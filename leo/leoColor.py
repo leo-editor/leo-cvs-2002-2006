@@ -568,7 +568,23 @@ class colorizer:
 		self.showInvisibles = false # true: show "invisible" characters.
 		self.delim = None # delimiter for triple strings.
 		self.comment_string = None # Set by scanColorDirectives on @comment
-		trace("-nocolor", self.disable)
+		
+		# For communication between colorAllDirectives and its allies.
+		# Copies of arguments...
+		self.v = None
+		self.body = None
+		self.language = None
+		self.flag = None
+		# Others...
+		self.single_comment_start = None
+		self.block_comment_start = None
+		self.block_comment_end = None
+		self.has_string = None
+		self.has_pp_directives = None
+		self.keywords = None
+		self.lb = None
+		self.rb = None
+	
 	#@-body
 	#@-node:1::color.__init__
 	#@+node:2::color.callbacks...
@@ -603,7 +619,7 @@ class colorizer:
 			self.colorizeAnyLanguage(v,body,language,flag)
 	#@-body
 	#@-node:3::colorize
-	#@+node:4::colorizeAnyLanguage
+	#@+node:4::colorizeAnyLanguage & allies
 	#@+body
 	tags = (
 		"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
@@ -611,16 +627,29 @@ class colorizer:
 	
 	def colorizeAnyLanguage(self,v,body,language,flag):
 	
-		#trace(`language`)
-		hyperCount = 0 # Number of hypertext tags
-		self.body = body # For callbacks
+		
+		#@<< initialize ivars, tags, dispatching tables >>
+		#@+node:1::<< initialize ivars, tags, dispatching tables >>
+		#@+body
+		# Copy the arguments.
+		self.v = v
+		self.body = body
+		self.language = language
+		self.flag = flag
+		
 		s = body.get("1.0", "end")
 		sel = body.index("insert") # get the location of the insert point
 		start, end = string.split(sel,'.')
 		start = int(start)
-		# trace(`self.count` + `v`)
+		
+		# trace(`self.language`)
+		# trace(`self.count` + `self.v`)
 		# trace(`body.tag_names()`)
-	
+		
+		
+		#@<< remove tags >>
+		#@+node:1::<< remove tags >>
+		#@+body
 		if 0: # Remove all tags from the selected line.
 			for tag in self.tags:
 				body.tag_remove(tag, index(start,0), index(start,"end"))
@@ -628,9 +657,12 @@ class colorizer:
 			body.tag_delete(
 				"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
 				"link", "name", "nameBrackets", "pp", "string", "tab")
+		#@-body
+		#@-node:1::<< remove tags >>
+
 		
 		#@<< configure tags >>
-		#@+node:1::<< configure tags >>
+		#@+node:2::<< configure tags >>
 		#@+body
 		config = app().config
 		assert(config)
@@ -665,484 +697,556 @@ class colorizer:
 			body.tag_config("blank",background="Gray90")
 			body.tag_config("tab",background="Gray80")
 		#@-body
-		#@-node:1::<< configure tags >>
+		#@-node:2::<< configure tags >>
 
 		
 		#@<< configure language-specific settings >>
-		#@+node:2::<< configure language-specific settings >> (colorizer)
+		#@+node:3::<< configure language-specific settings >>
 		#@+body
 		# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
 		
-		if language == "plain": # 9/12/02
+		if self.language == "plain": # 9/12/02
 			delim1,delim2,delim3 = None,None,None
 		elif self.comment_string: # 8/11/02
 			delim1,delim2,delim3 = set_delims_from_string(self.comment_string)
 		else:
-			delim1,delim2,delim3 = set_delims_from_language(language)
+			delim1,delim2,delim3 = set_delims_from_language(self.language)
 		
 		# 8/1/02: this now works as expected.
-		single_comment_start = delim1
-		block_comment_start = delim2
-		block_comment_end = delim3
+		self.single_comment_start = delim1
+		self.block_comment_start = delim2
+		self.block_comment_end = delim3
 		
 		# A strong case can be made for making this code as fast as possible.
 		# Whether this is compatible with general language descriptions remains to be seen.
-		has_string = language != "plain"
-		has_pp_directives = language in ["c","cweb"]
-		is_cweb = language == "cweb"
-		is_latex = language == "latex"
-		is_php = language == "php"
-		is_plain = language == "plain"
-		is_python = language == "python"
+		self.has_string = self.language != "plain"
+		self.has_pp_directives = self.language in ["c","cweb"]
 		
 		# The list of languages for which keywords exist.
 		# Eventually we might just use language_delims_dict.keys()
 		languages = ["c","cweb","html","java","latex", "pascal","perl","perlpod","python","tcltk","php"]
 		
-		keywords = []
-		if is_cweb:
+		self.keywords = []
+		if self.language == "cweb":
 			for i in c_keywords:
-				keywords.append(i)
+				self.keywords.append(i)
 			for i in cweb_keywords:
-				keywords.append(i)
+				self.keywords.append(i)
 		else:
 			for name in languages:
-				exec("if language==name: keywords=%s_keywords" % name)
+				exec("if self.language==name: self.keywords=%s_keywords" % name)
 		
 		# Color plain text unless we are under the control of @nocolor.
-		state = choose(flag,normalState,nocolorState)
+		state = choose(self.flag,normalState,nocolorState)
 		
-		lb = choose(is_cweb,"@<","<<")
-		rb = choose(is_cweb,"@>",">>")
+		self.lb = choose(self.language == "cweb","@<","<<")
+		self.rb = choose(self.language == "cweb","@>",">>")
 		#@-body
-		#@-node:2::<< configure language-specific settings >> (colorizer)
+		#@-node:3::<< configure language-specific settings >>
 
-		self.count += 1
 		
-		lines = string.split(s,'\n')
-		n = 0 # The line number for indices, as in n.i
-		for s in lines:
-			n += 1 ; i = 0 ; sLen = len(s)
-			# trace(`n` + ", " + `s`)
-			while i < sLen:
-				progress = i
-				ch = s[i]
-				if state == string3State:
-					
-					#@<< continue python triple string >>
-					#@+node:3::Multiline State Handlers
-					#@+node:2::<< continue python triple string >>
-					#@+body
-					delim = self.delim
-					if delim=="'''":
-						j = string.find(s,"'''",i)
-					elif delim=='"""':
-						j = string.find(s,'"""', i)
-					else:
-						state=normalState ; self.delim = None ; continue
-					
-					if j == -1:
-						# The entire line is part of the triple-quoted string.
-						body.tag_add("string", index(n,i), index(n,"end"))
-						i = sLen # skipt the rest of the line.
-					else:
-						# End the string
-						body.tag_add("string", index(n,i), index(n,j+3))
-						i = j + 3 ; state = normalState ; self.delim = None
-					#@-body
-					#@-node:2::<< continue python triple string >>
-					#@-node:3::Multiline State Handlers
-
-					continue
-				elif state == docState:
-					
-					#@<< continue doc part >>
-					#@+node:3::Multiline State Handlers
-					#@+node:1::<< continue doc part >>
-					#@+body
-					if is_cweb:
+		#@<< define dispatch dicts >>
+		#@+node:4::<< define dispatch dicts >>
+		#@+body
+		state_dict = {
+			normalState : self.doNormalState,
+			string3State : self.continuePythonString,
+			docState : self.continueDocPart,
+			nocolorState : self.continueNocolor,
+			continueCommentState : self.continueString,
+			blockCommentState : self.continueBlockComment }
+			
+		# Eventually all entries in these dicts will be entered dynamically
+		# under the control of the XML description of the present language.
+		
+		if 0: # not ready yet.
+		
+			dict1 = { # 1-character patterns.
+				'"' : self.doString,
+				"'" : self.doString,
+				'@' : self.doPossibleLeoKeyword,
+				' ' : self.doBlank,
+				'\t': self.doTab }
+		
+			dict2 = {} # 2-character patterns
+			
+			# Searching this list might be very slow!
+			mutli_list = [] # Multiple character patterns.
+			
+			# Enter single-character patterns...
+			if self.has_pp_directives:
+				dict1 ["#"] = self.doPPDirective
 						
-						#@<< handle cweb doc part >>
-						#@+node:1::<< handle cweb doc part >>
-						#@+body
-						word = self.getCwebWord(s,i)
-						if word and len(word) > 0:
-							j = i + len(word)
-							if word in ("@<","@(","@c","@d","@f","@p"):
-								state = normalState # end the doc part and rescan
-							else:
-								# The control code does not end the doc part.
-								body.tag_add("keyword", index(n,i), index(n,j))
-								i = j
-								if word in ("@^","@.","@:","@="): # Ended by "@>"
-									j = string.find(s,"@>",i)
-									if j > -1:
-										body.tag_add("cwebName", index(n,i), index(n,j))
-										body.tag_add("nameBrackets", index(n,j), index(n,j+2))
-										i = j + 2
-						else:
-							# Everthing up to the next "@" is in the doc part.
-							j = string.find(s,"@",i+1)
-							if j == -1: j = len(s)
-							body.tag_add("docPart", index(n,i), index(n,j))
-							i = j
-						#@-body
-						#@-node:1::<< handle cweb doc part >>
-
-					else:
-						
-						#@<< handle noweb doc part >>
-						#@+node:2::<< handle noweb doc part >>
-						#@+body
-						if i == 0 and match(s,i,lb):
-							# Possible section definition line.
-							state = normalState # rescan the line.
-							continue
-						if i == 0 and ch == '@':
-							j = self.skip_id(s,i+1)
-							word = s[i:j]
-							word = string.lower(word)
-						else:
-							word = ""
-						
-						if word in ["@c","@code","@unit","@root","@color","@nocolor"]:
-							# End of the doc part.
-							body.tag_remove("docPart", index(n,i), index(n,j))
-							body.tag_add("leoKeyword", index(n,i), index(n,j))
-							i = j ; state = normalState
-						else:
-							# The entire line is in the doc part.
-							body.tag_add("docPart", index(n,i), index(n,sLen))
-							i = sLen # skipt the rest of the line.
-						#@-body
-						#@-node:2::<< handle noweb doc part >>
-					#@-body
-					#@-node:1::<< continue doc part >>
-					#@-node:3::Multiline State Handlers
-
-					continue
-				elif state == nocolorState:
-					
-					#@<< continue nocolor state >>
-					#@+node:3::Multiline State Handlers
-					#@+node:4::<< continue nocolor state >>
-					#@+body
-					if i == 0 and ch == '@':
-						j = self.skip_id(s,i+1)
-						word = s[i:j]
-						word = string.lower(word)
-					else:
-						word = ""
-					
-					if word == "@color" and not is_plain:
-						# End of the nocolor part.
-						body.tag_add("leoKeyword", index(n,0), index(n,j))
-						i = j ; state = normalState
-					else:
-						# The entire line is in the nocolor part.
-						# Add tags for blanks and tabs to make "Show Invisibles" work.
-						for ch in s[i:]:
-							if ch == ' ':
-								body.tag_add("blank", index(n,i))
-							elif ch == '\t':
-								body.tag_add("tab", index(n,i))
-							i += 1
-					#@-body
-					#@-node:4::<< continue nocolor state >>
-					#@-node:3::Multiline State Handlers
-
-					continue
-				elif state == continueCommentState:
-					
-					#@<< continue string state >>
-					#@+node:3::Multiline State Handlers
-					#@+node:5::<< continue string state >>
-					#@+body
-					# Similar to skip_string.
-					delim = self.delim
-					continueFlag = false
-					j = i
-					while i < sLen and s[i] != delim:
-						if s[i:] == "\\":
-							i = sLen ; continueFlag = true ; break
-						elif s[i] == "\\":
-							i += 2
-						else:
-							i += 1
-					
-					if i >= sLen:
-						i = sLen
-					elif s[i] == delim:
-						i += 1
-					
-					body.tag_add("string", index(n,j), index(n,i))
-					state = choose(continueFlag, continueCommentState, normalState)
-					#@-body
-					#@-node:5::<< continue string state >>
-					#@-node:3::Multiline State Handlers
-
-					continue
-				elif state == blockCommentState:
-					
-					#@<< continue block comment >>
-					#@+node:3::Multiline State Handlers
-					#@+node:3::<< continue block comment >>
-					#@+body
-					j = string.find(s,block_comment_end,i)
-					if j == -1:
-						# The entire line is part of the block comment.
-						body.tag_add("comment", index(n,i), index(n,"end"))
-						i = sLen # skipt the rest of the line.
-					else:
-						# End the block comment.
-						k = len(block_comment_end)
-						body.tag_add("comment", index(n,i), index(n,j+k))
-						i = j + k ; state = normalState
-					#@-body
-					#@-node:3::<< continue block comment >>
-					#@-node:3::Multiline State Handlers
-
-					continue
-				else: assert(state == normalState)
-	
-				if has_string and (ch == '"' or ch == "'"):
-					
-					#@<< handle string >>
-					#@+node:4::<< handle string >>
-					#@+body
-					if is_python:
-						j, state = self.skip_python_string(s,i)
-						body.tag_add("string", index(n,i), index(n,j))
-						i = j
-					else:
-						j, state = self.skip_string(s,i)
-						body.tag_add("string", index(n,i), index(n,j))
-						i = j
-					
-					#@-body
-					#@-node:4::<< handle string >>
-
-				elif single_comment_start and match(s,i,single_comment_start):
-					
-					#@<< handle single-line comment >>
-					#@+node:6::<< handle single-line comment >>
-					#@+body
-					body.tag_add("comment", index(n,i), index(n,"end"))
-					i = sLen
-					#@-body
-					#@-node:6::<< handle single-line comment >>
-
-				elif block_comment_start and match(s,i,block_comment_start):
-					
-					#@<< start block comment >>
-					#@+node:5::<< start block comment >>
-					#@+body
-					k = len(block_comment_start)
-					body.tag_add("comment", index(n,i), index(n,i+k))
-					i += k ; state = blockCommentState
-					#@-body
-					#@-node:5::<< start block comment >>
-
-				elif ch == '#' and has_pp_directives:
-					
-					#@<< handle C preprocessor line >>
-					#@+node:7::<< handle C preprocessor line >>
-					#@+body
-					body.tag_add("pp", index(n,i), index(n,"end"))
-					i = sLen
-					#@-body
-					#@-node:7::<< handle C preprocessor line >>
-
-				elif match(s,i,lb) or (is_cweb and match(s,i,"@(")):
-					
-					#@<< handle possible section ref or def >>
-					#@+node:8::<< handle possible section ref or def >>
-					#@+body
-					body.tag_add("nameBrackets", index(n,i), index(n,i+2))
-					
-					# See if the line contains the rb
-					j = string.find(s,rb+"=",i+2) ; k = 3
-					if j == -1:
-						j = string.find(s,rb,i+2) ; k = 2
-					if j == -1:
-						i += 2
-					else:
-						if not is_cweb:
-							searchName = body.get(index(n,i), index(n,j+k)) # includes brackets
-							ref = findReference(searchName,v)
-						
-						if is_cweb:
-							body.tag_add("cwebName", index(n,i+2), index(n,j))
-						elif ref:
-							body.tag_add("link", index(n,i+2), index(n,j))
-							if self.use_hyperlinks:
-								
-								#@<< set the hyperlink >>
-								#@+node:1::<< set the hyperlink >>
-								#@+body
-								# Set the bindings to vnode callbacks.
-								# Create the tag.
-								# Create the tag name.
-								tagName = "hyper" + `hyperCount`
-								hyperCount += 1
-								body.tag_delete(tagName)
-								body.tag_add(tagName, index(n,i+2), index(n,j))
-								ref.tagName = tagName
-								body.tag_bind(tagName,"<Control-1>",ref.OnHyperLinkControlClick)
-								body.tag_bind(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
-								body.tag_bind(tagName,"<Any-Leave>",ref.OnHyperLinkLeave)
-								#@-body
-								#@-node:1::<< set the hyperlink >>
-
-						elif k == 3: # a section definition
-							body.tag_add("link", index(n,i+2), index(n,j))
-						else:
-							body.tag_add("name", index(n,i+2), index(n,j))
-						body.tag_add("nameBrackets", index(n,j), index(n,j+k))
-						i = j + k
-					#@-body
-					#@-node:8::<< handle possible section ref or def >>
-
-				elif ch == '@':
-					
-					#@<< handle possible @keyword >>
-					#@+node:9::<< handle possible @keyword >>
-					#@+body
-					word = None
-					if is_cweb:
-						
-						#@<< Handle all cweb control codes >>
-						#@+node:1::<< Handle all cweb control codes >>
-						#@+body
-						word = self.getCwebWord(s,i)
-						if word:
-							# Color and skip the word.
-							j = i + len(word)
-							body.tag_add("keyword",index(n,i),index(n,j))
-							i = j
-						
-							if word in ("@ ","@\t","@\n","@*","@**"):
-								state = docState
-								continue ;
-						
-							if word in ("@^","@.","@:","@="): # Ended by "@>"
-								j = string.find(s,"@>",i)
-								if j > -1:
-									body.tag_add("cwebName", index(n,i), index(n,j))
-									body.tag_add("nameBrackets", index(n,j), index(n,j+2))
-									i = j + 2
-						
-						#@-body
-						#@-node:1::<< Handle all cweb control codes >>
-
-					if not word:
-						
-						#@<< Handle non-cweb @keywords >>
-						#@+node:2::<< Handle non-cweb @keywords >>
-						#@+body
-						j = self.skip_id(s,i+1)
-						word = s[i:j]
-						word = string.lower(word)
-						if i != 0 and word != "@others":
-							word = "" # can't be a Leo keyword, even if it looks like it.
-						
-						# 7/8/02: don't color doc parts in plain text.
-						if not is_plain and (word == "@" or word == "@doc"):
-							# at-space starts doc part
-							body.tag_add("leoKeyword", index(n,i), index(n,j))
-							# Everything on the line is in the doc part.
-							body.tag_add("docPart", index(n,j), index(n,sLen))
-							i = sLen ; state = docState
-						elif word == "@nocolor":
-							# Nothing on the line is colored.
-							body.tag_add("leoKeyword", index(n,i), index(n,j))
-							i = j ; state = nocolorState
-						elif word in leoKeywords:
-							body.tag_add("leoKeyword", index(n,i), index(n,j))
-							i = j
-						else:
-							i = j
-						#@-body
-						#@-node:2::<< Handle non-cweb @keywords >>
-					#@-body
-					#@-node:9::<< handle possible @keyword >>
-
-				elif ch in string.letters or ch == '_' or (ch == '\\' and is_latex):
-					
-					#@<< handle possible keyword >>
-					#@+node:10::<< handle possible  keyword >>
-					#@+body
-					if is_latex and match(s,i,"\\"):
-						j = self.skip_id(s,i+1)
-					else:
-						j = self.skip_id(s,i)
-					
-					word = s[i:j]
-					if word in keywords:
-						body.tag_add("keyword", index(n,i), index(n,j))
-					elif is_php:
-						if word in php_paren_keywords and match(s,j,"()"):
-							body.tag_add("keyword", index(n,i), index(n,j+2))
-							j += 2
-					i = j
-					#@-body
-					#@-node:10::<< handle possible  keyword >>
-
-				elif is_php and (match(s,i,"<") or match(s,i,"?")):
-					
-					#@<< handle special php keywords >>
-					#@+node:11::<< handle special php keywords >>
-					#@+body
-					if match(s,i,"<?php"):
-						body.tag_add("keyword", index(n,i), index(n,i+5))
-						i += 5
-					elif match(s,i,"?>"):
-						body.tag_add("keyword", index(n,i), index(n,i+2))
-						i += 2
-					else:
-						i += 1
-					
-					#@-body
-					#@-node:11::<< handle special php keywords >>
-
-				elif ch == ' ':
-					
-					#@<< handle blank >>
-					#@+node:12::<< handle blank >>
-					#@+body
-					if self.showInvisibles:
-						body.tag_add("blank", index(n,i))
-					i += 1
-					#@-body
-					#@-node:12::<< handle blank >>
-
-				elif ch == '\t':
-					
-					#@<< handle tab >>
-					#@+node:13::<< handle tab >>
-					#@+body
-					if self.showInvisibles:
-						body.tag_add("tab", index(n,i))
-					i += 1
-					#@-body
-					#@-node:13::<< handle tab >>
-
+			for ch in string.letters:
+				dict1 [ch] = self.doPossibleKeyword
+			dict1 ['_'] = self.doPossibleKeyword
+			
+			if self.language == "latex":
+				dict1 ['\\'] = self.doPossibleKeyword
+				
+			if self.language == "php":
+				dict1 ['<'] = self.doSpecialPHPKeyword
+				dict1 ['?'] = self.doSpecialPHPKeyword
+			
+			# Enter potentially multi-character patterns.  (or should this be just 2-character patterns)
+			if self.language == "cweb":
+				dict2 ["@("] = self.doPossibleSectionRefOrDef
+			else:
+				dict2 ["<<"] = self.doPossibleSectionRefOrDef
+				
+			if self.single_comment_start:
+				n = len(self.single_comment_start)
+				if n == 1:
+					dict1 [self.single_comment_start] = self.doSingleCommentLine
+				elif n == 2:
+					dict2 [self.single_comment_start] = self.doSingleCommentLine
 				else:
-					
-					#@<< handle normal character >>
-					#@+node:14::<< handle normal character >>
-					#@+body
-					# body.tag_add("normal", index(n,i))
-					i += 1
-					
-					#@-body
-					#@-node:14::<< handle normal character >>
+					mutli_list.append((self.single_comment_start,self.doSingleCommentLine),)
+			
+			if self.block_comment_start:
+				n = len(self.block_comment_start)
+				if n == 1:
+					dict1 [self.block_comment_start] = self.doBlockComment
+				elif n == 2:
+					ddict2 [self.block_comment_start] = self.doBlockComment
+				else:
+					mutli_list.append((self.block_comment_start,self.doBlockComment),)
+		#@-body
+		#@-node:4::<< define dispatch dicts >>
 
-				assert(progress < i)
+		
+		self.hyperCount = 0 # Number of hypertext tags
+		self.count += 1
+		lines = string.split(s,'\n')
+		#@-body
+		#@-node:1::<< initialize ivars, tags, dispatching tables >>
+
+		try:
+			n = 0 # The line number for indices, as in n.i
+			for s in lines:
+				n += 1 ; i = 0 ; sLen = len(s)
+				# trace(`n` + ", " + `s`)
+				while i < sLen:
+					self.progress = i
+					func = state_dict[state]
+					i,state = func(s,i,n)
+		except:
+			es_exception()
+	
 	#@-body
-	#@+node:3::Multiline State Handlers
-	#@-node:3::Multiline State Handlers
-	#@-node:4::colorizeAnyLanguage
+	#@+node:2::continueDocPart
+	#@+body
+	def continueDocPart (self,s,i,n):
+		
+		body = self.body ; state = docState
+	
+		if self.language == "cweb":
+			
+			#@<< handle cweb doc part >>
+			#@+node:1::<< handle cweb doc part >>
+			#@+body
+			word = self.getCwebWord(s,i)
+			if word and len(word) > 0:
+				j = i + len(word)
+				if word in ("@<","@(","@c","@d","@f","@p"):
+					state = normalState # end the doc part and rescan
+				else:
+					# The control code does not end the doc part.
+					body.tag_add("keyword", index(n,i), index(n,j))
+					i = j
+					if word in ("@^","@.","@:","@="): # Ended by "@>"
+						j = string.find(s,"@>",i)
+						if j > -1:
+							body.tag_add("cwebName", index(n,i), index(n,j))
+							body.tag_add("nameBrackets", index(n,j), index(n,j+2))
+							i = j + 2
+			else:
+				# Everthing up to the next "@" is in the doc part.
+				j = string.find(s,"@",i+1)
+				if j == -1: j = len(s)
+				body.tag_add("docPart", index(n,i), index(n,j))
+				i = j
+			#@-body
+			#@-node:1::<< handle cweb doc part >>
+
+		else:
+			
+			#@<< handle noweb doc part >>
+			#@+node:2::<< handle noweb doc part >>
+			#@+body
+			if i == 0 and match(s,i,"<<"):
+				# Possible section definition line.
+				return i,normalState # rescan the line.
+			
+			if i == 0 and s[i] == '@':
+				j = self.skip_id(s,i+1)
+				word = s[i:j]
+				word = string.lower(word)
+			else:
+				word = ""
+			
+			if word in ["@c","@code","@unit","@root","@color","@nocolor"]:
+				# End of the doc part.
+				body.tag_remove("docPart", index(n,i), index(n,j))
+				body.tag_add("leoKeyword", index(n,i), index(n,j))
+				i = j ; state = normalState
+			else:
+				# The entire line is in the doc part.
+				sLen = len(s)
+				body.tag_add("docPart", index(n,i), index(n,sLen))
+				i = sLen # skipt the rest of the line.
+			#@-body
+			#@-node:2::<< handle noweb doc part >>
+
+		return i,state
+	#@-body
+	#@-node:2::continueDocPart
+	#@+node:3::continuePythonString
+	#@+body
+	def continuePythonString (self,s,i,n):
+	
+		body = self.body ; delim = self.delim
+		state = string3State
+	
+		if delim=="'''":
+			j = string.find(s,"'''",i)
+		elif delim=='"""':
+			j = string.find(s,'"""', i)
+		else:
+			state = normalState ; self.delim = None
+			return i,state
+	
+		if j == -1:
+			# The entire line is part of the triple-quoted string.
+			body.tag_add("string", index(n,i), index(n,"end"))
+			i = len(s)  # skipt the rest of the line.
+		else:
+			# End the string
+			body.tag_add("string", index(n,i), index(n,j+3))
+			i = j + 3 ; state = normalState ; self.delim = None
+		return i,state
+	#@-body
+	#@-node:3::continuePythonString
+	#@+node:4::continueBlockComment
+	#@+body
+	def continueBlockComment (self,s,i,n):
+		
+		body = self.body
+		
+		j = string.find(s,self.block_comment_end,i)
+		if j == -1:
+			# The entire line is part of the block comment.
+			body.tag_add("comment", index(n,i), index(n,"end"))
+			return len(s),blockCommentState # skipt the rest of the line.
+	
+		else:
+			# End the block comment.
+			k = len(self.block_comment_end)
+			body.tag_add("comment", index(n,i), index(n,j+k))
+			i = j + k
+			return i,normalState
+	#@-body
+	#@-node:4::continueBlockComment
+	#@+node:5::continueNocolor
+	#@+body
+	def continueNocolor (self,s,i,n):
+		
+		body = self.body
+	
+		if i == 0 and s[i] == '@':
+			j = self.skip_id(s,i+1)
+			word = s[i:j]
+			word = string.lower(word)
+		else:
+			word = ""
+		
+		if word == "@color" and self.language != "plain":
+			# End of the nocolor part.
+			body.tag_add("leoKeyword", index(n,0), index(n,j))
+			return i,normalState
+		else:
+			# The entire line is in the nocolor part.
+			# Add tags for blanks and tabs to make "Show Invisibles" work.
+			for ch in s[i:]:
+				if ch == ' ':
+					body.tag_add("blank", index(n,i))
+				elif ch == '\t':
+					body.tag_add("tab", index(n,i))
+				i += 1
+			return i,nocolorState
+	#@-body
+	#@-node:5::continueNocolor
+	#@+node:6::continueString
+	#@+body
+	# Similar to skip_string.
+	def continueString (self,s,i,n):
+	
+		body = self.body ; sLen = len(s) ; delim = self.delim
+		continueFlag = false
+		j = i
+		while i < sLen and s[i] != delim:
+			if s[i:] == "\\":
+				i = sLen ; continueFlag = true ; break
+			elif s[i] == "\\":
+				i += 2
+			else:
+				i += 1
+		if i >= sLen:
+			i = sLen
+		elif s[i] == delim:
+			i += 1
+		body.tag_add("string", index(n,j), index(n,i))
+		state = choose(continueFlag, continueCommentState, normalState)
+		return i,state
+	#@-body
+	#@-node:6::continueString
+	#@+node:7::doNormalState
+	#@+body
+	## To do: rewrite using dyntamically generated tables.
+	
+	def doNormalState (self,s,i,n):
+	
+		body = self.body ; sLen = len(s) ; ch = s[i]
+		state = normalState
+	
+		if self.has_string and (ch == '"' or ch == "'"):
+			
+			#@<< handle string >>
+			#@+node:1::<< handle string >>
+			#@+body
+			if self.language == "python":
+				j, state = self.skip_python_string(s,i)
+				body.tag_add("string", index(n,i), index(n,j))
+				i = j
+			else:
+				j, state = self.skip_string(s,i)
+				body.tag_add("string", index(n,i), index(n,j))
+				i = j
+			
+			#@-body
+			#@-node:1::<< handle string >>
+
+		elif self.single_comment_start and match(s,i,self.single_comment_start):
+			
+			#@<< handle single-line comment >>
+			#@+node:3::<< handle single-line comment >>
+			#@+body
+			body.tag_add("comment", index(n,i), index(n,"end"))
+			i = sLen
+			#@-body
+			#@-node:3::<< handle single-line comment >>
+
+		elif self.block_comment_start and match(s,i,self.block_comment_start):
+			
+			#@<< start block comment >>
+			#@+node:2::<< start block comment >>
+			#@+body
+			k = len(self.block_comment_start)
+			body.tag_add("comment", index(n,i), index(n,i+k))
+			i += k ; state = blockCommentState
+			#@-body
+			#@-node:2::<< start block comment >>
+
+		elif ch == '#' and self.has_pp_directives:
+			
+			#@<< handle C preprocessor line >>
+			#@+node:4::<< handle C preprocessor line >>
+			#@+body
+			body.tag_add("pp", index(n,i), index(n,"end"))
+			i = sLen
+			#@-body
+			#@-node:4::<< handle C preprocessor line >>
+
+		elif match(s,i,self.lb) or (self.language == "cweb" and match(s,i,"@(")):
+			
+			#@<< handle possible section ref or def >>
+			#@+node:5::<< handle possible section ref or def >>
+			#@+body
+			body.tag_add("nameBrackets", index(n,i), index(n,i+2))
+			
+			# See if the line contains the right name bracket.
+			j = string.find(s,self.rb+"=",i+2) ; k = 3
+			if j == -1:
+				j = string.find(s,self.rb,i+2) ; k = 2
+			if j == -1:
+				i += 2
+			else:
+				if not self.language == "cweb":
+					searchName = body.get(index(n,i), index(n,j+k)) # includes brackets
+					ref = findReference(searchName,self.v)
+				
+				if self.language == "cweb":
+					body.tag_add("cwebName", index(n,i+2), index(n,j))
+				elif ref:
+					body.tag_add("link", index(n,i+2), index(n,j))
+					if self.use_hyperlinks:
+						
+						#@<< set the hyperlink >>
+						#@+node:1::<< set the hyperlink >>
+						#@+body
+						# Set the bindings to vnode callbacks.
+						# Create the tag.
+						# Create the tag name.
+						tagName = "hyper" + `hyperCount`
+						hyperCount += 1
+						body.tag_delete(tagName)
+						body.tag_add(tagName, index(n,i+2), index(n,j))
+						ref.tagName = tagName
+						body.tag_bind(tagName,"<Control-1>",ref.OnHyperLinkControlClick)
+						body.tag_bind(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
+						body.tag_bind(tagName,"<Any-Leave>",ref.OnHyperLinkLeave)
+						#@-body
+						#@-node:1::<< set the hyperlink >>
+
+				elif k == 3: # a section definition
+					body.tag_add("link", index(n,i+2), index(n,j))
+				else:
+					body.tag_add("name", index(n,i+2), index(n,j))
+				body.tag_add("nameBrackets", index(n,j), index(n,j+k))
+				i = j + k
+			#@-body
+			#@-node:5::<< handle possible section ref or def >>
+
+		elif ch == '@':
+			
+			#@<< handle possible @keyword >>
+			#@+node:6::<< handle possible @keyword >>
+			#@+body
+			word = None
+			if self.language == "cweb":
+				
+				#@<< Handle all cweb control codes >>
+				#@+node:1::<< Handle all cweb control codes >>
+				#@+body
+				word = self.getCwebWord(s,i)
+				if word:
+					# Color and skip the word.
+					j = i + len(word)
+					body.tag_add("keyword",index(n,i),index(n,j))
+					i = j
+				
+					if word in ("@ ","@\t","@\n","@*","@**"):
+						return i,docState
+				
+					if word in ("@^","@.","@:","@="): # Ended by "@>"
+						j = string.find(s,"@>",i)
+						if j > -1:
+							body.tag_add("cwebName", index(n,i), index(n,j))
+							body.tag_add("nameBrackets", index(n,j), index(n,j+2))
+							i = j + 2
+				
+				#@-body
+				#@-node:1::<< Handle all cweb control codes >>
+
+			if not word:
+				
+				#@<< Handle non-cweb @keywords >>
+				#@+node:2::<< Handle non-cweb @keywords >>
+				#@+body
+				j = self.skip_id(s,i+1)
+				word = s[i:j]
+				word = string.lower(word)
+				if i != 0 and word != "@others":
+					word = "" # can't be a Leo keyword, even if it looks like it.
+				
+				# 7/8/02: don't color doc parts in plain text.
+				if self.language != "plain" and (word == "@" or word == "@doc"):
+					# at-space starts doc part
+					body.tag_add("leoKeyword", index(n,i), index(n,j))
+					# Everything on the line is in the doc part.
+					body.tag_add("docPart", index(n,j), index(n,sLen))
+					i = sLen ; state = docState
+				elif word == "@nocolor":
+					# Nothing on the line is colored.
+					body.tag_add("leoKeyword", index(n,i), index(n,j))
+					i = j ; state = nocolorState
+				elif word in leoKeywords:
+					body.tag_add("leoKeyword", index(n,i), index(n,j))
+					i = j
+				else:
+					i = j
+				#@-body
+				#@-node:2::<< Handle non-cweb @keywords >>
+			#@-body
+			#@-node:6::<< handle possible @keyword >>
+
+		elif ch in string.letters or ch == '_' or (ch == '\\' and self.language == "latex"):
+			
+			#@<< handle possible keyword >>
+			#@+node:7::<< handle possible  keyword >>
+			#@+body
+			if self.language == "latex" and match(s,i,"\\"):
+				j = self.skip_id(s,i+1)
+			else:
+				j = self.skip_id(s,i)
+			
+			word = s[i:j]
+			if word in self.keywords:
+				body.tag_add("keyword", index(n,i), index(n,j))
+			elif self.language == "php":
+				if word in php_paren_keywords and match(s,j,"()"):
+					body.tag_add("keyword", index(n,i), index(n,j+2))
+					j += 2
+			i = j
+			#@-body
+			#@-node:7::<< handle possible  keyword >>
+
+		elif self.language == "php" and (match(s,i,"<") or match(s,i,"?")):
+			
+			#@<< handle special php keywords >>
+			#@+node:8::<< handle special php keywords >>
+			#@+body
+			if match(s,i,"<?php"):
+				body.tag_add("keyword", index(n,i), index(n,i+5))
+				i += 5
+			elif match(s,i,"?>"):
+				body.tag_add("keyword", index(n,i), index(n,i+2))
+				i += 2
+			else:
+				i += 1
+			
+			#@-body
+			#@-node:8::<< handle special php keywords >>
+
+		elif ch == ' ':
+			
+			#@<< handle blank >>
+			#@+node:9::<< handle blank >>
+			#@+body
+			if self.showInvisibles:
+				body.tag_add("blank", index(n,i))
+			i += 1
+			#@-body
+			#@-node:9::<< handle blank >>
+
+		elif ch == '\t':
+			
+			#@<< handle tab >>
+			#@+node:10::<< handle tab >>
+			#@+body
+			if self.showInvisibles:
+				body.tag_add("tab", index(n,i))
+			i += 1
+			#@-body
+			#@-node:10::<< handle tab >>
+
+		else:
+			
+			#@<< handle normal character >>
+			#@+node:11::<< handle normal character >>
+			#@+body
+			# body.tag_add("normal", index(n,i))
+			i += 1
+			
+			#@-body
+			#@-node:11::<< handle normal character >>
+
+	
+		assert(self.progress < i)
+		return i,state
+	#@-body
+	#@-node:7::doNormalState
+	#@-node:4::colorizeAnyLanguage & allies
 	#@+node:5::scanColorDirectives
 	#@+body
 	#@+at
