@@ -2,16 +2,26 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="89" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-	<global_window_position top="136" left="314" height="704" width="800"/>
+<globals body_outline_ratio="0.673295454545">
+	<global_window_position top="136" left="257" height="704" width="857"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
-<v t="ekr.20041119035137" a="TV"><vh>About this file</vh>
-<v t="ekr.20041119035704"><vh> Basic setting nodes</vh></v>
+<v t="ekr.20041119035137"><vh>About this file</vh>
+<v t="ekr.20041119035704" a="E"><vh> Basic setting nodes</vh>
+<v t="ekr.20041119042929"><vh>@bool</vh></v>
+<v t="ekr.20041119042929.1"><vh>@color</vh></v>
+<v t="ekr.20041119044139"><vh>@directory</vh></v>
+<v t="ekr.20041119042929.3"><vh>@encoding</vh></v>
+<v t="ekr.20041119042929.4"><vh>@int</vh></v>
+<v t="ekr.20041119042929.5"><vh>@font</vh></v>
+<v t="ekr.20041119042929.6"><vh>@shortcut</vh></v>
+<v t="ekr.20041119042929.2"><vh>@path</vh></v>
+<v t="ekr.20041119042929.7"><vh>@string</vh></v>
+</v>
 <v t="ekr.20041119035704.1"><vh> Organizer nodes</vh></v>
 <v t="ekr.20041119035931"><vh>@if nodes</vh></v>
 <v t="ekr.20041119035704.2"><vh>@ignore nodes</vh></v>
@@ -20,36 +30,85 @@
 <v t="ekr.20041119035704.3"><vh>@type nodes</vh></v>
 </v>
 <v t="ekr.20041119034357.3"><vh>General configuration options</vh>
-<v t="ekr.20041119034357.4"><vh>@page general options (done)</vh>
+<v t="ekr.20041119034357.4"><vh>@page general options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.6"><vh>@bool use_psyco = False</vh></v>
+<v t="ekr.20041119034357.13"><vh>@bool use_plugins = False</vh></v>
 </v>
-<v t="ekr.20041119034357.7"><vh>@page .leo file options (done)</vh>
-<v t="ekr.20041119034357.8"><vh>@string output_initial_comment=</vh></v>
-<v t="ekr.20041119034357.9"><vh>@string stylesheet=</vh></v>
+<v t="ekr.20041119034357.7"><vh>@page .leo file options</vh>
+<v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
+<v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
 </v>
-<v t="ekr.20041119034357.10"><vh>@page command options</vh></v>
-<v t="ekr.20041119034357.11"><vh>@page directory options</vh></v>
-<v t="ekr.20041119034357.12"><vh>@page derived files options</vh></v>
-<v t="ekr.20041119034357.13"><vh>@page plugins options</vh></v>
-<v t="ekr.20041119034357.14"><vh>@page tangle options</vh></v>
-<v t="ekr.20041119034357.15"><vh>@page unicode encoding options</vh></v>
+<v t="ekr.20041119034357.11"><vh>@page directory options</vh>
+<v t="ekr.20041119041304"><vh>@bool create_nonexistent_directories = False</vh></v>
+<v t="ekr.20041119041304.1"><vh>@string relative_path_base_directory = .</vh></v>
 </v>
-<v t="ekr.20041119034357.16"><vh>Compare Panel defaults</vh>
-<v t="ekr.20041119034357.17"><vh>@page Options specifying files</vh></v>
-<v t="ekr.20041119034357.18"><vh>@page Options related to directory compares.</vh></v>
-<v t="ekr.20041119034357.19"><vh>@page Options related to file compares.</vh></v>
+<v t="ekr.20041119034357.12"><vh>@page derived files options</vh>
+<v t="ekr.20041119041747"><vh>@string output_newline = nl</vh></v>
+<v t="ekr.20041119041747.1"><vh>@string trailing_body_newlines = one</vh></v>
+<v t="ekr.20041119041747.4"><vh>@bool write_strips_blank_lines = True</vh></v>
 </v>
-<v t="ekr.20041119034357.20"><vh>@page Find/Change Panel defaults</vh></v>
-<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
-<v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
-<v t="ekr.20041119034357.23"><vh>Alt and Shift-Alt</vh></v>
-<v t="ekr.20041119034357.24"><vh>Control</vh></v>
-<v t="ekr.20041119034357.25"><vh>Shift-Control</vh></v>
-<v t="ekr.20041119034357.26"><vh>F-keys and others</vh></v>
-<v t="ekr.20041119034357.27"><vh>None</vh></v>
+<v t="ekr.20041119034357.15"><vh>@page unicode encoding options</vh>
+<v t="ekr.20041119042929.9"><vh>@encoding default_derived_file_encoding = UTF-8</vh></v>
+<v t="ekr.20041119042929.10"><vh>@encoding new_leo_file_encoding = UTF-8</vh></v>
+<v t="ekr.20041119042929.11"><vh>@encoding tk_encoding = None</vh></v>
 </v>
-<v t="ekr.20041119034357.28"><vh>@page Preferences Panel defaults (done)</vh>
+</v>
+<v t="ekr.20041119034357.10"><vh>@page command options</vh>
+<v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
+<v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
+<v t="ekr.20041119041019.1"><vh>@string remove_sentinels_extension = .txt</vh></v>
+<v t="ekr.20041119041019.2"><vh>@bool save_clears_undo_buffer = False</vh></v>
+<v t="ekr.20041119050749.10"><vh>@string headline_time_format_string = %m/%d</vh></v>
+<v t="ekr.20041119050749.11"><vh>@bool headline_gmt_time = False</vh></v>
+</v>
+<v t="ekr.20041119043713"><vh>Dialogs</vh>
+<v t="ekr.20041119034357.16"><vh>Compare panel</vh>
+<v t="ekr.20041119034357.17"><vh>@page files &amp; directories</vh>
+<v t="ekr.20041119043902"><vh>@path compare_file_1 = None</vh></v>
+<v t="ekr.20041119043902.1"><vh>@path compare_file_2 = None</vh></v>
+<v t="ekr.20041119043902.2"><vh>@path output_file = None</vh></v>
+<v t="ekr.20041119043902.3"><vh>@bool append_output_to_output_file = False</vh></v>
+<v t="ekr.20041119034357.18"><vh>@string limit_directory_search_extension = .py</vh></v>
+</v>
+<v t="ekr.20041119034357.19"><vh>@page file compare options</vh>
+<v t="ekr.20041119043902.4"><vh>@bool ignore_blank_lines = True</vh></v>
+<v t="ekr.20041119043902.5"><vh>@bool ignore_first_line_of_file_1 = False</vh></v>
+<v t="ekr.20041119043902.6"><vh>@bool ignore_first_line_of_file_2 = False</vh></v>
+<v t="ekr.20041119043902.7"><vh>@bool ignore_interior_whitespace = False</vh></v>
+<v t="ekr.20041119043902.8"><vh>@bool ignore_leading_whitespace = False</vh></v>
+<v t="ekr.20041119043902.9"><vh>@bool ignore_sentinel_lines = False</vh></v>
+</v>
+<v t="ekr.20041119050105"><vh>@page output options</vh>
+<v t="ekr.20041119043902.10"><vh>@int limit_count = 9</vh></v>
+<v t="ekr.20041119043902.11"><vh>@bool make_whitespace_visible = False</vh></v>
+<v t="ekr.20041119043902.12"><vh>@bool print_both_lines_for_matches = False</vh></v>
+<v t="ekr.20041119043902.13"><vh>@bool print_matching_lines = False</vh></v>
+<v t="ekr.20041119043902.14"><vh>@bool print_mismatching_lines = True</vh></v>
+<v t="ekr.20041119043902.15"><vh>@bool print_trailing_lines = True</vh></v>
+</v>
+</v>
+<v t="ekr.20041119034357.20"><vh>@page Find/Change panel</vh>
+<v t="ekr.20041119050105.1"><vh>@string change_string = None</vh></v>
+<v t="ekr.20041119050105.2"><vh>@string find_string = None</vh></v>
+<v t="ekr.20041119050105.3"><vh>Checkboxes</vh>
+<v t="ekr.20041119050105.4"><vh>@bool batch = False</vh></v>
+<v t="ekr.20041119050105.5"><vh>@bool ignore_case = False</vh></v>
+<v t="ekr.20041119050105.6"><vh>@bool mark_changes = False</vh></v>
+<v t="ekr.20041119050105.7"><vh>@bool mark_finds = False</vh></v>
+<v t="ekr.20041119050105.8"><vh>@bool pattern_match = False</vh></v>
+<v t="ekr.20041119050105.9"><vh>@bool reverse = False</vh></v>
+<v t="ekr.20041119050105.10"><vh>@bool whole_word = True</vh></v>
+<v t="ekr.20041119050105.11"><vh>@bool wrap = False</vh></v>
+<v t="ekr.20041119050105.12"><vh>@bool node_only = False</vh></v>
+</v>
+<v t="ekr.20041119050105.13"><vh>search extent radio buttons</vh>
+<v t="ekr.20041119050105.14"><vh>@bool search_body = True</vh></v>
+<v t="ekr.20041119050105.15"><vh>@bool search_headline = False</vh></v>
+<v t="ekr.20041119050105.16"><vh>@bool suboutline_only = False</vh></v>
+</v>
+</v>
+<v t="ekr.20041119034357.28"><vh>@page Preferences panel (done)</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
 <v t="ekr.20041119034357.30"><vh>@language default_target_language = Python</vh></v>
 <v t="ekr.20041119034357.31"><vh>@int tab_width = -4</vh></v>
@@ -59,28 +118,69 @@
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
-<v t="ekr.20041119034357.37" a="M"><vh>Window options...</vh>
-<v t="ekr.20041119034357.38"><vh>@page general body pane options (done)</vh>
+</v>
+<v t="ekr.20041119034357.37"><vh>Window options</vh>
+<v t="ekr.20041119050749.1"><vh>body pane</vh>
+<v t="ekr.20041119034357.38"><vh>@page body options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.40"><vh>@tk-color body_cursor_foreground_color = None</vh></v>
 <v t="ekr.20041119034357.41"><vh>@tk-color body_cursor_background_color = None</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
 <v t="ekr.20041119034357.43"><vh>@bool body_gmt_time = False</vh></v>
 <v t="ekr.20041119034357.44"><vh>@bool smart_auto_indent = False</vh></v>
+<v t="ekr.20041119034357.53"><vh>@int additional_body_text_border = 0</vh></v>
 </v>
-<v t="ekr.20041119034357.45"><vh>@page body text options (done)</vh>
-<v t="ekr.20041119034357.46"><vh>@tk-slant body_text_font_slant = roman</vh></v>
-<v t="ekr.20041119034357.47"><vh>@tk-family body_text_font_family = Courier New</vh></v>
+<v t="ekr.20041119050749.2"><vh>@page body colors</vh>
 <v t="ekr.20041119034357.48"><vh>@tk-color body_text_foreground_color = None</vh></v>
 <v t="ekr.20041119034357.49"><vh>@tk-color body_text_background_color = None</vh></v>
 <v t="ekr.20041119034357.50"><vh>@tk-color body_insertion_cursor_color = None</vh></v>
-<v t="ekr.20041119034357.51"><vh>@int body_text_font_size = None</vh></v>
-<v t="ekr.20041119034357.52"><vh>@tk-weight body_text_font_weight = normal</vh></v>
-<v t="ekr.20041119034357.53"><vh>@int additional_body_text_border = 0</vh></v>
 </v>
-<v t="ekr.20041119034357.54"><vh>@page outline pane options</vh></v>
-<v t="ekr.20041119034357.55"><vh>@page log pane options</vh></v>
-<v t="ekr.20041119034357.56"><vh>@page options for new windows (done)</vh>
+<v t="ekr.20041119034357.45"><vh>@font body text font</vh>
+<v t="ekr.20041119034357.47"><vh>@family body_text_font_family = Courier New</vh></v>
+<v t="ekr.20041119034357.51"><vh>@int body_text_font_size = None</vh></v>
+<v t="ekr.20041119034357.46"><vh>@slant body_text_font_slant = roman</vh></v>
+<v t="ekr.20041119034357.52"><vh>@weight body_text_font_weight = normal</vh></v>
+</v>
+</v>
+<v t="ekr.20041119051246"><vh>outline pane</vh>
+<v t="ekr.20041119034357.54"><vh>@page outline options</vh>
+<v t="ekr.20041119050749.3"><vh>@bool allow_clone_drags = False</vh></v>
+<v t="ekr.20041119050749.4"><vh>@bool enable_drag_messages = False</vh></v>
+<v t="ekr.20041119050749.5"><vh>@bool expanded_click_area = True</vh></v>
+<v t="ekr.20041119050749.17"><vh>@bool look_for_control_drag_on_mouse_down = True</vh></v>
+<v t="ekr.20041119050749.18"><vh>@bool outline_pane_scrolls_horizontally = False</vh></v>
+</v>
+<v t="ekr.20041119051246.1"><vh>@page outline colors</vh>
+<v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = white</vh></v>
+<v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = black</vh></v>
+<v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = gray80</vh></v>
+<v t="ekr.20041119050749.7"><vh>@color headline_text_selected_foreground_color = black</vh></v>
+<v t="ekr.20041119051901"><vh>@color headline_text_editing_background_color = white</vh></v>
+<v t="ekr.20041119050749.8"><vh>@color headline_text_editing_foreground_color = black</vh></v>
+<v t="ekr.20041119050749.9"><vh>@color headline_text_editing_selection_foreground_color = white</vh></v>
+<v t="ekr.20041119051901.1"><vh>@color headline_text_editing_selection_background_color = DarkBlue</vh></v>
+<v t="ekr.20041119050749.12"><vh>outline_pane_background_color = None</vh></v>
+</v>
+<v t="ekr.20041119051246.4"><vh>@font outline font</vh>
+<v t="ekr.20041119050749.13"><vh>@family headline_text_font_family = None</vh></v>
+<v t="ekr.20041119050749.14"><vh>@int headline_text_font_size = None</vh></v>
+<v t="ekr.20041119050749.16"><vh>@weight headline_text_font_weight = normal</vh></v>
+<v t="ekr.20041119050749.15"><vh>@slant headline_text_font_slant = roman</vh></v>
+</v>
+</v>
+<v t="ekr.20041119034357.55"><vh>@page log pane options</vh>
+<v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
+<v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
+<v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
+<v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
+<v t="ekr.20041119052015.3"><vh>@font log font</vh>
+<v t="ekr.20041119052015.4"><vh>@family log_text_font_family = None</vh></v>
+<v t="ekr.20041119052015.5"><vh>@int log_text_font_size = None</vh></v>
+<v t="ekr.20041119052015.6"><vh>@slant log_text_font_slant = roman</vh></v>
+<v t="ekr.20041119052015.7"><vh>@weight log_text_font_weight = normal</vh></v>
+</v>
+</v>
+<v t="ekr.20041119034357.56"><vh>@page options for new windows</vh>
 <v t="ekr.20041119034357.57"><vh>@float initial_horizontal_ratio = 0.3</vh></v>
 <v t="ekr.20041119034357.58"><vh>@float initial_horizontal_secondary_ratio = 0.5</vh></v>
 <v t="ekr.20041119034357.59"><vh>@string initial_splitter_orientation = v</vh></v>
@@ -91,13 +191,13 @@
 <v t="ekr.20041119034357.64"><vh>@int initial_window_top = 20</vh></v>
 <v t="ekr.20041119034357.65"><vh>@int initial_window_width = 800</vh></v>
 </v>
-<v t="ekr.20041119034357.66"><vh>@page splitter options (done)</vh>
-<v t="ekr.20041119034357.67"><vh>@tk-color split_bar_color = LightSteelBlue2</vh></v>
-<v t="ekr.20041119034357.68"><vh>@tk-relief split_bar_relief = groove</vh></v>
+<v t="ekr.20041119034357.66"><vh>@page splitter options</vh>
+<v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
+<v t="ekr.20041119034357.68"><vh>@relief split_bar_relief = groove</vh></v>
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.70"><vh>Syntax coloring (done)</vh>
+<v t="ekr.20041119034357.70"><vh>Syntax coloring</vh>
 <v t="ekr.20041119034357.71"><vh>@page syntax coloring options</vh>
 <v t="ekr.20041119034357.72"><vh>@bool color_cweb_doc_parts_with_latex=True</vh></v>
 <v t="ekr.20041119034357.73"><vh>@bool color_cweb_comments_with_latex=True</vh></v>
@@ -120,11 +220,21 @@
 <v t="ekr.20041119034357.89"><vh>@tk-color undefined_section_name_color=red</vh></v>
 </v>
 </v>
+<v t="ekr.20041119034357.21" a="TV"><vh>Keyboard shortcuts TO DO</vh>
+<v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
+<v t="ekr.20041119050749" a="E"><vh>@ignore  shortcuts ordered by shortcut value</vh>
+<v t="ekr.20041119034357.23"><vh>Alt and Shift-Alt</vh></v>
+<v t="ekr.20041119034357.24"><vh>Control</vh></v>
+<v t="ekr.20041119034357.25"><vh>Shift-Control</vh></v>
+<v t="ekr.20041119034357.26"><vh>F-keys and others</vh></v>
+<v t="ekr.20041119034357.27"><vh>None</vh></v>
+</v>
+</v>
 </v>
 </vnodes>
 <tnodes>
-<t tx="ekr.20041119034357.1"></t>
-<t tx="ekr.20041119034357.3">@nocolor</t>
+<t tx="ekr.20041119034357.1">@nocolor</t>
+<t tx="ekr.20041119034357.3"></t>
 <t tx="ekr.20041119034357.4"></t>
 <t tx="ekr.20041119034357.5">False: Leo writes leoSettings.leo files.</t>
 <t tx="ekr.20041119034357.6">True: use pscho module if it has been installed.</t>
@@ -133,231 +243,47 @@
 
 "Created by Leo at @date"
 
-# A comment to be iserted in derived files just after the initial @+leo line.
-# The comment will appear in an @comment sentinel.
-# Notes:
-# 1. Leo replaces @date with the date and time that the derived file was created.
-# 2. Use \n to separate lines.
-# 3. This must be empty for compatibility with older versions of Leo.
-# 4. Please use an empty comment when updating to CVS!</t>
-<t tx="ekr.20041119034357.9">stylesheet =
-# A string, s.  If present, .leo files will contain an xml-stylesheet line following
-# the opening xml line. 
-# For example:
-#   &lt;?xml ....?&gt; 
-#   &lt;?xml-stylesheet s?&gt;
-# Note 1: The string s should contain any needed XML escapes.
-#       Leo simply copies this line as given.
-# Note 2: Please set this field empty when uploading to CVS.
-# Note 3: This field must be empty for compatibility with older versions of Leo.</t>
-<t tx="ekr.20041119034357.10">redirect_execute_script_output_to_log_pane = 0
-# 0: Print sends its output to stdout (console) when doing Execute Script command.
-# 1: Print redirected to Leo's log pane when doing Execute Script command.
+A comment to be iserted in derived files just after the initial @+leo line.
+The comment will appear in an @comment sentinel.
+Notes:
+1. Leo replaces @date with the date and time that the derived file was created.
+2. Use \n to separate lines.
+3. This must be empty for compatibility with older versions of Leo.
+4. Please use an empty comment when updating to CVS!</t>
+<t tx="ekr.20041119034357.9">A string, s.  If present, .leo files will contain an xml-stylesheet line following
+the opening xml line. 
+For example:
+  &lt;?xml ....?&gt; 
+  &lt;?xml-stylesheet s?&gt;
+Note 1: The string s should contain any needed XML escapes.
+      Leo simply copies this line as given.
+Note 2: Please set this field empty when uploading to CVS.
+Note 3: This field must be empty for compatibility with older versions of Leo.</t>
+<t tx="ekr.20041119034357.10"></t>
+<t tx="ekr.20041119034357.11"></t>
+<t tx="ekr.20041119034357.12"></t>
+<t tx="ekr.20041119034357.13">True: Leo loads plugins on startup.
 
-remove_sentinels_extension = .txt
-# The string to be appended to file names resulting from the Remove Sentinels command.
-# If the value starts with . the extension is appended to the original file name.
-# Otherwise, the extension is appended before the file extension.
-# Example 1:
-#   File name x.y
-#   remove_sentinels_extension = _ns
-#   Result: x_ns.y
-# Example 2:
-#   File name x.y
-#   remove_sentinels_extension = .txt
-#   Result: x.y.txt
-
-save_clears_undo_buffer = 0
-# 1: Save command clears undo buffer.
-# 0: Undo buffer persists across saves.</t>
-<t tx="ekr.20041119034357.11">create_nonexistent_directories = 0
-# 1: Leo attempts to create directories if they do not exist.
-# 0: Leo never attempts to create directories
-# This option applies to directories specified in filenames in
-# @file, @rawfile, @root and @silentfile trees, and to filenames
-# speicied in the @path directory.
-
-relative_path_base_directory = .
-# The directory to be used as a prefix for &lt;filename&gt; in
-# @path &lt;filename&gt; and @file &lt;filename&gt; and @root &lt;filename&gt;
-# when &lt;filename&gt; is a relative path.
-#
-# Valid values for this option:
-#   "!" means relative to the location leo.py (the default).
-#   "." means relative to the location of the .leo file in the top window.
-#   An absolute path (in platform-dependent format).
-#
-# Relative paths are not allowed:
-#   Relative paths would be dangerous because their meaning
-#   would depend on the changing value of the current working directory.
+Warning: Naive or hostile hooks may execute HOSTILE CODE contained in .leo files. See further warnings in LeoDocs.leo.
 </t>
-<t tx="ekr.20041119034357.12">output_newline = nl
-#
-# nl or lf: The default: all lines end with "\n"
-# cr:       All lines end with "\r"
-# crlf:     All lines end with "\r\n"
-# platform: Lines end in platform-specific way, i.e.,
-#   Leo opens output files in "w" mode rather than "wb" mode and writes '\n'
-#
-# Please specify nl when uploading files to Leo's CVS site.
+<t tx="ekr.20041119034357.14">This option affects how Leo treats body text in @root trees.
 
-trailing_body_newlines = one
-# The number of trailing newlines Leo retains at the end of each body text.
-#
-# asis: Leo retains the number of newlines contained in each body text.
-#       Note: Leo sometimes has problems determining which ending newlines are "real".
-# zero: Leo removes all trailing whitespace from body text.
-# one:  Leo ends each non-empty body text with exactly one trailing newline.
+True:    Body text in @root trees start in doc mode.
 
-use_gnx = 1
-# TO BE REMOVED
-# 1:    tnode indices in .leo files have the form id.timestamp.n (n optional)
-#       Strongly recommended when using cvs.
-# 0:    tnode indices in .leo files are integers.
-#       For compatibility with Leo 3.x file format.
+This is the way @root trees always worked prior to version 3.10.
 
-write_old_format_derived_files = 0
-# TO BE REMOVED
-# 1: Write all derived files using pre-4.0 format.
-# 0: Write all derived files using 4.0 format.
-# Please write 4.0 derived files when uploading code to cvs.
-# The use of pre-4.0 derived files is deprecated.
+False:    Body text in @root trees start in code mode.
 
-write_strips_blank_lines = 1
-# 1:    Leo strips blanks and tabs from otherwise blank lines.
-# 0:    Leo retains whitespace even in otherwise blank lines.</t>
-<t tx="ekr.20041119034357.13">use_plugins = 0
-# 1:    Leo enables plugins.
-#       Warning: Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
-#       See further warnings in LeoDocs.leo.
-# 0:    Leo disables all plugins.</t>
-<t tx="ekr.20041119034357.14">at_root_bodies_start_in_doc_mode = 1
-# 1:    Body text in @root trees start in doc mode.
-#       (This is the way @root trees always worked prior to version 3.10.)
-# 0:    Body text in @root trees start in code mode.
-#      (This way makes @root trees more compatible with @file trees.)</t>
-<t tx="ekr.20041119034357.15">config_encoding = utf-8
-# The encoding for leoConfig.txt:
-# Default is utf-8
-# iso-8859-1 would be a popular alternative.
+This way makes @root trees more compatible with @file trees.</t>
+<t tx="ekr.20041119034357.15"></t>
+<t tx="ekr.20041119034357.16"></t>
+<t tx="ekr.20041119034357.17"></t>
+<t tx="ekr.20041119034357.18">Limit directory searches to files with the given file extension.
 
-default_derived_file_encoding = UTF-8
-# The encoding used for derived files if no @encoding directive is in effect.
-# This setting is also used to encode files created by the Tangle commands.
-# Default is UTF-8 (case not important).
-
-new_leo_file_encoding = UTF-8
-# The encoding specified in the following line of new .leo files:
-#   &lt;?xml version="1.0" encoding="UTF-8"&gt;
-# Default is UTF-8 (upper case for compatibility for old versions of Leo).
-# iso-8859-1 would be a popular alternative.
-# Important:
-#   Once a .leo file is created the &lt;?xml..."&gt; line can only be changed by hand.
-#   Changing the &lt;?xml..."&gt; line by hand may cause unicode errors the next time the .leo file is loaded,
-#   So you should change the &lt;?xml..."&gt; line by hand only when first creating a .leo file.
-
-tk_encoding =
-# The encoding that Tk text widgets are assumed for non-ascii character strings.
-# You would typically use this setting only in an emergency.
-# Leo assumes that Tk text widgets return:
-# 1. The value specified by the tk_encoding parameter, if it exists.
-# 2. locale.getdefaultlocale()[1] if it is exists.
-# 3. sys.getdefaultencoding()</t>
-<t tx="ekr.20041119034357.16">These correspond to the keyword parameters of the leoCompare constructor.
-Exception: there are no keywords for compare file names in the constructor.</t>
-<t tx="ekr.20041119034357.17">compare_file_1 =
-# Path to the first file or directory to be compared.
-# Directory compares ignore a filename part of the path, if present.
-# E.g., c:/directory1/spam.py is valid for directory compares.
-
-compare_file_2 =
-# Path to the second file or directory to be compared.
-# Directory compares ignore a filename part of the path, if present.
-# E.g., c:/directory2/spam.py is valid for directory compares
-
-output_file =
-# Path to the output file.
-# Leo will silently write to this file, regardless of whether it already exists.
-# Leo will write to the log pane if this path is empty or invalid.
-
-append_output_to_output_file = 0
-# 0: Replace output file with results of compare.
-# 1: Append output to output file.
-
-</t>
-<t tx="ekr.20041119034357.18">These options has no effect when comparing files.
-
-limit_directory_search_extension = .py
-# Limit directory searches to files with the given file extension.
-# Examples:
-#  None Compare all files when comparing directories.
-#  .py   Compare .py files when comparing directories.</t>
-<t tx="ekr.20041119034357.19"># These options have no effect when comparing directories.
-
-ignore_blank_lines = 1
-# 1: Ignore blanks lines when comparing files.
-
-ignore_first_line_of_file_1 = 0
-# 1: Ignore the first line of compare_file_1 when comparing files.
-
-ignore_first_line_of_file_2 = 0
-# 1: Ignore the first line of compare_file_2 when comparing files.
-
-ignore_interior_whitespace = 0
-# 1: Ignore whitespace after the leading whitespace of a line when comparing files.
-
-ignore_leading_whitespace = 0
-# 1: Ignore leading whitespace of each line when comparing files.
-# Not recommended when comparing .py files.
-
-ignore_sentinel_lines = 0
-# 1: Ignore sentinel lines when comparing files.
-# Leo sets sentinel comment delimiters from the first line of each file.
-# This option has no effect if the first line is not a @+leo line.
-
-# The following options affecting how Leo shows the results of file compares...
-# Leo gathers statistics regardless of these options.
-
-limit_count = 9
-# 0: Show lines regardless of the number of mismatches.
-# n: Stop showing lines after n mismatches.
-
-make_whitespace_visible = 0
-# 1: Show blanks as [ ] and tabs as [t]
-
-print_both_lines_for_matches = 0
-# 0: Print only the line of compare_file_1 when showing matching lines.
-# 1: Print lines of both files when showing matching lines.
-
-print_matching_lines = 0
-# 1: Print lines that match using the print_both_lines_for_matches option.
-
-print_mismatching_lines = 1
-# 1: Print lines that do not compare equal to each other.
-
-print_trailing_lines = 1
-# 1: Print lines all lines in one file after an end-of-file is seen on the other file.</t>
-<t tx="ekr.20041119034357.20">change_string = None
-# The change string (without the quotes unless quotes are part of the string).
-# N.B. Leo requires utf-8 encoding for any non-ascii characters.
-
-find_string = None
-# The find string (without the quotes unless quotes are part of the string).
-# N.B. Leo requires utf-8 encoding for any non-ascii characters.
-
-# Checkboxes in the Find/Change panel....
-batch = 0
-ignore_case = 0
-mark_changes = 0
-mark_finds = 0
-pattern_match = 0
-reverse = 0
-search_body = 1
-search_headline = 0
-suboutline_only = 0
-whole_word = 1
-wrap = 0
-node_only = 0</t>
+None  Compares all files when comparing directories.
+.py   Compares only .py files when comparing directories.</t>
+<t tx="ekr.20041119034357.19">These options have no effect when comparing directories.</t>
+<t tx="ekr.20041119034357.20"></t>
 <t tx="ekr.20041119034357.21">@nocolor
 
 Keyboard shortcuts for menu commands.
@@ -682,12 +608,11 @@ False: use local time.
 False: auto-indent increases indentation by one tab for Python only.</t>
 <t tx="ekr.20041119034357.45"></t>
 <t tx="ekr.20041119034357.46">The Tk -slant setting: roman or italic.  Default is roman.</t>
-<t tx="ekr.20041119034357.47">
-# Font family for body text.
-# Default is default font for Tk.Text widgets.
-# Invalid font names are translated to a font in a system-dependent way.
+<t tx="ekr.20041119034357.47">Font family for body text.
 
-</t>
+Default is default font for Tk.Text widgets.
+
+Tk translates invalid font names to another font in a system-dependent way.</t>
 <t tx="ekr.20041119034357.48">Foreground colors of body text.</t>
 <t tx="ekr.20041119034357.49">Background color of body text.</t>
 <t tx="ekr.20041119034357.50">Color of insertion cursor
@@ -698,105 +623,8 @@ False: auto-indent increases indentation by one tab for Python only.</t>
 Default is 12 for Linux, 9 for Windows.</t>
 <t tx="ekr.20041119034357.52">The Tk -weight setting: normal or bold.  Default is normal.</t>
 <t tx="ekr.20041119034357.53">Additional border in body text pane, in pixels.</t>
-<t tx="ekr.20041119034357.54">allow_clone_drags = 0
-# 1: Allows control-dragging to create clones.
-# 0: All drags move nodes.
-# See also: look_for_control_drag_on_mouse_down
-# Setting this setting to 0 allows Leo to be used on Aqua.
-
-enable_drag_messages = 0
-# 1: Tell whether drags will move nodes or clone nodes.
-# 0: Don't issue such messages.
-
-expanded_click_area = 1
-# 1: Click near a node expands or contracts the node.
-# 0: Only clicks in a node's plus/minus box expands or contracts the node.
-
-headline_text_unselected_foreground_color = black
-headline_text_unselected_background_color = white
-# Foreground and background colors of unselected headline text.
-# Both must be specified for either to take effect.
-
-headline_text_selected_foreground_color = black
-headline_text_selected_background_color = gray80
-# Foreground and background colors of selected headline text that is not being edited.
-# Both must be specified for either to take effect.
-
-headline_text_editing_foreground_color = black
-headline_text_editing_background_color = white
-# Foreground and background colors of unselected headline text in a headline that is being edited.
-# Both must be specified for either to take effect.
-
-headline_text_editing_selection_foreground_color = white
-headline_text_editing_selection_background_color = DarkBlue
-# Foreground and background colors of selected text headline text in a headline that is being edited.
-# Both must be specified for either to take effect.
-
-headline_time_format_string = %m/%d
-# The format string used when creating the Time/Date string for the Insert Time/Date command.
-# See the Python documentation for time.strftime for full details.
-# Examples:
-# 1/30
-#   %m/%d
-# 1/30/03 8:31:02
-#   %m/%d/%y %H:%M:%S
-# Thu, 30 Jan 2003 16:57:12
-# %a, %d %b %Y %H:%M:%S
-
-headline_gmt_time = 0
-# 1: use gmt time
-# 0: use local time.
-
-outline_pane_background_color =
-# Background color of outline pane itself.
-
-headline_text_font_family =
-# Font family for headline text.
-# Default is default font for Tk.Text widgets.
-# Invalid font names are translated to a font in a system-dependent way.
-
-headline_text_font_size = None
-# Size of headline text. Must be an integer.
-# Default is 12 for Linux, 9 for Windows.
-
-headline_text_font_slant = roman
-# The Tk -slant setting: roman or italic. Default is roman.
-
-headline_text_font_weight = normal
-# The Tk -weight setting: normal or bold.  Default is normal.
-
-look_for_control_drag_on_mouse_down = 1
-# This option control the interpretation of the control key when dragging nodes in the outline pane.
-# 1: A drag is a control-drag if the control key is down at the start of the drag.
-# 0: A drag is a control-drag if the control key is down at the end of the drag.
-
-outline_pane_scrolls_horizontally = 0
-# 0/1: 1: Use horizontal scrollbar in outline pane.</t>
-<t tx="ekr.20041119034357.55">log_error_color = red
-# Color for error messages written to the log window.
-# Must be a valid Tk color name.
-
-log_pane_wraps = 0
-# 0/1: Wrap body text if 1.
-
-log_text_foreground_color =
-log_text_background_color =
-# Foreground and background colors of log text.
-
-log_text_font_family =
-# Font family for text in the log pane.
-# Default is default font for Tk.Text widgets.
-# Invalid font names are translated to a font in a system-dependent way.
-
-log_text_font_size = None
-# Size of text in the log pane. Must be an integer.
-# Default is 12 for Linux, 8 otherwise.
-
-log_text_font_slant = roman
-# The Tk -slant setting: roman or italic. Default is roman.
-
-log_text_font_weight = normal
-# The Tk -weight setting: normal or bold.  Default is normal.</t>
+<t tx="ekr.20041119034357.54"></t>
+<t tx="ekr.20041119034357.55"></t>
 <t tx="ekr.20041119034357.56">These options apply only to windows opened with the New command.</t>
 <t tx="ekr.20041119034357.57">The ratio of tree pane size to body pane size when splitting primary panes horizontally.
 
@@ -883,9 +711,7 @@ For example, the color of "if", "try" and "except" in Python.</t>
 
 </t>
 <t tx="ekr.20041119034357.89">The color of name in &lt;&lt; name &gt;&gt; when name is undefined.</t>
-<t tx="ekr.20041119035137">@nocolor
-
-This is Leo's main settings file.  It specifies all the settings that Leo supports.
+<t tx="ekr.20041119035137">This is Leo's main settings file.  It specifies all the settings that Leo supports.
 
 Headlines that start with @setting form the root of a tree of settings nodes.
 
@@ -896,9 +722,11 @@ Headlines
 
 The headlines of basic settings nodes have the form: @type-name setting-name = value
 
-type-name is one of: @bool, @color, @directory, @font, @int, @shortcut, @string.
+type-name is one of: @bool, @color, @directory, @encoding, @font, @int, @shortcut, @string.
 
 type-name may also be a user-defined type defined by @type nodes.
+
+value is a type-specific value.  None is a valid string or type derived from string.
 
 Body text
 
@@ -909,5 +737,287 @@ Body text of basic settings nodes contains comments to be displayed in the setti
 <t tx="ekr.20041119035931"></t>
 <t tx="ekr.20041119035931.1"></t>
 <t tx="ekr.20041119035931.2"></t>
+<t tx="ekr.20041119041019">False: Print sends its output to stdout (console) when doing Execute Script command.
+True:  Print redirected to Leo's log pane when doing Execute Script command.
+</t>
+<t tx="ekr.20041119041019.1">
+The string to be appended to file names resulting from the Remove Sentinels command.
+If the value starts with . the extension is appended to the original file name.
+Otherwise, the extension is appended before the file extension.
+Example 1:
+  File name x.y
+  remove_sentinels_extension = _ns
+  Result: x_ns.y
+Example 2:
+  File name x.y
+  remove_sentinels_extension = .txt
+  Result: x.y.txt
+
+</t>
+<t tx="ekr.20041119041019.2">True:  The Save command clears undo buffer.
+False: The undo buffer persists across saves.</t>
+<t tx="ekr.20041119041304">This option applies to directories specified in filenames in all kinds of @file trees, and to filenames
+specified in the @path directive.
+
+True:  Leo attempts to create directories if they do not exist.
+False: Leo never attempts to create directories.</t>
+<t tx="ekr.20041119041304.1">This option specifies the directory to be used as a prefix for &lt;filename&gt; in
+
+@path &lt;filename&gt;
+@file &lt;filename&gt;
+@root &lt;filename&gt;
+
+when &lt;filename&gt; is a relative path.
+
+Valid values for this option:
+
+'!' means relative to the location leo.py (recommended).
+'.' means relative to the location of the .leo file in the top window.
+
+An absolute path (in platform-dependent format).
+
+Relative paths are not allowed because their meaning would depend on the changing value of the current working directory.</t>
+<t tx="ekr.20041119041747">nl or lf: (recommended) All lines end with "\n"
+cr:       All lines end with "\r"
+crlf:     All lines end with "\r\n"
+platform: Lines end in platform-specific way.
+
+With platform Leo opens output files in "w" mode rather than "wb" mode and writes '\n'
+
+Please specify nl when uploading files to Leo's CVS site.</t>
+<t tx="ekr.20041119041747.1">The number of trailing newlines Leo retains at the end of each body text.
+
+asis: Leo retains the number of newlines contained in each body text.
+      
+    Warning: Leo sometimes has problems determining which ending newlines are "real".
+
+zero: Leo removes all trailing whitespace from body text.
+
+one:  Leo ends each non-empty body text with exactly one trailing newline.</t>
+<t tx="ekr.20041119041747.4">
+1:    Leo strips blanks and tabs from otherwise blank lines.
+0:    Leo retains whitespace even in otherwise blank lines.</t>
+<t tx="ekr.20041119042929"></t>
+<t tx="ekr.20041119042929.1"></t>
+<t tx="ekr.20041119042929.2">Same as @directory.</t>
+<t tx="ekr.20041119042929.3"></t>
+<t tx="ekr.20041119042929.4"></t>
+<t tx="ekr.20041119042929.5"></t>
+<t tx="ekr.20041119042929.6"></t>
+<t tx="ekr.20041119042929.7"></t>
+<t tx="ekr.20041119042929.9">
+The encoding used for derived files if no @encoding directive is in effect.
+This setting is also used to encode files created by the Tangle commands.
+Default is UTF-8 (case not important).
+
+</t>
+<t tx="ekr.20041119042929.10">The encoding specified in the following line of new .leo files:
+
+&lt;?xml version="1.0" encoding="UTF-8"&gt;
+
+The recommended value is UTF-8 (upper case for compatibility for old versions of Leo).
+
+iso-8859-1 would be a popular alternative.
+
+Important: Once a .leo file is created the &lt;?xml..."&gt; line can only be changed by hand.  Alas, changing the &lt;?xml..."&gt; line by hand may cause unicode errors the next time the .leo file is loaded.  Therefore, you should change the &lt;?xml..."&gt; line by hand only when first creating a .leo file.</t>
+<t tx="ekr.20041119042929.11">The encoding that Tk text widgets are assumed for non-ascii character strings.
+
+You would typically use this setting only in an emergency.
+
+Leo assumes that Tk text widgets return:
+
+1. The value specified by the tk_encoding parameter, if it exists.
+2. locale.getdefaultlocale()[1] if it is exists.
+3. sys.getdefaultencoding()</t>
+<t tx="ekr.20041119043713"></t>
+<t tx="ekr.20041119043902">The path to the first file or directory to be compared.
+
+Directory compares ignore a filename part of the path, if present.
+
+E.g., c:/directory2/spam.py is valid for directory compares</t>
+<t tx="ekr.20041119043902.1">The path to the second file or directory to be compared.
+
+Directory compares ignore a filename part of the path, if present.
+
+E.g., c:/directory2/spam.py is valid for directory compares</t>
+<t tx="ekr.20041119043902.2">The path to the output file.
+
+Leo will silently write to this file, regardless of whether it already exists, creating the file if needed.
+
+Leo will write to the log pane if this path is empty or invalid.</t>
+<t tx="ekr.20041119043902.3">True:  Append output to output file.
+
+False: Replace output file with results of compare.</t>
+<t tx="ekr.20041119043902.4">True: Ignore blanks lines when comparing files.
+
+</t>
+<t tx="ekr.20041119043902.5">True: Ignore the first line of compare_file_1 when comparing files.
+
+</t>
+<t tx="ekr.20041119043902.6">True: Ignore the first line of compare_file_2 when comparing files.</t>
+<t tx="ekr.20041119043902.7">True: Ignore whitespace after the leading whitespace of a line when comparing files.</t>
+<t tx="ekr.20041119043902.8">True:  Ignore leading whitespace of each line when comparing files.
+
+False: The recommended setting when comparing Python source files.
+
+</t>
+<t tx="ekr.20041119043902.9">True: Ignore sentinel lines when comparing files.
+
+Leo sets sentinel comment delimiters from the first line of each file.  This option has no effect if the first line is not a @+leo line.</t>
+<t tx="ekr.20041119043902.10">0: Show lines regardless of the number of mismatches.
+
+n: Stop showing lines after n mismatches.
+
+</t>
+<t tx="ekr.20041119043902.11">
+1: Show blanks as [ ] and tabs as [t]
+
+</t>
+<t tx="ekr.20041119043902.12">True:  Print lines of both files when showing matching lines.
+
+False: Print only the line of compare_file_1 when showing matching lines.
+
+</t>
+<t tx="ekr.20041119043902.13">True: Print lines that match using the print_both_lines_for_matches option.
+
+</t>
+<t tx="ekr.20041119043902.14">True: Print lines that do not compare equal to each other.
+
+</t>
+<t tx="ekr.20041119043902.15">True: Print lines all lines in one file after an end-of-file is seen on the other file.</t>
+<t tx="ekr.20041119044139"></t>
+<t tx="ekr.20041119050105">These options affecting how Leo shows the results of file compares.
+
+Leo gathers statistics regardless of these options.</t>
+<t tx="ekr.20041119050105.1">The change string (without the quotes unless quotes are part of the string).
+
+N.B. Leo requires utf-8 encoding for any non-ascii characters.</t>
+<t tx="ekr.20041119050105.2">The find string (without the quotes unless quotes are part of the string).
+
+N.B. Leo requires utf-8 encoding for any non-ascii characters.
+
+</t>
+<t tx="ekr.20041119050105.3">These settings determine whether the corresponding checkbox is checked by default.</t>
+<t tx="ekr.20041119050105.4">Despite its name, this setting affects the default value of the Show Context checkbox.</t>
+<t tx="ekr.20041119050105.5"></t>
+<t tx="ekr.20041119050105.6"></t>
+<t tx="ekr.20041119050105.7"></t>
+<t tx="ekr.20041119050105.8"></t>
+<t tx="ekr.20041119050105.9"></t>
+<t tx="ekr.20041119050105.10"></t>
+<t tx="ekr.20041119050105.11"></t>
+<t tx="ekr.20041119050105.12"></t>
+<t tx="ekr.20041119050105.13">Only one of these settings can be True.</t>
+<t tx="ekr.20041119050105.14"></t>
+<t tx="ekr.20041119050105.15"></t>
+<t tx="ekr.20041119050105.16"></t>
+<t tx="ekr.20041119050749"></t>
+<t tx="ekr.20041119050749.1"></t>
+<t tx="ekr.20041119050749.2"></t>
+<t tx="ekr.20041119050749.3">
+1: Allows control-dragging to create clones.
+0: All drags move nodes.
+See also: look_for_control_drag_on_mouse_down
+Setting this setting to 0 allows Leo to be used on Aqua.
+
+</t>
+<t tx="ekr.20041119050749.4">
+1: Tell whether drags will move nodes or clone nodes.
+0: Don't issue such messages.
+
+</t>
+<t tx="ekr.20041119050749.5">
+1: Click near a node expands or contracts the node.
+0: Only clicks in a node's plus/minus box expands or contracts the node.
+
+</t>
+<t tx="ekr.20041119050749.6">Foreground color of unselected headline text.
+
+Background color must also be specified for either setting to take effect.</t>
+<t tx="ekr.20041119050749.7">Foreground color of selected headline text that is not being edited.
+
+Background color must also be specified for either setting to take effect.</t>
+<t tx="ekr.20041119050749.8">Foreground color of unselected headline text in a headline that is being edited.
+
+Background color must also be specified for either setting to take effect.</t>
+<t tx="ekr.20041119050749.9">Foreground color of selected text headline text in a headline that is being edited.
+
+Background must also be specified for either setting to take effect.</t>
+<t tx="ekr.20041119050749.10">The format string used when creating the Time/Date string for the Insert Time/Date command.
+
+See the Python documentation for time.strftime for full details.
+
+Examples:
+1/30
+%m/%d
+
+1/30/03 8:31:02
+%m/%d/%y %H:%M:%S
+
+Thu, 30 Jan 2003 16:57:12
+%a, %d %b %Y %H:%M:%S
+</t>
+<t tx="ekr.20041119050749.11">True:  use gmt time when inserting time into headlines.
+
+False: use local time.</t>
+<t tx="ekr.20041119050749.12">Background color of outline pane itself.</t>
+<t tx="ekr.20041119050749.13">Font family for headline text.
+
+Default is default font for Tk.Text widgets.
+
+Tk translates invalid font names to another font in a system-dependent way.</t>
+<t tx="ekr.20041119050749.14">Size of headline text.
+
+Default is 12 for Linux, 9 for Windows.</t>
+<t tx="ekr.20041119050749.15">The Tk -slant setting: roman or italic.
+
+</t>
+<t tx="ekr.20041119050749.16">The Tk -weight setting: normal or bold.
+
+</t>
+<t tx="ekr.20041119050749.17">This option controls the interpretation of the control key when dragging nodes in the outline pane.
+
+True: A drag is a control-drag if the control key is down at the start of the drag.
+
+False: A drag is a control-drag if the control key is down at the end of the drag.</t>
+<t tx="ekr.20041119050749.18">True: Use horizontal scrollbar in outline pane.</t>
+<t tx="ekr.20041119051246"></t>
+<t tx="ekr.20041119051246.1"></t>
+<t tx="ekr.20041119051246.2">Background color of unselected headline text.
+
+Foreground color must also be specified for either setting to take effect.</t>
+<t tx="ekr.20041119051246.3">Background color of selected headline text that is not being edited.
+
+Foreground color must also be specified for either setting to take effect.</t>
+<t tx="ekr.20041119051246.4"></t>
+<t tx="ekr.20041119051901">Background color of unselected headline text in a headline that is being edited.
+
+Foreground color must also be specified for either setting to take effect.</t>
+<t tx="ekr.20041119051901.1">Background color of selected text headline text in a headline that is being edited.
+
+Foreground must also be specified for either setting to take effect.</t>
+<t tx="ekr.20041119052015">Color for error messages written to the log window.</t>
+<t tx="ekr.20041119052015.1">True: Wrap body text.
+
+</t>
+<t tx="ekr.20041119052015.2">Foreground color of log text.
+
+</t>
+<t tx="ekr.20041119052015.3"></t>
+<t tx="ekr.20041119052015.4">Font family for text in the log pane.
+
+Default is default font for Tk.Text widgets.
+
+Tk translates invalid font names to another font in a system-dependent way.</t>
+<t tx="ekr.20041119052015.5">Size of text in the log pane.
+
+Default is 12 for Linux, 8 otherwise.
+
+</t>
+<t tx="ekr.20041119052015.6">The Tk -slant setting: roman or italic.
+
+</t>
+<t tx="ekr.20041119052015.7">The Tk -weight setting: normal or bold.</t>
+<t tx="ekr.20041119053445">Background color of log text.</t>
 </tnodes>
 </leo_file>
