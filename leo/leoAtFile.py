@@ -621,7 +621,10 @@ class atFile:
 			self.startSentinelComment = delim2
 			self.endSentinelComment = delim3
 		else: # Emergency!
-			assert(0)
+			# assert(0)
+			es("Unknown language: using Python comment delimiters")
+			es("c.target_language:"+`c.target_language`)
+			es("delim1,delim2,delim3:" + `delim`+":"+`delim2`+":"+`delim3`)
 			self.startSentinelComment = "#" # This should never happen!
 			self.endSentinelComment = ""
 		#@-body
