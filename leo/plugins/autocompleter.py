@@ -1,6 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20041017043622:@thin autocompleter.py
-"""autocompletion and calltips plugin.  Special characters:
+"""
+autocompletion and calltips plugin.  Special characters:
 
 . summons the autocompletion.
 ( summons the calltips
@@ -13,7 +14,7 @@ You many enable or disable features in autocomplete.ini.
 """
 
 #@@language python 
-#@@tabwidth -4
+#@@tabwidth-4
 
 #@<<imports>>
 #@+node:ekr.20041017043622.26:<< imports >>
@@ -48,20 +49,23 @@ except ImportError:
 #@nonl
 #@-node:ekr.20041017043622.26:<< imports >>
 #@nl
-__version__ = ".500"
+__version__ = ".501"
 #@<<version history>>
 #@+node:ekr.20041017102904:<<version history>>
 #@+at
-# 
 # .425:
 #     -The initial scan thread is now a daemon thread.
 #     -Creates autocompleter box and Calltip box once.
 #     -Broke long functions apart.
 #     -'Esc'now closes autobox and calltip.
 # 
-# .500EKR:Made minor changes based on .425:
+# .500 EKR:
+#     - Made minor changes based on .425:
 #     -Improved docstring.
 #     -Converted to 4.2style.
+# .501 EKR:
+#     - Changed select method following patch by original author.
+#     - Added event.keysym=='Up' case to
 #@-at
 #@nonl
 #@-node:ekr.20041017102904:<<version history>>
@@ -116,9 +120,9 @@ okchars['_'] = '_'
 #@+others
 #@+node:ekr.20041017043622.3:watcher
 def watcher (event):
-
+    
     global lang 
-
+    
     if event.char in('.','('):
         c = g.top()
         body = c.frame.body.bodyCtrl 
@@ -129,18 +133,18 @@ def watcher (event):
 #@-node:ekr.20041017043622.3:watcher
 #@+node:ekr.20041017043622.4:scanText
 def scanText (txt):
+    
+    # This function guides what gets scanned.
 
-    #This function guides what gets scanned.
     if useauto:
         scanForAutoCompleter(txt)
-
     if usecall:
         scanForCallTip(txt)
 #@-node:ekr.20041017043622.4:scanText
 #@+node:ekr.20041017043622.5:scanForAutoCompleter
 def scanForAutoCompleter (txt):
 
-    #This function scans text for the autocompleter database
+    # This function scans text for the autocompleter database.
     t1 = txt.split('.')
     g =[]
     reduce(lambda a,b:makeAutocompletionList(a,b,g),t1)
@@ -205,11 +209,11 @@ def _reverseFindWhitespace (s):
 #@+node:ekr.20041017043622.10:initialScan
 def initialScan (tag,keywords):
     
-    c = keywords.get("c") or keywords.get("new_c")
+    c = keywords.get("c")or keywords.get("new_c")
     if haveseen.has_key(c):
-        return
+        return 
 
-    haveseen[c] = None
+    haveseen[c] = None 
 
     def scan ():
         pth = os.path.split(g.app.loadDir)
@@ -220,8 +224,7 @@ def initialScan (tag,keywords):
         readLanguageFiles(bankpath)
         readOutline(c)
     
-    #A Thread is used to do the initial scan so as not to interfere with initial operations
-    #by the user.            
+    # Use a thread to do the initial scan so as not to interfere with the user.            
     t = threading.Thread(target=scan)
     t.setDaemon(True)
     t.start()
@@ -292,7 +295,7 @@ def reducer (lis,pat):
 def unbind (canvas,body):
 
     canvas.on = False 
-    c = canvas
+    c = canvas 
 
     c.unbind("<Control_L>")
     c.unbind("<Control_R>")
@@ -308,13 +311,16 @@ def moveSelItem (event,c):
     if len(i)==0:
         return None 
     i = int(i[0])
+    # g.trace(event.keysym,i)
     try:
         if event.keysym=='Down':
             if c.sl.size()-1>c.sl.index(i):
-                i = i+1
-            else:
-                if i!=0:
-                    i = i-1
+                i += 1
+            elif i!=0:
+                i -1
+        elif event.keysym=='Up': # EKR.
+            if i > 0:
+                i -= 1
     finally:
         c.sl.select_clear(0,'end')
         c.sl.select_set(i)
@@ -329,7 +335,7 @@ def select (event,c,body):
         return None 
     if event.keysym=='Escape':
         c.delete(c.i)
-        c.on = False 
+        unbind(c,body)
         return None 
     if c.which and event.keysym in('parenright','Control_L','Control_R'):
         c.delete(c.i)
@@ -351,13 +357,14 @@ def select (event,c,body):
     c.sl.select_clear(0,'end')
     c.sl.select_set(i)
     c.sl.see(i)
+#@nonl
 #@-node:ekr.20041017043622.17:select
 #@+node:ekr.20041017043622.18:remove
 def remove (event,c,body,scrllistbx):
     
     #c in this def is not a commander but a Tk Canvas
     if event.keysym in("Alt_L","Alt_R"):
-        return None
+        return None 
 
     c.delete(c.i)
     a = scrllistbx.getvalue()
@@ -465,7 +472,7 @@ def getCtipLabel (c):
     ct = Tk.Label(c,background='lightyellow',
     foreground='black')
     clabels[c] = ct 
-    return ct 
+    return ct  
 #@nonl
 #@-node:ekr.20041017043622.22:getCtipLabel
 #@+node:ekr.20041017043622.23:calculatePlace
@@ -517,15 +524,15 @@ def newCreateControl (self,frame,parentFrame):
     btags = body.bindtags()
     btags =(ctags[0],btags[0],btags[1],btags[2],btags[3])
     body.bindtags(btags)
-    return body 
+    return body  
 #@nonl
 #@-node:ekr.20041017043622.25:newCreateControl
 #@+node:ekr.20041017105122.2:onOpenWindow
-def onOpenWindow():
+def onOpenWindow ():
     
-    c = keywords.get("c") or keywords.get("new_c")
+    c = keywords.get("c")or keywords.get("new_c")
     if haveseen.has_key(c):
-        return
+        return 
         
     autocompleter = autocomplet(c)
 #@nonl
