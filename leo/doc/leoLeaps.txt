@@ -1,0 +1,92 @@
+#@+leo-ver=4-thin
+#@+node:EKR.20040524105100:@file-thin leoLeaps.txt
+#@@nocolor
+#@+all
+#@+node:edream.110203163054.1654:100's administering Leaps (and LeoCon)
+100 Series: Leaps that apply to the Leap process itself. 
+
+Leap 101: How to administer Leaps. 
+
+- Assigned to nobody. 
+- No formality needed yet. 
+#@nonl
+#@+node:edream.110203163054.1655:Leap 102: LeoCon 1
+
+
+- Assigned to nobody. 
+- Create, plan, promote & administer a gathering of Leo enthusiasts. 
+- Part of the planning would be to create a date and setting for the conferences. 
+#@nonl
+#@-node:edream.110203163054.1655:Leap 102: LeoCon 1
+#@-node:edream.110203163054.1654:100's administering Leaps (and LeoCon)
+#@+node:edream.110203163054.1656:200's single-user Leo
+#@+node:edream.110203163054.1657:Leap 201. (abandoned) Prototype link nodes and vxnodes
+- Project abandoned.  Prototypes largely complete.
+- Assigned to EKR.
+- Remove tnodes as a fundamental part of Leo. 
+- Represent clones as link nodes and target nodes. 
+- Create vxnodes as needed. (Some new thoughts about this are coming). 
+
+#@-node:edream.110203163054.1657:Leap 201. (abandoned) Prototype link nodes and vxnodes
+#@+node:edream.110203163054.1658:Leap 202. (abandoned) Create cvs-friendly file format for derived files
+- Project abandoned.
+
+- Assigned to EKR.
+- Sentinels are immutable, with mutable information following on separate lines. 
+- We could create such a file format without Leap 201. 
+- Leap 201, if implemented, will imply changes to this Leap. 
+
+#@-node:edream.110203163054.1658:Leap 202. (abandoned) Create cvs-friendly file format for derived files
+#@+node:edream.110203163054.1659:Leap 203. Use Python Mega Widgets
+- Assigned to EKR.
+- More flexible and more powerful than present hand-drawn code. 
+- Ideally, it would be a path to anygui. 
+- No firm commitment to this Leap: it depends on further study. 
+
+#@-node:edream.110203163054.1659:Leap 203. Use Python Mega Widgets
+#@-node:edream.110203163054.1656:200's single-user Leo
+#@+node:edream.110203163054.1661:300's LeoN and beyond
+#@+node:edream.110203163054.1662:Leap 301: Use central server
+Produce a plugin (with related design) that allows people to share all or part of .leo files via a
+central server. 
+
+- Assigned to nobody. 
+- This plugin need _not_ address itself to issues raised in Leap 302: it is a prototype for experimentation. The
+initial aim of this Leap would be to produce a starting point design that would be incorporated into this Leap
+for review. 
+
+#@-node:edream.110203163054.1662:Leap 301: Use central server
+#@+node:edream.110203163054.1663:Leap 302: Produce a plugin for a Resolve CVS Conflicts command
+- Assigned to nobody 
+- This plugin need _not_ address itself to issues raised in Leap 301: it is a prototype for experimentation. The
+initial aim of this Leap would be to produce a starting point design that would be incorporated into this Leap
+for review.
+#@nonl
+#@+node:edream.110203163054.1664:Comments by Josef
+Open Discussion
+
+ RE: Status report: ten breakthroughs
+2003-05-30 12:50  
+About merging / CVS etc: 
+
+Perhaps it helps to think about the big picture a bit, I mean about what do we really want / is practical. 
+
+CVS is a de-facto standard on the internet for collaboration, so being compatible is highly desirable. Unfortunately CVS has a series of shortcomings, particularly for Leo. 
+
+CVS merges on a line-by-line basis, so interdependencies of code are ignored (I think all other tools I know of do the same). Now, I believe this is ok for large sets of files, where mutiple changes to the same function or file are rare. Using CVS to merge only single Leo nodes (body text) would be rather silly though: Mostly these texts are short (a page or so) and one single function (or less). Multiple changes in such a codde snipped are likely to be interdependent, and I would rather like to look at the different texts rather than have them merged automatically. 
+
+On the other hand, I don't mind if the versioning or merging tool at hand allows me to update any nodes I did not touch myself. So rather than CVS-like merging, I would like to see which nodes are being affected by the change, then have it done automatically for thouse nodes I don't worry about, but by hand (or interactively) for thouse I changed myself too, or for thouse I worry about, because they are related to my own changes. 
+
+In other words, I would like to see a merge tool, that understands versions, can tell me which nodes in a Leo file have changed, remembers which changes I made myself, and gives me the choice, tree branch by tree branch, to automatically accept the changes, or screen them interactively. 
+
+I think Leo should have such a tool built-in. 
+
+- Josef
+#@nonl
+#@-node:edream.110203163054.1664:Comments by Josef
+#@-node:edream.110203163054.1663:Leap 302: Produce a plugin for a Resolve CVS Conflicts command
+#@-node:edream.110203163054.1661:300's LeoN and beyond
+#@-all
+#@nonl
+#@-node:EKR.20040524105100:@file-thin leoLeaps.txt
+#@-leo
