@@ -149,6 +149,8 @@ class baseFileCommands:
 		#@nonl
 		#@-node:<< reassign tnode indices and clear all clone links >>
 		#@nl
+		self.setAllJoinLinks(root=current) # 12/8/03
+		c.initAllCloneBits() # 12/8/03
 		c.selectVnode(current)
 		c.endUpdate()
 		return current
