@@ -8080,6 +8080,7 @@ if p == current:
 		gui.set_focus(c,self.canvas) # Essential for proper editing.
 else:
 	self.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
 	if p.v.t.insertSpot != None: # 9/1/02
 		c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
 		c.frame.bodyCtrl.see(p.v.t.insertSpot)
@@ -8106,6 +8107,7 @@ def OnBoxClick (self,p):
 
 	self.active = true
 	self.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
 	gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
 	self.redraw()
 #@nonl
@@ -8430,11 +8432,13 @@ def OnIconClick (self,p,event):
 			self.tagBindings.append((id,id4,"<B1-Motion>"),)
 			self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
 	tree.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
 	return "break" # disable expanded box handling.
 	
 def OnIconRightClick (self,p,event):
 
 	self.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
 	return "break" # disable expanded box handling.
 #@nonl
 #@-node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
@@ -15562,6 +15566,7 @@ def OnBoxClick (self,p):
 
 	self.active = true
 	self.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
 	gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
 	self.redraw()
 #@nonl
@@ -20131,6 +20136,7 @@ def write_Leo_file(self,fileName,outlineOnlyFlag):
 
 	c = self.c ; config = g.app.config
 
+	self.assignFileIndices()
 	if not outlineOnlyFlag:
 		<< write all @file nodes >>
 	<< return if the .leo file is read-only >>
@@ -25729,6 +25735,7 @@ def OnBoxClick (self,p):
 
 	self.active = true
 	self.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
 	gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
 	self.redraw()
 #@nonl
@@ -25878,11 +25885,13 @@ def OnIconClick (self,p,event):
 			self.tagBindings.append((id,id4,"<B1-Motion>"),)
 			self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
 	tree.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
 	return "break" # disable expanded box handling.
 	
 def OnIconRightClick (self,p,event):
 
 	self.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
 	return "break" # disable expanded box handling.
 #@nonl
 #@-node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
@@ -28395,6 +28404,7 @@ def write_Leo_file(self,fileName,outlineOnlyFlag):
 
 	c = self.c ; config = g.app.config
 
+	self.assignFileIndices()
 	if not outlineOnlyFlag:
 		<< write all @file nodes >>
 	<< return if the .leo file is read-only >>
@@ -31364,6 +31374,118 @@ def moveToParent (self):
 #@-node:ekr.20031218072017.937:p.moveToParent (pops stack when multiple parents)
 #@-node:EKR.20040502123721:Changed code
 #@-node:EKR.20040425130443:(Clone bug)
+#@+node:EKR.20040427074150:(Fixed problems with sboutline only option)
+#@+node:EKR.20040503071007:Notes
+#@@nocolor
+
+After a match, the find-next command searched only in the suboutline where the first match occured.
+To fix this, we call g.app.findFrame.handleUserClick in various Tk event handlers.
+This was a long-standing problem.
+
+The call to g.app.findFrame.handleUserClick(p) probably should be in a base class.  How to do this?
+#@nonl
+#@-node:EKR.20040503071007:Notes
+#@+node:EKR.20040503070514:handleUserClick
+def handleUserClick (self,p):
+	
+	"""Reset suboutline-only search when the user clicks a headline."""
+	
+	if self.c and self.c.suboutline_only_flag:
+		# g.trace(p)
+		self.onlyVnode = p
+#@nonl
+#@-node:EKR.20040503070514:handleUserClick
+#@+node:EKR.20040503072338.1:Event handlers
+#@+node:ekr.20031218072017.2339:OnBoxClick
+# Called on click in box and double-click in headline.
+
+def OnBoxClick (self,p):
+	
+	# g.trace(p)
+
+	# Note: "boxclick" hooks handled by vnode callback routine.
+	c = self.c ; gui = g.app.gui
+
+	if p.isExpanded(): p.contract()
+	else:              p.expand()
+
+	self.active = true
+	self.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
+	gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
+	self.redraw()
+#@nonl
+#@-node:ekr.20031218072017.2339:OnBoxClick
+#@+node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
+def OnIconClick (self,p,event):
+	
+	# g.trace(p)
+	
+	p = p.copy() # Make sure callbacks use the _present_ position.
+
+	tree = self ; canvas = tree.canvas
+	if event:
+		canvas_x = canvas.canvasx(event.x)
+		canvas_y = canvas.canvasy(event.y)
+		id = canvas.find_closest(canvas_x,canvas_y)
+		if id != None:
+			try: id = id[0]
+			except: pass
+			self.drag_p = p
+			self.drag_id = id
+			
+			# Create the bindings.
+			id4 = canvas.tag_bind(id,"<B1-Motion>", p.OnDrag)
+			id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", p.OnEndDrag)
+			
+			# Remember the bindings so deleteBindings can delete them.
+			self.tagBindings.append((id,id4,"<B1-Motion>"),)
+			self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
+	tree.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
+	return "break" # disable expanded box handling.
+	
+def OnIconRightClick (self,p,event):
+
+	self.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
+	return "break" # disable expanded box handling.
+#@nonl
+#@-node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
+#@+node:ekr.20031218072017.2337:OnActivate
+def OnActivate (self,p,event=None):
+
+	try:
+		c = self.c ; gui = g.app.gui
+		<< activate this window >>
+	except:
+		g.es_event_exception("activate tree")
+#@nonl
+#@+node:ekr.20031218072017.2338:<< activate this window >>
+current = c.currentPosition()
+
+if p == current:
+	if self.active:
+		self.editLabel(p)
+	else:
+		self.undimEditLabel()
+		gui.set_focus(c,self.canvas) # Essential for proper editing.
+else:
+	self.select(p)
+	g.app.findFrame.handleUserClick(p) # 4/3/04
+	if p.v.t.insertSpot != None: # 9/1/02
+		c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+		c.frame.bodyCtrl.see(p.v.t.insertSpot)
+	else:
+		c.frame.bodyCtrl.mark_set("insert","1.0")
+	gui.set_focus(c,c.frame.bodyCtrl)
+
+self.active = true
+#@nonl
+#@-node:ekr.20031218072017.2338:<< activate this window >>
+#@-node:ekr.20031218072017.2337:OnActivate
+#@-node:EKR.20040503072338.1:Event handlers
+#@-node:EKR.20040427074150:(Fixed problems with sboutline only option)
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
 #@nonl

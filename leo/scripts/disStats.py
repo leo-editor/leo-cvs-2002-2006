@@ -1,14 +1,13 @@
-#@+leo
-#@+node:0::@file ../scripts/disStats.py
-#@+body
+#@+leo-ver=4
+#@+node:EKR.20040502195213:@file-thin ../scripts/disStats.py
 # routines to gather static statistics about opcodes based on dis module.
+import leoGlobals as g
+from leoGlobals import true,false
 
 import compiler,dis,os,string,sys,types
 
-
 #@+others
-#@+node:1::go
-#@+body
+#@+node:EKR.20040502195213.1:go
 def go():
 	
 	dir = "c:/prog/leoCVS/leo/"
@@ -30,51 +29,51 @@ def go():
 			a = eval(m)
 			any(a,stats)
 		except:
-			import traceback
-			traceback.print_exc()
-			print "----- no matching class in", `m`
+			import traceback ; traceback.print_exc()
+			print "----- no matching class in", m
 			
-	print_stats(stats)
-#@-body
-#@-node:1::go
-#@+node:2::getFiles
-#@+body
+	g.print_stats(stats)
+#@nonl
+#@-node:EKR.20040502195213.1:go
+#@+node:EKR.20040502195213.2:getFiles
 def getFiles (dir):
+	
+	from leoGlobals import os_path_join,os_path_split,os_path_splitext
 
 	# Generate the list of modules.
 	allFiles = os.listdir(dir)
 	files = []
 	for f in allFiles:
-		head,tail = os.path.split(f)
-		root,ext = os.path.splitext(tail)
+		head,tail = g.os_path_split(f)
+		root,ext = g.os_path_splitext(tail)
 		if ext==".py":
-			files.append(os.path.join(dir,f))
+			files.append(g.os_path_join(dir,f))
 			
 	return files
-#@-body
-#@-node:2::getFiles
-#@+node:3::getModules
-#@+body
+#@nonl
+#@-node:EKR.20040502195213.2:getFiles
+#@+node:EKR.20040502195213.3:getModules
 def getModules (dir):
 	
 	"""Return the list of Python files in dir."""
+	
+	from leoGlobals import os_path_split,os_path_splitext
 	
 	files = []
 	
 	try:
 		allFiles = os.listdir(dir)
 		for f in allFiles:
-			head,tail = os.path.split(f)
-			fn,ext = os.path.splitext(tail)
+			head,tail = g.os_path_split(f)
+			fn,ext = g.os_path_splitext(tail)
 			if ext==".py":
 				files.append(fn)
 	except: pass
 			
 	return files
-#@-body
-#@-node:3::getModules
-#@+node:4::any
-#@+body
+#@nonl
+#@-node:EKR.20040502195213.3:getModules
+#@+node:EKR.20040502195213.4:any
 def any(x,stats,printName = 0):
 	# based on dis.dis()
 	"""Gathers statistics for classes, methods, functions, or code."""
@@ -104,10 +103,9 @@ def any(x,stats,printName = 0):
 		raise TypeError, \
 			  "don't know how to disassemble %s objects" % \
 			  type(x).__name__
-#@-body
-#@-node:4::any
-#@+node:5::code
-#@+body
+#@nonl
+#@-node:EKR.20040502195213.4:any
+#@+node:EKR.20040502195213.5:code
 def code (co, stats):
 	"""Gather static count statistics for a code object."""
 
@@ -121,10 +119,9 @@ def code (co, stats):
 		i = i+1
 		if op >= dis.HAVE_ARGUMENT:
 			i = i+2
-#@-body
-#@-node:5::code
-#@+node:6::print_stats
-#@+body
+#@nonl
+#@-node:EKR.20040502195213.5:code
+#@+node:EKR.20040502195213.6:print_stats
 def print_stats (stats):
 
 	stats2 = [] ; total = 0
@@ -136,11 +133,11 @@ def print_stats (stats):
 	stats2.sort()
 	stats2.reverse()
 	for stat,i in stats2:
-		print string.rjust(`stat`,6), dis.opname[i]
+		print string.rjust(repr(stat),6), dis.opname[i]
 	print "total", total
-#@-body
-#@-node:6::print_stats
+#@nonl
+#@-node:EKR.20040502195213.6:print_stats
 #@-others
-#@-body
-#@-node:0::@file ../scripts/disStats.py
+#@nonl
+#@-node:EKR.20040502195213:@file-thin ../scripts/disStats.py
 #@-leo

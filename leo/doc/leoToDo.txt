@@ -1,17 +1,10 @@
 #@+leo-ver=4
 #@+node:ekr.20040117181936:@file-thin ../doc/leoToDo.txt
-#@@nocolor
-
-- Shared nodes working perfectly.
-- Perfect import
-- Mac/Linux bugs
-- @file-thin
-- zodb
-- Jython
-
-#@@color
-
 #@+all
+#@+node:EKR.20040502194236:Don't write top-level thin node?
+#@-node:EKR.20040502194236:Don't write top-level thin node?
+#@+node:EKR.20040502200304:Anxiety:  putting "outline" stuff in separate files
+#@-node:EKR.20040502200304:Anxiety:  putting "outline" stuff in separate files
 #@+node:ekr.20031218072017.646:To do...
 #@@ignore
 #@@nocolor

@@ -1,15 +1,13 @@
 #! /usr/bin/env python
-#@+leo
-#@+node:0::@file ../scripts/untangle_done.py
-#@+body
+#@+leo-ver=4
+#@+node:ekr.20031218072017.2537:@file-thin ../scripts/untangle_done.py
 #@@first
-#@@language python
 
 # Example untangle_done script
 
 def run(root_list):
 
 	print "untangle_done roots:", root_list
-#@-body
-#@-node:0::@file ../scripts/untangle_done.py
+#@nonl
+#@-node:ekr.20031218072017.2537:@file-thin ../scripts/untangle_done.py
 #@-leo

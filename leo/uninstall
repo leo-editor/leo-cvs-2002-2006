@@ -1,3 +1,5 @@
+#@+leo-ver=4
+#@+node:ekr.20031218072017.2580:@file-thin ../uninstall
 #!/bin/sh
 
 ############################################
@@ -54,3 +56,6 @@ rm -fr $LEO_LIB_DIR
 rm -f  $LEO_RUN_SCRIPT_OUTPUT
 
 "
+#@nonl
+#@-node:ekr.20031218072017.2580:@file-thin ../uninstall
+#@-leo

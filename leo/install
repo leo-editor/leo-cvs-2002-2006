@@ -1,3 +1,5 @@
+#@+leo-ver=4
+#@+node:ekr.20031218072017.2579:@file-thin ../install
 #!/bin/sh
 
 ############################################
@@ -137,3 +139,6 @@ echo "      type 'leo filename.leo' to use it."
 echo "                                                 *****"
 echo ""
 exit 0;
+#@nonl
+#@-node:ekr.20031218072017.2579:@file-thin ../install
+#@-leo

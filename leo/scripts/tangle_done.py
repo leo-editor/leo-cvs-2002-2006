@@ -1,17 +1,13 @@
 #! /usr/bin/env python
-#@+leo
-#@+node:0::@file ../scripts/tangle_done.py
-#@+body
+#@+leo-ver=4
+#@+node:EKR.20040502194930:@file-thin ../scripts/tangle_done.py
 #@@first
-#@@language python
 
 # Example tangle_done.py file.
 # Leo catches all exceptions thrown here; there is no need for try:except blocks.
 
-
 #@+others
-#@+node:1::run
-#@+body
+#@+node:EKR.20040502194930.1:run
 # Leo calls this routine if "Run tangle-done.py after Tangle" is checked in the Prefs panel.
 
 def run (root_list):
@@ -22,32 +18,24 @@ def run (root_list):
 	
 	if 0: # Run code contributed by Paul Paterson.
 		convertRSTfilesToHTML(root_list)
-#@-body
-#@-node:1::run
-#@+node:2::convertRSTfilesToHTML
-#@+body
-#@+at
-#  This routine creates .html files from all .rst files in root_list, the list 
-# of files that have just been tangled.
-# 
+#@nonl
+#@-node:EKR.20040502194930.1:run
+#@+node:EKR.20040502194930.2:convertRSTfilesToHTML
 # Adapted from code by Paul Paterson.
 
-#@-at
-#@@c
-
 def convertRSTfilesToHTML(root_list):
+
+	"""This routine creates .html files from all .rst files in root_list, the list of files that have just been tangled."""
 	
-	import os
+	from leoGlobals import os_path_join,os_path_split,os_path_splitext
 	
 	for root in root_list: 
-		base,fullname = os.path.split(root)
-		name,ext = os.path.splitext(fullname)
+		base,fullname = g.os_path_split(root)
+		name,ext = g.os_path_splitext(fullname)
 		if ext == ".rst":
-			file = os.path.join(base,name+".html")
-			
-			#@<< Convert root to corresponding .html file >>
-			#@+node:1::<< Convert root to corresponding .html file >>
-			#@+body
+			file = g.os_path_join(base,name+".html")
+			#@			<< Convert root to corresponding .html file >>
+			#@+node:EKR.20040502194930.3:<< Convert root to corresponding .html file >>
 			# Leo will report the execption if docutils is not installed.
 			from docutils.core import Publisher 
 			from docutils.io import FileInput,StringOutput,StringInput 
@@ -66,23 +54,21 @@ def convertRSTfilesToHTML(root_list):
 			output = pub.publish()
 			
 			# EKR: 3/7/03: convert output using the present encoding.
-			dict = scanDirectives(self.commands,v=root)
+			dict = g.scanDirectives(self.c,p=root)
 			encoding = dict.get("encoding",None)
 			if encoding == None:
-				encoding = app().config.default_derived_file_encoding
-			output = toEncodedString(output,encoding,reportErrors=true) 
+				encoding = g.app.config.default_derived_file_encoding
+			output = g.toEncodedString(output,encoding,reportErrors=true) 
 			
 			# Write the corresponding html file.
 			f = open(file,"w")
 			f.write(output)
 			f.close()
-			#@-body
-			#@-node:1::<< Convert root to corresponding .html file >>
-
-
-#@-body
-#@-node:2::convertRSTfilesToHTML
+			#@nonl
+			#@-node:EKR.20040502194930.3:<< Convert root to corresponding .html file >>
+			#@nl
+#@-node:EKR.20040502194930.2:convertRSTfilesToHTML
 #@-others
-#@-body
-#@-node:0::@file ../scripts/tangle_done.py
+#@nonl
+#@-node:EKR.20040502194930:@file-thin ../scripts/tangle_done.py
 #@-leo

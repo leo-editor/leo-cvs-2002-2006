@@ -24,7 +24,7 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.1,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.10,ekr.20040327115832.1,ekr.20040327115832.2,ekr.20040327120228,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040315202250,ekr.20040315202314,ekr.20040315202314.1,ekr.20040315202347,ekr.20040315202718,ekr.20040315202718.1,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040323163413,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040323163643,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ../src/leoTest.py</vh>
+<v t="ekr.20040303062846.2" a="TV" tnodeList="ekr.20040303062846.2,ekr.20040303062846.1,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.10,ekr.20040327115832.1,ekr.20040327115832.2,ekr.20040327120228,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040315202250,ekr.20040315202314,ekr.20040315202314.1,ekr.20040315202347,ekr.20040315202718,ekr.20040315202718.1,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040323163413,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040323163643,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ../src/leoTest.py</vh>
 <v t="ekr.20040303062846.1"><vh>&lt;&lt; to do &gt;&gt;</vh></v>
 <v t="ekr.20040303062846.3"><vh> class testUtils</vh>
 <v t="ekr.20040303062846.4"><vh>compareOutlines</vh></v>
@@ -465,7 +465,7 @@
 <v t="ekr.20040325073120"><vh>Test that isAt...FileNode works</vh>
 <v t="ekr.20040325073120.1"><vh>@thinfile thinfile.txt</vh></v>
 </v>
-<v t="ekr.20040330103006" a="E" tnodeList="ekr.20040330103006"><vh>@file c:\prog\test\testSectionDelims.txt</vh></v>
+<v t="ekr.20040330103006" tnodeList="ekr.20040330103006"><vh>@file c:\prog\test\testSectionDelims.txt</vh></v>
 <v t="ekr.20040327105955"><vh>test of batch mode</vh></v>
 <v t="ekr.20040419105536" tnodeList="ekr.20040419105536,ekr.20040419105536.1,ekr.20040419105536.2"><vh>@file c:\prog\test\perlLineNumbersTest.txt</vh>
 <v t="ekr.20040419105536.1"><vh>one</vh></v>
@@ -493,28 +493,28 @@
 </v>
 </v>
 <v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
-<v t="ekr.20040402043516.1" a="E"><vh>leoReadlines</vh></v>
+<v t="ekr.20040402043516.1"><vh>leoReadlines</vh></v>
 <v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
-<v t="ekr.20040402064301" a="E"><vh>class prettyPrinter</vh>
+<v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
 <v t="ekr.20040402064301.1"><vh>__init__</vh></v>
 <v t="ekr.20040402093822"><vh>get</vh></v>
 <v t="ekr.20040402072335"><vh>put</vh></v>
 <v t="ekr.20040402081135"><vh>putOperator</vh></v>
 <v t="ekr.20040402080311"><vh>putToken</vh></v>
-<v t="ekr.20040402074431" a="E"><vh>putNormalToken</vh></v>
+<v t="ekr.20040402074431"><vh>putNormalToken</vh></v>
 <v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
 </v>
 </v>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
-<v t="ekr.20040409140301.2" a="E"><vh>c</vh>
+<v t="ekr.20040409140301.2"><vh>c</vh>
 <v t="ekr.20040409142108"><vh>firstChild</vh></v>
 <v t="ekr.20040409142108.1"><vh>secondChild</vh></v>
 </v>
 <v t="ekr.20040409142028"><vh>sibling</vh></v>
 </v>
-<v t="ekr.20040409140301.3" a="E"><vh>a</vh></v>
+<v t="ekr.20040409140301.3"><vh>a</vh></v>
 </v>
 <v t="ekr.20040409140343"><vh>d</vh>
 <v t="ekr.20040409140301.2"><vh>c</vh>
@@ -526,16 +526,16 @@
 <v t="ekr.20040409142108"><vh>firstChild</vh></v>
 <v t="ekr.20040409140343.1"><vh>last</vh></v>
 </v>
-<v t="EKR.20040502125446" a="TV"><vh>At-file thin tests</vh>
+<v t="EKR.20040502125446"><vh>At-file thin tests</vh>
 <v t="EKR.20040427092657"><vh>@ file-thin c:\prog\test\at-file-thin-test.txt</vh>
 <v t="EKR.20040427092657.1"><vh>node 1</vh>
-<v t="EKR.20040428145741" a="E"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
+<v t="EKR.20040428145741"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
 <v t="EKR.20040428145741.1"><vh>child node 1</vh></v>
 <v t="EKR.20040428145741.2"><vh>child node 2</vh></v>
 </v>
 </v>
-<v t="EKR.20040427092657.2" a="E"><vh>&lt;&lt; ref &gt;&gt;</vh>
-<v t="EKR.20040428150018" a="E"><vh>organizer node</vh>
+<v t="EKR.20040427092657.2"><vh>&lt;&lt; ref &gt;&gt;</vh>
+<v t="EKR.20040428150018"><vh>organizer node</vh>
 <v t="EKR.20040428145826"><vh>ref child 1</vh></v>
 <v t="EKR.20040428145826.1"><vh>ref child 2</vh></v>
 </v>
@@ -543,9 +543,7 @@
 </v>
 <v t="EKR.20040428074641"><vh>@file-thin c:\prog\test\at-file-thin-test2.txt</vh></v>
 <v t="EKR.20040429085213"><vh>@file-thin c:\prog\test\at-file-thin-test.txt</vh></v>
-<v t="EKR.20040429090143"><vh>@file-thin c:\prog\test\leoAtFile2.txt</vh></v>
-<v t="EKR.20040430083550" a="E"><vh>@ file-thin c:\prog\test\atAllTest.txt</vh></v>
-<v t="EKR.20040430083543"><vh>@file-thin c:\prog\test\atAllTest.txt</vh></v>
+<v t="EKR.20040430083550"><vh>@ file-thin c:\prog\test\atAllTest.txt</vh></v>
 </v>
 <v t="EKR.20040430160416"><vh>Tests: for unit tests</vh>
 <v t="EKR.20040430160416.1"><vh>jEdit modes Colorizer tests (bugs here)</vh>
@@ -684,49 +682,6 @@ root after at-others
 
 &lt;&lt; ref &gt;&gt;
 </t>
-<t tx="EKR.20040429090143">"""Classes to read and write @file nodes."""
-
-@language python
-
-import leoGlobals as g
-from leoGlobals import true,false
-
-if g.app.config.use_psyco:
-	# print "enabled psyco classes",__file__
-	try: from psyco.classes import *
-	except ImportError: pass
-
-import leoColor,leoNodes
-import filecmp,os,string,time
-
-&lt;&lt; global atFile constants &gt;&gt;
-
-class baseAtFile:
-	"""The base class for the top-level atFile subcommander."""
-	&lt;&lt; class baseAtFile methods &gt;&gt;
-	
-class atFile (baseAtFile):
-	pass # May be overridden in plugins.
-	
-class baseOldDerivedFile:
-	"""The base class to read and write 3.x derived files."""
-	&lt;&lt; class baseOldDerivedFile methods &gt;&gt;
-	
-class oldDerivedFile(baseOldDerivedFile):
-	pass # May be overridden in plugins.
-	
-class baseNewDerivedFile(oldDerivedFile):
-	"""The base class to read and write 4.x derived files."""
-	&lt;&lt; class baseNewDerivedFile methods &gt;&gt;
-
-class newDerivedFile(baseNewDerivedFile):
-	pass # May be overridden in plugins.
-</t>
-<t tx="EKR.20040430083543">before all
-
-@all
-
-after all</t>
 <t tx="EKR.20040430083550">before all
 
 @all
@@ -1321,7 +1276,7 @@ AssertionError
 @root a.txt 
 some text 
 @ </t>
-<t tx="EKR.20040502125446"></t>
+<t tx="EKR.20040502125446">@ignore</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>

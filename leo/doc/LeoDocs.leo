@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3831" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3842" clone_windows="0"/>
 <globals body_outline_ratio="0.427033492823">
-	<global_window_position top="21" left="215" height="836" width="1007"/>
+	<global_window_position top="10" left="220" height="836" width="1007"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -68,7 +68,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -79,6 +79,19 @@
 <v t="edream.110203163054.60"><vh>How to associate leo.py with .leo files on Windows</vh></v>
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
+</v>
+<v t="EKR.20040502184354" a="E"><vh>Distribution files</vh>
+<v t="EKR.20040502184354.1"><vh>@silentfile LICENSE.TXT</vh></v>
+<v t="EKR.20040502184354.2"><vh>@silentfile INSTALL.TXT</vh>
+<v t="EKR.20040502184354.3"><vh>System requirements</vh></v>
+<v t="EKR.20040502184354.4"><vh>Linux installation</vh></v>
+<v t="EKR.20040502184354.5"><vh>Windows installation</vh></v>
+<v t="EKR.20040502184354.6"><vh>MacOS installation</vh></v>
+<v t="EKR.20040502184354.7"><vh>Shell &amp; batch scripts</vh></v>
+</v>
+<v t="EKR.20040502184354.8"><vh>@silentfile PKG-INFO.TXT</vh></v>
+<v t="EKR.20040502184354.9"><vh>@silentfile README.TXT</vh></v>
+<v t="EKR.20040502184354.10"><vh>@silentfile ../manifest.in</vh></v>
 </v>
 <v t="edream.110203163054.63"><vh>Latest versions</vh>
 <v t="ekr.20040414084511"><vh>4.2 a1</vh>
@@ -1944,7 +1957,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="E"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
 <v t="ekr.20040414163815" a="E"><vh>Table of Contents</vh>
 <v t="ekr.20040414163815.1"><vh>@rst</vh></v>
@@ -1954,7 +1967,7 @@
 <v t="ekr.20040414172218.2" a="E"><vh>Preface</vh>
 <v t="ekr.20040414172336"><vh>@rst</vh></v>
 <v t="ekr.20040416070800"><vh>@rst</vh></v>
-<v t="ekr.20040416070800.1" a="TV"><vh>@rst</vh></v>
+<v t="ekr.20040416070800.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040414172218.4" a="E"><vh>Acknowledgements</vh>
 <v t="ekr.20040414172617" a="E"><vh>@rst</vh></v>
@@ -2048,6 +2061,216 @@
 </v>
 </vnodes>
 <tnodes>
+<t tx="EKR.20040502184354">@nocolor</t>
+<t tx="EKR.20040502184354.1">Leo is Open Software and is distributed under the terms of the Python License. The gist of the license is that Leo is absolutely free, even for commercial use (including resale). There is no GNU-like "copyleft" restriction. The Open Source Initiative board has voted to certify the Python license as Open Source. This license is compatible with the GPL.
+
+Copyright (c) 1997-2003 by Edward K. Ream. All Rights Reserved.
+
+Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the names of Leo or Edward K. Ream not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission.
+
+DISCLAIMER OF WARRANTIES
+
+EDWARD K. REAM (REAM) SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESSED OR IMPLIED, WITH RESPECT TO THIS COMPUTER SOFTWARE, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL REAM BE LIABLE FOR ANY LOSS OF PROFIT OR ANY COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER DAMAGES.</t>
+<t tx="EKR.20040502184354.2"></t>
+<t tx="EKR.20040502184354.3">System requirements for leo.py
+------------------------------
+
+leo.py requires Python 2.2 or above and tcl/tk 8.4 or above.
+
+	Download Python from http://python.org/ 
+	Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
+
+Warning: When building Tcl on Linux, do not specify "--enable-threads" .
+Only use Tcl with the default "threads not enabled" case.</t>
+<t tx="EKR.20040502184354.4">
+Installing the leo.py on Linux
+------------------------------
+
+You can install Leo using the install script provided.  Remember to 'chmod +x' before running this script.
+
+Leo is distributed as a single compressed (.zip) folder.  Simply uncompress this folder, put the folder in a convenient place and run leo.py.  You can run leo.py by double-clicking leo.py.  You can also run leo.py from a Python interpreter as follows:
+
+	import leo
+	leo.run() # runs leo.py, opening a new outline.
+	leo.go() # runs leo.py after reloading all modules.
+	leo.leoOpen(fileName) # runs leo.py, reloads all modules, and opens fileName.
+
+You may specify options using the configuration file called leoConfig.txt.  You should generate this file using leoConfig.leo.</t>
+<t tx="EKR.20040502184354.5">
+Installing the leo.py on Windows
+--------------------------------
+
+Important: You can install leo.py on Windows using the single-click installer called leosetup.exe.
+
+Leo is distributed as a single compressed (.zip) folder.  Uncompress this folder, put the folder in a convenient place and run leo.py.  You can run leo.py by double-clicking leo.py.  You can also run leo.py from a Python interpreter as follows:
+
+	import leo
+	leo.run() # runs leo.py, opening a new outline.
+	leo.go() # runs leo.py after reloading all modules.
+	leo.leoOpen(fileName) # runs leo.py, reloads all modules, and opens fileName.
+
+You may specify options using the configuration file called leoConfig.txt.  You should generate this file using leoConfig.leo.
+</t>
+<t tx="EKR.20040502184354.6">
+Installing leo.py on MacOs
+--------------------------
+
+Bruce M. Bolden, bruceb@cs.uidaho.edu, is using Leo on MaxOS X.  Here is his description of how to get Leo working there:
+
+I installed: 
+- Latest OS X Developer tools
+- latest (as of about two weeks ago) tk/tcl
+		 MacOSXTk8.4a4-2.tar.gz
+- the machopython distribution
+http://prdownloads.sourceforge.net/wxpython/MachoPython-2.2.1.dmg
+
+For OS X 10.1, I followed the directions at:
+	http://tony.lownds.com/macosx/tkinter.html
+
+That worked fine for 10.1, but didn't work for 10.2.  It
+took awhile to find a Python distribution that worked
+correctly with tk/tcl.
+
+I was just getting into Leo about a week before 10.2 was released and thought about---what if it breaks....10.2 broke it, but I was able to find a solution as described above.
+
+More re MacOS from Bruce Bolden
+-------------------------------
+
+I just finished building tk successfully!  The magic step was the execution of the command
+
+cp ../generic/prolog.ps to ../library/prolog.ps
+
+AFTER 
+
+cd ../../tk/macosx
+
+in the instructions on "Steps to build Tcl/Tk 8.4.0 on MacOS X":
+
+http://mini.net/tcl/4052
+
+I found this solution while looking at the tcl-mac mailing list archive.  The earlier (current?) tar ball on SourceForge did not have the file prolog.ps in the library directory:
+
+http://sourceforge.net/mailarchive/forum.php?thread_id=1060496&amp;forum_id=3853
+
+Copy and Paste seem to work just fine now in Leo!  This was my original question for you.
+
+I also noticed that someone else built everything on OS X 10.2 (Jaguar), but they did it under X.  Since, the new version of Tk appears to support the OS X interface quite well, I'm not going to bother installing X (for now).
+
+So, Leo works two different ways on OS X 10.2.
+</t>
+<t tx="EKR.20040502184354.7">
+Using shell scripts and batch files to make using Leo easier
+------------------------------------------------------------
+
+On Linux, the following shell script will allow you to open foo.leo files by typing leo foo
+
+#!/bin/sh 
+python &lt;leopath&gt;/leo.py $1
+
+where &lt;leopath&gt; is replaced with the path to the leo directory. 
+
+On Windows, the equivalent batch file would be:
+
+c:\python22\python &lt;leopath&gt;leo.py %1
+
+</t>
+<t tx="EKR.20040502184354.8">Metadata-Version: 1.0
+Name: leo
+Version: 4.2-a1
+Summary: Leo: Literate Editor with Outlines
+Home-page: http://webpages.charter.net/edreamleo/front.html
+Author: Edward K. Ream
+Author-email: edreamleo@charter.net
+License: Python
+Description: Leo is an outline-oriented editor written in 100% pure Python.
+		Leo works on any platform that supports Python 2.2 or above and the Tk toolkit.
+		This version of Leo was developed with Python 2.3.3 and Tk 8.4.3.
+		You may download Python from http://python.org/ and
+		tcl/Tk from http://tcl.activestate.com/software/tcltk/
+		Leo features a multi-window outlining editor, Python colorizing,
+		powerful outline commands and many other things, including 
+		Unlimited Undo/Redo and an integrated Python shell(IDLE) window.
+		Leo will place its own icon in Leo windows provided that you have
+		installed Fredrik Lundh's PIL and tkIcon packages:
+		Download PIL from http://www.pythonware.com/downloads/index.htm#pil
+		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
+Platform: Windows, Linux, Macintosh
+</t>
+<t tx="EKR.20040502184354.9">Important note: See INSTALL.TXT for installation instructions.
+
+Leo is available at:  http://sourceforge.net/projects/leo/
+Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
+Leo will work on Linux, Windows and MacOs X Jaguar.
+
+Leo 4.2 alpha 1            April 14, 2004
+
+This is a "semi-public" release of the new 4.2 code base.  I am releasing this code now to create a snapshot.  In particular, I shall use this snapshot to begin development work on the Macintosh.  This will allow me fix long-standing *nix bugs.
+
+This main feature of this release is that Leo represents clones as nodes that
+share trees of vnodes. To make this work Leo introduces _positions_. A position
+is a location in the traversal of an outline.
+
+This code appears stable.  I have been using the 4.2 code base for several weeks for all my work with no significant problems.  Nevertheless, this _is_ alpha (or even pre-alpha) quality code.  Use at your own risk.  Make frequent backups.
+
+See the "4.2 Projects" node in LeoPy.leo for details of what has been done so far.  I shall be updating documentation more fully for the first beta release.
+
+Leo 4.1 Final              February 20, 2004
+
+Leo 4.1 Final is the culmination of four months of work. No significant bugs
+have been reported since 4.1 rc4. Several people have contributed nifty plugins
+recently. See leoPlugins.leo for full details.
+
+The highlights of Leo 4.1:
+
+- Leo runs in batch mode when invoked with --script aScriptFile.py
+- Leo supports Unicode characters (e.g. Chinese) in path and file names.
+- @directives and section references are now valid when executing scripts.
+- @ignored and orphan nodes now valid in @file-nosent trees.
+- Script-based find/change commands.
+- Check Outline command.
+- Hoist &amp; DeHoist commands.
+- A new gui-agnostic architecture: useful for batch mode and unit tests.
+- Several new configuration settings.
+- Many new unit tests.
+- Excellent new plugins.
+- A host of bug fixes.</t>
+<t tx="EKR.20040502184354.10"># The manifest template: specifies all files to be included in the distribution.
+
+# Note: these are glob patterns!  Be careful:  .. may not work.
+
+include __init__.py
+
+include config/leoConfig.leo
+include config/leoConfig.txt
+
+include doc/LeoDocs.leo
+include doc/README.TXT
+include doc/INSTALL.TXT
+include doc/PKG-INFO.TXT
+include doc/LICENSE.TXT
+
+include Icons/*.*
+
+include plugins/*.*
+exclude plugins/*.pyc
+
+include src/LeoPy.leo
+include src/leo*.py
+
+include scripts/*
+include scripts/install/*.py
+include scripts/other/*.py
+include scripts/tangle/*.py
+
+include test/test.leo
+
+include install
+include uninstall
+include manifest.in
+include MANIFEST
+
+# Setup is more confusing than helpful.
+exclude setup.py</t>
 <t tx="edream.031216084930">The heart of the file format is the &lt;vnodes&gt; element containing possibly nested &lt;v&gt; elements, and the &lt;tnodes&gt; element containing a list of (non-nested) &lt;t&gt; elements.  &lt;v&gt; elements refer to &lt;t&gt; elements using "t" attributes in &lt;v&gt; elements corresponding to "tx" attributes in &lt;t&gt; elements.
 
 &lt;v&gt; and &lt;t&gt; elements in .leo files correspond directly to vnodes and tnodes in memory when Leo is running.  For full information about these see @file leoNodes.py in LeoPy.leo.  For full information about exactly what Leo is doing when reading and writing files, see @file leoFileCommands.py in LeoPy.leo.
