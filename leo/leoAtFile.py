@@ -2078,62 +2078,63 @@ class atFile:
 			j,delta = skip_leading_ws_with_indent(s,i,self.tab_width)
 			kind1 = self.directiveKind(s,i)
 			kind2 = self.directiveKind(s,j)
-			if kind1 == atFile.othersDirective or kind2 == atFile.othersDirective:
-				
-				#@<< handle @others >>
-				#@+node:1::<< handle @others >>
-				#@+body
-				# This skips all indent and delta whitespace, so putAtOthers must generate it all.
-				
-				if 0: # 9/27/02: eliminates the newline preceeding the @+others sentinel.
-					# This does not seem to be a good idea.
-					i = skip_line(s,i) 
-				else:
-					i = skip_to_end_of_line(s,i)
-				
-				if atOthersSeen:
-					self.writeError("@others already expanded in: " + v.headString())
-				else:
-					atOthersSeen = true
-					self.putAtOthers(v, delta)
-				#@-body
-				#@-node:1::<< handle @others >>
-
-			elif kind1 == atFile.rawDirective:
-				
-				#@<< handle @raw >>
-				#@+node:2::<< handle @raw >>
-				#@+body
-				self.raw = true
-				self.putSentinel("@@raw")
-				i = skip_line(s,i)
-				#@-body
-				#@-node:2::<< handle @raw >>
-
-			elif kind1 == atFile.endRawDirective:
-				
-				#@<< handle @end_raw >>
-				#@+node:3::<< handle @end_raw >>
-				#@+body
-				self.raw = false
-				self.putSentinel("@@end_raw")
-				i = skip_line(s,i)
-				#@-body
-				#@-node:3::<< handle @end_raw >>
-
-			elif kind1 == atFile.noDirective:
-				
-				#@<< put @verbatim sentinel if necessary >>
-				#@+node:4::<< put @verbatim sentinel if necessary >>
-				#@+body
-				if match (s,i,self.startSentinelComment + '@'):
-					self.putSentinel("verbatim")
-				#@-body
-				#@-node:4::<< put @verbatim sentinel if necessary >>
+			if self.raw:
+				if kind1 == atFile.endRawDirective:
+					
+					#@<< handle @end_raw >>
+					#@+node:3::<< handle @end_raw >>
+					#@+body
+					self.raw = false
+					self.putSentinel("@@end_raw")
+					i = skip_line(s,i)
+					#@-body
+					#@-node:3::<< handle @end_raw >>
 
 			else:
-				break # all other directives terminate the code part.
-			
+				if kind1 == atFile.othersDirective or kind2 == atFile.othersDirective:
+					
+					#@<< handle @others >>
+					#@+node:1::<< handle @others >>
+					#@+body
+					# This skips all indent and delta whitespace, so putAtOthers must generate it all.
+					
+					if 0: # 9/27/02: eliminates the newline preceeding the @+others sentinel.
+						# This does not seem to be a good idea.
+						i = skip_line(s,i) 
+					else:
+						i = skip_to_end_of_line(s,i)
+					
+					if atOthersSeen:
+						self.writeError("@others already expanded in: " + v.headString())
+					else:
+						atOthersSeen = true
+						self.putAtOthers(v, delta)
+					#@-body
+					#@-node:1::<< handle @others >>
+
+				elif kind1 == atFile.rawDirective:
+					
+					#@<< handle @raw >>
+					#@+node:2::<< handle @raw >>
+					#@+body
+					self.raw = true
+					self.putSentinel("@@raw")
+					i = skip_line(s,i)
+					#@-body
+					#@-node:2::<< handle @raw >>
+
+				elif kind1 == atFile.noDirective:
+					
+					#@<< put @verbatim sentinel if necessary >>
+					#@+node:4::<< put @verbatim sentinel if necessary >>
+					#@+body
+					if match (s,i,self.startSentinelComment + '@'):
+						self.putSentinel("verbatim")
+					#@-body
+					#@-node:4::<< put @verbatim sentinel if necessary >>
+
+				else:
+					break # all other directives terminate the code part.
 			#@-body
 			#@-node:1::<< handle the start of a line >>
 
@@ -2176,6 +2177,9 @@ class atFile:
 			#@-body
 			#@-node:2::<< put the line >>
 
+	
+		# Raw code parts can only end at the end of body text.
+		self.raw = false
 		return i
 	#@-body
 	#@+node:3::isSectionName

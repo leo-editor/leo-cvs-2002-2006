@@ -12,10 +12,10 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="E"><vh>Diary</vh>
-<v a="E"><vh>Oct 2002</vh>
+<v t="T1"><vh>Diary</vh>
+<v><vh>Oct 2002</vh>
 <v a="E"><vh>10/15</vh>
-<v t="T2" a="V"><vh>Added @raw support</vh></v>
+<v t="T2"><vh>Added @raw support</vh></v>
 <v><vh>Changed names of commands in help menu and corresponding entries in leoConfig.leo</vh></v>
 <v><vh>Updated docs for recent features</vh></v>
 </v>
@@ -6334,8 +6334,8 @@
 <v t="T824" a="C"><vh>utils_rename</vh></v>
 </v>
 </v>
-<v t="T2398"><vh>(@raw)</vh>
-<v t="T2399" a="E"><vh>@file c:\prog\test\atRawTest.txt</vh>
+<v t="T2398" a="EV"><vh>(@raw)</vh>
+<v t="T2399"><vh>@file c:\prog\test\atRawTest.txt</vh>
 <v t="T2400"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
 </v>
 <v t="T1476" a="C"><vh>&lt;&lt; initialize atFile ivars &gt;&gt;</vh></v>
@@ -26236,6 +26236,9 @@ def putCodePart(self,s,i,v):
 	while i &lt; len(s):
 		&lt;&lt; handle the start of a line &gt;&gt;
 		&lt;&lt; put the line &gt;&gt;
+
+	# Raw code parts can only end at the end of body text.
+	self.raw = false
 	return i</t>
 <t tx="T1490">@ The at-others directive is the only directive that is recognized following leading whitespace, so it is just a little tricky to recognize it.
 @c
@@ -26248,17 +26251,18 @@ if leading_nl:
 j,delta = skip_leading_ws_with_indent(s,i,self.tab_width)
 kind1 = self.directiveKind(s,i)
 kind2 = self.directiveKind(s,j)
-if kind1 == atFile.othersDirective or kind2 == atFile.othersDirective:
-	&lt;&lt; handle @others &gt;&gt;
-elif kind1 == atFile.rawDirective:
-	&lt;&lt; handle @raw &gt;&gt;
-elif kind1 == atFile.endRawDirective:
-	&lt;&lt; handle @end_raw &gt;&gt;
-elif kind1 == atFile.noDirective:
-	&lt;&lt; put @verbatim sentinel if necessary &gt;&gt;
+if self.raw:
+	if kind1 == atFile.endRawDirective:
+		&lt;&lt; handle @end_raw &gt;&gt;
 else:
-	break # all other directives terminate the code part.
-</t>
+	if kind1 == atFile.othersDirective or kind2 == atFile.othersDirective:
+		&lt;&lt; handle @others &gt;&gt;
+	elif kind1 == atFile.rawDirective:
+		&lt;&lt; handle @raw &gt;&gt;
+	elif kind1 == atFile.noDirective:
+		&lt;&lt; put @verbatim sentinel if necessary &gt;&gt;
+	else:
+		break # all other directives terminate the code part.</t>
 <t tx="T1491"># This skips all indent and delta whitespace, so putAtOthers must generate it all.
 
 if 0: # 9/27/02: eliminates the newline preceeding the @+others sentinel.
