@@ -92,14 +92,14 @@ def set_delims_from_string(s):
 #@+node:3:C=4:set_language
 #@+body
 #@+at
-#   Scans the @language directive that appears at s[i]. 'default' returns default_language.
+#   Scans the @language directive that appears at s[i].
 # 
 # Returns (language, delim1, delim2, delim3)
 
 #@-at
 #@@c
 
-def set_language(s,i,issue_errors_flag,default_language):
+def set_language(s,i,issue_errors_flag):
 
 	tag = "@language"
 	# trace(`get_line(s,i)`)
@@ -117,7 +117,7 @@ def set_language(s,i,issue_errors_flag,default_language):
 			("c", c_language),
 			("c++", c_language),
 			("cweb", cweb_language),
-			("default", default_language),
+			# ("default", default_language),
 			("fortran", fortran_language),
 			("fortran90", fortran90_language),
 			("html", html_language),
@@ -846,7 +846,7 @@ def skip_pp_directive(s,i):
 def skip_pp_if(s,i):
 	
 	start_line = get_line(s,i) # used for error messages.
-	#trace(start_line)
+	# trace(start_line)
 
 	assert(
 		match_word(s,i,"#if") or
@@ -898,7 +898,7 @@ def skip_pp_part(s,i):
 			delta += 1 ; i += 1
 		elif c == '}':
 			delta -= 1 ; i += 1
-		elif match(s,i,"//"): i = skip_line # i = skip_to_end_of_line(s,i)
+		elif match(s,i,"//"): i = skip_line(s,i)
 		elif match(s,i,"/*"): i = skip_block_comment(s,i)
 		else: i += 1
 	return i,delta
@@ -1235,14 +1235,17 @@ def skip_to_end_of_line (s,i):
 
 def skip_long(s,i):
 
+	digits = string.digits
 	val = 0
 	i = skip_ws(s,i)
 	n = len(s)
-	if i >= n or s[i] not in string.digits:
+	if i >= n or s[i] not in "+-" + digits:
 		return i, None
 	# Rewritten: 7/18/02.
 	j = i
-	while i < n and s[i] in string.digits:
+	if s[i] in '+-':    # whr allow sign if first digit
+		i +=1
+	while i < n and s[i] in digits:
 		i += 1
 	val = int(s[j:i])
 	return i, val

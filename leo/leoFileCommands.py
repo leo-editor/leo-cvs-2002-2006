@@ -1511,52 +1511,53 @@ class fileCommands:
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
 		c=self.commands
-		# Leo2: write all @file nodes and set orphan bits.
-		if not outlineOnlyFlag:
-			at = c.atFileCommands
-			at.writeAll(c.rootVnode(), false) # forceFlag
 		
-		#@<< create backup file >>
-		#@+node:1::<< create backup file >>
-		#@+body
-		# rename fileName to fileName.bak if fileName exists.
-		
-		if os.path.exists(fileName):
-			try:
-				backupName = os.path.join(app().loadDir,fileName)
-				backupName = fileName + ".bak"
-				if os.path.exists(backupName):
-					os.unlink(backupName)
-				os.rename(fileName,backupName)
-			except:
-				es("error creating " + backupName)
-				traceback.print_exc()
-				backupName = None
-		else:
-			backupName = None
-		#@-body
-		#@-node:1::<< create backup file >>
-
-		self.mFileName = fileName
-		self.outputFile = open(fileName, 'w')
-		if not self.outputFile:
-			es("can not open " + fileName)
-			
-			#@<< delete backup file >>
-			#@+node:2::<< delete backup file >>
-			#@+body
-			if backupName and os.path.exists(backupName):
-				try:
-					os.unlink(backupName)
-				except:
-					es("error deleting " + backupName)
-					traceback.print_exc()
-
-			#@-body
-			#@-node:2::<< delete backup file >>
-
-			return false
 		try:
+			# Leo2: write all @file nodes and set orphan bits.
+			if not outlineOnlyFlag:
+				at = c.atFileCommands
+				at.writeAll(c.rootVnode(), false) # forceFlag
+			
+			#@<< create backup file >>
+			#@+node:1::<< create backup file >>
+			#@+body
+			# rename fileName to fileName.bak if fileName exists.
+			
+			if os.path.exists(fileName):
+				try:
+					backupName = os.path.join(app().loadDir,fileName)
+					backupName = fileName + ".bak"
+					if os.path.exists(backupName):
+						os.unlink(backupName)
+					os.rename(fileName,backupName)
+				except:
+					es("exception creating " + backupName)
+					traceback.print_exc()
+					backupName = None
+			else:
+				backupName = None
+			#@-body
+			#@-node:1::<< create backup file >>
+
+			self.mFileName = fileName
+			self.outputFile = open(fileName, 'w')
+			if not self.outputFile:
+				es("can not open " + fileName)
+				
+				#@<< delete backup file >>
+				#@+node:2::<< delete backup file >>
+				#@+body
+				if backupName and os.path.exists(backupName):
+					try:
+						os.unlink(backupName)
+					except:
+						es("error deleting " + backupName)
+						traceback.print_exc()
+
+				#@-body
+				#@-node:2::<< delete backup file >>
+
+				return false
 			app().config.update()
 			self.putProlog()
 			self.putHeader()
@@ -1571,8 +1572,12 @@ class fileCommands:
 			es("exception writing: " + fileName)
 			traceback.print_exc() 
 			if self.outputFile:
-				self.outputFile.close()
-				self.outputFile = None
+				try:
+					self.outputFile.close()
+					self.outputFile = None
+				except:
+					es("exception closing: " + fileName)
+					traceback.print_exc()
 			
 			#@<< erase filename and rename backupName to fileName >>
 			#@+node:3::<< erase filename and rename backupName to fileName >>
@@ -1583,14 +1588,15 @@ class fileCommands:
 				try:
 					os.unlink(fileName)
 				except:
-					pass
+					es("exception deleting " + fileName)
+					traceback.print_exc()
 					
 			if backupName:
 				es("restoring " + fileName + " from " + backupName)
 				try:
 					os.rename(backupName, fileName)
 				except:
-					es("can not rename " + backupName + " to " + fileName)
+					es("exception renaming " + backupName + " to " + fileName)
 					traceback.print_exc()
 
 			#@-body
@@ -1599,8 +1605,12 @@ class fileCommands:
 			return false
 	
 		if self.outputFile:
-			self.outputFile.close()
-			self.outputFile = None
+			try:
+				self.outputFile.close()
+				self.outputFile = None
+			except:
+				es("exception closing: " + fileName)
+				traceback.print_exc()
 			
 			#@<< delete backup file >>
 			#@+node:2::<< delete backup file >>
@@ -1627,14 +1637,15 @@ class fileCommands:
 				try:
 					os.unlink(fileName)
 				except:
-					pass
+					es("exception deleting " + fileName)
+					traceback.print_exc()
 					
 			if backupName:
 				es("restoring " + fileName + " from " + backupName)
 				try:
 					os.rename(backupName, fileName)
 				except:
-					es("can not rename " + backupName + " to " + fileName)
+					es("exception renaming " + backupName + " to " + fileName)
 					traceback.print_exc()
 
 			#@-body

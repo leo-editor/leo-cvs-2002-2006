@@ -92,8 +92,6 @@ class atFile:
 		self.default_directory = None
 		self.page_width = None
 		self.tab_width  = None
-		self.presentLanguage = None
-		self.targetLanguage = None
 		self.startSentinelComment = None
 		self.endSentinelComment = None
 		
@@ -359,17 +357,12 @@ class atFile:
 		#@<< Set ivars >>
 		#@+node:1:C=5:<< Set ivars >>
 		#@+body
-		if 1: # 8/2/02
-			self.page_width = self.commands.page_width
-			self.tab_width = self.commands.tab_width
-			self.presentLanguage = self.targetLanguage = c.target_language
-		else:
-			self.page_width = leoPrefs.default_page_width
-			self.tab_width = leoPrefs.default_tab_width
-			self.presentLanguage = self.targetLanguage = leoPrefs.default_target_language
-			
-		self.default_directory = leoPrefs.default_default_directory
-		delim1, delim2, delim3 = set_delims_from_language(self.presentLanguage)
+		self.page_width = self.commands.page_width
+		self.tab_width  = self.commands.tab_width
+		
+		self.default_directory = None # 8/2: will be set later.
+		
+		delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 		#@-body
 		#@-node:1:C=5:<< Set ivars >>
 
@@ -433,16 +426,14 @@ class atFile:
 				if delim1:
 					# @comment effectively disables Untangle.
 					delim1, delim2, delim3 = d1, d2, d3
-					self.presentLanguage = unknown_language
 				
 			elif self.btest(language_bits, bits):
 				k = dict["language"]
 				issue_error_flag = false
-				language, d1, d2, d3 = set_language(s,k,issue_error_flag,self.targetLanguage)
+				language, d1, d2, d3 = set_language(s,k,issue_error_flag)
 				# print `delim1`,`delim2`,`delim3`
 				if delim1:
 					delim1, delim2, delim3 = d1, d2, d3
-					self.targetLanguage = self.presentLanguage = language
 			#@-body
 			#@-node:3::<< Test for @comment or @language >>
 
@@ -454,7 +445,7 @@ class atFile:
 				k = dict["page_width"]
 				j = i = k + len("@pagewidth")
 				i, val = skip_long(s,i)
-				if val:
+				if val != None and val > 0:
 					self.page_width = val
 				else:
 					i = skip_to_end_of_line(s,i)
@@ -464,7 +455,7 @@ class atFile:
 				k = dict["tab_width"]
 				j = i = k + len("@tabwidth")
 				i, val = skip_long(s, i)
-				if val:
+				if val != None and val != 0:
 					self.tab_width = val
 				else:
 					i = skip_to_end_of_line(s,i)
@@ -2040,8 +2031,9 @@ class atFile:
 		c = self.commands
 		w = self.tab_width
 		if w > 1:
-			self.otabs(int(n / w)) # To handle future division.
-			self.oblanks  (n % w)
+			quotient,remainder = divmod(n, w) 
+			self.otabs(quotient) 
+			self.oblanks(remainder) 
 		else:
 			self.oblanks(n)
 	#@-body
@@ -2065,28 +2057,43 @@ class atFile:
 		#@<< Open files.  Set orphan and dirty flags and return on errors >>
 		#@+node:1::<< Open files.  Set orphan and dirty flags and return on errors >>
 		#@+body
-		self.scanAllDirectives(root)
-		valid = self.errors == 0
+		try:
+			self.scanAllDirectives(root)
+			valid = self.errors == 0
+		except:
+			es("exception in atFile.scanAllDirectives")
+			traceback.print_exc()
+			valid = false
 		
 		if valid:
-			fn = root.atFileNodeName()
-			self.shortFileName = fn # name to use in status messages.
-			self.targetFileName = os.path.join(self.default_directory,fn)
-			self.targetFileName = os.path.normpath(self.targetFileName)
-			path = os.path.dirname(self.targetFileName)
-			if len(path) > 0:
-				valid = os.path.exists(path)
-				if not valid:
-					self.writeError("Path does not exist: " + path)
-			else:
+			try:
+				fn = root.atFileNodeName()
+				self.shortFileName = fn # name to use in status messages.
+				self.targetFileName = os.path.join(self.default_directory,fn)
+				self.targetFileName = os.path.normpath(self.targetFileName)
+				path = os.path.dirname(self.targetFileName)
+				if len(path) > 0:
+					valid = os.path.exists(path)
+					if not valid:
+						self.writeError("Path does not exist: " + path)
+				else:
+					valid = false
+			except:
+				es("exception creating path:" + fn)
+				traceback.print_exc()
 				valid = false
 		
 		if valid:
-			self.outputFileName = self.targetFileName + ".tmp"
-			self.outputFile = open(self.outputFileName, 'w')
-			valid = self.outputFile != None
-			if not valid:
-				self.writeError("Can not open " + self.outputFileName)
+			try:
+				self.outputFileName = self.targetFileName + ".tmp"
+				self.outputFile = open(self.outputFileName, 'w')
+				valid = self.outputFile != None
+				if not valid:
+					self.writeError("Can not open " + self.outputFileName)
+			except:
+				es("exception opening:" + self.outputFileName)
+				traceback.print_exc()
+				valid = false
 		
 		if not valid:
 			root.setOrphan()
@@ -2169,7 +2176,9 @@ class atFile:
 				if filecmp.cmp(self.outputFileName, self.targetFileName):
 					try: # Just delete the temp file.
 						os.remove(self.outputFileName)
-					except: pass
+					except:
+						es("exception deleting:" + self.outputFileName)
+						traceback.print_exc()
 					es("unchanged: " + self.shortFileName)
 				else:
 					try: # Replace target file with temp file.
@@ -2177,11 +2186,17 @@ class atFile:
 						os.rename(self.outputFileName, self.targetFileName)
 						es("writing: " + self.shortFileName)
 					except:
-						self.writeError("rename failed: no file created! (file may be read-only)")
+						self.writeError("exception removing and renaming:" + self.outputFileName +
+							" to " + self.targetFileName)
 						traceback.print_exc()
 			else:
-				os.rename(self.outputFileName, self.targetFileName)
-				es("creating: " + self.targetFileName)
+				try:
+					os.rename(self.outputFileName, self.targetFileName)
+					es("creating: " + self.targetFileName)
+				except:
+					self.writeError("exception renaming:" + self.outputFileName +
+						" to " + self.targetFileName)
+					traceback.print_exc()
 			#@-body
 			#@-node:4::<< Replace the target with the temp file if different >>
 	#@-body

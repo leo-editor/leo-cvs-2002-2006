@@ -933,7 +933,7 @@ class colorizer:
 			elif btest(language_bits,bits):
 				issue_error_flag = false
 				i = dict["language"]
-				language, junk, junk, junk = set_language(s,i,issue_error_flag,c.target_language)
+				language, junk, junk, junk = set_language(s,i,issue_error_flag)
 				break
 			#@-body
 			#@-node:1::<< Test for @comment or @language >>

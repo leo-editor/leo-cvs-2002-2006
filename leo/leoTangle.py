@@ -1607,19 +1607,19 @@ class tangleCommands:
 	#@-node:4:C=11:put_doc
 	#@+node:5:C=12:put_leading_ws
 	#@+body
-	# Outputs leading whitespace, converting tab_width blanks to tabs.
+	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 	
-	def put_leading_ws(self,indent):
+	def put_leading_ws(self,n):
 	
 		# trace("tab_width:" + `self.tab_width` + ", indent:" + `indent`)
 		w = self.tab_width
 	
 		if w > 1:
-			# Output tabs if possible.
-			self.otabs(int(indent / w)) # To handle future division.
-			self.oblanks  (indent % w)
+			quotient,remainder = divmod(n, w) 
+			self.otabs(quotient) 
+			self.oblanks(remainder) 
 		else:
-			self.oblanks(indent)
+			self.oblanks(n)
 
 	#@-body
 	#@-node:5:C=12:put_leading_ws
@@ -3561,9 +3561,7 @@ class tangleCommands:
 			elif btest(bits,language_bits):
 				issue_error_flag = false
 				i = dict["language"]
-				# Bug fix 7/18/02 (!!):
-				language,delim1,delim2,delim3 = set_language(
-					s,i,issue_error_flag,c.target_language)
+				language,delim1,delim2,delim3 = set_language(s,i,issue_error_flag)
 				self.language = language
 				# 8/1/02: Now works as expected.
 				self.single_comment_string = delim1
@@ -3635,20 +3633,22 @@ class tangleCommands:
 			if btest(bits,page_width_bits) and not btest(old_bits,page_width_bits):
 				i = dict["page_width"] # 7/18/02 (!)
 				i, val = skip_long(s,i+10) # Point past @pagewidth
-				if val == -1:
+				if val != None and val > 0:
+					self.page_width = val
+				else:
 					if issue_error_flag:
 						j = skip_to_end_of_line(s,i)
 						es("ignoring " + s[i:j])
-				else: self.page_width = val
 			
 			if btest(bits,tab_width_bits)and not btest(old_bits,tab_width_bits):
 				i = dict["tab_width"] # 7/18/02 (!)
 				i, val = skip_long(s,i+9) # Point past @tabwidth.
-				if val == -1:
+				if val != None and val != 0:
+					self.tab_width = val
+				else:
 					if issue_error_flag:
 						j = skip_to_end_of_line(s,i)
 						es("ignoring " + s[i:j])
-				else: self.tab_width = val
 			#@-body
 			#@-node:3::<< Test for @path, @pagewidth and @tabwidth >>
 

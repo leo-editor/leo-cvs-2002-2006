@@ -87,13 +87,12 @@ class leoImportCommands:
 	#@+body
 	def importFilesCommand  (self,files,treeType):
 	
-		c = self.commands ; current = c.currentVnode()
+		c = self.commands ; v = current = c.currentVnode()
 		if not current: return
 		if len(files) < 1: return
 		self.treeType = treeType
 		c.beginUpdate()
 		if 1: # range of update...
-		  	c.selectVnode(current)
 			if len(files) == 2:
 				
 				#@<< Create a parent for two files having a common prefix >>
@@ -124,8 +123,9 @@ class leoImportCommands:
 				v.setDirty()
 				c.setChanged(true)
 			c.validateOutline()
-		  	c.selectVnode(current)
+			c.expandVnode(current)
 		c.endUpdate()
+		c.selectVnode(v)
 	#@-body
 	#@-node:2::importFilesCommand
 	#@+node:3::importFlattenedOutline & allies
@@ -380,76 +380,7 @@ class leoImportCommands:
 		return None
 	#@-body
 	#@-node:3::findFunctionDef
-	#@+node:4::massageWebBody
-	#@+body
-	def massageWebBody (self,s):
-	
-		type = self.webType
-		lb = choose(type=="cweb","@<","<<")
-		rb = choose(type=="cweb","@>",">>")
-		
-		#@<< Remove most newlines from @space and @* sections >>
-		#@+node:1::<< Remove most newlines from @space and @* sections >>
-		#@+body
-		i = 0
-		while i < len(s):
-			i = skip_ws_and_nl(s,i)
-			if self.isDocStart(s,i):
-				# Scan to end of the doc part.
-				if match(s,i,"@ %def"):
-					# Don't remove the newline following %def
-					i = skip_line(s,i) ; start = end = i
-				else:
-					start = end = i ; i += 2
-				while i < len(s):
-					i = skip_ws_and_nl(s,i)
-					if self.isModuleStart(s,i) or match(s,i,lb):
-						end = i ; break
-					elif type == "cweb": i += 1
-					else: i = skip_to_end_of_line(s,i)
-				# Remove newlines from start to end.
-				doc = s[start:end]
-				doc = string.replace(doc,"\n"," ")
-				doc = string.replace(doc,"\r","")
-				doc = string.strip(doc)
-				if doc and len(doc) > 0:
-					if doc == "@":
-						doc = choose(self.webType=="cweb", "@ ","@\n")
-					else:
-						doc += "\n\n"
-					# trace("new doc:" + `doc`)
-					s = s[:start] + doc + s[end:]
-					i = start + len(doc)
-			else: i = skip_line(s,i)
-		#@-body
-		#@-node:1::<< Remove most newlines from @space and @* sections >>
-
-		
-		#@<< Replace abbreviated names with full names >>
-		#@+node:2::<< Replace abbreviated names with full names >>
-		#@+body
-		i = 0
-		while i < len(s):
-			# line = get_line(s,i) ; trace(`line`)
-			if match(s,i,lb):
-				i += 2 ; j = i ; k = find_on_line(s,j,rb)
-				if k > -1:
-					name = s[j:k]
-					name2 = self.cstLookup(name)
-					if name != name2:
-						# Replace name by name2 in s.
-						# trace("replacing:" + `name` + ", by:" + `name2`)
-						s = s[:j] + name2 + s[k:]
-						i = j + len(name2)
-			i = skip_line(s,i)
-		#@-body
-		#@-node:2::<< Replace abbreviated names with full names >>
-
-		s = string.rstrip(s)
-		return s
-	#@-body
-	#@-node:4::massageWebBody
-	#@+node:5::scanBodyForHeadline
+	#@+node:4::scanBodyForHeadline
 	#@+body
 	#@+at
 	#  This method returns the proper headline text.
@@ -523,8 +454,8 @@ class leoImportCommands:
 
 		return "@" # default.
 	#@-body
-	#@-node:5::scanBodyForHeadline
-	#@+node:6::scanWebFile (handles limbo)
+	#@-node:4::scanBodyForHeadline
+	#@+node:5::scanWebFile (handles limbo)
 	#@+body
 	def scanWebFile (self,fileName,parent):
 	
@@ -646,8 +577,8 @@ class leoImportCommands:
 
 			assert(progress < i)
 	#@-body
-	#@-node:6::scanWebFile (handles limbo)
-	#@+node:7::Symbol table
+	#@-node:5::scanWebFile (handles limbo)
+	#@+node:6::Symbol table
 	#@+node:1::cstCanonicalize
 	#@+body
 	#@+at
@@ -723,7 +654,7 @@ class leoImportCommands:
 		return result
 	#@-body
 	#@-node:4::cstLookup
-	#@-node:7::Symbol table
+	#@-node:6::Symbol table
 	#@-node:4::importWebCommand & allies
 	#@+node:5::Scanners for createOutline
 	#@+node:1:C=3:Python scanners
@@ -738,7 +669,7 @@ class leoImportCommands:
 	def scanPythonClass (self,s,i,start,parent):
 	
 		# line = get_line(s,i) ; trace(`line`)
-		classIndent = self.getPythonIndent(s,i)
+		classIndent = self.getLeadingIndent(s,i)
 		
 		#@<< set classname and headline, or return i >>
 		#@+node:1::<< set classname and headline, or return i >>
@@ -769,7 +700,7 @@ class leoImportCommands:
 		
 		# i points just after the class line.
 		body = s[start:i]
-		body = self.undentPythonBody(body)
+		body = self.undentBody(body)
 		class_vnode = self.createHeadline(parent,prefix + body,headline)
 
 		#@-body
@@ -783,14 +714,14 @@ class leoImportCommands:
 		#@<< create nodes for all defs of the class >>
 		#@+node:3:C=4:<< create nodes for all defs of the class >>
 		#@+body
-		indent =  self.getPythonIndent(s,i)
+		indent =  self.getLeadingIndent(s,i)
 		start = i = skip_blank_lines(s,i)
 		parent_vnode = None # 7/6/02
 		while i < len(s) and indent > classIndent:
 			progress = i
 			if is_nl(s,i):
 				j = skip_nl(s,i)
-				indent = self.getPythonIndent(s,j)
+				indent = self.getLeadingIndent(s,j)
 				if indent > classIndent: i = j
 				else: break
 			elif match_c_word(s,i,"def"):
@@ -800,27 +731,17 @@ class leoImportCommands:
 					#@+node:1::<< create parent_vnode >>
 					#@+body
 					# This must be done after the declaration reference is generated.
-					if 1: # 7/29/02.
-						if self.treeType == "@file":
-							class_vnode.appendStringToBody("\t@others\n")
-						else:
-							ref = angleBrackets(" class " + classname + " methods ")
-							class_vnode.appendStringToBody("\t" + ref + "\n\n")
-						parent_vnode = class_vnode
-					
-					else:  # old code
+					if self.treeType == "@file":
+						class_vnode.appendStringToBody("\t@others\n")
+					else:
 						ref = angleBrackets(" class " + classname + " methods ")
 						class_vnode.appendStringToBody("\t" + ref + "\n\n")
-						
-						if self.treeType == "@file":
-							parent_vnode = self.createHeadline(class_vnode,"@others",ref) # 7/6/02
-						else:
-							parent_vnode = class_vnode
+					parent_vnode = class_vnode
 					#@-body
 					#@-node:1::<< create parent_vnode >>
 
 				i = start = self.scanPythonDef(s,i,start,parent_vnode)
-				indent = self.getPythonIndent(s,i)
+				indent = self.getLeadingIndent(s,i)
 			elif match_c_word(s,i,"class"):
 				if not parent_vnode:
 					
@@ -828,27 +749,17 @@ class leoImportCommands:
 					#@+node:1::<< create parent_vnode >>
 					#@+body
 					# This must be done after the declaration reference is generated.
-					if 1: # 7/29/02.
-						if self.treeType == "@file":
-							class_vnode.appendStringToBody("\t@others\n")
-						else:
-							ref = angleBrackets(" class " + classname + " methods ")
-							class_vnode.appendStringToBody("\t" + ref + "\n\n")
-						parent_vnode = class_vnode
-					
-					else:  # old code
+					if self.treeType == "@file":
+						class_vnode.appendStringToBody("\t@others\n")
+					else:
 						ref = angleBrackets(" class " + classname + " methods ")
 						class_vnode.appendStringToBody("\t" + ref + "\n\n")
-						
-						if self.treeType == "@file":
-							parent_vnode = self.createHeadline(class_vnode,"@others",ref) # 7/6/02
-						else:
-							parent_vnode = class_vnode
+					parent_vnode = class_vnode
 					#@-body
 					#@-node:1::<< create parent_vnode >>
 
 				i = start = self.scanPythonClass(s,i,start,parent_vnode)
-				indent = self.getPythonIndent(s,i)
+				indent = self.getLeadingIndent(s,i)
 			elif s[i] == '#': i = skip_to_end_of_line(s,i)
 			elif s[i] == '"' or s[i] == '\'': i = skip_python_string(s,i)
 			else: i += 1
@@ -891,15 +802,15 @@ class leoImportCommands:
 		#@+node:2::<< skip the Python def >>
 		#@+body
 		# Set defIndent to the indentation of the def line.
-		defIndent = self.getPythonIndent(s,start)
+		defIndent = self.getLeadingIndent(s,start)
 		i = skip_line(s,i) # Skip the def line.
-		indent = self.getPythonIndent(s,i)
+		indent = self.getLeadingIndent(s,i)
 		while i < len(s) and indent > defIndent:
 			progress = i
 			ch = s[i]
 			if is_nl(s,i):
 				i = skip_nl(s,i)
-				indent = self.getPythonIndent(s,i)
+				indent = self.getLeadingIndent(s,i)
 				if indent <= defIndent:
 					break
 			elif ch == '#':
@@ -927,7 +838,7 @@ class leoImportCommands:
 		# Create body.
 		start = skip_blank_lines(s,start)
 		body = s[start:i]
-		body = self.undentPythonBody(body)
+		body = self.undentBody(body)
 		
 		# Create the node.
 		self.createHeadline(parent,prefix + body,headline)
@@ -981,7 +892,7 @@ class leoImportCommands:
 			parent.appendStringToBody(leading_tab + ref + "\n") # 7/6/02
 			
 			# Create the node for the decls.
-			body = self.undentPythonBody(s[j:i])
+			body = self.undentBody(s[j:i])
 			if self.treeType == "@root":
 				body = "@code\n\n" + body
 			self.createHeadline(parent,body,headline)
@@ -1208,6 +1119,7 @@ class leoImportCommands:
 					
 					headline = angleBrackets(" " + self.methodName + " #includes ")
 					body = s[include_start:include_end]
+					body = self.undentBody(body)
 					prefix = choose(self.treeType == "@file","","@code\n\n")
 					self.createHeadline(parent,prefix + body,headline)
 					parent.appendStringToBody("@ignore\n@language c\n")
@@ -1259,6 +1171,7 @@ class leoImportCommands:
 							# Append the headline to the parent's body.
 							parent.appendStringToBody(headline + "\n")
 							decls = s[scan_start:function_start]
+							decls = self.undentBody(decls)
 							if self.treeType == "@file":
 								body = decls
 							else:
@@ -1547,7 +1460,9 @@ class leoImportCommands:
 							decl_headline = angleBrackets(" " + self.methodName + " declarations ")
 							# Append the headline to the parent's body.
 							parent.appendStringToBody(decl_leader + leader + decl_headline + "\n")
+							scan_start = find_line_start(s,scan_start) # Backtrack so we remove leading whitespace.
 							decls = s[scan_start:function_start]
+							decls = self.undentBody(decls)
 							body = choose(self.treeType == "@file",decls,"@code\n\n" + decls)
 							self.createHeadline(parent,body,decl_headline)
 						i = save_ip
@@ -1560,15 +1475,7 @@ class leoImportCommands:
 						#@+node:2:C=9:<< append Java method reference to parent node >>
 						#@+body
 						if self.treeType == "@file":
-							if 1: # 7/31/02: use nested @others
-								parent.appendStringToBody("\t@others\n")
-							else:
-								if outerFlag:
-									parent.appendStringToBody("@others\n")
-								else:
-									ref_name = angleBrackets(" " + self.methodName + " methods ")
-									parent.appendStringToBody("\n" + leader + ref_name + "\n")
-									parent = self.createHeadline(parent,"@others\n",ref_name)
+							parent.appendStringToBody("\t@others\n")
 						else:
 							kind = choose(outerFlag,"classes","methods")
 							ref_name = angleBrackets(" " + self.methodName + " " + kind + " ")
@@ -1578,6 +1485,7 @@ class leoImportCommands:
 
 					if outerFlag:
 						# Create a headline for the class.
+						function_start = find_line_start(s,function_start) # Backtrack so we remove leading whitespace.
 						body = s[function_start:brace_ip1+1]
 						body = self.massageBody(body,methodKind)
 						v = self.createHeadline(parent,body,headline)
@@ -1600,6 +1508,7 @@ class leoImportCommands:
 
 					else:
 						# Create a single headline for the method.
+						function_start = find_line_start(s,function_start) # Backtrack so we remove leading whitespace.
 						body = s[function_start:function_end]
 						body = self.massageBody(body,methodKind)
 						self.createHeadline(parent,body,headline)
@@ -1766,6 +1675,7 @@ class leoImportCommands:
 								body = s[scan_start:start]
 							else:
 								body = "@code\n\n" + s[scan_start:start]
+							body = self.undentBody(body)
 							self.createHeadline(parent,body,headline)
 						i = save_ip
 						scan_start = i
@@ -2324,7 +2234,7 @@ class leoImportCommands:
 		v = parent.insertAsLastChild()
 		v.initHeadString(headline)
 		# Set the body.
-		if len(body) > 0: 
+		if len(body) > 0:
 			v.setBodyStringOrPane(body)
 		return v
 	#@-body
@@ -2334,7 +2244,7 @@ class leoImportCommands:
 	def error (self,s): es(s)
 	#@-body
 	#@-node:2::error
-	#@+node:3::getPythonIndent
+	#@+node:3::getLeadingIndent
 	#@+body
 	#@+at
 	#  This code returns the leading whitespace of a line, ignoring blank and comment lines.
@@ -2342,7 +2252,7 @@ class leoImportCommands:
 	#@-at
 	#@@c
 	
-	def getPythonIndent (self,s,i):
+	def getLeadingIndent (self,s,i):
 	
 		c = self.commands
 		i = find_line_start(s,i)
@@ -2357,7 +2267,7 @@ class leoImportCommands:
 		# trace("returns:0")
 		return 0
 	#@-body
-	#@-node:3::getPythonIndent
+	#@-node:3::getLeadingIndent
 	#@+node:4::isDocStart and isModuleStart
 	#@+body
 	# The start of a document part or module in a noweb or cweb file.
@@ -2391,13 +2301,15 @@ class leoImportCommands:
 	#@+body
 	def massageBody (self,s,methodKind):
 		
+		#trace(`s`)
 		# line = get_line(s,0) ; trace(`line`)
 		c = self.commands
 		if self.treeType == "@file":
 			if self.fileType == ".py": # 7/31/02: was "py"
-				return self.undentPythonBody(s)
+				return self.undentBody(s)
 			else:
 				newBody, comment = self.skipLeadingComments(s)
+				newBody = self.undentBody(newBody)
 				newLine = choose(is_nl(newBody,0),"\n","\n\n")
 				if len(comment) > 0:
 					return comment + "\n@c" + newLine + newBody
@@ -2410,11 +2322,12 @@ class leoImportCommands:
 			rb = choose(cweb,"@>=",">>=")
 			intro = lb + " " + self.methodName + " " + methodKind + " " + rb
 			if self.fileType == ".py": # 7/31/02: was "py"
-				newBody = self.undentPythonBody(s)
+				newBody = self.undentBody(s)
 				newLine = choose(is_nl(newBody,0),"\n","\n\n")
 				return intro + newLine + newBody
 			else:
 				newBody, comment = self.skipLeadingComments(s)
+				newBody = self.undentBody(newBody)
 				newLine = choose(is_nl(newBody,0),"\n","\n\n")
 				if len(comment) > 0:
 					return comment + "\n" + intro + newLine + newBody
@@ -2442,7 +2355,76 @@ class leoImportCommands:
 		return s
 	#@-body
 	#@-node:6::massageComment
-	#@+node:7:C=16:skipLeadingComments
+	#@+node:7::massageWebBody
+	#@+body
+	def massageWebBody (self,s):
+	
+		type = self.webType
+		lb = choose(type=="cweb","@<","<<")
+		rb = choose(type=="cweb","@>",">>")
+		
+		#@<< Remove most newlines from @space and @* sections >>
+		#@+node:1::<< Remove most newlines from @space and @* sections >>
+		#@+body
+		i = 0
+		while i < len(s):
+			i = skip_ws_and_nl(s,i)
+			if self.isDocStart(s,i):
+				# Scan to end of the doc part.
+				if match(s,i,"@ %def"):
+					# Don't remove the newline following %def
+					i = skip_line(s,i) ; start = end = i
+				else:
+					start = end = i ; i += 2
+				while i < len(s):
+					i = skip_ws_and_nl(s,i)
+					if self.isModuleStart(s,i) or match(s,i,lb):
+						end = i ; break
+					elif type == "cweb": i += 1
+					else: i = skip_to_end_of_line(s,i)
+				# Remove newlines from start to end.
+				doc = s[start:end]
+				doc = string.replace(doc,"\n"," ")
+				doc = string.replace(doc,"\r","")
+				doc = string.strip(doc)
+				if doc and len(doc) > 0:
+					if doc == "@":
+						doc = choose(self.webType=="cweb", "@ ","@\n")
+					else:
+						doc += "\n\n"
+					# trace("new doc:" + `doc`)
+					s = s[:start] + doc + s[end:]
+					i = start + len(doc)
+			else: i = skip_line(s,i)
+		#@-body
+		#@-node:1::<< Remove most newlines from @space and @* sections >>
+
+		
+		#@<< Replace abbreviated names with full names >>
+		#@+node:2::<< Replace abbreviated names with full names >>
+		#@+body
+		i = 0
+		while i < len(s):
+			# line = get_line(s,i) ; trace(`line`)
+			if match(s,i,lb):
+				i += 2 ; j = i ; k = find_on_line(s,j,rb)
+				if k > -1:
+					name = s[j:k]
+					name2 = self.cstLookup(name)
+					if name != name2:
+						# Replace name by name2 in s.
+						# trace("replacing:" + `name` + ", by:" + `name2`)
+						s = s[:j] + name2 + s[k:]
+						i = j + len(name2)
+			i = skip_line(s,i)
+		#@-body
+		#@-node:2::<< Replace abbreviated names with full names >>
+
+		s = string.rstrip(s)
+		return s
+	#@-body
+	#@-node:7::massageWebBody
+	#@+node:8:C=16:skipLeadingComments
 	#@+body
 	#@+at
 	#  This skips all leading comments in s, returning the remaining body text and the massaged comment text.
@@ -2467,15 +2449,23 @@ class leoImportCommands:
 						i += 1
 					j = i ; i = skip_line(s,i)
 					comment = comment + self.massageComment(s[j:i]) + "\n"
-					i = skip_ws_and_nl(s,i)
+					# 8/2/02: Preserve leading whitespace for undentBody
+					i = skip_ws(s,i)
+					i = skip_blank_lines(s,i)
 				elif match(s,i,"/*"): # Handle a block C comment.
 					j = i + 2 ; i = skip_block_comment (s,i)
 					k = choose(match(s,i-2,"*/"),i-2,i)
-					if self.fileType == ".java": # 7/31/02: don't munge Java block comments.
-						comment = comment + s[j:k] + "\n"
+					if self.fileType == ".java":
+						# 8/2/02: a hack: add leading whitespace then remove it.
+						comment = self.undentBody(comment)
+						comment2 = ' ' * 2 + s[j:k]
+						comment2 = self.undentBody(comment2)
+						comment = comment + comment2 + "\n"
 					else:
 						comment = comment + self.massageComment(s[j:k]) + "\n"
-					i = skip_ws_and_nl(s,i)
+					# 8/2/02: Preserve leading whitespace for undentBody
+					i = skip_ws(s,i)
+					i = skip_blank_lines(s,i)
 				else: break
 			#@-body
 			#@-node:1::<< scan for C-style comments >>
@@ -2491,11 +2481,15 @@ class leoImportCommands:
 						i += 1
 					j = i ; i = skip_line(s,i)
 					comment = comment + self.massageComment(s[j:i]) + "\n"
-					i = skip_ws_and_nl(s,i)
+					# 8/2/02: Preserve leading whitespace for undentBody
+					i = skip_ws(s,i)
+					i = skip_blank_lines(s,i)
 				elif match(s,i,'(*'):
 					j = i + 1 ; i = skip_pascal_block_comment(s,i)
 					comment = comment + self.massageComment(s[j:i]) + "\n"
-					i = skip_ws_and_nl(s,i)
+					# 8/2/02: Preserve leading whitespace for undentBody
+					i = skip_ws(s,i)
+					i = skip_blank_lines(s,i)
 				else: break
 			#@-body
 			#@-node:2::<< scan for Pascal comments >>
@@ -2507,8 +2501,11 @@ class leoImportCommands:
 			#@+body
 			while i < len(s) and match(s,i,'#'):
 				j = i + 1 ; i = skip_line(s,i)
+				comment = self.undentBody(comment)
 				comment = comment + self.massageComment(s[j:i]) + "\n"
-				i = skip_ws_and_nl(s,i)
+				# 8/2/02: Preserve leading whitespace for undentBody
+				i = skip_ws(s,i)
+				i = skip_blank_lines(s,i)
 			#@-body
 			#@-node:3::<< scan for Python comments >>
 
@@ -2520,8 +2517,8 @@ class leoImportCommands:
 		else:
 			return s[i:], "@ " + comment + "\n"
 	#@-body
-	#@-node:7:C=16:skipLeadingComments
-	#@+node:8::undentPythonBody
+	#@-node:8:C=16:skipLeadingComments
+	#@+node:9::undentBody
 	#@+body
 	#@+at
 	#  Removes extra leading indentation from all lines.  We look at the first line to determine how much leading whitespace to delete.
@@ -2529,9 +2526,9 @@ class leoImportCommands:
 	#@-at
 	#@@c
 	
-	def undentPythonBody (self,s):
+	def undentBody (self,s):
 	
-		trace(`s`)
+		# trace(`s`)
 		c = self.commands
 		i = 0 ; result = ""
 		# Copy an @code line as is.
@@ -2539,7 +2536,7 @@ class leoImportCommands:
 			j = i ; i = skip_line(s,i) # don't use get_line: it is only for dumping.
 			result += s[j:i]
 		# Calculate the amount to be removed from each line.
-		undent = self.getPythonIndent(s,i)
+		undent = self.getLeadingIndent(s,i)
 		if undent == 0: return s
 		while i < len(s):
 			j = i ; i = skip_line(s,i) # don't use get_line: it is only for dumping.
@@ -2549,7 +2546,7 @@ class leoImportCommands:
 			result += line
 		return result
 	#@-body
-	#@-node:8::undentPythonBody
+	#@-node:9::undentBody
 	#@-node:4::Utilities
 	#@-others
 #@-body
