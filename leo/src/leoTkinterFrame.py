@@ -412,22 +412,25 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         #@    << set the leoTkinterFrame ivars >>
         #@+node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
-        # Created in createLeoFrame and its allies.
-        self.top = None
-        self.tree = None
+        # "Official ivars created in createLeoFrame and its allies.
+        self.bar1 = None
+        self.bar2 = None
+        self.body = None
+        self.bodyBar = None
+        self.bodyCtrl = None
+        self.bodyXBar = None
         self.f1 = self.f2 = None
-        self.log = None  ; self.logBar = None
-        self.body = None ; self.bodyCtrl = None
-        self.bodyBar = None ; self.bodyXBar = None
-        self.canvas = None ; self.treeBar = None
-        self.splitter1 = self.splitter2 = None
-        self.icon = None
-        self.outerFrame = None 
+        self.findPanel = None # Inited when first opened.
         self.iconFrame = None 
+        self.log = None
+        self.canvas = None
+        self.outerFrame = None 
         self.statusFrame = None 
         self.statusText = None 
         self.statusLabel = None 
-        self.findPanel = None
+        self.top = None
+        self.tree = None
+        self.treeBar = None
         
         # Used by event handlers...
         self.redrawCount = 0
@@ -487,6 +490,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         #@+node:ekr.20041224120552:<< create the icon bar >>
         self.iconBarComponentName = 'iconBar'
         iconBar = self.iconBarClass(c,outerFrame)
+        self.iconFrame = iconBar.iconFrame
         
         self.iconBar = self.componentClass(c,
             self.iconBarComponentName,outerFrame,
@@ -526,6 +530,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
         #@+node:ekr.20041225103412:<< create the status line >>
         self.statusLineComponentName = 'statusLine'
         statusLine = self.statusLineClass(c,outerFrame)
+        
+        # Create offical ivars in the frame class.
+        self.statusFrame = statusLine.statusFrame
+        self.statusLabel = statusLine.labelWidget
+        self.statusText  = statusLine.textWidget
+        
         self.statusLine = self.componentClass(c,
             self.statusLineComponentName,
             statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
@@ -1529,18 +1539,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.controlKeyIsDown = False
     
     #@-node:ekr.20031218072017.3973:frame.OnControlKeyUp/Down
-    #@+node:ekr.20031218072017.3974:frame.OnVisibility
-    # Handle the "visibility" event and attempt to attach the Leo icon.
-    # This code must be executed whenever the window is redrawn.
-    
-    def OnVisibility (self,event):
-    
-        if self.icon and event.widget is self.top:
-    
-            # print "OnVisibility"
-            self.icon.attach(self.top)
-    #@nonl
-    #@-node:ekr.20031218072017.3974:frame.OnVisibility
     #@+node:ekr.20031218072017.3975:OnActivateBody
     def OnActivateBody (self,event=None):
     
@@ -2104,8 +2102,8 @@ class leoTkinterBody (leoFrame.leoBody):
         bodyBar['command'] = body.yview
         bodyBar.pack(side="right", fill="y")
         
-        # 8/30/03: Always create the horizontal bar.
-        self.bodyXBar = bodyXBar = Tk.Scrollbar(
+        # Always create the horizontal bar.
+        frame.bodyXBar = self.bodyXBar = bodyXBar = Tk.Scrollbar(
             parentFrame,name='bodyXBar',orient="horizontal")
         body['xscrollcommand'] = bodyXBar.set
         bodyXBar['command'] = body.xview
@@ -3071,7 +3069,7 @@ class leoTkinterLog (leoFrame.leoLog):
         log = Tk.Text(parentFrame,name="log",
             setgrid=0,wrap=wrap,bd=2,bg="white",relief="flat")
         
-        self.logBar = logBar = Tk.Scrollbar(parentFrame,name="logBar")
+        logBar = Tk.Scrollbar(parentFrame,name="logBar")
     
         log['yscrollcommand'] = logBar.set
         logBar['command'] = log.yview
