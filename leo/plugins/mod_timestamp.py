@@ -1,0 +1,32 @@
+#@+leo-ver=4-thin
+#@+node:edream.110203113231.727:@file-thin mod_timestamp.py
+"""Timestamp all save operations to show when they occur"""
+
+#@@language python
+
+# By Paul Paterson.
+
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+import time
+	
+#@+others
+#@+node:edream.110203113231.728:timestamp
+def timestamp(tag=None, keywords=None):
+	
+	cmd = keywords.get('label', 'save')
+
+	if cmd.startswith("save") or cmd.startswith("tangle"):
+		g.es("%s: %s" % (cmd, time.ctime()))
+#@-node:edream.110203113231.728:timestamp
+#@-others
+
+# Register the handlers...
+leoPlugins.registerHandler("command1", timestamp)
+__version__ = "0.1"
+g.plugin_signon(__name__)
+#@nonl
+#@-node:edream.110203113231.727:@file-thin mod_timestamp.py
+#@-leo
