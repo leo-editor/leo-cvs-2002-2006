@@ -105,6 +105,50 @@ class leoTkinterFrame (leoFrame.leoFrame):
         # Handle mouse wheel in the outline pane.
         if sys.platform == "linux2": # This crashes tcl83.dll
             canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+        if 1:
+            #@        << do scrolling by hand in a separate thread >>
+            #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
+            import threading
+            import time
+            way = 'Down' # global.
+            ev = threading.Event()
+            
+            def run(ev = ev):
+                global way
+                while 1:
+                    ev.wait()
+                    if way=='Down': canvas.yview("scroll", 1,"units")
+                    else:           canvas.yview("scroll",-1,"units")
+                    time.sleep(.1)
+            
+            t = threading.Thread(target = run)
+            t.setDaemon(True)
+            t.start()
+                
+            def exe(event,ev=ev,theWay='Down',canvas=canvas):
+                global way
+                if event.widget!=canvas: return
+                if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
+                ev.set()
+                way = theWay
+                    
+            def off(event,ev=ev,canvas=canvas):
+                if event.widget!=canvas: return
+                ev.clear()
+            
+            if 1: # Use shift-click
+                canvas.bind_all('<Shift Button-3>',exe)
+                canvas.bind_all('<Shift Button-1>',lambda event,way='Up': exe(event,theWay=way))
+                canvas.bind_all('<Shift ButtonRelease-1>', off)
+                canvas.bind_all('<Shift ButtonRelease-3>', off)
+            else: # Use plain click.
+                canvas.bind_all( '<Button-3>', exe)
+                canvas.bind_all( '<Button-1>', lambda event,way='Up': exe(event,theWay=way))
+                canvas.bind_all( '<ButtonRelease-1>', off)
+                canvas.bind_all( '<ButtonRelease-3>', off)
+            #@nonl
+            #@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
+            #@nl
         
         # g.print_bindings("canvas",canvas)
         return canvas
@@ -893,8 +937,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
         try:
             frame = self ; c = frame.c ; gui = g.app.gui
             g.app.setLog(frame.log,"OnActivateBody")
-            self.tree.OnDeactivate()
-            gui.set_focus(c,frame.body.bodyCtrl) # Reference to bodyCtrl is allowable in an event handler.
+            w = gui.get_focus(frame)
+            if w != frame.body.bodyCtrl:
+                self.tree.OnDeactivate()
+                # Reference to bodyCtrl is allowable in an event handler.
+                gui.set_focus(c,frame.body.bodyCtrl) 
         except:
             g.es_event_exception("activate body")
     #@nonl
@@ -957,6 +1004,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
             if not g.doHook("bodydclick1",c=c,v=v,event=event):
                 if event: # 8/4/02: prevent wandering insertion point.
                     index = "@%d,%d" % (event.x, event.y) # Find where we clicked
+                    # 7/9/04
+                    event.widget.tag_add('sel', 'insert wordstart', 'insert wordend')
                 body = self.bodyCtrl
                 start = body.index(index + " wordstart")
                 end = body.index(index + " wordend")
@@ -964,8 +1013,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
             g.doHook("bodydclick2",c=c,v=v,event=event)
         except:
             g.es_event_exception("bodydclick")
-    
-        return "break" # Inhibit all further event processing.
+            
+        return "break" # Restore this to handle proper double-click logic.
     #@nonl
     #@-node:ekr.20031218072017.3978:OnBodyDoubleClick (Events)
     #@+node:ekr.20031218072017.1803:OnMouseWheel (Tomaz Ficko)
