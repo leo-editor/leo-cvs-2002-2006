@@ -1066,8 +1066,6 @@ class atFile:
 		v = root
 		if partialFlag: after = v.nodeAfterTree()
 		else: after = None
-		if 0:
-			c.clearAllVisited() # 9/26/02: don't read cloned nodes twice.
 		while v and v != after:
 			if v.isAtIgnoreNode():
 				v = v.nodeAfterTree()
