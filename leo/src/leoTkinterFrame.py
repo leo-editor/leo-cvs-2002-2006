@@ -209,21 +209,35 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20041221071131.1:createTkTreeCanvas
     #@-node:ekr.20031218072017.3944:f.createCanvas & helpers
     #@+node:ekr.20041221075743:onPmwResizeSplitter1/2
+    #@+at 
+    #@nonl
+    # These methods cause problems because Pmw.PanedWidget's calls these methods way too often.
+    # 
+    # We don't need to remember changes to pane sizes, for several reasons:
+    # 1. The initial secondary ratio is always set by leoFrame.initialRatios().
+    #     - Remembering this ratio implies a change to the file format and is not worth the cost.
+    #     - The user can set these initial ratios with user options.
+    # 2. The only benefit of remembering the secondary ratio is when using the Equal Sized Panes command.
+    #     - But resetting the secondary ratio to the default secondary ratio is good enough.
+    # 3. Not remembering these ratios simplifies the code enough to be worth doing.
+    #@-at
+    #@@c
+    
     def onPmwResizeSplitter1 (self,sizes):
-        
-        if not self.initing:
-            n1,n2 = sizes
-            n1,n2 = float(n1),float(n2)
-            self.ratio = n1/(n1+n2)
-            # g.trace(self.ratio)
+        if 0: # Don't try to remember size changes.
+            if not self.initing:
+                n1,n2 = sizes
+                n1,n2 = float(n1),float(n2)
+                self.ratio = n1/(n1+n2)
+                # g.trace(self.ratio)
         
     def onPmwResizeSplitter2 (self,sizes):
-    
-    	if not self.initing:
-            n1,n2 = sizes
-            n1,n2 = float(n1),float(n2)
-            self.secondary_ratio = n1/(n1+n2)
-            # g.trace(self.secondary_ratio)
+        if 0: # Don't try to remember size changes.
+            if not self.initing:
+                n1,n2 = sizes
+                n1,n2 = float(n1),float(n2)
+                self.secondary_ratio = n1/(n1+n2)
+                # g.trace(self.secondary_ratio)
     #@nonl
     #@-node:ekr.20041221075743:onPmwResizeSplitter1/2
     #@+node:ekr.20031218072017.2176:f.finishCreate
@@ -232,9 +246,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         frame = self ; frame.c = c ; gui = g.app.gui
         
         # This must be done after creating the commander.
-        self.initing = True # To supress onPmwResize until resizePanesToRatio gets called.
         self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
-    
         #@    << create the toplevel frame >>
         #@+node:ekr.20031218072017.2177:<< create the toplevel frame >>
         frame.top = top = Tk.Toplevel()
@@ -296,21 +308,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c.endUpdate(False)
         #@-node:ekr.20031218072017.2180:<< create the first tree node >>
         #@nl
-    
         self.menu = leoTkinterMenu.leoTkinterMenu(frame)
-    
         v = c.currentVnode()
-    
         if not g.doHook("menu1",c=c,p=v,v=v):
             frame.menu.createMenuBar(self)
-    
         g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
-    
         g.app.windowList.append(frame)
-        
         c.initVersion()
         c.signOnWithVersion()
-        
         self.body.createBindings(frame)
     #@nonl
     #@-node:ekr.20031218072017.2176:f.finishCreate
@@ -412,10 +417,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def resizePanesToRatio(self,ratio,ratio2):
         
         if Pmw:
+            # g.trace(ratio,ratio2)
             self.ratio = ratio
             self.secondary_ratio = ratio2
-            self.initing = True
-            # g.trace(self.splitVerticalFlag,ratio,ratio2)
             splitter1 = self.componentsDict.get('splitter1')
             splitter2 = self.componentsDict.get('splitter2')
     
@@ -433,11 +437,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 # Use ratio2 to set outline height.
                 size = ratio2 * float(splitter2.winfo_height())
                 splitter2.configurepane('outline',size=int(size))
-    
-            # Wait until idle time to clear self.initing.
-            def callback(event=None):
-                self.initing = False
-            self.outerFrame.after_idle(callback)
     #@nonl
     #@-node:ekr.20031218072017.3946:resizePanesToRatio
     #@-node:ekr.20041221195402:Pmw only...
@@ -1394,6 +1393,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.3989:minimizeAll
     #@+node:ekr.20031218072017.3990:toggleSplitDirection (tkFrame)
     # The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
+    
     def toggleSplitDirection(self):
         
         # Switch directions.
@@ -1408,47 +1408,47 @@ class leoTkinterFrame (leoFrame.leoFrame):
             self.toggleTkSplitDirection(self.splitVerticalFlag)
     #@nonl
     #@+node:ekr.20041221122440.1:togglePmwSplitDirection
+    #@+at 
+    #@nonl
+    # Alas, there seems to be is no way to
+    # a) change the orientation of a Pmw.PanedWidget, or
+    # b) change the parent of a widget.
+    # Therefore, we must recreate all widgets to toggle the orientation!
+    #@-at
+    #@@c
+    
     def togglePmwSplitDirection (self,verticalFlag):
         
-        frame = self ; c = self.c
+        frame = self ; c = self.c ; p = c.currentPosition()
         
         for name in ('splitter1','splitter2'):
             splitter = self.componentsDict.get(name)
             splitter.pack_forget()
     
-        # Remember contents of the log and all tags.
-        # To do:  encapsulate in log.save and log.restore methods.
-        logCtrl = frame.log.logCtrl
-        s = logCtrl.get('1.0','end')
-        tag_names = logCtrl.tag_names()
-        tags = {}
-        for tag in tag_names:
-            tags[tag] = logCtrl.tag_ranges(tag)
-        # g.trace("tags...\n",g.dictToString(tags))
-        
-        # Reallocate everything
+        # Remember the contents of the log, including most tags.
+        d = self.log.saveAllState()
+    
+        # Recreate everything: similar to code in finishCreate.
         self.createLeoSplitters(self.outerFrame)
         frame.canvas = self.createCanvas(self.split2Pane1) # Also packs canvas
         frame.tree  = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
         frame.log   = leoTkinterLog(frame,self.split2Pane2)
-        
-        #### Body pane doesn't work after toggling. Could we lose data????????????
         frame.body  = leoTkinterBody(frame,self.split1Pane2)
         
-        # Restore the log text and all tags.
-        logCtrl = frame.log.logCtrl
-        logCtrl.insert('end',s)
-        for tag in tags.keys():
-            items = list(tags.get(tag))
-            # g.trace(tag,items)
-            while items:
-                if tag not in frame.log.colorTags:
-                    frame.log.colorTags.append(tag)
-                    logCtrl.tag_config(tag,foreground=tag)
-                start,stop = items[0],items[1]
-                items = items[2:]
-                logCtrl.tag_add(tag,start,stop)
+        # A kludge: reset this "official" ivar.
+        frame.bodyCtrl = frame.body.bodyCtrl
     
+        # Configure: similar to code in finishCreate.
+        frame.setTabWidth(c.tab_width)
+        frame.tree.setColorFromConfig()
+        self.reconfigurePanes()
+        self.body.setFontFromConfig()
+        self.body.setColorFromConfig()
+    
+        # Restore everything.
+        g.app.setLog(self.log)
+        frame.log.restoreAllState(d)
+        c.selectPosition(p)
         c.redraw()
     #@nonl
     #@-node:ekr.20041221122440.1:togglePmwSplitDirection
@@ -2752,6 +2752,51 @@ class leoTkinterLog (leoFrame.leoLog):
             self.frame.tree.disableRedraw = False
     #@nonl
     #@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+    #@+node:ekr.20041222043017:tkLog.restoreAllState
+    def restoreAllState (self,d):
+        
+        '''Restore the log from a dict created by saveAllState.'''
+        
+        logCtrl = self.logCtrl
+    
+        # Restore the text.
+        text = d.get('text')
+        logCtrl.insert('end',text)
+    
+        # Restore all colors.
+        colors = d.get('colors')
+        for color in colors.keys():
+            if color not in self.colorTags:
+                self.colorTags.append(color)
+                logCtrl.tag_config(color,foreground=color)
+            items = list(colors.get(color))
+            while items:
+                start,stop = items[0],items[1]
+                items = items[2:]
+                logCtrl.tag_add(color,start,stop)
+    #@nonl
+    #@-node:ekr.20041222043017:tkLog.restoreAllState
+    #@+node:ekr.20041222043017.1:tkLog.saveAllState
+    def saveAllState (self):
+        
+        '''Return a dict containing all data needed to recreate the log in another widget.'''
+        
+        logCtrl = self.logCtrl ; colors = {}
+    
+        # Save the text
+        text = logCtrl.get('1.0','end')
+    
+        # Save color tags.
+        tag_names = logCtrl.tag_names()
+        for tag in tag_names:
+            if tag in self.colorTags:
+                colors[tag] = logCtrl.tag_ranges(tag)
+                
+        d = {'text':text,'colors': colors}
+        # g.trace('\n',g.dictToString(d))
+        return d
+    #@nonl
+    #@-node:ekr.20041222043017.1:tkLog.saveAllState
     #@+node:ekr.20041217135735.2:tkLog.setColorFromConfig
     def setColorFromConfig (self):
         
