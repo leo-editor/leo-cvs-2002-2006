@@ -40,13 +40,15 @@ __version__ = "0.2"
 #     - Uses g.trace to simplify all traces.
 #     - Removed comments originating from style guide.
 #     - Defined __version__ only in root node.
-# 0.3 EKR
+# 0.3 EKR:
 #     - Used g.importExtension to import path and win32clipboard.
 #     - Added extensive comments to module's doc string.
 #     - Added comments to class View node.
 #     - Commented out several traces.
 #     - Handle @verbatim sentinels in strip()
 #     - Fix bug in strip: set path = currentPath.abspath()
+# 0.4 EKR:
+#     - Handle case where self.c has been destroyed in idle handler.
 #@-at
 #@nonl
 #@-node:ktenney.20041211072654.3:<< version history >>
@@ -108,10 +110,14 @@ class View:
     #@-node:ktenney.20041211072654.9:icondclick2
     #@+node:ktenney.20041211203715:idle
     def idle(self, tag, keywords):
-     
-        self.current = self.c.currentPosition()
-        s = self.current.headString()
+        
+        try:
+            self.current = self.c.currentPosition()
+        except AttributeError:
+            # c has been destroyed.
+            return
     
+        s = self.current.headString()
         if s.startswith("@clip"):
             self.clip()
     #@nonl
@@ -173,8 +179,6 @@ class View:
         
         # get a path object for this position
         currentPath = self.getCurrentPath()
-        
-        g.trace()
         
         if currentPath.exists():
             path = currentPath.abspath()
