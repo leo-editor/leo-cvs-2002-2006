@@ -2092,6 +2092,8 @@ class baseFileCommands:
             #@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
             #@nl
             return False
+            
+    write_LEO_file = write_Leo_file # For compatibility with old plugins.
     #@nonl
     #@-node:ekr.20031218072017.3046:write_Leo_file
     #@+node:ekr.20031218072017.2012:writeAtFileNodes
