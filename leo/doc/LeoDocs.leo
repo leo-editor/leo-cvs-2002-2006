@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3379" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-	<global_window_position top="111" left="398" height="836" width="837"/>
+<globals body_outline_ratio="0.47009569377990429">
+	<global_window_position top="-4" left="376" height="836" width="837"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -66,7 +66,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -86,8 +86,8 @@
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="edream.121403160546" a="V"><vh>4.1 final</vh>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="edream.121403160546"><vh>4.1 final</vh>
 <v t="edream.121403165221"><vh>Bugs fixed in this release</vh></v>
 <v t="edream.121403161017"><vh>Bug fixed in previous 4.1 releases</vh></v>
 <v t="edream.121403161017.1"><vh>New code-level features</vh></v>
@@ -1715,7 +1715,8 @@
 <v t="edream.110203163054.1156"><vh>Untangling</vh></v>
 <v t="edream.110203163054.1157"><vh>Weaving</vh></v>
 </v>
-<v t="edream.110203163054.1158"><vh>Sample Code</vh>
+<v t="edream.110203163054.1158" a="V"><vh>Sample Code</vh>
+<v t="edream.112303173638" a=""><vh>Running Leo in batch mode</vh></v>
 <v t="edream.110203163054.1159"><vh>Hello World using @root</vh>
 <v t="edream.110203163054.1160"><vh>&lt;&lt; includes &gt;&gt;</vh></v>
 <v t="edream.110203163054.1161"><vh>&lt;&lt; methods &gt;&gt;</vh></v>
@@ -24317,26 +24318,28 @@ script and the following happens:
 Presto!  Leo is ready for a script search.</t>
 <t tx="edream.111803060643"></t>
 <t tx="edream.111803062437"></t>
-<t tx="edream.112303173638">@nocolor
+<t tx="edream.112303173638">@language python
+@color
 
-New in version 4.1: On startup, Leo looks for two arguments of the form --script scriptFile.  If found, Leo enters batch mode.
+@  New in version 4.1: On startup, Leo looks for two arguments of the form --script scriptFile.  If found, Leo enters batch mode.
 
 In batch mode Leo does not show any windows.  Leo assumes the scriptFile contains a Python script and executes the contents of that file using Leo's Execute Script command.  By default, Leo sends all output to Leo's log pane to the console window.  Scripts in the scriptFile may disable or enable this output by calling app.log.disable() or app.log.enable()
 
 Scripts in the scriptFile may execute any of Leo's commands except the Edit Body and Edit Headline commands.  Those commands require interaction with the user.
 
 For example, the following batch script reads a Leo file and prints all the headlines in that file.
+@c
 
-@color
 from leoGlobals import *
-c = app.log.c
-path = r"c:\prog\test\myLeoFile.leo"
+
+path = r"c:\prog\leoCVS\leo\test\test.leo"
+
 app.log.disable() # disable reading messages while opening the file
-flag,newFrame = openWithFileName(path)
+flag,newFrame = openWithFileName(path,None)
 app.log.enable() # re-enable the log.
-c = newFrame.c ; root = c.rootVnode()
+c = newFrame.c ; v = c.rootVnode()
 while v:
-	print v.headString()
+	print toEncodedString(v.headString(),"utf-8")
 	v = v.threadNext()</t>
 <t tx="edream.120403174147"></t>
 <t tx="edream.120403174147.30">Another 4.1 reorg bug.</t>
