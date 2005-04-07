@@ -31,7 +31,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 <v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins</vh>
+<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
@@ -178,7 +178,6 @@ expanded="ekr.20050329163946.98,ekr.20050329163946.100,ekr.20050329163946.121,">
 <v t="ekr.20050329163946.125" tnodeList="ekr.20050329163946.125"><vh>@nosent dyna_menu.ini</vh></v>
 <v t="ekr.20050329163946.126"
 expanded="ekr.20050329163946.129,"><vh>@thin dyna.txt</vh></v>
-<v t="ekr.20050328091022.74" a="E"><vh>@thin exSButton.py</vh></v>
 </v>
 </v>
 <v t="edream.110203113231.872"><vh>Enhanced nodes...</vh>
@@ -925,7 +924,7 @@ expanded="ekr.20050331064504,"><vh>@thin golf.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050226090248" a="TV"><vh>New/updated from Leo User</vh>
+<v t="ekr.20050226090248"><vh>New/updated from Leo User</vh>
 <v t="mork.20041020082242.1"><vh>@thin base64Packager.py</vh></v>
 <v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
 <v t="mork.20041018091414.1"><vh>@thin fastGotoNode.py</vh></v>
