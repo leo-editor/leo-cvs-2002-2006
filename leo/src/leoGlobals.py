@@ -4014,7 +4014,7 @@ class Bunch (object):
         else:
             return "Bunch...\n%s\n" % '\n'.join(entries)
 
-    if 0:
+    if 1:  # Used by new undo code.
         def __setitem__ (self,key,value):
             '''Support aBunch[key] = val'''
             return operator.setitem(self.__dict__,key,value)
@@ -4022,6 +4022,9 @@ class Bunch (object):
         def __getitem__ (self,key):
             '''Support aBunch[key]'''
             return operator.getitem(self.__dict__,key)
+            
+        def get (self,key,theDefault=None):
+            return self.__dict__.get(key,theDefault)
         
 bunch = Bunch
 #@nonl
