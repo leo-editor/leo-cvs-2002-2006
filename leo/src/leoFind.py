@@ -376,7 +376,7 @@ class leoFind:
             return
     #@nonl
     #@-node:ekr.20050204084635:find.adjust_ivars
-    #@+node:ekr.20031218072017.2293:batchChange
+    #@+node:ekr.20031218072017.2293:batchChange (sets start of change-all group)
     #@+at 
     #@nonl
     # This routine performs a single batch change operation, updating the head 
@@ -446,7 +446,7 @@ class leoFind:
             c.setChanged(True)
         v.setDirty()
     #@nonl
-    #@-node:ekr.20031218072017.2293:batchChange
+    #@-node:ekr.20031218072017.2293:batchChange (sets start of change-all group)
     #@+node:ekr.20031218072017.3068:change
     def change(self):
     
@@ -455,7 +455,7 @@ class leoFind:
             self.changeSelection()
     #@nonl
     #@-node:ekr.20031218072017.3068:change
-    #@+node:ekr.20031218072017.3069:changeAll
+    #@+node:ekr.20031218072017.3069:changeAll (sets endo of change-all group)
     def changeAll(self):
     
         c = self.c ; st = self.s_ctrl ; gui = g.app.gui
@@ -487,7 +487,7 @@ class leoFind:
         self.restore(data)
         c.endUpdate()
     #@nonl
-    #@-node:ekr.20031218072017.3069:changeAll
+    #@-node:ekr.20031218072017.3069:changeAll (sets endo of change-all group)
     #@+node:ekr.20031218072017.3070:changeSelection
     # Replace selection with self.change_text.
     # If no selection, insert self.change_text at the cursor.

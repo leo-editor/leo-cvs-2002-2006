@@ -1813,17 +1813,16 @@ class baseCommands:
         d = g.scanDirectives(c)
         tabWidth  = d.get("tabwidth")
         # Create copy for undo.
-        if 1: # new undo code
+        if c.undoer.new_undo: # new undo code
             data = c.undoer.beforeChangeTree(current)
         else:
             v_copy = c.undoer.saveTree(current)
             oldText = body.getAllText()
             oldSel = body.getTextSelection()
         count = 0
-        #next = p.nodeAfterTree()
-        #while p and p != next:
+        c.beginUpdate() # 4/8/05
         for p in current.self_and_subtree_iter():
-            g.trace(p,tabWidth)
+            # g.trace(p.headString(),tabWidth)
             if p == current:
                 if c.convertBlanks(setUndoParams=False):
                     count += 1 ; p.setDirty()
@@ -1833,7 +1832,6 @@ class baseCommands:
                 assert(g.isUnicode(text))
                 lines = string.split(text, '\n')
                 for line in lines:
-                    # s = g.optimizeLeadingWhitespace(line,tabWidth)
                     i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
                     s = g.computeLeadingWhitespace(w,abs(tabWidth)) + line[i:] # use positive width.
                     if s != line: changed = True
@@ -1842,9 +1840,8 @@ class baseCommands:
                     count += 1 ; p.setDirty()
                     result = string.join(result,'\n')
                     p.setTnodeText(result)
-            # p = p.threadNext()
         if count > 0:
-            if 1:
+            if c.undoer.new_undo: # new undo code.
                 c.undoer.afterChangeTree(current,'Convert All Blanks',data)
             else:
                 newText = body.getAllText()
@@ -1853,7 +1850,8 @@ class baseCommands:
                     current,select=current,oldTree=v_copy,
                     oldText=oldText,newText=newText,
                     oldSel=oldSel,newSel=newSel)
-        g.es("blanks converted to tabs in %d nodes" % count)
+        g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
+        c.endUpdate(count > 0) # 4/8/05
     #@nonl
     #@-node:ekr.20031218072017.1704:convertAllBlanks
     #@+node:ekr.20031218072017.1705:convertAllTabs
@@ -1916,10 +1914,11 @@ class baseCommands:
         # Use the relative @tabwidth, not the global one.
         theDict = g.scanDirectives(c)
         tabWidth  = theDict.get("tabwidth")
+        
         if not tabWidth: return False
     
         for line in lines:
-            s = g.optimizeLeadingWhitespace(line,tabWidth)
+            s = g.optimizeLeadingWhitespace(line,abs(tabWidth)) # 4/8/05: use abs.
             if s != line: changed = True
             result.append(s)
     
@@ -1927,8 +1926,6 @@ class baseCommands:
             result = string.join(result,'\n')
             undoType = g.choose(setUndoParams,"Convert Blanks",None)
             c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-            
-        g.trace(changed)
     
         return changed
     #@nonl
@@ -2598,7 +2595,7 @@ class baseCommands:
     #@+node:ekr.20031218072017.1838:updateBodyPane (handles undo)
     def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
         
-        c = self ; body = c.frame.body ; v = c.currentVnode()
+        c = self ; body = c.frame.body ; p = c.currentPosition()
     
         # Update the text and notify the event handler.
         body.setSelectionAreas(head,middle,tail)
@@ -2606,13 +2603,13 @@ class baseCommands:
         if setSel:
             body.setTextSelection(oldSel)
     
-        body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
+        body.onBodyChanged(p,undoType,oldSel=oldSel,oldYview=oldYview)
     
         # Update the changed mark and icon.
         c.setChanged(True)
         c.beginUpdate()
-        if not v.isDirty():
-            v.setDirty()
+        if not p.isDirty():
+            p.setDirty()
         c.endUpdate()
     
         # Scroll as necessary.
