@@ -968,6 +968,22 @@ On Me you set the registry somehow.
 No information on XP.
 #@nonl
 #@-node:ekr.20031218072017.385:How to Increase environment space
+#@+node:ekr.20050316092232:How to install jyLeo
+@killcolor
+
+- put the j-leo-nnn.jar file in c:\prog
+
+- Execute the following command in a console window in c:\prog
+    jar xvf j-leo-nnn.jar
+
+This creates a folder called j-leo-nnn
+
+- Do the following, or execute jleo.bat
+
+cd c:\prog\j-leo-nnn\src
+java -jar c:\jython22a0\jython.jar leo.py
+#@nonl
+#@-node:ekr.20050316092232:How to install jyLeo
 #@+node:ekr.20031218072017.386:How to remove cursed newlines: use binary mode
 teknico ( Nicola Larosa ) 
  RE: Removing '\r' characters?   
@@ -3087,6 +3103,48 @@ while p and not p.isEqual(after):
 #@nonl
 #@-node:ekr.20050225105352:<< delete all unvisited nodes >>
 #@-node:ekr.20050225154536:Unused from AtFile.read
+#@+node:ekr.20050328134355:Unused from leo.py
+#@+node:ekr.20041219072416:<< compute directories >>
+if 1:
+    g.computeStandardDirectories()
+else:
+    g.app.loadDir = g.computeLoadDir()
+        # Depends on g.app.tkEncoding: uses utf-8 for now.
+    
+    g.app.homeDir = g.computeHomeDir()
+    
+    g.app.extensionsDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','extensions'))
+    
+    g.app.globalConfigDir = g.computeGlobalConfigDir()
+    
+    g.app.testDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','test'))
+#@nonl
+#@-node:ekr.20041219072416:<< compute directories >>
+#@-node:ekr.20050328134355:Unused from leo.py
+#@+node:ekr.20050404190914:From leoFileCommands write_Leo_file
+#@+node:ekr.20040324080359.2:<< create the output file >> No longer used
+self.outputFile = open(fileName, 'wb') # 9/18/02
+
+# This would never be executed, because the open statement would throw an IOError.
+if not self.outputFile:
+    g.es("can not open " + fileName)
+    << delete backup file >>
+    return False
+#@nonl
+#@-node:ekr.20040324080359.2:<< create the output file >> No longer used
+#@+node:ekr.20040324080819.3:<< close the output file >>
+try:
+    self.outputFile.close()
+except Exception:
+    g.es("exception closing: " + fileName)
+    g.es_exception()
+    
+self.outputFile = None
+#@nonl
+#@-node:ekr.20040324080819.3:<< close the output file >>
+#@-node:ekr.20050404190914:From leoFileCommands write_Leo_file
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

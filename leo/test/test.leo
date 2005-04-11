@@ -9,7 +9,8 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="EKR.20040623200709" annotate="7d71002e"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709" annotate="7d71002e"
+expanded="ekr.20040707140849.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -1053,7 +1054,7 @@
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1127,7 +1128,7 @@
 </v>
 <v t="ekr.20050119144013"><vh>Remove all file system dependencies</vh></v>
 </v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>General Unit Tests</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
@@ -1152,14 +1153,14 @@
 <v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
 </v>
 <v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2" a="E"><vh>findTestsInModule</vh>
+<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
 <v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20041130092210" a="E"><vh>Batch mode tests</vh>
+<v t="ekr.20041130092210"><vh>Batch mode tests</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
@@ -1227,90 +1228,6 @@
 <v t="ekr.20050105100227"><vh>@test atFile.replaceTargetFileIfDifferent (no target file)</vh></v>
 </v>
 <v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
-<v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
-<v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
-<v t="ekr.20040712101754.40"><vh>extractSection</vh>
-<v t="ekr.20040712101754.41"><vh>before</vh></v>
-<v t="ekr.20040712101754.42"><vh>after</vh>
-<v t="ekr.20040712101754.43"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040712101754.44"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040712101754.45"><vh>indentBody</vh>
-<v t="ekr.20040712101754.46"><vh>before</vh></v>
-<v t="ekr.20040712101754.47"><vh>after</vh></v>
-<v t="ekr.20040712101754.48"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040712101754.49"><vh>dedentBody</vh>
-<v t="ekr.20040712101754.50"><vh>before</vh></v>
-<v t="ekr.20040712101754.51"><vh>after</vh></v>
-<v t="ekr.20040712101754.52"><vh>selection</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
-<v t="ekr.20040712101754.54"><vh>What I did</vh></v>
-<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
-<v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
-<v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
-<v t="ekr.20040712101754.58"><vh>before</vh></v>
-<v t="ekr.20040712101754.59"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.60"><vh>testTrailingNewline</vh>
-<v t="ekr.20040712101754.61"><vh>before</vh></v>
-<v t="ekr.20040712101754.62"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.63"><vh>testMixedLineLengths</vh>
-<v t="ekr.20040712101754.64"><vh>before</vh></v>
-<v t="ekr.20040712101754.65"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.66"><vh>testMixedLinesWithLeadingWS</vh>
-<v t="ekr.20040712101754.67"><vh>before</vh></v>
-<v t="ekr.20040712101754.68"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.69"><vh>testNoChangeRequired</vh>
-<v t="ekr.20040712101754.70"><vh>before</vh></v>
-<v t="ekr.20040712101754.71"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.72"><vh>testHonorLeadingWS</vh>
-<v t="ekr.20040712101754.73"><vh>before</vh></v>
-<v t="ekr.20040712101754.74"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.75"><vh>testHonorLeadingWSVar1</vh>
-<v t="ekr.20040712101754.76"><vh>before</vh></v>
-<v t="ekr.20040712101754.77"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.78"><vh>testSimpleHangingIndent</vh>
-<v t="ekr.20040712101754.79"><vh>before</vh></v>
-<v t="ekr.20040712101754.80"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.81"><vh>testSimpleHangingIndentVar1</vh>
-<v t="ekr.20040712101754.82"><vh>before</vh></v>
-<v t="ekr.20040712101754.83"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.84"><vh>testSimpleHangingIndentVar2</vh>
-<v t="ekr.20040712101754.85"><vh>before</vh></v>
-<v t="ekr.20040712101754.86"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.87"><vh>testMultiParagraph</vh>
-<v t="ekr.20040712101754.88"><vh>before</vh></v>
-<v t="ekr.20040712101754.89"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.90"><vh>testMultiParagraphWithList</vh>
-<v t="ekr.20040712101754.91"><vh>before</vh></v>
-<v t="ekr.20040712101754.92"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.93"><vh>testDirectiveBreaksParagraph</vh>
-<v t="ekr.20040712101754.94"><vh>before</vh></v>
-<v t="ekr.20040712101754.95"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.96"><vh>testWithLeadingWSOnEmptyLines</vh>
-<v t="ekr.20040712101754.97"><vh>before</vh></v>
-<v t="ekr.20040712101754.98"><vh>after</vh></v>
-</v>
-</v>
-</v>
 <v t="ekr.20040712101754.99"><vh>@test c iters</vh>
 <v t="ekr.20040712101754.100"><vh>&lt;&lt; coverage tests &gt;&gt;</vh></v>
 <v t="ekr.20040712101754.101"><vh>&lt;&lt; duplicate tests &gt;&gt;</vh></v>
@@ -1554,17 +1471,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2"><vh>Test .leo files...</vh>
-<v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
-<v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
-<v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
-<v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
-<v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
-<v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
-<v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
-<v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
-<v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
-</v>
 <v t="ekr.20050105080048"><vh>Test ivars</vh>
 <v t="ekr.20050105080048.1"><vh>@test official frame ivars</vh></v>
 <v t="ekr.20050105082500"><vh>@test official commander ivars</vh></v>
@@ -1637,9 +1543,104 @@
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
 </v>
+<v t="ekr.20050408084135"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38" a="E"><vh>editBodyTests</vh>
+<v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.40"><vh>extractSection</vh>
+<v t="ekr.20040712101754.41"><vh>before</vh></v>
+<v t="ekr.20040712101754.42"><vh>after</vh>
+<v t="ekr.20040712101754.43"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040712101754.44"><vh>selection</vh></v>
+</v>
+<v t="ekr.20040712101754.45"><vh>indentBody</vh>
+<v t="ekr.20040712101754.46"><vh>before</vh></v>
+<v t="ekr.20040712101754.47"><vh>after</vh></v>
+<v t="ekr.20040712101754.48"><vh>selection</vh></v>
+</v>
+<v t="ekr.20040712101754.49"><vh>dedentBody</vh>
+<v t="ekr.20040712101754.50"><vh>before</vh></v>
+<v t="ekr.20040712101754.51"><vh>after</vh></v>
+<v t="ekr.20040712101754.52"><vh>selection</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
+<v t="ekr.20040712101754.54"><vh>What I did</vh></v>
+<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
+<v t="ekr.20040712101754.58"><vh>before</vh></v>
+<v t="ekr.20040712101754.59"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.60"><vh>testTrailingNewline</vh>
+<v t="ekr.20040712101754.61"><vh>before</vh></v>
+<v t="ekr.20040712101754.62"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.63"><vh>testMixedLineLengths</vh>
+<v t="ekr.20040712101754.64"><vh>before</vh></v>
+<v t="ekr.20040712101754.65"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.66"><vh>testMixedLinesWithLeadingWS</vh>
+<v t="ekr.20040712101754.67"><vh>before</vh></v>
+<v t="ekr.20040712101754.68"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.69"><vh>testNoChangeRequired</vh>
+<v t="ekr.20040712101754.70"><vh>before</vh></v>
+<v t="ekr.20040712101754.71"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.72"><vh>testHonorLeadingWS</vh>
+<v t="ekr.20040712101754.73"><vh>before</vh></v>
+<v t="ekr.20040712101754.74"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.75"><vh>testHonorLeadingWSVar1</vh>
+<v t="ekr.20040712101754.76"><vh>before</vh></v>
+<v t="ekr.20040712101754.77"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.78"><vh>testSimpleHangingIndent</vh>
+<v t="ekr.20040712101754.79"><vh>before</vh></v>
+<v t="ekr.20040712101754.80"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.81"><vh>testSimpleHangingIndentVar1</vh>
+<v t="ekr.20040712101754.82"><vh>before</vh></v>
+<v t="ekr.20040712101754.83"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.84"><vh>testSimpleHangingIndentVar2</vh>
+<v t="ekr.20040712101754.85"><vh>before</vh></v>
+<v t="ekr.20040712101754.86"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.87"><vh>testMultiParagraph</vh>
+<v t="ekr.20040712101754.88"><vh>before</vh></v>
+<v t="ekr.20040712101754.89"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.90"><vh>testMultiParagraphWithList</vh>
+<v t="ekr.20040712101754.91"><vh>before</vh></v>
+<v t="ekr.20040712101754.92"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.93"><vh>testDirectiveBreaksParagraph</vh>
+<v t="ekr.20040712101754.94"><vh>before</vh></v>
+<v t="ekr.20040712101754.95"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.96"><vh>testWithLeadingWSOnEmptyLines</vh>
+<v t="ekr.20040712101754.97"><vh>before</vh></v>
+<v t="ekr.20040712101754.98"><vh>after</vh></v>
+</v>
+</v>
+</v>
+</v>
 <v t="ekr.20050208135429"><vh>@test pre-definition of g in scripts</vh></v>
 </v>
-<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+<v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files</vh>
+<v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
+<v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
+<v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
+<v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
+<v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
+<v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
+<v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
+<v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
+<v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
 <v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit testing for plugins</vh>
 <v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
@@ -1685,7 +1686,8 @@
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
-<v t="ekr.20050106080304" a="TV"><vh>@suite run all test routines</vh>
+<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
 <v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
 <v t="ekr.20050106094854.1"><vh>__init__</vh></v>
@@ -1708,11 +1710,98 @@
 <v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
 </v>
 <v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2" a="E"><vh>findTestsInModule</vh>
+<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
 <v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
+</v>
+<v t="ekr.20050408084135"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38" a="E"><vh>editBodyTests</vh>
+<v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.40"><vh>extractSection</vh>
+<v t="ekr.20040712101754.41"><vh>before</vh></v>
+<v t="ekr.20040712101754.42"><vh>after</vh>
+<v t="ekr.20040712101754.43"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040712101754.44"><vh>selection</vh></v>
+</v>
+<v t="ekr.20040712101754.45"><vh>indentBody</vh>
+<v t="ekr.20040712101754.46"><vh>before</vh></v>
+<v t="ekr.20040712101754.47"><vh>after</vh></v>
+<v t="ekr.20040712101754.48"><vh>selection</vh></v>
+</v>
+<v t="ekr.20040712101754.49"><vh>dedentBody</vh>
+<v t="ekr.20040712101754.50"><vh>before</vh></v>
+<v t="ekr.20040712101754.51"><vh>after</vh></v>
+<v t="ekr.20040712101754.52"><vh>selection</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
+<v t="ekr.20040712101754.54"><vh>What I did</vh></v>
+<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
+<v t="ekr.20040712101754.58"><vh>before</vh></v>
+<v t="ekr.20040712101754.59"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.60"><vh>testTrailingNewline</vh>
+<v t="ekr.20040712101754.61"><vh>before</vh></v>
+<v t="ekr.20040712101754.62"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.63"><vh>testMixedLineLengths</vh>
+<v t="ekr.20040712101754.64"><vh>before</vh></v>
+<v t="ekr.20040712101754.65"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.66"><vh>testMixedLinesWithLeadingWS</vh>
+<v t="ekr.20040712101754.67"><vh>before</vh></v>
+<v t="ekr.20040712101754.68"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.69"><vh>testNoChangeRequired</vh>
+<v t="ekr.20040712101754.70"><vh>before</vh></v>
+<v t="ekr.20040712101754.71"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.72"><vh>testHonorLeadingWS</vh>
+<v t="ekr.20040712101754.73"><vh>before</vh></v>
+<v t="ekr.20040712101754.74"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.75"><vh>testHonorLeadingWSVar1</vh>
+<v t="ekr.20040712101754.76"><vh>before</vh></v>
+<v t="ekr.20040712101754.77"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.78"><vh>testSimpleHangingIndent</vh>
+<v t="ekr.20040712101754.79"><vh>before</vh></v>
+<v t="ekr.20040712101754.80"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.81"><vh>testSimpleHangingIndentVar1</vh>
+<v t="ekr.20040712101754.82"><vh>before</vh></v>
+<v t="ekr.20040712101754.83"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.84"><vh>testSimpleHangingIndentVar2</vh>
+<v t="ekr.20040712101754.85"><vh>before</vh></v>
+<v t="ekr.20040712101754.86"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.87"><vh>testMultiParagraph</vh>
+<v t="ekr.20040712101754.88"><vh>before</vh></v>
+<v t="ekr.20040712101754.89"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.90"><vh>testMultiParagraphWithList</vh>
+<v t="ekr.20040712101754.91"><vh>before</vh></v>
+<v t="ekr.20040712101754.92"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.93"><vh>testDirectiveBreaksParagraph</vh>
+<v t="ekr.20040712101754.94"><vh>before</vh></v>
+<v t="ekr.20040712101754.95"><vh>after</vh></v>
+</v>
+<v t="ekr.20040712101754.96"><vh>testWithLeadingWSOnEmptyLines</vh>
+<v t="ekr.20040712101754.97"><vh>before</vh></v>
+<v t="ekr.20040712101754.98"><vh>after</vh></v>
+</v>
+</v>
+</v>
+</v>
 </v>
 <v t="ekr.20050225161940" annotate="7d71002e"><vh>Move executeFile into core</vh>
 <v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
@@ -14075,5 +14164,6 @@ if not golf or not controller:
 &lt;body&gt;
 
 &lt;/body&gt;</t>
+<t tx="ekr.20050408084135"></t>
 </tnodes>
 </leo_file>

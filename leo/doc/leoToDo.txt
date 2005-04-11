@@ -3,848 +3,62 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20050303103230:4.3b1 code complete
-#@+node:ekr.20050315082746:Make sure NameErrors are reported with tracebacks in scripts
-#@+node:ekr.20050315082746.1:Report
-@killcolor
-http://sourceforge.net/forum/message.php?msg_id=3048149
-By: bwmulder
-
-Create a node with some code:
-
-x = 0
-import pdb; pdb.set_trace()
-y = 1
-z = z + 1
-
-And then either use the "run_script" button from the plugin, or "execute script"
-from the menu. You get:
-
-
->> <string>(5)?()
-
-(Pdb) s
-
->> <string>(6)?()
-
-(Pdb) s
-NameError: "name 'z' is not defined"
-
->> <string>(6)?()
-
-(Pdb) s
-NameError: "name 'z' is not defined"
-
->> c:\bwm\svn_checkouts\oracle_ipf\trunk\python\other\leo_cvs\src\leocommands.py(
-
-1195)executeScript()
--> exec script in d # Use {} to get a pristine environment!
-
-[Assuming that you have a DOS window in which you started leo.py].
-
-The debugger indicates some line numbers, but no source lines.
-
-When you remove the import line, you just get:
-
-exception executing script 
-NameError: name 'z' is not defined
+#@+node:ekr.20050318072227:Big picture: major incompletions
+None of these should take more than a week or so.
 #@nonl
-#@-node:ekr.20050315082746.1:Report
-#@-node:ekr.20050315082746:Make sure NameErrors are reported with tracebacks in scripts
-#@+node:ekr.20050314091755:Write unit tests for find/change commands
-#@-node:ekr.20050314091755:Write unit tests for find/change commands
-#@+node:ekr.20050104083128:(Drawing and uA's: needed for plugins)
-#@+node:ekr.20041228074125:Drawing...
-#@+node:ekr.20041228092223:Play with wiki markup
-http://sourceforge.net/forum/message.php?msg_id=2205285
-From: Rich
-
-Color ''and'' italic/bold characters with @markup. One thing I'd like to
-''not'' see are the markup characters in @file-nosent files.  "~~red:NOTE:~~"
-does nothing for readability in plain text.
+#@+node:ekr.20050318072227.4:Better undo
+#@-node:ekr.20050318072227.4:Better undo
+#@+node:ekr.20050318085432:uA's
+#@-node:ekr.20050318085432:uA's
+#@+node:ekr.20050318072227.1:Finish @settings stuff
+#@-node:ekr.20050318072227.1:Finish @settings stuff
+#@+node:ekr.20050318072227.3:Emacs commands
+#@-node:ekr.20050318072227.3:Emacs commands
+#@+node:ekr.20050318072646:Easy commands
+#@-node:ekr.20050318072646:Easy commands
+#@+node:ekr.20050318072227.2:Python-oriented find
+Use Python search commands instead of Tk.
+Use Python indices
 #@nonl
-#@-node:ekr.20041228092223:Play with wiki markup
-#@+node:EKR.20040602153716:(Finish drawUserIcons)
-# Create a better way of writing user icons.
-#@nonl
-#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-Also add corresponding commands.
-#@nonl
-#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-#@+node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2477913
-By: edream
-
-A better design for user icons
-
-Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
-to have t.unknownAttributes["icons"] be a list of g.Bunches rather
-than a list of tuples.  Each of these bunches could have the
-following keys:
-
-"type"
-
-"file", "icon" or "url".  At present my prototype code uses "file" to specify
-the location of an icon.
-
-"where":
-
-"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
-where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
-means before the plus/minus box.  "beforeIcon" means before the standard icon.
-
-"height":
-
-the height of the icon to use when calculating the line height.  Default: get
-from the icon itself, if possible.
-
-"width":
-
-the width of the icon to use when calculating where to put the following element.
-Default: get from the icon, if possible.
-
-"xoffset"
-
-Leo draws the icon at x + xoffset, where x is determined by the where param
-above.  Default 0.
-
-"xpad"
-
-The amount of extra space following the icon.  Default 0.
-
-"yoffset"
-
-Leo draws the icon at y + yoffset.  Default 0.
-
-"ypad"
-
-The amount of extra vertical space to add to the line height.  Default 0.
-
-These offset and pad values are integer pixel values and may be positive or
-negative.
-
-"lineHeight"  NOT USED.
-
-Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-
-Edward
-
-P.S.  Other gui's might not be able to support all these options.  That's ok.
-The drawing code in gui plugins should degrade gracefully.
-
-EKR
-#@nonl
-#@-node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
-#@+node:ekr.20040317184631.2:Changes
-@nocolor
-
-"lineHeight"
-
-This key won't be used.
-
-t.unknownAttributes["lineYOffset"] 
-
-An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
-#@nonl
-#@-node:ekr.20040317184631.2:Changes
-#@+node:ekr.20040317184631.1:To do
-@nocolor
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-#@nonl
-#@-node:ekr.20040317184631.1:To do
-#@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv,toString=False):
-    
-    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
-    
-    result = []
-    attrDict = torv.unknownAttributes
-    if type(attrDict) != type({}):
-        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
-        return
-
-    for key in attrDict.keys():
-        try:
-            val = attrDict[key]
-            try:
-                # Protocol argument is new in Python 2.3
-                # Use protocol 1 for compatibility with bin.
-                s = pickle.dumps(val,protocol=1)
-            except TypeError:
-                s = pickle.dumps(val,bin=True)
-            attr = ' %s="%s"' % (key,binascii.hexlify(s))
-            self.put(attr)
-        except pickle.PicklingError:
-            # New in 4.2 beta 1: keep going after error.
-            g.es("ignoring non-pickleable attribute %s in %s" % (
-                key,torv),color="blue")
-#@nonl
-#@-node:EKR.20040526202501:putUnknownAttributes
-#@-node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
+#@-node:ekr.20050318072227.2:Python-oriented find
+#@+node:ekr.20050318072227.5:Better handling of whitespace (cvs friendly)
+#@-node:ekr.20050318072227.5:Better handling of whitespace (cvs friendly)
+#@+node:ekr.20050318072227.7:Resolve CVS Conflicts command
+#@-node:ekr.20050318072227.7:Resolve CVS Conflicts command
+#@+node:ekr.20050318072227.6:Table-driven sysntax coloring
+#@-node:ekr.20050318072227.6:Table-driven sysntax coloring
+#@-node:ekr.20050318072227:Big picture: major incompletions
+#@+node:ekr.20050303103230:To do: 4.3b1 code complete
+#@+node:ekr.20050225160112:To do: First
+#@+node:ekr.20041231102453:(New uA scheme)
+#@+node:ekr.20050407090040:Posting
 @killcolor
 
-http://sourceforge.net/forum/message.php?msg_id=2877106
+I have been going round and round with ideas for improving uA's.  The more I think about this issue, the more I am inclined to make absolutely the minimal changes possible.
 
-By: Paul Paterson - paulpaterson
-RE: Can I color the headline text ?  
-2004-12-01 08:01
+My first thought was to define new xml elements that could be embedded in <v> and <t> elements.  This would be the natural way to extend Leo's file format from an xml purist's point of view.  However,   I absolutely want to avoid trying to define a set of xml elements that will magically be perfect for all plugins.  This way madness lies: I couldn't bear to entertain endless proposals for further 'improvements'.
 
-The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
- 
-Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
- 
-Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
- 
-Between the two of them there should be enough information to help you achieve what you want. 
- 
-It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
+Moreover, I'm not sure a new set of elements embedded in <v> and <t> elements actually addresses the present requests.  There are two such requests:
+
+1. The first was originally from Martin Clifford.  The request was not to pickle and hexlify plain strings.  (BTW, Martin has already worked around the problem on his own.)  This request makes sense: we would like allow myAttrib="myAttribute" to remain readable in the xml file if "myAttribute" is a plain string.
+
+2. The second was from BH, aka Leo User.  The request was to allow base64 values as the value of attributes.  Like this:  myAttrib="base64value".
+
+What if we don't change Leo's file format at all?  What if we just change how Leo encodes and decodes items in t.unknownAttributes and v.unknownAttributes?
+
+Absent new information from the file format, the only way to tell Leo how to write attributes is to use naming conventions.  The idea is that when writing attributes, Leo will do the following:
+
+- Do nothing except apply xml escapes if the attribute name (in t.unknownAttributes or v.unknownAttributes) starts with str_ and the attribute is, in fact, a string.  If the string is a Unicode string Leo must convert the Unicode string to an encoded string.
+
+- Try to convert the value to base64 if the attribute names starts with base64_.  Fall back to the present pickling/hexlifying scheming if converting to base64 fails.
+
+- Use the present pickling/hexlifying scheming otherwise.  In particular, issue a warning and ignore the attribute if the attribute can not be pickled.
+
+Leo will do the reverse when reading.
+
+BTW, plugins could add their own naming conventions in an emergency.  Indeed, the conventions will be confined to code in atFile.putUnknownAttributes and atFile. getUnknownAttribute, so a plugin would only need to override these two methods.
 #@nonl
-#@-node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
-#@-node:ekr.20041228074125:Drawing...
-#@+node:ekr.20041231102453:Design new uA scheme
-#@+node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
-@killcolor
-
-I would like to store unknown attributes as a simple string. The reason, is
-because I am using an unknown attribute to carry additional markup information,
-in this case, to carry color information for each node. (I used Joe Orr's XSL
-stylesheet as a startpoint for HTML generation).
-
-In order to achieve my nefarious aim, I have had to edit leoFileCommands.py but
-I would prefer not to have to edit the main source code.
-
-Martin Clifford
-Senior Software Engineer
-Snell & Wilcox
-#@+node:ekr.20041004091238:example file
-@killcolor
-
-This is a follow up to my email at the end of August, regarding unknown attributes.
-
-I have attached an HTML file (LeoToHTML) hat I generated from a Leo file.
-
-It demonstrates the uses that I have made of unknown attributes.
-
-My hope is that it will provide food for thought in your discussions on the subject.
-
- Regards
-Martin
-#@-node:ekr.20041004091238:example file
-#@-node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
-#@+node:ekr.20050304124404:From leoFileCommands...
-#@+node:ekr.20050304124404.1:read...
-#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
-def createVnode (self,parent,back,tref,headline,attrDict):
-    
-    # g.trace(parent,headline)
-    v = None ; c = self.c
-    # Shared tnodes are placed in the file even if empty.
-    if tref == -1:
-        t = leoNodes.tnode()
-    else:
-        tref = self.canonicalTnodeIndex(tref)
-        t = self.tnodesDict.get(tref)
-        if not t: t = self.newTnode(tref)
-    if back: # create v after back.
-        v = back.insertAfter(t)
-    elif parent: # create v as the parent's first child.
-        v = parent.insertAsNthChild(0,t)
-    else: # create a root vnode
-        v = leoNodes.vnode(c,t)
-        v.moveToRoot()
-
-    if v not in v.t.vnodeList:
-        v.t.vnodeList.append(v) # New in 4.2.
-
-    skip = len(v.t.vnodeList) > 1
-    v.initHeadString(headline,encoding=self.leo_file_encoding)
-    << handle unknown vnode attributes >>
-    # g.trace(skip,tref,v,v.t,len(v.t.vnodeList))
-    return v,skip
-#@nonl
-#@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
-keys = attrDict.keys()
-if keys:
-    v.unknownAttributes = attrDict
-
-    if 0: # For debugging.
-        s = "unknown attributes for " + v.headString()
-        print s ; g.es(s,color="blue")
-        for key in keys:
-            s = "%s = %s" % (key,attrDict.get(key))
-            print s ; g.es(s)
-#@nonl
-#@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
-#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
-#@+node:ekr.20031218072017.1553:getLeoFile
-# The caller should enclose this in begin/endUpdate.
-
-def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
-
-    c = self.c
-    c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
-    << warn on read-only files >>
-    self.mFileName = c.mFileName
-    self.tnodesDict = {}
-    self.descendentExpandedList = []
-    self.descendentMarksList = []
-    self.descendentUnknownAttributesDictList = []
-    ok = True
-    c.loading = True # disable c.changed
-    
-    try:
-        << scan all the xml elements >>
-    except BadLeoFile, message:
-        << raise an alert >>
-        ok = False
-
-    c.frame.tree.redraw_now(scroll=False)
-    
-    # g.trace(readAtFileNodesFlag,c.mFileName)
-    
-    if ok and readAtFileNodesFlag:
-        c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
-
-    if not c.currentPosition():
-        c.setCurrentPosition(c.rootPosition())
-
-    c.selectVnode(c.currentPosition()) # load body pane
-    c.loading = False # reenable c.changed
-    c.setChanged(c.changed) # Refresh the changed marker.
-    << restore attributes in descendent tnodes >>
-    self.descendentUnknownAttributesDictList = []
-    self.descendentExpandedList = []
-    self.descendentMarksList = []
-    self.tnodesDict = {}
-    return ok, self.ratio
-#@nonl
-#@+node:ekr.20031218072017.1554:<< warn on read-only files >>
-# os.access may not exist on all platforms.
-
-try:
-    self.read_only = not os.access(fileName,os.W_OK)
-except AttributeError:
-    self.read_only = False
-except UnicodeError:
-    self.read_only = False
-        
-if self.read_only:
-    g.es("read only: " + fileName,color="red")
-#@nonl
-#@-node:ekr.20031218072017.1554:<< warn on read-only files >>
-#@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
-self.getXmlVersionTag()
-self.getXmlStylesheetTag()
-
-self.getTag("<leo_file>") # Must match exactly.
-self.getLeoHeader()
-self.getGlobals()
-self.getPrefs()
-self.getFindPanelSettings()
-
-# Causes window to appear.
-c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio)
-if not silent:
-    g.es("reading: " + fileName)
-
-self.getVnodes()
-self.getTnodes()
-self.getCloneWindows()
-self.getTag("</leo_file>")
-#@nonl
-#@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
-#@+node:ekr.20031218072017.1556:<< raise an alert >>
-# All other exceptions are Leo bugs.
-
-g.es_exception()
-g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
-#@nonl
-#@-node:ekr.20031218072017.1556:<< raise an alert >>
-#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
-for resultDict in self.descendentUnknownAttributesDictList:
-    for gnx in resultDict.keys():
-        tref = self.canonicalTnodeIndex(gnx)
-        t = self.tnodesDict.get(tref)
-        if t: t.unknownAttributes = resultDict[gnx]
-        # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
-            
-marks = {} ; expanded = {}
-for gnx in self.descendentExpandedList:
-    t = self.tnodesDict.get(gnx)
-    if t: expanded[t]=t
-    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
-    
-for gnx in self.descendentMarksList:
-    t = self.tnodesDict.get(gnx)
-    if t: marks[t]=t
-    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
-
-if marks or expanded:
-    # g.trace("marks",len(marks),"expanded",len(expanded))
-    for p in c.all_positions_iter():
-        if marks.get(p.v.t):
-            p.v.initMarkedBit()
-                # This was the problem: was p.setMark.
-                # There was a big performance bug in the mark hook in the Node Navigator plugin.
-        if expanded.get(p.v.t):
-            p.expand()
-#@nonl
-#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
-#@-node:ekr.20031218072017.1553:getLeoFile
-#@+node:ekr.20031218072017.1561:getTnode
-def getTnode (self):
-
-    # we have already matched <t.
-    index = -1 ; attrDict = {}
-    # New in version 1.7: attributes may appear in any order.
-    while 1:	
-        if self.matchTag("tx="):
-            # New for 4.1.  Read either "Tnnn" or "gnx".
-            index = self.getDqString()
-        elif self.matchTag("rtf=\"1\""): pass # ignored
-        elif self.matchTag("rtf=\"0\""): pass # ignored
-        elif self.matchTag(">"):         break
-        else: # New for 4.0: allow unknown attributes.
-            # New in 4.2: allow pickle'd and hexlify'ed values.
-            attr,val = self.getUnknownAttribute("tnode")
-            if attr: attrDict[attr] = val
-            
-    # index might be Tnnn, nnn, or gnx.
-    theId,time,n = g.app.nodeIndices.scanGnx(index,0)
-    if time == None: # A pre-4.1 file index.
-        if index[0] == "T":
-            index = index[1:]
-
-    index = self.canonicalTnodeIndex(index)
-    t = self.tnodesDict.get(index)
-    # g.trace(t)
-    << handle unknown attributes >>
-    if t:
-        s = self.getEscapedString()
-        t.setTnodeText(s,encoding=self.leo_file_encoding)
-    else:
-        g.es("no tnode with index: %s.  The text will be discarded" % str(index))
-    self.getTag("</t>")
-#@nonl
-#@+node:ekr.20031218072017.1564:<< handle unknown attributes >>
-keys = attrDict.keys()
-if keys:
-    t.unknownAttributes = attrDict
-    if 0: # For debugging.
-        s = "unknown attributes for tnode"
-        print s ; g.es(s, color = "blue")
-        for key in keys:
-            s = "%s = %s" % (key,attrDict.get(key))
-            print s ; g.es(s)
-#@nonl
-#@-node:ekr.20031218072017.1564:<< handle unknown attributes >>
-#@-node:ekr.20031218072017.1561:getTnode
-#@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
-def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
-
-    c = self.c ; v = None
-    setCurrent = setExpanded = setMarked = setOrphan = setTop = False
-    tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
-    # we have already matched <v.
-    while 1:
-        if self.matchTag("a=\""):
-            << Handle vnode attribute bits >>
-        elif self.matchTag("t="):
-            # New for 4.1.  Read either "Tnnn" or "gnx".
-            tref = index = self.getDqString()
-            if self.usingClipboard:
-                << raise invalidPaste if the tnode is in self.forbiddenTnodes >>
-        elif self.matchTag("vtag=\"V"):
-            self.getIndex() ; self.getDquote() # ignored
-        elif self.matchTag("tnodeList="):
-            s = self.getDqString()
-            tnodeList = self.getTnodeList(s) # New for 4.0
-        elif self.matchTag("descendentTnodeUnknownAttributes="):
-            # New for 4.2
-            s = self.getDqString()
-            theDict = self.getDescendentUnknownAttributes(s)
-            if theDict:
-                self.descendentUnknownAttributesDictList.append(theDict)
-        elif self.matchTag("expanded="): # New in 4.2
-            s = self.getDqString()
-            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
-        elif self.matchTag("marks="): # New in 4.2
-            s = self.getDqString()
-            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
-        elif self.matchTag(">"):
-            break
-        else: # New for 4.0: allow unknown attributes.
-            # New in 4.2: allow pickle'd and hexlify'ed values.
-            attr,val = self.getUnknownAttribute("vnode")
-            if attr: attrDict[attr] = val
-    # Headlines are optional.
-    if self.matchTag("<vh>"):
-        headline = self.getEscapedString() ; self.getTag("</vh>")
-    
-    # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-    if skip:
-        v = self.getExistingVnode(tref,headline)
-    if v is None:
-        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
-        skip = skip or skip2
-        if tnodeList:
-            v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-
-    << Set the remembered status bits >>
-
-    # Recursively create all nested nodes.
-    parent = v ; back = None
-    while self.matchTag("<v"):
-        append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
-        append2 = appendToTopStack and len(self.topVnodeStack) == 0
-        back = self.getVnode(parent,back,skip,
-            appendToCurrentStack=append1,appendToTopStack=append2)
-            
-    << Append to current or top stack >>
-
-    # End this vnode.
-    self.getTag("</v>")
-    return v
-#@nonl
-#@+node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
-# The a=" has already been seen.
-while 1:
-    if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
-    elif self.matchChar('D'): pass # Not used.
-    elif self.matchChar('E'): setExpanded = True
-    elif self.matchChar('M'): setMarked = True
-    elif self.matchChar('O'): setOrphan = True
-    elif self.matchChar('T'): setTop = True
-    elif self.matchChar('V'): setCurrent = True
-    else: break
-
-self.getDquote()
-#@nonl
-#@-node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
-#@+node:ekr.20041023110111:<< raise invalidPaste if the tnode is in self.forbiddenTnodes >>
-# Bug fix in 4.3 a1: make sure we have valid paste.
-theId,time,n = g.app.nodeIndices.scanGnx(index,0)
-if not time and index[0] == "T":
-    index = index[1:]
-    
-index = self.canonicalTnodeIndex(index)
-t = self.tnodesDict.get(index)
-
-if t in self.forbiddenTnodes:
-    g.trace(t)
-    raise invalidPaste
-#@nonl
-#@-node:ekr.20041023110111:<< raise invalidPaste if the tnode is in self.forbiddenTnodes >>
-#@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
-if setCurrent:
-    self.currentVnodeStack = [v]
-
-if setTop:
-    self.topVnodeStack = [v]
-    
-if setExpanded:
-    v.initExpandedBit()
-    
-if setMarked:
-    v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
-
-if setOrphan:
-    v.setOrphan()
-#@nonl
-#@-node:ekr.20031218072017.1568:<< Set the remembered status bits >>
-#@+node:ekr.20040326055828:<< Append to current or top stack >>
-if not setCurrent and len(self.currentVnodeStack) > 0 and appendToCurrentStack:
-    #g.trace("append current",v)
-    self.currentVnodeStack.append(v)
-    
-if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
-    #g.trace("append top",v)
-    self.topVnodeStack.append(v)
-#@nonl
-#@-node:ekr.20040326055828:<< Append to current or top stack >>
-#@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
-#@+node:EKR.20040526204036.1:getUnknownAttribute
-def getUnknownAttribute(self,nodeType):
-    
-    """Parse an unknown attribute in a <v> or <t> element."""
-    
-    # New in 4.2.  The unknown tag has been pickled and hexlify'd.
-    attr,val = self.getUnknownTag()
-    if not attr:
-        return None,None
-    try:
-        binString = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
-    except TypeError:
-        # Assume that Leo 4.1 wrote the attribute.
-        # g.trace('4.1 val:',val2)
-        return attr,val
-    try:
-        # No change needed to support protocols.
-        val2 = pickle.loads(binString)
-        # g.trace('v.3 val:',val2)
-        return attr,val2
-    except (pickle.UnpicklingError,ImportError):
-        return attr,val
-#@nonl
-#@-node:EKR.20040526204036.1:getUnknownAttribute
-#@-node:ekr.20050304124404.1:read...
-#@+node:ekr.20050304124404.2:write...
-#@+node:EKR.20040627113418:putDescendentUnknownAttributes
-def putDescendentUnknownAttributes (self,p):
-
-    # Create a list of all tnodes having a valid unknownAttributes dict.
-    tnodes = []
-    for p2 in p.subtree_iter():
-        t = p2.v.t
-        if hasattr(t,"unknownAttributes"):
-            if t not in tnodes :
-                tnodes.append((p,t),)    
-    # g.trace(tnodes)
-    
-    # Create a list of pairs (t,d) where d contains only pickleable entries.
-    data = []
-    for p,t in tnodes:
-        if type(t.unknownAttributes) != type({}):
-             g.es("ignoring non-dictionary unknownAttributes for",p,color="blue")
-        else:
-            # Create a new dict containing only entries that can be pickled.
-            d = dict(t.unknownAttributes) # Copy the dict.
-            for key in d.keys():
-                try: pickle.dumps(d[key],bin=True)
-                except pickle.PicklingError:
-                    del d[key]
-                    g.es("ignoring bad unknownAttributes key %s in %s" % (
-                        key,p),color="blue")
-            data.append((t,d),)
-            
-    # Create resultDict, an enclosing dict to hold all the data.
-    resultDict = {}
-    nodeIndices = g.app.nodeIndices
-    for t,d in data:
-        gnx = nodeIndices.toString(t.fileIndex)
-        resultDict[gnx]=d
-    
-    if 0:
-        print "resultDict"
-        for key in resultDict:
-            print ; print key,resultDict[key]
-        
-    # Pickle and hexlify resultDict.
-    if resultDict:
-        try:
-            tag = "descendentTnodeUnknownAttributes"
-            s = pickle.dumps(resultDict,bin=True)
-            field = ' %s="%s"' % (tag,binascii.hexlify(s))
-            self.put(field)
-        except pickle.PicklingError:
-            g.trace("can't happen",color="red")
-#@nonl
-#@-node:EKR.20040627113418:putDescendentUnknownAttributes
-#@+node:ekr.20031218072017.1577:putTnode
-def putTnode (self,t):
-
-    self.put("<t")
-    self.put(" tx=")
-
-    gnx = g.app.nodeIndices.toString(t.fileIndex)
-    self.put_in_dquotes(gnx)
-
-    if hasattr(t,"unknownAttributes"):
-        self.putUnknownAttributes(t)
-
-    self.put(">")
-
-    # g.trace(t)
-    if t.bodyString:
-        self.putEscapedString(t.bodyString)
-
-    self.put("</t>") ; self.put_nl()
-#@nonl
-#@-node:ekr.20031218072017.1577:putTnode
-#@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv,toString=False):
-    
-    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
-    
-    result = []
-    attrDict = torv.unknownAttributes
-    if type(attrDict) != type({}):
-        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
-        return
-
-    for key in attrDict.keys():
-        try:
-            val = attrDict[key]
-            try:
-                # Protocol argument is new in Python 2.3
-                # Use protocol 1 for compatibility with bin.
-                s = pickle.dumps(val,protocol=1)
-            except TypeError:
-                s = pickle.dumps(val,bin=True)
-            attr = ' %s="%s"' % (key,binascii.hexlify(s))
-            self.put(attr)
-        except pickle.PicklingError:
-            # New in 4.2 beta 1: keep going after error.
-            g.es("ignoring non-pickleable attribute %s in %s" % (
-                key,torv),color="blue")
-#@nonl
-#@-node:EKR.20040526202501:putUnknownAttributes
-#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-def putVnode (self,p):
-
-    """Write a <v> element corresponding to a vnode."""
-
-    fc = self ; c = fc.c ; v = p.v
-    isThin = p.isAtThinFileNode()
-    # Must check all parents.
-    isIgnore = False
-    for p2 in p.self_and_parents_iter():
-        if p2.isAtIgnoreNode():
-            isIgnore = True ; break
-    isOrphan = p.isOrphan()
-    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
-
-    fc.put("<v")
-    << Put tnode index >>
-    << Put attribute bits >>
-    << Put tnodeList and unKnownAttributes >>
-    fc.put(">")
-    << Write the head text >>
-
-    if not self.usingClipboard:
-        << issue informational messages >>
-
-   # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
-    if p.hasChildren():
-        if forceWrite or self.usingClipboard:
-            fc.put_nl()
-            # This optimization eliminates all "recursive" copies.
-            p.moveToFirstChild()
-            while 1:
-                fc.putVnode(p)
-                if p.hasNext(): p.moveToNext()
-                else:           break
-            p.moveToParent()
-
-    fc.put("</v>") ; fc.put_nl()
-#@nonl
-#@+node:ekr.20031218072017.1864:<< Put tnode index >>
-if v.t.fileIndex:
-    gnx = g.app.nodeIndices.toString(v.t.fileIndex)
-    fc.put(" t=") ; fc.put_in_dquotes(gnx)
-
-    # g.trace(v.t)
-    if forceWrite or self.usingClipboard:
-        v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
-else:
-    g.trace(v.t.fileIndex,v)
-    g.es("error writing file(bad v.t.fileIndex)!")
-    g.es("try using the Save To command")
-#@nonl
-#@-node:ekr.20031218072017.1864:<< Put tnode index >>
-#@+node:ekr.20031218072017.1865:<< Put attribute bits >>
-attr = ""
-if p.v.isExpanded(): attr += "E"
-if p.v.isMarked():   attr += "M"
-if p.v.isOrphan():   attr += "O"
-
-if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
-    # Almost 30% of the entire writing time came from here!!!
-    if p.equal(self.topPosition):   attr += "T" # was a bottleneck
-    if c.isCurrentPosition(p):      attr += "V" # was a bottleneck
-
-if attr: fc.put(' a="%s"' % attr)
-#@nonl
-#@-node:ekr.20031218072017.1865:<< Put attribute bits >>
-#@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
-# Write the tnodeList only for @file nodes.
-# New in 4.2: tnode list is in tnode.
-
-if 0: # Debugging.
-    if v.isAnyAtFileNode():
-        if hasattr(v.t,"tnodeList"):
-            g.trace(v.headString(),len(v.t.tnodeList))
-        else:
-            g.trace(v.headString(),"no tnodeList")
-
-if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
-    if isThin:
-        if g.app.unitTesting:
-            g.app.unitTestDict["warning"] = True
-        g.es("deleting tnode list for %s" % p.headString(),color="blue")
-        # This is safe: cloning can't change the type of this node!
-        delattr(v.t,"tnodeList")
-    else:
-        fc.putTnodeList(v) # New in 4.0
-
-if hasattr(v,"unknownAttributes"): # New in 4.0
-    self.putUnknownAttributes(v)
-    
-if p.hasChildren() and not forceWrite and not self.usingClipboard:
-    # We put the entire tree when using the clipboard, so no need for this.
-    self.putDescendentUnknownAttributes(p)
-    self.putDescendentAttributes(p)
-#@nonl
-#@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
-#@+node:ekr.20040702085529:<< issue informational messages >>
-if p.isAtThinFileNode and p.isOrphan():
-    g.es("Writing erroneous: %s" % p.headString(),color="blue")
-    p.clearOrphan()
-
-if 0: # For testing.
-    if p.isAtIgnoreNode():
-         for p2 in p.self_and_subtree_iter():
-                if p2.isAtThinFileNode():
-                    g.es("Writing @ignore'd: %s" % p2.headString(),color="blue")
-#@nonl
-#@-node:ekr.20040702085529:<< issue informational messages >>
-#@+node:ekr.20031218072017.1866:<< Write the head text >>
-headString = p.v.headString()
-
-if headString:
-    fc.put("<vh>")
-    fc.putEscapedString(headString)
-    fc.put("</vh>")
-#@nonl
-#@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-#@-node:ekr.20050304124404.2:write...
-#@-node:ekr.20050304124404:From leoFileCommands...
+#@-node:ekr.20050407090040:Posting
 #@+node:ekr.20050304124404.3:From leoNodes...
 #@+node:EKR.20040530121847.1:For undo (tnode)
 #@+node:EKR.20040530120245:t.createUndoInfo
@@ -865,7 +79,7 @@ def createUndoInfo (self,copyLinks=True):
     try: d ["unknownAttributes"] = t.unknownAttributes
     except: pass
     
-    if 0: # These neve change, so no need to save/restore them.
+    if 0: # These never change, so no need to save/restore them.
         # In fact, it would be wrong to undo changes made to them!
         d ["cloneIndex"]  = t.cloneIndex
         d ["fileIndex"]  = t.fileIndex
@@ -1274,305 +488,1098 @@ Now the plugin can set and get fields in d.  Similar code would be used for the 
 #@-node:ekr.20050306090634.4:Recommended conventions for plugins
 #@-node:ekr.20050306090634.1:Adding attributes to nodes and .leo files
 #@-node:ekr.20050306090634:From docs...
-#@-node:ekr.20041231102453:Design new uA scheme
-#@-node:ekr.20050104083128:(Drawing and uA's: needed for plugins)
-#@+node:ekr.20050225160112:First
-#@+node:ekr.20050212040628:Always use a file-like object for writing?
-#@-node:ekr.20050212040628:Always use a file-like object for writing?
-#@+node:ekr.20050128081550:(Implement undo for Paste Retaing clones)
-#@+node:ekr.20050207062841:Report
-@killcolor
+#@+node:ekr.20050304124404:From leoFileCommands...
+#@+node:ekr.20050304124404.1:read...
+#@+node:ekr.20040701065235.1:getDescendentAttributes
+def getDescendentAttributes (self,s,tag=""):
+    
+    '''s is a list of gnx's, separated by commas from a <v> or <t> element.
+    Parses s into a list.
+    
+    This is used to record marked and expanded nodes.
+    '''
+    
+    nodeIndices = g.app.nodeIndices
+    gnxs = s.split(',')
+    result = [gnx for gnx in gnxs if len(gnx) > 0]
+    # g.trace(tag,result)
+    return result
+#@-node:ekr.20040701065235.1:getDescendentAttributes
+#@+node:EKR.20040627114602:getDescendentUnknownAttributes
+def getDescendentUnknownAttributes (self,s):
+    
+    try:
+        bin = binascii.unhexlify(s) # Throws a TypeError if val is not a hex string.
+        val = pickle.loads(bin)
+        return val
 
-By: Graham Horler - grahamh
- paste retaining clones bug: old data zaps new   
-2005-01-27 12:31  
-Leo 4.3 alpha 1, build 1.208 , January 24, 2005 
-Python 2.3.4, Tk 8.4.7-1, Debian GNU/Linux 3.0 
- 
-(Please excuse my leo-newbieness) 
- 
-Is this a bug?: 
- 
-Create a new headline "Head1", insert some body text. 
-Click Outline/Copy Node. 
-Type some more body text in "Head1" and change its name to "Head1a". 
-Create another headline "Head2". 
-Click Outline/Paste Retaining Clones. 
-Your changes to "Head1" are destroyed (bug 1). 
-Undo does NOT undo the destruction (bug 2) 
- 
-Hope this helps, Graham
- 
-#@-node:ekr.20050207062841:Report
-#@+node:ekr.20050207062841.1:Response
-@killcolor
-
-> Edward wants to empty the undo stack. So all should still behave as expected if you do copy / paste retaining clones without making changes in between, except that you might loose undo and get pestered with warnings.  
- 
-You have just convinced me that clearing the undo stack and issuing a warning is not good. For a2, I am going to back out of the 'fix', and leave things as they were. 
- 
-Besides, it should be possible to undo Paste As Clone. The paste code "just" needs to create a list of changed nodes. This list must be created while pasting; it can not be created after the fact. 
- 
-I put quotes around the word 'just' above because the paste code is, in fact, quite complex. The difficult part is in leoFileCommands.getVnode, and I suspect that this is the part that must remember changed data. 
- 
-In short, I believe Undo Paste As Clone is doable, but it isn't going to happen in a2. As I said above, a2 will do things as in a1. 
+    except (TypeError,pickle.UnpicklingError,ImportError):
+        return None
 #@nonl
-#@-node:ekr.20050207062841.1:Response
-#@+node:ekr.20050206101036:From undo class
-#@+node:EKR.20040526084140:undoInsertNodes
-def undoInsertNodes (self):
+#@-node:EKR.20040627114602:getDescendentUnknownAttributes
+#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
+def createVnode (self,parent,back,tref,headline,attrDict):
     
-    u = self ; c = u.c
-    
-    if 0: # Paste retaining clones can't be undone!
-        # Remember the previous headline.
-        old = c.currentPosition().headString()
-    
-    c.selectVnode(u.p)
-    c.deleteOutline()
-
-    if u.select:
-        c.selectVnode(u.select)
-        
-    # New in 4.3: Support for Paste As Clone.
-    if 0: # Paste retaining clones can't be undone!
-        if u.headString:
-            new = u.headString
-            g.trace('old',old,'new',new)
-            u.p.setHeadStringOrHeadline(new)
-            u.headString=old
-#@nonl
-#@-node:EKR.20040526084140:undoInsertNodes
-#@+node:EKR.20040526072519.4:redoInsertNodes
-def redoInsertNodes (self):
-    
-    u = self ; c = u.c
-    
-    if 0: # Paste retaining clones can't be undone!
-        # Remember the previous headline.
-        old = c.currentPosition().headString()
-
-    if u.back:
-        u.p.linkAfter(u.back)
-    elif u.parent:
-        u.p.linkAsNthChild(u.parent,0)
+    # g.trace(parent,headline)
+    v = None ; c = self.c
+    # Shared tnodes are placed in the file even if empty.
+    if tref == -1:
+        t = leoNodes.tnode()
     else:
-        oldRoot = c.rootPosition()
-        u.p.linkAsRoot(oldRoot)
+        tref = self.canonicalTnodeIndex(tref)
+        t = self.tnodesDict.get(tref)
+        if not t: t = self.newTnode(tref)
+    if back: # create v after back.
+        v = back.insertAfter(t)
+    elif parent: # create v as the parent's first child.
+        v = parent.insertAsNthChild(0,t)
+    else: # create a root vnode
+        v = leoNodes.vnode(c,t)
+        v.moveToRoot()
+
+    if v not in v.t.vnodeList:
+        v.t.vnodeList.append(v) # New in 4.2.
+
+    skip = len(v.t.vnodeList) > 1
+    v.initHeadString(headline,encoding=self.leo_file_encoding)
+    << handle unknown vnode attributes >>
+    # g.trace(skip,tref,v,v.t,len(v.t.vnodeList))
+    return v,skip
+#@nonl
+#@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
+keys = attrDict.keys()
+if keys:
+    v.unknownAttributes = attrDict
+
+    if 0: # For debugging.
+        s = "unknown attributes for " + v.headString()
+        print s ; g.es(s,color="blue")
+        for key in keys:
+            s = "%s = %s" % (key,attrDict.get(key))
+            print s ; g.es(s)
+#@nonl
+#@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
+#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
+#@+node:ekr.20031218072017.1553:getLeoFile
+# The caller should enclose this in begin/endUpdate.
+
+def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c
+    c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
+    << warn on read-only files >>
+    self.mFileName = c.mFileName
+    self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.descendentUnknownAttributesDictList = []
+    ok = True
+    c.loading = True # disable c.changed
+    
+    try:
+        << scan all the xml elements >>
+    except BadLeoFile, message:
+        if not silent:
+            << raise an alert >>
+        ok = False
+
+    c.frame.tree.redraw_now(scroll=False)
+    
+    # g.trace(readAtFileNodesFlag,c.mFileName)
+    
+    if ok and readAtFileNodesFlag:
+        c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+
+    if not c.currentPosition():
+        c.setCurrentPosition(c.rootPosition())
+
+    c.selectVnode(c.currentPosition()) # load body pane
+    c.loading = False # reenable c.changed
+    c.setChanged(c.changed) # Refresh the changed marker.
+    << restore attributes in descendent tnodes >>
+    self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.tnodesDict = {}
+    return ok, self.ratio
+#@nonl
+#@+node:ekr.20031218072017.1554:<< warn on read-only files >>
+# os.access may not exist on all platforms.
+
+try:
+    self.read_only = not os.access(fileName,os.W_OK)
+except AttributeError:
+    self.read_only = False
+except UnicodeError:
+    self.read_only = False
         
-    # Restore all vnodeLists (and thus all clone marks).
-    u.p.restoreLinksInTree()
+if self.read_only:
+    g.es("read only: " + fileName,color="red")
+#@nonl
+#@-node:ekr.20031218072017.1554:<< warn on read-only files >>
+#@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
+self.getXmlVersionTag()
+self.getXmlStylesheetTag()
 
-    c.selectVnode(u.p)
+self.getTag("<leo_file>") # Must match exactly.
+self.getLeoHeader()
+self.getGlobals()
+self.getPrefs()
+self.getFindPanelSettings()
+
+# Causes window to appear.
+c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio)
+if not silent:
+    g.es("reading: " + fileName)
+
+self.getVnodes()
+self.getTnodes()
+self.getCloneWindows()
+self.getTag("</leo_file>")
+#@nonl
+#@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
+#@+node:ekr.20031218072017.1556:<< raise an alert >>
+# All other exceptions are Leo bugs.
+
+g.es_exception()
+g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
+#@nonl
+#@-node:ekr.20031218072017.1556:<< raise an alert >>
+#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t: t.unknownAttributes = resultDict[gnx]
+        # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = {} ; expanded = {}
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
     
-    if 0: # Paste retaining clones can't be undone!
-        if u.headString:
-            new = u.headString
-            g.trace('old',old,'new',new)
-            u.p.setHeadStringOrHeadline(new)
-            u.headString=old
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+
+if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
+    for p in c.all_positions_iter():
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
+            p.expand()
 #@nonl
-#@-node:EKR.20040526072519.4:redoInsertNodes
-#@-node:ekr.20050206101036:From undo class
-#@+node:ekr.20031218072017.1548:Cut & Paste Outlines
-#@+node:ekr.20031218072017.1549:cutOutline
-def cutOutline(self):
+#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+#@-node:ekr.20031218072017.1553:getLeoFile
+#@+node:ekr.20031218072017.1561:getTnode & getTnodeUA's
+def getTnode (self):
 
-    c = self
-    if c.canDeleteHeadline():
-        c.copyOutline()
-        c.deleteOutline("Cut Node")
-        c.recolor()
-#@nonl
-#@-node:ekr.20031218072017.1549:cutOutline
-#@+node:ekr.20031218072017.1550:copyOutline
-def copyOutline(self):
+    # we have already matched <t.
+    index = -1 ; attrDict = {}
+    # New in version 1.7: attributes may appear in any order.
+    while 1:	
+        if self.matchTag("tx="):
+            # New for 4.1.  Read either "Tnnn" or "gnx".
+            index = self.getDqString()
+        elif self.matchTag("rtf=\"1\""): pass # ignored
+        elif self.matchTag("rtf=\"0\""): pass # ignored
+        elif self.matchTag('<uAbin64>'): # New in 4.3
+            data = self.getElementAttributes('bin64')
+            self.getTag('</uAbin64>')
+        elif self.matchTag('<uAstr>'): # New in 4.3
+            data = self.getElementAttributes('str')
+            self.getTag('</uAstr>')
+        elif self.matchTag(">"):         break
+        else: # New for 4.0: allow unknown attributes.
+            # New in 4.2: allow pickle'd and hexlify'ed values.
+            attr,val = self.getUnknownAttribute("tnode")
+            if attr: attrDict[attr] = val
+            
+    # index might be Tnnn, nnn, or gnx.
+    theId,time,n = g.app.nodeIndices.scanGnx(index,0)
+    if time == None: # A pre-4.1 file index.
+        if index[0] == "T":
+            index = index[1:]
 
-    # Copying an outline has no undo consequences.
-    c = self
-    c.endEditing()
-    c.fileCommands.assignFileIndices()
-    s = c.fileCommands.putLeoOutline()
-    g.app.gui.replaceClipboardWith(s)
-#@nonl
-#@-node:ekr.20031218072017.1550:copyOutline
-#@+node:ekr.20031218072017.1551:pasteOutline
-# To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
-
-def pasteOutline(self,reassignIndices=True):
-
-    c = self ; current = c.currentPosition()
-    
-    s = g.app.gui.getTextFromClipboard()
-
-    if not s or not c.canPasteOutline(s):
-        return # This should never happen.
-
-    isLeo = g.match(s,0,g.app.prolog_prefix_string)
-
-    if isLeo:
-        p = c.fileCommands.getLeoOutline(s,reassignIndices)
+    index = self.canonicalTnodeIndex(index)
+    t = self.tnodesDict.get(index)
+    << handle unknown attributes >>
+    if t:
+        s = self.getEscapedString()
+        t.setTnodeText(s,encoding=self.leo_file_encoding)
     else:
-        p = c.importCommands.convertMoreStringToOutlineAfter(s,current)
-        
-    if p:
-        c.endEditing()
-        c.beginUpdate()
-        if 1: # inside update...
-            c.validateOutline()
-            c.selectVnode(p)
-            p.setDirty()
-            c.setChanged(True)
-            # paste as first child if back is expanded.
-            back = p.back()
-            if back and back.isExpanded():
-                p.moveToNthChildOf(back,0)
-            c.undoer.setUndoParams("Paste Node",p)
-        c.endUpdate()
-        c.recolor()
+        g.es("no tnode with index: %s.  The text will be discarded" % str(index))
+    self.getTag("</t>")
 #@nonl
-#@-node:ekr.20031218072017.1551:pasteOutline
-#@+node:EKR.20040610130943:pasteOutlineRetainingClones
-def pasteOutlineRetainingClones (self):
-    
-    c = self
-    
-    if 1:
-        # For now, just execute the command.
-        return c.pasteOutline(reassignIndices=False)
+#@+node:ekr.20031218072017.1564:<< handle unknown attributes >>
+keys = attrDict.keys()
+if keys:
+    t.unknownAttributes = attrDict
+    if 0: # For debugging.
+        s = "unknown attributes for tnode"
+        print s ; g.es(s, color = "blue")
+        for key in keys:
+            s = "%s = %s" % (key,attrDict.get(key))
+            print s ; g.es(s)
+#@nonl
+#@-node:ekr.20031218072017.1564:<< handle unknown attributes >>
+#@-node:ekr.20031218072017.1561:getTnode & getTnodeUA's
+#@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
+def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 
-    else:
-        # Paste retaining clones can't be fully undone.  Warn first.
-        message = (
-            'Are you sure you want to Paste As Clone?\n\n'
-            'This operation can not be undone; it will clear the Undo stack.')
-        
-        response = g.app.gui.runAskYesNoDialog(c,'Paste As Clone?',message=message)
+    c = self.c ; v = None
+    setCurrent = setExpanded = setMarked = setOrphan = setTop = False
+    tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
+    # we have already matched <v.
+    while 1:
+        if self.matchTag("a=\""):
+            << Handle vnode attribute bits >>
+        elif self.matchTag("t="):
+            # New for 4.1.  Read either "Tnnn" or "gnx".
+            tref = index = self.getDqString()
+            if self.usingClipboard:
+                << raise invalidPaste if the tnode is in self.forbiddenTnodes >>
+        elif self.matchTag("vtag=\"V"):
+            self.getIndex() ; self.getDquote() # ignored
+        elif self.matchTag("tnodeList="):
+            s = self.getDqString()
+            tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag("descendentTnodeUnknownAttributes="):
+            # New for 4.2, deprecated for 4.3?
+            s = self.getDqString()
+            theDict = self.getDescendentUnknownAttributes(s)
+            if theDict:
+                self.descendentUnknownAttributesDictList.append(theDict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2.
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
+        # elif self.matchTag('<uAbase64>'): # New in 4.3
+            # data = self.getElementAttributes('bin64')
+            # self.getTag('</uAbase64>')
+        # elif self.matchTag('<uApickle>'): # New in 4.3
+            # data = self.getElementAttributes('pickle')
+            # self.getTag('</uApickle>')
+        # elif self.matchTag('<uAstr>'): # New in 4.3
+            # data = self.getElementAttributes('str')
+            # self.getTag('</uAstr>')
+        elif self.matchTag(">"):
+            break
+        else: # New for 4.0: allow unknown attributes.
+            # New in 4.2: allow pickle'd and hexlify'ed values.
+            attr,val = self.getUnknownAttribute("vnode")
+            if attr: attrDict[attr] = val
+    # Headlines are optional.
+    if self.matchTag("<vh>"):
+        headline = self.getEscapedString() ; self.getTag("</vh>")
     
-        if response == 'yes':
-            val = c.pasteOutline(reassignIndices=False)
-            c.undoer.clearUndoState()
-            g.es('Undo stack cleared',color='red')
-            return val
+    # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    if skip:
+        v = self.getExistingVnode(tref,headline)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
+        if tnodeList:
+            v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
+
+    << Set the remembered status bits >>
+
+    # Recursively create all nested nodes.
+    parent = v ; back = None
+    while self.matchTag("<v"):
+        append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
+        append2 = appendToTopStack and len(self.topVnodeStack) == 0
+        back = self.getVnode(parent,back,skip,
+            appendToCurrentStack=append1,appendToTopStack=append2)
+            
+    << Append to current or top stack >>
+
+    # End this vnode.
+    self.getTag("</v>")
+    return v
+#@nonl
+#@+node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+# The a=" has already been seen.
+while 1:
+    if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
+    elif self.matchChar('D'): pass # Not used.
+    elif self.matchChar('E'): setExpanded = True
+    elif self.matchChar('M'): setMarked = True
+    elif self.matchChar('O'): setOrphan = True
+    elif self.matchChar('T'): setTop = True
+    elif self.matchChar('V'): setCurrent = True
+    else: break
+
+self.getDquote()
+#@nonl
+#@-node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+#@+node:ekr.20041023110111:<< raise invalidPaste if the tnode is in self.forbiddenTnodes >>
+# Bug fix in 4.3 a1: make sure we have valid paste.
+theId,time,n = g.app.nodeIndices.scanGnx(index,0)
+if not time and index[0] == "T":
+    index = index[1:]
+    
+index = self.canonicalTnodeIndex(index)
+t = self.tnodesDict.get(index)
+
+if t in self.forbiddenTnodes:
+    g.trace(t)
+    raise invalidPaste
+#@nonl
+#@-node:ekr.20041023110111:<< raise invalidPaste if the tnode is in self.forbiddenTnodes >>
+#@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+if setCurrent:
+    self.currentVnodeStack = [v]
+
+if setTop:
+    self.topVnodeStack = [v]
+    
+if setExpanded:
+    v.initExpandedBit()
+    
+if setMarked:
+    v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
+
+if setOrphan:
+    v.setOrphan()
+#@nonl
+#@-node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+#@+node:ekr.20040326055828:<< Append to current or top stack >>
+if not setCurrent and len(self.currentVnodeStack) > 0 and appendToCurrentStack:
+    #g.trace("append current",v)
+    self.currentVnodeStack.append(v)
+    
+if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
+    #g.trace("append top",v)
+    self.topVnodeStack.append(v)
+#@nonl
+#@-node:ekr.20040326055828:<< Append to current or top stack >>
+#@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
+#@+node:EKR.20040526204036.1:getUnknownAttribute
+def getUnknownAttribute(self,nodeType):
+    
+    """Parse an unknown attribute in a <v> or <t> element."""
+    
+    # New in 4.2.  The unknown tag has been pickled and hexlify'd.
+    attr,val = self.getUnknownTag()
+    if not attr:
+        return None,None
+    try:
+        binString = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
+    except TypeError:
+        # Assume that Leo 4.1 wrote the attribute.
+        # g.trace('4.1 val:',val2)
+        return attr,val
+    try:
+        # No change needed to support protocols.
+        val2 = pickle.loads(binString)
+        # g.trace('v.3 val:',val2)
+        return attr,val2
+    except (pickle.UnpicklingError,ImportError):
+        return attr,val
+#@nonl
+#@-node:EKR.20040526204036.1:getUnknownAttribute
+#@-node:ekr.20050304124404.1:read...
+#@+node:ekr.20050304124404.2:write...
+#@+node:EKR.20040627113418:putDescendentUnknownAttributes
+def putDescendentUnknownAttributes (self,p):
+
+    # Create a list of all tnodes having a valid unknownAttributes dict.
+    tnodes = []
+    for p2 in p.subtree_iter():
+        t = p2.v.t
+        if hasattr(t,"unknownAttributes"):
+            if t not in tnodes :
+                tnodes.append((p,t),)    
+    # g.trace(tnodes)
+    
+    # Create a list of pairs (t,d) where d contains only pickleable entries.
+    data = []
+    for p,t in tnodes:
+        if type(t.unknownAttributes) != type({}):
+             g.es("ignoring non-dictionary unknownAttributes for",p,color="blue")
         else:
-            return None
+            # Create a new dict containing only entries that can be pickled.
+            d = dict(t.unknownAttributes) # Copy the dict.
+            for key in d.keys():
+                try: pickle.dumps(d[key],bin=True)
+                except pickle.PicklingError:
+                    del d[key]
+                    g.es("ignoring bad unknownAttributes key %s in %s" % (
+                        key,p),color="blue")
+            data.append((t,d),)
+            
+    # Create resultDict, an enclosing dict to hold all the data.
+    resultDict = {}
+    nodeIndices = g.app.nodeIndices
+    for t,d in data:
+        gnx = nodeIndices.toString(t.fileIndex)
+        resultDict[gnx]=d
+    
+    if 0:
+        print "resultDict"
+        for key in resultDict:
+            print ; print key,resultDict[key]
+        
+    # Pickle and hexlify resultDict.
+    if resultDict:
+        try:
+            tag = "descendentTnodeUnknownAttributes"
+            s = pickle.dumps(resultDict,bin=True)
+            field = ' %s="%s"' % (tag,binascii.hexlify(s))
+            self.put(field)
+        except pickle.PicklingError:
+            g.trace("can't happen",color="red")
 #@nonl
-#@-node:EKR.20040610130943:pasteOutlineRetainingClones
-#@-node:ekr.20031218072017.1548:Cut & Paste Outlines
-#@-node:ekr.20050128081550:(Implement undo for Paste Retaing clones)
-#@+node:ekr.20050116094523:Option not to write marks/expansion attributes
-#@-node:ekr.20050116094523:Option not to write marks/expansion attributes
-#@+node:ekr.20050225161957:Move executeFile into core
-#@-node:ekr.20050225161957:Move executeFile into core
-#@-node:ekr.20050225160112:First
-#@+node:ekr.20050211173540:Finish changes to c.executeScript & at.write
-At present g.executeScript does not call at.write if the script came from a selection.
+#@-node:EKR.20040627113418:putDescendentUnknownAttributes
+#@+node:ekr.20031218072017.1577:putTnode
+def putTnode (self,t):
 
-In fact, at.write assumes the 'root' node is c.currentPosition(). This must
-change if selections are to support Leo directives and section references.
+    self.put("<t")
+    self.put(" tx=")
+
+    gnx = g.app.nodeIndices.toString(t.fileIndex)
+    self.put_in_dquotes(gnx)
+
+    if hasattr(t,"unknownAttributes"):
+        self.putUnknownAttributes(t)
+
+    self.put(">")
+
+    # g.trace(t)
+    if t.bodyString:
+        self.putEscapedString(t.bodyString)
+
+    self.put("</t>") ; self.put_nl()
 #@nonl
-#@+node:ekr.20050228093753:e post 1
+#@-node:ekr.20031218072017.1577:putTnode
+#@+node:EKR.20040526202501:putUnknownAttributes
+def putUnknownAttributes (self,torv,toString=False):
+    
+    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
+    
+    result = []
+    attrDict = torv.unknownAttributes
+    if type(attrDict) != type({}):
+        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+        return
+
+    for key in attrDict.keys():
+        try:
+            val = attrDict[key]
+            try:
+                # Protocol argument is new in Python 2.3
+                # Use protocol 1 for compatibility with bin.
+                s = pickle.dumps(val,protocol=1)
+            except TypeError:
+                s = pickle.dumps(val,bin=True)
+            attr = ' %s="%s"' % (key,binascii.hexlify(s))
+            self.put(attr)
+        except pickle.PicklingError:
+            # New in 4.2 beta 1: keep going after error.
+            g.es("ignoring non-pickleable attribute %s in %s" % (
+                key,torv),color="blue")
+#@nonl
+#@-node:EKR.20040526202501:putUnknownAttributes
+#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+def putVnode (self,p):
+
+    """Write a <v> element corresponding to a vnode."""
+
+    fc = self ; c = fc.c ; v = p.v
+    isThin = p.isAtThinFileNode()
+    # Must check all parents.
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
+
+    fc.put("<v")
+    << Put tnode index >>
+    << Put attribute bits >>
+    << Put tnodeList and unKnownAttributes >>
+    fc.put(">")
+    << Write the head text >>
+
+    if not self.usingClipboard:
+        << issue informational messages >>
+
+   # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
+    if p.hasChildren():
+        if forceWrite or self.usingClipboard:
+            fc.put_nl()
+            # This optimization eliminates all "recursive" copies.
+            p.moveToFirstChild()
+            while 1:
+                fc.putVnode(p)
+                if p.hasNext(): p.moveToNext()
+                else:           break
+            p.moveToParent()
+
+    fc.put("</v>") ; fc.put_nl()
+#@nonl
+#@+node:ekr.20031218072017.1864:<< Put tnode index >>
+if v.t.fileIndex:
+    gnx = g.app.nodeIndices.toString(v.t.fileIndex)
+    fc.put(" t=") ; fc.put_in_dquotes(gnx)
+
+    # g.trace(v.t)
+    if forceWrite or self.usingClipboard:
+        v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
+else:
+    g.trace(v.t.fileIndex,v)
+    g.es("error writing file(bad v.t.fileIndex)!")
+    g.es("try using the Save To command")
+#@nonl
+#@-node:ekr.20031218072017.1864:<< Put tnode index >>
+#@+node:ekr.20031218072017.1865:<< Put attribute bits >>
+attr = ""
+if p.v.isExpanded(): attr += "E"
+if p.v.isMarked():   attr += "M"
+if p.v.isOrphan():   attr += "O"
+
+if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
+    # Almost 30% of the entire writing time came from here!!!
+    if p.equal(self.topPosition):   attr += "T" # was a bottleneck
+    if c.isCurrentPosition(p):      attr += "V" # was a bottleneck
+
+if attr: fc.put(' a="%s"' % attr)
+#@nonl
+#@-node:ekr.20031218072017.1865:<< Put attribute bits >>
+#@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+# Write the tnodeList only for @file nodes.
+# New in 4.2: tnode list is in tnode.
+
+if 0: # Debugging.
+    if v.isAnyAtFileNode():
+        if hasattr(v.t,"tnodeList"):
+            g.trace(v.headString(),len(v.t.tnodeList))
+        else:
+            g.trace(v.headString(),"no tnodeList")
+
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
+    if isThin:
+        if g.app.unitTesting:
+            g.app.unitTestDict["warning"] = True
+        g.es("deleting tnode list for %s" % p.headString(),color="blue")
+        # This is safe: cloning can't change the type of this node!
+        delattr(v.t,"tnodeList")
+    else:
+        fc.putTnodeList(v) # New in 4.0
+
+if hasattr(v,"unknownAttributes"): # New in 4.0
+    self.putUnknownAttributes(v)
+    
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
+#@nonl
+#@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+#@+node:ekr.20040702085529:<< issue informational messages >>
+if p.isAtThinFileNode and p.isOrphan():
+    g.es("Writing erroneous: %s" % p.headString(),color="blue")
+    p.clearOrphan()
+
+if 0: # For testing.
+    if p.isAtIgnoreNode():
+         for p2 in p.self_and_subtree_iter():
+                if p2.isAtThinFileNode():
+                    g.es("Writing @ignore'd: %s" % p2.headString(),color="blue")
+#@nonl
+#@-node:ekr.20040702085529:<< issue informational messages >>
+#@+node:ekr.20031218072017.1866:<< Write the head text >>
+headString = p.v.headString()
+
+if headString:
+    fc.put("<vh>")
+    fc.putEscapedString(headString)
+    fc.put("</vh>")
+#@nonl
+#@-node:ekr.20031218072017.1866:<< Write the head text >>
+#@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+#@-node:ekr.20050304124404.2:write...
+#@-node:ekr.20050304124404:From leoFileCommands...
+#@-node:ekr.20041231102453:(New uA scheme)
+#@+node:ekr.20041228074125:(Make drawing more flexible)
+#@+node:ekr.20041228092223:Play with wiki markup
+http://sourceforge.net/forum/message.php?msg_id=2205285
+From: Rich
+
+Color ''and'' italic/bold characters with @markup. One thing I'd like to
+''not'' see are the markup characters in @file-nosent files.  "~~red:NOTE:~~"
+does nothing for readability in plain text.
+#@nonl
+#@-node:ekr.20041228092223:Play with wiki markup
+#@+node:EKR.20040602153716:(Finish drawUserIcons)
+# Create a better way of writing user icons.
+#@nonl
+#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+Also add corresponding commands.
+#@nonl
+#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+#@+node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2477913
+By: edream
+
+A better design for user icons
+
+Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
+to have t.unknownAttributes["icons"] be a list of g.Bunches rather
+than a list of tuples.  Each of these bunches could have the
+following keys:
+
+"type"
+
+"file", "icon" or "url".  At present my prototype code uses "file" to specify
+the location of an icon.
+
+"where":
+
+"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
+where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
+means before the plus/minus box.  "beforeIcon" means before the standard icon.
+
+"height":
+
+the height of the icon to use when calculating the line height.  Default: get
+from the icon itself, if possible.
+
+"width":
+
+the width of the icon to use when calculating where to put the following element.
+Default: get from the icon, if possible.
+
+"xoffset"
+
+Leo draws the icon at x + xoffset, where x is determined by the where param
+above.  Default 0.
+
+"xpad"
+
+The amount of extra space following the icon.  Default 0.
+
+"yoffset"
+
+Leo draws the icon at y + yoffset.  Default 0.
+
+"ypad"
+
+The amount of extra vertical space to add to the line height.  Default 0.
+
+These offset and pad values are integer pixel values and may be positive or
+negative.
+
+"lineHeight"  NOT USED.
+
+Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+
+Edward
+
+P.S.  Other gui's might not be able to support all these options.  That's ok.
+The drawing code in gui plugins should degrade gracefully.
+
+EKR
+#@nonl
+#@-node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
+#@+node:ekr.20040317184631.2:Changes
+@nocolor
+
+"lineHeight"
+
+This key won't be used.
+
+t.unknownAttributes["lineYOffset"] 
+
+An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
+#@nonl
+#@-node:ekr.20040317184631.2:Changes
+#@+node:ekr.20040317184631.1:To do
+@nocolor
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+#@nonl
+#@-node:ekr.20040317184631.1:To do
+#@+node:EKR.20040526202501:putUnknownAttributes
+def putUnknownAttributes (self,torv,toString=False):
+    
+    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
+    
+    result = []
+    attrDict = torv.unknownAttributes
+    if type(attrDict) != type({}):
+        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+        return
+
+    for key in attrDict.keys():
+        try:
+            val = attrDict[key]
+            try:
+                # Protocol argument is new in Python 2.3
+                # Use protocol 1 for compatibility with bin.
+                s = pickle.dumps(val,protocol=1)
+            except TypeError:
+                s = pickle.dumps(val,bin=True)
+            attr = ' %s="%s"' % (key,binascii.hexlify(s))
+            self.put(attr)
+        except pickle.PicklingError:
+            # New in 4.2 beta 1: keep going after error.
+            g.es("ignoring non-pickleable attribute %s in %s" % (
+                key,torv),color="blue")
+#@nonl
+#@-node:EKR.20040526202501:putUnknownAttributes
+#@-node:EKR.20040602153716:(Finish drawUserIcons)
+#@+node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
 @killcolor
-http://sourceforge.net/forum/message.php?msg_id=3017712
 
-maybe not yet, except as a conditional script.
-its really only a very first draft.
-py2.4 ok
-py2.3 if you put subprocess.py in extensions
-and their compiled extension from effbot.org
-unless pywin32 is installed one or the other.
-no extension needed for nix.
-2.2 not even sure.
-but worse, subprocess doesn't work well under puthonw.exe
-I emailed the author, no one filed a bug report!
+http://sourceforge.net/forum/message.php?msg_id=2877106
 
-and the redirection is external you'll notice,
-that should be internal or the results should
-be passed back. print to console otherwise is useless.
-good enough in this application but not ready for primetime.
+By: Paul Paterson - paulpaterson
+RE: Can I color the headline text ?  
+2004-12-01 08:01
 
-I see subprocess is used in temacs plugin too.
-so subprocess should be in extensions in any case. and the merge of both use
-functions should
-be possible in a general way we can all use.
+The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
+ 
+Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
+ 
+Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
+ 
+Between the two of them there should be enough information to help you achieve what you want. 
+ 
+It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
 #@nonl
-#@-node:ekr.20050228093753:e post 1
-#@+node:ekr.20050228093753.1:e post 2
+#@-node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
+#@-node:ekr.20041228074125:(Make drawing more flexible)
+#@-node:ekr.20050225160112:To do: First
+#@+node:ekr.20050317080444:Fix bugs
+#@+node:ekr.20050317073747:Better error reporting in script button
+#@+node:ekr.20050317102007:Report
 @killcolor
-https://sourceforge.net/forum/message.php?msg_id=3018068
 
-a few other considerations,
-executeFile is now a misnomer. I originally expected
-to only need to make __name__ = '__main__',
-but then what about options?
-what about running another program than python?
-the other sticky problem from Leo, what about packing 
-sys.args for the spawned program? which I didn't attempt.
-and to duplicate the experience many programs expect args.
-execfile() was not going to cut it.
-
-the fallback for pythonw for now is:
-
-.    child_stdin, child_stdout, child_stderr = os.popen3(cmds)
-.    output = child_stdout.read()
-.    outerr = child_stderr.read()
-.    return output, outerr
-
-but, no return code? maybe popen4 is required for that.
-subprocess handles it allot better.
-not to mention piping the output from one program into another.
-we don't want to have people tripping over shell
-escaping problems to do simple things in a secure way.
-and did I read in another thread the mac has pythonw?
-does it suffer the same lack of stdout/stderr as 
-windows' pythonw?
-no one problem insurmountable. I could imagine 
-python.org taking the compatibility lead providing
-a py2224.zip with a few of the missing pieces.
-subprocess, datetime, sets, itertools, csv what have you.
-then instead of everyone incompletely trying
-to piece together compatibility those that want it
-could install a compete package.
-then there would only be PMW.
-we probably need elementtree and celementtree too.
-#@nonl
-#@-node:ekr.20050228093753.1:e post 2
-#@+node:ekr.20050302072742:iPython support (more powerful execute script)
-@killcolor
-https://sourceforge.net/forum/message.php?msg_id=3023147
+http://sourceforge.net/forum/message.php?msg_id=3051870
 By: e
 
-a little IPython integration woulden't be a bad thing.
-not with IPython code as much as in its execution.
-
-there '%' is now the magic char (was @) 
-
-you can also have automagic enabled.
-in scripting we have the static approach where you have
-to carefully think about what function to call
-the system and if it works on this or that OS.
-how to construct the call, list or string, 
-do I need to escape etc.
-
-what about a less static:
-filename = 'whatever.py'
-%python filename > <<details>>
-%cat <<details>> | sort
-
-maybe that would make too much work
-for executeScript.  just a thought.
-code to follow RSN.
-
->>I'll discuss them in detail when getting around to moving this work into Leo's core
-
-there are many places in Leo code, 
-openwith g.executeScript and various plugins
-all doing similar things in multitues of ways.
-a little more centralization might be called for.
-by then maybe subprocess will be updated.
+if you make a script button, the error is printed
+to the console only. no redirection to log if enabled.
 #@nonl
-#@-node:ekr.20050302072742:iPython support (more powerful execute script)
-#@-node:ekr.20050211173540:Finish changes to c.executeScript & at.write
+#@-node:ekr.20050317102007:Report
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
+    << redirect output >>
+    # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
+    if script.strip():
+        # 9/14/04: Temporarily add the open directory to sys.path.
+        sys.path.insert(0,c.frame.openDirectory)
+        script += '\n' # Make sure we end the script properly.
+        try:
+            p = c.currentPosition()
+            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+            exec script in d # Use {} to get a pristine environment!
+            << unredirect output >>
+            if not script1:
+                g.es("end of script",color="purple")
+        except Exception:
+            << unredirect output >>
+            g.es("exception executing script",color='blue')
+            if 0:
+                print 'script...'
+                for line in g.splitLines(script):
+                    print repr(line)
+            fileName,n = g.es_exception(full=True,c=c)
+            if p and not script1 and fileName == "<string>":
+                c.goToScriptLineNumber(p,script,n)
+            << dump the lines near the error >>
+            c.frame.tree.redrawAfterException()
+        del sys.path[0]
+    elif not error:
+        << unredirect output >>
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:EKR.20040612215018:<< dump the lines near the error >>
+if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 0:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        g.es(s,newline=False)
+else: # Print surrounding lines.
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@-node:ekr.20050317073747:Better error reporting in script button
+#@+node:ekr.20050317074713:Fix crasher in chapters plugin
+#@+node:ekr.20050317074713.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3051866
+By: nobody
+
+3)When enabling the chapters plugin, starting up Leo (which gives me an untitled
+window) and use the File-->Open menu to open leopluginsref.leo I get the following
+in the log pane:
+
+Leo Log Window...
+Leo 4.3 alpha 4, build  1.234 , March 15, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+exceptions opening: C:\Documents and Settings\re1705\My
+Documents\PythonStuff\leo\plugins\leoPluginsRef.leo
+Traceback (most recent call last):
+  File "C:\Documents and Settings\re1705\My
+Documents\PythonStuff\leo\src\leoGlobals.py", line 630, in openWithFileName
+    readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+  File "C:\Documents and Settings\re1705\My
+Documents\PythonStuff\leo\plugins\chapters.py", line 924, in newOpen
+    return oldOpen(self,file,fileName,readAtFileNodesFlag)
+  File "C:\Documents and Settings\re1705\My
+Documents\PythonStuff\leo\src\leoFileCommands.py", line 1285, in open
+    ok, ratio =
+self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
+TypeError: newGetLeoFile() got an unexpected keyword argument 'silent'
+
+of the newly opened window. In the still open 'untitled' window I can see a
+second 'no reportlab' line added to the log.
+#@nonl
+#@-node:ekr.20050317074713.1:Report
+#@-node:ekr.20050317074713:Fix crasher in chapters plugin
+#@+node:ekr.20050317074944:Improve plugin manager plugin
+@killcolor
+
+Some suggestions for you to ponder:
+
+i) maybe in the alfa and (early) beta versions of Leo you can show in the log
+pane which plugins are enabled (easier for reporting problems?)
+
+ii) how about making the Plugins menu have two sub-menus: Enabled and Disabled,
+thereby making it possible to right click on a plugin's name to toggle its state.
+So next time it will appear in the other submenu. I think this is slightly faster
+than starting up the plugin manager, especially when one is trying to find out
+which plugin is causing some unexpected behaviour.
+
+iii) remove the at_ and mod_ prefixes of the plugin names as they screw up the
+listing order of the plugins (when I try to recall some plugin having something
+to do with http, it takes me a while before thinking to look at the entries
+starting with m or a)
+
+iv) The casing of the plugins' names also screws up the ordering, so let the
+ordering of the plugin names (both in plugins menu and pluginsmanager) be case
+insensitive (when looking for some something to do with http, I don't care whether
+it's written like HTTP or http, in my mind it just starts with the letter 'h'
+with case unspecified)
+#@nonl
+#@-node:ekr.20050317074944:Improve plugin manager plugin
+#@+node:ekr.20050317075352:Scrollbar disappears when autocompleter plugin is enabled
+#@+node:ekr.20050317075352.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3052150
+By: brianvanden
+
+Leo Log Window...
+Leo 4.3 alpha 4, build  1.231 , March 15, 2005
+Python 2.4.0, Tk 8.4.7, win32
+
+I installed a4 today, made some changes to leoSettings.leo, and began exploring
+plugins. If autocompleter.py is enabled while the other plugins are left as
+in a fresh leo install, and the body pane is set not to wrap, then, when a line
+is longer than the screen, there is no horizontal scrollbar in the body pane.
+(I've observed this in both nodes not in a @nowrap sub- tree as well as those
+in such a sub-tree.)
+
+If autocompleter.py is disabled and leo is relaunched, the horizontal scroll
+bar appears as expected.
+
+but <http://sourceforge.net/forum/forum.php?thread_id=1244118&forum_id=10226
+might be relevant.
+#@nonl
+#@-node:ekr.20050317075352.1:Report
+#@-node:ekr.20050317075352:Scrollbar disappears when autocompleter plugin is enabled
+#@+node:ekr.20050318085825:test.leo starts out with 'Undo Clear Recent Files'
+#@-node:ekr.20050318085825:test.leo starts out with 'Undo Clear Recent Files'
+#@+node:ekr.20050328090032:Fix bug in call to spawnv
+#@+node:ekr.20050328090032.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3054876
+By: mstarzyk
+
+It looks to me like there is a bug in baseCommands.openWith(("os.spawnv"...))
+(Or in vim.py plugin that calls it)
+
+The executable should be passed twice to os.spawnv - first 
+as the "path" param, then as the first item in "args"
+But in line leoCommands.py:485 the executable is not included
+in the "args" param.
+
+Python manual says:
+    os.spawnv
+    The "v" variants are good when the number of parameters 
+    is variable [...]
+    In either case, the arguments to the child process must 
+    start with the name of the command being run. 
+
+With the current code the process runs, but the first parameter 
+is not passed to it. 
+So for example in the vim plugin vim is actually started 
+without the "--servername LEO" param.
+
+Additionally - on windows the executable in "args" should 
+be surrounded with doublequotes if the path contains whitespace.
+
+Cheers, 
+Maciek
+#@nonl
+#@-node:ekr.20050328090032.1:Report
+#@-node:ekr.20050328090032:Fix bug in call to spawnv
+#@+node:ekr.20050330135547:Notes re bug in chapter.py
+@nocolor
+#@nonl
+#@+node:ekr.20050330135641:Report 1
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=3073752
+By: nobody
+
+I just tried Chapters (latest CVS from a few hours ago) and I had a major bug,
+one that I've noticed for a few months now. I have 5 chapters and many cross-chapter
+clones.
+
+At unexpected times, when clicking on a node in one of the Chapters, Leo suddenly
+loses track of an entire subtree or the entirety of nodes in the outline. Just
+minutes ago, I clicked on a node in my first chapter (containing my entire outline,
+with subparts cloned to other chapters), and the ENTIRE CONTENTS of the chapter
+DISAPPEARED with the exception of one "New Headline" node, which was odd because
+I didn't add anything new in the first chapter. I tried CTRL+1, CTRL+2 to force
+Leo to redraw the outline in case the  nodes were present but somehow hidden,
+but no luck - all the nodes really seemed to be gone. The other chapters (containing
+clones from the first chapter) still looked ok. I had saved a few minutes earlier,
+so I quit without saving, hoping my earlier-saved version would still be OK,
+but to my disappointment the earlier-saved version had a one-node ("New Headline")
+outline in the first chapter.
+
+I had noticed this behavior since a few months (unfortunately I can't recall
+starting with which version), so I had been refraining from using Chapters,
+but it appears that there is still a serious bug lurking somewhere in there.
+#@nonl
+#@-node:ekr.20050330135641:Report 1
+#@+node:ekr.20050330135641.1:Report 2
+http://sourceforge.net/forum/message.php?msg_id=3073757
+By: nobody
+
+Regarding my previous message about Chapters deleting my entire outline, I just
+remembered my sequence of steps more clearly. This may provide some hint towards
+reproducing and fixing the bug.
+
+What I did:
+- Enabled Chapters, re-started Leo (latest CVS).
+- Load my huge outline. It appears in Chapter 1.
+- Add a chapter.
+- ***MAYBE IMPORTANT?*** The new chapter contains a new node, "New Headline".
+I leave this headline as it is, for now.
+- Clone some/many nodes into the new Chapters.
+- Add a few more chapters, again not touching the default "New Headline" node,
+and cloning nodes from Chapter 1 (big outline) into the new chapters.
+
+Up until now everything "seems" ok.
+
+Then, I started with Chapter 5, and deleted the "New Headline" node with the
+right-mouse-click menu. I did the same in Chapter 4, Chapter 3, and Chapter 2.
+
+Now, I returned to Chapter 1, clicked somewhere in the huge outline, and suddenly
+my entire outline disappeared, and a single "New Headline" node took its place.
+
+It looks as if some links or references between nodes/chapters are getting out
+of sync. Anyway, I know this information is not extremely specific, but maybe
+it will help in finding the bug.
+#@nonl
+#@-node:ekr.20050330135641.1:Report 2
+#@-node:ekr.20050330135547:Notes re bug in chapter.py
+#@-node:ekr.20050317080444:Fix bugs
 #@+node:ekr.20041228090344:Config improvements
 - Cancel should revert all settings.
     (Revert doesn't work after a node changes:this is confusing and dangerous.)
@@ -1583,6 +1590,25 @@ by then maybe subprocess will be updated.
 
 - Handle undo/redo properly.
 #@nonl
+#@+node:ekr.20050328095602:Add namespaces to configuration settings?
+#@+node:ekr.20050328095602.1:Suggestion
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3068816
+By: bwmulder
+
+
+>> c.config.getString('test')
+
+Neat.
+
+Now what's missing is that you can define different settings for different
+subtrees.
+
+But I can throw away the configuration settings. Did not work too well with
+the rst2 settings, when you want to be compatible with older versions...
+#@nonl
+#@-node:ekr.20050328095602.1:Suggestion
+#@-node:ekr.20050328095602:Add namespaces to configuration settings?
 #@+node:ekr.20050128092443:Add g.app.config.reloadAllSettings
 @killcolor
 
@@ -1764,8 +1790,256 @@ By: jasonic
 @nosent is an abbreviation for @file-nosentinels.
 Very hadny very cool but does not seem be much docs anywhere on this.
 #@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
+#@+node:ekr.20050317153447:jy-Leo install instructions
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3053534
+By: paulpaterson
+
+Very interesting indeed - great work! 
+ 
+I didn't have Java/Jython installed so for others in the same boat here's what I had to do to get it work on my platform (Win2k). Some of this is in the README but I had to do some extra but I'm not sure why. 
+ 
+1. Install 1.5 JDK  
+http://java.sun.com/j2se/1.5.0/download.jsp 
+ 
+2. Install Jython 
+http://www.jython.org/jython22a0.zip 
+ 
+3. Edit Jython.bat file - the part that calls Java.exe to ... 
+"C:\Program Files\Java\jdk1.5.0_02\jre\bin\java" -cp "C:\Program Files\Java\jdk1.5.0_02\jre\lib";"c:\Apps\Python23\Jython";"C:\Apps\jLeo\j-leo-MAR15\Icons";"C:\Apps\jLeo\j-leo-MAR15\skins";"C:\Apps\jLeo\j-leo-MAR15\src";"C:\Apps\jLeo\j-leo-MAR15\skinimages" -Dpython.home="c:\Apps\Python23\Jython" -jar jython.jar %ARGS% 
+ 
+Where  
+- Java installed at C:\Program Files\Java\jdk1.5.0_02 
+- Jython at c:\Apps\Python23\Jython 
+- jLeo at C:\Apps\jLeo\j-leo-MAR15 
+ 
+Change your paths as appropriate! There must be a better way to do this - Java confuses me! 
+ 
+4. Edit leo.py in jleo/src directory to fix failure to find HOME env variable. 
+ 
+line 241 becomes ... 
+ 
+....try:home = os.getenv('HOME' )#,default=dotDir) 
+....except KeyError:home="" 
+ 
+ 
+Then, from the Jython install directory ... 
+ 
+Jython " 
+C:\Apps\jLeo\j-leo-MAR15\src\leo.py" 
+ 
+Works a treat!  
+ 
+Paul
+#@-node:ekr.20050317153447:jy-Leo install instructions
 #@-node:ekr.20050211080215:Docs
-#@-node:ekr.20050303103230:4.3b1 code complete
+#@+node:ekr.20050316063117:Scripting
+#@+node:ekr.20050225161957:Move executeFile into core
+#@-node:ekr.20050225161957:Move executeFile into core
+#@+node:ekr.20050211173540:Finish changes to c.executeScript & at.write
+At present g.executeScript does not call at.write if the script came from a selection.
+
+In fact, at.write assumes the 'root' node is c.currentPosition(). This must
+change if selections are to support Leo directives and section references.
+#@nonl
+#@+node:ekr.20050228093753:e post 1
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3017712
+
+maybe not yet, except as a conditional script.
+its really only a very first draft.
+py2.4 ok
+py2.3 if you put subprocess.py in extensions
+and their compiled extension from effbot.org
+unless pywin32 is installed one or the other.
+no extension needed for nix.
+2.2 not even sure.
+but worse, subprocess doesn't work well under puthonw.exe
+I emailed the author, no one filed a bug report!
+
+and the redirection is external you'll notice,
+that should be internal or the results should
+be passed back. print to console otherwise is useless.
+good enough in this application but not ready for primetime.
+
+I see subprocess is used in temacs plugin too.
+so subprocess should be in extensions in any case. and the merge of both use
+functions should
+be possible in a general way we can all use.
+#@nonl
+#@-node:ekr.20050228093753:e post 1
+#@+node:ekr.20050228093753.1:e post 2
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3018068
+
+a few other considerations,
+executeFile is now a misnomer. I originally expected
+to only need to make __name__ = '__main__',
+but then what about options?
+what about running another program than python?
+the other sticky problem from Leo, what about packing 
+sys.args for the spawned program? which I didn't attempt.
+and to duplicate the experience many programs expect args.
+execfile() was not going to cut it.
+
+the fallback for pythonw for now is:
+
+.    child_stdin, child_stdout, child_stderr = os.popen3(cmds)
+.    output = child_stdout.read()
+.    outerr = child_stderr.read()
+.    return output, outerr
+
+but, no return code? maybe popen4 is required for that.
+subprocess handles it allot better.
+not to mention piping the output from one program into another.
+we don't want to have people tripping over shell
+escaping problems to do simple things in a secure way.
+and did I read in another thread the mac has pythonw?
+does it suffer the same lack of stdout/stderr as 
+windows' pythonw?
+no one problem insurmountable. I could imagine 
+python.org taking the compatibility lead providing
+a py2224.zip with a few of the missing pieces.
+subprocess, datetime, sets, itertools, csv what have you.
+then instead of everyone incompletely trying
+to piece together compatibility those that want it
+could install a compete package.
+then there would only be PMW.
+we probably need elementtree and celementtree too.
+#@nonl
+#@-node:ekr.20050228093753.1:e post 2
+#@+node:ekr.20050302072742:iPython support (more powerful execute script)
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3023147
+By: e
+
+a little IPython integration woulden't be a bad thing.
+not with IPython code as much as in its execution.
+
+there '%' is now the magic char (was @) 
+
+you can also have automagic enabled.
+in scripting we have the static approach where you have
+to carefully think about what function to call
+the system and if it works on this or that OS.
+how to construct the call, list or string, 
+do I need to escape etc.
+
+what about a less static:
+filename = 'whatever.py'
+%python filename > <<details>>
+%cat <<details>> | sort
+
+maybe that would make too much work
+for executeScript.  just a thought.
+code to follow RSN.
+
+>>I'll discuss them in detail when getting around to moving this work into Leo's core
+
+there are many places in Leo code, 
+openwith g.executeScript and various plugins
+all doing similar things in multitues of ways.
+a little more centralization might be called for.
+by then maybe subprocess will be updated.
+#@nonl
+#@-node:ekr.20050302072742:iPython support (more powerful execute script)
+#@-node:ekr.20050211173540:Finish changes to c.executeScript & at.write
+#@-node:ekr.20050316063117:Scripting
+#@+node:ekr.20050314091755:Write unit tests for find/change commands
+#@-node:ekr.20050314091755:Write unit tests for find/change commands
+#@+node:ekr.20050328093147:Improve distribution
+#@+node:ekr.20050328093147.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3064212
+By: djsg
+
+The following applies to Leo 4.3, which is in alpha as I write this. It describes
+the LeoSetup routine that I submitted to Edward to solve the "can't find Python"
+problem, and which Edward cleaned up for distribution.
+
+I think a few further issues need attention. I noticed them while working on
+the "can't find Python" problem, and deferred dealing with them. This appears
+to me to be a good time to pick them up.
+
+Before I start work on them, I would like to lay them out for your comment.
+Are they pains in the first place? Are my proposals good enough, and do they
+make sense?
+
+Issue 1. LeoSetup still thinks Leo's user is an Administrator who owns the whole
+machine.
+
+For explanation, let's say that I log on as David to Windows 2000 or Windows
+XP and install Leo 4.3. You then log out. You log in as Edward, and click Start,
+pick Programs... you have no visible entry for Leo!
+
+The current Setup routine allows no one but David to use Leo on this computer.
+To make things worse, when I go to use Leo, I have to log in to Windows using
+the account under which I installed it, which has Administrator rights to the
+computer. In other words, I can't use Leo without operating the computer in
+a mode that leaves it needlessly vulnerable to security violations.
+
+Issue 2. LeoSetup allows only one copy of Leo on a given computer. 
+
+LeoSetup assumes that you want Leo in C:\Program Files\Leo. The installer can
+override that already. LeoSetup also goes to some trouble to set up the usual
+click-to-open behavior for .leo files. That behavior is tied to the copy of
+Python that was current when I ran LeoSetup, and tied to the copy of Leo that
+was installed most recently.
+
+Proposal: While LeoSetup should allow all accounts to share the Python code
+for core Leo and its plug-ins, my guess is that we don't want to enforce that,
+since Leo is a programmer's tool and the individual programmer will wish to
+modify Leo and its pieces for the programmer's use.
+
+Proposal Option 1. Setup should ask whether to install Leo for everyone or for
+the installer's account only. If the answer to that question is "yes," Setup
+should give the user a private copy of everything that comes with Leo -- the
+only application shared should be the current Python, assuming that it is installed
+for all users.
+
+Python.org's installer for Python 2.4 allows the installed Python to work only
+for the account that installed it. I found this in December and wrote code to
+handle it, which I then commented out since the issue wasn't critical. I can
+check a computer with a single-account installation of Python in order to figure
+out how a single-account installation of Leo would have to handle the click-to-open
+behavior.
+
+Proposal Option 2. When LeoSetup finds Python installed for that single user,
+it should ask whether to install Leo for the installer's account only. If the
+answer to that question is "yes," Setup should give the user a private copy
+of everything that comes with Leo and use the single-user installation of Python.
+Why does this matter. If you need to test your plug-ins with different versions
+of Python, this would make that easier.
+
+Issue 3. LeoSetup always installs Python MegaWidgets ("Pmw"), even on computers
+whose installed Python installation already includes it.
+
+Proposal: put up a dialog box and ask whether Setup should install Pmw  I do
+not know whether doing this is a good idea.
+
+Issue 4. LeoSetup does not run without human intervention. This complicates
+deploying Leo in multi-computer sites.
+
+The message box that displays the path of the Python installation found is one
+issue. I put it in to allow the installer to cross-check Setup's behavior. Since
+nobody has complained about problems with the code I wrote to fix the problem
+installing with Python 2.4 and Active Python, Setup need no longer force the
+installer to review the message box's contents.
+
+Proposal: The message box needs to time out after, say, 15 seconds. 
+
+I last looked at the installer three months ago so I would have to look at the
+rest of it for other barriers to automated installation.
+
+Let me know what you think. I won't be able to start work for a week or so,
+so there's no rush.
+
+-- David
+#@nonl
+#@-node:ekr.20050328093147.1:Report
+#@-node:ekr.20050328093147:Improve distribution
+#@-node:ekr.20050303103230:To do: 4.3b1 code complete
 #@+node:ekr.20041228073219:4.3.n...
 #@+node:ekr.20040130073846:Use Python indices instead of Tk indices (Done except for leoFind!!)
 #@+node:ekr.20050313174347.1:Code notes
@@ -1973,50 +2247,59 @@ def tag (self,name,i,j):
 #@-node:ekr.20050313174347.3:In colorizer...
 #@+node:ekr.20050313174347.4:In commands...
 #@+node:ekr.20031218072017.2884:Edit Body submenu
-#@+node:ekr.20031218072017.1704:convertAllBlanks
+#@+node:ekr.20031218072017.1704:convertAllBlanks (done)
 def convertAllBlanks (self):
     
-    c = self ; body = c.frame.body ; v = current = c.currentVnode()
+    c = self ; body = c.frame.body ; current = c.currentPosition()
     
     if g.app.batchMode:
         c.notValidInBatchMode("Convert All Blanks")
         return
-    next = v.nodeAfterTree()
-    theDict = g.scanDirectives(c)
-    tabWidth  = theDict.get("tabwidth")
+    
+    d = g.scanDirectives(c)
+    tabWidth  = d.get("tabwidth")
     # Create copy for undo.
-    v_copy = c.undoer.saveTree(v)
-    oldText = body.getAllText()
-    oldSel = body.getTextSelection()
+    if c.undoer.new_undo: # new undo code
+        undoData = c.undoer.beforeGroup(current)
+    else:
+        v_copy = c.undoer.saveTree(current)
+        oldText = body.getAllText()
+        oldSel = body.getTextSelection()
     count = 0
-    while v and v != next:
-        if v == current:
-            if c.convertBlanks(setUndoParams=False):
-                count += 1 ; v.setDirty()
+    c.beginUpdate() # 4/8/05
+    for p in current.self_and_subtree_iter():
+        # g.trace(p.headString(),tabWidth)
+        if p == current:
+            if c.convertBlanks():
+                count += 1 ; p.setDirty()
         else:
             changed = False ; result = []
-            text = v.t.bodyString
+            text = p.t.bodyString
             assert(g.isUnicode(text))
             lines = string.split(text, '\n')
             for line in lines:
-                s = g.optimizeLeadingWhitespace(line,tabWidth)
+                i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+                s = g.computeLeadingWhitespace(w,abs(tabWidth)) + line[i:] # use positive width.
                 if s != line: changed = True
                 result.append(s)
             if changed:
-                count += 1 ; v.setDirty()
+                count += 1 ; p.setDirty()
                 result = string.join(result,'\n')
-                v.setTnodeText(result)
-        v = v.threadNext()
+                p.setTnodeText(result)
     if count > 0:
-        newText = body.getAllText()
-        newSel = body.getTextSelection()
-        c.undoer.setUndoParams("Convert All Blanks",
-            current,select=current,oldTree=v_copy,
-            oldText=oldText,newText=newText,
-            oldSel=oldSel,newSel=newSel)
-    g.es("blanks converted to tabs in %d nodes" % count)
+        if c.undoer.new_undo: # new undo code.
+            c.undoer.afterGroup(current,'Convert All Blanks',undoData)
+        else:
+            newText = body.getAllText()
+            newSel = body.getTextSelection()
+            c.undoer.setUndoParams("Convert All Blanks",
+                current,select=current,oldTree=v_copy,
+                oldText=oldText,newText=newText,
+                oldSel=oldSel,newSel=newSel)
+    g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
+    c.endUpdate(count > 0) # 4/8/05
 #@nonl
-#@-node:ekr.20031218072017.1704:convertAllBlanks
+#@-node:ekr.20031218072017.1704:convertAllBlanks (done)
 #@+node:ekr.20031218072017.1705:convertAllTabs
 def convertAllTabs (self):
 
@@ -2035,7 +2318,7 @@ def convertAllTabs (self):
     count = 0
     while v and v != next:
         if v == current:
-            if self.convertTabs(setUndoParams=False):
+            if self.convertTabs():
                 count += 1 ; v.setDirty()
         else:
             result = [] ; changed = False
@@ -2062,10 +2345,10 @@ def convertAllTabs (self):
     g.es("tabs converted to blanks in %d nodes" % count)
 #@nonl
 #@-node:ekr.20031218072017.1705:convertAllTabs
-#@+node:ekr.20031218072017.1821:convertBlanks
-def convertBlanks (self,setUndoParams=True):
+#@+node:ekr.20031218072017.1821:convertBlanks (done)
+def convertBlanks (self):
 
-    c = self ; body = c.frame.body
+    c = self ; u = c.undoer ; body = c.frame.body
     
     if g.app.batchMode:
         c.notValidInBatchMode("Convert Blanks")
@@ -2077,25 +2360,29 @@ def convertBlanks (self,setUndoParams=True):
     # Use the relative @tabwidth, not the global one.
     theDict = g.scanDirectives(c)
     tabWidth  = theDict.get("tabwidth")
+    
     if not tabWidth: return False
 
     for line in lines:
-        s = g.optimizeLeadingWhitespace(line,tabWidth)
+        s = g.optimizeLeadingWhitespace(line,abs(tabWidth)) # 4/8/05: use abs.
         if s != line: changed = True
         result.append(s)
 
     if changed:
         result = string.join(result,'\n')
-        undoType = g.choose(setUndoParams,"Convert Blanks",None)
+        if u.new_undo:
+            undoType = 'Convert Tabs'
+        else:
+            undoType = None
         c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
 
     return changed
 #@nonl
-#@-node:ekr.20031218072017.1821:convertBlanks
+#@-node:ekr.20031218072017.1821:convertBlanks (done)
 #@+node:ekr.20031218072017.1822:convertTabs
-def convertTabs (self,setUndoParams=True):
+def convertTabs (self):
 
-    c = self ; body = c.frame.body
+    c = self ; u = c.undoer ; body = c.frame.body
     
     if g.app.batchMode:
         c.notValidInBatchMode("Convert Tabs")
@@ -2117,7 +2404,10 @@ def convertTabs (self,setUndoParams=True):
 
     if changed:
         result = string.join(result,'\n')
-        undoType = g.choose(setUndoParams,"Convert Tabs",None)
+        if u.new_undo:
+            undoType = 'Convert Tabs'
+        else:
+            undoType = None
         c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
         
     return changed
@@ -2210,10 +2500,11 @@ headline = string.strip(headline)
 #@nonl
 #@-node:ekr.20031218072017.1707:<< Set headline for extract >>
 #@-node:ekr.20031218072017.1706:extract
-#@+node:ekr.20031218072017.1708:extractSection
+#@+node:ekr.20031218072017.1708:extractSection TO DO
 def extractSection(self):
 
-    c = self ; body = c.frame.body ; current = v = c.currentVnode()
+    c = self ; u = c.undoer
+    body = c.frame.body ; current = v = c.currentVnode()
     
     if g.app.batchMode:
         c.notValidInBatchMode("Extract Section")
@@ -2243,14 +2534,19 @@ def extractSection(self):
     if 1: # update range...
         c.createLastChildNode(v,headline,newBody)
         # g.trace(v)
-        undoType = None # Set undo params later.
+        if 0: ### u.new_undo:
+            undoType = 'Extract Section'
+        else:
+            undoType = None # Set undo params later.
         c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
-        newText = body.getAllText()
-        newSel = body.getTextSelection()
-        c.undoer.setUndoParams("Extract Section",v,
-            select=current,oldTree=v_copy,
-            oldText=oldText,newText=newText,
-            oldSel=oldSel,newSel=newSel)
+
+        if 1: ### not u.new_undo:
+            newText = body.getAllText()
+            newSel = body.getTextSelection()
+            c.undoer.setUndoParams("Extract Section",v,
+                select=current,oldTree=v_copy,
+                oldText=oldText,newText=newText,
+                oldSel=oldSel,newSel=newSel)
     c.endUpdate()
 #@nonl
 #@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
@@ -2274,7 +2570,7 @@ if oops:
     return
 #@nonl
 #@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
-#@-node:ekr.20031218072017.1708:extractSection
+#@-node:ekr.20031218072017.1708:extractSection TO DO
 #@+node:ekr.20031218072017.1710:extractSectionNames
 def extractSectionNames(self):
 
@@ -2746,24 +3042,28 @@ c.recolor()
 #@nonl
 #@-node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
 #@-node:ekr.20031218072017.1833:reformatParagraph
-#@+node:ekr.20031218072017.1838:updateBodyPane (handles undo)
+#@+node:ekr.20031218072017.1838:updateBodyPane (handles undo) TODO
 def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
     
-    c = self ; body = c.frame.body ; v = c.currentVnode()
+    c = self ; u = c.undoer
+    body = c.frame.body ; p = c.currentPosition()
+    
+    # if u.new_undo:
+        # undoData = u.beforeChangeNodeContents(p)
 
     # Update the text and notify the event handler.
     body.setSelectionAreas(head,middle,tail)
 
     if setSel:
         body.setTextSelection(oldSel)
-
-    body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
+        
+    body.onBodyChanged(p,undoType,oldSel=oldSel,oldYview=oldYview)
 
     # Update the changed mark and icon.
     c.setChanged(True)
     c.beginUpdate()
-    if not v.isDirty():
-        v.setDirty()
+    if not p.isDirty():
+        p.setDirty()
     c.endUpdate()
 
     # Scroll as necessary.
@@ -2771,11 +3071,15 @@ def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
         body.setYScrollPosition(oldYview)
     else:
         body.makeInsertPointVisible()
+        
+    # if u.new_undo:
+        # g.trace(undoType)
+        # u.afterChangeNodeContents(p,undoType,undoData)
 
     body.setFocus()
     c.recolor()
 #@nonl
-#@-node:ekr.20031218072017.1838:updateBodyPane (handles undo)
+#@-node:ekr.20031218072017.1838:updateBodyPane (handles undo) TODO
 #@-node:ekr.20031218072017.2884:Edit Body submenu
 #@-node:ekr.20050313174347.4:In commands...
 #@+node:ekr.20050313175009:In leoFind...
@@ -2788,11 +3092,11 @@ def search (self):
     
     __pychecker__ = '--no-implicitreturns' # Suppress bad warning.
 
-    c = self.c ; v = self.v ; t = self.s_ctrl ; gui = g.app.gui
-    assert(c and t and v)
+    c = self.c ; p = self.p ; t = self.s_ctrl ; gui = g.app.gui
+    assert(c and t and p)
     if self.selection_only:
         index,stopindex = self.selStart, self.selEnd
-        # g.trace(index,stopindex,v)
+        # g.trace(index,stopindex,p)
         if index == stopindex:
             return None, None
     else:
@@ -2823,7 +3127,7 @@ def search (self):
         if self.whole_word:
             index = t.index(g.choose(self.reverse,pos,newpos))
             << continue if not whole word match >>
-        #g.trace("found:",pos,newpos,v)
+        #g.trace("found:",pos,newpos,p)
         gui.setTextSelection(t,pos,newpos)
         return pos, newpos
 #@nonl
@@ -2841,7 +3145,7 @@ newpos = gui.moveIndexForward(t,pos,len(self.find_text))
 #@nonl
 #@-node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
 #@+node:ekr.20031218072017.3079:<< return if we are passed the wrap point >>
-if self.wrapping and self.wrapPos and self.wrapVnode and self.v == self.wrapVnode:
+if self.wrapping and self.wrapPos and self.wrapPosition and self.p == self.wrapPosition:
 
     if self.reverse and gui.compareIndices(t,pos, "<", self.wrapPos):
         # g.trace("wrap done")
@@ -4373,7 +4677,7 @@ def putCodeLine (self,s,i):
 #@+node:EKR.20040528075307:u.saveTree
 def saveTree (self,p,treeInfo=None):
     
-    """Create all info needed to handle a general undo operation."""
+    """Return a list of tuples with all info needed to handle a general undo operation."""
 
     # WARNING: read this before doing anything "clever"
     << about u.saveTree >>
@@ -4399,12 +4703,15 @@ The old code made a free-standing copy of the tree using v.copy and t.copy.  Thi
 
 Instead of creating new nodes, the new code creates all information needed to properly restore the vnodes and tnodes.  It creates a list of tuples, on tuple for each vnode in the tree.  Each tuple has the form,
 
-(vnodeInfo, tnodeInfo) where vnodeInfo and tnodeInfo are dicts contain all info needed to recreate the nodes.  The v.createUndoInfoDict and t.createUndoInfoDict methods correspond to the old v.copy and t.copy methods.
+(vnodeInfo, tnodeInfo)
+
+where vnodeInfo and tnodeInfo are dicts contain all info needed to recreate the nodes.  The v.createUndoInfoDict and t.createUndoInfoDict methods correspond to the old v.copy and t.copy methods.
 
 Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the createUndoInfoDict info, but quite a bit uglier.
+#@nonl
 #@-node:EKR.20040530114124:<< about u.saveTree >>
 #@-node:EKR.20040528075307:u.saveTree
-#@+node:EKR.20040606195417.2:u.saveNodeAndChildren
+#@+node:EKR.20040606195417.2:u.saveNodeAndChildren  (Not used at present)
 def saveNodeAndChildren (self,p):
     
     """Create all info needed for a node and all its immediate children."""
@@ -4425,19 +4732,19 @@ def saveNodeAndChildren (self,p):
 
     return treeInfo
 
-#@-node:EKR.20040606195417.2:u.saveNodeAndChildren
-#@+node:EKR.20040606195417.1:u.saveNode
+#@-node:EKR.20040606195417.2:u.saveNodeAndChildren  (Not used at present)
+#@+node:EKR.20040606195417.1:u.saveNode (Not used at present)
 def saveNode (self,p):
     
-    """Create all info for a single vnode."""
+    """Return a tuple containing all undo info for a single vnode."""
     
     u = self
 
     treeInfo = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
     return treeInfo
 #@nonl
-#@-node:EKR.20040606195417.1:u.saveNode
-#@+node:EKR.20040606195417.3:u.saveListOfNodes
+#@-node:EKR.20040606195417.1:u.saveNode (Not used at present)
+#@+node:EKR.20040606195417.3:u.saveListOfNodes (Not used at present)
 def saveListOfNodes (self,listOfVnodes):
     
     """Create all info for a list of vnodes."""
@@ -4450,7 +4757,7 @@ def saveListOfNodes (self,listOfVnodes):
 
     return treeInfo
 #@nonl
-#@-node:EKR.20040606195417.3:u.saveListOfNodes
+#@-node:EKR.20040606195417.3:u.saveListOfNodes (Not used at present)
 #@-node:EKR.20040601133022.1:(Finish the new undo)
 #@+node:ekr.20050108051818:Add hyperlinks for url's
 @killcolor
@@ -10456,6 +10763,12 @@ def next(self):
 #@-node:ekr.20040812154341.79:p.siblings_iter
 #@-node:ekr.20040812154341.64:p.Iterators (Can't use yield in pyrex)
 #@-node:ekr.20040812170616:Pyrex versions of key classes
+#@+node:ekr.20050116094523:Option not to write marks/expansion attributes in .leo files
+@
+
+I suppose the rationale is that they interfere with comparing .leo files, but so what?
+#@nonl
+#@-node:ekr.20050116094523:Option not to write marks/expansion attributes in .leo files
 #@-node:ekr.20041228084143: Maybe
 #@-node:ekr.20041228090855.3:All others
 #@+node:ekr.20040123102724:Can't or wont
@@ -11403,7 +11716,7 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
             s = self.getDqString()
             tnodeList = self.getTnodeList(s) # New for 4.0
         elif self.matchTag("descendentTnodeUnknownAttributes="):
-            # New for 4.2
+            # New for 4.2, deprecated for 4.3?
             s = self.getDqString()
             theDict = self.getDescendentUnknownAttributes(s)
             if theDict:
@@ -11411,9 +11724,18 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         elif self.matchTag("expanded="): # New in 4.2
             s = self.getDqString()
             self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
-        elif self.matchTag("marks="): # New in 4.2
+        elif self.matchTag("marks="): # New in 4.2.
             s = self.getDqString()
             self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
+        # elif self.matchTag('<uAbase64>'): # New in 4.3
+            # data = self.getElementAttributes('bin64')
+            # self.getTag('</uAbase64>')
+        # elif self.matchTag('<uApickle>'): # New in 4.3
+            # data = self.getElementAttributes('pickle')
+            # self.getTag('</uApickle>')
+        # elif self.matchTag('<uAstr>'): # New in 4.3
+            # data = self.getElementAttributes('str')
+            # self.getTag('</uAstr>')
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.

@@ -42,6 +42,11 @@ include doc/default.css
 include doc/leo_rst.css
 include doc/silver_city.css
 
+include doc\LeoN\sun98achieving.pdf
+include doc\LeoN\sun97generic.pdf
+include doc\LeoN\sun98operational.pdf
+include doc\LeoN\sun98reversible.pdf
+
 # New in 4.3a2: include path.py and sets.py.
 include extensions/path.py
 include extensions/sets.py

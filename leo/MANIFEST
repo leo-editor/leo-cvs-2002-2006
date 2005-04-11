@@ -70,6 +70,10 @@ doc\leoNotes.txt
 doc\leoToDo.txt
 doc\leo_rst.css
 doc\silver_city.css
+doc\LeoN\sun97generic.pdf
+doc\LeoN\sun98achieving.pdf
+doc\LeoN\sun98operational.pdf
+doc\LeoN\sun98reversible.pdf
 extensions\__init__.py
 extensions\path.py
 extensions\sets.py
@@ -304,6 +308,7 @@ plugins\.leoID.txt
 plugins\ConceptualSort.py
 plugins\EditAttributes.py
 plugins\FileActions.py
+plugins\LeoN.py
 plugins\Library.ini
 plugins\Library.py
 plugins\TabbedLog.py
@@ -322,6 +327,7 @@ plugins\at_produce.py
 plugins\at_view.py
 plugins\autocompleter.ini
 plugins\autocompleter.py
+plugins\autotrees.py
 plugins\base64Packager.py
 plugins\bibtex.py
 plugins\chapters.py
@@ -332,6 +338,7 @@ plugins\datenodes.ini
 plugins\datenodes.py
 plugins\dump_globals.py
 plugins\dyna.txt
+plugins\dyna_menu.ini
 plugins\dyna_menu.py
 plugins\dynacommon.py
 plugins\empty_leo_file.py
@@ -343,6 +350,7 @@ plugins\fastGotoNode.py
 plugins\footprints.ini
 plugins\footprints.py
 plugins\french_fm.py
+plugins\golf.py
 plugins\groupOperations.py
 plugins\hoist.py
 plugins\image.py
@@ -356,7 +364,6 @@ plugins\macros.py
 plugins\maximizeNewWindows.py
 plugins\mod_autosave.ini
 plugins\mod_autosave.py
-plugins\mod_http.ini
 plugins\mod_http.py
 plugins\mod_labels.py
 plugins\mod_leo2ascd.py
@@ -417,6 +424,12 @@ plugins\word_export.ini
 plugins\word_export.py
 plugins\xemacs.py
 plugins\xsltWithNodes.py
+plugins\trees\doc.py
+plugins\trees\news.py
+plugins\trees\pluginsManager.txt
+plugins\trees\remote.py
+plugins\trees\rss.py
+plugins\trees\test.py
 scripts\LinixInstall.py
 scripts\__init__.py
 scripts\c2py.py
