@@ -4005,6 +4005,9 @@ class Bunch (object):
     def ivars(self):
         return self.__dict__.keys()
         
+    def keys(self):
+        return self.__dict__.keys()
+        
     def toString(self):
         tag = self.__dict__.get('tag')
         entries = ["%s: %s" % (key,str(self.__dict__.get(key)))
