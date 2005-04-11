@@ -428,6 +428,14 @@ class baseFileCommands:
             return False
     #@-node:ekr.20031218072017.1245:match routines
     #@-node:ekr.20031218072017.1243:get & match (basic)(leoFileCommands)
+    #@+node:ekr.20050407073500:getElementAttributes (new in 4.3) NOT USED
+    def getElementAttributes (self,elementKind):
+        
+        data = []
+        
+        return data
+    #@nonl
+    #@-node:ekr.20050407073500:getElementAttributes (new in 4.3) NOT USED
     #@+node:ekr.20031218072017.3022:getClipboardHeader
     def getClipboardHeader (self):
     
@@ -468,6 +476,12 @@ class baseFileCommands:
     #@-node:ekr.20031218072017.3023:getCloneWindows
     #@+node:ekr.20040701065235.1:getDescendentAttributes
     def getDescendentAttributes (self,s,tag=""):
+        
+        '''s is a list of gnx's, separated by commas from a <v> or <t> element.
+        Parses s into a list.
+        
+        This is used to record marked and expanded nodes.
+        '''
         
         nodeIndices = g.app.nodeIndices
         gnxs = s.split(',')
@@ -870,7 +884,7 @@ class baseFileCommands:
         return height, width
     #@nonl
     #@-node:ekr.20031218072017.3026:getSize
-    #@+node:ekr.20031218072017.1561:getTnode
+    #@+node:ekr.20031218072017.1561:getTnode & getTnodeUA's
     def getTnode (self):
     
         # we have already matched <t.
@@ -882,6 +896,12 @@ class baseFileCommands:
                 index = self.getDqString()
             elif self.matchTag("rtf=\"1\""): pass # ignored
             elif self.matchTag("rtf=\"0\""): pass # ignored
+            elif self.matchTag('<uAbin64>'): # New in 4.3
+                data = self.getElementAttributes('bin64')
+                self.getTag('</uAbin64>')
+            elif self.matchTag('<uAstr>'): # New in 4.3
+                data = self.getElementAttributes('str')
+                self.getTag('</uAstr>')
             elif self.matchTag(">"):         break
             else: # New for 4.0: allow unknown attributes.
                 # New in 4.2: allow pickle'd and hexlify'ed values.
@@ -896,7 +916,6 @@ class baseFileCommands:
     
         index = self.canonicalTnodeIndex(index)
         t = self.tnodesDict.get(index)
-        # g.trace(t)
         #@    << handle unknown attributes >>
         #@+node:ekr.20031218072017.1564:<< handle unknown attributes >>
         keys = attrDict.keys()
@@ -918,7 +937,7 @@ class baseFileCommands:
             g.es("no tnode with index: %s.  The text will be discarded" % str(index))
         self.getTag("</t>")
     #@nonl
-    #@-node:ekr.20031218072017.1561:getTnode
+    #@-node:ekr.20031218072017.1561:getTnode & getTnodeUA's
     #@+node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
     def getTnodeList (self,s):
     
@@ -1030,7 +1049,7 @@ class baseFileCommands:
                 s = self.getDqString()
                 tnodeList = self.getTnodeList(s) # New for 4.0
             elif self.matchTag("descendentTnodeUnknownAttributes="):
-                # New for 4.2
+                # New for 4.2, deprecated for 4.3?
                 s = self.getDqString()
                 theDict = self.getDescendentUnknownAttributes(s)
                 if theDict:
@@ -1038,9 +1057,18 @@ class baseFileCommands:
             elif self.matchTag("expanded="): # New in 4.2
                 s = self.getDqString()
                 self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
-            elif self.matchTag("marks="): # New in 4.2
+            elif self.matchTag("marks="): # New in 4.2.
                 s = self.getDqString()
                 self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
+            # elif self.matchTag('<uAbase64>'): # New in 4.3
+                # data = self.getElementAttributes('bin64')
+                # self.getTag('</uAbase64>')
+            # elif self.matchTag('<uApickle>'): # New in 4.3
+                # data = self.getElementAttributes('pickle')
+                # self.getTag('</uApickle>')
+            # elif self.matchTag('<uAstr>'): # New in 4.3
+                # data = self.getElementAttributes('str')
+                # self.getTag('</uAstr>')
             elif self.matchTag(">"):
                 break
             else: # New for 4.0: allow unknown attributes.
@@ -1397,12 +1425,9 @@ class baseFileCommands:
             g.es_exception(full=False)
             return False
     #@nonl
-    #@+node:ekr.20050404212949:test_atFile_deleteFileWithMessage
-    def test_atFile_deleteFileWithMessage(self):
-        
-        g.trace()
-        return
-        
+    #@+node:ekr.20050404212949:test_fc_deleteFileWithMessage
+    def test_fc_deleteFileWithMessage(self):
+    
         fc=c.fileCommands # Self is a dummy argument.
         fc.deleteFileWithMessage('xyzzy','test')
         
@@ -1412,7 +1437,7 @@ class baseFileCommands:
         g.es("exception deleting %s file: %s" % (fileName,kind))
         g.es("exception deleting backup file:" + fileName)
     #@nonl
-    #@-node:ekr.20050404212949:test_atFile_deleteFileWithMessage
+    #@-node:ekr.20050404212949:test_fc_deleteFileWithMessage
     #@-node:ekr.20050404190914.2:deleteFileWithMessage
     #@+node:ekr.20031218072017.3033:put routines
     #@+node:ekr.20031218072017.3037:fileCommands.putGlobals (changed for 4.0)
