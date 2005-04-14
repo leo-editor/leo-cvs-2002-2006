@@ -1806,7 +1806,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if not p or not p.isCurrentPosition():
             return "break"
-            
+    
         edit_text = self.edit_text(p)
         index = edit_text.index("insert")
     

@@ -2217,7 +2217,7 @@ class position (object):
     def setAllAncestorAtFileNodesDirty (self,setDescendentsDirty=False):
     
         p = self ; c = p.c
-        changed = False
+        dirtyVnodeList = []
         
         # Calculate all nodes that are joined to v or parents of such nodes.
         nodes = p.findAllPotentiallyDirtyNodes()
@@ -2229,19 +2229,17 @@ class position (object):
                 # Only @thin nodes need to be marked.
                 if p2.v not in nodes and p2.isAtThinFileNode():
                     nodes.append(p2.v)
-        
+                    
+        dirtyVnodeList = [v for v in nodes
+            if not v.t.isDirty() and v.isAnyAtFileNode()]
+        changed = len(dirtyVnodeList) > 0
+    
         c.beginUpdate()
-        if 1: # update...
-            count = 0 # for debugging.
-            for v in nodes:
-                if not v.t.isDirty() and v.isAnyAtFileNode():
-                    # g.trace(v)
-                    changed = True
-                    v.t.setDirty() # Do not call v.setDirty here!
-                    count += 1
-            # g.trace(count,changed)
+        for v in dirtyVnodeList:
+            v.t.setDirty() # Do not call v.setDirty here!
         c.endUpdate(changed)
-        return changed
+    
+        return dirtyVnodeList
     #@nonl
     #@-node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
     #@+node:ekr.20040303163330:p.setDirty
@@ -2250,23 +2248,22 @@ class position (object):
     
     def setDirty (self,setDescendentsDirty=True):
     
-        p = self ; c = p.c
-        
+        p = self ; c = p.c ; dirtyVnodeList = []
         # g.trace(g.app.count) ; g.app.count += 1
     
         c.beginUpdate()
         if 1: # update...
-            changed = False
             if not p.v.t.isDirty():
                 p.v.t.setDirty()
-                changed = True
+                dirtyVnodeList.append(p.v)
             # N.B. This must be called even if p.v is already dirty.
             # Typing can change the @ignore state!
-            if p.setAllAncestorAtFileNodesDirty(setDescendentsDirty):
-                changed = True
+            dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty(setDescendentsDirty)
+            dirtyVnodeList.extend(dirtyVnodeList2)
+            changed = len(dirtyVnodeList) > 0
         c.endUpdate(changed)
     
-        return changed
+        return dirtyVnodeList
     #@nonl
     #@-node:ekr.20040303163330:p.setDirty
     #@+node:ekr.20040702104823:p.inAtIgnoreRange
