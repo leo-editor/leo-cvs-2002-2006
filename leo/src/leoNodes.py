@@ -2831,26 +2831,6 @@ class position (object):
     
         return p
     #@-node:ekr.20040303175026.11:p.moveToNthChildOf
-    #@+node:ekr.20040303175026.12:p.sortChildren
-    def sortChildren (self):
-        
-        p = self
-    
-        # Create a list of (headline,position) tuples
-        pairs = []
-        for child in p.children_iter():
-            pairs.append((string.lower(child.headString()),child.copy())) # do we need to copy?
-    
-        # Sort the list on the headlines.
-        pairs.sort()
-    
-        # Move the children.
-        index = 0
-        for headline,child in pairs:
-            child.moveToNthChildOf(p,index)
-            index += 1
-    #@nonl
-    #@-node:ekr.20040303175026.12:p.sortChildren
     #@+node:ekr.20040303175026.13:p.validateOutlineWithParent
     # This routine checks the structure of the receiver's tree.
     

@@ -2493,19 +2493,21 @@ def pasteOutlineRetainingClones (self):
             return None
 #@nonl
 #@-node:EKR.20040610130943:pasteOutlineRetainingClones
-#@+node:ekr.20031218072017.1551:pasteOutline TO DO
+#@+node:ekr.20031218072017.1551:pasteOutline TESTEd
 # To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
 
 def pasteOutline(self,reassignIndices=True):
 
     c = self ; u = c.undoer ; current = c.currentPosition()
     s = g.app.gui.getTextFromClipboard()
-    tag = g.choose(reassignIndices,'Paste Node','Paste As Clone')
+    undoType = g.choose(reassignIndices,'Paste Node','Paste As Clone')
 
     if not s or not c.canPasteOutline(s):
         return # This should never happen.
 
     isLeo = g.match(s,0,g.app.prolog_prefix_string)
+
+    undoData = u.beforeInsertNode(current)
 
     if isLeo:
         p = c.fileCommands.getLeoOutline(s,reassignIndices)
@@ -2523,16 +2525,12 @@ def pasteOutline(self,reassignIndices=True):
         # paste as first child if back is expanded.
         back = p.back()
         if back and back.isExpanded():
-            ## Is remembering the 'move' enough?
-            ## Don't we have to remember the insert too??
-            undoData = u.beforeMoveNode(p)
             p.moveToNthChildOf(back,0)
-            u.afterMoveNode(p,tag,undoData)
-            ## c.undoer.setUndoParams("Paste Node",p)
+        u.afterInsertNode(p,undoType,undoData)
     c.endUpdate()
     c.recolor()
 #@nonl
-#@-node:ekr.20031218072017.1551:pasteOutline TO DO
+#@-node:ekr.20031218072017.1551:pasteOutline TESTEd
 #@+node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
 # This method reads a Leo outline from string s in clipboard format.
 def getLeoOutline (self,s,reassignIndices=True):
@@ -2821,7 +2819,7 @@ def prettyPrintPythonCode (self,p=None,dump=False):
     pp.endUndo()
 #@nonl
 #@-node:ekr.20040712053025.1:prettyPrintPythonCode
-#@+node:ekr.20040711135244.5:class prettyPrinter TO DO
+#@+node:ekr.20040711135244.5:class prettyPrinter TESTED
 class prettyPrinter:
     
     @others
@@ -2909,12 +2907,12 @@ def dumpToken (self,token5tuple):
 #@+node:ekr.20040713091855:endUndo
 def endUndo (self):
     
-    c = self.c
+    c = self.c ; u = c.undoer ; undoType = 'Pretty Print'
+    current = c.currentPosition()
     
     if self.changed:
-
         # Tag the end of the command.
-        c.undoer.setUndoParams("Pretty Print",self.p)
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=self.dirtyVnodeList)
 #@nonl
 #@-node:ekr.20040713091855:endUndo
 #@+node:ekr.20040711135244.8:get
@@ -3126,28 +3124,30 @@ def putToken (self,token5tuple):
         self.putNormalToken(token5tuple)
 #@nonl
 #@-node:ekr.20040711135244.12:putToken
-#@+node:ekr.20040713070356:replaceBody
+#@+node:ekr.20040713070356:replaceBody TESTED
 def replaceBody (self,p,lines):
     
-    c = self.c
+    c = self.c ; u = c.undoer ; undoType = 'Pretty Print'
     
     sel = c.frame.body.getInsertionPoint()
     oldBody = p.bodyString()
     body = string.join(lines,'')
     
-    p.setBodyStringOrPane(body)
+    if oldBody != body:
+        if not self.changed:
+            # Start the group.
+            u.beforeChangeGroup(p,undoType)
+            self.changed = True
+            self.dirtyVnodeList = []
+        undoData = u.beforeChangeNodeContents(p)
+        p.setBodyStringOrPane(body)
+        dirtyVnodeList2 = p.setDirty()
+        self.dirtyVnodeList.extend(dirtyVnodeList2)
+        u.afterChangeNodeContents(p,undoType,undoData)
     
-    if not self.changed:
-
-        # Tag the start of the command.
-        c.undoer.setUndoParams("Pretty Print",self.p) 
-        self.changed = True
-    
-    self.c.undoer.setUndoParams("Change",p,
-        oldText=oldBody,newText=body,oldSel=sel, newSel=sel)
 #@nonl
-#@-node:ekr.20040713070356:replaceBody
-#@-node:ekr.20040711135244.5:class prettyPrinter TO DO
+#@-node:ekr.20040713070356:replaceBody TESTED
+#@-node:ekr.20040711135244.5:class prettyPrinter TESTED
 #@-node:ekr.20040711135959.1:Pretty Print commands
 #@-node:ekr.20050101100208:(Fixed Pretty Printer code for Python 2.4)
 #@+node:ekr.20050102181816:(Fixed crasher in Import Derived Files command)
@@ -3366,12 +3366,11 @@ With the version I am using (CVS, a few days old), searching for strings stops
 at nodes outside this subtree. The nodes where the string was found remains
 invisible.
 #@-node:ekr.20050121074152.1:Report
-#@+node:ekr.20031218072017.2028:Hoist & dehoist & enablers TO DO
+#@+node:ekr.20031218072017.2028:Hoist & dehoist TESTED
 def dehoist(self):
 
     c = self ; p = c.currentPosition()
     if p and c.canDehoist():
-        ## c.undoer.setUndoParams("De-Hoist",p)
         bunch = c.hoistStack.pop()
         if bunch.expanded: p.expand()
         else:              p.contract()
@@ -3382,21 +3381,22 @@ def dehoist(self):
             c.frame.putStatusLine("Hoist: " + bunch.p.headString())
         else:
             c.frame.putStatusLine("No hoist")
+        c.undoer.afterDehoist(p,'DeHoist')
 
 def hoist(self):
 
     c = self ; p = c.currentPosition()
     if p and c.canHoist():
-        ## c.undoer.setUndoParams("Hoist",p)
-        # New in 4.2: remember expansion state.
+        # Remember the expansion state.
         bunch = g.Bunch(p=p.copy(),expanded=p.isExpanded())
         c.hoistStack.append(bunch)
         p.expand()
         c.redraw()
         c.frame.clearStatusLine()
         c.frame.putStatusLine("Hoist: " + p.headString())
+        c.undoer.afterHoist(p,'Hoist')
 #@nonl
-#@-node:ekr.20031218072017.2028:Hoist & dehoist & enablers TO DO
+#@-node:ekr.20031218072017.2028:Hoist & dehoist TESTED
 #@+node:ekr.20031218072017.3081:selectNextVnode
 # Selects the next node to be searched.
 
@@ -12483,7 +12483,7 @@ def prettyPrintPythonCode (self,p=None,dump=False):
     pp.endUndo()
 #@nonl
 #@-node:ekr.20040712053025.1:prettyPrintPythonCode
-#@+node:ekr.20040711135244.5:class prettyPrinter TO DO
+#@+node:ekr.20040711135244.5:class prettyPrinter TESTED
 class prettyPrinter:
     
     @others
@@ -12571,12 +12571,12 @@ def dumpToken (self,token5tuple):
 #@+node:ekr.20040713091855:endUndo
 def endUndo (self):
     
-    c = self.c
+    c = self.c ; u = c.undoer ; undoType = 'Pretty Print'
+    current = c.currentPosition()
     
     if self.changed:
-
         # Tag the end of the command.
-        c.undoer.setUndoParams("Pretty Print",self.p)
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=self.dirtyVnodeList)
 #@nonl
 #@-node:ekr.20040713091855:endUndo
 #@+node:ekr.20040711135244.8:get
@@ -12788,28 +12788,30 @@ def putToken (self,token5tuple):
         self.putNormalToken(token5tuple)
 #@nonl
 #@-node:ekr.20040711135244.12:putToken
-#@+node:ekr.20040713070356:replaceBody
+#@+node:ekr.20040713070356:replaceBody TESTED
 def replaceBody (self,p,lines):
     
-    c = self.c
+    c = self.c ; u = c.undoer ; undoType = 'Pretty Print'
     
     sel = c.frame.body.getInsertionPoint()
     oldBody = p.bodyString()
     body = string.join(lines,'')
     
-    p.setBodyStringOrPane(body)
+    if oldBody != body:
+        if not self.changed:
+            # Start the group.
+            u.beforeChangeGroup(p,undoType)
+            self.changed = True
+            self.dirtyVnodeList = []
+        undoData = u.beforeChangeNodeContents(p)
+        p.setBodyStringOrPane(body)
+        dirtyVnodeList2 = p.setDirty()
+        self.dirtyVnodeList.extend(dirtyVnodeList2)
+        u.afterChangeNodeContents(p,undoType,undoData)
     
-    if not self.changed:
-
-        # Tag the start of the command.
-        c.undoer.setUndoParams("Pretty Print",self.p) 
-        self.changed = True
-    
-    self.c.undoer.setUndoParams("Change",p,
-        oldText=oldBody,newText=body,oldSel=sel, newSel=sel)
 #@nonl
-#@-node:ekr.20040713070356:replaceBody
-#@-node:ekr.20040711135244.5:class prettyPrinter TO DO
+#@-node:ekr.20040713070356:replaceBody TESTED
+#@-node:ekr.20040711135244.5:class prettyPrinter TESTED
 #@-node:ekr.20040711135959.1:Pretty Print commands
 #@-node:ekr.20041019111455:(Improved and repacked pretty printing)
 #@+node:ekr.20041214073833.1:(Removed g.os_path_norm and g.os_path_normabs)
@@ -20547,6 +20549,7 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@+node:ekr.20041122162610:@recent_files
 c:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
+c:\prog\leoCVS\leo\config\leoSettings.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -26921,37 +26924,33 @@ Hmm, there's something interesting here after all.
 Now you are hoisted on the recently removed node! The node is dead but his memory
 lives on ...
 #@-node:ekr.20041011092930:Report
-#@+node:ekr.20031218072017.1761:c.insertHeadline TO DO
-# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
-
+#@+node:ekr.20031218072017.1761:c.insertHeadline TESTED
 def insertHeadline (self,op_name="Insert Node"):
+    
+    '''Insert a node after the presently selected node.'''
 
     c = self ; u = c.undoer
-    p = c.currentPosition()
-    hasChildren = p.hasChildren()
-    isExpanded  = p.isExpanded()
-    if not p: return
+    current = c.currentPosition()
+    if not current: return
 
     c.beginUpdate()
-    if 1: # inside update...
-        undoData = c.undoer.beforeInsertNode(p)
-        # Make sure new node is visible when hoisting.
-        if ((hasChildren and isExpanded) or
-            (c.hoistStack and p == c.hoistStack[-1].p)
-        ):
-            p = p.insertAsNthChild(0)
+    if 1: # In update...
+        undoData = c.undoer.beforeInsertNode(current)
+        # Make sure the new node is visible when hoisting.
+        if ((current.hasChildren() and current.isExpanded()) or
+            (c.hoistStack and current == c.hoistStack[-1].current)):
+            p = current.insertAsNthChild(0)
         else:
-            p = p.insertAfter()
-        c.selectVnode(p)
-        c.editPosition(p)
+            p = current.insertAfter()
         dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
         c.setChanged(True)
         u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-        ## u.setUndoParams(op_name,p,select=old_p)
+        c.editPosition(p)
+        c.selectVnode(p)
     c.endUpdate()
     return p # for mod_labels plugin.
 #@nonl
-#@-node:ekr.20031218072017.1761:c.insertHeadline TO DO
+#@-node:ekr.20031218072017.1761:c.insertHeadline TESTED
 #@+node:EKR.20040526084140:undoInsertNodes
 def undoInsertNodes (self):
     
@@ -31388,7 +31387,7 @@ while i >= 0 and newText[i] == '\n':
     new_newlines += 1
     i -= 1
 
-if 0: ## u.debug_print:
+if u.debug_print:
     print "lead,trail",leading,trailing
     print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
     print "new mid,nls:",len(new_middle_lines),new_newlines,newText
@@ -38296,12 +38295,12 @@ if 0: # one-time test of es statements.
 #@+node:ekr.20050409080326:To do
 @killcolor
 
-- 'Unknown' undoTypes are setting the undo string in the menu to 'Can't Undo'.
-    - Happens for insert comments, indent, dedent, etc.
+- Don't call beginChangeGroup (in Change All) unless something will, in fact, be done.
 
-- Replace all calls to setUndoParams with before/after methods.
+- Replace v by current or p where possible.
+    - Search for selectVnode.
 
-- (last) Do undo/redo Paste As Clone.
+- Do undo/redo Paste As Clone.
 #@nonl
 #@+node:ekr.20050409080326.1:Cleanup (when finished)
 - (done) Remove dispatch dictionaries.
@@ -38412,7 +38411,7 @@ def redoInsertNodes (self):
 #@nonl
 #@-node:EKR.20040526072519.4:redoInsertNodes
 #@-node:ekr.20050206101036:From undo class
-#@+node:ekr.20031218072017.1548:Cut & Paste Outlines TO DO
+#@+node:ekr.20031218072017.1548:Cut & Paste Outlines TESTED
 #@+node:ekr.20031218072017.1549:cutOutline
 def cutOutline(self):
 
@@ -38434,19 +38433,21 @@ def copyOutline(self):
     g.app.gui.replaceClipboardWith(s)
 #@nonl
 #@-node:ekr.20031218072017.1550:copyOutline
-#@+node:ekr.20031218072017.1551:pasteOutline TO DO
+#@+node:ekr.20031218072017.1551:pasteOutline TESTEd
 # To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
 
 def pasteOutline(self,reassignIndices=True):
 
     c = self ; u = c.undoer ; current = c.currentPosition()
     s = g.app.gui.getTextFromClipboard()
-    tag = g.choose(reassignIndices,'Paste Node','Paste As Clone')
+    undoType = g.choose(reassignIndices,'Paste Node','Paste As Clone')
 
     if not s or not c.canPasteOutline(s):
         return # This should never happen.
 
     isLeo = g.match(s,0,g.app.prolog_prefix_string)
+
+    undoData = u.beforeInsertNode(current)
 
     if isLeo:
         p = c.fileCommands.getLeoOutline(s,reassignIndices)
@@ -38464,16 +38465,12 @@ def pasteOutline(self,reassignIndices=True):
         # paste as first child if back is expanded.
         back = p.back()
         if back and back.isExpanded():
-            ## Is remembering the 'move' enough?
-            ## Don't we have to remember the insert too??
-            undoData = u.beforeMoveNode(p)
             p.moveToNthChildOf(back,0)
-            u.afterMoveNode(p,tag,undoData)
-            ## c.undoer.setUndoParams("Paste Node",p)
+        u.afterInsertNode(p,undoType,undoData)
     c.endUpdate()
     c.recolor()
 #@nonl
-#@-node:ekr.20031218072017.1551:pasteOutline TO DO
+#@-node:ekr.20031218072017.1551:pasteOutline TESTEd
 #@+node:EKR.20040610130943:pasteOutlineRetainingClones
 def pasteOutlineRetainingClones (self):
     
@@ -38500,7 +38497,7 @@ def pasteOutlineRetainingClones (self):
             return None
 #@nonl
 #@-node:EKR.20040610130943:pasteOutlineRetainingClones
-#@-node:ekr.20031218072017.1548:Cut & Paste Outlines TO DO
+#@-node:ekr.20031218072017.1548:Cut & Paste Outlines TESTED
 #@-node:ekr.20050128081550:(Implement undo for Paste Retaining clones)
 #@-node:ekr.20050409080326:To do
 #@+node:ekr.20050315133212:What I did
@@ -38932,7 +38929,7 @@ while i >= 0 and newText[i] == '\n':
     new_newlines += 1
     i -= 1
 
-if 0: ## u.debug_print:
+if u.debug_print:
     print "lead,trail",leading,trailing
     print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
     print "new mid,nls:",len(new_middle_lines),new_newlines,newText
@@ -39155,6 +39152,457 @@ def setUndoTypes (self):
 #@nonl
 #@-node:ekr.20031218072017.3616:setUndoTypes
 #@-node:ekr.20050415061754:(Fixed new bug in updateBodyPane)
+#@+node:ekr.20050408104451:(Fixed undo/redo typing)
+#@+node:ekr.20031218072017.1490:setUndoTypingParams & recognizeStartOfTypingWord
+@ This routine saves enough information so a typing operation can be undone and redone.
+
+We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+@c
+
+def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+    
+    # g.trace(undo_type) # ,p,"old:",oldText,"new:",newText)
+    u = self ; c = u.c
+    << return if there is nothing to do >>
+    << init the undo params >>
+    << compute leading, middle & trailing  lines >>
+    << save undo text info >>
+    << save the selection and scrolling position >>
+    << adjust the undo stack, clearing all forward entries >>
+    u.setUndoTypes() # Recalculate the menu labels.
+    return bunch
+#@nonl
+#@+node:ekr.20040324061854:<< return if there is nothing to do >>
+if u.redoing or u.undoing:
+    return None
+
+if undo_type == None:
+    return None
+
+if undo_type == "Can't Undo":
+    u.clearUndoState()
+    return None
+
+if oldText == newText:
+    # g.trace("no change")
+    return None
+#@nonl
+#@-node:ekr.20040324061854:<< return if there is nothing to do >>
+#@+node:ekr.20040324061854.1:<< init the undo params >>
+# Clear all optional params.
+for ivar in u.optionalIvars:
+    setattr(u,ivar,None)
+
+# Set the params.
+u.undoType = undo_type
+u.p = p.copy()
+#@nonl
+#@-node:ekr.20040324061854.1:<< init the undo params >>
+#@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
+
+NB: the number of old and new middle lines may be different.
+@c
+
+old_lines = string.split(oldText,'\n')
+new_lines = string.split(newText,'\n')
+new_len = len(new_lines)
+old_len = len(old_lines)
+min_len = min(old_len,new_len)
+
+i = 0
+while i < min_len:
+    if old_lines[i] != new_lines[i]:
+        break
+    i += 1
+leading = i
+
+if leading == new_len:
+    # This happens when we remove lines from the end.
+    # The new text is simply the leading lines from the old text.
+    trailing = 0
+else:
+    i = 0
+    while i < min_len - leading:
+        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+            break
+        i += 1
+    trailing = i
+    
+# NB: the number of old and new middle lines may be different.
+if trailing == 0:
+    old_middle_lines = old_lines[leading:]
+    new_middle_lines = new_lines[leading:]
+else:
+    old_middle_lines = old_lines[leading:-trailing]
+    new_middle_lines = new_lines[leading:-trailing]
+
+# Remember how many trailing newlines in the old and new text.
+i = len(oldText) - 1 ; old_newlines = 0
+while i >= 0 and oldText[i] == '\n':
+    old_newlines += 1
+    i -= 1
+
+i = len(newText) - 1 ; new_newlines = 0
+while i >= 0 and newText[i] == '\n':
+    new_newlines += 1
+    i -= 1
+
+if u.debug_print:
+    print "lead,trail",leading,trailing
+    print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
+    print "new mid,nls:",len(new_middle_lines),new_newlines,newText
+    #print "lead,trail:",leading,trailing
+    #print "old mid:",old_middle_lines
+    #print "new mid:",new_middle_lines
+    print "---------------------"
+#@nonl
+#@-node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+#@+node:ekr.20031218072017.1492:<< save undo text info >>
+@ This is the start of the incremental undo algorithm.
+
+We must save enough info to do _both_ of the following:
+
+Undo: Given newText, recreate oldText.
+Redo: Given oldText, recreate oldText.
+
+The "given" texts for the undo and redo routines are simply v.bodyString().
+@c
+
+if u.debug:
+    # Remember the complete text for comparisons...
+    u.oldText = oldText
+    u.newText = newText
+    # Compute statistics comparing old and new ways...
+    # The old doesn't often store the old text, so don't count it here.
+    u.old_mem += len(newText)
+    s1 = string.join(old_middle_lines,'\n')
+    s2 = string.join(new_middle_lines,'\n')
+    u.new_mem += len(s1) + len(s2)
+else:
+    u.oldText = None
+    u.newText = None
+
+u.leading = leading
+u.trailing = trailing
+u.oldMiddleLines = old_middle_lines
+u.newMiddleLines = new_middle_lines
+u.oldNewlines = old_newlines
+u.newNewlines = new_newlines
+#@nonl
+#@-node:ekr.20031218072017.1492:<< save undo text info >>
+#@+node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#Remember the selection.
+u.oldSel = oldSel
+u.newSel = newSel
+
+# Remember the scrolling position.
+if oldYview:
+    u.yview = oldYview
+else:
+    u.yview = c.frame.body.getYScrollPosition()
+#@-node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#@+node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+@ New in Leo 4.3. Instead of creating a new bead on every character, we may adjust the top bead:
+
+word granularity: adjust the top bead if the typing would continue the word.
+line granularity: adjust the top bead if the typing is on the same line.
+node granularity: adjust the top bead if the typing is anywhere on the same node.
+@c
+
+granularity = u.granularity
+
+old_d = u.peekBead(u.bead)
+old_p = old_d and old_d.get('p')
+
+<< set newBead if we can't share the previous bead >>
+
+if newBead:
+    # Push params on undo stack, clearing all forward entries.
+    u.bead += 1
+    bunch = g.Bunch(
+        p = p.copy(),
+        kind='typing',
+        undoType = undo_type,
+        undoHelper=u.undoTyping,
+        redoHelper=u.redoTyping,
+        oldText=u.oldText,
+        oldSel=u.oldSel,
+        oldNewlines=u.oldNewlines,
+        oldMiddleLines=u.oldMiddleLines,
+    )
+else:
+    bunch = old_d
+
+bunch.leading=u.leading
+bunch.trailing= u.trailing
+bunch.newNewlines=u.newNewlines
+bunch.newMiddleLines=u.newMiddleLines
+bunch.newSel=u.newSel
+bunch.newText=u.newText
+bunch.yview=u.yview
+
+u.beads[u.bead:] = [bunch]
+    
+# g.trace(newBead,'u.bead',u.bead,undo_type,old_p)
+#@nonl
+#@+node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+if (
+    not old_d or not old_p or
+    old_p.v != p.v or
+    old_d.get('kind') != 'typing' or
+    old_d.get('undoType') != 'Typing' or
+    undo_type != 'Typing'
+):
+    newBead = True # We can't share the previous node.
+elif granularity == 'char':
+    newBead = True # This was the old way.
+elif granularity == 'node':
+    newBead = False # Always replace previous bead.
+else:
+    assert granularity in ('line','word')
+    # Replace the previous bead if only the middle lines have changed.
+    newBead = (
+        old_d.get('leading',0)  != u.leading or 
+        old_d.get('trailing',0) != u.trailing
+    )
+    if granularity == 'word' and not newBead:
+        # Protect the method that may be changed by the user
+        try:
+            << set newBead if the change does not continue a word >>
+        except Exception:
+            if 0:
+                g.trace('old_lines',old_lines)
+                g.trace('new_lines',new_lines)
+            g.es('Exception in setUndoRedoTypingParams',color='blue')
+            g.es_exception()
+            newBead = True
+#@nonl
+#@+node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+old_start,old_end = oldSel
+new_start,new_end = newSel
+if old_start != old_end or new_start != new_end:
+    # The new and old characters are not contiguous.
+    newBead = True
+else:
+    old_row,old_col = old_start.split('.')
+    new_row,new_col = new_start.split('.')
+    old_row,old_col = int(old_row),int(old_col)
+    new_row,new_col = int(new_row),int(new_col)
+    old_lines = g.splitLines(oldText)
+    new_lines = g.splitLines(newText)
+    #g.trace(old_row,old_col,len(old_lines))
+    #g.trace(new_row,new_col,len(new_lines))
+    # Recognize backspace, del, etc. as contiguous.
+    if old_row != new_row or abs(old_col-new_col) != 1:
+        # The new and old characters are not contiguous.
+        newBead = True
+    elif old_col == 0 or new_col == 0:
+        pass # We have just inserted a line.
+    else:
+        old_s = old_lines[old_row-1]
+        new_s = new_lines[new_row-1]
+        old_ch = old_s[old_col-1]
+        new_ch = new_s[new_col-1]
+        # g.trace(repr(old_ch),repr(new_ch))
+        newBead = self.recognizeStartOfTypingWord(
+            old_lines,old_row,old_col,old_ch,
+            new_lines,new_row,new_col,new_ch)
+#@nonl
+#@-node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+#@-node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+#@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+#@+node:ekr.20050126081529:recognizeStartOfTypingWord
+def recognizeStartOfTypingWord (self,
+    old_lines,old_row,old_col,old_ch, 
+    new_lines,new_row,new_col,new_ch):
+        
+    ''' A potentially user-modifiable method that should return True if the
+    typing indicated by the params starts a new 'word' for the purposes of
+    undo with 'word' granularity.
+    
+    u.setUndoTypingParams calls this method only when the typing could possibly
+    continue a previous word. In other words, undo will work safely regardless
+    of the value returned here.
+    
+    old_ch is the char at the given (Tk) row, col of old_lines.
+    new_ch is the char at the given (Tk) row, col of new_lines.
+    
+    The present code uses only old_ch and new_ch. The other arguments are given
+    for use by more sophisticated algorithms.'''
+    
+    ws = string.whitespace
+    word_chars = string.letters + string.digits + '_'
+
+    if 1: # This seems like the best way.
+        # Start a word if new_ch begins whitespace + word
+        return old_ch not in ws and new_ch in ws
+
+    if 0: # Problems with punctuation within words.
+        return old_ch in ws and new_ch not in ws
+
+    if 0: # Problems with punctuation within words.
+        return new_ch in word_chars and not old_ch in word_chars
+        
+    else: return False # Keeps Pychecker happy.
+#@nonl
+#@-node:ekr.20050126081529:recognizeStartOfTypingWord
+#@-node:ekr.20031218072017.1490:setUndoTypingParams & recognizeStartOfTypingWord
+#@+node:EKR.20040526090701.4:undoTyping
+def undoTyping (self):
+    
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectVnode causes recoloring, so don't do this unless needed.
+    if current != u.p:
+        c.selectVnode(u.p)
+    elif u.undoType in ("Cut","Paste",'Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.oldMiddleLines,u.newMiddleLines,
+        u.oldNewlines,u.newNewlines,
+        tag="undo",undoType=u.undoType)
+
+    if u.oldSel:
+        c.frame.body.setTextSelection(u.oldSel)
+    if u.yview:
+        c.frame.body.setYScrollPosition(u.yview)
+        
+    u.redrawFlag = (current != u.p)
+#@nonl
+#@-node:EKR.20040526090701.4:undoTyping
+#@+node:EKR.20040526075238.5:redoTyping
+def redoTyping (self):
+
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectVnode causes recoloring, so avoid if possible.
+    if current != u.p:
+        c.selectVnode(u.p)
+    elif u.undoType in ('Cut','Paste','Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.newMiddleLines,u.oldMiddleLines,
+        u.newNewlines,u.oldNewlines,
+        tag="redo",undoType=u.undoType)
+    
+    if u.newSel:
+        c.frame.body.setTextSelection(u.newSel)
+    if u.yview:
+        c.frame.body.setYScrollPosition(u.yview)
+        
+    u.redrawFlag = (current != u.p)
+#@nonl
+#@-node:EKR.20040526075238.5:redoTyping
+#@+node:ekr.20031218072017.1493:undoRedoText
+# Handle text undo and redo.
+# The terminology is for undo: converts _new_ text into _old_ text.
+
+def undoRedoText (self,p,
+    leading,trailing, # Number of matching leading & trailing lines.
+    oldMidLines,newMidLines, # Lists of unmatched lines.
+    oldNewlines,newNewlines, # Number of trailing newlines.
+    tag="undo", # "undo" or "redo"
+    undoType=None):
+
+    u = self ; c = u.c
+    assert(p == c.currentPosition())
+
+    << Incrementally update the Tk.Text widget >>
+    << Compute the result using p's body text >>
+    # g.trace(undoType)
+    p.setTnodeText(result)
+    << Get textResult from the Tk.Text widget >>
+    if textResult == result:
+        if undoType in ("Cut","Paste"):
+            # g.trace("non-incremental undo")
+            c.frame.body.recolor(p,incremental=False)
+        else:
+            # g.trace("incremental undo:",leading,trailing)
+            c.frame.body.recolor_range(p,leading,trailing)
+    else: # 11/19/02: # Rewrite the pane and do a full recolor.
+        if u.debug_print:
+            << print mismatch trace >>
+        # g.trace("non-incremental undo")
+        p.setBodyStringOrPane(result)
+#@nonl
+#@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+# Only update the changed lines.
+mid_text = string.join(oldMidLines,'\n')
+new_mid_len = len(newMidLines)
+# Maybe this could be simplified, and it is good to treat the "end" with care.
+if trailing == 0:
+    c.frame.body.deleteLine(leading)
+    if leading > 0:
+        c.frame.body.insertAtEnd('\n')
+    c.frame.body.insertAtEnd(mid_text)
+else:
+    if new_mid_len > 0:
+        c.frame.body.deleteLines(leading,new_mid_len)
+    elif leading > 0:
+        c.frame.body.insertAtStartOfLine(leading,'\n')
+    c.frame.body.insertAtStartOfLine(leading,mid_text)
+# Try to end the Tk.Text widget with oldNewlines newlines.
+# This may be off by one, and we don't care because
+# we never use body text to compute undo results!
+s = c.frame.body.getAllText()
+newlines = 0 ; i = len(s) - 1
+while i >= 0 and s[i] == '\n':
+    newlines += 1 ; i -= 1
+# g.trace(newlines,oldNewlines)
+while newlines > oldNewlines:
+    c.frame.body.deleteLastChar()
+    newlines -= 1
+if oldNewlines > newlines:
+    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
+#@nonl
+#@-node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+#@+node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
+# Recreate the text using the present body text.
+body = p.bodyString()
+body = g.toUnicode(body,"utf-8")
+body_lines = body.split('\n')
+s = []
+if leading > 0:
+    s.extend(body_lines[:leading])
+if len(oldMidLines) > 0:
+    s.extend(oldMidLines)
+if trailing > 0:
+    s.extend(body_lines[-trailing:])
+s = string.join(s,'\n')
+# Remove trailing newlines in s.
+while len(s) > 0 and s[-1] == '\n':
+    s = s[:-1]
+# Add oldNewlines newlines.
+if oldNewlines > 0:
+    s = s + '\n' * oldNewlines
+result = s
+if u.debug_print:
+    print "body:  ",body
+    print "result:",result
+#@nonl
+#@-node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
+#@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+textResult = c.frame.body.getAllText()
+
+if textResult != result:
+    # Remove the newline from textResult if that is the only difference.
+    if len(textResult) > 0 and textResult[:-1] == result:
+        textResult = result
+#@nonl
+#@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+#@+node:ekr.20031218072017.1497:<< print mismatch trace >>
+print "undo mismatch"
+print "expected:",result
+print "actual  :",textResult
+#@nonl
+#@-node:ekr.20031218072017.1497:<< print mismatch trace >>
+#@-node:ekr.20031218072017.1493:undoRedoText
+#@-node:ekr.20050408104451:(Fixed undo/redo typing)
 #@-node:ekr.20050315133212:What I did
 #@+node:ekr.20050412105321:Unused from leoUndo
 #@+node:ekr.20050409075427:Old redo helpers...
@@ -39658,31 +40106,6 @@ def registerHandler (self,undoName,func,kind,dict,verbose=False):
         g.trace(s) ; g.es(s, color="red")
 #@nonl
 #@-node:EKR.20040526094429:registerUndoHandlers & registerHandler
-#@+node:ekr.20031218072017.3604:<< Define optional ivars >>
-# New in 4.3:  the bead methods create these entries dynmically.
-u.optionalIvars = []
-
-## New in 4.2: this is now an ivar, not a global, and it's a list, not a tuple.
-## u.optionalIvars = [
-    ## "lastChild",
-    ## "parent","oldParent",
-    ## "back","oldBack",
-    ## "n","oldN","oldV",
-    ## "oldText","newText",
-    ## "oldSel","newSel",
-    ## "sort","select",
-    ## "oldTree","newTree", # Added newTree 10/14/03
-    ## "yview",
-    ## For incremental undo typing...
-    ## "leading","trailing",
-    ## "oldMiddleLines","newMiddleLines",
-    ## "oldNewlines","newNewlines",
-    ## # New in 4.3 (temp before we get rid of all of this).
-    ## 'undoHelper',
-    ## 'redoHelper',
-## ]
-#@nonl
-#@-node:ekr.20031218072017.3604:<< Define optional ivars >>
 #@+node:EKR.20040526072519:<< define redoDispatchDict >>
 u.redoDispatchDict = {
 
@@ -39884,6 +40307,38 @@ def makeBeadDict (self,keywords=None):
 #@nonl
 #@-node:EKR.20040526150818.2:makeBeadDict
 #@-node:ekr.20050409072320:Not used (leoUndo)
+#@+node:ekr.20031218072017.1189:<< Set the undo info for sortChildren >>
+# Get the present list of children.
+children = []
+child = v.firstChild()
+while child:
+    children.append(child)
+    child = child.next()
+
+## c.undoer.setUndoParams("Sort Children",v,sort=children)
+#@nonl
+#@-node:ekr.20031218072017.1189:<< Set the undo info for sortChildren >>
+#@+node:ekr.20031218072017.2897:<< Set the undo info for sortTopLevel >>
+# Get the present list of children.
+sibs = []
+
+for sib in root.self_and_siblings_iter(copy=True):
+    sibs.append(sib)
+    
+## c.undoer.setUndoParams("Sort Top Level",root,sort=sibs)
+#@nonl
+#@-node:ekr.20031218072017.2897:<< Set the undo info for sortTopLevel >>
+#@+node:ekr.20031218072017.1190:<< Set the undo info for sortSiblings >>
+# Get the present list of siblings.
+sibs = []
+sib = parent.firstChild()
+while sib:
+    sibs.append(sib)
+    sib = sib.next()
+    
+## c.undoer.setUndoParams("Sort Siblings",v,sort=sibs)
+#@nonl
+#@-node:ekr.20031218072017.1190:<< Set the undo info for sortSiblings >>
 #@-node:ekr.20050412105321:Unused from leoUndo
 #@+node:ekr.20031218072017.2989:c.setChanged
 def setChanged (self,changedFlag,tag=''):
@@ -40298,7 +40753,7 @@ while i >= 0 and newText[i] == '\n':
     new_newlines += 1
     i -= 1
 
-if 0: ## u.debug_print:
+if u.debug_print:
     print "lead,trail",leading,trailing
     print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
     print "new mid,nls:",len(new_middle_lines),new_newlines,newText
@@ -40642,7 +41097,7 @@ def beforeDeleteNode (self,p):
     return bunch
 #@nonl
 #@-node:ekr.20050411193627.3:beforeDeleteNode TEST
-#@+node:ekr.20050411193627.4:beforeInsertNode TEST
+#@+node:ekr.20050411193627.4:beforeInsertNode TESTED
 def beforeInsertNode (self,p):
     
     u = self
@@ -40651,7 +41106,7 @@ def beforeInsertNode (self,p):
 
     return bunch
 #@nonl
-#@-node:ekr.20050411193627.4:beforeInsertNode TEST
+#@-node:ekr.20050411193627.4:beforeInsertNode TESTED
 #@+node:ekr.20050410110215:beforeMoveNode
 def beforeMoveNode (self,p):
     
@@ -40674,8 +41129,7 @@ def afterChangeNodeContents (self,p,command,bunch):
     '''Create an undo node using d created by beforeChangeNode.'''
     
     u = self ; body = u.c.frame.body
-    if u.redoing or u.undoing:
-        return
+    if u.redoing or u.undoing: return
 
     # Set the type & helpers.
     bunch.kind = 'node'
@@ -40765,6 +41219,7 @@ def afterChangeGroup (self,p,command,reportFlag=False,dirtyVnodeList=[]):
 def afterCloneNode (self,p,command,bunch,dirtyVnodeList=[]):
     
     u = self
+    if u.redoing or u.undoing: return
     
     # Set types & helpers
     bunch.kind = 'clone'
@@ -40789,10 +41244,11 @@ def afterCloneNode (self,p,command,bunch,dirtyVnodeList=[]):
     u.setUndoTypes()
 #@nonl
 #@-node:ekr.20050411193627.5:afterCloneNode TEST
-#@+node:ekr.20050411193627.6:afterDehoistNode TEST
-def afterDehoistNode (self,p,command):
+#@+node:ekr.20050411193627.6:afterDehoist TESTED
+def afterDehoist (self,p,command):
 
     u = self
+    if u.redoing or u.undoing: return
     
     bunch = u.createCommonBunch(p)
     
@@ -40811,11 +41267,12 @@ def afterDehoistNode (self,p,command):
     # Recalculate the menu labels.
     u.setUndoTypes()
 #@nonl
-#@-node:ekr.20050411193627.6:afterDehoistNode TEST
-#@+node:ekr.20050411193627.7:afterHoistNode TEST
-def afterHoistNode (self,p,command):
+#@-node:ekr.20050411193627.6:afterDehoist TESTED
+#@+node:ekr.20050411193627.7:afterHoist TESTED
+def afterHoist (self,p,command):
     
     u = self
+    if u.redoing or u.undoing: return
     
     bunch = u.createCommonBunch(p)
     
@@ -40834,11 +41291,12 @@ def afterHoistNode (self,p,command):
     # Recalculate the menu labels.
     u.setUndoTypes()
 #@nonl
-#@-node:ekr.20050411193627.7:afterHoistNode TEST
+#@-node:ekr.20050411193627.7:afterHoist TESTED
 #@+node:ekr.20050411193627.8:afterDeleteNode TEST
 def afterDeleteNode (self,p,command,bunch,dirtyVnodeList=[]):
     
     u = self
+    if u.redoing or u.undoing: return
     
     # Set types & helpers
     bunch.kind = 'delete'
@@ -40863,10 +41321,11 @@ def afterDeleteNode (self,p,command,bunch,dirtyVnodeList=[]):
     u.setUndoTypes()
 #@nonl
 #@-node:ekr.20050411193627.8:afterDeleteNode TEST
-#@+node:ekr.20050411193627.9:afterInsertNode TEST
+#@+node:ekr.20050411193627.9:afterInsertNode TESTED
 def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
     
     u = self ; c = u.c
+    if u.redoing or u.undoing: return
     
     # Set types & helpers
     bunch.kind = 'insert'
@@ -40894,11 +41353,12 @@ def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
     # Recalculate the menu labels.
     u.setUndoTypes()
 #@nonl
-#@-node:ekr.20050411193627.9:afterInsertNode TEST
+#@-node:ekr.20050411193627.9:afterInsertNode TESTED
 #@+node:ekr.20050410110343:afterMoveNode
 def afterMoveNode (self,p,command,bunch,dirtyVnodeList=[]):
     
     u = self
+    if u.redoing or u.undoing: return
     
     # Set the types & helpers.
     bunch.kind = 'move'
@@ -40975,7 +41435,7 @@ def redo (self):
     u.bead += 1
     u.setUndoTypes()
 #@nonl
-#@+node:ekr.20050412083057:redoCloneNode TEST
+#@+node:ekr.20050412083057:redoCloneNode TESTED
 def redoCloneNode (self):
     
     u = self ; c = u.c
@@ -40990,18 +41450,18 @@ def redoCloneNode (self):
 
     c.selectVnode(u.newP)
 #@nonl
-#@-node:ekr.20050412083057:redoCloneNode TEST
-#@+node:EKR.20040526072519.2:redoDeleteNode TEST
+#@-node:ekr.20050412083057:redoCloneNode TESTED
+#@+node:EKR.20040526072519.2:redoDeleteNode TESTED
 def redoDeleteNode (self):
     
     u = self ; c = u.c
 
-    c.selectPosition(u.newP)
-    c.deleteOutline()
     c.selectPosition(u.p)
+    c.deleteOutline()
+    c.selectPosition(u.newP)
 #@nonl
-#@-node:EKR.20040526072519.2:redoDeleteNode TEST
-#@+node:ekr.20050412084532:redoInsertNode TEST
+#@-node:EKR.20040526072519.2:redoDeleteNode TESTED
+#@+node:ekr.20050412084532:redoInsertNode TESTED
 def redoInsertNode (self):
     
     u = self ; c = u.c
@@ -41017,10 +41477,10 @@ def redoInsertNode (self):
     # Restore all vnodeLists (and thus all clone marks).
     u.newP.restoreLinksInTree()
 
-    c.selectVnode(u.newCurrent)
+    c.selectVnode(u.newP)
 #@nonl
-#@-node:ekr.20050412084532:redoInsertNode TEST
-#@+node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode TEST
+#@-node:ekr.20050412084532:redoInsertNode TESTED
+#@+node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode TESTED
 def redoHoistNode (self):
     
     u = self ; c = u.c
@@ -41035,7 +41495,7 @@ def redoDehoistNode (self):
     c.selectVnode(u.p)
     c.dehoist()
 #@nonl
-#@-node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode TEST
+#@-node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode TESTED
 #@+node:ekr.20050318085432.6:redoGroup
 def redoGroup (self):
     
@@ -41111,7 +41571,7 @@ def redoMove (self):
         c.selectPosition(u.p)
 #@nonl
 #@-node:ekr.20050411111847:redoMove
-#@+node:ekr.20050318085432.8:redoTree
+#@+node:ekr.20050318085432.8:redoTree TESTED
 def redoTree (self):
     
     '''Redo replacement of an entire tree.'''
@@ -41125,7 +41585,7 @@ def redoTree (self):
     if u.newSel:
         c.frame.body.setTextSelection(u.newSel)
 #@nonl
-#@-node:ekr.20050318085432.8:redoTree
+#@-node:ekr.20050318085432.8:redoTree TESTED
 #@+node:EKR.20040526075238.5:redoTyping
 def redoTyping (self):
 
@@ -41177,7 +41637,7 @@ def undo (self):
     u.bead -= 1
     u.setUndoTypes()
 #@nonl
-#@+node:ekr.20050412083057.1:undoCloneNode TEST
+#@+node:ekr.20050412083057.1:undoCloneNode TESTED
 def undoCloneNode (self):
     
     u = self ; c = u.c
@@ -41186,8 +41646,8 @@ def undoCloneNode (self):
     c.deleteOutline()
     c.selectVnode(u.p)
 #@nonl
-#@-node:ekr.20050412083057.1:undoCloneNode TEST
-#@+node:ekr.20050412084055:undoDeleteNode TEST
+#@-node:ekr.20050412083057.1:undoCloneNode TESTED
+#@+node:ekr.20050412084055:undoDeleteNode TESTED
 def undoDeleteNode (self):
     
     u = self ; c = u.c
@@ -41205,7 +41665,7 @@ def undoDeleteNode (self):
 
     c.selectVnode(u.p)
 #@nonl
-#@-node:ekr.20050412084055:undoDeleteNode TEST
+#@-node:ekr.20050412084055:undoDeleteNode TESTED
 #@+node:ekr.20050318085713:undoGroup
 def undoGroup (self):
     
@@ -41244,7 +41704,7 @@ def undoGroup (self):
         c.frame.body.setTextSelection(u.oldSel)
 #@nonl
 #@-node:ekr.20050318085713:undoGroup
-#@+node:ekr.20050412083244:undoHoistNode & undoDehoistNode TEST
+#@+node:ekr.20050412083244:undoHoistNode & undoDehoistNode TESTED
 def undoHoistNode (self):
     
     u = self ; c = u.c
@@ -41259,8 +41719,8 @@ def undoDehoistNode (self):
     c.selectVnode(u.p)
     c.hoist()
 #@nonl
-#@-node:ekr.20050412083244:undoHoistNode & undoDehoistNode TEST
-#@+node:ekr.20050412085112:undoInsertNode TEST
+#@-node:ekr.20050412083244:undoHoistNode & undoDehoistNode TESTED
+#@+node:ekr.20050412085112:undoInsertNode TESTED
 def undoInsertNode (self):
     
     u = self ; c = u.c
@@ -41269,7 +41729,7 @@ def undoInsertNode (self):
     c.deleteOutline()
     c.selectVnode(u.p)
 #@nonl
-#@-node:ekr.20050412085112:undoInsertNode TEST
+#@-node:ekr.20050412085112:undoInsertNode TESTED
 #@+node:ekr.20050411112033:undoMove
 def undoMove (self):
     
@@ -41313,7 +41773,7 @@ def undoNodeContents (self):
     u.updateMarks('old')
 #@nonl
 #@-node:ekr.20050318085713.1:undoNodeContents
-#@+node:ekr.20050318085713.2:undoTree (needed??)
+#@+node:ekr.20050318085713.2:undoTree TESTED
 def undoTree (self):
     
     '''Redo replacement of an entire tree.'''
@@ -41325,8 +41785,8 @@ def undoTree (self):
     if u.oldSel:
         c.frame.body.setTextSelection(u.oldSel)
 #@nonl
-#@-node:ekr.20050318085713.2:undoTree (needed??)
-#@+node:ekr.20050408100042:undoRedoTree
+#@-node:ekr.20050318085713.2:undoTree TESTED
+#@+node:ekr.20050408100042:undoRedoTree TESTED
 def undoRedoTree (self,p,new_data,old_data):
     
     '''Replace p and its subtree using old_data during undo.'''
@@ -41348,7 +41808,7 @@ def undoRedoTree (self,p,new_data,old_data):
     
     return p # Nothing really changes.
 #@nonl
-#@-node:ekr.20050408100042:undoRedoTree
+#@-node:ekr.20050408100042:undoRedoTree TESTED
 #@+node:EKR.20040526090701.4:undoTyping
 def undoTyping (self):
     
@@ -41482,9 +41942,9 @@ print "actual  :",textResult
 #@-node:ekr.20050315135213.2:From leoUndo...
 #@+node:ekr.20050408074526:Calls to undoer...
 #@+node:ekr.20050408055511:Calls to u.setUndoParams
-#@+node:ekr.20050408072730:From Commands... TO DO...
-#@+node:ekr.20031218072017.2895: Top Level... (Commands) TO DO 6
-#@+node:ekr.20031218072017.1548:Cut & Paste Outlines TO DO
+#@+node:ekr.20050408072730:From Commands... TO DO
+#@+node:ekr.20031218072017.2895: Top Level... (Commands) TESTED
+#@+node:ekr.20031218072017.1548:Cut & Paste Outlines TESTED
 #@+node:ekr.20031218072017.1549:cutOutline
 def cutOutline(self):
 
@@ -41506,19 +41966,21 @@ def copyOutline(self):
     g.app.gui.replaceClipboardWith(s)
 #@nonl
 #@-node:ekr.20031218072017.1550:copyOutline
-#@+node:ekr.20031218072017.1551:pasteOutline TO DO
+#@+node:ekr.20031218072017.1551:pasteOutline TESTEd
 # To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
 
 def pasteOutline(self,reassignIndices=True):
 
     c = self ; u = c.undoer ; current = c.currentPosition()
     s = g.app.gui.getTextFromClipboard()
-    tag = g.choose(reassignIndices,'Paste Node','Paste As Clone')
+    undoType = g.choose(reassignIndices,'Paste Node','Paste As Clone')
 
     if not s or not c.canPasteOutline(s):
         return # This should never happen.
 
     isLeo = g.match(s,0,g.app.prolog_prefix_string)
+
+    undoData = u.beforeInsertNode(current)
 
     if isLeo:
         p = c.fileCommands.getLeoOutline(s,reassignIndices)
@@ -41536,16 +41998,12 @@ def pasteOutline(self,reassignIndices=True):
         # paste as first child if back is expanded.
         back = p.back()
         if back and back.isExpanded():
-            ## Is remembering the 'move' enough?
-            ## Don't we have to remember the insert too??
-            undoData = u.beforeMoveNode(p)
             p.moveToNthChildOf(back,0)
-            u.afterMoveNode(p,tag,undoData)
-            ## c.undoer.setUndoParams("Paste Node",p)
+        u.afterInsertNode(p,undoType,undoData)
     c.endUpdate()
     c.recolor()
 #@nonl
-#@-node:ekr.20031218072017.1551:pasteOutline TO DO
+#@-node:ekr.20031218072017.1551:pasteOutline TESTEd
 #@+node:EKR.20040610130943:pasteOutlineRetainingClones
 def pasteOutlineRetainingClones (self):
     
@@ -41572,13 +42030,12 @@ def pasteOutlineRetainingClones (self):
             return None
 #@nonl
 #@-node:EKR.20040610130943:pasteOutlineRetainingClones
-#@-node:ekr.20031218072017.1548:Cut & Paste Outlines TO DO
-#@+node:ekr.20031218072017.2028:Hoist & dehoist & enablers TO DO
+#@-node:ekr.20031218072017.1548:Cut & Paste Outlines TESTED
+#@+node:ekr.20031218072017.2028:Hoist & dehoist TESTED
 def dehoist(self):
 
     c = self ; p = c.currentPosition()
     if p and c.canDehoist():
-        ## c.undoer.setUndoParams("De-Hoist",p)
         bunch = c.hoistStack.pop()
         if bunch.expanded: p.expand()
         else:              p.contract()
@@ -41589,22 +42046,23 @@ def dehoist(self):
             c.frame.putStatusLine("Hoist: " + bunch.p.headString())
         else:
             c.frame.putStatusLine("No hoist")
+        c.undoer.afterDehoist(p,'DeHoist')
 
 def hoist(self):
 
     c = self ; p = c.currentPosition()
     if p and c.canHoist():
-        ## c.undoer.setUndoParams("Hoist",p)
-        # New in 4.2: remember expansion state.
+        # Remember the expansion state.
         bunch = g.Bunch(p=p.copy(),expanded=p.isExpanded())
         c.hoistStack.append(bunch)
         p.expand()
         c.redraw()
         c.frame.clearStatusLine()
         c.frame.putStatusLine("Hoist: " + p.headString())
+        c.undoer.afterHoist(p,'Hoist')
 #@nonl
-#@-node:ekr.20031218072017.2028:Hoist & dehoist & enablers TO DO
-#@+node:ekr.20031218072017.1759:Insert, Delete & Clone (Commands) TO DO...
+#@-node:ekr.20031218072017.2028:Hoist & dehoist TESTED
+#@+node:ekr.20031218072017.1759:Insert, Delete & Clone (Commands) TESTED
 #@+node:ekr.20031218072017.1760:c.checkMoveWithParentWithWarning
 def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
     
@@ -41631,82 +42089,79 @@ def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
     return True
 #@nonl
 #@-node:ekr.20031218072017.1760:c.checkMoveWithParentWithWarning
-#@+node:ekr.20031218072017.1193:c.deleteOutline TO DO
+#@+node:ekr.20031218072017.1193:c.deleteOutline TESTED
 def deleteOutline (self,op_name="Delete Node"):
     
     """Deletes the current position.
     
     Does nothing if the outline would become empty."""
 
-    c = self ; p = c.currentPosition()
+    c = self ; u = c.undoer ; p = c.currentPosition()
     if not p: return
-    # If vBack is NULL we are at the top level,
-    # the next node should be v.next(), _not_ v.visNext();
+
     if p.hasVisBack(): newNode = p.visBack()
-    else:              newNode = p.next()
+    else: newNode = p.next() # _not_ v.visNext(): we are at the top level.
     if not newNode: return
 
-    c.endEditing() # Make sure we capture the headline for Undo.
     c.beginUpdate()
-    if 1: # update...
-        p.setAllAncestorAtFileNodesDirty()
-        ## c.undoer.setUndoParams(op_name,p,select=newNode)
+    if 1: # In update...
+        c.endEditing() # Make sure we capture the headline for Undo.
+        undoData = u.beforeDeleteNode(p)
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
         p.doDelete(newNode)
         c.setChanged(True)
+        u.afterDeleteNode(newNode,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
     c.endUpdate()
     c.validateOutline()
 #@nonl
-#@-node:ekr.20031218072017.1193:c.deleteOutline TO DO
-#@+node:ekr.20031218072017.1761:c.insertHeadline TO DO
-# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
-
+#@-node:ekr.20031218072017.1193:c.deleteOutline TESTED
+#@+node:ekr.20031218072017.1761:c.insertHeadline TESTED
 def insertHeadline (self,op_name="Insert Node"):
+    
+    '''Insert a node after the presently selected node.'''
 
     c = self ; u = c.undoer
-    p = c.currentPosition()
-    hasChildren = p.hasChildren()
-    isExpanded  = p.isExpanded()
-    if not p: return
+    current = c.currentPosition()
+    if not current: return
 
     c.beginUpdate()
-    if 1: # inside update...
-        undoData = c.undoer.beforeInsertNode(p)
-        # Make sure new node is visible when hoisting.
-        if ((hasChildren and isExpanded) or
-            (c.hoistStack and p == c.hoistStack[-1].p)
-        ):
-            p = p.insertAsNthChild(0)
+    if 1: # In update...
+        undoData = c.undoer.beforeInsertNode(current)
+        # Make sure the new node is visible when hoisting.
+        if ((current.hasChildren() and current.isExpanded()) or
+            (c.hoistStack and current == c.hoistStack[-1].current)):
+            p = current.insertAsNthChild(0)
         else:
-            p = p.insertAfter()
-        c.selectVnode(p)
-        c.editPosition(p)
+            p = current.insertAfter()
         dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
         c.setChanged(True)
         u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-        ## u.setUndoParams(op_name,p,select=old_p)
+        c.editPosition(p)
+        c.selectVnode(p)
     c.endUpdate()
     return p # for mod_labels plugin.
 #@nonl
-#@-node:ekr.20031218072017.1761:c.insertHeadline TO DO
-#@+node:ekr.20031218072017.1762:c.clone TO DO
+#@-node:ekr.20031218072017.1761:c.insertHeadline TESTED
+#@+node:ekr.20031218072017.1762:c.clone TESTED
 def clone (self):
 
-    c = self
-    p = c.currentPosition()
+    c = self ; u = c.undoer ; p = c.currentPosition()
     if not p: return
     
     c.beginUpdate()
-    if 1: # update...
+    if 1: # In update...
+        undoData = c.undoer.beforeCloneNode(p)
         clone = p.clone(p)
-        clone.setAllAncestorAtFileNodesDirty()
+        dirtyVnodeList = clone.setAllAncestorAtFileNodesDirty()
         c.setChanged(True)
         if c.validateOutline():
+            u.afterInsertNode(clone,'Clone Node',undoData,dirtyVnodeList=dirtyVnodeList)
             c.selectVnode(clone)
-            ## c.undoer.setUndoParams("Clone Node",clone)
-    c.endUpdate() # updates all icons
+    c.endUpdate()
+
     return clone # For mod_labels plugin.
 #@nonl
-#@-node:ekr.20031218072017.1762:c.clone TO DO
+#@-node:ekr.20031218072017.1762:c.clone TESTED
 #@+node:ekr.20031218072017.1765:c.validateOutline
 # Makes sure all nodes are valid.
 
@@ -41726,115 +42181,101 @@ def validateOutline (self):
         return True
 #@nonl
 #@-node:ekr.20031218072017.1765:c.validateOutline
-#@-node:ekr.20031218072017.1759:Insert, Delete & Clone (Commands) TO DO...
-#@+node:ekr.20031218072017.1188:c.sortChildren, sortSiblings TO DO
+#@-node:ekr.20031218072017.1759:Insert, Delete & Clone (Commands) TESTED
+#@+node:ekr.20050415134809:c.sortChildren  TESTED
 def sortChildren(self):
 
-    c = self ; v = c.currentVnode()
-    if not v or not v.hasChildren(): return
-    << Set the undo info for sortChildren >>
+    c = self ; u = c.undoer ; undoType = 'Sort Children'
+    p = c.currentPosition()
+    if not p or not p.hasChildren(): return
+
     c.beginUpdate()
-    c.endEditing()
-    v.sortChildren()
-    # v.setDirty()
-    v.setAllAncestorAtFileNodesDirty() # 1/12/04
-    c.setChanged(True)
+    if 1: # In update
+        c.endEditing()
+        u.beforeChangeGroup(p,undoType)
+        c.sortChildrenHelper(p)
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+        u.afterChangeGroup(p,undoType,dirtyVnodeList=dirtyVnodeList)
     c.endUpdate()
+#@nonl
+#@-node:ekr.20050415134809:c.sortChildren  TESTED
+#@+node:ekr.20040303175026.12:c.sortChildrenHelper TESTED
+def sortChildrenHelper (self,p):
     
+    c = self ; u = c.undoer
+
+    # Create a list of tuples sorted on headlines.
+    pairs = [(child.headString().lower(),child.copy()) for child in p.children_iter()]
+    pairs.sort()
+
+    # Move the children.
+    index = 0
+    for headline,child in pairs:
+        undoData = u.beforeMoveNode(child)
+        child.moveToNthChildOf(p,index)
+        u.afterMoveNode(child,'Sort',undoData)
+        index += 1
+#@nonl
+#@-node:ekr.20040303175026.12:c.sortChildrenHelper TESTED
+#@+node:ekr.20050415134809.1:c.sortSiblings TESTED
 def sortSiblings (self):
     
-    c = self ; v = c.currentVnode()
-    if not v: return
-    parent = v.parent()
+    c = self ; u = c.undoer ; undoType = 'Sort Siblings'
+    p = c.currentPosition()
+    if not p: return
+
+    parent = p.parent()
     if not parent:
         c.sortTopLevel()
     else:
-        << Set the undo info for sortSiblings >>
         c.beginUpdate()
-        c.endEditing()
-        parent.sortChildren()
-        # parent.setDirty()
-        parent.setAllAncestorAtFileNodesDirty() # 1/12/04
-        c.setChanged(True)
+        if 1: # In update...
+            c.endEditing()
+            u.beforeChangeGroup(p,undoType)
+            c.sortChildrenHelper(parent)
+            dirtyVnodeList = parent.setAllAncestorAtFileNodesDirty()
+            c.setChanged(True)
+            u.afterChangeGroup(p,'Sort Siblings',dirtyVnodeList=dirtyVnodeList)
         c.endUpdate()
 #@nonl
-#@+node:ekr.20031218072017.1189:<< Set the undo info for sortChildren >>
-# Get the present list of children.
-children = []
-child = v.firstChild()
-while child:
-    children.append(child)
-    child = child.next()
-
-## c.undoer.setUndoParams("Sort Children",v,sort=children)
-#@nonl
-#@-node:ekr.20031218072017.1189:<< Set the undo info for sortChildren >>
-#@+node:ekr.20031218072017.1190:<< Set the undo info for sortSiblings >>
-# Get the present list of siblings.
-sibs = []
-sib = parent.firstChild()
-while sib:
-    sibs.append(sib)
-    sib = sib.next()
-    
-## c.undoer.setUndoParams("Sort Siblings",v,sort=sibs)
-#@nonl
-#@-node:ekr.20031218072017.1190:<< Set the undo info for sortSiblings >>
-#@-node:ekr.20031218072017.1188:c.sortChildren, sortSiblings TO DO
-#@+node:ekr.20031218072017.2896:c.sortTopLevel TO DO
+#@-node:ekr.20050415134809.1:c.sortSiblings TESTED
+#@+node:ekr.20031218072017.2896:c.sortTopLevel TESTED
 def sortTopLevel (self):
-    
-    # Create a list of position, headline tuples
-    c = self ; root = c.rootPosition()
+
+    c = self ; u = c.undoer ; undoType = 'Sort Siblings'
+    root = c.rootPosition()
     if not root: return
-    << Set the undo info for sortTopLevel >>
-    pairs = []
-    for p in root.self_and_siblings_iter(copy=True):
-        pairs.append((p.headString().lower(),p),)
-    # Sort the list on the headlines.
+
+    # Create a list of tuples sorted by headlines.
+    pairs = [(p.headString().lower(),p.copy())
+        for p in root.self_and_siblings_iter()]
     pairs.sort()
-    sortedNodes = pairs
-    # Move the nodes
+ 
     c.beginUpdate()
-    h,p = sortedNodes[0]
-    if p != root:
-        p.setAllAncestorAtFileNodesDirty()
-        p.moveToRoot(oldRoot=root)
-        p.setAllAncestorAtFileNodesDirty()
-    for h,next in sortedNodes[1:]:
-        next.moveAfter(p)
-        p = next
-    if 0:
-        g.trace("-----moving done")
-        for p in c.rootPosition().self_and_siblings_iter():
-            print p,p.v
+    if 1: # In update...
+        dirtyVnodeList = []
+        u.beforeChangeGroup(root,undoType)
+        if 1: # In group...
+            h,p = pairs[0]
+            if p != root:
+                undoData = u.beforeMoveNode(p)
+                dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
+                dirtyVnodeList.extend(dirtyVnodeList)
+                p.moveToRoot(oldRoot=root)
+                dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
+                dirtyVnodeList.extend(dirtyVnodeList)
+                u.afterMoveNode(p,'Sort',undoData)
+            for h,next in pairs[1:]:
+                undoData = u.beforeMoveNode(next)
+                next.moveAfter(p)
+                u.afterMoveNode(next,'Sort',undoData)
+                p = next
+        u.afterChangeGroup(root,undoType,dirtyVnodeList=dirtyVnodeList)
     c.endUpdate()
 #@nonl
-#@+node:ekr.20031218072017.2897:<< Set the undo info for sortTopLevel >>
-# Get the present list of children.
-sibs = []
-
-for sib in root.self_and_siblings_iter(copy=True):
-    sibs.append(sib)
-    
-## c.undoer.setUndoParams("Sort Top Level",root,sort=sibs)
-#@nonl
-#@-node:ekr.20031218072017.2897:<< Set the undo info for sortTopLevel >>
-#@-node:ekr.20031218072017.2896:c.sortTopLevel TO DO
-#@-node:ekr.20031218072017.2895: Top Level... (Commands) TO DO 6
-#@+node:ekr.20031218072017.1839:readAtFileNodes TEST
-def readAtFileNodes (self):
-
-    c = self ; u = c.undoer ; p = c.currentPosition()
-
-
-    undoData = u.beforeChangeTree(p)
-    
-    c.fileCommands.readAtFileNodes()
-    
-    u.afterChangeTree(p,'Read @file Nodes',undoData)
-#@nonl
-#@-node:ekr.20031218072017.1839:readAtFileNodes TEST
+#@-node:ekr.20031218072017.2896:c.sortTopLevel TESTED
+#@-node:ekr.20031218072017.2895: Top Level... (Commands) TESTED
 #@+node:ekr.20031218072017.2884:Edit Body submenu TESTED
 #@+node:ekr.20031218072017.1704:convertAllBlanks TESTED
 def convertAllBlanks (self):
@@ -42628,7 +43069,7 @@ def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
 #@nonl
 #@-node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
 #@-node:ekr.20031218072017.2884:Edit Body submenu TESTED
-#@+node:ekr.20040711135244.5:class prettyPrinter TO DO
+#@+node:ekr.20040711135244.5:class prettyPrinter TESTED
 class prettyPrinter:
     
     @others
@@ -42716,12 +43157,12 @@ def dumpToken (self,token5tuple):
 #@+node:ekr.20040713091855:endUndo
 def endUndo (self):
     
-    c = self.c
+    c = self.c ; u = c.undoer ; undoType = 'Pretty Print'
+    current = c.currentPosition()
     
     if self.changed:
-
         # Tag the end of the command.
-        c.undoer.setUndoParams("Pretty Print",self.p)
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=self.dirtyVnodeList)
 #@nonl
 #@-node:ekr.20040713091855:endUndo
 #@+node:ekr.20040711135244.8:get
@@ -42933,28 +43374,30 @@ def putToken (self,token5tuple):
         self.putNormalToken(token5tuple)
 #@nonl
 #@-node:ekr.20040711135244.12:putToken
-#@+node:ekr.20040713070356:replaceBody
+#@+node:ekr.20040713070356:replaceBody TESTED
 def replaceBody (self,p,lines):
     
-    c = self.c
+    c = self.c ; u = c.undoer ; undoType = 'Pretty Print'
     
     sel = c.frame.body.getInsertionPoint()
     oldBody = p.bodyString()
     body = string.join(lines,'')
     
-    p.setBodyStringOrPane(body)
+    if oldBody != body:
+        if not self.changed:
+            # Start the group.
+            u.beforeChangeGroup(p,undoType)
+            self.changed = True
+            self.dirtyVnodeList = []
+        undoData = u.beforeChangeNodeContents(p)
+        p.setBodyStringOrPane(body)
+        dirtyVnodeList2 = p.setDirty()
+        self.dirtyVnodeList.extend(dirtyVnodeList2)
+        u.afterChangeNodeContents(p,undoType,undoData)
     
-    if not self.changed:
-
-        # Tag the start of the command.
-        c.undoer.setUndoParams("Pretty Print",self.p) 
-        self.changed = True
-    
-    self.c.undoer.setUndoParams("Change",p,
-        oldText=oldBody,newText=body,oldSel=sel, newSel=sel)
 #@nonl
-#@-node:ekr.20040713070356:replaceBody
-#@-node:ekr.20040711135244.5:class prettyPrinter TO DO
+#@-node:ekr.20040713070356:replaceBody TESTED
+#@-node:ekr.20040711135244.5:class prettyPrinter TESTED
 #@+node:ekr.20031218072017.1766:Move... (Commands) TESTED
 #@+node:ekr.20031218072017.1767:demote
 def demote(self):
@@ -43196,134 +43639,132 @@ def promote(self):
 #@nonl
 #@-node:ekr.20031218072017.1774:promote
 #@-node:ekr.20031218072017.1766:Move... (Commands) TESTED
-#@+node:ekr.20031218072017.2945:Dragging (commands) TO DO 4
-#@+node:ekr.20031218072017.2353:c.dragAfter TO DO
-def dragAfter(self,v,after):
+#@+node:ekr.20031218072017.2945:Dragging (commands) TESTED
+#@+node:ekr.20031218072017.2353:c.dragAfter
+def dragAfter(self,p,after):
 
-    c = self
-    if not c.checkMoveWithParentWithWarning(v,after.parent(),True): return
-    # Remember both the before state and the after state for undo/redo
-    inAtIgnoreRange = v.inAtIgnoreRange()
-    oldBack = v.back()
-    oldParent = v.parent()
-    oldN = v.childIndex()
+    c = self ; u = self.undoer ; undoType = 'Drag'
+    current = c.currentPosition()
+    inAtIgnoreRange = p.inAtIgnoreRange()
+    if not c.checkMoveWithParentWithWarning(p,after.parent(),True): return
+
     c.beginUpdate()
-    if 1: # inside update...
+    if 1: # In update...
         c.endEditing()
-        # v.setDirty()
-        v.setAllAncestorAtFileNodesDirty() # 1/12/04
-        v.moveAfter(after)
-        c.undoer.setUndoParams("Drag",v,
-            oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-        if inAtIgnoreRange and not v.inAtIgnoreRange():
+        undoData = u.beforeMoveNode(current)
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty() # 1/12/04
+        p.moveAfter(after)
+        if inAtIgnoreRange and not p.inAtIgnoreRange():
             # The moved nodes have just become newly unignored.
-            v.setDirty() # Mark descendent @thin nodes dirty.
+            dirtyVnodeList2 = p.setDirty() # Mark descendent @thin nodes dirty.
+            dirtyVnodeList.extend(dirtyVnodeList2)
         else: # No need to mark descendents dirty.
-            v.setAllAncestorAtFileNodesDirty()
-        c.selectVnode(v)
+            dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
+            dirtyVnodeList.extend(dirtyVnodeList2)
         c.setChanged(True)
+        u.afterMoveNode(p,undoType,undoData,dirtyVnodeList=dirtyVnodeList)
+        c.selectPosition(p)
     c.endUpdate()
-    c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
+    c.updateSyntaxColorer(p) # Dragging can change syntax coloring.
 #@nonl
-#@-node:ekr.20031218072017.2353:c.dragAfter TO DO
-#@+node:ekr.20031218072017.2946:c.dragCloneToNthChildOf TO DO
-def dragCloneToNthChildOf (self,v,parent,n):
+#@-node:ekr.20031218072017.2353:c.dragAfter
+#@+node:ekr.20031218072017.2946:c.dragCloneToNthChildOf
+def dragCloneToNthChildOf (self,p,parent,n):
 
-    c = self
+    c = self ; u = c.undoer ; undoType = 'Clone Drag'
+    current = c.currentPosition()
+    inAtIgnoreRange = p.inAtIgnoreRange()
+    
     c.beginUpdate()
-    if 1: # Update range...
-        # g.trace("v,parent,n:",v.headString(),parent.headString(),n)
-        clone = v.clone(v) # Creates clone & dependents, does not set undo.
+    if 1: # In update...
+        # g.trace("p,parent,n:",p.headString(),parent.headString(),n)
+        clone = p.clone(p) # Creates clone & dependents, does not set undo.
         if not c.checkMoveWithParentWithWarning(clone,parent,True):
-            clone.doDelete(v) # Destroys clone and makes v the current node.
+            clone.doDelete(p) # Destroys clone and makes p the current node.
             c.endUpdate(False) # Nothing has changed.
             return
-        # Remember both the before state and the after state for undo/redo
-        inAtIgnoreRange = v.inAtIgnoreRange()
-        oldBack = v.back()
-        oldParent = v.parent()
-        oldN = v.childIndex()
         c.endEditing()
-        # clone.setDirty()
-        clone.setAllAncestorAtFileNodesDirty() # 1/12/04
+        undoData = u.beforeInsertNode(current)
+        dirtyVnodeList = clone.setAllAncestorAtFileNodesDirty()
         clone.moveToNthChildOf(parent,n)
-        c.undoer.setUndoParams("Drag & Clone",clone,
-            oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-        if inAtIgnoreRange and not v.inAtIgnoreRange():
+        if inAtIgnoreRange and not p.inAtIgnoreRange():
             # The moved nodes have just become newly unignored.
-            v.setDirty() # Mark descendent @thin nodes dirty.
+            dirtyVnodeList2 = p.setDirty() # Mark descendent @thin nodes dirty.
+            dirtyVnodeList.extend(dirtyVnodeList2)
         else: # No need to mark descendents dirty.
-            v.setAllAncestorAtFileNodesDirty()
-        c.selectVnode(clone)
+           dirtyVnodeList2 =  p.setAllAncestorAtFileNodesDirty()
+           dirtyVnodeList.extend(dirtyVnodeList2)
         c.setChanged(True)
-        c.endUpdate()
+        u.afterInsertNode(clone,undoType,undoData,dirtyVnodeList=dirtyVnodeList)
+        c.selectVnode(clone)
+    c.endUpdate()
     c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
 #@nonl
-#@-node:ekr.20031218072017.2946:c.dragCloneToNthChildOf TO DO
-#@+node:ekr.20031218072017.2947:c.dragToNthChildOf TO DO
-def dragToNthChildOf(self,v,parent,n):
+#@-node:ekr.20031218072017.2946:c.dragCloneToNthChildOf
+#@+node:ekr.20031218072017.2947:c.dragToNthChildOf
+def dragToNthChildOf(self,p,parent,n):
 
-    c = self
-    if not c.checkMoveWithParentWithWarning(v,parent,True): return
-    # Remember both the before state and the after state for undo/redo
-    inAtIgnoreRange = v.inAtIgnoreRange()
-    oldBack = v.back()
-    oldParent = v.parent()
-    oldN = v.childIndex()
+    c = self ; u = c.undoer ; undoType = 'Drag'
+    current = c.currentPosition()
+    inAtIgnoreRange = p.inAtIgnoreRange()
+    if not c.checkMoveWithParentWithWarning(p,parent,True): return
+
     c.beginUpdate()
-    if 1: # inside update...
+    if 1: # In update...
         c.endEditing()
-        v.setAllAncestorAtFileNodesDirty()
-        v.moveToNthChildOf(parent,n)
-        c.undoer.setUndoParams("Drag",v,
-            oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-        if inAtIgnoreRange and not v.inAtIgnoreRange():
+        undoData = u.beforeMoveNode(current)
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        p.moveToNthChildOf(parent,n)
+        if inAtIgnoreRange and not p.inAtIgnoreRange():
             # The moved nodes have just become newly unignored.
-            v.setDirty() # Mark descendent @thin nodes dirty.
+            dirtyVnodeList2 = p.setDirty() # Mark descendent @thin nodes dirty.
+            dirtyVnodeList.extend(dirtyVnodeList2)
         else: # No need to mark descendents dirty.
-            v.setAllAncestorAtFileNodesDirty()
-        c.selectVnode(v)
+            dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
+            dirtyVnodeList.extend(dirtyVnodeList2)
         c.setChanged(True)
+        u.afterMoveNode(p,undoType,undoData,dirtyVnodeList=dirtyVnodeList)
+        c.selectVnode(p)
     c.endUpdate()
-    c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
+    c.updateSyntaxColorer(p) # Dragging can change syntax coloring.
 #@nonl
-#@-node:ekr.20031218072017.2947:c.dragToNthChildOf TO DO
-#@+node:ekr.20031218072017.2948:c.dragCloneAfter TO DO
-def dragCloneAfter (self,v,after):
+#@-node:ekr.20031218072017.2947:c.dragToNthChildOf
+#@+node:ekr.20031218072017.2948:c.dragCloneAfter
+def dragCloneAfter (self,p,after):
 
-    c = self
+    c = self ; u = c.undoer ; undoType = 'Clone Drag'
+    current = c.currentPosition()
+
     c.beginUpdate()
-    if 1: # Update range...
-        clone = v.clone(v) # Creates clone.  Does not set undo.
-        # g.trace("v,after:",v.headString(),after.headString())
+    if 1: # In update...
+        clone = p.clone(p) # Creates clone.  Does not set undo.
+        # g.trace("p,after:",p.headString(),after.headString())
         if not c.checkMoveWithParentWithWarning(clone,after.parent(),True):
-            g.trace("invalid clone move")
-            clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+            # g.trace("invalid clone drag")
+            clone.doDelete(p) # Destroys clone & dependents. Makes p the current node.
             c.endUpdate(False) # Nothing has changed.
             return
-        # Remember both the before state and the after state for undo/redo
         inAtIgnoreRange = clone.inAtIgnoreRange()
-        oldBack = v.back()
-        oldParent = v.parent()
-        oldN = v.childIndex()
         c.endEditing()
-        clone.setAllAncestorAtFileNodesDirty()
+        undoData = u.beforeInsertNode(current)
+        dirtyVnodeList = clone.setAllAncestorAtFileNodesDirty()
         clone.moveAfter(after)
-        c.undoer.setUndoParams("Drag & Clone",clone,
-            oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
         if inAtIgnoreRange and not clone.inAtIgnoreRange():
             # The moved node have just become newly unignored.
-            clone.setDirty() # Mark descendent @thin nodes dirty.
+            dirtyVnodeList2 = clone.setDirty() # Mark descendent @thin nodes dirty.
+            dirtyVnodeList.extend(dirtyVnodeList2)
         else: # No need to mark descendents dirty.
-            clone.setAllAncestorAtFileNodesDirty()
-        c.selectVnode(clone)
+            dirtyVnodeList2 = clone.setAllAncestorAtFileNodesDirty()
+            dirtyVnodeList.extend(dirtyVnodeList2)
         c.setChanged(True)
+        u.afterInsertNode(clone,undoType,undoData,dirtyVnodeList=dirtyVnodeList)
+        c.selectVnode(clone)
     c.endUpdate()
     c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
 #@nonl
-#@-node:ekr.20031218072017.2948:c.dragCloneAfter TO DO
-#@-node:ekr.20031218072017.2945:Dragging (commands) TO DO 4
-#@-node:ekr.20050408072730:From Commands... TO DO...
+#@-node:ekr.20031218072017.2948:c.dragCloneAfter
+#@-node:ekr.20031218072017.2945:Dragging (commands) TESTED
+#@-node:ekr.20050408072730:From Commands... TO DO
 #@+node:ekr.20050408072730.1:From Import... TESTED 3
 #@+node:ekr.20050413102140.1:Old undo/redo helpers
 #@+node:EKR.20040526084140:undoInsertNodes
@@ -43749,34 +44190,11 @@ elif changed:
 #@-node:ekr.20040803072955.91:idle_head_key TO DO
 #@-node:ekr.20050408072730.3:From tkTree TO DO 1
 #@-node:ekr.20050408055511:Calls to u.setUndoParams
-#@+node:ekr.20050407123455:Calls to u.saveTree TO DO 3 Test 2
-#@+node:ekr.20050407123455.1:Notes & questions
-@killcolor
-
-- All the code calls getAllText.  Is this needed?
-    - The comment in undoReplace says that it isn't.
-
-- undo/redoReplaceNodes are the helpers used by the following commands:
-
-    "Extract":            u.redoReplaceNodes,
-    "Extract Names":      u.redoReplaceNodes,
-    "Extract Section":    u.redoReplaceNodes,
-    "Read @file Nodes":   u.redoReplaceNodes,
-
--  undo/redoReplaceNodesContents are the helpers used by the following commands:
-
-    "Convert All Blanks": u.redoReplaceNodesContents,
-    "Convert All Tabs":   u.redoReplaceNodesContents,
-
-- Both undo/redoReplaceNodes and undo/redoReplaceNodesContents use the same information.
-    - The only difference is that no redraw is needed after replacing node contents.
-#@nonl
-#@-node:ekr.20050407123455.1:Notes & questions
+#@+node:ekr.20050407123455:Calls to u.saveTree
 #@+node:ekr.20031218072017.1839:readAtFileNodes TEST
 def readAtFileNodes (self):
 
     c = self ; u = c.undoer ; p = c.currentPosition()
-
 
     undoData = u.beforeChangeTree(p)
     
@@ -43785,639 +44203,7 @@ def readAtFileNodes (self):
     u.afterChangeTree(p,'Read @file Nodes',undoData)
 #@nonl
 #@-node:ekr.20031218072017.1839:readAtFileNodes TEST
-#@+node:ekr.20031218072017.1704:convertAllBlanks TESTED
-def convertAllBlanks (self):
-    
-    c = self ; u = c.undoer ; undoType = 'Convert All Blanks'
-    body = c.frame.body ; current = c.currentPosition()
-
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-    
-    d = g.scanDirectives(c)
-    tabWidth  = d.get("tabwidth")
-    c.beginUpdate()
-    if 1: # In update...
-        count = 0 ; dirtyVnodeList = []
-        u.beforeChangeGroup(current,undoType)
-        for p in current.self_and_subtree_iter():
-            # g.trace(p.headString(),tabWidth)
-            innerUndoData = u.beforeChangeNodeContents(p)
-            if p == current:
-                changed,dirtyVnodeList2 = c.convertBlanks()
-                if changed:
-                    count += 1
-                    dirtyVnodeList.extend(dirtyVnodeList2)
-            else:
-                changed = False ; result = []
-                text = p.t.bodyString
-                assert(g.isUnicode(text))
-                lines = string.split(text, '\n')
-                for line in lines:
-                    i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
-                    s = g.computeLeadingWhitespace(w,abs(tabWidth)) + line[i:] # use positive width.
-                    if s != line: changed = True
-                    result.append(s)
-                if changed:
-                    count += 1
-                    dirtyVnodeList2 = p.setDirty()
-                    dirtyVnodeList.extend(dirtyVnodeList2)
-                    result = string.join(result,'\n')
-                    p.setTnodeText(result)
-                    u.afterChangeNodeContents(p,undoType,innerUndoData)
-        if count > 0:
-            u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
-        g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
-    c.endUpdate(count > 0)
-#@nonl
-#@-node:ekr.20031218072017.1704:convertAllBlanks TESTED
-#@+node:ekr.20031218072017.1706:extract TESTED
-def extract(self):
-
-    c = self ; u = c.undoer ; undoType = 'Extract'
-    current = c.currentPosition()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-    
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    if not lines: return
-    headline = lines[0].strip() ; del lines[0]
-    junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
-
-    # Remove leading whitespace from all body lines.
-    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
-        for line in lines]
-    newBody = string.join(strippedLines,'\n')
-    if head: head = head.rstrip()
-
-    c.beginUpdate()
-    if 1: # In update...
-        u.beforeChangeGroup(current,undoType)
-        if 1: # In group...
-            undoData = u.beforeInsertNode(current)
-            p = c.createLastChildNode(current,headline,newBody)
-            u.afterInsertNode(p,undoType,undoData)
-            c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
-        u.afterChangeGroup(current,undoType)
-    c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.1706:extract TESTED
-#@+node:ekr.20031218072017.1708:extractSection TESTED
-def extractSection(self):
-
-    c = self ; u = c.undoer ; undoType = 'Extract Section'
-    body = c.frame.body ; current = c.currentPosition()
-
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    if not lines: return
-
-    headline = lines[0].strip() ; del lines[0]
-    junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
-    line1 = "\n" + headline
-    << Set headline for extractSection >>
-    
-    # Remove leading whitespace from all body lines.
-    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
-        for line in lines]
-    newBody = string.join(strippedLines,'\n')
-    if head: head = head.rstrip()
-
-    c.beginUpdate()
-    if 1: # In update...
-        u.beforeChangeGroup(current,undoType)
-        if 1: # In group...
-            undoData = u.beforeInsertNode(current)
-            p = c.createLastChildNode(current,headline,newBody)
-            u.afterInsertNode(p,undoType,undoData)
-            c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
-        u.afterChangeGroup(current,undoType)
-    c.endUpdate()
-#@nonl
-#@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
-if len(headline) < 5:
-    oops = True
-else:
-    head1 = headline[0:2] == '<<'
-    head2 = headline[0:2] == '@<'
-    tail1 = headline[-2:] == '>>'
-    tail2 = headline[-2:] == '@>'
-    oops = not (head1 and tail1) and not (head2 and tail2)
-
-if oops:
-    g.es("Selected text should start with a section name",color="blue")
-    return
-#@nonl
-#@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
-#@-node:ekr.20031218072017.1708:extractSection TESTED
-#@+node:ekr.20031218072017.1710:extractSectionNames TESTED
-def extractSectionNames(self):
-
-    c = self ; u = c.undoer ; undoType = 'Extract Section Names'
-    body = c.frame.body ; current = c.currentPosition()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    if not lines: return
-
-    c.beginUpdate()
-    if 1: # In update...
-        u.beforeChangeGroup(current,undoType)
-        if 1: # In group...
-            found = False
-            for s in lines:
-                << Find the next section name >>
-                if name:
-                    undoData = u.beforeInsertNode(current)
-                    p = self.createLastChildNode(current,name,None)
-                    u.afterInsertNode(p,undoType,undoData)
-                    found = True
-            c.selectPosition(current)
-            c.validateOutline()
-            if not found:
-                g.es("Selected text should contain one or more section names",color="blue")
-        u.afterChangeGroup(current,undoType)
-    c.endUpdate()
-
-    # Restore the selection.
-    body.setTextSelection(oldSel)
-    body.setFocus()
-#@nonl
-#@+node:ekr.20031218072017.1711:<< Find the next section name >>
-head1 = string.find(s,"<<")
-if head1 > -1:
-    head2 = string.find(s,">>",head1)
-else:
-    head1 = string.find(s,"@<")
-    if head1 > -1:
-        head2 = string.find(s,"@>",head1)
-        
-if head1 == -1 or head2 == -1 or head1 > head2:
-    name = None
-else:
-    name = s[head1:head2+2]
-#@nonl
-#@-node:ekr.20031218072017.1711:<< Find the next section name >>
-#@-node:ekr.20031218072017.1710:extractSectionNames TESTED
-#@-node:ekr.20050407123455:Calls to u.saveTree TO DO 3 Test 2
-#@+node:ekr.20050408104451:(undo/redo typing) TEST
-#@+node:ekr.20031218072017.1490:setUndoTypingParams & recognizeStartOfTypingWord
-@ This routine saves enough information so a typing operation can be undone and redone.
-
-We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
-@c
-
-def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
-    
-    # g.trace(undo_type) # ,p,"old:",oldText,"new:",newText)
-    u = self ; c = u.c
-    << return if there is nothing to do >>
-    << init the undo params >>
-    << compute leading, middle & trailing  lines >>
-    << save undo text info >>
-    << save the selection and scrolling position >>
-    << adjust the undo stack, clearing all forward entries >>
-    u.setUndoTypes() # Recalculate the menu labels.
-    return bunch
-#@nonl
-#@+node:ekr.20040324061854:<< return if there is nothing to do >>
-if u.redoing or u.undoing:
-    return None
-
-if undo_type == None:
-    return None
-
-if undo_type == "Can't Undo":
-    u.clearUndoState()
-    return None
-
-if oldText == newText:
-    # g.trace("no change")
-    return None
-#@nonl
-#@-node:ekr.20040324061854:<< return if there is nothing to do >>
-#@+node:ekr.20040324061854.1:<< init the undo params >>
-# Clear all optional params.
-for ivar in u.optionalIvars:
-    setattr(u,ivar,None)
-
-# Set the params.
-u.undoType = undo_type
-u.p = p.copy()
-#@nonl
-#@-node:ekr.20040324061854.1:<< init the undo params >>
-#@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
-@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
-
-NB: the number of old and new middle lines may be different.
-@c
-
-old_lines = string.split(oldText,'\n')
-new_lines = string.split(newText,'\n')
-new_len = len(new_lines)
-old_len = len(old_lines)
-min_len = min(old_len,new_len)
-
-i = 0
-while i < min_len:
-    if old_lines[i] != new_lines[i]:
-        break
-    i += 1
-leading = i
-
-if leading == new_len:
-    # This happens when we remove lines from the end.
-    # The new text is simply the leading lines from the old text.
-    trailing = 0
-else:
-    i = 0
-    while i < min_len - leading:
-        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
-            break
-        i += 1
-    trailing = i
-    
-# NB: the number of old and new middle lines may be different.
-if trailing == 0:
-    old_middle_lines = old_lines[leading:]
-    new_middle_lines = new_lines[leading:]
-else:
-    old_middle_lines = old_lines[leading:-trailing]
-    new_middle_lines = new_lines[leading:-trailing]
-
-# Remember how many trailing newlines in the old and new text.
-i = len(oldText) - 1 ; old_newlines = 0
-while i >= 0 and oldText[i] == '\n':
-    old_newlines += 1
-    i -= 1
-
-i = len(newText) - 1 ; new_newlines = 0
-while i >= 0 and newText[i] == '\n':
-    new_newlines += 1
-    i -= 1
-
-if 0: ## u.debug_print:
-    print "lead,trail",leading,trailing
-    print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
-    print "new mid,nls:",len(new_middle_lines),new_newlines,newText
-    #print "lead,trail:",leading,trailing
-    #print "old mid:",old_middle_lines
-    #print "new mid:",new_middle_lines
-    print "---------------------"
-#@nonl
-#@-node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
-#@+node:ekr.20031218072017.1492:<< save undo text info >>
-@ This is the start of the incremental undo algorithm.
-
-We must save enough info to do _both_ of the following:
-
-Undo: Given newText, recreate oldText.
-Redo: Given oldText, recreate oldText.
-
-The "given" texts for the undo and redo routines are simply v.bodyString().
-@c
-
-if u.debug:
-    # Remember the complete text for comparisons...
-    u.oldText = oldText
-    u.newText = newText
-    # Compute statistics comparing old and new ways...
-    # The old doesn't often store the old text, so don't count it here.
-    u.old_mem += len(newText)
-    s1 = string.join(old_middle_lines,'\n')
-    s2 = string.join(new_middle_lines,'\n')
-    u.new_mem += len(s1) + len(s2)
-else:
-    u.oldText = None
-    u.newText = None
-
-u.leading = leading
-u.trailing = trailing
-u.oldMiddleLines = old_middle_lines
-u.newMiddleLines = new_middle_lines
-u.oldNewlines = old_newlines
-u.newNewlines = new_newlines
-#@nonl
-#@-node:ekr.20031218072017.1492:<< save undo text info >>
-#@+node:ekr.20040324061854.2:<< save the selection and scrolling position >>
-#Remember the selection.
-u.oldSel = oldSel
-u.newSel = newSel
-
-# Remember the scrolling position.
-if oldYview:
-    u.yview = oldYview
-else:
-    u.yview = c.frame.body.getYScrollPosition()
-#@-node:ekr.20040324061854.2:<< save the selection and scrolling position >>
-#@+node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
-@ New in Leo 4.3. Instead of creating a new bead on every character, we may adjust the top bead:
-
-word granularity: adjust the top bead if the typing would continue the word.
-line granularity: adjust the top bead if the typing is on the same line.
-node granularity: adjust the top bead if the typing is anywhere on the same node.
-@c
-
-granularity = u.granularity
-
-old_d = u.peekBead(u.bead)
-old_p = old_d and old_d.get('p')
-
-<< set newBead if we can't share the previous bead >>
-
-if newBead:
-    # Push params on undo stack, clearing all forward entries.
-    u.bead += 1
-    bunch = g.Bunch(
-        p = p.copy(),
-        kind='typing',
-        undoType = undo_type,
-        undoHelper=u.undoTyping,
-        redoHelper=u.redoTyping,
-        oldText=u.oldText,
-        oldSel=u.oldSel,
-        oldNewlines=u.oldNewlines,
-        oldMiddleLines=u.oldMiddleLines,
-    )
-else:
-    bunch = old_d
-
-bunch.leading=u.leading
-bunch.trailing= u.trailing
-bunch.newNewlines=u.newNewlines
-bunch.newMiddleLines=u.newMiddleLines
-bunch.newSel=u.newSel
-bunch.newText=u.newText
-bunch.yview=u.yview
-
-u.beads[u.bead:] = [bunch]
-    
-# g.trace(newBead,'u.bead',u.bead,undo_type,old_p)
-#@nonl
-#@+node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
-if (
-    not old_d or not old_p or
-    old_p.v != p.v or
-    old_d.get('kind') != 'typing' or
-    old_d.get('undoType') != 'Typing' or
-    undo_type != 'Typing'
-):
-    newBead = True # We can't share the previous node.
-elif granularity == 'char':
-    newBead = True # This was the old way.
-elif granularity == 'node':
-    newBead = False # Always replace previous bead.
-else:
-    assert granularity in ('line','word')
-    # Replace the previous bead if only the middle lines have changed.
-    newBead = (
-        old_d.get('leading',0)  != u.leading or 
-        old_d.get('trailing',0) != u.trailing
-    )
-    if granularity == 'word' and not newBead:
-        # Protect the method that may be changed by the user
-        try:
-            << set newBead if the change does not continue a word >>
-        except Exception:
-            if 0:
-                g.trace('old_lines',old_lines)
-                g.trace('new_lines',new_lines)
-            g.es('Exception in setUndoRedoTypingParams',color='blue')
-            g.es_exception()
-            newBead = True
-#@nonl
-#@+node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
-old_start,old_end = oldSel
-new_start,new_end = newSel
-if old_start != old_end or new_start != new_end:
-    # The new and old characters are not contiguous.
-    newBead = True
-else:
-    old_row,old_col = old_start.split('.')
-    new_row,new_col = new_start.split('.')
-    old_row,old_col = int(old_row),int(old_col)
-    new_row,new_col = int(new_row),int(new_col)
-    old_lines = g.splitLines(oldText)
-    new_lines = g.splitLines(newText)
-    #g.trace(old_row,old_col,len(old_lines))
-    #g.trace(new_row,new_col,len(new_lines))
-    # Recognize backspace, del, etc. as contiguous.
-    if old_row != new_row or abs(old_col-new_col) != 1:
-        # The new and old characters are not contiguous.
-        newBead = True
-    elif old_col == 0 or new_col == 0:
-        pass # We have just inserted a line.
-    else:
-        old_s = old_lines[old_row-1]
-        new_s = new_lines[new_row-1]
-        old_ch = old_s[old_col-1]
-        new_ch = new_s[new_col-1]
-        # g.trace(repr(old_ch),repr(new_ch))
-        newBead = self.recognizeStartOfTypingWord(
-            old_lines,old_row,old_col,old_ch,
-            new_lines,new_row,new_col,new_ch)
-#@nonl
-#@-node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
-#@-node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
-#@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
-#@+node:ekr.20050126081529:recognizeStartOfTypingWord
-def recognizeStartOfTypingWord (self,
-    old_lines,old_row,old_col,old_ch, 
-    new_lines,new_row,new_col,new_ch):
-        
-    ''' A potentially user-modifiable method that should return True if the
-    typing indicated by the params starts a new 'word' for the purposes of
-    undo with 'word' granularity.
-    
-    u.setUndoTypingParams calls this method only when the typing could possibly
-    continue a previous word. In other words, undo will work safely regardless
-    of the value returned here.
-    
-    old_ch is the char at the given (Tk) row, col of old_lines.
-    new_ch is the char at the given (Tk) row, col of new_lines.
-    
-    The present code uses only old_ch and new_ch. The other arguments are given
-    for use by more sophisticated algorithms.'''
-    
-    ws = string.whitespace
-    word_chars = string.letters + string.digits + '_'
-
-    if 1: # This seems like the best way.
-        # Start a word if new_ch begins whitespace + word
-        return old_ch not in ws and new_ch in ws
-
-    if 0: # Problems with punctuation within words.
-        return old_ch in ws and new_ch not in ws
-
-    if 0: # Problems with punctuation within words.
-        return new_ch in word_chars and not old_ch in word_chars
-        
-    else: return False # Keeps Pychecker happy.
-#@nonl
-#@-node:ekr.20050126081529:recognizeStartOfTypingWord
-#@-node:ekr.20031218072017.1490:setUndoTypingParams & recognizeStartOfTypingWord
-#@+node:EKR.20040526090701.4:undoTyping
-def undoTyping (self):
-    
-    u = self ; c = u.c ; current = c.currentPosition()
-
-    # selectVnode causes recoloring, so don't do this unless needed.
-    if current != u.p:
-        c.selectVnode(u.p)
-    elif u.undoType in ("Cut","Paste",'Clear Recent Files'):
-        c.frame.body.forceFullRecolor()
-
-    self.undoRedoText(
-        u.p,u.leading,u.trailing,
-        u.oldMiddleLines,u.newMiddleLines,
-        u.oldNewlines,u.newNewlines,
-        tag="undo",undoType=u.undoType)
-
-    if u.oldSel:
-        c.frame.body.setTextSelection(u.oldSel)
-    if u.yview:
-        c.frame.body.setYScrollPosition(u.yview)
-        
-    u.redrawFlag = (current != u.p)
-#@nonl
-#@-node:EKR.20040526090701.4:undoTyping
-#@+node:EKR.20040526075238.5:redoTyping
-def redoTyping (self):
-
-    u = self ; c = u.c ; current = c.currentPosition()
-
-    # selectVnode causes recoloring, so avoid if possible.
-    if current != u.p:
-        c.selectVnode(u.p)
-    elif u.undoType in ('Cut','Paste','Clear Recent Files'):
-        c.frame.body.forceFullRecolor()
-
-    self.undoRedoText(
-        u.p,u.leading,u.trailing,
-        u.newMiddleLines,u.oldMiddleLines,
-        u.newNewlines,u.oldNewlines,
-        tag="redo",undoType=u.undoType)
-    
-    if u.newSel:
-        c.frame.body.setTextSelection(u.newSel)
-    if u.yview:
-        c.frame.body.setYScrollPosition(u.yview)
-        
-    u.redrawFlag = (current != u.p)
-#@nonl
-#@-node:EKR.20040526075238.5:redoTyping
-#@+node:ekr.20031218072017.1493:undoRedoText
-# Handle text undo and redo.
-# The terminology is for undo: converts _new_ text into _old_ text.
-
-def undoRedoText (self,p,
-    leading,trailing, # Number of matching leading & trailing lines.
-    oldMidLines,newMidLines, # Lists of unmatched lines.
-    oldNewlines,newNewlines, # Number of trailing newlines.
-    tag="undo", # "undo" or "redo"
-    undoType=None):
-
-    u = self ; c = u.c
-    assert(p == c.currentPosition())
-
-    << Incrementally update the Tk.Text widget >>
-    << Compute the result using p's body text >>
-    # g.trace(undoType)
-    p.setTnodeText(result)
-    << Get textResult from the Tk.Text widget >>
-    if textResult == result:
-        if undoType in ("Cut","Paste"):
-            # g.trace("non-incremental undo")
-            c.frame.body.recolor(p,incremental=False)
-        else:
-            # g.trace("incremental undo:",leading,trailing)
-            c.frame.body.recolor_range(p,leading,trailing)
-    else: # 11/19/02: # Rewrite the pane and do a full recolor.
-        if u.debug_print:
-            << print mismatch trace >>
-        # g.trace("non-incremental undo")
-        p.setBodyStringOrPane(result)
-#@nonl
-#@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
-# Only update the changed lines.
-mid_text = string.join(oldMidLines,'\n')
-new_mid_len = len(newMidLines)
-# Maybe this could be simplified, and it is good to treat the "end" with care.
-if trailing == 0:
-    c.frame.body.deleteLine(leading)
-    if leading > 0:
-        c.frame.body.insertAtEnd('\n')
-    c.frame.body.insertAtEnd(mid_text)
-else:
-    if new_mid_len > 0:
-        c.frame.body.deleteLines(leading,new_mid_len)
-    elif leading > 0:
-        c.frame.body.insertAtStartOfLine(leading,'\n')
-    c.frame.body.insertAtStartOfLine(leading,mid_text)
-# Try to end the Tk.Text widget with oldNewlines newlines.
-# This may be off by one, and we don't care because
-# we never use body text to compute undo results!
-s = c.frame.body.getAllText()
-newlines = 0 ; i = len(s) - 1
-while i >= 0 and s[i] == '\n':
-    newlines += 1 ; i -= 1
-# g.trace(newlines,oldNewlines)
-while newlines > oldNewlines:
-    c.frame.body.deleteLastChar()
-    newlines -= 1
-if oldNewlines > newlines:
-    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
-#@nonl
-#@-node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
-#@+node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
-# Recreate the text using the present body text.
-body = p.bodyString()
-body = g.toUnicode(body,"utf-8")
-body_lines = body.split('\n')
-s = []
-if leading > 0:
-    s.extend(body_lines[:leading])
-if len(oldMidLines) > 0:
-    s.extend(oldMidLines)
-if trailing > 0:
-    s.extend(body_lines[-trailing:])
-s = string.join(s,'\n')
-# Remove trailing newlines in s.
-while len(s) > 0 and s[-1] == '\n':
-    s = s[:-1]
-# Add oldNewlines newlines.
-if oldNewlines > 0:
-    s = s + '\n' * oldNewlines
-result = s
-if u.debug_print:
-    print "body:  ",body
-    print "result:",result
-#@nonl
-#@-node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
-#@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
-textResult = c.frame.body.getAllText()
-
-if textResult != result:
-    # Remove the newline from textResult if that is the only difference.
-    if len(textResult) > 0 and textResult[:-1] == result:
-        textResult = result
-#@nonl
-#@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
-#@+node:ekr.20031218072017.1497:<< print mismatch trace >>
-print "undo mismatch"
-print "expected:",result
-print "actual  :",textResult
-#@nonl
-#@-node:ekr.20031218072017.1497:<< print mismatch trace >>
-#@-node:ekr.20031218072017.1493:undoRedoText
-#@-node:ekr.20050408104451:(undo/redo typing) TEST
+#@-node:ekr.20050407123455:Calls to u.saveTree
 #@-node:ekr.20050408074526:Calls to undoer...
 #@-node:ekr.20050408110906:(Undo projects)
 #@-all

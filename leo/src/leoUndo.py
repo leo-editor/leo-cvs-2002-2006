@@ -347,7 +347,7 @@ class baseUndoer:
             new_newlines += 1
             i -= 1
         
-        if 0: ## u.debug_print:
+        if u.debug_print:
             print "lead,trail",leading,trailing
             print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
             print "new mid,nls:",len(new_middle_lines),new_newlines,newText
@@ -727,7 +727,7 @@ class baseUndoer:
         return bunch
     #@nonl
     #@-node:ekr.20050411193627.3:beforeDeleteNode TEST
-    #@+node:ekr.20050411193627.4:beforeInsertNode TEST
+    #@+node:ekr.20050411193627.4:beforeInsertNode TESTED
     def beforeInsertNode (self,p):
         
         u = self
@@ -736,7 +736,7 @@ class baseUndoer:
     
         return bunch
     #@nonl
-    #@-node:ekr.20050411193627.4:beforeInsertNode TEST
+    #@-node:ekr.20050411193627.4:beforeInsertNode TESTED
     #@+node:ekr.20050410110215:beforeMoveNode
     def beforeMoveNode (self,p):
         
@@ -759,8 +759,7 @@ class baseUndoer:
         '''Create an undo node using d created by beforeChangeNode.'''
         
         u = self ; body = u.c.frame.body
-        if u.redoing or u.undoing:
-            return
+        if u.redoing or u.undoing: return
     
         # Set the type & helpers.
         bunch.kind = 'node'
@@ -850,6 +849,7 @@ class baseUndoer:
     def afterCloneNode (self,p,command,bunch,dirtyVnodeList=[]):
         
         u = self
+        if u.redoing or u.undoing: return
         
         # Set types & helpers
         bunch.kind = 'clone'
@@ -874,10 +874,11 @@ class baseUndoer:
         u.setUndoTypes()
     #@nonl
     #@-node:ekr.20050411193627.5:afterCloneNode TEST
-    #@+node:ekr.20050411193627.6:afterDehoistNode TEST
-    def afterDehoistNode (self,p,command):
+    #@+node:ekr.20050411193627.6:afterDehoist TESTED
+    def afterDehoist (self,p,command):
     
         u = self
+        if u.redoing or u.undoing: return
         
         bunch = u.createCommonBunch(p)
         
@@ -896,11 +897,12 @@ class baseUndoer:
         # Recalculate the menu labels.
         u.setUndoTypes()
     #@nonl
-    #@-node:ekr.20050411193627.6:afterDehoistNode TEST
-    #@+node:ekr.20050411193627.7:afterHoistNode TEST
-    def afterHoistNode (self,p,command):
+    #@-node:ekr.20050411193627.6:afterDehoist TESTED
+    #@+node:ekr.20050411193627.7:afterHoist TESTED
+    def afterHoist (self,p,command):
         
         u = self
+        if u.redoing or u.undoing: return
         
         bunch = u.createCommonBunch(p)
         
@@ -919,11 +921,12 @@ class baseUndoer:
         # Recalculate the menu labels.
         u.setUndoTypes()
     #@nonl
-    #@-node:ekr.20050411193627.7:afterHoistNode TEST
+    #@-node:ekr.20050411193627.7:afterHoist TESTED
     #@+node:ekr.20050411193627.8:afterDeleteNode TEST
     def afterDeleteNode (self,p,command,bunch,dirtyVnodeList=[]):
         
         u = self
+        if u.redoing or u.undoing: return
         
         # Set types & helpers
         bunch.kind = 'delete'
@@ -948,10 +951,11 @@ class baseUndoer:
         u.setUndoTypes()
     #@nonl
     #@-node:ekr.20050411193627.8:afterDeleteNode TEST
-    #@+node:ekr.20050411193627.9:afterInsertNode TEST
+    #@+node:ekr.20050411193627.9:afterInsertNode TESTED
     def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
         
         u = self ; c = u.c
+        if u.redoing or u.undoing: return
         
         # Set types & helpers
         bunch.kind = 'insert'
@@ -979,11 +983,12 @@ class baseUndoer:
         # Recalculate the menu labels.
         u.setUndoTypes()
     #@nonl
-    #@-node:ekr.20050411193627.9:afterInsertNode TEST
+    #@-node:ekr.20050411193627.9:afterInsertNode TESTED
     #@+node:ekr.20050410110343:afterMoveNode
     def afterMoveNode (self,p,command,bunch,dirtyVnodeList=[]):
         
         u = self
+        if u.redoing or u.undoing: return
         
         # Set the types & helpers.
         bunch.kind = 'move'
@@ -1060,7 +1065,7 @@ class baseUndoer:
         u.bead += 1
         u.setUndoTypes()
     #@nonl
-    #@+node:ekr.20050412083057:redoCloneNode TEST
+    #@+node:ekr.20050412083057:redoCloneNode TESTED
     def redoCloneNode (self):
         
         u = self ; c = u.c
@@ -1075,18 +1080,18 @@ class baseUndoer:
     
         c.selectVnode(u.newP)
     #@nonl
-    #@-node:ekr.20050412083057:redoCloneNode TEST
-    #@+node:EKR.20040526072519.2:redoDeleteNode TEST
+    #@-node:ekr.20050412083057:redoCloneNode TESTED
+    #@+node:EKR.20040526072519.2:redoDeleteNode TESTED
     def redoDeleteNode (self):
         
         u = self ; c = u.c
     
-        c.selectPosition(u.newP)
-        c.deleteOutline()
         c.selectPosition(u.p)
+        c.deleteOutline()
+        c.selectPosition(u.newP)
     #@nonl
-    #@-node:EKR.20040526072519.2:redoDeleteNode TEST
-    #@+node:ekr.20050412084532:redoInsertNode TEST
+    #@-node:EKR.20040526072519.2:redoDeleteNode TESTED
+    #@+node:ekr.20050412084532:redoInsertNode TESTED
     def redoInsertNode (self):
         
         u = self ; c = u.c
@@ -1102,10 +1107,10 @@ class baseUndoer:
         # Restore all vnodeLists (and thus all clone marks).
         u.newP.restoreLinksInTree()
     
-        c.selectVnode(u.newCurrent)
+        c.selectVnode(u.newP)
     #@nonl
-    #@-node:ekr.20050412084532:redoInsertNode TEST
-    #@+node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode TEST
+    #@-node:ekr.20050412084532:redoInsertNode TESTED
+    #@+node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode TESTED
     def redoHoistNode (self):
         
         u = self ; c = u.c
@@ -1120,7 +1125,7 @@ class baseUndoer:
         c.selectVnode(u.p)
         c.dehoist()
     #@nonl
-    #@-node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode TEST
+    #@-node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode TESTED
     #@+node:ekr.20050318085432.6:redoGroup
     def redoGroup (self):
         
@@ -1196,7 +1201,7 @@ class baseUndoer:
             c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050411111847:redoMove
-    #@+node:ekr.20050318085432.8:redoTree
+    #@+node:ekr.20050318085432.8:redoTree TESTED
     def redoTree (self):
         
         '''Redo replacement of an entire tree.'''
@@ -1210,7 +1215,7 @@ class baseUndoer:
         if u.newSel:
             c.frame.body.setTextSelection(u.newSel)
     #@nonl
-    #@-node:ekr.20050318085432.8:redoTree
+    #@-node:ekr.20050318085432.8:redoTree TESTED
     #@+node:EKR.20040526075238.5:redoTyping
     def redoTyping (self):
     
@@ -1262,7 +1267,7 @@ class baseUndoer:
         u.bead -= 1
         u.setUndoTypes()
     #@nonl
-    #@+node:ekr.20050412083057.1:undoCloneNode TEST
+    #@+node:ekr.20050412083057.1:undoCloneNode TESTED
     def undoCloneNode (self):
         
         u = self ; c = u.c
@@ -1271,8 +1276,8 @@ class baseUndoer:
         c.deleteOutline()
         c.selectVnode(u.p)
     #@nonl
-    #@-node:ekr.20050412083057.1:undoCloneNode TEST
-    #@+node:ekr.20050412084055:undoDeleteNode TEST
+    #@-node:ekr.20050412083057.1:undoCloneNode TESTED
+    #@+node:ekr.20050412084055:undoDeleteNode TESTED
     def undoDeleteNode (self):
         
         u = self ; c = u.c
@@ -1290,7 +1295,7 @@ class baseUndoer:
     
         c.selectVnode(u.p)
     #@nonl
-    #@-node:ekr.20050412084055:undoDeleteNode TEST
+    #@-node:ekr.20050412084055:undoDeleteNode TESTED
     #@+node:ekr.20050318085713:undoGroup
     def undoGroup (self):
         
@@ -1329,7 +1334,7 @@ class baseUndoer:
             c.frame.body.setTextSelection(u.oldSel)
     #@nonl
     #@-node:ekr.20050318085713:undoGroup
-    #@+node:ekr.20050412083244:undoHoistNode & undoDehoistNode TEST
+    #@+node:ekr.20050412083244:undoHoistNode & undoDehoistNode TESTED
     def undoHoistNode (self):
         
         u = self ; c = u.c
@@ -1344,8 +1349,8 @@ class baseUndoer:
         c.selectVnode(u.p)
         c.hoist()
     #@nonl
-    #@-node:ekr.20050412083244:undoHoistNode & undoDehoistNode TEST
-    #@+node:ekr.20050412085112:undoInsertNode TEST
+    #@-node:ekr.20050412083244:undoHoistNode & undoDehoistNode TESTED
+    #@+node:ekr.20050412085112:undoInsertNode TESTED
     def undoInsertNode (self):
         
         u = self ; c = u.c
@@ -1354,7 +1359,7 @@ class baseUndoer:
         c.deleteOutline()
         c.selectVnode(u.p)
     #@nonl
-    #@-node:ekr.20050412085112:undoInsertNode TEST
+    #@-node:ekr.20050412085112:undoInsertNode TESTED
     #@+node:ekr.20050411112033:undoMove
     def undoMove (self):
         
@@ -1398,7 +1403,7 @@ class baseUndoer:
         u.updateMarks('old')
     #@nonl
     #@-node:ekr.20050318085713.1:undoNodeContents
-    #@+node:ekr.20050318085713.2:undoTree (needed??)
+    #@+node:ekr.20050318085713.2:undoTree TESTED
     def undoTree (self):
         
         '''Redo replacement of an entire tree.'''
@@ -1410,8 +1415,8 @@ class baseUndoer:
         if u.oldSel:
             c.frame.body.setTextSelection(u.oldSel)
     #@nonl
-    #@-node:ekr.20050318085713.2:undoTree (needed??)
-    #@+node:ekr.20050408100042:undoRedoTree
+    #@-node:ekr.20050318085713.2:undoTree TESTED
+    #@+node:ekr.20050408100042:undoRedoTree TESTED
     def undoRedoTree (self,p,new_data,old_data):
         
         '''Replace p and its subtree using old_data during undo.'''
@@ -1433,7 +1438,7 @@ class baseUndoer:
         
         return p # Nothing really changes.
     #@nonl
-    #@-node:ekr.20050408100042:undoRedoTree
+    #@-node:ekr.20050408100042:undoRedoTree TESTED
     #@+node:EKR.20040526090701.4:undoTyping
     def undoTyping (self):
         

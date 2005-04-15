@@ -1285,11 +1285,11 @@ class baseFileCommands:
     #@+node:ekr.20031218072017.3029:readAtFileNodes
     def readAtFileNodes (self):
     
-        c = self.c ; current = c.currentVnode()
+        c = self.c ; current = c.currentPosition()
         c.atFileCommands.readAll(current,partialFlag=True)
-        c.redraw() # 4/4/03
+        c.redraw()
         
-        # 7/8/03: force an update of the body pane.
+        # Force an update of the body pane.
         current.setBodyStringOrPane(current.bodyString())
         c.frame.body.onBodyChanged(current,undoType=None)
     #@nonl
