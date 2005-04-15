@@ -1797,7 +1797,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.83:onHeadlineRightClick
     #@+node:ekr.20040803072955.90:virtual event handlers: called from core
-    #@+node:ekr.20040803072955.91:idle_head_key
+    #@+node:ekr.20040803072955.91:idle_head_key TO DO
     def idle_head_key (self,p,ch=None):
         
         """Update headline text at idle time."""
@@ -1915,7 +1915,7 @@ class leoTkinterTree (leoFrame.leoTree):
         g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
         return "break"
     #@nonl
-    #@-node:ekr.20040803072955.91:idle_head_key
+    #@-node:ekr.20040803072955.91:idle_head_key TO DO
     #@+node:ekr.20040803072955.98:onHeadChanged
     # The <Key> event generates the event before the headline text is changed!
     # We register an idle-event handler to do the work later.

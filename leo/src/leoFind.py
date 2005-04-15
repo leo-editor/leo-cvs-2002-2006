@@ -409,28 +409,19 @@ class leoFind:
             #@+node:ekr.20031218072017.2294:<< change headline >>
             sel = None
             if len(s) > 0 and s[-1]=='\n': s = s[:-1]
+            
             if s != p.headString():
                 
-                if u.new_undo:
-                    data = u.beforeChangeNodeContents(p)
-                else:
-                    if count == 1:
-                        u.setUndoParams("Change All",p) # Tag the start of the Change all.
-                    u.setUndoParams("Change Headline",p,
-                        oldText=p.headString(), newText=s,
-                        oldSel=sel, newSel=sel)
-                        
+                undoData = u.beforeChangeNodeContents(p)
+            
                 p.initHeadString(s)
-                
-                # Set mark, changed and dirty bits before calling u.afterChangeNodeContents
                 if self.mark_changes:
                     p.setMarked()
                 p.setDirty()
                 if not c.isChanged():
                     c.setChanged(True)
                 
-                if u.new_undo:
-                    u.afterChangeNodeContents(p,'Change Headline',data)
+                u.afterChangeNodeContents(p,'Change Headline',undoData)
             #@nonl
             #@-node:ekr.20031218072017.2294:<< change headline >>
             #@nl
@@ -438,32 +429,20 @@ class leoFind:
             #@        << change body >>
             #@+node:ekr.20031218072017.2295:<< change body >>
             sel = c.frame.body.getInsertionPoint()
-            
             if len(s) > 0 and s[-1]=='\n': s = s[:-1]
             
             if s != p.bodyString():
-                if u.new_undo:
-                    data = u.beforeChangeNodeContents(p)
-                else:
-                    if count == 1:
-                        c.undoer.setUndoParams("Change All",p) # Tag the start of the Change all.
                 
-                    # Use setUndoParams to avoid incremental undo.
-                    c.undoer.setUndoParams("Change",p,
-                        oldText=p.bodyString(), newText=s,
-                        oldSel=sel, newSel=sel)
-                        
+                undoData = u.beforeChangeNodeContents(p)
+            
                 p.setBodyStringOrPane(s)
-                
-                # Set mark, changed and dirty bits before calling u.afterChangeNodeContents
                 if self.mark_changes:
                     p.setMarked()
                 p.setDirty()
                 if not c.isChanged():
                     c.setChanged(True)
                  
-                if u.new_undo:
-                    u.afterChangeNodeContents(p,'Change Body',data)
+                u.afterChangeNodeContents(p,'Change Body',undoData)
             #@nonl
             #@-node:ekr.20031218072017.2295:<< change body >>
             #@nl
@@ -481,41 +460,28 @@ class leoFind:
     def changeAll(self):
     
         c = self.c ; u = c.undoer
+        current = c.currentPosition()
         st = self.s_ctrl ; gui = g.app.gui
-        if not self.checkArgs():
-            return
+        if not self.checkArgs(): return
+        command = 'Change All'
         self.initInHeadline()
         saveData = self.save()
         self.initBatchCommands()
         count = 0
         c.beginUpdate()
-        
-        if u.new_undo:
-            u.beforeChangeGroup(c.currentPosition(),'Change All')
-    
-        while 1:
-            pos1, pos2 = self.findNextMatch()
-            if pos1:
+        if 1: # In update...
+            u.beforeChangeGroup(current,command)
+            while 1:
+                pos1, pos2 = self.findNextMatch()
+                if not pos1: break
                 count += 1
                 self.batchChange(pos1,pos2,count)
                 line = gui.getLineContainingIndex(st,pos1)
                 self.printLine(line,allFlag=True)
-            else: break
-        
-        # Make sure the headline and body text are updated.
-        p = c.currentPosition()
-        if 0: # No longer needed, and interferes with later redraw!
-            c.frame.tree.onHeadChanged(p)
-            c.frame.body.onBodyChanged(p,"Can't Undo")
-    
-        if u.new_undo:
-            u.afterChangeGroup(p,'Change All',reportFlag=True)
-        elif count > 0:
-            # A change was made.  Tag the end of the Change All command.
-            c.undoer.setUndoParams("Change All",p)
-    
-        g.es("changed: %d instances" % (count))
-        self.restore(saveData)
+            p = c.currentPosition()
+            u.afterChangeGroup(p,command,reportFlag=True)
+            g.es("changed: %d instances" % (count))
+            self.restore(saveData)
         c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.3069:changeAll (sets end of change-all group)

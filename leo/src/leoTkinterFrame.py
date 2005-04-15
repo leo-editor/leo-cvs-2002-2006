@@ -2537,7 +2537,7 @@ class leoTkinterBody (leoFrame.leoBody):
         g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
         return "break"
     #@-node:ekr.20031218072017.1321:idle_body_key
-    #@+node:ekr.20031218072017.1329:onBodyChanged (called from core)
+    #@+node:ekr.20031218072017.1329:onBodyChanged (tkTree)
     # Called by command handlers that have already changed the text.
     
     def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
@@ -2553,7 +2553,7 @@ class leoTkinterBody (leoFrame.leoBody):
     
         self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
     #@nonl
-    #@-node:ekr.20031218072017.1329:onBodyChanged (called from core)
+    #@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
     #@+node:ekr.20031218072017.1330:onBodyKey
     def onBodyKey (self,event):
         

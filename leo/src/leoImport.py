@@ -72,7 +72,6 @@ class baseLeoImportCommands:
         # Create the top-level headline.
         undoData = u.beforeInsertNode(parent)
         p = parent.insertAsLastChild()
-        ## u.setUndoParams("Import",p,select=current)
         if self.treeType == "@file":
             p.initHeadString("@file " + fileName)
         else:
@@ -121,44 +120,40 @@ class baseLeoImportCommands:
         
         c = self.c ; u = c.undoer
         at = c.atFileCommands ; current = c.currentPosition()
-        self.tab_width = self.getTabWidth() # New in 4.3.
+        self.tab_width = self.getTabWidth()
         if not paths: return
+        command = 'Import'
     
         c.beginUpdate()
-        u.beforeChangeGroup(current,'Import')
-        
-        for fileName in paths:
-            #@        << set isThin if fileName is a thin derived file >>
-            #@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
-            fileName = g.os_path_normpath(fileName)
-            
-            try:
-                theFile = open(fileName,'rb')
-                isThin = at.scanHeaderForThin(theFile,fileName)
-                theFile.close()
-            except IOError:
-                isThin = False
-            #@nonl
-            #@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
-            #@nl
-            undoData = u.beforeInsertNode(parent)
-            p = parent.insertAfter()
-            if isThin:
-                p.initHeadString("@thin " + fileName)
-                ## c.undoer.setUndoParams("Import",p,select=current)
-                at.read(p,thinFile=True)
-            else:
-                p.initHeadString("Imported @file " + fileName)
-                ## c.undoer.setUndoParams("Import",p,select=current)
-                at.read(p,importFileName=fileName)
-            ## c.selectVnode(p)
-            p.contract()
-            u.afterInsertNode(p,'Import',undoData)
-    
-        current.expand()
-        c.selectVnode(current)
-        u.afterChangeGroup(p,'Import')
-    
+        if 1: # In update...
+            u.beforeChangeGroup(current,command)
+            for fileName in paths:
+                #@            << set isThin if fileName is a thin derived file >>
+                #@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+                fileName = g.os_path_normpath(fileName)
+                
+                try:
+                    theFile = open(fileName,'rb')
+                    isThin = at.scanHeaderForThin(theFile,fileName)
+                    theFile.close()
+                except IOError:
+                    isThin = False
+                #@nonl
+                #@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+                #@nl
+                undoData = u.beforeInsertNode(parent)
+                p = parent.insertAfter()
+                if isThin:
+                    p.initHeadString("@thin " + fileName)
+                    at.read(p,thinFile=True)
+                else:
+                    p.initHeadString("Imported @file " + fileName)
+                    at.read(p,importFileName=fileName)
+                p.contract()
+                u.afterInsertNode(p,command,undoData)
+            current.expand()
+            c.selectPosition(current)
+            u.afterChangeGroup(p,command)
         c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.1810:importDerivedFiles TESTED
@@ -321,14 +316,14 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3215:convertMoreString/StringsToOutlineAfter
     #@+node:ekr.20031218072017.3220:importFlattenedOutline TESTED
-    # On entry,files contains at most one file to convert.
     def importFlattenedOutline (self,files):
     
         c = self.c ; u = c.undoer ; current = c.currentPosition()
         if current == None: return
         if len(files) < 1: return
+    
         self.setEncoding()
-        fileName = files[0]
+        fileName = files[0] # files contains at most one file.
         #@    << Read the file into array >>
         #@+node:ekr.20031218072017.3221:<< Read the file into array >>
         try:
@@ -344,11 +339,11 @@ class baseLeoImportCommands:
             return
         #@-node:ekr.20031218072017.3221:<< Read the file into array >>
         #@nl
+    
         # Convert the string to an outline and insert it after the current node.
         undoData = u.beforeInsertNode(current)
         p = self.convertMoreStringsToOutlineAfter(array,current)
         if p:
-            ## u.setUndoParams("Import",p,select=current)
             c.endEditing()
             c.validateOutline()
             c.editPosition(p)
@@ -407,8 +402,8 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3223:stringIs/stringsAreValidMoreFile
     #@-node:ekr.20031218072017.3214:importFlattenedOutline & allies
-    #@+node:ekr.20031218072017.3224:importWebCommand & allies
-    #@+node:ekr.20031218072017.3225:createOutlineFromWeb
+    #@+node:ekr.20031218072017.3224:importWebCommand & allies TO DO
+    #@+node:ekr.20031218072017.3225:createOutlineFromWeb TO DO
     def createOutlineFromWeb (self,path,parent):
     
         c = self.c ; current = c.currentVnode()
@@ -424,7 +419,7 @@ class baseLeoImportCommands:
         self.scanWebFile(path,v)
         return v
     #@nonl
-    #@-node:ekr.20031218072017.3225:createOutlineFromWeb
+    #@-node:ekr.20031218072017.3225:createOutlineFromWeb TO DO
     #@+node:ekr.20031218072017.3226:importWebCommand
     def importWebCommand (self,files,webType):
     
@@ -717,7 +712,7 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3240:cstLookup
     #@-node:ekr.20031218072017.3236:Symbol table
-    #@-node:ekr.20031218072017.3224:importWebCommand & allies
+    #@-node:ekr.20031218072017.3224:importWebCommand & allies TO DO
     #@+node:EKR.20040506075328.2:perfectImport
     def perfectImport (self,fileName,p,testing=False,verbose=False,convertBlankLines=True,verify=True):
         

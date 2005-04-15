@@ -828,26 +828,12 @@ class baseCommands:
     
         c = self ; u = c.undoer ; p = c.currentPosition()
     
-        # Create copy for undo.
-        if u.new_undo:
-            undoData = u.beforeChangeTree(p)
-        else:
-            v_copy = c.undoer.saveTree(p)
-            oldText = c.frame.body.getAllText()
-            oldSel = c.frame.body.getTextSelection()
     
+        undoData = u.beforeChangeTree(p)
+        
         c.fileCommands.readAtFileNodes()
         
-        if u.new_undo:
-            u.afterChangeTree(p,'Read @file Nodes',undoData)
-        else:
-            newText = c.frame.body.getAllText()
-            newSel = c.frame.body.getTextSelection()
-        
-            c.undoer.setUndoParams("Read @file Nodes",
-                p,select=p,oldTree=v_copy,
-                oldText=oldText,newText=newText,
-                oldSel=oldSel,newSel=newSel)
+        u.afterChangeTree(p,'Read @file Nodes',undoData)
     #@nonl
     #@-node:ekr.20031218072017.1839:readAtFileNodes TEST
     #@+node:ekr.20031218072017.2840:4.0 Commands
@@ -1806,112 +1792,106 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2086:preferences
     #@-node:ekr.20031218072017.2862:Edit top level
-    #@+node:ekr.20031218072017.2884:Edit Body submenu TO DO 14
-    #@+node:ekr.20031218072017.1704:convertAllBlanks TEST
+    #@+node:ekr.20031218072017.2884:Edit Body submenu TESTED
+    #@+node:ekr.20031218072017.1704:convertAllBlanks TESTED
     def convertAllBlanks (self):
         
-        c = self ; body = c.frame.body ; current = c.currentPosition()
-        
+        c = self ; u = c.undoer ; undoType = 'Convert All Blanks'
+        body = c.frame.body ; current = c.currentPosition()
+    
         if g.app.batchMode:
-            c.notValidInBatchMode("Convert All Blanks")
+            c.notValidInBatchMode(undoType)
             return
         
         d = g.scanDirectives(c)
         tabWidth  = d.get("tabwidth")
-        # Create copy for undo.
-        if c.undoer.new_undo: # new undo code
-            undoData = c.undoer.beforeGroup(current)
-        else:
-            v_copy = c.undoer.saveTree(current)
-            oldText = body.getAllText()
-            oldSel = body.getTextSelection()
-        count = 0
-        c.beginUpdate() # 4/8/05
-        for p in current.self_and_subtree_iter():
-            # g.trace(p.headString(),tabWidth)
-            if p == current:
-                if c.convertBlanks():
-                    count += 1 ; p.setDirty()
-            else:
-                changed = False ; result = []
-                text = p.t.bodyString
-                assert(g.isUnicode(text))
-                lines = string.split(text, '\n')
-                for line in lines:
-                    i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
-                    s = g.computeLeadingWhitespace(w,abs(tabWidth)) + line[i:] # use positive width.
-                    if s != line: changed = True
-                    result.append(s)
-                if changed:
-                    count += 1 ; p.setDirty()
-                    result = string.join(result,'\n')
-                    p.setTnodeText(result)
-        if count > 0:
-            if c.undoer.new_undo: # new undo code.
-                c.undoer.afterGroup(current,'Convert All Blanks',undoData)
-            else:
-                newText = body.getAllText()
-                newSel = body.getTextSelection()
-                c.undoer.setUndoParams("Convert All Blanks",
-                    current,select=current,oldTree=v_copy,
-                    oldText=oldText,newText=newText,
-                    oldSel=oldSel,newSel=newSel)
-        g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
-        c.endUpdate(count > 0) # 4/8/05
+        c.beginUpdate()
+        if 1: # In update...
+            count = 0 ; dirtyVnodeList = []
+            u.beforeChangeGroup(current,undoType)
+            for p in current.self_and_subtree_iter():
+                # g.trace(p.headString(),tabWidth)
+                innerUndoData = u.beforeChangeNodeContents(p)
+                if p == current:
+                    changed,dirtyVnodeList2 = c.convertBlanks()
+                    if changed:
+                        count += 1
+                        dirtyVnodeList.extend(dirtyVnodeList2)
+                else:
+                    changed = False ; result = []
+                    text = p.t.bodyString
+                    assert(g.isUnicode(text))
+                    lines = string.split(text, '\n')
+                    for line in lines:
+                        i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+                        s = g.computeLeadingWhitespace(w,abs(tabWidth)) + line[i:] # use positive width.
+                        if s != line: changed = True
+                        result.append(s)
+                    if changed:
+                        count += 1
+                        dirtyVnodeList2 = p.setDirty()
+                        dirtyVnodeList.extend(dirtyVnodeList2)
+                        result = string.join(result,'\n')
+                        p.setTnodeText(result)
+                        u.afterChangeNodeContents(p,undoType,innerUndoData)
+            if count > 0:
+                u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+            g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
+        c.endUpdate(count > 0)
     #@nonl
-    #@-node:ekr.20031218072017.1704:convertAllBlanks TEST
-    #@+node:ekr.20031218072017.1705:convertAllTabs TO DO
+    #@-node:ekr.20031218072017.1704:convertAllBlanks TESTED
+    #@+node:ekr.20031218072017.1705:convertAllTabs TESTED
     def convertAllTabs (self):
     
-        c = self ; body = c.frame.body ; v = current = c.currentVnode()
-        
+        c = self ; u = c.undoer ; undoType = 'Convert All Tabs'
+        current = c.currentPosition()
+    
         if g.app.batchMode:
-            c.notValidInBatchMode("Convert All Tabs")
+            c.notValidInBatchMode(undoType)
             return
-        next = v.nodeAfterTree()
         theDict = g.scanDirectives(c)
         tabWidth  = theDict.get("tabwidth")
-        # Create copy for undo.
-        v_copy = c.undoer.saveTree(v)
-        oldText = body.getAllText()
-        oldSel = body.getTextSelection()
-        count = 0
-        while v and v != next:
-            if v == current:
-                if self.convertTabs():
-                    count += 1 ; v.setDirty()
-            else:
-                result = [] ; changed = False
-                text = v.t.bodyString
-                assert(g.isUnicode(text))
-                lines = string.split(text, '\n')
-                for line in lines:
-                    i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
-                    s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
-                    if s != line: changed = True
-                    result.append(s)
-                if changed:
-                    count += 1 ; v.setDirty()
-                    result = string.join(result,'\n')
-                    v.setTnodeText(result)
-            v = v.threadNext()
-        if count > 0:
-            newText = body.getAllText()
-            newSel = body.getTextSelection() # 7/11/03
-            c.undoer.setUndoParams("Convert All Tabs",
-                current,select=current,oldTree=v_copy,
-                oldText=oldText,newText=newText,
-                oldSel=oldSel,newSel=newSel)
-        g.es("tabs converted to blanks in %d nodes" % count)
+        c.beginUpdate()
+        if 1: # In update:
+            count = 0 ; dirtyVnodeList = []
+            u.beforeChangeGroup(current,undoType)
+            for p in current.self_and_subtree_iter():
+                undoData = u.beforeChangeNodeContents(p)
+                if p == current:
+                    changed,dirtyVnodeList2 = self.convertTabs()
+                    if changed:
+                        count += 1
+                        dirtyVnodeList.extend(dirtyVnodeList2)
+                else:
+                    result = [] ; changed = False
+                    text = p.t.bodyString
+                    assert(g.isUnicode(text))
+                    lines = string.split(text, '\n')
+                    for line in lines:
+                        i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+                        s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
+                        if s != line: changed = True
+                        result.append(s)
+                    if changed:
+                        count += 1
+                        dirtyVnodeList2 = p.setDirty()
+                        dirtyVnodeList.extend(dirtyVnodeList2)
+                        result = string.join(result,'\n')
+                        p.setTnodeText(result)
+                        u.afterChangeNodeContents(p,undoType,undoData)
+            if count > 0:
+                u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+            g.es("tabs converted to blanks in %d nodes" % count)
+        c.endUpdate(count > 0)
     #@nonl
-    #@-node:ekr.20031218072017.1705:convertAllTabs TO DO
-    #@+node:ekr.20031218072017.1821:convertBlanks TEST
+    #@-node:ekr.20031218072017.1705:convertAllTabs TESTED
+    #@+node:ekr.20031218072017.1821:convertBlanks TESTED
     def convertBlanks (self):
     
-        c = self ; u = c.undoer ; body = c.frame.body
+        c = self ; u = c.undoer ; undoType = 'Convert Blanks'
         
         if g.app.batchMode:
-            c.notValidInBatchMode("Convert Blanks")
+            c.notValidInBatchMode(undoType)
             return False
     
         head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=True)
@@ -1920,32 +1900,29 @@ class baseCommands:
         # Use the relative @tabwidth, not the global one.
         theDict = g.scanDirectives(c)
         tabWidth  = theDict.get("tabwidth")
-        
         if not tabWidth: return False
     
         for line in lines:
-            s = g.optimizeLeadingWhitespace(line,abs(tabWidth)) # 4/8/05: use abs.
+            s = g.optimizeLeadingWhitespace(line,abs(tabWidth)) # Use positive width.
             if s != line: changed = True
             result.append(s)
     
         if changed:
             result = string.join(result,'\n')
-            if u.new_undo:
-                undoType = 'Convert Tabs'
-            else:
-                undoType = None
-            c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
+            dirtyVnodeList = c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
+        else:
+            dirtyVnodeList = []
     
-        return changed
+        return changed,dirtyVnodeList
     #@nonl
-    #@-node:ekr.20031218072017.1821:convertBlanks TEST
-    #@+node:ekr.20031218072017.1822:convertTabs TO DO
+    #@-node:ekr.20031218072017.1821:convertBlanks TESTED
+    #@+node:ekr.20031218072017.1822:convertTabs TESTED
     def convertTabs (self):
     
-        c = self ; u = c.undoer ; body = c.frame.body
+        c = self ; u = c.undoer ; undoType = 'Convert Tabs'
         
         if g.app.batchMode:
-            c.notValidInBatchMode("Convert Tabs")
+            c.notValidInBatchMode(undoType)
             return False
     
         head,lines,tail,oldSel,oldYview = self.getBodyLines(expandSelection=True)
@@ -1964,15 +1941,14 @@ class baseCommands:
     
         if changed:
             result = string.join(result,'\n')
-            if u.new_undo:
-                undoType = 'Convert Tabs'
-            else:
-                undoType = None
-            c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
+            dirtyVnodeList = c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
+        else:
+            dirtyVnodeList = []
             
-        return changed
-    #@-node:ekr.20031218072017.1822:convertTabs TO DO
-    #@+node:ekr.20031218072017.1823:createLastChildNode TO DO:  how to undo insertAsLastChild
+        return changed,dirtyVnodeList
+    #@nonl
+    #@-node:ekr.20031218072017.1822:convertTabs TESTED
+    #@+node:ekr.20031218072017.1823:createLastChildNode
     def createLastChildNode (self,parent,headline,body):
         
         '''A helper function for the three extract commands.'''
@@ -1989,20 +1965,22 @@ class baseCommands:
         p.setTnodeText(body)
         p.setDirty()
         c.validateOutline()
+        return p
     #@nonl
-    #@-node:ekr.20031218072017.1823:createLastChildNode TO DO:  how to undo insertAsLastChild
-    #@+node:ekr.20031218072017.1824:dedentBody TO DO
+    #@-node:ekr.20031218072017.1823:createLastChildNode
+    #@+node:ekr.20031218072017.1824:dedentBody TESTED
     def dedentBody (self):
         
-        c = self ; p = c.currentPosition()
+        c = self ; undoType = 'Unindent' ; current = c.currentPosition()
         
         if g.app.batchMode:
-            c.notValidInBatchMode("Unindent")
+            c.notValidInBatchMode(undoType)
             return
     
-        d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+        d = g.scanDirectives(c,current) # Support @tab_width directive properly.
         tab_width = d.get("tabwidth",c.tab_width)
         head,lines,tail,oldSel,oldYview = self.getBodyLines()
+        
         result = [] ; changed = False
         for line in lines:
             i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
@@ -2012,86 +1990,59 @@ class baseCommands:
     
         if changed:
             result = string.join(result,'\n')
-            c.updateBodyPane(head,result,tail,"Undent",oldSel,oldYview)
+            c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
     #@nonl
-    #@-node:ekr.20031218072017.1824:dedentBody TO DO
-    #@+node:ekr.20031218072017.1706:extract TO DO
+    #@-node:ekr.20031218072017.1824:dedentBody TESTED
+    #@+node:ekr.20031218072017.1706:extract TESTED
     def extract(self):
-        
-        c = self ; body = c.frame.body ; current = v = c.currentVnode()
+    
+        c = self ; u = c.undoer ; undoType = 'Extract'
+        current = c.currentPosition()
         
         if g.app.batchMode:
-            c.notValidInBatchMode("Extract")
+            c.notValidInBatchMode(undoType)
             return
         
         head,lines,tail,oldSel,oldYview = self.getBodyLines()
         if not lines: return
-        headline = lines[0] ; del lines[0]
+        headline = lines[0].strip() ; del lines[0]
         junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
-        # Create copy for undo.
-        v_copy = c.undoer.saveTree(v)
-        oldText = body.getAllText()
-        oldSel = body.getTextSelection()
-        #@    << Set headline for extract >>
-        #@+node:ekr.20031218072017.1707:<< Set headline for extract >>
-        headline = string.strip(headline)
-        while len(headline) > 0 and headline[0] == '/':
-            headline = headline[1:]
-        headline = string.strip(headline)
-        #@nonl
-        #@-node:ekr.20031218072017.1707:<< Set headline for extract >>
-        #@nl
+    
         # Remove leading whitespace from all body lines.
-        result = []
-        for line in lines:
-            # Remove the whitespace on the first line
-            line = g.removeLeadingWhitespace(line,ws,c.tab_width)
-            result.append(line)
-        # Create a new node from lines.
-        newBody = string.join(result,'\n') # 11/23/03
-        if head and len(head) > 0:
-            head = string.rstrip(head)
+        strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+            for line in lines]
+        newBody = string.join(strippedLines,'\n')
+        if head: head = head.rstrip()
+    
         c.beginUpdate()
-        if 1: # update range...
-            c.createLastChildNode(v,headline,newBody) # 11/23/03
-            undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
-            c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
-            newText = body.getAllText()
-            newSel = body.getTextSelection() # 7/11/03
-            c.undoer.setUndoParams("Extract",
-                v,select=current,oldTree=v_copy,
-                oldText=oldText,newText=newText,
-                oldSel=oldSel,newSel=newSel)
+        if 1: # In update...
+            u.beforeChangeGroup(current,undoType)
+            if 1: # In group...
+                undoData = u.beforeInsertNode(current)
+                p = c.createLastChildNode(current,headline,newBody)
+                u.afterInsertNode(p,undoType,undoData)
+                c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
+            u.afterChangeGroup(current,undoType)
         c.endUpdate()
     #@nonl
-    #@-node:ekr.20031218072017.1706:extract TO DO
-    #@+node:ekr.20031218072017.1708:extractSection TO DO
+    #@-node:ekr.20031218072017.1706:extract TESTED
+    #@+node:ekr.20031218072017.1708:extractSection TESTED
     def extractSection(self):
     
-        c = self ; u = c.undoer
-        body = c.frame.body ; current = v = c.currentVnode()
-        
-        if g.app.batchMode:
-            c.notValidInBatchMode("Extract Section")
-            return
+        c = self ; u = c.undoer ; undoType = 'Extract Section'
+        body = c.frame.body ; current = c.currentPosition()
     
+        if g.app.batchMode:
+            c.notValidInBatchMode(undoType)
+            return
         head,lines,tail,oldSel,oldYview = self.getBodyLines()
         if not lines: return
-        headline = lines[0] ; del lines[0]
+    
+        headline = lines[0].strip() ; del lines[0]
         junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
         line1 = "\n" + headline
-        # Create copy for undo.
-        v_copy = c.undoer.saveTree(v)
-        oldText = body.getAllText()
-        oldSel = body.getTextSelection()
         #@    << Set headline for extractSection >>
         #@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
-        if 0: # I have no idea why this was being done.
-            while len(headline) > 0 and headline[0] == '/':
-                headline = headline[1:]
-        
-        headline = headline.strip()
-        
         if len(headline) < 5:
             oops = True
         else:
@@ -2107,97 +2058,77 @@ class baseCommands:
         #@nonl
         #@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
         #@nl
+        
         # Remove leading whitespace from all body lines.
-        result = []
-        for line in lines:
-            # Remove the whitespace on the first line
-            line = g.removeLeadingWhitespace(line,ws,c.tab_width)
-            result.append(line)
-        # Create a new node from lines.
-        newBody = string.join(result,'\n')
-        if head and len(head) > 0:
-            head = string.rstrip(head)
-        c.beginUpdate()
-        if 1: # update range...
-            c.createLastChildNode(v,headline,newBody)
-            # g.trace(v)
-            if u.new_undo:
-                undoType = 'Extract Section'
-            else:
-                undoType = None # Set undo params later.
-            c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
+        strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+            for line in lines]
+        newBody = string.join(strippedLines,'\n')
+        if head: head = head.rstrip()
     
-            if u.new_undo:
-                pass
-            else:
-                newText = body.getAllText()
-                newSel = body.getTextSelection()
-                c.undoer.setUndoParams("Extract Section",v,
-                    select=current,oldTree=v_copy,
-                    oldText=oldText,newText=newText,
-                    oldSel=oldSel,newSel=newSel)
+        c.beginUpdate()
+        if 1: # In update...
+            u.beforeChangeGroup(current,undoType)
+            if 1: # In group...
+                undoData = u.beforeInsertNode(current)
+                p = c.createLastChildNode(current,headline,newBody)
+                u.afterInsertNode(p,undoType,undoData)
+                c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
+            u.afterChangeGroup(current,undoType)
         c.endUpdate()
     #@nonl
-    #@-node:ekr.20031218072017.1708:extractSection TO DO
-    #@+node:ekr.20031218072017.1710:extractSectionNames TO DO
+    #@-node:ekr.20031218072017.1708:extractSection TESTED
+    #@+node:ekr.20031218072017.1710:extractSectionNames TESTED
     def extractSectionNames(self):
     
-        c = self ; u = c.undoer
-        body = c.frame.body ; current = p = c.currentPosition()
+        c = self ; u = c.undoer ; undoType = 'Extract Section Names'
+        body = c.frame.body ; current = c.currentPosition()
         
         if g.app.batchMode:
-            c.notValidInBatchMode("Extract Section Names")
+            c.notValidInBatchMode(undoType)
             return
-    
         head,lines,tail,oldSel,oldYview = self.getBodyLines()
         if not lines: return
-        # Create copy for undo.
-        v_copy = c.undoer.saveTree(p)
-        # No change to body or selection of this node.
-        oldText = newText = body.getAllText()
-        i, j = oldSel = newSel = body.getTextSelection()
+    
         c.beginUpdate()
-        if 1: # update range...
-            found = False
-            for s in lines:
-                #@            << Find the next section name >>
-                #@+node:ekr.20031218072017.1711:<< Find the next section name >>
-                head1 = string.find(s,"<<")
-                if head1 > -1:
-                    head2 = string.find(s,">>",head1)
-                else:
-                    head1 = string.find(s,"@<")
+        if 1: # In update...
+            u.beforeChangeGroup(current,undoType)
+            if 1: # In group...
+                found = False
+                for s in lines:
+                    #@                << Find the next section name >>
+                    #@+node:ekr.20031218072017.1711:<< Find the next section name >>
+                    head1 = string.find(s,"<<")
                     if head1 > -1:
-                        head2 = string.find(s,"@>",head1)
-                        
-                if head1 == -1 or head2 == -1 or head1 > head2:
-                    name = None
-                else:
-                    name = s[head1:head2+2]
-                #@nonl
-                #@-node:ekr.20031218072017.1711:<< Find the next section name >>
-                #@nl
-                if name:
-                    self.createLastChildNode(p,name,None)
-                    found = True
-            c.selectPosition(p)
-            c.validateOutline()
-            if not found:
-                g.es("Selected text should contain one or more section names",color="blue")
+                        head2 = string.find(s,">>",head1)
+                    else:
+                        head1 = string.find(s,"@<")
+                        if head1 > -1:
+                            head2 = string.find(s,"@>",head1)
+                            
+                    if head1 == -1 or head2 == -1 or head1 > head2:
+                        name = None
+                    else:
+                        name = s[head1:head2+2]
+                    #@nonl
+                    #@-node:ekr.20031218072017.1711:<< Find the next section name >>
+                    #@nl
+                    if name:
+                        undoData = u.beforeInsertNode(current)
+                        p = self.createLastChildNode(current,name,None)
+                        u.afterInsertNode(p,undoType,undoData)
+                        found = True
+                c.selectPosition(current)
+                c.validateOutline()
+                if not found:
+                    g.es("Selected text should contain one or more section names",color="blue")
+            u.afterChangeGroup(current,undoType)
         c.endUpdate()
-        if u.new_undo:
-            pass
-        else:
-            # No change to body or selection
-            c.undoer.setUndoParams("Extract Names",
-                p,select=current,oldTree=v_copy,
-                oldText=oldText,newText=newText,
-                oldSel=oldSel,newSel=newSel)
+    
         # Restore the selection.
         body.setTextSelection(oldSel)
         body.setFocus()
     #@nonl
-    #@-node:ekr.20031218072017.1710:extractSectionNames TO DO
+    #@-node:ekr.20031218072017.1710:extractSectionNames TESTED
     #@+node:ekr.20031218072017.1825:findBoundParagraph
     def findBoundParagraph (self):
         
@@ -2355,43 +2286,47 @@ class baseCommands:
         return head,lines,tail,oldSel,oldVview
     #@nonl
     #@-node:ekr.20031218072017.1829:getBodyLines
-    #@+node:ekr.20031218072017.1830:indentBody TO DO
+    #@+node:ekr.20031218072017.1830:indentBody TESTED
     def indentBody (self):
     
-        c = self ; p = c.currentPosition()
+        c = self ; undoType = 'Indent' ; current = c.currentPosition()
         
         if g.app.batchMode:
-            c.notValidInBatchMode("Indent")
+            c.notValidInBatchMode(undoType)
             return
     
-        d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+        d = g.scanDirectives(c,current) # Support @tab_width directive properly.
         tab_width = d.get("tabwidth",c.tab_width)
         head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    
         result = [] ; changed = False
         for line in lines:
             i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
             s = g.computeLeadingWhitespace(width+abs(tab_width),tab_width) + line[i:]
             if s != line: changed = True
             result.append(s)
+    
         if changed:
             result = string.join(result,'\n')
-            c.updateBodyPane(head,result,tail,"Indent",oldSel,oldYview)
+            c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
     #@nonl
-    #@-node:ekr.20031218072017.1830:indentBody TO DO
-    #@+node:ekr.20031218072017.1831:insertBodyTime & allies TO DO
+    #@-node:ekr.20031218072017.1830:indentBody TESTED
+    #@+node:ekr.20031218072017.1831:insertBodyTime & allies TESTED
     def insertBodyTime (self):
         
-        c = self ; v = c.currentVnode()
+        c = self ; undoType = 'Insert Body Time'
+        p = c.currentPosition()
         
         if g.app.batchMode:
-            c.notValidInBatchMode("xxx")
+            c.notValidInBatchMode(undoType)
             return
         
         oldSel = c.frame.body.getTextSelection()
         c.frame.body.deleteTextSelection() # Works if nothing is selected.
         s = self.getTime(body=True)
+    
         c.frame.body.insertAtInsertPoint(s)
-        c.frame.body.onBodyChanged(v,"Typing",oldSel=oldSel)
+        c.frame.body.onBodyChanged(p,undoType,oldSel=oldSel)
     #@nonl
     #@+node:ekr.20031218072017.1832:getTime
     def getTime (self,body=True):
@@ -2424,12 +2359,12 @@ class baseCommands:
             s = time.strftime(default_format,time.gmtime())
         return s
     #@-node:ekr.20031218072017.1832:getTime
-    #@-node:ekr.20031218072017.1831:insertBodyTime & allies TO DO
-    #@+node:ekr.20050312114529:insert/removeComments TO DO
-    #@+node:ekr.20050312114529.1:addComments TO DO
+    #@-node:ekr.20031218072017.1831:insertBodyTime & allies TESTED
+    #@+node:ekr.20050312114529:insert/removeComments TESTED
+    #@+node:ekr.20050312114529.1:addComments
     def addComments (self):
     
-        c = self ; p = c.currentPosition()
+        c = self ; undoType = 'Add Comments' ; p = c.currentPosition()
         
         d = g.scanDirectives(c,p)
         # d1 is the line delim.
@@ -2460,13 +2395,13 @@ class baseCommands:
                     result.append('%s %s' % (line[0:j],d3))
     
         result = string.join(result,'\n')
-        c.updateBodyPane(head,result,tail,"Add Comments",oldSel,oldYview)
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
     #@nonl
-    #@-node:ekr.20050312114529.1:addComments TO DO
-    #@+node:ekr.20050312114529.2:deleteComments TO DO
+    #@-node:ekr.20050312114529.1:addComments
+    #@+node:ekr.20050312114529.2:deleteComments
     def deleteComments (self):
     
-        c = self ; p = c.currentPosition()
+        c = self ; undoType = 'Delete Comments' ; p = c.currentPosition()
         
         d = g.scanDirectives(c,p)
         # d1 is the line delim.
@@ -2512,11 +2447,11 @@ class baseCommands:
                         return
     
         result = string.join(result,'\n')
-        c.updateBodyPane(head,result,tail,"Delete Comments",oldSel,oldYview)
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
     #@nonl
-    #@-node:ekr.20050312114529.2:deleteComments TO DO
-    #@-node:ekr.20050312114529:insert/removeComments TO DO
-    #@+node:ekr.20031218072017.1833:reformatParagraph TO DO
+    #@-node:ekr.20050312114529.2:deleteComments
+    #@-node:ekr.20050312114529:insert/removeComments TESTED
+    #@+node:ekr.20031218072017.1833:reformatParagraph TESTED
     def reformatParagraph(self):
     
         """Reformat a text paragraph in a Tk.Text widget
@@ -2619,29 +2554,30 @@ class baseCommands:
             #@-node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
             #@nl
     #@nonl
-    #@-node:ekr.20031218072017.1833:reformatParagraph TO DO
-    #@+node:ekr.20031218072017.1838:updateBodyPane (handles undo??) TODO
+    #@-node:ekr.20031218072017.1833:reformatParagraph TESTED
+    #@+node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
     def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
         
         c = self ; u = c.undoer
         body = c.frame.body ; p = c.currentPosition()
-        
-        # if u.new_undo:
-            # undoData = u.beforeChangeNodeContents(p)
     
         # Update the text and notify the event handler.
         body.setSelectionAreas(head,middle,tail)
     
-        if setSel:
+        if setSel and oldSel:
             body.setTextSelection(oldSel)
-            
+    
+        # This handles the undo by calling setUndoTypingParams (in idle_body_key).
         body.onBodyChanged(p,undoType,oldSel=oldSel,oldYview=oldYview)
     
         # Update the changed mark and icon.
-        c.setChanged(True)
         c.beginUpdate()
-        if not p.isDirty():
-            p.setDirty()
+        if 1: # In update...
+            c.setChanged(True)
+            if p.isDirty():
+                dirtyVnodeList = []
+            else:
+                dirtyVnodeList = p.setDirty()
         c.endUpdate()
     
         # Scroll as necessary.
@@ -2649,16 +2585,13 @@ class baseCommands:
             body.setYScrollPosition(oldYview)
         else:
             body.makeInsertPointVisible()
-            
-        # if u.new_undo:
-            # g.trace(undoType)
-            # u.afterChangeNodeContents(p,undoType,undoData)
     
         body.setFocus()
         c.recolor()
+        return dirtyVnodeList
     #@nonl
-    #@-node:ekr.20031218072017.1838:updateBodyPane (handles undo??) TODO
-    #@-node:ekr.20031218072017.2884:Edit Body submenu TO DO 14
+    #@-node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
+    #@-node:ekr.20031218072017.2884:Edit Body submenu TESTED
     #@+node:ekr.20031218072017.2885:Edit Headline submenu
     #@+node:ekr.20031218072017.2886:editHeadline
     def editHeadline(self):
@@ -2798,27 +2731,27 @@ class baseCommands:
             p = c.fileCommands.getLeoOutline(s,reassignIndices)
         else:
             p = c.importCommands.convertMoreStringToOutlineAfter(s,current)
-            
-        if p:
-            c.endEditing()
-            c.beginUpdate()
-            if 1: # inside update...
-                c.validateOutline()
-                c.selectVnode(p)
-                p.setDirty()
-                c.setChanged(True)
-                # paste as first child if back is expanded.
-                back = p.back()
-                if back and back.isExpanded():
-                    if u.new_undo:
-                        undoData = u.beforeMoveNode(p,tag)
-                    p.moveToNthChildOf(back,0)
-                    if u.new_undo:
-                        u.afterMoveNode(p,tag,undoData)
-                if not u.new_undo:
-                    c.undoer.setUndoParams("Paste Node",p)
-            c.endUpdate()
-            c.recolor()
+        if not p: return
+    
+        c.beginUpdate()
+        c.endEditing()
+        if 1: # inside update...
+            c.validateOutline()
+            c.selectVnode(p)
+            p.setDirty()
+            c.setChanged(True)
+            # paste as first child if back is expanded.
+            back = p.back()
+            if back and back.isExpanded():
+                ## Is remembering the 'move' enough?
+                ## Don't we have to remember the insert too??
+                undoData = u.beforeMoveNode(p)
+                p.moveToNthChildOf(back,0)
+                u.afterMoveNode(p,tag,undoData)
+                ## c.undoer.setUndoParams("Paste Node",p)
+        c.endUpdate()
+        c.recolor()
+    #@nonl
     #@-node:ekr.20031218072017.1551:pasteOutline TO DO
     #@+node:EKR.20040610130943:pasteOutlineRetainingClones
     def pasteOutlineRetainingClones (self):
@@ -2852,7 +2785,7 @@ class baseCommands:
     
         c = self ; p = c.currentPosition()
         if p and c.canDehoist():
-            c.undoer.setUndoParams("De-Hoist",p)
+            ## c.undoer.setUndoParams("De-Hoist",p)
             bunch = c.hoistStack.pop()
             if bunch.expanded: p.expand()
             else:              p.contract()
@@ -2868,7 +2801,7 @@ class baseCommands:
     
         c = self ; p = c.currentPosition()
         if p and c.canHoist():
-            c.undoer.setUndoParams("Hoist",p)
+            ## c.undoer.setUndoParams("Hoist",p)
             # New in 4.2: remember expansion state.
             bunch = g.Bunch(p=p.copy(),expanded=p.isExpanded())
             c.hoistStack.append(bunch)
@@ -2878,7 +2811,7 @@ class baseCommands:
             c.frame.putStatusLine("Hoist: " + p.headString())
     #@nonl
     #@-node:ekr.20031218072017.2028:Hoist & dehoist & enablers TO DO
-    #@+node:ekr.20031218072017.1759:Insert, Delete & Clone (Commands) 3 to-do
+    #@+node:ekr.20031218072017.1759:Insert, Delete & Clone (Commands) TO DO...
     #@+node:ekr.20031218072017.1760:c.checkMoveWithParentWithWarning
     def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
         
@@ -2924,7 +2857,7 @@ class baseCommands:
         c.beginUpdate()
         if 1: # update...
             p.setAllAncestorAtFileNodesDirty()
-            c.undoer.setUndoParams(op_name,p,select=newNode)
+            ## c.undoer.setUndoParams(op_name,p,select=newNode)
             p.doDelete(newNode)
             c.setChanged(True)
         c.endUpdate()
@@ -2944,27 +2877,20 @@ class baseCommands:
     
         c.beginUpdate()
         if 1: # inside update...
-            if u.new_undo:
-                data = c.undoer.beforeChangeTree(p)
-            else:
-                old_p = p.copy()
-            if (
-                # 1/31/04: Make sure new node is visible when hoisting.
-                (hasChildren and isExpanded) or
+            undoData = c.undoer.beforeInsertNode(p)
+            # Make sure new node is visible when hoisting.
+            if ((hasChildren and isExpanded) or
                 (c.hoistStack and p == c.hoistStack[-1].p)
             ):
                 p = p.insertAsNthChild(0)
             else:
                 p = p.insertAfter()
-            if u.new_undo:
-                u.afterChangeTree(p,op_name,data)
-            else:
-                u.setUndoParams(op_name,p,select=old_p)
-                # Bug fix!!: 1/25/05 (was: select=p)
             c.selectVnode(p)
             c.editPosition(p)
-            p.setAllAncestorAtFileNodesDirty()
+            dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
             c.setChanged(True)
+            u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+            ## u.setUndoParams(op_name,p,select=old_p)
         c.endUpdate()
         return p # for mod_labels plugin.
     #@nonl
@@ -2983,7 +2909,7 @@ class baseCommands:
             c.setChanged(True)
             if c.validateOutline():
                 c.selectVnode(clone)
-                c.undoer.setUndoParams("Clone Node",clone)
+                ## c.undoer.setUndoParams("Clone Node",clone)
         c.endUpdate() # updates all icons
         return clone # For mod_labels plugin.
     #@nonl
@@ -3007,7 +2933,7 @@ class baseCommands:
             return True
     #@nonl
     #@-node:ekr.20031218072017.1765:c.validateOutline
-    #@-node:ekr.20031218072017.1759:Insert, Delete & Clone (Commands) 3 to-do
+    #@-node:ekr.20031218072017.1759:Insert, Delete & Clone (Commands) TO DO...
     #@+node:ekr.20031218072017.1188:c.sortChildren, sortSiblings TO DO
     def sortChildren(self):
     
@@ -3021,7 +2947,8 @@ class baseCommands:
         while child:
             children.append(child)
             child = child.next()
-        c.undoer.setUndoParams("Sort Children",v,sort=children)
+        
+        ## c.undoer.setUndoParams("Sort Children",v,sort=children)
         #@nonl
         #@-node:ekr.20031218072017.1189:<< Set the undo info for sortChildren >>
         #@nl
@@ -3049,7 +2976,8 @@ class baseCommands:
             while sib:
                 sibs.append(sib)
                 sib = sib.next()
-            c.undoer.setUndoParams("Sort Siblings",v,sort=sibs)
+                
+            ## c.undoer.setUndoParams("Sort Siblings",v,sort=sibs)
             #@nonl
             #@-node:ekr.20031218072017.1190:<< Set the undo info for sortSiblings >>
             #@nl
@@ -3076,7 +3004,7 @@ class baseCommands:
         for sib in root.self_and_siblings_iter(copy=True):
             sibs.append(sib)
             
-        c.undoer.setUndoParams("Sort Top Level",root,sort=sibs)
+        ## c.undoer.setUndoParams("Sort Top Level",root,sort=sibs)
         #@nonl
         #@-node:ekr.20031218072017.2897:<< Set the undo info for sortTopLevel >>
         #@nl
@@ -4327,41 +4255,37 @@ class baseCommands:
     #@-node:ekr.20050219170523:test_c_unmark_all
     #@-node:ekr.20031218072017.2930:unmarkAll & test
     #@-node:ekr.20031218072017.2922:Mark...
-    #@+node:ekr.20031218072017.1766:Move... (Commands) TEST
+    #@+node:ekr.20031218072017.1766:Move... (Commands) TESTED
     #@+node:ekr.20031218072017.1767:demote
     def demote(self):
     
-        c = self ; u = c.undoer ; p = c.currentPosition()
-        if not p or not p.hasNext(): return
+        c = self ; u = c.undoer
+        current = c.currentPosition()
+        command = 'Demote'
+        if not current or not current.hasNext(): return
     
-        if not u.new_undo:
-            last = p.lastChild()
         # Make sure all the moves will be valid.
-        for child in p.children_iter():
-            if not c.checkMoveWithParentWithWarning(child,p,True):
+        for child in current.children_iter():
+            if not c.checkMoveWithParentWithWarning(child,current,True):
                 return
         c.beginUpdate()
         if 1: # update...
             c.endEditing()
-            u.beforeChangeGroup(p,'Demote')
+            u.beforeChangeGroup(current,command)
+            p = current.copy()
             while p.hasNext(): # Do not use iterator here.
                 child = p.next()
-                if u.new_undo:
-                    undoData = u.beforeMoveNode(child)
+                undoData = u.beforeMoveNode(child)
                 child.moveToNthChildOf(p,p.numberOfChildren())
-                if u.new_undo:
-                    u.afterMoveNode(child,'Demote',undoData)
+                u.afterMoveNode(child,command,undoData)
             p.expand()
             # Even if p is an @ignore node there is no need to mark the demoted children dirty.
-            dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+            dirtyVnodeList = current.setAllAncestorAtFileNodesDirty()
             c.setChanged(True)
-            if u.new_undo:
-                u.afterChangeGroup(p,'Demote',dirtyVnodeList=dirtyVnodeList)
-            else:
-                c.undoer.setUndoParams("Demote",p,lastChild=last)
-            c.selectPosition(p)
+            u.afterChangeGroup(current,command,dirtyVnodeList=dirtyVnodeList)
+            c.selectPosition(current)
         c.endUpdate()
-        c.updateSyntaxColorer(p) # Moving can change syntax coloring.
+        c.updateSyntaxColorer(current) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1767:demote
     #@+node:ekr.20031218072017.1768:moveOutlineDown
@@ -4392,14 +4316,7 @@ class baseCommands:
         c.beginUpdate()
         if 1: # update...
             c.endEditing()
-            # Remember both the before state and the after state for undo/redo
-            if u.new_undo:
-                undoData = u.beforeMoveNode(p)
-            else:
-                oldBack = p.back()
-                oldParent = p.parent()
-                oldN = p.childIndex()
-    
+            undoData = u.beforeMoveNode(p)
             #@        << Move v down & set moved if successful >>
             #@+node:ekr.20031218072017.1769:<< Move v down & set moved if successful >>
             if next.hasChildren() and next.isExpanded():
@@ -4426,11 +4343,7 @@ class baseCommands:
                     dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
                     dirtyVnodeList.extend(dirtyVnodeList2)
                 c.setChanged(True)
-                if u.new_undo:
-                    u.afterMoveNode(p,'Move Down',undoData,dirtyVnodeList)
-                else:
-                    u.setUndoParams("Move Down",p,
-                        oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+                u.afterMoveNode(p,'Move Down',undoData,dirtyVnodeList)
                 c.selectPosition(p)
         c.endUpdate()
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
@@ -4441,24 +4354,17 @@ class baseCommands:
         
         c = self ; u = c.undoer ; p = c.currentPosition()
         if not p: return
-    
         if not c.canMoveOutlineLeft(): # 11/4/03: Support for hoist.
             if c.hoistStack: g.es("Can't move node out of hoisted outline",color="blue")
             return
-        
         if not p.hasParent(): return
-        # Remember both the before state and the after state for undo/redo
+    
         inAtIgnoreRange = p.inAtIgnoreRange()
         parent = p.parent()
-        if u.new_undo:
-            undoData = u.beforeMoveNode(p)
-        else:
-            oldBack = p.back()
-            oldParent = p.parent()
-            oldN = p.childIndex()
         c.beginUpdate()
-        if 1: # update...
+        if 1: # In update...
             c.endEditing()
+            undoData = u.beforeMoveNode(p)
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
             p.moveAfter(parent)
             if inAtIgnoreRange and not p.inAtIgnoreRange():
@@ -4468,11 +4374,7 @@ class baseCommands:
                 dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
                 dirtyVnodeList.extend(dirtyVnodeList2)
             c.setChanged(True)
-            if u.new_undo:
-                u.afterMoveNode(p,'Move Left',undoData,dirtyVnodeList)
-            else:
-                u.setUndoParams("Move Left",p,
-                    oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+            u.afterMoveNode(p,'Move Left',undoData,dirtyVnodeList)
             c.selectPosition(p)
         c.endUpdate()
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
@@ -4483,26 +4385,17 @@ class baseCommands:
         
         c = self ; u = c.undoer ; p = c.currentPosition()
         if not p: return
-        
         if not c.canMoveOutlineRight(): # 11/4/03: Support for hoist.
             if c.hoistStack: g.es("Can't move node out of hoisted outline",color="blue")
             return
-        
         if not p.hasBack: return
         back = p.back()
         if not c.checkMoveWithParentWithWarning(p,back,True): return
     
-        # Remember both the before state and the after state for undo/redo.
-        if u.new_undo:
-            undoData = u.beforeMoveNode(p)
-        else:
-            oldBack = back
-            oldParent = p.parent()
-            oldN = p.childIndex()
-    
         c.beginUpdate()
         if 1: # update...
             c.endEditing()
+            undoData = u.beforeMoveNode(p)
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
             n = back.numberOfChildren()
             p.moveToNthChildOf(back,n)
@@ -4510,11 +4403,7 @@ class baseCommands:
             dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
             dirtyVnodeList.extend(dirtyVnodeList2)
             c.setChanged(True)
-            if u.new_undo:
-                u.afterMoveNode(p,'Move Right',undoData,dirtyVnodeList)
-            else:
-                u.setUndoParams("Move Right",p,
-                    oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+            u.afterMoveNode(p,'Move Right',undoData,dirtyVnodeList)
             c.selectPosition(p)
         c.endUpdate()
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
@@ -4531,25 +4420,16 @@ class baseCommands:
         back = p.visBack()
         if not back: return
         inAtIgnoreRange = p.inAtIgnoreRange()
-    
-        # A weird special case: just select back2.
         back2 = back.visBack()
         if back2 and p.v in back2.v.t.vnodeList:
-            # g.trace('-'*20,"no move, selecting visBack")
+            # A weird special case: just select back2.
             c.selectVnode(back2)
             return
-            
-        if u.new_undo:
-            undoData = u.beforeMoveNode(p)
-        else:
-             # Remember both the before state and the after state for undo/redo
-            oldBack = p.back()
-            oldParent = p.parent()
-            oldN = p.childIndex()
     
         c.beginUpdate()
         if 1: # update...
             c.endEditing()
+            undoData = u.beforeMoveNode(p)
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
             #@        << Move v up >>
             #@+node:ekr.20031218072017.1773:<< Move v up >>
@@ -4585,11 +4465,7 @@ class baseCommands:
                     dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
                 dirtyVnodeList.extend(dirtyVnodeList2)
                 c.setChanged(True)
-                if u.new_undo:
-                    u.afterMoveNode(p,'Move Right',undoData,dirtyVnodeList)
-                else:
-                    u.setUndoParams("Move Up",p,
-                        oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+                u.afterMoveNode(p,'Move Right',undoData,dirtyVnodeList)
                 c.selectVnode(p)
         c.endUpdate()
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
@@ -4599,42 +4475,35 @@ class baseCommands:
     def promote(self):
     
         c = self ; u = c.undoer ; p = c.currentPosition()
+        command = 'Promote'
         if not p or not p.hasChildren(): return
     
-        if not u.new_undo:
-            last = p.lastChild()
         isAtIgnoreNode = p.isAtIgnoreNode()
         inAtIgnoreRange = p.inAtIgnoreRange()
         c.beginUpdate()
-        if 1: # update...
+        if 1: # In update...
             c.endEditing()
-            u.beforeChangeGroup(p,'Promote')
+            u.beforeChangeGroup(p,command)
             after = p
             while p.hasChildren(): # Don't use an iterator.
                 child = p.firstChild()
-                if u.new_undo:
-                    undoData = u.beforeMoveNode(child)
+                undoData = u.beforeMoveNode(child)
                 child.moveAfter(after)
                 after = child
-                if u.new_undo:
-                    u.afterMoveNode(child,'Promote',undoData)
-                
+                u.afterMoveNode(child,command,undoData)
             c.setChanged(True)
             if not inAtIgnoreRange and isAtIgnoreNode:
                 # The promoted nodes have just become newly unignored.
                 dirtyVnodeList = p.setDirty() # Mark descendent @thin nodes dirty.
             else: # No need to mark descendents dirty.
                 dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
-            if u.new_undo:
-                u.afterChangeGroup(p,'Promote',dirtyVnodeList=dirtyVnodeList)
-            else:
-                c.undoer.setUndoParams("Promote",p,lastChild=last)
+            u.afterChangeGroup(p,command,dirtyVnodeList=dirtyVnodeList)
             c.selectVnode(p)
         c.endUpdate()
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1774:promote
-    #@-node:ekr.20031218072017.1766:Move... (Commands) TEST
+    #@-node:ekr.20031218072017.1766:Move... (Commands) TESTED
     #@-node:ekr.20031218072017.2894:Outline menu...
     #@+node:ekr.20031218072017.2931:Window Menu
     #@+node:ekr.20031218072017.2092:openCompareWindow
