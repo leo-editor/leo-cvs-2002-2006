@@ -273,56 +273,6 @@ class baseTnode (object):
     __str__ = __repr__
     #@nonl
     #@-node:ekr.20031218072017.3323:t.__repr__ & t.__str__
-    #@+node:EKR.20040530121847.1:For undo (tnode)
-    #@+node:EKR.20040530120245:t.createUndoInfo
-    def createUndoInfo (self,copyLinks=True):
-        
-        """Create a dict containing all info needed to recreate a vnode."""
-        
-        t = self ; d = {}
-        
-        # Essential fields.
-        d ["t"] = t
-        d ["headString"] = t.headString
-        d ["bodyString"] = t.bodyString
-        d ["vnodeList"]  = t.vnodeList[:]
-        d ["statusBits"] = t.statusBits
-        d ["firstChild"] = t._firstChild
-    
-        try: d ["unknownAttributes"] = t.unknownAttributes
-        except: pass
-        
-        if 0: # These never change, so no need to save/restore them.
-            # In fact, it would be wrong to undo changes made to them!
-            d ["cloneIndex"]  = t.cloneIndex
-            d ["fileIndex"]  = t.fileIndex
-    
-        if 0: # probably not needed for undo.
-            d ["insertSpot"]      = t.insertSpot
-            d ["scrollBarSpot"]   = t.scrollBarSpot
-            d ["selectionLength"] = t.selectionLength
-            d ["selectionStart"]  = t.selectionStart
-    
-        return d
-    #@-node:EKR.20040530120245:t.createUndoInfo
-    #@+node:EKR.20040530121847.2:t.restoreUndoInfo
-    def restoreUndoInfo (self,d):
-        
-        t = d ["t"] ; assert(t == self)
-    
-        t.headString  = d ["headString"]
-        t.bodyString  = d ["bodyString"]
-        t.vnodeList   = d ["vnodeList"]
-        t.statusBits  = d ["statusBits"]
-        t._firstChild = d ["firstChild"]
-    
-        try:
-            t.unknownAttributes = d ["unknownAttributes"]
-        except KeyError:
-            pass
-    #@nonl
-    #@-node:EKR.20040530121847.2:t.restoreUndoInfo
-    #@-node:EKR.20040530121847.1:For undo (tnode)
     #@+node:ekr.20031218072017.3325:Getters
     #@+node:EKR.20040625161602:getBody
     def getBody (self):
@@ -1211,47 +1161,6 @@ class baseVnode (object):
             # Don't set the dirty bit: it would just be annoying.
     #@-node:ekr.20031218072017.3404:v.trimTrailingLines
     #@-node:ekr.20031218072017.3384:Setters
-    #@+node:EKR.20040528111420:For undo (vnode)
-    #@+node:EKR.20040530115450:v.createUndoInfo
-    def createUndoInfo (self):
-        
-        """Create a dict containing all info needed to recreate a vnode for undo."""
-        
-        v = self ; d = {}
-        
-        # Copy all ivars.
-        d ["v"] = v
-        d ["statusBits"] = v.statusBits
-        d ["parent"] = v._parent
-        d ["next"] = v._next
-        d ["back"] = v._back
-        # The tnode never changes so there is no need to save it here.
-        
-        try: d ["unknownAttributes"] = v.unknownAttributes
-        except: pass
-    
-        return d
-    #@nonl
-    #@-node:EKR.20040530115450:v.createUndoInfo
-    #@+node:EKR.20040530121847:v.restoreUndoInfo
-    def restoreUndoInfo (self,d):
-        
-        """Restore all ivars saved in dict d."""
-        
-        v = d ["v"] ; assert(v == self)
-    
-        v.statusBits = d ["statusBits"]
-        v._parent    = d ["parent"] 
-        v._next      = d ["next"] 
-        v._back      = d ["back"]
-        
-        try:
-            v.unknownAttributes = d ["unknownAttributes"]
-        except KeyError:
-            pass
-    #@nonl
-    #@-node:EKR.20040530121847:v.restoreUndoInfo
-    #@-node:EKR.20040528111420:For undo (vnode)
     #@+node:EKR.20040528151551:v.Iterators
     #@+node:EKR.20040528151551.2:self_subtree_iter
     def subtree_iter(self):
@@ -2219,7 +2128,7 @@ class position (object):
         p = self ; c = p.c
         dirtyVnodeList = []
         
-        # Calculate all nodes that are joined to v or parents of such nodes.
+        # Calculate all nodes that are joined to p or parents of such nodes.
         nodes = p.findAllPotentiallyDirtyNodes()
         
         if setDescendentsDirty:

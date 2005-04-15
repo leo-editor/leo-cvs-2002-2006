@@ -41,7 +41,7 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3207:import.__init__
     #@+node:ekr.20031218072017.3209:Import TO DO
-    #@+node:ekr.20031218072017.3210:createOutline TESTED
+    #@+node:ekr.20031218072017.3210:createOutline
     def createOutline (self,fileName,parent):
     
         c = self.c ; u = c.undoer
@@ -103,7 +103,7 @@ class baseLeoImportCommands:
             g.es("createOutline: can't happen")
         return p
     #@nonl
-    #@-node:ekr.20031218072017.3210:createOutline TESTED
+    #@-node:ekr.20031218072017.3210:createOutline
     #@+node:ekr.20041126042730:getTabWidth
     def getTabWidth (self):
         
@@ -115,7 +115,7 @@ class baseLeoImportCommands:
             return self.c.tab_width
     #@nonl
     #@-node:ekr.20041126042730:getTabWidth
-    #@+node:ekr.20031218072017.1810:importDerivedFiles TESTED
+    #@+node:ekr.20031218072017.1810:importDerivedFiles
     def importDerivedFiles (self,parent,paths):
         
         c = self.c ; u = c.undoer
@@ -156,7 +156,7 @@ class baseLeoImportCommands:
             u.afterChangeGroup(p,command)
         c.endUpdate()
     #@nonl
-    #@-node:ekr.20031218072017.1810:importDerivedFiles TESTED
+    #@-node:ekr.20031218072017.1810:importDerivedFiles
     #@+node:ekr.20031218072017.3212:importFilesCommand
     def importFilesCommand (self,files,treeType,
         perfectImport=True,testing=False,verbose=False):
@@ -315,7 +315,7 @@ class baseLeoImportCommands:
         return theRoot
     #@nonl
     #@-node:ekr.20031218072017.3215:convertMoreString/StringsToOutlineAfter
-    #@+node:ekr.20031218072017.3220:importFlattenedOutline TESTED
+    #@+node:ekr.20031218072017.3220:importFlattenedOutline
     def importFlattenedOutline (self,files):
     
         c = self.c ; u = c.undoer ; current = c.currentPosition()
@@ -353,7 +353,7 @@ class baseLeoImportCommands:
         else:
             g.es(fileName + " is not a valid MORE file.")
     #@nonl
-    #@-node:ekr.20031218072017.3220:importFlattenedOutline TESTED
+    #@-node:ekr.20031218072017.3220:importFlattenedOutline
     #@+node:ekr.20031218072017.3222:moreHeadlineLevel
     # return the headline level of s,or -1 if the string is not a MORE headline.
     def moreHeadlineLevel (self,s):
@@ -403,23 +403,28 @@ class baseLeoImportCommands:
     #@-node:ekr.20031218072017.3223:stringIs/stringsAreValidMoreFile
     #@-node:ekr.20031218072017.3214:importFlattenedOutline & allies
     #@+node:ekr.20031218072017.3224:importWebCommand & allies TO DO
-    #@+node:ekr.20031218072017.3225:createOutlineFromWeb TO DO
+    #@+node:ekr.20031218072017.3225:createOutlineFromWeb
     def createOutlineFromWeb (self,path,parent):
     
-        c = self.c ; current = c.currentVnode()
+        c = self.c ; u = c.undoer ; current = c.currentPosition()
         junk, fileName = g.os_path_split(path)
+    
+        undoData = u.beforeInsertNode(parent)
+        
         # Create the top-level headline.
-        v = parent.insertAsLastChild()
-        c.undoer.setUndoParams("Import",v,select=current)
-        v.initHeadString(fileName)
+        p = parent.insertAsLastChild()
+        p.initHeadString(fileName)
         if self.webType=="cweb":
-            v.setBodyStringOrPane("@ignore\n" + self.rootLine + "@language cweb")
+            p.setBodyStringOrPane("@ignore\n" + self.rootLine + "@language cweb")
     
         # Scan the file, creating one section for each function definition.
-        self.scanWebFile(path,v)
-        return v
+        self.scanWebFile(path,p)
+    
+        u.afterInsertNode(p,'Import',undoData)
+    
+        return p
     #@nonl
-    #@-node:ekr.20031218072017.3225:createOutlineFromWeb TO DO
+    #@-node:ekr.20031218072017.3225:createOutlineFromWeb
     #@+node:ekr.20031218072017.3226:importWebCommand
     def importWebCommand (self,files,webType):
     

@@ -459,18 +459,17 @@ class leoFind:
     #@+node:ekr.20031218072017.3069:changeAll (sets end of change-all group)
     def changeAll(self):
     
-        c = self.c ; u = c.undoer
+        c = self.c ; u = c.undoer ; undoType = 'Change All'
         current = c.currentPosition()
         st = self.s_ctrl ; gui = g.app.gui
         if not self.checkArgs(): return
-        command = 'Change All'
         self.initInHeadline()
         saveData = self.save()
         self.initBatchCommands()
         count = 0
         c.beginUpdate()
         if 1: # In update...
-            u.beforeChangeGroup(current,command)
+            u.beforeChangeGroup(current,undoType)
             while 1:
                 pos1, pos2 = self.findNextMatch()
                 if not pos1: break
@@ -479,11 +478,10 @@ class leoFind:
                 line = gui.getLineContainingIndex(st,pos1)
                 self.printLine(line,allFlag=True)
             p = c.currentPosition()
-            u.afterChangeGroup(p,command,reportFlag=True)
+            u.afterChangeGroup(p,undoType,reportFlag=True)
             g.es("changed: %d instances" % (count))
             self.restore(saveData)
         c.endUpdate()
-    #@nonl
     #@-node:ekr.20031218072017.3069:changeAll (sets end of change-all group)
     #@+node:ekr.20031218072017.3070:changeSelection
     # Replace selection with self.change_text.

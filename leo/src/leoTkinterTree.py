@@ -1797,12 +1797,12 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.83:onHeadlineRightClick
     #@+node:ekr.20040803072955.90:virtual event handlers: called from core
-    #@+node:ekr.20040803072955.91:idle_head_key TO DO
+    #@+node:ekr.20040803072955.91:idle_head_key
     def idle_head_key (self,p,ch=None):
         
         """Update headline text at idle time."""
         
-        c = self.c
+        c = self.c ; u = c.undoer
     
         if not p or not p.isCurrentPosition():
             return "break"
@@ -1865,25 +1865,29 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nl
         changed = s != head
         if changed:
-            c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
+            undoData = u.beforeChangeNodeContents(p)
             #@        << update p >>
             #@+node:ekr.20040803072955.95:<< update p >>
             c.beginUpdate()
-            if 1: # update...
+            if 1: # In update...
+            
                 # Update changed bit.
                 if not c.changed:
                     c.setChanged(True)
-                # Update all dirty bits.
-                # Bug fix 8/2/04: must call p.setDirty even if p is dirty!
-                p.setDirty()
+            
+                # We must call p.setDirty even if p is dirty!
+                dirtyVnodeList = p.setDirty()
+            
                 # Update p.
                 p.initHeadString(s)
                 self.setText(edit_text,s,tag="idle_head_key2")
                 edit_text.mark_set("insert",index)
+            
             c.endUpdate(False) # do not redraw now.
             #@nonl
             #@-node:ekr.20040803072955.95:<< update p >>
             #@nl
+            u.afterChangeNodeContents(p,'Change Headline',undoData,dirtyVnodeList=self.dirtyVnodeList)
         if done or changed:
             #@        << reconfigure p and all nodes joined to p >>
             #@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
@@ -1915,7 +1919,7 @@ class leoTkinterTree (leoFrame.leoTree):
         g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
         return "break"
     #@nonl
-    #@-node:ekr.20040803072955.91:idle_head_key TO DO
+    #@-node:ekr.20040803072955.91:idle_head_key
     #@+node:ekr.20040803072955.98:onHeadChanged
     # The <Key> event generates the event before the headline text is changed!
     # We register an idle-event handler to do the work later.
