@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6686" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6796" clone_windows="0"/>
 <globals body_outline_ratio="0.594630872483">
 	<global_window_position top="80" left="281" height="745" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -9,8 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="EKR.20040623200709" annotate="7d71002e"
-expanded="ekr.20040707140849.12,"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20050415070840" a="TV" annotate="7d71002e"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -1039,7 +1038,7 @@ expanded="ekr.20040707140849.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
 <v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
 <v t="ekr.20050328101834"><vh>@page http plugin</vh>
-<v t="ekr.20050328101834.1"><vh>@bool http_active = True</vh></v>
+<v t="ekr.20050328101834.1"><vh>@bool http_active = False</vh></v>
 <v t="ekr.20050328101834.2"><vh>@int  port = 8080</vh></v>
 <v t="ekr.20050328101834.3"><vh>@string rst_http_attributename = ''</vh></v>
 </v>
@@ -1052,9 +1051,9 @@ expanded="ekr.20040707140849.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
-<v t="ekr.20050331070207"><vh>@button golf</vh></v>
+<v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1543,92 +1542,6 @@ expanded="ekr.20040707140849.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
 </v>
-<v t="ekr.20050408084135"><vh>Undo/Redo Tests</vh>
-<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38" a="E"><vh>editBodyTests</vh>
-<v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
-<v t="ekr.20040712101754.40"><vh>extractSection</vh>
-<v t="ekr.20040712101754.41"><vh>before</vh></v>
-<v t="ekr.20040712101754.42"><vh>after</vh>
-<v t="ekr.20040712101754.43"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040712101754.44"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040712101754.45"><vh>indentBody</vh>
-<v t="ekr.20040712101754.46"><vh>before</vh></v>
-<v t="ekr.20040712101754.47"><vh>after</vh></v>
-<v t="ekr.20040712101754.48"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040712101754.49"><vh>dedentBody</vh>
-<v t="ekr.20040712101754.50"><vh>before</vh></v>
-<v t="ekr.20040712101754.51"><vh>after</vh></v>
-<v t="ekr.20040712101754.52"><vh>selection</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
-<v t="ekr.20040712101754.54"><vh>What I did</vh></v>
-<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
-<v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
-<v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
-<v t="ekr.20040712101754.58"><vh>before</vh></v>
-<v t="ekr.20040712101754.59"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.60"><vh>testTrailingNewline</vh>
-<v t="ekr.20040712101754.61"><vh>before</vh></v>
-<v t="ekr.20040712101754.62"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.63"><vh>testMixedLineLengths</vh>
-<v t="ekr.20040712101754.64"><vh>before</vh></v>
-<v t="ekr.20040712101754.65"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.66"><vh>testMixedLinesWithLeadingWS</vh>
-<v t="ekr.20040712101754.67"><vh>before</vh></v>
-<v t="ekr.20040712101754.68"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.69"><vh>testNoChangeRequired</vh>
-<v t="ekr.20040712101754.70"><vh>before</vh></v>
-<v t="ekr.20040712101754.71"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.72"><vh>testHonorLeadingWS</vh>
-<v t="ekr.20040712101754.73"><vh>before</vh></v>
-<v t="ekr.20040712101754.74"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.75"><vh>testHonorLeadingWSVar1</vh>
-<v t="ekr.20040712101754.76"><vh>before</vh></v>
-<v t="ekr.20040712101754.77"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.78"><vh>testSimpleHangingIndent</vh>
-<v t="ekr.20040712101754.79"><vh>before</vh></v>
-<v t="ekr.20040712101754.80"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.81"><vh>testSimpleHangingIndentVar1</vh>
-<v t="ekr.20040712101754.82"><vh>before</vh></v>
-<v t="ekr.20040712101754.83"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.84"><vh>testSimpleHangingIndentVar2</vh>
-<v t="ekr.20040712101754.85"><vh>before</vh></v>
-<v t="ekr.20040712101754.86"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.87"><vh>testMultiParagraph</vh>
-<v t="ekr.20040712101754.88"><vh>before</vh></v>
-<v t="ekr.20040712101754.89"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.90"><vh>testMultiParagraphWithList</vh>
-<v t="ekr.20040712101754.91"><vh>before</vh></v>
-<v t="ekr.20040712101754.92"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.93"><vh>testDirectiveBreaksParagraph</vh>
-<v t="ekr.20040712101754.94"><vh>before</vh></v>
-<v t="ekr.20040712101754.95"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.96"><vh>testWithLeadingWSOnEmptyLines</vh>
-<v t="ekr.20040712101754.97"><vh>before</vh></v>
-<v t="ekr.20040712101754.98"><vh>after</vh></v>
-</v>
-</v>
-</v>
-</v>
 <v t="ekr.20050208135429"><vh>@test pre-definition of g in scripts</vh></v>
 </v>
 <v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files</vh>
@@ -1716,9 +1629,11 @@ expanded="ekr.20040707140849.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
-<v t="ekr.20050408084135"><vh>Undo/Redo Tests</vh>
-<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38" a="E"><vh>editBodyTests</vh>
+</v>
+<v t="ekr.20050414140643" a="E"><vh>(Fix Undo/Redo tests)</vh></v>
+<v t="ekr.20050408084135" a="E"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.40"><vh>extractSection</vh>
 <v t="ekr.20040712101754.41"><vh>before</vh></v>
@@ -1802,7 +1717,6 @@ expanded="ekr.20040707140849.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-</v>
 <v t="ekr.20050225161940" annotate="7d71002e"><vh>Move executeFile into core</vh>
 <v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
 <v t="ekr.20050225162123" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@thin executeFileTest.py</vh></v>
@@ -1819,6 +1733,7 @@ expanded="ekr.20040707140849.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050318143124"><vh>test of undo/redo Convert All Blanks</vh>
 <v t="ekr.20050318150022"><vh>node 2</vh></v>
 </v>
+<v t="ekr.20050414143234"><vh>test of extract section</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -2390,7 +2305,7 @@ print '
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">next = p.next()
 t = next.v.t
 v = next.v
@@ -2526,7 +2441,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14165,5 +14080,11 @@ if not golf or not controller:
 
 &lt;/body&gt;</t>
 <t tx="ekr.20050408084135"></t>
+<t tx="ekr.20050414140643"></t>
+<t tx="ekr.20050414143234">before
+&lt;&lt; name &gt;&gt;
+line 1
+line 2
+after</t>
 </tnodes>
 </leo_file>
