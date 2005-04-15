@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040623200709:@thin ../src/leoTest.py
+#@+node:ekr.20050415070840:@thin ../src/leoTest.py
 '''Classes for Leo's unit testing.
 
 Run the unit tests in test.leo using the Execute Script command.'''
@@ -10,7 +10,7 @@ Run the unit tests in test.leo using the Execute Script command.'''
 __pychecker__ = '--no-import --no-reimportself --no-reimport'
 
 #@<< leoTest imports >>
-#@+node:EKR.20040623200709.2:<< leoTest imports >>
+#@+node:ekr.20050415070840.1:<< leoTest imports >>
 import leoGlobals as g
 
 import leoColor
@@ -37,7 +37,7 @@ except ImportError: timeit = None
 try: import gc
 except ImportError: gc = None
 #@nonl
-#@-node:EKR.20040623200709.2:<< leoTest imports >>
+#@-node:ekr.20050415070840.1:<< leoTest imports >>
 #@nl
 
 if g.app: # Make sure we can import this module stand-alone.
@@ -47,8 +47,8 @@ else:
     newAtFile = False
 
 #@+others
-#@+node:ekr.20040721114839:Support @profile, @suite, @test, @timer
-#@+node:ekr.20040707071542.2:isSuiteNode and isTestNode
+#@+node:ekr.20050415070840.2:Support @profile, @suite, @test, @timer
+#@+node:ekr.20050415070840.3:isSuiteNode and isTestNode
 def isSuiteNode (p):
     h = p.headString().lower()
     return g.match_word(h,0,"@suite")
@@ -57,8 +57,8 @@ def isTestNode (p):
     h = p.headString().lower()
     return g.match_word(h,0,"@test")
 #@nonl
-#@-node:ekr.20040707071542.2:isSuiteNode and isTestNode
-#@+node:ekr.20040707210849:doTests...
+#@-node:ekr.20050415070840.3:isSuiteNode and isTestNode
+#@+node:ekr.20050415070840.4:doTests...
 def doTests(all,verbosity=1):
 
     c = g.top() ; p1 = p = c.currentPosition()
@@ -86,13 +86,13 @@ def doTests(all,verbosity=1):
     c.setChanged(changed) # Restore changed state.
     c.selectVnode(p1) # N.B. Restore the selected node.
 #@nonl
-#@+node:ekr.20040707073029:class generalTestCase
+#@+node:ekr.20050415070840.5:class generalTestCase
 class generalTestCase(unittest.TestCase):
 
     """Create a unit test from a snippet of code."""
 
     #@    @+others
-    #@+node:ekr.20040707073029.1:__init__
+    #@+node:ekr.20050415070840.6:__init__
     def __init__ (self,c,p):
     
          # Init the base class.
@@ -100,8 +100,8 @@ class generalTestCase(unittest.TestCase):
     
         self.c = c
         self.p = p.copy()
-    #@-node:ekr.20040707073029.1:__init__
-    #@+node:ekr.20040809073623: fail
+    #@-node:ekr.20050415070840.6:__init__
+    #@+node:ekr.20050415070840.7: fail
     def fail (self):
     
         """Mark a unit test as having failed."""
@@ -110,8 +110,8 @@ class generalTestCase(unittest.TestCase):
     
         g.app.unitTestDict["fail"] = g.callerName(2)
     #@nonl
-    #@-node:ekr.20040809073623: fail
-    #@+node:ekr.20040707073029.2:setUp
+    #@-node:ekr.20050415070840.7: fail
+    #@+node:ekr.20050415070840.8:setUp
     def setUp (self):
     
         c = self.c ; p = self.p
@@ -120,16 +120,16 @@ class generalTestCase(unittest.TestCase):
         c.beginUpdate()
         c.selectVnode(p)
     #@nonl
-    #@-node:ekr.20040707073029.2:setUp
-    #@+node:ekr.20040707073029.3:tearDown
+    #@-node:ekr.20050415070840.8:setUp
+    #@+node:ekr.20050415070840.9:tearDown
     def tearDown (self):
     
         g.app.unitTesting = False
         self.c.endUpdate(False)
         # To do: restore the outline.
     #@nonl
-    #@-node:ekr.20040707073029.3:tearDown
-    #@+node:ekr.20040707073029.4:runTest
+    #@-node:ekr.20050415070840.9:tearDown
+    #@+node:ekr.20050415070840.10:runTest
     def runTest (self,define_g = True):
     
         c = self.c ; p = self.p.copy()
@@ -145,17 +145,17 @@ class generalTestCase(unittest.TestCase):
             # Execute the test in a totally pristine environment.
             exec script + '\n' in {}
     #@nonl
-    #@-node:ekr.20040707073029.4:runTest
-    #@+node:ekr.20040707093235:shortDescription
+    #@-node:ekr.20050415070840.10:runTest
+    #@+node:ekr.20050415070840.11:shortDescription
     def shortDescription (self):
     
         return self.p.headString() + '\n'
     #@nonl
-    #@-node:ekr.20040707093235:shortDescription
+    #@-node:ekr.20050415070840.11:shortDescription
     #@-others
 #@nonl
-#@-node:ekr.20040707073029:class generalTestCase
-#@+node:ekr.20040707213238:makeTestSuite
+#@-node:ekr.20050415070840.5:class generalTestCase
+#@+node:ekr.20050415070840.12:makeTestSuite
 #@+at 
 #@nonl
 # This code executes the script in an @suite node.  This code assumes:
@@ -186,8 +186,8 @@ def makeTestSuite (c,p):
         g.es_exception()
         return None
 #@nonl
-#@-node:ekr.20040707213238:makeTestSuite
-#@+node:ekr.20040707072447:makeTestCase
+#@-node:ekr.20050415070840.12:makeTestSuite
+#@+node:ekr.20050415070840.13:makeTestCase
 def makeTestCase (c,p):
     
     p = p.copy()
@@ -197,9 +197,9 @@ def makeTestCase (c,p):
     else:
         return None
 #@nonl
-#@-node:ekr.20040707072447:makeTestCase
-#@-node:ekr.20040707210849:doTests...
-#@+node:ekr.20040721113538.1:runProfileOnNode Not used
+#@-node:ekr.20050415070840.13:makeTestCase
+#@-node:ekr.20050415070840.4:doTests...
+#@+node:ekr.20050415070840.14:runProfileOnNode Not used
 def runProfileOnNode (p,outputPath,):
 
     s = p.bodyString().rstrip() + '\n'
@@ -211,8 +211,8 @@ def runProfileOnNode (p,outputPath,):
     stats.sort_stats('cum','file','name')
     stats.print_stats()
 #@nonl
-#@-node:ekr.20040721113538.1:runProfileOnNode Not used
-#@+node:ekr.20040721115051.1:runTimerOnNode Not used
+#@-node:ekr.20050415070840.14:runProfileOnNode Not used
+#@+node:ekr.20050415070840.15:runTimerOnNode Not used
 def runTimerOnNode (p,count):
 
     s = p.bodyString().rstrip() + '\n'
@@ -226,10 +226,10 @@ def runTimerOnNode (p,count):
     except:
         t.print_exc()
 #@nonl
-#@-node:ekr.20040721115051.1:runTimerOnNode Not used
-#@-node:ekr.20040721114839:Support @profile, @suite, @test, @timer
-#@+node:ekr.20040721144439:run gc
-#@+node:ekr.20040721145855:runGC
+#@-node:ekr.20050415070840.15:runTimerOnNode Not used
+#@-node:ekr.20050415070840.2:Support @profile, @suite, @test, @timer
+#@+node:ekr.20050415070840.16:run gc
+#@+node:ekr.20050415070840.17:runGC
 lastObjectCount = 0
 lastObjectsDict = {}
 lastTypesDict = {}
@@ -254,8 +254,8 @@ def runGc(disable=False):
 
 runGC = runGc
 #@nonl
-#@-node:ekr.20040721145855:runGC
-#@+node:ekr.20040721145258:enableGc
+#@-node:ekr.20050415070840.17:runGC
+#@+node:ekr.20050415070840.18:enableGc
 def set_debugGc ():
 
     gc.set_debug(
@@ -268,8 +268,8 @@ def set_debugGc ():
         # gc.DEBUG_SAVEALL
     )
 #@nonl
-#@-node:ekr.20040721145258:enableGc
-#@+node:ekr.20040721144439.3:makeObjectList
+#@-node:ekr.20050415070840.18:enableGc
+#@+node:ekr.20050415070840.19:makeObjectList
 def makeObjectList(message):
 
     # WARNING: this id trick is not proper: newly allocated objects can have the same address as old objects.
@@ -284,8 +284,8 @@ def makeObjectList(message):
 
     print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
 #@nonl
-#@-node:ekr.20040721144439.3:makeObjectList
-#@+node:ekr.20040721144439.5:printGc
+#@-node:ekr.20050415070840.19:makeObjectList
+#@+node:ekr.20050415070840.20:printGc
 def printGc(message=None,onlyPrintChanges=False):
 
     if not message:
@@ -302,7 +302,7 @@ def printGc(message=None,onlyPrintChanges=False):
     print "%6d =%7d %s" % (delta,n2,"totals")
 
     #@    << print number of each type of object >>
-    #@+node:ekr.20040721144439.6:<< print number of each type of object >>
+    #@+node:ekr.20050415070840.21:<< print number of each type of object >>
     global lastTypesDict
     typesDict = {}
     
@@ -327,11 +327,11 @@ def printGc(message=None,onlyPrintChanges=False):
     lastTypesDict = typesDict
     typesDict = {}
     #@nonl
-    #@-node:ekr.20040721144439.6:<< print number of each type of object >>
+    #@-node:ekr.20050415070840.21:<< print number of each type of object >>
     #@nl
     if 0:
         #@        << print added functions >>
-        #@+node:ekr.20040721144439.7:<< print added functions >>
+        #@+node:ekr.20050415070840.22:<< print added functions >>
         import types
         import inspect
         
@@ -356,14 +356,14 @@ def printGc(message=None,onlyPrintChanges=False):
         lastFunctionsDict = funcDict
         funcDict = {}
         #@nonl
-        #@-node:ekr.20040721144439.7:<< print added functions >>
+        #@-node:ekr.20050415070840.22:<< print added functions >>
         #@nl
 
     lastObjectCount = n2
     return delta
 #@nonl
-#@-node:ekr.20040721144439.5:printGc
-#@+node:ekr.20040721144439.8:printGcRefs
+#@-node:ekr.20050415070840.20:printGc
+#@+node:ekr.20050415070840.23:printGcRefs
 def printGcRefs (verbose=True):
 
     refs = gc.get_referrers(g.app.windowList[0])
@@ -376,15 +376,15 @@ def printGcRefs (verbose=True):
     else:
         print "%d referrers" % len(refs)
 #@nonl
-#@-node:ekr.20040721144439.8:printGcRefs
-#@-node:ekr.20040721144439:run gc
-#@+node:EKR.20040623223148: class testUtils
+#@-node:ekr.20050415070840.23:printGcRefs
+#@-node:ekr.20050415070840.16:run gc
+#@+node:ekr.20050415070840.24: class testUtils
 class testUtils:
 
     """Common utility routines used by unit tests."""
 
     #@    @+others
-    #@+node:EKR.20040623223148.1:compareOutlines
+    #@+node:ekr.20050415070840.25:compareOutlines
     def compareOutlines (self,root1,root2,compareHeadlines=True):
     
         """Compares two outlines, making sure that their topologies,
@@ -402,26 +402,32 @@ class testUtils:
             if not ok: break
             p2.moveToThreadNext()
     
-        if 0:
-            if not ok:
-                g.trace("p1",p1.bodyString())
-                g.trace("p2",p2.bodyString())
+        if not ok:
+            if not p1 or not p2:
+                g.trace('failed: p1 and p2')
+            elif p1.numberOfChildren() != p2.numberOfChildren():
+                g.trace('failed: p1.numberOfChildren() == p2.numberOfChildren()')
+            elif compareHeadlines and (p1.headString() != p2.headString()):
+                g.trace('failed: p1.headString() == p2.headString()')
+            elif p1.isCloned() != p2.isCloned():
+                g.trace('failed: p1.isCloned() == p2.isCloned()')
+    
         return ok
     #@nonl
-    #@-node:EKR.20040623223148.1:compareOutlines
-    #@+node:EKR.20040623223148.2:Finding nodes...
-    #@+node:EKR.20040623223148.3:findChildrenOf
+    #@-node:ekr.20050415070840.25:compareOutlines
+    #@+node:ekr.20050415070840.26:Finding nodes...
+    #@+node:ekr.20050415070840.27:findChildrenOf
     def findChildrenOf (self,root):
     
         return [p.copy() for p in root.children_iter()]
-    #@-node:EKR.20040623223148.3:findChildrenOf
-    #@+node:EKR.20040623223148.4:findSubnodesOf
+    #@-node:ekr.20050415070840.27:findChildrenOf
+    #@+node:ekr.20050415070840.28:findSubnodesOf
     def findSubnodesOf (self,root):
     
         return [p.copy() for p in root.subtree_iter()]
     #@nonl
-    #@-node:EKR.20040623223148.4:findSubnodesOf
-    #@+node:EKR.20040623223148.5:findNodeInRootTree
+    #@-node:ekr.20050415070840.28:findSubnodesOf
+    #@+node:ekr.20050415070840.29:findNodeInRootTree
     def findRootNode (self,p):
     
         """Return the root of p's tree."""
@@ -430,8 +436,8 @@ class testUtils:
             p.moveToParent()
         return p
     #@nonl
-    #@-node:EKR.20040623223148.5:findNodeInRootTree
-    #@+node:EKR.20040623223148.6:findNodeInTree
+    #@-node:ekr.20050415070840.29:findNodeInRootTree
+    #@+node:ekr.20050415070840.30:findNodeInTree
     def findNodeInTree(self,p,headline):
     
         """Search for a node in p's tree matching the given headline."""
@@ -443,8 +449,8 @@ class testUtils:
                 return p.copy()
         return c.nullPosition()
     #@nonl
-    #@-node:EKR.20040623223148.6:findNodeInTree
-    #@+node:EKR.20040623223148.7:findNodeAnywhere
+    #@-node:ekr.20050415070840.30:findNodeInTree
+    #@+node:ekr.20050415070840.31:findNodeAnywhere
     def findNodeAnywhere(self,c,headline):
     
         for p in c.allNodes_iter():
@@ -453,8 +459,8 @@ class testUtils:
                 return p.copy()
         return c.nullPosition()
     #@nonl
-    #@-node:EKR.20040623223148.7:findNodeAnywhere
-    #@+node:EKR.20040623223148.8:findUnitTestNode (To Be Deleted)
+    #@-node:ekr.20050415070840.31:findNodeAnywhere
+    #@+node:ekr.20050415070840.32:findUnitTestNode (To Be Deleted)
     def findUnitTestNode (self,unitTestName):
     
         c = g.top() ; root = c.rootPosition()
@@ -478,9 +484,9 @@ class testUtils:
     
         return c.nullPosition()
     #@nonl
-    #@-node:EKR.20040623223148.8:findUnitTestNode (To Be Deleted)
-    #@-node:EKR.20040623223148.2:Finding nodes...
-    #@+node:EKR.20040623223148.9:numberOfClonesInOutline
+    #@-node:ekr.20050415070840.32:findUnitTestNode (To Be Deleted)
+    #@-node:ekr.20050415070840.26:Finding nodes...
+    #@+node:ekr.20050415070840.33:numberOfClonesInOutline
     def numberOfClonesInOutline (self):
     
         """Returns the number of cloned nodes in an outline"""
@@ -491,8 +497,8 @@ class testUtils:
                 n += 1
         return n
     #@nonl
-    #@-node:EKR.20040623223148.9:numberOfClonesInOutline
-    #@+node:EKR.20040623223148.10:numberOfNodesInOutline
+    #@-node:ekr.20050415070840.33:numberOfClonesInOutline
+    #@+node:ekr.20050415070840.34:numberOfNodesInOutline
     def numberOfNodesInOutline (self):
     
         """Returns the total number of nodes in an outline"""
@@ -502,8 +508,8 @@ class testUtils:
             n += 1
         return n
     
-    #@-node:EKR.20040623223148.10:numberOfNodesInOutline
-    #@+node:EKR.20040623223148.11:replaceOutline
+    #@-node:ekr.20050415070840.34:numberOfNodesInOutline
+    #@+node:ekr.20050415070840.35:replaceOutline
     def replaceOutline (self,c,outline1,outline2):
     
         """Replace outline1 by a copy of outline 2,
@@ -518,9 +524,9 @@ class testUtils:
         copy.linkAfter(outline1)
         outline1.doDelete(copy)
     #@nonl
-    #@-node:EKR.20040623223148.11:replaceOutline
-    #@+node:ekr.20040716073021:testUtils.writeNode/sToNode
-    #@+node:ekr.20040716144643:writeNodesToNode
+    #@-node:ekr.20050415070840.35:replaceOutline
+    #@+node:ekr.20050415070840.36:testUtils.writeNode/sToNode
+    #@+node:ekr.20050415070840.37:writeNodesToNode
     def writeNodesToNode (self,c,input,output,sentinels=True):
     
         result = []
@@ -530,8 +536,8 @@ class testUtils:
         result = ''.join(result)
         output.scriptSetBodyString (result)
     #@nonl
-    #@-node:ekr.20040716144643:writeNodesToNode
-    #@+node:ekr.20040716143229:writeNodeToNode
+    #@-node:ekr.20050415070840.37:writeNodesToNode
+    #@+node:ekr.20050415070840.38:writeNodeToNode
     def writeNodeToNode (self,c,input,output,sentinels=True):
     
         """Do an atFile.write the input tree to the body text of the output node."""
@@ -540,8 +546,8 @@ class testUtils:
     
         output.scriptSetBodyString (s)
     #@nonl
-    #@-node:ekr.20040716143229:writeNodeToNode
-    #@+node:ekr.20040717070500:writeNodeToString
+    #@-node:ekr.20050415070840.38:writeNodeToNode
+    #@+node:ekr.20050415070840.39:writeNodeToString
     def writeNodeToString (self,c,input,sentinels):
     
         """Return an atFile.write of the input tree to a string."""
@@ -563,9 +569,9 @@ class testUtils:
     
         return s
     #@nonl
-    #@-node:ekr.20040717070500:writeNodeToString
-    #@-node:ekr.20040716073021:testUtils.writeNode/sToNode
-    #@+node:ekr.20040716092802:testUtils.compareIgnoringNodeNames
+    #@-node:ekr.20050415070840.39:writeNodeToString
+    #@-node:ekr.20050415070840.36:testUtils.writeNode/sToNode
+    #@+node:ekr.20050415070840.40:testUtils.compareIgnoringNodeNames
     def compareIgnoringNodeNames (self,s1,s2,delims,verbose=False):
     
         # Compare text containing sentinels, but ignore differences in @+-nodes.
@@ -608,11 +614,11 @@ class testUtils:
                     return False
         return True
     #@nonl
-    #@-node:ekr.20040716092802:testUtils.compareIgnoringNodeNames
+    #@-node:ekr.20050415070840.40:testUtils.compareIgnoringNodeNames
     #@-others
 #@nonl
-#@-node:EKR.20040623223148: class testUtils
-#@+node:EKR.20040623200709.15: fail
+#@-node:ekr.20050415070840.24: class testUtils
+#@+node:ekr.20050415070840.41: fail
 def fail ():
 
     """Mark a unit test as having failed."""
@@ -621,8 +627,8 @@ def fail ():
 
     g.app.unitTestDict["fail"] = g.callerName(2)
 #@nonl
-#@-node:EKR.20040623200709.15: fail
-#@+node:ekr.20040707154621:leoTest.runLeoTest
+#@-node:ekr.20050415070840.41: fail
+#@+node:ekr.20050415070840.42:leoTest.runLeoTest
 def runLeoTest(path,verbose=False,full=False):
 
     c = g.top() ; frame = None ; ok = False
@@ -644,9 +650,9 @@ def runLeoTest(path,verbose=False,full=False):
 
     if not ok: raise
 #@nonl
-#@-node:ekr.20040707154621:leoTest.runLeoTest
-#@+node:ekr.20040708145036:Specific to particular unit tests...
-#@+node:ekr.20040707140849.5:at-File test code (leoTest.py)
+#@-node:ekr.20050415070840.42:leoTest.runLeoTest
+#@+node:ekr.20050415070840.43:Specific to particular unit tests...
+#@+node:ekr.20050415070840.44:at-File test code (leoTest.py)
 def runAtFileTest(c,p):
 
     """Common code for testing output of @file, @thin, etc."""
@@ -679,7 +685,7 @@ def runAtFileTest(c,p):
         assert(result == expected)
     except AssertionError:
         #@        << dump result and expected >>
-        #@+node:ekr.20040707141957:<< dump result and expected >>
+        #@+node:ekr.20050415070840.45:<< dump result and expected >>
         print ; print '-' * 20
         print "result..."
         for line in g.splitLines(result):
@@ -690,15 +696,15 @@ def runAtFileTest(c,p):
             print "%3d" % len(line),repr(line)
         print '-' * 20
         #@nonl
-        #@-node:ekr.20040707141957:<< dump result and expected >>
+        #@-node:ekr.20050415070840.45:<< dump result and expected >>
         #@nl
         raise
 #@nonl
-#@-node:ekr.20040707140849.5:at-File test code (leoTest.py)
-#@+node:ekr.20040708074710:Reformat Paragraph test code (leoTest.py)
+#@-node:ekr.20050415070840.44:at-File test code (leoTest.py)
+#@+node:ekr.20050415070840.46:Reformat Paragraph test code (leoTest.py)
 # DTHEIN 2004.01.11: Added unit tests for reformatParagraph
 #@nonl
-#@+node:ekr.20040708074710.1:makeReformatParagraphSuite
+#@+node:ekr.20050415070840.47:makeReformatParagraphSuite
 # DTHEIN 2004.01.11: Added method
 def makeReformatParagraphSuite(*args,**keys):
 
@@ -727,15 +733,15 @@ def makeReformatParagraphSuite(*args,**keys):
         suite.addTest(reformatParagraphTestCase("testWithLeadingWSOnEmptyLines"))
         return suite
 #@nonl
-#@-node:ekr.20040708074710.1:makeReformatParagraphSuite
-#@+node:ekr.20040708074710.2:class reformatParagraphTestCase (TestCase)
+#@-node:ekr.20050415070840.47:makeReformatParagraphSuite
+#@+node:ekr.20050415070840.48:class reformatParagraphTestCase (TestCase)
 # DTHEIN 2004.01.11: Added class
 class reformatParagraphTestCase(unittest.TestCase):
 
     """Unit tests for Leo's reformat paragraph command."""
 
     #@    @+others
-    #@+node:ekr.20040809073137: fail
+    #@+node:ekr.20050415070840.49: fail
     def fail (self):
     
         """Mark a unit test as having failed."""
@@ -744,8 +750,8 @@ class reformatParagraphTestCase(unittest.TestCase):
     
         g.app.unitTestDict["fail"] = g.callerName(2)
     #@nonl
-    #@-node:ekr.20040809073137: fail
-    #@+node:ekr.20040708074710.3:setUp
+    #@-node:ekr.20050415070840.49: fail
+    #@+node:ekr.20050415070840.50:setUp
     # DTHEIN 2004.01.11: Added method
     def setUp(self):
     
@@ -773,8 +779,8 @@ class reformatParagraphTestCase(unittest.TestCase):
         self.case_v = None
         self.wasChanged = self.c.changed
     #@nonl
-    #@-node:ekr.20040708074710.3:setUp
-    #@+node:ekr.20040708074710.4:tearDown
+    #@-node:ekr.20050415070840.50:setUp
+    #@+node:ekr.20050415070840.51:tearDown
     # DTHEIN 2004.01.11: Added method
     def tearDown(self):
     
@@ -794,68 +800,68 @@ class reformatParagraphTestCase(unittest.TestCase):
         # make the original node the current node
         c.selectVnode(self.old_v)
     #@nonl
-    #@-node:ekr.20040708074710.4:tearDown
-    #@+node:ekr.20040708074710.5:testNoTrailingNewline
+    #@-node:ekr.20050415070840.51:tearDown
+    #@+node:ekr.20050415070840.52:testNoTrailingNewline
     # DTHEIN 2004.01.11: Added method
     def testNoTrailingNewline(self):
     
         self.singleParagraphTest("testNoTrailingNewline",2,24)
-    #@-node:ekr.20040708074710.5:testNoTrailingNewline
-    #@+node:ekr.20040708074710.6:testTrailingNewline
+    #@-node:ekr.20050415070840.52:testNoTrailingNewline
+    #@+node:ekr.20050415070840.53:testTrailingNewline
     # DTHEIN 2004.01.11: Added method
     def testTrailingNewline(self):
     
         self.singleParagraphTest("testTrailingNewline",3,0)
-    #@-node:ekr.20040708074710.6:testTrailingNewline
-    #@+node:ekr.20040708074710.7:testMixedLineLengths
+    #@-node:ekr.20050415070840.53:testTrailingNewline
+    #@+node:ekr.20050415070840.54:testMixedLineLengths
     # DTHEIN 2004.01.11: Added method
     def testMixedLineLengths(self):
     
         self.singleParagraphTest("testMixedLineLengths",4,10)
-    #@-node:ekr.20040708074710.7:testMixedLineLengths
-    #@+node:ekr.20040708074710.8:testMixedLinesWithLeadingWS
+    #@-node:ekr.20050415070840.54:testMixedLineLengths
+    #@+node:ekr.20050415070840.55:testMixedLinesWithLeadingWS
     # DTHEIN 2004.01.11: Added method
     def testMixedLinesWithLeadingWS(self):
     
         self.singleParagraphTest("testMixedLinesWithLeadingWS",4,12)
-    #@-node:ekr.20040708074710.8:testMixedLinesWithLeadingWS
-    #@+node:ekr.20040708074710.9:testNoChangeRequired
+    #@-node:ekr.20050415070840.55:testMixedLinesWithLeadingWS
+    #@+node:ekr.20050415070840.56:testNoChangeRequired
     # DTHEIN 2004.01.11: Added method
     def testNoChangeRequired(self):
     
         self.singleParagraphTest("testNoChangeRequired",1,28)
-    #@-node:ekr.20040708074710.9:testNoChangeRequired
-    #@+node:ekr.20040708074710.10:testHonorLeadingWS
+    #@-node:ekr.20050415070840.56:testNoChangeRequired
+    #@+node:ekr.20050415070840.57:testHonorLeadingWS
     # DTHEIN 2004.01.11: Added method
     def testHonorLeadingWS(self):
     
         self.singleParagraphTest("testHonorLeadingWS",5,16)
-    #@-node:ekr.20040708074710.10:testHonorLeadingWS
-    #@+node:ekr.20040708074710.11:testHonorLeadingWSVar1
+    #@-node:ekr.20050415070840.57:testHonorLeadingWS
+    #@+node:ekr.20050415070840.58:testHonorLeadingWSVar1
     # DTHEIN 2004.01.11: Added method
     def testHonorLeadingWSVar1(self):
     
         self.singleParagraphTest("testHonorLeadingWSVar1",5,16)
-    #@-node:ekr.20040708074710.11:testHonorLeadingWSVar1
-    #@+node:ekr.20040708074710.12:testSimpleHangingIndent
+    #@-node:ekr.20050415070840.58:testHonorLeadingWSVar1
+    #@+node:ekr.20050415070840.59:testSimpleHangingIndent
     # DTHEIN 2004.01.11: Added method
     def testSimpleHangingIndent(self):
     
         self.singleParagraphTest("testSimpleHangingIndent",5,8)
-    #@-node:ekr.20040708074710.12:testSimpleHangingIndent
-    #@+node:ekr.20040708074710.13:testSimpleHangingIndentVar1
+    #@-node:ekr.20050415070840.59:testSimpleHangingIndent
+    #@+node:ekr.20050415070840.60:testSimpleHangingIndentVar1
     # DTHEIN 2004.01.11: Added method
     def testSimpleHangingIndentVar1(self):
     
         self.singleParagraphTest("testSimpleHangingIndentVar1",5,8)
-    #@-node:ekr.20040708074710.13:testSimpleHangingIndentVar1
-    #@+node:ekr.20040708074710.14:testSimpleHangingIndentVar2
+    #@-node:ekr.20050415070840.60:testSimpleHangingIndentVar1
+    #@+node:ekr.20050415070840.61:testSimpleHangingIndentVar2
     # DTHEIN 2004.01.11: Added method
     def testSimpleHangingIndentVar2(self):
     
         self.singleParagraphTest("testSimpleHangingIndentVar2",5,8)
-    #@-node:ekr.20040708074710.14:testSimpleHangingIndentVar2
-    #@+node:ekr.20040708074710.15:testMultiParagraph
+    #@-node:ekr.20050415070840.61:testSimpleHangingIndentVar2
+    #@+node:ekr.20050415070840.62:testMultiParagraph
     # DTHEIN 2004.01.11: Added method
     def testMultiParagraph(self):
     
@@ -881,8 +887,8 @@ class reformatParagraphTestCase(unittest.TestCase):
     
         # Compare the computed result to the reference result.
         self.checkText()
-    #@-node:ekr.20040708074710.15:testMultiParagraph
-    #@+node:ekr.20040708074710.16:testMultiParagraphWithList
+    #@-node:ekr.20050415070840.62:testMultiParagraph
+    #@+node:ekr.20050415070840.63:testMultiParagraphWithList
     # DTHEIN 2004.01.11: Added method
     def testMultiParagraphWithList(self):
     
@@ -912,8 +918,8 @@ class reformatParagraphTestCase(unittest.TestCase):
     
         # Compare the computed result to the reference result.
         self.checkText()
-    #@-node:ekr.20040708074710.16:testMultiParagraphWithList
-    #@+node:ekr.20040708074710.17:testDirectiveBreaksParagraph
+    #@-node:ekr.20050415070840.63:testMultiParagraphWithList
+    #@+node:ekr.20050415070840.64:testDirectiveBreaksParagraph
     # DTHEIN 2004.01.11: Added method
     def testDirectiveBreaksParagraph(self):
     
@@ -940,8 +946,8 @@ class reformatParagraphTestCase(unittest.TestCase):
     
         # Compare the computed result to the reference result.
         self.checkText()
-    #@-node:ekr.20040708074710.17:testDirectiveBreaksParagraph
-    #@+node:ekr.20040708074710.18:testWithLeadingWSOnEmptyLines
+    #@-node:ekr.20050415070840.64:testDirectiveBreaksParagraph
+    #@+node:ekr.20050415070840.65:testWithLeadingWSOnEmptyLines
     # DTHEIN 2004.01.11: Added method
     def testWithLeadingWSOnEmptyLines(self):
     
@@ -971,8 +977,8 @@ class reformatParagraphTestCase(unittest.TestCase):
     
         # Compare the computed result to the reference result.
         self.checkText()
-    #@-node:ekr.20040708074710.18:testWithLeadingWSOnEmptyLines
-    #@+node:ekr.20040708074710.19:singleParagraphTest
+    #@-node:ekr.20050415070840.65:testWithLeadingWSOnEmptyLines
+    #@+node:ekr.20050415070840.66:singleParagraphTest
     # DTHEIN 2004.01.11: Added method
     def singleParagraphTest(self,caseName,finalRow,finalCol):
     
@@ -992,8 +998,8 @@ class reformatParagraphTestCase(unittest.TestCase):
         self.checkText()
         self.checkPosition(finalRow,finalCol)
     
-    #@-node:ekr.20040708074710.19:singleParagraphTest
-    #@+node:ekr.20040708074710.20:checkPosition
+    #@-node:ekr.20050415070840.66:singleParagraphTest
+    #@+node:ekr.20050415070840.67:checkPosition
     # DTHEIN 2004.01.11: Added method
     def checkPosition(self,expRow,expCol):
     
@@ -1004,8 +1010,8 @@ class reformatParagraphTestCase(unittest.TestCase):
         self.failUnlessEqual(expRow,row,
             "Current position is (" + str(row) + "," + str(col) 
             + ");  expected cursor to be at line " + str(expRow) + ".")
-    #@-node:ekr.20040708074710.20:checkPosition
-    #@+node:ekr.20040708074710.21:checkText
+    #@-node:ekr.20050415070840.67:checkPosition
+    #@+node:ekr.20050415070840.68:checkText
     # DTHEIN 2004.01.11: Added method
     def checkText(self):
     
@@ -1024,8 +1030,8 @@ class reformatParagraphTestCase(unittest.TestCase):
             "Expected " + str(refLinesCount) + " lines, but "
             + "received " + str(newLinesCount) + " lines.")
     #@nonl
-    #@-node:ekr.20040708074710.21:checkText
-    #@+node:ekr.20040708074710.22:copyBeforeToTemp
+    #@-node:ekr.20050415070840.68:checkText
+    #@+node:ekr.20050415070840.69:copyBeforeToTemp
     # DTHEIN 2004.01.11: Added method
     # Warning: this is Tk-specific code.
     #
@@ -1064,16 +1070,16 @@ class reformatParagraphTestCase(unittest.TestCase):
         c.frame.body.setTextSelection(None,None)
         #g.app.gui.setInsertPoint(t,"1.0")
         #g.app.gui.setTextSelection(t,"1.0","1.0")
-    #@-node:ekr.20040708074710.22:copyBeforeToTemp
-    #@+node:ekr.20040708074710.23:getCaseDataNodes
+    #@-node:ekr.20050415070840.69:copyBeforeToTemp
+    #@+node:ekr.20050415070840.70:getCaseDataNodes
     # DTHEIN 2004.01.11: Added method
     def getCaseDataNodes(self,caseNodeName):
     
         self.case_v = self.u.findNodeInTree(self.dataParent_v,caseNodeName)
         self.before_v = self.u.findNodeInTree(self.case_v,"before")
         self.after_v  = self.u.findNodeInTree(self.case_v,"after")
-    #@-node:ekr.20040708074710.23:getCaseDataNodes
-    #@+node:ekr.20040708074710.24:getRowCol
+    #@-node:ekr.20050415070840.70:getCaseDataNodes
+    #@+node:ekr.20050415070840.71:getRowCol
     # DTHEIN 2004.01.11: Added method
     def getRowCol(self):
     
@@ -1096,13 +1102,13 @@ class reformatParagraphTestCase(unittest.TestCase):
             col = g.computeWidth(s,tab_width)
     
         return (row,col)
-    #@-node:ekr.20040708074710.24:getRowCol
+    #@-node:ekr.20050415070840.71:getRowCol
     #@-others
 #@nonl
-#@-node:ekr.20040708074710.2:class reformatParagraphTestCase (TestCase)
-#@-node:ekr.20040708074710:Reformat Paragraph test code (leoTest.py)
-#@+node:ekr.20040708111644:Edit Body test code (leoTest.py)
-#@+node:ekr.20040707140849.11: makeEditBodySuite
+#@-node:ekr.20050415070840.48:class reformatParagraphTestCase (TestCase)
+#@-node:ekr.20050415070840.46:Reformat Paragraph test code (leoTest.py)
+#@+node:ekr.20050415070840.72:Edit Body test code (leoTest.py)
+#@+node:ekr.20050415070840.73: makeEditBodySuite
 def makeEditBodySuite():
 
     """Create an Edit Body test for every descendant of testParentHeadline.."""
@@ -1131,14 +1137,14 @@ def makeEditBodySuite():
 
     return suite
 #@nonl
-#@-node:ekr.20040707140849.11: makeEditBodySuite
-#@+node:ekr.20040707140849.12:class editBodyTestCase
+#@-node:ekr.20050415070840.73: makeEditBodySuite
+#@+node:ekr.20050415070840.74:class editBodyTestCase
 class editBodyTestCase(unittest.TestCase):
 
     """Data-driven unit tests for Leo's edit body commands."""
 
     #@    @+others
-    #@+node:ekr.20040707140849.13:__init__
+    #@+node:ekr.20050415070840.75:__init__
     def __init__ (self,c,parent,before,after,sel,ins,temp_v):
     
         # Init the base class.
@@ -1154,7 +1160,7 @@ class editBodyTestCase(unittest.TestCase):
         self.ins    = ins.copy() # One line giving the insert point in tk coordinate.
         self.temp_v = temp_v.copy()
     #@nonl
-    #@+node:ekr.20040809073457: fail
+    #@+node:ekr.20050415070840.76: fail
     def fail (self):
     
         """Mark a unit test as having failed."""
@@ -1163,9 +1169,9 @@ class editBodyTestCase(unittest.TestCase):
     
         g.app.unitTestDict["fail"] = g.callerName(2)
     #@nonl
-    #@-node:ekr.20040809073457: fail
-    #@-node:ekr.20040707140849.13:__init__
-    #@+node:ekr.20040707140849.14:editBody
+    #@-node:ekr.20050415070840.76: fail
+    #@-node:ekr.20050415070840.75:__init__
+    #@+node:ekr.20050415070840.77:editBody
     def editBody (self):
     
         c = self.c ; u = self.u
@@ -1184,8 +1190,8 @@ class editBodyTestCase(unittest.TestCase):
             assert(u.compareOutlines(self.temp_v,self.after,compareHeadlines=False))
             c.undoer.undo()
             assert(u.compareOutlines(self.temp_v,self.before,compareHeadlines=False))
-    #@-node:ekr.20040707140849.14:editBody
-    #@+node:ekr.20040707140849.16:tearDown
+    #@-node:ekr.20050415070840.77:editBody
+    #@+node:ekr.20050415070840.78:tearDown
     def tearDown (self):
     
         c = self.c ; temp_v = self.temp_v
@@ -1198,8 +1204,8 @@ class editBodyTestCase(unittest.TestCase):
         while temp_v.firstChild():
             temp_v.firstChild().doDelete(temp_v)
     #@nonl
-    #@-node:ekr.20040707140849.16:tearDown
-    #@+node:ekr.20040707140849.17:setUp
+    #@-node:ekr.20050415070840.78:tearDown
+    #@+node:ekr.20050415070840.79:setUp
     # Warning: this is Tk-specific code.
     
     def setUp(self,*args,**keys):
@@ -1231,19 +1237,19 @@ class editBodyTestCase(unittest.TestCase):
             g.app.gui.setInsertPoint(t,"1.0")
             g.app.gui.setTextSelection(t,"1.0","1.0")
     #@nonl
-    #@-node:ekr.20040707140849.17:setUp
-    #@+node:ekr.20040707140849.18:runTest
+    #@-node:ekr.20050415070840.79:setUp
+    #@+node:ekr.20050415070840.80:runTest
     def runTest(self):
     
         self.editBody()
     #@nonl
-    #@-node:ekr.20040707140849.18:runTest
+    #@-node:ekr.20050415070840.80:runTest
     #@-others
 #@nonl
-#@-node:ekr.20040707140849.12:class editBodyTestCase
-#@-node:ekr.20040708111644:Edit Body test code (leoTest.py)
-#@+node:ekr.20040708173707:Import/Export test code (leoTest.py)
-#@+node:ekr.20040707140849.27:makeImportExportSuite
+#@-node:ekr.20050415070840.74:class editBodyTestCase
+#@-node:ekr.20050415070840.72:Edit Body test code (leoTest.py)
+#@+node:ekr.20050415070840.81:Import/Export test code (leoTest.py)
+#@+node:ekr.20050415070840.82:makeImportExportSuite
 def makeImportExportSuite(parentHeadline,doImport):
 
     """Create an Import/Export test for every descendant of testParentHeadline.."""
@@ -1267,14 +1273,14 @@ def makeImportExportSuite(parentHeadline,doImport):
         suite.addTest(test)
 
     return suite
-#@-node:ekr.20040707140849.27:makeImportExportSuite
-#@+node:ekr.20040707140849.28:class importExportTestCase
+#@-node:ekr.20050415070840.82:makeImportExportSuite
+#@+node:ekr.20050415070840.83:class importExportTestCase
 class importExportTestCase(unittest.TestCase):
 
     """Data-driven unit tests for Leo's edit body commands."""
 
     #@    @+others
-    #@+node:ekr.20040707140849.29:__init__
+    #@+node:ekr.20050415070840.84:__init__
     def __init__ (self,c,v,dialog,temp_v,doImport):
     
         # Init the base class.
@@ -1293,8 +1299,8 @@ class importExportTestCase(unittest.TestCase):
     
         self.old_v = c.currentVnode()
     #@nonl
-    #@-node:ekr.20040707140849.29:__init__
-    #@+node:ekr.20040809073457.1: fail
+    #@-node:ekr.20050415070840.84:__init__
+    #@+node:ekr.20050415070840.85: fail
     def fail (self):
     
         """Mark a unit test as having failed."""
@@ -1303,8 +1309,8 @@ class importExportTestCase(unittest.TestCase):
     
         g.app.unitTestDict["fail"] = g.callerName(2)
     #@nonl
-    #@-node:ekr.20040809073457.1: fail
-    #@+node:ekr.20040707140849.30:importExport
+    #@-node:ekr.20050415070840.85: fail
+    #@+node:ekr.20050415070840.86:importExport
     def importExport (self):
     
         c = self.c ; v = self.v
@@ -1318,16 +1324,16 @@ class importExportTestCase(unittest.TestCase):
         failedMethod = g.app.unitTestDict.get("fail")
         self.failIf(failedMethod,failedMethod)
     #@nonl
-    #@-node:ekr.20040707140849.30:importExport
-    #@+node:ekr.20040707140849.31:runTest
+    #@-node:ekr.20050415070840.86:importExport
+    #@+node:ekr.20050415070840.87:runTest
     def runTest(self):
     
         # """Import Export Test Case"""
     
         self.importExport()
     #@nonl
-    #@-node:ekr.20040707140849.31:runTest
-    #@+node:ekr.20040707140849.32:setUp
+    #@-node:ekr.20050415070840.87:runTest
+    #@+node:ekr.20050415070840.88:setUp
     def setUp(self,*args,**keys):
     
         c = self.c ; temp_v = self.temp_v ; d = self.dialog
@@ -1365,8 +1371,8 @@ class importExportTestCase(unittest.TestCase):
         self.oldGui = g.app.gui
         self.gui = leoGui.unitTestGui(theDict,trace=False)
     #@nonl
-    #@-node:ekr.20040707140849.32:setUp
-    #@+node:ekr.20040707140849.33:shortDescription
+    #@-node:ekr.20050415070840.88:setUp
+    #@+node:ekr.20050415070840.89:shortDescription
     def shortDescription (self):
     
         try:
@@ -1374,8 +1380,8 @@ class importExportTestCase(unittest.TestCase):
         except:
             return "ImportExportTestCase"
     #@nonl
-    #@-node:ekr.20040707140849.33:shortDescription
-    #@+node:ekr.20040707140849.34:tearDown
+    #@-node:ekr.20050415070840.89:shortDescription
+    #@+node:ekr.20050415070840.90:tearDown
     def tearDown (self):
     
         c = self.c ; temp_v = self.temp_v
@@ -1399,13 +1405,13 @@ class importExportTestCase(unittest.TestCase):
         c.selectVnode(self.old_v)
         g.app.unitTesting = False
     #@nonl
-    #@-node:ekr.20040707140849.34:tearDown
+    #@-node:ekr.20050415070840.90:tearDown
     #@-others
 #@nonl
-#@-node:ekr.20040707140849.28:class importExportTestCase
-#@-node:ekr.20040708173707:Import/Export test code (leoTest.py)
-#@+node:ekr.20040716140617:Perfect Import test code (leoTest.py)
-#@+node:ekr.20040717074817:About the Perfect Import tests
+#@-node:ekr.20050415070840.83:class importExportTestCase
+#@-node:ekr.20050415070840.81:Import/Export test code (leoTest.py)
+#@+node:ekr.20050415070840.91:Perfect Import test code (leoTest.py)
+#@+node:ekr.20050415070840.92:About the Perfect Import tests
 #@@killcolor
 #@+at
 # 
@@ -1433,8 +1439,8 @@ class importExportTestCase(unittest.TestCase):
 # output-after-sent, ignoring the details of @+node and @-node sentinels.
 #@-at
 #@nonl
-#@-node:ekr.20040717074817:About the Perfect Import tests
-#@+node:ekr.20040716140617.1:runPerfectImportTest
+#@-node:ekr.20050415070840.92:About the Perfect Import tests
+#@+node:ekr.20050415070840.93:runPerfectImportTest
 def runPerfectImportTest(c,p,
     testing=False,verbose=False,
     ignoreSentinelsInCompare=False):
@@ -1494,10 +1500,10 @@ def runPerfectImportTest(c,p,
             out_after_sent.bodyString(),
             delims,verbose=True)
 #@nonl
-#@-node:ekr.20040716140617.1:runPerfectImportTest
-#@-node:ekr.20040716140617:Perfect Import test code (leoTest.py)
-#@+node:ekr.20040801140146:Plugin tests... (leoTest.py)
-#@+node:ekr.20040801145719:getAllPluginFilenames
+#@-node:ekr.20050415070840.93:runPerfectImportTest
+#@-node:ekr.20050415070840.91:Perfect Import test code (leoTest.py)
+#@+node:ekr.20050415070840.94:Plugin tests... (leoTest.py)
+#@+node:ekr.20050415070840.95:getAllPluginFilenames
 def getAllPluginFilenames ():
 
     path = g.os_path_join(g.app.loadDir,"..","plugins")
@@ -1507,8 +1513,8 @@ def getAllPluginFilenames ():
     files.sort()
     return files
 #@nonl
-#@-node:ekr.20040801145719:getAllPluginFilenames
-#@+node:ekr.20040801124822:testPlugin (no longer used)
+#@-node:ekr.20050415070840.95:getAllPluginFilenames
+#@+node:ekr.20050415070840.96:testPlugin (no longer used)
 def oldTestPlugin (fileName,verbose=False):
         
     path = g.os_path_join(g.app.loadDir,"..","plugins")
@@ -1531,8 +1537,8 @@ def oldTestPlugin (fileName,verbose=False):
     finally:
         g.app.unitTesting = False
 #@nonl
-#@-node:ekr.20040801124822:testPlugin (no longer used)
-#@+node:ekr.20040801135348:checkFileSyntax
+#@-node:ekr.20050415070840.96:testPlugin (no longer used)
+#@+node:ekr.20050415070840.97:checkFileSyntax
 def checkFileSyntax (fileName,s):
     
     try:
@@ -1542,8 +1548,8 @@ def checkFileSyntax (fileName,s):
         g.es_exception(full=False,color="black")
         raise
 #@nonl
-#@-node:ekr.20040801135348:checkFileSyntax
-#@+node:ekr.20040801135348.1:checkFileTabs
+#@-node:ekr.20050415070840.97:checkFileSyntax
+#@+node:ekr.20050415070840.98:checkFileTabs
 def checkFileTabs (fileName,s):
 
     try:
@@ -1574,17 +1580,17 @@ def checkFileTabs (fileName,s):
         g.es_exception()
         assert 0, "test failed"
 #@nonl
-#@-node:ekr.20040801135348.1:checkFileTabs
-#@-node:ekr.20040801140146:Plugin tests... (leoTest.py)
-#@+node:ekr.20050316074630:throwAssertionError
+#@-node:ekr.20050415070840.98:checkFileTabs
+#@-node:ekr.20050415070840.94:Plugin tests... (leoTest.py)
+#@+node:ekr.20050415070840.99:throwAssertionError
 def throwAssertionError():
     
     assert 0, 'assert(0) as a test of catching assertions'
 #@nonl
-#@-node:ekr.20050316074630:throwAssertionError
-#@-node:ekr.20040708145036:Specific to particular unit tests...
-#@+node:ekr.20040710184602:Test of doctest
-#@+node:ekr.20040710183515:factorial
+#@-node:ekr.20050415070840.99:throwAssertionError
+#@-node:ekr.20050415070840.43:Specific to particular unit tests...
+#@+node:ekr.20050415070840.100:Test of doctest
+#@+node:ekr.20050415070840.101:factorial
 def factorial(n):
     """Return the factorial of n, an exact integer >= 0.
 
@@ -1636,10 +1642,10 @@ def factorial(n):
         factor += 1
     return result
 #@nonl
-#@-node:ekr.20040710183515:factorial
-#@-node:ekr.20040710184602:Test of doctest
-#@+node:ekr.20040711043551:Docutils stuff
-#@+node:ekr.20040711042449:createUnitTestsFromDoctests
+#@-node:ekr.20050415070840.101:factorial
+#@-node:ekr.20050415070840.100:Test of doctest
+#@+node:ekr.20050415070840.102:Docutils stuff
+#@+node:ekr.20050415070840.103:createUnitTestsFromDoctests
 def createUnitTestsFromDoctests (modules,verbose=True):
 
     created = False # True if suite is non-empty.
@@ -1661,8 +1667,8 @@ def createUnitTestsFromDoctests (modules,verbose=True):
 
     return g.choose(created,suite,None)
 #@nonl
-#@-node:ekr.20040711042449:createUnitTestsFromDoctests
-#@+node:ekr.20040711052911.1:findAllAtFileNodes
+#@-node:ekr.20050415070840.103:createUnitTestsFromDoctests
+#@+node:ekr.20050415070840.104:findAllAtFileNodes
 def findAllAtFileNodes(c):
 
     paths = []
@@ -1679,8 +1685,8 @@ def findAllAtFileNodes(c):
 
     return paths
 #@nonl
-#@-node:ekr.20040711052911.1:findAllAtFileNodes
-#@+node:ekr.20040711052911:importAllModulesInPathList
+#@-node:ekr.20050415070840.104:findAllAtFileNodes
+#@+node:ekr.20050415070840.105:importAllModulesInPathList
 def importAllModulesInPathList(paths):
 
     paths = list(paths)
@@ -1692,8 +1698,8 @@ def importAllModulesInPathList(paths):
             modules.append(module)
 
     return modules
-#@-node:ekr.20040711052911:importAllModulesInPathList
-#@+node:ekr.20040711043551.1:importAllModulesInPath
+#@-node:ekr.20050415070840.105:importAllModulesInPathList
+#@+node:ekr.20050415070840.106:importAllModulesInPath
 def importAllModulesInPath (path):
 
     path = g.os_path_abspath(path)
@@ -1712,8 +1718,8 @@ def importAllModulesInPath (path):
             modules.append(module)
 
     return modules
-#@-node:ekr.20040711043551.1:importAllModulesInPath
-#@+node:ekr.20040711061551:safeImportModule
+#@-node:ekr.20050415070840.106:importAllModulesInPath
+#@+node:ekr.20050415070840.107:safeImportModule
 #@+at 
 #@nonl
 # Warning: do NOT use g.importFromPath here!
@@ -1738,10 +1744,10 @@ def safeImportModule (fileName):
         print "Not a .py file:",fileName
         return None
 #@nonl
-#@-node:ekr.20040711061551:safeImportModule
-#@-node:ekr.20040711043551:Docutils stuff
-#@+node:ekr.20050106081120:Test of doTestRoutinesInModule
-#@+node:ekr.20050106081120.1:test_dummy & dummyTestCase
+#@-node:ekr.20050415070840.107:safeImportModule
+#@-node:ekr.20050415070840.102:Docutils stuff
+#@+node:ekr.20050415070840.108:Test of doTestRoutinesInModule
+#@+node:ekr.20050415070840.109:test_dummy & dummyTestCase
 def test_dummy():
     import leoGlobals as g
     g.trace()
@@ -1752,9 +1758,9 @@ class dummyTestClass: # NOT a TestCase.
         import leoGlobals as g
         g.trace(self)
 #@nonl
-#@-node:ekr.20050106081120.1:test_dummy & dummyTestCase
-#@-node:ekr.20050106081120:Test of doTestRoutinesInModule
+#@-node:ekr.20050415070840.109:test_dummy & dummyTestCase
+#@-node:ekr.20050415070840.108:Test of doTestRoutinesInModule
 #@-others
 #@nonl
-#@-node:EKR.20040623200709:@thin ../src/leoTest.py
+#@-node:ekr.20050415070840:@thin ../src/leoTest.py
 #@-leo
