@@ -157,7 +157,7 @@ class baseUndoer:
             return None
         bunch = u.beads[n]
         # g.trace(n,len(u.beads),bunch)
-        return buknch
+        return bunch
     #@nonl
     #@-node:EKR.20040526150818.1:peekBeed
     #@+node:ekr.20050126081529:recognizeStartOfTypingWord
