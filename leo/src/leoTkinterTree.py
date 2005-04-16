@@ -1887,7 +1887,7 @@ class leoTkinterTree (leoFrame.leoTree):
             #@nonl
             #@-node:ekr.20040803072955.95:<< update p >>
             #@nl
-            u.afterChangeNodeContents(p,'Change Headline',undoData,dirtyVnodeList=self.dirtyVnodeList)
+            u.afterChangeNodeContents(p,'Change Headline',undoData,dirtyVnodeList=dirtyVnodeList)
         if done or changed:
             #@        << reconfigure p and all nodes joined to p >>
             #@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
