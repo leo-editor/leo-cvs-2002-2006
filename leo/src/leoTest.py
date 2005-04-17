@@ -701,318 +701,52 @@ def runAtFileTest(c,p):
         raise
 #@nonl
 #@-node:ekr.20050415070840.44:at-File test code (leoTest.py)
-#@+node:ekr.20050415070840.46:Reformat Paragraph test code (leoTest.py)
+#@+node:ekr.20050417095020:NEW Reformat Paragraph test code (leoTest.py)
 # DTHEIN 2004.01.11: Added unit tests for reformatParagraph
 #@nonl
-#@+node:ekr.20050415070840.47:makeReformatParagraphSuite
-# DTHEIN 2004.01.11: Added method
-def makeReformatParagraphSuite(*args,**keys):
-
-    """makeReformatParagraphSuite() -> suite
-
-    Create a Reformat Paragraph test for each of the 
-    unit tests in the reformatParagraphTestCase class."""
-
-    if 1: # Add all 'test' methods to the suite.
-        return unittest.makeSuite(reformatParagraphTestCase,'test')
-    else:
-        suite = unittest.TestSuite()
-        suite.addTest(reformatParagraphTestCase("testNoTrailingNewline"))
-        suite.addTest(reformatParagraphTestCase("testTrailingNewline"))
-        suite.addTest(reformatParagraphTestCase("testMixedLineLengths"))
-        suite.addTest(reformatParagraphTestCase("testMixedLinesWithLeadingWS"))
-        suite.addTest(reformatParagraphTestCase("testNoChangeRequired"))
-        suite.addTest(reformatParagraphTestCase("testHonorLeadingWS"))
-        suite.addTest(reformatParagraphTestCase("testHonorLeadingWSVar1"))
-        suite.addTest(reformatParagraphTestCase("testSimpleHangingIndent"))
-        suite.addTest(reformatParagraphTestCase("testSimpleHangingIndentVar1"))
-        suite.addTest(reformatParagraphTestCase("testSimpleHangingIndentVar2"))
-        suite.addTest(reformatParagraphTestCase("testMultiParagraph"))
-        suite.addTest(reformatParagraphTestCase("testMultiParagraphWithList"))
-        suite.addTest(reformatParagraphTestCase("testDirectiveBreaksParagraph"))
-        suite.addTest(reformatParagraphTestCase("testWithLeadingWSOnEmptyLines"))
-        return suite
-#@nonl
-#@-node:ekr.20050415070840.47:makeReformatParagraphSuite
-#@+node:ekr.20050415070840.48:class reformatParagraphTestCase (TestCase)
-# DTHEIN 2004.01.11: Added class
-class reformatParagraphTestCase(unittest.TestCase):
-
-    """Unit tests for Leo's reformat paragraph command."""
-
+#@+node:ekr.20050417114404:class reformatParagraphTest
+class reformatParagraphTest:
+    
+    '''A class to work around stupidities of the Unittest classes.'''
+    
     #@    @+others
-    #@+node:ekr.20050415070840.49: fail
-    def fail (self):
+    #@+node:ekr.20050417121256:__init__
+    def __init__ (self,c,p):
+        
+        self.c = c
+        self.p = p.copy()
     
-        """Mark a unit test as having failed."""
-    
-        import leoGlobals as g
-    
-        g.app.unitTestDict["fail"] = g.callerName(2)
+        self.go()
     #@nonl
-    #@-node:ekr.20050415070840.49: fail
-    #@+node:ekr.20050415070840.50:setUp
-    # DTHEIN 2004.01.11: Added method
-    def setUp(self):
-    
-        testsName = "Reformat Paragraph tests"
-        codeName = "Reformat Paragraph test code (leoTest.py)"
-    
-        self.u = u = testUtils()
-        self.c = c = g.top()
-        self.current_v = c.currentVnode()
-        self.old_v = c.currentVnode()
-        # root = u.findRootNode(self.current_v)
-        root = u.findNodeAnywhere(c,testsName) # EKR: 7/8/04
-        if not root: print "Can not find", testsName
-        self.temp_v = temp_v = u.findNodeInTree(root,"tempNode")
-        if not temp_v: print "Can not find tempNode"
-        assert(temp_v)
-        self.tempChild_v = None
-        # self.dataParent_v = u.findNodeInTree(root,"reformatParagraphsTests")
-        self.dataParent_v = u.findNodeAnywhere(c,testsName) # EKR: 7/8/04
-        if not self.dataParent_v:
-            print "Can not find", codeName
-        assert(self.dataParent_v)
-        self.before_v = None
-        self.after_v = None
-        self.case_v = None
-        self.wasChanged = self.c.changed
+    #@-node:ekr.20050417121256:__init__
+    #@+node:ekr.20050417120717:go
+    def go (self):
+        
+        ok = True
+        try:
+            try:
+                self.setUp()
+                self.runTest()
+            except Exception:
+                g.es_exception()
+                ok = False
+        finally:
+            self.tearDown()
+        if not ok:
+            raise
     #@nonl
-    #@-node:ekr.20050415070840.50:setUp
-    #@+node:ekr.20050415070840.51:tearDown
-    # DTHEIN 2004.01.11: Added method
-    def tearDown(self):
-    
-        c = self.c ; temp_v = self.temp_v
-    
-        # clear the temp node and mark it unchanged
-        temp_v.setTnodeText("",g.app.tkEncoding)
-        temp_v.clearDirty()
-    
-        if not self.wasChanged:
-            c.setChanged (False)
-    
-        # Delete all children of temp node.
-        while temp_v.firstChild():
-            temp_v.firstChild().doDelete(temp_v)
-    
-        # make the original node the current node
-        c.selectVnode(self.old_v)
-    #@nonl
-    #@-node:ekr.20050415070840.51:tearDown
-    #@+node:ekr.20050415070840.52:testNoTrailingNewline
-    # DTHEIN 2004.01.11: Added method
-    def testNoTrailingNewline(self):
-    
-        self.singleParagraphTest("testNoTrailingNewline",2,24)
-    #@-node:ekr.20050415070840.52:testNoTrailingNewline
-    #@+node:ekr.20050415070840.53:testTrailingNewline
-    # DTHEIN 2004.01.11: Added method
-    def testTrailingNewline(self):
-    
-        self.singleParagraphTest("testTrailingNewline",3,0)
-    #@-node:ekr.20050415070840.53:testTrailingNewline
-    #@+node:ekr.20050415070840.54:testMixedLineLengths
-    # DTHEIN 2004.01.11: Added method
-    def testMixedLineLengths(self):
-    
-        self.singleParagraphTest("testMixedLineLengths",4,10)
-    #@-node:ekr.20050415070840.54:testMixedLineLengths
-    #@+node:ekr.20050415070840.55:testMixedLinesWithLeadingWS
-    # DTHEIN 2004.01.11: Added method
-    def testMixedLinesWithLeadingWS(self):
-    
-        self.singleParagraphTest("testMixedLinesWithLeadingWS",4,12)
-    #@-node:ekr.20050415070840.55:testMixedLinesWithLeadingWS
-    #@+node:ekr.20050415070840.56:testNoChangeRequired
-    # DTHEIN 2004.01.11: Added method
-    def testNoChangeRequired(self):
-    
-        self.singleParagraphTest("testNoChangeRequired",1,28)
-    #@-node:ekr.20050415070840.56:testNoChangeRequired
-    #@+node:ekr.20050415070840.57:testHonorLeadingWS
-    # DTHEIN 2004.01.11: Added method
-    def testHonorLeadingWS(self):
-    
-        self.singleParagraphTest("testHonorLeadingWS",5,16)
-    #@-node:ekr.20050415070840.57:testHonorLeadingWS
-    #@+node:ekr.20050415070840.58:testHonorLeadingWSVar1
-    # DTHEIN 2004.01.11: Added method
-    def testHonorLeadingWSVar1(self):
-    
-        self.singleParagraphTest("testHonorLeadingWSVar1",5,16)
-    #@-node:ekr.20050415070840.58:testHonorLeadingWSVar1
-    #@+node:ekr.20050415070840.59:testSimpleHangingIndent
-    # DTHEIN 2004.01.11: Added method
-    def testSimpleHangingIndent(self):
-    
-        self.singleParagraphTest("testSimpleHangingIndent",5,8)
-    #@-node:ekr.20050415070840.59:testSimpleHangingIndent
-    #@+node:ekr.20050415070840.60:testSimpleHangingIndentVar1
-    # DTHEIN 2004.01.11: Added method
-    def testSimpleHangingIndentVar1(self):
-    
-        self.singleParagraphTest("testSimpleHangingIndentVar1",5,8)
-    #@-node:ekr.20050415070840.60:testSimpleHangingIndentVar1
-    #@+node:ekr.20050415070840.61:testSimpleHangingIndentVar2
-    # DTHEIN 2004.01.11: Added method
-    def testSimpleHangingIndentVar2(self):
-    
-        self.singleParagraphTest("testSimpleHangingIndentVar2",5,8)
-    #@-node:ekr.20050415070840.61:testSimpleHangingIndentVar2
-    #@+node:ekr.20050415070840.62:testMultiParagraph
-    # DTHEIN 2004.01.11: Added method
-    def testMultiParagraph(self):
-    
-        # Locate the test data
-        #
-        self.getCaseDataNodes("testMultiParagraph")
-    
-        # Setup the temp node
-        #
-        self.copyBeforeToTemp()
-    
-        # reformat the paragraph and check insertion cursor position
-        #
-        self.c.reformatParagraph()
-        self.checkPosition(13,0)
-    
-        # Keep going, in the same manner
-        #
-        self.c.reformatParagraph()
-        self.checkPosition(25,0)
-        self.c.reformatParagraph()
-        self.checkPosition(32,11)
-    
-        # Compare the computed result to the reference result.
-        self.checkText()
-    #@-node:ekr.20050415070840.62:testMultiParagraph
-    #@+node:ekr.20050415070840.63:testMultiParagraphWithList
-    # DTHEIN 2004.01.11: Added method
-    def testMultiParagraphWithList(self):
-    
-        # Locate the test data
-        #
-        self.getCaseDataNodes("testMultiParagraphWithList")
-    
-        # Setup the temp node
-        #
-        self.copyBeforeToTemp()
-    
-        # reformat the paragraph and check insertion cursor position
-        #
-        self.c.reformatParagraph()
-        self.checkPosition(4,0)
-    
-        # Keep going, in the same manner
-        #
-        self.c.reformatParagraph()
-        self.checkPosition(7,0)
-        self.c.reformatParagraph()
-        self.checkPosition(10,0)
-        self.c.reformatParagraph()
-        self.checkPosition(13,0)
-        self.c.reformatParagraph()
-        self.checkPosition(14,18)
-    
-        # Compare the computed result to the reference result.
-        self.checkText()
-    #@-node:ekr.20050415070840.63:testMultiParagraphWithList
-    #@+node:ekr.20050415070840.64:testDirectiveBreaksParagraph
-    # DTHEIN 2004.01.11: Added method
-    def testDirectiveBreaksParagraph(self):
-    
-        # Locate the test data
-        #
-        self.getCaseDataNodes("testDirectiveBreaksParagraph")
-    
-        # Setup the temp node
-        #
-        self.copyBeforeToTemp()
-    
-        # reformat the paragraph and check insertion cursor position
-        #
-        self.c.reformatParagraph()
-        self.checkPosition(13,0) # at next paragraph
-    
-        # Keep going, in the same manner
-        #
-        self.c.reformatParagraph()
-        self.checkPosition(25,0) # at next paragraph
-    
-        self.c.reformatParagraph()
-        self.checkPosition(32,11)
-    
-        # Compare the computed result to the reference result.
-        self.checkText()
-    #@-node:ekr.20050415070840.64:testDirectiveBreaksParagraph
-    #@+node:ekr.20050415070840.65:testWithLeadingWSOnEmptyLines
-    # DTHEIN 2004.01.11: Added method
-    def testWithLeadingWSOnEmptyLines(self):
-    
-        # Locate the test data
-        #
-        self.getCaseDataNodes("testWithLeadingWSOnEmptyLines")
-    
-        # Setup the temp node
-        #
-        self.copyBeforeToTemp()
-    
-        # reformat the paragraph and check insertion cursor position
-        #
-        self.c.reformatParagraph()
-        self.checkPosition(4,0)
-    
-        # Keep going, in the same manner
-        #
-        self.c.reformatParagraph()
-        self.checkPosition(7,0)
-        self.c.reformatParagraph()
-        self.checkPosition(10,0)
-        self.c.reformatParagraph()
-        self.checkPosition(13,0)
-        self.c.reformatParagraph()
-        self.checkPosition(14,18)
-    
-        # Compare the computed result to the reference result.
-        self.checkText()
-    #@-node:ekr.20050415070840.65:testWithLeadingWSOnEmptyLines
-    #@+node:ekr.20050415070840.66:singleParagraphTest
-    # DTHEIN 2004.01.11: Added method
-    def singleParagraphTest(self,caseName,finalRow,finalCol):
-    
-        # Locate the test data
-        #
-        self.getCaseDataNodes(caseName)
-    
-        # Setup the temp node
-        #
-        self.copyBeforeToTemp()
-    
-        # reformat the paragraph
-        #
-        self.c.reformatParagraph()
-    
-        # Compare the computed result to the reference result.
-        self.checkText()
-        self.checkPosition(finalRow,finalCol)
-    
-    #@-node:ekr.20050415070840.66:singleParagraphTest
-    #@+node:ekr.20050415070840.67:checkPosition
-    # DTHEIN 2004.01.11: Added method
+    #@-node:ekr.20050417120717:go
+    #@+node:ekr.20050417105607.2:checkPosition
     def checkPosition(self,expRow,expCol):
     
         row,col = self.getRowCol()
-        self.failUnlessEqual(expCol,col,
-            "Current position is (" + str(row) + "," + str(col) 
-            + ");  expected cursor to be at column " + str(expCol) + ".")
-        self.failUnlessEqual(expRow,row,
-            "Current position is (" + str(row) + "," + str(col) 
-            + ");  expected cursor to be at line " + str(expRow) + ".")
-    #@-node:ekr.20050415070840.67:checkPosition
-    #@+node:ekr.20050415070840.68:checkText
-    # DTHEIN 2004.01.11: Added method
+    
+        assert expCol == col,	"Got column %d.  Expected %d" % (col,expCol)
+    
+        assert expRow == row, "Got row %d.  Expected %d" % (row,expRow)
+    #@nonl
+    #@-node:ekr.20050417105607.2:checkPosition
+    #@+node:ekr.20050417105607.3:checkText
     def checkText(self):
     
         new_text = self.tempChild_v.bodyString()
@@ -1022,91 +756,238 @@ class reformatParagraphTestCase(unittest.TestCase):
         newLinesCount = len(newLines)
         refLinesCount = len(refLines)
         for i in range(min(newLinesCount,refLinesCount)):
-            self.failUnlessEqual(newLines[i],refLines[i],
-                "Mismatch on line " + str(i) + "."
-                + "\nExpected text: " + `refLines[i]`
-                + "\n  Actual text: "	+ `newLines[i]`)
-        self.failUnlessEqual(newLinesCount,refLinesCount,
-            "Expected " + str(refLinesCount) + " lines, but "
-            + "received " + str(newLinesCount) + " lines.")
+            assert newLines[i] == refLines[i], \
+                "Mismatch on line " + str(i) + "." \
+                + "\nExpected text: " + `refLines[i]` \
+                + "\n  Actual text: "	+ `newLines[i]`
+                
+        assert newLinesCount == refLinesCount, \
+            "Expected " + str(refLinesCount) + " lines, but " \
+            + "received " + str(newLinesCount) + " lines."
     #@nonl
-    #@-node:ekr.20050415070840.68:checkText
-    #@+node:ekr.20050415070840.69:copyBeforeToTemp
-    # DTHEIN 2004.01.11: Added method
-    # Warning: this is Tk-specific code.
-    #
+    #@-node:ekr.20050417105607.3:checkText
+    #@+node:ekr.20050417105607.4:copyBeforeToTemp
     def copyBeforeToTemp(self):
     
-        # local variables for class fields, for ease
-        # of reading and ease of typing.
-        #	
         c = self.c ; temp_v = self.temp_v
     
         # Delete all children of temp node.
-        #
         while temp_v.firstChild():
             temp_v.firstChild().doDelete(temp_v)
     
-        # Copy the test case node text to the temp node
-        #
-        text = self.case_v.bodyString()
+        # Copy the before node text to the temp node.
+        text = self.before_v.bodyString()
         temp_v.setTnodeText(text,g.app.tkEncoding)
     
-        # create the child node that holds the text
-        #
+        # create the child node that holds the text.
         t = leoNodes.tnode(headString="tempChildNode")
         self.tempChild_v = self.temp_v.insertAsNthChild(0,t)
     
-        # copy the before text to the temp text
-        #
+        # copy the before text to the temp text.
         text = self.before_v.bodyString()
         self.tempChild_v.setTnodeText(text,g.app.tkEncoding)
     
-        # make the temp child node current, and put the
-        # cursor at the beginning
-        #
+        # Make the temp child node current, and put the cursor at the beginning.
         c.selectVnode(self.tempChild_v)
         c.frame.body.setInsertPointToStartOfLine( 0 )
         c.frame.body.setTextSelection(None,None)
-        #g.app.gui.setInsertPoint(t,"1.0")
-        #g.app.gui.setTextSelection(t,"1.0","1.0")
-    #@-node:ekr.20050415070840.69:copyBeforeToTemp
-    #@+node:ekr.20050415070840.70:getCaseDataNodes
-    # DTHEIN 2004.01.11: Added method
-    def getCaseDataNodes(self,caseNodeName):
-    
-        self.case_v = self.u.findNodeInTree(self.dataParent_v,caseNodeName)
-        self.before_v = self.u.findNodeInTree(self.case_v,"before")
-        self.after_v  = self.u.findNodeInTree(self.case_v,"after")
-    #@-node:ekr.20050415070840.70:getCaseDataNodes
-    #@+node:ekr.20050415070840.71:getRowCol
-    # DTHEIN 2004.01.11: Added method
+    #@nonl
+    #@-node:ekr.20050417105607.4:copyBeforeToTemp
+    #@+node:ekr.20050417105607.6:getRowCol
     def getRowCol(self):
     
-        # local variables for class fields, for ease
-        # of reading and ease of typing.
-        #	
         c = self.c ; body = c.frame.body.bodyCtrl ; gui = g.app.gui
         tab_width = c.frame.tab_width
     
-        # Get the Tkinter row col position of the insert cursor
-        #	
+        # Get the Tkinter row col position of the insert cursor.
         index = body.index("insert")
         row,col = gui.getindex(body,index)
     
-        # Adjust col position for tabs
-        #
+        # Adjust col position for tabs.
         if col > 0:
             s = body.get("%d.0" % (row),index)
             s = g.toUnicode(s,g.app.tkEncoding)
             col = g.computeWidth(s,tab_width)
     
-        return (row,col)
-    #@-node:ekr.20050415070840.71:getRowCol
+        return row,col
+    #@nonl
+    #@-node:ekr.20050417105607.6:getRowCol
+    #@+node:ekr.20050417120717.1:runTest
+    def runTest(self):
+        
+        g.trace('must be overridden in subclasses')
+    #@nonl
+    #@-node:ekr.20050417120717.1:runTest
+    #@+node:ekr.20050417102531:setUp
+    def setUp(self):
+        
+        c = self.c ; p = self.p
+        u = self.u = testUtils()
+    
+        self.current_v = p.copy()
+        self.before_v = u.findNodeInTree(p,"before")
+        self.after_v  = u.findNodeInTree(p,"after")
+        self.temp_v   = u.findNodeInTree(p,"tempNode")
+        if not self.temp_v: print 'no temp_v: p = ',p.headString()
+        assert(self.temp_v)
+        self.tempChild_v = None
+    
+        self.copyBeforeToTemp()
+    #@nonl
+    #@-node:ekr.20050417102531:setUp
+    #@+node:ekr.20050417103035.1:tearDown
+    def tearDown(self):
+    
+        c = self.c ; temp_v = self.temp_v
+    
+        # clear the temp node and mark it unchanged
+        temp_v.setTnodeText("",g.app.tkEncoding)
+        temp_v.clearDirty()
+    
+        # Delete all children of temp node.
+        while temp_v.firstChild():
+            temp_v.firstChild().doDelete(temp_v)
+    #@nonl
+    #@-node:ekr.20050417103035.1:tearDown
     #@-others
 #@nonl
-#@-node:ekr.20050415070840.48:class reformatParagraphTestCase (TestCase)
-#@-node:ekr.20050415070840.46:Reformat Paragraph test code (leoTest.py)
+#@-node:ekr.20050417114404:class reformatParagraphTest
+#@+node:ekr.20050417102526:class singleParagraphTest (reformatParagraphTest)
+class singleParagraphTest (reformatParagraphTest):
+    
+    '''A class to work around stupidities of the Unittest classes.'''
+    
+    #@    @+others
+    #@+node:ekr.20050417102526.1:__init__
+    def __init__ (self,c,p,finalRow,finalCol):
+    
+        self.c = c
+        self.p = p.copy()
+    
+        self.finalCol = finalCol
+        self.finalRow = finalRow
+    
+        self.go()
+    #@nonl
+    #@-node:ekr.20050417102526.1:__init__
+    #@+node:ekr.20050417103035:runTest
+    def runTest(self):
+    
+        # Reformat the paragraph
+        self.c.reformatParagraph()
+    
+        # Compare the computed result to the reference result.
+        self.checkText()
+        self.checkPosition(self.finalRow,self.finalCol)
+    #@nonl
+    #@-node:ekr.20050417103035:runTest
+    #@-others
+#@nonl
+#@-node:ekr.20050417102526:class singleParagraphTest (reformatParagraphTest)
+#@+node:ekr.20050417095020.16:class multiParagraphTest (reformatParagraphTest)
+class multiParagraphTest (reformatParagraphTest):
+    
+    #@    @+others
+    #@+node:ekr.20050417120312:runTest
+    def runTest(self):
+    
+        self.c.reformatParagraph()
+        self.checkPosition(13,0)
+    
+        # Keep going, in the same manner
+        self.c.reformatParagraph()
+        self.checkPosition(25,0)
+        self.c.reformatParagraph()
+        self.checkPosition(32,11)
+    
+        # Compare the computed result to the reference result.
+        self.checkText()
+    #@nonl
+    #@-node:ekr.20050417120312:runTest
+    #@-others
+#@nonl
+#@-node:ekr.20050417095020.16:class multiParagraphTest (reformatParagraphTest)
+#@+node:ekr.20050417095020.17:class multiParagraphWithListTest (reformatParagraphTest)
+class multiParagraphWithListTest (reformatParagraphTest):
+    
+    #@    @+others
+    #@+node:ekr.20050417120955:runTest
+    def runTest(self):
+    
+        # reformat the paragraph and check insertion cursor position
+        self.c.reformatParagraph()
+        self.checkPosition(4,0)
+    
+        # Keep going, in the same manner.
+        self.c.reformatParagraph()
+        self.checkPosition(7,0)
+        self.c.reformatParagraph()
+        self.checkPosition(10,0)
+        self.c.reformatParagraph()
+        self.checkPosition(13,0)
+        self.c.reformatParagraph()
+        self.checkPosition(14,18)
+    
+        # Compare the computed result to the reference result.
+        self.checkText()
+    #@nonl
+    #@-node:ekr.20050417120955:runTest
+    #@-others
+#@nonl
+#@-node:ekr.20050417095020.17:class multiParagraphWithListTest (reformatParagraphTest)
+#@+node:ekr.20050417095020.19:class leadingWSOnEmptyLinesTest (reformatParagraphTest)
+class leadingWSOnEmptyLinesTest (reformatParagraphTest):
+    
+    #@    @+others
+    #@+node:ekr.20050417121745:runTest
+    def runTest(self):
+    
+        # reformat the paragraph and check insertion cursor position
+        self.c.reformatParagraph()
+        self.checkPosition(4,0)
+    
+        # Keep going, in the same manner
+        self.c.reformatParagraph()
+        self.checkPosition(7,0)
+        self.c.reformatParagraph()
+        self.checkPosition(10,0)
+        self.c.reformatParagraph()
+        self.checkPosition(13,0)
+        self.c.reformatParagraph()
+        self.checkPosition(14,18)
+    
+        # Compare the computed result to the reference result.
+        self.checkText()
+    #@nonl
+    #@-node:ekr.20050417121745:runTest
+    #@-others
+#@nonl
+#@-node:ekr.20050417095020.19:class leadingWSOnEmptyLinesTest (reformatParagraphTest)
+#@+node:ekr.20050417095020.18:testDirectiveBreaksParagraph (reformatParagraphTest)
+class directiveBreaksParagraphTest (reformatParagraphTest):
+    
+    #@    @+others
+    #@+node:ekr.20050417122215:runTest
+    def runTest(self):
+    
+        # reformat the paragraph and check insertion cursor position
+        self.c.reformatParagraph()
+        self.checkPosition(13,0) # at next paragraph
+    
+        # Keep going, in the same manner
+        self.c.reformatParagraph()
+        self.checkPosition(25,0) # at next paragraph
+        self.c.reformatParagraph()
+        self.checkPosition(32,11)
+    
+        # Compare the computed result to the reference result.
+        self.checkText()
+    #@nonl
+    #@-node:ekr.20050417122215:runTest
+    #@-others
+#@nonl
+#@-node:ekr.20050417095020.18:testDirectiveBreaksParagraph (reformatParagraphTest)
+#@-node:ekr.20050417095020:NEW Reformat Paragraph test code (leoTest.py)
 #@+node:ekr.20050415070840.72:Edit Body test code (leoTest.py)
 #@+node:ekr.20050415070840.73: makeEditBodySuite
 def makeEditBodySuite():

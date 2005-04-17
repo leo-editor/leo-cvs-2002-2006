@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6796" clone_windows="0"/>
-<globals body_outline_ratio="0.594630872483">
-	<global_window_position top="80" left="281" height="745" width="931"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6910" clone_windows="0"/>
+<globals body_outline_ratio="0.763903462749">
+	<global_window_position top="10" left="209" height="953" width="916"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20050415070840" a="TV" annotate="7d71002e"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20050415070840" annotate="7d71002e"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -979,7 +979,6 @@
 <v t="ekr.20050108110751.2"><vh>NewHeadline</vh></v>
 </v>
 </v>
-<v t="ekr.20050124065111"><vh>Prototype for Pretty Print command</vh></v>
 <v t="ekr.20050210180034"><vh>jython script</vh></v>
 <v t="ekr.20050219054039"><vh>Scripts to convert ChoiceMail .ini file to .csv file</vh>
 <v t="ekr.20050218174326.1"><vh>Scipt to remove rejected entries</vh>
@@ -1042,6 +1041,7 @@
 <v t="ekr.20050328101834.2"><vh>@int  port = 8080</vh></v>
 <v t="ekr.20050328101834.3"><vh>@string rst_http_attributename = ''</vh></v>
 </v>
+<v t="ekr.20050415090637"><vh>@bool allow_clone_drags = True</vh></v>
 </v>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
@@ -1477,8 +1477,8 @@
 <v t="ekr.20050105090632"><vh>@test official g.app ivars</vh></v>
 </v>
 <v t="ekr.20040712101754.102"><vh>Tests of @file nodes</vh>
-<v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
-<v t="ekr.20040707141957"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
+<v t="ekr.20050415070840.44"><vh>at-File test code (leoTest.py)</vh>
+<v t="ekr.20050415070840.45"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
 <v t="ekr.20040712101754.104"><vh>#@file</vh></v>
@@ -1629,9 +1629,7 @@
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
-</v>
-<v t="ekr.20050414140643" a="E"><vh>(Fix Undo/Redo tests)</vh></v>
-<v t="ekr.20050408084135" a="E"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20050408084135"><vh>Undo/Redo Tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
@@ -1654,65 +1652,104 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
-<v t="ekr.20040712101754.54"><vh>What I did</vh></v>
-<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
-<v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
-<v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
-<v t="ekr.20040712101754.58"><vh>before</vh></v>
-<v t="ekr.20040712101754.59"><vh>after</vh></v>
+<v t="ekr.20050417102057"><vh>New reformat Paragraph tests</vh>
+<v t="ekr.20050417102114"><vh>@test noTrailingNewline</vh>
+<v t="ekr.20050417104821"><vh>data</vh>
+<v t="ekr.20050417124704"><vh>tempNode</vh></v>
+<v t="ekr.20050417102114.1"><vh>before</vh></v>
+<v t="ekr.20050417102114.2"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.60"><vh>testTrailingNewline</vh>
-<v t="ekr.20040712101754.61"><vh>before</vh></v>
-<v t="ekr.20040712101754.62"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.63"><vh>testMixedLineLengths</vh>
-<v t="ekr.20040712101754.64"><vh>before</vh></v>
-<v t="ekr.20040712101754.65"><vh>after</vh></v>
+<v t="ekr.20050417111144"><vh>@test trailingNewline</vh>
+<v t="ekr.20050417111144.1"><vh>data</vh>
+<v t="ekr.20050417111240"><vh>tempNode</vh></v>
+<v t="ekr.20050417111144.2"><vh>before</vh></v>
+<v t="ekr.20050417111144.3"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.66"><vh>testMixedLinesWithLeadingWS</vh>
-<v t="ekr.20040712101754.67"><vh>before</vh></v>
-<v t="ekr.20040712101754.68"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.69"><vh>testNoChangeRequired</vh>
-<v t="ekr.20040712101754.70"><vh>before</vh></v>
-<v t="ekr.20040712101754.71"><vh>after</vh></v>
+<v t="ekr.20050417113549"><vh>@test mixedLineLengths</vh>
+<v t="ekr.20050417113910"><vh>data</vh>
+<v t="ekr.20050417113921"><vh>tempNode</vh></v>
+<v t="ekr.20050417113910.1"><vh>before</vh></v>
+<v t="ekr.20050417113910.2"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.72"><vh>testHonorLeadingWS</vh>
-<v t="ekr.20040712101754.73"><vh>before</vh></v>
-<v t="ekr.20040712101754.74"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.75"><vh>testHonorLeadingWSVar1</vh>
-<v t="ekr.20040712101754.76"><vh>before</vh></v>
-<v t="ekr.20040712101754.77"><vh>after</vh></v>
+<v t="ekr.20050417114153"><vh>@test mixedLinesWithLeadingWS</vh>
+<v t="ekr.20050417114221"><vh>data</vh>
+<v t="ekr.20050417114221.1"><vh>tempNode</vh></v>
+<v t="ekr.20050417114221.2"><vh>before</vh></v>
+<v t="ekr.20050417114221.3"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.78"><vh>testSimpleHangingIndent</vh>
-<v t="ekr.20040712101754.79"><vh>before</vh></v>
-<v t="ekr.20040712101754.80"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.81"><vh>testSimpleHangingIndentVar1</vh>
-<v t="ekr.20040712101754.82"><vh>before</vh></v>
-<v t="ekr.20040712101754.83"><vh>after</vh></v>
+<v t="ekr.20050417114836"><vh>@test noChangeRequired</vh>
+<v t="ekr.20050417095124.16"><vh>data</vh>
+<v t="ekr.20050417114914"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.17"><vh>before</vh></v>
+<v t="ekr.20050417095124.18"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.84"><vh>testSimpleHangingIndentVar2</vh>
-<v t="ekr.20040712101754.85"><vh>before</vh></v>
-<v t="ekr.20040712101754.86"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.87"><vh>testMultiParagraph</vh>
-<v t="ekr.20040712101754.88"><vh>before</vh></v>
-<v t="ekr.20040712101754.89"><vh>after</vh></v>
+<v t="ekr.20050417095020.11"><vh>@test honorLeadingWS</vh>
+<v t="ekr.20050417095124.19"><vh>data</vh>
+<v t="ekr.20050417115111"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.20"><vh>before</vh></v>
+<v t="ekr.20050417095124.21"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.90"><vh>testMultiParagraphWithList</vh>
-<v t="ekr.20040712101754.91"><vh>before</vh></v>
-<v t="ekr.20040712101754.92"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.93"><vh>testDirectiveBreaksParagraph</vh>
-<v t="ekr.20040712101754.94"><vh>before</vh></v>
-<v t="ekr.20040712101754.95"><vh>after</vh></v>
+<v t="ekr.20050417095020.12"><vh>@test honorLeadingWSVar1</vh>
+<v t="ekr.20050417095124.22"><vh>data</vh>
+<v t="ekr.20050417115257"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.23"><vh>before</vh></v>
+<v t="ekr.20050417095124.24"><vh>after</vh></v>
 </v>
-<v t="ekr.20040712101754.96"><vh>testWithLeadingWSOnEmptyLines</vh>
-<v t="ekr.20040712101754.97"><vh>before</vh></v>
-<v t="ekr.20040712101754.98"><vh>after</vh></v>
+</v>
+<v t="ekr.20050417095020.13"><vh>@test simpleHangingIndent</vh>
+<v t="ekr.20050417095124.25"><vh>data</vh>
+<v t="ekr.20050417115414"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.26"><vh>before</vh></v>
+<v t="ekr.20050417095124.27"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.14"><vh>@test testSimpleHangingIndentVar1</vh>
+<v t="ekr.20050417095124.28"><vh>data</vh>
+<v t="ekr.20050417115559"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.29"><vh>before</vh></v>
+<v t="ekr.20050417095124.30"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.15"><vh>@test simpleHangingIndentVar2</vh>
+<v t="ekr.20050417095124.31"><vh>data</vh>
+<v t="ekr.20050417115709"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.32"><vh>before</vh></v>
+<v t="ekr.20050417095124.33"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417120312.1"><vh>@test multiParagraphTest</vh>
+<v t="ekr.20050417095124.34"><vh>data</vh>
+<v t="ekr.20050417120312.2"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.35"><vh>before</vh></v>
+<v t="ekr.20050417095124.36"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417121448"><vh>@test multiParagraphWithListTest</vh>
+<v t="ekr.20050417095124.37"><vh>data</vh>
+<v t="ekr.20050417121448.1"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.38"><vh>before</vh></v>
+<v t="ekr.20050417095124.39"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417121942"><vh>@test leadingWSOnEmptyLinesTest</vh>
+<v t="ekr.20050417095124.43"><vh>data</vh>
+<v t="ekr.20050417121942.1"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.44"><vh>before</vh></v>
+<v t="ekr.20050417095124.45"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417122215.1"><vh>@test directiveBreaksParagraphTest</vh>
+<v t="ekr.20050417095124.40"><vh>data</vh>
+<v t="ekr.20050417122215.2"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.41"><vh>before</vh></v>
+<v t="ekr.20050417095124.42"><vh>after</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -1734,6 +1771,106 @@
 <v t="ekr.20050318150022"><vh>node 2</vh></v>
 </v>
 <v t="ekr.20050414143234"><vh>test of extract section</vh></v>
+<v t="ekr.20050417102057" a="ETV"><vh>New reformat Paragraph tests</vh>
+<v t="ekr.20050417102114"><vh>@test noTrailingNewline</vh>
+<v t="ekr.20050417104821"><vh>data</vh>
+<v t="ekr.20050417124704"><vh>tempNode</vh></v>
+<v t="ekr.20050417102114.1"><vh>before</vh></v>
+<v t="ekr.20050417102114.2"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417111144"><vh>@test trailingNewline</vh>
+<v t="ekr.20050417111144.1"><vh>data</vh>
+<v t="ekr.20050417111240"><vh>tempNode</vh></v>
+<v t="ekr.20050417111144.2"><vh>before</vh></v>
+<v t="ekr.20050417111144.3"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417113549"><vh>@test mixedLineLengths</vh>
+<v t="ekr.20050417113910"><vh>data</vh>
+<v t="ekr.20050417113921"><vh>tempNode</vh></v>
+<v t="ekr.20050417113910.1"><vh>before</vh></v>
+<v t="ekr.20050417113910.2"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417114153"><vh>@test mixedLinesWithLeadingWS</vh>
+<v t="ekr.20050417114221"><vh>data</vh>
+<v t="ekr.20050417114221.1"><vh>tempNode</vh></v>
+<v t="ekr.20050417114221.2"><vh>before</vh></v>
+<v t="ekr.20050417114221.3"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417114836"><vh>@test noChangeRequired</vh>
+<v t="ekr.20050417095124.16"><vh>data</vh>
+<v t="ekr.20050417114914"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.17"><vh>before</vh></v>
+<v t="ekr.20050417095124.18"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.11"><vh>@test honorLeadingWS</vh>
+<v t="ekr.20050417095124.19"><vh>data</vh>
+<v t="ekr.20050417115111"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.20"><vh>before</vh></v>
+<v t="ekr.20050417095124.21"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.12"><vh>@test honorLeadingWSVar1</vh>
+<v t="ekr.20050417095124.22"><vh>data</vh>
+<v t="ekr.20050417115257"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.23"><vh>before</vh></v>
+<v t="ekr.20050417095124.24"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.13"><vh>@test simpleHangingIndent</vh>
+<v t="ekr.20050417095124.25"><vh>data</vh>
+<v t="ekr.20050417115414"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.26"><vh>before</vh></v>
+<v t="ekr.20050417095124.27"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.14"><vh>@test testSimpleHangingIndentVar1</vh>
+<v t="ekr.20050417095124.28"><vh>data</vh>
+<v t="ekr.20050417115559"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.29"><vh>before</vh></v>
+<v t="ekr.20050417095124.30"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.15"><vh>@test simpleHangingIndentVar2</vh>
+<v t="ekr.20050417095124.31"><vh>data</vh>
+<v t="ekr.20050417115709"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.32"><vh>before</vh></v>
+<v t="ekr.20050417095124.33"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417120312.1"><vh>@test multiParagraphTest</vh>
+<v t="ekr.20050417095124.34"><vh>data</vh>
+<v t="ekr.20050417120312.2"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.35"><vh>before</vh></v>
+<v t="ekr.20050417095124.36"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417121448"><vh>@test multiParagraphWithListTest</vh>
+<v t="ekr.20050417095124.37"><vh>data</vh>
+<v t="ekr.20050417121448.1"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.38"><vh>before</vh></v>
+<v t="ekr.20050417095124.39"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417121942"><vh>@test leadingWSOnEmptyLinesTest</vh>
+<v t="ekr.20050417095124.43"><vh>data</vh>
+<v t="ekr.20050417121942.1"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.44"><vh>before</vh></v>
+<v t="ekr.20050417095124.45"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417122215.1"><vh>@test directiveBreaksParagraphTest</vh>
+<v t="ekr.20050417095124.40"><vh>data</vh>
+<v t="ekr.20050417122215.2"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.41"><vh>before</vh></v>
+<v t="ekr.20050417095124.42"><vh>after</vh></v>
+</v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -2305,7 +2442,7 @@ print '
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">next = p.next()
 t = next.v.t
 v = next.v
@@ -2441,7 +2578,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -2865,48 +3002,6 @@ leoTest.doTests(all=False)</t>
 <t tx="ekr.20040707110818">@ignore # Suppress @file reads/writes
 
 </t>
-<t tx="ekr.20040707140849.5">def runAtFileTest(c,p):
-
-    """Common code for testing output of @file, @thin, etc."""
-
-    at = c.atFileCommands
-    child1 = p.firstChild()
-    child2 = child1.next()
-    h1 = child1.headString().lower().strip()
-    h2 = child2.headString().lower().strip()
-    assert(g.match(h1,0,"#@"))
-    assert(g.match(h2,0,"output"))
-    expected = child2.bodyString()
-
-    # Compute the type from child1's headline.
-    j = g.skip_c_id(h1,2)
-    theType = h1[1:j]
-    assert theType in ("@file","@thin","@nosent","@noref","@asis"), "bad type: %s" % type
-
-    thinFile = theType == "@thin"
-    nosentinels = theType in ("@asis","@nosent")
-
-    if theType == "@asis":
-        at.asisWrite(child1,toString=True)
-    elif theType == "@noref":
-        at.norefWrite(child1,toString=True)
-    else:
-        at.write(child1,thinFile=thinFile,nosentinels=nosentinels,toString=True)
-    try:
-        result = g.toUnicode(at.stringOutput,"ascii")
-        assert(result == expected)
-    except AssertionError:
-        &lt;&lt; dump result and expected &gt;&gt;
-        raise</t>
-<t tx="ekr.20040707141957">print ; print '-' * 20
-print "result..."
-for line in g.splitLines(result):
-    print "%3d" % len(line),repr(line)
-print '-' * 20
-print "expected..."
-for line in g.splitLines(expected):
-    print "%3d" % len(line),repr(line)
-print '-' * 20</t>
 <t tx="ekr.20040707141957.12">import leoTest
 
 leoTest.runAtFileTest(c,p)</t>
@@ -3235,339 +3330,6 @@ line 3
 line 4</t>
 <t tx="ekr.20040712101754.52">2.0
 3.0 lineend - 1c</t>
-<t tx="ekr.20040712101754.53"># Create unit tests in g.app.scriptDict["suite"]
-
-import leoTest
-
-suite = leoTest.makeReformatParagraphSuite()
-
-g.app.scriptDict['suite'] = suite</t>
-<t tx="ekr.20040712101754.54">@language plain
-
-Changed made by EKR on 7/8/04.
-
-- Created @suite node to call makeReformatParagraphSuite
-
-- Used makeSuite(reformatParagraphTestCase,'test') in makeReformatParagraphSuite instead of list of tests.
-
-- modified setUp to handle these new conventions.
-    - Search for reformatParagraphsTests anywhere in the tree
-    - Created tempNode inside reformatParagraphsTests tree.</t>
-<t tx="ekr.20040712101754.55">@language plain
-
-Each child node will in turn have two or more children:
-    
-- a "before" node
-- an "after" node
-
-The parent to before and after nodes will contain pagewidth and language formatting directives
-</t>
-<t tx="ekr.20040712101754.56"></t>
-<t tx="ekr.20040712101754.57">@language plain
-@pagewidth 40
-@tabwidth 8
-
-Wrap a long line, no trailing newline.</t>
-<t tx="ekr.20040712101754.58">This line is over forty characters long, at least it seems to be.</t>
-<t tx="ekr.20040712101754.59">This line is over forty characters long,
-at least it seems to be.</t>
-<t tx="ekr.20040712101754.60">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-Wrap a long line, with trailing newline.
-</t>
-<t tx="ekr.20040712101754.61">This line is over forty characters long, at least it seems to be.
-</t>
-<t tx="ekr.20040712101754.62">This line is over forty characters long,
-at least it seems to be.
-</t>
-<t tx="ekr.20040712101754.63">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-Wrap a long line and some short ones.</t>
-<t tx="ekr.20040712101754.64">This line is over forty characters long, at least it seems to be.
-This is shorter, 
-but should be part of the same
-paragraph.</t>
-<t tx="ekr.20040712101754.65">This line is over forty characters long,
-at least it seems to be. This is
-shorter, but should be part of the same
-paragraph.</t>
-<t tx="ekr.20040712101754.66">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-Wrap a paragraph with interior lines that have leading white space.</t>
-<t tx="ekr.20040712101754.67">This line is over forty characters long, at least it seems to be.
-  This indented line should be merged into the same
-paragraph.</t>
-<t tx="ekr.20040712101754.68">This line is over forty characters long,
-  at least it seems to be. This indented
-  line should be merged into the same
-  paragraph.</t>
-<t tx="ekr.20040712101754.69">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-No wrapping required, so don't change a thing.</t>
-<t tx="ekr.20040712101754.70">This line is under 40 chars.</t>
-<t tx="ekr.20040712101754.71">This line is under 40 chars.</t>
-<t tx="ekr.20040712101754.72">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-Honor the first line's leading whitespace.</t>
-<t tx="ekr.20040712101754.73">   This line is over forty characters long, at least it seems to be.
-   This is shorter, 
-but should be part of the same
-paragraph.  And this is indented 3 characters.</t>
-<t tx="ekr.20040712101754.74">   This line is over forty characters
-   long, at least it seems to be. This
-   is shorter, but should be part of the
-   same paragraph. And this is indented
-   3 characters.</t>
-<t tx="ekr.20040712101754.75">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-Honor the first and second line's leading whitespace.</t>
-<t tx="ekr.20040712101754.76">   This line is over forty characters long, at least it seems to be.
-   This is shorter, 
-     but should be part of the same
-     paragraph.  And this is indented 3 characters.</t>
-<t tx="ekr.20040712101754.77">   This line is over forty characters
-   long, at least it seems to be. This
-   is shorter, but should be part of the
-   same paragraph. And this is indented
-   3 characters.</t>
-<t tx="ekr.20040712101754.78">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-Single paragraph, hanging indentation.</t>
-<t tx="ekr.20040712101754.79">Honor this line that has a hanging indentation, please.  Hanging
-  indentation is valuable for lists of all kinds.  But it is tricky to get right.</t>
-<t tx="ekr.20040712101754.80">Honor this line that has a hanging
-  indentation, please. Hanging
-  indentation is valuable for lists of
-  all kinds. But it is tricky to get
-  right.</t>
-<t tx="ekr.20040712101754.81">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-Single paragraph, hanging indentation with other indentation beyond line 2.</t>
-<t tx="ekr.20040712101754.82">Honor this line that has
-  a hanging indentation, please.  Hanging
-    indentation is valuable for lists of all kinds.  But it is tricky to get right.</t>
-<t tx="ekr.20040712101754.83">Honor this line that has a hanging
-  indentation, please. Hanging
-  indentation is valuable for lists of
-  all kinds. But it is tricky to get
-  right.</t>
-<t tx="ekr.20040712101754.84">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-Single paragraph, hanging indentation, short lines, extraneous indentation, and last line uses a tab for whitespace.</t>
-<t tx="ekr.20040712101754.85">Honor this line that 
-  has a hanging indentation, 
-  please.  Hanging
-   indentation is valuable
-    for lists of all kinds.  But 
-    it is tricky to get right.</t>
-<t tx="ekr.20040712101754.86">Honor this line that has a hanging
-  indentation, please. Hanging
-  indentation is valuable for lists of
-  all kinds. But it is tricky to get
-  right.</t>
-<t tx="ekr.20040712101754.87">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-Multiple long lined paragraphs.  Cursor should move to next paragraph after formatting a paragraph.</t>
-<t tx="ekr.20040712101754.88">Americans live in the most severe weather-prone country on Earth. Each year, Americans cope with an average of 10,000 thunderstorms, 2,500 floods, 1,000 tornadoes, as well as an average of 6 deadly hurricanes. Potentially deadly weather impacts every American. Communities can now rely on the National Weather Service’s StormReady program to help them guard against the ravages of Mother Nature.
-
-Some 90% of all presidentially declared disasters are weather related, leading to around 500 deaths per year and nearly $14 billion in damage. StormReady, a program started in 1999 in Tulsa, OK, helps arm America's communities with the communication and safety skills needed to save lives and property– before and during the event. StormReady helps community leaders and emergency managers strengthen local safety programs.
-
-StormReady communities are better prepared to save lives from the onslaught of severe weather through better planning, education, and awareness. No community is storm proof, but StormReady can help communities save lives. Does StormReady make a difference?</t>
-<t tx="ekr.20040712101754.89">Americans live in the most severe
-weather-prone country on Earth. Each
-year, Americans cope with an average of
-10,000 thunderstorms, 2,500 floods,
-1,000 tornadoes, as well as an average
-of 6 deadly hurricanes. Potentially
-deadly weather impacts every American.
-Communities can now rely on the National
-Weather Service’s StormReady program to
-help them guard against the ravages of
-Mother Nature.
-
-Some 90% of all presidentially declared
-disasters are weather related, leading
-to around 500 deaths per year and nearly
-$14 billion in damage. StormReady, a
-program started in 1999 in Tulsa, OK,
-helps arm America's communities with the
-communication and safety skills needed
-to save lives and property– before and
-during the event. StormReady helps
-community leaders and emergency managers
-strengthen local safety programs.
-
-StormReady communities are better
-prepared to save lives from the
-onslaught of severe weather through
-better planning, education, and
-awareness. No community is storm proof,
-but StormReady can help communities save
-lives. Does StormReady make a
-difference?</t>
-<t tx="ekr.20040712101754.90">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-A regular paragraph, plus a numbered list of several items, plus a final regular paragraph.  Cursor should move to next paragraph after formatting a paragraph.
-</t>
-<t tx="ekr.20040712101754.91">This paragraph leads of this test.  It is the "lead"
-paragraph.
-
-  1. This is item 
-     number 1.  It is the first item in the list.
-
-  2. This is item 
-     number 2.  It is the second item in the list.
-
-  3. This is item 
-     number 3.  It is the third item in the list.
-
-This paragraph ends the test.  It is the "final"
-paragraph.</t>
-<t tx="ekr.20040712101754.92">This paragraph leads of this test. It is
-the "lead" paragraph.
-
-  1. This is item number 1. It is the
-     first item in the list.
-
-  2. This is item number 2. It is the
-     second item in the list.
-
-  3. This is item number 3. It is the
-     third item in the list.
-
-This paragraph ends the test. It is the
-"final" paragraph.</t>
-<t tx="ekr.20040712101754.93">@language plain
-@pagewidth 40
-@tabwidth 8
-
-# DTHEIN 2004.01.11: Added test case data
-
-Test to make sure that reformatting treats directives as a new paragraph and doesn't wrap directive lines.
-</t>
-<t tx="ekr.20040712101754.94">Americans live in the most severe weather-prone country on Earth. Each year, Americans cope with an average of 10,000 thunderstorms, 2,500 floods, 1,000 tornadoes, as well as an average of 6 deadly hurricanes. Potentially deadly weather impacts every American. Communities can now rely on the National Weather Service’s StormReady program to help them guard against the ravages of Mother Nature.
-@unknownDirective
-Some 90% of all presidentially declared disasters are weather related, leading to around 500 deaths per year and nearly $14 billion in damage. StormReady, a program started in 1999 in Tulsa, OK, helps arm America's communities with the communication and safety skills needed to save lives and property– before and during the event. StormReady helps community leaders and emergency managers strengthen local safety programs.
-@unknownDirective
-StormReady communities are better prepared to save lives from the onslaught of severe weather through better planning, education, and awareness. No community is storm proof, but StormReady can help communities save lives. Does StormReady make a difference?</t>
-<t tx="ekr.20040712101754.95">Americans live in the most severe
-weather-prone country on Earth. Each
-year, Americans cope with an average of
-10,000 thunderstorms, 2,500 floods,
-1,000 tornadoes, as well as an average
-of 6 deadly hurricanes. Potentially
-deadly weather impacts every American.
-Communities can now rely on the National
-Weather Service’s StormReady program to
-help them guard against the ravages of
-Mother Nature.
-@unknownDirective
-Some 90% of all presidentially declared
-disasters are weather related, leading
-to around 500 deaths per year and nearly
-$14 billion in damage. StormReady, a
-program started in 1999 in Tulsa, OK,
-helps arm America's communities with the
-communication and safety skills needed
-to save lives and property– before and
-during the event. StormReady helps
-community leaders and emergency managers
-strengthen local safety programs.
-@unknownDirective
-StormReady communities are better
-prepared to save lives from the
-onslaught of severe weather through
-better planning, education, and
-awareness. No community is storm proof,
-but StormReady can help communities save
-lives. Does StormReady make a
-difference?</t>
-<t tx="ekr.20040712101754.96">@language plain
-@pagewidth 40
-@tabwidth 8
-
-Ran into a problem with the wrapping
-eating blank lines that delimit
-paragraphs if those blank lines have any
-leading whitespace. This test is to make
-sure that still works.
-
-If you "show invisibles" you'll see the
-leading whitespace in the blank lines --
-which is different from the
-"testMultiParagraphWithList" test.</t>
-<t tx="ekr.20040712101754.97">This paragraph leads of this test.  It is the "lead"
-paragraph.
-  
-  1. This is item 
-     number 1.  It is the first item in the list.
-  
-  2. This is item 
-     number 2.  It is the second item in the list.
-  
-  3. This is item 
-     number 3.  It is the third item in the list.
-  
-This paragraph ends the test.  It is the "final"
-paragraph.</t>
-<t tx="ekr.20040712101754.98">This paragraph leads of this test. It is
-the "lead" paragraph.
-  
-  1. This is item number 1. It is the
-     first item in the list.
-  
-  2. This is item number 2. It is the
-     second item in the list.
-  
-  3. This is item number 3. It is the
-     third item in the list.
-  
-This paragraph ends the test. It is the
-"final" paragraph.</t>
 <t tx="ekr.20040712101754.99">&lt;&lt; coverage tests &gt;&gt;
 &lt;&lt; duplicate tests &gt;&gt;
 
@@ -12941,14 +12703,6 @@ for p in g.app.loadedPlugins:
     
 leoPlugins.printHandlers()</t>
 <t tx="ekr.20050123143337"></t>
-<t tx="ekr.20050124065111">headlines = []
-for p in p.self_and_subtree_iter():
-    headlines.append(' '*p.level() + '- ' + p.headString())
-    
-headlines = '\n'.join(headlines)
-print headlines
-
-</t>
 <t tx="ekr.20050203001146"># g.es(c.page_width)
 
 assert c.page_width == 80</t>
@@ -14080,11 +13834,415 @@ if not golf or not controller:
 
 &lt;/body&gt;</t>
 <t tx="ekr.20050408084135"></t>
-<t tx="ekr.20050414140643"></t>
 <t tx="ekr.20050414143234">before
 &lt;&lt; name &gt;&gt;
 line 1
 line 2
 after</t>
+<t tx="ekr.20050415070840.44">def runAtFileTest(c,p):
+
+    """Common code for testing output of @file, @thin, etc."""
+
+    at = c.atFileCommands
+    child1 = p.firstChild()
+    child2 = child1.next()
+    h1 = child1.headString().lower().strip()
+    h2 = child2.headString().lower().strip()
+    assert(g.match(h1,0,"#@"))
+    assert(g.match(h2,0,"output"))
+    expected = child2.bodyString()
+
+    # Compute the type from child1's headline.
+    j = g.skip_c_id(h1,2)
+    theType = h1[1:j]
+    assert theType in ("@file","@thin","@nosent","@noref","@asis"), "bad type: %s" % type
+
+    thinFile = theType == "@thin"
+    nosentinels = theType in ("@asis","@nosent")
+
+    if theType == "@asis":
+        at.asisWrite(child1,toString=True)
+    elif theType == "@noref":
+        at.norefWrite(child1,toString=True)
+    else:
+        at.write(child1,thinFile=thinFile,nosentinels=nosentinels,toString=True)
+    try:
+        result = g.toUnicode(at.stringOutput,"ascii")
+        assert(result == expected)
+    except AssertionError:
+        &lt;&lt; dump result and expected &gt;&gt;
+        raise</t>
+<t tx="ekr.20050415070840.45">print ; print '-' * 20
+print "result..."
+for line in g.splitLines(result):
+    print "%3d" % len(line),repr(line)
+print '-' * 20
+print "expected..."
+for line in g.splitLines(expected):
+    print "%3d" % len(line),repr(line)
+print '-' * 20</t>
+<t tx="ekr.20050415090637">True:  Allows control-dragging to create clones.
+False: All drags move nodes.
+
+See also: look_for_control_drag_on_mouse_down
+Setting this setting to False allows Leo to be used on Aqua.</t>
+<t tx="ekr.20050417095020.11"># Honor the first line's leading whitespace.
+
+import leoTest
+
+leoTest.singleParagraphTest(c,p,5,16)
+</t>
+<t tx="ekr.20050417095020.12"># Honor the first and second line's leading whitespace.
+
+import leoTest
+
+leoTest.singleParagraphTest(c,p,5,16)
+</t>
+<t tx="ekr.20050417095020.13"># Single paragraph, hanging indentation.
+
+import leoTest
+
+leoTest.singleParagraphTest(c,p,5,8)
+</t>
+<t tx="ekr.20050417095020.14"># Single paragraph, hanging indentation with other indentation beyond line 2.
+
+import leoTest
+
+leoTest.singleParagraphTest(c,p,5,8)</t>
+<t tx="ekr.20050417095020.15"># Single paragraph, hanging indentation, short lines, extraneous indentation, and last line uses a tab for whitespace.
+
+import leoTest
+
+leoTest.singleParagraphTest(c,p,5,8)</t>
+<t tx="ekr.20050417095124.16">@language plain
+@pagewidth 40
+@tabwidth 8</t>
+<t tx="ekr.20050417095124.17">This line is under 40 chars.</t>
+<t tx="ekr.20050417095124.18">This line is under 40 chars.</t>
+<t tx="ekr.20050417095124.19">@language plain
+@pagewidth 40
+@tabwidth 8</t>
+<t tx="ekr.20050417095124.20">   This line is over forty characters long, at least it seems to be.
+   This is shorter, 
+but should be part of the same
+paragraph.  And this is indented 3 characters.</t>
+<t tx="ekr.20050417095124.21">   This line is over forty characters
+   long, at least it seems to be. This
+   is shorter, but should be part of the
+   same paragraph. And this is indented
+   3 characters.</t>
+<t tx="ekr.20050417095124.22">@language plain
+@pagewidth 40
+@tabwidth 8</t>
+<t tx="ekr.20050417095124.23">   This line is over forty characters long, at least it seems to be.
+   This is shorter, 
+     but should be part of the same
+     paragraph.  And this is indented 3 characters.</t>
+<t tx="ekr.20050417095124.24">   This line is over forty characters
+   long, at least it seems to be. This
+   is shorter, but should be part of the
+   same paragraph. And this is indented
+   3 characters.</t>
+<t tx="ekr.20050417095124.25">@language plain
+@pagewidth 40
+@tabwidth 8</t>
+<t tx="ekr.20050417095124.26">Honor this line that has a hanging indentation, please.  Hanging
+  indentation is valuable for lists of all kinds.  But it is tricky to get right.</t>
+<t tx="ekr.20050417095124.27">Honor this line that has a hanging
+  indentation, please. Hanging
+  indentation is valuable for lists of
+  all kinds. But it is tricky to get
+  right.</t>
+<t tx="ekr.20050417095124.28">@language plain
+@pagewidth 40
+@tabwidth 8</t>
+<t tx="ekr.20050417095124.29">Honor this line that has
+  a hanging indentation, please.  Hanging
+    indentation is valuable for lists of all kinds.  But it is tricky to get right.</t>
+<t tx="ekr.20050417095124.30">Honor this line that has a hanging
+  indentation, please. Hanging
+  indentation is valuable for lists of
+  all kinds. But it is tricky to get
+  right.</t>
+<t tx="ekr.20050417095124.31">@language plain
+@pagewidth 40
+@tabwidth 8</t>
+<t tx="ekr.20050417095124.32">Honor this line that 
+  has a hanging indentation, 
+  please.  Hanging
+   indentation is valuable
+    for lists of all kinds.  But 
+    it is tricky to get right.</t>
+<t tx="ekr.20050417095124.33">Honor this line that has a hanging
+  indentation, please. Hanging
+  indentation is valuable for lists of
+  all kinds. But it is tricky to get
+  right.</t>
+<t tx="ekr.20050417095124.34">@language plain
+@pagewidth 40
+@tabwidth 8</t>
+<t tx="ekr.20050417095124.35">Americans live in the most severe weather-prone country on Earth. Each year, Americans cope with an average of 10,000 thunderstorms, 2,500 floods, 1,000 tornadoes, as well as an average of 6 deadly hurricanes. Potentially deadly weather impacts every American. Communities can now rely on the National Weather Service’s StormReady program to help them guard against the ravages of Mother Nature.
+
+Some 90% of all presidentially declared disasters are weather related, leading to around 500 deaths per year and nearly $14 billion in damage. StormReady, a program started in 1999 in Tulsa, OK, helps arm America's communities with the communication and safety skills needed to save lives and property– before and during the event. StormReady helps community leaders and emergency managers strengthen local safety programs.
+
+StormReady communities are better prepared to save lives from the onslaught of severe weather through better planning, education, and awareness. No community is storm proof, but StormReady can help communities save lives. Does StormReady make a difference?</t>
+<t tx="ekr.20050417095124.36">Americans live in the most severe
+weather-prone country on Earth. Each
+year, Americans cope with an average of
+10,000 thunderstorms, 2,500 floods,
+1,000 tornadoes, as well as an average
+of 6 deadly hurricanes. Potentially
+deadly weather impacts every American.
+Communities can now rely on the National
+Weather Service’s StormReady program to
+help them guard against the ravages of
+Mother Nature.
+
+Some 90% of all presidentially declared
+disasters are weather related, leading
+to around 500 deaths per year and nearly
+$14 billion in damage. StormReady, a
+program started in 1999 in Tulsa, OK,
+helps arm America's communities with the
+communication and safety skills needed
+to save lives and property– before and
+during the event. StormReady helps
+community leaders and emergency managers
+strengthen local safety programs.
+
+StormReady communities are better
+prepared to save lives from the
+onslaught of severe weather through
+better planning, education, and
+awareness. No community is storm proof,
+but StormReady can help communities save
+lives. Does StormReady make a
+difference?</t>
+<t tx="ekr.20050417095124.37">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+</t>
+<t tx="ekr.20050417095124.38">This paragraph leads of this test.  It is the "lead"
+paragraph.
+
+  1. This is item 
+     number 1.  It is the first item in the list.
+
+  2. This is item 
+     number 2.  It is the second item in the list.
+
+  3. This is item 
+     number 3.  It is the third item in the list.
+
+This paragraph ends the test.  It is the "final"
+paragraph.</t>
+<t tx="ekr.20050417095124.39">This paragraph leads of this test. It is
+the "lead" paragraph.
+
+  1. This is item number 1. It is the
+     first item in the list.
+
+  2. This is item number 2. It is the
+     second item in the list.
+
+  3. This is item number 3. It is the
+     third item in the list.
+
+This paragraph ends the test. It is the
+"final" paragraph.</t>
+<t tx="ekr.20050417095124.40">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Test to make sure that reformatting treats directives as a new paragraph and doesn't wrap directive lines.
+</t>
+<t tx="ekr.20050417095124.41">Americans live in the most severe weather-prone country on Earth. Each year, Americans cope with an average of 10,000 thunderstorms, 2,500 floods, 1,000 tornadoes, as well as an average of 6 deadly hurricanes. Potentially deadly weather impacts every American. Communities can now rely on the National Weather Service’s StormReady program to help them guard against the ravages of Mother Nature.
+@unknownDirective
+Some 90% of all presidentially declared disasters are weather related, leading to around 500 deaths per year and nearly $14 billion in damage. StormReady, a program started in 1999 in Tulsa, OK, helps arm America's communities with the communication and safety skills needed to save lives and property– before and during the event. StormReady helps community leaders and emergency managers strengthen local safety programs.
+@unknownDirective
+StormReady communities are better prepared to save lives from the onslaught of severe weather through better planning, education, and awareness. No community is storm proof, but StormReady can help communities save lives. Does StormReady make a difference?</t>
+<t tx="ekr.20050417095124.42">Americans live in the most severe
+weather-prone country on Earth. Each
+year, Americans cope with an average of
+10,000 thunderstorms, 2,500 floods,
+1,000 tornadoes, as well as an average
+of 6 deadly hurricanes. Potentially
+deadly weather impacts every American.
+Communities can now rely on the National
+Weather Service’s StormReady program to
+help them guard against the ravages of
+Mother Nature.
+@unknownDirective
+Some 90% of all presidentially declared
+disasters are weather related, leading
+to around 500 deaths per year and nearly
+$14 billion in damage. StormReady, a
+program started in 1999 in Tulsa, OK,
+helps arm America's communities with the
+communication and safety skills needed
+to save lives and property– before and
+during the event. StormReady helps
+community leaders and emergency managers
+strengthen local safety programs.
+@unknownDirective
+StormReady communities are better
+prepared to save lives from the
+onslaught of severe weather through
+better planning, education, and
+awareness. No community is storm proof,
+but StormReady can help communities save
+lives. Does StormReady make a
+difference?</t>
+<t tx="ekr.20050417095124.43">@language plain
+@pagewidth 40
+@tabwidth 8
+
+</t>
+<t tx="ekr.20050417095124.44">This paragraph leads of this test.  It is the "lead"
+paragraph.
+  
+  1. This is item 
+     number 1.  It is the first item in the list.
+  
+  2. This is item 
+     number 2.  It is the second item in the list.
+  
+  3. This is item 
+     number 3.  It is the third item in the list.
+  
+This paragraph ends the test.  It is the "final"
+paragraph.</t>
+<t tx="ekr.20050417095124.45">This paragraph leads of this test. It is
+the "lead" paragraph.
+  
+  1. This is item number 1. It is the
+     first item in the list.
+  
+  2. This is item number 2. It is the
+     second item in the list.
+  
+  3. This is item number 3. It is the
+     third item in the list.
+  
+This paragraph ends the test. It is the
+"final" paragraph.</t>
+<t tx="ekr.20050417102057">@ Rewritten by EKR.  April 17, 2005.
+
+Each data node must have three children:
+    
+- a "before" node
+- an "after" node
+- a "tempNode" node
+
+A parent to before and after nodes will contain pagewidth and language formatting directives.</t>
+<t tx="ekr.20050417102114"># Wrap a long line, no trailing newline.
+
+import leoTest
+
+leoTest.singleParagraphTest(c,p,2,24)</t>
+<t tx="ekr.20050417102114.1">This line is over forty characters long, at least it seems to be.</t>
+<t tx="ekr.20050417102114.2">This line is over forty characters long,
+at least it seems to be.</t>
+<t tx="ekr.20050417104821">@language plain
+@pagewidth 40
+@tabwidth 8
+
+</t>
+<t tx="ekr.20050417111144"># Wrap a long line, with trailing newline.
+
+import leoTest
+
+# Wrap a long line, no trailing newline.
+leoTest.singleParagraphTest(c,p,3,0)</t>
+<t tx="ekr.20050417111144.1">@language plain
+@pagewidth 40
+@tabwidth 8</t>
+<t tx="ekr.20050417111144.2">This line is over forty characters long, at least it seems to be.
+</t>
+<t tx="ekr.20050417111144.3">This line is over forty characters long,
+at least it seems to be.
+</t>
+<t tx="ekr.20050417111240"></t>
+<t tx="ekr.20050417113549"># Wrap a long line and some short ones.
+
+import leoTest
+
+leoTest.singleParagraphTest(c,p,4,10)</t>
+<t tx="ekr.20050417113910">@language plain
+@pagewidth 40
+@tabwidth 8</t>
+<t tx="ekr.20050417113910.1">This line is over forty characters long, at least it seems to be.
+This is shorter, 
+but should be part of the same
+paragraph.</t>
+<t tx="ekr.20050417113910.2">This line is over forty characters long,
+at least it seems to be. This is
+shorter, but should be part of the same
+paragraph.</t>
+<t tx="ekr.20050417113921"></t>
+<t tx="ekr.20050417114153"># Wrap a paragraph with interior lines that have leading white space.
+
+import leoTest
+
+leoTest.singleParagraphTest(c,p,4,12)</t>
+<t tx="ekr.20050417114221">@language plain
+@pagewidth 40
+@tabwidth 8</t>
+<t tx="ekr.20050417114221.1"></t>
+<t tx="ekr.20050417114221.2">This line is over forty characters long, at least it seems to be.
+  This indented line should be merged into the same
+paragraph.</t>
+<t tx="ekr.20050417114221.3">This line is over forty characters long,
+  at least it seems to be. This indented
+  line should be merged into the same
+  paragraph.</t>
+<t tx="ekr.20050417114836"># No wrapping required, so don't change a thing.
+
+import leoTest
+
+leoTest.singleParagraphTest(c,p,1,28)
+</t>
+<t tx="ekr.20050417114914"></t>
+<t tx="ekr.20050417115111"></t>
+<t tx="ekr.20050417115257"></t>
+<t tx="ekr.20050417115414"></t>
+<t tx="ekr.20050417115559"></t>
+<t tx="ekr.20050417115709"></t>
+<t tx="ekr.20050417120312.1"># Multiple long lined paragraphs.  Cursor should move to next paragraph after formatting a paragraph.
+
+import leoTest
+
+leoTest.multiParagraphTest(c,p)</t>
+<t tx="ekr.20050417120312.2"></t>
+<t tx="ekr.20050417121448"># A regular paragraph, plus a numbered list of several items, plus a final regular paragraph.
+# Cursor should move to next paragraph after formatting a paragraph.
+
+import leoTest
+
+leoTest.multiParagraphWithListTest(c,p)</t>
+<t tx="ekr.20050417121448.1"></t>
+<t tx="ekr.20050417121942">@
+Ran into a problem with the wrapping eating blank lines that delimit paragraphs
+if those blank lines have any leading whitespace. This test is to make sure that
+still works.
+
+If you "show invisibles" you'll see the leading whitespace in the blank lines --
+which is different from the "testMultiParagraphWithList" test.
+@c
+
+import leoTest
+
+leoTest.leadingWSOnEmptyLinesTest(c,p)</t>
+<t tx="ekr.20050417121942.1"></t>
+<t tx="ekr.20050417122215.1">import leoTest
+
+leoTest.directiveBreaksParagraphTest(c,p)</t>
+<t tx="ekr.20050417122215.2"></t>
+<t tx="ekr.20050417124704"></t>
 </tnodes>
 </leo_file>
