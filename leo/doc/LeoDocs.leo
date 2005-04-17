@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="13333" clone_windows="0"/>
-<globals body_outline_ratio="0.616666666667">
+<leo_header file_format="2" tnodes="0" max_tnode_index="13334" clone_windows="0"/>
+<globals body_outline_ratio="0.613333333333">
 	<global_window_position top="45" left="166" height="900" width="1023"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -19,7 +19,7 @@
 </v>
 <v t="ekr.20050404094627" a="E"><vh>Settings and buttons</vh>
 <v t="ekr.20041226081019"><vh>@button check spelling...</vh></v>
-<v t="ekr.20050407144417" a="TV"><vh>@settings</vh>
+<v t="ekr.20050407144417"><vh>@settings</vh>
 <v t="ekr.20050407144342" a="E"><vh>@page http plugin</vh>
 <v t="ekr.20050407144342.1"><vh>@bool http_active = True</vh></v>
 <v t="ekr.20050407144342.2"><vh>@int  port = 8080</vh></v>
@@ -1393,7 +1393,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1599,7 +1599,7 @@
 </v>
 <v t="EKR.20040608091134.1"><vh>Appendix 3 to Chapter 4: Using @thin instead of @file</vh></v>
 </v>
-<v t="EKR.20040524104904.99" a="E"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="EKR.20040524104904.99"><vh>Chapter 5: Using Leo's Commands</vh>
 <v t="EKR.20040524104904.100"><vh> The File Menu</vh>
 <v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
 <v t="EKR.20040524104904.102"><vh>Communicating with external editors</vh>
@@ -1614,7 +1614,7 @@
 <v t="EKR.20040524104904.109"><vh>Exporting Files from Leo Outlines</vh></v>
 <v t="EKR.20040524104904.110"><vh>Quitting Leo</vh></v>
 </v>
-<v t="EKR.20040524104904.111" a="E"><vh> The Edit Menu</vh>
+<v t="EKR.20040524104904.111"><vh> The Edit Menu</vh>
 <v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
 <v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
 <v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
@@ -1750,7 +1750,7 @@
 </v>
 <v t="EKR.20040524104904.181"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
 </v>
-<v t="EKR.20040524104904.182" a="E"><vh>Chapter 7: Scripting Leo with Python</vh>
+<v t="EKR.20040524104904.182"><vh>Chapter 7: Scripting Leo with Python</vh>
 <v t="EKR.20040524104904.183"><vh>Overview of Leo's code</vh></v>
 <v t="EKR.20040524104904.184"><vh>Basic scripts</vh>
 <v t="EKR.20040524104904.185"><vh>Writing to log window</vh></v>
@@ -1799,7 +1799,7 @@
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
 <v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050122090016" a="E"><vh>Setting options...</vh>
+<v t="ekr.20050122090016"><vh>Setting options...</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="EKR.20040524104904.212"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 </v>
@@ -1853,6 +1853,7 @@
 <v t="EKR.20040524104904.121"><vh>Using the initScriptFind script</vh></v>
 <v t="EKR.20040524104904.122"><vh>Ideas for using scripts</vh></v>
 </v>
+<v t="ekr.20050417072710.1" a="TV"><vh>How to make operations undoable</vh></v>
 </v>
 <v t="EKR.20040524104904.245"><vh>Chapter 9: History of Leo</vh>
 <v t="EKR.20040524104904.246"><vh>Beginnings</vh></v>
@@ -17008,5 +17009,31 @@ g.es('log_pane_background_color',c.config.getColor('log_pane_background_color'))
 <t tx="ekr.20050407144342.2"></t>
 <t tx="ekr.20050407144342.3"></t>
 <t tx="ekr.20050407144417"></t>
+<t tx="ekr.20050417072710.1">User (client) code should call u.beforeX and u.afterX methods to create a bead
+describing the operation that is being performed. (By convention, the code sets
+u = c.undoer for undoable operations.) Most u.beforeX methods return 'undoData'
+that the client code merely passes to the corresponding u.afterX method. This
+data contains the 'before' snapshot. The u.afterX methods then create a bead
+containing both the 'before' and 'after' snapshots.
+
+u.beforeChangeGroup and u.afterChangeGroup allow multiple calls to u.beforeX and
+u.afterX methods to be treated as a single undoable entry. See the code for the
+Change All, Sort, Promote and Demote commands for examples. The
+u.before/afterChangeGroup methods substantially reduce the number of
+u.before/afterX methods needed.
+
+Plugins may define their own u.before/afterX methods. Indeed, u.afterX merely
+needs to set the bunch.undoHelper and bunch.redoHelper ivars to the methods used
+to undo and redo the operation. See the code for the various u.before/afterX
+methods for guidance.
+
+p.setDirty and p.setAllAncestorAtFileNodesDirty now return a 'dirtyVnodeList'
+that all vnodes that became dirty as the result of an operation. More than one
+list may be generated: client code is responsible for merging lists using the
+pattern dirtyVnodeList.extend(dirtyVnodeList2)
+
+See the section called &lt;&lt; How Leo implements unlimited undo &gt;&gt; in leoUndo.py for
+more details. In general, the best way to see how to implement undo is to see
+how Leo's core calls the u.before/afterX methods.</t>
 </tnodes>
 </leo_file>
