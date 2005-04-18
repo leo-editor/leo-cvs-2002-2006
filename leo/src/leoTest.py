@@ -403,14 +403,22 @@ class testUtils:
             p2.moveToThreadNext()
     
         if not ok:
+            print 'compareOutlines failed'
             if not p1 or not p2:
-                g.trace('failed: p1 and p2')
+                print 'p1 and p2'
             elif p1.numberOfChildren() != p2.numberOfChildren():
-                g.trace('failed: p1.numberOfChildren() == p2.numberOfChildren()')
+                print 'p1.numberOfChildren()=%d, p2.numberOfChildren()=%d' % (
+                    p1.numberOfChildren(),p2.numberOfChildren())
             elif compareHeadlines and (p1.headString() != p2.headString()):
-                g.trace('failed: p1.headString() == p2.headString()')
+                print 'p1.head', p1.headString()
+                print 'p2.head', p2.headString()
+            elif p1.bodyString() != p2.bodyString():
+                print 'p1.body'
+                print repr(p1.bodyString())
+                print 'p2.body'
+                print repr(p2.bodyString())
             elif p1.isCloned() != p2.isCloned():
-                g.trace('failed: p1.isCloned() == p2.isCloned()')
+                print 'p1.isCloned() == p2.isCloned()'
     
         return ok
     #@nonl
@@ -701,7 +709,7 @@ def runAtFileTest(c,p):
         raise
 #@nonl
 #@-node:ekr.20050415070840.44:at-File test code (leoTest.py)
-#@+node:ekr.20050417095020:NEW Reformat Paragraph test code (leoTest.py)
+#@+node:ekr.20050417095020:Reformat Paragraph test code (leoTest.py)
 # DTHEIN 2004.01.11: Added unit tests for reformatParagraph
 #@nonl
 #@+node:ekr.20050417114404:class reformatParagraphTest
@@ -749,8 +757,8 @@ class reformatParagraphTest:
     #@+node:ekr.20050417105607.3:checkText
     def checkText(self):
     
-        new_text = self.tempChild_v.bodyString()
-        ref_text = self.after_v.bodyString()
+        new_text = self.tempChild.bodyString()
+        ref_text = self.after.bodyString()
         newLines = new_text.splitlines(1)
         refLines = ref_text.splitlines(1)
         newLinesCount = len(newLines)
@@ -769,26 +777,26 @@ class reformatParagraphTest:
     #@+node:ekr.20050417105607.4:copyBeforeToTemp
     def copyBeforeToTemp(self):
     
-        c = self.c ; temp_v = self.temp_v
+        c = self.c ; tempNode = self.tempNode
     
         # Delete all children of temp node.
-        while temp_v.firstChild():
-            temp_v.firstChild().doDelete(temp_v)
+        while tempNode.firstChild():
+            tempNode.firstChild().doDelete(tempNode)
     
         # Copy the before node text to the temp node.
-        text = self.before_v.bodyString()
-        temp_v.setTnodeText(text,g.app.tkEncoding)
+        text = self.before.bodyString()
+        tempNode.setTnodeText(text,g.app.tkEncoding)
     
         # create the child node that holds the text.
         t = leoNodes.tnode(headString="tempChildNode")
-        self.tempChild_v = self.temp_v.insertAsNthChild(0,t)
+        self.tempChild = self.tempNode.insertAsNthChild(0,t)
     
         # copy the before text to the temp text.
-        text = self.before_v.bodyString()
-        self.tempChild_v.setTnodeText(text,g.app.tkEncoding)
+        text = self.before.bodyString()
+        self.tempChild.setTnodeText(text,g.app.tkEncoding)
     
         # Make the temp child node current, and put the cursor at the beginning.
-        c.selectVnode(self.tempChild_v)
+        c.selectVnode(self.tempChild)
         c.frame.body.setInsertPointToStartOfLine( 0 )
         c.frame.body.setTextSelection(None,None)
     #@nonl
@@ -824,13 +832,12 @@ class reformatParagraphTest:
         c = self.c ; p = self.p
         u = self.u = testUtils()
     
-        self.current_v = p.copy()
-        self.before_v = u.findNodeInTree(p,"before")
-        self.after_v  = u.findNodeInTree(p,"after")
-        self.temp_v   = u.findNodeInTree(p,"tempNode")
-        if not self.temp_v: print 'no temp_v: p = ',p.headString()
-        assert(self.temp_v)
-        self.tempChild_v = None
+        self.before = u.findNodeInTree(p,"before")
+        self.after  = u.findNodeInTree(p,"after")
+        self.tempNode   = u.findNodeInTree(p,"tempNode")
+        if not self.tempNode: print 'no tempNode: p = ',p.headString()
+        assert(self.tempNode)
+        self.tempChild = None
     
         self.copyBeforeToTemp()
     #@nonl
@@ -838,15 +845,15 @@ class reformatParagraphTest:
     #@+node:ekr.20050417103035.1:tearDown
     def tearDown(self):
     
-        c = self.c ; temp_v = self.temp_v
+        c = self.c ; tempNode = self.tempNode
     
         # clear the temp node and mark it unchanged
-        temp_v.setTnodeText("",g.app.tkEncoding)
-        temp_v.clearDirty()
+        tempNode.setTnodeText("",g.app.tkEncoding)
+        tempNode.clearDirty()
     
         # Delete all children of temp node.
-        while temp_v.firstChild():
-            temp_v.firstChild().doDelete(temp_v)
+        while tempNode.firstChild():
+            tempNode.firstChild().doDelete(tempNode)
     #@nonl
     #@-node:ekr.20050417103035.1:tearDown
     #@-others
@@ -963,7 +970,7 @@ class leadingWSOnEmptyLinesTest (reformatParagraphTest):
     #@-others
 #@nonl
 #@-node:ekr.20050417095020.19:class leadingWSOnEmptyLinesTest (reformatParagraphTest)
-#@+node:ekr.20050417095020.18:testDirectiveBreaksParagraph (reformatParagraphTest)
+#@+node:ekr.20050417095020.18:class testDirectiveBreaksParagraph (reformatParagraphTest)
 class directiveBreaksParagraphTest (reformatParagraphTest):
     
     #@    @+others
@@ -986,8 +993,8 @@ class directiveBreaksParagraphTest (reformatParagraphTest):
     #@-node:ekr.20050417122215:runTest
     #@-others
 #@nonl
-#@-node:ekr.20050417095020.18:testDirectiveBreaksParagraph (reformatParagraphTest)
-#@-node:ekr.20050417095020:NEW Reformat Paragraph test code (leoTest.py)
+#@-node:ekr.20050417095020.18:class testDirectiveBreaksParagraph (reformatParagraphTest)
+#@-node:ekr.20050417095020:Reformat Paragraph test code (leoTest.py)
 #@+node:ekr.20050415070840.72:Edit Body test code (leoTest.py)
 #@+node:ekr.20050415070840.73: makeEditBodySuite
 def makeEditBodySuite():
@@ -1025,8 +1032,8 @@ class editBodyTestCase(unittest.TestCase):
     """Data-driven unit tests for Leo's edit body commands."""
 
     #@    @+others
-    #@+node:ekr.20050415070840.75:__init__
-    def __init__ (self,c,parent,before,after,sel,ins,temp_v):
+    #@+node:ekr.20050415070840.75: __init__
+    def __init__ (self,c,parent,before,after,sel,ins,tempNode):
     
         # Init the base class.
         unittest.TestCase.__init__(self)
@@ -1039,8 +1046,9 @@ class editBodyTestCase(unittest.TestCase):
         self.after  = after.copy()
         self.sel    = sel.copy() # Two lines giving the selection range in tk coordinates.
         self.ins    = ins.copy() # One line giving the insert point in tk coordinate.
-        self.temp_v = temp_v.copy()
+        self.tempNode = tempNode.copy()
     #@nonl
+    #@-node:ekr.20050415070840.75: __init__
     #@+node:ekr.20050415070840.76: fail
     def fail (self):
     
@@ -1051,56 +1059,45 @@ class editBodyTestCase(unittest.TestCase):
         g.app.unitTestDict["fail"] = g.callerName(2)
     #@nonl
     #@-node:ekr.20050415070840.76: fail
-    #@-node:ekr.20050415070840.75:__init__
     #@+node:ekr.20050415070840.77:editBody
     def editBody (self):
     
         c = self.c ; u = self.u
     
-        # Compute the result in temp_v.bodyString()
+        # Compute the result in tempNode.bodyString()
         commandName = self.parent.headString()
         # g.trace(commandName)
         command = getattr(c,commandName)
         command()
     
         if 1:
-            assert(u.compareOutlines(self.temp_v,self.after,compareHeadlines=False))
+            assert(u.compareOutlines(self.tempNode,self.after,compareHeadlines=False))
             c.undoer.undo()
-            assert(u.compareOutlines(self.temp_v,self.before,compareHeadlines=False))
+            assert(u.compareOutlines(self.tempNode,self.before,compareHeadlines=False))
             c.undoer.redo()
-            assert(u.compareOutlines(self.temp_v,self.after,compareHeadlines=False))
+            assert(u.compareOutlines(self.tempNode,self.after,compareHeadlines=False))
             c.undoer.undo()
-            assert(u.compareOutlines(self.temp_v,self.before,compareHeadlines=False))
+            assert(u.compareOutlines(self.tempNode,self.before,compareHeadlines=False))
     #@-node:ekr.20050415070840.77:editBody
-    #@+node:ekr.20050415070840.78:tearDown
-    def tearDown (self):
+    #@+node:ekr.20050415070840.80:runTest
+    def runTest(self):
     
-        c = self.c ; temp_v = self.temp_v
-    
-        c.selectVnode(temp_v)
-        temp_v.setTnodeText("",g.app.tkEncoding)
-        temp_v.clearDirty()
-    
-        # Delete all children of temp node.
-        while temp_v.firstChild():
-            temp_v.firstChild().doDelete(temp_v)
+        self.editBody()
     #@nonl
-    #@-node:ekr.20050415070840.78:tearDown
+    #@-node:ekr.20050415070840.80:runTest
     #@+node:ekr.20050415070840.79:setUp
-    # Warning: this is Tk-specific code.
-    
     def setUp(self,*args,**keys):
     
-        c = self.c ; temp_v = self.temp_v
+        c = self.c ; tempNode = self.tempNode
     
         # Delete all children of temp node.
-        while temp_v.firstChild():
-            temp_v.firstChild().doDelete(temp_v)
+        while tempNode.firstChild():
+            tempNode.firstChild().doDelete(tempNode)
     
         text = self.before.bodyString()
     
-        temp_v.setTnodeText(text,g.app.tkEncoding)
-        c.selectVnode(self.temp_v) # 7/8/04
+        tempNode.setTnodeText(text,g.app.tkEncoding)
+        c.selectPosition(self.tempNode)
     
         t = c.frame.body.bodyCtrl
         if self.sel:
@@ -1119,12 +1116,20 @@ class editBodyTestCase(unittest.TestCase):
             g.app.gui.setTextSelection(t,"1.0","1.0")
     #@nonl
     #@-node:ekr.20050415070840.79:setUp
-    #@+node:ekr.20050415070840.80:runTest
-    def runTest(self):
+    #@+node:ekr.20050415070840.78:tearDown
+    def tearDown (self):
     
-        self.editBody()
+        c = self.c ; tempNode = self.tempNode
+    
+        c.selectVnode(tempNode)
+        tempNode.setTnodeText("",g.app.tkEncoding)
+        tempNode.clearDirty()
+    
+        # Delete all children of temp node.
+        while tempNode.firstChild():
+            tempNode.firstChild().doDelete(tempNode)
     #@nonl
-    #@-node:ekr.20050415070840.80:runTest
+    #@-node:ekr.20050415070840.78:tearDown
     #@-others
 #@nonl
 #@-node:ekr.20050415070840.74:class editBodyTestCase
