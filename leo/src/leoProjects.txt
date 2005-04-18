@@ -519,7 +519,7 @@ delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
 self.language = c.target_language
 
 self.encoding = c.config.default_derived_file_encoding
-self.output_newline = g.getOutputNewline(c=self.c) # 4/24/03: initialize from config settings.
+self.output_newline = g.getOutputNewline(c=self.c) # Init from config settings.
 #@nonl
 #@-node:ekr.20041005105605.223:<< Set ivars >>
 #@+node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
@@ -3538,7 +3538,7 @@ delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
 self.language = c.target_language
 
 self.encoding = c.config.default_derived_file_encoding
-self.output_newline = g.getOutputNewline(c=self.c) # 4/24/03: initialize from config settings.
+self.output_newline = g.getOutputNewline(c=self.c) # Init from config settings.
 #@nonl
 #@-node:ekr.20041005105605.223:<< Set ivars >>
 #@+node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
@@ -5584,7 +5584,7 @@ delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
 self.language = c.target_language
 
 self.encoding = c.config.default_derived_file_encoding
-self.output_newline = g.getOutputNewline(c=self.c) # 4/24/03: initialize from config settings.
+self.output_newline = g.getOutputNewline(c=self.c) # Init from config settings.
 #@nonl
 #@-node:ekr.20041005105605.223:<< Set ivars >>
 #@+node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
@@ -6161,7 +6161,7 @@ def initWriteIvars(self,root,targetFileName,
     self.initCommonIvars()
     << init ivars for writing >>
     
-    self.scanAllDirectives(root,scripting=scriptWrite) # 2/22/04
+    self.scanAllDirectives(root,scripting=scriptWrite)
     if scriptWrite:
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
@@ -6174,7 +6174,10 @@ def initWriteIvars(self,root,targetFileName,
     self.toString = toString
     self.root = root
     
-    # Bug fix: 12/31/04: Init all other ivars even if there is an error.
+    # Ignore config settings for unit testing.
+    if toString and g.app.unitTesting: self.output_newline = '\n'
+    
+    # Init all other ivars even if there is an error.
     if not self.errors: 
         self.root.v.t.tnodeList = []
 #@nonl
@@ -10224,7 +10227,7 @@ delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
 self.language = c.target_language
 
 self.encoding = c.config.default_derived_file_encoding
-self.output_newline = g.getOutputNewline(c=self.c) # 4/24/03: initialize from config settings.
+self.output_newline = g.getOutputNewline(c=self.c) # Init from config settings.
 #@nonl
 #@-node:ekr.20041005105605.223:<< Set ivars >>
 #@+node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
@@ -10761,7 +10764,7 @@ def initWriteIvars(self,root,targetFileName,
     self.initCommonIvars()
     << init ivars for writing >>
     
-    self.scanAllDirectives(root,scripting=scriptWrite) # 2/22/04
+    self.scanAllDirectives(root,scripting=scriptWrite)
     if scriptWrite:
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
@@ -10774,7 +10777,10 @@ def initWriteIvars(self,root,targetFileName,
     self.toString = toString
     self.root = root
     
-    # Bug fix: 12/31/04: Init all other ivars even if there is an error.
+    # Ignore config settings for unit testing.
+    if toString and g.app.unitTesting: self.output_newline = '\n'
+    
+    # Init all other ivars even if there is an error.
     if not self.errors: 
         self.root.v.t.tnodeList = []
 #@nonl
@@ -11528,10 +11534,8 @@ def getScript (c,p,useSelectedText=True,script=None):
             else:
                 at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
                 script = at.stringOutput
-            # Bug fix: 2/22/04.  Don't use atFile.output_newline ivar.  It may not exist!
-            if g.getOutputNewline(c=c) == '\r\n':
-                if g.app.unitTesting: g.app.unitTestDict['stripping-crlf']=True
-                script = script.replace("\r\n","\n")
+            # The simple way: covert crlf by brute force.
+            script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
@@ -11546,14 +11550,8 @@ def getScript (c,p,useSelectedText=True,script=None):
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
 def test_g_getScript_strips_crlf():
 
-    old_output_newline = c.config.output_newline
-    c.config.output_newline = 'crlf' # A config setting, not an actual line ending.
-    g.app.unitTestDict = {}
     script = g.getScript(c,p) # This will get the text of this node.
-    assert g.app.unitTestDict.get('stripping-crlf')
-    c.config.output_newline = old_output_newline
-
-    assert script.find('\r\n') == -1
+    assert script.find('\r\n') == -1, repr(script)
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_crlf
 #@-node:EKR.20040614071102.1:g.getScript & tests
@@ -12355,10 +12353,8 @@ def getScript (c,p,useSelectedText=True,script=None):
             else:
                 at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
                 script = at.stringOutput
-            # Bug fix: 2/22/04.  Don't use atFile.output_newline ivar.  It may not exist!
-            if g.getOutputNewline(c=c) == '\r\n':
-                if g.app.unitTesting: g.app.unitTestDict['stripping-crlf']=True
-                script = script.replace("\r\n","\n")
+            # The simple way: covert crlf by brute force.
+            script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
@@ -12373,14 +12369,8 @@ def getScript (c,p,useSelectedText=True,script=None):
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
 def test_g_getScript_strips_crlf():
 
-    old_output_newline = c.config.output_newline
-    c.config.output_newline = 'crlf' # A config setting, not an actual line ending.
-    g.app.unitTestDict = {}
     script = g.getScript(c,p) # This will get the text of this node.
-    assert g.app.unitTestDict.get('stripping-crlf')
-    c.config.output_newline = old_output_newline
-
-    assert script.find('\r\n') == -1
+    assert script.find('\r\n') == -1, repr(script)
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_crlf
 #@-node:EKR.20040614071102.1:g.getScript & tests
@@ -12394,7 +12384,7 @@ def initWriteIvars(self,root,targetFileName,
     self.initCommonIvars()
     << init ivars for writing >>
     
-    self.scanAllDirectives(root,scripting=scriptWrite) # 2/22/04
+    self.scanAllDirectives(root,scripting=scriptWrite)
     if scriptWrite:
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
@@ -12407,7 +12397,10 @@ def initWriteIvars(self,root,targetFileName,
     self.toString = toString
     self.root = root
     
-    # Bug fix: 12/31/04: Init all other ivars even if there is an error.
+    # Ignore config settings for unit testing.
+    if toString and g.app.unitTesting: self.output_newline = '\n'
+    
+    # Init all other ivars even if there is an error.
     if not self.errors: 
         self.root.v.t.tnodeList = []
 #@nonl
@@ -13634,7 +13627,7 @@ delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
 self.language = c.target_language
 
 self.encoding = c.config.default_derived_file_encoding
-self.output_newline = g.getOutputNewline(c=self.c) # 4/24/03: initialize from config settings.
+self.output_newline = g.getOutputNewline(c=self.c) # Init from config settings.
 #@nonl
 #@-node:ekr.20041005105605.223:<< Set ivars >>
 #@+node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
@@ -20551,8 +20544,8 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
 c:\prog\leoCVS\leo\config\leoSettings.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
@@ -22850,10 +22843,8 @@ def getScript (c,p,useSelectedText=True,script=None):
             else:
                 at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
                 script = at.stringOutput
-            # Bug fix: 2/22/04.  Don't use atFile.output_newline ivar.  It may not exist!
-            if g.getOutputNewline(c=c) == '\r\n':
-                if g.app.unitTesting: g.app.unitTestDict['stripping-crlf']=True
-                script = script.replace("\r\n","\n")
+            # The simple way: covert crlf by brute force.
+            script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
@@ -22868,14 +22859,8 @@ def getScript (c,p,useSelectedText=True,script=None):
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
 def test_g_getScript_strips_crlf():
 
-    old_output_newline = c.config.output_newline
-    c.config.output_newline = 'crlf' # A config setting, not an actual line ending.
-    g.app.unitTestDict = {}
     script = g.getScript(c,p) # This will get the text of this node.
-    assert g.app.unitTestDict.get('stripping-crlf')
-    c.config.output_newline = old_output_newline
-
-    assert script.find('\r\n') == -1
+    assert script.find('\r\n') == -1, repr(script)
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_crlf
 #@-node:EKR.20040614071102.1:g.getScript & tests
@@ -30590,10 +30575,8 @@ def getScript (c,p,useSelectedText=True,script=None):
             else:
                 at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
                 script = at.stringOutput
-            # Bug fix: 2/22/04.  Don't use atFile.output_newline ivar.  It may not exist!
-            if g.getOutputNewline(c=c) == '\r\n':
-                if g.app.unitTesting: g.app.unitTestDict['stripping-crlf']=True
-                script = script.replace("\r\n","\n")
+            # The simple way: covert crlf by brute force.
+            script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
@@ -30608,14 +30591,8 @@ def getScript (c,p,useSelectedText=True,script=None):
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
 def test_g_getScript_strips_crlf():
 
-    old_output_newline = c.config.output_newline
-    c.config.output_newline = 'crlf' # A config setting, not an actual line ending.
-    g.app.unitTestDict = {}
     script = g.getScript(c,p) # This will get the text of this node.
-    assert g.app.unitTestDict.get('stripping-crlf')
-    c.config.output_newline = old_output_newline
-
-    assert script.find('\r\n') == -1
+    assert script.find('\r\n') == -1, repr(script)
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_crlf
 #@-node:EKR.20040614071102.1:g.getScript & tests
@@ -31410,10 +31387,8 @@ def getScript (c,p,useSelectedText=True,script=None):
             else:
                 at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
                 script = at.stringOutput
-            # Bug fix: 2/22/04.  Don't use atFile.output_newline ivar.  It may not exist!
-            if g.getOutputNewline(c=c) == '\r\n':
-                if g.app.unitTesting: g.app.unitTestDict['stripping-crlf']=True
-                script = script.replace("\r\n","\n")
+            # The simple way: covert crlf by brute force.
+            script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
@@ -31428,14 +31403,8 @@ def getScript (c,p,useSelectedText=True,script=None):
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
 def test_g_getScript_strips_crlf():
 
-    old_output_newline = c.config.output_newline
-    c.config.output_newline = 'crlf' # A config setting, not an actual line ending.
-    g.app.unitTestDict = {}
     script = g.getScript(c,p) # This will get the text of this node.
-    assert g.app.unitTestDict.get('stripping-crlf')
-    c.config.output_newline = old_output_newline
-
-    assert script.find('\r\n') == -1
+    assert script.find('\r\n') == -1, repr(script)
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_crlf
 #@-node:EKR.20040614071102.1:g.getScript & tests
@@ -32605,10 +32574,8 @@ def getScript (c,p,useSelectedText=True,script=None):
             else:
                 at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
                 script = at.stringOutput
-            # Bug fix: 2/22/04.  Don't use atFile.output_newline ivar.  It may not exist!
-            if g.getOutputNewline(c=c) == '\r\n':
-                if g.app.unitTesting: g.app.unitTestDict['stripping-crlf']=True
-                script = script.replace("\r\n","\n")
+            # The simple way: covert crlf by brute force.
+            script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
@@ -32623,14 +32590,8 @@ def getScript (c,p,useSelectedText=True,script=None):
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
 def test_g_getScript_strips_crlf():
 
-    old_output_newline = c.config.output_newline
-    c.config.output_newline = 'crlf' # A config setting, not an actual line ending.
-    g.app.unitTestDict = {}
     script = g.getScript(c,p) # This will get the text of this node.
-    assert g.app.unitTestDict.get('stripping-crlf')
-    c.config.output_newline = old_output_newline
-
-    assert script.find('\r\n') == -1
+    assert script.find('\r\n') == -1, repr(script)
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_crlf
 #@-node:EKR.20040614071102.1:g.getScript & tests
@@ -32676,7 +32637,7 @@ delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
 self.language = c.target_language
 
 self.encoding = c.config.default_derived_file_encoding
-self.output_newline = g.getOutputNewline(c=self.c) # 4/24/03: initialize from config settings.
+self.output_newline = g.getOutputNewline(c=self.c) # Init from config settings.
 #@nonl
 #@-node:ekr.20041005105605.223:<< Set ivars >>
 #@+node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
