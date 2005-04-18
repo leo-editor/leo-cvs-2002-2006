@@ -145,7 +145,8 @@ class baseFileCommands:
         else:
             tref = self.canonicalTnodeIndex(tref)
             t = self.tnodesDict.get(tref)
-            if not t: t = self.newTnode(tref)
+            if not t:
+                t = self.newTnode(tref)
         if back: # create v after back.
             v = back.insertAfter(t)
         elif parent: # create v as the parent's first child.
@@ -428,14 +429,6 @@ class baseFileCommands:
             return False
     #@-node:ekr.20031218072017.1245:match routines
     #@-node:ekr.20031218072017.1243:get & match (basic)(leoFileCommands)
-    #@+node:ekr.20050407073500:getElementAttributes (new in 4.3) NOT USED
-    def getElementAttributes (self,elementKind):
-        
-        data = []
-        
-        return data
-    #@nonl
-    #@-node:ekr.20050407073500:getElementAttributes (new in 4.3) NOT USED
     #@+node:ekr.20031218072017.3022:getClipboardHeader
     def getClipboardHeader (self):
     
@@ -737,7 +730,7 @@ class baseFileCommands:
         self.fileBuffer = s ; self.fileIndex = 0
         self.tnodesDict = {}
         self.descendentUnknownAttributesDictList = []
-        
+    
         if not reassignIndices:
             #@        << recreate tnodesDict >>
             #@+node:EKR.20040610134756:<< recreate tnodesDict >>
@@ -896,12 +889,6 @@ class baseFileCommands:
                 index = self.getDqString()
             elif self.matchTag("rtf=\"1\""): pass # ignored
             elif self.matchTag("rtf=\"0\""): pass # ignored
-            elif self.matchTag('<uAbin64>'): # New in 4.3
-                data = self.getElementAttributes('bin64')
-                self.getTag('</uAbin64>')
-            elif self.matchTag('<uAstr>'): # New in 4.3
-                data = self.getElementAttributes('str')
-                self.getTag('</uAstr>')
             elif self.matchTag(">"):         break
             else: # New for 4.0: allow unknown attributes.
                 # New in 4.2: allow pickle'd and hexlify'ed values.
@@ -1038,7 +1025,7 @@ class baseFileCommands:
                     t = self.tnodesDict.get(index)
                     
                     if t in self.forbiddenTnodes:
-                        g.trace(t)
+                        # g.trace(t)
                         raise invalidPaste
                     #@nonl
                     #@-node:ekr.20041023110111:<< raise invalidPaste if the tnode is in self.forbiddenTnodes >>
@@ -1060,15 +1047,6 @@ class baseFileCommands:
             elif self.matchTag("marks="): # New in 4.2.
                 s = self.getDqString()
                 self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
-            # elif self.matchTag('<uAbase64>'): # New in 4.3
-                # data = self.getElementAttributes('bin64')
-                # self.getTag('</uAbase64>')
-            # elif self.matchTag('<uApickle>'): # New in 4.3
-                # data = self.getElementAttributes('pickle')
-                # self.getTag('</uApickle>')
-            # elif self.matchTag('<uAstr>'): # New in 4.3
-                # data = self.getElementAttributes('str')
-                # self.getTag('</uAstr>')
             elif self.matchTag(">"):
                 break
             else: # New for 4.0: allow unknown attributes.
@@ -1078,16 +1056,17 @@ class baseFileCommands:
         # Headlines are optional.
         if self.matchTag("<vh>"):
             headline = self.getEscapedString() ; self.getTag("</vh>")
-        
         # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
         if skip:
             v = self.getExistingVnode(tref,headline)
+            if v: # Bug fix: 4/18/05: The headline may change during paste as clone.
+                v.initHeadString(headline,encoding=self.leo_file_encoding)
         if v is None:
             v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
             skip = skip or skip2
             if tnodeList:
                 v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-    
+                
         #@    << Set the remembered status bits >>
         #@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
         if setCurrent:
@@ -1923,7 +1902,7 @@ class baseFileCommands:
         #@nonl
         #@-node:ekr.20031218072017.1866:<< Write the head text >>
         #@nl
-    
+        
         if not self.usingClipboard:
             #@        << issue informational messages >>
             #@+node:ekr.20040702085529:<< issue informational messages >>
