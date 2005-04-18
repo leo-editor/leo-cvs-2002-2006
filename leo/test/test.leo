@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6910" clone_windows="0"/>
-<globals body_outline_ratio="0.763903462749">
-	<global_window_position top="10" left="209" height="953" width="916"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6933" clone_windows="0"/>
+<globals body_outline_ratio="0.417628541448">
+	<global_window_position top="10" left="270" height="953" width="916"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1053,7 +1053,7 @@
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1127,7 +1127,6 @@
 </v>
 <v t="ekr.20050119144013"><vh>Remove all file system dependencies</vh></v>
 </v>
-<v t="ekr.20040712101754"><vh>General Unit Tests</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
@@ -1158,6 +1157,7 @@
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
+<v t="ekr.20040712101754"><vh>General Unit Tests</vh>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20041130092210"><vh>Batch mode tests</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
@@ -1477,9 +1477,6 @@
 <v t="ekr.20050105090632"><vh>@test official g.app ivars</vh></v>
 </v>
 <v t="ekr.20040712101754.102"><vh>Tests of @file nodes</vh>
-<v t="ekr.20050415070840.44"><vh>at-File test code (leoTest.py)</vh>
-<v t="ekr.20050415070840.45"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
-</v>
 <v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
 <v t="ekr.20040712101754.104"><vh>#@file</vh></v>
 <v t="ekr.20040712101754.105"><vh>Output</vh></v>
@@ -1555,6 +1552,178 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
+<v t="ekr.20050408084135" a="E"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38" a="ETV"><vh>editBodyTests</vh>
+<v t="ekr.20050417202713"><vh>addComments</vh>
+<v t="ekr.20050417202713.1"><vh>before</vh></v>
+<v t="ekr.20050417202713.2"><vh>after</vh></v>
+<v t="ekr.20050417202713.3"><vh>selection</vh></v>
+</v>
+<v t="ekr.20050417204940"><vh>convertAllBlanks</vh>
+<v t="ekr.20050417204940.1"><vh>before</vh></v>
+<v t="ekr.20050417204940.2"><vh>after</vh></v>
+<v t="ekr.20050417204940.3"><vh>selection</vh></v>
+</v>
+<v t="ekr.20050417205012"><vh>convertAllTabs</vh>
+<v t="ekr.20050417205012.1"><vh>before</vh></v>
+<v t="ekr.20050417205012.2"><vh>after</vh></v>
+<v t="ekr.20050417205012.3"><vh>selection</vh></v>
+</v>
+<v t="ekr.20050417203114"><vh>convertBlanks</vh>
+<v t="ekr.20050417203310"><vh>before</vh></v>
+<v t="ekr.20050417203310.1"><vh>after</vh></v>
+<v t="ekr.20050417203336"><vh>selection</vh></v>
+</v>
+<v t="ekr.20050417203114.1"><vh>convertTabs</vh>
+<v t="ekr.20050417204834"><vh>before</vh></v>
+<v t="ekr.20050417204830"><vh>after</vh></v>
+<v t="ekr.20050417204901"><vh>selection</vh></v>
+</v>
+<v t="ekr.20040712101754.49"><vh>dedentBody</vh>
+<v t="ekr.20040712101754.50"><vh>before</vh></v>
+<v t="ekr.20040712101754.51"><vh>after</vh></v>
+<v t="ekr.20040712101754.52"><vh>selection</vh></v>
+</v>
+<v t="ekr.20050417202817"><vh>deleteComments</vh>
+<v t="ekr.20050417202817.1"><vh>before</vh></v>
+<v t="ekr.20050417202817.2"><vh>after</vh></v>
+<v t="ekr.20050417202817.3"><vh>selection</vh></v>
+</v>
+<v t="ekr.20050417201845"><vh>extract</vh>
+<v t="ekr.20050417201845.1" a="E"><vh>before</vh></v>
+<v t="ekr.20050417201845.2"><vh>after</vh>
+<v t="ekr.20050417201845.3"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050417201845.4"><vh>selection</vh></v>
+</v>
+<v t="ekr.20040712101754.40"><vh>extractSection</vh>
+<v t="ekr.20040712101754.41"><vh>before</vh></v>
+<v t="ekr.20040712101754.42"><vh>after</vh>
+<v t="ekr.20040712101754.43"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040712101754.44"><vh>selection</vh></v>
+</v>
+<v t="ekr.20050417202052"><vh>extractSectionNames</vh>
+<v t="ekr.20050417202052.1"><vh>before</vh></v>
+<v t="ekr.20050417202112"><vh>after</vh>
+<v t="ekr.20050417202112.1"><vh>&lt;&lt; section 1&gt;&gt;</vh></v>
+<v t="ekr.20050417202112.2"><vh>&lt;&lt; section 2&gt;&gt;</vh></v>
+<v t="ekr.20050417202112.3"><vh>&lt;&lt; section 3 &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050417202243"><vh>selection</vh></v>
+</v>
+<v t="ekr.20040712101754.45"><vh>indentBody</vh>
+<v t="ekr.20040712101754.46"><vh>before</vh></v>
+<v t="ekr.20040712101754.47"><vh>after</vh></v>
+<v t="ekr.20040712101754.48"><vh>selection</vh></v>
+</v>
+<v t="ekr.20040712101754.39" a="E"><vh>tempNode</vh></v>
+</v>
+</v>
+<v t="ekr.20050417102057"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20050417102114"><vh>@test noTrailingNewline</vh>
+<v t="ekr.20050417104821"><vh>data</vh>
+<v t="ekr.20050417124704"><vh>tempNode</vh></v>
+<v t="ekr.20050417102114.1"><vh>before</vh></v>
+<v t="ekr.20050417102114.2"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417111144"><vh>@test trailingNewline</vh>
+<v t="ekr.20050417111144.1"><vh>data</vh>
+<v t="ekr.20050417111240"><vh>tempNode</vh></v>
+<v t="ekr.20050417111144.2"><vh>before</vh></v>
+<v t="ekr.20050417111144.3"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417113549"><vh>@test mixedLineLengths</vh>
+<v t="ekr.20050417113910"><vh>data</vh>
+<v t="ekr.20050417113921"><vh>tempNode</vh></v>
+<v t="ekr.20050417113910.1"><vh>before</vh></v>
+<v t="ekr.20050417113910.2"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417114153"><vh>@test mixedLinesWithLeadingWS</vh>
+<v t="ekr.20050417114221"><vh>data</vh>
+<v t="ekr.20050417114221.1"><vh>tempNode</vh></v>
+<v t="ekr.20050417114221.2"><vh>before</vh></v>
+<v t="ekr.20050417114221.3"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417114836"><vh>@test noChangeRequired</vh>
+<v t="ekr.20050417095124.16"><vh>data</vh>
+<v t="ekr.20050417114914"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.17"><vh>before</vh></v>
+<v t="ekr.20050417095124.18"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.11"><vh>@test honorLeadingWS</vh>
+<v t="ekr.20050417095124.19"><vh>data</vh>
+<v t="ekr.20050417115111"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.20"><vh>before</vh></v>
+<v t="ekr.20050417095124.21"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.12"><vh>@test honorLeadingWSVar1</vh>
+<v t="ekr.20050417095124.22"><vh>data</vh>
+<v t="ekr.20050417115257"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.23"><vh>before</vh></v>
+<v t="ekr.20050417095124.24"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.13"><vh>@test simpleHangingIndent</vh>
+<v t="ekr.20050417095124.25"><vh>data</vh>
+<v t="ekr.20050417115414"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.26"><vh>before</vh></v>
+<v t="ekr.20050417095124.27"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.14"><vh>@test testSimpleHangingIndentVar1</vh>
+<v t="ekr.20050417095124.28"><vh>data</vh>
+<v t="ekr.20050417115559"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.29"><vh>before</vh></v>
+<v t="ekr.20050417095124.30"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417095020.15"><vh>@test simpleHangingIndentVar2</vh>
+<v t="ekr.20050417095124.31"><vh>data</vh>
+<v t="ekr.20050417115709"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.32"><vh>before</vh></v>
+<v t="ekr.20050417095124.33"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417120312.1"><vh>@test multiParagraphTest</vh>
+<v t="ekr.20050417095124.34"><vh>data</vh>
+<v t="ekr.20050417120312.2"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.35"><vh>before</vh></v>
+<v t="ekr.20050417095124.36"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417121448"><vh>@test multiParagraphWithListTest</vh>
+<v t="ekr.20050417095124.37"><vh>data</vh>
+<v t="ekr.20050417121448.1"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.38"><vh>before</vh></v>
+<v t="ekr.20050417095124.39"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417121942"><vh>@test leadingWSOnEmptyLinesTest</vh>
+<v t="ekr.20050417095124.43"><vh>data</vh>
+<v t="ekr.20050417121942.1"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.44"><vh>before</vh></v>
+<v t="ekr.20050417095124.45"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20050417122215.1"><vh>@test directiveBreaksParagraphTest</vh>
+<v t="ekr.20050417095124.40"><vh>data</vh>
+<v t="ekr.20050417122215.2"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.41"><vh>before</vh></v>
+<v t="ekr.20050417095124.42"><vh>after</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+</v>
 <v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit testing for plugins</vh>
 <v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
@@ -1599,161 +1768,6 @@
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
-<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
-<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
-<v t="ekr.20050106123646"><vh>unused</vh>
-<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
-<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
-<v t="ekr.20050106094854.2"><vh> fail</vh></v>
-<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
-<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
-<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
-<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
-<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
-</v>
-</v>
-<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
-<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
-<v t="ekr.20050106080318.3"><vh> fail</vh></v>
-<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
-<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
-<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
-<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
-<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
-<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
-</v>
-<v t="ekr.20050408084135"><vh>Undo/Redo Tests</vh>
-<v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
-<v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
-<v t="ekr.20040712101754.40"><vh>extractSection</vh>
-<v t="ekr.20040712101754.41"><vh>before</vh></v>
-<v t="ekr.20040712101754.42"><vh>after</vh>
-<v t="ekr.20040712101754.43"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040712101754.44"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040712101754.45"><vh>indentBody</vh>
-<v t="ekr.20040712101754.46"><vh>before</vh></v>
-<v t="ekr.20040712101754.47"><vh>after</vh></v>
-<v t="ekr.20040712101754.48"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040712101754.49"><vh>dedentBody</vh>
-<v t="ekr.20040712101754.50"><vh>before</vh></v>
-<v t="ekr.20040712101754.51"><vh>after</vh></v>
-<v t="ekr.20040712101754.52"><vh>selection</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050417102057"><vh>New reformat Paragraph tests</vh>
-<v t="ekr.20050417102114"><vh>@test noTrailingNewline</vh>
-<v t="ekr.20050417104821"><vh>data</vh>
-<v t="ekr.20050417124704"><vh>tempNode</vh></v>
-<v t="ekr.20050417102114.1"><vh>before</vh></v>
-<v t="ekr.20050417102114.2"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417111144"><vh>@test trailingNewline</vh>
-<v t="ekr.20050417111144.1"><vh>data</vh>
-<v t="ekr.20050417111240"><vh>tempNode</vh></v>
-<v t="ekr.20050417111144.2"><vh>before</vh></v>
-<v t="ekr.20050417111144.3"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417113549"><vh>@test mixedLineLengths</vh>
-<v t="ekr.20050417113910"><vh>data</vh>
-<v t="ekr.20050417113921"><vh>tempNode</vh></v>
-<v t="ekr.20050417113910.1"><vh>before</vh></v>
-<v t="ekr.20050417113910.2"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417114153"><vh>@test mixedLinesWithLeadingWS</vh>
-<v t="ekr.20050417114221"><vh>data</vh>
-<v t="ekr.20050417114221.1"><vh>tempNode</vh></v>
-<v t="ekr.20050417114221.2"><vh>before</vh></v>
-<v t="ekr.20050417114221.3"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417114836"><vh>@test noChangeRequired</vh>
-<v t="ekr.20050417095124.16"><vh>data</vh>
-<v t="ekr.20050417114914"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.17"><vh>before</vh></v>
-<v t="ekr.20050417095124.18"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417095020.11"><vh>@test honorLeadingWS</vh>
-<v t="ekr.20050417095124.19"><vh>data</vh>
-<v t="ekr.20050417115111"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.20"><vh>before</vh></v>
-<v t="ekr.20050417095124.21"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417095020.12"><vh>@test honorLeadingWSVar1</vh>
-<v t="ekr.20050417095124.22"><vh>data</vh>
-<v t="ekr.20050417115257"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.23"><vh>before</vh></v>
-<v t="ekr.20050417095124.24"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417095020.13"><vh>@test simpleHangingIndent</vh>
-<v t="ekr.20050417095124.25"><vh>data</vh>
-<v t="ekr.20050417115414"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.26"><vh>before</vh></v>
-<v t="ekr.20050417095124.27"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417095020.14"><vh>@test testSimpleHangingIndentVar1</vh>
-<v t="ekr.20050417095124.28"><vh>data</vh>
-<v t="ekr.20050417115559"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.29"><vh>before</vh></v>
-<v t="ekr.20050417095124.30"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417095020.15"><vh>@test simpleHangingIndentVar2</vh>
-<v t="ekr.20050417095124.31"><vh>data</vh>
-<v t="ekr.20050417115709"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.32"><vh>before</vh></v>
-<v t="ekr.20050417095124.33"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417120312.1"><vh>@test multiParagraphTest</vh>
-<v t="ekr.20050417095124.34"><vh>data</vh>
-<v t="ekr.20050417120312.2"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.35"><vh>before</vh></v>
-<v t="ekr.20050417095124.36"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417121448"><vh>@test multiParagraphWithListTest</vh>
-<v t="ekr.20050417095124.37"><vh>data</vh>
-<v t="ekr.20050417121448.1"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.38"><vh>before</vh></v>
-<v t="ekr.20050417095124.39"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417121942"><vh>@test leadingWSOnEmptyLinesTest</vh>
-<v t="ekr.20050417095124.43"><vh>data</vh>
-<v t="ekr.20050417121942.1"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.44"><vh>before</vh></v>
-<v t="ekr.20050417095124.45"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417122215.1"><vh>@test directiveBreaksParagraphTest</vh>
-<v t="ekr.20050417095124.40"><vh>data</vh>
-<v t="ekr.20050417122215.2"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.41"><vh>before</vh></v>
-<v t="ekr.20050417095124.42"><vh>after</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
 <v t="ekr.20050225161940" annotate="7d71002e"><vh>Move executeFile into core</vh>
 <v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
 <v t="ekr.20050225162123" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@thin executeFileTest.py</vh></v>
@@ -1765,110 +1779,6 @@
 <v t="ekr.20050225164423"><vh>&lt;&lt; define subprocess_wrapper &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
-</v>
-</v>
-<v t="ekr.20050318143124"><vh>test of undo/redo Convert All Blanks</vh>
-<v t="ekr.20050318150022"><vh>node 2</vh></v>
-</v>
-<v t="ekr.20050414143234"><vh>test of extract section</vh></v>
-<v t="ekr.20050417102057" a="ETV"><vh>New reformat Paragraph tests</vh>
-<v t="ekr.20050417102114"><vh>@test noTrailingNewline</vh>
-<v t="ekr.20050417104821"><vh>data</vh>
-<v t="ekr.20050417124704"><vh>tempNode</vh></v>
-<v t="ekr.20050417102114.1"><vh>before</vh></v>
-<v t="ekr.20050417102114.2"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417111144"><vh>@test trailingNewline</vh>
-<v t="ekr.20050417111144.1"><vh>data</vh>
-<v t="ekr.20050417111240"><vh>tempNode</vh></v>
-<v t="ekr.20050417111144.2"><vh>before</vh></v>
-<v t="ekr.20050417111144.3"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417113549"><vh>@test mixedLineLengths</vh>
-<v t="ekr.20050417113910"><vh>data</vh>
-<v t="ekr.20050417113921"><vh>tempNode</vh></v>
-<v t="ekr.20050417113910.1"><vh>before</vh></v>
-<v t="ekr.20050417113910.2"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417114153"><vh>@test mixedLinesWithLeadingWS</vh>
-<v t="ekr.20050417114221"><vh>data</vh>
-<v t="ekr.20050417114221.1"><vh>tempNode</vh></v>
-<v t="ekr.20050417114221.2"><vh>before</vh></v>
-<v t="ekr.20050417114221.3"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417114836"><vh>@test noChangeRequired</vh>
-<v t="ekr.20050417095124.16"><vh>data</vh>
-<v t="ekr.20050417114914"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.17"><vh>before</vh></v>
-<v t="ekr.20050417095124.18"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417095020.11"><vh>@test honorLeadingWS</vh>
-<v t="ekr.20050417095124.19"><vh>data</vh>
-<v t="ekr.20050417115111"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.20"><vh>before</vh></v>
-<v t="ekr.20050417095124.21"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417095020.12"><vh>@test honorLeadingWSVar1</vh>
-<v t="ekr.20050417095124.22"><vh>data</vh>
-<v t="ekr.20050417115257"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.23"><vh>before</vh></v>
-<v t="ekr.20050417095124.24"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417095020.13"><vh>@test simpleHangingIndent</vh>
-<v t="ekr.20050417095124.25"><vh>data</vh>
-<v t="ekr.20050417115414"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.26"><vh>before</vh></v>
-<v t="ekr.20050417095124.27"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417095020.14"><vh>@test testSimpleHangingIndentVar1</vh>
-<v t="ekr.20050417095124.28"><vh>data</vh>
-<v t="ekr.20050417115559"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.29"><vh>before</vh></v>
-<v t="ekr.20050417095124.30"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417095020.15"><vh>@test simpleHangingIndentVar2</vh>
-<v t="ekr.20050417095124.31"><vh>data</vh>
-<v t="ekr.20050417115709"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.32"><vh>before</vh></v>
-<v t="ekr.20050417095124.33"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417120312.1"><vh>@test multiParagraphTest</vh>
-<v t="ekr.20050417095124.34"><vh>data</vh>
-<v t="ekr.20050417120312.2"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.35"><vh>before</vh></v>
-<v t="ekr.20050417095124.36"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417121448"><vh>@test multiParagraphWithListTest</vh>
-<v t="ekr.20050417095124.37"><vh>data</vh>
-<v t="ekr.20050417121448.1"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.38"><vh>before</vh></v>
-<v t="ekr.20050417095124.39"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417121942"><vh>@test leadingWSOnEmptyLinesTest</vh>
-<v t="ekr.20050417095124.43"><vh>data</vh>
-<v t="ekr.20050417121942.1"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.44"><vh>before</vh></v>
-<v t="ekr.20050417095124.45"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20050417122215.1"><vh>@test directiveBreaksParagraphTest</vh>
-<v t="ekr.20050417095124.40"><vh>data</vh>
-<v t="ekr.20050417122215.2"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.41"><vh>before</vh></v>
-<v t="ekr.20050417095124.42"><vh>after</vh></v>
-</v>
 </v>
 </v>
 </vnodes>
@@ -2442,7 +2352,7 @@ print '
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">next = p.next()
 t = next.v.t
 v = next.v
@@ -2578,7 +2488,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13788,11 +13698,6 @@ print z</t>
 <t tx="ekr.20050316074630.1">import leoTest
 
 leoTest.throwAssertionError()</t>
-<t tx="ekr.20050318143124">@tabwidth -4
-
-    line 1
-    line 2</t>
-<t tx="ekr.20050318150022">    line 1, node 2</t>
 <t tx="ekr.20050328101834"> 
         
         
@@ -13834,53 +13739,6 @@ if not golf or not controller:
 
 &lt;/body&gt;</t>
 <t tx="ekr.20050408084135"></t>
-<t tx="ekr.20050414143234">before
-&lt;&lt; name &gt;&gt;
-line 1
-line 2
-after</t>
-<t tx="ekr.20050415070840.44">def runAtFileTest(c,p):
-
-    """Common code for testing output of @file, @thin, etc."""
-
-    at = c.atFileCommands
-    child1 = p.firstChild()
-    child2 = child1.next()
-    h1 = child1.headString().lower().strip()
-    h2 = child2.headString().lower().strip()
-    assert(g.match(h1,0,"#@"))
-    assert(g.match(h2,0,"output"))
-    expected = child2.bodyString()
-
-    # Compute the type from child1's headline.
-    j = g.skip_c_id(h1,2)
-    theType = h1[1:j]
-    assert theType in ("@file","@thin","@nosent","@noref","@asis"), "bad type: %s" % type
-
-    thinFile = theType == "@thin"
-    nosentinels = theType in ("@asis","@nosent")
-
-    if theType == "@asis":
-        at.asisWrite(child1,toString=True)
-    elif theType == "@noref":
-        at.norefWrite(child1,toString=True)
-    else:
-        at.write(child1,thinFile=thinFile,nosentinels=nosentinels,toString=True)
-    try:
-        result = g.toUnicode(at.stringOutput,"ascii")
-        assert(result == expected)
-    except AssertionError:
-        &lt;&lt; dump result and expected &gt;&gt;
-        raise</t>
-<t tx="ekr.20050415070840.45">print ; print '-' * 20
-print "result..."
-for line in g.splitLines(result):
-    print "%3d" % len(line),repr(line)
-print '-' * 20
-print "expected..."
-for line in g.splitLines(expected):
-    print "%3d" % len(line),repr(line)
-print '-' * 20</t>
 <t tx="ekr.20050415090637">True:  Allows control-dragging to create clones.
 False: All drags move nodes.
 
@@ -14244,5 +14102,145 @@ leoTest.leadingWSOnEmptyLinesTest(c,p)</t>
 leoTest.directiveBreaksParagraphTest(c,p)</t>
 <t tx="ekr.20050417122215.2"></t>
 <t tx="ekr.20050417124704"></t>
+<t tx="ekr.20050417201845"></t>
+<t tx="ekr.20050417201845.1">before
+&lt;&lt; section &gt;&gt;
+sec line 1
+    sec line 2 indented
+sec line 3
+after</t>
+<t tx="ekr.20050417201845.2">before
+after</t>
+<t tx="ekr.20050417201845.3">sec line 1
+    sec line 2 indented
+sec line 3</t>
+<t tx="ekr.20050417201845.4">2.0
+5.0 lineend -1c</t>
+<t tx="ekr.20050417202052"></t>
+<t tx="ekr.20050417202052.1">line1
+&lt;&lt; section 1&gt;&gt;
+if 1:
+    &lt;&lt; section 2&gt;&gt;
+line 2
+    &lt;&lt; section 3 &gt;&gt;
+line 3</t>
+<t tx="ekr.20050417202112">line1
+&lt;&lt; section 1&gt;&gt;
+if 1:
+    &lt;&lt; section 2&gt;&gt;
+line 2
+    &lt;&lt; section 3 &gt;&gt;
+line 3</t>
+<t tx="ekr.20050417202112.1"></t>
+<t tx="ekr.20050417202112.2"></t>
+<t tx="ekr.20050417202112.3"></t>
+<t tx="ekr.20050417202243">1.0
+7.0 lineend - 1c</t>
+<t tx="ekr.20050417202713"></t>
+<t tx="ekr.20050417202713.1">@language python
+
+def addCommentTest():
+
+    if 1:
+        a = 2
+        b = 3
+        
+    pass</t>
+<t tx="ekr.20050417202713.2">@language python
+
+def addCommentTest():
+
+    # if 1:
+        # a = 2
+        # b = 3
+        
+    pass</t>
+<t tx="ekr.20050417202713.3">5.0
+7.0 lineend -1c</t>
+<t tx="ekr.20050417202817"></t>
+<t tx="ekr.20050417202817.1">@language python
+
+def deleteCommentTest():
+
+    # if 1:
+        # a = 2
+        # b = 3
+        
+    pass</t>
+<t tx="ekr.20050417202817.2">@language python
+
+def deleteCommentTest():
+
+    if 1:
+        a = 2
+        b = 3
+        
+    pass</t>
+<t tx="ekr.20050417202817.3">5.0
+7.0 lineend -1c</t>
+<t tx="ekr.20050417203114"></t>
+<t tx="ekr.20050417203114.1"></t>
+<t tx="ekr.20050417203310">@tabwidth -4
+
+line 1
+    line 2
+      line 3
+line4</t>
+<t tx="ekr.20050417203310.1">@tabwidth -4
+
+line 1
+	line 2
+	  line 3
+line4
+</t>
+<t tx="ekr.20050417203336">1.0
+6.0 lineend - 1c</t>
+<t tx="ekr.20050417204830">@tabwidth -4
+
+line 1
+    line 2
+      line 3
+line4
+</t>
+<t tx="ekr.20050417204834">@tabwidth -4
+
+line 1
+	line 2
+	  line 3
+line4</t>
+<t tx="ekr.20050417204901">1.0
+6.0 lineend - 1c</t>
+<t tx="ekr.20050417204940"></t>
+<t tx="ekr.20050417204940.1">@tabwidth -4
+
+line 1
+    line 2
+      line 3
+line4</t>
+<t tx="ekr.20050417204940.2">@tabwidth -4
+
+line 1
+	line 2
+	  line 3
+line4
+</t>
+<t tx="ekr.20050417204940.3">1.0
+6.0 lineend - 1c</t>
+<t tx="ekr.20050417205012"></t>
+<t tx="ekr.20050417205012.1">@tabwidth -4
+
+line 1
+	line 2
+	  line 3
+line4</t>
+<t tx="ekr.20050417205012.2">@tabwidth -4
+
+line 1
+    line 2
+      line 3
+line4
+</t>
+<t tx="ekr.20050417205012.3">1.0
+6.0 lineend - 1c</t>
 </tnodes>
 </leo_file>
