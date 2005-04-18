@@ -320,7 +320,7 @@ class atFile:
         #@-node:ekr.20041005105605.16:<< init ivars for writing >>>
         #@nl
         
-        self.scanAllDirectives(root,scripting=scriptWrite) # 2/22/04
+        self.scanAllDirectives(root,scripting=scriptWrite)
         if scriptWrite:
             # Force Python comment delims for g.getScript.
             self.startSentinelComment = "#"
@@ -333,7 +333,10 @@ class atFile:
         self.toString = toString
         self.root = root
         
-        # Bug fix: 12/31/04: Init all other ivars even if there is an error.
+        # Ignore config settings for unit testing.
+        if toString and g.app.unitTesting: self.output_newline = '\n'
+        
+        # Init all other ivars even if there is an error.
         if not self.errors: 
             self.root.v.t.tnodeList = []
     #@nonl
@@ -4557,7 +4560,7 @@ class atFile:
         self.language = c.target_language
         
         self.encoding = c.config.default_derived_file_encoding
-        self.output_newline = g.getOutputNewline(c=self.c) # 4/24/03: initialize from config settings.
+        self.output_newline = g.getOutputNewline(c=self.c) # Init from config settings.
         #@nonl
         #@-node:ekr.20041005105605.223:<< Set ivars >>
         #@nl
