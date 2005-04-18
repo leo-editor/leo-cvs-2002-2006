@@ -4745,10 +4745,8 @@ def getScript (c,p,useSelectedText=True,script=None):
             else:
                 at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
                 script = at.stringOutput
-            # Bug fix: 2/22/04.  Don't use atFile.output_newline ivar.  It may not exist!
-            if g.getOutputNewline(c=c) == '\r\n':
-                if g.app.unitTesting: g.app.unitTestDict['stripping-crlf']=True
-                script = script.replace("\r\n","\n")
+            # The simple way: covert crlf by brute force.
+            script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
@@ -4763,14 +4761,8 @@ def getScript (c,p,useSelectedText=True,script=None):
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
 def test_g_getScript_strips_crlf():
 
-    old_output_newline = c.config.output_newline
-    c.config.output_newline = 'crlf' # A config setting, not an actual line ending.
-    g.app.unitTestDict = {}
     script = g.getScript(c,p) # This will get the text of this node.
-    assert g.app.unitTestDict.get('stripping-crlf')
-    c.config.output_newline = old_output_newline
-
-    assert script.find('\r\n') == -1
+    assert script.find('\r\n') == -1, repr(script)
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_crlf
 #@-node:EKR.20040614071102.1:g.getScript & tests
