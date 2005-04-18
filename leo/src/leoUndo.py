@@ -32,12 +32,13 @@
 # 
 # New in Leo 4.3: User (client) code should call u.beforeX and u.afterX 
 # methods to
-# create a bead describing the operation that is being performed. Most 
-# u.beforeX
-# methods return 'undoData' that the client code merely passes to the
-# corresponding u.afterX method. This data contains the 'before' snapshot. The
-# u.afterX methods then create a bead containing both the 'before' and 'after'
-# snapshots.
+# create a bead describing the operation that is being performed. (By 
+# convention,
+# the code sets u = c.undoer for undoable operations.) Most u.beforeX methods
+# return 'undoData' that the client code merely passes to the corresponding
+# u.afterX method. This data contains the 'before' snapshot. The u.afterX 
+# methods
+# then create a bead containing both the 'before' and 'after' snapshots.
 # 
 # New in Leo 4.3: u.beforeChangeGroup and u.afterChangeGroup allow multiple 
 # calls
