@@ -407,6 +407,15 @@ class baseTnode (object):
         self.fileIndex = index
     #@nonl
     #@-node:ekr.20031218072017.3340:setFileIndex
+    #@+node:ekr.20050418101546:setHeadString (new in 4.3)
+    def setHeadString (self,s,encoding="utf-8"):
+        
+        t = self
+    
+        s = g.toUnicode(s,encoding,reportErrors=True)
+        t.headString = s
+    #@nonl
+    #@-node:ekr.20050418101546:setHeadString (new in 4.3)
     #@-node:ekr.20031218072017.3331:Setters
     #@-others
     

@@ -650,7 +650,7 @@ class baseUndoer:
     #@nonl
     #@-node:ekr.20050411193627.8:afterDeleteNode
     #@+node:ekr.20050411193627.9:afterInsertNode
-    def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
+    def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[],pasteAsClone=False):
         
         u = self ; c = u.c
         if u.redoing or u.undoing: return
@@ -673,6 +673,16 @@ class baseUndoer:
         bunch.newChanged = c.isChanged()
         bunch.newDirty = p.isDirty()
         bunch.newMarked = p.isMarked()
+        
+        if bunch.pasteAsClone:
+            beforeTree=bunch.beforeTree
+            afterTree = []
+            for bunch2 in beforeTree:
+                t = bunch2.t
+                afterTree.append(
+                    g.Bunch(t=t,head=t.headString[:],body=t.bodyString[:]))
+            bunch.afterTree=afterTree
+            # g.trace(afterTree)
     
         # Push the bunch.
         u.bead += 1
@@ -809,11 +819,18 @@ class baseUndoer:
     #@nonl
     #@-node:ekr.20050411193627.3:beforeDeleteNode
     #@+node:ekr.20050411193627.4:beforeInsertNode
-    def beforeInsertNode (self,p):
+    def beforeInsertNode (self,p,pasteAsClone=False,pastedTree=None,copiedBunchList=[]):
         
-        u = self
+        u = self ; c = u.c ; fc = c.fileCommands
     
         bunch = u.createCommonBunch(p)
+        
+        bunch.pasteAsClone = pasteAsClone
+        
+        if pasteAsClone:
+            # Save the list of bunches created by fc.createVnode.
+            bunch.beforeTree = copiedBunchList
+            # g.trace(bunch.beforeTree)
     
         return bunch
     #@nonl
@@ -1232,6 +1249,17 @@ class baseUndoer:
             
         # Restore all vnodeLists (and thus all clone marks).
         u.newP.restoreLinksInTree()
+        
+        if u.pasteAsClone:
+            for bunch in u.afterTree:
+                t = bunch.t
+                if u.newP.v.t == t:
+                    u.newP.setBodyStringOrPane(bunch.body)
+                    u.newP.setHeadString(bunch.head)
+                else:
+                    t.setTnodeText(bunch.body)
+                    t.setHeadString(bunch.head)
+                # g.trace(t,bunch.head,bunch.body)
     
         c.selectPosition(u.newP)
     #@nonl
@@ -1484,6 +1512,18 @@ class baseUndoer:
     
         c.selectPosition(u.newP)
         c.deleteOutline()
+        
+        if u.pasteAsClone:
+            for bunch in u.beforeTree:
+                t = bunch.t
+                if u.p.v.t == t:
+                    u.p.setBodyStringOrPane(bunch.body)
+                    u.p.setHeadString(bunch.head)
+                else:
+                    t.setTnodeText(bunch.body)
+                    t.setHeadString(bunch.head)
+                # g.trace(t,bunch.head,bunch.body)
+    
         c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050412085112:undoInsertNode

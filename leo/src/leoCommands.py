@@ -2712,68 +2712,103 @@ class baseCommands:
         g.app.gui.replaceClipboardWith(s)
     #@nonl
     #@-node:ekr.20031218072017.1550:copyOutline
-    #@+node:ekr.20031218072017.1551:pasteOutline TESTEd
+    #@+node:ekr.20031218072017.1551:pasteOutline
     # To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
     
     def pasteOutline(self,reassignIndices=True):
     
-        c = self ; u = c.undoer ; current = c.currentPosition()
+        c = self ; fc = c.fileCommands ; u = c.undoer
+        current = c.currentPosition()
         s = g.app.gui.getTextFromClipboard()
+        pasteAsClone = not reassignIndices
         undoType = g.choose(reassignIndices,'Paste Node','Paste As Clone')
     
         if not s or not c.canPasteOutline(s):
             return # This should never happen.
     
         isLeo = g.match(s,0,g.app.prolog_prefix_string)
-    
-        undoData = u.beforeInsertNode(current)
+        
+        tnodeInfoDict = {}
+        if pasteAsClone:
+            #@        << remember all data for undo/redo Paste As Clone >>
+            #@+node:ekr.20050418084539:<< remember all data for undo/redo Paste As Clone >>
+            #@+at
+            # 
+            # We don't know yet which nodes will be affected by the paste, so 
+            # we remember
+            # everything. This is expensive, but foolproof.
+            # 
+            # The alternative is to try to remember the 'before' values of 
+            # tnodes in the
+            # fileCommands read logic. Several experiments failed, and the 
+            # code is very ugly.
+            # In short, it seems wise to do things the foolproof way.
+            # 
+            #@-at
+            #@@c
+            
+            for p in c.allNodes_iter():
+                t = p.v.t
+                if t not in tnodeInfoDict.keys():
+                    tnodeInfoDict[t] = g.Bunch(
+                        t=t,head=p.headString(),body=p.bodyString())
+            #@nonl
+            #@-node:ekr.20050418084539:<< remember all data for undo/redo Paste As Clone >>
+            #@nl
     
         if isLeo:
-            p = c.fileCommands.getLeoOutline(s,reassignIndices)
+            pasted = c.fileCommands.getLeoOutline(s,reassignIndices)
         else:
-            p = c.importCommands.convertMoreStringToOutlineAfter(s,current)
-        if not p: return
+            pasted = c.importCommands.convertMoreStringToOutlineAfter(s,current)
+        if not pasted: return
+        
+        copiedBunchList = []
+        if pasteAsClone:
+            #@        << put only needed info in copiedBunchList >>
+            #@+node:ekr.20050418084539.2:<< put only needed info in copiedBunchList >>
+            # Create a dict containing only copied tnodes.
+            copiedTnodeDict = {}
+            for p in pasted.self_and_subtree_iter():
+                if p.v.t not in copiedTnodeDict:
+                    copiedTnodeDict[p.v.t] = p.v.t
+                    
+            # g.trace(copiedTnodeDict.keys())
+            
+            for t in tnodeInfoDict.keys():
+                bunch = tnodeInfoDict.get(t)
+                if copiedTnodeDict.get(t):
+                    copiedBunchList.append(bunch)
+            
+            # g.trace('copiedBunchList',copiedBunchList)
+            #@nonl
+            #@-node:ekr.20050418084539.2:<< put only needed info in copiedBunchList >>
+            #@nl
+        
+        undoData = u.beforeInsertNode(current,
+            pasteAsClone=pasteAsClone,pastedTree=pasted,copiedBunchList=copiedBunchList)
     
         c.beginUpdate()
         c.endEditing()
         if 1: # inside update...
             c.validateOutline()
-            c.selectPosition(p)
-            p.setDirty()
+            c.selectPosition(pasted)
+            pasted.setDirty()
             c.setChanged(True)
             # paste as first child if back is expanded.
-            back = p.back()
+            back = pasted.back()
             if back and back.isExpanded():
-                p.moveToNthChildOf(back,0)
-            u.afterInsertNode(p,undoType,undoData)
+                pasted.moveToNthChildOf(back,0)
+            u.afterInsertNode(pasted,undoType,undoData,pasteAsClone=pasteAsClone)
         c.endUpdate()
         c.recolor()
     #@nonl
-    #@-node:ekr.20031218072017.1551:pasteOutline TESTEd
+    #@-node:ekr.20031218072017.1551:pasteOutline
     #@+node:EKR.20040610130943:pasteOutlineRetainingClones
     def pasteOutlineRetainingClones (self):
         
         c = self
-        
-        if 1:
-            # For now, just execute the command.
-            return c.pasteOutline(reassignIndices=False)
     
-        else:
-            # Paste retaining clones can't be fully undone.  Warn first.
-            message = (
-                'Are you sure you want to Paste As Clone?\n\n'
-                'This operation can not be undone; it will clear the Undo stack.')
-            
-            response = g.app.gui.runAskYesNoDialog(c,'Paste As Clone?',message=message)
-        
-            if response == 'yes':
-                val = c.pasteOutline(reassignIndices=False)
-                c.undoer.clearUndoState()
-                g.es('Undo stack cleared',color='red')
-                return val
-            else:
-                return None
+        return c.pasteOutline(reassignIndices=False)
     #@nonl
     #@-node:EKR.20040610130943:pasteOutlineRetainingClones
     #@-node:ekr.20031218072017.1548:Cut & Paste Outlines
@@ -2928,7 +2963,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.1765:c.validateOutline
     #@-node:ekr.20031218072017.1759:Insert, Delete & Clone (Commands)
-    #@+node:ekr.20050415134809:c.sortChildren 
+    #@+node:ekr.20050415134809:c.sortChildren
     def sortChildren(self):
     
         c = self ; u = c.undoer ; undoType = 'Sort Children'
@@ -2945,7 +2980,7 @@ class baseCommands:
             u.afterChangeGroup(p,undoType,dirtyVnodeList=dirtyVnodeList)
         c.endUpdate()
     #@nonl
-    #@-node:ekr.20050415134809:c.sortChildren 
+    #@-node:ekr.20050415134809:c.sortChildren
     #@+node:ekr.20040303175026.12:c.sortChildrenHelper
     def sortChildrenHelper (self,p):
         
