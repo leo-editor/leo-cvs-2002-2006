@@ -10957,7 +10957,7 @@ def putUnknownAttributes (self,torv,toString=False):
 
     for key in attrDict.keys():
         val = attrDict[key]
-        self.putUa(key,val)
+        self.putUa(torv,key,val)
 #@nonl
 #@-node:EKR.20040526202501:putUnknownAttributes
 #@+node:EKR.20040526204036.1:getUa (changed for 4.3)
@@ -15908,7 +15908,7 @@ def putUnknownAttributes (self,torv,toString=False):
 
     for key in attrDict.keys():
         val = attrDict[key]
-        self.putUa(key,val)
+        self.putUa(torv,key,val)
 #@nonl
 #@-node:EKR.20040526202501:putUnknownAttributes
 #@-node:ekr.20041124164305:(Eliminated alarming warning message)
@@ -41466,20 +41466,23 @@ def putUnknownAttributes (self,torv,toString=False):
 
     for key in attrDict.keys():
         val = attrDict[key]
-        self.putUa(key,val)
+        self.putUa(torv,key,val)
 #@nonl
 #@-node:EKR.20040526202501:putUnknownAttributes
 #@+node:ekr.20050418161620.2:putUa (new in 4.3) (changed for 4.3)
-def putUa (self,key,val):
+def putUa (self,torv,key,val):
     
     '''Put attribute whose name is key and value is val to the output stream.'''
     
     # New in 4.3: leave string attributes starting with 'str_' alone.
-    if key.startswith('str_') and type(val) == type(''):
-        attr = ' %s="%s"' % (key,self.xmlEscape(val))
-        self.put(attr)
+    if key.startswith('str_'):
+        if type(val) == type(''):
+            attr = ' %s="%s"' % (key,self.xmlEscape(val))
+            self.put(attr)
+        else:
+            g.es("ignoring non-string attribute %s in %s" % (
+                key,torv),color="blue")
         return
-
     try:
         try:
             # Protocol argument is new in Python 2.3
