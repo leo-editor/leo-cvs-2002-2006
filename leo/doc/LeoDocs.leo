@@ -1393,7 +1393,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1799,9 +1799,9 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050122090016"><vh>Setting options...</vh>
-<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="ekr.20050122090016" a="E"><vh>Setting options...</vh>
+<v t="ekr.20050122084954" a="TV"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050419072509.1"><vh>NewHeadline</vh></v>
 <v t="EKR.20040524104904.212"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 </v>
@@ -15635,17 +15635,21 @@ set the value of name to val, with the indicated type.
 
 &lt;type&gt; may be one of the following, with valid values shown:
 
-&lt;type&gt;      Valid values
------       ------------
-@bool       True, False, 0, 1
-@color      A Tk color name or value, such as 'red' or 'xf2fddff'
-@directory  A path to a directory
-@float      A floating point number of the form nn.ff.
-@int        An integer
-@path       A path to a directory or file
-@ratio      A floating point number between 0.0 and 1.0, inclusive.
-@shortcut   A valid shortcut specifier.
-@string     A string
+&lt;type&gt;          Valid values
+-----           ------------
+@bool           True, False, 0, 1
+@color          A Tk color name or value, such as 'red' or 'xf2fddff'
+@directory      A path to a directory
+@float          A floating point number of the form nn.ff.
+@int            An integer
+@ints[list]     An integer (must be one of the ints in the list).
+                Example: @ints meaningOfLife[0,42,666]=42
+@path           A path to a directory or file
+@ratio          A floating point number between 0.0 and 1.0, inclusive.
+@shortcut       A valid shortcut specifier.
+@string         A string
+@strings[list]  A string (must be one of the strings in the list).
+                Example: @strings tk_relief['flat','groove','raised']='groove'
 
 2. "Complex settings nodes" have headlines of the form:
 
