@@ -17,10 +17,10 @@
 <v t="edream.110203163054.4"><vh>This is a cloned headline</vh></v>
 <v t="edream.110203163054.5"><vh>This node contains no text</vh></v>
 </v>
-<v t="ekr.20050404094627" a="E"><vh>Settings and buttons</vh>
+<v t="ekr.20050404094627"><vh>Settings and buttons</vh>
 <v t="ekr.20041226081019"><vh>@button check spelling...</vh></v>
 <v t="ekr.20050407144417"><vh>@settings</vh>
-<v t="ekr.20050407144342" a="E"><vh>@page http plugin</vh>
+<v t="ekr.20050407144342"><vh>@page http plugin</vh>
 <v t="ekr.20050407144342.1"><vh>@bool http_active = True</vh></v>
 <v t="ekr.20050407144342.2"><vh>@int  port = 8080</vh></v>
 <v t="ekr.20050407144342.3"><vh>@string rst_http_attributename = rst_http_attribute</vh></v>
@@ -61,7 +61,7 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
 <v t="ekr.20050313101229"><vh>4.3-a4</vh>
 <v t="ekr.20050313101229.2"><vh>Fixed bugs...</vh>
 <v t="ekr.20050313101229.69"><vh>Fix colorizer bug for initial @nocolor in @root nodes</vh></v>
@@ -77,7 +77,7 @@
 <v t="ekr.20050313101229.100"><vh>Revised plugins for the 4.3 code base</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.117" a="E"><vh>Previous versions...</vh>
+<v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050221104844"><vh>4.3-a3</vh>
 <v t="ekr.20050221104844.2"><vh>Bugs</vh>
 <v t="ekr.20050221104844.3"><vh>Fixed crasher in Tangle</vh></v>
@@ -132,9 +132,9 @@
 <v t="ekr.20050209141626.198"><vh>Changed name of Preferences command to Settings</vh></v>
 </v>
 </v>
-<v t="ekr.20050122090311" a="E"><vh>4.3-a1</vh>
-<v t="ekr.20050123112834" a="E"><vh>Defining features of 4.3</vh>
-<v t="ekr.20050123110009" a="E"><vh>Using @settings trees and leoSettings.leo</vh>
+<v t="ekr.20050122090311"><vh>4.3-a1</vh>
+<v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
+<v t="ekr.20050123110009"><vh>Using @settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
 </v>
@@ -200,8 +200,8 @@
 <v t="ekr.20050123092834.1011"><vh>computeHomeDir now handles references to other vars</vh></v>
 </v>
 </v>
-<v t="ekr.20050123092834.896" a="E"><vh>New or improved features...</vh>
-<v t="ekr.20050123110009" a="E"><vh>Using @settings trees and leoSettings.leo</vh>
+<v t="ekr.20050123092834.896"><vh>New or improved features...</vh>
+<v t="ekr.20050123110009"><vh>Using @settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
 </v>
@@ -214,7 +214,7 @@
 <v t="ekr.20050123092834.1004"><vh>Added p=p param to all hooks containing v=v</vh></v>
 <v t="ekr.20050123092834.565"><vh>Implemented delayed focus scheme</vh></v>
 </v>
-<v t="ekr.20050123103521" a="E"><vh>Commands</vh>
+<v t="ekr.20050123103521"><vh>Commands</vh>
 <v t="ekr.20050123092834.897"><vh>Added 'Expand Or Go Right' and 'Contract or Go Left' commands</vh></v>
 <v t="ekr.20050123092834.908"><vh>Added keyboard shortcuts to find panel</vh></v>
 <v t="ekr.20050123092834.1005"><vh>Find panels are now associated with individual Leo windows</vh></v>
@@ -630,7 +630,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.118" a="E"><vh>3.x...</vh>
+<v t="edream.110203163054.118"><vh>3.x...</vh>
 <v t="edream.110203163054.119"><vh>3.12 final</vh>
 <v t="edream.110203163054.120"><vh>Bug fixes (major)</vh>
 <v t="edream.110203163054.121"><vh>Fixed major undo bug</vh></v>
@@ -850,7 +850,7 @@
 <v t="edream.110203163054.306"><vh>Bugs in undoReplace logic</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.307" a="E"><vh>leo.py 3.9</vh>
+<v t="edream.110203163054.307"><vh>leo.py 3.9</vh>
 <v t="edream.110203163054.308"><vh>Fixed bugs</vh>
 <v t="edream.110203163054.309"><vh>Fixed bug involving @language</vh></v>
 <v t="edream.110203163054.310"><vh>Correctly colors Pascal's "private" and "uses" keywords</vh></v>
@@ -858,13 +858,13 @@
 <v t="edream.110203163054.312"><vh>Fixed bugs when importing Java files.</vh></v>
 <v t="edream.110203163054.313"><vh>Convert All Blanks/Tabs  commands honor @tabwidth directives</vh></v>
 </v>
-<v t="edream.110203163054.314" a="E"><vh>New documentation for leo.py 3.9</vh>
+<v t="edream.110203163054.314"><vh>New documentation for leo.py 3.9</vh>
 <v t="edream.110203163054.315"><vh>Major performance improvements</vh>
 <v t="edream.110203163054.316"><vh>Incremental syntax coloring speeds redraws</vh></v>
 <v t="edream.110203163054.317"><vh>Incremental undo reduces memory usages significantly</vh></v>
 </v>
-<v t="edream.110203163054.318" a="E"><vh>Major configuration improvements</vh>
-<v t="edream.110203163054.319" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="edream.110203163054.318"><vh>Major configuration improvements</vh>
+<v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="edream.110203163054.320"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
@@ -1393,7 +1393,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1648,7 +1648,7 @@
 <v t="EKR.20040524104904.138"><vh>Reformat Paragraph command</vh></v>
 </v>
 <v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
-<v t="EKR.20040524104904.140" a="E"><vh>Specifying settings</vh>
+<v t="EKR.20040524104904.140"><vh>Specifying settings</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="EKR.20040524104904.141"><vh>PHP keywords</vh></v>
 <v t="EKR.20040524104904.142"><vh>LaTex keywords</vh></v>
@@ -1774,7 +1774,8 @@
 <v t="EKR.20040524104904.200"><vh>Invoking commands from scripts</vh></v>
 <v t="EKR.20040524104904.201"><vh>Getting preferences</vh></v>
 <v t="EKR.20040524104904.202"><vh>Setting preferences</vh></v>
-<v t="ekr.20050404093434"><vh>How plugins can get settings</vh></v>
+<v t="ekr.20050404093434"><vh>Getting settings from @settings trees</vh></v>
+<v t="ekr.20050419072748"><vh>Reloading @settings trees</vh></v>
 <v t="EKR.20040524104904.203"><vh>Functions for finding and changing text from scripts</vh>
 <v t="EKR.20040524104904.204"><vh>Example 1: the findAll function</vh></v>
 <v t="EKR.20040524104904.205"><vh>Example 2: the reFindAll function</vh></v>
@@ -1798,9 +1799,10 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
 <v t="ekr.20050122090016"><vh>Setting options...</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+<v t="ekr.20050419072509.1"><vh>NewHeadline</vh></v>
 <v t="EKR.20040524104904.212"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 </v>
 <v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
@@ -1853,7 +1855,7 @@
 <v t="EKR.20040524104904.121"><vh>Using the initScriptFind script</vh></v>
 <v t="EKR.20040524104904.122"><vh>Ideas for using scripts</vh></v>
 </v>
-<v t="ekr.20050417072710.1" a="TV"><vh>How to make operations undoable</vh></v>
+<v t="ekr.20050417072710.1"><vh>How to make operations undoable</vh></v>
 </v>
 <v t="EKR.20040524104904.245"><vh>Chapter 9: History of Leo</vh>
 <v t="EKR.20040524104904.246"><vh>Beginnings</vh></v>
@@ -2099,7 +2101,7 @@
 <v t="EKR.20040521090400"><vh>How can I use Leo with older C compilers</vh></v>
 <v t="ekr.20040804173200.6"><vh>How does @thin make Leo more friendly to CVS?</vh></v>
 </v>
-<v t="edream.110203163054.1068" a="E"><vh>Customizing Leo</vh>
+<v t="edream.110203163054.1068"><vh>Customizing Leo</vh>
 <v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.1069"><vh>I'm having trouble getting plugins to work.  What should I do?</vh></v>
 <v t="edream.110203163054.1070"><vh>How can I add support for a new language?</vh></v>
@@ -2108,7 +2110,7 @@
 <v t="ekr.20050219093156.1"><vh>@url http://www.pythonware.com/library/tkinter/introduction/index.htm</vh></v>
 <v t="ekr.20050219093156.2"><vh>@url http://www.tcl.tk/man/tcl8.4/TkCmd/contents.htm</vh></v>
 </v>
-<v t="edream.110203163054.319" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="edream.110203163054.320"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
@@ -17035,5 +17037,10 @@ pattern dirtyVnodeList.extend(dirtyVnodeList2)
 See the section called &lt;&lt; How Leo implements unlimited undo &gt;&gt; in leoUndo.py for
 more details. In general, the best way to see how to implement undo is to see
 how Leo's core calls the u.before/afterX methods.</t>
+<t tx="ekr.20050419072509.1"></t>
+<t tx="ekr.20050419072748"># Scripts or plugins may reload settings files using g.app.config.readSettingsFiles
+# Note: Leo calls g.app.config.readSettingsFiles before opening the settings dialog.
+
+g.app.config.readSettingsFiles(c.fileName(),verbose=True)</t>
 </tnodes>
 </leo_file>
