@@ -482,7 +482,10 @@ class baseFileCommands:
         # g.trace(tag,result)
         return result
     #@-node:ekr.20040701065235.1:getDescendentAttributes
-    #@+node:EKR.20040627114602:getDescendentUnknownAttributes
+    #@+node:EKR.20040627114602:getDescendentUnknownAttributes 
+    # Only @thin vnodes have the descendentTnodeUnknownAttributes field.
+    # The question is: what are we to do about this?
+    
     def getDescendentUnknownAttributes (self,s):
         
         try:
@@ -493,7 +496,7 @@ class baseFileCommands:
         except (TypeError,pickle.UnpicklingError,ImportError):
             return None
     #@nonl
-    #@-node:EKR.20040627114602:getDescendentUnknownAttributes
+    #@-node:EKR.20040627114602:getDescendentUnknownAttributes 
     #@+node:ekr.20031218072017.3024:getEscapedString
     def getEscapedString (self):
     
@@ -877,7 +880,7 @@ class baseFileCommands:
         return height, width
     #@nonl
     #@-node:ekr.20031218072017.3026:getSize
-    #@+node:ekr.20031218072017.1561:getTnode & getTnodeUA's
+    #@+node:ekr.20031218072017.1561:getTnode
     def getTnode (self):
     
         # we have already matched <t.
@@ -892,7 +895,7 @@ class baseFileCommands:
             elif self.matchTag(">"):         break
             else: # New for 4.0: allow unknown attributes.
                 # New in 4.2: allow pickle'd and hexlify'ed values.
-                attr,val = self.getUnknownAttribute("tnode")
+                attr,val = self.getUa("tnode")
                 if attr: attrDict[attr] = val
                 
         # index might be Tnnn, nnn, or gnx.
@@ -924,7 +927,7 @@ class baseFileCommands:
             g.es("no tnode with index: %s.  The text will be discarded" % str(index))
         self.getTag("</t>")
     #@nonl
-    #@-node:ekr.20031218072017.1561:getTnode & getTnodeUA's
+    #@-node:ekr.20031218072017.1561:getTnode
     #@+node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
     def getTnodeList (self,s):
     
@@ -960,8 +963,8 @@ class baseFileCommands:
     
         self.getTag("</tnodes>")
     #@-node:ekr.20031218072017.1560:getTnodes
-    #@+node:EKR.20040526204036.1:getUnknownAttribute
-    def getUnknownAttribute(self,nodeType):
+    #@+node:EKR.20040526204036.1:getUa (changed for 4.3)
+    def getUa(self,nodeType):
         
         """Parse an unknown attribute in a <v> or <t> element."""
         
@@ -969,6 +972,18 @@ class baseFileCommands:
         attr,val = self.getUnknownTag()
         if not attr:
             return None,None
+            
+        # New in 4.3: leave string attributes starting with 'str_' alone.
+        if attr.startswith('str_') and type(val) == type(''):
+            # g.trace(attr,val)
+            return attr,val
+            
+        # New in 4.3: convert attributes starting with 'b64_' using the base64 conversion.
+        if 0: # Not ready yet.
+            if attr.startswith('b64_'):
+                try: pass
+                except Exception: pass
+            
         try:
             binString = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
         except TypeError:
@@ -983,7 +998,7 @@ class baseFileCommands:
         except (pickle.UnpicklingError,ImportError):
             return attr,val
     #@nonl
-    #@-node:EKR.20040526204036.1:getUnknownAttribute
+    #@-node:EKR.20040526204036.1:getUa (changed for 4.3)
     #@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
     def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
     
@@ -1051,7 +1066,7 @@ class baseFileCommands:
                 break
             else: # New for 4.0: allow unknown attributes.
                 # New in 4.2: allow pickle'd and hexlify'ed values.
-                attr,val = self.getUnknownAttribute("vnode")
+                attr,val = self.getUa("vnode")
                 if attr: attrDict[attr] = val
         # Headlines are optional.
         if self.matchTag("<vh>"):
@@ -1560,8 +1575,7 @@ class baseFileCommands:
             t = p2.v.t
             if hasattr(t,"unknownAttributes"):
                 if t not in tnodes :
-                    tnodes.append((p,t),)    
-        # g.trace(tnodes)
+                    tnodes.append((p,t),)
         
         # Create a list of pairs (t,d) where d contains only pickleable entries.
         data = []
@@ -1782,6 +1796,33 @@ class baseFileCommands:
         self.put("</tnodes>") ; self.put_nl()
     #@nonl
     #@-node:ekr.20031218072017.1575:putTnodes
+    #@+node:ekr.20050418161620.2:putUa (new in 4.3) (changed for 4.3)
+    def putUa (self,key,val):
+        
+        '''Put attribute whose name is key and value is val to the output stream.'''
+        
+        # New in 4.3: leave string attributes starting with 'str_' alone.
+        if key.startswith('str_') and type(val) == type(''):
+            attr = ' %s="%s"' % (key,self.xmlEscape(val))
+            self.put(attr)
+            return
+    
+        try:
+            try:
+                # Protocol argument is new in Python 2.3
+                # Use protocol 1 for compatibility with bin.
+                s = pickle.dumps(val,protocol=1)
+            except TypeError:
+                s = pickle.dumps(val,bin=True)
+            attr = ' %s="%s"' % (key,binascii.hexlify(s))
+            self.put(attr)
+    
+        except pickle.PicklingError:
+            # New in 4.2 beta 1: keep going after error.
+            g.es("ignoring non-pickleable attribute %s in %s" % (
+                key,torv),color="blue")
+    #@nonl
+    #@-node:ekr.20050418161620.2:putUa (new in 4.3) (changed for 4.3)
     #@+node:EKR.20040526202501:putUnknownAttributes
     def putUnknownAttributes (self,torv,toString=False):
         
@@ -1794,20 +1835,8 @@ class baseFileCommands:
             return
     
         for key in attrDict.keys():
-            try:
-                val = attrDict[key]
-                try:
-                    # Protocol argument is new in Python 2.3
-                    # Use protocol 1 for compatibility with bin.
-                    s = pickle.dumps(val,protocol=1)
-                except TypeError:
-                    s = pickle.dumps(val,bin=True)
-                attr = ' %s="%s"' % (key,binascii.hexlify(s))
-                self.put(attr)
-            except pickle.PicklingError:
-                # New in 4.2 beta 1: keep going after error.
-                g.es("ignoring non-pickleable attribute %s in %s" % (
-                    key,torv),color="blue")
+            val = attrDict[key]
+            self.putUa(key,val)
     #@nonl
     #@-node:EKR.20040526202501:putUnknownAttributes
     #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)

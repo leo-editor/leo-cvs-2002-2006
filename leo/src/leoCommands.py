@@ -2936,7 +2936,7 @@ class baseCommands:
             dirtyVnodeList = clone.setAllAncestorAtFileNodesDirty()
             c.setChanged(True)
             if c.validateOutline():
-                u.afterInsertNode(clone,'Clone Node',undoData,dirtyVnodeList=dirtyVnodeList)
+                u.afterCloneNode(clone,'Clone Node',undoData,dirtyVnodeList=dirtyVnodeList)
                 c.selectPosition(clone)
         c.endUpdate()
     
