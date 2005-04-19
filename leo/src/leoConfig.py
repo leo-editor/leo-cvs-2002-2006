@@ -1639,6 +1639,8 @@ class settingsController:
             print s ; g.es(s,color='red')
             return
         
+        # Reread the settings files so any changes will take effect.
+        g.app.config.readSettingsFiles(c.fileName(),verbose=True)
         self._settingsPosition = p = self.createSettingsTree()
         self.parser = settingsDialogParserClass(c,p,self)
         #@    << set background color for widgets >>
@@ -2871,6 +2873,7 @@ class settingsController:
             elif munge(name) == "recentfiles":
                 c.setRecentFiles(val)
             else:
+                g.trace(name,kind,val)
                 g.app.config.set(c,name,kind,val)
     #@nonl
     #@-node:ekr.20041225063637.66:updateConfig
