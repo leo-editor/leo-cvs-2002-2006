@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6933" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6946" clone_windows="0"/>
 <globals body_outline_ratio="0.417628541448">
-	<global_window_position top="10" left="270" height="953" width="916"/>
+	<global_window_position top="10" left="344" height="953" width="916"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20050415070840" annotate="7d71002e"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041121151002.1"><vh>@recentfiles </vh></v>
+<v t="ekr.20041218110904"><vh>@page local options</vh>
+<v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
+<v t="ekr.20041213075902"><vh>@font log font</vh></v>
+<v t="ekr.20041217042849"><vh>@font body font</vh></v>
+<v t="ekr.20041217132317"><vh>@strings[a,b,c] stringsTest = c</vh></v>
+<v t="ekr.20041217132338"><vh>@ints[1,2,3] intsTest = 3</vh></v>
+</v>
+<v t="ekr.20041217144914"><vh>@page colors</vh>
+<v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
+<v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
+<v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
+<v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
+</v>
+<v t="ekr.20041218141525"><vh>@page Fonts</vh>
+<v t="ekr.20041218141525.1"><vh>@font log font</vh></v>
+<v t="ekr.20041218141525.2"><vh>@font body text font</vh></v>
+<v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
+</v>
+<v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
+<v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
+<v t="ekr.20050328101834"><vh>@page http plugin</vh>
+<v t="ekr.20050328101834.1"><vh>@bool http_active = False</vh></v>
+<v t="ekr.20050328101834.2"><vh>@int  port = 8080</vh></v>
+<v t="ekr.20050328101834.3"><vh>@string rst_http_attributename = ''</vh></v>
+</v>
+<v t="ekr.20050415090637"><vh>@bool allow_clone_drags = True</vh></v>
+<v t="ekr.20050419082439"><vh>@if-platform win32</vh>
+<v t="ekr.20050419070841"><vh>@string ekrSetting = abc2</vh></v>
+</v>
+<v t="ekr.20050419084109"><vh>@if-gui gtk</vh>
+<v t="ekr.20050419084109.1"><vh>@string gtkSetting = xyz</vh></v>
+</v>
+<v t="ekr.20050419085933"><vh>@ints[0,1,2] testInts = 0</vh></v>
+<v t="ekr.20050419090156"><vh>@strings[a,b,c] testStrings = b</vh></v>
+</v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -309,13 +346,16 @@
 </v>
 </v>
 <v t="ekr.20040724171040"><vh>Tk bindtags test</vh></v>
-<v t="ekr.20040708210636"><vh>User Icon tests</vh>
+<v t="ekr.20040708210636" a="M"><vh>User Icon tests</vh>
 <v t="ekr.20040317173327"><vh>Delete user icons</vh></v>
 <v t="ekr.20040317101155"><vh>Test of user icons</vh>
 <v t="ekr.20040317185041"><vh>&lt;&lt; define event callbacks &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20040730185319"><vh>Test drawing of root node w/o children</vh></v>
+<v t="ekr.20050419033955"><vh>test of 4.3 str_ attributes</vh>
+<v t="ekr.20050419034527"><vh>set</vh></v>
+<v t="ekr.20050419034527.1"><vh>get</vh></v>
+</v>
 <v t="ekr.20040909103024"><vh>Test of linenumbers plugin</vh>
 <v t="ekr.20040909103024.1"><vh>@file perlLineNumbers.txt</vh>
 <v t="ekr.20040909103024.2"><vh>TestNode</vh></v>
@@ -413,7 +453,7 @@
 <v t="ekr.20041029111650"><vh>Test of g.app.debugSwitch</vh></v>
 </v>
 <v t="ekr.20041227081159"><vh>test of tab_width &amp; tab_width ivars</vh></v>
-<v t="ekr.20041222060224"><vh>Tests of component</vh>
+<v t="ekr.20041222060224"><vh>Tests of components</vh>
 <v t="ekr.20041224104337"><vh>packing &amp; unpacking...</vh>
 <v t="ekr.20041224082127"><vh>iconBar...</vh>
 <v t="ekr.20041224082127.1"><vh>unpack iconBar</vh></v>
@@ -584,6 +624,25 @@
 <v t="ekr.20050331065217.3"><vh>Root</vh>
 <v t="ekr.20050331065217.4"><vh>Node 1</vh></v>
 <v t="ekr.20050331065322"><vh>Node 2</vh></v>
+</v>
+</v>
+<v t="ekr.20040918093738"><vh>Prototypes for Python-to-Tk indices</vh>
+<v t="ekr.20040918093738.1"><vh>py2tkIndex</vh>
+<v t="ekr.20040918093738.2"><vh>test</vh></v>
+</v>
+<v t="ekr.20040918093738.3"><vh>pyRowColToTkIndex</vh>
+<v t="ekr.20040918093738.4"><vh>test</vh></v>
+</v>
+<v t="ekr.20050314104217"><vh>Develop g.convertPythonIndexToRowCol</vh>
+<v t="ekr.20050314103747" a="E"><vh>g.convertPythonIndexToRowCol  &amp; tests</vh>
+<v t="ekr.20050314103747.1"><vh>bruteForceConvertPythonIndexToRowCol</vh></v>
+<v t="ekr.20050314103747.2"><vh>test_g_convertPythonIndexToRowCol</vh></v>
+</v>
+</v>
+<v t="ekr.20050315072359"><vh>Develop g.convertRowColToPythonIndex</vh>
+<v t="ekr.20050315072359.1"><vh>g.convertRowColToPythonIndex &amp; test</vh>
+<v t="ekr.20050315072359.2"><vh>test_g_convertRowColToPythonIndex</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -941,14 +1000,6 @@
 <v t="ekr.20040805101759"><vh>How to use pdb</vh>
 <v t="ekr.20040805102453"><vh>@url http://docs.python.org/lib/debugger-commands.html</vh></v>
 </v>
-<v t="ekr.20040918093738"><vh>Prototypes for Python-to-Tk indices</vh>
-<v t="ekr.20040918093738.1"><vh>py2tkIndex</vh>
-<v t="ekr.20040918093738.2"><vh>test</vh></v>
-</v>
-<v t="ekr.20040918093738.3"><vh>pyRowColToTkIndex</vh>
-<v t="ekr.20040918093738.4"><vh>test</vh></v>
-</v>
-</v>
 <v t="ekr.20041013101029"><vh>headfind</vh>
 <v t="ekr.20041013101029.1"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 </v>
@@ -1001,48 +1052,8 @@
 <v t="ekr.20050219073752.1"><vh>Add a menu item after Open With</vh></v>
 </v>
 <v t="ekr.20050310082013"><vh>AutoIt script from e</vh></v>
-<v t="ekr.20050314104217"><vh>Develop g.convertPythonIndexToRowCol</vh>
-<v t="ekr.20050314103747"><vh>g.convertPythonIndexToRowCol  &amp; tests</vh>
-<v t="ekr.20050314103747.1"><vh>bruteForceConvertPythonIndexToRowCol</vh></v>
-<v t="ekr.20050314103747.2"><vh>test_g_convertPythonIndexToRowCol</vh></v>
-</v>
-</v>
-<v t="ekr.20050315072359"><vh>Develop g.convertRowColToPythonIndex</vh>
-<v t="ekr.20050315072359.1"><vh>g.convertRowColToPythonIndex &amp; test</vh>
-<v t="ekr.20050315072359.2"><vh>test_g_convertRowColToPythonIndex</vh></v>
-</v>
-</v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
-<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20041121151002.1"><vh>@recentfiles </vh></v>
-<v t="ekr.20041218110904"><vh>@page local options</vh>
-<v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
-<v t="ekr.20041213075902"><vh>@font log font</vh></v>
-<v t="ekr.20041217042849"><vh>@font body font</vh></v>
-<v t="ekr.20041217132317"><vh>@strings[a,b,c] stringsTest = c</vh></v>
-<v t="ekr.20041217132338"><vh>@ints[1,2,3] intsTest = 3</vh></v>
-</v>
-<v t="ekr.20041217144914"><vh>@page colors</vh>
-<v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
-<v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
-<v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
-<v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
-</v>
-<v t="ekr.20041218141525"><vh>@page Fonts</vh>
-<v t="ekr.20041218141525.1"><vh>@font log font</vh></v>
-<v t="ekr.20041218141525.2"><vh>@font body text font</vh></v>
-<v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
-</v>
-<v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
-<v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
-<v t="ekr.20050328101834"><vh>@page http plugin</vh>
-<v t="ekr.20050328101834.1"><vh>@bool http_active = False</vh></v>
-<v t="ekr.20050328101834.2"><vh>@int  port = 8080</vh></v>
-<v t="ekr.20050328101834.3"><vh>@string rst_http_attributename = ''</vh></v>
-</v>
-<v t="ekr.20050415090637"><vh>@bool allow_clone_drags = True</vh></v>
-</v>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 <v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
@@ -1053,7 +1064,7 @@
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E" annotate="7d71002e"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1552,9 +1563,9 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="ekr.20050408084135" a="E"><vh>Undo/Redo Tests</vh>
-<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38" a="ETV"><vh>editBodyTests</vh>
+<v t="ekr.20050408084135"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20050417202713"><vh>addComments</vh>
 <v t="ekr.20050417202713.1"><vh>before</vh></v>
 <v t="ekr.20050417202713.2"><vh>after</vh></v>
@@ -1591,7 +1602,7 @@
 <v t="ekr.20050417202817.3"><vh>selection</vh></v>
 </v>
 <v t="ekr.20050417201845"><vh>extract</vh>
-<v t="ekr.20050417201845.1" a="E"><vh>before</vh></v>
+<v t="ekr.20050417201845.1"><vh>before</vh></v>
 <v t="ekr.20050417201845.2"><vh>after</vh>
 <v t="ekr.20050417201845.3"><vh>&lt;&lt; section &gt;&gt;</vh></v>
 </v>
@@ -1618,7 +1629,7 @@
 <v t="ekr.20040712101754.47"><vh>after</vh></v>
 <v t="ekr.20040712101754.48"><vh>selection</vh></v>
 </v>
-<v t="ekr.20040712101754.39" a="E"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
 </v>
 </v>
 <v t="ekr.20050417102057"><vh>Reformat Paragraph tests</vh>
@@ -1779,6 +1790,29 @@
 <v t="ekr.20050225164423"><vh>&lt;&lt; define subprocess_wrapper &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
+</v>
+</v>
+<v t="ekr.20050419070841.1"><vh>test settings</vh></v>
+<v t="ekr.20050419115225" a="E"><vh>(parse jEdit files)</vh>
+<v t="ekr.20050419115418" a="E"><vh>Script to run xml parser</vh>
+<v t="ekr.20050419120410.1"><vh>&lt;&lt; paths &gt;&gt;</vh></v>
+<v t="ekr.20050419115912.1" a="TV"><vh>class trace_parse</vh>
+<v t="ekr.20050419120819"><vh> __init__</vh></v>
+<v t="ekr.20050419140912"><vh>helpers</vh>
+<v t="ekr.20050419132345"><vh>attrsToList</vh></v>
+<v t="ekr.20050419124121"><vh>attrsToString</vh></v>
+<v t="ekr.20050419115912"><vh>clean</vh></v>
+<v t="ekr.20050419131709"><vh>printSummary</vh></v>
+</v>
+<v t="ekr.20050419140912.1"><vh>over-rides</vh>
+<v t="ekr.20050419115418.1"><vh>characters</vh></v>
+<v t="ekr.20050419115418.2"><vh>endDocument</vh></v>
+<v t="ekr.20050419115418.3"><vh>endElement</vh></v>
+<v t="ekr.20050419115418.4"><vh>other methods</vh></v>
+<v t="ekr.20050419115418.5"><vh>startDocument</vh></v>
+<v t="ekr.20050419115418.6"><vh>startElement</vh></v>
+</v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -2352,7 +2386,7 @@ print '
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902"></t>
 <t tx="EKR.20040627121836">next = p.next()
 t = next.v.t
 v = next.v
@@ -9027,7 +9061,6 @@ leoTest.runLeoTest(path,verbose=False,full=True)
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile2.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
-<t tx="ekr.20040730185319"></t>
 <t tx="ekr.20040802065214"># Make sure that changing this headline marks descendant @thin nodes dirty.
 h = p.headString()
 
@@ -9278,8 +9311,9 @@ atRootTest2.txt</t>
 this is a test of I've aren't arn't can't won't
 aren`t arn`t can`t won`t</t>
 <t tx="ekr.20040915080419">for p in c.allNodes_iter():
-    if hasattr(p.v.t,"unknownAttributes"):
-        print p.v.t.unknownAttributes</t>
+    h = p.headString()
+    if hasattr(p.v,'unknownAttributes'):   print 'v',h,p.v.unknownAttributes
+    if hasattr(p.v.t,'unknownAttributes'): print 't',h,p.v.t.unknownAttributes</t>
 <t tx="ekr.20040915111739">@nocolor
 @ignore
 
@@ -9944,7 +9978,7 @@ assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
    s" some string" type cr
 ;</t>
 <t tx="ekr.20041109164251"></t>
-<t tx="ekr.20041109174338" template="550874656d706c61746571002e">@ignore
+<t tx="ekr.20041109174338">@ignore
 
 This is a template node.
 
@@ -14242,5 +14276,196 @@ line4
 </t>
 <t tx="ekr.20050417205012.3">1.0
 6.0 lineend - 1c</t>
+<t tx="ekr.20050419033955"></t>
+<t tx="ekr.20050419034527" str_ekr_attribute="abc"># Set the attribute.
+d = {'str_ekr_attribute': 'abc'}
+p.v.t.unknownAttributes = d</t>
+<t tx="ekr.20050419034527.1">for p in c.allNodes_iter():
+    h = p.headString()
+    if hasattr(p.v.t,'unknownAttributes'):
+        d = p.v.t.unknownAttributes
+        val = d.get('str_ekr_attribute')
+        if val:
+           g.es('str_ekr_attribute is: %s' % val)</t>
+<t tx="ekr.20050419070841"></t>
+<t tx="ekr.20050419070841.1">g.es(c.config.getString('ekrSetting'))
+
+g.es(c.config.getString('testStrings'))
+
+g.es(c.config.getInt('testInts'))</t>
+<t tx="ekr.20050419082439"></t>
+<t tx="ekr.20050419084109"></t>
+<t tx="ekr.20050419084109.1"></t>
+<t tx="ekr.20050419085933"></t>
+<t tx="ekr.20050419090156"></t>
+<t tx="ekr.20050419115225">&lt;!DOCTYPE MODE SYSTEM "xmode.dtd"&gt;</t>
+<t tx="ekr.20050419115418">@language python
+@tabwidth -4
+import leoNodes
+import os
+import xml.sax
+import xml.sax.saxutils
+&lt;&lt; paths &gt;&gt;
+
+@others
+
+try:
+    f = None
+    try:
+        print ; print ; print '*' * 80
+        print path
+        if 1:
+            source = f = open(path)
+        else: # not needed, and it works.
+            source = xml.sax.xmlreader.InputSource(path)
+            source.setEncoding(g.app.tkEncoding) # Not needed.
+        parser = xml.sax.make_parser()
+        h = trace_parse(c)
+        parser.setContentHandler(h)
+        parser.parse(source)
+        h.printSummary()
+    except: g.es_exception()
+finally:
+    if f: f.close()</t>
+<t tx="ekr.20050419115418.1">def characters(self,content):
+
+    content = content.replace('\r','')
+
+    if self.verbose:
+        
+        kind = self.elementStack and self.elementStack[-1]
+        
+        if self.printAllConents or kind in self.printContents:
+            
+            if self.ignoreWs:
+                s = self.clean(content).strip()
+                if s: print s,
+            else:
+                s = self.clean(content)
+                print s,</t>
+<t tx="ekr.20050419115418.2">def endDocument(self):
+
+    g.trace()
+
+
+</t>
+<t tx="ekr.20050419115418.3">def endElement(self,name):
+    
+    if self.verbose:
+        print '&lt;/' + self.clean(name).strip() + '&gt;'
+
+    name2 = self.elementStack.pop()
+    assert name == name2
+    # g.trace(name2,name)</t>
+<t tx="ekr.20050419115418.4">def ignorableWhitespace(self):
+    g.trace()
+
+def processingInstruction (self,target,data):
+    g.trace()
+
+def skippedEntity(self,name):
+    g.trace(name)
+
+def startElementNS(self,name,qname,attrs):
+    g.trace(name)
+
+def endElementNS(self,name,qname):
+    g.trace(name)</t>
+<t tx="ekr.20050419115418.5">def startDocument(self):
+    
+    g.trace()
+</t>
+<t tx="ekr.20050419115418.6">def startElement(self,name,attrs):
+
+    if self.verbose:
+        n = attrs.getLength()
+        if n &gt; 0:
+            self.attributes += n
+            print '&lt;%s %s&gt;' % (
+                self.clean(name).strip(),
+                self.attrsToString(attrs,sep=' ')),
+        else:
+            print '&lt;%s&gt;' % (self.clean(name).strip()),
+
+        if name in self.newLineAfterStartElement:
+            print
+        
+    if 0:
+        if name == "v":
+            self.vnodes += 1
+            v = leoNodes.vnode(self.c,leoNodes.tnode())
+    
+        elif name == "t":
+            self.tnodes += 1
+            t = leoNodes.tnode()
+            
+    self.elements += 1
+    self.elementStack.append(name)</t>
+<t tx="ekr.20050419115912">def clean(self,s):
+
+    return g.toEncodedString(s,"ascii")</t>
+<t tx="ekr.20050419115912.1">class trace_parse(xml.sax.saxutils.XMLGenerator):
+    
+    @others
+</t>
+<t tx="ekr.20050419120410.1"># The last path takes effect.
+
+path = os.path.join(g.app.loadDir,"../","test","test2.leo")
+path = os.path.join(g.app.loadDir,"LeoPy.leo")
+
+path = os.path.join(g.app.loadDir,"../","test","python.xml") # jEdit description file
+
+path = os.path.normpath(path)</t>
+<t tx="ekr.20050419120819">def __init__ (self,c):
+
+    self.c = c
+    
+    # Init the base class.
+    xml.sax.saxutils.XMLGenerator.__init__(self)
+
+    self.attributes = 0
+    self.elementStack = []
+    self.elements = 0
+    self.ignoreWs = True # True: don't print contents with only ws.
+
+    self.newLineAfterStartElement = ['SPAN','MODE','PROPS','RULES','KEYWORDS']
+  
+    self.printAllConents = True
+    self.printContents = ['vh','t'] # List of element types for which to print contents.
+    self.verbose = True
+
+    self.tnodes = 0
+    self.vnodes = 0</t>
+<t tx="ekr.20050419124121">def attrsToString (self,attrs,sep='\n'):
+    
+    '''Convert the attributes to a string.
+    
+    attrs: an Attributes item passed to startElement.
+    
+    sep: the separator charater between attributes.'''
+
+    result = [
+        '%s="%s"' % (bunch.name,bunch.val)
+        for bunch in self.attrsToList(attrs)
+    ]
+
+    return sep.join(result)</t>
+<t tx="ekr.20050419131709">def printSummary (self):
+    
+    print 'elements:',self.elements,'attributes',self.attributes</t>
+<t tx="ekr.20050419132345">def attrsToList (self,attrs):
+    
+    '''Convert the attributes to a list of g.Bunches.
+    
+    attrs: an Attributes item passed to startElement.
+    
+    sep: the separator charater between attributes.'''
+    
+    return [
+        g.Bunch(name=name,val=attrs.getValue(name))
+        for name in attrs.getNames()
+    ]</t>
+<t tx="ekr.20050419140912"></t>
+<t tx="ekr.20050419140912.1"></t>
 </tnodes>
 </leo_file>
