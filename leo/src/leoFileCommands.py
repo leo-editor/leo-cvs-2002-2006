@@ -482,7 +482,7 @@ class baseFileCommands:
         # g.trace(tag,result)
         return result
     #@-node:ekr.20040701065235.1:getDescendentAttributes
-    #@+node:EKR.20040627114602:getDescendentUnknownAttributes 
+    #@+node:EKR.20040627114602:getDescendentUnknownAttributes
     # Only @thin vnodes have the descendentTnodeUnknownAttributes field.
     # The question is: what are we to do about this?
     
@@ -496,7 +496,7 @@ class baseFileCommands:
         except (TypeError,pickle.UnpicklingError,ImportError):
             return None
     #@nonl
-    #@-node:EKR.20040627114602:getDescendentUnknownAttributes 
+    #@-node:EKR.20040627114602:getDescendentUnknownAttributes
     #@+node:ekr.20031218072017.3024:getEscapedString
     def getEscapedString (self):
     
@@ -1797,16 +1797,19 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.1575:putTnodes
     #@+node:ekr.20050418161620.2:putUa (new in 4.3) (changed for 4.3)
-    def putUa (self,key,val):
+    def putUa (self,torv,key,val):
         
         '''Put attribute whose name is key and value is val to the output stream.'''
         
         # New in 4.3: leave string attributes starting with 'str_' alone.
-        if key.startswith('str_') and type(val) == type(''):
-            attr = ' %s="%s"' % (key,self.xmlEscape(val))
-            self.put(attr)
+        if key.startswith('str_'):
+            if type(val) == type(''):
+                attr = ' %s="%s"' % (key,self.xmlEscape(val))
+                self.put(attr)
+            else:
+                g.es("ignoring non-string attribute %s in %s" % (
+                    key,torv),color="blue")
             return
-    
         try:
             try:
                 # Protocol argument is new in Python 2.3
@@ -1836,7 +1839,7 @@ class baseFileCommands:
     
         for key in attrDict.keys():
             val = attrDict[key]
-            self.putUa(key,val)
+            self.putUa(torv,key,val)
     #@nonl
     #@-node:EKR.20040526202501:putUnknownAttributes
     #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
