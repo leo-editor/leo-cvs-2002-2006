@@ -20553,8 +20553,8 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
 c:\prog\leoCVS\leo\config\leoSettings.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
@@ -20740,6 +20740,7 @@ def updateConfig(self,c,changes):
         elif munge(name) == "recentfiles":
             c.setRecentFiles(val)
         else:
+            g.trace(name,kind,val)
             g.app.config.set(c,name,kind,val)
 #@nonl
 #@-node:ekr.20041225063637.66:updateConfig
@@ -40997,7 +40998,7 @@ def getDescendentAttributes (self,s,tag=""):
     # g.trace(tag,result)
     return result
 #@-node:ekr.20040701065235.1:getDescendentAttributes
-#@+node:EKR.20040627114602:getDescendentUnknownAttributes 
+#@+node:EKR.20040627114602:getDescendentUnknownAttributes
 # Only @thin vnodes have the descendentTnodeUnknownAttributes field.
 # The question is: what are we to do about this?
 
@@ -41011,7 +41012,7 @@ def getDescendentUnknownAttributes (self,s):
     except (TypeError,pickle.UnpicklingError,ImportError):
         return None
 #@nonl
-#@-node:EKR.20040627114602:getDescendentUnknownAttributes 
+#@-node:EKR.20040627114602:getDescendentUnknownAttributes
 #@+node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 def createVnode (self,parent,back,tref,headline,attrDict):
     
@@ -41621,6 +41622,793 @@ if headString:
 #@-node:ekr.20050304124404.2:write...
 #@-node:ekr.20050304124404:From leoFileCommands...
 #@-node:ekr.20041231102453:(Added support for 'str_' uA's
+#@+node:ekr.20050128092443:(Reload settings files when opening the settings dialog)
+#@+node:ekr.20050419085515:Notes
+@killcolor
+
+> I...change the @settings node to @string server = mail.otherisp.net
+
+the script doesn't print  -mail.otherisp.net-
+until I restart Leo.
+
+# EKR:  The change _is_ available if the change is made from the settings panel.  However, it is not available if the change is made in the Leo outline.  So opening the settings dialog should reload the files!
+
+g.app.config.readSettingsFiles(c.fileName(),verbose=True) reloads all settings files.
+#@nonl
+#@-node:ekr.20050419085515:Notes
+#@+node:ekr.20031218072017.1934:run & allies
+def run(fileName=None,*args,**keywords):
+    
+    """Initialize and run Leo"""
+    
+    if not isValidPython(): return
+    << import leoGlobals and leoApp >>
+    g.computeStandardDirectories()
+    script = getBatchScript() # Do early so we can compute verbose next.
+    verbose = script is None
+    g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
+    << import leoNodes and leoConfig >>
+    g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
+    g.app.config = leoConfig.configClass()
+    fileName = completeFileName(fileName)
+    reportDirectories(verbose)
+    g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.
+    g.app.setEncoding()
+    if script:
+        createNullGuiWithScript(script)
+        fileName = None
+    # Load plugins. Plugins may create g.app.gui.
+    g.doHook("start1")
+    if g.app.killed: return # Support for g.app.forceShutdown.
+    # Create the default gui if needed.
+    if g.app.gui == None:
+        g.app.createTkGui() # Creates global windows.
+    # Initialize tracing and statistics.
+    g.init_sherlock(args)
+    g.clear_stats()
+    << start psycho >>
+    # New in 4.3: clear g.app.initing _before_ creating the frame.
+    g.app.initing = False # "idle" hooks may now call g.app.forceShutdown.
+    # Create the main frame.  Show it and all queued messages.
+    c,frame = createFrame(fileName)
+    if not frame: return
+    if g.app.disableSave:
+        g.es("disabling save commands",color="red")
+    g.app.writeWaitingLog()
+    p = c.currentPosition()
+    g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
+    g.enableIdleTimeHook()
+    frame.tree.redraw()
+    frame.body.setFocus()
+    g.app.gui.runMainLoop()
+#@nonl
+#@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+# Import leoGlobals, but do NOT set g.
+try:
+    import leoGlobals
+except ImportError:
+    print "Error importing leoGlobals.py"
+
+# Create the application object.
+try:
+    import leoApp
+    leoGlobals.app = leoApp.LeoApp()
+except ImportError:
+    print "Error importing leoApp.py"
+    
+# NOW we can set g.
+g = leoGlobals
+assert(g.app)
+#@nonl
+#@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+#@+node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+try:
+    import leoNodes
+except ImportError:
+    print "Error importing leoNodes.py"
+    import traceback ; traceback.print_exc()
+try:
+    import leoConfig
+except ImportError:
+    print "Error importing leoConfig.py"
+    import traceback ; traceback.print_exc()
+#@nonl
+#@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+#@+node:ekr.20040411081633:<< start psycho >>
+if g.app and g.app.use_psyco:
+    try:
+        import psyco
+        if 0:
+            theFile = r"c:\prog\test\psycoLog.txt"
+            g.es("psyco now logging to",theFile,color="blue")
+            psyco.log(theFile)
+            psyco.profile()
+        psyco.full()
+        g.es("psyco now running",color="blue")
+    except ImportError:
+        pass
+    except:
+        print "unexpected exception importing psyco"
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040411081633:<< start psycho >>
+#@+node:ekr.20031218072017.1936:isValidPython
+def isValidPython():
+
+    message = """\
+Leo requires Python 2.2.1 or higher.
+You may download Python from http://python.org/download/
+"""
+    try:
+        # This will fail if True/False are not defined.
+        import leoGlobals as g
+    except ImportError:
+        print "isValidPython: can not import leoGlobals"
+        return 0
+    except:
+        print "isValidPytyhon: unexpected exception: import leoGlobals.py as g"
+        import traceback ; traceback.print_exc()
+        return 0
+    try:
+        ok = g.CheckVersion(sys.version, "2.2.1")
+        if not ok:
+            print message
+            g.app.gui.runAskOkDialog(None,"Python version error",message=message,text="Exit")
+        return ok
+    except:
+        print "isValidPython: unexpected exception: g.CheckVersion"
+        import traceback ; traceback.print_exc()
+        return 0
+#@nonl
+#@-node:ekr.20031218072017.1936:isValidPython
+#@+node:ekr.20041124083125:completeFileName (leo.py)
+def completeFileName (fileName):
+    
+    import leoGlobals as g
+    
+    if not fileName:
+        return None
+        
+    # This does not depend on config settings.
+    fileName = g.os_path_join(os.getcwd(),fileName)
+
+    head,ext = g.os_path_splitext(fileName)
+    if not ext:
+        fileName = fileName + ".leo"
+
+    return fileName
+#@nonl
+#@-node:ekr.20041124083125:completeFileName (leo.py)
+#@+node:ekr.20031218072017.1624:createFrame (leo.py)
+def createFrame (fileName):
+    
+    """Create a LeoFrame during Leo's startup process."""
+    
+    import leoGlobals as g
+
+    # Try to create a frame for the file.
+    if fileName:
+        if g.os_path_exists(fileName):
+            ok, frame = g.openWithFileName(fileName,None)
+            if ok:
+                return frame.c,frame
+    
+    # Create a _new_ frame & indicate it is the startup window.
+    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
+    frame.setInitialWindowGeometry()
+    frame.startupWindow = True
+    # 3/2/05: Call the 'new' hook for compatibility with plugins.
+    g.doHook("new",old_c=None,c=c,new_c=c)
+
+    # Report the failure to open the file.
+    if fileName:
+        g.es("File not found: " + fileName)
+
+    return c,frame
+#@-node:ekr.20031218072017.1624:createFrame (leo.py)
+#@+node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+def createNullGuiWithScript (script):
+    
+    import leoGlobals as g
+    import leoGui
+    
+    g.app.batchMode = True
+    g.app.gui = leoGui.nullGui("nullGui")
+    if not g.app.root:
+        g.app.root = g.app.gui.createRootWindow()
+    g.app.gui.finishCreate()
+    g.app.gui.setScript(script)
+#@-node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+#@+node:ekr.20031218072017.1939:getBatchScript
+def getBatchScript ():
+    
+    import leoGlobals as g
+    
+    name = None ; i = 1 # Skip the dummy first arg.
+    while i + 1 < len(sys.argv):
+        arg = sys.argv[i].strip().lower()
+        if arg in ("--script","-script"):
+            name = sys.argv[i+1].strip() ; break
+        i += 1
+
+    if not name:
+        return None
+    name = g.os_path_join(g.app.loadDir,name)
+    try:
+        f = None
+        try:
+            f = open(name,'r')
+            script = f.read()
+            # g.trace("script",script)
+        except IOError:
+            g.es("can not open script file: " + name, color="red")
+            script = None
+    finally:
+        if f: f.close()
+        return script
+#@nonl
+#@-node:ekr.20031218072017.1939:getBatchScript
+#@+node:ekr.20041130093254:reportDirectories
+def reportDirectories(verbose):
+    
+    import leoGlobals as g
+   
+    if verbose:
+        for kind,theDir in (
+            ("global config",g.app.globalConfigDir),
+            ("home",g.app.homeDir),
+        ):
+            g.es("%s dir: %s" % (kind,theDir),color="blue")
+#@nonl
+#@-node:ekr.20041130093254:reportDirectories
+#@-node:ekr.20031218072017.1934:run & allies
+#@+node:ekr.20041225063637.65:writeChangedVars & helpers
+def writeChangedVars (self):
+    
+    """Create per-file changes lists from diffs between what has been inited and written.
+    
+    Call writeChangedList to update each file from items in this list."""
+
+    changedList = []
+    fDict = self.fileValueDict
+    iDict = self.initValueDict
+    munge = g.app.config.munge
+    
+    for key in iDict.keys():
+
+        iData = iDict.get(key)
+        ip,iname,ikind,ival,getValueCallback = iData
+        newVal = getValueCallback()
+        fData = fDict.get(key)
+        if fData:
+            fp,fname,fkind,fval,junk = fData
+            assert(ip==fp and iname==fname and ikind==fkind)
+            changed = fval != newVal ; oldVal = fval
+        else:
+            changed = ival != newVal ; oldVal = ival
+            fval = '<none>'
+
+        if changed:
+            # print "write","key","ival",ival,"fval",fval
+            if type(oldVal) == type({}):
+                s = "write  %s" % (iname)
+                print s ; g.es(s,color='blue')
+            else:
+                s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
+                print s ; g.es(s,color='blue')
+            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
+            changedList.append((ip,iname,ikind,oldVal,newVal),)
+            
+    self.writeChangedList(changedList,"write")
+#@nonl
+#@+node:ekr.20041225063637.66:updateConfig
+def updateConfig(self,c,changes):
+    
+    """Update the core config settings from the changes list."""
+    
+    munge = g.app.config.munge
+
+    for data in changes:
+        p,name,kind,oldval,val = data
+        if munge(kind) == 'font':
+            for key in ('family','size','slant','weight'):
+                data2 = val.get(key)
+                if data2:
+                    name2,val2 = data2
+                    kind2 = g.choose(key=='size','int','string')
+                    g.app.config.set(c,name2,kind2,val2)
+            # Update the visible fonts: c may not be the same as self.c.
+            for c2 in (c,self.c):
+                c2.frame.body.setFontFromConfig()
+                c2.frame.body.colorizer.setFontFromConfig()
+                c2.frame.log.setFontFromConfig()
+                c2.frame.tree.setFontFromConfig()
+                c2.redraw()
+        elif munge(kind) == "color":
+            # g.trace("setting colors")
+            g.app.config.set(c,name,kind,val)
+            for c2 in (c,self.c):
+                c2.frame.tree.setColorFromConfig()
+                c2.frame.log.setColorFromConfig()
+                c2.frame.body.setColorFromConfig()
+        elif munge(name) == "recentfiles":
+            c.setRecentFiles(val)
+        else:
+            g.trace(name,kind,val)
+            g.app.config.set(c,name,kind,val)
+#@nonl
+#@-node:ekr.20041225063637.66:updateConfig
+#@+node:ekr.20041225063637.67:updateOneNode & helper
+def updateOneNode (self,c,data):
+    
+    """Update the node in c corresponding to p = data[0]."""
+    
+    p,name,kind,oldVal,val = data
+    munge = g.app.config.munge
+    name = name.strip() ; kind = munge(kind.strip())
+
+    # Root1 is the root of the dialog's outline.
+    p1 = p
+    root1 = self.findSettingsRoot(p1.copy())
+    c1 = root1.c
+    
+    # Root2 is the root of the settings outline in the file.
+    root2 = g.app.config.settingsRoot(c) # c is NOT self.c
+    #g.trace(root2.c.mFileName)
+    p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
+    if p2:
+        c2 = p2.c ; filename = c2.mFileName
+    else:
+        g.trace("can't happen: can't find node in root2:",root2.c.mFileName)
+        g.trace('root1',root1)
+        g.trace('root2',root2)
+        g.trace('p1',p1)
+        c2 = None ; filename = None
+
+    # Update the outline in the dialog and the target file.
+    for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
+        if p:
+            # g.trace("updating %s in %s" % (name,where))
+            if kind in ('shortcuts','recentfiles'):
+                # Put the values in the body.
+                p.initHeadString("@%s %s" % (kind,name))
+                body = '\n'.join(val)
+                p.setBodyStringOrPane(body)
+            elif kind == 'font':
+                body = self.computeBodyFromFontDict(p,val)
+                p.setBodyStringOrPane(body)
+            else:
+                # Put everything in the headline.
+                p.initHeadString("@%s %s = %s" % (kind,name,val))
+#@nonl
+#@+node:ekr.20041225063637.68:computeBodyFromFontDict
+def computeBodyFromFontDict(self,p,d):
+
+    lines = []
+    comments = d.get('comments')
+    if comments:
+        comment_lines = g.splitLines(comments)
+        comment_lines = ["# %s" % (line) for line in comment_lines]
+        lines.extend(comment_lines)
+        lines.extend('\n\n')
+        
+    for key in ('family','size','slant','weight'):
+        data = d.get(key)
+        if data:
+            name,val = data
+            if val in (None,'<none>'):
+                val = "None"
+            line = "%s = %s\n" % (name,val)
+            lines.extend(line)
+
+    body = ''.join(lines)
+    return body
+#@nonl
+#@-node:ekr.20041225063637.68:computeBodyFromFontDict
+#@-node:ekr.20041225063637.67:updateOneNode & helper
+#@+node:ekr.20041225063637.69:writeChangedList
+def writeChangedList (self,changedList,tag):
+    
+    if not changedList: return
+    
+    filesInfoDict = self.filesInfoDict
+    if 0:
+        << dump all the dicts in filesInfoDict >>
+
+    # Accumulate the changes for each file in a 'changes' list for each root.
+    for data in changedList:
+        p,name,kind,oldVal,newVal = data
+        # print "%6s %6s %10s -> %10s %s" % (tag,kind,str(oldVal),str(newVal),name)
+        root = self.findSettingsRoot(p)
+        d = filesInfoDict.get(root)
+        changes = d.get('changes')
+        changes.append(data)
+        d['changes'] = changes
+
+    for root in filesInfoDict.keys():
+        d = filesInfoDict.get(root)
+        # Keys are 'c','changes','path','islocal' (unused)
+        c = d.get('c')
+        changes = d.get('changes')
+        path = d.get('path')
+        # isLocal = rootDict.get('isLocal')
+        if changes:
+            self.writeChangesToFile(c,changes,path)
+            self.updateConfig(c,changes)
+        d['changes'] = []
+#@nonl
+#@+node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+for key in filesInfoDict.keys():
+    print ; print
+    print "key",key
+    g.printDict(filesInfoDict.get(key))
+print ; print
+#@nonl
+#@-node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+#@-node:ekr.20041225063637.69:writeChangedList
+#@+node:ekr.20041225063637.71:writeChangesToFile
+def writeChangesToFile (self,c,changes,path):
+
+    # Write the individual changes.
+    for data in changes:
+        self.updateOneNode(c,data)
+
+    if c.mFileName:
+        self.es("writing " + g.shortFilename(path))
+        # Save the file corresponding to c.
+        # Non-local files aren't open otherwise!
+        c.fileCommands.save(c.mFileName)
+        c.redraw() # This should work for non-local files too.
+        self.tree.redraw()
+    else:
+        print "no settings saved.  local file not named."
+#@nonl
+#@-node:ekr.20041225063637.71:writeChangesToFile
+#@-node:ekr.20041225063637.65:writeChangedVars & helpers
+#@-node:ekr.20050128092443:(Reload settings files when opening the settings dialog)
+#@+node:ekr.20050419062215.1:(Debugged @if-platform, @if-gui, @ints & @strings)
+#@+node:ekr.20050419085131:Notes
+@killcolor
+
+g.app.gui typically not defined when the config settings are loaded, so to use a
+setting in @if-gui a plugin would have to call g.app.config.readSettingsFiles.
+#@nonl
+#@-node:ekr.20050419085131:Notes
+#@+node:ekr.20041225063637.99:visitNode (settingsDialogParserClass)
+def visitNode (self,p):
+    
+    """Visit a node, and possibly append a widget description to self.widgets."""
+    
+    munge = g.app.config.munge
+    h = p.headString().strip() or ''
+    kind,name,val = self.parseHeadline(h)
+    
+    # g.trace(kind,name,val)
+
+    f = self.dispatchDict.get(munge(kind))
+    if f is not None:
+        try:
+            return f(p,kind,name,val)
+        except TypeError:
+            g.es_exception()
+            print "*** no handler",kind
+            return None
+#@nonl
+#@-node:ekr.20041225063637.99:visitNode (settingsDialogParserClass)
+#@+node:ekr.20041119204714:visitNode (settingsTreeParser)
+def visitNode (self,p):
+    
+    """Init any settings found in node p."""
+    
+    # g.trace(p.headString())
+    
+    munge = g.app.config.munge
+
+    kind,name,val = self.parseHeadline(p.headString())
+    kind = munge(kind)
+
+    if kind == "settings":
+        pass
+    elif kind not in self.control_types and val in (u'None',u'none','None','none','',None):
+        # None is valid for all data types.
+        self.set(p,kind,name,None)
+    elif kind in self.control_types or kind in self.basic_types:
+        f = self.dispatchDict.get(kind)
+        try:
+            return f(p,kind,name,val)
+        except TypeError:
+            g.es_exception()
+            print "*** no handler",kind
+            return None
+    elif name:
+        # self.error("unknown type %s for setting %s" % (kind,name))
+        # Just assume the type is a string.
+        self.set(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041119204714:visitNode (settingsTreeParser)
+#@+node:ekr.20041119204700.1:traverse (parserBaseClass)
+def traverse (self):
+    
+    c = self.c
+    
+    p = g.app.config.settingsRoot(c)
+    if not p:
+        return None
+
+    self.settingsDict = {}
+    after = p.nodeAfterTree()
+    while p and p != after:
+        result = self.visitNode(p)
+        # g.trace(result,p.headString())
+        if result == "skip":
+            s = 'skipping settings in %s' % p.headString()
+            print s ; g.es(s,color='blue')
+            p.moveToNodeAfterTree()
+        else:
+            p.moveToThreadNext()
+            
+    return self.settingsDict
+#@nonl
+#@-node:ekr.20041119204700.1:traverse (parserBaseClass)
+#@+node:ekr.20041119204700: ctor (parserBaseClass)
+def __init__ (self,c):
+    
+    self.c = c
+    self.recentFiles = [] # List of recent files.
+    
+    # Keys are canonicalized names.
+    self.dispatchDict = {
+        'bool':         self.doBool,
+        'color':        self.doColor,
+        'directory':    self.doDirectory,
+        'font':         self.doFont,
+        'if':           self.doIf,
+        'ifgui':        self.doIfGui,
+        'ifplatform':   self.doIfPlatform,
+        'ignore':       self.doIgnore,
+        'int':          self.doInt,
+        'ints':         self.doInts,
+        'float':        self.doFloat,
+        'path':         self.doPath,
+        'page':         self.doPage,
+        'ratio':        self.doRatio,
+        'recentfiles':  self.doRecentFiles,
+        'shortcut':     self.doShortcut,
+        'shortcuts':    self.doShortcuts,
+        'string':       self.doString,
+        'strings':      self.doStrings,
+    }
+#@nonl
+#@-node:ekr.20041119204700: ctor (parserBaseClass)
+#@+node:ekr.20041120094940:kind handlers (parserBaseClass)
+#@+node:ekr.20041120094940.1:doBool
+def doBool (self,p,kind,name,val):
+
+    if val in ('True','true','1'):
+        self.set(p,kind,name,True)
+    elif val in ('False','false','0'):
+        self.set(p,kind,name,False)
+    else:
+        self.valueError(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.1:doBool
+#@+node:ekr.20041120094940.2:doColor
+def doColor (self,p,kind,name,val):
+    
+    # At present no checking is done.
+    self.set(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.2:doColor
+#@+node:ekr.20041120094940.3:doDirectory & doPath
+def doDirectory (self,p,kind,name,val):
+    
+    # At present no checking is done.
+    self.set(p,kind,name,val)
+
+doPath = doDirectory
+#@nonl
+#@-node:ekr.20041120094940.3:doDirectory & doPath
+#@+node:ekr.20041120094940.6:doFloat
+def doFloat (self,p,kind,name,val):
+    
+    try:
+        val = float(val)
+        self.set(p,kind,name,val)
+    except ValueError:
+        self.valueError(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.6:doFloat
+#@+node:ekr.20041120094940.4:doFont
+def doFont (self,p,kind,name,val):
+    
+    d = self.parseFont(p)
+    
+    # Set individual settings.
+    for key in ('family','size','slant','weight'):
+        data = d.get(key)
+        if data is not None:
+            name,val = data
+            setKind = key
+            self.set(p,setKind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.4:doFont
+#@+node:ekr.20041120103933:doIf
+def doIf(self,p,kind,name,val):
+
+    g.trace("'if' not supported yet")
+    return None
+#@nonl
+#@-node:ekr.20041120103933:doIf
+#@+node:ekr.20041121125416:doIfGui
+def doIfGui (self,p,kind,name,val):
+    
+    # g.trace(repr(name))
+    
+    if not g.app.gui or not g.app.gui.guiName():
+        s = '@if-gui has not effect: g.app.gui not defined yet'
+        print s ; g.es(s,color='blue')
+        return "skip"
+    elif g.app.gui.guiName().lower() == name.lower():
+        return None
+    else:
+        return "skip"
+#@nonl
+#@-node:ekr.20041121125416:doIfGui
+#@+node:ekr.20041120104215:doIfPlatform
+def doIfPlatform (self,p,kind,name,val):
+    
+    # g.trace(sys.platform,repr(name))
+
+    if sys.platform.lower() == name.lower():
+        return None
+    else:
+        return "skip"
+#@nonl
+#@-node:ekr.20041120104215:doIfPlatform
+#@+node:ekr.20041120104215.1:doIgnore
+def doIgnore(self,p,kind,name,val):
+
+    return "skip"
+#@nonl
+#@-node:ekr.20041120104215.1:doIgnore
+#@+node:ekr.20041120094940.5:doInt
+def doInt (self,p,kind,name,val):
+    
+    try:
+        val = int(val)
+        self.set(p,kind,name,val)
+    except ValueError:
+        self.valueError(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.5:doInt
+#@+node:ekr.20041217132253:doInts
+def doInts (self,p,kind,name,val):
+    
+    '''We expect @ints aName[val1,val2]=val'''
+
+    name = name.strip() # The name indicates the valid values.
+    i = name.find('[')
+    j = name.find(']')
+    
+    # g.trace(kind,name,val)
+
+    if -1 < i < j:
+        items = name[i+1:j]
+        items = items.split(',')
+        name = name[0:i].strip()
+        try:
+            items = [int(item.strip()) for item in items]
+        except ValueError:
+            items = []
+            self.valueError(p,'ints[]',name,val)
+            return
+        kind = "ints[%s]" % (','.join([str(item) for item in items]))
+        try:
+            val = int(val)
+        except ValueError:
+            self.valueError(p,'int',name,val)
+            return
+        if val not in items:
+            self.error("%d is not in %s in %s" % (val,kind,name))
+            return
+
+        # g.trace(repr(kind),repr(name),val)
+
+        # At present no checking is done.
+        self.set(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041217132253:doInts
+#@+node:ekr.20041120104215.2:doPage
+def doPage(self,p,kind,name,val):
+
+    pass # Ignore @page this while parsing settings.
+#@nonl
+#@-node:ekr.20041120104215.2:doPage
+#@+node:ekr.20041121125741:doRatio
+def doRatio (self,p,kind,name,val):
+    
+    try:
+        val = float(val)
+        if 0.0 <= val <= 1.0:
+            self.set(p,kind,name,val)
+        else:
+            self.valueError(p,kind,name,val)
+    except ValueError:
+        self.valueError(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041121125741:doRatio
+#@+node:ekr.20041121151924:doRecentFiles
+def doRecentFiles (self,p,kind,name,val):
+    
+    s = p.bodyString().strip()
+    if s:
+        lines = g.splitLines(s)
+        self.set(p,"recent-files","recent-files",lines)
+#@nonl
+#@-node:ekr.20041121151924:doRecentFiles
+#@+node:ekr.20041120113848:doShortcut
+def doShortcut(self,p,kind,name,val):
+
+    self.set(p,kind,name,val)
+    self.setShortcut(name,val)
+#@nonl
+#@-node:ekr.20041120113848:doShortcut
+#@+node:ekr.20041120105609:doShortcuts
+def doShortcuts(self,p,kind,name,val):
+    
+    #g.trace('*'*10,p.headString())
+
+    s = p.bodyString()
+    lines = g.splitLines(s)
+    for line in lines:
+        line = line.strip()
+        if line and not g.match(line,0,'#'):
+            name,val = self.parseShortcutLine(line)
+            # g.trace(name,val)
+            if val is not None:
+                self.set(p,"shortcut",name,val)
+                self.setShortcut(name,val)
+#@nonl
+#@-node:ekr.20041120105609:doShortcuts
+#@+node:ekr.20041217132028:doString
+def doString (self,p,kind,name,val):
+    
+    # At present no checking is done.
+    self.set(p,kind,name,val)
+#@-node:ekr.20041217132028:doString
+#@+node:ekr.20041120094940.8:doStrings
+def doStrings (self,p,kind,name,val):
+    
+    '''We expect @strings aName[val1,val2]=val'''
+    
+    name = name.strip()
+    i = name.find('[')
+    j = name.find(']')
+
+    if -1 < i < j:
+        items = name[i+1:j]
+        items = items.split(',')
+        items = [item.strip() for item in items]
+        name = name[0:i].strip()
+
+        kind = "strings[%s]" % (','.join(items))
+
+        # g.trace(repr(kind),repr(name),val)
+
+        # At present no checking is done.
+        self.set(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.8:doStrings
+#@-node:ekr.20041120094940:kind handlers (parserBaseClass)
+#@+node:ekr.20041120094940.10:valueError
+def valueError (self,p,kind,name,val):
+    
+    """Give an error: val is not valid for kind."""
+    
+    self.error("%s is not a valid %s for %s" % (val,kind,name))
+#@nonl
+#@-node:ekr.20041120094940.10:valueError
+#@-node:ekr.20050419062215.1:(Debugged @if-platform, @if-gui, @ints & @strings)
 #@-node:ekr.20050316083031:4.3 a5 projects
 #@-all
 #@nonl

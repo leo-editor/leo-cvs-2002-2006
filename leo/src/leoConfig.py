@@ -50,7 +50,7 @@ class parserBaseClass:
     #@nl
     
     #@    @+others
-    #@+node:ekr.20041119204700: ctor
+    #@+node:ekr.20041119204700: ctor (parserBaseClass)
     def __init__ (self,c):
         
         self.c = c
@@ -79,7 +79,7 @@ class parserBaseClass:
             'strings':      self.doStrings,
         }
     #@nonl
-    #@-node:ekr.20041119204700: ctor
+    #@-node:ekr.20041119204700: ctor (parserBaseClass)
     #@+node:ekr.20041120103012:error
     def error (self,s):
     
@@ -89,7 +89,7 @@ class parserBaseClass:
         g.es(s,color="blue")
     #@nonl
     #@-node:ekr.20041120103012:error
-    #@+node:ekr.20041120094940:kind handlers
+    #@+node:ekr.20041120094940:kind handlers (parserBaseClass)
     #@+node:ekr.20041120094940.1:doBool
     def doBool (self,p,kind,name,val):
     
@@ -150,8 +150,14 @@ class parserBaseClass:
     #@-node:ekr.20041120103933:doIf
     #@+node:ekr.20041121125416:doIfGui
     def doIfGui (self,p,kind,name,val):
-    
-        if g.app.gui == name:
+        
+        # g.trace(repr(name))
+        
+        if not g.app.gui or not g.app.gui.guiName():
+            s = '@if-gui has not effect: g.app.gui not defined yet'
+            print s ; g.es(s,color='blue')
+            return "skip"
+        elif g.app.gui.guiName().lower() == name.lower():
             return None
         else:
             return "skip"
@@ -159,8 +165,10 @@ class parserBaseClass:
     #@-node:ekr.20041121125416:doIfGui
     #@+node:ekr.20041120104215:doIfPlatform
     def doIfPlatform (self,p,kind,name,val):
+        
+        # g.trace(sys.platform,repr(name))
     
-        if sys.platform == name:
+        if sys.platform.lower() == name.lower():
             return None
         else:
             return "skip"
@@ -184,22 +192,35 @@ class parserBaseClass:
     #@-node:ekr.20041120094940.5:doInt
     #@+node:ekr.20041217132253:doInts
     def doInts (self,p,kind,name,val):
+        
+        '''We expect @ints aName[val1,val2]=val'''
     
-        name = name.strip()
+        name = name.strip() # The name indicates the valid values.
         i = name.find('[')
         j = name.find(']')
+        
+        # g.trace(kind,name,val)
     
         if -1 < i < j:
             items = name[i+1:j]
             items = items.split(',')
+            name = name[0:i].strip()
             try:
                 items = [int(item.strip()) for item in items]
             except ValueError:
                 items = []
-                self.valueError(p,kind,name,val)
-        
-            name = name[j+1:].strip()
+                self.valueError(p,'ints[]',name,val)
+                return
             kind = "ints[%s]" % (','.join([str(item) for item in items]))
+            try:
+                val = int(val)
+            except ValueError:
+                self.valueError(p,'int',name,val)
+                return
+            if val not in items:
+                self.error("%d is not in %s in %s" % (val,kind,name))
+                return
+    
             # g.trace(repr(kind),repr(name),val)
     
             # At present no checking is done.
@@ -267,6 +288,8 @@ class parserBaseClass:
     #@+node:ekr.20041120094940.8:doStrings
     def doStrings (self,p,kind,name,val):
         
+        '''We expect @strings aName[val1,val2]=val'''
+        
         name = name.strip()
         i = name.find('[')
         j = name.find(']')
@@ -275,16 +298,17 @@ class parserBaseClass:
             items = name[i+1:j]
             items = items.split(',')
             items = [item.strip() for item in items]
+            name = name[0:i].strip()
     
-            name = name[j+1:].strip()
             kind = "strings[%s]" % (','.join(items))
+    
             # g.trace(repr(kind),repr(name),val)
     
             # At present no checking is done.
             self.set(p,kind,name,val)
     #@nonl
     #@-node:ekr.20041120094940.8:doStrings
-    #@-node:ekr.20041120094940:kind handlers
+    #@-node:ekr.20041120094940:kind handlers (parserBaseClass)
     #@+node:ekr.20041124063257:munge
     def munge(self,s):
         
@@ -372,14 +396,14 @@ class parserBaseClass:
     
         if g.match(s,0,'@'):
             i = g.skip_id(s,1,chars='-')
-            kind = s[1:i]
+            kind = s[1:i].strip()
             if kind:
                 # name is everything up to '='
                 j = s.find('=',i)
                 if j == -1:
-                    name = s[i:]
+                    name = s[i:].strip()
                 else:
-                    name = s[i:j]
+                    name = s[i:j].strip()
                     # val is everything after the '='
                     val = s[j+1:].strip()
     
@@ -443,7 +467,7 @@ class parserBaseClass:
         self.set(c,rawKey,"shortcut",val)
     #@nonl
     #@-node:ekr.20041227071423:setShortcut (ParserBaseClass)
-    #@+node:ekr.20041119204700.1:traverse
+    #@+node:ekr.20041119204700.1:traverse (parserBaseClass)
     def traverse (self):
         
         c = self.c
@@ -456,14 +480,17 @@ class parserBaseClass:
         after = p.nodeAfterTree()
         while p and p != after:
             result = self.visitNode(p)
+            # g.trace(result,p.headString())
             if result == "skip":
+                s = 'skipping settings in %s' % p.headString()
+                print s ; g.es(s,color='blue')
                 p.moveToNodeAfterTree()
             else:
                 p.moveToThreadNext()
                 
         return self.settingsDict
     #@nonl
-    #@-node:ekr.20041119204700.1:traverse
+    #@-node:ekr.20041119204700.1:traverse (parserBaseClass)
     #@+node:ekr.20041120094940.10:valueError
     def valueError (self,p,kind,name,val):
         
@@ -1233,7 +1260,7 @@ class settingsDialogParserClass (parserBaseClass):
         self.widgets.append((p.copy(),kind,name,val),)
     #@nonl
     #@-node:ekr.20041225063637.98:set
-    #@+node:ekr.20041225063637.99:visitNode
+    #@+node:ekr.20041225063637.99:visitNode (settingsDialogParserClass)
     def visitNode (self,p):
         
         """Visit a node, and possibly append a widget description to self.widgets."""
@@ -1247,13 +1274,14 @@ class settingsDialogParserClass (parserBaseClass):
         f = self.dispatchDict.get(munge(kind))
         if f is not None:
             try:
-                f(p,kind,name,val)
+                return f(p,kind,name,val)
             except TypeError:
                 g.es_exception()
                 print "*** no handler",kind
+                return None
     #@nonl
-    #@-node:ekr.20041225063637.99:visitNode
-    #@+node:ekr.20041225063637.100:kind handlers
+    #@-node:ekr.20041225063637.99:visitNode (settingsDialogParserClass)
+    #@+node:ekr.20041225063637.100:kind handlers (settingsDialogParserClass)
     # Most of the work is done by base class methods.
     #@nonl
     #@+node:ekr.20041225063637.101:doFont
@@ -1306,7 +1334,7 @@ class settingsDialogParserClass (parserBaseClass):
         self.set(p,kind,name,vals)
     #@nonl
     #@-node:ekr.20041225063637.104:doShortcuts
-    #@-node:ekr.20041225063637.100:kind handlers
+    #@-node:ekr.20041225063637.100:kind handlers (settingsDialogParserClass)
     #@-others
 #@-node:ekr.20041225063637.96:class settingsDialogParserClass (parserBaseClass)
 #@+node:ekr.20041225063637.78:class settingsTree (leoTkinterTree)
@@ -1491,7 +1519,7 @@ class settingsTreeParser (parserBaseClass):
         parserBaseClass.__init__(self,c)
     #@nonl
     #@-node:ekr.20041119204103:ctor
-    #@+node:ekr.20041119204714:visitNode
+    #@+node:ekr.20041119204714:visitNode (settingsTreeParser)
     def visitNode (self,p):
         
         """Init any settings found in node p."""
@@ -1511,16 +1539,17 @@ class settingsTreeParser (parserBaseClass):
         elif kind in self.control_types or kind in self.basic_types:
             f = self.dispatchDict.get(kind)
             try:
-                f(p,kind,name,val)
+                return f(p,kind,name,val)
             except TypeError:
                 g.es_exception()
                 print "*** no handler",kind
+                return None
         elif name:
             # self.error("unknown type %s for setting %s" % (kind,name))
             # Just assume the type is a string.
             self.set(p,kind,name,val)
     #@nonl
-    #@-node:ekr.20041119204714:visitNode
+    #@-node:ekr.20041119204714:visitNode (settingsTreeParser)
     #@-others
 #@nonl
 #@-node:ekr.20041119203941.3:class settingsTreeParser (parserBaseClass)
