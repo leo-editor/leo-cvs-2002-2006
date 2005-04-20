@@ -731,7 +731,7 @@ class baseCommands:
         c.recentFiles = []
         f.menu.createRecentFilesMenuItems()
         c.updateRecentFiles(c.mFileName)
-        c.config.setRecentFiles(c.recentFiles)
+        c.config.setRecentFiles(c.recentFiles,doUndo=True)
     #@nonl
     #@-node:ekr.20031218072017.2080:clearRecentFiles
     #@+node:ekr.20031218072017.2081:openRecentFile
@@ -5761,29 +5761,61 @@ class configSettings:
     #@-node:ekr.20041118053731:Getters
     #@+node:ekr.20041118195812:Setters...
     #@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
-    def setRecentFiles (self,files):
+    def setRecentFiles (self,files,doUndo=False):
         
-        c = self.c
+        '''Update the @recent-files node the present commander, and possibly
+        the global leoSettings.leo files.'''
+        
+        c = self.c ; old_p = c.currentPosition()
         
         # Append the files to the global list.
         g.app.config.appendToRecentFiles(files)
         
-        # Do nothing if there is no @settings tree or no @recent-files node.
-        p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if not p:
-            # g.trace("no @recent-files node for ",c.mFileName)
-            return
-    
-        # g.trace("updating @recent-files for ",c.mFileName)
-        
-        # Update the @recent-files entry, leaving c's changed status untouched.
-        oldText = p.bodyString()
-        changed = c.isChanged()
-        newText = '\n'.join(files)
-        p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
-        c.setChanged(changed)
-        c.undoer.setUndoTypingParams(p,'Clear Recent Files',
-            oldText,newText,oldSel=None,newSel=None)
+        c.beginUpdate()
+        if 1: # In update...
+            root = g.app.config.settingsRoot(c)
+            if not root:
+                #@            << create @settings node >>
+                #@+node:ekr.20050420081237:<< create @settings node >>
+                g.es('created @settings node',color='red')
+                
+                old_root = c.rootPosition()
+                root = old_root.insertAfter()
+                root.moveToRoot(old_root)
+                root.initHeadString('@settings')
+                
+                assert(g.app.config.settingsRoot(c))
+                #@nonl
+                #@-node:ekr.20050420081237:<< create @settings node >>
+                #@nl
+            p = g.app.config.findSettingsPosition(c,"@recent-files")
+            if not p:
+                #@            << create @recent-files node >>
+                #@+node:ekr.20050420081237.1:<< create @recent-files node >>
+                g.es('created @recent-files node',color='red')
+                p = root.insertAsNthChild(0)
+                p.initHeadString('@recent-files')
+                c.selectPosition(p)
+                
+                assert(g.app.config.findSettingsPosition(c,"@recent-files"))
+                #@nonl
+                #@-node:ekr.20050420081237.1:<< create @recent-files node >>
+                #@nl
+            #@        << Update p, leaving c.changed untouched >>
+            #@+node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
+            oldText = p.bodyString()
+            changed = c.isChanged()
+            newText = '\n'.join(files)
+            p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
+            c.setChanged(changed)
+            
+            if doUndo:
+                c.undoer.setUndoTypingParams(old_p,'Clear Recent Files',
+                    oldText,newText,oldSel=None,newSel=None)
+            #@nonl
+            #@-node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
+            #@nl
+        c.endUpdate(changed)
     #@nonl
     #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
     #@+node:ekr.20041118195812.2:set & setString
