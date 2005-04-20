@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6946" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6969" clone_windows="0"/>
 <globals body_outline_ratio="0.417628541448">
-	<global_window_position top="10" left="344" height="953" width="916"/>
+	<global_window_position top="32" left="223" height="880" width="1055"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1792,25 +1792,121 @@
 <v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
 </v>
 </v>
-<v t="ekr.20050419070841.1"><vh>test settings</vh></v>
+<v t="ekr.20050419070841.1" a="E"><vh>test settings</vh></v>
+<v t="ekr.20050419211746"><vh>Lower the selection</vh></v>
 <v t="ekr.20050419115225" a="E"><vh>(parse jEdit files)</vh>
+<v t="ekr.20050419172816"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
+<v t="ekr.20050419173824"><vh>jEdit docs...</vh>
+<v t="ekr.20050419175429"><vh>Rule ordering</vh></v>
+<v t="ekr.20050419181328"><vh>Attributes</vh>
+<v t="ekr.20050419182514"><vh>AT_CHAR (int)</vh></v>
+<v t="ekr.20050419182514.1"><vh>AT_LINE_START (bool)</vh></v>
+<v t="ekr.20050419182514.2" a="E"><vh>AT_WHITESPACE_END (bool)</vh></v>
+<v t="ekr.20050419182514.3"><vh>AT_WORD_START (bool)</vh></v>
+<v t="ekr.20050419182514.4"><vh>DELEGATE (mode name)</vh></v>
+<v t="ekr.20050419182514.5"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
+<v t="ekr.20050419182514.6" a="E"><vh>EXCLUDE_MATCH (bool)</vh></v>
+<v t="ekr.20050419182514.7" a="E"><vh>HASH_CHAR (char)</vh></v>
+<v t="ekr.20050419182514.8" a="E"><vh>NO_ESCAPE (bool)</vh></v>
+<v t="ekr.20050419182514.9"><vh>NO_LINE_BREAK (bool)</vh></v>
+<v t="ekr.20050419182514.10" a="E"><vh>NO_WORD_BREAK (bool)</vh></v>
+<v t="ekr.20050419182514.11"><vh>TYPE</vh></v>
+</v>
+<v t="ekr.20050419200205" a="E"><vh>Elements</vh>
+<v t="ekr.20050419173824.6"><vh>mode</vh></v>
+<v t="ekr.20050419173824.7"><vh>props (can be placed inside rules tag)</vh>
+<v t="ekr.20050419173824.8" a="E"><vh>property</vh></v>
+</v>
+<v t="ekr.20050419173824.9"><vh>begin (for span, etc.)</vh></v>
+<v t="ekr.20050419173824.10"><vh>end (for span, etc.)</vh></v>
+<v t="ekr.20050419173824.3"><vh>rules</vh>
+<v t="ekr.20050419173824.13"><vh>eol_span</vh></v>
+<v t="ekr.20050419173824.12" a="E"><vh>eol_span_regexp</vh></v>
+<v t="ekr.20050419173824.16"><vh>import</vh></v>
+<v t="ekr.20050419173824.2"><vh>keywords</vh></v>
+<v t="ekr.20050419173824.17"><vh>mark_following</vh></v>
+<v t="ekr.20050419173824.18"><vh>mark_previous</vh></v>
+<v t="ekr.20050419173824.14"><vh>seq</vh></v>
+<v t="ekr.20050419173824.15" a="E"><vh>seq_regexp</vh></v>
+<v t="ekr.20050419173824.4" a="E"><vh>span</vh></v>
+<v t="ekr.20050419173824.11" a="E"><vh>span_regexp</vh></v>
+<v t="ekr.20050419173824.5"><vh>terminate</vh></v>
+</v>
+</v>
+</v>
 <v t="ekr.20050419115418" a="E"><vh>Script to run xml parser</vh>
 <v t="ekr.20050419120410.1"><vh>&lt;&lt; paths &gt;&gt;</vh></v>
-<v t="ekr.20050419115912.1" a="TV"><vh>class trace_parse</vh>
-<v t="ekr.20050419120819"><vh> __init__</vh></v>
+<v t="ekr.20050419215535"><vh>class mode</vh>
+<v t="ekr.20050419220140"><vh>mode.__init__</vh></v>
+</v>
+<v t="ekr.20050419215535.1"><vh>class property</vh>
+<v t="ekr.20050419220140.1"><vh>propery.__init__</vh></v>
+</v>
+<v t="ekr.20050419215535.2" a="E"><vh>class rule</vh>
+<v t="ekr.20050419215535.3"><vh>rule.__init__</vh></v>
+</v>
+<v t="ekr.20050419115912.1" a="E"><vh>class jEdit_parse</vh>
+<v t="ekr.20050419120819" a="TV"><vh> __init__ &amp; helpers</vh>
+<v t="ekr.20050419194651"><vh>setAttrDispatchDict</vh></v>
+<v t="ekr.20050419211746.1"><vh>setStartElementDispatchDict</vh></v>
+<v t="ekr.20050419214653"><vh>setEndElementDispatchDict</vh></v>
+</v>
 <v t="ekr.20050419140912"><vh>helpers</vh>
 <v t="ekr.20050419132345"><vh>attrsToList</vh></v>
 <v t="ekr.20050419124121"><vh>attrsToString</vh></v>
 <v t="ekr.20050419115912"><vh>clean</vh></v>
+<v t="ekr.20050419192455"><vh>printStartElement</vh></v>
 <v t="ekr.20050419131709"><vh>printSummary</vh></v>
 </v>
-<v t="ekr.20050419140912.1"><vh>over-rides</vh>
+<v t="ekr.20050419140912.1"><vh>sax over-rides</vh>
 <v t="ekr.20050419115418.1"><vh>characters</vh></v>
 <v t="ekr.20050419115418.2"><vh>endDocument</vh></v>
 <v t="ekr.20050419115418.3"><vh>endElement</vh></v>
 <v t="ekr.20050419115418.4"><vh>other methods</vh></v>
 <v t="ekr.20050419115418.5"><vh>startDocument</vh></v>
 <v t="ekr.20050419115418.6"><vh>startElement</vh></v>
+</v>
+<v t="ekr.20050419195838" a="E"><vh>Semantics...</vh>
+<v t="ekr.20050419191207"><vh>doAttr &amp; helpers</vh>
+<v t="ekr.20050419194651.1"><vh>doBoolAttr</vh></v>
+<v t="ekr.20050419194718"><vh>doCharAttr</vh></v>
+<v t="ekr.20050419194911"><vh>doDelegateAttr</vh></v>
+<v t="ekr.20050419194822"><vh>doIntAttr</vh></v>
+<v t="ekr.20050419194651.2"><vh>doReAttr</vh></v>
+<v t="ekr.20050419194651.3"><vh>doStringAttr</vh></v>
+</v>
+<v t="ekr.20050419192133"><vh>doStartElement &amp; helpers</vh>
+<v t="ekr.20050419211746.2"><vh>startBegin</vh></v>
+<v t="ekr.20050419211746.3"><vh>startEnd</vh></v>
+<v t="ekr.20050419211746.4"><vh>startEolSpan</vh></v>
+<v t="ekr.20050419211746.5"><vh>startImport</vh></v>
+<v t="ekr.20050419211746.6"><vh>startKeywords</vh></v>
+<v t="ekr.20050419212840"><vh>startKeyword</vh></v>
+<v t="ekr.20050419211746.7"><vh>startMark</vh></v>
+<v t="ekr.20050419211746.8"><vh>startMode</vh></v>
+<v t="ekr.20050419211746.9"><vh>startProps</vh></v>
+<v t="ekr.20050419211746.10"><vh>startProperty</vh></v>
+<v t="ekr.20050419211746.11"><vh>startRules</vh></v>
+<v t="ekr.20050419211746.12"><vh>startSeq</vh></v>
+<v t="ekr.20050419211746.13"><vh>startSpan</vh></v>
+<v t="ekr.20050419211746.14"><vh>startTerminate</vh></v>
+</v>
+<v t="ekr.20050419214545"><vh>doEndElement &amp; helpers</vh>
+<v t="ekr.20050419214545.1"><vh>endBegin</vh></v>
+<v t="ekr.20050419214545.2"><vh>endEnd</vh></v>
+<v t="ekr.20050419214545.3"><vh>endEolSpan</vh></v>
+<v t="ekr.20050419214545.4"><vh>endImport</vh></v>
+<v t="ekr.20050419214545.5"><vh>endKeywords</vh></v>
+<v t="ekr.20050419214545.6"><vh>endKeyword</vh></v>
+<v t="ekr.20050419214545.7"><vh>endMark</vh></v>
+<v t="ekr.20050419214545.8"><vh>endMode</vh></v>
+<v t="ekr.20050419214545.9"><vh>endProps</vh></v>
+<v t="ekr.20050419214545.10"><vh>endProperty</vh></v>
+<v t="ekr.20050419214545.11"><vh>endRules</vh></v>
+<v t="ekr.20050419214545.12"><vh>endSeq</vh></v>
+<v t="ekr.20050419214545.13"><vh>endSpan</vh></v>
+<v t="ekr.20050419214545.14"><vh>endTerminate</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -2522,7 +2618,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14320,7 +14416,7 @@ try:
             source = xml.sax.xmlreader.InputSource(path)
             source.setEncoding(g.app.tkEncoding) # Not needed.
         parser = xml.sax.make_parser()
-        h = trace_parse(c)
+        h = jEdit_parse(c)
         parser.setContentHandler(h)
         parser.parse(source)
         h.printSummary()
@@ -14330,19 +14426,18 @@ finally:
 <t tx="ekr.20050419115418.1">def characters(self,content):
 
     content = content.replace('\r','')
+    content = self.clean(content)
 
     if self.verbose:
-        
         kind = self.elementStack and self.elementStack[-1]
-        
         if self.printAllConents or kind in self.printContents:
-            
             if self.ignoreWs:
-                s = self.clean(content).strip()
-                if s: print s,
+                if content.strip():
+                    print content.strip(),
             else:
-                s = self.clean(content)
-                print s,</t>
+                print content,
+                
+    return content</t>
 <t tx="ekr.20050419115418.2">def endDocument(self):
 
     g.trace()
@@ -14350,13 +14445,11 @@ finally:
 
 </t>
 <t tx="ekr.20050419115418.3">def endElement(self,name):
-    
-    if self.verbose:
-        print '&lt;/' + self.clean(name).strip() + '&gt;'
+
+    self.doEndElement(name)
 
     name2 = self.elementStack.pop()
-    assert name == name2
-    # g.trace(name2,name)</t>
+    assert name == name2</t>
 <t tx="ekr.20050419115418.4">def ignorableWhitespace(self):
     g.trace()
 
@@ -14373,38 +14466,20 @@ def endElementNS(self,name,qname):
     g.trace(name)</t>
 <t tx="ekr.20050419115418.5">def startDocument(self):
     
-    g.trace()
-</t>
+    g.trace()</t>
 <t tx="ekr.20050419115418.6">def startElement(self,name,attrs):
-
-    if self.verbose:
-        n = attrs.getLength()
-        if n &gt; 0:
-            self.attributes += n
-            print '&lt;%s %s&gt;' % (
-                self.clean(name).strip(),
-                self.attrsToString(attrs,sep=' ')),
-        else:
-            print '&lt;%s&gt;' % (self.clean(name).strip()),
-
-        if name in self.newLineAfterStartElement:
-            print
-        
-    if 0:
-        if name == "v":
-            self.vnodes += 1
-            v = leoNodes.vnode(self.c,leoNodes.tnode())
     
-        elif name == "t":
-            self.tnodes += 1
-            t = leoNodes.tnode()
-            
-    self.elements += 1
-    self.elementStack.append(name)</t>
+    self.numberOfElements += 1
+    self.elementStack.append(name)
+    
+    ## Create data structure for element?
+    
+    self.doStartElement(name,attrs)
+</t>
 <t tx="ekr.20050419115912">def clean(self,s):
 
     return g.toEncodedString(s,"ascii")</t>
-<t tx="ekr.20050419115912.1">class trace_parse(xml.sax.saxutils.XMLGenerator):
+<t tx="ekr.20050419115912.1">class jEdit_parse(xml.sax.saxutils.XMLGenerator):
     
     @others
 </t>
@@ -14423,19 +14498,28 @@ path = os.path.normpath(path)</t>
     # Init the base class.
     xml.sax.saxutils.XMLGenerator.__init__(self)
 
-    self.attributes = 0
-    self.elementStack = []
-    self.elements = 0
+    # Statistics...
+    self.numberOfAttributes = 0
+    self.numberOfElements = 0
+    
+    # Options...
     self.ignoreWs = True # True: don't print contents with only ws.
-
     self.newLineAfterStartElement = ['SPAN','MODE','PROPS','RULES','KEYWORDS']
-  
     self.printAllConents = True
-    self.printContents = ['vh','t'] # List of element types for which to print contents.
+    self.printContents = [] # List of element types for which to print contents.
+    self.trace = False
     self.verbose = True
-
-    self.tnodes = 0
-    self.vnodes = 0</t>
+    
+    # Init the dispatch dicts...
+    self.setAttrDispatchDict()
+    self.setStartElementDispatchDict()
+    self.setEndElementDispatchDict()
+    
+    # Semantics.
+    self.elementStack = []
+    self.mode = None ; self.modes = [] # All modes defined here or by imports.
+    self.property = None ; self.properties = [] # Properties of the present mode or rule.
+    self.rule = None ; self.rules = [] # Rules of the present mode.</t>
 <t tx="ekr.20050419124121">def attrsToString (self,attrs,sep='\n'):
     
     '''Convert the attributes to a string.
@@ -14452,7 +14536,7 @@ path = os.path.normpath(path)</t>
     return sep.join(result)</t>
 <t tx="ekr.20050419131709">def printSummary (self):
     
-    print 'elements:',self.elements,'attributes',self.attributes</t>
+    print 'elements:',self.numberOfElements,'attributes',self.numberOfAttributes</t>
 <t tx="ekr.20050419132345">def attrsToList (self,attrs):
     
     '''Convert the attributes to a list of g.Bunches.
@@ -14467,5 +14551,609 @@ path = os.path.normpath(path)</t>
     ]</t>
 <t tx="ekr.20050419140912"></t>
 <t tx="ekr.20050419140912.1"></t>
+<t tx="ekr.20050419172816"></t>
+<t tx="ekr.20050419173824">@killcolor</t>
+<t tx="ekr.20050419173824.2">The KEYWORDS tag, which must be placed inside a RULES tag and can only appear once, specifies a list of keywords to highlight. Keywords are similar to SEQs, except that SEQs match anywhere in the text, whereas keywords only match whole words. Words are considered to be runs of text separated by non-alphanumeric characters.
+
+The KEYWORDS tag does not define any attributes.
+
+Each child element of the KEYWORDS tag is an element whose name is a token type, and whose content is the keyword to highlight.
+
+&lt;KEYWORDS&gt;
+  &lt;KEYWORD1&gt;if&lt;/KEYWORD1&gt;
+  &lt;KEYWORD1&gt;else&lt;/KEYWORD1&gt;
+  &lt;KEYWORD3&gt;int&lt;/KEYWORD3&gt;
+  &lt;KEYWORD3&gt;void&lt;/KEYWORD3&gt;
+&lt;/KEYWORDS&gt;</t>
+<t tx="ekr.20050419173824.3">attributes:
+    
+SET
+the name of this ruleset. All rulesets other than the first must have a name.
+
+IGNORE_CASE
+if set to FALSE, matches will be case sensitive.
+Otherwise, case will not matter. Default is TRUE.
+
+NO_WORD_SEP
+Any non-alphanumeric character not in this list is treated as a word separator for the purposes of syntax highlighting.
+
+DEFAULT
+The token type for text which doesn't match any specific rule. Default is NULL.
+See the section called “Token Types” for a list of token types.
+
+HIGHLIGHT_DIGITS
+DIGIT_RE
+
+If the HIGHLIGHT_DIGITS attribute is set to TRUE, jEdit will attempt to highlight numbers in this ruleset.
+
+Any word consisting entirely of digits (0-9) will be highlighted with the DIGIT token type. A word that contains other letters in addition to digits will be highlighted with the DIGIT token type only if it matches the regular expression specified in the DIGIT_RE attribute. If this attribute is not specified, it will not be highlighted.
+
+Here is an example DIGIT_RE regular expression that highlights Java-style numeric literals (normal numbers, hexadecimals prefixed with 0x, numbers suffixed with various type indicators, and floating point literals containing an exponent):
+
+DIGIT_RE="(0x[[:xdigit:]]+|[[:digit:]]+(e[[:digit:]]*)?)[lLdDfF]?"
+
+Here is an example RULES tag:
+
+&lt;RULES IGNORE_CASE="FALSE" HIGHLIGHT_DIGITS="TRUE"&gt;
+    ... parser rules go here ...
+&lt;/RULES&gt;</t>
+<t tx="ekr.20050419173824.4">The SPAN rule, which must be placed inside a RULES tag, highlights text between a start and end string. The start and end strings are specified inside child elements of the SPAN tag. The following attributes are supported:
+
+TYPE - The token type to highlight the span with. See the section called “Token Types” for a list of token types.
+
+AT_LINE_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a line.
+
+AT_WHITESPACE_END - If set to TRUE, the span will only be highlighted if the start sequence is the first non-whitespace text in the line.
+
+AT_WORD_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a word.
+
+DELEGATE - text inside the span will be highlighted with the specified ruleset. To delegate to a ruleset defined in the current mode, just specify its name. To delegate to a ruleset defined in another mode, specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset in a mode is called “MAIN”.
+
+EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be highlighted, only the text between them will.
+
+NO_ESCAPE - If set to TRUE, the ruleset's escape character will have no effect before the span's end string. Otherwise, the presence of the escape character will cause that occurrence of the end string to be ignored.
+
+NO_LINE_BREAK - If set to TRUE, the span will not cross line breaks.
+
+NO_WORD_BREAK - If set to TRUE, the span will not cross word breaks.
+
+Note that the AT_LINE_START, AT_WHITESPACE_END and AT_WORD_START attributes can also be used on the BEGIN and END elements. Setting these attributes to the same value on both elements has the same effect as setting them on the SPAN element. 
+
+Here is a SPAN that highlights Java string literals, which cannot include line breaks:
+
+&lt;SPAN TYPE="LITERAL1" NO_LINE_BREAK="TRUE"&gt;
+  &lt;BEGIN&gt;"&lt;/BEGIN&gt;
+  &lt;END&gt;"&lt;/END&gt;
+&lt;/SPAN&gt;
+
+Here is a SPAN that highlights Java documentation comments by delegating to the “JAVADOC” ruleset defined elsewhere in the current mode:
+
+&lt;SPAN TYPE="COMMENT2" DELEGATE="JAVADOC"&gt;
+  &lt;BEGIN&gt;/**&lt;/BEGIN&gt;
+  &lt;END&gt;*/&lt;/END&gt;
+&lt;/SPAN&gt;
+
+Here is a SPAN that highlights HTML cascading stylesheets inside &lt;STYLE&gt; tags by delegating to the main ruleset in the CSS edit mode:
+
+&lt;SPAN TYPE="MARKUP" DELEGATE="css::MAIN"&gt;
+  &lt;BEGIN&gt;&amp;lt;style&amp;gt;&lt;/BEGIN&gt;
+  &lt;END&gt;&amp;lt;/style&amp;gt;&lt;/END&gt;
+&lt;/SPAN&gt;</t>
+<t tx="ekr.20050419173824.5">The TERMINATE rule, which must be placed inside a RULES tag, specifies that parsing should stop after the specified number of characters have been read from a line.
+
+The number of characters to terminate after should be specified with the AT_CHAR attribute. Here is an example:
+
+&lt;TERMINATE AT_CHAR="1" /&gt;
+
+This rule is used in Patch mode, for example, because only the first character of each line affects highlighting.</t>
+<t tx="ekr.20050419173824.6">Each mode definition must begin with the following:
+
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE MODE SYSTEM "xmode.dtd"&gt;
+
+Each mode definition must also contain exactly one MODE tag. All other tags (PROPS, RULES) must be placed inside the MODE tag. The MODE tag does not have any defined attributes. Here is an example:
+
+&lt;MODE&gt;
+    ... mode definition goes here ...
+&lt;/MODE&gt;</t>
+<t tx="ekr.20050419173824.7"></t>
+<t tx="ekr.20050419173824.8">Here is the complete &lt;PROPS&gt; tag for Java mode:
+
+&lt;PROPS&gt;
+    &lt;PROPERTY NAME="commentStart" VALUE="/*" /&gt;
+    &lt;PROPERTY NAME="commentEnd" VALUE="*/" /&gt;
+    &lt;PROPERTY NAME="lineComment" VALUE="//" /&gt;
+    &lt;PROPERTY NAME="wordBreakChars" VALUE=",+-=&amp;lt;&amp;gt;/?^&amp;amp;*" /&gt;
+
+    &lt;!-- Auto indent --&gt;
+    &lt;PROPERTY NAME="indentOpenBrackets" VALUE="{" /&gt;
+    &lt;PROPERTY NAME="indentCloseBrackets" VALUE="}" /&gt;
+    &lt;PROPERTY NAME="indentNextLine"
+    	VALUE="\s*(((if|while)\s*\(|else\s*|else\s+if\s*\(|for\s*\(.*\))[^{;]*)" /&gt;
+    &lt;!-- set this to 'true' if you want to use GNU coding style --&gt;
+    &lt;PROPERTY NAME="doubleBracketIndent" VALUE="false" /&gt;
+    &lt;PROPERTY NAME="lineUpClosingBracket" VALUE="true" /&gt;
+&lt;/PROPS&gt;</t>
+<t tx="ekr.20050419173824.9"></t>
+<t tx="ekr.20050419173824.10"></t>
+<t tx="ekr.20050419173824.11">The SPAN_REGEXP rule is similar to the SPAN rule except the start sequence is taken to be a regular expression.
+
+In addition to the attributes supported by the SPAN tag, the HASH_CHAR attribute must be specified. It must be set to the first character that the regular expression matches. This rules out using regular expressions which can match more than one character at the start position. The regular expression match cannot span more than one line, either.
+
+Any text matched by groups in the BEGIN regular expression is substituted in the END string. See below for an example of where this is useful. 
+
+Here is a SPAN_REGEXP rule that highlights “read-ins” in shell scripts:
+
+&lt;SPAN_REGEXP HASH_CHAR="&lt;" TYPE="LITERAL1" DELEGATE="LITERAL"&gt;
+    &lt;BEGIN&gt;&lt;![CDATA[&lt;&lt;[[:space:]'"]*([[:alnum:]_]+)[[:space:]'"]*]]&gt;&lt;/BEGIN&gt;
+    &lt;END&gt;$1&lt;/END&gt;
+&lt;/SPAN_REGEXP&gt;
+
+Here is a SPAN_REGEXP rule that highlights constructs placed between &lt;#ftl and &gt;, as long as the &lt;#ftl is followed by a word break:
+
+&lt;SPAN_REGEXP TYPE="KEYWORD1" HASH_CHAR="&amp;lt;" DELEGATE="EXPRESSION"&gt;
+    &lt;BEGIN&gt;&amp;lt;#ftl\&amp;gt;&lt;/BEGIN&gt;
+    &lt;END&gt;&amp;gt;&lt;/END&gt;
+&lt;/SPAN_REGEXP&gt;</t>
+<t tx="ekr.20050419173824.12">The EOL_SPAN_REGEXP rule is similar to the EOL_SPAN rule except the match sequence is taken to be a regular expression.
+
+In addition to the attributes supported by the EOL_SPAN tag, the HASH_CHAR attribute must be specified. It must be set to the first character that the regular expression matches. This rules out using regular expressions which can match more than one character at the start position. The regular expression match cannot span more than one line, either.
+
+Here is an EOL_SPAN_REGEXP that highlights MS-DOS batch file comments, which start with REM, followed by any whitespace character, and extend until the end of the line:
+
+&lt;EOL_SPAN_REGEXP AT_WHITESPACE_END="TRUE" HASH_CHAR="R" TYPE="COMMENT1"&gt;REM\s&lt;/EOL_SPAN_REGEXP&gt;</t>
+<t tx="ekr.20050419173824.13">An EOL_SPAN is similar to a SPAN  except that highlighting stops at the end of the line, and no end sequence needs to be specified. The text to match is specified between the opening and closing EOL_SPAN tags.
+
+The following attributes are supported:
+
+TYPE - The token type to highlight the span with. See the section called “Token Types” for a list of token types.
+
+AT_LINE_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a line.
+
+AT_WHITESPACE_END - If set to TRUE, the span will only be highlighted if the sequence is the first non-whitespace text in the line.
+
+AT_WORD_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a word.
+
+DELEGATE - text inside the span will be highlighted with the specified ruleset. To delegate to a ruleset defined in the current mode, just specify its name. To delegate to a ruleset defined in another mode, specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset in a mode is called “MAIN”.
+
+EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be highlighted, only the text between them will.
+
+Here is an EOL_SPAN that highlights C++ comments:
+
+&lt;EOL_SPAN TYPE="COMMENT1"&gt;//&lt;/EOL_SPAN&gt;</t>
+<t tx="ekr.20050419173824.14">The SEQ rule, which must be placed inside a RULES tag, highlights fixed sequences of text. The text to highlight is specified between opening and closing SEQ  tags. The following attributes are supported:
+
+TYPE - the token type to highlight the sequence with. See the section called “Token Types” for a list of token types.
+
+AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line.
+
+AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it is the first non-whitespace text in the line.
+
+AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a word.
+
+DELEGATE - if this attribute is specified, all text after the sequence will be highlighted using this ruleset. To delegate to a ruleset defined in the current mode, just specify its name. To delegate to a ruleset defined in another mode, specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset in a mode is called “MAIN”.
+
+The following rules highlight a few Java operators:
+
+&lt;SEQ TYPE="OPERATOR"&gt;+&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;-&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;*&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;/&lt;/SEQ&gt;</t>
+<t tx="ekr.20050419173824.15">The SEQ_REGEXP rule is similar to the SEQ rule except the match sequence is taken to be a regular expression.
+
+In addition to the attributes supported by the SEQ tag, the HASH_CHAR attribute must be specified. It must be set to the first character that the regular expression matches. This rules out using regular expressions which can match more than one character at the start position. The regular expression match cannot span more than one line, either.
+
+Here is an example of a SEQ_REGEXP rule that highlights Perl's matcher constructions such as m/(.+):(\d+):(.+)/:
+
+&lt;SEQ_REGEXP TYPE="MARKUP"
+    HASH_CHAR="m"
+    AT_WORD_START="TRUE"
+&gt;m([[:punct:]])(?:.*?[^\\])*?\1[sgiexom]*&lt;/SEQ_REGEXP&gt;</t>
+<t tx="ekr.20050419173824.16">The IMPORT tag, which must be placed inside a RULES tag, loads all rules defined in a given ruleset into the current ruleset; in other words, it has the same effect as copying and pasting the imported ruleset.
+
+The only required attribute DELEGATE must be set to the name of a ruleset. To import a ruleset defined in the current mode, just specify its name. To import a ruleset defined in another mode, specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset in a mode is called “MAIN”.
+
+One quirk is that the definition of the imported ruleset is not copied to the location of the IMPORT tag, but rather to the end of the containing ruleset. This has implications with rule-ordering; see the section called “Rule Ordering Requirements”.
+
+Here is an example from the PHP mode, which extends the inline JavaScript highlighting to support embedded PHP:
+
+   &lt;RULES SET="JAVASCRIPT+PHP"&gt;
+
+   &lt;SPAN TYPE="MARKUP" DELEGATE="php::PHP"&gt;
+       &lt;BEGIN&gt;&amp;lt;?php&lt;/BEGIN&gt;
+       &lt;END&gt;?&amp;gt;&lt;/END&gt;
+   &lt;/SPAN&gt;
+   
+   &lt;SPAN TYPE="MARKUP" DELEGATE="php::PHP"&gt;
+       &lt;BEGIN&gt;&amp;lt;?&lt;/BEGIN&gt;
+       &lt;END&gt;?&amp;gt;&lt;/END&gt;
+   &lt;/SPAN&gt;
+   
+   &lt;SPAN TYPE="MARKUP" DELEGATE="php::PHP"&gt;
+       &lt;BEGIN&gt;&amp;lt;%=&lt;/BEGIN&gt;
+       &lt;END&gt;%&amp;gt;&lt;/END&gt;
+   &lt;/SPAN&gt;
+
+   &lt;IMPORT DELEGATE="javascript::MAIN"/&gt;
+&lt;/RULES&gt;</t>
+<t tx="ekr.20050419173824.17">The MARK_FOLLOWING rule, which must be placed inside a RULES tag, highlights from the start of the match to the next syntax token. The text to match is specified between opening and closing MARK_FOLLOWING  tags.
+
+The following attributes are supported:
+
+TYPE - The token type to highlight the text with. See the section called “Token Types” for a list of token types.
+
+AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line.
+
+AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it is the first non-whitespace text in the line.
+
+AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a word.
+
+EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text after it will.
+
+Here is a rule that highlights variables in Unix shell scripts (“$CLASSPATH”, “$IFS”, etc):
+
+&lt;MARK_FOLLOWING TYPE="KEYWORD2"&gt;$&lt;/MARK_FOLLOWING&gt;</t>
+<t tx="ekr.20050419173824.18">The MARK_PREVIOUS rule, which must be placed inside a RULES tag, highlights from the end of the previous syntax token to the matched text. The text to match is specified between opening and closing MARK_PREVIOUS  tags. The following attributes are supported:
+
+TYPE - The token type to highlight the text with. See the section called “Token Types” for a list of token types.
+
+AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line.
+
+AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it is the first non-whitespace text in the line.
+
+AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a word.
+
+EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text before it will.
+
+Here is a rule that highlights labels in Java mode (for example, “XXX:”):
+
+&lt;MARK_PREVIOUS AT_WHITESPACE_END="TRUE"
+   EXCLUDE_MATCH="TRUE"&gt;:&lt;/MARK_PREVIOUS&gt;</t>
+<t tx="ekr.20050419175429">You might encounter this very common pitfall when writing your own modes.
+
+Since jEdit checks buffer text against parser rules in the order they appear in the ruleset, more specific rules must be placed before generalized ones, otherwise the generalized rules will catch everything. </t>
+<t tx="ekr.20050419181328">Atribute            Elements used in
+--------            ----------------
+AT_CHAR             TERMINATE
+AT_LINE_START       EOL_SPAN,EOL_SPAN_REGEXP,MARK_FOLLOWING,MARK_PREVIOUS,SEQ,SEQ_REGEXP,SPAN,SPAN_REGEXP,BEGIN,END
+AT_WHITESPACE_END   EOL_SPAN,EOL_SPAN_REGEXP,MARK_FOLLOWING,MARK_PREVIOUS,SEQ,SEQ_REGEXP,SPAN,SPAN_REGEXP,BEGIN,END
+AT_WORD_START       EOL_SPAN,EOL_SPAN_REGEXP,MARK_FOLLOWING,MARK_PREVIOUS,SEQ,SEQ_REGEXP,SPAN,SPAN_REGEXP,BEGIN,END
+DEFAULT             RULES
+DELEGATE            EOL_SPAN,EOL_SPAN_REGEXP,IMPORT,SEQ,SPAN
+DIGIT_RE            RULES
+EXCLUDE_MATCH       EOL_SPAN,EOL_SPAN_REGEXP,MARK_FOLLOWING,MARK_PREVIOUS,SPAN,SPAN_REGEXP
+HASH_CHAR           EOL_SPAN_REGEXP,SEQ_REGEXP,SPAN_REGEXP
+HIGHLIGHT_DIGITS    RULES
+IGNORE_CASE         RULES
+NAME                PROPERTY
+SET                 RULES
+NO_ESCAPE           SPAN,SPAN_REGEXP
+NO_LINE_BREAK       SPAN,SPAN_REGEXP
+NO_WORD_BREAK       SPAN,SPAN_REGEXP
+NO_WORD_SEP         RULES
+TYPE                EOL_SPAN,EOL_SPAN_REGEXP,IMPORT,MARK_FOLLOWING,MARK_PREVIOUS,SEQ,SEQ_REGEXP,SPAN,SPAN_REGEXP
+VALUE               PROPERTY</t>
+<t tx="ekr.20050419182514">The number of characters to terminate after.</t>
+<t tx="ekr.20050419182514.1">If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line.</t>
+<t tx="ekr.20050419182514.2">If set to TRUE, the sequence will only be highlighted if it is the first non-whitespace text in the line.</t>
+<t tx="ekr.20050419182514.3">If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a word.</t>
+<t tx="ekr.20050419182514.4">Text inside the span will be highlighted with the specified ruleset. To delegate
+to a ruleset defined in the current mode, just specify its name. To delegate to
+a ruleset defined in another mode, specify a name of the form mode::ruleset.
+Note that the first (unnamed) ruleset in a mode is called “MAIN”.</t>
+<t tx="ekr.20050419182514.5">If the HIGHLIGHT_DIGITS attribute is set to TRUE, jEdit will attempt to highlight numbers in this ruleset.
+
+Any word consisting entirely of digits (0-9) will be highlighted with the DIGIT token type.
+
+A word that contains other letters in addition to digits will be highlighted with the DIGIT token type only if it matches the regular expression specified in the DIGIT_RE attribute. If this attribute is not specified, it will not be highlighted.
+
+Here is an example DIGIT_RE regular expression that highlights Java-style numeric literals (normal numbers, hexadecimals prefixed with 0x, numbers suffixed with various type indicators, and floating point literals containing an exponent):
+
+DIGIT_RE="(0x[[:xdigit:]]+|[[:digit:]]+(e[[:digit:]]*)?)[lLdDfF]?"</t>
+<t tx="ekr.20050419182514.6">If set to TRUE, the match will not be highlighted, only the text before it will.</t>
+<t tx="ekr.20050419182514.7">It must be set to the first character that the regular expression matches. This
+rules out using regular expressions which can match more than one character at
+the start position. The regular expression match cannot span more than one line,
+either.</t>
+<t tx="ekr.20050419182514.8">If set to TRUE, the ruleset's escape character will have no effect before the span's end string. Otherwise, the presence of the escape character will cause that occurrence of the end string to be ignored.
+
+</t>
+<t tx="ekr.20050419182514.9">If set to TRUE, the span will not cross line breaks.</t>
+<t tx="ekr.20050419182514.10">If set to TRUE, the span will not cross word breaks.</t>
+<t tx="ekr.20050419182514.11">The token type to highlight the text with. See the section called “Token Types” for a list of token types.
+
+Parser rules can highlight tokens using any of the following token types:
+
+NULL - no special highlighting is performed on tokens of type NULL
+COMMENT1,COMMENT2,COMMENT3,COMMENT4
+FUNCTION
+KEYWORD1,KEYWORD2,KEYWORD3,KEYWORD4
+LABEL
+LITERAL1,LITERAL2,LITERAL3,LITERAL4
+MARKUP
+OPERATOR </t>
+<t tx="ekr.20050419191207">def doAttr(self,elementName,bunch):
+    
+    # s = '%s="%s' % (bunch.name,bunch.val)
+    
+    bunch2 = self.attrDispatchDict.get(bunch.name)
+    if bunch2:
+        bunch2.f(elementName,bunch)
+    else:
+        g.trace('no handler for %s' % bunch.name)
+        
+    return bunch2</t>
+<t tx="ekr.20050419192133">def doStartElement (self,elementName,attrs):
+    
+    if self.verbose:
+        self.printStartElement(elementName,attrs)
+    
+    self.numberOfAttributes += attrs.getLength()
+
+    for attrBunch in self.attrsToList(attrs):
+        self.doAttr(elementName,attrBunch)
+        
+    bunch = self.startElementDispatchDict.get(elementName.lower())
+    if bunch:
+        bunch.f(bunch,attrs)
+    else:
+        g.trace('no handler for %s' % elementName)
+
+   </t>
+<t tx="ekr.20050419192455">def printStartElement(self,name,attrs):
+
+    if attrs.getLength() &gt; 0:
+        print '&lt;%s %s&gt;' % (
+            self.clean(name).strip(),
+            self.attrsToString(attrs,sep=' ')),
+    else:
+        print '&lt;%s&gt;' % (self.clean(name).strip()),
+
+    if name in self.newLineAfterStartElement:
+        print</t>
+<t tx="ekr.20050419194651">def setAttrDispatchDict (self):
+    
+    self.attrDispatchDict = {
+    'AT_CHAR':             g.bunch(f=self.doIntAttr),
+    'AT_LINE_START':       g.bunch(f=self.doBoolAttr),
+    'AT_WHITESPACE_END':   g.bunch(f=self.doBoolAttr),
+    'AT_WORD_START':       g.bunch(f=self.doBoolAttr),
+    'DEFAULT':             g.bunch(f=self.doStringAttr),
+    'DELEGATE':            g.bunch(f=self.doDelegateAttr),
+    'DIGIT_RE':            g.bunch(f=self.doReAttr),
+    'ESCAPE':              g.bunch(f=self.doCharAttr),
+    'EXCLUDE_MATCH':       g.bunch(f=self.doBoolAttr),
+    'HASH_CHAR':           g.bunch(f=self.doCharAttr),
+    'HIGHLIGHT_DIGITS':    g.bunch(f=self.doBoolAttr),
+    'IGNORE_CASE':         g.bunch(f=self.doBoolAttr),
+    'NAME':                g.bunch(f=self.doStringAttr),
+    'SET':                 g.bunch(f=self.doStringAttr),
+    'NO_ESCAPE':           g.bunch(f=self.doBoolAttr),
+    'NO_LINE_BREAK':       g.bunch(f=self.doBoolAttr),
+    'NO_WORD_BREAK':       g.bunch(f=self.doBoolAttr),
+    'NO_WORD_SEP':         g.bunch(f=self.doBoolAttr),
+    'TYPE':                g.bunch(f=self.doStringAttr),
+    'VALUE':               g.bunch(f=self.doStringAttr),
+    }
+    
+    for key in self.attrDispatchDict.keys():
+        bunch = self.attrDispatchDict.get(key)
+        bunch.attributeName = key.lower()</t>
+<t tx="ekr.20050419194651.1">def doBoolAttr(self,elementName,bunch):
+
+    pass</t>
+<t tx="ekr.20050419194651.2">def doReAttr(self,elementName,bunch):
+    pass</t>
+<t tx="ekr.20050419194651.3">def doStringAttr(self,elementName,bunch):
+
+    pass</t>
+<t tx="ekr.20050419194718">def doCharAttr(self,elementName,bunch):
+    pass</t>
+<t tx="ekr.20050419194822">def doIntAttr(self,elementName,bunch):
+    pass</t>
+<t tx="ekr.20050419194911">def doDelegateAttr(self,elementName,bunch):
+
+    pass</t>
+<t tx="ekr.20050419195838"></t>
+<t tx="ekr.20050419200205"></t>
+<t tx="ekr.20050419211746"></t>
+<t tx="ekr.20050419211746.1">def setStartElementDispatchDict (self):
+    
+    self.startElementDispatchDict = {
+
+    'begin':            g.bunch(f=self.startBegin),
+    'end':              g.bunch(f=self.startEnd),
+    'eol_span':         g.bunch(f=self.startEolSpan,regexp=False),
+    'eol_span_regexp':  g.bunch(f=self.startEolSpan,regexp=True),
+    'import':           g.bunch(f=self.startImport),
+    'keywords':         g.bunch(f=self.startKeywords),
+    'keyword1':         g.bunch(f=self.startKeyword,kind='1'),
+    'keyword2':         g.bunch(f=self.startKeyword,kind='2'),
+    'keyword3':         g.bunch(f=self.startKeyword,kind='3'),
+    'keyword4':         g.bunch(f=self.startKeyword,kind='4'),
+    'mark_following':   g.bunch(f=self.startMark,kind='following'),
+    'mark_previous':    g.bunch(f=self.startMark,kind='previous'),
+    'mode':             g.bunch(f=self.startMode),
+    'props':            g.bunch(f=self.startProps),
+    'property':         g.bunch(f=self.startProperty),
+    'rules':            g.bunch(f=self.startRules),
+    'seq':              g.bunch(f=self.startSeq,regexp=False),
+    'seq_regexp':       g.bunch(f=self.startSeq,regexp=True),
+    'span':             g.bunch(f=self.startSpan,regexp=False),
+    'span_regexp':      g.bunch(f=self.startSpan,regexp=True),
+    'terminate':        g.bunch(f=self.startTerminate),
+    }
+    
+    if 0:
+        for key in self.elementDispatchDict.keys():
+            bunch = self.elementDispatchDict.get(key)
+            bunch.attributeName = key</t>
+<t tx="ekr.20050419211746.2">def startBegin (self,bunch,attrs):
+    
+    if self.trace: g.trace()</t>
+<t tx="ekr.20050419211746.3">def startEnd (self,bunch,attrs):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419211746.4">def startEolSpan (self,bunch,attrs): # regexp=True/False
+    
+    if self.trace: g.trace('regexp:',bunch.regexp)
+</t>
+<t tx="ekr.20050419211746.5">def startImport (self,bunch,attrs):
+       
+    if self.trace: g.trace()
+
+</t>
+<t tx="ekr.20050419211746.6">def startKeywords (self,bunch,attrs):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419211746.7">def startMark (self,bunch,attrs): #,kind='following'/'previous'
+    
+    if self.trace: g.trace('kind:',bunch.kind)
+</t>
+<t tx="ekr.20050419211746.8">def startMode (self,bunch,attrs):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419211746.9">def startProps (self,bunch,attrs):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419211746.10">def startProperty (self,bunch,attrs):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419211746.11">def startRules (self,bunch,attrs):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419211746.12">def startSeq (self,bunch,attrs): #,regexp=True/False
+    
+    if self.trace: g.trace('regexp:',bunch.regexp)
+</t>
+<t tx="ekr.20050419211746.13">def startSpan (self,bunch,attrs): #,regexp=True/False
+    
+    if self.trace: g.trace('regexp:',bunch.regexp)
+</t>
+<t tx="ekr.20050419211746.14">def startTerminate (self,bunch,attrs):
+      
+    if self.trace: g.trace()</t>
+<t tx="ekr.20050419212840">def startKeyword (self,bunch,attrs):
+    
+    pass # g.trace()</t>
+<t tx="ekr.20050419214545">def doEndElement (self,elementName):
+    
+    if self.verbose:
+        print '&lt;/' + self.clean(elementName).strip() + '&gt;'
+        
+    bunch = self.endElementDispatchDict.get(elementName.lower())
+    if bunch:
+        bunch.f(bunch)
+    else:
+        g.trace('no handler for %s' % elementName)</t>
+<t tx="ekr.20050419214545.1">def endBegin (self,bunch):
+    
+    if self.trace: g.trace()</t>
+<t tx="ekr.20050419214545.2">def endEnd (self,bunch):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419214545.3">def endEolSpan (self,bunch): # regexp=True/False
+    
+    if self.trace: g.trace('regexp:',bunch.regexp)
+</t>
+<t tx="ekr.20050419214545.4">def endImport (self,bunch):
+       
+    if self.trace: g.trace()
+
+</t>
+<t tx="ekr.20050419214545.5">def endKeywords (self,bunch):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419214545.6">def endKeyword (self,bunch):
+    
+    pass # g.trace()</t>
+<t tx="ekr.20050419214545.7">def endMark (self,bunch): #,kind='following'/'previous'
+    
+    if self.trace: g.trace('kind:',bunch.kind)
+</t>
+<t tx="ekr.20050419214545.8">def endMode (self,bunch):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419214545.9">def endProps (self,bunch):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419214545.10">def endProperty (self,bunch):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419214545.11">def endRules (self,bunch):
+    
+    if self.trace: g.trace()
+</t>
+<t tx="ekr.20050419214545.12">def endSeq (self,bunch): #,regexp=True/False
+    
+    if self.trace: g.trace('regexp:',bunch.regexp)
+</t>
+<t tx="ekr.20050419214545.13">def endSpan (self,bunch): #,regexp=True/False
+    
+    if self.trace: g.trace('regexp:',bunch.regexp)
+</t>
+<t tx="ekr.20050419214545.14">def endTerminate (self,bunch):
+      
+    if self.trace: g.trace()</t>
+<t tx="ekr.20050419214653">def setEndElementDispatchDict (self):
+    
+    self.endElementDispatchDict = {
+
+    'begin':            g.bunch(f=self.endBegin),
+    'end':              g.bunch(f=self.endEnd),
+    'eol_span':         g.bunch(f=self.endEolSpan,regexp=False),
+    'eol_span_regexp':  g.bunch(f=self.endEolSpan,regexp=True),
+    'import':           g.bunch(f=self.endImport),
+    'keywords':         g.bunch(f=self.endKeywords),
+    'keyword1':         g.bunch(f=self.endKeyword,kind='1'),
+    'keyword2':         g.bunch(f=self.endKeyword,kind='2'),
+    'keyword3':         g.bunch(f=self.endKeyword,kind='3'),
+    'keyword4':         g.bunch(f=self.endKeyword,kind='4'),
+    'mark_following':   g.bunch(f=self.endMark,kind='following'),
+    'mark_previous':    g.bunch(f=self.endMark,kind='previous'),
+    'mode':             g.bunch(f=self.endMode),
+    'props':            g.bunch(f=self.endProps),
+    'property':         g.bunch(f=self.endProperty),
+    'rules':            g.bunch(f=self.endRules),
+    'seq':              g.bunch(f=self.endSeq,regexp=False),
+    'seq_regexp':       g.bunch(f=self.endSeq,regexp=True),
+    'span':             g.bunch(f=self.endSpan,regexp=False),
+    'span_regexp':      g.bunch(f=self.endSpan,regexp=True),
+    'terminate':        g.bunch(f=self.endTerminate),
+    }
+    
+    if 0:
+        for key in self.elementDispatchDict.keys():
+            bunch = self.elementDispatchDict.get(key)
+            bunch.attributeName = key</t>
+<t tx="ekr.20050419215535">class mode:
+    
+    @others</t>
+<t tx="ekr.20050419215535.1">class propery:
+    
+    @others</t>
+<t tx="ekr.20050419215535.2">class rule:
+    
+    @others</t>
+<t tx="ekr.20050419215535.3">def __init__ (self,kind):
+    
+    self.kind = kind</t>
+<t tx="ekr.20050419220140">def __init__ (self,name):
+    
+    self.name = name</t>
+<t tx="ekr.20050419220140.1">def __init__ (self,kind):
+    
+    self.kind = kind</t>
 </tnodes>
 </leo_file>
