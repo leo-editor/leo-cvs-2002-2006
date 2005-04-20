@@ -10,43 +10,6 @@
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20050415070840" annotate="7d71002e"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20041121151002.1"><vh>@recentfiles </vh></v>
-<v t="ekr.20041218110904"><vh>@page local options</vh>
-<v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
-<v t="ekr.20041213075902"><vh>@font log font</vh></v>
-<v t="ekr.20041217042849"><vh>@font body font</vh></v>
-<v t="ekr.20041217132317"><vh>@strings[a,b,c] stringsTest = c</vh></v>
-<v t="ekr.20041217132338"><vh>@ints[1,2,3] intsTest = 3</vh></v>
-</v>
-<v t="ekr.20041217144914"><vh>@page colors</vh>
-<v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
-<v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
-<v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
-<v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
-</v>
-<v t="ekr.20041218141525"><vh>@page Fonts</vh>
-<v t="ekr.20041218141525.1"><vh>@font log font</vh></v>
-<v t="ekr.20041218141525.2"><vh>@font body text font</vh></v>
-<v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
-</v>
-<v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
-<v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
-<v t="ekr.20050328101834"><vh>@page http plugin</vh>
-<v t="ekr.20050328101834.1"><vh>@bool http_active = False</vh></v>
-<v t="ekr.20050328101834.2"><vh>@int  port = 8080</vh></v>
-<v t="ekr.20050328101834.3"><vh>@string rst_http_attributename = ''</vh></v>
-</v>
-<v t="ekr.20050415090637"><vh>@bool allow_clone_drags = True</vh></v>
-<v t="ekr.20050419082439"><vh>@if-platform win32</vh>
-<v t="ekr.20050419070841"><vh>@string ekrSetting = abc2</vh></v>
-</v>
-<v t="ekr.20050419084109"><vh>@if-gui gtk</vh>
-<v t="ekr.20050419084109.1"><vh>@string gtkSetting = xyz</vh></v>
-</v>
-<v t="ekr.20050419085933"><vh>@ints[0,1,2] testInts = 0</vh></v>
-<v t="ekr.20050419090156"><vh>@strings[a,b,c] testStrings = b</vh></v>
-</v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -1054,6 +1017,43 @@
 <v t="ekr.20050310082013"><vh>AutoIt script from e</vh></v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
+<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20050420073444"><vh>@recent-files</vh></v>
+<v t="ekr.20041218110904"><vh>@page local options</vh>
+<v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
+<v t="ekr.20041213075902"><vh>@font log font</vh></v>
+<v t="ekr.20041217042849"><vh>@font body font</vh></v>
+<v t="ekr.20041217132317"><vh>@strings[a,b,c] stringsTest = c</vh></v>
+<v t="ekr.20041217132338"><vh>@ints[1,2,3] intsTest = 3</vh></v>
+</v>
+<v t="ekr.20041217144914"><vh>@page colors</vh>
+<v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
+<v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
+<v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
+<v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
+</v>
+<v t="ekr.20041218141525"><vh>@page Fonts</vh>
+<v t="ekr.20041218141525.1"><vh>@font log font</vh></v>
+<v t="ekr.20041218141525.2"><vh>@font body text font</vh></v>
+<v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
+</v>
+<v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
+<v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
+<v t="ekr.20050328101834"><vh>@page http plugin</vh>
+<v t="ekr.20050328101834.1"><vh>@bool http_active = False</vh></v>
+<v t="ekr.20050328101834.2"><vh>@int  port = 8080</vh></v>
+<v t="ekr.20050328101834.3"><vh>@string rst_http_attributename = ''</vh></v>
+</v>
+<v t="ekr.20050415090637"><vh>@bool allow_clone_drags = True</vh></v>
+<v t="ekr.20050419082439"><vh>@if-platform win32</vh>
+<v t="ekr.20050419070841"><vh>@string ekrSetting = abc2</vh></v>
+</v>
+<v t="ekr.20050419084109"><vh>@if-gui gtk</vh>
+<v t="ekr.20050419084109.1"><vh>@string gtkSetting = xyz</vh></v>
+</v>
+<v t="ekr.20050419085933"><vh>@ints[0,1,2] testInts = 0</vh></v>
+<v t="ekr.20050419090156"><vh>@strings[a,b,c] testStrings = b</vh></v>
+</v>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 <v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
@@ -1064,7 +1064,7 @@
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1794,7 +1794,7 @@
 </v>
 <v t="ekr.20050419070841.1" a="E"><vh>test settings</vh></v>
 <v t="ekr.20050419211746"><vh>Lower the selection</vh></v>
-<v t="ekr.20050419115225" a="E"><vh>(parse jEdit files)</vh>
+<v t="ekr.20050419115225"><vh>(parse jEdit files)</vh>
 <v t="ekr.20050419172816"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
 <v t="ekr.20050419173824"><vh>jEdit docs...</vh>
 <v t="ekr.20050419175429"><vh>Rule ordering</vh></v>
@@ -1834,7 +1834,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050419115418" a="E"><vh>Script to run xml parser</vh>
+<v t="ekr.20050419115418"><vh>Script to run xml parser</vh>
 <v t="ekr.20050419120410.1"><vh>&lt;&lt; paths &gt;&gt;</vh></v>
 <v t="ekr.20050419215535"><vh>class mode</vh>
 <v t="ekr.20050419220140"><vh>mode.__init__</vh></v>
@@ -1846,7 +1846,7 @@
 <v t="ekr.20050419215535.3"><vh>rule.__init__</vh></v>
 </v>
 <v t="ekr.20050419115912.1" a="E"><vh>class jEdit_parse</vh>
-<v t="ekr.20050419120819" a="TV"><vh> __init__ &amp; helpers</vh>
+<v t="ekr.20050419120819"><vh> __init__ &amp; helpers</vh>
 <v t="ekr.20050419194651"><vh>setAttrDispatchDict</vh></v>
 <v t="ekr.20050419211746.1"><vh>setStartElementDispatchDict</vh></v>
 <v t="ekr.20050419214653"><vh>setEndElementDispatchDict</vh></v>
@@ -10365,7 +10365,6 @@ if not spellpyx or not spellFrame:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124144944">import os
 import sys
 for s in sys.path:
@@ -15155,5 +15154,7 @@ OPERATOR </t>
 <t tx="ekr.20050419220140.1">def __init__ (self,kind):
     
     self.kind = kind</t>
+<t tx="ekr.20050420073444">C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\test\test.leo</t>
 </tnodes>
 </leo_file>

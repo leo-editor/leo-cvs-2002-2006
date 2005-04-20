@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="95" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="96" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="101" left="167" height="703" width="911"/>
+	<global_window_position top="142" left="267" height="703" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -35,6 +35,7 @@
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
+<v t="ekr.20050420081933" a="TV"><vh>@recent-files</vh></v>
 <v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
@@ -129,10 +130,10 @@
 <v t="ekr.20050203090810"><vh>@page For unit tests</vh>
 <v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
 </v>
-<v t="ekr.20041119034357.21" a="E"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
-<v t="ekr.20041119034357.24" a="TV"><vh>@shortcuts Control</vh></v>
+<v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
 <v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
 <v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
 <v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
@@ -1126,5 +1127,6 @@ Please do not change this; it would make a unit test fail.</t>
 
 Doing so would make unit tests fail.
 </t>
+<t tx="ekr.20050420081933">c:\prog\leoCVS\leo\config\leoSettings.leo</t>
 </tnodes>
 </leo_file>
