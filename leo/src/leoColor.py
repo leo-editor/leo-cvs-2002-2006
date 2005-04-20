@@ -716,11 +716,6 @@ class baseColorizer:
     #@nl
     #@    @+others
     #@+node:ekr.20031218072017.1605:color.__init__
-    def disable (self):
-    
-        print "disabling all syntax coloring"
-        self.enabled=False
-    
     def __init__(self,c):
     
         self.c = c
@@ -885,6 +880,13 @@ class baseColorizer:
         #@nl
     #@nonl
     #@-node:ekr.20031218072017.1605:color.__init__
+    #@+node:ekr.20050420083821:disable
+    def disable (self):
+    
+        print "disabling all syntax coloring"
+        self.enabled=False
+    #@nonl
+    #@-node:ekr.20050420083821:disable
     #@+node:ekr.20041217041016:setFontFromConfig
     def setFontFromConfig (self):
         
@@ -2126,8 +2128,6 @@ class baseColorizer:
     #@nonl
     #@-node:ekr.20031218072017.1377:scanColorDirectives
     #@+node:ekr.20031218072017.2802:color.schedule & idle_colorize (not used)
-    # At present these are not used.
-    
     def schedule(self,p,incremental=0):
     
         if self.enabled:
@@ -2136,7 +2136,8 @@ class baseColorizer:
             
     def idle_colorize(self,p):
     
-        if p and self.enabled:
+        # New in 4.3b1: make sure the colorizer still exists!
+        if p and hasattr(self,'enabled') and self.enabled:
             self.colorize(p,self.incremental)
     #@nonl
     #@-node:ekr.20031218072017.2802:color.schedule & idle_colorize (not used)
@@ -2318,6 +2319,7 @@ class nullColorizer (colorizer):
         colorizer.__init__(self,c) # init the base class.
     
         self.c = c
+        self.enabled = False
     #@-node:ekr.20031218072017.2219:__init__
     #@+node:ekr.20031218072017.2220:entry points
     def colorize(self,p,incremental=False):
