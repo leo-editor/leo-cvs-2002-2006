@@ -596,7 +596,7 @@ class configClass:
     #@-node:ekr.20041118062709:define encodingIvarsDict
     #@+node:ekr.20041117072055:ivarsDict
     # Each of these settings sets the corresponding ivar.
-    # Also, the c.configSettings settins class inits the corresponding commander ivar.
+    # Also, the c.configSettings settings class inits the corresponding commander ivar.
     ivarsDict = {'_hash':'ivarsDict'}
     
     ivarsData = (
@@ -1159,19 +1159,19 @@ class configClass:
                     if d:
                         theHash = c.hash()
                         d['_hash'] = theHash
-                        # g.trace('*****',hash)
                         if setOptionsFlag:
                             self.localOptionsDict[theHash] = d
                             #@                        << update recent files from d >>
                             #@+node:ekr.20041201081440:<< update recent files from d >>
                             for key in d.keys():
+                                
                                 if munge(key) == "recentfiles":
                                     # Entries were created by parserBaseClass.set.
                                     bunch = d.get(key)
                                     files = bunch.val
                                     files = [theFile.strip() for theFile in files]
                                     if 0:
-                                        print "config.readSettingsFiles.  recent files..."
+                                        print "config.readSettingsFiles.  recent files from %s..." % fileName
                                         for theFile in files:
                                             print theFile
                                     self.appendToRecentFiles(files)
@@ -1196,7 +1196,7 @@ class configClass:
         
         """Read settings from a file that may contain an @settings tree."""
         
-        # g.trace(c.mFileName)
+        # g.trace(c.fileName())
         
         # Create a settings dict for c for set()
         if c and self.localOptionsDict.get(c.hash()) is None:
@@ -3022,11 +3022,11 @@ class settingsController:
         for data in changes:
             self.updateOneNode(c,data)
     
-        if c.mFileName:
+        if c.fileName():
             self.es("writing " + g.shortFilename(path))
             # Save the file corresponding to c.
             # Non-local files aren't open otherwise!
-            c.fileCommands.save(c.mFileName)
+            c.fileCommands.save(c.fileName())
             c.redraw() # This should work for non-local files too.
             self.tree.redraw()
         else:
