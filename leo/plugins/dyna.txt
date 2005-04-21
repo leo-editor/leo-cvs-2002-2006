@@ -1,8 +1,9 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20050329163946.126:@thin dyna.txt
+#@+node:ekr.20050421093045.134:@thin dyna.txt
 #@+all
-#@+node:ekr.20050329163946.127:you need
-"""to use you pylint need both.
+#@+node:ekr.20050421093045.135:you need
+python code and style checkers, pylint and makeatemp macro
+to use you pylint need both.
 http://www.logilab.org/projects/pylint
 http://www.logilab.org/projects/common
 %HOME% .pylintrc
@@ -13,14 +14,42 @@ http://pychecker.sourceforge.net/
 %HOME% .pycheckrc
 in test.leo I think there is a good rc file for pychecker
 
+http://www.python.org/peps/pep-0008.html
+http://www.python.org/doc/current/tut/tut.html
+
+
+astyle macro, reformat c, java/javascript code
+http://astyle.sourceforge.net/  
+can use  ~/.astylerc not included
+
+
+syntax highlight from htmlize
+docutils
+silvercity
+source-highlight
+
+
+for subprocess for python less than v2.4
+replaces popen and used to call various externals
+pychecker source-highlight and others
+http://effbot.org/download
+
+not sure it helps, might even slow things down
+but if its installed a few macros can enable it.
+http://psyco.sourceforge.net/ 
+
+
+
+
 set HOME=c:\sve\mii or whatever in your .rc or autoexec.bat
 or somehow set HOME or export in your env 
 or use the os default for home if there is one.
+many programs look in your home for .rc files
 
-it may also be possible to set which config on the command line.
+it may also be possible to set which config on the command line
+for some of the chekers or source highlighters.
 
-
-   few macros expect python 2.3
+   few macros expect python 2.3 or python 2.4 modules.
    instruction how to get modules from cvs are on c.l.py
  cvs.sourceforge.net/cgi-bin/viewcvs.cgi/python/python/nondist/sandbox/csv
 
@@ -30,8 +59,8 @@ it may also be possible to set which config on the command line.
 
     you may need generators and enumerate for some operations.
     py2.2 you can uncomment from  __future__ import generators
-    enumerate you have to search a little or ask on IRC.
-    (Internet Relay Chat)
+    enumerate you have to search a little. dyna_menu has enumerate.
+    or ask on IRC. (Internet Relay Chat)
      
 type in: 
 /server irc.freenode.net 
@@ -40,8 +69,6 @@ from an IRC client sometime!
 if you have Leo questions or answers. 
     #python too. ask good questions get good answers.
     and many open source projects have channels there.
-    
-    dyna_menu tries to define enumerate if one doesn't exist.
 
    c.l.py is the usenet comp.lang.python gated mailing list
    source of all knowledge and misinformation about python.
@@ -62,12 +89,21 @@ a shortcut for you and for other systems there are chm readers.
 aspn recipes refer to numbers add the number after this url
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/
 
-don't forget the dead tree version of information exchange.
+don't forget the dead tree version of information exchange
+for the python cookbook and many other titles.
 and the many link sites for python have links to articles
 or tutorials that should be read and tested more than once.
-"""
 
+ Daily Python-URL [http://www.pythonware.com/daily/]
 
+http://www.python.org/moin/PythonSpeed/PerformanceTips
+http://www.awaretek.com/ output.html
+
+http://www.speedygrl.com/p/44.html
+
+Tom Loredo's page is one of the first I ever saw about python.
+http://astrosun.tn.cornell.edu/staff/loredo/
+#@+node:ekr.20050421093045.136:get the pylint rc
 #howtto get the pylint rc file
 #@verbatim
 #@url file:///C|/C/PY/PYTHON~1/SCRIPTS/PYLINT.bat%20c:\sve\mi\.pylintrt
@@ -100,61 +136,10 @@ if outit:
 
 @language python
 @color
-#@-node:ekr.20050329163946.127:you need
-#@+node:ekr.20050329163946.128:macro items
-
- macro items will be added from the macros subnode.
- technically, any function starting with the name 'dyna*_'.
- toggle print/paste in dynabutton or dyna_menu 
- only affect macros in their respective menus.
-
- there is a status display associated with some actions.
- most output actions are to the log,
- or using print redirected to log if you set that in config.
- 'print' gets redirected to console if the macro is in the plugin.
- you have to change the macro accordingly from print x to g.es(x) 
- can't be helped. various macro's solve their own output problems.
- 
-
-with the dyna plugin loaded you can do things in your scripts like:
-    
-import sys
-#theres probably an easier way than this.
-sys.modules['dyna_menu'].dynaM_Clip_dtef(0, 'p')
-
-#another way
-import dyna_menu
-#print help(dyna_menu)
-#print dir(dyna_menu)  #dynaM_
-print dyna_menu.dynaHexdump('testing 123')
-
-
-#some macros that work on selected text maybe should seperate
-#their data transformation from their aquisition of data.
-#which wouldent depend on c. like this def in dump body.
-Hexdump = sys.modules['dyna_menu'].dynaHexdump
-print Hexdump('help')
-assumes dyna plugin is loaded, would need default or try/except for use.
-
-hard to know beforehand what might be reused in other macros.
-reuse is more an art than a science, but using smmaler functions
-that do something specific and not depending on global magic helps.
-its also easier to test single well defined functions.
-
-
-for a productivity boost on windows,
-http://www.geoshell.com replacement explorer shell
-mulitiple window views, floating toolbars with many plugins
-opensource, source available for plugins.
-(not connected in any way, its just amazing)
-
-see firefox browser for an enlightning approach to user options
-based on the Netscape user.js and chrome.css and adds themes.
-
-e
 #@nonl
-#@-node:ekr.20050329163946.128:macro items
-#@+node:ekr.20050329163946.129:rc
+#@-node:ekr.20050421093045.136:get the pylint rc
+#@-node:ekr.20050421093045.135:you need
+#@+node:ekr.20050421093045.137:rc
 #@verbatim
 #@path ~home
 
@@ -205,7 +190,7 @@ problems on older windows. I've never had a problem.
 insertAhome()
 @language python
 @color
-#@+node:ekr.20050329163946.130:<< @home >>
+#@+node:ekr.20050421093045.138:<< @home >>
 @others
 def insertAhome(wch= 'i'): #i/r
     """use to insertAt 1.0 #@path user.home
@@ -218,8 +203,8 @@ def insertAhome(wch= 'i'): #i/r
     import os, sys
 
     home = None
-    #                ,nt/w2k?  ,    xp  ,xp,   ,nix/mac 
-    l = 'USERPROFILE APPDATA HOMEPATH home'.split()  #HOMEDRIVE 
+    #         ,nt/w2k?   xp  ,xp,   ,nix/mac 
+    l = 'USERPROFILE APPDATA home'.split()  #HOMEPATH HOMEDRIVE 
     x = l.pop()
     while x:
         print x 
@@ -243,7 +228,6 @@ def insertAhome(wch= 'i'): #i/r
             if home == "~":
                 home = os.getenv("home", None)
         
-
     if home is None:
         home = './' #use curent dir
 
@@ -263,9 +247,8 @@ def insertAhome(wch= 'i'): #i/r
         Tx.insertAtInsertPoint('#@path %s\n'%(home,))
         Tx.onBodyWillChange(p, "Typing")  
 
-    #if 'r' in wch:  i forget why dtef shouldent do this in every case...
     #return home
-#@+node:ekr.20050329163946.131:windefs
+#@+node:ekr.20050421093045.139:windefs
 
 def GetLongPath(shortname):
     r"""
@@ -303,8 +286,8 @@ check for an error
     return shell.SHGetPathFromIDList (
       shell.SHGetSpecialFolderLocation (0, shellcon.CSIDL_APPDATA)
     )
-#@-node:ekr.20050329163946.131:windefs
-#@+node:ekr.20050329163946.132:macdefs
+#@-node:ekr.20050421093045.139:windefs
+#@+node:ekr.20050421093045.140:macdefs
 @
 from http://www.astro.washington.edu/rowen/ROPython.html
 
@@ -371,10 +354,11 @@ def getAppSuppDirs(doCreate = False):
         if path != None:
             retDirs.append(path)
     return retDirs  
-#@-node:ekr.20050329163946.132:macdefs
-#@-node:ekr.20050329163946.130:<< @home >>
-#@+node:ekr.20050329163946.133:@test onetest
+#@-node:ekr.20050421093045.140:macdefs
+#@-node:ekr.20050421093045.138:<< @home >>
+#@+node:ekr.20050421093045.141:@test onetest
 #this should work even if python -O or -OO
+#http://rclick.netfirms.com/commonerrors.html
 if 1: #try:
     assert(1 == 1)
 
@@ -385,41 +369,38 @@ if 1: #finally:
             pass
     t = t_()
     t.assert_(1 == 1)
-#http://rclick.netfirms.com/commonerrors.html
-
-
-#@-node:ekr.20050329163946.133:@test onetest
-#@+node:ekr.20050329163946.134:urls
+#@-node:ekr.20050421093045.141:@test onetest
+#@+node:ekr.20050421093045.142:urls
 urls to pychecker and pylint
-#@+node:ekr.20050329163946.135:@url http://www.logilab.org/projects/pylint
+#@+node:ekr.20050421093045.143:@url http://www.logilab.org/projects/pylint
 need common too
 run python setup.py install on both of them
-#@-node:ekr.20050329163946.135:@url http://www.logilab.org/projects/pylint
-#@+node:ekr.20050329163946.136:@url http://www.logilab.org/projects/common
-#@-node:ekr.20050329163946.136:@url http://www.logilab.org/projects/common
-#@+node:ekr.20050329163946.137:@url http://pychecker.sourceforge.net/
+#@-node:ekr.20050421093045.143:@url http://www.logilab.org/projects/pylint
+#@+node:ekr.20050421093045.144:@url http://www.logilab.org/projects/common
+#@-node:ekr.20050421093045.144:@url http://www.logilab.org/projects/common
+#@+node:ekr.20050421093045.145:@url http://pychecker.sourceforge.net/
 install pychecker python setup.py install
 then copy pychecker2 to site-packages
 and make mods mentioned in the pychecker2 macro if you want to try it.
 experimental and so far provides a minimal value on hard to debug scripts
 while pychecker is proven useful in more cases
 #@nonl
-#@-node:ekr.20050329163946.137:@url http://pychecker.sourceforge.net/
-#@-node:ekr.20050329163946.134:urls
-#@+node:ekr.20050329163946.138:@file-nosent .pdbrc
+#@-node:ekr.20050421093045.145:@url http://pychecker.sourceforge.net/
+#@-node:ekr.20050421093045.142:urls
+#@+node:ekr.20050421093045.146:@file-nosent .pdbrc
 @ignore
 #Print instance variables (usage "pi classInst")
 alias pi for k in %1.__dict__.keys(): print "%1.",k,"=",%1.__dict__[k]
 #Print instance variables in self
 alias ps pi self
 
-#@-node:ekr.20050329163946.138:@file-nosent .pdbrc
-#@+node:ekr.20050329163946.139:@file-nosent .pythonrc.py
+#@-node:ekr.20050421093045.146:@file-nosent .pdbrc
+#@+node:ekr.20050421093045.147:@file-nosent .pythonrc.py
 @ignore
 #import user
 #sys.version 
-#@-node:ekr.20050329163946.139:@file-nosent .pythonrc.py
-#@+node:ekr.20050329163946.140:@file-nosent .pycheckrc
+#@-node:ekr.20050421093045.147:@file-nosent .pythonrc.py
+#@+node:ekr.20050421093045.148:@file-nosent .pycheckrc
 @ignore
 # Sample defaults file for PyChecker 0.8.13
 # This file should be called:  .pycheckrc
@@ -644,8 +625,8 @@ else: # Doesn't work
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}
 #@nonl
-#@-node:ekr.20050329163946.140:@file-nosent .pycheckrc
-#@+node:ekr.20050329163946.141:@file-nosent .pylintrc
+#@-node:ekr.20050421093045.148:@file-nosent .pycheckrc
+#@+node:ekr.20050421093045.149:@file-nosent .pylintrc
 @ignore
 #t04413p12:07 lint Python modules using external checkers.
     
@@ -845,8 +826,8 @@ indent-string='    '
 #this is a tab indent-string='	' 
 
 
-#@-node:ekr.20050329163946.141:@file-nosent .pylintrc
-#@+node:ekr.20050329163946.142:@nosent tags.j2h
+#@-node:ekr.20050421093045.149:@file-nosent .pylintrc
+#@+node:ekr.20050421093045.150:@nosent tags.j2h
 @ignore
 // generate to exist in your homeDir for source-highlite from htmlize
 keyword blue b ;
@@ -869,9 +850,9 @@ ip darkgreen ;
 file darkblue b ;
 name darkgreen ; 
 #@nonl
-#@-node:ekr.20050329163946.142:@nosent tags.j2h
-#@-node:ekr.20050329163946.129:rc
-#@+node:ekr.20050329163946.143:leo css
+#@-node:ekr.20050421093045.150:@nosent tags.j2h
+#@-node:ekr.20050421093045.137:rc
+#@+node:ekr.20050421093045.151:leo css
 @ignore 
 # css files for the rst plugin and htmlize macro
 
@@ -887,12 +868,644 @@ but firefox fonts are too small
 and the @import url in the default doesn't work in firefox
 @color 
 #@nonl
-#@+node:ekr.20050329163946.144:@file silver_city.css
+#@+node:ekr.20050421093045.152:@file default.css
+/*alternate default style sheet for the HTML output of Docutils.
+:Author: David Goodger, Ian Bicking 
+Blue Bars with Boxed Admonitions
+:version: $Revision$
+:copyright: This stylesheet has been placed in the public domain.
+ 
+
+preincluded leo and silvercity at the end, so firefox works better
+is not fully compatible yet. not sure why but @import url() failed.
+
+generate file rename to default.css where you will generate @rst nodes
+I guess htmlize should use this file as well.
+some kind of script to automatically change the font size and style
+to suite individulat taste would probably not be much work.
+some simplification is in order and some duplication is evident.
+
+
+there is also the problem of adding Rest directives on the fly
+and keeping the css up to date.
+code-block is one
+simple too small
+*/
+BODY {
+	FONT-FAMILY: Arial, sans-serif
+}
+EM {
+	FONT-FAMILY: Times New Roman, Times, serif
+}
+I {
+	FONT-FAMILY: Times New Roman, Times, serif
+}
+LI {
+	LIST-STYLE-TYPE: circle
+}
+A.target {
+	COLOR: blue
+}
+A.toc-backref {
+	COLOR: black; TEXT-DECORATION: none
+}
+A.toc-backref:hover {
+	
+}
+A:hover {
+	BACKGROUND-COLOR: #cccccc
+}
+CITE {
+	FONT-WEIGHT: bold; FONT-STYLE: normal; FONT-FAMILY: monospace
+}
+DD {
+	MARGIN-BOTTOM: 0.5em
+}
+DIV.abstract {
+	MARGIN: 2em 5em
+}
+DIV.abstract P.topic-title {
+	FONT-WEIGHT: bold; TEXT-ALIGN: center
+}
+DIV.attention {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.caution {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.danger {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.error {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.hint {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.important {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.note {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.tip {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.warning {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.attention P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; COLOR: #cc0000; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.caution P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; COLOR: #cc0000; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.danger P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; COLOR: #cc0000; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.error P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; COLOR: #cc0000; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.warning P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; COLOR: #cc0000; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.hint P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.important P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.note P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.tip P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.dedication {
+	MARGIN: 2em 5em; FONT-STYLE: italic; TEXT-ALIGN: center
+}
+DIV.dedication P.topic-title {
+	FONT-WEIGHT: bold; FONT-STYLE: normal
+}
+DIV.figure {
+	MARGIN-LEFT: 2em
+}
+DIV.footer {
+	FONT-SIZE: smaller
+}
+DIV.header {
+	FONT-SIZE: smaller
+}
+DIV.system-messages {
+	MARGIN: 5em
+}
+DIV.system-messages H1 {
+	COLOR: red
+}
+DIV.system-message {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 1em; BORDER-TOP: outset; PADDING-LEFT: 1em; PADDING-BOTTOM: 1em; BORDER-LEFT: outset; PADDING-TOP: 1em; BORDER-BOTTOM: outset
+}
+DIV.system-message P.system-message-title {
+	FONT-WEIGHT: bold; COLOR: red
+}
+DIV.topic {
+	MARGIN: 2em
+}
+H1 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H2 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H3 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H4 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H5 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H6 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H1 {
+	BORDER-RIGHT: black solid; BORDER-TOP: black solid; BORDER-LEFT: black solid; COLOR: #ffffff; BORDER-BOTTOM: black solid; BACKGROUND-COLOR: #444499
+}
+H1 A.toc-backref {
+	COLOR: #ffffff
+}
+H2 A.toc-backref {
+	COLOR: #ffffff
+}
+H2 {
+	BORDER-RIGHT: black solid; BORDER-TOP: black solid; BORDER-LEFT: black solid; COLOR: #ffffff; BORDER-BOTTOM: black solid; BACKGROUND-COLOR: #666666
+}
+H3 {
+	COLOR: #000000; BACKGROUND-COLOR: #cccccc
+}
+H4 {
+	COLOR: #000000; BACKGROUND-COLOR: #cccccc
+}
+H5 {
+	COLOR: #000000; BACKGROUND-COLOR: #cccccc
+}
+H6 {
+	COLOR: #000000; BACKGROUND-COLOR: #cccccc
+}
+H3 A.toc-backref {
+	COLOR: #000000
+}
+H4 A.toc-backref {
+	COLOR: #000000
+}
+H5 A.toc-backref {
+	COLOR: #000000
+}
+H6 A.toc-backref {
+	COLOR: #000000
+}
+H1.title {
+	BORDER-RIGHT: black thick solid; BORDER-TOP: black thick solid; BORDER-LEFT: black thick solid; COLOR: #eeeeee; BORDER-BOTTOM: black thick solid; BACKGROUND-COLOR: #444499; TEXT-ALIGN: center; moz-border-radius: 20px
+}
+H2.subtitle {
+	TEXT-ALIGN: center
+}
+HR {
+	WIDTH: 75%
+}
+OL.simple {
+	MARGIN-BOTTOM: 1em
+}
+UL.simple {
+	MARGIN-BOTTOM: 1em
+}
+OL.arabic {
+	LIST-STYLE-TYPE: decimal
+}
+OL.loweralpha {
+	LIST-STYLE-TYPE: lower-alpha
+}
+OL.upperalpha {
+	LIST-STYLE-TYPE: upper-alpha
+}
+OL.lowerroman {
+	LIST-STYLE-TYPE: lower-roman
+}
+OL.upperroman {
+	LIST-STYLE-TYPE: upper-roman
+}
+P.caption {
+	FONT-STYLE: italic
+}
+P.credits {
+	FONT-SIZE: smaller; FONT-STYLE: italic
+}
+P.first {
+	MARGIN-TOP: 0px
+}
+P.label {
+	WHITE-SPACE: nowrap
+}
+P.topic-title {
+	FONT-WEIGHT: bold
+}
+PRE.address {
+	MARGIN-TOP: 0px; FONT-SIZE: 100%; MARGIN-BOTTOM: 0px; FONT-FAMILY: serif
+}
+PRE.line-block {
+	FONT-SIZE: 100%; FONT-FAMILY: serif
+}
+PRE.literal-block {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 5px; BORDER-TOP: black thin solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; MARGIN-LEFT: 2em; BORDER-LEFT: black thin solid; MARGIN-RIGHT: 2em; PADDING-TOP: 5px; BORDER-BOTTOM: black thin solid; BACKGROUND-COLOR: #eeeeee
+}
+PRE.doctest-block {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 5px; BORDER-TOP: black thin solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; MARGIN-LEFT: 2em; BORDER-LEFT: black thin solid; MARGIN-RIGHT: 2em; PADDING-TOP: 5px; BORDER-BOTTOM: black thin solid; BACKGROUND-COLOR: #eeeeee
+}
+SPAN.classifier {
+	FONT-STYLE: oblique; FONT-FAMILY: sans-serif
+}
+SPAN.classifier-delimiter {
+	FONT-WEIGHT: bold; FONT-FAMILY: sans-serif
+}
+SPAN.interpreted {
+	FONT-FAMILY: sans-serif
+}
+SPAN.option-argument {
+	FONT-STYLE: italic
+}
+SPAN.pre {
+	WHITE-SPACE: pre
+}
+SPAN.problematic {
+	COLOR: red
+}
+TABLE {
+	MARGIN-TOP: 0.5em; MARGIN-BOTTOM: 0.5em
+}
+TABLE.citation {
+	PADDING-LEFT: 0.5ex; BORDER-LEFT: gray thin solid
+}
+TABLE.docinfo {
+	MARGIN: 2em 4em
+}
+TABLE.footnote {
+	PADDING-LEFT: 0.5ex; BORDER-LEFT: black thin solid
+}
+TD {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; VERTICAL-ALIGN: top
+}
+TH {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; VERTICAL-ALIGN: top
+}
+UNKNOWN {
+	MARGIN-TOP: 0em
+}
+TH.docinfo-name {
+	FONT-WEIGHT: bold; WHITE-SPACE: nowrap; TEXT-ALIGN: left
+}
+TH.field-name {
+	FONT-WEIGHT: bold; WHITE-SPACE: nowrap; TEXT-ALIGN: left
+}
+H1 TT {
+	FONT-SIZE: 100%
+}
+H2 TT {
+	FONT-SIZE: 100%
+}
+H3 TT {
+	FONT-SIZE: 100%
+}
+H4 TT {
+	FONT-SIZE: 100%
+}
+H5 TT {
+	FONT-SIZE: 100%
+}
+H6 TT {
+	FONT-SIZE: 100%
+}
+CODE {
+	COLOR: #000066
+}
+TT {
+	COLOR: #000066
+}
+UL.auto-toc {
+	LIST-STYLE-TYPE: none
+}
+
+@others
+#@nonl
+#@+node:ekr.20050421093045.153:leo_rst1.css
+/* Some of these styles taken from Gunnar Schwant's (g.schwant@gmx.de) DocFactory */
+
+/* tt is the class of the inline literal
+as 10pt
+*/
+
+tt { background-color: #ffffee } 
+
+.first {
+  font-size: 110% }
+
+.last {
+  font-size: 110% }
+
+a {
+  text-decoration: none }
+
+a.reference {
+  color: #00009F }
+
+a:hover {
+  background-color: #00009F ;
+  color: white }
+
+body {
+  font-family: arial,helvetica,univers ;
+  font-size: 110% ;
+  padding-top: 0.6cm ;
+  margin-left:0.5cm ;
+  margin-right:0.5cm ;
+  margin-bottom:0.5cm }
+
+/* dd appears to be the text of the definitions  padding-top: 0.1cm */
+dd {
+  font-size: 110% }
+  
+ dt {
+   font-style: italic }
+
+/* dt appears to be the word in a definition list line-height: 110%
+
+dt {
+  font-size: 110% ;
+  font-family: "Courier New", Courier;
+  }
+*/
+
+div.abstract {
+  font-size: 110% }
+
+div.abstract p.topic-title {
+  font-size: 110% }
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  font-size: 110% }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, div.hint p.admonition-title, 
+div.important p.admonition-title, div.note p.admonition-title, 
+div.tip p.admonition-title {
+  margin-top: 0em ;
+  font-size: 120% ;
+  font-family: arial,helvetica,univers }
+
+div.dedication {
+  font-size: 110% }
+
+div.dedication p.topic-title {
+  font-size: 110% }
+
+div.figure {
+  font-size: 110% }
+
+div.footer, div.header {
+  font-size: 9pt }
+
+div.system-messages {
+  font-size: 110% }
+
+div.system-messages h1 {
+  font-size: 120% }
+
+div.system-message {
+  font-size: 110% }
+
+div.system-message p.system-message-title {
+  font-size: 110% }
+
+div.topic {
+  font-size: 110% }
+
+h1, h2, h3, h4, h5, h6 {
+  padding-top: 0.5cm ;
+  page-break-after: avoid ;
+  font-family: arial,helvetica,univers }
+
+#content .subtitle {
+	font-size: .9em;
+}
+
+#content .title {
+	font-size: 1.6em;
+	font-weight: normal;
+}
+
+#content ul {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+	margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+
+h1 {
+	font-size: 1.4em;
+	border-bottom: .25pt solid #ccc;
+}
+
+h1.title {
+         font-size: 1.6em;
+         border-bottom:none}
+
+h2 {
+	font-size: 1.2em;
+}
+
+h3, h4, h5, h6 {
+	font-size: 1.0em;}
+
+hr {
+  width: 100%;
+  page-break-after: always }
+
+/* the following was creating too much space in the table of contents*/
+/*li {
+  padding-top: 1mm ;
+  padding-bottom: 1mm }*/
+  
+li {font-size: 10pt}
+
+ol.simple, ul.simple {
+  font-size: 110% }
+
+ol.arabic {
+  font-size: 110% }
+
+ol.loweralpha {
+  font-size: 110% }
+
+ol.upperalpha {
+  font-size: 110% }
+
+ol.lowerroman {
+  font-size: 110% }
+
+ol.upperroman {
+  font-size: 110% }
+
+p.caption {
+  font-size: 110% }
+
+p.credits {
+  font-style: italic ;
+  font-size: 8pt }
+
+p.label {
+  font-size: 110% }
+
+p.topic-title {
+  font-size: 110% }
+
+pre.address {
+  font-family: arial,helvetica,univers ;
+  font-size: 110% }
+
+pre.line-block {
+  background-color: #eeeeee ;
+  border-color: #999999 ;
+  border-width: 1pt ;
+  font-size: 10pt;
+  font-family: "Courier New", Courier }
+  
+  /*border: 1px dotted #999;*/
+
+pre.literal-block, pre.doctest-block {
+  border-width: 1pt ;
+  border-style: solid ;
+  border-color: #999999 ;
+  background-color: #ffffee ;
+  padding-left: 0.5ex ;
+  margin-left:0.5cm ;
+  font-size: 110% }
+  
+/*code class - this allows us to use literal-block for program code and make it gray with small text*/
+  pre.code {
+  background-color: #eeeeee ;
+  font-size: 10pt }
+
+span.classifier {
+  font-size: 110% ;
+  font-family: arial,helvetica,univers }
+
+span.classifier-delimiter {
+  font-size: 110% ;
+  font-family: arial,helvetica,univers }
+
+span.field-argument {
+  font-size: 110% }
+
+span.interpreted {
+  font-size: 110% ;
+  font-family: arial,helvetica,univers }
+
+span.option-argument {
+  font-size: 110% }
+
+span.problematic {
+  font-size: 110% }
+
+table {
+  font-size: 110% ;
+  border-collapse: collapse ;
+  border-width: 1.5pt ;
+  border-color: #003366 }
+
+table.citation {
+  font-size: 110% }
+
+table.docinfo {
+  font-size: 110% }
+
+table.footnote {
+  font-size: 8pt ;
+  text-align: left }
+
+/*table.table {
+  width: 100% } */
+
+th {
+  border-width: 1.5pt }
+
+td {
+  border-width: 1pt }
+
+td, th {
+  font-size: 9pt ;
+  border-style: thin ;
+  border-color: #003366 }
+
+td.docinfo-name, th.field-name {
+  font-size: 110% }
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 110% }
+  
+  /* SZ CHANGES*/
+  
+  div.system-messages {
+    margin: 5em }
+  
+  div.system-messages h1 {
+    color: red }
+  
+  div.system-message {
+    border: medium outset ;
+    padding: 1em }
+  
+  div.system-message p.system-message-title {
+    color: red ;
+  font-weight: bold }
+  
+  div.hint p.admonition-title, div.important p.admonition-title,
+  div.note p.admonition-title, div.tip p.admonition-title,
+  div.admonition p.admonition-title {
+  color: maroon }
+  
+  p.topic-title {
+  font-weight: bold }
+  
+  p.rubric {
+    text-align: left} ;
+    
+/* Following added for code-blocks if SilverCity is present*/
+    
+  div.code-block{
+    margin-left: 2em ;
+    margin-right: 2em ;
+    background-color: #eeeeee;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 10pt;
+    white-space: nowrap;
+    }
+#@-node:ekr.20050421093045.153:leo_rst1.css
+#@+node:ekr.20050421093045.154:silver_city1.css
 
 .code_default
 {
     FONT-FAMILY: "Courier New", Courier, monospace;
-    FONT-SIZE: 80%;
+    FONT-SIZE: 110%;
 }
 
 .c_character
@@ -1243,7 +1856,7 @@ and the @import url in the default doesn't work in firefox
 
 .p_character
 {
-	color: olive;
+	color: 00aa00;
 }
 
 .p_classname
@@ -1352,550 +1965,14 @@ and the @import url in the default doesn't work in firefox
     color: #008888;
 }
 
-#@-node:ekr.20050329163946.144:@file silver_city.css
-#@+node:ekr.20050329163946.145:@file leo_rst.css
-/* Some of these styles taken from Gunnar Schwant's (g.schwant@gmx.de) DocFactory */
-
-/* tt is the class of the inline literal
-as 10pt
-*/
-
-tt { background-color: #ffffee } 
-
-.first {
-  font-size: 110% }
-
-.last {
-  font-size: 110% }
-
-a {
-  text-decoration: none }
-
-a.reference {
-  color: #00009F }
-
-a:hover {
-  background-color: #00009F ;
-  color: white }
-
-body {
-  font-family: arial,helvetica,univers ;
-  font-size: 110% ;
-  padding-top: 0.6cm ;
-  margin-left:0.5cm ;
-  margin-right:0.5cm ;
-  margin-bottom:0.5cm }
-
-/* dd appears to be the text of the definitions  padding-top: 0.1cm */
-dd {
-  font-size: 110% }
-  
- dt {
-   font-style: italic }
-
-/* dt appears to be the word in a definition list line-height: 110%
-
-dt {
-  font-size: 110% ;
-  font-family: "Courier New", Courier;
-  }
-*/
-
-div.abstract {
-  font-size: 110% }
-
-div.abstract p.topic-title {
-  font-size: 110% }
-
-div.attention, div.caution, div.danger, div.error, div.hint,
-div.important, div.note, div.tip, div.warning {
-  font-size: 110% }
-
-div.attention p.admonition-title, div.caution p.admonition-title,
-div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title, div.hint p.admonition-title, 
-div.important p.admonition-title, div.note p.admonition-title, 
-div.tip p.admonition-title {
-  margin-top: 0em ;
-  font-size: 120% ;
-  font-family: arial,helvetica,univers }
-
-div.dedication {
-  font-size: 110% }
-
-div.dedication p.topic-title {
-  font-size: 110% }
-
-div.figure {
-  font-size: 110% }
-
-div.footer, div.header {
-  font-size: 8pt }
-
-div.system-messages {
-  font-size: 110% }
-
-div.system-messages h1 {
-  font-size: 120% }
-
-div.system-message {
-  font-size: 110% }
-
-div.system-message p.system-message-title {
-  font-size: 110% }
-
-div.topic {
-  font-size: 110% }
-
-h1, h2, h3, h4, h5, h6 {
-  padding-top: 0.5cm ;
-  page-break-after: avoid ;
-  font-family: arial,helvetica,univers }
-
-#content .subtitle {
-	font-size: .9em;
-}
-
-#content .title {
-	font-size: 1.6em;
-	font-weight: normal;
-}
-
-#content ul {
-    margin-left: 20px;
-    margin-bottom: 10px;
-}
-
-p {
-	margin-bottom: 10px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	margin-top: 10px;
-	margin-bottom: 5px;
-}
-
-
-h1 {
-	font-size: 1.4em;
-	border-bottom: .25pt solid #ccc;
-}
-
-h1.title {
-         font-size: 1.6em;
-         border-bottom:none}
-
-h2 {
-	font-size: 1.2em;
-}
-
-h3, h4, h5, h6 {
-	font-size: 1.0em;}
-
-hr {
-  width: 100%;
-  page-break-after: always }
-
-/* the following was creating too much space in the table of contents*/
-/*li {
-  padding-top: 1mm ;
-  padding-bottom: 1mm }*/
-  
-li {font-size: 9pt}
-
-ol.simple, ul.simple {
-  font-size: 110% }
-
-ol.arabic {
-  font-size: 110% }
-
-ol.loweralpha {
-  font-size: 110% }
-
-ol.upperalpha {
-  font-size: 110% }
-
-ol.lowerroman {
-  font-size: 110% }
-
-ol.upperroman {
-  font-size: 110% }
-
-p.caption {
-  font-size: 110% }
-
-p.credits {
-  font-style: italic ;
-  font-size: 8pt }
-
-p.label {
-  font-size: 110% }
-
-p.topic-title {
-  font-size: 110% }
-
-pre.address {
-  font-family: arial,helvetica,univers ;
-  font-size: 110% }
-
-pre.line-block {
-  background-color: #eeeeee ;
-  border-color: #999999 ;
-  border-width: 1pt ;
-  font-size: 9pt;
-  font-family: "Courier New", Courier }
-  
-  /*border: 1px dotted #999;*/
-
-pre.literal-block, pre.doctest-block {
-  border-width: 1pt ;
-  border-style: solid ;
-  border-color: #999999 ;
-  background-color: #ffffee ;
-  padding-left: 0.5ex ;
-  margin-left:0.5cm ;
-  font-size: 110% }
-  
-/*code class - this allows us to use literal-block for program code and make it gray with small text*/
-  pre.code {
-  background-color: #eeeeee ;
-  font-size: 9pt }
-
-span.classifier {
-  font-size: 110% ;
-  font-family: arial,helvetica,univers }
-
-span.classifier-delimiter {
-  font-size: 110% ;
-  font-family: arial,helvetica,univers }
-
-span.field-argument {
-  font-size: 110% }
-
-span.interpreted {
-  font-size: 110% ;
-  font-family: arial,helvetica,univers }
-
-span.option-argument {
-  font-size: 110% }
-
-span.problematic {
-  font-size: 110% }
-
-table {
-  font-size: 110% ;
-  border-collapse: collapse ;
-  border-width: 1.5pt ;
-  border-color: #003366 }
-
-table.citation {
-  font-size: 110% }
-
-table.docinfo {
-  font-size: 110% }
-
-table.footnote {
-  font-size: 8pt ;
-  text-align: left }
-
-/*table.table {
-  width: 100% } */
-
-th {
-  border-width: 1.5pt }
-
-td {
-  border-width: 1pt }
-
-td, th {
-  font-size: 9pt ;
-  border-style: thin ;
-  border-color: #003366 }
-
-td.docinfo-name, th.field-name {
-  font-size: 110% }
-
-h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
-  font-size: 110% }
-  
-  /* SZ CHANGES*/
-  
-  div.system-messages {
-    margin: 5em }
-  
-  div.system-messages h1 {
-    color: red }
-  
-  div.system-message {
-    border: medium outset ;
-    padding: 1em }
-  
-  div.system-message p.system-message-title {
-    color: red ;
-  font-weight: bold }
-  
-  div.hint p.admonition-title, div.important p.admonition-title,
-  div.note p.admonition-title, div.tip p.admonition-title,
-  div.admonition p.admonition-title {
-  color: maroon }
-  
-  p.topic-title {
-  font-weight: bold }
-  
-  p.rubric {
-    text-align: left} ;
-    
-/* Following added for code-blocks if SilverCity is present*/
-    
-  div.code-block{
-    margin-left: 2em ;
-    margin-right: 2em ;
-    background-color: #eeeeee;
-    font-family: "Courier New", Courier, monospace;
-    font-size: 9pt;
-    white-space: nowrap;
-    }
-#@-node:ekr.20050329163946.145:@file leo_rst.css
-#@+node:ekr.20050329163946.146:@file default.css
-/*ORIGINAL GOODGER + changes; up to line 224 it's standard reST stylesheet
-:Author: David Goodger
-:Contact: goodger@users.sourceforge.net
-:date: $Date$
-:version: $Revision$
-:copyright: This stylesheet has been placed in the public domain.
-
-Default cascading style sheet for the HTML output of Docutils.
-*/
-
-.first {
-  margin-top: 0 }
-
-.last {
-  margin-bottom: 0 }
-
-a.toc-backref {
-  text-decoration: none ;
-  color: black }
-
-dd {
-  margin-bottom: 0.5em }
-
-div.abstract {
-  margin: 2em 5em }
-
-div.abstract p.topic-title {
-  font-weight: bold ;
-  text-align: center }
-
-div.attention, div.caution, div.danger, div.error, div.hint,
-div.important, div.note, div.tip, div.warning, div.admonition {
-  margin: 2em ;
-  border: medium outset ;
-  padding: 1em }
-
-div.attention p.admonition-title, div.caution p.admonition-title,
-div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title {
-  color: red ;
-  font-weight: bold ;
-  font-family: sans-serif }
-
-div.hint p.admonition-title, div.important p.admonition-title,
-div.note p.admonition-title, div.tip p.admonition-title,
-div.admonition p.admonition-title {
-  font-weight: bold ;
-  font-family: sans-serif }
-
-div.dedication {
-  margin: 2em 5em ;
-  text-align: center ;
-  font-style: italic }
-
-div.dedication p.topic-title {
-  font-weight: bold ;
-  font-style: normal }
-
-div.figure {
-  margin-left: 2em }
-
-div.footer, div.header {
-  font-size: smaller }
-
-div.sidebar {
-  margin-left: 1em ;
-  border: medium outset ;
-  padding: 0em 1em ;
-  background-color: #ffffee ;
-  width: 40% ;
-  float: right ;
-  clear: right }
-
-div.sidebar p.rubric {
-  font-family: sans-serif ;
-  font-size: medium }
-
-div.system-messages {
-  margin: 5em }
-
-div.system-messages h1 {
-  color: red }
-
-div.system-message {
-  border: medium outset ;
-  padding: 1em }
-
-div.system-message p.system-message-title {
-  color: red ;
-  font-weight: bold }
-
-div.topic {
-  margin: 2em }
-
-h1.title {
-  text-align: center }
-
-h2.subtitle {
-  text-align: center }
-
-hr {
-  width: 75% }
-
-ol.simple, ul.simple {
-  margin-bottom: 1em }
-
-ol.arabic {
-  list-style: decimal }
-
-ol.loweralpha {
-  list-style: lower-alpha }
-
-ol.upperalpha {
-  list-style: upper-alpha }
-
-ol.lowerroman {
-  list-style: lower-roman }
-
-ol.upperroman {
-  list-style: upper-roman }
-
-p.attribution {
-  text-align: right ;
-  margin-left: 50% }
-
-p.caption {
-  font-style: italic }
-
-p.credits {
-  font-style: italic ;
-  font-size: smaller }
-
-p.label {
-  white-space: nowrap }
-
-p.rubric {
-  font-weight: bold ;
-  font-size: larger ;
-  color: maroon ;
-  text-align: center }
-
-p.sidebar-title {
-  font-family: sans-serif ;
-  font-weight: bold ;
-  font-size: larger }
-
-p.sidebar-subtitle {
-  font-family: sans-serif ;
-  font-weight: bold }
-
-p.topic-title {
-  font-weight: bold }
-
-pre.address {
-  margin-bottom: 0 ;
-  margin-top: 0 ;
-  font-family: serif ;
-  font-size: 110% }
-
-pre.line-block {
-  font-family: serif ;
-  font-size: 110% }
-
-pre.literal-block, pre.doctest-block {
-  margin-left: 2em ;
-  margin-right: 2em ;}
-  /*background-color: #eeeeee }*/
-  /*for some reason i can't overide in an import*/
-
-span.classifier {
-  font-family: sans-serif ;
-  font-style: oblique }
-
-span.classifier-delimiter {
-  font-family: sans-serif ;
-  font-weight: bold }
-
-span.interpreted {
-  font-family: sans-serif }
-
-span.option {
-  white-space: nowrap }
-
-span.option-argument {
-  font-style: italic }
-
-span.pre {
-  white-space: pre }
-
-span.problematic {
-  color: red }
-
-table {
-  margin-top: 0.5em ;
-  margin-bottom: 0.5em }
-
-table.citation {
-  border-left: solid thin gray ;
-  padding-left: 0.5ex }
-
-table.docinfo {
-  margin: 2em 4em }
-
-table.footnote {
-  border-left: solid thin black ;
-  padding-left: 0.5ex }
-
-td, th {
-  padding-left: 0.5em ;
-  padding-right: 0.5em ;
-  vertical-align: top }
-
-th.docinfo-name, th.field-name {
-  font-weight: bold ;
-  text-align: left ;
-  white-space: nowrap }
-
-h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
-  font-size: 110% }
-
-/*for some reason, the following isn't being overridden by the imports
-at the end of this style sheet so I've commented it out*/
-/*tt {
-  background-color: #eeeeee }*/
-
-ul.auto-toc {
-  list-style-type: none }
-
-/*import not working in firefox*/
-@import url(leo_rst.css);
-@import url(silver_city.css);
-
-#@-node:ekr.20050329163946.146:@file default.css
-#@-node:ekr.20050329163946.143:leo css
-#@+node:ekr.20050329163946.147:rpdb
+#@-node:ekr.20050421093045.154:silver_city1.css
+#@-node:ekr.20050421093045.152:@file default.css
+#@-node:ekr.20050421093045.151:leo css
+#@+node:ekr.20050421093045.155:rpdb
 to debug a script that is run from an embedded interpreter,
 add 'rpdb.set_active()' in the beginning of your script.
 #@nonl
-#@+node:ekr.20050329163946.148:@file-nosent rpdb.bat
+#@+node:ekr.20050421093045.156:@file-nosent rpdb.bat
 @path c:\bIn\bat\
 @lineending crlf
 set pydir=c:\c\py\Python233
@@ -1960,13 +2037,13 @@ print output, errout
 
 #e
 #@nonl
-#@-node:ekr.20050329163946.148:@file-nosent rpdb.bat
-#@+node:ekr.20050329163946.149:@url file:///c|/bIn/bat/rpdb.bat
+#@-node:ekr.20050421093045.156:@file-nosent rpdb.bat
+#@+node:ekr.20050421093045.157:@url file:///c|/bIn/bat/rpdb.bat
 remote pdb. http://rpdb.digitalpeers.com/
 c:\bIn\bat\rpdb.bat
-#@-node:ekr.20050329163946.149:@url file:///c|/bIn/bat/rpdb.bat
-#@-node:ekr.20050329163946.147:rpdb
-#@+node:ekr.20050329163946.150:au3
+#@-node:ekr.20050421093045.157:@url file:///c|/bIn/bat/rpdb.bat
+#@-node:ekr.20050421093045.155:rpdb
+#@+node:ekr.20050421093045.158:au3
 <http://www.hiddensoft.com/AutoIt> 
 a way to automate open leo. 
 AutoIt3, windows only though. 
@@ -1975,7 +2052,7 @@ AutoIt3, windows only though.
 http://www.autoitscript.com/autoit3/
  
 regsvr32 AutoItX3.dll
-#@+node:ekr.20050329163946.151:@nosent leoopen1.au3
+#@+node:ekr.20050421093045.159:@nosent leoopen1.au3
 @path c:\c\chall\osix_Geek\
 @language elisp
 ;
@@ -2039,8 +2116,8 @@ Send("!Fx")
 
 ; Finished!
 #@nonl
-#@-node:ekr.20050329163946.151:@nosent leoopen1.au3
-#@+node:ekr.20050329163946.152:@url c:/c/chall/osix_Geek/leoopen1.au3
+#@-node:ekr.20050421093045.159:@nosent leoopen1.au3
+#@+node:ekr.20050421093045.160:@url c:/c/chall/osix_Geek/leoopen1.au3
 
 c:/c/chall/osix_Geek/leoopen1.au3cd 
 
@@ -2071,8 +2148,8 @@ Run("c:\WINDOWS\Command.pif")
 WinWaitActive("MS-DOS Prompt")   
 
 
-#@-node:ekr.20050329163946.152:@url c:/c/chall/osix_Geek/leoopen1.au3
-#@-node:ekr.20050329163946.150:au3
+#@-node:ekr.20050421093045.160:@url c:/c/chall/osix_Geek/leoopen1.au3
+#@-node:ekr.20050421093045.158:au3
 #@-all
  you need
 < @home >
@@ -2083,8 +2160,23 @@ rc, urls to pychecker and pylint,
    rpdb,
    au3,
 
+.astylerc for astyle reformater not included
 
+HappyDoc3-r3_0_a1 from happydoc.sourceforge.net or pydoc (in stdlib).
+need PYTHONDOCS env set and download the help from python.org
+for print help(whatever) type answers. think pydoc imports the module.
+
+happydoc doesn't import so is safe on untrusted code. but is proving
+to be quite out of date so will try something from docutils sandbox
+other apps like epydoc also possible. why does noone think of scriptability!
+everything is input file and output file and no mention of anything else.
+
+
+silvercity or source-highlight for syntax highlighted htmlize output
+
+
+#u05417a10:51
 #@@killcolor 
 #@nonl
-#@-node:ekr.20050329163946.126:@thin dyna.txt
+#@-node:ekr.20050421093045.134:@thin dyna.txt
 #@-leo

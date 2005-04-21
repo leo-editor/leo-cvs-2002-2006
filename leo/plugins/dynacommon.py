@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20050329163946.97:@thin dynacommon.py
+#@+node:ekr.20050421093045.103:@thin dynacommon.py
 """not needed in pluginManager.txt
 generate this file to exist in the Leo plugins directory.
 you have to edit in your correct paths. < set filenames > section 
@@ -9,14 +9,12 @@ helper code your macro can call from dyna_menu or other Leo script/plugin.
 check your sys.path that plugins is there before import
 from dynacommon import *
 was clone, is common to dynabutton, dynatester & dyna_menu
-exSButtton & htmlize use ScrollMenu
 
 some things common like the dynaBunch & init you probably wont call
 
     rearrange things carelessly at your own peril
 
-have to lazy eval the filename creation till after leoID is defined til Leo4.3
-"""
+have to lazy eval the filename creation till after leoID is defined"""
 
 #__all__ = 'tmpfile py pypath leosrc reindent pycheck2 pycheck  _caller_symbols deangle commafy stripSentinels sanitize_ leotmp scriptbody runAskYesNoCancelDialog init_dyna dycolors dynaBunch dynaerrout dynaerrline dyna_getsubnodes captureStd runcmd dynadoc dynaput dynaplayer pyO'.split()
 #this needs its own dictionary dopylint doreindent
@@ -25,14 +23,10 @@ import sys, os
 import leoGlobals as g
 import Tkinter as Tk
 
-try:
-    True and False
-except NameError:
-    # match the 2.2 definition
-    (True, False) = (1==1), (1==0)
-
-false = False
-true = True
+__not_a_plugin__ = True
+__version__ = '0.0139i' #u05417a10:51
+#@+others
+#@+node:ekr.20050421093045.104:others
 
 #possibly there are unicode anomalies in cStringIO?
 try:
@@ -40,12 +34,43 @@ try:
 except ImportError:
     import StringIO
 
-__version__ = '0.0139e'  #t05329p4
-__not_a_plugin__ = True
-#@+others
-#@+node:ekr.20050329163946.98:others
+try:
+    True and False
+except NameError:
+    # match the 2.2 definition
+    (True, False) = (1==1), (1==0)
+    
+#needed in several macros. what if import htmlize from menu?
+try:
+    enumerate
+except NameError:
+    def enumerate(seq):
+        '''
+        >>> enumerate('123') #does 2.2 enumerate a string ok?
+        [(0, '1'), (1, '2'), (2, '3')]
+        '''
+        import sys
+        return zip(xrange(sys.maxint), seq)
+    print 'now have enumerate'
 
-#@+node:ekr.20050329163946.99:_caller_symbols
+try:
+    sum #no sum in 2.2, not fully tested compatible
+except NameError:
+    from operator import add
+    def sum(seq, m=0, add=add):
+        '''
+        >>> sum([1, 4, 5, 2], 0)
+        12
+        >>> sum([len(x) for x in ['12','23','45']], 0)
+        6
+        
+        '''
+        return reduce(add, seq, m)
+    print 'now have sum'
+    del add
+
+
+#@+node:ekr.20050421093045.105:_caller_symbols
 def _caller_symbols():
     """aspncookbook/52278
     Print an expression and its value, 
@@ -59,12 +84,11 @@ def _caller_symbols():
     except StandardError:
         t = sys.exc_info()[2].tb_frame
         return (t.f_back.f_back.f_globals, t.f_back.f_back.f_locals)
-#@-node:ekr.20050329163946.99:_caller_symbols
-#@-node:ekr.20050329163946.98:others
-#@+node:ekr.20050329163946.100:functs w/doctest
-
+#@-node:ekr.20050421093045.105:_caller_symbols
+#@-node:ekr.20050421093045.104:others
+#@+node:ekr.20050421093045.106:functs w/doctest
 #@+others
-#@+node:ekr.20050329163946.101:deangle
+#@+node:ekr.20050421093045.107:deangle
 def deangle(s, repl=  '+'):
     """
     use repl so output can be pasted w/o appearing as named nodes to leo
@@ -81,8 +105,8 @@ def deangle(s, repl=  '+'):
         return '<%s%s'%(repl, s[1:])
     return s
 #@nonl
-#@-node:ekr.20050329163946.101:deangle
-#@+node:ekr.20050329163946.102:commafy
+#@-node:ekr.20050421093045.107:deangle
+#@+node:ekr.20050421093045.108:commafy
 def commafy(val, sep= ','):
     """Bengt , added sep
     mod to use leading seperator if . maybe
@@ -100,8 +124,8 @@ def commafy(val, sep= ','):
     while val: val, rest = val[:-3], '%s%s%s'%(val[-3:], sep, rest)
     return '%s%s%s' %(sign, rest[:-1], dec)
 #@nonl
-#@-node:ekr.20050329163946.102:commafy
-#@+node:ekr.20050329163946.103:stripSentinels
+#@-node:ekr.20050421093045.108:commafy
+#@+node:ekr.20050421093045.109:stripSentinels
 def stripSentinels(s, stripsentinals=1,
            stripcomments=0, stripnodesents=1, stripdirectives=1, **ignored):
     r""" r for doctest, ignored so can pass **hopts from htmlize
@@ -120,8 +144,8 @@ def stripSentinels(s, stripsentinals=1,
     
     is startswith Unicode safe? is slice? slice over *with next up.
 
-  #@  << the essential doctesting >>
-  #@+node:ekr.20050329163946.104:<< the essential doctesting >>
+  #@  << essential doctesting >>
+  #@+node:ekr.20050421093045.110:<< essential doctesting >>
   >>> s = '#@+leo=4\n#@+node:sent\nhay\n#@nonl\n#@-node: chk \n#@verbatim\n@deco\n#@  @others\n#cmt'
   >>> stripSentinels(s,0,0,0,0)
   '#@+leo=4\n#@+sent\nhay\n#@nonl\n#@- chk \n#@verbatim\n@deco\n#@  @others\n#cmt'
@@ -139,6 +163,8 @@ def stripSentinels(s, stripsentinals=1,
   'hay\n#@verbatim\n@deco\n#@  @others\n'
   >>> stripSentinels(s,1,1,0,0)
   '#@+sent\nhay\n#@- chk \n#@verbatim\n@deco\n#@  @others\n'
+  >>> stripSentinels('#@+node:<<sent>+>\nhay\n#@- chk \n##@cmt',1,0,0,0)
+  '#@+<+<sent>+>\nhay\n##@cmt'
   >>> stripSentinels('')
   ''
   >>> stripSentinels('\n##\n')
@@ -153,9 +179,14 @@ def stripSentinels(s, stripsentinals=1,
   'between raw\n'
   >>> stripSentinels('#@@raw\nbetween raw\n#@@end_raw\n', 1,0,1,0)
   '#@@raw\nbetween raw\n#@@end_raw\n'
+  >>> #mixed lang
+  >>> stripSentinels(';@@raw\nbetween raw\n;@@end_raw\n//cmt')#, 1,0,1,1
+  'between raw\n//cmt'
+  >>> stripSentinels('be\n;@@first <...>\n')#, 1,0,1,1
+  '<...>\nbe\n'
   >>> #
   
-  #@-node:ekr.20050329163946.104:<< the essential doctesting >>
+  #@-node:ekr.20050421093045.110:<< essential doctesting >>
   #@nl
   not every possible corner case.
 
@@ -176,72 +207,115 @@ def stripSentinels(s, stripsentinals=1,
     first file opening and last closing node sentinals could probably be eliminated
     the @others and named section & nodesents should be enough.
     skip namedsection,
+    going to be screwed if a lang uses @ for comments
+    
+    add forced delims check for c,perl,java, html & python
+    if other @lang the first 2 are always #python, might have to fix that
+    luckily all the tests passed before thought of this hack
+    add @first/@last if simple on the same line 
+
+    add another option to mangle namesection refrences <+< xyz >>
+    to allow copy&paste into a node without needing to edit them.
+
     """
     import leoGlobals as g
     result = []
     verbatim = 0
-    tag1 = '#@+node:'
-    tag2 = '#@-node:'
-    n = len(tag1)
-    
+    first = last = ''
+
+    cmts = ('//', '/*', ';', '<!--')    
     for line in s.splitlines(True):
         s = line.lstrip()
+        
+        #much trickier if need to know @language & delims
+        # otherwise need seperate strippers. 
+        #and gets especially screwy in mixed languages
+
+        for icmt, x in enumerate(cmts):
+            if not s.startswith(x):   continue
+            cmt = cmts[icmt]
+            break
+        else:
+            #print 'didnt find anything'
+            cmt = '#'
+
+        #should't hsve to recalc these each time
+        tag1 = cmt+'@+node:'
+        tag2 = cmt+'@-node:'
+        n = len(tag1)
+
+        #@        << linematch >>
+        #@+node:ekr.20050421093045.111:<< linematch >>
         #we'll assume no one would use verbatim\n#@@end_raw!
-        if verbatim > 0 and not s.startswith('#@@end_raw'):
+        if verbatim > 0 and not s.startswith(cmt+'@@end_raw'):
             if verbatim == 1: verbatim = 0
             result.append(line)
             continue
-
-        elif verbatim > 0 and s.startswith('#@@end_raw'):
+        
+        elif verbatim > 0 and s.startswith(cmt+'@@end_raw'):
             verbatim = 0
             if not stripdirectives:
                 result.append(line)
-
-        elif s.startswith('#@verbatim') or s.startswith('#@@raw'):
-            verbatim = g.choose(s.startswith('#@verbatim'), 1, 2)
+        
+        elif s.startswith(cmt+'@verbatim') or s.startswith(cmt+'@@raw'):
+            verbatim = g.choose(s.startswith(cmt+'@verbatim'), 1, 2)
             if not stripdirectives:
                 result.append(line)
-
-        elif not s.startswith('#@') and (not stripcomments and s.startswith('#')): 
+        
+        elif not s.startswith(cmt+'@') and (not stripcomments and s.startswith(cmt)): 
             result.append(line)
             continue
-
+        
         #need a regex here could be #@[ \t]@VALIDDIRECIVE 
         #\t unlikely to work in startswith, fix if you care about tabs
         #otherwise could strip valid comments, but whould a real Leo user do that?
-        elif s.startswith('#@@') or s.startswith('#@ ') or\
-             s.startswith('#@\t')  or s.startswith('#@<<'):
-
+        elif s.startswith(cmt+'@@') or s.startswith(cmt+'@ ') or\
+             s.startswith(cmt+'@\t') or s.startswith(cmt+'@<<'):
+        
+            #actually might be a little more complicated first1 first2
+            #might stripsentinal allow too
+            if s.startswith(cmt+'@@first'):
+                first = line[s.find(' ')+1:]; continue
+            if s.startswith(cmt+'@@last'):
+                last = line[s.find(' ')+1:]; continue
+        
             #skip namedsection, could opt this in
-            if stripsentinals and s.find('<<') != -1: continue
+            if stripsentinals and s.find('<<') != -1 and\
+                  s.find('>>') != -1: 
+                continue
             if not stripdirectives:
                 result.append(line)
-
+        
         elif s.startswith(tag1):
             if not stripnodesents:
                 i = line.find(tag1)
-                result.append(line[:i] + '#@+' + line[i+n:])
-
+                result.append(
+                  line[:i] + cmt+'@+' + line[i+n:].replace('<<','<+<'))
+        
         elif s.startswith(tag2):
             if not stripnodesents:
                 i = line.find(tag2)
-                result.append(line[:i] + '#@-' + line[i+n:]) #.strip() happy
-
-        elif stripsentinals and s.startswith('#@'):
+                result.append(
+                  line[:i] + cmt+'@-' + line[i+n:].replace('<<','<+<')) #.strip() happy
+        
+        elif stripsentinals and s.startswith(cmt+'@'):
             continue
-
-        elif stripcomments and s.startswith('#'):
+        
+        elif stripcomments and s.startswith(cmt):
             continue
-
+        
         else: #could this possibly be sentinals?
             #print s
             result.append(line)
+        #@nonl
+        #@-node:ekr.20050421093045.111:<< linematch >>
+        #@nl
 
-    return ''.join(result)  #user might have other ideas about \n
+
+    return ''.join([first]+result+[last])  #user might have other ideas about \n
 #@nonl
-#@-node:ekr.20050329163946.103:stripSentinels
-#@+node:ekr.20050329163946.105:sanitize_
-
+#@-node:ekr.20050421093045.109:stripSentinels
+#@+node:ekr.20050421093045.112:sanitize_
 def sanitize_(s):
     """ Leo's sanitize_filename is too aggressive and too lax
     origional regex from away.js
@@ -249,19 +323,21 @@ def sanitize_(s):
     strips most characters, space and replaces with underscore, len<128
     the doctest is in a subnode to allow syntax highlighting
     #@    << chk sanitize >>
-    #@+node:ekr.20050329163946.106:<< chk sanitize >>
+    #@+node:ekr.20050421093045.113:<< chk sanitize >>
     the best of both worlds, doctest with syntax highlighting!
     >>> sanitize_("|\\ /!@=#$%,^&?:;.\\"'<>`~*+")
     '_____________'
+    >>> sanitize_("")
+    ''
     >>> sanitize_("@abc123[],(),{}")
     '_abc123[]_()_{}'
     >>> #one comment line required when use subnode this way 
     >>> #to avoid doctest seeing node sentinals. don't ask...
     #@nonl
-    #@-node:ekr.20050329163946.106:<< chk sanitize >>
+    #@-node:ekr.20050421093045.113:<< chk sanitize >>
     #@nl
     """
-    if not s: return
+    #if not s: return
     import re
 
     res = re.compile(r"""
@@ -270,10 +346,10 @@ def sanitize_(s):
     #  ^?"' \xnn,  [],(),{} ok, * not sure always ok
 
     #should test for unicode before str()
-    return res.sub('_', str(s.strip())).replace('__','_')[:128]
+    return res.sub('_', s.strip()).replace('__','_')[:128]
 #@nonl
-#@-node:ekr.20050329163946.105:sanitize_
-#@+node:ekr.20050329163946.107:leotmp
+#@-node:ekr.20050421093045.112:sanitize_
+#@+node:ekr.20050421093045.114:leotmp
 def leotmp(name = None, tmp= None):
     """ attempt to divine the user tmp dir add to input name
     later prepend leoID unless no leoID flag or something
@@ -297,7 +373,7 @@ def leotmp(name = None, tmp= None):
         return tmp
     return g.os_path_join(tmp, name)
 
-#@-node:ekr.20050329163946.107:leotmp
+#@-node:ekr.20050421093045.114:leotmp
 #@-others
 #@+at
 # others not required except to enable du_test for all these subnodes
@@ -306,81 +382,85 @@ def leotmp(name = None, tmp= None):
 # comafy, sanitize_ actually more usefull in site-packages/myutils.py
 # but I script and run nearly everything in Leo anyway.
 # 
-# 23 passed and 0 failed.
+# 0 failed.
+# all over htmlize and config isn't fully tested and the one test fails.
+# with py2.2, 2 places Expected: True Got: 1 same w/False in dyna_menu
+# but I don't think any code depends on True or False being 1 or 0
+# except for doctest.
 #@-at
-#@-node:ekr.20050329163946.100:functs w/doctest
-#@+node:ekr.20050329163946.108:dynastuff
+#@-node:ekr.20050421093045.106:functs w/doctest
+#@+node:ekr.20050421093045.115:dynastuff
+#@+node:ekr.20050421093045.116:fixbody
+#previouslky fixscript selectscript and a few other things
+#Leo always outputs sentinals now and follows subnodes
+#and stripSentinals has more options
+#and default is usually no tabs so expandtabs less critical
 
+def fixbody(data= None, c= None):
+    """ return script following subnodes and @others
+    strips all sentinals
+    if addscript its prepended to the output or something?
+    """
 
-#@+at
-# #code for dyna
-# 
-#     - dynaBunch
-#     - dynaerrout
-#     - captureStd
-#     - runcmd
-#     - dynadoc
-# 
-# 
-#@-at
-#@+node:ekr.20050329163946.109:fixbody
-#ripe for consolidation. executeScript & getScript changed since this
-#stripSentinals better than adhockduplications in 3 functions here
-#they will stop working eventually. and better unicode support is mandatory
-#too much str() on the body, need a loop on ord() or encode or something
+    if c is None: c = g.top()
+    p = c.currentPosition()
 
+    if not data:
+        data = g.getScript(c, p)
 
-def scriptbody(c, p):
-    """AttributeError: vnode instance has no attribute 'copy'
-    this removes all sentinals but might be switchable somehow
-    something chged in 4.2b2+ while using linenumber macro
-    df.write(p, nosentinels= true, scriptFile= fo)
-  File "c:\c\leo\V42leos\leo\src\leoAtFile.py", line 4754, 
-  in write scriptFile.clear()
-AttributeError: StringIO instance has no attribute 'clear'
-moveing away from 4.1final if use filelikeobject
-chg to g.fileLikeObject() but really its toString= True
-leaveing it false was trigering an assert, seems redundant
-if scriptfile its onnvious that its to string also
-but I dont really know the ins and outs of the new script stuff.
-this whole thing can be replaced with g.getScript(c,p) in 4.2
-but thats always with sentinals I guess... API moveing too fast
-still getting an assert error sometimes
+    else: #selected text, so comment out directives in the @language
+        data = selecbody(data, g.scanDirectives(c, p))
 
-        """
-    df = c.atFileCommands.new_df
-    df.scanAllDirectives(p, scripting= True)
-    # Force Python comment delims.
-    df.startSentinelComment = "#"
-    df.endSentinelComment = None
-    # Write the "derived file" into fo.
-
-    fo = g.fileLikeObject()  #was StringIO.StringIO() 
-
-    #self.writeOpenFile(root,nosentinels,scriptFile,thinFile,toString)
-    #df.write(p.copy(), nosentinels= true, scriptFile= fo)
-    df.write(p.copy(), nosentinels= True, scriptFile= fo, toString= True)
-    assert(p)  #why assert after the write?
-    return fo.get() #getvalue() 
-
-
+    if not data:  
+        data = EOLN  #avoid error on empty script
+    else:
+        #could work the other way too if anyone wanted tabs.
+        if hasattr(g.app.dynaMvar, 'tabstrip'):
+            if g.app.dynaMvar.tabstrip: 
+                data = data.expandtabs(g.app.dynaMvar.tabstrip)
+    return data
+#@nonl
+#@-node:ekr.20050421093045.116:fixbody
+#@+node:ekr.20050421093045.117:selecbody
 def selecbody(data, sdict):
-    """ if selected starts after @ it should be commented anyway?
+    r"""for commenting out directives in selected text.
+    should start by commenting out all lines that start with @
+    then strip sentinals. not going to follow @others?
+    multiline delims probably not currently handled well
+    have to add some tests 
+    and get back into understanding the full use case.
+    
+    if selected starts after @ it should be commented anyway?
     
     backslash inside string literal, always skips the next char 
     \s might have to be \\s in raw?
-        """
+    
+    >>> selecbody(None, {'language':'python'})
+    
+    >>> selecbody('@language python\n#cmt', {'language':'python'})
+    '#@language python\n#cmt'
+    >>> cdct = {'language':'java', 'delims': ('/*', '*/', '//')}
+    >>> selecbody('@language python\n#cmt', cdct)
+    '/*@language python\n#cmt'
+
+    have to do some reserch and fix this
+    """
+    if not data: return
+    import leoGlobals as g
+
     cmtdelim = '#'
     if sdict['language'] != u'python':
         #obviously for other language have to check is valid
         # is more than one, then have to trail each line etc
         #was delims[0] not sure where that came from
         #coverage tool might have caught that so far untested
+        #think it needs to be 0+1 if [2] is None
+        #wouldv'e made more sense to always have the single in 0?
         cmtdelim = sdict.get('delims', ['#'])[0]
         
     import re
     datalines = data.splitlines(True)
-    #print 'data is %r'%(datalines,)
+    #g.es('data is %r'%(datalines,))
 
 
     #not sure why <\< works
@@ -420,100 +500,8 @@ def selecbody(data, sdict):
         sx.append(x)
 
     return ''.join(sx)
-
-def fixbody(data, c= g.top()):
-    """ assumed leo body, forces str & expandtabs
-    @directives commented out
-    from @ to @c commented out
-    have to make sure doesnt expand \n \t etc literals in strings
-    that is a problem when include section refrences as data
-    eventually follow @others, and section refrences or use Leo API
-    comments sectionnames
-    commented out indented @others or sectionnames 
-    add a strip comments mode to speedup the processing on larger data
-   I was a little confused about directive use. forgot @c is code
-  (@ followed by a space, tab or newline) or @doc
-  Body text from an @c or @code directive to the
-    next @<space> or @directive.  
-    Leo itself doesnt stop the comment if @path after @space
-    @doc isnt commented, not sure what that is.
-   @color/@nocolor work @path doesnt stop comments
-   any htmlize of the body should follow these very closely
-   even if just rendering code
-
-    1/2h looking thru leodoc leopy, 1/2h looking thru leo*file
-    I have no idea how to do this using the Leo API
-    maybe some other plugin does it? rst must have some of it
-    obvious solution would be a recurxive one.
-    it seems the plugins and scripts do alot of the node traversal
-    I dont see where they are calling Leo
-    nor do I see how they follow @others or sectionnames
-    
-    luckily it continues on to comment after any @directive till @c
-    the goal here is not to mimic Leo. but to render all @ as comments
-
-    should get directives so the proper comment are rendered
-    in c for ex, might want to mark and output /* comments */
-    or in style section of html or inside script = javascript
-    name fixbody is a misnomer here, I assume we are in body
-    and the c would be valid but who knonws.
-    its only passed data so that has to change.
-    chg to data, c if data is None then assume the worst
-    still going to need what node selected text is in?
-    otherwise how to use language & delims
-    
-
-{'language': u'python', 'pagewidth': 80, 'encoding': None, 'delims': ('#', None, None), 'lineending': '\n', 'tabwidth': -4, 'wrap': 1, 'path': u'', 'pluginsList': []}
-     just because I get the directives, doesn't mean I respect them all.
-     
-     
-    the other piece is implimenting a toggle get @others or just node
-    if if get @others, will the caller be responsible for knowing
-    if the current node is the complete piece of the program? guess so.
-    not ready to go recursive yet,   
-    going to need a follow @other 
-     but add dont comment mode & strip docstrings also 
-    
-    executescript in leocommands has code to derive a file to an object
-    it takes care of comments and I assume adds sentinals.
-    it does the @ comments, 
-    but removes all other sentinal as presently setup
-    selectedtext passes thru my @directive commenter
-      """
-
-    if not c:
-        g.es("in fixbody, empty c")
-        return
-
-    p = c.currentPosition()
-    v = c.currentVnode() # may want to chg for 4.2
-    #sdict = g.scanDirectives(c, v) 
-    sdict = g.scanDirectives(c, p) 
-    #print sdict
-
-    if not data:
-        #g.es("in fixbody, empty data, using body")
-        #data = v.bodyString()
-        #data = str(scriptbody(c, p).expandtabs(4))
-        data = g.getScript(c, p)  #.strip()
-
-    else:
-        print  'data is %r'%(data,)
-
-        #gota be a better way than this
-        try:
-            data = str(selecbody(data, sdict).expandtabs(4))
-        except (UnicodeEncodeError, Exception):
-            g.es_exception(full = False)
-            data = selecbody(data, sdict).expandtabs(4)
-
-    if not data:  data = '\n'  #avoid error on empty script
-
-    return data
-#@nonl
-#@-node:ekr.20050329163946.109:fixbody
-#@+node:ekr.20050329163946.110:AskYesNo
-
+#@-node:ekr.20050421093045.117:selecbody
+#@+node:ekr.20050421093045.118:AskYesNo
 #file leoTkinterGui.py
 #import tkFont,Tkinter,tkFileDialog leoTkinterDialog
 #class tkinterGui(leoGui.leoGui):
@@ -532,8 +520,8 @@ def runAskYesNoCancelDialog(c,title,
 
     return d.run(modal=True)
 #@nonl
-#@-node:ekr.20050329163946.110:AskYesNo
-#@+node:ekr.20050329163946.111:dynaBunch
+#@-node:ekr.20050421093045.118:AskYesNo
+#@+node:ekr.20050421093045.119:dynaBunch
 import operator
 
 def init_dyna(c, *a, **k):
@@ -547,9 +535,10 @@ def init_dyna(c, *a, **k):
         dynapasteFlag = Tk.StringVar(),
         #getsubnodes different in button & menu, lst is a list of macros
         dynadeflst = dyna_getsubnodes(c,  globs= caller_globals),
-        du_test_verbose = 0, #0or1 just dots in @test from du_test
-        justPyChecker =  1, #show source after running pychecker & pylint
-                            
+        verbosity = 0, #0or1 just dots in @test from du_test
+        justpychecker =  1, #show source after running pychecker & pylint
+        htmlize_hilighter = '',  #other language colorizer
+        bugimport =  0,  #test fallbacks on ImportError
         )
     
     #print to start, paste over selection later
@@ -620,8 +609,8 @@ class dynaBunch(object):
 
     def save(self, outfile):"""
 #@nonl
-#@-node:ekr.20050329163946.111:dynaBunch
-#@+node:ekr.20050329163946.112:names and colors
+#@-node:ekr.20050421093045.119:dynaBunch
+#@+node:ekr.20050421093045.120:names and colors
 #Leo log Tk names & HTML names and colors
 dycolors = dynaBunch( 
     gAqua = 'aquamarine3',
@@ -660,32 +649,8 @@ dycolors = dynaBunch(
     hYellow = '#FFFF00',
     )
 #print dycolors.gYellow
-#@-node:ekr.20050329163946.112:names and colors
-#@+node:ekr.20050329163946.113:quiet warnings
-
-#quiet warnings from pychecker and tim1 about regex
-#this should be part of init rather than module level.
-
-import warnings
-
-warnings.filterwarnings("ignore",
-         r'the regex module is deprecated; please use the re module$',
-         DeprecationWarning, r'(<string>|%s)$' % __name__)
-warnings.filterwarnings("ignore",
-         r' the regsub module is deprecated; please use re.sub\(\).$.$',
-         DeprecationWarning, r'(<string>|%s)$' % __name__)
-
-if sys.version_info >= (2, 3): #py2.2 no simple
-    warnings.simplefilter("ignore", DeprecationWarning, append=0)
-
-'''C:\c\leo\leo4CVS233\plugins\dyna_menu.py:774: DeprecationWarning: the regex module is deprecated; please use the re module
-  import regex
-C:\C\PY\PYTHON233\lib\regsub.py:15: DeprecationWarning: the regsub module is dep
-recated; please use re.sub()
-  DeprecationWarning)'''
-
-#@-node:ekr.20050329163946.113:quiet warnings
-#@+node:ekr.20050329163946.114:dynaerrout
+#@-node:ekr.20050421093045.120:names and colors
+#@+node:ekr.20050421093045.121:dynaerrout
 #maybe can turn on full exception reporting 
 #rather than rolling my own
 # es_event_exception (eventName,full=false):
@@ -716,9 +681,8 @@ def dynaerrout(err, msg):
         #c.goToLineNumber(n=int(newSel))
         g.es(line, color= dycolors.gError)
 #@nonl
-#@-node:ekr.20050329163946.114:dynaerrout
-#@+node:ekr.20050329163946.115:dynaerrline
-
+#@-node:ekr.20050421093045.121:dynaerrout
+#@+node:ekr.20050421093045.122:dynaerrline
 def dynaerrline():
     """for debuggin, return just the error string on one line
     call in an except after an error.
@@ -726,7 +690,7 @@ def dynaerrline():
     >>> try:
     ...    a = 1 / 0
     ... except Exception:
-    ...    print dynaerrreturn()[:49]
+    ...    print dynaerrline()[:49]
     ZeroDivisionError integer division or modulo by z
     """
     import sys
@@ -740,11 +704,9 @@ def dynaerrline():
 
     return '%s %s %s '%(exc_type_name, value, el)
 
-#@-node:ekr.20050329163946.115:dynaerrline
-#@+node:ekr.20050329163946.116:getsubnodes
-
+#@-node:ekr.20050421093045.122:dynaerrline
+#@+node:ekr.20050421093045.123:getsubnodes
 #code to operate dynamenu, no user code
-
 
 def dyna_getsubnodes(c, globs= {}):
     """ changed API slightly, macros now need a common first 5 chars
@@ -761,6 +723,7 @@ def dyna_getsubnodes(c, globs= {}):
     glitch, they arent added in the order defined in macros node.
     sorting
     glitch when in dynacommon globals isnt the callers globals!
+    fails from test.leo
     """
     lst = []
 
@@ -783,8 +746,8 @@ def dyna_getsubnodes(c, globs= {}):
     #es('dynamenu macros %s'%(lst,) )
     return lst
 #@nonl
-#@-node:ekr.20050329163946.116:getsubnodes
-#@+node:ekr.20050329163946.117:captureStd
+#@-node:ekr.20050421093045.123:getsubnodes
+#@+node:ekr.20050421093045.124:captureStd
 class captureStd(object):
     """the typical redirect stdout
     add stderr and stdin later
@@ -797,13 +760,14 @@ class captureStd(object):
     another way
     sys.displayhook = mydisplayhook
 
-    >>> def mydisplayhook(a):
+    >> def mydisplayhook(a):
     ...     if a is not None:
     ...             sys.stdout.write("%r\n" % (a,))
     ...
     
     only used in evaluator, why not in du_test
     or if it doens't work there why does it work in evaluator w/calc_util?
+    maybe can replace now?
         """
     def captureStdout(self):
         sys.stdout = StringIO.StringIO()
@@ -812,10 +776,9 @@ class captureStd(object):
         captured = sys.stdout.getvalue()
         sys.stdout = sys.__stdout__
         return captured
-#@-node:ekr.20050329163946.117:captureStd
-#@+node:ekr.20050329163946.118:runcmd
-
-def runcmd(cmdlst):
+#@-node:ekr.20050421093045.124:captureStd
+#@+node:ekr.20050421093045.125:runcmd
+def runcmd(cmdlst, to_stdin= None):
     """cmdlst is either a list or string for subprocess
     think is string for popen
     
@@ -828,7 +791,7 @@ def runcmd(cmdlst):
     use subprocess if available and not on pythonw till that bug fixed
     see forums for usage and download from effbot.org if <py2.4
     
-    py2.2 think prints 1 as True
+    py2.2 think prints 1 as True and so fails
     >>> 'pythonw.exe'[-5:].upper() == 'W.EXE'
     True
     
@@ -836,100 +799,154 @@ def runcmd(cmdlst):
     or wherever you set the defaults
     if Leo or temacs core gets an executeFile we will use that if it works
     shell=True still fails for me on win9x so fork still up in the air.
-    and so a flash if no console
+    and so a flash if no console, latest test seem to deconfirm this.
+    
     and a title change on the console if already open to the last command
     seems to be a subprocess bug
+    
+    adding stdin driver to feed input to command and options
+    leave it up to caller to use the -- or no filename conventions
+
+    shell metacharacters?
+    
+    startupinfo
+    ASPN/Cookbook/Python/Recipe/409002
+
     """
     import os, sys
 
-    try: import subprocess
+    try: 
+        if g.app.dynaMvar.bugimport: raise ImportError
+        import subprocess
     except ImportError:
         #not going to concider name collision if you have an older
         #python with one of the previous incarnations of subprocess
         subprocess = None
 
+    outstd = outerr = ''
     #think only windows pythonw fails stdout/stderr duplication
-    if sys.executable[-5:].upper() == 'W.EXE': subprocess = None
+    #if sys.executable[-5:].upper() == 'W.EXE': subprocess = None
 
-    if not subprocess:    
+    if not subprocess:
+        #should try to get return code its <<128 or something on stderr
+        if to_stdin:
+            #just haven't programmed it in yet, but get subprocess anyway!
+            g.es('stdin redirection not avaiable \nw/o subprocess module')
+            return outstd, outerr
+
+        if isinstance(cmdlst, list):
+            cmdlst = ' '.join(cmdlst)
+
         child_stdin, child_stdout, child_stderr = os.popen3(cmdlst)
+        #better to_stdin.replace('\n', os.lineterm())
+        #do I have to child_stdin.write(to_stdin) & wait?
         outstd = child_stdout.read()
         outerr = child_stderr.read()
     else:
-        ps = subprocess.Popen(cmdlst, #cwd=fdir,
-            universal_newlines=True,
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE
-            )
-    
-        (outstd, outerr) = ps.communicate()
-        ret = ps.wait()  #need to handle return code if not subprocess
-
-    
+        #@        << subproc >>
+        #@+node:ekr.20050421093045.126:<< subproc >>
+        try:
+            if to_stdin: #could hang w/bad or insufficent data
+                if g.app.dynaMvar.verbosity: g.es('piping to stdin')  #, BLINK
+        
+            startupinfo = subprocess.STARTUPINFO()
+        
+            #depends on if pywin32 or _subprocess?
+            if hasattr(subprocess, 'STARTF_USESHOWWINDOW'):
+                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                
+            ps = subprocess.Popen(cmdlst, #cwd= fdir,
+                universal_newlines= True,
+                stdin= subprocess.PIPE,
+                stdout= subprocess.PIPE, stderr= subprocess.PIPE
+                #,close_fds=True
+                , startupinfo=startupinfo
+                )
+        
+            (outstd, outerr) = ps.communicate(to_stdin)
+            ret = ps.wait()
+        
+        except ValueError:  #if Popen is called with invalid arguments. 
+            g.es('invalid args?\n', cmdlst)
+        
+        except Exception:
+            g.es_exception(full= True)
+            g.es(' args?\n', cmdlst)
+        #@nonl
+        #@-node:ekr.20050421093045.126:<< subproc >>
+        #@nl
+    #will probably add ret and force=0 if not subprocess
     return outstd, outerr
-    
 #@nonl
-#@-node:ekr.20050329163946.118:runcmd
-#@+node:ekr.20050329163946.119:dynadoc
-
-def dynadoc(c, sub= 'all' , globs= {}):
+#@-node:ekr.20050421093045.125:runcmd
+#@+node:ekr.20050421093045.127:dynadoc
+def dynadoc(c, sub= 'all', globs= {}):
     """read dynadeflst and createdoc for them
         was previously print, but that doesnt work well in plugin
-        add a simple wrap, which isnt appending dash in midword like expected
+        add a simple wrap, which isn't appending dash in midword like expected
         could set wrap on for the log. then off again, 
         would probably unwrap  though
 
     combined the call to all and removed else. works because
     a list is made from sub, will preclude docing a macro named all
 
-    using now \python233\lib\textwrap.py, if available
+    using now \python23\lib\textwrap.py, if available
     too many amonalies in fordoc too little time.
-    made a wraper macro, dont really want another depency
+    made a wraper macro, don't really want another depency
     would have to extract the relevant code and have the 
     macro call it too. ok a little code duplication for now
     
     expand to show macro's internal __dict__
     getting doc for fliper for ex, might be nice to know
-    add quit sentinal to docs
-    
+    add quit sentinal to docs to limit display
+    use Leo g.wrap and in dynawrapper or call dynawrapper
+    add some reST formatting to docs
+    could add some slight blurb on each ini option value.
+    a few in dynacommon like runcmd could be doced
   """
     import sys
     try:
         import textwrap as tw
     except ImportError:
         tw = None  #or overwrite formdoc
-        g.es('textwrap is going to produce better resiults.')
+        g.es('textwrap is going to produce better results.')
         g.es('get it from the python cvs archive\n')
         
-
     #from pydoc import resolve, describe, inspect, text, plain
-
-    def formdoc(doc):
-        """create a rough wraper to 40 charlines"""
+    #@    << formdoc >>
+    #@+node:ekr.20050421093045.128:<< formdoc >>
+    def formdoc(doc, to= 50):
+        r"""    
+        >>> formdoc('create a rough wraper to 40 charlines', 14)
+        '\n  create a rough\n    wraper to 40 charlines\n'
+    
+        """
         sx = doc.expandtabs(2).splitlines()
-        sl = ['\n']
+        sl = []
         for i, x in enumerate(sx):
-            if i > 6: break  #beyond that is implimentation details
-
-            if len(x) < 42: sl.append('  ' + x.lstrip()); continue
-
-            if len(x) > 50: ax = 50
+            if len(x) < (to-8): sl.append('  ' + x.lstrip()); continue
+    
+            if len(x) > to: ax = to
             else: ax = len(x) - 1
-
+    
             dash = '-'
-            while ax > 35:
+            while ax > (to-8):
                 if x[ax] in ' .,(){}[]?\n': dash = ''; break
                 ax -= 1
             #if ax w/in few char of len(x) may as well be one line
             #check it isnt eating a char at ends
             sl.append('  ' + x.lstrip()[:ax] + dash)
             sl.append('   ' + x.lstrip()[ax:])
-
-        sl.append('\n')
+    
         return '\n'.join(sl)
-
+    #@nonl
+    #@-node:ekr.20050421093045.128:<< formdoc >>
+    #@nl
     lst = [sub ] 
     if sub == 'all':
         lst = g.app.dynaMvar.dynadeflst
+        lst += [x for x in globs if x.startswith('cmd_')]
+        lst.reverse()
 
     #g.es(g.__dict__.keys()) {}
     #g.es(g.app.__dict__.keys()) Leo ivars
@@ -944,19 +961,19 @@ def dynadoc(c, sub= 'all' , globs= {}):
             g.es('cant find', x)
             continue
         
-        coln = 520
-
         #if no doc problems
         #try to get len of unsized object or unscriptable object
         #hasattr(f, '__doc__') always true for a function
+        elip = ''
         if f.__doc__:
-            #add a doc[:find('~END') so not included extransious stuff
+
+            coln = f.__doc__.find('~EOT') 
+            if coln == -1: coln = 520
+
             doc = f.__doc__[:coln]
             if len(f.__doc__) > coln: elip = ' ...'
-            else: elip = ''
         else:
             doc = ' no additional info '
-            elip = ''
 
         if not tw:
             st = formdoc(doc)
@@ -972,19 +989,35 @@ def dynadoc(c, sub= 'all' , globs= {}):
 
             st = t.fill(doc)
 
-
         g.es('\n' + x + '.__doc__\n' + st + elip)
-        #g.es('\n' + str(f.__dict__))  #{}
 
     #obj, name = resolve(x, 0)
     #desc = describe(obj)
     #g.es(text.docroutine(f, x))
     
 #@nonl
-#@-node:ekr.20050329163946.119:dynadoc
-#@-node:ekr.20050329163946.108:dynastuff
-#@+node:ekr.20050329163946.120:dynaput
-
+#@-node:ekr.20050421093045.127:dynadoc
+#@+node:ekr.20050421093045.129:quiet warnings
+def quietwarnings():
+    '''quiet warnings from pychecker and tim1 about regex
+    this should be part of init rather than module level'''
+    
+    import warnings
+    
+    warnings.filterwarnings("ignore",
+             r'the regex module is deprecated; please use the re module$',
+             DeprecationWarning, r'(<string>|%s)$' % __name__)
+    warnings.filterwarnings("ignore",
+             r' the regsub module is deprecated; please use re.sub\(\).$.$',
+             DeprecationWarning, r'(<string>|%s)$' % __name__)
+    
+    if sys.version_info >= (2, 3): #py2.2 no simple
+        warnings.simplefilter("ignore", DeprecationWarning, append=0)
+    
+#@nonl
+#@-node:ekr.20050421093045.129:quiet warnings
+#@-node:ekr.20050421093045.115:dynastuff
+#@+node:ekr.20050421093045.130:dynaput
 def dynaput(c, slst):
     """return the text selection or put it if slst is not None
     assumes slst is a list to be joined and print/paste as toggled
@@ -1072,106 +1105,13 @@ def dynaput(c, slst):
                          cg.dynapasteFlag.get() )
 
     else: g.es("no text selected", color= 'orangered' )
-#@-node:ekr.20050329163946.120:dynaput
-#@+node:ekr.20050329163946.121:dynaplayer
-
-def dynaplayer(c, splst):
-    """playback commands from a list into the selected or body text
-    inventing a new little language isnt a trivial endevor
-    should do some research to find out if I can steal one
-    didnt takevery long to get initial results
-    need to preparse and push repeat n, and parse n for other commands
-    preparsing is dificult, untill you act you dont know if it will raise an error
-    this first cut wont allow repeat and n as easily
-    repete means startover to the repete -= 1. 
-    what if there is another repete, the previous repete needs to be reset
-
-    need to set insert point so repete works, independant of paste mode?
-    tricky, first time thru insert can be outside of selection
-    and commands can try to insert outside of selection
-    undo doesn't change insertpoint
-    I can think of a better way to do this now, have a commands class with
-    its own parser up(), dn() etc rather than inline switch if/else style.
-    would be nice to operate on the text widget directly rather than on the string
-
-    """
-    if not splst: return
-
-    def g_row(ip): return int(ip)
-    def g_col(ip): return int(ip - g_row(ip))
-
-    nothingselected = False
-    data = dynaput(c, [])
-    g.es("selected ")
-    if not data:
-        nothingselected = True
-        g.es("...skip, dump the body")
-        v = c.currentVnode() # may chg in 4.2
-        data = v.bodyString()
-
-    ip = float(c.frame.body.getInsertionPoint())
-    #this apparently does the right thing if nothing selected 
-    Tst,  Ten = c.frame.body.getTextSelection()
-
-    #on selection insert is at end or start
-    #if repete play you want the insert if its midselection somewhere
-    #print 'Tst%r <= ip%r <= Ten%r'%(Tst, ip, Ten)
-
-    if c.frame.body.hasTextSelection():
-        if float(Tst) <= ip < float(Ten):
-            pass
-        else: ip = float(Tst)
-    
-
-    sx = data.splitlines(True)
-    sx[0:0] = ' ' #make it base1
-    for ix in xrange(len(sx)):  #sx[:]
-        #@        << splst >>
-        #@+node:ekr.20050329163946.122:<< splst >>
-        for x in splst:
-            if x.startswith('%%C,'): #command
-                comd = x[4:].lower()
-                if comd == '[down]':
-                    ip += 1.0
-        
-                elif comd == '[up]':
-                    ip -= 1.0
-        
-                elif comd == '[home]':
-                    ip = float("%d.%d"%(g_row(ip), 0 ))
-        
-                elif comd == '[end]':
-                    ip = float("%d.%d"%(g_row(ip), len(sx[g_row(ip)]) ))
-        
-            else: #must be an insert something
-                try:
-                    b = sx[g_row(ip)][:g_col(ip)]
-                    m = x
-                    a = sx[g_row(ip)][g_col(ip):]
-        
-                    sx[g_row(ip)] = '%s%s%s'%(b,m,a)
-                    ip = "%d.%d"%(g_row(ip), len(x) + g_col(ip) )
-                    ip = float(ip)
-                    c.frame.body.setInsertionPoint(ip)
-                except IndexError, err:
-                    g.es('command outside selection', err)
-        
-            #g.es('ip=%r, x=%r'%(ip, x))
-        #@nonl
-        #@-node:ekr.20050329163946.122:<< splst >>
-        #@nl
-
-    dynaput(c, sx[1:])
-    c.frame.body.setInsertionPoint(ip)
-    c.frame.body.see('insert')
-#@nonl
-#@-node:ekr.20050329163946.121:dynaplayer
-#@+node:ekr.20050329163946.123:python -O
+#@-node:ekr.20050421093045.130:dynaput
+#@+node:ekr.20050421093045.131:python -O
 #make part of a larger basic python sanity check
 import leoGlobals as g
 
-#indented def's priblem in doctest < py2.4b2?
-def x():
+#indented def's problem in doctest < py2.4b2?
+def xt():
     """__ """
     pass
 
@@ -1189,14 +1129,14 @@ try:
     #print dynaplay.__doc__  
     #when printed is not None of -O, of not printed is None if -O!
     #x()
-    print x.__doc__, #will this fail on pyw?
+    print xt.__doc__, #will this fail on pyw?
 
     #doc apparently is always defined, even if empty? just None if -OO
     #further caviet, is None untill run regardless if -O due to late binding
     #even if run is None, has to be specifically accessed! weird...
     #if printed is totally unreliable the difference between -O and -OO
     #back to the drawing board.
-    if x.__doc__ is None:
+    if xt.__doc__ is None:
         pyO = 'OO'
         g.es('YOU MAY HAVE RUN python -OO \ndoctest Will fail, @test ok',
             color= 'tomato')
@@ -1205,18 +1145,17 @@ try:
         g.es('YOU HAVE RUN python -O',
             color= 'tomato')
 
-
 except AssertionError: 
     pyO = 'I'  #used in du_test
     pass
-del x
+del xt
 #@nonl
-#@-node:ekr.20050329163946.123:python -O
+#@-node:ekr.20050421093045.131:python -O
 #@-others
 
 #depandance on sanitize_ and leoID
 #@<< set filenames >>
-#@+node:ekr.20050329163946.124:<< set filenames >>
+#@+node:ekr.20050421093045.132:<< set filenames >>
 #note, these changes are at the time the button or menu is created
 #to effect these changes you have to 
 #write the plugin and start a new python and leo. maybe reload
@@ -1230,7 +1169,7 @@ del x
 pypath = g.os_path_split(sys.executable)[0]
 
 #py =  pypath + '/python.exe -tOO '     #_space_
-py =  g.os_path_join(pypath, 'python.exe') + ' -tOO '
+py =  g.os_path_join(pypath, 'python') + ' -tO '
 
 #leosrc = r'c:\c\leo\leo4CVS233\src'
 leosrc = g.app.loadDir
@@ -1253,9 +1192,12 @@ pycheck2 = pypath + '/Lib/site-packages/pychecker2/main.py '
 #DeprecationWarning: the regsub module is deprecated; please use re.sub()
 # was caused by tim1crunch, I supress the warning now.
 
-#set to 1 to call pylint after pychecker or 0 for just pychecker
-dopylint = 1  #this call in makatemp is too complicated to code in here
-doreindent = 0 #in makatemp to forgo reindent step
+#pylint is its own macro now, could delete if you don't run it
+#set to 1 to call pylint after pychecker ub makatemp
+dopylint = 0  #this call too complicated to code in here
+
+
+doreindent = 0 #to forgo reindent step in pylint & makatemp macro
 
 
 #@+at
@@ -1316,10 +1258,10 @@ if sys.platform[:3] == 'win':
 #leoID doesnt exist when dyna imports common and shouldent import * either
 
 #should calculate from @lineending,  does python handle conversion?
-EOLN = '\n'  #have to try and use this everywhere
-#@-node:ekr.20050329163946.124:<< set filenames >>
+EOLN = '\n'  #have to try and use this everywhere, os.linesep()?
+#@-node:ekr.20050421093045.132:<< set filenames >>
 #@nl
 #
 #@nonl
-#@-node:ekr.20050329163946.97:@thin dynacommon.py
+#@-node:ekr.20050421093045.103:@thin dynacommon.py
 #@-leo

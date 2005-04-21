@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4438" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4599" clone_windows="0"/>
 <globals body_outline_ratio="0.494983277592">
 	<global_window_position top="30" left="232" height="897" width="983"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -51,7 +51,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="ekr.20050306071629.4"><vh>init</vh></v>
 <v t="ekr.20050306071540"><vh>onStart2</vh></v>
 </v>
-<v t="ekr.20050303051035.2" a="E"><vh>Template for Tk plugin with per-commander controller class</vh>
+<v t="ekr.20050303051035.2"><vh>Template for Tk plugin with per-commander controller class</vh>
 <v t="ekr.20050303051035.3"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
 <v t="ekr.20050303051035.4"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050303051035.5"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -135,7 +135,8 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="ekr.20050328092641.1"><vh>db</vh></v>
 <v t="ekr.20050328092641.2" tnodeList="ekr.20050328092641.2"><vh>@nosent Library.ini</vh></v>
 <v t="ekr.20050328092641.3"><vh>@string Library_lib1 = default/libraryS.dbm</vh></v>
-<v t="ekr.20050328092641.4"><vh>@thin Library.py</vh></v>
+<v t="ekr.20050328092641.4" a="E"
+expanded="ekr.20050328092641.28,ekr.20050328092641.29,"><vh>@thin Library.py</vh></v>
 </v>
 <v t="edream.110203113231.722"><vh>mod_autosave</vh>
 <v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
@@ -168,16 +169,16 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
 </v>
 </v>
-<v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
-<v t="ekr.20050329163946" a="E"><vh> dyna plugin 139</vh>
-<v t="ekr.20050329163946.1"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
-<v t="ekr.20050329163946.2"
-expanded="ekr.20050329163946.91,"><vh>@thin dyna_menu.py</vh></v>
-<v t="ekr.20050329163946.97"
-expanded="ekr.20050329163946.98,ekr.20050329163946.100,ekr.20050329163946.121,"><vh>@thin dynacommon.py</vh></v>
-<v t="ekr.20050329163946.125" tnodeList="ekr.20050329163946.125"><vh>@nosent dyna_menu.ini</vh></v>
-<v t="ekr.20050329163946.126"
-expanded="ekr.20050329163946.129,"><vh>@thin dyna.txt</vh></v>
+<v t="ekr.20041030092101" a="E"><vh>Dyna plugins by e</vh>
+<v t="ekr.20050421093045"><vh> dyna plugin 139i</vh>
+<v t="ekr.20050421093045.1" a="E"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.2"
+expanded="ekr.20050421093045.6,ekr.20050421093045.22,ekr.20050421093045.48,ekr.20050421093045.52,ekr.20050421093045.55,ekr.20050421093045.68,ekr.20050421093045.79,ekr.20050421093045.84,ekr.20050421093045.91,ekr.20050421093045.93,ekr.20050421093045.98,"><vh>@thin dyna_menu.py</vh></v>
+<v t="ekr.20050421093045.103"
+expanded="ekr.20050421093045.125,ekr.20050421093045.127,"><vh>@thin dynacommon.py</vh></v>
+<v t="ekr.20050421093045.133" tnodeList="ekr.20050421093045.133"><vh>@nosent dyna_menu.ini</vh></v>
+<v t="ekr.20050421093045.134"
+expanded="ekr.20050421093045.137,"><vh>@thin dyna.txt</vh></v>
 </v>
 </v>
 <v t="edream.110203113231.872"><vh>Enhanced nodes...</vh>
@@ -741,17 +742,16 @@ marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 <v t="ekr.20050402080206"><vh>LeoN</vh>
 <v t="ekr.20050402080206.1"><vh>Readme file.</vh></v>
 <v t="ekr.20050402080206.2"><vh>Overview</vh>
-<v t="ekr.20050402080206.3" a="E"><vh>&lt;&lt; Step four, Realtime interaction &gt;&gt;</vh>
+<v t="ekr.20050402080206.3"><vh>&lt;&lt; Step four, Realtime interaction &gt;&gt;</vh>
 <v t="ekr.20050402080206.4"><vh>Design notes</vh>
 <v t="ekr.20050402080206.5"><vh>LeoN devellopment status III</vh></v>
 <v t="ekr.20050402080206.6"><vh>LeoN devellopment status IV</vh></v>
 </v>
-<v t="ekr.20050402080206.7" a="E"><vh>Notes</vh></v>
+<v t="ekr.20050402080206.7"><vh>Notes</vh></v>
 </v>
 </v>
-<v t="ekr.20050402080206.8" a="E"
-marks="ekr.20050402080206.34,ekr.20050402080206.38,"
-expanded="ekr.20050402080206.22,ekr.20050402080206.30,"><vh>@thin LeoN.py</vh></v>
+<v t="ekr.20050402080206.8"
+marks="ekr.20050402080206.34,ekr.20050402080206.38,"><vh>@thin LeoN.py</vh></v>
 </v>
 <v t="EKR.20040517080555"><vh>Menus &amp; translations</vh>
 <v t="ekr.20041019072632"><vh>Chinese:  Must use @file due to problems with cvs</vh>
@@ -819,7 +819,7 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 <v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
 <v t="mork.20041030164547"><vh>@thin temacs.py</vh></v>
 </v>
-<v t="ekr.20050306081349"><vh>Text formatting</vh>
+<v t="ekr.20050306081349" a="E"><vh>Text formatting</vh>
 <v t="edream.111803100242"><vh>@thin rst.py</vh></v>
 <v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
 <v t="ekr.20040331071919"><vh>Leo to AsciiDoc</vh>
@@ -893,10 +893,10 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 </v>
 </v>
-<v t="ekr.20040408161258"><vh>rst2 plugin</vh>
-<v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
+<v t="ekr.20040408161258" a="E"><vh>rst2 plugin</vh>
+<v t="ekr.20040408192158" a="E"><vh>Documentation for the rST plugin using rst</vh>
 <v t="ekr.20040408192158.1"><vh>@rst ../doc/rstplugin.html</vh>
-<v t="ekr.20040408192158.2"><vh>Overview</vh>
+<v t="ekr.20040408192158.2" a="E"><vh>Overview</vh>
 <v t="ekr.20040408192158.3"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040408192158.4"><vh>Formatting</vh>
@@ -913,14 +913,12 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 </v>
 </v>
-<v t="ekr.20040331071319"
-expanded="ekr.20040331071319.4,bwmulder.20050319191929.1,"><vh>@thin rst2.py</vh></v>
+<v t="ekr.20040331071319" a="E"><vh>@thin rst2.py</vh></v>
 </v>
 <v t="ekr.20050331061925"><vh>golf prototype</vh>
-<v t="ekr.20050331081136" a="E"><vh>Design notes</vh></v>
+<v t="ekr.20050331081136"><vh>Design notes</vh></v>
 <v t="ekr.20050331100205"><vh>To do</vh></v>
-<v t="ekr.20050331061925.2" a="E"
-expanded="ekr.20050331064504,"><vh>@thin golf.py</vh></v>
+<v t="ekr.20050331061925.2"><vh>@thin golf.py</vh></v>
 </v>
 </v>
 </v>
@@ -9617,111 +9615,6 @@ http://hardware.slashdot.org/article.pl?shttp://hardware.slashdot.org/article.pl
 Memorize writes "A company called Daystartech has released a new type of photovoltaic cell which, unlike almost all the cells currently in use, does not silicon. This is based on a thin titanium film. Given the current shortage of solar-grade silicon, and all-time high oil prices, maybe titanium solar panels are here at the right time. The questions are, will they release it as a consumer solar product, and what will be the price per kilowatt hour?"
 
 http://science.slashdot.org/article.pl?shttp://science.slashdot.org/article.pl?sid=05/03/28/2320211&amp;from=rss=05/03/28/2320211&amp;from=rss</t>
-<t tx="ekr.20050329163946">
-@
-several plugins of the dyna variety and support files
-newer than the version included in Leo4.3 alpha 4, March 15, 2005
-exS all but retired, newer dynaclick not ready for distribution.
-look in version history for a few minor changes to bring
-dyna_menu up to Leo4.3 code. and some cosmetic changes
-for htmlize and du_test and their config and a few option flippers.
-
-executeScript on this node to insert your plugin path
-if it looks ok remove the #comment
-@c
-
-&lt;&lt; insertAplug &gt;&gt;
-insertAplug()
-
-@language python
-@color
-@tabwidth -4
-</t>
-<t tx="ekr.20050329163946.1">def insertAplug(wch= 'i'): #i/r
-    """use to insertAt 1.0 #@path plugindir
-   
-    """
-    import leoGlobals as g
-    import os, sys
-
-
-    k = g.os_path_split(g.app.loadDir)[0]
-    #this should fix the slashes and lower cases' it on win9x
-    path = g.os_path_normpath(g.os_path_abspath(g.os_path_join(k, "plugins")))
-
-    if not g.os_path_isdir(path):
-        print 'give up', path; raise NameError
-
-    if 'i' in wch:
-        c = g.top()
-        p = c.currentPosition()
-        Tx = c.frame.body
-        Tx.setInsertionPoint(1.0)
-        Tx.insertAtInsertPoint('#@path %s\n'%(path,))
-        Tx.onBodyWillChange(p, "Typing")  
-</t>
-<t tx="ekr.20050329163946.125">@language elisp
-;ini may be shortlived in favor of @settings when thats feasible
-;leave nosent so it isn't updated on leo open and all comments lost
-; but if you change something here, it will overwrite any previous ini on disk.
-;
-;current properties ini editor will not have enough room for all these.
-;pick only about a dozzen of your favorites more if you have more screen size
-; True==1 False==0 just like the old days works too, case insensitive
-;case sensitive on section names, insensitive on item names
-;untested with spaces or Unicode in filenames please report any problem. 
-
-
-[main]
-verbosity=0
-;verbosity for du_test and @test
-;tempfile used in makatemp and tim1crunch, not active yet, edit dynacommon
-;tmpfile = site-packages
-
-;no source print after checks
-justPyChecker=1
-
-[htmlize]
-;which external colorizer for @language other than python
-;leave blank for none or comment out
-;hiliter=silvercity
-;hiliter=source-highlight
-hiliter=
-
-;codefold = False
-stripcomments = False
-stripsentinals = True
-stripnodesents = False
-stripdirectives = False
-noNUMBER = False
-noOP = False
-noNAME = True
-
-;filename = c:\temp\htmlize.html
-timestring = default
-
-;use leodefault if Leo has one or default for whats hardwired in dyna_menu
-;non existant or commented out values use the default in dyna_menu
-
-;have to invent a new node, a clone with languageformatconversion
-;hate duplicating here the defaults hardwired in htmlize, but anyways
-;colors
-;token_NUMBER  =  #483D8B  ;black/darkslateblue
-;token_OP      =  #000080  ;black/navy
-;token_STRING  =  #00AA00  ;green 00cc66
-;token_COMMENT =  #DD0000  ;red cc0033
-;token_NAME     = #4B0082  ;black/indigo
-;token_ERRORTOKEN= #FF8080  ;redred bare null does it
-;token_KEYWORD    =  #0066ff  ;blue
-;token_TEXT       =  #000000  ;black /is text fg color too
-;token_LeoDir     =  #228B22  ;directive, forest comment
-token_LeoSen     =  #BC8F8F  ;sentinal, tan fade comment
-token_bg         =  #FFFAFA  ;snow
-
-; comments can be after values but not spaces or commas?
-;comments can be between values?
-;configparser needs a complete testsuite to answer these questions
-;maybe there is one already?</t>
 <t tx="ekr.20050331061925"></t>
 <t tx="ekr.20050331081136">@killcolor
 
@@ -9928,6 +9821,118 @@ Todo
 @color
 @language python
 
+</t>
+<t tx="ekr.20050421093045">@
+several plugins of the dyna variety and support files
+newer than the version included in Leo4.3 alpha 4, March 15, 2005
+exS all but retired, newer dynaclick not ready for distribution.
+look in version history for a few minor changes to bring
+dyna_menu up to Leo4.3 code. and some cosmetic changes
+for htmlize and du_test and their config and a few option flippers.
+
+had to move a few macros to get under my host single filesize limit.
+look them up in older versions of dyna menu. pychecker2, leoglobals, etc.
+
+executeScript on this node to insert your plugin path
+if it looks ok remove the #comment
+@c
+
+&lt;&lt; insertAplug &gt;&gt;
+insertAplug()
+
+@language python
+@color
+@tabwidth -4
+</t>
+<t tx="ekr.20050421093045.1">def insertAplug(wch= 'i'): #i/r
+    """use to insertAt 1.0 #@path plugindir
+    """
+    import leoGlobals as g
+    import os, sys
+
+    k = g.os_path_split(g.app.loadDir)[0]
+    #this should fix the slashes and lower cases' it on win9x
+    path = g.os_path_normpath(g.os_path_abspath(g.os_path_join(k, "plugins")))
+
+    if not g.os_path_isdir(path):
+        print 'give up', path; raise NameError
+
+    if 'i' in wch:
+        c = g.top()
+        p = c.currentPosition()
+        Tx = c.frame.body
+        Tx.setInsertionPoint(1.0)
+        Tx.insertAtInsertPoint('#@path %s\n'%(path,))
+        Tx.onBodyWillChange(p, "Typing")  
+</t>
+<t tx="ekr.20050421093045.133">;ini may be shortlived in favor of @settings when thats feasible
+;leave nosent so it isn't updated on leo open and all comments lost
+; but if you change something here, it will overwrite any previous ini on disk.
+;
+;current properties ini editor will not have enough room for all these.
+;pick only about a dozzen of your favorites more if you have more screen size
+; True==1 False==0 just like the old days works too, case insensitive
+;case sensitive on section names, insensitive on item names
+;untested with spaces or Unicode in filenames please report any problem. 
+
+
+[main]
+verbosity=0
+;verbosity for du_test and @test
+;tempfile used in makatemp and tim1crunch, not active yet, edit dynacommon
+;tmpfile = site-packages
+
+;no source print after checks
+justPyChecker=1
+
+bugImport=0
+tabstrip=4
+
+
+[htmlize]
+;which external colorizer for @language other than python
+;leave blank for none or comment out
+;hilighter=silvercity
+hilighter=source-highlight
+;hilighter=
+
+;codefold = False
+stripcomments = False
+stripsentinals = True
+stripnodesents = False
+stripdirectives = False
+noNUMBER = False
+noOP = False
+noNAME = True
+
+;filename = c:\temp\htmlize.html
+timestring = default
+
+;use leodefault if Leo has one or default for whats hardwired in dyna_menu
+;non existant or commented out values use the default in dyna_menu
+
+;have to invent a new node, a clone with languageformatconversion
+;hate duplicating here the defaults hardwired in htmlize, but anyways
+;colors
+;token_NUMBER  =  #483D8B  ;black/darkslateblue
+;token_OP      =  #000080  ;black/navy
+;token_STRING  =  #00AA00  ;green 00cc66
+;token_COMMENT =  #DD0000  ;red cc0033
+;token_NAME     = #4B0082  ;black/indigo
+;token_ERRORTOKEN= #FF8080  ;redred bare null does it
+;token_KEYWORD    =  #0066ff  ;blue
+;token_TEXT       =  #000000  ;black /is text fg color too
+;token_LeoDir     =  #228B22  ;directive, forest comment
+token_LeoSen     =  #BC8F8F  ;sentinal, tan fade comment
+token_bg         =  #FFFAFA  ;snow
+
+; comments can be after values but not spaces or commas?
+;comments can be between values?
+;configparser needs a complete testsuite to answer these questions
+;maybe there is one already?
+
+
+@language elisp
 </t>
 </tnodes>
 </leo_file>
