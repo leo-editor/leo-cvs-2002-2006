@@ -608,7 +608,7 @@ class atFile:
         assert(n > 0)
         
         if at.importing:
-            return at.createImportedNode(at.root,at.c,headline)
+            return at.createImportedNode(at.root,headline)
     
         # Create any needed dummy children.
         dummies = n - parent.numberOfChildren() - 1
@@ -846,6 +846,8 @@ class atFile:
     def scanText3 (self,theFile,p,out,endSentinelKind,nextLine=None):
         
         """Scan a 3.x derived file recursively."""
+        
+        __pychecker__ = '--maxbranches=100 --maxlines=500'
     
         at = self
         lastLines = [] # The lines after @-leo
@@ -1371,7 +1373,7 @@ class atFile:
     
         """Find or create a new vnode whose parent is at.lastThinNode."""
     
-        at = self ; v = at.root.v ; c = at.c ; indices = g.app.nodeIndices
+        at = self ; c = at.c ; indices = g.app.nodeIndices
         last = at.lastThinNode ; lastIndex = last.t.fileIndex
         gnx = indices.scanGnx(gnxString,0)
         
@@ -1422,6 +1424,8 @@ class atFile:
         
         """Return the next tnode in at.root.t.tnodeList."""
         
+        __pychecker__ = '--no-argsused' # headline might be used for debugging.
+        
         # Note: tnodeLists are used _only_ when reading @file (not @thin) nodes.
         # tnodeLists compensate (a hack) for not having gnx's in derived files! 
     
@@ -1459,6 +1463,8 @@ class atFile:
     def scanText4 (self,theFile,fileName,p,verbose=False):
         
         """Scan a 4.x derived file non-recursively."""
+        
+        __pychecker__ = '--no-argsused' # fileName,verbose might be used for debugging.
     
         at = self
         #@    << init ivars for scanText4 >>
@@ -1707,7 +1713,7 @@ class atFile:
         at.tStack.append(at.t)
     
         if at.importing:
-            p = at.createImportedNode(at.root,at.c,headline)
+            p = at.createImportedNode(at.root,headline)
             at.t = p.v.t
         elif at.thinFile:
             at.thinNodeStack.append(at.lastThinNode)
@@ -1745,6 +1751,8 @@ class atFile:
         
         """Read an @-all sentinel."""
         
+        __pychecker__ = '--no-argsused' # s,i not used, but must be present.
+        
         at = self
         at.popSentinelStack(at.endAll)
     #@nonl
@@ -1753,6 +1761,8 @@ class atFile:
     def readEndAt (self,s,i):
         
         """Read an @-at sentinel."""
+        
+        __pychecker__ = '--no-argsused' # s,i not used, but must be present.
     
         at = self
         at.readLastDocLine("@")
@@ -1762,6 +1772,8 @@ class atFile:
     def readEndDoc (self,s,i):
         
         """Read an @-doc sentinel."""
+        
+        __pychecker__ = '--no-argsused' # s,i not used, but must be present.
     
         at = self
         at.readLastDocLine("@doc")
@@ -1773,6 +1785,8 @@ class atFile:
     def readEndLeo (self,s,i):
         
         """Read an @-leo sentinel."""
+        
+        __pychecker__ = '--no-argsused' # i not used, but must be present.
         
         at = self
     
@@ -1800,6 +1814,8 @@ class atFile:
     def readEndNode (self,s,i,middle=False):
         
         """Handle end-of-node processing for @-others and @-ref sentinels."""
+        
+        __pychecker__ = '--no-argsused' # i not used, but must be present.
     
         at = self ; c = at.c
         
@@ -1898,6 +1914,8 @@ class atFile:
         
         """Read an @-others sentinel."""
         
+        __pychecker__ = '--no-argsused' # s,i unused, but must be present.
+        
         at = self
         at.popSentinelStack(at.endOthers)
     #@nonl
@@ -1953,6 +1971,8 @@ class atFile:
     def  ignoreOldSentinel (self,s,i):
         
         """Ignore an 3.x sentinel."""
+        
+        __pychecker__ = '--no-argsused' # i unused, but must be present.
         
         g.es("Ignoring 3.x sentinel: " + s.strip(), color="blue")
     #@nonl
@@ -2392,7 +2412,7 @@ class atFile:
     #@nonl
     #@-node:ekr.20050301105854:copyAllTempBodyStringsToTnodes
     #@+node:ekr.20041005105605.119:createImportedNode
-    def createImportedNode (self,root,c,headline):
+    def createImportedNode (self,root,headline):
         
         at = self
     
@@ -2710,7 +2730,7 @@ class atFile:
             for p in root.self_and_subtree_iter():
                 #@    << Write p's node >>
                 #@+node:ekr.20041005105605.140:<< Write p's node >>
-                at.putOpenNodeSentinel(p,inAtOthers=True)
+                at.putOpenNodeSentinel(p)
                 
                 s = p.bodyString()
                 if s and len(s) > 0:
@@ -2721,7 +2741,7 @@ class atFile:
                 if s and s[-1] != '\n':
                     at.onl_sent() ; at.putSentinel("@nonl")
                 
-                at.putCloseNodeSentinel(p,inAtOthers=True)
+                at.putCloseNodeSentinel(p)
                 #@nonl
                 #@-node:ekr.20041005105605.140:<< Write p's node >>
                 #@nl
@@ -2777,7 +2797,7 @@ class atFile:
             at.outputFileName = "<string: %s>" % at.shortFileName
             at.outputFile = g.fileLikeObject()
         else:
-            at.openFileForWritingHelper(fileName,toString)
+            at.openFileForWritingHelper(fileName)
     
         if at.outputFile:
             root.clearOrphan()
@@ -2788,7 +2808,7 @@ class atFile:
         return at.outputFile is not None
     #@nonl
     #@+node:ekr.20041005105605.143:openFileForWritingHelper
-    def openFileForWritingHelper (self,fileName,toString):
+    def openFileForWritingHelper (self,fileName):
         
         at = self
     
@@ -2977,7 +2997,6 @@ class atFile:
         after = p.nodeAfterTree()
         while p and p != after: # Don't use iterator.
             if p.isAtAsisFileNode() or (p.isAnyAtFileNode() and not p.isAtIgnoreNode()):
-                missing = False ; valid = True
                 at.targetFileName = p.anyAtFileNodeName()
                 if at.targetFileName:
                     at.targetFileName = g.os_path_join(self.default_directory,at.targetFileName)
@@ -3082,8 +3101,7 @@ class atFile:
     
         """Do all writes except asis writes."""
         
-        at = self ; c = at.c
-    
+        at = self
         root.clearAllVisitedInTree() # Clear both vnode and tnode bits.
         root.clearVisitedInTree()
     
@@ -3163,9 +3181,9 @@ class atFile:
     #@-node:ekr.20041005105605.133:Writing (top level)
     #@+node:ekr.20041005105605.160:Writing 4.x
     #@+node:ekr.20041005105605.161:putBody
-    # oneNodeOnly is no longer used.
+    # oneNodeOnly is no longer used, but it might be used in the future?
     
-    def putBody(self,p,putCloseSentinel=True,oneNodeOnly=False):
+    def putBody(self,p,oneNodeOnly=False):
         
         """ Generate the body enclosed in sentinel lines."""
     
@@ -3276,7 +3294,7 @@ class atFile:
     #@nonl
     #@-node:ekr.20041005105605.166:putAtAllLine
     #@+node:ekr.20041005105605.167:putatAllBody
-    def putAtAllBody(self,p,putCloseSentinel=True):
+    def putAtAllBody(self,p):
         
         """ Generate the body enclosed in sentinel lines."""
     
@@ -3350,7 +3368,7 @@ class atFile:
         for child in p.children_iter():
             at.putAtAllChild(child)
     
-        at.putCloseNodeSentinel(p,inAtAll=True)
+        at.putCloseNodeSentinel(p)
     #@nonl
     #@-node:ekr.20041005105605.169:putAtAllChild
     #@-node:ekr.20041005105605.165:@all
@@ -3392,7 +3410,7 @@ class atFile:
         if clonedSibs > 1 and thisClonedSibIndex == 1:
             at.writeError("Cloned siblings are not valid in @thin trees")
     
-        at.putOpenNodeSentinel(p,inAtOthers=True)
+        at.putOpenNodeSentinel(p)
         at.putBody(p) 
         
         # Insert expansions of all children.
@@ -3400,7 +3418,7 @@ class atFile:
             if at.inAtOthers(child):
                 at.putAtOthersChild(child)
                 
-        at.putCloseNodeSentinel(p,inAtOthers=True)
+        at.putCloseNodeSentinel(p)
     #@nonl
     #@-node:ekr.20041005105605.172:putAtOthersChild
     #@+node:ekr.20041005105605.173:putAtOthersLine
@@ -3831,7 +3849,7 @@ class atFile:
     #@nonl
     #@-node:ekr.20041005105605.190:putLeadInSentinel 4.x
     #@+node:ekr.20041005105605.191:putCloseNodeSentinel 4.x
-    def putCloseNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
+    def putCloseNodeSentinel(self,p,middle=False):
         
         at = self
         
@@ -3865,7 +3883,7 @@ class atFile:
     #@nonl
     #@-node:ekr.20041005105605.192:putOpenLeoSentinel 4.x
     #@+node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
-    def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
+    def putOpenNodeSentinel(self,p,inAtAll=False,middle=False):
         
         """Write @+node sentinel for p."""
         
@@ -4418,6 +4436,7 @@ class atFile:
     def test_atFile_rename (self):
     
         __pychecker__ = '--no-reimport'
+    
         import os
         at = c.atFileCommands
     
@@ -4460,7 +4479,7 @@ class atFile:
             return False
     #@nonl
     #@+node:ekr.20050107090156:test_atFile_remove
-    def test_atFile_remove(self,**keys):
+    def test_atFile_remove(self):
         
         __pychecker__ = '--no-reimport'
         import os
@@ -4515,7 +4534,7 @@ class atFile:
             except UnicodeError:
                 print g.toEncodedString(message,g.app.tkEncoding)
                 
-    def test_atFile_printError(self,**keys):
+    def test_atFile_printError(self):
     
         at = c.atFileCommands
         at.errors = 0
@@ -4548,6 +4567,8 @@ class atFile:
         """Scan position p and p's ancestors looking for directives,
         setting corresponding atFile ivars.
         """
+        
+        __pychecker__ = '--maxlines=400'
     
         c = self.c
         #@    << Set ivars >>
