@@ -530,8 +530,6 @@ def scanAtTabwidthDirective(s,theDict,issue_error_flag=False):
 def scanForAtIgnore(c,p):
     
     """Scan position p and its ancestors looking for @ignore directives."""
-    
-    language = c.target_language
 
     if c is None or g.top() is None:
         return False # For unit tests.
@@ -904,7 +902,7 @@ def test_g_pdb():
     
     # Not a good unit test; it probably will never fail.
     def aFunction(): pass
-    assert type(g.pdb)==type(aFunction), 'wrong type for g.pdb: %' % type(g.pdb)
+    assert type(g.pdb)==type(aFunction), 'wrong type for g.pdb: %s' % type(g.pdb)
     
     class myStdout:
         def write(self,s):
@@ -981,6 +979,8 @@ def es_event_exception (eventName,full=False):
 #@-node:ekr.20031218072017.3111:es_event_exception
 #@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
+    
+    __pychecker__ = '--no-argsused' # c not used. retained for compatibility.
 
     typ,val,tb = sys.exc_info()
 
@@ -1006,55 +1006,6 @@ def es_exception (full=True,c=None,color="red"):
 
     return fileName,n
 #@nonl
-#@+node:ekr.20031218072017.1474:es, enl, ecnl
-def ecnl():
-    g.ecnls(1)
-
-def ecnls(n):
-    log = app.log
-    if log and not log.isNull:
-        while log.newlines < n:
-            g.enl()
-
-def enl():
-    log = app.log
-    if log and not log.isNull:
-        log.newlines += 1
-        log.putnl()
-
-def es(s,*args,**keys):
-    if app.killed:
-        return
-    newline = keys.get("newline",True)
-    color = keys.get("color",None)
-    if color == 'suppress': return # New in 4.3.
-    if type(s) != type("") and type(s) != type(u""): # 1/20/03
-        s = repr(s)
-    for arg in args:
-        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
-            arg = repr(arg)
-        s = s + ", " + arg
-    if app.batchMode:
-        if app.log:
-            app.log.put(s)
-    else:
-        log = app.log
-        if log and not log.isNull:
-            # print 'g.es',s
-            log.put(s,color=color)
-            for ch in s:
-                if ch == '\n': log.newlines += 1
-                else: log.newlines = 0
-            if newline:
-                g.ecnl() # only valid here
-        elif newline:
-            app.logWaiting.append((s+'\n',color),)
-            # print s
-        else:
-            app.logWaiting.append((s,color),)
-            # print s,
-#@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
 
@@ -1814,6 +1765,7 @@ def utils_remove (fileName,verbose=True):
 def test_g_utils_remove():
 
     __pychecker__ = '--no-reimport'
+
     import os
     exists = g.os_path_exists
     
@@ -1895,9 +1847,10 @@ def utils_rename(src,dst,mode=None,verbose=True):
         return False
 #@nonl
 #@+node:ekr.20050107085710.1:test_g_utils_rename
-def test_g_utils_rename(**keys):
+def test_g_utils_rename():
 
-    __pychecker__ = '--no-reimport '
+    __pychecker__ = '--no-reimport'
+
     import os
     exists = g.os_path_exists
     
@@ -2122,6 +2075,8 @@ def collectGarbage(message=None):
 #@+node:ekr.20031218072017.1592:printGc
 def printGc(message=None,onlyPrintChanges=False):
     
+    __pychecker__ = '--no-argsused' # onlyPrintChanges not used.
+    
     if not debugGC: return None
     
     if not message:
@@ -2254,6 +2209,8 @@ def disableIdleTimeHook():
 trace_count = 0
 
 def idleTimeHookHandler(*args,**keys):
+    
+    __pychecker__ = '--no-argsused' # args & keys not used.
     
     if 0: # Do not use g.trace here!
         global trace_count ; trace_count += 1
@@ -3468,10 +3425,12 @@ def joinLines (aList):
 #@+node:ekr.20031218072017.2418:g.initScriptFind (set up dialog)
 def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
     script_search=True,script_change=True):
+        
+    __pychecker__ = '--no-argsused' # firstNode is not used.
     
     import leoTest
     import leoGlobals as g
-    
+
     # Find the scripts.
     c = g.top() ; p = c.currentPosition()
     u = leoTest.testUtils()
@@ -3899,21 +3858,23 @@ virtual_event_name = angleBrackets
 #@@c
 
 def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
-    #
+
+    __pychecker__ = 'maxreturns=20'
+
     # tokenize the stringCompare flags
     compareFlag = string.split( stringCompare, '.' )
-    #
+
     # tokenize the version strings
     testVersion = string.split( version, delimiter )
     testAgainst = string.split( againstVersion, delimiter )
-    #
+
     # find the 'precision' of the comparison
     tokenCount = 4
     if tokenCount > len(testAgainst):
         tokenCount = len(testAgainst)
     if tokenCount > len(testVersion):
         tokenCount = len(testVersion)
-    #
+
     # Apply the stringCompare flags
     justInteger = sre.compile("^[0-9]+")
     for i in range(tokenCount):
@@ -3927,7 +3888,7 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
                  "the form \"x.x.x.x\" where each " +\
                  "'x' is either '0' or '1'."
             raise EnvironmentError,errMsg
-    #
+
     # Compare the versions
     if condition == ">=":
         for i in range(tokenCount):
@@ -3967,7 +3928,7 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
             if testVersion[i] < testAgainst[i]:
                 return 1 # it was less than
         return 1 # it was equal
-    #
+
     # didn't find a condition that we expected.
     raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
 #@nonl
@@ -4046,7 +4007,7 @@ class mulderUpdateAlgorithm:
     def __init__ (self,testing=False,verbose=False):
         
         self.testing = testing
-        self.verbose = False
+        self.verbose = verbose
         self.do_backups = False
     #@nonl
     #@-node:EKR.20040504150046.3:__init__
@@ -4455,6 +4416,8 @@ class mulderUpdateAlgorithm:
         """
         Generate a report when something goes wrong.
         """
+        
+        __pychecker__ = '--no-argsused' # Most args are presently unused.
     
         print '='*20
         print message
@@ -4555,6 +4518,8 @@ class mulderUpdateAlgorithm:
 class nullObject:
     
     """An object that does nothing, and does it very well."""
+    
+    __pychecker__ = '--no-argsused'
     
     def __init__   (self,*args,**keys): pass
     def __call__   (self,*args,**keys): return self
@@ -4748,8 +4713,7 @@ def getScript (c,p,useSelectedText=True,script=None):
             # The simple way: covert crlf by brute force.
             script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
-            error = len(script) == 0
-    except:
+    except Exception:
         s = "unexpected exception"
         print s ; g.es(s)
         g.es_exception()
