@@ -5770,11 +5770,10 @@ class configSettings:
         
         # Append the files to the global list.
         g.app.config.appendToRecentFiles(files)
-        
-        c.beginUpdate()
-        if 1: # In update...
-            root = g.app.config.settingsRoot(c)
-            if not root:
+    
+        root = g.app.config.settingsRoot(c)
+        if not root:
+            if 0:
                 #@            << create @settings node >>
                 #@+node:ekr.20050420081237:<< create @settings node >>
                 g.es('created @settings node',color='red')
@@ -5788,8 +5787,11 @@ class configSettings:
                 #@nonl
                 #@-node:ekr.20050420081237:<< create @settings node >>
                 #@nl
-            p = g.app.config.findSettingsPosition(c,"@recent-files")
-            if not p:
+            return
+    
+        p = g.app.config.findSettingsPosition(c,"@recent-files")
+        if not p:
+            if 0:
                 #@            << create @recent-files node >>
                 #@+node:ekr.20050420081237.1:<< create @recent-files node >>
                 g.es('created @recent-files node',color='red')
@@ -5801,21 +5803,21 @@ class configSettings:
                 #@nonl
                 #@-node:ekr.20050420081237.1:<< create @recent-files node >>
                 #@nl
-            #@        << Update p, leaving c.changed untouched >>
-            #@+node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
-            oldText = p.bodyString()
-            changed = c.isChanged()
-            newText = '\n'.join(files)
-            p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
-            c.setChanged(changed)
-            
-            if doUndo:
-                c.undoer.setUndoTypingParams(old_p,'Clear Recent Files',
-                    oldText,newText,oldSel=None,newSel=None)
-            #@nonl
-            #@-node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
-            #@nl
-        c.endUpdate(changed)
+            return
+        #@    << Update p, leaving c.changed untouched >>
+        #@+node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
+        oldText = p.bodyString()
+        changed = c.isChanged()
+        newText = '\n'.join(files)
+        p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
+        c.setChanged(changed)
+        
+        if doUndo:
+            c.undoer.setUndoTypingParams(old_p,'Clear Recent Files',
+                oldText,newText,oldSel=None,newSel=None)
+        #@nonl
+        #@-node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
+        #@nl
     #@nonl
     #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
     #@+node:ekr.20041118195812.2:set & setString
