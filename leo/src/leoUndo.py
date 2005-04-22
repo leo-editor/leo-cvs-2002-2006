@@ -165,6 +165,8 @@ class baseUndoer:
     def recognizeStartOfTypingWord (self,
         old_lines,old_row,old_col,old_ch, 
         new_lines,new_row,new_col,new_ch):
+    
+        __pychecker__ = '--no-argsused' # Ignore all unused arguments here.
             
         ''' A potentially user-modifiable method that should return True if the
         typing indicated by the params starts a new 'word' for the purposes of
@@ -181,7 +183,6 @@ class baseUndoer:
         for use by more sophisticated algorithms.'''
         
         ws = string.whitespace
-        word_chars = string.letters + string.digits + '_'
     
         if 1: # This seems like the best way.
             # Start a word if new_ch begins whitespace + word
@@ -191,6 +192,7 @@ class baseUndoer:
             return old_ch in ws and new_ch not in ws
     
         if 0: # Problems with punctuation within words.
+            word_chars = string.letters + string.digits + '_'
             return new_ch in word_chars and not old_ch in word_chars
             
         else: return False # Keeps Pychecker happy.
@@ -371,8 +373,6 @@ class baseUndoer:
         
         """Create a bunch containing all info needed to recreate a vnode for undo."""
         
-        u = self
-        
         bunch = g.Bunch(
             v = v,
             statusBits = v.statusBits,
@@ -389,12 +389,10 @@ class baseUndoer:
     #@nonl
     #@-node:ekr.20050415170737.1:createVnodeUndoInfo
     #@+node:ekr.20050415170812.1:createTnodeUndoInfo
-    def createTnodeUndoInfo (self,t,copyLinks=True):
+    def createTnodeUndoInfo (self,t):
         
         """Create a bunch containing all info needed to recreate a vnode."""
-        
-        u = self
-        
+    
         bunch = g.Bunch(
             t = t,
             headString = t.headString,
@@ -406,17 +404,6 @@ class baseUndoer:
         
         if hasattr(t,'unknownAttributes'):
             bunch.unknownAttributes = t.unknownAttributes
-    
-        if 0: # These never change, so no need to save/restore them.
-            # In fact, it would be wrong to undo changes made to them!
-            t.cloneIndex
-            t.fileIndex
-    
-        if 0: # probably not needed for undo.
-            t.insertSpot
-            t.scrollBarSpot
-            t.selectionLength
-            t.selectionStart
     
         return bunch
     #@nonl
@@ -650,7 +637,7 @@ class baseUndoer:
     #@nonl
     #@-node:ekr.20050411193627.8:afterDeleteNode
     #@+node:ekr.20050411193627.9:afterInsertNode
-    def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[],pasteAsClone=False):
+    def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
         
         u = self ; c = u.c
         if u.redoing or u.undoing: return
@@ -819,12 +806,11 @@ class baseUndoer:
     #@nonl
     #@-node:ekr.20050411193627.3:beforeDeleteNode
     #@+node:ekr.20050411193627.4:beforeInsertNode
-    def beforeInsertNode (self,p,pasteAsClone=False,pastedTree=None,copiedBunchList=[]):
+    def beforeInsertNode (self,p,pasteAsClone=False,copiedBunchList=[]):
         
-        u = self ; c = u.c ; fc = c.fileCommands
+        u = self
     
         bunch = u.createCommonBunch(p)
-        
         bunch.pasteAsClone = pasteAsClone
         
         if pasteAsClone:
@@ -899,6 +885,8 @@ class baseUndoer:
     #@@c
     
     def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+        
+        __pychecker__ = 'maxlines=2000' # Ignore the size of this method.
         
         # g.trace(undo_type) # ,p,"old:",oldText,"new:",newText)
         u = self ; c = u.c
@@ -1593,7 +1581,7 @@ class baseUndoer:
         
         # Same as undoReplace except uses g.Bunch.
     
-        u = self ; c = u.c
+        u = self
         
         if new_data == None:
             # This is the first time we have undone the operation.
@@ -1644,6 +1632,8 @@ class baseUndoer:
         oldNewlines,newNewlines, # Number of trailing newlines.
         tag="undo", # "undo" or "redo"
         undoType=None):
+            
+        __pychecker__ = '--no-argsused' # newNewlines is unused, but it has symmetry.
     
         u = self ; c = u.c
         assert(p == c.currentPosition())
@@ -1750,7 +1740,7 @@ class undoer (baseUndoer):
     pass
 #@nonl
 #@-node:ekr.20031218072017.3605:class undoer
-#@+node:ekr.20031218072017.2243:class nullUndoer
+#@+node:ekr.20031218072017.2243:class nullUndoer (undoer)
 class nullUndoer (undoer):
 
     def __init__ (self,c):
@@ -1793,7 +1783,7 @@ class nullUndoer (undoer):
     def beforeDeleteNode (self,p):
         pass
         
-    def beforeInsertNode (self,p):
+    def beforeInsertNode (self,p,pasteAsClone=False,copiedBunchList=[]):
         pass
         
     def beforeMoveNode (self,p):
@@ -1801,7 +1791,7 @@ class nullUndoer (undoer):
     #@nonl
     #@-node:ekr.20050415165731.1:before undo handlers...
     #@+node:ekr.20050415170018:after undo handlers...
-    def afterChangeNodeContents (self,p,command,bunch):
+    def afterChangeNodeContents (self,p,command,bunch,dirtyVnodeList=[]):
         pass
         
     def afterChangeTree (self,p,command,bunch):
@@ -1821,7 +1811,7 @@ class nullUndoer (undoer):
         
     def afterDeleteNode (self,p,command,bunch,dirtyVnodeList=[]):
         pass
-        
+    
     def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
         pass
         
@@ -1831,7 +1821,7 @@ class nullUndoer (undoer):
     #@-node:ekr.20050415170018:after undo handlers...
     #@-others
 #@nonl
-#@-node:ekr.20031218072017.2243:class nullUndoer
+#@-node:ekr.20031218072017.2243:class nullUndoer (undoer)
 #@-others
 #@nonl
 #@-node:ekr.20031218072017.3603:@thin leoUndo.py
