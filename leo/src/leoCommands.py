@@ -2785,7 +2785,7 @@ class baseCommands:
             #@nl
         
         undoData = u.beforeInsertNode(current,
-            pasteAsClone=pasteAsClone,pastedTree=pasted,copiedBunchList=copiedBunchList)
+            pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
     
         c.beginUpdate()
         c.endEditing()
@@ -2798,7 +2798,7 @@ class baseCommands:
             back = pasted.back()
             if back and back.isExpanded():
                 pasted.moveToNthChildOf(back,0)
-            u.afterInsertNode(pasted,undoType,undoData,pasteAsClone=pasteAsClone)
+            u.afterInsertNode(pasted,undoType,undoData)
         c.endUpdate()
         c.recolor()
     #@nonl
