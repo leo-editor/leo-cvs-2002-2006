@@ -154,7 +154,7 @@ class parserBaseClass:
         # g.trace(repr(name))
         
         if not g.app.gui or not g.app.gui.guiName():
-            s = '@if-gui has not effect: g.app.gui not defined yet'
+            s = '@if-gui has no effect: g.app.gui not defined yet'
             print s ; g.es(s,color='blue')
             return "skip"
         elif g.app.gui.guiName().lower() == name.lower():
