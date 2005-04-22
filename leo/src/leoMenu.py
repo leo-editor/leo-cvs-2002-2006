@@ -227,7 +227,7 @@ class leoMenu:
             ("C&ut Node","Shift+Ctrl+X",c.cutOutline),
             ("C&opy Node","Shift+Ctrl+C",c.copyOutline),
             ("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
-            ("Paste Node &As Clone",None,c.pasteOutlineRetainingClones),
+            ("Pas&te Node As Clone",None,c.pasteOutlineRetainingClones),
             ("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
             ("-",None,None),
             ("&Insert Node","Ctrl+I",c.insertHeadline),
@@ -239,7 +239,9 @@ class leoMenu:
             ("D&e-Hoist",None,f.c.dehoist),
             ("-",None,None))
             
-        # Ampersand bindings:  a,c,d,e,h,i,k,m,n,o,p,s,u
+        # Ampersand bindings:  a,c,d,e,h,i,n,o,p,t,s,
+        # Bindings for entries that go to submenus: a,g,k,m,x
+        #@nonl
         #@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
         #@nl
         #@<< define outlineMenuCheckOutlineMenuTable >>
@@ -1078,7 +1080,7 @@ class leoMenu:
         #@nl
         #@<< create expand/contract submenu >>
         #@+node:ekr.20031218072017.3798:<< create expand/contract submenu >>
-        expandMenu = self.createNewMenu("&Expand/Contract...","Outline")
+        expandMenu = self.createNewMenu("E&xpand/Contract...","Outline")
         
         self.createMenuEntries(expandMenu,self.outlineMenuExpandContractMenuTable,init=True)
         #@nonl
