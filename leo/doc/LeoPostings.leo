@@ -2,25 +2,27 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/>
 <globals body_outline_ratio="0.400862068966">
-	<global_window_position top="9" left="308" height="928" width="888"/>
+	<global_window_position top="10" left="308" height="928" width="888"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20050421221914"><vh>About this file</vh></v>
-<v t="ekr.20050422065602" a="TV"><vh>Summary of problems and their solutions</vh>
-<v t="ekr.20050422065602.1"><vh>The big questions that Leo must answer</vh>
+<v t="ekr.20050422065602" a="E"><vh>Summary of problems and their solutions</vh>
+<v t="ekr.20050422065602.1" a="E"><vh>The big questions that Leo must answer</vh>
 <v t="ekr.20050422065602.2"><vh>How to read derived files reliably?</vh></v>
 <v t="ekr.20050422065602.3"><vh>How to ensure the integrity of data?</vh></v>
 <v t="ekr.20050422065602.4"><vh>How to represent clones?</vh></v>
 <v t="ekr.20050422065602.5"><vh>How to make derived files friendly to cvs?</vh></v>
+<v t="ekr.20050422071828" a="TV"><vh>How to handle unicode reliably?</vh></v>
 </v>
 <v t="ekr.20050422065602.6" a="E"><vh>Summary of solutions</vh>
 <v t="ekr.20050421214628.1"><vh>2003-09-17 Progress.doc *** (summary of features)</vh></v>
 </v>
 </v>
-<v t="ekr.20050421212523"><vh>4.0 (2002-2003)</vh>
+<v t="ekr.20050421212523" a="E"><vh>4.0 (2002-2003)</vh>
+<v t="ekr.20050422071739"><vh>  2003-10-17 From 4.0 readme</vh></v>
 <v t="ekr.20050422065602.7"><vh>2002 &amp; 2003: Early ideas</vh>
 <v t="ekr.20050421205312"><vh>2002-10-21 design.doc</vh></v>
 <v t="ekr.20050421192149.12"><vh>2002-10 gti-open.doc New (long) design notes ***</vh>
@@ -113,7 +115,7 @@
 <v t="ekr.20050421212523.5"><vh>2003-07-31 synch reply 2.doc</vh></v>
 </v>
 <v t="ekr.20050422065602.8"><vh>2003-09 Code details</vh>
-<v t="ekr.20050421212523.6" a="E"><vh>2003-09-05 New 4-0 Design Notes.doc</vh>
+<v t="ekr.20050421212523.6"><vh>2003-09-05 New 4-0 Design Notes.doc</vh>
 <v t="ekr.20050421212523.7"><vh>Executive summary</vh></v>
 <v t="ekr.20050421212523.8"><vh>Background and discussion</vh></v>
 <v t="ekr.20050421212523.9"><vh>Examples</vh></v>
@@ -126,11 +128,13 @@
 <v t="ekr.20050421214628.4"><vh>2003-09-23 Transition.doc</vh></v>
 </v>
 </v>
-<v t="ekr.20050421214628.5"><vh>4.1 (2003)</vh>
+<v t="ekr.20050421214628.5" a="E"><vh>4.1 (2003) Unicode and gui-agnosic code</vh>
+<v t="ekr.20050422071739.1"><vh>  2004-02-20 From 4.1 readme</vh></v>
 <v t="ekr.20050421214628.6"><vh>2003-11-03 4-1a1 released.doc</vh></v>
 </v>
-<v t="ekr.20050421214704"><vh>4.2 (2004)</vh>
-<v t="ekr.20050421214921.6"><vh>2004-02-05 at-file-thin.doc</vh></v>
+<v t="ekr.20050421214704" a="E"><vh>4.2 (2004) @thin, gnx's, shared tnodes &amp; positions</vh>
+<v t="ekr.20050422071739.2"><vh>  2004-09-20 From 4.2 readme</vh></v>
+<v t="ekr.20050421214921.6"><vh>2004-02-05 at-file-thin.doc **</vh></v>
 <v t="ekr.20050421214921.16"><vh>2004-02-29 New plans-2-29-04.doc **</vh></v>
 <v t="ekr.20050421214921.21"><vh>2004-02-29 shared tnode design.doc</vh></v>
 <v t="ekr.20050421214921.9"><vh>2004-02-29 Code details of shared tnode.doc</vh></v>
@@ -2545,7 +2549,12 @@ P.P.S.  I am incredibly excited about Rodrigo's work with LeoN.  I think the bes
 
 EKR
 </t>
-<t tx="ekr.20050421212523">@nocolor</t>
+<t tx="ekr.20050421212523">@nocolor
+
+The major innovations in 4.0 were:
+
+- Eliminating the error-prone error-recovery scheme used when reading derived files.
+- Using gnx's in derived files.</t>
 <t tx="ekr.20050421212523.1">New 4.0 ideas: your comments pls
 
 I have been taking long bicycle rides and long baths trying to understand my reluctance to do 4.0.  Several interesting phrases have emerged from the creative unconscious.  I'll dignify these phrases with the term "design principles."
@@ -3171,7 +3180,15 @@ Schedule:
 
 Edward
 </t>
-<t tx="ekr.20050421214704">@nocolor</t>
+<t tx="ekr.20050421214704">@nocolor
+
+The major innovation in 4.2 were:
+
+1.  Representing clones as shared subtrees.
+
+2.  Using positions (and especially position iterators) to traverse Leo outlines.
+
+3.  @thin trees and 'thin' derived files.</t>
 <t tx="ekr.20050421214921">Transition
 
 In the past I would have converted LeoPy.leo to use positions in one big step.  This time, I am testing the position class first.  This gets tricky:  there are many files involved:
@@ -5174,13 +5191,22 @@ there seems to be no need to use this ugly scheme at present. </t>
 
 - 
 - </t>
-<t tx="ekr.20050422065602.2">Leo 3.x versions had a not-very-reliable error recovery scheme that could, in
+<t tx="ekr.20050422065602.2">There are two parts to this question:
+
+1. Prior to using @file nodes, Leo used an exceedingly complex Untangle
+algorithm to update an outline based on changes to files derived from @root.
+Moreover, the user had to apply the Untangle command explictly.
+
+@file trees greatly simplified Leo's read logic and eliminated the need for
+explicit Untangling.
+
+2. Leo 3.x versions had a not-very-reliable error recovery scheme that could, in
 fact, corrupt the meaning of outlines. The big aha in 4.0 was that it would be
 possible to eliminate such schemes entirely.
 
-4.0 also introduced a new way of treating newlines surrounding sentinel lines.
-The @ws sentinel is a key element in this scheme. As a result, the atFile.read
-logic was dramatically simplified.</t>
+Leo 4.0 also introduced a new way of treating newlines surrounding sentinel
+lines. The @ws sentinel is a key element in this scheme. As a result, the
+atFile.read logic was dramatically simplified.</t>
 <t tx="ekr.20050422065602.3">There are actually two issues:
 
 1. How can Leo ensure that .leo files and derived files remain in-synch? In
@@ -5211,5 +5237,84 @@ All 3.x versions of Leo used "child indices" to associate nodes in derived files
 <t tx="ekr.20050422065602.7"></t>
 <t tx="ekr.20050422065602.8"></t>
 <t tx="ekr.20050422065602.9"></t>
+<t tx="ekr.20050422071739">Leo 4.0 final                     October 17, 2003
+
+More than a year in the making, Leo 4.0 is finally here.
+
+Highlights of 4.0 final:
+-----------------------
+
+** Improved and simplified format of derived files.
+	- Eliminated child indices, extraneous blank lines and @body sentinels.
+	- Eliminated @node sentinels that indicate outline structure.
+	- New @nl and @nonl sentinels indicate where newlines are and aren't.
+	- These changes will largely eliminate unwanted cvs conflicts.
+
+** Greatly improved error handling.
+	- Reading derived files _never_ alter outline structure or links.
+	- Read errors leave the outline completely unchanged.
+	- Broken clone links are gone forever.
+	- As a result, 4.0 is much safer than all previous versions.
+
+** Full compatibility will previous versions of Leo.
+	- Leo 4.0 reads all derived files properly, regardless of version.
+	- Leo writes new-format derived files by default, and this default may be changed.
+	- New commands in the read/write menu allow you to explicitly specify the format of derived files.
+
+* New commands:
+	- Write 3.x Derived File and Write 4.x Derived File.
+	- Import Derived File.
+	- Clear Recent Files.
+
+* Dozens of other improvements, including:
+	- Better Unicode support.
+	- New configuration settings.
+	- Several new plugins.</t>
+<t tx="ekr.20050422071739.1">Leo 4.1 Final              February 20, 2004
+
+Leo 4.1 Final is the culmination of four months of work. No significant bugs
+have been reported since 4.1 rc4. Several people have contributed nifty plugins
+recently. See leoPlugins.leo for full details.
+
+The highlights of Leo 4.1:
+
+- Leo runs in batch mode when invoked with --script aScriptFile.py
+- Leo supports Unicode characters (e.g. Chinese) in path and file names.
+- @directives and section references are now valid when executing scripts.
+- @ignored and orphan nodes now valid in @file-nosent trees.
+- Script-based find/change commands.
+- Check Outline command.
+- Hoist &amp; DeHoist commands.
+- A new gui-agnostic architecture: useful for batch mode and unit tests.
+- Several new configuration settings.
+- Many new unit tests.
+- Excellent new plugins.
+- A host of bug fixes.</t>
+<t tx="ekr.20050422071739.2">Leo 4.2 Final       September 20, 2004
+
+The highlights of Leo 4.2:
+
+- @thin trees make Leo much more friendly to cvs. Files derived from @thin can
+be committed to cvs and updated from cvs without having to commit or update the
+corresponding .leo file. There is no longer any need to keep .leo files and
+derived files in synch.
+
+- Leo's data structures have been reorganized. As a result, all outline
+operations are much faster. To support this organization, scripts that traverse
+Leo's data structures must now use a positions rather than vnodes. Old scripts
+that appear to use vnodes will still work because methods like c.currentVnode
+that appear to return vnodes actually return positions.
+
+- A new mod_scripting plugin is a big advance in scripting and testing.
+test.leo now uses @test and @script nodes to define unit tests without
+explicitly creating subclasses of unittest.TestCase. Converting scripts to unit
+tests now takes a few seconds!
+
+- A much faster and more robust spell checker plugin. (requires Python 2.3)
+
+- Leo is now much more friendly to using spaces instead of tabs.
+
+- The Execute Script command reports erroneous lines more clearly.</t>
+<t tx="ekr.20050422071828"></t>
 </tnodes>
 </leo_file>

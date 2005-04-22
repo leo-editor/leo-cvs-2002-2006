@@ -488,6 +488,8 @@ def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
     """Scan position p and p's ancestors looking for directives,
     setting corresponding atFile ivars.
     """
+    
+    __pychecker__ = '--maxlines=400'
 
     c = self.c
     << Set ivars >>
@@ -1448,8 +1450,6 @@ def scanAtTabwidthDirective(s,theDict,issue_error_flag=False):
 def scanForAtIgnore(c,p):
     
     """Scan position p and its ancestors looking for @ignore directives."""
-    
-    language = c.target_language
 
     if c is None or g.top() is None:
         return False # For unit tests.
@@ -2510,7 +2510,7 @@ def pasteOutline(self,reassignIndices=True):
         << put only needed info in copiedBunchList >>
     
     undoData = u.beforeInsertNode(current,
-        pasteAsClone=pasteAsClone,pastedTree=pasted,copiedBunchList=copiedBunchList)
+        pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
 
     c.beginUpdate()
     c.endEditing()
@@ -2523,7 +2523,7 @@ def pasteOutline(self,reassignIndices=True):
         back = pasted.back()
         if back and back.isExpanded():
             pasted.moveToNthChildOf(back,0)
-        u.afterInsertNode(pasted,undoType,undoData,pasteAsClone=pasteAsClone)
+        u.afterInsertNode(pasted,undoType,undoData)
     c.endUpdate()
     c.recolor()
 #@nonl
@@ -2682,7 +2682,7 @@ for p in oldCurrent.self_and_parents_iter():
 #@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
 def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 
-    c = self.c ; v = None
+    v = None
     setCurrent = setExpanded = setMarked = setOrphan = setTop = False
     tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
     # we have already matched <v.
@@ -3528,6 +3528,8 @@ def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
     """Scan position p and p's ancestors looking for directives,
     setting corresponding atFile ivars.
     """
+    
+    __pychecker__ = '--maxlines=400'
 
     c = self.c
     << Set ivars >>
@@ -4460,7 +4462,7 @@ self.outlineMenuTopMenuTable = (
     ("C&ut Node","Shift+Ctrl+X",c.cutOutline),
     ("C&opy Node","Shift+Ctrl+C",c.copyOutline),
     ("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
-    ("Paste Node &As Clone",None,c.pasteOutlineRetainingClones),
+    ("Pas&te Node As Clone",None,c.pasteOutlineRetainingClones),
     ("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
     ("-",None,None),
     ("&Insert Node","Ctrl+I",c.insertHeadline),
@@ -4472,7 +4474,9 @@ self.outlineMenuTopMenuTable = (
     ("D&e-Hoist",None,f.c.dehoist),
     ("-",None,None))
     
-# Ampersand bindings:  a,c,d,e,h,i,k,m,n,o,p,s,u
+# Ampersand bindings:  a,c,d,e,h,i,n,o,p,t,s,
+# Bindings for entries that go to submenus: a,g,k,m,x
+#@nonl
 #@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
 #@+node:ekr.20040711140738:<< define outlineMenuCheckOutlineMenuTable >>
 self.outlineMenuCheckOutlineMenuTable = (
@@ -5061,7 +5065,7 @@ self.createMenuEntries(checkOutlineMenu,self.outlineMenuCheckOutlineMenuTable,in
 #@nonl
 #@-node:ekr.20040711140738.1:<< create check submenu >>
 #@+node:ekr.20031218072017.3798:<< create expand/contract submenu >>
-expandMenu = self.createNewMenu("&Expand/Contract...","Outline")
+expandMenu = self.createNewMenu("E&xpand/Contract...","Outline")
 
 self.createMenuEntries(expandMenu,self.outlineMenuExpandContractMenuTable,init=True)
 #@nonl
@@ -5574,6 +5578,8 @@ def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
     """Scan position p and p's ancestors looking for directives,
     setting corresponding atFile ivars.
     """
+    
+    __pychecker__ = '--maxlines=400'
 
     c = self.c
     << Set ivars >>
@@ -6029,6 +6035,7 @@ def __init__(self,c):
     self.debug = False
     self.fileCommands = c.fileCommands
     self.testing = True # True: enable additional checks.
+    self.errors = 0 # Make sure at.error() works even when not inited.
 
     << define the dispatch dictionary used by scanText4 >>
 #@nonl
@@ -6469,7 +6476,7 @@ def createNthChild3(self,n,parent,headline):
     assert(n > 0)
     
     if at.importing:
-        return at.createImportedNode(at.root,at.c,headline)
+        return at.createImportedNode(at.root,headline)
 
     # Create any needed dummy children.
     dummies = n - parent.numberOfChildren() - 1
@@ -6695,6 +6702,8 @@ if not single:
 def scanText3 (self,theFile,p,out,endSentinelKind,nextLine=None):
     
     """Scan a 3.x derived file recursively."""
+    
+    __pychecker__ = '--maxbranches=100 --maxlines=500'
 
     at = self
     lastLines = [] # The lines after @-leo
@@ -7176,7 +7185,7 @@ def createThinChild4 (self,gnxString,headline):
 
     """Find or create a new vnode whose parent is at.lastThinNode."""
 
-    at = self ; v = at.root.v ; c = at.c ; indices = g.app.nodeIndices
+    at = self ; c = at.c ; indices = g.app.nodeIndices
     last = at.lastThinNode ; lastIndex = last.t.fileIndex
     gnx = indices.scanGnx(gnxString,0)
     
@@ -7227,6 +7236,8 @@ def findChild4 (self,headline):
     
     """Return the next tnode in at.root.t.tnodeList."""
     
+    __pychecker__ = '--no-argsused' # headline might be used for debugging.
+    
     # Note: tnodeLists are used _only_ when reading @file (not @thin) nodes.
     # tnodeLists compensate (a hack) for not having gnx's in derived files! 
 
@@ -7264,6 +7275,8 @@ def findChild4 (self,headline):
 def scanText4 (self,theFile,fileName,p,verbose=False):
     
     """Scan a 4.x derived file non-recursively."""
+    
+    __pychecker__ = '--no-argsused' # fileName,verbose might be used for debugging.
 
     at = self
     << init ivars for scanText4 >>
@@ -7459,7 +7472,7 @@ def readStartNode (self,s,i,middle=False):
     at.tStack.append(at.t)
 
     if at.importing:
-        p = at.createImportedNode(at.root,at.c,headline)
+        p = at.createImportedNode(at.root,headline)
         at.t = p.v.t
     elif at.thinFile:
         at.thinNodeStack.append(at.lastThinNode)
@@ -7543,6 +7556,8 @@ def readEndAll (self,s,i):
     
     """Read an @-all sentinel."""
     
+    __pychecker__ = '--no-argsused' # s,i not used, but must be present.
+    
     at = self
     at.popSentinelStack(at.endAll)
 #@nonl
@@ -7551,6 +7566,8 @@ def readEndAll (self,s,i):
 def readEndAt (self,s,i):
     
     """Read an @-at sentinel."""
+    
+    __pychecker__ = '--no-argsused' # s,i not used, but must be present.
 
     at = self
     at.readLastDocLine("@")
@@ -7560,6 +7577,8 @@ def readEndAt (self,s,i):
 def readEndDoc (self,s,i):
     
     """Read an @-doc sentinel."""
+    
+    __pychecker__ = '--no-argsused' # s,i not used, but must be present.
 
     at = self
     at.readLastDocLine("@doc")
@@ -7571,6 +7590,8 @@ def readEndDoc (self,s,i):
 def readEndLeo (self,s,i):
     
     """Read an @-leo sentinel."""
+    
+    __pychecker__ = '--no-argsused' # i not used, but must be present.
     
     at = self
 
@@ -7598,6 +7619,8 @@ def readEndMiddle (self,s,i):
 def readEndNode (self,s,i,middle=False):
     
     """Handle end-of-node processing for @-others and @-ref sentinels."""
+    
+    __pychecker__ = '--no-argsused' # i not used, but must be present.
 
     at = self ; c = at.c
     
@@ -7694,6 +7717,8 @@ def readEndOthers (self,s,i):
     
     """Read an @-others sentinel."""
     
+    __pychecker__ = '--no-argsused' # s,i unused, but must be present.
+    
     at = self
     at.popSentinelStack(at.endOthers)
 #@nonl
@@ -7749,6 +7774,8 @@ def readLastDocLine (self,tag):
 def  ignoreOldSentinel (self,s,i):
     
     """Ignore an 3.x sentinel."""
+    
+    __pychecker__ = '--no-argsused' # i unused, but must be present.
     
     g.es("Ignoring 3.x sentinel: " + s.strip(), color="blue")
 #@nonl
@@ -8181,7 +8208,7 @@ def  copyAllTempBodyStringsToTnodes (self,root,thinFile):
 #@nonl
 #@-node:ekr.20050301105854:copyAllTempBodyStringsToTnodes
 #@+node:ekr.20041005105605.119:createImportedNode
-def createImportedNode (self,root,c,headline):
+def createImportedNode (self,root,headline):
     
     at = self
 
@@ -8481,7 +8508,7 @@ if s2:
             at.putSentinel("@comment " + line)
 #@-node:ekr.20041005105605.139:<< put optional @comment sentinel lines >>
 #@+node:ekr.20041005105605.140:<< Write p's node >>
-at.putOpenNodeSentinel(p,inAtOthers=True)
+at.putOpenNodeSentinel(p)
 
 s = p.bodyString()
 if s and len(s) > 0:
@@ -8492,7 +8519,7 @@ if s and len(s) > 0:
 if s and s[-1] != '\n':
     at.onl_sent() ; at.putSentinel("@nonl")
 
-at.putCloseNodeSentinel(p,inAtOthers=True)
+at.putCloseNodeSentinel(p)
 #@nonl
 #@-node:ekr.20041005105605.140:<< Write p's node >>
 #@+node:ekr.20041005105605.141:<< put all @last lines in root >>
@@ -8529,7 +8556,7 @@ def openFileForWriting (self,root,fileName,toString):
         at.outputFileName = "<string: %s>" % at.shortFileName
         at.outputFile = g.fileLikeObject()
     else:
-        at.openFileForWritingHelper(fileName,toString)
+        at.openFileForWritingHelper(fileName)
 
     if at.outputFile:
         root.clearOrphan()
@@ -8540,7 +8567,7 @@ def openFileForWriting (self,root,fileName,toString):
     return at.outputFile is not None
 #@nonl
 #@+node:ekr.20041005105605.143:openFileForWritingHelper
-def openFileForWritingHelper (self,fileName,toString):
+def openFileForWritingHelper (self,fileName):
     
     at = self
 
@@ -8720,7 +8747,6 @@ def writeMissing(self,p,toString=False):
     after = p.nodeAfterTree()
     while p and p != after: # Don't use iterator.
         if p.isAtAsisFileNode() or (p.isAnyAtFileNode() and not p.isAtIgnoreNode()):
-            missing = False ; valid = True
             at.targetFileName = p.anyAtFileNodeName()
             if at.targetFileName:
                 at.targetFileName = g.os_path_join(self.default_directory,at.targetFileName)
@@ -8819,8 +8845,7 @@ def writeOpenFile(self,root,nosentinels=False,toString=False):
 
     """Do all writes except asis writes."""
     
-    at = self ; c = at.c
-
+    at = self
     root.clearAllVisitedInTree() # Clear both vnode and tnode bits.
     root.clearVisitedInTree()
 
@@ -8888,9 +8913,9 @@ for line in lines[j+1:k+1]:
 #@-node:ekr.20041005105605.133:Writing (top level)
 #@+node:ekr.20041005105605.160:Writing 4.x
 #@+node:ekr.20041005105605.161:putBody
-# oneNodeOnly is no longer used.
+# oneNodeOnly is no longer used, but it might be used in the future?
 
-def putBody(self,p,putCloseSentinel=True,oneNodeOnly=False):
+def putBody(self,p,oneNodeOnly=False):
     
     """ Generate the body enclosed in sentinel lines."""
 
@@ -8999,7 +9024,7 @@ def putAtAllLine (self,s,i,p):
 #@nonl
 #@-node:ekr.20041005105605.166:putAtAllLine
 #@+node:ekr.20041005105605.167:putatAllBody
-def putAtAllBody(self,p,putCloseSentinel=True):
+def putAtAllBody(self,p):
     
     """ Generate the body enclosed in sentinel lines."""
 
@@ -9067,7 +9092,7 @@ def putAtAllChild(self,p):
     for child in p.children_iter():
         at.putAtAllChild(child)
 
-    at.putCloseNodeSentinel(p,inAtAll=True)
+    at.putCloseNodeSentinel(p)
 #@nonl
 #@-node:ekr.20041005105605.169:putAtAllChild
 #@-node:ekr.20041005105605.165:@all
@@ -9109,7 +9134,7 @@ def putAtOthersChild(self,p):
     if clonedSibs > 1 and thisClonedSibIndex == 1:
         at.writeError("Cloned siblings are not valid in @thin trees")
 
-    at.putOpenNodeSentinel(p,inAtOthers=True)
+    at.putOpenNodeSentinel(p)
     at.putBody(p) 
     
     # Insert expansions of all children.
@@ -9117,7 +9142,7 @@ def putAtOthersChild(self,p):
         if at.inAtOthers(child):
             at.putAtOthersChild(child)
             
-    at.putCloseNodeSentinel(p,inAtOthers=True)
+    at.putCloseNodeSentinel(p)
 #@nonl
 #@-node:ekr.20041005105605.172:putAtOthersChild
 #@+node:ekr.20041005105605.173:putAtOthersLine
@@ -9536,7 +9561,7 @@ def putLeadInSentinel (self,s,i,j,delta):
 #@nonl
 #@-node:ekr.20041005105605.190:putLeadInSentinel 4.x
 #@+node:ekr.20041005105605.191:putCloseNodeSentinel 4.x
-def putCloseNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
+def putCloseNodeSentinel(self,p,middle=False):
     
     at = self
     
@@ -9570,7 +9595,7 @@ def putOpenLeoSentinel(self,s):
 #@nonl
 #@-node:ekr.20041005105605.192:putOpenLeoSentinel 4.x
 #@+node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
-def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
+def putOpenNodeSentinel(self,p,inAtAll=False,middle=False):
     
     """Write @+node sentinel for p."""
     
@@ -10094,6 +10119,7 @@ file.
 def test_atFile_rename (self):
 
     __pychecker__ = '--no-reimport'
+
     import os
     at = c.atFileCommands
 
@@ -10136,7 +10162,7 @@ def remove (self,fileName,verbose=True):
         return False
 #@nonl
 #@+node:ekr.20050107090156:test_atFile_remove
-def test_atFile_remove(self,**keys):
+def test_atFile_remove(self):
     
     __pychecker__ = '--no-reimport'
     import os
@@ -10191,7 +10217,7 @@ def printError (self,message):
         except UnicodeError:
             print g.toEncodedString(message,g.app.tkEncoding)
             
-def test_atFile_printError(self,**keys):
+def test_atFile_printError(self):
 
     at = c.atFileCommands
     at.errors = 0
@@ -10217,6 +10243,8 @@ def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
     """Scan position p and p's ancestors looking for directives,
     setting corresponding atFile ivars.
     """
+    
+    __pychecker__ = '--maxlines=400'
 
     c = self.c
     << Set ivars >>
@@ -10847,9 +10875,9 @@ Leo fails to write the closing #@-at sentinel that would finish the first @doc p
 #@nonl
 #@-node:ekr.20041231102453.5:Notes
 #@+node:ekr.20041005105605.161:putBody
-# oneNodeOnly is no longer used.
+# oneNodeOnly is no longer used, but it might be used in the future?
 
-def putBody(self,p,putCloseSentinel=True,oneNodeOnly=False):
+def putBody(self,p,oneNodeOnly=False):
     
     """ Generate the body enclosed in sentinel lines."""
 
@@ -10945,11 +10973,10 @@ c:\python24\lib\pickle.py:202: DeprecationWarning:
 #@+node:ekr.20050101133638:@url http://docs.python.org/lib/module-pickle.html
 #@-node:ekr.20050101133638:@url http://docs.python.org/lib/module-pickle.html
 #@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv,toString=False):
+def putUnknownAttributes (self,torv):
     
     """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
     
-    result = []
     attrDict = torv.unknownAttributes
     if type(attrDict) != type({}):
         g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
@@ -10964,6 +10991,8 @@ def putUnknownAttributes (self,torv,toString=False):
 def getUa(self,nodeType):
     
     """Parse an unknown attribute in a <v> or <t> element."""
+    
+    __pychecker__ = '--no-argsused' # nodeType not used: good for debugging.
     
     # New in 4.2.  The unknown tag has been pickled and hexlify'd.
     attr,val = self.getUnknownTag()
@@ -11558,8 +11587,7 @@ def getScript (c,p,useSelectedText=True,script=None):
             # The simple way: covert crlf by brute force.
             script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
-            error = len(script) == 0
-    except:
+    except Exception:
         s = "unexpected exception"
         print s ; g.es(s)
         g.es_exception()
@@ -11787,6 +11815,8 @@ def getLastTracebackFileAndLineNumber():
 #@-node:ekr.20040731204831:getLastTracebackFileAndLineNumber
 #@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
+    
+    __pychecker__ = '--no-argsused' # c not used. retained for compatibility.
 
     typ,val,tb = sys.exc_info()
 
@@ -11812,55 +11842,6 @@ def es_exception (full=True,c=None,color="red"):
 
     return fileName,n
 #@nonl
-#@+node:ekr.20031218072017.1474:es, enl, ecnl
-def ecnl():
-    g.ecnls(1)
-
-def ecnls(n):
-    log = app.log
-    if log and not log.isNull:
-        while log.newlines < n:
-            g.enl()
-
-def enl():
-    log = app.log
-    if log and not log.isNull:
-        log.newlines += 1
-        log.putnl()
-
-def es(s,*args,**keys):
-    if app.killed:
-        return
-    newline = keys.get("newline",True)
-    color = keys.get("color",None)
-    if color == 'suppress': return # New in 4.3.
-    if type(s) != type("") and type(s) != type(u""): # 1/20/03
-        s = repr(s)
-    for arg in args:
-        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
-            arg = repr(arg)
-        s = s + ", " + arg
-    if app.batchMode:
-        if app.log:
-            app.log.put(s)
-    else:
-        log = app.log
-        if log and not log.isNull:
-            # print 'g.es',s
-            log.put(s,color=color)
-            for ch in s:
-                if ch == '\n': log.newlines += 1
-                else: log.newlines = 0
-            if newline:
-                g.ecnl() # only valid here
-        elif newline:
-            app.logWaiting.append((s+'\n',color),)
-            # print s
-        else:
-            app.logWaiting.append((s,color),)
-            # print s,
-#@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
 
@@ -12377,8 +12358,7 @@ def getScript (c,p,useSelectedText=True,script=None):
             # The simple way: covert crlf by brute force.
             script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
-            error = len(script) == 0
-    except:
+    except Exception:
         s = "unexpected exception"
         print s ; g.es(s)
         g.es_exception()
@@ -13131,6 +13111,7 @@ def utils_remove (fileName,verbose=True):
 def test_g_utils_remove():
 
     __pychecker__ = '--no-reimport'
+
     import os
     exists = g.os_path_exists
     
@@ -13204,9 +13185,10 @@ file.
 #@nonl
 #@-node:ekr.20050104123726.1:<< about os.rename >>
 #@+node:ekr.20050107085710.1:test_g_utils_rename
-def test_g_utils_rename(**keys):
+def test_g_utils_rename():
 
-    __pychecker__ = '--no-reimport '
+    __pychecker__ = '--no-reimport'
+
     import os
     exists = g.os_path_exists
     
@@ -13494,6 +13476,7 @@ file.
 def test_atFile_rename (self):
 
     __pychecker__ = '--no-reimport'
+
     import os
     at = c.atFileCommands
 
@@ -13536,7 +13519,7 @@ def remove (self,fileName,verbose=True):
         return False
 #@nonl
 #@+node:ekr.20050107090156:test_atFile_remove
-def test_atFile_remove(self,**keys):
+def test_atFile_remove(self):
     
     __pychecker__ = '--no-reimport'
     import os
@@ -13591,7 +13574,7 @@ def printError (self,message):
         except UnicodeError:
             print g.toEncodedString(message,g.app.tkEncoding)
             
-def test_atFile_printError(self,**keys):
+def test_atFile_printError(self):
 
     at = c.atFileCommands
     at.errors = 0
@@ -13617,6 +13600,8 @@ def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
     """Scan position p and p's ancestors looking for directives,
     setting corresponding atFile ivars.
     """
+    
+    __pychecker__ = '--maxlines=400'
 
     c = self.c
     << Set ivars >>
@@ -14623,17 +14608,19 @@ def setRecentFiles (self,files,doUndo=False):
     
     # Append the files to the global list.
     g.app.config.appendToRecentFiles(files)
-    
-    c.beginUpdate()
-    if 1: # In update...
-        root = g.app.config.settingsRoot(c)
-        if not root:
+
+    root = g.app.config.settingsRoot(c)
+    if not root:
+        if 0:
             << create @settings node >>
-        p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if not p:
+        return
+
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        if 0:
             << create @recent-files node >>
-        << Update p, leaving c.changed untouched >>
-    c.endUpdate(changed)
+        return
+    << Update p, leaving c.changed untouched >>
 #@nonl
 #@+node:ekr.20050420081237:<< create @settings node >>
 g.es('created @settings node',color='red')
@@ -14688,17 +14675,19 @@ def setRecentFiles (self,files,doUndo=False):
     
     # Append the files to the global list.
     g.app.config.appendToRecentFiles(files)
-    
-    c.beginUpdate()
-    if 1: # In update...
-        root = g.app.config.settingsRoot(c)
-        if not root:
+
+    root = g.app.config.settingsRoot(c)
+    if not root:
+        if 0:
             << create @settings node >>
-        p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if not p:
+        return
+
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        if 0:
             << create @recent-files node >>
-        << Update p, leaving c.changed untouched >>
-    c.endUpdate(changed)
+        return
+    << Update p, leaving c.changed untouched >>
 #@nonl
 #@+node:ekr.20050420081237:<< create @settings node >>
 g.es('created @settings node',color='red')
@@ -15954,11 +15943,10 @@ def putDescendentAttributes (self,p):
 #@nonl
 #@-node:ekr.20040701065235.2:putDescendentAttributes
 #@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv,toString=False):
+def putUnknownAttributes (self,torv):
     
     """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
     
-    result = []
     attrDict = torv.unknownAttributes
     if type(attrDict) != type({}):
         g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
@@ -16297,8 +16285,6 @@ class parents_iter_class:
     @others
 
 def parents_iter (self,copy=False):
-    
-    p = self
 
     return self.parents_iter_class(self,copy,includeSelf=False)
     
@@ -16797,17 +16783,19 @@ def setRecentFiles (self,files,doUndo=False):
     
     # Append the files to the global list.
     g.app.config.appendToRecentFiles(files)
-    
-    c.beginUpdate()
-    if 1: # In update...
-        root = g.app.config.settingsRoot(c)
-        if not root:
+
+    root = g.app.config.settingsRoot(c)
+    if not root:
+        if 0:
             << create @settings node >>
-        p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if not p:
+        return
+
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        if 0:
             << create @recent-files node >>
-        << Update p, leaving c.changed untouched >>
-    c.endUpdate(changed)
+        return
+    << Update p, leaving c.changed untouched >>
 #@nonl
 #@+node:ekr.20050420081237:<< create @settings node >>
 g.es('created @settings node',color='red')
@@ -20377,17 +20365,19 @@ def setRecentFiles (self,files,doUndo=False):
     
     # Append the files to the global list.
     g.app.config.appendToRecentFiles(files)
-    
-    c.beginUpdate()
-    if 1: # In update...
-        root = g.app.config.settingsRoot(c)
-        if not root:
+
+    root = g.app.config.settingsRoot(c)
+    if not root:
+        if 0:
             << create @settings node >>
-        p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if not p:
+        return
+
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        if 0:
             << create @recent-files node >>
-        << Update p, leaving c.changed untouched >>
-    c.endUpdate(changed)
+        return
+    << Update p, leaving c.changed untouched >>
 #@nonl
 #@+node:ekr.20050420081237:<< create @settings node >>
 g.es('created @settings node',color='red')
@@ -20677,17 +20667,19 @@ def setRecentFiles (self,files,doUndo=False):
     
     # Append the files to the global list.
     g.app.config.appendToRecentFiles(files)
-    
-    c.beginUpdate()
-    if 1: # In update...
-        root = g.app.config.settingsRoot(c)
-        if not root:
+
+    root = g.app.config.settingsRoot(c)
+    if not root:
+        if 0:
             << create @settings node >>
-        p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if not p:
+        return
+
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        if 0:
             << create @recent-files node >>
-        << Update p, leaving c.changed untouched >>
-    c.endUpdate(changed)
+        return
+    << Update p, leaving c.changed untouched >>
 #@nonl
 #@+node:ekr.20050420081237:<< create @settings node >>
 g.es('created @settings node',color='red')
@@ -21874,6 +21866,8 @@ except ImportError:
 #@nonl
 #@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
+    
+    __pychecker__ = '--no-argsused' # c not used. retained for compatibility.
 
     typ,val,tb = sys.exc_info()
 
@@ -21899,55 +21893,6 @@ def es_exception (full=True,c=None,color="red"):
 
     return fileName,n
 #@nonl
-#@+node:ekr.20031218072017.1474:es, enl, ecnl
-def ecnl():
-    g.ecnls(1)
-
-def ecnls(n):
-    log = app.log
-    if log and not log.isNull:
-        while log.newlines < n:
-            g.enl()
-
-def enl():
-    log = app.log
-    if log and not log.isNull:
-        log.newlines += 1
-        log.putnl()
-
-def es(s,*args,**keys):
-    if app.killed:
-        return
-    newline = keys.get("newline",True)
-    color = keys.get("color",None)
-    if color == 'suppress': return # New in 4.3.
-    if type(s) != type("") and type(s) != type(u""): # 1/20/03
-        s = repr(s)
-    for arg in args:
-        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
-            arg = repr(arg)
-        s = s + ", " + arg
-    if app.batchMode:
-        if app.log:
-            app.log.put(s)
-    else:
-        log = app.log
-        if log and not log.isNull:
-            # print 'g.es',s
-            log.put(s,color=color)
-            for ch in s:
-                if ch == '\n': log.newlines += 1
-                else: log.newlines = 0
-            if newline:
-                g.ecnl() # only valid here
-        elif newline:
-            app.logWaiting.append((s+'\n',color),)
-            # print s
-        else:
-            app.logWaiting.append((s,color),)
-            # print s,
-#@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
 
@@ -22741,6 +22686,8 @@ How did we ever live without this?
 #@-node:ekr.20041111100436:Notes
 #@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
+    
+    __pychecker__ = '--no-argsused' # c not used. retained for compatibility.
 
     typ,val,tb = sys.exc_info()
 
@@ -22766,55 +22713,6 @@ def es_exception (full=True,c=None,color="red"):
 
     return fileName,n
 #@nonl
-#@+node:ekr.20031218072017.1474:es, enl, ecnl
-def ecnl():
-    g.ecnls(1)
-
-def ecnls(n):
-    log = app.log
-    if log and not log.isNull:
-        while log.newlines < n:
-            g.enl()
-
-def enl():
-    log = app.log
-    if log and not log.isNull:
-        log.newlines += 1
-        log.putnl()
-
-def es(s,*args,**keys):
-    if app.killed:
-        return
-    newline = keys.get("newline",True)
-    color = keys.get("color",None)
-    if color == 'suppress': return # New in 4.3.
-    if type(s) != type("") and type(s) != type(u""): # 1/20/03
-        s = repr(s)
-    for arg in args:
-        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
-            arg = repr(arg)
-        s = s + ", " + arg
-    if app.batchMode:
-        if app.log:
-            app.log.put(s)
-    else:
-        log = app.log
-        if log and not log.isNull:
-            # print 'g.es',s
-            log.put(s,color=color)
-            for ch in s:
-                if ch == '\n': log.newlines += 1
-                else: log.newlines = 0
-            if newline:
-                g.ecnl() # only valid here
-        elif newline:
-            app.logWaiting.append((s+'\n',color),)
-            # print s
-        else:
-            app.logWaiting.append((s,color),)
-            # print s,
-#@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
 
@@ -22965,8 +22863,7 @@ def getScript (c,p,useSelectedText=True,script=None):
             # The simple way: covert crlf by brute force.
             script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
-            error = len(script) == 0
-    except:
+    except Exception:
         s = "unexpected exception"
         print s ; g.es(s)
         g.es_exception()
@@ -24766,8 +24663,6 @@ def scanAtTabwidthDirective(s,theDict,issue_error_flag=False):
 def scanForAtIgnore(c,p):
     
     """Scan position p and its ancestors looking for @ignore directives."""
-    
-    language = c.target_language
 
     if c is None or g.top() is None:
         return False # For unit tests.
@@ -25116,17 +25011,19 @@ def setRecentFiles (self,files,doUndo=False):
     
     # Append the files to the global list.
     g.app.config.appendToRecentFiles(files)
-    
-    c.beginUpdate()
-    if 1: # In update...
-        root = g.app.config.settingsRoot(c)
-        if not root:
+
+    root = g.app.config.settingsRoot(c)
+    if not root:
+        if 0:
             << create @settings node >>
-        p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if not p:
+        return
+
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        if 0:
             << create @recent-files node >>
-        << Update p, leaving c.changed untouched >>
-    c.endUpdate(changed)
+        return
+    << Update p, leaving c.changed untouched >>
 #@nonl
 #@+node:ekr.20050420081237:<< create @settings node >>
 g.es('created @settings node',color='red')
@@ -26835,6 +26732,8 @@ trace_count = 0
 
 def idleTimeHookHandler(*args,**keys):
     
+    __pychecker__ = '--no-argsused' # args & keys not used.
+    
     if 0: # Do not use g.trace here!
         global trace_count ; trace_count += 1
         if trace_count % 10 == 0:
@@ -27753,7 +27652,7 @@ AttributeError: 'tnode' object has no attribute 'tnodeList'
 #@nonl
 #@-node:ekr.20050202052911:Traceback
 #@+node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
-def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
+def putOpenNodeSentinel(self,p,inAtAll=False,middle=False):
     
     """Write @+node sentinel for p."""
     
@@ -28544,17 +28443,19 @@ def setRecentFiles (self,files,doUndo=False):
     
     # Append the files to the global list.
     g.app.config.appendToRecentFiles(files)
-    
-    c.beginUpdate()
-    if 1: # In update...
-        root = g.app.config.settingsRoot(c)
-        if not root:
+
+    root = g.app.config.settingsRoot(c)
+    if not root:
+        if 0:
             << create @settings node >>
-        p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if not p:
+        return
+
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        if 0:
             << create @recent-files node >>
-        << Update p, leaving c.changed untouched >>
-    c.endUpdate(changed)
+        return
+    << Update p, leaving c.changed untouched >>
 #@nonl
 #@+node:ekr.20050420081237:<< create @settings node >>
 g.es('created @settings node',color='red')
@@ -29478,7 +29379,7 @@ def printError (self,message):
         except UnicodeError:
             print g.toEncodedString(message,g.app.tkEncoding)
             
-def test_atFile_printError(self,**keys):
+def test_atFile_printError(self):
 
     at = c.atFileCommands
     at.errors = 0
@@ -30755,8 +30656,7 @@ def getScript (c,p,useSelectedText=True,script=None):
             # The simple way: covert crlf by brute force.
             script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
-            error = len(script) == 0
-    except:
+    except Exception:
         s = "unexpected exception"
         print s ; g.es(s)
         g.es_exception()
@@ -31244,7 +31144,7 @@ self.outlineMenuTopMenuTable = (
     ("C&ut Node","Shift+Ctrl+X",c.cutOutline),
     ("C&opy Node","Shift+Ctrl+C",c.copyOutline),
     ("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
-    ("Paste Node &As Clone",None,c.pasteOutlineRetainingClones),
+    ("Pas&te Node As Clone",None,c.pasteOutlineRetainingClones),
     ("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
     ("-",None,None),
     ("&Insert Node","Ctrl+I",c.insertHeadline),
@@ -31256,7 +31156,9 @@ self.outlineMenuTopMenuTable = (
     ("D&e-Hoist",None,f.c.dehoist),
     ("-",None,None))
     
-# Ampersand bindings:  a,c,d,e,h,i,k,m,n,o,p,s,u
+# Ampersand bindings:  a,c,d,e,h,i,n,o,p,t,s,
+# Bindings for entries that go to submenus: a,g,k,m,x
+#@nonl
 #@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
 #@+node:ekr.20040131171020:<< enable top level outline menu >>
 menu = frame.menu.getMenu("Outline")
@@ -31567,8 +31469,7 @@ def getScript (c,p,useSelectedText=True,script=None):
             # The simple way: covert crlf by brute force.
             script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
-            error = len(script) == 0
-    except:
+    except Exception:
         s = "unexpected exception"
         print s ; g.es(s)
         g.es_exception()
@@ -32389,7 +32290,7 @@ def expand   (self): return self.v.expand()
 
 def initExpandedBit    (self): return self.v.initExpandedBit()
 def initMarkedBit      (self): return self.v.initMarkedBit()
-def initStatus (self, status): return self.v.initStatus()
+def initStatus (self, status): return self.v.initStatus(status)
     
 def setMarked (self):
     self.v.setMarked()
@@ -32630,7 +32531,7 @@ def test_g_pdb():
     
     # Not a good unit test; it probably will never fail.
     def aFunction(): pass
-    assert type(g.pdb)==type(aFunction), 'wrong type for g.pdb: %' % type(g.pdb)
+    assert type(g.pdb)==type(aFunction), 'wrong type for g.pdb: %s' % type(g.pdb)
     
     class myStdout:
         def write(self,s):
@@ -32754,8 +32655,7 @@ def getScript (c,p,useSelectedText=True,script=None):
             # The simple way: covert crlf by brute force.
             script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
-            error = len(script) == 0
-    except:
+    except Exception:
         s = "unexpected exception"
         print s ; g.es(s)
         g.es_exception()
@@ -32783,6 +32683,8 @@ def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
     """Scan position p and p's ancestors looking for directives,
     setting corresponding atFile ivars.
     """
+    
+    __pychecker__ = '--maxlines=400'
 
     c = self.c
     << Set ivars >>
@@ -32992,6 +32894,8 @@ This allows plugins such as plugin_manager.py to work on Python 2.2.x.
 #@+node:ekr.20050220034952:(Added test for g.exception & added color='suppress' hack to g.es)
 #@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
+    
+    __pychecker__ = '--no-argsused' # c not used. retained for compatibility.
 
     typ,val,tb = sys.exc_info()
 
@@ -33017,55 +32921,6 @@ def es_exception (full=True,c=None,color="red"):
 
     return fileName,n
 #@nonl
-#@+node:ekr.20031218072017.1474:es, enl, ecnl
-def ecnl():
-    g.ecnls(1)
-
-def ecnls(n):
-    log = app.log
-    if log and not log.isNull:
-        while log.newlines < n:
-            g.enl()
-
-def enl():
-    log = app.log
-    if log and not log.isNull:
-        log.newlines += 1
-        log.putnl()
-
-def es(s,*args,**keys):
-    if app.killed:
-        return
-    newline = keys.get("newline",True)
-    color = keys.get("color",None)
-    if color == 'suppress': return # New in 4.3.
-    if type(s) != type("") and type(s) != type(u""): # 1/20/03
-        s = repr(s)
-    for arg in args:
-        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
-            arg = repr(arg)
-        s = s + ", " + arg
-    if app.batchMode:
-        if app.log:
-            app.log.put(s)
-    else:
-        log = app.log
-        if log and not log.isNull:
-            # print 'g.es',s
-            log.put(s,color=color)
-            for ch in s:
-                if ch == '\n': log.newlines += 1
-                else: log.newlines = 0
-            if newline:
-                g.ecnl() # only valid here
-        elif newline:
-            app.logWaiting.append((s+'\n',color),)
-            # print s
-        else:
-            app.logWaiting.append((s,color),)
-            # print s,
-#@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
 
@@ -33226,6 +33081,8 @@ for p in c.allNodes_iter():
 def readEndNode (self,s,i,middle=False):
     
     """Handle end-of-node processing for @-others and @-ref sentinels."""
+    
+    __pychecker__ = '--no-argsused' # i not used, but must be present.
 
     at = self ; c = at.c
     
@@ -33322,7 +33179,7 @@ def createThinChild4 (self,gnxString,headline):
 
     """Find or create a new vnode whose parent is at.lastThinNode."""
 
-    at = self ; v = at.root.v ; c = at.c ; indices = g.app.nodeIndices
+    at = self ; c = at.c ; indices = g.app.nodeIndices
     last = at.lastThinNode ; lastIndex = last.t.fileIndex
     gnx = indices.scanGnx(gnxString,0)
     
@@ -33372,6 +33229,8 @@ def createThinChild4 (self,gnxString,headline):
 def scanText4 (self,theFile,fileName,p,verbose=False):
     
     """Scan a 4.x derived file non-recursively."""
+    
+    __pychecker__ = '--no-argsused' # fileName,verbose might be used for debugging.
 
     at = self
     << init ivars for scanText4 >>
@@ -33567,7 +33426,7 @@ def readStartNode (self,s,i,middle=False):
     at.tStack.append(at.t)
 
     if at.importing:
-        p = at.createImportedNode(at.root,at.c,headline)
+        p = at.createImportedNode(at.root,headline)
         at.t = p.v.t
     elif at.thinFile:
         at.thinNodeStack.append(at.lastThinNode)
@@ -33651,6 +33510,8 @@ def readEndAll (self,s,i):
     
     """Read an @-all sentinel."""
     
+    __pychecker__ = '--no-argsused' # s,i not used, but must be present.
+    
     at = self
     at.popSentinelStack(at.endAll)
 #@nonl
@@ -33659,6 +33520,8 @@ def readEndAll (self,s,i):
 def readEndAt (self,s,i):
     
     """Read an @-at sentinel."""
+    
+    __pychecker__ = '--no-argsused' # s,i not used, but must be present.
 
     at = self
     at.readLastDocLine("@")
@@ -33668,6 +33531,8 @@ def readEndAt (self,s,i):
 def readEndDoc (self,s,i):
     
     """Read an @-doc sentinel."""
+    
+    __pychecker__ = '--no-argsused' # s,i not used, but must be present.
 
     at = self
     at.readLastDocLine("@doc")
@@ -33679,6 +33544,8 @@ def readEndDoc (self,s,i):
 def readEndLeo (self,s,i):
     
     """Read an @-leo sentinel."""
+    
+    __pychecker__ = '--no-argsused' # i not used, but must be present.
     
     at = self
 
@@ -33706,6 +33573,8 @@ def readEndMiddle (self,s,i):
 def readEndNode (self,s,i,middle=False):
     
     """Handle end-of-node processing for @-others and @-ref sentinels."""
+    
+    __pychecker__ = '--no-argsused' # i not used, but must be present.
 
     at = self ; c = at.c
     
@@ -33802,6 +33671,8 @@ def readEndOthers (self,s,i):
     
     """Read an @-others sentinel."""
     
+    __pychecker__ = '--no-argsused' # s,i unused, but must be present.
+    
     at = self
     at.popSentinelStack(at.endOthers)
 #@nonl
@@ -33857,6 +33728,8 @@ def readLastDocLine (self,tag):
 def  ignoreOldSentinel (self,s,i):
     
     """Ignore an 3.x sentinel."""
+    
+    __pychecker__ = '--no-argsused' # i unused, but must be present.
     
     g.es("Ignoring 3.x sentinel: " + s.strip(), color="blue")
 #@nonl
@@ -35750,7 +35623,7 @@ self.createMenuEntries(checkOutlineMenu,self.outlineMenuCheckOutlineMenuTable,in
 #@nonl
 #@-node:ekr.20040711140738.1:<< create check submenu >>
 #@+node:ekr.20031218072017.3798:<< create expand/contract submenu >>
-expandMenu = self.createNewMenu("&Expand/Contract...","Outline")
+expandMenu = self.createNewMenu("E&xpand/Contract...","Outline")
 
 self.createMenuEntries(expandMenu,self.outlineMenuExpandContractMenuTable,init=True)
 #@nonl
@@ -36041,6 +35914,8 @@ def findChild4 (self,headline):
     
     """Return the next tnode in at.root.t.tnodeList."""
     
+    __pychecker__ = '--no-argsused' # headline might be used for debugging.
+    
     # Note: tnodeLists are used _only_ when reading @file (not @thin) nodes.
     # tnodeLists compensate (a hack) for not having gnx's in derived files! 
 
@@ -36133,7 +36008,7 @@ else:
 #@-node:ekr.20041005105605.146:<< set dirty and orphan bits on error >>
 #@-node:ekr.20041005105605.144:write
 #@+node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
-def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
+def putOpenNodeSentinel(self,p,inAtAll=False,middle=False):
     
     """Write @+node sentinel for p."""
     
@@ -36407,6 +36282,8 @@ def es_event_exception (eventName,full=False):
 #@-node:ekr.20031218072017.3111:es_event_exception
 #@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
+    
+    __pychecker__ = '--no-argsused' # c not used. retained for compatibility.
 
     typ,val,tb = sys.exc_info()
 
@@ -36432,55 +36309,6 @@ def es_exception (full=True,c=None,color="red"):
 
     return fileName,n
 #@nonl
-#@+node:ekr.20031218072017.1474:es, enl, ecnl
-def ecnl():
-    g.ecnls(1)
-
-def ecnls(n):
-    log = app.log
-    if log and not log.isNull:
-        while log.newlines < n:
-            g.enl()
-
-def enl():
-    log = app.log
-    if log and not log.isNull:
-        log.newlines += 1
-        log.putnl()
-
-def es(s,*args,**keys):
-    if app.killed:
-        return
-    newline = keys.get("newline",True)
-    color = keys.get("color",None)
-    if color == 'suppress': return # New in 4.3.
-    if type(s) != type("") and type(s) != type(u""): # 1/20/03
-        s = repr(s)
-    for arg in args:
-        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
-            arg = repr(arg)
-        s = s + ", " + arg
-    if app.batchMode:
-        if app.log:
-            app.log.put(s)
-    else:
-        log = app.log
-        if log and not log.isNull:
-            # print 'g.es',s
-            log.put(s,color=color)
-            for ch in s:
-                if ch == '\n': log.newlines += 1
-                else: log.newlines = 0
-            if newline:
-                g.ecnl() # only valid here
-        elif newline:
-            app.logWaiting.append((s+'\n',color),)
-            # print s
-        else:
-            app.logWaiting.append((s,color),)
-            # print s,
-#@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
 
@@ -36790,6 +36618,8 @@ def findChild4 (self,headline):
     
     """Return the next tnode in at.root.t.tnodeList."""
     
+    __pychecker__ = '--no-argsused' # headline might be used for debugging.
+    
     # Note: tnodeLists are used _only_ when reading @file (not @thin) nodes.
     # tnodeLists compensate (a hack) for not having gnx's in derived files! 
 
@@ -36882,7 +36712,7 @@ else:
 #@-node:ekr.20041005105605.146:<< set dirty and orphan bits on error >>
 #@-node:ekr.20041005105605.144:write
 #@+node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
-def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
+def putOpenNodeSentinel(self,p,inAtAll=False,middle=False):
     
     """Write @+node sentinel for p."""
     
@@ -36912,6 +36742,1190 @@ def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
 #@-node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
 #@-node:ekr.20050202052911.2:Documentation of tnodeLists & potential problems
 #@-node:ekr.20050328070924:(Investigated problem with LeoPluginsRef.leo)
+#@+node:ekr.20050416150731:Fixed conflicts in menu shortcuts
+# The De-hoist command conflicted with the Expand/Contract submenu.
+# Also, the Paste Node As Clone conflicted with the Mark submenu.
+#@nonl
+#@+node:ekr.20031218072017.3785:createMenusFromTables
+def createMenusFromTables (self):
+
+    c = self.c
+    << create the file menu >>
+    << create the edit menu >>
+    << create the outline menu >>
+    g.doHook("create-optional-menus",c=c)
+    << create the window menu >>
+    << create the help menu >>
+#@nonl
+#@+node:ekr.20031218072017.3790:<< create the file menu >>
+fileMenu = self.createNewMenu("&File")
+
+self.createMenuEntries(fileMenu,self.fileMenuTopTable,init=True)
+self.createNewMenu("Open &With...","File")
+self.createMenuEntries(fileMenu,self.fileMenuTop2Table,init=True)
+<< create the recent files submenu >>
+self.add_separator(fileMenu)
+<< create the read/write submenu >>
+<< create the tangle submenu >>
+<< create the untangle submenu >>
+<< create the import submenu >>
+<< create the export submenu >>
+self.add_separator(fileMenu)
+self.createMenuEntries(fileMenu,self.fileMenuTop3MenuTable,init=True)
+#@nonl
+#@+node:ekr.20031218072017.3791:<< create the recent files submenu >>
+self.createNewMenu("Recent &Files...","File")
+c.recentFiles = c.config.getRecentFiles()
+
+if 0: # Not needed, and causes problems in wxWindows...
+    self.createRecentFilesMenuItems()
+#@nonl
+#@-node:ekr.20031218072017.3791:<< create the recent files submenu >>
+#@+node:ekr.20031218072017.3792:<< create the read/write submenu >>
+readWriteMenu = self.createNewMenu("&Read/Write...","File")
+
+self.createMenuEntries(readWriteMenu,self.fileMenuReadWriteMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3792:<< create the read/write submenu >>
+#@+node:ekr.20031218072017.3793:<< create the tangle submenu >>
+tangleMenu = self.createNewMenu("&Tangle...","File")
+
+self.createMenuEntries(tangleMenu,self.fileMenuTangleMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3793:<< create the tangle submenu >>
+#@+node:ekr.20031218072017.3794:<< create the untangle submenu >>
+untangleMenu = self.createNewMenu("&Untangle...","File")
+
+self.createMenuEntries(untangleMenu,self.fileMenuUntangleMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3794:<< create the untangle submenu >>
+#@+node:ekr.20031218072017.3795:<< create the import submenu >>
+importMenu = self.createNewMenu("&Import...","File")
+
+self.createMenuEntries(importMenu,self.fileMenuImportMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3795:<< create the import submenu >>
+#@+node:ekr.20031218072017.3796:<< create the export submenu >>
+exportMenu = self.createNewMenu("&Export...","File")
+
+self.createMenuEntries(exportMenu,self.fileMenuExportMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3796:<< create the export submenu >>
+#@-node:ekr.20031218072017.3790:<< create the file menu >>
+#@+node:ekr.20031218072017.3786:<< create the edit menu >>
+editMenu = self.createNewMenu("&Edit")
+
+self.createMenuEntries(editMenu,self.editMenuTopTable,init=True)
+
+<< create the edit body submenu >>
+<< create the edit headline submenu >>
+<< create the find submenu >>
+
+self.createMenuEntries(editMenu,self.editMenuTop2Table,init=True)
+#@nonl
+#@+node:ekr.20031218072017.3787:<< create the edit body submenu >>
+editBodyMenu = self.createNewMenu("Edit &Body...","Edit")
+
+self.createMenuEntries(editBodyMenu,self.editMenuEditBodyTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3787:<< create the edit body submenu >>
+#@+node:ekr.20031218072017.3788:<< create the edit headline submenu >>
+editHeadlineMenu = self.createNewMenu("Edit &Headline...","Edit")
+
+self.createMenuEntries(editHeadlineMenu,self.editMenuEditHeadlineTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3788:<< create the edit headline submenu >>
+#@+node:ekr.20031218072017.3789:<< create the find submenu >>
+findMenu = self.createNewMenu("&Find...","Edit")
+
+self.createMenuEntries(findMenu,self.editMenuFindMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3789:<< create the find submenu >>
+#@-node:ekr.20031218072017.3786:<< create the edit menu >>
+#@+node:ekr.20031218072017.3797:<< create the outline menu >>
+outlineMenu = self.createNewMenu("&Outline")
+
+self.createMenuEntries(outlineMenu,self.outlineMenuTopMenuTable,init=True)
+
+<< create check submenu >>
+<< create expand/contract submenu >>
+<< create move submenu >>
+<< create mark submenu >>
+<< create goto submenu >>
+#@nonl
+#@+node:ekr.20040711140738.1:<< create check submenu >>
+checkOutlineMenu = self.createNewMenu("Chec&k...","Outline")
+
+self.createMenuEntries(checkOutlineMenu,self.outlineMenuCheckOutlineMenuTable,init=True)
+#@nonl
+#@-node:ekr.20040711140738.1:<< create check submenu >>
+#@+node:ekr.20031218072017.3798:<< create expand/contract submenu >>
+expandMenu = self.createNewMenu("E&xpand/Contract...","Outline")
+
+self.createMenuEntries(expandMenu,self.outlineMenuExpandContractMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3798:<< create expand/contract submenu >>
+#@+node:ekr.20031218072017.3799:<< create move submenu >>
+moveSelectMenu = self.createNewMenu("&Move...","Outline")
+
+self.createMenuEntries(moveSelectMenu,self.outlineMenuMoveMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3799:<< create move submenu >>
+#@+node:ekr.20031218072017.3800:<< create mark submenu >>
+markMenu = self.createNewMenu("M&ark/Unmark...","Outline")
+
+self.createMenuEntries(markMenu,self.outlineMenuMarkMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3800:<< create mark submenu >>
+#@+node:ekr.20031218072017.3801:<< create goto submenu >>
+gotoMenu = self.createNewMenu("&Go To...","Outline")
+
+self.createMenuEntries(gotoMenu,self.outlineMenuGoToMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3801:<< create goto submenu >>
+#@-node:ekr.20031218072017.3797:<< create the outline menu >>
+#@+node:ekr.20031218072017.3802:<< create the window menu >>
+windowMenu = self.createNewMenu("&Window")
+
+self.createMenuEntries(windowMenu,self.windowMenuTopTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3802:<< create the window menu >>
+#@+node:ekr.20031218072017.3803:<< create the help menu >>
+helpMenu = self.createNewMenu("&Help")
+
+self.createMenuEntries(helpMenu,self.helpMenuTopTable,init=True)
+
+if sys.platform=="win32":
+    self.createMenuEntries(helpMenu,self.helpMenuTop2Table,init=True)
+
+self.createMenuEntries(helpMenu,self.helpMenuTop3Table,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3803:<< create the help menu >>
+#@-node:ekr.20031218072017.3785:createMenusFromTables
+#@+node:ekr.20031218072017.3767:<< define outline menu tables >>
+<< define outlineMenuTopMenuTable >>
+<< define outlineMenuCheckOutlineMenuTable >>
+<< define outlineMenuExpandContractMenuTable >>
+<< define outlineMenuMoveMenuTable >>
+<< define outlineMenuMarkMenuTable >>
+<< define outlineMenuGoToMenuTable >>
+#@nonl
+#@+node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
+self.outlineMenuTopMenuTable = (
+    ("C&ut Node","Shift+Ctrl+X",c.cutOutline),
+    ("C&opy Node","Shift+Ctrl+C",c.copyOutline),
+    ("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
+    ("Pas&te Node As Clone",None,c.pasteOutlineRetainingClones),
+    ("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
+    ("-",None,None),
+    ("&Insert Node","Ctrl+I",c.insertHeadline),
+    ("&Clone Node","Ctrl+`",c.clone),
+    ("Sort Childre&n",None,c.sortChildren), # Conflicted with Hoist.
+    ("&Sort Siblings","Alt+A",c.sortSiblings),
+    ("-",None,None),
+    ("&Hoist",None,c.hoist),
+    ("D&e-Hoist",None,f.c.dehoist),
+    ("-",None,None))
+    
+# Ampersand bindings:  a,c,d,e,h,i,n,o,p,t,s,
+# Bindings for entries that go to submenus: a,g,k,m,x
+#@nonl
+#@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
+#@+node:ekr.20040711140738:<< define outlineMenuCheckOutlineMenuTable >>
+self.outlineMenuCheckOutlineMenuTable = (
+
+    ("Check &Outline",None,c.checkOutline),
+    ("&Dump Outline",None,c.dumpOutline),
+    ("-",None,None),
+    ("Check &All Python Code",None,c.checkAllPythonCode),
+    ("&Check Python &Code",None,c.checkPythonCode),
+    ("-",None,None),
+    ("Pretty P&rint All Python Code",None,c.prettyPrintAllPythonCode),
+    ("&Pretty Print Python Code",None,c.prettyPrintPythonCode),
+    
+)
+
+# shortcuts used: a,c,d,o,p,r
+#@nonl
+#@-node:ekr.20040711140738:<< define outlineMenuCheckOutlineMenuTable >>
+#@+node:ekr.20031218072017.3769:<< define outlineMenuExpandContractMenuTable >>
+self.outlineMenuExpandContractMenuTable = (
+    ("&Contract All","Alt+-",c.contractAllHeadlines),
+    ("Contract &Node","Alt+[",c.contractNode),
+    ("Contract &Parent","Alt+0",c.contractParent),
+    ("Contract Or Go Left","Alt+LtArrow",c.contractNodeOrGoToParent),
+    ("-",None,None),
+    ("Expand P&rev Level","Alt+.",c.expandPrevLevel),
+    ("Expand N&ext Level","Alt+=",c.expandNextLevel),
+    ("Expand Or Go Right","Alt+RtArrow",c.expandNodeOrGoToFirstChild),
+    ("-",None,None),
+    ("Expand To Level &1","Alt+1",c.expandLevel1),
+    ("Expand To Level &2","Alt+2",c.expandLevel2),
+    ("Expand To Level &3","Alt+3",c.expandLevel3),
+    ("Expand To Level &4","Alt+4",c.expandLevel4),
+    ("Expand To Level &5","Alt+5",c.expandLevel5),
+    ("Expand To Level &6","Alt+6",c.expandLevel6),
+    ("Expand To Level &7","Alt+7",c.expandLevel7),
+    ("Expand To Level &8","Alt+8",c.expandLevel8),
+    # ("Expand To Level &9","Alt+9",c.expandLevel9),
+    ("-",None,None),
+    ("Expand &All","Alt+9",c.expandAllHeadlines),
+    ("Expand N&ode","Alt+]",c.expandNode))
+#@nonl
+#@-node:ekr.20031218072017.3769:<< define outlineMenuExpandContractMenuTable >>
+#@+node:ekr.20031218072017.3770:<< define outlineMenuMoveMenuTable >>
+self.outlineMenuMoveMenuTable = (
+    ("Move &Down", "Ctrl+D",c.moveOutlineDown),
+    ("Move &Left", "Ctrl+L",c.moveOutlineLeft),
+    ("Move &Right","Ctrl+R",c.moveOutlineRight),
+    ("Move &Up",   "Ctrl+U",c.moveOutlineUp),
+    ("-",None,None),
+    ("&Promote","Ctrl+{",c.promote),
+    ("&Demote", "Ctrl+}",c.demote))
+#@nonl
+#@-node:ekr.20031218072017.3770:<< define outlineMenuMoveMenuTable >>
+#@+node:ekr.20031218072017.3771:<< define outlineMenuMarkMenuTable >>
+self.outlineMenuMarkMenuTable = (
+    ("&Mark","Ctrl+M",c.markHeadline),
+    ("Mark &Subheads","Alt+S",c.markSubheads),
+    ("Mark Changed &Items","Alt+C",c.markChangedHeadlines),
+    ("Mark Changed &Roots","Alt+R",c.markChangedRoots),
+    ("Mark &Clones","Alt+K",c.markClones),
+    ("&Unmark All","Alt+U",c.unmarkAll))
+#@nonl
+#@-node:ekr.20031218072017.3771:<< define outlineMenuMarkMenuTable >>
+#@+node:ekr.20031218072017.3772:<< define outlineMenuGoToMenuTable >>
+self.outlineMenuGoToMenuTable = (
+    ("Go Back",None,c.goPrevVisitedNode), # Usually use buttons for this.
+    ("Go Forward",None,c.goNextVisitedNode),
+    ("-",None,None),
+    ("Go To Next &Marked","Alt+M",c.goToNextMarkedHeadline),
+    ("Go To Next C&hanged","Alt+D",c.goToNextDirtyHeadline),
+    ("Go To Next &Clone","Alt+N",c.goToNextClone),
+    ("-",None,None),
+    ("Go To &First Node","Alt+Shift+G",c.goToFirstNode),
+    ("Go To &Last Node","Alt+Shift+H",c.goToLastNode),
+    ("Go To &Parent","Alt+Shift+P",c.goToParent),
+    ("Go To P&rev Sibling","Alt+Shift+R",c.goToPrevSibling),
+    ("Go To Next &Sibling","Alt+Shift+S",c.goToNextSibling),
+    ("-",None,None),
+    ("Go To Prev V&isible","Alt+UpArrow",c.selectVisBack),
+    ("Go To Next &Visible","Alt+DnArrow",c.selectVisNext),
+    ("Go To Prev Node","Alt+Shift+UpArrow",c.selectThreadBack),
+    ("Go To Next Node","Alt+Shift+DnArrow",c.selectThreadNext))
+#@nonl
+#@-node:ekr.20031218072017.3772:<< define outlineMenuGoToMenuTable >>
+#@-node:ekr.20031218072017.3767:<< define outline menu tables >>
+#@-node:ekr.20050416150731:Fixed conflicts in menu shortcuts
+#@+node:ekr.20050419062215.1:(Debugged @if-platform, @if-gui, @ints & @strings)
+#@+node:ekr.20050419085131:Notes
+@killcolor
+
+g.app.gui typically not defined when the config settings are loaded, so to use a
+setting in @if-gui a plugin would have to call g.app.config.readSettingsFiles.
+#@nonl
+#@-node:ekr.20050419085131:Notes
+#@+node:ekr.20041225063637.99:visitNode (settingsDialogParserClass)
+def visitNode (self,p):
+    
+    """Visit a node, and possibly append a widget description to self.widgets."""
+    
+    munge = g.app.config.munge
+    h = p.headString().strip() or ''
+    kind,name,val = self.parseHeadline(h)
+    
+    # g.trace(kind,name,val)
+
+    f = self.dispatchDict.get(munge(kind))
+    if f is not None:
+        try:
+            return f(p,kind,name,val)
+        except TypeError:
+            g.es_exception()
+            print "*** no handler",kind
+            return None
+#@nonl
+#@-node:ekr.20041225063637.99:visitNode (settingsDialogParserClass)
+#@+node:ekr.20041119204714:visitNode (settingsTreeParser)
+def visitNode (self,p):
+    
+    """Init any settings found in node p."""
+    
+    # g.trace(p.headString())
+    
+    munge = g.app.config.munge
+
+    kind,name,val = self.parseHeadline(p.headString())
+    kind = munge(kind)
+
+    if kind == "settings":
+        pass
+    elif kind not in self.control_types and val in (u'None',u'none','None','none','',None):
+        # None is valid for all data types.
+        self.set(p,kind,name,None)
+    elif kind in self.control_types or kind in self.basic_types:
+        f = self.dispatchDict.get(kind)
+        try:
+            return f(p,kind,name,val)
+        except TypeError:
+            g.es_exception()
+            print "*** no handler",kind
+            return None
+    elif name:
+        # self.error("unknown type %s for setting %s" % (kind,name))
+        # Just assume the type is a string.
+        self.set(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041119204714:visitNode (settingsTreeParser)
+#@+node:ekr.20041119204700.1:traverse (parserBaseClass)
+def traverse (self):
+    
+    c = self.c
+    
+    p = g.app.config.settingsRoot(c)
+    if not p:
+        return None
+
+    self.settingsDict = {}
+    after = p.nodeAfterTree()
+    while p and p != after:
+        result = self.visitNode(p)
+        # g.trace(result,p.headString())
+        if result == "skip":
+            s = 'skipping settings in %s' % p.headString()
+            print s ; g.es(s,color='blue')
+            p.moveToNodeAfterTree()
+        else:
+            p.moveToThreadNext()
+            
+    return self.settingsDict
+#@nonl
+#@-node:ekr.20041119204700.1:traverse (parserBaseClass)
+#@+node:ekr.20041119204700: ctor (parserBaseClass)
+def __init__ (self,c):
+    
+    self.c = c
+    self.recentFiles = [] # List of recent files.
+    
+    # Keys are canonicalized names.
+    self.dispatchDict = {
+        'bool':         self.doBool,
+        'color':        self.doColor,
+        'directory':    self.doDirectory,
+        'font':         self.doFont,
+        'if':           self.doIf,
+        'ifgui':        self.doIfGui,
+        'ifplatform':   self.doIfPlatform,
+        'ignore':       self.doIgnore,
+        'int':          self.doInt,
+        'ints':         self.doInts,
+        'float':        self.doFloat,
+        'path':         self.doPath,
+        'page':         self.doPage,
+        'ratio':        self.doRatio,
+        'recentfiles':  self.doRecentFiles,
+        'shortcut':     self.doShortcut,
+        'shortcuts':    self.doShortcuts,
+        'string':       self.doString,
+        'strings':      self.doStrings,
+    }
+#@nonl
+#@-node:ekr.20041119204700: ctor (parserBaseClass)
+#@+node:ekr.20041120094940:kind handlers (parserBaseClass)
+#@+node:ekr.20041120094940.1:doBool
+def doBool (self,p,kind,name,val):
+
+    if val in ('True','true','1'):
+        self.set(p,kind,name,True)
+    elif val in ('False','false','0'):
+        self.set(p,kind,name,False)
+    else:
+        self.valueError(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.1:doBool
+#@+node:ekr.20041120094940.2:doColor
+def doColor (self,p,kind,name,val):
+    
+    # At present no checking is done.
+    self.set(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.2:doColor
+#@+node:ekr.20041120094940.3:doDirectory & doPath
+def doDirectory (self,p,kind,name,val):
+    
+    # At present no checking is done.
+    self.set(p,kind,name,val)
+
+doPath = doDirectory
+#@nonl
+#@-node:ekr.20041120094940.3:doDirectory & doPath
+#@+node:ekr.20041120094940.6:doFloat
+def doFloat (self,p,kind,name,val):
+    
+    try:
+        val = float(val)
+        self.set(p,kind,name,val)
+    except ValueError:
+        self.valueError(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.6:doFloat
+#@+node:ekr.20041120094940.4:doFont
+def doFont (self,p,kind,name,val):
+    
+    d = self.parseFont(p)
+    
+    # Set individual settings.
+    for key in ('family','size','slant','weight'):
+        data = d.get(key)
+        if data is not None:
+            name,val = data
+            setKind = key
+            self.set(p,setKind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.4:doFont
+#@+node:ekr.20041120103933:doIf
+def doIf(self,p,kind,name,val):
+
+    g.trace("'if' not supported yet")
+    return None
+#@nonl
+#@-node:ekr.20041120103933:doIf
+#@+node:ekr.20041121125416:doIfGui
+def doIfGui (self,p,kind,name,val):
+    
+    # g.trace(repr(name))
+    
+    if not g.app.gui or not g.app.gui.guiName():
+        s = '@if-gui has no effect: g.app.gui not defined yet'
+        print s ; g.es(s,color='blue')
+        return "skip"
+    elif g.app.gui.guiName().lower() == name.lower():
+        return None
+    else:
+        return "skip"
+#@nonl
+#@-node:ekr.20041121125416:doIfGui
+#@+node:ekr.20041120104215:doIfPlatform
+def doIfPlatform (self,p,kind,name,val):
+    
+    # g.trace(sys.platform,repr(name))
+
+    if sys.platform.lower() == name.lower():
+        return None
+    else:
+        return "skip"
+#@nonl
+#@-node:ekr.20041120104215:doIfPlatform
+#@+node:ekr.20041120104215.1:doIgnore
+def doIgnore(self,p,kind,name,val):
+
+    return "skip"
+#@nonl
+#@-node:ekr.20041120104215.1:doIgnore
+#@+node:ekr.20041120094940.5:doInt
+def doInt (self,p,kind,name,val):
+    
+    try:
+        val = int(val)
+        self.set(p,kind,name,val)
+    except ValueError:
+        self.valueError(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.5:doInt
+#@+node:ekr.20041217132253:doInts
+def doInts (self,p,kind,name,val):
+    
+    '''We expect @ints aName[val1,val2]=val'''
+
+    name = name.strip() # The name indicates the valid values.
+    i = name.find('[')
+    j = name.find(']')
+    
+    # g.trace(kind,name,val)
+
+    if -1 < i < j:
+        items = name[i+1:j]
+        items = items.split(',')
+        name = name[0:i].strip()
+        try:
+            items = [int(item.strip()) for item in items]
+        except ValueError:
+            items = []
+            self.valueError(p,'ints[]',name,val)
+            return
+        kind = "ints[%s]" % (','.join([str(item) for item in items]))
+        try:
+            val = int(val)
+        except ValueError:
+            self.valueError(p,'int',name,val)
+            return
+        if val not in items:
+            self.error("%d is not in %s in %s" % (val,kind,name))
+            return
+
+        # g.trace(repr(kind),repr(name),val)
+
+        # At present no checking is done.
+        self.set(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041217132253:doInts
+#@+node:ekr.20041120104215.2:doPage
+def doPage(self,p,kind,name,val):
+
+    pass # Ignore @page this while parsing settings.
+#@nonl
+#@-node:ekr.20041120104215.2:doPage
+#@+node:ekr.20041121125741:doRatio
+def doRatio (self,p,kind,name,val):
+    
+    try:
+        val = float(val)
+        if 0.0 <= val <= 1.0:
+            self.set(p,kind,name,val)
+        else:
+            self.valueError(p,kind,name,val)
+    except ValueError:
+        self.valueError(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041121125741:doRatio
+#@+node:ekr.20041121151924:doRecentFiles
+def doRecentFiles (self,p,kind,name,val):
+    
+    s = p.bodyString().strip()
+    if s:
+        lines = g.splitLines(s)
+        self.set(p,"recent-files","recent-files",lines)
+#@nonl
+#@-node:ekr.20041121151924:doRecentFiles
+#@+node:ekr.20041120113848:doShortcut
+def doShortcut(self,p,kind,name,val):
+
+    self.set(p,kind,name,val)
+    self.setShortcut(name,val)
+#@nonl
+#@-node:ekr.20041120113848:doShortcut
+#@+node:ekr.20041120105609:doShortcuts
+def doShortcuts(self,p,kind,name,val):
+    
+    #g.trace('*'*10,p.headString())
+
+    s = p.bodyString()
+    lines = g.splitLines(s)
+    for line in lines:
+        line = line.strip()
+        if line and not g.match(line,0,'#'):
+            name,val = self.parseShortcutLine(line)
+            # g.trace(name,val)
+            if val is not None:
+                self.set(p,"shortcut",name,val)
+                self.setShortcut(name,val)
+#@nonl
+#@-node:ekr.20041120105609:doShortcuts
+#@+node:ekr.20041217132028:doString
+def doString (self,p,kind,name,val):
+    
+    # At present no checking is done.
+    self.set(p,kind,name,val)
+#@-node:ekr.20041217132028:doString
+#@+node:ekr.20041120094940.8:doStrings
+def doStrings (self,p,kind,name,val):
+    
+    '''We expect @strings aName[val1,val2]=val'''
+    
+    name = name.strip()
+    i = name.find('[')
+    j = name.find(']')
+
+    if -1 < i < j:
+        items = name[i+1:j]
+        items = items.split(',')
+        items = [item.strip() for item in items]
+        name = name[0:i].strip()
+
+        kind = "strings[%s]" % (','.join(items))
+
+        # g.trace(repr(kind),repr(name),val)
+
+        # At present no checking is done.
+        self.set(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.8:doStrings
+#@-node:ekr.20041120094940:kind handlers (parserBaseClass)
+#@+node:ekr.20041120094940.10:valueError
+def valueError (self,p,kind,name,val):
+    
+    """Give an error: val is not valid for kind."""
+    
+    self.error("%s is not a valid %s for %s" % (val,kind,name))
+#@nonl
+#@-node:ekr.20041120094940.10:valueError
+#@-node:ekr.20050419062215.1:(Debugged @if-platform, @if-gui, @ints & @strings)
+#@+node:ekr.20050128092443:(Reloaded settings files when opening the settings dialog)
+#@+node:ekr.20050419085515:Notes
+@killcolor
+
+> I...change the @settings node to @string server = mail.otherisp.net
+
+the script doesn't print  -mail.otherisp.net-
+until I restart Leo.
+
+# EKR:  The change _is_ available if the change is made from the settings panel.  However, it is not available if the change is made in the Leo outline.  So opening the settings dialog should reload the files!
+
+g.app.config.readSettingsFiles(c.fileName(),verbose=True) reloads all settings files.
+#@nonl
+#@-node:ekr.20050419085515:Notes
+#@+node:ekr.20031218072017.1934:run & allies
+def run(fileName=None,*args,**keywords):
+    
+    """Initialize and run Leo"""
+    
+    if not isValidPython(): return
+    << import leoGlobals and leoApp >>
+    g.computeStandardDirectories()
+    script = getBatchScript() # Do early so we can compute verbose next.
+    verbose = script is None
+    g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
+    << import leoNodes and leoConfig >>
+    g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
+    g.app.config = leoConfig.configClass()
+    fileName = completeFileName(fileName)
+    reportDirectories(verbose)
+    g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.
+    g.app.setEncoding()
+    if script:
+        createNullGuiWithScript(script)
+        fileName = None
+    # Load plugins. Plugins may create g.app.gui.
+    g.doHook("start1")
+    if g.app.killed: return # Support for g.app.forceShutdown.
+    # Create the default gui if needed.
+    if g.app.gui == None:
+        g.app.createTkGui() # Creates global windows.
+    # Initialize tracing and statistics.
+    g.init_sherlock(args)
+    g.clear_stats()
+    << start psycho >>
+    # New in 4.3: clear g.app.initing _before_ creating the frame.
+    g.app.initing = False # "idle" hooks may now call g.app.forceShutdown.
+    # Create the main frame.  Show it and all queued messages.
+    c,frame = createFrame(fileName)
+    if not frame: return
+    if g.app.disableSave:
+        g.es("disabling save commands",color="red")
+    g.app.writeWaitingLog()
+    p = c.currentPosition()
+    g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
+    g.enableIdleTimeHook()
+    frame.tree.redraw()
+    frame.body.setFocus()
+    g.app.gui.runMainLoop()
+#@nonl
+#@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+# Import leoGlobals, but do NOT set g.
+try:
+    import leoGlobals
+except ImportError:
+    print "Error importing leoGlobals.py"
+
+# Create the application object.
+try:
+    import leoApp
+    leoGlobals.app = leoApp.LeoApp()
+except ImportError:
+    print "Error importing leoApp.py"
+    
+# NOW we can set g.
+g = leoGlobals
+assert(g.app)
+#@nonl
+#@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+#@+node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+try:
+    import leoNodes
+except ImportError:
+    print "Error importing leoNodes.py"
+    import traceback ; traceback.print_exc()
+try:
+    import leoConfig
+except ImportError:
+    print "Error importing leoConfig.py"
+    import traceback ; traceback.print_exc()
+#@nonl
+#@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+#@+node:ekr.20040411081633:<< start psycho >>
+if g.app and g.app.use_psyco:
+    try:
+        import psyco
+        if 0:
+            theFile = r"c:\prog\test\psycoLog.txt"
+            g.es("psyco now logging to",theFile,color="blue")
+            psyco.log(theFile)
+            psyco.profile()
+        psyco.full()
+        g.es("psyco now running",color="blue")
+    except ImportError:
+        pass
+    except:
+        print "unexpected exception importing psyco"
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040411081633:<< start psycho >>
+#@+node:ekr.20031218072017.1936:isValidPython
+def isValidPython():
+
+    message = """\
+Leo requires Python 2.2.1 or higher.
+You may download Python from http://python.org/download/
+"""
+    try:
+        # This will fail if True/False are not defined.
+        import leoGlobals as g
+    except ImportError:
+        print "isValidPython: can not import leoGlobals"
+        return 0
+    except:
+        print "isValidPytyhon: unexpected exception: import leoGlobals.py as g"
+        import traceback ; traceback.print_exc()
+        return 0
+    try:
+        ok = g.CheckVersion(sys.version, "2.2.1")
+        if not ok:
+            print message
+            g.app.gui.runAskOkDialog(None,"Python version error",message=message,text="Exit")
+        return ok
+    except:
+        print "isValidPython: unexpected exception: g.CheckVersion"
+        import traceback ; traceback.print_exc()
+        return 0
+#@nonl
+#@-node:ekr.20031218072017.1936:isValidPython
+#@+node:ekr.20041124083125:completeFileName (leo.py)
+def completeFileName (fileName):
+    
+    import leoGlobals as g
+    
+    if not fileName:
+        return None
+        
+    # This does not depend on config settings.
+    fileName = g.os_path_join(os.getcwd(),fileName)
+
+    head,ext = g.os_path_splitext(fileName)
+    if not ext:
+        fileName = fileName + ".leo"
+
+    return fileName
+#@nonl
+#@-node:ekr.20041124083125:completeFileName (leo.py)
+#@+node:ekr.20031218072017.1624:createFrame (leo.py)
+def createFrame (fileName):
+    
+    """Create a LeoFrame during Leo's startup process."""
+    
+    import leoGlobals as g
+
+    # Try to create a frame for the file.
+    if fileName:
+        if g.os_path_exists(fileName):
+            ok, frame = g.openWithFileName(fileName,None)
+            if ok:
+                return frame.c,frame
+    
+    # Create a _new_ frame & indicate it is the startup window.
+    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
+    frame.setInitialWindowGeometry()
+    frame.startupWindow = True
+    # 3/2/05: Call the 'new' hook for compatibility with plugins.
+    g.doHook("new",old_c=None,c=c,new_c=c)
+
+    # Report the failure to open the file.
+    if fileName:
+        g.es("File not found: " + fileName)
+
+    return c,frame
+#@-node:ekr.20031218072017.1624:createFrame (leo.py)
+#@+node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+def createNullGuiWithScript (script):
+    
+    import leoGlobals as g
+    import leoGui
+    
+    g.app.batchMode = True
+    g.app.gui = leoGui.nullGui("nullGui")
+    if not g.app.root:
+        g.app.root = g.app.gui.createRootWindow()
+    g.app.gui.finishCreate()
+    g.app.gui.setScript(script)
+#@-node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+#@+node:ekr.20031218072017.1939:getBatchScript
+def getBatchScript ():
+    
+    import leoGlobals as g
+    
+    name = None ; i = 1 # Skip the dummy first arg.
+    while i + 1 < len(sys.argv):
+        arg = sys.argv[i].strip().lower()
+        if arg in ("--script","-script"):
+            name = sys.argv[i+1].strip() ; break
+        i += 1
+
+    if not name:
+        return None
+    name = g.os_path_join(g.app.loadDir,name)
+    try:
+        f = None
+        try:
+            f = open(name,'r')
+            script = f.read()
+            # g.trace("script",script)
+        except IOError:
+            g.es("can not open script file: " + name, color="red")
+            script = None
+    finally:
+        if f: f.close()
+        return script
+#@nonl
+#@-node:ekr.20031218072017.1939:getBatchScript
+#@+node:ekr.20041130093254:reportDirectories
+def reportDirectories(verbose):
+    
+    import leoGlobals as g
+   
+    if verbose:
+        for kind,theDir in (
+            ("global config",g.app.globalConfigDir),
+            ("home",g.app.homeDir),
+        ):
+            g.es("%s dir: %s" % (kind,theDir),color="blue")
+#@nonl
+#@-node:ekr.20041130093254:reportDirectories
+#@-node:ekr.20031218072017.1934:run & allies
+#@+node:ekr.20041225063637.65:writeChangedVars & helpers
+def writeChangedVars (self):
+    
+    """Create per-file changes lists from diffs between what has been inited and written.
+    
+    Call writeChangedList to update each file from items in this list."""
+
+    changedList = []
+    fDict = self.fileValueDict
+    iDict = self.initValueDict
+    munge = g.app.config.munge
+    
+    for key in iDict.keys():
+
+        iData = iDict.get(key)
+        ip,iname,ikind,ival,getValueCallback = iData
+        newVal = getValueCallback()
+        fData = fDict.get(key)
+        if fData:
+            fp,fname,fkind,fval,junk = fData
+            assert(ip==fp and iname==fname and ikind==fkind)
+            changed = fval != newVal ; oldVal = fval
+        else:
+            changed = ival != newVal ; oldVal = ival
+            fval = '<none>'
+
+        if changed:
+            # print "write","key","ival",ival,"fval",fval
+            if type(oldVal) == type({}):
+                s = "write  %s" % (iname)
+                print s ; g.es(s,color='blue')
+            else:
+                s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
+                print s ; g.es(s,color='blue')
+            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
+            changedList.append((ip,iname,ikind,oldVal,newVal),)
+            
+    self.writeChangedList(changedList,"write")
+#@nonl
+#@+node:ekr.20041225063637.66:updateConfig
+def updateConfig(self,c,changes):
+    
+    """Update the core config settings from the changes list."""
+    
+    munge = g.app.config.munge
+
+    for data in changes:
+        p,name,kind,oldval,val = data
+        if munge(kind) == 'font':
+            for key in ('family','size','slant','weight'):
+                data2 = val.get(key)
+                if data2:
+                    name2,val2 = data2
+                    kind2 = g.choose(key=='size','int','string')
+                    g.app.config.set(c,name2,kind2,val2)
+            # Update the visible fonts: c may not be the same as self.c.
+            for c2 in (c,self.c):
+                c2.frame.body.setFontFromConfig()
+                c2.frame.body.colorizer.setFontFromConfig()
+                c2.frame.log.setFontFromConfig()
+                c2.frame.tree.setFontFromConfig()
+                c2.redraw()
+        elif munge(kind) == "color":
+            # g.trace("setting colors")
+            g.app.config.set(c,name,kind,val)
+            for c2 in (c,self.c):
+                c2.frame.tree.setColorFromConfig()
+                c2.frame.log.setColorFromConfig()
+                c2.frame.body.setColorFromConfig()
+        elif munge(name) == "recentfiles":
+            c.setRecentFiles(val)
+        else:
+            g.trace(name,kind,val)
+            g.app.config.set(c,name,kind,val)
+#@nonl
+#@-node:ekr.20041225063637.66:updateConfig
+#@+node:ekr.20041225063637.67:updateOneNode & helper
+def updateOneNode (self,c,data):
+    
+    """Update the node in c corresponding to p = data[0]."""
+    
+    p,name,kind,oldVal,val = data
+    munge = g.app.config.munge
+    name = name.strip() ; kind = munge(kind.strip())
+
+    # Root1 is the root of the dialog's outline.
+    p1 = p
+    root1 = self.findSettingsRoot(p1.copy())
+    c1 = root1.c
+    
+    # Root2 is the root of the settings outline in the file.
+    root2 = g.app.config.settingsRoot(c) # c is NOT self.c
+    #g.trace(root2.c.mFileName)
+    p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
+    if p2:
+        c2 = p2.c ; filename = c2.mFileName
+    else:
+        g.trace("can't happen: can't find node in root2:",root2.c.mFileName)
+        g.trace('root1',root1)
+        g.trace('root2',root2)
+        g.trace('p1',p1)
+        c2 = None ; filename = None
+
+    # Update the outline in the dialog and the target file.
+    for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
+        if p:
+            # g.trace("updating %s in %s" % (name,where))
+            if kind in ('shortcuts','recentfiles'):
+                # Put the values in the body.
+                p.initHeadString("@%s %s" % (kind,name))
+                body = '\n'.join(val)
+                p.setBodyStringOrPane(body)
+            elif kind == 'font':
+                body = self.computeBodyFromFontDict(p,val)
+                p.setBodyStringOrPane(body)
+            else:
+                # Put everything in the headline.
+                p.initHeadString("@%s %s = %s" % (kind,name,val))
+#@nonl
+#@+node:ekr.20041225063637.68:computeBodyFromFontDict
+def computeBodyFromFontDict(self,p,d):
+
+    lines = []
+    comments = d.get('comments')
+    if comments:
+        comment_lines = g.splitLines(comments)
+        comment_lines = ["# %s" % (line) for line in comment_lines]
+        lines.extend(comment_lines)
+        lines.extend('\n\n')
+        
+    for key in ('family','size','slant','weight'):
+        data = d.get(key)
+        if data:
+            name,val = data
+            if val in (None,'<none>'):
+                val = "None"
+            line = "%s = %s\n" % (name,val)
+            lines.extend(line)
+
+    body = ''.join(lines)
+    return body
+#@nonl
+#@-node:ekr.20041225063637.68:computeBodyFromFontDict
+#@-node:ekr.20041225063637.67:updateOneNode & helper
+#@+node:ekr.20041225063637.69:writeChangedList
+def writeChangedList (self,changedList,tag):
+    
+    if not changedList: return
+    
+    filesInfoDict = self.filesInfoDict
+    if 0:
+        << dump all the dicts in filesInfoDict >>
+
+    # Accumulate the changes for each file in a 'changes' list for each root.
+    for data in changedList:
+        p,name,kind,oldVal,newVal = data
+        # print "%6s %6s %10s -> %10s %s" % (tag,kind,str(oldVal),str(newVal),name)
+        root = self.findSettingsRoot(p)
+        d = filesInfoDict.get(root)
+        changes = d.get('changes')
+        changes.append(data)
+        d['changes'] = changes
+
+    for root in filesInfoDict.keys():
+        d = filesInfoDict.get(root)
+        # Keys are 'c','changes','path','islocal' (unused)
+        c = d.get('c')
+        changes = d.get('changes')
+        path = d.get('path')
+        # isLocal = rootDict.get('isLocal')
+        if changes:
+            self.writeChangesToFile(c,changes,path)
+            self.updateConfig(c,changes)
+        d['changes'] = []
+#@nonl
+#@+node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+for key in filesInfoDict.keys():
+    print ; print
+    print "key",key
+    g.printDict(filesInfoDict.get(key))
+print ; print
+#@nonl
+#@-node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+#@-node:ekr.20041225063637.69:writeChangedList
+#@+node:ekr.20041225063637.71:writeChangesToFile
+def writeChangesToFile (self,c,changes,path):
+
+    # Write the individual changes.
+    for data in changes:
+        self.updateOneNode(c,data)
+
+    if c.fileName():
+        self.es("writing " + g.shortFilename(path))
+        # Save the file corresponding to c.
+        # Non-local files aren't open otherwise!
+        c.fileCommands.save(c.fileName())
+        c.redraw() # This should work for non-local files too.
+        self.tree.redraw()
+    else:
+        print "no settings saved.  local file not named."
+#@nonl
+#@-node:ekr.20041225063637.71:writeChangesToFile
+#@-node:ekr.20041225063637.65:writeChangedVars & helpers
+#@-node:ekr.20050128092443:(Reloaded settings files when opening the settings dialog)
+#@+node:ekr.20050422153813:Fixed bug in p.initStatus caught by pychecker
+@killcolor
+
+The status bits weren't being passed to v.initStatus.
+#@nonl
+#@-node:ekr.20050422153813:Fixed bug in p.initStatus caught by pychecker
+#@+node:ekr.20050421185808:(Fixed Crasher in undo)
+Exception executing command
+Traceback (most recent call last):
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 174, in doCommand
+    command()
+  File "c:\prog\leoCVS\leo\src\leoUndo.py", line 1418, in undo
+    u.undoHelper()
+  File "c:\prog\leoCVS\leo\src\leoUndo.py", line 1442, in undoDeleteNode
+    elif u.parent:
+AttributeError: undoer instance has no attribute 'parent'
+
+#@+node:ekr.20050412084055:undoDeleteNode
+def undoDeleteNode (self):
+    
+    u = self ; c = u.c
+    
+    if u.oldBack:
+        u.p.linkAfter(u.oldBack)
+    elif u.oldParent:
+        u.p.linkAsNthChild(u.oldParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.linkAsRoot(oldRoot)
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.p.restoreLinksInTree()
+
+    c.selectPosition(u.p)
+#@nonl
+#@-node:ekr.20050412084055:undoDeleteNode
+#@-node:ekr.20050421185808:(Fixed Crasher in undo)
+#@+node:ekr.20050421190435:(Fixed crasher in import logic (leoAtFile)
+Traceback (most recent call last):
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 174, in doCommand
+    command()
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 863, in importDerivedFile
+    c.importCommands.importDerivedFiles(v,names)
+  File "C:\prog\leoCVS\leo\src\leoImport.py", line 137, in importDerivedFiles
+    isThin = at.scanHeaderForThin(theFile,fileName)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 570, in scanHeaderForThin
+    junk,junk,isThin = at.scanHeader(theFile,fileName)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 2616, in scanHeader
+    at.error("Bad @+leo sentinel in: %s" % fileName)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 4500, in error
+    self.printError(message)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 4509, in printError
+    if self.errors == 0:
+AttributeError: atFile instance has no attribute 'errors'
+#@+node:ekr.20041005105605.8:atFile.__init__ & initIvars
+def __init__(self,c):
+    
+    # Note: Pychecker complains if about module attributes if we assign at.x instead of self.x.
+    
+    self.c = c
+    self.debug = False
+    self.fileCommands = c.fileCommands
+    self.testing = True # True: enable additional checks.
+    self.errors = 0 # Make sure at.error() works even when not inited.
+
+    << define the dispatch dictionary used by scanText4 >>
+#@nonl
+#@+node:ekr.20041005105605.9:<< define the dispatch dictionary used by scanText4 >>
+self.dispatch_dict = {
+    # Plain line.
+    self.noSentinel: self.readNormalLine,
+    # Starting sentinels...
+    self.startAll:    self.readStartAll,
+    self.startAt:     self.readStartAt,
+    self.startDoc:    self.readStartDoc,
+    self.startLeo:    self.readStartLeo,
+    self.startMiddle: self.readStartMiddle,
+    self.startNode:   self.readStartNode,
+    self.startOthers: self.readStartOthers,
+    # Ending sentinels...
+    self.endAll:    self.readEndAll,
+    self.endAt:     self.readEndAt,
+    self.endDoc:    self.readEndDoc,
+    self.endLeo:    self.readEndLeo,
+    self.endMiddle: self.readEndMiddle,
+    self.endNode:   self.readEndNode,
+    self.endOthers: self.readEndOthers,
+    # Non-paired sentinels.
+    self.startAfterRef:  self.readAfterRef,
+    self.startClone:     self.readClone,
+    self.startComment:   self.readComment,
+    self.startDelims:    self.readDelims,
+    self.startDirective: self.readDirective,
+    self.startNl:        self.readNl,
+    self.startNonl:      self.readNonl,
+    self.startRef:       self.readRef,
+    self.startVerbatim:  self.readVerbatim,
+    # Ignored 3.x sentinels
+    self.endBody:               self.ignoreOldSentinel,
+    self.startBody:             self.ignoreOldSentinel,
+    self.startVerbatimAfterRef: self.ignoreOldSentinel }
+#@nonl
+#@-node:ekr.20041005105605.9:<< define the dispatch dictionary used by scanText4 >>
+#@-node:ekr.20041005105605.8:atFile.__init__ & initIvars
+#@+node:ekr.20050103163224:scanHeaderForThin
+def scanHeaderForThin (self,theFile,fileName):
+    
+    '''Scan the header of a derived file and return True if it is a thin file.
+    
+    N.B. We are not interested in @first lines, so any encoding will do.'''
+    
+    at = self
+
+    # The encoding doesn't matter.  No error messages are given.
+    at.encoding = at.c.config.default_derived_file_encoding
+    
+    junk,junk,isThin = at.scanHeader(theFile,fileName)
+    
+    return isThin
+#@nonl
+#@-node:ekr.20050103163224:scanHeaderForThin
+#@-node:ekr.20050421190435:(Fixed crasher in import logic (leoAtFile)
 #@-node:ekr.20050316083031.1:Bugs...
 #@+node:ekr.20050316083031.2:Features...
 #@+node:ekr.20050328133058.1:(Created stand-alone leoGlobals.py module)
@@ -37417,7 +38431,6 @@ def readSettings (self,c):
 #@-node:ekr.20041117083857.1:readSettings
 #@-node:ekr.20041117093246:Scanning @settings
 #@-node:ekr.20050329055521:(Ignore problems opening settings file for chapters plugin)
-#@-node:ekr.20050316083031.2:Features...
 #@+node:ekr.20050212040628:(Improved write logic)
 Or better yet, use CStringIO?
 #@nonl
@@ -37566,9 +38579,10 @@ file.
 #@nonl
 #@-node:ekr.20050104123726.1:<< about os.rename >>
 #@+node:ekr.20050107085710.1:test_g_utils_rename
-def test_g_utils_rename(**keys):
+def test_g_utils_rename():
 
-    __pychecker__ = '--no-reimport '
+    __pychecker__ = '--no-reimport'
+
     import os
     exists = g.os_path_exists
     
@@ -37765,6 +38779,8 @@ def putLeoOutline (self):
 #@-node:ekr.20031218072017.1573:putLeoOutline (to clipboard)
 #@+node:ekr.20050404190914.2:deleteFileWithMessage
 def deleteFileWithMessage(self,fileName,kind):
+    
+    __pychecker__ = '--no-argsused' # kind unused: retained for debugging.
 
     try:
         os.remove(fileName)
@@ -37878,7 +38894,7 @@ def pasteOutline(self,reassignIndices=True):
         << put only needed info in copiedBunchList >>
     
     undoData = u.beforeInsertNode(current,
-        pasteAsClone=pasteAsClone,pastedTree=pasted,copiedBunchList=copiedBunchList)
+        pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
 
     c.beginUpdate()
     c.endEditing()
@@ -37891,7 +38907,7 @@ def pasteOutline(self,reassignIndices=True):
         back = pasted.back()
         if back and back.isExpanded():
             pasted.moveToNthChildOf(back,0)
-        u.afterInsertNode(pasted,undoType,undoData,pasteAsClone=pasteAsClone)
+        u.afterInsertNode(pasted,undoType,undoData)
     c.endUpdate()
     c.recolor()
 #@nonl
@@ -40208,7 +41224,7 @@ if keys:
 #@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
 def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 
-    c = self.c ; v = None
+    v = None
     setCurrent = setExpanded = setMarked = setOrphan = setTop = False
     tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
     # we have already matched <v.
@@ -40333,7 +41349,6 @@ if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
 #@+node:ekr.20040326063413:getExistingVnode
 def getExistingVnode (self,tref,headline):
 
-    tref1 = tref
     assert(tref > -1)
     tref = self.canonicalTnodeIndex(tref)
     t = self.tnodesDict.get(tref)
@@ -40342,7 +41357,6 @@ def getExistingVnode (self,tref,headline):
     except (IndexError,AttributeError):
         g.es("Missing vnode:",headline,color="red")
         g.es("Probably an outline topology error.")
-        # g.trace(tref1,t,t.vnodeList)
         return None
 #@nonl
 #@-node:ekr.20040326063413:getExistingVnode
@@ -40554,12 +41568,11 @@ if headString:
 #@-node:ekr.20050418083241.2:fc.write logic
 #@+node:ekr.20050418070354:From undo
 #@+node:ekr.20050411193627.4:beforeInsertNode
-def beforeInsertNode (self,p,pasteAsClone=False,pastedTree=None,copiedBunchList=[]):
+def beforeInsertNode (self,p,pasteAsClone=False,copiedBunchList=[]):
     
-    u = self ; c = u.c ; fc = c.fileCommands
+    u = self
 
     bunch = u.createCommonBunch(p)
-    
     bunch.pasteAsClone = pasteAsClone
     
     if pasteAsClone:
@@ -40571,7 +41584,7 @@ def beforeInsertNode (self,p,pasteAsClone=False,pastedTree=None,copiedBunchList=
 #@nonl
 #@-node:ekr.20050411193627.4:beforeInsertNode
 #@+node:ekr.20050411193627.9:afterInsertNode
-def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[],pasteAsClone=False):
+def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
     
     u = self ; c = u.c
     if u.redoing or u.undoing: return
@@ -40719,7 +41732,7 @@ def pasteOutline(self,reassignIndices=True):
         << put only needed info in copiedBunchList >>
     
     undoData = u.beforeInsertNode(current,
-        pasteAsClone=pasteAsClone,pastedTree=pasted,copiedBunchList=copiedBunchList)
+        pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
 
     c.beginUpdate()
     c.endEditing()
@@ -40732,7 +41745,7 @@ def pasteOutline(self,reassignIndices=True):
         back = pasted.back()
         if back and back.isExpanded():
             pasted.moveToNthChildOf(back,0)
-        u.afterInsertNode(pasted,undoType,undoData,pasteAsClone=pasteAsClone)
+        u.afterInsertNode(pasted,undoType,undoData)
     c.endUpdate()
     c.recolor()
 #@nonl
@@ -41159,7 +42172,8 @@ def getDescendentAttributes (self,s,tag=""):
     This is used to record marked and expanded nodes.
     '''
     
-    nodeIndices = g.app.nodeIndices
+    __pychecker__ = '--no-argsused' # tag used only for debugging.
+
     gnxs = s.split(',')
     result = [gnx for gnx in gnxs if len(gnx) > 0]
     # g.trace(tag,result)
@@ -41390,7 +42404,7 @@ if keys:
 #@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
 def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 
-    c = self.c ; v = None
+    v = None
     setCurrent = setExpanded = setMarked = setOrphan = setTop = False
     tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
     # we have already matched <v.
@@ -41517,6 +42531,8 @@ def getUa(self,nodeType):
     
     """Parse an unknown attribute in a <v> or <t> element."""
     
+    __pychecker__ = '--no-argsused' # nodeType not used: good for debugging.
+    
     # New in 4.2.  The unknown tag has been pickled and hexlify'd.
     attr,val = self.getUnknownTag()
     if not attr:
@@ -41622,11 +42638,10 @@ def putTnode (self,t):
 #@nonl
 #@-node:ekr.20031218072017.1577:putTnode
 #@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv,toString=False):
+def putUnknownAttributes (self,torv):
     
     """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
     
-    result = []
     attrDict = torv.unknownAttributes
     if type(attrDict) != type({}):
         g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
@@ -41789,991 +42804,21 @@ if headString:
 #@-node:ekr.20050304124404.2:write...
 #@-node:ekr.20050304124404:From leoFileCommands...
 #@-node:ekr.20041231102453:(Added support for 'str_' uA's
-#@+node:ekr.20050128092443:(Reload settings files when opening the settings dialog)
-#@+node:ekr.20050419085515:Notes
-@killcolor
+#@+node:ekr.20050422162615:Removed unused params from leoAtFile.py
+@nocolor
 
-> I...change the @settings node to @string server = mail.otherisp.net
+Removed inAtOthers  param from putOpen/CloseNodeSentinel.
+Removed inAtAll param from putCloseNodeSentinel.
+Removed putCloseSentinel param from putAtAllBody
+Removed putCloseSentinel param from putBody
 
-the script doesn't print  -mail.otherisp.net-
-until I restart Leo.
+Removed toString param from openFileForWritingHelper
+Removed toString param from v.putUnknownAttributes
 
-# EKR:  The change _is_ available if the change is made from the settings panel.  However, it is not available if the change is made in the Leo outline.  So opening the settings dialog should reload the files!
-
-g.app.config.readSettingsFiles(c.fileName(),verbose=True) reloads all settings files.
+Note: most(all?) top-level atFile.write methods pass toString to initWriteIvars.
 #@nonl
-#@-node:ekr.20050419085515:Notes
-#@+node:ekr.20031218072017.1934:run & allies
-def run(fileName=None,*args,**keywords):
-    
-    """Initialize and run Leo"""
-    
-    if not isValidPython(): return
-    << import leoGlobals and leoApp >>
-    g.computeStandardDirectories()
-    script = getBatchScript() # Do early so we can compute verbose next.
-    verbose = script is None
-    g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
-    << import leoNodes and leoConfig >>
-    g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
-    g.app.config = leoConfig.configClass()
-    fileName = completeFileName(fileName)
-    reportDirectories(verbose)
-    g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.
-    g.app.setEncoding()
-    if script:
-        createNullGuiWithScript(script)
-        fileName = None
-    # Load plugins. Plugins may create g.app.gui.
-    g.doHook("start1")
-    if g.app.killed: return # Support for g.app.forceShutdown.
-    # Create the default gui if needed.
-    if g.app.gui == None:
-        g.app.createTkGui() # Creates global windows.
-    # Initialize tracing and statistics.
-    g.init_sherlock(args)
-    g.clear_stats()
-    << start psycho >>
-    # New in 4.3: clear g.app.initing _before_ creating the frame.
-    g.app.initing = False # "idle" hooks may now call g.app.forceShutdown.
-    # Create the main frame.  Show it and all queued messages.
-    c,frame = createFrame(fileName)
-    if not frame: return
-    if g.app.disableSave:
-        g.es("disabling save commands",color="red")
-    g.app.writeWaitingLog()
-    p = c.currentPosition()
-    g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
-    g.enableIdleTimeHook()
-    frame.tree.redraw()
-    frame.body.setFocus()
-    g.app.gui.runMainLoop()
-#@nonl
-#@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
-# Import leoGlobals, but do NOT set g.
-try:
-    import leoGlobals
-except ImportError:
-    print "Error importing leoGlobals.py"
-
-# Create the application object.
-try:
-    import leoApp
-    leoGlobals.app = leoApp.LeoApp()
-except ImportError:
-    print "Error importing leoApp.py"
-    
-# NOW we can set g.
-g = leoGlobals
-assert(g.app)
-#@nonl
-#@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
-#@+node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
-try:
-    import leoNodes
-except ImportError:
-    print "Error importing leoNodes.py"
-    import traceback ; traceback.print_exc()
-try:
-    import leoConfig
-except ImportError:
-    print "Error importing leoConfig.py"
-    import traceback ; traceback.print_exc()
-#@nonl
-#@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
-#@+node:ekr.20040411081633:<< start psycho >>
-if g.app and g.app.use_psyco:
-    try:
-        import psyco
-        if 0:
-            theFile = r"c:\prog\test\psycoLog.txt"
-            g.es("psyco now logging to",theFile,color="blue")
-            psyco.log(theFile)
-            psyco.profile()
-        psyco.full()
-        g.es("psyco now running",color="blue")
-    except ImportError:
-        pass
-    except:
-        print "unexpected exception importing psyco"
-        g.es_exception()
-#@nonl
-#@-node:ekr.20040411081633:<< start psycho >>
-#@+node:ekr.20031218072017.1936:isValidPython
-def isValidPython():
-
-    message = """\
-Leo requires Python 2.2.1 or higher.
-You may download Python from http://python.org/download/
-"""
-    try:
-        # This will fail if True/False are not defined.
-        import leoGlobals as g
-    except ImportError:
-        print "isValidPython: can not import leoGlobals"
-        return 0
-    except:
-        print "isValidPytyhon: unexpected exception: import leoGlobals.py as g"
-        import traceback ; traceback.print_exc()
-        return 0
-    try:
-        ok = g.CheckVersion(sys.version, "2.2.1")
-        if not ok:
-            print message
-            g.app.gui.runAskOkDialog(None,"Python version error",message=message,text="Exit")
-        return ok
-    except:
-        print "isValidPython: unexpected exception: g.CheckVersion"
-        import traceback ; traceback.print_exc()
-        return 0
-#@nonl
-#@-node:ekr.20031218072017.1936:isValidPython
-#@+node:ekr.20041124083125:completeFileName (leo.py)
-def completeFileName (fileName):
-    
-    import leoGlobals as g
-    
-    if not fileName:
-        return None
-        
-    # This does not depend on config settings.
-    fileName = g.os_path_join(os.getcwd(),fileName)
-
-    head,ext = g.os_path_splitext(fileName)
-    if not ext:
-        fileName = fileName + ".leo"
-
-    return fileName
-#@nonl
-#@-node:ekr.20041124083125:completeFileName (leo.py)
-#@+node:ekr.20031218072017.1624:createFrame (leo.py)
-def createFrame (fileName):
-    
-    """Create a LeoFrame during Leo's startup process."""
-    
-    import leoGlobals as g
-
-    # Try to create a frame for the file.
-    if fileName:
-        if g.os_path_exists(fileName):
-            ok, frame = g.openWithFileName(fileName,None)
-            if ok:
-                return frame.c,frame
-    
-    # Create a _new_ frame & indicate it is the startup window.
-    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
-    frame.setInitialWindowGeometry()
-    frame.startupWindow = True
-    # 3/2/05: Call the 'new' hook for compatibility with plugins.
-    g.doHook("new",old_c=None,c=c,new_c=c)
-
-    # Report the failure to open the file.
-    if fileName:
-        g.es("File not found: " + fileName)
-
-    return c,frame
-#@-node:ekr.20031218072017.1624:createFrame (leo.py)
-#@+node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
-def createNullGuiWithScript (script):
-    
-    import leoGlobals as g
-    import leoGui
-    
-    g.app.batchMode = True
-    g.app.gui = leoGui.nullGui("nullGui")
-    if not g.app.root:
-        g.app.root = g.app.gui.createRootWindow()
-    g.app.gui.finishCreate()
-    g.app.gui.setScript(script)
-#@-node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
-#@+node:ekr.20031218072017.1939:getBatchScript
-def getBatchScript ():
-    
-    import leoGlobals as g
-    
-    name = None ; i = 1 # Skip the dummy first arg.
-    while i + 1 < len(sys.argv):
-        arg = sys.argv[i].strip().lower()
-        if arg in ("--script","-script"):
-            name = sys.argv[i+1].strip() ; break
-        i += 1
-
-    if not name:
-        return None
-    name = g.os_path_join(g.app.loadDir,name)
-    try:
-        f = None
-        try:
-            f = open(name,'r')
-            script = f.read()
-            # g.trace("script",script)
-        except IOError:
-            g.es("can not open script file: " + name, color="red")
-            script = None
-    finally:
-        if f: f.close()
-        return script
-#@nonl
-#@-node:ekr.20031218072017.1939:getBatchScript
-#@+node:ekr.20041130093254:reportDirectories
-def reportDirectories(verbose):
-    
-    import leoGlobals as g
-   
-    if verbose:
-        for kind,theDir in (
-            ("global config",g.app.globalConfigDir),
-            ("home",g.app.homeDir),
-        ):
-            g.es("%s dir: %s" % (kind,theDir),color="blue")
-#@nonl
-#@-node:ekr.20041130093254:reportDirectories
-#@-node:ekr.20031218072017.1934:run & allies
-#@+node:ekr.20041225063637.65:writeChangedVars & helpers
-def writeChangedVars (self):
-    
-    """Create per-file changes lists from diffs between what has been inited and written.
-    
-    Call writeChangedList to update each file from items in this list."""
-
-    changedList = []
-    fDict = self.fileValueDict
-    iDict = self.initValueDict
-    munge = g.app.config.munge
-    
-    for key in iDict.keys():
-
-        iData = iDict.get(key)
-        ip,iname,ikind,ival,getValueCallback = iData
-        newVal = getValueCallback()
-        fData = fDict.get(key)
-        if fData:
-            fp,fname,fkind,fval,junk = fData
-            assert(ip==fp and iname==fname and ikind==fkind)
-            changed = fval != newVal ; oldVal = fval
-        else:
-            changed = ival != newVal ; oldVal = ival
-            fval = '<none>'
-
-        if changed:
-            # print "write","key","ival",ival,"fval",fval
-            if type(oldVal) == type({}):
-                s = "write  %s" % (iname)
-                print s ; g.es(s,color='blue')
-            else:
-                s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
-                print s ; g.es(s,color='blue')
-            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
-            changedList.append((ip,iname,ikind,oldVal,newVal),)
-            
-    self.writeChangedList(changedList,"write")
-#@nonl
-#@+node:ekr.20041225063637.66:updateConfig
-def updateConfig(self,c,changes):
-    
-    """Update the core config settings from the changes list."""
-    
-    munge = g.app.config.munge
-
-    for data in changes:
-        p,name,kind,oldval,val = data
-        if munge(kind) == 'font':
-            for key in ('family','size','slant','weight'):
-                data2 = val.get(key)
-                if data2:
-                    name2,val2 = data2
-                    kind2 = g.choose(key=='size','int','string')
-                    g.app.config.set(c,name2,kind2,val2)
-            # Update the visible fonts: c may not be the same as self.c.
-            for c2 in (c,self.c):
-                c2.frame.body.setFontFromConfig()
-                c2.frame.body.colorizer.setFontFromConfig()
-                c2.frame.log.setFontFromConfig()
-                c2.frame.tree.setFontFromConfig()
-                c2.redraw()
-        elif munge(kind) == "color":
-            # g.trace("setting colors")
-            g.app.config.set(c,name,kind,val)
-            for c2 in (c,self.c):
-                c2.frame.tree.setColorFromConfig()
-                c2.frame.log.setColorFromConfig()
-                c2.frame.body.setColorFromConfig()
-        elif munge(name) == "recentfiles":
-            c.setRecentFiles(val)
-        else:
-            g.trace(name,kind,val)
-            g.app.config.set(c,name,kind,val)
-#@nonl
-#@-node:ekr.20041225063637.66:updateConfig
-#@+node:ekr.20041225063637.67:updateOneNode & helper
-def updateOneNode (self,c,data):
-    
-    """Update the node in c corresponding to p = data[0]."""
-    
-    p,name,kind,oldVal,val = data
-    munge = g.app.config.munge
-    name = name.strip() ; kind = munge(kind.strip())
-
-    # Root1 is the root of the dialog's outline.
-    p1 = p
-    root1 = self.findSettingsRoot(p1.copy())
-    c1 = root1.c
-    
-    # Root2 is the root of the settings outline in the file.
-    root2 = g.app.config.settingsRoot(c) # c is NOT self.c
-    #g.trace(root2.c.mFileName)
-    p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
-    if p2:
-        c2 = p2.c ; filename = c2.mFileName
-    else:
-        g.trace("can't happen: can't find node in root2:",root2.c.mFileName)
-        g.trace('root1',root1)
-        g.trace('root2',root2)
-        g.trace('p1',p1)
-        c2 = None ; filename = None
-
-    # Update the outline in the dialog and the target file.
-    for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
-        if p:
-            # g.trace("updating %s in %s" % (name,where))
-            if kind in ('shortcuts','recentfiles'):
-                # Put the values in the body.
-                p.initHeadString("@%s %s" % (kind,name))
-                body = '\n'.join(val)
-                p.setBodyStringOrPane(body)
-            elif kind == 'font':
-                body = self.computeBodyFromFontDict(p,val)
-                p.setBodyStringOrPane(body)
-            else:
-                # Put everything in the headline.
-                p.initHeadString("@%s %s = %s" % (kind,name,val))
-#@nonl
-#@+node:ekr.20041225063637.68:computeBodyFromFontDict
-def computeBodyFromFontDict(self,p,d):
-
-    lines = []
-    comments = d.get('comments')
-    if comments:
-        comment_lines = g.splitLines(comments)
-        comment_lines = ["# %s" % (line) for line in comment_lines]
-        lines.extend(comment_lines)
-        lines.extend('\n\n')
-        
-    for key in ('family','size','slant','weight'):
-        data = d.get(key)
-        if data:
-            name,val = data
-            if val in (None,'<none>'):
-                val = "None"
-            line = "%s = %s\n" % (name,val)
-            lines.extend(line)
-
-    body = ''.join(lines)
-    return body
-#@nonl
-#@-node:ekr.20041225063637.68:computeBodyFromFontDict
-#@-node:ekr.20041225063637.67:updateOneNode & helper
-#@+node:ekr.20041225063637.69:writeChangedList
-def writeChangedList (self,changedList,tag):
-    
-    if not changedList: return
-    
-    filesInfoDict = self.filesInfoDict
-    if 0:
-        << dump all the dicts in filesInfoDict >>
-
-    # Accumulate the changes for each file in a 'changes' list for each root.
-    for data in changedList:
-        p,name,kind,oldVal,newVal = data
-        # print "%6s %6s %10s -> %10s %s" % (tag,kind,str(oldVal),str(newVal),name)
-        root = self.findSettingsRoot(p)
-        d = filesInfoDict.get(root)
-        changes = d.get('changes')
-        changes.append(data)
-        d['changes'] = changes
-
-    for root in filesInfoDict.keys():
-        d = filesInfoDict.get(root)
-        # Keys are 'c','changes','path','islocal' (unused)
-        c = d.get('c')
-        changes = d.get('changes')
-        path = d.get('path')
-        # isLocal = rootDict.get('isLocal')
-        if changes:
-            self.writeChangesToFile(c,changes,path)
-            self.updateConfig(c,changes)
-        d['changes'] = []
-#@nonl
-#@+node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
-for key in filesInfoDict.keys():
-    print ; print
-    print "key",key
-    g.printDict(filesInfoDict.get(key))
-print ; print
-#@nonl
-#@-node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
-#@-node:ekr.20041225063637.69:writeChangedList
-#@+node:ekr.20041225063637.71:writeChangesToFile
-def writeChangesToFile (self,c,changes,path):
-
-    # Write the individual changes.
-    for data in changes:
-        self.updateOneNode(c,data)
-
-    if c.fileName():
-        self.es("writing " + g.shortFilename(path))
-        # Save the file corresponding to c.
-        # Non-local files aren't open otherwise!
-        c.fileCommands.save(c.fileName())
-        c.redraw() # This should work for non-local files too.
-        self.tree.redraw()
-    else:
-        print "no settings saved.  local file not named."
-#@nonl
-#@-node:ekr.20041225063637.71:writeChangesToFile
-#@-node:ekr.20041225063637.65:writeChangedVars & helpers
-#@-node:ekr.20050128092443:(Reload settings files when opening the settings dialog)
-#@+node:ekr.20050419062215.1:(Debugged @if-platform, @if-gui, @ints & @strings)
-#@+node:ekr.20050419085131:Notes
-@killcolor
-
-g.app.gui typically not defined when the config settings are loaded, so to use a
-setting in @if-gui a plugin would have to call g.app.config.readSettingsFiles.
-#@nonl
-#@-node:ekr.20050419085131:Notes
-#@+node:ekr.20041225063637.99:visitNode (settingsDialogParserClass)
-def visitNode (self,p):
-    
-    """Visit a node, and possibly append a widget description to self.widgets."""
-    
-    munge = g.app.config.munge
-    h = p.headString().strip() or ''
-    kind,name,val = self.parseHeadline(h)
-    
-    # g.trace(kind,name,val)
-
-    f = self.dispatchDict.get(munge(kind))
-    if f is not None:
-        try:
-            return f(p,kind,name,val)
-        except TypeError:
-            g.es_exception()
-            print "*** no handler",kind
-            return None
-#@nonl
-#@-node:ekr.20041225063637.99:visitNode (settingsDialogParserClass)
-#@+node:ekr.20041119204714:visitNode (settingsTreeParser)
-def visitNode (self,p):
-    
-    """Init any settings found in node p."""
-    
-    # g.trace(p.headString())
-    
-    munge = g.app.config.munge
-
-    kind,name,val = self.parseHeadline(p.headString())
-    kind = munge(kind)
-
-    if kind == "settings":
-        pass
-    elif kind not in self.control_types and val in (u'None',u'none','None','none','',None):
-        # None is valid for all data types.
-        self.set(p,kind,name,None)
-    elif kind in self.control_types or kind in self.basic_types:
-        f = self.dispatchDict.get(kind)
-        try:
-            return f(p,kind,name,val)
-        except TypeError:
-            g.es_exception()
-            print "*** no handler",kind
-            return None
-    elif name:
-        # self.error("unknown type %s for setting %s" % (kind,name))
-        # Just assume the type is a string.
-        self.set(p,kind,name,val)
-#@nonl
-#@-node:ekr.20041119204714:visitNode (settingsTreeParser)
-#@+node:ekr.20041119204700.1:traverse (parserBaseClass)
-def traverse (self):
-    
-    c = self.c
-    
-    p = g.app.config.settingsRoot(c)
-    if not p:
-        return None
-
-    self.settingsDict = {}
-    after = p.nodeAfterTree()
-    while p and p != after:
-        result = self.visitNode(p)
-        # g.trace(result,p.headString())
-        if result == "skip":
-            s = 'skipping settings in %s' % p.headString()
-            print s ; g.es(s,color='blue')
-            p.moveToNodeAfterTree()
-        else:
-            p.moveToThreadNext()
-            
-    return self.settingsDict
-#@nonl
-#@-node:ekr.20041119204700.1:traverse (parserBaseClass)
-#@+node:ekr.20041119204700: ctor (parserBaseClass)
-def __init__ (self,c):
-    
-    self.c = c
-    self.recentFiles = [] # List of recent files.
-    
-    # Keys are canonicalized names.
-    self.dispatchDict = {
-        'bool':         self.doBool,
-        'color':        self.doColor,
-        'directory':    self.doDirectory,
-        'font':         self.doFont,
-        'if':           self.doIf,
-        'ifgui':        self.doIfGui,
-        'ifplatform':   self.doIfPlatform,
-        'ignore':       self.doIgnore,
-        'int':          self.doInt,
-        'ints':         self.doInts,
-        'float':        self.doFloat,
-        'path':         self.doPath,
-        'page':         self.doPage,
-        'ratio':        self.doRatio,
-        'recentfiles':  self.doRecentFiles,
-        'shortcut':     self.doShortcut,
-        'shortcuts':    self.doShortcuts,
-        'string':       self.doString,
-        'strings':      self.doStrings,
-    }
-#@nonl
-#@-node:ekr.20041119204700: ctor (parserBaseClass)
-#@+node:ekr.20041120094940:kind handlers (parserBaseClass)
-#@+node:ekr.20041120094940.1:doBool
-def doBool (self,p,kind,name,val):
-
-    if val in ('True','true','1'):
-        self.set(p,kind,name,True)
-    elif val in ('False','false','0'):
-        self.set(p,kind,name,False)
-    else:
-        self.valueError(p,kind,name,val)
-#@nonl
-#@-node:ekr.20041120094940.1:doBool
-#@+node:ekr.20041120094940.2:doColor
-def doColor (self,p,kind,name,val):
-    
-    # At present no checking is done.
-    self.set(p,kind,name,val)
-#@nonl
-#@-node:ekr.20041120094940.2:doColor
-#@+node:ekr.20041120094940.3:doDirectory & doPath
-def doDirectory (self,p,kind,name,val):
-    
-    # At present no checking is done.
-    self.set(p,kind,name,val)
-
-doPath = doDirectory
-#@nonl
-#@-node:ekr.20041120094940.3:doDirectory & doPath
-#@+node:ekr.20041120094940.6:doFloat
-def doFloat (self,p,kind,name,val):
-    
-    try:
-        val = float(val)
-        self.set(p,kind,name,val)
-    except ValueError:
-        self.valueError(p,kind,name,val)
-#@nonl
-#@-node:ekr.20041120094940.6:doFloat
-#@+node:ekr.20041120094940.4:doFont
-def doFont (self,p,kind,name,val):
-    
-    d = self.parseFont(p)
-    
-    # Set individual settings.
-    for key in ('family','size','slant','weight'):
-        data = d.get(key)
-        if data is not None:
-            name,val = data
-            setKind = key
-            self.set(p,setKind,name,val)
-#@nonl
-#@-node:ekr.20041120094940.4:doFont
-#@+node:ekr.20041120103933:doIf
-def doIf(self,p,kind,name,val):
-
-    g.trace("'if' not supported yet")
-    return None
-#@nonl
-#@-node:ekr.20041120103933:doIf
-#@+node:ekr.20041121125416:doIfGui
-def doIfGui (self,p,kind,name,val):
-    
-    # g.trace(repr(name))
-    
-    if not g.app.gui or not g.app.gui.guiName():
-        s = '@if-gui has not effect: g.app.gui not defined yet'
-        print s ; g.es(s,color='blue')
-        return "skip"
-    elif g.app.gui.guiName().lower() == name.lower():
-        return None
-    else:
-        return "skip"
-#@nonl
-#@-node:ekr.20041121125416:doIfGui
-#@+node:ekr.20041120104215:doIfPlatform
-def doIfPlatform (self,p,kind,name,val):
-    
-    # g.trace(sys.platform,repr(name))
-
-    if sys.platform.lower() == name.lower():
-        return None
-    else:
-        return "skip"
-#@nonl
-#@-node:ekr.20041120104215:doIfPlatform
-#@+node:ekr.20041120104215.1:doIgnore
-def doIgnore(self,p,kind,name,val):
-
-    return "skip"
-#@nonl
-#@-node:ekr.20041120104215.1:doIgnore
-#@+node:ekr.20041120094940.5:doInt
-def doInt (self,p,kind,name,val):
-    
-    try:
-        val = int(val)
-        self.set(p,kind,name,val)
-    except ValueError:
-        self.valueError(p,kind,name,val)
-#@nonl
-#@-node:ekr.20041120094940.5:doInt
-#@+node:ekr.20041217132253:doInts
-def doInts (self,p,kind,name,val):
-    
-    '''We expect @ints aName[val1,val2]=val'''
-
-    name = name.strip() # The name indicates the valid values.
-    i = name.find('[')
-    j = name.find(']')
-    
-    # g.trace(kind,name,val)
-
-    if -1 < i < j:
-        items = name[i+1:j]
-        items = items.split(',')
-        name = name[0:i].strip()
-        try:
-            items = [int(item.strip()) for item in items]
-        except ValueError:
-            items = []
-            self.valueError(p,'ints[]',name,val)
-            return
-        kind = "ints[%s]" % (','.join([str(item) for item in items]))
-        try:
-            val = int(val)
-        except ValueError:
-            self.valueError(p,'int',name,val)
-            return
-        if val not in items:
-            self.error("%d is not in %s in %s" % (val,kind,name))
-            return
-
-        # g.trace(repr(kind),repr(name),val)
-
-        # At present no checking is done.
-        self.set(p,kind,name,val)
-#@nonl
-#@-node:ekr.20041217132253:doInts
-#@+node:ekr.20041120104215.2:doPage
-def doPage(self,p,kind,name,val):
-
-    pass # Ignore @page this while parsing settings.
-#@nonl
-#@-node:ekr.20041120104215.2:doPage
-#@+node:ekr.20041121125741:doRatio
-def doRatio (self,p,kind,name,val):
-    
-    try:
-        val = float(val)
-        if 0.0 <= val <= 1.0:
-            self.set(p,kind,name,val)
-        else:
-            self.valueError(p,kind,name,val)
-    except ValueError:
-        self.valueError(p,kind,name,val)
-#@nonl
-#@-node:ekr.20041121125741:doRatio
-#@+node:ekr.20041121151924:doRecentFiles
-def doRecentFiles (self,p,kind,name,val):
-    
-    s = p.bodyString().strip()
-    if s:
-        lines = g.splitLines(s)
-        self.set(p,"recent-files","recent-files",lines)
-#@nonl
-#@-node:ekr.20041121151924:doRecentFiles
-#@+node:ekr.20041120113848:doShortcut
-def doShortcut(self,p,kind,name,val):
-
-    self.set(p,kind,name,val)
-    self.setShortcut(name,val)
-#@nonl
-#@-node:ekr.20041120113848:doShortcut
-#@+node:ekr.20041120105609:doShortcuts
-def doShortcuts(self,p,kind,name,val):
-    
-    #g.trace('*'*10,p.headString())
-
-    s = p.bodyString()
-    lines = g.splitLines(s)
-    for line in lines:
-        line = line.strip()
-        if line and not g.match(line,0,'#'):
-            name,val = self.parseShortcutLine(line)
-            # g.trace(name,val)
-            if val is not None:
-                self.set(p,"shortcut",name,val)
-                self.setShortcut(name,val)
-#@nonl
-#@-node:ekr.20041120105609:doShortcuts
-#@+node:ekr.20041217132028:doString
-def doString (self,p,kind,name,val):
-    
-    # At present no checking is done.
-    self.set(p,kind,name,val)
-#@-node:ekr.20041217132028:doString
-#@+node:ekr.20041120094940.8:doStrings
-def doStrings (self,p,kind,name,val):
-    
-    '''We expect @strings aName[val1,val2]=val'''
-    
-    name = name.strip()
-    i = name.find('[')
-    j = name.find(']')
-
-    if -1 < i < j:
-        items = name[i+1:j]
-        items = items.split(',')
-        items = [item.strip() for item in items]
-        name = name[0:i].strip()
-
-        kind = "strings[%s]" % (','.join(items))
-
-        # g.trace(repr(kind),repr(name),val)
-
-        # At present no checking is done.
-        self.set(p,kind,name,val)
-#@nonl
-#@-node:ekr.20041120094940.8:doStrings
-#@-node:ekr.20041120094940:kind handlers (parserBaseClass)
-#@+node:ekr.20041120094940.10:valueError
-def valueError (self,p,kind,name,val):
-    
-    """Give an error: val is not valid for kind."""
-    
-    self.error("%s is not a valid %s for %s" % (val,kind,name))
-#@nonl
-#@-node:ekr.20041120094940.10:valueError
-#@-node:ekr.20050419062215.1:(Debugged @if-platform, @if-gui, @ints & @strings)
-#@+node:ekr.20050419073824:(Improved how Leo handles recent files)
-#@+node:ekr.20050420061036:What I did
-@killcolor
-
-- Properly implemented undo/redo Clear Recent Files.
-
-- readSettingsFiles now reads @recentfiles nodes from all settings files.
-
-- Created @settings nodes and @recent-files nodes if they do not exist.
-#@nonl
-#@-node:ekr.20050420061036:What I did
-#@+node:ekr.20041117093246:Scanning @settings
-#@+node:ekr.20041117085625:openSettingsFile
-def openSettingsFile (self,path):
-    
-    try:
-        # Open the file in binary mode to allow 0x1a in bodies & headlines.
-        theFile = open(path,'rb')
-    except IOError:
-        g.es("can not open: " + path, color="blue")
-        return None
-        
-    # Similar to g.openWithFileName except it uses a null gui.
-    # Changing g.app.gui here is a major hack.
-    oldGui = g.app.gui
-    g.app.gui = leoGui.nullGui("nullGui")
-    c,frame = g.app.gui.newLeoCommanderAndFrame(path,updateRecentFiles=False)
-    frame.log.enable(False)
-    g.app.setLog(frame.log,"openWithFileName")
-    g.app.lockLog()
-    ok = frame.c.fileCommands.open(
-        theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
-    g.app.unlockLog()
-    frame.openDirectory = g.os_path_dirname(path)
-    g.app.gui = oldGui
-    return ok and c
-#@nonl
-#@-node:ekr.20041117085625:openSettingsFile
-#@+node:ekr.20041120064303:config.readSettingsFiles
-def readSettingsFiles (self,fileName,verbose=True):
-    
-    munge = self.munge ; seen = []
-    
-    # Init settings from leoSettings.leo files.
-    for path,setOptionsFlag in (
-        (self.globalConfigFile,False),
-        (self.homeFile,False),
-        (fileName,True),
-    ):
-        if path and path.lower() not in seen:
-            seen.append(path.lower())
-            if verbose:
-                s = 'reading settings in %s' % path
-                print s ; g.es(s)
-            c = self.openSettingsFile(path)
-            if c:
-                d = self.readSettings(c)
-                # g.trace(c)
-                if d:
-                    theHash = c.hash()
-                    d['_hash'] = theHash
-                    if setOptionsFlag:
-                        self.localOptionsDict[theHash] = d
-                        << update recent files from d >>
-                    else:
-                        self.localOptionsList.insert(0,d)
-                else:
-                    g.es("No @settings tree in %s" % (g.shortFileName(path)),color="red")
-                g.app.destroyWindow(c.frame)
-
-    self.inited = True
-    self.setIvarsFromSettings(None)
-#@nonl
-#@+node:ekr.20041201081440:<< update recent files from d >>
-for key in d.keys():
-    
-    if munge(key) == "recentfiles":
-        # Entries were created by parserBaseClass.set.
-        bunch = d.get(key)
-        files = bunch.val
-        files = [theFile.strip() for theFile in files]
-        if 0:
-            print "config.readSettingsFiles.  recent files from %s..." % fileName
-            for theFile in files:
-                print theFile
-        self.appendToRecentFiles(files)
-#@nonl
-#@-node:ekr.20041201081440:<< update recent files from d >>
-#@-node:ekr.20041120064303:config.readSettingsFiles
-#@+node:ekr.20041117083857.1:readSettings
-# Called to read all leoSettings.leo files.
-# Also called when opening an .leo file to read @settings tree.
-
-def readSettings (self,c):
-    
-    """Read settings from a file that may contain an @settings tree."""
-    
-    # g.trace(c.fileName())
-    
-    # Create a settings dict for c for set()
-    if c and self.localOptionsDict.get(c.hash()) is None:
-        self.localOptionsDict[c.hash()] = {}
-
-    parser = settingsTreeParser(c)
-    d = parser.traverse()
-
-    return d
-#@nonl
-#@-node:ekr.20041117083857.1:readSettings
-#@-node:ekr.20041117093246:Scanning @settings
-#@+node:ekr.20041201080436:config.appendToRecentFiles
-def appendToRecentFiles (self,files):
-    
-    def munge(name):
-        name = name or ''
-        return g.os_path_normpath(name).lower()
-    
-    for name in files:
-        # Remove all variants of name.
-        for name2 in self.recentFiles:
-            if munge(name) == munge(name2):
-                self.recentFiles.remove(name2)
-
-        self.recentFiles.append(name)
-#@nonl
-#@-node:ekr.20041201080436:config.appendToRecentFiles
-#@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
-def setRecentFiles (self,files,doUndo=False):
-    
-    '''Update the @recent-files node the present commander, and possibly
-    the global leoSettings.leo files.'''
-    
-    c = self.c ; old_p = c.currentPosition()
-    
-    # Append the files to the global list.
-    g.app.config.appendToRecentFiles(files)
-    
-    c.beginUpdate()
-    if 1: # In update...
-        root = g.app.config.settingsRoot(c)
-        if not root:
-            << create @settings node >>
-        p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if not p:
-            << create @recent-files node >>
-        << Update p, leaving c.changed untouched >>
-    c.endUpdate(changed)
-#@nonl
-#@+node:ekr.20050420081237:<< create @settings node >>
-g.es('created @settings node',color='red')
-
-old_root = c.rootPosition()
-root = old_root.insertAfter()
-root.moveToRoot(old_root)
-root.initHeadString('@settings')
-
-assert(g.app.config.settingsRoot(c))
-#@nonl
-#@-node:ekr.20050420081237:<< create @settings node >>
-#@+node:ekr.20050420081237.1:<< create @recent-files node >>
-g.es('created @recent-files node',color='red')
-p = root.insertAsNthChild(0)
-p.initHeadString('@recent-files')
-c.selectPosition(p)
-
-assert(g.app.config.findSettingsPosition(c,"@recent-files"))
-#@nonl
-#@-node:ekr.20050420081237.1:<< create @recent-files node >>
-#@+node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
-oldText = p.bodyString()
-changed = c.isChanged()
-newText = '\n'.join(files)
-p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
-c.setChanged(changed)
-
-if doUndo:
-    c.undoer.setUndoTypingParams(old_p,'Clear Recent Files',
-        oldText,newText,oldSel=None,newSel=None)
-#@nonl
-#@-node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
-#@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
-#@+node:ekr.20031218072017.2080:clearRecentFiles
-def clearRecentFiles (self):
-    
-    """Clear the recent files list, then add the present file."""
-
-    c = self ; f = c.frame
-    
-    recentFilesMenu = f.menu.getMenu("Recent Files...")
-    f.menu.delete_range(recentFilesMenu,0,len(c.recentFiles))
-    
-    c.recentFiles = []
-    f.menu.createRecentFilesMenuItems()
-    c.updateRecentFiles(c.mFileName)
-    c.config.setRecentFiles(c.recentFiles,doUndo=True)
-#@nonl
-#@-node:ekr.20031218072017.2080:clearRecentFiles
-#@-node:ekr.20050419073824:(Improved how Leo handles recent files)
+#@-node:ekr.20050422162615:Removed unused params from leoAtFile.py
+#@-node:ekr.20050316083031.2:Features...
 #@-node:ekr.20050316083031:4.3 a5 projects
 #@-all
 #@nonl

@@ -236,7 +236,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050210102150"><vh>4.2...</vh>
+<v t="ekr.20050210102150" a="E"><vh>4.2...</vh>
 <v t="ekr.20040922074200"><vh>4.2 final</vh></v>
 <v t="ekr.20040914103359"><vh>4.2 rc1</vh>
 <v t="ekr.20040914103743.1"><vh>Added new features</vh>
@@ -441,7 +441,7 @@
 <v t="EKR.20040518075457"><vh>Dangers of @file-thin</vh></v>
 </v>
 </v>
-<v t="ekr.20050210102150.1"><vh>4.1...</vh>
+<v t="ekr.20050210102150.1" a="E"><vh>4.1...</vh>
 <v t="ekr.20040216151748"><vh>4.1 final</vh>
 <v t="ekr.20040217085036"><vh>Added several new plugins</vh></v>
 <v t="ekr.20040216152948"><vh>Added Toggle Angle Brackets command</vh></v>
@@ -565,7 +565,7 @@
 </v>
 <v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
 </v>
-<v t="ekr.20050210102358"><vh>4.0...</vh>
+<v t="ekr.20050210102358" a="E"><vh>4.0...</vh>
 <v t="edream.110203163054.66"><vh>4.0.1 through 4.0.4</vh></v>
 <v t="edream.110203163054.67"><vh>4.0 final</vh>
 <v t="edream.110203163054.68"><vh>4.0 beta 4</vh></v>
@@ -1799,9 +1799,9 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
 <v t="ekr.20050122090016" a="E"><vh>Setting options...</vh>
-<v t="ekr.20050122084954" a="TV"><vh>Using leoSettings.leo and @settings trees</vh></v>
+<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050419072509.1"><vh>NewHeadline</vh></v>
 <v t="EKR.20040524104904.212"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 </v>
@@ -1857,10 +1857,10 @@
 </v>
 <v t="ekr.20050417072710.1"><vh>How to make operations undoable</vh></v>
 </v>
-<v t="EKR.20040524104904.245"><vh>Chapter 9: History of Leo</vh>
+<v t="EKR.20040524104904.245" a="TV"><vh>Chapter 9: History of Leo</vh>
 <v t="EKR.20040524104904.246"><vh>Beginnings</vh></v>
 <v t="EKR.20040524104904.247"><vh>Versions, and more versions</vh></v>
-<v t="EKR.20040524104904.248"><vh>Designing @file trees</vh>
+<v t="EKR.20040524104904.248" a="E"><vh>Designing @file trees</vh>
 <v t="EKR.20040524104904.249"><vh>Deciding to do Leo2</vh></v>
 <v t="EKR.20040524104904.250"><vh>A prototype</vh></v>
 <v t="EKR.20040524104904.251"><vh>User interaction</vh></v>
@@ -1886,6 +1886,21 @@
 <v t="EKR.20040524104904.268"><vh>Unicode theory of operation</vh></v>
 <v t="EKR.20040524104904.269"><vh>Unlimited undo</vh></v>
 <v t="EKR.20040524104904.273"><vh>4.0 Theory of operation</vh></v>
+<v t="EKR.20040524104904.337"><vh>Format of derived files (3.x)</vh>
+<v t="EKR.20040524104904.338"><vh>Sentinels in derived files</vh>
+<v t="EKR.20040524104904.339"><vh>The @delims directive</vh></v>
+<v t="EKR.20040524104904.340"><vh>@leo &amp; comment delimiters</vh></v>
+<v t="EKR.20040524104904.341"><vh>@node</vh></v>
+<v t="EKR.20040524104904.342"><vh>@body</vh></v>
+<v t="EKR.20040524104904.343"><vh>@at and @doc &amp; the trailing whitespace convention</vh></v>
+<v t="EKR.20040524104904.344"><vh>@others</vh></v>
+<v t="EKR.20040524104904.345"><vh>@@delims</vh></v>
+<v t="EKR.20040524104904.346"><vh>@@&lt;text&gt;</vh></v>
+<v t="EKR.20040524104904.347"><vh>@verbatim and @verbatimAfterRef</vh></v>
+<v t="EKR.20040524104904.348"><vh>@&lt;&lt;section name&gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.349"><vh>Format of derived files (4.x)</vh></v>
 </v>
 <v t="EKR.20040524104904.274"><vh>Appendices</vh>
 <v t="EKR.20040524104904.275"><vh>Code hidden in leo.py</vh>
@@ -1971,7 +1986,6 @@
 </v>
 </v>
 <v t="EKR.20040524104904.349"><vh>Format of derived files (4.x)</vh></v>
-<v t="EKR.20040524104904.350"><vh>Future Features</vh></v>
 <v t="EKR.20040524104904.351"><vh>Known Bugs &amp; Limitations</vh></v>
 <v t="EKR.20040524104904.352"><vh>Reference for @file trees</vh></v>
 <v t="EKR.20040524104904.354"><vh>Unicode</vh>
@@ -6210,15 +6224,6 @@ gnx's have the format id.timestamp or id.timestamp.n if two gnx's would be the s
 - The @+-all sentinels correspond to the range of the @all directive.
 
 - The @+-middle sentinels indicate intermediate nodes between the node that references a section and the node that defines the section.  Typically no such sentinels are needed because most sections are defined in a direct child of the referencing node.</t>
-<t tx="EKR.20040524104904.350">The following is a list of features I'd like to add to Leo.
-
-Styled text and graphics
-
-Except for syntax coloring, there is no way to style text in an outline.  The ultimate would be for Leo to support arbitrary XML code in the body pane.  Perhaps someday Tk's text panes will allow this.
-
-Lists of sections
-
-It would be useful to have easily available, possibly as a pop-up menu, a list of the most recently accessed sections, and possibly a full list of all section names as well.</t>
 <t tx="EKR.20040524104904.351">Known bugs and limitations in all versions of Leo.
 
 1. Untangle has no way of updating a section(chunk) whose name has been changed in the derived file.  Because of the @unit directive, there is not even a way to issue a meaningful warning.

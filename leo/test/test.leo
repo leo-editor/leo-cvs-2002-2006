@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6969" clone_windows="0"/>
 <globals body_outline_ratio="0.417628541448">
-	<global_window_position top="32" left="223" height="880" width="1055"/>
+	<global_window_position top="49" left="172" height="880" width="1055"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -597,7 +597,7 @@
 <v t="ekr.20040918093738.4"><vh>test</vh></v>
 </v>
 <v t="ekr.20050314104217"><vh>Develop g.convertPythonIndexToRowCol</vh>
-<v t="ekr.20050314103747" a="E"><vh>g.convertPythonIndexToRowCol  &amp; tests</vh>
+<v t="ekr.20050314103747"><vh>g.convertPythonIndexToRowCol  &amp; tests</vh>
 <v t="ekr.20050314103747.1"><vh>bruteForceConvertPythonIndexToRowCol</vh></v>
 <v t="ekr.20050314103747.2"><vh>test_g_convertPythonIndexToRowCol</vh></v>
 </v>
@@ -1792,7 +1792,7 @@
 <v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
 </v>
 </v>
-<v t="ekr.20050419070841.1" a="E"><vh>test settings</vh></v>
+<v t="ekr.20050419070841.1"><vh>test settings</vh></v>
 <v t="ekr.20050419211746"><vh>Lower the selection</vh></v>
 <v t="ekr.20050419115225"><vh>(parse jEdit files)</vh>
 <v t="ekr.20050419172816"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
@@ -1801,35 +1801,35 @@
 <v t="ekr.20050419181328"><vh>Attributes</vh>
 <v t="ekr.20050419182514"><vh>AT_CHAR (int)</vh></v>
 <v t="ekr.20050419182514.1"><vh>AT_LINE_START (bool)</vh></v>
-<v t="ekr.20050419182514.2" a="E"><vh>AT_WHITESPACE_END (bool)</vh></v>
+<v t="ekr.20050419182514.2"><vh>AT_WHITESPACE_END (bool)</vh></v>
 <v t="ekr.20050419182514.3"><vh>AT_WORD_START (bool)</vh></v>
 <v t="ekr.20050419182514.4"><vh>DELEGATE (mode name)</vh></v>
 <v t="ekr.20050419182514.5"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
-<v t="ekr.20050419182514.6" a="E"><vh>EXCLUDE_MATCH (bool)</vh></v>
-<v t="ekr.20050419182514.7" a="E"><vh>HASH_CHAR (char)</vh></v>
-<v t="ekr.20050419182514.8" a="E"><vh>NO_ESCAPE (bool)</vh></v>
+<v t="ekr.20050419182514.6"><vh>EXCLUDE_MATCH (bool)</vh></v>
+<v t="ekr.20050419182514.7"><vh>HASH_CHAR (char)</vh></v>
+<v t="ekr.20050419182514.8"><vh>NO_ESCAPE (bool)</vh></v>
 <v t="ekr.20050419182514.9"><vh>NO_LINE_BREAK (bool)</vh></v>
-<v t="ekr.20050419182514.10" a="E"><vh>NO_WORD_BREAK (bool)</vh></v>
+<v t="ekr.20050419182514.10"><vh>NO_WORD_BREAK (bool)</vh></v>
 <v t="ekr.20050419182514.11"><vh>TYPE</vh></v>
 </v>
-<v t="ekr.20050419200205" a="E"><vh>Elements</vh>
+<v t="ekr.20050419200205"><vh>Elements</vh>
 <v t="ekr.20050419173824.6"><vh>mode</vh></v>
 <v t="ekr.20050419173824.7"><vh>props (can be placed inside rules tag)</vh>
-<v t="ekr.20050419173824.8" a="E"><vh>property</vh></v>
+<v t="ekr.20050419173824.8"><vh>property</vh></v>
 </v>
 <v t="ekr.20050419173824.9"><vh>begin (for span, etc.)</vh></v>
 <v t="ekr.20050419173824.10"><vh>end (for span, etc.)</vh></v>
 <v t="ekr.20050419173824.3"><vh>rules</vh>
 <v t="ekr.20050419173824.13"><vh>eol_span</vh></v>
-<v t="ekr.20050419173824.12" a="E"><vh>eol_span_regexp</vh></v>
+<v t="ekr.20050419173824.12"><vh>eol_span_regexp</vh></v>
 <v t="ekr.20050419173824.16"><vh>import</vh></v>
 <v t="ekr.20050419173824.2"><vh>keywords</vh></v>
 <v t="ekr.20050419173824.17"><vh>mark_following</vh></v>
 <v t="ekr.20050419173824.18"><vh>mark_previous</vh></v>
 <v t="ekr.20050419173824.14"><vh>seq</vh></v>
-<v t="ekr.20050419173824.15" a="E"><vh>seq_regexp</vh></v>
-<v t="ekr.20050419173824.4" a="E"><vh>span</vh></v>
-<v t="ekr.20050419173824.11" a="E"><vh>span_regexp</vh></v>
+<v t="ekr.20050419173824.15"><vh>seq_regexp</vh></v>
+<v t="ekr.20050419173824.4"><vh>span</vh></v>
+<v t="ekr.20050419173824.11"><vh>span_regexp</vh></v>
 <v t="ekr.20050419173824.5"><vh>terminate</vh></v>
 </v>
 </v>
@@ -1842,10 +1842,10 @@
 <v t="ekr.20050419215535.1"><vh>class property</vh>
 <v t="ekr.20050419220140.1"><vh>propery.__init__</vh></v>
 </v>
-<v t="ekr.20050419215535.2" a="E"><vh>class rule</vh>
+<v t="ekr.20050419215535.2"><vh>class rule</vh>
 <v t="ekr.20050419215535.3"><vh>rule.__init__</vh></v>
 </v>
-<v t="ekr.20050419115912.1" a="E"><vh>class jEdit_parse</vh>
+<v t="ekr.20050419115912.1"><vh>class jEdit_parse</vh>
 <v t="ekr.20050419120819"><vh> __init__ &amp; helpers</vh>
 <v t="ekr.20050419194651"><vh>setAttrDispatchDict</vh></v>
 <v t="ekr.20050419211746.1"><vh>setStartElementDispatchDict</vh></v>
@@ -1866,7 +1866,7 @@
 <v t="ekr.20050419115418.5"><vh>startDocument</vh></v>
 <v t="ekr.20050419115418.6"><vh>startElement</vh></v>
 </v>
-<v t="ekr.20050419195838" a="E"><vh>Semantics...</vh>
+<v t="ekr.20050419195838"><vh>Semantics...</vh>
 <v t="ekr.20050419191207"><vh>doAttr &amp; helpers</vh>
 <v t="ekr.20050419194651.1"><vh>doBoolAttr</vh></v>
 <v t="ekr.20050419194718"><vh>doCharAttr</vh></v>

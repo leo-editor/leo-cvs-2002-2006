@@ -969,9 +969,9 @@ No information on XP.
 #@nonl
 #@-node:ekr.20031218072017.385:How to Increase environment space
 #@+node:ekr.20050316092232:How to install jyLeo
-@killcolor
+@nocolor
 
-- put the j-leo-nnn.jar file in c:\prog
+- put the jyleo-nnn.jar file in c:\prog
 
 - Execute the following command in a console window in c:\prog
     jar xvf j-leo-nnn.jar
@@ -982,6 +982,20 @@ This creates a folder called j-leo-nnn
 
 cd c:\prog\j-leo-nnn\src
 java -jar c:\jython22a0\jython.jar leo.py
+
+Note:  at present this gives KeyError: HOME
+
+In leo.py, in computeHomeDir, I changed:
+@color
+
+home = os.getenv('HOME' )#,default=dotDir)
+
+to:
+
+try:
+    home = os.getenv('HOME' )#,default=dotDir)
+except Exception:
+    home = ''
 #@nonl
 #@-node:ekr.20050316092232:How to install jyLeo
 #@+node:ekr.20031218072017.386:How to remove cursed newlines: use binary mode
@@ -1078,6 +1092,11 @@ returns, to be different :-)
 Do the following in Idle:
 
 import pychecker.checker ; import leo
+
+To run Idle(Python2.3 version) directly:
+
+cd c:\prog\leoCvs\leo\src
+c:\python23\python c:\python23\Lib\idlelib\idle.py
 #@nonl
 #@-node:ekr.20031218072017.390:How to run Pychecker
 #@+node:ekr.20031218072017.391:How to use CVS branches

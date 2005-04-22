@@ -115,7 +115,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
+<v t="ekr.20040629175400" a="E"><vh>Pychecker stuff</vh>
 <v t="ekr.20050212143754"><vh>*** Mods to pychecker in python23/site-packages ***</vh>
 <v t="ekr.20050212143754.1"><vh>What I did</vh></v>
 <v t="ekr.20050212143754.2"><vh>CodeChecks.py (modified)</vh>
@@ -123,7 +123,7 @@
 <v t="ekr.20050212143754.4"><vh>_checkModuleAttribute (modified)</vh></v>
 </v>
 </v>
-<v t="ekr.20040629173419.1" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file .pycheckrc</vh>
+<v t="ekr.20040629173419.1" a="TV" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file .pycheckrc</vh>
 <v t="ekr.20040701193853"><vh>blacklist</vh></v>
 <v t="ekr.20040701193853.1"><vh>defaults</vh></v>
 <v t="ekr.20040701193853.2"><vh>max...</vh></v>
@@ -135,7 +135,7 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021" a="TV"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
@@ -3136,12 +3136,12 @@ modifyDefaultValue = 1
 usesExec = 0</t>
 <t tx="ekr.20040701193853.2"># Max value before generating a complexity warning.
 
-maxLines = 2000
-maxBranches = 500
-maxReturns = 100
-maxArgs = 100
-maxLocals = 250
-maxReferences = 500</t>
+maxlines = 2000
+maxbranches = 500
+maxreturns = 100
+maxargs = 100
+maxlocals = 250
+maxreferences = 500</t>
 <t tx="ekr.20040701193853.3"># dict: suppress warnings, key is module.class.method or module.function
 #	value is a string of command line arguments (can omit -- for long args)
 #       { 'module1': 'no-namedargs maxlines=0',
