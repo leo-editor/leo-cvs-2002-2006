@@ -182,7 +182,6 @@ class baseFileCommands:
     #@+node:ekr.20040326063413:getExistingVnode
     def getExistingVnode (self,tref,headline):
     
-        tref1 = tref
         assert(tref > -1)
         tref = self.canonicalTnodeIndex(tref)
         t = self.tnodesDict.get(tref)
@@ -191,7 +190,6 @@ class baseFileCommands:
         except (IndexError,AttributeError):
             g.es("Missing vnode:",headline,color="red")
             g.es("Probably an outline topology error.")
-            # g.trace(tref1,t,t.vnodeList)
             return None
     #@nonl
     #@-node:ekr.20040326063413:getExistingVnode
@@ -476,7 +474,8 @@ class baseFileCommands:
         This is used to record marked and expanded nodes.
         '''
         
-        nodeIndices = g.app.nodeIndices
+        __pychecker__ = '--no-argsused' # tag used only for debugging.
+    
         gnxs = s.split(',')
         result = [gnx for gnx in gnxs if len(gnx) > 0]
         # g.trace(tag,result)
@@ -968,6 +967,8 @@ class baseFileCommands:
         
         """Parse an unknown attribute in a <v> or <t> element."""
         
+        __pychecker__ = '--no-argsused' # nodeType not used: good for debugging.
+        
         # New in 4.2.  The unknown tag has been pickled and hexlify'd.
         attr,val = self.getUnknownTag()
         if not attr:
@@ -1002,7 +1003,7 @@ class baseFileCommands:
     #@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
     def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
     
-        c = self.c ; v = None
+        v = None
         setCurrent = setExpanded = setMarked = setOrphan = setTop = False
         tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
         # we have already matched <v.
@@ -1408,6 +1409,8 @@ class baseFileCommands:
     #@-node:ekr.20031218072017.1570:assignFileIndices & compactFileIndices
     #@+node:ekr.20050404190914.2:deleteFileWithMessage
     def deleteFileWithMessage(self,fileName,kind):
+        
+        __pychecker__ = '--no-argsused' # kind unused: retained for debugging.
     
         try:
             os.remove(fileName)
@@ -1827,11 +1830,10 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20050418161620.2:putUa (new in 4.3) (changed for 4.3)
     #@+node:EKR.20040526202501:putUnknownAttributes
-    def putUnknownAttributes (self,torv,toString=False):
+    def putUnknownAttributes (self,torv):
         
         """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
         
-        result = []
         attrDict = torv.unknownAttributes
         if type(attrDict) != type({}):
             g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
