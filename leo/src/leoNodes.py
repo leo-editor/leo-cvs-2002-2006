@@ -1896,14 +1896,9 @@ class position (object):
     #@+node:ekr.20040227214711:p.level & simpleLevel
     def simpleLevel(self):
         
-        p = self ; level = 0
-        for parent in p.parents_iter():
-            level += 1
-        return level
+        return len([p for p in self.parents_iter()])
     
     def level(self,verbose=False):
-        
-        # if g.app.debug: simpleLevel = self.simpleLevel()
         
         p = self ; level = 0
         if not p: return level
@@ -1918,7 +1913,7 @@ class position (object):
                 if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
             else:
                 if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
-                # if g.app.debug: assert(level==simpleLevel)
+                # if g.app.debug: assert(level==self.simpleLevel())
                 break
         return level
     #@nonl
@@ -1942,7 +1937,7 @@ class position (object):
     
     def initExpandedBit    (self): return self.v.initExpandedBit()
     def initMarkedBit      (self): return self.v.initMarkedBit()
-    def initStatus (self, status): return self.v.initStatus()
+    def initStatus (self, status): return self.v.initStatus(status)
         
     def setMarked (self):
         self.v.setMarked()
@@ -2040,14 +2035,11 @@ class position (object):
     #@+node:ekr.20040305223225:p.setHeadStringOrHeadline
     def setHeadStringOrHeadline (self,s,encoding="utf-8"):
     
-        p = self ; c = p.c
-        
-        t = p.edit_text()
+        p = self ; t = p.edit_text()
         
         p.initHeadString(s,encoding)
     
         if t:
-            
             state = t.cget("state")
             # g.trace(state,s)
             t.configure(state="normal")
@@ -2226,9 +2218,11 @@ class position (object):
     def moreHead (self, firstLevel,useVerticalBar=False):
         
         """Return the headline string in MORE format."""
+        
+        # useVerticalBar is unused, but it would be useful in over-ridden methods.
+        __pychecker__ = '--no-argsused'
     
         p = self
-    
         level = self.level() - firstLevel
         plusMinus = g.choose(p.hasChildren(), "+", "-")
         
@@ -2497,8 +2491,6 @@ class position (object):
         #@-others
     
     def parents_iter (self,copy=False):
-        
-        p = self
     
         return self.parents_iter_class(self,copy,includeSelf=False)
         
