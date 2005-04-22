@@ -1439,7 +1439,7 @@ class baseUndoer:
         
         if u.oldBack:
             u.p.linkAfter(u.oldBack)
-        elif u.parent:
+        elif u.oldParent:
             u.p.linkAsNthChild(u.oldParent,0)
         else:
             oldRoot = c.rootPosition()
