@@ -136,6 +136,7 @@ class atFile:
         self.debug = False
         self.fileCommands = c.fileCommands
         self.testing = True # True: enable additional checks.
+        self.errors = 0 # Make sure at.error() works even when not inited.
     
         #@    << define the dispatch dictionary used by scanText4 >>
         #@+node:ekr.20041005105605.9:<< define the dispatch dictionary used by scanText4 >>
