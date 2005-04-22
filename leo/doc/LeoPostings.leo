@@ -1,24 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/>
-<globals body_outline_ratio="0.431565967941">
-	<global_window_position top="19" left="167" height="928" width="1043"/>
+<globals body_outline_ratio="0.400862068966">
+	<global_window_position top="9" left="308" height="928" width="888"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20050421185356" a="E"><vh>Postings</vh>
-<v t="ekr.20050421191648"><vh>gnx's (2002-2003)</vh>
-<v t="ekr.20050421194008" a="E"><vh>2002</vh>
-<v t="ekr.20050421205312"><vh>2002-10-21 design.doc</vh></v>
-<v t="ekr.20050421192149.9"><vh>2002-10-24 Glorious unification.doc</vh></v>
-<v t="ekr.20050421192149.18"><vh>2002-12-07 structure rule.doc</vh></v>
+<v t="ekr.20050421221914"><vh>About this file</vh></v>
+<v t="ekr.20050422065602" a="TV"><vh>Summary of problems and their solutions</vh>
+<v t="ekr.20050422065602.1"><vh>The big questions that Leo must answer</vh>
+<v t="ekr.20050422065602.2"><vh>How to read derived files reliably?</vh></v>
+<v t="ekr.20050422065602.3"><vh>How to ensure the integrity of data?</vh></v>
+<v t="ekr.20050422065602.4"><vh>How to represent clones?</vh></v>
+<v t="ekr.20050422065602.5"><vh>How to make derived files friendly to cvs?</vh></v>
 </v>
-<v t="ekr.20050421194542" a="E"><vh>2003 gti's etc</vh>
-<v t="ekr.20050421192149.13"><vh>2003-12-03 gti's.doc  Big picture: why 4.0 is important </vh>
-<v t="ekr.20050421205312.1"><vh>2003-12-06 Big picture: why 4.0 is important: more</vh></v>
+<v t="ekr.20050422065602.6" a="E"><vh>Summary of solutions</vh>
+<v t="ekr.20050421214628.1"><vh>2003-09-17 Progress.doc *** (summary of features)</vh></v>
+</v>
+</v>
+<v t="ekr.20050421212523"><vh>4.0 (2002-2003)</vh>
+<v t="ekr.20050422065602.7"><vh>2002 &amp; 2003: Early ideas</vh>
+<v t="ekr.20050421205312"><vh>2002-10-21 design.doc</vh></v>
+<v t="ekr.20050421192149.12"><vh>2002-10 gti-open.doc New (long) design notes ***</vh>
+<v t="ekr.20050422055636"><vh>2002-10-21 Theme 1: Global Tnode Indices </vh></v>
+<v t="ekr.20050422055636.1"><vh>2002-10-21 Theme 2: Small (template) .leo files </vh></v>
+<v t="ekr.20050422055636.2"><vh>2002-10-21 Theme 3: @@file nodes </vh></v>
+<v t="ekr.20050422055636.8"><vh>2002-10-21 Summary of themes 1-3 </vh></v>
+<v t="ekr.20050422055636.6" a="E"><vh>2002-10-21Theme 4: Revised XML file format</vh></v>
+<v t="ekr.20050422055636.7"><vh>2002-10-22 RE: Theme 4: Revised XML file format</vh></v>
+<v t="ekr.20050422055636.3"><vh>2002-10-23 Yes, GTI's _are_ possible ***</vh></v>
+<v t="ekr.20050422055636.4" a="E"><vh>2002-10-24 RE: Yes, GTI's _are_ possible, more </vh></v>
+<v t="ekr.20050422055636.5"><vh>2002-10-24 sequence numbers in gti's </vh></v>
+<v t="ekr.20050422055636.9"><vh>2002-10-24 Glorious unification &amp; leo.py 4.0 **</vh></v>
+<v t="ekr.20050422055636.10" a="E"><vh>2002-10-26 Setting global name: LeoID.txt </vh></v>
+<v t="ekr.20050422060227"><vh>2002-10-24 Embedded XML != XML </vh></v>
+<v t="ekr.20050422060227.1"><vh>2002-10-27 Embedded XML escapes</vh></v>
+<v t="ekr.20050422060227.2"><vh>2002-10-29 Embedded XML escapes: second thoughts</vh></v>
+</v>
+<v t="ekr.20050421192149.13"><vh>2002-12 gti's.doc  Big picture: why 4.0 is important ***</vh>
+<v t="ekr.20050421205312.1"><vh>2002-12-06 Big picture: why 4.0 is important: more</vh></v>
 <v t="ekr.20050421205312.2"><vh>2002-12-07 Big picture: why 4.0 is important: more</vh></v>
+<v t="ekr.20050421192149.18"><vh>2002-12-07 structure rule.doc (Continuation of big picture)</vh></v>
 <v t="ekr.20050421205312.3" a="E"><vh>2002-12-17 Big picture: thick or thin?</vh></v>
 <v t="ekr.20050421205312.4"><vh>2002-12-18 Big picture: thick or thin?</vh></v>
 <v t="ekr.20050421210335"><vh>2002-12-18 Big picture: thick or thin?</vh></v>
@@ -40,30 +64,40 @@
 <v t="ekr.20050421210335.16"><vh>2003-01-02 RE: Thick &amp; thin</vh></v>
 <v t="ekr.20050421210335.17"><vh>2003-01-06 RE: Thick &amp; thin</vh></v>
 </v>
-<v t="ekr.20050421192149.12"><vh>2003-02-16 gti-open.doc</vh></v>
-<v t="ekr.20050421192149.11"><vh>2003-02-18 gti_summary.doc</vh></v>
+<v t="ekr.20050421192149.11" a="E"><vh>2003-02-18 gti_summary.doc</vh></v>
+</v>
+<v t="ekr.20050421194542.1" a="M"><vh>2003-04 thru 2003-07 Doubts about reliability &amp; resolution</vh>
 <v t="ekr.20050421211313"><vh>2003-04-30 Design questions</vh></v>
-<v t="ekr.20050421211313.1"><vh>5-13-03 Progress.doc</vh></v>
+<v t="ekr.20050421204424" a="M"><vh>2003-05-01 thru  2003-05-30 vxnodes (shared nodes)</vh>
+<v t="ekr.20050421192149.15"><vh>2003-05-01 nodes.doc</vh></v>
+<v t="ekr.20050421203956"><vh>2003-05-01 shared nodes.doc</vh></v>
+<v t="ekr.20050421192149.14"><vh>2003-05-02 inodes redux.doc</vh></v>
+<v t="ekr.20050421203956.4"><vh>2003-05-29 scrolling.doc</vh></v>
+<v t="ekr.20050421203956.2"><vh>2003-05-30 More about vxnodes.doc</vh></v>
 </v>
-<v t="ekr.20050421194542.1"><vh>05 2003</vh>
-<v t="ekr.20050421192149.15"><vh>nodes.doc</vh></v>
-<v t="ekr.20050421192149.14"><vh>inodes redux.doc</vh></v>
-<v t="ekr.20050421192149.6"><vh>Conflicts.doc</vh></v>
-<v t="ekr.20050421192149.5"><vh>Conflicts2.doc</vh></v>
-<v t="ekr.20050421192149.2"><vh>4.0 is dead, long live leo.doc</vh></v>
-<v t="ekr.20050421192149.20"><vh>Using gnx's safely.doc</vh></v>
-<v t="ekr.20050421192149.7"><vh>Eliminate clones.doc</vh></v>
-<v t="ekr.20050421192149.16"><vh>Objections to link nodes.doc</vh></v>
-<v t="ekr.20050421192149.3"><vh>clones2links script.doc</vh></v>
+<v t="ekr.20050421192149.6"><vh>2003-05-06 Conflicts.doc</vh></v>
+<v t="ekr.20050421192149.5"><vh>2003-05-07 Conflicts2.doc</vh></v>
+<v t="ekr.20050421211313.1"><vh>2003-5-13 Progress.doc</vh></v>
+<v t="ekr.20050421192149.2"><vh>2003-05-25 4.0 is dead, long live leo.doc  **</vh></v>
+<v t="ekr.20050421192149.20"><vh>2003-05-26 Using gnx's safely.doc</vh></v>
+<v t="ekr.20050421192149.7"><vh>2003-05-27 Eliminate clones.doc</vh></v>
+<v t="ekr.20050421192149.16"><vh>2003-05-30 Objections to link nodes.doc</vh></v>
+<v t="ekr.20050421192149.3" a="E"><vh>2003-05-31 clones2links script.doc</vh></v>
+<v t="ekr.20050421203956.3"><vh>2003-06-02 positions.doc</vh>
+<v t="ekr.20050421204424.1" a="E"><vh>Overview</vh></v>
+<v t="ekr.20050421204424.2"><vh>Positions</vh></v>
 </v>
-<v t="ekr.20050421195802"><vh>06 2003</vh>
-<v t="ekr.20050421192149.4" a="E"><vh>Cold feet.doc</vh></v>
-<v t="ekr.20050421192149.10"><vh>gnxs must go.doc</vh></v>
-<v t="ekr.20050421192149.19"><vh>ugnx.doc</vh></v>
-<v t="ekr.20050421192149.8"><vh>Eliminating child indices.doc</vh></v>
-<v t="ekr.20050421192149.17" a="E"><vh>Reply 6-22.doc</vh></v>
-<v t="ekr.20050421192149"><vh>What has been gained.doc</vh></v>
-<v t="ekr.20050421192149.1"><vh>++About consistency.doc</vh>
+<v t="ekr.20050421203956.1"><vh>2003-06-02 Giant Aha re positions.doc</vh></v>
+<v t="ekr.20050421211313.2"><vh>2003-06-09 Progress report</vh></v>
+<v t="ekr.20050421192149.4" a="E"><vh>2003-06-12 Cold feet.doc</vh></v>
+<v t="ekr.20050421211313.3"><vh>2003-06-17 Progress report (shared tnodes delayed)</vh></v>
+<v t="ekr.20050421192149.10"><vh>2003-06-18 gnxs must go.doc</vh></v>
+<v t="ekr.20050421192149.19"><vh>2003-06-18 ugnx.doc</vh></v>
+<v t="ekr.20050421192149.8"><vh>2003-06-19 Eliminating child indices.doc</vh></v>
+<v t="ekr.20050421192149.17" a="E"><vh>2003-06-22 Reply 6-22.doc</vh></v>
+<v t="ekr.20050421192149"><vh>2003-06-26 What has been gained.doc</vh></v>
+<v t="ekr.20050421212523.1"><vh>2003-07-09 New design principles.doc</vh></v>
+<v t="ekr.20050421192149.1"><vh>2003-07-26 ++About consistency.doc</vh>
 <v t="ekr.20050421195802.1"><vh>A new 4.0?  Consistency</vh></v>
 <v t="ekr.20050421195802.2"><vh>A new 4.0?  ironical gnx's</vh></v>
 <v t="ekr.20050421195802.3"><vh>A new 4.0?  Derived files can be the SUM</vh></v>
@@ -73,46 +107,29 @@
 <v t="ekr.20050421195802.7"><vh>A new 4.0?  Primary &amp; secondary data</vh></v>
 <v t="ekr.20050421195802.8"><vh>A new 4.0?  gnx's redux</vh></v>
 </v>
-</v>
-</v>
-<v t="ekr.20050421203808"><vh> (2003) positions &amp; vxnodes</vh>
-<v t="ekr.20050421204424"><vh>2003-05 vxnodes</vh>
-<v t="ekr.20050421203956"><vh>shared nodes.doc</vh></v>
-<v t="ekr.20050421203956.4"><vh>scrolling.doc</vh></v>
-<v t="ekr.20050421203956.2"><vh>More about vxnodes.doc</vh></v>
-</v>
-<v t="ekr.20050421204621"><vh>2003-06-02 Positions</vh>
-<v t="ekr.20050421203956.3"><vh>positions.doc</vh>
-<v t="ekr.20050421204424.1" a="E"><vh>Overview</vh></v>
-<v t="ekr.20050421204424.2"><vh>Positions</vh></v>
-</v>
-<v t="ekr.20050421203956.1"><vh>Giant Aha re positions.doc</vh></v>
-</v>
-<v t="ekr.20050421211313.2"><vh>2003-06-09 Progress report</vh></v>
-<v t="ekr.20050421211313.3"><vh>2003-06-17 Progress report (shared tnodes delayed)</vh></v>
-</v>
-<v t="ekr.20050421212523"><vh> (2003) 4.0</vh>
-<v t="ekr.20050421212523.1"><vh>2003-07-09 New design principles.doc</vh></v>
 <v t="ekr.20050421212523.2"><vh>2003-07-30 About at-include.doc</vh></v>
 <v t="ekr.20050421212523.3"><vh>2003-07-30 More about at-include.doc</vh></v>
 <v t="ekr.20050421212523.4"><vh>2003-07-31 comments about 4-0 design.doc</vh></v>
 <v t="ekr.20050421212523.5"><vh>2003-07-31 synch reply 2.doc</vh></v>
-<v t="ekr.20050421212523.6"><vh>2003-09-05 New 4-0 Design Notes.doc</vh>
+</v>
+<v t="ekr.20050422065602.8"><vh>2003-09 Code details</vh>
+<v t="ekr.20050421212523.6" a="E"><vh>2003-09-05 New 4-0 Design Notes.doc</vh>
 <v t="ekr.20050421212523.7"><vh>Executive summary</vh></v>
 <v t="ekr.20050421212523.8"><vh>Background and discussion</vh></v>
 <v t="ekr.20050421212523.9"><vh>Examples</vh></v>
 </v>
 <v t="ekr.20050421212523.10" a="E"><vh>2003-09-03 ProgressReport.doc</vh></v>
 <v t="ekr.20050421214628"><vh>2003-09-14 tempBodyString.doc</vh></v>
-<v t="ekr.20050421214628.1" a="E"><vh>2003-09-17 Progress.doc</vh></v>
-<v t="ekr.20050421214628.2"><vh>2003-09-18 Farewell to at-ws.doc</vh></v>
+<v t="ekr.20050421214628.1" a="E"><vh>2003-09-17 Progress.doc *** (summary of features)</vh></v>
+<v t="ekr.20050421214628.2" a="E"><vh>2003-09-18 Farewell to at-ws.doc</vh></v>
 <v t="ekr.20050421214628.3"><vh>2003-09-22 4-0 complete.doc</vh></v>
 <v t="ekr.20050421214628.4"><vh>2003-09-23 Transition.doc</vh></v>
 </v>
-<v t="ekr.20050421214628.5"><vh> (2003)4.1</vh>
+</v>
+<v t="ekr.20050421214628.5"><vh>4.1 (2003)</vh>
 <v t="ekr.20050421214628.6"><vh>2003-11-03 4-1a1 released.doc</vh></v>
 </v>
-<v t="ekr.20050421214704" a="TV"><vh>(2004) 4.2</vh>
+<v t="ekr.20050421214704"><vh>4.2 (2004)</vh>
 <v t="ekr.20050421214921.6"><vh>2004-02-05 at-file-thin.doc</vh></v>
 <v t="ekr.20050421214921.16"><vh>2004-02-29 New plans-2-29-04.doc **</vh></v>
 <v t="ekr.20050421214921.21"><vh>2004-02-29 shared tnode design.doc</vh></v>
@@ -146,11 +163,9 @@
 <v t="ekr.20050421221330.3"><vh>Embedded sentinels are essential</vh></v>
 </v>
 </v>
-</v>
+<v t="ekr.20050422065602.9"><vh>4.3 (2005)</vh></v>
 </vnodes>
 <tnodes>
-<t tx="ekr.20050421185356"></t>
-<t tx="ekr.20050421191648">@nocolor</t>
 <t tx="ekr.20050421192149">What has been gained?
 
 The recent design changes are subtle: much remains from the old 4.0 design.  In this posting I'd like to summarize what has been gained.
@@ -596,78 +611,6 @@ P.S. This Aha is a direct result of killing gnx's.  It is now clear that .leo fi
 
 EKR
 </t>
-<t tx="ekr.20050421192149.9">Glorious unification &amp; leo.py 4.0
-
-Today’s breakthrough ranks among the very most important events in Leo’s history.  Let me explain why true immutable gti’s are so important.
-
-Clones are the real complicating factor in Leo’s implementation.  In particular, it has always been a major problem associating cloned nodes in .leo files with cloned nodes in derived files.  The present mirroring scheme is a relatively good way, maybe the only good way, of linking nodes between .leo file and derived files.  However, the mirroring scheme essentially requires that information be duplicated in .leo files.  Read errors result when the mirroring scheme breaks down.
-
-True, immutable gti’s solve all these problems in a way never before possible.  We can dispense with writing @file nodes in .leo files!  This in turn means that read errors are eliminated!  At a stroke, .leo files become much, much smaller.  For the first time we can represent the entire Linux kernel in a compact .leo file.  Indeed, the file would have approximately one @file node per kernel file, plus a few other nodes for our own local use.
-
-And there is more, much more.  Because true, immutable gti’s simplify everything, it is possible to consider even more improvement.  Sitting in my bath (how decadent, a shower followed by a bath) I realized that it is now possible to create an entirely new organization for derived files.  This new organization takes full advantage of the new opportunities, and in turn creates even more opportunities.
-
-The immediate impetus for my thoughts was the realization that the new gti’s will not, by themselves, remove all “spurious” diffs reported by CVS.  Indeed, even with immutable gti’s, moving a node in the outline will change the child indices of all siblings that follow the moved node.  And it’s not so easy to see how to represent child indices in such a way that they mostly remain the same when nodes moved.
-
-I first considered replacing child indices with back and next gti’s, but this would make the derived file even more cluttered: gti’s are going to be pretty ugly.  Then the Aha hit:  instead of representing the structure of the outline in “pieces”, using @node and @body sentinels, we can represent the entire outline structure in one place, just as is done in the .leo file itself.  This is now completely safe, because gti’s provide bullet-proof links.
-
-Indeed, the structure of a derived file (say in 4.x of leo.py) will mirror the structure of .leo files almost exactly.   Like this:
-
-@+leo sentinel
-@…other leading sentinels
-@+vnodes
-…the XML-like representation of vnodes, just as in the .leo file, in comments, on many comment lines
-@-vnodes (the end of the xml representation of vnodes)
-code
-
-Note that the representation of vnodes will be exactly like the “real” XML in the .leo file, except that the XML will all be contained in the comment delimiters in effect for the derived file.  So this isn’t “real” XML, it is “XML in comments.”  However, it would be very easy for code to strip off the comments to get at the embedded XML.
-
-We no longer need @+-node sentinels sprinkled throughout the text!  Indeed, within the actual code, we need only represent the tnode, something like this:
-
-@tnode gti=name:time
-
-As an added nicety, we can put the tnode’s headline (the headline of any vnode that contains the tnode) in a comment on the very next line, like this:
-
-@tnode gti=name:time 
-# &lt;&lt; the headline for the reference &gt;&gt;
-
-This will look much nicer than the present way; they won’t be surrounded by @node sentinels, so they will look much cleaner. Of course, these sentinels will, as at present, be properly indented.  
-
-And as a further nicety, the tnode sentinel can indicate whether the expansion of the reference was followed by text, like this:
-
-@tnode nonewline=1, gti=name:time
-# &lt;&lt; the headline for the reference &gt;&gt;
-@+body
-the body
-@-body
-whatever follows the reference, if nonewline is1
-
-This scheme solves a number of nagging or hard problems.
-
-[1] It is much easier to generate the nodes of the outline because it is done in a single spot, and like the &lt;vnodes&gt; element of .leo files we can recreate the outline structure without using any vnode indices at all.  When the structure of the outline changes, only lines of the @vnodes sentinel area will change.  That is, the @vnodes area in the derived file will change if and _only if the outline structure changes.  Spurious diff’s will be completely eliminated, and moving nodes will probably not result in CVS conflicts.
-
-[2] The sentinels embedded within code no longer carry any structure information; that is all carried in the @vnodes area.  So the visual appearance of the text area is simplified.  Much more importantly, tnodes will never change, so CVS conflicts involving @tnode lines are impossible.  Conflicts will still happen if two people change the text of a headline “simultaneously”, but CVS will then mess with the line _following the @tnode sentinel, not the sentinel itself.
-
-[3] While I am messing with the format of derived files, it would be a good idea to solve the problem of how to represent text that follows a references.  The present code ends up inserting spurious newlines to represent the end of a section reference, and some people have complained about those extra newlines.  As shown above, we can represent text following a reference with the nonewline “attribute”.
-
-[4] The similarity between the structure of .leo files and derived files suggests that other XML fields might be placed at the start of derived files.  For example, we could have an @+-preferences sentinels corresponding to the real XML &lt;preferences&gt; element in the .leo file.  This would be the natural place to carry per-file preferences such a font.
-
-[5] Leo can recreate marks and clone links very easily, without “polluting” the derived file.  That is, we do _not want to represent marks in a derived file, because to do so would cause essentially spurious diffs.  Rather, Leo will represent marks in a new &lt;marks&gt; element in the .leo file.  Now that gti’s are solid, this is completely safe.  Similarly, gti’s create rock-solid “join links”.  That is, when reading a derived file Leo can be absolutely sure that two nodes are joined if and _only if they have the same gti.  It is then trivial to recreate clone marks and links.  Two nodes v1 and v2 are cloned if and _only if they have the same gti and shouldBeCloned(v1,v2) returns true.
-
-This last point is of supreme importance.  It means that cloned nodes can be carried in a .leo file _without having to mirror structure.  If and when we ever read a derived file, we can reconstitute the clone links (and marks) with _complete reliability!  We no longer need redundant mirroring information in .leo files!  This in turn makes it possible to use a single “template” .leo file to represent the entire Linux kernel, or all the entire Linux distribution, for that matter.  All we need is a way of deferring the loading of derived files until they are wanted (until the user selects an @@file node)
-
-I called this posting “glorious unification” for several reasons.
-
-[1] There is no longer any doubt about how to associate nodes in .leo files and derived files.  At last we can join nodes in such a way that they can never be parted.  As has already been explained, this hugely simplifies the implementation, and eliminates the need for redundant information in .leo files.  .leo files can be very small!
-
-[2] The unification of file formats (that is, the intimate association of XML elements in the .leo file with similar sentinels in the derived files) not only solves many lingering problems, but makes derived files much more elegant and good looking.  Moreover, tools that apply to .leo files can now easily be adapted to apply to derived files.  And the unification of formats suggests new areas in which information can be shared between .leo files and derived files.
-
-[3] It is now almost certain that we can include one .leo file inside another using a @include x.leo node.  This was always iffy before, but with gti’s it becomes safe to do.  Indeed, because mirroring is no longer required, we no longer need to worry about the various .leo files becoming out-of-synch!  Whatever the included .leo file contains, the including .leo file will handle it with ease.  No longer must we worry about error recovery when the mirroring scheme shatters.
-
-This is, indeed, a great day for Leo.
-
-Edward
-
-</t>
 <t tx="ekr.20050421192149.10">gnx's MUST DIE
 
 Standing in the shower this morning I saw again how dangerous gnx's are.
@@ -774,451 +717,7 @@ These thoughts got me thinking about all parts of Leo’s implementation, especi
 
 The major problems facing any new implementation strategy involve clones. At present, clone linking happens entirely within .leo files as the result of redundantly saving all information in the derived files as part of the .leo file. The derived files create content, the .leo file creates clone links, marks, etc. 
 
-This post is already too long, and it is just the introduction. So I am going to break the rest of this posting into 5 themes, each a "response" on this thread. 
-
-Theme 2: Small (template) .leo files 
-2002-10-21 08:54 
-Presently, updating LeoPy.leo to CVS takes a long time and isn’t very useful. CVS doesn’t understand the format of .leo files; CVS destroys the XML structure of .leo files when trying to merge conflicts. 
-
-The “heroic” solution is the “Resolve CVS Conflicts” command, but I think another way might be better, and much simpler. The idea is just this: don’t include LeoPy.leo in CVS at all. 
-
-To do this, we need to make LeoPy.leo “irrelevant” as far as CVS is concerned. We can do that by having the
-derived files contain _all_ information in LeoPy.leo. So LeoPy.leo would become nothing but a shell, or
-placeholder. This would be just what is needed for truly huge projects, starting with the Linux kernel. 
-
-The elements of this scheme might be as follows: 
-
-1. A user option: copy_derived_info = 0 that causes @file trees in .leo files not to be saved when derived files are written. For completeness, perhaps we would have a Write Full Outline command that does write everything. Such a small .leo file might be called a “template” .leo file. It would consist mainly of the vnodes describing @file nodes (but not their descendents), as well as nodes that exist only in the outline. We would want to reduce or eliminate such non-@file nodes: see below. 
-
-2. Tables within .leo files (or in other files?) would allow marks and clones links to be recreated when derived files are read. I call these gti tables. Regardless of where these tables reside, these tables are conceptually _local_ to each .leo file; they do _not_ have to be managed by CVS. In other words, clone links are created by each .leo file, _not_ by derived files. The acid test of this scheme is whether it can handle the section in LeoPy.leo now called (Project views) 
-
-3. A @read_only option causes the .leo file to be read-only. The Save command would be dimmed in that case.
-This isn’t really needed, and it might emphasize that the .leo file isn’t part of the CVS distribution and isn’t
-mutable. 
-
-4. All information in LeoPy.leo should be “carried” by derived files. An @file local_notes.txt section creates a
-derived file _not_ part of CVS, for the private use of people besides me. The Notes section becomes @file
-EdwardsNotes.txt, containing the "official" (i.e., my) notes about Leo. “Official” derived files are the files handled by CVS. Local files are not managed by CVS, and can be changed by anyone at any time for any reason. LeoDocs.leo and leoConfig.leo would probably exist as before. 
-
-I’ve got to double check that this scheme avoid the horror’s of the old “backup” .leo files. I think it does because there is will be no such thing as read errors. Such errors arose because of mismatches between the structure of the derived file in the .leo file and the real structure as specified by the derived file. If the .leo file contains no structure information no such mismatch can exist. 
-
-Theme 3: @@file nodes 
-2002-10-21 08:56 
-@@file nodes would be read only when the user first selects them. This eliminates the reading of derived files when the template .leo file is opened. 
-
-By: edream ( Edward K. Ream ) 
-Theme 5: @option headlines 
-2002-10-21 09:03 
-Given that there are a number of ways to write .leo files, the new attitude says that rather than trying to figure out
-which is best we give the user the ability to pick any way. When writing a file, we might want to specify: 
-
-1. Whether to use the old, compatible file format, or the new file format without the &lt;tnodes&gt; element. 
-
-2. Whether to redundantly write information to the .leo file, as is done presently, or whether to write template @file nodes. 
-
-The natural place to specify such options is in a headlines, not body text, because only headlines are guaranteed to be written in template @file nodes. Moreover, such options are more similar to @file, @rawfile and @silentfile than to “real” directives. 
-
-We could generalize such “options headlines” to specify many other options. For example, 
-
-@option remove_sentinels_extension = .txt 
-@option body_text_font_family = Courier New 
-etc. 
-
-Not all options could or should be “localized” this way. I doubt, for example, that keyboard shortcuts should be
-dependent on the location of the headline, although I think it probably could be done. And the read_only option
-presently applies to the entire .leo file. We could create a local-read only option, but that would be a new options and the @ignore also has the same effect. I'm not going to get bogged down in details here: the point is that we don't have to dogmatically say that all options in leoConfig.txt should be available in an @options headline. 
-
-Theme 1: Global Tnode Indices 
-2002-10-21 08:51 
-Previously I have dismissed the notion of global node (or clone) indices, saying that there is no way to guarantee
-uniqueness. This is correct, but it is not the whole story. CVS provides another model: that of resolving conflicts. 
-
-So suppose every node (in a derived file or in a .leo file) has a global node index. This index would be associated with _all_ tnodes, not just cloned nodes. These indices (global tnode indices, or gti’s for short) would be _semi_ mutable. That is, they would be immutable except for the (rare) instances in which gti conflicts occurred. A gti conflict occurs when two nodes in a .leo file have the same gti. At that point, one or both of the gti’s must change.
-
-A subsidiary part of this scheme is that .leo files (and derived files?), would contain an indication of the maximum
-gti used so far. When writing a file, the maximum gti would be set to the maximum of all the max gti fields found
-when reading all the files. When creating a tnode for the very first time, its gti would be set to the max gti value,
-and that value then would be incremented. Possibly a new @max_gti sentinel would be needed in derived files.
-This might (will?) cause conflicts: to resolve the CVS conflict we would simply pick the larger number. 
-
-In short, we have a “semi-global” index that is _not_ guaranteed to be unique, but which will be “almost” unique.
-We resolve conflicts as follows. Each .leo file will contain a gti table, associating gti’s with headlines. A conflict
-occurs when two nodes have different headlines and the same gti’s. The gti table will give the headline that was
-written last for each gti, so the gti table will usually match one of the headlines of the conflicting nodes. The other
-tnode will have it’s gti changed. If neither node’s headline is in the table we will change both gti’s.
-
-By: edream ( Edward K. Ream ) 
-Yes, GTI's _are_ possible 
-2002-10-23 19:58 
-
-Standing in the shower after my noon workout I realized that there is a very easy and simple way to generate true, immutable, unique GTI's. We simply concatenate a user name, specified, say in leoConfig.txt, with any local timestamp. 
-
-The beauty of this scheme is that it works so well with CVS. Indeed, we simply use the Sourceforge user name,
-edream, dthein, jmgilligan (but not nobody :-) and we instantly have a guarantee of uniqueness. Presumably this
-will be good enough, though if several people could log in under the same id from several places at the _same_
-time we could extend the scheme to include the location: edream:home, and edream:fiji_islands,
-edream:crab_nebula, for example. 
-
-This truly changes everything. At last there is a really good way to uniquely identify nodes, and in a meaningful
-form as well. What could be better than creator:creationTime? Thanks to all who have kept pestering me about
-this. 
-
-Of course there are minor complications. Maybe leo will use "nobody" if the creator_name field in leoConfig.txt is not specified. Or maybe we could fall back on other schemes: just using the local timestamp (while issuing a
-warning). It may even be possible to use the CVS $Author$ variable. In any case, these are just nits related to
-initialization. 
-
-Victory is at hand! 
-
-BTW, with such nice indices, there is probably no need to "improve" the present .leo file format. We must,
-however, write these true gti's in node sentinels in derived files. So these sentinels will be longer, but that won't
-matter because they will never ever show up in spurious diffs. 
-
-By: dthein ( Dave Hein ) 
- RE: Yes, GTI's _are_ possible, more 
-2002-10-24 00:21 
-I just thought of an even more compelling reason for adding
-sequence numbers -- file imports. File imports will add nodes as fast
-as possible, guaranteeing multiple GTI generation requests within the
-minimum clock interval. 
-
-By: dthein ( Dave Hein ) 
- RE: Yes, GTI's _are_ possible 
-2002-10-23 22:54 
-Boy, that was easy. :-) All we had to do was wait :-) :-) 
-
-If you are happy with "timestamp:userid:location" as the GTI, then so
-am I -- almost. I'd also add a sequence number in case somebody
-hits Ctrl-I key several times quickly and so generates several GTIs
-within the resolution of the timestamp. Just increment a global seqno
-with each GTI generation request. So I'd like to see
-"seqno:timestamp:userid:location". 
-
-Note: You also probably want to use time.time() to get the
-timestamp ... it gets sub-second times on different platforms;
-time.clock() only gets seconds on UNIX. Of course, if you want a
-human readable time string instead of a floating point number, then
-seconds is the finest resolution you can get and the seqno
-mentioned above becomes even more important. 
-
-By: edream ( Edward K. Ream ) 
-sequence numbers in gti's 
-2002-10-24 11:17 
-&gt; I'd like to see "seqno:timestamp:userid:location". 
-
-I agree. Leo would actually generate the seqno field only if the presently generated timestamp matches the previousTimestamp ivar in the app class. 
-
-Derived files will specify a default userid:location field. Within
-derived files, Leo will only write seqno:timestamp if the
-userid:location does not match this default. When reading a
-derived file, Leo will use the default userid:location field in the
-derived file's header to reconstitute the full gti. Since seqno
-will mostly be empty, within derived files gti's will reduce, in
-most cases, to just the timestamp! This will make derived
-files much more pleasant to read. In particular, all files derived
-from LeoPy.leo will have edream as the default userid:location
-field, so those few headlines originally created by somebody
-else will be clearly visible. It's perfect. 
-
-Neither the format nor the resolution of the timestamp affects this scheme in any way. 
-
-1. The formats of the timestamps do not need to match
-"across" different machines because the 
-userid:location part of the gti (whether explicit or implicit)
-disambiguates the gti. All that is required is that timestamps
-be unique on a particular machine, whatever their format. 
-
-2. The resolution of timestamps similarly does not matter
-provided that we use seqno's as you suggest. 
-
-By: edream ( Edward K. Ream ) 
-Theme 4: Revised XML file format 
-2002-10-21 08:58 
-The present XML file format is “regular”, that is, all vnodes and tnodes are represented in the same way. In particular, tnodes are associated with vnode using tnode indices. Tnode indices are computed each time the .leo file is written, and a “small” change in a .leo file can cause many of these indices to change. This causes CVS to report many diffs.
-
-It would be possible to use a slightly more complex scheme that would take an entirely different approach. 
-
-We don’t use the &lt;tnodes&gt; element at all. Instead, we associate text with the first headline that uses it, using an
-attribute field. For example, instead of: 
-
-&lt;v t="T4"&gt;&lt;vh&gt;The headline text&lt;/vh&gt;...any nested vnodes&lt;/v&gt; 
-
-We would have: 
-
-&lt;v tx="The body text"&gt;&lt;vh&gt;The headline text&lt;/vh&gt;...&lt;/v&gt; 
-
-To make this work, we must ensure that two nodes are cloned if and only if their headline texts are identical. Leo can do this as follows. When writing a .leo file, Leo will first scan the entire list of vnodes, entering headline text into a Python dictionary. If two vnodes have the same headline text but are _not_ clones a disambiguating tag will be added, something like this: 
-
-&lt;v tag="1" tx="The body text"&gt;&lt;vh&gt;The headline text&lt;/vh&gt;...&lt;/v&gt; 
-
-The read logic will consider that vnodes with the same headline text are clones provided that: 
-
-1. They don’t use the old t= tnode index field 
-2. They either have no new tag= field or they have the same tag= field. 
-
-This scheme will eliminate all the old tnode index fields, and the new tag= fields won’t change when other vnodes or tnodes change. This means that essentially all changes to .leo files will be as the result of adding vnodes or changing tnode text. That is, changes in .leo files will correspond directly to user changes. This presumably will make CVS happier. 
-
-By: dthein ( Dave Hein ) 
-RE: Theme 4: Revised XML file format 
-2002-10-22 20:23 
-
-Putting the body text into the value of an XML attribute is, I think, not a good thing. There are limits as to what
-kind of characters can be used for attribute values, and there may be length limits for attributes imposed by
-some tools. In general, it is better for the inner text (the text between the start and end XML tags) to be used
-for _data_ and the attributes to be used for _metadata_ -- which is the way the current leo XML is defined.
-Usually, using an attribute for basic data will lead to trouble down the road. 
-
-What is the problem here? Is not that inserting a new node or moving a node causes all the tnode indexes
-to be renumbered (thus generating lots of diffs)? 
-
-Would we not be better served by relying on the vnode structure to indicate the node positioning in the tree,
-and using "semi-mutable" :-) identifiers for the tnode indexes so that they are not resequenced each time a
-node is inserted, removed, repositioned? 
-
-By: edream ( Edward K. Ream ) 
-RE: Theme 4: Revised XML file format 
-2002-10-22 23:06 
-&gt; Careful. 
-
-Ok. I misspoke. The data should be in an element (like the headline is), rather than in an attribute. This
-doesn't change matters materially. 
-
-&gt; What is the problem here? 
-
-Yes, one of the problems is tnode indices changing, with the resulting "false" diffs. Making tnode
-indices semi-mutable may or may not be feasible or desirable. 
-
-My present thinking is that we might be able to get rid of all, (or almost all) indices. Exactly what the
-file format becomes is a secondary issue. For sure it won't be compatible with old versions of Leo. 
-
-Again, the idea is to identify nodes by headline, with a disambiguating attribute field in those rare cases
-where non-cloned nodes have identical headlines. We could even associate vnodes with tnodes (and
-vice versa) this way. 
-
-But these are details. As always, the main problems are: 
-
-1. Clones links (maybe solved in this case, but maybe not in general) and 
-
-2. The multiple-update problem that CVS addresses but which also may occur outside the CVS context
-and which have, in the past, been the source of the dreaded read errors. Perhaps I should list read
-errors themselves as major problems in their own right. 
-
-3. Reducing false diffs in CVS. 
-
-4. Handling CVS conflicts, or better yet, eliminating them completely. 
-
-Anyway, I wouldn't take what I say in this posting too seriously, or worry too much about details. There
-is so much to handle that even broad-brush ideas will probably not be too close to the final solutions.
-Maybe the only idea to take from this theme is that Leo's XML format is, after years of stasis, possibly
-open to major change. Obviously, I won't do this unless the new scheme solves major outstanding
-problems. Secondary issues like compactness are, to me, completely irrelevant. 
-
-Finally, it should be obvious that nothing is going to happen on this matter for quit a while. 
-
-By: edream ( Edward K. Ream ) 
-Summary of themes 1-3 
-2002-10-21 08:56 
-What underlies these first 3 themes is that the user experience of Leo would be almost completely unchanged! The only difference is that Leo would load template .leo files much more quickly, and the messages about loading derived files would happen only on demand. New user options would control all the “controversial” parts of these proposals. 
-
-I’m excited about these new directions. It’s possible that there will be gotchas that can’t be resolved. I’ve tried some of these ideas before without success. However, I think it is more likely that gti’s form a firm foundation for new implementations. 
-
-The key to all of this is minimizing gti conflicts, and handling them properly when they happen. If this can’t be done without heroic decisions from the user the whole scheme fails. It may be possible, it may not be. By a “heroic” decision I mean a decision at the time the conflict is announced requiring information that will not be present until after the decision was made. Some of the old error recovery schemes required such heroic decisions, which is why they didn’t work. 
-
-By: dthein ( Dave Hein ) 
-RE: Summary of themes 1-3 
-2002-10-23 11:41 
-I like having the marks and clone links only in the .leo file. Of course, this does require having a unique
-identifier for the tnode. 
-
-I agree that some sort of reorg is required to address performance issues (both CVS diff times and load/save
-times). 
-
-As you note elsewhere, it is worth calling these ideas out and mulling them over for a while. Eventually, an
-elegant solution will arise :-) 
-
-By: edream ( Edward K. Ream ) 
-Glorious unification &amp; leo.py 4.0 
-2002-10-24 00:51 
-Today’s breakthrough ranks among the very most important events in Leo’s history. Let me explain why true
-immutable gti’s are so important. 
-
-Clones are the real complicating factor in Leo’s implementation. In particular, it has always been a major problem associating cloned nodes in .leo files with cloned nodes in derived files. The present mirroring scheme is a relatively good way, maybe the only good way, of linking nodes between .leo file and derived files. However, the mirroring scheme essentially requires that information be duplicated in .leo files. Read errors result when the mirroring scheme breaks down. 
-
-True, immutable gti’s solve all these problems in a way never before possible. We can dispense with writing @file nodes in .leo files! This in turn means that read errors are eliminated! At a stroke, .leo files become much, much smaller. For the first time we can represent the entire Linux kernel in a compact .leo file. Indeed, the file would have approximately one @file node per kernel file, plus a few other nodes for our own local use. 
-
-And there is more, much more. Because true, immutable gti’s simplify everything, it is possible to consider even
-more improvement. Sitting in my bath (how decadent, a shower followed by a bath) I realized that it is now possible to create an entirely new organization for derived files. This new organization takes full advantage of the new opportunities, and in turn creates even more opportunities. 
-
-The immediate impetus for my thoughts was the realization that the new gti’s will not, by themselves, remove all
-“spurious” diffs reported by CVS. Indeed, even with immutable gti’s, moving a node in the outline will change the child indices of all siblings that follow the moved node. And it’s not so easy to see how to represent child indices in such a way that they mostly remain the same when nodes moved. 
-
-I first considered replacing child indices with back and next gti’s, but this would make the derived file even more
-cluttered: gti’s are going to be pretty ugly. Then the Aha hit: instead of representing the structure of the outline in
-“pieces”, using @node and @body sentinels, we can represent the entire outline structure in one place, just as is
-done in the .leo file itself. This is now completely safe, because gti’s provide bullet-proof links. 
-
-Indeed, the structure of a derived file (say in 4.x of leo.py) will mirror the structure of .leo files almost exactly. Like this: 
-
-@+leo sentinel 
-@…other leading sentinels 
-@+vnodes 
-…the XML-like representation of vnodes, just as in the .leo file, in comments, on many comment lines 
-@-vnodes (the end of the xml representation of vnodes) 
-code 
-
-Note that the representation of vnodes will be exactly like the “real” XML in the .leo file, except that the XML will all be contained in the comment delimiters in effect for the derived file. So this isn’t “real” XML, it is “XML in comments.” However, it would be very easy for code to strip off the comments to get at the embedded XML. 
-
-We no longer need @+-node sentinels sprinkled throughout the text! Indeed, within the actual code, we need only represent the tnode, something like this: 
-
-@tnode gti=name:time 
-
-As an added nicety, we can put the tnode’s headline (the headline of any vnode that contains the tnode) in a
-comment on the very next line, like this: 
-
-@tnode gti=name:time 
-# &lt;&lt; the headline for the reference &gt;&gt; 
-
-This will look much nicer than the present way; they won’t be surrounded by @node sentinels, so they will look much cleaner. Of course, these sentinels will, as at present, be properly indented. 
-
-And as a further nicety, the tnode sentinel can indicate whether the expansion of the reference was followed by text, like this: 
-
-@tnode nonewline=1, gti=name:time 
-# &lt;&lt; the headline for the reference &gt;&gt; 
-@+body 
-the body 
-@-body 
-whatever follows the reference, if nonewline is1 
-
-This scheme solves a number of nagging or hard problems. 
-
-1. It is much easier to generate the nodes of the outline because it is done in a single spot, and like the &lt;vnodes&gt;
-element of .leo files we can recreate the outline structure without using any vnode indices at all. When the structure of the outline changes, only lines of the @vnodes sentinel area will change. That is, the @vnodes area in the derived file will change if and _only_ if the outline structure changes. Spurious diff’s will be completely eliminated, and moving nodes will probably not result in CVS conflicts. 
-
-2. The sentinels embedded within code no longer carry any structure information; that is all carried in the @vnodes area. So the visual appearance of the text area is simplified. Much more importantly, tnodes will never change, so CVS conflicts involving @tnode lines are impossible. Conflicts will still happen if two people change the text of a headline “simultaneously”, but CVS will then mess with the line _following_ the @tnode sentinel, not the sentinel itself. 
-
-3. While I am messing with the format of derived files, it would be a good idea to solve the problem of how to
-represent text that follows a references. The present code ends up inserting spurious newlines to represent the end of a section reference, and some people have complained about those extra newlines. As shown above, we can represent text following a reference with the nonewline “attribute”. 
-
-4. The similarity between the structure of .leo files and derived files suggests that other XML fields might be placed at the start of derived files. For example, we could have an @+-preferences sentinels corresponding to the real XML &lt;preferences&gt; element in the .leo file. This would be the natural place to carry per-file preferences such a font. 
-
-5. Leo can recreate marks and clone links very easily, without “polluting” the derived file. That is, we do _not_ want to represent marks in a derived file, because to do so would cause essentially spurious diffs. Rather, Leo will represent marks in a new &lt;marks&gt; element in the .leo file. Now that gti’s are solid, this is completely safe. Similarly, gti’s create rock-solid “join links”. That is, when reading a derived file Leo can be absolutely sure that two nodes are joined if and _only_ if they have the same gti. It is then trivial to recreate clone marks and links. Two nodes v1 and v2 are cloned if and only if they have the same gti and shouldBeCloned(v1,v2) returns true. 
-
-This last point is of supreme importance. It means that cloned nodes can be carried in a .leo file _without_ having to mirror structure. If and when we ever read a derived file, we can reconstitute the clone links (and marks) with _complete_ reliability! We no longer need redundant mirroring information in .leo files! This in turn makes it possible to use a single “template” .leo file to represent the entire Linux kernel, or all the entire Linux distribution, for that matter. All we need is a way of deferring the loading of derived files until they are wanted (until the user selects an @@file node) 
-
-I called this posting “glorious unification” for several reasons. 
-
-[1] There is no longer any doubt about how to associate nodes in .leo files and derived files. At last we can join nodes in such a way that they can never be parted. As has already been explained, this hugely simplifies the
-implementation, and eliminates the need for redundant information in .leo files. .leo files can be very small! 
-
-[2] The unification of file formats (that is, the intimate association of XML elements in the .leo file with similar
-sentinels in the derived files) not only solves many lingering problems, but makes derived files much more elegant and good looking. Moreover, tools that apply to .leo files can now easily be adapted to apply to derived files. And the unification of formats suggests new areas in which information can be shared between .leo files and derived files. 
-
-[3] It is now almost certain that we can include one .leo file inside another using a @include x.leo node. This was always iffy before, but with gti’s it becomes safe to do. Indeed, because mirroring is no longer required, we no longer need to worry about the various .leo files becoming out-of-synch! Whatever the included .leo file contains, the including .leo file will handle it with ease. No longer must we worry about error recovery when the mirroring scheme shatters. 
-
-This is, indeed, a great day for Leo. 
-
-Edward 
-
-By: edream ( Edward K. Ream ) 
-Setting global name: LeoID.txt 
-2002-10-26 13:15 
-There are a few nits concerning setting the global id:loc field that I'd like to mention here. 
-
-1. I don't believe the id:loc field should be part of leoConfig.leo/leoConfig.txt. If it were it would be difficult to distribute leoConfig.leo without risk of resetting the id:loc. Instead, a separate file, say LeoID.txt should contain the id:loc field. The first non-comment line of the file will contain the field, with comment lines starting with #. 
-
-2. LeoID.txt might be placed in a location associated with the user. But this creates the further problem: how
-do we tell Leo about this location? 
-
-Remember what the situation is: we want to make sure that the id:loc field disambiguates possibly identical
-timestamps. Even with a single user, it would be conceivable, with a time grain of one second, to create two
-nodes in two different copies of Leo on the same machine at the "same" time. To handle this, we could add
-another timestamp, the time at which Leo was launched (which would be unique, even for two copies of Leo on
-the same machine). However, this extra timestamp would be ugly, and it would destroy the ability to have a
-default id:loc associated with every machine. 
-
-So I favor the simple solution of either a) putting LeoID.txt in the same folder as leo.py, or having the user
-specify the location of the directory containing LeoID.txt. If different users on Linux can specify different
-locations for LeoID.txt, so much the better. 
-
-3. Leo 4.x must raise an error if LeoID.txt can not be found. It will put up a dialog saying that LeoID.txt can not
-be found, and prompting the user either 
-
-a) for the location of an existing LeoID.txt file or 
-b) for an id:txt field and the location of the place to put a new LeoID.txt file. 
-
-Once again, we have the problem of where to put LeoID.txt. Any ideas, especially from Linux people, would be
-welcome here. 
-
-4. leoConfig.txt will contain at least one option related to the new gti scheme. This option tells whether to use
-gti's at all, or whether to use the old way. (For the foreseeable future, leo.py will be able to read both old and
-new style derived files and .leo files.) We must have this option to suppress the dialog mentioned above. This
-option causes no distribution problem: it will always be set to use_gtis = 1 when updating to CVS, and nobody
-using CVS would be tempted to change it. 
-
-So that's it. These are minor details which, except for the problem of where to put LeoID.txt are easily solved.
-Any suggestions for where to put LeoID.txt so Leo can find them would be appreciated. Note that is a minor
-problem: gti's are going to happen. 
-
-By: edream ( Edward K. Ream ) 
-Embedded XML != XML 
-2002-10-24 13:54 
-
-For languages without single-line comments, like HTML, the "embedded" XML within a derived file must
-escape the ending comment delimiter used to create sentinel lines. Whatever escape convention used, it won't
-be compatible with XML. So we can parse the embedded XML until that escape convention is undone. 
-
-This issues does not arise for languages that have a single-line comment: that is, we convert from embedded
-XML to "real" XML simply be stripping off the leading comment delimiter. 
-
-Yes, this is a nit, and an important nit. 
-
-By: edream ( Edward K. Ream ) 
-Embedded XML escapes 
-2002-10-27 10:10 
-Some scheme must be found to escape the ending block comment delimiter within embedded XML.
-This would only be needed for languages without a single-line comment and without its own escape
-convention. 
-
-One general-purpose escape convention would be to define an escape sequence that "goes away", say
-&amp;none. Suppose the ending block delimiter is ch1...chn. We escape this as &amp;nonech1,...&amp;nonechn.
-We must also escape &amp;none to &amp;&amp;nonenone. To unescape such escaped text we simply delete all
-instances of &amp;none. I believe this will work as long as the ending block comment delimiter of no
-language is in fact &amp;none. 
-
-For example, if HTML (or XML) did not already have its own escape convention, we would escape XML
-embedded in HTML (or XML) by replacing all --&gt; strings by &amp;none-&amp;none-&amp;none&gt;. 
-
-However, HTML does have an escape convention, so instead of using the above scheme we should
-replace --&gt; by --&amp;gt. Perhaps this whole issue will not arise. HTML is one of the very few languages
-without a single-line comment. But if there is, in fact, a language without a single-line comment, and
-without its own escape convention, the &amp;none convention could be used. 
-
-Hmm. I don't like the fact that under this scheme &amp;none can't be the ending comment delimiter of the
-language being escaped. Perhaps a more general way can be imagined. The problem appears hard. For
-example, the HTML/XLM escape convention works by escaping &amp;, &lt; and &gt;. The convention "complete";
-there are no "holes" like the &amp;none hole in the scheme I have just proposed. But completeness is
-possible precisely because the special characters in HTML/XML are known beforehand. 
-
-By: edream ( Edward K. Ream ) 
-Embedded XML escapes: second thoughts 
-2002-10-29 10:23 
-The more I think of it, the less I like the &amp;none scheme. It's ugly, it doesn't work in general, it
-probably isn't needed, and there is a better, simpler way. 
-
-1. It's ugly: I mean this in the mathematical sense of something overly complex and not elegant. 
-
-2. It doesn't work in general: Escaping &amp;none results in &amp;&amp;nonenone, so this scheme fails if the
-ending comment delimiter is &amp;&amp;. 
-
-3. It probably isn't needed: the only languages Leo knows about at present that don't have
-single-line comments are HTML and XML, and both of these have a perfectly good escape
-mechanism. 
-
-4. There is a better way: we simply need to require that the "specification" for each language w/o
-single-line comments include an escape mechanism to be used when generating embedded XML. 
-
-I'm not saying definitely that I'll never try to come up with a general escaping mechanism, but
-there seems to be no need to use this ugly scheme at present. 
-</t>
+This post is already too long, and it is just the introduction. So I am going to break the rest of this posting into 5 themes, each a "response" on this thread. </t>
 <t tx="ekr.20050421192149.13">Big picture: why 4.0 is important 
 2002-12-03 22:05 
 
@@ -1483,10 +982,7 @@ We might not want this simplification if Gil can convince me that Leo can easily
 
 Edward
 </t>
-<t tx="ekr.20050421194008"></t>
-<t tx="ekr.20050421194542"></t>
 <t tx="ekr.20050421194542.1">0</t>
-<t tx="ekr.20050421195802"></t>
 <t tx="ekr.20050421195802.1">A new 4.0?  Consistency
 
 The overriding requirement for 4.0 is that Leo must preserve the _meaning_, _consistency_ and _intention_ of code in all situations.  I know from experience that this does not happen automatically.  In particular, I am haunted by the ill-fated concept (and implementation) of "backup" .leo files.  Such files did not contain all the information typically found in .leo files.  Backup .leo files were truly dangerous.  It was way too easy to unwittingly revert to previous versions of code using such backup files.
@@ -1613,7 +1109,6 @@ P.S.  The exact details don't matter much now that we aren't asking  the new gnx
 P.P.S  Many clone links might break when the .leo files and derived files are out of synch.  This really is the same situation as happens now.  Indeed, the announcement that links have been broken will serve as a useful warning that not everything is in synch.  In any event, there is no way to deal with this kind of situation automatically, and no real danger in this situation either.
 
 EKR</t>
-<t tx="ekr.20050421203808">@nocolor</t>
 <t tx="ekr.20050421203956">Breakthrough re shared trees &amp; a surprising result
 
 Today I have had series of important insights regarding Leo's implementation.  To state my conclusion first:
@@ -1873,7 +1368,6 @@ For each shared tree of vnodes, there is exactly one target vnode.  The target v
 
 Therefore, a _single_ link vnode together with its target vnode fully represents a cloned node.  You can think of each such combination of a link vnode and its (shared) target vnode as a _virtual vnode_.  For any virtual vnode, Leo can get any information found in a normal vnode (not a cloned vnode) either from the link vnode or the target vnode.  Moreover, a virtual vnode corresponds to a _single_ position in a tree traversal.
 Internally, Leo "moves around in the virtual vnode" as needed to set or get information from the virtual vnode.  Traversals of the tree are unaware that the virtual vnode has structure: it looks exactly like any other vnode.  Because all positions within a bag are equivalent, Leo must be careful to compare positions properly.</t>
-<t tx="ekr.20050421204621"></t>
 <t tx="ekr.20050421205312">One of the great joys of the Leo project is the way it takes, in unexpected ways and at unexpected times, surprising new directions.  The last time a major change in Leo happened was a little more than a year ago when I decided that @file trees were feasible.  I believe a similar seismic shift is about to happen.
 
 There seems to be a natural rhythm involved: expansion and contraction, invention and consolidation/completion, positive and negative.  I believe part of this natural rhythm involves forgetting, especially forgetting why things don’t work.  Often a slightly new point of view invalidates formerly real obstacles.
@@ -3297,7 +2791,7 @@ Edward</t>
 
 To accomplish these goals, derived files will contain the new @ws and @nonl sentinels.
 </t>
-<t tx="ekr.20050421212523.8">We can't eliminating extra blank lines unless we are willing to rewrite the old code (in leoAtFile.py) and substantially modify the conceptual framework on which the old code was based.  I wandered around a bit before I realized that the write code must "come first".  Not only does the write code create the format of derived files, but the write code creates the conceptual framework that will simplify (or not!) the job of the read code's.
+<t tx="ekr.20050421212523.8">We can't eliminating extra blank lines unless we are willing to rewrite the old code (in leoAtFile.py) and substantially modify the conceptual framework on which the old code was based.  I wandered around a bit before I realized that the write code must "come first".  Not only does the write code create the format of derived files, but the write code creates the conceptual framework that will simplify (or not!) the job of the read code.
 
 The old read code has great difficulties deciding whether newlines "belong" to sentinels or not.  The culprit came from considering that sentinels begin _and_ end with newlines.  The old write code "pretended" to write newlines before and after all sentinels, then used a "newline pending" scheme to eliminate redundant newlines between adjacent sentinels.
 
@@ -5226,5 +4720,496 @@ Again, I'm sure this won't end the noodling, but hey, I tried :-)
 
 Edward
 </t>
+<t tx="ekr.20050421221914">@nocolor
+
+This file contains many design-related postings from my hard drive. These
+correspond fairly closely, but not exactly, to SourceForge postings.
+
+I plan much more work on this file; it may form the basis of a proper theory of
+operation, as well as a Leo book.
+
+It is amazing how difficult it is for me to keep the essential developments of
+Leo's history in proper order. I plan an overview section telling, for each
+major development, when it happened, what the design questions were and what the
+general resolution of those questions were.</t>
+<t tx="ekr.20050422055636">Theme 1: Global Tnode Indices 
+2002-10-21 08:51 
+Previously I have dismissed the notion of global node (or clone) indices, saying that there is no way to guarantee
+uniqueness. This is correct, but it is not the whole story. CVS provides another model: that of resolving conflicts. 
+
+So suppose every node (in a derived file or in a .leo file) has a global node index. This index would be associated with _all_ tnodes, not just cloned nodes. These indices (global tnode indices, or gti’s for short) would be _semi_ mutable. That is, they would be immutable except for the (rare) instances in which gti conflicts occurred. A gti conflict occurs when two nodes in a .leo file have the same gti. At that point, one or both of the gti’s must change.
+
+A subsidiary part of this scheme is that .leo files (and derived files?), would contain an indication of the maximum
+gti used so far. When writing a file, the maximum gti would be set to the maximum of all the max gti fields found
+when reading all the files. When creating a tnode for the very first time, its gti would be set to the max gti value,
+and that value then would be incremented. Possibly a new @max_gti sentinel would be needed in derived files.
+This might (will?) cause conflicts: to resolve the CVS conflict we would simply pick the larger number. 
+
+In short, we have a “semi-global” index that is _not_ guaranteed to be unique, but which will be “almost” unique.
+We resolve conflicts as follows. Each .leo file will contain a gti table, associating gti’s with headlines. A conflict
+occurs when two nodes have different headlines and the same gti’s. The gti table will give the headline that was
+written last for each gti, so the gti table will usually match one of the headlines of the conflicting nodes. The other
+tnode will have it’s gti changed. If neither node’s headline is in the table we will change both gti’s.
+</t>
+<t tx="ekr.20050422055636.1">Theme 2: Small (template) .leo files 
+2002-10-21 08:54 
+Presently, updating LeoPy.leo to CVS takes a long time and isn’t very useful. CVS doesn’t understand the format of .leo files; CVS destroys the XML structure of .leo files when trying to merge conflicts. 
+
+The “heroic” solution is the “Resolve CVS Conflicts” command, but I think another way might be better, and much simpler. The idea is just this: don’t include LeoPy.leo in CVS at all. 
+
+To do this, we need to make LeoPy.leo “irrelevant” as far as CVS is concerned. We can do that by having the
+derived files contain _all_ information in LeoPy.leo. So LeoPy.leo would become nothing but a shell, or
+placeholder. This would be just what is needed for truly huge projects, starting with the Linux kernel. 
+
+The elements of this scheme might be as follows: 
+
+1. A user option: copy_derived_info = 0 that causes @file trees in .leo files not to be saved when derived files are written. For completeness, perhaps we would have a Write Full Outline command that does write everything. Such a small .leo file might be called a “template” .leo file. It would consist mainly of the vnodes describing @file nodes (but not their descendents), as well as nodes that exist only in the outline. We would want to reduce or eliminate such non-@file nodes: see below. 
+
+2. Tables within .leo files (or in other files?) would allow marks and clones links to be recreated when derived files are read. I call these gti tables. Regardless of where these tables reside, these tables are conceptually _local_ to each .leo file; they do _not_ have to be managed by CVS. In other words, clone links are created by each .leo file, _not_ by derived files. The acid test of this scheme is whether it can handle the section in LeoPy.leo now called (Project views) 
+
+3. A @read_only option causes the .leo file to be read-only. The Save command would be dimmed in that case.
+This isn’t really needed, and it might emphasize that the .leo file isn’t part of the CVS distribution and isn’t
+mutable. 
+
+4. All information in LeoPy.leo should be “carried” by derived files. An @file local_notes.txt section creates a
+derived file _not_ part of CVS, for the private use of people besides me. The Notes section becomes @file
+EdwardsNotes.txt, containing the "official" (i.e., my) notes about Leo. “Official” derived files are the files handled by CVS. Local files are not managed by CVS, and can be changed by anyone at any time for any reason. LeoDocs.leo and leoConfig.leo would probably exist as before. 
+
+I’ve got to double check that this scheme avoid the horror’s of the old “backup” .leo files. I think it does because there is will be no such thing as read errors. Such errors arose because of mismatches between the structure of the derived file in the .leo file and the real structure as specified by the derived file. If the .leo file contains no structure information no such mismatch can exist. </t>
+<t tx="ekr.20050422055636.2">Theme 3: @@file nodes 
+2002-10-21 08:56 
+@@file nodes would be read only when the user first selects them. This eliminates the reading of derived files when the template .leo file is opened. 
+
+By: edream ( Edward K. Ream ) 
+Theme 5: @option headlines 
+2002-10-21 09:03 
+Given that there are a number of ways to write .leo files, the new attitude says that rather than trying to figure out
+which is best we give the user the ability to pick any way. When writing a file, we might want to specify: 
+
+1. Whether to use the old, compatible file format, or the new file format without the &lt;tnodes&gt; element. 
+
+2. Whether to redundantly write information to the .leo file, as is done presently, or whether to write template @file nodes. 
+
+The natural place to specify such options is in a headlines, not body text, because only headlines are guaranteed to be written in template @file nodes. Moreover, such options are more similar to @file, @rawfile and @silentfile than to “real” directives. 
+
+We could generalize such “options headlines” to specify many other options. For example, 
+
+@option remove_sentinels_extension = .txt 
+@option body_text_font_family = Courier New 
+etc. 
+
+Not all options could or should be “localized” this way. I doubt, for example, that keyboard shortcuts should be
+dependent on the location of the headline, although I think it probably could be done. And the read_only option
+presently applies to the entire .leo file. We could create a local-read only option, but that would be a new options and the @ignore also has the same effect. I'm not going to get bogged down in details here: the point is that we don't have to dogmatically say that all options in leoConfig.txt should be available in an @options headline. 
+
+
+</t>
+<t tx="ekr.20050422055636.3">By: edream ( Edward K. Ream ) 
+Yes, GTI's _are_ possible 
+2002-10-23 19:58 
+
+Standing in the shower after my noon workout I realized that there is a very easy and simple way to generate true, immutable, unique GTI's. We simply concatenate a user name, specified, say in leoConfig.txt, with any local timestamp. 
+
+The beauty of this scheme is that it works so well with CVS. Indeed, we simply use the Sourceforge user name,
+edream, dthein, jmgilligan (but not nobody :-) and we instantly have a guarantee of uniqueness. Presumably this
+will be good enough, though if several people could log in under the same id from several places at the _same_
+time we could extend the scheme to include the location: edream:home, and edream:fiji_islands,
+edream:crab_nebula, for example. 
+
+This truly changes everything. At last there is a really good way to uniquely identify nodes, and in a meaningful
+form as well. What could be better than creator:creationTime? Thanks to all who have kept pestering me about
+this. 
+
+Of course there are minor complications. Maybe leo will use "nobody" if the creator_name field in leoConfig.txt is not specified. Or maybe we could fall back on other schemes: just using the local timestamp (while issuing a
+warning). It may even be possible to use the CVS $Author$ variable. In any case, these are just nits related to
+initialization. 
+
+Victory is at hand! 
+
+BTW, with such nice indices, there is probably no need to "improve" the present .leo file format. We must,
+however, write these true gti's in node sentinels in derived files. So these sentinels will be longer, but that won't
+matter because they will never ever show up in spurious diffs. 
+</t>
+<t tx="ekr.20050422055636.4">By: dthein ( Dave Hein ) 
+ RE: Yes, GTI's _are_ possible, more 
+2002-10-24 00:21 
+I just thought of an even more compelling reason for adding
+sequence numbers -- file imports. File imports will add nodes as fast
+as possible, guaranteeing multiple GTI generation requests within the
+minimum clock interval. 
+
+By: dthein ( Dave Hein ) 
+ RE: Yes, GTI's _are_ possible 
+2002-10-23 22:54 
+Boy, that was easy. :-) All we had to do was wait :-) :-) 
+
+If you are happy with "timestamp:userid:location" as the GTI, then so
+am I -- almost. I'd also add a sequence number in case somebody
+hits Ctrl-I key several times quickly and so generates several GTIs
+within the resolution of the timestamp. Just increment a global seqno
+with each GTI generation request. So I'd like to see
+"seqno:timestamp:userid:location". 
+
+Note: You also probably want to use time.time() to get the
+timestamp ... it gets sub-second times on different platforms;
+time.clock() only gets seconds on UNIX. Of course, if you want a
+human readable time string instead of a floating point number, then
+seconds is the finest resolution you can get and the seqno
+mentioned above becomes even more important. </t>
+<t tx="ekr.20050422055636.5">By: edream ( Edward K. Ream ) 
+sequence numbers in gti's 
+2002-10-24 11:17 
+&gt; I'd like to see "seqno:timestamp:userid:location". 
+
+I agree. Leo would actually generate the seqno field only if the presently generated timestamp matches the previousTimestamp ivar in the app class. 
+
+Derived files will specify a default userid:location field. Within
+derived files, Leo will only write seqno:timestamp if the
+userid:location does not match this default. When reading a
+derived file, Leo will use the default userid:location field in the
+derived file's header to reconstitute the full gti. Since seqno
+will mostly be empty, within derived files gti's will reduce, in
+most cases, to just the timestamp! This will make derived
+files much more pleasant to read. In particular, all files derived
+from LeoPy.leo will have edream as the default userid:location
+field, so those few headlines originally created by somebody
+else will be clearly visible. It's perfect. 
+
+Neither the format nor the resolution of the timestamp affects this scheme in any way. 
+
+1. The formats of the timestamps do not need to match
+"across" different machines because the 
+userid:location part of the gti (whether explicit or implicit)
+disambiguates the gti. All that is required is that timestamps
+be unique on a particular machine, whatever their format. 
+
+2. The resolution of timestamps similarly does not matter
+provided that we use seqno's as you suggest. </t>
+<t tx="ekr.20050422055636.6">By: edream ( Edward K. Ream ) 
+Theme 4: Revised XML file format 
+2002-10-21 08:58 
+The present XML file format is “regular”, that is, all vnodes and tnodes are represented in the same way. In particular, tnodes are associated with vnode using tnode indices. Tnode indices are computed each time the .leo file is written, and a “small” change in a .leo file can cause many of these indices to change. This causes CVS to report many diffs.
+
+It would be possible to use a slightly more complex scheme that would take an entirely different approach. 
+
+We don’t use the &lt;tnodes&gt; element at all. Instead, we associate text with the first headline that uses it, using an
+attribute field. For example, instead of: 
+
+&lt;v t="T4"&gt;&lt;vh&gt;The headline text&lt;/vh&gt;...any nested vnodes&lt;/v&gt; 
+
+We would have: 
+
+&lt;v tx="The body text"&gt;&lt;vh&gt;The headline text&lt;/vh&gt;...&lt;/v&gt; 
+
+To make this work, we must ensure that two nodes are cloned if and only if their headline texts are identical. Leo can do this as follows. When writing a .leo file, Leo will first scan the entire list of vnodes, entering headline text into a Python dictionary. If two vnodes have the same headline text but are _not_ clones a disambiguating tag will be added, something like this: 
+
+&lt;v tag="1" tx="The body text"&gt;&lt;vh&gt;The headline text&lt;/vh&gt;...&lt;/v&gt; 
+
+The read logic will consider that vnodes with the same headline text are clones provided that: 
+
+1. They don’t use the old t= tnode index field 
+2. They either have no new tag= field or they have the same tag= field. 
+
+This scheme will eliminate all the old tnode index fields, and the new tag= fields won’t change when other vnodes or tnodes change. This means that essentially all changes to .leo files will be as the result of adding vnodes or changing tnode text. That is, changes in .leo files will correspond directly to user changes. This presumably will make CVS happier. 
+</t>
+<t tx="ekr.20050422055636.7">By: dthein ( Dave Hein ) 
+RE: Theme 4: Revised XML file format 
+2002-10-22 20:23 
+
+Putting the body text into the value of an XML attribute is, I think, not a good thing. There are limits as to what
+kind of characters can be used for attribute values, and there may be length limits for attributes imposed by
+some tools. In general, it is better for the inner text (the text between the start and end XML tags) to be used
+for _data_ and the attributes to be used for _metadata_ -- which is the way the current leo XML is defined.
+Usually, using an attribute for basic data will lead to trouble down the road. 
+
+What is the problem here? Is not that inserting a new node or moving a node causes all the tnode indexes
+to be renumbered (thus generating lots of diffs)? 
+
+Would we not be better served by relying on the vnode structure to indicate the node positioning in the tree,
+and using "semi-mutable" :-) identifiers for the tnode indexes so that they are not resequenced each time a
+node is inserted, removed, repositioned? 
+
+By: edream ( Edward K. Ream ) 
+RE: Theme 4: Revised XML file format 
+2002-10-22 23:06 
+&gt; Careful. 
+
+Ok. I misspoke. The data should be in an element (like the headline is), rather than in an attribute. This
+doesn't change matters materially. 
+
+&gt; What is the problem here? 
+
+Yes, one of the problems is tnode indices changing, with the resulting "false" diffs. Making tnode
+indices semi-mutable may or may not be feasible or desirable. 
+
+My present thinking is that we might be able to get rid of all, (or almost all) indices. Exactly what the
+file format becomes is a secondary issue. For sure it won't be compatible with old versions of Leo. 
+
+Again, the idea is to identify nodes by headline, with a disambiguating attribute field in those rare cases
+where non-cloned nodes have identical headlines. We could even associate vnodes with tnodes (and
+vice versa) this way. 
+
+But these are details. As always, the main problems are: 
+
+1. Clones links (maybe solved in this case, but maybe not in general) and 
+
+2. The multiple-update problem that CVS addresses but which also may occur outside the CVS context
+and which have, in the past, been the source of the dreaded read errors. Perhaps I should list read
+errors themselves as major problems in their own right. 
+
+3. Reducing false diffs in CVS. 
+
+4. Handling CVS conflicts, or better yet, eliminating them completely. 
+
+Anyway, I wouldn't take what I say in this posting too seriously, or worry too much about details. There
+is so much to handle that even broad-brush ideas will probably not be too close to the final solutions.
+Maybe the only idea to take from this theme is that Leo's XML format is, after years of stasis, possibly
+open to major change. Obviously, I won't do this unless the new scheme solves major outstanding
+problems. Secondary issues like compactness are, to me, completely irrelevant. 
+
+Finally, it should be obvious that nothing is going to happen on this matter for quit a while. </t>
+<t tx="ekr.20050422055636.8">By: edream ( Edward K. Ream ) 
+Summary of themes 1-3 
+2002-10-21 08:56 
+What underlies these first 3 themes is that the user experience of Leo would be almost completely unchanged! The only difference is that Leo would load template .leo files much more quickly, and the messages about loading derived files would happen only on demand. New user options would control all the “controversial” parts of these proposals. 
+
+I’m excited about these new directions. It’s possible that there will be gotchas that can’t be resolved. I’ve tried some of these ideas before without success. However, I think it is more likely that gti’s form a firm foundation for new implementations. 
+
+The key to all of this is minimizing gti conflicts, and handling them properly when they happen. If this can’t be done without heroic decisions from the user the whole scheme fails. It may be possible, it may not be. By a “heroic” decision I mean a decision at the time the conflict is announced requiring information that will not be present until after the decision was made. Some of the old error recovery schemes required such heroic decisions, which is why they didn’t work. 
+
+By: dthein ( Dave Hein ) 
+RE: Summary of themes 1-3 
+2002-10-23 11:41 
+I like having the marks and clone links only in the .leo file. Of course, this does require having a unique
+identifier for the tnode. 
+
+I agree that some sort of reorg is required to address performance issues (both CVS diff times and load/save
+times). 
+
+As you note elsewhere, it is worth calling these ideas out and mulling them over for a while. Eventually, an
+elegant solution will arise :-)</t>
+<t tx="ekr.20050422055636.9">By: edream ( Edward K. Ream ) 
+Glorious unification &amp; leo.py 4.0 
+2002-10-24 00:51 
+Today’s breakthrough ranks among the very most important events in Leo’s history. Let me explain why true immutable gti’s are so important. 
+
+Clones are the real complicating factor in Leo’s implementation. In particular, it has always been a major problem associating cloned nodes in .leo files with cloned nodes in derived files. The present mirroring scheme is a relatively good way, maybe the only good way, of linking nodes between .leo file and derived files. However, the mirroring scheme essentially requires that information be duplicated in .leo files. Read errors result when the mirroring scheme breaks down. 
+
+True, immutable gti’s solve all these problems in a way never before possible. We can dispense with writing @file nodes in .leo files! This in turn means that read errors are eliminated! At a stroke, .leo files become much, much smaller. For the first time we can represent the entire Linux kernel in a compact .leo file. Indeed, the file would have approximately one @file node per kernel file, plus a few other nodes for our own local use. 
+
+And there is more, much more. Because true, immutable gti’s simplify everything, it is possible to consider even
+more improvement. Sitting in my bath (how decadent, a shower followed by a bath) I realized that it is now possible to create an entirely new organization for derived files. This new organization takes full advantage of the new opportunities, and in turn creates even more opportunities. 
+
+The immediate impetus for my thoughts was the realization that the new gti’s will not, by themselves, remove all
+“spurious” diffs reported by CVS. Indeed, even with immutable gti’s, moving a node in the outline will change the child indices of all siblings that follow the moved node. And it’s not so easy to see how to represent child indices in such a way that they mostly remain the same when nodes moved. 
+
+I first considered replacing child indices with back and next gti’s, but this would make the derived file even more
+cluttered: gti’s are going to be pretty ugly. Then the Aha hit: instead of representing the structure of the outline in
+“pieces”, using @node and @body sentinels, we can represent the entire outline structure in one place, just as is
+done in the .leo file itself. This is now completely safe, because gti’s provide bullet-proof links. 
+
+Indeed, the structure of a derived file (say in 4.x of leo.py) will mirror the structure of .leo files almost exactly. Like this: 
+
+@+leo sentinel 
+@…other leading sentinels 
+@+vnodes 
+…the XML-like representation of vnodes, just as in the .leo file, in comments, on many comment lines 
+@-vnodes (the end of the xml representation of vnodes) 
+code 
+
+Note that the representation of vnodes will be exactly like the “real” XML in the .leo file, except that the XML will all be contained in the comment delimiters in effect for the derived file. So this isn’t “real” XML, it is “XML in comments.” However, it would be very easy for code to strip off the comments to get at the embedded XML. 
+
+We no longer need @+-node sentinels sprinkled throughout the text! Indeed, within the actual code, we need only represent the tnode, something like this: 
+
+@tnode gti=name:time 
+
+As an added nicety, we can put the tnode’s headline (the headline of any vnode that contains the tnode) in a
+comment on the very next line, like this: 
+
+@tnode gti=name:time 
+# &lt;&lt; the headline for the reference &gt;&gt; 
+
+This will look much nicer than the present way; they won’t be surrounded by @node sentinels, so they will look much cleaner. Of course, these sentinels will, as at present, be properly indented. 
+
+And as a further nicety, the tnode sentinel can indicate whether the expansion of the reference was followed by text, like this: 
+
+@tnode nonewline=1, gti=name:time 
+# &lt;&lt; the headline for the reference &gt;&gt; 
+@+body 
+the body 
+@-body 
+whatever follows the reference, if nonewline is1 
+
+This scheme solves a number of nagging or hard problems. 
+
+1. It is much easier to generate the nodes of the outline because it is done in a single spot, and like the &lt;vnodes&gt;
+element of .leo files we can recreate the outline structure without using any vnode indices at all. When the structure of the outline changes, only lines of the @vnodes sentinel area will change. That is, the @vnodes area in the derived file will change if and _only_ if the outline structure changes. Spurious diff’s will be completely eliminated, and moving nodes will probably not result in CVS conflicts. 
+
+2. The sentinels embedded within code no longer carry any structure information; that is all carried in the @vnodes area. So the visual appearance of the text area is simplified. Much more importantly, tnodes will never change, so CVS conflicts involving @tnode lines are impossible. Conflicts will still happen if two people change the text of a headline “simultaneously”, but CVS will then mess with the line _following_ the @tnode sentinel, not the sentinel itself. 
+
+3. While I am messing with the format of derived files, it would be a good idea to solve the problem of how to
+represent text that follows a references. The present code ends up inserting spurious newlines to represent the end of a section reference, and some people have complained about those extra newlines. As shown above, we can represent text following a reference with the nonewline “attribute”. 
+
+4. The similarity between the structure of .leo files and derived files suggests that other XML fields might be placed at the start of derived files. For example, we could have an @+-preferences sentinels corresponding to the real XML &lt;preferences&gt; element in the .leo file. This would be the natural place to carry per-file preferences such a font. 
+
+5. Leo can recreate marks and clone links very easily, without “polluting” the derived file. That is, we do _not_ want to represent marks in a derived file, because to do so would cause essentially spurious diffs. Rather, Leo will represent marks in a new &lt;marks&gt; element in the .leo file. Now that gti’s are solid, this is completely safe. Similarly, gti’s create rock-solid “join links”. That is, when reading a derived file Leo can be absolutely sure that two nodes are joined if and _only_ if they have the same gti. It is then trivial to recreate clone marks and links. Two nodes v1 and v2 are cloned if and only if they have the same gti and shouldBeCloned(v1,v2) returns true. 
+
+This last point is of supreme importance. It means that cloned nodes can be carried in a .leo file _without_ having to mirror structure. If and when we ever read a derived file, we can reconstitute the clone links (and marks) with _complete_ reliability! We no longer need redundant mirroring information in .leo files! This in turn makes it possible to use a single “template” .leo file to represent the entire Linux kernel, or all the entire Linux distribution, for that matter. All we need is a way of deferring the loading of derived files until they are wanted (until the user selects an @@file node) 
+
+I called this posting “glorious unification” for several reasons. 
+
+[1] There is no longer any doubt about how to associate nodes in .leo files and derived files. At last we can join nodes in such a way that they can never be parted. As has already been explained, this hugely simplifies the
+implementation, and eliminates the need for redundant information in .leo files. .leo files can be very small! 
+
+[2] The unification of file formats (that is, the intimate association of XML elements in the .leo file with similar
+sentinels in the derived files) not only solves many lingering problems, but makes derived files much more elegant and good looking. Moreover, tools that apply to .leo files can now easily be adapted to apply to derived files. And the unification of formats suggests new areas in which information can be shared between .leo files and derived files. 
+
+[3] It is now almost certain that we can include one .leo file inside another using a @include x.leo node. This was always iffy before, but with gti’s it becomes safe to do. Indeed, because mirroring is no longer required, we no longer need to worry about the various .leo files becoming out-of-synch! Whatever the included .leo file contains, the including .leo file will handle it with ease. No longer must we worry about error recovery when the mirroring scheme shatters. 
+
+This is, indeed, a great day for Leo. 
+
+Edward </t>
+<t tx="ekr.20050422055636.10">By: edream ( Edward K. Ream ) 
+Setting global name: LeoID.txt 
+2002-10-26 13:15 
+There are a few nits concerning setting the global id:loc field that I'd like to mention here. 
+
+1. I don't believe the id:loc field should be part of leoConfig.leo/leoConfig.txt. If it were it would be difficult to distribute leoConfig.leo without risk of resetting the id:loc. Instead, a separate file, say LeoID.txt should contain the id:loc field. The first non-comment line of the file will contain the field, with comment lines starting with #. 
+
+2. LeoID.txt might be placed in a location associated with the user. But this creates the further problem: how
+do we tell Leo about this location? 
+
+Remember what the situation is: we want to make sure that the id:loc field disambiguates possibly identical
+timestamps. Even with a single user, it would be conceivable, with a time grain of one second, to create two
+nodes in two different copies of Leo on the same machine at the "same" time. To handle this, we could add
+another timestamp, the time at which Leo was launched (which would be unique, even for two copies of Leo on
+the same machine). However, this extra timestamp would be ugly, and it would destroy the ability to have a
+default id:loc associated with every machine. 
+
+So I favor the simple solution of either a) putting LeoID.txt in the same folder as leo.py, or having the user
+specify the location of the directory containing LeoID.txt. If different users on Linux can specify different
+locations for LeoID.txt, so much the better. 
+
+3. Leo 4.x must raise an error if LeoID.txt can not be found. It will put up a dialog saying that LeoID.txt can not
+be found, and prompting the user either 
+
+a) for the location of an existing LeoID.txt file or 
+b) for an id:txt field and the location of the place to put a new LeoID.txt file. 
+
+Once again, we have the problem of where to put LeoID.txt. Any ideas, especially from Linux people, would be
+welcome here. 
+
+4. leoConfig.txt will contain at least one option related to the new gti scheme. This option tells whether to use
+gti's at all, or whether to use the old way. (For the foreseeable future, leo.py will be able to read both old and
+new style derived files and .leo files.) We must have this option to suppress the dialog mentioned above. This
+option causes no distribution problem: it will always be set to use_gtis = 1 when updating to CVS, and nobody
+using CVS would be tempted to change it. 
+
+So that's it. These are minor details which, except for the problem of where to put LeoID.txt are easily solved.
+Any suggestions for where to put LeoID.txt so Leo can find them would be appreciated. Note that is a minor
+problem: gti's are going to happen. </t>
+<t tx="ekr.20050422060227">By: edream ( Edward K. Ream ) 
+Embedded XML != XML 
+2002-10-24 13:54 
+
+For languages without single-line comments, like HTML, the "embedded" XML within a derived file must
+escape the ending comment delimiter used to create sentinel lines. Whatever escape convention used, it won't
+be compatible with XML. So we can parse the embedded XML until that escape convention is undone. 
+
+This issues does not arise for languages that have a single-line comment: that is, we convert from embedded
+XML to "real" XML simply be stripping off the leading comment delimiter. 
+
+Yes, this is a nit, and an important nit. </t>
+<t tx="ekr.20050422060227.1">By: edream ( Edward K. Ream ) 
+Embedded XML escapes 
+2002-10-27 10:10 
+Some scheme must be found to escape the ending block comment delimiter within embedded XML.
+This would only be needed for languages without a single-line comment and without its own escape
+convention. 
+
+One general-purpose escape convention would be to define an escape sequence that "goes away", say
+&amp;none. Suppose the ending block delimiter is ch1...chn. We escape this as &amp;nonech1,...&amp;nonechn.
+We must also escape &amp;none to &amp;&amp;nonenone. To unescape such escaped text we simply delete all
+instances of &amp;none. I believe this will work as long as the ending block comment delimiter of no
+language is in fact &amp;none. 
+
+For example, if HTML (or XML) did not already have its own escape convention, we would escape XML
+embedded in HTML (or XML) by replacing all --&gt; strings by &amp;none-&amp;none-&amp;none&gt;. 
+
+However, HTML does have an escape convention, so instead of using the above scheme we should
+replace --&gt; by --&amp;gt. Perhaps this whole issue will not arise. HTML is one of the very few languages
+without a single-line comment. But if there is, in fact, a language without a single-line comment, and
+without its own escape convention, the &amp;none convention could be used. 
+
+Hmm. I don't like the fact that under this scheme &amp;none can't be the ending comment delimiter of the
+language being escaped. Perhaps a more general way can be imagined. The problem appears hard. For
+example, the HTML/XLM escape convention works by escaping &amp;, &lt; and &gt;. The convention "complete";
+there are no "holes" like the &amp;none hole in the scheme I have just proposed. But completeness is
+possible precisely because the special characters in HTML/XML are known beforehand. 
+</t>
+<t tx="ekr.20050422060227.2">By: edream ( Edward K. Ream ) 
+Embedded XML escapes: second thoughts 
+2002-10-29 10:23 
+The more I think of it, the less I like the &amp;none scheme. It's ugly, it doesn't work in general, it
+probably isn't needed, and there is a better, simpler way. 
+
+1. It's ugly: I mean this in the mathematical sense of something overly complex and not elegant. 
+
+2. It doesn't work in general: Escaping &amp;none results in &amp;&amp;nonenone, so this scheme fails if the
+ending comment delimiter is &amp;&amp;. 
+
+3. It probably isn't needed: the only languages Leo knows about at present that don't have
+single-line comments are HTML and XML, and both of these have a perfectly good escape
+mechanism. 
+
+4. There is a better way: we simply need to require that the "specification" for each language w/o
+single-line comments include an escape mechanism to be used when generating embedded XML. 
+
+I'm not saying definitely that I'll never try to come up with a general escaping mechanism, but
+there seems to be no need to use this ugly scheme at present. </t>
+<t tx="ekr.20050422065602"></t>
+<t tx="ekr.20050422065602.1">@nocolor
+
+
+
+- 
+- </t>
+<t tx="ekr.20050422065602.2">Leo 3.x versions had a not-very-reliable error recovery scheme that could, in
+fact, corrupt the meaning of outlines. The big aha in 4.0 was that it would be
+possible to eliminate such schemes entirely.
+
+4.0 also introduced a new way of treating newlines surrounding sentinel lines.
+The @ws sentinel is a key element in this scheme. As a result, the atFile.read
+logic was dramatically simplified.</t>
+<t tx="ekr.20050422065602.3">There are actually two issues:
+
+1. How can Leo ensure that .leo files and derived files remain in-synch? In
+other words, how can Leo ensure that out-of-synch derived files do not destroy
+the integrity of projects?
+
+2. How can we be sure that using clones is safe, especially if clones exist in
+multiple derived files?
+
+Both of these issues were vexing: they was discussed in various forms on Leo's
+forums for several years.
+</t>
+<t tx="ekr.20050422065602.4">There are two parts of this question:
+
+1.  How should Leo represent clones internally.
+
+All versions of Leo prior to Leo 4.2 represented clones by copying vnodes so that vnodes represent (one for one) the headlines on the screen.  This scheme had major problems:
+
+A: Somne outline operations slowed down considerably as the size of the outline grew.  Indeed, Leo had to scan the entire outline in order to move nodes!  BTW, even the great MORE outliner suffered from this defect.
+
+1.  How should Leo represent cloned nodes in derived files.
+
+In other words, how could we reliably associate nodes in derived files with nodes in outlines.
+
+All 3.x versions of Leo used "child indices" to associate nodes in derived files with nodes in outlines.  Such scheme created many problems for cvs.</t>
+<t tx="ekr.20050422065602.5"></t>
+<t tx="ekr.20050422065602.6"></t>
+<t tx="ekr.20050422065602.7"></t>
+<t tx="ekr.20050422065602.8"></t>
+<t tx="ekr.20050422065602.9"></t>
 </tnodes>
 </leo_file>
