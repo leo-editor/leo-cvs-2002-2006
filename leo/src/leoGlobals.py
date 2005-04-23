@@ -11,8 +11,9 @@
 
 from __future__ import generators # To make the code work in Python 2.2.
 
-# This module must do strange things with imports.
-__pychecker__ = '--no-import --no-reimportself --no-reimport '
+__pychecker__ = '--no-import --no-reimportself --no-reimport --no-constcond -- no-constant1'
+    # Disable all import warnings: This module must do strange things with imports.
+    # Disable warnings about if 0: and if 1.
 
 #@<< imports >>
 #@+node:ekr.20050208101229:<< imports >>
