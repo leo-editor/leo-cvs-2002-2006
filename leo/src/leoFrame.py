@@ -129,6 +129,8 @@ class leoBody:
     
     """The base class for the body pane in Leo windows."""
     
+    __pychecker__ = '--no-argsused' # base classes have many unused args.
+    
     #@    @+others
     #@+node:ekr.20031218072017.3657:leoBody.__init__
     def __init__ (self,frame,parentFrame):
@@ -429,6 +431,8 @@ class leoFrame:
     
     """The base class for all Leo windows."""
     
+    __pychecker__ = '--no-argsused' # base classes have many unused args.
+    
     instances = 0
     
     #@    @+others
@@ -671,6 +675,8 @@ class leoLog:
     
     """The base class for the log pane in Leo windows."""
     
+    __pychecker__ = '--no-argsused' # base classes have many unused args.
+    
     #@    @+others
     #@+node:ekr.20031218072017.3695:leoLog.__init__
     def __init__ (self,frame,parentFrame):
@@ -758,6 +764,8 @@ class leoLog:
 class leoTree:
     
     """The base class for the outline pane in Leo windows."""
+    
+    __pychecker__ = '--no-argsused' # base classes have many unused args.
     
     #@    @+others
     #@+node:ekr.20031218072017.3705:  tree.__init__ (base class)
@@ -998,6 +1006,8 @@ class leoTree:
 #@-node:ekr.20031218072017.3704:class leoTree
 #@+node:ekr.20031218072017.2191:class nullBody
 class nullBody (leoBody):
+    
+    __pychecker__ = '--no-argsused' # null classes have many unused args.
 
     #@    @+others
     #@+node:ekr.20031218072017.2192: nullBody.__init__
@@ -1415,6 +1425,8 @@ class nullFrame (leoFrame):
     
     """A null frame class for tests and batch execution."""
     
+    __pychecker__ = '--no-argsused' # null classes have many unused args.
+    
     #@    @+others
     #@+node:ekr.20040327105706: ctor
     def __init__ (self,title,gui,useNullUndoer=False):
@@ -1503,6 +1515,8 @@ class nullFrame (leoFrame):
 #@+node:ekr.20031218072017.2232:class nullLog
 class nullLog (leoLog):
     
+    __pychecker__ = '--no-argsused' # null classes have many unused args.
+    
     #@    @+others
     #@+node:ekr.20041012083237:nullLog.__init__
     def __init__ (self,frame=None,parentFrame=None):
@@ -1548,6 +1562,8 @@ class nullLog (leoLog):
 #@-node:ekr.20031218072017.2232:class nullLog
 #@+node:ekr.20031218072017.2233:class nullTree
 class nullTree (leoTree):
+    
+    __pychecker__ = '--no-argsused' # null classes have many unused args.
 
     #@    @+others
     #@+node:ekr.20031218072017.2234: nullTree.__init__
