@@ -259,7 +259,7 @@ class leoFind:
     #@+node:ekr.20031218072017.3059:findButton
     # The user has pushed the "Find" button from the find panel.
     
-    def findButton(self,event=None):
+    def findButton(self):
     
         self.setup_button()
     
@@ -389,7 +389,7 @@ class leoFind:
     #@-at
     #@@c
     
-    def batchChange (self,pos1,pos2,count):
+    def batchChange (self,pos1,pos2):
     
         c = self.c ; u = c.undoer
         p = self.p ; st = self.s_ctrl ; gui = g.app.gui
@@ -471,7 +471,7 @@ class leoFind:
                 pos1, pos2 = self.findNextMatch()
                 if not pos1: break
                 count += 1
-                self.batchChange(pos1,pos2,count)
+                self.batchChange(pos1,pos2)
                 line = gui.getLineContainingIndex(st,pos1)
                 self.printLine(line,allFlag=True)
             p = c.currentPosition()
@@ -673,6 +673,8 @@ class leoFind:
     #@-node:ekr.20031218072017.3075:findNextMatch
     #@+node:ekr.20031218072017.3076:resetWrap
     def resetWrap (self,event=None):
+        
+        __pychecker__ = '--no-argsused'
     
         self.wrapPosition = None
         self.onlyPosition = None
@@ -1046,16 +1048,19 @@ class leoFind:
     #@-node:ekr.20031218072017.3082:Initing & finalizing
     #@+node:ekr.20031218072017.3092:Must be overridden in subclasses
     def init_s_ctrl (self,s):
+        __pychecker__ = '--no-argsused'
         self.oops()
     
     def bringToFront (self):
         self.oops()
     
     def gui_search (self,t,*args,**keys):
+        __pychecker__ = '--no-argsused'
         self.oops()
        
     # New in 4.3: allows base class to adjust controls. 
     def adjust_find_text(self,s):
+        __pychecker__ = '--no-argsused'
         self.oops()
     
     def oops(self):

@@ -952,6 +952,8 @@ class baseColorizer:
         
         """Color the body pane either incrementally or non-incrementally"""
         
+        __pychecker__ = 'maxlines=500'
+        
         c = self.c
         
         # g.trace("incremental",self.incremental,p)
@@ -1660,6 +1662,8 @@ class baseColorizer:
     ## To do: rewrite using dynamically generated tables.
     
     def doNormalState (self,s,i):
+        
+        __pychecker__ = 'maxlines=500'
     
         ch = s[i] ; state = "normal"
         assert(type(ch)==type(u""))
@@ -2129,16 +2133,21 @@ class baseColorizer:
     #@-node:ekr.20031218072017.1377:scanColorDirectives
     #@+node:ekr.20031218072017.2802:color.schedule & idle_colorize (not used)
     def schedule(self,p,incremental=0):
+        
+        __pychecker__ = '--no-argsused'
+            # p not used, but it is difficult to remove.
     
         if self.enabled:
             self.incremental=incremental
-            g.app.gui.setIdleTimeHook(self.idle_colorize,p)
+            g.app.gui.setIdleTimeHook(self.idle_colorize)
             
-    def idle_colorize(self,p):
+    def idle_colorize(self):
     
         # New in 4.3b1: make sure the colorizer still exists!
-        if p and hasattr(self,'enabled') and self.enabled:
-            self.colorize(p,self.incremental)
+        if hasattr(self,'enabled') and self.enabled:
+            p = self.c.currentPosition()
+            if p:
+                self.colorize(p,self.incremental)
     #@nonl
     #@-node:ekr.20031218072017.2802:color.schedule & idle_colorize (not used)
     #@+node:ekr.20031218072017.2803:getCwebWord
@@ -2279,8 +2288,7 @@ class baseColorizer:
     def skip_string(self,s,i):
         
         """Skip a string literal."""
-        
-        first = i # for tracing.
+    
         allow_newlines = self.language == "elisp"
         delim = s[i] ; i += 1
         continue_state = g.choose(delim=="'","singleString","doubleString")
@@ -2325,7 +2333,7 @@ class nullColorizer (colorizer):
     def colorize(self,p,incremental=False):
         pass
         
-    def idle_colorize(self,p):
+    def idle_colorize(self):
         pass
             
     def recolor_range(self,p,leading,trailing):

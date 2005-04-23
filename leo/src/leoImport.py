@@ -45,7 +45,6 @@ class baseLeoImportCommands:
     def createOutline (self,fileName,parent):
     
         c = self.c ; u = c.undoer
-        current = c.currentPosition()
         junk,self.fileName = g.os_path_split(fileName)
         self.methodName,ext = g.os_path_splitext(self.fileName)
         self.fileType = ext
@@ -406,8 +405,8 @@ class baseLeoImportCommands:
     #@+node:ekr.20031218072017.3225:createOutlineFromWeb
     def createOutlineFromWeb (self,path,parent):
     
-        c = self.c ; u = c.undoer ; current = c.currentPosition()
-        junk, fileName = g.os_path_split(path)
+        c = self.c ; u = c.undoer
+        junk,fileName = g.os_path_split(path)
     
         undoData = u.beforeInsertNode(parent)
         
@@ -720,6 +719,8 @@ class baseLeoImportCommands:
     #@-node:ekr.20031218072017.3224:importWebCommand & allies TO DO
     #@+node:EKR.20040506075328.2:perfectImport
     def perfectImport (self,fileName,p,testing=False,verbose=False,convertBlankLines=True,verify=True):
+        
+        __pychecker__ = 'maxlines=500'
         
         #@    << about this algorithm >>
         #@+node:ekr.20040717112739:<< about this algorithm >>
@@ -1240,6 +1241,8 @@ class baseLeoImportCommands:
     # Creates a child of parent for each C function definition seen.
     
     def scanCText (self,s,parent):
+        
+        __pychecker__ = 'maxlines=500'
     
         #@    << define scanCText vars >>
         #@+node:ekr.20031218072017.3251:<< define scanCText vars >>
@@ -1548,10 +1551,9 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3250:scanCText
     #@+node:ekr.20031218072017.3265:scanElispText & allies
-    def scanElispText(self,s,v):
-        
-        c = self.c
-        v.appendStringToBody("@ignore\n@language elisp\n")
+    def scanElispText(self,s,p):
+    
+        p.appendStringToBody("@ignore\n@language elisp\n")
         i = 0 ; start = 0
         while i < len(s):
             progress = i
@@ -1564,8 +1566,8 @@ class baseLeoImportCommands:
                 if g.match_word(s,k,"defun") or g.match_word(s,k,"defconst") or g.match_word(s,k,"defvar"):
                     data = s[start:i]
                     if data.strip():
-                        self.createElispDataNode(v,data)
-                    self.createElispFunction(v,s[i:j+1])
+                        self.createElispDataNode(p,data)
+                    self.createElispFunction(p,s[i:j+1])
                     start = j+1
                 i = j
             else:
@@ -1573,7 +1575,7 @@ class baseLeoImportCommands:
             assert(progress < i)
         data = s[start:len(s)]
         if data.strip():
-            self.createElispDataNode(v,data)
+            self.createElispDataNode(p,data)
     #@nonl
     #@+node:ekr.20031218072017.3266:skipElispParens
     def skipElispParens (self,s,i):
@@ -1608,7 +1610,7 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3267:skipElispId
     #@+node:ekr.20031218072017.3268:createElispFunction
-    def createElispFunction (self,v,s):
+    def createElispFunction (self,p,s):
         
         body = s
         i = 1 # Skip the '('
@@ -1631,10 +1633,10 @@ class baseLeoImportCommands:
         j = self.skipElispId(s,i)
         theId = prefix + s[i:j]
     
-        self.createHeadline(v,body,theId)
+        self.createHeadline(p,body,theId)
     #@-node:ekr.20031218072017.3268:createElispFunction
     #@+node:ekr.20031218072017.3269:createElispDataNode
-    def createElispDataNode (self,v,s):
+    def createElispDataNode (self,p,s):
         
         data = s
         # g.trace(len(data))
@@ -1655,7 +1657,7 @@ class baseLeoImportCommands:
         if not theId:
             theId = "unnamed data"
     
-        self.createHeadline(v,data,theId)
+        self.createHeadline(p,data,theId)
     #@nonl
     #@-node:ekr.20031218072017.3269:createElispDataNode
     #@-node:ekr.20031218072017.3265:scanElispText & allies
@@ -1671,6 +1673,8 @@ class baseLeoImportCommands:
     # Creates a child of parent for each Java function definition seen.
     
     def scanJavaText (self,s,parent,outerFlag): # True if at outer level.
+    
+        __pychecker__ = 'maxlines=500'
     
         #@    << define scanJavaText vars >>
         #@+node:ekr.20031218072017.3271:<< define scanJavaText vars >>
@@ -2077,6 +2081,8 @@ class baseLeoImportCommands:
     # PHP uses both # and // as line comments, and /* */ as block comments
     
     def scanPHPText (self,s,parent):
+        
+        __pychecker__ = 'maxlines=500'
     
         """Creates a child of parent for each class and function definition seen."""
     
@@ -2813,8 +2819,9 @@ class baseLeoImportCommands:
                 #@            << write the context of p to f >>
                 #@+node:ekr.20031218072017.1465:<< write the context of p to f >>
                 # write the headlines of p, p's parent and p's grandparent.
-                context = [] ; p2 = p.copy()
-                for i in xrange(3):
+                context = [] ; p2 = p.copy() ; i = 0
+                while i < 3:
+                    i += 1
                     if not p2: break
                     context.append(p2.headString())
                     p2.moveToParent()
@@ -2861,7 +2868,6 @@ class baseLeoImportCommands:
     
         """Return the leading whitespace of a line, ignoring blank and comment lines."""
     
-        c = self.c
         i = g.find_line_start(s,i)
         while i < len(s):
             # g.trace(g.get_line(s,i))
@@ -3126,7 +3132,6 @@ class baseLeoImportCommands:
         """Removes extra leading indentation from all lines."""
     
         # g.trace(s)
-        c = self.c
         i = 0 ; result = ""
         # Copy an @code line as is.
         if g.match(s,i,"@code"):

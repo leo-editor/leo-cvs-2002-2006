@@ -136,7 +136,7 @@ class leoBody:
     def __init__ (self,frame,parentFrame):
     
         self.frame = frame
-        self.c = c = frame.c
+        self.c = frame.c
         self.forceFullRecolorFlag = False
         frame.body = self
         
@@ -523,6 +523,8 @@ class leoFrame:
     #@+node:ekr.20031218072017.3686:setTopGeometry
     def setTopGeometry (self,w,h,x,y,adjustSize=True):
         
+        __pychecker__ = '--no-argsused' # adjustSize used in derived classes.
+        
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3686:setTopGeometry
@@ -696,6 +698,8 @@ class leoLog:
     #@+node:ekr.20031218072017.3696:leoLog.configure
     def configure (self,*args,**keys):
         
+        __pychecker__ = '--no-argsused'
+        
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3696:leoLog.configure
@@ -772,7 +776,7 @@ class leoTree:
     def __init__ (self,frame):
         
         self.frame = frame
-        self.c = c = frame.c
+        self.c = frame.c
     
         self.edit_text_dict = {}
             # New in 3.12: keys vnodes, values are edit_text (Tk.Text widgets)
@@ -830,16 +834,20 @@ class leoTree:
     #@+node:ekr.20031218072017.3710:Notifications
     # These should all be internal to the tkinter.frame class.
     
-    def OnActivateHeadline(self,v):
+    def OnActivateHeadline(self,p):
+        __pychecker__ = '--no-argsused'
         self.oops()
         
-    def onHeadChanged(self,v):
+    def onHeadChanged(self,p):
+        __pychecker__ = '--no-argsused'
         self.oops()
     
-    def OnHeadlineKey(self,v,event):
+    def OnHeadlineKey(self,p,event):
+        __pychecker__ = '--no-argsused'
         self.oops()
     
-    def idle_head_key(self,v,ch=None):
+    def idle_head_key(self,p,ch=None):
+        __pychecker__ = '--no-argsused'
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3710:Notifications
@@ -910,14 +918,14 @@ class leoTree:
     #@nonl
     #@-node:ekr.20031218072017.3718:oops
     #@+node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
-    def OnIconDoubleClick (self,v,event=None):
+    def OnIconDoubleClick (self,p):
     
         # Note: "icondclick" hooks handled by vnode callback routine.
     
         c = self.c
-        s = v.headString().strip()
+        s = p.headString().strip()
         if g.match_word(s,0,"@url"):
-            if not g.doHook("@url1",c=c,p=v,v=v):
+            if not g.doHook("@url1",c=c,p=p,v=p):
                 url = s[4:].strip()
                 #@            << stop the url after any whitespace >>
                 #@+node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
@@ -993,7 +1001,7 @@ class leoTree:
                 
                 #@-node:ekr.20031218072017.2315:<< pass the url to the web browser >>
                 #@nl
-            g.doHook("@url2",c=c,p=v,v=v)
+            g.doHook("@url2",c=c,p=p,v=p)
     #@nonl
     #@-node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
     #@+node:ekr.20040106095546.1:tree.enableDrawingAfterException
@@ -1444,13 +1452,13 @@ class nullFrame (leoFrame):
     #@nonl
     #@-node:ekr.20040327105706: ctor
     #@+node:ekr.20041130065921:deiconfy, lift, update
-    def deiconify (self,*args,**keys):
+    def deiconify (self):
         pass
         
-    def lift (self,*args,**keys):
+    def lift (self):
         pass
         
-    def update (self,*args,**keys):
+    def update (self):
         pass
     #@nonl
     #@-node:ekr.20041130065921:deiconfy, lift, update
@@ -1495,19 +1503,20 @@ class nullFrame (leoFrame):
     #@nonl
     #@-node:ekr.20040327105706.3:oops
     #@+node:ekr.20041130090749:setInitialWindowGeometry
-    def setInitialWindowGeometry (self,*args,**keys):
+    def setInitialWindowGeometry (self):
         pass
     #@nonl
     #@-node:ekr.20041130090749:setInitialWindowGeometry
     #@+node:ekr.20041130065718.1:setTopGeometry
-    def setTopGeometry(self,w,h,x,y):
+    def setTopGeometry (self,w,h,x,y,adjustSize=True):
+        
+        __pychecker__ = '--no-argsused' # adjustSize used in derived classes.
         
         self.w = w
         self.h = h
         self.x = x
         self.y = y
-        
-        
+    #@nonl
     #@-node:ekr.20041130065718.1:setTopGeometry
     #@-others
 #@nonl

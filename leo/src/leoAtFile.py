@@ -10,7 +10,7 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__pychecker__ = '--no-reimport --no-constcond -- no-constant1'
+__pychecker__ = '--no-reimport --no-constCond -- no-constant1'
     # Reimports needed in test methods.
     # Disable checks for if 0, if 1.
 
@@ -3907,8 +3907,10 @@ class atFile:
         if not at.thinFile:
             # Append the n'th tnode to the root's tnode list.
             # It may not exist when executing scripts.
-            try: 
-                at.root.v.t.tnodeList.append(p.v.t)
+            try:
+                # Pychecker doesn't like so many references in a row...
+                t = at.root.v.t
+                t.tnodeList.append(p.v.t)
             except AttributeError:
                 pass # Do nothing.  We are creating a script.
     #@nonl

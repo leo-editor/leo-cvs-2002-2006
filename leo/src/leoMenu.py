@@ -1194,7 +1194,8 @@ class leoMenu:
         # Create all the other entries.
         i = 3
         for name in c.recentFiles:
-            def callback (event=None,c=c,name=name): # 12/9/03
+            def callback (event=None,c=c,name=name):
+                __pychecker__ = '--no-argsused' # event not used, but must be present.
                 c.openRecentFile(name)
             label = "%d %s" % (i-2,g.computeWindowTitle(name))
             self.add_command(recentFilesMenu,label=label,command=callback,underline=0)

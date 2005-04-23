@@ -338,12 +338,12 @@ class leoGui:
     #@nonl
     #@-node:ekr.20031218072017.3738:Index
     #@+node:ekr.20031218072017.3739:Idle time
-    def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
+    def setIdleTimeHook (self,idleTimeHookHandler):
         
         # print 'leoGui:setIdleTimeHook'
         pass # Not an error.
         
-    def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
+    def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler):
         
         # print 'leoGui:setIdleTimeHookAfterDelay'
         pass # Not an error.

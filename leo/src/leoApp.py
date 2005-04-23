@@ -211,7 +211,10 @@ class LeoApp:
     #@nonl
     #@-node:ekr.20031218072017.2609:app.closeLeoWindow
     #@+node:ekr.20031218072017.2610:app.createTkGui
-    def createTkGui (self,fileName=None): # Do NOT omit fileName param: it is used in plugin code.
+    def createTkGui (self,fileName=None):
+        
+        # Do NOT omit fileName param: it is used in plugin code.
+        __pychecker__ = '--no-argsused'
         
         """A convenience routines for plugins to create the default Tk gui class."""
         
@@ -224,7 +227,6 @@ class LeoApp:
         if 0:
             if fileName:
                 print "Tk gui created in", g.shortFileName(fileName)
-    #@nonl
     #@-node:ekr.20031218072017.2610:app.createTkGui
     #@+node:ekr.20031218072017.2612:app.destroyAllOpenWithFiles
     def destroyAllOpenWithFiles (self):
@@ -368,9 +370,10 @@ class LeoApp:
                 # g.trace(self.tkEncoding,src)
                 break
             elif encoding and len(encoding) > 0:
-                g.trace("ignoring invalid ",src," encoding: ",encoding)
+                color = g.choose(self.tkEncoding=="ascii","red","blue")
+                g.trace("ignoring invalid %s encoding: %s" % (src,encoding),color=color)
                 
-        color = g.choose(self.tkEncoding=="ascii","red","blue")
+        
     #@nonl
     #@-node:ekr.20031218072017.2618:app.setEncoding
     #@+node:ekr.20031218072017.1978:app.setLeoID
@@ -471,6 +474,8 @@ class LeoApp:
     #@+node:ekr.20031218072017.1847:app.setLog, lockLog, unlocklog
     def setLog (self,log,tag=""):
         """set the frame to which log messages will go"""
+        
+        __pychecker__ = '--no-argsused' # tag used for debugging.
         
         # print "setLog:",tag,"locked:",self.logIsLocked,log
         if not self.logIsLocked:

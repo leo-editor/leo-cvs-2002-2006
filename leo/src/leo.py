@@ -46,6 +46,8 @@ def run(fileName=None,*args,**keywords):
     
     """Initialize and run Leo"""
     
+    __pychecker__ = '--no-argsused' # keywords not used.
+    
     if not isValidPython(): return
     #@    << import leoGlobals and leoApp >>
     #@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
