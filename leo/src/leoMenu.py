@@ -15,6 +15,8 @@ import sys
 class leoMenu:
     
     """The base class for all Leo menus."""
+    
+    __pychecker__ = '--no-argsused' # base classes have many unused args.
 
     #@    @+others
     #@+node:ekr.20031218072017.3751: leoMenu.__init__
@@ -30,6 +32,8 @@ class leoMenu:
     #@-node:ekr.20031218072017.3751: leoMenu.__init__
     #@+node:ekr.20031218072017.3752:defineMenuTables
     def defineMenuTables (self):
+        
+        __pychecker__ = 'maxlines=500'
         
         c = self.c ; f = self.frame
         
@@ -1175,7 +1179,7 @@ class leoMenu:
     #@+node:ekr.20031218072017.2078:createRecentFilesMenuItems (leoMenu)
     def createRecentFilesMenuItems (self):
         
-        c = self.c ; frame = c.frame
+        c = self.c
         recentFilesMenu = self.getMenu("Recent Files...")
         
         # Delete all previous entries.
@@ -1311,6 +1315,8 @@ class leoMenu:
 class nullMenu(leoMenu):
     
     """A null menu class for testing and batch execution."""
+    
+    __pychecker__ = '--no-argsused' # This calss has many unused args.
     
     #@    @+others
     #@+node:ekr.20050104094308:ctor
