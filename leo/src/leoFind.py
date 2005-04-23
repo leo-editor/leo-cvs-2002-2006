@@ -180,12 +180,11 @@ class leoFind:
     #@nonl
     #@-node:ekr.20031218072017.3057:changeAllButton
     #@+node:ekr.20031218072017.3056:changeButton
-    
     # The user has pushed the "Change" button from the find panel.
     
     def changeButton(self):
     
-        c  = self.setup_button()
+        self.setup_button()
     
         if self.script_change:
             self.doChangeScript()
@@ -211,7 +210,7 @@ class leoFind:
     
     def changeThenFindButton(self):
     
-        c = self.setup_button()
+        self.setup_button()
     
         if self.script_change:
             self.doChangeScript()
@@ -262,7 +261,7 @@ class leoFind:
     
     def findButton(self,event=None):
     
-        c = self.setup_button()
+        self.setup_button()
     
         if self.script_search:
             self.doFindScript()
@@ -407,7 +406,6 @@ class leoFind:
         if self.in_headline:
             #@        << change headline >>
             #@+node:ekr.20031218072017.2294:<< change headline >>
-            sel = None
             if len(s) > 0 and s[-1]=='\n': s = s[:-1]
             
             if s != p.headString():
@@ -428,7 +426,6 @@ class leoFind:
         else:
             #@        << change body >>
             #@+node:ekr.20031218072017.2295:<< change body >>
-            sel = c.frame.body.getInsertionPoint()
             if len(s) > 0 and s[-1]=='\n': s = s[:-1]
             
             if s != p.bodyString():
@@ -555,7 +552,6 @@ class leoFind:
     
     def runChangeScript (self):
     
-        c = self.c
         try:
             assert(self.script_change)
             exec self.change_text in {} # Use {} to get a pristine environment.
@@ -585,7 +581,6 @@ class leoFind:
     
     def runFindScript (self):
     
-        c = self.c
         try:
             exec self.find_text in {} # Use {} to get a pristine environment.
         except:
@@ -855,7 +850,6 @@ class leoFind:
     #@+node:ekr.20031218072017.3083:checkArgs
     def checkArgs (self):
     
-        c = self.c
         val = True
         if not self.search_headline and not self.search_body:
             g.es("not searching headline or body")
@@ -955,7 +949,6 @@ class leoFind:
     #@+node:ekr.20031218072017.3088:printLine
     def printLine (self,line,allFlag=False):
     
-        c = self.c
         both = self.search_body and self.search_headline
         context = self.batch # "batch" now indicates context
     
@@ -1075,5 +1068,6 @@ class leoFind:
     #@nonl
     #@-node:ekr.20031218072017.3092:Must be overridden in subclasses
     #@-others
+#@nonl
 #@-node:ekr.20031218072017.3052:@thin leoFind.py
 #@-leo
