@@ -7,7 +7,9 @@ Run the unit tests in test.leo using the Execute Script command.'''
 #@@language python
 #@@tabwidth -4
 
-__pychecker__ = '--no-import --no-reimportself --no-reimport'
+__pychecker__ = '--no-import --no-reimportself --no-reimport --no-constcond --no-constant1'
+    # Disable all import warnings.
+    # Disable warnings about if 1 and if 0.
 
 #@<< leoTest imports >>
 #@+node:ekr.20050415070840.1:<< leoTest imports >>
