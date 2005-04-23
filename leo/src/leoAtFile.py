@@ -10,7 +10,9 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__pychecker__ = '--no-reimport' # Reimports needed in test methods.
+__pychecker__ = '--no-reimport --no-constcond -- no-constant1'
+    # Reimports needed in test methods.
+    # Disable checks for if 0, if 1.
 
 #@<< imports >>
 #@+node:ekr.20041005105605.2:<< imports >>
