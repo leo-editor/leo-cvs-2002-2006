@@ -260,7 +260,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20041221071131.1:createTkTreeCanvas
     def createTkTreeCanvas (self,parentFrame,scrolls,pack):
         
-        frame = self ; c = frame.c
+        frame = self
         
         canvas = Tk.Canvas(parentFrame,name="canvas",
             bd=0,bg="white",relief="flat")
@@ -362,8 +362,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.3944:f.createCanvas & helpers
     #@+node:ekr.20041221123325:createLeoSplitters & helpers
     def createLeoSplitters (self,parentFrame):
-        
-        c = self.c
         
         if use_Pmw and Pmw:
             #@        << create Pmw splitters and their components >>
@@ -1520,19 +1518,24 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3973:frame.OnControlKeyUp/Down
     def OnControlKeyDown (self,event=None):
         
+        __pychecker__ = '--no-argsused' # event not used.
+        
         self.controlKeyIsDown = True
         
     def OnControlKeyUp (self,event=None):
+        
+        __pychecker__ = '--no-argsused' # event not used.
     
         self.controlKeyIsDown = False
-    
+    #@nonl
     #@-node:ekr.20031218072017.3973:frame.OnControlKeyUp/Down
     #@+node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
     def OnActivateBody (self,event=None):
+        
+        __pychecker__ = '--no-argsused' # event not used.
     
         try:
-            frame = self ; c = frame.c ; gui = g.app.gui
-            # g.trace(c.shortFileName())
+            frame = self ; gui = g.app.gui
             g.app.setLog(frame.log,"OnActivateBody")
             w = gui.get_focus(frame)
             if w != frame.body.bodyCtrl:
@@ -1544,6 +1547,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
     #@+node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
     def OnActivateLeoEvent(self,event=None):
+        
+        __pychecker__ = '--no-argsused' # event not used.
         
         # g.trace(self.c.shortFileName())
     
@@ -1564,10 +1569,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3976:OnActivateTree
     def OnActivateTree (self,event=None):
         
-        # g.trace(self.c)
+        __pychecker__ = '--no-argsused' # event not used.
     
         try:
-            frame = self ; c = frame.c ; gui = g.app.gui
+            frame = self
             g.app.setLog(frame.log,"OnActivateTree")
             if 0: # Do NOT do this here!
                 # OnActivateTree can get called when the tree gets DE-activated!!
@@ -1663,6 +1668,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def OnCut (self,event=None):
         
         """The handler for the virtual Cut event."""
+        
+        __pychecker__ = '--no-argsused' # event not used.
     
         frame = self ; c = frame.c ; v = c.currentVnode()
         
@@ -1692,9 +1699,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
     def OnCopy (self,event=None):
         
-        frame = self
+        __pychecker__ = '--no-argsused' # event not used.
     
         if 0: # g.app.gui.win32clipboard is always None.
+            frame = self
             if g.app.gui.win32clipboard:
                 data = frame.body.getSelectedText()
                 if data:
@@ -1707,9 +1715,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
         frame = self
         w = frame.getFocus()
         w.event_generate(g.virtual_event_name("Copy"))
+    #@nonl
     #@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
     #@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
     def OnPaste (self,event=None):
+        
+        __pychecker__ = '--no-argsused' # event not used.
         
         frame = self ; c = frame.c ; v = c.currentVnode()
         
@@ -1739,7 +1750,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3982:endEditLabelCommand
     def endEditLabelCommand (self):
     
-        frame = self ; c = frame.c ; tree = frame.tree ; gui = g.app.gui
+        frame = self ; c = frame.c ; tree = frame.tree
         
         if g.app.batchMode:
             c.notValidInBatchMode("End Edit Headline")
@@ -1871,6 +1882,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
     def togglePmwSplitDirection (self,verticalFlag):
         
+        __pychecker__ = '--no-argsused' # verticalFlag not used.
+        
         frame = self ; c = self.c ; p = c.currentPosition()
         
         for name in ('splitter1','splitter2'):
@@ -1908,7 +1921,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def toggleTkSplitDirection (self,verticalFlag):
     
         # Abbreviations.
-        frame = self ; c = frame.c
+        frame = self
         bar1 = self.bar1 ; bar2 = self.bar2
         split1Pane1,split1Pane2 = self.split1Pane1,self.split1Pane2
         split2Pane1,split2Pane2 = self.split2Pane1,self.split2Pane2
@@ -2059,6 +2072,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def set_focus(self,widget,later=False,tag=''):
         
         '''Set the focus to the widget specified in the xWantsFocus methods.'''
+        
+        __pychecker__ = '--no-argsused' # tag good for debugging.
     
         c = self.c
         
@@ -2300,6 +2315,8 @@ class leoTkinterBody (leoFrame.leoBody):
     def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
         
         """Update the body pane at idle time."""
+        
+        __pychecker__ = 'maxlines=500'
     
         # g.trace(ch,ord(ch))
         c = self.c
@@ -2831,18 +2848,17 @@ class leoTkinterBody (leoFrame.leoBody):
         return self.bodyCtrl.bind(*args,**keys)
     #@-node:ekr.20031218072017.4017:Menus
     #@+node:ekr.20031218072017.4018:Selection
-    #@+node:ekr.20031218072017.4019:deleteTextSelection
-    def deleteTextSelection (self,t=None):
+    #@+node:ekr.20031218072017.4019:deleteTextSelection (not used)
+    def deleteTextSelection (self):
         
-        if t is None:
-            t = self.bodyCtrl
+        t = self.bodyCtrl
         sel = t.tag_ranges("sel")
         if len(sel) == 2:
             start,end = sel
             if t.compare(start,"!=",end):
                 t.delete(start,end)
     #@nonl
-    #@-node:ekr.20031218072017.4019:deleteTextSelection
+    #@-node:ekr.20031218072017.4019:deleteTextSelection (not used)
     #@+node:ekr.20031218072017.4020:getSelectedText
     def getSelectedText (self):
         
@@ -3207,6 +3223,8 @@ class leoTkinterLog (leoFrame.leoLog):
     #@-node:ekr.20031218072017.4044:tkLog.hasFocus
     #@+node:ekr.20031218072017.4045:tkLog.onActivateLog
     def onActivateLog (self,event=None):
+        
+        __pychecker__ = '--no-argsused' # event not used.
     
         try:
             g.app.setLog(self,"OnActivateLog")

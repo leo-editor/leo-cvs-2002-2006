@@ -187,6 +187,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
         
         # The first parameter must be event, and it must default to None.
         def callback(event=None,self=self,command=command,label=name):
+            __pychecker__ = '--no-argsused' # event not used, and must be present.
             return self.c.doCommand(command,label)
     
         return callback
@@ -197,6 +198,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
         
         # The first parameter must be event, and it must default to None.
         def callback(event=None,self=self,data=command):
+            __pychecker__ = '--no-argsused' # event param must be present.
             return self.c.openWith(data=data)
     
         return callback

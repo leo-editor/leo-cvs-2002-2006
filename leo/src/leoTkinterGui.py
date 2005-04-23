@@ -217,6 +217,8 @@ class tkinterGui(leoGui.leoGui):
     
         """Create and run an Tkinter open file dialog ."""
         
+        __pychecker__ = '--no-argsused' # defaultextension not used.
+        
         if multiple:
             # askopenfilenames requires Pythone 2.3 and Tk 8.4.
             if (
@@ -237,6 +239,8 @@ class tkinterGui(leoGui.leoGui):
     def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
     
         """Create and run an Tkinter save file dialog ."""
+        
+        __pychecker__ = '--no-argsused' # defaultextension not used.
     
         return tkFileDialog.asksaveasfilename(
             initialfile=initialfile,
@@ -413,6 +417,8 @@ class tkinterGui(leoGui.leoGui):
     #@+node:ekr.20031218072017.2373:set_focus (app.gui)
     def set_focus(self,c,widget,tag=''):
         
+        __pychecker__ = '--no-argsused' # c and tag not used at present.
+        
         """Put the focus on the widget."""
         
         # g.trace(tag,widget)
@@ -445,6 +451,8 @@ class tkinterGui(leoGui.leoGui):
     #@+node:ekr.20031218072017.2187:tkGui.getFontFromParams
     def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
         
+        __pychecker__ = '--no-argsused' # defaultSize not used.
+    
         family_name = family
         
         try:
@@ -492,10 +500,12 @@ class tkinterGui(leoGui.leoGui):
                 #@-at
                 #@@c
                 
-                import Image,tkIcon,_tkicon
+                import Image
+                import tkIcon
                 
                 # Wait until the window has been drawn once before attaching the icon in OnVisiblity.
                 def visibilityCallback(event,self=self,w=w):
+                    __pychecker__ = '--no-argsused' # event not used.
                     try: self.leoIcon.attach(w.winfo_id())
                     except: pass
                 w.bind("<Visibility>",visibilityCallback)
@@ -522,7 +532,7 @@ class tkinterGui(leoGui.leoGui):
     def createLeoIcon (self,icon):
         
         try:
-            import Image,tkIcon,_tkicon
+            import Image,_tkicon
             
             i = icon ; m = None
             # create transparency mask
@@ -551,16 +561,14 @@ class tkinterGui(leoGui.leoGui):
     #@-node:ekr.20031218072017.4067:Icons
     #@+node:ekr.20031218072017.4071:Idle Time
     #@+node:ekr.20031218072017.4072:tkinterGui.setIdleTimeHook
-    def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
-        
-        # g.trace(idleTimeHookHandler,self.root)
+    def setIdleTimeHook (self,idleTimeHookHandler):
     
         if self.root:
-            self.root.after_idle(idleTimeHookHandler,*args,**keys)
+            self.root.after_idle(idleTimeHookHandler)
     #@nonl
     #@-node:ekr.20031218072017.4072:tkinterGui.setIdleTimeHook
     #@+node:ekr.20031218072017.4073:setIdleTimeHookAfterDelay
-    def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
+    def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler):
         
         if self.root:
             g.app.root.after(g.app.idleTimeDelay,idleTimeHookHandler)

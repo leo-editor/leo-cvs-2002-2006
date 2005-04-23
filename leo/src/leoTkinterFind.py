@@ -66,7 +66,9 @@ class underlinedTkButton:
     #@+node:ekr.20041025152717:callback
     # The hot key has been hit.  Call the button's command.
     
-    def callback (self, event):
+    def callback (self, event=None):
+        
+        __pychecker__ = '--no-argsused' # the event param must be present.
     
         # g.trace(self.text)
     
@@ -267,6 +269,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         # HotKeys used for plain buttons (enter),d,g,t
         
         def findButtonCallback(event=None):
+            __pychecker__ = '--no-argsused' # the event param must be present.
             self.findButton()
             return 'break'
         
@@ -426,6 +429,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     #@-node:ekr.20050204090259:tkFind.adjust_find_text
     #@+node:ekr.20031218072017.3906:onCloseWindow
     def onCloseWindow(self,event=None):
+        
+        __pychecker__ = '--no-argsused' # the event param must be present.
     
         self.top.withdraw()
     #@nonl
@@ -460,6 +465,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     #@-node:ekr.20031218072017.3907:bringToFront
     #@+node:EKR.20040603221140:selectAll
     def selectAll (self,event=None):
+        
+        __pychecker__ = '--no-argsused' # the event param must be present.
     
         try:
             w = self.frame.focus_get()
@@ -474,7 +481,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         return t.search(*args,**keys)
     
     def init_s_ctrl (self,s):
-        c = self.c ; t = self.s_ctrl	
+        t = self.s_ctrl	
         t.delete("1.0","end")
         t.insert("end",s)
         t.mark_set("insert",g.choose(self.reverse,"end","1.0"))

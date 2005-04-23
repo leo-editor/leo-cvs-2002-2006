@@ -7,7 +7,7 @@ Run the unit tests in test.leo using the Execute Script command.'''
 #@@language python
 #@@tabwidth -4
 
-__pychecker__ = '--no-import --no-reimportself --no-reimport --no-constcond --no-constant1'
+__pychecker__ = '--no-import --no-reimportself --no-reimport --no-constCond --no-constant1'
     # Disable all import warnings.
     # Disable warnings about if 1 and if 0.
 
@@ -104,9 +104,12 @@ class generalTestCase(unittest.TestCase):
         self.p = p.copy()
     #@-node:ekr.20050415070840.6:__init__
     #@+node:ekr.20050415070840.7: fail
-    def fail (self):
+    def fail (self,msg=None):
     
         """Mark a unit test as having failed."""
+        
+        __pychecker__ = '--no-argsused'
+            #  msg needed so signature matches base class.
     
         import leoGlobals as g
     
@@ -289,6 +292,8 @@ def makeObjectList(message):
 #@-node:ekr.20050415070840.19:makeObjectList
 #@+node:ekr.20050415070840.20:printGc
 def printGc(message=None,onlyPrintChanges=False):
+    
+    __pychecker__ = '--no-argsused' # onlyPrintChanges may be useful for debugging.
 
     if not message:
         message = g.callerName(n=2)
@@ -513,20 +518,18 @@ class testUtils:
     
         """Returns the total number of nodes in an outline"""
     
-        c = g.top() ; n = 0
-        for p in c.allNodes_iter():
-            n += 1
-        return n
-    
+        c = g.top()
+        
+        return len([p for p in c.allNodes_iter()])
+    #@nonl
     #@-node:ekr.20050415070840.34:numberOfNodesInOutline
     #@+node:ekr.20050415070840.35:replaceOutline
-    def replaceOutline (self,c,outline1,outline2):
+    def replaceOutline (self,outline1,outline2):
     
         """Replace outline1 by a copy of outline 2,
     
         retaining the headline of outline1."""
     
-        u = self
         h = outline1.headString()
         copy = outline2.copyTreeAfter()
         copy.initHeadString(h)
@@ -632,6 +635,9 @@ class testUtils:
 def fail ():
 
     """Mark a unit test as having failed."""
+    
+    __pychecker__ = '--no-argsused'
+        #  msg needed so signature matches base class.
 
     import leoGlobals as g
 
@@ -831,7 +837,7 @@ class reformatParagraphTest:
     #@+node:ekr.20050417102531:setUp
     def setUp(self):
         
-        c = self.c ; p = self.p
+        p = self.p
         u = self.u = testUtils()
     
         self.before = u.findNodeInTree(p,"before")
@@ -847,7 +853,7 @@ class reformatParagraphTest:
     #@+node:ekr.20050417103035.1:tearDown
     def tearDown(self):
     
-        c = self.c ; tempNode = self.tempNode
+        tempNode = self.tempNode
     
         # clear the temp node and mark it unchanged
         tempNode.setTnodeText("",g.app.tkEncoding)
@@ -869,14 +875,12 @@ class singleParagraphTest (reformatParagraphTest):
     #@    @+others
     #@+node:ekr.20050417102526.1:__init__
     def __init__ (self,c,p,finalRow,finalCol):
-    
-        self.c = c
-        self.p = p.copy()
-    
+        
         self.finalCol = finalCol
         self.finalRow = finalRow
-    
-        self.go()
+        
+        # Call the base class.
+        reformatParagraphTest.__init__(self,c,p)
     #@nonl
     #@-node:ekr.20050417102526.1:__init__
     #@+node:ekr.20050417103035:runTest
@@ -1052,14 +1056,16 @@ class editBodyTestCase(unittest.TestCase):
     #@nonl
     #@-node:ekr.20050415070840.75: __init__
     #@+node:ekr.20050415070840.76: fail
-    def fail (self):
+    def fail (self,msg=None):
     
         """Mark a unit test as having failed."""
+        
+        __pychecker__ = '--no-argsused'
+            #  msg needed so signature matches base class.
     
         import leoGlobals as g
     
         g.app.unitTestDict["fail"] = g.callerName(2)
-    #@nonl
     #@-node:ekr.20050415070840.76: fail
     #@+node:ekr.20050415070840.77:editBody
     def editBody (self):
@@ -1088,7 +1094,7 @@ class editBodyTestCase(unittest.TestCase):
     #@nonl
     #@-node:ekr.20050415070840.80:runTest
     #@+node:ekr.20050415070840.79:setUp
-    def setUp(self,*args,**keys):
+    def setUp(self):
     
         c = self.c ; tempNode = self.tempNode
     
@@ -1142,8 +1148,7 @@ def makeImportExportSuite(parentHeadline,doImport):
 
     """Create an Import/Export test for every descendant of testParentHeadline.."""
 
-    c = g.top() ; v = c.currentVnode()
-    u = testUtils()
+    c = g.top() ; u = testUtils()
 
     parent = u.findNodeAnywhere(c,parentHeadline)
     assert(parent)
@@ -1161,6 +1166,7 @@ def makeImportExportSuite(parentHeadline,doImport):
         suite.addTest(test)
 
     return suite
+#@nonl
 #@-node:ekr.20050415070840.82:makeImportExportSuite
 #@+node:ekr.20050415070840.83:class importExportTestCase
 class importExportTestCase(unittest.TestCase):
@@ -1189,9 +1195,12 @@ class importExportTestCase(unittest.TestCase):
     #@nonl
     #@-node:ekr.20050415070840.84:__init__
     #@+node:ekr.20050415070840.85: fail
-    def fail (self):
+    def fail (self,msg=None):
     
         """Mark a unit test as having failed."""
+        
+        __pychecker__ = '--no-argsused'
+            #  msg needed so signature matches base class.
     
         import leoGlobals as g
     
@@ -1222,7 +1231,7 @@ class importExportTestCase(unittest.TestCase):
     #@nonl
     #@-node:ekr.20050415070840.87:runTest
     #@+node:ekr.20050415070840.88:setUp
-    def setUp(self,*args,**keys):
+    def setUp(self):
     
         c = self.c ; temp_v = self.temp_v ; d = self.dialog
     
@@ -1244,7 +1253,7 @@ class importExportTestCase(unittest.TestCase):
         try:
             # os.path.sep does not exist in Python 2.2.x.
             sep = os.path.sep
-            fileName = fileName.replace('\\',os.path.sep)
+            fileName = fileName.replace('\\',sep)
         except AttributeError:
             fileName = g.os_path_normpath(fileName)
     

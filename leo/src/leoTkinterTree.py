@@ -723,6 +723,9 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """All changes to text widgets should come here."""
         
+        __pychecker__ = '--no-argsused'
+            # tag and isHeadline are useful for debugging.
+        
         if 0: # A good trace to have...
             if isHeadline:
                 g.trace(self.textAddr(t),tag,s)
@@ -782,7 +785,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.36:drawBox
     def drawBox (self,p,x,y):
     
-        tree = self ; c = self.c ; canvas = self.canvas
+        tree = self ; c = self.c
         y += 7 # draw the box at x, y+7
         
         theId = g.doHook("draw-outline-box",tree=tree,c=c,p=p,v=p,x=x,y=y)
@@ -799,11 +802,11 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.37:drawClickBox
     def drawClickBox (self,p,y):
     
-        canvas = self.canvas ; h = self.line_height
+        h = self.line_height
         
         # Define a slighly larger rect to catch clicks.
         if self.expanded_click_area:
-            theId = self.newClickBox(p,0,y,1000,y+h-2)
+            self.newClickBox(p,0,y,1000,y+h-2)
             
             if 0: # A major change to the user interface.
                 #@            << change the appearance of headlines >>
@@ -849,7 +852,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
     
-        canvas = self.canvas ; c = self.c
+        c = self.c
         #@    << compute x,y and iconVal >>
         #@+node:ekr.20040803072955.40:<< compute x,y and iconVal >>
         v = p.v
@@ -879,7 +882,7 @@ class leoTkinterTree (leoFrame.leoTree):
             # Get the image.
             imagename = "box%02d.GIF" % val
             image = self.getIconImage(imagename)
-            theId = self.newIcon(p,x,y+self.lineyoffset,image)
+            self.newIcon(p,x,y+self.lineyoffset,image)
             
         return 0,self.icon_width # dummy icon height,width
     #@nonl
@@ -894,7 +897,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.42:drawNode & force_draw_node (good trace)
     def drawNode(self,p,x,y):
         
-        canvas = self.canvas ; c = self.c
+        c = self.c
         
         data = g.doHook("draw-outline-node",tree=self,c=c,p=p,v=p,x=x,y=y)
         if data is not None: return data
@@ -965,8 +968,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         assert(p)
     
-        c = self.c ; canvas = self.canvas
-        h = self.line_height
+        c = self.c
         x += self.text_indent
         
         data = g.doHook("draw-outline-text-box",tree=self,c=c,p=p,v=p,x=x,y=y)
@@ -977,6 +979,9 @@ class leoTkinterTree (leoFrame.leoTree):
         if 0: # old, experimental code.
             #@        << highlight text widget on enter events >>
             #@+node:ekr.20040803072955.45:<< highlight text widget on enter events >>
+            canvas = self.canvas
+            h = self.line_height
+            
             if 0: # Define a rect to colorize.
             
                 color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
@@ -1181,7 +1186,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.53:drawTree
     def drawTree(self,p,x,y,h,level,hoistFlag=False):
     
-        tree = self ; c = self.c ; v = p.v
+        tree = self ; c = self.c
         yfirst = ylast = y
         h1 = None
         
@@ -1217,6 +1222,8 @@ class leoTkinterTree (leoFrame.leoTree):
     # This _is_ useful when a flag is passed to c.endUpdate.
     
     def redraw (self,event=None):
+        
+        __pychecker__ = '--no-argsused' # event not used.
         
         # g.trace(self.updateCount,self.redrawScheduled)
         
@@ -1459,6 +1466,7 @@ class leoTkinterTree (leoFrame.leoTree):
     def scrollTo (self,p):
         
         def scrollToCallback(event=None,self=self,p=p):
+            __pychecker__ = '--no-argsused' # event not used.
             # if self.trace and self.verbose: g.trace(event,self,p)
             self.idle_scrollTo(p)
         
@@ -1602,6 +1610,8 @@ class leoTkinterTree (leoFrame.leoTree):
     def findEditWidget (self,p,tag=""):
         
         """Return the Tk.Text item corresponding to p."""
+        
+        __pychecker__ = '--no-argsused' # tag useful for debugging.
     
         c = self.c
         
@@ -1623,7 +1633,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.79:onClickBoxClick
     def onClickBoxClick (self,event):
         
-        c = self.c ; gui = g.app.gui
+        c = self.c
         
         if self.trace and self.verbose: g.trace()
         p = self.eventToPosition(event)
@@ -1649,8 +1659,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.81:onIconBoxClick
     def onIconBoxClick (self,event):
         
-        c = self.c ; gui = g.app.gui
-        tree = self ; canvas = tree.canvas
+        c = self.c ; tree = self
         
         p = self.eventToPosition(event)
         if not p: return
@@ -1673,7 +1682,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """Handle a right click in any outline widget."""
     
-        c = self.c ; w = event.widget
+        c = self.c
         
         p = self.eventToPosition(event)
         if not p: return
@@ -1706,13 +1715,12 @@ class leoTkinterTree (leoFrame.leoTree):
             g.doHook("icondclick2",c=c,p=p,v=p,event=event)
         except:
             g.es_event_exception("icondclick")
+    #@nonl
     #@-node:ekr.20040803072955.82:onIconBoxDoubleClick
     #@-node:ekr.20040803072955.80:Icon Box...
     #@+node:ekr.20040803072955.84:Text Box...
     #@+node:ekr.20040803072955.85:configureTextState
     def configureTextState (self,p):
-        
-        c = self.c
         
         if not p: return
         
@@ -2098,10 +2106,11 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.99:Dragging
     #@+node:ekr.20040803072955.105:OnActivate (tkTree)
     def OnActivate (self,p,event=None):
+        
+        __pychecker__ = '--no-argsused' # event not used.
     
         try:
-            c = self.c ; gui = g.app.gui
-            # g.trace(c)
+            c = self.c
             #@        << activate this window >>
             #@+node:ekr.20040803072955.106:<< activate this window >>
             current = c.currentPosition()
@@ -2143,6 +2152,8 @@ class leoTkinterTree (leoFrame.leoTree):
     def OnDeactivate (self,event=None):
         
         """Deactivate the tree pane, dimming any headline being edited."""
+        
+        __pychecker__ = '--no-argsused' # event not used.
     
         tree = self ; c = self.c
         focus = g.app.gui.get_focus(c.frame)
@@ -2220,12 +2231,16 @@ class leoTkinterTree (leoFrame.leoTree):
     # 20-SEP-2002 DTHEIN: This event handler is only needed for Linux.
     
     def OnPopupFocusLost(self,event=None):
+        
+        __pychecker__ = '--no-argsused' # event not used.
     
         self.popupMenu.unpost()
-        
+    #@nonl
     #@-node:ekr.20040803072955.111:OnPopupFocusLost
     #@+node:ekr.20040803072955.112:createPopupMenu
     def createPopupMenu (self,event):
+        
+        __pychecker__ = '--no-argsused' # event not used.
         
         c = self.c ; frame = c.frame
         
@@ -2277,6 +2292,8 @@ class leoTkinterTree (leoFrame.leoTree):
     def enablePopupMenuItems (self,v,event):
         
         """Enable and disable items in the popup menu."""
+        
+        __pychecker__ = '--no-argsused' # event not used.
         
         c = self.c ; menu = self.popupMenu
     
@@ -2339,8 +2356,12 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.116:showPopupMenu
     #@-node:ekr.20040803072955.110:tree.OnPopup & allies
     #@+node:ekr.20040803072955.117:tree.moveUpDown
-    def OnUpKey   (self,event=None): return self.moveUpDown("up")
-    def OnDownKey (self,event=None): return self.moveUpDown("down")
+    def OnUpKey   (self,event=None):
+        __pychecker__ = '--no-argsused' # event not used.
+        return self.moveUpDown("up")
+    def OnDownKey (self,event=None):
+        __pychecker__ = '--no-argsused' # event not used.
+        return self.moveUpDown("down")
     
     def moveUpDown (self,upOrDown):
         c = self.c ; body = c.frame.bodyCtrl
@@ -2483,12 +2504,12 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.124:tree.updateTree
     def updateTree (self,v,x,y,h,level):
     
-        yfirst = ylast = y
+        yfirst = y
         if level==0: yfirst += 10
         while v:
             # g.trace(x,y,v)
             h,indent = self.updateNode(v,x,y)
-            y += h ; ylast = y
+            y += h
             if v.isExpanded() and v.firstChild():
                 y = self.updateTree(v.firstChild(),x+indent,y,h,level+1)
             v = v.next()
