@@ -6,6 +6,8 @@
 
 from __future__ import generators # To make the code work in Python 2.2.
 
+__pychecker__ = '--no-constcond -- no-constant1' # Disable checks for if 0, if 1.
+
 #@<< imports >>
 #@+node:ekr.20040712045933:<< imports  >>
 import leoGlobals as g
@@ -147,7 +149,7 @@ class baseCommands:
     #@-node:ekr.20041130173135:c.hash
     #@-node:ekr.20031218072017.2811: c.Birth & death
     #@+node:ekr.20031218072017.2817: doCommand
-    def doCommand (self,command,label,event=None):
+    def doCommand (self,command,label):
     
         """Execute the given command, invoking hooks and catching exceptions.
         
@@ -841,7 +843,7 @@ class baseCommands:
         
         """Create a new outline from a 4.0 derived file."""
         
-        c = self ; frame = c.frame ; v = c.currentVnode()
+        c = self ; p = c.currentPosition()
         
         types = [
             ("All files","*"),
@@ -860,7 +862,7 @@ class baseCommands:
             multiple=True)
     
         if names:
-            c.importCommands.importDerivedFiles(v,names)
+            c.importCommands.importDerivedFiles(p,names)
     #@nonl
     #@-node:ekr.20031218072017.1809:importDerivedFile
     #@-node:ekr.20031218072017.2840:4.0 Commands
@@ -1266,6 +1268,8 @@ class baseCommands:
     #@-node:ekr.20031218072017.2140:c.executeScript
     #@+node:ekr.20031218072017.2864:goToLineNumber & allies
     def goToLineNumber (self,root=None,lines=None,n=None,scriptFind=False):
+        
+        __pychecker__ = 'maxlines=400'
     
         c = self ; p = c.currentPosition()
         root1 = root
@@ -1752,7 +1756,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2090:colorPanel
     #@+node:ekr.20031218072017.2883:viewAllCharacters
-    def viewAllCharacters (self, event=None):
+    def viewAllCharacters (self):
     
         c = self ; frame = c.frame
         p = c.currentPosition()
@@ -1796,7 +1800,7 @@ class baseCommands:
     def convertAllBlanks (self):
         
         c = self ; u = c.undoer ; undoType = 'Convert All Blanks'
-        body = c.frame.body ; current = c.currentPosition()
+        current = c.currentPosition()
     
         if g.app.batchMode:
             c.notValidInBatchMode(undoType)
@@ -1887,7 +1891,7 @@ class baseCommands:
     #@+node:ekr.20031218072017.1821:convertBlanks
     def convertBlanks (self):
     
-        c = self ; u = c.undoer ; undoType = 'Convert Blanks'
+        c = self ; undoType = 'Convert Blanks'
         
         if g.app.batchMode:
             c.notValidInBatchMode(undoType)
@@ -1918,7 +1922,7 @@ class baseCommands:
     #@+node:ekr.20031218072017.1822:convertTabs
     def convertTabs (self):
     
-        c = self ; u = c.undoer ; undoType = 'Convert Tabs'
+        c = self ; undoType = 'Convert Tabs'
         
         if g.app.batchMode:
             c.notValidInBatchMode(undoType)
@@ -1952,7 +1956,7 @@ class baseCommands:
         
         '''A helper function for the three extract commands.'''
         
-        c = self ; u = c.undoer
+        c = self
         
         if body and len(body) > 0:
             body = string.rstrip(body)
@@ -2029,7 +2033,7 @@ class baseCommands:
     def extractSection(self):
     
         c = self ; u = c.undoer ; undoType = 'Extract Section'
-        body = c.frame.body ; current = c.currentPosition()
+        current = c.currentPosition()
     
         if g.app.batchMode:
             c.notValidInBatchMode(undoType)
@@ -2557,8 +2561,7 @@ class baseCommands:
     #@+node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
     def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
         
-        c = self ; u = c.undoer
-        body = c.frame.body ; p = c.currentPosition()
+        c = self ; body = c.frame.body ; p = c.currentPosition()
     
         # Update the text and notify the event handler.
         body.setSelectionAreas(head,middle,tail)
@@ -2717,8 +2720,7 @@ class baseCommands:
     
     def pasteOutline(self,reassignIndices=True):
     
-        c = self ; fc = c.fileCommands ; u = c.undoer
-        current = c.currentPosition()
+        c = self ; u = c.undoer ; current = c.currentPosition()
         s = g.app.gui.getTextFromClipboard()
         pasteAsClone = not reassignIndices
         undoType = g.choose(reassignIndices,'Paste Node','Paste As Clone')
@@ -3042,10 +3044,10 @@ class baseCommands:
                 if p != root:
                     undoData = u.beforeMoveNode(p)
                     dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
-                    dirtyVnodeList.extend(dirtyVnodeList)
+                    dirtyVnodeList.extend(dirtyVnodeList2)
                     p.moveToRoot(oldRoot=root)
                     dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
-                    dirtyVnodeList.extend(dirtyVnodeList)
+                    dirtyVnodeList.extend(dirtyVnodeList2)
                     u.afterMoveNode(p,'Sort',undoData)
                 for h,next in pairs[1:]:
                     undoData = u.beforeMoveNode(next)
@@ -5506,6 +5508,8 @@ class baseCommands:
     #@-node:ekr.20031218072017.2988:c.rootPosition & c.setRootPosition
     #@+node:ekr.20031218072017.2989:c.setChanged
     def setChanged (self,changedFlag,tag=''):
+        
+        __pychecker__ = '--no-argsused' # tag used for debugging.
     
         c = self
         if not c.frame: return
@@ -5742,7 +5746,7 @@ class configSettings:
             family,size,slant,weight,defaultSize=defaultSize,tag=tag)
     
     def getRecentFiles (self):
-        return g.app.config.getRecentFiles(self.c)
+        return g.app.config.getRecentFiles()
     
     def get(self,setting,theType):
         return g.app.config.get(self.c,setting,theType)
@@ -5822,6 +5826,8 @@ class configSettings:
     #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
     #@+node:ekr.20041118195812.2:set & setString
     def set (self,p,setting,val):
+        
+        __pychecker__ = '--no-argsused' # p not used.
         
         return g.app.config.setString(self.c,setting,val)
         
