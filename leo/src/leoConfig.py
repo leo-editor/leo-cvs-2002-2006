@@ -130,6 +130,8 @@ class parserBaseClass:
     #@+node:ekr.20041120094940.4:doFont
     def doFont (self,p,kind,name,val):
         
+        __pychecker__ = '--no-argsused' # kind not used.
+        
         d = self.parseFont(p)
         
         # Set individual settings.
@@ -143,6 +145,8 @@ class parserBaseClass:
     #@-node:ekr.20041120094940.4:doFont
     #@+node:ekr.20041120103933:doIf
     def doIf(self,p,kind,name,val):
+        
+        __pychecker__ = '--no-argsused' # args not used.
     
         g.trace("'if' not supported yet")
         return None
@@ -150,6 +154,8 @@ class parserBaseClass:
     #@-node:ekr.20041120103933:doIf
     #@+node:ekr.20041121125416:doIfGui
     def doIfGui (self,p,kind,name,val):
+        
+        __pychecker__ = '--no-argsused' # args not used.
         
         # g.trace(repr(name))
         
@@ -165,6 +171,8 @@ class parserBaseClass:
     #@-node:ekr.20041121125416:doIfGui
     #@+node:ekr.20041120104215:doIfPlatform
     def doIfPlatform (self,p,kind,name,val):
+        
+        __pychecker__ = '--no-argsused' # args not used.
         
         # g.trace(sys.platform,repr(name))
     
@@ -249,6 +257,8 @@ class parserBaseClass:
     #@+node:ekr.20041121151924:doRecentFiles
     def doRecentFiles (self,p,kind,name,val):
         
+        __pychecker__ = '--no-argsused' # args not used.
+        
         s = p.bodyString().strip()
         if s:
             lines = g.splitLines(s)
@@ -264,6 +274,8 @@ class parserBaseClass:
     #@-node:ekr.20041120113848:doShortcut
     #@+node:ekr.20041120105609:doShortcuts
     def doShortcuts(self,p,kind,name,val):
+        
+        __pychecker__ = '--no-argsused' # kind not used.
         
         #g.trace('*'*10,p.headString())
     
@@ -349,7 +361,7 @@ class parserBaseClass:
         lines = g.splitLines(s)
     
         for line in lines:
-            self.parseFontLine(p,line,d)
+            self.parseFontLine(line,d)
             
         comments = d.get('comments')
         d['comments'] = '\n'.join(comments)
@@ -358,7 +370,7 @@ class parserBaseClass:
     #@nonl
     #@-node:ekr.20041213082558.1:parseFont
     #@+node:ekr.20041213082558.2:parseFontLine
-    def parseFontLine (self,p,line,d):
+    def parseFontLine (self,line,d):
         
         s = line.strip()
         if not s: return
@@ -416,8 +428,7 @@ class parserBaseClass:
         
         """Return the kind of @settings node indicated by p's headline."""
         
-        kind = name = val = None
-    
+        name = val = None
         i = g.skip_id(s,0)
         name = s[0:i]
         if name:
@@ -432,11 +443,11 @@ class parserBaseClass:
     #@-node:ekr.20041120112043:parseShortcutLine
     #@-node:ekr.20041213082558:parsers
     #@+node:ekr.20041120094940.9:set (parseBaseClass)
-    # p used in subclasses, not here.
-    
     def set (self,p,kind,name,val):
         
         """Init the setting for name to val."""
+        
+        __pychecker__ = '--no-argsused' # p used in subclasses, not here.
         
         c = self.c ; key = self.munge(name)
         # g.trace("settingsParser %10s %15s %s" %(kind,val,name))
@@ -496,11 +507,15 @@ class parserBaseClass:
         
         """Give an error: val is not valid for kind."""
         
+        __pychecker__ = '--no-argsused' # p not used, but needed.
+        
         self.error("%s is not a valid %s for %s" % (val,kind,name))
     #@nonl
     #@-node:ekr.20041120094940.10:valueError
     #@+node:ekr.20041119204700.3:visitNode (must be overwritten in subclasses)
     def visitNode (self,p):
+        
+        __pychecker__ = '--no-argsused' # p not used, but needed.
         
         self.oops()
     #@nonl
@@ -835,6 +850,8 @@ class configClass:
     #@nonl
     #@+node:ekr.20041121143823:getValFromDict
     def getValFromDict (self,d,setting,requestedType,found):
+        
+        __pychecker__ = '--no-argsused' # reqestedType not used.
     
         bunch = d.get(self.munge(setting))
         if bunch:
@@ -905,6 +922,8 @@ class configClass:
         We default to size=12, slant="roman", weight="normal".
     
         We return None if there is no family setting so we can use system default fonts."""
+        
+        __pychecker__ = '--no-argsused' # tag used for debugging.
     
         family = self.get(c,family,"family")
         if family in (None,""):
@@ -964,9 +983,8 @@ class configClass:
     #@nonl
     #@-node:ekr.20041122070752:getRatio
     #@+node:ekr.20041117062717.11:getRecentFiles
-    def getRecentFiles (self,c):
-        
-        # Must get c's recent files.
+    def getRecentFiles (self):
+    
         return self.recentFiles
     #@nonl
     #@-node:ekr.20041117062717.11:getRecentFiles
@@ -1223,8 +1241,7 @@ class settingsDialogParserClass (parserBaseClass):
     # There is no need to call the base class ctor.
     __pychecker__ = '--no-callinit'
     
-    def __init__ (self,c,p,dialogController):
-        
+    def __init__ (self,c,p):
         self.c = c
         self.root = p.copy()
         self.widgets = [] # A list of widgets to create in the setter pane.
@@ -1286,16 +1303,19 @@ class settingsDialogParserClass (parserBaseClass):
     #@nonl
     #@+node:ekr.20041225063637.101:doFont
     def doFont (self,p,kind,name,val):
+        
+        __pychecker__ = '--no-argsused' # args not used, but required.
     
         d = self.parseFont(p)
         # g.trace("\n\nfont dict...\n%s" % g.dictToString(d))
         self.set(p,kind,name,d)
-    #@nonl
     #@-node:ekr.20041225063637.101:doFont
     #@+node:ekr.20041225063637.102:doPage
     def doPage(self,p,kind,name,val):
         
         """Create a widget for each setting in the subtree."""
+        
+        __pychecker__ = '--no-argsused' # args not used, but required.
     
         for p in p.subtree_iter():
             self.visitNode(p)
@@ -1303,6 +1323,8 @@ class settingsDialogParserClass (parserBaseClass):
     #@-node:ekr.20041225063637.102:doPage
     #@+node:ekr.20041225063637.103:doRecentFiles & doBodyPaneList
     def doBodyPaneList (self,p,kind,name,val):
+        
+        __pychecker__ = '--no-argsused' # val not used, but required.
     
         s = p.bodyString()
         lines = g.splitLines(s)
@@ -1316,6 +1338,7 @@ class settingsDialogParserClass (parserBaseClass):
         self.set(p,kind,name,vals)
     
     doRecentFiles = doBodyPaneList
+    
     #@-node:ekr.20041225063637.103:doRecentFiles & doBodyPaneList
     #@+node:ekr.20041225063637.104:doShortcuts
     def doShortcuts(self,p,kind,name,val):
@@ -1410,6 +1433,8 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
     #@-node:ekr.20041225063637.82:editLabel
     #@+node:ekr.20041225063637.83:tree.select
     def select (self,p,updateBeadList=True):
+        
+        __pychecker__ = '--no-argsused' # updateBeadList required for compatibility.
     
         old_p = self.old_p
     
@@ -1476,7 +1501,7 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
         
         """Draw the settings tree, i.e., the tree rooted at self.controller.settingsPosition()."""
         
-        c = self.c ; canvas = self.canvas
+        canvas = self.canvas
         p = self.controller.settingsPosition()
         self.redrawing = True
         # Recycle all widgets.
@@ -1543,11 +1568,12 @@ class settingsTreeParser (parserBaseClass):
             except TypeError:
                 g.es_exception()
                 print "*** no handler",kind
-                return None
         elif name:
             # self.error("unknown type %s for setting %s" % (kind,name))
             # Just assume the type is a string.
             self.set(p,kind,name,val)
+        
+        return None
     #@nonl
     #@-node:ekr.20041119204714:visitNode (settingsTreeParser)
     #@-others
@@ -1588,7 +1614,7 @@ class settingsController:
         self.sc = None
         self.setterLabel = None
         self.suppressComments = None # position for which to suppress comments.
-        self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
+        self.title = "Settings for %s" % g.shortFileName(c.fileName())
         self.top = None
         self.tree = None
         #@nonl
@@ -1671,7 +1697,7 @@ class settingsController:
         # Reread the settings files so any changes will take effect.
         g.app.config.readSettingsFiles(c.fileName(),verbose=True)
         self._settingsPosition = p = self.createSettingsTree()
-        self.parser = settingsDialogParserClass(c,p,self)
+        self.parser = settingsDialogParserClass(c,p)
         #@    << set background color for widgets >>
         #@+node:ekr.20050121105232:<< set background color for widgets >>
         if 0:
@@ -1707,8 +1733,7 @@ class settingsController:
     #@+node:ekr.20050212153515:replaceBodyWithDialog
     def replaceBodyWithDialog (self):
         
-        c = self.c ; title = self.title
-        bg = self.commonBackground
+        c = self.c ; bg = self.commonBackground
         
         #@    << replace the body pane with the outer dialog frame >>
         #@+node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
@@ -1904,7 +1929,7 @@ class settingsController:
         treeCanvas.configure(background='white')
         
         # Create the tree.
-        self.tree = tree = settingsTree(c,c.frame,treeCanvas,self)
+        self.tree = settingsTree(c,c.frame,treeCanvas,self)
         
         logPane = self.panes.get('log')
         self.logText = logText = Tk.Text(logPane)
@@ -1923,10 +1948,8 @@ class settingsController:
             
         sc.pack(side='top',expand=1,fill="both")
         
-        setterCanvas = sc.component('canvas')
+        sc.component('canvas')
         self.setterLabel = sc.component('label')
-        
-        # setterCanvas.configure(background='LightSteelBlue1')
         #@nonl
         #@-node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
         #@nl
@@ -2208,12 +2231,9 @@ class settingsController:
             t = scrolled_text.component('text')
             t.insert('end',s)
             t.configure(state='disabled')
-            hull=scrolled_text.component('hull')
-            
+            scrolled_text.component('hull')
     
-        item = self.sc.create_window(10-2,self.h,anchor='w',window=f)
-        # bbox=hull.bbox() ; print bbox # (0,0,0,0)
-        
+        self.sc.create_window(10-2,self.h,anchor='w',window=f)
         self.h += 70
     #@nonl
     #@-node:ekr.20050121131613:createComents
@@ -2257,7 +2277,7 @@ class settingsController:
         
         """Create a font picker.  val is a dict containing the specified values."""
         bg = self.commonBackground
-        d = val ; widgets = {}
+        d = val
         munge = g.app.config.munge
         f = Tk.Frame(parent,background=bg) # No need to pack.
         self.alterComments = p.copy()
@@ -2299,7 +2319,7 @@ class settingsController:
             kind,val = data
             if val not in (None,'None','none'):
                 try:
-                    n = int(val)
+                    int(val)
                     sizeEntry.insert('end',val)
                 except ValueError:
                     s = "invalid size: %s" % val
@@ -2353,6 +2373,8 @@ class settingsController:
         #@    << define fontCallback >>
         #@+node:ekr.20041225063637.39:<< define fontCallback >>
         def fontCallback(*args,**keys):
+            
+            __pychecker__ = '--no-argsused' # not used, but needed.
             
             d2 = d.copy() # The update logic must compare distinct dicts.
             
@@ -2544,6 +2566,8 @@ class settingsController:
     #@+node:ekr.20041225063637.46:createShortcuts
     def createShortcuts (self,parent,p,kind,name,vals):
         
+        __pychecker__ = '--no-argsused' # vals not used, but needed.
+        
         s = p.bodyString()
         lines = g.splitLines(s)
         
@@ -2695,6 +2719,8 @@ class settingsController:
     #@-node:ekr.20041225063637.52:revert
     #@+node:ekr.20041225063637.53:onPaneResize
     def onPaneResize (self,sizes=None):
+        
+        __pychecker__ = '--no-argsused' # sizes not used, but needed.
     
         self.sc.resizescrollregion()
     #@nonl
@@ -2765,8 +2791,7 @@ class settingsController:
     def updateSetter (self,p,updateDicts=True):
         
         """Create a setter pane for position p."""
-        
-        c = self.c
+    
         sc = self.sc ; interior = sc.interior()
         
         if updateDicts:
@@ -2943,14 +2968,14 @@ class settingsController:
                     body = '\n'.join(val)
                     p.setBodyStringOrPane(body)
                 elif kind == 'font':
-                    body = self.computeBodyFromFontDict(p,val)
+                    body = self.computeBodyFromFontDict(val)
                     p.setBodyStringOrPane(body)
                 else:
                     # Put everything in the headline.
                     p.initHeadString("@%s %s = %s" % (kind,name,val))
     #@nonl
     #@+node:ekr.20041225063637.68:computeBodyFromFontDict
-    def computeBodyFromFontDict(self,p,d):
+    def computeBodyFromFontDict(self,d):
     
         lines = []
         comments = d.get('comments')
@@ -2976,6 +3001,8 @@ class settingsController:
     #@-node:ekr.20041225063637.67:updateOneNode & helper
     #@+node:ekr.20041225063637.69:writeChangedList
     def writeChangedList (self,changedList,tag):
+        
+        __pychecker__ = '--no-argsused' # tag used for debugging.
         
         if not changedList: return
         
