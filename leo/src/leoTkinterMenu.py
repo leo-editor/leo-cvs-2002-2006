@@ -187,7 +187,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
         
         # The first parameter must be event, and it must default to None.
         def callback(event=None,self=self,command=command,label=name):
-            return self.c.doCommand(command,label,event)
+            return self.c.doCommand(command,label)
     
         return callback
     #@nonl
