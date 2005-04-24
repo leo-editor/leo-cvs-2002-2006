@@ -41,7 +41,7 @@ class parserBaseClass:
     
     control_types = [
         'font','if','ifgui','ifplatform','ignore','page',
-        'recentfiles','settings','shortcuts']
+        'settings','shortcuts']
     
     # Keys are settings names, values are (type,value) tuples.
     settingsDict = {}
@@ -72,7 +72,6 @@ class parserBaseClass:
             'path':         self.doPath,
             'page':         self.doPage,
             'ratio':        self.doRatio,
-            'recentfiles':  self.doRecentFiles,
             'shortcut':     self.doShortcut,
             'shortcuts':    self.doShortcuts,
             'string':       self.doString,
@@ -254,17 +253,6 @@ class parserBaseClass:
             self.valueError(p,kind,name,val)
     #@nonl
     #@-node:ekr.20041121125741:doRatio
-    #@+node:ekr.20041121151924:doRecentFiles
-    def doRecentFiles (self,p,kind,name,val):
-        
-        __pychecker__ = '--no-argsused' # args not used.
-        
-        s = p.bodyString().strip()
-        if s:
-            lines = g.splitLines(s)
-            self.set(p,"recent-files","recent-files",lines)
-    #@nonl
-    #@-node:ekr.20041121151924:doRecentFiles
     #@+node:ekr.20041120113848:doShortcut
     def doShortcut(self,p,kind,name,val):
     
@@ -1162,7 +1150,7 @@ class configClass:
     #@+node:ekr.20041120064303:config.readSettingsFiles
     def readSettingsFiles (self,fileName,verbose=True):
         
-        munge = self.munge ; seen = []
+        seen = []
         
         # Init settings from leoSettings.leo files.
         for path,localFlag in (
@@ -1344,7 +1332,6 @@ class settingsDialogParserClass (parserBaseClass):
             'path':         self.doPath,
             'page':         self.doPage,
             'ratio':        self.set,
-            'recentfiles':  self.doRecentFiles,
             'shortcut':     None,
             'shortcuts':    self.doShortcuts,
             'string':       self.set,
@@ -1417,9 +1404,6 @@ class settingsDialogParserClass (parserBaseClass):
                 vals.append(line)
                     
         self.set(p,kind,name,vals)
-    
-    doRecentFiles = doBodyPaneList
-    
     #@-node:ekr.20041225063637.103:doRecentFiles & doBodyPaneList
     #@+node:ekr.20041225063637.104:doShortcuts
     def doShortcuts(self,p,kind,name,val):
@@ -2147,7 +2131,6 @@ class settingsController:
             'float':        self.createFloat,
             'path':         self.createPath,
             'ratio':        self.createRatio,
-            'recentfiles':  self.createRecentFiles,
             'shortcut':     self.createShortcut,
             'shortcuts':    self.createShortcuts,
             'string':       self.createString,
@@ -2598,43 +2581,6 @@ class settingsController:
         self.h += 30
     #@nonl
     #@-node:ekr.20041225063637.43:createRatio
-    #@+node:ekr.20041225063637.44:createRecentFiles
-    def createRecentFiles (self,parent,p,kind,name,vals):
-        
-        bg = self.commonBackground
-        
-        s = p.bodyString()
-        lines = g.splitLines(s)
-        
-        f = Tk.Frame(parent)
-        
-        recentFilesBox = Pmw.ComboBox(f,
-            labelpos="ew",label_text='recent files',
-            label_background = bg,
-            scrolledlist_items=lines)
-    
-        if lines:
-            recentFilesBox.selectitem(0)
-        recentFilesBox.pack(side="left")
-        
-        # Increase the width of the entry field.
-        entryfield = recentFilesBox.component('entryfield')
-        entry = entryfield.component('entry')
-        entry.configure(width=70)
-    
-        def recentFilesCallback():
-            files = recentFilesBox.get(0,'end')
-            files = [theFile.strip() for theFile in files if theFile.strip()]
-            return files
-    
-        self.initValue(p,name,kind,vals,recentFilesCallback)
-    
-        self.sc.create_window(10,self.h,anchor='w',window=f)
-        self.h += 30
-                    
-        self.suppressComments = p.copy()
-    #@nonl
-    #@-node:ekr.20041225063637.44:createRecentFiles
     #@+node:ekr.20041225063637.45:createShortcut
     def createShortcut (self,parent,p,kind,name,val):
         
@@ -3005,8 +2951,6 @@ class settingsController:
                     c2.frame.tree.setColorFromConfig()
                     c2.frame.log.setColorFromConfig()
                     c2.frame.body.setColorFromConfig()
-            elif munge(name) == "recentfiles":
-                c.setRecentFiles(val)
             else:
                 g.trace(name,kind,val)
                 g.app.config.set(c,name,kind,val)
@@ -3043,7 +2987,7 @@ class settingsController:
         for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
             if p:
                 # g.trace("updating %s in %s" % (name,where))
-                if kind in ('shortcuts','recentfiles'):
+                if kind == 'shortcuts':
                     # Put the values in the body.
                     p.initHeadString("@%s %s" % (kind,name))
                     body = '\n'.join(val)
