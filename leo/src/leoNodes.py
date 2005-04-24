@@ -2502,7 +2502,7 @@ class position (object):
     #@+node:ekr.20040305173343:p.siblings_iter
     class siblings_iter_class:
     
-        """Returns a list of siblings of a position."""
+        '''Returns a list of siblings of a position, including the position itself!'''
     
         #@    @+others
         #@+node:ekr.20040305173343.1:__init__ & __iter__
