@@ -1396,13 +1396,19 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.65:idle_scrollTo
     def idle_scrollTo(self,p=None):
     
-        """Scrolls the canvas so that v is in view.
+        """Scrolls the canvas so that p is in view.
         
         This is done at idle time after a redraw so that treeBar.get() will return proper values."""
+        
+        __pychecker__ = '--no-argsused' # event not used.
     
         c = self.c ; frame = c.frame
         if not p: p = self.c.currentPosition()
-        if not p: p = self.c.rootPosition() # 4/8/04.
+        if not p: p = self.c.rootPosition()
+        if not p or not p.exists(c):
+            g.trace('does not exist:',p.headString())
+            return
+        # g.trace(p.headString())
         try:
             last = p.lastVisible()
             nextToLast = last.visBack()
@@ -1467,7 +1473,6 @@ class leoTkinterTree (leoFrame.leoTree):
         
         def scrollToCallback(event=None,self=self,p=p):
             __pychecker__ = '--no-argsused' # event not used.
-            # if self.trace and self.verbose: g.trace(event,self,p)
             self.idle_scrollTo(p)
         
         self.canvas.after_idle(scrollToCallback)
@@ -1476,33 +1481,31 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.70:yoffset
     #@+at 
     #@nonl
-    # We can't just return icony because the tree hasn't been redrawn yet.  
+    # We can't just return icony because the tree hasn't been redrawn yet.
     # For the same reason we can't rely on any TK canvas methods here.
     #@-at
     #@@c
     
-    def yoffset(self, v1):
+    def yoffset(self,p1):
     
-        # if not v1.isVisible(): print "yoffset not visible:",v1
+        # if not p1.isVisible(): print "yoffset not visible:",p1
         root = self.c.rootPosition()
-        h, flag = self.yoffsetTree(root,v1)
+        h,flag = self.yoffsetTree(root,p1)
         # flag can be False during initialization.
         # if not flag: print "yoffset fails:",h,v1
         return h
     
-    # Returns the visible height of the tree and all sibling trees, stopping at p1
-    
     def yoffsetTree(self,p,p1):
-    
         h = 0
+        if not p.exists(self.c): return h # An extra precaution.
         p = p.copy()
-        for p in p.siblings_iter():
-            # print "yoffsetTree:", p
-            if p == p1:
+        for p2 in p.siblings_iter():
+            # print "yoffsetTree:", p2
+            if p2 == p1:
                 return h, True
             h += self.line_height
-            if p.isExpanded() and p.hasChildren():
-                child = p.firstChild()
+            if p2.isExpanded() and p2.hasChildren():
+                child = p2.firstChild()
                 h2, flag = self.yoffsetTree(child,p1)
                 h += h2
                 if flag: return h, True
@@ -2616,9 +2619,9 @@ class leoTkinterTree (leoFrame.leoTree):
             #@nonl
             #@-node:ekr.20040803072955.130:<< select the new node >>
             #@nl
-            if p and p != old_p: # 3/26/03: Suppress duplicate call.
-                try: # may fail during initialization
-                    self.idle_scrollTo(p)
+            if p and p != old_p: # Suppress duplicate call.
+                try: # may fail during initialization.
+                    self.idle_scrollTo(p) # p is NOT c.currentPosition() here!
                 except: pass
             #@        << update c.beadList or c.beadPointer >>
             #@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
@@ -2654,8 +2657,10 @@ class leoTkinterTree (leoFrame.leoTree):
         #@    << set the current node >>
         #@+node:ekr.20040803072955.133:<< set the current node >>
         self.c.setCurrentPosition(p)
+        
         if p != old_p:
             self.setSelectedLabelState(p)
+        
         frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
         
         frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
