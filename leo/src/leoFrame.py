@@ -852,14 +852,12 @@ class leoTree:
     #@nonl
     #@-node:ekr.20031218072017.3710:Notifications
     #@+node:ekr.20031218072017.3711:Scrolling
-    def scrollTo(self,v):
+    def scrollTo(self):
         self.oops()
     
-    def idle_scrollTo(self,v):
-        
+    def idle_scrollTo(self):
         self.oops()
-    
-    
+    #@nonl
     #@-node:ekr.20031218072017.3711:Scrolling
     #@+node:ekr.20031218072017.3712:Selecting
     def select(self,p,updateBeadList=True):
@@ -1621,11 +1619,12 @@ class nullTree (leoTree):
     #@nonl
     #@-node:ekr.20031218072017.2238:Edit label
     #@+node:ekr.20031218072017.2239:Scrolling
-    def scrollTo(self,v):
+    def scrollTo(self):
         pass
     
-    def idle_scrollTo(self,v):
+    def idle_scrollTo(self):
         pass
+    #@nonl
     #@-node:ekr.20031218072017.2239:Scrolling
     #@+node:ekr.20031218072017.2240:Tree operations
     def expandAllAncestors(self,v):
