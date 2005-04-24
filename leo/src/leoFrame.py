@@ -852,10 +852,10 @@ class leoTree:
     #@nonl
     #@-node:ekr.20031218072017.3710:Notifications
     #@+node:ekr.20031218072017.3711:Scrolling
-    def scrollTo(self):
+    def scrollTo(self,p):
         self.oops()
     
-    def idle_scrollTo(self):
+    def idle_scrollTo(self,p):
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3711:Scrolling
@@ -1619,10 +1619,10 @@ class nullTree (leoTree):
     #@nonl
     #@-node:ekr.20031218072017.2238:Edit label
     #@+node:ekr.20031218072017.2239:Scrolling
-    def scrollTo(self):
+    def scrollTo(self,p):
         pass
     
-    def idle_scrollTo(self):
+    def idle_scrollTo(self,p):
         pass
     #@nonl
     #@-node:ekr.20031218072017.2239:Scrolling
