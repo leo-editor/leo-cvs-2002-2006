@@ -657,7 +657,7 @@ class configClass:
     #@-node:ekr.20041122094813:<<  class data >>
     #@nl
     #@    @+others
-    #@+node:ekr.20041117083202:Birth...
+    #@+node:ekr.20041117083202:Birth... (g.app.config)
     #@+node:ekr.20041117062717.2:ctor
     def __init__ (self):
         
@@ -667,6 +667,7 @@ class configClass:
         self.globalConfigFile = None # Set in initSettingsFiles
         self.homeFile = None # Set in initSettingsFiles
         self.inited = False
+        self.recentFilesFiles = [] # List of g.Bunches describing .leoRecentFiles.txt files.
         
         # Inited later...
         self.panes = None
@@ -775,8 +776,8 @@ class configClass:
             g.trace("homeFile",g.app.homeDir)
     #@nonl
     #@-node:ekr.20041117083857:initSettingsFiles
-    #@-node:ekr.20041117083202:Birth...
-    #@+node:ekr.20041117081009:Getters...
+    #@-node:ekr.20041117083202:Birth... (g.app.config)
+    #@+node:ekr.20041117081009:Getters... (g.app.config)
     #@+node:ekr.20041123070429:canonicalizeSettingName (munge)
     def canonicalizeSettingName (self,name):
         
@@ -1046,8 +1047,8 @@ class configClass:
             return c.nullPosition()
     #@nonl
     #@-node:ekr.20041120074536:settingsRoot
-    #@-node:ekr.20041117081009:Getters...
-    #@+node:ekr.20041118084146:Setters
+    #@-node:ekr.20041117081009:Getters... (g.app.config)
+    #@+node:ekr.20041118084146:Setters (g.app.config)
     #@+node:ekr.20041118084146.1:set (g.app.config)
     def set (self,c,setting,kind,val):
         
@@ -1110,8 +1111,12 @@ class configClass:
                         setattr(self,ivar,val)
     #@nonl
     #@-node:ekr.20041228042224:setIvarsFromSettings (g.app.config)
-    #@+node:ekr.20041201080436:config.appendToRecentFiles
+    #@+node:ekr.20041201080436:appendToRecentFiles (g.app.config)
     def appendToRecentFiles (self,files):
+        
+        files = [theFile.strip() for theFile in files]
+        
+        # g.trace(files)
         
         def munge(name):
             name = name or ''
@@ -1125,9 +1130,9 @@ class configClass:
     
             self.recentFiles.append(name)
     #@nonl
-    #@-node:ekr.20041201080436:config.appendToRecentFiles
-    #@-node:ekr.20041118084146:Setters
-    #@+node:ekr.20041117093246:Scanning @settings
+    #@-node:ekr.20041201080436:appendToRecentFiles (g.app.config)
+    #@-node:ekr.20041118084146:Setters (g.app.config)
+    #@+node:ekr.20041117093246:Scanning @settings (g.app.config)
     #@+node:ekr.20041117085625:openSettingsFile
     def openSettingsFile (self,path):
         
@@ -1160,7 +1165,7 @@ class configClass:
         munge = self.munge ; seen = []
         
         # Init settings from leoSettings.leo files.
-        for path,setOptionsFlag in (
+        for path,localFlag in (
             (self.globalConfigFile,False),
             (self.homeFile,False),
             (fileName,True),
@@ -1173,34 +1178,14 @@ class configClass:
                 c = self.openSettingsFile(path)
                 if c:
                     d = self.readSettings(c)
-                    # g.trace(c)
                     if d:
-                        theHash = c.hash()
-                        d['_hash'] = theHash
-                        if setOptionsFlag:
+                        d['_hash'] = theHash = c.hash()
+                        if localFlag:
                             self.localOptionsDict[theHash] = d
-                            #@                        << update recent files from d >>
-                            #@+node:ekr.20041201081440:<< update recent files from d >>
-                            for key in d.keys():
-                                
-                                if munge(key) == "recentfiles":
-                                    # Entries were created by parserBaseClass.set.
-                                    bunch = d.get(key)
-                                    files = bunch.val
-                                    files = [theFile.strip() for theFile in files]
-                                    if 0:
-                                        print "config.readSettingsFiles.  recent files from %s..." % fileName
-                                        for theFile in files:
-                                            print theFile
-                                    self.appendToRecentFiles(files)
-                            #@nonl
-                            #@-node:ekr.20041201081440:<< update recent files from d >>
-                            #@nl
                         else:
                             self.localOptionsList.insert(0,d)
-                    else:
-                        g.es("No @settings tree in %s" % (g.shortFileName(path)),color="red")
                     g.app.destroyWindow(c.frame)
+                self.readRecentFilesFile(path)
     
         self.inited = True
         self.setIvarsFromSettings(None)
@@ -1226,7 +1211,103 @@ class configClass:
         return d
     #@nonl
     #@-node:ekr.20041117083857.1:readSettings
-    #@-node:ekr.20041117093246:Scanning @settings
+    #@-node:ekr.20041117093246:Scanning @settings (g.app.config)
+    #@+node:ekr.20050424114937.1:Reading and writing .leoRecentFiles.txt (g.app.config)
+    #@+node:ekr.20050424115658:readRecentFilesFile
+    def readRecentFilesFile (self,path):
+        
+        # Set the kind of file for later.
+        for path2,kind in (
+            (self.globalConfigFile,'global'),
+            (self.homeFile,'home'),
+        ):
+            if path2 and path2 == path: break
+        else:
+            kind = 'local'
+    
+        path,junk = g.os_path_split(path)
+        fileName = g.os_path_join(path,'.leoRecentFiles.txt')
+        
+        if not g.os_path_exists(fileName):
+            # g.trace('----- no file',kind,fileName)
+            return
+    
+        for bunch in self.recentFilesFiles:
+            if bunch.fileName == fileName:
+                # g.trace('-----already read',kind,fileName)
+                return
+                
+        # g.trace('-----',kind,fileName)
+    
+        self.recentFilesFiles.append(
+            g.Bunch(fileName=fileName,kind=kind))
+    
+        lines = file(fileName).readlines()
+        self.appendToRecentFiles(lines)
+    #@nonl
+    #@-node:ekr.20050424115658:readRecentFilesFile
+    #@+node:ekr.20050424114937.2:writeRecentFilesFile & helper
+    def writeRecentFilesFile (self,c):
+        
+        '''Write the appropriate .leoRecentFiles.txt file.'''
+        
+        tag = '.leoRecentFiles.txt'
+        
+        localFileName = c.fileName()
+        if not localFileName:
+            g.trace('----no file name')
+            return
+            
+        # Create a list of bunches to control the comparison below.
+        files = []
+        for fileName,kind in (
+            (localFileName,'local'),
+            (self.homeFile,'home'),
+            (self.globalConfigFile,'global'),
+        ):
+            if fileName:
+                path,junk = g.os_path_split(fileName)
+                files.append(g.Bunch(
+                    fileName=g.os_path_join(path,tag),kind=kind))
+    
+        # Search local file first, then home and global files.                
+        for kind in ('local','home','global'):
+            for bunch in files:
+                for bunch2 in self.recentFilesFiles:
+                    if bunch.kind == bunch2.kind:
+                        # g.trace('----- comparing',bunch.kind,bunch.fileName)
+                        if bunch.fileName == bunch2.fileName:
+                            self.writeRecentFilesFileHelper(bunch.fileName)
+                            return
+                        
+        # g.trace('----- not found:',localFileName)
+    #@nonl
+    #@+node:ekr.20050424131051:writeRecentFilesFileHelper
+    def writeRecentFilesFileHelper (self,fileName):
+        
+        theFile = None
+        
+        # g.trace(fileName)
+    
+        try:
+            theFile = file(fileName,'w')
+            if self.recentFiles:
+                theFile.write('\n'.join(self.recentFiles))
+    
+        except IOError:
+            # The user may have erased a file.  Not an error.
+            pass
+                
+        except Exception:
+            g.es('unexpected exception writing %s' % fileName,color='red')
+            g.es_exception()
+        
+        if theFile:
+            theFile.close()
+    #@nonl
+    #@-node:ekr.20050424131051:writeRecentFilesFileHelper
+    #@-node:ekr.20050424114937.2:writeRecentFilesFile & helper
+    #@-node:ekr.20050424114937.1:Reading and writing .leoRecentFiles.txt (g.app.config)
     #@-others
 #@nonl
 #@-node:ekr.20041119203941:class configClass
