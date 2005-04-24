@@ -726,7 +726,9 @@ class baseCommands:
         
         """Clear the recent files list, then add the present file."""
     
-        c = self ; f = c.frame
+        c = self ; f = c.frame ; u = c.undoer
+        
+        bunch = u.beforeClearRecentFiles()
         
         recentFilesMenu = f.menu.getMenu("Recent Files...")
         f.menu.delete_range(recentFilesMenu,0,len(c.recentFiles))
@@ -736,7 +738,9 @@ class baseCommands:
         f.menu.createRecentFilesMenuItems()
         c.updateRecentFiles(c.fileName())
         
-        c.config.setRecentFiles(c.recentFiles,doUndo=True)
+        g.app.config.appendToRecentFiles(c.recentFiles)
+        
+        u.afterClearRecentFiles(bunch)
     #@nonl
     #@-node:ekr.20031218072017.2080:clearRecentFiles
     #@+node:ekr.20031218072017.2081:openRecentFile
@@ -3997,7 +4001,7 @@ class baseCommands:
                 c.frame.tree.expandAllAncestors(v)
                 c.selectVnode(v,updateBeadList=False)
                 c.endUpdate()
-                c.frame.tree.scrollTo(v)
+                c.frame.tree.idle_scrollTo(v)
                 return
     #@nonl
     #@-node:ekr.20031218072017.1628:goNextVisitedNode
@@ -4014,7 +4018,7 @@ class baseCommands:
                 c.frame.tree.expandAllAncestors(v)
                 c.selectVnode(v,updateBeadList=False)
                 c.endUpdate()
-                c.frame.tree.scrollTo(v)
+                c.frame.tree.idle_scrollTo(v)
                 return
     #@-node:ekr.20031218072017.1627:goPrevVisitedNode
     #@+node:ekr.20031218072017.2914:goToFirstNode
@@ -5768,22 +5772,12 @@ class configSettings:
     #@-node:ekr.20041118053731:Getters
     #@+node:ekr.20041118195812:Setters...
     #@+node:ekr.20041118195812.3:setRecentFiles (c.configSettings)
-    def setRecentFiles (self,files,doUndo=False):
+    def setRecentFiles (self,files):
         
         '''Update the recent files list.'''
-        
-        c = self.c ; p = c.currentPosition() ; u = c.undoer
-        
-        if doUndo:
-            if 0: # not ready yet.
-                u.beforeUpdateRecentFiles()
     
         # Append the files to the global list.
         g.app.config.appendToRecentFiles(files)
-        
-        if doUndo:
-            if 0: # not ready yet.
-                u.afterUpdateRecentFiles()
     #@nonl
     #@-node:ekr.20041118195812.3:setRecentFiles (c.configSettings)
     #@+node:ekr.20041118195812.2:set & setString
