@@ -1226,12 +1226,14 @@ class configClass:
                 return
                 
         # g.trace('-----',kind,fileName)
-    
         self.recentFilesFiles.append(
             g.Bunch(fileName=fileName,kind=kind))
     
         lines = file(fileName).readlines()
-        self.appendToRecentFiles(lines)
+        if lines and self.munge(lines[0])=='readonly':
+            lines = lines[1:]
+        if lines:
+            self.appendToRecentFiles(lines)
     #@nonl
     #@-node:ekr.20050424115658:readRecentFilesFile
     #@+node:ekr.20050424114937.2:writeRecentFilesFile & helper
@@ -1272,11 +1274,21 @@ class configClass:
     #@nonl
     #@+node:ekr.20050424131051:writeRecentFilesFileHelper
     def writeRecentFilesFileHelper (self,fileName):
-        
-        theFile = None
-        
         # g.trace(fileName)
+        
+        # Don't update the file if it begins with read-only.
+        theFile = None
+        try:
+            theFile = file(fileName)
+            lines = theFile.readlines()
+            if lines and self.munge(lines[0])=='readonly':
+                # g.trace('read-only: %s' %fileName)
+                return
+        except IOError:
+            # The user may have erased a file.  Not an error.
+            if theFile: theFile.close()
     
+        theFile = None
         try:
             theFile = file(fileName,'w')
             if self.recentFiles:
