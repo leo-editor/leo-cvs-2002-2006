@@ -2065,6 +2065,8 @@ class baseFileCommands:
         c = self.c
         self.assignFileIndices()
         if not outlineOnlyFlag:
+            # Update .leoRecentFiles.txt if possible.
+            g.app.config.writeRecentFilesFile(c)
             #@        << write all @file nodes >>
             #@+node:ekr.20040324080359:<< write all @file nodes >>
             try:
