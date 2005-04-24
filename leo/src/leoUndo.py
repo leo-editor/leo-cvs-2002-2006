@@ -436,6 +436,42 @@ class baseUndoer:
     #@-node:ekr.20050416092908.1:Internal helpers
     #@+node:ekr.20031218072017.3608:Externally visible entries
     #@+node:ekr.20050318085432.4:afterX...
+    #@+node:ekr.20050315134017.4:afterChangeGroup
+    def afterChangeGroup (self,p,command,reportFlag=False,dirtyVnodeList=[]):
+    
+        '''Create an undo node for general tree operations using d created by beforeChangeTree'''
+        
+        u = self ; body = u.c.frame.body
+        if u.redoing or u.undoing: return
+        
+        # Must use a _separate_ bunch than that created by beforeChangeGroup.
+        # (To allow separate bunch.kind fields.
+        bunch = u.createCommonBunch(p)
+    
+        # Set the types & helpers.
+        bunch.kind = 'afterGroup'
+        bunch.undoType = command
+        
+        # Set helper only for undo:
+        # The bead pointer will point to an 'beforeGroup' bead for redo.
+        bunch.undoHelper = u.undoGroup
+        bunch.redoHelper = None
+        
+        bunch.dirtyVnodeList = dirtyVnodeList
+        
+        bunch.newP = p.copy()
+        bunch.newSel = body.getTextSelection()
+        
+        # Tells whether to report the number of separate changes undone/redone.
+        bunch.reportFlag = reportFlag
+    
+        # Push the bunch.
+        u.bead += 1
+        u.beads[u.bead:] = [bunch]
+    
+        # Recalculate the menu labels.
+        u.setUndoTypes()
+    #@-node:ekr.20050315134017.4:afterChangeGroup
     #@+node:ekr.20050315134017.2:afterChangeNodeContents
     def afterChangeNodeContents (self,p,command,bunch,dirtyVnodeList=[]):
     
@@ -494,42 +530,27 @@ class baseUndoer:
         u.setUndoTypes()
     #@nonl
     #@-node:ekr.20050315134017.3:afterChangeTree
-    #@+node:ekr.20050315134017.4:afterChangeGroup
-    def afterChangeGroup (self,p,command,reportFlag=False,dirtyVnodeList=[]):
+    #@+node:ekr.20050424161505:afterClearRecentFiles
+    def afterClearRecentFiles (self,bunch):
+        
+        u = self
     
-        '''Create an undo node for general tree operations using d created by beforeChangeTree'''
+        bunch.newRecentFiles = g.app.config.recentFiles[:]
         
-        u = self ; body = u.c.frame.body
-        if u.redoing or u.undoing: return
+        bunch.undoType = 'Clear Recent Files'
+        bunch.undoHelper = u.undoClearRecentFiles
+        bunch.redoHelper = u.redoClearRecentFiles
         
-        # Must use a _separate_ bunch than that created by beforeChangeGroup.
-        # (To allow separate bunch.kind fields.
-        bunch = u.createCommonBunch(p)
-    
-        # Set the types & helpers.
-        bunch.kind = 'afterGroup'
-        bunch.undoType = command
-        
-        # Set helper only for undo:
-        # The bead pointer will point to an 'beforeGroup' bead for redo.
-        bunch.undoHelper = u.undoGroup
-        bunch.redoHelper = None
-        
-        bunch.dirtyVnodeList = dirtyVnodeList
-        
-        bunch.newP = p.copy()
-        bunch.newSel = body.getTextSelection()
-        
-        # Tells whether to report the number of separate changes undone/redone.
-        bunch.reportFlag = reportFlag
-    
-        # Push the bunch.
+        # Push the bunch, not a dict.
         u.bead += 1
         u.beads[u.bead:] = [bunch]
     
         # Recalculate the menu labels.
         u.setUndoTypes()
-    #@-node:ekr.20050315134017.4:afterChangeGroup
+    
+        return bunch
+    #@nonl
+    #@-node:ekr.20050424161505:afterClearRecentFiles
     #@+node:ekr.20050411193627.5:afterCloneNode
     def afterCloneNode (self,p,command,bunch,dirtyVnodeList=[]):
         
@@ -583,30 +604,6 @@ class baseUndoer:
         u.setUndoTypes()
     #@nonl
     #@-node:ekr.20050411193627.6:afterDehoist
-    #@+node:ekr.20050411193627.7:afterHoist
-    def afterHoist (self,p,command):
-        
-        u = self
-        if u.redoing or u.undoing: return
-        
-        bunch = u.createCommonBunch(p)
-        
-        # Set types & helpers
-        bunch.kind = 'hoist'
-        bunch.undoType = command
-        
-        # Set helpers
-        bunch.undoHelper = u.undoHoistNode
-        bunch.redoHelper = u.redoHoistNode
-    
-        # Push the bunch.
-        u.bead += 1
-        u.beads[u.bead:] = [bunch]
-        
-        # Recalculate the menu labels.
-        u.setUndoTypes()
-    #@nonl
-    #@-node:ekr.20050411193627.7:afterHoist
     #@+node:ekr.20050411193627.8:afterDeleteNode
     def afterDeleteNode (self,p,command,bunch,dirtyVnodeList=[]):
         
@@ -636,6 +633,30 @@ class baseUndoer:
         u.setUndoTypes()
     #@nonl
     #@-node:ekr.20050411193627.8:afterDeleteNode
+    #@+node:ekr.20050411193627.7:afterHoist
+    def afterHoist (self,p,command):
+        
+        u = self
+        if u.redoing or u.undoing: return
+        
+        bunch = u.createCommonBunch(p)
+        
+        # Set types & helpers
+        bunch.kind = 'hoist'
+        bunch.undoType = command
+        
+        # Set helpers
+        bunch.undoHelper = u.undoHoistNode
+        bunch.redoHelper = u.redoHoistNode
+    
+        # Push the bunch.
+        u.bead += 1
+        u.beads[u.bead:] = [bunch]
+        
+        # Recalculate the menu labels.
+        u.setUndoTypes()
+    #@nonl
+    #@-node:ekr.20050411193627.7:afterHoist
     #@+node:ekr.20050411193627.9:afterInsertNode
     def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
         
@@ -714,23 +735,26 @@ class baseUndoer:
     #@-node:ekr.20050410110343:afterMoveNode
     #@-node:ekr.20050318085432.4:afterX...
     #@+node:ekr.20050318085432.3:beforeX...
-    #@+node:ekr.20050318085432.2:createCommonBunch
-    def createCommonBunch (self,p):
+    #@+node:ekr.20050315134017.7:beforeChangeGroup
+    def beforeChangeGroup (self,p,command):
         
-        '''Return a bunch containing all common undo info.
-        This is mostly the info for recreating an empty node at position p.'''
+        u = self
+        bunch = u.createCommonBunch(p)
         
-        u = self ; c = u.c ; body = c.frame.body
+        # Set types.
+        bunch.kind = 'beforeGroup'
+        bunch.undoType = command
         
-        return g.Bunch(
-            oldChanged = c.isChanged(),
-            oldDirty = p.isDirty(),
-            oldMarked = p.isMarked(),
-            oldSel = body.getTextSelection(),
-            p = p.copy(),
-        )
+        # Set helper only for redo:
+        # The bead pointer will point to an 'afterGroup' bead for undo.
+        bunch.undoHelper = None
+        bunch.redoHelper = u.redoGroup
+    
+        # Push the bunch.
+        u.bead += 1
+        u.beads[u.bead:] = [bunch]
     #@nonl
-    #@-node:ekr.20050318085432.2:createCommonBunch
+    #@-node:ekr.20050315134017.7:beforeChangeGroup
     #@+node:ekr.20050315133212.2:beforeChangeNodeContents
     def beforeChangeNodeContents (self,p):
         
@@ -762,26 +786,17 @@ class baseUndoer:
         return bunch
     #@nonl
     #@-node:ekr.20050315134017.6:beforeChangeTree
-    #@+node:ekr.20050315134017.7:beforeChangeGroup
-    def beforeChangeGroup (self,p,command):
+    #@+node:ekr.20050424161505.1:beforeClearRecentFiles
+    def beforeClearRecentFiles (self):
         
-        u = self
+        u = self ; p = u.c.currentPosition()
+        
         bunch = u.createCommonBunch(p)
-        
-        # Set types.
-        bunch.kind = 'beforeGroup'
-        bunch.undoType = command
-        
-        # Set helper only for redo:
-        # The bead pointer will point to an 'afterGroup' bead for undo.
-        bunch.undoHelper = None
-        bunch.redoHelper = u.redoGroup
+        bunch.oldRecentFiles = g.app.config.recentFiles[:]
     
-        # Push the bunch.
-        u.bead += 1
-        u.beads[u.bead:] = [bunch]
+        return bunch
     #@nonl
-    #@-node:ekr.20050315134017.7:beforeChangeGroup
+    #@-node:ekr.20050424161505.1:beforeClearRecentFiles
     #@+node:ekr.20050412080354:beforeCloneNode
     def beforeCloneNode (self,p):
         
@@ -835,6 +850,23 @@ class baseUndoer:
         return bunch
     #@nonl
     #@-node:ekr.20050410110215:beforeMoveNode
+    #@+node:ekr.20050318085432.2:createCommonBunch
+    def createCommonBunch (self,p):
+        
+        '''Return a bunch containing all common undo info.
+        This is mostly the info for recreating an empty node at position p.'''
+        
+        u = self ; c = u.c ; body = c.frame.body
+        
+        return g.Bunch(
+            oldChanged = c.isChanged(),
+            oldDirty = p.isDirty(),
+            oldMarked = p.isMarked(),
+            oldSel = body.getTextSelection(),
+            p = p.copy(),
+        )
+    #@nonl
+    #@-node:ekr.20050318085432.2:createCommonBunch
     #@-node:ekr.20050318085432.3:beforeX...
     #@+node:ekr.20031218072017.3610:canRedo & canUndo
     # Translation does not affect these routines.
@@ -1196,6 +1228,17 @@ class baseUndoer:
         u.bead += 1
         u.setUndoTypes()
     #@nonl
+    #@+node:ekr.20050424170219:redoClearRecentFiles
+    def redoClearRecentFiles (self):
+        
+        u = self ; c = u.c
+    
+        g.app.recentFiles = u.newRecentFiles[:]
+        c.recentFiles = u.newRecentFiles[:]
+        
+        c.frame.menu.createRecentFilesMenuItems()
+    #@nonl
+    #@-node:ekr.20050424170219:redoClearRecentFiles
     #@+node:ekr.20050412083057:redoCloneNode
     def redoCloneNode (self):
         
@@ -1410,6 +1453,17 @@ class baseUndoer:
         u.bead -= 1
         u.setUndoTypes()
     #@nonl
+    #@+node:ekr.20050424170219.1:undoClearRecentFiles
+    def undoClearRecentFiles (self):
+        
+        u = self ; c = u.c
+        
+        g.app.recentFiles = u.oldRecentFiles[:]
+        c.recentFiles = u.oldRecentFiles[:]
+    
+        c.frame.menu.createRecentFilesMenuItems()
+    #@nonl
+    #@-node:ekr.20050424170219.1:undoClearRecentFiles
     #@+node:ekr.20050412083057.1:undoCloneNode
     def undoCloneNode (self):
         
@@ -1777,6 +1831,9 @@ class nullUndoer (undoer):
     def beforeChangeGroup (self,p,command):
         pass
         
+    def beforeClearRecentFiles (self):
+        pass
+        
     def beforeCloneNode (self,p):
         pass
         
@@ -1788,7 +1845,7 @@ class nullUndoer (undoer):
         
     def beforeMoveNode (self,p):
         pass
-    #@nonl
+        
     #@-node:ekr.20050415165731.1:before undo handlers...
     #@+node:ekr.20050415170018:after undo handlers...
     def afterChangeNodeContents (self,p,command,bunch,dirtyVnodeList=[]):
@@ -1798,6 +1855,9 @@ class nullUndoer (undoer):
         pass
         
     def afterChangeGroup (self,p,command,reportFlag=False,dirtyVnodeList=[]):
+        pass
+        
+    def afterClearRecentFiles (self,bunch):
         pass
         
     def afterCloneNode (self,p,command,bunch,dirtyVnodeList=[]):
