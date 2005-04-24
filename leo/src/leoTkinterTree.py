@@ -357,11 +357,9 @@ class leoTkinterTree (leoFrame.leoTree):
                 g.doHook("hypercclick2",c=c,p=p,v=p,event=event)
             except:
                 g.es_event_exception("hypercclick")
-                
-        onHyperLinkControlClick = OnHyperLinkControlClick
         #@nonl
         #@-node:ekr.20040803072955.23:OnHyperLinkControlClick
-        #@+node:ekr.20040803072955.24:onHyperLinkEnter
+        #@+node:ekr.20040803072955.24:OnHyperLinkEnter
         def OnHyperLinkEnter (self,event=None):
             
             """Callback injected into position class."""
@@ -374,11 +372,9 @@ class leoTkinterTree (leoFrame.leoTree):
                 g.doHook("hyperenter2",c=c,p=p,v=p,event=event)
             except:
                 g.es_event_exception("hyperenter")
-                
-        onHyperLinkEnter = OnHyperLinkEnter
         #@nonl
-        #@-node:ekr.20040803072955.24:onHyperLinkEnter
-        #@+node:ekr.20040803072955.25:onHyperLinkLeave
+        #@-node:ekr.20040803072955.24:OnHyperLinkEnter
+        #@+node:ekr.20040803072955.25:OnHyperLinkLeave
         def OnHyperLinkLeave (self,event=None):
             
             """Callback injected into position class."""
@@ -391,10 +387,8 @@ class leoTkinterTree (leoFrame.leoTree):
                 g.doHook("hyperleave2",c=c,p=p,v=p,event=event)
             except:
                 g.es_event_exception("hyperleave")
-                
-        onHyperLinkLeave = OnHyperLinkLeave
         #@nonl
-        #@-node:ekr.20040803072955.25:onHyperLinkLeave
+        #@-node:ekr.20040803072955.25:OnHyperLinkLeave
         #@-others
         
         #@-node:ekr.20040803072955.22:<< define tkinter callbacks to be injected in the position class >>
@@ -974,11 +968,13 @@ class leoTkinterTree (leoFrame.leoTree):
         data = g.doHook("draw-outline-text-box",tree=self,c=c,p=p,v=p,x=x,y=y)
         if data is not None: return data
         
-        t = self.newText(p,x,y+self.lineyoffset)
+        self.newText(p,x,y+self.lineyoffset)
     
         if 0: # old, experimental code.
             #@        << highlight text widget on enter events >>
             #@+node:ekr.20040803072955.45:<< highlight text widget on enter events >>
+            # t is the widget returned by self.newText.
+            
             canvas = self.canvas
             h = self.line_height
             
@@ -1085,13 +1081,14 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nl
         theType = theDict.get("type")
         if theType == "icon":
-            s = theDict.get("icon")
-            #@        << draw the icon in string s >>
-            #@+node:ekr.20040803072955.49:<< draw the icon in string s >>
-            pass
-            #@nonl
-            #@-node:ekr.20040803072955.49:<< draw the icon in string s >>
-            #@nl
+            if 0: # not ready yet.
+                s = theDict.get("icon")
+                #@            << draw the icon in string s >>
+                #@+node:ekr.20040803072955.49:<< draw the icon in string s >>
+                pass
+                #@nonl
+                #@-node:ekr.20040803072955.49:<< draw the icon in string s >>
+                #@nl
         elif theType == "file":
             theFile = theDict.get("file")
             #@        << draw the icon at file >>
@@ -1111,7 +1108,9 @@ class leoTkinterTree (leoFrame.leoTree):
                     image = None
                     
             if image:
-                theId = self.canvas.create_image(x+xoffset+w2,y+yoffset,anchor="nw",image=image,tag="userIcon")
+                theId = self.canvas.create_image(
+                    x+xoffset+w2,y+yoffset,
+                    anchor="nw",image=image,tag="userIcon")
                 self.ids[theId] = p
             
                 assert(theId not in self.visibleIcons)
@@ -1119,10 +1118,11 @@ class leoTkinterTree (leoFrame.leoTree):
             
                 h = image.height() + yoffset + ypad
                 w = image.width()  + xoffset + xpad
+            
             #@-node:ekr.20040803072955.50:<< draw the icon at file >>
             #@nl
         elif theType == "url":
-            url = theDict.get("url")
+            ## url = theDict.get("url")
             #@        << draw the icon at url >>
             #@+node:ekr.20040803072955.51:<< draw the icon at url >>
             pass
