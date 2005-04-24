@@ -6,7 +6,8 @@
 
 from __future__ import generators # To make the code work in Python 2.2.
 
-__pychecker__ = '--no-constCond -- no-constant1' # Disable checks for if 0, if 1.
+__pychecker__ = '--no-constCond -- no-constant1'
+    # Disable checks for constant conditionals.
 
 #@<< imports >>
 #@+node:ekr.20040712045933:<< imports  >>

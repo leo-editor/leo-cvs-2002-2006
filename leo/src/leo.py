@@ -30,9 +30,8 @@ if 0: # Set to 1 for lint-like testing.
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@nl
 
-# Suppress import errors.
-# This module must do strange things with imports.
-__pychecker__ = '--no-import --no-reimportself --no-reimport '
+__pychecker__ = '--no-import --no-reimportself --no-reimport'
+    # Suppress import errors: this module must do strange things with imports.
 
 # Warning: do not import any Leo modules here!
 # Doing so would make g.app invalid in the imported files.
