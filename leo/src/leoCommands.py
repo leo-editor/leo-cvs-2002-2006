@@ -732,8 +732,10 @@ class baseCommands:
         f.menu.delete_range(recentFilesMenu,0,len(c.recentFiles))
         
         c.recentFiles = []
+        g.app.config.recentFiles = [] # New in Leo 4.3.
         f.menu.createRecentFilesMenuItems()
-        c.updateRecentFiles(c.mFileName)
+        c.updateRecentFiles(c.fileName())
+        
         c.config.setRecentFiles(c.recentFiles,doUndo=True)
     #@nonl
     #@-node:ekr.20031218072017.2080:clearRecentFiles
@@ -3995,7 +3997,7 @@ class baseCommands:
                 c.frame.tree.expandAllAncestors(v)
                 c.selectVnode(v,updateBeadList=False)
                 c.endUpdate()
-                c.frame.tree.idle_scrollTo(v)
+                c.frame.tree.scrollTo(v)
                 return
     #@nonl
     #@-node:ekr.20031218072017.1628:goNextVisitedNode
@@ -4012,7 +4014,7 @@ class baseCommands:
                 c.frame.tree.expandAllAncestors(v)
                 c.selectVnode(v,updateBeadList=False)
                 c.endUpdate()
-                c.frame.tree.idle_scrollTo(v)
+                c.frame.tree.scrollTo(v)
                 return
     #@-node:ekr.20031218072017.1627:goPrevVisitedNode
     #@+node:ekr.20031218072017.2914:goToFirstNode
@@ -5765,66 +5767,25 @@ class configSettings:
     #@nonl
     #@-node:ekr.20041118053731:Getters
     #@+node:ekr.20041118195812:Setters...
-    #@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
+    #@+node:ekr.20041118195812.3:setRecentFiles (c.configSettings)
     def setRecentFiles (self,files,doUndo=False):
         
-        '''Update the @recent-files node the present commander, and possibly
-        the global leoSettings.leo files.'''
+        '''Update the recent files list.'''
         
-        c = self.c ; old_p = c.currentPosition()
-        
-        # Append the files to the global list.
-        g.app.config.appendToRecentFiles(files)
-    
-        root = g.app.config.settingsRoot(c)
-        if not root:
-            if 0:
-                #@            << create @settings node >>
-                #@+node:ekr.20050420081237:<< create @settings node >>
-                g.es('created @settings node',color='red')
-                
-                old_root = c.rootPosition()
-                root = old_root.insertAfter()
-                root.moveToRoot(old_root)
-                root.initHeadString('@settings')
-                
-                assert(g.app.config.settingsRoot(c))
-                #@nonl
-                #@-node:ekr.20050420081237:<< create @settings node >>
-                #@nl
-            return
-    
-        p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if not p:
-            if 0:
-                #@            << create @recent-files node >>
-                #@+node:ekr.20050420081237.1:<< create @recent-files node >>
-                g.es('created @recent-files node',color='red')
-                p = root.insertAsNthChild(0)
-                p.initHeadString('@recent-files')
-                c.selectPosition(p)
-                
-                assert(g.app.config.findSettingsPosition(c,"@recent-files"))
-                #@nonl
-                #@-node:ekr.20050420081237.1:<< create @recent-files node >>
-                #@nl
-            return
-        #@    << Update p, leaving c.changed untouched >>
-        #@+node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
-        oldText = p.bodyString()
-        changed = c.isChanged()
-        newText = '\n'.join(files)
-        p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
-        c.setChanged(changed)
+        c = self.c ; p = c.currentPosition() ; u = c.undoer
         
         if doUndo:
-            c.undoer.setUndoTypingParams(old_p,'Clear Recent Files',
-                oldText,newText,oldSel=None,newSel=None)
-        #@nonl
-        #@-node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
-        #@nl
+            if 0: # not ready yet.
+                u.beforeUpdateRecentFiles()
+    
+        # Append the files to the global list.
+        g.app.config.appendToRecentFiles(files)
+        
+        if doUndo:
+            if 0: # not ready yet.
+                u.afterUpdateRecentFiles()
     #@nonl
-    #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
+    #@-node:ekr.20041118195812.3:setRecentFiles (c.configSettings)
     #@+node:ekr.20041118195812.2:set & setString
     def set (self,p,setting,val):
         
