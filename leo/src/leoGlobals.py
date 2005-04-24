@@ -11,9 +11,10 @@
 
 from __future__ import generators # To make the code work in Python 2.2.
 
-__pychecker__ = '--no-import --no-reimportself --no-reimport --no-constCond --no-constant1'
-    # Disable all import warnings: This module must do strange things with imports.
-    # Disable warnings about if 0: and if 1.
+__pychecker__ = '--no-import --no-reimportself --no-reimport\
+     --no-constCond --no-constant1'
+    # Disable all import warnings: This module must do strange things with imports. 
+    # Disable checks for constant conditionals.
 
 #@<< imports >>
 #@+node:ekr.20050208101229:<< imports >>
@@ -2229,10 +2230,11 @@ def idleTimeHookHandler(*args,**keys):
         # This would be a MAJOR leak of positions.
         g.doHook("idle",c=c)
 
-    # Requeue this routine after 100 msec.  Faster requeues overload the system.
+    # Requeue this routine after g.app.idleTimeDelay msec.
+    # (This delay is set by g.enableIdleTimeHook.)
+    # Faster requeues overload the system.
     if g.app.idleTimeHook:
-        g.app.gui.setIdleTimeHookAfterDelay(g.app.idleTimeDelay,g.idleTimeHookHandler)
-        # g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+        g.app.gui.setIdleTimeHookAfterDelay(g.idleTimeHookHandler)
         g.app.afterHandler = g.idleTimeHookHandler
     else:
         g.app.afterHandler = None

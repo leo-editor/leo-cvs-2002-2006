@@ -343,7 +343,7 @@ class leoGui:
         # print 'leoGui:setIdleTimeHook'
         pass # Not an error.
         
-    def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler):
+    def setIdleTimeHookAfterDelay (self,idleTimeHookHandler):
         
         # print 'leoGui:setIdleTimeHookAfterDelay'
         pass # Not an error.

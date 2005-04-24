@@ -568,7 +568,7 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20031218072017.4072:tkinterGui.setIdleTimeHook
     #@+node:ekr.20031218072017.4073:setIdleTimeHookAfterDelay
-    def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler):
+    def setIdleTimeHookAfterDelay (self,idleTimeHookHandler):
         
         if self.root:
             g.app.root.after(g.app.idleTimeDelay,idleTimeHookHandler)
