@@ -1663,7 +1663,7 @@ class settingsController:
     #@+node:ekr.20041225063637.13: ctor
     def __init__ (self,c,replaceBody=True):
         
-        self.createSummaryNode = True # Dithering whether to do this.
+        self.createSummaryNode = True # Works either way.
     
         #@    << init ivars >>
         #@+node:ekr.20050123194330:<< init ivars >>
@@ -2054,7 +2054,6 @@ class settingsController:
         """Create a tree of vnodes representing all settings."""
     
         createEmptyRootNodes = False
-    
         c = self.c ; config = g.app.config
         root_p = None ; last_p = None
         for kind,path,otherFileFlag in (
@@ -2091,7 +2090,7 @@ class settingsController:
                     root2.copyTreeFromSelfTo(p)  # replace p by root2.
                 
                 self.copyExpansionState(root2,p)
-                p.expand() # Always expand the top-level node
+                # g.trace(p.isExpanded(),p.headString())
                 
                 #@<< add entry for p to filesInfoDict >>
                 #@+node:ekr.20041225063637.23:<< add entry for p to filesInfoDict >>
@@ -2111,7 +2110,7 @@ class settingsController:
                 #@nonl
                 #@-node:ekr.20041225063637.22:<< create a node p for  kind & root2 >>
                 #@nl
-        root_p.expand()
+        if self.createSummaryNode: root_p.expand()
         return root_p
     #@nonl
     #@+node:ekr.20041225063637.24:rootNodeComments
@@ -2964,7 +2963,7 @@ class settingsController:
                     c2.frame.log.setColorFromConfig()
                     c2.frame.body.setColorFromConfig()
             else:
-                g.trace(name,kind,val)
+                # g.trace(name,kind,val)
                 g.app.config.set(c,name,kind,val)
     #@nonl
     #@-node:ekr.20041225063637.66:updateConfig
@@ -2984,7 +2983,6 @@ class settingsController:
         
         # Root2 is the root of the settings outline in the file.
         root2 = g.app.config.settingsRoot(c) # c is NOT self.c
-        #g.trace(root2.c.mFileName)
         p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
         if p2:
             c2 = p2.c ; filename = c2.mFileName
@@ -3041,8 +3039,6 @@ class settingsController:
         
         __pychecker__ = '--no-argsused' # tag used for debugging.
         
-        if not changedList: return
-        
         filesInfoDict = self.filesInfoDict
         if 0:
             #@        << dump all the dicts in filesInfoDict >>
@@ -3072,10 +3068,9 @@ class settingsController:
             c = d.get('c')
             changes = d.get('changes')
             path = d.get('path')
-            # isLocal = rootDict.get('isLocal')
-            if changes:
-                self.writeChangesToFile(c,changes,path)
-                self.updateConfig(c,changes)
+            # Always write the file so as to preserve expansion state.
+            self.writeChangesToFile(c,changes,path)
+            self.updateConfig(c,changes)
             d['changes'] = []
     #@nonl
     #@-node:ekr.20041225063637.69:writeChangedList
@@ -3085,6 +3080,23 @@ class settingsController:
         # Write the individual changes.
         for data in changes:
             self.updateOneNode(c,data)
+            
+        # Copy the expansion state of the dialog to the file.
+        for d in self.filesInfoDict.values():
+            c2 = d.get('c')
+            if c2 and c2 == c:
+                p2 = d.get('p')
+                p = g.app.config.settingsRoot(c)
+                # g.trace(c,p)
+                if p and p2:
+                    p = p.copy() ; p2 = p2.copy()
+                    # Defensive programming: don't assume p and p2 are in synch.
+                    while p and p2:
+                        if p2.isExpanded(): p.expand()
+                        else: p.contract()
+                        p.moveToThreadNext()
+                        p2.moveToThreadNext()
+                break
     
         if c.fileName():
             self.es("writing " + g.shortFilename(path))

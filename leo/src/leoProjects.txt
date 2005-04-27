@@ -20589,7 +20589,7 @@ def updateConfig(self,c,changes):
                 c2.frame.log.setColorFromConfig()
                 c2.frame.body.setColorFromConfig()
         else:
-            g.trace(name,kind,val)
+            # g.trace(name,kind,val)
             g.app.config.set(c,name,kind,val)
 #@nonl
 #@-node:ekr.20041225063637.66:updateConfig
@@ -20609,7 +20609,6 @@ def updateOneNode (self,c,data):
     
     # Root2 is the root of the settings outline in the file.
     root2 = g.app.config.settingsRoot(c) # c is NOT self.c
-    #g.trace(root2.c.mFileName)
     p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
     if p2:
         c2 = p2.c ; filename = c2.mFileName
@@ -20666,8 +20665,6 @@ def writeChangedList (self,changedList,tag):
     
     __pychecker__ = '--no-argsused' # tag used for debugging.
     
-    if not changedList: return
-    
     filesInfoDict = self.filesInfoDict
     if 0:
         << dump all the dicts in filesInfoDict >>
@@ -20688,10 +20685,9 @@ def writeChangedList (self,changedList,tag):
         c = d.get('c')
         changes = d.get('changes')
         path = d.get('path')
-        # isLocal = rootDict.get('isLocal')
-        if changes:
-            self.writeChangesToFile(c,changes,path)
-            self.updateConfig(c,changes)
+        # Always write the file so as to preserve expansion state.
+        self.writeChangesToFile(c,changes,path)
+        self.updateConfig(c,changes)
         d['changes'] = []
 #@nonl
 #@+node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
@@ -20709,6 +20705,23 @@ def writeChangesToFile (self,c,changes,path):
     # Write the individual changes.
     for data in changes:
         self.updateOneNode(c,data)
+        
+    # Copy the expansion state of the dialog to the file.
+    for d in self.filesInfoDict.values():
+        c2 = d.get('c')
+        if c2 and c2 == c:
+            p2 = d.get('p')
+            p = g.app.config.settingsRoot(c)
+            # g.trace(c,p)
+            if p and p2:
+                p = p.copy() ; p2 = p2.copy()
+                # Defensive programming: don't assume p and p2 are in synch.
+                while p and p2:
+                    if p2.isExpanded(): p.expand()
+                    else: p.contract()
+                    p.moveToThreadNext()
+                    p2.moveToThreadNext()
+            break
 
     if c.fileName():
         self.es("writing " + g.shortFilename(path))
@@ -30551,7 +30564,6 @@ def updateOneNode (self,c,data):
     
     # Root2 is the root of the settings outline in the file.
     root2 = g.app.config.settingsRoot(c) # c is NOT self.c
-    #g.trace(root2.c.mFileName)
     p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
     if p2:
         c2 = p2.c ; filename = c2.mFileName
@@ -35735,7 +35747,7 @@ def putOpenNodeSentinel(self,p,inAtAll=False,middle=False):
 #@-node:ekr.20050228200421:Revised scripting chapter (on web and in LeoDocs.leo) to use predefined g, c, p
 #@-node:ekr.20050225155947:Docs
 #@-node:ekr.20050225104239:4.3 a4 projects
-#@+node:ekr.20050316083031:4.3 a5 projects
+#@+node:ekr.20050316083031:4.3 b1 projects
 #@+node:ekr.20050316083031.1:Bugs...
 #@+node:ekr.20050315082746:(Made sure NameErrors are reported with tracebacks in scripts)
 #@+node:ekr.20050315082746.1:Report
@@ -37371,7 +37383,7 @@ def updateConfig(self,c,changes):
                 c2.frame.log.setColorFromConfig()
                 c2.frame.body.setColorFromConfig()
         else:
-            g.trace(name,kind,val)
+            # g.trace(name,kind,val)
             g.app.config.set(c,name,kind,val)
 #@nonl
 #@-node:ekr.20041225063637.66:updateConfig
@@ -37391,7 +37403,6 @@ def updateOneNode (self,c,data):
     
     # Root2 is the root of the settings outline in the file.
     root2 = g.app.config.settingsRoot(c) # c is NOT self.c
-    #g.trace(root2.c.mFileName)
     p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
     if p2:
         c2 = p2.c ; filename = c2.mFileName
@@ -37448,8 +37459,6 @@ def writeChangedList (self,changedList,tag):
     
     __pychecker__ = '--no-argsused' # tag used for debugging.
     
-    if not changedList: return
-    
     filesInfoDict = self.filesInfoDict
     if 0:
         << dump all the dicts in filesInfoDict >>
@@ -37470,10 +37479,9 @@ def writeChangedList (self,changedList,tag):
         c = d.get('c')
         changes = d.get('changes')
         path = d.get('path')
-        # isLocal = rootDict.get('isLocal')
-        if changes:
-            self.writeChangesToFile(c,changes,path)
-            self.updateConfig(c,changes)
+        # Always write the file so as to preserve expansion state.
+        self.writeChangesToFile(c,changes,path)
+        self.updateConfig(c,changes)
         d['changes'] = []
 #@nonl
 #@+node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
@@ -37491,6 +37499,23 @@ def writeChangesToFile (self,c,changes,path):
     # Write the individual changes.
     for data in changes:
         self.updateOneNode(c,data)
+        
+    # Copy the expansion state of the dialog to the file.
+    for d in self.filesInfoDict.values():
+        c2 = d.get('c')
+        if c2 and c2 == c:
+            p2 = d.get('p')
+            p = g.app.config.settingsRoot(c)
+            # g.trace(c,p)
+            if p and p2:
+                p = p.copy() ; p2 = p2.copy()
+                # Defensive programming: don't assume p and p2 are in synch.
+                while p and p2:
+                    if p2.isExpanded(): p.expand()
+                    else: p.contract()
+                    p.moveToThreadNext()
+                    p2.moveToThreadNext()
+            break
 
     if c.fileName():
         self.es("writing " + g.shortFilename(path))
@@ -43216,8 +43241,319 @@ def writeRecentFilesFileHelper (self,fileName):
 #@-node:ekr.20050424114937.2:writeRecentFilesFile & helper
 #@-node:ekr.20050424114937.1:Reading and writing .leoRecentFiles.txt (g.app.config)
 #@-node:ekr.20050424174315:(Added support for read-only as the first line of .leoRecentFiles.txt)
+#@+node:ekr.20050420061320:(Copied expansion state when writing @settings trees)
+# This means that Leo writes all config files whenever the user chooses OK.
+#@nonl
+#@+node:ekr.20041225063637.74:copyExpansionState
+def copyExpansionState(self,p1,p2):
+ 
+    # Don't depend on p.nodeAfterTree, etc.
+    if p1.isExpanded():
+        # g.trace("p1",p1)
+        # g.trace("p2",p2)
+        p2.expand()
+        child1 = p1.firstChild()
+        child2 = p2.firstChild()
+        while child1:
+            self.copyExpansionState(child1,child2)
+            child1 = child1.next()
+            child2 = child2.next()
+#@nonl
+#@-node:ekr.20041225063637.74:copyExpansionState
+#@+node:ekr.20041225063637.21:createSettingsTree & helpers
+def createSettingsTree (self):
+    
+    """Create a tree of vnodes representing all settings."""
+
+    createEmptyRootNodes = False
+    c = self.c ; config = g.app.config
+    root_p = None ; last_p = None
+    for kind,path,otherFileFlag in (
+        ("Global",config.globalConfigFile,True),
+        ("Home",config.homeFile,True),
+        ("Local",c.fileName(),False),
+    ):
+        if path:
+            if otherFileFlag: c2 = config.openSettingsFile(path)
+            else: c2 = c
+            root2 = g.app.config.settingsRoot(c2)
+        else:
+            root2 = None
+        if root2 or createEmptyRootNodes:
+            << create a node p for kind & root2 >>
+    if self.createSummaryNode: root_p.expand()
+    return root_p
+#@nonl
+#@+node:ekr.20041225063637.22:<< create a node p for  kind & root2 >>
+if not root_p:
+    t = leoNodes.tnode()
+    root_v = leoNodes.vnode(c,t) # Using c2 --> oops: nullTree.
+    root_p = leoNodes.position(root_v,[])
+    if self.createSummaryNode:
+        root_p.initHeadString("All settings")
+        root_p.scriptSetBodyString(self.rootNodeComments())
+        p = root_p.insertAsLastChild()
+    else:
+        p = root_p.copy()
+    last_p = p.copy()
+else:
+    # Pychecker may complain, but last_p _is_ defined here!
+    p = last_p.insertAfter()
+    last_p = p.copy()
+
+if root2:
+    root2.copyTreeFromSelfTo(p)  # replace p by root2.
+
+self.copyExpansionState(root2,p)
+# g.trace(p.isExpanded(),p.headString())
+
+<< add entry for p to filesInfoDict >>
+
+path2 = g.choose(otherFileFlag,path,g.shortFileName(path))
+p.initHeadString("%s settings: %s" % (kind,path2))
+#@nonl
+#@+node:ekr.20041225063637.23:<< add entry for p to filesInfoDict >>
+self.filesInfoDict[p] = {
+    'c': c2,
+    'changes': [],
+    'p': p.copy(),
+    'path': path,
+    'isLocal':  not otherFileFlag,
+}
+#@nonl
+#@-node:ekr.20041225063637.23:<< add entry for p to filesInfoDict >>
+#@-node:ekr.20041225063637.22:<< create a node p for  kind & root2 >>
+#@+node:ekr.20041225063637.24:rootNodeComments
+def rootNodeComments(self):
+    
+    c = self.c ; fileName = g.shortFileName(c.mFileName)
+    
+    s = """This tree shows Leo's global and home settings, as well as the local settings in %s."""\
+        % (fileName)
+    
+    return s
+#@nonl
+#@-node:ekr.20041225063637.24:rootNodeComments
+#@-node:ekr.20041225063637.21:createSettingsTree & helpers
+#@+node:ekr.20041225063637.65:writeChangedVars & helpers
+def writeChangedVars (self):
+    
+    """Create per-file changes lists from diffs between what has been inited and written.
+    
+    Call writeChangedList to update each file from items in this list."""
+
+    changedList = []
+    fDict = self.fileValueDict
+    iDict = self.initValueDict
+    munge = g.app.config.munge
+    
+    for key in iDict.keys():
+
+        iData = iDict.get(key)
+        ip,iname,ikind,ival,getValueCallback = iData
+        newVal = getValueCallback()
+        fData = fDict.get(key)
+        if fData:
+            fp,fname,fkind,fval,junk = fData
+            assert(ip==fp and iname==fname and ikind==fkind)
+            changed = fval != newVal ; oldVal = fval
+        else:
+            changed = ival != newVal ; oldVal = ival
+            fval = '<none>'
+
+        if changed:
+            # print "write","key","ival",ival,"fval",fval
+            if type(oldVal) == type({}):
+                s = "write  %s" % (iname)
+                print s ; g.es(s,color='blue')
+            else:
+                s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
+                print s ; g.es(s,color='blue')
+            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
+            changedList.append((ip,iname,ikind,oldVal,newVal),)
+            
+    self.writeChangedList(changedList,"write")
+#@nonl
+#@+node:ekr.20041225063637.66:updateConfig
+def updateConfig(self,c,changes):
+    
+    """Update the core config settings from the changes list."""
+    
+    munge = g.app.config.munge
+
+    for data in changes:
+        p,name,kind,oldval,val = data
+        if munge(kind) == 'font':
+            for key in ('family','size','slant','weight'):
+                data2 = val.get(key)
+                if data2:
+                    name2,val2 = data2
+                    kind2 = g.choose(key=='size','int','string')
+                    g.app.config.set(c,name2,kind2,val2)
+            # Update the visible fonts: c may not be the same as self.c.
+            for c2 in (c,self.c):
+                c2.frame.body.setFontFromConfig()
+                c2.frame.body.colorizer.setFontFromConfig()
+                c2.frame.log.setFontFromConfig()
+                c2.frame.tree.setFontFromConfig()
+                c2.redraw()
+        elif munge(kind) == "color":
+            # g.trace("setting colors")
+            g.app.config.set(c,name,kind,val)
+            for c2 in (c,self.c):
+                c2.frame.tree.setColorFromConfig()
+                c2.frame.log.setColorFromConfig()
+                c2.frame.body.setColorFromConfig()
+        else:
+            # g.trace(name,kind,val)
+            g.app.config.set(c,name,kind,val)
+#@nonl
+#@-node:ekr.20041225063637.66:updateConfig
+#@+node:ekr.20041225063637.67:updateOneNode & helper
+def updateOneNode (self,c,data):
+    
+    """Update the node in c corresponding to p = data[0]."""
+    
+    p,name,kind,oldVal,val = data
+    munge = g.app.config.munge
+    name = name.strip() ; kind = munge(kind.strip())
+
+    # Root1 is the root of the dialog's outline.
+    p1 = p
+    root1 = self.findSettingsRoot(p1.copy())
+    c1 = root1.c
+    
+    # Root2 is the root of the settings outline in the file.
+    root2 = g.app.config.settingsRoot(c) # c is NOT self.c
+    p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
+    if p2:
+        c2 = p2.c ; filename = c2.mFileName
+    else:
+        g.trace("can't happen: can't find node in root2:",root2.c.mFileName)
+        g.trace('root1',root1)
+        g.trace('root2',root2)
+        g.trace('p1',p1)
+        c2 = None ; filename = None
+
+    # Update the outline in the dialog and the target file.
+    for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
+        if p:
+            # g.trace("updating %s in %s" % (name,where))
+            if kind == 'shortcuts':
+                # Put the values in the body.
+                p.initHeadString("@%s %s" % (kind,name))
+                body = '\n'.join(val)
+                p.setBodyStringOrPane(body)
+            elif kind == 'font':
+                body = self.computeBodyFromFontDict(val)
+                p.setBodyStringOrPane(body)
+            else:
+                # Put everything in the headline.
+                p.initHeadString("@%s %s = %s" % (kind,name,val))
+#@nonl
+#@+node:ekr.20041225063637.68:computeBodyFromFontDict
+def computeBodyFromFontDict(self,d):
+
+    lines = []
+    comments = d.get('comments')
+    if comments:
+        comment_lines = g.splitLines(comments)
+        comment_lines = ["# %s" % (line) for line in comment_lines]
+        lines.extend(comment_lines)
+        lines.extend('\n\n')
+        
+    for key in ('family','size','slant','weight'):
+        data = d.get(key)
+        if data:
+            name,val = data
+            if val in (None,'<none>'):
+                val = "None"
+            line = "%s = %s\n" % (name,val)
+            lines.extend(line)
+
+    body = ''.join(lines)
+    return body
+#@nonl
+#@-node:ekr.20041225063637.68:computeBodyFromFontDict
+#@-node:ekr.20041225063637.67:updateOneNode & helper
+#@+node:ekr.20041225063637.69:writeChangedList
+def writeChangedList (self,changedList,tag):
+    
+    __pychecker__ = '--no-argsused' # tag used for debugging.
+    
+    filesInfoDict = self.filesInfoDict
+    if 0:
+        << dump all the dicts in filesInfoDict >>
+
+    # Accumulate the changes for each file in a 'changes' list for each root.
+    for data in changedList:
+        p,name,kind,oldVal,newVal = data
+        # print "%6s %6s %10s -> %10s %s" % (tag,kind,str(oldVal),str(newVal),name)
+        root = self.findSettingsRoot(p)
+        d = filesInfoDict.get(root)
+        changes = d.get('changes')
+        changes.append(data)
+        d['changes'] = changes
+
+    for root in filesInfoDict.keys():
+        d = filesInfoDict.get(root)
+        # Keys are 'c','changes','path','islocal' (unused)
+        c = d.get('c')
+        changes = d.get('changes')
+        path = d.get('path')
+        # Always write the file so as to preserve expansion state.
+        self.writeChangesToFile(c,changes,path)
+        self.updateConfig(c,changes)
+        d['changes'] = []
+#@nonl
+#@+node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+for key in filesInfoDict.keys():
+    print ; print
+    print "key",key
+    g.printDict(filesInfoDict.get(key))
+print ; print
+#@nonl
+#@-node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+#@-node:ekr.20041225063637.69:writeChangedList
+#@+node:ekr.20041225063637.71:writeChangesToFile
+def writeChangesToFile (self,c,changes,path):
+
+    # Write the individual changes.
+    for data in changes:
+        self.updateOneNode(c,data)
+        
+    # Copy the expansion state of the dialog to the file.
+    for d in self.filesInfoDict.values():
+        c2 = d.get('c')
+        if c2 and c2 == c:
+            p2 = d.get('p')
+            p = g.app.config.settingsRoot(c)
+            # g.trace(c,p)
+            if p and p2:
+                p = p.copy() ; p2 = p2.copy()
+                # Defensive programming: don't assume p and p2 are in synch.
+                while p and p2:
+                    if p2.isExpanded(): p.expand()
+                    else: p.contract()
+                    p.moveToThreadNext()
+                    p2.moveToThreadNext()
+            break
+
+    if c.fileName():
+        self.es("writing " + g.shortFilename(path))
+        # Save the file corresponding to c.
+        # Non-local files aren't open otherwise!
+        c.fileCommands.save(c.fileName())
+        c.redraw() # This should work for non-local files too.
+        self.tree.redraw()
+    else:
+        print "no settings saved.  local file not named."
+#@nonl
+#@-node:ekr.20041225063637.71:writeChangesToFile
+#@-node:ekr.20041225063637.65:writeChangedVars & helpers
+#@-node:ekr.20050420061320:(Copied expansion state when writing @settings trees)
 #@-node:ekr.20050316083031.2:Features...
-#@-node:ekr.20050316083031:4.3 a5 projects
+#@-node:ekr.20050316083031:4.3 b1 projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt
