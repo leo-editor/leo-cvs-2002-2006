@@ -1514,6 +1514,8 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
         __pychecker__ = '--no-argsused' # updateBeadList required for compatibility.
     
         old_p = self.old_p
+        
+        # g.trace(p.headString())
     
         # Unselect the old
         if old_p:
@@ -1663,7 +1665,7 @@ class settingsTreeParser (parserBaseClass):
 class settingsController:
     
     #@    @+others
-    #@+node:ekr.20041225063637.13: ctor
+    #@+node:ekr.20041225063637.13: ctor (settingsController)
     def __init__ (self,c,replaceBody=True):
         
         self.createSummaryNode = True # Works either way.
@@ -1809,7 +1811,7 @@ class settingsController:
             g.app.gui.widgetWantsFocus(None,None)
             if self.modal: d.activate()
     #@nonl
-    #@-node:ekr.20041225063637.13: ctor
+    #@-node:ekr.20041225063637.13: ctor (settingsController)
     #@+node:ekr.20050212153515:replaceBodyWithDialog
     def replaceBodyWithDialog (self):
         

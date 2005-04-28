@@ -124,6 +124,8 @@ def onSelect2 (tag,keywords):
     # c.currentPosition() is not valid while using the settings panel.
     new_p = keywords.get('new_p')
     
+    # g.trace(new_p)
+    
     if new_p:
         c.frame.clearStatusLine()
         myList = [p.headString() for p in new_p.self_and_parents_iter()]
