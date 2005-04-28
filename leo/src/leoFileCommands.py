@@ -1297,7 +1297,7 @@ class baseFileCommands:
         self.fileBuffer = theFile.read() ; theFile.close()
         self.fileIndex = 0
         #@    << Set the default directory >>
-        #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+        #@+node:ekr.20031218072017.2298:<< Set the default directory >>
         #@+at 
         #@nonl
         # The most natural default directory is the directory containing the 
@@ -1312,7 +1312,7 @@ class baseFileCommands:
         if len(theDir) > 0:
             c.openDirectory = theDir
         #@nonl
-        #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+        #@-node:ekr.20031218072017.2298:<< Set the default directory >>
         #@nl
         self.topPosition = None
         c.beginUpdate()
@@ -1322,7 +1322,7 @@ class baseFileCommands:
             if self.topPosition: 
                 c.setTopVnode(self.topPosition)
         c.endUpdate()
-        # delete the file buffer
+        # Delete the file buffer
         self.fileBuffer = ""
         return ok
     #@nonl
@@ -1335,7 +1335,7 @@ class baseFileCommands:
         self.fileBuffer = theFile.read() ; theFile.close()
         self.fileIndex = 0
         #@    << Set the default directory >>
-        #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+        #@+node:ekr.20031218072017.2298:<< Set the default directory >>
         #@+at 
         #@nonl
         # The most natural default directory is the directory containing the 
@@ -1350,7 +1350,7 @@ class baseFileCommands:
         if len(theDir) > 0:
             c.openDirectory = theDir
         #@nonl
-        #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+        #@-node:ekr.20031218072017.2298:<< Set the default directory >>
         #@nl
         c.beginUpdate()
         ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=False)
