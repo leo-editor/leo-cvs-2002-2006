@@ -1528,6 +1528,9 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
         self.old_p = p
     
         self.controller.onTreeClick(p)
+        
+        # For the UNL plugin.
+        g.doHook("select2",c=p.c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     #@nonl
     #@-node:ekr.20041225063637.83:tree.select
     #@+node:ekr.20041225063637.91:getTextWidget
