@@ -58,6 +58,8 @@ class leoTkinterMenu (leoMenu.leoMenu):
     def bind (self,bind_shortcut,callback):
         
         """Wrapper for the Tkinter bind menu method."""
+        
+        # g.trace(bind_shortcut)
     
         return self.top.bind(bind_shortcut,callback)
         

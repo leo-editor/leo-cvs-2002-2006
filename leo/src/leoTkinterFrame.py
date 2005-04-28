@@ -2553,6 +2553,7 @@ class leoTkinterBody (leoFrame.leoBody):
         #@nl
         g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
         return "break"
+    #@nonl
     #@-node:ekr.20031218072017.1321:idle_body_key
     #@+node:ekr.20031218072017.1329:onBodyChanged (tkTree)
     # Called by command handlers that have already changed the text.

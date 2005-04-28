@@ -77,6 +77,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     << redraw the screen if necessary >>
     g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
     return "break"
+#@nonl
 #@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
 # 6/22/03: Make sure we handle delete key properly.
 if ch not in ('\n','\r',chr(8)):
@@ -15079,11 +15080,11 @@ def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
         if self.topPosition: 
             c.setTopVnode(self.topPosition)
     c.endUpdate()
-    # delete the file buffer
+    # Delete the file buffer
     self.fileBuffer = ""
     return ok
 #@nonl
-#@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+#@+node:ekr.20031218072017.2298:<< Set the default directory >>
 @ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
 @c
 
@@ -15092,7 +15093,7 @@ theDir = g.os_path_dirname(fileName)
 if len(theDir) > 0:
     c.openDirectory = theDir
 #@nonl
-#@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+#@-node:ekr.20031218072017.2298:<< Set the default directory >>
 #@-node:ekr.20031218072017.2297:open
 #@+node:ekr.20031218072017.1553:getLeoFile
 # The caller should enclose this in begin/endUpdate.
@@ -27234,11 +27235,11 @@ def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
         if self.topPosition: 
             c.setTopVnode(self.topPosition)
     c.endUpdate()
-    # delete the file buffer
+    # Delete the file buffer
     self.fileBuffer = ""
     return ok
 #@nonl
-#@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+#@+node:ekr.20031218072017.2298:<< Set the default directory >>
 @ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
 @c
 
@@ -27247,7 +27248,7 @@ theDir = g.os_path_dirname(fileName)
 if len(theDir) > 0:
     c.openDirectory = theDir
 #@nonl
-#@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+#@-node:ekr.20031218072017.2298:<< Set the default directory >>
 #@-node:ekr.20031218072017.2297:open
 #@+node:ekr.20031218072017.1553:getLeoFile
 # The caller should enclose this in begin/endUpdate.
