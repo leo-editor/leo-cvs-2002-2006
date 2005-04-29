@@ -129,6 +129,7 @@ def onSelect2 (tag,keywords):
     if new_p:
         c.frame.clearStatusLine()
         myList = [p.headString() for p in new_p.self_and_parents_iter()]
+        myList.reverse()
 
         # Rich has reported using ::
         # Any suggestions for standardization?
