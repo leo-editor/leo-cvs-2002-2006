@@ -589,9 +589,9 @@ if wx and not g.app.unitTesting: # Not Ok for unit testing !!!
             
         #@-node:edream.111303093843:setIdleTimeHook
         #@+node:edream.111303093843.1:setIdleTimeHookAfterDelay
-        def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
+        def setIdleTimeHookAfterDelay (self,idleTimeHookHandler,*args,**keys):
             
-            trace(delay,idleTimeHookHandler)
+            trace(idleTimeHookHandler)
         #@nonl
         #@-node:edream.111303093843.1:setIdleTimeHookAfterDelay
         #@-node:edream.110203113231.329:Idle time
@@ -2449,10 +2449,10 @@ if wx and not g.app.unitTesting: # Not Ok for unit testing !!!
             trace(v)
         
         # Scrolling... 
-        def scrollTo(self,v):
+        def scrollTo(self,p):
             trace()
         
-        def idle_scrollTo(self,v):
+        def idle_scrollTo(self,p):
             pass
         #@nonl
         #@-node:edream.111403090242:Drawing  & scrolling TO DO
@@ -2634,7 +2634,7 @@ if wx and not g.app.unitTesting: # Not Ok for unit testing !!!
                 #@nl
                 if v and v != old_v: # 3/26/03: Suppress duplicate call.
                     try: # may fail during initialization
-                        self.idle_scrollTo(v)
+                        self.idle_scrollTo()
                     except: pass
                 #@        << update c.beadList or c.beadPointer >>
                 #@+node:edream.111603221343.5:<< update c.beadList or c.beadPointer >>
