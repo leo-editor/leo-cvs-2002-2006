@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1025" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
-	<global_window_position top="44" left="90" height="778" width="831"/>
+	<global_window_position top="59" left="242" height="778" width="831"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -11,7 +11,7 @@
 <vnodes>
 <v t="ekr.20050315084904"><vh>Startup</vh>
 <v t="ekr.20050315084904.1" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20050315084904.2" a="E"><vh>@recentfiles </vh></v>
+<v t="ekr.20050315084904.2"><vh>@recentfiles </vh></v>
 </v>
 <v t="ekr.20050315084922"><vh>@button check spelling...</vh></v>
 </v>
@@ -101,7 +101,7 @@
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
 <v t="EKR.20040519090846.4"><vh>Linux installation</vh></v>
 <v t="EKR.20040519090846.5"><vh>Windows installation</vh></v>
-<v t="EKR.20040519090846.6" a="E"><vh>MacOS installation</vh></v>
+<v t="EKR.20040519090846.6"><vh>MacOS installation</vh></v>
 <v t="EKR.20040519090846.7"><vh>Shell &amp; batch scripts</vh></v>
 </v>
 <v t="EKR.20040519090846.1"><vh>@silentfile ../doc/LICENSE.TXT</vh></v>
@@ -116,7 +116,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040629175400" a="TV"><vh>Pychecker stuff</vh>
+<v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
 <v t="ekr.20050430095952"><vh>Pychecker statements</vh></v>
 <v t="ekr.20050212143754"><vh>*** Mods to pychecker in python23/site-packages ***</vh>
 <v t="ekr.20050212143754.1"><vh>What I did</vh></v>
@@ -137,7 +137,7 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021"><vh>Leo 4.3 installer: version stuff</vh>
+<v t="ekr.20050118095021" a="E"><vh>Leo 4.3 installer: version stuff</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
@@ -183,10 +183,11 @@
 <v t="ekr.20050118103447.1"><vh>&lt;&lt; uninstall top-level files &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
+<v t="ekr.20050118092706" a="E"
+expanded="ekr.20050118092706.13,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -3510,16 +3511,12 @@ Delete "$INSTDIR\config\.leoRecentFiles.txt"</t>
 
 File "leoDist.leo"
 
-File "LeoPackage.pmsp"
-
 File "leo-4-3.nsi"
 
 File ".pycheckrc"</t>
 <t tx="ekr.20050118104149.5">Delete "$INSTDIR\dist\createLeoDist.p*"
 
 Delete "$INSTDIR\dist\leoDist.leo"
-
-Delete "$INSTDIR\dist\LeoPackage.pmsp"
 
 Delete "$INSTDIR\dist\leo-4-3.nsi"
 
@@ -3539,6 +3536,8 @@ File "..\doc\License.txt"
 File "..\doc\default.css"
 File "..\doc\leo_rst.css"
 File "..\doc\silver_city.css"
+
+SetOutPath "$INSTDIR\doc\LeoN"
 
 File "..\doc\LeoN\sun98achieving.pdf"
 File "..\doc\LeoN\sun97generic.pdf"

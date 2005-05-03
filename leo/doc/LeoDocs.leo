@@ -48,7 +48,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -62,7 +62,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20050429094215" a="E"><vh>4.3-beta 1</vh>
+<v t="ekr.20050429094215" a="ETV"><vh>4.3-beta 1</vh>
 <v t="ekr.20050429094215.2"><vh>Fixed bugs...</vh>
 <v t="ekr.20050429094215.3" a="E"><vh>Made sure NameErrors are reported with tracebacks in scripts</vh></v>
 <v t="ekr.20050429094215.22" a="E"><vh>Finally! fixed .leoID problem!</vh></v>
@@ -2161,7 +2161,7 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050" a="TV"><vh>FAQ</vh>
+<v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>

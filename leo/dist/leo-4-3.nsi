@@ -240,8 +240,6 @@ Section "Leo" SEC01
   
   File "leoDist.leo"
   
-  File "LeoPackage.pmsp"
-  
   File "leo-4-3.nsi"
   
   File ".pycheckrc"
@@ -265,6 +263,8 @@ Section "Leo" SEC01
   File "..\doc\default.css"
   File "..\doc\leo_rst.css"
   File "..\doc\silver_city.css"
+  
+  SetOutPath "$INSTDIR\doc\LeoN"
   
   File "..\doc\LeoN\sun98achieving.pdf"
   File "..\doc\LeoN\sun97generic.pdf"
@@ -521,8 +521,6 @@ Section Uninstall
   
   Delete "$INSTDIR\dist\leoDist.leo"
   
-  Delete "$INSTDIR\dist\LeoPackage.pmsp"
-  
   Delete "$INSTDIR\dist\leo-4-3.nsi"
   
   Delete "$INSTDIR\dist\.pycheckrc"
@@ -639,6 +637,7 @@ Section Uninstall
   ; First, delete sub-folders...
   RMDir "$INSTDIR\config"
   RMDir "$INSTDIR\dist"
+  RmDir "$INSTDIR\doc\LeoN"
   RMDir "$INSTDIR\doc"
   
   RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2\bin"

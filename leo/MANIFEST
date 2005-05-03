@@ -56,7 +56,6 @@ Icons\CVS\Entries.Old
 config\.leoRecentFiles.txt
 config\leoSettings.leo
 dist\.pycheckrc
-dist\LeoPackage.pmsp
 dist\createLeoDist.py
 dist\leo-4-3.nsi
 dist\leoDist.leo
