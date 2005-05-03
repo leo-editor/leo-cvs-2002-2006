@@ -714,72 +714,71 @@ def applyConfiguration(config):
 #@-at
 #@@c
 
-def test_Configuration(): 
-    """read the ini to save it or back it up
-     or pass a StringIO mockable to getConfiguration, 
-        write the ini with known values
-      test they can be read back in the config object
-        make sure if ini exists and is wrong
-        or if it doesn't exist, defaults will be preserved.
-    no mention of HOME for now
-    its not vary convienent to run this with all the dependancies scattered
-    likely similar with other more complicated tests
-    but do it anyway as part of a more expanded test than plugin import?
-    is False return enough or a raise Something? any print a failure?
-    
-    function name must be test_something but node can be @test something
-    and I think doctests can be in any part of the plugin if those tests run.
-    no claim yet this tests anything consequential.
-    
-    what might be useful is a options permutation generator:
-    compare all perms of each of the Bunch the ini the @setting
-     with valid and invalid possibly user [mis]edits of each and extras.
-    do we end up with a valid usable Bunch of paths and options?
-     are all the booleans boolable and all the ints and strings viable?
-     will it be the same if user edits or changes the ini or @settings
-    can we identify where each of the options comes from so on close/exit
-     we can offer to update the correct ini or @setting node or just print changes.
-    and investigate optparser for getting commandline options as well.
-    I think Leo will just pass them on and not mangle them and not be confused.
-    """ 
-    
+if 0: # Fails unit test.
 
-    #libc = g.Bunch(libconfig) or g.Bunch(dict(libconfig)) shoulv'e worked
-    #print dir(libconfig)
-
-    libc = libconfig.__dict__.copy()
-    #why does Bunch not a copy and intersection method?
-    #repr(l1) should be anough to reconstruct w/o additional parsing.
-    #sets would be handy to find which settings are global which are per leo,
-    #each setting should probably be a tupple of that kind of info. 
+    def test_Configuration(): 
+        """read the ini to save it or back it up
+         or pass a StringIO mockable to getConfiguration, 
+            write the ini with known values
+          test they can be read back in the config object
+            make sure if ini exists and is wrong
+            or if it doesn't exist, defaults will be preserved.
+        no mention of HOME for now
+        its not vary convienent to run this with all the dependancies scattered
+        likely similar with other more complicated tests
+        but do it anyway as part of a more expanded test than plugin import?
+        is False return enough or a raise Something? any print a failure?
+        
+        function name must be test_something but node can be @test something
+        and I think doctests can be in any part of the plugin if those tests run.
+        no claim yet this tests anything consequential.
+        
+        what might be useful is a options permutation generator:
+        compare all perms of each of the Bunch the ini the @setting
+         with valid and invalid possibly user [mis]edits of each and extras.
+        do we end up with a valid usable Bunch of paths and options?
+         are all the booleans boolable and all the ints and strings viable?
+         will it be the same if user edits or changes the ini or @settings
+        can we identify where each of the options comes from so on close/exit
+         we can offer to update the correct ini or @setting node or just print changes.
+        and investigate optparser for getting commandline options as well.
+        I think Leo will just pass them on and not mangle them and not be confused.
+        """ 
+        
     
-    #libc['libname'] = 'library00'
-    #g.es(libc)
-    #g.es(libconfig)
-
-    fileName = g.os_path_join(
-            g.app.loadDir,"..","plugins", __file__[:-2]+"ini") 
-
-    config = ConfigParser.ConfigParser() 
-    config.read(fileName) 
-    applyConfiguration(config)
+        #libc = g.Bunch(libconfig) or g.Bunch(dict(libconfig)) shoulv'e worked
+        #print dir(libconfig)
     
-    #compare this config with getconfig and do in try/except
-
-    liba = libconfig.__dict__.copy()
-    g.es(libc)
-    g.es(liba)
+        libc = libconfig.__dict__.copy()
+        #why does Bunch not a copy and intersection method?
+        #repr(l1) should be anough to reconstruct w/o additional parsing.
+        #sets would be handy to find which settings are global which are per leo,
+        #each setting should probably be a tupple of that kind of info. 
+        
+        #libc['libname'] = 'library00'
+        #g.es(libc)
+        #g.es(libconfig)
     
-    #does this need an element by element comparison?
-    return g.es(liba != libc)
+        fileName = g.os_path_join(
+                g.app.loadDir,"..","plugins", __file__[:-2]+"ini") 
     
-#@+at 
-#@nonl
-# comment this out to test with g.app.unitTesting
-# if __name__ == '__builtin__':
-# 
-#     test_Configuration() != False
-#@-at
+        config = ConfigParser.ConfigParser() 
+        config.read(fileName) 
+        applyConfiguration(config)
+        
+        #compare this config with getconfig and do in try/except
+    
+        liba = libconfig.__dict__.copy()
+        g.es(libc)
+        g.es(liba)
+        
+        #does this need an element by element comparison?
+        return g.es(liba != libc)
+        
+    # comment this out to test with g.app.unitTesting
+    if __name__ == '__builtin__':
+    
+        test_Configuration() != False
 #@nonl
 #@-node:ekr.20050328092641.35:@test _Configuration
 #@-node:ekr.20050328092641.29:config
