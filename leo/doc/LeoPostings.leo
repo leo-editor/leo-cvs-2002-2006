@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="10" clone_windows="0"/>
 <globals body_outline_ratio="0.400862068966">
 	<global_window_position top="10" left="308" height="928" width="888"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -9,19 +10,20 @@
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20050421221914"><vh>About this file</vh></v>
-<v t="ekr.20050422065602" a="E"><vh>Summary of problems and their solutions</vh>
-<v t="ekr.20050422065602.1" a="E"><vh>The big questions that Leo must answer</vh>
-<v t="ekr.20050422065602.2"><vh>How to read derived files reliably?</vh></v>
-<v t="ekr.20050422065602.3"><vh>How to ensure the integrity of data?</vh></v>
-<v t="ekr.20050422065602.4"><vh>How to represent clones?</vh></v>
-<v t="ekr.20050422065602.5"><vh>How to make derived files friendly to cvs?</vh></v>
-<v t="ekr.20050422071828" a="TV"><vh>How to handle unicode reliably?</vh></v>
+<v t="ekr.20050425064819" a="E"><vh>3.x 2001 @file trees</vh>
+<v t="ekr.20050425064819.1"><vh>Designing @file trees (From LeoDocs.Leo)</vh>
+<v t="ekr.20050425064819.2"><vh>Deciding to do Leo2</vh></v>
+<v t="ekr.20050425064819.3"><vh>A prototype</vh></v>
+<v t="ekr.20050425064819.4"><vh>User interaction</vh></v>
+<v t="ekr.20050425064819.5"><vh>The write code</vh></v>
+<v t="ekr.20050425064819.6"><vh>The read code</vh></v>
+<v t="ekr.20050425064819.7"><vh>The load/save code</vh></v>
+<v t="ekr.20050425064819.8"><vh>Attributes, mirroring and dummy nodes</vh></v>
+<v t="ekr.20050425064819.9"><vh>Clones</vh></v>
+<v t="ekr.20050425064819.10"><vh>Error recovery, at last</vh></v>
 </v>
-<v t="ekr.20050422065602.6" a="E"><vh>Summary of solutions</vh>
-<v t="ekr.20050421214628.1"><vh>2003-09-17 Progress.doc *** (summary of features)</vh></v>
 </v>
-</v>
-<v t="ekr.20050421212523" a="E"><vh>4.0 (2002-2003)</vh>
+<v t="ekr.20050421212523"><vh>4.0 (2002-2003) New file format w/o child indices, eliminated error "recovery"</vh>
 <v t="ekr.20050422071739"><vh>  2003-10-17 From 4.0 readme</vh></v>
 <v t="ekr.20050422065602.7"><vh>2002 &amp; 2003: Early ideas</vh>
 <v t="ekr.20050421205312"><vh>2002-10-21 design.doc</vh></v>
@@ -78,9 +80,9 @@
 <v t="ekr.20050421203956.2"><vh>2003-05-30 More about vxnodes.doc</vh></v>
 </v>
 <v t="ekr.20050421192149.6"><vh>2003-05-06 Conflicts.doc</vh></v>
-<v t="ekr.20050421192149.5"><vh>2003-05-07 Conflicts2.doc</vh></v>
+<v t="ekr.20050421192149.5"><vh>2003-05-07 Conflicts2.doc ** (user can't resolve conflicts)</vh></v>
 <v t="ekr.20050421211313.1"><vh>2003-5-13 Progress.doc</vh></v>
-<v t="ekr.20050421192149.2"><vh>2003-05-25 4.0 is dead, long live leo.doc  **</vh></v>
+<v t="ekr.20050421192149.2"><vh>2003-05-25 4.0 is dead, long live leo.doc  **  (Valid concerns, wrong conclusion: see 2004-02-5)</vh></v>
 <v t="ekr.20050421192149.20"><vh>2003-05-26 Using gnx's safely.doc</vh></v>
 <v t="ekr.20050421192149.7"><vh>2003-05-27 Eliminate clones.doc</vh></v>
 <v t="ekr.20050421192149.16"><vh>2003-05-30 Objections to link nodes.doc</vh></v>
@@ -89,11 +91,11 @@
 <v t="ekr.20050421204424.1" a="E"><vh>Overview</vh></v>
 <v t="ekr.20050421204424.2"><vh>Positions</vh></v>
 </v>
-<v t="ekr.20050421203956.1"><vh>2003-06-02 Giant Aha re positions.doc</vh></v>
+<v t="ekr.20050421203956.1"><vh>2003-06-02 Giant Aha re positions.doc ***</vh></v>
 <v t="ekr.20050421211313.2"><vh>2003-06-09 Progress report</vh></v>
 <v t="ekr.20050421192149.4" a="E"><vh>2003-06-12 Cold feet.doc</vh></v>
 <v t="ekr.20050421211313.3"><vh>2003-06-17 Progress report (shared tnodes delayed)</vh></v>
-<v t="ekr.20050421192149.10"><vh>2003-06-18 gnxs must go.doc</vh></v>
+<v t="ekr.20050421192149.10"><vh>2003-06-18 gnxs must go.doc ** (Valid concerns, wrong conclusion: see 2004-02-5)</vh></v>
 <v t="ekr.20050421192149.19"><vh>2003-06-18 ugnx.doc</vh></v>
 <v t="ekr.20050421192149.8"><vh>2003-06-19 Eliminating child indices.doc</vh></v>
 <v t="ekr.20050421192149.17" a="E"><vh>2003-06-22 Reply 6-22.doc</vh></v>
@@ -114,7 +116,7 @@
 <v t="ekr.20050421212523.4"><vh>2003-07-31 comments about 4-0 design.doc</vh></v>
 <v t="ekr.20050421212523.5"><vh>2003-07-31 synch reply 2.doc</vh></v>
 </v>
-<v t="ekr.20050422065602.8"><vh>2003-09 Code details</vh>
+<v t="ekr.20050422065602.8" a="E"><vh>2003-09 Code details</vh>
 <v t="ekr.20050421212523.6"><vh>2003-09-05 New 4-0 Design Notes.doc</vh>
 <v t="ekr.20050421212523.7"><vh>Executive summary</vh></v>
 <v t="ekr.20050421212523.8"><vh>Background and discussion</vh></v>
@@ -122,21 +124,21 @@
 </v>
 <v t="ekr.20050421212523.10" a="E"><vh>2003-09-03 ProgressReport.doc</vh></v>
 <v t="ekr.20050421214628"><vh>2003-09-14 tempBodyString.doc</vh></v>
-<v t="ekr.20050421214628.1" a="E"><vh>2003-09-17 Progress.doc *** (summary of features)</vh></v>
+<v t="ekr.20050421214628.1" a="E"><vh>2003-09-17 Progress.doc *** (summary of features of 4.0)</vh></v>
 <v t="ekr.20050421214628.2" a="E"><vh>2003-09-18 Farewell to at-ws.doc</vh></v>
 <v t="ekr.20050421214628.3"><vh>2003-09-22 4-0 complete.doc</vh></v>
 <v t="ekr.20050421214628.4"><vh>2003-09-23 Transition.doc</vh></v>
 </v>
 </v>
-<v t="ekr.20050421214628.5" a="E"><vh>4.1 (2003) Unicode and gui-agnosic code</vh>
+<v t="ekr.20050421214628.5"><vh>4.1 (2003) Unicode, gui-agnosic code and gnx's in .leo files.</vh>
 <v t="ekr.20050422071739.1"><vh>  2004-02-20 From 4.1 readme</vh></v>
 <v t="ekr.20050421214628.6"><vh>2003-11-03 4-1a1 released.doc</vh></v>
 </v>
-<v t="ekr.20050421214704" a="E"><vh>4.2 (2004) @thin, gnx's, shared tnodes &amp; positions</vh>
+<v t="ekr.20050421214704" a="E"><vh>4.2 (2004) shared tnodes, positions and @thin (gnx's in derived files)</vh>
 <v t="ekr.20050422071739.2"><vh>  2004-09-20 From 4.2 readme</vh></v>
-<v t="ekr.20050421214921.6"><vh>2004-02-05 at-file-thin.doc **</vh></v>
+<v t="ekr.20050421214921.6" a="M"><vh>2004-02-05 at-file-thin.doc ***** (abandon the synchronization principle)</vh></v>
 <v t="ekr.20050421214921.16"><vh>2004-02-29 New plans-2-29-04.doc **</vh></v>
-<v t="ekr.20050421214921.21"><vh>2004-02-29 shared tnode design.doc</vh></v>
+<v t="ekr.20050421214921.21"><vh>2004-02-29 shared tnode design.doc ***</vh></v>
 <v t="ekr.20050421214921.9"><vh>2004-02-29 Code details of shared tnode.doc</vh></v>
 <v t="ekr.20050421214921.12" a="E"><vh>2004-02-29 Details and schedule.doc</vh></v>
 <v t="ekr.20050421214921"><vh>2004-03-02 Transition notes.doc</vh></v>
@@ -146,9 +148,9 @@
 <v t="ekr.20050421214921.14"><vh>2004-03-04 Iter test code.doc</vh></v>
 <v t="ekr.20050421214921.11"><vh>2004-03-04 Design answers.doc</vh></v>
 <v t="ekr.20050421214921.23"><vh>2004-03-04 Status report 3-5-04.doc</vh></v>
-<v t="ekr.20050421214921.15"><vh>2004-03-05 iterators make position safe.doc</vh></v>
+<v t="ekr.20050421214921.15"><vh>2004-03-05 iterators make positions safe.doc ***</vh></v>
 <v t="ekr.20050421214921.18"><vh>2004-03-07 positions can be compatible.doc **</vh></v>
-<v t="ekr.20050421214921.4"><vh>2004-03-08 A little gem.doc</vh></v>
+<v t="ekr.20050421214921.4"><vh>2004-03-08 A little gem.doc **</vh></v>
 <v t="ekr.20050421214921.17" a="E"><vh>2004-03-09 New read logic works.doc</vh></v>
 <v t="ekr.20050421214921.8"><vh>2004-03-10 cmp and nonzero.doc</vh></v>
 <v t="ekr.20050421214921.24"><vh>2004-03-11 Status report 3-11-04.doc</vh></v>
@@ -156,7 +158,7 @@
 <v t="ekr.20050421214921.13"><vh>2004-03-13 Heavy lifting.doc</vh></v>
 <v t="ekr.20050421214921.22"><vh>2004-03-14 Small code--big aha.doc **</vh></v>
 <v t="ekr.20050421214921.1" a="E"><vh>2004-03-15 4-2 liftoff near.doc</vh></v>
-<v t="ekr.20050421214921.26"><vh>2004-03-19 The taste of dog food.doc</vh></v>
+<v t="ekr.20050421214921.26"><vh>2004-03-19 The taste of dog food.doc *** (eliminating positions)</vh></v>
 <v t="ekr.20050421214921.25"><vh>2004-03-23 Status report 3-23-04.doc</vh></v>
 <v t="ekr.20050421214921.3"><vh>2004-03-25 4-2a1 now on cvs.doc</vh></v>
 <v t="ekr.20050421214921.2"><vh>2004-03-26 4-2 looks solid.doc</vh></v>
@@ -168,6 +170,33 @@
 </v>
 </v>
 <v t="ekr.20050422065602.9"><vh>4.3 (2005)</vh></v>
+<v t="ekr.20050425053621" a="E"><vh>The essentials</vh>
+<v t="ekr.20050422065602.1"><vh>The big questions that Leo must answer</vh>
+<v t="ekr.20050422065602.2"><vh>How to read derived files reliably?</vh></v>
+<v t="ekr.20050422065602.3"><vh>How to ensure the integrity of data?</vh></v>
+<v t="ekr.20050422065602.4"><vh>How to represent clones?</vh></v>
+<v t="ekr.20050422065602.5"><vh>How to make derived files friendly to cvs?</vh></v>
+<v t="ekr.20050422071828"><vh>How to handle unicode reliably?</vh></v>
+</v>
+<v t="ekr.20050421214628.1"><vh>2003-09-17 Progress.doc *** (summary of features of 4.0)</vh></v>
+<v t="ekr.20050425053635"><vh>About consistency</vh>
+<v t="ekr.20050421192149.5"><vh>2003-05-07 Conflicts2.doc ** (user can't resolve conflicts)</vh></v>
+<v t="ekr.20050421192149.2"><vh>2003-05-25 4.0 is dead, long live leo.doc  **  (Valid concerns, wrong conclusion: see 2004-02-5)</vh></v>
+<v t="ekr.20050421192149.10"><vh>2003-06-18 gnxs must go.doc ** (Valid concerns, wrong conclusion: see 2004-02-5)</vh></v>
+<v t="ekr.20050421214921.6"><vh>2004-02-05 at-file-thin.doc ***** (abandon the synchronization principle)</vh></v>
+</v>
+<v t="ekr.20050425060514" a="E"><vh>About positions</vh>
+<v t="ekr.20050421203956.1"><vh>2003-06-02 Giant Aha re positions.doc ***</vh></v>
+<v t="ekr.20050421214921.21"><vh>2004-02-29 shared tnode design.doc ***</vh></v>
+<v t="ekr.20050421214921.15"><vh>2004-03-05 iterators make positions safe.doc ***</vh></v>
+<v t="ekr.20050425064819.11" a="TV"><vh>Missing paper here? Referenced in previous paper</vh></v>
+<v t="ekr.20050421214921.18"><vh>2004-03-07 positions can be compatible.doc **</vh></v>
+<v t="ekr.20050421214921.4"><vh>2004-03-08 A little gem.doc **</vh></v>
+<v t="ekr.20050421214921.22" a="E"><vh>2004-03-14 Small code--big aha.doc **</vh></v>
+<v t="ekr.20050421214921.26"><vh>2004-03-19 The taste of dog food.doc *** (eliminating positions)</vh></v>
+</v>
+</v>
+<v t="ekr.20050425060514.1"><vh>To do</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20050421192149">What has been gained?
@@ -231,6 +260,8 @@ Edward
 P.S.  I am fairly confident that the scheme I am about to discuss will meet with general approval.    I put a question mark in the title to indicate that nothing has been firmly decided.
 </t>
 <t tx="ekr.20050421192149.2">4.0 is dead! Long live Leo!
+
+[WARNING: the concerns in this posting are real.  The conclusions are WRONG!  See 2004-02-05]
 
 I have been growing increasingly uneasy about 4.0.  The thoughts weren't fully formed, and I had vague worries about gnx's creating problems similar to the ill-fated backup .leo files.
 
@@ -617,6 +648,8 @@ EKR
 </t>
 <t tx="ekr.20050421192149.10">gnx's MUST DIE
 
+[WARNING: the concerns in this posting are real.  The conclusions are WRONG!  See 2004-02-05]
+
 Standing in the shower this morning I saw again how dangerous gnx's are.
 
 Proof:  Suppose I wanted to create a file called LeoAttic.leo containing old project nodes that aren't very useful but that I wanted to keep around "just in case".  Creating this file _decouples_ the contents of all the nodes in the attic from the ongoing development.  Would I _ever_ want to _recouple_ these nodes?  Absolutely not!  The "old" nodes are _exceedingly_ dangerous!  Bad (old) data are the enemy of all good (up-to-date) data!
@@ -965,6 +998,10 @@ Edward
 </t>
 <t tx="ekr.20050421192149.20">Using gnx's safely
 
+[Warning: these are obsolete ideas:
+- thin derived files carry all essential info, including structure and content.
+- The root @thin node in an outline carries only marks, expansion state and uA's]
+
 My initial intuition wasn't completely faulty, I think:  using gnx's naively has the potential to create almost unlimited chaos.  The problem is this:  if "flat" (derived) files contain embedded structure, the structure implied by a derived file may not match the structure of corresponding (cloned) node in a .leo file.  As I have said before, the situation may result in an extreme form of "dreaded read errors".  Note that such mismatches of structure may occur even if @file-thin is in effect.  When many people are editing flat files simultaneously the potential for conflicts seems almost unlimited.
 
 Maybe we should revisit an old idea, namely that outlines should carry structure and that flat files should carry content.  The implications:
@@ -1172,7 +1209,8 @@ P.P.S. There are other implementation problems with temporary vnodes.  For examp
 P.P.P.S. I'll look at Gil's ideas (and any others) thoroughly before fixing 4.0 in stone.  As Gil suggests, designing 4.0 properly is more important than releasing in the next week :-)
 EKR
 </t>
-<t tx="ekr.20050421203956.1">In my last posting on Leo's Developers Forum I discussed in great detail how Leo can represent clones as shared trees of vnodes.   In this post I'll show why this new design can have minimal impact on Leo.
+<t tx="ekr.20050421203956.1">@nocolor
+In my last posting on Leo's Developers Forum I discussed in great detail how Leo can represent clones as shared trees of vnodes.   In this post I'll show why this new design can have minimal impact on Leo.
 
 To summarize this design:
 
@@ -1213,26 +1251,28 @@ This is all you really need to know about this Aha.  You can stop reading now if
 
 I'm not sure I ever would have discovered this in a language like C++.  In C++ you can't get away from the actual names of classes: they appear in so many declarations.  In python, we don't _know_ and don't _care_ about what the type of "v" is.  So we can say v = c.rootVnode() without worrying about what c.rootVnode() "really" returns.
 
-2. What's in a name?  There was some discussion recently about whether we should rename the vnode class to be something else.  At that time I dismissed the idea, saying it would require massive changes to the code.  We see now that neither the original suggestion nor my response were on precisely on target.  _It doesn't matter_ what the name of the vnode class is!   It has _no effect_ on statements such as v = c.rootVnode()  (!!!)
+2. What's in a name?  There was some discussion recently about whether we should rename the vnode class to be something else.  At that time I dismissed the idea, saying it would require massive changes to the code.  We see now that neither the original suggestion nor my response were on precisely on target.  _It doesn't matter_ what the name of the vnode class is!  It has _no effect_ on statements such as v = c.rootVnode()  (!!!)
 
 In other words, the "real" vnode class becomes essentially invisible to user code.  Sure, you can get at the details of virtual vnodes if you really wanted to, but typical "user" scripts will never care.  I'll probably leave the name of the vnode class unchanged because the code is clear the way it is.
 
 3.  I mentioned that the getters and setters of the vnode class will move to the position class.  It certainly makes no sense to leave those methods in the old vnode class.  What's really fascinating is this: the fundamental traversal methods could used in the position class _without any changes_!
 
 For example:  the v.threadBack method is defined in the vnodes class as:
+@color
 
 def threadBack (self):
 	
-....back = self.back()
-....if back:
-........lastChild = back.lastChild()
-........if lastChild:
-........ ....return lastChild.lastNode()
-........else:
-............return back
-........else:
-............return self.parent()
+    back = self.back()
+    if back:
+        lastChild = back.lastChild()
+        if lastChild:
+            return lastChild.lastNode()
+        else:
+            return back
+        else:
+            return self.parent()
 
+@nocolor
 ** Exactly the same code will work in the position class! **
 
 If you think this point is unimportant, you should look at the code for previous versions of the inode class.  It was based on the vnode setters, and it was much different and much more complex.
@@ -2553,8 +2593,11 @@ EKR
 
 The major innovations in 4.0 were:
 
-- Eliminating the error-prone error-recovery scheme used when reading derived files.
-- Using gnx's in derived files.</t>
+- New format for derived files: Eliminated child indices WITHOUT using gnx's.
+    - Eliminated @node sentinels that indicate outline structure.
+	- New @nl and @nonl sentinels simplified read logic.
+
+- Eliminating the error-prone error-recovery scheme used when reading derived files.</t>
 <t tx="ekr.20050421212523.1">New 4.0 ideas: your comments pls
 
 I have been taking long bicycle rides and long baths trying to understand my reluctance to do 4.0.  Several interesting phrases have emerged from the creative unconscious.  I'll dignify these phrases with the term "design principles."
@@ -3147,7 +3190,9 @@ The only place where I would expect some problems are the "unusual" directives l
 
 Edward
 </t>
-<t tx="ekr.20050421214628.5">@nocolor</t>
+<t tx="ekr.20050421214628.5">@nocolor
+
+- Leo uses gnx's in .leo files (but not derived files)</t>
 <t tx="ekr.20050421214628.6">4.1 a1 released
 
 I have just uploaded 4.1 alpha 1 to Leo's cvs site.  This is alpha quality code:  Please make full backups before playing with it!
@@ -3184,11 +3229,13 @@ Edward
 
 The major innovation in 4.2 were:
 
-1.  Representing clones as shared subtrees.
+- Representing clones as shared subtrees.
 
-2.  Using positions (and especially position iterators) to traverse Leo outlines.
+- Using positions (and especially position iterators) to traverse Leo outlines.
 
-3.  @thin trees and 'thin' derived files.</t>
+- @thin trees and 'thin' derived files using gnx's.
+
+    (gnx's in .leo files were introduced in 4.1)</t>
 <t tx="ekr.20050421214921">Transition
 
 In the past I would have converted LeoPy.leo to use positions in one big step.  This time, I am testing the position class first.  This gets tricky:  there are many files involved:
@@ -3469,7 +3516,7 @@ groups I work in.
 
 I'm glad you asked.  The short answer is: this _will_ happen, and for exactly the reason you mention: it is essential if Leo is to be used in mixed-editor groups.
 
-How can @file-thin be made to work?  First, we must abandon the so-called synchronization principle, which states (or stated) that an entire .leo file is the "small unit of meaning" of a program.  Instead, we put the burden of "file-level consistency" on the work environment (where it belongs).  For example, in a multi-user workgroup that uses cvs, it is up to the _users_ (with the help of cvs) to ensure consistency when several people are working on files simultaneously.  There is really no other option.  Perhaps Leo can assist in making files consistent, but that is really a minor point: in the general case users will have to discuss potential problems, cvs conflicts, failing (or missing) unit tests or any other issue that might affect the integrity of a program.
+How can @file-thin be made to work?  First, we must abandon the so-called synchronization principle, which states (or stated) that an entire .leo file is the "small unit of meaning" of a program.  Instead, we put the burden of "file-level consistency" on the work environment (where it belongs).  For example, in a multi-user workgroup that uses cvs, it is up to the _users_ (with the help of cvs) to ensure consistency when several people are working on files simultaneously.  There is really no other option.  Perhaps Leo can assist in making files consistent, but that is  a minor point: in the general case users will have to discuss potential problems, cvs conflicts, failing (or missing) unit tests or any other issue that might affect the integrity of a program.
 
 Once we absolve Leo of a task that it simply cannot perform in a multi-user setting it becomes possible to design @file-thin in a relatively straightforward manner.
 
@@ -4430,6 +4477,8 @@ I think of vnodes now as "virtual" nodes rather than "visual" nodes.  vnodes are
 
 vnodes no longer correspond exactly to headlines in the outline pane.  The drawing code will have to create nodes (I think I'll call them xnodes) to represent "real estate" on the Tk canvas (or widget in other gui's).  The drawing code will create and destroy xnodes as needed: this is the reason that the "incremental drawing" project is intimately related to the shared-tnode project.
 
+[Note: the drawing code actually creates Tk widgets for screen items, but no nothing like vxnodes]
+
 2. Positions
 
 A vnode is no longer sufficient to locate a "spot" in the tree traversal.  Indeed, the first child of a cloned vnode has no unique parent.  Therefore, we need the concept of _position_ in order to keep track of where we are in the tree traversal.  A position is much like an iterator.  For example, suppose we have the tree:
@@ -4473,6 +4522,8 @@ v2 = v.back()
 
 This kind of code will break the traversal if the effect of v.parent() or v.back() is to _move_ the position.  Instead, these routines must return _copies_ of the position.  But in that case, every call to v.threadNext() will also create a copy of the position.
 
+[Note: The following concern turned out to be completely justified.  Eliminating extra postiions was very important.]
+
 Alas, positions are not mere pointers (object references), such as are presently returned by the "traversal routines" v.threadNext(), v.back(), v.next() and v.firstChild().  Instead, positions are fairly "heavy" objects: they contain an arbitrarily large stack of information.  We do not want tree traversals  to create one or more positions for each node in the entire tree.
 
 This starts to be worrisome.  The reason we want shared tnodes in the first place is to reduce the time needed to create, destroy and move nodes.  In other words, the shared tnodes scheme is an optimization.  It seems strange to replace an inefficiency in time with an added burden on the storage allocator.  What are we to do?
@@ -4481,59 +4532,71 @@ The next paper will discuss the solution to this problem and other code-level de
 
 Edward
 </t>
-<t tx="ekr.20050421214921.22">Small code--big aha
+<t tx="ekr.20050421214921.22">@nocolor
+Small code--big aha
 
 I have just discovered a code improvement that puts the 4.2 code on a rock-solid foundation.
 
 In the old vnode-oriented world there was a  "harmless" inefficiency in v.lastNode:
+@color
 
 # Returns the last node of v's tree, or v itself if v has no descendents.
 def lastNode (self):
-..v = self ; level = v.level()
-..result = None
-..while v:
-....result = v
-....v = v.threadNext()
-....if not v or v.level() &lt;= level:
-......break
-..return result
-
-In the position-oriented world of Leo 4.2 this kind of code causes no end of difficulties: it generates lots of copies of positions.  Like this:
+    v = self ; level = v.level()
+    result = None
+    while v:
+        result = v
+        v = v.threadNext()
+        if not v or v.level() &lt;= level:
+            break
+    return result
+    
+@nocolor
+In the position-oriented world of Leo 4.2 this kind of code causes no end of
+difficulties: it generates lots of copies of positions. Like this:
+@color
 
 def oldLastNode (self): # The old, inefficient way.
-..p = self.copy() ;  result = p.copy()
-..level = p.level()
-..while p:
-....p.moveToThreadNext()
-....if not p or p.level() &lt;= level:
-......break
-....result = p.copy() # Very expensive.
-..return result
+    p = self.copy() ;  result = p.copy()
+    level = p.level()
+    while p:
+        p.moveToThreadNext()
+        if not p or p.level() &lt;= level:
+            break
+        result = p.copy() # Very expensive.
+    return result
 
-This wasn't so bad in itself, but it caused me to rewrite p.moveToThreadBack to avoid these extra copies, and that lead to really horrible code.
+@nocolor
+This wasn't so bad in itself, but it caused me to rewrite p.moveToThreadBack to
+avoid these extra copies, and that lead to really horrible code.
 
 But there is a _much_ better way to define moveToLastNode!
+@color
 
 def moveToLastNode (self): # Huge improvement for 4.2.
-..p = self
-..while p.hasChildren():
-....p.moveToLastChild()
-..return p
+    p = self
+    while p.hasChildren():
+        p.moveToLastChild()
+    return p
 
+@nocolor
 As mathematicians say, "this is the way it is written in The Book".
 
 So now p.moveToThreadBack becomes dead simple again:
+@color
 
 def moveToThreadBack (self):
-..p = self
-..if p.hasBack():
-....p.moveToBack()
-....p.moveToLastNode() # No longer expensive.
-..else:
-....p.moveToParent()
-..return p
+    p = self
+    if p.hasBack():
+        p.moveToBack()
+        p.moveToLastNode() # No longer expensive.
+    else:
+        p.moveToParent()
+    return p
 
-I can't tell you how important these code changes are: they are the difference between reliable and unreliable code.
+@nocolor
+I can't tell you how important these code changes are: they are the difference
+between reliable and unreliable code.
 
 Edward
 </t>
@@ -4611,7 +4674,9 @@ P.S.   @file-thin should be ready about a week after alpha 1 goes out the door.
 
 EKR
 </t>
-<t tx="ekr.20050421214921.26">Eating my own dog food: status report
+<t tx="ekr.20050421214921.26">@nocolor
+
+Eating my own dog food: status report
 
 Yesterday I switched over to using the Leo 4.2 code base.  Here is a status report.
 
@@ -4628,26 +4693,28 @@ Moving a node up, down, left or right now generates about 10 positions or so.  T
 3.  I received quite a shock at the start of the changeover.  Changes made in a clone were not marking as dirty @file nodes that were parents of other cloned nodes.  This caused Leo not to save some derived files when it should.
 
 In previous versions of Leo, marking ancestor @file nodes dirty is handled by looking at all nodes joined to a particular node.  In 4.2, there are no join lists, so p.setAllAncestorAtFileNodesDirty must find some other way. I created the following helper routine:
+@color
 
 def findAllPotentiallyDirtyNodes(self):
-..p = self
-..# Start with all the vnodes in p's vnodeList.
-..nodes = []
-..newNodes = p.v.t.vnodeList[:]
-..# Add nodes until no more are added.
-..while newNodes:
-....addedNodes = []
-....nodes.extend(newNodes)
-....for v in newNodes:
-......for v2 in v.t.vnodeList:
-........if v2 not in nodes and v2 not in addedNodes:
-..........addedNodes.append(v2)
-........for v3 in v2.parents: 
-..........if v3 not in nodes and v3 not in addedNodes:
-............addedNodes.append(v3)
-....newNodes = addedNodes[:]
-..return nodes
+    p = self
+    # Start with all the vnodes in p's vnodeList.
+    nodes = []
+    newNodes = p.v.t.vnodeList[:]
+    # Add nodes until no more are added.
+    while newNodes:
+        addedNodes = []
+        nodes.extend(newNodes)
+        for v in newNodes:
+            for v2 in v.t.vnodeList:
+                if v2 not in nodes and v2 not in addedNodes:
+                    addedNodes.append(v2)
+                for v3 in v2.parents: 
+                    if v3 not in nodes and v3 not in addedNodes:
+                        addedNodes.append(v3)
+        newNodes = addedNodes[:]
+    return nodes
 
+@nocolor
 This is one of those kinds of graph algorithms that one might study in school.  It creates a list of all nodes that might be an ancestor of p, or an ancestor of a clone of p, or an ancestor of one of the nodes already on the list.
 
 This method is fast.  The loop is executed approximate n times, where n is the total number of parents of any p and any clone of p.  Worst case n could be very large, but the worst case will never happen.  The typical case is 5 to 50, which is no problem at all.
@@ -5184,7 +5251,6 @@ single-line comments include an escape mechanism to be used when generating embe
 
 I'm not saying definitely that I'll never try to come up with a general escaping mechanism, but
 there seems to be no need to use this ugly scheme at present. </t>
-<t tx="ekr.20050422065602"></t>
 <t tx="ekr.20050422065602.1">@nocolor
 
 
@@ -5233,7 +5299,6 @@ In other words, how could we reliably associate nodes in derived files with node
 
 All 3.x versions of Leo used "child indices" to associate nodes in derived files with nodes in outlines.  Such scheme created many problems for cvs.</t>
 <t tx="ekr.20050422065602.5"></t>
-<t tx="ekr.20050422065602.6"></t>
 <t tx="ekr.20050422065602.7"></t>
 <t tx="ekr.20050422065602.8"></t>
 <t tx="ekr.20050422065602.9"></t>
@@ -5316,5 +5381,103 @@ tests now takes a few seconds!
 
 - The Execute Script command reports erroneous lines more clearly.</t>
 <t tx="ekr.20050422071828"></t>
+<t tx="ekr.20050425053621">@nocolor</t>
+<t tx="ekr.20050425053635"></t>
+<t tx="ekr.20050425060514">A recurring theme in these discussions is eliminating unwanted copies of positions.
+
+The problem was stated in: 2004-02-29 shared tnode design.doc
+
+The problem was solved in various places in the code, and discussed in:
+
+2004-03-05 iterators make positions safe.doc
+2004-03-07 positions can be compatible.doc
+2004-03-14 Small code--big aha.doc
+
+and finally solved in:
+
+2004-03-19 The taste of dog food.doc *** (eliminating positions)</t>
+<t tx="ekr.20050425060514.1">@nocolor
+
+- The Users Guide still refers to the synchronization principle.
+
+    - In fact, the key is eliminating error recovery in the read logic!</t>
+<t tx="ekr.20050425064819">@nocolor
+
+This was the so-called "New Leo" (Aka Leo2) discussed in the History of Leo.
+
+It's defining feature was @file (The "old" Leo had only @root).</t>
+<t tx="ekr.20050425064819.1">The following sections give a pseudo-chronological list of the major Aha's involved in creating Leo2. These Aha's form the real design and theory of operation of Leo. See the "Diary", "Notes" and "Letters to Speed Ream" sections in LeoDocs.leo for a more accurate and less tidy history of Leo2.
+
+I am writing these notes for several reasons.  First, the initial design and coding of Leo2, spanning a period of about 8 weeks, was some of the most creative and rewarding work I have ever done. The result is elegant and simple.  I'm proud of it.  Second, much of the design work is not reflected in the code, because improved design often eliminated code entirely. The final code is so elegant that it obscures the hard work that created it.  Third, you must understand this design in order to understand the implementation of @file trees and their derived files.  Someday someone else may take charge of Leo. That person should know what really makes Leo2 work.</t>
+<t tx="ekr.20050425064819.2">In the summer of 2001 I began work on a project that for a long time I had considered impossible.  I had long considered that "private" file formats such as .leo files were the only way to represent an outline properly and safely.  I'm not sure exactly what changed my mind, but I finally was willing to consider that information embedded in derived files might be useful.  This meant accepting the possibility that sentinel lines might be corrupted.  This was a crucial first step.  If we can trust the user not to corrupt sentinel lines than we can embed almost any kind of information into a derived file.
+
+There were several motivations for this work.  I wanted to eliminate the need for explicit Tangle and Untangle commands. I thought of this as "Untangle on Read/Tangle on Write."  If tangling and untangling could be made automatic it would save the user a lot of work.  I also wanted to make derived files the primary sources files.  .leo files might be made much smaller derived files contained the primary source information. This hope turned out to be false.
+
+The result of this design work was something I originally called Leo2, though I now usually prefer to talk about @file trees.  Initially most design issues were unresolved or unknown. I resolved to attempt a robust error-recovery scheme, not knowing in advance what that might involve. I also wanted to solve what I thought of as the "cross-file clone" problem: clones that point from a .leo outline into a derived file. With Leo1 cross-file clones do not exist; everything is in the same .leo file. It was clear that Leo2 would have to change some aspects of clones, but all details were fuzzy.
+</t>
+<t tx="ekr.20050425064819.3">The next step was also crucial.  I started to use Leo1 as a prototype to design what the new body pane would look like to the user. In retrospect, using Leo1 as a prototype for Leo2 was just as inspired as using MORE as a prototype for Leo1.  Both prototypes marked the true beginning of their respective projects.  The Leo2 prototype was a mockup in Python of the code for reading and writing derived files. The file LeoDocs.leo contain these first prototype nodes.
+
+Writing the prototype got me thinking about improving noweb.  With my experience with Leo1, I was able to create a new markup language that took advantage of outline structure.  I called the new language  "simplified noweb", though that terminology is obsolete.  I created @file nodes to distinguish between the old and new ways of creating derived files.  In Leo1, the @code directive is simply an abbreviation for a section definition line.  Simplified noweb used @c as an abbreviation for @code.  More importantly, simplified noweb used @c to separate doc parts from code parts without necessarily specifying a section name.  It quickly became apparent that most nodes could be unnamed.  All I needed was the @others directive to specify the location for all such unnamed nodes.
+
+From the start, simplified noweb was a joy to use. Indeed, the @others directive could replace all section definition lines.  Furthermore, I could make @doc directive optional if the body pane started in "code mode".  But this meant that plain body text could become a "literate" program! This was an amazing discovery.  These Aha's got me excited about Leo2. This was important, as it motivated me to do a lot of difficult design work.</t>
+<t tx="ekr.20050425064819.4">In spite of this excitement, I was uneasy. After much "daydreaming" I realized that I was afraid that reading and writing derived files would be interrupted by a long series of alerts. I saw that designing the "user interaction" during reading and writing would be very important. The next Aha was that I could replace a long series of alerts with messages to the log window, followed by a single "summary" alert. Much later I saw how to eliminate alerts entirely.
+
+At this time I thought there would be two kinds of "errors" while reading derived files. Warnings would alert the user that something non-serious had happened. True errors would alert the user that data might have been lost. Indeed, if Leo2 saves orphan and ignored nodes in a .leo file under an @file node, then read errors could endanger such nodes. Much later I saw that a robust error recovery scheme demands that @file nodes not contain orphan and @ignored nodes. (More on this subject later.) But if orphan and @ignored nodes are moved out of @file trees, there are no read errors that can cause data loss! So the distinction between warnings and errors finally went away.</t>
+<t tx="ekr.20050425064819.5">I next turned my attention to writing @file nodes.  A huge Aha: I realized that sentinel lines must contain both a leading and a trailing newline.  The general principle is this: the write code must contain absolutely no "conditional" logic, because otherwise the read code could not figure out whether the condition should be true or false.  So derived files contain blank lines between sentinel lines. These "extra" newlines are very useful, because the read (untangle) code can now easily determine exactly where every blank, tab and newline of the derived file came from.  It would be hard to overstate how important this simplifying principle was in practice.
+
+Much later, with urging from a customer, I realized that the write code could safely remove "extra" newlines between sentinels with a caching scheme in the low level atFile::os() routine. This scheme does not alter the body of the write code in any way: in effect, sentinels still contain leading and trailing "logical" newlines. The read code had to be modified to handle "missing" leading newlines, but this can always be done assuming that sentinels still contain logical leading and trailing newlines!
+
+At about this time I designed a clever way of having the write code tell the read code which newlines were inserted in doc parts. (The whole point of doc parts is to have the write code format long comments by splitting long lines.) To quote from my diary:
+
+"We can use the following convention to determine where putDocPart has inserted line breaks: A line in a doc part is followed by an inserted newline if and only if the newline is preceded by whitespace. This is a really elegant convention, and is essentially invisible to the user.
+
+Tangle outputs words until the line would become too long, and then it inserts a newline. To preserve all whitespace, tangle always includes the whitespace that terminates a word on the same line as the word itself. Therefore, split lines always end in whitespace. To make this convention work, tangle only has to delete the trailing whitespace of all lines that are followed by a 'real' newline."
+
+</t>
+<t tx="ekr.20050425064819.6">After the write code was working I turned my attention to the read (untangle) code.  Leo's Untangle command  is the most complex and difficult code I have ever written. Imagine my surprise when I realized that the Leo2 read code is essentially trivial! Indeed, the Leo2 untangle code is like an assembler. The read code scans lines of a derived files looking for "opcodes", that is, sentinel lines, and executes some simple code for each separate opcode. The heart of this code is the scanText routine in atFile.cpp.
+
+The read code was written and debugged in less than two days! It is the most elegant code I have ever written. While perfecting the read code I realized that sentinel lines should show the complete nesting structure found in the outline, even if this information seems redundant. For example, I was tempted to use a single sentinel to represent an @other directive, but finally abandoned this plan in favor of the @+other and @-other sentinels.
+
+This redundancy greatly simplified the read code and made the structure of derived files absolutely clear. Moreover, it turned out that we need, in general, all the information created by the present sentinel lines. In short, sentinels are as simple as they can be, and no simpler.
+
+The atFile::createNthChild method is a very important: it ensures that nodes will be correctly inserted into the outline. createNthChild must be bullet-proof if the Read code is to be robust. Note that the write code outputs @node sentinels, that is, section definitions, in the order in which sections are referenced in the outline, not the order in which sections appear in the outline. So createNthChild must insert the n'th node of parent p properly even if p contains fewer than n-1 children! The write code ensures that section references are properly nested: @node sentinels are enclosed in @node sentinels for all their ancestors in the @file tree. createNthChild creates dummy siblings as needed, then replaces the dummy siblings later when their actual definitions, that is, @node sentinels, are encountered.
+
+At this point the fundamental read/write code was complete. I found three minor bugs in the code over the next week or so, but it was clear that the read/write code formed a rock-solid base from which to continue design and implementation. This was an entirely unexpected surprise.</t>
+<t tx="ekr.20050425064819.7">At this point I could read and write derived files "by hand", using temporary Read and Write commands. The next step was to integrate the reading and writing of derived files with the loading and saving of .leo files.  From time to time I made minor changes to the drivers for the read/write code to accommodate the Load and Save code, but at no time did I significantly alter the read or write code itself.
+
+The user interaction of the Load and Save commands drove the design and implementation of the load/store code. The most important questions were: "what do we tell the user?", and "what does the user do with the information?" It turns out that the user can't make any complex decision during error recovery because the user doesn't have nearly enough information to make an informed choice. In turn, this means that certain kinds of error recovery schemes are out of the question...</t>
+<t tx="ekr.20050425064819.8">I now turned my attention to "attributes" of nodes.  Most attributes, like user marks, are non-essential. However, clone information is essential; we must never lose clone links. At this time I had a preliminary design for cross-file clones that involved a two part "pointer" consisting of a full path name and an immutable clone index within the derived file. Eventually such pointers completely disappeared, but the immutable clone indices remain.
+
+My first thought was that it would be good to store all attributes in @node sentinels in the derived file, but experience showed that would be irritating. Indeed, one wants Leo2 to rewrite derived files only if something essential has changed. For example, one doesn't want to rewrite the derived file just because a different node as been selected.
+
+At this point I had another Aha: we can use the .leo file to store all non-essential attributes. For example, this means that the .leo file, not the derived files, will change if we select a new node. In effect, the .leo file mirrors the derived file. The only reason to store nodes in the .leo file under an @file node is to carry these attributes, so Leo2 wrote dummy nodes that do not reference body text.  Much later I saw that dummy nodes were dangerous and that .leo files should contain all information found in derived files.</t>
+<t tx="ekr.20050425064819.9">The concept of mirroring created a huge breakthrough with cross-file clones: Here is an excerpt of an email i sent to my brother Speed:
+
+"I realized this morning that since a .leo file contains dummy vnodes for all nodes in a derived file, those dummy nodes can carry clone info! I changed one line to make sure that the write code always writes clone info in dummy vnodes and voila! Cross-file clones worked!"
+
+All of Leo1's clone code could be used completely unchanged. Everything "just works".</t>
+<t tx="ekr.20050425064819.10">At first I thought we could make sure that the .leo file always correctly mirrors all derived file, but disastrous experience showed that is a completely false hope. Indeed, backup .leo files will almost never mirror derived file correctly. So it became urgent to find a completely fool-proof error recovery scheme.
+
+I had known for quite a while that error recovery should work "as if" the mirroring nodes were deleted, then recreated afresh. Several failed attempts at an error recovery scheme convinced me that error recovery would actually have to delete all dummy nodes and then do a complete reread. This is what Leo2 does.
+
+But erasing dummy nodes would destroy any orphan and ignored nodes--by definition such nodes appear nowhere in the derived file. Therefore, I had to enforce the rule that @file nodes should contain no such nodes. Here is an email I wrote to my brother, Speed Ream discussing what turned out to be the penultimate error recovery scheme:
+
+"The error recovery saga continues. After much pondering and some trial coding I have changed my mind about orphans and @ignored nodes. They simply should never appear as descendants of @file nodes. Fortunately, this simplifies all aspects of Leo2.
+Leo2 will issue a warning (not an error) if an orphan or @ignored node appears as the descendant of an @file node when a .leo file is being saved. If any warnings occur while writing the derived file, Leo2 will write the "offending" @file tree to the .leo file instead of the derived file. This has several advantages:
+
+1.	The user gets warned about orphan nodes. These are useful warnings! Orphan nodes arise from missing @others directives or missing section references.
+
+2. The user doesn't have to change anything immediately in order to save an outline. This is very important. Besides warnings about orphans, Leo2 will also warn about undefined or unreferenced sections. User's shouldn't have to fix these warnings to do a Save!
+
+3. No errors or alerts will occur during Reading or Writing, so the user's anxiety level goes way down. At worst, some informational message will be sent to the log. The user will never have to make important decisions during Loads or Saves. [At last the dubious distinction between errors and warnings disappears.]
+
+4. Error recovery can be bullet-proof. Simple code will guarantee that after any read operation the structure of an @file node will match the structure of the derived file. Also, sentinels in derived files will now account for all children of an @file node. There are no more "missing nodes" that must be filled in using the .leo file. Finally, error recovery will never change the @file tree in any way: no more "recovered nodes" nodes.
+
+5. The present read code can be used almost unchanged. The only addition is the posting of a warning if the structure of the .leo file does not match the structure of the derived file. We need a warning because non-essential attribute of nodes (like user marks) may be altered."
+
+This ends the original history of Leo2. In fact, it took quite a while before Leo recovered properly from all errors. I finally saw that .leo files should duplicate all information in derived files. This allows a .leo file to be used a single backup file and allows maximal error recovery in all situations.  It took several months to stamp out several subtle bugs involving clones that caused spurious read errors. Such errors undermine confidence in Leo and can cause disastrous reversions. See my diary entries for January 2002 in leo.py for details.
+
+</t>
+<t tx="ekr.20050425064819.11"></t>
 </tnodes>
 </leo_file>

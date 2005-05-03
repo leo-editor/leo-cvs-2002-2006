@@ -34,8 +34,7 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
-<v t="ekr.20050420081933" a="TV"><vh>@recent-files</vh></v>
+<v t="ekr.20041119034357.1" a="TV"><vh>@settings</vh>
 <v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
@@ -1127,6 +1126,5 @@ Please do not change this; it would make a unit test fail.</t>
 
 Doing so would make unit tests fail.
 </t>
-<t tx="ekr.20050420081933">c:\prog\leoCVS\leo\config\leoSettings.leo</t>
 </tnodes>
 </leo_file>

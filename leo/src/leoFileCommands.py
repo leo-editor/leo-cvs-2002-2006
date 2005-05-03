@@ -1277,7 +1277,7 @@ class baseFileCommands:
             return t
     #@nonl
     #@-node:ekr.20031218072017.2009:newTnode
-    #@+node:ekr.20031218072017.3029:readAtFileNodes
+    #@+node:ekr.20031218072017.3029:readAtFileNodes (leoAtFile)
     def readAtFileNodes (self):
     
         c = self.c ; current = c.currentPosition()
@@ -1288,7 +1288,7 @@ class baseFileCommands:
         current.setBodyStringOrPane(current.bodyString())
         c.frame.body.onBodyChanged(current,undoType=None)
     #@nonl
-    #@-node:ekr.20031218072017.3029:readAtFileNodes
+    #@-node:ekr.20031218072017.3029:readAtFileNodes (leoAtFile)
     #@+node:ekr.20031218072017.2297:open
     def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
     

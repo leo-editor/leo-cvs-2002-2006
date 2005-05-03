@@ -6,10 +6,374 @@
 #@+node:ekr.20050318072227:Big picture: major incompletions
 None of these should take more than a week or so.
 #@nonl
+#@+node:ekr.20031218072017.658:Resolve CVS Conflicts command
+@nocolor
+
+There have been a couple different suggestions on how to obtain a .leo file
+that presents the conflicts for resolution.  My initial thought was to have
+some sort of external file containing only the structure information of interest.
+Edward has suggested that we could process the CVS created .leo file with all
+its conflict indicators.
+
+I'd like to offer another alternative: based on the ad-hoc procedure that Edward
+is currently using, i.e.,
+
+* Save your work to foo.leo file.
+* copy your foo.leo file to fooCvsTmp.leo
+* cvs ci
+* if there are no conflicts (hurray)
+*    remove fooCvsTmp.leo; finished
+* otherwise
+*    remove foo.leo
+*    cvs up foo.leo
+*    read foo.leo into an internal directed acyclic graph (DAG)
+*    generate the conflict resolution DAG from the proposed new leo internal
+DAG (which Leo already has as a matter of course) and the CVS derived DAG
+*    present for editting
+*    when you are satisfied and want to try to check in again, repeat.
+
+From the user's point of view, a CVS check in either succeeds or requires that
+the conflicts be resolved, after which another check in may be attempted.  If
+we're somehow interrupted in the middle of the process, the fooCvsTmp.leo file
+preserves the users work.
+#@+node:ekr.20050501111900:Stephen Schaefer
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3125092
+By: thyrsus
+
+About a month ago, I posted a screed on how @thin was inadequate to address
+my needs; that what I needed to collaborate on via version control was exactly
+the essence of Leo's value: the multiple expressions of structure, which by
+their nature must exist outside of @thin.  I said I was going to live the pain
+to discover a modus vivendi.
+
+Having done that, let me now say:
+
+AAAAAAAAAAAAGGGGGGGGHHHHHHHHHH!
+
+But the exercise has led me to a vision, which I will implement to the extent
+my nonexistent spare time and paltry programming talents permit.
+
+The essence of the pain is "conflicts", which become more  certain to occur
+as the leo file encompases ever more related files.  As I work on a change to
+the Linux configuration, my colleague works on a change to the Solaris configuration,
+and one of us checks in our version of the leo file documenting the site
+configuration first, and the other cannot check in his version of that file.
+The conflict must be resolved by the human.  Using the "diff" tool on the .leo
+XML is not an answer (though thank Heaven and Ed for gnxs).  The resolution
+needs two levels of support: outline and node.
+
+With the .leo file declared binary, in the event of a conflict CVS leaves you
+with the most recent CVS version and your rejected version, and you're responsible
+for performing a reconciliation and then resubmitting that.  Leo will recognize
+the problem, and present both versions of the project, side by side, splitting
+the outline pane.  The parallel trees will scroll/expand/contract in unison.
+Outline branches present in CVS and not yours will display as blank space in
+your version; nodes present in your version and not CVS will display as blank
+space in the CVS version. The CVS version will be read only, your version editable.
+The same node with differences in its text or in its children will be highlighted.
+You will be able to drag nodes from the CVS version into your version. If the
+text of a selected node has conflicts, the text area will split in two, showing
+the CVS version and your version, with differences highlighted, both sides of
+the pane scrolling in unison, the CVS side read-only, and you can copy from
+that side to your side.  I intend to take as many ideas as I can from tkdiff
+(http://sourceforge.net/projects/tkdiff/ - see also
+http://freshmeat.net/screenshots/10602/ ).  (I have begun translating tkdiff
+from from tcl to python - nearly 9000 lines and I'm still learning both languages,
+so draw your own timeline.)  You edit your nodes, you edit your tree, you hit
+the "reconcile" button, and your reconciliation of the conflict goes into CVS.
+If, meanwhile, another one of your over-achieving colleages has again updated
+CVS, the process repeats with the most current CVS version.  Or you can hit
+the "abandon" button to give up on your changes.
+
+As the Hebrews say at Passover: "Next year in Jerusalem."
+#@nonl
+#@-node:ekr.20050501111900:Stephen Schaefer
+#@+node:ekr.20031218072017.659:Jonathon 1
+https://sourceforge.net/forum/message.php?msg_id=1803722
+By: jmgilligan
+
+What is the intended behavior when foo.leo has a cloned node that appears several
+times in a derived (or multiple derived files) and the user edits this file
+or files to change two or more instances of the cloned node in different ways.
+
+Example:
+
+@file foo.py
+****begin tnode
+@others
+****end tnode
+...definition of procedure a
+***begin tnode
+def a:
+...print "a:", <<bar>>
+***end tnode
+...<<bar>>
+****begin tnode
+"bar"
+****end tnode
+
+...definition of procedure b
+***begin tnode
+def b:
+...print "b:", <<bar>>
+***end tnode
+...<<bar>>
+****begin tnode
+"bar"
+****end tnode
+
+...definition of procedure c
+***begin tnode
+def c:
+...print "a:", <<bar>>
+***end tnode
+...<<bar>>
+****begin tnode
+"bar"
+****end tnode
+
+In the .leo, if I edit <<bar>>, it will change simultaneously in each place,
+always in synch. However, suppose I edit foo.py in a text editor and change
+foo.py to read:
+
+#@verbatim
+#@+leo
+#@verbatim
+#@+node:0::@file foo.py
+#@verbatim
+#@+body
+#@verbatim
+#@+others
+#@verbatim
+#@+node:1::definition of a
+#@verbatim
+#@+body
+print "a:", 
+#@verbatim
+#@<<bar>>
+#@verbatim
+#@+node:1::<<bar>>
+#@verbatim
+#@+body
+"bar"
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::<<bar>>
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::definition of a
+#@verbatim
+#@+node:2::definition of b
+#@verbatim
+#@+body
+print "b:", 
+#@verbatim
+#@<<bar>>
+#@verbatim
+#@+node:1::<<bar>>
+#@verbatim
+#@+body
+"variation b"
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::<<bar>>
+#@verbatim
+#@-body
+#@verbatim
+#@-node:2::definition of b
+#@verbatim
+#@+node:3::definition of c
+#@verbatim
+#@+body
+print "c:", 
+#@verbatim
+#@<<bar>>
+#@verbatim
+#@+node:1::<<bar>>
+#@verbatim
+#@+body
+"variation c"
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::<<bar>>
+#@verbatim
+#@-body
+#@verbatim
+#@-node:3::definition of c
+#@verbatim
+#@-others
+#@verbatim
+#@-body
+#@verbatim
+#@-node:0::@file foo.py
+#@verbatim
+#@-leo
+
+Now what is supposed to happen when leo tries to read foo.py back in? It seems
+that there are three possible behaviors:
+
+1) leo reports a conflict that the user needs to resolve.
+2) leo breaks the clone: the three nodes become separate vnodes, not clones
+of the same one.
+3) leo arbitrarily takes one of the tnodes to be the new tnode for all of the
+clones. This is currently what happens. It creates something like a race condition,
+where the last node in the derived file determines what the final result will
+be. In this case, all three tnodes get text "variation c".
+
+This general question of how Leo should deal with conflicts in clone nodes seems
+to me that it needs to be addressed, particularly with respect to trying to
+avoid cvs conflicts via thick/thin modes.
+
+Note that this can become quite a subtle question because the same node can
+be cloned across several different derived files, in which case a serious race
+condition may pertain.
+
+At the least, I would like to see leo perform consistency checking on cloned
+nodes when it reads a derived file back in and warn the user if cloned nodes
+are inconsistent.
+
+Note that the issue also occurs with OpenWith: I can open each instance of a
+cloned node as a separate file in the external text editor. Which version is
+read back into leo depends on the order in which I save them from the external
+editor.
+#@-node:ekr.20031218072017.659:Jonathon 1
+#@+node:ekr.20031218072017.660:Jonathan 2
+By: jmgilligan ( Jonathan M. Gilligan ) 
+ Possible solution   
+2003-01-13 20:55  
+One possible solution for the conflicting clones problem is to have Leo, when it detects a conflicting clone, generate a text file (perhaps named LeoConflict_NNNN.leo, where NNNN is the gid of the node in question), which contains all the different versions of the node in question, output in leo XML format. 
+
+The vnode would then be marked with a "conflict" flag that would prevent the user from opening it in Leo until the conflict is resolved. See below for how the user resolves the conflict. 
+
+What I have in mind is something similar to the CVS conflict file, where a conflict between two versions is marked 
+
+<<<<<<< 
+blah blah blah? 
+======= 
+blah blah blah! 
+>>>>>>> 
+
+Except that we would output this file in Leo XML format. The reason for XML format would be to avoid problems of how to generically delimit the different sections (different versions of the cloned node). Here leo's XML tags can unambiguously delimit the sections. 
+
+The user would then edit the conflict file and delete all but the desired version. Then he would tell leo to resolve the conflict by reading the corrected file in and replacing the contents of the conflicting node with the contents of the LeoConflict_NNNN.leo file. 
+
+On the down side, this may well be too baroque a fix for a problem that most users may never encounter. If so, perhaps it's best left alone until more pressing problems are solved. I know what I am doing with Leo and am always careful NOT to generate conflicting clones when I edit in an external text editor, so I don't absolutely need a resolution to this problem. I raised it because it's good for a program to have well-defined behavior when presented with anomalous input. 
+
+In this sense, perhaps the best thing is to allow users to generate code from clones (what Allan Holub referred to as "enough rope to shoot yourself in the foot"), but to tell them that this practice is frowned upon.  
+
+ 
+#@-node:ekr.20031218072017.660:Jonathan 2
+#@+node:ekr.20031218072017.661:Gil 1
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1836117
+By: gilshwartz
+
+Edward, now that conflicting clones may not be the result of bad style, I would
+like to propose yet another solution that I have been thinking of for a while.
+
+My basic approach is that cloning is not just a convenience tool, it may also
+reflect some of the properties of the code/code set. Therefore my goal is for
+clone links to remain even if they are conflicting, and let the user resolve
+them at any convenient time. I also think that Leo's user interface is the best
+tool to resolve such conflicts.
+
+Thus here is my view of clone management and resolution inside Leo. Anytime
+content is loaded into Leo, if a clone set agrees (i.e. have the same content)
+all clone copies are marked "green". When one green clone is edited, all green
+clones are changed. This is Leo as it is now.
+
+If at some point conflicting clones are loaded, Leo decides on some representing
+content (may be based on policies like most occurring content, or latest timestamp,
+etc.) and provides visual clues for the conflict. The visual clue is give by
+a double node box, e.g.
+
++---------------+
++ clone org +
++---------------+
++ resolution +
++---------------+
+
+such that it is a single node in the tree, but has two content node, the original
+text, and the possibly arbitrary resolution.
+
+The resolution pseudo node is marked "blue", while the original text is either
+"green", if it is identical to the blue node, or "red", if it is not. To emphasis,
+the red/green nodes contain the specific (possibly) unique code associated with
+the derived file, while the pseudo blue node contains the shared clone content.
+During save to derived files, only the red/green content is saved, so effectively
+the file is not changed and the conflict is not resolved until the user chooses
+to do so. However, the clone relationship (via the gti) remains.
+
+During editing, changes to red/green clones are local and do not propagate to
+other clone copies (actually any change to a green node would turn it red).
+Changes to the blue nodes do propagate since it is a single view of the clone.
+A node pair may be converted to a regular node, effectively getting a new gti
+and eliminating the blue copy. Or, it may be converted to the shared copy,
+effectively forgetting its original content (leaving only the blue node). Once
+there are no more red nodes in a clone set, all its nodes become green again
+and the conflict is resolved.
+
+Some additional clone actions I think are useful are:
+
+1. Go to next/prev clone.
+2. Go to next/prev green clone (useful when there are red ones).
+3. Convert all green copies to a new clone group (useful when some clone copies
+needs to remain clones, but break from the original clone set, thus getting
+a new clone gti)
+
+Action 3 enables the user to partition its clone set to several clone groups
+by copying a clone's original content to its blue copy and finding matching
+(green) clones.
+
+What do we gain by all this?
+
+1. We can have conflicting clones without catastrophes.
+2. We get tools to handle conflicts and resolve them.
+3. We keep on working is Leo's environment, which is the most supportive one
+we can expect.
+
+Gil
+
+(By the way, I have a feeling that it would be useful to include along with
+the gti a hash of its node content, which could tell Leo is a node was changed
+outside of it. Also, including a timestamp in the opening sentinel, indicating
+when Leo last saved it. These may help having intelligent decisions by Leo in
+cases like conflicting clones.)
+#@-node:ekr.20031218072017.661:Gil 1
+#@+node:ekr.20031218072017.662:Gil 2
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1804169
+By: gilshwartz
+
+Another thing to think about is what should happen when close heading is changing.
+Right now, if you are inside Leo, all headings will be changed, and if you try
+to change by hand it in the derived file, clone links are removed (after some
+error reporting). This is quite reasonable in the current scheme of things,
+where one is not really expected to mess up with Leo sentinels.
+
+However, if/when @include is implemented, one would probably edit some files
+with clones that may extend to other files and changing the clone node name
+(via Leo) is quite feasible. Note that the gti for the cloned node would probably
+not change. So
+
+1. Do Leo resync the clone content based on the gti?
+2. Does it break cloning and allocates a new gti for one (arbitrary?) clone
+set?
+3. Let the user resolve manually, offer undoable auto-resolution with reporting,
+other?
+
+More things to think about.
+
+Gil
+#@-node:ekr.20031218072017.662:Gil 2
+#@-node:ekr.20031218072017.658:Resolve CVS Conflicts command
 #@+node:ekr.20050419060645:Alternate lead-in characters
 #@-node:ekr.20050419060645:Alternate lead-in characters
-#@+node:ekr.20050318072227.1:Finish @settings stuff
-#@-node:ekr.20050318072227.1:Finish @settings stuff
 #@+node:ekr.20050318072227.3:Emacs commands
 #@-node:ekr.20050318072227.3:Emacs commands
 #@+node:ekr.20050318072646:Easy commands
@@ -21,248 +385,13 @@ Use Python indices
 #@-node:ekr.20050318072227.2:Python-oriented find
 #@+node:ekr.20050318072227.5:Better handling of whitespace (cvs friendly)
 #@-node:ekr.20050318072227.5:Better handling of whitespace (cvs friendly)
-#@+node:ekr.20050318072227.7:Resolve CVS Conflicts command
-#@-node:ekr.20050318072227.7:Resolve CVS Conflicts command
 #@+node:ekr.20050318072227.6:Table-driven sysntax coloring
 #@-node:ekr.20050318072227.6:Table-driven sysntax coloring
 #@+node:ekr.20050419061015:Support for zodb
 #@-node:ekr.20050419061015:Support for zodb
 #@-node:ekr.20050318072227:Big picture: major incompletions
-#@+node:ekr.20050303103230:To do: 4.3b1 code complete
-#@+node:ekr.20041228090344:Finish @settings stuff 5
-@killcolor
-#@nonl
-#@+node:ekr.20050420061320:Copy expansion state when writing @settings trees
-#@-node:ekr.20050420061320:Copy expansion state when writing @settings trees
-#@+node:ekr.20050420061320.1:Cancel should revert all settings.
-Revert doesn't work after a node changes:this is confusing and dangerous.
-#@nonl
-#@-node:ekr.20050420061320.1:Cancel should revert all settings.
-#@+node:ekr.20050420061320.2:Handle undo/redo properly.
-#@-node:ekr.20050420061320.2:Handle undo/redo properly.
-#@+node:ekr.20050419062215:Fix bug: findSettingsRoot doesn't work if no summary node
-#@-node:ekr.20050419062215:Fix bug: findSettingsRoot doesn't work if no summary node
-#@+node:ekr.20050419062215.2:Allow adding, deleting, rearranging recent files ?
-#@-node:ekr.20050419062215.2:Allow adding, deleting, rearranging recent files ?
-#@-node:ekr.20041228090344:Finish @settings stuff 5
-#@+node:ekr.20050419073824:(Improved how Leo handles recent files) THESE CHANGES HAVE BEEN UNDONE
-#@+node:ekr.20050420061036:What I did
-@killcolor
-
-- Properly implemented undo/redo Clear Recent Files.
-
-- readSettingsFiles now reads @recentfiles nodes from all settings files.
-
-- Created @settings nodes and @recent-files nodes if they do not exist.
-#@nonl
-#@-node:ekr.20050420061036:What I did
-#@+node:ekr.20041117093246:Scanning @settings
-#@+node:ekr.20041117085625:openSettingsFile
-def openSettingsFile (self,path):
-    
-    try:
-        # Open the file in binary mode to allow 0x1a in bodies & headlines.
-        theFile = open(path,'rb')
-    except IOError:
-        g.es("can not open: " + path, color="blue")
-        return None
-        
-    # Similar to g.openWithFileName except it uses a null gui.
-    # Changing g.app.gui here is a major hack.
-    oldGui = g.app.gui
-    g.app.gui = leoGui.nullGui("nullGui")
-    c,frame = g.app.gui.newLeoCommanderAndFrame(path,updateRecentFiles=False)
-    frame.log.enable(False)
-    g.app.setLog(frame.log,"openWithFileName")
-    g.app.lockLog()
-    ok = frame.c.fileCommands.open(
-        theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
-    g.app.unlockLog()
-    frame.openDirectory = g.os_path_dirname(path)
-    g.app.gui = oldGui
-    return ok and c
-#@nonl
-#@-node:ekr.20041117085625:openSettingsFile
-#@+node:ekr.20041120064303:config.readSettingsFiles
-def readSettingsFiles (self,fileName,verbose=True):
-    
-    munge = self.munge ; seen = []
-    
-    # Init settings from leoSettings.leo files.
-    for path,setOptionsFlag in (
-        (self.globalConfigFile,False),
-        (self.homeFile,False),
-        (fileName,True),
-    ):
-        if path and path.lower() not in seen:
-            seen.append(path.lower())
-            if verbose:
-                s = 'reading settings in %s' % path
-                print s ; g.es(s)
-            c = self.openSettingsFile(path)
-            if c:
-                d = self.readSettings(c)
-                # g.trace(c)
-                if d:
-                    theHash = c.hash()
-                    d['_hash'] = theHash
-                    if setOptionsFlag:
-                        self.localOptionsDict[theHash] = d
-                        << update recent files from d >>
-                    else:
-                        self.localOptionsList.insert(0,d)
-                else:
-                    g.es("No @settings tree in %s" % (g.shortFileName(path)),color="red")
-                g.app.destroyWindow(c.frame)
-
-    self.inited = True
-    self.setIvarsFromSettings(None)
-#@nonl
-#@+node:ekr.20041201081440:<< update recent files from d >>
-for key in d.keys():
-    
-    if munge(key) == "recentfiles":
-        # Entries were created by parserBaseClass.set.
-        bunch = d.get(key)
-        files = bunch.val
-        files = [theFile.strip() for theFile in files]
-        if 0:
-            print "config.readSettingsFiles.  recent files from %s..." % fileName
-            for theFile in files:
-                print theFile
-        self.appendToRecentFiles(files)
-#@nonl
-#@-node:ekr.20041201081440:<< update recent files from d >>
-#@-node:ekr.20041120064303:config.readSettingsFiles
-#@+node:ekr.20041117083857.1:readSettings
-# Called to read all leoSettings.leo files.
-# Also called when opening an .leo file to read @settings tree.
-
-def readSettings (self,c):
-    
-    """Read settings from a file that may contain an @settings tree."""
-    
-    # g.trace(c.fileName())
-    
-    # Create a settings dict for c for set()
-    if c and self.localOptionsDict.get(c.hash()) is None:
-        self.localOptionsDict[c.hash()] = {}
-
-    parser = settingsTreeParser(c)
-    d = parser.traverse()
-
-    return d
-#@nonl
-#@-node:ekr.20041117083857.1:readSettings
-#@-node:ekr.20041117093246:Scanning @settings
-#@+node:ekr.20041201080436:config.appendToRecentFiles
-def appendToRecentFiles (self,files):
-    
-    def munge(name):
-        name = name or ''
-        return g.os_path_normpath(name).lower()
-    
-    for name in files:
-        # Remove all variants of name.
-        for name2 in self.recentFiles:
-            if munge(name) == munge(name2):
-                self.recentFiles.remove(name2)
-
-        self.recentFiles.append(name)
-#@nonl
-#@-node:ekr.20041201080436:config.appendToRecentFiles
-#@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
-def setRecentFiles (self,files,doUndo=False):
-    
-    '''Update the @recent-files node the present commander, and possibly
-    the global leoSettings.leo files.'''
-    
-    c = self.c ; old_p = c.currentPosition()
-    
-    # Append the files to the global list.
-    g.app.config.appendToRecentFiles(files)
-
-    root = g.app.config.settingsRoot(c)
-    if not root:
-        if 0:
-            << create @settings node >>
-        return
-
-    p = g.app.config.findSettingsPosition(c,"@recent-files")
-    if not p:
-        if 0:
-            << create @recent-files node >>
-        return
-    << Update p, leaving c.changed untouched >>
-#@nonl
-#@+node:ekr.20050420081237:<< create @settings node >>
-g.es('created @settings node',color='red')
-
-old_root = c.rootPosition()
-root = old_root.insertAfter()
-root.moveToRoot(old_root)
-root.initHeadString('@settings')
-
-assert(g.app.config.settingsRoot(c))
-#@nonl
-#@-node:ekr.20050420081237:<< create @settings node >>
-#@+node:ekr.20050420081237.1:<< create @recent-files node >>
-g.es('created @recent-files node',color='red')
-p = root.insertAsNthChild(0)
-p.initHeadString('@recent-files')
-c.selectPosition(p)
-
-assert(g.app.config.findSettingsPosition(c,"@recent-files"))
-#@nonl
-#@-node:ekr.20050420081237.1:<< create @recent-files node >>
-#@+node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
-oldText = p.bodyString()
-changed = c.isChanged()
-newText = '\n'.join(files)
-p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
-c.setChanged(changed)
-
-if doUndo:
-    c.undoer.setUndoTypingParams(old_p,'Clear Recent Files',
-        oldText,newText,oldSel=None,newSel=None)
-#@nonl
-#@-node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
-#@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
-#@+node:ekr.20031218072017.2080:clearRecentFiles
-def clearRecentFiles (self):
-    
-    """Clear the recent files list, then add the present file."""
-
-    c = self ; f = c.frame
-    
-    recentFilesMenu = f.menu.getMenu("Recent Files...")
-    f.menu.delete_range(recentFilesMenu,0,len(c.recentFiles))
-    
-    c.recentFiles = []
-    f.menu.createRecentFilesMenuItems()
-    c.updateRecentFiles(c.mFileName)
-    c.config.setRecentFiles(c.recentFiles,doUndo=True)
-#@nonl
-#@-node:ekr.20031218072017.2080:clearRecentFiles
-#@-node:ekr.20050419073824:(Improved how Leo handles recent files) THESE CHANGES HAVE BEEN UNDONE
-#@+node:ekr.20050421042526:Two new bug reports (minor)
-@killcolor
-
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=3109733
-By: rogererens
-
-PS1:
-Why did you make the setting trailing_body_newlines make a string in stead of
-an int?
-
-PS2:
-Perhaps prematurely to note this plugin error:
-The UNL does not show up in the status line of the Settings panel without enabling
-the Status_line plugin, but that latter plugin gives a traceback when enabled.
-#@nonl
-#@-node:ekr.20050421042526:Two new bug reports (minor)
-#@+node:ekr.20050328090032:(Fix bug in call to spawnv)  (Wait for reply to post)
+#@+node:ekr.20050303103230:To do: 4.3b2
+#@+node:ekr.20050328090032:(Create new os.spawnv2 type in openWith
 #@+node:ekr.20050328090032.1:Report
 @killcolor
 http://sourceforge.net/forum/message.php?msg_id=3054876
@@ -295,6 +424,142 @@ Cheers,
 Maciek
 #@nonl
 #@-node:ekr.20050328090032.1:Report
+#@+node:ekr.20050428093945:Suggested fix
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3122633
+By: davidschein
+
+In leoCommands.baseCommands.openWith(..) I added
+
+@color
+
+elif openType == "desHACK": apply(os.spawnv,(os.P_NOWAIT, r"c:\vim\vim63\gvim.exe",
+[" --servername LEO "," --remote-silent "]+[shortPath]))
+
+# and in vim.open_in_vim(..) I made the call to open Vim
+
+#des: the big HACK
+g.top().openWith(("desHACK",None, None))
+
+@nocolor
+
+I know it is outrageous, but I was in a hurry and it does the trick for now.
+I thought I would just share it in case it points to a proper solution.
+#@nonl
+#@-node:ekr.20050428093945:Suggested fix
+#@+node:ekr.20031218072017.2823:openWith and allies
+def openWith(self,data=None):
+
+    """This routine handles the items in the Open With... menu.
+
+    These items can only be created by createOpenWithMenuFromTable().
+    Typically this would be done from the "open2" hook.
+    
+    New in 4.3: The "os.spawnv" now works. You may specify arguments to spawnv
+    using a list, e.g.:
+        
+    openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
+    """
+    
+    c = self ; p = c.currentPosition()
+    if not data or len(data) != 3:
+        g.trace('bad data')
+        return
+    try:
+        openType,arg,ext=data
+        if not g.doHook("openwith1",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext):
+            << set ext based on the present language >>
+            << create or reopen temp file, testing for conflicting changes >>
+            << execute a command to open path in external editor >>
+        g.doHook("openwith2",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext)
+    except Exception:
+        g.es("unexpected exception in c.openWith")
+        g.es_exception()
+
+    return "break"
+#@+node:ekr.20031218072017.2824:<< set ext based on the present language >>
+if not ext:
+    theDict = g.scanDirectives(c)
+    language = theDict.get("language")
+    ext = g.app.language_extension_dict.get(language)
+    # print language,ext
+    if ext == None:
+        ext = "txt"
+    
+if ext[0] != ".":
+    ext = "."+ext
+    
+# print "ext",ext
+#@nonl
+#@-node:ekr.20031218072017.2824:<< set ext based on the present language >>
+#@+node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
+theDict = None ; path = None
+<< set dict and path if a temp file already refers to p.v.t >>
+if path:
+    << create or recreate temp file as needed >>
+else:
+    path = c.createOpenWithTempFile(p,ext)
+
+if not path:
+    return # An error has occured.
+#@nonl
+#@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
+searchPath = c.openWithTempFilePath(p,ext)
+
+if g.os_path_exists(searchPath):
+    for theDict in g.app.openWithFiles:
+        if p.v == theDict.get('v') and searchPath == theDict.get("path"):
+            path = searchPath
+            break
+#@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
+#@+node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+@ We test for changes in both p and the temp file:
+
+- If only p's body text has changed, we recreate the temp file.
+- If only the temp file has changed, do nothing here.
+- If both have changed we must prompt the user to see which code to use.
+@c
+
+encoding = theDict.get("encoding")
+old_body = theDict.get("body")
+new_body = p.bodyString()
+new_body = g.toEncodedString(new_body,encoding,reportErrors=True)
+
+old_time = theDict.get("time")
+try:
+    new_time = g.os_path_getmtime(path)
+except:
+    new_time = None
+    
+body_changed = old_body != new_body
+temp_changed = old_time != new_time
+
+if body_changed and temp_changed:
+    << Raise dialog about conflict and set result >>
+    if result == "cancel": return
+    rewrite = result == "outline"
+else:
+    rewrite = body_changed
+        
+if rewrite:
+    path = c.createOpenWithTempFile(p,ext)
+else:
+    g.es("reopening: " + g.shortFileName(path),color="blue")
+#@nonl
+#@+node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+message = (
+    "Conflicting changes in outline and temp file\n\n" +
+    "Do you want to use the code in the outline or the temp file?\n\n")
+
+result = g.app.gui.runAskYesNoCancelDialog(c,
+    "Conflict!", message,
+    yesMessage = "Outline",
+    noMessage = "File",
+    defaultButton = "Cancel")
+#@nonl
+#@-node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+#@-node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+#@-node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
 #@+node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
 try:
     if arg == None: arg = ""
@@ -313,31 +578,376 @@ try:
         os.startfile(arg+path)
     elif openType == "exec":
         command = "exec(%s)" % (arg+shortPath)
-        exec arg+path in {} # 12/11/02
+        exec arg+path in {}
     elif openType == "os.spawnl":
         filename = g.os_path_basename(arg)
         command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
         apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
     elif openType == "os.spawnv":
-        if 1: # New code allows args to spawnv.
-            filename = os.path.basename(arg[0]) 
-            vtuple = arg[1:] 
-            vtuple.append(path)
-            command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
-            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
-        else:
-            filename = g.os_path_basename(arg)
-            command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
-            apply(os.spawnv,(os.P_NOWAIT,arg,(filename,path)))
+        filename = os.path.basename(arg[0]) 
+        vtuple = arg[1:] 
+        vtuple.append(path)
+        command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+        apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+    elif openType == "os.spawnv2": # New in 4.3 beta 1: TO DO
+        # We need more args.
+        apply(os.spawnv,(os.P_NOWAIT, r"c:\vim\vim63\gvim.exe",
+            [" --servername LEO "," --remote-silent "]+[shortPath]))
     else:
         command="bad command:"+str(openType)
-    g.trace(command)
+        g.trace(command)
 except Exception:
     g.es("exception executing: "+command)
     g.es_exception()
 #@nonl
 #@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
-#@-node:ekr.20050328090032:(Fix bug in call to spawnv)  (Wait for reply to post)
+#@+node:ekr.20031218072017.2830:createOpenWithTempFile
+def createOpenWithTempFile (self,p,ext):
+    
+    c = self
+    path = c.openWithTempFilePath(p,ext)
+    try:
+        if g.os_path_exists(path):
+            g.es("recreating:  " + g.shortFileName(path),color="red")
+        else:
+            g.es("creating:  " + g.shortFileName(path),color="blue")
+        theFile = open(path,"w")
+        # Convert s to whatever encoding is in effect.
+        s = p.bodyString()
+        theDict = g.scanDirectives(c,p=p)
+        encoding = theDict.get("encoding",None)
+        if encoding == None:
+            encoding = c.config.default_derived_file_encoding
+        s = g.toEncodedString(s,encoding,reportErrors=True) 
+        theFile.write(s)
+        theFile.flush()
+        theFile.close()
+        try:    time = g.os_path_getmtime(path)
+        except: time = None
+        # g.es("time: " + str(time))
+        # New in 4.3: theDict now contains both 'p' and 'v' entries, of the expected type.
+        theDict = {
+            "body":s, "c":c, "encoding":encoding,
+            "f":theFile, "path":path, "time":time,
+            "p":p, "v":p.v }
+        << remove previous entry from app.openWithFiles if it exists >>
+        g.app.openWithFiles.append(theDict)
+        return path
+    except:
+        if theFile:
+            theFile.close()
+        theFile = None
+        g.es("exception creating temp file",color="red")
+        g.es_exception()
+        return None
+#@nonl
+#@+node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+for d in g.app.openWithFiles[:]:
+    p2 = d.get("p")
+    if p.v.t == p2.v.t:
+        print "removing previous entry in g.app.openWithFiles for",p.headString()
+        g.app.openWithFiles.remove(d)
+#@nonl
+#@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+#@-node:ekr.20031218072017.2830:createOpenWithTempFile
+#@+node:ekr.20031218072017.2832:c.openWithTempFilePath
+def openWithTempFilePath (self,p,ext):
+    
+    """Return the path to the temp file corresponding to p and ext."""
+    
+    if 0: # new code: similar to code in mod_tempfname.py plugin.
+        try:
+            # At least in Windows, user name may contain special characters
+            # which would require escaping quotes.
+            leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+        except:
+            leoTempDir = "LeoTemp"
+            g.es("Could not retrieve your user name.")
+            g.es("Temporary files will be stored in: %s" % leoTempDir)
+        
+        td = os.path.join(os.path.abspath(tempfile.gettempdir()),leoTempDir)
+        if not os.path.exists(td):
+            os.mkdir(td)
+        
+        name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+        path = os.path.join(td,name)
+        return path
+    else: # Original code.
+        name = "LeoTemp_%s_%s%s" % (
+            str(id(p.v.t)),
+            g.sanitize_filename(p.headString()),
+            ext)
+    
+        name = g.toUnicode(name,g.app.tkEncoding)
+    
+        if 1:
+            td = g.os_path_abspath(tempfile.gettempdir())
+        else:
+            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+    
+        path = g.os_path_join(td,name)
+    
+        return path
+#@nonl
+#@-node:ekr.20031218072017.2832:c.openWithTempFilePath
+#@-node:ekr.20031218072017.2823:openWith and allies
+#@-node:ekr.20050328090032:(Create new os.spawnv2 type in openWith
+#@+node:ekr.20031218072017.801:Zipped .leo files (must be compatible with chapters.py)
+#@+node:ekr.20050428062312:Request 1
+@nocolor
+
+By: samcollett ( Sam Collett ) 
+ Compressed LEO files   
+2003-01-07 16:57
+
+
+Would it be possible to have a new file format that was basically a compressed
+version of LEO files? Maybe using the gzip compression method. You could then
+save a lot of space when you do large files. Not being a professional
+programmer myself (I mainly dabble in web design - HTML and Active Server
+Pages) how difficult would this be to implement? You would just output using a
+different file extension so users of the older versions can still use files
+with the LEO extension.
+#@-node:ekr.20050428062312:Request 1
+#@+node:ekr.20040226092546:Request 2
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2442772
+By: ejoy
+
+I made an experiment last night. I replaced the call to open()in leofilecommand.py
+with a call to gzip.open().
+
+The LeoPy.leo file saved this way is only 600K! And there is no significant
+speed down in saving.
+
+I think it is a good idea to add compression support for load/save .leo files.
+When reading or writing file with name ending with ".leo.gz", leo can call gzip
+module to uncompress/compress the file, saving a lot of disk space.
+
+What do you think of this?
+#@nonl
+#@-node:ekr.20040226092546:Request 2
+#@+node:ekr.20031218072017.2297:open
+def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c ; frame = c.frame
+    # Read the entire file into the buffer
+    self.fileBuffer = theFile.read() ; theFile.close()
+    self.fileIndex = 0
+    << Set the default directory >>
+    self.topPosition = None
+    c.beginUpdate()
+    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
+    frame.resizePanesToRatio(ratio,frame.secondary_ratio)
+    if 0: # 1/30/04: this is useless.
+        if self.topPosition: 
+            c.setTopVnode(self.topPosition)
+    c.endUpdate()
+    # Delete the file buffer
+    self.fileBuffer = ""
+    return ok
+#@nonl
+#@+node:ekr.20031218072017.2298:<< Set the default directory >>
+@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
+@c
+
+theDir = g.os_path_dirname(fileName)
+
+if len(theDir) > 0:
+    c.openDirectory = theDir
+#@nonl
+#@-node:ekr.20031218072017.2298:<< Set the default directory >>
+#@-node:ekr.20031218072017.2297:open
+#@+node:ekr.20050428063105:newOpen (From chapters.py)
+oldOpen = leoFileCommands.fileCommands.open
+
+def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
+
+    global iscStringIO
+    c = self.c
+    
+    if zipfile.is_zipfile( fileName ):
+        iscStringIO = True
+        chapters = openChaptersFile( fileName )
+        g.es( str( len( chapters ) ) + " Chapters To Read", color = 'blue' )
+        insertChapters( chapters, c.frame, c )
+        g.es( "Finished Reading Chapters", color = 'blue' )
+        iscStringIO = False
+        return True
+
+    return oldOpen(self,file,fileName,readAtFileNodesFlag,silent)
+#@nonl
+#@-node:ekr.20050428063105:newOpen (From chapters.py)
+#@-node:ekr.20031218072017.801:Zipped .leo files (must be compatible with chapters.py)
+#@+node:ekr.20041228074125:(Make drawing more flexible)
+#@+node:ekr.20041228092223:Play with wiki markup
+http://sourceforge.net/forum/message.php?msg_id=2205285
+From: Rich
+
+Color ''and'' italic/bold characters with @markup. One thing I'd like to
+''not'' see are the markup characters in @file-nosent files.  "~~red:NOTE:~~"
+does nothing for readability in plain text.
+#@nonl
+#@-node:ekr.20041228092223:Play with wiki markup
+#@+node:EKR.20040602153716:(Finish drawUserIcons)
+# Create a better way of writing user icons.
+#@nonl
+#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+Also add corresponding commands.
+#@nonl
+#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+#@+node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2477913
+By: edream
+
+A better design for user icons
+
+Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
+to have t.unknownAttributes["icons"] be a list of g.Bunches rather
+than a list of tuples.  Each of these bunches could have the
+following keys:
+
+"type"
+
+"file", "icon" or "url".  At present my prototype code uses "file" to specify
+the location of an icon.
+
+"where":
+
+"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
+where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
+means before the plus/minus box.  "beforeIcon" means before the standard icon.
+
+"height":
+
+the height of the icon to use when calculating the line height.  Default: get
+from the icon itself, if possible.
+
+"width":
+
+the width of the icon to use when calculating where to put the following element.
+Default: get from the icon, if possible.
+
+"xoffset"
+
+Leo draws the icon at x + xoffset, where x is determined by the where param
+above.  Default 0.
+
+"xpad"
+
+The amount of extra space following the icon.  Default 0.
+
+"yoffset"
+
+Leo draws the icon at y + yoffset.  Default 0.
+
+"ypad"
+
+The amount of extra vertical space to add to the line height.  Default 0.
+
+These offset and pad values are integer pixel values and may be positive or
+negative.
+
+"lineHeight"  NOT USED.
+
+Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+
+Edward
+
+P.S.  Other gui's might not be able to support all these options.  That's ok.
+The drawing code in gui plugins should degrade gracefully.
+
+EKR
+#@nonl
+#@-node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
+#@+node:ekr.20040317184631.2:Changes
+@nocolor
+
+"lineHeight"
+
+This key won't be used.
+
+t.unknownAttributes["lineYOffset"] 
+
+An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
+#@nonl
+#@-node:ekr.20040317184631.2:Changes
+#@+node:ekr.20040317184631.1:To do
+@nocolor
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+#@nonl
+#@-node:ekr.20040317184631.1:To do
+#@+node:EKR.20040526202501:putUnknownAttributes
+def putUnknownAttributes (self,torv):
+    
+    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
+    
+    attrDict = torv.unknownAttributes
+    if type(attrDict) != type({}):
+        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+        return
+
+    for key in attrDict.keys():
+        val = attrDict[key]
+        self.putUa(torv,key,val)
+#@nonl
+#@-node:EKR.20040526202501:putUnknownAttributes
+#@-node:EKR.20040602153716:(Finish drawUserIcons)
+#@+node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2877106
+
+By: Paul Paterson - paulpaterson
+RE: Can I color the headline text ?  
+2004-12-01 08:01
+
+The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
+ 
+Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
+ 
+Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
+ 
+Between the two of them there should be enough information to help you achieve what you want. 
+ 
+It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
+#@nonl
+#@-node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
+#@-node:ekr.20041228074125:(Make drawing more flexible)
 #@+node:ekr.20050316063117:Scripting 3
 #@+node:ekr.20050421044938:Add __name__ to execute script namespace?
 #@-node:ekr.20050421044938:Add __name__ to execute script namespace?
@@ -553,7 +1163,1586 @@ by then maybe subprocess will be updated.
 #@-node:ekr.20050302072742:iPython support (more powerful execute script)
 #@-node:ekr.20050211173540:Finish changes to c.executeScript & at.write
 #@-node:ekr.20050316063117:Scripting 3
-#@+node:ekr.20050420090710:Plugins
+#@+node:ekr.20050420090710:Plugins 5
+#@+node:ekr.20050416150731.2:Keystrokes for jumping between words: temacs & usetemacs
+#@+node:ekr.20050428081411:Request
+@killcolor
+
+http://sourceforge.net/forum/forum.php?thread_id=1260345&forum_id=10227
+
+I try to quickly jump between words using CTRL+ left and right arrows. The problem is it seems leo jumps according to spaces, not words. For instance, if I my cursor is at the end of a line like: 
+Pmw.ComboBox(r,label_text 
+and I press CTRL-left, leo will jump to the beginning of the line. But I want it to jump to the beginning of the word "label_text".
+
+How can I do this in leo?
+#@nonl
+#@-node:ekr.20050428081411:Request
+#@+node:ekr.20050428090956:Reply
+@killcolor
+
+The reason that Leo does not support the default Tk bindings described at: 
+ 
+http://www.tcl.tk/man/tcl8.4/TkCmd/text.htm 
+ 
+is that idle_body_key contains return 'break' statements throughout. I deleted
+the last return 'break' and the shift/control arrow keys mostly work. You can
+try to replace return 'break' by just return throughout, but there are no
+guarantees that this will be to your liking. 
+ 
+Leo should have commands to move the cursor in various ways. The big advantage
+of this way is that key bindings are uniform in both panes. OTOH, one might
+rather that some key bindings work differently depending on what pane is active.
+In general, I intensely dislike such modes, but other people may disagree. 
+ 
+The temacs and usetemacs plugins go a long way towards bringing all the Emacs
+commands into Leo, and it's becoming intolerable not to bring these commands
+fully into the fold. I plan to do this by 4.3 final. This would be the
+appropriate place to define lots of Emacs-style cursor move commands.
+#@nonl
+#@-node:ekr.20050428090956:Reply
+#@+node:ekr.20050428075604:From Tk docs
+The Left and Right keys move the insertion cursor one character to the left or
+right; they also clear any selection in the text.
+
+If Left or Right is typed with the Shift key down, then the insertion cursor
+moves and the selection is extended to include the new character.
+
+Control-Left and Control-Right move the insertion cursor by words, and
+Control-Shift-Left and Control-Shift-Right move the insertion cursor by words
+and also extend the selection.
+
+Control-b and Control-f behave the same as Left and Right, respectively.
+
+Meta-b and Meta-f behave the same as Control-Left and Control-Right,
+respectively.
+#@nonl
+#@-node:ekr.20050428075604:From Tk docs
+#@+node:ekr.20031218072017.3996:class leoTkinterBody
+class leoTkinterBody (leoFrame.leoBody):
+    
+    """A class that represents the body pane of a Tkinter window."""
+
+    @others
+#@nonl
+#@+node:ekr.20031218072017.3997: Birth & death
+#@+node:ekr.20031218072017.2182:tkBody. __init__
+def __init__ (self,frame,parentFrame):
+    
+    # g.trace("leoTkinterBody")
+    
+    # Call the base class constructor.
+    leoFrame.leoBody.__init__(self,frame,parentFrame)
+
+    self.bodyCtrl = self.createControl(frame,parentFrame)
+
+    self.colorizer = leoColor.colorizer(self.c)
+#@nonl
+#@-node:ekr.20031218072017.2182:tkBody. __init__
+#@+node:ekr.20031218072017.838:tkBody.createBindings
+def createBindings (self,frame):
+    
+    t = self.bodyCtrl
+    
+    # Event handlers...
+    t.bind("<Button-1>", frame.OnBodyClick)
+    if sys.platform == "win32":
+        # Support Linux middle-button paste easter egg.
+        t.bind("<Button-2>", frame.OnPaste)
+    t.bind("<Button-3>", frame.OnBodyRClick)
+    t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
+    t.bind("<Key>", frame.body.onBodyKey)
+
+    # Gui-dependent commands...
+    t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+    t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+    t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+#@nonl
+#@-node:ekr.20031218072017.838:tkBody.createBindings
+#@+node:ekr.20031218072017.3998:tkBody.createControl
+def createControl (self,frame,parentFrame):
+    
+    c = self.c
+
+    # A light selectbackground value is needed to make syntax coloring look good.
+    wrap = c.config.getBool('body_pane_wraps')
+    wrap = g.choose(wrap,"word","none")
+    
+    # Setgrid=1 cause severe problems with the font panel.
+    body = Tk.Text(parentFrame,name='body',
+        bd=2,bg="white",relief="flat",
+        setgrid=0,wrap=wrap, selectbackground="Gray80") 
+    
+    bodyBar = Tk.Scrollbar(parentFrame,name='bodyBar')
+    frame.bodyBar = self.bodyBar = bodyBar
+    body['yscrollcommand'] = bodyBar.set
+    bodyBar['command'] = body.yview
+    bodyBar.pack(side="right", fill="y")
+    
+    # Always create the horizontal bar.
+    frame.bodyXBar = self.bodyXBar = bodyXBar = Tk.Scrollbar(
+        parentFrame,name='bodyXBar',orient="horizontal")
+    body['xscrollcommand'] = bodyXBar.set
+    bodyXBar['command'] = body.xview
+    self.bodyXbar = frame.bodyXBar = bodyXBar
+    
+    if wrap == "none":
+        g.trace(parentFrame)
+        bodyXBar.pack(side="bottom", fill="x")
+        
+    body.pack(expand=1,fill="both")
+
+    self.wrapState = wrap
+
+    if 0: # Causes the cursor not to blink.
+        body.configure(insertofftime=0)
+        
+    return body
+#@nonl
+#@-node:ekr.20031218072017.3998:tkBody.createControl
+#@-node:ekr.20031218072017.3997: Birth & death
+#@+node:ekr.20041217135735.1:tkBody.setColorFromConfig
+def setColorFromConfig (self):
+    
+    c = self.c ; body = self.bodyCtrl
+        
+    bg = c.config.getColor("body_text_background_color") or 'white'
+    try: body.configure(bg=bg)
+    except:
+        g.es("exception setting body text background color")
+        g.es_exception()
+    
+    fg = c.config.getColor("body_text_foreground_color") or 'black'
+    try: body.configure(fg=fg)
+    except:
+        g.es("exception setting body textforeground color")
+        g.es_exception()
+
+    bg = c.config.getColor("body_insertion_cursor_color")
+    if bg:
+        try: body.configure(insertbackground=bg)
+        except:
+            g.es("exception setting body pane cursor color")
+            g.es_exception()
+        
+    if sys.platform != "win32": # Maybe a Windows bug.
+        fg = c.config.getColor("body_cursor_foreground_color")
+        bg = c.config.getColor("body_cursor_background_color")
+        if fg and bg:
+            cursor="xterm" + " " + fg + " " + bg
+            try: body.configure(cursor=cursor)
+            except:
+                import traceback ; traceback.print_exc()
+#@nonl
+#@-node:ekr.20041217135735.1:tkBody.setColorFromConfig
+#@+node:ekr.20031218072017.2183:tkBody.setFontFromConfig
+def setFontFromConfig (self):
+
+    c = self.c ; body = self.bodyCtrl
+    
+    font = c.config.getFontFromParams(
+        "body_text_font_family", "body_text_font_size",
+        "body_text_font_slant",  "body_text_font_weight",
+        c.config.defaultBodyFontSize, tag = "body")
+    
+    self.fontRef = font # ESSENTIAL: retain a link to font.
+    body.configure(font=font)
+
+    # g.trace("BODY",body.cget("font"),font.cget("family"),font.cget("weight"))
+#@nonl
+#@-node:ekr.20031218072017.2183:tkBody.setFontFromConfig
+#@+node:ekr.20031218072017.1320:body key handlers
+@ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
+
+1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if so.  This is the clean and safe way.
+
+2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
+@c
+
+@others
+#@nonl
+#@+node:ekr.20031218072017.1321:idle_body_key
+def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Update the body pane at idle time."""
+    
+    __pychecker__ = 'maxlines=500'
+
+    # g.trace(ch,ord(ch))
+    c = self.c
+    if not c: return "break"
+    if not p: return "break"
+    if not c.isCurrentPosition(p): return "break"
+
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+    body = p.bodyString()
+    if not newSel:
+        newSel = c.frame.body.getTextSelection()
+    if oldText != None:
+        s = oldText
+    else:
+        s = c.frame.body.getAllText()
+    << return if nothing has changed >>
+    << set removeTrailing >>
+    if ch in ('\t','\n','\r',chr(8)):
+        d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+        tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+        if ch in ('\n','\r'):
+            << Do auto indent >>
+        elif ch == '\t' and tab_width < 0:
+            << convert tab to blanks >>
+        elif ch in (chr(8)) and tab_width < 0:
+            << handle backspace with negative tab_width >>
+    << set s to widget text, removing trailing newlines if necessary >>
+    if undoType: # 11/6/03: set oldText properly when oldText param exists.
+        if not oldText: oldText = body
+        newText = s
+        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+    p.v.setTnodeText(s)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed:
+        c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return "break"
+#@nonl
+#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
+# 6/22/03: Make sure we handle delete key properly.
+if ch not in ('\n','\r',chr(8)):
+
+    if s == body:
+        return "break"
+
+    # Do nothing for control characters.
+    if (ch == None or len(ch) == 0) and body == s[:-1]:
+        return "break"
+#@nonl
+#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
+#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = s ; old = body
+
+if len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
+#@nonl
+#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
+#@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+# Do nothing if we are in @nocolor mode or if we are executing a Change command.
+if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+    # Get the previous line.
+    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s[-1]==':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Added Nov 18 by David McNab, david@rebirthing.co.nz
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width]
+        tabex = 0
+        for i in range(0, len(s)):
+            if s[i] == '\t':
+                tabex += tab_width - 1
+            if s[i] in '([{':
+                brackets.append(i+tabex + 1)
+            elif s[i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+        # end patch by David McNab
+    ws = g.computeLeadingWhitespace (width,tab_width)
+    if ws and len(ws) > 0:
+        c.frame.bodyCtrl.insert("insert", ws)
+        removeTrailing = False # bug fix: 11/18
+#@nonl
+#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+#@+node:ekr.20031218072017.1325:<< convert tab to blanks >>
+# Do nothing if we are executing a Change command.
+if undoType != "Change":
+    
+    # Get the characters preceeding the tab.
+    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+    
+    if 1: # 6/26/03: Convert tab no matter where it is.
+
+        w = g.computeWidth(prev,tab_width)
+        w2 = (abs(tab_width) - (w % abs(tab_width)))
+        # g.trace("prev w:",w,"prev chars:",prev)
+        c.frame.bodyCtrl.delete("insert -1c")
+        c.frame.bodyCtrl.insert("insert",' ' * w2)
+    
+    else: # Convert only leading tabs.
+    
+        # Get the characters preceeding the tab.
+        prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+
+        # Do nothing if there are non-whitespace in prev:
+        all_ws = True
+        for ch in prev:
+            if ch != ' ' and ch != '\t':
+                all_ws = False
+        if all_ws:
+            w = g.computeWidth(prev,tab_width)
+            w2 = (abs(tab_width) - (w % abs(tab_width)))
+            # g.trace("prev w:",w,"prev chars:",prev)
+            c.frame.bodyCtrl.delete("insert -1c")
+            c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20031218072017.1325:<< convert tab to blanks >>
+#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+# Get the preceeding characters.
+prev   =c.frame.bodyCtrl.get("insert linestart","insert")
+allPrev=c.frame.bodyCtrl.get("1.0","insert")
+n = len(allPrev)
+try:
+    oldAllPrev = body[:n]
+    assert(allPrev==oldAllPrev)
+    deletedChar = body[n:n+1]
+except (IndexError,AssertionError):
+    deletedChar = None
+
+if deletedChar in (u' ',' '):
+    n = len(prev) ; w = abs(tab_width)
+    n2 = n % w # Delete up to n2 - 1 spaces.
+    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
+        count = 0
+        while n2 > 0:
+            n2 -= 1
+            ch = prev[n-count-1]
+            # g.trace(count,repr(ch))
+            if ch in (u' ',' '): count += 1
+            else: break
+        # g.trace(count,(n%w))
+        if count > 0:
+            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+#@nonl
+#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+s = c.frame.body.getAllText()
+if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+    s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # print "no real change"
+    return "break"
+#@nonl
+#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+#@+node:ekr.20031218072017.1327:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20031218072017.1327:<< recolor the body >>
+#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+redraw_flag = False
+
+c.beginUpdate()
+
+# Update dirty bits.
+if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+    redraw_flag = True
+    
+# Update icons.
+val = p.computeIcon()
+
+# 7/8/04: During unit tests the node may not have been drawn,
+# So p.v.iconVal may not exist yet.
+if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+    p.v.iconVal = val
+    redraw_flag = True
+
+c.endUpdate(redraw_flag) # redraw only if necessary
+#@nonl
+#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+#@-node:ekr.20031218072017.1321:idle_body_key
+#@+node:ekr.20031218072017.1329:onBodyChanged (tkTree)
+# Called by command handlers that have already changed the text.
+
+def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Handle a change to the body pane."""
+    
+    c = self.c
+    if not p:
+        p = c.currentPosition()
+
+    if not oldSel:
+        oldSel = c.frame.body.getTextSelection()
+
+    self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
+#@nonl
+#@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
+#@+node:ekr.20031218072017.1330:onBodyKey
+def onBodyKey (self,event):
+    
+    """Handle any key press event in the body pane."""
+
+    c = self.c ; ch = event.char
+    
+    # This translation is needed on MacOS.
+    if ch == '':
+        d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
+        ch = d.get(event.keysym,'')
+
+    oldSel = c.frame.body.getTextSelection()
+    
+    p = c.currentPosition()
+
+    if 0: # won't work when menu keys are bound.
+        self.handleStatusLineKey(event)
+        
+    # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
+#@nonl
+#@+node:ekr.20040105223536:handleStatusLineKey
+def handleStatusLineKey (self,event):
+    
+    c = self.c ; frame = c.frame
+    ch = event.char ; keysym = event.keysym
+    keycode = event.keycode ; state = event.state
+
+    if 1: # ch and len(ch)>0:
+        << trace the key event >>
+
+    try:
+        status = self.keyStatus
+    except:
+        status = [] ; frame.clearStatusLine()
+    
+    for sym,name in (
+        ("Alt_L","Alt"),("Alt_R","Alt"),
+        ("Control_L","Control"),("Control_R","Control"),
+        ("Escape","Esc"),
+        ("Shift_L","Shift"), ("Shift_R","Shift")):
+        if keysym == sym:
+            if name not in status:
+                status.append(name)
+                frame.putStatusLine(name + ' ')
+            break
+    else:
+        status = [] ; frame.clearStatusLine()
+
+    self.keyStatus = status
+#@nonl
+#@+node:ekr.20040105223536.1:<< trace the key event >>
+try:    self.keyCount += 1
+except: self.keyCount  = 1
+
+printable = g.choose(ch == keysym and state < 4,"printable","")
+
+print "%4d %s %d %s %x %s" % (
+    self.keyCount,repr(ch),keycode,keysym,state,printable)
+#@nonl
+#@-node:ekr.20040105223536.1:<< trace the key event >>
+#@-node:ekr.20040105223536:handleStatusLineKey
+#@-node:ekr.20031218072017.1330:onBodyKey
+#@+node:ekr.20031218072017.1331:onBodyWillChange
+# Called by command handlers that change the text just before idle time.
+
+def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
+    
+    """Queue the body changed idle handler."""
+    
+    c = self.c
+
+    if not oldSel:
+        oldSel = c.frame.body.getTextSelection()
+
+    if not p:
+        p = c.currentPosition()
+
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1331:onBodyWillChange
+#@-node:ekr.20031218072017.1320:body key handlers
+#@+node:ekr.20031218072017.3999:forceRecolor
+def forceFullRecolor (self):
+    
+    self.forceFullRecolorFlag = True
+#@nonl
+#@-node:ekr.20031218072017.3999:forceRecolor
+#@+node:ekr.20031218072017.4000:Tk bindings (leoTkinterBody)
+@
+I could have used this to redirect all calls from the body class and the bodyCtrl to Tk. OTOH:
+
+1. Most of the wrappers do more than the old Tk routines now and
+2. The wrapper names are more discriptive than the Tk names.
+
+Still, using the Tk names would have had its own appeal.  If I had prefixed the tk routine with tk_ the __getatt__ routine could have stripped it off!
+@c
+
+if 0: # This works.
+    def __getattr__(self,attr):
+        return getattr(self.bodyCtrl,attr)
+        
+if 0: # This would work if all tk wrapper routines were prefixed with tk_
+    def __getattr__(self,attr):
+        if attr[0:2] == "tk_":
+            return getattr(self.bodyCtrl,attr[3:])
+#@nonl
+#@+node:ekr.20031218072017.4001:Bounding box (Tk spelling)
+def bbox(self,index):
+
+    return self.bodyCtrl.bbox(index)
+#@nonl
+#@-node:ekr.20031218072017.4001:Bounding box (Tk spelling)
+#@+node:ekr.20031218072017.4002:Color tags (Tk spelling)
+# Could have been replaced by the __getattr__ routine above...
+# 12/19/03: no: that would cause more problems.
+
+def tag_add (self,tagName,index1,index2):
+    self.bodyCtrl.tag_add(tagName,index1,index2)
+
+def tag_bind (self,tagName,event,callback):
+    self.bodyCtrl.tag_bind(tagName,event,callback)
+
+def tag_configure (self,colorName,**keys):
+    self.bodyCtrl.tag_configure(colorName,keys)
+
+def tag_delete(self,tagName):
+    self.bodyCtrl.tag_delete(tagName)
+
+def tag_remove (self,tagName,index1,index2):
+    return self.bodyCtrl.tag_remove(tagName,index1,index2)
+#@nonl
+#@-node:ekr.20031218072017.4002:Color tags (Tk spelling)
+#@+node:ekr.20031218072017.2184:Configuration (Tk spelling)
+def cget(self,*args,**keys):
+    
+    val = self.bodyCtrl.cget(*args,**keys)
+    
+    if g.app.trace:
+        g.trace(val,args,keys)
+
+    return val
+    
+def configure (self,*args,**keys):
+    
+    if g.app.trace:
+        g.trace(args,keys)
+    
+    return self.bodyCtrl.configure(*args,**keys)
+#@nonl
+#@-node:ekr.20031218072017.2184:Configuration (Tk spelling)
+#@+node:ekr.20031218072017.4003:Focus
+def hasFocus (self):
+    
+    return self.bodyCtrl == self.frame.top.focus_displayof()
+    
+def setFocus (self):
+    
+    self.bodyCtrl.focus_set()
+#@nonl
+#@-node:ekr.20031218072017.4003:Focus
+#@+node:ekr.20031218072017.4004:Height & width
+def getBodyPaneHeight (self):
+    
+    return self.bodyCtrl.winfo_height()
+
+def getBodyPaneWidth (self):
+    
+    return self.bodyCtrl.winfo_width()
+#@nonl
+#@-node:ekr.20031218072017.4004:Height & width
+#@+node:ekr.20031218072017.4005:Idle time...
+def scheduleIdleTimeRoutine (self,function,*args,**keys):
+
+    self.bodyCtrl.after_idle(function,*args,**keys)
+#@nonl
+#@-node:ekr.20031218072017.4005:Idle time...
+#@+node:ekr.20031218072017.4006:Indices (leoTkinterBody)
+#@+node:ekr.20031218072017.4007:adjustIndex
+def adjustIndex (self,index,offset):
+    
+    t = self.bodyCtrl
+    return t.index("%s + %dc" % (t.index(index),offset))
+#@nonl
+#@-node:ekr.20031218072017.4007:adjustIndex
+#@+node:ekr.20031218072017.4008:compareIndices
+def compareIndices(self,i,rel,j):
+
+    return self.bodyCtrl.compare(i,rel,j)
+#@nonl
+#@-node:ekr.20031218072017.4008:compareIndices
+#@+node:ekr.20031218072017.4009:convertRowColumnToIndex
+def convertRowColumnToIndex (self,row,column):
+    
+    return self.bodyCtrl.index("%s.%s" % (row,column))
+#@nonl
+#@-node:ekr.20031218072017.4009:convertRowColumnToIndex
+#@+node:ekr.20031218072017.4010:convertIndexToRowColumn
+def convertIndexToRowColumn (self,index):
+    
+    index = self.bodyCtrl.index(index)
+    start, end = string.split(index,'.')
+    return int(start),int(end)
+#@nonl
+#@-node:ekr.20031218072017.4010:convertIndexToRowColumn
+#@+node:ekr.20031218072017.4011:getImageIndex
+def getImageIndex (self,image):
+    
+    return self.bodyCtrl.index(image)
+#@nonl
+#@-node:ekr.20031218072017.4011:getImageIndex
+#@+node:ekr.20031218072017.4012:tkIndex (internal use only)
+def tkIndex(self,index):
+    
+    """Returns the canonicalized Tk index."""
+    
+    if index == "start": index = "1.0"
+    
+    return self.bodyCtrl.index(index)
+#@nonl
+#@-node:ekr.20031218072017.4012:tkIndex (internal use only)
+#@-node:ekr.20031218072017.4006:Indices (leoTkinterBody)
+#@+node:ekr.20031218072017.4013:Insert point
+#@+node:ekr.20031218072017.495:getInsertionPoint & getBeforeInsertionPoint
+def getBeforeInsertionPoint (self):
+    
+    return self.bodyCtrl.index("insert-1c")
+
+def getInsertionPoint (self):
+    
+    return self.bodyCtrl.index("insert")
+#@nonl
+#@-node:ekr.20031218072017.495:getInsertionPoint & getBeforeInsertionPoint
+#@+node:ekr.20031218072017.4014:getCharAtInsertPoint & getCharBeforeInsertPoint
+def getCharAtInsertPoint (self):
+    
+    s = self.bodyCtrl.get("insert")
+    return g.toUnicode(s,g.app.tkEncoding)
+
+def getCharBeforeInsertPoint (self):
+
+    s = self.bodyCtrl.get("insert -1c")
+    return g.toUnicode(s,g.app.tkEncoding)
+#@nonl
+#@-node:ekr.20031218072017.4014:getCharAtInsertPoint & getCharBeforeInsertPoint
+#@+node:ekr.20031218072017.4015:makeInsertPointVisible
+def makeInsertPointVisible (self):
+    
+    self.bodyCtrl.see("insert -5l")
+#@nonl
+#@-node:ekr.20031218072017.4015:makeInsertPointVisible
+#@+node:ekr.20031218072017.4016:setInsertionPointTo...
+def setInsertionPoint (self,index):
+    self.bodyCtrl.mark_set("insert",index)
+
+def setInsertionPointToEnd (self):
+    self.bodyCtrl.mark_set("insert","end")
+    
+def setInsertPointToStartOfLine (self,lineNumber): # zero-based line number
+    self.bodyCtrl.mark_set("insert",str(1+lineNumber)+".0 linestart")
+#@nonl
+#@-node:ekr.20031218072017.4016:setInsertionPointTo...
+#@-node:ekr.20031218072017.4013:Insert point
+#@+node:ekr.20031218072017.4017:Menus
+def bind (self,*args,**keys):
+    
+    return self.bodyCtrl.bind(*args,**keys)
+#@-node:ekr.20031218072017.4017:Menus
+#@+node:ekr.20031218072017.4018:Selection
+#@+node:ekr.20031218072017.4019:deleteTextSelection (not used)
+def deleteTextSelection (self):
+    
+    t = self.bodyCtrl
+    sel = t.tag_ranges("sel")
+    if len(sel) == 2:
+        start,end = sel
+        if t.compare(start,"!=",end):
+            t.delete(start,end)
+#@nonl
+#@-node:ekr.20031218072017.4019:deleteTextSelection (not used)
+#@+node:ekr.20031218072017.4020:getSelectedText
+def getSelectedText (self):
+    
+    """Return the selected text of the body frame, converted to unicode."""
+
+    start, end = self.getTextSelection()
+    if start and end and start != end:
+        s = self.bodyCtrl.get(start,end)
+        if s is None:
+            return u""
+        else:
+            return g.toUnicode(s,g.app.tkEncoding)
+    else:
+        return None
+#@nonl
+#@-node:ekr.20031218072017.4020:getSelectedText
+#@+node:ekr.20031218072017.4021:getTextSelection
+def getTextSelection (self):
+    
+    """Return a tuple representing the selected range of body text.
+    
+    Return a tuple giving the insertion point if no range of text is selected."""
+
+    bodyCtrl = self.bodyCtrl
+    sel = bodyCtrl.tag_ranges("sel")
+
+    if len(sel) == 2:
+        return sel
+    else:
+        # Return the insertion point if there is no selected text.
+        insert = bodyCtrl.index("insert")
+        return insert,insert
+#@nonl
+#@-node:ekr.20031218072017.4021:getTextSelection
+#@+node:ekr.20031218072017.4022:hasTextSelection
+def hasTextSelection (self):
+
+    sel = self.bodyCtrl.tag_ranges("sel")
+    return sel and len(sel) == 2
+#@nonl
+#@-node:ekr.20031218072017.4022:hasTextSelection
+#@+node:ekr.20031218072017.4023:selectAllText
+def selectAllText (self):
+
+    try:
+        w = self.bodyCtrl.focus_get()
+        g.app.gui.setTextSelection(w,"1.0","end")
+    except:
+        pass
+#@nonl
+#@-node:ekr.20031218072017.4023:selectAllText
+#@+node:ekr.20031218072017.4024:setTextSelection (tkinterBody)
+def setTextSelection (self,i,j=None):
+    
+    # Allow the user to pass either a 2-tuple or two separate args.
+    if i is None:
+        i,j = "1.0","1.0"
+    elif len(i) == 2:
+        i,j = i
+
+    g.app.gui.setTextSelection(self.bodyCtrl,i,j)
+#@nonl
+#@-node:ekr.20031218072017.4024:setTextSelection (tkinterBody)
+#@-node:ekr.20031218072017.4018:Selection
+#@+node:ekr.20031218072017.4025:Text
+#@+node:ekr.20031218072017.4026:delete...
+def deleteAllText(self):
+    self.bodyCtrl.delete("1.0","end")
+
+def deleteCharacter (self,index):
+    t = self.bodyCtrl
+    t.delete(t.index(index))
+    
+def deleteLastChar (self):
+    self.bodyCtrl.delete("end-1c")
+    
+def deleteLine (self,lineNumber): # zero based line number.
+    self.bodyCtrl.delete(str(1+lineNumber)+".0","end")
+    
+def deleteLines (self,line1,numberOfLines): # zero based line numbers.
+    self.bodyCtrl.delete(str(1+line1)+".0",str(1+line1+numberOfLines-1)+".0 lineend")
+    
+def deleteRange (self,index1,index2):
+    t = self.bodyCtrl
+    t.delete(t.index(index1),t.index(index2))
+#@nonl
+#@-node:ekr.20031218072017.4026:delete...
+#@+node:ekr.20031218072017.4027:get...
+#@+node:ekr.20031218072017.4028:getAllText
+def getAllText (self):
+    
+    """Return all the body text, converted to unicode."""
+    
+    s = self.bodyCtrl.get("1.0","end")
+    if s is None:
+        return u""
+    else:
+        return g.toUnicode(s,g.app.tkEncoding)
+#@nonl
+#@-node:ekr.20031218072017.4028:getAllText
+#@+node:ekr.20031218072017.4029:getCharAtIndex
+def getCharAtIndex (self,index):
+    
+    """Return all the body text, converted to unicode."""
+    
+    s = self.bodyCtrl.get(index)
+    if s is None:
+        return u""
+    else:
+        return g.toUnicode(s,g.app.tkEncoding)
+#@nonl
+#@-node:ekr.20031218072017.4029:getCharAtIndex
+#@+node:ekr.20031218072017.4030:getInsertLines
+def getInsertLines (self):
+    
+    """Return before,after where:
+        
+    before is all the lines before the line containing the insert point.
+    sel is the line containing the insert point.
+    after is all the lines after the line containing the insert point.
+    
+    All lines end in a newline, except possibly the last line."""
+    
+    t = self.bodyCtrl
+
+    before = t.get("1.0","insert linestart")
+    ins    = t.get("insert linestart","insert lineend + 1c")
+    after  = t.get("insert lineend + 1c","end")
+
+    before = g.toUnicode(before,g.app.tkEncoding)
+    ins    = g.toUnicode(ins,   g.app.tkEncoding)
+    after  = g.toUnicode(after ,g.app.tkEncoding)
+
+    return before,ins,after
+#@nonl
+#@-node:ekr.20031218072017.4030:getInsertLines
+#@+node:ekr.20031218072017.4031:getSelectionAreas
+def getSelectionAreas (self):
+    
+    """Return before,sel,after where:
+        
+    before is the text before the selected text
+    (or the text before the insert point if no selection)
+    sel is the selected text (or "" if no selection)
+    after is the text after the selected text
+    (or the text after the insert point if no selection)"""
+    
+    g.trace()
+    t = self.bodyCtrl
+    
+    sel_index = t.getTextSelection()
+    if len(sel_index) == 2:
+        i,j = sel_index
+        sel = t.get(i,j)
+    else:
+        i = j = t.index("insert")
+        sel = ""
+
+    before = t.get("1.0",i)
+    after  = t.get(j,"end")
+    
+    before = g.toUnicode(before,g.app.tkEncoding)
+    sel    = g.toUnicode(sel,   g.app.tkEncoding)
+    after  = g.toUnicode(after ,g.app.tkEncoding)
+    return before,sel,after
+#@nonl
+#@-node:ekr.20031218072017.4031:getSelectionAreas
+#@+node:ekr.20031218072017.2377:getSelectionLines (tkBody)
+def getSelectionLines (self):
+    
+    """Return before,sel,after where:
+        
+    before is the all lines before the selected text
+    (or the text before the insert point if no selection)
+    sel is the selected text (or "" if no selection)
+    after is all lines after the selected text
+    (or the text after the insert point if no selection)"""
+    
+    # At present, called only by c.getBodyLines.
+
+    t = self.bodyCtrl
+    sel_index = t.tag_ranges("sel") 
+    if len(sel_index) != 2:
+        if 1: # Choose the insert line.
+            index = t.index("insert")
+            sel_index = index,index
+        else:
+            return "","","" # Choose everything.
+
+    i,j = sel_index
+    i = t.index(i + "linestart")
+    j = t.index(j + "lineend") # 10/24/03: -1c  # 11/4/03: no -1c.
+    before = g.toUnicode(t.get("1.0",i),g.app.tkEncoding)
+    sel    = g.toUnicode(t.get(i,j),    g.app.tkEncoding)
+    after  = g.toUnicode(t.get(j,"end-1c"),g.app.tkEncoding)
+    
+    # g.trace(i,j)
+    return before,sel,after
+#@nonl
+#@-node:ekr.20031218072017.2377:getSelectionLines (tkBody)
+#@+node:ekr.20031218072017.4032:getTextRange
+def getTextRange (self,index1,index2):
+    
+    t = self.bodyCtrl
+    return t.get(t.index(index1),t.index(index2))
+#@nonl
+#@-node:ekr.20031218072017.4032:getTextRange
+#@-node:ekr.20031218072017.4027:get...
+#@+node:ekr.20031218072017.4033:Insert...
+#@+node:ekr.20031218072017.4034:insertAtInsertPoint
+def insertAtInsertPoint (self,s):
+    
+    self.bodyCtrl.insert("insert",s)
+#@nonl
+#@-node:ekr.20031218072017.4034:insertAtInsertPoint
+#@+node:ekr.20031218072017.4035:insertAtEnd
+def insertAtEnd (self,s):
+    
+    self.bodyCtrl.insert("end",s)
+#@nonl
+#@-node:ekr.20031218072017.4035:insertAtEnd
+#@+node:ekr.20031218072017.4036:insertAtStartOfLine
+def insertAtStartOfLine (self,lineNumber,s):
+    
+    self.bodyCtrl.insert(str(1+lineNumber)+".0",s)
+#@nonl
+#@-node:ekr.20031218072017.4036:insertAtStartOfLine
+#@-node:ekr.20031218072017.4033:Insert...
+#@+node:ekr.20031218072017.4037:setSelectionAreas (tkinterBody)
+def setSelectionAreas (self,before,sel,after):
+    
+    """Replace the body text by before + sel + after and
+    set the selection so that the sel text is selected."""
+
+    t = self.bodyCtrl ; gui = g.app.gui
+    t.delete("1.0","end")
+
+    if before: t.insert("1.0",before)
+    sel_start = t.index("end-1c") # 10/24/03: -1c
+
+    if sel: t.insert("end",sel)
+    sel_end = t.index("end")
+
+    if after:
+        # A horrible Tk kludge.  Remove a trailing newline so we don't keep extending the text.
+        if after[-1] == '\n':
+            after = after[:-1]
+        t.insert("end",after)
+
+    gui.setTextSelection(t,sel_start,sel_end)
+    # g.trace(sel_start,sel_end)
+    
+    return t.index(sel_start), t.index(sel_end)
+#@nonl
+#@-node:ekr.20031218072017.4037:setSelectionAreas (tkinterBody)
+#@-node:ekr.20031218072017.4025:Text
+#@+node:ekr.20031218072017.4038:Visibility & scrolling
+def makeIndexVisible (self,index):
+    
+    self.bodyCtrl.see(index)
+    
+def setFirstVisibleIndex (self,index):
+    
+    self.bodyCtrl.yview("moveto",index)
+    
+def getYScrollPosition (self):
+    
+    return self.bodyCtrl.yview()
+    
+def setYScrollPosition (self,scrollPosition):
+
+    if len(scrollPosition) == 2:
+        first,last = scrollPosition
+    else:
+        first = scrollPosition
+    self.bodyCtrl.yview("moveto",first)
+    
+def scrollUp (self):
+    
+    self.bodyCtrl.yview("scroll",-1,"units")
+    
+def scrollDown (self):
+
+    self.bodyCtrl.yview("scroll",1,"units")
+#@nonl
+#@-node:ekr.20031218072017.4038:Visibility & scrolling
+#@-node:ekr.20031218072017.4000:Tk bindings (leoTkinterBody)
+#@-node:ekr.20031218072017.3996:class leoTkinterBody
+#@+node:ekr.20031218072017.4103:Tkinter menu bindings
+# See the Tk docs for what these routines are to do
+#@nonl
+#@+node:ekr.20031218072017.4104:9 Routines with Tk spellings
+#@+node:ekr.20031218072017.4105:add_cascade
+def add_cascade (self,parent,label,menu,underline):
+    
+    """Wrapper for the Tkinter add_cascade menu method."""
+    
+    return parent.add_cascade(label=label,menu=menu,underline=underline)
+
+#@-node:ekr.20031218072017.4105:add_cascade
+#@+node:ekr.20031218072017.4106:add_command
+def add_command (self,menu,**keys):
+    
+    """Wrapper for the Tkinter add_command menu method."""
+
+    return menu.add_command(**keys)
+    
+#@-node:ekr.20031218072017.4106:add_command
+#@+node:ekr.20031218072017.4107:add_separator
+def add_separator(self,menu):
+    
+    """Wrapper for the Tkinter add_separator menu method."""
+
+    menu.add_separator()
+    
+#@-node:ekr.20031218072017.4107:add_separator
+#@+node:ekr.20031218072017.4108:bind
+def bind (self,bind_shortcut,callback):
+    
+    """Wrapper for the Tkinter bind menu method."""
+    
+    # g.trace(bind_shortcut)
+
+    return self.top.bind(bind_shortcut,callback)
+    
+#@-node:ekr.20031218072017.4108:bind
+#@+node:ekr.20031218072017.4109:delete
+def delete (self,menu,realItemName):
+    
+    """Wrapper for the Tkinter delete menu method."""
+
+    return menu.delete(realItemName)
+#@nonl
+#@-node:ekr.20031218072017.4109:delete
+#@+node:ekr.20031218072017.4110:delete_range
+def delete_range (self,menu,n1,n2):
+    
+    """Wrapper for the Tkinter delete menu method."""
+
+    return menu.delete(n1,n2)
+
+#@-node:ekr.20031218072017.4110:delete_range
+#@+node:ekr.20031218072017.4111:destroy
+def destroy (self,menu):
+    
+    """Wrapper for the Tkinter destroy menu method."""
+
+    return menu.destroy()
+
+#@-node:ekr.20031218072017.4111:destroy
+#@+node:ekr.20031218072017.4112:insert_cascade
+def insert_cascade (self,parent,index,label,menu,underline):
+    
+    """Wrapper for the Tkinter insert_cascade menu method."""
+    
+    return parent.insert_cascade(
+        index=index,label=label,
+        menu=menu,underline=underline)
+
+
+#@-node:ekr.20031218072017.4112:insert_cascade
+#@+node:ekr.20031218072017.4113:new_menu
+def new_menu(self,parent,tearoff=False):
+    
+    """Wrapper for the Tkinter new_menu menu method."""
+
+    return Tk.Menu(parent,tearoff=tearoff)
+#@nonl
+#@-node:ekr.20031218072017.4113:new_menu
+#@-node:ekr.20031218072017.4104:9 Routines with Tk spellings
+#@+node:ekr.20031218072017.4114:8 Routines with other spellings
+#@+node:ekr.20041228063406:clearAccel
+def clearAccel(self,menu,name):
+    
+    realName = self.getRealMenuName(name)
+    realName = realName.replace("&","")
+
+    menu.entryconfig(realName,accelerator='')
+#@nonl
+#@-node:ekr.20041228063406:clearAccel
+#@+node:ekr.20031218072017.4115:createMenuBar
+def createMenuBar(self,frame):
+
+    top = frame.top
+    topMenu = Tk.Menu(top,postcommand=self.updateAllMenus)
+    
+    # Do gui-independent stuff.
+    self.setMenu("top",topMenu)
+    self.createMenusFromTables()
+    
+    top.config(menu=topMenu) # Display the menu.
+#@nonl
+#@-node:ekr.20031218072017.4115:createMenuBar
+#@+node:ekr.20031218072017.4116:createOpenWithMenuFromTable
+@ Entries in the table passed to createOpenWithMenuFromTable are
+tuples of the form (commandName,shortcut,data).
+
+- command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
+- shortcut is a string describing a shortcut, just as for createMenuItemsFromTable.
+- data is a tuple of the form (command,arg,ext).
+
+Leo executes command(arg+path) where path is the full path to the temp file.
+If ext is not None, the temp file has the given extension.
+Otherwise, Leo computes an extension based on the @language directive in effect.
+@c
+
+def createOpenWithMenuFromTable (self,table):
+
+    g.app.openWithTable = table # Override any previous table.
+    # Delete the previous entry.
+    parent = self.getMenu("File")
+    label = self.getRealMenuName("Open &With...")
+    amp_index = label.find("&")
+    label = label.replace("&","")
+    try:
+        index = parent.index(label)
+        parent.delete(index)
+    except:
+        try:
+            index = parent.index("Open With...")
+            parent.delete(index)
+        except: return
+    # Create the "Open With..." menu.
+    openWithMenu = Tk.Menu(parent,tearoff=0)
+    self.setMenu("Open With...",openWithMenu)
+    parent.insert_cascade(index,label=label,menu=openWithMenu,underline=amp_index)
+    # Populate the "Open With..." menu.
+    shortcut_table = []
+    for triple in table:
+        if len(triple) == 3: # 6/22/03
+            shortcut_table.append(triple)
+        else:
+            g.es("createOpenWithMenuFromTable: invalid data",color="red")
+            return
+            
+    # for i in shortcut_table: print i
+    self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=True)
+#@nonl
+#@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
+#@+node:ekr.20031218072017.4117:defineMenuCallback (tk)
+def defineMenuCallback(self,command,name):
+    
+    # The first parameter must be event, and it must default to None.
+    def callback(event=None,self=self,command=command,label=name):
+        __pychecker__ = '--no-argsused' # event not used, and must be present.
+        return self.c.doCommand(command,label)
+
+    return callback
+#@nonl
+#@-node:ekr.20031218072017.4117:defineMenuCallback (tk)
+#@+node:ekr.20031218072017.4118:defineOpenWithMenuCallback
+def defineOpenWithMenuCallback(self,command):
+    
+    # The first parameter must be event, and it must default to None.
+    def callback(event=None,self=self,data=command):
+        __pychecker__ = '--no-argsused' # event param must be present.
+        return self.c.openWith(data=data)
+
+    return callback
+#@nonl
+#@-node:ekr.20031218072017.4118:defineOpenWithMenuCallback
+#@+node:ekr.20031218072017.4119:disableMenu
+def disableMenu (self,menu,name):
+    
+    try:
+        menu.entryconfig(name,state="disabled")
+    except: 
+        try:
+            realName = self.getRealMenuName(name)
+            realName = realName.replace("&","")
+            menu.entryconfig(realName,state="disabled")
+        except:
+            print "disableMenu menu,name:",menu,name
+            g.es_exception()
+            pass
+#@-node:ekr.20031218072017.4119:disableMenu
+#@+node:ekr.20031218072017.4120:enableMenu
+# Fail gracefully if the item name does not exist.
+
+def enableMenu (self,menu,name,val):
+    
+    state = g.choose(val,"normal","disabled")
+    try:
+        menu.entryconfig(name,state=state)
+    except:
+        try:
+            realName = self.getRealMenuName(name)
+            realName = realName.replace("&","")
+            menu.entryconfig(realName,state=state)
+        except:
+            print "enableMenu menu,name,val:",menu,name,val
+            g.es_exception()
+            pass
+#@nonl
+#@-node:ekr.20031218072017.4120:enableMenu
+#@+node:ekr.20031218072017.4121:setMenuLabel
+def setMenuLabel (self,menu,name,label,underline=-1):
+
+    try:
+        if type(name) == type(0):
+            # "name" is actually an index into the menu.
+            menu.entryconfig(name,label=label,underline=underline)
+        else:
+            # Bug fix: 2/16/03: use translated name.
+            realName = self.getRealMenuName(name)
+            realName = realName.replace("&","")
+            # Bug fix: 3/25/03" use tranlasted label.
+            label = self.getRealMenuName(label)
+            label = label.replace("&","")
+            menu.entryconfig(realName,label=label,underline=underline)
+    except:
+        print "setMenuLabel menu,name,label:",menu,name,label
+        g.es_exception()
+        pass
+#@nonl
+#@-node:ekr.20031218072017.4121:setMenuLabel
+#@-node:ekr.20031218072017.4114:8 Routines with other spellings
+#@-node:ekr.20031218072017.4103:Tkinter menu bindings
+#@+node:ekr.20031218072017.1320:body key handlers
+@ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
+
+1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if so.  This is the clean and safe way.
+
+2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
+@c
+
+@others
+#@nonl
+#@+node:ekr.20031218072017.1321:idle_body_key
+def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Update the body pane at idle time."""
+    
+    __pychecker__ = 'maxlines=500'
+
+    # g.trace(ch,ord(ch))
+    c = self.c
+    if not c: return "break"
+    if not p: return "break"
+    if not c.isCurrentPosition(p): return "break"
+
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+    body = p.bodyString()
+    if not newSel:
+        newSel = c.frame.body.getTextSelection()
+    if oldText != None:
+        s = oldText
+    else:
+        s = c.frame.body.getAllText()
+    << return if nothing has changed >>
+    << set removeTrailing >>
+    if ch in ('\t','\n','\r',chr(8)):
+        d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+        tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+        if ch in ('\n','\r'):
+            << Do auto indent >>
+        elif ch == '\t' and tab_width < 0:
+            << convert tab to blanks >>
+        elif ch in (chr(8)) and tab_width < 0:
+            << handle backspace with negative tab_width >>
+    << set s to widget text, removing trailing newlines if necessary >>
+    if undoType: # 11/6/03: set oldText properly when oldText param exists.
+        if not oldText: oldText = body
+        newText = s
+        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+    p.v.setTnodeText(s)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed:
+        c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return "break"
+#@nonl
+#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
+# 6/22/03: Make sure we handle delete key properly.
+if ch not in ('\n','\r',chr(8)):
+
+    if s == body:
+        return "break"
+
+    # Do nothing for control characters.
+    if (ch == None or len(ch) == 0) and body == s[:-1]:
+        return "break"
+#@nonl
+#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
+#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = s ; old = body
+
+if len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
+#@nonl
+#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
+#@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+# Do nothing if we are in @nocolor mode or if we are executing a Change command.
+if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+    # Get the previous line.
+    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s[-1]==':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Added Nov 18 by David McNab, david@rebirthing.co.nz
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width]
+        tabex = 0
+        for i in range(0, len(s)):
+            if s[i] == '\t':
+                tabex += tab_width - 1
+            if s[i] in '([{':
+                brackets.append(i+tabex + 1)
+            elif s[i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+        # end patch by David McNab
+    ws = g.computeLeadingWhitespace (width,tab_width)
+    if ws and len(ws) > 0:
+        c.frame.bodyCtrl.insert("insert", ws)
+        removeTrailing = False # bug fix: 11/18
+#@nonl
+#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+#@+node:ekr.20031218072017.1325:<< convert tab to blanks >>
+# Do nothing if we are executing a Change command.
+if undoType != "Change":
+    
+    # Get the characters preceeding the tab.
+    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+    
+    if 1: # 6/26/03: Convert tab no matter where it is.
+
+        w = g.computeWidth(prev,tab_width)
+        w2 = (abs(tab_width) - (w % abs(tab_width)))
+        # g.trace("prev w:",w,"prev chars:",prev)
+        c.frame.bodyCtrl.delete("insert -1c")
+        c.frame.bodyCtrl.insert("insert",' ' * w2)
+    
+    else: # Convert only leading tabs.
+    
+        # Get the characters preceeding the tab.
+        prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+
+        # Do nothing if there are non-whitespace in prev:
+        all_ws = True
+        for ch in prev:
+            if ch != ' ' and ch != '\t':
+                all_ws = False
+        if all_ws:
+            w = g.computeWidth(prev,tab_width)
+            w2 = (abs(tab_width) - (w % abs(tab_width)))
+            # g.trace("prev w:",w,"prev chars:",prev)
+            c.frame.bodyCtrl.delete("insert -1c")
+            c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20031218072017.1325:<< convert tab to blanks >>
+#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+# Get the preceeding characters.
+prev   =c.frame.bodyCtrl.get("insert linestart","insert")
+allPrev=c.frame.bodyCtrl.get("1.0","insert")
+n = len(allPrev)
+try:
+    oldAllPrev = body[:n]
+    assert(allPrev==oldAllPrev)
+    deletedChar = body[n:n+1]
+except (IndexError,AssertionError):
+    deletedChar = None
+
+if deletedChar in (u' ',' '):
+    n = len(prev) ; w = abs(tab_width)
+    n2 = n % w # Delete up to n2 - 1 spaces.
+    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
+        count = 0
+        while n2 > 0:
+            n2 -= 1
+            ch = prev[n-count-1]
+            # g.trace(count,repr(ch))
+            if ch in (u' ',' '): count += 1
+            else: break
+        # g.trace(count,(n%w))
+        if count > 0:
+            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+#@nonl
+#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+s = c.frame.body.getAllText()
+if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+    s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # print "no real change"
+    return "break"
+#@nonl
+#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+#@+node:ekr.20031218072017.1327:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20031218072017.1327:<< recolor the body >>
+#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+redraw_flag = False
+
+c.beginUpdate()
+
+# Update dirty bits.
+if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+    redraw_flag = True
+    
+# Update icons.
+val = p.computeIcon()
+
+# 7/8/04: During unit tests the node may not have been drawn,
+# So p.v.iconVal may not exist yet.
+if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+    p.v.iconVal = val
+    redraw_flag = True
+
+c.endUpdate(redraw_flag) # redraw only if necessary
+#@nonl
+#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+#@-node:ekr.20031218072017.1321:idle_body_key
+#@+node:ekr.20031218072017.1329:onBodyChanged (tkTree)
+# Called by command handlers that have already changed the text.
+
+def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Handle a change to the body pane."""
+    
+    c = self.c
+    if not p:
+        p = c.currentPosition()
+
+    if not oldSel:
+        oldSel = c.frame.body.getTextSelection()
+
+    self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
+#@nonl
+#@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
+#@+node:ekr.20031218072017.1330:onBodyKey
+def onBodyKey (self,event):
+    
+    """Handle any key press event in the body pane."""
+
+    c = self.c ; ch = event.char
+    
+    # This translation is needed on MacOS.
+    if ch == '':
+        d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
+        ch = d.get(event.keysym,'')
+
+    oldSel = c.frame.body.getTextSelection()
+    
+    p = c.currentPosition()
+
+    if 0: # won't work when menu keys are bound.
+        self.handleStatusLineKey(event)
+        
+    # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
+#@nonl
+#@+node:ekr.20040105223536:handleStatusLineKey
+def handleStatusLineKey (self,event):
+    
+    c = self.c ; frame = c.frame
+    ch = event.char ; keysym = event.keysym
+    keycode = event.keycode ; state = event.state
+
+    if 1: # ch and len(ch)>0:
+        << trace the key event >>
+
+    try:
+        status = self.keyStatus
+    except:
+        status = [] ; frame.clearStatusLine()
+    
+    for sym,name in (
+        ("Alt_L","Alt"),("Alt_R","Alt"),
+        ("Control_L","Control"),("Control_R","Control"),
+        ("Escape","Esc"),
+        ("Shift_L","Shift"), ("Shift_R","Shift")):
+        if keysym == sym:
+            if name not in status:
+                status.append(name)
+                frame.putStatusLine(name + ' ')
+            break
+    else:
+        status = [] ; frame.clearStatusLine()
+
+    self.keyStatus = status
+#@nonl
+#@+node:ekr.20040105223536.1:<< trace the key event >>
+try:    self.keyCount += 1
+except: self.keyCount  = 1
+
+printable = g.choose(ch == keysym and state < 4,"printable","")
+
+print "%4d %s %d %s %x %s" % (
+    self.keyCount,repr(ch),keycode,keysym,state,printable)
+#@nonl
+#@-node:ekr.20040105223536.1:<< trace the key event >>
+#@-node:ekr.20040105223536:handleStatusLineKey
+#@-node:ekr.20031218072017.1330:onBodyKey
+#@+node:ekr.20031218072017.1331:onBodyWillChange
+# Called by command handlers that change the text just before idle time.
+
+def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
+    
+    """Queue the body changed idle handler."""
+    
+    c = self.c
+
+    if not oldSel:
+        oldSel = c.frame.body.getTextSelection()
+
+    if not p:
+        p = c.currentPosition()
+
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1331:onBodyWillChange
+#@-node:ekr.20031218072017.1320:body key handlers
+#@-node:ekr.20050416150731.2:Keystrokes for jumping between words: temacs & usetemacs
 #@+node:ekr.20050317075352:Scrollbar disappears when autocompleter plugin is enabled
 #@+node:ekr.20050317075352.1:Report
 @killcolor
@@ -702,192 +2891,118 @@ it's written like HTTP or http, in my mind it just starts with the letter 'h'
 with case unspecified)
 #@nonl
 #@-node:ekr.20050317074944:Improve plugin manager plugin
-#@-node:ekr.20050420090710:Plugins
-#@+node:ekr.20050419061015.1:Other improvements 2
-#@+node:ekr.20050416150731.2:Keystrokes for jumping between words
+#@+node:ekr.20050420110455:rst/golf
+#@+node:ekr.20050420110455.1:@url https://sourceforge.net/forum/message.php?msg_id=2946194
+#@-node:ekr.20050420110455.1:@url https://sourceforge.net/forum/message.php?msg_id=2946194
+#@+node:ekr.20050420110651:Responses
 @killcolor
 
-I try to quickly jump between words using CTRL+ left and right arrows. The problem is it seems leo jumps according to spaces, not words. For instance, if I my cursor is at the end of a line like: 
-Pmw.ComboBox(r,label_text 
-and I press CTRL-left, leo will jump to the beginning of the line. But I want it to jump to the beginning of the word "label_text". 
-How can I do this in leo? 
- 
+- Leo is a potentially 'killer' app for documentation.
+    - rst2 is a start, and will be improved.
+    - Making rst2 work really well is a high priority.
+- Leo files contain multiple documents.
+- Need to specify settings dynamically.
+    - This is the idea behind golf.
 #@nonl
-#@-node:ekr.20050416150731.2:Keystrokes for jumping between words
-#@+node:ekr.20041228074125:(Make drawing more flexible)
-#@+node:ekr.20041228092223:Play with wiki markup
-http://sourceforge.net/forum/message.php?msg_id=2205285
-From: Rich
+#@-node:ekr.20050420110651:Responses
+#@+node:ekr.20050421105950.1:from Kent
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3109034
+By: ktenney
 
-Color ''and'' italic/bold characters with @markup. One thing I'd like to
-''not'' see are the markup characters in @file-nosent files.  "~~red:NOTE:~~"
-does nothing for readability in plain text.
+There are a number of settings which effect the way rst2 works.
+
+What you describe is the result of one mode of rst2 operation,
+where a node is considered to be source code unless
+it's headline is "@rst"
+
+In the file leo/plugins/leoPluginsRef.leo, node
+Plugins-->Text formatting-->rst2 plugin-->@thin rst2.py-->config
+
+the config options are listed. I can't find the recent
+thread which gives the meanings of the settings.
 #@nonl
-#@-node:ekr.20041228092223:Play with wiki markup
-#@+node:EKR.20040602153716:(Finish drawUserIcons)
-# Create a better way of writing user icons.
-#@nonl
-#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-Also add corresponding commands.
-#@nonl
-#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-#@+node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2477913
-By: edream
-
-A better design for user icons
-
-Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
-to have t.unknownAttributes["icons"] be a list of g.Bunches rather
-than a list of tuples.  Each of these bunches could have the
-following keys:
-
-"type"
-
-"file", "icon" or "url".  At present my prototype code uses "file" to specify
-the location of an icon.
-
-"where":
-
-"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
-where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
-means before the plus/minus box.  "beforeIcon" means before the standard icon.
-
-"height":
-
-the height of the icon to use when calculating the line height.  Default: get
-from the icon itself, if possible.
-
-"width":
-
-the width of the icon to use when calculating where to put the following element.
-Default: get from the icon, if possible.
-
-"xoffset"
-
-Leo draws the icon at x + xoffset, where x is determined by the where param
-above.  Default 0.
-
-"xpad"
-
-The amount of extra space following the icon.  Default 0.
-
-"yoffset"
-
-Leo draws the icon at y + yoffset.  Default 0.
-
-"ypad"
-
-The amount of extra vertical space to add to the line height.  Default 0.
-
-These offset and pad values are integer pixel values and may be positive or
-negative.
-
-"lineHeight"  NOT USED.
-
-Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-
-Edward
-
-P.S.  Other gui's might not be able to support all these options.  That's ok.
-The drawing code in gui plugins should degrade gracefully.
-
-EKR
-#@nonl
-#@-node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
-#@+node:ekr.20040317184631.2:Changes
-@nocolor
-
-"lineHeight"
-
-This key won't be used.
-
-t.unknownAttributes["lineYOffset"] 
-
-An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
-#@nonl
-#@-node:ekr.20040317184631.2:Changes
-#@+node:ekr.20040317184631.1:To do
-@nocolor
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-#@nonl
-#@-node:ekr.20040317184631.1:To do
-#@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv):
-    
-    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
-    
-    attrDict = torv.unknownAttributes
-    if type(attrDict) != type({}):
-        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
-        return
-
-    for key in attrDict.keys():
-        val = attrDict[key]
-        self.putUa(torv,key,val)
-#@nonl
-#@-node:EKR.20040526202501:putUnknownAttributes
-#@-node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
+#@-node:ekr.20050421105950.1:from Kent
+#@+node:ekr.20050421100238:New stylesheets for rst (Kent Tenny told me about there)
+#@+node:ekr.20050421100238.1:@url http://www.voidspace.org.uk/stylesheets/blue_box.css
+#@-node:ekr.20050421100238.1:@url http://www.voidspace.org.uk/stylesheets/blue_box.css
+#@-node:ekr.20050421100238:New stylesheets for rst (Kent Tenny told me about there)
+#@+node:ekr.20050421110446:get rid of double-click hack fir rst
 @killcolor
 
-http://sourceforge.net/forum/message.php?msg_id=2877106
+http://sourceforge.net/forum/message.php?msg_id=3107951
+By: rdskaroff
 
-By: Paul Paterson - paulpaterson
-RE: Can I color the headline text ?  
-2004-12-01 08:01
-
-The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
- 
-Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
- 
-Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
- 
-Between the two of them there should be enough information to help you achieve what you want. 
- 
-It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
+I also agree 100% with initiating the creation of an output file as a menu item
+rather than a double-click event. I am having enough trouble keeping track of
+where I am in the ui when I edit my outlines, select right-click menu items
+and drag nodes around.
 #@nonl
-#@-node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
-#@-node:ekr.20041228074125:(Make drawing more flexible)
-#@-node:ekr.20050419061015.1:Other improvements 2
+#@-node:ekr.20050421110446:get rid of double-click hack fir rst
+#@-node:ekr.20050420110455:rst/golf
+#@-node:ekr.20050420090710:Plugins 5
+#@+node:ekr.20050427101445:Testing & distribution
+#@+node:ekr.20050430100107:Improve Mac distribution
+#@+node:ekr.20050430100107.1:Post 1
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3016680
+By: wordtech
+
+I'd suggest a some revisions to your approach. 
+
+1. Unless you're putting files over several directories, there's no reason to
+use PackageMaker. As far as I can tell, you're doing a large folder called "leo"
+and installing it in /. PackageMaker is for complex installations, i.e. a GUI
+front end in /Applications, the supporting files in /usr/local, and man pages
+in /usr/share/man, or something like that.
+
+In fact, people are advised not to move stuff installed by PackageMaker, but
+if they leave the default installation alone (in /), your launcher tool won't
+work. I thought this was a bug, because the launcher tool looks for ~/leo, until
+I saw your docs here.
+
+2. It isn't necessary to stuff everything into the app bundle with py2app. I
+used to maintain a nice Mac-native bundle of Leo that only wrapped your files,
+but left other stuff like Tcl/Tk out. (I removed it from my site because no
+one downloaded it.) I did a quick wrap of the new version and it seems to work
+fine. Although I don't have any interest in putting this on my site anymore,
+I'd be willing to provide a package for you to include at your Sourceforge site.
+
+(See http://www.wordtech-software.com/python-applet-tutorial.html for a description
+of my packaging method: it's a front-end to the older bundlebuilder method.
+Please contact me at my Sourceforge address if you have questions.)
+
+At a minimum, consider wrapping the /leo directory in a tar or zip file and
+advise people to move it to their home directory after they download it. That
+would make installation much smoother.
+#@nonl
+#@-node:ekr.20050430100107.1:Post 1
+#@+node:ekr.20050430100107.2:Post 2
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3024408
+By: bowerymarc
+
+I saw a message in the bug tracker saying to post bugs here instead, so here
+it is:
+
+Tried to install Leo-4-3-a3.pkg.  Instructions for MacLeo say, you have to install
+Leo in your *home* directory (which by the way is rediculous - normally you
+install in the Applications directory on OSX.  In any case the facility exists
+to discover where an app is installed....)
+
+So I tried that.  Trouble is, it won't let me.  Why?  Perhaps because I have
+FileVault turned on, which turns your home directory into a crypto-fs type mount.
+Apparently its method of dealing with your home directory can't deal with that.
+#@nonl
+#@-node:ekr.20050430100107.2:Post 2
+#@+node:ekr.20050430100107.3:Install Leo in Applications Folder
+#@-node:ekr.20050430100107.3:Install Leo in Applications Folder
+#@+node:ekr.20050430100107.4:Create leo.zip folder
+#@-node:ekr.20050430100107.4:Create leo.zip folder
+#@-node:ekr.20050430100107:Improve Mac distribution
 #@+node:ekr.20050314091755:Unit tests for find/change commands
 #@-node:ekr.20050314091755:Unit tests for find/change commands
-#@+node:ekr.20050328093147:Improve distribution
-#@+node:ekr.20050328093147.1:Report
+#@+node:ekr.20050328093147.1:Report: improving installer
 @killcolor
 http://sourceforge.net/forum/message.php?msg_id=3064212
 By: djsg
@@ -975,9 +3090,11 @@ so there's no rush.
 
 -- David
 #@nonl
-#@-node:ekr.20050328093147.1:Report
-#@-node:ekr.20050328093147:Improve distribution
+#@-node:ekr.20050328093147.1:Report: improving installer
+#@-node:ekr.20050427101445:Testing & distribution
 #@+node:ekr.20050211080215:Docs
+#@+node:ekr.20050427101208:1. Make pictures of Leo's designs
+#@-node:ekr.20050427101208:1. Make pictures of Leo's designs
 #@+node:ekr.20050217080914:Rework 'Ultimate Scripting Tool' posting & put it on web site
 #@+node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
 #@-node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
@@ -1080,64 +3197,8 @@ Information Technology
 Rochester Institute of Technology
 schull@digitalgoods.com 585-738-6696
 #@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
-#@+node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2928991
-By: jasonic
-
-@nosent is an abbreviation for @file-nosentinels.
-Very hadny very cool but does not seem be much docs anywhere on this.
-#@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
-#@+node:ekr.20050317153447:jy-Leo install instructions
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=3053534
-By: paulpaterson
-
-Very interesting indeed - great work! 
- 
-I didn't have Java/Jython installed so for others in the same boat here's what I had to do to get it work on my platform (Win2k). Some of this is in the README but I had to do some extra but I'm not sure why. 
- 
-1. Install 1.5 JDK  
-http://java.sun.com/j2se/1.5.0/download.jsp 
- 
-2. Install Jython 
-http://www.jython.org/jython22a0.zip 
- 
-3. Edit Jython.bat file - the part that calls Java.exe to ... 
-"C:\Program Files\Java\jdk1.5.0_02\jre\bin\java" -cp "C:\Program Files\Java\jdk1.5.0_02\jre\lib";"c:\Apps\Python23\Jython";"C:\Apps\jLeo\j-leo-MAR15\Icons";"C:\Apps\jLeo\j-leo-MAR15\skins";"C:\Apps\jLeo\j-leo-MAR15\src";"C:\Apps\jLeo\j-leo-MAR15\skinimages" -Dpython.home="c:\Apps\Python23\Jython" -jar jython.jar %ARGS% 
- 
-Where  
-- Java installed at C:\Program Files\Java\jdk1.5.0_02 
-- Jython at c:\Apps\Python23\Jython 
-- jLeo at C:\Apps\jLeo\j-leo-MAR15 
- 
-Change your paths as appropriate! There must be a better way to do this - Java confuses me! 
- 
-4. Edit leo.py in jleo/src directory to fix failure to find HOME env variable. 
- 
-line 241 becomes ... 
- 
-....try:home = os.getenv('HOME' )#,default=dotDir) 
-....except KeyError:home="" 
- 
- 
-Then, from the Jython install directory ... 
- 
-Jython " 
-C:\Apps\jLeo\j-leo-MAR15\src\leo.py" 
- 
-Works a treat!  
- 
-Paul
-#@-node:ekr.20050317153447:jy-Leo install instructions
 #@-node:ekr.20050211080215:Docs
-#@+node:ekr.20050421100238:New stylesheets for rst (Kent Tenny told me about there)
-#@+node:ekr.20050421100238.1:@url http://www.voidspace.org.uk/stylesheets/blue_box.css
-#@-node:ekr.20050421100238.1:@url http://www.voidspace.org.uk/stylesheets/blue_box.css
-#@-node:ekr.20050421100238:New stylesheets for rst (Kent Tenny told me about there)
-#@-node:ekr.20050303103230:To do: 4.3b1 code complete
+#@-node:ekr.20050303103230:To do: 4.3b2
 #@+node:ekr.20041228073219:4.3.n...
 #@+node:ekr.20040130073846:Use Python indices instead of Tk indices (Done except for leoFind!!)
 #@+node:ekr.20050313174347.1:Code notes
@@ -1349,7 +3410,7 @@ def tag (self,name,i,j):
 def convertAllBlanks (self):
     
     c = self ; u = c.undoer ; undoType = 'Convert All Blanks'
-    body = c.frame.body ; current = c.currentPosition()
+    current = c.currentPosition()
 
     if g.app.batchMode:
         c.notValidInBatchMode(undoType)
@@ -1440,7 +3501,7 @@ def convertAllTabs (self):
 #@+node:ekr.20031218072017.1821:convertBlanks
 def convertBlanks (self):
 
-    c = self ; u = c.undoer ; undoType = 'Convert Blanks'
+    c = self ; undoType = 'Convert Blanks'
     
     if g.app.batchMode:
         c.notValidInBatchMode(undoType)
@@ -1471,7 +3532,7 @@ def convertBlanks (self):
 #@+node:ekr.20031218072017.1822:convertTabs
 def convertTabs (self):
 
-    c = self ; u = c.undoer ; undoType = 'Convert Tabs'
+    c = self ; undoType = 'Convert Tabs'
     
     if g.app.batchMode:
         c.notValidInBatchMode(undoType)
@@ -1505,7 +3566,7 @@ def createLastChildNode (self,parent,headline,body):
     
     '''A helper function for the three extract commands.'''
     
-    c = self ; u = c.undoer
+    c = self
     
     if body and len(body) > 0:
         body = string.rstrip(body)
@@ -1582,7 +3643,7 @@ def extract(self):
 def extractSection(self):
 
     c = self ; u = c.undoer ; undoType = 'Extract Section'
-    body = c.frame.body ; current = c.currentPosition()
+    current = c.currentPosition()
 
     if g.app.batchMode:
         c.notValidInBatchMode(undoType)
@@ -2103,8 +4164,7 @@ c.recolor()
 #@+node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
 def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
     
-    c = self ; u = c.undoer
-    body = c.frame.body ; p = c.currentPosition()
+    c = self ; body = c.frame.body ; p = c.currentPosition()
 
     # Update the text and notify the event handler.
     body.setSelectionAreas(head,middle,tail)
@@ -3215,6 +5275,8 @@ def setTnodeText (self,s,encoding="utf-8"):
 def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
     
     """Update the body pane at idle time."""
+    
+    __pychecker__ = 'maxlines=500'
 
     # g.trace(ch,ord(ch))
     c = self.c
@@ -3255,6 +5317,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     << redraw the screen if necessary >>
     g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
     return "break"
+#@nonl
 #@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
 # 6/22/03: Make sure we handle delete key properly.
 if ch not in ('\n','\r',chr(8)):
@@ -3749,36 +5812,6 @@ This would make a straightforward plugin.  Mind you, this should be in Leo's cor
 Edward
 #@nonl
 #@-node:ekr.20050108051818:Add hyperlinks for url's
-#@+node:ekr.20031218072017.801:Zipped .leo files (see chapters plugin for how to do this)
-By: samcollett ( Sam Collett ) 
- Compressed LEO files   
-2003-01-07 16:57
-
-
-Would it be possible to have a new file format that was basically a compressed
-version of LEO files? Maybe using the gzip compression method. You could then
-save a lot of space when you do large files. Not being a professional
-programmer myself (I mainly dabble in web design - HTML and Active Server
-Pages) how difficult would this be to implement? You would just output using a
-different file extension so users of the older versions can still use files
-with the LEO extension.
-#@+node:ekr.20040226092546:Saving .leo files with file compression
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2442772
-By: ejoy
-
-I made an experiment last night. I replaced the call to open()in leofilecommand.py
-with a call to gzip.open().
-The LeoPy.leo file saved this way is only 600K! And there is no significant
-speed down in saving.
-
-I think it is a good idea to add compression support for load/save .leo files.
-When reading or writing file with name ending with ".leo.gz", leo can call gzip
-module to uncompress/compress the file, saving a lot of disk space.
-
-What do you think of this?
-#@-node:ekr.20040226092546:Saving .leo files with file compression
-#@-node:ekr.20031218072017.801:Zipped .leo files (see chapters plugin for how to do this)
 #@+node:ekr.20041022083833.1:Commands
 #@+node:ekr.20040918165519:Mark Task & Clone To Task commands
 @nocolor
@@ -5796,6 +7829,59 @@ From the user's point of view, a CVS check in either succeeds or requires that
 the conflicts be resolved, after which another check in may be attempted.  If
 we're somehow interrupted in the middle of the process, the fooCvsTmp.leo file
 preserves the users work.
+#@+node:ekr.20050501111900:Stephen Schaefer
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3125092
+By: thyrsus
+
+About a month ago, I posted a screed on how @thin was inadequate to address
+my needs; that what I needed to collaborate on via version control was exactly
+the essence of Leo's value: the multiple expressions of structure, which by
+their nature must exist outside of @thin.  I said I was going to live the pain
+to discover a modus vivendi.
+
+Having done that, let me now say:
+
+AAAAAAAAAAAAGGGGGGGGHHHHHHHHHH!
+
+But the exercise has led me to a vision, which I will implement to the extent
+my nonexistent spare time and paltry programming talents permit.
+
+The essence of the pain is "conflicts", which become more  certain to occur
+as the leo file encompases ever more related files.  As I work on a change to
+the Linux configuration, my colleague works on a change to the Solaris configuration,
+and one of us checks in our version of the leo file documenting the site
+configuration first, and the other cannot check in his version of that file.
+The conflict must be resolved by the human.  Using the "diff" tool on the .leo
+XML is not an answer (though thank Heaven and Ed for gnxs).  The resolution
+needs two levels of support: outline and node.
+
+With the .leo file declared binary, in the event of a conflict CVS leaves you
+with the most recent CVS version and your rejected version, and you're responsible
+for performing a reconciliation and then resubmitting that.  Leo will recognize
+the problem, and present both versions of the project, side by side, splitting
+the outline pane.  The parallel trees will scroll/expand/contract in unison.
+Outline branches present in CVS and not yours will display as blank space in
+your version; nodes present in your version and not CVS will display as blank
+space in the CVS version. The CVS version will be read only, your version editable.
+The same node with differences in its text or in its children will be highlighted.
+You will be able to drag nodes from the CVS version into your version. If the
+text of a selected node has conflicts, the text area will split in two, showing
+the CVS version and your version, with differences highlighted, both sides of
+the pane scrolling in unison, the CVS side read-only, and you can copy from
+that side to your side.  I intend to take as many ideas as I can from tkdiff
+(http://sourceforge.net/projects/tkdiff/ - see also
+http://freshmeat.net/screenshots/10602/ ).  (I have begun translating tkdiff
+from from tcl to python - nearly 9000 lines and I'm still learning both languages,
+so draw your own timeline.)  You edit your nodes, you edit your tree, you hit
+the "reconcile" button, and your reconciliation of the conflict goes into CVS.
+If, meanwhile, another one of your over-achieving colleages has again updated
+CVS, the process repeats with the most current CVS version.  Or you can hit
+the "abandon" button to give up on your changes.
+
+As the Hebrews say at Passover: "Next year in Jerusalem."
+#@nonl
+#@-node:ekr.20050501111900:Stephen Schaefer
 #@+node:ekr.20031218072017.659:Jonathon 1
 https://sourceforge.net/forum/message.php?msg_id=1803722
 By: jmgilligan
@@ -6495,6 +8581,8 @@ def getTextFromClipboard (self):
 def OnCut (self,event=None):
     
     """The handler for the virtual Cut event."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
 
     frame = self ; c = frame.c ; v = c.currentVnode()
     
@@ -6524,9 +8612,10 @@ def OnCutFromMenu (self):
 #@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
 def OnCopy (self,event=None):
     
-    frame = self
+    __pychecker__ = '--no-argsused' # event not used.
 
     if 0: # g.app.gui.win32clipboard is always None.
+        frame = self
         if g.app.gui.win32clipboard:
             data = frame.body.getSelectedText()
             if data:
@@ -6539,9 +8628,12 @@ def OnCopyFromMenu (self):
     frame = self
     w = frame.getFocus()
     w.event_generate(g.virtual_event_name("Copy"))
+#@nonl
 #@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
 #@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 def OnPaste (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
     
     frame = self ; c = frame.c ; v = c.currentVnode()
     
@@ -9767,6 +11859,8 @@ self.editMenuTopTable = (
 def OnCut (self,event=None):
     
     """The handler for the virtual Cut event."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
 
     frame = self ; c = frame.c ; v = c.currentVnode()
     
@@ -9796,9 +11890,10 @@ def OnCutFromMenu (self):
 #@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
 def OnCopy (self,event=None):
     
-    frame = self
+    __pychecker__ = '--no-argsused' # event not used.
 
     if 0: # g.app.gui.win32clipboard is always None.
+        frame = self
         if g.app.gui.win32clipboard:
             data = frame.body.getSelectedText()
             if data:
@@ -9811,9 +11906,12 @@ def OnCopyFromMenu (self):
     frame = self
     w = frame.getFocus()
     w.event_generate(g.virtual_event_name("Copy"))
+#@nonl
 #@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
 #@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 def OnPaste (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
     
     frame = self ; c = frame.c ; v = c.currentVnode()
     
@@ -10830,11 +12928,11 @@ def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
         if self.topPosition: 
             c.setTopVnode(self.topPosition)
     c.endUpdate()
-    # delete the file buffer
+    # Delete the file buffer
     self.fileBuffer = ""
     return ok
 #@nonl
-#@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+#@+node:ekr.20031218072017.2298:<< Set the default directory >>
 @ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
 @c
 
@@ -10843,7 +12941,7 @@ theDir = g.os_path_dirname(fileName)
 if len(theDir) > 0:
     c.openDirectory = theDir
 #@nonl
-#@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+#@-node:ekr.20031218072017.2298:<< Set the default directory >>
 #@-node:ekr.20031218072017.2297:open
 #@+node:ekr.20031218072017.3030:readOutlineOnly
 def readOutlineOnly (self,theFile,fileName):
@@ -10868,7 +12966,7 @@ def readOutlineOnly (self,theFile,fileName):
     self.fileBuffer = ""
     return ok
 #@nonl
-#@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+#@+node:ekr.20031218072017.2298:<< Set the default directory >>
 @ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
 @c
 
@@ -10877,7 +12975,7 @@ theDir = g.os_path_dirname(fileName)
 if len(theDir) > 0:
     c.openDirectory = theDir
 #@nonl
-#@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+#@-node:ekr.20031218072017.2298:<< Set the default directory >>
 #@-node:ekr.20031218072017.3030:readOutlineOnly
 #@-node:ekr.20040129133809.8:top node not saved
 #@-node:ekr.20031218072017.663:Bug: can't be fixed

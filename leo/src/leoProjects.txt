@@ -2182,25 +2182,24 @@ try:
         os.startfile(arg+path)
     elif openType == "exec":
         command = "exec(%s)" % (arg+shortPath)
-        exec arg+path in {} # 12/11/02
+        exec arg+path in {}
     elif openType == "os.spawnl":
         filename = g.os_path_basename(arg)
         command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
         apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
     elif openType == "os.spawnv":
-        if 1: # New code allows args to spawnv.
-            filename = os.path.basename(arg[0]) 
-            vtuple = arg[1:] 
-            vtuple.append(path)
-            command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
-            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
-        else:
-            filename = g.os_path_basename(arg)
-            command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
-            apply(os.spawnv,(os.P_NOWAIT,arg,(filename,path)))
+        filename = os.path.basename(arg[0]) 
+        vtuple = arg[1:] 
+        vtuple.append(path)
+        command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+        apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+    elif openType == "os.spawnv2": # New in 4.3 beta 1: TO DO
+        # We need more args.
+        apply(os.spawnv,(os.P_NOWAIT, r"c:\vim\vim63\gvim.exe",
+            [" --servername LEO "," --remote-silent "]+[shortPath]))
     else:
         command="bad command:"+str(openType)
-    g.trace(command)
+        g.trace(command)
 except Exception:
     g.es("exception executing: "+command)
     g.es_exception()
@@ -3358,25 +3357,24 @@ try:
         os.startfile(arg+path)
     elif openType == "exec":
         command = "exec(%s)" % (arg+shortPath)
-        exec arg+path in {} # 12/11/02
+        exec arg+path in {}
     elif openType == "os.spawnl":
         filename = g.os_path_basename(arg)
         command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
         apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
     elif openType == "os.spawnv":
-        if 1: # New code allows args to spawnv.
-            filename = os.path.basename(arg[0]) 
-            vtuple = arg[1:] 
-            vtuple.append(path)
-            command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
-            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
-        else:
-            filename = g.os_path_basename(arg)
-            command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
-            apply(os.spawnv,(os.P_NOWAIT,arg,(filename,path)))
+        filename = os.path.basename(arg[0]) 
+        vtuple = arg[1:] 
+        vtuple.append(path)
+        command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+        apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+    elif openType == "os.spawnv2": # New in 4.3 beta 1: TO DO
+        # We need more args.
+        apply(os.spawnv,(os.P_NOWAIT, r"c:\vim\vim63\gvim.exe",
+            [" --servername LEO "," --remote-silent "]+[shortPath]))
     else:
         command="bad command:"+str(openType)
-    g.trace(command)
+        g.trace(command)
 except Exception:
     g.es("exception executing: "+command)
     g.es_exception()
@@ -31634,25 +31632,24 @@ try:
         os.startfile(arg+path)
     elif openType == "exec":
         command = "exec(%s)" % (arg+shortPath)
-        exec arg+path in {} # 12/11/02
+        exec arg+path in {}
     elif openType == "os.spawnl":
         filename = g.os_path_basename(arg)
         command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
         apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
     elif openType == "os.spawnv":
-        if 1: # New code allows args to spawnv.
-            filename = os.path.basename(arg[0]) 
-            vtuple = arg[1:] 
-            vtuple.append(path)
-            command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
-            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
-        else:
-            filename = g.os_path_basename(arg)
-            command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
-            apply(os.spawnv,(os.P_NOWAIT,arg,(filename,path)))
+        filename = os.path.basename(arg[0]) 
+        vtuple = arg[1:] 
+        vtuple.append(path)
+        command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+        apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+    elif openType == "os.spawnv2": # New in 4.3 beta 1: TO DO
+        # We need more args.
+        apply(os.spawnv,(os.P_NOWAIT, r"c:\vim\vim63\gvim.exe",
+            [" --servername LEO "," --remote-silent "]+[shortPath]))
     else:
         command="bad command:"+str(openType)
-    g.trace(command)
+        g.trace(command)
 except Exception:
     g.es("exception executing: "+command)
     g.es_exception()
@@ -40574,7 +40571,7 @@ def dragCloneAfter (self,p,after):
 #@nonl
 #@-node:ekr.20031218072017.2948:c.dragCloneAfter
 #@-node:ekr.20031218072017.2945:Dragging (commands)
-#@+node:ekr.20031218072017.1839:readAtFileNodes
+#@+node:ekr.20031218072017.1839:readAtFileNodes (commands)
 def readAtFileNodes (self):
 
     c = self ; u = c.undoer ; p = c.currentPosition()
@@ -40585,7 +40582,7 @@ def readAtFileNodes (self):
     
     u.afterChangeTree(p,'Read @file Nodes',undoData)
 #@nonl
-#@-node:ekr.20031218072017.1839:readAtFileNodes
+#@-node:ekr.20031218072017.1839:readAtFileNodes (commands)
 #@-node:ekr.20050408072730:From Commands...
 #@+node:ekr.20050408072730.2:From Find
 #@+node:ekr.20031218072017.3069:changeAll (sets end of change-all group)
@@ -43835,7 +43832,183 @@ def statusLineIsEnabled(self):
 #@nonl
 #@-node:ekr.20041223105114.1:Status line methods (compatibility)
 #@-node:ekr.20050428103606:(Added support for UNL's in settings pane)
+#@+node:ekr.20050430105726:(Added Paul Paterson's Tangle patch)
+#@+node:ekr.20050430105726.1:email
+@nocolor
+
+I know you don't like to maintain the tangle code, but here is a patch to remove a hangnail of mine ...
+
+The current way Leo works is that if you do a tangle on a node then it searches for child nodes which are @root's and then tangles them. However, in my workflow, the most common use case is that I make a quick change to a method and want to tangle the *parent* file. If you make the change and then hit ctrl-shift-t then Leo says "No roots in node".
+
+What this patch does is to extend the current behaviour. If (and only if) there are no @roots in the node then it tries to find a parent node which is a @root. If if finds one then it tangles it and then stops. In most cases I think this is what the user would want to happen.
+
+You will probably say,
+
+a) I should be using @thin's, or
+b) marking nodes and then using the tangle-marked function
+
+(a) is not currently workable on my main project (14,000 nodes and 700+ files!) since writing the Leo file itself takes 30 seconds or more. I do use marked nodes but even then if I have several large nodes marked it takes 10+ seconds to tangle them and so I often want to just do a quick tangle to a single file without losing my current node location.
+
+Anyway, here is the patch ... it affects only the tangle method of baseTangleCommands in leoTangle.py ...
+
+   def tangle(self):
+         c = self.c ; p = c.currentPosition()
+       self.initTangleCommand()
+       if not self.tangleTree(p,report_errors):
+           g.es("Looking for a parent to tangle")
+           while p:
+               if g.get_directives_dict(p.bodyString(),[self.head_root]).has_key("root"):
+                   g.es("Tangling parent")
+                   self.tangleTree(p,report_errors)
+                   break
+               p.moveToParent()
+
+
+This could have been a plugin but it seems to me that this is probably just easier to roll into Leo rather than have another tiny plugin to support.
+#@-node:ekr.20050430105726.1:email
+#@+node:ekr.20050430105726.2:patch
+# Anyway, here is the patch ... it affects only the tangle method of baseTangleCommands in leoTangle.py ...
+
+def tangle(self):
+    c = self.c ; p = c.currentPosition()
+    self.initTangleCommand()
+    if not self.tangleTree(p,report_errors):
+        g.es("Looking for a parent to tangle")
+        while p:
+            if g.get_directives_dict(p.bodyString(),[self.head_root]).has_key("root"):
+                g.es("Tangling parent")
+                self.tangleTree(p,report_errors)
+                break
+            p.moveToParent()
+#@nonl
+#@-node:ekr.20050430105726.2:patch
+#@+node:ekr.20031218072017.3472:tangle
+def tangle(self):
+    
+    c = self.c ; p = c.currentPosition()
+    self.initTangleCommand()
+    
+    if 1: # Paul Paterson's patch.
+        if not self.tangleTree(p,report_errors):
+            g.es("looking for a parent to tangle...")
+            while p:
+                d = g.get_directives_dict(p.bodyString(),[self.head_root])
+                if d.has_key("root"):
+                    g.es("tangling parent")
+                    self.tangleTree(p,report_errors)
+                    break
+                p.moveToParent()
+    else:
+        self.tangleTree(p,report_errors)
+    
+    g.es("tangle complete")
+#@-node:ekr.20031218072017.3472:tangle
+#@+node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
+# The caller passes [root_node] or None as the second arg.  This allows us to distinguish between None and [None].
+
+def get_directives_dict(s,root=None):
+    
+    """Scans root for @directives found in globalDirectivesList.
+
+    Returns a dict containing pointers to the start of each directive"""
+
+    if root: root_node = root[0]
+    theDict = {}
+    i = 0 ; n = len(s)
+    while i < n:
+        if s[i] == '@' and i+1 < n:
+            << set theDict for @ directives >>
+        elif root and g.match(s,i,"<<"):
+            << set theDict["root"] for noweb * chunks >>
+        i = g.skip_line(s,i)
+    return theDict
+#@nonl
+#@+node:ekr.20031218072017.1261:<< set theDict for @ directives >>
+j = g.skip_c_id(s,i+1)
+word = s[i+1:j]
+if word in g.globalDirectiveList:
+    if theDict.has_key(word):
+        # Ignore second value.
+        pass
+        # g.es("Warning: conflicting values for %s" % (word), color="blue")
+    else:
+        theDict [word] = i
+#@nonl
+#@-node:ekr.20031218072017.1261:<< set theDict for @ directives >>
+#@+node:ekr.20031218072017.1262:<< set theDict["root"] for noweb * chunks >>
+@ The following looks for chunk definitions of the form < < * > > =. If found, we take this to be equivalent to @root filename if the headline has the form @root filename.
+@c
+
+i = g.skip_ws(s,i+2)
+if i < n and s[i] == '*' :
+    i = g.skip_ws(s,i+1) # Skip the '*'
+    if g.match(s,i,">>="):
+        # < < * > > = implies that @root should appear in the headline.
+        i += 3
+        if root_node:
+            theDict["root"]=0 # value not immportant
+        else:
+            g.es(g.angleBrackets("*") + "= requires @root in the headline")
+#@nonl
+#@-node:ekr.20031218072017.1262:<< set theDict["root"] for noweb * chunks >>
+#@-node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
+#@-node:ekr.20050430105726:(Added Paul Paterson's Tangle patch)
 #@-node:ekr.20050316083031.2:Features...
+#@+node:ekr.20050429092616:Plugins
+#@+node:ekr.20050429091529:(Read @file Nodes v Import Derived Files)
+#@+node:ekr.20031218072017.1839:readAtFileNodes (commands)
+def readAtFileNodes (self):
+
+    c = self ; u = c.undoer ; p = c.currentPosition()
+
+    undoData = u.beforeChangeTree(p)
+    
+    c.fileCommands.readAtFileNodes()
+    
+    u.afterChangeTree(p,'Read @file Nodes',undoData)
+#@nonl
+#@-node:ekr.20031218072017.1839:readAtFileNodes (commands)
+#@+node:ekr.20031218072017.3029:readAtFileNodes (leoAtFile)
+def readAtFileNodes (self):
+
+    c = self.c ; current = c.currentPosition()
+    c.atFileCommands.readAll(current,partialFlag=True)
+    c.redraw()
+    
+    # Force an update of the body pane.
+    current.setBodyStringOrPane(current.bodyString())
+    c.frame.body.onBodyChanged(current,undoType=None)
+#@nonl
+#@-node:ekr.20031218072017.3029:readAtFileNodes (leoAtFile)
+#@+node:ekr.20031218072017.1809:importDerivedFile
+def importDerivedFile (self):
+    
+    """Create a new outline from a 4.0 derived file."""
+    
+    c = self ; p = c.currentPosition()
+    
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+    
+    names = g.app.gui.runOpenFileDialog(
+        title="Import Derived File",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importDerivedFiles(p,names)
+#@nonl
+#@-node:ekr.20031218072017.1809:importDerivedFile
+#@-node:ekr.20050429091529:(Read @file Nodes v Import Derived Files)
+#@-node:ekr.20050429092616:Plugins
 #@-node:ekr.20050316083031:4.3 b1 projects
 #@-all
 #@nonl

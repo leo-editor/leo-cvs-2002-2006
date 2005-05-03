@@ -973,7 +973,8 @@ No information on XP.
 
 - put the jyleo-nnn.jar file in c:\prog
 
-- Execute the following command in a console window in c:\prog
+- Execute the following command in a console window
+    cd c:\prog
     jar xvf j-leo-nnn.jar
 
 This creates a folder called j-leo-nnn
@@ -997,6 +998,49 @@ try:
 except Exception:
     home = ''
 #@nonl
+#@+node:ekr.20050317153447:jy-Leo install instructions by Paul Paterson
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3053534
+By: paulpaterson
+
+Very interesting indeed - great work! 
+ 
+I didn't have Java/Jython installed so for others in the same boat here's what I had to do to get it work on my platform (Win2k). Some of this is in the README but I had to do some extra but I'm not sure why. 
+ 
+1. Install 1.5 JDK  
+http://java.sun.com/j2se/1.5.0/download.jsp 
+ 
+2. Install Jython 
+http://www.jython.org/jython22a0.zip 
+ 
+3. Edit Jython.bat file - the part that calls Java.exe to ... 
+"C:\Program Files\Java\jdk1.5.0_02\jre\bin\java" -cp "C:\Program Files\Java\jdk1.5.0_02\jre\lib";"c:\Apps\Python23\Jython";"C:\Apps\jLeo\j-leo-MAR15\Icons";"C:\Apps\jLeo\j-leo-MAR15\skins";"C:\Apps\jLeo\j-leo-MAR15\src";"C:\Apps\jLeo\j-leo-MAR15\skinimages" -Dpython.home="c:\Apps\Python23\Jython" -jar jython.jar %ARGS% 
+ 
+Where  
+- Java installed at C:\Program Files\Java\jdk1.5.0_02 
+- Jython at c:\Apps\Python23\Jython 
+- jLeo at C:\Apps\jLeo\j-leo-MAR15 
+ 
+Change your paths as appropriate! There must be a better way to do this - Java confuses me! 
+ 
+4. Edit leo.py in jleo/src directory to fix failure to find HOME env variable. 
+ 
+line 241 becomes ... 
+ 
+....try:home = os.getenv('HOME' )#,default=dotDir) 
+....except KeyError:home="" 
+ 
+ 
+Then, from the Jython install directory ... 
+ 
+Jython " 
+C:\Apps\jLeo\j-leo-MAR15\src\leo.py" 
+ 
+Works a treat!  
+ 
+Paul
+#@-node:ekr.20050317153447:jy-Leo install instructions by Paul Paterson
 #@-node:ekr.20050316092232:How to install jyLeo
 #@+node:ekr.20031218072017.386:How to remove cursed newlines: use binary mode
 teknico ( Nicola Larosa ) 
@@ -1097,6 +1141,10 @@ To run Idle(Python2.3 version) directly:
 
 cd c:\prog\leoCvs\leo\src
 c:\python23\python c:\python23\Lib\idlelib\idle.py
+
+The HOME var must be set to c:\prog\leoCVS for .pycheckrc to be effective.
+
+To suppress warnings from the standard library set ignoreStandardLibrary=1 in .pycheckrc
 #@nonl
 #@-node:ekr.20031218072017.390:How to run Pychecker
 #@+node:ekr.20031218072017.391:How to use CVS branches
@@ -1571,6 +1619,134 @@ Brian Theado
 @language python
 @color
 #@nonl
+#@+node:ekr.20050424173858:From config
+#@+node:ekr.20050424115658.1:original from config.readSettingsFiles
+d = self.readSettings(c)
+# g.trace(c)
+if d:
+    theHash = c.hash()
+    d['_hash'] = theHash
+    if setOptionsFlag:
+        self.localOptionsDict[theHash] = d
+        << update recent files from d >>
+    else:
+        self.localOptionsList.insert(0,d)
+else:
+    g.es("No @settings tree in %s" % (g.shortFileName(path)),color="red")
+g.app.destroyWindow(c.frame)
+#@nonl
+#@+node:ekr.20041201081440:<< update recent files from d >>
+for key in d.keys():
+    
+    if munge(key) == "recentfiles":
+        # Entries were created by parserBaseClass.set.
+        bunch = d.get(key)
+        files = bunch.val
+        files = [theFile.strip() for theFile in files]
+        if 0:
+            print "config.readSettingsFiles.  recent files from %s..." % fileName
+            for theFile in files:
+                print theFile
+        self.appendToRecentFiles(files)
+#@nonl
+#@-node:ekr.20041201081440:<< update recent files from d >>
+#@-node:ekr.20050424115658.1:original from config.readSettingsFiles
+#@+node:ekr.20050424114937:From configSettings.setRecentFiles
+    root = g.app.config.settingsRoot(c)
+    if not root:
+        if 0:
+            << create @settings node >>
+        return
+
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        if 0:
+            << create @recent-files node >>
+        return
+    << Update p, leaving c.changed untouched >>
+#@nonl
+#@+node:ekr.20050420081237.1:<< create @recent-files node >>
+g.es('created @recent-files node',color='red')
+p = root.insertAsNthChild(0)
+p.initHeadString('@recent-files')
+c.selectPosition(p)
+
+assert(g.app.config.findSettingsPosition(c,"@recent-files"))
+#@nonl
+#@-node:ekr.20050420081237.1:<< create @recent-files node >>
+#@+node:ekr.20050420081237:<< create @settings node >>
+g.es('created @settings node',color='red')
+
+old_root = c.rootPosition()
+root = old_root.insertAfter()
+root.moveToRoot(old_root)
+root.initHeadString('@settings')
+
+assert(g.app.config.settingsRoot(c))
+#@nonl
+#@-node:ekr.20050420081237:<< create @settings node >>
+#@+node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
+oldText = p.bodyString()
+changed = c.isChanged()
+newText = '\n'.join(files)
+p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
+c.setChanged(changed)
+
+if doUndo:
+    c.undoer.setUndoTypingParams(old_p,'Clear Recent Files',
+        oldText,newText,oldSel=None,newSel=None)
+#@nonl
+#@-node:ekr.20050420081237.2:<< Update p, leaving c.changed untouched >>
+#@-node:ekr.20050424114937:From configSettings.setRecentFiles
+#@+node:ekr.20041121151924:doRecentFiles
+def doRecentFiles (self,p,kind,name,val):
+    
+    __pychecker__ = '--no-argsused' # args not used.
+    
+    s = p.bodyString().strip()
+    if s:
+        lines = g.splitLines(s)
+        self.set(p,"recent-files","recent-files",lines)
+#@nonl
+#@-node:ekr.20041121151924:doRecentFiles
+#@+node:ekr.20041225063637.44:createRecentFiles
+def createRecentFiles (self,parent,p,kind,name,vals):
+    
+    bg = self.commonBackground
+    
+    s = p.bodyString()
+    lines = g.splitLines(s)
+    
+    f = Tk.Frame(parent)
+    
+    recentFilesBox = Pmw.ComboBox(f,
+        labelpos="ew",label_text='recent files',
+        label_background = bg,
+        scrolledlist_items=lines)
+
+    if lines:
+        recentFilesBox.selectitem(0)
+    recentFilesBox.pack(side="left")
+    
+    # Increase the width of the entry field.
+    entryfield = recentFilesBox.component('entryfield')
+    entry = entryfield.component('entry')
+    entry.configure(width=70)
+
+    def recentFilesCallback():
+        files = recentFilesBox.get(0,'end')
+        files = [theFile.strip() for theFile in files if theFile.strip()]
+        return files
+
+    self.initValue(p,name,kind,vals,recentFilesCallback)
+
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+                
+    self.suppressComments = p.copy()
+#@nonl
+#@-node:ekr.20041225063637.44:createRecentFiles
+#@-node:ekr.20050424173858:From config
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

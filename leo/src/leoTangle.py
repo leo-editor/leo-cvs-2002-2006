@@ -595,12 +595,24 @@ class baseTangleCommands:
     #@-node:ekr.20031218072017.3471:initUntangleCommand
     #@+node:ekr.20031218072017.3472:tangle
     def tangle(self):
-    
+        
         c = self.c ; p = c.currentPosition()
         self.initTangleCommand()
-        self.tangleTree(p,report_errors)
-        g.es("Tangle complete")
-    #@nonl
+        
+        if 1: # Paul Paterson's patch.
+            if not self.tangleTree(p,report_errors):
+                g.es("looking for a parent to tangle...")
+                while p:
+                    d = g.get_directives_dict(p.bodyString(),[self.head_root])
+                    if d.has_key("root"):
+                        g.es("tangling parent")
+                        self.tangleTree(p,report_errors)
+                        break
+                    p.moveToParent()
+        else:
+            self.tangleTree(p,report_errors)
+        
+        g.es("tangle complete")
     #@-node:ekr.20031218072017.3472:tangle
     #@+node:ekr.20031218072017.3473:tangleAll
     def tangleAll(self):

@@ -199,7 +199,7 @@ class baseCommands:
     #@+node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     def getSignOnLine (self):
         c = self
-        return "Leo 4.3 alpha 4, build %s, March 15, 2005" % c.getBuildNumber()
+        return "Leo 4.3 beta 1, build %s, April 30, 2005" % c.getBuildNumber()
     #@nonl
     #@-node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     #@+node:ekr.20040629121554.2:initVersion
@@ -474,25 +474,24 @@ class baseCommands:
                         os.startfile(arg+path)
                     elif openType == "exec":
                         command = "exec(%s)" % (arg+shortPath)
-                        exec arg+path in {} # 12/11/02
+                        exec arg+path in {}
                     elif openType == "os.spawnl":
                         filename = g.os_path_basename(arg)
                         command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
                         apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
                     elif openType == "os.spawnv":
-                        if 1: # New code allows args to spawnv.
-                            filename = os.path.basename(arg[0]) 
-                            vtuple = arg[1:] 
-                            vtuple.append(path)
-                            command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
-                            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
-                        else:
-                            filename = g.os_path_basename(arg)
-                            command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
-                            apply(os.spawnv,(os.P_NOWAIT,arg,(filename,path)))
+                        filename = os.path.basename(arg[0]) 
+                        vtuple = arg[1:] 
+                        vtuple.append(path)
+                        command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+                        apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+                    elif openType == "os.spawnv2": # New in 4.3 beta 1: TO DO
+                        # We need more args.
+                        apply(os.spawnv,(os.P_NOWAIT, r"c:\vim\vim63\gvim.exe",
+                            [" --servername LEO "," --remote-silent "]+[shortPath]))
                     else:
                         command="bad command:"+str(openType)
-                    g.trace(command)
+                        g.trace(command)
                 except Exception:
                     g.es("exception executing: "+command)
                     g.es_exception()
@@ -832,7 +831,7 @@ class baseCommands:
             g.es("can not open:" + fileName)
     #@nonl
     #@-node:ekr.20031218072017.2839:readOutlineOnly
-    #@+node:ekr.20031218072017.1839:readAtFileNodes
+    #@+node:ekr.20031218072017.1839:readAtFileNodes (commands)
     def readAtFileNodes (self):
     
         c = self ; u = c.undoer ; p = c.currentPosition()
@@ -843,7 +842,7 @@ class baseCommands:
         
         u.afterChangeTree(p,'Read @file Nodes',undoData)
     #@nonl
-    #@-node:ekr.20031218072017.1839:readAtFileNodes
+    #@-node:ekr.20031218072017.1839:readAtFileNodes (commands)
     #@+node:ekr.20031218072017.2840:4.0 Commands
     #@+node:ekr.20031218072017.1809:importDerivedFile
     def importDerivedFile (self):

@@ -855,7 +855,7 @@ class leoTree:
     def scrollTo(self,p):
         self.oops()
     
-    def idle_scrollTo(self,p):
+    def idle_scrollTo(self,p=None):
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3711:Scrolling
@@ -1622,7 +1622,7 @@ class nullTree (leoTree):
     def scrollTo(self,p):
         pass
     
-    def idle_scrollTo(self,p):
+    def idle_scrollTo(self,p=None):
         pass
     #@nonl
     #@-node:ekr.20031218072017.2239:Scrolling

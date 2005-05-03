@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="13334" clone_windows="0"/>
-<globals body_outline_ratio="0.613333333333">
+<leo_header file_format="2" tnodes="0" max_tnode_index="13712" clone_windows="0"/>
+<globals body_outline_ratio="0.635555555556">
 	<global_window_position top="45" left="166" height="900" width="1023"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -61,7 +61,57 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20050429094215" a="E"><vh>4.3-beta 1</vh>
+<v t="ekr.20050429094215.2"><vh>Fixed bugs...</vh>
+<v t="ekr.20050429094215.3" a="E"><vh>Made sure NameErrors are reported with tracebacks in scripts</vh></v>
+<v t="ekr.20050429094215.22" a="E"><vh>Finally! fixed .leoID problem!</vh></v>
+<v t="ekr.20050429094215.31" a="E"><vh>Investigated problem with LeoPluginsRef.leo</vh></v>
+<v t="ekr.20050429094215.41" a="E"><vh>Fixed conflicts in menu shortcuts</vh></v>
+<v t="ekr.20050429094215.113"><vh>Fixed bug in p.initStatus caught by pychecker</vh></v>
+<v t="ekr.20050429094215.116" a="E"><vh>Fixed crasher in import logic (leoAtFile)</vh></v>
+<v t="ekr.20050429094215.120" a="E"><vh>Put in protections against unbounded recursion in idle_scrollTo</vh></v>
+</v>
+<v t="ekr.20050429094215.130"><vh>New features...</vh>
+<v t="ekr.20050429094215.131" a="E"><vh>Created stand-alone leoGlobals.py module</vh></v>
+<v t="ekr.20050429094215.139" a="E"><vh>Leo now ignores problems opening settings file for chapters plugin</vh></v>
+<v t="ekr.20050429094215.145" a="E"><vh>Improved write logic</vh></v>
+<v t="ekr.20050429094215.173" a="E"><vh>Rewrote the undo code</vh></v>
+<v t="ekr.20050429094215.286" a="E"><vh>Implemented undo/redo for Paste Retaining clones</vh></v>
+<v t="ekr.20050429094215.316" a="E"><vh>Added support for 'str_' uA's</vh></v>
+<v t="ekr.20050429094215.347"><vh>Removed unused params from leoAtFile.py</vh></v>
+<v t="ekr.20050429094215.353"><vh>Leo  saves recent files info in .leoRecentFiles.txt files</vh>
+<v t="ekr.20050429094215.354"><vh>What I did</vh></v>
+<v t="ekr.20050429094215.355"><vh>New plan</vh></v>
+<v t="ekr.20050429094215.161"><vh>write_Leo_file</vh>
+<v t="ekr.20050429094215.162"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.163"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.164"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.165"><vh>&lt;&lt; put the .leo file &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.166"><vh>&lt;&lt; delete fileName &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.167"><vh>&lt;&lt; rename backupName to fileName &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.168"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050429094215.141"><vh>Scanning @settings (g.app.config)</vh>
+<v t="ekr.20050429094215.142"><vh>openSettingsFile</vh></v>
+<v t="ekr.20050429094215.143"><vh>config.readSettingsFiles</vh></v>
+<v t="ekr.20050429094215.144"><vh>readSettings</vh></v>
+</v>
+<v t="ekr.20050429094215.350"><vh>setRecentFiles (c.configSettings)</vh></v>
+<v t="ekr.20050429094215.356"><vh>appendToRecentFiles (g.app.config)</vh></v>
+<v t="ekr.20050429094215.349"><vh>clearRecentFiles</vh></v>
+<v t="ekr.20050429094215.357"><vh>Reading and writing .leoRecentFiles.txt (g.app.config)</vh>
+<v t="ekr.20050429094215.358"><vh>readRecentFilesFile</vh></v>
+<v t="ekr.20050429094215.359"><vh>writeRecentFilesFile &amp; helper</vh>
+<v t="ekr.20050429094215.360"><vh>writeRecentFilesFileHelper</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050429095849" a="E"><vh>Finished all @settings coding</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050313101229"><vh>4.3-a4</vh>
 <v t="ekr.20050313101229.2"><vh>Fixed bugs...</vh>
 <v t="ekr.20050313101229.69"><vh>Fix colorizer bug for initial @nocolor in @root nodes</vh></v>
@@ -76,8 +126,6 @@
 </v>
 <v t="ekr.20050313101229.100"><vh>Revised plugins for the 4.3 code base</vh></v>
 </v>
-</v>
-<v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050221104844"><vh>4.3-a3</vh>
 <v t="ekr.20050221104844.2"><vh>Bugs</vh>
 <v t="ekr.20050221104844.3"><vh>Fixed crasher in Tangle</vh></v>
@@ -236,7 +284,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050210102150" a="E"><vh>4.2...</vh>
+<v t="ekr.20050210102150"><vh>4.2... @file-thin and gnx's</vh>
 <v t="ekr.20040922074200"><vh>4.2 final</vh></v>
 <v t="ekr.20040914103359"><vh>4.2 rc1</vh>
 <v t="ekr.20040914103743.1"><vh>Added new features</vh>
@@ -441,7 +489,7 @@
 <v t="EKR.20040518075457"><vh>Dangers of @file-thin</vh></v>
 </v>
 </v>
-<v t="ekr.20050210102150.1" a="E"><vh>4.1...</vh>
+<v t="ekr.20050210102150.1"><vh>4.1...</vh>
 <v t="ekr.20040216151748"><vh>4.1 final</vh>
 <v t="ekr.20040217085036"><vh>Added several new plugins</vh></v>
 <v t="ekr.20040216152948"><vh>Added Toggle Angle Brackets command</vh></v>
@@ -565,7 +613,7 @@
 </v>
 <v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
 </v>
-<v t="ekr.20050210102358" a="E"><vh>4.0...</vh>
+<v t="ekr.20050210102358"><vh>4.0...</vh>
 <v t="edream.110203163054.66"><vh>4.0.1 through 4.0.4</vh></v>
 <v t="edream.110203163054.67"><vh>4.0 final</vh>
 <v t="edream.110203163054.68"><vh>4.0 beta 4</vh></v>
@@ -1393,7 +1441,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
+<v t="EKR.20040524104904"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1800,7 +1848,7 @@
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
 <v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050122090016" a="E"><vh>Setting options...</vh>
+<v t="ekr.20050122090016"><vh>Setting options...</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050419072509.1"><vh>NewHeadline</vh></v>
 <v t="EKR.20040524104904.212"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
@@ -1856,11 +1904,38 @@
 <v t="EKR.20040524104904.122"><vh>Ideas for using scripts</vh></v>
 </v>
 <v t="ekr.20050417072710.1"><vh>How to make operations undoable</vh></v>
+<v t="ekr.20050429094215.353"><vh>Leo  saves recent files info in .leoRecentFiles.txt files</vh>
+<v t="ekr.20050429094215.354"><vh>What I did</vh></v>
+<v t="ekr.20050429094215.355"><vh>New plan</vh></v>
+<v t="ekr.20050429094215.161"><vh>write_Leo_file</vh>
+<v t="ekr.20050429094215.162"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.163"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.164"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.165"><vh>&lt;&lt; put the .leo file &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.166"><vh>&lt;&lt; delete fileName &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.167"><vh>&lt;&lt; rename backupName to fileName &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.168"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
 </v>
-<v t="EKR.20040524104904.245" a="TV"><vh>Chapter 9: History of Leo</vh>
+<v t="ekr.20050429094215.141"><vh>Scanning @settings (g.app.config)</vh>
+<v t="ekr.20050429094215.142"><vh>openSettingsFile</vh></v>
+<v t="ekr.20050429094215.143"><vh>config.readSettingsFiles</vh></v>
+<v t="ekr.20050429094215.144"><vh>readSettings</vh></v>
+</v>
+<v t="ekr.20050429094215.350"><vh>setRecentFiles (c.configSettings)</vh></v>
+<v t="ekr.20050429094215.356"><vh>appendToRecentFiles (g.app.config)</vh></v>
+<v t="ekr.20050429094215.349"><vh>clearRecentFiles</vh></v>
+<v t="ekr.20050429094215.357"><vh>Reading and writing .leoRecentFiles.txt (g.app.config)</vh>
+<v t="ekr.20050429094215.358"><vh>readRecentFilesFile</vh></v>
+<v t="ekr.20050429094215.359"><vh>writeRecentFilesFile &amp; helper</vh>
+<v t="ekr.20050429094215.360"><vh>writeRecentFilesFileHelper</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="EKR.20040524104904.245"><vh>Chapter 9: History of Leo</vh>
 <v t="EKR.20040524104904.246"><vh>Beginnings</vh></v>
 <v t="EKR.20040524104904.247"><vh>Versions, and more versions</vh></v>
-<v t="EKR.20040524104904.248" a="E"><vh>Designing @file trees</vh>
+<v t="EKR.20040524104904.248"><vh>Designing @file trees</vh>
 <v t="EKR.20040524104904.249"><vh>Deciding to do Leo2</vh></v>
 <v t="EKR.20040524104904.250"><vh>A prototype</vh></v>
 <v t="EKR.20040524104904.251"><vh>User interaction</vh></v>
@@ -1885,7 +1960,7 @@
 <v t="EKR.20040524104904.267"><vh>Tangle and Untangle commands</vh></v>
 <v t="EKR.20040524104904.268"><vh>Unicode theory of operation</vh></v>
 <v t="EKR.20040524104904.269"><vh>Unlimited undo</vh></v>
-<v t="EKR.20040524104904.273"><vh>4.0 Theory of operation</vh></v>
+<v t="EKR.20040524104904.273"><vh>4.0 Theory of operation WRONG: The synchronization principle is invalid!</vh></v>
 <v t="EKR.20040524104904.337"><vh>Format of derived files (3.x)</vh>
 <v t="EKR.20040524104904.338"><vh>Sentinels in derived files</vh>
 <v t="EKR.20040524104904.339"><vh>The @delims directive</vh></v>
@@ -2034,6 +2109,9 @@
 <v t="EKR.20040524104904.380"><vh>Glossary</vh>
 <v t="EKR.20040524104904.381"><vh>@file node, @others node, @root node, etc.</vh></v>
 <v t="EKR.20040524104904.382"><vh>@file tree, @others tree, @root tree, etc.</vh></v>
+<v t="ekr.20050429093748"><vh>@asis, @file, @noref, @nosent, @thin and related forms</vh>
+<v t="EKR.20040524104904.92"><vh>Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees</vh></v>
+</v>
 <v t="EKR.20040524104904.383"><vh>Body pane</vh></v>
 <v t="EKR.20040524104904.384"><vh>Body text</vh></v>
 <v t="EKR.20040524104904.385"><vh>Body text box</vh></v>
@@ -2083,7 +2161,7 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050"><vh>FAQ</vh>
+<v t="edream.110203163054.1050" a="TV"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
@@ -2096,7 +2174,11 @@
 <v t="edream.110203163054.1057"><vh>Some characters in derived files look funny. What can I do?</vh></v>
 <v t="edream.110203163054.1058"><vh>Some characters are garbled when importing files. What can I do?</vh></v>
 </v>
+<v t="ekr.20050429094029"><vh>Using Leo with CVS or SVN</vh>
+<v t="ekr.20040804173200.6"><vh>How should I use Leo with CVS?</vh></v>
+</v>
 <v t="edream.110203163054.1059"><vh>Using derived files</vh>
+<v t="ekr.20040804173200.6"><vh>How should I use Leo with CVS?</vh></v>
 <v t="edream.110203163054.1060"><vh>How do I prevent Leo from inserting sentinels in derived files?</vh>
 <v t="edream.110203163054.359"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 </v>
@@ -2113,7 +2195,6 @@
 </v>
 <v t="edream.110203163054.1067"><vh>Can @file trees contain material not in the derived file?</vh></v>
 <v t="EKR.20040521090400"><vh>How can I use Leo with older C compilers</vh></v>
-<v t="ekr.20040804173200.6"><vh>How does @thin make Leo more friendly to CVS?</vh></v>
 </v>
 <v t="edream.110203163054.1068"><vh>Customizing Leo</vh>
 <v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
@@ -2236,6 +2317,7 @@
 <v t="edream.110203163054.1108"><vh>How can I create a template .leo file?</vh></v>
 <v t="ekr.20040908100113"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
 <v t="ekr.20050307112705"><vh>The rst plugins sometimes crash.  What can I do?</vh></v>
+<v t="ekr.20050501103522"><vh>VIM syntax file hack to handle Leo @ markup</vh></v>
 </v>
 <v t="ekr.20041013100216"><vh>Tips and techniques</vh>
 <v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
@@ -3416,10 +3498,12 @@ You can get any combination of sentinels/no sentinels and references/no referenc
                  Derived files        Sections and 
 Type of tree   contain sentinels?   @others expanded?
 ------------   ------------------   -----------------
-       @file   yes                  yes
-     @nosent   no                   yes
-      @noref   yes                  no
        @asis   no                   no
+       @file   yes                  yes
+      @noref   yes                  no
+     @nosent   no                   yes
+     
+       
 
 Leo can not update the outline from changes made from derived files unless those files contain sentinels.  The primary source for @nosent and @asis trees are the outlines from which those files were derived.
 
@@ -6657,7 +6741,7 @@ http://www-cs-faculty.stanford.edu/~knuth/cweb.html</t>
 <t tx="EKR.20040524104904.392">To move right all following siblings of a node so that they become children of a node.</t>
 <t tx="EKR.20040524104904.393">The output file created as the result of tangling a node containing an @root directive. The file consists of the expansion of the text following the @root directive.</t>
 <t tx="EKR.20040524104904.394">An offspring of a node.  That is, a child, grandchild, etc. of a node.</t>
-<t tx="EKR.20040524104904.395">A keyword, preceded by an '@' sign, that is used to control syntax coloring or the Tangle, Untangle or Weave commands.</t>
+<t tx="EKR.20040524104904.395">A keyword, preceded by an '@' sign, in body text that controls Leo's operation.</t>
 <t tx="EKR.20040524104904.396">A section containing only documentation. That is, a section that start with @.  Doc sections are associated with the immediately following code section, if any.</t>
 <t tx="EKR.20040524104904.397">A convention for representing sequences of characters that would otherwise have special meaning.  Leo has only one such convention: in @root trees, @@ in the leftmost column of a code part stands for a single @ character.
 
@@ -15179,7 +15263,8 @@ The Check Python Code and Pretty Print Python Code commands replace nodes with t
 <t tx="ekr.20040804172113.1"></t>
 <t tx="ekr.20040804173200.6">@thin can eliminate most problems with using Leo in cvs environments:
 
-- Developers should use @thin to create almost all derived files.
+- Developers should use @thin to create derived files in any kind of cooperative
+environment.
 
 - The cvs repository contains "reference" .leo files. These reference files
 should containing nothing but @thin nodes. Reference files will change only when
@@ -17051,5 +17136,569 @@ how Leo's core calls the u.before/afterX methods.</t>
 # Note: Leo calls g.app.config.readSettingsFiles before opening the settings dialog.
 
 g.app.config.readSettingsFiles(c.fileName(),verbose=True)</t>
+<t tx="ekr.20050429093748">Headlines that start with one of these mark a tree corresponding to a derived file.
+
+See the child of this node for full details.</t>
+<t tx="ekr.20050429094029"></t>
+<t tx="ekr.20050429094215">Leo 4.3 beta 1                 April 30, 2005
+
+Leo 4.3 beta 1 completes all major features of Leo 4.3. There are no known
+significant bugs remaining.
+
+The defining features of Leo 4.3:
+---------------------------------
+1. Leo now stores options in @settings trees, that is, outlines whose headline
+is '@settings'. When opening a .leo file, Leo looks for @settings trees not only
+in the outline being opened but also in various leoSettings.leo files.
+
+The key design goal of @settings trees was that Leo's user options must be
+infinitely flexible. That goal has been accomplished. Indeed, users can create
+arbitrarily complex user options with @settings trees. Leo settings outlines
+are, in fact, infinitely more flexible and powerful than any scheme based on
+flat text.  Readers of Python's configParser shootout take note!
+
+2. The Settings command temporarily replaces the outline pane with an outline
+showing all the @settings trees in effect. The Settings command also replaces
+the body pane with a "settings pane". This settings pane allows you to change
+the settings selected in the outline pane using standard gui widgets. The
+settings pane is dynamically created from nodes in the settings tree; it is as
+extensible as the @settings tree itself.
+
+3. Leo now stores recent files information in .leoRecentFiles.txt files.
+
+4. Leo's read/write code in leoAtFile.py has been rewritten to support user-
+defined tangling and untangling.  This is a major cleanup of Leo's core.
+
+5. Leo now boasts a wonderful new Plugins Manager plugin. This plugin enables
+and disables plugins automatically. You never have to mess with
+pluginsManager.txt again! This plugin also tells you everything you need to know
+about each plugin. Finally, this plugin also lets you download plugins from
+Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
+
+6. You can install third-party extensions in Leo's extensions directory. Leo
+will attempt to import such extensions from the extensions directory if normal
+imports fail. Leo is distributed with Pmw (Python Mega Widgets), path.py and
+sets.py in this directory.</t>
+<t tx="ekr.20050429094215.2"></t>
+<t tx="ekr.20050429094215.3">The initial bug report:
+
+http://sourceforge.net/forum/message.php?msg_id=3048149
+
+The problem arose from a misguided attempt to eliminate non-useful information
+from traces. Alas, the baby got thrown out with the bath water.
+
+Here are the changes I made:
+
+ - c.executeScript now calls g.es_exception(full=True) to ensure that a full
+ stack trace always gets produced. This is especially important when the
+ exception happens in a module (file) called by the script.
+
+- c.executeScript now always executes the section &lt; &lt; dump the lines near the
+error &gt; &gt;, regardless of context. The lines are printed (in black) in the log.
+This is useful information in almost all cases.
+
+- After much experimentation, g.es_exception is basically unchanged. Note: If
+the error occurs in your script itself (as contrasted with an exception thrown
+from a file called by your script) Leo always has properly put the cursor on the
+offending line. I made no changes in this logic.
+
+BTW, calling pdb.set_trace() in your scripts may cause more problems than it is
+worth. Indeed.pdb.set_trace() uses only the information on the stack, and that
+may not be enough information to be useful. I usually use g.trace to find out
+what is happening. This works well.</t>
+<t tx="ekr.20050429094215.22">Initial bug report:
+
+http://sourceforge.net/forum/message.php?msg_id=3053699
+
+There were three similar bugs, all arising from the fact that g.os_path_abs and
+g.os_path_join return the _working_ directory if the initial path is None!
+
+I removed my HOME directory for testing. This was essential.
+
+- Compute home directory must return None, rather than the working directory if
+the HOME variable is None.
+
+- app.setLeoId must be careful (in two sections) to do nothing if any of
+(homeDir,globalConfigDir,loadDir) is None.</t>
+<t tx="ekr.20050429094215.31">The problem is that newButtons must use @nosent, so any changes to newButtons
+must be accompanied by a change to LeoPluginsRef.py. There is nothing more that
+needs to be done.</t>
+<t tx="ekr.20050429094215.41">The De-hoist command conflicted with the Expand/Contract submenu.
+
+The Paste Node As Clone conflicted with the Mark submenu.</t>
+<t tx="ekr.20050429094215.113">The status bits weren't being passed to v.initStatus!</t>
+<t tx="ekr.20050429094215.116">Traceback (most recent call last):
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 174, in doCommand
+    command()
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 863, in importDerivedFile
+    c.importCommands.importDerivedFiles(v,names)
+  File "C:\prog\leoCVS\leo\src\leoImport.py", line 137, in importDerivedFiles
+    isThin = at.scanHeaderForThin(theFile,fileName)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 570, in scanHeaderForThin
+    junk,junk,isThin = at.scanHeader(theFile,fileName)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 2616, in scanHeader
+    at.error("Bad @+leo sentinel in: %s" % fileName)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 4500, in error
+    self.printError(message)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 4509, in printError
+    if self.errors == 0:
+AttributeError: atFile instance has no attribute 'errors'
+</t>
+<t tx="ekr.20050429094215.120">Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoTkinterTree.py", line 1409, in idle_scrollTo
+    h1 = self.yoffset(p)
+  File "C:\prog\leoCVS\leo\src\leoTkinterTree.py", line 1488, in yoffset
+    h, flag = self.yoffsetTree(root,v1)
+  File "C:\prog\leoCVS\leo\src\leoTkinterTree.py", line 1506, in yoffsetTree
+    h2, flag = self.yoffsetTree(child,p1)
+  
+# Maximum recursion depth exceeded.
+
+It is still not completely clear why this happened.</t>
+<t tx="ekr.20050429094215.130"></t>
+<t tx="ekr.20050429094215.131">- Moved computeGlobalConfigDir, computeHomeDir, computeLoadDir and startupEncoding from leo.py to leoGlobals.py.
+
+- Created g.computeStandardDirectories and used it in leo.py.
+
+- Created g.createStandAloneApp using the above functions.  This function was based on the 'Standalone Operation' classed in the plugin_manager plugin.  g.createStandAloneApp doesn't actually use any of these classes because the nullGui class is basically a clumsier version of the BlackHole class.
+
+- Added a do-nothing attachLeoIcon method to nullGui class to suppress a warning.  As I said, the nullGui class is not as elegant as Paul's BlackHole class.
+
+- Added &lt;&lt;importLeoGlobals&gt;&gt; button to newButtons plugin.  This creates a node named
+  &lt;&lt; define importLeoGlobals &gt;&gt; whose body text defines an importLeoGlobals function.
+
+The idea is that importing leoGlobals from a stand-alone plugin is a bit tricky.  The importLeoGlobals handles these details.  Note that we don't want to define importLeoGlobals in a node included by @others, because this function must be available to the code in the &lt;&lt; imports &gt;&gt; section.  So we use a named section and reference it in before referencing the &lt;&lt; imports &gt;&gt; section.  See the plugin_manager plugin for an example.
+
+- Changed the plugin_manager plugin as follows:
+    - Used the newButtons plugin to add an &lt;&lt; define importLeoGlobals &gt;&gt; section.
+    - Simplified the import logic using importLeoGlobals function.
+    - Commented out the Standalone Operation classes.
+    - Called g.createStandAloneApp in the '__name__ == "__main__"' code.</t>
+<t tx="ekr.20050429094215.139">- config.openSettingsFile returns None if there is a read error.
+
+- leoFileCommand.open gives no BadLeoFile message if silent is True.</t>
+<t tx="ekr.20050429094215.141"></t>
+<t tx="ekr.20050429094215.142">def openSettingsFile (self,path):
+    
+    try:
+        # Open the file in binary mode to allow 0x1a in bodies &amp; headlines.
+        theFile = open(path,'rb')
+    except IOError:
+        g.es("can not open: " + path, color="blue")
+        return None
+        
+    # Similar to g.openWithFileName except it uses a null gui.
+    # Changing g.app.gui here is a major hack.
+    oldGui = g.app.gui
+    g.app.gui = leoGui.nullGui("nullGui")
+    c,frame = g.app.gui.newLeoCommanderAndFrame(path,updateRecentFiles=False)
+    frame.log.enable(False)
+    g.app.setLog(frame.log,"openWithFileName")
+    g.app.lockLog()
+    ok = frame.c.fileCommands.open(
+        theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
+    g.app.unlockLog()
+    frame.openDirectory = g.os_path_dirname(path)
+    g.app.gui = oldGui
+    return ok and c</t>
+<t tx="ekr.20050429094215.143">def readSettingsFiles (self,fileName,verbose=True):
+    
+    seen = []
+    
+    # Init settings from leoSettings.leo files.
+    for path,localFlag in (
+        (self.globalConfigFile,False),
+        (self.homeFile,False),
+        (fileName,True),
+    ):
+        if path and path.lower() not in seen:
+            seen.append(path.lower())
+            if verbose:
+                s = 'reading settings in %s' % path
+                print s ; g.es(s)
+            c = self.openSettingsFile(path)
+            if c:
+                d = self.readSettings(c)
+                if d:
+                    d['_hash'] = theHash = c.hash()
+                    if localFlag:
+                        self.localOptionsDict[theHash] = d
+                    else:
+                        self.localOptionsList.insert(0,d)
+                g.app.destroyWindow(c.frame)
+            self.readRecentFilesFile(path)
+
+    self.inited = True
+    self.setIvarsFromSettings(None)</t>
+<t tx="ekr.20050429094215.144"># Called to read all leoSettings.leo files.
+# Also called when opening an .leo file to read @settings tree.
+
+def readSettings (self,c):
+    
+    """Read settings from a file that may contain an @settings tree."""
+    
+    # g.trace(c.fileName())
+    
+    # Create a settings dict for c for set()
+    if c and self.localOptionsDict.get(c.hash()) is None:
+        self.localOptionsDict[c.hash()] = {}
+
+    parser = settingsTreeParser(c)
+    d = parser.traverse()
+
+    return d</t>
+<t tx="ekr.20050429094215.145">- Simplified write_Leo_file using new leoFileCommand.deleteFileWithMessage and g.utils_rename.
+
+- Eliminated outputList var.
+    - The code that writes to a clipboard sets self.outputFile to g.fileLikeObject.
+
+- Speeded up put routine: it always writes to self.outputFile.
+
+- self.outputFile is now a cStringIo object.  However, the heart of the put routine is:
+
+    s = g.toEncodedString(s,self.leo_file_encoding,reportErrors=True)
+    self.outputFile.write(s)
+
+and it appears that the call to g.toEncodedString is the limiting factor.</t>
+<t tx="ekr.20050429094215.161">def write_Leo_file(self,fileName,outlineOnlyFlag):
+
+    c = self.c
+    self.assignFileIndices()
+    if not outlineOnlyFlag:
+        # Update .leoRecentFiles.txt if possible.
+        g.app.config.writeRecentFilesFile(c)
+        &lt;&lt; write all @file nodes &gt;&gt;
+    &lt;&lt; return if the .leo file is read-only &gt;&gt;
+    try:
+        theActualFile = None
+        &lt;&lt; create backup file &gt;&gt;
+        self.mFileName = fileName
+        self.outputFile = cStringIO.StringIO() # or g.fileLikeObject()
+        theActualFile = open(fileName, 'wb')
+        &lt;&lt; put the .leo file &gt;&gt;
+        theActualFile.write(self.outputFile.getvalue())
+        theActualFile.close()
+        self.outputFile = None
+        &lt;&lt; delete backup file &gt;&gt;
+        return True
+    except Exception:
+        g.es("exception writing: " + fileName)
+        g.es_exception(full=False)
+        if theActualFile: theActualFile.close()
+        self.outputFile = None
+        &lt;&lt; delete fileName &gt;&gt;
+        &lt;&lt; rename backupName to fileName &gt;&gt;
+        return False
+
+write_LEO_file = write_Leo_file # For compatibility with old plugins.</t>
+<t tx="ekr.20050429094215.162">try:
+    # Write all @file nodes and set orphan bits.
+    c.atFileCommands.writeAll()
+except Exception:
+    g.es_error("exception writing derived files")
+    g.es_exception()
+    return False</t>
+<t tx="ekr.20050429094215.163"># self.read_only is not valid for Save As and Save To commands.
+
+if g.os_path_exists(fileName):
+    try:
+        if not os.access(fileName,os.W_OK):
+            g.es("can not create: read only: " + fileName,color="red")
+            return False
+    except:
+        pass # os.access() may not exist on all platforms.</t>
+<t tx="ekr.20050429094215.164"># rename fileName to fileName.bak if fileName exists.
+if g.os_path_exists(fileName):
+    backupName = g.os_path_join(g.app.loadDir,fileName)
+    backupName = fileName + ".bak"
+    if g.os_path_exists(backupName):
+        g.utils_remove(backupName)
+    ok = g.utils_rename(fileName,backupName)
+    if not ok:
+        if self.read_only:
+            g.es("read only",color="red")
+        return False
+else:
+    backupName = None</t>
+<t tx="ekr.20050429094215.165">self.putProlog()
+self.putHeader()
+self.putGlobals()
+self.putPrefs()
+self.putFindSettings()
+#start = g.getTime()
+self.putVnodes()
+#start = g.printDiffTime("vnodes ",start)
+self.putTnodes()
+#start = g.printDiffTime("tnodes ",start)
+self.putPostlog()</t>
+<t tx="ekr.20050429094215.166">if fileName and g.os_path_exists(fileName):
+    self.deleteFileWithMessage(fileName,'')
+</t>
+<t tx="ekr.20050429094215.167">if backupName:
+    g.es("restoring " + fileName + " from " + backupName)
+    g.utils_rename(backupName,fileName)</t>
+<t tx="ekr.20050429094215.168">if backupName and g.os_path_exists(backupName):
+
+    self.deleteFileWithMessage(backupName,'backup')</t>
+<t tx="ekr.20050429094215.173">- Use g.Bunch to simplify code.
+- Added 'before' &amp; 'after' methods
+- Added entries to optionalIvars dynamically in bead methods.
+- Eliminated 'case-itis' by making it unnessesary ever to add more cases.
+- Removed 'v' key in undoer:  replaced it with 'p'.
+- Replaced u.v by u.p and v by p in find code (It's too confusing).
+- p.setDirty and p.setAllAncestorAtFileNodesDirty  return list of nodes that were marked dirty.
+- Create new top-level before/after methods &amp; helpers:
+- Changed setUndoTypingParams to use new dispatch method.
+- Removed makeBeadDict.
+- Removed updateSetChangedFlag.
+- Added new methods to nullUndoer class.
+- Moved undo methods from leoNodes.py to leoUndo.py
+- Added dirtyVnodeList param to afterChangeNodeContents.</t>
+<t tx="ekr.20050429094215.286"></t>
+<t tx="ekr.20050429094215.316">The only changes concern how Leo encodes and decodes items in
+t.unknownAttributes and v.unknownAttributes.
+
+Without changing the file format, the only way to tell Leo how to write
+attributes is to use naming conventions. When writing attributes, Leo now does
+the following:
+
+- Do nothing except apply xml escapes if the attribute name (in
+t.unknownAttributes or v.unknownAttributes) starts with str_ and the attribute
+is, in fact, a string. If the string is a Unicode string Leo converts the
+Unicode string to an encoded string.
+
+- Use the present pickling/hexlifying scheming otherwise. In particular, issue a
+warning and ignore the attribute if the attribute can not be pickled. BTW, there
+is no need for separate base64 support: hexlifying guarantees that the result is
+valid in any xml environment.
+
+Leo now does the reverse when reading.
+
+BTW, plugins could add their own naming conventions in an emergency. Indeed, the
+conventions will be confined to code in atFile.putUa and atFile.getUa, so a
+plugin would only need to override these two methods.</t>
+<t tx="ekr.20050429094215.347">Removed inAtOthers  param from putOpen/CloseNodeSentinel.
+Removed inAtAll param from putCloseNodeSentinel.
+Removed putCloseSentinel param from putAtAllBody
+Removed putCloseSentinel param from putBody
+
+Removed toString param from openFileForWritingHelper
+Removed toString param from v.putUnknownAttributes
+
+Note: most(all?) top-level atFile.write methods pass toString to initWriteIvars.</t>
+<t tx="ekr.20050429094215.349">def clearRecentFiles (self):
+    
+    """Clear the recent files list, then add the present file."""
+
+    c = self ; f = c.frame ; u = c.undoer
+    
+    bunch = u.beforeClearRecentFiles()
+    
+    recentFilesMenu = f.menu.getMenu("Recent Files...")
+    f.menu.delete_range(recentFilesMenu,0,len(c.recentFiles))
+    
+    c.recentFiles = []
+    g.app.config.recentFiles = [] # New in Leo 4.3.
+    f.menu.createRecentFilesMenuItems()
+    c.updateRecentFiles(c.fileName())
+    
+    g.app.config.appendToRecentFiles(c.recentFiles)
+    
+    u.afterClearRecentFiles(bunch)</t>
+<t tx="ekr.20050429094215.350">def setRecentFiles (self,files):
+    
+    '''Update the recent files list.'''
+
+    # Append the files to the global list.
+    g.app.config.appendToRecentFiles(files)</t>
+<t tx="ekr.20050429094215.353">New in Leo 4.3 beta 1:
+
+Storing recent files data in .leo files was a dubious idea. Leo now does the following:
+
+1. Leo stores recent files info in files called .leoRecentFiles.txt. These will
+be a plain text files with one line per recent files entry. An Easter egg: if
+the file starts with read-only, read_only, readonly, etc. Leo will never update
+the file and will not remember changes to the Recent Files menu.
+
+2. On startup, Leo searches for the .leoRecentFiles.txt files in the user's home
+directory, if it exists. Leo looks in Leo's config directory next, but only if
+the home directory does not exist, or does not contain a .leoRecentFiles.txt
+file. In other words, Leo will use at most one .leoRecentFiles.txt file on
+startup.
+
+3. When opening a .leo file, Leo looks for .leoRecentFiles.txt in the directory
+containing the file.
+
+4. At no time after installation does Leo create any .leoRecentFiles.txt file.
+This will allow users (or their managers) to set policy regarding where to store
+this information (if anywhere).
+
+5. Leo writes at most one .leoRecentFiles.txt file when saving a .leo file,
+namely the file read in item 3 if it exists, or the file read in item 2
+otherwise.
+
+This is a flexible scheme that should meet most needs without having to resolve
+thorny questions about exactly where recent files info belongs.</t>
+<t tx="ekr.20050429094215.354">@killcolor
+
+- Properly implemented undo/redo Clear Recent Files.
+
+- readSettingsFiles now reads @recentfiles nodes from all settings files.
+
+- Created @settings nodes and @recent-files nodes if they do not exist.</t>
+<t tx="ekr.20050429094215.355">@killcolor
+
+You all have convinced me that storing recent files data in .leo files is a dubious idea. My new plan is as follows:
+
+1. Leo will store recent files info in files called .leoRecentFiles.txt.  These will be a plain text files with one line per recent files entry.  These will be local files, so problems concerning directory structure and path specifications should go away.
+
+2.  On startup, Leo will search for the .leoRecentFiles.txt files in the user's home directory, if it exists.  Leo will look in Leo's config directory next, but only if the home directory does not exist, or does not contain a .leoRecentFiles.txt file.  In other words, Leo will use at most one .leoRecentFiles.txt file on startup.
+
+3.  When opening a .leo file, Leo will look for .leoRecentFiles.txt in the directory containing the file.
+
+4.  At no time after installation will Leo create any .leoRecentFiles.txt file.  This will allow users (or their managers) to set policy regarding where to store this information (if anywhere).
+
+5.  Leo will write at most one .leoRecentFiles.txt file when saving a .leo file, namely the file read in item 3 if it exists, or the file read in item 2 otherwise.
+
+6.  Leo will have settings to tell which .leoRecentFiles.txt files may be written.
+
+7. Leo will never create @settings nodes or @recent-files nodes automatically.  Moreover, I shall remove the @recent-files panel from the settings dialog and the corresponding @recent-files code from the config classes.
+
+I believe this will address everyone's concerns without the need for resolving thorny questions about exactly where recent files info belongs.
+
+</t>
+<t tx="ekr.20050429094215.356">def appendToRecentFiles (self,files):
+    
+    files = [theFile.strip() for theFile in files]
+    
+    # g.trace(files)
+    
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+    
+    for name in files:
+        # Remove all variants of name.
+        for name2 in self.recentFiles:
+            if munge(name) == munge(name2):
+                self.recentFiles.remove(name2)
+
+        self.recentFiles.append(name)</t>
+<t tx="ekr.20050429094215.357"></t>
+<t tx="ekr.20050429094215.358">def readRecentFilesFile (self,path):
+    
+    # Set the kind of file for later.
+    for path2,kind in (
+        (self.globalConfigFile,'global'),
+        (self.homeFile,'home'),
+    ):
+        if path2 and path2 == path: break
+    else:
+        kind = 'local'
+
+    path,junk = g.os_path_split(path)
+    fileName = g.os_path_join(path,'.leoRecentFiles.txt')
+    
+    if not g.os_path_exists(fileName):
+        # g.trace('----- no file',kind,fileName)
+        return
+
+    for bunch in self.recentFilesFiles:
+        if bunch.fileName == fileName:
+            # g.trace('-----already read',kind,fileName)
+            return
+            
+    # g.trace('-----',kind,fileName)
+    self.recentFilesFiles.append(
+        g.Bunch(fileName=fileName,kind=kind))
+
+    lines = file(fileName).readlines()
+    if lines and self.munge(lines[0])=='readonly':
+        lines = lines[1:]
+    if lines:
+        self.appendToRecentFiles(lines)</t>
+<t tx="ekr.20050429094215.359">def writeRecentFilesFile (self,c):
+    
+    '''Write the appropriate .leoRecentFiles.txt file.'''
+    
+    tag = '.leoRecentFiles.txt'
+    
+    localFileName = c.fileName()
+    if not localFileName:
+        g.trace('----no file name')
+        return
+        
+    # Create a list of bunches to control the comparison below.
+    files = []
+    for fileName,kind in (
+        (localFileName,'local'),
+        (self.homeFile,'home'),
+        (self.globalConfigFile,'global'),
+    ):
+        if fileName:
+            path,junk = g.os_path_split(fileName)
+            files.append(g.Bunch(
+                fileName=g.os_path_join(path,tag),kind=kind))
+
+    # Search local file first, then home and global files.                
+    for kind in ('local','home','global'):
+        for bunch in files:
+            for bunch2 in self.recentFilesFiles:
+                if bunch.kind == bunch2.kind:
+                    # g.trace('----- comparing',bunch.kind,bunch.fileName)
+                    if bunch.fileName == bunch2.fileName:
+                        self.writeRecentFilesFileHelper(bunch.fileName)
+                        return
+                    
+    # g.trace('----- not found:',localFileName)</t>
+<t tx="ekr.20050429094215.360">def writeRecentFilesFileHelper (self,fileName):
+    # g.trace(fileName)
+    
+    # Don't update the file if it begins with read-only.
+    theFile = None
+    try:
+        theFile = file(fileName)
+        lines = theFile.readlines()
+        if lines and self.munge(lines[0])=='readonly':
+            # g.trace('read-only: %s' %fileName)
+            return
+    except IOError:
+        # The user may have erased a file.  Not an error.
+        if theFile: theFile.close()
+
+    theFile = None
+    try:
+        theFile = file(fileName,'w')
+        if self.recentFiles:
+            theFile.write('\n'.join(self.recentFiles))
+
+    except IOError:
+        # The user may have erased a file.  Not an error.
+        pass
+            
+    except Exception:
+        g.es('unexpected exception writing %s' % fileName,color='red')
+        g.es_exception()
+    
+    if theFile:
+        theFile.close()</t>
+<t tx="ekr.20050429095849">- Saved expansion state of @settings trees when the user hits the OK button.
+
+- Added support for UNL's in the status line when the settings dialog is active.
+
+- Debugged @if-platform, @if-gui, @ints &amp; @strings.
+
+- Reloaded settings files when opening the settings dialog.
+
+- Removed support for @recent-files nodes.  This is now handled by .leoRecentFiles.txt files.</t>
+<t tx="ekr.20050501103522">http://sourceforge.net/forum/message.php?msg_id=3126190
+By: davidschein
+
+The decorator syntax is ill-concieved.  This syntax file hack works well enough
+anyway.
+
+" to work with Leo @ markup
+syn region leoComment start="^@\s*" end="^@c\s*$"
+syn match   pythonDecorator	"@\S\S+" display nextgroup=pythonFunction skipwhite</t>
 </tnodes>
 </leo_file>

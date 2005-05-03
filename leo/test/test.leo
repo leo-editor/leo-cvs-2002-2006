@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6969" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6970" clone_windows="0"/>
 <globals body_outline_ratio="0.417628541448">
-	<global_window_position top="49" left="172" height="880" width="1055"/>
+	<global_window_position top="12" left="397" height="880" width="788"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -531,8 +531,9 @@
 </v>
 <v t="ekr.20050316063336"><vh>test of NameError traceback</vh></v>
 <v t="ekr.20050316074630.1"><vh>test of an exception in another module</vh></v>
+<v t="ekr.20050428085106"><vh>linda's node</vh></v>
 </v>
-<v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes</vh>
+<v t="ekr.20041126132604" a="TV" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
 <v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
 </v>
@@ -607,6 +608,141 @@
 <v t="ekr.20050315072359.2"><vh>test_g_convertRowColToPythonIndex</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20050225161940" annotate="7d71002e"><vh>Move executeFile into core</vh>
+<v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
+<v t="ekr.20050225162123" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@thin executeFileTest.py</vh></v>
+<v t="ekr.20050225161940.2" annotate="7d71002e"><vh>Script</vh>
+<v t="ekr.20050225161940.3" annotate="7d71002e"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050225171553" annotate="7d71002e"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20050225161940.5" annotate="7d71002e"><vh>getAtFileName</vh></v>
+<v t="ekr.20050225161940.4" annotate="7d71002e"><vh>executeFile</vh>
+<v t="ekr.20050225164423"><vh>&lt;&lt; define subprocess_wrapper &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
+</v>
+</v>
+<v t="ekr.20050419115225"><vh>(parse jEdit files)</vh>
+<v t="ekr.20050419172816"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
+<v t="ekr.20050419173824"><vh>jEdit docs...</vh>
+<v t="ekr.20050419175429"><vh>Rule ordering</vh></v>
+<v t="ekr.20050419181328"><vh>Attributes</vh>
+<v t="ekr.20050419182514"><vh>AT_CHAR (int)</vh></v>
+<v t="ekr.20050419182514.1"><vh>AT_LINE_START (bool)</vh></v>
+<v t="ekr.20050419182514.2"><vh>AT_WHITESPACE_END (bool)</vh></v>
+<v t="ekr.20050419182514.3"><vh>AT_WORD_START (bool)</vh></v>
+<v t="ekr.20050419182514.4"><vh>DELEGATE (mode name)</vh></v>
+<v t="ekr.20050419182514.5"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
+<v t="ekr.20050419182514.6"><vh>EXCLUDE_MATCH (bool)</vh></v>
+<v t="ekr.20050419182514.7"><vh>HASH_CHAR (char)</vh></v>
+<v t="ekr.20050419182514.8"><vh>NO_ESCAPE (bool)</vh></v>
+<v t="ekr.20050419182514.9"><vh>NO_LINE_BREAK (bool)</vh></v>
+<v t="ekr.20050419182514.10"><vh>NO_WORD_BREAK (bool)</vh></v>
+<v t="ekr.20050419182514.11"><vh>TYPE</vh></v>
+</v>
+<v t="ekr.20050419200205"><vh>Elements</vh>
+<v t="ekr.20050419173824.6"><vh>mode</vh></v>
+<v t="ekr.20050419173824.7"><vh>props (can be placed inside rules tag)</vh>
+<v t="ekr.20050419173824.8"><vh>property</vh></v>
+</v>
+<v t="ekr.20050419173824.9"><vh>begin (for span, etc.)</vh></v>
+<v t="ekr.20050419173824.10"><vh>end (for span, etc.)</vh></v>
+<v t="ekr.20050419173824.3"><vh>rules</vh>
+<v t="ekr.20050419173824.13"><vh>eol_span</vh></v>
+<v t="ekr.20050419173824.12"><vh>eol_span_regexp</vh></v>
+<v t="ekr.20050419173824.16"><vh>import</vh></v>
+<v t="ekr.20050419173824.2"><vh>keywords</vh></v>
+<v t="ekr.20050419173824.17"><vh>mark_following</vh></v>
+<v t="ekr.20050419173824.18"><vh>mark_previous</vh></v>
+<v t="ekr.20050419173824.14"><vh>seq</vh></v>
+<v t="ekr.20050419173824.15"><vh>seq_regexp</vh></v>
+<v t="ekr.20050419173824.4"><vh>span</vh></v>
+<v t="ekr.20050419173824.11"><vh>span_regexp</vh></v>
+<v t="ekr.20050419173824.5"><vh>terminate</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050419115418"><vh>Script to run xml parser</vh>
+<v t="ekr.20050419120410.1"><vh>&lt;&lt; paths &gt;&gt;</vh></v>
+<v t="ekr.20050419215535"><vh>class mode</vh>
+<v t="ekr.20050419220140"><vh>mode.__init__</vh></v>
+</v>
+<v t="ekr.20050419215535.1"><vh>class property</vh>
+<v t="ekr.20050419220140.1"><vh>propery.__init__</vh></v>
+</v>
+<v t="ekr.20050419215535.2"><vh>class rule</vh>
+<v t="ekr.20050419215535.3"><vh>rule.__init__</vh></v>
+</v>
+<v t="ekr.20050419115912.1"><vh>class jEdit_parse</vh>
+<v t="ekr.20050419120819"><vh> __init__ &amp; helpers</vh>
+<v t="ekr.20050419194651"><vh>setAttrDispatchDict</vh></v>
+<v t="ekr.20050419211746.1"><vh>setStartElementDispatchDict</vh></v>
+<v t="ekr.20050419214653"><vh>setEndElementDispatchDict</vh></v>
+</v>
+<v t="ekr.20050419140912"><vh>helpers</vh>
+<v t="ekr.20050419132345"><vh>attrsToList</vh></v>
+<v t="ekr.20050419124121"><vh>attrsToString</vh></v>
+<v t="ekr.20050419115912"><vh>clean</vh></v>
+<v t="ekr.20050419192455"><vh>printStartElement</vh></v>
+<v t="ekr.20050419131709"><vh>printSummary</vh></v>
+</v>
+<v t="ekr.20050419140912.1"><vh>sax over-rides</vh>
+<v t="ekr.20050419115418.1"><vh>characters</vh></v>
+<v t="ekr.20050419115418.2"><vh>endDocument</vh></v>
+<v t="ekr.20050419115418.3"><vh>endElement</vh></v>
+<v t="ekr.20050419115418.4"><vh>other methods</vh></v>
+<v t="ekr.20050419115418.5"><vh>startDocument</vh></v>
+<v t="ekr.20050419115418.6"><vh>startElement</vh></v>
+</v>
+<v t="ekr.20050419195838"><vh>Semantics...</vh>
+<v t="ekr.20050419191207"><vh>doAttr &amp; helpers</vh>
+<v t="ekr.20050419194651.1"><vh>doBoolAttr</vh></v>
+<v t="ekr.20050419194718"><vh>doCharAttr</vh></v>
+<v t="ekr.20050419194911"><vh>doDelegateAttr</vh></v>
+<v t="ekr.20050419194822"><vh>doIntAttr</vh></v>
+<v t="ekr.20050419194651.2"><vh>doReAttr</vh></v>
+<v t="ekr.20050419194651.3"><vh>doStringAttr</vh></v>
+</v>
+<v t="ekr.20050419192133"><vh>doStartElement &amp; helpers</vh>
+<v t="ekr.20050419211746.2"><vh>startBegin</vh></v>
+<v t="ekr.20050419211746.3"><vh>startEnd</vh></v>
+<v t="ekr.20050419211746.4"><vh>startEolSpan</vh></v>
+<v t="ekr.20050419211746.5"><vh>startImport</vh></v>
+<v t="ekr.20050419211746.6"><vh>startKeywords</vh></v>
+<v t="ekr.20050419212840"><vh>startKeyword</vh></v>
+<v t="ekr.20050419211746.7"><vh>startMark</vh></v>
+<v t="ekr.20050419211746.8"><vh>startMode</vh></v>
+<v t="ekr.20050419211746.9"><vh>startProps</vh></v>
+<v t="ekr.20050419211746.10"><vh>startProperty</vh></v>
+<v t="ekr.20050419211746.11"><vh>startRules</vh></v>
+<v t="ekr.20050419211746.12"><vh>startSeq</vh></v>
+<v t="ekr.20050419211746.13"><vh>startSpan</vh></v>
+<v t="ekr.20050419211746.14"><vh>startTerminate</vh></v>
+</v>
+<v t="ekr.20050419214545"><vh>doEndElement &amp; helpers</vh>
+<v t="ekr.20050419214545.1"><vh>endBegin</vh></v>
+<v t="ekr.20050419214545.2"><vh>endEnd</vh></v>
+<v t="ekr.20050419214545.3"><vh>endEolSpan</vh></v>
+<v t="ekr.20050419214545.4"><vh>endImport</vh></v>
+<v t="ekr.20050419214545.5"><vh>endKeywords</vh></v>
+<v t="ekr.20050419214545.6"><vh>endKeyword</vh></v>
+<v t="ekr.20050419214545.7"><vh>endMark</vh></v>
+<v t="ekr.20050419214545.8"><vh>endMode</vh></v>
+<v t="ekr.20050419214545.9"><vh>endProps</vh></v>
+<v t="ekr.20050419214545.10"><vh>endProperty</vh></v>
+<v t="ekr.20050419214545.11"><vh>endRules</vh></v>
+<v t="ekr.20050419214545.12"><vh>endSeq</vh></v>
+<v t="ekr.20050419214545.13"><vh>endSpan</vh></v>
+<v t="ekr.20050419214545.14"><vh>endTerminate</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20050427101736"><vh>Zip files experiments</vh>
+<v t="ekr.20050427102426"><vh>@url http://docs.python.org/lib/module-zipfile.html</vh></v>
+<v t="ekr.20050427101736.1"><vh>write zip</vh></v>
+<v t="ekr.20050427101736.2"><vh>read zip</vh></v>
 </v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts</vh>
@@ -1018,7 +1154,6 @@
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20050420073444"><vh>@recent-files</vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041213075902"><vh>@font log font</vh></v>
@@ -1052,7 +1187,7 @@
 <v t="ekr.20050419084109.1"><vh>@string gtkSetting = xyz</vh></v>
 </v>
 <v t="ekr.20050419085933"><vh>@ints[0,1,2] testInts = 0</vh></v>
-<v t="ekr.20050419090156"><vh>@strings[a,b,c] testStrings = b</vh></v>
+<v t="ekr.20050419090156"><vh>@strings[a,b,c]  = a</vh></v>
 </v>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
@@ -1064,7 +1199,7 @@
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1778,138 +1913,6 @@
 <v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
-</v>
-<v t="ekr.20050225161940" annotate="7d71002e"><vh>Move executeFile into core</vh>
-<v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
-<v t="ekr.20050225162123" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@thin executeFileTest.py</vh></v>
-<v t="ekr.20050225161940.2" annotate="7d71002e"><vh>Script</vh>
-<v t="ekr.20050225161940.3" annotate="7d71002e"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
-<v t="ekr.20050225171553" annotate="7d71002e"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20050225161940.5" annotate="7d71002e"><vh>getAtFileName</vh></v>
-<v t="ekr.20050225161940.4" annotate="7d71002e"><vh>executeFile</vh>
-<v t="ekr.20050225164423"><vh>&lt;&lt; define subprocess_wrapper &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
-</v>
-</v>
-<v t="ekr.20050419070841.1"><vh>test settings</vh></v>
-<v t="ekr.20050419211746"><vh>Lower the selection</vh></v>
-<v t="ekr.20050419115225"><vh>(parse jEdit files)</vh>
-<v t="ekr.20050419172816"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
-<v t="ekr.20050419173824"><vh>jEdit docs...</vh>
-<v t="ekr.20050419175429"><vh>Rule ordering</vh></v>
-<v t="ekr.20050419181328"><vh>Attributes</vh>
-<v t="ekr.20050419182514"><vh>AT_CHAR (int)</vh></v>
-<v t="ekr.20050419182514.1"><vh>AT_LINE_START (bool)</vh></v>
-<v t="ekr.20050419182514.2"><vh>AT_WHITESPACE_END (bool)</vh></v>
-<v t="ekr.20050419182514.3"><vh>AT_WORD_START (bool)</vh></v>
-<v t="ekr.20050419182514.4"><vh>DELEGATE (mode name)</vh></v>
-<v t="ekr.20050419182514.5"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
-<v t="ekr.20050419182514.6"><vh>EXCLUDE_MATCH (bool)</vh></v>
-<v t="ekr.20050419182514.7"><vh>HASH_CHAR (char)</vh></v>
-<v t="ekr.20050419182514.8"><vh>NO_ESCAPE (bool)</vh></v>
-<v t="ekr.20050419182514.9"><vh>NO_LINE_BREAK (bool)</vh></v>
-<v t="ekr.20050419182514.10"><vh>NO_WORD_BREAK (bool)</vh></v>
-<v t="ekr.20050419182514.11"><vh>TYPE</vh></v>
-</v>
-<v t="ekr.20050419200205"><vh>Elements</vh>
-<v t="ekr.20050419173824.6"><vh>mode</vh></v>
-<v t="ekr.20050419173824.7"><vh>props (can be placed inside rules tag)</vh>
-<v t="ekr.20050419173824.8"><vh>property</vh></v>
-</v>
-<v t="ekr.20050419173824.9"><vh>begin (for span, etc.)</vh></v>
-<v t="ekr.20050419173824.10"><vh>end (for span, etc.)</vh></v>
-<v t="ekr.20050419173824.3"><vh>rules</vh>
-<v t="ekr.20050419173824.13"><vh>eol_span</vh></v>
-<v t="ekr.20050419173824.12"><vh>eol_span_regexp</vh></v>
-<v t="ekr.20050419173824.16"><vh>import</vh></v>
-<v t="ekr.20050419173824.2"><vh>keywords</vh></v>
-<v t="ekr.20050419173824.17"><vh>mark_following</vh></v>
-<v t="ekr.20050419173824.18"><vh>mark_previous</vh></v>
-<v t="ekr.20050419173824.14"><vh>seq</vh></v>
-<v t="ekr.20050419173824.15"><vh>seq_regexp</vh></v>
-<v t="ekr.20050419173824.4"><vh>span</vh></v>
-<v t="ekr.20050419173824.11"><vh>span_regexp</vh></v>
-<v t="ekr.20050419173824.5"><vh>terminate</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050419115418"><vh>Script to run xml parser</vh>
-<v t="ekr.20050419120410.1"><vh>&lt;&lt; paths &gt;&gt;</vh></v>
-<v t="ekr.20050419215535"><vh>class mode</vh>
-<v t="ekr.20050419220140"><vh>mode.__init__</vh></v>
-</v>
-<v t="ekr.20050419215535.1"><vh>class property</vh>
-<v t="ekr.20050419220140.1"><vh>propery.__init__</vh></v>
-</v>
-<v t="ekr.20050419215535.2"><vh>class rule</vh>
-<v t="ekr.20050419215535.3"><vh>rule.__init__</vh></v>
-</v>
-<v t="ekr.20050419115912.1"><vh>class jEdit_parse</vh>
-<v t="ekr.20050419120819"><vh> __init__ &amp; helpers</vh>
-<v t="ekr.20050419194651"><vh>setAttrDispatchDict</vh></v>
-<v t="ekr.20050419211746.1"><vh>setStartElementDispatchDict</vh></v>
-<v t="ekr.20050419214653"><vh>setEndElementDispatchDict</vh></v>
-</v>
-<v t="ekr.20050419140912"><vh>helpers</vh>
-<v t="ekr.20050419132345"><vh>attrsToList</vh></v>
-<v t="ekr.20050419124121"><vh>attrsToString</vh></v>
-<v t="ekr.20050419115912"><vh>clean</vh></v>
-<v t="ekr.20050419192455"><vh>printStartElement</vh></v>
-<v t="ekr.20050419131709"><vh>printSummary</vh></v>
-</v>
-<v t="ekr.20050419140912.1"><vh>sax over-rides</vh>
-<v t="ekr.20050419115418.1"><vh>characters</vh></v>
-<v t="ekr.20050419115418.2"><vh>endDocument</vh></v>
-<v t="ekr.20050419115418.3"><vh>endElement</vh></v>
-<v t="ekr.20050419115418.4"><vh>other methods</vh></v>
-<v t="ekr.20050419115418.5"><vh>startDocument</vh></v>
-<v t="ekr.20050419115418.6"><vh>startElement</vh></v>
-</v>
-<v t="ekr.20050419195838"><vh>Semantics...</vh>
-<v t="ekr.20050419191207"><vh>doAttr &amp; helpers</vh>
-<v t="ekr.20050419194651.1"><vh>doBoolAttr</vh></v>
-<v t="ekr.20050419194718"><vh>doCharAttr</vh></v>
-<v t="ekr.20050419194911"><vh>doDelegateAttr</vh></v>
-<v t="ekr.20050419194822"><vh>doIntAttr</vh></v>
-<v t="ekr.20050419194651.2"><vh>doReAttr</vh></v>
-<v t="ekr.20050419194651.3"><vh>doStringAttr</vh></v>
-</v>
-<v t="ekr.20050419192133"><vh>doStartElement &amp; helpers</vh>
-<v t="ekr.20050419211746.2"><vh>startBegin</vh></v>
-<v t="ekr.20050419211746.3"><vh>startEnd</vh></v>
-<v t="ekr.20050419211746.4"><vh>startEolSpan</vh></v>
-<v t="ekr.20050419211746.5"><vh>startImport</vh></v>
-<v t="ekr.20050419211746.6"><vh>startKeywords</vh></v>
-<v t="ekr.20050419212840"><vh>startKeyword</vh></v>
-<v t="ekr.20050419211746.7"><vh>startMark</vh></v>
-<v t="ekr.20050419211746.8"><vh>startMode</vh></v>
-<v t="ekr.20050419211746.9"><vh>startProps</vh></v>
-<v t="ekr.20050419211746.10"><vh>startProperty</vh></v>
-<v t="ekr.20050419211746.11"><vh>startRules</vh></v>
-<v t="ekr.20050419211746.12"><vh>startSeq</vh></v>
-<v t="ekr.20050419211746.13"><vh>startSpan</vh></v>
-<v t="ekr.20050419211746.14"><vh>startTerminate</vh></v>
-</v>
-<v t="ekr.20050419214545"><vh>doEndElement &amp; helpers</vh>
-<v t="ekr.20050419214545.1"><vh>endBegin</vh></v>
-<v t="ekr.20050419214545.2"><vh>endEnd</vh></v>
-<v t="ekr.20050419214545.3"><vh>endEolSpan</vh></v>
-<v t="ekr.20050419214545.4"><vh>endImport</vh></v>
-<v t="ekr.20050419214545.5"><vh>endKeywords</vh></v>
-<v t="ekr.20050419214545.6"><vh>endKeyword</vh></v>
-<v t="ekr.20050419214545.7"><vh>endMark</vh></v>
-<v t="ekr.20050419214545.8"><vh>endMode</vh></v>
-<v t="ekr.20050419214545.9"><vh>endProps</vh></v>
-<v t="ekr.20050419214545.10"><vh>endProperty</vh></v>
-<v t="ekr.20050419214545.11"><vh>endRules</vh></v>
-<v t="ekr.20050419214545.12"><vh>endSeq</vh></v>
-<v t="ekr.20050419214545.13"><vh>endSpan</vh></v>
-<v t="ekr.20050419214545.14"><vh>endTerminate</vh></v>
-</v>
-</v>
-</v>
-</v>
 </v>
 </vnodes>
 <tnodes>
@@ -5016,20 +5019,19 @@ outline2 = outline1.next()
 assert(outline1.headString()=="outline1")
 assert(outline2.headString()=="outline2")
 
-u.replaceOutline(c,outline1,outline2)
+u.replaceOutline(outline1,outline2)
 c.redraw()
 c.checkOutline()</t>
 <t tx="ekr.20040712101754.222"></t>
 <t tx="ekr.20040712101754.223"></t>
 <t tx="ekr.20040712101754.224"></t>
 <t tx="ekr.20040712101754.225"></t>
-<t tx="ekr.20040712101754.226">def replaceOutline (self,c,outline1,outline2):
+<t tx="ekr.20040712101754.226">def replaceOutline (self,outline1,outline2):
     
     """Replace outline1 by a copy of outline 2,
     
     retaining the headline of outline1."""
 
-    u = self
     h = outline1.headString()
     copy = outline2.copyTreeAfter()
     copy.initHeadString(h)
@@ -5107,7 +5109,7 @@ g.app.scriptDict['suite'] = suite</t>
 <t tx="ekr.20040712101754.232">def runTest(self):
 
     self.outlineCommand()</t>
-<t tx="ekr.20040712101754.233">def setUp(self,*args,**keys):
+<t tx="ekr.20040712101754.233">def setUp(self):
 
     assert(self.before)
     assert(self.after)
@@ -5167,7 +5169,7 @@ g.app.scriptDict['suite'] = suite</t>
     """Unit tests for Leo's find commands."""
     
     @others</t>
-<t tx="ekr.20040712101754.256">def setUp(self,*args,**keys):
+<t tx="ekr.20040712101754.256">def setUp(self):
     
     self.u = u = leoTest.testUtils()
     self.c = c # = g.top()
@@ -12123,10 +12125,9 @@ else: # For script button nodes.  Good for testing.
     self.p = c.currentPosition().copy()
     self.verbose = verbose
 </t>
-<t tx="ekr.20050106080318.3">def fail (self):
+<t tx="ekr.20050106080318.3">def fail (self,msg=None):
 
     """Mark a unit test as having failed."""
-
     
     g.app.unitTestDict["fail"] = g.callerName(2)</t>
 <t tx="ekr.20050106080318.4">def setUp (self):
@@ -12247,7 +12248,7 @@ else: # For script button nodes.  Good for testing.
 
     self.c = c
     self.test = test</t>
-<t tx="ekr.20050106094854.2">def fail (self):
+<t tx="ekr.20050106094854.2">def fail (self,msg=None):
 
     """Mark a unit test as having failed."""
 
@@ -12688,7 +12689,7 @@ g.app.scriptDict['suite'] = suite</t>
 
     self.c = c
     self.path = path</t>
-<t tx="ekr.20050120095423.15">def fail (self):
+<t tx="ekr.20050120095423.15">def fail (self,msg=None):
 
     """Mark a unit test as having failed."""
 
@@ -12704,7 +12705,7 @@ g.app.scriptDict['suite'] = suite</t>
     if not module:
         module = leoPlugins.loadOnePlugin(moduleName,verbose=False)
         assert module, 'can not import %s' % moduleName</t>
-<t tx="ekr.20050120095423.17">def setUp(self,*args,**keys):
+<t tx="ekr.20050120095423.17">def setUp(self):
 
     g.app.unitTesting = True
     g.app.unitTestDict = {}</t>
@@ -13026,7 +13027,7 @@ else: # For script button nodes.  Good for testing.
     self.p = c.currentPosition().copy()
     self.verbose = verbose
 </t>
-<t tx="ekr.20050218015346.13">def fail (self):
+<t tx="ekr.20050218015346.13">def fail (self,msg=None):
 
     """Mark a unit test as having failed."""
 
@@ -14383,11 +14384,6 @@ p.v.t.unknownAttributes = d</t>
         if val:
            g.es('str_ekr_attribute is: %s' % val)</t>
 <t tx="ekr.20050419070841"></t>
-<t tx="ekr.20050419070841.1">g.es(c.config.getString('ekrSetting'))
-
-g.es(c.config.getString('testStrings'))
-
-g.es(c.config.getInt('testInts'))</t>
 <t tx="ekr.20050419082439"></t>
 <t tx="ekr.20050419084109"></t>
 <t tx="ekr.20050419084109.1"></t>
@@ -14955,7 +14951,6 @@ OPERATOR </t>
     pass</t>
 <t tx="ekr.20050419195838"></t>
 <t tx="ekr.20050419200205"></t>
-<t tx="ekr.20050419211746"></t>
 <t tx="ekr.20050419211746.1">def setStartElementDispatchDict (self):
     
     self.startElementDispatchDict = {
@@ -15154,7 +15149,40 @@ OPERATOR </t>
 <t tx="ekr.20050419220140.1">def __init__ (self,kind):
     
     self.kind = kind</t>
-<t tx="ekr.20050420073444">C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\test\test.leo</t>
+<t tx="ekr.20050427101736">class ZipFile(  	file[, mode[, compression]])
+    Open a ZIP file, where file can be either a path to a file (a string) or a file-like object. The mode parameter should be 'r' to read an existing file, 'w' to truncate and write a new file, or 'a' to append to an existing file. For mode is 'a' and file refers to an existing ZIP file, then additional files are added to it. If file does not refer to a ZIP file, then a new ZIP archive is appended to the file. This is meant for adding a ZIP archive to another file, such as python.exe. Using
+
+cat myzip.zip &gt;&gt; python.exe
+
+    also works, and at least WinZip can read such files. compression is the ZIP compression method to use when writing the archive, and should be ZIP_STORED or ZIP_DEFLATED; unrecognized values will cause RuntimeError to be raised. If ZIP_DEFLATED is specified but the zlib module is not available, RuntimeError is also raised. The default is ZIP_STORED. </t>
+<t tx="ekr.20050427101736.1">import zipfile
+
+path = r'c:\prog\leoCVS\leo\test\ziptest.zip'
+
+zf = zipfile.ZipFile(path,'w',zipfile.ZIP_DEFLATED)
+zf.writestr('This is a test: EKR','ziptest')
+zf.close()</t>
+<t tx="ekr.20050427101736.2">import zipfile
+
+path = r'c:\prog\leoCVS\leo\src\leoPy.leo'
+path = r'c:\prog\leoCVS\leo\test\ziptest.zip'
+
+if zipfile.is_zipfile(path):
+    try:
+        zf = zipfile.ZipFile(path)
+        names = zf.namelist()
+        for name in names:
+            print 'name',repr(name),'contents',zf.read(name)
+        zf.close()
+    except Exception:
+        g.es_exception()
+        zf = None</t>
+<t tx="ekr.20050427102426"></t>
+<t tx="ekr.20050428085106">print '-'*60
+count = 0
+for p in c.allNodes_iter():
+    count += 1
+    print ' '*p.level(),p.headString()
+print 'found',count,'nodes'</t>
 </tnodes>
 </leo_file>

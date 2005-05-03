@@ -18,7 +18,7 @@
 ;@+node:ekr.20050118092706.1:<< defines >>
 ;@<< 4.3 nsi installer version >>
 ;@+node:ekr.20050118124408:<< 4.3 nsi installer version >>
-!define PRODUCT_VERSION "4.3-a5"
+!define PRODUCT_VERSION "4.3-b1"
 ;@nonl
 ;@-node:ekr.20050118124408:<< 4.3 nsi installer version >>
 ;@nl
@@ -73,7 +73,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-3-a5.exe"
+OutFile "LeoSetup-4-3-b1.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -229,6 +229,7 @@ Section "Leo" SEC01
   ;@  << install config files >>
   ;@+node:ekr.20050118104149.1:<< install config files >>
   File "..\config\leoSettings.leo"
+  File "..\config\.leoRecentFiles.txt"
   ;@nonl
   ;@-node:ekr.20050118104149.1:<< install config files >>
   ;@nl
@@ -510,6 +511,7 @@ Section Uninstall
   ;@+node:ekr.20050118104149.2:<< uninstall config files >>
   Delete "$INSTDIR\config\leoSettings.leo"
   Delete "$INSTDIR\config\.leoID.txt"
+  Delete "$INSTDIR\config\.leoRecentFiles.txt"
   ;@nonl
   ;@-node:ekr.20050118104149.2:<< uninstall config files >>
   ;@nl

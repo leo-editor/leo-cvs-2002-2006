@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1023" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1025" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
-	<global_window_position top="74" left="341" height="778" width="852"/>
+	<global_window_position top="44" left="90" height="778" width="831"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -23,7 +23,8 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20050313105121"><vh>ANN: Leo 4.3-a4 (don't split into lines!)</vh></v>
+<v t="ekr.20050429102040"><vh>ANN: Leo 4.3-b1 (don't split into lines!)</vh></v>
+<v t="ekr.20050313105121"><vh>ANN: Leo 4.3-a4</vh></v>
 <v t="ekr.20050212054125"><vh>ANN: Leo 4.3-a3</vh></v>
 <v t="ekr.20050224070230"><vh>ANN: Leo 4.3-a2</vh></v>
 <v t="ekr.20050124083006"><vh>ANN: Leo 4.3-a1</vh></v>
@@ -115,7 +116,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040629175400" a="E"><vh>Pychecker stuff</vh>
+<v t="ekr.20040629175400" a="TV"><vh>Pychecker stuff</vh>
+<v t="ekr.20050430095952"><vh>Pychecker statements</vh></v>
 <v t="ekr.20050212143754"><vh>*** Mods to pychecker in python23/site-packages ***</vh>
 <v t="ekr.20050212143754.1"><vh>What I did</vh></v>
 <v t="ekr.20050212143754.2"><vh>CodeChecks.py (modified)</vh>
@@ -123,7 +125,7 @@
 <v t="ekr.20050212143754.4"><vh>_checkModuleAttribute (modified)</vh></v>
 </v>
 </v>
-<v t="ekr.20040629173419.1" a="TV" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file .pycheckrc</vh>
+<v t="ekr.20040629173419.1" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file .pycheckrc</vh>
 <v t="ekr.20040701193853"><vh>blacklist</vh></v>
 <v t="ekr.20040701193853.1"><vh>defaults</vh></v>
 <v t="ekr.20040701193853.2"><vh>max...</vh></v>
@@ -135,7 +137,7 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118095021"><vh>Leo 4.3 installer: version stuff</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
@@ -148,7 +150,7 @@
 <v t="ekr.20050118104149.4"><vh>&lt;&lt; install dist files &gt;&gt;</vh></v>
 <v t="ekr.20050118104149.5"><vh>&lt;&lt; uninstall dist files &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050118104901" a="E"><vh>doc files</vh>
+<v t="ekr.20050118104901"><vh>doc files</vh>
 <v t="ekr.20050118104901.1"><vh>&lt;&lt; install doc files &gt;&gt;</vh></v>
 <v t="ekr.20050118104901.2"><vh>&lt;&lt; uninstall doc files &gt;&gt;</vh></v>
 </v>
@@ -182,11 +184,12 @@
 </v>
 </v>
 <v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
+<v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050118113631"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
-<v t="ekr.20050117032444" a="E"><vh>@button Create Leo-4.3.zip</vh>
+<v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
 <v t="ekr.20050118080857"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 <v t="ekr.20050118083936.1"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050118082301"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -457,7 +460,7 @@ else: # Doesn't work
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519080201.3"></t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4-3-a5", # No spaces here!
+version="4-3-b1", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -630,7 +633,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.3-a4
+Version: 4.3-b1
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -649,18 +652,13 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.3 alpha 4                 March 15, 2005
+<t tx="EKR.20040519090846.9">Leo 4.3 beta 1                 April 30, 2005
 
-Leo 4.3 is the culmination of more than five months of work. This alpha 4
-focuses on plugins: all known plugins are now in leoPlugins.leo. Most plugins
-now work with the 4.3 code base. Warning: not all plugins have been tested
-thorougly.
-
-This alpha 4 release also adds the requently-requested Add Comments and Delete
-Comments commands to Leo's Edit Body menu.
+Leo 4.3 beta 1 completes all major features of Leo 4.3. There are no known
+significant bugs remaining.
 
 The defining features of Leo 4.3:
-
+---------------------------------
 1. Leo now stores options in @settings trees, that is, outlines whose headline
 is '@settings'. When opening a .leo file, Leo looks for @settings trees not only
 in the outline being opened but also in various leoSettings.leo files.
@@ -678,16 +676,18 @@ the settings selected in the outline pane using standard gui widgets. The
 settings pane is dynamically created from nodes in the settings tree; it is as
 extensible as the @settings tree itself.
 
-3. Leo's read/write code in leoAtFile.py has been rewritten to support user-
+3. Leo now stores recent files information in .leoRecentFiles.txt files.
+
+4. Leo's read/write code in leoAtFile.py has been rewritten to support user-
 defined tangling and untangling.  This is a major cleanup of Leo's core.
 
-4. Leo now boasts a wonderful new Plugins Manager plugin. This plugin enables
+5. Leo now boasts a wonderful new Plugins Manager plugin. This plugin enables
 and disables plugins automatically. You never have to mess with
 pluginsManager.txt again! This plugin also tells you everything you need to know
 about each plugin. Finally, this plugin also lets you download plugins from
 Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
 
-5. You can install third-party extensions in Leo's extensions directory. Leo
+6. You can install third-party extensions in Leo's extensions directory. Leo
 will attempt to import such extensions from the extensions directory if normal
 imports fail. Leo is distributed with Pmw (Python Mega Widgets), path.py and
 sets.py in this directory.</t>
@@ -704,8 +704,9 @@ include install
 include uninstall
 exclude createLeoDist.py
 
-# New in Leo 4.3: use leoSettings.leo
+# New in Leo 4.3: use leoSettings.leo, .leoRecentFiles.txt
 include config/leoSettings.leo
+include config/.leoRecentFiles.txt
 
 # New in Leo 4.3:
 # 1. createLeoDist.py is distributed in dist directory.
@@ -2517,16 +2518,16 @@ Edward K. Ream
 checkObjectAttrs = 1        # True: check that attributes of objects exist
 checkReturnValues = 1       # True: check consistent return values
 checkImplicitReturns = 1    # True: check if using implict and explicit return values
-classAttrExists = 1     # True: warn when the class attribute does not exist
+classAttrExists = 1         # True: warn when the class attribute does not exist
 mixImport = 1               # True: warn when import and from ... import are used for same module
 moduleImportErrors = 1      # True: warn when a module reimports another module (import &amp; from/import)
 reimportSelf = 1            # True: warn when modules import themselves
 shadows = 1                 # bool: check if local variables shadow a global variable with same name
+localVariablesUsed = 1      # True: warn when local variables are not used
 
 # Disabled by EKR...
 argumentsUsed = 0       # True: warn when method/function arguments are unused
 isLiteral = 0           # True: warn if using (expr is const-literal), doesn't always work on ints and strings
-localVariablesUsed = 0  # True: warn when local variables are not used
 shadowBuiltins = 1      # EKR: Not in ref file.
 
 # bool:  ignore all warnings from standard library components
@@ -2849,7 +2850,7 @@ the case statement as you would with a normal editor) saves time, and
 makes the system more flexible...
 [End Quote]</t>
 <t tx="ekr.20040701160830"></t>
-<t tx="ekr.20040701160830.1">@killcolor
+<t tx="ekr.20040701160830.1">@color
 
 --name    enables
 --no-name disables
@@ -2867,7 +2868,7 @@ classdoc
 classmethodargs=
 complexity
 config=
-constCond
+constCond  #note the case
 constant1
 debug
 deprecated
@@ -3467,7 +3468,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-3-a5.exe"
+OutFile "LeoSetup-4-3-b1.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3499,9 +3500,11 @@ Delete "$INSTDIR\uninstall"
 
 </t>
 <t tx="ekr.20050118104149"></t>
-<t tx="ekr.20050118104149.1">File "..\config\leoSettings.leo"</t>
+<t tx="ekr.20050118104149.1">File "..\config\leoSettings.leo"
+File "..\config\.leoRecentFiles.txt"</t>
 <t tx="ekr.20050118104149.2">Delete "$INSTDIR\config\leoSettings.leo"
-Delete "$INSTDIR\config\.leoID.txt"</t>
+Delete "$INSTDIR\config\.leoID.txt"
+Delete "$INSTDIR\config\.leoRecentFiles.txt"</t>
 <t tx="ekr.20050118104149.3"></t>
 <t tx="ekr.20050118104149.4">File "createLeoDist.py"
 
@@ -3655,7 +3658,7 @@ Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 <t tx="ekr.20050118122740.2"></t>
 <t tx="ekr.20050118122740.3">Delete "$INSTDIR\test\__init__.py"
 Delete "$INSTDIR\test\test.leo"</t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-a5"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-b1"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119191034"></t>
 <t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/
@@ -4031,7 +4034,7 @@ Leo: Literate Editor with Outlines
 Leo: http://webpages.charter.net/edreamleo/front.html
 --------------------------------------------------------------------
 </t>
-<t tx="ekr.20050313105121">Leo 4.3 alpha 4 is now available at http://sourceforge.net/projects/leo/
+<t tx="ekr.20050313105121">Leo 4.3 beta 1 is now available at http://sourceforge.net/projects/leo/
 
 Leo 4.3 is the culmination of more than five months of work. This alpha 4 focuses on plugins: all known plugins are now in leoPlugins.leo. Most plugins now work with the 4.3 code base.
 
@@ -4093,9 +4096,8 @@ Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
 </t>
 <t tx="ekr.20050315084904"></t>
 <t tx="ekr.20050315084904.1">@nocolor</t>
-<t tx="ekr.20050315084904.2">C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\test\test.leo</t>
+<t tx="ekr.20050315084904.2">C:\Documents and Settings\Ed\My Documents\ekr.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo</t>
 <t tx="ekr.20050315084922">import leoPlugins
 
 spellpyx = leoPlugins.getPluginModule("spellpyx")
@@ -4116,5 +4118,66 @@ if spellpyx:
 if not spellpyx or not spellFrame:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
+<t tx="ekr.20050429102040">Leo 4.3 beta 1 is now available at http://sourceforge.net/projects/leo/
+
+Leo 4.3 beta 1 completes all major features of Leo 4.3.  There are no known significant bugs.
+
+The defining features of Leo 4.3:
+---------------------------------
+1. Leo now stores options in @settings trees, that is, outlines whose headline is '@settings'. When opening a .leo file, Leo looks for @settings trees not only in the outline being opened but also in various leoSettings.leo files. Users can create arbitrarily complex user options with @settings trees. 
+
+2. The Preferences command temporarily replaces the outline pane with an outline showing all the @settings trees in effect. The Preferences command also replaces the body pane with a "settings pane". This settings pane allows you to change the settings selected in the outline pane using standard gui widgets.
+
+3. Leo now stores recent files information in .leoRecentFiles.txt files.
+
+4. Leo's read/write code in leoAtFile.py has been rewritten to support user-defined tangling and untangling. This is a major cleanup of Leo's core.
+
+5. Leo now contains an excellent Plugins Manager plugin. This plugin enables and disables plugins automatically and tells you everything you need to know about each plugin. This plugin also lets you download plugins from Leo's cvs site.
+
+6. You can install third-party extensions in Leo's extensions directory. Leo will attempt to import such extensions from the extensions directory when normal imports fail. The distribution contains Python Mega Widgets in the extensions directory.
+
+What people are saying about Leo
+--------------------------------
+"Another day, another breakthrough using Leo--now I realize Leo is the best URL bookmark manager there is. No more bookmarks menus or favorites lists inside the browser for me. With the @url directive I can just double click on the URL to open it in my browser. Leo lets me arrange the URLs in a hierarchy (or multiple hierarchies), attach notes to them, save clippings of things I read on the sites. It's sooo much better than anything the browsers have built in and it lets me easily use different browsers on different platforms and different machines (try that with the browsers' built-in bookmark managers)." -- Dan Winkler
+
+"I am an amateur photographer. I use plain old 35mm. film for my pictures. Over the weekend, I used Leo to organize my lists of pictures. It is quite helpful--I can have separate nodes for pictures I have enlarged, as well as pictures I have submitted to our local camera club. Thanks!" -- Rich Reis
+
+"Cloning is pure genius!... Leo's cloning facility, allows me to create several views on the CFA course material. My main view follows the prescribed study guide. Another view is organized like the textbooks. Yet another gives me a glossary of terms. And when I'm done, I'll have some nice libraries...I can re-use later in other projects." -- Michael Manti
+
+More quotes at: http://webpages.charter.net/edreamleo/testimonials.html
+
+What makes Leo special?
+-----------------------
+- Leo's outlines add a new dimension to programming.
+- Leo shows you your code and data the way _you_ want to see them.
+- Leo extends, completes and simplifies literate programming.
+- Leo's script buttons bring scripts to data. 
+
+What is Leo?
+------------
+- A programmer's editor, an outlining editor and a flexible browser.
+- A literate programming tool, compatible with noweb and CWEB.
+- A data organizer and project manager. Leo provides multiple views
+  of projects within a single outline.
+- Fully scriptable using Python. Leo saves its files in XML format.
+- Portable. leo.py is 100% pure Python.
+- Open Software, distributed under the Python License.
+
+Leo requires Python 2.2.1 or above and tcl/tk 8.4 or above.
+Leo works on Linux, Windows and MacOs X.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
+</t>
+<t tx="ekr.20050430095952"># __pychecker__ = '--no-argsused' # event not used.
+
+# __pychecker__ = '--no-constCond -- no-constant1'
+
+# __pychecker__ = 'maxlines=500'</t>
 </tnodes>
 </leo_file>

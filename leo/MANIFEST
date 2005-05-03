@@ -53,6 +53,7 @@ Icons\rt_arrow_enabled.gif
 Icons\uninst.ico
 Icons\CVS\Entries.Extra
 Icons\CVS\Entries.Old
+config\.leoRecentFiles.txt
 config\leoSettings.leo
 dist\.pycheckrc
 dist\LeoPackage.pmsp
@@ -343,7 +344,6 @@ plugins\dyna_menu.py
 plugins\dynacommon.py
 plugins\empty_leo_file.py
 plugins\enable_gc.py
-plugins\exSButton.py
 plugins\exampleTemacsExtension.py
 plugins\failed_import.py
 plugins\fastGotoNode.py
