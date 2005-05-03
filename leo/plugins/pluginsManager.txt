@@ -24,6 +24,14 @@ plugins_menu.py
 #at_view.py
 #vim.py
 newButtons.py
+#UniversalScrolling.py
+#mod_http.py
+#chapters.py
+#bibtex.py
+#autotrees.py
+#mod_autosave.py
+#golf.py
+image.py
 plugin_manager.py
 
 # Several plugins depend on TabbedLog.

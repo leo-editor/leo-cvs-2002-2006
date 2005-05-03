@@ -1,5 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040331071319:@thin rst2.py
+#@<< docstring >>
+#@+node:ekr.20050420105800:<< docstring >>
 """A plugin to generate HTML or LaTeX files from reStructured Text
 embedded in Leo outlines.
 
@@ -8,9 +10,85 @@ write a file in outline order, with the headlines converted to reStructuredText
 section headings.
 
 If the name of the <filename> has the extension .html, .htm or .tex, and if you have
-docutils installed, it will generate HTML or LaTeX, respectively."""
+docutils installed, it will generate HTML or LaTeX, respectively.
+
+The following settings are presently available: They can be set in the rst2 code
+itself, or (maybe?) using @settings trees:
+    
+rst2_bodyfilter = False
+# True: call body_filter to massage text.
+# Removes @ignore, @nocolor, @wrap directives.
+
+rst2file = False
+# Controls whether to use external file or string.
+
+rst2_pure_document = False
+# Controls the following code in writeTreeAsRst
+if config.rst2_pure_document or g.match_word(h,0,"@rst"):
+    < < handle an rst node > >
+    # Removes @ignore, @nocolor, @wrap directives.
+    # Removes code blocks if rst2_replace_code_blocks is True.
+    # Formats headlines only if rst2_format_headlines is True.
+else:
+    < < handle a plain node > >
+    # Deletes @others from output.
+    # Formats headlines only if rst2_format_headlines is False. (opposite of meaning in rst nodes!)
+        
+rst2_format_headlines = False
+# Used differently.  See rst2_pure_document.
+    
+rst2_http_server_support = True
+# True:
+# 1. add_node_marker writes a string using generate_node_marker.
+# Generates 'http-node-marker-'+str(number), where number is config.node_counter (incremented each time add_node_marker is called.
+# 2. Enables the following code in writeTreeAsRst
+    if config.tag == 'open2':
+        http_map = config.http_map
+    else:
+        http_map = {}
+        config.anchormap = {}
+       # maps v nodes to markers.
+        config.node_counter = 0
+    # [snip] code to write the tree
+    if config.rst2_http_server_support:
+        config.http_map = http_map
+# 3. http_support_main does nothing unless this option is True.
+# False: add_node_marker does nothing.
+
+rst2_clear_attributes = False
+    # Deletes p.v.rst2_http_attributename from all nodes after writing.
+    # Deletes p.v.unknownAttributes if it then becomes empty.
+    
+rst2_run_on_window_open = False
+# Runs an alternative 'main line' in onFileOpen when a new window is opened.
+
+rst2_replace_code_blocks = True
+# See notes for rst2_pure_document. (Uses do_replace_code_blocks)
+< < define alternate code block implementation> >
+# Don't know what to do here: Can someone make a suggestion?
+#import docutils.parsers.rst.directives.admonitions
+#import docutils.parsers.rst.directives.body
+# docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.block 
+# docutils.parsers.rst.directives.register_directive('code-block', docutils.parsers.rst.directives.admonitions.admonition)
+#docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.pull_quote 
+# g.es("Registered some alternate implementation for code-block directive")
+config.do_replace_code_blocks = config.rst2_replace_code_blocks
+        
+rst2_install_menu_item_in_edit_menu = True
+# True: install 'Transform rst text in subtree'command to Edit menu.
+
+rst2_node_begin_marker = 'http-node-marker-'
+rst2_http_attributename = 'rst_http_attribute'
+
+"""
+#@nonl
+#@-node:ekr.20050420105800:<< docstring >>
+#@nl
 
 # By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
+
+#@<< imports >>
+#@+node:ekr.20050420105800.1:<< imports >>
 
 import leoGlobals as g
 import leoPlugins
@@ -28,7 +106,9 @@ try:
     from mod_http import set_http_attribute, get_http_attribute, reconstruct_html_from_attrs
 except:
     mod_http = None
-
+#@nonl
+#@-node:ekr.20050420105800.1:<< imports >>
+#@nl
 #@<< change log >>
 #@+node:ekr.20040331071319.2:<< change log >>
 #@+at 
@@ -107,7 +187,7 @@ class config:
     rst2_debug_node_html_1 = False
     rst2_debug_anchors = False
     rst2_debug_before_and_after_replacement = False
-    rst2_install_menu_item_in_edit_menu = False
+    rst2_install_menu_item_in_edit_menu = True
     
     # These are really configuration options.
     rst2_node_begin_marker = 'http-node-marker-'
@@ -134,6 +214,7 @@ class config:
     # node.
     
     do_replace_code_blocks = False
+#@nonl
 #@-node:bwmulder.20050314132625:config
 #@+node:bwmulder.20050327204614:transform_rst2_text_in_subtree
 def transform_rst2_text_in_subtree(c):
@@ -379,7 +460,7 @@ def replace_code_block_directive(line):
     return line
 #@nonl
 #@-node:bwmulder.20050326125712:replace_code_block_directive
-#@+node:ekr.20040331071319.7:writeTreeAsRst
+#@+node:ekr.20040331071319.7:writeTreeAsRst & add_node_marker
 def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
     
     'Write the tree under position p to the file rstFile (fname is the filename)'
@@ -521,7 +602,7 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
     add_node_marker()
     if config.rst2_http_server_support:
         config.http_map = http_map
-#@-node:ekr.20040331071319.7:writeTreeAsRst
+#@-node:ekr.20040331071319.7:writeTreeAsRst & add_node_marker
 #@+node:bwmulder.20050314131619:applyConfiguration
 def applyConfiguration (c):
 
@@ -599,7 +680,6 @@ def http_support_main(tag, fname):
         g.es('html updated for html plugin', color="blue")
         if config.rst2_clear_attributes:
             g.es("http attributes cleared")
-        
 #@nonl
 #@-node:bwmulder.20050320092000:http_support_main
 #@+node:bwmulder.20050319191929.1:general routines
@@ -764,6 +844,7 @@ class rst_htmlparser(link_anchor_parser):
     #@-node:bwmulder.20050315115739.2:handle_endtag
     #@+node:bwmulder.20050315115739.3:generate_node_marker
     def generate_node_marker(cls, number):
+        
         """
         Generate a node marker for 
         """
@@ -771,6 +852,7 @@ class rst_htmlparser(link_anchor_parser):
         
     generate_node_marker = classmethod(generate_node_marker)
         
+    
     #@-node:bwmulder.20050315115739.3:generate_node_marker
     #@+node:bwmulder.20050315134705:feed
     def feed(self, line):

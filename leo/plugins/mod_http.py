@@ -25,7 +25,7 @@ To enable this plugin:
         @page http plugin
         @bool http_active = True
         @int  port = 8080
-        @string rst_http_attributename = '
+        @string rst_http_attributename = 'rst_http_attribute'
 '''
 #@nonl
 #@-node:ekr.20050111111238:<< docstring >>
@@ -37,14 +37,8 @@ To enable this plugin:
 # Adapted and extended from the Python Cookbook:
 # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/259148
 
-__version__ = "0.92"
+__version__ = "0.93"
 
-#@<< how to use this plugin >>
-#@+node:EKR.20040517080250.2:<< how to use this plugin >>
-#@+at
-#@-at
-#@-node:EKR.20040517080250.2:<< how to use this plugin >>
-#@nl
 #@<< imports >>
 #@+node:EKR.20040517080250.3:<< imports >>
 import leoGlobals as g
@@ -70,6 +64,22 @@ import urlparse
 #@nonl
 #@-node:EKR.20040517080250.3:<< imports >>
 #@nl
+#@<< version history >>
+#@+node:ekr.20050328104558:<< version history >>
+#@@killcolor
+
+#@+at
+# 
+# 0.93 EKR:
+#     - Added 'version history' section.
+#     - Removed vestigial sections.
+#     - Changed docstring to mention
+#         @string rst_http_attributename = 'rst_http_attribute'
+#       (Not sure if this is correct.)
+#@-at
+#@nonl
+#@-node:ekr.20050328104558:<< version history >>
+#@nl
 
 sockets_to_close = []
 
@@ -83,12 +93,6 @@ class config:
 #@-node:bwmulder.20050326191345:<< config >>
 #@nl
 #@+others
-#@+node:bwmulder.20050326224000:possible @settings
-#@+doc
-# See the beginning of the LEO file
-#@-doc
-#@nonl
-#@-node:bwmulder.20050326224000:possible @settings
 #@+node:bwmulder.20050326191345.1:onFileOpen
 def onFileOpen(tag, keywords):
     c = keywords.get("new_c")

@@ -1501,6 +1501,7 @@ class PluginCollection(dict):
     
         conflicts = []
         for this_plugin in self.values():
+            # g.trace(plugin.handlers,this_plugin.handlers)
             if this_plugin.name <> plugin.name:
                 for conflict in plugin.handlers.intersection(this_plugin.handlers):
                     conflicts.append((this_plugin.name, conflict))

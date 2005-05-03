@@ -885,7 +885,7 @@ def walkChapters( c = None, ignorelist = [], chapname = False):
 #@-others
 #@nonl
 #@-node:mork.20040930094729:Chapter-Notebook ops
-#@+node:mork.20040930091035:opening and closing
+#@+node:mork.20040930091035:opening and closing (to be moved into Leo's core)
 #@+at
 # This category is for opening and closing of Leo files.  We need to decorate 
 # and be tricky here, since a Chapters leo file is a zip file.  These 
@@ -1050,7 +1050,7 @@ def zipChapters( fileName, pagenames, c, chapList ):
 #@-node:mork.20040930091035.2:closing
 #@-others
 #@nonl
-#@-node:mork.20040930091035:opening and closing
+#@-node:mork.20040930091035:opening and closing (to be moved into Leo's core)
 #@+node:mork.20040930091624:decorated Leo functions
 #@+at
 # I prefer decorating Leo functions as opposed to patching them.  Patching 
@@ -1062,6 +1062,7 @@ def zipChapters( fileName, pagenames, c, chapList ):
 #@+others
 #@+node:mork.20040926105355.34:newos_path_dirname
 olos_pat_dirname  = g.os_path_dirname
+
 def newos_path_dirname( path, encoding = None ):
     if iscStringIO:
         c = g.top()
@@ -1071,6 +1072,7 @@ def newos_path_dirname( path, encoding = None ):
 #@-node:mork.20040926105355.34:newos_path_dirname
 #@+node:mork.20040926105355.45:newendEditLabel
 olEditLabel = leoTkinterTree.leoTkinterTree.endEditLabel
+
 def newendEditLabel( self ):
     
     c = self.c
@@ -1100,6 +1102,7 @@ if hasattr( leoNodes.vnode, 'doDelete' ):
     olDelete = leoNodes.vnode.doDelete
 else:
     olDelete = leoNodes.position.doDelete
+
 def newTrashDelete(  self, newVnode):
     c = self.c
     notebook = notebooks.get(c)

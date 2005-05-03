@@ -1,4 +1,5 @@
 2K
+35mm
 3d
 8s
 AssertionError
@@ -6,9 +7,11 @@ AttributeError
 Autosaves
 Avec
 BadLeoFile
+Baecker
 Bolden
 Borland
 CDATA
+CFA
 COMMENT1
 CVS
 CWEB
@@ -20,6 +23,7 @@ ConfigParser
 Configurator
 Ctor
 Ctrl
+DAG's
 DEBUG_LEAK
 DEBUG_SAVEALL
 DEBUG_STATS
@@ -73,6 +77,7 @@ M2C
 MARK_PREVIOUS
 MacOS
 MacOSXTk8
+Manti
 MaxOS
 McNab
 Merenda
@@ -350,6 +355,7 @@ boundp
 boxclick1
 boxclick2
 br
+browsers'
 bruceb
 btags
 bytecode
@@ -900,6 +906,7 @@ leoPlugins
 leoPrefs
 leoProfile
 leoProjects
+leoRecentFiles
 leoScripts
 leoSettings
 leoTangle
@@ -931,6 +938,7 @@ lineending
 linenumber
 lines1
 lines2
+linespacing
 linkAfter
 linkX
 linux1
@@ -1411,6 +1419,7 @@ sn
 someScan
 some_proc
 someclass
+sooo
 soooo
 sortSequence
 sourcedir
@@ -1458,6 +1467,7 @@ subdictionary
 subheadlines
 submenu
 submit_form
+subnode
 subnodes
 suboutline
 suboutlines
@@ -1544,6 +1554,7 @@ toks
 toolbar
 top_df
 tot2
+towards
 tp
 traceDrawing
 tracePositions
@@ -1645,6 +1656,7 @@ windowMenu
 won`t
 word2
 word_export
+wordspacing
 workCtrl
 workflow
 writeAll
