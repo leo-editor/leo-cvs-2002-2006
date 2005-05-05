@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="13712" clone_windows="0"/>
 <globals body_outline_ratio="0.635555555556">
-	<global_window_position top="45" left="166" height="900" width="1023"/>
+	<global_window_position top="10" left="143" height="900" width="1023"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -48,7 +48,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -61,24 +61,24 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20050429094215" a="ETV"><vh>4.3-beta 1</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20050429094215"><vh>4.3-beta 1</vh>
 <v t="ekr.20050429094215.2"><vh>Fixed bugs...</vh>
-<v t="ekr.20050429094215.3" a="E"><vh>Made sure NameErrors are reported with tracebacks in scripts</vh></v>
-<v t="ekr.20050429094215.22" a="E"><vh>Finally! fixed .leoID problem!</vh></v>
-<v t="ekr.20050429094215.31" a="E"><vh>Investigated problem with LeoPluginsRef.leo</vh></v>
-<v t="ekr.20050429094215.41" a="E"><vh>Fixed conflicts in menu shortcuts</vh></v>
+<v t="ekr.20050429094215.3"><vh>Made sure NameErrors are reported with tracebacks in scripts</vh></v>
+<v t="ekr.20050429094215.22"><vh>Finally! fixed .leoID problem!</vh></v>
+<v t="ekr.20050429094215.31"><vh>Investigated problem with LeoPluginsRef.leo</vh></v>
+<v t="ekr.20050429094215.41"><vh>Fixed conflicts in menu shortcuts</vh></v>
 <v t="ekr.20050429094215.113"><vh>Fixed bug in p.initStatus caught by pychecker</vh></v>
-<v t="ekr.20050429094215.116" a="E"><vh>Fixed crasher in import logic (leoAtFile)</vh></v>
-<v t="ekr.20050429094215.120" a="E"><vh>Put in protections against unbounded recursion in idle_scrollTo</vh></v>
+<v t="ekr.20050429094215.116"><vh>Fixed crasher in import logic (leoAtFile)</vh></v>
+<v t="ekr.20050429094215.120"><vh>Put in protections against unbounded recursion in idle_scrollTo</vh></v>
 </v>
 <v t="ekr.20050429094215.130"><vh>New features...</vh>
-<v t="ekr.20050429094215.131" a="E"><vh>Created stand-alone leoGlobals.py module</vh></v>
-<v t="ekr.20050429094215.139" a="E"><vh>Leo now ignores problems opening settings file for chapters plugin</vh></v>
-<v t="ekr.20050429094215.145" a="E"><vh>Improved write logic</vh></v>
-<v t="ekr.20050429094215.173" a="E"><vh>Rewrote the undo code</vh></v>
-<v t="ekr.20050429094215.286" a="E"><vh>Implemented undo/redo for Paste Retaining clones</vh></v>
-<v t="ekr.20050429094215.316" a="E"><vh>Added support for 'str_' uA's</vh></v>
+<v t="ekr.20050429094215.131"><vh>Created stand-alone leoGlobals.py module</vh></v>
+<v t="ekr.20050429094215.139"><vh>Leo now ignores problems opening settings file for chapters plugin</vh></v>
+<v t="ekr.20050429094215.145"><vh>Improved write logic</vh></v>
+<v t="ekr.20050429094215.173"><vh>Rewrote the undo code</vh></v>
+<v t="ekr.20050429094215.286"><vh>Implemented undo/redo for Paste Retaining clones</vh></v>
+<v t="ekr.20050429094215.316"><vh>Added support for 'str_' uA's</vh></v>
 <v t="ekr.20050429094215.347"><vh>Removed unused params from leoAtFile.py</vh></v>
 <v t="ekr.20050429094215.353"><vh>Leo  saves recent files info in .leoRecentFiles.txt files</vh>
 <v t="ekr.20050429094215.354"><vh>What I did</vh></v>
@@ -107,7 +107,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050429095849" a="E"><vh>Finished all @settings coding</vh></v>
+<v t="ekr.20050429095849"><vh>Finished all @settings coding</vh></v>
 </v>
 </v>
 </v>
@@ -1441,7 +1441,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -3741,6 +3741,8 @@ The table argument describes the entries to be created.  This table is a sequenc
 - arg is an argument to be passed to the given command.
 - ext is a file extension or None.
 
+New in Leo 4.3:
+
 When the user selects the Open With item corresponding to the table item Leo executes command(arg).
 If ext is not None, the temp file has the given extension.
 Otherwise, Leo computes an extension based on what @language directive is in effect.
@@ -5219,7 +5221,7 @@ tag argument               over-                                        keys in 
 'start2'                            after opening first Leo window      c,p,v,fileName
 'unselect1'                 yes     before unselecting a vnode          c,new_p,old_p,new_v,old_v
 'unselect2'                         after  unselecting a vnode          c,new_p,old_p,old_v,old_v
-'@url1'                     yes     before double-click @url node       c,p,v (note 5)
+'@url1'                     yes     before double-click @url node       c,p,v,url (note 5)
 '@url2'                             after  double-click @url node       c,p,v(note 5)
 
 Notes:
