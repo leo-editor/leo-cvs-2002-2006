@@ -6,7 +6,7 @@
 #@@tabwidth -4
 
 __name__ = "Node Navigator"
-__version__ = "0.8"
+__version__ = "0.9"
 
 #@<< version history >>
 #@+node:ekr.20040908093511.2:<< version history >>
@@ -32,9 +32,11 @@ __version__ = "0.8"
 # - Fix problems with initialization:
 #     - Bind onCreate to the "open2" hook.
 #     - Set c = keywords.get("new_c") in onCreate.
-# .8 EKR:
+# 0.8 EKR:
 #     - Changed 'new_c' logic to 'c' logic.
 #     - Added init function.
+# 0.9 EKR:
+#     - Make sure buttons appear in a new window.
 #@-at
 #@nonl
 #@-node:ekr.20040908093511.2:<< version history >>
@@ -65,7 +67,7 @@ def init ():
             g.app.createTkGui(__file__)
     
         if g.app.gui.guiName() == "tkinter":
-            leoPlugins.registerHandler("open2", onCreate)
+            leoPlugins.registerHandler(('new','open2'), onCreate)
             g.plugin_signon("nodenavigator")
     
     return ok
