@@ -59,7 +59,7 @@ parent or child of such nodes.
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.2"
+__version__ = "0.3"
 #@<< version history >>
 #@+node:rogererens.20041014104353:<< version history >>
 #@+at
@@ -69,6 +69,9 @@ __version__ = "0.2"
 # PS: wouldn't it be more handy to define __version__ in this section?
 # 
 # 0.2 ekr:  changes for new status line class.
+# 
+# 0.3 ekr: Added support for url keyword in '@url1' hook.
+# As a result, this plugin now support single and double quoted urls.
 #@-at
 #@nonl
 #@-node:rogererens.20041014104353:<< version history >>
@@ -142,7 +145,10 @@ def onUrl1 (tag,keywords):
     """Redefine the @url functionality of Leo Core: allows jumping to URL _and UNLs_. Spaces are now allowed in URLs."""
     c = keywords.get("c")
     v = keywords.get("v")
-    url = v.headString()[4:].strip() # remove the "@url" part and possible leading and trailing whitespace characters
+    # The unl key is new in 4.3 beta 2.
+    # The unl ends with the first blank, unless either single or double quotes are used.
+    url = keywords.get('url')
+    # url = v.headString()[4:].strip() # remove the "@url" part and possible leading and trailing whitespace characters
 
 #@+at 
 #@nonl
@@ -215,7 +221,6 @@ def onUrl1 (tag,keywords):
     except:
         g.es("exception opening " + url)
         g.es_exception()
-#@nonl
 #@-node:rogererens.20041021091837:onUrl1
 #@+node:rogererens.20041014110709:To do
 #@+at
