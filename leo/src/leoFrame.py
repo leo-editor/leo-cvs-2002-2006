@@ -923,21 +923,36 @@ class leoTree:
         c = self.c
         s = p.headString().strip()
         if g.match_word(s,0,"@url"):
-            if not g.doHook("@url1",c=c,p=p,v=p):
-                url = s[4:].strip()
-                #@            << stop the url after any whitespace >>
-                #@+node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
-                # For safety, the URL string should end at the first whitespace.
-                
-                url = url.replace('\t',' ')
+            url = s[4:].strip()
+            #@        << stop the url after any whitespace >>
+            #@+node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
+            # For safety, the URL string should end at the first whitespace, unless quoted.
+            # This logic is also found in the UNL plugin so we don't have to change the 'unl1' hook.
+            
+            url = url.replace('\t',' ')
+            
+            # Strip quotes.
+            i = -1
+            if url and url[0] in ('"',"'"):
+                i = url.find(url[0],1)
+                if i > -1:
+                    url = url[1:i]
+            
+            if i == -1:
+                # Not quoted or no matching quote.
                 i = url.find(' ')
                 if i > -1:
                     if 0: # No need for a warning.  Assume everything else is a comment.
                         g.es("ignoring characters after space in url:"+url[i:])
                         g.es("use %20 instead of spaces")
                     url = url[:i]
-                #@-node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
-                #@nl
+                
+            #@nonl
+            #@-node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
+            #@nl
+            # g.trace(url)
+            if not g.doHook("@url1",c=c,p=p,v=p,url=url):
+                # Note: the UNL plugin has its own notion of what a good url is.
                 #@            << check the url; return if bad >>
                 #@+node:ekr.20031218072017.2314:<< check the url; return if bad >>
                 if not url or len(url) == 0:
