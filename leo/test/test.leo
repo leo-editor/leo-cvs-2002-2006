@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6970" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6973" clone_windows="0"/>
 <globals body_outline_ratio="0.417628541448">
-	<global_window_position top="12" left="397" height="880" width="788"/>
+	<global_window_position top="64" left="434" height="880" width="788"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -532,8 +532,10 @@
 <v t="ekr.20050316063336"><vh>test of NameError traceback</vh></v>
 <v t="ekr.20050316074630.1"><vh>test of an exception in another module</vh></v>
 <v t="ekr.20050428085106"><vh>linda's node</vh></v>
+<v t="ekr.20050503095605"><vh>Test of os.spawnv calls to c.openWith</vh></v>
+<v t="ekr.20050505053411"><vh>@url 'c:\Program Files\jEdit\doc\README.txt'</vh></v>
 </v>
-<v t="ekr.20041126132604" a="TV" annotate="7d71002e"><vh>Prototypes</vh>
+<v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
 <v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
 </v>
@@ -607,19 +609,6 @@
 <v t="ekr.20050315072359.1"><vh>g.convertRowColToPythonIndex &amp; test</vh>
 <v t="ekr.20050315072359.2"><vh>test_g_convertRowColToPythonIndex</vh></v>
 </v>
-</v>
-</v>
-<v t="ekr.20050225161940" annotate="7d71002e"><vh>Move executeFile into core</vh>
-<v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
-<v t="ekr.20050225162123" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@thin executeFileTest.py</vh></v>
-<v t="ekr.20050225161940.2" annotate="7d71002e"><vh>Script</vh>
-<v t="ekr.20050225161940.3" annotate="7d71002e"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
-<v t="ekr.20050225171553" annotate="7d71002e"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20050225161940.5" annotate="7d71002e"><vh>getAtFileName</vh></v>
-<v t="ekr.20050225161940.4" annotate="7d71002e"><vh>executeFile</vh>
-<v t="ekr.20050225164423"><vh>&lt;&lt; define subprocess_wrapper &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
 </v>
 </v>
 <v t="ekr.20050419115225"><vh>(parse jEdit files)</vh>
@@ -745,7 +734,7 @@
 <v t="ekr.20050427101736.2"><vh>read zip</vh></v>
 </v>
 </v>
-<v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts</vh>
+<v t="ekr.20040312021734" a="TV" annotate="7d71002e"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1151,6 +1140,16 @@
 <v t="ekr.20050219073752.1"><vh>Add a menu item after Open With</vh></v>
 </v>
 <v t="ekr.20050310082013"><vh>AutoIt script from e</vh></v>
+<v t="ekr.20050225161940" annotate="7d71002e"><vh>Script to execute @test, @suite or file</vh>
+<v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
+<v t="ekr.20050225162123" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@@thin executeFileTest.py</vh></v>
+<v t="ekr.20050225161940.2" annotate="7d71002e"><vh>Exec File</vh>
+<v t="ekr.20050225161940.3" annotate="7d71002e"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050225171553" annotate="7d71002e"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20050225161940.5" annotate="7d71002e"><vh>getAtFileName</vh></v>
+<v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
@@ -2534,7 +2533,7 @@ print "done"</t>
 <t tx="bwmulder.20050108100437.1">@killcolor
 
 Running unit tests from test.leo is easy, provided you have enabled the
-mod_scripting plugin. When this plugin is enabled Leo will create a blue 'script
+Scripting plugin. When this plugin is enabled Leo will create a blue 'script
 button' in the icon bar called 'unit test'. 
  
 - To run all unit tests, select the node in test.leo called 'Unit testing...',
@@ -2547,7 +2546,7 @@ then click the 'unit test' button.
 - To run any other collection of tests, create an outline containing those @test
 or @suite nodes, select the root of that tree and click the 'unit test' button.
 
-That's all. See the docstring for mod_scripting for more details about script
+That's all. See the docstring the Scripting plugin for more details about script
 buttons. You can see this docstring using the plugin_manager plugin if you have
 it installed. 
  
@@ -2621,7 +2620,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -3875,7 +3874,16 @@ This is a test of \LaTeX mode.
 
 This is a keyword \% not the start of a comment.
 
-More keywords: \@ and \( and \) and \{ and \}</t>
+More keywords: \@ and \( and \) and \{ and \}
+
+The following should be colored:
+
+\documentclass{report}
+
+The following 2-letter words should be colored, regardless of what follows:
+
+\(\)\{\}\@
+\(abc\)abc\{abc\}abc\@abc</t>
 <t tx="ekr.20040712101754.139">p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
@@ -13559,7 +13567,17 @@ except AssertionError:
     self.dump(result)
     return result
 </t>
-<t tx="ekr.20050225161940"></t>
+<t tx="ekr.20050225161940">@
+
+To run the script:
+    
+1. Make the 'Exec File' node a script button.
+
+2. Select either the @test node or the @thin node.
+
+(You must change @@thin to @thin for this to work.)
+
+3. Hit the Exec File button.</t>
 <t tx="ekr.20050225161940.1">assert __name__ == '__builtin__', '__name__ is %s' % __name__</t>
 <t tx="ekr.20050225161940.2">&lt;&lt; docstring &gt;&gt;
 &lt;&lt; imports &gt;&gt;
@@ -13603,27 +13621,6 @@ Warning: this may run arbitrary code.
 no warranty expressed or implied!
 """
 </t>
-<t tx="ekr.20050225161940.4">def executeFile(filename, options= ''):
-
-    if not os.access(filename, os.R_OK): return
-    
-    cwd = os.getcwdu()
-    fdir, fname = g.os_path_split(filename)
-    
-    if subprocess: # Only exists in Python 2.4.
-        &lt;&lt; define subprocess_wrapper &gt;&gt;
-        rc, so, se = subprocess_wrapper('%s %s %s'%(sys.executable, fname, options))
-        if rc:
-             print 'return code', rc
-        print so, se
-    else:
-        if fdir: os.chdir(fdir)
-        d = {'__name__': '__main__'}
-        execfile(fname, d)  #, globals()
-        os.system('%s %s' % (sys.executable, fname))
-        if fdir: os.chdir(cwd)
-
-g.executeFile = executeFile</t>
 <t tx="ekr.20050225161940.5">def getAtFileName():
     
     '''Return the full path from any kind of @file node and applicable @path directives.'''
@@ -13673,17 +13670,13 @@ g.executeFile = executeFile</t>
     g.es('Test done',color='blue')
 
     c.frame.putStatusLine(' fini ', color= 'DodgerBlue')</t>
-<t tx="ekr.20050225164423">def subprocess_wrapper(cmdlst):
-    
-    # g.trace(cmdlst, fdir)
-    # g.trace(subprocess.list2cmdline([cmdlst]))
+<t tx="ekr.20050225162123">@language python
+@tabwidth -4
 
-    p = subprocess.Popen(cmdlst, cwd=fdir,
-        universal_newlines=True,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+print __name__
+#print 'hi'
 
-    stdo, stde = p.communicate()
-    return p.wait(), stdo, stde</t>
+assert __name__ == '__main__', '__name__ is %s' % __name__</t>
 <t tx="ekr.20050225171553">import leoTest
 
 try:
@@ -15184,5 +15177,15 @@ for p in c.allNodes_iter():
     count += 1
     print ' '*p.level(),p.headString()
 print 'found',count,'nodes'</t>
+<t tx="ekr.20050503095605">table = ('spawnv',None,(
+    'os.spawnv',[
+    r'c:\vim\vim63\gvim.exe',
+    ' --servername LEO ',
+    ' --remote-silent ',
+    ],
+    ".py")),
+
+c.frame.menu.createOpenWithMenuFromTable(table)</t>
+<t tx="ekr.20050505053411"></t>
 </tnodes>
 </leo_file>
