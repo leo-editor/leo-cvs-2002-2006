@@ -18,7 +18,6 @@ __pychecker__ = '--no-import --no-reimportself --no-reimport\
 
 #@<< imports >>
 #@+node:ekr.20050208101229:<< imports >>
-
 import leoGlobals as g # So code can use g below.
 
 if 0: # Don't import this here: it messes up Leo's startup code.
@@ -1010,6 +1009,9 @@ def es_exception (full=True,c=None,color="red"):
 #@nonl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
+    
+    if c.config.redirect_execute_script_output_to_log_pane:
+        return # Test doesn't work when redirection is on.
 
     try:
         import sys
@@ -3496,6 +3498,46 @@ def findTopLevelNode(headline):
     return c.nullPosition()
 #@nonl
 #@-node:ekr.20040321065415:g.findNodeInTree, findNodeAnywhere, findTopLevelNode
+#@+node:ekr.20050503112513.7:g.executeFile
+def executeFile(filename, options= ''):
+
+    if not os.access(filename, os.R_OK): return
+    
+    try: import subprocess # Exists in Python 2.4 or later.
+    except ImportError: subprocess = None
+
+    cwd = os.getcwdu()
+    fdir, fname = g.os_path_split(filename)
+    
+    if subprocess: # Only exists in Python 2.4.
+        #@        << define subprocess_wrapper >>
+        #@+node:ekr.20050503112513.8:<< define subprocess_wrapper >>
+        def subprocess_wrapper(cmdlst):
+            
+            # g.trace(cmdlst, fdir)
+            # g.trace(subprocess.list2cmdline([cmdlst]))
+        
+            p = subprocess.Popen(cmdlst, cwd=fdir,
+                universal_newlines=True,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
+            stdo, stde = p.communicate()
+            return p.wait(), stdo, stde
+        #@nonl
+        #@-node:ekr.20050503112513.8:<< define subprocess_wrapper >>
+        #@nl
+        rc, so, se = subprocess_wrapper('%s %s %s'%(sys.executable, fname, options))
+        if rc:
+             print 'return code', rc
+        print so, se
+    else:
+        if fdir: os.chdir(fdir)
+        d = {'__name__': '__main__'}
+        execfile(fname, d)  #, globals()
+        os.system('%s %s' % (sys.executable, fname))
+        if fdir: os.chdir(cwd)
+#@nonl
+#@-node:ekr.20050503112513.7:g.executeFile
 #@-node:ekr.20040327103735.2:Script Tools (leoGlobals.py)
 #@+node:ekr.20031218072017.1498:Unicode utils...
 #@+node:ekr.20031218072017.1499:isUnicode
