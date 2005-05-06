@@ -4621,7 +4621,7 @@ def executeScript (name):
 
     if theFile:
         theFile.close()
-
+#@nonl
 #@-node:ekr.20031218072017.3138:g.executeScript
 #@+node:ekr.20040331083824.1:g.fileLikeObject
 # Note: we could use StringIo for this.
@@ -4721,50 +4721,35 @@ def funcToMethod(f,theClass,name=None):
 #@nonl
 #@-node:ekr.20031218072017.3126:g.funcToMethod
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True,script=None):
-
-    if not p: p = c.currentPosition()
-    old_body = p.bodyString()
-
-    try:
-        if script:
-            s = script
-        else:
-            script = ''
-            # Allow p not to be the present position.
-            if p == c.currentPosition():
-                if useSelectedText and c.frame.body.hasTextSelection():
-                    # Temporarily replace v's body text with just the selected text.
-                    s = c.frame.body.getSelectedText()
-                    p.v.setTnodeText(s)
-                else:
-                    s = c.frame.body.getAllText()
-            else:
-                s = p.bodyString()
-                
-        # New in 4.3: Remove extra leading whitespace so the user may execute indented code.
-        s = g.removeExtraLws(s,c.tab_width)
+def getScript (c,p,useSelectedText=True):
     
+    '''Return the expansion of the selected text of node p.
+    Return the expansion of all of node p's body text if there
+    is p is not the current node or if there is no text selection.'''
+
+    at = c.atFileCommands
+    try:
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                s = c.frame.body.getSelectedText()
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+        # Remove extra leading whitespace so the user may execute indented code.
+        s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            at = c.atFileCommands
-            # New in 4.3: Selecting text executes _only_ the selected text.
-            # This removes some indentation problems, but not all of them.
-            if useSelectedText and c.frame.body.hasTextSelection():
-                script = s
-            else:
-                at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
-                script = at.stringOutput
-            # The simple way: covert crlf by brute force.
-            script = script.replace("\r\n","\n")
+            script = at.writeFromString(p.copy(),s)
+            script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
+        else: script = ''
     except Exception:
-        s = "unexpected exception"
+        s = "unexpected exception in g.getScript"
         print s ; g.es(s)
         g.es_exception()
         script = ''
 
-    p.v.setTnodeText(old_body)
     return script
 #@nonl
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf

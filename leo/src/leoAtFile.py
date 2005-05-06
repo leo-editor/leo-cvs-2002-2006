@@ -323,7 +323,8 @@ class atFile:
         #@-node:ekr.20041005105605.16:<< init ivars for writing >>>
         #@nl
         
-        self.scanAllDirectives(root,scripting=scriptWrite)
+        if root:
+            self.scanAllDirectives(root,scripting=scriptWrite)
         if scriptWrite:
             # Force Python comment delims for g.getScript.
             self.startSentinelComment = "#"
@@ -340,7 +341,7 @@ class atFile:
         if toString and g.app.unitTesting: self.output_newline = '\n'
         
         # Init all other ivars even if there is an error.
-        if not self.errors: 
+        if not self.errors and self.root:
             self.root.v.t.tnodeList = []
     #@nonl
     #@-node:ekr.20041005105605.15:initWriteIvars
@@ -2801,11 +2802,13 @@ class atFile:
         else:
             at.openFileForWritingHelper(fileName)
     
-        if at.outputFile:
-            root.clearOrphan()
-        else:
-            root.setOrphan()
-            root.setDirty()
+        # New in 4.3 b2: root may be none when writing from a string.
+        if root:
+            if at.outputFile:
+                root.clearOrphan()
+            else:
+                root.setOrphan()
+                root.setDirty()
         
         return at.outputFile is not None
     #@nonl
@@ -2903,6 +2906,32 @@ class atFile:
             else:
                 at.writeException() # Sets dirty and orphan bits.
     #@-node:ekr.20041005105605.144:write
+    #@+node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
+    # This is at.write specialized for scripting.
+    
+    def writeFromString(self,root,s):
+        
+        """Write a 4.x derived file from a string.
+        
+        This is used by the scripting logic."""
+        
+        at = self ; c = at.c
+        c.endEditing() # Capture the current headline.
+    
+        at.initWriteIvars(root,"<string-file>",
+            nosentinels=False,thinFile=False,scriptWrite=True,toString=True)
+    
+        try:
+            at.openFileForWriting(root,at.targetFileName,toString=True)
+            # Simulate writing the entire file so error recovery works.
+            at.writeOpenFile(root,nosentinels=False,toString=True,fromString=s)
+            at.closeWriteFile()
+        except:
+            at.exception("exception preprocessing script")
+    
+        return at.stringOutput
+    #@nonl
+    #@-node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
     #@+node:ekr.20041005105605.147:writeAll
     def writeAll(self,writeAtFileNodesFlag=False,writeDirtyAtFileNodesFlag=False,toString=False):
         
@@ -3098,83 +3127,27 @@ class atFile:
     #@-node:ekr.20041005105605.154:asisWrite
     #@+node:ekr.20041005105605.157:writeOpenFile
     # New in 4.3: must be inited before calling this method.
+    # New in 4.3 b2: support for writing from a string.
     
-    def writeOpenFile(self,root,nosentinels=False,toString=False):
+    def writeOpenFile(self,root,nosentinels=False,toString=False,fromString=''):
     
         """Do all writes except asis writes."""
         
-        at = self
+        at = self ; s = g.choose(fromString,fromString,root.v.t.bodyString)
+    
         root.clearAllVisitedInTree() # Clear both vnode and tnode bits.
         root.clearVisitedInTree()
     
-        #@    << put all @first lines in root >>
-        #@+node:ekr.20041005105605.158:<< put all @first lines in root >> (4.x)
-        #@+at 
-        #@nonl
-        # Write any @first lines.  These lines are also converted to @verbatim 
-        # lines, so the read logic simply ignores lines preceding the @+leo 
-        # sentinel.
-        #@-at
-        #@@c
-        
-        s = root.v.t.bodyString
-        tag = "@first"
-        i = 0
-        while g.match(s,i,tag):
-            i += len(tag)
-            i = g.skip_ws(s,i)
-            j = i
-            i = g.skip_to_end_of_line(s,i)
-            # Write @first line, whether empty or not
-            line = s[j:i]
-            at.os(line) ; at.onl()
-            i = g.skip_nl(s,i)
-        #@nonl
-        #@-node:ekr.20041005105605.158:<< put all @first lines in root >> (4.x)
-        #@nl
-    
-        # Put the main part of the file.
+        at.putAtFirstLines(s)
         at.putOpenLeoSentinel("@+leo-ver=4")
         at.putInitialComment()
         at.putOpenNodeSentinel(root)
-        at.putBody(root)
+        at.putBody(root,fromString=fromString)
         at.putCloseNodeSentinel(root)
         at.putSentinel("@-leo")
         root.setVisited()
-        
-        #@    << put all @last lines in root >>
-        #@+node:ekr.20041005105605.159:<< put all @last lines in root >> (4.x)
-        #@+at 
-        #@nonl
-        # Write any @last lines.  These lines are also converted to @verbatim 
-        # lines, so the read logic simply ignores lines following the @-leo 
-        # sentinel.
-        #@-at
-        #@@c
-        
-        tag = "@last"
-        
-        # 4/17/04 Use g.splitLines to preserve trailing newlines.
-        lines = g.splitLines(root.v.t.bodyString)
-        n = len(lines) ; j = k = n - 1
-        
-        # Scan backwards for @last directives.
-        while j >= 0:
-            line = lines[j]
-            if g.match(line,0,tag): j -= 1
-            elif not line.strip():
-                j -= 1
-            else: break
-            
-        # Write the @last lines.
-        for line in lines[j+1:k+1]:
-            if g.match(line,0,tag):
-                i = len(tag) ; i = g.skip_ws(line,i)
-                at.os(line[i:])
-        #@nonl
-        #@-node:ekr.20041005105605.159:<< put all @last lines in root >> (4.x)
-        #@nl
-        
+        at.putAtLastLines(s)
+    
         if not toString and not nosentinels:
             at.warnAboutOrphandAndIgnoredNodes()
     #@nonl
@@ -3185,18 +3158,21 @@ class atFile:
     #@+node:ekr.20041005105605.161:putBody
     # oneNodeOnly is no longer used, but it might be used in the future?
     
-    def putBody(self,p,oneNodeOnly=False):
+    def putBody(self,p,oneNodeOnly=False,fromString=''):
         
         """ Generate the body enclosed in sentinel lines."""
     
-        at = self ; s = p.bodyString()
+        at = self
         
+        # New in 4.3 b2: get s from fromString if possible.
+        s = g.choose(fromString,fromString,p.bodyString())
+    
         p.v.t.setVisited() # Suppress orphans check.
         p.v.setVisited() # Make sure v is never expanded again.
         if not at.thinFile:
             p.v.t.setWriteBit() # Mark the tnode to be written.
-            
         if not at.thinFile and not s: return
+    
         inCode = True
         #@    << Make sure all lines end in a newline >>
         #@+node:ekr.20041005105605.162:<< Make sure all lines end in a newline >>
@@ -4110,6 +4086,55 @@ class atFile:
         self.os(s.replace('\n',self.output_newline))
     #@nonl
     #@-node:ekr.20041005105605.205:outputStringWithLineEndings
+    #@+node:ekr.20050506090446.1:putAtFirstLines (new in 4.3 b2)
+    def putAtFirstLines (self,s):
+        
+        '''Write any @firstlines from string s.
+        These lines are converted to @verbatim lines,
+        so the read logic simply ignores lines preceding the @+leo sentinel.'''
+    
+        at = self ; tag = "@first"
+    
+        i = 0
+        while g.match(s,i,tag):
+            i += len(tag)
+            i = g.skip_ws(s,i)
+            j = i
+            i = g.skip_to_end_of_line(s,i)
+            # Write @first line, whether empty or not
+            line = s[j:i]
+            at.os(line) ; at.onl()
+            i = g.skip_nl(s,i)
+    #@nonl
+    #@-node:ekr.20050506090446.1:putAtFirstLines (new in 4.3 b2)
+    #@+node:ekr.20050506090955:putAtLastLines (new in 4.3 b2)
+    def putAtLastLines (self,s):
+        
+        '''Write any @last lines from string s.
+        These lines are converted to @verbatim lines,
+        so the read logic simply ignores lines following the @-leo sentinel.'''
+    
+        at = self ; tag = "@last"
+        
+        # Use g.splitLines to preserve trailing newlines.
+        lines = g.splitLines(s)
+        n = len(lines) ; j = k = n - 1
+        
+        # Scan backwards for @last directives.
+        while j >= 0:
+            line = lines[j]
+            if g.match(line,0,tag): j -= 1
+            elif not line.strip():
+                j -= 1
+            else: break
+            
+        # Write the @last lines.
+        for line in lines[j+1:k+1]:
+            if g.match(line,0,tag):
+                i = len(tag) ; i = g.skip_ws(line,i)
+                at.os(line[i:])
+    #@nonl
+    #@-node:ekr.20050506090955:putAtLastLines (new in 4.3 b2)
     #@+node:ekr.20041005105605.206:putDirective  (handles @delims,@comment,@language) 4.x
     #@+at 
     #@nonl
