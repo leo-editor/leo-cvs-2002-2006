@@ -1681,7 +1681,10 @@ class baseColorizer:
                 #@    << handle possible latex keyword >>
                 #@+node:ekr.20031218072017.1899:<< handle possible latex keyword >>
                 if g.match(s,i,"\\"):
-                    j = self.skip_id(s,i+1,chars=self.latex_special_keyword_characters) # 11/9/03
+                    if i + 1 < len(s) and s[i+1] in self.latex_special_keyword_characters:
+                        j = i + 2 # A special 2-character LaTex keyword.
+                    else:
+                        j = self.skip_id(s,i+1)
                     word = s[i:j]
                     if word in self.latex_keywords:
                         self.tag("latexKeyword",i,j)
