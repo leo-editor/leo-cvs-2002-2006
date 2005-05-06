@@ -485,10 +485,6 @@ class baseCommands:
                         vtuple.append(path)
                         command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
                         apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
-                    elif openType == "os.spawnv2": # New in 4.3 beta 1: TO DO
-                        # We need more args.
-                        apply(os.spawnv,(os.P_NOWAIT, r"c:\vim\vim63\gvim.exe",
-                            [" --servername LEO "," --remote-silent "]+[shortPath]))
                     else:
                         command="bad command:"+str(openType)
                         g.trace(command)
@@ -1171,8 +1167,7 @@ class baseCommands:
         
         We execute the selected text, or the entire body text if no text is selected."""
         
-        c = self ; error = False ; s = None ; script1 = script
-    
+        c = self ; script1 = script
         if not script:
             script = g.getScript(c,p,useSelectedText=useSelectedText)
         #@    << redirect output >>
@@ -1184,79 +1179,70 @@ class baseCommands:
         #@nonl
         #@-node:ekr.20031218072017.2143:<< redirect output >>
         #@nl
-        # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
-        if script.strip():
-            # 9/14/04: Temporarily add the open directory to sys.path.
-            sys.path.insert(0,c.frame.openDirectory)
-            script += '\n' # Make sure we end the script properly.
-            try:
-                p = c.currentPosition()
-                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
-                exec script in d # Use {} to get a pristine environment!
-                #@            << unredirect output >>
-                #@+node:EKR.20040627100424:<< unredirect output >>
-                if c.config.redirect_execute_script_output_to_log_pane:
-                
-                    g.restoreStderr()
-                    g.restoreStdout()
-                #@nonl
-                #@-node:EKR.20040627100424:<< unredirect output >>
-                #@nl
-                if not script1:
-                    g.es("end of script",color="purple")
-            except Exception:
-                #@            << unredirect output >>
-                #@+node:EKR.20040627100424:<< unredirect output >>
-                if c.config.redirect_execute_script_output_to_log_pane:
-                
-                    g.restoreStderr()
-                    g.restoreStdout()
-                #@nonl
-                #@-node:EKR.20040627100424:<< unredirect output >>
-                #@nl
-                g.es("exception executing script",color='blue')
-                if 0:
-                    print 'script...'
-                    for line in g.splitLines(script):
-                        print repr(line)
-                fileName,n = g.es_exception(full=True,c=c)
-                if p and not script1 and fileName == "<string>":
-                    c.goToScriptLineNumber(p,script,n)
-                #@            << dump the lines near the error >>
-                #@+node:EKR.20040612215018:<< dump the lines near the error >>
-                if g.os_path_exists(fileName):
-                    f = file(fileName)
-                    lines = f.readlines()
-                    f.close()
-                else:
-                    lines = g.splitLines(script)
-                
-                s = '-' * 20
-                print s; g.es(s)
-                
-                if 0:
-                    # Just print the error line.
-                    try:
-                        s = "%s line %d: %s" % (fileName,n,lines[n-1])
-                        g.es(s,newline=False)
-                    except IndexError:
-                        s = "%s line %d" % (fileName,n)
-                        g.es(s,newline=False)
-                else: # Print surrounding lines.
-                    i = max(0,n-2)
-                    j = min(n+2,len(lines))
-                    # g.trace(n,i,j)
-                    while i < j:
-                        ch = g.choose(i==n-1,'*',' ')
-                        s = "%s line %d: %s" % (ch,i+1,lines[i])
-                        g.es(s,newline=False)
-                        i += 1
-                #@nonl
-                #@-node:EKR.20040612215018:<< dump the lines near the error >>
-                #@nl
-                c.frame.tree.redrawAfterException()
-            del sys.path[0]
-        elif not error:
+        try:
+            if script.strip():
+                sys.path.insert(0,c.frame.openDirectory)
+                script += '\n' # Make sure we end the script properly.
+                try:
+                    p = c.currentPosition()
+                    d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                    exec script in d
+                    if not script1:
+                        g.es("end of script",color="purple")
+                except Exception:
+                    #@                << handle an exception in the script >>
+                    #@+node:ekr.20050505104140:<< handle an exception in the script >>
+                    g.es("exception executing script",color='blue')
+                    
+                    if 0:
+                        print 'script...'
+                        for line in g.splitLines(script):
+                            print repr(line)
+                    
+                    fileName,n = g.es_exception(full=True,c=c)
+                    if p and not script1 and fileName == "<string>":
+                        c.goToScriptLineNumber(p,script,n)
+                    
+                    #@<< dump the lines near the error >>
+                    #@+node:EKR.20040612215018:<< dump the lines near the error >>
+                    if g.os_path_exists(fileName):
+                        f = file(fileName)
+                        lines = f.readlines()
+                        f.close()
+                    else:
+                        lines = g.splitLines(script)
+                    
+                    s = '-' * 20
+                    print s; g.es(s)
+                    
+                    if 0:
+                        # Just print the error line.
+                        try:
+                            s = "%s line %d: %s" % (fileName,n,lines[n-1])
+                            g.es(s,newline=False)
+                        except IndexError:
+                            s = "%s line %d" % (fileName,n)
+                            g.es(s,newline=False)
+                    else: # Print surrounding lines.
+                        i = max(0,n-2)
+                        j = min(n+2,len(lines))
+                        # g.trace(n,i,j)
+                        while i < j:
+                            ch = g.choose(i==n-1,'*',' ')
+                            s = "%s line %d: %s" % (ch,i+1,lines[i])
+                            g.es(s,newline=False)
+                            i += 1
+                    #@nonl
+                    #@-node:EKR.20040612215018:<< dump the lines near the error >>
+                    #@nl
+                    c.frame.tree.redrawAfterException()
+                    #@nonl
+                    #@-node:ekr.20050505104140:<< handle an exception in the script >>
+                    #@nl
+                del sys.path[0]
+            else:
+                g.es("no script selected",color="blue")
+        finally: # New in 4.3 beta 2: unredirect output last.
             #@        << unredirect output >>
             #@+node:EKR.20040627100424:<< unredirect output >>
             if c.config.redirect_execute_script_output_to_log_pane:
@@ -1266,8 +1252,7 @@ class baseCommands:
             #@nonl
             #@-node:EKR.20040627100424:<< unredirect output >>
             #@nl
-            g.es("no script selected",color="blue")
-            
+    
         # Force a redraw _after_ all messages have been output.
         c.redraw() 
     #@nonl
