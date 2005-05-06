@@ -2926,6 +2926,9 @@ class atFile:
             # Simulate writing the entire file so error recovery works.
             at.writeOpenFile(root,nosentinels=False,toString=True,fromString=s)
             at.closeWriteFile()
+            # Major bug: failure to clear this wipes out headlines!
+            # Minor bug: sometimes this causes slight problems...
+            if root: root.v.t.tnodeList = [] 
         except:
             at.exception("exception preprocessing script")
     
