@@ -20,7 +20,7 @@ import os
 #@nonl
 #@-node:ekr.20050219114353:<< imports >>
 #@nl
-__version__ = "1.3"
+__version__ = "1.4"
 #@<< version history >>
 #@+node:ekr.20050219114353.1:<< version history >>
 #@@killcolor
@@ -36,6 +36,15 @@ __version__ = "1.3"
 #     - The code is _much_ simpler than before.
 #     - Added marksInitiallyVisible and recentInitiallyVisible config 
 # constants.
+# 
+# 1.4 EKR: 2 bug fixes
+#     - Allways fill the box when clicking on the 'Recent' button.
+#     - Use keywords.get('c') NOT self.c in hook handlers.  They may not be 
+# the same!
+#         - This is actually a bug in leoPlugins.registerHandler, but it can't 
+# be
+#           fixed because there is no way to associate commanders with hook 
+# handlers.
 #@-at
 #@-node:ekr.20050219114353.1:<< version history >>
 #@nl
@@ -63,7 +72,6 @@ def init ():
 #@+node:ekr.20050219115116:onCreate
 def onCreate (tag,keywords):
 
-    
     # Not ok for unit testing: can't use unitTestGui.
     if g.app.unitTesting:
         return
@@ -174,10 +182,14 @@ class marksDialog (tkinterListBoxDialog):
     def updateMarks(self,tag,keywords):
     
         '''Recreate the Marks listbox.'''
+        
+        # Warning: it is not correct to use self.c in hook handlers.
+        c = keywords.get('c')
+        if c != self.c: return
     
         self.box.delete(0,"end")
         
-        c = self.c ; i = 0 ; tnodeList = []
+        i = 0 ; tnodeList = []
     
         for p in c.allNodes_iter():
             if p.isMarked() and p.v.t not in tnodeList:
@@ -212,7 +224,7 @@ class recentSectionsDialog (tkinterListBoxDialog):
         # N.B.  The base class contains positionList ivar.
         tkinterListBoxDialog.__init__(self,c,self.title,self.label)
         
-        self.fillbox() # forceUpdate=True) # Must be done initially.
+        self.fillbox() # Must be done initially.
         
         if not recentInitiallyVisible:
             self.top.withdraw()
@@ -227,6 +239,7 @@ class recentSectionsDialog (tkinterListBoxDialog):
         
         # Add 'Recent' button to icon bar.
         def recentButtonCallback(*args,**keys):
+            self.fillbox(forceUpdate=True)
             self.top.deiconify()
     
         self.sections_button = c.frame.addIconButton(
@@ -298,6 +311,8 @@ class recentSectionsDialog (tkinterListBoxDialog):
     def clearAll (self,event=None):
     
         """Handle clicks in the "Delete" button of the Recent Sections listbox dialog."""
+        
+        c = self.c
     
         self.c.visitedList = []
         self.positionList = []
@@ -366,9 +381,34 @@ class recentSectionsDialog (tkinterListBoxDialog):
                 i += 1
     #@nonl
     #@-node:edream.110203113231.787:fillbox
+    #@+node:ekr.20050508104217:testxxx.py
+    import unittest
+    
+    #@+others
+    #@+node:ekr.20050508104217.1:TestXXX
+    class TestXXX(unittest.TestCase):
+    
+        """Tests for the XXX class"""
+    
+        #@    @+others
+        #@+node:ekr.20050508104217.2:setUp
+        def setUp(self):
+        
+            """Create the test fixture"""
+        #@nonl
+        #@-node:ekr.20050508104217.2:setUp
+        #@-others
+    #@nonl
+    #@-node:ekr.20050508104217.1:TestXXX
+    #@-others
+    
+    if __name__ == "__main__":
+        unittest.main()
+    #@nonl
+    #@-node:ekr.20050508104217:testxxx.py
     #@+node:ekr.20050219122657:updateButtons
     def updateButtons (self):
-    
+        
         c = self.c
             
         for b,b2,enabled_image,disabled_image,cond in (
@@ -388,7 +428,11 @@ class recentSectionsDialog (tkinterListBoxDialog):
     #@nonl
     #@-node:ekr.20050219122657:updateButtons
     #@+node:ekr.20050219162434:updateRecent
-    def updateRecent(self,tag,kewords):
+    def updateRecent(self,tag,keywords):
+    
+        # Warning: it is not correct to use self.c in hook handlers.
+        c = keywords.get('c')
+        if c != self.c: return
     
         forceUpdate = tag in ('new2','open2')
         self.fillbox(forceUpdate)
