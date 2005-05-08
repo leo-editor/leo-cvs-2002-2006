@@ -129,8 +129,8 @@ class Navigator:
     
         c = keywords.get("c")
         p = keywords.get("p")
-        if not c or not p: return
-        
+        if c != self.c or not p: return
+    
         marks = self.markLists.get(c,[])
         if p.v.t in marks: return
     
@@ -180,7 +180,7 @@ class Navigator:
         """Initialize the marks list."""
     
         c = keywords.get("c")
-        if not c : return
+        if c != self.c: return
     
         # Clear old marks menu
         menu = self.marksMenus.get(c)
@@ -208,7 +208,7 @@ class Navigator:
     
         c = keywords.get("c")
         p = keywords.get("p")
-        if not c or not p: return
+        if c != self.c or not p: return
     
         marks = self.markLists.get(c,[])
         if not p.v.t in marks: return
@@ -248,6 +248,7 @@ class Navigator:
         """Add all entries to the recent nodes list."""
     
         c = keywords.get("c")
+        if c != self.c: return
     
         # Clear old recent menu
         menu = self.recentMenus.get(c)

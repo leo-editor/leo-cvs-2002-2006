@@ -129,7 +129,8 @@ class HoistButtons:
     #@+node:ekr.20040331072607.7:onIdle
     def onIdle(self,tag,keywords):
         
-        c = self.c
+        c = keywords.get('c')
+        if c != self.c: return
         
         # This should not be necessary, and it is.
         if g.app.killed:
