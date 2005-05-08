@@ -2578,18 +2578,21 @@ class leoTkinterTree (leoFrame.leoTree):
             #@        << unselect the old node >>
             #@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
             # Remember the position of the scrollbar before making any changes.
-            yview=body.yview()
-            insertSpot = c.frame.body.getInsertionPoint()
+            if old_p:
             
-            if old_p and old_p != p:
-                if self.trace and self.verbose:
-                    g.trace("unselect:",old_p.headString())
-                self.endEditLabel() # sets editPosition = None
-                self.setUnselectedLabelState(old_p)
-            
-            if old_p and old_p.edit_text():
-                old_p.v.t.scrollBarSpot = yview
-                old_p.v.t.insertSpot = insertSpot
+                yview=body.yview()
+                insertSpot = c.frame.body.getInsertionPoint()
+                
+                if old_p != p:
+                    if self.trace and self.verbose:
+                        g.trace("unselect:",old_p.headString())
+                    self.endEditLabel() # sets editPosition = None
+                    self.setUnselectedLabelState(old_p)
+                
+                if old_p.edit_text():
+                    old_p.v.t.scrollBarSpot = yview
+                    old_p.v.t.insertSpot = insertSpot
+            #@nonl
             #@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
             #@nl
     
@@ -2611,7 +2614,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 first,last = p.v.t.scrollBarSpot
                 body.yview("moveto",first)
             
-            if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+            if p.v and p.v.t.insertSpot != None:
                 c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
                 c.frame.bodyCtrl.see(p.v.t.insertSpot)
             else:
@@ -2656,7 +2659,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         #@    << set the current node >>
         #@+node:ekr.20040803072955.133:<< set the current node >>
-        self.c.setCurrentPosition(p)
+        c.setCurrentPosition(p)
         
         if p != old_p:
             self.setSelectedLabelState(p)
