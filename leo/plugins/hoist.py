@@ -24,12 +24,14 @@
 #     - Simplified the code a bit: no need for independent callbacks.
 # 0.8 EKR:
 #     - Use g.importExtension to import Tkinter as Tk.
+# 0.9 EKR:
+#     - Make sure self.c == keywords.get('c') in all hook handlers.
 #@-at
 #@nonl
 #@-node:ekr.20040908093511:<< change history >>
 #@nl
 
-__version__ = "0.8"
+__version__ = "0.9"
   
 #@<< hoist.py imports >>
 #@+node:ekr.20040908093511.1:<< hoist.py imports >>

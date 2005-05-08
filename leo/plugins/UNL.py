@@ -136,7 +136,7 @@ def onSelect2 (tag,keywords):
 
         # Rich has reported using ::
         # Any suggestions for standardization?
-        s = "-->".join(myList)          
+        s = "-->".join(myList)
         c.frame.putStatusLine(s)
 #@nonl
 #@-node:rogererens.20041013084119:onSelect2

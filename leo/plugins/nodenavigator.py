@@ -6,7 +6,7 @@
 #@@tabwidth -4
 
 __name__ = "Node Navigator"
-__version__ = "0.9"
+__version__ = "0.10"
 
 #@<< version history >>
 #@+node:ekr.20040908093511.2:<< version history >>
@@ -37,6 +37,8 @@ __version__ = "0.9"
 #     - Added init function.
 # 0.9 EKR:
 #     - Make sure buttons appear in a new window.
+# 0.10 EKR:
+#     - Make sure self.c == keywords.get('c') in all hook handlers.
 #@-at
 #@nonl
 #@-node:ekr.20040908093511.2:<< version history >>
