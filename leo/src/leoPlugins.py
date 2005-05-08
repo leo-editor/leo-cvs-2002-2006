@@ -31,20 +31,16 @@ loadingModuleNameStack = [] # The stack of module names.  Top is the module bein
 def callTagHandler (bunch,tag,keywords):
     
     handler = bunch.fn ; moduleName = bunch.moduleName
-    
-    if tag == 'idle':
 
-        # Make sure all commanders exist.
-        for key in ('c','old_c','new_c'):
-            c = keywords.get(key)
-            if c:
-                try:
-                    if c.frame not in g.app.windowList:
-                        return None # c has (or will be) destroyed.
-                except AttributeError:
-                    # c has been destroyed: c.frame ivar does not exist.
-                    return None
-                    
+    # Make sure all commanders exist.
+    # New in 4.3 b2: this can be a problem for any tag.
+    for key in ('c','old_c','new_c'):
+        c = keywords.get(key)
+        if c:
+            if not hasattr(c,'frame'): return None
+            if c.frame not in g.app.windowList:
+                return None # c has (or will be) destroyed.
+
     # Calls to registerHandler from inside the handler belong to moduleName.
     global loadingModuleNameStack
     loadingModuleNameStack.append(moduleName)
