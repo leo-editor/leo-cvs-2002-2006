@@ -102,8 +102,6 @@ def onIconDoubleClick(tag, keywords):
 
     c = keywords.get("c")
     p = keywords.get("p")
-    
-    g.trace(c,p)
 
     if not c or not p:
         return
