@@ -2193,10 +2193,6 @@ try:
         vtuple.append(path)
         command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
         apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
-    elif openType == "os.spawnv2": # New in 4.3 beta 1: TO DO
-        # We need more args.
-        apply(os.spawnv,(os.P_NOWAIT, r"c:\vim\vim63\gvim.exe",
-            [" --servername LEO "," --remote-silent "]+[shortPath]))
     else:
         command="bad command:"+str(openType)
         g.trace(command)
@@ -3368,10 +3364,6 @@ try:
         vtuple.append(path)
         command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
         apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
-    elif openType == "os.spawnv2": # New in 4.3 beta 1: TO DO
-        # We need more args.
-        apply(os.spawnv,(os.P_NOWAIT, r"c:\vim\vim63\gvim.exe",
-            [" --servername LEO "," --remote-silent "]+[shortPath]))
     else:
         command="bad command:"+str(openType)
         g.trace(command)
@@ -6200,7 +6192,8 @@ def initWriteIvars(self,root,targetFileName,
     self.initCommonIvars()
     << init ivars for writing >>
     
-    self.scanAllDirectives(root,scripting=scriptWrite)
+    if root:
+        self.scanAllDirectives(root,scripting=scriptWrite)
     if scriptWrite:
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
@@ -6217,7 +6210,7 @@ def initWriteIvars(self,root,targetFileName,
     if toString and g.app.unitTesting: self.output_newline = '\n'
     
     # Init all other ivars even if there is an error.
-    if not self.errors: 
+    if not self.errors and self.root:
         self.root.v.t.tnodeList = []
 #@nonl
 #@+node:ekr.20041005105605.16:<< init ivars for writing >>>
@@ -8569,11 +8562,13 @@ def openFileForWriting (self,root,fileName,toString):
     else:
         at.openFileForWritingHelper(fileName)
 
-    if at.outputFile:
-        root.clearOrphan()
-    else:
-        root.setOrphan()
-        root.setDirty()
+    # New in 4.3 b2: root may be none when writing from a string.
+    if root:
+        if at.outputFile:
+            root.clearOrphan()
+        else:
+            root.setOrphan()
+            root.setDirty()
     
     return at.outputFile is not None
 #@nonl
@@ -8669,6 +8664,35 @@ else:
 #@nonl
 #@-node:ekr.20041005105605.146:<< set dirty and orphan bits on error >>
 #@-node:ekr.20041005105605.144:write
+#@+node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
+# This is at.write specialized for scripting.
+
+def writeFromString(self,root,s):
+    
+    """Write a 4.x derived file from a string.
+    
+    This is used by the scripting logic."""
+    
+    at = self ; c = at.c
+    c.endEditing() # Capture the current headline.
+
+    at.initWriteIvars(root,"<string-file>",
+        nosentinels=False,thinFile=False,scriptWrite=True,toString=True)
+
+    try:
+        at.openFileForWriting(root,at.targetFileName,toString=True)
+        # Simulate writing the entire file so error recovery works.
+        at.writeOpenFile(root,nosentinels=False,toString=True,fromString=s)
+        at.closeWriteFile()
+        # Major bug: failure to clear this wipes out headlines!
+        # Minor bug: sometimes this causes slight problems...
+        if root: root.v.t.tnodeList = [] 
+    except:
+        at.exception("exception preprocessing script")
+
+    return at.stringOutput
+#@nonl
+#@-node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
 #@+node:ekr.20041005105605.147:writeAll
 def writeAll(self,writeAtFileNodesFlag=False,writeDirtyAtFileNodesFlag=False,toString=False):
     
@@ -8851,74 +8875,30 @@ if s:
 #@-node:ekr.20041005105605.154:asisWrite
 #@+node:ekr.20041005105605.157:writeOpenFile
 # New in 4.3: must be inited before calling this method.
+# New in 4.3 b2: support for writing from a string.
 
-def writeOpenFile(self,root,nosentinels=False,toString=False):
+def writeOpenFile(self,root,nosentinels=False,toString=False,fromString=''):
 
     """Do all writes except asis writes."""
     
-    at = self
+    at = self ; s = g.choose(fromString,fromString,root.v.t.bodyString)
+
     root.clearAllVisitedInTree() # Clear both vnode and tnode bits.
     root.clearVisitedInTree()
 
-    << put all @first lines in root >>
-
-    # Put the main part of the file.
+    at.putAtFirstLines(s)
     at.putOpenLeoSentinel("@+leo-ver=4")
     at.putInitialComment()
     at.putOpenNodeSentinel(root)
-    at.putBody(root)
+    at.putBody(root,fromString=fromString)
     at.putCloseNodeSentinel(root)
     at.putSentinel("@-leo")
     root.setVisited()
-    
-    << put all @last lines in root >>
-    
+    at.putAtLastLines(s)
+
     if not toString and not nosentinels:
         at.warnAboutOrphandAndIgnoredNodes()
 #@nonl
-#@+node:ekr.20041005105605.158:<< put all @first lines in root >> (4.x)
-@ Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines preceding the @+leo sentinel.
-@c
-
-s = root.v.t.bodyString
-tag = "@first"
-i = 0
-while g.match(s,i,tag):
-    i += len(tag)
-    i = g.skip_ws(s,i)
-    j = i
-    i = g.skip_to_end_of_line(s,i)
-    # Write @first line, whether empty or not
-    line = s[j:i]
-    at.os(line) ; at.onl()
-    i = g.skip_nl(s,i)
-#@nonl
-#@-node:ekr.20041005105605.158:<< put all @first lines in root >> (4.x)
-#@+node:ekr.20041005105605.159:<< put all @last lines in root >> (4.x)
-@ Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines following the @-leo sentinel.
-@c
-
-tag = "@last"
-
-# 4/17/04 Use g.splitLines to preserve trailing newlines.
-lines = g.splitLines(root.v.t.bodyString)
-n = len(lines) ; j = k = n - 1
-
-# Scan backwards for @last directives.
-while j >= 0:
-    line = lines[j]
-    if g.match(line,0,tag): j -= 1
-    elif not line.strip():
-        j -= 1
-    else: break
-    
-# Write the @last lines.
-for line in lines[j+1:k+1]:
-    if g.match(line,0,tag):
-        i = len(tag) ; i = g.skip_ws(line,i)
-        at.os(line[i:])
-#@nonl
-#@-node:ekr.20041005105605.159:<< put all @last lines in root >> (4.x)
 #@-node:ekr.20041005105605.157:writeOpenFile
 #@-node:ekr.20041005105605.153:Override in plugins...
 #@-node:ekr.20041005105605.133:Writing (top level)
@@ -8926,18 +8906,21 @@ for line in lines[j+1:k+1]:
 #@+node:ekr.20041005105605.161:putBody
 # oneNodeOnly is no longer used, but it might be used in the future?
 
-def putBody(self,p,oneNodeOnly=False):
+def putBody(self,p,oneNodeOnly=False,fromString=''):
     
     """ Generate the body enclosed in sentinel lines."""
 
-    at = self ; s = p.bodyString()
+    at = self
     
+    # New in 4.3 b2: get s from fromString if possible.
+    s = g.choose(fromString,fromString,p.bodyString())
+
     p.v.t.setVisited() # Suppress orphans check.
     p.v.setVisited() # Make sure v is never expanded again.
     if not at.thinFile:
         p.v.t.setWriteBit() # Mark the tnode to be written.
-        
     if not at.thinFile and not s: return
+
     inCode = True
     << Make sure all lines end in a newline >>
     i = 0
@@ -9825,6 +9808,55 @@ def outputStringWithLineEndings (self,s):
     self.os(s.replace('\n',self.output_newline))
 #@nonl
 #@-node:ekr.20041005105605.205:outputStringWithLineEndings
+#@+node:ekr.20050506090446.1:putAtFirstLines (new in 4.3 b2)
+def putAtFirstLines (self,s):
+    
+    '''Write any @firstlines from string s.
+    These lines are converted to @verbatim lines,
+    so the read logic simply ignores lines preceding the @+leo sentinel.'''
+
+    at = self ; tag = "@first"
+
+    i = 0
+    while g.match(s,i,tag):
+        i += len(tag)
+        i = g.skip_ws(s,i)
+        j = i
+        i = g.skip_to_end_of_line(s,i)
+        # Write @first line, whether empty or not
+        line = s[j:i]
+        at.os(line) ; at.onl()
+        i = g.skip_nl(s,i)
+#@nonl
+#@-node:ekr.20050506090446.1:putAtFirstLines (new in 4.3 b2)
+#@+node:ekr.20050506090955:putAtLastLines (new in 4.3 b2)
+def putAtLastLines (self,s):
+    
+    '''Write any @last lines from string s.
+    These lines are converted to @verbatim lines,
+    so the read logic simply ignores lines following the @-leo sentinel.'''
+
+    at = self ; tag = "@last"
+    
+    # Use g.splitLines to preserve trailing newlines.
+    lines = g.splitLines(s)
+    n = len(lines) ; j = k = n - 1
+    
+    # Scan backwards for @last directives.
+    while j >= 0:
+        line = lines[j]
+        if g.match(line,0,tag): j -= 1
+        elif not line.strip():
+            j -= 1
+        else: break
+        
+    # Write the @last lines.
+    for line in lines[j+1:k+1]:
+        if g.match(line,0,tag):
+            i = len(tag) ; i = g.skip_ws(line,i)
+            at.os(line[i:])
+#@nonl
+#@-node:ekr.20050506090955:putAtLastLines (new in 4.3 b2)
 #@+node:ekr.20041005105605.206:putDirective  (handles @delims,@comment,@language) 4.x
 @ It is important for PHP and other situations that @first and @last directives get translated to verbatim lines that do _not_ include what follows the @first & @last directives.
 @c
@@ -10826,7 +10858,8 @@ def initWriteIvars(self,root,targetFileName,
     self.initCommonIvars()
     << init ivars for writing >>
     
-    self.scanAllDirectives(root,scripting=scriptWrite)
+    if root:
+        self.scanAllDirectives(root,scripting=scriptWrite)
     if scriptWrite:
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
@@ -10843,7 +10876,7 @@ def initWriteIvars(self,root,targetFileName,
     if toString and g.app.unitTesting: self.output_newline = '\n'
     
     # Init all other ivars even if there is an error.
-    if not self.errors: 
+    if not self.errors and self.root:
         self.root.v.t.tnodeList = []
 #@nonl
 #@+node:ekr.20041005105605.16:<< init ivars for writing >>>
@@ -10890,18 +10923,21 @@ Leo fails to write the closing #@-at sentinel that would finish the first @doc p
 #@+node:ekr.20041005105605.161:putBody
 # oneNodeOnly is no longer used, but it might be used in the future?
 
-def putBody(self,p,oneNodeOnly=False):
+def putBody(self,p,oneNodeOnly=False,fromString=''):
     
     """ Generate the body enclosed in sentinel lines."""
 
-    at = self ; s = p.bodyString()
+    at = self
     
+    # New in 4.3 b2: get s from fromString if possible.
+    s = g.choose(fromString,fromString,p.bodyString())
+
     p.v.t.setVisited() # Suppress orphans check.
     p.v.setVisited() # Make sure v is never expanded again.
     if not at.thinFile:
         p.v.t.setWriteBit() # Mark the tnode to be written.
-        
     if not at.thinFile and not s: return
+
     inCode = True
     << Make sure all lines end in a newline >>
     i = 0
@@ -11485,40 +11521,28 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
     
     We execute the selected text, or the entire body text if no text is selected."""
     
-    c = self ; error = False ; s = None ; script1 = script
-
+    c = self ; script1 = script
     if not script:
         script = g.getScript(c,p,useSelectedText=useSelectedText)
     << redirect output >>
-    # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
-    if script.strip():
-        # 9/14/04: Temporarily add the open directory to sys.path.
-        sys.path.insert(0,c.frame.openDirectory)
-        script += '\n' # Make sure we end the script properly.
-        try:
-            p = c.currentPosition()
-            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
-            exec script in d # Use {} to get a pristine environment!
-            << unredirect output >>
-            if not script1:
-                g.es("end of script",color="purple")
-        except Exception:
-            << unredirect output >>
-            g.es("exception executing script",color='blue')
-            if 0:
-                print 'script...'
-                for line in g.splitLines(script):
-                    print repr(line)
-            fileName,n = g.es_exception(full=True,c=c)
-            if p and not script1 and fileName == "<string>":
-                c.goToScriptLineNumber(p,script,n)
-            << dump the lines near the error >>
-            c.frame.tree.redrawAfterException()
-        del sys.path[0]
-    elif not error:
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                exec script in d
+                if not script1:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
         << unredirect output >>
-        g.es("no script selected",color="blue")
-        
+
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
@@ -11536,6 +11560,21 @@ if c.config.redirect_execute_script_output_to_log_pane:
     g.restoreStdout()
 #@nonl
 #@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+c.frame.tree.redrawAfterException()
+#@nonl
 #@+node:EKR.20040612215018:<< dump the lines near the error >>
 if g.os_path_exists(fileName):
     f = file(fileName)
@@ -11566,52 +11605,38 @@ else: # Print surrounding lines.
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True,script=None):
-
-    if not p: p = c.currentPosition()
-    old_body = p.bodyString()
-
-    try:
-        if script:
-            s = script
-        else:
-            script = ''
-            # Allow p not to be the present position.
-            if p == c.currentPosition():
-                if useSelectedText and c.frame.body.hasTextSelection():
-                    # Temporarily replace v's body text with just the selected text.
-                    s = c.frame.body.getSelectedText()
-                    p.v.setTnodeText(s)
-                else:
-                    s = c.frame.body.getAllText()
-            else:
-                s = p.bodyString()
-                
-        # New in 4.3: Remove extra leading whitespace so the user may execute indented code.
-        s = g.removeExtraLws(s,c.tab_width)
+def getScript (c,p,useSelectedText=True):
     
+    '''Return the expansion of the selected text of node p.
+    Return the expansion of all of node p's body text if there
+    is p is not the current node or if there is no text selection.'''
+
+    at = c.atFileCommands
+    try:
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                s = c.frame.body.getSelectedText()
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+        # Remove extra leading whitespace so the user may execute indented code.
+        s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            at = c.atFileCommands
-            # New in 4.3: Selecting text executes _only_ the selected text.
-            # This removes some indentation problems, but not all of them.
-            if useSelectedText and c.frame.body.hasTextSelection():
-                script = s
-            else:
-                at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
-                script = at.stringOutput
-            # The simple way: covert crlf by brute force.
-            script = script.replace("\r\n","\n")
+            script = at.writeFromString(p.copy(),s)
+            script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
+        else: script = ''
     except Exception:
-        s = "unexpected exception"
+        s = "unexpected exception in g.getScript"
         print s ; g.es(s)
         g.es_exception()
         script = ''
 
-    p.v.setTnodeText(old_body)
     return script
 #@nonl
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
@@ -11723,40 +11748,28 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
     
     We execute the selected text, or the entire body text if no text is selected."""
     
-    c = self ; error = False ; s = None ; script1 = script
-
+    c = self ; script1 = script
     if not script:
         script = g.getScript(c,p,useSelectedText=useSelectedText)
     << redirect output >>
-    # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
-    if script.strip():
-        # 9/14/04: Temporarily add the open directory to sys.path.
-        sys.path.insert(0,c.frame.openDirectory)
-        script += '\n' # Make sure we end the script properly.
-        try:
-            p = c.currentPosition()
-            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
-            exec script in d # Use {} to get a pristine environment!
-            << unredirect output >>
-            if not script1:
-                g.es("end of script",color="purple")
-        except Exception:
-            << unredirect output >>
-            g.es("exception executing script",color='blue')
-            if 0:
-                print 'script...'
-                for line in g.splitLines(script):
-                    print repr(line)
-            fileName,n = g.es_exception(full=True,c=c)
-            if p and not script1 and fileName == "<string>":
-                c.goToScriptLineNumber(p,script,n)
-            << dump the lines near the error >>
-            c.frame.tree.redrawAfterException()
-        del sys.path[0]
-    elif not error:
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                exec script in d
+                if not script1:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
         << unredirect output >>
-        g.es("no script selected",color="blue")
-        
+
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
@@ -11774,6 +11787,21 @@ if c.config.redirect_execute_script_output_to_log_pane:
     g.restoreStdout()
 #@nonl
 #@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+c.frame.tree.redrawAfterException()
+#@nonl
 #@+node:EKR.20040612215018:<< dump the lines near the error >>
 if g.os_path_exists(fileName):
     f = file(fileName)
@@ -11804,6 +11832,7 @@ else: # Print surrounding lines.
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:ekr.20040731204831:getLastTracebackFileAndLineNumber
 def getLastTracebackFileAndLineNumber():
@@ -11862,6 +11891,9 @@ def es_exception (full=True,c=None,color="red"):
 #@nonl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
+    
+    if c.config.redirect_execute_script_output_to_log_pane:
+        return # Test doesn't work when redirection is on.
 
     try:
         import sys
@@ -12343,50 +12375,35 @@ def writeOldDerivedFiles (self):
 #@nonl
 #@-node:ekr.20041005112818.2:What I did
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True,script=None):
-
-    if not p: p = c.currentPosition()
-    old_body = p.bodyString()
-
-    try:
-        if script:
-            s = script
-        else:
-            script = ''
-            # Allow p not to be the present position.
-            if p == c.currentPosition():
-                if useSelectedText and c.frame.body.hasTextSelection():
-                    # Temporarily replace v's body text with just the selected text.
-                    s = c.frame.body.getSelectedText()
-                    p.v.setTnodeText(s)
-                else:
-                    s = c.frame.body.getAllText()
-            else:
-                s = p.bodyString()
-                
-        # New in 4.3: Remove extra leading whitespace so the user may execute indented code.
-        s = g.removeExtraLws(s,c.tab_width)
+def getScript (c,p,useSelectedText=True):
     
+    '''Return the expansion of the selected text of node p.
+    Return the expansion of all of node p's body text if there
+    is p is not the current node or if there is no text selection.'''
+
+    at = c.atFileCommands
+    try:
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                s = c.frame.body.getSelectedText()
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+        # Remove extra leading whitespace so the user may execute indented code.
+        s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            at = c.atFileCommands
-            # New in 4.3: Selecting text executes _only_ the selected text.
-            # This removes some indentation problems, but not all of them.
-            if useSelectedText and c.frame.body.hasTextSelection():
-                script = s
-            else:
-                at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
-                script = at.stringOutput
-            # The simple way: covert crlf by brute force.
-            script = script.replace("\r\n","\n")
+            script = at.writeFromString(p.copy(),s)
+            script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
+        else: script = ''
     except Exception:
-        s = "unexpected exception"
+        s = "unexpected exception in g.getScript"
         print s ; g.es(s)
         g.es_exception()
         script = ''
 
-    p.v.setTnodeText(old_body)
     return script
 #@nonl
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
@@ -12407,7 +12424,8 @@ def initWriteIvars(self,root,targetFileName,
     self.initCommonIvars()
     << init ivars for writing >>
     
-    self.scanAllDirectives(root,scripting=scriptWrite)
+    if root:
+        self.scanAllDirectives(root,scripting=scriptWrite)
     if scriptWrite:
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
@@ -12424,7 +12442,7 @@ def initWriteIvars(self,root,targetFileName,
     if toString and g.app.unitTesting: self.output_newline = '\n'
     
     # Init all other ivars even if there is an error.
-    if not self.errors: 
+    if not self.errors and self.root:
         self.root.v.t.tnodeList = []
 #@nonl
 #@+node:ekr.20041005105605.16:<< init ivars for writing >>>
@@ -15905,11 +15923,9 @@ def doHook(tag,*args,**keywords):
             s = "Plugins disabled: use_plugins is 0 in a leoSettings.leo file."
             print s ; g.es(s,color="blue")
         return None
-
-    # New in 4.2.  We call the idle-time handlers for all open windows.
-    c = keywords.get("c")
-            
+         
     # Get the hook handler function.  Usually this is doPlugins.
+    c = keywords.get("c")
     f = (c and c.hookFunction) or g.app.hookFunction
     if not f:
         import leoPlugins
@@ -21660,6 +21676,9 @@ def es_exception (full=True,c=None,color="red"):
 #@nonl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
+    
+    if c.config.redirect_execute_script_output_to_log_pane:
+        return # Test doesn't work when redirection is on.
 
     try:
         import sys
@@ -21688,40 +21707,28 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
     
     We execute the selected text, or the entire body text if no text is selected."""
     
-    c = self ; error = False ; s = None ; script1 = script
-
+    c = self ; script1 = script
     if not script:
         script = g.getScript(c,p,useSelectedText=useSelectedText)
     << redirect output >>
-    # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
-    if script.strip():
-        # 9/14/04: Temporarily add the open directory to sys.path.
-        sys.path.insert(0,c.frame.openDirectory)
-        script += '\n' # Make sure we end the script properly.
-        try:
-            p = c.currentPosition()
-            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
-            exec script in d # Use {} to get a pristine environment!
-            << unredirect output >>
-            if not script1:
-                g.es("end of script",color="purple")
-        except Exception:
-            << unredirect output >>
-            g.es("exception executing script",color='blue')
-            if 0:
-                print 'script...'
-                for line in g.splitLines(script):
-                    print repr(line)
-            fileName,n = g.es_exception(full=True,c=c)
-            if p and not script1 and fileName == "<string>":
-                c.goToScriptLineNumber(p,script,n)
-            << dump the lines near the error >>
-            c.frame.tree.redrawAfterException()
-        del sys.path[0]
-    elif not error:
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                exec script in d
+                if not script1:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
         << unredirect output >>
-        g.es("no script selected",color="blue")
-        
+
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
@@ -21739,6 +21746,21 @@ if c.config.redirect_execute_script_output_to_log_pane:
     g.restoreStdout()
 #@nonl
 #@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+c.frame.tree.redrawAfterException()
+#@nonl
 #@+node:EKR.20040612215018:<< dump the lines near the error >>
 if g.os_path_exists(fileName):
     f = file(fileName)
@@ -21769,6 +21791,7 @@ else: # Print surrounding lines.
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@-node:ekr.20041029111407:(Added support for g.app.debugSwitch in es_exception)
 #@+node:ekr.20041107093219:(Added support for Forth)
@@ -22061,7 +22084,10 @@ i = j
 #@nonl
 #@+node:ekr.20031218072017.1899:<< handle possible latex keyword >>
 if g.match(s,i,"\\"):
-    j = self.skip_id(s,i+1,chars=self.latex_special_keyword_characters) # 11/9/03
+    if i + 1 < len(s) and s[i+1] in self.latex_special_keyword_characters:
+        j = i + 2 # A special 2-character LaTex keyword.
+    else:
+        j = self.skip_id(s,i+1)
     word = s[i:j]
     if word in self.latex_keywords:
         self.tag("latexKeyword",i,j)
@@ -22481,6 +22507,9 @@ def es_exception (full=True,c=None,color="red"):
 #@nonl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
+    
+    if c.config.redirect_execute_script_output_to_log_pane:
+        return # Test doesn't work when redirection is on.
 
     try:
         import sys
@@ -22509,40 +22538,28 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
     
     We execute the selected text, or the entire body text if no text is selected."""
     
-    c = self ; error = False ; s = None ; script1 = script
-
+    c = self ; script1 = script
     if not script:
         script = g.getScript(c,p,useSelectedText=useSelectedText)
     << redirect output >>
-    # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
-    if script.strip():
-        # 9/14/04: Temporarily add the open directory to sys.path.
-        sys.path.insert(0,c.frame.openDirectory)
-        script += '\n' # Make sure we end the script properly.
-        try:
-            p = c.currentPosition()
-            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
-            exec script in d # Use {} to get a pristine environment!
-            << unredirect output >>
-            if not script1:
-                g.es("end of script",color="purple")
-        except Exception:
-            << unredirect output >>
-            g.es("exception executing script",color='blue')
-            if 0:
-                print 'script...'
-                for line in g.splitLines(script):
-                    print repr(line)
-            fileName,n = g.es_exception(full=True,c=c)
-            if p and not script1 and fileName == "<string>":
-                c.goToScriptLineNumber(p,script,n)
-            << dump the lines near the error >>
-            c.frame.tree.redrawAfterException()
-        del sys.path[0]
-    elif not error:
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                exec script in d
+                if not script1:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
         << unredirect output >>
-        g.es("no script selected",color="blue")
-        
+
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
@@ -22560,6 +22577,21 @@ if c.config.redirect_execute_script_output_to_log_pane:
     g.restoreStdout()
 #@nonl
 #@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+c.frame.tree.redrawAfterException()
+#@nonl
 #@+node:EKR.20040612215018:<< dump the lines near the error >>
 if g.os_path_exists(fileName):
     f = file(fileName)
@@ -22590,52 +22622,38 @@ else: # Print surrounding lines.
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True,script=None):
-
-    if not p: p = c.currentPosition()
-    old_body = p.bodyString()
-
-    try:
-        if script:
-            s = script
-        else:
-            script = ''
-            # Allow p not to be the present position.
-            if p == c.currentPosition():
-                if useSelectedText and c.frame.body.hasTextSelection():
-                    # Temporarily replace v's body text with just the selected text.
-                    s = c.frame.body.getSelectedText()
-                    p.v.setTnodeText(s)
-                else:
-                    s = c.frame.body.getAllText()
-            else:
-                s = p.bodyString()
-                
-        # New in 4.3: Remove extra leading whitespace so the user may execute indented code.
-        s = g.removeExtraLws(s,c.tab_width)
+def getScript (c,p,useSelectedText=True):
     
+    '''Return the expansion of the selected text of node p.
+    Return the expansion of all of node p's body text if there
+    is p is not the current node or if there is no text selection.'''
+
+    at = c.atFileCommands
+    try:
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                s = c.frame.body.getSelectedText()
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+        # Remove extra leading whitespace so the user may execute indented code.
+        s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            at = c.atFileCommands
-            # New in 4.3: Selecting text executes _only_ the selected text.
-            # This removes some indentation problems, but not all of them.
-            if useSelectedText and c.frame.body.hasTextSelection():
-                script = s
-            else:
-                at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
-                script = at.stringOutput
-            # The simple way: covert crlf by brute force.
-            script = script.replace("\r\n","\n")
+            script = at.writeFromString(p.copy(),s)
+            script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
+        else: script = ''
     except Exception:
-        s = "unexpected exception"
+        s = "unexpected exception in g.getScript"
         print s ; g.es(s)
         g.es_exception()
         script = ''
 
-    p.v.setTnodeText(old_body)
     return script
 #@nonl
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
@@ -24647,23 +24665,38 @@ def OnIconDoubleClick (self,p):
     c = self.c
     s = p.headString().strip()
     if g.match_word(s,0,"@url"):
-        if not g.doHook("@url1",c=c,p=p,v=p):
-            url = s[4:].strip()
-            << stop the url after any whitespace >>
+        url = s[4:].strip()
+        << stop the url after any whitespace >>
+        # g.trace(url)
+        if not g.doHook("@url1",c=c,p=p,v=p,url=url):
+            # Note: the UNL plugin has its own notion of what a good url is.
             << check the url; return if bad >>
             << pass the url to the web browser >>
         g.doHook("@url2",c=c,p=p,v=p)
 #@nonl
 #@+node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
-# For safety, the URL string should end at the first whitespace.
+# For safety, the URL string should end at the first whitespace, unless quoted.
+# This logic is also found in the UNL plugin so we don't have to change the 'unl1' hook.
 
 url = url.replace('\t',' ')
-i = url.find(' ')
-if i > -1:
-    if 0: # No need for a warning.  Assume everything else is a comment.
-        g.es("ignoring characters after space in url:"+url[i:])
-        g.es("use %20 instead of spaces")
-    url = url[:i]
+
+# Strip quotes.
+i = -1
+if url and url[0] in ('"',"'"):
+    i = url.find(url[0],1)
+    if i > -1:
+        url = url[1:i]
+
+if i == -1:
+    # Not quoted or no matching quote.
+    i = url.find(' ')
+    if i > -1:
+        if 0: # No need for a warning.  Assume everything else is a comment.
+            g.es("ignoring characters after space in url:"+url[i:])
+            g.es("use %20 instead of spaces")
+        url = url[:i]
+    
+#@nonl
 #@-node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
 #@+node:ekr.20031218072017.2314:<< check the url; return if bad >>
 if not url or len(url) == 0:
@@ -24993,18 +25026,21 @@ def select (self,p,updateBeadList=True):
 #@nonl
 #@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
 # Remember the position of the scrollbar before making any changes.
-yview=body.yview()
-insertSpot = c.frame.body.getInsertionPoint()
+if old_p:
 
-if old_p and old_p != p:
-    if self.trace and self.verbose:
-        g.trace("unselect:",old_p.headString())
-    self.endEditLabel() # sets editPosition = None
-    self.setUnselectedLabelState(old_p)
-
-if old_p and old_p.edit_text():
-    old_p.v.t.scrollBarSpot = yview
-    old_p.v.t.insertSpot = insertSpot
+    yview=body.yview()
+    insertSpot = c.frame.body.getInsertionPoint()
+    
+    if old_p != p:
+        if self.trace and self.verbose:
+            g.trace("unselect:",old_p.headString())
+        self.endEditLabel() # sets editPosition = None
+        self.setUnselectedLabelState(old_p)
+    
+    if old_p.edit_text():
+        old_p.v.t.scrollBarSpot = yview
+        old_p.v.t.insertSpot = insertSpot
+#@nonl
 #@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
 #@+node:ekr.20040803072955.130:<< select the new node >>
 frame.setWrap(p)
@@ -25020,7 +25056,7 @@ if p.v and p.v.t.scrollBarSpot != None:
     first,last = p.v.t.scrollBarSpot
     body.yview("moveto",first)
 
-if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+if p.v and p.v.t.insertSpot != None:
     c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
     c.frame.bodyCtrl.see(p.v.t.insertSpot)
 else:
@@ -25054,7 +25090,7 @@ c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20040803072955.132:<< update c.visitedList >>
 #@+node:ekr.20040803072955.133:<< set the current node >>
-self.c.setCurrentPosition(p)
+c.setCurrentPosition(p)
 
 if p != old_p:
     self.setSelectedLabelState(p)
@@ -26240,20 +26276,16 @@ This checks 'idle' hooks to make sure that any commander referenced by the 'c','
 def callTagHandler (bunch,tag,keywords):
     
     handler = bunch.fn ; moduleName = bunch.moduleName
-    
-    if tag == 'idle':
 
-        # Make sure all commanders exist.
-        for key in ('c','old_c','new_c'):
-            c = keywords.get(key)
-            if c:
-                try:
-                    if c.frame not in g.app.windowList:
-                        return None # c has (or will be) destroyed.
-                except AttributeError:
-                    # c has been destroyed: c.frame ivar does not exist.
-                    return None
-                    
+    # Make sure all commanders exist.
+    # New in 4.3 b2: this can be a problem for any tag.
+    for key in ('c','old_c','new_c'):
+        c = keywords.get(key)
+        if c:
+            if not hasattr(c,'frame'): return None
+            if c.frame not in g.app.windowList:
+                return None # c has (or will be) destroyed.
+
     # Calls to registerHandler from inside the handler belong to moduleName.
     global loadingModuleNameStack
     loadingModuleNameStack.append(moduleName)
@@ -26326,11 +26358,9 @@ def doHook(tag,*args,**keywords):
             s = "Plugins disabled: use_plugins is 0 in a leoSettings.leo file."
             print s ; g.es(s,color="blue")
         return None
-
-    # New in 4.2.  We call the idle-time handlers for all open windows.
-    c = keywords.get("c")
-            
+         
     # Get the hook handler function.  Usually this is doPlugins.
+    c = keywords.get("c")
     f = (c and c.hookFunction) or g.app.hookFunction
     if not f:
         import leoPlugins
@@ -26403,11 +26433,9 @@ def doHook(tag,*args,**keywords):
             s = "Plugins disabled: use_plugins is 0 in a leoSettings.leo file."
             print s ; g.es(s,color="blue")
         return None
-
-    # New in 4.2.  We call the idle-time handlers for all open windows.
-    c = keywords.get("c")
-            
+         
     # Get the hook handler function.  Usually this is doPlugins.
+    c = keywords.get("c")
     f = (c and c.hookFunction) or g.app.hookFunction
     if not f:
         import leoPlugins
@@ -26494,20 +26522,16 @@ def idleTimeHookHandler(*args,**keys):
 def callTagHandler (bunch,tag,keywords):
     
     handler = bunch.fn ; moduleName = bunch.moduleName
-    
-    if tag == 'idle':
 
-        # Make sure all commanders exist.
-        for key in ('c','old_c','new_c'):
-            c = keywords.get(key)
-            if c:
-                try:
-                    if c.frame not in g.app.windowList:
-                        return None # c has (or will be) destroyed.
-                except AttributeError:
-                    # c has been destroyed: c.frame ivar does not exist.
-                    return None
-                    
+    # Make sure all commanders exist.
+    # New in 4.3 b2: this can be a problem for any tag.
+    for key in ('c','old_c','new_c'):
+        c = keywords.get(key)
+        if c:
+            if not hasattr(c,'frame'): return None
+            if c.frame not in g.app.windowList:
+                return None # c has (or will be) destroyed.
+
     # Calls to registerHandler from inside the handler belong to moduleName.
     global loadingModuleNameStack
     loadingModuleNameStack.append(moduleName)
@@ -27853,40 +27877,28 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
     
     We execute the selected text, or the entire body text if no text is selected."""
     
-    c = self ; error = False ; s = None ; script1 = script
-
+    c = self ; script1 = script
     if not script:
         script = g.getScript(c,p,useSelectedText=useSelectedText)
     << redirect output >>
-    # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
-    if script.strip():
-        # 9/14/04: Temporarily add the open directory to sys.path.
-        sys.path.insert(0,c.frame.openDirectory)
-        script += '\n' # Make sure we end the script properly.
-        try:
-            p = c.currentPosition()
-            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
-            exec script in d # Use {} to get a pristine environment!
-            << unredirect output >>
-            if not script1:
-                g.es("end of script",color="purple")
-        except Exception:
-            << unredirect output >>
-            g.es("exception executing script",color='blue')
-            if 0:
-                print 'script...'
-                for line in g.splitLines(script):
-                    print repr(line)
-            fileName,n = g.es_exception(full=True,c=c)
-            if p and not script1 and fileName == "<string>":
-                c.goToScriptLineNumber(p,script,n)
-            << dump the lines near the error >>
-            c.frame.tree.redrawAfterException()
-        del sys.path[0]
-    elif not error:
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                exec script in d
+                if not script1:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
         << unredirect output >>
-        g.es("no script selected",color="blue")
-        
+
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
@@ -27904,6 +27916,21 @@ if c.config.redirect_execute_script_output_to_log_pane:
     g.restoreStdout()
 #@nonl
 #@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+c.frame.tree.redrawAfterException()
+#@nonl
 #@+node:EKR.20040612215018:<< dump the lines near the error >>
 if g.os_path_exists(fileName):
     f = file(fileName)
@@ -27934,6 +27961,7 @@ else: # Print surrounding lines.
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:ekr.20031218072017.3121:redirecting stderr and stdout
 class redirectClass:
@@ -28372,23 +28400,38 @@ def OnIconDoubleClick (self,p):
     c = self.c
     s = p.headString().strip()
     if g.match_word(s,0,"@url"):
-        if not g.doHook("@url1",c=c,p=p,v=p):
-            url = s[4:].strip()
-            << stop the url after any whitespace >>
+        url = s[4:].strip()
+        << stop the url after any whitespace >>
+        # g.trace(url)
+        if not g.doHook("@url1",c=c,p=p,v=p,url=url):
+            # Note: the UNL plugin has its own notion of what a good url is.
             << check the url; return if bad >>
             << pass the url to the web browser >>
         g.doHook("@url2",c=c,p=p,v=p)
 #@nonl
 #@+node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
-# For safety, the URL string should end at the first whitespace.
+# For safety, the URL string should end at the first whitespace, unless quoted.
+# This logic is also found in the UNL plugin so we don't have to change the 'unl1' hook.
 
 url = url.replace('\t',' ')
-i = url.find(' ')
-if i > -1:
-    if 0: # No need for a warning.  Assume everything else is a comment.
-        g.es("ignoring characters after space in url:"+url[i:])
-        g.es("use %20 instead of spaces")
-    url = url[:i]
+
+# Strip quotes.
+i = -1
+if url and url[0] in ('"',"'"):
+    i = url.find(url[0],1)
+    if i > -1:
+        url = url[1:i]
+
+if i == -1:
+    # Not quoted or no matching quote.
+    i = url.find(' ')
+    if i > -1:
+        if 0: # No need for a warning.  Assume everything else is a comment.
+            g.es("ignoring characters after space in url:"+url[i:])
+            g.es("use %20 instead of spaces")
+        url = url[:i]
+    
+#@nonl
 #@-node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
 #@+node:ekr.20031218072017.2314:<< check the url; return if bad >>
 if not url or len(url) == 0:
@@ -30323,50 +30366,35 @@ def set_focus(self,widget,later=False,tag=''):
 #@-node:ekr.20050210080438:(Made sure Go To Line Number dialog is brought to the front)
 #@+node:ekr.20050211095957:(Fixed newline bug in g.getScript)
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True,script=None):
-
-    if not p: p = c.currentPosition()
-    old_body = p.bodyString()
-
-    try:
-        if script:
-            s = script
-        else:
-            script = ''
-            # Allow p not to be the present position.
-            if p == c.currentPosition():
-                if useSelectedText and c.frame.body.hasTextSelection():
-                    # Temporarily replace v's body text with just the selected text.
-                    s = c.frame.body.getSelectedText()
-                    p.v.setTnodeText(s)
-                else:
-                    s = c.frame.body.getAllText()
-            else:
-                s = p.bodyString()
-                
-        # New in 4.3: Remove extra leading whitespace so the user may execute indented code.
-        s = g.removeExtraLws(s,c.tab_width)
+def getScript (c,p,useSelectedText=True):
     
+    '''Return the expansion of the selected text of node p.
+    Return the expansion of all of node p's body text if there
+    is p is not the current node or if there is no text selection.'''
+
+    at = c.atFileCommands
+    try:
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                s = c.frame.body.getSelectedText()
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+        # Remove extra leading whitespace so the user may execute indented code.
+        s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            at = c.atFileCommands
-            # New in 4.3: Selecting text executes _only_ the selected text.
-            # This removes some indentation problems, but not all of them.
-            if useSelectedText and c.frame.body.hasTextSelection():
-                script = s
-            else:
-                at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
-                script = at.stringOutput
-            # The simple way: covert crlf by brute force.
-            script = script.replace("\r\n","\n")
+            script = at.writeFromString(p.copy(),s)
+            script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
+        else: script = ''
     except Exception:
-        s = "unexpected exception"
+        s = "unexpected exception in g.getScript"
         print s ; g.es(s)
         g.es_exception()
         script = ''
 
-    p.v.setTnodeText(old_body)
     return script
 #@nonl
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
@@ -30915,40 +30943,28 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
     
     We execute the selected text, or the entire body text if no text is selected."""
     
-    c = self ; error = False ; s = None ; script1 = script
-
+    c = self ; script1 = script
     if not script:
         script = g.getScript(c,p,useSelectedText=useSelectedText)
     << redirect output >>
-    # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
-    if script.strip():
-        # 9/14/04: Temporarily add the open directory to sys.path.
-        sys.path.insert(0,c.frame.openDirectory)
-        script += '\n' # Make sure we end the script properly.
-        try:
-            p = c.currentPosition()
-            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
-            exec script in d # Use {} to get a pristine environment!
-            << unredirect output >>
-            if not script1:
-                g.es("end of script",color="purple")
-        except Exception:
-            << unredirect output >>
-            g.es("exception executing script",color='blue')
-            if 0:
-                print 'script...'
-                for line in g.splitLines(script):
-                    print repr(line)
-            fileName,n = g.es_exception(full=True,c=c)
-            if p and not script1 and fileName == "<string>":
-                c.goToScriptLineNumber(p,script,n)
-            << dump the lines near the error >>
-            c.frame.tree.redrawAfterException()
-        del sys.path[0]
-    elif not error:
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                exec script in d
+                if not script1:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
         << unredirect output >>
-        g.es("no script selected",color="blue")
-        
+
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
@@ -30966,6 +30982,21 @@ if c.config.redirect_execute_script_output_to_log_pane:
     g.restoreStdout()
 #@nonl
 #@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+c.frame.tree.redrawAfterException()
+#@nonl
 #@+node:EKR.20040612215018:<< dump the lines near the error >>
 if g.os_path_exists(fileName):
     f = file(fileName)
@@ -30996,6 +31027,7 @@ else: # Print surrounding lines.
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@-node:ekr.20050208134526:(Added define_g=True param in executeScript)
 #@+node:ekr.20050209112556:Changed Preferences to Settings in menu, leoSettings.leo & documentation
@@ -31052,40 +31084,28 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
     
     We execute the selected text, or the entire body text if no text is selected."""
     
-    c = self ; error = False ; s = None ; script1 = script
-
+    c = self ; script1 = script
     if not script:
         script = g.getScript(c,p,useSelectedText=useSelectedText)
     << redirect output >>
-    # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
-    if script.strip():
-        # 9/14/04: Temporarily add the open directory to sys.path.
-        sys.path.insert(0,c.frame.openDirectory)
-        script += '\n' # Make sure we end the script properly.
-        try:
-            p = c.currentPosition()
-            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
-            exec script in d # Use {} to get a pristine environment!
-            << unredirect output >>
-            if not script1:
-                g.es("end of script",color="purple")
-        except Exception:
-            << unredirect output >>
-            g.es("exception executing script",color='blue')
-            if 0:
-                print 'script...'
-                for line in g.splitLines(script):
-                    print repr(line)
-            fileName,n = g.es_exception(full=True,c=c)
-            if p and not script1 and fileName == "<string>":
-                c.goToScriptLineNumber(p,script,n)
-            << dump the lines near the error >>
-            c.frame.tree.redrawAfterException()
-        del sys.path[0]
-    elif not error:
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                exec script in d
+                if not script1:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
         << unredirect output >>
-        g.es("no script selected",color="blue")
-        
+
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
@@ -31103,6 +31123,21 @@ if c.config.redirect_execute_script_output_to_log_pane:
     g.restoreStdout()
 #@nonl
 #@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+c.frame.tree.redrawAfterException()
+#@nonl
 #@+node:EKR.20040612215018:<< dump the lines near the error >>
 if g.os_path_exists(fileName):
     f = file(fileName)
@@ -31133,52 +31168,38 @@ else: # Print surrounding lines.
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True,script=None):
-
-    if not p: p = c.currentPosition()
-    old_body = p.bodyString()
-
-    try:
-        if script:
-            s = script
-        else:
-            script = ''
-            # Allow p not to be the present position.
-            if p == c.currentPosition():
-                if useSelectedText and c.frame.body.hasTextSelection():
-                    # Temporarily replace v's body text with just the selected text.
-                    s = c.frame.body.getSelectedText()
-                    p.v.setTnodeText(s)
-                else:
-                    s = c.frame.body.getAllText()
-            else:
-                s = p.bodyString()
-                
-        # New in 4.3: Remove extra leading whitespace so the user may execute indented code.
-        s = g.removeExtraLws(s,c.tab_width)
+def getScript (c,p,useSelectedText=True):
     
+    '''Return the expansion of the selected text of node p.
+    Return the expansion of all of node p's body text if there
+    is p is not the current node or if there is no text selection.'''
+
+    at = c.atFileCommands
+    try:
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                s = c.frame.body.getSelectedText()
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+        # Remove extra leading whitespace so the user may execute indented code.
+        s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            at = c.atFileCommands
-            # New in 4.3: Selecting text executes _only_ the selected text.
-            # This removes some indentation problems, but not all of them.
-            if useSelectedText and c.frame.body.hasTextSelection():
-                script = s
-            else:
-                at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
-                script = at.stringOutput
-            # The simple way: covert crlf by brute force.
-            script = script.replace("\r\n","\n")
+            script = at.writeFromString(p.copy(),s)
+            script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
+        else: script = ''
     except Exception:
-        s = "unexpected exception"
+        s = "unexpected exception in g.getScript"
         print s ; g.es(s)
         g.es_exception()
         script = ''
 
-    p.v.setTnodeText(old_body)
     return script
 #@nonl
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
@@ -31643,10 +31664,6 @@ try:
         vtuple.append(path)
         command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
         apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
-    elif openType == "os.spawnv2": # New in 4.3 beta 1: TO DO
-        # We need more args.
-        apply(os.spawnv,(os.P_NOWAIT, r"c:\vim\vim63\gvim.exe",
-            [" --servername LEO "," --remote-silent "]+[shortPath]))
     else:
         command="bad command:"+str(openType)
         g.trace(command)
@@ -32028,11 +32045,9 @@ def doHook(tag,*args,**keywords):
             s = "Plugins disabled: use_plugins is 0 in a leoSettings.leo file."
             print s ; g.es(s,color="blue")
         return None
-
-    # New in 4.2.  We call the idle-time handlers for all open windows.
-    c = keywords.get("c")
-            
+         
     # Get the hook handler function.  Usually this is doPlugins.
+    c = keywords.get("c")
     f = (c and c.hookFunction) or g.app.hookFunction
     if not f:
         import leoPlugins
@@ -32320,50 +32335,35 @@ def getOutputNewline (c=None,name=None):
 #@nonl
 #@-node:ekr.20031218072017.1386:getOutputNewline
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True,script=None):
-
-    if not p: p = c.currentPosition()
-    old_body = p.bodyString()
-
-    try:
-        if script:
-            s = script
-        else:
-            script = ''
-            # Allow p not to be the present position.
-            if p == c.currentPosition():
-                if useSelectedText and c.frame.body.hasTextSelection():
-                    # Temporarily replace v's body text with just the selected text.
-                    s = c.frame.body.getSelectedText()
-                    p.v.setTnodeText(s)
-                else:
-                    s = c.frame.body.getAllText()
-            else:
-                s = p.bodyString()
-                
-        # New in 4.3: Remove extra leading whitespace so the user may execute indented code.
-        s = g.removeExtraLws(s,c.tab_width)
+def getScript (c,p,useSelectedText=True):
     
+    '''Return the expansion of the selected text of node p.
+    Return the expansion of all of node p's body text if there
+    is p is not the current node or if there is no text selection.'''
+
+    at = c.atFileCommands
+    try:
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                s = c.frame.body.getSelectedText()
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+        # Remove extra leading whitespace so the user may execute indented code.
+        s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            at = c.atFileCommands
-            # New in 4.3: Selecting text executes _only_ the selected text.
-            # This removes some indentation problems, but not all of them.
-            if useSelectedText and c.frame.body.hasTextSelection():
-                script = s
-            else:
-                at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
-                script = at.stringOutput
-            # The simple way: covert crlf by brute force.
-            script = script.replace("\r\n","\n")
+            script = at.writeFromString(p.copy(),s)
+            script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
+        else: script = ''
     except Exception:
-        s = "unexpected exception"
+        s = "unexpected exception in g.getScript"
         print s ; g.es(s)
         g.es_exception()
         script = ''
 
-    p.v.setTnodeText(old_body)
     return script
 #@nonl
 #@+node:ekr.20050211100535:test_g_getScript_strips_crlf
@@ -32625,6 +32625,9 @@ def es_exception (full=True,c=None,color="red"):
 #@nonl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
+    
+    if c.config.redirect_execute_script_output_to_log_pane:
+        return # Test doesn't work when redirection is on.
 
     try:
         import sys
@@ -35843,7 +35846,7 @@ def executeScript (name):
 
     if theFile:
         theFile.close()
-
+#@nonl
 #@-node:ekr.20031218072017.3138:g.executeScript
 #@+node:ekr.20031218072017.2140:c.executeScript
 def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
@@ -35852,40 +35855,28 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
     
     We execute the selected text, or the entire body text if no text is selected."""
     
-    c = self ; error = False ; s = None ; script1 = script
-
+    c = self ; script1 = script
     if not script:
         script = g.getScript(c,p,useSelectedText=useSelectedText)
     << redirect output >>
-    # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
-    if script.strip():
-        # 9/14/04: Temporarily add the open directory to sys.path.
-        sys.path.insert(0,c.frame.openDirectory)
-        script += '\n' # Make sure we end the script properly.
-        try:
-            p = c.currentPosition()
-            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
-            exec script in d # Use {} to get a pristine environment!
-            << unredirect output >>
-            if not script1:
-                g.es("end of script",color="purple")
-        except Exception:
-            << unredirect output >>
-            g.es("exception executing script",color='blue')
-            if 0:
-                print 'script...'
-                for line in g.splitLines(script):
-                    print repr(line)
-            fileName,n = g.es_exception(full=True,c=c)
-            if p and not script1 and fileName == "<string>":
-                c.goToScriptLineNumber(p,script,n)
-            << dump the lines near the error >>
-            c.frame.tree.redrawAfterException()
-        del sys.path[0]
-    elif not error:
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                exec script in d
+                if not script1:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
         << unredirect output >>
-        g.es("no script selected",color="blue")
-        
+
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
@@ -35903,6 +35894,21 @@ if c.config.redirect_execute_script_output_to_log_pane:
     g.restoreStdout()
 #@nonl
 #@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+c.frame.tree.redrawAfterException()
+#@nonl
 #@+node:EKR.20040612215018:<< dump the lines near the error >>
 if g.os_path_exists(fileName):
     f = file(fileName)
@@ -35933,6 +35939,7 @@ else: # Print surrounding lines.
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:ekr.20031218072017.3108:Dumps
 #@+node:ekr.20031218072017.3109:dump
@@ -36015,6 +36022,9 @@ def es_exception (full=True,c=None,color="red"):
 #@nonl
 #@+node:ekr.20050220030850:test_g_es_exception
 def test_g_es_exception():
+    
+    if c.config.redirect_execute_script_output_to_log_pane:
+        return # Test doesn't work when redirection is on.
 
     try:
         import sys
@@ -44010,6 +44020,1629 @@ def importDerivedFile (self):
 #@-node:ekr.20050429091529:(Read @file Nodes v Import Derived Files)
 #@-node:ekr.20050429092616:Plugins
 #@-node:ekr.20050316083031:4.3 b1 projects
+#@+node:ekr.20050503111718:4.3 b2 projects
+#@+node:ekr.20050505094928:Bugs
+#@+node:ekr.20050328090032:(Investigated problems with os.spwawnv in openWith
+#@+node:ekr.20050328090032.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3054876
+By: mstarzyk
+
+It looks to me like there is a bug in baseCommands.openWith(("os.spawnv"...))
+(Or in vim.py plugin that calls it)
+
+The executable should be passed twice to os.spawnv - first 
+as the "path" param, then as the first item in "args"
+But in line leoCommands.py:485 the executable is not included
+in the "args" param.
+
+Python manual says:
+    os.spawnv
+    The "v" variants are good when the number of parameters 
+    is variable [...]
+    In either case, the arguments to the child process must 
+    start with the name of the command being run. 
+
+With the current code the process runs, but the first parameter 
+is not passed to it. 
+So for example in the vim plugin vim is actually started 
+without the "--servername LEO" param.
+
+Additionally - on windows the executable in "args" should 
+be surrounded with doublequotes if the path contains whitespace.
+
+Cheers, 
+Maciek
+#@nonl
+#@-node:ekr.20050328090032.1:Report
+#@+node:ekr.20050428093945:Suggested fix
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3122633
+By: davidschein
+
+In leoCommands.baseCommands.openWith(..) I added
+
+@color
+
+elif openType == "desHACK": apply(os.spawnv,(os.P_NOWAIT, r"c:\vim\vim63\gvim.exe",
+[" --servername LEO "," --remote-silent "]+[shortPath]))
+
+# and in vim.open_in_vim(..) I made the call to open Vim
+
+#des: the big HACK
+g.top().openWith(("desHACK",None, None))
+
+@nocolor
+
+I know it is outrageous, but I was in a hurry and it does the trick for now.
+I thought I would just share it in case it points to a proper solution.
+#@nonl
+#@-node:ekr.20050428093945:Suggested fix
+#@+node:ekr.20050503111641:Not really a problem
+@nocolor
+
+I think you misunderstand how Leo calls os.spawnv. 
+ 
+The following works for me: 
+ 
+table = ('spawnv',None,( 
+'os.spawnv',[ 
+r'c:\vim\vim63\gvim.exe', 
+' --servername LEO ', 
+' --remote-silent ', 
+], 
+".py")) 
+ 
+c.frame.menu.createOpenWithMenuFromTable(table) 
+ 
+This works because c.openWith takes the first element of the list (in this case, r'c:\vim\vim63\gvim.exe') and uses it as the first argument to spawnv. 
+ 
+I grant you that this is not well documented :-) 
+ 
+Edward 
+ 
+P.S. Here is the actual code in openWith: 
+ 
+elif openType == "os.spawnv": 
+    filename = os.path.basename(arg[0])  
+    vtuple = arg[1:]  
+    vtuple.append(path) 
+    apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple)) 
+ 
+EKR
+#@-node:ekr.20050503111641:Not really a problem
+#@+node:ekr.20031218072017.2823:openWith and allies
+def openWith(self,data=None):
+
+    """This routine handles the items in the Open With... menu.
+
+    These items can only be created by createOpenWithMenuFromTable().
+    Typically this would be done from the "open2" hook.
+    
+    New in 4.3: The "os.spawnv" now works. You may specify arguments to spawnv
+    using a list, e.g.:
+        
+    openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
+    """
+    
+    c = self ; p = c.currentPosition()
+    if not data or len(data) != 3:
+        g.trace('bad data')
+        return
+    try:
+        openType,arg,ext=data
+        if not g.doHook("openwith1",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext):
+            << set ext based on the present language >>
+            << create or reopen temp file, testing for conflicting changes >>
+            << execute a command to open path in external editor >>
+        g.doHook("openwith2",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext)
+    except Exception:
+        g.es("unexpected exception in c.openWith")
+        g.es_exception()
+
+    return "break"
+#@+node:ekr.20031218072017.2824:<< set ext based on the present language >>
+if not ext:
+    theDict = g.scanDirectives(c)
+    language = theDict.get("language")
+    ext = g.app.language_extension_dict.get(language)
+    # print language,ext
+    if ext == None:
+        ext = "txt"
+    
+if ext[0] != ".":
+    ext = "."+ext
+    
+# print "ext",ext
+#@nonl
+#@-node:ekr.20031218072017.2824:<< set ext based on the present language >>
+#@+node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
+theDict = None ; path = None
+<< set dict and path if a temp file already refers to p.v.t >>
+if path:
+    << create or recreate temp file as needed >>
+else:
+    path = c.createOpenWithTempFile(p,ext)
+
+if not path:
+    return # An error has occured.
+#@nonl
+#@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
+searchPath = c.openWithTempFilePath(p,ext)
+
+if g.os_path_exists(searchPath):
+    for theDict in g.app.openWithFiles:
+        if p.v == theDict.get('v') and searchPath == theDict.get("path"):
+            path = searchPath
+            break
+#@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
+#@+node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+@ We test for changes in both p and the temp file:
+
+- If only p's body text has changed, we recreate the temp file.
+- If only the temp file has changed, do nothing here.
+- If both have changed we must prompt the user to see which code to use.
+@c
+
+encoding = theDict.get("encoding")
+old_body = theDict.get("body")
+new_body = p.bodyString()
+new_body = g.toEncodedString(new_body,encoding,reportErrors=True)
+
+old_time = theDict.get("time")
+try:
+    new_time = g.os_path_getmtime(path)
+except:
+    new_time = None
+    
+body_changed = old_body != new_body
+temp_changed = old_time != new_time
+
+if body_changed and temp_changed:
+    << Raise dialog about conflict and set result >>
+    if result == "cancel": return
+    rewrite = result == "outline"
+else:
+    rewrite = body_changed
+        
+if rewrite:
+    path = c.createOpenWithTempFile(p,ext)
+else:
+    g.es("reopening: " + g.shortFileName(path),color="blue")
+#@nonl
+#@+node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+message = (
+    "Conflicting changes in outline and temp file\n\n" +
+    "Do you want to use the code in the outline or the temp file?\n\n")
+
+result = g.app.gui.runAskYesNoCancelDialog(c,
+    "Conflict!", message,
+    yesMessage = "Outline",
+    noMessage = "File",
+    defaultButton = "Cancel")
+#@nonl
+#@-node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+#@-node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+#@-node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
+#@+node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+try:
+    if arg == None: arg = ""
+    shortPath = path # g.shortFileName(path)
+    if openType == "os.system":
+        if 1:
+            # This works, _provided_ that arg does not contain blanks.  Sheesh.
+            command = 'os.system(%s)' % (arg+shortPath)
+            os.system(arg+shortPath)
+        else:
+            # XP does not like this format!
+            command = 'os.system("%s" "%s")' % (arg,shortPath)
+            os.system('"%s" "%s"' % (arg,shortPath))
+    elif openType == "os.startfile":
+        command = "os.startfile(%s)" % (arg+shortPath)
+        os.startfile(arg+path)
+    elif openType == "exec":
+        command = "exec(%s)" % (arg+shortPath)
+        exec arg+path in {}
+    elif openType == "os.spawnl":
+        filename = g.os_path_basename(arg)
+        command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
+        apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
+    elif openType == "os.spawnv":
+        filename = os.path.basename(arg[0]) 
+        vtuple = arg[1:] 
+        vtuple.append(path)
+        command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+        apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+    else:
+        command="bad command:"+str(openType)
+        g.trace(command)
+except Exception:
+    g.es("exception executing: "+command)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+#@+node:ekr.20031218072017.2830:createOpenWithTempFile
+def createOpenWithTempFile (self,p,ext):
+    
+    c = self
+    path = c.openWithTempFilePath(p,ext)
+    try:
+        if g.os_path_exists(path):
+            g.es("recreating:  " + g.shortFileName(path),color="red")
+        else:
+            g.es("creating:  " + g.shortFileName(path),color="blue")
+        theFile = open(path,"w")
+        # Convert s to whatever encoding is in effect.
+        s = p.bodyString()
+        theDict = g.scanDirectives(c,p=p)
+        encoding = theDict.get("encoding",None)
+        if encoding == None:
+            encoding = c.config.default_derived_file_encoding
+        s = g.toEncodedString(s,encoding,reportErrors=True) 
+        theFile.write(s)
+        theFile.flush()
+        theFile.close()
+        try:    time = g.os_path_getmtime(path)
+        except: time = None
+        # g.es("time: " + str(time))
+        # New in 4.3: theDict now contains both 'p' and 'v' entries, of the expected type.
+        theDict = {
+            "body":s, "c":c, "encoding":encoding,
+            "f":theFile, "path":path, "time":time,
+            "p":p, "v":p.v }
+        << remove previous entry from app.openWithFiles if it exists >>
+        g.app.openWithFiles.append(theDict)
+        return path
+    except:
+        if theFile:
+            theFile.close()
+        theFile = None
+        g.es("exception creating temp file",color="red")
+        g.es_exception()
+        return None
+#@nonl
+#@+node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+for d in g.app.openWithFiles[:]:
+    p2 = d.get("p")
+    if p.v.t == p2.v.t:
+        print "removing previous entry in g.app.openWithFiles for",p.headString()
+        g.app.openWithFiles.remove(d)
+#@nonl
+#@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+#@-node:ekr.20031218072017.2830:createOpenWithTempFile
+#@+node:ekr.20031218072017.2832:c.openWithTempFilePath
+def openWithTempFilePath (self,p,ext):
+    
+    """Return the path to the temp file corresponding to p and ext."""
+    
+    if 0: # new code: similar to code in mod_tempfname.py plugin.
+        try:
+            # At least in Windows, user name may contain special characters
+            # which would require escaping quotes.
+            leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+        except:
+            leoTempDir = "LeoTemp"
+            g.es("Could not retrieve your user name.")
+            g.es("Temporary files will be stored in: %s" % leoTempDir)
+        
+        td = os.path.join(os.path.abspath(tempfile.gettempdir()),leoTempDir)
+        if not os.path.exists(td):
+            os.mkdir(td)
+        
+        name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+        path = os.path.join(td,name)
+        return path
+    else: # Original code.
+        name = "LeoTemp_%s_%s%s" % (
+            str(id(p.v.t)),
+            g.sanitize_filename(p.headString()),
+            ext)
+    
+        name = g.toUnicode(name,g.app.tkEncoding)
+    
+        if 1:
+            td = g.os_path_abspath(tempfile.gettempdir())
+        else:
+            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+    
+        path = g.os_path_join(td,name)
+    
+        return path
+#@nonl
+#@-node:ekr.20031218072017.2832:c.openWithTempFilePath
+#@-node:ekr.20031218072017.2823:openWith and allies
+#@-node:ekr.20050328090032:(Investigated problems with os.spwawnv in openWith
+#@+node:ekr.20050504105855:(Fixed nodenavagator bug)
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3133917
+
+Having the Nodenavigator plugin enabled by default: 
+in an empty, new outline, no 'Recently' nor 'Marked' button shows up in the tool bar
+#@nonl
+#@-node:ekr.20050504105855:(Fixed nodenavagator bug)
+#@+node:ekr.20050504110933:(Fixed LaTex Coloring bug)
+#@+node:ekr.20050504110933.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3133915
+By: Greg
+
+Latex keywords aren't colored when certain characters are after them.  For example,
+"\documentclass" in
+
+\documentclass{report}
+
+is not colorized, but it is when you add a space like so:
+
+\documentclass {report}
+
+I've traced the problem to line 1684 in LeoColor.py (as it appears in CVS).
+This is in the section labeled "<< handle possible latex keyword >>".  This
+line currently reads
+
+j = self.skip_id(s,i+1,chars=self.latex_special_keyword_characters) # 11/9/03
+
+So what I think is happening is that, since "{" and "}" are considered special
+keyword characters, it's parsing the entire command "\documentclass{report}"
+as a single keyword, rather than just "\documentclass".  The fix is easy:  just
+get rid of the chars= keyword like so:
+
+j = self.skip_id(s,i+1)
+
+This seems to be  working for me... it's kinda odd that someone put that in
+there in the first place, though, so maybe it does something else that
+I'm missing?
+
+Also, disclaimer:  I'm currently running 4.1 on my computer.  Although line
+1684 appears the same on the CVS as it does in my version, maybe something else
+was changed in the latest version to make it work.
+#@nonl
+#@-node:ekr.20050504110933.1:Report
+#@+node:ekr.20050504110933.2:Notes
+The code must handle the following with special-case code:
+    
+"\\@", "\\(", "\\)", "\\{", "\\}",
+#@nonl
+#@-node:ekr.20050504110933.2:Notes
+#@+node:ekr.20031218072017.1899:<< handle possible latex keyword >>
+if g.match(s,i,"\\"):
+    if i + 1 < len(s) and s[i+1] in self.latex_special_keyword_characters:
+        j = i + 2 # A special 2-character LaTex keyword.
+    else:
+        j = self.skip_id(s,i+1)
+    word = s[i:j]
+    if word in self.latex_keywords:
+        self.tag("latexKeyword",i,j)
+    else:
+        self.tag("latexBackground",i,j)
+else:
+    self.tag("latexBackground",i,i+1)
+    j = i + 1 # skip the character.
+#@nonl
+#@-node:ekr.20031218072017.1899:<< handle possible latex keyword >>
+#@+node:ekr.20031218072017.377:latex keywords
+#If you see two idenitical words, with minor capitalization differences
+#DO NOT ASSUME that they are the same word. For example \vert produces
+#a single vertical line and \Vert produces a double vertical line
+#Marcus A. Martin.
+
+latex_special_keyword_characters = "@(){}%"
+
+latex_keywords = [
+    #special keyworlds
+    "\\%", # 11/9/03
+    "\\@", "\\(", "\\)", "\\{", "\\}",
+    #A
+    "\\acute", "\\addcontentsline", "\\addtocontents", "\\addtocounter", "\\address",
+    "\\addtolength", "\\addvspace", "\\AE", "\\ae", "\\aleph", "\\alph", "\\angle",
+    "\\appendix", 
+    "\\approx",	"\\arabic", "\\arccos", "\\arcsin", "\\arctan", "\\ast", "\\author",
+    #B
+    "\\b", "\\backmatter", "\\backslash", "\\bar", "\\baselineskip", "\\baselinestretch",
+    "\\begin", "\\beta", "\\bezier", "\\bf", "\\bfseries", "\\bibitem", "\\bigcap", 
+    "\\bigcup", "\\bigodot", "\\bigoplus", "\\bigotimes", "\\bigskip", "\\biguplus", 
+    "\\bigvee", "\\bigwedge",	"\\bmod", "\\boldmath", "\\Box", "\\breve", "\\bullet",
+    #C
+    "\\c", "\\cal", "\\caption", "\\cdot", "\\cdots", "\\centering", "\\chapter", 
+    "\\check", "\\chi", "\\circ", "\\circle", "\\cite", "\\cleardoublepage", "\\clearpage", 
+    "\\cline",	"\\closing", "\\clubsuit", "\\coprod", "\\copywright", "\\cos", "\\cosh", 
+    "\\cot", "\\coth",	"csc",
+    #D
+    "\\d", "\\dag", "\\dashbox", "\\date", "\\ddag", "\\ddot", "\\ddots", "\\decl", 
+    "\\deg", "\\Delta", 
+    "\\delta", "\\depthits", "\\det", 
+    "\\DH", "\\dh", "\\Diamond", "\\diamondsuit", "\\dim", "\\div", "\\DJ", "\\dj", 
+    "\\documentclass", "\\documentstyle", 
+    "\\dot", "\\dotfil", "\\downarrow",
+    #E
+    "\\ell", "\\em", "\\emph", "\\end", "\\enlargethispage", "\\ensuremath", 
+    "\\enumi", "\\enuii", "\\enumiii", "\\enuiv", "\\epsilon", "\\equation", "\\equiv",	
+    "\\eta", "\\example", "\\exists", "\\exp",
+    #F
+    "\\fbox", "\\figure", "\\flat", "\\flushbottom", "\\fnsymbol", "\\footnote", 
+    "\\footnotemark", "\\fotenotesize", 
+    "\\footnotetext", "\\forall", "\\frac", "\\frame", "\\framebox", "\\frenchspacing", 
+    "\\frontmatter",
+    #G
+    "\\Gamma", "\\gamma", "\\gcd", "\\geq", "\\gg", "\\grave", "\\guillemotleft", 
+    "\\guillemotright",	"\\guilsinglleft", "\\guilsinglright",
+    #H
+    "\\H", "\\hat", "\\hbar", "\\heartsuit", "\\heightits", "\\hfill", "\\hline", "\\hom",
+    "\\hrulefill",	"\\hspace", "\\huge",	"\\Huge",	"\\hyphenation"
+    #I
+    "\\Im", "\\imath", "\\include", "includeonly", "indent", "\\index", "\\inf", "\\infty", 
+    "\\input", "\\int", "\\iota",	"\\it", "\\item", "\\itshape",
+    #J
+    "\\jmath", "\\Join",
+    #K
+    "\\k", "\\kappa", "\\ker", "\\kill",
+    #L
+    "\\label", "\\Lambda", "\\lambda", "\\langle", "\\large", "\\Large", "\\LARGE", 
+    "\\LaTeX", "\\LaTeXe", 
+    "\\ldots", "\\leadsto", "\\left", "\\Leftarrow", "\\leftarrow", "\\lefteqn", "\\leq",
+    "\\lg", "\\lhd", "\\lim", "\\liminf", "\\limsup", "\\line", 	"\\linebreak", 
+    "\\linethickness", "\\linewidth",	"\\listfiles",
+    "\\ll", "\\ln", "\\location", "\\log", "\\Longleftarrow", "\\longleftarrow", 
+    "\\Longrightarrow",	"longrightarrow",
+    #M
+    "\\mainmatter", "\\makebox", "\\makeglossary", "\\makeindex","\\maketitle", "\\markboth", "\\markright",
+    "\\mathbf", "\\mathcal", "\\mathit", "\\mathnormal", "\\mathop",
+    "\\mathrm", "\\mathsf", "\\mathtt", "\\max", "\\mbox", "\\mdseries", "\\medskip",
+    "\\mho", "\\min", "\\mp", "\\mpfootnote", "\\mu", "\\multicolumn", "\\multiput",
+    #N
+    "\\nabla", "\\natural", "\\nearrow", "\\neq", "\\newcommand", "\\newcounter", 
+    "\\newenvironment", "\\newfont",
+    "\\newlength",	"\\newline", "\\newpage", "\\newsavebox", "\\newtheorem", "\\NG", "\\ng",
+    "\\nocite", "\\noindent", "\\nolinbreak", "\\nopagebreak", "\\normalsize",
+    "\\not", "\\nu", "nwarrow",
+    #O
+    "\\Omega", "\\omega", "\\onecolumn", "\\oint", "\\opening", "\\oval", 
+    "\\overbrace", "\\overline",
+    #P
+    "\\P", "\\page", "\\pagebreak", "\\pagenumbering", "\\pageref", "\\pagestyle", 
+    "\\par", "\\parbox",	"\\paragraph", "\\parindent", "\\parskip", "\\part", 
+    "\\partial", "\\per", "\\Phi", 	"\\phi",	"\\Pi", "\\pi", "\\pm", 
+    "\\pmod", "\\pounds", "\\prime", "\\printindex", "\\prod", "\\propto", "\\protext", 
+    "\\providecomamnd", "\\Psi",	"\\psi", "\\put",
+    #Q
+    "\\qbezier", "\\quoteblbase", "\\quotesinglbase",
+    #R
+    "\\r", "\\raggedbottom", "\\raggedleft", "\\raggedright", "\\raisebox", "\\rangle", 
+    "\\Re", "\\ref", 	"\\renewcommand", "\\renewenvironment", "\\rhd", "\\rho", "\\right", 
+    "\\Rightarrow",	"\\rightarrow", "\\rm", "\\rmfamily",
+    "\\Roman", "\\roman", "\\rule", 
+    #S
+    "\\s", "\\samepage", "\\savebox", "\\sbox", "\\sc", "\\scriptsize", "\\scshape", 
+    "\\searrow",	"\\sec", "\\section",
+    "\\setcounter", "\\setlength", "\\settowidth", "\\settodepth", "\\settoheight", 
+    "\\settowidth", "\\sf", "\\sffamily", "\\sharp", "\\shortstack", "\\Sigma", "\\sigma", 
+    "\\signature", "\\sim", "\\simeq", "\\sin", "\\sinh", "\\sl", "\\SLiTeX",
+    "\\slshape", "\\small", "\\smallskip", "\\spadesuit", "\\sqrt", "\\sqsubset",	
+    "\\sqsupset", "\\SS",
+    "\\stackrel", "\\star", "\\subsection", "\\subset", 
+    "\\subsubsection", "\\sum", "\\sup", "\\supressfloats", "\\surd", "\\swarrow",
+    #T
+    "\\t", "\\table", "\\tableofcontents", "\\tabularnewline", "\\tan", "\\tanh", 
+    "\\tau", "\\telephone",	"\\TeX", "\\textbf",
+    "\\textbullet", "\\textcircled", "\\textcompworkmark",	"\\textemdash", 
+    "\\textendash", "\\textexclamdown", "\\textheight", "\\textquestiondown", 
+    "\\textquoteblleft", "\\textquoteblright", "\\textquoteleft",
+    "\\textperiod", "\\textquotebl", "\\textquoteright", "\\textmd", "\\textit", "\\textrm", 
+    "\\textsc", "\\textsl", "\\textsf", "\\textsuperscript", "\\texttt", "\\textup",
+    "\\textvisiblespace", "\\textwidth", "\\TH", "\\th", "\\thanks", "\\thebibligraphy",
+    "\\Theta", "theta", 
+    "\\tilde", "\\thinlines", 
+    "\\thispagestyle", "\\times", "\\tiny", "\\title",	"\\today", "\\totalheightits", 
+    "\\triangle", "\\tt", 
+    "\\ttfamily", "\\twocoloumn", "\\typeout", "\\typein",
+    #U
+    "\\u", "\\underbrace", "\\underline", "\\unitlength", "\\unlhd", "\\unrhd", "\\Uparrow",
+    "\\uparrow",	"\\updownarrow", "\\upshape", "\\Upsilon", "\\upsilon", "\\usebox",	
+    "\\usecounter", "\\usepackage", 
+    #V
+    "\\v", "\\value", "\\varepsilon", "\\varphi", "\\varpi", "\\varrho", "\\varsigma", 
+    "\\vartheta", "\\vdots", "\\vec", "\\vector", "\\verb", "\\Vert", "\\vert", 	"\\vfill",
+    "\\vline", "\\vphantom", "\\vspace",
+    #W
+    "\\widehat", "\\widetilde", "\\widthits", "\\wp",
+    #X
+    "\\Xi", "\\xi",
+    #Z
+    "\\zeta" ]
+#@nonl
+#@-node:ekr.20031218072017.377:latex keywords
+#@-node:ekr.20050504110933:(Fixed LaTex Coloring bug)
+#@+node:ekr.20050317073747:(Unredirected output only after all script processing is complete)
+#@+node:ekr.20050317102007:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3051870
+By: e
+
+if you make a script button, the error is printed
+to the console only. no redirection to log if enabled.
+#@nonl
+#@-node:ekr.20050317102007:Report
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; script1 = script
+    if not script:
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
+    << redirect output >>
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                exec script in d
+                if not script1:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
+        << unredirect output >>
+
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+c.frame.tree.redrawAfterException()
+#@nonl
+#@+node:EKR.20040612215018:<< dump the lines near the error >>
+if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 0:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        g.es(s,newline=False)
+else: # Print surrounding lines.
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@+node:ekr.20050220030850:test_g_es_exception
+def test_g_es_exception():
+    
+    if c.config.redirect_execute_script_output_to_log_pane:
+        return # Test doesn't work when redirection is on.
+
+    try:
+        import sys
+        # Catch the output of g.es_exception.
+        # We catch the AssertionError, so nothing gets written to stderr.
+        sys.stdout = fo = g.fileLikeObject()
+        try: # Create an exception to catch.
+            assert False, 'Assert False in test_g_es_exception'
+        except AssertionError:
+            g.es_exception(color='suppress')
+            result = fo.get()
+            s1 = 'Traceback (most recent call last):'
+            s2 = 'AssertionError: Assert False in test_g_es_exception'
+            assert result.find(s1) > -1, 'No traceback line: %s' % repr(result)
+            assert result.find(s2) > -1, 'No AssertionError line: %s' % repr(result)
+    finally:
+        # Not needed unless we execute this script as selected text.
+        sys.stdout = sys.__stdout__
+#@nonl
+#@-node:ekr.20050220030850:test_g_es_exception
+#@-node:ekr.20050317073747:(Unredirected output only after all script processing is complete)
+#@+node:ekr.20050507081356.1:(Fixed Crasher in nav_buttons)
+#@+node:ekr.20050508113634:Notes
+@killcolor
+
+The nav_buttons plugin was using self.c rather than keywords.get('c') in a hook
+handler. The general rule is that hook handlers should do nothing if self.c !-
+keywords.get('c').  This was an old bug, arising from the rewrite of the plugin.
+
+I added a warning to that effect in the plugin template.
+
+It would perhaps be better to specify an optional commander in registerHandler
+and only call the handler if the commander matches. However, this isn't so easy
+or clean to do.
+#@nonl
+#@-node:ekr.20050508113634:Notes
+#@+node:ekr.20050508060138:Traceback
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3138608
+
+With nav_buttons plugin loaded. the first click in the outline window after
+loading an outline produces:
+Traceback (most recent call last):
+  File "C:\Program Files\leo\src\leoGlobals.py", line 2286, in doHook
+    return f(tag,keywords)
+  File "C:\Program Files\leo\src\leoPlugins.py", line 92, in doPlugins
+    return doHandlersForTag(tag,keywords)
+  File "C:\Program Files\leo\src\leoPlugins.py", line 73, in doHandlersForTag
+    val = callTagHandler(bunch,tag,keywords)
+  File "C:\Program Files\leo\src\leoPlugins.py", line 51, in callTagHandler
+    result = handler(tag,keywords)
+  File "C:\Program Files\leo\plugins\nav_buttons.py", line 395, in updateRecent
+    self.updateButtons()
+  File "C:\Program Files\leo\plugins\nav_buttons.py", line 374, in
+updateButtons
+    for b,b2,enabled_image,disabled_image,cond in (
+AttributeError: Commands instance has no attribute 'beadPointer'
+#@nonl
+#@-node:ekr.20050508060138:Traceback
+#@+node:ekr.20050102094729:callTagHandler
+def callTagHandler (bunch,tag,keywords):
+    
+    handler = bunch.fn ; moduleName = bunch.moduleName
+
+    # Make sure all commanders exist.
+    # New in 4.3 b2: this can be a problem for any tag.
+    for key in ('c','old_c','new_c'):
+        c = keywords.get(key)
+        if c:
+            if not hasattr(c,'frame'): return None
+            if c.frame not in g.app.windowList:
+                return None # c has (or will be) destroyed.
+
+    # Calls to registerHandler from inside the handler belong to moduleName.
+    global loadingModuleNameStack
+    loadingModuleNameStack.append(moduleName)
+    result = handler(tag,keywords)
+    loadingModuleNameStack.pop()
+    return result
+#@nonl
+#@-node:ekr.20050102094729:callTagHandler
+#@+node:ekr.20040803072955.128:tree.select
+# Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+
+    if not p: return
+
+    # g.trace('len(body)',len(p.bodyString()),p.headString())
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << select the new node >>
+        if p and p != old_p: # Suppress duplicate call.
+            try: # may fail during initialization.
+                self.idle_scrollTo(p) # p is NOT c.currentPosition() here!
+            except: pass
+        << update c.beadList or c.beadPointer >>
+        << update c.visitedList >>
+
+    << set the current node >>
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    # g.printGc()
+#@nonl
+#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+# Remember the position of the scrollbar before making any changes.
+if old_p:
+
+    yview=body.yview()
+    insertSpot = c.frame.body.getInsertionPoint()
+    
+    if old_p != p:
+        if self.trace and self.verbose:
+            g.trace("unselect:",old_p.headString())
+        self.endEditLabel() # sets editPosition = None
+        self.setUnselectedLabelState(old_p)
+    
+    if old_p.edit_text():
+        old_p.v.t.scrollBarSpot = yview
+        old_p.v.t.insertSpot = insertSpot
+#@nonl
+#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20040803072955.130:<< select the new node >>
+frame.setWrap(p)
+
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(body,s,tag="select:set body",isHeadline=False)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v and p.v.t.insertSpot != None:
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+#@nonl
+#@-node:ekr.20040803072955.130:<< select the new node >>
+#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by c and make c the present node.
+        # print "updating c.beadList"
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+    # g.trace(c.beadPointer,p,present_p)
+#@nonl
+#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20040803072955.132:<< update c.visitedList >>
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+#@nonl
+#@-node:ekr.20040803072955.132:<< update c.visitedList >>
+#@+node:ekr.20040803072955.133:<< set the current node >>
+c.setCurrentPosition(p)
+
+if p != old_p:
+    self.setSelectedLabelState(p)
+
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
+#@nonl
+#@-node:ekr.20040803072955.133:<< set the current node >>
+#@-node:ekr.20040803072955.128:tree.select
+#@-node:ekr.20050507081356.1:(Fixed Crasher in nav_buttons)
+#@-node:ekr.20050505094928:Bugs
+#@+node:ekr.20050505094928.1:Features
+#@+node:ekr.20050505051303:(Allow quoted urls in  @urls nodes)
+#@+node:ekr.20050505051303.1:Request
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3135170
+By: trishul
+
+I am also using leo partly as a pim and partly for warehousing code in W2K.
+The clickable "@url file://" nodes work fine, but how
+do you manage spaces in filenames ?  (the %20 substitute appears to work only
+in http:// url's and quoting didn't help)
+#@-node:ekr.20050505051303.1:Request
+#@+node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
+def OnIconDoubleClick (self,p):
+
+    # Note: "icondclick" hooks handled by vnode callback routine.
+
+    c = self.c
+    s = p.headString().strip()
+    if g.match_word(s,0,"@url"):
+        url = s[4:].strip()
+        << stop the url after any whitespace >>
+        # g.trace(url)
+        if not g.doHook("@url1",c=c,p=p,v=p,url=url):
+            # Note: the UNL plugin has its own notion of what a good url is.
+            << check the url; return if bad >>
+            << pass the url to the web browser >>
+        g.doHook("@url2",c=c,p=p,v=p)
+#@nonl
+#@+node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
+# For safety, the URL string should end at the first whitespace, unless quoted.
+# This logic is also found in the UNL plugin so we don't have to change the 'unl1' hook.
+
+url = url.replace('\t',' ')
+
+# Strip quotes.
+i = -1
+if url and url[0] in ('"',"'"):
+    i = url.find(url[0],1)
+    if i > -1:
+        url = url[1:i]
+
+if i == -1:
+    # Not quoted or no matching quote.
+    i = url.find(' ')
+    if i > -1:
+        if 0: # No need for a warning.  Assume everything else is a comment.
+            g.es("ignoring characters after space in url:"+url[i:])
+            g.es("use %20 instead of spaces")
+        url = url[:i]
+    
+#@nonl
+#@-node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
+#@+node:ekr.20031218072017.2314:<< check the url; return if bad >>
+if not url or len(url) == 0:
+    g.es("no url following @url")
+    return
+    
+@ A valid url is (according to D.T.Hein):
+
+3 or more lowercase alphas, followed by,
+one ':', followed by,
+one or more of: (excludes !"#;<>[\]^`|)
+  $%&'()*+,-./0-9:=?@A-Z_a-z{}~
+followed by one of: (same as above, except no minus sign or comma).
+  $%&'()*+/0-9:=?@A-Z_a-z}~
+@c
+
+urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
+
+# 4/21/03: Add http:// if required.
+if not re.match('^([a-z]{3,}:)',url):
+    url = 'http://' + url
+if not re.match(urlPattern,url):
+    g.es("invalid url: "+url)
+    return
+#@-node:ekr.20031218072017.2314:<< check the url; return if bad >>
+#@+node:ekr.20031218072017.2315:<< pass the url to the web browser >>
+@ Most browsers should handle the following urls:
+  ftp://ftp.uu.net/public/whatever.
+  http://localhost/MySiteUnderDevelopment/index.html
+  file://home/me/todolist.html
+@c
+
+try:
+    import os
+    os.chdir(g.app.loadDir)
+
+    if g.match(url,0,"file:") and url[-4:]==".leo":
+        ok,frame = g.openWithFileName(url[5:],c)
+        if ok:
+            frame.bringToFront()
+    else:
+        import webbrowser
+        
+        # Mozilla throws a weird exception, then opens the file!
+        try: webbrowser.open(url)
+        except: pass
+except:
+    g.es("exception opening " + url)
+    g.es_exception()
+
+#@-node:ekr.20031218072017.2315:<< pass the url to the web browser >>
+#@-node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
+#@-node:ekr.20050505051303:(Allow quoted urls in  @urls nodes)
+#@+node:ekr.20050503112513:(Moved executeFile into core)
+@ For tests of this, see the script in test.leo at:
+    
+Scripts-->Script to execute @test, @suite or file
+
+Read the documentation in that node before running the script.
+#@nonl
+#@+node:ekr.20050503112513.7:g.executeFile
+def executeFile(filename, options= ''):
+
+    if not os.access(filename, os.R_OK): return
+    
+    try: import subprocess # Exists in Python 2.4 or later.
+    except ImportError: subprocess = None
+
+    cwd = os.getcwdu()
+    fdir, fname = g.os_path_split(filename)
+    
+    if subprocess: # Only exists in Python 2.4.
+        << define subprocess_wrapper >>
+        rc, so, se = subprocess_wrapper('%s %s %s'%(sys.executable, fname, options))
+        if rc:
+             print 'return code', rc
+        print so, se
+    else:
+        if fdir: os.chdir(fdir)
+        d = {'__name__': '__main__'}
+        execfile(fname, d)  #, globals()
+        os.system('%s %s' % (sys.executable, fname))
+        if fdir: os.chdir(cwd)
+#@nonl
+#@+node:ekr.20050503112513.8:<< define subprocess_wrapper >>
+def subprocess_wrapper(cmdlst):
+    
+    # g.trace(cmdlst, fdir)
+    # g.trace(subprocess.list2cmdline([cmdlst]))
+
+    p = subprocess.Popen(cmdlst, cwd=fdir,
+        universal_newlines=True,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    stdo, stde = p.communicate()
+    return p.wait(), stdo, stde
+#@nonl
+#@-node:ekr.20050503112513.8:<< define subprocess_wrapper >>
+#@-node:ekr.20050503112513.7:g.executeFile
+#@-node:ekr.20050503112513:(Moved executeFile into core)
+#@+node:ekr.20050211173540:(Rewrote g.getScript using at.writeFromString)
+#@+node:ekr.20050506095420:What I did
+@killcolor
+
+g.getScript now fully processes all scripts, regardless of where they came from.
+
+- Changed g.getScript:
+    - p arg is now required.
+    - Removed unused script arg.
+    - g.getScript no longer temporarily alters any body text.
+        - atFile.writeFromString gets the initial text using the fromString arg.
+    - g.getScript now always calls atFile.writeFromString to handle all Leo directives.
+
+- Created atFile.putAtFirstLines and atFile.putAtLastLines.
+    - These replace the corresonding sections in writeOpenFile.
+    - It was not actually necessary to define these, but it cleans up the code.
+
+- Created atFile.writeFromString.
+    - This handles all the details of simulating a write _from_ a string _to_ a string.
+
+- atFile.initWriteIvars and atFile.openFileForWriting now allow root to be None.
+    - This is not used at present: root is always defined.
+
+- Added fromString arg to atFile.writeOpenFile and atFile.putBody.
+#@nonl
+#@-node:ekr.20050506095420:What I did
+#@+node:EKR.20040614071102.1:g.getScript & tests
+def getScript (c,p,useSelectedText=True):
+    
+    '''Return the expansion of the selected text of node p.
+    Return the expansion of all of node p's body text if there
+    is p is not the current node or if there is no text selection.'''
+
+    at = c.atFileCommands
+    try:
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                s = c.frame.body.getSelectedText()
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+        # Remove extra leading whitespace so the user may execute indented code.
+        s = g.removeExtraLws(s,c.tab_width)
+        if s.strip():
+            g.app.scriptDict["script1"]=s
+            script = at.writeFromString(p.copy(),s)
+            script = script.replace("\r\n","\n") # Use brute force.
+            g.app.scriptDict["script2"]=script
+        else: script = ''
+    except Exception:
+        s = "unexpected exception in g.getScript"
+        print s ; g.es(s)
+        g.es_exception()
+        script = ''
+
+    return script
+#@nonl
+#@+node:ekr.20050211100535:test_g_getScript_strips_crlf
+def test_g_getScript_strips_crlf():
+
+    script = g.getScript(c,p) # This will get the text of this node.
+    assert script.find('\r\n') == -1, repr(script)
+#@nonl
+#@-node:ekr.20050211100535:test_g_getScript_strips_crlf
+#@-node:EKR.20040614071102.1:g.getScript & tests
+#@+node:ekr.20041005105605.15:initWriteIvars
+def initWriteIvars(self,root,targetFileName,
+    nosentinels=False,
+    thinFile=False,
+    scriptWrite=False,
+    toString=False):
+
+    self.initCommonIvars()
+    << init ivars for writing >>
+    
+    if root:
+        self.scanAllDirectives(root,scripting=scriptWrite)
+    if scriptWrite:
+        # Force Python comment delims for g.getScript.
+        self.startSentinelComment = "#"
+        self.endSentinelComment = None
+
+    # Init state from arguments.
+    self.targetFileName = targetFileName
+    self.sentinels = not nosentinels
+    self.thinFile = thinFile
+    self.toString = toString
+    self.root = root
+    
+    # Ignore config settings for unit testing.
+    if toString and g.app.unitTesting: self.output_newline = '\n'
+    
+    # Init all other ivars even if there is an error.
+    if not self.errors and self.root:
+        self.root.v.t.tnodeList = []
+#@nonl
+#@+node:ekr.20041005105605.16:<< init ivars for writing >>>
+@
+When tangling, we first write to a temporary output file. After tangling is
+temporary file. Otherwise we delete the old target file and rename the temporary
+file to be the target file.
+@c
+
+self.docKind = None
+self.explicitLineEnding = False # True: an @lineending directive specifies the ending.
+self.fileChangedFlag = False # True: the file has actually been updated.
+self.shortFileName = "" # short version of file name used for messages.
+self.thinFile = False
+
+if toString:
+    self.outputFile = g.fileLikeObject()
+    self.stringOutput = ""
+    self.targetFileName = self.outputFileName = "<string-file>"
+else:
+    self.outputFile = None # The temporary output file.
+    self.stringOutput = None
+    self.targetFileName = self.outputFileName = u""
+#@nonl
+#@-node:ekr.20041005105605.16:<< init ivars for writing >>>
+#@-node:ekr.20041005105605.15:initWriteIvars
+#@+node:ekr.20041005105605.161:putBody
+# oneNodeOnly is no longer used, but it might be used in the future?
+
+def putBody(self,p,oneNodeOnly=False,fromString=''):
+    
+    """ Generate the body enclosed in sentinel lines."""
+
+    at = self
+    
+    # New in 4.3 b2: get s from fromString if possible.
+    s = g.choose(fromString,fromString,p.bodyString())
+
+    p.v.t.setVisited() # Suppress orphans check.
+    p.v.setVisited() # Make sure v is never expanded again.
+    if not at.thinFile:
+        p.v.t.setWriteBit() # Mark the tnode to be written.
+    if not at.thinFile and not s: return
+
+    inCode = True
+    << Make sure all lines end in a newline >>
+    i = 0
+    while i < len(s):
+        next_i = g.skip_line(s,i)
+        assert(next_i > i)
+        kind = at.directiveKind4(s,i)
+        << handle line at s[i] >>
+        i = next_i
+    if not inCode:
+        at.putEndDocLine()
+    if at.sentinels and not trailingNewlineFlag:
+        at.putSentinel("@nonl")
+#@nonl
+#@+node:ekr.20041005105605.162:<< Make sure all lines end in a newline >>
+# 11/20/03: except in nosentinel mode.
+# 1/30/04: and especially in scripting mode.
+# If we add a trailing newline, we'll generate an @nonl sentinel below.
+
+if s:
+    trailingNewlineFlag = s and s[-1] == '\n'
+    if at.sentinels and not trailingNewlineFlag:
+        s = s + '\n'
+else:
+    trailingNewlineFlag = True # don't need to generate an @nonl
+#@nonl
+#@-node:ekr.20041005105605.162:<< Make sure all lines end in a newline >>
+#@+node:ekr.20041005105605.163:<< handle line at s[i]  >>
+if kind == at.noDirective:
+    if not oneNodeOnly:
+        if inCode:
+            hasRef,n1,n2 = at.findSectionName(s,i)
+            if hasRef and not at.raw:
+                at.putRefLine(s,i,n1,n2,p)
+            else:
+                at.putCodeLine(s,i)
+        else:
+            at.putDocLine(s,i)
+elif kind in (at.docDirective,at.atDirective):
+    assert(not at.pending)
+    if not inCode: # Bug fix 12/31/04: handle adjacent doc parts.
+        at.putEndDocLine() 
+    at.putStartDocLine(s,i,kind)
+    inCode = False
+elif kind in (at.cDirective,at.codeDirective):
+    # Only @c and @code end a doc part.
+    if not inCode:
+        at.putEndDocLine() 
+    at.putDirective(s,i)
+    inCode = True
+elif kind == at.allDirective:
+    if not oneNodeOnly:
+        if inCode: at.putAtAllLine(s,i,p)
+        else: at.putDocLine(s,i)
+elif kind == at.othersDirective:
+    if not oneNodeOnly:
+        if inCode: at.putAtOthersLine(s,i,p)
+        else: at.putDocLine(s,i)
+elif kind == at.rawDirective:
+    at.raw = True
+    at.putSentinel("@@raw")
+elif kind == at.endRawDirective:
+    at.raw = False
+    at.putSentinel("@@end_raw")
+    i = g.skip_line(s,i)
+elif kind == at.miscDirective:
+    at.putDirective(s,i)
+else:
+    assert(0) # Unknown directive.
+#@nonl
+#@-node:ekr.20041005105605.163:<< handle line at s[i]  >>
+#@-node:ekr.20041005105605.161:putBody
+#@+node:ekr.20050506090446.1:putAtFirstLines (new in 4.3 b2)
+def putAtFirstLines (self,s):
+    
+    '''Write any @firstlines from string s.
+    These lines are converted to @verbatim lines,
+    so the read logic simply ignores lines preceding the @+leo sentinel.'''
+
+    at = self ; tag = "@first"
+
+    i = 0
+    while g.match(s,i,tag):
+        i += len(tag)
+        i = g.skip_ws(s,i)
+        j = i
+        i = g.skip_to_end_of_line(s,i)
+        # Write @first line, whether empty or not
+        line = s[j:i]
+        at.os(line) ; at.onl()
+        i = g.skip_nl(s,i)
+#@nonl
+#@-node:ekr.20050506090446.1:putAtFirstLines (new in 4.3 b2)
+#@+node:ekr.20050506090955:putAtLastLines (new in 4.3 b2)
+def putAtLastLines (self,s):
+    
+    '''Write any @last lines from string s.
+    These lines are converted to @verbatim lines,
+    so the read logic simply ignores lines following the @-leo sentinel.'''
+
+    at = self ; tag = "@last"
+    
+    # Use g.splitLines to preserve trailing newlines.
+    lines = g.splitLines(s)
+    n = len(lines) ; j = k = n - 1
+    
+    # Scan backwards for @last directives.
+    while j >= 0:
+        line = lines[j]
+        if g.match(line,0,tag): j -= 1
+        elif not line.strip():
+            j -= 1
+        else: break
+        
+    # Write the @last lines.
+    for line in lines[j+1:k+1]:
+        if g.match(line,0,tag):
+            i = len(tag) ; i = g.skip_ws(line,i)
+            at.os(line[i:])
+#@nonl
+#@-node:ekr.20050506090955:putAtLastLines (new in 4.3 b2)
+#@+node:ekr.20041005105605.142:openFileForWriting & openFileForWritingHelper
+def openFileForWriting (self,root,fileName,toString):
+
+    at = self
+    at.outputFile = None
+    
+    if toString:
+        at.shortFileName = g.shortFileName(fileName)
+        at.outputFileName = "<string: %s>" % at.shortFileName
+        at.outputFile = g.fileLikeObject()
+    else:
+        at.openFileForWritingHelper(fileName)
+
+    # New in 4.3 b2: root may be none when writing from a string.
+    if root:
+        if at.outputFile:
+            root.clearOrphan()
+        else:
+            root.setOrphan()
+            root.setDirty()
+    
+    return at.outputFile is not None
+#@nonl
+#@+node:ekr.20041005105605.143:openFileForWritingHelper
+def openFileForWritingHelper (self,fileName):
+    
+    at = self
+
+    try:
+        at.shortFileName = g.shortFileName(fileName)
+        fileName = g.os_path_join(at.default_directory,fileName)
+        at.targetFileName = g.os_path_normpath(fileName)
+        path = g.os_path_dirname(at.targetFileName)
+        if not path or not g.os_path_exists(path):
+            at.writeError("path does not exist: " + path)
+            return
+    except:
+        at.exception("exception creating path:" + path)
+        return
+
+    if g.os_path_exists(at.targetFileName):
+        try:
+            if not os.access(at.targetFileName,os.W_OK):
+                at.writeError("can not create: read only: " + at.targetFileName)
+                return
+        except AttributeError: pass # os.access() may not exist on all platforms.
+
+    try:
+        at.outputFileName = at.targetFileName + ".tmp"
+        at.outputFile = self.openForWrite(at.outputFileName,'wb') # bwm
+        if not at.outputFile:
+            at.writeError("can not create " + at.outputFileName)
+    except:
+        at.exception("exception creating:" + at.outputFileName)
+#@nonl
+#@-node:ekr.20041005105605.143:openFileForWritingHelper
+#@-node:ekr.20041005105605.142:openFileForWriting & openFileForWritingHelper
+#@+node:ekr.20041005105605.144:write
+# This is the entry point to the write code.  root should be an @file vnode.
+
+def write(self,root,nosentinels=False,thinFile=False,scriptWrite=False,toString=False):
+    
+    """Write a 4.x derived file."""
+    
+    at = self ; c = at.c
+    c.endEditing() # Capture the current headline.
+    << set at.targetFileName >>
+    at.initWriteIvars(root,at.targetFileName,
+        nosentinels=nosentinels,thinFile=thinFile,
+        scriptWrite=scriptWrite,toString=toString)
+    if not at.openFileForWriting(root,at.targetFileName,toString):
+        return
+
+    try:
+        at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
+        if toString:
+            at.closeWriteFile()
+            # Major bug: failure to clear this wipes out headlines!
+            # Minor bug: sometimes this causes slight problems...
+            at.root.v.t.tnodeList = [] 
+        else:
+            at.closeWriteFile()
+            << set dirty and orphan bits on error >>
+    except:
+        if toString:
+            at.exception("exception preprocessing script")
+            at.root.v.t.tnodeList = []
+        else:
+            at.writeException() # Sets dirty and orphan bits.
+#@+node:ekr.20041005105605.145:<< set at.targetFileName >>
+if toString:
+    at.targetFileName = "<string-file>"
+elif nosentinels:
+    at.targetFileName = root.atNoSentFileNodeName()
+elif thinFile:
+    at.targetFileName = root.atThinFileNodeName()
+else:
+    at.targetFileName = root.atFileNodeName()
+#@nonl
+#@-node:ekr.20041005105605.145:<< set at.targetFileName >>
+#@+node:ekr.20041005105605.146:<< set dirty and orphan bits on error >>
+# Setting the orphan and dirty flags tells Leo to write the tree..
+
+if at.errors > 0 or at.root.isOrphan():
+    root.setOrphan()
+    root.setDirty() # Make _sure_ we try to rewrite this file.
+    os.remove(at.outputFileName) # Delete the temp file.
+    g.es("Not written: " + at.outputFileName)
+else:
+    root.clearOrphan()
+    root.clearDirty()
+    at.replaceTargetFileIfDifferent()
+#@nonl
+#@-node:ekr.20041005105605.146:<< set dirty and orphan bits on error >>
+#@-node:ekr.20041005105605.144:write
+#@+node:ekr.20041005105605.157:writeOpenFile
+# New in 4.3: must be inited before calling this method.
+# New in 4.3 b2: support for writing from a string.
+
+def writeOpenFile(self,root,nosentinels=False,toString=False,fromString=''):
+
+    """Do all writes except asis writes."""
+    
+    at = self ; s = g.choose(fromString,fromString,root.v.t.bodyString)
+
+    root.clearAllVisitedInTree() # Clear both vnode and tnode bits.
+    root.clearVisitedInTree()
+
+    at.putAtFirstLines(s)
+    at.putOpenLeoSentinel("@+leo-ver=4")
+    at.putInitialComment()
+    at.putOpenNodeSentinel(root)
+    at.putBody(root,fromString=fromString)
+    at.putCloseNodeSentinel(root)
+    at.putSentinel("@-leo")
+    root.setVisited()
+    at.putAtLastLines(s)
+
+    if not toString and not nosentinels:
+        at.warnAboutOrphandAndIgnoredNodes()
+#@nonl
+#@-node:ekr.20041005105605.157:writeOpenFile
+#@+node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
+# This is at.write specialized for scripting.
+
+def writeFromString(self,root,s):
+    
+    """Write a 4.x derived file from a string.
+    
+    This is used by the scripting logic."""
+    
+    at = self ; c = at.c
+    c.endEditing() # Capture the current headline.
+
+    at.initWriteIvars(root,"<string-file>",
+        nosentinels=False,thinFile=False,scriptWrite=True,toString=True)
+
+    try:
+        at.openFileForWriting(root,at.targetFileName,toString=True)
+        # Simulate writing the entire file so error recovery works.
+        at.writeOpenFile(root,nosentinels=False,toString=True,fromString=s)
+        at.closeWriteFile()
+        # Major bug: failure to clear this wipes out headlines!
+        # Minor bug: sometimes this causes slight problems...
+        if root: root.v.t.tnodeList = [] 
+    except:
+        at.exception("exception preprocessing script")
+
+    return at.stringOutput
+#@nonl
+#@-node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; script1 = script
+    if not script:
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
+    << redirect output >>
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                exec script in d
+                if not script1:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
+        << unredirect output >>
+
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+c.frame.tree.redrawAfterException()
+#@nonl
+#@+node:EKR.20040612215018:<< dump the lines near the error >>
+if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 0:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        g.es(s,newline=False)
+else: # Print surrounding lines.
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@+node:ekr.20050505104140.1:notes
+@killcolor
+
+At present c.executeScript does not call at.write if the script came from a selection.
+
+In fact, at.write assumes the 'root' node is c.currentPosition(). This must
+change if selections are to support Leo directives and section references.
+#@nonl
+#@-node:ekr.20050505104140.1:notes
+#@+node:ekr.20050228093753:e post 1
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3017712
+
+maybe not yet, except as a conditional script.
+its really only a very first draft.
+py2.4 ok
+py2.3 if you put subprocess.py in extensions
+and their compiled extension from effbot.org
+unless pywin32 is installed one or the other.
+no extension needed for nix.
+2.2 not even sure.
+but worse, subprocess doesn't work well under puthonw.exe
+I emailed the author, no one filed a bug report!
+
+and the redirection is external you'll notice,
+that should be internal or the results should
+be passed back. print to console otherwise is useless.
+good enough in this application but not ready for primetime.
+
+I see subprocess is used in temacs plugin too.
+so subprocess should be in extensions in any case. and the merge of both use
+functions should
+be possible in a general way we can all use.
+#@nonl
+#@-node:ekr.20050228093753:e post 1
+#@+node:ekr.20050228093753.1:e post 2
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3018068
+
+a few other considerations,
+executeFile is now a misnomer. I originally expected
+to only need to make __name__ = '__main__',
+but then what about options?
+what about running another program than python?
+the other sticky problem from Leo, what about packing 
+sys.args for the spawned program? which I didn't attempt.
+and to duplicate the experience many programs expect args.
+execfile() was not going to cut it.
+
+the fallback for pythonw for now is:
+
+.    child_stdin, child_stdout, child_stderr = os.popen3(cmds)
+.    output = child_stdout.read()
+.    outerr = child_stderr.read()
+.    return output, outerr
+
+but, no return code? maybe popen4 is required for that.
+subprocess handles it allot better.
+not to mention piping the output from one program into another.
+we don't want to have people tripping over shell
+escaping problems to do simple things in a secure way.
+and did I read in another thread the mac has pythonw?
+does it suffer the same lack of stdout/stderr as 
+windows' pythonw?
+no one problem insurmountable. I could imagine 
+python.org taking the compatibility lead providing
+a py2224.zip with a few of the missing pieces.
+subprocess, datetime, sets, itertools, csv what have you.
+then instead of everyone incompletely trying
+to piece together compatibility those that want it
+could install a compete package.
+then there would only be PMW.
+we probably need elementtree and celementtree too.
+#@nonl
+#@-node:ekr.20050228093753.1:e post 2
+#@+node:ekr.20050302072742:iPython support (more powerful execute script)
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3023147
+By: e
+
+a little IPython integration woulden't be a bad thing.
+not with IPython code as much as in its execution.
+
+there '%' is now the magic char (was @) 
+
+you can also have automagic enabled.
+in scripting we have the static approach where you have
+to carefully think about what function to call
+the system and if it works on this or that OS.
+how to construct the call, list or string, 
+do I need to escape etc.
+
+what about a less static:
+filename = 'whatever.py'
+%python filename > <<details>>
+%cat <<details>> | sort
+
+maybe that would make too much work
+for executeScript.  just a thought.
+code to follow RSN.
+
+>>I'll discuss them in detail when getting around to moving this work into Leo's core
+
+there are many places in Leo code, 
+openwith g.executeScript and various plugins
+all doing similar things in multitues of ways.
+a little more centralization might be called for.
+by then maybe subprocess will be updated.
+#@nonl
+#@-node:ekr.20050302072742:iPython support (more powerful execute script)
+#@-node:ekr.20050211173540:(Rewrote g.getScript using at.writeFromString)
+#@-node:ekr.20050505094928.1:Features
+#@-node:ekr.20050503111718:4.3 b2 projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt

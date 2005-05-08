@@ -2273,11 +2273,9 @@ def doHook(tag,*args,**keywords):
             s = "Plugins disabled: use_plugins is 0 in a leoSettings.leo file."
             print s ; g.es(s,color="blue")
         return None
-
-    # New in 4.2.  We call the idle-time handlers for all open windows.
-    c = keywords.get("c")
-            
+         
     # Get the hook handler function.  Usually this is doPlugins.
+    c = keywords.get("c")
     f = (c and c.hookFunction) or g.app.hookFunction
     if not f:
         import leoPlugins
