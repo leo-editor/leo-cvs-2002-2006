@@ -324,11 +324,16 @@ class atFile:
         #@-node:ekr.20041005105605.16:<< init ivars for writing >>>
         #@nl
         
-        if root:
-            self.scanAllDirectives(root,scripting=scriptWrite)
-            
         if forcePythonSentinels is None:
             forcePythonSentinels = scriptWrite
+    
+        if root:
+            self.scanAllDirectives(root,
+                scripting=scriptWrite,
+                forcePythonSentinels=forcePythonSentinels)
+        
+        # g.trace(forcePythonSentinels,self.startSentinelComment,self.endSentinelComment)
+        
         if forcePythonSentinels:
             # Force Python comment delims for g.getScript.
             self.startSentinelComment = "#"
@@ -4599,7 +4604,7 @@ class atFile:
     #@-at
     #@@c
     
-    def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
+    def scanAllDirectives(self,p,scripting=False,importing=False,reading=False,forcePythonSentinels=False):
         
         """Scan position p and p's ancestors looking for directives,
         setting corresponding atFile ivars.
@@ -4790,14 +4795,13 @@ class atFile:
             # 5/19/04: don't override comment delims when reading!
             #@        << Set comment strings from delims >>
             #@+node:ekr.20041005105605.235:<< Set comment strings from delims >>
-            if scripting:
+            if forcePythonSentinels:
                 # Force Python language.
                 delim1,delim2,delim3 = g.set_delims_from_language("python")
                 self.language = "python"
                 
             # Use single-line comments if we have a choice.
-            # 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
-            
+            # delim1,delim2,delim3 now correspond to line,start,end
             if delim1:
                 self.startSentinelComment = delim1
                 self.endSentinelComment = "" # Must not be None.
