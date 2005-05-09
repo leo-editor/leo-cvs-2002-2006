@@ -4726,6 +4726,8 @@ def getScript (c,p,useSelectedText=True):
     is p is not the current node or if there is no text selection.'''
 
     at = c.atFileCommands
+    if not p:
+        p = c.currentPosition()
     try:
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
