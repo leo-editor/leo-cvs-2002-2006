@@ -291,7 +291,8 @@ class atFile:
         nosentinels=False,
         thinFile=False,
         scriptWrite=False,
-        toString=False):
+        toString=False,
+        forcePythonSentinels=None):
     
         self.initCommonIvars()
         #@    << init ivars for writing >>
@@ -325,7 +326,10 @@ class atFile:
         
         if root:
             self.scanAllDirectives(root,scripting=scriptWrite)
-        if scriptWrite:
+            
+        if forcePythonSentinels is None:
+            forcePythonSentinels = scriptWrite
+        if forcePythonSentinels:
             # Force Python comment delims for g.getScript.
             self.startSentinelComment = "#"
             self.endSentinelComment = None
@@ -2909,7 +2913,7 @@ class atFile:
     #@+node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
     # This is at.write specialized for scripting.
     
-    def writeFromString(self,root,s):
+    def writeFromString(self,root,s,forcePythonSentinels=True):
         
         """Write a 4.x derived file from a string.
         
@@ -2919,7 +2923,8 @@ class atFile:
         c.endEditing() # Capture the current headline.
     
         at.initWriteIvars(root,"<string-file>",
-            nosentinels=False,thinFile=False,scriptWrite=True,toString=True)
+            nosentinels=False,thinFile=False,scriptWrite=True,toString=True,
+            forcePythonSentinels=forcePythonSentinels)
     
         try:
             at.openFileForWriting(root,at.targetFileName,toString=True)
