@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6973" clone_windows="0"/>
 <globals body_outline_ratio="0.417628541448">
-	<global_window_position top="64" left="434" height="880" width="788"/>
+	<global_window_position top="60" left="312" height="880" width="788"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -20,7 +20,7 @@
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841" annotate="7d71002e"><vh>Other tests...</vh>
+<v t="ekr.20040708205841" a="TV" annotate="7d71002e"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
@@ -534,6 +534,8 @@
 <v t="ekr.20050428085106"><vh>linda's node</vh></v>
 <v t="ekr.20050503095605"><vh>Test of os.spawnv calls to c.openWith</vh></v>
 <v t="ekr.20050505053411"><vh>@url 'c:\Program Files\jEdit\doc\README.txt'</vh></v>
+<v t="ekr.20050508195711"><vh>@nowrap tests</vh></v>
+<v t="ekr.20050505104328"><vh>Test of redirected scipt with error</vh></v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -734,7 +736,7 @@
 <v t="ekr.20050427101736.2"><vh>read zip</vh></v>
 </v>
 </v>
-<v t="ekr.20040312021734" a="TV" annotate="7d71002e"><vh>Scripts</vh>
+<v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1187,6 +1189,7 @@
 </v>
 <v t="ekr.20050419085933"><vh>@ints[0,1,2] testInts = 0</vh></v>
 <v t="ekr.20050419090156"><vh>@strings[a,b,c]  = a</vh></v>
+<v t="ekr.20050505104752"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
 </v>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
@@ -1913,6 +1916,12 @@
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
+<v t="ekr.20050509072745"><vh>Test of g.getScript with forcePythonSentinels = False</vh>
+<v t="ekr.20050509072745.1"><vh>g.getScript</vh></v>
+<v t="ekr.20050509072745.2"><vh>html stuff</vh>
+<v t="ekr.20050509072745.3"><vh>body</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -2620,7 +2629,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -15187,5 +15196,20 @@ print 'found',count,'nodes'</t>
 
 c.frame.menu.createOpenWithMenuFromTable(table)</t>
 <t tx="ekr.20050505053411"></t>
+<t tx="ekr.20050505104328"># To run this test, set @bool redirect_execute_script_output_to_log_pane = True in the @settings tree.
+
+print 'hi'
+print c.config.redirect_execute_script_output_to_log_pane
+print c.xyzzy</t>
+<t tx="ekr.20050505104752"># For testing error handling in g.executeScript</t>
+<t tx="ekr.20050508195711">@nowrap
+aaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccccc ddddddddddddddd eeeeeeeeeeeeeee ffffffffffffffff </t>
+<t tx="ekr.20050509072745">@language html</t>
+<t tx="ekr.20050509072745.1">print '-'*20
+print g.getScript(c,p,forcePythonSentinels=False)</t>
+<t tx="ekr.20050509072745.2">&lt;body&gt;
+@others
+&lt;/body&gt;</t>
+<t tx="ekr.20050509072745.3">This is a body</t>
 </tnodes>
 </leo_file>
