@@ -6187,14 +6187,18 @@ def initWriteIvars(self,root,targetFileName,
     nosentinels=False,
     thinFile=False,
     scriptWrite=False,
-    toString=False):
+    toString=False,
+    forcePythonSentinels=None):
 
     self.initCommonIvars()
     << init ivars for writing >>
     
     if root:
         self.scanAllDirectives(root,scripting=scriptWrite)
-    if scriptWrite:
+        
+    if forcePythonSentinels is None:
+        forcePythonSentinels = scriptWrite
+    if forcePythonSentinels:
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
         self.endSentinelComment = None
@@ -8667,7 +8671,7 @@ else:
 #@+node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
 # This is at.write specialized for scripting.
 
-def writeFromString(self,root,s):
+def writeFromString(self,root,s,forcePythonSentinels=True):
     
     """Write a 4.x derived file from a string.
     
@@ -8677,7 +8681,8 @@ def writeFromString(self,root,s):
     c.endEditing() # Capture the current headline.
 
     at.initWriteIvars(root,"<string-file>",
-        nosentinels=False,thinFile=False,scriptWrite=True,toString=True)
+        nosentinels=False,thinFile=False,scriptWrite=True,toString=True,
+        forcePythonSentinels=forcePythonSentinels)
 
     try:
         at.openFileForWriting(root,at.targetFileName,toString=True)
@@ -10853,14 +10858,18 @@ def initWriteIvars(self,root,targetFileName,
     nosentinels=False,
     thinFile=False,
     scriptWrite=False,
-    toString=False):
+    toString=False,
+    forcePythonSentinels=None):
 
     self.initCommonIvars()
     << init ivars for writing >>
     
     if root:
         self.scanAllDirectives(root,scripting=scriptWrite)
-    if scriptWrite:
+        
+    if forcePythonSentinels is None:
+        forcePythonSentinels = scriptWrite
+    if forcePythonSentinels:
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
         self.endSentinelComment = None
@@ -11608,13 +11617,15 @@ else: # Print surrounding lines.
 #@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True):
+def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
     
     '''Return the expansion of the selected text of node p.
     Return the expansion of all of node p's body text if there
     is p is not the current node or if there is no text selection.'''
 
     at = c.atFileCommands
+    if not p:
+        p = c.currentPosition()
     try:
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
@@ -11627,7 +11638,8 @@ def getScript (c,p,useSelectedText=True):
         s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            script = at.writeFromString(p.copy(),s)
+            script = at.writeFromString(p.copy(),s,
+                forcePythonSentinels=forcePythonSentinels)
             script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
         else: script = ''
@@ -12375,13 +12387,15 @@ def writeOldDerivedFiles (self):
 #@nonl
 #@-node:ekr.20041005112818.2:What I did
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True):
+def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
     
     '''Return the expansion of the selected text of node p.
     Return the expansion of all of node p's body text if there
     is p is not the current node or if there is no text selection.'''
 
     at = c.atFileCommands
+    if not p:
+        p = c.currentPosition()
     try:
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
@@ -12394,7 +12408,8 @@ def getScript (c,p,useSelectedText=True):
         s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            script = at.writeFromString(p.copy(),s)
+            script = at.writeFromString(p.copy(),s,
+                forcePythonSentinels=forcePythonSentinels)
             script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
         else: script = ''
@@ -12419,14 +12434,18 @@ def initWriteIvars(self,root,targetFileName,
     nosentinels=False,
     thinFile=False,
     scriptWrite=False,
-    toString=False):
+    toString=False,
+    forcePythonSentinels=None):
 
     self.initCommonIvars()
     << init ivars for writing >>
     
     if root:
         self.scanAllDirectives(root,scripting=scriptWrite)
-    if scriptWrite:
+        
+    if forcePythonSentinels is None:
+        forcePythonSentinels = scriptWrite
+    if forcePythonSentinels:
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
         self.endSentinelComment = None
@@ -22625,13 +22644,15 @@ else: # Print surrounding lines.
 #@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True):
+def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
     
     '''Return the expansion of the selected text of node p.
     Return the expansion of all of node p's body text if there
     is p is not the current node or if there is no text selection.'''
 
     at = c.atFileCommands
+    if not p:
+        p = c.currentPosition()
     try:
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
@@ -22644,7 +22665,8 @@ def getScript (c,p,useSelectedText=True):
         s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            script = at.writeFromString(p.copy(),s)
+            script = at.writeFromString(p.copy(),s,
+                forcePythonSentinels=forcePythonSentinels)
             script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
         else: script = ''
@@ -26277,14 +26299,14 @@ def callTagHandler (bunch,tag,keywords):
     
     handler = bunch.fn ; moduleName = bunch.moduleName
 
-    # Make sure all commanders exist.
-    # New in 4.3 b2: this can be a problem for any tag.
-    for key in ('c','old_c','new_c'):
-        c = keywords.get(key)
-        if c:
-            if not hasattr(c,'frame'): return None
-            if c.frame not in g.app.windowList:
-                return None # c has (or will be) destroyed.
+    # Make sure the new commander exists.
+    if tag == 'idle':
+        for key in ('c','new_c'):
+            c = keywords.get(key)
+            if c:
+                if not hasattr(c,'frame'): return None
+                if c.frame not in g.app.windowList:
+                    return None # c has (or will be) destroyed.
 
     # Calls to registerHandler from inside the handler belong to moduleName.
     global loadingModuleNameStack
@@ -26523,14 +26545,14 @@ def callTagHandler (bunch,tag,keywords):
     
     handler = bunch.fn ; moduleName = bunch.moduleName
 
-    # Make sure all commanders exist.
-    # New in 4.3 b2: this can be a problem for any tag.
-    for key in ('c','old_c','new_c'):
-        c = keywords.get(key)
-        if c:
-            if not hasattr(c,'frame'): return None
-            if c.frame not in g.app.windowList:
-                return None # c has (or will be) destroyed.
+    # Make sure the new commander exists.
+    if tag == 'idle':
+        for key in ('c','new_c'):
+            c = keywords.get(key)
+            if c:
+                if not hasattr(c,'frame'): return None
+                if c.frame not in g.app.windowList:
+                    return None # c has (or will be) destroyed.
 
     # Calls to registerHandler from inside the handler belong to moduleName.
     global loadingModuleNameStack
@@ -30366,13 +30388,15 @@ def set_focus(self,widget,later=False,tag=''):
 #@-node:ekr.20050210080438:(Made sure Go To Line Number dialog is brought to the front)
 #@+node:ekr.20050211095957:(Fixed newline bug in g.getScript)
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True):
+def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
     
     '''Return the expansion of the selected text of node p.
     Return the expansion of all of node p's body text if there
     is p is not the current node or if there is no text selection.'''
 
     at = c.atFileCommands
+    if not p:
+        p = c.currentPosition()
     try:
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
@@ -30385,7 +30409,8 @@ def getScript (c,p,useSelectedText=True):
         s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            script = at.writeFromString(p.copy(),s)
+            script = at.writeFromString(p.copy(),s,
+                forcePythonSentinels=forcePythonSentinels)
             script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
         else: script = ''
@@ -31171,13 +31196,15 @@ else: # Print surrounding lines.
 #@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True):
+def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
     
     '''Return the expansion of the selected text of node p.
     Return the expansion of all of node p's body text if there
     is p is not the current node or if there is no text selection.'''
 
     at = c.atFileCommands
+    if not p:
+        p = c.currentPosition()
     try:
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
@@ -31190,7 +31217,8 @@ def getScript (c,p,useSelectedText=True):
         s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            script = at.writeFromString(p.copy(),s)
+            script = at.writeFromString(p.copy(),s,
+                forcePythonSentinels=forcePythonSentinels)
             script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
         else: script = ''
@@ -32335,13 +32363,15 @@ def getOutputNewline (c=None,name=None):
 #@nonl
 #@-node:ekr.20031218072017.1386:getOutputNewline
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True):
+def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
     
     '''Return the expansion of the selected text of node p.
     Return the expansion of all of node p's body text if there
     is p is not the current node or if there is no text selection.'''
 
     at = c.atFileCommands
+    if not p:
+        p = c.currentPosition()
     try:
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
@@ -32354,7 +32384,8 @@ def getScript (c,p,useSelectedText=True):
         s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            script = at.writeFromString(p.copy(),s)
+            script = at.writeFromString(p.copy(),s,
+                forcePythonSentinels=forcePythonSentinels)
             script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
         else: script = ''
@@ -37752,7 +37783,6 @@ For the same reason we can't rely on any TK canvas methods here.
 @c
 
 def yoffset(self,p1):
-
     # if not p1.isVisible(): print "yoffset not visible:",p1
     root = self.c.rootPosition()
     h,flag = self.yoffsetTree(root,p1)
@@ -37762,7 +37792,7 @@ def yoffset(self,p1):
 
 def yoffsetTree(self,p,p1):
     h = 0
-    if not p.exists(self.c): return h # An extra precaution.
+    if not p.exists(self.c): return h,False # An extra precaution.
     p = p.copy()
     for p2 in p.siblings_iter():
         # print "yoffsetTree:", p2
@@ -37774,7 +37804,6 @@ def yoffsetTree(self,p,p1):
             h2, flag = self.yoffsetTree(child,p1)
             h += h2
             if flag: return h, True
-    
     return h, False
 #@nonl
 #@-node:ekr.20040803072955.70:yoffset
@@ -44725,14 +44754,14 @@ def callTagHandler (bunch,tag,keywords):
     
     handler = bunch.fn ; moduleName = bunch.moduleName
 
-    # Make sure all commanders exist.
-    # New in 4.3 b2: this can be a problem for any tag.
-    for key in ('c','old_c','new_c'):
-        c = keywords.get(key)
-        if c:
-            if not hasattr(c,'frame'): return None
-            if c.frame not in g.app.windowList:
-                return None # c has (or will be) destroyed.
+    # Make sure the new commander exists.
+    if tag == 'idle':
+        for key in ('c','new_c'):
+            c = keywords.get(key)
+            if c:
+                if not hasattr(c,'frame'): return None
+                if c.frame not in g.app.windowList:
+                    return None # c has (or will be) destroyed.
 
     # Calls to registerHandler from inside the handler belong to moduleName.
     global loadingModuleNameStack
@@ -44853,6 +44882,472 @@ frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
 #@-node:ekr.20040803072955.133:<< set the current node >>
 #@-node:ekr.20040803072955.128:tree.select
 #@-node:ekr.20050507081356.1:(Fixed Crasher in nav_buttons)
+#@+node:ekr.20050317075352:(Investigated disappearing scrollbar  when autocompleter plugin is enabled)
+# Autocompleter appears to work as expected with the 4.3b1 release.
+#@nonl
+#@+node:ekr.20050317075352.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3052150
+By: brianvanden
+
+Leo Log Window...
+Leo 4.3 alpha 4, build  1.231 , March 15, 2005
+Python 2.4.0, Tk 8.4.7, win32
+
+I installed a4 today, made some changes to leoSettings.leo, and began exploring
+plugins. If autocompleter.py is enabled while the other plugins are left as
+in a fresh leo install, and the body pane is set not to wrap, then, when a line
+is longer than the screen, there is no horizontal scrollbar in the body pane.
+(I've observed this in both nodes not in a @nowrap sub- tree as well as those
+in such a sub-tree.)
+
+If autocompleter.py is disabled and leo is relaunched, the horizontal scroll
+bar appears as expected.
+
+but http://sourceforge.net/forum/forum.php?thread_id=1244118&forum_id=10226
+might be relevant.
+#@nonl
+#@-node:ekr.20050317075352.1:Report
+#@-node:ekr.20050317075352:(Investigated disappearing scrollbar  when autocompleter plugin is enabled)
+#@+node:ekr.20050317074713:(Tested chapters plugin)
+#@+node:ekr.20050508200915:Problem: crasher (no problem now)
+#@+node:ekr.20050317074713.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3051866
+By: nobody
+
+3)When enabling the chapters plugin, starting up Leo (which gives me an untitled
+window) and use the File-->Open menu to open leopluginsref.leo I get the following
+in the log pane:
+
+Leo Log Window...
+Leo 4.3 alpha 4, build  1.234 , March 15, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+exceptions opening: C:\Documents and Settings\re1705\My
+Documents\PythonStuff\leo\plugins\leoPluginsRef.leo
+Traceback (most recent call last):
+  File "C:\Documents and Settings\re1705\My
+Documents\PythonStuff\leo\src\leoGlobals.py", line 630, in openWithFileName
+    readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+  File "C:\Documents and Settings\re1705\My
+Documents\PythonStuff\leo\plugins\chapters.py", line 924, in newOpen
+    return oldOpen(self,file,fileName,readAtFileNodesFlag)
+  File "C:\Documents and Settings\re1705\My
+Documents\PythonStuff\leo\src\leoFileCommands.py", line 1285, in open
+    ok, ratio =
+self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
+TypeError: newGetLeoFile() got an unexpected keyword argument 'silent'
+
+of the newly opened window. In the still open 'untitled' window I can see a
+second 'no reportlab' line added to the log.
+#@nonl
+#@-node:ekr.20050317074713.1:Report
+#@+node:ekr.20031218072017.1553:getLeoFile
+# The caller should enclose this in begin/endUpdate.
+
+def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c
+    c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
+    << warn on read-only files >>
+    self.mFileName = c.mFileName
+    self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.descendentUnknownAttributesDictList = []
+    ok = True
+    c.loading = True # disable c.changed
+    
+    try:
+        << scan all the xml elements >>
+    except BadLeoFile, message:
+        if not silent:
+            << raise an alert >>
+        ok = False
+
+    c.frame.tree.redraw_now(scroll=False)
+    
+    # g.trace(readAtFileNodesFlag,c.mFileName)
+    
+    if ok and readAtFileNodesFlag:
+        c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+
+    if not c.currentPosition():
+        c.setCurrentPosition(c.rootPosition())
+
+    c.selectVnode(c.currentPosition()) # load body pane
+    c.loading = False # reenable c.changed
+    c.setChanged(c.changed) # Refresh the changed marker.
+    << restore attributes in descendent tnodes >>
+    self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.tnodesDict = {}
+    return ok, self.ratio
+#@nonl
+#@+node:ekr.20031218072017.1554:<< warn on read-only files >>
+# os.access may not exist on all platforms.
+
+try:
+    self.read_only = not os.access(fileName,os.W_OK)
+except AttributeError:
+    self.read_only = False
+except UnicodeError:
+    self.read_only = False
+        
+if self.read_only:
+    g.es("read only: " + fileName,color="red")
+#@nonl
+#@-node:ekr.20031218072017.1554:<< warn on read-only files >>
+#@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
+self.getXmlVersionTag()
+self.getXmlStylesheetTag()
+
+self.getTag("<leo_file>") # Must match exactly.
+self.getLeoHeader()
+self.getGlobals()
+self.getPrefs()
+self.getFindPanelSettings()
+
+# Causes window to appear.
+c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio)
+if not silent:
+    g.es("reading: " + fileName)
+
+self.getVnodes()
+self.getTnodes()
+self.getCloneWindows()
+self.getTag("</leo_file>")
+#@nonl
+#@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
+#@+node:ekr.20031218072017.1556:<< raise an alert >>
+# All other exceptions are Leo bugs.
+
+g.es_exception()
+g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
+#@nonl
+#@-node:ekr.20031218072017.1556:<< raise an alert >>
+#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t: t.unknownAttributes = resultDict[gnx]
+        # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = {} ; expanded = {}
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+
+if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
+    for p in c.all_positions_iter():
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
+            p.expand()
+#@nonl
+#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+#@-node:ekr.20031218072017.1553:getLeoFile
+#@-node:ekr.20050508200915:Problem: crasher (no problem now)
+#@+node:ekr.20050330135547:Problem: disappearing chapters (I don't see this)
+#@+node:ekr.20040803072955.128:tree.select
+# Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+
+    if not p: return
+
+    # g.trace('len(body)',len(p.bodyString()),p.headString())
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << select the new node >>
+        if p and p != old_p: # Suppress duplicate call.
+            try: # may fail during initialization.
+                self.idle_scrollTo(p) # p is NOT c.currentPosition() here!
+            except: pass
+        << update c.beadList or c.beadPointer >>
+        << update c.visitedList >>
+
+    << set the current node >>
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    # g.printGc()
+#@nonl
+#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+# Remember the position of the scrollbar before making any changes.
+if old_p:
+
+    yview=body.yview()
+    insertSpot = c.frame.body.getInsertionPoint()
+    
+    if old_p != p:
+        if self.trace and self.verbose:
+            g.trace("unselect:",old_p.headString())
+        self.endEditLabel() # sets editPosition = None
+        self.setUnselectedLabelState(old_p)
+    
+    if old_p.edit_text():
+        old_p.v.t.scrollBarSpot = yview
+        old_p.v.t.insertSpot = insertSpot
+#@nonl
+#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20040803072955.130:<< select the new node >>
+frame.setWrap(p)
+
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(body,s,tag="select:set body",isHeadline=False)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v and p.v.t.insertSpot != None:
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+#@nonl
+#@-node:ekr.20040803072955.130:<< select the new node >>
+#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by c and make c the present node.
+        # print "updating c.beadList"
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+    # g.trace(c.beadPointer,p,present_p)
+#@nonl
+#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20040803072955.132:<< update c.visitedList >>
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+#@nonl
+#@-node:ekr.20040803072955.132:<< update c.visitedList >>
+#@+node:ekr.20040803072955.133:<< set the current node >>
+c.setCurrentPosition(p)
+
+if p != old_p:
+    self.setSelectedLabelState(p)
+
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
+#@nonl
+#@-node:ekr.20040803072955.133:<< set the current node >>
+#@-node:ekr.20040803072955.128:tree.select
+#@+node:ekr.20050330135641:Report 1
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3073752
+By: nobody
+
+I just tried Chapters (latest CVS from a few hours ago) and I had a major bug,
+one that I've noticed for a few months now. I have 5 chapters and many cross-chapter
+clones.
+
+At unexpected times, when clicking on a node in one of the Chapters, Leo suddenly
+loses track of an entire subtree or the entirety of nodes in the outline. Just
+minutes ago, I clicked on a node in my first chapter (containing my entire outline,
+with subparts cloned to other chapters), and the ENTIRE CONTENTS of the chapter
+DISAPPEARED with the exception of one "New Headline" node, which was odd because
+I didn't add anything new in the first chapter. I tried CTRL+1, CTRL+2 to force
+Leo to redraw the outline in case the  nodes were present but somehow hidden,
+but no luck - all the nodes really seemed to be gone. The other chapters (containing
+clones from the first chapter) still looked ok. I had saved a few minutes earlier,
+so I quit without saving, hoping my earlier-saved version would still be OK,
+but to my disappointment the earlier-saved version had a one-node ("New Headline")
+outline in the first chapter.
+
+I had noticed this behavior since a few months (unfortunately I can't recall
+starting with which version), so I had been refraining from using Chapters,
+but it appears that there is still a serious bug lurking somewhere in there.
+#@nonl
+#@-node:ekr.20050330135641:Report 1
+#@+node:ekr.20050330135641.1:Report 2
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3073757
+By: nobody
+
+Regarding my previous message about Chapters deleting my entire outline, I just
+remembered my sequence of steps more clearly. This may provide some hint towards
+reproducing and fixing the bug.
+
+What I did:
+- Enabled Chapters, re-started Leo (latest CVS).
+- Load my huge outline. It appears in Chapter 1.
+- Add a chapter.
+- ***MAYBE IMPORTANT?*** The new chapter contains a new node, "New Headline".
+I leave this headline as it is, for now.
+- Clone some/many nodes into the new Chapters.
+- Add a few more chapters, again not touching the default "New Headline" node,
+and cloning nodes from Chapter 1 (big outline) into the new chapters.
+
+Up until now everything "seems" ok.
+
+Then, I started with Chapter 5, and deleted the "New Headline" node with the
+right-mouse-click menu. I did the same in Chapter 4, Chapter 3, and Chapter 2.
+
+Now, I returned to Chapter 1, clicked somewhere in the huge outline, and suddenly
+my entire outline disappeared, and a single "New Headline" node took its place.
+
+It looks as if some links or references between nodes/chapters are getting out
+of sync. Anyway, I know this information is not extremely specific, but maybe
+it will help in finding the bug.
+#@nonl
+#@-node:ekr.20050330135641.1:Report 2
+#@-node:ekr.20050330135547:Problem: disappearing chapters (I don't see this)
+#@+node:ekr.20050508201625:Problem: c.exists may return False in chapters
+#@+node:ekr.20040803072955.65:idle_scrollTo
+def idle_scrollTo(self,p=None):
+
+    """Scrolls the canvas so that p is in view.
+    
+    This is done at idle time after a redraw so that treeBar.get() will return proper values."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    c = self.c ; frame = c.frame
+    if not p: p = self.c.currentPosition()
+    if not p: p = self.c.rootPosition()
+    if not p or not p.exists(c):
+        g.trace('does not exist:',p.headString())
+        return
+    # g.trace(p.headString())
+    try:
+        last = p.lastVisible()
+        nextToLast = last.visBack()
+        h1 = self.yoffset(p)
+        h2 = self.yoffset(last)
+        << compute approximate line height >>
+        << Compute the fractions to scroll down/up >>
+        if frac <= lo:
+            if self.prevMoveToFrac != frac:
+                self.prevMoveToFrac = frac
+                self.canvas.yview("moveto",frac)
+        elif frac2 + (hi - lo) >= hi:
+            if self.prevMoveToFrac != frac2:
+                self.prevMoveToFrac = frac2
+                self.canvas.yview("moveto",frac2)
+
+        if self.allocateOnlyVisibleNodes:
+            self.canvas.after_idle(self.idle_second_redraw)
+            
+        c.setTopVnode(p) # 1/30/04: remember a pseudo "top" node.
+        # g.trace("%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi))
+    except:
+        g.es_exception()
+#@nonl
+#@+node:ekr.20040803072955.66:<< compute approximate line height >>
+if nextToLast: # 2/2/03: compute approximate line height.
+    lineHeight = h2 - self.yoffset(nextToLast)
+else:
+    lineHeight = 20 # A reasonable default.
+#@nonl
+#@-node:ekr.20040803072955.66:<< compute approximate line height >>
+#@+node:ekr.20040803072955.67:<< Compute the fractions to scroll down/up >>
+data = frame.treeBar.get()
+try: lo, hi = data
+except: lo,hi = 0.0,1.0
+if h2 > 0.1:
+    frac = float(h1)/float(h2) # For scrolling down.
+    frac2 = float(h1+lineHeight/2)/float(h2) # For scrolling up.
+    frac2 = frac2 - (hi - lo)
+else:
+    frac = frac2 = 0.0 # probably any value would work here.
+    
+frac =  max(min(frac,1.0),0.0)
+frac2 = max(min(frac2,1.0),0.0)
+#@nonl
+#@-node:ekr.20040803072955.67:<< Compute the fractions to scroll down/up >>
+#@-node:ekr.20040803072955.65:idle_scrollTo
+#@-node:ekr.20050508201625:Problem: c.exists may return False in chapters
+#@-node:ekr.20050317074713:(Tested chapters plugin)
+#@+node:ekr.20050508201158:(Fixed crasher in yoffsetTree)
+# This happened when creating a new chapter with chapters.py enabled.
+#@nonl
+#@+node:ekr.20050508201158.1:Traceback
+idle_scrollTo: does not exist: NewHeadline
+Traceback (most recent call last):
+
+  File "C:\prog\leoCVS\leo\src\leoTkinterTree.py", line 1416, in idle_scrollTo
+    h2 = self.yoffset(last)
+
+  File "C:\prog\leoCVS\leo\src\leoTkinterTree.py", line 1493, in yoffset
+    h,flag = self.yoffsetTree(root,p1)
+
+  File "C:\prog\leoCVS\leo\src\leoTkinterTree.py", line 1509, in yoffsetTree
+    h2, flag = self.yoffsetTree(child,p1)
+
+TypeError: unpack non-sequence
+#@nonl
+#@-node:ekr.20050508201158.1:Traceback
+#@+node:ekr.20040803072955.70:yoffset
+@ We can't just return icony because the tree hasn't been redrawn yet.
+For the same reason we can't rely on any TK canvas methods here.
+@c
+
+def yoffset(self,p1):
+    # if not p1.isVisible(): print "yoffset not visible:",p1
+    root = self.c.rootPosition()
+    h,flag = self.yoffsetTree(root,p1)
+    # flag can be False during initialization.
+    # if not flag: print "yoffset fails:",h,v1
+    return h
+
+def yoffsetTree(self,p,p1):
+    h = 0
+    if not p.exists(self.c): return h,False # An extra precaution.
+    p = p.copy()
+    for p2 in p.siblings_iter():
+        # print "yoffsetTree:", p2
+        if p2 == p1:
+            return h, True
+        h += self.line_height
+        if p2.isExpanded() and p2.hasChildren():
+            child = p2.firstChild()
+            h2, flag = self.yoffsetTree(child,p1)
+            h += h2
+            if flag: return h, True
+    return h, False
+#@nonl
+#@-node:ekr.20040803072955.70:yoffset
+#@-node:ekr.20050508201158:(Fixed crasher in yoffsetTree)
 #@-node:ekr.20050505094928:Bugs
 #@+node:ekr.20050505094928.1:Features
 #@+node:ekr.20050505051303:(Allow quoted urls in  @urls nodes)
@@ -45015,9 +45510,13 @@ g.getScript now fully processes all scripts, regardless of where they came from.
 - Changed g.getScript:
     - p arg is now required.
     - Removed unused script arg.
+    - Added forcePythonSentinels arg (default is True).
     - g.getScript no longer temporarily alters any body text.
         - atFile.writeFromString gets the initial text using the fromString arg.
     - g.getScript now always calls atFile.writeFromString to handle all Leo directives.
+
+- Added forcePythonSentinels to initWriteIvars.
+    - Default is None, in which case the code sets forcePythonSentinels to the scriptWrite arg.
 
 - Created atFile.putAtFirstLines and atFile.putAtLastLines.
     - These replace the corresonding sections in writeOpenFile.
@@ -45033,13 +45532,15 @@ g.getScript now fully processes all scripts, regardless of where they came from.
 #@nonl
 #@-node:ekr.20050506095420:What I did
 #@+node:EKR.20040614071102.1:g.getScript & tests
-def getScript (c,p,useSelectedText=True):
+def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
     
     '''Return the expansion of the selected text of node p.
     Return the expansion of all of node p's body text if there
     is p is not the current node or if there is no text selection.'''
 
     at = c.atFileCommands
+    if not p:
+        p = c.currentPosition()
     try:
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
@@ -45052,7 +45553,8 @@ def getScript (c,p,useSelectedText=True):
         s = g.removeExtraLws(s,c.tab_width)
         if s.strip():
             g.app.scriptDict["script1"]=s
-            script = at.writeFromString(p.copy(),s)
+            script = at.writeFromString(p.copy(),s,
+                forcePythonSentinels=forcePythonSentinels)
             script = script.replace("\r\n","\n") # Use brute force.
             g.app.scriptDict["script2"]=script
         else: script = ''
@@ -45077,14 +45579,18 @@ def initWriteIvars(self,root,targetFileName,
     nosentinels=False,
     thinFile=False,
     scriptWrite=False,
-    toString=False):
+    toString=False,
+    forcePythonSentinels=None):
 
     self.initCommonIvars()
     << init ivars for writing >>
     
     if root:
         self.scanAllDirectives(root,scripting=scriptWrite)
-    if scriptWrite:
+        
+    if forcePythonSentinels is None:
+        forcePythonSentinels = scriptWrite
+    if forcePythonSentinels:
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
         self.endSentinelComment = None
@@ -45411,7 +45917,7 @@ def writeOpenFile(self,root,nosentinels=False,toString=False,fromString=''):
 #@+node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
 # This is at.write specialized for scripting.
 
-def writeFromString(self,root,s):
+def writeFromString(self,root,s,forcePythonSentinels=True):
     
     """Write a 4.x derived file from a string.
     
@@ -45421,7 +45927,8 @@ def writeFromString(self,root,s):
     c.endEditing() # Capture the current headline.
 
     at.initWriteIvars(root,"<string-file>",
-        nosentinels=False,thinFile=False,scriptWrite=True,toString=True)
+        nosentinels=False,thinFile=False,scriptWrite=True,toString=True,
+        forcePythonSentinels=forcePythonSentinels)
 
     try:
         at.openFileForWriting(root,at.targetFileName,toString=True)
