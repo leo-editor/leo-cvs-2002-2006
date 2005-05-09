@@ -1487,7 +1487,6 @@ class leoTkinterTree (leoFrame.leoTree):
     #@@c
     
     def yoffset(self,p1):
-    
         # if not p1.isVisible(): print "yoffset not visible:",p1
         root = self.c.rootPosition()
         h,flag = self.yoffsetTree(root,p1)
@@ -1497,7 +1496,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
     def yoffsetTree(self,p,p1):
         h = 0
-        if not p.exists(self.c): return h # An extra precaution.
+        if not p.exists(self.c): return h,False # An extra precaution.
         p = p.copy()
         for p2 in p.siblings_iter():
             # print "yoffsetTree:", p2
@@ -1509,7 +1508,6 @@ class leoTkinterTree (leoFrame.leoTree):
                 h2, flag = self.yoffsetTree(child,p1)
                 h += h2
                 if flag: return h, True
-        
         return h, False
     #@nonl
     #@-node:ekr.20040803072955.70:yoffset
