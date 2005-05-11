@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6973" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6974" clone_windows="0"/>
 <globals body_outline_ratio="0.417628541448">
-	<global_window_position top="60" left="312" height="880" width="788"/>
+	<global_window_position top="62" left="386" height="880" width="788"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -20,7 +20,7 @@
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841" a="TV" annotate="7d71002e"><vh>Other tests...</vh>
+<v t="ekr.20040708205841" annotate="7d71002e"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
@@ -536,6 +536,13 @@
 <v t="ekr.20050505053411"><vh>@url 'c:\Program Files\jEdit\doc\README.txt'</vh></v>
 <v t="ekr.20050508195711"><vh>@nowrap tests</vh></v>
 <v t="ekr.20050505104328"><vh>Test of redirected scipt with error</vh></v>
+<v t="ekr.20050509072745"><vh>Test of g.getScript with forcePythonSentinels = False</vh>
+<v t="ekr.20050509072745.1"><vh>g.getScript</vh></v>
+<v t="ekr.20050509072745.2"><vh>html stuff</vh>
+<v t="ekr.20050509072745.3"><vh>body</vh></v>
+</v>
+</v>
+<v t="ekr.20050511093328"><vh>Test of extract section</vh></v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -1190,6 +1197,7 @@
 <v t="ekr.20050419085933"><vh>@ints[0,1,2] testInts = 0</vh></v>
 <v t="ekr.20050419090156"><vh>@strings[a,b,c]  = a</vh></v>
 <v t="ekr.20050505104752"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
+<v t="ekr.20050511085027"><vh>@string undo_granularity = word</vh></v>
 </v>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
@@ -1201,7 +1209,7 @@
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1916,12 +1924,6 @@
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
-<v t="ekr.20050509072745"><vh>Test of g.getScript with forcePythonSentinels = False</vh>
-<v t="ekr.20050509072745.1"><vh>g.getScript</vh></v>
-<v t="ekr.20050509072745.2"><vh>html stuff</vh>
-<v t="ekr.20050509072745.3"><vh>body</vh></v>
-</v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -2629,7 +2631,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -3346,13 +3348,13 @@ Each child node will in turn have two or more children:
 <t tx="ekr.20040712101754.39"></t>
 <t tx="ekr.20040712101754.40"></t>
 <t tx="ekr.20040712101754.41">before
-&lt;&lt; section &gt;&gt;
-sec line 1
-    sec line 2 indented
+    &lt;&lt; section &gt;&gt;
+    sec line 1
+        sec line 2 indented
 sec line 3
 after</t>
 <t tx="ekr.20040712101754.42">before
-&lt;&lt; section &gt;&gt;
+    &lt;&lt; section &gt;&gt;
 after</t>
 <t tx="ekr.20040712101754.43">sec line 1
     sec line 2 indented
@@ -14236,9 +14238,9 @@ leoTest.directiveBreaksParagraphTest(c,p)</t>
 <t tx="ekr.20050417124704"></t>
 <t tx="ekr.20050417201845"></t>
 <t tx="ekr.20050417201845.1">before
-&lt;&lt; section &gt;&gt;
-sec line 1
-    sec line 2 indented
+    &lt;&lt; section &gt;&gt;
+    sec line 1
+        sec line 2 indented
 sec line 3
 after</t>
 <t tx="ekr.20050417201845.2">before
@@ -15211,5 +15213,21 @@ print g.getScript(c,p,forcePythonSentinels=False)</t>
 @others
 &lt;/body&gt;</t>
 <t tx="ekr.20050509072745.3">This is a body</t>
+<t tx="ekr.20050511085027">node granularity: start a new undo unit when typing moves to a new node.
+line granularity: start a new undo unit when typing moves to new line.
+word granularity: start a new undo unit when typing starts a new word.
+char granularity: start a new undo unit for each character typed.
+
+'line' granularity is the default used if no valid setting is specified.
+
+Leo used char granularity for all version prior to 4.3. char granularity is not
+recommended; it is clumsy and wasteful of computer memory.</t>
+<t tx="ekr.20050511093328">line 1
+    indented line 2
+    &lt;&lt; section &gt;&gt;
+    section line 1
+    section line 2
+    after line 1
+after line 2</t>
 </tnodes>
 </leo_file>
