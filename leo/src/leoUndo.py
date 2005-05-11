@@ -1431,8 +1431,9 @@ class baseUndoer:
             c.frame.body.setTextSelection(u.newSel)
         if u.yview:
             c.frame.body.setYScrollPosition(u.yview)
-            
-        u.redrawFlag = (current != u.p)
+        
+        if u.groupCount == 0:
+            u.redrawFlag = (current != u.p)
     #@nonl
     #@-node:EKR.20040526075238.5:redoTyping
     #@-node:ekr.20031218072017.2030:redo & helpers...
@@ -1455,6 +1456,7 @@ class baseUndoer:
         # Execute the undoHelper.
         c.beginUpdate()
         u.undoHelper()
+        # g.trace(u.redrawFlag)
         c.endUpdate(u.redrawFlag)
     
         u.undoing = False
@@ -1681,7 +1683,8 @@ class baseUndoer:
         if u.yview:
             c.frame.body.setYScrollPosition(u.yview)
             
-        u.redrawFlag = (current != u.p)
+        if u.groupCount == 0:
+            u.redrawFlag = (current != u.p)
     #@nonl
     #@-node:EKR.20040526090701.4:undoTyping
     #@+node:ekr.20031218072017.1493:undoRedoText
