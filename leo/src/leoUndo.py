@@ -1103,6 +1103,7 @@ class baseUndoer:
         # with 'real' typing.
         #@-at
         #@@c
+        # g.trace(granularity)
         if (
             not old_d or not old_p or
             old_p.v != p.v or
@@ -1129,6 +1130,7 @@ class baseUndoer:
                     #@+node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
                     old_start,old_end = oldSel
                     new_start,new_end = newSel
+                    # g.trace('new_start',new_start,'old_start',old_start)
                     if old_start != old_end or new_start != new_end:
                         # The new and old characters are not contiguous.
                         newBead = True
@@ -1139,10 +1141,10 @@ class baseUndoer:
                         new_row,new_col = int(new_row),int(new_col)
                         old_lines = g.splitLines(oldText)
                         new_lines = g.splitLines(newText)
-                        #g.trace(old_row,old_col,len(old_lines))
-                        #g.trace(new_row,new_col,len(new_lines))
+                        # g.trace('old',old_row,old_col,len(old_lines))
+                        # g.trace('new',new_row,new_col,len(new_lines))
                         # Recognize backspace, del, etc. as contiguous.
-                        if old_row != new_row or abs(old_col-new_col) != 1:
+                        if old_row != new_row or abs(old_col- new_col) != 1:
                             # The new and old characters are not contiguous.
                             newBead = True
                         elif old_col == 0 or new_col == 0:
@@ -1150,12 +1152,18 @@ class baseUndoer:
                         else:
                             old_s = old_lines[old_row-1]
                             new_s = new_lines[new_row-1]
-                            old_ch = old_s[old_col-1]
-                            new_ch = new_s[new_col-1]
-                            # g.trace(repr(old_ch),repr(new_ch))
-                            newBead = self.recognizeStartOfTypingWord(
-                                old_lines,old_row,old_col,old_ch,
-                                new_lines,new_row,new_col,new_ch)
+                            # New in 4.3b2:
+                            # Guard against invalid oldSel or newSel params.
+                            if old_col-1 >= len(old_s) or new_col-1 >= len(new_s):
+                                newBead = True
+                            else:
+                                # g.trace(new_col,len(new_s),repr(new_s))
+                                # g.trace(repr(old_ch),repr(new_ch))
+                                old_ch = old_s[old_col-1]
+                                new_ch = new_s[new_col-1]
+                                newBead = self.recognizeStartOfTypingWord(
+                                    old_lines,old_row,old_col,old_ch,
+                                    new_lines,new_row,new_col,new_ch)
                     #@nonl
                     #@-node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
                     #@nl
