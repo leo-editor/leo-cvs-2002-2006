@@ -2493,6 +2493,7 @@ class leoTkinterBody (leoFrame.leoBody):
                         # g.trace(count,(n%w))
                         if count > 0:
                             c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+                            newSel = c.frame.body.getTextSelection() # Fixes crasher in undo logic.
                 #@nonl
                 #@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
                 #@nl
