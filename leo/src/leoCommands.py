@@ -2000,9 +2000,9 @@ class baseCommands:
         head,lines,tail,oldSel,oldYview = self.getBodyLines()
         if not lines: return
         headline = lines[0].strip() ; del lines[0]
-        junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
     
         # Remove leading whitespace from all body lines.
+        junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
         strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
             for line in lines]
         newBody = string.join(strippedLines,'\n')
@@ -2032,9 +2032,8 @@ class baseCommands:
         head,lines,tail,oldSel,oldYview = self.getBodyLines()
         if not lines: return
     
+        line1 = '\n' + lines[0]
         headline = lines[0].strip() ; del lines[0]
-        junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
-        line1 = "\n" + headline
         #@    << Set headline for extractSection >>
         #@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
         if len(headline) < 5:
@@ -2054,6 +2053,7 @@ class baseCommands:
         #@nl
         
         # Remove leading whitespace from all body lines.
+        junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
         strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
             for line in lines]
         newBody = string.join(strippedLines,'\n')
