@@ -92,9 +92,9 @@
 <v t="ekr.20050118125236"><vh>Write a script to make sure .nsi and main install scripts create the same files</vh></v>
 <v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
-<v t="EKR.20040519080201.1"><vh>Distribution checklist</vh>
+<v t="EKR.20040519080201.1" a="E"><vh>Distribution checklist</vh>
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
-<v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+<v t="EKR.20040519080201.3" a="TV"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
 <v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
 <v t="EKR.20040519090846.2"><vh>@silentfile ../doc/INSTALL.TXT</vh>
@@ -137,7 +137,7 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021" a="E"><vh>Leo 4.3 installer: version stuff</vh>
+<v t="ekr.20050118095021"><vh>Leo 4.3 installer: version stuff</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
@@ -183,8 +183,7 @@
 <v t="ekr.20050118103447.1"><vh>&lt;&lt; uninstall top-level files &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050118092706" a="E"
-expanded="ekr.20050118092706.13,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
+<v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050118113631"><vh>Main distribution script</vh>
@@ -216,6 +215,7 @@ Version numbers
 	- Update version number in createLeoDist.py
 
 Create the distribution using the distribution scripts.
+    - Make sure .leoRecentFiles.txt is empty.
 
 Create and test leosetup.exe.
 	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
@@ -719,7 +719,6 @@ include config/.leoRecentFiles.txt
 include dist/createLeoDist.py
 include dist/leo-4-3.nsi
 include dist/leoDist.leo
-include dist/LeoPackage.pmsp
 include dist/.pycheckrc
 
 include doc/LeoDiary.leo

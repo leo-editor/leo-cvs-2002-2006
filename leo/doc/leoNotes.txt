@@ -1147,6 +1147,19 @@ The HOME var must be set to c:\prog\leoCVS for .pycheckrc to be effective.
 To suppress warnings from the standard library set ignoreStandardLibrary=1 in .pycheckrc
 #@nonl
 #@-node:ekr.20031218072017.390:How to run Pychecker
+#@+node:ekr.20050510071834:How to use a temp file with pdb
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3137690
+By: nobody
+
+I dont know if anyone has solved this for regular Leo, but in the JyLeo JythonShell,
+when the user executes a script with Pdb it:
+1. dumps the script in a tmp file system's tmp directory.
+2. Executes pdb based off of that tmp file.
+
+that way you get all the goodness that pdb can offer.
+#@-node:ekr.20050510071834:How to use a temp file with pdb
 #@+node:ekr.20031218072017.391:How to use CVS branches
 @nocolor
 
@@ -1747,6 +1760,53 @@ def createRecentFiles (self,parent,p,kind,name,vals):
 #@nonl
 #@-node:ekr.20041225063637.44:createRecentFiles
 #@-node:ekr.20050424173858:From config
+#@+node:ekr.20050506094742:Unused from atFile.writeOpenFile
+# these have been replaced by at.putAtFirst/LastLines
+#@nonl
+#@+node:ekr.20041005105605.159:<< put all @last lines in root >> (4.x)
+@ Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines following the @-leo sentinel.
+@c
+
+tag = "@last"
+
+# 4/17/04 Use g.splitLines to preserve trailing newlines.
+lines = g.splitLines(root.v.t.bodyString)
+n = len(lines) ; j = k = n - 1
+
+# Scan backwards for @last directives.
+while j >= 0:
+    line = lines[j]
+    if g.match(line,0,tag): j -= 1
+    elif not line.strip():
+        j -= 1
+    else: break
+    
+# Write the @last lines.
+for line in lines[j+1:k+1]:
+    if g.match(line,0,tag):
+        i = len(tag) ; i = g.skip_ws(line,i)
+        at.os(line[i:])
+#@nonl
+#@-node:ekr.20041005105605.159:<< put all @last lines in root >> (4.x)
+#@+node:ekr.20041005105605.158:<< put all @first lines in root >> (4.x)
+@ Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines preceding the @+leo sentinel.
+@c
+
+s = root.v.t.bodyString
+tag = "@first"
+i = 0
+while g.match(s,i,tag):
+    i += len(tag)
+    i = g.skip_ws(s,i)
+    j = i
+    i = g.skip_to_end_of_line(s,i)
+    # Write @first line, whether empty or not
+    line = s[j:i]
+    at.os(line) ; at.onl()
+    i = g.skip_nl(s,i)
+#@nonl
+#@-node:ekr.20041005105605.158:<< put all @first lines in root >> (4.x)
+#@-node:ekr.20050506094742:Unused from atFile.writeOpenFile
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
