@@ -4163,45 +4163,60 @@ class baseCommands:
     #@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty
     def markAllAtFileNodesDirty (self):
     
-        c = self ; v = c.rootVnode()
+        c = self ; p = c.rootPosition()
+    
+        changed = False
         c.beginUpdate()
-        while v:
-            if v.isAtFileNode()and not v.isDirty():
-                v.setDirty()
-                v = v.nodeAfterTree()
-            else: v = v.threadNext()
+        if 1: # In update...
+            while p:
+                if p.isAtFileNode()and not p.isDirty():
+                    p.setDirty()
+                    changed = True
+                    p.moveToNodeAfterTree()
+                else:
+                    p.moveToThreadNext()
+            if changed:
+                c.setChanged(True)
         c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2925:markAllAtFileNodesDirty
     #@+node:ekr.20031218072017.2926:markAtFileNodesDirty
     def markAtFileNodesDirty (self):
     
-        c = self
-        v = c.currentVnode()
-        if not v: return
-        after = v.nodeAfterTree()
+        c = self ; p = c.currentPosition()
+        if not p: return
+    
+        after = p.nodeAfterTree()
+        changed = False
         c.beginUpdate()
-        while v and v != after:
-            if v.isAtFileNode() and not v.isDirty():
-                v.setDirty()
-                v = v.nodeAfterTree()
-            else: v = v.threadNext()
+        if 1: # In update...
+            while p and p != after:
+                if p.isAtFileNode() and not p.isDirty():
+                    p.setDirty()
+                    changed = True
+                    p.moveToNodeAfterTree()
+                else:
+                    p.moveToThreadNext()
+            if changed:
+                c.setChanged(True)
         c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2926:markAtFileNodesDirty
     #@+node:ekr.20031218072017.2927:markClones
     def markClones (self):
     
-        c = self ; current = v = c.currentVnode()
-        if not v: return
-        if not v.isCloned(): return
-        
-        v = c.rootVnode()
+        c = self ; current = c.currentPosition()
+        if not current or current.isCloned(): return
+    
+        changed = False
         c.beginUpdate()
-        while v:
-            if v.t == current.t:
-                v.setMarked()
-            v = v.threadNext()
+        if 1: # In update...
+            for p in c.allNodes_iter():
+                if p.v.t == current.v.t:
+                    p.setMarked()
+                    changed = True
+            if changed:
+                c.setChanged(True)
         c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2927:markClones
@@ -4212,34 +4227,36 @@ class baseCommands:
         if not p: return
     
         c.beginUpdate()
-        if p.isMarked():
-            p.clearMarked()
-        else:
-            p.setMarked()
+        if 1: # In update...
+            if p.isMarked():
+                p.clearMarked()
+            else:
+                p.setMarked()
             p.setDirty()
-            if 0: # 4/3/04: Marking a headline is a minor operation.
-                c.setChanged(True)
+            c.setChanged(True)
         c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2928:markHeadline
     #@+node:ekr.20031218072017.2929:markSubheads
     def markSubheads(self):
     
-        c = self ; v = c.currentVnode()
-        if not v: return
+        c = self ; p = c.currentPosition()
+        if not p: return
     
-        child = v.firstChild()
+        changed = False
         c.beginUpdate()
-        while child:
-            if not child.isMarked():
-                child.setMarked()
-                child.setDirty()
+        if 1: # In update...
+            for child in p.children_iter():
+                if not child.isMarked():
+                    child.setMarked()
+                    child.setDirty()
+                    changed = True
+            if changed:
                 c.setChanged(True)
-            child = child.next()
         c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2929:markSubheads
-    #@+node:ekr.20031218072017.2930:unmarkAll & test
+    #@+node:ekr.20031218072017.2930:unmarkAll
     def unmarkAll(self):
     
         c = self
@@ -4251,26 +4268,7 @@ class baseCommands:
                 c.setChanged(True)
         c.endUpdate()
     #@nonl
-    #@+node:ekr.20050219170523:test_c_unmark_all
-    def test_c_unmark_all(self):
-        
-        marked = [p.copy() for p in c.allNodes_iter() if p.isMarked()]
-        
-        c.unmarkAll()
-    
-        for p in c.allNodes_iter():
-            assert not p.isMarked(), 'marked after Unmark All %s' % p
-            
-        # Restore marks.
-        c.beginUpdate()
-        for p in c.allNodes_iter():
-            for p2 in marked:
-                if p.isEqual(p2):
-                    p.setMarked()
-        c.endUpdate()
-    #@nonl
-    #@-node:ekr.20050219170523:test_c_unmark_all
-    #@-node:ekr.20031218072017.2930:unmarkAll & test
+    #@-node:ekr.20031218072017.2930:unmarkAll
     #@-node:ekr.20031218072017.2922:Mark...
     #@+node:ekr.20031218072017.1766:Move... (Commands)
     #@+node:ekr.20031218072017.1767:demote
