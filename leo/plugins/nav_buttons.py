@@ -20,7 +20,7 @@ import os
 #@nonl
 #@-node:ekr.20050219114353:<< imports >>
 #@nl
-__version__ = "1.4"
+__version__ = "1.5"
 #@<< version history >>
 #@+node:ekr.20050219114353.1:<< version history >>
 #@@killcolor
@@ -45,6 +45,9 @@ __version__ = "1.4"
 # be
 #           fixed because there is no way to associate commanders with hook 
 # handlers.
+# 
+# 1.5 EKR: Fixed crasher in tkinterListBoxDialog.go().
+#     updateMarks must set positionList ivar in the base class.
 #@-at
 #@-node:ekr.20050219114353.1:<< version history >>
 #@nl
@@ -189,12 +192,14 @@ class marksDialog (tkinterListBoxDialog):
     
         self.box.delete(0,"end")
         
-        i = 0 ; tnodeList = []
+        # Bug fix 5/12/05: Set self.positionList for use by tkinterListBoxDialog.go().
+        i = 0 ; self.positionList = [] ; tnodeList = []
     
         for p in c.allNodes_iter():
             if p.isMarked() and p.v.t not in tnodeList:
                 self.box.insert(i,p.headString().strip())
                 tnodeList.append(p.v.t)
+                self.positionList.append(p.copy())
                 i += 1
     #@nonl
     #@-node:edream.110203113231.779:updateMarks
