@@ -1140,24 +1140,21 @@ class baseCommands:
     #@+node:ekr.20031218072017.2863:delete
     def delete(self):
     
-        c = self ; v = c.currentVnode()
+        c = self ; p = c.currentPosition()
+        body = c.frame.body
+        w = body.bodyCtrl.focus_get()
         
-        # 6/11/04: Don't assume the body has focus.
-        try:
-            body = c.frame.body ; bodyCtrl = body.bodyCtrl
-            w = bodyCtrl.focus_get()
-            if w == bodyCtrl:
-                oldSel = body.getTextSelection()
-                body.deleteTextSelection()
-                body.onBodyChanged(v,"Delete",oldSel=oldSel)
-            else:
-                # Assume we are changing a headline...
-                # This works even if the assumption is incorrect.
-                body.deleteTextSelection(w)
-                c.frame.tree.onHeadChanged(v)
-        except:
-            # import traceback ; traceback.print_exc()
-            pass
+        # Don't assume the body has focus.
+        if w == body.bodyCtrl:
+            oldSel = body.getTextSelection()
+            body.deleteTextSelection()
+            body.onBodyChanged(p,"Delete",oldSel=oldSel)
+        else:
+            # Assume we are changing a headline...
+            # This works even if the assumption is incorrect.
+            start,end=g.app.gui.getTextSelection(w)
+            g.app.gui.replaceSelectionRangeWithText(w,start,end,'')
+            c.frame.tree.onHeadChanged(p)
     #@nonl
     #@-node:ekr.20031218072017.2863:delete
     #@+node:ekr.20031218072017.2140:c.executeScript
