@@ -18541,7 +18541,7 @@ def initialRatios (self):
     
     c = self.c
 
-    s = c.config.get("initial_splitter_orientation","orientation")
+    s = c.config.get("initial_splitter_orientation","string")
     verticalFlag = s == None or (s != "h" and s != "horizontal")
 
     if verticalFlag:
@@ -20097,7 +20097,7 @@ defaultsData = (
     ("initial_window_width","int",800),
     ("initial_window_left","int",10),
     ("initial_window_top","int",10),
-    ("initial_splitter_orientation","orientation","vertical"),
+    ("initial_splitter_orientation","string","vertical"),
     ("initial_vertical_ratio","ratio",0.5),
     ("initial_horizontal_ratio","ratio",0.3),
     ("initial_horizontal_secondary_ratio","ratio",0.5),
@@ -27793,7 +27793,7 @@ defaultsData = (
     ("initial_window_width","int",800),
     ("initial_window_left","int",10),
     ("initial_window_top","int",10),
-    ("initial_splitter_orientation","orientation","vertical"),
+    ("initial_splitter_orientation","string","vertical"),
     ("initial_vertical_ratio","ratio",0.5),
     ("initial_horizontal_ratio","ratio",0.3),
     ("initial_horizontal_secondary_ratio","ratio",0.5),
@@ -36998,7 +36998,9 @@ def doInt (self,p,kind,name,val):
 #@+node:ekr.20041217132253:doInts
 def doInts (self,p,kind,name,val):
     
-    '''We expect @ints aName[val1,val2]=val'''
+    '''We expect either:
+    @ints [val1,val2,...]aName=val
+    @ints aName[val1,val2,...]=val'''
 
     name = name.strip() # The name indicates the valid values.
     i = name.find('[')
@@ -37009,7 +37011,8 @@ def doInts (self,p,kind,name,val):
     if -1 < i < j:
         items = name[i+1:j]
         items = items.split(',')
-        name = name[0:i].strip()
+        name = name[:i]+name[j+1:].strip()
+        g.trace(name,items)
         try:
             items = [int(item.strip()) for item in items]
         except ValueError:
@@ -37086,7 +37089,9 @@ def doString (self,p,kind,name,val):
 #@+node:ekr.20041120094940.8:doStrings
 def doStrings (self,p,kind,name,val):
     
-    '''We expect @strings aName[val1,val2]=val'''
+    '''We expect one of the following:
+    @strings aName[val1,val2...]=val
+    @strings [val1,val2,...]aName=val'''
     
     name = name.strip()
     i = name.find('[')
@@ -37096,7 +37101,8 @@ def doStrings (self,p,kind,name,val):
         items = name[i+1:j]
         items = items.split(',')
         items = [item.strip() for item in items]
-        name = name[0:i].strip()
+        name = name[:i]+name[j+1:].strip()
+        #g.trace(name,items)
 
         kind = "strings[%s]" % (','.join(items))
 
@@ -46542,6 +46548,233 @@ def unmarkAll(self):
 #@-node:ekr.20031218072017.2930:unmarkAll
 #@-node:ekr.20031218072017.2922:Mark...
 #@-node:ekr.20050511092427:(Marking any node sets the outline changed)
+#@+node:ekr.20050511081331.2:(Fixed bugs re initial_splitter_orientation & @strings & @ints generally)
+#@+node:ekr.20050512124239.1:Report
+@killcolor
+
+http://sourceforge.net/forum/forum.php?thread_id=1281868&forum_id=10226
+
+2: @orientation missing from options for new windows in settings. The head line is there in the outline, but the option doesn't show in the page, and if you click on the heading in the outline, the body pane is just grey 
+#@-node:ekr.20050512124239.1:Report
+#@+node:ekr.20050512130956:What I did
+@killcolor
+
+> @strings initial_splitter_orientation [vertical,horizontal] = horizontal 
+ 
+That works in leoSettings.leo, but it doesn't really work in the settings dialog. The problem is that the settings dialog changes the line to: 
+ 
+@strings[vertical,horizontal]initial_splitter_orientation = horizontal 
+ 
+The options [vertical,horizontal] follow the @strings, not the settings name. This makes more sense because logically the options are 'part of' the @strings type. But the parser for @strings expects the first way! 
+ 
+I changed doStrings and doInts so they allow either form.
+#@nonl
+#@-node:ekr.20050512130956:What I did
+#@+node:ekr.20031218072017.2176:f.finishCreate
+def finishCreate (self,c):
+    
+    frame = self ; frame.c = c ; gui = g.app.gui
+    
+    # This must be done after creating the commander.
+    self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
+    << create the toplevel and outer frames >>
+    << create the icon bar >>
+    << create the splitters and their subframes >>
+    << create the status line >>
+    << create the first tree node >>
+    << create the menu bar >>
+    g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
+    g.app.windowList.append(frame)
+    c.initVersion()
+    c.signOnWithVersion()
+    self.body.createBindings(frame)
+#@nonl
+#@+node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
+frame.top = top = Tk.Toplevel()
+gui.attachLeoIcon(top)
+top.title(frame.title)
+top.minsize(30,10) # In grid units.
+
+frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
+frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
+
+# These don't work on Windows. Because of bugs in window managers,
+# there is NO WAY to know which window is on top!
+frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
+frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
+
+frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
+frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
+
+# Create the outer frame, the 'hull' component.
+self.outerFrame = outerFrame = Tk.Frame(top)
+self.outerFrame.pack(expand=1,fill="both")
+self.componentClass(c,'hull',self.outerFrame)
+#@nonl
+#@-node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
+#@+node:ekr.20041224120552:<< create the icon bar >>
+self.iconBarComponentName = 'iconBar'
+iconBar = self.iconBarClass(c,outerFrame)
+self.iconFrame = iconBar.iconFrame
+
+self.iconBar = self.componentClass(c,
+    self.iconBarComponentName,iconBar.iconFrame,
+    iconBar,iconBar.pack,iconBar.unpack)
+
+self.iconBar.show()
+#@nonl
+#@-node:ekr.20041224120552:<< create the icon bar >>
+#@+node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
+self.createLeoSplitters(outerFrame)
+
+# Create the canvas, tree, log and body.
+frame.canvas = self.createCanvas(self.split2Pane1)
+frame.tree   = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
+frame.log    = leoTkinterLog(frame,self.split2Pane2)
+frame.body   = leoTkinterBody(frame,self.split1Pane2)
+
+self.componentClass(c,'tree',self.split2Pane1, frame.tree, self.packTree, self.unpackTree)
+self.componentClass(c,'log', self.split2Pane2, frame.log,  self.packLog,  self.unpackLog)
+self.componentClass(c,'body',self.split1Pane2, frame.body, self.packBody, self.unpackBody)
+
+# Yes, this an "official" ivar: this is a kludge.
+frame.bodyCtrl = frame.body.bodyCtrl
+
+# Configure.
+frame.setTabWidth(c.tab_width)
+frame.tree.setColorFromConfig()
+self.reconfigurePanes()
+self.body.setFontFromConfig()
+self.body.setColorFromConfig()
+#@nonl
+#@-node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
+#@+node:ekr.20031218072017.2180:<< create the first tree node >>
+t = leoNodes.tnode()
+v = leoNodes.vnode(c,t)
+p = leoNodes.position(v,[])
+v.initHeadString("NewHeadline")
+
+p.moveToRoot()
+c.beginUpdate()
+c.selectVnode(p)
+c.redraw()
+c.frame.getFocus()
+c.editPosition(p)
+c.endUpdate(False)
+#@-node:ekr.20031218072017.2180:<< create the first tree node >>
+#@+node:ekr.20041225103412:<< create the status line >>
+self.statusLineComponentName = 'statusLine'
+statusLine = self.statusLineClass(c,outerFrame)
+
+# Create offical ivars in the frame class.
+self.statusFrame = statusLine.statusFrame
+self.statusLabel = statusLine.labelWidget
+self.statusText  = statusLine.textWidget
+
+self.statusLine = self.componentClass(c,
+    self.statusLineComponentName,
+    statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
+self.statusLine.show() # Show status line by default.
+#@nonl
+#@-node:ekr.20041225103412:<< create the status line >>
+#@+node:ekr.20041225103412.1:<< create the menu bar >>
+self.menu = leoTkinterMenu.leoTkinterMenu(frame)
+v = c.currentVnode()
+if not g.doHook("menu1",c=c,p=v,v=v):
+    frame.menu.createMenuBar(self)
+#@nonl
+#@-node:ekr.20041225103412.1:<< create the menu bar >>
+#@-node:ekr.20031218072017.2176:f.finishCreate
+#@+node:ekr.20031218072017.3689:initialRatios
+def initialRatios (self):
+    
+    c = self.c
+
+    s = c.config.get("initial_splitter_orientation","string")
+    verticalFlag = s == None or (s != "h" and s != "horizontal")
+
+    if verticalFlag:
+        r = c.config.getRatio("initial_vertical_ratio")
+        if r == None or r < 0.0 or r > 1.0: r = 0.5
+        r2 = c.config.getRatio("initial_vertical_secondary_ratio")
+        if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
+    else:
+        r = c.config.getRatio("initial_horizontal_ratio")
+        if r == None or r < 0.0 or r > 1.0: r = 0.3
+        r2 = c.config.getRatio("initial_horizontal_secondary_ratio")
+        if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
+
+    # g.trace(r,r2)
+    return verticalFlag,r,r2
+#@nonl
+#@-node:ekr.20031218072017.3689:initialRatios
+#@+node:ekr.20041120094940.8:doStrings
+def doStrings (self,p,kind,name,val):
+    
+    '''We expect one of the following:
+    @strings aName[val1,val2...]=val
+    @strings [val1,val2,...]aName=val'''
+    
+    name = name.strip()
+    i = name.find('[')
+    j = name.find(']')
+
+    if -1 < i < j:
+        items = name[i+1:j]
+        items = items.split(',')
+        items = [item.strip() for item in items]
+        name = name[:i]+name[j+1:].strip()
+        #g.trace(name,items)
+
+        kind = "strings[%s]" % (','.join(items))
+
+        # g.trace(repr(kind),repr(name),val)
+
+        # At present no checking is done.
+        self.set(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041120094940.8:doStrings
+#@+node:ekr.20041217132253:doInts
+def doInts (self,p,kind,name,val):
+    
+    '''We expect either:
+    @ints [val1,val2,...]aName=val
+    @ints aName[val1,val2,...]=val'''
+
+    name = name.strip() # The name indicates the valid values.
+    i = name.find('[')
+    j = name.find(']')
+    
+    # g.trace(kind,name,val)
+
+    if -1 < i < j:
+        items = name[i+1:j]
+        items = items.split(',')
+        name = name[:i]+name[j+1:].strip()
+        g.trace(name,items)
+        try:
+            items = [int(item.strip()) for item in items]
+        except ValueError:
+            items = []
+            self.valueError(p,'ints[]',name,val)
+            return
+        kind = "ints[%s]" % (','.join([str(item) for item in items]))
+        try:
+            val = int(val)
+        except ValueError:
+            self.valueError(p,'int',name,val)
+            return
+        if val not in items:
+            self.error("%d is not in %s in %s" % (val,kind,name))
+            return
+
+        # g.trace(repr(kind),repr(name),val)
+
+        # At present no checking is done.
+        self.set(p,kind,name,val)
+#@nonl
+#@-node:ekr.20041217132253:doInts
+#@-node:ekr.20050511081331.2:(Fixed bugs re initial_splitter_orientation & @strings & @ints generally)
 #@-node:ekr.20050505094928:Bugs
 #@+node:ekr.20050505094928.1:Features
 #@+node:ekr.20050505051303:(Allow quoted urls in  @urls nodes)

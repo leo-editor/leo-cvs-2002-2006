@@ -200,7 +200,9 @@ class parserBaseClass:
     #@+node:ekr.20041217132253:doInts
     def doInts (self,p,kind,name,val):
         
-        '''We expect @ints aName[val1,val2]=val'''
+        '''We expect either:
+        @ints [val1,val2,...]aName=val
+        @ints aName[val1,val2,...]=val'''
     
         name = name.strip() # The name indicates the valid values.
         i = name.find('[')
@@ -211,7 +213,8 @@ class parserBaseClass:
         if -1 < i < j:
             items = name[i+1:j]
             items = items.split(',')
-            name = name[0:i].strip()
+            name = name[:i]+name[j+1:].strip()
+            g.trace(name,items)
             try:
                 items = [int(item.strip()) for item in items]
             except ValueError:
@@ -288,7 +291,9 @@ class parserBaseClass:
     #@+node:ekr.20041120094940.8:doStrings
     def doStrings (self,p,kind,name,val):
         
-        '''We expect @strings aName[val1,val2]=val'''
+        '''We expect one of the following:
+        @strings aName[val1,val2...]=val
+        @strings [val1,val2,...]aName=val'''
         
         name = name.strip()
         i = name.find('[')
@@ -298,7 +303,8 @@ class parserBaseClass:
             items = name[i+1:j]
             items = items.split(',')
             items = [item.strip() for item in items]
-            name = name[0:i].strip()
+            name = name[:i]+name[j+1:].strip()
+            #g.trace(name,items)
     
             kind = "strings[%s]" % (','.join(items))
     
