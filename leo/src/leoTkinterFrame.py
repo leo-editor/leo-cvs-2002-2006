@@ -2850,7 +2850,7 @@ class leoTkinterBody (leoFrame.leoBody):
         return self.bodyCtrl.bind(*args,**keys)
     #@-node:ekr.20031218072017.4017:Menus
     #@+node:ekr.20031218072017.4018:Selection
-    #@+node:ekr.20031218072017.4019:deleteTextSelection (not used)
+    #@+node:ekr.20031218072017.4019:deleteTextSelection
     def deleteTextSelection (self):
         
         t = self.bodyCtrl
@@ -2860,7 +2860,7 @@ class leoTkinterBody (leoFrame.leoBody):
             if t.compare(start,"!=",end):
                 t.delete(start,end)
     #@nonl
-    #@-node:ekr.20031218072017.4019:deleteTextSelection (not used)
+    #@-node:ekr.20031218072017.4019:deleteTextSelection
     #@+node:ekr.20031218072017.4020:getSelectedText
     def getSelectedText (self):
         
