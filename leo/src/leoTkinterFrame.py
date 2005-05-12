@@ -1863,7 +1863,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c = self.c
         self.splitVerticalFlag = not self.splitVerticalFlag
         orientation = g.choose(self.splitVerticalFlag,"vertical","horizontal")
-        c.config.set("initial_splitter_orientation","orientation",orientation)
+        c.config.set("initial_splitter_orientation","string",orientation)
         
         if use_Pmw and Pmw:
             self.togglePmwSplitDirection(self.splitVerticalFlag)

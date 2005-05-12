@@ -568,7 +568,7 @@ class leoFrame:
         
         c = self.c
     
-        s = c.config.get("initial_splitter_orientation","orientation")
+        s = c.config.get("initial_splitter_orientation","string")
         verticalFlag = s == None or (s != "h" and s != "horizontal")
     
         if verticalFlag:
