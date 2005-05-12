@@ -215,6 +215,7 @@ if deletedChar in (u' ',' '):
         # g.trace(count,(n%w))
         if count > 0:
             c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+            newSel = c.frame.body.getTextSelection() # Fixes crasher in undo logic.
 #@nonl
 #@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
 #@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -39346,9 +39347,9 @@ def extract(self):
     head,lines,tail,oldSel,oldYview = self.getBodyLines()
     if not lines: return
     headline = lines[0].strip() ; del lines[0]
-    junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
 
     # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
     strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
         for line in lines]
     newBody = string.join(strippedLines,'\n')
@@ -39378,12 +39379,12 @@ def extractSection(self):
     head,lines,tail,oldSel,oldYview = self.getBodyLines()
     if not lines: return
 
+    line1 = '\n' + lines[0]
     headline = lines[0].strip() ; del lines[0]
-    junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
-    line1 = "\n" + headline
     << Set headline for extractSection >>
     
     # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
     strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
         for line in lines]
     newBody = string.join(strippedLines,'\n')
@@ -45357,6 +45358,827 @@ def yoffsetTree(self,p,p1):
 #@nonl
 #@-node:ekr.20040803072955.70:yoffset
 #@-node:ekr.20050508201158:(Fixed crasher in yoffsetTree)
+#@+node:ekr.20050510165153:(Fixed crasher in undo)
+#@+node:ekr.20050511081331.3:Report
+@killcolor
+
+http://sourceforge.net/forum/forum.php?thread_id=1281868&forum_id=10226
+By: Nic Cave-Lynch - niccl
+a few more bugs in 4.3 b1  
+2005-05-10 15:33
+1: Bug in undo: 
+I just found that if you do a new line, then backspace (to go to previouslevel of indent) you get: 
+ 
+Exception in setUndoRedoTypingParams 
+Traceback (most recent call last): 
+File "C:\Program Files\leo\src\leoUndo.py", line 1154, in setUndoTypingParams 
+new_ch = new_s[new_col-1] 
+IndexError: string index out of range 
+ 
+undo granularity is set to word
+
+The fix was to recompute newSel in << handle backspace with negative tab_width >> in idle_body_key.
+
+There may be a problem in updateBodyPane as well.
+#@nonl
+#@-node:ekr.20050511081331.3:Report
+#@+node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
+def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
+    
+    c = self ; body = c.frame.body ; p = c.currentPosition()
+
+    # Update the text and notify the event handler.
+    body.setSelectionAreas(head,middle,tail)
+
+    if setSel and oldSel:
+        body.setTextSelection(oldSel)
+
+    # This handles the undo by calling setUndoTypingParams (in idle_body_key).
+    body.onBodyChanged(p,undoType,oldSel=oldSel,oldYview=oldYview)
+
+    # Update the changed mark and icon.
+    c.beginUpdate()
+    if 1: # In update...
+        c.setChanged(True)
+        if p.isDirty():
+            dirtyVnodeList = []
+        else:
+            dirtyVnodeList = p.setDirty()
+    c.endUpdate()
+
+    # Scroll as necessary.
+    if oldYview:
+        body.setYScrollPosition(oldYview)
+    else:
+        body.makeInsertPointVisible()
+
+    body.setFocus()
+    c.recolor()
+    return dirtyVnodeList
+#@nonl
+#@-node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
+#@+node:ekr.20031218072017.4037:setSelectionAreas (tkinterBody)
+def setSelectionAreas (self,before,sel,after):
+    
+    """Replace the body text by before + sel + after and
+    set the selection so that the sel text is selected."""
+
+    t = self.bodyCtrl ; gui = g.app.gui
+    t.delete("1.0","end")
+
+    if before: t.insert("1.0",before)
+    sel_start = t.index("end-1c") # 10/24/03: -1c
+
+    if sel: t.insert("end",sel)
+    sel_end = t.index("end")
+
+    if after:
+        # A horrible Tk kludge.  Remove a trailing newline so we don't keep extending the text.
+        if after[-1] == '\n':
+            after = after[:-1]
+        t.insert("end",after)
+
+    gui.setTextSelection(t,sel_start,sel_end)
+    # g.trace(sel_start,sel_end)
+    
+    return t.index(sel_start), t.index(sel_end)
+#@nonl
+#@-node:ekr.20031218072017.4037:setSelectionAreas (tkinterBody)
+#@+node:ekr.20031218072017.1321:idle_body_key
+def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Update the body pane at idle time."""
+    
+    __pychecker__ = 'maxlines=500'
+
+    # g.trace(ch,ord(ch))
+    c = self.c
+    if not c: return "break"
+    if not p: return "break"
+    if not c.isCurrentPosition(p): return "break"
+
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+    body = p.bodyString()
+    if not newSel:
+        newSel = c.frame.body.getTextSelection()
+    if oldText != None:
+        s = oldText
+    else:
+        s = c.frame.body.getAllText()
+    << return if nothing has changed >>
+    << set removeTrailing >>
+    if ch in ('\t','\n','\r',chr(8)):
+        d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+        tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+        if ch in ('\n','\r'):
+            << Do auto indent >>
+        elif ch == '\t' and tab_width < 0:
+            << convert tab to blanks >>
+        elif ch in (chr(8)) and tab_width < 0:
+            << handle backspace with negative tab_width >>
+    << set s to widget text, removing trailing newlines if necessary >>
+    if undoType: # 11/6/03: set oldText properly when oldText param exists.
+        if not oldText: oldText = body
+        newText = s
+        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+    p.v.setTnodeText(s)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed:
+        c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return "break"
+#@nonl
+#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
+# 6/22/03: Make sure we handle delete key properly.
+if ch not in ('\n','\r',chr(8)):
+
+    if s == body:
+        return "break"
+
+    # Do nothing for control characters.
+    if (ch == None or len(ch) == 0) and body == s[:-1]:
+        return "break"
+#@nonl
+#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
+#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = s ; old = body
+
+if len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
+#@nonl
+#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
+#@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+# Do nothing if we are in @nocolor mode or if we are executing a Change command.
+if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+    # Get the previous line.
+    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s[-1]==':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Added Nov 18 by David McNab, david@rebirthing.co.nz
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width]
+        tabex = 0
+        for i in range(0, len(s)):
+            if s[i] == '\t':
+                tabex += tab_width - 1
+            if s[i] in '([{':
+                brackets.append(i+tabex + 1)
+            elif s[i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+        # end patch by David McNab
+    ws = g.computeLeadingWhitespace (width,tab_width)
+    if ws and len(ws) > 0:
+        c.frame.bodyCtrl.insert("insert", ws)
+        removeTrailing = False # bug fix: 11/18
+#@nonl
+#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+#@+node:ekr.20031218072017.1325:<< convert tab to blanks >>
+# Do nothing if we are executing a Change command.
+if undoType != "Change":
+    
+    # Get the characters preceeding the tab.
+    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+    
+    if 1: # 6/26/03: Convert tab no matter where it is.
+
+        w = g.computeWidth(prev,tab_width)
+        w2 = (abs(tab_width) - (w % abs(tab_width)))
+        # g.trace("prev w:",w,"prev chars:",prev)
+        c.frame.bodyCtrl.delete("insert -1c")
+        c.frame.bodyCtrl.insert("insert",' ' * w2)
+    
+    else: # Convert only leading tabs.
+    
+        # Get the characters preceeding the tab.
+        prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+
+        # Do nothing if there are non-whitespace in prev:
+        all_ws = True
+        for ch in prev:
+            if ch != ' ' and ch != '\t':
+                all_ws = False
+        if all_ws:
+            w = g.computeWidth(prev,tab_width)
+            w2 = (abs(tab_width) - (w % abs(tab_width)))
+            # g.trace("prev w:",w,"prev chars:",prev)
+            c.frame.bodyCtrl.delete("insert -1c")
+            c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20031218072017.1325:<< convert tab to blanks >>
+#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+# Get the preceeding characters.
+prev   =c.frame.bodyCtrl.get("insert linestart","insert")
+allPrev=c.frame.bodyCtrl.get("1.0","insert")
+n = len(allPrev)
+try:
+    oldAllPrev = body[:n]
+    assert(allPrev==oldAllPrev)
+    deletedChar = body[n:n+1]
+except (IndexError,AssertionError):
+    deletedChar = None
+
+if deletedChar in (u' ',' '):
+    n = len(prev) ; w = abs(tab_width)
+    n2 = n % w # Delete up to n2 - 1 spaces.
+    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
+        count = 0
+        while n2 > 0:
+            n2 -= 1
+            ch = prev[n-count-1]
+            # g.trace(count,repr(ch))
+            if ch in (u' ',' '): count += 1
+            else: break
+        # g.trace(count,(n%w))
+        if count > 0:
+            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+            newSel = c.frame.body.getTextSelection() # Fixes crasher in undo logic.
+#@nonl
+#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+s = c.frame.body.getAllText()
+if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+    s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # print "no real change"
+    return "break"
+#@nonl
+#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+#@+node:ekr.20031218072017.1327:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20031218072017.1327:<< recolor the body >>
+#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+redraw_flag = False
+
+c.beginUpdate()
+
+# Update dirty bits.
+if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+    redraw_flag = True
+    
+# Update icons.
+val = p.computeIcon()
+
+# 7/8/04: During unit tests the node may not have been drawn,
+# So p.v.iconVal may not exist yet.
+if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+    p.v.iconVal = val
+    redraw_flag = True
+
+c.endUpdate(redraw_flag) # redraw only if necessary
+#@nonl
+#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+#@-node:ekr.20031218072017.1321:idle_body_key
+#@+node:ekr.20031218072017.1490:setUndoTypingParams
+@ This routine saves enough information so a typing operation can be undone and redone.
+
+We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+@c
+
+def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+    
+    __pychecker__ = 'maxlines=2000' # Ignore the size of this method.
+    
+    # g.trace(undo_type) # ,p,"old:",oldText,"new:",newText)
+    u = self ; c = u.c
+    << return if there is nothing to do >>
+    << init the undo params >>
+    << compute leading, middle & trailing  lines >>
+    << save undo text info >>
+    << save the selection and scrolling position >>
+    << adjust the undo stack, clearing all forward entries >>
+    u.setUndoTypes() # Recalculate the menu labels.
+    return bunch
+#@nonl
+#@+node:ekr.20040324061854:<< return if there is nothing to do >>
+if u.redoing or u.undoing:
+    return None
+
+if undo_type == None:
+    return None
+
+if undo_type == "Can't Undo":
+    u.clearUndoState()
+    return None
+
+if oldText == newText:
+    # g.trace("no change")
+    return None
+#@nonl
+#@-node:ekr.20040324061854:<< return if there is nothing to do >>
+#@+node:ekr.20040324061854.1:<< init the undo params >>
+# Clear all optional params.
+for ivar in u.optionalIvars:
+    setattr(u,ivar,None)
+
+# Set the params.
+u.undoType = undo_type
+u.p = p.copy()
+#@nonl
+#@-node:ekr.20040324061854.1:<< init the undo params >>
+#@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
+
+NB: the number of old and new middle lines may be different.
+@c
+
+old_lines = string.split(oldText,'\n')
+new_lines = string.split(newText,'\n')
+new_len = len(new_lines)
+old_len = len(old_lines)
+min_len = min(old_len,new_len)
+
+i = 0
+while i < min_len:
+    if old_lines[i] != new_lines[i]:
+        break
+    i += 1
+leading = i
+
+if leading == new_len:
+    # This happens when we remove lines from the end.
+    # The new text is simply the leading lines from the old text.
+    trailing = 0
+else:
+    i = 0
+    while i < min_len - leading:
+        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+            break
+        i += 1
+    trailing = i
+    
+# NB: the number of old and new middle lines may be different.
+if trailing == 0:
+    old_middle_lines = old_lines[leading:]
+    new_middle_lines = new_lines[leading:]
+else:
+    old_middle_lines = old_lines[leading:-trailing]
+    new_middle_lines = new_lines[leading:-trailing]
+
+# Remember how many trailing newlines in the old and new text.
+i = len(oldText) - 1 ; old_newlines = 0
+while i >= 0 and oldText[i] == '\n':
+    old_newlines += 1
+    i -= 1
+
+i = len(newText) - 1 ; new_newlines = 0
+while i >= 0 and newText[i] == '\n':
+    new_newlines += 1
+    i -= 1
+
+if u.debug_print:
+    print "lead,trail",leading,trailing
+    print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
+    print "new mid,nls:",len(new_middle_lines),new_newlines,newText
+    #print "lead,trail:",leading,trailing
+    #print "old mid:",old_middle_lines
+    #print "new mid:",new_middle_lines
+    print "---------------------"
+#@nonl
+#@-node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+#@+node:ekr.20031218072017.1492:<< save undo text info >>
+@ This is the start of the incremental undo algorithm.
+
+We must save enough info to do _both_ of the following:
+
+Undo: Given newText, recreate oldText.
+Redo: Given oldText, recreate oldText.
+
+The "given" texts for the undo and redo routines are simply p.bodyString().
+@c
+
+if u.debug:
+    # Remember the complete text for comparisons...
+    u.oldText = oldText
+    u.newText = newText
+    # Compute statistics comparing old and new ways...
+    # The old doesn't often store the old text, so don't count it here.
+    u.old_mem += len(newText)
+    s1 = string.join(old_middle_lines,'\n')
+    s2 = string.join(new_middle_lines,'\n')
+    u.new_mem += len(s1) + len(s2)
+else:
+    u.oldText = None
+    u.newText = None
+
+u.leading = leading
+u.trailing = trailing
+u.oldMiddleLines = old_middle_lines
+u.newMiddleLines = new_middle_lines
+u.oldNewlines = old_newlines
+u.newNewlines = new_newlines
+#@nonl
+#@-node:ekr.20031218072017.1492:<< save undo text info >>
+#@+node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#Remember the selection.
+u.oldSel = oldSel
+u.newSel = newSel
+
+# Remember the scrolling position.
+if oldYview:
+    u.yview = oldYview
+else:
+    u.yview = c.frame.body.getYScrollPosition()
+#@-node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#@+node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+@ New in Leo 4.3. Instead of creating a new bead on every character, we may adjust the top bead:
+
+word granularity: adjust the top bead if the typing would continue the word.
+line granularity: adjust the top bead if the typing is on the same line.
+node granularity: adjust the top bead if the typing is anywhere on the same node.
+@c
+
+granularity = u.granularity
+
+old_d = u.peekBead(u.bead)
+old_p = old_d and old_d.get('p')
+
+<< set newBead if we can't share the previous bead >>
+
+if newBead:
+    # Push params on undo stack, clearing all forward entries.
+    u.bead += 1
+    bunch = g.Bunch(
+        p = p.copy(),
+        kind='typing',
+        undoType = undo_type,
+        undoHelper=u.undoTyping,
+        redoHelper=u.redoTyping,
+        oldText=u.oldText,
+        oldSel=u.oldSel,
+        oldNewlines=u.oldNewlines,
+        oldMiddleLines=u.oldMiddleLines,
+    )
+else:
+    bunch = old_d
+
+bunch.leading=u.leading
+bunch.trailing= u.trailing
+bunch.newNewlines=u.newNewlines
+bunch.newMiddleLines=u.newMiddleLines
+bunch.newSel=u.newSel
+bunch.newText=u.newText
+bunch.yview=u.yview
+
+u.beads[u.bead:] = [bunch]
+    
+# g.trace(newBead,'u.bead',u.bead,undo_type,old_p)
+#@nonl
+#@+node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+@ We must set newBead to True if undo_type is not 'Typing' so that commands that
+get treated like typing (by updateBodyPane and onBodyChanged) don't get lumped
+with 'real' typing.
+@c
+# g.trace(granularity)
+if (
+    not old_d or not old_p or
+    old_p.v != p.v or
+    old_d.get('kind') != 'typing' or
+    old_d.get('undoType') != 'Typing' or
+    undo_type != 'Typing'
+):
+    newBead = True # We can't share the previous node.
+elif granularity == 'char':
+    newBead = True # This was the old way.
+elif granularity == 'node':
+    newBead = False # Always replace previous bead.
+else:
+    assert granularity in ('line','word')
+    # Replace the previous bead if only the middle lines have changed.
+    newBead = (
+        old_d.get('leading',0)  != u.leading or 
+        old_d.get('trailing',0) != u.trailing
+    )
+    if granularity == 'word' and not newBead:
+        # Protect the method that may be changed by the user
+        try:
+            << set newBead if the change does not continue a word >>
+        except Exception:
+            if 0:
+                g.trace('old_lines',old_lines)
+                g.trace('new_lines',new_lines)
+            g.es('Exception in setUndoRedoTypingParams',color='blue')
+            g.es_exception()
+            newBead = True
+#@nonl
+#@+node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+old_start,old_end = oldSel
+new_start,new_end = newSel
+# g.trace('new_start',new_start,'old_start',old_start)
+if old_start != old_end or new_start != new_end:
+    # The new and old characters are not contiguous.
+    newBead = True
+else:
+    old_row,old_col = old_start.split('.')
+    new_row,new_col = new_start.split('.')
+    old_row,old_col = int(old_row),int(old_col)
+    new_row,new_col = int(new_row),int(new_col)
+    old_lines = g.splitLines(oldText)
+    new_lines = g.splitLines(newText)
+    # g.trace('old',old_row,old_col,len(old_lines))
+    # g.trace('new',new_row,new_col,len(new_lines))
+    # Recognize backspace, del, etc. as contiguous.
+    if old_row != new_row or abs(old_col- new_col) != 1:
+        # The new and old characters are not contiguous.
+        newBead = True
+    elif old_col == 0 or new_col == 0:
+        pass # We have just inserted a line.
+    else:
+        old_s = old_lines[old_row-1]
+        new_s = new_lines[new_row-1]
+        # New in 4.3b2:
+        # Guard against invalid oldSel or newSel params.
+        if old_col-1 >= len(old_s) or new_col-1 >= len(new_s):
+            newBead = True
+        else:
+            # g.trace(new_col,len(new_s),repr(new_s))
+            # g.trace(repr(old_ch),repr(new_ch))
+            old_ch = old_s[old_col-1]
+            new_ch = new_s[new_col-1]
+            newBead = self.recognizeStartOfTypingWord(
+                old_lines,old_row,old_col,old_ch,
+                new_lines,new_row,new_col,new_ch)
+#@nonl
+#@-node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+#@-node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+#@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+#@-node:ekr.20031218072017.1490:setUndoTypingParams
+#@-node:ekr.20050510165153:(Fixed crasher in undo)
+#@+node:ekr.20050505104630:(Fix indentation problems with Extract and Extract Section)
+#@+node:ekr.20050511093458:Report
+@killcolor
+
+Two problems:
+    
+1. The section name loses its indentation.
+2. The created section has extra indentation.
+
+These were introduced during a 'simplification' of the code, so it's not a big deal.
+
+The unit tests didn't properly test indentation.  Now they do.
+#@nonl
+#@-node:ekr.20050511093458:Report
+#@+node:ekr.20031218072017.1708:extractSection
+def extractSection(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract Section'
+    current = c.currentPosition()
+
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+
+    line1 = '\n' + lines[0]
+    headline = lines[0].strip() ; del lines[0]
+    << Set headline for extractSection >>
+    
+    # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
+    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+        for line in lines]
+    newBody = string.join(strippedLines,'\n')
+    if head: head = head.rstrip()
+
+    c.beginUpdate()
+    if 1: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            undoData = u.beforeInsertNode(current)
+            p = c.createLastChildNode(current,headline,newBody)
+            u.afterInsertNode(p,undoType,undoData)
+            c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
+        u.afterChangeGroup(current,undoType)
+    c.endUpdate()
+#@nonl
+#@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+if len(headline) < 5:
+    oops = True
+else:
+    head1 = headline[0:2] == '<<'
+    head2 = headline[0:2] == '@<'
+    tail1 = headline[-2:] == '>>'
+    tail2 = headline[-2:] == '@>'
+    oops = not (head1 and tail1) and not (head2 and tail2)
+
+if oops:
+    g.es("Selected text should start with a section name",color="blue")
+    return
+#@nonl
+#@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+#@-node:ekr.20031218072017.1708:extractSection
+#@+node:ekr.20031218072017.1706:extract
+def extract(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract'
+    current = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+    headline = lines[0].strip() ; del lines[0]
+
+    # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
+    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+        for line in lines]
+    newBody = string.join(strippedLines,'\n')
+    if head: head = head.rstrip()
+
+    c.beginUpdate()
+    if 1: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            undoData = u.beforeInsertNode(current)
+            p = c.createLastChildNode(current,headline,newBody)
+            u.afterInsertNode(p,undoType,undoData)
+            c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
+        u.afterChangeGroup(current,undoType)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.1706:extract
+#@-node:ekr.20050505104630:(Fix indentation problems with Extract and Extract Section)
+#@+node:ekr.20050511095457:(Fixed undo problems with Extract and Extract Section)
+#@+node:ekr.20050511095457.1:Report
+@killcolor
+
+Undoing does not remove the inserted section node.
+
+The problem was that the undo/redoTyping helpers were setting u.redrawFlag to false.
+
+The fix was to disable that logic when inside a group.
+
+#@-node:ekr.20050511095457.1:Report
+#@+node:EKR.20040526075238.5:redoTyping
+def redoTyping (self):
+
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectPosition causes recoloring, so avoid if possible.
+    if current != u.p:
+        c.selectPosition(u.p)
+    elif u.undoType in ('Cut','Paste','Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.newMiddleLines,u.oldMiddleLines,
+        u.newNewlines,u.oldNewlines,
+        tag="redo",undoType=u.undoType)
+    
+    if u.newSel:
+        c.frame.body.setTextSelection(u.newSel)
+    if u.yview:
+        c.frame.body.setYScrollPosition(u.yview)
+    
+    if u.groupCount == 0:
+        u.redrawFlag = (current != u.p)
+#@nonl
+#@-node:EKR.20040526075238.5:redoTyping
+#@+node:EKR.20040526090701.4:undoTyping
+def undoTyping (self):
+    
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectPosition causes recoloring, so don't do this unless needed.
+    if current != u.p:
+        c.selectPosition(u.p)
+    elif u.undoType in ("Cut","Paste",'Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.oldMiddleLines,u.newMiddleLines,
+        u.oldNewlines,u.newNewlines,
+        tag="undo",undoType=u.undoType)
+
+    if u.oldSel:
+        c.frame.body.setTextSelection(u.oldSel)
+    if u.yview:
+        c.frame.body.setYScrollPosition(u.yview)
+        
+    if u.groupCount == 0:
+        u.redrawFlag = (current != u.p)
+#@nonl
+#@-node:EKR.20040526090701.4:undoTyping
+#@-node:ekr.20050511095457:(Fixed undo problems with Extract and Extract Section)
+#@+node:ekr.20050510105122.1:(Fixed bug with Delete in headlines)
+#@+node:ekr.20050511140630:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3143895
+By: e
+
+select something in headline,
+Edit->Delete
+nothing happens.
+#@nonl
+#@-node:ekr.20050511140630:Report
+#@+node:ekr.20031218072017.2863:delete
+def delete(self):
+
+    c = self ; p = c.currentPosition()
+    body = c.frame.body
+    w = body.bodyCtrl.focus_get()
+    
+    # Don't assume the body has focus.
+    if w == body.bodyCtrl:
+        oldSel = body.getTextSelection()
+        body.deleteTextSelection()
+        body.onBodyChanged(p,"Delete",oldSel=oldSel)
+    else:
+        # Assume we are changing a headline...
+        # This works even if the assumption is incorrect.
+        start,end=g.app.gui.getTextSelection(w)
+        g.app.gui.replaceSelectionRangeWithText(w,start,end,'')
+        c.frame.tree.onHeadChanged(p)
+#@nonl
+#@-node:ekr.20031218072017.2863:delete
+#@-node:ekr.20050510105122.1:(Fixed bug with Delete in headlines)
+#@+node:ekr.20050512031131.1:(Fixed crasher in nav_buttons)
+#@+node:ekr.20050512031131.2:Report
+@killcolor
+
+http://sourceforge.net/forum/forum.php?thread_id=1282631&forum_id=10226
+ 
+Using the latest CSV, the marks dialog of the nav_buttons plugin doesn''t work. Ie, double clicking on a line in the marks crashes Leo.  
+
+The plugin was failing to set the positionList ivar (in the base tkinterListBoxDialog class).  This was a fairly recent blunder:  I saw that positionList wasn't used in the plugin directly, so I 'improved' the code by using a local var instead of self.positionList.  This illustrates a hazard of using subclassing.
+#@nonl
+#@-node:ekr.20050512031131.2:Report
+#@+node:ekr.20031218072017.3896:go
+def go(self,event=None):
+    
+    """Handle clicks in the "go" button in a list box dialog."""
+    
+    __pychecker__ = '--no-argsused' # the event param must be present.
+    
+    c = self.c ; box = self.box
+    
+    # Work around an old Python bug.  Convert strings to ints.
+    items = box.curselection()
+    try:
+        items = map(int, items)
+    except ValueError: pass
+
+    if items:
+        n = items[0]
+        p = self.positionList[n]
+        c.beginUpdate()
+        c.frame.tree.expandAllAncestors(p)
+        c.selectPosition(p,updateBeadList=True) # A case could be made for updateBeadList=False
+        c.endUpdate()
+        c.frame.tree.idle_scrollTo(p)
+#@nonl
+#@-node:ekr.20031218072017.3896:go
+#@-node:ekr.20050512031131.1:(Fixed crasher in nav_buttons)
 #@-node:ekr.20050505094928:Bugs
 #@+node:ekr.20050505094928.1:Features
 #@+node:ekr.20050505051303:(Allow quoted urls in  @urls nodes)
