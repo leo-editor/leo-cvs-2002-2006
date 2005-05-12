@@ -31909,45 +31909,60 @@ def markChangedRoots (self):
 #@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty
 def markAllAtFileNodesDirty (self):
 
-    c = self ; v = c.rootVnode()
+    c = self ; p = c.rootPosition()
+
+    changed = False
     c.beginUpdate()
-    while v:
-        if v.isAtFileNode()and not v.isDirty():
-            v.setDirty()
-            v = v.nodeAfterTree()
-        else: v = v.threadNext()
+    if 1: # In update...
+        while p:
+            if p.isAtFileNode()and not p.isDirty():
+                p.setDirty()
+                changed = True
+                p.moveToNodeAfterTree()
+            else:
+                p.moveToThreadNext()
+        if changed:
+            c.setChanged(True)
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2925:markAllAtFileNodesDirty
 #@+node:ekr.20031218072017.2926:markAtFileNodesDirty
 def markAtFileNodesDirty (self):
 
-    c = self
-    v = c.currentVnode()
-    if not v: return
-    after = v.nodeAfterTree()
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    after = p.nodeAfterTree()
+    changed = False
     c.beginUpdate()
-    while v and v != after:
-        if v.isAtFileNode() and not v.isDirty():
-            v.setDirty()
-            v = v.nodeAfterTree()
-        else: v = v.threadNext()
+    if 1: # In update...
+        while p and p != after:
+            if p.isAtFileNode() and not p.isDirty():
+                p.setDirty()
+                changed = True
+                p.moveToNodeAfterTree()
+            else:
+                p.moveToThreadNext()
+        if changed:
+            c.setChanged(True)
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2926:markAtFileNodesDirty
 #@+node:ekr.20031218072017.2927:markClones
 def markClones (self):
 
-    c = self ; current = v = c.currentVnode()
-    if not v: return
-    if not v.isCloned(): return
-    
-    v = c.rootVnode()
+    c = self ; current = c.currentPosition()
+    if not current or current.isCloned(): return
+
+    changed = False
     c.beginUpdate()
-    while v:
-        if v.t == current.t:
-            v.setMarked()
-        v = v.threadNext()
+    if 1: # In update...
+        for p in c.allNodes_iter():
+            if p.v.t == current.v.t:
+                p.setMarked()
+                changed = True
+        if changed:
+            c.setChanged(True)
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2927:markClones
@@ -31958,34 +31973,36 @@ def markHeadline (self):
     if not p: return
 
     c.beginUpdate()
-    if p.isMarked():
-        p.clearMarked()
-    else:
-        p.setMarked()
+    if 1: # In update...
+        if p.isMarked():
+            p.clearMarked()
+        else:
+            p.setMarked()
         p.setDirty()
-        if 0: # 4/3/04: Marking a headline is a minor operation.
-            c.setChanged(True)
+        c.setChanged(True)
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2928:markHeadline
 #@+node:ekr.20031218072017.2929:markSubheads
 def markSubheads(self):
 
-    c = self ; v = c.currentVnode()
-    if not v: return
+    c = self ; p = c.currentPosition()
+    if not p: return
 
-    child = v.firstChild()
+    changed = False
     c.beginUpdate()
-    while child:
-        if not child.isMarked():
-            child.setMarked()
-            child.setDirty()
+    if 1: # In update...
+        for child in p.children_iter():
+            if not child.isMarked():
+                child.setMarked()
+                child.setDirty()
+                changed = True
+        if changed:
             c.setChanged(True)
-        child = child.next()
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2929:markSubheads
-#@+node:ekr.20031218072017.2930:unmarkAll & test
+#@+node:ekr.20031218072017.2930:unmarkAll
 def unmarkAll(self):
 
     c = self
@@ -31997,26 +32014,7 @@ def unmarkAll(self):
             c.setChanged(True)
     c.endUpdate()
 #@nonl
-#@+node:ekr.20050219170523:test_c_unmark_all
-def test_c_unmark_all(self):
-    
-    marked = [p.copy() for p in c.allNodes_iter() if p.isMarked()]
-    
-    c.unmarkAll()
-
-    for p in c.allNodes_iter():
-        assert not p.isMarked(), 'marked after Unmark All %s' % p
-        
-    # Restore marks.
-    c.beginUpdate()
-    for p in c.allNodes_iter():
-        for p2 in marked:
-            if p.isEqual(p2):
-                p.setMarked()
-    c.endUpdate()
-#@nonl
-#@-node:ekr.20050219170523:test_c_unmark_all
-#@-node:ekr.20031218072017.2930:unmarkAll & test
+#@-node:ekr.20031218072017.2930:unmarkAll
 #@-node:ekr.20031218072017.2922:Mark...
 #@+node:ekr.20031218072017.3391:v.clearMarked
 def clearMarked (self):
@@ -46179,6 +46177,371 @@ def go(self,event=None):
 #@nonl
 #@-node:ekr.20031218072017.3896:go
 #@-node:ekr.20050512031131.1:(Fixed crasher in nav_buttons)
+#@+node:ekr.20050511092427:(Marking any node sets the outline changed)
+#@+node:ekr.20050512083214:Notes
+@killcolor
+
+The following methods changed:
+I also rewrote the code using explicit positions.
+
+- markAllAtFileNodesDirty
+- markAtFileNodesDirty
+- markClones
+- markHeadline
+- markSubheads
+#@nonl
+#@-node:ekr.20050512083214:Notes
+#@+node:ekr.20031218072017.3386: v.Status bits
+#@+node:ekr.20031218072017.3389:clearClonedBit
+def clearClonedBit (self):
+
+    self.statusBits &= ~ self.clonedBit
+#@nonl
+#@-node:ekr.20031218072017.3389:clearClonedBit
+#@+node:ekr.20031218072017.3390:clearDirty & clearDirtyJoined (redundant code)
+def clearDirty (self):
+
+    v = self
+    v.t.clearDirty()
+
+def clearDirtyJoined (self):
+
+    g.trace()
+    v = self ; c = v.c
+    c.beginUpdate()
+    v.t.clearDirty()
+    c.endUpdate() # recomputes all icons
+#@nonl
+#@-node:ekr.20031218072017.3390:clearDirty & clearDirtyJoined (redundant code)
+#@+node:ekr.20031218072017.3391:v.clearMarked
+def clearMarked (self):
+
+    self.statusBits &= ~ self.markedBit
+#@-node:ekr.20031218072017.3391:v.clearMarked
+#@+node:ekr.20031218072017.3392:clearOrphan
+def clearOrphan (self):
+
+    self.statusBits &= ~ self.orphanBit
+#@nonl
+#@-node:ekr.20031218072017.3392:clearOrphan
+#@+node:ekr.20031218072017.3393:clearVisited
+def clearVisited (self):
+
+    self.statusBits &= ~ self.visitedBit
+#@nonl
+#@-node:ekr.20031218072017.3393:clearVisited
+#@+node:ekr.20031218072017.3395:contract & expand & initExpandedBit
+def contract(self):
+
+    self.statusBits &= ~ self.expandedBit
+    
+    # g.trace(self.statusBits)
+
+def expand(self):
+
+    self.statusBits |= self.expandedBit
+    
+    # g.trace(self.statusBits)
+
+def initExpandedBit (self):
+
+    self.statusBits |= self.expandedBit
+#@nonl
+#@-node:ekr.20031218072017.3395:contract & expand & initExpandedBit
+#@+node:ekr.20031218072017.3396:initStatus
+def initStatus (self, status):
+
+    self.statusBits = status
+#@nonl
+#@-node:ekr.20031218072017.3396:initStatus
+#@+node:ekr.20031218072017.3397:setClonedBit & initClonedBit
+def setClonedBit (self):
+
+    self.statusBits |= self.clonedBit
+
+def initClonedBit (self, val):
+
+    if val:
+        self.statusBits |= self.clonedBit
+    else:
+        self.statusBits &= ~ self.clonedBit
+#@nonl
+#@-node:ekr.20031218072017.3397:setClonedBit & initClonedBit
+#@+node:ekr.20031218072017.3398:v.setMarked & initMarkedBit
+def setMarked (self):
+
+    self.statusBits |= self.markedBit
+
+def initMarkedBit (self):
+
+    self.statusBits |= self.markedBit
+#@-node:ekr.20031218072017.3398:v.setMarked & initMarkedBit
+#@+node:ekr.20031218072017.3399:setOrphan
+def setOrphan (self):
+
+    self.statusBits |= self.orphanBit
+#@nonl
+#@-node:ekr.20031218072017.3399:setOrphan
+#@+node:ekr.20031218072017.3400:setSelected (vnode)
+# This only sets the selected bit.
+
+def setSelected (self):
+
+    self.statusBits |= self.selectedBit
+#@nonl
+#@-node:ekr.20031218072017.3400:setSelected (vnode)
+#@+node:ekr.20031218072017.3401:t.setVisited
+# Compatibility routine for scripts
+
+def setVisited (self):
+
+    self.statusBits |= self.visitedBit
+#@nonl
+#@-node:ekr.20031218072017.3401:t.setVisited
+#@-node:ekr.20031218072017.3386: v.Status bits
+#@+node:ekr.20040305162628:p.Dirty bits
+#@+node:ekr.20040311113514:p.clearDirty
+def clearDirty (self):
+
+    p = self
+    p.v.clearDirty()
+#@nonl
+#@-node:ekr.20040311113514:p.clearDirty
+#@+node:ekr.20040318125934:p.findAllPotentiallyDirtyNodes
+def findAllPotentiallyDirtyNodes(self):
+    
+    p = self 
+    
+    # Start with all nodes in the vnodeList.
+    nodes = []
+    newNodes = p.v.t.vnodeList[:]
+
+    # Add nodes until no more are added.
+    while newNodes:
+        addedNodes = []
+        nodes.extend(newNodes)
+        for v in newNodes:
+            for v2 in v.t.vnodeList:
+                if v2 not in nodes and v2 not in addedNodes:
+                    addedNodes.append(v2)
+                for v3 in v2.directParents():
+                    if v3 not in nodes and v3 not in addedNodes:
+                        addedNodes.append(v3)
+        newNodes = addedNodes[:]
+
+    # g.trace(len(nodes))
+    return nodes
+#@nonl
+#@-node:ekr.20040318125934:p.findAllPotentiallyDirtyNodes
+#@+node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
+def setAllAncestorAtFileNodesDirty (self,setDescendentsDirty=False):
+
+    p = self ; c = p.c
+    dirtyVnodeList = []
+    
+    # Calculate all nodes that are joined to p or parents of such nodes.
+    nodes = p.findAllPotentiallyDirtyNodes()
+    
+    if setDescendentsDirty:
+        # N.B. Only mark _direct_ descendents of nodes.
+        # Using the findAllPotentiallyDirtyNodes algorithm would mark way too many nodes.
+        for p2 in p.subtree_iter():
+            # Only @thin nodes need to be marked.
+            if p2.v not in nodes and p2.isAtThinFileNode():
+                nodes.append(p2.v)
+                
+    dirtyVnodeList = [v for v in nodes
+        if not v.t.isDirty() and v.isAnyAtFileNode()]
+    changed = len(dirtyVnodeList) > 0
+
+    c.beginUpdate()
+    for v in dirtyVnodeList:
+        v.t.setDirty() # Do not call v.setDirty here!
+    c.endUpdate(changed)
+
+    return dirtyVnodeList
+#@nonl
+#@-node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
+#@+node:ekr.20040303163330:p.setDirty
+# Ensures that all ancestor and descentent @file nodes are marked dirty.
+# It is much safer to do it this way.
+
+def setDirty (self,setDescendentsDirty=True):
+
+    p = self ; c = p.c ; dirtyVnodeList = []
+    # g.trace(g.app.count) ; g.app.count += 1
+
+    c.beginUpdate()
+    if 1: # update...
+        if not p.v.t.isDirty():
+            p.v.t.setDirty()
+            dirtyVnodeList.append(p.v)
+        # N.B. This must be called even if p.v is already dirty.
+        # Typing can change the @ignore state!
+        dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty(setDescendentsDirty)
+        dirtyVnodeList.extend(dirtyVnodeList2)
+        changed = len(dirtyVnodeList) > 0
+    c.endUpdate(changed)
+
+    return dirtyVnodeList
+#@nonl
+#@-node:ekr.20040303163330:p.setDirty
+#@+node:ekr.20040702104823:p.inAtIgnoreRange
+def inAtIgnoreRange (self):
+    
+    """Returns True if position p or one of p's parents is an @ignore node."""
+    
+    p = self
+    
+    for p in p.self_and_parents_iter():
+        if p.isAtIgnoreNode():
+            return True
+
+    return False
+#@nonl
+#@-node:ekr.20040702104823:p.inAtIgnoreRange
+#@-node:ekr.20040305162628:p.Dirty bits
+#@+node:ekr.20031218072017.2922:Mark...
+#@+node:ekr.20031218072017.2923:markChangedHeadlines
+def markChangedHeadlines (self): 
+
+    c = self
+    c.beginUpdate()
+    for p in c.allNodes_iter():
+        if p.isDirty()and not p.isMarked():
+            p.setMarked()
+            c.setChanged(True)
+    g.es("done",color="blue")
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2923:markChangedHeadlines
+#@+node:ekr.20031218072017.2924:markChangedRoots
+def markChangedRoots (self):
+
+    c = self
+    c.beginUpdate()
+    for p in c.allNodes_iter():
+        if p.isDirty()and not p.isMarked():
+            s = p.bodyString()
+            flag, i = g.is_special(s,0,"@root")
+            if flag:
+                p.setMarked()
+                c.setChanged(True)
+    g.es("done",color="blue")
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2924:markChangedRoots
+#@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty
+def markAllAtFileNodesDirty (self):
+
+    c = self ; p = c.rootPosition()
+
+    changed = False
+    c.beginUpdate()
+    if 1: # In update...
+        while p:
+            if p.isAtFileNode()and not p.isDirty():
+                p.setDirty()
+                changed = True
+                p.moveToNodeAfterTree()
+            else:
+                p.moveToThreadNext()
+        if changed:
+            c.setChanged(True)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2925:markAllAtFileNodesDirty
+#@+node:ekr.20031218072017.2926:markAtFileNodesDirty
+def markAtFileNodesDirty (self):
+
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    after = p.nodeAfterTree()
+    changed = False
+    c.beginUpdate()
+    if 1: # In update...
+        while p and p != after:
+            if p.isAtFileNode() and not p.isDirty():
+                p.setDirty()
+                changed = True
+                p.moveToNodeAfterTree()
+            else:
+                p.moveToThreadNext()
+        if changed:
+            c.setChanged(True)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2926:markAtFileNodesDirty
+#@+node:ekr.20031218072017.2927:markClones
+def markClones (self):
+
+    c = self ; current = c.currentPosition()
+    if not current or current.isCloned(): return
+
+    changed = False
+    c.beginUpdate()
+    if 1: # In update...
+        for p in c.allNodes_iter():
+            if p.v.t == current.v.t:
+                p.setMarked()
+                changed = True
+        if changed:
+            c.setChanged(True)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2927:markClones
+#@+node:ekr.20031218072017.2928:markHeadline
+def markHeadline (self):
+
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    c.beginUpdate()
+    if 1: # In update...
+        if p.isMarked():
+            p.clearMarked()
+        else:
+            p.setMarked()
+        p.setDirty()
+        c.setChanged(True)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2928:markHeadline
+#@+node:ekr.20031218072017.2929:markSubheads
+def markSubheads(self):
+
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    changed = False
+    c.beginUpdate()
+    if 1: # In update...
+        for child in p.children_iter():
+            if not child.isMarked():
+                child.setMarked()
+                child.setDirty()
+                changed = True
+        if changed:
+            c.setChanged(True)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2929:markSubheads
+#@+node:ekr.20031218072017.2930:unmarkAll
+def unmarkAll(self):
+
+    c = self
+    c.beginUpdate()
+    for p in c.allNodes_iter():
+        if p.isMarked():
+            p.clearMarked()
+            p.setDirty()
+            c.setChanged(True)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2930:unmarkAll
+#@-node:ekr.20031218072017.2922:Mark...
+#@-node:ekr.20050511092427:(Marking any node sets the outline changed)
 #@-node:ekr.20050505094928:Bugs
 #@+node:ekr.20050505094928.1:Features
 #@+node:ekr.20050505051303:(Allow quoted urls in  @urls nodes)
