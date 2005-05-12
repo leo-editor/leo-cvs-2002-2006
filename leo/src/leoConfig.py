@@ -214,7 +214,7 @@ class parserBaseClass:
             items = name[i+1:j]
             items = items.split(',')
             name = name[:i]+name[j+1:].strip()
-            g.trace(name,items)
+            # g.trace(name,items)
             try:
                 items = [int(item.strip()) for item in items]
             except ValueError:
