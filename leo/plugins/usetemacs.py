@@ -1,10 +1,15 @@
 #@+leo-ver=4-thin
 #@+node:mork.20041013092542.1:@thin usetemacs.py
+#@<< docstring >>
+#@+node:ekr.20050513171201:<< docstring >>
 '''usetemacs is a Leo plugin that patches the temacs modules Emacs emulation
 into the standard Leo Tkinter Text editor.  It is recommended that the user of
-usetemacs rebinds any conflicting keystrokes in leoConfig.txt, for example:
+usetemacs rebinds any conflicting keystrokes in leoSettings.leo, for example:
 Ctrl-s is incremental search forward but also default Save in Leo. Look under
 Leos Help menu for "Temacs Help" to get a complete listing of commands and keystrokes.'''
+#@nonl
+#@-node:ekr.20050513171201:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
@@ -58,7 +63,7 @@ leocommandnames = None
 #@nonl
 #@-node:mork.20041013092542.2:<< globals >>
 #@nl
-__version__ = '.56'
+__version__ = '.57'
 #@<<version history>>
 #@+node:mork.20041101132349:<<version history>>
 #@+at 
@@ -120,6 +125,12 @@ __version__ = '.56'
 # .56 EKR:
 #     - Removed 'start2' hook and haveseen dict.
 #     - Added init function.
+# .57 EKR:
+#     - Added global orig_Bindings,orig_OnBodyKey to init().
+#     - Removed writeNewDerivedFiles writeOldDerivedFiles and 'apply settings' 
+# commands.
+#     - Changed c.findPanel to c.showFindPanel.
+#     - Changed leoConfig.txt to leoSettings.leo in docstring.
 #@-at
 #@-node:mork.20041101132349:<<version history>>
 #@nl
@@ -270,13 +281,14 @@ def init ():
     ok = temacs and Tk and not g.app.unitTesting
     
     if ok:
-
         if g.app.gui is None: 
             g.app.createTkGui(__file__)
     
         if g.app.gui.guiName() == "tkinter":
+            global orig_Bindings,orig_OnBodyKey
             #@            << override createBindings and onBodyKey >>
             #@+node:ekr.20041106100326.2:<< override createBindings and onBodyKey >>
+            
             orig_Bindings = leoTkinterFrame.leoTkinterBody.createBindings
             leoTkinterFrame.leoTkinterBody.createBindings = initialise() #createBindings
             
@@ -663,8 +675,8 @@ def addLeoCommands( c, emacs ):
     'readOutlineOnly': c.readOutlineOnly,
     'readAtFileNodes': c.readAtFileNodes,
     'importDerivedFile': c.importDerivedFile,
-    'writeNewDerivedFiles': c.writeNewDerivedFiles,
-    'writeOldDerivedFiles': c.writeOldDerivedFiles,
+    #'writeNewDerivedFiles': c.writeNewDerivedFiles,
+    #'writeOldDerivedFiles': c.writeOldDerivedFiles,
     'tangle': c.tangle,
     'tangle all': c.tangleAll,
     'tangle marked': c.tangleMarked,
@@ -701,7 +713,7 @@ def addLeoCommands( c, emacs ):
     'extract names': c.extractSectionNames,
     'extract': c.extract,
     'match bracket': c.findMatchingBracket,
-    'find panel': c.findPanel,
+    'find panel': c.showFindPanel, ## c.findPanel,
     'find next': c.findNext,
     'find previous': c.findPrevious,
     'replace': c.replace,
@@ -766,7 +778,7 @@ def addLeoCommands( c, emacs ):
     "go to prev node" : c.selectThreadBack,
     "go to next node" : c.selectThreadNext,
     'about leo...': c.about,
-    'apply settings': c.applyConfig,
+    #'apply settings': c.applyConfig,
     'open LeoConfig.leo': c.leoConfig,
     'open LeoDocs.leo': c.leoDocumentation,
     'open online home': c.leoHome,
@@ -872,8 +884,6 @@ def addLeoCommands( c, emacs ):
 # the autocompletion will work ).
 #     After typing Enter you should see you selection indented and each line 
 # prefixed with an ascending number.'''
-# 
-# 
 # 
 # 
 # def formatSelectionAsList( self, event ):
