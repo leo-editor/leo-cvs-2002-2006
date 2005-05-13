@@ -1334,7 +1334,7 @@ def print_dict(d,tag=None):
     if tag:
         print '%s...' % tag
     for key in keys:
-        print "%*s: %s" % n,key,d.get(key)
+        print "%*s: %s" % (n,key,d.get(key))
 
 printDict = print_dict
 
