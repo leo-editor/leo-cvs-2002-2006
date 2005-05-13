@@ -205,6 +205,7 @@ def createFrame (fileName):
     # Create a _new_ frame & indicate it is the startup window.
     c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
     frame.setInitialWindowGeometry()
+    frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # 5/13/05
     frame.startupWindow = True
     # 3/2/05: Call the 'new' hook for compatibility with plugins.
     g.doHook("new",old_c=None,c=c,new_c=c)
