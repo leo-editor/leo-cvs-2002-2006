@@ -20592,10 +20592,11 @@ def writeChangedVars (self):
             # print "write","key","ival",ival,"fval",fval
             if type(oldVal) == type({}):
                 s = "write  %s" % (iname)
-                print s ; g.es(s,color='blue')
+            elif ikind == 'shortcuts':
+                s = 'updating shortcuts in %s' % ip.headString()
             else:
                 s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
-                print s ; g.es(s,color='blue')
+            print s ; g.es(s,color='blue')
             self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
             changedList.append((ip,iname,ikind,oldVal,newVal),)
             
@@ -20667,10 +20668,8 @@ def updateOneNode (self,c,data):
         if p:
             # g.trace("updating %s in %s" % (name,where))
             if kind == 'shortcuts':
-                # Put the values in the body.
-                p.initHeadString("@%s %s" % (kind,name))
-                body = '\n'.join(val)
-                p.setBodyStringOrPane(body)
+                # Just put the new the values in the body.
+                p.setBodyStringOrPane(val)
             elif kind == 'font':
                 body = self.computeBodyFromFontDict(val)
                 p.setBodyStringOrPane(body)
@@ -30641,10 +30640,8 @@ def updateOneNode (self,c,data):
         if p:
             # g.trace("updating %s in %s" % (name,where))
             if kind == 'shortcuts':
-                # Put the values in the body.
-                p.initHeadString("@%s %s" % (kind,name))
-                body = '\n'.join(val)
-                p.setBodyStringOrPane(body)
+                # Just put the new the values in the body.
+                p.setBodyStringOrPane(val)
             elif kind == 'font':
                 body = self.computeBodyFromFontDict(val)
                 p.setBodyStringOrPane(body)
@@ -37394,10 +37391,11 @@ def writeChangedVars (self):
             # print "write","key","ival",ival,"fval",fval
             if type(oldVal) == type({}):
                 s = "write  %s" % (iname)
-                print s ; g.es(s,color='blue')
+            elif ikind == 'shortcuts':
+                s = 'updating shortcuts in %s' % ip.headString()
             else:
                 s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
-                print s ; g.es(s,color='blue')
+            print s ; g.es(s,color='blue')
             self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
             changedList.append((ip,iname,ikind,oldVal,newVal),)
             
@@ -37469,10 +37467,8 @@ def updateOneNode (self,c,data):
         if p:
             # g.trace("updating %s in %s" % (name,where))
             if kind == 'shortcuts':
-                # Put the values in the body.
-                p.initHeadString("@%s %s" % (kind,name))
-                body = '\n'.join(val)
-                p.setBodyStringOrPane(body)
+                # Just put the new the values in the body.
+                p.setBodyStringOrPane(val)
             elif kind == 'font':
                 body = self.computeBodyFromFontDict(val)
                 p.setBodyStringOrPane(body)
@@ -43416,10 +43412,11 @@ def writeChangedVars (self):
             # print "write","key","ival",ival,"fval",fval
             if type(oldVal) == type({}):
                 s = "write  %s" % (iname)
-                print s ; g.es(s,color='blue')
+            elif ikind == 'shortcuts':
+                s = 'updating shortcuts in %s' % ip.headString()
             else:
                 s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
-                print s ; g.es(s,color='blue')
+            print s ; g.es(s,color='blue')
             self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
             changedList.append((ip,iname,ikind,oldVal,newVal),)
             
@@ -43491,10 +43488,8 @@ def updateOneNode (self,c,data):
         if p:
             # g.trace("updating %s in %s" % (name,where))
             if kind == 'shortcuts':
-                # Put the values in the body.
-                p.initHeadString("@%s %s" % (kind,name))
-                body = '\n'.join(val)
-                p.setBodyStringOrPane(body)
+                # Just put the new the values in the body.
+                p.setBodyStringOrPane(val)
             elif kind == 'font':
                 body = self.computeBodyFromFontDict(val)
                 p.setBodyStringOrPane(body)
@@ -43710,7 +43705,7 @@ def __init__ (self,c,replaceBody=True):
     # Reread the settings files so any changes will take effect.
     g.app.config.readSettingsFiles(c.fileName(),verbose=True)
     self._settingsPosition = p = self.createSettingsTree()
-    self.parser = settingsDialogParserClass(c,p)
+    self.parser = settingsDialogParserClass(c,p,self)
     << set background color for widgets >>
     c.disableCommandsMessage = 'All commands disabled while settings dialog is open'
     if self.replaceBody:
@@ -46927,6 +46922,857 @@ def createFrame (fileName):
     return c,frame
 #@-node:ekr.20031218072017.1624:createFrame (leo.py)
 #@-node:ekr.20050512123920:(Fixed problem with settings dialog position when panes split horizontally)
+#@+node:ekr.20050507081356.2:(Fixed problem changing shortcut & redid shortcuts widget)
+#@+node:ekr.20050511081331:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3138608
+
+How do I bind GoToLine from Alt-G to Ctrl-G using the settings system?
+
+When I did what I thought might work, ie replace
+the Alt-G with Ctrl-G, and then 'apply', it renamed the '@shortcuts Alt and
+Shift-Alt' outline heading to something about Go To Line, and turned the actual
+displayed settings to complete rubbish.
+
+Try it for an explanation: it required copying a backup of the settings.leo to fix it.
+#@nonl
+#@-node:ekr.20050511081331:Report
+#@+node:ekr.20050512133942:What I did
+@killcolor
+
+The shortcuts panel seems very clunky.  Why not just use a text widget?  That way the user can add and delete entries at will.
+#@nonl
+#@-node:ekr.20050512133942:What I did
+#@+node:ekr.20041225063637.60:updateSetter
+def updateSetter (self,p,updateDicts=True):
+    
+    """Create a setter pane for position p."""
+
+    sc = self.sc ; interior = sc.interior()
+    
+    if updateDicts:
+        self.fileValueDict = {}
+        self.initValueDict = {}
+        self.colorSettingDict = {}
+    
+    # Destroy the previous widgets
+    for w in interior.winfo_children():
+        w.destroy()
+
+    # Visit the node, and possibly its subtree, looking for widgets to create.
+    self.parser.widgets = []
+    self.suppressComments = None # May be set in parser.
+    self.parser.visitNode(p)
+    if self.parser.widgets:
+        self.createWidgets(self.parser.widgets,interior,p)
+        
+    self.sc.resizescrollregion()
+    self.sc.yview('moveto',0)
+    self.updateSetterLabel(p)
+    g.app.gui.widgetWantsFocus(None,None)
+#@nonl
+#@-node:ekr.20041225063637.60:updateSetter
+#@+node:ekr.20041225063637.25:createWidgets & helpers
+def createWidgets (self,widgets,parent,p):
+    
+    munge = g.app.config.munge
+
+    << define creatorDispatchDict >>
+    
+    # self.printWidgets(widgets)
+    
+    self.h = 0 # Offset from top of pane for first widget.
+    self.createSpacerFrame(parent,size=15)
+    
+    p_copy = p.copy()
+    if p != self.suppressComments:
+        self.createComments(parent,p_copy)
+            
+    for data in widgets:
+        p,kind,name,vals = data
+        if kind.startswith('ints'):
+            self.createInts(parent,p,kind,name,vals)
+        if kind.startswith('strings'):
+            self.createStrings(parent,p,kind,name,vals)
+        else:
+            f = creatorDispatchDict.get(munge(kind))
+            if f is not None:
+                try:
+                    f(parent,p,kind,name,vals)
+                except TypeError:
+                    g.es_exception()
+                    g.trace("***No handler***",kind)
+#@nonl
+#@+node:ekr.20041225063637.26:<< define creatorDispatchDict >>
+creatorDispatchDict = {
+    'bool':         self.createBool,
+    'color':        self.createColor,
+    'directory':    self.createDirectory,
+    'font':         self.createFont,
+    'int':          self.createInt,
+    'ints':         self.createInts,
+    'float':        self.createFloat,
+    'path':         self.createPath,
+    'ratio':        self.createRatio,
+    'shortcut':     self.createShortcut,
+    'shortcuts':    self.createShortcuts,
+    'string':       self.createString,
+    'strings':      self.createStrings,
+}
+#@nonl
+#@-node:ekr.20041225063637.26:<< define creatorDispatchDict >>
+#@+node:ekr.20041225063637.27:createBool
+def createBool (self,parent,p,kind,name,val):
+    
+    val = g.choose(val.lower()=='true',1,0)
+
+    # Inits the checkbutton widget. 
+    var = Tk.IntVar()
+    var.set(val)
+
+    def boolCallback():
+        val2 = g.choose(var.get(),True,False)
+        # g.trace(name,val2)
+        return val2
+    
+    val = g.choose(val,True,False)
+    self.initValue(p,name,kind,val,boolCallback)
+
+    box = Tk.Checkbutton(parent,text=name,variable=var,background=self.commonBackground)
+
+    self.sc.create_window(10,self.h,anchor='w',window=box)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.27:createBool
+#@+node:ekr.20041225063637.28:createColor
+def createColor (self,parent,p,kind,name,val):
+    
+    munge = g.app.config.munge
+    noColor = "<no color>"
+    colorNamesList = list(self.colorNamesList)
+    
+    f = Tk.Frame(parent,background=self.commonBackground) # No need to pack.
+    << munge val and add val to colorNamesList >>
+    << create optionMenu and callback >>
+    << create picker button and callback >>
+    Tk.Label(f,text=name,background=self.commonBackground).pack(side='left')
+    
+    self.colorSettingDict [munge(name)] = val
+
+    def getColorCallback ():
+        return self.colorSettingDict.get(munge(name))
+
+    self.initValue(p,name,kind,val,getColorCallback)
+
+    self.sc.create_window(15,self.h+8,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@+node:ekr.20041225063637.29:<< munge val and add val to colorNamesList >>
+if val in ("None",None): val = noColor
+val = str(val) # Get rid of unicode.
+
+if noColor in colorNamesList:
+    colorNamesList.remove(val)
+if val is not noColor and val not in colorNamesList:
+     colorNamesList.append(val)
+colorNamesList.sort()
+colorNamesList.insert(0,noColor)
+
+initVal = val
+if val is noColor: val = None
+#@nonl
+#@-node:ekr.20041225063637.29:<< munge val and add val to colorNamesList >>
+#@+node:ekr.20041225063637.30:<< create optionMenu and callback >>
+colorBox = Pmw.ComboBox(f,scrolledlist_items=colorNamesList)
+colorBox.selectitem(initVal)
+colorBox.pack(side="left",padx=2)
+
+color = g.choose(val is None,f.cget('background'),val)
+colorSample = Tk.Button(f,width=8,background=color)
+colorSample.pack(side='left',padx=2)
+
+def colorCallback (newName):
+    # g.trace(repr(newName))
+    if not newName or newName.lower() in ('none','<none>','<no color>'):
+        self.colorSettingDict[munge(name)] = None
+        color = f.cget('background')
+        colorSample.configure(background=color)
+    else:
+        try:
+            colorSample.configure(background=newName)
+            self.colorSettingDict[munge(name)] = g.choose(newName is noColor,None,newName)
+        except: pass # Ignore invalid names.
+
+colorBox.configure(selectioncommand=colorCallback)
+#@nonl
+#@-node:ekr.20041225063637.30:<< create optionMenu and callback >>
+#@+node:ekr.20041225063637.31:<< create picker button and callback >>
+def pickerCallback (color=val):
+
+    rgb,val = tkColorChooser.askcolor(parent=parent,color=color)
+    if rgb or val:
+        # g.trace(rgb,val)
+        self.colorSettingDict[munge(name)] = val
+        colorSample.configure(background=val,activebackground=val,text=val)
+
+b = Tk.Button(f,text="Color Picker...",command=pickerCallback,background=self.commonBackground)
+b.pack(side="left")
+#@nonl
+#@-node:ekr.20041225063637.31:<< create picker button and callback >>
+#@-node:ekr.20041225063637.28:createColor
+#@+node:ekr.20050121131613:createComments
+def createComments (self,parent,p):
+    
+    bg = self.commonBackground
+
+    s = p.bodyString().strip()
+    if not s: return
+    
+    f = Tk.Frame(parent,background=bg) # No need to pack.
+
+    scrolled_text = Pmw.ScrolledText(f,
+        labelpos = 'ew',label_text='comments',
+        hull_background=bg,
+        hull_bd=2,hull_relief='groove',
+        hull_padx=6,hull_pady=6,
+        text_background=bg,
+        text_padx=6,text_pady=6,
+        text_bd=2,text_relief='sunken',
+        label_background=bg,
+        text_height=5,text_width=80)
+    scrolled_text.pack(side='left',pady=6,padx=6,expand=1,fill='x')
+    t = scrolled_text.component('text')
+    t.insert('end',s)
+    t.configure(state='disabled')
+    scrolled_text.component('hull')
+
+    self.sc.create_window(10-2,self.h,anchor='w',window=f)
+    self.h += 70
+#@nonl
+#@-node:ekr.20050121131613:createComments
+#@+node:ekr.20041225063637.32:createDirectory
+def createDirectory (self,parent,p,kind,name,val):
+    
+    self.createString(parent,p,kind,name,val)
+#@nonl
+#@-node:ekr.20041225063637.32:createDirectory
+#@+node:ekr.20041225063637.33:createFloat
+def createFloat (self,parent,p,kind,name,val):
+    
+    bg = self.commonBackground
+
+    # Inits the entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+
+    f = Tk.Frame(parent,background=bg)
+    Tk.Entry(f,textvariable=var,background=bg).pack(side='left')
+    Tk.Label(f,text=name,background=bg).pack(side='left')
+    
+    def floatCallback():
+        val2 = var.get()
+        # g.trace(name,val2)
+        try:
+            float(val2)
+            return val2
+        except TypeError:
+            g.trace("bad val:",val2)
+            return val
+            
+    self.initValue(p,name,kind,val,floatCallback)
+    
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.33:createFloat
+#@+node:ekr.20041225063637.34:createFont
+def createFont (self,parent,p,kind,fontName,val):
+    
+    """Create a font picker.  val is a dict containing the specified values."""
+    bg = self.commonBackground
+    d = val
+    munge = g.app.config.munge
+    f = Tk.Frame(parent,background=bg) # No need to pack.
+    self.alterComments = p.copy()
+    self.alteredCommentsString = d.get('comments')
+    << create the family combo box >>
+    << create the size entry >>
+    << create the weight combo box >>
+    << create the slant combo box >>
+    Tk.Label(f,text=fontName,background=bg).pack(side='left')
+    << define fontCallback >>
+
+    familyBox.configure(selectioncommand=fontCallback)
+    slantBox.configure(selectioncommand=fontCallback)
+    weightBox.configure(selectioncommand=fontCallback)
+
+    self.initValue(p,munge(fontName),'font',d,fontCallback)
+
+    self.sc.create_window(15,self.h,anchor='w',window = f)
+    self.h += 30
+#@nonl
+#@+node:ekr.20041225063637.35:<< create the family combo box >>
+names = tkFont.families()
+names = list(names)
+names.sort()
+names.insert(0,'<None>')
+
+data = d.get('family')
+initialitem = 0
+if data:
+    name2,val = data
+    if val and val in names:
+        initialitem = names.index(val)
+
+familyBox = Pmw.ComboBox(f,
+    labelpos="we",label_text='Family:',
+    label_background=bg,
+    arrowbutton_background=bg,
+    scrolledlist_items=names)
+
+familyBox.selectitem(initialitem)
+familyBox.pack(side="left",padx=2)
+#@nonl
+#@-node:ekr.20041225063637.35:<< create the family combo box >>
+#@+node:ekr.20041225063637.36:<< create the size entry >>
+Tk.Label(f,text="Size:",background=bg).pack(side="left")
+
+sizeEntry = Tk.Entry(f,width=4)
+sizeEntry.pack(side="left")
+
+data = d.get('size')
+if data:
+    kind,val = data
+    if val not in (None,'None','none'):
+        try:
+            int(val)
+            sizeEntry.insert('end',val)
+        except ValueError:
+            s = "invalid size: %s" % val
+            print s ; self.es(s,color="blue")
+#@nonl
+#@-node:ekr.20041225063637.36:<< create the size entry >>
+#@+node:ekr.20041225063637.37:<< create the weight combo box >>
+initialitem = 0
+values = ['<None>','normal','bold']
+data = d.get('weight')
+if data:
+    kind,val = data
+    if val in values:
+        initialitem = values.index(val)
+
+weightBox = Pmw.ComboBox(f,
+    labelpos="we",label_text="Weight:",
+    label_background=bg,
+    arrowbutton_background=bg,
+    scrolledlist_items=values)
+
+weightBox.selectitem(initialitem)
+weightBox.pack(side="left",padx=2)
+#@nonl
+#@-node:ekr.20041225063637.37:<< create the weight combo box >>
+#@+node:ekr.20041225063637.38:<< create the slant combo box>>
+initialitem = 0
+values=['<None>','roman','italic']
+data = d.get('slant')
+if data:
+    kind,val = data
+    if val in values:
+        initialitem = values.index(val)
+
+slantBox = Pmw.ComboBox(f,
+    labelpos="we",label_text="Slant:",
+    label_background=bg,
+    arrowbutton_background=bg,
+    scrolledlist_items=values)
+
+slantBox.selectitem(initialitem)
+slantBox.pack(side="left",padx=2)
+#@nonl
+#@-node:ekr.20041225063637.38:<< create the slant combo box>>
+#@+node:ekr.20041225063637.39:<< define fontCallback >>
+def fontCallback(*args,**keys):
+    
+    __pychecker__ = '--no-argsused' # not used, but needed.
+    
+    d2 = d.copy() # The update logic must compare distinct dicts.
+    
+    for box,key in (
+        (familyBox, 'family'),
+        (None,      'size'),
+        (slantBox,  'slant'),
+        (weightBox, 'weight'),
+    ):
+        if box: val = box.get()
+        else:   val = sizeEntry.get().strip()
+        if not val or  val.lower() in ('none','<none>',): val = None
+
+        data = d.get(key)
+        name,oldval = data
+        d2[key] = name,val
+    
+    return d2
+#@nonl
+#@-node:ekr.20041225063637.39:<< define fontCallback >>
+#@-node:ekr.20041225063637.34:createFont
+#@+node:ekr.20041225063637.40:createInt
+def createInt (self,parent,p,kind,name,val):
+    
+    bg = self.commonBackground
+
+    # Inits the entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+
+    f = Tk.Frame(parent)
+    Tk.Entry(f,textvariable=var).pack(side='left')
+    Tk.Label(f,text=name,background=bg).pack(side='left')
+
+    def intCallback():
+        val2 = var.get()
+        # g.trace(name,val2)
+        try:
+            int(val2)
+            return val2
+        except TypeError:
+            g.trace("bad val:",val2)
+            return val
+    
+    self.initValue(p,name,kind,val,intCallback)
+    
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.40:createInt
+#@+node:ekr.20041225063637.41:createInts
+def createInts (self,parent,p,kind,name,val):
+    
+    # g.trace(repr(kind),repr(name),val)
+    
+    bg = self.commonBackground
+    
+    i = kind.find('[')
+    j = kind.find(']')
+    if not (-1 < i < j):
+        return
+    
+    items = kind[i+1:j].split(',')
+    items.sort()
+    items.insert(0,'<none>')
+    
+    if val in items:
+        initialitem = items.index(val)
+    else:
+        initialitem = 0
+        
+    f = Tk.Frame(parent)
+
+    intsBox = Pmw.ComboBox(f,
+        labelpos="ew",label_text=name,
+        label_background=bg,
+        scrolledlist_items=items)
+
+    intsBox.selectitem(initialitem)
+    intsBox.pack(side="left",padx=2)
+    
+    def intsCallback():
+        val2 = intsBox.get()
+        try:
+            int(val2)
+            return val2
+        except TypeError:
+            g.trace("bad val:",val2)
+            return val
+
+    self.initValue(p,name,kind,val,intsCallback)
+
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.41:createInts
+#@+node:ekr.20041225063637.42:createPath
+def createPath (self,parent,p,kind,name,val):
+    
+    self.createString(parent,p,kind,name,val)
+#@nonl
+#@-node:ekr.20041225063637.42:createPath
+#@+node:ekr.20041225063637.43:createRatio
+def createRatio (self,parent,p,kind,name,val):
+    
+    bg = self.commonBackground
+    
+    # Inits the entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+
+    f = Tk.Frame(parent)
+    Tk.Entry(f,textvariable=var).pack(side='left')
+    Tk.Label(f,text=name,background=bg).pack(side='left')
+    
+    def ratioCallback():
+        val2 = var.get()
+        # g.trace(name,val2)
+        try:
+            float(val2)
+            return g.choose(0.0 <= val2 <= 1.0,val2,val)
+        except TypeError:
+            g.trace("bad val:",val2)
+            return val
+            
+    self.initValue(p,name,kind,val,ratioCallback)
+    
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.43:createRatio
+#@+node:ekr.20041225063637.45:createShortcut
+def createShortcut (self,parent,p,kind,name,val):
+    
+    g.trace(name,val)
+    
+    if name:
+        self.createString(parent,p,kind,name,val)
+#@nonl
+#@-node:ekr.20041225063637.45:createShortcut
+#@+node:ekr.20041225063637.46:createShortcuts
+def createShortcuts (self,parent,p,kind,name,vals):
+    
+    __pychecker__ = '--no-argsused' # vals not used.
+    
+    t = self.createText(parent,p)
+    
+    def shortcutsCallback():
+        val = t.get('1.0','end').rstrip()
+        return val
+
+    self.initValue(p,name,kind,vals,shortcutsCallback)
+#@nonl
+#@-node:ekr.20041225063637.46:createShortcuts
+#@+node:ekr.20041225063637.47:createSpacerFrame
+def createSpacerFrame (self,parent,size=10):
+    
+    f = Tk.Frame(parent)
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += size
+#@nonl
+#@-node:ekr.20041225063637.47:createSpacerFrame
+#@+node:ekr.20041225063637.48:createString
+def createString (self,parent,p,kind,name,val):
+    
+    bg = self.commonBackground
+
+    if val in (None,'None'): val = ""
+    
+    # Inits the Entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+    
+    f = Tk.Frame(parent) # No need to pack.
+    Tk.Entry(f,textvariable=var,width=40).pack(side='left')
+    Tk.Label(f,text=name,background=bg).pack(side='left')
+    
+    def stringCallback():
+        val = var.get()
+        # g.trace(name,val)
+        return val
+
+    self.initValue(p,name,kind,val,stringCallback)
+    
+    self.sc.create_window(15,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.48:createString
+#@+node:ekr.20041225063637.49:createStrings
+def createStrings (self,parent,p,kind,name,val):
+    
+    bg = self.commonBackground
+    
+    # g.trace(repr(kind),repr(name),val)
+    i = kind.find('[')
+    j = kind.find(']')
+    if not (-1 < i < j):
+        return
+    
+    items = kind[i+1:j].split(',')
+    items.sort()
+    items.insert(0,'<none>')
+    if val in items:
+        initialitem = items.index(val)
+    else:
+        initialitem = 0
+        
+    f = Tk.Frame(parent,background=bg)
+
+    stringsBox = Pmw.ComboBox(f,
+        labelpos="ew",label_text=name,
+        label_background = bg,
+        scrolledlist_items=items)
+
+    stringsBox.selectitem(initialitem)
+    stringsBox.pack(side="left",padx=2)
+    
+    def stringsCallback():
+        return stringsBox.get()
+
+    self.initValue(p,name,kind,val,stringsCallback)
+
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.49:createStrings
+#@+node:ekr.20050512134219:createText
+def createText (self,parent,p):
+    
+    bg = self.commonBackground
+    f = Tk.Frame(parent,background=bg) # No need to pack.
+
+    scrolled_text = Pmw.ScrolledText(f,
+        labelpos = 'ew',label_text='shortcuts',
+        hull_background=bg,
+        hull_bd=2,hull_relief='groove',
+        hull_padx=6,hull_pady=6,
+        text_background='white',
+        text_padx=6,text_pady=6,
+        text_bd=2,text_relief='sunken',
+        label_background=bg,
+        text_height=10,text_width=80)
+    scrolled_text.pack(side='left',pady=6,padx=6,expand=1,fill='x')
+    t = scrolled_text.component('text')
+    t.insert('end',p.bodyString().strip())
+    t.configure(state='normal')
+    scrolled_text.component('hull')
+
+    self.sc.create_window(10-2,self.h,anchor='w',window=f)
+    self.h += 140
+    
+    return t
+#@nonl
+#@-node:ekr.20050512134219:createText
+#@-node:ekr.20041225063637.25:createWidgets & helpers
+#@+node:ekr.20041225063637.104:doShortcuts
+def doShortcuts(self,p,kind,name,val):
+
+    s = p.bodyString()
+    self.set(p,kind,name,s)
+    self.controller.suppressComments=p.copy()
+#@nonl
+#@-node:ekr.20041225063637.104:doShortcuts
+#@+node:ekr.20041225063637.65:writeChangedVars & helpers
+def writeChangedVars (self):
+    
+    """Create per-file changes lists from diffs between what has been inited and written.
+    
+    Call writeChangedList to update each file from items in this list."""
+
+    changedList = []
+    fDict = self.fileValueDict
+    iDict = self.initValueDict
+    munge = g.app.config.munge
+    
+    for key in iDict.keys():
+
+        iData = iDict.get(key)
+        ip,iname,ikind,ival,getValueCallback = iData
+        newVal = getValueCallback()
+        fData = fDict.get(key)
+        if fData:
+            fp,fname,fkind,fval,junk = fData
+            assert(ip==fp and iname==fname and ikind==fkind)
+            changed = fval != newVal ; oldVal = fval
+        else:
+            changed = ival != newVal ; oldVal = ival
+            fval = '<none>'
+
+        if changed:
+            # print "write","key","ival",ival,"fval",fval
+            if type(oldVal) == type({}):
+                s = "write  %s" % (iname)
+            elif ikind == 'shortcuts':
+                s = 'updating shortcuts in %s' % ip.headString()
+            else:
+                s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
+            print s ; g.es(s,color='blue')
+            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
+            changedList.append((ip,iname,ikind,oldVal,newVal),)
+            
+    self.writeChangedList(changedList,"write")
+#@nonl
+#@+node:ekr.20041225063637.66:updateConfig
+def updateConfig(self,c,changes):
+    
+    """Update the core config settings from the changes list."""
+    
+    munge = g.app.config.munge
+
+    for data in changes:
+        p,name,kind,oldval,val = data
+        if munge(kind) == 'font':
+            for key in ('family','size','slant','weight'):
+                data2 = val.get(key)
+                if data2:
+                    name2,val2 = data2
+                    kind2 = g.choose(key=='size','int','string')
+                    g.app.config.set(c,name2,kind2,val2)
+            # Update the visible fonts: c may not be the same as self.c.
+            for c2 in (c,self.c):
+                c2.frame.body.setFontFromConfig()
+                c2.frame.body.colorizer.setFontFromConfig()
+                c2.frame.log.setFontFromConfig()
+                c2.frame.tree.setFontFromConfig()
+                c2.redraw()
+        elif munge(kind) == "color":
+            # g.trace("setting colors")
+            g.app.config.set(c,name,kind,val)
+            for c2 in (c,self.c):
+                c2.frame.tree.setColorFromConfig()
+                c2.frame.log.setColorFromConfig()
+                c2.frame.body.setColorFromConfig()
+        else:
+            # g.trace(name,kind,val)
+            g.app.config.set(c,name,kind,val)
+#@nonl
+#@-node:ekr.20041225063637.66:updateConfig
+#@+node:ekr.20041225063637.67:updateOneNode & helper
+def updateOneNode (self,c,data):
+    
+    """Update the node in c corresponding to p = data[0]."""
+    
+    p,name,kind,oldVal,val = data
+    munge = g.app.config.munge
+    name = name.strip() ; kind = munge(kind.strip())
+
+    # Root1 is the root of the dialog's outline.
+    p1 = p
+    root1 = self.findSettingsRoot(p1.copy())
+    c1 = root1.c
+    
+    # Root2 is the root of the settings outline in the file.
+    root2 = g.app.config.settingsRoot(c) # c is NOT self.c
+    p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
+    if p2:
+        c2 = p2.c ; filename = c2.mFileName
+    else:
+        g.trace("can't happen: can't find node in root2:",root2.c.mFileName)
+        g.trace('root1',root1)
+        g.trace('root2',root2)
+        g.trace('p1',p1)
+        c2 = None ; filename = None
+
+    # Update the outline in the dialog and the target file.
+    for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
+        if p:
+            # g.trace("updating %s in %s" % (name,where))
+            if kind == 'shortcuts':
+                # Just put the new the values in the body.
+                p.setBodyStringOrPane(val)
+            elif kind == 'font':
+                body = self.computeBodyFromFontDict(val)
+                p.setBodyStringOrPane(body)
+            else:
+                # Put everything in the headline.
+                p.initHeadString("@%s %s = %s" % (kind,name,val))
+#@nonl
+#@+node:ekr.20041225063637.68:computeBodyFromFontDict
+def computeBodyFromFontDict(self,d):
+
+    lines = []
+    comments = d.get('comments')
+    if comments:
+        comment_lines = g.splitLines(comments)
+        comment_lines = ["# %s" % (line) for line in comment_lines]
+        lines.extend(comment_lines)
+        lines.extend('\n\n')
+        
+    for key in ('family','size','slant','weight'):
+        data = d.get(key)
+        if data:
+            name,val = data
+            if val in (None,'<none>'):
+                val = "None"
+            line = "%s = %s\n" % (name,val)
+            lines.extend(line)
+
+    body = ''.join(lines)
+    return body
+#@nonl
+#@-node:ekr.20041225063637.68:computeBodyFromFontDict
+#@-node:ekr.20041225063637.67:updateOneNode & helper
+#@+node:ekr.20041225063637.69:writeChangedList
+def writeChangedList (self,changedList,tag):
+    
+    __pychecker__ = '--no-argsused' # tag used for debugging.
+    
+    filesInfoDict = self.filesInfoDict
+    if 0:
+        << dump all the dicts in filesInfoDict >>
+
+    # Accumulate the changes for each file in a 'changes' list for each root.
+    for data in changedList:
+        p,name,kind,oldVal,newVal = data
+        # print "%6s %6s %10s -> %10s %s" % (tag,kind,str(oldVal),str(newVal),name)
+        root = self.findSettingsRoot(p)
+        d = filesInfoDict.get(root)
+        changes = d.get('changes')
+        changes.append(data)
+        d['changes'] = changes
+
+    for root in filesInfoDict.keys():
+        d = filesInfoDict.get(root)
+        # Keys are 'c','changes','path','islocal' (unused)
+        c = d.get('c')
+        changes = d.get('changes')
+        path = d.get('path')
+        # Always write the file so as to preserve expansion state.
+        self.writeChangesToFile(c,changes,path)
+        self.updateConfig(c,changes)
+        d['changes'] = []
+#@nonl
+#@+node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+for key in filesInfoDict.keys():
+    print ; print
+    print "key",key
+    g.printDict(filesInfoDict.get(key))
+print ; print
+#@nonl
+#@-node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+#@-node:ekr.20041225063637.69:writeChangedList
+#@+node:ekr.20041225063637.71:writeChangesToFile
+def writeChangesToFile (self,c,changes,path):
+
+    # Write the individual changes.
+    for data in changes:
+        self.updateOneNode(c,data)
+        
+    # Copy the expansion state of the dialog to the file.
+    for d in self.filesInfoDict.values():
+        c2 = d.get('c')
+        if c2 and c2 == c:
+            p2 = d.get('p')
+            p = g.app.config.settingsRoot(c)
+            # g.trace(c,p)
+            if p and p2:
+                p = p.copy() ; p2 = p2.copy()
+                # Defensive programming: don't assume p and p2 are in synch.
+                while p and p2:
+                    if p2.isExpanded(): p.expand()
+                    else: p.contract()
+                    p.moveToThreadNext()
+                    p2.moveToThreadNext()
+            break
+
+    if c.fileName():
+        self.es("writing " + g.shortFilename(path))
+        # Save the file corresponding to c.
+        # Non-local files aren't open otherwise!
+        c.fileCommands.save(c.fileName())
+        c.redraw() # This should work for non-local files too.
+        self.tree.redraw()
+    else:
+        print "no settings saved.  local file not named."
+#@nonl
+#@-node:ekr.20041225063637.71:writeChangesToFile
+#@-node:ekr.20041225063637.65:writeChangedVars & helpers
+#@-node:ekr.20050507081356.2:(Fixed problem changing shortcut & redid shortcuts widget)
 #@-node:ekr.20050505094928:Bugs
 #@+node:ekr.20050505094928.1:Features
 #@+node:ekr.20050505051303:(Allow quoted urls in  @urls nodes)

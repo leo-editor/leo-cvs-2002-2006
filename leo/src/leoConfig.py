@@ -304,10 +304,7 @@ class parserBaseClass:
             items = items.split(',')
             items = [item.strip() for item in items]
             name = name[:i]+name[j+1:].strip()
-            #g.trace(name,items)
-    
             kind = "strings[%s]" % (','.join(items))
-    
             # g.trace(repr(kind),repr(name),val)
     
             # At present no checking is done.
@@ -1328,8 +1325,9 @@ class settingsDialogParserClass (parserBaseClass):
     # There is no need to call the base class ctor.
     __pychecker__ = '--no-callinit'
     
-    def __init__ (self,c,p):
+    def __init__ (self,c,p,controller):
         self.c = c
+        self.controller = controller
         self.root = p.copy()
         self.widgets = [] # A list of widgets to create in the setter pane.
     
@@ -1357,12 +1355,12 @@ class settingsDialogParserClass (parserBaseClass):
         }
     #@nonl
     #@-node:ekr.20041225063637.97:ctor
-    #@+node:ekr.20041225063637.98:set
+    #@+node:ekr.20041225063637.98:set (settingsDialogParserClass)
     def set (self,p,kind,name,val):
         
         self.widgets.append((p.copy(),kind,name,val),)
     #@nonl
-    #@-node:ekr.20041225063637.98:set
+    #@-node:ekr.20041225063637.98:set (settingsDialogParserClass)
     #@+node:ekr.20041225063637.99:visitNode (settingsDialogParserClass)
     def visitNode (self,p):
         
@@ -1427,17 +1425,8 @@ class settingsDialogParserClass (parserBaseClass):
     def doShortcuts(self,p,kind,name,val):
     
         s = p.bodyString()
-        lines = g.splitLines(s)
-    
-        vals = []
-        for line in lines:
-            line = line.strip()
-            if line and not g.match(line,0,'#'):
-                name,val = self.parseShortcutLine(line)
-                if val is not None:
-                    vals.append((name,val),)
-                    
-        self.set(p,kind,name,vals)
+        self.set(p,kind,name,s)
+        self.controller.suppressComments=p.copy()
     #@nonl
     #@-node:ekr.20041225063637.104:doShortcuts
     #@-node:ekr.20041225063637.100:kind handlers (settingsDialogParserClass)
@@ -1785,7 +1774,7 @@ class settingsController:
         # Reread the settings files so any changes will take effect.
         g.app.config.readSettingsFiles(c.fileName(),verbose=True)
         self._settingsPosition = p = self.createSettingsTree()
-        self.parser = settingsDialogParserClass(c,p)
+        self.parser = settingsDialogParserClass(c,p,self)
         #@    << set background color for widgets >>
         #@+node:ekr.20050121105232:<< set background color for widgets >>
         if 0:
@@ -2167,7 +2156,9 @@ class settingsController:
         self.h = 0 # Offset from top of pane for first widget.
         self.createSpacerFrame(parent,size=15)
         
-        self.createComments(parent,p)
+        p_copy = p.copy()
+        if p != self.suppressComments:
+            self.createComments(parent,p_copy)
                 
         for data in widgets:
             p,kind,name,vals = data
@@ -2286,43 +2277,36 @@ class settingsController:
         self.h += 30
     #@nonl
     #@-node:ekr.20041225063637.28:createColor
-    #@+node:ekr.20050121131613:createComents
+    #@+node:ekr.20050121131613:createComments
     def createComments (self,parent,p):
         
         bg = self.commonBackground
     
         s = p.bodyString().strip()
-        if not s:
-            return
+        if not s: return
         
         f = Tk.Frame(parent,background=bg) # No need to pack.
-        
-        if 0: # atoi problem.
-            group = Pmw.Group(f,tag_text='comments',hull_background = bg)
-            group.pack(side='left',padx=6,pady=6)
-            label = Tkinter.Label(group.interior(),text=s)
-            label.pack(padx=2,pady=2,expand=1,fill='both')
-        else:
-            scrolled_text = Pmw.ScrolledText(f,
-                labelpos = 'ew',label_text='comments',
-                hull_background=bg,
-                hull_bd=2,hull_relief='groove',
-                hull_padx=6,hull_pady=6,
-                text_background=bg,
-                text_padx=6,text_pady=6,
-                text_bd=2,text_relief='sunken',
-                label_background=bg,
-                text_height=5,text_width=80)
-            scrolled_text.pack(side='left',pady=6,padx=6,expand=1,fill='x')
-            t = scrolled_text.component('text')
-            t.insert('end',s)
-            t.configure(state='disabled')
-            scrolled_text.component('hull')
+    
+        scrolled_text = Pmw.ScrolledText(f,
+            labelpos = 'ew',label_text='comments',
+            hull_background=bg,
+            hull_bd=2,hull_relief='groove',
+            hull_padx=6,hull_pady=6,
+            text_background=bg,
+            text_padx=6,text_pady=6,
+            text_bd=2,text_relief='sunken',
+            label_background=bg,
+            text_height=5,text_width=80)
+        scrolled_text.pack(side='left',pady=6,padx=6,expand=1,fill='x')
+        t = scrolled_text.component('text')
+        t.insert('end',s)
+        t.configure(state='disabled')
+        scrolled_text.component('hull')
     
         self.sc.create_window(10-2,self.h,anchor='w',window=f)
         self.h += 70
     #@nonl
-    #@-node:ekr.20050121131613:createComents
+    #@-node:ekr.20050121131613:createComments
     #@+node:ekr.20041225063637.32:createDirectory
     def createDirectory (self,parent,p,kind,name,val):
         
@@ -2615,18 +2599,15 @@ class settingsController:
     #@+node:ekr.20041225063637.46:createShortcuts
     def createShortcuts (self,parent,p,kind,name,vals):
         
-        __pychecker__ = '--no-argsused' # vals not used, but needed.
+        __pychecker__ = '--no-argsused' # vals not used.
         
-        s = p.bodyString()
-        lines = g.splitLines(s)
+        t = self.createText(parent,p)
         
-        for line in lines:
-            if not g.match(line.strip(),0,'#'):
-                name,val = self.parser.parseShortcutLine(line)
-                if name:
-                    self.createString(parent,p,kind,name,val)
+        def shortcutsCallback():
+            val = t.get('1.0','end').rstrip()
+            return val
     
-        self.suppressComments = p.copy()
+        self.initValue(p,name,kind,vals,shortcutsCallback)
     #@nonl
     #@-node:ekr.20041225063637.46:createShortcuts
     #@+node:ekr.20041225063637.47:createSpacerFrame
@@ -2701,6 +2682,34 @@ class settingsController:
         self.h += 30
     #@nonl
     #@-node:ekr.20041225063637.49:createStrings
+    #@+node:ekr.20050512134219:createText
+    def createText (self,parent,p):
+        
+        bg = self.commonBackground
+        f = Tk.Frame(parent,background=bg) # No need to pack.
+    
+        scrolled_text = Pmw.ScrolledText(f,
+            labelpos = 'ew',label_text='shortcuts',
+            hull_background=bg,
+            hull_bd=2,hull_relief='groove',
+            hull_padx=6,hull_pady=6,
+            text_background='white',
+            text_padx=6,text_pady=6,
+            text_bd=2,text_relief='sunken',
+            label_background=bg,
+            text_height=10,text_width=80)
+        scrolled_text.pack(side='left',pady=6,padx=6,expand=1,fill='x')
+        t = scrolled_text.component('text')
+        t.insert('end',p.bodyString().strip())
+        t.configure(state='normal')
+        scrolled_text.component('hull')
+    
+        self.sc.create_window(10-2,self.h,anchor='w',window=f)
+        self.h += 140
+        
+        return t
+    #@nonl
+    #@-node:ekr.20050512134219:createText
     #@-node:ekr.20041225063637.25:createWidgets & helpers
     #@+node:ekr.20041225063637.50:callbacks...
     #@+node:ekr.20041225063637.51:onAnyButton
@@ -2854,6 +2863,7 @@ class settingsController:
     
         # Visit the node, and possibly its subtree, looking for widgets to create.
         self.parser.widgets = []
+        self.suppressComments = None # May be set in parser.
         self.parser.visitNode(p)
         if self.parser.widgets:
             self.createWidgets(self.parser.widgets,interior,p)
@@ -2934,10 +2944,11 @@ class settingsController:
                 # print "write","key","ival",ival,"fval",fval
                 if type(oldVal) == type({}):
                     s = "write  %s" % (iname)
-                    print s ; g.es(s,color='blue')
+                elif ikind == 'shortcuts':
+                    s = 'updating shortcuts in %s' % ip.headString()
                 else:
                     s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
-                    print s ; g.es(s,color='blue')
+                print s ; g.es(s,color='blue')
                 self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
                 changedList.append((ip,iname,ikind,oldVal,newVal),)
                 
@@ -3009,10 +3020,8 @@ class settingsController:
             if p:
                 # g.trace("updating %s in %s" % (name,where))
                 if kind == 'shortcuts':
-                    # Put the values in the body.
-                    p.initHeadString("@%s %s" % (kind,name))
-                    body = '\n'.join(val)
-                    p.setBodyStringOrPane(body)
+                    # Just put the new the values in the body.
+                    p.setBodyStringOrPane(val)
                 elif kind == 'font':
                     body = self.computeBodyFromFontDict(val)
                     p.setBodyStringOrPane(body)
