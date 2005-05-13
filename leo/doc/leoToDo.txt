@@ -4,43 +4,6 @@
 
 #@+all
 #@+node:ekr.20050303103230:To do: 4.3b2
-#@+node:ekr.20050510110600:Bugs
-#@+node:ekr.20050507081356.2:(Fix problem changing shortcut)
-#@+node:ekr.20050511081331:Report
-@killcolor
-http://sourceforge.net/forum/message.php?msg_id=3138608
-
-How do I bind GoToLine from Alt-G to Ctrl-G using the settings system?
-
-When I did what I thought might work, ie replace
-the Alt-G with Ctrl-G, and then 'apply', it renamed the '@shortcuts Alt and
-Shift-Alt' outline heading to something about Go To Line, and turned the actual
-displayed settings to complete rubbish.
-
-Try it for an explanation: it required copying a backup of the settings.leo to fix it.
-#@nonl
-#@-node:ekr.20050511081331:Report
-#@-node:ekr.20050507081356.2:(Fix problem changing shortcut)
-#@+node:ekr.20050511081331.1:(Fix problems with settings)
-#@+node:ekr.20050511081331.2:Report
-@killcolor
-
-http://sourceforge.net/forum/forum.php?thread_id=1281868&forum_id=10226
-By: Nic Cave-Lynch - niccl
-a few more bugs in 4.3 b1  
-2005-05-10 15:33
-
-2: @orientation missing from options for new windows in settings. The head line is there in the outline, but the option doesn't show in the page, and if you click on the heading in the outline, the body pane is just grey 
- 
-3: If you start leo with no .leo file, then go straight to settings from the edit menu, there are no scroll bars in the outline, whihc makes things like checking the thing above a challenge... If ther's a .leo file open, then the scrol bars are there. 
- 
-These are all on Windows 2000, with a build I picked from cvs on 10 May 
-#@nonl
-#@-node:ekr.20050511081331.2:Report
-#@-node:ekr.20050511081331.1:(Fix problems with settings)
-#@+node:ekr.20050511092427:Make sure marking any node also sets the outline dirty
-#@-node:ekr.20050511092427:Make sure marking any node also sets the outline dirty
-#@-node:ekr.20050510110600:Bugs
 #@+node:ekr.20050512033408:Features
 #@+node:ekr.20050421044938:Add __name__ to execute script namespace?
 #@+node:ekr.20050510105122:Posting
@@ -288,7 +251,7 @@ def createControl (self,frame,parentFrame):
     self.bodyXbar = frame.bodyXBar = bodyXBar
     
     if wrap == "none":
-        g.trace(parentFrame)
+        # g.trace(parentFrame)
         bodyXBar.pack(side="bottom", fill="x")
         
     body.pack(expand=1,fill="both")
@@ -1819,6 +1782,8 @@ Apparently its method of dealing with your home directory can't deal with that.
 #@-node:ekr.20050430100107:Improve Mac distribution
 #@-node:ekr.20050303103230:To do: 4.3b2
 #@+node:ekr.20041228073219:4.3.n...
+#@+node:ekr.20050512085922:Make all Mark commands undoable
+#@-node:ekr.20050512085922:Make all Mark commands undoable
 #@+node:ekr.20041228074125:(Make drawing more flexible)
 #@+node:ekr.20041228092223:Play with wiki markup
 http://sourceforge.net/forum/message.php?msg_id=2205285
