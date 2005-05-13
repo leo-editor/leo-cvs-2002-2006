@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="13712" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="13987" clone_windows="0"/>
 <globals body_outline_ratio="0.635555555556">
 	<global_window_position top="35" left="231" height="900" width="1023"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -48,7 +48,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -61,7 +61,32 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20050513141852" a="ETV"><vh>4.3-beta 2</vh>
+<v t="ekr.20050513141913.1"><vh>Fixed bugs...</vh>
+<v t="ekr.20050513141913.16"><vh>Fixed nodenavagator bug</vh></v>
+<v t="ekr.20050513141913.17" a="E"><vh>Fixed LaTex Coloring bug</vh></v>
+<v t="ekr.20050513141913.22" a="E"><vh>Error messages in scripts are now redirected properly.</vh></v>
+<v t="ekr.20050513141913.30" a="E"><vh>Fixed 2 crashers in nav_buttons plugin</vh></v>
+<v t="ekr.20050513141913.57" a="E"><vh>Fixed crasher in yoffsetTree</vh></v>
+<v t="ekr.20050513141913.60" a="E"><vh>Fixed crasher in undo</vh></v>
+<v t="ekr.20050513141913.82" a="E"><vh>Fixed  several problems with Extract and Extract Section</vh></v>
+<v t="ekr.20050513141913.91"><vh>Fixed bug with Delete in headlines</vh></v>
+<v t="ekr.20050513141913.127" a="E"><vh>Fixed bugs re initial_splitter_orientation &amp; @strings &amp; @ints generally</vh></v>
+<v t="ekr.20050513141913.140" a="E"><vh>Fixed bug with hoist + insert</vh></v>
+<v t="ekr.20050513141913.145" a="E"><vh>Fixed problem with settings dialog position when panes split horizontally</vh></v>
+<v t="ekr.20050513141913.149" a="E"><vh>Fixed problem changing shortcut &amp; redid shortcuts widget</vh></v>
+</v>
+<v t="ekr.20050513141913.187"><vh>New Features...</vh>
+<v t="ekr.20050513141913.97" a="E"><vh>Marking any node sets the outline changed</vh></v>
+<v t="ekr.20050513141913.188" a="E"><vh>Allow quoted urls in  @urls nodes</vh></v>
+<v t="ekr.20050513141913.194" a="E"><vh>Moved executeFile into core</vh></v>
+<v t="ekr.20050513141913.197" a="E"><vh>Rewrote g.getScript using at.writeFromString</vh></v>
+<v t="ekr.20050513141913.233" a="E"><vh>Added define_name arg to c.executeScript</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050429094215"><vh>4.3-beta 1</vh>
 <v t="ekr.20050429094215.2"><vh>Fixed bugs...</vh>
 <v t="ekr.20050429094215.3"><vh>Made sure NameErrors are reported with tracebacks in scripts</vh></v>
@@ -110,8 +135,6 @@
 <v t="ekr.20050429095849"><vh>Finished all @settings coding</vh></v>
 </v>
 </v>
-</v>
-<v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050313101229"><vh>4.3-a4</vh>
 <v t="ekr.20050313101229.2"><vh>Fixed bugs...</vh>
 <v t="ekr.20050313101229.69"><vh>Fix colorizer bug for initial @nocolor in @root nodes</vh></v>
@@ -2350,7 +2373,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="TV"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414172212"><vh>@rst frontMatter.html</vh>
 <v t="ekr.20040414172218.2"><vh>Preface</vh>
 <v t="ekr.20040414172336"><vh>@rst</vh></v>
@@ -17685,5 +17708,162 @@ anyway.
 " to work with Leo @ markup
 syn region leoComment start="^@\s*" end="^@c\s*$"
 syn match   pythonDecorator	"@\S\S+" display nextgroup=pythonFunction skipwhite</t>
+<t tx="ekr.20050513141852">Leo 4.3 beta 2                 May 15, 2005
+
+Leo 4.3 beta 2 completes all major features of Leo 4.3 and fixes all bugs
+reported since the beta 1 release.
+
+The defining features of Leo 4.3:
+---------------------------------
+1. Leo now stores options in @settings trees, that is, outlines whose headline
+is '@settings'. When opening a .leo file, Leo looks for @settings trees not only
+in the outline being opened but also in various leoSettings.leo files.
+
+The key design goal of @settings trees was that Leo's user options must be
+infinitely flexible. That goal has been accomplished. Indeed, users can create
+arbitrarily complex user options with @settings trees. Leo settings outlines
+are, in fact, infinitely more flexible and powerful than any scheme based on
+flat text.  Readers of Python's configParser shootout take note!
+
+2. The Settings command temporarily replaces the outline pane with an outline
+showing all the @settings trees in effect. The Settings command also replaces
+the body pane with a "settings pane". This settings pane allows you to change
+the settings selected in the outline pane using standard gui widgets. The
+settings pane is dynamically created from nodes in the settings tree; it is as
+extensible as the @settings tree itself.
+
+3. Leo now stores recent files information in .leoRecentFiles.txt files.
+
+4. Leo's read/write code in leoAtFile.py has been rewritten to support user-
+defined tangling and untangling.  This is a major cleanup of Leo's core.
+
+5. Leo now boasts a wonderful new Plugins Manager plugin. This plugin enables
+and disables plugins automatically. You never have to mess with
+pluginsManager.txt again! This plugin also tells you everything you need to know
+about each plugin. Finally, this plugin also lets you download plugins from
+Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
+
+6. You can install third-party extensions in Leo's extensions directory. Leo
+will attempt to import such extensions from the extensions directory if normal
+imports fail. Leo is distributed with Pmw (Python Mega Widgets), path.py and
+sets.py in this directory.</t>
+<t tx="ekr.20050513141913.1"></t>
+<t tx="ekr.20050513141913.16">http://sourceforge.net/forum/message.php?msg_id=3133917
+
+'Recent' and 'Marked' button now appear in new windows.</t>
+<t tx="ekr.20050513141913.17">http://sourceforge.net/forum/message.php?msg_id=3133915
+
+The colorizer now correctly handles the following:
+    
+\@, \(, \), \{, \}
+
+And also constructs like \documentclass{report}.</t>
+<t tx="ekr.20050513141913.22">http://sourceforge.net/forum/message.php?msg_id=3051870</t>
+<t tx="ekr.20050513141913.30">http://sourceforge.net/forum/message.php?msg_id=3138608
+
+The nav_buttons plugin was using self.c rather than keywords.get('c') in a hook
+handler. The general rule is that hook handlers should do nothing if self.c !-
+keywords.get('c').  This was an old bug, arising from the rewrite of the plugin.
+
+I added a warning to that effect in the plugin template.
+
+It would perhaps be better to specify an optional commander in registerHandler
+and only call the handler if the commander matches. However, this isn't so easy
+or clean to do.I
+
+http://sourceforge.net/forum/forum.php?thread_id=1282631&amp;forum_id=10226
+ 
+The plugin was failing to set the positionList ivar (in the base
+tkinterListBoxDialog class). This was a fairly recent blunder: I saw that
+positionList wasn't used in the plugin directly, so I 'improved' the code by
+using a local var instead of self.positionList. This illustrates a hazard of
+using subclassing.</t>
+<t tx="ekr.20050513141913.57">This happened when creating a new chapter with chapters.py enabled.</t>
+<t tx="ekr.20050513141913.60">http://sourceforge.net/forum/forum.php?thread_id=1281868&amp;forum_id=10226
+
+The fix was to recompute newSel in &lt;&lt; handle backspace with negative tab_width &gt;&gt; in idle_body_key.</t>
+<t tx="ekr.20050513141913.82">- The section name lost its indentation.
+- The created section had extra indentation.
+- Undoing did not remove the inserted section node.
+
+The unit tests now properly test indentation.</t>
+<t tx="ekr.20050513141913.91">http://sourceforge.net/forum/message.php?msg_id=3143895
+
+The Edit-&gt;Delete command did nothing when the selected text was in a headline.</t>
+<t tx="ekr.20050513141913.97">The following methods changed:
+
+- markAllAtFileNodesDirty
+- markAtFileNodesDirty
+- markClones
+- markHeadline
+- markSubheads
+
+I also rewrote the code using explicit positions.</t>
+<t tx="ekr.20050513141913.127">http://sourceforge.net/forum/forum.php?thread_id=1281868&amp;forum_id=10226
+
+doStrings now accepts either:
+
+@strings[values]name=value
+@strings name[values]=value
+
+Similarly, doInts accepts:
+
+@ints[values]name=value
+@ints name[values]=value</t>
+<t tx="ekr.20050513141913.140">http://sourceforge.net/forum/message.php?msg_id=3149604
+
+Changed c.hoistStack[-1].current to c.hoistStack[-1].p in c.insertHeadline.</t>
+<t tx="ekr.20050513141913.145">http://sourceforge.net/forum/forum.php?thread_id=1281868&amp;forum_id=10226
+
+The code now calls frame.resizePanesToRatio in createFrame in leo.py.
+
+Not only does this fix this bug, it honors the following settings:
+
+- initial_horizontal_ratio
+- initial_horizontal_secondary_ratio
+- initial_vertical_ratio
+- initial_vertical_secondary_ratio</t>
+<t tx="ekr.20050513141913.149">http://sourceforge.net/forum/message.php?msg_id=3138608
+
+Replaced individual shortcuts widget with a single text widget. This allows the
+user to add or delete shortcuts.</t>
+<t tx="ekr.20050513141913.187"></t>
+<t tx="ekr.20050513141913.188">http://sourceforge.net/forum/message.php?msg_id=3135170</t>
+<t tx="ekr.20050513141913.194">For a test of this, see the script in test.leo at:
+    
+Scripts--&gt;Script to execute @test, @suite or file
+
+Read the documentation in that node before running the script.</t>
+<t tx="ekr.20050513141913.197">g.getScript now fully processes all scripts, regardless of where they came from.
+
+- Changed g.getScript:
+    - p arg is now required.
+    - Removed unused script arg.
+    - Added forcePythonSentinels arg (default is True).
+    - g.getScript no longer temporarily alters any body text.
+        - atFile.writeFromString gets the initial text using the fromString arg.
+    - g.getScript now always calls atFile.writeFromString to handle all Leo directives.
+
+- Added forcePythonSentinels to atFile.initWriteIvars and atFile.scanAllDirectives.
+    - Default is None, in which case the code sets forcePythonSentinels to the scriptWrite arg.
+
+- Added forcePythonSentinels to atFile.scanAllDirectives.
+    - Default is False.
+
+- Created atFile.putAtFirstLines and atFile.putAtLastLines.
+    - These replace the corresonding sections in writeOpenFile.
+    - It was not actually necessary to define these, but it cleans up the code.
+
+- Created atFile.writeFromString.
+    - This handles all the details of simulating a write _from_ a string _to_ a string.
+
+- atFile.initWriteIvars and atFile.openFileForWriting now allow root to be None.
+    - This is not used at present: root is always defined.
+
+- Added fromString arg to atFile.writeOpenFile and atFile.putBody.</t>
+<t tx="ekr.20050513141913.233">http://sourceforge.net/forum/forum.php?thread_id=1281640&amp;forum_id=10228
+
+The default is ''.  It define_name exists c.executeScript executes the script in an environment containing
+__name__ = define_name.</t>
 </tnodes>
 </leo_file>
