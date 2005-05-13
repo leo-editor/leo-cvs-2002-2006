@@ -290,7 +290,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
             
         canvas['yscrollcommand'] = self.setCallback
         treeBar['command']     = self.yviewCallback
-        
         treeBar.pack(side="right", fill="y")
         if scrolls: 
             treeXBar = Tk.Scrollbar( 
@@ -356,7 +355,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         # g.print_bindings("canvas",canvas)
         return canvas
-        
     #@nonl
     #@-node:ekr.20041221071131.1:createTkTreeCanvas
     #@-node:ekr.20031218072017.3944:f.createCanvas & helpers
@@ -575,6 +573,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3950:divideLeoSplitter
     # Divides the main or secondary splitter, using the key invariant.
     def divideLeoSplitter (self, verticalFlag, frac):
+    
         if self.splitVerticalFlag == verticalFlag:
             self.divideLeoSplitter1(frac,verticalFlag)
             self.ratio = frac # Ratio of body pane to tree pane.
@@ -2226,7 +2225,7 @@ class leoTkinterBody (leoFrame.leoBody):
         self.bodyXbar = frame.bodyXBar = bodyXBar
         
         if wrap == "none":
-            g.trace(parentFrame)
+            # g.trace(parentFrame)
             bodyXBar.pack(side="bottom", fill="x")
             
         body.pack(expand=1,fill="both")
