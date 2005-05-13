@@ -11529,7 +11529,8 @@ def setTopGeometry (self,w,h,x,y,adjustSize=True):
 #@-node:ekr.20041007081134.2:(Fixed unbounded recursion with --script)
 #@+node:ekr.20041013101851:(Use entire script when executing script buttons)
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name=''):
 
     """This executes body text as a Python script.
     
@@ -11546,6 +11547,7 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
             try:
                 p = c.currentPosition()
                 d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
                 exec script in d
                 if not script1:
                     g.es("end of script",color="purple")
@@ -11759,7 +11761,8 @@ if not item[-1] is None:
     item = data[-2]
 #@-node:ekr.20041007080346.1:Report 2 from e
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name=''):
 
     """This executes body text as a Python script.
     
@@ -11776,6 +11779,7 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
             try:
                 p = c.currentPosition()
                 d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
                 exec script in d
                 if not script1:
                     g.es("end of script",color="purple")
@@ -21728,7 +21732,8 @@ def test_g_es_exception():
 #@-node:ekr.20050220030850:test_g_es_exception
 #@-node:ekr.20031218072017.3112:es_exception & test
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name=''):
 
     """This executes body text as a Python script.
     
@@ -21745,6 +21750,7 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
             try:
                 p = c.currentPosition()
                 d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
                 exec script in d
                 if not script1:
                     g.es("end of script",color="purple")
@@ -22559,7 +22565,8 @@ def test_g_es_exception():
 #@-node:ekr.20050220030850:test_g_es_exception
 #@-node:ekr.20031218072017.3112:es_exception & test
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name=''):
 
     """This executes body text as a Python script.
     
@@ -22576,6 +22583,7 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
             try:
                 p = c.currentPosition()
                 d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
                 exec script in d
                 if not script1:
                     g.es("end of script",color="purple")
@@ -27902,7 +27910,8 @@ def getValFromDict (self,d,setting,requestedType,found):
 #@-node:ekr.20041121143823:getValFromDict
 #@-node:ekr.20041117083141:get & allies (g.app.config)
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name=''):
 
     """This executes body text as a Python script.
     
@@ -27919,6 +27928,7 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
             try:
                 p = c.currentPosition()
                 d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
                 exec script in d
                 if not script1:
                     g.es("end of script",color="purple")
@@ -30969,7 +30979,8 @@ Documentation problem in "Leo\config\leoSettings.leo"
 #@+node:ekr.20050208133438.2:g.app did not exist during scripts!
 #@-node:ekr.20050208133438.2:g.app did not exist during scripts!
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name=''):
 
     """This executes body text as a Python script.
     
@@ -30986,6 +30997,7 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
             try:
                 p = c.currentPosition()
                 d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
                 exec script in d
                 if not script1:
                     g.es("end of script",color="purple")
@@ -31110,7 +31122,8 @@ In particular, it does not call strip!
 #@nonl
 #@-node:ekr.20050211134923:What I did
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name=''):
 
     """This executes body text as a Python script.
     
@@ -31127,6 +31140,7 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
             try:
                 p = c.currentPosition()
                 d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
                 exec script in d
                 if not script1:
                     g.es("end of script",color="purple")
@@ -35885,7 +35899,8 @@ def executeScript (name):
 #@nonl
 #@-node:ekr.20031218072017.3138:g.executeScript
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name=''):
 
     """This executes body text as a Python script.
     
@@ -35902,6 +35917,7 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
             try:
                 p = c.currentPosition()
                 d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
                 exec script in d
                 if not script1:
                     g.es("end of script",color="purple")
@@ -44602,7 +44618,8 @@ to the console only. no redirection to log if enabled.
 #@nonl
 #@-node:ekr.20050317102007:Report
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name=''):
 
     """This executes body text as a Python script.
     
@@ -44619,6 +44636,7 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
             try:
                 p = c.currentPosition()
                 d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
                 exec script in d
                 if not script1:
                     g.es("end of script",color="purple")
@@ -48589,7 +48607,8 @@ def writeFromString(self,root,s,forcePythonSentinels=True):
 #@nonl
 #@-node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name=''):
 
     """This executes body text as a Python script.
     
@@ -48606,6 +48625,7 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
             try:
                 p = c.currentPosition()
                 d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
                 exec script in d
                 if not script1:
                     g.es("end of script",color="purple")
@@ -48792,6 +48812,132 @@ by then maybe subprocess will be updated.
 #@nonl
 #@-node:ekr.20050302072742:iPython support (more powerful execute script)
 #@-node:ekr.20050211173540:(Rewrote g.getScript using at.writeFromString)
+#@+node:ekr.20050421044938:(Added define_name arg to c.executeScript)
+#@+node:ekr.20050510105122:Posting
+@nocolor
+
+http://sourceforge.net/forum/forum.php?thread_id=1281640&forum_id=10228
+
+Pre-define __name__ in scripts?
+
+There was some discussion recently about defining __name__ in scripts.  The relevant part of c.executeScript is:
+
+@color
+p = c.currentPosition()
+d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+exec script in d
+@nocolor
+
+If the define_g argument is True (the default) Leo executes the script in a context including c, g and p. Otherwise,Leo executes the script in a completely pristine environment.
+
+My idea is to add a define_name keyword to executeScript.  The code becomes:
+
+@color
+p = c.currentPosition()
+d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+if define_name: d['__name__'] = define_name
+exec script in d
+@nocolor
+
+What should the default value of define_name be?  (This will be the value used by the Execute Script command).  I am thinking that '' (the empty string) would be best in general, which means that the Execute Script command will work exactly as before.  Various other callers of c.executeScript could make other decisions.
+#@nonl
+#@-node:ekr.20050510105122:Posting
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name=''):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; script1 = script
+    if not script:
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
+    << redirect output >>
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
+                exec script in d
+                if not script1:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
+        << unredirect output >>
+
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+c.frame.tree.redrawAfterException()
+#@nonl
+#@+node:EKR.20040612215018:<< dump the lines near the error >>
+if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 0:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        g.es(s,newline=False)
+else: # Print surrounding lines.
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@-node:ekr.20050421044938:(Added define_name arg to c.executeScript)
 #@-node:ekr.20050505094928.1:Features
 #@-node:ekr.20050503111718:4.3 b2 projects
 #@-all

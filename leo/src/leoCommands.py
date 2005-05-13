@@ -1158,7 +1158,8 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2863:delete
     #@+node:ekr.20031218072017.2140:c.executeScript
-    def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+    def executeScript(self,p=None,script=None,
+        useSelectedText=True,define_g=True,define_name=''):
     
         """This executes body text as a Python script.
         
@@ -1183,6 +1184,7 @@ class baseCommands:
                 try:
                     p = c.currentPosition()
                     d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                    if define_name: d['__name__'] = define_name
                     exec script in d
                     if not script1:
                         g.es("end of script",color="purple")
