@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6981" clone_windows="0"/>
-<globals body_outline_ratio="0.544318181818">
-	<global_window_position top="46" left="233" height="880" width="788"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6984" clone_windows="0"/>
+<globals body_outline_ratio="0.453409090909">
+	<global_window_position top="64" left="289" height="880" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1161,7 +1161,7 @@
 </v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
-<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041121151002" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041213075902"><vh>@font log font</vh></v>
@@ -1194,10 +1194,12 @@
 <v t="ekr.20050419084109"><vh>@if-gui gtk</vh>
 <v t="ekr.20050419084109.1"><vh>@string gtkSetting = xyz</vh></v>
 </v>
-<v t="ekr.20050419085933"><vh>@ints[0,1,2] testInts = 0</vh></v>
-<v t="ekr.20050419090156"><vh>@strings[a,b,c]  = a</vh></v>
+<v t="ekr.20050419085933"><vh>@ints[0,1,2] testInts = 1</vh></v>
 <v t="ekr.20050505104752"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
 <v t="ekr.20050511085027"><vh>@string undo_granularity = word</vh></v>
+<v t="ekr.20050512130051"><vh>@strings[vertical,horizontal] initial_splitter_orientation = vertical</vh></v>
+<v t="ekr.20050513085201"><vh>@shortcuts Control</vh></v>
+<v t="ekr.20050513103937"><vh>Original shortcuts</vh></v>
 </v>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
@@ -14408,7 +14410,6 @@ p.v.t.unknownAttributes = d</t>
 <t tx="ekr.20050419084109"></t>
 <t tx="ekr.20050419084109.1"></t>
 <t tx="ekr.20050419085933"></t>
-<t tx="ekr.20050419090156"></t>
 <t tx="ekr.20050419115225">&lt;!DOCTYPE MODE SYSTEM "xmode.dtd"&gt;</t>
 <t tx="ekr.20050419115418">@language python
 @tabwidth -4
@@ -15385,5 +15386,16 @@ if not ok: raise</t>
 <t tx="ekr.20050512084850"></t>
 <t tx="ekr.20050512084850.1">pass</t>
 <t tx="ekr.20050512084850.2">pass</t>
+<t tx="ekr.20050512130051">Defines the primary splitter orientation.
+
+The primary panes are the body pane and the secondary pane.
+The secondary pane contains the outline and log panes.
+
+vertical: body pane below outline and log panes.
+horizontal: body pane to left of outline and log panes.</t>
+<t tx="ekr.20050513085201">CloneNode = Ctrl+'
+Xyzzy = Alt+Shit+Ctrl+Z</t>
+<t tx="ekr.20050513103937">CloneNode = Ctrl+'
+Replace = Ctrl+=</t>
 </tnodes>
 </leo_file>
