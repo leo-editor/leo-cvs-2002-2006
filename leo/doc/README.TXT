@@ -1,6 +1,6 @@
-Leo 4.3 beta 1                 April 30, 2005
+Leo 4.3 beta 2                 May 15, 2005
 
-Leo 4.3 beta 1 completes all major features of Leo 4.3. There are no known
+Leo 4.3 beta 2 completes all major features of Leo 4.3. There are no known
 significant bugs remaining.
 
 The defining features of Leo 4.3:

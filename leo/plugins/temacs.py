@@ -730,9 +730,7 @@ class MC_KeyStrokeManager:
 class Tracker:
     '''A class designed to allow the user to cycle through a list
        and to change the list as deemed appropiate.'''
-    
-    
-    
+
     #@    @+others
     #@+node:mork.20041102131352.1:init
     def __init__( self ):
@@ -5820,7 +5818,6 @@ class Emacs:
 #@-others
 
 if __name__ == '__main__':
-    
     #@    << run standalone tests >>
     #@+node:ekr.20041106100834:<< run standalone tests >>
     #@+at

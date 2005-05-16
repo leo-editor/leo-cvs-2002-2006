@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6984" clone_windows="0"/>
 <globals body_outline_ratio="0.453409090909">
-	<global_window_position top="64" left="289" height="880" width="856"/>
+	<global_window_position top="6" left="60" height="880" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1161,7 +1161,7 @@
 </v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
-<v t="ekr.20041121151002" a="E" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041213075902"><vh>@font log font</vh></v>
@@ -1211,7 +1211,7 @@
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1898,7 +1898,7 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
+<v t="ekr.20050120095423" a="TV" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
 <v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050218015346.12"><vh>__init__</vh></v>
@@ -13850,10 +13850,7 @@ print z</t>
 <t tx="ekr.20050316074630.1">import leoTest
 
 leoTest.throwAssertionError()</t>
-<t tx="ekr.20050328101834"> 
-        
-        
-        </t>
+<t tx="ekr.20050328101834"></t>
 <t tx="ekr.20050328101834.1"></t>
 <t tx="ekr.20050328101834.2"></t>
 <t tx="ekr.20050328101834.3"></t>

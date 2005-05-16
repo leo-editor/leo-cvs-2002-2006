@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="96" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="142" left="267" height="703" width="911"/>
+	<global_window_position top="127" left="272" height="703" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -34,7 +34,7 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20041119034357.1" a="TV"><vh>@settings</vh>
+<v t="ekr.20041119034357.1"><vh>@settings</vh>
 <v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
@@ -136,6 +136,7 @@
 <v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
 <v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
 <v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
+<v t="ekr.20050513110847" a="TV"><vh>@shortcuts test shortcuts</vh></v>
 </v>
 <v t="ekr.20041213105007"><vh>@page Fonts</vh>
 <v t="ekr.20041213105508"><vh>@font log font</vh></v>
@@ -203,7 +204,7 @@
 <v t="ekr.20041119034357.56"><vh>@page Options for new windows</vh>
 <v t="ekr.20041119034357.57"><vh>@ratio initial_horizontal_ratio = 0.3</vh></v>
 <v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.5</vh></v>
-<v t="ekr.20041119034357.59"><vh>@orientation initial_splitter_orientation = vertical</vh></v>
+<v t="ekr.20041119034357.59"><vh>@strings[vertical,horizontal] initial_splitter_orientation = vertical</vh></v>
 <v t="ekr.20041119034357.60"><vh>@ratio initial_vertical_ratio = 0.5</vh></v>
 <v t="ekr.20041119034357.61"><vh>@ratio initial_vertical_secondary_ratio = 0.7</vh></v>
 <v t="ekr.20041119034357.62"><vh>@int initial_window_height = 600</vh></v>
@@ -1126,5 +1127,8 @@ Please do not change this; it would make a unit test fail.</t>
 
 Doing so would make unit tests fail.
 </t>
+<t tx="ekr.20050513110847"># For manual testing
+xyzzy = Alt+Ctrl+Shift+y
+pdq = Alt+Ctrl+Shift+A</t>
 </tnodes>
 </leo_file>

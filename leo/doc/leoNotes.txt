@@ -1270,6 +1270,80 @@ HTH
 #@-node:ekr.20050214055018.4:@url http://idisk.mac.com/genthaler-Public/Leo.zip (download)
 #@+node:ekr.20050214055018.5:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
 #@-node:ekr.20050214055018.5:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
+#@+node:ekr.20050513164506:Problems with run script command on Mac x11
+@killcolor
+
+Jon Schull <jschull@softlock.com>  
+Date:  2003/12/30 Tue PM 05:50:51 EST 
+To:  edreamleo@charter.net 
+Subject:  Leo, Mac OS X 10.3, and VPython 
+             
+I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
+have some observations and a suggestion.
+
+Observations:
+- Leo runs under X11 as well as under OS X.
+- My X11 python configuration was created using the recipe at XXX (which enables vpython).
+- The OS X configuration is vanilla MacPython from MacPython.org, along with AquaTclTk batteries included XXX.
+
+In both environments I can run leo under python leo.py and under idle.
+Under OS X we get font smoothing, but we can't run visual python programs (python crashes;  this is a known incompatibility with  MacPython.)
+    
+- Under X11 we can run visual python programs like this one
+    #box.py
+    from visual import *
+    box()
+            
+And we can even run them under leo (under X11). HOWEVER, when the visual python program is terminated, leo vanishes (leo and the vp program apparently run in the same space)
+    
+Under x11, we can keep leo alive by putting the vp program in its own space:
+    
+    os.popen3('/sw/bin/python /Users/jis/box.py')
+    
+However,  this doesn't let us see the output of stderr and stdout.  
+Those text streams are available...
+        
+    def do(cmd='ls'):
+        from os import popen3
+        pIn,pOut,pErr=0,1,2
+        popenResults=popen3(cmd)
+        print popenResults[pOut].read()
+        print popenResults[pErr].read()
+    
+    import os	
+    do('/sw/bin/python /Users/jis/box.py')
+        
+...but only when the vpython program terminates.
+    
+Here's the good news:  if we execute our vp program with 
+/sw/bin/idle.py rather than with python, we get to see the program 
+output in real time (under idle, under X11).
+    
+    import os	
+    os.chdir('/sw/lib/python2.3/idlelib')
+    os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
+        
+#this runs as an executed script in leo, and produces a live idle 
+with real time ongoing output.
+    
+Now, while idle is running, leo sits in suspended animation.  But when 
+the vpython program terminates, we are left in idle, and when idle is 
+terminated, leo becomes active again.
+    
+It would be even better if leo were not suspended (using os.spawn, 
+perhaps) but the real point is that I would really really like leo's 
+"Execute script" command to execute code this way and spare me having 
+to  hard-write the path to box.py.  It ought to be possible to 
+eliminate os.chdir as well.
+
+------------------
+Jon Schull, Ph.D.
+Associate Professor
+Information Technology
+Rochester Institute of Technology
+schull@digitalgoods.com 585-738-6696
+#@nonl
+#@-node:ekr.20050513164506:Problems with run script command on Mac x11
 #@+node:ekr.20040104162835.8:Linux/Mac notes: Dan Winkler
 #@+node:ekr.20040104162835.13:Fink & aqua
 Yes, fink does have pre-built Pythons, both 2.1 and 2.2.  (If you don't 

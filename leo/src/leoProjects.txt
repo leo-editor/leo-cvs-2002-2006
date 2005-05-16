@@ -48938,6 +48938,62 @@ else: # Print surrounding lines.
 #@-node:ekr.20050505104140:<< handle an exception in the script >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@-node:ekr.20050421044938:(Added define_name arg to c.executeScript)
+#@+node:ekr.20050416150731.2:Commands for jumping between words: temacs & usetemacs
+#@+node:ekr.20050428081411:Request
+@killcolor
+
+http://sourceforge.net/forum/forum.php?thread_id=1260345&forum_id=10227
+
+I try to quickly jump between words using CTRL+ left and right arrows. The problem is it seems leo jumps according to spaces, not words. For instance, if I my cursor is at the end of a line like: 
+Pmw.ComboBox(r,label_text 
+and I press CTRL-left, leo will jump to the beginning of the line. But I want it to jump to the beginning of the word "label_text".
+
+How can I do this in leo?
+#@nonl
+#@-node:ekr.20050428081411:Request
+#@+node:ekr.20050428090956:Reply
+@killcolor
+
+The reason that Leo does not support the default Tk bindings described at: 
+ 
+http://www.tcl.tk/man/tcl8.4/TkCmd/text.htm 
+ 
+is that idle_body_key contains return 'break' statements throughout. I deleted
+the last return 'break' and the shift/control arrow keys mostly work. You can
+try to replace return 'break' by just return throughout, but there are no
+guarantees that this will be to your liking. 
+ 
+Leo should have commands to move the cursor in various ways. The big advantage
+of this way is that key bindings are uniform in both panes. OTOH, one might
+rather that some key bindings work differently depending on what pane is active.
+In general, I intensely dislike such modes, but other people may disagree. 
+ 
+The temacs and usetemacs plugins go a long way towards bringing all the Emacs
+commands into Leo, and it's becoming intolerable not to bring these commands
+fully into the fold. I plan to do this by 4.3 final. This would be the
+appropriate place to define lots of Emacs-style cursor move commands.
+#@nonl
+#@-node:ekr.20050428090956:Reply
+#@+node:ekr.20050428075604:From Tk docs
+@killcolor
+
+The Left and Right keys move the insertion cursor one character to the left or
+right; they also clear any selection in the text.
+
+If Left or Right is typed with the Shift key down, then the insertion cursor
+moves and the selection is extended to include the new character.
+
+Control-Left and Control-Right move the insertion cursor by words, and
+Control-Shift-Left and Control-Shift-Right move the insertion cursor by words
+and also extend the selection.
+
+Control-b and Control-f behave the same as Left and Right, respectively.
+
+Meta-b and Meta-f behave the same as Control-Left and Control-Right,
+respectively.
+#@nonl
+#@-node:ekr.20050428075604:From Tk docs
+#@-node:ekr.20050416150731.2:Commands for jumping between words: temacs & usetemacs
 #@-node:ekr.20050505094928.1:Features
 #@-node:ekr.20050503111718:4.3 b2 projects
 #@-all

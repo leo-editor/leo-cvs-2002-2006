@@ -23,7 +23,7 @@ plugins_menu.py
 #open_shell.py
 #at_view.py
 #vim.py
-newButtons.py
+#newButtons.py
 #UniversalScrolling.py
 #mod_http.py
 #chapters.py
@@ -32,6 +32,8 @@ newButtons.py
 #mod_autosave.py
 #golf.py
 image.py
+#temacs.py
+#usetemacs.py
 plugin_manager.py
 
 # Several plugins depend on TabbedLog.

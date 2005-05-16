@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="13987" clone_windows="0"/>
 <globals body_outline_ratio="0.635555555556">
-	<global_window_position top="35" left="231" height="900" width="1023"/>
+	<global_window_position top="81" left="412" height="765" width="824"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -62,7 +62,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20050513141852" a="ETV"><vh>4.3-beta 2</vh>
+<v t="ekr.20050513141852" a="TV"><vh>4.3-beta 2</vh>
 <v t="ekr.20050513141913.1"><vh>Fixed bugs...</vh>
 <v t="ekr.20050513141913.16"><vh>Fixed nodenavagator bug</vh></v>
 <v t="ekr.20050513141913.17" a="E"><vh>Fixed LaTex Coloring bug</vh></v>
@@ -14222,8 +14222,8 @@ and clicking the [Install:] button with "Install dependencies" checked
 
 	http://leo.sourceforge.net/
 
-5) Unzip the contents into a directory by double-clicking the  
-downloaded file.
+5) Unzip the contents into a directory by double-clicking the downloaded file.
+Typically you would put the Leo folder into the Applications directory.
 
 6) Control-click on /path_to_unzipped_dir/leo/src/leo.py and open with  
 PythonLauncher.

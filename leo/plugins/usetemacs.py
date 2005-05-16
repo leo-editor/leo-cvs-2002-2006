@@ -3,10 +3,14 @@
 #@<< docstring >>
 #@+node:ekr.20050513171201:<< docstring >>
 '''usetemacs is a Leo plugin that patches the temacs modules Emacs emulation
-into the standard Leo Tkinter Text editor.  It is recommended that the user of
-usetemacs rebinds any conflicting keystrokes in leoSettings.leo, for example:
-Ctrl-s is incremental search forward but also default Save in Leo. Look under
-Leos Help menu for "Temacs Help" to get a complete listing of commands and keystrokes.'''
+into the standard Leo Tkinter Text editor.
+
+Create a usetemacs.ini file to rebind shortcuts that conflict with those in your
+leoSettings.leo file. There are many such conflicts. For example, Ctrl-s is
+incremental search forward here but by default it is Save in Leo. 
+
+See Help->Temacs Help for a complete listing of commands and keystrokes.
+'''
 #@nonl
 #@-node:ekr.20050513171201:<< docstring >>
 #@nl
@@ -264,9 +268,8 @@ __version__ = '.57'
 # Now all the user needs to do is have temacs.py in the same plugins directory 
 # of the usetemacs plugin.  The plugin should
 # be able to load the module if done in this way.
-# 
-# 
 #@-at
+#@nonl
 #@-node:mork.20041102094341:a note on loading temacs
 #@-others
 #@@nocolor
@@ -288,7 +291,6 @@ def init ():
             global orig_Bindings,orig_OnBodyKey
             #@            << override createBindings and onBodyKey >>
             #@+node:ekr.20041106100326.2:<< override createBindings and onBodyKey >>
-            
             orig_Bindings = leoTkinterFrame.leoTkinterBody.createBindings
             leoTkinterFrame.leoTkinterBody.createBindings = initialise() #createBindings
             
@@ -384,7 +386,7 @@ def seeHelp():
 #@-node:mork.20041013092542.6:seeHelp
 #@+node:mork.20041013092542.5:addMenu
 def addMenu( tag, keywords ):
-    '''Adds the Temacs Help option to Leos Help menu'''
+    '''Adds the Temacs Help option to Leo's Help menu'''
     
     c = keywords.get('c')
     if not c: return

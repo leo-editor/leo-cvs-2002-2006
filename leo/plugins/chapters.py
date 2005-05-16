@@ -885,7 +885,7 @@ def walkChapters( c = None, ignorelist = [], chapname = False):
 #@-others
 #@nonl
 #@-node:mork.20040930094729:Chapter-Notebook ops
-#@+node:mork.20040930091035:opening and closing (to be moved into Leo's core)
+#@+node:mork.20040930091035:opening and closing (to be moved into Leo's core?)
 #@+at
 # This category is for opening and closing of Leo files.  We need to decorate 
 # and be tricky here, since a Chapters leo file is a zip file.  These 
@@ -1050,7 +1050,7 @@ def zipChapters( fileName, pagenames, c, chapList ):
 #@-node:mork.20040930091035.2:closing
 #@-others
 #@nonl
-#@-node:mork.20040930091035:opening and closing (to be moved into Leo's core)
+#@-node:mork.20040930091035:opening and closing (to be moved into Leo's core?)
 #@+node:mork.20040930091624:decorated Leo functions
 #@+at
 # I prefer decorating Leo functions as opposed to patching them.  Patching 

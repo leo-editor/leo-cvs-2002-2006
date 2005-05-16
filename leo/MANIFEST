@@ -417,6 +417,7 @@ plugins\templates.py
 plugins\trace_gc.py
 plugins\trace_keys.py
 plugins\trace_tags.py
+plugins\usetemacs.ini
 plugins\usetemacs.py
 plugins\vim.py
 plugins\word_export.ini
