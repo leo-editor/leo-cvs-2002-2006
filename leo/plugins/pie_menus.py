@@ -10,11 +10,21 @@ import leoTkinterTree
 import leoTkinterFrame
 import leoPlugins
 
-Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+Tk     = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+tkFont = g.importExtension('tkFont', pluginName=__name__,verbose=True)
 
 import weakref
-
+#@nonl
 #@-node:ekr.20040828122150.1:<< pie_menus imports >>
+#@nl
+#@<< version history >>
+#@+node:ekr.20050518065635:<< version history >>
+#@+at
+# 
+# .28 EKR: Added import for tkFont.
+#@-at
+#@nonl
+#@-node:ekr.20050518065635:<< version history >>
 #@nl
 
 timeids = weakref.WeakKeyDictionary()
@@ -483,7 +493,7 @@ def addPMenu( self, parentFrame ):
 
 if Tk and not g.app.unitTesting:  # Changes Leo's core.
     leoTkinterFrame.leoTkinterFrame.createCanvas = addPMenu
-    __version__ = ".27a"
+    __version__ = ".28"
     g.plugin_signon( __name__ )
 #@nonl
 #@-node:ekr.20040828122150:@thin pie_menus.py
