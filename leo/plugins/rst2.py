@@ -142,6 +142,8 @@ except:
 #     - added various options which can be set with @settings directive
 #     - add support for mod_http plugin.
 #     - added possible settings to the beginning of the Leo file
+# 2.4 EKR:
+#     - Call onFileOpen from both "new" and "open2" hooks.
 #@-at
 #@nonl
 #@-node:ekr.20040331071319.2:<< change log >>
@@ -1022,8 +1024,8 @@ def relocate_references_using_anchormap():
 
 if 1: # Ok for unit testing.
     leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
-    leoPlugins.registerHandler("open2", onFileOpen)
-    __version__ = "2.3"
+    leoPlugins.registerHandler(("new","open2"), onFileOpen)
+    __version__ = "2.4"
 
     g.plugin_signon(__name__)
 #@nonl
