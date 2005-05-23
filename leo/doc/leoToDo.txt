@@ -6,7 +6,19 @@
 #@+node:ekr.20050513164506.1:4.3.1
 #@+node:ekr.20050523075215:Create method for autoindent
 #@-node:ekr.20050523075215:Create method for autoindent
-#@+node:ekr.20050523071432:Position bugs
+#@+node:ekr.20050523071432:Fix Position bugs
+#@+node:ekr.20050523085407:Report
+@killcolor
+
+While doing final testing I discovered a long-standing bug that is potentially serious but that has lain dormant for a year or more.  I'm not going to delay 4.3 while I (try) to fix this bug because any potential fix would create the potential for even more serious bugs.  So I'll start work on the bug right after releasing 4.3 final, and I'll release 4.3.1 b1 about a week later.
+
+The bug is this:  modifying outlines can invalidate existing positions!  This rarely happens.  At present it affects the atFile.read logic when reading an outline whose initial current position is a clone outside an @thin tree with another clone inside the @thin tree.  So the read logic computes the expected current position before reading all derived files, and this expected current position becomes invalid.  This bug itself is minor: Leo doesn't highlight the initial node correctly in this case and nothing else bad happens.
+
+However, this bug is probably also behind a recent hang in the unit tests.  What happens is that inserting and deleting nodes also can invalidate existing positions, and in general this can have bad results.  N.B. Typical scripts will never encounter the bug because the vast majority of scripts a) do not attempt to modify the outline and b) don't have state that must be saved as the outline changes.  However, unit tests do both.
+
+The reason I'm not going even to attempt to fix the bug is that doing so will require a change deep in the heart of the position class.  I don't remember all the details of the implementation, so at the minimum I'll have to document the code much better than at present.  Iirc the code and data structures are something of a hack.  Rather than hacking the hack I'll see if maybe I can simplify matters, but this is potentially very dangerous.  Thus, I would rather live with a mostly dormant bug in 4.3 final than attempting a change that could ruin a release or two.
+#@nonl
+#@-node:ekr.20050523085407:Report
 #@+node:ekr.20050518092616:(Problems with redo extract section)
 #@+node:ekr.20050412084532:redoInsertNode
 def redoInsertNode (self):
@@ -330,8 +342,8 @@ def scrollTo (self,p):
     
     def scrollToCallback(event=None,self=self,p=p):
         __pychecker__ = '--no-argsused' # event not used.
-        if not p.exists(p.c):
-            g.trace('does not exist',p)
+        # if not p.exists(p.c):
+            # g.trace('does not exist',p)
         self.idle_scrollTo(p)
     
     self.canvas.after_idle(scrollToCallback)
@@ -638,7 +650,7 @@ for p in c.allNodes_iter():
 #@-node:ekr.20041005105605.25:<< delete all tempBodyStrings >>
 #@-node:ekr.20041005105605.21:read
 #@-node:ekr.20050521075528:(Problems with p.exists)
-#@-node:ekr.20050523071432:Position bugs
+#@-node:ekr.20050523071432:Fix Position bugs
 #@+node:ekr.20050513164949:Easy
 #@+node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio??)
 @killcolor

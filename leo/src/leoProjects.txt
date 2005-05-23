@@ -37816,8 +37816,8 @@ def scrollTo (self,p):
     
     def scrollToCallback(event=None,self=self,p=p):
         __pychecker__ = '--no-argsused' # event not used.
-        if not p.exists(p.c):
-            g.trace('does not exist',p)
+        # if not p.exists(p.c):
+            # g.trace('does not exist',p)
         self.idle_scrollTo(p)
     
     self.canvas.after_idle(scrollToCallback)
