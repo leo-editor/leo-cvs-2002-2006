@@ -230,9 +230,8 @@ class tkinterAboutLeo (leoTkinterDialog):
             bitmap_name = g.os_path_join(g.app.loadDir,"..","Icons","Leoapp.GIF") # 5/12/03
             image = Tk.PhotoImage(file=bitmap_name)
             text.image_create("1.0",image=image,padx=10)
-        except:
-            g.es("exception getting icon")
-            g.es_exception()
+        except Exception:
+            pass # This can sometimes happen for mysterious reasons.
     
         text.insert("end",version,"version")
         text.insert("end",theCopyright,"copyright")
