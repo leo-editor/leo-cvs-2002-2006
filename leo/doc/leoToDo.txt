@@ -652,6 +652,8 @@ for p in c.allNodes_iter():
 #@-node:ekr.20050521075528:(Problems with p.exists)
 #@-node:ekr.20050523071432:Fix Position bugs
 #@+node:ekr.20050513164949:Easy
+#@+node:ekr.20050523134613:Make sure same case is used in all recent files entries
+#@-node:ekr.20050523134613:Make sure same case is used in all recent files entries
 #@+node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio??)
 @killcolor
 

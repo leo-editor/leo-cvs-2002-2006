@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7547" clone_windows="0"/>
-<globals body_outline_ratio="0.472392638037">
-	<global_window_position top="39" left="372" height="815" width="775"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7730" clone_windows="0"/>
+<globals body_outline_ratio="0.600225225225">
+	<global_window_position top="23" left="370" height="888" width="876"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,16 +14,20 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20041122162610,ekr.20031218072017.2293,ekr.20031218072017.3069,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20031218072017.2817,"
+expanded="ekr.20050518070428,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
-<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="ETV"><vh>Code</vh>
 <v t="ekr.20031218072017.2415"><vh> Scripts</vh>
 <v t="ekr.20040327103735.2"><vh>Script Tools (leoGlobals.py)</vh>
 <v t="ekr.20031218072017.2418"><vh>g.initScriptFind (set up dialog)</vh></v>
 <v t="ekr.20040321065415"><vh>g.findNodeInTree, findNodeAnywhere, findTopLevelNode</vh></v>
+<v t="ekr.20050503112513.7"><vh>g.executeFile</vh>
+<v t="ekr.20050503112513.8"><vh>&lt;&lt; define subprocess_wrapper &gt;&gt;</vh></v>
+</v>
 </v>
 <v t="EKR.20040502195524"><vh>@thin ../scripts/leoScripts.txt</vh></v>
 <v t="EKR.20040502194930"><vh>@thin ../scripts/tangle_done.py</vh></v>
@@ -40,8 +44,8 @@ marks="ekr.20041122162610,ekr.20031218072017.2293,ekr.20031218072017.3069,"><vh>
 <v t="ekr.20041226080857"><vh>@button Spelling...</vh></v>
 <v t="ekr.20050130152155"><vh>@button Plugins...</vh></v>
 <v t="ekr.20041119040438"><vh>@settings</vh>
+<v t="ekr.20050420073615"><vh>@recent-files</vh></v>
 <v t="ekr.20041119042418"><vh>@bool use_plugins = True</vh></v>
-<v t="ekr.20041122162610" a="M"><vh>@recent_files</vh></v>
 <v t="ekr.20041211042119"><vh>@int page_width = 80</vh></v>
 </v>
 </v>
@@ -51,7 +55,7 @@ marks="ekr.20041122162610,ekr.20031218072017.2293,ekr.20031218072017.3069,"><vh>
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
 <v t="ekr.20031218072017.2810"
-marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
+marks="ekr.20031218072017.2817,ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
@@ -64,8 +68,7 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
 <v t="ekr.20031218072017.3630"><vh>@thin leoCompare.py</vh></v>
-<v t="ekr.20031218072017.3052"
-marks="ekr.20031218072017.2293,ekr.20031218072017.3069,"><vh>@thin leoFind.py</vh></v>
+<v t="ekr.20031218072017.3052"><vh>@thin leoFind.py</vh></v>
 <v t="ekr.20031218072017.3655"><vh>@thin leoFrame.py</vh></v>
 <v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
@@ -86,7 +89,7 @@ marks="ekr.20031218072017.2293,ekr.20031218072017.3069,"><vh>@thin leoFind.py</v
 <t tx="EKR.20040430162943"></t>
 <t tx="EKR.20040519090151.2"></t>
 <t tx="EKR.20040519090151.3"></t>
-<t tx="ekr.20031218072017.2406"> @language python
+<t tx="ekr.20031218072017.2406">@language python
 @tabwidth -4
 @pagewidth 80
 
@@ -109,10 +112,12 @@ For more documentation, see the node called "Overview of Leo's code" in LeoDocs.
 <t tx="ekr.20031218072017.2415"></t>
 <t tx="ekr.20031218072017.2418">def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
     script_search=True,script_change=True):
+        
+    __pychecker__ = '--no-argsused' # firstNode is not used.
     
     import leoTest
     import leoGlobals as g
-    
+
     # Find the scripts.
     c = g.top() ; p = c.currentPosition()
     u = leoTest.testUtils()
@@ -180,10 +185,10 @@ def findTopLevelNode(headline):
     return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"</t>
 <t tx="ekr.20040629121554.1">def getSignOnLine (self):
     c = self
-    return "Leo 4.3 alpha 4, build %s, March 15, 2005" % c.getBuildNumber()</t>
+    return "Leo 4.3 final, build %s, May 23, 2005" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.231 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.261 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -203,8 +208,6 @@ This tree contains settings unique to this outline.</t>
 
 Warning: Naive or hostile hooks may execute HOSTILE CODE contained in .leo files. See further warnings in LeoDocs.leo.
 </t>
-<t tx="ekr.20041122162610">c:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo</t>
 <t tx="ekr.20041211042119"></t>
 <t tx="ekr.20041226080857">import leoGlobals as g
 import leoPlugins
@@ -242,5 +245,42 @@ fileName = g.os_path_join(g.app.loadDir,"..","plugins",name)
 ok,frame = g.openWithFileName(fileName,c)
 if not ok:
     g.es("not found: %s" % name)</t>
+<t tx="ekr.20050420073615">c:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\Documents and Settings\Ed\My Documents\ekr.leo
+c:\prog\leoCVS\leo\config\leoSettings.leo</t>
+<t tx="ekr.20050503112513.7">def executeFile(filename, options= ''):
+
+    if not os.access(filename, os.R_OK): return
+    
+    try: import subprocess # Exists in Python 2.4 or later.
+    except ImportError: subprocess = None
+
+    cwd = os.getcwdu()
+    fdir, fname = g.os_path_split(filename)
+    
+    if subprocess: # Only exists in Python 2.4.
+        &lt;&lt; define subprocess_wrapper &gt;&gt;
+        rc, so, se = subprocess_wrapper('%s %s %s'%(sys.executable, fname, options))
+        if rc:
+             print 'return code', rc
+        print so, se
+    else:
+        if fdir: os.chdir(fdir)
+        d = {'__name__': '__main__'}
+        execfile(fname, d)  #, globals()
+        os.system('%s %s' % (sys.executable, fname))
+        if fdir: os.chdir(cwd)</t>
+<t tx="ekr.20050503112513.8">def subprocess_wrapper(cmdlst):
+    
+    # g.trace(cmdlst, fdir)
+    # g.trace(subprocess.list2cmdline([cmdlst]))
+
+    p = subprocess.Popen(cmdlst, cwd=fdir,
+        universal_newlines=True,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    stdo, stde = p.communicate()
+    return p.wait(), stdo, stde</t>
 </tnodes>
 </leo_file>
