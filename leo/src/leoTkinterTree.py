@@ -1403,12 +1403,14 @@ class leoTkinterTree (leoFrame.leoTree):
         __pychecker__ = '--no-argsused' # event not used.
     
         c = self.c ; frame = c.frame
-        if not p: p = self.c.currentPosition()
-        if not p: p = self.c.rootPosition()
         if not p or not p.exists(c):
-            g.trace('does not exist:',p.headString())
+            p = c.currentPosition()
+        if not p or not p.exists(c):
+            # g.trace('current p does not exist',p)
+            p = c.rootPosition()
+        if not p or not p.exists(c):
+            # g.trace('no position')
             return
-        # g.trace(p.headString())
         try:
             last = p.lastVisible()
             nextToLast = last.visBack()
@@ -1473,6 +1475,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         def scrollToCallback(event=None,self=self,p=p):
             __pychecker__ = '--no-argsused' # event not used.
+            # if not p.exists(p.c):
+                # g.trace('does not exist',p)
             self.idle_scrollTo(p)
         
         self.canvas.after_idle(scrollToCallback)

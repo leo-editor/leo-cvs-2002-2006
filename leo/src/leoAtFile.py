@@ -402,6 +402,9 @@ class atFile:
         """Read any derived file."""
     
         at = self ; c = at.c
+        if 0:
+            p = c.currentPosition()
+            g.trace('1',p,p.v._parent,p.v._parent and p.v._parent.t.vnodeList)
         #@    << set fileName >>
         #@+node:ekr.20041005105605.22:<< set fileName >>
         if fromString:
@@ -427,6 +430,9 @@ class atFile:
         root.clearVisitedInTree()
         at.scanAllDirectives(root,importing=at.importing,reading=True)
         at.readOpenFile(root,at.inputFile,fileName)
+        if 0:
+            p = c.currentPosition()
+            g.trace('2',p,p.v._parent,p.v._parent and p.v._parent.t.vnodeList)
         at.inputFile.close()
         root.clearDirty() # May be set dirty below.
         if not at.thinFile:

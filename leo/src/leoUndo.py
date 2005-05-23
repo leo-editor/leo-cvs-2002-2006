@@ -1275,8 +1275,10 @@ class baseUndoer:
     #@-node:EKR.20040526072519.2:redoDeleteNode
     #@+node:ekr.20050412084532:redoInsertNode
     def redoInsertNode (self):
-        
+    
         u = self ; c = u.c
+        
+        # g.trace('p',u.newP.v,'parent',u.newParent.v)
     
         if u.newBack:
             u.newP.linkAfter(u.newBack)
@@ -1285,6 +1287,8 @@ class baseUndoer:
         else:
             oldRoot = c.rootPosition()
             u.newP.linkAsRoot(oldRoot)
+    
+        # assert(u.newP.exists(c))
             
         # Restore all vnodeLists (and thus all clone marks).
         u.newP.restoreLinksInTree()

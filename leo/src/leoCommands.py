@@ -199,7 +199,7 @@ class baseCommands:
     #@+node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     def getSignOnLine (self):
         c = self
-        return "Leo 4.3 beta 2, build %s, May 15, 2005" % c.getBuildNumber()
+        return "Leo 4.3 final, build %s, May 23, 2005" % c.getBuildNumber()
     #@nonl
     #@-node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     #@+node:ekr.20040629121554.2:initVersion
@@ -1999,6 +1999,10 @@ class baseCommands:
         head,lines,tail,oldSel,oldYview = self.getBodyLines()
         if not lines: return
         headline = lines[0].strip() ; del lines[0]
+        
+        if not lines:
+            g.es("Nothing follows section name",color="blue")
+            return
     
         # Remove leading whitespace from all body lines.
         junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
@@ -2050,6 +2054,10 @@ class baseCommands:
         #@nonl
         #@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
         #@nl
+        
+        if not lines:
+            g.es("Nothing follows section name",color="blue")
+            return
         
         # Remove leading whitespace from all body lines.
         junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
@@ -5349,7 +5357,10 @@ class baseCommands:
             if p.equal(c._currentPosition):
                 pass # We have already made a copy.
             else: # Must make a copy _now_
-                c._currentPosition = p.copy() 
+                c._currentPosition = p.copy()
+            # g.trace('exists',p.exists(c),'returns',p)
+            # if not p.exists(c):
+                # g.printStack()
         else:
             c._currentPosition = None
         

@@ -1696,9 +1696,11 @@ class position (object):
         
         p = self.copy()
         
-        # This code must be fast.
+         # This code must be fast.
         root = c.rootPosition()
+    
         while p:
+            # g.trace(p,'parent',p.parent(),'back',p.back())
             if p == root:
                 return True
             if p.hasParent():

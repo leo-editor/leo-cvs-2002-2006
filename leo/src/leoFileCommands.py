@@ -129,7 +129,9 @@ class baseFileCommands:
                         break
                     else:
                         p2.moveToParent()
-                if p2: return p
+                if p2:
+                    # g.trace('exists',p.exists(c),p)
+                    return p
     
         return None
     #@nonl
@@ -647,9 +649,11 @@ class baseFileCommands:
         c.frame.tree.redraw_now(scroll=False)
         
         # g.trace(readAtFileNodesFlag,c.mFileName)
-        
+    
         if ok and readAtFileNodesFlag:
             c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+            
+        # g.trace(c.currentPosition())
     
         if not c.currentPosition():
             c.setCurrentPosition(c.rootPosition())
@@ -1178,15 +1182,17 @@ class baseFileCommands:
             #@+node:ekr.20040326054052:<< set current and top positions >>
             current = self.convertStackToPosition(self.currentVnodeStack)
             if current:
+                # g.trace('using convertStackToPosition',current)
                 c.setCurrentPosition(current)
             else:
                 # g.trace(self.currentVnodeStack)
                 c.setCurrentPosition(c.rootPosition())
                 
             # At present this is useless: the drawing code doesn't set the top position properly.
-            top = self.convertStackToPosition(self.topVnodeStack)
-            if top:
-                c.setTopPosition(top)
+            if 0:
+                top = self.convertStackToPosition(self.topVnodeStack)
+                if top:
+                    c.setTopPosition(top)
             #@nonl
             #@-node:ekr.20040326054052:<< set current and top positions >>
             #@nl
