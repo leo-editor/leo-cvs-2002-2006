@@ -97,26 +97,15 @@ import urlparse
 #@nl
 
 #@+others
-#@+node:rogererens.20041130095659:@url file: ./../../plugins/leoPlugins.leo#Plugins-->Enhancing the icon and status areas-->@thin UNL.py-->To do
+#@+node:rogererens.20041130095659:@url 'file: ./../../plugins/leoPlugins.leo#Plugins-->Enhancing the icon and status areas-->@thin UNL.py-->To do'
 #@+at 
 #@nonl
 # It is possible to link to nodes within the same file.  However clones might 
 # be better.
 #@-at
-#@-node:rogererens.20041130095659:@url file: ./../../plugins/leoPlugins.leo#Plugins-->Enhancing the icon and status areas-->@thin UNL.py-->To do
-#@+node:ekr.20041202032543:@url file: ./../../doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
-#@-node:ekr.20041202032543:@url file: ./../../doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
-#@+node:rogererens.20041013082304.1:createStatusLine
-def createStatusLine(tag,keywords):
-
-    """Create a status line.""" # Might already be done by another plugin. Checking needed?
-    
-    c = keywords.get("c")
-    statusLine = c.frame.createStatusLine()
-    statusLine.clear()
-    statusLine.put("...")
-#@nonl
-#@-node:rogererens.20041013082304.1:createStatusLine
+#@-node:rogererens.20041130095659:@url 'file: ./../../plugins/leoPlugins.leo#Plugins-->Enhancing the icon and status areas-->@thin UNL.py-->To do'
+#@+node:ekr.20041202032543:@url 'file:./../doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo'
+#@-node:ekr.20041202032543:@url 'file:./../doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo'
 #@+node:rogererens.20041013084119:onSelect2
 def onSelect2 (tag,keywords):
 
@@ -140,6 +129,17 @@ def onSelect2 (tag,keywords):
         c.frame.putStatusLine(s)
 #@nonl
 #@-node:rogererens.20041013084119:onSelect2
+#@+node:rogererens.20041013082304.1:createStatusLine
+def createStatusLine(tag,keywords):
+
+    """Create a status line.""" # Might already be done by another plugin. Checking needed?
+    
+    c = keywords.get("c")
+    statusLine = c.frame.createStatusLine()
+    statusLine.clear()
+    statusLine.put("...")
+#@nonl
+#@-node:rogererens.20041013082304.1:createStatusLine
 #@+node:rogererens.20041021091837:onUrl1
 def onUrl1 (tag,keywords):
     """Redefine the @url functionality of Leo Core: allows jumping to URL _and UNLs_. Spaces are now allowed in URLs."""
