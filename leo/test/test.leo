@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6984" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7007" clone_windows="0"/>
 <globals body_outline_ratio="0.453409090909">
-	<global_window_position top="6" left="60" height="880" width="856"/>
+	<global_window_position top="58" left="315" height="880" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -542,7 +542,6 @@
 <v t="ekr.20050509072745.3"><vh>body</vh></v>
 </v>
 </v>
-<v t="ekr.20050511093328"><vh>Test of extract section</vh></v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes...</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -1198,7 +1197,6 @@
 <v t="ekr.20050505104752"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
 <v t="ekr.20050511085027"><vh>@string undo_granularity = word</vh></v>
 <v t="ekr.20050512130051"><vh>@strings[vertical,horizontal] initial_splitter_orientation = vertical</vh></v>
-<v t="ekr.20050513085201"><vh>@shortcuts Control</vh></v>
 <v t="ekr.20050513103937"><vh>Original shortcuts</vh></v>
 </v>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
@@ -1211,7 +1209,34 @@
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="ekr.20050523072136"><vh>To do</vh>
+<v t="ekr.20050511093328"><vh>Test of extract section</vh></v>
+<v t="ekr.20050520071616"><vh>(problems with undo/redo unit tests)</vh>
+<v t="ekr.20050415070840.25"><vh>compareOutlines</vh></v>
+<v t="ekr.20050415070840.73"><vh> makeEditBodySuite</vh></v>
+<v t="ekr.20050415070840.74"><vh>class editBodyTestCase</vh>
+<v t="ekr.20050415070840.75"><vh> __init__</vh></v>
+<v t="ekr.20050415070840.76"><vh> fail</vh></v>
+<v t="ekr.20050415070840.77"><vh>editBody</vh></v>
+<v t="ekr.20050415070840.80"><vh>runTest</vh></v>
+<v t="ekr.20050415070840.79"><vh>setUp</vh></v>
+<v t="ekr.20050415070840.78"><vh>tearDown</vh></v>
+</v>
+</v>
+<v t="ekr.20050523072136.1"><vh>New Undo/Redo (Edit Body) unit tests</vh>
+<v t="ekr.20050518070540"><vh>extract test2: no section test</vh>
+<v t="ekr.20050518070540.1"><vh>before</vh></v>
+<v t="ekr.20050518070545"><vh>after</vh></v>
+<v t="ekr.20050518070540.4"><vh>selection</vh></v>
+</v>
+<v t="ekr.20050518071251"><vh>extractSection test2: no section test</vh>
+<v t="ekr.20050518071251.1"><vh>before</vh></v>
+<v t="ekr.20050518071258"><vh>after</vh></v>
+<v t="ekr.20050518071251.4"><vh>selection</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1743,19 +1768,19 @@
 <v t="ekr.20050417202817.2"><vh>after</vh></v>
 <v t="ekr.20050417202817.3"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050417201845"><vh>extract</vh>
+<v t="ekr.20050417201845"><vh>extract test1</vh>
 <v t="ekr.20050417201845.1"><vh>before</vh></v>
 <v t="ekr.20050417201845.2"><vh>after</vh>
 <v t="ekr.20050417201845.3"><vh>&lt;&lt; section &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050417201845.4"><vh>selection</vh></v>
 </v>
-<v t="ekr.20040712101754.40"><vh>extractSection</vh>
-<v t="ekr.20040712101754.41"><vh>before</vh></v>
-<v t="ekr.20040712101754.42"><vh>after</vh>
-<v t="ekr.20040712101754.43"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20050518070927"><vh>extractSection test1</vh>
+<v t="ekr.20050518070927.1"><vh>before</vh></v>
+<v t="ekr.20050518070927.2"><vh>after</vh>
+<v t="ekr.20050518070927.3"><vh>&lt;&lt; section &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040712101754.44"><vh>selection</vh></v>
+<v t="ekr.20050518070927.4"><vh>selection</vh></v>
 </v>
 <v t="ekr.20050417202052"><vh>extractSectionNames</vh>
 <v t="ekr.20050417202052.1"><vh>before</vh></v>
@@ -1898,7 +1923,7 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050120095423" a="TV" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
+<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
 <v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050218015346.12"><vh>__init__</vh></v>
@@ -2649,7 +2674,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -3350,6 +3375,8 @@ test\\unittest\\output\\outlineToCweb.txt</t>
 
 import leoTest
 
+g.app.enableUnitTest = True
+
 suite = leoTest.makeEditBodySuite()
 
 g.app.scriptDict['suite'] = suite</t>
@@ -3363,22 +3390,12 @@ Each child node will in turn have two or more children:
 - an "after" node
 - an optional selection node containing two lines giving the selection range in Tk coordinates.
 - An optional insert node containing one line giving the insert point in Tk coordinates.</t>
-<t tx="ekr.20040712101754.39"></t>
-<t tx="ekr.20040712101754.40"></t>
-<t tx="ekr.20040712101754.41">before
+<t tx="ekr.20040712101754.39">before
     &lt;&lt; section &gt;&gt;
     sec line 1
         sec line 2 indented
 sec line 3
 after</t>
-<t tx="ekr.20040712101754.42">before
-    &lt;&lt; section &gt;&gt;
-after</t>
-<t tx="ekr.20040712101754.43">sec line 1
-    sec line 2 indented
-sec line 3</t>
-<t tx="ekr.20040712101754.44">2.0
-5.0 lineend -1c</t>
 <t tx="ekr.20040712101754.45"></t>
 <t tx="ekr.20040712101754.46">line 1
 line 2
@@ -13888,6 +13905,182 @@ if not golf or not controller:
 
 &lt;/body&gt;</t>
 <t tx="ekr.20050408084135"></t>
+<t tx="ekr.20050415070840.25">def compareOutlines (self,root1,root2,compareHeadlines=True,tag=''):
+
+    """Compares two outlines, making sure that their topologies,
+    content and join lists are equivalent"""
+
+    p2 = root2.copy() ; ok = True
+    for p1 in root1.self_and_subtree_iter():
+        ok = (
+            p1 and p2 and
+            p1.numberOfChildren() == p2.numberOfChildren() and
+            (not compareHeadlines or (p1.headString() == p2.headString())) and
+            p1.bodyString() == p2.bodyString() and
+            p1.isCloned()   == p2.isCloned()
+        )
+        if not ok: break
+        p2.moveToThreadNext()
+
+    if not ok:
+        print 'compareOutlines failed',
+        if tag: print 'tag:',tag
+        else: print
+        if p1: print 'p1',p1,p1.v
+        if p2: print 'p2',p2,p2.v
+        if not p1 or not p2:
+            print 'p1 and p2'
+        if p1.numberOfChildren() != p2.numberOfChildren():
+            print 'p1.numberOfChildren()=%d, p2.numberOfChildren()=%d' % (
+                p1.numberOfChildren(),p2.numberOfChildren())
+        if compareHeadlines and (p1.headString() != p2.headString()):
+            print 'p1.head', p1.headString()
+            print 'p2.head', p2.headString()
+        if p1.bodyString() != p2.bodyString():
+            print 'p1.body'
+            print repr(p1.bodyString())
+            print 'p2.body'
+            print repr(p2.bodyString())
+        if p1.isCloned() != p2.isCloned():
+            print 'p1.isCloned() == p2.isCloned()'
+
+    return ok</t>
+<t tx="ekr.20050415070840.73">def makeEditBodySuite():
+
+    """Create an Edit Body test for every descendant of testParentHeadline.."""
+
+    c = g.top() ; p = c.currentPosition()
+    u = testUtils()
+    data_p = u.findNodeInTree(p,"editBodyTests")
+    assert(data_p)
+    temp_p = u.findNodeInTree(data_p,"tempNode")
+    assert(temp_p)
+
+    # Create the suite and add all test cases.
+    suite = unittest.makeSuite(unittest.TestCase)
+
+    for p in data_p.children_iter():
+        if p.headString()=="tempNode": continue # TempNode now in data tree.
+        before = u.findNodeInTree(p,"before")
+        after  = u.findNodeInTree(p,"after")
+        sel    = u.findNodeInTree(p,"selection")
+        ins    = u.findNodeInTree(p,"insert")
+        if before and after:
+            test = editBodyTestCase(c,p,before,after,sel,ins,temp_p)
+            suite.addTest(test)
+        else:
+            print 'missing "before" or "after" for', p.headString()
+
+    return suite</t>
+<t tx="ekr.20050415070840.74">class editBodyTestCase(unittest.TestCase):
+
+    """Data-driven unit tests for Leo's edit body commands."""
+
+    @others</t>
+<t tx="ekr.20050415070840.75">def __init__ (self,c,parent,before,after,sel,ins,tempNode):
+
+    # Init the base class.
+    unittest.TestCase.__init__(self)
+
+    self.u = testUtils()
+
+    self.c = c
+    self.parent = parent.copy()
+    self.before = before.copy()
+    self.after  = after.copy()
+    self.sel    = sel.copy() # Two lines giving the selection range in tk coordinates.
+    self.ins    = ins.copy() # One line giving the insert point in tk coordinate.
+    self.tempNode = tempNode.copy()
+    
+    if 0:
+        g.trace('parent',parent)
+        g.trace('before',before)
+        g.trace('after',after)</t>
+<t tx="ekr.20050415070840.76">def fail (self,msg=None):
+
+    """Mark a unit test as having failed."""
+    
+    __pychecker__ = '--no-argsused'
+        #  msg needed so signature matches base class.
+
+    import leoGlobals as g
+
+    g.app.unitTestDict["fail"] = g.callerName(2)
+</t>
+<t tx="ekr.20050415070840.77">def editBody (self):
+
+    c = self.c ; u = self.u
+    
+    if not g.app.enableUnitTest: return
+
+    # Blank stops the command name.
+    commandName = self.parent.headString()
+    i = commandName.find(' ')
+    if i &gt; -1:
+        commandName = commandName[:i] 
+    # g.trace(commandName)
+    
+    # Compute the result in tempNode.bodyString()
+    command = getattr(c,commandName)
+    command()
+
+    if 1:
+        assert(u.compareOutlines(self.tempNode,self.after,compareHeadlines=False,tag='before undo1'))
+        c.undoer.undo()
+        assert(u.compareOutlines(self.tempNode,self.before,compareHeadlines=False,tag='after undo1'))
+        c.undoer.redo()
+        assert(u.compareOutlines(self.tempNode,self.after,compareHeadlines=False,tag='after redo'))
+        c.undoer.undo()
+        assert(u.compareOutlines(self.tempNode,self.before,compareHeadlines=False,tag='after undo2'))
+        # c.frame.tree.redraw_now()
+</t>
+<t tx="ekr.20050415070840.78">def tearDown (self):
+
+    c = self.c ; tempNode = self.tempNode
+    
+
+
+    c.selectVnode(tempNode)
+    tempNode.setTnodeText("",g.app.tkEncoding)
+
+    # Delete all children of temp node.
+    while tempNode.firstChild():
+        tempNode.firstChild().doDelete(tempNode)
+        
+    tempNode.clearDirty()</t>
+<t tx="ekr.20050415070840.79">def setUp(self):
+
+    c = self.c ; tempNode = self.tempNode
+    
+    if not g.app.enableUnitTest: return
+
+    # Delete all children of temp node.
+    while tempNode.firstChild():
+        tempNode.firstChild().doDelete(tempNode)
+
+    text = self.before.bodyString()
+
+    tempNode.setTnodeText(text,g.app.tkEncoding)
+    c.selectPosition(self.tempNode)
+
+    t = c.frame.body.bodyCtrl
+    if self.sel:
+        s = str(self.sel.bodyString()) # Can't be unicode.
+        lines = s.split('\n')
+        g.app.gui.setTextSelection(t,lines[0],lines[1])
+
+    if self.ins:
+        s = str(self.ins.bodyString()) # Can't be unicode.
+        lines = s.split('\n')
+        g.trace(lines)
+        g.app.gui.setInsertPoint(t,lines[0])
+
+    if not self.sel and not self.ins:
+        g.app.gui.setInsertPoint(t,"1.0")
+        g.app.gui.setTextSelection(t,"1.0","1.0")</t>
+<t tx="ekr.20050415070840.80">def runTest(self):
+
+    self.editBody()</t>
 <t tx="ekr.20050415090637">True:  Allows control-dragging to create clones.
 False: All drags move nodes.
 
@@ -15390,9 +15583,55 @@ The secondary pane contains the outline and log panes.
 
 vertical: body pane below outline and log panes.
 horizontal: body pane to left of outline and log panes.</t>
-<t tx="ekr.20050513085201">CloneNode = Ctrl+'
-Xyzzy = Alt+Shit+Ctrl+Z</t>
 <t tx="ekr.20050513103937">CloneNode = Ctrl+'
 Replace = Ctrl+=</t>
+<t tx="ekr.20050518070540"></t>
+<t tx="ekr.20050518070540.1">before
+    &lt;&lt; section &gt;&gt;
+    sec line 1
+        sec line 2 indented
+sec line 3
+after</t>
+<t tx="ekr.20050518070540.4">2.0
+2.0 lineend -1c</t>
+<t tx="ekr.20050518070545">before
+    &lt;&lt; section &gt;&gt;
+    sec line 1
+        sec line 2 indented
+sec line 3
+after</t>
+<t tx="ekr.20050518070927"></t>
+<t tx="ekr.20050518070927.1">before
+    &lt;&lt; section &gt;&gt;
+    sec line 1
+        sec line 2 indented
+sec line 3
+after</t>
+<t tx="ekr.20050518070927.2">before
+    &lt;&lt; section &gt;&gt;
+after</t>
+<t tx="ekr.20050518070927.3">sec line 1
+    sec line 2 indented
+sec line 3</t>
+<t tx="ekr.20050518070927.4">2.0
+5.0 lineend -1c</t>
+<t tx="ekr.20050518071251"></t>
+<t tx="ekr.20050518071251.1">before
+    &lt;&lt; section &gt;&gt;
+    sec line 1
+        sec line 2 indented
+sec line 3
+after</t>
+<t tx="ekr.20050518071251.4">2.0
+2.0 lineend -1c</t>
+<t tx="ekr.20050518071258">before
+    &lt;&lt; section &gt;&gt;
+    sec line 1
+        sec line 2 indented
+sec line 3
+after</t>
+<t tx="ekr.20050520071616"></t>
+<t tx="ekr.20050523072136"></t>
+<t tx="ekr.20050523072136.1"></t>
 </tnodes>
 </leo_file>

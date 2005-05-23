@@ -4,6 +4,641 @@
 
 #@+all
 #@+node:ekr.20050513164506.1:4.3.1
+#@+node:ekr.20050523075215:Create method for autoindent
+#@-node:ekr.20050523075215:Create method for autoindent
+#@+node:ekr.20050523071432:Position bugs
+#@+node:ekr.20050518092616:(Problems with redo extract section)
+#@+node:ekr.20050412084532:redoInsertNode
+def redoInsertNode (self):
+
+    u = self ; c = u.c
+    
+    # g.trace('p',u.newP.v,'parent',u.newParent.v)
+
+    if u.newBack:
+        u.newP.linkAfter(u.newBack)
+    elif u.newParent:
+        u.newP.linkAsNthChild(u.newParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.newP.linkAsRoot(oldRoot)
+
+    # assert(u.newP.exists(c))
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.newP.restoreLinksInTree()
+    
+    if u.pasteAsClone:
+        for bunch in u.afterTree:
+            t = bunch.t
+            if u.newP.v.t == t:
+                u.newP.setBodyStringOrPane(bunch.body)
+                u.newP.setHeadString(bunch.head)
+            else:
+                t.setTnodeText(bunch.body)
+                t.setHeadString(bunch.head)
+            # g.trace(t,bunch.head,bunch.body)
+
+    c.selectPosition(u.newP)
+#@nonl
+#@-node:ekr.20050412084532:redoInsertNode
+#@-node:ekr.20050518092616:(Problems with redo extract section)
+#@+node:ekr.20050521075528:(Problems with p.exists)
+#@+node:ekr.20031218072017.1553:getLeoFile
+# The caller should enclose this in begin/endUpdate.
+
+def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c
+    c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
+    << warn on read-only files >>
+    self.mFileName = c.mFileName
+    self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.descendentUnknownAttributesDictList = []
+    ok = True
+    c.loading = True # disable c.changed
+    
+    try:
+        << scan all the xml elements >>
+    except BadLeoFile, message:
+        if not silent:
+            << raise an alert >>
+        ok = False
+
+    c.frame.tree.redraw_now(scroll=False)
+    
+    # g.trace(readAtFileNodesFlag,c.mFileName)
+
+    if ok and readAtFileNodesFlag:
+        c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+        
+    # g.trace(c.currentPosition())
+
+    if not c.currentPosition():
+        c.setCurrentPosition(c.rootPosition())
+
+    c.selectVnode(c.currentPosition()) # load body pane
+    c.loading = False # reenable c.changed
+    c.setChanged(c.changed) # Refresh the changed marker.
+    << restore attributes in descendent tnodes >>
+    self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.tnodesDict = {}
+    return ok, self.ratio
+#@nonl
+#@+node:ekr.20031218072017.1554:<< warn on read-only files >>
+# os.access may not exist on all platforms.
+
+try:
+    self.read_only = not os.access(fileName,os.W_OK)
+except AttributeError:
+    self.read_only = False
+except UnicodeError:
+    self.read_only = False
+        
+if self.read_only:
+    g.es("read only: " + fileName,color="red")
+#@nonl
+#@-node:ekr.20031218072017.1554:<< warn on read-only files >>
+#@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
+self.getXmlVersionTag()
+self.getXmlStylesheetTag()
+
+self.getTag("<leo_file>") # Must match exactly.
+self.getLeoHeader()
+self.getGlobals()
+self.getPrefs()
+self.getFindPanelSettings()
+
+# Causes window to appear.
+c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio)
+if not silent:
+    g.es("reading: " + fileName)
+
+self.getVnodes()
+self.getTnodes()
+self.getCloneWindows()
+self.getTag("</leo_file>")
+#@nonl
+#@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
+#@+node:ekr.20031218072017.1556:<< raise an alert >>
+# All other exceptions are Leo bugs.
+
+g.es_exception()
+g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
+#@nonl
+#@-node:ekr.20031218072017.1556:<< raise an alert >>
+#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t: t.unknownAttributes = resultDict[gnx]
+        # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = {} ; expanded = {}
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+
+if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
+    for p in c.all_positions_iter():
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
+            p.expand()
+#@nonl
+#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+#@-node:ekr.20031218072017.1553:getLeoFile
+#@+node:ekr.20031218072017.1565:getVnodes
+def getVnodes (self,reassignIndices=True):
+
+    c = self.c
+
+    if self.getOpenTag("<vnodes>"):
+        return # <vnodes/> seen.
+        
+    self.forbiddenTnodes = []
+    back = parent = None # This routine _must_ work on vnodes!
+    self.currentVnodeStack = []
+    self.topVnodeStack = []
+        
+    if self.usingClipboard:
+        oldRoot = c.rootPosition()
+        oldCurrent = c.currentPosition()
+        if not reassignIndices:
+            << set self.forbiddenTnodes to tnodes than must not be pasted >>
+
+    while self.matchTag("<v"):
+        append1 = not self.usingClipboard and len(self.currentVnodeStack) == 0
+        append2 = not self.usingClipboard and len(self.topVnodeStack) == 0
+        back = self.getVnode(parent,back,skip=False,
+            appendToCurrentStack=append1,appendToTopStack=append2)
+
+    if self.usingClipboard:
+        # Link in the pasted nodes after the current position.
+        newRoot = c.rootPosition()
+        c.setRootPosition(oldRoot)
+        newRoot.v.linkAfter(oldCurrent.v)
+        newCurrent = oldCurrent.copy()
+        newCurrent.v = newRoot.v
+        c.setCurrentPosition(newCurrent)
+    else:
+        << set current and top positions >>
+
+    self.getTag("</vnodes>")
+#@nonl
+#@+node:ekr.20040326054052:<< set current and top positions >>
+current = self.convertStackToPosition(self.currentVnodeStack)
+if current:
+    # g.trace('using convertStackToPosition',current)
+    c.setCurrentPosition(current)
+else:
+    # g.trace(self.currentVnodeStack)
+    c.setCurrentPosition(c.rootPosition())
+    
+# At present this is useless: the drawing code doesn't set the top position properly.
+if 0:
+    top = self.convertStackToPosition(self.topVnodeStack)
+    if top:
+        c.setTopPosition(top)
+#@nonl
+#@-node:ekr.20040326054052:<< set current and top positions >>
+#@+node:ekr.20041023105832:<< set self.forbiddenTnodes to tnodes than must not be pasted >>
+self.forbiddenTnodes = []
+
+for p in oldCurrent.self_and_parents_iter():
+    if p.v.t not in self.forbiddenTnodes:
+        self.forbiddenTnodes.append(p.v.t)
+        
+# g.trace("forbiddenTnodes",self.forbiddenTnodes)
+#@nonl
+#@-node:ekr.20041023105832:<< set self.forbiddenTnodes to tnodes than must not be pasted >>
+#@-node:ekr.20031218072017.1565:getVnodes
+#@+node:ekr.20040326052245:convertStackToPosition
+def convertStackToPosition (self,stack):
+
+    c = self.c ; p2 = None
+    if not stack: return None
+
+    for p in c.allNodes_iter():
+        if p.v == stack[0]:
+            p2 = p.copy()
+            for n in xrange(len(stack)):
+                if not p2: break
+                # g.trace("compare",n,p2.v,stack[n])
+                if p2.v != stack[n]:
+                    p2 = None
+                elif n + 1 == len(stack):
+                    break
+                else:
+                    p2.moveToParent()
+            if p2:
+                # g.trace('exists',p.exists(c),p)
+                return p
+
+    return None
+#@nonl
+#@-node:ekr.20040326052245:convertStackToPosition
+#@+node:ekr.20040803072955.59:idle_redraw
+def idle_redraw (self,scroll=True):
+    
+    c = self.c ; frame = c.frame
+
+    self.redrawScheduled = False # Always do this here.
+
+    << return if disabled, or quitting or dragging >>
+
+    # g.print_bindings("canvas",self.canvas)
+
+    self.expandAllAncestors(c.currentPosition())
+
+    oldcursor = self.canvas['cursor']
+    self.canvas['cursor'] = "watch"
+
+    if not g.doHook("redraw-entire-outline",c=c):
+        c.setTopVnode(None)
+        self.setVisibleAreaToFullCanvas()
+        self.drawTopTree()
+        # Set up the scroll region after the tree has been redrawn.
+        x0, y0, x1, y1 = self.canvas.bbox("all")
+        self.canvas.configure(scrollregion=(0, 0, x1, y1))
+        # Do a scrolling operation after the scrollbar is redrawn
+        if scroll:
+            self.canvas.after_idle(self.idle_scrollTo)
+        if 0:
+            self.redrawCount += 1
+            print "idle_redraw allocated:",self.redrawCount
+    g.doHook("after-redraw-outline",c=c)
+
+    self.canvas['cursor'] = oldcursor
+#@nonl
+#@+node:ekr.20040803072955.60:<< return if disabled, or quitting or dragging >>
+# g.trace('disableRedraw',self.disableRedraw)
+
+if self.disableRedraw:
+    # We have been called as the result of an update_idletasks in the log pane.
+    # Don't do anything now.
+    return
+
+if frame not in g.app.windowList or g.app.quitting:
+    # g.trace("no frame")
+    return
+
+if self.drag_p:
+    # g.trace("dragging",self.drag_p)
+    return
+#@nonl
+#@-node:ekr.20040803072955.60:<< return if disabled, or quitting or dragging >>
+#@-node:ekr.20040803072955.59:idle_redraw
+#@+node:ekr.20040307104131.3:p.exists
+def exists(self,c):
+    
+    """Return True if a position exists in c's tree"""
+    
+    p = self.copy()
+    
+     # This code must be fast.
+    root = c.rootPosition()
+
+    while p:
+        # g.trace(p,'parent',p.parent(),'back',p.back())
+        if p == root:
+            return True
+        if p.hasParent():
+            p.moveToParent()
+        else:
+            p.moveToBack()
+        
+    return False
+#@nonl
+#@-node:ekr.20040307104131.3:p.exists
+#@+node:ekr.20040803072955.69:scrollTo
+def scrollTo (self,p):
+    
+    def scrollToCallback(event=None,self=self,p=p):
+        __pychecker__ = '--no-argsused' # event not used.
+        if not p.exists(p.c):
+            g.trace('does not exist',p)
+        self.idle_scrollTo(p)
+    
+    self.canvas.after_idle(scrollToCallback)
+#@nonl
+#@-node:ekr.20040803072955.69:scrollTo
+#@+node:ekr.20040803072955.65:idle_scrollTo
+def idle_scrollTo(self,p=None):
+
+    """Scrolls the canvas so that p is in view.
+    
+    This is done at idle time after a redraw so that treeBar.get() will return proper values."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    c = self.c ; frame = c.frame
+    if not p or not p.exists(c):
+        p = c.currentPosition()
+    if not p or not p.exists(c):
+        # g.trace('current p does not exist',p)
+        p = c.rootPosition()
+    if not p or not p.exists(c):
+        # g.trace('no position')
+        return
+    try:
+        last = p.lastVisible()
+        nextToLast = last.visBack()
+        h1 = self.yoffset(p)
+        h2 = self.yoffset(last)
+        << compute approximate line height >>
+        << Compute the fractions to scroll down/up >>
+        if frac <= lo:
+            if self.prevMoveToFrac != frac:
+                self.prevMoveToFrac = frac
+                self.canvas.yview("moveto",frac)
+        elif frac2 + (hi - lo) >= hi:
+            if self.prevMoveToFrac != frac2:
+                self.prevMoveToFrac = frac2
+                self.canvas.yview("moveto",frac2)
+
+        if self.allocateOnlyVisibleNodes:
+            self.canvas.after_idle(self.idle_second_redraw)
+            
+        c.setTopVnode(p) # 1/30/04: remember a pseudo "top" node.
+        # g.trace("%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi))
+    except:
+        g.es_exception()
+#@nonl
+#@+node:ekr.20040803072955.66:<< compute approximate line height >>
+if nextToLast: # 2/2/03: compute approximate line height.
+    lineHeight = h2 - self.yoffset(nextToLast)
+else:
+    lineHeight = 20 # A reasonable default.
+#@nonl
+#@-node:ekr.20040803072955.66:<< compute approximate line height >>
+#@+node:ekr.20040803072955.67:<< Compute the fractions to scroll down/up >>
+data = frame.treeBar.get()
+try: lo, hi = data
+except: lo,hi = 0.0,1.0
+if h2 > 0.1:
+    frac = float(h1)/float(h2) # For scrolling down.
+    frac2 = float(h1+lineHeight/2)/float(h2) # For scrolling up.
+    frac2 = frac2 - (hi - lo)
+else:
+    frac = frac2 = 0.0 # probably any value would work here.
+    
+frac =  max(min(frac,1.0),0.0)
+frac2 = max(min(frac2,1.0),0.0)
+#@nonl
+#@-node:ekr.20040803072955.67:<< Compute the fractions to scroll down/up >>
+#@-node:ekr.20040803072955.65:idle_scrollTo
+#@+node:ekr.20031218072017.1708:extractSection
+def extractSection(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract Section'
+    current = c.currentPosition()
+
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+
+    line1 = '\n' + lines[0]
+    headline = lines[0].strip() ; del lines[0]
+    << Set headline for extractSection >>
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
+    
+    # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
+    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+        for line in lines]
+    newBody = string.join(strippedLines,'\n')
+    if head: head = head.rstrip()
+
+    c.beginUpdate()
+    if 1: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            undoData = u.beforeInsertNode(current)
+            p = c.createLastChildNode(current,headline,newBody)
+            u.afterInsertNode(p,undoType,undoData)
+            c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
+        u.afterChangeGroup(current,undoType)
+    c.endUpdate()
+#@nonl
+#@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+if len(headline) < 5:
+    oops = True
+else:
+    head1 = headline[0:2] == '<<'
+    head2 = headline[0:2] == '@<'
+    tail1 = headline[-2:] == '>>'
+    tail2 = headline[-2:] == '@>'
+    oops = not (head1 and tail1) and not (head2 and tail2)
+
+if oops:
+    g.es("Selected text should start with a section name",color="blue")
+    return
+#@nonl
+#@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+#@-node:ekr.20031218072017.1708:extractSection
+#@+node:ekr.20040227214711:p.level & simpleLevel
+def simpleLevel(self):
+    
+    return len([p for p in self.parents_iter()])
+
+def level(self,verbose=False):
+    
+    p = self ; level = 0
+    if not p: return level
+        
+    # Avoid calling p.copy() or copying the stack.
+    v = p.v ; n = len(p.stack)-1
+    while 1:
+        assert(p)
+        v,n = p.vParentWithStack(v,p.stack,n)
+        if v:
+            level += 1
+            if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
+        else:
+            if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
+            # if g.app.debug: assert(level==self.simpleLevel())
+            break
+    return level
+#@nonl
+#@-node:ekr.20040227214711:p.level & simpleLevel
+#@+node:ekr.20031218072017.937:p.moveToParent (pops stack when multiple parents)
+def moveToParent (self):
+    
+    """Move a position to its parent position."""
+    
+    p = self
+    
+    if not p: return p # 10/30/04
+
+    if p.v._parent and len(p.v._parent.t.vnodeList) == 1:
+        p.v = p.v._parent
+    elif p.stack:
+        p.v = p.stack.pop()
+        # g.trace("pop",p.v,p)
+    else:
+        p.v = None
+
+    return p
+#@nonl
+#@-node:ekr.20031218072017.937:p.moveToParent (pops stack when multiple parents)
+#@+node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
+#@+node:ekr.20040803140033:currentPosition
+def currentPosition (self,copy=True):
+    
+    """Return the presently selected position."""
+    
+    c = self
+    
+    if c._currentPosition:
+        if copy:
+            return c._currentPosition.copy() # Must make a second copy now.
+        else:
+            # The caller MUST copy the position if it is passed to any other method.
+            # At present no core method uses copy = False.
+            g.trace("copy=False")
+            return c._currentPosition
+    else:
+        return c.nullPosition()
+    
+# For compatibiility with old scripts.
+currentVnode = currentPosition
+#@nonl
+#@-node:ekr.20040803140033:currentPosition
+#@+node:ekr.20040803140033.1:setCurrentPosition
+def setCurrentPosition (self,p):
+    
+    """Set the presently selected position."""
+    
+    c = self
+    
+    if p:
+        if p.equal(c._currentPosition):
+            pass # We have already made a copy.
+        else: # Must make a copy _now_
+            c._currentPosition = p.copy()
+        # g.trace('exists',p.exists(c),'returns',p)
+        # if not p.exists(c):
+            # g.printStack()
+    else:
+        c._currentPosition = None
+    
+# For compatibiility with old scripts.
+setCurrentVnode = setCurrentPosition
+#@nonl
+#@-node:ekr.20040803140033.1:setCurrentPosition
+#@-node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
+#@+node:ekr.20041005105605.21:read
+# The caller must enclose this code in beginUpdate/endUpdate.
+
+def read(self,root,importFileName=None,thinFile=False,fromString=None):
+    
+    """Read any derived file."""
+
+    at = self ; c = at.c
+    if 0:
+        p = c.currentPosition()
+        g.trace('1',p,p.v._parent,p.v._parent and p.v._parent.t.vnodeList)
+    << set fileName >>
+    at.initReadIvars(root,fileName,importFileName=importFileName,thinFile=thinFile)
+    if at.errors: return False
+    at.openFileForReading(fileName,fromString=fromString)
+    if not at.inputFile: return False
+    g.es("reading: " + root.headString())
+    root.clearVisitedInTree()
+    at.scanAllDirectives(root,importing=at.importing,reading=True)
+    at.readOpenFile(root,at.inputFile,fileName)
+    if 0:
+        p = c.currentPosition()
+        g.trace('2',p,p.v._parent,p.v._parent and p.v._parent.t.vnodeList)
+    at.inputFile.close()
+    root.clearDirty() # May be set dirty below.
+    if not at.thinFile:
+        << warn about non-empty unvisited nodes >>
+    if at.errors == 0 and not at.importing:
+        if 1: # Package this as a method for use by mod_labels plugin.
+            self.copyAllTempBodyStringsToTnodes(root,thinFile)
+        else:
+            << copy all tempBodyStrings to tnodes >>
+    << delete all tempBodyStrings >>
+    return at.errors == 0
+#@nonl
+#@+node:ekr.20041005105605.22:<< set fileName >>
+if fromString:
+    fileName = "<string-file>"
+elif importFileName:
+    fileName = importFileName
+elif root.isAnyAtFileNode():
+    fileName = root.anyAtFileNodeName()
+else:
+    fileName = None
+
+if not fileName:
+    at.error("Missing file name.  Restoring @file tree from .leo file.")
+    return False
+#@nonl
+#@-node:ekr.20041005105605.22:<< set fileName >>
+#@+node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
+for p in root.self_and_subtree_iter():
+
+    # g.trace(p)
+    try: s = p.v.t.tempBodyString
+    except: s = ""
+    if s and not p.v.t.isVisited():
+        at.error("Not in derived file: %s" % p.headString())
+        p.v.t.setVisited() # One message is enough.
+#@nonl
+#@-node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
+#@+node:ekr.20041005105605.24:<< copy all tempBodyStrings to tnodes >>
+for p in root.self_and_subtree_iter():
+    try: s = p.v.t.tempBodyString
+    except: s = ""
+    if s != p.bodyString():
+        if 0: # For debugging.
+            print ; print "changed: " + p.headString()
+            print ; print "new:",s
+            print ; print "old:",p.bodyString()
+        if thinFile:
+            p.v.setTnodeText(s)
+            if p.v.isDirty():
+                p.setAllAncestorAtFileNodesDirty()
+        else:
+            p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+            
+        if not thinFile or (thinFile and p.v.isDirty()):
+            g.es("changed: " + p.headString(),color="blue")
+            p.setMarked()
+#@nonl
+#@-node:ekr.20041005105605.24:<< copy all tempBodyStrings to tnodes >>
+#@+node:ekr.20041005105605.25:<< delete all tempBodyStrings >>
+for p in c.allNodes_iter():
+    
+    if hasattr(p.v.t,"tempBodyString"):
+        delattr(p.v.t,"tempBodyString")
+#@nonl
+#@-node:ekr.20041005105605.25:<< delete all tempBodyStrings >>
+#@-node:ekr.20041005105605.21:read
+#@-node:ekr.20050521075528:(Problems with p.exists)
+#@-node:ekr.20050523071432:Position bugs
 #@+node:ekr.20050513164949:Easy
 #@+node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio??)
 @killcolor
@@ -189,6 +824,35 @@ It is possible to do pretty much anything you want but you will have to provide 
 #@nonl
 #@-node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
 #@-node:ekr.20041228074125:(Make drawing more flexible)
+#@+node:ekr.20050514171429.1:Small window bugs
+@killcolor 
+http://sourceforge.net/forum/message.php?msg_id=3151996
+By: ngirard
+
+Hi all,
+here are a few questions related to the size of leo's main window:
+
+- quite strangely enough, leo's main window can't be maximized using the window
+manager... why ?
+
+- instead there exists a command "resize to screen" in the Window menu, which
+should do the job, but actually doen't do it, at least to me. Using this command
+the window's width and height aren't big enough
+
+- how to make the window dimensions persistent ? When I restart leo, the main
+window's size are revert to devault values which are not mine...
+
+Thanks for reading,
+cheers,
+Nicolas
+#@-node:ekr.20050514171429.1:Small window bugs
+#@+node:ekr.20050518055557:Get UniversalScrolling work
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3155710
+
+is there any chance of fixing UniversalScrolling to work with 4.3?
+#@-node:ekr.20050518055557:Get UniversalScrolling work
 #@-node:ekr.20050513164949:Easy
 #@+node:ekr.20050419060645:Alternate lead-in characters
 #@-node:ekr.20050419060645:Alternate lead-in characters
@@ -991,6 +1655,10 @@ def extract(self):
     head,lines,tail,oldSel,oldYview = self.getBodyLines()
     if not lines: return
     headline = lines[0].strip() ; del lines[0]
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
 
     # Remove leading whitespace from all body lines.
     junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
@@ -1026,6 +1694,10 @@ def extractSection(self):
     line1 = '\n' + lines[0]
     headline = lines[0].strip() ; del lines[0]
     << Set headline for extractSection >>
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
     
     # Remove leading whitespace from all body lines.
     junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
@@ -1669,6 +2341,54 @@ if g.is_c_id(after) and g.is_c_id(last):
 #@-node:ekr.20050318072227.2:Python-oriented find
 #@+node:ekr.20040217153407.1:Investigate unified @root and @file
 #@-node:ekr.20040217153407.1:Investigate unified @root and @file
+#@+node:ekr.20050518065151:Collapsing children into root
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3154702
+By: paulpaterson
+
+Something that would be really neat is allowing a node's children to be temporarily
+collapsed into the parent. This is like what you describe but the conversion
+back to nodes follows the original nodalization and not the import style
+nodalization.
+
+The use case is that you have a complex algorithm as a single method that is
+broken into nodes to allow the top level to be very clean. Sometimes you want
+to edit the algorithm as a whole as you need to see information in multiple
+nodes at once. Hence you would unnodalize, then edit and then renodalize along
+the same lines as you had it before.
+
+The "unnodalize" would presumably have to leave the << markers >> in there in
+some form .. eg,
+
+<!< old node >!>
+
+And these could be interpreted when the renodalization took place.
+
+Paul
+#@-node:ekr.20050518065151:Collapsing children into root
+#@+node:ekr.20050518065151.1:Temporarily collapse children into parent
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3154702
+By: paulpaterson
+
+Something that would be really neat is allowing a node's children to be temporarily
+collapsed into the parent. This is like what you describe but the conversion
+back to nodes follows the original nodalization and not the import style
+nodalization.
+
+The use case is that you have a complex algorithm as a single method that is
+broken into nodes to allow the top level to be very clean. Sometimes you want
+to edit the algorithm as a whole as you need to see information in multiple
+nodes at once. Hence you would unnodalize, then edit and then renodalize along
+the same lines as you had it before.
+
+The "unnodalize" would presumably have to leave the << markers >> in there in
+some form .. eg,
+
+<!< old node >!>
+
+And these could be interpreted when the renodalization took place.
+#@-node:ekr.20050518065151.1:Temporarily collapse children into parent
 #@-node:ekr.20050513164506.1:4.3.1
 #@+node:ekr.20041228073219:4.3.x (6 items)
 #@+node:ekr.20031218072017.801:Zipped .leo files (must be compatible with chapters.py)
@@ -3937,11 +4657,10 @@ Whaterver pdb.pm does (I haven't used it) this might be the starting point for t
 
 - Create window with breakpoint symbols.
     - Replace sections with helper functions in f.finishCreate.
+
 - How/when to set breakpoints?
-    - Inverse function to go-to line number?
+    - Inverse function to go-to line number.
     - Represent breakpoints by node/offset/line-contents?
-    - How does that work?
-- Get Eric3 working, or look at code.
 #@nonl
 #@-node:ekr.20050515091432:LeoDb
 #@-node:ekr.20041228092223.2:Integrated Leo debugger
@@ -9481,6 +10200,43 @@ This may be a Linux-only bug related to the control-v workaround.
 #@nonl
 #@-node:ekr.20031218072017.668:Automatic select & Paste bug (Linux?)
 #@-node:ekr.20031218072017.664:Cut/paste bug on X windows (waiting for help)
+#@+node:ekr.20050514171429:Glitch pasting into headlines
+
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3152036
+By: ngirard
+
+Hi again,
+
+Leo has IMHO a slight inconsistency as when a new node is created and has to
+be given a name.
+
+When the new node is created, the string "NewHeadline" appears and is selected.
+Then there are 2 ways of setting a new name:
+
+1. by typing the new name character by character using the keyboard. This way,
+"NewHeadline" disappears as the first character of the new name is typed. Here
+the implicit idea is that "NewHeadline" is very unlikely to be the final node
+name -- which makes sense to me ;-)
+
+2. by pasting the contents of the clipboard, with Ctrl-v. This way, "NewHeadline"
+*remains* and the contents of the clipboard is appended to it.
+
+
+I find leo's behaviour in case #2 inconsistent with #1 and suggest that the
+first approach should be preferred.
+
+Cheers,
+Nicolas
+
+
+______________________________________________________________________
+You are receiving this email because you elected to monitor this forum.
+To stop monitoring this forum, login to SourceForge.net and visit: 
+https://sourceforge.net/forum/unmonitor.php?forum_id=10226
+
+#@-node:ekr.20050514171429:Glitch pasting into headlines
 #@+node:ekr.20031218072017.669:Linux-only Bugs
 These may indicate problems with Tk on Linux.  I can not reproduce them on XP.
 #@nonl

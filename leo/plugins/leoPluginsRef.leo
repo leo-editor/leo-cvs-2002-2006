@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4599" clone_windows="0"/>
-<globals body_outline_ratio="0.494983277592">
-	<global_window_position top="30" left="232" height="897" width="983"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4716" clone_windows="0"/>
+<globals body_outline_ratio="0.604236343367">
+	<global_window_position top="10" left="217" height="897" width="983"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -11,9 +11,8 @@
 <vnodes>
 <v t="edream.110203113231"
 marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></v>
-<v t="ekr.20041211035618"><vh>Scripts, buttons &amp; settings</vh>
+<v t="ekr.20041211035618" a="TV"><vh>Scripts, buttons &amp; settings</vh>
 <v t="ekr.20050217093214"><vh>@settings</vh>
-<v t="ekr.20050217093214.1"><vh>@recentfiles </vh></v>
 <v t="ekr.20050328101812"><vh>@page http plugin</vh>
 <v t="ekr.20050328101812.1"><vh>@bool http_active = True</vh></v>
 <v t="ekr.20050328101812.2"><vh>@int  port = 8080</vh></v>
@@ -31,7 +30,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 <v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
 </v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
@@ -120,6 +119,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="timo.20050213160555"><vh>@thin bibtex.py</vh></v>
 <v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
 <v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
+<v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
 <v t="ekr.20040916084945"><vh>@thin macros.py</vh></v>
 <v t="ekr.20050301083306"><vh>@thin mod_read_dir_outline.py</vh></v>
 <v t="edream.110203113231.727"><vh>@thin mod_timestamp.py</vh></v>
@@ -135,8 +135,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="ekr.20050328092641.1"><vh>db</vh></v>
 <v t="ekr.20050328092641.2" tnodeList="ekr.20050328092641.2"><vh>@nosent Library.ini</vh></v>
 <v t="ekr.20050328092641.3"><vh>@string Library_lib1 = default/libraryS.dbm</vh></v>
-<v t="ekr.20050328092641.4" a="E"
-expanded="ekr.20050328092641.28,ekr.20050328092641.29,"><vh>@thin Library.py</vh></v>
+<v t="ekr.20050328092641.4"><vh>@thin Library.py</vh></v>
 </v>
 <v t="edream.110203113231.722"><vh>mod_autosave</vh>
 <v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
@@ -169,19 +168,25 @@ expanded="ekr.20050328092641.28,ekr.20050328092641.29,"><vh>@thin Library.py</vh
 <v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
 </v>
 </v>
-<v t="ekr.20041030092101" a="E"><vh>Dyna plugins by e</vh>
+<v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
 <v t="ekr.20050421093045"><vh> dyna plugin 139i</vh>
-<v t="ekr.20050421093045.1" a="E"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
-<v t="ekr.20050421093045.2"
-expanded="ekr.20050421093045.6,ekr.20050421093045.22,ekr.20050421093045.48,ekr.20050421093045.52,ekr.20050421093045.55,ekr.20050421093045.68,ekr.20050421093045.79,ekr.20050421093045.84,ekr.20050421093045.91,ekr.20050421093045.93,ekr.20050421093045.98,"><vh>@thin dyna_menu.py</vh></v>
-<v t="ekr.20050421093045.103"
-expanded="ekr.20050421093045.125,ekr.20050421093045.127,"><vh>@thin dynacommon.py</vh></v>
+<v t="ekr.20050421093045.1"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.2"><vh>@thin dyna_menu.py</vh></v>
+<v t="ekr.20050421093045.103"><vh>@thin dynacommon.py</vh></v>
 <v t="ekr.20050421093045.133" tnodeList="ekr.20050421093045.133"><vh>@nosent dyna_menu.ini</vh></v>
-<v t="ekr.20050421093045.134"
-expanded="ekr.20050421093045.137,"><vh>@thin dyna.txt</vh></v>
+<v t="ekr.20050421093045.134"><vh>@thin dyna.txt</vh></v>
 </v>
 </v>
 <v t="edream.110203113231.872"><vh>Enhanced nodes...</vh>
+<v t="edream.110203113231.873"><vh>@thin at_folder.py</vh></v>
+<v t="ekr.20040915085351"><vh>@thin at_produce.py</vh></v>
+<v t="ktenney.20041211072654.1"><vh>@thin at_view.py</vh></v>
+<v t="mork.20041020082242.1"><vh>@thin base64Packager.py</vh></v>
+<v t="mork.20041018091414.1"><vh>@thin fastGotoNode.py</vh></v>
+<v t="ekr.20050301095332"><vh>@thin mod_labels.py</vh></v>
+<v t="edream.110203113231.876"><vh>@thin read_only_nodes.py</vh></v>
+<v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
+<v t="ekr.20040828103325"><vh>@thin startfile.py</vh></v>
 <v t="ekr.20050329082101"><vh>AutoTrees</vh>
 <v t="ekr.20050329082101.1"><vh>AutoTrees plugin</vh>
 <v t="ekr.20050329082101.2"><vh>Introduction</vh></v>
@@ -326,13 +331,6 @@ expanded="ekr.20050421093045.137,"><vh>@thin dyna.txt</vh></v>
 </v>
 </v>
 </v>
-<v t="edream.110203113231.873"><vh>@thin at_folder.py</vh></v>
-<v t="ekr.20040915085351"><vh>@thin at_produce.py</vh></v>
-<v t="ktenney.20041211072654.1"><vh>@thin at_view.py</vh></v>
-<v t="edream.110203113231.876"><vh>@thin read_only_nodes.py</vh></v>
-<v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
-<v t="ekr.20040828103325"><vh>@thin startfile.py</vh></v>
-<v t="ekr.20050301095332"><vh>@thin mod_labels.py</vh></v>
 </v>
 <v t="ekr.20040722135402.1"><vh>Enhancing the body pane</vh>
 <v t="EKR.20040517080517.1"><vh>@thin arrows.py</vh></v>
@@ -451,8 +449,15 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="ekr.20050303080042.1" tnodeList="ekr.20050303080042.1"><vh>@nosent footprints.ini</vh></v>
 <v t="pap.20041020001240"><vh>@thin footprints.py</vh></v>
 </v>
+<v t="ekr.20050523073009"><vh> chapters</vh>
+<v t="ekr.20050427102121"><vh>Calls to zipfile module in chapters.py</vh>
+<v t="mork.20040926105355.29"><vh>newOpen</vh></v>
+<v t="mork.20040926105355.9"><vh>openChaptersFile</vh></v>
+<v t="mork.20040929090525.1"><vh>zipChapters</vh></v>
+</v>
 <v t="mork.20040926105355.1"
 marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
+</v>
 <v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
 <v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
@@ -722,6 +727,40 @@ marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 </v>
 <v t="edream.110203113231.302"><vh>@thin __wx_gui.py</vh></v>
 </v>
+<v t="ekr.20050508203638"><vh>rst/golf</vh>
+<v t="ekr.20050508203638.1"><vh>@url https://sourceforge.net/forum/message.php?msg_id=2946194</vh></v>
+<v t="ekr.20050508203638.2"><vh>Responses</vh></v>
+<v t="ekr.20050508203638.3"><vh>from Kent</vh></v>
+<v t="ekr.20050508203638.4"><vh>New stylesheets for rst (Kent Tenny told me about there)</vh>
+<v t="ekr.20050508203638.5"><vh>@url http://www.voidspace.org.uk/stylesheets/blue_box.css</vh></v>
+</v>
+<v t="ekr.20050508203638.6"><vh>get rid of double-click hack fir rst</vh></v>
+<v t="ekr.20050515093257.1"><vh>Summary of config settings for rst2 plugin</vh>
+<v t="ekr.20050515093257.2"><vh>@url http://sourceforge.net/forum/forum.php?thread_id=1251867&amp;forum_id=10226</vh></v>
+<v t="ekr.20050515093257.3"><vh>Post from Bernhard</vh>
+<v t="ekr.20050515093257.4"><vh>Suggested settings for regular rst files</vh></v>
+<v t="ekr.20050515093257.5"><vh>run_on_window_open (for http server)</vh></v>
+<v t="ekr.20050515093257.6"><vh>configuration settings</vh></v>
+<v t="ekr.20050515093257.7"><vh>Not implemented</vh></v>
+<v t="ekr.20050515093257.8"><vh>pure_document</vh></v>
+<v t="ekr.20050515093257.9"><vh>retain the headline nodes with  pure_document=True ?</vh></v>
+<v t="ekr.20050515093257.10"><vh>create_table_of_contents</vh></v>
+</v>
+<v t="ekr.20040331071319.4"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
+<v t="ekr.20040331071319.5"><vh>&lt;&lt; define code-block &gt;&gt;</vh></v>
+<v t="bwmulder.20050326114320"><vh> &lt;&lt; define alternate code block implementation&gt;&gt;</vh></v>
+</v>
+<v t="bwmulder.20050320000243"><vh>onFileOpen</vh></v>
+<v t="bwmulder.20050320092000"><vh>http_support_main</vh></v>
+<v t="ekr.20040331071319.7"><vh>writeTreeAsRst &amp; add_node_marker</vh>
+<v t="ekr.20040408160625.1"><vh>&lt;&lt; set encoding &gt;&gt;</vh></v>
+<v t="ekr.20040403202850"><vh>&lt;&lt; set code_dir &gt;&gt;</vh></v>
+<v t="ekr.20040403202850.1"><vh>&lt;&lt; handle an rst node &gt;&gt;</vh></v>
+<v t="ekr.20040403202850.2"><vh>&lt;&lt; handle a plain node &gt;&gt;</vh></v>
+<v t="bwmulder.20050315150045"><vh>&lt;&lt; clear attributes &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
 </v>
 <v t="EKR.20040517075715"><vh>External editors &amp; Open With</vh>
 <v t="EKR.20040517075715.1"><vh>@thin mod_tempfname.py</vh></v>
@@ -737,6 +776,7 @@ marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 <v t="EKR.20040517080049"><vh>Files</vh>
 <v t="EKR.20040517080049.1"><vh>@thin empty_leo_file.py</vh></v>
 <v t="ekr.20040419105219"><vh>@thin lineNumbers.py</vh></v>
+<v t="mork.20041018204908.1"><vh>@thin multifile.py</vh></v>
 <v t="ekr.20040331151007"><vh>@thin niceNosent.py</vh></v>
 </v>
 <v t="ekr.20050402080206"><vh>LeoN</vh>
@@ -792,6 +832,7 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 <v t="edream.110203113231.930"><vh>Spell Checking</vh>
 <v t="ekr.20040809165421"><vh>Read me or suffer</vh></v>
+<v t="ekr.20050518064900"><vh>Installing apell on Linux systems</vh></v>
 <v t="edream.110203113231.932"><vh>@thin mod_spelling.ini</vh></v>
 <v t="edream.110203113231.933"><vh>@thin mod_spelling.py</vh></v>
 <v t="ekr.20050216110126"><vh>Spelling to do</vh></v>
@@ -817,9 +858,13 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 <v t="ekr.20041107165824"><vh>temacs &amp; usetemacs</vh>
 <v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
-<v t="mork.20041030164547"><vh>@thin temacs.py</vh></v>
+<v t="mork.20041030164547"
+marks="mork.20041122190403,"><vh>@thin temacs.py</vh></v>
+<v t="ekr.20050518085205"><vh>@thin usetemacs.ini</vh></v>
+<v t="ekr.20050514095136"><vh>ekr usetemacs.ini (doesn't solve the problem I was trying to solve)</vh></v>
+<v t="ekr.20050514095136.1"><vh>Key references</vh></v>
 </v>
-<v t="ekr.20050306081349" a="E"><vh>Text formatting</vh>
+<v t="ekr.20050306081349"><vh>Text formatting</vh>
 <v t="edream.111803100242"><vh>@thin rst.py</vh></v>
 <v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
 <v t="ekr.20040331071919"><vh>Leo to AsciiDoc</vh>
@@ -893,10 +938,10 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 </v>
 </v>
-<v t="ekr.20040408161258" a="E"><vh>rst2 plugin</vh>
-<v t="ekr.20040408192158" a="E"><vh>Documentation for the rST plugin using rst</vh>
+<v t="ekr.20040408161258"><vh>rst2 plugin</vh>
+<v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
 <v t="ekr.20040408192158.1"><vh>@rst ../doc/rstplugin.html</vh>
-<v t="ekr.20040408192158.2" a="E"><vh>Overview</vh>
+<v t="ekr.20040408192158.2"><vh>Overview</vh>
 <v t="ekr.20040408192158.3"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040408192158.4"><vh>Formatting</vh>
@@ -913,7 +958,7 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 </v>
 </v>
-<v t="ekr.20040331071319" a="E"><vh>@thin rst2.py</vh></v>
+<v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
 </v>
 <v t="ekr.20050331061925"><vh>golf prototype</vh>
 <v t="ekr.20050331081136"><vh>Design notes</vh></v>
@@ -921,14 +966,6 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 <v t="ekr.20050331061925.2"><vh>@thin golf.py</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20050226090248"><vh>New/updated from Leo User</vh>
-<v t="mork.20041020082242.1"><vh>@thin base64Packager.py</vh></v>
-<v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
-<v t="mork.20041018091414.1"><vh>@thin fastGotoNode.py</vh></v>
-<v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
-<v t="mork.20041018204908.1"><vh>@thin multifile.py</vh></v>
-<v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2443,6 +2480,84 @@ class basic_dict_test(unittest.TestCase):
     dict.__init__(self, value)
     self.set_monitor_object(monitor)
 </t>
+<t tx="bwmulder.20050315150045">if config.rst2_clear_attributes:
+    if hasattr(p.v, 'unknownAttributes'):
+        if p.v.unknownAttributes.has_key(config.rst2_http_attributename):
+            del p.v.unknownAttributes[config.rst2_http_attributename]
+            if p.v.unknownAttributes == {}:
+                del p.v.unknownAttributes</t>
+<t tx="bwmulder.20050320000243">def onFileOpen(tag, keywords):
+    # c,old_c,new_c,fileName):
+    c = keywords["new_c"]
+    applyConfiguration(c)
+    if config.firstCall and config.rst2_install_menu_item_in_edit_menu:
+        config.firstCall = False
+        transform_rst2_text_in_subtree(c)
+    ignoreset = {}
+    if c.config.getBool("rst2_run_on_open_window"):
+    # if config.rst2_run_on_window_open:
+        http_map = {}
+        anchormap = {}
+        config.node_counter = 0
+        found_rst_trees = False
+        root = c.currentVnode()
+        
+        if tag == 'open2':
+            iterator = c.allNodes_iter(root)
+        else:
+            iterator = root.self_and_subtree_iter()
+        for p in iterator:
+            if p.v not in ignoreset:
+                s = p.v.headString()
+                if s.startswith("@rst ") and len(s.split()) &gt;= 2:
+                    for p1 in p.subtree_iter():
+                        ignoreset[p1.v] = True
+                    try:
+                        config.http_map = {}
+                        config.anchormap = {}
+                        onIconDoubleClick("open2", {"c": c, "p": p})
+                        http_map.update(config.http_map)
+                        anchormap.update(config.anchormap)
+                        found_rst_trees = True
+                    except SystemExit, s:
+                        g.es("Formatting failed for %s" % p, color='red')
+        if found_rst_trees:
+            config.http_map = http_map
+            config.anchormap = anchormap
+            relocate_references() 
+          
+            config.http_map = None
+            config.anchormap = None
+            g.es('html updated for html plugin', color="blue")
+        if config.rst2_clear_attributes:
+            g.es("http attributes cleared")
+</t>
+<t tx="bwmulder.20050320092000">def http_support_main(tag, fname):
+    if config.rst2_http_server_support:
+        set_initial_http_attributes(fname)
+        find_anchors()
+        if tag == 'open2':
+            return True
+        
+        # We relocate references here if we are only running
+        # for one file, otherwise we must postpone the
+        # relocation until we have processed all files.
+        relocate_references() 
+      
+        config.http_map = None
+        config.anchormap = None
+        g.es('html updated for html plugin', color="blue")
+        if config.rst2_clear_attributes:
+            g.es("http attributes cleared")</t>
+<t tx="bwmulder.20050326114320"># Don't know what to do here: Can someone make a suggestion?
+#import docutils.parsers.rst.directives.admonitions
+#import docutils.parsers.rst.directives.body
+# docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.block 
+# docutils.parsers.rst.directives.register_directive('code-block', docutils.parsers.rst.directives.admonitions.admonition)
+#docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.pull_quote 
+# g.es("Registered some alternate implementation for code-block directive")
+config.do_replace_code_blocks = config.rst2_replace_code_blocks
+</t>
 <t tx="edream.110203113231.233">@ To do:
     
      WARNING: problems with locking out event handlers could cause Leo to drop Text!
@@ -3569,6 +3684,154 @@ if Tk and not g.app.unitTesting: # Not (yet) for unit testing.
         ("insOK",'Ctrl+Shift+O',c.insertOKcmd)]
 
     c.frame.menu.createMenuEntries(c.pluginMenu,table)</t>
+<t tx="ekr.20040331071319.4">try:
+    import docutils
+except:
+    g.es('HTML/LaTeX generation requires docutils')
+    return
+else:
+    import docutils.parsers.rst
+    from docutils.core import Publisher
+    from docutils.io import StringOutput, StringInput, FileOutput,FileInput
+    import StringIO
+    
+# Set the writer and encoding for the converted file
+if ext in ('.html','.htm'):
+    writer='html' ; enc="utf-8"
+else:
+    writer='latex' ; enc="iso-8859-1"
+
+syntax = False
+if writer == 'html':
+    try:
+        import SilverCity
+        &lt;&lt; define code-block &gt;&gt;
+        syntax = True
+    except ImportError:
+        g.es('SilverCity not present so no syntax highlighting')
+        &lt;&lt; define alternate code block implementation&gt;&gt;
+
+if config.rst2file:
+    rstFileName = os.path.splitext(fname)[0] + ".txt"
+    rstFile = file(rstFileName, "w")
+    g.es("Using %s as rst file" % rstFileName)
+else:
+    rstFile = StringIO.StringIO()
+config.current_file = fname
+writeTreeAsRst(rstFile,fname,p,c,syntax=syntax)
+if config.rst2file:
+    rstFile.close()
+else:
+    rstText = rstFile.getvalue()
+
+# This code snipped has been taken from code contributed by Paul Paterson 2002-12-05.
+pub = Publisher()
+if config.rst2file:
+    pub.source = FileInput(source_path=rstFileName)
+    pub.destination = FileOutput(destination_path=fname, encoding='unicode')
+else:
+    pub.source = StringInput(source=rstText)
+    pub.destination = StringOutput(pub.settings, encoding=enc)
+pub.set_reader('standalone', None, 'restructuredtext')
+pub.set_writer(writer)
+output = pub.publish(argv=[''])
+
+if config.rst2file:
+    pass
+else:
+    convertedFile = file(fname,'w')
+    convertedFile.write(output)
+    convertedFile.close()
+rstFile.close()
+writeFullFileName(fname)
+return http_support_main(tag, fname)
+
+</t>
+<t tx="ekr.20040331071319.5">def code_block(name,arguments,options,content,lineno,content_offset,block_text,state,state_machine):
+    
+    """Create a code-block directive for docutils."""
+    
+    # See http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/252170
+    language = arguments[0]
+    module = getattr(SilverCity,language)
+    generator = getattr(module,language+"HTMLGenerator")
+    io = StringIO.StringIO()
+    generator().generate_html(io, '\n'.join(content))
+    html = '&lt;div class="code-block"&gt;\n%s\n&lt;/div&gt;\n'%io.getvalue()
+    raw = docutils.nodes.raw('',html, format='html') #(self, rawsource='', text='', *children, **attributes):
+    return [raw]
+    
+# These are documented at http://docutils.sourceforge.net/spec/howto/rst-directives.html.
+code_block.arguments = (
+    1, # Number of required arguments.
+    0, # Number of optional arguments.
+    0) # True if final argument may contain whitespace.
+
+# A mapping from option name to conversion function.
+code_block.options = {
+    'language' :
+    docutils.parsers.rst.directives.unchanged # Return the text argument, unchanged
+}
+
+code_block.content = 1 # True if content is allowed.
+ 
+# Register the directive with docutils.
+docutils.parsers.rst.directives.register_directive('code-block',code_block)
+
+config.do_replace_code_blocks = False</t>
+<t tx="ekr.20040331071319.7">def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
+    
+    'Write the tree under position p to the file rstFile (fname is the filename)'
+    
+    def add_node_marker():
+        if config.rst2_http_server_support:
+            config.node_counter += 1
+            marker = rst_htmlparser.generate_node_marker(config.node_counter)
+            config.last_marker = marker
+            http_map[marker] = p.copy()
+            # the p.copy is necessary, since otherwise the
+            # position is modified and unusable later.
+            rstFile.write("\n\n.. _%s:\n\n" % marker)
+            
+    # we don't write a title, so the titlepage can be customized
+    # use '#' for title under/overline
+    directives = g.scanDirectives(c,p=p) # changed name because don't want to use keyword dict
+    &lt;&lt; set encoding &gt;&gt;
+    &lt;&lt; set code_dir &gt;&gt;
+    s = g.toEncodedString(fname,encoding,reportErrors=True)
+    rstFile.write('.. filename: '+s+'\n')
+    rstFile.write('\n')
+
+    if config.rst2_bodyfilter:
+        s = bodyfilter(p)
+    else:
+        s = p.bodyString()
+    s = g.toEncodedString(s,encoding,reportErrors=True)
+    rstFile.write(s+'\n')		# write body of titlepage.
+    rstFile.write('\n')
+    
+    toplevel = p.level()+1 # Dec 20
+    h = p.headString()
+    
+    if config.rst2_http_server_support:
+        if config.tag == 'open2':
+            http_map = config.http_map
+        else:
+            http_map = {}
+            config.anchormap = {}
+           # maps v nodes to markers.
+            config.node_counter = 0
+    for p in p.subtree_iter():
+        h = p.headString().strip()
+        if config.rst2_pure_document or g.match_word(h,0,"@rst"):
+            &lt;&lt; handle an rst node &gt;&gt;
+        else:
+            &lt;&lt; handle a plain node &gt;&gt;
+        &lt;&lt; clear attributes &gt;&gt;
+    add_node_marker()
+    if config.rst2_http_server_support:
+        config.http_map = http_map
+</t>
 <t tx="ekr.20040331071919"></t>
 <t tx="ekr.20040331071919.1">@language plain
 @ascfile "doc/mod_asc_dev.asc"
@@ -6954,6 +7217,69 @@ http://www.docbook.org[The official home page for DocBook: The Definitive Guide.
 
 
 @code</t>
+<t tx="ekr.20040403202850">if syntax:
+    lang_dict = {'python':'Python', 'ruby':'Ruby', 'perl':'Perl', 'c':'CPP'}
+    language = directives['language']
+    # SilverCity modules have first letter in caps
+    if language in lang_dict:
+        code_dir = '**code**:\n\n.. code-block:: %s\n\n' % lang_dict[language]
+    else:
+        code_dir = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
+else:
+    code_dir = '**code**:\n\n.. class:: code\n..\n\n::\n\n'</t>
+<t tx="ekr.20040403202850.1">s = p.bodyString()
+s = g.toEncodedString(s,encoding,reportErrors=True)
+
+# Skip any leading @ignore, @nocolor, @wrap directives.
+while (
+    g.match_word(s,0,"@ignore") or
+    g.match_word(s,0,"@nocolor") or
+    g.match_word(s,0,"@wrap")
+):
+    i = g.skip_line(s,0)
+    s = s[i:]
+
+add_node_marker()    
+
+if config.rst2_format_headlines:
+    rstFile.write(h+'\n')
+    rstFile.write(underline(h,p.level()-toplevel))
+    rstFile.write('\n')
+
+if config.do_replace_code_blocks and 'code-block::' in s:
+    s = '\n'.join([replace_code_block_directive(line) for line in s.split("\n")])
+
+rstFile.write('%s\n\n'%s.strip())</t>
+<t tx="ekr.20040403202850.2">if g.match_word(h,0,"@file-nosent"):
+    h = h[13:]
+h = g.toEncodedString(h,encoding,reportErrors=True)
+if config.rst2_bodyfilter:
+    s = bodyfilter(p)
+else:
+    s = p.bodyString()
+s = g.toEncodedString(s,encoding,reportErrors=True)
+
+add_node_marker()    
+
+if config.rst2_format_headlines:
+    pass
+else:
+    rstFile.write(h+'\n')
+    rstFile.write(underline(h,p.level()-toplevel))
+    rstFile.write('\n')
+
+if s.strip():
+    rstFile.write(code_dir)
+    s = s.split('\n')
+    for linenum,linetext in enumerate(s[:-1]):
+        if "@others" in linetext: #deleting lines with @other directive from output
+            continue
+        rstFile.write('\t%2d  %s\n'%(linenum+1,linetext))
+
+rstFile.write('\n')</t>
+<t tx="ekr.20040408160625.1">encoding = directives.get("encoding",None)
+if encoding == None:
+    encoding = c.config.default_derived_file_encoding</t>
 <t tx="ekr.20040408161258"></t>
 <t tx="ekr.20040408192158">@nocolor</t>
 <t tx="ekr.20040408192158.1">###########################
@@ -8093,10 +8419,6 @@ used. Maybe this information can be centralized.
 
 - Simplify the directory settings.</t>
 <t tx="ekr.20050217093214">@nocolor</t>
-<t tx="ekr.20050217093214.1">c:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo</t>
-<t tx="ekr.20050226090248"> </t>
 <t tx="ekr.20050227071948"></t>
 <t tx="ekr.20050227071948.1">
 - move the clone marker to the same place as the blue square
@@ -8355,7 +8677,8 @@ Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
     @others</t>
 <t tx="ekr.20050303051222.1">def __init__ (self,c):
     
-    self.c = c</t>
+    self.c = c
+    # Warning: hook handlers must use keywords.get('c'), NOT self.c.</t>
 <t tx="ekr.20050303080042"></t>
 <t tx="ekr.20050303080042.1">[Main]
 
@@ -9934,5 +10257,441 @@ token_bg         =  #FFFAFA  ;snow
 
 @language elisp
 </t>
+<t tx="ekr.20050427102121"></t>
+<t tx="ekr.20050508203638"></t>
+<t tx="ekr.20050508203638.1"></t>
+<t tx="ekr.20050508203638.2">@killcolor
+
+- Leo is a potentially 'killer' app for documentation.
+    - rst2 is a start, and will be improved.
+    - Making rst2 work really well is a high priority.
+- Leo files contain multiple documents.
+- Need to specify settings dynamically.
+    - This is the idea behind golf.</t>
+<t tx="ekr.20050508203638.3">@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3109034
+By: ktenney
+
+There are a number of settings which effect the way rst2 works.
+
+What you describe is the result of one mode of rst2 operation,
+where a node is considered to be source code unless
+it's headline is "@rst"
+
+In the file leo/plugins/leoPluginsRef.leo, node
+Plugins--&gt;Text formatting--&gt;rst2 plugin--&gt;@thin rst2.py--&gt;config
+
+the config options are listed. I can't find the recent
+thread which gives the meanings of the settings.</t>
+<t tx="ekr.20050508203638.4"></t>
+<t tx="ekr.20050508203638.5"></t>
+<t tx="ekr.20050508203638.6">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3107951
+By: rdskaroff
+
+I also agree 100% with initiating the creation of an output file as a menu item
+rather than a double-click event. I am having enough trouble keeping track of
+where I am in the ui when I edit my outlines, select right-click menu items
+and drag nodes around.</t>
+<t tx="ekr.20050514095136">[ newkeystrokes ]
+
+#Alt-q=Alt-f # rebind Alt-q to what Alt-f does.
+# Cut and paste first
+Alt-Ctrl-x = Ctrl-x
+Alt-Ctrl-x ( =Ctrl-x (
+Alt-Ctrl-x ) =Ctrl-x )
+Alt-Ctrl-x e =Ctrl-x e
+
+Alt-Ctrl-z=Ctrl-z
+
+Alt-Ctrl-x Ctrl-u=Ctrl-x Ctrl-u
+Alt-Ctrl-x Ctrl-l=Ctrl-x Ctrl-l
+Alt-Ctrl-x h=Ctrl-x
+
+Alt-Ctrl-x tab=Ctrl-x tab
+Alt-Ctrl-x Ctrl-x=Ctrl-x Ctrl-x
+Alt-Ctrl-x semicolon=Ctrl-x semicolon
+
+Alt-Ctrl-x a e=Ctrl-x a e
+Alt-Ctrl-x a g=Ctrl-x a g
+Alt-Ctrl-x a i g=Ctrl-x a i g
+
+Alt-Ctrl s=Ctrl s
+Alt-Ctrl r=Ctrl r
+
+# Alt-Ctrl XXX=
+
+Alt-Ctrl-s Enter=Ctrl-s Enter
+Alt-Ctrl-r Enter=Ctrl-r Enter
+Alt-Ctrl-s Enter Ctrl-w=Ctrl-s Enter Ctrl-w
+Alt-Ctrl-r Enter Ctrl-w=Ctrl-r Enter Ctrl-w
+ 
+# Ctrl-Alt s
+# Ctrl-Alt r
+Alt-Ctrl-%=Alt-%
+#&lt;Ctrl Alt %
+Alt-Ctrl-==Alt-=
+Alt-Ctrl-(=Alt-(
+Alt-Ctrl-)=&lt;Alt-)
+
+Alt-Ctrl-x Ctrl-t=Ctrl-x Ctrl-t
+Alt-Ctrl-x Ctrl-o=Ctrl-x Ctrl-o
+Alt-Ctrl-x r s=Ctrl-x r s
+Alt-Ctrl-x r i=Ctrl-x r i
+Alt-Ctrl-x r +=Ctrl-x r +
+Alt-Ctrl-x r n=Ctrl-x r n
+Alt-Ctrl-x r space=Ctrl-x r space
+Alt-Ctrl-x r j=Ctrl-x r j
+Alt-Ctrl-x x=Ctrl-x x
+Alt-Ctrl-x r r=Ctrl-x r r
+Alt-Ctrl-x r o=Ctrl-x r o
+Alt-Ctrl-x r c=Ctrl-x r c
+Alt-Ctrl-x r d=Ctrl-x r d
+Alt-Ctrl-x r t=Ctrl-x r t
+Alt-Ctrl-x r k=Ctrl-x r k
+Alt-Ctrl-x r y=Ctrl-x r y
+
+Alt-Ctrl-x = =Ctrl-x =
+Alt-Ctrl-x . =Ctrl-x .
+Alt-Ctrl-x f =Ctrl-x f
+Alt-Ctrl-x Ctrl-b =Ctrl-x Ctrl-b
+Alt-Ctrl-x b =Ctrl-x b
+Alt-Ctrl-x k =Ctrl-x k
+
+Alt-Ctrl-g=Ctrl-g
+
+Alt-Ctrl - - Alt-l =Alt - - Alt-l
+Alt-Ctrl - - Alt-u =Alt - - Alt-u
+Alt-Ctrl - - Alt-c =Alt - - Alt-c
+
+Alt-Ctrl-/=Alt-/</t>
+<t tx="ekr.20050514095136.1">Buffer Keyboard Commands:
+----------------------------------------
+
+&lt;Control-p&gt;: move up one line
+&lt;Control-n&gt;: move down one line
+&lt;Control-f&gt;: move forward one char
+&lt;Conftol-b&gt;: move backward one char
+&lt;Control-o&gt;: insert newline
+&lt;Control-Alt-o&gt; : insert newline and indent
+&lt;Control-j&gt;: insert newline and tab
+&lt;Alt-&lt;&gt; : move to start of Buffer
+&lt;Alt- &gt; &gt;: move to end of Buffer
+&lt;Control a&gt;: move to start of line
+&lt;Control e&gt; :move to end of line
+&lt;Alt-Up&gt;: move to start of line
+&lt;Alt-Down&gt;: move to end of line
+&lt;Alt b&gt;: move one word backward
+&lt;Alt f&gt; : move one word forward
+&lt;Control - Right Arrow&gt;: move one word forward
+&lt;Control - Left Arrow&gt;: move one word backwards
+&lt;Alt-m&gt; : move to beginning of indentation
+&lt;Alt-g&gt; : goto line number
+&lt;Control-v&gt;: scroll forward one screen
+&lt;Alt-v&gt;: scroll up one screen
+&lt;Alt-a&gt;: move back one sentence
+&lt;Alt-e&gt;: move forward one sentence
+&lt;Alt-}&gt;: move forward one paragraph
+&lt;Alt-{&gt;: move backwards one paragraph
+&lt;Alt-:&gt; evaluate a Python expression in the minibuffer and insert the value in the current buffer
+Esc Esc : evaluate a Python expression in the minibuffer and insert the value in the current buffer
+&lt;Control-x . &gt;: set fill prefix
+&lt;Alt-q&gt;: fill paragraph
+&lt;Alt-h&gt;: select current or next paragraph
+&lt;Control-x Control-@&gt;: pop global mark
+&lt;Control-u&gt;: universal command, repeats the next command n times.
+&lt;Alt -n &gt; : n is a number.  Processes the next command n times.
+&lt;Control-x (&gt;: start definition of kbd macro
+&lt;Control-x ) &gt; : stop definition of kbd macro
+&lt;Control-x e : execute last macro defined
+&lt;Control-u Control-x ( &gt;: execute last macro and edit
+&lt;Control-x Esc Esc &gt;: execute last complex command( last Alt-x command
+&lt;Control-x Control-c &gt;: save buffers kill Emacs
+&lt;Control-x u &gt; : advertised undo.   This function utilizes the environments.
+        If the buffer is not configure explicitly, there is no operation.
+&lt;Control-_&gt;: advertised undo.  See above
+&lt;Control-z&gt;: iconfify frame
+----------------------------------------
+
+&lt;Delete&gt; : delete previous character
+&lt;Control d&gt;: delete next character
+&lt;Control k&gt; : delete from cursor to end of line. Text goes to kill buffer
+&lt;Alt d&gt;: delete word. Word goes to kill buffer
+&lt;Alt Delete&gt;: delete previous word. Word goes to kill buffer
+&lt;Alt k &gt;: delete current sentence. Sentence goes to kill buffer
+&lt;Control x Delete&gt;: delete previous sentence. Sentence goes to kill buffer
+&lt;Control y &gt;: yank last deleted text segment from
+ kill buffer and inserts it.
+&lt;Alt y &gt;: cycle and yank through kill buffer.
+
+&lt;Alt z &gt;: zap to typed letter. Text goes to kill buffer
+&lt;Alt-^ &gt;: join this line to the previous one
+&lt;Alt-\ &gt;: delete surrounding spaces
+&lt;Alt-s&gt; &gt;: center line in current fill column
+&lt;Control-Alt-w&gt;: next kill is appended to kill buffer
+----------------------------------------
+
+&lt;Alt c&gt;: Capitalize the word the cursor is under.
+&lt;Alt u&gt;: Uppercase the characters in the word.
+&lt;Alt l&gt;: Lowercase the characters in the word.
+----------------------------------------
+
+&lt;Alt t&gt;: Mark word for word swapping.  Marking a second
+ word will swap this word with the first
+&lt;Control-t&gt;: Swap characters
+&lt;Ctrl-@&gt;: Begin marking region.
+&lt;Ctrl-W&gt;: Kill marked region
+&lt;Alt-W&gt;: Copy marked region
+&lt;Ctrl-x Ctrl-u&gt;: uppercase a marked region
+&lt;Ctrl-x Ctrl-l&gt;: lowercase a marked region
+&lt;Ctrl-x h&gt;: mark entire buffer
+&lt;Alt-Ctrl-backslash&gt;: indent region to indentation of line 1 of the region.
+&lt;Ctrl-x tab&gt; : indent region by 1 tab
+&lt;Control-x Control-x&gt; : swap point and mark
+&lt;Control-x semicolon&gt;: set comment column
+&lt;Alt-semicolon&gt;: indent to comment column
+----------------------------------------
+
+M-! cmd -- Run the shell command line cmd and display the output
+M-| cmd -- Run the shell command line cmd with region contents as input
+----------------------------------------
+
+&lt;Control-x a e&gt;: Expand the abbrev before point (expand-abbrev). This is effective even when Abbrev mode is not enabled
+&lt;Control-x a g&gt;: Define an abbreviation for previous word
+&lt;Control-x a i g&gt;: Define a word as abbreviation for word before point, or in point
+----------------------------------------
+
+&lt;Control s&gt;: forward search, using pattern in Mini buffer.
+
+&lt;Control r&gt;: backward search, using pattern in Mini buffer.
+
+&lt;Control s Enter&gt;: search forward for a word, nonincremental
+
+&lt;Control r Enter&gt;: search backward for a word, nonincremental
+
+&lt;Control s Enter Control w&gt;: Search for words, ignoring details of punctuation
+&lt;Control r Enter Control w&gt;: Search backward for words, ignoring details of punctuation
+&lt;Control-Alt s&gt;: forward regular expression search, using pattern in Mini buffer
+
+&lt;Control-Alt r&gt;: backward regular expression search, using pattern in Mini buffer
+
+&lt;Alt-%&gt;: begin query search/replace. n skips to next match. y changes current match.  
+        q or Return exits. ! to replace all remaining matches with no more questions
+&lt;Control Alt %&gt; begin regex search replace, like Alt-%
+&lt;Alt-=&gt;: count lines and characters in regions
+&lt;Alt-( &gt;: insert parentheses()
+&lt;Alt-) &gt;:  move past close
+&lt;Control-x Control-t&gt;: transpose lines.
+&lt;Control-x Control-o&gt;: delete blank lines
+&lt;Control-x r s&gt;: save region to register
+&lt;Control-x r i&gt;: insert to buffer from register
+&lt;Control-x r +&gt;: increment register
+&lt;Control-x r n&gt;: insert number 0 to register
+&lt;Control-x r space &gt; : point insert point to register
+&lt;Control-x r j &gt; : jump to register
+&lt;Control-x x&gt;: save region to register
+&lt;Control-x r r&gt; : save rectangle to register
+&lt;Control-x r o&gt;: open up rectangle
+&lt;Control-x r c&gt; : clear rectangle
+&lt;Control-x r d&gt; : delete rectangle
+&lt;Control-x r t&gt; : replace rectangle with string
+&lt;Control-x r k&gt; : kill rectangle
+&lt;Control-x r y&gt; : yank rectangle
+&lt;Control-g&gt; : keyboard quit
+
+&lt;Control-x = &gt; : position of cursor
+&lt;Control-x . &gt; : set fill prefix
+&lt;Control-x f &gt; : set the fill column
+&lt;Control-x Control-b &gt; : display the buffer list
+&lt;Control-x b &gt; : switch to buffer
+&lt;Control-x k &gt; : kill the specified buffer
+----------------------------------------
+
+&lt;Alt - - Alt-l &gt;: lowercase previous word
+&lt;Alt - - Alt-u&gt;: uppercase previous word
+&lt;Alt - - Alt-c&gt;: capitalise previous word
+----------------------------------------
+
+&lt;Alt-/ &gt;: dynamic expansion
+&lt;Control-Alt-/&gt;: dynamic expansion.  Expands to common prefix in buffer
+----------------------------------------
+
+Alt-x commands:
+
+(Pressing Tab will result in auto completion of the options if an appropriate match is found
+
+</t>
+<t tx="ekr.20050515093257.1">rst2_bodyfilter = False
+    # True: call body_filter to massage text.
+    # Removes @ignore, @nocolor, @wrap directives.
+    # Extension: specify ignored directives.
+
+rst2file = False
+    # Controls whether to use external file or string.
+
+rst2_pure_document = False
+    # Controls the following code in writeTreeAsRst
+    if config.rst2_pure_document or g.match_word(h,0,"@rst"):
+        &lt;&lt; handle an rst node &gt;&gt;
+        # Removes @ignore, @nocolor, @wrap directives.
+        # Removes code blocks if rst2_replace_code_blocks is True.
+        # Formats headlines only if rst2_format_headlines is True.
+    else:
+        &lt;&lt; handle a plain node &gt;&gt;
+        # Deletes @others from output.
+        # Formats headlines only if rst2_format_headlines is False. (opposite of meaning in rst nodes!)
+        
+rst2_format_headlines = False
+    # Used differently.  See rst2_pure_document.
+    
+rst2_http_server_support = True
+    # True:
+        # 1. add_node_marker writes a string using generate_node_marker.
+        # Generates 'http-node-marker-'+str(number), where number is config.node_counter (incremented each time add_node_marker is called.
+        # 2. Enables the following code in writeTreeAsRst
+            if config.tag == 'open2':
+                http_map = config.http_map
+            else:
+                http_map = {}
+                config.anchormap = {}
+               # maps v nodes to markers.
+                config.node_counter = 0
+            # [snip] code to write the tree
+            if config.rst2_http_server_support:
+                config.http_map = http_map
+        # 3. http_support_main does nothing unless this option is True.
+    # False: add_node_marker does nothing.
+
+rst2_clear_attributes = False
+    # Deletes p.v.rst2_http_attributename from all nodes after writing.
+    # Deletes p.v.unknownAttributes if it then becomes empty.
+    
+rst2_run_on_window_open = False
+    # Runs an alternative 'main line' in onFileOpen when a new window is opened.
+
+rst2_replace_code_blocks = True
+    # See notes for rst2_pure_document. (Uses do_replace_code_blocks)
+    &lt;&lt; define alternate code block implementation&gt;&gt;
+        # Don't know what to do here: Can someone make a suggestion?
+        #import docutils.parsers.rst.directives.admonitions
+        #import docutils.parsers.rst.directives.body
+        # docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.block 
+        # docutils.parsers.rst.directives.register_directive('code-block', docutils.parsers.rst.directives.admonitions.admonition)
+        #docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.pull_quote 
+        # g.es("Registered some alternate implementation for code-block directive")
+        config.do_replace_code_blocks = config.rst2_replace_code_blocks
+        
+rst2_install_menu_item_in_edit_menu = True
+    # True: install 'Transform rst text in subtree'command to Edit menu.
+
+rst2_node_begin_marker = 'http-node-marker-'
+rst2_http_attributename = 'rst_http_attribute'</t>
+<t tx="ekr.20050515093257.2"></t>
+<t tx="ekr.20050515093257.3">@killcolor
+
+My current thinking is to use the logic of 'run_on_window_open' and 
+make this command available as a menu (maybe in the 'Edit' menu). The 
+command would run the convertion on all rst subnodes of the current 
+selected node. For large documents, 'doubleclick' is a really bad interface choice. 
+</t>
+<t tx="ekr.20050515093257.4">bodyfilter = True 
+underline_change = True # Not used!
+rst2file = 'rst2.txt' 
+pure_document = True </t>
+<t tx="ekr.20050515093257.5">If you set the following flag, then all rst trees will be generated 
+upon opening the outline. This is in preparation for the next flag: 
+ 
+run_on_window_open = True 
+ 
+You should be able to set the next flag, but it I have not yet made 
+all required changes: 
+ 
+http_server_support = False </t>
+<t tx="ekr.20050515093257.6">The following settings are really configuration settings. No anchor in 
+your document should begin with the value of node_begin_marker. 
+ 
+rst_http_attributename is the name of the attribute used in the 
+'unknownAttribute' of vnodes. 
+ 
+node_begin_marker = 'http-node-marker-' 
+rst_http_attributename = 'rst_http_attribute' </t>
+<t tx="ekr.20050515093257.7">The following options is not yet implemented: 
+ 
+number_headlines = False 
+ 
+I am not sure yet what to do with the next option: 
+ 
+warnofdrags = False </t>
+<t tx="ekr.20050515093257.8">&gt; Is there, or could there be, a setting which treats all node content as rst? 
+
+That's what the new configuration switch "pure_document", currently on cvs, is for. </t>
+<t tx="ekr.20050515093257.9">Is there a way to retain the headline nodes with  
+pure_document=True ? </t>
+<t tx="ekr.20050515093257.10">I would like a setting create_table_of_contents or some such 
+which would add a  
+.. contents::  
+directive </t>
+<t tx="ekr.20050518064900">@killcolor
+
+The following steps must be done to get the aspell plugin to load:
+
+1. Install aspell-python from
+    http://www.republika.pl/wmula/proj/aspell-python/
+
+2. Make a symbolic link to aspell.so:
+    cd /other/leo/lib/leo/plugins/
+    ln -s /other/aspell-python/lib/python2.4/site-packages/aspell.so .
+
+3. Edit /other/leo/lib/leo/plugins/spellpyx.py to replace the paths
+    at lines 63 and 65:
+    aspell_dir = r'/other/leo/lib/leo/plugins'
+    aspell_bin_dir = r'/other/leo/lib/leo/plugins'</t>
+<t tx="ekr.20050523073009"></t>
+<t tx="mork.20040926105355.9">def openChaptersFile( fileName ):
+    zf = zipfile.ZipFile( fileName )
+    import cStringIO
+    file = cStringIO.StringIO()
+    name = zf.namelist()
+    csfiles = [ [], [] ]
+    for x in name :
+        zi = zf.getinfo( x )
+        csfiles[ 0 ].append( zi.comment )
+        cs = cStringIO.StringIO()
+        csfiles[ 1 ].append( cs )           
+        cs.write( zf.read( x ) )
+        cs.seek( 0 )          
+    zf.close()
+    csfiles = zip( csfiles[ 0 ], csfiles[ 1 ] )
+    return csfiles
+</t>
+<t tx="mork.20040926105355.29">oldOpen = leoFileCommands.fileCommands.open
+
+def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
+
+    global iscStringIO
+    c = self.c
+    
+    if zipfile.is_zipfile( fileName ):
+        iscStringIO = True
+        chapters = openChaptersFile( fileName )
+        g.es( str( len( chapters ) ) + " Chapters To Read", color = 'blue' )
+        insertChapters( chapters, c.frame, c )
+        g.es( "Finished Reading Chapters", color = 'blue' )
+        iscStringIO = False
+        return True
+
+    return oldOpen(self,file,fileName,readAtFileNodesFlag,silent)</t>
+<t tx="mork.20040929090525.1">def zipChapters( fileName, pagenames, c, chapList ):
+    #takes list of StringIO instances and zips them to a file
+    zf = zipfile.ZipFile( fileName, 'w',  zipfile.ZIP_DEFLATED )
+    for x ,fname in enumerate( pagenames ):
+        sv = getSV( fname, c )
+        zif = zipfile.ZipInfo( str( x ) )
+        zif.comment = sv.get()
+        zif.compress_type = zipfile.ZIP_DEFLATED
+        chapList[ x ].seek( 0 )
+        zf.writestr( zif ,chapList[ x ].read() )
+    zf.close()</t>
 </tnodes>
 </leo_file>

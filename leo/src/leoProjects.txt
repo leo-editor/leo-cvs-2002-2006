@@ -2656,15 +2656,17 @@ def getVnodes (self,reassignIndices=True):
 #@+node:ekr.20040326054052:<< set current and top positions >>
 current = self.convertStackToPosition(self.currentVnodeStack)
 if current:
+    # g.trace('using convertStackToPosition',current)
     c.setCurrentPosition(current)
 else:
     # g.trace(self.currentVnodeStack)
     c.setCurrentPosition(c.rootPosition())
     
 # At present this is useless: the drawing code doesn't set the top position properly.
-top = self.convertStackToPosition(self.topVnodeStack)
-if top:
-    c.setTopPosition(top)
+if 0:
+    top = self.convertStackToPosition(self.topVnodeStack)
+    if top:
+        c.setTopPosition(top)
 #@nonl
 #@-node:ekr.20040326054052:<< set current and top positions >>
 #@+node:ekr.20041023105832:<< set self.forbiddenTnodes to tnodes than must not be pasted >>
@@ -6288,6 +6290,9 @@ def read(self,root,importFileName=None,thinFile=False,fromString=None):
     """Read any derived file."""
 
     at = self ; c = at.c
+    if 0:
+        p = c.currentPosition()
+        g.trace('1',p,p.v._parent,p.v._parent and p.v._parent.t.vnodeList)
     << set fileName >>
     at.initReadIvars(root,fileName,importFileName=importFileName,thinFile=thinFile)
     if at.errors: return False
@@ -6297,6 +6302,9 @@ def read(self,root,importFileName=None,thinFile=False,fromString=None):
     root.clearVisitedInTree()
     at.scanAllDirectives(root,importing=at.importing,reading=True)
     at.readOpenFile(root,at.inputFile,fileName)
+    if 0:
+        p = c.currentPosition()
+        g.trace('2',p,p.v._parent,p.v._parent and p.v._parent.t.vnodeList)
     at.inputFile.close()
     root.clearDirty() # May be set dirty below.
     if not at.thinFile:
@@ -15171,9 +15179,11 @@ def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
     c.frame.tree.redraw_now(scroll=False)
     
     # g.trace(readAtFileNodesFlag,c.mFileName)
-    
+
     if ok and readAtFileNodesFlag:
         c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+        
+    # g.trace(c.currentPosition())
 
     if not c.currentPosition():
         c.setCurrentPosition(c.rootPosition())
@@ -27337,9 +27347,11 @@ def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
     c.frame.tree.redraw_now(scroll=False)
     
     # g.trace(readAtFileNodesFlag,c.mFileName)
-    
+
     if ok and readAtFileNodesFlag:
         c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+        
+    # g.trace(c.currentPosition())
 
     if not c.currentPosition():
         c.setCurrentPosition(c.rootPosition())
@@ -32755,6 +32767,9 @@ def read(self,root,importFileName=None,thinFile=False,fromString=None):
     """Read any derived file."""
 
     at = self ; c = at.c
+    if 0:
+        p = c.currentPosition()
+        g.trace('1',p,p.v._parent,p.v._parent and p.v._parent.t.vnodeList)
     << set fileName >>
     at.initReadIvars(root,fileName,importFileName=importFileName,thinFile=thinFile)
     if at.errors: return False
@@ -32764,6 +32779,9 @@ def read(self,root,importFileName=None,thinFile=False,fromString=None):
     root.clearVisitedInTree()
     at.scanAllDirectives(root,importing=at.importing,reading=True)
     at.readOpenFile(root,at.inputFile,fileName)
+    if 0:
+        p = c.currentPosition()
+        g.trace('2',p,p.v._parent,p.v._parent and p.v._parent.t.vnodeList)
     at.inputFile.close()
     root.clearDirty() # May be set dirty below.
     if not at.thinFile:
@@ -37738,12 +37756,14 @@ def idle_scrollTo(self,p=None):
     __pychecker__ = '--no-argsused' # event not used.
 
     c = self.c ; frame = c.frame
-    if not p: p = self.c.currentPosition()
-    if not p: p = self.c.rootPosition()
     if not p or not p.exists(c):
-        g.trace('does not exist:',p.headString())
+        p = c.currentPosition()
+    if not p or not p.exists(c):
+        # g.trace('current p does not exist',p)
+        p = c.rootPosition()
+    if not p or not p.exists(c):
+        # g.trace('no position')
         return
-    # g.trace(p.headString())
     try:
         last = p.lastVisible()
         nextToLast = last.visBack()
@@ -37796,6 +37816,8 @@ def scrollTo (self,p):
     
     def scrollToCallback(event=None,self=self,p=p):
         __pychecker__ = '--no-argsused' # event not used.
+        if not p.exists(p.c):
+            g.trace('does not exist',p)
         self.idle_scrollTo(p)
     
     self.canvas.after_idle(scrollToCallback)
@@ -39363,6 +39385,10 @@ def extract(self):
     head,lines,tail,oldSel,oldYview = self.getBodyLines()
     if not lines: return
     headline = lines[0].strip() ; del lines[0]
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
 
     # Remove leading whitespace from all body lines.
     junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
@@ -39398,6 +39424,10 @@ def extractSection(self):
     line1 = '\n' + lines[0]
     headline = lines[0].strip() ; del lines[0]
     << Set headline for extractSection >>
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
     
     # Remove leading whitespace from all body lines.
     junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
@@ -41593,8 +41623,10 @@ def undoInsertNode (self):
 #@-node:ekr.20050412085112:undoInsertNode
 #@+node:ekr.20050412084532:redoInsertNode
 def redoInsertNode (self):
-    
+
     u = self ; c = u.c
+    
+    # g.trace('p',u.newP.v,'parent',u.newParent.v)
 
     if u.newBack:
         u.newP.linkAfter(u.newBack)
@@ -41603,6 +41635,8 @@ def redoInsertNode (self):
     else:
         oldRoot = c.rootPosition()
         u.newP.linkAsRoot(oldRoot)
+
+    # assert(u.newP.exists(c))
         
     # Restore all vnodeLists (and thus all clone marks).
     u.newP.restoreLinksInTree()
@@ -42210,9 +42244,11 @@ def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
     c.frame.tree.redraw_now(scroll=False)
     
     # g.trace(readAtFileNodesFlag,c.mFileName)
-    
+
     if ok and readAtFileNodesFlag:
         c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+        
+    # g.trace(c.currentPosition())
 
     if not c.currentPosition():
         c.setCurrentPosition(c.rootPosition())
@@ -43652,12 +43688,14 @@ def idle_scrollTo(self,p=None):
     __pychecker__ = '--no-argsused' # event not used.
 
     c = self.c ; frame = c.frame
-    if not p: p = self.c.currentPosition()
-    if not p: p = self.c.rootPosition()
     if not p or not p.exists(c):
-        g.trace('does not exist:',p.headString())
+        p = c.currentPosition()
+    if not p or not p.exists(c):
+        # g.trace('current p does not exist',p)
+        p = c.rootPosition()
+    if not p or not p.exists(c):
+        # g.trace('no position')
         return
-    # g.trace(p.headString())
     try:
         last = p.lastVisible()
         nextToLast = last.visBack()
@@ -44997,9 +45035,11 @@ def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
     c.frame.tree.redraw_now(scroll=False)
     
     # g.trace(readAtFileNodesFlag,c.mFileName)
-    
+
     if ok and readAtFileNodesFlag:
         c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+        
+    # g.trace(c.currentPosition())
 
     if not c.currentPosition():
         c.setCurrentPosition(c.rootPosition())
@@ -45270,12 +45310,14 @@ def idle_scrollTo(self,p=None):
     __pychecker__ = '--no-argsused' # event not used.
 
     c = self.c ; frame = c.frame
-    if not p: p = self.c.currentPosition()
-    if not p: p = self.c.rootPosition()
     if not p or not p.exists(c):
-        g.trace('does not exist:',p.headString())
+        p = c.currentPosition()
+    if not p or not p.exists(c):
+        # g.trace('current p does not exist',p)
+        p = c.rootPosition()
+    if not p or not p.exists(c):
+        # g.trace('no position')
         return
-    # g.trace(p.headString())
     try:
         last = p.lastVisible()
         nextToLast = last.visBack()
@@ -45995,6 +46037,10 @@ def extractSection(self):
     headline = lines[0].strip() ; del lines[0]
     << Set headline for extractSection >>
     
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
+    
     # Remove leading whitespace from all body lines.
     junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
     strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
@@ -46042,6 +46088,10 @@ def extract(self):
     head,lines,tail,oldSel,oldYview = self.getBodyLines()
     if not lines: return
     headline = lines[0].strip() ; del lines[0]
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
 
     # Remove leading whitespace from all body lines.
     junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
@@ -48996,6 +49046,151 @@ respectively.
 #@-node:ekr.20050416150731.2:Commands for jumping between words: temacs & usetemacs
 #@-node:ekr.20050505094928.1:Features
 #@-node:ekr.20050503111718:4.3 b2 projects
+#@+node:ekr.20050518070428:4.3 final projects
+#@+node:ekr.20050517090117:(Fixed crasher when pie-menu plugin enabled)
+#@+node:ekr.20050517090117.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3155657
+By: tfer
+
+Enabling the Pie Menu plug-in causes Leo to quit when you re-open it.  It just
+draws part of the main window and quits (did not run it from a console to see
+what is going on yet).
+
+This was the only plug-in enabled on top of the default set (I was curious asw
+to what the menus looked like).
+
+Tom
+#@nonl
+#@-node:ekr.20050517090117.1:Report
+#@+node:ekr.20050518065352:Traceback
+Traceback (most recent call last):
+
+  File "C:\prog\leoCVS\leo\src\leoGlobals.py", line 763, in openWithFileName
+    c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+  File "C:\prog\leoCVS\leo\src\leoGui.py", line 133, in newLeoCommanderAndFrame
+    frame.finishCreate(c)
+  File "C:\prog\leoCVS\leo\src\leoTkinterFrame.py", line 154, in finishCreate
+    frame.canvas = self.createCanvas(self.split2Pane1)
+  File "C:\prog\leoCVS\leo\plugins\pie_menus.py", line 477, in addPMenu
+    fa = PieMenu( can, c )
+  File "C:\prog\leoCVS\leo\plugins\pie_menus.py", line 77, in __init__
+    self.construct()
+  File "C:\prog\leoCVS\leo\plugins\pie_menus.py", line 104, in construct
+    f = tkFont.Font( weight = tkFont.BOLD, size = -15, family = 'courier')
+
+NameError: name 'tkFont' is not defined
+#@nonl
+#@-node:ekr.20050518065352:Traceback
+#@-node:ekr.20050517090117:(Fixed crasher when pie-menu plugin enabled)
+#@+node:ekr.20050516202739:(Fixed crasher in Extract Section Command)
+# added new checks and new error messages.
+#@nonl
+#@+node:ekr.20050516202739.1:Traceback
+Select only a section name (no following lines)
+
+Traceback (most recent call last):
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 177, in doCommand
+    command()
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 2055, in extractSection
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
+IndexError: list index out of range
+#@nonl
+#@-node:ekr.20050516202739.1:Traceback
+#@+node:ekr.20031218072017.1708:extractSection
+def extractSection(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract Section'
+    current = c.currentPosition()
+
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+
+    line1 = '\n' + lines[0]
+    headline = lines[0].strip() ; del lines[0]
+    << Set headline for extractSection >>
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
+    
+    # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
+    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+        for line in lines]
+    newBody = string.join(strippedLines,'\n')
+    if head: head = head.rstrip()
+
+    c.beginUpdate()
+    if 1: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            undoData = u.beforeInsertNode(current)
+            p = c.createLastChildNode(current,headline,newBody)
+            u.afterInsertNode(p,undoType,undoData)
+            c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
+        u.afterChangeGroup(current,undoType)
+    c.endUpdate()
+#@nonl
+#@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+if len(headline) < 5:
+    oops = True
+else:
+    head1 = headline[0:2] == '<<'
+    head2 = headline[0:2] == '@<'
+    tail1 = headline[-2:] == '>>'
+    tail2 = headline[-2:] == '@>'
+    oops = not (head1 and tail1) and not (head2 and tail2)
+
+if oops:
+    g.es("Selected text should start with a section name",color="blue")
+    return
+#@nonl
+#@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+#@-node:ekr.20031218072017.1708:extractSection
+#@+node:ekr.20031218072017.1706:extract
+def extract(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract'
+    current = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+    headline = lines[0].strip() ; del lines[0]
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
+
+    # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
+    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+        for line in lines]
+    newBody = string.join(strippedLines,'\n')
+    if head: head = head.rstrip()
+
+    c.beginUpdate()
+    if 1: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            undoData = u.beforeInsertNode(current)
+            p = c.createLastChildNode(current,headline,newBody)
+            u.afterInsertNode(p,undoType,undoData)
+            c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
+        u.afterChangeGroup(current,undoType)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.1706:extract
+#@-node:ekr.20050516202739:(Fixed crasher in Extract Section Command)
+#@-node:ekr.20050518070428:4.3 final projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt

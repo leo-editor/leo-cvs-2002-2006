@@ -392,7 +392,7 @@ class testUtils:
 
     #@    @+others
     #@+node:ekr.20050415070840.25:compareOutlines
-    def compareOutlines (self,root1,root2,compareHeadlines=True):
+    def compareOutlines (self,root1,root2,compareHeadlines=True,tag=''):
     
         """Compares two outlines, making sure that their topologies,
         content and join lists are equivalent"""
@@ -410,21 +410,25 @@ class testUtils:
             p2.moveToThreadNext()
     
         if not ok:
-            print 'compareOutlines failed'
+            print 'compareOutlines failed',
+            if tag: print 'tag:',tag
+            else: print
+            if p1: print 'p1',p1,p1.v
+            if p2: print 'p2',p2,p2.v
             if not p1 or not p2:
                 print 'p1 and p2'
-            elif p1.numberOfChildren() != p2.numberOfChildren():
+            if p1.numberOfChildren() != p2.numberOfChildren():
                 print 'p1.numberOfChildren()=%d, p2.numberOfChildren()=%d' % (
                     p1.numberOfChildren(),p2.numberOfChildren())
-            elif compareHeadlines and (p1.headString() != p2.headString()):
+            if compareHeadlines and (p1.headString() != p2.headString()):
                 print 'p1.head', p1.headString()
                 print 'p2.head', p2.headString()
-            elif p1.bodyString() != p2.bodyString():
+            if p1.bodyString() != p2.bodyString():
                 print 'p1.body'
                 print repr(p1.bodyString())
                 print 'p2.body'
                 print repr(p2.bodyString())
-            elif p1.isCloned() != p2.isCloned():
+            if p1.isCloned() != p2.isCloned():
                 print 'p1.isCloned() == p2.isCloned()'
     
         return ok
@@ -1053,6 +1057,11 @@ class editBodyTestCase(unittest.TestCase):
         self.sel    = sel.copy() # Two lines giving the selection range in tk coordinates.
         self.ins    = ins.copy() # One line giving the insert point in tk coordinate.
         self.tempNode = tempNode.copy()
+        
+        if 0:
+            g.trace('parent',parent)
+            g.trace('before',before)
+            g.trace('after',after)
     #@nonl
     #@-node:ekr.20050415070840.75: __init__
     #@+node:ekr.20050415070840.76: fail
@@ -1071,21 +1080,29 @@ class editBodyTestCase(unittest.TestCase):
     def editBody (self):
     
         c = self.c ; u = self.u
+        
+        if not g.app.enableUnitTest: return
     
-        # Compute the result in tempNode.bodyString()
+        # Blank stops the command name.
         commandName = self.parent.headString()
+        i = commandName.find(' ')
+        if i > -1:
+            commandName = commandName[:i] 
         # g.trace(commandName)
+        
+        # Compute the result in tempNode.bodyString()
         command = getattr(c,commandName)
         command()
     
         if 1:
-            assert(u.compareOutlines(self.tempNode,self.after,compareHeadlines=False))
+            assert(u.compareOutlines(self.tempNode,self.after,compareHeadlines=False,tag='before undo1'))
             c.undoer.undo()
-            assert(u.compareOutlines(self.tempNode,self.before,compareHeadlines=False))
+            assert(u.compareOutlines(self.tempNode,self.before,compareHeadlines=False,tag='after undo1'))
             c.undoer.redo()
-            assert(u.compareOutlines(self.tempNode,self.after,compareHeadlines=False))
+            assert(u.compareOutlines(self.tempNode,self.after,compareHeadlines=False,tag='after redo'))
             c.undoer.undo()
-            assert(u.compareOutlines(self.tempNode,self.before,compareHeadlines=False))
+            assert(u.compareOutlines(self.tempNode,self.before,compareHeadlines=False,tag='after undo2'))
+            # c.frame.tree.redraw_now()
     #@-node:ekr.20050415070840.77:editBody
     #@+node:ekr.20050415070840.80:runTest
     def runTest(self):
@@ -1097,6 +1114,8 @@ class editBodyTestCase(unittest.TestCase):
     def setUp(self):
     
         c = self.c ; tempNode = self.tempNode
+        
+        if not g.app.enableUnitTest: return
     
         # Delete all children of temp node.
         while tempNode.firstChild():
@@ -1128,14 +1147,17 @@ class editBodyTestCase(unittest.TestCase):
     def tearDown (self):
     
         c = self.c ; tempNode = self.tempNode
+        
+    
     
         c.selectVnode(tempNode)
         tempNode.setTnodeText("",g.app.tkEncoding)
-        tempNode.clearDirty()
     
         # Delete all children of temp node.
         while tempNode.firstChild():
             tempNode.firstChild().doDelete(tempNode)
+            
+        tempNode.clearDirty()
     #@nonl
     #@-node:ekr.20050415070840.78:tearDown
     #@-others
