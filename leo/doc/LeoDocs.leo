@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="13987" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="13996" clone_windows="0"/>
 <globals body_outline_ratio="0.635555555556">
 	<global_window_position top="81" left="412" height="765" width="824"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -62,7 +62,14 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20050513141852" a="TV"><vh>4.3-beta 2</vh>
+<v t="ekr.20050523092026" a="TV"><vh>4.3-final</vh>
+<v t="ekr.20050523092056.1" a="E"><vh>Fixed crasher when pie-menu plugin enabled</vh></v>
+<v t="ekr.20050523092056.4" a="E"><vh>Fixed crasher in Extract Section Command</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.117"><vh>Previous versions...</vh>
+<v t="ekr.20050523092026.1"><vh>4.3... @settings</vh>
+<v t="ekr.20050513141852"><vh>4.3-beta 2</vh>
 <v t="ekr.20050513141913.1"><vh>Fixed bugs...</vh>
 <v t="ekr.20050513141913.16"><vh>Fixed nodenavagator bug</vh></v>
 <v t="ekr.20050513141913.17" a="E"><vh>Fixed LaTex Coloring bug</vh></v>
@@ -85,8 +92,6 @@
 <v t="ekr.20050513141913.233" a="E"><vh>Added define_name arg to c.executeScript</vh></v>
 </v>
 </v>
-</v>
-<v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050429094215"><vh>4.3-beta 1</vh>
 <v t="ekr.20050429094215.2"><vh>Fixed bugs...</vh>
 <v t="ekr.20050429094215.3"><vh>Made sure NameErrors are reported with tracebacks in scripts</vh></v>
@@ -304,6 +309,7 @@
 <v t="ekr.20050123103753"><vh>Syntax Coloring &amp; languages</vh>
 <v t="ekr.20050123092834.903"><vh>Added support for Ada</vh></v>
 <v t="ekr.20050123092834.929"><vh>Added support for Forth</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -17865,5 +17871,50 @@ Read the documentation in that node before running the script.</t>
 
 The default is ''.  It define_name exists c.executeScript executes the script in an environment containing
 __name__ = define_name.</t>
+<t tx="ekr.20050523092026">Leo 4.3 final                 May 23, 2005
+
+Leo 4.3 is here after almost five months of work.
+
+The defining features of Leo 4.3:
+---------------------------------
+1. Leo now stores options in @settings trees, that is, outlines whose headline
+is '@settings'. When opening a .leo file, Leo looks for @settings trees not only
+in the outline being opened but also in various leoSettings.leo files.
+
+The key design goal of @settings trees was that Leo's user options must be
+infinitely flexible. That goal has been accomplished. Indeed, users can create
+arbitrarily complex user options with @settings trees. Leo settings outlines
+are, in fact, infinitely more flexible and powerful than any scheme based on
+flat text.  Readers of Python's configParser shootout take note!
+
+2. The Settings command temporarily replaces the outline pane with an outline
+showing all the @settings trees in effect. The Settings command also replaces
+the body pane with a "settings pane". This settings pane allows you to change
+the settings selected in the outline pane using standard gui widgets. The
+settings pane is dynamically created from nodes in the settings tree; it is as
+extensible as the @settings tree itself.
+
+3. Leo now stores recent files information in .leoRecentFiles.txt files.
+
+4. Leo's read/write code in leoAtFile.py has been rewritten to support user-
+defined tangling and untangling.  This is a major cleanup of Leo's core.
+
+5. Leo now boasts a wonderful new Plugins Manager plugin. This plugin enables
+and disables plugins automatically. You never have to mess with
+pluginsManager.txt again! This plugin also tells you everything you need to know
+about each plugin. Finally, this plugin also lets you download plugins from
+Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
+
+6. You can install third-party extensions in Leo's extensions directory. Leo
+will attempt to import such extensions from the extensions directory if normal
+imports fail. Leo is distributed with Pmw (Python Mega Widgets), path.py and
+sets.py in this directory.</t>
+<t tx="ekr.20050523092026.1"></t>
+<t tx="ekr.20050523092056.1">http://sourceforge.net/forum/message.php?msg_id=3155657
+
+Enabling the Pie Menu plug-in caused Leo to quit when opening .leo files.</t>
+<t tx="ekr.20050523092056.4">This fixed a recent bug.
+The crash happened if not section text was specified.
+Added new checks and new error messages.</t>
 </tnodes>
 </leo_file>

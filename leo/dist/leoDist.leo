@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1026" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1027" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
 	<global_window_position top="40" left="406" height="778" width="794"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -23,6 +23,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
+<v t="ekr.20050523091828"><vh>ANN: Leo 4.3-final</vh></v>
 <v t="ekr.20050516064011"><vh>ANN: Leo 4.3-b2</vh></v>
 <v t="ekr.20050429102040"><vh>ANN: Leo 4.3-b1</vh></v>
 <v t="ekr.20050313105121"><vh>ANN: Leo 4.3-a4</vh></v>
@@ -93,11 +94,11 @@
 <v t="ekr.20050118125236"><vh>Write a script to make sure .nsi and main install scripts create the same files</vh></v>
 <v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
-<v t="EKR.20040519080201.1" a="ETV"><vh>Distribution checklist</vh>
+<v t="EKR.20040519080201.1"><vh>Distribution checklist</vh>
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
-<v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
+<v t="EKR.20040519090846" a="TV"><vh>Distribution files (update for each release)</vh>
 <v t="EKR.20040519090846.2"><vh>@silentfile ../doc/INSTALL.TXT</vh>
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
 <v t="EKR.20040519090846.4"><vh>Linux installation</vh></v>
@@ -187,7 +188,7 @@
 <v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -463,7 +464,7 @@ else: # Doesn't work
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519080201.3"></t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4-3-b2", # No spaces here!
+version="4-3-final", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -636,7 +637,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.3-b2
+Version: 4.3-final
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -655,10 +656,9 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.3 beta 2                 May 15, 2005
+<t tx="EKR.20040519090846.9">Leo 4.3 final                May 23, 2005
 
-Leo 4.3 beta 2 completes all major features of Leo 4.3. There are no known
-significant bugs remaining.
+Leo 4.3 is here after almost five months of work.
 
 The defining features of Leo 4.3:
 ---------------------------------
@@ -4182,6 +4182,62 @@ Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
 <t tx="ekr.20050516064011">Leo 4.3 beta 2 is now available at http://sourceforge.net/projects/leo/
 
 Leo 4.3 beta 2 completes all major features of Leo 4.3.  There are no known significant bugs.
+
+The defining features of Leo 4.3:
+---------------------------------
+1. Leo now stores options in @settings trees, that is, outlines whose headline is '@settings'. When opening a .leo file, Leo looks for @settings trees not only in the outline being opened but also in various leoSettings.leo files. Users can create arbitrarily complex user options with @settings trees. 
+
+2. The Preferences command temporarily replaces the outline pane with an outline showing all the @settings trees in effect. The Preferences command also replaces the body pane with a "settings pane". This settings pane allows you to change the settings selected in the outline pane using standard gui widgets.
+
+3. Leo now stores recent files information in .leoRecentFiles.txt files.
+
+4. Leo's read/write code in leoAtFile.py has been rewritten to support user-defined tangling and untangling. This is a major cleanup of Leo's core.
+
+5. Leo now contains an excellent Plugins Manager plugin. This plugin enables and disables plugins automatically and tells you everything you need to know about each plugin. This plugin also lets you download plugins from Leo's cvs site.
+
+6. You can install third-party extensions in Leo's extensions directory. Leo will attempt to import such extensions from the extensions directory when normal imports fail. The distribution contains Python Mega Widgets in the extensions directory.
+
+What people are saying about Leo
+--------------------------------
+"Another day, another breakthrough using Leo--now I realize Leo is the best URL bookmark manager there is. No more bookmarks menus or favorites lists inside the browser for me. With the @url directive I can just double click on the URL to open it in my browser. Leo lets me arrange the URLs in a hierarchy (or multiple hierarchies), attach notes to them, save clippings of things I read on the sites. It's sooo much better than anything the browsers have built in and it lets me easily use different browsers on different platforms and different machines (try that with the browsers' built-in bookmark managers)." -- Dan Winkler
+
+"I am an amateur photographer. I use plain old 35mm. film for my pictures. Over the weekend, I used Leo to organize my lists of pictures. It is quite helpful--I can have separate nodes for pictures I have enlarged, as well as pictures I have submitted to our local camera club. Thanks!" -- Rich Reis
+
+"Cloning is pure genius!... Leo's cloning facility, allows me to create several views on the CFA course material. My main view follows the prescribed study guide. Another view is organized like the textbooks. Yet another gives me a glossary of terms. And when I'm done, I'll have some nice libraries...I can re-use later in other projects." -- Michael Manti
+
+More quotes at: http://webpages.charter.net/edreamleo/testimonials.html
+
+What makes Leo special?
+-----------------------
+- Leo's outlines add a new dimension to programming.
+- Leo shows you your code and data the way _you_ want to see them.
+- Leo extends, completes and simplifies literate programming.
+- Leo's script buttons bring scripts to data. 
+
+What is Leo?
+------------
+- A programmer's editor, an outlining editor and a flexible browser.
+- A literate programming tool, compatible with noweb and CWEB.
+- A data organizer and project manager. Leo provides multiple views
+  of projects within a single outline.
+- Fully scriptable using Python. Leo saves its files in XML format.
+- Portable. leo.py is 100% pure Python.
+- Open Software, distributed under the Python License.
+
+Leo requires Python 2.2.1 or above and tcl/tk 8.4 or above.
+Leo works on Linux, Windows and MacOs X.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
+</t>
+<t tx="ekr.20050523091828">Leo 4.3 beta 2 is now available at http://sourceforge.net/projects/leo/
+
+Leo 4.3 is here after almost five months of work.
 
 The defining features of Leo 4.3:
 ---------------------------------
