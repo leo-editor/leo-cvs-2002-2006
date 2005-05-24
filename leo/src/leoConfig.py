@@ -2577,11 +2577,13 @@ class settingsController:
             val2 = var.get()
             # g.trace(name,val2)
             try:
-                float(val2)
-                return g.choose(0.0 <= val2 <= 1.0,val2,val)
+                val2 = float(val2)
+                if 0.0 <= val2 <= 1.0:
+                    return val2
             except TypeError:
-                g.trace("bad val:",val2)
-                return val
+                pass
+            g.trace("bad val:",val2)
+            return val
                 
         self.initValue(p,name,kind,val,ratioCallback)
         
