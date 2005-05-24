@@ -1423,6 +1423,8 @@ class settingsDialogParserClass (parserBaseClass):
     #@-node:ekr.20041225063637.103:doRecentFiles & doBodyPaneList
     #@+node:ekr.20041225063637.104:doShortcuts
     def doShortcuts(self,p,kind,name,val):
+        
+        __pychecker__ = '--no-argsused' # val not used, but required.
     
         s = p.bodyString()
         self.set(p,kind,name,s)
