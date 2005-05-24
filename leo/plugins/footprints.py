@@ -21,11 +21,14 @@ __plugin_name__ = "Footprints"
 #@@killcolor
 #@+at 
 # 
-# 0.1: Paul Paterson - Initial version.
-# 0.2: EKR:
+# 0.1 Paul Paterson: Initial version.
+# 0.2 EKR:
 #     - Added init method.
 #     - Not safe for unit testing because of lock.acquire.
 #       That is, not installed properly by unit tests.
+# 
+# 0.3 EKR:
+#     - Declared click_registry and coloured_nodes global in init.
 #@-at
 #@nonl
 #@-node:pap.20041020001240.1:<< version history >>
@@ -66,6 +69,8 @@ Todo list:
 def init ():
     
     ok = Tk and not g.app.unitTesting # Not safe for unit testing because of lock.
+    
+    global click_registry, coloured_nodes
     
     if ok:
         # Internal controls 
