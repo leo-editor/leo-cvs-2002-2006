@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="96" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="127" left="272" height="703" width="911"/>
+	<global_window_position top="101" left="390" height="703" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -34,7 +34,7 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20041119034357.1"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
 <v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
@@ -136,7 +136,7 @@
 <v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
 <v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
 <v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
-<v t="ekr.20050513110847" a="TV"><vh>@shortcuts test shortcuts</vh></v>
+<v t="ekr.20050513110847"><vh>@shortcuts test shortcuts</vh></v>
 </v>
 <v t="ekr.20041213105007"><vh>@page Fonts</vh>
 <v t="ekr.20041213105508"><vh>@font log font</vh></v>
@@ -190,7 +190,7 @@
 </v>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 </v>
-<v t="ekr.20041213105954"><vh>Window options</vh>
+<v t="ekr.20041213105954" a="EV"><vh>Window options</vh>
 <v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
@@ -201,7 +201,7 @@
 <v t="ekr.20041213105954.1"><vh>@page Log pane options</vh>
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
 </v>
-<v t="ekr.20041119034357.56"><vh>@page Options for new windows</vh>
+<v t="ekr.20041119034357.56" a="E"><vh>@page Options for new windows</vh>
 <v t="ekr.20041119034357.57"><vh>@ratio initial_horizontal_ratio = 0.3</vh></v>
 <v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.5</vh></v>
 <v t="ekr.20041119034357.59"><vh>@strings[vertical,horizontal] initial_splitter_orientation = vertical</vh></v>
@@ -568,7 +568,7 @@ body_text_font_weight = None
 Valid values: 0.0 to 1.0.
 
 </t>
-<t tx="ekr.20041119034357.58">The ratio of outline pane size to log pane size when splitting the primary panes horizontally.
+<t tx="ekr.20041119034357.58">The ratio of outline (tree) pane size to log pane size when splitting the primary panes horizontally.
 
 Valid values: 0.0 to 1.0.
 
@@ -585,7 +585,7 @@ horizontal: body pane to left of outline and log panes.</t>
 Valid values: 0.0 to 1.0.
 
 </t>
-<t tx="ekr.20041119034357.61">The ratio of tree pane size to body pane size when splitting the primary panes vertically.
+<t tx="ekr.20041119034357.61">The ratio of outline (tree) pane size to body pane size when splitting the primary panes vertically.
 
 Valid values: 0.0 to 1.0.</t>
 <t tx="ekr.20041119034357.62">Height of window in pixels.
