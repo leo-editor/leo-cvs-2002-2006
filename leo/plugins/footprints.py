@@ -13,7 +13,7 @@ cleo plugin by Mark Ng)
 Paul Paterson 
 """ 
  
-__version__ = "0.2" 
+__version__ = "0.3" 
 __plugin_name__ = "Footprints" 
  
 #@<< version history >>
