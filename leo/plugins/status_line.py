@@ -1,6 +1,8 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040201060959:@thin status_line.py
-"""Adds status line to Leo window."""
+"""Adds status line to Leo window.
+
+WARNING: this plugin is experimental and probably does not work."""
 
 #@@language python
 #@@tabwidth -4
