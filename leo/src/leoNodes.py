@@ -1366,6 +1366,8 @@ class position (object):
 
     #@    << about the position class >>
     #@+node:ekr.20031218072017.890:<< about the position class >>
+    #@@killcolor
+    
     #@+at 
     #@nonl
     # This class provides tree traversal methods that operate on positions, 
@@ -1400,7 +1402,7 @@ class position (object):
     # positions while traversing trees:
     # - Several routines use p.vParentWithStack to avoid having to call 
     # tempPosition.moveToParent().
-    #   These include p.level, p.isVisible, p.hasThreadNext and p.vThreadNext.
+    #   These include p.level, p.isVisible and p.hasThreadNext.
     # - p.moveToLastNode and p.moveToThreadBack use new algorithms that don't 
     # use temporary data.
     # - Several lookahead routines compute whether a position exists without 
@@ -1408,6 +1410,37 @@ class position (object):
     #@-at
     #@nonl
     #@-node:ekr.20031218072017.890:<< about the position class >>
+    #@nl
+    #@    << positions may become invalid when outlines change >>
+    #@+node:ekr.20050524082843:<< positions may become invalid when outlines change >>
+    #@@killcolor
+    
+    #@+at 
+    #@nonl
+    # If a vnode has only one parent, v._parent is that parent. Otherwise,
+    # v.t.vnodeList is the list of vnodes v2 such that v2._firstChild == v. 
+    # Alas, this
+    # means that positions can become invalid when vnodeList's change!
+    # 
+    # There is no use trying to solve the problem in p.moveToParent or
+    # p.vParentWithStack: the invalidated positions simply don't have the 
+    # stack
+    # entries needed to compute parent fields properly. In short, changing 
+    # t.vnodeList
+    # may invalidate existing positions!
+    # 
+    # The greatest potential for problems may be in the undo/redo logic. More 
+    # testing
+    # is needed.
+    # 
+    # Another area of potential problems are unit tests.
+    # 
+    # The workarounds must involve recomputing positions after outlines 
+    # change, or in
+    # the case of the read logic, after reading derived files.
+    #@-at
+    #@nonl
+    #@-node:ekr.20050524082843:<< positions may become invalid when outlines change >>
     #@nl
     
     #@    @+others
@@ -1695,8 +1728,8 @@ class position (object):
         """Return True if a position exists in c's tree"""
         
         p = self.copy()
-        
-         # This code must be fast.
+    
+        # This code must be fast.
         root = c.rootPosition()
     
         while p:
@@ -2938,16 +2971,14 @@ class position (object):
         
         p = self
         
-        if not p: return p # 10/30/04
+        if not p: return p
     
         if p.v._parent and len(p.v._parent.t.vnodeList) == 1:
             p.v = p.v._parent
         elif p.stack:
             p.v = p.stack.pop()
-            # g.trace("pop",p.v,p)
         else:
             p.v = None
-    
         return p
     #@nonl
     #@-node:ekr.20031218072017.937:p.moveToParent (pops stack when multiple parents)
