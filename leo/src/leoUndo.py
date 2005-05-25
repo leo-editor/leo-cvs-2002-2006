@@ -136,13 +136,16 @@ class baseUndoer:
         self.clearIvars()
     
         if 0: # Debugging.
+            print '-' * 40
             keys = bunch.keys()
             keys.sort()
             for key in keys:
                 g.trace(key,bunch.get(key))
+            print '-' * 20
     
         for key in bunch.keys():
             val = bunch.get(key)
+            # g.trace(key,val)
             setattr(u,key,val)
             if key not in u.optionalIvars:
                 u.optionalIvars.append(key)
@@ -255,13 +258,13 @@ class baseUndoer:
         
         u = self
     
-        # g.trace(u.bead,len(u.beads))
-    
         # Set the undo type and undo menu label.
         bunch = u.peekBead(u.bead)
         if bunch:
+            # g.trace(u.bead,len(u.beads),bunch.undoType)
             u.setUndoType(bunch.undoType)
         else:
+            # g.trace(u.bead,len(u.beads))
             u.setUndoType("Can't Undo")
     
         # Set only the redo menu label.
@@ -409,6 +412,16 @@ class baseUndoer:
     #@nonl
     #@-node:ekr.20050415170812.1:createTnodeUndoInfo
     #@-node:EKR.20040528075307:u.saveTree & helpers
+    #@+node:ekr.20050525151449:u.trace
+    def trace (self):
+        
+        ivars = ('kind','undoType')
+        
+        for ivar in ivars:
+            print ivar, getattr(self,ivar)
+        
+    #@nonl
+    #@-node:ekr.20050525151449:u.trace
     #@+node:ekr.20050410095424:updateMarks
     def updateMarks (self,oldOrNew):
         
@@ -471,6 +484,8 @@ class baseUndoer:
     
         # Recalculate the menu labels.
         u.setUndoTypes()
+        
+        # g.trace(u.undoMenuLabel,u.redoMenuLabel)
     #@-node:ekr.20050315134017.4:afterChangeGroup
     #@+node:ekr.20050315134017.2:afterChangeNodeContents
     def afterChangeNodeContents (self,p,command,bunch,dirtyVnodeList=[]):
@@ -905,6 +920,22 @@ class baseUndoer:
         frame.menu.enableMenu(menu,u.redoMenuLabel,u.canRedo())
         frame.menu.enableMenu(menu,u.undoMenuLabel,u.canUndo())
     #@-node:ekr.20031218072017.3611:enableMenuItems
+    #@+node:ekr.20050525151217:getMark & rollbackToMark
+    def getMark (self):
+        
+        return self.bead
+        
+    def rollbackToMark (self,n):
+        
+        u = self
+    
+        u.bead = n
+        u.beads = u.beads[:n+1]
+        u.setUndoTypes()
+        
+    rollBackToMark = rollbackToMark
+    #@nonl
+    #@-node:ekr.20050525151217:getMark & rollbackToMark
     #@+node:ekr.20031218072017.1490:setUndoTypingParams
     #@+at 
     #@nonl
@@ -920,7 +951,6 @@ class baseUndoer:
         
         __pychecker__ = 'maxlines=2000' # Ignore the size of this method.
         
-        # g.trace(undo_type) # ,p,"old:",oldText,"new:",newText)
         u = self ; c = u.c
         #@    << return if there is nothing to do >>
         #@+node:ekr.20040324061854:<< return if there is nothing to do >>
@@ -932,14 +962,17 @@ class baseUndoer:
         
         if undo_type == "Can't Undo":
             u.clearUndoState()
+            u.setUndoTypes() # Must still recalculate the menu labels.
             return None
         
         if oldText == newText:
             # g.trace("no change")
+            u.setUndoTypes() # Must still recalculate the menu labels.
             return None
         #@nonl
         #@-node:ekr.20040324061854:<< return if there is nothing to do >>
         #@nl
+        # g.trace(undo_type)
         #@    << init the undo params >>
         #@+node:ekr.20040324061854.1:<< init the undo params >>
         # Clear all optional params.
@@ -1205,7 +1238,7 @@ class baseUndoer:
         
         u.beads[u.bead:] = [bunch]
             
-        # g.trace(newBead,'u.bead',u.bead,undo_type,old_p)
+        # g.trace(u.bead,len(u.beads))
         #@nonl
         #@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
         #@nl
@@ -1218,9 +1251,15 @@ class baseUndoer:
     def redo (self):
     
         u = self ; c = u.c
-        if not u.canRedo(): return
-        if not u.getBead(u.bead+1): return
-        if not  c.currentPosition(): return
+        if not u.canRedo():
+            g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
+            return
+        if not u.getBead(u.bead+1):
+            g.trace('no bead')
+            return
+        if not c.currentPosition():
+            g.trace('no current position')
+            return
         # g.trace(u.bead+1,len(u.beads),u.peekBead(u.bead+1))
     
         u.redoing = True 
@@ -1229,7 +1268,10 @@ class baseUndoer:
     
         # Execute the redoHelper.
         c.beginUpdate()
-        u.redoHelper()
+        if u.redoHelper:
+            u.redoHelper()
+        else:
+            g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
         c.endUpdate(u.redrawFlag)
     
         u.redoing = False
@@ -1343,7 +1385,7 @@ class baseUndoer:
                 count += 1
                 u.redoHelper()
             else:
-                s = "No redo helper for %s" % u.undoType
+                s = "No group redo helper for %s" % u.undoType
                 g.trace(s) ; g.es(s, color="red")
         u.groupCount -= 1
         
@@ -1447,9 +1489,15 @@ class baseUndoer:
         """Undo the operation described by the undo parmaters."""
         
         u = self ; c = u.c
-        if not u.canUndo(): return
-        if not u.getBead(u.bead): return # Sets ivars.
-        if not c.currentPosition(): return
+        if not u.canUndo():
+            g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
+            return
+        if not u.getBead(u.bead):
+            g.trace('no bead')
+            return # Sets ivars.
+        if not c.currentPosition():
+            g.trace('no current position')
+            return
         # g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
     
         c.endEditing()# Make sure we capture the headline for a redo.
@@ -1459,8 +1507,10 @@ class baseUndoer:
     
         # Execute the undoHelper.
         c.beginUpdate()
-        u.undoHelper()
-        # g.trace(u.redrawFlag)
+        if u.undoHelper:
+            u.undoHelper()
+        else:
+            g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
         c.endUpdate(u.redrawFlag)
     
         u.undoing = False
@@ -1529,7 +1579,7 @@ class baseUndoer:
                 count += 1
                 u.undoHelper()
             else:
-                s = "No undo helper for %s" % u.undoType
+                s = "No group undo helper for %s" % u.undoType
                 g.trace(s) ; g.es(s, color="red")
                
         if u.dirtyVnodeList: # May be None instead of [].
@@ -1705,7 +1755,7 @@ class baseUndoer:
         __pychecker__ = '--no-argsused' # newNewlines is unused, but it has symmetry.
     
         u = self ; c = u.c
-        assert(p == c.currentPosition())
+        # assert p == c.currentPosition(),'not current position'+repr(p)
     
         #@    << Incrementally update the Tk.Text widget >>
         #@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
