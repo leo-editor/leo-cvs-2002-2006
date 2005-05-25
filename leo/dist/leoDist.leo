@@ -94,10 +94,7 @@
 <v t="ekr.20050118125236"><vh>Write a script to make sure .nsi and main install scripts create the same files</vh></v>
 <v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
-<v t="EKR.20040519080201.1"><vh>Distribution checklist</vh>
-<v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
-<v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
-</v>
+<v t="EKR.20040519080201.1" a="E"><vh>Distribution checklist</vh></v>
 <v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
 <v t="EKR.20040519090846.2"><vh>@silentfile ../doc/INSTALL.TXT</vh>
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
@@ -118,7 +115,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
+<v t="ekr.20040629175400" a="TV"><vh>Pychecker stuff</vh>
+<v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="ekr.20050430095952"><vh>Pychecker statements</vh></v>
 <v t="ekr.20050212143754"><vh>*** Mods to pychecker in python23/site-packages ***</vh>
 <v t="ekr.20050212143754.1"><vh>What I did</vh></v>
@@ -139,7 +137,7 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021" a="TV"><vh>Leo 4.3 installer: version stuff</vh>
+<v t="ekr.20050118095021"><vh>Leo 4.3 installer: version stuff</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
@@ -462,7 +460,6 @@ else: # Doesn't work
 
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}</t>
-<t tx="EKR.20040519080201.3"></t>
 <t tx="EKR.20040519082027.28">name="leo",
 version="4-3-final", # No spaces here!
 author="Edward K. Ream",
@@ -4235,7 +4232,7 @@ Download: http://sourceforge.net/project/showfiles.php?group_id=3458
 CVS:      http://sourceforge.net/cvs/?group_id=3458
 Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
 </t>
-<t tx="ekr.20050523091828">Leo 4.3 beta 2 is now available at http://sourceforge.net/projects/leo/
+<t tx="ekr.20050523091828">Leo 4.3 final is now available at http://sourceforge.net/projects/leo/
 
 Leo 4.3 is here after almost five months of work.
 

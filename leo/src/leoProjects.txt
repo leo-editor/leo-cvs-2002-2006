@@ -1690,27 +1690,7 @@ ref line 2
 #@-node:ekr.20031218072017.1406:@root c:\prog\test\tangleTest.txt
 #@-node:ekr.20031218072017.1401:Tests
 #@-node:ekr.20031218072017.1341:(scanAllDirectives, scanDirectives, related utils)
-#@+node:ekr.20040803100035:Run Pychecker
-#@+node:ekr.20031218072017.2606:<< Import pychecker >>
-@color
-
-# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
-
-if 0: # Set to 1 for lint-like testing.
-
-    # Note:  Pychecker presently works only on Python 2.3.
-
-    try:
-        import pychecker.checker
-        # This works.  We may want to set options here...
-        # from pychecker import Config 
-        # print pychecker
-        print ; print "Warning (in leo.py): pychecker.checker running..." ; print
-    except:
-        print ; print 'Can not import pychecker' ; print
-#@nonl
-#@-node:ekr.20031218072017.2606:<< Import pychecker >>
-#@-node:ekr.20040803100035:Run Pychecker
+#@+node:ekr.20050524073547:4.3 projects...
 #@+node:ekr.20040929081120:4.3 a1 projects
 #@+node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20050123151628:Code
@@ -2648,27 +2628,9 @@ def getVnodes (self,reassignIndices=True):
         newCurrent = oldCurrent.copy()
         newCurrent.v = newRoot.v
         c.setCurrentPosition(newCurrent)
-    else:
-        << set current and top positions >>
 
     self.getTag("</vnodes>")
 #@nonl
-#@+node:ekr.20040326054052:<< set current and top positions >>
-current = self.convertStackToPosition(self.currentVnodeStack)
-if current:
-    # g.trace('using convertStackToPosition',current)
-    c.setCurrentPosition(current)
-else:
-    # g.trace(self.currentVnodeStack)
-    c.setCurrentPosition(c.rootPosition())
-    
-# At present this is useless: the drawing code doesn't set the top position properly.
-if 0:
-    top = self.convertStackToPosition(self.topVnodeStack)
-    if top:
-        c.setTopPosition(top)
-#@nonl
-#@-node:ekr.20040326054052:<< set current and top positions >>
 #@+node:ekr.20041023105832:<< set self.forbiddenTnodes to tnodes than must not be pasted >>
 self.forbiddenTnodes = []
 
@@ -5249,16 +5211,14 @@ def moveToParent (self):
     
     p = self
     
-    if not p: return p # 10/30/04
+    if not p: return p
 
     if p.v._parent and len(p.v._parent.t.vnodeList) == 1:
         p.v = p.v._parent
     elif p.stack:
         p.v = p.stack.pop()
-        # g.trace("pop",p.v,p)
     else:
         p.v = None
-
     return p
 #@nonl
 #@-node:ekr.20031218072017.937:p.moveToParent (pops stack when multiple parents)
@@ -15184,6 +15144,10 @@ def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
         c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
         
     # g.trace(c.currentPosition())
+    
+    # New in 4.3.1: do this after reading derived files.
+    if not self.usingClipboard:
+        << set current and top positions >>
 
     if not c.currentPosition():
         c.setCurrentPosition(c.rootPosition())
@@ -15270,6 +15234,22 @@ if marks or expanded:
             p.expand()
 #@nonl
 #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+#@+node:ekr.20040326054052:<< set current and top positions >>
+current = self.convertStackToPosition(self.currentVnodeStack)
+if current:
+    # g.trace('using convertStackToPosition',current)
+    c.setCurrentPosition(current)
+else:
+    # g.trace(self.currentVnodeStack)
+    c.setCurrentPosition(c.rootPosition())
+    
+# At present this is useless: the drawing code doesn't set the top position properly.
+if 0:
+    top = self.convertStackToPosition(self.topVnodeStack)
+    if top:
+        c.setTopPosition(top)
+#@nonl
+#@-node:ekr.20040326054052:<< set current and top positions >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@-node:ekr.20041124081632:(Problems overriding defaults)
 #@+node:ekr.20041124150138:(Don't munge window title, make sure to munge when comparing c.mFileName)
@@ -25049,6 +25029,9 @@ def select (self,p,updateBeadList=True):
     old_p = c.currentPosition()
 
     if not p: return
+    if not p.exists(c):
+        g.trace('does not exist',p)
+        return
 
     # g.trace('len(body)',len(p.bodyString()),p.headString())
 
@@ -27352,6 +27335,10 @@ def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
         c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
         
     # g.trace(c.currentPosition())
+    
+    # New in 4.3.1: do this after reading derived files.
+    if not self.usingClipboard:
+        << set current and top positions >>
 
     if not c.currentPosition():
         c.setCurrentPosition(c.rootPosition())
@@ -27438,6 +27425,22 @@ if marks or expanded:
             p.expand()
 #@nonl
 #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+#@+node:ekr.20040326054052:<< set current and top positions >>
+current = self.convertStackToPosition(self.currentVnodeStack)
+if current:
+    # g.trace('using convertStackToPosition',current)
+    c.setCurrentPosition(current)
+else:
+    # g.trace(self.currentVnodeStack)
+    c.setCurrentPosition(c.rootPosition())
+    
+# At present this is useless: the drawing code doesn't set the top position properly.
+if 0:
+    top = self.convertStackToPosition(self.topVnodeStack)
+    if top:
+        c.setTopPosition(top)
+#@nonl
+#@-node:ekr.20040326054052:<< set current and top positions >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@-node:ekr.20050130133731:Added silent keyword to severl methods
 #@-node:ekr.20050126102846.2:(Improved queuing of log messages)
@@ -37759,10 +37762,10 @@ def idle_scrollTo(self,p=None):
     if not p or not p.exists(c):
         p = c.currentPosition()
     if not p or not p.exists(c):
-        # g.trace('current p does not exist',p)
+        g.trace('current p does not exist',p)
         p = c.rootPosition()
     if not p or not p.exists(c):
-        # g.trace('no position')
+        g.trace('no position')
         return
     try:
         last = p.lastVisible()
@@ -37816,8 +37819,7 @@ def scrollTo (self,p):
     
     def scrollToCallback(event=None,self=self,p=p):
         __pychecker__ = '--no-argsused' # event not used.
-        # if not p.exists(p.c):
-            # g.trace('does not exist',p)
+
         self.idle_scrollTo(p)
     
     self.canvas.after_idle(scrollToCallback)
@@ -39213,8 +39215,7 @@ def convertAllBlanks (self):
                     result = string.join(result,'\n')
                     p.setTnodeText(result)
                     u.afterChangeNodeContents(p,undoType,innerUndoData)
-        if count > 0:
-            u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
         g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
     c.endUpdate(count > 0)
 #@nonl
@@ -39258,8 +39259,7 @@ def convertAllTabs (self):
                     result = string.join(result,'\n')
                     p.setTnodeText(result)
                     u.afterChangeNodeContents(p,undoType,undoData)
-        if count > 0:
-            u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
         g.es("tabs converted to blanks in %d nodes" % count)
     c.endUpdate(count > 0)
 #@nonl
@@ -39939,6 +39939,8 @@ c.recolor()
 def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
     
     c = self ; body = c.frame.body ; p = c.currentPosition()
+    
+    # g.trace(undoType)
 
     # Update the text and notify the event handler.
     body.setSelectionAreas(head,middle,tail)
@@ -42249,6 +42251,10 @@ def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
         c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
         
     # g.trace(c.currentPosition())
+    
+    # New in 4.3.1: do this after reading derived files.
+    if not self.usingClipboard:
+        << set current and top positions >>
 
     if not c.currentPosition():
         c.setCurrentPosition(c.rootPosition())
@@ -42335,6 +42341,22 @@ if marks or expanded:
             p.expand()
 #@nonl
 #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+#@+node:ekr.20040326054052:<< set current and top positions >>
+current = self.convertStackToPosition(self.currentVnodeStack)
+if current:
+    # g.trace('using convertStackToPosition',current)
+    c.setCurrentPosition(current)
+else:
+    # g.trace(self.currentVnodeStack)
+    c.setCurrentPosition(c.rootPosition())
+    
+# At present this is useless: the drawing code doesn't set the top position properly.
+if 0:
+    top = self.convertStackToPosition(self.topVnodeStack)
+    if top:
+        c.setTopPosition(top)
+#@nonl
+#@-node:ekr.20040326054052:<< set current and top positions >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@+node:ekr.20031218072017.1561:getTnode
 def getTnode (self):
@@ -43691,10 +43713,10 @@ def idle_scrollTo(self,p=None):
     if not p or not p.exists(c):
         p = c.currentPosition()
     if not p or not p.exists(c):
-        # g.trace('current p does not exist',p)
+        g.trace('current p does not exist',p)
         p = c.rootPosition()
     if not p or not p.exists(c):
-        # g.trace('no position')
+        g.trace('no position')
         return
     try:
         last = p.lastVisible()
@@ -44845,6 +44867,9 @@ def select (self,p,updateBeadList=True):
     old_p = c.currentPosition()
 
     if not p: return
+    if not p.exists(c):
+        g.trace('does not exist',p)
+        return
 
     # g.trace('len(body)',len(p.bodyString()),p.headString())
 
@@ -45040,6 +45065,10 @@ def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
         c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
         
     # g.trace(c.currentPosition())
+    
+    # New in 4.3.1: do this after reading derived files.
+    if not self.usingClipboard:
+        << set current and top positions >>
 
     if not c.currentPosition():
         c.setCurrentPosition(c.rootPosition())
@@ -45126,6 +45155,22 @@ if marks or expanded:
             p.expand()
 #@nonl
 #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+#@+node:ekr.20040326054052:<< set current and top positions >>
+current = self.convertStackToPosition(self.currentVnodeStack)
+if current:
+    # g.trace('using convertStackToPosition',current)
+    c.setCurrentPosition(current)
+else:
+    # g.trace(self.currentVnodeStack)
+    c.setCurrentPosition(c.rootPosition())
+    
+# At present this is useless: the drawing code doesn't set the top position properly.
+if 0:
+    top = self.convertStackToPosition(self.topVnodeStack)
+    if top:
+        c.setTopPosition(top)
+#@nonl
+#@-node:ekr.20040326054052:<< set current and top positions >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@-node:ekr.20050508200915:Problem: crasher (no problem now)
 #@+node:ekr.20050330135547:Problem: disappearing chapters (I don't see this)
@@ -45138,6 +45183,9 @@ def select (self,p,updateBeadList=True):
     old_p = c.currentPosition()
 
     if not p: return
+    if not p.exists(c):
+        g.trace('does not exist',p)
+        return
 
     # g.trace('len(body)',len(p.bodyString()),p.headString())
 
@@ -45313,10 +45361,10 @@ def idle_scrollTo(self,p=None):
     if not p or not p.exists(c):
         p = c.currentPosition()
     if not p or not p.exists(c):
-        # g.trace('current p does not exist',p)
+        g.trace('current p does not exist',p)
         p = c.rootPosition()
     if not p or not p.exists(c):
-        # g.trace('no position')
+        g.trace('no position')
         return
     try:
         last = p.lastVisible()
@@ -45445,6 +45493,8 @@ There may be a problem in updateBodyPane as well.
 def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
     
     c = self ; body = c.frame.body ; p = c.currentPosition()
+    
+    # g.trace(undoType)
 
     # Update the text and notify the event handler.
     body.setSelectionAreas(head,middle,tail)
@@ -45742,9 +45792,9 @@ def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview
     
     __pychecker__ = 'maxlines=2000' # Ignore the size of this method.
     
-    # g.trace(undo_type) # ,p,"old:",oldText,"new:",newText)
     u = self ; c = u.c
     << return if there is nothing to do >>
+    # g.trace(undo_type)
     << init the undo params >>
     << compute leading, middle & trailing  lines >>
     << save undo text info >>
@@ -45762,10 +45812,12 @@ if undo_type == None:
 
 if undo_type == "Can't Undo":
     u.clearUndoState()
+    u.setUndoTypes() # Must still recalculate the menu labels.
     return None
 
 if oldText == newText:
     # g.trace("no change")
+    u.setUndoTypes() # Must still recalculate the menu labels.
     return None
 #@nonl
 #@-node:ekr.20040324061854:<< return if there is nothing to do >>
@@ -45925,7 +45977,7 @@ bunch.yview=u.yview
 
 u.beads[u.bead:] = [bunch]
     
-# g.trace(newBead,'u.bead',u.bead,undo_type,old_p)
+# g.trace(u.bead,len(u.beads))
 #@nonl
 #@+node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
 @ We must set newBead to True if undo_type is not 'Typing' so that commands that
@@ -47481,11 +47533,13 @@ def createRatio (self,parent,p,kind,name,val):
         val2 = var.get()
         # g.trace(name,val2)
         try:
-            float(val2)
-            return g.choose(0.0 <= val2 <= 1.0,val2,val)
+            val2 = float(val2)
+            if 0.0 <= val2 <= 1.0:
+                return val2
         except TypeError:
-            g.trace("bad val:",val2)
-            return val
+            pass
+        g.trace("bad val:",val2)
+        return val
             
     self.initValue(p,name,kind,val,ratioCallback)
     
@@ -47619,6 +47673,8 @@ def createText (self,parent,p):
 #@-node:ekr.20041225063637.25:createWidgets & helpers
 #@+node:ekr.20041225063637.104:doShortcuts
 def doShortcuts(self,p,kind,name,val):
+    
+    __pychecker__ = '--no-argsused' # val not used, but required.
 
     s = p.bodyString()
     self.set(p,kind,name,s)
@@ -49191,6 +49247,2461 @@ def extract(self):
 #@-node:ekr.20031218072017.1706:extract
 #@-node:ekr.20050516202739:(Fixed crasher in Extract Section Command)
 #@-node:ekr.20050518070428:4.3 final projects
+#@-node:ekr.20050524073547:4.3 projects...
+#@+node:ekr.20050524073547.1:4.3.1 projects
+#@+node:ekr.20050524102538:Bug fixes...
+#@+node:ekr.20050524092311:(Fixed ratio bugs)
+#@+node:ekr.20050524092311.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3166883
+By: rogererens
+
+I swear I didn't wait for the release to be the first to report a bug! I just
+didn't try this in the alfa/beta versions:
+
+Leo 4.3 final, build  1.262 , May 23, 2005
+Python 2.4.1, Tk 8.4.7, win32
+
+Changing
+Global settings: C:\Leo\config\leoSettings.leo-->Window options-->@page Options
+for new windows-->@ratio initial_horizontal_ratio = 0.3
+or any of the other ratios, does not save them to leoSettings.leo. So after
+restarting I still have the old settings in use.
+#@nonl
+#@-node:ekr.20050524092311.1:Report
+#@+node:ekr.20041225063637.43:createRatio
+def createRatio (self,parent,p,kind,name,val):
+    
+    bg = self.commonBackground
+    
+    # Inits the entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+
+    f = Tk.Frame(parent)
+    Tk.Entry(f,textvariable=var).pack(side='left')
+    Tk.Label(f,text=name,background=bg).pack(side='left')
+    
+    def ratioCallback():
+        val2 = var.get()
+        # g.trace(name,val2)
+        try:
+            val2 = float(val2)
+            if 0.0 <= val2 <= 1.0:
+                return val2
+        except TypeError:
+            pass
+        g.trace("bad val:",val2)
+        return val
+            
+    self.initValue(p,name,kind,val,ratioCallback)
+    
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.43:createRatio
+#@-node:ekr.20050524092311:(Fixed ratio bugs)
+#@+node:ekr.20050524095049:(Fixed crasher footprint plugin)
+@ The fix was to add the following line to the init function:
+
+    global click_registry, coloured_nodes
+#@nonl
+#@+node:ekr.20050524095049.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3167166
+By: porter235
+
+with footprints enabled, attempting to open a document causes the following
+error
+
+exceptions opening: D:\Program Files\leo-4.3-final\Leo\doc\LeoDocs.leo
+Traceback (most recent call last):
+  File "D:\Program Files\leo-4.3-final\Leo\src\leoGlobals.py", line 771, in
+openWithFileName
+    readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+  File "D:\Program Files\leo-4.3-final\Leo\src\leoFileCommands.py", line 1325,
+in open
+    ok, ratio =
+self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
+  File "D:\Program Files\leo-4.3-final\Leo\src\leoFileCommands.py", line 649,
+in getLeoFile
+    c.frame.tree.redraw_now(scroll=False)
+  File "D:\Program Files\leo-4.3-final\Leo\src\leoTkinterTree.py", line 1277,
+in redraw_now
+    self.idle_redraw(scroll=scroll)
+  File "D:\Program Files\leo-4.3-final\Leo\src\leoTkinterTree.py", line 1317,
+in idle_redraw
+    self.drawTopTree()
+  File "D:\Program Files\leo-4.3-final\Leo\src\leoTkinterTree.py", line 1174,
+in drawTopTree
+    self.drawTree(c.rootPosition(),self.root_left,self.root_top,0,0)
+  File "D:\Program Files\leo-4.3-final\Leo\src\leoTkinterTree.py", line 1201,
+in drawTree
+    h,indent = self.drawNode(const_p,x,y)
+  File "D:\Program Files\leo-4.3-final\Leo\src\leoTkinterTree.py", line 916,
+in drawNode
+    return self.force_draw_node(p,x,y)
+  File "D:\Program Files\leo-4.3-final\Leo\src\leoTkinterTree.py", line 945,
+in force_draw_node
+    h2 = self.drawText(p,x,y)
+  File "D:\Program Files\leo-4.3-final\Leo\src\leoTkinterTree.py", line 1021,
+in drawText
+    self.configureTextState(p)
+  File "D:\Program Files\leo-4.3-final\Leo\src\leoTkinterTree.py", line 1738,
+in configureTextState
+    self.setUnselectedLabelState(p) # unselected
+  File "D:\Program Files\leo-4.3-final\Leo\plugins\footprints.py", line 138,
+in doFootprint
+    if click_registry.get(p.v, 0) >= HITS_TO_HOT:
+NameError: global name 'click_registry' is not defined
+#@-node:ekr.20050524095049.1:Report
+#@-node:ekr.20050524095049:(Fixed crasher footprint plugin)
+#@+node:ekr.20050523071432:(Worked around invalid position bug)
+#@+node:ekr.20050523085407:Report
+@killcolor
+
+While doing final testing I discovered a long-standing bug that is potentially serious but that has lain dormant for a year or more.  I'm not going to delay 4.3 while I (try) to fix this bug because any potential fix would create the potential for even more serious bugs.  So I'll start work on the bug right after releasing 4.3 final, and I'll release 4.3.1 b1 about a week later.
+
+The bug is this:  modifying outlines can invalidate existing positions!  This rarely happens.  At present it affects the atFile.read logic when reading an outline whose initial current position is a clone outside an @thin tree with another clone inside the @thin tree.  So the read logic computes the expected current position before reading all derived files, and this expected current position becomes invalid.  This bug itself is minor: Leo doesn't highlight the initial node correctly in this case and nothing else bad happens.
+
+However, this bug is probably also behind a recent hang in the unit tests.  What happens is that inserting and deleting nodes also can invalidate existing positions, and in general this can have bad results.  N.B. Typical scripts will never encounter the bug because the vast majority of scripts a) do not attempt to modify the outline and b) don't have state that must be saved as the outline changes.  However, unit tests do both.
+
+The reason I'm not going even to attempt to fix the bug is that doing so will require a change deep in the heart of the position class.  I don't remember all the details of the implementation, so at the minimum I'll have to document the code much better than at present.  Iirc the code and data structures are something of a hack.  Rather than hacking the hack I'll see if maybe I can simplify matters, but this is potentially very dangerous.  Thus, I would rather live with a mostly dormant bug in 4.3 final than attempting a change that could ruin a release or two.
+#@nonl
+#@-node:ekr.20050523085407:Report
+#@+node:ekr.20050525065038:What I did
+@killcolor
+
+1.  Moved << set current and top positions >> from getVnodes to end of getLeoFile.
+This ensures that the outline won't change after computing the position.
+
+2. Unit tests will have to be revised to make sure that only valid positions get used.
+#@nonl
+#@-node:ekr.20050525065038:What I did
+#@+node:ekr.20031218072017.890:<< about the position class >>
+@killcolor
+
+@ This class provides tree traversal methods that operate on positions, not vnodes.  Positions encapsulate the notion of present position within a traversal.
+
+Positions consist of a vnode and a stack of parent nodes used to determine the next parent when a vnode has mutliple parents.
+
+Calling, e.g., p.moveToThreadNext() results in p being an invalid position.  That is, p represents the position following the last node of the outline.  The test "if p" is the _only_ correct way to test whether a position p is valid.  In particular, tests like "if p is None" or "if p is not None" will not work properly.
+
+The only changes to vnodes and tnodes needed to implement shared tnodes are:
+
+- The firstChild field becomes part of tnodes.
+- t.vnodes contains a list of all vnodes sharing the tnode.
+
+The advantages of using shared tnodes:
+
+- Leo no longer needs to create or destroy "dependent" trees when changing descendents of cloned trees.
+- There is no need for join links and no such things as joined nodes.
+
+These advantages are extremely important: Leo is now scalable to very large outlines.
+
+An important complication is the need to avoid creating temporary positions while traversing trees:
+- Several routines use p.vParentWithStack to avoid having to call tempPosition.moveToParent().
+  These include p.level, p.isVisible and p.hasThreadNext.
+- p.moveToLastNode and p.moveToThreadBack use new algorithms that don't use temporary data.
+- Several lookahead routines compute whether a position exists without computing the actual position.
+#@nonl
+#@-node:ekr.20031218072017.890:<< about the position class >>
+#@+node:ekr.20050524082843:<< positions may become invalid when outlines change >>
+@killcolor
+
+@ If a vnode has only one parent, v._parent is that parent. Otherwise,
+v.t.vnodeList is the list of vnodes v2 such that v2._firstChild == v. Alas, this
+means that positions can become invalid when vnodeList's change!
+
+There is no use trying to solve the problem in p.moveToParent or
+p.vParentWithStack: the invalidated positions simply don't have the stack
+entries needed to compute parent fields properly. In short, changing t.vnodeList
+may invalidate existing positions!
+#@nonl
+#@-node:ekr.20050524082843:<< positions may become invalid when outlines change >>
+#@+node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
+#@+node:ekr.20040803140033:currentPosition
+def currentPosition (self,copy=True):
+    
+    """Return the presently selected position."""
+    
+    c = self
+    
+    if c._currentPosition:
+        if copy:
+            return c._currentPosition.copy() # Must make a second copy now.
+        else:
+            # The caller MUST copy the position if it is passed to any other method.
+            # At present no core method uses copy = False.
+            g.trace("copy=False")
+            return c._currentPosition
+    else:
+        return c.nullPosition()
+    
+# For compatibiility with old scripts.
+currentVnode = currentPosition
+#@nonl
+#@-node:ekr.20040803140033:currentPosition
+#@+node:ekr.20040803140033.1:setCurrentPosition
+def setCurrentPosition (self,p):
+    
+    """Set the presently selected position."""
+    
+    c = self
+    
+    if p:
+        if p.equal(c._currentPosition):
+            pass # We have already made a copy.
+        else: # Must make a copy _now_
+            c._currentPosition = p.copy()
+        # g.trace('exists',p.exists(c),'returns',p)
+        # if not p.exists(c):
+            # g.printStack()
+    else:
+        c._currentPosition = None
+    
+# For compatibiility with old scripts.
+setCurrentVnode = setCurrentPosition
+#@nonl
+#@-node:ekr.20040803140033.1:setCurrentPosition
+#@-node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
+#@+node:ekr.20050524095253:undo...
+#@+node:ekr.20050412084532:redoInsertNode
+def redoInsertNode (self):
+
+    u = self ; c = u.c
+    
+    # g.trace('p',u.newP.v,'parent',u.newParent.v)
+
+    if u.newBack:
+        u.newP.linkAfter(u.newBack)
+    elif u.newParent:
+        u.newP.linkAsNthChild(u.newParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.newP.linkAsRoot(oldRoot)
+
+    # assert(u.newP.exists(c))
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.newP.restoreLinksInTree()
+    
+    if u.pasteAsClone:
+        for bunch in u.afterTree:
+            t = bunch.t
+            if u.newP.v.t == t:
+                u.newP.setBodyStringOrPane(bunch.body)
+                u.newP.setHeadString(bunch.head)
+            else:
+                t.setTnodeText(bunch.body)
+                t.setHeadString(bunch.head)
+            # g.trace(t,bunch.head,bunch.body)
+
+    c.selectPosition(u.newP)
+#@nonl
+#@-node:ekr.20050412084532:redoInsertNode
+#@-node:ekr.20050524095253:undo...
+#@+node:ekr.20050524074930.5:drawing...
+#@+node:ekr.20040803072955.59:idle_redraw
+def idle_redraw (self,scroll=True):
+    
+    c = self.c ; frame = c.frame
+
+    self.redrawScheduled = False # Always do this here.
+
+    << return if disabled, or quitting or dragging >>
+
+    # g.print_bindings("canvas",self.canvas)
+
+    self.expandAllAncestors(c.currentPosition())
+
+    oldcursor = self.canvas['cursor']
+    self.canvas['cursor'] = "watch"
+
+    if not g.doHook("redraw-entire-outline",c=c):
+        c.setTopVnode(None)
+        self.setVisibleAreaToFullCanvas()
+        self.drawTopTree()
+        # Set up the scroll region after the tree has been redrawn.
+        x0, y0, x1, y1 = self.canvas.bbox("all")
+        self.canvas.configure(scrollregion=(0, 0, x1, y1))
+        # Do a scrolling operation after the scrollbar is redrawn
+        if scroll:
+            self.canvas.after_idle(self.idle_scrollTo)
+        if 0:
+            self.redrawCount += 1
+            print "idle_redraw allocated:",self.redrawCount
+    g.doHook("after-redraw-outline",c=c)
+
+    self.canvas['cursor'] = oldcursor
+#@nonl
+#@+node:ekr.20040803072955.60:<< return if disabled, or quitting or dragging >>
+# g.trace('disableRedraw',self.disableRedraw)
+
+if self.disableRedraw:
+    # We have been called as the result of an update_idletasks in the log pane.
+    # Don't do anything now.
+    return
+
+if frame not in g.app.windowList or g.app.quitting:
+    # g.trace("no frame")
+    return
+
+if self.drag_p:
+    # g.trace("dragging",self.drag_p)
+    return
+#@nonl
+#@-node:ekr.20040803072955.60:<< return if disabled, or quitting or dragging >>
+#@-node:ekr.20040803072955.59:idle_redraw
+#@+node:ekr.20040803072955.69:scrollTo
+def scrollTo (self,p):
+    
+    def scrollToCallback(event=None,self=self,p=p):
+        __pychecker__ = '--no-argsused' # event not used.
+
+        self.idle_scrollTo(p)
+    
+    self.canvas.after_idle(scrollToCallback)
+#@nonl
+#@-node:ekr.20040803072955.69:scrollTo
+#@+node:ekr.20040803072955.65:idle_scrollTo
+def idle_scrollTo(self,p=None):
+
+    """Scrolls the canvas so that p is in view.
+    
+    This is done at idle time after a redraw so that treeBar.get() will return proper values."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    c = self.c ; frame = c.frame
+    if not p or not p.exists(c):
+        p = c.currentPosition()
+    if not p or not p.exists(c):
+        g.trace('current p does not exist',p)
+        p = c.rootPosition()
+    if not p or not p.exists(c):
+        g.trace('no position')
+        return
+    try:
+        last = p.lastVisible()
+        nextToLast = last.visBack()
+        h1 = self.yoffset(p)
+        h2 = self.yoffset(last)
+        << compute approximate line height >>
+        << Compute the fractions to scroll down/up >>
+        if frac <= lo:
+            if self.prevMoveToFrac != frac:
+                self.prevMoveToFrac = frac
+                self.canvas.yview("moveto",frac)
+        elif frac2 + (hi - lo) >= hi:
+            if self.prevMoveToFrac != frac2:
+                self.prevMoveToFrac = frac2
+                self.canvas.yview("moveto",frac2)
+
+        if self.allocateOnlyVisibleNodes:
+            self.canvas.after_idle(self.idle_second_redraw)
+            
+        c.setTopVnode(p) # 1/30/04: remember a pseudo "top" node.
+        # g.trace("%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi))
+    except:
+        g.es_exception()
+#@nonl
+#@+node:ekr.20040803072955.66:<< compute approximate line height >>
+if nextToLast: # 2/2/03: compute approximate line height.
+    lineHeight = h2 - self.yoffset(nextToLast)
+else:
+    lineHeight = 20 # A reasonable default.
+#@nonl
+#@-node:ekr.20040803072955.66:<< compute approximate line height >>
+#@+node:ekr.20040803072955.67:<< Compute the fractions to scroll down/up >>
+data = frame.treeBar.get()
+try: lo, hi = data
+except: lo,hi = 0.0,1.0
+if h2 > 0.1:
+    frac = float(h1)/float(h2) # For scrolling down.
+    frac2 = float(h1+lineHeight/2)/float(h2) # For scrolling up.
+    frac2 = frac2 - (hi - lo)
+else:
+    frac = frac2 = 0.0 # probably any value would work here.
+    
+frac =  max(min(frac,1.0),0.0)
+frac2 = max(min(frac2,1.0),0.0)
+#@nonl
+#@-node:ekr.20040803072955.67:<< Compute the fractions to scroll down/up >>
+#@-node:ekr.20040803072955.65:idle_scrollTo
+#@+node:ekr.20031218072017.1708:extractSection
+def extractSection(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract Section'
+    current = c.currentPosition()
+
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+
+    line1 = '\n' + lines[0]
+    headline = lines[0].strip() ; del lines[0]
+    << Set headline for extractSection >>
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
+    
+    # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
+    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+        for line in lines]
+    newBody = string.join(strippedLines,'\n')
+    if head: head = head.rstrip()
+
+    c.beginUpdate()
+    if 1: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            undoData = u.beforeInsertNode(current)
+            p = c.createLastChildNode(current,headline,newBody)
+            u.afterInsertNode(p,undoType,undoData)
+            c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
+        u.afterChangeGroup(current,undoType)
+    c.endUpdate()
+#@nonl
+#@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+if len(headline) < 5:
+    oops = True
+else:
+    head1 = headline[0:2] == '<<'
+    head2 = headline[0:2] == '@<'
+    tail1 = headline[-2:] == '>>'
+    tail2 = headline[-2:] == '@>'
+    oops = not (head1 and tail1) and not (head2 and tail2)
+
+if oops:
+    g.es("Selected text should start with a section name",color="blue")
+    return
+#@nonl
+#@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+#@-node:ekr.20031218072017.1708:extractSection
+#@-node:ekr.20050524074930.5:drawing...
+#@+node:ekr.20050524074930.7:position methods...
+#@+node:ekr.20040228060340:p.vParentWithStack
+# A crucial utility method.
+# The p.level(), p.isVisible() and p.hasThreadNext() methods show how to use this method.
+
+<< about the vParentWithStack utility method >>
+
+def vParentWithStack(self,v,stack,n):
+    
+    """A utility that allows the computation of p.v without calling p.copy().
+    
+    v,stack[:n] correspond to p.v,p.stack for some intermediate position p.
+
+    Returns (v,n) such that v,stack[:n] correpond to the parent position of p."""
+
+    if not v:
+        return None,n
+    elif v._parent and len(v._parent.t.vnodeList) == 1:
+        return v._parent,n # don't change stack.
+    elif stack and n >= 0:
+        return self.stack[n],n-1 # simulate popping the stack.
+    else:
+        return None,n
+#@nonl
+#@+node:ekr.20040228060340.1:<< about the vParentWithStack utility method >>
+@ 
+This method allows us to simulate calls to p.parent() without generating any intermediate data.
+
+For example, the code below will compute the same values for list1 and list2:
+
+# The first way depends on the call to p.copy:
+list1 = []
+p=p.copy() # odious.
+while p:
+    p = p.moveToParent()
+    if p: list1.append(p.v)
+
+# The second way uses p.vParentWithStack to avoid all odious intermediate data.
+
+list2 = []
+n = len(p.stack)-1
+v,n = p.vParentWithStack(v,p.stack,n)
+while v:
+    list2.append(v)
+    v,n = p.vParentWithStack(v,p.stack,n)
+
+#@-node:ekr.20040228060340.1:<< about the vParentWithStack utility method >>
+#@-node:ekr.20040228060340:p.vParentWithStack
+#@+node:ekr.20031218072017.937:p.moveToParent (pops stack when multiple parents)
+def moveToParent (self):
+    
+    """Move a position to its parent position."""
+    
+    p = self
+    
+    if not p: return p
+
+    if p.v._parent and len(p.v._parent.t.vnodeList) == 1:
+        p.v = p.v._parent
+    elif p.stack:
+        p.v = p.stack.pop()
+    else:
+        p.v = None
+    return p
+#@nonl
+#@-node:ekr.20031218072017.937:p.moveToParent (pops stack when multiple parents)
+#@+node:ekr.20040227214711:p.level & simpleLevel
+def simpleLevel(self):
+    
+    return len([p for p in self.parents_iter()])
+
+def level(self,verbose=False):
+    
+    p = self ; level = 0
+    if not p: return level
+        
+    # Avoid calling p.copy() or copying the stack.
+    v = p.v ; n = len(p.stack)-1
+    while 1:
+        assert(p)
+        v,n = p.vParentWithStack(v,p.stack,n)
+        if v:
+            level += 1
+            if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
+        else:
+            if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
+            # if g.app.debug: assert(level==self.simpleLevel())
+            break
+    return level
+#@nonl
+#@-node:ekr.20040227214711:p.level & simpleLevel
+#@+node:ekr.20040307104131.3:p.exists
+def exists(self,c):
+    
+    """Return True if a position exists in c's tree"""
+    
+    p = self.copy()
+
+    # This code must be fast.
+    root = c.rootPosition()
+
+    while p:
+        # g.trace(p,'parent',p.parent(),'back',p.back())
+        if p == root:
+            return True
+        if p.hasParent():
+            p.moveToParent()
+        else:
+            p.moveToBack()
+        
+    return False
+#@nonl
+#@-node:ekr.20040307104131.3:p.exists
+#@-node:ekr.20050524074930.7:position methods...
+#@+node:ekr.20050524074930.6:read logic...
+#@+node:ekr.20031218072017.1553:getLeoFile
+# The caller should enclose this in begin/endUpdate.
+
+def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c
+    c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
+    << warn on read-only files >>
+    self.mFileName = c.mFileName
+    self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.descendentUnknownAttributesDictList = []
+    ok = True
+    c.loading = True # disable c.changed
+    
+    try:
+        << scan all the xml elements >>
+    except BadLeoFile, message:
+        if not silent:
+            << raise an alert >>
+        ok = False
+
+    c.frame.tree.redraw_now(scroll=False)
+    
+    # g.trace(readAtFileNodesFlag,c.mFileName)
+
+    if ok and readAtFileNodesFlag:
+        c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+        
+    # g.trace(c.currentPosition())
+    
+    # New in 4.3.1: do this after reading derived files.
+    if not self.usingClipboard:
+        << set current and top positions >>
+
+    if not c.currentPosition():
+        c.setCurrentPosition(c.rootPosition())
+
+    c.selectVnode(c.currentPosition()) # load body pane
+    c.loading = False # reenable c.changed
+    c.setChanged(c.changed) # Refresh the changed marker.
+    << restore attributes in descendent tnodes >>
+    self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.tnodesDict = {}
+    return ok, self.ratio
+#@nonl
+#@+node:ekr.20031218072017.1554:<< warn on read-only files >>
+# os.access may not exist on all platforms.
+
+try:
+    self.read_only = not os.access(fileName,os.W_OK)
+except AttributeError:
+    self.read_only = False
+except UnicodeError:
+    self.read_only = False
+        
+if self.read_only:
+    g.es("read only: " + fileName,color="red")
+#@nonl
+#@-node:ekr.20031218072017.1554:<< warn on read-only files >>
+#@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
+self.getXmlVersionTag()
+self.getXmlStylesheetTag()
+
+self.getTag("<leo_file>") # Must match exactly.
+self.getLeoHeader()
+self.getGlobals()
+self.getPrefs()
+self.getFindPanelSettings()
+
+# Causes window to appear.
+c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio)
+if not silent:
+    g.es("reading: " + fileName)
+
+self.getVnodes()
+self.getTnodes()
+self.getCloneWindows()
+self.getTag("</leo_file>")
+#@nonl
+#@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
+#@+node:ekr.20031218072017.1556:<< raise an alert >>
+# All other exceptions are Leo bugs.
+
+g.es_exception()
+g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
+#@nonl
+#@-node:ekr.20031218072017.1556:<< raise an alert >>
+#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t: t.unknownAttributes = resultDict[gnx]
+        # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = {} ; expanded = {}
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+
+if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
+    for p in c.all_positions_iter():
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
+            p.expand()
+#@nonl
+#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+#@+node:ekr.20040326054052:<< set current and top positions >>
+current = self.convertStackToPosition(self.currentVnodeStack)
+if current:
+    # g.trace('using convertStackToPosition',current)
+    c.setCurrentPosition(current)
+else:
+    # g.trace(self.currentVnodeStack)
+    c.setCurrentPosition(c.rootPosition())
+    
+# At present this is useless: the drawing code doesn't set the top position properly.
+if 0:
+    top = self.convertStackToPosition(self.topVnodeStack)
+    if top:
+        c.setTopPosition(top)
+#@nonl
+#@-node:ekr.20040326054052:<< set current and top positions >>
+#@-node:ekr.20031218072017.1553:getLeoFile
+#@+node:ekr.20031218072017.1565:getVnodes
+def getVnodes (self,reassignIndices=True):
+
+    c = self.c
+
+    if self.getOpenTag("<vnodes>"):
+        return # <vnodes/> seen.
+        
+    self.forbiddenTnodes = []
+    back = parent = None # This routine _must_ work on vnodes!
+    self.currentVnodeStack = []
+    self.topVnodeStack = []
+        
+    if self.usingClipboard:
+        oldRoot = c.rootPosition()
+        oldCurrent = c.currentPosition()
+        if not reassignIndices:
+            << set self.forbiddenTnodes to tnodes than must not be pasted >>
+
+    while self.matchTag("<v"):
+        append1 = not self.usingClipboard and len(self.currentVnodeStack) == 0
+        append2 = not self.usingClipboard and len(self.topVnodeStack) == 0
+        back = self.getVnode(parent,back,skip=False,
+            appendToCurrentStack=append1,appendToTopStack=append2)
+
+    if self.usingClipboard:
+        # Link in the pasted nodes after the current position.
+        newRoot = c.rootPosition()
+        c.setRootPosition(oldRoot)
+        newRoot.v.linkAfter(oldCurrent.v)
+        newCurrent = oldCurrent.copy()
+        newCurrent.v = newRoot.v
+        c.setCurrentPosition(newCurrent)
+
+    self.getTag("</vnodes>")
+#@nonl
+#@+node:ekr.20041023105832:<< set self.forbiddenTnodes to tnodes than must not be pasted >>
+self.forbiddenTnodes = []
+
+for p in oldCurrent.self_and_parents_iter():
+    if p.v.t not in self.forbiddenTnodes:
+        self.forbiddenTnodes.append(p.v.t)
+        
+# g.trace("forbiddenTnodes",self.forbiddenTnodes)
+#@nonl
+#@-node:ekr.20041023105832:<< set self.forbiddenTnodes to tnodes than must not be pasted >>
+#@-node:ekr.20031218072017.1565:getVnodes
+#@+node:ekr.20040326052245:convertStackToPosition
+def convertStackToPosition (self,stack):
+
+    c = self.c ; p2 = None
+    if not stack: return None
+
+    for p in c.allNodes_iter():
+        if p.v == stack[0]:
+            p2 = p.copy()
+            for n in xrange(len(stack)):
+                if not p2: break
+                # g.trace("compare",n,p2.v,stack[n])
+                if p2.v != stack[n]:
+                    p2 = None
+                elif n + 1 == len(stack):
+                    break
+                else:
+                    p2.moveToParent()
+            if p2:
+                # g.trace('exists',p.exists(c),p)
+                return p
+
+    return None
+#@nonl
+#@-node:ekr.20040326052245:convertStackToPosition
+#@+node:ekr.20041005105605.21:read
+# The caller must enclose this code in beginUpdate/endUpdate.
+
+def read(self,root,importFileName=None,thinFile=False,fromString=None):
+    
+    """Read any derived file."""
+
+    at = self ; c = at.c
+    if 0:
+        p = c.currentPosition()
+        g.trace('1',p,p.v._parent,p.v._parent and p.v._parent.t.vnodeList)
+    << set fileName >>
+    at.initReadIvars(root,fileName,importFileName=importFileName,thinFile=thinFile)
+    if at.errors: return False
+    at.openFileForReading(fileName,fromString=fromString)
+    if not at.inputFile: return False
+    g.es("reading: " + root.headString())
+    root.clearVisitedInTree()
+    at.scanAllDirectives(root,importing=at.importing,reading=True)
+    at.readOpenFile(root,at.inputFile,fileName)
+    if 0:
+        p = c.currentPosition()
+        g.trace('2',p,p.v._parent,p.v._parent and p.v._parent.t.vnodeList)
+    at.inputFile.close()
+    root.clearDirty() # May be set dirty below.
+    if not at.thinFile:
+        << warn about non-empty unvisited nodes >>
+    if at.errors == 0 and not at.importing:
+        if 1: # Package this as a method for use by mod_labels plugin.
+            self.copyAllTempBodyStringsToTnodes(root,thinFile)
+        else:
+            << copy all tempBodyStrings to tnodes >>
+    << delete all tempBodyStrings >>
+    return at.errors == 0
+#@nonl
+#@+node:ekr.20041005105605.22:<< set fileName >>
+if fromString:
+    fileName = "<string-file>"
+elif importFileName:
+    fileName = importFileName
+elif root.isAnyAtFileNode():
+    fileName = root.anyAtFileNodeName()
+else:
+    fileName = None
+
+if not fileName:
+    at.error("Missing file name.  Restoring @file tree from .leo file.")
+    return False
+#@nonl
+#@-node:ekr.20041005105605.22:<< set fileName >>
+#@+node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
+for p in root.self_and_subtree_iter():
+
+    # g.trace(p)
+    try: s = p.v.t.tempBodyString
+    except: s = ""
+    if s and not p.v.t.isVisited():
+        at.error("Not in derived file: %s" % p.headString())
+        p.v.t.setVisited() # One message is enough.
+#@nonl
+#@-node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
+#@+node:ekr.20041005105605.24:<< copy all tempBodyStrings to tnodes >>
+for p in root.self_and_subtree_iter():
+    try: s = p.v.t.tempBodyString
+    except: s = ""
+    if s != p.bodyString():
+        if 0: # For debugging.
+            print ; print "changed: " + p.headString()
+            print ; print "new:",s
+            print ; print "old:",p.bodyString()
+        if thinFile:
+            p.v.setTnodeText(s)
+            if p.v.isDirty():
+                p.setAllAncestorAtFileNodesDirty()
+        else:
+            p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+            
+        if not thinFile or (thinFile and p.v.isDirty()):
+            g.es("changed: " + p.headString(),color="blue")
+            p.setMarked()
+#@nonl
+#@-node:ekr.20041005105605.24:<< copy all tempBodyStrings to tnodes >>
+#@+node:ekr.20041005105605.25:<< delete all tempBodyStrings >>
+for p in c.allNodes_iter():
+    
+    if hasattr(p.v.t,"tempBodyString"):
+        delattr(p.v.t,"tempBodyString")
+#@nonl
+#@-node:ekr.20041005105605.25:<< delete all tempBodyStrings >>
+#@-node:ekr.20041005105605.21:read
+#@-node:ekr.20050524074930.6:read logic...
+#@-node:ekr.20050523071432:(Worked around invalid position bug)
+#@+node:ekr.20050525074210:(Fixed undo problems in unit tests)
+#@+node:ekr.20050525162830:What I did, and why
+@killcolor
+
+- Fixed bugs in convertAllBlanks and convertAllTabs.
+
+These must always call afterChangeGroup to match beforeChangeGroup, even if
+nothing has changed.
+
+- Added u.getMark and u.rollbackToMark.
+
+These allow unit tests to cut the undo stack back to an initial position in the
+tearDown method. This should be done for all tests that use u.undo and u.redo
+methods. The bug was probably the result of changing the outline in the tearDown
+method.
+
+Both the Reformat Paragraph and Edit Body unit tests now roll back the undo stack.
+
+- Added traces for unexpected conditions in u.undo, u.redo and tree.select.
+
+- Call u.setUndoTypes() in u.setUndoTypingParams when returning early.
+
+- Corrected Edit Body unit tests.
+
+These tests should not call undo/redo when nothing is expected to change. Doing
+so may trigger the new 'cant undo' traces in u.undo.
+
+- doTest in leoTest.py now makes copies of both p and p1.
+
+It's not clear that this is needed, it can't hurt, and it may have been important.
+#@nonl
+#@-node:ekr.20050525162830:What I did, and why
+#@+node:ekr.20050525163715:undo...
+#@+node:ekr.20050525151217:getMark & rollbackToMark
+def getMark (self):
+    
+    return self.bead
+    
+def rollbackToMark (self,n):
+    
+    u = self
+
+    u.bead = n
+    u.beads = u.beads[:n+1]
+    u.setUndoTypes()
+    
+rollBackToMark = rollbackToMark
+#@nonl
+#@-node:ekr.20050525151217:getMark & rollbackToMark
+#@+node:ekr.20031218072017.3616:setUndoTypes
+def setUndoTypes (self):
+    
+    u = self
+
+    # Set the undo type and undo menu label.
+    bunch = u.peekBead(u.bead)
+    if bunch:
+        # g.trace(u.bead,len(u.beads),bunch.undoType)
+        u.setUndoType(bunch.undoType)
+    else:
+        # g.trace(u.bead,len(u.beads))
+        u.setUndoType("Can't Undo")
+
+    # Set only the redo menu label.
+    bunch = u.peekBead(u.bead+1)
+    if bunch:
+        u.setRedoType(bunch.undoType)
+    else:
+        u.setRedoType("Can't Redo")
+#@nonl
+#@-node:ekr.20031218072017.3616:setUndoTypes
+#@+node:ekr.20031218072017.1490:setUndoTypingParams
+@ This routine saves enough information so a typing operation can be undone and redone.
+
+We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+@c
+
+def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+    
+    __pychecker__ = 'maxlines=2000' # Ignore the size of this method.
+    
+    u = self ; c = u.c
+    << return if there is nothing to do >>
+    # g.trace(undo_type)
+    << init the undo params >>
+    << compute leading, middle & trailing  lines >>
+    << save undo text info >>
+    << save the selection and scrolling position >>
+    << adjust the undo stack, clearing all forward entries >>
+    u.setUndoTypes() # Recalculate the menu labels.
+    return bunch
+#@nonl
+#@+node:ekr.20040324061854:<< return if there is nothing to do >>
+if u.redoing or u.undoing:
+    return None
+
+if undo_type == None:
+    return None
+
+if undo_type == "Can't Undo":
+    u.clearUndoState()
+    u.setUndoTypes() # Must still recalculate the menu labels.
+    return None
+
+if oldText == newText:
+    # g.trace("no change")
+    u.setUndoTypes() # Must still recalculate the menu labels.
+    return None
+#@nonl
+#@-node:ekr.20040324061854:<< return if there is nothing to do >>
+#@+node:ekr.20040324061854.1:<< init the undo params >>
+# Clear all optional params.
+for ivar in u.optionalIvars:
+    setattr(u,ivar,None)
+
+# Set the params.
+u.undoType = undo_type
+u.p = p.copy()
+#@nonl
+#@-node:ekr.20040324061854.1:<< init the undo params >>
+#@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
+
+NB: the number of old and new middle lines may be different.
+@c
+
+old_lines = string.split(oldText,'\n')
+new_lines = string.split(newText,'\n')
+new_len = len(new_lines)
+old_len = len(old_lines)
+min_len = min(old_len,new_len)
+
+i = 0
+while i < min_len:
+    if old_lines[i] != new_lines[i]:
+        break
+    i += 1
+leading = i
+
+if leading == new_len:
+    # This happens when we remove lines from the end.
+    # The new text is simply the leading lines from the old text.
+    trailing = 0
+else:
+    i = 0
+    while i < min_len - leading:
+        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+            break
+        i += 1
+    trailing = i
+    
+# NB: the number of old and new middle lines may be different.
+if trailing == 0:
+    old_middle_lines = old_lines[leading:]
+    new_middle_lines = new_lines[leading:]
+else:
+    old_middle_lines = old_lines[leading:-trailing]
+    new_middle_lines = new_lines[leading:-trailing]
+
+# Remember how many trailing newlines in the old and new text.
+i = len(oldText) - 1 ; old_newlines = 0
+while i >= 0 and oldText[i] == '\n':
+    old_newlines += 1
+    i -= 1
+
+i = len(newText) - 1 ; new_newlines = 0
+while i >= 0 and newText[i] == '\n':
+    new_newlines += 1
+    i -= 1
+
+if u.debug_print:
+    print "lead,trail",leading,trailing
+    print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
+    print "new mid,nls:",len(new_middle_lines),new_newlines,newText
+    #print "lead,trail:",leading,trailing
+    #print "old mid:",old_middle_lines
+    #print "new mid:",new_middle_lines
+    print "---------------------"
+#@nonl
+#@-node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+#@+node:ekr.20031218072017.1492:<< save undo text info >>
+@ This is the start of the incremental undo algorithm.
+
+We must save enough info to do _both_ of the following:
+
+Undo: Given newText, recreate oldText.
+Redo: Given oldText, recreate oldText.
+
+The "given" texts for the undo and redo routines are simply p.bodyString().
+@c
+
+if u.debug:
+    # Remember the complete text for comparisons...
+    u.oldText = oldText
+    u.newText = newText
+    # Compute statistics comparing old and new ways...
+    # The old doesn't often store the old text, so don't count it here.
+    u.old_mem += len(newText)
+    s1 = string.join(old_middle_lines,'\n')
+    s2 = string.join(new_middle_lines,'\n')
+    u.new_mem += len(s1) + len(s2)
+else:
+    u.oldText = None
+    u.newText = None
+
+u.leading = leading
+u.trailing = trailing
+u.oldMiddleLines = old_middle_lines
+u.newMiddleLines = new_middle_lines
+u.oldNewlines = old_newlines
+u.newNewlines = new_newlines
+#@nonl
+#@-node:ekr.20031218072017.1492:<< save undo text info >>
+#@+node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#Remember the selection.
+u.oldSel = oldSel
+u.newSel = newSel
+
+# Remember the scrolling position.
+if oldYview:
+    u.yview = oldYview
+else:
+    u.yview = c.frame.body.getYScrollPosition()
+#@-node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#@+node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+@ New in Leo 4.3. Instead of creating a new bead on every character, we may adjust the top bead:
+
+word granularity: adjust the top bead if the typing would continue the word.
+line granularity: adjust the top bead if the typing is on the same line.
+node granularity: adjust the top bead if the typing is anywhere on the same node.
+@c
+
+granularity = u.granularity
+
+old_d = u.peekBead(u.bead)
+old_p = old_d and old_d.get('p')
+
+<< set newBead if we can't share the previous bead >>
+
+if newBead:
+    # Push params on undo stack, clearing all forward entries.
+    u.bead += 1
+    bunch = g.Bunch(
+        p = p.copy(),
+        kind='typing',
+        undoType = undo_type,
+        undoHelper=u.undoTyping,
+        redoHelper=u.redoTyping,
+        oldText=u.oldText,
+        oldSel=u.oldSel,
+        oldNewlines=u.oldNewlines,
+        oldMiddleLines=u.oldMiddleLines,
+    )
+else:
+    bunch = old_d
+
+bunch.leading=u.leading
+bunch.trailing= u.trailing
+bunch.newNewlines=u.newNewlines
+bunch.newMiddleLines=u.newMiddleLines
+bunch.newSel=u.newSel
+bunch.newText=u.newText
+bunch.yview=u.yview
+
+u.beads[u.bead:] = [bunch]
+    
+# g.trace(u.bead,len(u.beads))
+#@nonl
+#@+node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+@ We must set newBead to True if undo_type is not 'Typing' so that commands that
+get treated like typing (by updateBodyPane and onBodyChanged) don't get lumped
+with 'real' typing.
+@c
+# g.trace(granularity)
+if (
+    not old_d or not old_p or
+    old_p.v != p.v or
+    old_d.get('kind') != 'typing' or
+    old_d.get('undoType') != 'Typing' or
+    undo_type != 'Typing'
+):
+    newBead = True # We can't share the previous node.
+elif granularity == 'char':
+    newBead = True # This was the old way.
+elif granularity == 'node':
+    newBead = False # Always replace previous bead.
+else:
+    assert granularity in ('line','word')
+    # Replace the previous bead if only the middle lines have changed.
+    newBead = (
+        old_d.get('leading',0)  != u.leading or 
+        old_d.get('trailing',0) != u.trailing
+    )
+    if granularity == 'word' and not newBead:
+        # Protect the method that may be changed by the user
+        try:
+            << set newBead if the change does not continue a word >>
+        except Exception:
+            if 0:
+                g.trace('old_lines',old_lines)
+                g.trace('new_lines',new_lines)
+            g.es('Exception in setUndoRedoTypingParams',color='blue')
+            g.es_exception()
+            newBead = True
+#@nonl
+#@+node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+old_start,old_end = oldSel
+new_start,new_end = newSel
+# g.trace('new_start',new_start,'old_start',old_start)
+if old_start != old_end or new_start != new_end:
+    # The new and old characters are not contiguous.
+    newBead = True
+else:
+    old_row,old_col = old_start.split('.')
+    new_row,new_col = new_start.split('.')
+    old_row,old_col = int(old_row),int(old_col)
+    new_row,new_col = int(new_row),int(new_col)
+    old_lines = g.splitLines(oldText)
+    new_lines = g.splitLines(newText)
+    # g.trace('old',old_row,old_col,len(old_lines))
+    # g.trace('new',new_row,new_col,len(new_lines))
+    # Recognize backspace, del, etc. as contiguous.
+    if old_row != new_row or abs(old_col- new_col) != 1:
+        # The new and old characters are not contiguous.
+        newBead = True
+    elif old_col == 0 or new_col == 0:
+        pass # We have just inserted a line.
+    else:
+        old_s = old_lines[old_row-1]
+        new_s = new_lines[new_row-1]
+        # New in 4.3b2:
+        # Guard against invalid oldSel or newSel params.
+        if old_col-1 >= len(old_s) or new_col-1 >= len(new_s):
+            newBead = True
+        else:
+            # g.trace(new_col,len(new_s),repr(new_s))
+            # g.trace(repr(old_ch),repr(new_ch))
+            old_ch = old_s[old_col-1]
+            new_ch = new_s[new_col-1]
+            newBead = self.recognizeStartOfTypingWord(
+                old_lines,old_row,old_col,old_ch,
+                new_lines,new_row,new_col,new_ch)
+#@nonl
+#@-node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+#@-node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+#@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+#@-node:ekr.20031218072017.1490:setUndoTypingParams
+#@+node:ekr.20031218072017.1493:undoRedoText
+# Handle text undo and redo.
+# The terminology is for undo: converts _new_ text into _old_ text.
+
+def undoRedoText (self,p,
+    leading,trailing, # Number of matching leading & trailing lines.
+    oldMidLines,newMidLines, # Lists of unmatched lines.
+    oldNewlines,newNewlines, # Number of trailing newlines.
+    tag="undo", # "undo" or "redo"
+    undoType=None):
+        
+    __pychecker__ = '--no-argsused' # newNewlines is unused, but it has symmetry.
+
+    u = self ; c = u.c
+    # assert p == c.currentPosition(),'not current position'+repr(p)
+
+    << Incrementally update the Tk.Text widget >>
+    << Compute the result using p's body text >>
+    # g.trace(undoType)
+    p.setTnodeText(result)
+    << Get textResult from the Tk.Text widget >>
+    if textResult == result:
+        if undoType in ("Cut","Paste"):
+            # g.trace("non-incremental undo")
+            c.frame.body.recolor(p,incremental=False)
+        else:
+            # g.trace("incremental undo:",leading,trailing)
+            c.frame.body.recolor_range(p,leading,trailing)
+    else: # 11/19/02: # Rewrite the pane and do a full recolor.
+        if u.debug_print:
+            << print mismatch trace >>
+        # g.trace("non-incremental undo")
+        p.setBodyStringOrPane(result)
+#@nonl
+#@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+# Only update the changed lines.
+mid_text = string.join(oldMidLines,'\n')
+new_mid_len = len(newMidLines)
+# Maybe this could be simplified, and it is good to treat the "end" with care.
+if trailing == 0:
+    c.frame.body.deleteLine(leading)
+    if leading > 0:
+        c.frame.body.insertAtEnd('\n')
+    c.frame.body.insertAtEnd(mid_text)
+else:
+    if new_mid_len > 0:
+        c.frame.body.deleteLines(leading,new_mid_len)
+    elif leading > 0:
+        c.frame.body.insertAtStartOfLine(leading,'\n')
+    c.frame.body.insertAtStartOfLine(leading,mid_text)
+# Try to end the Tk.Text widget with oldNewlines newlines.
+# This may be off by one, and we don't care because
+# we never use body text to compute undo results!
+s = c.frame.body.getAllText()
+newlines = 0 ; i = len(s) - 1
+while i >= 0 and s[i] == '\n':
+    newlines += 1 ; i -= 1
+# g.trace(newlines,oldNewlines)
+while newlines > oldNewlines:
+    c.frame.body.deleteLastChar()
+    newlines -= 1
+if oldNewlines > newlines:
+    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
+#@nonl
+#@-node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+#@+node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
+# Recreate the text using the present body text.
+body = p.bodyString()
+body = g.toUnicode(body,"utf-8")
+body_lines = body.split('\n')
+s = []
+if leading > 0:
+    s.extend(body_lines[:leading])
+if len(oldMidLines) > 0:
+    s.extend(oldMidLines)
+if trailing > 0:
+    s.extend(body_lines[-trailing:])
+s = string.join(s,'\n')
+# Remove trailing newlines in s.
+while len(s) > 0 and s[-1] == '\n':
+    s = s[:-1]
+# Add oldNewlines newlines.
+if oldNewlines > 0:
+    s = s + '\n' * oldNewlines
+result = s
+if u.debug_print:
+    print "body:  ",body
+    print "result:",result
+#@nonl
+#@-node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
+#@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+textResult = c.frame.body.getAllText()
+
+if textResult != result:
+    # Remove the newline from textResult if that is the only difference.
+    if len(textResult) > 0 and textResult[:-1] == result:
+        textResult = result
+#@nonl
+#@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+#@+node:ekr.20031218072017.1497:<< print mismatch trace >>
+print "undo mismatch"
+print "expected:",result
+print "actual  :",textResult
+#@nonl
+#@-node:ekr.20031218072017.1497:<< print mismatch trace >>
+#@-node:ekr.20031218072017.1493:undoRedoText
+#@-node:ekr.20050525163715:undo...
+#@+node:ekr.20031218072017.2884:Edit Body submenu
+#@+node:ekr.20031218072017.1704:convertAllBlanks
+def convertAllBlanks (self):
+    
+    c = self ; u = c.undoer ; undoType = 'Convert All Blanks'
+    current = c.currentPosition()
+
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    
+    d = g.scanDirectives(c)
+    tabWidth  = d.get("tabwidth")
+    c.beginUpdate()
+    if 1: # In update...
+        count = 0 ; dirtyVnodeList = []
+        u.beforeChangeGroup(current,undoType)
+        for p in current.self_and_subtree_iter():
+            # g.trace(p.headString(),tabWidth)
+            innerUndoData = u.beforeChangeNodeContents(p)
+            if p == current:
+                changed,dirtyVnodeList2 = c.convertBlanks()
+                if changed:
+                    count += 1
+                    dirtyVnodeList.extend(dirtyVnodeList2)
+            else:
+                changed = False ; result = []
+                text = p.t.bodyString
+                assert(g.isUnicode(text))
+                lines = string.split(text, '\n')
+                for line in lines:
+                    i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+                    s = g.computeLeadingWhitespace(w,abs(tabWidth)) + line[i:] # use positive width.
+                    if s != line: changed = True
+                    result.append(s)
+                if changed:
+                    count += 1
+                    dirtyVnodeList2 = p.setDirty()
+                    dirtyVnodeList.extend(dirtyVnodeList2)
+                    result = string.join(result,'\n')
+                    p.setTnodeText(result)
+                    u.afterChangeNodeContents(p,undoType,innerUndoData)
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+        g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
+    c.endUpdate(count > 0)
+#@nonl
+#@-node:ekr.20031218072017.1704:convertAllBlanks
+#@+node:ekr.20031218072017.1705:convertAllTabs
+def convertAllTabs (self):
+
+    c = self ; u = c.undoer ; undoType = 'Convert All Tabs'
+    current = c.currentPosition()
+
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    theDict = g.scanDirectives(c)
+    tabWidth  = theDict.get("tabwidth")
+    c.beginUpdate()
+    if 1: # In update:
+        count = 0 ; dirtyVnodeList = []
+        u.beforeChangeGroup(current,undoType)
+        for p in current.self_and_subtree_iter():
+            undoData = u.beforeChangeNodeContents(p)
+            if p == current:
+                changed,dirtyVnodeList2 = self.convertTabs()
+                if changed:
+                    count += 1
+                    dirtyVnodeList.extend(dirtyVnodeList2)
+            else:
+                result = [] ; changed = False
+                text = p.t.bodyString
+                assert(g.isUnicode(text))
+                lines = string.split(text, '\n')
+                for line in lines:
+                    i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+                    s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
+                    if s != line: changed = True
+                    result.append(s)
+                if changed:
+                    count += 1
+                    dirtyVnodeList2 = p.setDirty()
+                    dirtyVnodeList.extend(dirtyVnodeList2)
+                    result = string.join(result,'\n')
+                    p.setTnodeText(result)
+                    u.afterChangeNodeContents(p,undoType,undoData)
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+        g.es("tabs converted to blanks in %d nodes" % count)
+    c.endUpdate(count > 0)
+#@nonl
+#@-node:ekr.20031218072017.1705:convertAllTabs
+#@+node:ekr.20031218072017.1821:convertBlanks
+def convertBlanks (self):
+
+    c = self ; undoType = 'Convert Blanks'
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return False
+
+    head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=True)
+    result = [] ; changed = False
+
+    # Use the relative @tabwidth, not the global one.
+    theDict = g.scanDirectives(c)
+    tabWidth  = theDict.get("tabwidth")
+    if not tabWidth: return False
+
+    for line in lines:
+        s = g.optimizeLeadingWhitespace(line,abs(tabWidth)) # Use positive width.
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        dirtyVnodeList = c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
+    else:
+        dirtyVnodeList = []
+
+    return changed,dirtyVnodeList
+#@nonl
+#@-node:ekr.20031218072017.1821:convertBlanks
+#@+node:ekr.20031218072017.1822:convertTabs
+def convertTabs (self):
+
+    c = self ; undoType = 'Convert Tabs'
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return False
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines(expandSelection=True)
+    result = [] ; changed = False
+    
+    # Use the relative @tabwidth, not the global one.
+    theDict = g.scanDirectives(c)
+    tabWidth  = theDict.get("tabwidth")
+    if not tabWidth: return False
+
+    for line in lines:
+        i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+        s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        dirtyVnodeList = c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
+    else:
+        dirtyVnodeList = []
+        
+    return changed,dirtyVnodeList
+#@nonl
+#@-node:ekr.20031218072017.1822:convertTabs
+#@+node:ekr.20031218072017.1823:createLastChildNode
+def createLastChildNode (self,parent,headline,body):
+    
+    '''A helper function for the three extract commands.'''
+    
+    c = self
+    
+    if body and len(body) > 0:
+        body = string.rstrip(body)
+    if not body or len(body) == 0:
+        body = ""
+
+    p = parent.insertAsLastChild()
+    p.initHeadString(headline)
+    p.setTnodeText(body)
+    p.setDirty()
+    c.validateOutline()
+    return p
+#@nonl
+#@-node:ekr.20031218072017.1823:createLastChildNode
+#@+node:ekr.20031218072017.1824:dedentBody
+def dedentBody (self):
+    
+    c = self ; undoType = 'Unindent' ; current = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+
+    d = g.scanDirectives(c,current) # Support @tab_width directive properly.
+    tab_width = d.get("tabwidth",c.tab_width)
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    
+    result = [] ; changed = False
+    for line in lines:
+        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+        s = g.computeLeadingWhitespace(width-abs(tab_width),tab_width) + line[i:]
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1824:dedentBody
+#@+node:ekr.20031218072017.1706:extract
+def extract(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract'
+    current = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+    headline = lines[0].strip() ; del lines[0]
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
+
+    # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
+    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+        for line in lines]
+    newBody = string.join(strippedLines,'\n')
+    if head: head = head.rstrip()
+
+    c.beginUpdate()
+    if 1: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            undoData = u.beforeInsertNode(current)
+            p = c.createLastChildNode(current,headline,newBody)
+            u.afterInsertNode(p,undoType,undoData)
+            c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
+        u.afterChangeGroup(current,undoType)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.1706:extract
+#@+node:ekr.20031218072017.1708:extractSection
+def extractSection(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract Section'
+    current = c.currentPosition()
+
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+
+    line1 = '\n' + lines[0]
+    headline = lines[0].strip() ; del lines[0]
+    << Set headline for extractSection >>
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
+    
+    # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
+    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+        for line in lines]
+    newBody = string.join(strippedLines,'\n')
+    if head: head = head.rstrip()
+
+    c.beginUpdate()
+    if 1: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            undoData = u.beforeInsertNode(current)
+            p = c.createLastChildNode(current,headline,newBody)
+            u.afterInsertNode(p,undoType,undoData)
+            c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
+        u.afterChangeGroup(current,undoType)
+    c.endUpdate()
+#@nonl
+#@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+if len(headline) < 5:
+    oops = True
+else:
+    head1 = headline[0:2] == '<<'
+    head2 = headline[0:2] == '@<'
+    tail1 = headline[-2:] == '>>'
+    tail2 = headline[-2:] == '@>'
+    oops = not (head1 and tail1) and not (head2 and tail2)
+
+if oops:
+    g.es("Selected text should start with a section name",color="blue")
+    return
+#@nonl
+#@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+#@-node:ekr.20031218072017.1708:extractSection
+#@+node:ekr.20031218072017.1710:extractSectionNames
+def extractSectionNames(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract Section Names'
+    body = c.frame.body ; current = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+
+    c.beginUpdate()
+    if 1: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            found = False
+            for s in lines:
+                << Find the next section name >>
+                if name:
+                    undoData = u.beforeInsertNode(current)
+                    p = self.createLastChildNode(current,name,None)
+                    u.afterInsertNode(p,undoType,undoData)
+                    found = True
+            c.selectPosition(current)
+            c.validateOutline()
+            if not found:
+                g.es("Selected text should contain one or more section names",color="blue")
+        u.afterChangeGroup(current,undoType)
+    c.endUpdate()
+
+    # Restore the selection.
+    body.setTextSelection(oldSel)
+    body.setFocus()
+#@nonl
+#@+node:ekr.20031218072017.1711:<< Find the next section name >>
+head1 = string.find(s,"<<")
+if head1 > -1:
+    head2 = string.find(s,">>",head1)
+else:
+    head1 = string.find(s,"@<")
+    if head1 > -1:
+        head2 = string.find(s,"@>",head1)
+        
+if head1 == -1 or head2 == -1 or head1 > head2:
+    name = None
+else:
+    name = s[head1:head2+2]
+#@nonl
+#@-node:ekr.20031218072017.1711:<< Find the next section name >>
+#@-node:ekr.20031218072017.1710:extractSectionNames
+#@+node:ekr.20031218072017.1825:findBoundParagraph
+def findBoundParagraph (self):
+    
+    c = self
+    head,ins,tail = c.frame.body.getInsertLines()
+
+    if not ins or ins.isspace() or ins[0] == '@':
+        return None,None,None,None # DTHEIN 18-JAN-2004
+        
+    head_lines = g.splitLines(head)
+    tail_lines = g.splitLines(tail)
+
+    if 0:
+        << trace head_lines, ins, tail_lines >>
+
+    # Scan backwards.
+    i = len(head_lines)
+    while i > 0:
+        i -= 1
+        line = head_lines[i]
+        if len(line) == 0 or line.isspace() or line[0] == '@':
+            i += 1 ; break
+
+    pre_para_lines = head_lines[:i]
+    para_head_lines = head_lines[i:]
+
+    # Scan forwards.
+    i = 0
+    trailingNL = False # DTHEIN 18-JAN-2004: properly capture terminating NL
+    while i < len(tail_lines):
+        line = tail_lines[i]
+        if len(line) == 0 or line.isspace() or line[0] == '@':
+            trailingNL = line.endswith(u'\n') or line.startswith(u'@') # DTHEIN 21-JAN-2004
+            break
+        i += 1
+        
+#	para_tail_lines = tail_lines[:i]
+    para_tail_lines = tail_lines[:i]
+    post_para_lines = tail_lines[i:]
+    
+    head = g.joinLines(pre_para_lines)
+    result = para_head_lines 
+    result.extend([ins])
+    result.extend(para_tail_lines)
+    tail = g.joinLines(post_para_lines)
+
+    # DTHEIN 18-JAN-2004: added trailingNL to return value list
+    return head,result,tail,trailingNL # string, list, string, bool
+#@nonl
+#@+node:ekr.20031218072017.1826:<< trace head_lines, ins, tail_lines >>
+if 0:
+    print ; print "head_lines"
+    for line in head_lines: print line
+    print ; print "ins", ins
+    print ; print "tail_lines"
+    for line in tail_lines: print line
+else:
+    g.es("head_lines: ",head_lines)
+    g.es("ins: ",ins)
+    g.es("tail_lines: ",tail_lines)
+#@nonl
+#@-node:ekr.20031218072017.1826:<< trace head_lines, ins, tail_lines >>
+#@-node:ekr.20031218072017.1825:findBoundParagraph
+#@+node:ekr.20031218072017.1827:findMatchingBracket
+def findMatchingBracket (self):
+    
+    c = self ; body = c.frame.body
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Match Brackets")
+        return
+
+    brackets = "()[]{}<>"
+    ch1 = body.getCharBeforeInsertPoint()
+    ch2 = body.getCharAtInsertPoint()
+
+    # Prefer to match the character to the left of the cursor.
+    if ch1 in brackets:
+        ch = ch1 ; index = body.getBeforeInsertionPoint()
+    elif ch2 in brackets:
+        ch = ch2 ; index = body.getInsertionPoint()
+    else:
+        return
+    
+    index2 = self.findSingleMatchingBracket(ch,index)
+    if index2:
+        if body.compareIndices(index,"<=",index2):
+            adj_index = body.adjustIndex(index2,1)
+            body.setTextSelection(index,adj_index)
+        else:
+            adj_index = body.adjustIndex(index,1)
+            body.setTextSelection(index2,adj_index)
+        adj_index = body.adjustIndex(index2,1)
+        body.setInsertionPoint(adj_index)
+        body.makeIndexVisible(adj_index)
+    else:
+        g.es("unmatched '%s'",ch)
+#@nonl
+#@+node:ekr.20031218072017.1828:findMatchingBracket
+# To do: replace comments with blanks before scanning.
+# Test  unmatched())
+def findSingleMatchingBracket(self,ch,index):
+    
+    c = self ; body = c.frame.body
+    open_brackets  = "([{<" ; close_brackets = ")]}>"
+    brackets = open_brackets + close_brackets
+    matching_brackets = close_brackets + open_brackets
+    forward = ch in open_brackets
+    # Find the character matching the initial bracket.
+    for n in xrange(len(brackets)):
+        if ch == brackets[n]:
+            match_ch = matching_brackets[n]
+            break
+    level = 0
+    while 1:
+        if forward and body.compareIndices(index,">=","end"):
+            # g.trace("not found")
+            return None
+        ch2 = body.getCharAtIndex(index)
+        if ch2 == ch:
+            level += 1 #; g.trace(level,index)
+        if ch2 == match_ch:
+            level -= 1 #; g.trace(level,index)
+            if level <= 0:
+                return index
+        if not forward and body.compareIndices(index,"<=","1.0"):
+            # g.trace("not found")
+            return None
+        adj = g.choose(forward,1,-1)
+        index = body.adjustIndex(index,adj)
+    return 0 # unreachable: keeps pychecker happy.
+# Test  (
+# ([(x){y}]))
+# Test  ((x)(unmatched
+#@nonl
+#@-node:ekr.20031218072017.1828:findMatchingBracket
+#@-node:ekr.20031218072017.1827:findMatchingBracket
+#@+node:ekr.20031218072017.1829:getBodyLines
+def getBodyLines (self,expandSelection=False):
+
+    c = self ; body = c.frame.body
+    oldVview = body.getYScrollPosition()
+    oldSel   = body.getTextSelection()
+
+    if expandSelection: # 12/3/03
+        lines = body.getAllText()
+        head = tail = None
+    else:
+        # Note: lines is the entire line containing the insert point if no selection.
+        head,lines,tail = body.getSelectionLines()
+
+    lines = string.split(lines,'\n') # It would be better to use splitLines.
+
+    return head,lines,tail,oldSel,oldVview
+#@nonl
+#@-node:ekr.20031218072017.1829:getBodyLines
+#@+node:ekr.20031218072017.1830:indentBody
+def indentBody (self):
+
+    c = self ; undoType = 'Indent' ; current = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+
+    d = g.scanDirectives(c,current) # Support @tab_width directive properly.
+    tab_width = d.get("tabwidth",c.tab_width)
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+
+    result = [] ; changed = False
+    for line in lines:
+        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+        s = g.computeLeadingWhitespace(width+abs(tab_width),tab_width) + line[i:]
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1830:indentBody
+#@+node:ekr.20031218072017.1831:insertBodyTime & allies
+def insertBodyTime (self):
+    
+    c = self ; undoType = 'Insert Body Time'
+    p = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    
+    oldSel = c.frame.body.getTextSelection()
+    c.frame.body.deleteTextSelection() # Works if nothing is selected.
+    s = self.getTime(body=True)
+
+    c.frame.body.insertAtInsertPoint(s)
+    c.frame.body.onBodyChanged(p,undoType,oldSel=oldSel)
+#@nonl
+#@+node:ekr.20031218072017.1832:getTime
+def getTime (self,body=True):
+
+    c = self
+    default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
+    
+    # Try to get the format string from leoConfig.txt.
+    if body:
+        format = c.config.getString("body_time_format_string")
+        gmt    = c.config.getString("body_gmt_time")
+    else:
+        format = c.config.getString("headline_time_format_string")
+        gmt     = c.config.getString("headline_gmt_time")
+
+    if format == None:
+        format = default_format
+
+    try:
+        import time
+        if gmt:
+            s = time.strftime(format,time.gmtime())
+        else:
+            s = time.strftime(format,time.localtime())
+    except (ImportError, NameError):
+        g.es("time.strftime not available on this platform",color="blue")
+        return ""
+    except:
+        g.es_exception() # Probably a bad format string in leoConfig.txt.
+        s = time.strftime(default_format,time.gmtime())
+    return s
+#@-node:ekr.20031218072017.1832:getTime
+#@-node:ekr.20031218072017.1831:insertBodyTime & allies
+#@+node:ekr.20050312114529:insert/removeComments
+#@+node:ekr.20050312114529.1:addComments
+def addComments (self):
+
+    c = self ; undoType = 'Add Comments' ; p = c.currentPosition()
+    
+    d = g.scanDirectives(c,p)
+    # d1 is the line delim.
+    d1,d2,d3 = d.get('delims')
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    result = []
+    if not lines:
+        g.es('No text selected',color='blue')
+        return
+    
+    if d1:
+        # Append the single-line comment delim in front of each line
+        for line in lines:
+            i = g.skip_ws(line,0)
+            result.append('%s%s %s' % (line[0:i],d1,line[i:]))
+    else:
+        n = len(lines)
+        for i in xrange(n):
+            line = lines[i]
+            if i not in (0,n-1):
+                result.append(line)
+            if i == 0:
+                j = g.skip_ws(line,0)
+                result.append('%s%s %s' % (line[0:j],d2,line[j:]))
+            if i == n-1:
+                j = len(line.rstrip())
+                result.append('%s %s' % (line[0:j],d3))
+
+    result = string.join(result,'\n')
+    c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+#@nonl
+#@-node:ekr.20050312114529.1:addComments
+#@+node:ekr.20050312114529.2:deleteComments
+def deleteComments (self):
+
+    c = self ; undoType = 'Delete Comments' ; p = c.currentPosition()
+    
+    d = g.scanDirectives(c,p)
+    # d1 is the line delim.
+    d1,d2,d3 = d.get('delims')
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    result = []
+    if not lines:
+        g.es('No text selected',color='blue')
+        return
+    
+    if d1:
+        # Append the single-line comment delim in front of each line
+        for line in lines:
+            i = g.skip_ws(line,0)
+            if g.match(line,i,d1):
+                j = g.skip_ws(line,i + len(d1))
+                result.append(line[0:i] + line[j:])
+            else:
+                result.append(line)
+    else:
+        n = len(lines)
+        for i in xrange(n):
+            line = lines[i]
+            if i not in (0,n-1):
+                result.append(line)
+            if i == 0:
+                j = g.skip_ws(line,0)
+                if g.match(line,j,d2):
+                    k = g.skip_ws(line,j + len(d2))
+                    result.append(line[0:j] + line[k:])
+                else:
+                    g.es("'%s' not found" % (d2),color='blue')
+                    return
+            if i == n-1:
+                if i == 0:
+                    line = result[0] ; result = []
+                s = line.rstrip()
+                if s.endswith(d3):
+                    result.append(s[:-len(d3)].rstrip())
+                else:
+                    g.es("'%s' not found" % (d3),color='blue')
+                    return
+
+    result = string.join(result,'\n')
+    c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+#@nonl
+#@-node:ekr.20050312114529.2:deleteComments
+#@-node:ekr.20050312114529:insert/removeComments
+#@+node:ekr.20031218072017.1833:reformatParagraph
+def reformatParagraph(self):
+
+    """Reformat a text paragraph in a Tk.Text widget
+
+Wraps the concatenated text to present page width setting. Leading tabs are
+sized to present tab width setting. First and second line of original text is
+used to determine leading whitespace in reformatted text. Hanging indentation
+is honored.
+
+Paragraph is bound by start of body, end of body, blank lines, and lines
+starting with "@". Paragraph is selected by position of current insertion
+cursor."""
+
+    c = self ; body = c.frame.body ; p = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("xxx")
+        return
+
+    if body.hasTextSelection():
+        g.es("Text selection inhibits Reformat Paragraph",color="blue")
+        return
+
+    << compute vars for reformatParagraph >>
+    if lines:
+        << compute the leading whitespace >>
+        << compute the result of wrapping all lines >>
+        << update the body, selection & undo state >>
+#@nonl
+#@+node:ekr.20031218072017.1834:<< compute vars for reformatParagraph >>
+theDict = g.scanDirectives(c)
+pageWidth = theDict.get("pagewidth")
+tabWidth  = theDict.get("tabwidth")
+
+original = body.getAllText()
+oldSel   = body.getTextSelection()
+oldYview = body.getYScrollPosition()
+head,lines,tail,trailingNL = c.findBoundParagraph() # DTHEIN 18-JAN-2004: add trailingNL
+#@nonl
+#@-node:ekr.20031218072017.1834:<< compute vars for reformatParagraph >>
+#@+node:ekr.20031218072017.1835:<< compute the leading whitespace >>
+indents = [0,0] ; leading_ws = ["",""]
+
+for i in (0,1):
+    if i < len(lines):
+        # Use the original, non-optimized leading whitespace.
+        leading_ws[i] = ws = g.get_leading_ws(lines[i])
+        indents[i] = g.computeWidth(ws,tabWidth)
+        
+indents[1] = max(indents)
+if len(lines) == 1:
+    leading_ws[1] = leading_ws[0]
+#@-node:ekr.20031218072017.1835:<< compute the leading whitespace >>
+#@+node:ekr.20031218072017.1836:<< compute the result of wrapping all lines >>
+# Remember whether the last line ended with a newline.
+lastLine = lines[-1]
+if 0: # DTHEIN 18-JAN-2004: removed because findBoundParagraph now gives trailingNL
+    trailingNL = lastLine and lastLine[-1] == '\n'
+
+# Remove any trailing newlines for wraplines.
+lines = [line[:-1] for line in lines[:-1]]
+if lastLine and not trailingNL:
+    lastLine = lastLine[:-1]
+lines.extend([lastLine])
+
+# Wrap the lines, decreasing the page width by indent.
+result = g.wrap_lines(lines,
+    pageWidth-indents[1],
+    pageWidth-indents[0])
+
+# DTHEIN 	18-JAN-2004
+# prefix with the leading whitespace, if any
+paddedResult = []
+paddedResult.append(leading_ws[0] + result[0])
+for line in result[1:]:
+    paddedResult.append(leading_ws[1] + line)
+
+# Convert the result to a string.
+result = '\n'.join(paddedResult) # DTHEIN 	18-JAN-2004: use paddedResult
+if 0: # DTHEIN 18-JAN-2004:  No need to do this.
+    if trailingNL:
+        result += '\n'
+#@-node:ekr.20031218072017.1836:<< compute the result of wrapping all lines >>
+#@+node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
+sel_start, sel_end = body.setSelectionAreas(head,result,tail)
+
+changed = original != head + result + tail
+undoType = g.choose(changed,"Reformat Paragraph",None)
+body.onBodyChanged(p,undoType,oldSel=oldSel,oldYview=oldYview)
+
+# Advance the selection to the next paragraph.
+newSel = sel_end, sel_end
+body.setTextSelection(newSel)
+body.makeIndexVisible(sel_end)
+
+c.recolor()
+#@nonl
+#@-node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
+#@-node:ekr.20031218072017.1833:reformatParagraph
+#@+node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
+def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
+    
+    c = self ; body = c.frame.body ; p = c.currentPosition()
+    
+    # g.trace(undoType)
+
+    # Update the text and notify the event handler.
+    body.setSelectionAreas(head,middle,tail)
+
+    if setSel and oldSel:
+        body.setTextSelection(oldSel)
+
+    # This handles the undo by calling setUndoTypingParams (in idle_body_key).
+    body.onBodyChanged(p,undoType,oldSel=oldSel,oldYview=oldYview)
+
+    # Update the changed mark and icon.
+    c.beginUpdate()
+    if 1: # In update...
+        c.setChanged(True)
+        if p.isDirty():
+            dirtyVnodeList = []
+        else:
+            dirtyVnodeList = p.setDirty()
+    c.endUpdate()
+
+    # Scroll as necessary.
+    if oldYview:
+        body.setYScrollPosition(oldYview)
+    else:
+        body.makeInsertPointVisible()
+
+    body.setFocus()
+    c.recolor()
+    return dirtyVnodeList
+#@nonl
+#@-node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
+#@-node:ekr.20031218072017.2884:Edit Body submenu
+#@+node:ekr.20040803072955.128:tree.select
+# Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+
+    if not p: return
+    if not p.exists(c):
+        g.trace('does not exist',p)
+        return
+
+    # g.trace('len(body)',len(p.bodyString()),p.headString())
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << select the new node >>
+        if p and p != old_p: # Suppress duplicate call.
+            try: # may fail during initialization.
+                self.idle_scrollTo(p) # p is NOT c.currentPosition() here!
+            except: pass
+        << update c.beadList or c.beadPointer >>
+        << update c.visitedList >>
+
+    << set the current node >>
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    # g.printGc()
+#@nonl
+#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+# Remember the position of the scrollbar before making any changes.
+if old_p:
+
+    yview=body.yview()
+    insertSpot = c.frame.body.getInsertionPoint()
+    
+    if old_p != p:
+        if self.trace and self.verbose:
+            g.trace("unselect:",old_p.headString())
+        self.endEditLabel() # sets editPosition = None
+        self.setUnselectedLabelState(old_p)
+    
+    if old_p.edit_text():
+        old_p.v.t.scrollBarSpot = yview
+        old_p.v.t.insertSpot = insertSpot
+#@nonl
+#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20040803072955.130:<< select the new node >>
+frame.setWrap(p)
+
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(body,s,tag="select:set body",isHeadline=False)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v and p.v.t.insertSpot != None:
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+#@nonl
+#@-node:ekr.20040803072955.130:<< select the new node >>
+#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by c and make c the present node.
+        # print "updating c.beadList"
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+    # g.trace(c.beadPointer,p,present_p)
+#@nonl
+#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20040803072955.132:<< update c.visitedList >>
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+#@nonl
+#@-node:ekr.20040803072955.132:<< update c.visitedList >>
+#@+node:ekr.20040803072955.133:<< set the current node >>
+c.setCurrentPosition(p)
+
+if p != old_p:
+    self.setSelectedLabelState(p)
+
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
+#@nonl
+#@-node:ekr.20040803072955.133:<< set the current node >>
+#@-node:ekr.20040803072955.128:tree.select
+#@+node:ekr.20031218072017.1321:idle_body_key
+def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Update the body pane at idle time."""
+    
+    __pychecker__ = 'maxlines=500'
+
+    # g.trace(ch,ord(ch))
+    c = self.c
+    if not c: return "break"
+    if not p: return "break"
+    if not c.isCurrentPosition(p): return "break"
+
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+    body = p.bodyString()
+    if not newSel:
+        newSel = c.frame.body.getTextSelection()
+    if oldText != None:
+        s = oldText
+    else:
+        s = c.frame.body.getAllText()
+    << return if nothing has changed >>
+    << set removeTrailing >>
+    if ch in ('\t','\n','\r',chr(8)):
+        d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+        tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+        if ch in ('\n','\r'):
+            << Do auto indent >>
+        elif ch == '\t' and tab_width < 0:
+            << convert tab to blanks >>
+        elif ch in (chr(8)) and tab_width < 0:
+            << handle backspace with negative tab_width >>
+    << set s to widget text, removing trailing newlines if necessary >>
+    if undoType: # 11/6/03: set oldText properly when oldText param exists.
+        if not oldText: oldText = body
+        newText = s
+        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+    p.v.setTnodeText(s)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed:
+        c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return "break"
+#@nonl
+#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
+# 6/22/03: Make sure we handle delete key properly.
+if ch not in ('\n','\r',chr(8)):
+
+    if s == body:
+        return "break"
+
+    # Do nothing for control characters.
+    if (ch == None or len(ch) == 0) and body == s[:-1]:
+        return "break"
+#@nonl
+#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
+#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = s ; old = body
+
+if len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
+#@nonl
+#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
+#@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+# Do nothing if we are in @nocolor mode or if we are executing a Change command.
+if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+    # Get the previous line.
+    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s[-1]==':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Added Nov 18 by David McNab, david@rebirthing.co.nz
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width]
+        tabex = 0
+        for i in range(0, len(s)):
+            if s[i] == '\t':
+                tabex += tab_width - 1
+            if s[i] in '([{':
+                brackets.append(i+tabex + 1)
+            elif s[i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+        # end patch by David McNab
+    ws = g.computeLeadingWhitespace (width,tab_width)
+    if ws and len(ws) > 0:
+        c.frame.bodyCtrl.insert("insert", ws)
+        removeTrailing = False # bug fix: 11/18
+#@nonl
+#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+#@+node:ekr.20031218072017.1325:<< convert tab to blanks >>
+# Do nothing if we are executing a Change command.
+if undoType != "Change":
+    
+    # Get the characters preceeding the tab.
+    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+    
+    if 1: # 6/26/03: Convert tab no matter where it is.
+
+        w = g.computeWidth(prev,tab_width)
+        w2 = (abs(tab_width) - (w % abs(tab_width)))
+        # g.trace("prev w:",w,"prev chars:",prev)
+        c.frame.bodyCtrl.delete("insert -1c")
+        c.frame.bodyCtrl.insert("insert",' ' * w2)
+    
+    else: # Convert only leading tabs.
+    
+        # Get the characters preceeding the tab.
+        prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+
+        # Do nothing if there are non-whitespace in prev:
+        all_ws = True
+        for ch in prev:
+            if ch != ' ' and ch != '\t':
+                all_ws = False
+        if all_ws:
+            w = g.computeWidth(prev,tab_width)
+            w2 = (abs(tab_width) - (w % abs(tab_width)))
+            # g.trace("prev w:",w,"prev chars:",prev)
+            c.frame.bodyCtrl.delete("insert -1c")
+            c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20031218072017.1325:<< convert tab to blanks >>
+#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+# Get the preceeding characters.
+prev   =c.frame.bodyCtrl.get("insert linestart","insert")
+allPrev=c.frame.bodyCtrl.get("1.0","insert")
+n = len(allPrev)
+try:
+    oldAllPrev = body[:n]
+    assert(allPrev==oldAllPrev)
+    deletedChar = body[n:n+1]
+except (IndexError,AssertionError):
+    deletedChar = None
+
+if deletedChar in (u' ',' '):
+    n = len(prev) ; w = abs(tab_width)
+    n2 = n % w # Delete up to n2 - 1 spaces.
+    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
+        count = 0
+        while n2 > 0:
+            n2 -= 1
+            ch = prev[n-count-1]
+            # g.trace(count,repr(ch))
+            if ch in (u' ',' '): count += 1
+            else: break
+        # g.trace(count,(n%w))
+        if count > 0:
+            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+            newSel = c.frame.body.getTextSelection() # Fixes crasher in undo logic.
+#@nonl
+#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+s = c.frame.body.getAllText()
+if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+    s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # print "no real change"
+    return "break"
+#@nonl
+#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+#@+node:ekr.20031218072017.1327:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20031218072017.1327:<< recolor the body >>
+#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+redraw_flag = False
+
+c.beginUpdate()
+
+# Update dirty bits.
+if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+    redraw_flag = True
+    
+# Update icons.
+val = p.computeIcon()
+
+# 7/8/04: During unit tests the node may not have been drawn,
+# So p.v.iconVal may not exist yet.
+if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+    p.v.iconVal = val
+    redraw_flag = True
+
+c.endUpdate(redraw_flag) # redraw only if necessary
+#@nonl
+#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+#@-node:ekr.20031218072017.1321:idle_body_key
+#@-node:ekr.20050525074210:(Fixed undo problems in unit tests)
+#@-node:ekr.20050524102538:Bug fixes...
+#@-node:ekr.20050524073547.1:4.3.1 projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt

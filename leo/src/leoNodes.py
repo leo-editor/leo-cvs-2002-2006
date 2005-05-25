@@ -1428,16 +1428,6 @@ class position (object):
     # entries needed to compute parent fields properly. In short, changing 
     # t.vnodeList
     # may invalidate existing positions!
-    # 
-    # The greatest potential for problems may be in the undo/redo logic. More 
-    # testing
-    # is needed.
-    # 
-    # Another area of potential problems are unit tests.
-    # 
-    # The workarounds must involve recomputing positions after outlines 
-    # change, or in
-    # the case of the read logic, after reading derived files.
     #@-at
     #@nonl
     #@-node:ekr.20050524082843:<< positions may become invalid when outlines change >>
