@@ -654,6 +654,27 @@ class baseFileCommands:
             c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
             
         # g.trace(c.currentPosition())
+        
+        # New in 4.3.1: do this after reading derived files.
+        if not self.usingClipboard:
+            #@        << set current and top positions >>
+            #@+node:ekr.20040326054052:<< set current and top positions >>
+            current = self.convertStackToPosition(self.currentVnodeStack)
+            if current:
+                # g.trace('using convertStackToPosition',current)
+                c.setCurrentPosition(current)
+            else:
+                # g.trace(self.currentVnodeStack)
+                c.setCurrentPosition(c.rootPosition())
+                
+            # At present this is useless: the drawing code doesn't set the top position properly.
+            if 0:
+                top = self.convertStackToPosition(self.topVnodeStack)
+                if top:
+                    c.setTopPosition(top)
+            #@nonl
+            #@-node:ekr.20040326054052:<< set current and top positions >>
+            #@nl
     
         if not c.currentPosition():
             c.setCurrentPosition(c.rootPosition())
@@ -1177,25 +1198,6 @@ class baseFileCommands:
             newCurrent = oldCurrent.copy()
             newCurrent.v = newRoot.v
             c.setCurrentPosition(newCurrent)
-        else:
-            #@        << set current and top positions >>
-            #@+node:ekr.20040326054052:<< set current and top positions >>
-            current = self.convertStackToPosition(self.currentVnodeStack)
-            if current:
-                # g.trace('using convertStackToPosition',current)
-                c.setCurrentPosition(current)
-            else:
-                # g.trace(self.currentVnodeStack)
-                c.setCurrentPosition(c.rootPosition())
-                
-            # At present this is useless: the drawing code doesn't set the top position properly.
-            if 0:
-                top = self.convertStackToPosition(self.topVnodeStack)
-                if top:
-                    c.setTopPosition(top)
-            #@nonl
-            #@-node:ekr.20040326054052:<< set current and top positions >>
-            #@nl
     
         self.getTag("</vnodes>")
     #@nonl
