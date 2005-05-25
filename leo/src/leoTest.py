@@ -63,13 +63,14 @@ def isTestNode (p):
 #@+node:ekr.20050415070840.4:doTests...
 def doTests(all,verbosity=1):
 
-    c = g.top() ; p1 = p = c.currentPosition()
+    c = g.top() ; p = c.currentPosition() ; p1 = p.copy()
 
     g.app.unitTestDict["fail"] = False
 
     if all: theIter = c.all_positions_iter()
     else:   theIter = p.self_and_subtree_iter()
-
+    
+    # c.undoer.clearUndoState() # New in 4.3.1.
     changed = c.isChanged()
     suite = unittest.makeSuite(unittest.TestCase)
 
@@ -392,7 +393,7 @@ class testUtils:
 
     #@    @+others
     #@+node:ekr.20050415070840.25:compareOutlines
-    def compareOutlines (self,root1,root2,compareHeadlines=True,tag=''):
+    def compareOutlines (self,root1,root2,compareHeadlines=True,tag='',report=True):
     
         """Compares two outlines, making sure that their topologies,
         content and join lists are equivalent"""
@@ -408,8 +409,18 @@ class testUtils:
             )
             if not ok: break
             p2.moveToThreadNext()
+            
+        if not report:
+            return ok
     
-        if not ok:
+        if ok:
+            if 0:
+                print 'compareOutlines ok',
+                if tag: print 'tag:',tag
+                else: print
+                if p1: print 'p1',p1,p1.v
+                if p2: print 'p2',p2,p2.v
+        else:
             print 'compareOutlines failed',
             if tag: print 'tag:',tag
             else: print
@@ -841,14 +852,18 @@ class reformatParagraphTest:
     #@+node:ekr.20050417102531:setUp
     def setUp(self):
         
-        p = self.p
+        c = self.c ; p = self.p
         u = self.u = testUtils()
+        
+        self.undoMark = c.undoer.getMark()
     
+        assert(p.exists(c))
         self.before = u.findNodeInTree(p,"before")
         self.after  = u.findNodeInTree(p,"after")
-        self.tempNode   = u.findNodeInTree(p,"tempNode")
-        if not self.tempNode: print 'no tempNode: p = ',p.headString()
-        assert(self.tempNode)
+        self.tempNode = u.findNodeInTree(p,"tempNode")
+    
+        assert self.tempNode,'no tempNode: ' + p
+        assert self.tempNode.exists(c),'tempNode does not exist'
         self.tempChild = None
     
         self.copyBeforeToTemp()
@@ -856,8 +871,8 @@ class reformatParagraphTest:
     #@-node:ekr.20050417102531:setUp
     #@+node:ekr.20050417103035.1:tearDown
     def tearDown(self):
-    
-        tempNode = self.tempNode
+        
+        c = self.c ; tempNode = self.tempNode
     
         # clear the temp node and mark it unchanged
         tempNode.setTnodeText("",g.app.tkEncoding)
@@ -866,6 +881,8 @@ class reformatParagraphTest:
         # Delete all children of temp node.
         while tempNode.firstChild():
             tempNode.firstChild().doDelete(tempNode)
+            
+        c.undoer.rollbackToMark(self.undoMark)
     #@nonl
     #@-node:ekr.20050417103035.1:tearDown
     #@-others
@@ -1013,6 +1030,7 @@ def makeEditBodySuite():
 
     c = g.top() ; p = c.currentPosition()
     u = testUtils()
+    assert p.exists(c)
     data_p = u.findNodeInTree(p,"editBodyTests")
     assert(data_p)
     temp_p = u.findNodeInTree(data_p,"tempNode")
@@ -1093,8 +1111,9 @@ class editBodyTestCase(unittest.TestCase):
         # Compute the result in tempNode.bodyString()
         command = getattr(c,commandName)
         command()
-    
-        if 1:
+        
+        # Don't call the undoer if we expect no change.
+        if not u.compareOutlines(self.before,self.after,compareHeadlines=False,report=False):
             assert(u.compareOutlines(self.tempNode,self.after,compareHeadlines=False,tag='before undo1'))
             c.undoer.undo()
             assert(u.compareOutlines(self.tempNode,self.before,compareHeadlines=False,tag='after undo1'))
@@ -1102,7 +1121,8 @@ class editBodyTestCase(unittest.TestCase):
             assert(u.compareOutlines(self.tempNode,self.after,compareHeadlines=False,tag='after redo'))
             c.undoer.undo()
             assert(u.compareOutlines(self.tempNode,self.before,compareHeadlines=False,tag='after undo2'))
-            # c.frame.tree.redraw_now()
+          
+    #@nonl
     #@-node:ekr.20050415070840.77:editBody
     #@+node:ekr.20050415070840.80:runTest
     def runTest(self):
@@ -1116,6 +1136,8 @@ class editBodyTestCase(unittest.TestCase):
         c = self.c ; tempNode = self.tempNode
         
         if not g.app.enableUnitTest: return
+        
+        self.undoMark = c.undoer.getMark()
     
         # Delete all children of temp node.
         while tempNode.firstChild():
@@ -1147,8 +1169,6 @@ class editBodyTestCase(unittest.TestCase):
     def tearDown (self):
     
         c = self.c ; tempNode = self.tempNode
-        
-    
     
         c.selectVnode(tempNode)
         tempNode.setTnodeText("",g.app.tkEncoding)
@@ -1158,6 +1178,8 @@ class editBodyTestCase(unittest.TestCase):
             tempNode.firstChild().doDelete(tempNode)
             
         tempNode.clearDirty()
+        
+        c.undoer.rollbackToMark(self.undoMark)
     #@nonl
     #@-node:ekr.20050415070840.78:tearDown
     #@-others
