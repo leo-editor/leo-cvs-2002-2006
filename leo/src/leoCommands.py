@@ -1827,8 +1827,7 @@ class baseCommands:
                         result = string.join(result,'\n')
                         p.setTnodeText(result)
                         u.afterChangeNodeContents(p,undoType,innerUndoData)
-            if count > 0:
-                u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+            u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
             g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
         c.endUpdate(count > 0)
     #@nonl
@@ -1872,8 +1871,7 @@ class baseCommands:
                         result = string.join(result,'\n')
                         p.setTnodeText(result)
                         u.afterChangeNodeContents(p,undoType,undoData)
-            if count > 0:
-                u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+            u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
             g.es("tabs converted to blanks in %d nodes" % count)
         c.endUpdate(count > 0)
     #@nonl
@@ -2560,6 +2558,8 @@ class baseCommands:
     def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
         
         c = self ; body = c.frame.body ; p = c.currentPosition()
+        
+        # g.trace(undoType)
     
         # Update the text and notify the event handler.
         body.setSelectionAreas(head,middle,tail)
