@@ -153,25 +153,27 @@ class leoTkinterDialog:
         
         if g.app.unitTesting: return None
     
-        c = self.c
-        self.modal = modal
-        
+        c = self.c ; self.modal = modal
+    
         self.center() # Do this after all packing complete.
-        self.top.lift() # 7/31/04
+        self.top.lift()
     
         if self.modal:
             self.top.grab_set() # Make the dialog a modal dialog.
-            if self.focus_widget == None:
-                self.focus_widget = self.top
-                
-            self.focus_widget.focus_set() # Get all keystrokes.
-            if c:
-                 g.app.gui.widget_wants_focus(c,self.focus_widget)
-               
-            self.root.wait_window(self.top)
+            
+        if self.focus_widget == None:
+            self.focus_widget = self.top
+            
+        self.focus_widget.focus_set() # Get all keystrokes.
+        if c:
+            g.trace(self.focus_widget,c)
+            g.app.gui.widget_wants_focus(c,self.focus_widget)
+           
+        self.root.wait_window(self.top)
+        
+        if self.modal:
             return self.answer
         else:
-            self.root.wait_window(self.top)
             return None
     #@nonl
     #@-node:ekr.20031218072017.3866:run (tkDialog)
