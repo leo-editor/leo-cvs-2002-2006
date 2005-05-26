@@ -51860,6 +51860,33 @@ def run (self,modal):
 #@nonl
 #@-node:ekr.20031218072017.3866:run (tkDialog)
 #@-node:ekr.20050524061338:(Made sure all dialogs gets focus when they are run)
+#@+node:ekr.20050514171429.1:(Improved Resize To Screen command)
+#@+node:ekr.20050526091058:Request
+@killcolor 
+http://sourceforge.net/forum/message.php?msg_id=3151996
+By: ngirard, Nicolas
+
+The "resize to screen" command doesn't actually resize to the entire screen.
+#@nonl
+#@-node:ekr.20050526091058:Request
+#@+node:EKR.20040422130619:resizeToScreen
+def resizeToScreen (self):
+    
+    top = self.top
+    
+    w = top.winfo_screenwidth()
+    h = top.winfo_screenheight()
+
+    if 1: # Fill the entire screen (almost)
+        # This works well on Windows.  YMMV for other platforms.
+        geom = "%dx%d%+d%+d" % (w-8,h-46,0,0)
+    else: # The old way.
+        geom = "%dx%d%+d%+d" % (w-20,h-55,10,25)
+
+    top.geometry(geom)
+#@nonl
+#@-node:EKR.20040422130619:resizeToScreen
+#@-node:ekr.20050514171429.1:(Improved Resize To Screen command)
 #@-node:ekr.20050524102538:Bug fixes...
 #@+node:ekr.20050526081733:New features...
 #@+node:ekr.20050523075215:(Created separate helpers for idle_body_key)

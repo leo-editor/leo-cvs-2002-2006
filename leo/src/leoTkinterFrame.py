@@ -1947,8 +1947,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         w = top.winfo_screenwidth()
         h = top.winfo_screenheight()
-        
-        geom = "%dx%d%+d%+d" % (w-20,h-55,10,25)
+    
+        if 1: # Fill the entire screen (almost)
+            # This works well on Windows.  YMMV for other platforms.
+            geom = "%dx%d%+d%+d" % (w-8,h-46,0,0)
+        else: # The old way.
+            geom = "%dx%d%+d%+d" % (w-20,h-55,10,25)
     
         top.geometry(geom)
     #@nonl
