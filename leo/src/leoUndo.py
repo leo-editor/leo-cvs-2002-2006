@@ -1252,10 +1252,10 @@ class baseUndoer:
     
         u = self ; c = u.c
         if not u.canRedo():
-            g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
+            # g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
             return
         if not u.getBead(u.bead+1):
-            g.trace('no bead')
+            # g.trace('no bead')
             return
         if not c.currentPosition():
             g.trace('no current position')
@@ -1490,10 +1490,10 @@ class baseUndoer:
         
         u = self ; c = u.c
         if not u.canUndo():
-            g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
+            # g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
             return
         if not u.getBead(u.bead):
-            g.trace('no bead')
+            # g.trace('no bead')
             return # Sets ivars.
         if not c.currentPosition():
             g.trace('no current position')
