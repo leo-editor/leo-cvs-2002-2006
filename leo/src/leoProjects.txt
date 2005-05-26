@@ -30309,25 +30309,27 @@ def run (self,modal):
     
     if g.app.unitTesting: return None
 
-    c = self.c
-    self.modal = modal
-    
+    c = self.c ; self.modal = modal
+
     self.center() # Do this after all packing complete.
-    self.top.lift() # 7/31/04
+    self.top.lift()
 
     if self.modal:
         self.top.grab_set() # Make the dialog a modal dialog.
-        if self.focus_widget == None:
-            self.focus_widget = self.top
-            
-        self.focus_widget.focus_set() # Get all keystrokes.
-        if c:
-             g.app.gui.widget_wants_focus(c,self.focus_widget)
-           
-        self.root.wait_window(self.top)
+        
+    if self.focus_widget == None:
+        self.focus_widget = self.top
+        
+    self.focus_widget.focus_set() # Get all keystrokes.
+    if c:
+        g.trace(self.focus_widget,c)
+        g.app.gui.widget_wants_focus(c,self.focus_widget)
+       
+    self.root.wait_window(self.top)
+    
+    if self.modal:
         return self.answer
     else:
-        self.root.wait_window(self.top)
         return None
 #@nonl
 #@-node:ekr.20031218072017.3866:run (tkDialog)
@@ -51823,6 +51825,41 @@ def computeLoadDir():
 #@nonl
 #@-node:ekr.20031218072017.1937:computeLoadDir
 #@-node:ekr.20050523134613:(Made sure same case is used in all recent files entries)
+#@+node:ekr.20050524061338:(Made sure all dialogs gets focus when they are run)
+# The About Leo dialog was not getting focus.
+#@nonl
+#@+node:ekr.20031218072017.3866:run (tkDialog)
+def run (self,modal):
+    
+    """Run a leoTkinterDialog."""
+    
+    if g.app.unitTesting: return None
+
+    c = self.c ; self.modal = modal
+
+    self.center() # Do this after all packing complete.
+    self.top.lift()
+
+    if self.modal:
+        self.top.grab_set() # Make the dialog a modal dialog.
+        
+    if self.focus_widget == None:
+        self.focus_widget = self.top
+        
+    self.focus_widget.focus_set() # Get all keystrokes.
+    if c:
+        g.trace(self.focus_widget,c)
+        g.app.gui.widget_wants_focus(c,self.focus_widget)
+       
+    self.root.wait_window(self.top)
+    
+    if self.modal:
+        return self.answer
+    else:
+        return None
+#@nonl
+#@-node:ekr.20031218072017.3866:run (tkDialog)
+#@-node:ekr.20050524061338:(Made sure all dialogs gets focus when they are run)
 #@-node:ekr.20050524102538:Bug fixes...
 #@+node:ekr.20050526081733:New features...
 #@+node:ekr.20050523075215:(Created separate helpers for idle_body_key)

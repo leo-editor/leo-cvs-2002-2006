@@ -4,46 +4,28 @@
 
 #@+all
 #@+node:ekr.20050513164506.1:To do 4.3.1
-#@+node:ekr.20050524074930.2:temacs-like keystroke handling
-#@-node:ekr.20050524074930.2:temacs-like keystroke handling
-#@+node:ekr.20050513164949:Easy
-#@+node:ekr.20050524061338:Make sure About Leo dialog goes to front
-#@-node:ekr.20050524061338:Make sure About Leo dialog goes to front
-#@+node:ekr.20050512085922:Make Mark commands undoable
-#@-node:ekr.20050512085922:Make Mark commands undoable
-#@+node:ekr.20050514171429.1:Small window bugs
+#@+node:ekr.20050514171429.1:(Fix Resize To Screen command)
 @killcolor 
 http://sourceforge.net/forum/message.php?msg_id=3151996
-By: ngirard
+By: ngirard, Nicolas
 
-Hi all,
-here are a few questions related to the size of leo's main window:
-
-- quite strangely enough, leo's main window can't be maximized using the window
-manager... why ?
-
-- instead there exists a command "resize to screen" in the Window menu, which
-should do the job, but actually doen't do it, at least to me. Using this command
-the window's width and height aren't big enough
-
-- how to make the window dimensions persistent ? When I restart leo, the main
-window's size are revert to devault values which are not mine...
-
-Thanks for reading,
-cheers,
-Nicolas
-#@-node:ekr.20050514171429.1:Small window bugs
+The "resize to screen" command doesn't actually resize to the entire screen.
+#@-node:ekr.20050514171429.1:(Fix Resize To Screen command)
+#@+node:ekr.20050512085922:Make Mark commands undoable
+#@-node:ekr.20050512085922:Make Mark commands undoable
 #@+node:ekr.20050518055557:Get UniversalScrolling to work
 @killcolor
 
 http://sourceforge.net/forum/message.php?msg_id=3155710
 #@nonl
 #@-node:ekr.20050518055557:Get UniversalScrolling to work
-#@-node:ekr.20050513164949:Easy
+#@+node:ekr.20050524074930.2:temacs-like keystroke handling
+#@-node:ekr.20050524074930.2:temacs-like keystroke handling
 #@+node:ekr.20050524074930:Improve LeoPostings.leo
 #@-node:ekr.20050524074930:Improve LeoPostings.leo
 #@+node:ekr.20050526073734:Maybe
 #@+node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio?)
+#@+node:ekr.20050526090336:Request
 @killcolor
 
 https://sourceforge.net/forum/message.php?msg_id=3147054
@@ -53,6 +35,7 @@ In the CVS leo from 12 May, yet another minor but mildly irritating bug: the
 split ratio between log and outline windows isn't restored on re-opening a .leo
 file. The  split between body and the others is, however.
 #@nonl
+#@-node:ekr.20050526090336:Request
 #@-node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio?)
 #@+node:ekr.20050513164506.2:Make Expand/Contract undoable?
 #@-node:ekr.20050513164506.2:Make Expand/Contract undoable?
