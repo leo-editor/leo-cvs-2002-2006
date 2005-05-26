@@ -168,8 +168,18 @@ def computeLoadDir():
 
     try:
         import leo
+        import sys
+        
+        # Fix a hangnail: on Windows the drive letter returned by
+        # __file__ is randomly upper or lower case!
+        # The made for an ugly recent files list.
+        path = leo.__file__
+        if sys.platform=='win32':
+            if len(path) > 2 and path[1]==':':
+                # Convert the drive name to upper case.
+                path = path[0].upper() + path[1:]
         encoding = g.startupEncoding()
-        path = g.os_path_abspath(leo.__file__,encoding)
+        path = g.os_path_abspath(path,encoding)
         if path:
             loadDir = g.os_path_dirname(path,encoding)
         else: loadDir = None
