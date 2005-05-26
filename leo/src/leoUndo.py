@@ -715,6 +715,31 @@ class baseUndoer:
         u.setUndoTypes()
     #@nonl
     #@-node:ekr.20050411193627.9:afterInsertNode
+    #@+node:ekr.20050526124257:afterMark
+    def afterMark (self,p,command,bunch,dirtyVnodeList=[]):
+        
+        '''Create an undo node for mark and unmark commands.'''
+        
+        u = self ; body = u.c.frame.body
+        if u.redoing or u.undoing: return
+    
+        # Set the type & helpers.
+        bunch.undoHelper = u.undoMark
+        bunch.redoHelper = u.redoMark
+        
+        bunch.dirtyVnodeList = dirtyVnodeList
+        bunch.newChanged = u.c.isChanged()
+        bunch.newDirty = p.isDirty()
+        bunch.newMarked = p.isMarked()
+    
+        # Push the bunch.
+        u.bead += 1
+        u.beads[u.bead:] = [bunch]
+    
+        # Recalculate the menu labels.
+        u.setUndoTypes()
+    #@nonl
+    #@-node:ekr.20050526124257:afterMark
     #@+node:ekr.20050410110343:afterMoveNode
     def afterMoveNode (self,p,command,bunch,dirtyVnodeList=[]):
         
@@ -851,6 +876,18 @@ class baseUndoer:
         return bunch
     #@nonl
     #@-node:ekr.20050411193627.4:beforeInsertNode
+    #@+node:ekr.20050526131252:beforeMark
+    def beforeMark (self,p,command):
+        
+        u = self
+        bunch = u.createCommonBunch(p)
+    
+        bunch.kind = 'mark'
+        bunch.undoType = command
+        
+        return bunch
+    #@nonl
+    #@-node:ekr.20050526131252:beforeMark
     #@+node:ekr.20050410110215:beforeMoveNode
     def beforeMoveNode (self,p):
         
@@ -1418,6 +1455,21 @@ class baseUndoer:
             v.t.setDirty()
     #@nonl
     #@-node:ekr.20050318085432.7:redoNodeContents
+    #@+node:ekr.20050526125801:redoMark
+    def redoMark (self):
+        
+        u = self ; c = u.c
+    
+        u.updateMarks('new')
+        
+        for v in u.dirtyVnodeList:
+            v.t.setDirty()
+        
+        # Selecting can scroll the tree which causes flash.
+        if u.groupCount == 0:
+            c.selectPosition(u.p)
+    #@nonl
+    #@-node:ekr.20050526125801:redoMark
     #@+node:ekr.20050411111847:redoMove
     def redoMove (self):
         
@@ -1633,6 +1685,21 @@ class baseUndoer:
         c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050412085112:undoInsertNode
+    #@+node:ekr.20050526124906:undoMark
+    def undoMark (self):
+        
+        u = self ; c = u.c
+    
+        u.updateMarks('old')
+        
+        for v in u.dirtyVnodeList:
+            v.t.clearDirty()
+        
+        # Selecting can scroll the tree which causes flash.
+        if u.groupCount == 0:
+            c.selectPosition(u.p)
+    #@nonl
+    #@-node:ekr.20050526124906:undoMark
     #@+node:ekr.20050411112033:undoMove
     def undoMove (self):
         
@@ -1889,55 +1956,45 @@ class nullUndoer (undoer):
     #@+node:ekr.20050415165731.1:before undo handlers...
     def beforeChangeNodeContents (self,p):
         pass
-        
     def beforeChangeTree (self,p):
         pass
-        
     def beforeChangeGroup (self,p,command):
         pass
-        
     def beforeClearRecentFiles (self):
         pass
-        
     def beforeCloneNode (self,p):
         pass
-        
     def beforeDeleteNode (self,p):
         pass
-        
     def beforeInsertNode (self,p,pasteAsClone=False,copiedBunchList=[]):
         pass
-        
+    def beforeMark (self,p,command):
+        pass
     def beforeMoveNode (self,p):
         pass
-        
+    #@nonl
     #@-node:ekr.20050415165731.1:before undo handlers...
     #@+node:ekr.20050415170018:after undo handlers...
     def afterChangeNodeContents (self,p,command,bunch,dirtyVnodeList=[]):
         pass
-        
     def afterChangeTree (self,p,command,bunch):
         pass
-        
     def afterChangeGroup (self,p,command,reportFlag=False,dirtyVnodeList=[]):
         pass
-        
     def afterClearRecentFiles (self,bunch):
         pass
-        
     def afterCloneNode (self,p,command,bunch,dirtyVnodeList=[]):
         pass
-        
     def afterDehoist (self,p,command):
         pass
-        
     def afterHoist (self,p,command):
         pass
-        
     def afterDeleteNode (self,p,command,bunch,dirtyVnodeList=[]):
         pass
-    
     def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
+        pass
+        
+    def afterMark (self,p,command,bunch,dirtyVnodeList=[]):
         pass
         
     def afterMoveNode (self,p,command,bunch,dirtyVnodeList=[]):
