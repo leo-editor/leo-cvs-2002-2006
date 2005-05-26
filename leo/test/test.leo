@@ -10,8 +10,7 @@
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20050415070840" a="M" annotate="7d71002e"
-marks="ekr.20050415070840.12,"
-expanded="ekr.20050415070840.74,"><vh>@thin ../src/leoTest.py</vh></v>
+marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -1211,7 +1210,7 @@ expanded="ekr.20050415070840.74,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1285,6 +1284,8 @@ expanded="ekr.20050415070840.74,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050119144013"><vh>Remove all file system dependencies</vh></v>
 </v>
+<v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
+<v t="ekr.20040712101754"><vh>General Unit Tests...</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
@@ -1315,8 +1316,6 @@ expanded="ekr.20050415070840.74,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
-<v t="ekr.20040712101754"><vh>General Unit Tests</vh>
-<v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20041130092210"><vh>Batch mode tests...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
@@ -1895,7 +1894,7 @@ expanded="ekr.20050415070840.74,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050208104202"><vh>@test of round-tripping toUnicode &amp; toEncodedString</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files</vh>
+<v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1906,9 +1905,7 @@ expanded="ekr.20050415070840.74,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
-</v>
-<v t="ekr.20050120095423" a="TV" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
+<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
 <v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050218015346.12"><vh>__init__</vh></v>
@@ -1951,6 +1948,8 @@ expanded="ekr.20050415070840.74,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
+</v>
+<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2436,7 +2435,7 @@ try:
     print "done"
 except IOError:
     print "Can not open",port</t>
-<t tx="EKR.20040619133116"># Make sure this doesn't get deleted by the unit test!</t>
+<t tx="EKR.20040619133116"></t>
 <t tx="EKR.20040622074004">@ignore</t>
 <t tx="EKR.20040622074004.1"></t>
 <t tx="EKR.20040622074004.2">node b, line 1 (changed 12)</t>
