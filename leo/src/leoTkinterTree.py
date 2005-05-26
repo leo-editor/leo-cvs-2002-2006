@@ -1790,7 +1790,6 @@ class leoTkinterTree (leoFrame.leoTree):
     
         c = self.c ; w = event.widget
         
-    
         try:
             p = w.leo_position
         except AttributeError:

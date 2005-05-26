@@ -30322,7 +30322,7 @@ def run (self,modal):
         
     self.focus_widget.focus_set() # Get all keystrokes.
     if c:
-        g.trace(self.focus_widget,c)
+        # g.trace(self.focus_widget,c)
         g.app.gui.widget_wants_focus(c,self.focus_widget)
        
     self.root.wait_window(self.top)
@@ -31926,12 +31926,18 @@ By: ktenney
 #@+node:ekr.20031218072017.2923:markChangedHeadlines
 def markChangedHeadlines (self): 
 
-    c = self
+    c = self ; u = c.undoer ; undoType = 'Mark Changed'
+    current = c.currentPosition()
+    
     c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
     for p in c.allNodes_iter():
         if p.isDirty()and not p.isMarked():
+            bunch = u.beforeMark(p,undoType)
             p.setMarked()
             c.setChanged(True)
+            u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType)
     g.es("done",color="blue")
     c.endUpdate()
 #@nonl
@@ -31939,43 +31945,47 @@ def markChangedHeadlines (self):
 #@+node:ekr.20031218072017.2924:markChangedRoots
 def markChangedRoots (self):
 
-    c = self
+    c = self ; u = c.undoer ; undoType = 'Mark Changed'
+    current = c.currentPosition()
+
     c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
     for p in c.allNodes_iter():
         if p.isDirty()and not p.isMarked():
             s = p.bodyString()
             flag, i = g.is_special(s,0,"@root")
             if flag:
+                bunch = u.beforeMark(p,undoType)
                 p.setMarked()
                 c.setChanged(True)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType)
     g.es("done",color="blue")
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2924:markChangedRoots
-#@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty
+#@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty (not used)
 def markAllAtFileNodesDirty (self):
 
     c = self ; p = c.rootPosition()
 
-    changed = False
     c.beginUpdate()
     if 1: # In update...
         while p:
             if p.isAtFileNode()and not p.isDirty():
                 p.setDirty()
-                changed = True
+                c.setChanged(True)
                 p.moveToNodeAfterTree()
             else:
                 p.moveToThreadNext()
-        if changed:
-            c.setChanged(True)
     c.endUpdate()
 #@nonl
-#@-node:ekr.20031218072017.2925:markAllAtFileNodesDirty
-#@+node:ekr.20031218072017.2926:markAtFileNodesDirty
+#@-node:ekr.20031218072017.2925:markAllAtFileNodesDirty (not used)
+#@+node:ekr.20031218072017.2926:markAtFileNodesDirty (not used)
 def markAtFileNodesDirty (self):
 
-    c = self ; p = c.currentPosition()
+    c = self
+    p = c.currentPosition()
     if not p: return
 
     after = p.nodeAfterTree()
@@ -31985,79 +31995,99 @@ def markAtFileNodesDirty (self):
         while p and p != after:
             if p.isAtFileNode() and not p.isDirty():
                 p.setDirty()
-                changed = True
+                c.setChanged(True)
                 p.moveToNodeAfterTree()
             else:
                 p.moveToThreadNext()
-        if changed:
-            c.setChanged(True)
     c.endUpdate()
 #@nonl
-#@-node:ekr.20031218072017.2926:markAtFileNodesDirty
+#@-node:ekr.20031218072017.2926:markAtFileNodesDirty (not used)
 #@+node:ekr.20031218072017.2927:markClones
 def markClones (self):
 
-    c = self ; current = c.currentPosition()
-    if not current or current.isCloned(): return
+    c = self ; u = c.undoer ; undoType = 'Mark Clones'
+    current = c.currentPosition()
+    if not current or not current.isCloned():
+        g.es('The current node is not a clone',color='blue')
+        return
 
-    changed = False
     c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
     if 1: # In update...
+        dirtyVnodeList = []
         for p in c.allNodes_iter():
             if p.v.t == current.v.t:
+                bunch = u.beforeMark(p,undoType)
                 p.setMarked()
-                changed = True
-        if changed:
-            c.setChanged(True)
+                c.setChanged(True)
+                dirtyVnodeList2 = p.setDirty()
+                dirtyVnodeList.extend(dirtyVnodeList2)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2927:markClones
 #@+node:ekr.20031218072017.2928:markHeadline
 def markHeadline (self):
 
-    c = self ; p = c.currentPosition()
+    c = self ; u = c.undoer ; p = c.currentPosition()
     if not p: return
 
     c.beginUpdate()
     if 1: # In update...
+        undoType = g.choose(p.isMarked(),'Unmark','Mark')
+        bunch = u.beforeMark(p,undoType)
         if p.isMarked():
             p.clearMarked()
         else:
             p.setMarked()
-        p.setDirty()
+        dirtyVnodeList = p.setDirty()
         c.setChanged(True)
+        u.afterMark(p,undoType,bunch,dirtyVnodeList=dirtyVnodeList)
     c.endUpdate()
-#@nonl
 #@-node:ekr.20031218072017.2928:markHeadline
 #@+node:ekr.20031218072017.2929:markSubheads
 def markSubheads(self):
 
-    c = self ; p = c.currentPosition()
-    if not p: return
+    c = self ; u = c.undoer ; undoType = 'Mark Subheads'
+    current = c.currentPosition()
+    if not current: return
 
-    changed = False
     c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
     if 1: # In update...
-        for child in p.children_iter():
-            if not child.isMarked():
-                child.setMarked()
-                child.setDirty()
-                changed = True
-        if changed:
-            c.setChanged(True)
+        dirtyVnodeList = []
+        for p in current.children_iter():
+            if not p.isMarked():
+                bunch = u.beforeMark(p,undoType)
+                p.setMarked()
+                dirtyVnodeList2 = p.setDirty()
+                dirtyVnodeList.extend(dirtyVnodeList2)
+                c.setChanged(True)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
     c.endUpdate()
-#@nonl
 #@-node:ekr.20031218072017.2929:markSubheads
 #@+node:ekr.20031218072017.2930:unmarkAll
 def unmarkAll(self):
 
-    c = self
+    c = self ; u = c.undoer ; undoType = 'Unmark All'
+    current = c.currentPosition()
+    if not current: return
+    
     c.beginUpdate()
-    for p in c.allNodes_iter():
-        if p.isMarked():
-            p.clearMarked()
-            p.setDirty()
-            c.setChanged(True)
+    u.beforeChangeGroup(current,undoType)
+    if 1: # In update...
+        dirtyVnodeList = []
+        for p in c.allNodes_iter():
+            if p.isMarked():
+                bunch = u.beforeMark(p,undoType)
+                p.clearMarked()
+                dirtyVnodeList2 = p.setDirty()
+                dirtyVnodeList.extend(dirtyVnodeList2)
+                c.setChanged(True)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2930:unmarkAll
@@ -34525,12 +34555,18 @@ if self.drag_p:
 #@+node:ekr.20031218072017.2923:markChangedHeadlines
 def markChangedHeadlines (self): 
 
-    c = self
+    c = self ; u = c.undoer ; undoType = 'Mark Changed'
+    current = c.currentPosition()
+    
     c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
     for p in c.allNodes_iter():
         if p.isDirty()and not p.isMarked():
+            bunch = u.beforeMark(p,undoType)
             p.setMarked()
             c.setChanged(True)
+            u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType)
     g.es("done",color="blue")
     c.endUpdate()
 #@nonl
@@ -34538,15 +34574,21 @@ def markChangedHeadlines (self):
 #@+node:ekr.20031218072017.2924:markChangedRoots
 def markChangedRoots (self):
 
-    c = self
+    c = self ; u = c.undoer ; undoType = 'Mark Changed'
+    current = c.currentPosition()
+
     c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
     for p in c.allNodes_iter():
         if p.isDirty()and not p.isMarked():
             s = p.bodyString()
             flag, i = g.is_special(s,0,"@root")
             if flag:
+                bunch = u.beforeMark(p,undoType)
                 p.setMarked()
                 c.setChanged(True)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType)
     g.es("done",color="blue")
     c.endUpdate()
 #@nonl
@@ -46586,12 +46628,18 @@ def inAtIgnoreRange (self):
 #@+node:ekr.20031218072017.2923:markChangedHeadlines
 def markChangedHeadlines (self): 
 
-    c = self
+    c = self ; u = c.undoer ; undoType = 'Mark Changed'
+    current = c.currentPosition()
+    
     c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
     for p in c.allNodes_iter():
         if p.isDirty()and not p.isMarked():
+            bunch = u.beforeMark(p,undoType)
             p.setMarked()
             c.setChanged(True)
+            u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType)
     g.es("done",color="blue")
     c.endUpdate()
 #@nonl
@@ -46599,43 +46647,47 @@ def markChangedHeadlines (self):
 #@+node:ekr.20031218072017.2924:markChangedRoots
 def markChangedRoots (self):
 
-    c = self
+    c = self ; u = c.undoer ; undoType = 'Mark Changed'
+    current = c.currentPosition()
+
     c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
     for p in c.allNodes_iter():
         if p.isDirty()and not p.isMarked():
             s = p.bodyString()
             flag, i = g.is_special(s,0,"@root")
             if flag:
+                bunch = u.beforeMark(p,undoType)
                 p.setMarked()
                 c.setChanged(True)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType)
     g.es("done",color="blue")
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2924:markChangedRoots
-#@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty
+#@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty (not used)
 def markAllAtFileNodesDirty (self):
 
     c = self ; p = c.rootPosition()
 
-    changed = False
     c.beginUpdate()
     if 1: # In update...
         while p:
             if p.isAtFileNode()and not p.isDirty():
                 p.setDirty()
-                changed = True
+                c.setChanged(True)
                 p.moveToNodeAfterTree()
             else:
                 p.moveToThreadNext()
-        if changed:
-            c.setChanged(True)
     c.endUpdate()
 #@nonl
-#@-node:ekr.20031218072017.2925:markAllAtFileNodesDirty
-#@+node:ekr.20031218072017.2926:markAtFileNodesDirty
+#@-node:ekr.20031218072017.2925:markAllAtFileNodesDirty (not used)
+#@+node:ekr.20031218072017.2926:markAtFileNodesDirty (not used)
 def markAtFileNodesDirty (self):
 
-    c = self ; p = c.currentPosition()
+    c = self
+    p = c.currentPosition()
     if not p: return
 
     after = p.nodeAfterTree()
@@ -46645,79 +46697,99 @@ def markAtFileNodesDirty (self):
         while p and p != after:
             if p.isAtFileNode() and not p.isDirty():
                 p.setDirty()
-                changed = True
+                c.setChanged(True)
                 p.moveToNodeAfterTree()
             else:
                 p.moveToThreadNext()
-        if changed:
-            c.setChanged(True)
     c.endUpdate()
 #@nonl
-#@-node:ekr.20031218072017.2926:markAtFileNodesDirty
+#@-node:ekr.20031218072017.2926:markAtFileNodesDirty (not used)
 #@+node:ekr.20031218072017.2927:markClones
 def markClones (self):
 
-    c = self ; current = c.currentPosition()
-    if not current or current.isCloned(): return
+    c = self ; u = c.undoer ; undoType = 'Mark Clones'
+    current = c.currentPosition()
+    if not current or not current.isCloned():
+        g.es('The current node is not a clone',color='blue')
+        return
 
-    changed = False
     c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
     if 1: # In update...
+        dirtyVnodeList = []
         for p in c.allNodes_iter():
             if p.v.t == current.v.t:
+                bunch = u.beforeMark(p,undoType)
                 p.setMarked()
-                changed = True
-        if changed:
-            c.setChanged(True)
+                c.setChanged(True)
+                dirtyVnodeList2 = p.setDirty()
+                dirtyVnodeList.extend(dirtyVnodeList2)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2927:markClones
 #@+node:ekr.20031218072017.2928:markHeadline
 def markHeadline (self):
 
-    c = self ; p = c.currentPosition()
+    c = self ; u = c.undoer ; p = c.currentPosition()
     if not p: return
 
     c.beginUpdate()
     if 1: # In update...
+        undoType = g.choose(p.isMarked(),'Unmark','Mark')
+        bunch = u.beforeMark(p,undoType)
         if p.isMarked():
             p.clearMarked()
         else:
             p.setMarked()
-        p.setDirty()
+        dirtyVnodeList = p.setDirty()
         c.setChanged(True)
+        u.afterMark(p,undoType,bunch,dirtyVnodeList=dirtyVnodeList)
     c.endUpdate()
-#@nonl
 #@-node:ekr.20031218072017.2928:markHeadline
 #@+node:ekr.20031218072017.2929:markSubheads
 def markSubheads(self):
 
-    c = self ; p = c.currentPosition()
-    if not p: return
+    c = self ; u = c.undoer ; undoType = 'Mark Subheads'
+    current = c.currentPosition()
+    if not current: return
 
-    changed = False
     c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
     if 1: # In update...
-        for child in p.children_iter():
-            if not child.isMarked():
-                child.setMarked()
-                child.setDirty()
-                changed = True
-        if changed:
-            c.setChanged(True)
+        dirtyVnodeList = []
+        for p in current.children_iter():
+            if not p.isMarked():
+                bunch = u.beforeMark(p,undoType)
+                p.setMarked()
+                dirtyVnodeList2 = p.setDirty()
+                dirtyVnodeList.extend(dirtyVnodeList2)
+                c.setChanged(True)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
     c.endUpdate()
-#@nonl
 #@-node:ekr.20031218072017.2929:markSubheads
 #@+node:ekr.20031218072017.2930:unmarkAll
 def unmarkAll(self):
 
-    c = self
+    c = self ; u = c.undoer ; undoType = 'Unmark All'
+    current = c.currentPosition()
+    if not current: return
+    
     c.beginUpdate()
-    for p in c.allNodes_iter():
-        if p.isMarked():
-            p.clearMarked()
-            p.setDirty()
-            c.setChanged(True)
+    u.beforeChangeGroup(current,undoType)
+    if 1: # In update...
+        dirtyVnodeList = []
+        for p in c.allNodes_iter():
+            if p.isMarked():
+                bunch = u.beforeMark(p,undoType)
+                p.clearMarked()
+                dirtyVnodeList2 = p.setDirty()
+                dirtyVnodeList.extend(dirtyVnodeList2)
+                c.setChanged(True)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2930:unmarkAll
@@ -51848,7 +51920,7 @@ def run (self,modal):
         
     self.focus_widget.focus_set() # Get all keystrokes.
     if c:
-        g.trace(self.focus_widget,c)
+        # g.trace(self.focus_widget,c)
         g.app.gui.widget_wants_focus(c,self.focus_widget)
        
     self.root.wait_window(self.top)
@@ -52139,6 +52211,231 @@ if all_ws:
 #@-node:ekr.20031218072017.1325:convertBlanksToTabs
 #@-node:ekr.20031218072017.1321:idle_body_key & helpers
 #@-node:ekr.20050523075215:(Created separate helpers for idle_body_key)
+#@+node:ekr.20050518055557:(Created v0.2 of UniversalScrolling plugin)
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3155710
+
+I simplified the code so I could understand it.
+
+Known problems:
+
+- Binding <Button-1> events is not a good idea.  The plugin has no good way to be sure whether the user intended to select a headline or scroll.
+
+- Sometimes 'junk' appears above the scrolled outline when the root node gets scrolled down.  It appears impossible to fix.  A workaround would be to prevent scrolling downward if that would move the root node down.  However, I don't know how to do this: the canvas.yview method always returns the same value.
+#@nonl
+#@-node:ekr.20050518055557:(Created v0.2 of UniversalScrolling plugin)
+#@+node:ekr.20050512085922:(Made all Mark commands undoable)
+# I also fixed a bug: the Mark Clones command did not work!
+#@nonl
+#@+node:ekr.20050526131252:beforeMark
+def beforeMark (self,p,command):
+    
+    u = self
+    bunch = u.createCommonBunch(p)
+
+    bunch.kind = 'mark'
+    bunch.undoType = command
+    
+    return bunch
+#@nonl
+#@-node:ekr.20050526131252:beforeMark
+#@+node:ekr.20050526124257:afterMark
+def afterMark (self,p,command,bunch,dirtyVnodeList=[]):
+    
+    '''Create an undo node for mark and unmark commands.'''
+    
+    u = self ; body = u.c.frame.body
+    if u.redoing or u.undoing: return
+
+    # Set the type & helpers.
+    bunch.undoHelper = u.undoMark
+    bunch.redoHelper = u.redoMark
+    
+    bunch.dirtyVnodeList = dirtyVnodeList
+    bunch.newChanged = u.c.isChanged()
+    bunch.newDirty = p.isDirty()
+    bunch.newMarked = p.isMarked()
+
+    # Push the bunch.
+    u.bead += 1
+    u.beads[u.bead:] = [bunch]
+
+    # Recalculate the menu labels.
+    u.setUndoTypes()
+#@nonl
+#@-node:ekr.20050526124257:afterMark
+#@+node:ekr.20031218072017.2922:Mark...
+#@+node:ekr.20031218072017.2923:markChangedHeadlines
+def markChangedHeadlines (self): 
+
+    c = self ; u = c.undoer ; undoType = 'Mark Changed'
+    current = c.currentPosition()
+    
+    c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
+    for p in c.allNodes_iter():
+        if p.isDirty()and not p.isMarked():
+            bunch = u.beforeMark(p,undoType)
+            p.setMarked()
+            c.setChanged(True)
+            u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType)
+    g.es("done",color="blue")
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2923:markChangedHeadlines
+#@+node:ekr.20031218072017.2924:markChangedRoots
+def markChangedRoots (self):
+
+    c = self ; u = c.undoer ; undoType = 'Mark Changed'
+    current = c.currentPosition()
+
+    c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
+    for p in c.allNodes_iter():
+        if p.isDirty()and not p.isMarked():
+            s = p.bodyString()
+            flag, i = g.is_special(s,0,"@root")
+            if flag:
+                bunch = u.beforeMark(p,undoType)
+                p.setMarked()
+                c.setChanged(True)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType)
+    g.es("done",color="blue")
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2924:markChangedRoots
+#@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty (not used)
+def markAllAtFileNodesDirty (self):
+
+    c = self ; p = c.rootPosition()
+
+    c.beginUpdate()
+    if 1: # In update...
+        while p:
+            if p.isAtFileNode()and not p.isDirty():
+                p.setDirty()
+                c.setChanged(True)
+                p.moveToNodeAfterTree()
+            else:
+                p.moveToThreadNext()
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2925:markAllAtFileNodesDirty (not used)
+#@+node:ekr.20031218072017.2926:markAtFileNodesDirty (not used)
+def markAtFileNodesDirty (self):
+
+    c = self
+    p = c.currentPosition()
+    if not p: return
+
+    after = p.nodeAfterTree()
+    changed = False
+    c.beginUpdate()
+    if 1: # In update...
+        while p and p != after:
+            if p.isAtFileNode() and not p.isDirty():
+                p.setDirty()
+                c.setChanged(True)
+                p.moveToNodeAfterTree()
+            else:
+                p.moveToThreadNext()
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2926:markAtFileNodesDirty (not used)
+#@+node:ekr.20031218072017.2927:markClones
+def markClones (self):
+
+    c = self ; u = c.undoer ; undoType = 'Mark Clones'
+    current = c.currentPosition()
+    if not current or not current.isCloned():
+        g.es('The current node is not a clone',color='blue')
+        return
+
+    c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
+    if 1: # In update...
+        dirtyVnodeList = []
+        for p in c.allNodes_iter():
+            if p.v.t == current.v.t:
+                bunch = u.beforeMark(p,undoType)
+                p.setMarked()
+                c.setChanged(True)
+                dirtyVnodeList2 = p.setDirty()
+                dirtyVnodeList.extend(dirtyVnodeList2)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2927:markClones
+#@+node:ekr.20031218072017.2928:markHeadline
+def markHeadline (self):
+
+    c = self ; u = c.undoer ; p = c.currentPosition()
+    if not p: return
+
+    c.beginUpdate()
+    if 1: # In update...
+        undoType = g.choose(p.isMarked(),'Unmark','Mark')
+        bunch = u.beforeMark(p,undoType)
+        if p.isMarked():
+            p.clearMarked()
+        else:
+            p.setMarked()
+        dirtyVnodeList = p.setDirty()
+        c.setChanged(True)
+        u.afterMark(p,undoType,bunch,dirtyVnodeList=dirtyVnodeList)
+    c.endUpdate()
+#@-node:ekr.20031218072017.2928:markHeadline
+#@+node:ekr.20031218072017.2929:markSubheads
+def markSubheads(self):
+
+    c = self ; u = c.undoer ; undoType = 'Mark Subheads'
+    current = c.currentPosition()
+    if not current: return
+
+    c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
+    if 1: # In update...
+        dirtyVnodeList = []
+        for p in current.children_iter():
+            if not p.isMarked():
+                bunch = u.beforeMark(p,undoType)
+                p.setMarked()
+                dirtyVnodeList2 = p.setDirty()
+                dirtyVnodeList.extend(dirtyVnodeList2)
+                c.setChanged(True)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+    c.endUpdate()
+#@-node:ekr.20031218072017.2929:markSubheads
+#@+node:ekr.20031218072017.2930:unmarkAll
+def unmarkAll(self):
+
+    c = self ; u = c.undoer ; undoType = 'Unmark All'
+    current = c.currentPosition()
+    if not current: return
+    
+    c.beginUpdate()
+    u.beforeChangeGroup(current,undoType)
+    if 1: # In update...
+        dirtyVnodeList = []
+        for p in c.allNodes_iter():
+            if p.isMarked():
+                bunch = u.beforeMark(p,undoType)
+                p.clearMarked()
+                dirtyVnodeList2 = p.setDirty()
+                dirtyVnodeList.extend(dirtyVnodeList2)
+                c.setChanged(True)
+                u.afterMark(p,undoType,bunch)
+    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2930:unmarkAll
+#@-node:ekr.20031218072017.2922:Mark...
+#@-node:ekr.20050512085922:(Made all Mark commands undoable)
 #@-node:ekr.20050526081733:New features...
 #@-node:ekr.20050524073547.1:4.3.1 projects
 #@-all

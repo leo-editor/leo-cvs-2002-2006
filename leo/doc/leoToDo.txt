@@ -4,21 +4,6 @@
 
 #@+all
 #@+node:ekr.20050513164506.1:To do 4.3.1
-#@+node:ekr.20050514171429.1:(Fix Resize To Screen command)
-@killcolor 
-http://sourceforge.net/forum/message.php?msg_id=3151996
-By: ngirard, Nicolas
-
-The "resize to screen" command doesn't actually resize to the entire screen.
-#@-node:ekr.20050514171429.1:(Fix Resize To Screen command)
-#@+node:ekr.20050512085922:Make Mark commands undoable
-#@-node:ekr.20050512085922:Make Mark commands undoable
-#@+node:ekr.20050518055557:Get UniversalScrolling to work
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=3155710
-#@nonl
-#@-node:ekr.20050518055557:Get UniversalScrolling to work
 #@+node:ekr.20050524074930.2:temacs-like keystroke handling
 #@-node:ekr.20050524074930.2:temacs-like keystroke handling
 #@+node:ekr.20050524074930:Improve LeoPostings.leo
