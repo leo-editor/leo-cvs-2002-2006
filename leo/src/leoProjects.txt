@@ -33943,8 +33943,18 @@ def computeLoadDir():
 
     try:
         import leo
+        import sys
+        
+        # Fix a hangnail: on Windows the drive letter returned by
+        # __file__ is randomly upper or lower case!
+        # The made for an ugly recent files list.
+        path = leo.__file__
+        if sys.platform=='win32':
+            if len(path) > 2 and path[1]==':':
+                # Convert the drive name to upper case.
+                path = path[0].upper() + path[1:]
         encoding = g.startupEncoding()
-        path = g.os_path_abspath(leo.__file__,encoding)
+        path = g.os_path_abspath(path,encoding)
         if path:
             loadDir = g.os_path_dirname(path,encoding)
         else: loadDir = None
@@ -38251,8 +38261,18 @@ def computeLoadDir():
 
     try:
         import leo
+        import sys
+        
+        # Fix a hangnail: on Windows the drive letter returned by
+        # __file__ is randomly upper or lower case!
+        # The made for an ugly recent files list.
+        path = leo.__file__
+        if sys.platform=='win32':
+            if len(path) > 2 and path[1]==':':
+                # Convert the drive name to upper case.
+                path = path[0].upper() + path[1:]
         encoding = g.startupEncoding()
-        path = g.os_path_abspath(leo.__file__,encoding)
+        path = g.os_path_abspath(path,encoding)
         if path:
             loadDir = g.os_path_dirname(path,encoding)
         else: loadDir = None
@@ -51700,6 +51720,52 @@ c.endUpdate(redraw_flag) # redraw only if necessary
 #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 #@-node:ekr.20031218072017.1321:idle_body_key
 #@-node:ekr.20050525074210:(Fixed undo problems in unit tests)
+#@+node:ekr.20050523134613:(Made sure same case is used in all recent files entries)
+@ The problem was that leo.__file__ returns a randomly upper or lower cased drive letter.
+#@nonl
+#@+node:ekr.20031218072017.1937:computeLoadDir
+def computeLoadDir():
+    
+    """Returns the directory containing leo.py."""
+    
+    import leoGlobals as g
+
+    try:
+        import leo
+        import sys
+        
+        # Fix a hangnail: on Windows the drive letter returned by
+        # __file__ is randomly upper or lower case!
+        # The made for an ugly recent files list.
+        path = leo.__file__
+        if sys.platform=='win32':
+            if len(path) > 2 and path[1]==':':
+                # Convert the drive name to upper case.
+                path = path[0].upper() + path[1:]
+        encoding = g.startupEncoding()
+        path = g.os_path_abspath(path,encoding)
+        if path:
+            loadDir = g.os_path_dirname(path,encoding)
+        else: loadDir = None
+            
+        if (
+            not loadDir or
+            not g.os_path_exists(loadDir,encoding) or
+            not g.os_path_isdir(loadDir,encoding)
+        ):
+            loadDir = os.getcwd()
+            print "Using emergency loadDir:",repr(loadDir)
+        
+        loadDir = g.os_path_abspath(loadDir,encoding)
+        # g.es("load dir: %s" % (loadDir),color="blue")
+        return loadDir
+    except:
+        print "Exception getting load directory"
+        import traceback ; traceback.print_exc()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.1937:computeLoadDir
+#@-node:ekr.20050523134613:(Made sure same case is used in all recent files entries)
 #@-node:ekr.20050524102538:Bug fixes...
 #@-node:ekr.20050524073547.1:4.3.1 projects
 #@-all

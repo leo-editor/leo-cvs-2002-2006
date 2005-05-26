@@ -4,34 +4,13 @@
 
 #@+all
 #@+node:ekr.20050513164506.1:To do 4.3.1
-#@+node:ekr.20050524074023:First
-#@+node:ekr.20050523134613:Make sure same case is used in all recent files entries
-#@-node:ekr.20050523134613:Make sure same case is used in all recent files entries
 #@+node:ekr.20050524074930.2:temacs-like keystroke handling
 #@-node:ekr.20050524074930.2:temacs-like keystroke handling
-#@-node:ekr.20050524074023:First
 #@+node:ekr.20050513164949:Easy
-#@+node:ekr.20050524074930:Improve LeoPostings.leo
-#@-node:ekr.20050524074930:Improve LeoPostings.leo
-#@+node:ekr.20050523075215:Create method for autoindent
-#@-node:ekr.20050523075215:Create method for autoindent
 #@+node:ekr.20050524061338:Make sure About Leo dialog goes to front
 #@-node:ekr.20050524061338:Make sure About Leo dialog goes to front
-#@+node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio?)
-@killcolor
-
-https://sourceforge.net/forum/message.php?msg_id=3147054
-By: niccl
-
-In the CVS leo from 12 May, yet another minor but mildly irritating bug: the
-split ratio between log and outline windows isn't restored on re-opening a .leo
-file. The  split between body and the others is, however.
-#@nonl
-#@-node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio?)
-#@+node:ekr.20050512085922:Make all Mark commands undoable
-#@-node:ekr.20050512085922:Make all Mark commands undoable
-#@+node:ekr.20050513164506.2:Make Expand/Contract undoable?
-#@-node:ekr.20050513164506.2:Make Expand/Contract undoable?
+#@+node:ekr.20050512085922:Make Mark commands undoable
+#@-node:ekr.20050512085922:Make Mark commands undoable
 #@+node:ekr.20050514171429.1:Small window bugs
 @killcolor 
 http://sourceforge.net/forum/message.php?msg_id=3151996
@@ -61,6 +40,23 @@ http://sourceforge.net/forum/message.php?msg_id=3155710
 #@nonl
 #@-node:ekr.20050518055557:Get UniversalScrolling to work
 #@-node:ekr.20050513164949:Easy
+#@+node:ekr.20050524074930:Improve LeoPostings.leo
+#@-node:ekr.20050524074930:Improve LeoPostings.leo
+#@+node:ekr.20050526073734:Maybe
+#@+node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio?)
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=3147054
+By: niccl
+
+In the CVS leo from 12 May, yet another minor but mildly irritating bug: the
+split ratio between log and outline windows isn't restored on re-opening a .leo
+file. The  split between body and the others is, however.
+#@nonl
+#@-node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio?)
+#@+node:ekr.20050513164506.2:Make Expand/Contract undoable?
+#@-node:ekr.20050513164506.2:Make Expand/Contract undoable?
+#@-node:ekr.20050526073734:Maybe
 #@-node:ekr.20050513164506.1:To do 4.3.1
 #@+node:ekr.20041228073219:4.3.x
 #@+node:ekr.20050419060645:Alternate lead-in characters
@@ -3087,14 +3083,14 @@ def putCodeLine (self,s,i):
 #@-node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040628085831:@import, @shadow
 #@-node:ekr.20040919182750.1:Better handling of whitespace (cvs fiendly)
+#@+node:ekr.20041231102453.1:Move emacs commands into core
+#@-node:ekr.20041231102453.1:Move emacs commands into core
 #@+node:ekr.20041228084018:Easy commands, directives, options, etc.
 - There may be several releases needed.
 
 - Note everything on this list needs to be done first.
 
 - Most of these will take 1 hour to 1 day. They have been delayed far too long.
-#@+node:ekr.20041231102453.1:Move emacs commands into core
-#@-node:ekr.20041231102453.1:Move emacs commands into core
 #@+node:ekr.20041228092223.1:Use tabbed log for find dialog
 #@+node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
 #@-node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
