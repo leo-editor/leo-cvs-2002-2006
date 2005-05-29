@@ -1842,8 +1842,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050419115225" a="E"><vh>(parse jEdit files)</vh>
 <v t="ekr.20050419172816"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
-<v t="ekr.20050528092533" a="TV"><vh>To do</vh></v>
-<v t="ekr.20050419173824"><vh>jEdit docs...</vh>
+<v t="ekr.20050419173824" a="TV"><vh>jEdit docs...</vh>
 <v t="ekr.20050419175429"><vh>Rule ordering</vh></v>
 <v t="ekr.20050419181328"><vh>Attributes</vh>
 <v t="ekr.20050419182514"><vh>AT_CHAR (int)</vh></v>
@@ -1881,70 +1880,20 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050528105213"><vh>No longer used</vh>
-<v t="ekr.20050528105213.1"><vh>Attributes</vh>
-<v t="ekr.20050419194651"><vh>setAttrDispatchDict</vh></v>
-<v t="ekr.20050528105213.2"><vh>from doAttr</vh></v>
-<v t="ekr.20050419194651.1"><vh>doBoolAttr</vh></v>
-<v t="ekr.20050419194718"><vh>doCharAttr</vh></v>
-<v t="ekr.20050419194911"><vh>doDelegateAttr</vh></v>
-<v t="ekr.20050419194822"><vh>doIntAttr</vh></v>
-<v t="ekr.20050419194651.2"><vh>doReAttr</vh></v>
-<v t="ekr.20050419194651.3"><vh>doStringAttr</vh></v>
-</v>
-<v t="ekr.20050528163850"><vh>contentHandler helpers</vh>
-<v t="ekr.20050419211746.1"><vh>setStartElementDispatchDict</vh></v>
-<v t="ekr.20050419214653"><vh>setEndElementDispatchDict</vh></v>
-<v t="ekr.20050419191207" a="E"><vh>doAttr</vh></v>
-<v t="ekr.20050528163850.1"><vh>Start handlers</vh>
-<v t="ekr.20050528105213.4"><vh> Do nothing...</vh>
-<v t="ekr.20050419211746.2"><vh>startBegin</vh></v>
-<v t="ekr.20050419211746.3"><vh>startEnd</vh></v>
-<v t="ekr.20050419211746.5"><vh>startImport</vh></v>
-<v t="ekr.20050419211746.6"><vh>startKeywords</vh></v>
-<v t="ekr.20050419211746.7"><vh>startMark</vh></v>
-<v t="ekr.20050419211746.9"><vh>startProps</vh></v>
-<v t="ekr.20050419211746.10"><vh>startProperty</vh></v>
-<v t="ekr.20050419211746.11"><vh>startRules</vh></v>
-<v t="ekr.20050419211746.14"><vh>startTerminate</vh></v>
-</v>
-<v t="ekr.20050419212840"><vh>startKeyword</vh></v>
-<v t="ekr.20050419211746.8"><vh>startMode</vh></v>
-<v t="ekr.20050419211746.13"><vh>startSpan &amp; startEolSpan</vh></v>
-</v>
-<v t="ekr.20050528163850.2"><vh>End helpers</vh>
-<v t="ekr.20050528105213.5"><vh> Do-nothing</vh>
-<v t="ekr.20050419214545.1"><vh>endBegin</vh></v>
-<v t="ekr.20050419214545.2"><vh>endEnd</vh></v>
-<v t="ekr.20050419214545.4"><vh>endImport</vh></v>
-<v t="ekr.20050419214545.5"><vh>endKeywords</vh></v>
-<v t="ekr.20050419214545.7" a="E"><vh>endMark</vh></v>
-<v t="ekr.20050419214545.9"><vh>endProps</vh></v>
-<v t="ekr.20050419214545.10"><vh>endProperty</vh></v>
-<v t="ekr.20050419214545.11"><vh>endRules</vh></v>
-<v t="ekr.20050419214545.14"><vh>endTerminate</vh></v>
-</v>
-<v t="ekr.20050419214545.12"><vh>endSeq</vh></v>
-<v t="ekr.20050419214545.6"><vh>endKeyword</vh></v>
-<v t="ekr.20050419214545.8"><vh>endMode</vh></v>
-<v t="ekr.20050419214545.13"><vh>endSpan &amp; endEolSpan</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050419115418"><vh>Script to run xml parser</vh>
+<v t="ekr.20050419115418" a="E"><vh>Script to run xml parser</vh>
 <v t="ekr.20050419120410.1"><vh>&lt;&lt; paths &gt;&gt;</vh></v>
-<v t="ekr.20050419215535"><vh>class modeClass</vh>
-<v t="ekr.20050419220140" a="E"><vh> mode.__init__</vh></v>
+<v t="ekr.20050419215535" a="E"><vh>class modeClass</vh>
+<v t="ekr.20050419220140"><vh> mode.__init__</vh></v>
 <v t="ekr.20050528112438"><vh>doAttribute</vh></v>
-<v t="ekr.20050528160435" a="E"><vh>doKeywordContent</vh></v>
-<v t="ekr.20050528161834"><vh>endElement (Improve)</vh></v>
+<v t="ekr.20050529062656"><vh>doContent</vh></v>
+<v t="ekr.20050528161834"><vh>endElement</vh></v>
 <v t="ekr.20050529051601"><vh>error</vh></v>
 <v t="ekr.20050529045503.1"><vh>inRule</vh></v>
 <v t="ekr.20050528102444"><vh>printSummary</vh></v>
-<v t="ekr.20050528110638" a="E"><vh>startElement</vh></v>
+<v t="ekr.20050528110638"><vh>startElement</vh></v>
 </v>
 <v t="ekr.20050419115912.1"><vh>class jEdit_contentHandler</vh>
-<v t="ekr.20050419120819" a="E"><vh> __init__ &amp; helpers</vh></v>
+<v t="ekr.20050419120819"><vh> __init__ &amp; helpers</vh></v>
 <v t="ekr.20050419140912"><vh>helpers</vh>
 <v t="ekr.20050419132345"><vh>attrsToList</vh></v>
 <v t="ekr.20050419124121"><vh>attrsToString</vh></v>
@@ -1956,15 +1905,15 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050419140912.1"><vh>sax over-rides</vh>
 <v t="ekr.20050528105408"><vh> Do nothing...</vh>
 <v t="ekr.20050419115418.4"><vh>other methods</vh></v>
-<v t="ekr.20050419115418.2" a="E"><vh>endDocument</vh></v>
+<v t="ekr.20050419115418.2"><vh>endDocument</vh></v>
 <v t="ekr.20050419115418.5"><vh>startDocument</vh></v>
 </v>
 <v t="ekr.20050419115418.1"><vh>characters</vh></v>
 <v t="ekr.20050419115418.3"><vh>endElement</vh></v>
 <v t="ekr.20050419115418.6"><vh>startElement</vh></v>
 </v>
-<v t="ekr.20050419192133" a="E"><vh>doStartElement</vh></v>
-<v t="ekr.20050419214545" a="E"><vh>doEndElement</vh></v>
+<v t="ekr.20050419192133"><vh>doStartElement</vh></v>
+<v t="ekr.20050419214545"><vh>doEndElement</vh></v>
 </v>
 </v>
 </v>
@@ -2675,7 +2624,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14468,19 +14417,25 @@ finally:
     content = content.replace('\r','').strip()
     content = self.clean(content)
 
-    elementKind = self.elementStack and self.elementStack[-1]
-    elementKind = elementKind.lower()
+    elementName = self.elementStack and self.elementStack[-1]
+    elementName = elementName.lower()
     
-    if self.printCharacters and content and elementKind not in self.suppressContent:
+    if 1: # new code
         if self.printAllElements:
             print content,
-        else:
-            print 'content:',elementKind,repr(content)
-        
-    if elementKind in ('keyword1','keyword2','keyword3','keyword4'):
-        self.mode.doKeywordContent(elementKind,content)
-
-    return content</t>
+        elif self.printCharacters and content and elementName not in self.suppressContent:
+            print 'content:',elementName,repr(content)
+    else:
+        if self.printCharacters and content and elementName not in self.suppressContent:
+            if self.printAllElements:
+                print content,
+            else:
+                print 'content:',elementName,repr(content)
+            
+    if self.mode:
+        self.mode.doContent(elementName,content)
+    else:
+        self.error('characters outside of mode')</t>
 <t tx="ekr.20050419115418.2">def endDocument(self):
 
     pass
@@ -14548,21 +14503,23 @@ path = os.path.normpath(path)</t>
     # Options...
     self.ignoreWs = True # True: don't print contents with only ws.
     self.newLineAfterStartElement = [
-        'keywords','mode','props','property','rules','span','eol_span','seq']
+        'keywords','mode','props','property','rules','span','eol_span',
+        # 'seq',
+    ]
     
     # Printing options
-    self.printAllElements = False
-    self.printCharacters = True or self.printAllElements
-    self.printAttributes = True and not self.printAllElements
+    self.printAllElements = True
+    self.printCharacters = False or self.printAllElements
+    self.printAttributes = False and not self.printAllElements
     self.printElements = [
         # 'begin','end',
         #'eol_span',
         #'keyword1','keyword2','keyword3','keyword4',
         #'mark_previous',
-        'mode',
+        #'mode',
         #'props',
         #'property',
-        'rules',
+        #'rules',
         #'span',
         #'seq',
     ]
@@ -14933,18 +14890,6 @@ LABEL
 LITERAL1,LITERAL2,LITERAL3,LITERAL4
 MARKUP
 OPERATOR </t>
-<t tx="ekr.20050419191207">def doAttr(self,elementName,bunch):
-    
-    name = bunch.name
-    val = bunch.val
-
-    if self.printAttributes:
-        print 'attr:',elementName,name,'=',val
-    
-    if self.mode:
-        self.mode.doAttr(name,val)
-    else:
-        self.error('Attribute appears outside of Mode')</t>
 <t tx="ekr.20050419192133">def doStartElement (self,elementName,attrs):
     
     if self.printAllElements or elementName.lower() in self.printElements:
@@ -14975,178 +14920,7 @@ OPERATOR </t>
 
     if name.lower() in self.newLineAfterStartElement:
         print</t>
-<t tx="ekr.20050419194651">def setAttrDispatchDict (self):
-    
-    self.attrDispatchDict = {
-    'AT_CHAR':             g.bunch(f=self.doIntAttr),
-    'AT_LINE_START':       g.bunch(f=self.doBoolAttr),
-    'AT_WHITESPACE_END':   g.bunch(f=self.doBoolAttr),
-    'AT_WORD_START':       g.bunch(f=self.doBoolAttr),
-    'DEFAULT':             g.bunch(f=self.doStringAttr),
-    'DELEGATE':            g.bunch(f=self.doDelegateAttr),
-    'DIGIT_RE':            g.bunch(f=self.doReAttr),
-    'ESCAPE':              g.bunch(f=self.doCharAttr),
-    'EXCLUDE_MATCH':       g.bunch(f=self.doBoolAttr),
-    'HASH_CHAR':           g.bunch(f=self.doCharAttr),
-    'HIGHLIGHT_DIGITS':    g.bunch(f=self.doBoolAttr),
-    'IGNORE_CASE':         g.bunch(f=self.doBoolAttr),
-    'NAME':                g.bunch(f=self.doStringAttr),
-    'SET':                 g.bunch(f=self.doStringAttr),
-    'NO_ESCAPE':           g.bunch(f=self.doBoolAttr),
-    'NO_LINE_BREAK':       g.bunch(f=self.doBoolAttr),
-    'NO_WORD_BREAK':       g.bunch(f=self.doBoolAttr),
-    'NO_WORD_SEP':         g.bunch(f=self.doBoolAttr),
-    'TYPE':                g.bunch(f=self.doStringAttr),
-    'VALUE':               g.bunch(f=self.doStringAttr),
-    }
-    
-    for key in self.attrDispatchDict.keys():
-        bunch = self.attrDispatchDict.get(key)
-        bunch.attributeName = key.lower()</t>
-<t tx="ekr.20050419194651.1">def doBoolAttr(self,elementName,bunch):
-    
-    name = bunch.name
-    val = bunch.val
-
-    if self.printAttributes:
-        print 'bool attr:',elementName,name,'=',val
-    
-    self.mode.attributes[name] = g.choose(val.lower=='true',True,False)</t>
-<t tx="ekr.20050419194651.2">def doReAttr(self,elementName,bunch):
-    
-    name = bunch.name
-    val = bunch.val
-
-    if self.printAttributes:
-        print 're attr:',elementName,name,'=',val
-    
-    self.mode.attributes[name] = val</t>
-<t tx="ekr.20050419194651.3">def doStringAttr(self,elementName,bunch):
-
-    name = bunch.name
-    val = bunch.val
-
-    if self.printAttributes:
-        print 'string attr:',elementName,name,'=',val
-    
-    self.mode.attributes[name] = val</t>
-<t tx="ekr.20050419194718">def doCharAttr(self,elementName,bunch):
-    
-    name = bunch.name
-    val = bunch.val
-
-    if self.printAttributes:
-        print 'char attr:',elementName,name,'=',val
-    
-    self.mode.attributes[name] = val</t>
-<t tx="ekr.20050419194822">def doIntAttr(self,elementName,bunch):
-    
-    name = bunch.name
-    val = bunch.val
-
-    if self.printAttributes:
-        print 'int attr:',elementName,name,'=',val
-    
-    self.mode.attributes[name] = val</t>
-<t tx="ekr.20050419194911">def doDelegateAttr(self,elementName,bunch):
-
-    name = bunch.name
-    val = bunch.val
-
-    if self.printAttributes:
-        print 'delegate attr:',elementName,name,'=',val
-    
-    self.mode.attributes[name] = val</t>
 <t tx="ekr.20050419200205"></t>
-<t tx="ekr.20050419211746.1">def setStartElementDispatchDict (self):
-    
-    self.startElementDispatchDict = {
-
-    'begin':            g.bunch(f=self.startBegin),
-    'end':              g.bunch(f=self.startEnd),
-    'eol_span':         g.bunch(f=self.startEolSpan,regexp=False),
-    'eol_span_regexp':  g.bunch(f=self.startEolSpan,regexp=True),
-    'import':           g.bunch(f=self.startImport),
-    'keywords':         g.bunch(f=self.startKeywords),
-    'keyword1':         g.bunch(f=self.startKeyword,keywordNumber=1),
-    'keyword2':         g.bunch(f=self.startKeyword,keywordNumber=2),
-    'keyword3':         g.bunch(f=self.startKeyword,keywordNumber=3),
-    'keyword4':         g.bunch(f=self.startKeyword,keywordNumber=4),
-    'mark_following':   g.bunch(f=self.startMark,kind='following'),
-    'mark_previous':    g.bunch(f=self.startMark,kind='previous'),
-    'mode':             g.bunch(f=self.startMode),
-    'props':            g.bunch(f=self.startProps),
-    'property':         g.bunch(f=self.startProperty),
-    'rules':            g.bunch(f=self.startRules),
-    'seq':              g.bunch(f=self.startSeq,regexp=False),
-    'seq_regexp':       g.bunch(f=self.startSeq,regexp=True),
-    'span':             g.bunch(f=self.startSpan,regexp=False),
-    'span_regexp':      g.bunch(f=self.startSpan,regexp=True),
-    'terminate':        g.bunch(f=self.startTerminate),
-    }
-    
-    if 0:
-        for key in self.elementDispatchDict.keys():
-            bunch = self.elementDispatchDict.get(key)
-            bunch.attributeName = key</t>
-<t tx="ekr.20050419211746.2">def startBegin (self,bunch):
-
-    if self.trace: g.trace()</t>
-<t tx="ekr.20050419211746.3">def startEnd (self,bunch):
-    
-    if self.trace: g.trace()
-</t>
-<t tx="ekr.20050419211746.5">def startImport (self,bunch):
-       
-    if self.trace: g.trace()
-
-</t>
-<t tx="ekr.20050419211746.6">def startKeywords (self,bunch):
-    
-    if self.trace: g.trace()
-</t>
-<t tx="ekr.20050419211746.7">def startMark (self,bunch): 
-    
-    # bunch.kind='following'/'previous'
-    if self.trace: g.trace('kind:',bunch.kind)
-</t>
-<t tx="ekr.20050419211746.8">def startMode (self,bunch):
-    
-    self.mode = modeClass(self)</t>
-<t tx="ekr.20050419211746.9">def startProps (self,bunch):
-    
-    if self.trace: g.trace()
-</t>
-<t tx="ekr.20050419211746.10">def startProperty (self,bunch):
-    
-    if self.trace: g.trace()
-</t>
-<t tx="ekr.20050419211746.11">def startRules (self,bunchs):
-    
-    if self.trace: g.trace()
-</t>
-<t tx="ekr.20050419211746.13">def startSpan (self,bunch):
-
-    if self.mode:
-        self.mode.startSpan(bunch.regexp)
-    else:
-        self.error('Span appears outside of a Mode')
-    
-def startEolSpan (self,bunch):
-
-    if self.mode:
-        self.mode.startSpan(bunch.regexp)
-    else:
-        self.error('Eol_span appears outside of a Mode')</t>
-<t tx="ekr.20050419211746.14">def startTerminate (self,bunch):
-      
-    if self.trace: g.trace()</t>
-<t tx="ekr.20050419212840">def startKeyword (self,bunch):
-    
-    if self.mode:
-        self.mode.startKeyword(bunch.keywordNumber)
-    else:
-        self.error('Keyword appears outside of a Mode')</t>
 <t tx="ekr.20050419214545">def doEndElement (self,elementName):
     
     if self.printAllElements or elementName.lower() in self.printElements:
@@ -15162,97 +14936,6 @@ def startEolSpan (self,bunch):
         self.error('End element appears outside of Mode:%s' % elementName)
         for bunch in self.attrsToList(attrs):
             self.error('Attribute appears outside of Mode:%s' %bunch.name)</t>
-<t tx="ekr.20050419214545.1">def endBegin (self,bunch):
-    
-    if self.trace: g.trace()</t>
-<t tx="ekr.20050419214545.2">def endEnd (self,bunch):
-    
-    if self.trace: g.trace()
-</t>
-<t tx="ekr.20050419214545.4">def endImport (self,bunch):
-       
-    if self.trace: g.trace()
-
-</t>
-<t tx="ekr.20050419214545.5">def endKeywords (self,bunch):
-    
-    if self.trace: g.trace()
-</t>
-<t tx="ekr.20050419214545.6">def endKeyword (self,bunch):
-    
-    self.mode.presentKeywordList = None</t>
-<t tx="ekr.20050419214545.7">def endMark (self,bunch): #,kind='following'/'previous'
-    
-    if self.trace: g.trace('kind:',bunch.kind)</t>
-<t tx="ekr.20050419214545.8">def endMode (self,bunch):
-    
-    if self.mode:
-        self.mode.printSummary()
-        self.modes.append(self.mode)
-        self.mode = None
-    else:
-        self.error('Unexpected end of Mode')</t>
-<t tx="ekr.20050419214545.9">def endProps (self,bunch):
-    
-    if self.trace: g.trace()
-</t>
-<t tx="ekr.20050419214545.10">def endProperty (self,bunch):
-    
-    if self.trace: g.trace()
-</t>
-<t tx="ekr.20050419214545.11">def endRules (self,bunch):
-    
-    if self.trace: g.trace()
-</t>
-<t tx="ekr.20050419214545.12">def endSeq (self,bunch): #,regexp=True/False
-    
-    if self.mode:
-        self.mode.endSeq()
-    else:
-        self.error('Seq appears outside of a Mode')
-</t>
-<t tx="ekr.20050419214545.13">def endSpan (self,bunch):
-    
-    if self.mode:
-        self.mode.endSpan()
-    else:
-        self.error('Seq ends outside of a Mode')
-    
-endEolSpan = endSpan</t>
-<t tx="ekr.20050419214545.14">def endTerminate (self,bunch):
-      
-    if self.trace: g.trace()</t>
-<t tx="ekr.20050419214653">def setEndElementDispatchDict (self):
-    
-    self.endElementDispatchDict = {
-
-    'begin':            g.bunch(f=self.endBegin),
-    'end':              g.bunch(f=self.endEnd),
-    'eol_span':         g.bunch(f=self.endEolSpan,regexp=False),
-    'eol_span_regexp':  g.bunch(f=self.endEolSpan,regexp=True),
-    'import':           g.bunch(f=self.endImport),
-    'keywords':         g.bunch(f=self.endKeywords),
-    'keyword1':         g.bunch(f=self.endKeyword,kind='1'),
-    'keyword2':         g.bunch(f=self.endKeyword,kind='2'),
-    'keyword3':         g.bunch(f=self.endKeyword,kind='3'),
-    'keyword4':         g.bunch(f=self.endKeyword,kind='4'),
-    'mark_following':   g.bunch(f=self.endMark,kind='following'),
-    'mark_previous':    g.bunch(f=self.endMark,kind='previous'),
-    'mode':             g.bunch(f=self.endMode),
-    'props':            g.bunch(f=self.endProps),
-    'property':         g.bunch(f=self.endProperty),
-    'rules':            g.bunch(f=self.endRules),
-    'seq':              g.bunch(f=self.endSeq,regexp=False),
-    'seq_regexp':       g.bunch(f=self.endSeq,regexp=True),
-    'span':             g.bunch(f=self.endSpan,regexp=False),
-    'span_regexp':      g.bunch(f=self.endSpan,regexp=True),
-    'terminate':        g.bunch(f=self.endTerminate),
-    }
-    
-    if 0:
-        for key in self.elementDispatchDict.keys():
-            bunch = self.elementDispatchDict.get(key)
-            bunch.attributeName = key</t>
 <t tx="ekr.20050419215535">class modeClass:
     
     @others</t>
@@ -15260,13 +14943,15 @@ endEolSpan = endSpan</t>
 
     self.contentHandler = contentHandler
     self.fileName = None # The file from which the mode was imported.
+    self.verbose = self.contentHandler.verbose
 
     # Mode statistics
     self.numberOfAttributes = 0
     self.numberOfElements = 0
+    self.numberOfErrors = 0
     self.numberOfPropertyAttributes = 0
     self.numberOfRuleAttributes = 0
-
+    
     # List of boolean attributes.
     self.boolAttrs = [
         'at_line_start','at_whitespace_end','at_word_start',
@@ -15278,24 +14963,24 @@ endEolSpan = endSpan</t>
         'eol_span','eol_span_regexp','import','keywords',
         'mark_following','mark_previous','seq','seq_regexp',
         'span','span_regexp','terminate',]
+        
+    self.seqSpanElements = [
+        'eol_span','eol_span_regexp',
+        'seq','seq_regexp',
+        'span','span_regexp',]
 
     # Mode semantics.
     self.attributes = {}
     self.rulesAttributes = {}
     self.inProps = False
     self.inRules = False
-    self.propery = None
     self.props = []
+    self.property = None
     self.rule = None
     self.rules = []
 
-    # Not used yet...
-    self.seqList = []
-    self.seqDict = None
-    self.spanList = []
-    self.spanDict = None
-    self.property = None
-    self.properties = []</t>
+
+   </t>
 <t tx="ekr.20050427101736">class ZipFile(  	file[, mode[, compression]])
     Open a ZIP file, where file can be either a path to a file (a string) or a file-like object. The mode parameter should be 'r' to read an existing file, 'w' to truncate and write a new file, or 'a' to append to an existing file. For mode is 'a' and file refers to an existing ZIP file, then additional files are added to it. If file does not refer to a ZIP file, then a new ZIP archive is appended to the file. This is meant for adding a ZIP archive to another file, such as python.exe. Using
 
@@ -15563,59 +15248,44 @@ after</t>
 <t tx="ekr.20050526144024">as</t>
 <t tx="ekr.20050526144024.1">@root aa</t>
 <t tx="ekr.20050526144024.2">@root bb</t>
-<t tx="ekr.20050528092533">- Fix problem with SEQ  &gt;= gets reported as &gt; = (two separate contents!)
-</t>
 <t tx="ekr.20050528102444">def printSummary (self):
 
     print '-' * 10, 'mode statistics'
-    print 'elements:',self.numberOfElements
+    print 'elements',self.numberOfElements
+    print 'errors',self.numberOfErrors
     print 'mode attributes',self.numberOfAttributes
     print 'property attributes',self.numberOfPropertyAttributes
     print 'rule attributes',self.numberOfRuleAttributes
-    print
-    
+
     if self.attributes:
-        print 'mode attributes...'
-        print self.attributes
-        print
+        print '%-20s' %'mode','attrs:',self.attributes
     if self.rulesAttributes:
-        print 'rules attributes...'
-        print self.rulesAttributes
-        print
-        
+        print '%-20s' %'rules','attrs:',self.rulesAttributes
     for bunch in self.props:
         d = bunch.attributes
-        if d: print '%-20s' %'property','attributes',d
+        if d: print '%-20s' %'property','attrs:',d
 
     for bunch in self.rules:
         if bunch.name == 'keywords':
             for key in ('keyword1','keyword2','keyword3','keyword4'):
                 theList = bunch.get(key,[])
-                if self.contentHandler.verbose:
-                    print key,theList
-                else:
-                    print key,len(theList)
-        d = bunch.attributes
-        if d:
-            print '%-20s' % ('rule:'+bunch.name),'attributes',d</t>
-<t tx="ekr.20050528105213"></t>
-<t tx="ekr.20050528105213.1"></t>
-<t tx="ekr.20050528105213.2">
-    bunch2 = self.attrDispatchDict.get(bunch.name)
-    if bunch2:
-        bunch2.f(elementName,bunch)
-    else:
-        g.trace('no handler for %s' % bunch.name)
-        
-    return bunch2</t>
+                if self.verbose: print key,theList
+                else:            print key,len(theList)
+        else:
+            d = bunch.attributes
+            d2 = bunch.get('contents')
+            if d or d2:
+                print '%-20s' % ('rule:'+bunch.name),
+                if d and d2: print 'attrs:',d,'chars:',d2
+                elif d:  print 'attrs',d
+                else:    print 'chars',d2
+            </t>
 <t tx="ekr.20050528105213.3">def error (self, message):
     
     print
     print
     print 'XML error: %s' % (message)
     print</t>
-<t tx="ekr.20050528105213.4"></t>
-<t tx="ekr.20050528105213.5"></t>
 <t tx="ekr.20050528105408"></t>
 <t tx="ekr.20050528110638">def startElement (self,elementName):
 
@@ -15625,13 +15295,11 @@ after</t>
         self.inProps = True
     if name == 'rules':
         self.inRules = True
-        
     if name == 'property':
         if self.inProps:
             self.property = g.bunch(name=name,attributes={})
         else:
             self.error('property not in props element')
-
     if name in self.ruleElements:
         if self.inRules:
             self.rule = g.bunch(name=name,attributes={})
@@ -15660,14 +15328,6 @@ after</t>
     else:
         self.attributes[name] = val
         self.numberOfAttributes += 1</t>
-<t tx="ekr.20050528160435">def doKeywordContent (self,keyword,content):
-
-    if self.inRule('keywords'):
-        theList = self.rule.get(keyword,[])
-        theList.append(content)
-        self.rule[keyword] = theList
-    else:
-        self.error('%d not in keywords' % keyword)</t>
 <t tx="ekr.20050528161834">def endElement (self,elementName):
 
     name = elementName.lower()
@@ -15682,29 +15342,39 @@ after</t>
             self.property = None
         else:
             self.error('end %s not matched by start %s' % (name,name))
-
     if name in self.ruleElements:
         if self.inRule(name):
             self.rules.append(self.rule)
             self.rule = None
         else:
-            self.error('end %s not matched by start %s' % (name,name))
-
-    ### This should be stored in individual rules.
-    if name == 'seq':
-        self.seqList.append(self.seqDict)
-        self.seqDict = {}
-    elif name == 'span':
-        self.spanList.append(self.spanDict)
-        self.spanDict = {}</t>
-<t tx="ekr.20050528163850"></t>
-<t tx="ekr.20050528163850.1"></t>
-<t tx="ekr.20050528163850.2"></t>
+            self.error('end %s not matched by start %s' % (name,name))</t>
 <t tx="ekr.20050529045503.1">def inRule (self,elementName):
 
     return self.rule and self.rule.get('name') == elementName</t>
 <t tx="ekr.20050529051601">def error (self,message):
+    
+    self.numberOfErrors += 1
 
-    return self.contentHandler.error(message)</t>
+    self.contentHandler.error(message)</t>
+<t tx="ekr.20050529062656">def doContent (self,elementName,content):
+    
+    if not content:
+        return
+    
+    name = str(elementName.lower())
+
+    if name in ('keyword1','keyword2','keyword3','keyword4'):
+        if self.inRule('keywords'):
+            theList = self.rule.get(name,[])
+            theList.append(content)
+            self.rule[name] = theList
+        else:
+            self.error('%d not in keywords' % name)
+
+    elif self.rule:
+        d = self.rule.get('contents',{})
+        s = d.get(name,'')
+        d [name] = s + content
+        self.rule['contents'] = d</t>
 </tnodes>
 </leo_file>
