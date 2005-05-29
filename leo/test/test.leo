@@ -1842,7 +1842,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050419115225" a="E"><vh>(parse jEdit files)</vh>
 <v t="ekr.20050419172816"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
-<v t="ekr.20050528092533"><vh>To do</vh></v>
+<v t="ekr.20050528092533" a="TV"><vh>To do</vh></v>
 <v t="ekr.20050419173824"><vh>jEdit docs...</vh>
 <v t="ekr.20050419175429"><vh>Rule ordering</vh></v>
 <v t="ekr.20050419181328"><vh>Attributes</vh>
@@ -1861,7 +1861,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050419200205"><vh>Elements</vh>
 <v t="ekr.20050419173824.6"><vh>mode</vh></v>
-<v t="ekr.20050419173824.7" a="E"><vh>props (can be placed inside rules tag)</vh>
+<v t="ekr.20050419173824.7"><vh>props (can be placed inside rules tag)</vh>
 <v t="ekr.20050419173824.8"><vh>property</vh></v>
 </v>
 <v t="ekr.20050419173824.9"><vh>begin (for span, etc.)</vh></v>
@@ -1881,9 +1881,9 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050528105213" a="E"><vh>No longer used</vh>
-<v t="ekr.20050419194651"><vh>setAttrDispatchDict</vh></v>
+<v t="ekr.20050528105213"><vh>No longer used</vh>
 <v t="ekr.20050528105213.1"><vh>Attributes</vh>
+<v t="ekr.20050419194651"><vh>setAttrDispatchDict</vh></v>
 <v t="ekr.20050528105213.2"><vh>from doAttr</vh></v>
 <v t="ekr.20050419194651.1"><vh>doBoolAttr</vh></v>
 <v t="ekr.20050419194718"><vh>doCharAttr</vh></v>
@@ -1892,44 +1892,11 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050419194651.2"><vh>doReAttr</vh></v>
 <v t="ekr.20050419194651.3"><vh>doStringAttr</vh></v>
 </v>
-</v>
-<v t="ekr.20050419115418" a="E"><vh>Script to run xml parser</vh>
-<v t="ekr.20050419120410.1"><vh>&lt;&lt; paths &gt;&gt;</vh></v>
-<v t="ekr.20050419215535"><vh>class modeClass</vh>
-<v t="ekr.20050419220140"><vh> mode.__init__</vh></v>
-<v t="ekr.20050528103055"><vh>keywordNumberToList</vh></v>
-<v t="ekr.20050528102444"><vh>printSummary</vh></v>
-<v t="ekr.20050528112438"><vh>doAttr (To do)</vh></v>
-<v t="ekr.20050528110638"><vh>startElement &amp; endElement</vh></v>
-<v t="ekr.20050528105858"><vh>startSeq &amp; endSeq</vh></v>
-<v t="ekr.20050528111547"><vh>startSpan &amp; endSpan</vh></v>
-</v>
-<v t="ekr.20050419115912.1" a="E"><vh>class jEdit_contentHandler</vh>
-<v t="ekr.20050419120819" a="ETV"><vh> __init__ &amp; helpers</vh>
+<v t="ekr.20050528163850"><vh>contentHandler helpers</vh>
 <v t="ekr.20050419211746.1"><vh>setStartElementDispatchDict</vh></v>
 <v t="ekr.20050419214653"><vh>setEndElementDispatchDict</vh></v>
-</v>
-<v t="ekr.20050419140912"><vh>helpers</vh>
-<v t="ekr.20050419132345"><vh>attrsToList</vh></v>
-<v t="ekr.20050419124121"><vh>attrsToString</vh></v>
-<v t="ekr.20050419115912"><vh>clean</vh></v>
-<v t="ekr.20050528105213.3"><vh>error</vh></v>
-<v t="ekr.20050419192455"><vh>printStartElement</vh></v>
-<v t="ekr.20050419131709"><vh>printSummary</vh></v>
-</v>
-<v t="ekr.20050419140912.1" a="E"><vh>sax over-rides</vh>
-<v t="ekr.20050528105408"><vh> Do nothing...</vh>
-<v t="ekr.20050419115418.4"><vh>other methods</vh></v>
-<v t="ekr.20050419115418.2" a="E"><vh>endDocument</vh></v>
-<v t="ekr.20050419115418.5"><vh>startDocument</vh></v>
-</v>
-<v t="ekr.20050419115418.1"><vh>characters</vh></v>
-<v t="ekr.20050419115418.3"><vh>endElement</vh></v>
-<v t="ekr.20050419115418.6"><vh>startElement</vh></v>
-</v>
-<v t="ekr.20050419195838" a="E"><vh>Semantics...</vh>
 <v t="ekr.20050419191207" a="E"><vh>doAttr</vh></v>
-<v t="ekr.20050419192133"><vh>doStartElement &amp; helpers</vh>
+<v t="ekr.20050528163850.1"><vh>Start handlers</vh>
 <v t="ekr.20050528105213.4"><vh> Do nothing...</vh>
 <v t="ekr.20050419211746.2"><vh>startBegin</vh></v>
 <v t="ekr.20050419211746.3"><vh>startEnd</vh></v>
@@ -1941,12 +1908,11 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050419211746.11"><vh>startRules</vh></v>
 <v t="ekr.20050419211746.14"><vh>startTerminate</vh></v>
 </v>
-<v t="ekr.20050419211746.12"><vh>startSeq</vh></v>
 <v t="ekr.20050419212840"><vh>startKeyword</vh></v>
 <v t="ekr.20050419211746.8"><vh>startMode</vh></v>
 <v t="ekr.20050419211746.13"><vh>startSpan &amp; startEolSpan</vh></v>
 </v>
-<v t="ekr.20050419214545"><vh>doEndElement &amp; helpers</vh>
+<v t="ekr.20050528163850.2"><vh>End helpers</vh>
 <v t="ekr.20050528105213.5"><vh> Do-nothing</vh>
 <v t="ekr.20050419214545.1"><vh>endBegin</vh></v>
 <v t="ekr.20050419214545.2"><vh>endEnd</vh></v>
@@ -1964,6 +1930,41 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050419214545.13"><vh>endSpan &amp; endEolSpan</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20050419115418"><vh>Script to run xml parser</vh>
+<v t="ekr.20050419120410.1"><vh>&lt;&lt; paths &gt;&gt;</vh></v>
+<v t="ekr.20050419215535"><vh>class modeClass</vh>
+<v t="ekr.20050419220140" a="E"><vh> mode.__init__</vh></v>
+<v t="ekr.20050528112438"><vh>doAttribute</vh></v>
+<v t="ekr.20050528160435" a="E"><vh>doKeywordContent</vh></v>
+<v t="ekr.20050528161834"><vh>endElement (Improve)</vh></v>
+<v t="ekr.20050529051601"><vh>error</vh></v>
+<v t="ekr.20050529045503.1"><vh>inRule</vh></v>
+<v t="ekr.20050528102444"><vh>printSummary</vh></v>
+<v t="ekr.20050528110638" a="E"><vh>startElement</vh></v>
+</v>
+<v t="ekr.20050419115912.1"><vh>class jEdit_contentHandler</vh>
+<v t="ekr.20050419120819" a="E"><vh> __init__ &amp; helpers</vh></v>
+<v t="ekr.20050419140912"><vh>helpers</vh>
+<v t="ekr.20050419132345"><vh>attrsToList</vh></v>
+<v t="ekr.20050419124121"><vh>attrsToString</vh></v>
+<v t="ekr.20050419115912"><vh>clean</vh></v>
+<v t="ekr.20050528105213.3"><vh>error</vh></v>
+<v t="ekr.20050419192455"><vh>printStartElement</vh></v>
+<v t="ekr.20050419131709"><vh>printSummary</vh></v>
+</v>
+<v t="ekr.20050419140912.1"><vh>sax over-rides</vh>
+<v t="ekr.20050528105408"><vh> Do nothing...</vh>
+<v t="ekr.20050419115418.4"><vh>other methods</vh></v>
+<v t="ekr.20050419115418.2" a="E"><vh>endDocument</vh></v>
+<v t="ekr.20050419115418.5"><vh>startDocument</vh></v>
+</v>
+<v t="ekr.20050419115418.1"><vh>characters</vh></v>
+<v t="ekr.20050419115418.3"><vh>endElement</vh></v>
+<v t="ekr.20050419115418.6"><vh>startElement</vh></v>
+</v>
+<v t="ekr.20050419192133" a="E"><vh>doStartElement</vh></v>
+<v t="ekr.20050419214545" a="E"><vh>doEndElement</vh></v>
 </v>
 </v>
 </v>
@@ -14468,15 +14469,16 @@ finally:
     content = self.clean(content)
 
     elementKind = self.elementStack and self.elementStack[-1]
+    elementKind = elementKind.lower()
     
-    if self.printCharacters and content and elementKind.lower() not in self.suppressContent:
+    if self.printCharacters and content and elementKind not in self.suppressContent:
         if self.printAllElements:
             print content,
         else:
             print 'content:',elementKind,repr(content)
         
-    if elementKind.lower() in ('keyword1','keyword2','keyword3','keyword4'):
-        self.mode.presentKeywordList.append(content)
+    if elementKind in ('keyword1','keyword2','keyword3','keyword4'):
+        self.mode.doKeywordContent(elementKind,content)
 
     return content</t>
 <t tx="ekr.20050419115418.2">def endDocument(self):
@@ -14516,13 +14518,12 @@ def endElementNS(self,name,qname):
         self.numberOfElements += 1
         
     self.elementStack.append(name)
-    
     self.doStartElement(name,attrs)</t>
 <t tx="ekr.20050419115912">def clean(self,s):
 
     return g.toEncodedString(s,"ascii")</t>
 <t tx="ekr.20050419115912.1">class jEdit_contentHandler (xml.sax.saxutils.XMLGenerator):
-    
+
     @others
 </t>
 <t tx="ekr.20050419120410.1"># The last path takes effect.
@@ -14577,11 +14578,7 @@ path = os.path.normpath(path)</t>
     # Semantics: most of these should be mode ivars.
     self.elementStack = []
     self.mode = None # The present mode, or None if outside all modes.
-    self.modes = [] # All modes defined here or by imports.
-    
-    # Init the dispatch dicts...
-    self.setStartElementDispatchDict()
-    self.setEndElementDispatchDict()</t>
+    self.modes = [] # All modes defined here or by imports.</t>
 <t tx="ekr.20050419124121">def attrsToString (self,attrs,sep='\n'):
     
     '''Convert the attributes to a string.
@@ -14953,18 +14950,20 @@ OPERATOR </t>
     if self.printAllElements or elementName.lower() in self.printElements:
         self.printStartElement(elementName,attrs)
 
-    bunch = self.startElementDispatchDict.get(elementName.lower())
-    if bunch:
-            bunch.f(bunch)
-    else:
-        if 1: # Not an error.
-            g.trace('no handler for %s' % elementName)
-            
-    if self.mode and elementName.lower() != 'mode':
+    elementName = elementName.lower()
+    
+    if elementName == 'mode':
+        self.mode = modeClass(self)
+    elif self.mode:
         self.mode.startElement(elementName)
-        
-    for attrBunch in self.attrsToList(attrs):
-        self.doAttr(elementName,attrBunch)</t>
+        for bunch in self.attrsToList(attrs):
+            if self.printAttributes:
+                print 'attr:',elementName,bunch.name,'=',bunch.val
+            self.mode.doAttribute(bunch.name,bunch.val)
+    else:
+        self.error('Start element appears outside of Mode:%s' % elementName)
+        for bunch in self.attrsToList(attrs):
+            self.error('Attribute appears outside of Mode:%s' % bunch.name)</t>
 <t tx="ekr.20050419192455">def printStartElement(self,name,attrs):
 
     if attrs.getLength() &gt; 0:
@@ -15058,7 +15057,6 @@ OPERATOR </t>
         print 'delegate attr:',elementName,name,'=',val
     
     self.mode.attributes[name] = val</t>
-<t tx="ekr.20050419195838"></t>
 <t tx="ekr.20050419200205"></t>
 <t tx="ekr.20050419211746.1">def setStartElementDispatchDict (self):
     
@@ -15127,12 +15125,6 @@ OPERATOR </t>
     
     if self.trace: g.trace()
 </t>
-<t tx="ekr.20050419211746.12">def startSeq (self,bunch):
-    
-    if self.mode:
-        self.mode.startSeq()
-    else:
-        self.error('Seq appears outside of a Mode')</t>
 <t tx="ekr.20050419211746.13">def startSpan (self,bunch):
 
     if self.mode:
@@ -15152,7 +15144,7 @@ def startEolSpan (self,bunch):
 <t tx="ekr.20050419212840">def startKeyword (self,bunch):
     
     if self.mode:
-        self.mode.presentKeywordList = self.mode.keywordNumberToList(bunch.keywordNumber)
+        self.mode.startKeyword(bunch.keywordNumber)
     else:
         self.error('Keyword appears outside of a Mode')</t>
 <t tx="ekr.20050419214545">def doEndElement (self,elementName):
@@ -15160,14 +15152,16 @@ def startEolSpan (self,bunch):
     if self.printAllElements or elementName.lower() in self.printElements:
         print '&lt;/' + self.clean(elementName).strip() + '&gt;'
         
-    bunch = self.endElementDispatchDict.get(elementName.lower())
-    if bunch:
-        bunch.f(bunch)
+    if elementName.lower() == 'mode':
+        self.modes.append(self.mode)
+        self.mode.printSummary()
+        self.mode = None
+    elif self.mode:
+        self.mode.endElement(elementName)
     else:
-        g.trace('no handler for %s' % elementName)
-        
-    if self.mode:
-        self.mode.endElement(elementName)</t>
+        self.error('End element appears outside of Mode:%s' % elementName)
+        for bunch in self.attrsToList(attrs):
+            self.error('Attribute appears outside of Mode:%s' %bunch.name)</t>
 <t tx="ekr.20050419214545.1">def endBegin (self,bunch):
     
     if self.trace: g.trace()</t>
@@ -15263,36 +15257,45 @@ endEolSpan = endSpan</t>
     
     @others</t>
 <t tx="ekr.20050419220140">def __init__ (self,contentHandler):
-    
+
     self.contentHandler = contentHandler
     self.fileName = None # The file from which the mode was imported.
-    
+
     # Mode statistics
     self.numberOfAttributes = 0
     self.numberOfElements = 0
-    
+    self.numberOfPropertyAttributes = 0
+    self.numberOfRuleAttributes = 0
+
+    # List of boolean attributes.
+    self.boolAttrs = [
+        'at_line_start','at_whitespace_end','at_word_start',
+        'exclude_match','highlight_digits','ignore_case',
+        'no_escape','no_line_break','no_word_break','no_word_sep',]
+
+    # List of elements that start a rule.
+    self.ruleElements = [
+        'eol_span','eol_span_regexp','import','keywords',
+        'mark_following','mark_previous','seq','seq_regexp',
+        'span','span_regexp','terminate',]
+
     # Mode semantics.
     self.attributes = {}
+    self.rulesAttributes = {}
     self.inProps = False
     self.inRules = False
-    self.inSeq = False
-    self.inSpan = False
-    self.keywords1List = []
-    self.keywords2List = []
-    self.keywords3List = []
-    self.keywords4List = []
-    self.presentElement = None
-    self.presentKeywordList = None
+    self.propery = None
+    self.props = []
+    self.rule = None
+    self.rules = []
+
+    # Not used yet...
     self.seqList = []
     self.seqDict = None
     self.spanList = []
     self.spanDict = None
-    
-    # Not used yet...
     self.property = None
-    self.properties = []
-    self.rule = None
-    self.rules = []</t>
+    self.properties = []</t>
 <t tx="ekr.20050427101736">class ZipFile(  	file[, mode[, compression]])
     Open a ZIP file, where file can be either a path to a file (a string) or a file-like object. The mode parameter should be 'r' to read an existing file, 'w' to truncate and write a new file, or 'a' to append to an existing file. For mode is 'a' and file refers to an existing ZIP file, then additional files are added to it. If file does not refer to a ZIP file, then a new ZIP archive is appended to the file. This is meant for adding a ZIP archive to another file, such as python.exe. Using
 
@@ -15560,36 +15563,41 @@ after</t>
 <t tx="ekr.20050526144024">as</t>
 <t tx="ekr.20050526144024.1">@root aa</t>
 <t tx="ekr.20050526144024.2">@root bb</t>
-<t tx="ekr.20050528092533">** Keep modes separate.
-    - Use mode-specific ivars.
-    
-- Fix problem with SEQ  &gt;= gets reported as &gt; = (two separate contents!)</t>
+<t tx="ekr.20050528092533">- Fix problem with SEQ  &gt;= gets reported as &gt; = (two separate contents!)
+</t>
 <t tx="ekr.20050528102444">def printSummary (self):
-    
+
     print '-' * 10, 'mode statistics'
     print 'elements:',self.numberOfElements
-    print 'attributes',self.numberOfAttributes
+    print 'mode attributes',self.numberOfAttributes
+    print 'property attributes',self.numberOfPropertyAttributes
+    print 'rule attributes',self.numberOfRuleAttributes
+    print
     
-    for name,theList in (
-        ('KEYWORD1',self.keywords1List),
-        ('KEYWORD2',self.keywords2List),
-        ('KEYWORD3',self.keywords3List),
-        ('KEYWORD4',self.keywords4List),
-    ):
-        if self.contentHandler.verbose:
-            print name,theList
-        else:
-            print name,len(theList)</t>
-<t tx="ekr.20050528103055">def keywordNumberToList(self, keywordNumber):
-    
-    d = {
-        1:self.keywords1List,
-        2:self.keywords2List,
-        3:self.keywords3List,
-        4:self.keywords4List,
-    }
-    
-    return d.get(keywordNumber)</t>
+    if self.attributes:
+        print 'mode attributes...'
+        print self.attributes
+        print
+    if self.rulesAttributes:
+        print 'rules attributes...'
+        print self.rulesAttributes
+        print
+        
+    for bunch in self.props:
+        d = bunch.attributes
+        if d: print '%-20s' %'property','attributes',d
+
+    for bunch in self.rules:
+        if bunch.name == 'keywords':
+            for key in ('keyword1','keyword2','keyword3','keyword4'):
+                theList = bunch.get(key,[])
+                if self.contentHandler.verbose:
+                    print key,theList
+                else:
+                    print key,len(theList)
+        d = bunch.attributes
+        if d:
+            print '%-20s' % ('rule:'+bunch.name),'attributes',d</t>
 <t tx="ekr.20050528105213"></t>
 <t tx="ekr.20050528105213.1"></t>
 <t tx="ekr.20050528105213.2">
@@ -15609,47 +15617,94 @@ after</t>
 <t tx="ekr.20050528105213.4"></t>
 <t tx="ekr.20050528105213.5"></t>
 <t tx="ekr.20050528105408"></t>
-<t tx="ekr.20050528105858">def startSeq (self):
-    
-    self.seqDict = {}
-    
-def endSeq (self):
-    
-    self.seqList.append(self.seqDict)
-    self.seqDict = None</t>
 <t tx="ekr.20050528110638">def startElement (self,elementName):
-    
+
     name = elementName.lower()
-    self.presentElement = name
+    
+    if name == 'props':
+        self.inProps = True
+    if name == 'rules':
+        self.inRules = True
+        
+    if name == 'property':
+        if self.inProps:
+            self.property = g.bunch(name=name,attributes={})
+        else:
+            self.error('property not in props element')
 
-    if   name == 'props':   self.inProps = True
-    elif name == 'rules':   self.inRules = True
-    elif name == 'seq':     self.inSeq   = True
-    elif name == 'span':    self.inSpan  = True
+    if name in self.ruleElements:
+        if self.inRules:
+            self.rule = g.bunch(name=name,attributes={})
+        else:
+            self.error('%s not in rules element' % name)</t>
+<t tx="ekr.20050528112438">def doAttribute (self,name,val):
     
-def endElement (self,elementName):
+    name = str(name.lower())
     
+    if name in self.boolAttrs:
+        val = g.choose(val=='True',True,False)
+    else:
+        val = str(val) # Do NOT lower this value!
+
+    if self.rule:
+        d = self.rule.get('attributes')
+        d [name] = val
+        self.numberOfRuleAttributes += 1
+    elif self.property:
+        d = self.property.get('attributes')
+        d [name] = val
+        self.numberOfPropertyAttributes += 1
+    elif self.inRules:
+        self.rulesAttributes[name] = val
+        self.numberOfAttributes += 1
+    else:
+        self.attributes[name] = val
+        self.numberOfAttributes += 1</t>
+<t tx="ekr.20050528160435">def doKeywordContent (self,keyword,content):
+
+    if self.inRule('keywords'):
+        theList = self.rule.get(keyword,[])
+        theList.append(content)
+        self.rule[keyword] = theList
+    else:
+        self.error('%d not in keywords' % keyword)</t>
+<t tx="ekr.20050528161834">def endElement (self,elementName):
+
     name = elementName.lower()
-    self.presentElement = None
+    
+    if name == 'props':
+        self.inProps = True
+    if name == 'rules':
+        self.inRules = False
+    if name == 'property':
+        if self.property:
+            self.props.append(self.property)
+            self.property = None
+        else:
+            self.error('end %s not matched by start %s' % (name,name))
 
-    if   name == 'props':   self.inProps = False
-    elif name == 'rules':   self.inRules = False
-    elif name == 'seq':     self.inSeq   = False
-    elif name == 'span':    self.inSpan  = False</t>
-<t tx="ekr.20050528111547">def startSpan (self,regexp):
-    
-    self.spanDict = {}
+    if name in self.ruleElements:
+        if self.inRule(name):
+            self.rules.append(self.rule)
+            self.rule = None
+        else:
+            self.error('end %s not matched by start %s' % (name,name))
 
-def endSpan (self):
-    
-    self.spanList.append(self.spanDict)
-    self.spanDict = None
-</t>
-<t tx="ekr.20050528112438">def doAttr (self,name,val):
-    
-    ### To do:  set attribute of property, seq, span, mark, etc.
-    
-    self.attributes[name] = val
-    self.numberOfAttributes += 1</t>
+    ### This should be stored in individual rules.
+    if name == 'seq':
+        self.seqList.append(self.seqDict)
+        self.seqDict = {}
+    elif name == 'span':
+        self.spanList.append(self.spanDict)
+        self.spanDict = {}</t>
+<t tx="ekr.20050528163850"></t>
+<t tx="ekr.20050528163850.1"></t>
+<t tx="ekr.20050528163850.2"></t>
+<t tx="ekr.20050529045503.1">def inRule (self,elementName):
+
+    return self.rule and self.rule.get('name') == elementName</t>
+<t tx="ekr.20050529051601">def error (self,message):
+
+    return self.contentHandler.error(message)</t>
 </tnodes>
 </leo_file>
