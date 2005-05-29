@@ -2,7 +2,7 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7009" clone_windows="0"/>
-<globals body_outline_ratio="0.553409090909">
+<globals body_outline_ratio="0.555681818182">
 	<global_window_position top="64" left="269" height="880" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -1842,36 +1842,51 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050419115225" a="E"><vh>(parse jEdit files)</vh>
 <v t="ekr.20050419172816"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
-<v t="ekr.20050419173824"><vh>jEdit docs...</vh>
+<v t="ekr.20050419173824" a="E"><vh>jEdit docs...</vh>
 <v t="ekr.20050419175429"><vh>Rule ordering</vh></v>
 <v t="ekr.20050419181328"><vh>Attributes</vh>
-<v t="ekr.20050419182514"><vh>AT_CHAR (int)</vh></v>
+<v t="ekr.20050529103436"><vh> Documentation of attributes</vh>
+<v t="ekr.20050529103859.1"><vh> For 'seq', 'span', 'begin', 'end'</vh>
 <v t="ekr.20050419182514.1"><vh>AT_LINE_START (bool)</vh></v>
 <v t="ekr.20050419182514.2"><vh>AT_WHITESPACE_END (bool)</vh></v>
 <v t="ekr.20050419182514.3"><vh>AT_WORD_START (bool)</vh></v>
-<v t="ekr.20050419182514.4"><vh>DELEGATE (mode name)</vh></v>
-<v t="ekr.20050419182514.5"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
-<v t="ekr.20050419182514.6"><vh>EXCLUDE_MATCH (bool)</vh></v>
-<v t="ekr.20050419182514.7"><vh>HASH_CHAR (char)</vh></v>
-<v t="ekr.20050419182514.8"><vh>NO_ESCAPE (bool)</vh></v>
-<v t="ekr.20050419182514.9"><vh>NO_LINE_BREAK (bool)</vh></v>
+</v>
+<v t="ekr.20050529104609"><vh> For 'span' only</vh>
 <v t="ekr.20050419182514.10"><vh>NO_WORD_BREAK (bool)</vh></v>
-<v t="ekr.20050419182514.11"><vh>TYPE</vh></v>
+<v t="ekr.20050419182514.9"><vh>NO_LINE_BREAK (bool)</vh></v>
+<v t="ekr.20050419182514.8"><vh>NO_ESCAPE (bool)</vh></v>
+<v t="ekr.20050419182514.6"><vh>EXCLUDE_MATCH (bool)</vh></v>
 </v>
-<v t="ekr.20050419200205"><vh>Elements</vh>
-<v t="ekr.20050419173824.6"><vh>mode</vh></v>
-<v t="ekr.20050419173824.7"><vh>props (can be placed inside rules tag)</vh>
-<v t="ekr.20050419173824.8"><vh>property</vh></v>
+<v t="ekr.20050529110433"><vh> For 'rules' only</vh>
+<v t="ekr.20050529102116.4"><vh>DEFAULT</vh></v>
+<v t="ekr.20050419182514.5"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
+<v t="ekr.20050529102116.5"><vh>IGNORE_CASE (bool)</vh></v>
+<v t="ekr.20050529102116.6"><vh>SET</vh></v>
+<v t="ekr.20050529102116.7"><vh>NO_WORD_SEP</vh></v>
 </v>
-<v t="ekr.20050419173824.9"><vh>begin (for span, etc.)</vh></v>
-<v t="ekr.20050419173824.10"><vh>end (for span, etc.)</vh></v>
-<v t="ekr.20050419173824.3"><vh>rules</vh>
+<v t="ekr.20050529103436.2" a="E"><vh>AT_CHAR (int) for 'terminate'</vh></v>
+<v t="ekr.20050529104244" a="E"><vh>DELEGATE: for 'import', 'span' &amp; 'seq'</vh></v>
+<v t="ekr.20050419182514.7"><vh>HASH_CHAR (char) For 'regx'</vh></v>
+<v t="ekr.20050419182514.11" a="E"><vh>TYPE (Token Types)</vh></v>
+</v>
+<v t="ekr.20050529103436.3"><vh>Attributes for 'begin' &amp; 'end'</vh></v>
+<v t="ekr.20050529102116" a="E"><vh>Attributes for 'import': delegate</vh></v>
+<v t="ekr.20050529102116.8"><vh>Attributes for 'mark' </vh></v>
+<v t="ekr.20050529102116.1"><vh>Attributes for 'property': name, value</vh></v>
+<v t="ekr.20050529102116.3" a="E"><vh>Attributes for 'rules'</vh></v>
+<v t="ekr.20050529102116.9" a="E"><vh>Attributes for 'span'</vh></v>
+<v t="ekr.20050529103436.4"><vh>Attributes for 'seq' </vh></v>
+</v>
+<v t="ekr.20050419200205" a="TV"><vh>Elements</vh>
 <v t="ekr.20050419173824.13"><vh>eol_span</vh></v>
 <v t="ekr.20050419173824.12"><vh>eol_span_regexp</vh></v>
 <v t="ekr.20050419173824.16"><vh>import</vh></v>
 <v t="ekr.20050419173824.2"><vh>keywords</vh></v>
 <v t="ekr.20050419173824.17"><vh>mark_following</vh></v>
 <v t="ekr.20050419173824.18"><vh>mark_previous</vh></v>
+<v t="ekr.20050419173824.6"><vh>mode</vh></v>
+<v t="ekr.20050419173824.7" a="E"><vh>props &amp; property</vh></v>
+<v t="ekr.20050419173824.3" a="E"><vh>rules</vh></v>
 <v t="ekr.20050419173824.14"><vh>seq</vh></v>
 <v t="ekr.20050419173824.15"><vh>seq_regexp</vh></v>
 <v t="ekr.20050419173824.4"><vh>span</vh></v>
@@ -1879,11 +1894,10 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050419173824.5"><vh>terminate</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20050419115418" a="E"><vh>Parse jEdit script</vh>
+<v t="ekr.20050419115418"><vh>Parse jEdit script</vh>
 <v t="ekr.20050419120410.1"><vh>&lt;&lt; paths &gt;&gt;</vh></v>
 <v t="ekr.20050419215535" a="E"><vh>class modeClass</vh>
-<v t="ekr.20050419220140" a="TV"><vh> mode.__init__</vh></v>
+<v t="ekr.20050419220140"><vh> mode.__init__</vh></v>
 <v t="ekr.20050528112438"><vh>doAttribute</vh></v>
 <v t="ekr.20050529062656"><vh>doContent</vh></v>
 <v t="ekr.20050528161834"><vh>endElement</vh></v>
@@ -2624,7 +2638,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14674,8 +14688,62 @@ Each mode definition must also contain exactly one MODE tag. All other tags (PRO
 &lt;MODE&gt;
     ... mode definition goes here ...
 &lt;/MODE&gt;</t>
-<t tx="ekr.20050419173824.7"></t>
-<t tx="ekr.20050419173824.8">Here is the complete &lt;PROPS&gt; tag for Java mode:
+<t tx="ekr.20050419173824.7">@nocolor
+The PROPS tag and the PROPERTY tags inside it are used to define mode-specific properties. Each PROPERTY tag must have a NAME attribute set to the property's name, and a VALUE attribute with the property's value.
+
+All buffer-local properties listed in the section called “Buffer-Local Properties” may be given values in edit modes.
+
+The following mode properties specify commenting strings:
+
+* commentEnd - the comment end string, used by the Range Comment command.
+* commentStart - the comment start string, used by the Range Comment command.
+* lineComment - the line comment string, used by the Line Comment command. 
+
+When performing auto indent, a number of mode properties determine the resulting indent level:
+
+* The line and the one before it are scanned for brackets listed in the indentCloseBrackets and indentOpenBrackets properties. Opening brackets in the previous line increase indent.
+
+If lineUpClosingBracket is set to true, then closing brackets on the current line will line up with the line containing the matching opening bracket. For example, in Java mode lineUpClosingBracket is set to true, resulting in brackets being indented like so:
+
+{
+    // Code
+    {
+        // More code
+    }
+}
+
+If lineUpClosingBracket is set to false, the line after a closing bracket will be lined up with the line containing the matching opening bracket. For example, in Lisp mode lineUpClosingBracket is set to false, resulting in brackets being indented like so:
+
+(foo 'a-parameter
+    (crazy-p)
+    (bar baz ()))
+(print "hello world")
+
+* If the previous line contains no opening brackets, or if the doubleBracketIndent property is set to true, the previous line is checked against the regular expressions in the indentNextLine and indentNextLines properties. If the previous line matches the former, the indent of the current line is increased and the subsequent line is shifted back again. If the previous line matches the latter, the indent of the current and subsequent lines is increased.
+
+In Java mode, for example, the indentNextLine property is set to match control structures such as “if”, “else”, “while”, and so on.
+
+The doubleBracketIndent property, if set to the default of false, results in code indented like so:
+
+while(objects.hasNext())
+{
+    Object next = objects.hasNext();
+    if(next instanceof Paintable)
+        next.paint(g);
+}
+
+On the other hand, settings this property to “true” will give the following result:
+
+while(objects.hasNext())
+    {
+        Object next = objects.hasNext();
+        if(next instanceof Paintable)
+            next.paint(g);
+    }
+
+Here is the complete &lt;PROPS&gt; tag for Java mode:
+@color
+@language html
 
 &lt;PROPS&gt;
     &lt;PROPERTY NAME="commentStart" VALUE="/*" /&gt;
@@ -14692,8 +14760,6 @@ Each mode definition must also contain exactly one MODE tag. All other tags (PRO
     &lt;PROPERTY NAME="doubleBracketIndent" VALUE="false" /&gt;
     &lt;PROPERTY NAME="lineUpClosingBracket" VALUE="true" /&gt;
 &lt;/PROPS&gt;</t>
-<t tx="ekr.20050419173824.9"></t>
-<t tx="ekr.20050419173824.10"></t>
 <t tx="ekr.20050419173824.11">The SPAN_REGEXP rule is similar to the SPAN rule except the start sequence is taken to be a regular expression.
 
 In addition to the attributes supported by the SPAN tag, the HASH_CHAR attribute must be specified. It must be set to the first character that the regular expression matches. This rules out using regular expressions which can match more than one character at the start position. The regular expression match cannot span more than one line, either.
@@ -14830,35 +14896,10 @@ Here is a rule that highlights labels in Java mode (for example, “XXX:”):
 <t tx="ekr.20050419175429">You might encounter this very common pitfall when writing your own modes.
 
 Since jEdit checks buffer text against parser rules in the order they appear in the ruleset, more specific rules must be placed before generalized ones, otherwise the generalized rules will catch everything. </t>
-<t tx="ekr.20050419181328">Atribute            Elements used in
---------            ----------------
-AT_CHAR             TERMINATE
-AT_LINE_START       EOL_SPAN,EOL_SPAN_REGEXP,MARK_FOLLOWING,MARK_PREVIOUS,SEQ,SEQ_REGEXP,SPAN,SPAN_REGEXP,BEGIN,END
-AT_WHITESPACE_END   EOL_SPAN,EOL_SPAN_REGEXP,MARK_FOLLOWING,MARK_PREVIOUS,SEQ,SEQ_REGEXP,SPAN,SPAN_REGEXP,BEGIN,END
-AT_WORD_START       EOL_SPAN,EOL_SPAN_REGEXP,MARK_FOLLOWING,MARK_PREVIOUS,SEQ,SEQ_REGEXP,SPAN,SPAN_REGEXP,BEGIN,END
-DEFAULT             RULES
-DELEGATE            EOL_SPAN,EOL_SPAN_REGEXP,IMPORT,SEQ,SPAN
-DIGIT_RE            RULES
-EXCLUDE_MATCH       EOL_SPAN,EOL_SPAN_REGEXP,MARK_FOLLOWING,MARK_PREVIOUS,SPAN,SPAN_REGEXP
-HASH_CHAR           EOL_SPAN_REGEXP,SEQ_REGEXP,SPAN_REGEXP
-HIGHLIGHT_DIGITS    RULES
-IGNORE_CASE         RULES
-NAME                PROPERTY
-SET                 RULES
-NO_ESCAPE           SPAN,SPAN_REGEXP
-NO_LINE_BREAK       SPAN,SPAN_REGEXP
-NO_WORD_BREAK       SPAN,SPAN_REGEXP
-NO_WORD_SEP         RULES
-TYPE                EOL_SPAN,EOL_SPAN_REGEXP,IMPORT,MARK_FOLLOWING,MARK_PREVIOUS,SEQ,SEQ_REGEXP,SPAN,SPAN_REGEXP
-VALUE               PROPERTY</t>
-<t tx="ekr.20050419182514">The number of characters to terminate after.</t>
+<t tx="ekr.20050419181328"></t>
 <t tx="ekr.20050419182514.1">If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line.</t>
 <t tx="ekr.20050419182514.2">If set to TRUE, the sequence will only be highlighted if it is the first non-whitespace text in the line.</t>
 <t tx="ekr.20050419182514.3">If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a word.</t>
-<t tx="ekr.20050419182514.4">Text inside the span will be highlighted with the specified ruleset. To delegate
-to a ruleset defined in the current mode, just specify its name. To delegate to
-a ruleset defined in another mode, specify a name of the form mode::ruleset.
-Note that the first (unnamed) ruleset in a mode is called “MAIN”.</t>
 <t tx="ekr.20050419182514.5">If the HIGHLIGHT_DIGITS attribute is set to TRUE, jEdit will attempt to highlight numbers in this ruleset.
 
 Any word consisting entirely of digits (0-9) will be highlighted with the DIGIT token type.
@@ -14869,7 +14910,11 @@ Here is an example DIGIT_RE regular expression that highlights Java-style numeri
 
 DIGIT_RE="(0x[[:xdigit:]]+|[[:digit:]]+(e[[:digit:]]*)?)[lLdDfF]?"</t>
 <t tx="ekr.20050419182514.6">If set to TRUE, the match will not be highlighted, only the text before it will.</t>
-<t tx="ekr.20050419182514.7">It must be set to the first character that the regular expression matches. This
+<t tx="ekr.20050419182514.7">Atribute            Elements used in
+--------            ----------------
+HASH_CHAR           EOL_SPAN_REGEXP,SPAN_REGEXP,SEQ_REGEXP
+
+It must be set to the first character that the regular expression matches. This
 rules out using regular expressions which can match more than one character at
 the start position. The regular expression match cannot span more than one line,
 either.</t>
@@ -14878,18 +14923,18 @@ either.</t>
 </t>
 <t tx="ekr.20050419182514.9">If set to TRUE, the span will not cross line breaks.</t>
 <t tx="ekr.20050419182514.10">If set to TRUE, the span will not cross word breaks.</t>
-<t tx="ekr.20050419182514.11">The token type to highlight the text with. See the section called “Token Types” for a list of token types.
+<t tx="ekr.20050419182514.11">The token type to highlight the text with.
 
 Parser rules can highlight tokens using any of the following token types:
 
-NULL - no special highlighting is performed on tokens of type NULL
+NULL - no special highlighting
 COMMENT1,COMMENT2,COMMENT3,COMMENT4
 FUNCTION
 KEYWORD1,KEYWORD2,KEYWORD3,KEYWORD4
 LABEL
 LITERAL1,LITERAL2,LITERAL3,LITERAL4
 MARKUP
-OPERATOR </t>
+OPERATOR</t>
 <t tx="ekr.20050419192133">def doStartElement (self,elementName,attrs):
     
     if self.printAllElements or elementName.lower() in self.printElements:
@@ -15373,5 +15418,83 @@ after</t>
         s = d.get(name,'')
         d [name] = s + content
         self.rule['contents'] = d</t>
+<t tx="ekr.20050529102116">The only required attribute DELEGATE must be set to the name of a ruleset. To
+import a ruleset defined in the current mode, just specify its name. To import a
+ruleset defined in another mode, specify a name of the form mode::ruleset. Note
+that the first (unnamed) ruleset in a mode is called “MAIN”.
+
+One quirk is that the definition of the imported ruleset is not copied to the
+location of the IMPORT tag, but rather to the end of the containing ruleset.
+This has implications with rule-ordering; see the section called “Rule Ordering
+Requirements”.</t>
+<t tx="ekr.20050529102116.1">Atribute            Elements used in
+--------            ----------------
+NAME                PROPERTY
+VALUE               PROPERTY</t>
+<t tx="ekr.20050529102116.3">Atribute            Elements used in
+--------            ----------------
+DEFAULT             RULES
+DIGIT_RE            RULES
+HIGHLIGHT_DIGITS    RULES
+IGNORE_CASE         RULES
+SET                 RULES
+NO_WORD_SEP         RULES</t>
+<t tx="ekr.20050529102116.4">The token type for text which doesn't match any specific rule. Default is NULL.
+See the section called “Token Types” for a list of token types.</t>
+<t tx="ekr.20050529102116.5">If set to FALSE, matches will be case sensitive.
+Otherwise, case will not matter. Default is TRUE.</t>
+<t tx="ekr.20050529102116.6">The name of this ruleset. All rulesets other than the first must have a name.</t>
+<t tx="ekr.20050529102116.7">Any non-alphanumeric character not in this list is treated as a word separator for the purposes of syntax highlighting.
+</t>
+<t tx="ekr.20050529102116.8">Atribute            Elements used in
+--------            ----------------
+AT_LINE_START       MARK_FOLLOWING,MARK_PREVIOUS
+AT_WHITESPACE_END   MARK_FOLLOWING,MARK_PREVIOUS
+AT_WORD_START       MARK_FOLLOWING,MARK_PREVIOUS 
+EXCLUDE_MATCH       MARK_FOLLOWING,MARK_PREVIOUS
+TYPE                MARK_FOLLOWING,MARK_PREVIOUS</t>
+<t tx="ekr.20050529102116.9">all_spans   = EOL_SPAN,EOL_SPAN_REGEXP,SPAN,SPAN_REGEXP
+plain_spans = SPAN,SPAN_REGEXP
+regx_spans  = EOL_SPAN_REGEXP,SPAN_REGEXP
+
+Atribute            Elements used in
+--------            ----------------
+AT_LINE_START       all_spans
+AT_WHITESPACE_END   all_spans
+AT_WORD_START       all_spans
+DELEGATE            all_spans
+EXCLUDE_MATCH       all_spans
+HASH_CHAR           regx_spans  (must be specified)
+NO_ESCAPE           plain_spans
+NO_LINE_BREAK       plain_spans
+NO_WORD_BREAK       plain_spans
+TYPE                all_spans</t>
+<t tx="ekr.20050529103436"></t>
+<t tx="ekr.20050529103436.2">The number of characters to terminate after.</t>
+<t tx="ekr.20050529103436.3">Atribute            Elements used in
+--------            ----------------
+AT_LINE_START       BEGIN,END
+AT_WHITESPACE_END   BEGIN,END
+AT_WORD_START       BEGIN,END</t>
+<t tx="ekr.20050529103436.4">Atribute            Elements used in
+--------            ----------------
+AT_LINE_START       SEQ,SEQ_REGEXP
+AT_WHITESPACE_END   SEQ,SEQ_REGEXP
+AT_WORD_START       SEQ,SEQ_REGEXP
+DELEGATE            SEQ,SEQ_REGEXP
+HASH_CHAR           SEQ_REGEXP (must be specified)
+TYPE                SEQ,SEQ_REGEXP</t>
+<t tx="ekr.20050529103859.1"></t>
+<t tx="ekr.20050529104244">Text inside the span will be highlighted with the specified ruleset. To delegate
+to a ruleset defined in the current mode, just specify its name. To delegate to
+a ruleset defined in another mode, specify a name of the form mode::ruleset.
+Note that the first (unnamed) ruleset in a mode is called “MAIN”.
+
+One quirk is that the definition of the imported ruleset is not copied to the
+location of the IMPORT tag, but rather to the end of the containing ruleset.
+This has implications with rule-ordering; see the section called “Rule Ordering
+Requirements”.</t>
+<t tx="ekr.20050529104609"></t>
+<t tx="ekr.20050529110433"></t>
 </tnodes>
 </leo_file>
