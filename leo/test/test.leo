@@ -1877,7 +1877,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050529102116.9" a="E"><vh>Attributes for 'span'</vh></v>
 <v t="ekr.20050529103436.4"><vh>Attributes for 'seq' </vh></v>
 </v>
-<v t="ekr.20050419200205" a="TV"><vh>Elements</vh>
+<v t="ekr.20050419200205" a="E"><vh>Elements</vh>
 <v t="ekr.20050419173824.13"><vh>eol_span</vh></v>
 <v t="ekr.20050419173824.12"><vh>eol_span_regexp</vh></v>
 <v t="ekr.20050419173824.16"><vh>import</vh></v>
@@ -1885,8 +1885,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050419173824.17"><vh>mark_following</vh></v>
 <v t="ekr.20050419173824.18"><vh>mark_previous</vh></v>
 <v t="ekr.20050419173824.6"><vh>mode</vh></v>
-<v t="ekr.20050419173824.7" a="E"><vh>props &amp; property</vh></v>
-<v t="ekr.20050419173824.3" a="E"><vh>rules</vh></v>
+<v t="ekr.20050419173824.7" a="E"><vh>props &amp; property  (for auto-indent)</vh></v>
+<v t="ekr.20050419173824.3" a="ETV"><vh>rules</vh></v>
 <v t="ekr.20050419173824.14"><vh>seq</vh></v>
 <v t="ekr.20050419173824.15"><vh>seq_regexp</vh></v>
 <v t="ekr.20050419173824.4"><vh>span</vh></v>
@@ -2638,7 +2638,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14585,11 +14585,16 @@ path = os.path.normpath(path)</t>
 <t tx="ekr.20050419140912.1"></t>
 <t tx="ekr.20050419172816"></t>
 <t tx="ekr.20050419173824">@killcolor</t>
-<t tx="ekr.20050419173824.2">The KEYWORDS tag, which must be placed inside a RULES tag and can only appear once, specifies a list of keywords to highlight. Keywords are similar to SEQs, except that SEQs match anywhere in the text, whereas keywords only match whole words. Words are considered to be runs of text separated by non-alphanumeric characters.
+<t tx="ekr.20050419173824.2">The KEYWORDS tag, which must be placed inside a RULES tag and can only appear
+once, specifies a list of keywords to highlight. Keywords are similar to SEQs,
+except that SEQs match anywhere in the text, whereas keywords only match whole
+words. Words are considered to be runs of text separated by non-alphanumeric
+characters.
 
 The KEYWORDS tag does not define any attributes.
 
-Each child element of the KEYWORDS tag is an element whose name is a token type, and whose content is the keyword to highlight.
+Each child element of the KEYWORDS tag is an element whose name is a token type,
+and whose content is the keyword to highlight.
 
 &lt;KEYWORDS&gt;
   &lt;KEYWORD1&gt;if&lt;/KEYWORD1&gt;
@@ -14597,30 +14602,44 @@ Each child element of the KEYWORDS tag is an element whose name is a token type,
   &lt;KEYWORD3&gt;int&lt;/KEYWORD3&gt;
   &lt;KEYWORD3&gt;void&lt;/KEYWORD3&gt;
 &lt;/KEYWORDS&gt;</t>
-<t tx="ekr.20050419173824.3">attributes:
-    
-SET
-the name of this ruleset. All rulesets other than the first must have a name.
+<t tx="ekr.20050419173824.3">RULES tags must be placed inside the MODE tag. Each RULES tag defines a ruleset.
+A ruleset consists of a number of parser rules, with each parser rule specifying
+how to highlight a specific syntax token. There must be at least one ruleset in
+each edit mode. There can also be more than one, with different rulesets being
+used to highlight different parts of a buffer (for example, in HTML mode, one
+rule set highlights HTML tags, and another highlights inline JavaScript). For
+information about using more than one ruleset, see the section called “The SPAN
+Tag”.
 
-IGNORE_CASE
-if set to FALSE, matches will be case sensitive.
-Otherwise, case will not matter. Default is TRUE.
+The RULES tag supports the following attributes, all of which are optional: 
 
-NO_WORD_SEP
-Any non-alphanumeric character not in this list is treated as a word separator for the purposes of syntax highlighting.
+SET the name of this ruleset. All rulesets other than the first must have a
+name.
 
-DEFAULT
-The token type for text which doesn't match any specific rule. Default is NULL.
-See the section called “Token Types” for a list of token types.
+IGNORE_CASE if set to FALSE, matches will be case sensitive. Otherwise, case
+will not matter. Default is TRUE.
 
-HIGHLIGHT_DIGITS
-DIGIT_RE
+NO_WORD_SEP Any non-alphanumeric character not in this list is treated as a word
+separator for the purposes of syntax highlighting.
 
-If the HIGHLIGHT_DIGITS attribute is set to TRUE, jEdit will attempt to highlight numbers in this ruleset.
+DEFAULT The token type for text which doesn't match any specific rule. Default
+is NULL. See the section called “Token Types” for a list of token types.
 
-Any word consisting entirely of digits (0-9) will be highlighted with the DIGIT token type. A word that contains other letters in addition to digits will be highlighted with the DIGIT token type only if it matches the regular expression specified in the DIGIT_RE attribute. If this attribute is not specified, it will not be highlighted.
+HIGHLIGHT_DIGITS DIGIT_RE
 
-Here is an example DIGIT_RE regular expression that highlights Java-style numeric literals (normal numbers, hexadecimals prefixed with 0x, numbers suffixed with various type indicators, and floating point literals containing an exponent):
+If the HIGHLIGHT_DIGITS attribute is set to TRUE, jEdit will attempt to
+highlight numbers in this ruleset.
+
+Any word consisting entirely of digits (0-9) will be highlighted with the DIGIT
+token type. A word that contains other letters in addition to digits will be
+highlighted with the DIGIT token type only if it matches the regular expression
+specified in the DIGIT_RE attribute. If this attribute is not specified, it will
+not be highlighted.
+
+Here is an example DIGIT_RE regular expression that highlights Java-style
+numeric literals (normal numbers, hexadecimals prefixed with 0x, numbers
+suffixed with various type indicators, and floating point literals containing an
+exponent):
 
 DIGIT_RE="(0x[[:xdigit:]]+|[[:digit:]]+(e[[:digit:]]*)?)[lLdDfF]?"
 
@@ -14629,27 +14648,42 @@ Here is an example RULES tag:
 &lt;RULES IGNORE_CASE="FALSE" HIGHLIGHT_DIGITS="TRUE"&gt;
     ... parser rules go here ...
 &lt;/RULES&gt;</t>
-<t tx="ekr.20050419173824.4">The SPAN rule, which must be placed inside a RULES tag, highlights text between a start and end string. The start and end strings are specified inside child elements of the SPAN tag. The following attributes are supported:
+<t tx="ekr.20050419173824.4">The SPAN rule, which must be placed inside a RULES tag, highlights text between
+a start and end string. The start and end strings are specified inside child
+elements of the SPAN tag. The following attributes are supported:
 
-TYPE - The token type to highlight the span with. See the section called “Token Types” for a list of token types.
+TYPE - The token type to highlight the span with. See the section called “Token
+Types” for a list of token types.
 
-AT_LINE_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a line.
+AT_LINE_START - If set to TRUE, the span will only be highlighted if the start
+sequence occurs at the beginning of a line.
 
-AT_WHITESPACE_END - If set to TRUE, the span will only be highlighted if the start sequence is the first non-whitespace text in the line.
+AT_WHITESPACE_END - If set to TRUE, the span will only be highlighted if the
+start sequence is the first non-whitespace text in the line.
 
-AT_WORD_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a word.
+AT_WORD_START - If set to TRUE, the span will only be highlighted if the start
+sequence occurs at the beginning of a word.
 
-DELEGATE - text inside the span will be highlighted with the specified ruleset. To delegate to a ruleset defined in the current mode, just specify its name. To delegate to a ruleset defined in another mode, specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset in a mode is called “MAIN”.
+DELEGATE - text inside the span will be highlighted with the specified ruleset.
+To delegate to a ruleset defined in the current mode, just specify its name. To
+delegate to a ruleset defined in another mode, specify a name of the form
+mode::ruleset. Note that the first (unnamed) ruleset in a mode is called
+“MAIN”.
 
-EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be highlighted, only the text between them will.
+EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be
+highlighted, only the text between them will.
 
-NO_ESCAPE - If set to TRUE, the ruleset's escape character will have no effect before the span's end string. Otherwise, the presence of the escape character will cause that occurrence of the end string to be ignored.
+NO_ESCAPE - If set to TRUE, the ruleset's escape character will have no effect
+before the span's end string. Otherwise, the presence of the escape character
+will cause that occurrence of the end string to be ignored.
 
 NO_LINE_BREAK - If set to TRUE, the span will not cross line breaks.
 
 NO_WORD_BREAK - If set to TRUE, the span will not cross word breaks.
 
-Note that the AT_LINE_START, AT_WHITESPACE_END and AT_WORD_START attributes can also be used on the BEGIN and END elements. Setting these attributes to the same value on both elements has the same effect as setting them on the SPAN element. 
+Note that the AT_LINE_START, AT_WHITESPACE_END and AT_WORD_START attributes can
+also be used on the BEGIN and END elements. Setting these attributes to the same
+value on both elements has the same effect as setting them on the SPAN element.
 
 Here is a SPAN that highlights Java string literals, which cannot include line breaks:
 
@@ -14671,13 +14705,17 @@ Here is a SPAN that highlights HTML cascading stylesheets inside &lt;STYLE&gt; t
   &lt;BEGIN&gt;&amp;lt;style&amp;gt;&lt;/BEGIN&gt;
   &lt;END&gt;&amp;lt;/style&amp;gt;&lt;/END&gt;
 &lt;/SPAN&gt;</t>
-<t tx="ekr.20050419173824.5">The TERMINATE rule, which must be placed inside a RULES tag, specifies that parsing should stop after the specified number of characters have been read from a line.
+<t tx="ekr.20050419173824.5">The TERMINATE rule, which must be placed inside a RULES tag, specifies that
+parsing should stop after the specified number of characters have been read from
+a line.
 
-The number of characters to terminate after should be specified with the AT_CHAR attribute. Here is an example:
+The number of characters to terminate after should be specified with the AT_CHAR
+attribute. Here is an example:
 
 &lt;TERMINATE AT_CHAR="1" /&gt;
 
-This rule is used in Patch mode, for example, because only the first character of each line affects highlighting.</t>
+This rule is used in Patch mode, for example, because only the first character
+of each line affects highlighting.</t>
 <t tx="ekr.20050419173824.6">Each mode definition must begin with the following:
 
 &lt;?xml version="1.0"?&gt;
@@ -14688,10 +14726,12 @@ Each mode definition must also contain exactly one MODE tag. All other tags (PRO
 &lt;MODE&gt;
     ... mode definition goes here ...
 &lt;/MODE&gt;</t>
-<t tx="ekr.20050419173824.7">@nocolor
-The PROPS tag and the PROPERTY tags inside it are used to define mode-specific properties. Each PROPERTY tag must have a NAME attribute set to the property's name, and a VALUE attribute with the property's value.
+<t tx="ekr.20050419173824.7">The PROPS tag and the PROPERTY tags inside it are used to define mode-specific
+properties. Each PROPERTY tag must have a NAME attribute set to the property's
+name, and a VALUE attribute with the property's value.
 
-All buffer-local properties listed in the section called “Buffer-Local Properties” may be given values in edit modes.
+All buffer-local properties listed in the section called “Buffer-Local
+Properties” may be given values in edit modes.
 
 The following mode properties specify commenting strings:
 
@@ -14701,9 +14741,14 @@ The following mode properties specify commenting strings:
 
 When performing auto indent, a number of mode properties determine the resulting indent level:
 
-* The line and the one before it are scanned for brackets listed in the indentCloseBrackets and indentOpenBrackets properties. Opening brackets in the previous line increase indent.
+* The line and the one before it are scanned for brackets listed in the
+indentCloseBrackets and indentOpenBrackets properties. Opening brackets in the
+previous line increase indent.
 
-If lineUpClosingBracket is set to true, then closing brackets on the current line will line up with the line containing the matching opening bracket. For example, in Java mode lineUpClosingBracket is set to true, resulting in brackets being indented like so:
+If lineUpClosingBracket is set to true, then closing brackets on the current
+line will line up with the line containing the matching opening bracket. For
+example, in Java mode lineUpClosingBracket is set to true, resulting in brackets
+being indented like so:
 
 {
     // Code
@@ -14712,16 +14757,26 @@ If lineUpClosingBracket is set to true, then closing brackets on the current lin
     }
 }
 
-If lineUpClosingBracket is set to false, the line after a closing bracket will be lined up with the line containing the matching opening bracket. For example, in Lisp mode lineUpClosingBracket is set to false, resulting in brackets being indented like so:
+If lineUpClosingBracket is set to false, the line after a closing bracket will
+be lined up with the line containing the matching opening bracket. For example,
+in Lisp mode lineUpClosingBracket is set to false, resulting in brackets being
+indented like so:
 
 (foo 'a-parameter
     (crazy-p)
     (bar baz ()))
 (print "hello world")
 
-* If the previous line contains no opening brackets, or if the doubleBracketIndent property is set to true, the previous line is checked against the regular expressions in the indentNextLine and indentNextLines properties. If the previous line matches the former, the indent of the current line is increased and the subsequent line is shifted back again. If the previous line matches the latter, the indent of the current and subsequent lines is increased.
+* If the previous line contains no opening brackets, or if the
+doubleBracketIndent property is set to true, the previous line is checked
+against the regular expressions in the indentNextLine and indentNextLines
+properties. If the previous line matches the former, the indent of the current
+line is increased and the subsequent line is shifted back again. If the previous
+line matches the latter, the indent of the current and subsequent lines is
+increased.
 
-In Java mode, for example, the indentNextLine property is set to match control structures such as “if”, “else”, “while”, and so on.
+In Java mode, for example, the indentNextLine property is set to match control
+structures such as “if”, “else”, “while”, and so on.
 
 The doubleBracketIndent property, if set to the default of false, results in code indented like so:
 
@@ -14742,8 +14797,6 @@ while(objects.hasNext())
     }
 
 Here is the complete &lt;PROPS&gt; tag for Java mode:
-@color
-@language html
 
 &lt;PROPS&gt;
     &lt;PROPERTY NAME="commentStart" VALUE="/*" /&gt;
@@ -14760,11 +14813,17 @@ Here is the complete &lt;PROPS&gt; tag for Java mode:
     &lt;PROPERTY NAME="doubleBracketIndent" VALUE="false" /&gt;
     &lt;PROPERTY NAME="lineUpClosingBracket" VALUE="true" /&gt;
 &lt;/PROPS&gt;</t>
-<t tx="ekr.20050419173824.11">The SPAN_REGEXP rule is similar to the SPAN rule except the start sequence is taken to be a regular expression.
+<t tx="ekr.20050419173824.11">The SPAN_REGEXP rule is similar to the SPAN rule except the start sequence is
+taken to be a regular expression.
 
-In addition to the attributes supported by the SPAN tag, the HASH_CHAR attribute must be specified. It must be set to the first character that the regular expression matches. This rules out using regular expressions which can match more than one character at the start position. The regular expression match cannot span more than one line, either.
+In addition to the attributes supported by the SPAN tag, the HASH_CHAR attribute
+must be specified. It must be set to the first character that the regular
+expression matches. This rules out using regular expressions which can match
+more than one character at the start position. The regular expression match
+cannot span more than one line, either.
 
-Any text matched by groups in the BEGIN regular expression is substituted in the END string. See below for an example of where this is useful. 
+Any text matched by groups in the BEGIN regular expression is substituted in the
+END string. See below for an example of where this is useful. 
 
 Here is a SPAN_REGEXP rule that highlights “read-ins” in shell scripts:
 
@@ -14773,49 +14832,78 @@ Here is a SPAN_REGEXP rule that highlights “read-ins” in shell scripts:
     &lt;END&gt;$1&lt;/END&gt;
 &lt;/SPAN_REGEXP&gt;
 
-Here is a SPAN_REGEXP rule that highlights constructs placed between &lt;#ftl and &gt;, as long as the &lt;#ftl is followed by a word break:
+Here is a SPAN_REGEXP rule that highlights constructs placed between &lt;#ftl and
+&gt;, as long as the &lt;#ftl is followed by a word break:
 
 &lt;SPAN_REGEXP TYPE="KEYWORD1" HASH_CHAR="&amp;lt;" DELEGATE="EXPRESSION"&gt;
     &lt;BEGIN&gt;&amp;lt;#ftl\&amp;gt;&lt;/BEGIN&gt;
     &lt;END&gt;&amp;gt;&lt;/END&gt;
 &lt;/SPAN_REGEXP&gt;</t>
-<t tx="ekr.20050419173824.12">The EOL_SPAN_REGEXP rule is similar to the EOL_SPAN rule except the match sequence is taken to be a regular expression.
+<t tx="ekr.20050419173824.12">The EOL_SPAN_REGEXP rule is similar to the EOL_SPAN rule except the match
+sequence is taken to be a regular expression.
 
-In addition to the attributes supported by the EOL_SPAN tag, the HASH_CHAR attribute must be specified. It must be set to the first character that the regular expression matches. This rules out using regular expressions which can match more than one character at the start position. The regular expression match cannot span more than one line, either.
+In addition to the attributes supported by the EOL_SPAN tag, the HASH_CHAR
+attribute must be specified. It must be set to the first character that the
+regular expression matches. This rules out using regular expressions which can
+match more than one character at the start position. The regular expression
+match cannot span more than one line, either.
 
-Here is an EOL_SPAN_REGEXP that highlights MS-DOS batch file comments, which start with REM, followed by any whitespace character, and extend until the end of the line:
+Here is an EOL_SPAN_REGEXP that highlights MS-DOS batch file comments, which
+start with REM, followed by any whitespace character, and extend until the end
+of the line:
 
 &lt;EOL_SPAN_REGEXP AT_WHITESPACE_END="TRUE" HASH_CHAR="R" TYPE="COMMENT1"&gt;REM\s&lt;/EOL_SPAN_REGEXP&gt;</t>
-<t tx="ekr.20050419173824.13">An EOL_SPAN is similar to a SPAN  except that highlighting stops at the end of the line, and no end sequence needs to be specified. The text to match is specified between the opening and closing EOL_SPAN tags.
+<t tx="ekr.20050419173824.13">An EOL_SPAN is similar to a SPAN except that highlighting stops at the end of
+the line, and no end sequence needs to be specified. The text to match is
+specified between the opening and closing EOL_SPAN tags.
 
 The following attributes are supported:
 
-TYPE - The token type to highlight the span with. See the section called “Token Types” for a list of token types.
+TYPE - The token type to highlight the span with. See the section called “Token
+Types” for a list of token types.
 
-AT_LINE_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a line.
+AT_LINE_START - If set to TRUE, the span will only be highlighted if the start
+sequence occurs at the beginning of a line.
 
-AT_WHITESPACE_END - If set to TRUE, the span will only be highlighted if the sequence is the first non-whitespace text in the line.
+AT_WHITESPACE_END - If set to TRUE, the span will only be highlighted if the
+sequence is the first non-whitespace text in the line.
 
-AT_WORD_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a word.
+AT_WORD_START - If set to TRUE, the span will only be highlighted if the start
+sequence occurs at the beginning of a word.
 
-DELEGATE - text inside the span will be highlighted with the specified ruleset. To delegate to a ruleset defined in the current mode, just specify its name. To delegate to a ruleset defined in another mode, specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset in a mode is called “MAIN”.
+DELEGATE - text inside the span will be highlighted with the specified ruleset.
+To delegate to a ruleset defined in the current mode, just specify its name. To
+delegate to a ruleset defined in another mode, specify a name of the form
+mode::ruleset. Note that the first (unnamed) ruleset in a mode is called
+“MAIN”.
 
-EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be highlighted, only the text between them will.
+EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be
+highlighted, only the text between them will.
 
 Here is an EOL_SPAN that highlights C++ comments:
 
 &lt;EOL_SPAN TYPE="COMMENT1"&gt;//&lt;/EOL_SPAN&gt;</t>
-<t tx="ekr.20050419173824.14">The SEQ rule, which must be placed inside a RULES tag, highlights fixed sequences of text. The text to highlight is specified between opening and closing SEQ tags. The following attributes are supported:
+<t tx="ekr.20050419173824.14">The SEQ rule, which must be placed inside a RULES tag, highlights fixed
+sequences of text. The text to highlight is specified between opening and
+closing SEQ tags. The following attributes are supported:
 
-TYPE - the token type to highlight the sequence with. See the section called “Token Types” for a list of token types.
+TYPE - the token type to highlight the sequence with. See the section called
+“Token Types” for a list of token types.
 
-AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line.
+AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a line.
 
-AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it is the first non-whitespace text in the line.
+AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it
+is the first non-whitespace text in the line.
 
-AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a word.
+AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a word.
 
-DELEGATE - if this attribute is specified, all text after the sequence will be highlighted using this ruleset. To delegate to a ruleset defined in the current mode, just specify its name. To delegate to a ruleset defined in another mode, specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset in a mode is called “MAIN”.
+DELEGATE - if this attribute is specified, all text after the sequence will be
+highlighted using this ruleset. To delegate to a ruleset defined in the current
+mode, just specify its name. To delegate to a ruleset defined in another mode,
+specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset
+in a mode is called “MAIN”.
 
 The following rules highlight a few Java operators:
 
@@ -14823,23 +14911,39 @@ The following rules highlight a few Java operators:
 &lt;SEQ TYPE="OPERATOR"&gt;-&lt;/SEQ&gt;
 &lt;SEQ TYPE="OPERATOR"&gt;*&lt;/SEQ&gt;
 &lt;SEQ TYPE="OPERATOR"&gt;/&lt;/SEQ&gt;</t>
-<t tx="ekr.20050419173824.15">The SEQ_REGEXP rule is similar to the SEQ rule except the match sequence is taken to be a regular expression.
+<t tx="ekr.20050419173824.15">The SEQ_REGEXP rule is similar to the SEQ rule except the match sequence is
+taken to be a regular expression.
 
-In addition to the attributes supported by the SEQ tag, the HASH_CHAR attribute must be specified. It must be set to the first character that the regular expression matches. This rules out using regular expressions which can match more than one character at the start position. The regular expression match cannot span more than one line, either.
+In addition to the attributes supported by the SEQ tag, the HASH_CHAR attribute
+must be specified. It must be set to the first character that the regular
+expression matches. This rules out using regular expressions which can match
+more than one character at the start position. The regular expression match
+cannot span more than one line, either.
 
-Here is an example of a SEQ_REGEXP rule that highlights Perl's matcher constructions such as m/(.+):(\d+):(.+)/:
+Here is an example of a SEQ_REGEXP rule that highlights Perl's matcher
+constructions such as m/(.+):(\d+):(.+)/:
 
 &lt;SEQ_REGEXP TYPE="MARKUP"
     HASH_CHAR="m"
     AT_WORD_START="TRUE"
 &gt;m([[:punct:]])(?:.*?[^\\])*?\1[sgiexom]*&lt;/SEQ_REGEXP&gt;</t>
-<t tx="ekr.20050419173824.16">The IMPORT tag, which must be placed inside a RULES tag, loads all rules defined in a given ruleset into the current ruleset; in other words, it has the same effect as copying and pasting the imported ruleset.
+<t tx="ekr.20050419173824.16">The IMPORT tag, which must be placed inside a RULES tag, loads all rules defined
+in a given ruleset into the current ruleset; in other words, it has the same
+effect as copying and pasting the imported ruleset.
 
-The only required attribute DELEGATE must be set to the name of a ruleset. To import a ruleset defined in the current mode, just specify its name. To import a ruleset defined in another mode, specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset in a mode is called “MAIN”.
+The only required attribute DELEGATE must be set to the name of a ruleset. To
+import a ruleset defined in the current mode, just specify its name. To import a
+ruleset defined in another mode, specify a name of the form mode::ruleset. Note
+that the first (unnamed) ruleset in a mode is called “MAIN”.
 
-One quirk is that the definition of the imported ruleset is not copied to the location of the IMPORT tag, but rather to the end of the containing ruleset. This has implications with rule-ordering; see the section called “Rule Ordering Requirements”.
+One quirk is that the definition of the imported ruleset is not copied to the
+location of the IMPORT tag, but rather to the end of the containing ruleset.
+This has implications with rule-ordering; see the section called “Rule Ordering
+Requirements”.
 
-Here is an example from the PHP mode, which extends the inline JavaScript highlighting to support embedded PHP:
+Here is an example from the PHP mode, which extends the inline JavaScript
+highlighting to support embedded PHP:
+
 
    &lt;RULES SET="JAVASCRIPT+PHP"&gt;
 
@@ -14860,39 +14964,53 @@ Here is an example from the PHP mode, which extends the inline JavaScript highli
 
    &lt;IMPORT DELEGATE="javascript::MAIN"/&gt;
 &lt;/RULES&gt;</t>
-<t tx="ekr.20050419173824.17">The MARK_FOLLOWING rule, which must be placed inside a RULES tag, highlights from the start of the match to the next syntax token. The text to match is specified between opening and closing MARK_FOLLOWING  tags.
+<t tx="ekr.20050419173824.17">The MARK_FOLLOWING rule, which must be placed inside a RULES tag, highlights
+from the start of the match to the next syntax token. The text to match is
+specified between opening and closing MARK_FOLLOWING tags.
 
 The following attributes are supported:
 
-TYPE - The token type to highlight the text with. See the section called “Token Types” for a list of token types.
+TYPE - The token type to highlight the text with. See the section called “Token
+Types” for a list of token types.
 
-AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line.
+AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a line.
 
-AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it is the first non-whitespace text in the line.
+AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it
+is the first non-whitespace text in the line.
 
-AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a word.
+AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a word.
 
-EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text after it will.
+EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text
+after it will.
 
-Here is a rule that highlights variables in Unix shell scripts (“$CLASSPATH”, “$IFS”, etc):
+Here is a rule that highlights variables in Unix shell scripts (“$CLASSPATH”,“$IFS”, etc):
 
 &lt;MARK_FOLLOWING TYPE="KEYWORD2"&gt;$&lt;/MARK_FOLLOWING&gt;</t>
-<t tx="ekr.20050419173824.18">The MARK_PREVIOUS rule, which must be placed inside a RULES tag, highlights from the end of the previous syntax token to the matched text. The text to match is specified between opening and closing MARK_PREVIOUS  tags. The following attributes are supported:
+<t tx="ekr.20050419173824.18">The MARK_PREVIOUS rule, which must be placed inside a RULES tag, highlights from
+the end of the previous syntax token to the matched text. The text to match is
+specified between opening and closing MARK_PREVIOUS tags. The following
+attributes are supported:
 
-TYPE - The token type to highlight the text with. See the section called “Token Types” for a list of token types.
+TYPE - The token type to highlight the text with. See the section called “Token
+Types” for a list of token types.
 
-AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line.
+AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a line.
 
-AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it is the first non-whitespace text in the line.
+AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it
+is the first non-whitespace text in the line.
 
-AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a word.
+AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a word.
 
-EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text before it will.
+EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text
+before it will.
 
 Here is a rule that highlights labels in Java mode (for example, “XXX:”):
 
-&lt;MARK_PREVIOUS AT_WHITESPACE_END="TRUE"
-   EXCLUDE_MATCH="TRUE"&gt;:&lt;/MARK_PREVIOUS&gt;</t>
+&lt;MARK_PREVIOUS AT_WHITESPACE_END="TRUE" EXCLUDE_MATCH="TRUE"&gt;:&lt;/MARK_PREVIOUS&gt;</t>
 <t tx="ekr.20050419175429">You might encounter this very common pitfall when writing your own modes.
 
 Since jEdit checks buffer text against parser rules in the order they appear in the ruleset, more specific rules must be placed before generalized ones, otherwise the generalized rules will catch everything. </t>
@@ -14965,7 +15083,8 @@ OPERATOR</t>
 
     if name.lower() in self.newLineAfterStartElement:
         print</t>
-<t tx="ekr.20050419200205"></t>
+<t tx="ekr.20050419200205">@language html
+@color</t>
 <t tx="ekr.20050419214545">def doEndElement (self,elementName):
     
     if self.printAllElements or elementName.lower() in self.printElements:
