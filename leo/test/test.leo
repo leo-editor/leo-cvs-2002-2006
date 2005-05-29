@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7009" clone_windows="0"/>
 <globals body_outline_ratio="0.553409090909">
-	<global_window_position top="25" left="298" height="880" width="856"/>
+	<global_window_position top="64" left="269" height="880" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1842,7 +1842,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050419115225" a="E"><vh>(parse jEdit files)</vh>
 <v t="ekr.20050419172816"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
-<v t="ekr.20050419173824" a="TV"><vh>jEdit docs...</vh>
+<v t="ekr.20050419173824"><vh>jEdit docs...</vh>
 <v t="ekr.20050419175429"><vh>Rule ordering</vh></v>
 <v t="ekr.20050419181328"><vh>Attributes</vh>
 <v t="ekr.20050419182514"><vh>AT_CHAR (int)</vh></v>
@@ -1880,10 +1880,10 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050419115418" a="E"><vh>Script to run xml parser</vh>
+<v t="ekr.20050419115418" a="E"><vh>Parse jEdit script</vh>
 <v t="ekr.20050419120410.1"><vh>&lt;&lt; paths &gt;&gt;</vh></v>
 <v t="ekr.20050419215535" a="E"><vh>class modeClass</vh>
-<v t="ekr.20050419220140"><vh> mode.__init__</vh></v>
+<v t="ekr.20050419220140" a="TV"><vh> mode.__init__</vh></v>
 <v t="ekr.20050528112438"><vh>doAttribute</vh></v>
 <v t="ekr.20050529062656"><vh>doContent</vh></v>
 <v t="ekr.20050528161834"><vh>endElement</vh></v>
@@ -2624,7 +2624,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14508,7 +14508,7 @@ path = os.path.normpath(path)</t>
     ]
     
     # Printing options
-    self.printAllElements = True
+    self.printAllElements = False
     self.printCharacters = False or self.printAllElements
     self.printAttributes = False and not self.printAllElements
     self.printElements = [
@@ -14945,7 +14945,7 @@ OPERATOR </t>
     self.fileName = None # The file from which the mode was imported.
     self.verbose = self.contentHandler.verbose
 
-    # Mode statistics
+    # Mode statistics...
     self.numberOfAttributes = 0
     self.numberOfElements = 0
     self.numberOfErrors = 0
@@ -14963,24 +14963,21 @@ OPERATOR </t>
         'eol_span','eol_span_regexp','import','keywords',
         'mark_following','mark_previous','seq','seq_regexp',
         'span','span_regexp','terminate',]
-        
-    self.seqSpanElements = [
-        'eol_span','eol_span_regexp',
-        'seq','seq_regexp',
-        'span','span_regexp',]
+
+    if 0: # Not used at present.
+        self.seqSpanElements = [
+            'eol_span','eol_span_regexp','seq','seq_regexp',
+            'span','span_regexp',]
 
     # Mode semantics.
     self.attributes = {}
-    self.rulesAttributes = {}
     self.inProps = False
     self.inRules = False
     self.props = []
     self.property = None
     self.rule = None
     self.rules = []
-
-
-   </t>
+    self.rulesAttributes = {}</t>
 <t tx="ekr.20050427101736">class ZipFile(  	file[, mode[, compression]])
     Open a ZIP file, where file can be either a path to a file (a string) or a file-like object. The mode parameter should be 'r' to read an existing file, 'w' to truncate and write a new file, or 'a' to append to an existing file. For mode is 'a' and file refers to an existing ZIP file, then additional files are added to it. If file does not refer to a ZIP file, then a new ZIP archive is appended to the file. This is meant for adding a ZIP archive to another file, such as python.exe. Using
 
@@ -15277,8 +15274,8 @@ after</t>
             if d or d2:
                 print '%-20s' % ('rule:'+bunch.name),
                 if d and d2: print 'attrs:',d,'chars:',d2
-                elif d:  print 'attrs',d
-                else:    print 'chars',d2
+                elif d:  print 'attrs:',d
+                else:    print 'chars:',d2
             </t>
 <t tx="ekr.20050528105213.3">def error (self, message):
     
