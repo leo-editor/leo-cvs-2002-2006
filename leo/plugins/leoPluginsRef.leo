@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4716" clone_windows="0"/>
-<globals body_outline_ratio="0.604236343367">
-	<global_window_position top="10" left="217" height="897" width="983"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4866" clone_windows="0"/>
+<globals body_outline_ratio="0.590858416945">
+	<global_window_position top="16" left="149" height="897" width="1087"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -11,7 +11,7 @@
 <vnodes>
 <v t="edream.110203113231"
 marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></v>
-<v t="ekr.20041211035618" a="TV"><vh>Scripts, buttons &amp; settings</vh>
+<v t="ekr.20041211035618"><vh>Scripts, buttons &amp; settings</vh>
 <v t="ekr.20050217093214"><vh>@settings</vh>
 <v t="ekr.20050328101812"><vh>@page http plugin</vh>
 <v t="ekr.20050328101812.1"><vh>@bool http_active = True</vh></v>
@@ -34,7 +34,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
-<v t="ekr.20050303051035"><vh> Templates: these show recommended ways of defining plugins.</vh>
+<v t="ekr.20050303051035" a="E"><vh> Templates: these show recommended ways of defining plugins.</vh>
 <v t="ekr.20041114102139"><vh>Notes</vh>
 <v t="ekr.20041114103913"><vh>About comments in the style guide</vh></v>
 <v t="ekr.20041114102139.1"><vh>About the root node</vh></v>
@@ -856,14 +856,6 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 </v>
 </v>
-<v t="ekr.20041107165824"><vh>temacs &amp; usetemacs</vh>
-<v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
-<v t="mork.20041030164547"
-marks="mork.20041122190403,"><vh>@thin temacs.py</vh></v>
-<v t="ekr.20050518085205"><vh>@thin usetemacs.ini</vh></v>
-<v t="ekr.20050514095136"><vh>ekr usetemacs.ini (doesn't solve the problem I was trying to solve)</vh></v>
-<v t="ekr.20050514095136.1"><vh>Key references</vh></v>
-</v>
 <v t="ekr.20050306081349"><vh>Text formatting</vh>
 <v t="edream.111803100242"><vh>@thin rst.py</vh></v>
 <v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
@@ -967,6 +959,193 @@ marks="mork.20041122190403,"><vh>@thin temacs.py</vh></v>
 </v>
 </v>
 </v>
+<v t="ekr.20041107165824"><vh>temacs &amp; usetemacs</vh>
+<v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
+<v t="mork.20041030164547"
+marks="mork.20041030183331,mork.20041030190903,mork.20041030164547.30,mork.20041122190403,"><vh>@thin temacs.py</vh></v>
+<v t="ekr.20050518085205"><vh>@thin usetemacs.ini</vh></v>
+<v t="ekr.20050514095136"><vh>ekr usetemacs.ini (doesn't solve the problem I was trying to solve)</vh></v>
+<v t="ekr.20050514095136.1"><vh>Key references</vh></v>
+</v>
+<v t="ekr.20050527081321"><vh>EKR Notes: usetemacs</vh>
+<v t="ekr.20050527084754.2"><vh>EKR Notes</vh></v>
+<v t="ekr.20050527081715"><vh>masterCommand...</vh>
+<v t="mork.20041030164547.30" a="M"><vh>setBufferStrokes</vh></v>
+<v t="mork.20041030164547.43"><vh>masterCommand</vh>
+<v t="ekr.20050527084754"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+<v t="ekr.20050527084754.1"><vh>&lt;&lt; old code 2 &gt;&gt;</vh></v>
+<v t="ekr.20050527112828"><vh>&lt;&lt; old insert code &gt;&gt;</vh></v>
+</v>
+<v t="mork.20041123150836"><vh>the master command is the center of an Emacs instance</vh></v>
+<v t="mork.20041030164547.95"><vh>manufactureKeyPress</vh></v>
+<v t="mork.20041031182258"><vh>add command dictionary methods</vh>
+<v t="mork.20041030183331" a="M"><vh>addCallBackDict (creates cbDict)</vh></v>
+<v t="mork.20041030183633"><vh>addXCommands</vh></v>
+<v t="mork.20041030190903" a="M"><vh>addAltXCommands</vh></v>
+<v t="mork.20041030190729"><vh>addRegisterItems</vh></v>
+</v>
+<v t="mork.20041031194746"><vh>configurable methods</vh>
+<v t="mork.20041031182643"><vh>tailEnd methods</vh>
+<v t="mork.20041030164547.4"><vh>_tailEnd</vh></v>
+<v t="mork.20041030164547.5"><vh>setTailEnd</vh></v>
+</v>
+<v t="mork.20041031182643.1"><vh>undoer methods</vh>
+<v t="mork.20041030164547.6"><vh>setUndoer</vh></v>
+<v t="mork.20041030164547.7"><vh>doUndo</vh></v>
+</v>
+<v t="mork.20041030164547.30" a="M"><vh>setBufferStrokes</vh></v>
+<v t="mork.20041101190309"><vh>extendAltX</vh></v>
+<v t="mork.20041102094716"><vh>reconfigureKeyStroke</vh></v>
+<v t="mork.20041103155347"><vh>buffer recognition and alterers</vh>
+<v t="mork.20041104094826"><vh>configure buffer methods</vh>
+<v t="mork.20041103155347.1"><vh>setBufferGetter</vh></v>
+<v t="mork.20041103155347.2"><vh>setBufferSetter</vh></v>
+<v t="mork.20041103155347.3"><vh>getBufferDict</vh></v>
+<v t="mork.20041103162147"><vh>setBufferData</vh></v>
+<v t="mork.20041103191311"><vh>setBufferGoto</vh></v>
+<v t="mork.20041104090224"><vh>setBufferDelete</vh></v>
+<v t="mork.20041104092349"><vh>setBufferRename</vh></v>
+</v>
+<v t="mork.20041104094826.1"><vh>buffer operations</vh>
+<v t="mork.20041103155347.4"><vh>appendToBuffer</vh></v>
+<v t="mork.20041103155347.5"><vh>prependToBuffer</vh></v>
+<v t="mork.20041103155347.6"><vh>insertToBuffer</vh></v>
+<v t="mork.20041103190332"><vh>listBuffers</vh></v>
+<v t="mork.20041103155347.7"><vh>copyToBuffer</vh></v>
+<v t="mork.20041103191311.1"><vh>switchToBuffer</vh></v>
+<v t="mork.20041104090224.1"><vh>killBuffer</vh></v>
+<v t="mork.20041104092058"><vh>renameBuffer</vh></v>
+<v t="mork.20041103161202"><vh>chooseBuffer</vh></v>
+<v t="mork.20041103161202.1"><vh>setInBufferMode</vh></v>
+</v>
+</v>
+</v>
+<v t="mork.20041030164547.11"><vh>_executeMacro</vh></v>
+<v t="mork.20041031155455"><vh>universal methods</vh>
+<v t="mork.20041030164547.143"><vh>universalDispatch</vh></v>
+<v t="mork.20041030164547.144"><vh>universalCommand1</vh></v>
+<v t="mork.20041030164547.145"><vh>universalCommand2</vh></v>
+<v t="mork.20041030164547.146"><vh>universalCommand3</vh></v>
+<v t="mork.20041030164547.147"><vh>numberCommand</vh></v>
+</v>
+</v>
+<v t="ekr.20050527081715.1"><vh>bind and bindtags</vh>
+<v t="mork.20041030164547.30" a="M"><vh>setBufferStrokes</vh></v>
+<v t="mork.20041030183331" a="M"><vh>addCallBackDict (creates cbDict)</vh></v>
+<v t="mork.20041102094716"><vh>reconfigureKeyStroke</vh></v>
+<v t="mork.20041030164547.87"><vh>setRegion</vh></v>
+</v>
+<v t="mork.20041030165020.1"><vh>Emacs.__init__</vh></v>
+<v t="ekr.20050527084754.3"><vh>Commands that need state: mcStateManager</vh>
+<v t="mork.20041122152311"><vh>adding stateful commands to temacs</vh></v>
+<v t="mork.20041104102456"><vh>Emacs helper classes</vh>
+<v t="mork.20041031131847"><vh>class ControlXHandler</vh>
+<v t="mork.20041031162953"><vh>__init__</vh></v>
+<v t="mork.20041031132342"><vh>__call__</vh></v>
+<v t="mork.20041031133146"><vh>processKey</vh></v>
+<v t="mork.20041031134709"><vh>processRectangle</vh></v>
+<v t="mork.20041031135748"><vh>processAbbreviation</vh></v>
+</v>
+<v t="mork.20041031145157"><vh>class MC_StateManager</vh>
+<v t="mork.20041031162857"><vh>__init__</vh>
+<v t="mork.20041031150125"><vh>&lt;&lt;statecommands&gt;&gt;</vh></v>
+</v>
+<v t="mork.20041031162857.1"><vh>setState</vh></v>
+<v t="mork.20041031162857.2"><vh>getState</vh></v>
+<v t="mork.20041031162857.3"><vh>hasState</vh></v>
+<v t="mork.20041124094511"><vh>whichState</vh></v>
+<v t="mork.20041031162857.4"><vh>__call__</vh></v>
+<v t="mork.20041031162857.5"><vh>clear</vh></v>
+</v>
+<v t="mork.20041101083527"><vh>class MC_KeyStrokeManager  (hard-coded keystrokes)</vh>
+<v t="mork.20041101083527.1"><vh>__init__</vh>
+<v t="mork.20041101083527.2"><vh>&lt;&lt;keystrokes&gt;&gt; (hard-coded keystrokes)</vh></v>
+</v>
+<v t="mork.20041101084148"><vh>hasKeyStroke</vh></v>
+<v t="mork.20041101084148.1"><vh>__call__</vh></v>
+</v>
+<v t="mork.20041102131352"><vh>class Tracker</vh>
+<v t="mork.20041102131352.1"><vh>init</vh></v>
+<v t="mork.20041102131352.2"><vh>setTabList</vh></v>
+<v t="mork.20041102131352.3"><vh>_next</vh></v>
+<v t="mork.20041102132710"><vh>next</vh></v>
+<v t="mork.20041102160313"><vh>clear</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050527111832.1"><vh>regXRpl related (It's a generator)</vh>
+<v t="mork.20041030164547.63"><vh>regionalExpandAbbrev</vh>
+<v t="ekr.20050527111832"><vh>&lt;&lt; define a new generator searchXR &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050527121522" a="E"><vh>Control-x stuff</vh>
+<v t="mork.20041030164547.43"><vh>masterCommand</vh>
+<v t="ekr.20050527084754"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+<v t="ekr.20050527084754.1"><vh>&lt;&lt; old code 2 &gt;&gt;</vh></v>
+<v t="ekr.20050527112828"><vh>&lt;&lt; old insert code &gt;&gt;</vh></v>
+</v>
+<v t="mork.20041030183633"><vh>addXCommands</vh></v>
+<v t="mork.20041030164547.145"><vh>universalCommand2</vh></v>
+</v>
+</v>
+<v t="ekr.20050529180421"><vh>jEdit docs...</vh>
+<v t="ekr.20050529180421.1"><vh>Rule ordering</vh></v>
+<v t="ekr.20050529180421.2"><vh>Attributes</vh>
+<v t="ekr.20050529180421.3"><vh> Documentation of attributes</vh>
+<v t="ekr.20050529180421.4"><vh> For 'seq', 'span', 'begin', 'end'</vh>
+<v t="ekr.20050529180421.5"><vh>AT_LINE_START (bool)</vh></v>
+<v t="ekr.20050529180421.6"><vh>AT_WHITESPACE_END (bool)</vh></v>
+<v t="ekr.20050529180421.7"><vh>AT_WORD_START (bool)</vh></v>
+</v>
+<v t="ekr.20050529180421.8"><vh> For 'span' only</vh>
+<v t="ekr.20050529180421.9"><vh>NO_WORD_BREAK (bool)</vh></v>
+<v t="ekr.20050529180421.10"><vh>NO_LINE_BREAK (bool)</vh></v>
+<v t="ekr.20050529180421.11"><vh>NO_ESCAPE (bool)</vh></v>
+<v t="ekr.20050529180421.12"><vh>EXCLUDE_MATCH (bool)</vh></v>
+</v>
+<v t="ekr.20050529180421.13"><vh> For 'rules' only</vh>
+<v t="ekr.20050529180421.14"><vh>DEFAULT</vh></v>
+<v t="ekr.20050529180421.15"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
+<v t="ekr.20050529180421.16"><vh>IGNORE_CASE (bool)</vh></v>
+<v t="ekr.20050529180421.17"><vh>SET</vh></v>
+<v t="ekr.20050529180421.18"><vh>NO_WORD_SEP</vh></v>
+</v>
+<v t="ekr.20050529180421.19" a="E"><vh>AT_CHAR (int) for 'terminate'</vh></v>
+<v t="ekr.20050529180421.20" a="E"><vh>DELEGATE: for 'import', 'span' &amp; 'seq'</vh></v>
+<v t="ekr.20050529180421.21"><vh>HASH_CHAR (char) For 'regx'</vh></v>
+<v t="ekr.20050529180421.22" a="E"><vh>TYPE (Token Types)</vh></v>
+</v>
+<v t="ekr.20050529180421.23"><vh>Attributes for 'begin' &amp; 'end'</vh></v>
+<v t="ekr.20050529180421.24" a="E"><vh>Attributes for 'import': delegate</vh></v>
+<v t="ekr.20050529180421.25"><vh>Attributes for 'mark' </vh></v>
+<v t="ekr.20050529180421.26"><vh>Attributes for 'property': name, value</vh></v>
+<v t="ekr.20050529180421.27" a="E"><vh>Attributes for 'rules'</vh></v>
+<v t="ekr.20050529180421.28" a="E"><vh>Attributes for 'span'</vh></v>
+<v t="ekr.20050529180421.29"><vh>Attributes for 'seq' </vh></v>
+</v>
+<v t="ekr.20050529180421.30"><vh>Elements</vh>
+<v t="ekr.20050529220821"><vh>Spans and seqs...</vh>
+<v t="ekr.20050529180421.31"><vh>eol_span</vh></v>
+<v t="ekr.20050529180421.32"><vh>eol_span_regexp</vh></v>
+<v t="ekr.20050529180421.35"><vh>mark_following</vh></v>
+<v t="ekr.20050529180421.36"><vh>mark_previous</vh></v>
+<v t="ekr.20050529180421.40"><vh>seq</vh></v>
+<v t="ekr.20050529180421.41"><vh>seq_regexp</vh></v>
+<v t="ekr.20050529180421.42"><vh>span</vh></v>
+<v t="ekr.20050529180421.43"><vh>span_regexp</vh></v>
+</v>
+<v t="ekr.20050529220821.1"><vh>All others...</vh>
+<v t="ekr.20050529180421.33"><vh>import</vh></v>
+<v t="ekr.20050529180421.34"><vh>keywords</vh></v>
+<v t="ekr.20050529180421.37"><vh>mode</vh></v>
+<v t="ekr.20050529180421.38" a="E"><vh>props &amp; property  (for auto-indent)</vh></v>
+<v t="ekr.20050529180421.39" a="E"><vh>rules</vh></v>
+<v t="ekr.20050529180421.44"><vh>terminate</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050529142847" a="TV"
+expanded="ekr.20050529143413.87,"><vh>@thin __jEdit_colorizer__.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040517075715"></t>
@@ -10648,6 +10827,659 @@ The following steps must be done to get the aspell plugin to load:
     aspell_dir = r'/other/leo/lib/leo/plugins'
     aspell_bin_dir = r'/other/leo/lib/leo/plugins'</t>
 <t tx="ekr.20050523073009"></t>
+<t tx="ekr.20050527081321"></t>
+<t tx="ekr.20050527081715"></t>
+<t tx="ekr.20050527081715.1"></t>
+<t tx="ekr.20050527084754">
+#if self.uC:
+#    self.previousStroke = stroke
+#    return self.universalDispatch( event, stroke )
+
+#if self.controlx:
+#    self.previousStroke = stroke
+#     return self.doControlX( event, stroke )
+
+
+#if stroke in ('&lt;Control-s&gt;', '&lt;Control-r&gt;' ): 
+#    self.previousStroke = stroke
+#    return self.startIncremental( event, stroke )
+
+#if self.isearch:
+#   return self.iSearch( event )
+
+#if stroke == '&lt;Alt-g&gt;':
+#    self.previousStroke = stroke
+#    return self.startGoto( event )
+#if self.goto:
+#    return self.Goto( event )
+
+#if stroke == '&lt;Alt-z&gt;':
+#    self.previousStroke = stroke
+#    return self.startZap( event )
+
+#if self.zap:
+#    return self.zapTo( event )</t>
+<t tx="ekr.20050527084754.1">
+    #if self.howM:
+    #    return self.howMany( event )
+        
+    #if self.abbrevMode:
+    #    return self.abbrevCommand1( event )
+        
+    #if self.altx:
+    #    return self.doAlt_X( event )
+
+    #if stroke == '&lt;Alt-percent&gt;':
+    #    self.previousStroke = stroke
+    #    return self.masterQR( event )  
+    #if self.qlisten:
+    #    return self.masterQR( event )
+        
+    #if self.rString:
+    #    return self.replaceString( event )
+     
+    #if self.negativeArg:
+    #    return self.negativeArgument( event, stroke )
+    
+    #if stroke == '&lt;Control-Alt-w&gt;':
+    #    self.previousStroke = '&lt;Control-Alt-w&gt;'   
+    #    return 'break'</t>
+<t tx="ekr.20050527084754.2">setBufferStrokes creates all additional bindings.
+    - Called at end of Emacs.__init__.
+    - </t>
+<t tx="ekr.20050527084754.3"></t>
+<t tx="ekr.20050527111832"># EKR: This is a generator (it contains a yield).
+# EKR: To make this work we must define a new generator for each call to regionalExpandAbbrev.
+def searchXR( i1 , i2, ins, event ):
+    tbuffer.tag_add( 'sXR', i1, i2 )
+    while i1:
+        tr = tbuffer.tag_ranges( 'sXR' )
+        if not tr: break
+        i1 = tbuffer.search( r'\w', i1, stopindex = tr[ 1 ] , regexp = True )
+        if i1:
+            word = tbuffer.get( '%s wordstart' % i1, '%s wordend' % i1 )
+            tbuffer.tag_delete( 'found' )
+            tbuffer.tag_add( 'found',  '%s wordstart' % i1, '%s wordend' % i1 )
+            tbuffer.tag_config( 'found', background = 'yellow' )
+            if self.abbrevs.has_key( word ):
+                svar, label = self.getSvarLabel( event )
+                svar.set( 'Replace %s with %s? y/n' % ( word, self.abbrevs[ word ] ) )
+                yield None
+                if self.regXKey == 'y':
+                    ind = tbuffer.index( '%s wordstart' % i1 )
+                    tbuffer.delete( '%s wordstart' % i1, '%s wordend' % i1 )
+                    tbuffer.insert( ind, self.abbrevs[ word ] )
+            i1 = '%s wordend' % i1
+    tbuffer.mark_set( 'insert', ins )
+    tbuffer.selection_clear()
+    tbuffer.tag_delete( 'sXR' )
+    tbuffer.tag_delete( 'found' )
+    svar, label = self.getSvarLabel( event )
+    svar.set( '' )
+    self.setLabelGrey( label )
+    self._setRAvars()</t>
+<t tx="ekr.20050527111832.1"></t>
+<t tx="ekr.20050527112828">Emacs.lossage.reverse()
+Emacs.lossage.append( event.char ) #Then we add the new char.  Hopefully this will keep Python from allocating a new array each time.
+Emacs.lossage.reverse()
+
+self.keysymhistory.reverse()
+self.keysymhistory.append( event.keysym )
+self.keysymhistory.reverse()</t>
+<t tx="ekr.20050527121522"></t>
+<t tx="ekr.20050529180421">@killcolor</t>
+<t tx="ekr.20050529180421.1">You might encounter this very common pitfall when writing your own modes.
+
+Since jEdit checks buffer text against parser rules in the order they appear in
+the ruleset, more specific rules must be placed before generalized ones,
+otherwise the generalized rules will catch everything.</t>
+<t tx="ekr.20050529180421.2"></t>
+<t tx="ekr.20050529180421.3"></t>
+<t tx="ekr.20050529180421.4"></t>
+<t tx="ekr.20050529180421.5">If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line.</t>
+<t tx="ekr.20050529180421.6">If set to TRUE, the sequence will only be highlighted if it is the first non-whitespace text in the line.</t>
+<t tx="ekr.20050529180421.7">If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a word.</t>
+<t tx="ekr.20050529180421.8"></t>
+<t tx="ekr.20050529180421.9">If set to TRUE, the span will not cross word breaks.</t>
+<t tx="ekr.20050529180421.10">If set to TRUE, the span will not cross line breaks.</t>
+<t tx="ekr.20050529180421.11">If set to TRUE, the ruleset's escape character will have no effect before the span's end string. Otherwise, the presence of the escape character will cause that occurrence of the end string to be ignored.
+
+</t>
+<t tx="ekr.20050529180421.12">If set to TRUE, the match will not be highlighted, only the text before it will.</t>
+<t tx="ekr.20050529180421.13"></t>
+<t tx="ekr.20050529180421.14">The token type for text which doesn't match any specific rule. Default is NULL.
+See the section called “Token Types” for a list of token types.</t>
+<t tx="ekr.20050529180421.15">If the HIGHLIGHT_DIGITS attribute is set to TRUE, jEdit will attempt to highlight numbers in this ruleset.
+
+Any word consisting entirely of digits (0-9) will be highlighted with the DIGIT token type.
+
+A word that contains other letters in addition to digits will be highlighted with the DIGIT token type only if it matches the regular expression specified in the DIGIT_RE attribute. If this attribute is not specified, it will not be highlighted.
+
+Here is an example DIGIT_RE regular expression that highlights Java-style numeric literals (normal numbers, hexadecimals prefixed with 0x, numbers suffixed with various type indicators, and floating point literals containing an exponent):
+
+DIGIT_RE="(0x[[:xdigit:]]+|[[:digit:]]+(e[[:digit:]]*)?)[lLdDfF]?"</t>
+<t tx="ekr.20050529180421.16">If set to FALSE, matches will be case sensitive.
+Otherwise, case will not matter. Default is TRUE.</t>
+<t tx="ekr.20050529180421.17">The name of this ruleset. All rulesets other than the first must have a name.</t>
+<t tx="ekr.20050529180421.18">Any non-alphanumeric character not in this list is treated as a word separator for the purposes of syntax highlighting.
+</t>
+<t tx="ekr.20050529180421.19">The number of characters to terminate after.</t>
+<t tx="ekr.20050529180421.20">Text inside the span will be highlighted with the specified ruleset. To delegate
+to a ruleset defined in the current mode, just specify its name. To delegate to
+a ruleset defined in another mode, specify a name of the form mode::ruleset.
+Note that the first (unnamed) ruleset in a mode is called “MAIN”.
+
+One quirk is that the definition of the imported ruleset is not copied to the
+location of the IMPORT tag, but rather to the end of the containing ruleset.
+This has implications with rule-ordering; see the section called “Rule Ordering
+Requirements”.</t>
+<t tx="ekr.20050529180421.21">Atribute            Elements used in
+--------            ----------------
+HASH_CHAR           EOL_SPAN_REGEXP,SPAN_REGEXP,SEQ_REGEXP
+
+It must be set to the first character that the regular expression matches. This
+rules out using regular expressions which can match more than one character at
+the start position. The regular expression match cannot span more than one line,
+either.</t>
+<t tx="ekr.20050529180421.22">The token type to highlight the text with.
+
+Parser rules can highlight tokens using any of the following token types:
+
+NULL - no special highlighting
+COMMENT1,COMMENT2,COMMENT3,COMMENT4
+FUNCTION
+KEYWORD1,KEYWORD2,KEYWORD3,KEYWORD4
+LABEL
+LITERAL1,LITERAL2,LITERAL3,LITERAL4
+MARKUP
+OPERATOR</t>
+<t tx="ekr.20050529180421.23">Atribute            Elements used in
+--------            ----------------
+AT_LINE_START       BEGIN,END
+AT_WHITESPACE_END   BEGIN,END
+AT_WORD_START       BEGIN,END</t>
+<t tx="ekr.20050529180421.24">The only required attribute DELEGATE must be set to the name of a ruleset. To
+import a ruleset defined in the current mode, just specify its name. To import a
+ruleset defined in another mode, specify a name of the form mode::ruleset. Note
+that the first (unnamed) ruleset in a mode is called “MAIN”.
+
+One quirk is that the definition of the imported ruleset is not copied to the
+location of the IMPORT tag, but rather to the end of the containing ruleset.
+This has implications with rule-ordering; see the section called “Rule Ordering
+Requirements”.</t>
+<t tx="ekr.20050529180421.25">Atribute            Elements used in
+--------            ----------------
+AT_LINE_START       MARK_FOLLOWING,MARK_PREVIOUS
+AT_WHITESPACE_END   MARK_FOLLOWING,MARK_PREVIOUS
+AT_WORD_START       MARK_FOLLOWING,MARK_PREVIOUS 
+EXCLUDE_MATCH       MARK_FOLLOWING,MARK_PREVIOUS
+TYPE                MARK_FOLLOWING,MARK_PREVIOUS</t>
+<t tx="ekr.20050529180421.26">Atribute            Elements used in
+--------            ----------------
+NAME                PROPERTY
+VALUE               PROPERTY</t>
+<t tx="ekr.20050529180421.27">Atribute            Elements used in
+--------            ----------------
+DEFAULT             RULES
+DIGIT_RE            RULES
+HIGHLIGHT_DIGITS    RULES
+IGNORE_CASE         RULES
+SET                 RULES
+NO_WORD_SEP         RULES</t>
+<t tx="ekr.20050529180421.28">all_spans   = EOL_SPAN,EOL_SPAN_REGEXP,SPAN,SPAN_REGEXP
+plain_spans = SPAN,SPAN_REGEXP
+regx_spans  = EOL_SPAN_REGEXP,SPAN_REGEXP
+
+Atribute            Elements used in
+--------            ----------------
+AT_LINE_START       all_spans
+AT_WHITESPACE_END   all_spans
+AT_WORD_START       all_spans
+DELEGATE            all_spans
+EXCLUDE_MATCH       all_spans
+HASH_CHAR           regx_spans  (must be specified)
+NO_ESCAPE           plain_spans
+NO_LINE_BREAK       plain_spans
+NO_WORD_BREAK       plain_spans
+TYPE                all_spans</t>
+<t tx="ekr.20050529180421.29">Atribute            Elements used in
+--------            ----------------
+AT_LINE_START       SEQ,SEQ_REGEXP
+AT_WHITESPACE_END   SEQ,SEQ_REGEXP
+AT_WORD_START       SEQ,SEQ_REGEXP
+DELEGATE            SEQ,SEQ_REGEXP
+HASH_CHAR           SEQ_REGEXP (must be specified)
+TYPE                SEQ,SEQ_REGEXP</t>
+<t tx="ekr.20050529180421.30">@language html
+@color</t>
+<t tx="ekr.20050529180421.31">An EOL_SPAN is similar to a SPAN except that highlighting stops at the end of
+the line, and no end sequence needs to be specified. The text to match is
+specified between the opening and closing EOL_SPAN tags.
+
+The following attributes are supported:
+
+TYPE - The token type to highlight the span with. See the section called “Token
+Types” for a list of token types.
+
+AT_LINE_START - If set to TRUE, the span will only be highlighted if the start
+sequence occurs at the beginning of a line.
+
+AT_WHITESPACE_END - If set to TRUE, the span will only be highlighted if the
+sequence is the first non-whitespace text in the line.
+
+AT_WORD_START - If set to TRUE, the span will only be highlighted if the start
+sequence occurs at the beginning of a word.
+
+DELEGATE - text inside the span will be highlighted with the specified ruleset.
+To delegate to a ruleset defined in the current mode, just specify its name. To
+delegate to a ruleset defined in another mode, specify a name of the form
+mode::ruleset. Note that the first (unnamed) ruleset in a mode is called
+“MAIN”.
+
+EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be
+highlighted, only the text between them will.
+
+Here is an EOL_SPAN that highlights C++ comments:
+
+&lt;EOL_SPAN TYPE="COMMENT1"&gt;//&lt;/EOL_SPAN&gt;</t>
+<t tx="ekr.20050529180421.32">The EOL_SPAN_REGEXP rule is similar to the EOL_SPAN rule except the match
+sequence is taken to be a regular expression.
+
+In addition to the attributes supported by the EOL_SPAN tag, the HASH_CHAR
+attribute must be specified. It must be set to the first character that the
+regular expression matches. This rules out using regular expressions which can
+match more than one character at the start position. The regular expression
+match cannot span more than one line, either.
+
+Here is an EOL_SPAN_REGEXP that highlights MS-DOS batch file comments, which
+start with REM, followed by any whitespace character, and extend until the end
+of the line:
+
+&lt;EOL_SPAN_REGEXP AT_WHITESPACE_END="TRUE" HASH_CHAR="R" TYPE="COMMENT1"&gt;REM\s&lt;/EOL_SPAN_REGEXP&gt;</t>
+<t tx="ekr.20050529180421.33">The IMPORT tag, which must be placed inside a RULES tag, loads all rules defined
+in a given ruleset into the current ruleset; in other words, it has the same
+effect as copying and pasting the imported ruleset.
+
+The only required attribute DELEGATE must be set to the name of a ruleset. To
+import a ruleset defined in the current mode, just specify its name. To import a
+ruleset defined in another mode, specify a name of the form mode::ruleset. Note
+that the first (unnamed) ruleset in a mode is called “MAIN”.
+
+One quirk is that the definition of the imported ruleset is not copied to the
+location of the IMPORT tag, but rather to the end of the containing ruleset.
+This has implications with rule-ordering; see the section called “Rule Ordering
+Requirements”.
+
+Here is an example from the PHP mode, which extends the inline JavaScript
+highlighting to support embedded PHP:
+
+
+   &lt;RULES SET="JAVASCRIPT+PHP"&gt;
+
+   &lt;SPAN TYPE="MARKUP" DELEGATE="php::PHP"&gt;
+       &lt;BEGIN&gt;&amp;lt;?php&lt;/BEGIN&gt;
+       &lt;END&gt;?&amp;gt;&lt;/END&gt;
+   &lt;/SPAN&gt;
+   
+   &lt;SPAN TYPE="MARKUP" DELEGATE="php::PHP"&gt;
+       &lt;BEGIN&gt;&amp;lt;?&lt;/BEGIN&gt;
+       &lt;END&gt;?&amp;gt;&lt;/END&gt;
+   &lt;/SPAN&gt;
+   
+   &lt;SPAN TYPE="MARKUP" DELEGATE="php::PHP"&gt;
+       &lt;BEGIN&gt;&amp;lt;%=&lt;/BEGIN&gt;
+       &lt;END&gt;%&amp;gt;&lt;/END&gt;
+   &lt;/SPAN&gt;
+
+   &lt;IMPORT DELEGATE="javascript::MAIN"/&gt;
+&lt;/RULES&gt;</t>
+<t tx="ekr.20050529180421.34">The KEYWORDS tag, which must be placed inside a RULES tag and can only appear
+once, specifies a list of keywords to highlight. Keywords are similar to SEQs,
+except that SEQs match anywhere in the text, whereas keywords only match whole
+words. Words are considered to be runs of text separated by non-alphanumeric
+characters.
+
+The KEYWORDS tag does not define any attributes.
+
+Each child element of the KEYWORDS tag is an element whose name is a token type,
+and whose content is the keyword to highlight.
+
+&lt;KEYWORDS&gt;
+  &lt;KEYWORD1&gt;if&lt;/KEYWORD1&gt;
+  &lt;KEYWORD1&gt;else&lt;/KEYWORD1&gt;
+  &lt;KEYWORD3&gt;int&lt;/KEYWORD3&gt;
+  &lt;KEYWORD3&gt;void&lt;/KEYWORD3&gt;
+&lt;/KEYWORDS&gt;</t>
+<t tx="ekr.20050529180421.35">The MARK_FOLLOWING rule, which must be placed inside a RULES tag, highlights
+from the start of the match to the next syntax token. The text to match is
+specified between opening and closing MARK_FOLLOWING tags.
+
+The following attributes are supported:
+
+TYPE - The token type to highlight the text with. See the section called “Token
+Types” for a list of token types.
+
+AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a line.
+
+AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it
+is the first non-whitespace text in the line.
+
+AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a word.
+
+EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text
+after it will.
+
+Here is a rule that highlights variables in Unix shell scripts (“$CLASSPATH”,“$IFS”, etc):
+
+&lt;MARK_FOLLOWING TYPE="KEYWORD2"&gt;$&lt;/MARK_FOLLOWING&gt;</t>
+<t tx="ekr.20050529180421.36">The MARK_PREVIOUS rule, which must be placed inside a RULES tag, highlights from
+the end of the previous syntax token to the matched text. The text to match is
+specified between opening and closing MARK_PREVIOUS tags. The following
+attributes are supported:
+
+TYPE - The token type to highlight the text with. See the section called “Token
+Types” for a list of token types.
+
+AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a line.
+
+AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it
+is the first non-whitespace text in the line.
+
+AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a word.
+
+EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text
+before it will.
+
+Here is a rule that highlights labels in Java mode (for example, “XXX:”):
+
+&lt;MARK_PREVIOUS AT_WHITESPACE_END="TRUE" EXCLUDE_MATCH="TRUE"&gt;:&lt;/MARK_PREVIOUS&gt;</t>
+<t tx="ekr.20050529180421.37">Each mode definition must begin with the following:
+
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE MODE SYSTEM "xmode.dtd"&gt;
+
+Each mode definition must also contain exactly one MODE tag. All other tags (PROPS, RULES) must be placed inside the MODE tag. The MODE tag does not have any defined attributes. Here is an example:
+
+&lt;MODE&gt;
+    ... mode definition goes here ...
+&lt;/MODE&gt;</t>
+<t tx="ekr.20050529180421.38">The PROPS tag and the PROPERTY tags inside it are used to define mode-specific
+properties. Each PROPERTY tag must have a NAME attribute set to the property's
+name, and a VALUE attribute with the property's value.
+
+All buffer-local properties listed in the section called “Buffer-Local
+Properties” may be given values in edit modes.
+
+The following mode properties specify commenting strings:
+
+* commentEnd - the comment end string, used by the Range Comment command.
+* commentStart - the comment start string, used by the Range Comment command.
+* lineComment - the line comment string, used by the Line Comment command. 
+
+When performing auto indent, a number of mode properties determine the resulting indent level:
+
+* The line and the one before it are scanned for brackets listed in the
+indentCloseBrackets and indentOpenBrackets properties. Opening brackets in the
+previous line increase indent.
+
+If lineUpClosingBracket is set to true, then closing brackets on the current
+line will line up with the line containing the matching opening bracket. For
+example, in Java mode lineUpClosingBracket is set to true, resulting in brackets
+being indented like so:
+
+{
+    // Code
+    {
+        // More code
+    }
+}
+
+If lineUpClosingBracket is set to false, the line after a closing bracket will
+be lined up with the line containing the matching opening bracket. For example,
+in Lisp mode lineUpClosingBracket is set to false, resulting in brackets being
+indented like so:
+
+(foo 'a-parameter
+    (crazy-p)
+    (bar baz ()))
+(print "hello world")
+
+* If the previous line contains no opening brackets, or if the
+doubleBracketIndent property is set to true, the previous line is checked
+against the regular expressions in the indentNextLine and indentNextLines
+properties. If the previous line matches the former, the indent of the current
+line is increased and the subsequent line is shifted back again. If the previous
+line matches the latter, the indent of the current and subsequent lines is
+increased.
+
+In Java mode, for example, the indentNextLine property is set to match control
+structures such as “if”, “else”, “while”, and so on.
+
+The doubleBracketIndent property, if set to the default of false, results in code indented like so:
+
+while(objects.hasNext())
+{
+    Object next = objects.hasNext();
+    if(next instanceof Paintable)
+        next.paint(g);
+}
+
+On the other hand, settings this property to “true” will give the following result:
+
+while(objects.hasNext())
+    {
+        Object next = objects.hasNext();
+        if(next instanceof Paintable)
+            next.paint(g);
+    }
+
+Here is the complete &lt;PROPS&gt; tag for Java mode:
+
+&lt;PROPS&gt;
+    &lt;PROPERTY NAME="commentStart" VALUE="/*" /&gt;
+    &lt;PROPERTY NAME="commentEnd" VALUE="*/" /&gt;
+    &lt;PROPERTY NAME="lineComment" VALUE="//" /&gt;
+    &lt;PROPERTY NAME="wordBreakChars" VALUE=",+-=&amp;lt;&amp;gt;/?^&amp;amp;*" /&gt;
+
+    &lt;!-- Auto indent --&gt;
+    &lt;PROPERTY NAME="indentOpenBrackets" VALUE="{" /&gt;
+    &lt;PROPERTY NAME="indentCloseBrackets" VALUE="}" /&gt;
+    &lt;PROPERTY NAME="indentNextLine"
+    	VALUE="\s*(((if|while)\s*\(|else\s*|else\s+if\s*\(|for\s*\(.*\))[^{;]*)" /&gt;
+    &lt;!-- set this to 'true' if you want to use GNU coding style --&gt;
+    &lt;PROPERTY NAME="doubleBracketIndent" VALUE="false" /&gt;
+    &lt;PROPERTY NAME="lineUpClosingBracket" VALUE="true" /&gt;
+&lt;/PROPS&gt;</t>
+<t tx="ekr.20050529180421.39">RULES tags must be placed inside the MODE tag. Each RULES tag defines a ruleset.
+A ruleset consists of a number of parser rules, with each parser rule specifying
+how to highlight a specific syntax token. There must be at least one ruleset in
+each edit mode. There can also be more than one, with different rulesets being
+used to highlight different parts of a buffer (for example, in HTML mode, one
+rule set highlights HTML tags, and another highlights inline JavaScript). For
+information about using more than one ruleset, see the section called “The SPAN
+Tag”.
+
+The RULES tag supports the following attributes, all of which are optional: 
+
+SET the name of this ruleset. All rulesets other than the first must have a
+name.
+
+IGNORE_CASE if set to FALSE, matches will be case sensitive. Otherwise, case
+will not matter. Default is TRUE.
+
+NO_WORD_SEP Any non-alphanumeric character not in this list is treated as a word
+separator for the purposes of syntax highlighting.
+
+DEFAULT The token type for text which doesn't match any specific rule. Default
+is NULL. See the section called “Token Types” for a list of token types.
+
+HIGHLIGHT_DIGITS DIGIT_RE
+
+If the HIGHLIGHT_DIGITS attribute is set to TRUE, jEdit will attempt to
+highlight numbers in this ruleset.
+
+Any word consisting entirely of digits (0-9) will be highlighted with the DIGIT
+token type. A word that contains other letters in addition to digits will be
+highlighted with the DIGIT token type only if it matches the regular expression
+specified in the DIGIT_RE attribute. If this attribute is not specified, it will
+not be highlighted.
+
+Here is an example DIGIT_RE regular expression that highlights Java-style
+numeric literals (normal numbers, hexadecimals prefixed with 0x, numbers
+suffixed with various type indicators, and floating point literals containing an
+exponent):
+
+DIGIT_RE="(0x[[:xdigit:]]+|[[:digit:]]+(e[[:digit:]]*)?)[lLdDfF]?"
+
+Here is an example RULES tag:
+
+&lt;RULES IGNORE_CASE="FALSE" HIGHLIGHT_DIGITS="TRUE"&gt;
+    ... parser rules go here ...
+&lt;/RULES&gt;</t>
+<t tx="ekr.20050529180421.40">The SEQ rule, which must be placed inside a RULES tag, highlights fixed
+sequences of text. The text to highlight is specified between opening and
+closing SEQ tags. The following attributes are supported:
+
+TYPE - the token type to highlight the sequence with. See the section called
+“Token Types” for a list of token types.
+
+AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a line.
+
+AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it
+is the first non-whitespace text in the line.
+
+AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it
+occurs at the beginning of a word.
+
+DELEGATE - if this attribute is specified, all text after the sequence will be
+highlighted using this ruleset. To delegate to a ruleset defined in the current
+mode, just specify its name. To delegate to a ruleset defined in another mode,
+specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset
+in a mode is called “MAIN”.
+
+The following rules highlight a few Java operators:
+
+&lt;SEQ TYPE="OPERATOR"&gt;+&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;-&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;*&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;/&lt;/SEQ&gt;</t>
+<t tx="ekr.20050529180421.41">The SEQ_REGEXP rule is similar to the SEQ rule except the match sequence is
+taken to be a regular expression.
+
+In addition to the attributes supported by the SEQ tag, the HASH_CHAR attribute
+must be specified. It must be set to the first character that the regular
+expression matches. This rules out using regular expressions which can match
+more than one character at the start position. The regular expression match
+cannot span more than one line, either.
+
+Here is an example of a SEQ_REGEXP rule that highlights Perl's matcher
+constructions such as m/(.+):(\d+):(.+)/:
+
+&lt;SEQ_REGEXP TYPE="MARKUP"
+    HASH_CHAR="m"
+    AT_WORD_START="TRUE"
+&gt;m([[:punct:]])(?:.*?[^\\])*?\1[sgiexom]*&lt;/SEQ_REGEXP&gt;</t>
+<t tx="ekr.20050529180421.42">The SPAN rule, which must be placed inside a RULES tag, highlights text between
+a start and end string. The start and end strings are specified inside child
+elements of the SPAN tag. The following attributes are supported:
+
+TYPE - The token type to highlight the span with. See the section called “Token
+Types” for a list of token types.
+
+AT_LINE_START - If set to TRUE, the span will only be highlighted if the start
+sequence occurs at the beginning of a line.
+
+AT_WHITESPACE_END - If set to TRUE, the span will only be highlighted if the
+start sequence is the first non-whitespace text in the line.
+
+AT_WORD_START - If set to TRUE, the span will only be highlighted if the start
+sequence occurs at the beginning of a word.
+
+DELEGATE - text inside the span will be highlighted with the specified ruleset.
+To delegate to a ruleset defined in the current mode, just specify its name. To
+delegate to a ruleset defined in another mode, specify a name of the form
+mode::ruleset. Note that the first (unnamed) ruleset in a mode is called
+“MAIN”.
+
+EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be
+highlighted, only the text between them will.
+
+NO_ESCAPE - If set to TRUE, the ruleset's escape character will have no effect
+before the span's end string. Otherwise, the presence of the escape character
+will cause that occurrence of the end string to be ignored.
+
+NO_LINE_BREAK - If set to TRUE, the span will not cross line breaks.
+
+NO_WORD_BREAK - If set to TRUE, the span will not cross word breaks.
+
+Note that the AT_LINE_START, AT_WHITESPACE_END and AT_WORD_START attributes can
+also be used on the BEGIN and END elements. Setting these attributes to the same
+value on both elements has the same effect as setting them on the SPAN element.
+
+Here is a SPAN that highlights Java string literals, which cannot include line breaks:
+
+&lt;SPAN TYPE="LITERAL1" NO_LINE_BREAK="TRUE"&gt;
+  &lt;BEGIN&gt;"&lt;/BEGIN&gt;
+  &lt;END&gt;"&lt;/END&gt;
+&lt;/SPAN&gt;
+
+Here is a SPAN that highlights Java documentation comments by delegating to the “JAVADOC” ruleset defined elsewhere in the current mode:
+
+&lt;SPAN TYPE="COMMENT2" DELEGATE="JAVADOC"&gt;
+  &lt;BEGIN&gt;/**&lt;/BEGIN&gt;
+  &lt;END&gt;*/&lt;/END&gt;
+&lt;/SPAN&gt;
+
+Here is a SPAN that highlights HTML cascading stylesheets inside &lt;STYLE&gt; tags by delegating to the main ruleset in the CSS edit mode:
+
+&lt;SPAN TYPE="MARKUP" DELEGATE="css::MAIN"&gt;
+  &lt;BEGIN&gt;&amp;lt;style&amp;gt;&lt;/BEGIN&gt;
+  &lt;END&gt;&amp;lt;/style&amp;gt;&lt;/END&gt;
+&lt;/SPAN&gt;</t>
+<t tx="ekr.20050529180421.43">The SPAN_REGEXP rule is similar to the SPAN rule except the start sequence is
+taken to be a regular expression.
+
+In addition to the attributes supported by the SPAN tag, the HASH_CHAR attribute
+must be specified. It must be set to the first character that the regular
+expression matches. This rules out using regular expressions which can match
+more than one character at the start position. The regular expression match
+cannot span more than one line, either.
+
+Any text matched by groups in the BEGIN regular expression is substituted in the
+END string. See below for an example of where this is useful. 
+
+Here is a SPAN_REGEXP rule that highlights “read-ins” in shell scripts:
+
+&lt;SPAN_REGEXP HASH_CHAR="&lt;" TYPE="LITERAL1" DELEGATE="LITERAL"&gt;
+    &lt;BEGIN&gt;&lt;![CDATA[&lt;&lt;[[:space:]'"]*([[:alnum:]_]+)[[:space:]'"]*]]&gt;&lt;/BEGIN&gt;
+    &lt;END&gt;$1&lt;/END&gt;
+&lt;/SPAN_REGEXP&gt;
+
+Here is a SPAN_REGEXP rule that highlights constructs placed between &lt;#ftl and
+&gt;, as long as the &lt;#ftl is followed by a word break:
+
+&lt;SPAN_REGEXP TYPE="KEYWORD1" HASH_CHAR="&amp;lt;" DELEGATE="EXPRESSION"&gt;
+    &lt;BEGIN&gt;&amp;lt;#ftl\&amp;gt;&lt;/BEGIN&gt;
+    &lt;END&gt;&amp;gt;&lt;/END&gt;
+&lt;/SPAN_REGEXP&gt;</t>
+<t tx="ekr.20050529180421.44">The TERMINATE rule, which must be placed inside a RULES tag, specifies that
+parsing should stop after the specified number of characters have been read from
+a line.
+
+The number of characters to terminate after should be specified with the AT_CHAR
+attribute. Here is an example:
+
+&lt;TERMINATE AT_CHAR="1" /&gt;
+
+This rule is used in Patch mode, for example, because only the first character
+of each line affects highlighting.</t>
+<t tx="ekr.20050529220821"></t>
+<t tx="ekr.20050529220821.1"></t>
 <t tx="mork.20040926105355.9">def openChaptersFile( fileName ):
     zf = zipfile.ZipFile( fileName )
     import cStringIO
@@ -10693,5 +11525,1326 @@ def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
         chapList[ x ].seek( 0 )
         zf.writestr( zif ,chapList[ x ].read() )
     zf.close()</t>
+<t tx="mork.20041030164547.4">def _tailEnd( self, tbuffer ):
+    '''This returns the tailEnd function that has been configure for the tbuffer parameter.'''
+    if self.tailEnds.has_key( tbuffer ):
+        return self.tailEnds[ tbuffer ]( tbuffer )
+    else:
+        return 'break'
+</t>
+<t tx="mork.20041030164547.5">#self.tailEnds = {}
+def setTailEnd( self, tbuffer , tailCall ):
+    '''This method sets a ending call that is specific for a particular Text widget.
+       Some environments require that specific end calls be made after a keystroke
+       or command is executed.'''
+    self.tailEnds[ tbuffer ] = tailCall
+</t>
+<t tx="mork.20041030164547.6">#self.undoers = {}
+def setUndoer( self, tbuffer, undoer ):
+    '''This method sets the undoer method for the Emacs instance.'''
+    self.undoers[ tbuffer ] = undoer
+</t>
+<t tx="mork.20041030164547.7">def doUndo(  self, event, amount = 1 ):
+    tbuffer = event.widget
+    if self.undoers.has_key( tbuffer ):
+        for z in xrange( amount ):
+            self.undoers[ tbuffer ]()
+    return 'break'
+</t>
+<t tx="mork.20041030164547.11">def _executeMacro( self, macro, tbuffer ):
+    for z in macro:
+        if len( z ) == 2:
+            tbuffer.event_generate( '&lt;Key&gt;', keycode = z[ 0 ], keysym = z[ 1 ] ) 
+        else:
+            meth = z[ 0 ].lstrip( '&lt;' ).rstrip( '&gt;' )
+            method = self.cbDict[ meth ]
+            ev = Tkinter.Event()
+            ev.widget = tbuffer
+            ev.keycode = z[ 1 ]
+            ev.keysym = z[ 2 ]
+            ev.char = z[ 3 ]
+            self.masterCommand( ev , method, '&lt;%s&gt;' % meth )
+    return self._tailEnd( tbuffer )  
+</t>
+<t tx="mork.20041030164547.30">#mbuffers = {}
+#svars = {}
+def setBufferStrokes( self, tbuffer, label ):
+        '''setBufferStrokes takes a Tk Text widget called 'tbuffer'. 'stext' is a function or method
+        that when called will return the value of the search text. 'rtext' is a function or method
+        that when called will return the value of the replace text.  It is this method and
+        getHelpText that users of the temacs module should call.  The rest are callback functions
+        that enable the Emacs emulation.'''
+        
+        g.trace(tbuffer,label)
+    
+        Emacs.Emacs_instances[ tbuffer ] = self
+        def cb( evstring ):
+            _cb = None
+            if self.cbDict.has_key( evstring ):
+                _cb = self.cbDict[ evstring ]
+            evstring = '&lt;%s&gt;' % evstring
+            if evstring != '&lt;Key&gt;':
+                # g.trace(evstring)
+                tbuffer.bind( evstring,  lambda event, meth = _cb: self.masterCommand( event, meth , evstring) )
+            else:
+                # g.trace('+',evstring)
+                tbuffer.bind( evstring,  lambda event, meth = _cb: self.masterCommand( event, meth , evstring), '+' )
+
+        # EKR: create one binding for each entry in cbDict.
+        for z in self.cbDict:
+            cb( z )
+        
+        self.mbuffers[ tbuffer ] = label
+        self.svars[ tbuffer ] = Tkinter.StringVar()
+        def setVar( event ):
+            label = self.mbuffers[ event.widget ]
+            svar = self.svars[ event.widget ]
+            label.configure( textvariable = svar )
+        tbuffer.bind( '&lt;FocusIn&gt;', setVar, '+' )
+        def scrollTo( event ):
+            event.widget.see( 'insert' )
+        
+        #tbuffer.bind( '&lt;Enter&gt;', scrollTo, '+' )
+        
+        # EKR: This _adds_ a binding for all &lt;Key&gt; events, so _all_ key events go through masterCommand.
+        cb( 'Key' )
+</t>
+<t tx="mork.20041030164547.43">#self.controlx = False
+#self.csr = { '&lt;Control-s&gt;': 'for', '&lt;Control-r&gt;':'bak' }
+#self.pref = None
+#self.zap = False
+#self.goto = False
+#self.previousStroke = ''
+def masterCommand( self, event, method , stroke):
+    '''The masterCommand is the central routing method of the Emacs method.
+       All commands and keystrokes pass through here.'''
+       
+    special = event.keysym in ('Control_L','Control_R','Alt_L','Alt-R','Shift_L','Shift_R')
+    inserted = not special or len(self.keysymhistory) == 0 or self.keysymhistory[0] != event.keysym
+
+    # Don't add multiple special characters to history.
+    if inserted:
+        self.keysymhistory.insert(0,event.keysym)
+        if len(event.char) &gt; 0:
+            if len(Emacs.lossage) &gt; 99: Emacs.lossage.pop()
+            Emacs.lossage.insert(0,event.char)
+        
+        if 1: # traces
+            print event.keysym,stroke
+            g.trace(self.keysymhistory)
+            g.trace(Emacs.lossage)
+        
+    if 0:
+        &lt;&lt; old insert code &gt;&gt;
+    
+            
+    if self.macroing:
+        if self.macroing == 2 and stroke != '&lt;Control-x&gt;':
+            return self.nameLastMacro( event )
+        elif self.macroing == 3 and stroke != '&lt;Control-x&gt;':
+            return self.getMacroName( event )
+        else:
+           self.recordKBDMacro( event, stroke )
+         
+    if  stroke == '&lt;Control-g&gt;':
+        self.previousStroke = stroke
+        return self.keyboardQuit( event )
+        
+    if self.mcStateManager.hasState():
+        self.previousStroke = stroke
+        return self.mcStateManager( event, stroke ) # EKR: Invoke the __call__ method.
+        
+    if self.kstrokeManager.hasKeyStroke( stroke ):
+        self.previousStroke = stroke
+        return self.kstrokeManager( event, stroke ) # EKR: Invoke the __call__ method.
+
+    &lt;&lt; old code &gt;&gt;
+    if self.regXRpl: # EKR: a generator.
+        try:
+            self.regXKey = event.keysym
+            self.regXRpl.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    &lt;&lt; old code 2 &gt;&gt;
+    if self.abbrevOn:
+        if self.expandAbbrev( event ) :
+            return 'break'       
+
+    if method:
+        rt = method( event )
+        self.previousStroke = stroke
+        return rt</t>
+<t tx="mork.20041030164547.63">#self.regXRpl = None
+#self.regXKey = None
+def regionalExpandAbbrev( self, event ):
+    #global regXRpl
+    if not self._chckSel( event ):
+        return
+    tbuffer = event.widget
+    i1 = tbuffer.index( 'sel.first' )
+    i2 = tbuffer.index( 'sel.last' ) 
+    ins = tbuffer.index( 'insert' )
+    &lt;&lt; define a new generator searchXR &gt;&gt;
+    # EKR: the 'result' of calling searchXR is a generator object.
+    self.regXRpl = searchXR( i1, i2, ins, event)
+    self.regXRpl.next() # Call it the first time.
+    return 'break' </t>
+<t tx="mork.20041030164547.87">def setRegion( self, event ):   
+    mrk = 'sel'
+    tbuffer = event.widget
+    def extend( event ):
+        widget = event.widget
+        widget.mark_set( 'insert', 'insert + 1c' )
+        if self.inRange( widget, mrk ):
+            widget.tag_remove( mrk, 'insert -1c' )
+        else:
+            widget.tag_add( mrk, 'insert -1c' )
+            widget.tag_configure( mrk, background = 'lightgrey' )
+            self.testinrange( widget )
+        return 'break'
+        
+    def truncate( event ):
+        widget = event.widget
+        widget.mark_set( 'insert', 'insert -1c' )
+        if self.inRange( widget, mrk ):
+            self.testinrange( widget )
+            widget.tag_remove( mrk, 'insert' )
+        else:
+            widget.tag_add( mrk, 'insert' )
+            widget.tag_configure( mrk, background = 'lightgrey' )
+            self.testinrange( widget  )
+        return 'break'
+        
+    def up( event ):
+        widget = event.widget
+        if not self.testinrange( widget ):
+            return 'break'
+        widget.tag_add( mrk, 'insert linestart', 'insert' )
+        i = widget.index( 'insert' )
+        i1, i2 = i.split( '.' )
+        i1 = str( int( i1 ) - 1 )
+        widget.mark_set( 'insert', i1+'.'+i2)
+        widget.tag_add( mrk, 'insert', 'insert lineend + 1c' )
+        if self.inRange( widget, mrk ,l = '-1c', r = '+1c') and widget.index( 'insert' ) != '1.0':
+            widget.tag_remove( mrk, 'insert', 'end' )  
+        return 'break'
+        
+    def down( event ):
+        widget = event.widget
+        if not self.testinrange( widget ):
+            return 'break'
+        widget.tag_add( mrk, 'insert', 'insert lineend' )
+        i = widget.index( 'insert' )
+        i1, i2 = i.split( '.' )
+        i1 = str( int( i1 ) + 1 )
+        widget.mark_set( 'insert', i1 +'.'+i2 )
+        widget.tag_add( mrk, 'insert linestart -1c', 'insert' )
+        if self.inRange( widget, mrk , l = '-1c', r = '+1c' ): 
+            widget.tag_remove( mrk, '1.0', 'insert' )
+        return 'break'
+        
+    extend( event )   
+    tbuffer.bind( '&lt;Right&gt;', extend, '+' )
+    tbuffer.bind( '&lt;Left&gt;', truncate, '+' )
+    tbuffer.bind( '&lt;Up&gt;', up, '+' )
+    tbuffer.bind( '&lt;Down&gt;', down, '+' )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.95">def manufactureKeyPress( self, event, which ):
+    tbuffer = event.widget
+    tbuffer.event_generate( '&lt;Key&gt;',  keysym = which  )
+    tbuffer.update_idletasks()
+    return 'break'</t>
+<t tx="mork.20041030164547.143">#self.uC = False
+def universalDispatch( self, event, stroke ):
+    #global uC    
+    uC = self.mcStateManager.getState( 'uC' )
+    if not uC:
+        #self.uC = 1
+        self.mcStateManager.setState( 'uC', 1 )
+        svar, label = self.getSvarLabel( event )
+        svar.set( '' )
+        self.setLabelBlue( label ) 
+    elif uC == 1:
+        self.universalCommand1( event, stroke )
+    elif uC == 2:
+        self.universalCommand3( event, stroke )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.144">#import string
+#self.uCstring = string.digits + '\b'
+
+def universalCommand1( self, event, stroke ):
+    #global uC
+    if event.char not in self.uCstring:
+        return self.universalCommand2( event, stroke )
+    svar, label = self.getSvarLabel( event )
+    self.setSvar( event, svar )
+    if event.char != '\b':
+        svar.set( '%s ' %svar.get() )
+</t>
+<t tx="mork.20041030164547.145">def universalCommand2(  self, event , stroke ):
+    #global uC
+    #self.uC = False
+    #self.mcStateManager.setState( 'uC', False )
+    svar, label = self.getSvarLabel( event )
+    txt = svar.get()
+    self.keyboardQuit( event )
+    txt = txt.replace( ' ', '' )
+    self.resetMiniBuffer( event )
+    if not txt.isdigit(): #This takes us to macro state.  For example Control-u Control-x (  will execute the last macro and begin editing of it.
+        if stroke == '&lt;Control-x&gt;':
+            #self.uC = 2
+            self.mcStateManager.setState( 'uC', 2 )
+            return self.universalCommand3( event, stroke )
+        return self._tailEnd( event.widget )
+    if self.uCdict.has_key( stroke ): #This executes the keystroke 'n' number of times.
+            self.uCdict[ stroke ]( event , txt )
+    else:
+        tbuffer = event.widget
+        i = int( txt )
+        stroke = stroke.lstrip( '&lt;' ).rstrip( '&gt;' )
+        if self.cbDict.has_key( stroke ):
+            for z in xrange( i ):
+                method = self.cbDict[ stroke ]
+                ev = Tkinter.Event()
+                ev.widget = event.widget
+                ev.keysym = event.keysym
+                ev.keycode = event.keycode
+                ev.char = event.char
+                self.masterCommand( ev , method, '&lt;%s&gt;' % stroke )
+        else:
+            for z in xrange( i ):
+                tbuffer.event_generate( '&lt;Key&gt;', keycode = event.keycode, keysym = event.keysym )
+                self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.146">#self.uCdict = { '&lt;Alt-x&gt;' : alt_X }
+def universalCommand3( self, event, stroke ):
+    svar, label = self.getSvarLabel( event )
+    svar.set( 'Control-u %s' % stroke.lstrip( '&lt;' ).rstrip( '&gt;' ) )
+    self.setLabelBlue( label )
+    if event.keysym == 'parenleft':
+        self.keyboardQuit( event )
+        self.startKBDMacro( event )
+        self.executeLastMacro( event )
+        return 'break'
+</t>
+<t tx="mork.20041030164547.147">def numberCommand( self, event, stroke, number ):
+    self.universalDispatch( event, stroke )
+    tbuffer = event.widget
+    tbuffer.event_generate( '&lt;Key&gt;', keysym = number )
+    return 'break'       
+</t>
+<t tx="mork.20041030165020.1">def __init__( self , tbuffer = None , minibuffer = None, useGlobalKillbuffer = False, useGlobalRegisters = False):
+    '''Sets up Emacs instance.
+          If a Tkinter Text widget and Tkinter Label are passed in
+       via the tbuffer and minibuffer parameters, these are bound to.
+       Otherwise an explicit call to setBufferStrokes must be done.
+       useGlobalRegisters set to True indicates that the Emacs instance should use a class attribute that functions
+       as a global register.
+       useGlobalKillbuffer set to True indicates that the Emacs instances should use a class attribute that functions
+       as a global killbuffer.'''
+    
+    self.mbuffers = {} 
+    self.svars = {}
+    
+    
+    #self.isearch = False
+    self.tailEnds = {} #functions to execute at the end of many Emac methods.  Configurable by environment.
+    self.undoers = {} #Emacs instance tracks undoers given to it.
+    
+    
+    self.store = {'rlist': [], 'stext': ''} 
+    
+    #macros
+    self.lastMacro = None 
+    self.macs = []
+    self.macro = []
+    self.namedMacros = {}
+    self.macroing = False
+    self.dynaregex = re.compile( r'[%s%s\-_]+' %( string.ascii_letters, string.digits ) ) #for dynamic abbreviations
+    self.altx_history = []
+    self.keysymhistory = [] 
+    
+    #This section sets up the buffer data structures
+    self.bufferListGetters = {}
+    self.bufferSetters = {}
+    self.bufferGotos = {}
+    self.bufferDeletes = {}
+    self.renameBuffers = {}
+    self.bufferDict = None
+    self.bufferTracker = Tracker()
+    self.bufferCommands = {
+    
+    'append-to-buffer': self.appendToBuffer,
+    'prepend-to-buffer': self.prependToBuffer,
+    'copy-to-buffer': self.copyToBuffer,
+    'insert-buffer': self.insertToBuffer,
+    'switch-to-buffer': self.switchToBuffer,
+     'kill-buffer': self.killBuffer,   
+    }
+    
+    self.swapSpots = []
+    self.ccolumn = '0'
+    #self.howM = False
+    self.reset = False
+    if useGlobalKillbuffer:
+        self.killbuffer = Emacs.global_killbuffer
+    else:
+        self.killbuffer = []
+    self.kbiterator = self.iterateKillBuffer()
+    
+    #self.controlx = False
+    self.csr = { '&lt;Control-s&gt;': 'for', '&lt;Control-r&gt;':'bak' }
+    self.pref = None
+    #self.zap = False
+    #self.goto = False
+    self.previousStroke = ''
+    if useGlobalRegisters:
+        self.registers = Emacs.global_registers
+    else:
+        self.registers = {}
+    
+    #registers
+    self.regMeth = None
+    self.regMeths, self.regText = self.addRegisterItems()
+
+    #Abbreviations
+    self.abbrevMode = False 
+    self.abbrevOn = False # determines if abbreviations are on for masterCommand and toggle abbreviations
+    self.abbrevs = {}
+    
+    self.regXRpl = None # EKR: a generator: calling self.regXRpl.next() get the next value.
+    self.regXKey = None
+    
+    self.fillPrefix = '' #for fill prefix functions
+    self.fillColumn = 70 #for line centering
+    self.registermode = False #for rectangles and registers
+    
+    self.qQ = None
+    self.qR = None
+    #self.qlisten = False
+    #self.lqR = Tkinter.StringVar()
+    #self.lqR.set( 'Query with: ' ) # replaced with using the svar and self.mcStateManager
+    self.qgetQuery = False
+    #self.lqQ = Tkinter.StringVar()
+    #self.lqQ.set( 'Replace with:' )# replaced with using the svar and self.mcStateManager
+    self.qgetReplace = False
+    self.qrexecute = False
+    self.querytype = 'normal'
+    
+    #self.rString = False
+    #These attributes are for replace-string and replace-regex
+    self._sString = ''
+    self._rpString = ''
+    self._useRegex = False
+    
+    self.sRect = False  #State indicating string rectangle.  May be moved to MC_StateManager
+    self.krectangle = None #The kill rectangle
+    self.rectanglemode = 0 #Determines what state the rectangle system is in.
+    
+    self.last_clipboard = None #For interacting with system clipboard.
+    
+    self.negativeArg = False 
+    self.negArgs = { '&lt;Alt-c&gt;': self.changePreviousWord,
+    '&lt;Alt-u&gt;' : self.changePreviousWord,
+    '&lt;Alt-l&gt;': self.changePreviousWord } #For negative argument functionality
+    
+    #self.altx = False
+    #Alt-X commands.
+    self.doAltX = self.addAltXCommands()
+    self.axTabList = Tracker()
+    self.x_hasNumeric = [ 'sort-lines' , 'sort-fields']
+    
+    #self.uC = False
+    #These attributes are for the universal command functionality.
+    self.uCstring = string.digits + '\b'
+    self.uCdict = { '&lt;Alt-x&gt;' : self.alt_X }
+    
+    self.cbDict = self.addCallBackDict()# Creates callback dictionary, primarily used in the master command
+    self.xcommands = self.addXCommands() # Creates the X commands dictionary
+    self.cxHandler = ControlXHandler( self ) #Creates the handler for Control-x commands
+    self.mcStateManager = MC_StateManager( self ) #Manages state for the master command
+    self.kstrokeManager = MC_KeyStrokeManager( self ) #Manages some keystroke state for the master command.
+    self.shutdownhook = None #If this is set via setShutdownHook, it is executed instead of sys.exit when Control-x Control-c is fired
+    self.shuttingdown = False #indicates that the Emacs instance is shutting down and no work needs to be done.
+    
+    if tbuffer and minibuffer:
+        self.setBufferStrokes( tbuffer, minibuffer )
+
+
+
+
+</t>
+<t tx="mork.20041030183331">def addCallBackDict( self ):
+    '''This method adds a dictionary to the Emacs instance through which the masterCommand can
+       call the specified method.'''
+    cbDict = {
+    'Alt-less' : lambda event, spot = '1.0' : self.moveTo( event, spot ),
+    'Alt-greater': lambda event, spot = 'end' : self.moveTo( event, spot ),
+    'Control-Right': lambda event, way = 1: self.moveword( event, way ),
+    'Control-Left': lambda event, way = -1: self.moveword( event, way ),
+    'Control-a': lambda event, spot = 'insert linestart': self.moveTo( event, spot ),
+    'Control-e': lambda event, spot = 'insert lineend': self.moveTo( event, spot ),
+    'Alt-Up': lambda event, spot = 'insert linestart': self.moveTo( event, spot ),
+    'Alt-Down': lambda event, spot = 'insert lineend': self.moveTo( event, spot ),
+    'Alt-f': lambda event, way = 1: self.moveword( event, way ),
+    'Alt-b' : lambda event, way = -1: self.moveword( event, way ),
+    'Control-o': self.insertNewLine,
+    'Control-k': lambda event, frm = 'insert', to = 'insert lineend': self.kill( event, frm, to) ,
+    'Alt-d': lambda event, frm = 'insert wordstart', to = 'insert wordend': self.kill( event,frm, to ),
+    'Alt-Delete': lambda event: self.deletelastWord( event ),
+    "Control-y": lambda event, frm = 'insert', which = 'c': self.walkKB( event, frm, which),
+    "Alt-y": lambda event , frm = "insert", which = 'a': self.walkKB( event, frm, which ),
+    "Alt-k": lambda event : self.killsentence( event ),
+    'Control-s' : None,
+    'Control-r' : None,
+    'Alt-c': lambda event, which = 'cap' : self.capitalize( event, which ),
+    'Alt-u': lambda event, which = 'up' : self.capitalize( event, which ),
+    'Alt-l': lambda event, which = 'low' : self.capitalize( event, which ),
+    'Alt-t': lambda event, sw = self.swapSpots: self.swapWords( event, sw ),
+    'Alt-x': self.alt_X,
+    'Control-x': self.startControlX,
+    'Control-g': self.keyboardQuit,
+    'Control-Shift-at': self.setRegion,
+    'Control-w': lambda event, which = 'd' :self.killRegion( event, which ),
+    'Alt-w': lambda event, which = 'c' : self.killRegion( event, which ),
+    'Control-t': self.swapCharacters,
+    'Control-u': None,
+    'Control-l': None,
+    'Alt-z': None,
+    'Control-i': None,
+    'Alt-Control-backslash': self.indentRegion,
+    'Alt-m' : self.backToIndentation,
+    'Alt-asciicircum' : self.deleteIndentation,
+    'Control-d': self.deleteNextChar,
+    'Alt-backslash': self.deleteSpaces, 
+    'Alt-g': None,
+    'Control-v' : lambda event, way = 'south': self.screenscroll( event, way ),
+    'Alt-v' : lambda event, way = 'north' : self.screenscroll( event, way ),
+    'Alt-equal': self.countRegion,
+    'Alt-parenleft': self.insertParentheses,
+    'Alt-parenright': self.movePastClose,
+    'Alt-percent' : None,
+    'Control-c': None,
+    'Delete': lambda event, which = 'BackSpace': self.manufactureKeyPress( event, which ),
+    'Control-p': lambda event, which = 'Up': self.manufactureKeyPress( event, which ),
+    'Control-n': lambda event, which = 'Down': self.manufactureKeyPress( event, which ),
+    'Control-f': lambda event, which = 'Right':self.manufactureKeyPress( event, which ),
+    'Control-b': lambda event, which = 'Left': self.manufactureKeyPress( event, which ),
+    'Control-Alt-w': None,
+    'Alt-a': lambda event, which = 'bak': self.prevNexSentence( event, which ),
+    'Alt-e': lambda event, which = 'for': self.prevNexSentence( event, which ),
+    'Control-Alt-o': self.insertNewLineIndent,
+    'Control-j': self.insertNewLineAndTab,
+    'Alt-minus': self.negativeArgument,
+    'Alt-slash': self.dynamicExpansion,
+    'Control-Alt-slash': self.dynamicExpansion2,
+    'Control-u': lambda event, keystroke = '&lt;Control-u&gt;': self.universalDispatch( event, keystroke ),
+    'Alt-braceright': lambda event, which = 1: self.movingParagraphs( event, which ),
+    'Alt-braceleft': lambda event , which = 0: self.movingParagraphs( event, which ),
+    'Alt-q': self.fillParagraph,
+    'Alt-h': self.selectParagraph,
+    'Alt-semicolon': self.indentToCommentColumn,
+    'Alt-0': lambda event, stroke = '&lt;Alt-0&gt;', number = 0: self.numberCommand( event, stroke, number ) ,
+    'Alt-1': lambda event, stroke = '&lt;Alt-1&gt;', number = 1: self.numberCommand( event, stroke, number ) ,
+    'Alt-2': lambda event, stroke = '&lt;Alt-2&gt;', number = 2: self.numberCommand( event, stroke, number ) ,
+    'Alt-3': lambda event, stroke = '&lt;Alt-3&gt;', number = 3: self.numberCommand( event, stroke, number ) ,
+    'Alt-4': lambda event, stroke = '&lt;Alt-4&gt;', number = 4: self.numberCommand( event, stroke, number ) ,
+    'Alt-5': lambda event, stroke = '&lt;Alt-5&gt;', number = 5: self.numberCommand( event, stroke, number ) ,
+    'Alt-6': lambda event, stroke = '&lt;Alt-6&gt;', number = 6: self.numberCommand( event, stroke, number ) ,
+    'Alt-7': lambda event, stroke = '&lt;Alt-7&gt;', number = 7: self.numberCommand( event, stroke, number ) ,
+    'Alt-8': lambda event, stroke = '&lt;Alt-8&gt;', number = 8: self.numberCommand( event, stroke, number ) ,
+    'Alt-9': lambda event, stroke = '&lt;Alt-9&gt;', number = 9: self.numberCommand( event, stroke, number ) ,
+    'Control-underscore': self.doUndo,
+    'Alt-s': self.centerLine,
+    'Control-z': self.suspend, 
+    'Control-Alt-s': lambda event, stroke='&lt;Control-s&gt;': self.startIncremental( event, stroke, which='regexp' ),
+    'Control-Alt-r': lambda event, stroke='&lt;Control-r&gt;': self.startIncremental( event, stroke, which='regexp' ),
+    'Control-Alt-percent': lambda event: self.startRegexReplace() and self.masterQR( event ),
+    'Escape': self.watchEscape,
+    'Alt-colon': self.startEvaluate,
+    'Alt-exclam': self.startSubprocess,
+    'Alt-bar': lambda event: self.startSubprocess( event, which = 1 ),
+    }
+    
+    return cbDict</t>
+<t tx="mork.20041030183633">def addXCommands( self ):
+    
+    xcommands = {
+    '&lt;Control-t&gt;': self.transposeLines, 
+    '&lt;Control-u&gt;': lambda event , way ='up': self.upperLowerRegion( event, way ),
+    '&lt;Control-l&gt;':  lambda event , way ='low': self.upperLowerRegion( event, way ),
+    '&lt;Control-o&gt;': self.removeBlankLines,
+    '&lt;Control-i&gt;': self.insertFile,
+    '&lt;Control-s&gt;': self.saveFile,
+    '&lt;Control-x&gt;': self.exchangePointMark,
+    '&lt;Control-c&gt;': self.shutdown,
+    '&lt;Control-b&gt;': self.listBuffers,
+    '&lt;Control-Shift-at&gt;': lambda event: event.widget.selection_clear(),
+    '&lt;Delete&gt;' : lambda event, back = True: self.killsentence( event, back ),
+    }
+    
+    return xcommands</t>
+<t tx="mork.20041030190729">def addRegisterItems( self ):
+    
+    regMeths = {
+    's' : self.copyToRegister,
+    'i' : self.insertFromRegister,
+    'n': self.numberToRegister,
+    'plus': self.incrementRegister,
+    'space': self.pointToRegister,
+    'j': self.jumpToRegister,
+    'a': lambda event , which = 'a': self._ToReg( event, which ),
+    'p': lambda event , which = 'p': self._ToReg( event, which ),
+    'r': self.copyRectangleToRegister,
+    'view' : self.viewRegister,
+    }    
+    
+    regText = {
+    's' : 'copy to register',
+    'i' : 'insert from register',
+    'plus': 'increment register',
+    'n' : 'number to register',
+    'p' : 'prepend to register',
+    'a' : 'append to register',
+    'space' : 'point to register',
+    'j': 'jump to register',
+    'r': 'rectangle to register',
+    'view': 'view register',
+    }
+    
+    return regMeths, regText</t>
+<t tx="mork.20041030190903">def addAltXCommands( self ):
+    
+    #many of the simpler methods need self.keyboardQuit( event ) appended to the end to stop the Alt-x mode.
+    doAltX= {
+    'prepend-to-register': self.prependToRegister,
+    'append-to-register': self.appendToRegister,
+    'replace-string': self.replaceString,
+    'replace-regex': lambda event:  self.activateReplaceRegex() and self.replaceString( event ),
+    'sort-lines': self.sortLines,
+    'sort-columns': self.sortColumns,
+    'reverse-region': self.reverseRegion,
+    'sort-fields': self.sortFields,
+    'abbrev-mode': self.toggleAbbrevMode,
+    'kill-all-abbrevs': self.killAllAbbrevs,
+    'expand-region-abbrevs': self.regionalExpandAbbrev,
+    'write-abbrev-file': self.writeAbbreviations,
+    'read-abbrev-file': self.readAbbreviations,
+    'fill-region-as-paragraph': self.fillRegionAsParagraph,
+    'fill-region': self.fillRegion,
+    'close-rectangle': self.closeRectangle,
+    'how-many': self.startHowMany,
+    'kill-paragraph': self.killParagraph,
+    'backward-kill-paragraph': self.backwardKillParagraph,
+    'backward-kill-sentence': lambda event: self.keyboardQuit( event ) and self.killsentence( event, back = True ),
+    'name-last-kbd-macro': self.nameLastMacro,
+    'load-file': self.loadMacros,
+    'insert-keyboard-macro' : self.getMacroName,
+    'list-abbrevs': self.listAbbrevs,
+    'kill-word': lambda event, frm = 'insert wordstart', to = 'insert wordend': self.kill( event,frm, to ) and self.keyboardQuit( event ),
+    'kill-line': lambda event, frm = 'insert', to = 'insert lineend': self.kill( event, frm, to) and self.keyboardQuit( event ), 
+    'kill-sentence': lambda event : self.killsentence( event ) and self.keyboardQuit( event ),
+    'kill-region': lambda event, which = 'd' :self.killRegion( event, which ) and self.keyboardQuit( event ),
+    'yank': lambda event, frm = 'insert', which = 'c': self.walkKB( event, frm, which) and self.keyboardQuit( event ),
+    'yank-pop' : lambda event , frm = "insert", which = 'a': self.walkKB( event, frm, which ) and self.keyboardQuit( event ),
+    'backward-kill-word': lambda event: self.deletelastWord( event ) and self.keyboardQuit( event ),
+    'backward-delete-char':lambda event, which = 'BackSpace': self.manufactureKeyPress( event, which ) and self.keyboardQuit( event ),
+    'delete-char': lambda event: self.deleteNextChar( event ) and self.keyboardQuit( event ) , 
+    'isearch-forward': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-s&gt;' ),
+    'isearch-backward': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-r&gt;' ),
+    'isearch-forward-regexp': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-s&gt;', which = 'regexp' ),
+    'isearch-backward-regexp': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-r&gt;', which = 'regexp' ),
+    'capitalize-word': lambda event, which = 'cap' : self.capitalize( event, which ) and self.keyboardQuit( event ),
+    'upcase-word': lambda event, which = 'up' : self.capitalize( event, which ) and self.keyboardQuit( event ),
+    'downcase-word': lambda event, which = 'low' : self.capitalize( event, which ) and self.keyboardQuit( event ),
+    'indent-region': lambda event: self.indentRegion( event ) and self.keyboardQuit( event ),
+    'indent-rigidly': lambda event: self.tabIndentRegion( event ) and self.keyboardQuit( event ),
+    'indent-relative': self.indent_relative,
+    'set-mark-command': lambda event: self.setRegion( event ) and self.keyboardQuit( event ),
+    'kill-rectangle': lambda event: self.killRectangle( event ),
+    'delete-rectangle': lambda event: self.deleteRectangle( event ),
+    'yank-rectangle': lambda event: self.yankRectangle( event ),
+    'open-rectangle': lambda event: self.openRectangle( event ),
+    'clear-rectangle': lambda event: self.clearRectangle( event ),
+    'copy-to-register': lambda event: self.setEvent( event, 's' ) and self.setNextRegister( event ),
+    'insert-register': lambda event: self.setEvent( event, 'i' ) and self.setNextRegister( event ),
+    'copy-rectangle-to-register': lambda event: self.setEvent( event, 'r' ) and self.setNextRegister( event ),
+    'jump-to-register': lambda event: self.setEvent( event, 'j' ) and self.setNextRegister( event ),
+    'point-to-register': lambda event: self.setEvent( event, 'space' ) and self.setNextRegister( event ),
+    'number-to-register': lambda event: self.setEvent( event, 'n' ) and self.setNextRegister( event ),
+    'increment-register': lambda event: self.setEvent( event, 'plus' ) and self.setNextRegister( event ),
+    'view-register': lambda event: self.setEvent( event, 'view' ) and self.setNextRegister( event ),
+    'beginning-of-line': lambda event, spot = 'insert linestart': self.moveTo( event, spot ) and self.keyboardQuit( event ),
+    'end-of-line': lambda event, spot = 'insert lineend': self.moveTo( event, spot ) and self.keyboardQuit( event ),
+    'keyboard-quit': lambda event: self.keyboardQuit( event ),
+    'advertised-undo': lambda event: self.doUndo( event ) and self.keyboardQuit( event ),
+    'back-to-indentation': lambda event: self.backToIndentation( event ) and self.keyboardQuit( event ),
+    'delete-indentation': lambda event: self.deleteIndentation( event ) and self.keyboardQuit( event ),    
+    'view-lossage': lambda event: self.viewLossage( event ),
+     'transpose-chars': lambda event : self.swapCharacters( event ) and self.keyboardQuit( event ),
+     'transpose-words': lambda event, sw = self.swapSpots: self.swapWords( event, sw ) and self.keyboardQuit( event ),
+     'transpose-lines': lambda event: self.transposeLines( event ) and self.keyboardQuit( event ),
+     'insert-file' : lambda event: self.insertFile( event ) and self.keyboardQuit( event ),
+     'save-buffer' : lambda event: self.saveFile( event ) and self.keyboardQuit( event ),
+     'split-line' : lambda event: self.insertNewLineIndent( event ) and self.keyboardQuit( event ),
+     'upcase-region': lambda event: self.upperLowerRegion( event, 'up' ) and self.keyboardQuit( event ),
+     'downcase-region': lambda event: self.upperLowerRegion( event , 'low' ) and self.keyboardQuit( event ),
+     'dabbrev-expands': lambda event: self.dynamicExpansion( event ) and self.keyboardQuit( event ),
+     'dabbrev-completion': lambda event: self.dynamicExpansion2( event ) and self.keyboardQuit( event ),
+     'goto-line': lambda event: self.startGoto( event ),
+     'goto-char': lambda event: self.startGoto( event, True ),
+     'set-fill-prefix': lambda event: self.setFillPrefix( event ) and self.keyboardQuit( event ),
+     'set-fill-column': lambda event: self.setFillColumn( event ),
+     'center-line': lambda event: self.centerLine( event ) and self.keyboardQuit( event ),
+     'center-region': lambda event: self.centerRegion( event ) and self.keyboardQuit( event ),
+     'forward-char': lambda event, which = 'Right': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+     'backward-char': lambda event, which = 'Left': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+     'previous-line': lambda event, which = 'Up': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+     'next-line': lambda event, which = 'Down': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+     'digit-argument': lambda event: self.universalDispatch( event, '' ),
+     'universal-argument': lambda event: self.universalDispatch( event, '' ),   
+     'newline-and-indent': lambda event: self.insertNewLineAndTab( event ) and self.keyboardQuit( event ),
+     'beginning-of-buffer': lambda event, spot = '1.0' : self.moveTo( event, spot ) and self.keyboardQuit( event ),
+     'end-of-buffer': lambda event, spot = 'end' : self.moveTo( event, spot ) and self.keyboardQuit( event ),
+     'scroll-up': lambda event, way = 'north' : self.screenscroll( event, way ) and self.keyboardQuit( event ),
+     'scroll-down': lambda event, way = 'south': self.screenscroll( event, way ) and self.keyboardQuit( event ),
+     'copy-to-buffer': lambda event, which = 'copy-to-buffer': self.setInBufferMode( event, which ),
+     'insert-buffer': lambda event, which = 'insert-buffer': self.setInBufferMode( event, which ),
+     'append-to-buffer': lambda event , which = 'append-to-buffer':  self.setInBufferMode( event, which ),
+     'prepend-to-buffer': lambda event, which = 'prepend-to-buffer': self.setInBufferMode( event, which ),
+     'switch-to-buffer': lambda event, which = 'switch-to-buffer': self.setInBufferMode( event, which ),
+     'list-buffers' : lambda event: self.listBuffers( event ),
+     'kill-buffer' : lambda event, which = 'kill-buffer': self.setInBufferMode( event, which ),
+     'rename-buffer': lambda event: self.renameBuffer( event ),
+     'query-replace': lambda event: self.masterQR( event ), 
+     'query-replace-regex': lambda event: self.startRegexReplace() and self.masterQR( event ),
+     'inverse-add-global-abbrev': lambda event: self.abbreviationDispatch( event, 2 ) ,  
+     'expand-abbrev': lambda event : self.keyboardQuit( event ) and self.expandAbbrev( event ), 
+     'iconfify-or-deiconify-frame': lambda event: self.suspend( event ) and self.keyboardQuit( event ),
+     'save-buffers-kill-emacs': lambda event: self.keyboardQuit( event ) and self.shutdown( event ),
+     're-search-forward': lambda event: self.reStart( event ),
+     're-search-backward': lambda event: self.reStart( event, which = 'backward' ),
+     'diff': self.diff, 
+     'what-line': self.whatLine,
+     'flush-lines': lambda event: self.startLines( event ),
+     'keep-lines': lambda event: self.startLines( event, which = 'keep' ),
+     'make-directory': lambda event: self.makeDirectory( event ),
+     'remove-directory': lambda event: self.removeDirectory( event ),
+     'delete-file': lambda event: self.deleteFile( event ),
+     'search-forward': lambda event: self.startNonIncrSearch( event, 'for' ),
+     'search-backward': lambda event: self.startNonIncrSearch( event, 'bak' ),
+     'word-search-forward': lambda event : self.startWordSearch( event, 'for' ),
+     'word-search-backward': lambda event: self.startWordSearch( event, 'bak' ),
+     'repeat-complex-command': lambda event: self.repeatComplexCommand( event ),
+     'eval-expression': self.startEvaluate,
+     'tabify': self.tabify,
+     'untabify': lambda event: self.tabify( event, which = 'untabify' ),
+     'shell-command': self.startSubprocess,
+     'shell-command-on-region': lambda event: self.startSubprocess( event, which=1 ),
+    }    
+    #Note: if we are reusing some of the cbDict lambdas we need to alter many by adding: self.keyboardQuit( event )
+    #Otherwise the darn thing just sits in Alt-X land.  Putting the 'and self.keyboardQuit( event )' part in the killbuffer
+    #and yanking it out for each new item, works well.  Adding it to a register might be good to.
+    return doAltX
+
+
+
+
+
+
+ </t>
+<t tx="mork.20041031131847">class ControlXHandler:
+    '''The ControlXHandler manages how the Control-X based commands operate on the
+       Emacs instance.'''    
+    
+    @others
+
+</t>
+<t tx="mork.20041031132342">def __call__( self, event , stroke ):
+    
+    self.previous.insert( 0, event.keysym )
+    emacs = self.emacs 
+    if len( self.previous ) &gt; 10: self.previous.pop()
+    if stroke in ('&lt;Key&gt;', '&lt;Escape&gt;' ):
+        return self.processKey( event )
+    if stroke in emacs.xcommands:
+        emacs.xcommands[ stroke ]( event )
+        if stroke != '&lt;Control-b&gt;': emacs.keyboardQuit( event )
+    return 'break'</t>
+<t tx="mork.20041031133146">def processKey( self, event ):
+        
+    emacs = self.emacs 
+    previous = self.previous
+    if event.keysym in ( 'Shift_L', 'Shift_R' ):
+        return
+        
+    if emacs.sRect:
+        return emacs.stringRectangle( event )
+        
+    if ( event.keysym == 'r' and emacs.rectanglemode == 0 ) and not emacs.registermode:
+        return self.processRectangle( event )
+    elif self.rect_commands.has_key( event.keysym ) and emacs.rectanglemode == 1:
+        return self.processRectangle( event )
+        
+    if self.register_commands.has_key( emacs.registermode ):
+        self.register_commands[ emacs.registermode ]( event )
+        return 'break'
+    
+    if self.variety_commands.has_key( event.keysym ):
+        emacs.stopControlX( event )
+        return self.variety_commands[ event.keysym ]( event )
+        
+    
+    #if emacs.sRect:
+    #    return emacs.stringRectangle( event )
+    #    #return 'break'
+    if event.keysym in ( 'a', 'i' , 'e'):
+        if self.processAbbreviation( event ): return 'break'
+
+    if event.keysym == 'g':
+        svar, label = emacs.getSvarLabel( event )
+        l = svar.get()
+        if self.abbreviationDispatch.has_key( l ):
+            emacs.stopControlX( event )
+            return self.abbreviationDispatch[ l ]( event )
+        #if l == 'a':
+        #    emacs.stopControlX( event )
+        #    return emacs.abbreviationDispatch( event, 1 )
+        #elif l == 'a i':
+        #    emacs.stopControlX( event )
+        #    return emacs.abbreviationDispatch( event, 2 )
+    if event.keysym == 'e':
+        emacs.stopControlX( event )
+        return emacs.executeLastMacro( event )
+    if event.keysym == 'x' and previous[ 1 ] not in ( 'Control_L', 'Control_R'):
+        event.keysym = 's' 
+        emacs.setNextRegister( event )
+        return 'break'
+    
+    if event.keysym == 'Escape':
+        if len( previous ) &gt; 1:
+            if previous[ 1 ] == 'Escape':
+                return emacs.repeatComplexCommand( event )
+    #if event.keysym == 'r':
+    #    return emacs.activateRectangleMethods( event )
+    #if self.rect_commands.has_key( event.keysym ):# and emacs.registermode == 1:
+    #    return self.processRectangle( event )
+     
+    #if emacs.registermode == 1:
+    #    emacs.setNextRegister( event )
+    #    return 'break'
+    #elif emacs.registermode == 2:
+    #    emacs.executeRegister( event )
+    #    return 'break'
+    #if self.register_commands.has_key( emacs.registermode ):
+    #    print 'register commands'
+    #    self.register_commands[ emacs.registermode ]( event )
+    #    return 'break'
+    #if event.keysym == 'r':
+    #    return emacs.activateRectangleMethods( event )
+    #    emacs.registermode = 1
+    #    svar = emacs.svars[ event.widget ]
+    #    svar.set( 'C - x r' )
+    #    return 'break'
+    #if event.keysym== 'h':
+    #    emacs.stopControlX( event )
+    #    event.widget.tag_add( 'sel', '1.0', 'end' )
+    #tag_add( 'sel', '1.0', 'end' )    return 'break' 
+    #if event.keysym == 'equal':
+    #    emacs.lineNumber( event )
+    #    return 'break'
+    #if event.keysym == 'u':
+    #    emacs.stopControlX( event )
+    #    return emacs.doUndo( event, 2 )   
+        
+         
+
+
+
+</t>
+<t tx="mork.20041031134709">def processRectangle( self, event ):
+    
+    self.rect_commands[ event.keysym ]( event )
+    return 'break'
+    #if event.keysym == 'o':
+    #    emacs.openRectangle( event )
+    #    return 'break'
+    #if event.keysym == 'c':
+    #    emacs.clearRectangle( event )
+    #    return 'break'
+    #if event.keysym == 't':
+    #    emacs.stringRectangle( event )
+    #    return 'break'
+    #if event.keysym == 'y':
+    #    emacs.yankRectangle( event )
+    #    return 'break'
+    #if event.keysym == 'd':
+    #    emacs.deleteRectangle( event )
+    #    return 'break'
+    #if event.keysym == 'k':
+    #    emacs.killRectangle( event )
+    #    return 'break'       
+</t>
+<t tx="mork.20041031135748">def processAbbreviation( self, event ):
+    
+    emacs = self.emacs
+    svar, label = emacs.getSvarLabel( event )
+    if svar.get() != 'a' and event.keysym == 'a':
+        svar.set( 'a' )
+        return 'break'
+    elif svar.get() == 'a':
+        if event.char == 'i':
+            svar.set( 'a i' )
+        elif event.char == 'e':
+            emacs.stopControlX( event )
+            event.char = ''
+            emacs.expandAbbrev( event )
+        return 'break'</t>
+<t tx="mork.20041031145157">class MC_StateManager:
+    
+    '''MC_StateManager manages the state that the Emacs instance has entered and
+       routes key events to the right method, dependent upon the state in the MC_StateManager'''
+       
+    @others
+
+
+
+</t>
+<t tx="mork.20041031150125"># EKR: used only below.
+def eA( event ):
+    if self.emacs.expandAbbrev( event ) :
+        return 'break'
+
+self.stateCommands = { #1 == one parameter, 2 == all
+    'uC': ( 2, emacs.universalDispatch ),
+    'controlx': ( 2, emacs.doControlX ),
+    'isearch':( 2, emacs.iSearch ),
+    'goto': ( 1, emacs.Goto ),
+    'zap': ( 1, emacs.zapTo ),
+    'howM': ( 1, emacs.howMany ),
+    'abbrevMode': ( 1, emacs.abbrevCommand1 ),
+    'altx': ( 1, emacs.doAlt_X ),
+    'qlisten': ( 1, emacs.masterQR ),
+    'rString': ( 1, emacs.replaceString ),
+    'negativeArg':( 2, emacs.negativeArgument ),
+    'abbrevOn': ( 1, eA ),
+    'set-fill-column': ( 1, emacs.setFillColumn ),
+    'chooseBuffer': ( 1, emacs.chooseBuffer ),
+    'renameBuffer': ( 1, emacs.renameBuffer ),
+    're_search': ( 1, emacs.re_search ),
+    'alterlines': ( 1, emacs.processLines ),
+    'make_directory': ( 1, emacs.makeDirectory ),
+    'remove_directory': ( 1, emacs.removeDirectory ),
+    'delete_file': ( 1, emacs.deleteFile ),
+    'nonincr-search': ( 2, emacs.nonincrSearch ),
+    'word-search':( 1, emacs.wordSearch ),
+    'last-altx': ( 1, emacs.executeLastAltX ),
+    'escape': ( 1, emacs.watchEscape ),
+    'subprocess': ( 1, emacs.subprocesser ),
+    }</t>
+<t tx="mork.20041031155455">@others</t>
+<t tx="mork.20041031162857">def __init__( self, emacs ):
+        
+    self.emacs = emacs
+    self.state = None
+    self.states = {}
+    &lt;&lt;statecommands&gt;&gt;</t>
+<t tx="mork.20041031162857.1">def setState( self, state, value ):
+        
+    self.state = state
+    self.states[ state ] = value</t>
+<t tx="mork.20041031162857.2">def getState( self, state ):
+    
+    return self.states.get(state,False)</t>
+<t tx="mork.20041031162857.3">def hasState( self ):
+
+    if self.state:
+        return self.states[ self.state ]
+</t>
+<t tx="mork.20041031162857.4">def __call__( self, *args ):
+        
+    if self.state:
+        which = self.stateCommands[ self.state ]
+        
+        # EKR: which[0] is a flag: 1 == one parameter, 2 == all
+        # EKR: which[1] is the function.
+        
+        if which[ 0 ] == 1:
+            return which[ 1 ]( args[ 0 ] )
+        else:
+            return which[ 1 ]( *args )
+</t>
+<t tx="mork.20041031162857.5">def clear( self ):
+        
+    self.state = None
+
+    for z in self.states.keys():
+        self.states[ z ] = False</t>
+<t tx="mork.20041031162953">def __init__( self, emacs ):
+        
+    self.emacs = emacs
+    self.previous = []
+    self.rect_commands = {
+    'o': emacs.openRectangle,
+    'c': emacs.clearRectangle,
+    't': emacs.stringRectangle,
+    'y': emacs.yankRectangle,
+    'd': emacs.deleteRectangle,
+    'k': emacs.killRectangle,
+    'r': emacs.activateRectangleMethods,             
+    }
+    
+    self.variety_commands = {
+    'period': emacs.setFillPrefix,
+    'parenleft': emacs.startKBDMacro,
+    'parenright' : emacs.stopKBDMacro,
+    'semicolon': emacs.setCommentColumn,
+    'Tab': emacs.tabIndentRegion,
+    'u': lambda event: emacs.doUndo( event, 2 ),
+    'equal': emacs.lineNumber,
+    'h': emacs.selectAll,
+    'f': emacs.setFillColumn,
+    'b': lambda event, which = 'switch-to-buffer': emacs.setInBufferMode( event, which ),
+    'k': lambda event, which = 'kill-buffer': emacs.setInBufferMode( event, which ),
+    }
+    
+    self.abbreviationDispatch = {    
+    'a': lambda event: emacs.abbreviationDispatch( event, 1 ),
+    'a i': lambda event: emacs.abbreviationDispatch( event, 2 ),    
+    }
+    
+    self.register_commands ={    
+    1: emacs.setNextRegister,
+    2: emacs.executeRegister,        
+    }
+</t>
+<t tx="mork.20041031182258">@
+These methods create the dispatch dictionarys that the
+Emacs instance uses to execute specific keystrokes and commands.
+Dont mess with it if you dont understand this section, without these dictionarys
+the Emacs system cant work.
+
+@c
+
+
+@others</t>
+<t tx="mork.20041031182643">@others</t>
+<t tx="mork.20041031182643.1">@
+Emacs requires an undo mechanism be added from the environment.
+If there is no undo mechanism added, there will be no undo functionality in the instance.
+@c
+
+
+
+@others</t>
+<t tx="mork.20041031194746">@
+These methods contain methods by which an Emacs instance is extended, changed, added to , etc...
+
+@c
+
+
+@others</t>
+<t tx="mork.20041101083527">class MC_KeyStrokeManager:
+    
+    @others</t>
+<t tx="mork.20041101083527.1">def __init__( self, emacs ):
+    
+    self.emacs = emacs
+
+    &lt;&lt;keystrokes&gt;&gt;
+</t>
+<t tx="mork.20041101083527.2">self.keystrokes = {
+
+    '&lt;Control-s&gt;': ( 2, emacs.startIncremental ), 
+    '&lt;Control-r&gt;': ( 2, emacs.startIncremental ),
+    '&lt;Alt-g&gt;': ( 1, emacs.startGoto ),
+    '&lt;Alt-z&gt;': ( 1, emacs.startZap ),
+    '&lt;Alt-percent&gt;': ( 1,  emacs.masterQR ) ,
+    '&lt;Control-Alt-w&gt;': ( 1, lambda event: 'break' ),
+}</t>
+<t tx="mork.20041101084148">def hasKeyStroke( self, stroke ):
+    
+    return self.keystrokes.has_key( stroke )</t>
+<t tx="mork.20041101084148.1">def __call__( self, event, stroke ):
+    
+    kstroke = self.keystrokes[ stroke ]
+    
+    if 0: # EKR: this would be better:
+        numberOfArgs,func = self.keystrokes[ stroke ]
+        if numberOfArgs == 1:
+            return func(event)
+        else:
+            return func(event,stroke)
+    
+    # EKR: which[0] is the number of params.
+    # EKR: which[1] is the function.
+
+    if kstroke[ 0 ] == 1:
+        return kstroke[ 1 ]( event )
+    else:
+        return kstroke[ 1 ]( event, stroke )
+        
+    </t>
+<t tx="mork.20041101190309">def extendAltX( self, name, function ):
+    '''A simple method that extends the functions Alt-X offers.'''
+    
+    nfunction = new.instancemethod( function, self, Emacs ) #making it an instance method allows the function to be passed 'self'.
+    self.doAltX[ name ] = nfunction
+    
+
+</t>
+<t tx="mork.20041102094716">def reconfigureKeyStroke( self, tbuffer, keystroke , set_to ):
+    
+    '''This method allows the user to reconfigure what a keystroke does.
+       This feature is alpha at best, and untested.'''
+
+    if self.cbDict.has_key( set_to ):
+        
+        command = self.cbDict[ set_to ]
+        self.cbDict[ keystroke ] = command
+        evstring = '&lt;%s&gt;' % keystroke
+        tbuffer.bind( evstring,  lambda event, meth = command: self.masterCommand( event, meth , evstring)  )</t>
+<t tx="mork.20041102131352">class Tracker:
+    '''A class designed to allow the user to cycle through a list
+       and to change the list as deemed appropiate.'''
+
+    @others</t>
+<t tx="mork.20041102131352.1">def __init__( self ):
+    
+    self.tablist = []
+    self.prefix = None
+    self.ng = self._next()</t>
+<t tx="mork.20041102131352.2">def setTabList( self, prefix, tlist ):
+    
+    self.prefix = prefix
+    self.tablist = tlist
+    
+
+</t>
+<t tx="mork.20041102131352.3">def _next( self ):
+    
+    while 1:
+        
+        tlist = self.tablist
+        if not tlist: yield ''
+        for z in self.tablist:
+            if tlist != self.tablist:
+                break
+            yield z
+</t>
+<t tx="mork.20041102132710">def next( self ):
+    
+    return self.ng.next()
+</t>
+<t tx="mork.20041102160313">def clear( self ):
+
+    self.tablist = []
+    self.prefix = None
+</t>
+<t tx="mork.20041103155347">@
+an Emacs instance does not have knowledge of what is considered a buffer in the environment.
+It must be configured by the user so that it can operate on the other buffers.  Otherwise
+these methods will be useless.
+
+@c
+
+
+@others</t>
+<t tx="mork.20041103155347.1">def setBufferListGetter( self, buffer, method ):
+    #Sets a method that returns a buffer name and its text, and its insert position.
+    self.bufferListGetters[ buffer ] = method
+</t>
+<t tx="mork.20041103155347.2">def setBufferSetter( self, buffer, method ):
+    #Sets a method that takes a buffer name and the new contents.
+    self.bufferSetters[ buffer ] = method</t>
+<t tx="mork.20041103155347.3">def getBufferDict( self, event ):
+    
+    tbuffer = event.widget
+    meth = self.bufferListGetters[ tbuffer ]
+    return meth()</t>
+<t tx="mork.20041103155347.4">def appendToBuffer( self, event, name ):
+
+    tbuffer = event.widget
+    try:
+        txt = tbuffer.get( 'sel.first', 'sel.last' )
+        bdata = self.bufferDict[ name ]
+        bdata = '%s%s' % ( bdata, txt )
+        self.setBufferData( event, name, bdata )
+    except Exception, x:
+        pass
+    return self.keyboardQuit( event )</t>
+<t tx="mork.20041103155347.5">def prependToBuffer( self, event, name ):
+    
+    tbuffer = event.widget
+    try:
+        txt = tbuffer.get( 'sel.first', 'sel.last' )
+        bdata = self.bufferDict[ name ]
+        bdata = '%s%s' % ( txt, bdata )
+        self.setBufferData( event, name, bdata )
+    except Exception, x:
+        pass
+    return self.keyboardQuit( event )</t>
+<t tx="mork.20041103155347.6">def insertToBuffer( self, event, name ):
+
+    tbuffer = event.widget
+    bdata = self.bufferDict[ name ]
+    tbuffer.insert( 'insert', bdata )
+    self._tailEnd( tbuffer )
+    return self.keyboardQuit( event )
+</t>
+<t tx="mork.20041103155347.7">def copyToBuffer( self, event, name ):
+    
+    tbuffer = event.widget
+    try:
+        txt = tbuffer.get( 'sel.first', 'sel.last' )
+        self.setBufferData( event, name, txt )
+    except Exception, x:
+        pass
+    return self.keyboardQuit( event )
+    
+</t>
+<t tx="mork.20041103161202">def chooseBuffer( self, event ):
+    
+    svar, label = self.getSvarLabel( event )
+
+    state = self.mcStateManager.getState( 'chooseBuffer' )
+    if state.startswith( 'start' ):
+        state = state[ 5: ]
+        self.mcStateManager.setState( 'chooseBuffer', state )
+        svar.set( '' )
+    if event.keysym == 'Tab':
+        
+        stext = svar.get().strip()
+        if self.bufferTracker.prefix and stext.startswith( self.bufferTracker.prefix ):
+            svar.set( self.bufferTracker.next() ) #get next in iteration
+        else:
+            prefix = svar.get()
+            pmatches = []
+            for z in self.bufferDict.keys():
+                if z.startswith( prefix ):
+                    pmatches.append( z )
+            self.bufferTracker.setTabList( prefix, pmatches )
+            svar.set( self.bufferTracker.next() ) #begin iteration on new lsit
+        return 'break'        
+
+        
+    elif event.keysym == 'Return':
+       
+       bMode = self.mcStateManager.getState( 'chooseBuffer' )
+       return self.bufferCommands[ bMode ]( event, svar.get() )
+        
+        
+    else:
+        self.setSvar( event, svar )
+        return 'break'
+
+</t>
+<t tx="mork.20041103161202.1">def setInBufferMode( self, event, which ):
+    
+    self.keyboardQuit( event )
+    tbuffer = event.widget
+    self.mcStateManager.setState( 'chooseBuffer', 'start%s' % which )
+    svar, label = self.getSvarLabel( event )
+    label.configure( background = 'lightblue' )
+    svar.set( 'Choose Buffer Name:' )
+    self.bufferDict = self.getBufferDict( event )
+    return 'break'</t>
+<t tx="mork.20041103162147">def setBufferData( self, event, name, data ):
+    
+    tbuffer = event.widget
+    meth = self.bufferSetters[ tbuffer ]
+    meth( name, data )</t>
+<t tx="mork.20041103190332">def listBuffers( self, event ):
+    
+    bdict  = self.getBufferDict( event )
+    list = bdict.keys()
+    list.sort()
+    svar, label = self.getSvarLabel( event )
+    data = '\n'.join( list )
+    self.keyboardQuit( event )
+    svar.set( data )
+    return 'break'
+    </t>
+<t tx="mork.20041103191311">def setBufferGoto( self, tbuffer, method ):
+    self.bufferGotos[ tbuffer ] = method </t>
+<t tx="mork.20041103191311.1">def switchToBuffer( self, event, name ):
+    
+    method = self.bufferGotos[ event.widget ]
+    self.keyboardQuit( event )
+    method( name )
+    return 'break'
+</t>
+<t tx="mork.20041104090224">def setBufferDelete( self, tbuffer, method ):
+    
+    self.bufferDeletes[ tbuffer ] = method
+    
+
+</t>
+<t tx="mork.20041104090224.1">def killBuffer( self, event, name ):
+    
+    method = self.bufferDeletes[ event.widget ]
+    self.keyboardQuit( event )
+    method( name )
+    return 'break'
+    
+
+</t>
+<t tx="mork.20041104092058">def renameBuffer( self, event ):
+    
+    svar, label = self.getSvarLabel( event )
+    if not self.mcStateManager.getState( 'renameBuffer' ):
+        self.mcStateManager.setState( 'renameBuffer', True )
+        svar.set( '' )
+        label.configure( background = 'lightblue' )
+        return 'break'
+    if event.keysym == 'Return':
+       
+       nname = svar.get()
+       self.keyboardQuit( event )
+       self.renameBuffers[ event.widget ]( nname )
+        
+        
+    else:
+        self.setSvar( event, svar )
+        return 'break'</t>
+<t tx="mork.20041104092349">def setBufferRename( self, buffer, method ):
+    
+    self.renameBuffers[ buffer ] = method</t>
+<t tx="mork.20041104094826">@others</t>
+<t tx="mork.20041104094826.1">@others</t>
+<t tx="mork.20041104102456">@others
+</t>
+<t tx="mork.20041122152311">@
+Ive noticed a general strategy that works for adding commands that need state to develop.
+
+1. Create a start method.  This sets the mcStateManager into a specific state
+2. Create a process method.  This watches events as they happen in the state
+3. Create endpoint methods. These perform the final steps in processing the stateful command.
+
+
+This general strategy works well so far.  A whole family of methods can be created in this manner.  Steps 1 and 2
+could be combined but at a cost of more complexity, so Id recommend keeping them separate.
+</t>
+<t tx="mork.20041123150836">@
+
+just a short note to anyone, including myself, that is working on temacs.  Currently all( well all the ones that we have registered interest in ) key events get
+routed through:
+
+def masterCommand( self, event, method , stroke):
+
+
+to understand the flow of the Emacs class, you need to understand this method.  Everything goes through it, there are no sidecuts or anything.  This offers the implementor complete control over what happens, and for the stateful commands it is essential to
+keep states from being corrupted.
+
+
+dont mess with this method lightly.
+</t>
+<t tx="mork.20041124094511">def whichState( self ):
+    
+    return self.state
+</t>
 </tnodes>
 </leo_file>
