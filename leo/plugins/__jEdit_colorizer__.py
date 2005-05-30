@@ -6,7 +6,7 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = '0.2'
+__version__ = '0.3'
 #@<< version history >>
 #@+node:ekr.20050529142916.2:<< version history >>
 #@@killcolor
@@ -14,12 +14,13 @@ __version__ = '0.2'
 # 
 # 0.1 EKR: Initial version:
 #     - Split large methods into smaller methods.
-# 
 # 0.2 EKR:
 #     - Moved contentHandler and modeClass into the plugin.
 #     - colorizer.__init__ reads python.xml, but does nothing with it.
+# 0.3 EKR:
+#     - Wrote and tested createRuleMatchers.  Next step: revise algorithms to 
+# use matchers.
 #@-at
-#@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
 #@nl
 #@<< imports >>
@@ -32,8 +33,6 @@ import re
 import string
 import xml.sax
 import xml.sax.saxutils
-
-
 
 # php_re = re.compile("<?(\s|=|[pP][hH][pP])")
 php_re = re.compile("<?(\s[pP][hH][pP])")
@@ -816,6 +815,7 @@ class colorizer:
         if 1:
             mode0 = self.modes[0]
             mode0.printSummary (printStats=False)
+            self.ruleMatchers = self.createRuleMatchers(mode0.rules)
     
         self.count = 0 # how many times this has been called.
         self.use_hyperlinks = False # True: use hyperlinks and underline "live" links.
@@ -2400,12 +2400,90 @@ class colorizer:
     #@nonl
     #@-node:ekr.20050529143413.93:skip_python_string
     #@-node:ekr.20050529145355:Language-specific utils: (To be removed)
-    #@+node:ekr.20050529180421.47:Rule matching methods
-    #@+node:ekr.20050530065723.78:main colorizer code
+    #@+node:ekr.20050530065723.47:parse_jEdit_file
+    def parse_jEdit_file(self,fileName,verbose=False):
+        
+        if not fileName.endswith('.xml'):
+            fileName = fileName + '.xml'
+    
+        path = os.path.join(g.app.loadDir,'../','modes',fileName)
+        path = os.path.normpath(path)
+        
+        try: f = open(path)
+        except IOError: return None
+    
+        try:
+            try:
+                parser = xml.sax.make_parser()
+                handler = contentHandler(self.c,fileName,verbose=verbose)
+                parser.setContentHandler(handler)
+                parser.parse(f)
+                if verbose: handler.printSummary()
+                modes = handler.getModes()
+            except Exception:
+                g.es('unexpected exception parsing %s' % (languageName),color='red')
+                g.es_exception()
+                return None
+        finally:
+            f.close()
+            return modes
+    #@nonl
+    #@-node:ekr.20050530065723.47:parse_jEdit_file
+    #@+node:ekr.20050530112849:createRuleMatchers
+    def createRuleMatchers (self,rules):
+        
+        return [self.createRuleMatcher(rule) for rule in rules]
+    #@nonl
+    #@-node:ekr.20050530112849:createRuleMatchers
+    #@+node:ekr.20050530112849.1:createRuleMatcher
+    def createRuleMatcher (self,rule):
+        
+        name = rule.name ; d = rule.attributes or {} ; d2 = rule.get('contents',{})
+        token_type    = d.get('type','<no type>')
+        at_line_start = d.get('at_line_start',False)
+        at_ws_end     = d.get('at_ws_end',False)
+        at_word_start = d.get('at_word_start',False)
+        seq     = d2.get(name,'')
+        begin   = d2.get('begin','')
+        end     = d2.get('end','')
+        
+        if name in ('eol_span','mark_following','mark_previous','seq'):
+            def f(self,s,i,seq,at_line_start,at_ws_end,at_word_start):
+                return self.match_seq(s,i,seq,at_line_start,at_ws_end,at_word_start)
+        elif name in ('eol_span_regexp','seq_regexp'):
+            def f(self,s,i,seq,at_line_start,at_ws_end,at_word_start):
+                return self.match_seq_regexp(s,i,seq,at_line_start,at_ws_end,at_word_start)
+        elif name == 'keywords':
+            def f(self,s,i):
+                return self.match_keywords(s,i)
+        elif name == 'span':
+            def f(self,s,i,begin,end,at_line_start,at_ws_end,at_word_start):
+                return self.match_span(s,i,seq,at_line_start,at_ws_end,at_word_start)
+        elif name == 'span_regexp':
+            def f(self,s,i,begin,end,at_line_start,at_ws_end,at_word_start):
+                return self.match_span_regexp(s,i,seq,at_line_start,at_ws_end,at_word_start)
+        else:
+            g.trace('no function for %s' % name)
+            def f(self,s,i):
+                return 0
+    
+        # At present token_type is not specified for 'keywords'
+        g.trace('%-25s'%(name+':'+token_type),at_line_start,at_ws_end,at_word_start,repr(seq),repr(begin),repr(end))
+        
+        return f,token_type
+        
+            
+        
+    
+    
+        
+    
+    #@-node:ekr.20050530112849.1:createRuleMatcher
+    #@+node:ekr.20050529180421.47:Rule matching methods (not used yet)
+    #@+node:ekr.20050530065723.78:new_colorize (prototype for main colorizer code)
     def new_colorize (self):
         
         # Assume all data has been inited.
-        
         while not self.done:
             for f1,f2 in self.rules:
                 if f1():
@@ -2415,7 +2493,7 @@ class colorizer:
             # No rule found.
             return
     #@nonl
-    #@-node:ekr.20050530065723.78:main colorizer code
+    #@-node:ekr.20050530065723.78:new_colorize (prototype for main colorizer code)
     #@+node:ekr.20050529190857:match_keywords
     # Keywords only match whole words.
     # Words are runs of text separated by non-alphanumeric characters.
@@ -2467,7 +2545,7 @@ class colorizer:
     match_mark_previous   = match_seq
     #@nonl
     #@-node:ekr.20050529182335.1:match_seq, match_eol_span & match_mark_following/previous
-    #@+node:ekr.20050529215620:match_seq_regexp & match_eol_span_regexp
+    #@+node:ekr.20050529215620:match_seq_regexp
     def match_seq_regexp (self,s,i,seq,at_line_start,at_ws_end,at_word_start,hash_char):
         
         '''Return the length of a matched SEQ_REGEXP or 0 if no match.
@@ -2482,13 +2560,14 @@ class colorizer:
         if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
         
         # Test hash_char first to increase speed.
-        if g.match(s,i,hash_char):
+        if i < len(s) and s[i] == hash_char:
             return self.match_regexp_helper(s,i,seq)
         else:
             return 0
-        
+    
     match_eol_span_regexp = match_seq_regexp
-    #@-node:ekr.20050529215620:match_seq_regexp & match_eol_span_regexp
+    #@nonl
+    #@-node:ekr.20050529215620:match_seq_regexp
     #@+node:ekr.20050529185208.2:match_span
     def match_span (self,s,i,begin,end,at_line_start,at_ws_end,at_word_start):
         
@@ -2524,45 +2603,16 @@ class colorizer:
         if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
         
         # Test hash_char first to increase speed.
-        if g.match(s,i,hash_char):
+        if i < len(s) and s[i] == hash_char:
             n = self.match_regexp_helper(s,i,begin)
-            # We may have to allow $n here, in which case we must use a regex object.
+            # We may have to allow $n here, in which case we must use a regex object?
             if n > 0 and g.match(s,i+n,end):
                 return n + len(end)
         else:
             return 0
-    #@nonl
+            
     #@-node:ekr.20050529215732:match_span_regexp
-    #@-node:ekr.20050529180421.47:Rule matching methods
-    #@+node:ekr.20050530065723.47:parse_jEdit_file
-    def parse_jEdit_file(self,fileName,verbose=False):
-        
-        if not fileName.endswith('.xml'):
-            fileName = fileName + '.xml'
-    
-        path = os.path.join(g.app.loadDir,'../','modes',fileName)
-        path = os.path.normpath(path)
-        
-        try: f = open(path)
-        except IOError: return None
-    
-        try:
-            try:
-                parser = xml.sax.make_parser()
-                handler = contentHandler(self.c,fileName,verbose=verbose)
-                parser.setContentHandler(handler)
-                parser.parse(f)
-                if verbose: handler.printSummary()
-                modes = handler.getModes()
-            except Exception:
-                g.es('unexpected exception parsing %s' % (languageName),color='red')
-                g.es_exception()
-                return None
-        finally:
-            f.close()
-            return modes
-    #@nonl
-    #@-node:ekr.20050530065723.47:parse_jEdit_file
+    #@-node:ekr.20050529180421.47:Rule matching methods (not used yet)
     #@-others
 #@nonl
 #@-node:ekr.20050529143413.4:class colorizer
