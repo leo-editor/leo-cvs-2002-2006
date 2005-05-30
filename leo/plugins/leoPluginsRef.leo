@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4866" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4945" clone_windows="0"/>
 <globals body_outline_ratio="0.590858416945">
-	<global_window_position top="16" left="149" height="897" width="1087"/>
+	<global_window_position top="17" left="305" height="897" width="957"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1089,6 +1089,7 @@ marks="mork.20041030183331,mork.20041030190903,mork.20041030164547.30,mork.20041
 </v>
 </v>
 <v t="ekr.20050529180421"><vh>jEdit docs...</vh>
+<v t="ekr.20050530065723"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
 <v t="ekr.20050529180421.1"><vh>Rule ordering</vh></v>
 <v t="ekr.20050529180421.2"><vh>Attributes</vh>
 <v t="ekr.20050529180421.3"><vh> Documentation of attributes</vh>
@@ -1144,8 +1145,8 @@ marks="mork.20041030183331,mork.20041030190903,mork.20041030164547.30,mork.20041
 </v>
 </v>
 </v>
-<v t="ekr.20050529142847" a="TV"
-expanded="ekr.20050529143413.87,"><vh>@thin __jEdit_colorizer__.py</vh></v>
+<v t="ekr.20050529142847" a="E"
+expanded="ekr.20050529143413.31,"><vh>@thin __jEdit_colorizer__.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040517075715"></t>
@@ -11480,6 +11481,7 @@ This rule is used in Patch mode, for example, because only the first character
 of each line affects highlighting.</t>
 <t tx="ekr.20050529220821"></t>
 <t tx="ekr.20050529220821.1"></t>
+<t tx="ekr.20050530065723"></t>
 <t tx="mork.20040926105355.9">def openChaptersFile( fileName ):
     zf = zipfile.ZipFile( fileName )
     import cStringIO

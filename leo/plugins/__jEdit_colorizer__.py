@@ -6,15 +6,18 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = '0.1'
+__version__ = '0.2'
 #@<< version history >>
 #@+node:ekr.20050529142916.2:<< version history >>
 #@@killcolor
 #@+at
 # 
 # 0.1 EKR: Initial version:
+#     - Split large methods into smaller methods.
 # 
-# - Split large methods into smaller methods.
+# 0.2 EKR:
+#     - Moved contentHandler and modeClass into the plugin.
+#     - colorizer.__init__ reads python.xml, but does nothing with it.
 #@-at
 #@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
@@ -24,8 +27,13 @@ __version__ = '0.1'
 import leoGlobals as g
 import leoPlugins
 
+import os
 import re
 import string
+import xml.sax
+import xml.sax.saxutils
+
+
 
 # php_re = re.compile("<?(\s|=|[pP][hH][pP])")
 php_re = re.compile("<?(\s[pP][hH][pP])")
@@ -78,7 +86,7 @@ def init ():
 
     leoPlugins.registerHandler('start1',onStart1)
     g.plugin_signon(__name__)
-        
+
     return True
 #@nonl
 #@-node:ekr.20050529142916.4:init
@@ -87,11 +95,11 @@ def onStart1 (tag, keywords):
     
     import leoColor
     
-    leoColor.colorizer = jEdit_colorizer
+    leoColor.colorizer = colorizer
 #@nonl
 #@-node:ekr.20050529142916.5:onStart1
-#@+node:ekr.20050529143413.4:class jEdit_colorizer
-class jEdit_colorizer:
+#@+node:ekr.20050529143413.4:class colorizer
+class colorizer:
     
     '''New colorizer using jEdit language description files'''
 
@@ -751,6 +759,8 @@ class jEdit_colorizer:
     #@    @+others
     #@+node:ekr.20050529154639:Can we use jEdit states to do incremental coloring??
     #@@nocolor
+    #@@color
+    #@@nocolor
     #@+at 
     #@nonl
     # Can we correctly represent state ?
@@ -758,11 +768,9 @@ class jEdit_colorizer:
     # ** The jEdit states are about color, the Leo states are about semantics.
     # 
     # - The present code uses the following states:
-    #@@color
     #     "blockComment"
     #     "doc","nocolor","normal"
     #     "doubleString","singleString","string3s","string3d"
-    #@@nocolor
     # - The jEdit types are:
     # 
     # NULL
@@ -803,6 +811,11 @@ class jEdit_colorizer:
         self.c = c
         self.frame = c.frame
         self.body = c.frame.body
+        
+        self.modes = self.parse_jEdit_file('python')
+        if 1:
+            mode0 = self.modes[0]
+            mode0.printSummary (printStats=False)
     
         self.count = 0 # how many times this has been called.
         self.use_hyperlinks = False # True: use hyperlinks and underline "live" links.
@@ -2388,6 +2401,21 @@ class jEdit_colorizer:
     #@-node:ekr.20050529143413.93:skip_python_string
     #@-node:ekr.20050529145355:Language-specific utils: (To be removed)
     #@+node:ekr.20050529180421.47:Rule matching methods
+    #@+node:ekr.20050530065723.78:main colorizer code
+    def new_colorize (self):
+        
+        # Assume all data has been inited.
+        
+        while not self.done:
+            for f1,f2 in self.rules:
+                if f1():
+                    # An applicable rule has been found.
+                    f2()
+                    break
+            # No rule found.
+            return
+    #@nonl
+    #@-node:ekr.20050530065723.78:main colorizer code
     #@+node:ekr.20050529190857:match_keywords
     # Keywords only match whole words.
     # Words are runs of text separated by non-alphanumeric characters.
@@ -2506,9 +2534,551 @@ class jEdit_colorizer:
     #@nonl
     #@-node:ekr.20050529215732:match_span_regexp
     #@-node:ekr.20050529180421.47:Rule matching methods
+    #@+node:ekr.20050530065723.47:parse_jEdit_file
+    def parse_jEdit_file(self,fileName,verbose=False):
+        
+        if not fileName.endswith('.xml'):
+            fileName = fileName + '.xml'
+    
+        path = os.path.join(g.app.loadDir,'../','modes',fileName)
+        path = os.path.normpath(path)
+        
+        try: f = open(path)
+        except IOError: return None
+    
+        try:
+            try:
+                parser = xml.sax.make_parser()
+                handler = contentHandler(self.c,fileName,verbose=verbose)
+                parser.setContentHandler(handler)
+                parser.parse(f)
+                if verbose: handler.printSummary()
+                modes = handler.getModes()
+            except Exception:
+                g.es('unexpected exception parsing %s' % (languageName),color='red')
+                g.es_exception()
+                return None
+        finally:
+            f.close()
+            return modes
+    #@nonl
+    #@-node:ekr.20050530065723.47:parse_jEdit_file
     #@-others
 #@nonl
-#@-node:ekr.20050529143413.4:class jEdit_colorizer
+#@-node:ekr.20050529143413.4:class colorizer
+#@+node:ekr.20050530065723.58:class contentHandler
+class contentHandler (xml.sax.saxutils.XMLGenerator):
+    
+    '''A sax content handler class that handles jEdit language-description files.
+    
+    Creates a list of modes that can be retrieved using getModes method.'''
+
+    #@    @+others
+    #@+node:ekr.20050530065723.59: __init__ & helpers
+    def __init__ (self,c,fileName,trace=False,verbose=False):
+    
+        self.c = c
+        self.fileName = fileName
+        self.trace = trace
+        self.verbose = verbose
+        
+        # Init the base class.
+        xml.sax.saxutils.XMLGenerator.__init__(self)
+        
+        # Non-mode statistics.
+        self.numberOfAttributes = 0
+        self.numberOfElements = 0
+        
+        # Options...
+        self.ignoreWs = True # True: don't print contents with only ws.
+        self.newLineAfterStartElement = [
+            'keywords','mode','props','property','rules','span','eol_span',
+            # 'seq',
+        ]
+        
+        # Printing options
+        if verbose:
+            self.printAllElements = True
+            self.printCharacters = False or self.printAllElements
+            self.printAttributes = False and not self.printAllElements
+            self.printElements = [
+                #'begin','end',
+                #'eol_span',
+                #'keyword1','keyword2','keyword3','keyword4',
+                #'mark_previous',
+                #'mode',
+                #'props',
+                #'property',
+                #'rules',
+                #'span',
+                #'seq',
+            ]
+            
+            if self.printAllElements:
+                self.suppressContent = []
+            else:
+                self.suppressContent = ['keyword1','keyword2','keyword3','keyword4']
+        else:
+            self.printAllElements = False
+            self.printCharacters = False
+            self.printAttributes = False
+            self.printElements = []
+      
+        # Semantics: most of these should be mode ivars.
+        self.elementStack = []
+        self.mode = None # The present mode, or None if outside all modes.
+        self.modes = [] # All modes defined here or by imports.
+    #@nonl
+    #@-node:ekr.20050530065723.59: __init__ & helpers
+    #@+node:ekr.20050530065723.60:helpers
+    #@+node:ekr.20050530065723.61:attrsToList
+    def attrsToList (self,attrs):
+        
+        '''Convert the attributes to a list of g.Bunches.
+        
+        attrs: an Attributes item passed to startElement.
+        
+        sep: the separator charater between attributes.'''
+        
+        return [
+            g.Bunch(name=name,val=attrs.getValue(name))
+            for name in attrs.getNames()
+        ]
+    #@nonl
+    #@-node:ekr.20050530065723.61:attrsToList
+    #@+node:ekr.20050530065723.62:attrsToString
+    def attrsToString (self,attrs,sep='\n'):
+        
+        '''Convert the attributes to a string.
+        
+        attrs: an Attributes item passed to startElement.
+        
+        sep: the separator charater between attributes.'''
+    
+        result = [
+            '%s="%s"' % (bunch.name,bunch.val)
+            for bunch in self.attrsToList(attrs)
+        ]
+    
+        return sep.join(result)
+    #@nonl
+    #@-node:ekr.20050530065723.62:attrsToString
+    #@+node:ekr.20050530065723.63:clean
+    def clean(self,s):
+    
+        return g.toEncodedString(s,"ascii")
+    #@nonl
+    #@-node:ekr.20050530065723.63:clean
+    #@+node:ekr.20050530065723.64:error
+    def error (self, message):
+        
+        print
+        print
+        print 'XML error: %s' % (message)
+        print
+    #@nonl
+    #@-node:ekr.20050530065723.64:error
+    #@+node:ekr.20050530065723.65:printStartElement
+    def printStartElement(self,name,attrs):
+    
+        if attrs.getLength() > 0:
+            print '<%s %s>' % (
+                self.clean(name).strip(),
+                self.attrsToString(attrs,sep=' ')),
+        else:
+            print '<%s>' % (self.clean(name).strip()),
+    
+        if name.lower() in self.newLineAfterStartElement:
+            print
+    #@nonl
+    #@-node:ekr.20050530065723.65:printStartElement
+    #@+node:ekr.20050530065723.66:printSummary
+    def printSummary (self):
+        
+        print '-' * 10, 'non- mode statistics'
+        print 'modes',len(self.modes)
+        print 'elements', self.numberOfElements
+    #@nonl
+    #@-node:ekr.20050530065723.66:printSummary
+    #@-node:ekr.20050530065723.60:helpers
+    #@+node:ekr.20050530065723.67:sax over-rides
+    #@+node:ekr.20050530065723.68: Do nothing...
+    #@+node:ekr.20050530065723.69:other methods
+    def ignorableWhitespace(self):
+        g.trace()
+    
+    def processingInstruction (self,target,data):
+        g.trace()
+    
+    def skippedEntity(self,name):
+        g.trace(name)
+    
+    def startElementNS(self,name,qname,attrs):
+        g.trace(name)
+    
+    def endElementNS(self,name,qname):
+        g.trace(name)
+    #@nonl
+    #@-node:ekr.20050530065723.69:other methods
+    #@+node:ekr.20050530065723.70:endDocument
+    def endDocument(self):
+    
+        pass
+    
+    
+    #@-node:ekr.20050530065723.70:endDocument
+    #@+node:ekr.20050530065723.71:startDocument
+    def startDocument(self):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20050530065723.71:startDocument
+    #@-node:ekr.20050530065723.68: Do nothing...
+    #@+node:ekr.20050530065723.72:characters
+    def characters(self,content):
+        
+        content = content.replace('\r','').strip()
+        content = self.clean(content)
+    
+        elementName = self.elementStack and self.elementStack[-1]
+        elementName = elementName.lower()
+        
+        if 1: # new code
+            if self.printAllElements:
+                print content,
+            elif self.printCharacters and content and elementName not in self.suppressContent:
+                print 'content:',elementName,repr(content)
+        else:
+            if self.printCharacters and content and elementName not in self.suppressContent:
+                if self.printAllElements:
+                    print content,
+                else:
+                    print 'content:',elementName,repr(content)
+                
+        if self.mode:
+            self.mode.doContent(elementName,content)
+        else:
+            self.error('characters outside of mode')
+    #@nonl
+    #@-node:ekr.20050530065723.72:characters
+    #@+node:ekr.20050530065723.73:endElement
+    def endElement(self,name):
+    
+        self.doEndElement(name)
+    
+        name2 = self.elementStack.pop()
+        assert name == name2
+    #@nonl
+    #@-node:ekr.20050530065723.73:endElement
+    #@+node:ekr.20050530065723.74:startElement
+    def startElement(self,name,attrs):
+        
+        if self.mode:
+            self.mode.numberOfElements += 1
+        else:
+            self.numberOfElements += 1
+            
+        self.elementStack.append(name)
+        self.doStartElement(name,attrs)
+    #@nonl
+    #@-node:ekr.20050530065723.74:startElement
+    #@-node:ekr.20050530065723.67:sax over-rides
+    #@+node:ekr.20050530065723.75:doStartElement
+    def doStartElement (self,elementName,attrs):
+        
+        if self.printAllElements or elementName.lower() in self.printElements:
+            self.printStartElement(elementName,attrs)
+    
+        elementName = elementName.lower()
+        
+        if elementName == 'mode':
+            self.mode = modeClass(self,self.fileName)
+        elif self.mode:
+            self.mode.startElement(elementName)
+            for bunch in self.attrsToList(attrs):
+                if self.printAttributes:
+                    print 'attr:',elementName,bunch.name,'=',bunch.val
+                self.mode.doAttribute(bunch.name,bunch.val)
+        else:
+            self.error('Start element appears outside of Mode:%s' % elementName)
+            for bunch in self.attrsToList(attrs):
+                self.error('Attribute appears outside of Mode:%s' % bunch.name)
+    #@nonl
+    #@-node:ekr.20050530065723.75:doStartElement
+    #@+node:ekr.20050530065723.76:doEndElement
+    def doEndElement (self,elementName):
+        
+        if self.printAllElements or elementName.lower() in self.printElements:
+            print '</' + self.clean(elementName).strip() + '>'
+            
+        if elementName.lower() == 'mode':
+            self.modes.append(self.mode)
+            if self.verbose:
+                self.mode.printSummary()
+            self.mode = None
+        elif self.mode:
+            self.mode.endElement(elementName)
+        else:
+            self.error('End element appears outside of Mode:%s' % elementName)
+            for bunch in self.attrsToList(attrs):
+                self.error('Attribute appears outside of Mode:%s' %bunch.name)
+    #@nonl
+    #@-node:ekr.20050530065723.76:doEndElement
+    #@+node:ekr.20050530071955:getModes
+    def getModes (self):
+        
+        return self.modes
+    #@nonl
+    #@-node:ekr.20050530071955:getModes
+    #@-others
+#@nonl
+#@-node:ekr.20050530065723.58:class contentHandler
+#@+node:ekr.20050530065723.49:class modeClass
+class modeClass:
+    
+    '''A class representing one jEdit language-description mode.
+    
+    Use getters to access the attributes, properties and rules of this mode.'''
+    
+    #@    @+others
+    #@+node:ekr.20050530065723.50: mode.__init__
+    def __init__ (self,contentHandler,fileName):
+    
+        self.contentHandler = contentHandler
+        self.fileName = fileName # The file from which the mode was imported.
+        self.verbose = self.contentHandler.verbose
+    
+        # Mode statistics...
+        self.numberOfAttributes = 0
+        self.numberOfElements = 0
+        self.numberOfErrors = 0
+        self.numberOfPropertyAttributes = 0
+        self.numberOfRuleAttributes = 0
+        
+        # List of boolean attributes.
+        self.boolAttrs = [
+            'at_line_start','at_whitespace_end','at_word_start',
+            'exclude_match','highlight_digits','ignore_case',
+            'no_escape','no_line_break','no_word_break','no_word_sep',]
+    
+        # List of elements that start a rule.
+        self.ruleElements = [
+            'eol_span','eol_span_regexp','import','keywords',
+            'mark_following','mark_previous','seq','seq_regexp',
+            'span','span_regexp','terminate',]
+    
+        if 0: # Not used at present.
+            self.seqSpanElements = [
+                'eol_span','eol_span_regexp','seq','seq_regexp',
+                'span','span_regexp',]
+    
+        # Mode semantics.
+        self.attributes = {}
+        self.inProps = False
+        self.inRules = False
+        self.props = []
+        self.property = None
+        self.rule = None
+        self.rules = []
+        self.rulesAttributes = {}
+    #@nonl
+    #@-node:ekr.20050530065723.50: mode.__init__
+    #@+node:ekr.20050530073825: mode.__str__ & __repr__
+    def __str__ (self):
+        
+        return '<modeClass for %s>' % self.fileName
+        
+    __repr__ = __str__
+    #@nonl
+    #@-node:ekr.20050530073825: mode.__str__ & __repr__
+    #@+node:ekr.20050530081700: Printing...
+    #@+node:ekr.20050530075602:printModeAttributes, printRuleAttributes & printAttributesHelper
+    def printModeAttributes (self):
+        
+        self.printAttributesHelper('mode attributes',self.attributes)
+        
+    def printRuleAttributes (self):
+        
+        self.printAttributesHelper('rule attributes',self.rulesAttributes)
+        
+    def printAttributesHelper (self,kind,attrs):
+        
+        print '%-20s' % (kind),'attrs:',attrs
+    #@nonl
+    #@-node:ekr.20050530075602:printModeAttributes, printRuleAttributes & printAttributesHelper
+    #@+node:ekr.20050530080452:printProperty
+    def printProperty (self,property):
+        
+        # A property is a bunch.
+        d = property.attributes
+        if d:
+            self.printAttributesHelper('property',d)
+    #@nonl
+    #@-node:ekr.20050530080452:printProperty
+    #@+node:ekr.20050530075602.1:printRule
+    def printRule (self,rule):
+        
+        # A rule is a g.Bunch.
+        if rule.name == 'keywords':
+            print '%-20s' % ('rule:keywords'),
+            for key in ('keyword1','keyword2','keyword3','keyword4'):
+                theList = rule.get(key,[])
+                print key,len(theList),
+            print
+        else:
+            d = rule.attributes
+            d2 = rule.get('contents')
+            if d or d2:
+                print '%-20s' % ('rule:'+rule.name),
+                if d and d2: print 'attrs:',d,'chars:',d2
+                elif d:  print 'attrs:',d
+                else:    print 'chars:',d2
+    #@nonl
+    #@-node:ekr.20050530075602.1:printRule
+    #@+node:ekr.20050530065723.56:printSummary
+    def printSummary (self,printStats=True):
+    
+        if printStats:
+            print '-' * 10, 'mode statistics'
+            print 'elements',self.numberOfElements
+            print 'errors',self.numberOfErrors
+            print 'mode attributes',self.numberOfAttributes
+            print 'property attributes',self.numberOfPropertyAttributes
+            print 'rule attributes',self.numberOfRuleAttributes
+    
+        self.printModeAttributes()
+        self.printRuleAttributes()
+        for bunch in self.props:
+            self.printProperty(bunch)
+        for rule in self.rules:
+            self.printRule(rule)
+    #@nonl
+    #@-node:ekr.20050530065723.56:printSummary
+    #@-node:ekr.20050530081700: Printing...
+    #@+node:ekr.20050530065723.51:doAttribute
+    def doAttribute (self,name,val):
+        
+        name = str(name.lower())
+        
+        if name in self.boolAttrs:
+            val = g.choose(val=='True',True,False)
+        else:
+            val = str(val) # Do NOT lower this value!
+    
+        if self.rule:
+            d = self.rule.get('attributes')
+            d [name] = val
+            self.numberOfRuleAttributes += 1
+        elif self.property:
+            d = self.property.get('attributes')
+            d [name] = val
+            self.numberOfPropertyAttributes += 1
+        elif self.inRules:
+            self.rulesAttributes[name] = val
+            self.numberOfAttributes += 1
+        else:
+            self.attributes[name] = val
+            self.numberOfAttributes += 1
+    #@nonl
+    #@-node:ekr.20050530065723.51:doAttribute
+    #@+node:ekr.20050530065723.52:doContent
+    def doContent (self,elementName,content):
+        
+        if not content:
+            return
+        
+        name = str(elementName.lower())
+    
+        if name in ('keyword1','keyword2','keyword3','keyword4'):
+            if self.inRule('keywords'):
+                theList = self.rule.get(name,[])
+                theList.append(content)
+                self.rule[name] = theList
+            else:
+                self.error('%d not in keywords' % name)
+    
+        elif self.rule:
+            d = self.rule.get('contents',{})
+            s = d.get(name,'')
+            d [name] = s + content
+            self.rule['contents'] = d
+    #@nonl
+    #@-node:ekr.20050530065723.52:doContent
+    #@+node:ekr.20050530065723.53:endElement
+    def endElement (self,elementName):
+    
+        name = elementName.lower()
+        
+        if name == 'props':
+            self.inProps = True
+        if name == 'rules':
+            self.inRules = False
+        if name == 'property':
+            if self.property:
+                self.props.append(self.property)
+                self.property = None
+            else:
+                self.error('end %s not matched by start %s' % (name,name))
+        if name in self.ruleElements:
+            if self.inRule(name):
+                self.rules.append(self.rule)
+                self.rule = None
+            else:
+                self.error('end %s not matched by start %s' % (name,name))
+    #@nonl
+    #@-node:ekr.20050530065723.53:endElement
+    #@+node:ekr.20050530065723.54:error
+    def error (self,message):
+        
+        self.numberOfErrors += 1
+    
+        self.contentHandler.error(message)
+    #@nonl
+    #@-node:ekr.20050530065723.54:error
+    #@+node:ekr.20050530074431:getters
+    def getAttributes (self):
+        
+        return self.attributes
+    
+    def getProperties (self):
+        
+        return self.props
+        
+    def getRules (self):
+        
+        return self.rules
+    #@nonl
+    #@-node:ekr.20050530074431:getters
+    #@+node:ekr.20050530065723.55:inRule
+    def inRule (self,elementName):
+    
+        return self.rule and self.rule.get('name') == elementName
+    #@nonl
+    #@-node:ekr.20050530065723.55:inRule
+    #@+node:ekr.20050530065723.57:startElement
+    def startElement (self,elementName):
+    
+        name = elementName.lower()
+        
+        if name == 'props':
+            self.inProps = True
+        if name == 'rules':
+            self.inRules = True
+        if name == 'property':
+            if self.inProps:
+                self.property = g.bunch(name=name,attributes={})
+            else:
+                self.error('property not in props element')
+        if name in self.ruleElements:
+            if self.inRules:
+                self.rule = g.bunch(name=name,attributes={})
+            else:
+                self.error('%s not in rules element' % name)
+    #@nonl
+    #@-node:ekr.20050530065723.57:startElement
+    #@-others
+#@nonl
+#@-node:ekr.20050530065723.49:class modeClass
 #@-others
 #@nonl
 #@-node:ekr.20050529142847:@thin __jEdit_colorizer__.py
