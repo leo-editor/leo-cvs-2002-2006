@@ -26,12 +26,14 @@ import compiler
 import doctest
 import glob
 import os
-import profile
 import pstats
 import sys
 import tabnanny
 import tokenize
 import unittest
+
+try: import profile
+except ImportError: profile = None
 
 try: import timeit
 except ImportError: timeit = None
