@@ -26,20 +26,19 @@ import compiler
 import doctest
 import glob
 import os
-import pstats
+
 import sys
 import tabnanny
 import tokenize
 import unittest
 
-try: import profile
-except ImportError: profile = None
-
-try: import timeit
-except ImportError: timeit = None
-
-try: import gc
-except ImportError: gc = None
+try:
+    import gc
+    import profile
+    import pstats
+    import timeit
+except ImportError:
+    pass
 #@nonl
 #@-node:ekr.20050415070840.1:<< leoTest imports >>
 #@nl
