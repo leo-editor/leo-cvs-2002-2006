@@ -6,7 +6,7 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = '0.3'
+__version__ = '0.4'
 #@<< version history >>
 #@+node:ekr.20050529142916.2:<< version history >>
 #@@killcolor
@@ -18,8 +18,9 @@ __version__ = '0.3'
 #     - Moved contentHandler and modeClass into the plugin.
 #     - colorizer.__init__ reads python.xml, but does nothing with it.
 # 0.3 EKR:
-#     - Wrote and tested createRuleMatchers.  Next step: revise algorithms to 
-# use matchers.
+#     - Wrote and tested createRuleMatchers.
+# 0.4 EKR:
+#     - Basic syntax coloring now works.  See to-do list.
 #@-at
 #@-node:ekr.20050529142916.2:<< version history >>
 #@nl
@@ -35,12 +36,20 @@ __version__ = '0.3'
 #     - Any non-alphanumeric character not appearing in a keyword definition 
 # or
 #       the ruleset's NO_WORD_SEP attribute is considered a word separator.
+#     - Scan keyword list for characters to add to word list.
+# 
+# - Figure out how to do mark_previous and mark_following.
+#     - In particular, what are the previous and following token??
+# 
+# - Handle regular expressions: finish match_regexp_helper.
 # 
 # - Handle incremental coloring.
 #     - This involves remembering state information.
 # 
-# - Figure out how to do mark_previous and mark_following.
-#     - In particular, what are the previous and following token??
+# - Define tags corresponding to token types.
+#     - At present doColor translates from token types to old tags.
+#     - Eventually we shall want to specify the coloring for new token types 
+# using prefs.
 #@-at
 #@nonl
 #@-node:ekr.20050601081132:<< to do >>
@@ -119,21 +128,6 @@ def onStart1 (tag, keywords):
     leoColor.colorizer = colorizer
 #@nonl
 #@-node:ekr.20050529142916.5:onStart1
-#@+node:ekr.20050530065723.78:new_colorize (prototype for main colorizer code)
-if 0:
-    def new_colorize (self):
-    
-        # Assume all data has been inited.
-        while not self.done:
-            for f1,f2 in self.rules:
-                if f1():
-                    # An applicable rule has been found.
-                    f2()
-                    break
-            # No rule found.
-            return
-#@nonl
-#@-node:ekr.20050530065723.78:new_colorize (prototype for main colorizer code)
 #@+node:ekr.20050530065723.58:class contentHandler
 class contentHandler (xml.sax.saxutils.XMLGenerator):
     
@@ -1910,7 +1904,314 @@ class colorizer:
         return state
     #@nonl
     #@-node:ekr.20050529143413.46:colorizeLine & allies
-    #@+node:ekr.20050529180421.46:Helpers for colorizerLine (will be deleted)
+    #@+node:ekr.20050529143413.33:configure_tags
+    def configure_tags (self):
+        
+        c = self.c
+    
+        for name in default_colors_dict.keys(): # Python 2.1 support.
+            option_name,default_color = default_colors_dict[name]
+            option_color = c.config.getColor(option_name)
+            color = g.choose(option_color,option_color,default_color)
+            # Must use foreground, not fg.
+            try:
+                self.body.tag_configure(name, foreground=color)
+            except: # Recover after a user error.
+                self.body.tag_configure(name, foreground=default_color)
+        
+        # underline=var doesn't seem to work.
+        if 0: # self.use_hyperlinks: # Use the same coloring, even when hyperlinks are in effect.
+            self.body.tag_configure("link",underline=1) # defined
+            self.body.tag_configure("name",underline=0) # undefined
+        else:
+            self.body.tag_configure("link",underline=0)
+            if self.underline_undefined:
+                self.body.tag_configure("name",underline=1)
+            else:
+                self.body.tag_configure("name",underline=0)
+                
+        # Only create tags for whitespace when showing invisibles.
+        if self.showInvisibles:
+            for name,option_name,default_color in (
+                ("blank","show_invisibles_space_background_color","Gray90"),
+                ("tab",  "show_invisibles_tab_background_color",  "Gray80")):
+                option_color = c.config.getColor(option_name)
+                color = g.choose(option_color,option_color,default_color)
+                try:
+                    self.body.tag_configure(name,background=color)
+                except: # Recover after a user error.
+                    self.body.tag_configure(name,background=default_color)
+            
+        # Colors for latex characters.  Should be user options...
+        
+        if 1: # Alas, the selection doesn't show if a background color is specified.
+            self.body.tag_configure("latexModeBackground",foreground="black")
+            self.body.tag_configure("latexModeKeyword",foreground="blue")
+            self.body.tag_configure("latexBackground",foreground="black")
+            self.body.tag_configure("latexKeyword",foreground="blue")
+        else: # Looks cool, and good for debugging.
+            self.body.tag_configure("latexModeBackground",foreground="black",background="seashell1")
+            self.body.tag_configure("latexModeKeyword",foreground="blue",background="seashell1")
+            self.body.tag_configure("latexBackground",foreground="black",background="white")
+            self.body.tag_configure("latexKeyword",foreground="blue",background="white")
+            
+        # Tags for wiki coloring.
+        if self.showInvisibles:
+            self.body.tag_configure("elide",background="yellow")
+        else:
+            self.body.tag_configure("elide",elide="1")
+        self.body.tag_configure("bold",font=self.bold_font)
+        self.body.tag_configure("italic",font=self.italic_font)
+        self.body.tag_configure("bolditalic",font=self.bolditalic_font)
+        for name in self.color_tags_list:
+            self.body.tag_configure(name,foreground=name)
+    #@nonl
+    #@-node:ekr.20050529143413.33:configure_tags
+    #@+node:ekr.20050529143413.32:init_ivars
+    def init_ivars (self,p):
+        
+        c = self.c
+        self.p = p
+    
+        # Add any newly-added user keywords.
+        for d in g.globalDirectiveList:
+            name = '@' + d
+            if name not in leoKeywords:
+                leoKeywords.append(name)
+    
+        # Get the body text, converted to unicode.
+        s = self.body.getAllText()
+        self.sel = sel = self.body.getInsertionPoint()
+        start,end = self.body.convertIndexToRowColumn(sel)
+        
+        # g.trace(self.language)
+        # g.trace(self.count,self.p)
+        # g.trace(body.tag_names())
+        
+        if 1: #### not self.incremental:
+            self.removeAllTags()
+            self.removeAllImages()
+        
+        self.redoColoring = False
+        self.redoingColoring = False
+        
+        self.underline_undefined = c.config.getBool("underline_undefined_section_names")
+        self.use_hyperlinks = c.config.getBool("use_hyperlinks")
+        
+        #@    << configure language-specific settings >>
+        #@+node:ekr.20050529143413.34:<< configure language-specific settings >>
+        # Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
+        
+        if self.language == "cweb": # Use C comments, not cweb sentinel comments.
+            delim1,delim2,delim3 = g.set_delims_from_language("c")
+        elif self.comment_string:
+            delim1,delim2,delim3 = g.set_delims_from_string(self.comment_string)
+        elif self.language == "plain":
+            delim1,delim2,delim3 = None,None,None
+        else:
+            delim1,delim2,delim3 = g.set_delims_from_language(self.language)
+        
+        self.single_comment_start = delim1
+        self.block_comment_start = delim2
+        self.block_comment_end = delim3
+        
+        # A strong case can be made for making this code as fast as possible.
+        # Whether this is compatible with general language descriptions remains to be seen.
+        self.case_sensitiveLanguage = self.language not in case_insensitiveLanguages
+        self.has_string = self.language != "plain"
+        if self.language == "plain":
+            self.string_delims = ()
+        elif self.language in ("elisp","html"):
+            self.string_delims = ('"')
+        else:
+            self.string_delims = ("'",'"')
+        self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
+        
+        # The list of languages for which keywords exist.
+        languages = [
+            "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex",
+            "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
+        
+        self.keywords = []
+        if self.language == "cweb":
+            for i in self.c_keywords:
+                self.keywords.append(i)
+            for i in self.cweb_keywords:
+                self.keywords.append(i)
+        else:
+            for name in languages:
+                if self.language==name: 
+                    # g.trace("setting keywords for",name)
+                    self.keywords = getattr(self, name + "_keywords")
+        
+        # For forth.
+        self.nextForthWordIsNew = False
+        
+        if 1: # We color both kinds of references in cweb mode.
+            self.lb = "<<"
+            self.rb = ">>"
+        else:
+            self.lb = g.choose(self.language == "cweb","@<","<<")
+            self.rb = g.choose(self.language == "cweb","@>",">>")
+        #@nonl
+        #@-node:ekr.20050529143413.34:<< configure language-specific settings >>
+        #@nl
+        
+        self.hyperCount = 0 # Number of hypertext tags
+        self.count += 1
+        lines = string.split(s,'\n')
+        
+        # Color plain text unless we are under the control of @nocolor.
+        state = self.setFirstLineState()
+        self.word_chars = string.letters + '_'
+        
+        return s,lines,state
+    #@nonl
+    #@-node:ekr.20050529143413.32:init_ivars
+    #@+node:ekr.20050529143413.42:recolor_all
+    def recolor_all (self):
+    
+        # This code is executed only if graphics characters will be inserted by user markup code.
+        
+        # Pass 1:  Insert all graphics characters.
+        self.removeAllImages()
+        s = self.body.getAllText()
+        lines = s.split('\n')
+        
+        self.color_pass = 1
+        self.line_index = 1
+        state = self.setFirstLineState()
+        for s in lines:
+            state = self.colorizeLine(s,state)
+            self.line_index += 1
+        
+        # Pass 2: Insert one blank for each previously inserted graphic.
+        self.color_pass = 2
+        self.line_index = 1
+        state = self.setFirstLineState()
+        for s in lines:
+            #@        << kludge: insert a blank in s for every image in the line >>
+            #@+node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
+            #@+at 
+            #@nonl
+            # A spectacular kludge.
+            # 
+            # Images take up a real index, yet the get routine does not return 
+            # any character for them!
+            # In order to keep the colorer in synch, we must insert dummy 
+            # blanks in s at the positions corresponding to each image.
+            #@-at
+            #@@c
+            
+            inserted = 0
+            
+            for photo,image,line_index,i in self.image_references:
+                if self.line_index == line_index:
+                    n = i+inserted ; 	inserted += 1
+                    s = s[:n] + ' ' + s[n:]
+            #@-node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
+            #@nl
+            state = self.colorizeLine(s,state)
+            self.line_index += 1
+    #@nonl
+    #@-node:ekr.20050529143413.42:recolor_all
+    #@+node:ekr.20050529143413.91:setFirstLineState
+    def setFirstLineState (self):
+        
+        if self.flag:
+            if self.rootMode:
+                state = g.choose(self.rootMode=="code","normal","doc")
+            else:
+                state = "normal"
+        else:
+            state = "nocolor"
+    
+        return state
+    #@nonl
+    #@-node:ekr.20050529143413.91:setFirstLineState
+    #@-node:ekr.20050529150436:Colorizer code
+    #@+node:ekr.20050601082256:To be removed...
+    #@+node:ekr.20050529145355:Language-specific utils: (to be removed)
+    #@+node:ekr.20050529143413.85:getCwebWord
+    def getCwebWord (self,s,i):
+        
+        # g.trace(g.get_line(s,i))
+        if not g.match(s,i,"@"):
+            return None
+        
+        ch1 = ch2 = word = None
+        if i + 1 < len(s): ch1 = s[i+1]
+        if i + 2 < len(s): ch2 = s[i+2]
+    
+        if g.match(s,i,"@**"):
+            word = "@**"
+        elif not ch1:
+            word = "@"
+        elif not ch2:
+            word = s[i:i+2]
+        elif (
+            (ch1 in string.ascii_letters and not ch2 in string.ascii_letters) or # single-letter control code
+            ch1 not in string.ascii_letters # non-letter control code
+        ):
+            word = s[i:i+2]
+    
+        # if word: g.trace(word)
+            
+        return word
+    #@nonl
+    #@-node:ekr.20050529143413.85:getCwebWord
+    #@+node:ekr.20050529143413.92:skip_id
+    def skip_id(self,s,i,chars=None):
+    
+        n = len(s)
+        while i < n:
+            ch = s[i]
+            if ch in string.ascii_letters or ch in string.digits or ch == '_':
+                i += 1
+            elif chars and ch in chars:
+                i += 1
+            else: break
+        return i
+    #@-node:ekr.20050529143413.92:skip_id
+    #@+node:ekr.20050529143413.94:skip_string
+    def skip_string(self,s,i):
+        
+        """Skip a string literal."""
+    
+        allow_newlines = self.language == "elisp"
+        delim = s[i] ; i += 1
+        continue_state = g.choose(delim=="'","singleString","doubleString")
+        assert(delim == '"' or delim == "'")
+        n = len(s)
+        while i < n and s[i] != delim and (allow_newlines or not s[i] == '\n'): # 6/3/04: newline ends most strings.
+            if s[i:] == "\\": # virtual trailing newline.
+                return n,continue_state
+            elif s[i] == '\\': i += 2
+            else: i += 1
+    
+        if i >= n:
+            return n, g.choose(allow_newlines,continue_state,"normal")
+        if s[i] == delim:
+            i += 1
+        return i,"normal"
+    #@nonl
+    #@-node:ekr.20050529143413.94:skip_string
+    #@+node:ekr.20050529143413.93:skip_python_string
+    def skip_python_string(self,s,i):
+    
+        delim = s[i:i+3]
+        if delim == "'''" or delim == '"""':
+            k = s.find(delim,i+3)
+            if k == -1:
+                return len(s),g.choose(delim=="'''","string3s","string3d")
+            else:
+                return k+3, "normal"
+        else:
+            return self.skip_string(s,i)
+    #@nonl
+    #@-node:ekr.20050529143413.93:skip_python_string
+    #@-node:ekr.20050529145355:Language-specific utils: (to be removed)
+    #@+node:ekr.20050529180421.46:Helpers for colorizerLine (to be deleted)
     #@+node:ekr.20050529143413.47:continueBlockComment
     def continueBlockComment (self,s,i):
         
@@ -2549,233 +2850,8 @@ class colorizer:
             return j + k
     #@nonl
     #@-node:ekr.20050529143413.78:doNowebSecRef
-    #@-node:ekr.20050529180421.46:Helpers for colorizerLine (will be deleted)
-    #@+node:ekr.20050529143413.33:configure_tags
-    def configure_tags (self):
-        
-        c = self.c
-    
-        for name in default_colors_dict.keys(): # Python 2.1 support.
-            option_name,default_color = default_colors_dict[name]
-            option_color = c.config.getColor(option_name)
-            color = g.choose(option_color,option_color,default_color)
-            # Must use foreground, not fg.
-            try:
-                self.body.tag_configure(name, foreground=color)
-            except: # Recover after a user error.
-                self.body.tag_configure(name, foreground=default_color)
-        
-        # underline=var doesn't seem to work.
-        if 0: # self.use_hyperlinks: # Use the same coloring, even when hyperlinks are in effect.
-            self.body.tag_configure("link",underline=1) # defined
-            self.body.tag_configure("name",underline=0) # undefined
-        else:
-            self.body.tag_configure("link",underline=0)
-            if self.underline_undefined:
-                self.body.tag_configure("name",underline=1)
-            else:
-                self.body.tag_configure("name",underline=0)
-                
-        # Only create tags for whitespace when showing invisibles.
-        if self.showInvisibles:
-            for name,option_name,default_color in (
-                ("blank","show_invisibles_space_background_color","Gray90"),
-                ("tab",  "show_invisibles_tab_background_color",  "Gray80")):
-                option_color = c.config.getColor(option_name)
-                color = g.choose(option_color,option_color,default_color)
-                try:
-                    self.body.tag_configure(name,background=color)
-                except: # Recover after a user error.
-                    self.body.tag_configure(name,background=default_color)
-            
-        # Colors for latex characters.  Should be user options...
-        
-        if 1: # Alas, the selection doesn't show if a background color is specified.
-            self.body.tag_configure("latexModeBackground",foreground="black")
-            self.body.tag_configure("latexModeKeyword",foreground="blue")
-            self.body.tag_configure("latexBackground",foreground="black")
-            self.body.tag_configure("latexKeyword",foreground="blue")
-        else: # Looks cool, and good for debugging.
-            self.body.tag_configure("latexModeBackground",foreground="black",background="seashell1")
-            self.body.tag_configure("latexModeKeyword",foreground="blue",background="seashell1")
-            self.body.tag_configure("latexBackground",foreground="black",background="white")
-            self.body.tag_configure("latexKeyword",foreground="blue",background="white")
-            
-        # Tags for wiki coloring.
-        if self.showInvisibles:
-            self.body.tag_configure("elide",background="yellow")
-        else:
-            self.body.tag_configure("elide",elide="1")
-        self.body.tag_configure("bold",font=self.bold_font)
-        self.body.tag_configure("italic",font=self.italic_font)
-        self.body.tag_configure("bolditalic",font=self.bolditalic_font)
-        for name in self.color_tags_list:
-            self.body.tag_configure(name,foreground=name)
-    #@nonl
-    #@-node:ekr.20050529143413.33:configure_tags
-    #@+node:ekr.20050529143413.32:init_ivars
-    def init_ivars (self,p):
-        
-        c = self.c
-        self.p = p
-    
-        # Add any newly-added user keywords.
-        for d in g.globalDirectiveList:
-            name = '@' + d
-            if name not in leoKeywords:
-                leoKeywords.append(name)
-    
-        # Get the body text, converted to unicode.
-        s = self.body.getAllText()
-        self.sel = sel = self.body.getInsertionPoint()
-        start,end = self.body.convertIndexToRowColumn(sel)
-        
-        # g.trace(self.language)
-        # g.trace(self.count,self.p)
-        # g.trace(body.tag_names())
-        
-        if 1: #### not self.incremental:
-            self.removeAllTags()
-            self.removeAllImages()
-        
-        self.redoColoring = False
-        self.redoingColoring = False
-        
-        self.underline_undefined = c.config.getBool("underline_undefined_section_names")
-        self.use_hyperlinks = c.config.getBool("use_hyperlinks")
-        
-        #@    << configure language-specific settings >>
-        #@+node:ekr.20050529143413.34:<< configure language-specific settings >>
-        # Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
-        
-        if self.language == "cweb": # Use C comments, not cweb sentinel comments.
-            delim1,delim2,delim3 = g.set_delims_from_language("c")
-        elif self.comment_string:
-            delim1,delim2,delim3 = g.set_delims_from_string(self.comment_string)
-        elif self.language == "plain":
-            delim1,delim2,delim3 = None,None,None
-        else:
-            delim1,delim2,delim3 = g.set_delims_from_language(self.language)
-        
-        self.single_comment_start = delim1
-        self.block_comment_start = delim2
-        self.block_comment_end = delim3
-        
-        # A strong case can be made for making this code as fast as possible.
-        # Whether this is compatible with general language descriptions remains to be seen.
-        self.case_sensitiveLanguage = self.language not in case_insensitiveLanguages
-        self.has_string = self.language != "plain"
-        if self.language == "plain":
-            self.string_delims = ()
-        elif self.language in ("elisp","html"):
-            self.string_delims = ('"')
-        else:
-            self.string_delims = ("'",'"')
-        self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
-        
-        # The list of languages for which keywords exist.
-        languages = [
-            "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex",
-            "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
-        
-        self.keywords = []
-        if self.language == "cweb":
-            for i in self.c_keywords:
-                self.keywords.append(i)
-            for i in self.cweb_keywords:
-                self.keywords.append(i)
-        else:
-            for name in languages:
-                if self.language==name: 
-                    # g.trace("setting keywords for",name)
-                    self.keywords = getattr(self, name + "_keywords")
-        
-        # For forth.
-        self.nextForthWordIsNew = False
-        
-        if 1: # We color both kinds of references in cweb mode.
-            self.lb = "<<"
-            self.rb = ">>"
-        else:
-            self.lb = g.choose(self.language == "cweb","@<","<<")
-            self.rb = g.choose(self.language == "cweb","@>",">>")
-        #@nonl
-        #@-node:ekr.20050529143413.34:<< configure language-specific settings >>
-        #@nl
-        
-        self.hyperCount = 0 # Number of hypertext tags
-        self.count += 1
-        lines = string.split(s,'\n')
-        
-        # Color plain text unless we are under the control of @nocolor.
-        state = self.setFirstLineState()
-        self.word_chars = string.letters + '_'
-        
-        return s,lines,state
-    #@nonl
-    #@-node:ekr.20050529143413.32:init_ivars
-    #@+node:ekr.20050529143413.42:recolor_all
-    def recolor_all (self):
-    
-        # This code is executed only if graphics characters will be inserted by user markup code.
-        
-        # Pass 1:  Insert all graphics characters.
-        self.removeAllImages()
-        s = self.body.getAllText()
-        lines = s.split('\n')
-        
-        self.color_pass = 1
-        self.line_index = 1
-        state = self.setFirstLineState()
-        for s in lines:
-            state = self.colorizeLine(s,state)
-            self.line_index += 1
-        
-        # Pass 2: Insert one blank for each previously inserted graphic.
-        self.color_pass = 2
-        self.line_index = 1
-        state = self.setFirstLineState()
-        for s in lines:
-            #@        << kludge: insert a blank in s for every image in the line >>
-            #@+node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
-            #@+at 
-            #@nonl
-            # A spectacular kludge.
-            # 
-            # Images take up a real index, yet the get routine does not return 
-            # any character for them!
-            # In order to keep the colorer in synch, we must insert dummy 
-            # blanks in s at the positions corresponding to each image.
-            #@-at
-            #@@c
-            
-            inserted = 0
-            
-            for photo,image,line_index,i in self.image_references:
-                if self.line_index == line_index:
-                    n = i+inserted ; 	inserted += 1
-                    s = s[:n] + ' ' + s[n:]
-            #@-node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
-            #@nl
-            state = self.colorizeLine(s,state)
-            self.line_index += 1
-    #@nonl
-    #@-node:ekr.20050529143413.42:recolor_all
-    #@+node:ekr.20050529143413.91:setFirstLineState
-    def setFirstLineState (self):
-        
-        if self.flag:
-            if self.rootMode:
-                state = g.choose(self.rootMode=="code","normal","doc")
-            else:
-                state = "normal"
-        else:
-            state = "nocolor"
-    
-        return state
-    #@nonl
-    #@-node:ekr.20050529143413.91:setFirstLineState
-    #@-node:ekr.20050529150436:Colorizer code
+    #@-node:ekr.20050529180421.46:Helpers for colorizerLine (to be deleted)
+    #@-node:ekr.20050601082256:To be removed...
     #@+node:ekr.20050529143413.89:Utils
     #@+at 
     #@nonl
@@ -2877,7 +2953,7 @@ class colorizer:
             'keyword-n': 'keyword',
             'comment1': 'comment',
             'operator': None,
-            'function': 'comment', # just for testing.
+            # 'function': 'comment', # just for testing.
         }
         
         tag = d.get(token_type)
@@ -2891,86 +2967,6 @@ class colorizer:
     #@nonl
     #@-node:ekr.20050601065451:doColor (new)
     #@-node:ekr.20050529143413.89:Utils
-    #@+node:ekr.20050529145355:Language-specific utils: (To be removed)
-    #@+node:ekr.20050529143413.85:getCwebWord
-    def getCwebWord (self,s,i):
-        
-        # g.trace(g.get_line(s,i))
-        if not g.match(s,i,"@"):
-            return None
-        
-        ch1 = ch2 = word = None
-        if i + 1 < len(s): ch1 = s[i+1]
-        if i + 2 < len(s): ch2 = s[i+2]
-    
-        if g.match(s,i,"@**"):
-            word = "@**"
-        elif not ch1:
-            word = "@"
-        elif not ch2:
-            word = s[i:i+2]
-        elif (
-            (ch1 in string.ascii_letters and not ch2 in string.ascii_letters) or # single-letter control code
-            ch1 not in string.ascii_letters # non-letter control code
-        ):
-            word = s[i:i+2]
-    
-        # if word: g.trace(word)
-            
-        return word
-    #@nonl
-    #@-node:ekr.20050529143413.85:getCwebWord
-    #@+node:ekr.20050529143413.92:skip_id
-    def skip_id(self,s,i,chars=None):
-    
-        n = len(s)
-        while i < n:
-            ch = s[i]
-            if ch in string.ascii_letters or ch in string.digits or ch == '_':
-                i += 1
-            elif chars and ch in chars:
-                i += 1
-            else: break
-        return i
-    #@-node:ekr.20050529143413.92:skip_id
-    #@+node:ekr.20050529143413.94:skip_string
-    def skip_string(self,s,i):
-        
-        """Skip a string literal."""
-    
-        allow_newlines = self.language == "elisp"
-        delim = s[i] ; i += 1
-        continue_state = g.choose(delim=="'","singleString","doubleString")
-        assert(delim == '"' or delim == "'")
-        n = len(s)
-        while i < n and s[i] != delim and (allow_newlines or not s[i] == '\n'): # 6/3/04: newline ends most strings.
-            if s[i:] == "\\": # virtual trailing newline.
-                return n,continue_state
-            elif s[i] == '\\': i += 2
-            else: i += 1
-    
-        if i >= n:
-            return n, g.choose(allow_newlines,continue_state,"normal")
-        if s[i] == delim:
-            i += 1
-        return i,"normal"
-    #@nonl
-    #@-node:ekr.20050529143413.94:skip_string
-    #@+node:ekr.20050529143413.93:skip_python_string
-    def skip_python_string(self,s,i):
-    
-        delim = s[i:i+3]
-        if delim == "'''" or delim == '"""':
-            k = s.find(delim,i+3)
-            if k == -1:
-                return len(s),g.choose(delim=="'''","string3s","string3d")
-            else:
-                return k+3, "normal"
-        else:
-            return self.skip_string(s,i)
-    #@nonl
-    #@-node:ekr.20050529143413.93:skip_python_string
-    #@-node:ekr.20050529145355:Language-specific utils: (To be removed)
     #@+node:ekr.20050530065723.47:parse_jEdit_file
     def parse_jEdit_file(self,fileName,verbose=False):
         
@@ -3000,6 +2996,7 @@ class colorizer:
             return modes
     #@nonl
     #@-node:ekr.20050530065723.47:parse_jEdit_file
+    #@+node:ekr.20050529180421.47:Rule matching methods
     #@+node:ekr.20050530112849:createRuleMatchers
     def createRuleMatchers (self,rules):
         
@@ -3058,7 +3055,6 @@ class colorizer:
         return f,name,state,token_type
     #@nonl
     #@-node:ekr.20050530112849.1:createRuleMatcher
-    #@+node:ekr.20050529180421.47:Rule matching methods
     #@+node:ekr.20050529190857:match_keywords
     # Keywords only match whole words.
     # Words are runs of text separated by non-alphanumeric characters.
@@ -3079,7 +3075,7 @@ class colorizer:
             return 0
     #@nonl
     #@-node:ekr.20050529190857:match_keywords
-    #@+node:ekr.20050529182335:match_regexp_helper
+    #@+node:ekr.20050529182335:match_regexp_helper (TO DO)
     def match_regexp_helper (self,s,i,seq):
         
         '''Return the length of the matching text if seq (a regular expression) matches the present position.'''
@@ -3088,7 +3084,7 @@ class colorizer:
         
         return 0 ### Not ready yet.
     #@nonl
-    #@-node:ekr.20050529182335:match_regexp_helper
+    #@-node:ekr.20050529182335:match_regexp_helper (TO DO)
     #@+node:ekr.20050601045930:match_eol_span
     def match_eol_span (self,s,i,seq,at_line_start,at_ws_end,at_word_start):
         
