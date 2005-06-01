@@ -2593,6 +2593,7 @@ class leoTkinterBody (leoFrame.leoBody):
         if not oldSel:
             oldSel = c.frame.body.getTextSelection()
     
+        self.c.frame.body.colorizer.interrupt()
         self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
     #@nonl
     #@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
@@ -2616,6 +2617,7 @@ class leoTkinterBody (leoFrame.leoBody):
             self.handleStatusLineKey(event)
             
         # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
+        self.c.frame.body.colorizer.interrupt()
         self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
     #@nonl
     #@+node:ekr.20040105223536:handleStatusLineKey
@@ -2676,6 +2678,7 @@ class leoTkinterBody (leoFrame.leoBody):
         if not p:
             p = c.currentPosition()
     
+        self.c.frame.body.colorizer.interrupt()
         self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
     #@nonl
     #@-node:ekr.20031218072017.1331:onBodyWillChange
