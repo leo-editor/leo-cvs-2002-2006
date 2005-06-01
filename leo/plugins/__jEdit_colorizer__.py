@@ -23,6 +23,28 @@ __version__ = '0.3'
 #@-at
 #@-node:ekr.20050529142916.2:<< version history >>
 #@nl
+#@<< to do >>
+#@+node:ekr.20050601081132:<< to do >>
+#@@nocolor
+#@+at
+# 
+# - Handle doc parts, leo directives, section references.
+#     - Add generic Leo rules to all rule sets.
+# 
+# - Handle rules attributes, esp. NO_WORD_SEP.
+#     - Any non-alphanumeric character not appearing in a keyword definition 
+# or
+#       the ruleset's NO_WORD_SEP attribute is considered a word separator.
+# 
+# - Handle incremental coloring.
+#     - This involves remembering state information.
+# 
+# - Figure out how to do mark_previous and mark_following.
+#     - In particular, what are the previous and following token??
+#@-at
+#@nonl
+#@-node:ekr.20050601081132:<< to do >>
+#@nl
 #@<< imports >>
 #@+node:ekr.20050529142916.3:<< imports >>
 import leoGlobals as g
@@ -97,6 +119,534 @@ def onStart1 (tag, keywords):
     leoColor.colorizer = colorizer
 #@nonl
 #@-node:ekr.20050529142916.5:onStart1
+#@+node:ekr.20050530065723.78:new_colorize (prototype for main colorizer code)
+if 0:
+    def new_colorize (self):
+    
+        # Assume all data has been inited.
+        while not self.done:
+            for f1,f2 in self.rules:
+                if f1():
+                    # An applicable rule has been found.
+                    f2()
+                    break
+            # No rule found.
+            return
+#@nonl
+#@-node:ekr.20050530065723.78:new_colorize (prototype for main colorizer code)
+#@+node:ekr.20050530065723.58:class contentHandler
+class contentHandler (xml.sax.saxutils.XMLGenerator):
+    
+    '''A sax content handler class that handles jEdit language-description files.
+    
+    Creates a list of modes that can be retrieved using getModes method.'''
+
+    #@    @+others
+    #@+node:ekr.20050530065723.59: __init__ & helpers
+    def __init__ (self,c,fileName,trace=False,verbose=False):
+    
+        self.c = c
+        self.fileName = fileName
+        self.trace = trace
+        self.verbose = verbose
+        
+        # Init the base class.
+        xml.sax.saxutils.XMLGenerator.__init__(self)
+        
+        # Non-mode statistics.
+        self.numberOfAttributes = 0
+        self.numberOfElements = 0
+        
+        # Options...
+        self.ignoreWs = True # True: don't print contents with only ws.
+        self.newLineAfterStartElement = [
+            'keywords','mode','props','property','rules','span','eol_span',
+            # 'seq',
+        ]
+        
+        # Printing options
+        if verbose:
+            self.printAllElements = True
+            self.printCharacters = False or self.printAllElements
+            self.printAttributes = False and not self.printAllElements
+            self.printElements = [
+                #'begin','end',
+                #'eol_span',
+                #'keyword1','keyword2','keyword3','keyword4',
+                #'mark_previous',
+                #'mode',
+                #'props',
+                #'property',
+                #'rules',
+                #'span',
+                #'seq',
+            ]
+            
+            if self.printAllElements:
+                self.suppressContent = []
+            else:
+                self.suppressContent = ['keyword1','keyword2','keyword3','keyword4']
+        else:
+            self.printAllElements = False
+            self.printCharacters = False
+            self.printAttributes = False
+            self.printElements = []
+      
+        # Semantics: most of these should be mode ivars.
+        self.elementStack = []
+        self.mode = None # The present mode, or None if outside all modes.
+        self.modes = [] # All modes defined here or by imports.
+    #@nonl
+    #@-node:ekr.20050530065723.59: __init__ & helpers
+    #@+node:ekr.20050530065723.60:helpers
+    #@+node:ekr.20050530065723.61:attrsToList
+    def attrsToList (self,attrs):
+        
+        '''Convert the attributes to a list of g.Bunches.
+        
+        attrs: an Attributes item passed to startElement.
+        
+        sep: the separator charater between attributes.'''
+        
+        return [
+            g.Bunch(name=name,val=attrs.getValue(name))
+            for name in attrs.getNames()
+        ]
+    #@nonl
+    #@-node:ekr.20050530065723.61:attrsToList
+    #@+node:ekr.20050530065723.62:attrsToString
+    def attrsToString (self,attrs,sep='\n'):
+        
+        '''Convert the attributes to a string.
+        
+        attrs: an Attributes item passed to startElement.
+        
+        sep: the separator charater between attributes.'''
+    
+        result = [
+            '%s="%s"' % (bunch.name,bunch.val)
+            for bunch in self.attrsToList(attrs)
+        ]
+    
+        return sep.join(result)
+    #@nonl
+    #@-node:ekr.20050530065723.62:attrsToString
+    #@+node:ekr.20050530065723.63:clean
+    def clean(self,s):
+    
+        return g.toEncodedString(s,"ascii")
+    #@nonl
+    #@-node:ekr.20050530065723.63:clean
+    #@+node:ekr.20050530065723.64:error
+    def error (self, message):
+        
+        print
+        print
+        print 'XML error: %s' % (message)
+        print
+    #@nonl
+    #@-node:ekr.20050530065723.64:error
+    #@+node:ekr.20050530065723.65:printStartElement
+    def printStartElement(self,name,attrs):
+    
+        if attrs.getLength() > 0:
+            print '<%s %s>' % (
+                self.clean(name).strip(),
+                self.attrsToString(attrs,sep=' ')),
+        else:
+            print '<%s>' % (self.clean(name).strip()),
+    
+        if name.lower() in self.newLineAfterStartElement:
+            print
+    #@nonl
+    #@-node:ekr.20050530065723.65:printStartElement
+    #@+node:ekr.20050530065723.66:printSummary
+    def printSummary (self):
+        
+        print '-' * 10, 'non- mode statistics'
+        print 'modes',len(self.modes)
+        print 'elements', self.numberOfElements
+    #@nonl
+    #@-node:ekr.20050530065723.66:printSummary
+    #@-node:ekr.20050530065723.60:helpers
+    #@+node:ekr.20050530065723.67:sax over-rides
+    #@+node:ekr.20050530065723.68: Do nothing...
+    #@+node:ekr.20050530065723.69:other methods
+    def ignorableWhitespace(self):
+        g.trace()
+    
+    def processingInstruction (self,target,data):
+        g.trace()
+    
+    def skippedEntity(self,name):
+        g.trace(name)
+    
+    def startElementNS(self,name,qname,attrs):
+        g.trace(name)
+    
+    def endElementNS(self,name,qname):
+        g.trace(name)
+    #@nonl
+    #@-node:ekr.20050530065723.69:other methods
+    #@+node:ekr.20050530065723.70:endDocument
+    def endDocument(self):
+    
+        pass
+    
+    
+    #@-node:ekr.20050530065723.70:endDocument
+    #@+node:ekr.20050530065723.71:startDocument
+    def startDocument(self):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20050530065723.71:startDocument
+    #@-node:ekr.20050530065723.68: Do nothing...
+    #@+node:ekr.20050530065723.72:characters
+    def characters(self,content):
+        
+        content = content.replace('\r','').strip()
+        content = self.clean(content)
+    
+        elementName = self.elementStack and self.elementStack[-1]
+        elementName = elementName.lower()
+        
+        if 1: # new code
+            if self.printAllElements:
+                print content,
+            elif self.printCharacters and content and elementName not in self.suppressContent:
+                print 'content:',elementName,repr(content)
+        else:
+            if self.printCharacters and content and elementName not in self.suppressContent:
+                if self.printAllElements:
+                    print content,
+                else:
+                    print 'content:',elementName,repr(content)
+                
+        if self.mode:
+            self.mode.doContent(elementName,content)
+        else:
+            self.error('characters outside of mode')
+    #@nonl
+    #@-node:ekr.20050530065723.72:characters
+    #@+node:ekr.20050530065723.73:endElement
+    def endElement(self,name):
+    
+        self.doEndElement(name)
+    
+        name2 = self.elementStack.pop()
+        assert name == name2
+    #@nonl
+    #@-node:ekr.20050530065723.73:endElement
+    #@+node:ekr.20050530065723.74:startElement
+    def startElement(self,name,attrs):
+        
+        if self.mode:
+            self.mode.numberOfElements += 1
+        else:
+            self.numberOfElements += 1
+            
+        self.elementStack.append(name)
+        self.doStartElement(name,attrs)
+    #@nonl
+    #@-node:ekr.20050530065723.74:startElement
+    #@-node:ekr.20050530065723.67:sax over-rides
+    #@+node:ekr.20050530065723.75:doStartElement
+    def doStartElement (self,elementName,attrs):
+        
+        if self.printAllElements or elementName.lower() in self.printElements:
+            self.printStartElement(elementName,attrs)
+    
+        elementName = elementName.lower()
+        
+        if elementName == 'mode':
+            self.mode = modeClass(self,self.fileName)
+        elif self.mode:
+            self.mode.startElement(elementName)
+            for bunch in self.attrsToList(attrs):
+                if self.printAttributes:
+                    print 'attr:',elementName,bunch.name,'=',bunch.val
+                self.mode.doAttribute(bunch.name,bunch.val)
+        else:
+            self.error('Start element appears outside of Mode:%s' % elementName)
+            for bunch in self.attrsToList(attrs):
+                self.error('Attribute appears outside of Mode:%s' % bunch.name)
+    #@nonl
+    #@-node:ekr.20050530065723.75:doStartElement
+    #@+node:ekr.20050530065723.76:doEndElement
+    def doEndElement (self,elementName):
+        
+        if self.printAllElements or elementName.lower() in self.printElements:
+            print '</' + self.clean(elementName).strip() + '>'
+            
+        if elementName.lower() == 'mode':
+            self.modes.append(self.mode)
+            if self.verbose:
+                self.mode.printSummary()
+            self.mode = None
+        elif self.mode:
+            self.mode.endElement(elementName)
+        else:
+            self.error('End element appears outside of Mode:%s' % elementName)
+            for bunch in self.attrsToList(attrs):
+                self.error('Attribute appears outside of Mode:%s' %bunch.name)
+    #@nonl
+    #@-node:ekr.20050530065723.76:doEndElement
+    #@+node:ekr.20050530071955:getModes
+    def getModes (self):
+        
+        return self.modes
+    #@nonl
+    #@-node:ekr.20050530071955:getModes
+    #@-others
+#@nonl
+#@-node:ekr.20050530065723.58:class contentHandler
+#@+node:ekr.20050530065723.49:class modeClass
+class modeClass:
+    
+    '''A class representing one jEdit language-description mode.
+    
+    Use getters to access the attributes, properties and rules of this mode.'''
+    
+    #@    @+others
+    #@+node:ekr.20050530065723.50: mode.__init__
+    def __init__ (self,contentHandler,fileName):
+    
+        self.contentHandler = contentHandler
+        self.fileName = fileName # The file from which the mode was imported.
+        self.verbose = self.contentHandler.verbose
+    
+        # Mode statistics...
+        self.numberOfAttributes = 0
+        self.numberOfElements = 0
+        self.numberOfErrors = 0
+        self.numberOfPropertyAttributes = 0
+        self.numberOfRuleAttributes = 0
+        
+        # List of boolean attributes.
+        self.boolAttrs = [
+            'at_line_start','at_whitespace_end','at_word_start',
+            'exclude_match','highlight_digits','ignore_case',
+            'no_escape','no_line_break','no_word_break','no_word_sep',]
+    
+        # List of elements that start a rule.
+        self.ruleElements = [
+            'eol_span','eol_span_regexp','import','keywords',
+            'mark_following','mark_previous','seq','seq_regexp',
+            'span','span_regexp','terminate',]
+    
+        if 0: # Not used at present.
+            self.seqSpanElements = [
+                'eol_span','eol_span_regexp','seq','seq_regexp',
+                'span','span_regexp',]
+    
+        # Mode semantics.
+        self.attributes = {}
+        self.inProps = False
+        self.inRules = False
+        self.props = []
+        self.property = None
+        self.rule = None
+        self.rules = []
+        self.rulesAttributes = {}
+    #@nonl
+    #@-node:ekr.20050530065723.50: mode.__init__
+    #@+node:ekr.20050530073825: mode.__str__ & __repr__
+    def __str__ (self):
+        
+        return '<modeClass for %s>' % self.fileName
+        
+    __repr__ = __str__
+    #@nonl
+    #@-node:ekr.20050530073825: mode.__str__ & __repr__
+    #@+node:ekr.20050530081700: Printing...
+    #@+node:ekr.20050530075602:printModeAttributes, printRuleAttributes & printAttributesHelper
+    def printModeAttributes (self):
+        
+        self.printAttributesHelper('mode attributes',self.attributes)
+        
+    def printRuleAttributes (self):
+        
+        self.printAttributesHelper('rule attributes',self.rulesAttributes)
+        
+    def printAttributesHelper (self,kind,attrs):
+        
+        print '%-20s' % (kind),'attrs:',attrs
+    #@nonl
+    #@-node:ekr.20050530075602:printModeAttributes, printRuleAttributes & printAttributesHelper
+    #@+node:ekr.20050530080452:printProperty
+    def printProperty (self,property):
+        
+        # A property is a bunch.
+        d = property.attributes
+        if d:
+            self.printAttributesHelper('property',d)
+    #@nonl
+    #@-node:ekr.20050530080452:printProperty
+    #@+node:ekr.20050530075602.1:printRule
+    def printRule (self,rule):
+        
+        # A rule is a g.Bunch.
+        if rule.name == 'keywords':
+            print '%-20s' % ('rule:keywords'),
+            for key in ('keyword1','keyword2','keyword3','keyword4'):
+                theList = rule.get(key,[])
+                print key,len(theList),
+            print
+        else:
+            d = rule.attributes
+            d2 = rule.get('contents')
+            if d or d2:
+                print '%-20s' % ('rule:'+rule.name),
+                if d and d2: print 'attrs:',d,'chars:',d2
+                elif d:  print 'attrs:',d
+                else:    print 'chars:',d2
+    #@nonl
+    #@-node:ekr.20050530075602.1:printRule
+    #@+node:ekr.20050530065723.56:printSummary
+    def printSummary (self,printStats=True):
+    
+        if printStats:
+            print '-' * 10, 'mode statistics'
+            print 'elements',self.numberOfElements
+            print 'errors',self.numberOfErrors
+            print 'mode attributes',self.numberOfAttributes
+            print 'property attributes',self.numberOfPropertyAttributes
+            print 'rule attributes',self.numberOfRuleAttributes
+    
+        self.printModeAttributes()
+        self.printRuleAttributes()
+        for bunch in self.props:
+            self.printProperty(bunch)
+        for rule in self.rules:
+            self.printRule(rule)
+    #@nonl
+    #@-node:ekr.20050530065723.56:printSummary
+    #@-node:ekr.20050530081700: Printing...
+    #@+node:ekr.20050530065723.51:doAttribute
+    def doAttribute (self,name,val):
+        
+        name = str(name.lower())
+        
+        if name in self.boolAttrs:
+            val = g.choose(val=='True',True,False)
+        else:
+            val = str(val) # Do NOT lower this value!
+    
+        if self.rule:
+            d = self.rule.get('attributes')
+            d [name] = val
+            self.numberOfRuleAttributes += 1
+        elif self.property:
+            d = self.property.get('attributes')
+            d [name] = val
+            self.numberOfPropertyAttributes += 1
+        elif self.inRules:
+            self.rulesAttributes[name] = val
+            self.numberOfAttributes += 1
+        else:
+            self.attributes[name] = val
+            self.numberOfAttributes += 1
+    #@nonl
+    #@-node:ekr.20050530065723.51:doAttribute
+    #@+node:ekr.20050530065723.52:doContent
+    def doContent (self,elementName,content):
+        
+        if not content:
+            return
+        
+        name = str(elementName.lower())
+    
+        if name in ('keyword1','keyword2','keyword3','keyword4'):
+            if self.inRule('keywords'):
+                theList = self.rule.get(name,[])
+                theList.append(content)
+                self.rule[name] = theList
+            else:
+                self.error('%d not in keywords' % name)
+    
+        elif self.rule:
+            d = self.rule.get('contents',{})
+            s = d.get(name,'')
+            d [name] = s + content
+            self.rule['contents'] = d
+    #@nonl
+    #@-node:ekr.20050530065723.52:doContent
+    #@+node:ekr.20050530065723.53:endElement
+    def endElement (self,elementName):
+    
+        name = elementName.lower()
+        
+        if name == 'props':
+            self.inProps = True
+        if name == 'rules':
+            self.inRules = False
+        if name == 'property':
+            if self.property:
+                self.props.append(self.property)
+                self.property = None
+            else:
+                self.error('end %s not matched by start %s' % (name,name))
+        if name in self.ruleElements:
+            if self.inRule(name):
+                self.rules.append(self.rule)
+                self.rule = None
+            else:
+                self.error('end %s not matched by start %s' % (name,name))
+    #@nonl
+    #@-node:ekr.20050530065723.53:endElement
+    #@+node:ekr.20050530065723.54:error
+    def error (self,message):
+        
+        self.numberOfErrors += 1
+    
+        self.contentHandler.error(message)
+    #@nonl
+    #@-node:ekr.20050530065723.54:error
+    #@+node:ekr.20050530074431:getters
+    def getAttributes (self):
+        
+        return self.attributes
+    
+    def getProperties (self):
+        
+        return self.props
+        
+    def getRules (self):
+        
+        return self.rules
+    #@nonl
+    #@-node:ekr.20050530074431:getters
+    #@+node:ekr.20050530065723.55:inRule
+    def inRule (self,elementName):
+    
+        return self.rule and self.rule.get('name') == elementName
+    #@nonl
+    #@-node:ekr.20050530065723.55:inRule
+    #@+node:ekr.20050530065723.57:startElement
+    def startElement (self,elementName):
+    
+        name = elementName.lower()
+        
+        if name == 'props':
+            self.inProps = True
+        if name == 'rules':
+            self.inRules = True
+        if name == 'property':
+            if self.inProps:
+                self.property = g.bunch(name=name,attributes={})
+            else:
+                self.error('property not in props element')
+        if name in self.ruleElements:
+            if self.inRules:
+                self.rule = g.bunch(name=name,attributes={})
+            else:
+                self.error('%s not in rules element' % name)
+    #@nonl
+    #@-node:ekr.20050530065723.57:startElement
+    #@-others
+#@nonl
+#@-node:ekr.20050530065723.49:class modeClass
 #@+node:ekr.20050529143413.4:class colorizer
 class colorizer:
     
@@ -756,52 +1306,6 @@ class colorizer:
     #@nl
 
     #@    @+others
-    #@+node:ekr.20050529154639:Can we use jEdit states to do incremental coloring??
-    #@@nocolor
-    #@@color
-    #@@nocolor
-    #@+at 
-    #@nonl
-    # Can we correctly represent state ?
-    # 
-    # ** The jEdit states are about color, the Leo states are about semantics.
-    # 
-    # - The present code uses the following states:
-    #     "blockComment"
-    #     "doc","nocolor","normal"
-    #     "doubleString","singleString","string3s","string3d"
-    # - The jEdit types are:
-    # 
-    # NULL
-    # COMMENT1,COMMENT2,COMMENT3,COMMENT4
-    # FUNCTION
-    # KEYWORD1,KEYWORD2,KEYWORD3,KEYWORD4
-    # LABEL
-    # LITERAL1,LITERAL2,LITERAL3,LITERAL4
-    # MARKUP
-    # OPERATOR
-    #@-at
-    #@nonl
-    #@-node:ekr.20050529154639:Can we use jEdit states to do incremental coloring??
-    #@+node:ekr.20050529154639.1:Can we use Keyword4 for Leo keywords?
-    #@@nocolor
-    #@+at
-    # 
-    # We might just add Keyword5...
-    #@-at
-    #@nonl
-    #@-node:ekr.20050529154639.1:Can we use Keyword4 for Leo keywords?
-    #@+node:ekr.20050529155153:How do we handle doc parts and other Leo-specific stuff
-    #@@nocolor
-    #@+at
-    # 
-    # Presumably we shall have to add new rules when reading language 
-    # description files.
-    # 
-    # This might be tricky...
-    #@-at
-    #@nonl
-    #@-node:ekr.20050529155153:How do we handle doc parts and other Leo-specific stuff
     #@+node:ekr.20050529143413.24:color.__init__
     def __init__(self,c):
         
@@ -1321,33 +1825,37 @@ class colorizer:
             self.removeAllTags()
             return
         try:
-            lines,state = self.init_ivars(p)
+            s,lines,state = self.init_ivars(p)
             self.configure_tags()
             g.doHook("init-color-markup",colorer=self,p=self.p,v=self.p)
-            self.color_pass = 0
-            if self.incremental and (
-                #@            << all state ivars match >>
-                #@+node:ekr.20050529143413.35:<< all state ivars match >>
-                self.flag == self.last_flag and
-                self.last_language == self.language and
-                self.comment_string == self.last_comment and
-                self.markup_string == self.last_markup
-                #@nonl
-                #@-node:ekr.20050529143413.35:<< all state ivars match >>
-                #@afterref
+            if 1:
+                # TEST CODE
+                self.colorAll(s)
+            else:
+                self.color_pass = 0
+                if self.incremental and (
+                    #@                << all state ivars match >>
+                    #@+node:ekr.20050529143413.35:<< all state ivars match >>
+                    self.flag == self.last_flag and
+                    self.last_language == self.language and
+                    self.comment_string == self.last_comment and
+                    self.markup_string == self.last_markup
+                    #@nonl
+                    #@-node:ekr.20050529143413.35:<< all state ivars match >>
+                    #@afterref
  ):
-                self.color_incremental(lines,state,leading,trailing)
-            else: self.color_nonincremental(lines,state)
-            if self.redoColoring: self.recolor_all()
-            #@        << update state ivars >>
-            #@+node:ekr.20050529143413.44:<< update state ivars >>
-            self.last_flag = self.flag
-            self.last_language = self.language
-            self.last_comment = self.comment_string
-            self.last_markup = self.markup_string
-            #@nonl
-            #@-node:ekr.20050529143413.44:<< update state ivars >>
-            #@nl
+                    self.color_incremental(lines,state,leading,trailing)
+                else: self.color_nonincremental(lines,state)
+                if self.redoColoring: self.recolor_all()
+                #@            << update state ivars >>
+                #@+node:ekr.20050529143413.44:<< update state ivars >>
+                self.last_flag = self.flag
+                self.last_language = self.language
+                self.last_comment = self.comment_string
+                self.last_markup = self.markup_string
+                #@nonl
+                #@-node:ekr.20050529143413.44:<< update state ivars >>
+                #@nl
             return "ok" # for testing.
         except Exception:
             self.last_flag = self.last_language = self.last_comment = 'unknown'
@@ -1355,6 +1863,35 @@ class colorizer:
             return "error" # for unit testing.
     #@nonl
     #@-node:ekr.20050529143413.31:colorizeAnyLanguage
+    #@+node:ekr.20050601042620:colorAll
+    def colorAll(self,s):
+        
+        # We have to handle mark_previous and mark_following.
+        i = 0 ; prev = None ; follow = True
+        while i < len(s):
+            for f,kind,state,token_type in self.ruleMatchers:
+                n = f(self,s,i)
+                if n > 0:
+                    if kind == 'mark_following':
+                        pass
+                    elif kind == 'mark_previous':
+                        if 0: # This make no sense at all.
+                            if prev:
+                                i2,j2,token_type2 = prev
+                                g.trace('mark_previous',i2,j2,token_type2)
+                                self.doColor(s,i2,j2,token_type) # Use the type specified in the mark_previous.
+                                prev = None
+                    else:
+                        # g.trace('%3d %2d'%(i,n),state,repr(s[i:i+n]))
+                        self.doColor(s,i,i+n,token_type)
+                        prev = (i,i+n,token_type)
+                    i += n
+                    break
+            else:
+                # g.trace('no match')
+                i += 1
+    #@nonl
+    #@-node:ekr.20050601042620:colorAll
     #@+node:ekr.20050529143413.46:colorizeLine & allies
     def colorizeLine (self,s,state):
     
@@ -1373,7 +1910,7 @@ class colorizer:
         return state
     #@nonl
     #@-node:ekr.20050529143413.46:colorizeLine & allies
-    #@+node:ekr.20050529180421.46:Helpers for colorizerLine
+    #@+node:ekr.20050529180421.46:Helpers for colorizerLine (will be deleted)
     #@+node:ekr.20050529143413.47:continueBlockComment
     def continueBlockComment (self,s,i):
         
@@ -2012,7 +2549,7 @@ class colorizer:
             return j + k
     #@nonl
     #@-node:ekr.20050529143413.78:doNowebSecRef
-    #@-node:ekr.20050529180421.46:Helpers for colorizerLine
+    #@-node:ekr.20050529180421.46:Helpers for colorizerLine (will be deleted)
     #@+node:ekr.20050529143413.33:configure_tags
     def configure_tags (self):
         
@@ -2097,7 +2634,7 @@ class colorizer:
         # g.trace(self.count,self.p)
         # g.trace(body.tag_names())
         
-        if not self.incremental:
+        if 1: #### not self.incremental:
             self.removeAllTags()
             self.removeAllImages()
         
@@ -2115,7 +2652,7 @@ class colorizer:
             delim1,delim2,delim3 = g.set_delims_from_language("c")
         elif self.comment_string:
             delim1,delim2,delim3 = g.set_delims_from_string(self.comment_string)
-        elif self.language == "plain": # 1/30/03
+        elif self.language == "plain":
             delim1,delim2,delim3 = None,None,None
         else:
             delim1,delim2,delim3 = g.set_delims_from_language(self.language)
@@ -2156,9 +2693,6 @@ class colorizer:
         # For forth.
         self.nextForthWordIsNew = False
         
-        # Color plain text unless we are under the control of @nocolor.
-        state = self.setFirstLineState()
-        
         if 1: # We color both kinds of references in cweb mode.
             self.lb = "<<"
             self.rb = ">>"
@@ -2173,7 +2707,11 @@ class colorizer:
         self.count += 1
         lines = string.split(s,'\n')
         
-        return lines,state
+        # Color plain text unless we are under the control of @nocolor.
+        state = self.setFirstLineState()
+        self.word_chars = string.letters + '_'
+        
+        return s,lines,state
     #@nonl
     #@-node:ekr.20050529143413.32:init_ivars
     #@+node:ekr.20050529143413.42:recolor_all
@@ -2249,10 +2787,10 @@ class colorizer:
         
         # Warning: the following DOES NOT WORK: self.body.tag_delete(self.tags)
         for tag in self.tags:
-            self.body.tag_delete(tag) # 10/27/03
+            self.body.tag_delete(tag)
     
         for tag in self.color_tags_list:
-            self.body.tag_delete(tag) # 10/27/03
+            self.body.tag_delete(tag)
         
     def removeTagsFromLine (self):
         
@@ -2319,6 +2857,39 @@ class colorizer:
         self.image_references = []
     #@nonl
     #@-node:ekr.20050529143413.29:setFontFromConfig
+    #@+node:ekr.20050601044345:get_word (new)
+    def get_word(self,s,i):
+    
+        j = i
+        while j < len(s) and s[j] in self.word_chars:
+            j += 1
+            
+        # g.trace(s[i:j])
+        return s[i:j]
+    #@-node:ekr.20050601044345:get_word (new)
+    #@+node:ekr.20050601065451:doColor (new)
+    def doColor(self,s,i,j,token_type):
+    
+        d = {
+            'seq': None,
+            'literal1': 'string',
+            'literal2': 'string',
+            'keyword-n': 'keyword',
+            'comment1': 'comment',
+            'operator': None,
+            'function': 'comment', # just for testing.
+        }
+        
+        tag = d.get(token_type)
+        if tag:
+            row,col = g.convertPythonIndexToRowCol(s,i)
+            x1 = '%d.%d' % (row+1,col)
+            row,col = g.convertPythonIndexToRowCol(s,j)
+            x2 = '%d.%d' % (row+1,col)
+            # g.trace(name,i,j,x1,x2)
+            self.body.tag_add(tag,x1,x2)
+    #@nonl
+    #@-node:ekr.20050601065451:doColor (new)
     #@-node:ekr.20050529143413.89:Utils
     #@+node:ekr.20050529145355:Language-specific utils: (To be removed)
     #@+node:ekr.20050529143413.85:getCwebWord
@@ -2432,78 +3003,73 @@ class colorizer:
     #@+node:ekr.20050530112849:createRuleMatchers
     def createRuleMatchers (self,rules):
         
-        return [self.createRuleMatcher(rule) for rule in rules]
+        ruleNumber = 0 ; result = []
+        for rule in rules:
+            result.append(self.createRuleMatcher(rule,ruleNumber))
+            ruleNumber += 1
+        return result
+        
+        # return [self.createRuleMatcher(rule) for rule in rules]
     #@nonl
     #@-node:ekr.20050530112849:createRuleMatchers
     #@+node:ekr.20050530112849.1:createRuleMatcher
-    def createRuleMatcher (self,rule):
+    def createRuleMatcher (self,rule,ruleNumber):
         
-        name = rule.name ; d = rule.attributes or {} ; d2 = rule.get('contents',{})
-        token_type    = d.get('type','<no type>')
+        name = rule.name ; d = rule.attributes or {}
+        token_type    = d.get('type','<no type>').lower()
         at_line_start = d.get('at_line_start',False)
         at_ws_end     = d.get('at_ws_end',False)
         at_word_start = d.get('at_word_start',False)
+        d2 = rule.get('contents',{})
         seq     = d2.get(name,'')
         begin   = d2.get('begin','')
         end     = d2.get('end','')
         
-        if name in ('eol_span','mark_following','mark_previous','seq'):
-            def f(self,s,i,seq,at_line_start,at_ws_end,at_word_start):
-                return self.match_seq(s,i,seq,at_line_start,at_ws_end,at_word_start)
-        elif name in ('eol_span_regexp','seq_regexp'):
-            def f(self,s,i,seq,at_line_start,at_ws_end,at_word_start):
-                return self.match_seq_regexp(s,i,seq,at_line_start,at_ws_end,at_word_start)
+        if name == 'eol_span':
+            def f(self,s,i,seq=seq,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
+                return self.match_eol_span(s,i,seq,at_line_start,at_ws_end,at_word_start)
+        elif name == 'eol_span_regexp':
+            def f(self,s,i,seq=seq,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
+                return self.match_eol_span_regexp(s,i,seq,at_line_start,at_ws_end,at_word_start)
         elif name == 'keywords':
             def f(self,s,i):
                 return self.match_keywords(s,i)
+            token_type = 'keyword-n' ### To be replaced by keyword1,...,keyword4,leoKeyword.
+        elif name in ('mark_following','mark_previous','seq'):
+            def f(self,s,i,seq=seq,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
+                return self.match_seq(s,i,seq,at_line_start,at_ws_end,at_word_start)
+        elif name == 'seq_regexp':
+            def f(self,s,i,seq=seq,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
+                return self.match_seq_regexp(s,i,seq,at_line_start,at_ws_end,at_word_start)
         elif name == 'span':
-            def f(self,s,i,begin,end,at_line_start,at_ws_end,at_word_start):
-                return self.match_span(s,i,seq,at_line_start,at_ws_end,at_word_start)
+            def f(self,s,i,begin=begin,end=end,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
+                return self.match_span(s,i,begin,end,at_line_start,at_ws_end,at_word_start)
         elif name == 'span_regexp':
-            def f(self,s,i,begin,end,at_line_start,at_ws_end,at_word_start):
-                return self.match_span_regexp(s,i,seq,at_line_start,at_ws_end,at_word_start)
+            def f(self,s,i,begin=begin,end=end,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
+                return self.match_span_regexp(s,i,begin,end,at_line_start,at_ws_end,at_word_start)
         else:
             g.trace('no function for %s' % name)
             def f(self,s,i):
                 return 0
     
-        # At present token_type is not specified for 'keywords'
-        g.trace('%-25s'%(name+':'+token_type),at_line_start,at_ws_end,at_word_start,repr(seq),repr(begin),repr(end))
+        # g.trace('%-25s'%(name+':'+token_type),at_line_start,at_ws_end,at_word_start,repr(seq),repr(begin),repr(end))
         
-        return f,token_type
-        
-            
-        
-    
-    
-        
-    
-    #@-node:ekr.20050530112849.1:createRuleMatcher
-    #@+node:ekr.20050529180421.47:Rule matching methods (not used yet)
-    #@+node:ekr.20050530065723.78:new_colorize (prototype for main colorizer code)
-    def new_colorize (self):
-        
-        # Assume all data has been inited.
-        while not self.done:
-            for f1,f2 in self.rules:
-                if f1():
-                    # An applicable rule has been found.
-                    f2()
-                    break
-            # No rule found.
-            return
+        state = 'rule %2d %-14s %9s' % (ruleNumber,name,token_type)
+        return f,name,state,token_type
     #@nonl
-    #@-node:ekr.20050530065723.78:new_colorize (prototype for main colorizer code)
+    #@-node:ekr.20050530112849.1:createRuleMatcher
+    #@+node:ekr.20050529180421.47:Rule matching methods
     #@+node:ekr.20050529190857:match_keywords
     # Keywords only match whole words.
     # Words are runs of text separated by non-alphanumeric characters.
     
-    def match_keywords (s,i):
+    def match_keywords (self,s,i):
         
         '''Return the length of the keyword if present position matches any keyword.
         Otherwise, return 0.'''
         
-        if i > 0 and s[i-1] not in self.word_chars:
+        # We must be at the start of a word.
+        if i > 0 and s[i-1] in self.word_chars:
             return 0
     
         word = self.get_word(s,i)
@@ -2523,7 +3089,54 @@ class colorizer:
         return 0 ### Not ready yet.
     #@nonl
     #@-node:ekr.20050529182335:match_regexp_helper
-    #@+node:ekr.20050529182335.1:match_seq, match_eol_span & match_mark_following/previous
+    #@+node:ekr.20050601045930:match_eol_span
+    def match_eol_span (self,s,i,seq,at_line_start,at_ws_end,at_word_start):
+        
+        '''Return the length of the rest of line if SEQ matches s[i:]
+        Return 0 if no match.
+    
+        'at_line_start':    True: sequence must start the line.
+        'at_ws_end':        True: sequence must be first non-whitespace text of the line.
+        'at_word_start':    True: sequence must start a word.'''
+    
+        if at_line_start and i != 0: return 0
+        if at_ws_end and i != g.skip_ws(s,0): return 0
+        if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
+    
+        if g.match(s,i,seq):
+            j = g.skip_to_end_of_line(s,i)
+            return j - i 
+        else:
+            return 0
+    #@-node:ekr.20050601045930:match_eol_span
+    #@+node:ekr.20050601063317:match_eol_span_regexp
+    def match_eol_span_regexp (self,s,i,seq,at_line_start,at_ws_end,at_word_start,hash_char):
+        
+        '''Return the length of rest if the line if seq (a regx) matches s[i:]
+        Return 0 if no match.
+    
+        'at_line_start':    True: sequence must start the line.
+        'at_ws_end':        True: sequence must be first non-whitespace text of the line.
+        'at_word_start':    True: sequence must start a word.
+        'hash_char':        The first character of the regexp (for speed).'''
+    
+        if at_line_start and i != 0: return 0
+        if at_ws_end and i != g.skip_ws(s,0): return 0
+        if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
+        
+        # Test hash_char first to increase speed.
+        if i < len(s) and s[i] == hash_char:
+            n = self.match_regexp_helper(s,i,seq)
+            if n > 0:
+                j = g.skip_to_end_of_line(s,i)
+                return j - i
+            else:
+                return 0
+        else:
+            return 0
+    #@nonl
+    #@-node:ekr.20050601063317:match_eol_span_regexp
+    #@+node:ekr.20050529182335.1:match_seq, match_mark_following/previous
     def match_seq (self,s,i,seq,at_line_start,at_ws_end,at_word_start):
         
         '''Return the length of a matched SEQ or 0 if no match.
@@ -2540,11 +3153,10 @@ class colorizer:
         else: return 0
     
     # For spans & marks, seq comes from the contents.
-    match_eol_span        = match_seq
     match_mark_following  = match_seq
     match_mark_previous   = match_seq
     #@nonl
-    #@-node:ekr.20050529182335.1:match_seq, match_eol_span & match_mark_following/previous
+    #@-node:ekr.20050529182335.1:match_seq, match_mark_following/previous
     #@+node:ekr.20050529215620:match_seq_regexp
     def match_seq_regexp (self,s,i,seq,at_line_start,at_ws_end,at_word_start,hash_char):
         
@@ -2564,8 +3176,6 @@ class colorizer:
             return self.match_regexp_helper(s,i,seq)
         else:
             return 0
-    
-    match_eol_span_regexp = match_seq_regexp
     #@nonl
     #@-node:ekr.20050529215620:match_seq_regexp
     #@+node:ekr.20050529185208.2:match_span
@@ -2581,9 +3191,12 @@ class colorizer:
         if at_ws_end and i != g.skip_ws(s,0): return 0
         if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
     
-        n = len(begin)
-        if g.match(s,i,begin) and g.match(s,i+n,end):
-            return n + len(end)
+        if g.match(s,i,begin):
+            j = s.find(end,i+len(begin))
+            if j > -1:
+                return j + len(end) - i
+            else:
+                return 0
         else:
             return 0
     #@nonl
@@ -2610,525 +3223,12 @@ class colorizer:
                 return n + len(end)
         else:
             return 0
-            
+    #@nonl
     #@-node:ekr.20050529215732:match_span_regexp
-    #@-node:ekr.20050529180421.47:Rule matching methods (not used yet)
+    #@-node:ekr.20050529180421.47:Rule matching methods
     #@-others
 #@nonl
 #@-node:ekr.20050529143413.4:class colorizer
-#@+node:ekr.20050530065723.58:class contentHandler
-class contentHandler (xml.sax.saxutils.XMLGenerator):
-    
-    '''A sax content handler class that handles jEdit language-description files.
-    
-    Creates a list of modes that can be retrieved using getModes method.'''
-
-    #@    @+others
-    #@+node:ekr.20050530065723.59: __init__ & helpers
-    def __init__ (self,c,fileName,trace=False,verbose=False):
-    
-        self.c = c
-        self.fileName = fileName
-        self.trace = trace
-        self.verbose = verbose
-        
-        # Init the base class.
-        xml.sax.saxutils.XMLGenerator.__init__(self)
-        
-        # Non-mode statistics.
-        self.numberOfAttributes = 0
-        self.numberOfElements = 0
-        
-        # Options...
-        self.ignoreWs = True # True: don't print contents with only ws.
-        self.newLineAfterStartElement = [
-            'keywords','mode','props','property','rules','span','eol_span',
-            # 'seq',
-        ]
-        
-        # Printing options
-        if verbose:
-            self.printAllElements = True
-            self.printCharacters = False or self.printAllElements
-            self.printAttributes = False and not self.printAllElements
-            self.printElements = [
-                #'begin','end',
-                #'eol_span',
-                #'keyword1','keyword2','keyword3','keyword4',
-                #'mark_previous',
-                #'mode',
-                #'props',
-                #'property',
-                #'rules',
-                #'span',
-                #'seq',
-            ]
-            
-            if self.printAllElements:
-                self.suppressContent = []
-            else:
-                self.suppressContent = ['keyword1','keyword2','keyword3','keyword4']
-        else:
-            self.printAllElements = False
-            self.printCharacters = False
-            self.printAttributes = False
-            self.printElements = []
-      
-        # Semantics: most of these should be mode ivars.
-        self.elementStack = []
-        self.mode = None # The present mode, or None if outside all modes.
-        self.modes = [] # All modes defined here or by imports.
-    #@nonl
-    #@-node:ekr.20050530065723.59: __init__ & helpers
-    #@+node:ekr.20050530065723.60:helpers
-    #@+node:ekr.20050530065723.61:attrsToList
-    def attrsToList (self,attrs):
-        
-        '''Convert the attributes to a list of g.Bunches.
-        
-        attrs: an Attributes item passed to startElement.
-        
-        sep: the separator charater between attributes.'''
-        
-        return [
-            g.Bunch(name=name,val=attrs.getValue(name))
-            for name in attrs.getNames()
-        ]
-    #@nonl
-    #@-node:ekr.20050530065723.61:attrsToList
-    #@+node:ekr.20050530065723.62:attrsToString
-    def attrsToString (self,attrs,sep='\n'):
-        
-        '''Convert the attributes to a string.
-        
-        attrs: an Attributes item passed to startElement.
-        
-        sep: the separator charater between attributes.'''
-    
-        result = [
-            '%s="%s"' % (bunch.name,bunch.val)
-            for bunch in self.attrsToList(attrs)
-        ]
-    
-        return sep.join(result)
-    #@nonl
-    #@-node:ekr.20050530065723.62:attrsToString
-    #@+node:ekr.20050530065723.63:clean
-    def clean(self,s):
-    
-        return g.toEncodedString(s,"ascii")
-    #@nonl
-    #@-node:ekr.20050530065723.63:clean
-    #@+node:ekr.20050530065723.64:error
-    def error (self, message):
-        
-        print
-        print
-        print 'XML error: %s' % (message)
-        print
-    #@nonl
-    #@-node:ekr.20050530065723.64:error
-    #@+node:ekr.20050530065723.65:printStartElement
-    def printStartElement(self,name,attrs):
-    
-        if attrs.getLength() > 0:
-            print '<%s %s>' % (
-                self.clean(name).strip(),
-                self.attrsToString(attrs,sep=' ')),
-        else:
-            print '<%s>' % (self.clean(name).strip()),
-    
-        if name.lower() in self.newLineAfterStartElement:
-            print
-    #@nonl
-    #@-node:ekr.20050530065723.65:printStartElement
-    #@+node:ekr.20050530065723.66:printSummary
-    def printSummary (self):
-        
-        print '-' * 10, 'non- mode statistics'
-        print 'modes',len(self.modes)
-        print 'elements', self.numberOfElements
-    #@nonl
-    #@-node:ekr.20050530065723.66:printSummary
-    #@-node:ekr.20050530065723.60:helpers
-    #@+node:ekr.20050530065723.67:sax over-rides
-    #@+node:ekr.20050530065723.68: Do nothing...
-    #@+node:ekr.20050530065723.69:other methods
-    def ignorableWhitespace(self):
-        g.trace()
-    
-    def processingInstruction (self,target,data):
-        g.trace()
-    
-    def skippedEntity(self,name):
-        g.trace(name)
-    
-    def startElementNS(self,name,qname,attrs):
-        g.trace(name)
-    
-    def endElementNS(self,name,qname):
-        g.trace(name)
-    #@nonl
-    #@-node:ekr.20050530065723.69:other methods
-    #@+node:ekr.20050530065723.70:endDocument
-    def endDocument(self):
-    
-        pass
-    
-    
-    #@-node:ekr.20050530065723.70:endDocument
-    #@+node:ekr.20050530065723.71:startDocument
-    def startDocument(self):
-        
-        pass
-    #@nonl
-    #@-node:ekr.20050530065723.71:startDocument
-    #@-node:ekr.20050530065723.68: Do nothing...
-    #@+node:ekr.20050530065723.72:characters
-    def characters(self,content):
-        
-        content = content.replace('\r','').strip()
-        content = self.clean(content)
-    
-        elementName = self.elementStack and self.elementStack[-1]
-        elementName = elementName.lower()
-        
-        if 1: # new code
-            if self.printAllElements:
-                print content,
-            elif self.printCharacters and content and elementName not in self.suppressContent:
-                print 'content:',elementName,repr(content)
-        else:
-            if self.printCharacters and content and elementName not in self.suppressContent:
-                if self.printAllElements:
-                    print content,
-                else:
-                    print 'content:',elementName,repr(content)
-                
-        if self.mode:
-            self.mode.doContent(elementName,content)
-        else:
-            self.error('characters outside of mode')
-    #@nonl
-    #@-node:ekr.20050530065723.72:characters
-    #@+node:ekr.20050530065723.73:endElement
-    def endElement(self,name):
-    
-        self.doEndElement(name)
-    
-        name2 = self.elementStack.pop()
-        assert name == name2
-    #@nonl
-    #@-node:ekr.20050530065723.73:endElement
-    #@+node:ekr.20050530065723.74:startElement
-    def startElement(self,name,attrs):
-        
-        if self.mode:
-            self.mode.numberOfElements += 1
-        else:
-            self.numberOfElements += 1
-            
-        self.elementStack.append(name)
-        self.doStartElement(name,attrs)
-    #@nonl
-    #@-node:ekr.20050530065723.74:startElement
-    #@-node:ekr.20050530065723.67:sax over-rides
-    #@+node:ekr.20050530065723.75:doStartElement
-    def doStartElement (self,elementName,attrs):
-        
-        if self.printAllElements or elementName.lower() in self.printElements:
-            self.printStartElement(elementName,attrs)
-    
-        elementName = elementName.lower()
-        
-        if elementName == 'mode':
-            self.mode = modeClass(self,self.fileName)
-        elif self.mode:
-            self.mode.startElement(elementName)
-            for bunch in self.attrsToList(attrs):
-                if self.printAttributes:
-                    print 'attr:',elementName,bunch.name,'=',bunch.val
-                self.mode.doAttribute(bunch.name,bunch.val)
-        else:
-            self.error('Start element appears outside of Mode:%s' % elementName)
-            for bunch in self.attrsToList(attrs):
-                self.error('Attribute appears outside of Mode:%s' % bunch.name)
-    #@nonl
-    #@-node:ekr.20050530065723.75:doStartElement
-    #@+node:ekr.20050530065723.76:doEndElement
-    def doEndElement (self,elementName):
-        
-        if self.printAllElements or elementName.lower() in self.printElements:
-            print '</' + self.clean(elementName).strip() + '>'
-            
-        if elementName.lower() == 'mode':
-            self.modes.append(self.mode)
-            if self.verbose:
-                self.mode.printSummary()
-            self.mode = None
-        elif self.mode:
-            self.mode.endElement(elementName)
-        else:
-            self.error('End element appears outside of Mode:%s' % elementName)
-            for bunch in self.attrsToList(attrs):
-                self.error('Attribute appears outside of Mode:%s' %bunch.name)
-    #@nonl
-    #@-node:ekr.20050530065723.76:doEndElement
-    #@+node:ekr.20050530071955:getModes
-    def getModes (self):
-        
-        return self.modes
-    #@nonl
-    #@-node:ekr.20050530071955:getModes
-    #@-others
-#@nonl
-#@-node:ekr.20050530065723.58:class contentHandler
-#@+node:ekr.20050530065723.49:class modeClass
-class modeClass:
-    
-    '''A class representing one jEdit language-description mode.
-    
-    Use getters to access the attributes, properties and rules of this mode.'''
-    
-    #@    @+others
-    #@+node:ekr.20050530065723.50: mode.__init__
-    def __init__ (self,contentHandler,fileName):
-    
-        self.contentHandler = contentHandler
-        self.fileName = fileName # The file from which the mode was imported.
-        self.verbose = self.contentHandler.verbose
-    
-        # Mode statistics...
-        self.numberOfAttributes = 0
-        self.numberOfElements = 0
-        self.numberOfErrors = 0
-        self.numberOfPropertyAttributes = 0
-        self.numberOfRuleAttributes = 0
-        
-        # List of boolean attributes.
-        self.boolAttrs = [
-            'at_line_start','at_whitespace_end','at_word_start',
-            'exclude_match','highlight_digits','ignore_case',
-            'no_escape','no_line_break','no_word_break','no_word_sep',]
-    
-        # List of elements that start a rule.
-        self.ruleElements = [
-            'eol_span','eol_span_regexp','import','keywords',
-            'mark_following','mark_previous','seq','seq_regexp',
-            'span','span_regexp','terminate',]
-    
-        if 0: # Not used at present.
-            self.seqSpanElements = [
-                'eol_span','eol_span_regexp','seq','seq_regexp',
-                'span','span_regexp',]
-    
-        # Mode semantics.
-        self.attributes = {}
-        self.inProps = False
-        self.inRules = False
-        self.props = []
-        self.property = None
-        self.rule = None
-        self.rules = []
-        self.rulesAttributes = {}
-    #@nonl
-    #@-node:ekr.20050530065723.50: mode.__init__
-    #@+node:ekr.20050530073825: mode.__str__ & __repr__
-    def __str__ (self):
-        
-        return '<modeClass for %s>' % self.fileName
-        
-    __repr__ = __str__
-    #@nonl
-    #@-node:ekr.20050530073825: mode.__str__ & __repr__
-    #@+node:ekr.20050530081700: Printing...
-    #@+node:ekr.20050530075602:printModeAttributes, printRuleAttributes & printAttributesHelper
-    def printModeAttributes (self):
-        
-        self.printAttributesHelper('mode attributes',self.attributes)
-        
-    def printRuleAttributes (self):
-        
-        self.printAttributesHelper('rule attributes',self.rulesAttributes)
-        
-    def printAttributesHelper (self,kind,attrs):
-        
-        print '%-20s' % (kind),'attrs:',attrs
-    #@nonl
-    #@-node:ekr.20050530075602:printModeAttributes, printRuleAttributes & printAttributesHelper
-    #@+node:ekr.20050530080452:printProperty
-    def printProperty (self,property):
-        
-        # A property is a bunch.
-        d = property.attributes
-        if d:
-            self.printAttributesHelper('property',d)
-    #@nonl
-    #@-node:ekr.20050530080452:printProperty
-    #@+node:ekr.20050530075602.1:printRule
-    def printRule (self,rule):
-        
-        # A rule is a g.Bunch.
-        if rule.name == 'keywords':
-            print '%-20s' % ('rule:keywords'),
-            for key in ('keyword1','keyword2','keyword3','keyword4'):
-                theList = rule.get(key,[])
-                print key,len(theList),
-            print
-        else:
-            d = rule.attributes
-            d2 = rule.get('contents')
-            if d or d2:
-                print '%-20s' % ('rule:'+rule.name),
-                if d and d2: print 'attrs:',d,'chars:',d2
-                elif d:  print 'attrs:',d
-                else:    print 'chars:',d2
-    #@nonl
-    #@-node:ekr.20050530075602.1:printRule
-    #@+node:ekr.20050530065723.56:printSummary
-    def printSummary (self,printStats=True):
-    
-        if printStats:
-            print '-' * 10, 'mode statistics'
-            print 'elements',self.numberOfElements
-            print 'errors',self.numberOfErrors
-            print 'mode attributes',self.numberOfAttributes
-            print 'property attributes',self.numberOfPropertyAttributes
-            print 'rule attributes',self.numberOfRuleAttributes
-    
-        self.printModeAttributes()
-        self.printRuleAttributes()
-        for bunch in self.props:
-            self.printProperty(bunch)
-        for rule in self.rules:
-            self.printRule(rule)
-    #@nonl
-    #@-node:ekr.20050530065723.56:printSummary
-    #@-node:ekr.20050530081700: Printing...
-    #@+node:ekr.20050530065723.51:doAttribute
-    def doAttribute (self,name,val):
-        
-        name = str(name.lower())
-        
-        if name in self.boolAttrs:
-            val = g.choose(val=='True',True,False)
-        else:
-            val = str(val) # Do NOT lower this value!
-    
-        if self.rule:
-            d = self.rule.get('attributes')
-            d [name] = val
-            self.numberOfRuleAttributes += 1
-        elif self.property:
-            d = self.property.get('attributes')
-            d [name] = val
-            self.numberOfPropertyAttributes += 1
-        elif self.inRules:
-            self.rulesAttributes[name] = val
-            self.numberOfAttributes += 1
-        else:
-            self.attributes[name] = val
-            self.numberOfAttributes += 1
-    #@nonl
-    #@-node:ekr.20050530065723.51:doAttribute
-    #@+node:ekr.20050530065723.52:doContent
-    def doContent (self,elementName,content):
-        
-        if not content:
-            return
-        
-        name = str(elementName.lower())
-    
-        if name in ('keyword1','keyword2','keyword3','keyword4'):
-            if self.inRule('keywords'):
-                theList = self.rule.get(name,[])
-                theList.append(content)
-                self.rule[name] = theList
-            else:
-                self.error('%d not in keywords' % name)
-    
-        elif self.rule:
-            d = self.rule.get('contents',{})
-            s = d.get(name,'')
-            d [name] = s + content
-            self.rule['contents'] = d
-    #@nonl
-    #@-node:ekr.20050530065723.52:doContent
-    #@+node:ekr.20050530065723.53:endElement
-    def endElement (self,elementName):
-    
-        name = elementName.lower()
-        
-        if name == 'props':
-            self.inProps = True
-        if name == 'rules':
-            self.inRules = False
-        if name == 'property':
-            if self.property:
-                self.props.append(self.property)
-                self.property = None
-            else:
-                self.error('end %s not matched by start %s' % (name,name))
-        if name in self.ruleElements:
-            if self.inRule(name):
-                self.rules.append(self.rule)
-                self.rule = None
-            else:
-                self.error('end %s not matched by start %s' % (name,name))
-    #@nonl
-    #@-node:ekr.20050530065723.53:endElement
-    #@+node:ekr.20050530065723.54:error
-    def error (self,message):
-        
-        self.numberOfErrors += 1
-    
-        self.contentHandler.error(message)
-    #@nonl
-    #@-node:ekr.20050530065723.54:error
-    #@+node:ekr.20050530074431:getters
-    def getAttributes (self):
-        
-        return self.attributes
-    
-    def getProperties (self):
-        
-        return self.props
-        
-    def getRules (self):
-        
-        return self.rules
-    #@nonl
-    #@-node:ekr.20050530074431:getters
-    #@+node:ekr.20050530065723.55:inRule
-    def inRule (self,elementName):
-    
-        return self.rule and self.rule.get('name') == elementName
-    #@nonl
-    #@-node:ekr.20050530065723.55:inRule
-    #@+node:ekr.20050530065723.57:startElement
-    def startElement (self,elementName):
-    
-        name = elementName.lower()
-        
-        if name == 'props':
-            self.inProps = True
-        if name == 'rules':
-            self.inRules = True
-        if name == 'property':
-            if self.inProps:
-                self.property = g.bunch(name=name,attributes={})
-            else:
-                self.error('property not in props element')
-        if name in self.ruleElements:
-            if self.inRules:
-                self.rule = g.bunch(name=name,attributes={})
-            else:
-                self.error('%s not in rules element' % name)
-    #@nonl
-    #@-node:ekr.20050530065723.57:startElement
-    #@-others
-#@nonl
-#@-node:ekr.20050530065723.49:class modeClass
 #@-others
 #@nonl
 #@-node:ekr.20050529142847:@thin __jEdit_colorizer__.py
