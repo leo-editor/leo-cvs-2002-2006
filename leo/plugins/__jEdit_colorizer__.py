@@ -62,6 +62,7 @@ import leoPlugins
 import os
 import re
 import string
+import threading
 import xml.sax
 import xml.sax.saxutils
 
@@ -1314,6 +1315,8 @@ class colorizer:
             mode0 = self.modes[0]
             mode0.printSummary (printStats=False)
             self.ruleMatchers = self.createRuleMatchers(mode0.rules)
+            self.color_thread = None
+            self.kill_thread = False
     
         self.count = 0 # how many times this has been called.
         self.use_hyperlinks = False # True: use hyperlinks and underline "live" links.
@@ -1814,7 +1817,7 @@ class colorizer:
         
         '''Color the body pane.  All coloring starts here.'''
         
-        g.trace("incremental",self.incremental,p.headString())
+        # g.trace("incremental",self.incremental,p.headString())
         if self.killFlag:
             self.removeAllTags()
             return
@@ -1823,7 +1826,6 @@ class colorizer:
             self.configure_tags()
             g.doHook("init-color-markup",colorer=self,p=self.p,v=self.p)
             if 1:
-                # TEST CODE
                 self.colorAll(s)
             else:
                 self.color_pass = 0
@@ -1857,12 +1859,48 @@ class colorizer:
             return "error" # for unit testing.
     #@nonl
     #@-node:ekr.20050529143413.31:colorizeAnyLanguage
-    #@+node:ekr.20050601042620:colorAll
+    #@+node:ekr.20050601042620:colorAll & interrupt
     def colorAll(self,s):
-        
-        # We have to handle mark_previous and mark_following.
-        i = 0 ; prev = None ; follow = True
+        '''Colorizer all of s.'''
+        # Kill any previous thread.
+        if self.color_thread and self.color_thread.isAlive():
+            # g.trace('killing thread')
+            self.kill_thread = True
+            self.color_thread.join()
+        # These are thread safe: only one method ever changes them.
+        self.thread_s = s
+        self.thread_i = 0
+        self.prev_token = None
+        self.follow_token = None
+        self.thread_count = 0
+        self.kill_thread = False
+        # Run the thread.
+        self.color_thread = threading.Thread(target=self.colorInThread)
+        self.color_thread.setDaemon(True) 
+        self.color_thread.start()
+    
+    def interrupt(self):
+        '''Interrupt the presently running colorizing thread'''
+        self.kill_thread = True
+    #@-node:ekr.20050601042620:colorAll & interrupt
+    #@+node:ekr.20050601105358:colorInThread
+    def colorInThread(self,**keys):
+        s = self.thread_s
+        i = self.thread_i
+        prev = self.prev_token
+        follow = self.follow_token
         while i < len(s):
+            self.thread_count += 1
+            if self.kill_thread:
+                # g.trace('killed')
+                return
+            if self.thread_count % 50 == 0:
+                self.thread_s = s
+                self.thread_i = i
+                self.prev_token = prev
+                self.follow_token = follow
+                self.c.frame.top.after_idle(self.colorInThread)
+                return
             for f,kind,state,token_type in self.ruleMatchers:
                 n = f(self,s,i)
                 if n > 0:
@@ -1885,7 +1923,7 @@ class colorizer:
                 # g.trace('no match')
                 i += 1
     #@nonl
-    #@-node:ekr.20050601042620:colorAll
+    #@-node:ekr.20050601105358:colorInThread
     #@+node:ekr.20050529143413.46:colorizeLine & allies
     def colorizeLine (self,s,state):
     
