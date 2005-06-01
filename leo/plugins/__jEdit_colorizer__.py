@@ -6,7 +6,7 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = '0.4'
+__version__ = '0.5'
 #@<< version history >>
 #@+node:ekr.20050529142916.2:<< version history >>
 #@@killcolor
@@ -20,8 +20,16 @@ __version__ = '0.4'
 # 0.3 EKR:
 #     - Wrote and tested createRuleMatchers.
 # 0.4 EKR:
-#     - Basic syntax coloring now works.  See to-do list.
+#     - Basic syntax coloring now works.
+# 0.5 EKR:
+#     - Giant step forward 1: colorOneChunk and interrupt allow very fast 
+# keyboard response.
+#     - Giant step forward 2: no need for incremental coloring!
+#     - Giant step forward 3: eliminated flashing & eliminated most calls to 
+# removeAllTags.
+#     See to-do list.
 #@-at
+#@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
 #@nl
 #@<< to do >>
@@ -43,13 +51,12 @@ __version__ = '0.4'
 # 
 # - Handle regular expressions: finish match_regexp_helper.
 # 
-# - Handle incremental coloring.
-#     - This involves remembering state information.
-# 
 # - Define tags corresponding to token types.
 #     - At present doColor translates from token types to old tags.
 #     - Eventually we shall want to specify the coloring for new token types 
 # using prefs.
+# 
+# - Make sure pictures get drawn properly.
 #@-at
 #@nonl
 #@-node:ekr.20050601081132:<< to do >>
@@ -1503,6 +1510,8 @@ class colorizer:
         '''An entry point for the colorer called from incremental undo code.
         Colorizes the lines between the leading and trailing lines.'''
         
+        g.trace()
+        
         if self.enabled:
             self.incremental=True
             self.updateSyntaxColorer(p)
@@ -1625,6 +1634,362 @@ class colorizer:
     #@-node:ekr.20050529143413.87:updateSyntaxColorer & helpers
     #@-node:ekr.20050529145203:Entry points & helpers
     #@+node:ekr.20050529150436:Colorizer code
+    #@+node:ekr.20050529143413.31:colorizeAnyLanguage
+    def colorizeAnyLanguage (self,p,leading=None,trailing=None):
+        
+        '''Color the body pane.  All coloring starts here.'''
+        
+        # g.trace("incremental",self.incremental,p.headString())
+        if self.killFlag:
+            # @killcolor is in effect.
+            self.removeAllTags()
+            return
+        try:
+            s,lines,state = self.init_ivars(p)
+            self.configure_tags()
+            g.doHook("init-color-markup",colorer=self,p=self.p,v=self.p)
+            self.colorAll(s)
+            if 0:  ## TO BE REMOVED
+                self.color_pass = 0
+                if self.incremental and (
+                    #@                << all state ivars match >>
+                    #@+node:ekr.20050529143413.35:<< all state ivars match >>
+                    self.flag == self.last_flag and
+                    self.last_language == self.language and
+                    self.comment_string == self.last_comment and
+                    self.markup_string == self.last_markup
+                    #@nonl
+                    #@-node:ekr.20050529143413.35:<< all state ivars match >>
+                    #@afterref
+ ):
+                    self.color_incremental(lines,state,leading,trailing)
+                else: self.color_nonincremental(lines,state)
+                if self.redoColoring: self.recolor_all()
+                #@            << update state ivars >>
+                #@+node:ekr.20050529143413.44:<< update state ivars >>
+                self.last_flag = self.flag
+                self.last_language = self.language
+                self.last_comment = self.comment_string
+                self.last_markup = self.markup_string
+                #@nonl
+                #@-node:ekr.20050529143413.44:<< update state ivars >>
+                #@nl
+            return "ok" # for testing.
+        except Exception:
+            self.last_flag = self.last_language = self.last_comment = 'unknown'
+            g.es_exception()
+            return "error" # for unit testing.
+    #@nonl
+    #@-node:ekr.20050529143413.31:colorizeAnyLanguage
+    #@+node:ekr.20050601042620:colorAll & interrupt
+    def colorAll(self,s):
+        '''Colorize all of s.'''
+        # Init colorOneChunk.
+        self.chunk_s = s
+        self.chunk_i = 0
+        self.prev_token = None
+        self.follow_token = None
+        self.kill_chunk = False
+        self.colorOneChunk()
+    
+    # This is needed, even without threads.
+    def interrupt(self):
+        '''Interrupt colorOneChunk'''
+        self.kill_chunk = True
+    #@nonl
+    #@-node:ekr.20050601042620:colorAll & interrupt
+    #@+node:ekr.20050601105358:colorOneChunk
+    def colorOneChunk(self):
+        '''Colorize a fixed number (50) of tokens.
+        If not done, queue this method again to continue coloring later.'''
+        s,i = self.chunk_s,self.chunk_i
+        prev,follow = self.prev_token,self.follow_token
+        count = 0
+        while i < len(s):
+            count += 1
+            # Exit only after finishing the row.  This reduces flash.
+            if i == 0 or s[i-1] == '\n':
+                if self.kill_chunk: return
+                if count >= 50:
+                    #@                << queue up this method >>
+                    #@+node:ekr.20050601162452.1:<< queue up this method >>
+                    self.chunk_s,self.chunk_i = s,i
+                    self.prev_token,self.follow_token = prev,follow
+                    self.c.frame.top.after_idle(self.colorOneChunk)
+                    #@nonl
+                    #@-node:ekr.20050601162452.1:<< queue up this method >>
+                    #@nl
+                    return
+                #@            << remove all tags from this row >>
+                #@+node:ekr.20050601162452:<< remove all tags from this row >>
+                row,col = g.convertPythonIndexToRowCol(s,i)
+                x1 = '%d.0' % (row+1) ; x2 = '%d.end' % (row+1)
+                
+                for tag in self.tags:
+                    self.body.tag_remove(tag,x1,x2)
+                
+                for tag in self.color_tags_list:
+                    self.body.tag_remove(tag,x1,x2)
+                #@nonl
+                #@-node:ekr.20050601162452:<< remove all tags from this row >>
+                #@nl
+            for f,kind,token_type in self.ruleMatchers:
+                n = f(self,s,i)
+                if n > 0:
+                    self.doRule(s,i,i+n,kind,token_type)
+                    i += n
+                    break
+            else:
+                # g.trace('no match')
+                i += 1
+    #@-node:ekr.20050601105358:colorOneChunk
+    #@+node:ekr.20050529143413.33:configure_tags
+    def configure_tags (self):
+        
+        c = self.c
+    
+        for name in default_colors_dict.keys(): # Python 2.1 support.
+            option_name,default_color = default_colors_dict[name]
+            option_color = c.config.getColor(option_name)
+            color = g.choose(option_color,option_color,default_color)
+            # Must use foreground, not fg.
+            try:
+                self.body.tag_configure(name, foreground=color)
+            except: # Recover after a user error.
+                self.body.tag_configure(name, foreground=default_color)
+        
+        # underline=var doesn't seem to work.
+        if 0: # self.use_hyperlinks: # Use the same coloring, even when hyperlinks are in effect.
+            self.body.tag_configure("link",underline=1) # defined
+            self.body.tag_configure("name",underline=0) # undefined
+        else:
+            self.body.tag_configure("link",underline=0)
+            if self.underline_undefined:
+                self.body.tag_configure("name",underline=1)
+            else:
+                self.body.tag_configure("name",underline=0)
+                
+        # Only create tags for whitespace when showing invisibles.
+        if self.showInvisibles:
+            for name,option_name,default_color in (
+                ("blank","show_invisibles_space_background_color","Gray90"),
+                ("tab",  "show_invisibles_tab_background_color",  "Gray80")):
+                option_color = c.config.getColor(option_name)
+                color = g.choose(option_color,option_color,default_color)
+                try:
+                    self.body.tag_configure(name,background=color)
+                except: # Recover after a user error.
+                    self.body.tag_configure(name,background=default_color)
+            
+        # Colors for latex characters.  Should be user options...
+        
+        if 1: # Alas, the selection doesn't show if a background color is specified.
+            self.body.tag_configure("latexModeBackground",foreground="black")
+            self.body.tag_configure("latexModeKeyword",foreground="blue")
+            self.body.tag_configure("latexBackground",foreground="black")
+            self.body.tag_configure("latexKeyword",foreground="blue")
+        else: # Looks cool, and good for debugging.
+            self.body.tag_configure("latexModeBackground",foreground="black",background="seashell1")
+            self.body.tag_configure("latexModeKeyword",foreground="blue",background="seashell1")
+            self.body.tag_configure("latexBackground",foreground="black",background="white")
+            self.body.tag_configure("latexKeyword",foreground="blue",background="white")
+            
+        # Tags for wiki coloring.
+        if self.showInvisibles:
+            self.body.tag_configure("elide",background="yellow")
+        else:
+            self.body.tag_configure("elide",elide="1")
+        self.body.tag_configure("bold",font=self.bold_font)
+        self.body.tag_configure("italic",font=self.italic_font)
+        self.body.tag_configure("bolditalic",font=self.bolditalic_font)
+        for name in self.color_tags_list:
+            self.body.tag_configure(name,foreground=name)
+    #@nonl
+    #@-node:ekr.20050529143413.33:configure_tags
+    #@+node:ekr.20050601162452.3:doRule
+    def doRule (self,s,i,j,kind,token_type):
+        
+        if kind == 'mark_following':
+            pass
+        
+        elif kind == 'mark_previous':
+            if 0: # This make no sense at all.
+                if prev:
+                    i2,j2,token_type2 = self.prev
+                    g.trace('mark_previous',i2,j2,token_type2)
+                    self.doColor(s,i2,j2,token_type) # Use the type specified in the mark_previous.
+                    self.prev = None
+        else:
+            # g.trace('%3d %2d'%(i,j),state,repr(s[i:i+n]))
+            self.doColor(s,i,j,token_type)
+            self.prev = (i,j,token_type)
+    #@nonl
+    #@-node:ekr.20050601162452.3:doRule
+    #@+node:ekr.20050529143413.32:init_ivars
+    def init_ivars (self,p):
+        
+        c = self.c
+        self.p = p
+    
+        # Add any newly-added user keywords.
+        for d in g.globalDirectiveList:
+            name = '@' + d
+            if name not in leoKeywords:
+                leoKeywords.append(name)
+    
+        # Get the body text, converted to unicode.
+        s = self.body.getAllText()
+        self.sel = sel = self.body.getInsertionPoint()
+        start,end = self.body.convertIndexToRowColumn(sel)
+        
+        # g.trace(self.language)
+        # g.trace(self.count,self.p)
+        # g.trace(body.tag_names())
+        
+        if 0:
+            if not self.incremental:
+                self.removeAllTags()
+                self.removeAllImages()
+        
+        self.redoColoring = False
+        self.redoingColoring = False
+        
+        self.underline_undefined = c.config.getBool("underline_undefined_section_names")
+        self.use_hyperlinks = c.config.getBool("use_hyperlinks")
+        
+        #@    << configure language-specific settings >>
+        #@+node:ekr.20050529143413.34:<< configure language-specific settings >>
+        # Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
+        
+        if self.language == "cweb": # Use C comments, not cweb sentinel comments.
+            delim1,delim2,delim3 = g.set_delims_from_language("c")
+        elif self.comment_string:
+            delim1,delim2,delim3 = g.set_delims_from_string(self.comment_string)
+        elif self.language == "plain":
+            delim1,delim2,delim3 = None,None,None
+        else:
+            delim1,delim2,delim3 = g.set_delims_from_language(self.language)
+        
+        self.single_comment_start = delim1
+        self.block_comment_start = delim2
+        self.block_comment_end = delim3
+        
+        # A strong case can be made for making this code as fast as possible.
+        # Whether this is compatible with general language descriptions remains to be seen.
+        self.case_sensitiveLanguage = self.language not in case_insensitiveLanguages
+        self.has_string = self.language != "plain"
+        if self.language == "plain":
+            self.string_delims = ()
+        elif self.language in ("elisp","html"):
+            self.string_delims = ('"')
+        else:
+            self.string_delims = ("'",'"')
+        self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
+        
+        # The list of languages for which keywords exist.
+        languages = [
+            "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex",
+            "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
+        
+        self.keywords = []
+        if self.language == "cweb":
+            for i in self.c_keywords:
+                self.keywords.append(i)
+            for i in self.cweb_keywords:
+                self.keywords.append(i)
+        else:
+            for name in languages:
+                if self.language==name: 
+                    # g.trace("setting keywords for",name)
+                    self.keywords = getattr(self, name + "_keywords")
+        
+        # For forth.
+        self.nextForthWordIsNew = False
+        
+        if 1: # We color both kinds of references in cweb mode.
+            self.lb = "<<"
+            self.rb = ">>"
+        else:
+            self.lb = g.choose(self.language == "cweb","@<","<<")
+            self.rb = g.choose(self.language == "cweb","@>",">>")
+        #@nonl
+        #@-node:ekr.20050529143413.34:<< configure language-specific settings >>
+        #@nl
+        
+        self.hyperCount = 0 # Number of hypertext tags
+        self.count += 1
+        lines = string.split(s,'\n')
+        
+        # Color plain text unless we are under the control of @nocolor.
+        state = self.setFirstLineState()
+        self.word_chars = string.letters + '_'
+        
+        return s,lines,state
+    #@nonl
+    #@-node:ekr.20050529143413.32:init_ivars
+    #@+node:ekr.20050529143413.42:recolor_all
+    def recolor_all (self):
+    
+        # This code is executed only if graphics characters will be inserted by user markup code.
+        
+        # Pass 1:  Insert all graphics characters.
+        self.removeAllImages()
+        s = self.body.getAllText()
+        lines = s.split('\n')
+        
+        self.color_pass = 1
+        self.line_index = 1
+        state = self.setFirstLineState()
+        for s in lines:
+            state = self.colorizeLine(s,state)
+            self.line_index += 1
+        
+        # Pass 2: Insert one blank for each previously inserted graphic.
+        self.color_pass = 2
+        self.line_index = 1
+        state = self.setFirstLineState()
+        for s in lines:
+            #@        << kludge: insert a blank in s for every image in the line >>
+            #@+node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
+            #@+at 
+            #@nonl
+            # A spectacular kludge.
+            # 
+            # Images take up a real index, yet the get routine does not return 
+            # any character for them!
+            # In order to keep the colorer in synch, we must insert dummy 
+            # blanks in s at the positions corresponding to each image.
+            #@-at
+            #@@c
+            
+            inserted = 0
+            
+            for photo,image,line_index,i in self.image_references:
+                if self.line_index == line_index:
+                    n = i+inserted ; 	inserted += 1
+                    s = s[:n] + ' ' + s[n:]
+            #@-node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
+            #@nl
+            state = self.colorizeLine(s,state)
+            self.line_index += 1
+    #@nonl
+    #@-node:ekr.20050529143413.42:recolor_all
+    #@+node:ekr.20050529143413.91:setFirstLineState
+    def setFirstLineState (self):
+        
+        if self.flag:
+            if self.rootMode:
+                state = g.choose(self.rootMode=="code","normal","doc")
+            else:
+                state = "normal"
+        else:
+            state = "nocolor"
+    
+        return state
+    #@nonl
+    #@-node:ekr.20050529143413.91:setFirstLineState
+    #@-node:ekr.20050529150436:Colorizer code
+    #@+node:ekr.20050601082256:To be removed...
     #@+node:ekr.20050529143413.36:color_incremental
     #@+at  
     #@nonl
@@ -1812,118 +2177,6 @@ class colorizer:
             self.line_index += 1
     #@nonl
     #@-node:ekr.20050529143413.41:color_nonincremental
-    #@+node:ekr.20050529143413.31:colorizeAnyLanguage
-    def colorizeAnyLanguage (self,p,leading=None,trailing=None):
-        
-        '''Color the body pane.  All coloring starts here.'''
-        
-        # g.trace("incremental",self.incremental,p.headString())
-        if self.killFlag:
-            self.removeAllTags()
-            return
-        try:
-            s,lines,state = self.init_ivars(p)
-            self.configure_tags()
-            g.doHook("init-color-markup",colorer=self,p=self.p,v=self.p)
-            if 1:
-                self.colorAll(s)
-            else:
-                self.color_pass = 0
-                if self.incremental and (
-                    #@                << all state ivars match >>
-                    #@+node:ekr.20050529143413.35:<< all state ivars match >>
-                    self.flag == self.last_flag and
-                    self.last_language == self.language and
-                    self.comment_string == self.last_comment and
-                    self.markup_string == self.last_markup
-                    #@nonl
-                    #@-node:ekr.20050529143413.35:<< all state ivars match >>
-                    #@afterref
- ):
-                    self.color_incremental(lines,state,leading,trailing)
-                else: self.color_nonincremental(lines,state)
-                if self.redoColoring: self.recolor_all()
-                #@            << update state ivars >>
-                #@+node:ekr.20050529143413.44:<< update state ivars >>
-                self.last_flag = self.flag
-                self.last_language = self.language
-                self.last_comment = self.comment_string
-                self.last_markup = self.markup_string
-                #@nonl
-                #@-node:ekr.20050529143413.44:<< update state ivars >>
-                #@nl
-            return "ok" # for testing.
-        except Exception:
-            self.last_flag = self.last_language = self.last_comment = 'unknown'
-            g.es_exception()
-            return "error" # for unit testing.
-    #@nonl
-    #@-node:ekr.20050529143413.31:colorizeAnyLanguage
-    #@+node:ekr.20050601042620:colorAll & interrupt
-    def colorAll(self,s):
-        '''Colorizer all of s.'''
-        # Kill any previous thread.
-        if self.color_thread and self.color_thread.isAlive():
-            # g.trace('killing thread')
-            self.kill_thread = True
-            self.color_thread.join()
-        # These are thread safe: only one method ever changes them.
-        self.thread_s = s
-        self.thread_i = 0
-        self.prev_token = None
-        self.follow_token = None
-        self.thread_count = 0
-        self.kill_thread = False
-        # Run the thread.
-        self.color_thread = threading.Thread(target=self.colorInThread)
-        self.color_thread.setDaemon(True) 
-        self.color_thread.start()
-    
-    def interrupt(self):
-        '''Interrupt the presently running colorizing thread'''
-        self.kill_thread = True
-    #@-node:ekr.20050601042620:colorAll & interrupt
-    #@+node:ekr.20050601105358:colorInThread
-    def colorInThread(self,**keys):
-        s = self.thread_s
-        i = self.thread_i
-        prev = self.prev_token
-        follow = self.follow_token
-        while i < len(s):
-            self.thread_count += 1
-            if self.kill_thread:
-                # g.trace('killed')
-                return
-            if self.thread_count % 50 == 0:
-                self.thread_s = s
-                self.thread_i = i
-                self.prev_token = prev
-                self.follow_token = follow
-                self.c.frame.top.after_idle(self.colorInThread)
-                return
-            for f,kind,state,token_type in self.ruleMatchers:
-                n = f(self,s,i)
-                if n > 0:
-                    if kind == 'mark_following':
-                        pass
-                    elif kind == 'mark_previous':
-                        if 0: # This make no sense at all.
-                            if prev:
-                                i2,j2,token_type2 = prev
-                                g.trace('mark_previous',i2,j2,token_type2)
-                                self.doColor(s,i2,j2,token_type) # Use the type specified in the mark_previous.
-                                prev = None
-                    else:
-                        # g.trace('%3d %2d'%(i,n),state,repr(s[i:i+n]))
-                        self.doColor(s,i,i+n,token_type)
-                        prev = (i,i+n,token_type)
-                    i += n
-                    break
-            else:
-                # g.trace('no match')
-                i += 1
-    #@nonl
-    #@-node:ekr.20050601105358:colorInThread
     #@+node:ekr.20050529143413.46:colorizeLine & allies
     def colorizeLine (self,s,state):
     
@@ -1942,233 +2195,6 @@ class colorizer:
         return state
     #@nonl
     #@-node:ekr.20050529143413.46:colorizeLine & allies
-    #@+node:ekr.20050529143413.33:configure_tags
-    def configure_tags (self):
-        
-        c = self.c
-    
-        for name in default_colors_dict.keys(): # Python 2.1 support.
-            option_name,default_color = default_colors_dict[name]
-            option_color = c.config.getColor(option_name)
-            color = g.choose(option_color,option_color,default_color)
-            # Must use foreground, not fg.
-            try:
-                self.body.tag_configure(name, foreground=color)
-            except: # Recover after a user error.
-                self.body.tag_configure(name, foreground=default_color)
-        
-        # underline=var doesn't seem to work.
-        if 0: # self.use_hyperlinks: # Use the same coloring, even when hyperlinks are in effect.
-            self.body.tag_configure("link",underline=1) # defined
-            self.body.tag_configure("name",underline=0) # undefined
-        else:
-            self.body.tag_configure("link",underline=0)
-            if self.underline_undefined:
-                self.body.tag_configure("name",underline=1)
-            else:
-                self.body.tag_configure("name",underline=0)
-                
-        # Only create tags for whitespace when showing invisibles.
-        if self.showInvisibles:
-            for name,option_name,default_color in (
-                ("blank","show_invisibles_space_background_color","Gray90"),
-                ("tab",  "show_invisibles_tab_background_color",  "Gray80")):
-                option_color = c.config.getColor(option_name)
-                color = g.choose(option_color,option_color,default_color)
-                try:
-                    self.body.tag_configure(name,background=color)
-                except: # Recover after a user error.
-                    self.body.tag_configure(name,background=default_color)
-            
-        # Colors for latex characters.  Should be user options...
-        
-        if 1: # Alas, the selection doesn't show if a background color is specified.
-            self.body.tag_configure("latexModeBackground",foreground="black")
-            self.body.tag_configure("latexModeKeyword",foreground="blue")
-            self.body.tag_configure("latexBackground",foreground="black")
-            self.body.tag_configure("latexKeyword",foreground="blue")
-        else: # Looks cool, and good for debugging.
-            self.body.tag_configure("latexModeBackground",foreground="black",background="seashell1")
-            self.body.tag_configure("latexModeKeyword",foreground="blue",background="seashell1")
-            self.body.tag_configure("latexBackground",foreground="black",background="white")
-            self.body.tag_configure("latexKeyword",foreground="blue",background="white")
-            
-        # Tags for wiki coloring.
-        if self.showInvisibles:
-            self.body.tag_configure("elide",background="yellow")
-        else:
-            self.body.tag_configure("elide",elide="1")
-        self.body.tag_configure("bold",font=self.bold_font)
-        self.body.tag_configure("italic",font=self.italic_font)
-        self.body.tag_configure("bolditalic",font=self.bolditalic_font)
-        for name in self.color_tags_list:
-            self.body.tag_configure(name,foreground=name)
-    #@nonl
-    #@-node:ekr.20050529143413.33:configure_tags
-    #@+node:ekr.20050529143413.32:init_ivars
-    def init_ivars (self,p):
-        
-        c = self.c
-        self.p = p
-    
-        # Add any newly-added user keywords.
-        for d in g.globalDirectiveList:
-            name = '@' + d
-            if name not in leoKeywords:
-                leoKeywords.append(name)
-    
-        # Get the body text, converted to unicode.
-        s = self.body.getAllText()
-        self.sel = sel = self.body.getInsertionPoint()
-        start,end = self.body.convertIndexToRowColumn(sel)
-        
-        # g.trace(self.language)
-        # g.trace(self.count,self.p)
-        # g.trace(body.tag_names())
-        
-        if 1: #### not self.incremental:
-            self.removeAllTags()
-            self.removeAllImages()
-        
-        self.redoColoring = False
-        self.redoingColoring = False
-        
-        self.underline_undefined = c.config.getBool("underline_undefined_section_names")
-        self.use_hyperlinks = c.config.getBool("use_hyperlinks")
-        
-        #@    << configure language-specific settings >>
-        #@+node:ekr.20050529143413.34:<< configure language-specific settings >>
-        # Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
-        
-        if self.language == "cweb": # Use C comments, not cweb sentinel comments.
-            delim1,delim2,delim3 = g.set_delims_from_language("c")
-        elif self.comment_string:
-            delim1,delim2,delim3 = g.set_delims_from_string(self.comment_string)
-        elif self.language == "plain":
-            delim1,delim2,delim3 = None,None,None
-        else:
-            delim1,delim2,delim3 = g.set_delims_from_language(self.language)
-        
-        self.single_comment_start = delim1
-        self.block_comment_start = delim2
-        self.block_comment_end = delim3
-        
-        # A strong case can be made for making this code as fast as possible.
-        # Whether this is compatible with general language descriptions remains to be seen.
-        self.case_sensitiveLanguage = self.language not in case_insensitiveLanguages
-        self.has_string = self.language != "plain"
-        if self.language == "plain":
-            self.string_delims = ()
-        elif self.language in ("elisp","html"):
-            self.string_delims = ('"')
-        else:
-            self.string_delims = ("'",'"')
-        self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
-        
-        # The list of languages for which keywords exist.
-        languages = [
-            "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex",
-            "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
-        
-        self.keywords = []
-        if self.language == "cweb":
-            for i in self.c_keywords:
-                self.keywords.append(i)
-            for i in self.cweb_keywords:
-                self.keywords.append(i)
-        else:
-            for name in languages:
-                if self.language==name: 
-                    # g.trace("setting keywords for",name)
-                    self.keywords = getattr(self, name + "_keywords")
-        
-        # For forth.
-        self.nextForthWordIsNew = False
-        
-        if 1: # We color both kinds of references in cweb mode.
-            self.lb = "<<"
-            self.rb = ">>"
-        else:
-            self.lb = g.choose(self.language == "cweb","@<","<<")
-            self.rb = g.choose(self.language == "cweb","@>",">>")
-        #@nonl
-        #@-node:ekr.20050529143413.34:<< configure language-specific settings >>
-        #@nl
-        
-        self.hyperCount = 0 # Number of hypertext tags
-        self.count += 1
-        lines = string.split(s,'\n')
-        
-        # Color plain text unless we are under the control of @nocolor.
-        state = self.setFirstLineState()
-        self.word_chars = string.letters + '_'
-        
-        return s,lines,state
-    #@nonl
-    #@-node:ekr.20050529143413.32:init_ivars
-    #@+node:ekr.20050529143413.42:recolor_all
-    def recolor_all (self):
-    
-        # This code is executed only if graphics characters will be inserted by user markup code.
-        
-        # Pass 1:  Insert all graphics characters.
-        self.removeAllImages()
-        s = self.body.getAllText()
-        lines = s.split('\n')
-        
-        self.color_pass = 1
-        self.line_index = 1
-        state = self.setFirstLineState()
-        for s in lines:
-            state = self.colorizeLine(s,state)
-            self.line_index += 1
-        
-        # Pass 2: Insert one blank for each previously inserted graphic.
-        self.color_pass = 2
-        self.line_index = 1
-        state = self.setFirstLineState()
-        for s in lines:
-            #@        << kludge: insert a blank in s for every image in the line >>
-            #@+node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
-            #@+at 
-            #@nonl
-            # A spectacular kludge.
-            # 
-            # Images take up a real index, yet the get routine does not return 
-            # any character for them!
-            # In order to keep the colorer in synch, we must insert dummy 
-            # blanks in s at the positions corresponding to each image.
-            #@-at
-            #@@c
-            
-            inserted = 0
-            
-            for photo,image,line_index,i in self.image_references:
-                if self.line_index == line_index:
-                    n = i+inserted ; 	inserted += 1
-                    s = s[:n] + ' ' + s[n:]
-            #@-node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
-            #@nl
-            state = self.colorizeLine(s,state)
-            self.line_index += 1
-    #@nonl
-    #@-node:ekr.20050529143413.42:recolor_all
-    #@+node:ekr.20050529143413.91:setFirstLineState
-    def setFirstLineState (self):
-        
-        if self.flag:
-            if self.rootMode:
-                state = g.choose(self.rootMode=="code","normal","doc")
-            else:
-                state = "normal"
-        else:
-            state = "nocolor"
-    
-        return state
-    #@nonl
-    #@-node:ekr.20050529143413.91:setFirstLineState
-    #@-node:ekr.20050529150436:Colorizer code
-    #@+node:ekr.20050601082256:To be removed...
     #@+node:ekr.20050529145355:Language-specific utils: (to be removed)
     #@+node:ekr.20050529143413.85:getCwebWord
     def getCwebWord (self,s,i):
@@ -2910,10 +2936,10 @@ class colorizer:
         
         # print "removeTagsFromLine",self.line_index
         for tag in self.tags:
-            self.body.tag_remove(tag,self.index(0),self.index("end")) # 10/27/03
+            self.body.tag_remove(tag,self.index(0),self.index("end"))
             
         for tag in self.color_tags_list:
-            self.body.tag_remove(tag,self.index(0),self.index("end")) # 10/27/03
+            self.body.tag_remove(tag,self.index(0),self.index("end"))
     #@nonl
     #@-node:ekr.20050529143413.80:removeAllTags & removeTagsFromLines
     #@+node:ekr.20050529143413.90:index & tag
@@ -2981,7 +3007,7 @@ class colorizer:
         # g.trace(s[i:j])
         return s[i:j]
     #@-node:ekr.20050601044345:get_word (new)
-    #@+node:ekr.20050601065451:doColor (new)
+    #@+node:ekr.20050601065451:doColor
     def doColor(self,s,i,j,token_type):
     
         d = {
@@ -2995,15 +3021,15 @@ class colorizer:
         }
         
         tag = d.get(token_type)
+    
         if tag:
             row,col = g.convertPythonIndexToRowCol(s,i)
             x1 = '%d.%d' % (row+1,col)
             row,col = g.convertPythonIndexToRowCol(s,j)
             x2 = '%d.%d' % (row+1,col)
-            # g.trace(name,i,j,x1,x2)
             self.body.tag_add(tag,x1,x2)
     #@nonl
-    #@-node:ekr.20050601065451:doColor (new)
+    #@-node:ekr.20050601065451:doColor
     #@-node:ekr.20050529143413.89:Utils
     #@+node:ekr.20050530065723.47:parse_jEdit_file
     def parse_jEdit_file(self,fileName,verbose=False):
@@ -3088,9 +3114,8 @@ class colorizer:
                 return 0
     
         # g.trace('%-25s'%(name+':'+token_type),at_line_start,at_ws_end,at_word_start,repr(seq),repr(begin),repr(end))
-        
-        state = 'rule %2d %-14s %9s' % (ruleNumber,name,token_type)
-        return f,name,state,token_type
+        # state = 'rule %2d %-14s %9s' % (ruleNumber,name,token_type)
+        return f,name,token_type
     #@nonl
     #@-node:ekr.20050530112849.1:createRuleMatcher
     #@+node:ekr.20050529190857:match_keywords
