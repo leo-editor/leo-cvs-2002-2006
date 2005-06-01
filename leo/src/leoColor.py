@@ -714,6 +714,7 @@ class baseColorizer:
     #@nonl
     #@-node:ekr.20031218072017.371:<< define colorizer keywords >> colorizer
     #@nl
+    def interrupt(self): pass
     #@    @+others
     #@+node:ekr.20031218072017.1605:color.__init__
     def __init__(self,c):
