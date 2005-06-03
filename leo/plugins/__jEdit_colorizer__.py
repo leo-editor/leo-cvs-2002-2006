@@ -6,7 +6,7 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = '0.6'
+__version__ = '0.7'
 #@<< version history >>
 #@+node:ekr.20050529142916.2:<< version history >>
 #@@killcolor
@@ -35,6 +35,11 @@ __version__ = '0.6'
 #     - Most (all?) Python now is colored properly.
 #     - Discovered a performance bug: it can take a long time on big text for 
 # the cursor to appear.
+# 0.7 EKR:
+#     - Colorized start of @doc sections properly.
+#     - Fixed bug involving at_line_start: must test i == 0 OR s[i-1] == '\n'.
+#     - Added rules for @color and @nocolor.
+#     - Added more entries to to-do list for Leo special cases.
 #@-at
 #@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
@@ -44,7 +49,27 @@ __version__ = '0.6'
 #@@nocolor
 #@+at
 # 
-# - Colorizer start of @doc sections properly.
+# - Support Show Invisibles.
+#     Conditionally add rule for whitespace.
+# 
+# - Support self.use_hyperlinks and self.underline_undefined.
+#     - Add code to sectionRefColorHelper.
+# 
+# - Support self.comment_string.
+#     Conditionally add rules for comment ivars:
+#         single_comment_start,block_comment_start,block_comment_end
+# 
+# - Make cweb section references are handled correctly.
+# 
+# - Handle logic of setFirstLineState.
+#     - Change match_doc_part: Start in doc mode for some @root's.
+# 
+# - Make sure content handler doesn't barf on dtd line.
+#     - Are exceptions in content handler being reported properly??
+# 
+# - Make sure pictures get drawn properly.
+# 
+# - Put keywords list in mode bunch.
 # 
 # - ?? Fix performance bug: it can take a long time on big text for the cursor 
 # to appear.
@@ -54,19 +79,10 @@ __version__ = '0.6'
 # 
 # - Handle regular expressions: finish match_regexp_helper.
 # 
-# - Define tags corresponding to token types.
+# - Define tags corresponding to jEdit token types.
 #     - At present doColor translates from token types to old tags.
 #     - Eventually we shall want to specify the coloring for new token types 
 # using prefs.
-# 
-# - Support Leo-specific settings:
-#     self.comment_string = None # Set by scanColorDirectives on @comment
-#     self.showInvisibles = False # True: show "invisible" characters.
-#     self.underline_undefined = 
-# c.config.getBool("underline_undefined_section_names")
-#     self.use_hyperlinks = c.config.getBool("use_hyperlinks")
-# 
-# - Make sure pictures get drawn properly.
 # 
 # - Remove calls to recolor_range from Leo's core.
 # - Remove incremental keywords from entry points.
@@ -701,19 +717,15 @@ class colorizer:
         # State ivars...
         self.color_pass = 0
         self.comment_string = None # Can be set by @comment directive.
-        self.enabled = True
+        self.enabled = True # Set to False by unit tests.
+        self.flag = True # True unless in range of @nocolor
+        self.keywordNumber = 0 # The kind of keyword for keywordsColorHelper.
         self.kill_chunk = False
         self.language = 'python' # set by scanColorDirectives.
         self.last_language = None
         self.redoColoring = False # May be set by plugins.
         self.redoingColoring = False
         # Data...
-        # self.keywords0 = []
-        # self.keywords1 = []
-        # self.keywords2 = []
-        # self.keywords3 = []
-        # self.keywords4 = []
-        # self.keywords = [leoKeywords,self.keywords1,self.keywords2,self.keywords3,self.keywords4]
         self.keywords = [] # A list of 5 lists.
         self.modes = {} # Keys are languages, values are bunches with mode and ruleMatchers attributes.
         self.mode = None # The mode object for the present language.
@@ -1306,26 +1318,52 @@ class colorizer:
     #@-node:ekr.20050529143413.42:recolor_all
     #@+node:ekr.20050601065451:doColor & helpers
     def doColor(self,s,i,j,token_type):
-        
+    
         helpers = {
             'doc_part':self.docPartColorHelper,
             'section_ref':self.sectionRefColorHelper,
             'keywords':self.keywordsColorHelper,
+            '@color':self.atColorColorHelper,
+            '@nocolor':self.atNocolorColorHelper,
         }
         
         # g.trace(token_type)
         
-        helper = helpers.get(token_type,self.defaultColorHelper)
-        helper(token_type,s,i,j)
+        # not in range of @nocolor.
+        if self.flag:
+            helper = helpers.get(token_type,self.defaultColorHelper)
+            helper(token_type,s,i,j)
     #@nonl
+    #@+node:ekr.20050603051440:atColorColorHelper & atNocolorColorHelper
+    def atColorColorHelper (self,token_type,s,i,j):
+        
+        # Enable coloring.
+        self.flag = True
+    
+        # Color the Leo keyword.
+        self.keywordNumber = 0
+        self.keywordsColorHelper(token_type,s,i,j)
+        
+    def atNocolorColorHelper (self,token_type,s,i,j):
+        
+        if self.flag:
+            # Color the Leo keyword.
+            self.keywordNumber = 0
+            self.keywordsColorHelper(token_type,s,i,j)
+        
+        # Disable coloring until next @color
+        self.flag = False
+    #@nonl
+    #@-node:ekr.20050603051440:atColorColorHelper & atNocolorColorHelper
     #@+node:ekr.20050602205810:docPartColorHelper
     def docPartColorHelper (self,token_type,s,i,j):
+        
+        i2 = g.choose(s[i:i+3] == '@doc',i+3,i+1)
+        j2 = g.choose(s[j-2:j] == '@c',j-2,j)
     
-        if s[j-2:j] == '@c':
-            self.colorRangeWithTag(s,i,j-2,'docPart')
-            self.colorRangeWithTag(s,j-2,j,'leoKeyword')
-        else:
-            self.colorRangeWithTag(s,i,j,'docPart')
+        self.colorRangeWithTag(s,i,i2,'leoKeyword')
+        self.colorRangeWithTag(s,i2,j2,'docPart')
+        self.colorRangeWithTag(s,j2,j,'leoKeyword')
     #@nonl
     #@-node:ekr.20050602205810:docPartColorHelper
     #@+node:ekr.20050602205810.1:sectionRefColorHelper
@@ -1448,6 +1486,8 @@ class colorizer:
     def createRuleMatchers (self,rules):
         
         matchers = [
+            self.createAtColorMatcher(),
+            self.createAtNocolorMatcher(),
             self.createDocPartMatcher(),
             self.createSectionRefMatcher()
         ]
@@ -1519,6 +1559,52 @@ class colorizer:
         return f,name,token_type
     #@nonl
     #@-node:ekr.20050602204708:createDocPartMatcher & createSectionRefMatcher
+    #@+node:ekr.20050603043840:createAtColorMatcher & createAtNocolorMatcher
+    def createAtColorMatcher (self):
+        
+        def f(self,s,i):
+            return self.match_at_color(s,i)
+    
+        name = token_type = '@color'
+        return f,name,token_type
+    
+    def createAtNocolorMatcher (self):
+        
+        def f(self,s,i):
+            return self.match_at_nocolor(s,i)
+    
+        name = token_type = '@nocolor'
+        return f,name,token_type
+    #@nonl
+    #@-node:ekr.20050603043840:createAtColorMatcher & createAtNocolorMatcher
+    #@+node:ekr.20050603043840.1:match_at_color
+    def match_at_color (self,s,i):
+    
+        seq = '@color'
+        
+        if i != 0 and s[i-1] != '\n': return 0
+    
+        if g.match(s,i,seq):
+            self.flag = True # Enable coloring now so @color itself gets colored.
+            return len(seq)
+        else:
+            return 0
+    #@-node:ekr.20050603043840.1:match_at_color
+    #@+node:ekr.20050603043840.2:match_at_nocolor
+    def match_at_nocolor (self,s,i):
+        
+        seq = '@nocolor'
+        
+        if i != 0 and s[i-1] != '\n':
+            return 0
+    
+        if g.match(s,i,seq):
+            self.keywordNumber = 0
+            return len(seq)
+        else:
+            return 0
+    #@nonl
+    #@-node:ekr.20050603043840.2:match_at_nocolor
     #@+node:ekr.20050529190857:match_keywords
     # Keywords only match whole words.
     # Words are runs of text separated by non-alphanumeric characters.
@@ -1568,7 +1654,7 @@ class colorizer:
         'at_ws_end':        True: sequence must be first non-whitespace text of the line.
         'at_word_start':    True: sequence must start a word.'''
     
-        if at_line_start and i != 0: return 0
+        if at_line_start and i != 0 and s[i-1] != '\n': return 0
         if at_ws_end and i != g.skip_ws(s,0): return 0
         if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
     
@@ -1589,7 +1675,7 @@ class colorizer:
         'at_word_start':    True: sequence must start a word.
         'hash_char':        The first character of the regexp (for speed).'''
     
-        if at_line_start and i != 0: return 0
+        if at_line_start and i != 0 and s[i-1] != '\n': return 0
         if at_ws_end and i != g.skip_ws(s,0): return 0
         if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
         
@@ -1614,7 +1700,7 @@ class colorizer:
         'at_ws_end':        True: sequence must be first non-whitespace text of the line.
         'at_word_start':    True: sequence must start a word.'''
     
-        if at_line_start and i != 0: return 0
+        if at_line_start and i != 0 and s[i-1] != '\n': return 0
         if at_ws_end and i != g.skip_ws(s,0): return 0
         if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
     
@@ -1672,7 +1758,7 @@ class colorizer:
         'at_word_start':    True: sequence must start a word.
         'hash_char':        The first character of the regexp (for speed).'''
     
-        if at_line_start and i != 0: return 0
+        if at_line_start and i != 0 and s[i-1] != '\n': return 0
         if at_ws_end and i != g.skip_ws(s,0): return 0
         if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
         
@@ -1692,7 +1778,7 @@ class colorizer:
         'at_ws_end':        True: sequence must be first non-whitespace text of the line.
         'at_word_start':    True: sequence must start a word.'''
         
-        if at_line_start and i != 0: return 0
+        if at_line_start and i != 0 and s[i-1] != '\n': return 0
         if at_ws_end and i != g.skip_ws(s,0): return 0
         if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
     
@@ -1716,7 +1802,7 @@ class colorizer:
         'at_word_start':    True: sequence must start a word.
         'hash_char':        The first character of the regexp (for speed).'''
         
-        if at_line_start and i != 0: return 0
+        if at_line_start and i != 0 and s[i-1] != '\n': return 0
         if at_ws_end and i != g.skip_ws(s,0): return 0
         if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
         
