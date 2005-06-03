@@ -42,6 +42,8 @@ __version__ = '0.8'
 #     - Added more entries to to-do list for Leo special cases.
 # 0.8 EKR
 #     - Use a single dict for all keywords--an important speedup.
+#     - Call init_keywords exactly once per mode.
+#     - Defined tags for jEdit types.
 #@-at
 #@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
@@ -50,6 +52,10 @@ __version__ = '0.8'
 #@+node:ekr.20050601081132:<< to do >>
 #@@nocolor
 #@+at
+# 
+# - Finish all rules:
+#     - mark_previous and mark_following.
+#     - match_regexp_helper.
 # 
 # - Support NO_WORD_SEP, IGNORE_CASE and DEFAULT attributes in rules element.
 #     - Later: support DIGIT_RE and HIGHLIGHT_DIGITS attributes in rules 
@@ -80,23 +86,12 @@ __version__ = '0.8'
 # 
 # - Make sure pictures get drawn properly.
 # 
-# - Save keywords list in mode data.
-# 
-# - ?? Fix performance bug: it can take a long time on big text for the cursor 
-# to appear.
-# 
-# - Figure out how to do mark_previous and mark_following.
-#     - In particular, what are the previous and following token??
-# 
-# - Handle regular expressions: finish match_regexp_helper.
-# 
-# - Define tags corresponding to jEdit token types (COMMENT1,COMMENT2, etc.)
-#     - At present doColor translates from token types to old tags.
-#     - Eventually we shall want to specify the coloring for new token types 
-# using prefs.
+# - Fix performance bug: it can take a long time on big text for the cursor to 
+# appear.
 # 
 # - Remove calls to recolor_range from Leo's core.
-# - Remove incremental keywords from entry points.
+# 
+# - Remove incremental keywords from entry points?
 #@-at
 #@nonl
 #@-node:ekr.20050601081132:<< to do >>
@@ -142,18 +137,37 @@ leoKeywords = [
 # These defaults are sure to exist.
 
 default_colors_dict = {
-    # tag name      :(     option name,           default color),
-    "comment"       :("comment_color",               "red"),
-    "cwebName"      :("cweb_section_name_color",     "red"),
-    "pp"             :("directive_color",             "blue"),
-    "docPart"        :("doc_part_color",              "red"),
-    "keyword"        :("keyword_color",               "blue"),
-    "leoKeyword"     :("leo_keyword_color",           "blue"),
-    "link"           :("section_name_color",          "red"),
-    "nameBrackets"   :("section_name_brackets_color", "blue"),
-    "string"         :("string_color",                "#00aa00"), # Used by IDLE.
-    "name"           :("undefined_section_name_color","red"),
-    "latexBackground":("latex_background_color","white") }
+    # tag name       :(     option name,           default color),
+    'comment'        :('comment_color',               'red'),
+    'cwebName'       :('cweb_section_name_color',     'red'),
+    'pp'             :('directive_color',             'blue'),
+    'docPart'        :('doc_part_color',              'red'),
+    'keyword'        :('keyword_color',               'blue'),
+    'leoKeyword'     :('leo_keyword_color',           'blue'),
+    'link'           :('section_name_color',          'red'),
+    'nameBrackets'   :('section_name_brackets_color', 'blue'),
+    'string'         :('string_color',                '#00aa00'), # Used by IDLE.
+    'name'           :('undefined_section_name_color','red'),
+    'latexBackground':('latex_background_color','white'),
+    
+    # jEdit tags.
+    'comment1'  :('comment1_color', 'red'),
+    'comment2'  :('comment2_color', 'red'),
+    'comment3'  :('comment3_color', 'red'),
+    'comment4'  :('comment4_color', 'red'),
+    'function'  :('function_color', 'black'),
+    'keyword1'  :('keyword1_color', 'blue'),
+    'keyword2'  :('keyword2_color', 'blue'),
+    'keyword3'  :('keyword3_color', 'blue'),
+    'keyword4'  :('keyword4_color', 'blue'),
+    'label'     :('label_color',    'black'),
+    'literal1'  :('keyword1_color', 'black'),
+    'literal2'  :('keyword2_color', 'black'),
+    'literal3'  :('keyword3_color', 'black'),
+    'literal4'  :('keyword4_color', 'black'),
+    'markup'    :('markup_color',   'black'),
+    'operator'  :('operator_color', 'black'),
+    }
 #@nonl
 #@-node:ekr.20050529143413.1:<< define default_colors_dict >>
 #@nl
@@ -733,7 +747,6 @@ class colorizer:
         self.keywordNumber = 0 # The kind of keyword for keywordsColorHelper.
         self.kill_chunk = False
         self.language = 'python' # set by scanColorDirectives.
-        self.last_language = None
         self.redoColoring = False # May be set by plugins.
         self.redoingColoring = False
         # Data...
@@ -747,7 +760,7 @@ class colorizer:
             "latexBackground","latexKeyword",
             "link","name","nameBrackets","pp","string","tab",
             "elide","bold","bolditalic","italic") # new for wiki styling.
-        self.word_chars = string.letters # May be extended by init_keywords().
+        self.word_chars = {} # Inited by init_keywords().
         self.setFontFromConfig()
         self.defineAndExtendForthWords()
     #@nonl
@@ -881,45 +894,42 @@ class colorizer:
     #@+node:ekr.20050602152743:init_keywords
     def init_keywords (self):
         
-        '''Initialize the keywords for the present language/mode.
+        '''Initialize the keywords for the present language.
         
-        Also extend self.word_chars by any characters appearing in a keyword'''
-        
-        if self.last_language and self.language == self.last_language:
-            return
-        self.last_language = self.language
-        
+         Set word_chars to all non-alpha characters appearing in any keyword'''
+    
         g.trace(self.language)
-        
         # Add any new user keywords to leoKeywords.
         for d in g.globalDirectiveList:
             name = '@' + d
             if name not in leoKeywords:
                 leoKeywords.append(name)
         # Create a single keywords dict.
-        self.keywords = {}
+        keywords = {}
         for key in leoKeywords:
-            self.keywords[key] = 0
+            keywords[key] = 0
         if self.mode:
             for i in (1,2,3,4):
                 keys = self.mode.getKeywords(i)
                 for key in keys:
-                    if self.keywords.get(key):
+                    if keywords.get(key):
                         print 'keyword %s defined in multiple places' % key
-                    self.keywords[key] = i
-        # Extend word characters.    
-        word_chars_dict = {}
+                    keywords[key] = i
+        # Create the word_chars list. 
+        word_chars = {}
         for ch in string.letters:
-            word_chars_dict[ch] = None
-        for keywords in self.keywords:
-            for word in keywords:
+            word_chars[ch] = None
+        for keys in keywords.keys():
+            for word in keys:
                 for ch in word:
-                    word_chars_dict[ch] = None
-        self.word_chars = word_chars_dict.keys()
-        self.extra_word_chars = []
-        for ch in self.word_chars:
-            if ch not in string.letters and ch not in self.extra_word_chars:
-                self.extra_word_chars.append(ch)
+                    word_chars[ch] = None
+        if 0: # Testing.
+            extra_word_chars = {}
+            for ch in word_chars:
+                if ch not in string.letters and ch not in extra_word_chars:
+                    extra_word_chars[ch] = None
+                
+        return keywords,word_chars
     #@nonl
     #@-node:ekr.20050602152743:init_keywords
     #@+node:ekr.20050602150619:init_mode
@@ -929,6 +939,8 @@ class colorizer:
         if bunch:
             self.mode = bunch.mode
             self.ruleMatchers = bunch.ruleMatchers
+            self.keywords = bunch.keywords
+            self.word_chars = bunch.word_chars
         else:
             g.trace(self.language)
             modeList = self.parse_jEdit_file(self.language)
@@ -937,11 +949,13 @@ class colorizer:
                 for mode in modeList:
                     if self.language not in self.modes:
                         # mode.printSummary (printStats=False)
-                        ruleMatchers = self.createRuleMatchers(mode.rules)
-                        if not self.ruleMatchers:
-                            self.mode = mode
-                            self.ruleMatchers = ruleMatchers
-                        self.modes[self.language] = g.bunch(mode=mode,ruleMatchers=ruleMatchers)
+                        self.ruleMatchers = self.createRuleMatchers(mode.rules)
+                        self.mode = mode
+                        self.keywords,self.word_chars = self.init_keywords()
+                        self.modes[self.language] = g.bunch(mode=mode,
+                            ruleMatchers=self.ruleMatchers,
+                            keywords=self.keywords,
+                            word_chars=self.word_chars)
             else:
                 if self.language:
                     g.trace('No language description for %s' % self.language)
@@ -1196,7 +1210,6 @@ class colorizer:
             self.p = p
             self.redoColoring = False
             self.redoingColoring = False
-            self.init_keywords()
             if 0: # not self.incremental:
                 self.removeAllTags()
                 self.removeAllImages()
@@ -1396,7 +1409,7 @@ class colorizer:
     #@+node:ekr.20050602205810.2:keywordsColorHelper
     def keywordsColorHelper (self,token_type,s,i,j):
         
-        theList = ('leoKeyword','keyword','keyword','keyword','keyword',)
+        theList = ('leoKeyword','keyword1','keyword2','keyword3','keyword4',)
     
         tag = theList[self.keywordNumber]
     
