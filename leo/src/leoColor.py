@@ -53,7 +53,7 @@ default_colors_dict = {
 #@nl
 #@<< define global colorizer data >>
 #@+node:EKR.20040623090054:<< define global colorizer data >>
-case_insensitiveLanguages = []
+case_insensitiveLanguages = ['plsql',]
 #@nonl
 #@-node:EKR.20040623090054:<< define global colorizer data >>
 #@nl
