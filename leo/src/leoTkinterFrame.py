@@ -84,6 +84,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         #@nonl
         #@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
         #@nl
+    #@nonl
     #@-node:ekr.20031218072017.1801:__init__ (tkFrame)
     #@+node:ekr.20031218072017.3942:__repr__ (tkFrame)
     def __repr__ (self):
@@ -113,6 +114,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         gui.attachLeoIcon(top)
         top.title(frame.title)
         top.minsize(30,10) # In grid units.
+        
+        if g.os_path_exists(g.app.user_xresources_path):
+            frame.top.option_readfile(g.app.user_xresources_path)
         
         frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
         frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
