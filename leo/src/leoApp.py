@@ -71,6 +71,7 @@ class LeoApp:
         self.unitTestDict = {} # For communication between unit tests and code.
         self.unitTesting = False # True if unit testing.
         self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
+        self.user_xresources_path = None # Resource file for Tk/tcl.
         self.wantedCommander = None # Used by leoTkinterFrame logic to manage calls to g.app.gui.set_focus.
         self.windowList = [] # Global list of all frames.  Does not include hidden root window.
     
