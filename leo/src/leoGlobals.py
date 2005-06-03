@@ -218,6 +218,8 @@ def computeStandardDirectories():
     
     g.app.testDir = g.os_path_abspath(
         g.os_path_join(g.app.loadDir,'..','test'))
+        
+    g.app.user_xresources_path = g.os_path_join(g.app.homeDir,'.leo_xresources')
 #@nonl
 #@-node:ekr.20050328133444:computeStandardDirectories
 #@+node:ekr.20041117151301.1:startupEncoding
