@@ -6,7 +6,7 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = '0.7'
+__version__ = '0.8'
 #@<< version history >>
 #@+node:ekr.20050529142916.2:<< version history >>
 #@@killcolor
@@ -40,6 +40,8 @@ __version__ = '0.7'
 #     - Fixed bug involving at_line_start: must test i == 0 OR s[i-1] == '\n'.
 #     - Added rules for @color and @nocolor.
 #     - Added more entries to to-do list for Leo special cases.
+# 0.8 EKR
+#     - Use a single dict for all keywords--an important speedup.
 #@-at
 #@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
@@ -53,15 +55,20 @@ __version__ = '0.7'
 #     - Later: support DIGIT_RE and HIGHLIGHT_DIGITS attributes in rules 
 # element.
 # 
+# - Support comment properties and self.comment_string:
+#     - Conditionally add rules for comment ivars: 
+# single_comment_start,block_comment_start,block_comment_end
+#     - commentEnd - the comment end string, used by the Range Comment 
+# command.
+#     - commentStart - the comment start string, used by the Range Comment 
+# command.
+#     - lineComment - the line comm
+# 
 # - Support Show Invisibles.
 #     Conditionally add rule for whitespace.
 # 
 # - Support self.use_hyperlinks and self.underline_undefined.
 #     - Add code to sectionRefColorHelper.
-# 
-# - Support self.comment_string.
-#     Conditionally add rules for comment ivars:
-#         single_comment_start,block_comment_start,block_comment_end
 # 
 # - Make cweb section references are handled correctly.
 # 
@@ -73,7 +80,7 @@ __version__ = '0.7'
 # 
 # - Make sure pictures get drawn properly.
 # 
-# - Put keywords list in mode bunch.
+# - Save keywords list in mode data.
 # 
 # - ?? Fix performance bug: it can take a long time on big text for the cursor 
 # to appear.
@@ -83,7 +90,7 @@ __version__ = '0.7'
 # 
 # - Handle regular expressions: finish match_regexp_helper.
 # 
-# - Define tags corresponding to jEdit token types.
+# - Define tags corresponding to jEdit token types (COMMENT1,COMMENT2, etc.)
 #     - At present doColor translates from token types to old tags.
 #     - Eventually we shall want to specify the coloring for new token types 
 # using prefs.
@@ -730,7 +737,7 @@ class colorizer:
         self.redoColoring = False # May be set by plugins.
         self.redoingColoring = False
         # Data...
-        self.keywords = [] # A list of 5 lists.
+        self.keywords = {} # Keys are keywords, values are 0..5.
         self.modes = {} # Keys are languages, values are bunches with mode and ruleMatchers attributes.
         self.mode = None # The mode object for the present language.
         self.prev_mode = None
@@ -889,13 +896,17 @@ class colorizer:
             name = '@' + d
             if name not in leoKeywords:
                 leoKeywords.append(name)
-        # Set extra keywords.
-        self.keywords = [leoKeywords] # Must reinit this each time.
-        for i in (1,2,3,4):
-            if self.mode: keywords = self.mode.getKeywords(i)
-            else: keywords = []
-            self.keywords.append(keywords)
-            # g.trace(i,len(keywords))
+        # Create a single keywords dict.
+        self.keywords = {}
+        for key in leoKeywords:
+            self.keywords[key] = 0
+        if self.mode:
+            for i in (1,2,3,4):
+                keys = self.mode.getKeywords(i)
+                for key in keys:
+                    if self.keywords.get(key):
+                        print 'keyword %s defined in multiple places' % key
+                    self.keywords[key] = i
         # Extend word characters.    
         word_chars_dict = {}
         for ch in string.letters:
@@ -1610,9 +1621,7 @@ class colorizer:
     #@nonl
     #@-node:ekr.20050603043840.2:match_at_nocolor
     #@+node:ekr.20050529190857:match_keywords
-    # Keywords only match whole words.
-    # Words are runs of text separated by non-alphanumeric characters.
-    
+    # This is a time-critical method.
     def match_keywords (self,s,i):
         
         '''Return the length of the keyword if present position matches any keyword.
@@ -1623,19 +1632,16 @@ class colorizer:
             return 0
             
         # Get the word as quickly as possible.
-        n = len(s) ; w = self.word_chars
-        j = i
+        j = i ; n = len(s) ; w = self.word_chars
         while j < n and s[j] in w:
             j += 1
-        word = s[i:j]
-        n = 0
-        for keywords in self.keywords:
-            if word and word in keywords:
-                self.keywordNumber = n
-                # g.trace(n,word)
-                return len(word)
-            n += 1
-        return 0
+       
+        k = self.keywords.get(s[i:j],-1)
+        if k > -1:
+            self.keywordNumber = k
+            return j-i
+        else:
+            return 0
     #@nonl
     #@-node:ekr.20050529190857:match_keywords
     #@+node:ekr.20050529182335:match_regexp_helper (TO DO)
