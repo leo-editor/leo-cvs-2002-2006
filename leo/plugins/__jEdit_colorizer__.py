@@ -44,6 +44,10 @@ __version__ = '0.8'
 #     - Use a single dict for all keywords--an important speedup.
 #     - Call init_keywords exactly once per mode.
 #     - Defined tags for jEdit types.
+#     - Fixed bug in exception handling in parse_jEdit_file: exceptions now 
+# reported properly.
+#     - Turned off inclusion of external general entities so dtd line gets 
+# ignored.
 #@-at
 #@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
@@ -53,6 +57,8 @@ __version__ = '0.8'
 #@@nocolor
 #@+at
 # 
+# - Eliminate line flash.  This is driving me crazy.
+# 
 # - Finish all rules:
 #     - mark_previous and mark_following.
 #     - match_regexp_helper.
@@ -61,6 +67,12 @@ __version__ = '0.8'
 #     - Later: support DIGIT_RE and HIGHLIGHT_DIGITS attributes in rules 
 # element.
 # 
+#@-at
+#@@c
+
+#@<< later >>
+#@+node:ekr.20050603121815:<< later >>
+#@+at
 # - Support comment properties and self.comment_string:
 #     - Conditionally add rules for comment ivars: 
 # single_comment_start,block_comment_start,block_comment_end
@@ -76,13 +88,10 @@ __version__ = '0.8'
 # - Support self.use_hyperlinks and self.underline_undefined.
 #     - Add code to sectionRefColorHelper.
 # 
-# - Make cweb section references are handled correctly.
+# - Handle cweb section references correctly.
 # 
 # - Handle logic of setFirstLineState.
 #     - Change match_doc_part: Start in doc mode for some @root's.
-# 
-# - Make sure content handler doesn't barf on dtd line.
-#     - Are exceptions in content handler being reported properly??
 # 
 # - Make sure pictures get drawn properly.
 # 
@@ -93,6 +102,9 @@ __version__ = '0.8'
 # 
 # - Remove incremental keywords from entry points?
 #@-at
+#@nonl
+#@-node:ekr.20050603121815:<< later >>
+#@nl
 #@nonl
 #@-node:ekr.20050601081132:<< to do >>
 #@nl
@@ -190,7 +202,7 @@ def onStart1 (tag, keywords):
     leoColor.colorizer = colorizer
 #@nonl
 #@-node:ekr.20050529142916.5:onStart1
-#@+node:ekr.20050530065723.58:class contentHandler
+#@+node:ekr.20050530065723.58:class contentHandler (xml.sax.saxutils.XMLGenerator)
 class contentHandler (xml.sax.saxutils.XMLGenerator):
     
     '''A sax content handler class that handles jEdit language-description files.
@@ -451,14 +463,12 @@ class contentHandler (xml.sax.saxutils.XMLGenerator):
     #@+node:ekr.20050530071955:getModes
     def getModes (self):
         
-        g.trace(self.modes)
-        
         return self.modes
     #@nonl
     #@-node:ekr.20050530071955:getModes
     #@-others
 #@nonl
-#@-node:ekr.20050530065723.58:class contentHandler
+#@-node:ekr.20050530065723.58:class contentHandler (xml.sax.saxutils.XMLGenerator)
 #@+node:ekr.20050530065723.49:class modeClass
 class modeClass:
     
@@ -985,13 +995,16 @@ class colorizer:
             try:
                 modes = None
                 parser = xml.sax.make_parser()
+                # Do not include external general entities.
+                # The actual feature name is "http://xml.org/sax/features/external-general-entities"
+                parser.setFeature(xml.sax.handler.feature_external_ges,0)
                 handler = contentHandler(self.c,fileName,verbose=verbose)
                 parser.setContentHandler(handler)
                 parser.parse(f)
                 if verbose: handler.printSummary()
                 modes = handler.getModes()
-            except Exception:
-                g.es('unexpected exception parsing %s' % (languageName),color='red')
+            except:
+                g.es('unexpected exception parsing %s' % (fileName),color='red')
                 g.es_exception()
                 return None
         finally:
