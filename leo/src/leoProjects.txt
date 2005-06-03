@@ -293,6 +293,7 @@ def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText
     if not oldSel:
         oldSel = c.frame.body.getTextSelection()
 
+    self.c.frame.body.colorizer.interrupt()
     self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
 #@nonl
 #@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
@@ -316,6 +317,7 @@ def onBodyKey (self,event):
         self.handleStatusLineKey(event)
         
     # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
+    self.c.frame.body.colorizer.interrupt()
     self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
 #@nonl
 #@+node:ekr.20040105223536:handleStatusLineKey
@@ -375,6 +377,7 @@ def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
     if not p:
         p = c.currentPosition()
 
+    self.c.frame.body.colorizer.interrupt()
     self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
 #@nonl
 #@-node:ekr.20031218072017.1331:onBodyWillChange
@@ -18460,6 +18463,9 @@ gui.attachLeoIcon(top)
 top.title(frame.title)
 top.minsize(30,10) # In grid units.
 
+if g.os_path_exists(g.app.user_xresources_path):
+    frame.top.option_readfile(g.app.user_xresources_path)
+
 frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
 frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
 
@@ -18741,6 +18747,9 @@ frame.top = top = Tk.Toplevel()
 gui.attachLeoIcon(top)
 top.title(frame.title)
 top.minsize(30,10) # In grid units.
+
+if g.os_path_exists(g.app.user_xresources_path):
+    frame.top.option_readfile(g.app.user_xresources_path)
 
 frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
 frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
@@ -19349,6 +19358,7 @@ def __init__(self,title,gui):
     self.iconBar = None
 
     << set the leoTkinterFrame ivars >>
+#@nonl
 #@+node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
 # "Official ivars created in createLeoFrame and its allies.
 self.bar1 = None
@@ -19421,6 +19431,9 @@ frame.top = top = Tk.Toplevel()
 gui.attachLeoIcon(top)
 top.title(frame.title)
 top.minsize(30,10) # In grid units.
+
+if g.os_path_exists(g.app.user_xresources_path):
+    frame.top.option_readfile(g.app.user_xresources_path)
 
 frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
 frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
@@ -25447,6 +25460,7 @@ def __init__(self,title,gui):
     self.iconBar = None
 
     << set the leoTkinterFrame ivars >>
+#@nonl
 #@+node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
 # "Official ivars created in createLeoFrame and its allies.
 self.bar1 = None
@@ -25519,6 +25533,9 @@ frame.top = top = Tk.Toplevel()
 gui.attachLeoIcon(top)
 top.title(frame.title)
 top.minsize(30,10) # In grid units.
+
+if g.os_path_exists(g.app.user_xresources_path):
+    frame.top.option_readfile(g.app.user_xresources_path)
 
 frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
 frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
@@ -34044,6 +34061,8 @@ def computeStandardDirectories():
     
     g.app.testDir = g.os_path_abspath(
         g.os_path_join(g.app.loadDir,'..','test'))
+        
+    g.app.user_xresources_path = g.os_path_join(g.app.homeDir,'.leo_xresources')
 #@nonl
 #@-node:ekr.20050328133444:computeStandardDirectories
 #@+node:ekr.20041117151301.1:startupEncoding
@@ -35267,6 +35286,9 @@ frame.top = top = Tk.Toplevel()
 gui.attachLeoIcon(top)
 top.title(frame.title)
 top.minsize(30,10) # In grid units.
+
+if g.os_path_exists(g.app.user_xresources_path):
+    frame.top.option_readfile(g.app.user_xresources_path)
 
 frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
 frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
@@ -36898,7 +36920,7 @@ def visitNode (self,p):
     
     # g.trace(kind,name,val)
 
-    f = self.dispatchDict.get(munge(kind))
+    f = self.dispatchDict.get(munge(kind)) or self.doComment
     if f is not None:
         try:
             return f(p,kind,name,val)
@@ -38374,6 +38396,8 @@ def computeStandardDirectories():
     
     g.app.testDir = g.os_path_abspath(
         g.os_path_join(g.app.loadDir,'..','test'))
+        
+    g.app.user_xresources_path = g.os_path_join(g.app.homeDir,'.leo_xresources')
 #@nonl
 #@-node:ekr.20050328133444:computeStandardDirectories
 #@+node:ekr.20041117151301.1:startupEncoding
@@ -46842,6 +46866,9 @@ gui.attachLeoIcon(top)
 top.title(frame.title)
 top.minsize(30,10) # In grid units.
 
+if g.os_path_exists(g.app.user_xresources_path):
+    frame.top.option_readfile(g.app.user_xresources_path)
+
 frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
 frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
 
@@ -47226,20 +47253,21 @@ def updateSetter (self,p,updateDicts=True):
 #@-node:ekr.20041225063637.60:updateSetter
 #@+node:ekr.20041225063637.25:createWidgets & helpers
 def createWidgets (self,widgets,parent,p):
-    
+
     munge = g.app.config.munge
 
     << define creatorDispatchDict >>
+    
+    # g.trace(p.headString())
     
     # self.printWidgets(widgets)
     
     self.h = 0 # Offset from top of pane for first widget.
     self.createSpacerFrame(parent,size=15)
     
-    p_copy = p.copy()
     if p != self.suppressComments:
-        self.createComments(parent,p_copy)
-            
+        self.createComments(parent,p.copy())
+
     for data in widgets:
         p,kind,name,vals = data
         if kind.startswith('ints'):
@@ -47259,6 +47287,7 @@ def createWidgets (self,widgets,parent,p):
 creatorDispatchDict = {
     'bool':         self.createBool,
     'color':        self.createColor,
+    'comment':      self.createOnlyComments, # New in 4.3.1
     'directory':    self.createDirectory,
     'font':         self.createFont,
     'int':          self.createInt,
@@ -47375,6 +47404,8 @@ b.pack(side="left")
 #@+node:ekr.20050121131613:createComments
 def createComments (self,parent,p):
     
+    # g.trace(p.headString())
+    
     bg = self.commonBackground
 
     s = p.bodyString().strip()
@@ -47402,6 +47433,12 @@ def createComments (self,parent,p):
     self.h += 70
 #@nonl
 #@-node:ekr.20050121131613:createComments
+#@+node:ekr.20050603065744:createOnlyComments
+def createOnlyComments (self,parent,p,kind,name,val):
+    
+    pass # The existence of the 'comments' widget is enough.
+#@nonl
+#@-node:ekr.20050603065744:createOnlyComments
 #@+node:ekr.20041225063637.32:createDirectory
 def createDirectory (self,parent,p,kind,name,val):
     
@@ -51959,6 +51996,689 @@ def resizeToScreen (self):
 #@nonl
 #@-node:EKR.20040422130619:resizeToScreen
 #@-node:ekr.20050514171429.1:(Improved Resize To Screen command)
+#@+node:ekr.20050531105422:(Made sure comments are always visible in setting dialog even for non-@ nodes)
+# Tricky to get right.
+# Note that createOnlyComments doesn't have to do anything.
+#@nonl
+#@+node:ekr.20050531105422.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3176499
+By: mackal
+
+5) am I missing text in the Settings panels?  the outline shows that certain
+nodes have text (e.g., "About keyboard shortcuts" has the blue rectangle), yet
+the body pane is empty; heck, even the title suggests that something should
+be there...
+#@-node:ekr.20050531105422.1:Report
+#@+node:ekr.20041225063637.99:visitNode (settingsDialogParserClass)
+def visitNode (self,p):
+    
+    """Visit a node, and possibly append a widget description to self.widgets."""
+    
+    munge = g.app.config.munge
+    h = p.headString().strip() or ''
+    kind,name,val = self.parseHeadline(h)
+    
+    # g.trace(kind,name,val)
+
+    f = self.dispatchDict.get(munge(kind)) or self.doComment
+    if f is not None:
+        try:
+            return f(p,kind,name,val)
+        except TypeError:
+            g.es_exception()
+            print "*** no handler",kind
+            return None
+#@nonl
+#@-node:ekr.20041225063637.99:visitNode (settingsDialogParserClass)
+#@+node:ekr.20041225063637.100:kind handlers (settingsDialogParserClass)
+# Most of the work is done by base class methods.
+#@nonl
+#@+node:ekr.20050603065400:doComment
+def doComment (self,p,kind,name,val):
+    
+    __pychecker__ = '--no-argsused' # args not used, but required.
+
+    self.set(p,'comment',None,None)
+#@nonl
+#@-node:ekr.20050603065400:doComment
+#@+node:ekr.20041225063637.101:doFont
+def doFont (self,p,kind,name,val):
+    
+    __pychecker__ = '--no-argsused' # args not used, but required.
+
+    d = self.parseFont(p)
+    # g.trace("\n\nfont dict...\n%s" % g.dictToString(d))
+    self.set(p,kind,name,d)
+#@-node:ekr.20041225063637.101:doFont
+#@+node:ekr.20041225063637.102:doPage
+def doPage(self,p,kind,name,val):
+    
+    """Create a widget for each setting in the subtree."""
+    
+    __pychecker__ = '--no-argsused' # args not used, but required.
+
+    for p in p.subtree_iter():
+        self.visitNode(p)
+#@nonl
+#@-node:ekr.20041225063637.102:doPage
+#@+node:ekr.20041225063637.103:doRecentFiles & doBodyPaneList
+def doBodyPaneList (self,p,kind,name,val):
+    
+    __pychecker__ = '--no-argsused' # val not used, but required.
+
+    s = p.bodyString()
+    lines = g.splitLines(s)
+
+    vals = []
+    for line in lines:
+        line = line.strip()
+        if line and not g.match(line,0,'#'):
+            vals.append(line)
+                
+    self.set(p,kind,name,vals)
+#@-node:ekr.20041225063637.103:doRecentFiles & doBodyPaneList
+#@+node:ekr.20041225063637.104:doShortcuts
+def doShortcuts(self,p,kind,name,val):
+    
+    __pychecker__ = '--no-argsused' # val not used, but required.
+
+    s = p.bodyString()
+    self.set(p,kind,name,s)
+    self.controller.suppressComments=p.copy()
+#@nonl
+#@-node:ekr.20041225063637.104:doShortcuts
+#@-node:ekr.20041225063637.100:kind handlers (settingsDialogParserClass)
+#@+node:ekr.20041225063637.25:createWidgets & helpers
+def createWidgets (self,widgets,parent,p):
+
+    munge = g.app.config.munge
+
+    << define creatorDispatchDict >>
+    
+    # g.trace(p.headString())
+    
+    # self.printWidgets(widgets)
+    
+    self.h = 0 # Offset from top of pane for first widget.
+    self.createSpacerFrame(parent,size=15)
+    
+    if p != self.suppressComments:
+        self.createComments(parent,p.copy())
+
+    for data in widgets:
+        p,kind,name,vals = data
+        if kind.startswith('ints'):
+            self.createInts(parent,p,kind,name,vals)
+        if kind.startswith('strings'):
+            self.createStrings(parent,p,kind,name,vals)
+        else:
+            f = creatorDispatchDict.get(munge(kind))
+            if f is not None:
+                try:
+                    f(parent,p,kind,name,vals)
+                except TypeError:
+                    g.es_exception()
+                    g.trace("***No handler***",kind)
+#@nonl
+#@+node:ekr.20041225063637.26:<< define creatorDispatchDict >>
+creatorDispatchDict = {
+    'bool':         self.createBool,
+    'color':        self.createColor,
+    'comment':      self.createOnlyComments, # New in 4.3.1
+    'directory':    self.createDirectory,
+    'font':         self.createFont,
+    'int':          self.createInt,
+    'ints':         self.createInts,
+    'float':        self.createFloat,
+    'path':         self.createPath,
+    'ratio':        self.createRatio,
+    'shortcut':     self.createShortcut,
+    'shortcuts':    self.createShortcuts,
+    'string':       self.createString,
+    'strings':      self.createStrings,
+}
+#@nonl
+#@-node:ekr.20041225063637.26:<< define creatorDispatchDict >>
+#@+node:ekr.20041225063637.27:createBool
+def createBool (self,parent,p,kind,name,val):
+    
+    val = g.choose(val.lower()=='true',1,0)
+
+    # Inits the checkbutton widget. 
+    var = Tk.IntVar()
+    var.set(val)
+
+    def boolCallback():
+        val2 = g.choose(var.get(),True,False)
+        # g.trace(name,val2)
+        return val2
+    
+    val = g.choose(val,True,False)
+    self.initValue(p,name,kind,val,boolCallback)
+
+    box = Tk.Checkbutton(parent,text=name,variable=var,background=self.commonBackground)
+
+    self.sc.create_window(10,self.h,anchor='w',window=box)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.27:createBool
+#@+node:ekr.20041225063637.28:createColor
+def createColor (self,parent,p,kind,name,val):
+    
+    munge = g.app.config.munge
+    noColor = "<no color>"
+    colorNamesList = list(self.colorNamesList)
+    
+    f = Tk.Frame(parent,background=self.commonBackground) # No need to pack.
+    << munge val and add val to colorNamesList >>
+    << create optionMenu and callback >>
+    << create picker button and callback >>
+    Tk.Label(f,text=name,background=self.commonBackground).pack(side='left')
+    
+    self.colorSettingDict [munge(name)] = val
+
+    def getColorCallback ():
+        return self.colorSettingDict.get(munge(name))
+
+    self.initValue(p,name,kind,val,getColorCallback)
+
+    self.sc.create_window(15,self.h+8,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@+node:ekr.20041225063637.29:<< munge val and add val to colorNamesList >>
+if val in ("None",None): val = noColor
+val = str(val) # Get rid of unicode.
+
+if noColor in colorNamesList:
+    colorNamesList.remove(val)
+if val is not noColor and val not in colorNamesList:
+     colorNamesList.append(val)
+colorNamesList.sort()
+colorNamesList.insert(0,noColor)
+
+initVal = val
+if val is noColor: val = None
+#@nonl
+#@-node:ekr.20041225063637.29:<< munge val and add val to colorNamesList >>
+#@+node:ekr.20041225063637.30:<< create optionMenu and callback >>
+colorBox = Pmw.ComboBox(f,scrolledlist_items=colorNamesList)
+colorBox.selectitem(initVal)
+colorBox.pack(side="left",padx=2)
+
+color = g.choose(val is None,f.cget('background'),val)
+colorSample = Tk.Button(f,width=8,background=color)
+colorSample.pack(side='left',padx=2)
+
+def colorCallback (newName):
+    # g.trace(repr(newName))
+    if not newName or newName.lower() in ('none','<none>','<no color>'):
+        self.colorSettingDict[munge(name)] = None
+        color = f.cget('background')
+        colorSample.configure(background=color)
+    else:
+        try:
+            colorSample.configure(background=newName)
+            self.colorSettingDict[munge(name)] = g.choose(newName is noColor,None,newName)
+        except: pass # Ignore invalid names.
+
+colorBox.configure(selectioncommand=colorCallback)
+#@nonl
+#@-node:ekr.20041225063637.30:<< create optionMenu and callback >>
+#@+node:ekr.20041225063637.31:<< create picker button and callback >>
+def pickerCallback (color=val):
+
+    rgb,val = tkColorChooser.askcolor(parent=parent,color=color)
+    if rgb or val:
+        # g.trace(rgb,val)
+        self.colorSettingDict[munge(name)] = val
+        colorSample.configure(background=val,activebackground=val,text=val)
+
+b = Tk.Button(f,text="Color Picker...",command=pickerCallback,background=self.commonBackground)
+b.pack(side="left")
+#@nonl
+#@-node:ekr.20041225063637.31:<< create picker button and callback >>
+#@-node:ekr.20041225063637.28:createColor
+#@+node:ekr.20050121131613:createComments
+def createComments (self,parent,p):
+    
+    # g.trace(p.headString())
+    
+    bg = self.commonBackground
+
+    s = p.bodyString().strip()
+    if not s: return
+    
+    f = Tk.Frame(parent,background=bg) # No need to pack.
+
+    scrolled_text = Pmw.ScrolledText(f,
+        labelpos = 'ew',label_text='comments',
+        hull_background=bg,
+        hull_bd=2,hull_relief='groove',
+        hull_padx=6,hull_pady=6,
+        text_background=bg,
+        text_padx=6,text_pady=6,
+        text_bd=2,text_relief='sunken',
+        label_background=bg,
+        text_height=5,text_width=80)
+    scrolled_text.pack(side='left',pady=6,padx=6,expand=1,fill='x')
+    t = scrolled_text.component('text')
+    t.insert('end',s)
+    t.configure(state='disabled')
+    scrolled_text.component('hull')
+
+    self.sc.create_window(10-2,self.h,anchor='w',window=f)
+    self.h += 70
+#@nonl
+#@-node:ekr.20050121131613:createComments
+#@+node:ekr.20050603065744:createOnlyComments
+def createOnlyComments (self,parent,p,kind,name,val):
+    
+    pass # The existence of the 'comments' widget is enough.
+#@nonl
+#@-node:ekr.20050603065744:createOnlyComments
+#@+node:ekr.20041225063637.32:createDirectory
+def createDirectory (self,parent,p,kind,name,val):
+    
+    self.createString(parent,p,kind,name,val)
+#@nonl
+#@-node:ekr.20041225063637.32:createDirectory
+#@+node:ekr.20041225063637.33:createFloat
+def createFloat (self,parent,p,kind,name,val):
+    
+    bg = self.commonBackground
+
+    # Inits the entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+
+    f = Tk.Frame(parent,background=bg)
+    Tk.Entry(f,textvariable=var,background=bg).pack(side='left')
+    Tk.Label(f,text=name,background=bg).pack(side='left')
+    
+    def floatCallback():
+        val2 = var.get()
+        # g.trace(name,val2)
+        try:
+            float(val2)
+            return val2
+        except TypeError:
+            g.trace("bad val:",val2)
+            return val
+            
+    self.initValue(p,name,kind,val,floatCallback)
+    
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.33:createFloat
+#@+node:ekr.20041225063637.34:createFont
+def createFont (self,parent,p,kind,fontName,val):
+    
+    """Create a font picker.  val is a dict containing the specified values."""
+    bg = self.commonBackground
+    d = val
+    munge = g.app.config.munge
+    f = Tk.Frame(parent,background=bg) # No need to pack.
+    self.alterComments = p.copy()
+    self.alteredCommentsString = d.get('comments')
+    << create the family combo box >>
+    << create the size entry >>
+    << create the weight combo box >>
+    << create the slant combo box >>
+    Tk.Label(f,text=fontName,background=bg).pack(side='left')
+    << define fontCallback >>
+
+    familyBox.configure(selectioncommand=fontCallback)
+    slantBox.configure(selectioncommand=fontCallback)
+    weightBox.configure(selectioncommand=fontCallback)
+
+    self.initValue(p,munge(fontName),'font',d,fontCallback)
+
+    self.sc.create_window(15,self.h,anchor='w',window = f)
+    self.h += 30
+#@nonl
+#@+node:ekr.20041225063637.35:<< create the family combo box >>
+names = tkFont.families()
+names = list(names)
+names.sort()
+names.insert(0,'<None>')
+
+data = d.get('family')
+initialitem = 0
+if data:
+    name2,val = data
+    if val and val in names:
+        initialitem = names.index(val)
+
+familyBox = Pmw.ComboBox(f,
+    labelpos="we",label_text='Family:',
+    label_background=bg,
+    arrowbutton_background=bg,
+    scrolledlist_items=names)
+
+familyBox.selectitem(initialitem)
+familyBox.pack(side="left",padx=2)
+#@nonl
+#@-node:ekr.20041225063637.35:<< create the family combo box >>
+#@+node:ekr.20041225063637.36:<< create the size entry >>
+Tk.Label(f,text="Size:",background=bg).pack(side="left")
+
+sizeEntry = Tk.Entry(f,width=4)
+sizeEntry.pack(side="left")
+
+data = d.get('size')
+if data:
+    kind,val = data
+    if val not in (None,'None','none'):
+        try:
+            int(val)
+            sizeEntry.insert('end',val)
+        except ValueError:
+            s = "invalid size: %s" % val
+            print s ; self.es(s,color="blue")
+#@nonl
+#@-node:ekr.20041225063637.36:<< create the size entry >>
+#@+node:ekr.20041225063637.37:<< create the weight combo box >>
+initialitem = 0
+values = ['<None>','normal','bold']
+data = d.get('weight')
+if data:
+    kind,val = data
+    if val in values:
+        initialitem = values.index(val)
+
+weightBox = Pmw.ComboBox(f,
+    labelpos="we",label_text="Weight:",
+    label_background=bg,
+    arrowbutton_background=bg,
+    scrolledlist_items=values)
+
+weightBox.selectitem(initialitem)
+weightBox.pack(side="left",padx=2)
+#@nonl
+#@-node:ekr.20041225063637.37:<< create the weight combo box >>
+#@+node:ekr.20041225063637.38:<< create the slant combo box>>
+initialitem = 0
+values=['<None>','roman','italic']
+data = d.get('slant')
+if data:
+    kind,val = data
+    if val in values:
+        initialitem = values.index(val)
+
+slantBox = Pmw.ComboBox(f,
+    labelpos="we",label_text="Slant:",
+    label_background=bg,
+    arrowbutton_background=bg,
+    scrolledlist_items=values)
+
+slantBox.selectitem(initialitem)
+slantBox.pack(side="left",padx=2)
+#@nonl
+#@-node:ekr.20041225063637.38:<< create the slant combo box>>
+#@+node:ekr.20041225063637.39:<< define fontCallback >>
+def fontCallback(*args,**keys):
+    
+    __pychecker__ = '--no-argsused' # not used, but needed.
+    
+    d2 = d.copy() # The update logic must compare distinct dicts.
+    
+    for box,key in (
+        (familyBox, 'family'),
+        (None,      'size'),
+        (slantBox,  'slant'),
+        (weightBox, 'weight'),
+    ):
+        if box: val = box.get()
+        else:   val = sizeEntry.get().strip()
+        if not val or  val.lower() in ('none','<none>',): val = None
+
+        data = d.get(key)
+        name,oldval = data
+        d2[key] = name,val
+    
+    return d2
+#@nonl
+#@-node:ekr.20041225063637.39:<< define fontCallback >>
+#@-node:ekr.20041225063637.34:createFont
+#@+node:ekr.20041225063637.40:createInt
+def createInt (self,parent,p,kind,name,val):
+    
+    bg = self.commonBackground
+
+    # Inits the entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+
+    f = Tk.Frame(parent)
+    Tk.Entry(f,textvariable=var).pack(side='left')
+    Tk.Label(f,text=name,background=bg).pack(side='left')
+
+    def intCallback():
+        val2 = var.get()
+        # g.trace(name,val2)
+        try:
+            int(val2)
+            return val2
+        except TypeError:
+            g.trace("bad val:",val2)
+            return val
+    
+    self.initValue(p,name,kind,val,intCallback)
+    
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.40:createInt
+#@+node:ekr.20041225063637.41:createInts
+def createInts (self,parent,p,kind,name,val):
+    
+    # g.trace(repr(kind),repr(name),val)
+    
+    bg = self.commonBackground
+    
+    i = kind.find('[')
+    j = kind.find(']')
+    if not (-1 < i < j):
+        return
+    
+    items = kind[i+1:j].split(',')
+    items.sort()
+    items.insert(0,'<none>')
+    
+    if val in items:
+        initialitem = items.index(val)
+    else:
+        initialitem = 0
+        
+    f = Tk.Frame(parent)
+
+    intsBox = Pmw.ComboBox(f,
+        labelpos="ew",label_text=name,
+        label_background=bg,
+        scrolledlist_items=items)
+
+    intsBox.selectitem(initialitem)
+    intsBox.pack(side="left",padx=2)
+    
+    def intsCallback():
+        val2 = intsBox.get()
+        try:
+            int(val2)
+            return val2
+        except TypeError:
+            g.trace("bad val:",val2)
+            return val
+
+    self.initValue(p,name,kind,val,intsCallback)
+
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.41:createInts
+#@+node:ekr.20041225063637.42:createPath
+def createPath (self,parent,p,kind,name,val):
+    
+    self.createString(parent,p,kind,name,val)
+#@nonl
+#@-node:ekr.20041225063637.42:createPath
+#@+node:ekr.20041225063637.43:createRatio
+def createRatio (self,parent,p,kind,name,val):
+    
+    bg = self.commonBackground
+    
+    # Inits the entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+
+    f = Tk.Frame(parent)
+    Tk.Entry(f,textvariable=var).pack(side='left')
+    Tk.Label(f,text=name,background=bg).pack(side='left')
+    
+    def ratioCallback():
+        val2 = var.get()
+        # g.trace(name,val2)
+        try:
+            val2 = float(val2)
+            if 0.0 <= val2 <= 1.0:
+                return val2
+        except TypeError:
+            pass
+        g.trace("bad val:",val2)
+        return val
+            
+    self.initValue(p,name,kind,val,ratioCallback)
+    
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.43:createRatio
+#@+node:ekr.20041225063637.45:createShortcut
+def createShortcut (self,parent,p,kind,name,val):
+    
+    g.trace(name,val)
+    
+    if name:
+        self.createString(parent,p,kind,name,val)
+#@nonl
+#@-node:ekr.20041225063637.45:createShortcut
+#@+node:ekr.20041225063637.46:createShortcuts
+def createShortcuts (self,parent,p,kind,name,vals):
+    
+    __pychecker__ = '--no-argsused' # vals not used.
+    
+    t = self.createText(parent,p)
+    
+    def shortcutsCallback():
+        val = t.get('1.0','end').rstrip()
+        return val
+
+    self.initValue(p,name,kind,vals,shortcutsCallback)
+#@nonl
+#@-node:ekr.20041225063637.46:createShortcuts
+#@+node:ekr.20041225063637.47:createSpacerFrame
+def createSpacerFrame (self,parent,size=10):
+    
+    f = Tk.Frame(parent)
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += size
+#@nonl
+#@-node:ekr.20041225063637.47:createSpacerFrame
+#@+node:ekr.20041225063637.48:createString
+def createString (self,parent,p,kind,name,val):
+    
+    bg = self.commonBackground
+
+    if val in (None,'None'): val = ""
+    
+    # Inits the Entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+    
+    f = Tk.Frame(parent) # No need to pack.
+    Tk.Entry(f,textvariable=var,width=40).pack(side='left')
+    Tk.Label(f,text=name,background=bg).pack(side='left')
+    
+    def stringCallback():
+        val = var.get()
+        # g.trace(name,val)
+        return val
+
+    self.initValue(p,name,kind,val,stringCallback)
+    
+    self.sc.create_window(15,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.48:createString
+#@+node:ekr.20041225063637.49:createStrings
+def createStrings (self,parent,p,kind,name,val):
+    
+    bg = self.commonBackground
+    
+    # g.trace(repr(kind),repr(name),val)
+    i = kind.find('[')
+    j = kind.find(']')
+    if not (-1 < i < j):
+        return
+    
+    items = kind[i+1:j].split(',')
+    items.sort()
+    items.insert(0,'<none>')
+    if val in items:
+        initialitem = items.index(val)
+    else:
+        initialitem = 0
+        
+    f = Tk.Frame(parent,background=bg)
+
+    stringsBox = Pmw.ComboBox(f,
+        labelpos="ew",label_text=name,
+        label_background = bg,
+        scrolledlist_items=items)
+
+    stringsBox.selectitem(initialitem)
+    stringsBox.pack(side="left",padx=2)
+    
+    def stringsCallback():
+        return stringsBox.get()
+
+    self.initValue(p,name,kind,val,stringsCallback)
+
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
+#@nonl
+#@-node:ekr.20041225063637.49:createStrings
+#@+node:ekr.20050512134219:createText
+def createText (self,parent,p):
+    
+    bg = self.commonBackground
+    f = Tk.Frame(parent,background=bg) # No need to pack.
+
+    scrolled_text = Pmw.ScrolledText(f,
+        labelpos = 'ew',label_text='shortcuts',
+        hull_background=bg,
+        hull_bd=2,hull_relief='groove',
+        hull_padx=6,hull_pady=6,
+        text_background='white',
+        text_padx=6,text_pady=6,
+        text_bd=2,text_relief='sunken',
+        label_background=bg,
+        text_height=10,text_width=80)
+    scrolled_text.pack(side='left',pady=6,padx=6,expand=1,fill='x')
+    t = scrolled_text.component('text')
+    t.insert('end',p.bodyString().strip())
+    t.configure(state='normal')
+    scrolled_text.component('hull')
+
+    self.sc.create_window(10-2,self.h,anchor='w',window=f)
+    self.h += 140
+    
+    return t
+#@nonl
+#@-node:ekr.20050512134219:createText
+#@-node:ekr.20041225063637.25:createWidgets & helpers
+#@-node:ekr.20050531105422:(Made sure comments are always visible in setting dialog even for non-@ nodes)
 #@-node:ekr.20050524102538:Bug fixes...
 #@+node:ekr.20050526081733:New features...
 #@+node:ekr.20050523075215:(Created separate helpers for idle_body_key)
@@ -52436,6 +53156,646 @@ def unmarkAll(self):
 #@-node:ekr.20031218072017.2930:unmarkAll
 #@-node:ekr.20031218072017.2922:Mark...
 #@-node:ekr.20050512085922:(Made all Mark commands undoable)
+#@+node:ekr.20050527100614:(Removed dependence on profile and pstats modules from leoTest.py)
+#@+node:ekr.20050527100614.1:Report
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=3172485
+By: ktenney
+
+
+/usr/lib/python2.4/site-packages# python leo/src/leo.py
+reading settings in /usr/lib/python2.4/site-packages/leo/config/leoSettings.leo
+Traceback (most recent call last):
+  File "leo/src/leo.py", line 312, in ?
+    run()
+  File "leo/src/leo.py", line 95, in run
+    g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting
+g.app.config.
+  File "/usr/lib/python2.4/site-packages/leo/src/leoConfig.py", line 1169, in
+readSettingsFiles
+    c = self.openSettingsFile(path)
+  File "/usr/lib/python2.4/site-packages/leo/src/leoConfig.py", line 1141, in
+openSettingsFile
+    c,frame = g.app.gui.newLeoCommanderAndFrame(path,updateRecentFiles=False)
+  File "/usr/lib/python2.4/site-packages/leo/src/leoGui.py", line 105,
+in newLeoCommanderAndFrame
+    import leoCommands
+  File "/usr/lib/python2.4/site-packages/leo/src/leoCommands.py", line 24, in ?
+    import leoImport
+  File "/usr/lib/python2.4/site-packages/leo/src/leoImport.py", line 8, in ?
+    import leoTest # Support for unit tests.
+  File "/usr/lib/python2.4/site-packages/leo/src/leoTest.py", line 29, in ?
+    import profile
+ImportError: No module named profile
+
+
+#@-node:ekr.20050527100614.1:Report
+#@-node:ekr.20050527100614:(Removed dependence on profile and pstats modules from leoTest.py)
+#@+node:ekr.20050601112005:(Body key handlers now call colorizer.interrupt)
+# This supports the new colorizer.  It has no effect in the present code base.
+#@nonl
+#@+node:ekr.20031218072017.1320:body key handlers
+@ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
+
+1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if so.  This is the clean and safe way.
+
+2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
+@c
+
+@others
+#@nonl
+#@+node:ekr.20031218072017.1321:idle_body_key & helpers
+def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Update the body pane at idle time."""
+    
+    __pychecker__ = 'maxlines=500'
+
+    # g.trace(ch,ord(ch))
+    c = self.c
+    if not c: return "break"
+    if not p: return "break"
+    if not c.isCurrentPosition(p): return "break"
+
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+    body = p.bodyString()
+    if not newSel:
+        newSel = c.frame.body.getTextSelection()
+    if oldText != None:
+        s = oldText
+    else:
+        s = c.frame.body.getAllText()
+    << return if nothing has changed >>
+    << set removeTrailing >>
+    if ch in ('\t','\n','\r',chr(8)):
+        << handle special characters >>
+    << set s to widget text, removing trailing newlines if necessary >>
+    if undoType:
+        if not oldText: oldText = body
+        newText = s
+        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+    p.v.setTnodeText(s)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed:
+        c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return "break"
+#@nonl
+#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
+# Make sure we handle delete key properly.
+if ch not in ('\n','\r',chr(8)):
+
+    if s == body:
+        return "break"
+
+    # Do nothing for control characters.
+    if (ch == None or len(ch) == 0) and body == s[:-1]:
+        return "break"
+#@nonl
+#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
+#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = s ; old = body
+
+if len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
+#@nonl
+#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
+#@+node:ekr.20050526080309:<< handle special characters >>
+d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+
+if ch in ('\n','\r'):
+    # Do nothing if we are in @nocolor mode or if we are executing a Change command.
+    if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+        removeTrailing = self.doAutoIndent(p,removeTrailing,tab_width,undoType)
+
+elif ch == '\t' and tab_width < 0:
+    # Do nothing if we are executing a Change command.
+    if undoType != "Change":
+        self.convertBlanksToTabs(tab_width)
+
+elif ch in (chr(8)) and tab_width < 0:
+    << handle backspace with negative tab_width >>
+#@nonl
+#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+# Get the preceeding characters.
+prev   =c.frame.bodyCtrl.get("insert linestart","insert")
+allPrev=c.frame.bodyCtrl.get("1.0","insert")
+n = len(allPrev)
+try:
+    oldAllPrev = body[:n]
+    assert(allPrev==oldAllPrev)
+    deletedChar = body[n:n+1]
+except (IndexError,AssertionError):
+    deletedChar = None
+
+if deletedChar in (u' ',' '):
+    n = len(prev) ; w = abs(tab_width)
+    n2 = n % w # Delete up to n2 - 1 spaces.
+    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
+        count = 0
+        while n2 > 0:
+            n2 -= 1
+            ch = prev[n-count-1]
+            # g.trace(count,repr(ch))
+            if ch in (u' ',' '): count += 1
+            else: break
+        # g.trace(count,(n%w))
+        if count > 0:
+            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+            newSel = c.frame.body.getTextSelection() # Fixes crasher in undo logic.
+#@nonl
+#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+#@-node:ekr.20050526080309:<< handle special characters >>
+#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+s = c.frame.body.getAllText()
+if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+    s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # print "no real change"
+    return "break"
+#@nonl
+#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+#@+node:ekr.20031218072017.1327:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20031218072017.1327:<< recolor the body >>
+#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+redraw_flag = False
+
+c.beginUpdate()
+
+# Update dirty bits.
+if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+    redraw_flag = True
+    
+# Update icons.
+val = p.computeIcon()
+
+# 7/8/04: During unit tests the node may not have been drawn,
+# So p.v.iconVal may not exist yet.
+if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+    p.v.iconVal = val
+    redraw_flag = True
+
+c.endUpdate(redraw_flag) # redraw only if necessary
+#@nonl
+#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+#@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
+def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
+    
+    c = self.c
+    # Get the previous line.
+    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s[-1]==':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Added Nov 18 by David McNab, david@rebirthing.co.nz
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width] ; tabex = 0
+        for i in range(0, len(s)):
+            if s[i] == '\t':
+                tabex += tab_width - 1
+            if s[i] in '([{':
+                brackets.append(i+tabex + 1)
+            elif s[i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+        # end patch by David McNab
+    ws = g.computeLeadingWhitespace (width,tab_width)
+    if ws and len(ws) > 0:
+        c.frame.bodyCtrl.insert("insert", ws)
+        removeTrailing = False
+            
+    return removeTrailing
+#@nonl
+#@-node:ekr.20031218072017.1324:doAutoIndent (David McNab)
+#@+node:ekr.20031218072017.1325:convertBlanksToTabs
+def convertBlanksToTabs (self,tab_width):
+
+    c = self.c
+    
+    # Get the characters preceeding the tab.
+    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+    
+    if 1:
+        << convert tab no matter where it is >>
+    else:
+        << convert only leading tabs >>
+#@nonl
+#@+node:ekr.20050526081024:<< convert tab no matter where it is >>
+w = g.computeWidth(prev,tab_width)
+w2 = (abs(tab_width) - (w % abs(tab_width)))
+# g.trace("prev w:",w,"prev chars:",prev)
+c.frame.bodyCtrl.delete("insert -1c")
+c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20050526081024:<< convert tab no matter where it is >>
+#@+node:ekr.20050526081024.1:<< convert only leading tabs >>
+# Get the characters preceeding the tab.
+prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+
+# Do nothing if there are non-whitespace in prev:
+all_ws = True
+for ch in prev:
+    if ch != ' ' and ch != '\t':
+        all_ws = False
+if all_ws:
+    w = g.computeWidth(prev,tab_width)
+    w2 = (abs(tab_width) - (w % abs(tab_width)))
+    # g.trace("prev w:",w,"prev chars:",prev)
+    c.frame.bodyCtrl.delete("insert -1c")
+    c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20050526081024.1:<< convert only leading tabs >>
+#@-node:ekr.20031218072017.1325:convertBlanksToTabs
+#@-node:ekr.20031218072017.1321:idle_body_key & helpers
+#@+node:ekr.20031218072017.1329:onBodyChanged (tkTree)
+# Called by command handlers that have already changed the text.
+
+def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Handle a change to the body pane."""
+    
+    c = self.c
+    if not p:
+        p = c.currentPosition()
+
+    if not oldSel:
+        oldSel = c.frame.body.getTextSelection()
+
+    self.c.frame.body.colorizer.interrupt()
+    self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
+#@nonl
+#@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
+#@+node:ekr.20031218072017.1330:onBodyKey
+def onBodyKey (self,event):
+    
+    """Handle any key press event in the body pane."""
+
+    c = self.c ; ch = event.char
+    
+    # This translation is needed on MacOS.
+    if ch == '':
+        d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
+        ch = d.get(event.keysym,'')
+
+    oldSel = c.frame.body.getTextSelection()
+    
+    p = c.currentPosition()
+
+    if 0: # won't work when menu keys are bound.
+        self.handleStatusLineKey(event)
+        
+    # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
+    self.c.frame.body.colorizer.interrupt()
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
+#@nonl
+#@+node:ekr.20040105223536:handleStatusLineKey
+def handleStatusLineKey (self,event):
+    
+    c = self.c ; frame = c.frame
+    ch = event.char ; keysym = event.keysym
+    keycode = event.keycode ; state = event.state
+
+    if 1: # ch and len(ch)>0:
+        << trace the key event >>
+
+    try:
+        status = self.keyStatus
+    except:
+        status = [] ; frame.clearStatusLine()
+    
+    for sym,name in (
+        ("Alt_L","Alt"),("Alt_R","Alt"),
+        ("Control_L","Control"),("Control_R","Control"),
+        ("Escape","Esc"),
+        ("Shift_L","Shift"), ("Shift_R","Shift")):
+        if keysym == sym:
+            if name not in status:
+                status.append(name)
+                frame.putStatusLine(name + ' ')
+            break
+    else:
+        status = [] ; frame.clearStatusLine()
+
+    self.keyStatus = status
+#@nonl
+#@+node:ekr.20040105223536.1:<< trace the key event >>
+try:    self.keyCount += 1
+except: self.keyCount  = 1
+
+printable = g.choose(ch == keysym and state < 4,"printable","")
+
+print "%4d %s %d %s %x %s" % (
+    self.keyCount,repr(ch),keycode,keysym,state,printable)
+#@nonl
+#@-node:ekr.20040105223536.1:<< trace the key event >>
+#@-node:ekr.20040105223536:handleStatusLineKey
+#@-node:ekr.20031218072017.1330:onBodyKey
+#@+node:ekr.20031218072017.1331:onBodyWillChange
+# Called by command handlers that change the text just before idle time.
+
+def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
+    
+    """Queue the body changed idle handler."""
+    
+    c = self.c
+
+    if not oldSel:
+        oldSel = c.frame.body.getTextSelection()
+
+    if not p:
+        p = c.currentPosition()
+
+    self.c.frame.body.colorizer.interrupt()
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1331:onBodyWillChange
+#@-node:ekr.20031218072017.1320:body key handlers
+#@-node:ekr.20050601112005:(Body key handlers now call colorizer.interrupt)
+#@+node:ekr.20050602081251:(Added patch for tk options)
+@
+
+Leo will now look for a file called .leo_xresources' in the users home
+directory. If found, Leo will pass that file to Tk's option_readfile method for
+the top widget. This allows users to set Tk options.
+#@nonl
+#@+node:ekr.20050602081251.1:Initial posting
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3181786
+By: mackal
+
+The following is a patch for allowing the user to have a configuration file
+specifying what fonts to use in menubars, etc.  This is mostly intended for
+Linux/UNIX, where the default Tk look is very Motif-like (read "ugly"!).  As
+suggested, I might turn this into a plugin once I figure out how to do that,
+but for the time being it might be a fix for other Linux users currently suffering.
+:)
+
+Although AFAIK TclTk supports the notion of X11 resources with  its option_readfile()
+and other option-related commands, I'm not sure whether this has any effect
+under Windows, where I believe the native toolkit is used.
+
+Here is the patch:[snip]
+
+Here is a sample resource file I look to give Leo a much "lighter" feel
+(to be placed in ~/.leo_xresources):
+
+! X resources to use in Leo
+*font:                  -*-helvetica-medium-r-*-*-12-*-*-*-*-*-*-*
+*padY:                  0
+*borderWidth:           1
+*activeBorderWidth:     1
+
+! have to reset the borderWidth back to 0 for dialogs
+*Dialog*borderWidth:    0
+*Dialog.msg.font:       -*-helvetica-medium-r-*-*-12-*-*-*-*-*-*-*
+#@-node:ekr.20050602081251.1:Initial posting
+#@+node:ekr.20050328133444:computeStandardDirectories
+def computeStandardDirectories():
+    
+    '''Set g.app.loadDir, g.app.homeDir and g.app.globalConfigDir.'''
+    
+    g.app.loadDir = g.computeLoadDir()
+        # Depends on g.app.tkEncoding: uses utf-8 for now.
+    
+    g.app.homeDir = g.computeHomeDir()
+    
+    g.app.extensionsDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','extensions'))
+    
+    g.app.globalConfigDir = g.computeGlobalConfigDir()
+    
+    g.app.testDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','test'))
+        
+    g.app.user_xresources_path = g.os_path_join(g.app.homeDir,'.leo_xresources')
+#@nonl
+#@-node:ekr.20050328133444:computeStandardDirectories
+#@+node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
+frame.top = top = Tk.Toplevel()
+gui.attachLeoIcon(top)
+top.title(frame.title)
+top.minsize(30,10) # In grid units.
+
+if g.os_path_exists(g.app.user_xresources_path):
+    frame.top.option_readfile(g.app.user_xresources_path)
+
+frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
+frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
+
+# These don't work on Windows. Because of bugs in window managers,
+# there is NO WAY to know which window is on top!
+frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
+frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
+
+frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
+frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
+
+# Create the outer frame, the 'hull' component.
+self.outerFrame = outerFrame = Tk.Frame(top)
+self.outerFrame.pack(expand=1,fill="both")
+self.componentClass(c,'hull',self.outerFrame)
+#@nonl
+#@-node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
+#@+node:ekr.20031218072017.1416:app.__init__
+def __init__(self):
+
+    # These ivars are the global vars of this program.
+    self.afterHandler = None
+    self.batchMode = False # True: run in batch mode.
+    self.commandName = None # The name of the command being executed.
+    self.config = None # The leoConfig instance.
+    self.count = 0 # General purpose debugging count.
+    self.debug = False # True: enable extra debugging tests (not used at present).
+        # WARNING: this could greatly slow things down.
+    self.debugSwitch = 0
+        # 0: default behavior
+        # 1: full traces in g.es_exception.
+        # 2: call pdb.set_trace in g.es_exception, etc.
+    self.disableSave = False
+    self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
+    self.gui = None # The gui class.
+    self.hasOpenWithMenu = False # True: open with plugin has been loaded.
+    self.hookError = False # True: suppress further calls to hooks.
+    self.hookFunction = None # Application wide hook function.
+    self.homeDir = None # The user's home directory.
+    self.idle_imported = False # True: we have done an import idle
+    self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
+    self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
+    self.initing = True # True: we are initiing the app.
+    self.killed = False # True: we are about to destroy the root window.
+    self.leoID = None # The id part of gnx's.
+    self.loadDir = None # The directory from which Leo was loaded.
+    self.loadedPlugins = [] # List of loaded plugins that have signed on.
+    self.log = None # The LeoFrame containing the present log.
+    self.logIsLocked = False # True: no changes to log are allowed.
+    self.logWaiting = [] # List of messages waiting to go to a log.
+    self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.nodeIndices = None # Singleton node indices instance.
+    self.numberOfWindows = 0 # Number of opened windows.
+    self.openWithFiles = [] # List of data used by Open With command.
+    self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
+    self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
+    self.quitting = False # True if quitting.  Locks out some events.
+    self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
+    self.root = None # The hidden main window. Set later.
+    self.searchDict = {} # For communication between find/change scripts.
+    self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.trace = False # True: enable debugging traces.
+    self.tracePositions = False
+    self.trace_list = [] # "Sherlock" argument list for tracing().
+    self.tkEncoding = "utf-8"
+    self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
+    self.unitTestDict = {} # For communication between unit tests and code.
+    self.unitTesting = False # True if unit testing.
+    self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
+    self.user_xresources_path = None # Resource file for Tk/tcl.
+    self.wantedCommander = None # Used by leoTkinterFrame logic to manage calls to g.app.gui.set_focus.
+    self.windowList = [] # Global list of all frames.  Does not include hidden root window.
+
+    # Global panels.  Destroyed when Leo ends.
+    self.pythonFrame = None
+    
+    << Define global constants >>
+    << Define global data structures >>
+#@nonl
+#@+node:ekr.20031218072017.1417:<< define global constants >>
+self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+
+# New in leo.py 3.0
+self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
+self.prolog_postfix_string = "?>"
+
+# leo.py 3.11
+self.use_unicode = True # True: use new unicode logic.
+#@-node:ekr.20031218072017.1417:<< define global constants >>
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */",	# C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    "perl" : "perl",
+    "perlpod" : "perl",
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    "perl"  : "perl",
+    "php"   : "php",
+    "py"    : "python",
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@-node:ekr.20031218072017.1416:app.__init__
+#@-node:ekr.20050602081251:(Added patch for tk options)
 #@-node:ekr.20050526081733:New features...
 #@-node:ekr.20050524073547.1:4.3.1 projects
 #@-all

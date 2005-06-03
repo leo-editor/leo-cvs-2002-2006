@@ -49,6 +49,10 @@ __version__ = '0.7'
 #@@nocolor
 #@+at
 # 
+# - Support NO_WORD_SEP, IGNORE_CASE and DEFAULT attributes in rules element.
+#     - Later: support DIGIT_RE and HIGHLIGHT_DIGITS attributes in rules 
+# element.
+# 
 # - Support Show Invisibles.
 #     Conditionally add rule for whitespace.
 # 
