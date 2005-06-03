@@ -87,6 +87,9 @@ remove readme*.doc
 
 - Add any language-specifig code to leoColor.colorizeAnyLanguage.
   For most languages nothing need be done in this step.
+  
+- If the language is case insensitive, add it to the list of
+case_insensitiveLanguages found in  << define global colorizer data >>
 
 TESTS
 
@@ -107,6 +110,10 @@ but with the name of your new language instead of "Python".
 
 @color
 #@nonl
+#@+node:EKR.20040623090054:<< define global colorizer data >>
+case_insensitiveLanguages = ['plsql',]
+#@nonl
+#@-node:EKR.20040623090054:<< define global colorizer data >>
 #@+node:ekr.20031218072017.368:<< define global data structures >> app
 # Internally, lower case is used for all language names.
 self.language_delims_dict = {
