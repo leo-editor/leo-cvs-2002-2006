@@ -1372,7 +1372,7 @@ class settingsDialogParserClass (parserBaseClass):
         
         # g.trace(kind,name,val)
     
-        f = self.dispatchDict.get(munge(kind))
+        f = self.dispatchDict.get(munge(kind)) or self.doComment
         if f is not None:
             try:
                 return f(p,kind,name,val)
@@ -1385,6 +1385,14 @@ class settingsDialogParserClass (parserBaseClass):
     #@+node:ekr.20041225063637.100:kind handlers (settingsDialogParserClass)
     # Most of the work is done by base class methods.
     #@nonl
+    #@+node:ekr.20050603065400:doComment
+    def doComment (self,p,kind,name,val):
+        
+        __pychecker__ = '--no-argsused' # args not used, but required.
+    
+        self.set(p,'comment',None,None)
+    #@nonl
+    #@-node:ekr.20050603065400:doComment
     #@+node:ekr.20041225063637.101:doFont
     def doFont (self,p,kind,name,val):
         
@@ -2129,7 +2137,7 @@ class settingsController:
     #@-node:ekr.20041225063637.21:createSettingsTree & helpers
     #@+node:ekr.20041225063637.25:createWidgets & helpers
     def createWidgets (self,widgets,parent,p):
-        
+    
         munge = g.app.config.munge
     
         #@    << define creatorDispatchDict >>
@@ -2137,6 +2145,7 @@ class settingsController:
         creatorDispatchDict = {
             'bool':         self.createBool,
             'color':        self.createColor,
+            'comment':      self.createOnlyComments, # New in 4.3.1
             'directory':    self.createDirectory,
             'font':         self.createFont,
             'int':          self.createInt,
@@ -2153,15 +2162,16 @@ class settingsController:
         #@-node:ekr.20041225063637.26:<< define creatorDispatchDict >>
         #@nl
         
+        # g.trace(p.headString())
+        
         # self.printWidgets(widgets)
         
         self.h = 0 # Offset from top of pane for first widget.
         self.createSpacerFrame(parent,size=15)
         
-        p_copy = p.copy()
         if p != self.suppressComments:
-            self.createComments(parent,p_copy)
-                
+            self.createComments(parent,p.copy())
+    
         for data in widgets:
             p,kind,name,vals = data
             if kind.startswith('ints'):
@@ -2282,6 +2292,8 @@ class settingsController:
     #@+node:ekr.20050121131613:createComments
     def createComments (self,parent,p):
         
+        # g.trace(p.headString())
+        
         bg = self.commonBackground
     
         s = p.bodyString().strip()
@@ -2309,6 +2321,12 @@ class settingsController:
         self.h += 70
     #@nonl
     #@-node:ekr.20050121131613:createComments
+    #@+node:ekr.20050603065744:createOnlyComments
+    def createOnlyComments (self,parent,p,kind,name,val):
+        
+        pass # The existence of the 'comments' widget is enough.
+    #@nonl
+    #@-node:ekr.20050603065744:createOnlyComments
     #@+node:ekr.20041225063637.32:createDirectory
     def createDirectory (self,parent,p,kind,name,val):
         
