@@ -6,7 +6,7 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = '0.8'
+__version__ = '0.9'
 #@<< version history >>
 #@+node:ekr.20050529142916.2:<< version history >>
 #@@killcolor
@@ -40,7 +40,7 @@ __version__ = '0.8'
 #     - Fixed bug involving at_line_start: must test i == 0 OR s[i-1] == '\n'.
 #     - Added rules for @color and @nocolor.
 #     - Added more entries to to-do list for Leo special cases.
-# 0.8 EKR
+# 0.8 EKR:
 #     - Use a single dict for all keywords--an important speedup.
 #     - Call init_keywords exactly once per mode.
 #     - Defined tags for jEdit types.
@@ -48,6 +48,17 @@ __version__ = '0.8'
 # reported properly.
 #     - Turned off inclusion of external general entities so dtd line gets 
 # ignored.
+# 0.9 EKR:
+#     - Added colored_ranges dict, colorRangeWithTag & removeTagsFromRange.
+#         - This keeps track of tags much more effectively than Tk does.
+#     - A compromise looks best for eliminating flash with good performance:
+#         - Don't interrupt colorOneChunk for non-incremental redraws.
+#             - Doesn't really hurt performance: the cursor didn't blink in 
+# the old way.
+#         - Do interrupt colorOneChunk for incremental redraws.
+#             - Key performance is optimal.
+#             - There is no flash because no tags get needlessly destroyed.
+#         - recolor_range calls invalidate_range so undo works properly.
 #@-at
 #@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
@@ -57,7 +68,14 @@ __version__ = '0.8'
 #@@nocolor
 #@+at
 # 
-# - Eliminate line flash.  This is driving me crazy.
+# - Settings panel crashes with plugin enabled.
+# 
+# - Eliminate line flash on pastes or when a search fails.  This is driving me 
+# crazy.
+# 
+# - Handle c.xml:
+#     - Multiple rules, each with its own <keywords> element.
+#     - <markup> element in <keywords> element.
 # 
 # - Finish all rules:
 #     - mark_previous and mark_following.
@@ -69,6 +87,7 @@ __version__ = '0.8'
 # 
 #@-at
 #@@c
+#@@color
 
 #@<< later >>
 #@+node:ekr.20050603121815:<< later >>
@@ -101,6 +120,8 @@ __version__ = '0.8'
 # - Remove calls to recolor_range from Leo's core.
 # 
 # - Remove incremental keywords from entry points?
+# 
+# - Create forth.xml
 #@-at
 #@nonl
 #@-node:ekr.20050603121815:<< later >>
@@ -177,7 +198,7 @@ default_colors_dict = {
     'literal2'  :('keyword2_color', 'black'),
     'literal3'  :('keyword3_color', 'black'),
     'literal4'  :('keyword4_color', 'black'),
-    'markup'    :('markup_color',   'black'),
+    'markup'    :('markup_color',   'orange'), # What is the reasonable default?
     'operator'  :('operator_color', 'black'),
     }
 #@nonl
@@ -750,6 +771,8 @@ class colorizer:
         self.underline_undefined = c.config.getBool("underline_undefined_section_names")
         self.use_hyperlinks = c.config.getBool("use_hyperlinks")
         # State ivars...
+        self.colored_ranges = {}
+            # Keys are indices, values are tags.
         self.color_pass = 0
         self.comment_string = None # Can be set by @comment directive.
         self.enabled = True # Set to False by unit tests.
@@ -757,6 +780,7 @@ class colorizer:
         self.keywordNumber = 0 # The kind of keyword for keywordsColorHelper.
         self.kill_chunk = False
         self.language = 'python' # set by scanColorDirectives.
+        self.ranges = 0
         self.redoColoring = False # May be set by plugins.
         self.redoingColoring = False
         # Data...
@@ -764,12 +788,23 @@ class colorizer:
         self.modes = {} # Keys are languages, values are bunches with mode and ruleMatchers attributes.
         self.mode = None # The mode object for the present language.
         self.prev_mode = None
-        self.tags = (
+        self.tags = [
             "blank","comment","cwebName","docPart","keyword","leoKeyword",
             "latexModeBackground","latexModeKeyword",
             "latexBackground","latexKeyword",
             "link","name","nameBrackets","pp","string","tab",
-            "elide","bold","bolditalic","italic") # new for wiki styling.
+            "elide","bold","bolditalic","italic", # new for wiki styling.
+            # Leo jEdit tags...
+            '@color', '@nocolor', 'doc_part', 'section_ref',
+            # jEdit tags.
+            'comment1','comment2','comment3','comment4',
+            'function',
+            'keyword1','keyword2','keyword3','keyword4',
+            'label',
+            'literal1','literal2','literal3','literal4',
+            'markup',
+            'operator',
+        ]
         self.word_chars = {} # Inited by init_keywords().
         self.setFontFromConfig()
         self.defineAndExtendForthWords()
@@ -777,7 +812,7 @@ class colorizer:
     #@-node:ekr.20050602150957:__init__
     #@+node:ekr.20050529143413.33:configure_tags
     def configure_tags (self):
-        
+    
         c = self.c
     
         for name in default_colors_dict.keys(): # Python 2.1 support.
@@ -902,7 +937,7 @@ class colorizer:
     #@nonl
     #@-node:ekr.20050529143413.27:defineAndExtendForthWords
     #@+node:ekr.20050602152743:init_keywords
-    def init_keywords (self):
+    def init_keywords (self,mode):
         
         '''Initialize the keywords for the present language.
         
@@ -918,13 +953,14 @@ class colorizer:
         keywords = {}
         for key in leoKeywords:
             keywords[key] = 0
-        if self.mode:
+        if mode:
             for i in (1,2,3,4):
-                keys = self.mode.getKeywords(i)
+                keys = mode.getKeywords(i)
                 for key in keys:
                     if keywords.get(key):
                         print 'keyword %s defined in multiple places' % key
                     keywords[key] = i
+        # g.trace(len(keywords.keys()))
         # Create the word_chars list. 
         word_chars = {}
         for ch in string.letters:
@@ -958,10 +994,10 @@ class colorizer:
                 self.ruleMatchers = None
                 for mode in modeList:
                     if self.language not in self.modes:
-                        # mode.printSummary (printStats=False)
+                        mode.printSummary (printStats=False)
                         self.ruleMatchers = self.createRuleMatchers(mode.rules)
                         self.mode = mode
-                        self.keywords,self.word_chars = self.init_keywords()
+                        self.keywords,self.word_chars = self.init_keywords(mode)
                         self.modes[self.language] = g.bunch(mode=mode,
                             ruleMatchers=self.ruleMatchers,
                             keywords=self.keywords,
@@ -1143,6 +1179,8 @@ class colorizer:
     def colorize(self,p,incremental=False):
         
         '''The main colorizer entry point.'''
+        
+        # g.trace(incremental)
     
         if self.enabled:
             self.incremental=incremental 
@@ -1159,20 +1197,23 @@ class colorizer:
         self.enabled=False
     #@nonl
     #@-node:ekr.20050529143413.28:disable
-    #@+node:ekr.20050529145203.1:recolor_range TO BE REMOVED
+    #@+node:ekr.20050529145203.1:recolor_range
     def recolor_range(self,p,leading,trailing):
         
         '''An entry point for the colorer called from incremental undo code.
         Colorizes the lines between the leading and trailing lines.'''
         
+        # g.trace(leading,trailing)
+        
         if self.enabled:
             self.incremental=True
+            self.invalidate_range(leading,trailing)
             self.updateSyntaxColorer(p)
             return self.colorizeAnyLanguage(p,leading=leading,trailing=trailing)
         else:
             return "ok" # For unit testing.
     #@nonl
-    #@-node:ekr.20050529145203.1:recolor_range TO BE REMOVED
+    #@-node:ekr.20050529145203.1:recolor_range
     #@+node:ekr.20050529143413.84:schedule & idle_colorize
     def schedule(self,p,incremental=0):
         
@@ -1203,12 +1244,12 @@ class colorizer:
         # Init ivars used by colorOneChunk.
         self.chunk_s = s
         self.chunk_i = 0
+        self.chunk_last_i = 0
         self.prev_token = None
         self.follow_token = None
         self.kill_chunk = False
     
         self.colorOneChunk()
-    
     #@-node:ekr.20050601042620:colorAll
     #@+node:ekr.20050529143413.31:colorizeAnyLanguage
     def colorizeAnyLanguage (self,p,leading=None,trailing=None):
@@ -1223,9 +1264,10 @@ class colorizer:
             self.p = p
             self.redoColoring = False
             self.redoingColoring = False
-            if 0: # not self.incremental:
-                self.removeAllTags()
-                self.removeAllImages()
+            if not self.incremental:
+                # self.removeAllTags()
+                # self.removeAllImages()
+                self.colored_ranges = {}
             self.configure_tags()
             g.doHook("init-color-markup",colorer=self,p=self.p,v=self.p)
             s = self.body.getAllText()
@@ -1250,29 +1292,17 @@ class colorizer:
             # Exit only after finishing the row.  This reduces flash.
             if i == 0 or s[i-1] == '\n':
                 if self.kill_chunk: return
-                if count >= 50:
-                    #@                << queue up this method >>
-                    #@+node:ekr.20050601162452.1:<< queue up this method >>
-                    self.chunk_s,self.chunk_i = s,i
-                    self.prev_token,self.follow_token = prev,follow
-                    self.c.frame.top.after_idle(self.colorOneChunk)
-                    #@nonl
-                    #@-node:ekr.20050601162452.1:<< queue up this method >>
-                    #@nl
-                    return
-                #@            << remove all tags from this row >>
-                #@+node:ekr.20050601162452:<< remove all tags from this row >>
-                row,col = g.convertPythonIndexToRowCol(s,i)
-                x1 = '%d.0' % (row+1) ; x2 = '%d.end' % (row+1)
-                
-                for tag in self.tags:
-                    self.body.tag_remove(tag,x1,x2)
-                
-                for tag in self.color_tags_list:
-                    self.body.tag_remove(tag,x1,x2)
-                #@nonl
-                #@-node:ekr.20050601162452:<< remove all tags from this row >>
-                #@nl
+                if self.incremental: # returning causes flash, but greatly increases performance.
+                    if count >= 50:
+                        #@                    << queue up this method >>
+                        #@+node:ekr.20050601162452.1:<< queue up this method >>
+                        self.chunk_s,self.chunk_i = s,i
+                        self.prev_token,self.follow_token = prev,follow
+                        self.c.frame.top.after_idle(self.colorOneChunk)
+                        #@nonl
+                        #@-node:ekr.20050601162452.1:<< queue up this method >>
+                        #@nl
+                        return
             for f,kind,token_type in self.ruleMatchers:
                 n = f(self,s,i)
                 if n > 0:
@@ -1282,6 +1312,8 @@ class colorizer:
             else:
                 # g.trace('no match')
                 i += 1
+    
+        self.removeTagsFromRange(s,self.chunk_last_i,len(s))
     #@nonl
     #@-node:ekr.20050601105358:colorOneChunk
     #@+node:ekr.20050601162452.3:doRule
@@ -1396,40 +1428,30 @@ class colorizer:
         self.flag = False
     #@nonl
     #@-node:ekr.20050603051440:atColorColorHelper & atNocolorColorHelper
-    #@+node:ekr.20050602205810:docPartColorHelper
-    def docPartColorHelper (self,token_type,s,i,j):
+    #@+node:ekr.20050602205810.4:colorRangeWithTag
+    def colorRangeWithTag (self,s,i,j,tag):
         
-        i2 = g.choose(s[i:i+3] == '@doc',i+3,i+1)
-        j2 = g.choose(s[j-2:j] == '@c',j-2,j)
-    
-        self.colorRangeWithTag(s,i,i2,'leoKeyword')
-        self.colorRangeWithTag(s,i2,j2,'docPart')
-        self.colorRangeWithTag(s,j2,j,'leoKeyword')
+        if self.rangeColoredWithTag(i,j,tag):
+            # Remove the old tags to i.
+            self.removeTagsFromRange(s,self.chunk_last_i,i)
+        else:
+            # Remove the old tags to j.
+            self.removeTagsFromRange(s,self.chunk_last_i,j)
+        
+            # Remember the new tags.
+            for k in xrange(i,j):
+                self.colored_ranges[k] = tag
+            
+            # Do the real coloring.
+            row,col = g.convertPythonIndexToRowCol(s,i)
+            x1 = '%d.%d' % (row+1,col)
+            row,col = g.convertPythonIndexToRowCol(s,j)
+            x2 = '%d.%d' % (row+1,col)
+            self.body.tag_add(tag,x1,x2)
+        
+        self.chunk_last_i = j
     #@nonl
-    #@-node:ekr.20050602205810:docPartColorHelper
-    #@+node:ekr.20050602205810.1:sectionRefColorHelper
-    def sectionRefColorHelper (self,token_type,s,i,j):
-        
-        # g.trace(i,j,s[i:j])
-        
-        ## To do: this assumes the 2-character brackets.
-        
-        self.colorRangeWithTag(s,i,i+2,'nameBrackets')
-        self.colorRangeWithTag(s,i+2,j-2,'link')
-        self.colorRangeWithTag(s,j-2,j,'nameBrackets')
-    #@nonl
-    #@-node:ekr.20050602205810.1:sectionRefColorHelper
-    #@+node:ekr.20050602205810.2:keywordsColorHelper
-    def keywordsColorHelper (self,token_type,s,i,j):
-        
-        theList = ('leoKeyword','keyword1','keyword2','keyword3','keyword4',)
-    
-        tag = theList[self.keywordNumber]
-    
-        if tag:
-            self.colorRangeWithTag(s,i,j,tag)
-    #@nonl
-    #@-node:ekr.20050602205810.2:keywordsColorHelper
+    #@-node:ekr.20050602205810.4:colorRangeWithTag
     #@+node:ekr.20050602205810.3:defaultColorHelper
     def defaultColorHelper(self,token_type,s,i,j):
     
@@ -1451,16 +1473,80 @@ class colorizer:
             self.colorRangeWithTag(s,i,j,tag)
     #@nonl
     #@-node:ekr.20050602205810.3:defaultColorHelper
-    #@+node:ekr.20050602205810.4:colorRangeWithTag
-    def colorRangeWithTag (self,s,i,j,tag):
+    #@+node:ekr.20050602205810:docPartColorHelper
+    def docPartColorHelper (self,token_type,s,i,j):
         
+        i2 = g.choose(s[i:i+4] == '@doc',i+4,i+1)
+        if   s[j-5:j] == '@code': j2 = j-5
+        elif s[j-2:j] == '@c': j2 = j-2
+        else: j2 = j
+        
+        # g.trace(i,i2,j2,j)
+    
+        self.colorRangeWithTag(s,i,i2,'leoKeyword')
+        self.colorRangeWithTag(s,i2,j2,'docPart')
+        self.colorRangeWithTag(s,j2,j,'leoKeyword')
+    #@nonl
+    #@-node:ekr.20050602205810:docPartColorHelper
+    #@+node:ekr.20050603202319:invalidate_range
+    def invalidate_range (self,i,j):
+        
+        for k in xrange(i,j):
+            self.colored_ranges[k] = None
+    #@nonl
+    #@-node:ekr.20050603202319:invalidate_range
+    #@+node:ekr.20050602205810.2:keywordsColorHelper
+    def keywordsColorHelper (self,token_type,s,i,j):
+        
+        theList = ('leoKeyword','keyword1','keyword2','keyword3','keyword4',)
+    
+        tag = theList[self.keywordNumber]
+    
+        if tag:
+            self.colorRangeWithTag(s,i,j,tag)
+    #@nonl
+    #@-node:ekr.20050602205810.2:keywordsColorHelper
+    #@+node:ekr.20050602205810.1:sectionRefColorHelper
+    def sectionRefColorHelper (self,token_type,s,i,j):
+        
+        # g.trace(i,j,s[i:j])
+        
+        ## To do: this assumes the 2-character brackets.
+        
+        self.colorRangeWithTag(s,i,i+2,'nameBrackets')
+        self.colorRangeWithTag(s,i+2,j-2,'link')
+        self.colorRangeWithTag(s,j-2,j,'nameBrackets')
+    #@nonl
+    #@-node:ekr.20050602205810.1:sectionRefColorHelper
+    #@+node:ekr.20050603190206:rangeColoredWithTag
+    def rangeColoredWithTag(self,i,j,tag):
+        
+        for k in xrange(i,j):
+            if tag != self.colored_ranges.get(k):
+                return False
+        return True
+    #@nonl
+    #@-node:ekr.20050603190206:rangeColoredWithTag
+    #@+node:ekr.20050603174749:removeTagsFromRange
+    def removeTagsFromRange (self,s,i,j):
+        
+        tags = {}
+        for k in xrange(i,j):
+            tag = self.colored_ranges.get(k)
+            if tag: # Must remove the tag, even if it will be reapplied (to a possibly different range).
+                tags[tag] = None
+                self.colored_ranges[k] = None
+                
         row,col = g.convertPythonIndexToRowCol(s,i)
         x1 = '%d.%d' % (row+1,col)
         row,col = g.convertPythonIndexToRowCol(s,j)
         x2 = '%d.%d' % (row+1,col)
-        self.body.tag_add(tag,x1,x2)
+                
+        for tag in tags.keys():
+            # g.trace(tag,x1,x2)
+            self.body.tag_remove(tag,x1,x2)
     #@nonl
-    #@-node:ekr.20050602205810.4:colorRangeWithTag
+    #@-node:ekr.20050603174749:removeTagsFromRange
     #@-node:ekr.20050601065451:doColor & helpers
     #@-node:ekr.20050529150436:Colorizer code
     #@+node:ekr.20050529143413.89:Utils
@@ -1625,7 +1711,8 @@ class colorizer:
         
         if i != 0 and s[i-1] != '\n': return 0
     
-        if g.match(s,i,seq):
+        if g.match_word(s,i,seq):
+            # g.trace(i)
             self.flag = True # Enable coloring now so @color itself gets colored.
             return len(seq)
         else:
@@ -1639,7 +1726,7 @@ class colorizer:
         if i != 0 and s[i-1] != '\n':
             return 0
     
-        if g.match(s,i,seq):
+        if g.match_word(s,i,seq):
             self.keywordNumber = 0
             return len(seq)
         else:
@@ -1665,6 +1752,7 @@ class colorizer:
         k = self.keywords.get(s[i:j],-1)
         if k > -1:
             self.keywordNumber = k
+            # g.trace(i,s[i:j])
             return j-i
         else:
             return 0
@@ -1770,7 +1858,7 @@ class colorizer:
         if i + 1 >= len(s):
             return 1
             
-        if not g.match(s,i,'@doc') and not s[i+1] in (' ','\t','\n'):
+        if not g.match_word(s,i,'@doc') and not s[i+1] in (' ','\t','\n'):
             return 0
     
         j = i
@@ -1778,10 +1866,13 @@ class colorizer:
             k = s.find('@c',j)
             if k == -1:
                 return len(s) - i
-            if s[k-1] != '\n':
+            if s[k-1] != '\n' or (not g.match_word(s,k,'@c') and not g.match_word(s,k,'@code')):
                 j = j + k + 1
-            else:
+                continue
+            elif g.match_word(s,k,'@c'):
                 return k + 2 - i
+            else:
+                return k + 5 - i
     #@nonl
     #@-node:ekr.20050602211253:match_doc_part
     #@+node:ekr.20050529215620:match_seq_regexp
