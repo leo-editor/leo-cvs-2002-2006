@@ -881,13 +881,17 @@ class baseColorizer:
         #@nl
     #@nonl
     #@-node:ekr.20031218072017.1605:color.__init__
-    #@+node:ekr.20050420083821:disable
+    #@+node:ekr.20050420083821:disable & enable
     def disable (self):
     
-        print "disabling all syntax coloring"
+        # print "disabling all syntax coloring"
         self.enabled=False
+        
+    def enable (self):
+    
+        self.enabled=True
     #@nonl
-    #@-node:ekr.20050420083821:disable
+    #@-node:ekr.20050420083821:disable & enable
     #@+node:ekr.20041217041016:setFontFromConfig
     def setFontFromConfig (self):
         
@@ -2334,23 +2338,21 @@ class nullColorizer (colorizer):
         self.enabled = False
     #@-node:ekr.20031218072017.2219:__init__
     #@+node:ekr.20031218072017.2220:entry points
-    def colorize(self,p,incremental=False):
-        pass
+    def colorize(self,p,incremental=False): pass
+    
+    def disable(self): pass
         
-    def idle_colorize(self):
-        pass
+    def enable(self): pass
+        
+    def idle_colorize(self): pass
             
-    def recolor_range(self,p,leading,trailing):
-        pass
+    def recolor_range(self,p,leading,trailing): pass
     
-    def scanColorDirectives(self,p):
-        pass
+    def scanColorDirectives(self,p): pass
         
-    def schedule(self,p,incremental=0):
-        pass
+    def schedule(self,p,incremental=0): pass
     
-    def updateSyntaxColorer (self,p):
-        pass
+    def updateSyntaxColorer (self,p): pass
     #@nonl
     #@-node:ekr.20031218072017.2220:entry points
     #@-others
