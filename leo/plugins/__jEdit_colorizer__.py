@@ -6,7 +6,7 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = '0.9'
+__version__ = '0.10'
 #@<< version history >>
 #@+node:ekr.20050529142916.2:<< version history >>
 #@@killcolor
@@ -59,6 +59,12 @@ __version__ = '0.9'
 #             - Key performance is optimal.
 #             - There is no flash because no tags get needlessly destroyed.
 #         - recolor_range calls invalidate_range so undo works properly.
+# 0.10 EKR:
+#     - use self.c.frame.top.after(50,self.colorOneChunk) to queue 
+# non-incremental coloring.
+#     - This causes instant display and prompt coloring, even for large text.
+#     - Must call removeAllTags and removeAllImages when clearing the 
+# colored_ranges dict.
 #@-at
 #@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
@@ -69,9 +75,6 @@ __version__ = '0.9'
 #@+at
 # 
 # - Settings panel crashes with plugin enabled.
-# 
-# - Eliminate line flash on pastes or when a search fails.  This is driving me 
-# crazy.
 # 
 # - Handle c.xml:
 #     - Multiple rules, each with its own <keywords> element.
@@ -773,6 +776,7 @@ class colorizer:
         # State ivars...
         self.colored_ranges = {}
             # Keys are indices, values are tags.
+        self.chunk_count = 0
         self.color_pass = 0
         self.comment_string = None # Can be set by @comment directive.
         self.enabled = True # Set to False by unit tests.
@@ -1180,7 +1184,7 @@ class colorizer:
         
         '''The main colorizer entry point.'''
         
-        # g.trace(incremental)
+        g.trace(incremental)
     
         if self.enabled:
             self.incremental=incremental 
@@ -1195,6 +1199,9 @@ class colorizer:
     
         print "disabling all syntax coloring"
         self.enabled=False
+        
+    def enable (self):
+        self.enabled=True
     #@nonl
     #@-node:ekr.20050529143413.28:disable
     #@+node:ekr.20050529145203.1:recolor_range
@@ -1245,8 +1252,6 @@ class colorizer:
         self.chunk_s = s
         self.chunk_i = 0
         self.chunk_last_i = 0
-        self.prev_token = None
-        self.follow_token = None
         self.kill_chunk = False
     
         self.colorOneChunk()
@@ -1265,8 +1270,8 @@ class colorizer:
             self.redoColoring = False
             self.redoingColoring = False
             if not self.incremental:
-                # self.removeAllTags()
-                # self.removeAllImages()
+                self.removeAllTags() # v0.10
+                self.removeAllImages() # 0.10
                 self.colored_ranges = {}
             self.configure_tags()
             g.doHook("init-color-markup",colorer=self,p=self.p,v=self.p)
@@ -1285,19 +1290,29 @@ class colorizer:
         '''Colorize a fixed number of tokens.
         If not done, queue this method again to continue coloring later.'''
         s,i = self.chunk_s,self.chunk_i
-        prev,follow = self.prev_token,self.follow_token
         count = 0
+        self.chunk_count += 1
+        # g.trace('%3d'%(self.chunk_count),self.incremental)
+        if not self.incremental:
+            self.incremental = True
+            #@        << queue up this method the first time >>
+            #@+node:ekr.20050605130806:<< queue up this method the first time >>
+            self.chunk_s,self.chunk_i = s,i
+            self.c.frame.top.after(50,self.colorOneChunk)
+            #@nonl
+            #@-node:ekr.20050605130806:<< queue up this method the first time >>
+            #@nl
+            return
         while i < len(s):
             count += 1
             # Exit only after finishing the row.  This reduces flash.
             if i == 0 or s[i-1] == '\n':
                 if self.kill_chunk: return
-                if self.incremental: # returning causes flash, but greatly increases performance.
+                if self.incremental:
                     if count >= 50:
                         #@                    << queue up this method >>
                         #@+node:ekr.20050601162452.1:<< queue up this method >>
                         self.chunk_s,self.chunk_i = s,i
-                        self.prev_token,self.follow_token = prev,follow
                         self.c.frame.top.after_idle(self.colorOneChunk)
                         #@nonl
                         #@-node:ekr.20050601162452.1:<< queue up this method >>
