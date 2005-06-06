@@ -6,7 +6,7 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = '0.11'
+__version__ = '0.12'
 #@<< version history >>
 #@+node:ekr.20050529142916.2:<< version history >>
 #@@killcolor
@@ -74,6 +74,11 @@ __version__ = '0.11'
 #         - Never clear tags in colorizeAnyLanguage: it cause flash after 
 # colorOneChunk exits.
 #         - Instead, clear by hand was_non_incremental is True.
+# 0.12 EKR:
+#     - Only look up the rules which appear in 
+# self.rulesDict.get(s[i],self.defaultRulesList)
+#     - This should typically reduce the number of rules examined by a factor 
+# of about 10.
 #@-at
 #@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
@@ -788,6 +793,7 @@ class colorizer:
         self.chunk_count = 0
         self.color_pass = 0
         self.comment_string = None # Can be set by @comment directive.
+        self.defaultRulesList = []
         self.enabled = True # Set to False by unit tests.
         self.flag = True # True unless in range of @nocolor
         self.keywordNumber = 0 # The kind of keyword for keywordsColorHelper.
@@ -799,9 +805,10 @@ class colorizer:
         self.was_non_incremental = False # True: we are coloring as the result of a non-incremental call.
         # Data...
         self.keywords = {} # Keys are keywords, values are 0..5.
-        self.modes = {} # Keys are languages, values are bunches with mode and ruleMatchers attributes.
+        self.modes = {} # Keys are languages, values are bunches describing the mode.
         self.mode = None # The mode object for the present language.
         self.prev_mode = None
+        self.rulesDict = {}
         self.tags = [
             "blank","comment","cwebName","docPart","keyword","leoKeyword",
             "latexModeBackground","latexModeKeyword",
@@ -998,23 +1005,27 @@ class colorizer:
         bunch = self.modes.get(self.language)
         if bunch:
             self.mode = bunch.mode
-            self.ruleMatchers = bunch.ruleMatchers
+            self.defaultRulesList=bunch.defaultRulesList
             self.keywords = bunch.keywords
+            self.rulesDict=bunch.rulesDict
             self.word_chars = bunch.word_chars
         else:
             g.trace(self.language)
             modeList = self.parse_jEdit_file(self.language)
             if modeList:
-                self.ruleMatchers = None
                 for mode in modeList:
                     if self.language not in self.modes:
                         mode.printSummary (printStats=False)
-                        self.ruleMatchers = self.createRuleMatchers(mode.rules)
-                        self.mode = mode
                         self.keywords,self.word_chars = self.init_keywords(mode)
-                        self.modes[self.language] = g.bunch(mode=mode,
-                            ruleMatchers=self.ruleMatchers,
+                            # Sets self.word_chars: must be called before createRuleMatchers.
+    
+                        self.createRuleMatchers(mode.rules)
+                            # Sets self.defaultRulesList & self.rulesDict.
+                        self.mode = mode
+                        self.modes[self.language] = b = g.bunch(mode=mode,
+                            defaultRulesList=self.defaultRulesList,
                             keywords=self.keywords,
+                            rulesDict=self.rulesDict,
                             word_chars=self.word_chars)
             else:
                 if self.language:
@@ -1331,7 +1342,7 @@ class colorizer:
                         #@-node:ekr.20050601162452.1:<< queue up this method >>
                         #@nl
                         return
-            for f,kind,token_type in self.ruleMatchers:
+            for f,kind,token_type in self.rulesDict.get(s[i],self.defaultRulesList):
                 n = f(self,s,i)
                 if n > 0:
                     self.doRule(s,i,i+n,kind,token_type)
@@ -1689,16 +1700,23 @@ class colorizer:
     #@+node:ekr.20050530112849:createRuleMatchers
     def createRuleMatchers (self,rules):
         
-        matchers = [
-            self.createAtColorMatcher(),
-            self.createAtNocolorMatcher(),
-            self.createDocPartMatcher(),
-            self.createSectionRefMatcher()
-        ]
-        
-        matchers.extend([self.createRuleMatcher(rule) for rule in rules])
+        self.defaultRulesList = []
+        self.rulesDict = {}
     
-        return matchers
+        # Put the Leo rules first on each list.
+        for key,createMatcher in (
+            ('@',self.createAtColorMatcher),
+            ('@',self.createAtNocolorMatcher),
+            ('@',self.createDocPartMatcher),
+            ('<',self.createSectionRefMatcher),
+        ):
+            f,name,token_type = createMatcher()
+            rulesList = self.rulesDict.get(key,[])
+            rulesList.append((f,name,token_type),)
+            self.rulesDict[key] = rulesList
+            
+        for rule in rules:
+            self.createRuleMatcher(rule)
     #@nonl
     #@-node:ekr.20050530112849:createRuleMatchers
     #@+node:ekr.20050530112849.1:createRuleMatcher
@@ -1716,32 +1734,38 @@ class colorizer:
         end     = d2.get('end','')
         
         if name == 'eol_span':
+            keys = [seq[0]]
             def f(self,s,i,seq=seq,
                 at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start
             ):
                 return self.match_eol_span(s,i,seq,at_line_start,at_ws_end,at_word_start)
         elif name == 'eol_span_regexp':
+            keys = [seq[0]]
             def f(self,s,i,seq=seq,
                 at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start
             ):
                 return self.match_eol_span_regexp(s,i,seq,
                     at_line_start,at_ws_end,at_word_start)
         elif name == 'keywords':
+            keys = self.word_chars
             def f(self,s,i):
                 return self.match_keywords(s,i)
             token_type = 'keywords'
         elif name in ('mark_following','mark_previous','seq'):
+            keys = [seq[0]]
             def f(self,s,i,seq=seq,
                 at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start
             ):
                 return self.match_seq(s,i,seq,at_line_start,at_ws_end,at_word_start)
         elif name == 'seq_regexp':
+            keys = [hash_char]
             def f(self,s,i,seq=seq,hash_char=hash_char,
                 at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start
             ):
                 return self.match_seq_regexp(s,i,seq,hash_char,
                     at_line_start,at_ws_end,at_word_start)
         elif name == 'span':
+            keys = [begin[0]]
             def f(self,s,i,begin=begin,end=end,
                 at_line_start=at_line_start,at_ws_end=at_ws_end,
                 at_word_start=at_word_start,no_line_break=no_line_break
@@ -1749,6 +1773,7 @@ class colorizer:
                 return self.match_span(s,i,begin,end,
                     at_line_start,at_ws_end,at_word_start,no_line_break)
         elif name == 'span_regexp':
+            keys = [hash_char]
             def f(self,s,i,begin=begin,end=end,hash_char=hash_char,
                 at_line_start=at_line_start,at_ws_end=at_ws_end,
                 at_word_start=at_word_start,no_line_break=no_line_break
@@ -1756,12 +1781,21 @@ class colorizer:
                 return self.match_span_regexp(s,i,begin,end,hash_char,
                     at_line_start,at_ws_end,at_word_start,no_line_break)
         else:
+            keys = []
             g.trace('no function for %s' % name)
             def f(self,s,i):
                 return 0
     
+        # Put f,name,token_type in the rulesDict or defaultRulesList.
+        for key in keys:
+            if key in string.printable:
+                rulesList = self.rulesDict.get(key,[])
+                rulesList.append((f,name,token_type),)
+                self.rulesDict[key] = rulesList
+            else:
+                self.defaultRulesList.append((f,name,token_type),)
+    
         # g.trace('%-25s'%(name+':'+token_type),at_line_start,at_ws_end,at_word_start,repr(seq),repr(begin),repr(end))
-        return f,name,token_type
     #@nonl
     #@-node:ekr.20050530112849.1:createRuleMatcher
     #@+node:ekr.20050602204708:createDocPartMatcher & createSectionRefMatcher
@@ -1877,6 +1911,8 @@ class colorizer:
         if at_line_start and i != 0 and s[i-1] != '\n': return 0
         if at_ws_end and i != g.skip_ws(s,0): return 0
         if at_word_start and i > 0 and s[i-1] not in self.word_chars: return 0
+        
+        # g.trace(i,repr(s[i]),repr(seq))
     
         if g.match(s,i,seq):
             j = g.skip_to_end_of_line(s,i)
