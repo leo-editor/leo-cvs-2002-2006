@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- EKR comment out this next line -->
-<!-- DOCTYPE MODE SYSTEM "xmode.dtd" -->
+<!DOCTYPE MODE SYSTEM "xmode.dtd">
 
 <!-- Python mode, by Slava Pestov. Based on PythonTokenMarker by -->
 <!-- Jonathan Revusky -->
@@ -38,15 +37,19 @@
 			<END>'''</END>
 		</SPAN>
 
-		<!-- Standard literals -->
-		<SPAN TYPE="LITERAL1">
+		<!-- Standard literals-->
+		<!-- EKR: added NO_LINE_BREAK="TRUE"-->
+		<SPAN TYPE="LITERAL1" NO_LINE_BREAK="TRUE">
 			<BEGIN>"</BEGIN>
 			<END>"</END>
 		</SPAN>
-		<SPAN TYPE="LITERAL1">
+		<SPAN TYPE="LITERAL1" NO_LINE_BREAK="TRUE">
 			<BEGIN>'</BEGIN>
 			<END>'</END>
 		</SPAN>
+		<!-- EKR: added these 'partial' strings.-->
+		<EOL_SPAN TYPE="LITERAL1">"</EOL_SPAN>
+		<EOL_SPAN TYPE="LITERAL1">'</EOL_SPAN>
 
 		<SEQ TYPE="OPERATOR">=</SEQ>
 		<SEQ TYPE="OPERATOR">!</SEQ>
