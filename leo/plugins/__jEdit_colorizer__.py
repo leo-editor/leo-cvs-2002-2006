@@ -6,7 +6,7 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = '0.10'
+__version__ = '0.11'
 #@<< version history >>
 #@+node:ekr.20050529142916.2:<< version history >>
 #@@killcolor
@@ -65,6 +65,15 @@ __version__ = '0.10'
 #     - This causes instant display and prompt coloring, even for large text.
 #     - Must call removeAllTags and removeAllImages when clearing the 
 # colored_ranges dict.
+# 0.11 EKR:
+#     - Supported no_line_break in match_span.
+#     - Fixed bug in doAttribute so that "TRUE" is recognized correctly.
+#     - Added span_eol rules to python.xml to handle non-terminated ' and " 
+# strings.
+#     - Added was_non_incremental state var and related logic.
+#         - Never clear tags in colorizeAnyLanguage: it cause flash after 
+# colorOneChunk exits.
+#         - Instead, clear by hand was_non_incremental is True.
 #@-at
 #@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
@@ -622,7 +631,7 @@ class modeClass:
         name = str(name.lower())
         
         if name in self.boolAttrs:
-            val = g.choose(val=='True',True,False)
+            val = g.choose(val.lower()=='true',True,False)
         else:
             val = str(val) # Do NOT lower this value!
     
@@ -787,6 +796,7 @@ class colorizer:
         self.ranges = 0
         self.redoColoring = False # May be set by plugins.
         self.redoingColoring = False
+        self.was_non_incremental = False # True: we are coloring as the result of a non-incremental call.
         # Data...
         self.keywords = {} # Keys are keywords, values are 0..5.
         self.modes = {} # Keys are languages, values are bunches with mode and ruleMatchers attributes.
@@ -1184,7 +1194,7 @@ class colorizer:
         
         '''The main colorizer entry point.'''
         
-        g.trace(incremental)
+        # g.trace(incremental)
     
         if self.enabled:
             self.incremental=incremental 
@@ -1269,9 +1279,13 @@ class colorizer:
             self.p = p
             self.redoColoring = False
             self.redoingColoring = False
+            self.was_non_incremental = not self.incremental
+            # g.trace('was_non_incremental',self.was_non_incremental)
             if not self.incremental:
-                self.removeAllTags() # v0.10
-                self.removeAllImages() # 0.10
+                # g.trace('removing tags')
+                if 0: # removing tags causes flash at idle time.
+                    self.removeAllTags()
+                    self.removeAllImages()
                 self.colored_ranges = {}
             self.configure_tags()
             g.doHook("init-color-markup",colorer=self,p=self.p,v=self.p)
@@ -1290,8 +1304,7 @@ class colorizer:
         '''Colorize a fixed number of tokens.
         If not done, queue this method again to continue coloring later.'''
         s,i = self.chunk_s,self.chunk_i
-        count = 0
-        self.chunk_count += 1
+        count = 0 ; self.chunk_count += 1
         # g.trace('%3d'%(self.chunk_count),self.incremental)
         if not self.incremental:
             self.incremental = True
@@ -1415,10 +1428,9 @@ class colorizer:
             '@nocolor':self.atNocolorColorHelper,
         }
         
-        # g.trace(token_type)
-        
         # not in range of @nocolor.
         if self.flag:
+            # g.trace(i,j,token_type)
             helper = helpers.get(token_type,self.defaultColorHelper)
             helper(token_type,s,i,j)
     #@nonl
@@ -1446,24 +1458,30 @@ class colorizer:
     #@+node:ekr.20050602205810.4:colorRangeWithTag
     def colorRangeWithTag (self,s,i,j,tag):
         
-        if self.rangeColoredWithTag(i,j,tag):
+        if self.was_non_incremental:
+            must_color = True
+            self.removeOldTagsFromRange(s,self.chunk_last_i,j)
+        elif self.rangeColoredWithTag(i,j,tag):
+            must_color = False
             # Remove the old tags to i.
             self.removeTagsFromRange(s,self.chunk_last_i,i)
         else:
+            must_color = True
             # Remove the old tags to j.
             self.removeTagsFromRange(s,self.chunk_last_i,j)
-        
+            
             # Remember the new tags.
             for k in xrange(i,j):
                 self.colored_ranges[k] = tag
-            
+        
+        if must_color:
             # Do the real coloring.
             row,col = g.convertPythonIndexToRowCol(s,i)
             x1 = '%d.%d' % (row+1,col)
             row,col = g.convertPythonIndexToRowCol(s,j)
             x2 = '%d.%d' % (row+1,col)
             self.body.tag_add(tag,x1,x2)
-        
+    
         self.chunk_last_i = j
     #@nonl
     #@-node:ekr.20050602205810.4:colorRangeWithTag
@@ -1521,6 +1539,79 @@ class colorizer:
             self.colorRangeWithTag(s,i,j,tag)
     #@nonl
     #@-node:ekr.20050602205810.2:keywordsColorHelper
+    #@+node:ekr.20050603190206:rangeColoredWithTag
+    def rangeColoredWithTag(self,i,j,tag):
+        
+        for k in xrange(i,j):
+            if tag != self.colored_ranges.get(k):
+                return False
+        return True
+    #@nonl
+    #@-node:ekr.20050603190206:rangeColoredWithTag
+    #@+node:ekr.20050605185452:removeOldTagsFromLine (not used)
+    #@+at 
+    #@nonl
+    # Line-by line processing does not work because some tokens span multiple 
+    # lines.
+    #@-at
+    #@@c
+    
+    def removeOldTagsFromLine(self,s,i):
+    
+        row,col = g.convertPythonIndexToRowCol(s,i)
+        x1 = '%d.0' % (row+1)
+        x2 = '%d.0' % (row+2)
+        
+        # g.trace('remove',x1,x2)
+        
+        for tag in self.tags:
+            self.body.tag_remove(tag,x1,x2)
+        
+        for tag in self.color_tags_list:
+            self.body.tag_remove(tag,x1,x2)
+    #@nonl
+    #@-node:ekr.20050605185452:removeOldTagsFromLine (not used)
+    #@+node:ekr.20050605183244:removeOldTagsFromRange
+    def removeOldTagsFromRange(self,s,i,j):
+        
+        '''Remove all tags from range without using the colored_ranges dict.
+        
+        This is executed when a non-incremental redraw clears the colored_ranges dict.'''
+    
+        row,col = g.convertPythonIndexToRowCol(s,i)
+        x1 = '%d.%d' % (row+1,col)
+        row,col = g.convertPythonIndexToRowCol(s,j)
+        x2 = '%d.%d' % (row+1,col)
+                
+        for tag in self.tags:
+            self.body.tag_remove(tag,x1,x2)
+        
+        for tag in self.color_tags_list:
+            self.body.tag_remove(tag,x1,x2)
+    #@nonl
+    #@-node:ekr.20050605183244:removeOldTagsFromRange
+    #@+node:ekr.20050603174749:removeTagsFromRange
+    def removeTagsFromRange (self,s,i,j):
+        
+        tags = {}
+        for k in xrange(i,j):
+            tag = self.colored_ranges.get(k)
+            if tag: # Must remove the tag, even if it will be reapplied (to a possibly different range).
+                tags[tag] = None
+                self.colored_ranges[k] = None
+    
+        row,col = g.convertPythonIndexToRowCol(s,i)
+        x1 = '%d.%d' % (row+1,col)
+        row,col = g.convertPythonIndexToRowCol(s,j)
+        x2 = '%d.%d' % (row+1,col)
+        
+        # g.trace('row',row+1)
+    
+        for tag in tags.keys():
+            # g.trace(tag,x1,x2)
+            self.body.tag_remove(tag,x1,x2)
+    #@nonl
+    #@-node:ekr.20050603174749:removeTagsFromRange
     #@+node:ekr.20050602205810.1:sectionRefColorHelper
     def sectionRefColorHelper (self,token_type,s,i,j):
         
@@ -1533,35 +1624,6 @@ class colorizer:
         self.colorRangeWithTag(s,j-2,j,'nameBrackets')
     #@nonl
     #@-node:ekr.20050602205810.1:sectionRefColorHelper
-    #@+node:ekr.20050603190206:rangeColoredWithTag
-    def rangeColoredWithTag(self,i,j,tag):
-        
-        for k in xrange(i,j):
-            if tag != self.colored_ranges.get(k):
-                return False
-        return True
-    #@nonl
-    #@-node:ekr.20050603190206:rangeColoredWithTag
-    #@+node:ekr.20050603174749:removeTagsFromRange
-    def removeTagsFromRange (self,s,i,j):
-        
-        tags = {}
-        for k in xrange(i,j):
-            tag = self.colored_ranges.get(k)
-            if tag: # Must remove the tag, even if it will be reapplied (to a possibly different range).
-                tags[tag] = None
-                self.colored_ranges[k] = None
-                
-        row,col = g.convertPythonIndexToRowCol(s,i)
-        x1 = '%d.%d' % (row+1,col)
-        row,col = g.convertPythonIndexToRowCol(s,j)
-        x2 = '%d.%d' % (row+1,col)
-                
-        for tag in tags.keys():
-            # g.trace(tag,x1,x2)
-            self.body.tag_remove(tag,x1,x2)
-    #@nonl
-    #@-node:ekr.20050603174749:removeTagsFromRange
     #@-node:ekr.20050601065451:doColor & helpers
     #@-node:ekr.20050529150436:Colorizer code
     #@+node:ekr.20050529143413.89:Utils
@@ -1647,33 +1709,52 @@ class colorizer:
         at_line_start = d.get('at_line_start',False)
         at_ws_end     = d.get('at_ws_end',False)
         at_word_start = d.get('at_word_start',False)
+        no_line_break = d.get('no_line_break',False)
         d2 = rule.get('contents',{})
         seq     = d2.get(name,'')
         begin   = d2.get('begin','')
         end     = d2.get('end','')
         
         if name == 'eol_span':
-            def f(self,s,i,seq=seq,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
+            def f(self,s,i,seq=seq,
+                at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start
+            ):
                 return self.match_eol_span(s,i,seq,at_line_start,at_ws_end,at_word_start)
         elif name == 'eol_span_regexp':
-            def f(self,s,i,seq=seq,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
-                return self.match_eol_span_regexp(s,i,seq,at_line_start,at_ws_end,at_word_start)
+            def f(self,s,i,seq=seq,
+                at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start
+            ):
+                return self.match_eol_span_regexp(s,i,seq,
+                    at_line_start,at_ws_end,at_word_start)
         elif name == 'keywords':
             def f(self,s,i):
                 return self.match_keywords(s,i)
             token_type = 'keywords'
         elif name in ('mark_following','mark_previous','seq'):
-            def f(self,s,i,seq=seq,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
+            def f(self,s,i,seq=seq,
+                at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start
+            ):
                 return self.match_seq(s,i,seq,at_line_start,at_ws_end,at_word_start)
         elif name == 'seq_regexp':
-            def f(self,s,i,seq=seq,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
-                return self.match_seq_regexp(s,i,seq,at_line_start,at_ws_end,at_word_start)
+            def f(self,s,i,seq=seq,hash_char=hash_char,
+                at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start
+            ):
+                return self.match_seq_regexp(s,i,seq,hash_char,
+                    at_line_start,at_ws_end,at_word_start)
         elif name == 'span':
-            def f(self,s,i,begin=begin,end=end,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
-                return self.match_span(s,i,begin,end,at_line_start,at_ws_end,at_word_start)
+            def f(self,s,i,begin=begin,end=end,
+                at_line_start=at_line_start,at_ws_end=at_ws_end,
+                at_word_start=at_word_start,no_line_break=no_line_break
+            ):
+                return self.match_span(s,i,begin,end,
+                    at_line_start,at_ws_end,at_word_start,no_line_break)
         elif name == 'span_regexp':
-            def f(self,s,i,begin=begin,end=end,at_line_start=at_line_start,at_ws_end=at_ws_end,at_word_start=at_word_start):
-                return self.match_span_regexp(s,i,begin,end,at_line_start,at_ws_end,at_word_start)
+            def f(self,s,i,begin=begin,end=end,hash_char=hash_char,
+                at_line_start=at_line_start,at_ws_end=at_ws_end,
+                at_word_start=at_word_start,no_line_break=no_line_break
+            ):
+                return self.match_span_regexp(s,i,begin,end,hash_char,
+                    at_line_start,at_ws_end,at_word_start,no_line_break)
         else:
             g.trace('no function for %s' % name)
             def f(self,s,i):
@@ -1891,7 +1972,8 @@ class colorizer:
     #@nonl
     #@-node:ekr.20050602211253:match_doc_part
     #@+node:ekr.20050529215620:match_seq_regexp
-    def match_seq_regexp (self,s,i,seq,at_line_start,at_ws_end,at_word_start,hash_char):
+    def match_seq_regexp (self,s,i,seq,hash_char,
+        at_line_start,at_ws_end,at_word_start):
         
         '''Return the length of a matched SEQ_REGEXP or 0 if no match.
     
@@ -1912,13 +1994,15 @@ class colorizer:
     #@nonl
     #@-node:ekr.20050529215620:match_seq_regexp
     #@+node:ekr.20050529185208.2:match_span
-    def match_span (self,s,i,begin,end,at_line_start,at_ws_end,at_word_start):
+    def match_span (self,s,i,begin,end,
+        at_line_start,at_ws_end,at_word_start,no_line_break):
         
         '''Return the length of a matched SPAN or 0 if no match.
     
         'at_line_start':    True: sequence must start the line.
         'at_ws_end':        True: sequence must be first non-whitespace text of the line.
-        'at_word_start':    True: sequence must start a word.'''
+        'at_word_start':    True: sequence must start a word.
+        'no_line_break':    True: sequence must not cross a line.'''
         
         if at_line_start and i != 0 and s[i-1] != '\n': return 0
         if at_ws_end and i != g.skip_ws(s,0): return 0
@@ -1927,20 +2011,25 @@ class colorizer:
         if g.match(s,i,begin):
             j = s.find(end,i+len(begin))
             if j > -1:
-                return j + len(end) - i
+                # g.trace(no_line_break,i,j,repr(s[i:j]))
+                if no_line_break and '\n' in s[i:j]:
+                    return 0
+                else:
+                    return j + len(end) - i
             else:
                 return 0
         else:
             return 0
-    #@nonl
     #@-node:ekr.20050529185208.2:match_span
     #@+node:ekr.20050529215732:match_span_regexp
-    def match_span_regexp (self,s,i,begin,end,hash_char):
+    def match_span_regexp (self,s,i,begin,end,hash_char,
+        at_line_start,at_ws_end,at_word_start,no_line_break):
         
         '''Return the length of a matched SPAN_REGEXP or 0 if no match.
     
         'at_line_start':    True: sequence must start the line.
         'at_ws_end':        True: sequence must be first non-whitespace text of the line.
+        'at_word_start':    True: sequence must start a word.
         'at_word_start':    True: sequence must start a word.
         'hash_char':        The first character of the regexp (for speed).'''
         
