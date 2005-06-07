@@ -6,10 +6,12 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = '0.12'
+__version__ = '0.13'
 #@<< version history >>
 #@+node:ekr.20050529142916.2:<< version history >>
 #@@killcolor
+#@+others
+#@+node:ekr.20050607075752:0.1 through 0.5
 #@+at
 # 
 # 0.1 EKR: Initial version:
@@ -27,6 +29,12 @@ __version__ = '0.12'
 #     - Giant step forward 2: no need for incremental coloring!
 #     - Giant step forward 3: eliminated flashing & eliminated most calls to 
 # removeAllTags.
+#@-at
+#@nonl
+#@-node:ekr.20050607075752:0.1 through 0.5
+#@+node:ekr.20050607080236:0.6 through 0.10
+#@+at
+# 
 # 0.6 EKR:
 #     - Removed unused code and ivars.
 #     - Added support for keywords, including Leo keywords and expanded 
@@ -65,6 +73,12 @@ __version__ = '0.12'
 #     - This causes instant display and prompt coloring, even for large text.
 #     - Must call removeAllTags and removeAllImages when clearing the 
 # colored_ranges dict.
+#@-at
+#@nonl
+#@-node:ekr.20050607080236:0.6 through 0.10
+#@+node:ekr.20050607075752.1:0.11 up
+#@+at
+# 
 # 0.11 EKR:
 #     - Supported no_line_break in match_span.
 #     - Fixed bug in doAttribute so that "TRUE" is recognized correctly.
@@ -79,7 +93,29 @@ __version__ = '0.12'
 # self.rulesDict.get(s[i],self.defaultRulesList)
 #     - This should typically reduce the number of rules examined by a factor 
 # of about 10.
+# 0.13 EKR:
+#     - Duplicated nullColorizer in this file so it derives from proper base 
+# class.
+#       This fixes the crash in the settings panel.
+#     - colorRangeWithTag now always sets colored_ranges when doing any real 
+# coloring.
+#       This fixes a bug in which old tags weren't always cleared.
+#     - Colorized hyperlinks and undefined sections correctly.
+#     - Changed contentHandler so and parse_jEdit_file so parse_jEdit_file 
+# returns a single mode.
+#         - It is now an error for more than one mode to appear in an xml 
+# file.
+#     - Many changes to handle multiple rulesets properly:
+#         - Added logic to initMode and initKeywords to handle multiple 
+# rulesets.
+#         - created rulesetClass.
+#         - created following mode ivars:
+#             - modeProperties, 
+# rulesetProperties,presentProperty,rulesetAttributes.
 #@-at
+#@nonl
+#@-node:ekr.20050607075752.1:0.11 up
+#@-others
 #@nonl
 #@-node:ekr.20050529142916.2:<< version history >>
 #@nl
@@ -88,19 +124,17 @@ __version__ = '0.12'
 #@@nocolor
 #@+at
 # 
-# - Settings panel crashes with plugin enabled.
-# 
 # - Handle c.xml:
-#     - Multiple rules, each with its own <keywords> element.
-#     - <markup> element in <keywords> element.
+#     - Handle delegated rulesets (for preprocessor keywords)
+#         - Make sure <markup> element in <keywords> element work in delegate.
+# - Support NO_WORD_SEP, IGNORE_CASE and DEFAULT attributes in rules element.
+#     - Later: support DIGIT_RE and HIGHLIGHT_DIGITS attributes in rules 
+# element.
 # 
 # - Finish all rules:
 #     - mark_previous and mark_following.
 #     - match_regexp_helper.
-# 
-# - Support NO_WORD_SEP, IGNORE_CASE and DEFAULT attributes in rules element.
-#     - Later: support DIGIT_RE and HIGHLIGHT_DIGITS attributes in rules 
-# element.
+# - Test colorizing of hyperlinks.
 # 
 #@-at
 #@@c
@@ -237,7 +271,11 @@ def onStart1 (tag, keywords):
     
     import leoColor
     
+    leoColor.colorizer = baseColorizer
+    
     leoColor.colorizer = colorizer
+    
+    leoColor.nullColorizer = nullColorizer
 #@nonl
 #@-node:ekr.20050529142916.5:onStart1
 #@+node:ekr.20050530065723.58:class contentHandler (xml.sax.saxutils.XMLGenerator)
@@ -245,7 +283,7 @@ class contentHandler (xml.sax.saxutils.XMLGenerator):
     
     '''A sax content handler class that handles jEdit language-description files.
     
-    Creates a list of modes that can be retrieved using getModes method.'''
+    Creates mode that can be retrieved using getMode method.'''
 
     #@    @+others
     #@+node:ekr.20050530065723.59: __init__ & helpers
@@ -466,7 +504,10 @@ class contentHandler (xml.sax.saxutils.XMLGenerator):
         elementName = elementName.lower()
         
         if elementName == 'mode':
-            self.mode = modeClass(self,self.fileName)
+            if self.mode:
+                self.error('Multiple modes')
+            else:
+                self.mode = modeClass(self,self.fileName)
         elif self.mode:
             self.mode.startElement(elementName)
             for bunch in self.attrsToList(attrs):
@@ -486,10 +527,8 @@ class contentHandler (xml.sax.saxutils.XMLGenerator):
             print '</' + self.clean(elementName).strip() + '>'
             
         if elementName.lower() == 'mode':
-            self.modes.append(self.mode)
             if self.verbose:
                 self.mode.printSummary()
-            self.mode = None
         elif self.mode:
             self.mode.endElement(elementName)
         else:
@@ -498,12 +537,12 @@ class contentHandler (xml.sax.saxutils.XMLGenerator):
                 self.error('Attribute appears outside of Mode:%s' %bunch.name)
     #@nonl
     #@-node:ekr.20050530065723.76:doEndElement
-    #@+node:ekr.20050530071955:getModes
-    def getModes (self):
+    #@+node:ekr.20050530071955:getMode
+    def getMode (self):
         
-        return self.modes
+        return self.mode
     #@nonl
-    #@-node:ekr.20050530071955:getModes
+    #@-node:ekr.20050530071955:getMode
     #@-others
 #@nonl
 #@-node:ekr.20050530065723.58:class contentHandler (xml.sax.saxutils.XMLGenerator)
@@ -551,11 +590,13 @@ class modeClass:
         self.inProps = False
         self.inRules = False
         self.keywords = None
-        self.props = []
-        self.property = None
+        self.rulesetProperties = []
+        self.modeProperties = []
+        self.presentProperty = None # A bunch to be assigned to modeProperties or rulesetProperties.
         self.rule = None
-        self.rules = []
-        self.rulesAttributes = {}
+        self.ruleSets = []
+        self.rules = [] # The rules of the present rules element.
+        self.rulesetAttributes = {} # The attributes of the present rules element.
     #@nonl
     #@-node:ekr.20050530065723.50: mode.__init__
     #@+node:ekr.20050530073825: mode.__str__ & __repr__
@@ -567,25 +608,25 @@ class modeClass:
     #@nonl
     #@-node:ekr.20050530073825: mode.__str__ & __repr__
     #@+node:ekr.20050530081700: Printing...
-    #@+node:ekr.20050530075602:printModeAttributes, printRuleAttributes & printAttributesHelper
+    #@+node:ekr.20050530075602:printModeAttributes, printRulesetAttributes & printAttributesHelper
     def printModeAttributes (self):
         
         self.printAttributesHelper('mode attributes',self.attributes)
         
-    def printRuleAttributes (self):
+    def printRulesetAttributes (self):
         
-        self.printAttributesHelper('rule attributes',self.rulesAttributes)
+        self.printAttributesHelper('rule attributes',self.rulesetAttributes)
         
     def printAttributesHelper (self,kind,attrs):
         
         print '%-20s' % (kind),'attrs:',attrs
     #@nonl
-    #@-node:ekr.20050530075602:printModeAttributes, printRuleAttributes & printAttributesHelper
+    #@-node:ekr.20050530075602:printModeAttributes, printRulesetAttributes & printAttributesHelper
     #@+node:ekr.20050530080452:printProperty
-    def printProperty (self,property):
+    def printProperty (self,theProperty):
         
         # A property is a bunch.
-        d = property.attributes
+        d = theProperty.attributes
         if d:
             self.printAttributesHelper('property',d)
     #@nonl
@@ -596,7 +637,7 @@ class modeClass:
         # A rule is a g.Bunch.
         if rule.name == 'keywords':
             print '%-20s' % ('rule:keywords'),
-            for key in ('keyword1','keyword2','keyword3','keyword4'):
+            for key in ('keyword1','keyword2','keyword3','keyword4','markup',):
                 theList = rule.get(key,[])
                 print key,len(theList),
             print
@@ -622,8 +663,8 @@ class modeClass:
             print 'rule attributes',self.numberOfRuleAttributes
     
         self.printModeAttributes()
-        self.printRuleAttributes()
-        for bunch in self.props:
+        self.printRulesetAttributes()
+        for bunch in self.modeProperties:
             self.printProperty(bunch)
         for rule in self.rules:
             self.printRule(rule)
@@ -644,12 +685,12 @@ class modeClass:
             d = self.rule.get('attributes')
             d [name] = val
             self.numberOfRuleAttributes += 1
-        elif self.property:
-            d = self.property.get('attributes')
+        elif self.presentProperty:
+            d = self.presentProperty.get('attributes')
             d [name] = val
             self.numberOfPropertyAttributes += 1
         elif self.inRules:
-            self.rulesAttributes[name] = val
+            self.rulesetAttributes[name] = val
             self.numberOfAttributes += 1
         else:
             self.attributes[name] = val
@@ -664,12 +705,12 @@ class modeClass:
         
         name = str(elementName.lower())
     
-        if name in ('keyword1','keyword2','keyword3','keyword4'):
+        if name in ('keyword1','keyword2','keyword3','keyword4','markup',):
             if self.inRule('keywords'):
                 theList = self.rule.get(name,[])
                 theList.append(content)
                 self.rule[name] = theList
-            else:
+            elif name != 'markup':
                 self.error('%d not in keywords' % name)
     
         elif self.rule:
@@ -688,12 +729,18 @@ class modeClass:
             self.inProps = True
         if name == 'rules':
             self.inRules = False
+            ruleset = rulesetClass(self.rulesetAttributes,self.keywords,self.rulesetProperties,self.rules)
+            self.ruleSets.append(ruleset)
         if name == 'property':
-            if self.property:
-                self.props.append(self.property)
-                self.property = None
+            bunch = self.presentProperty
+            if bunch:
+                if self.inRules:
+                    self.rulesetProperties.append(bunch)
+                else:
+                    self.modeProperties.append(bunch)
             else:
                 self.error('end %s not matched by start %s' % (name,name))
+            self.presentProperty = None
         if name in self.ruleElements:
             if self.inRule(name):
                 self.rules.append(self.rule)
@@ -714,26 +761,56 @@ class modeClass:
     def getAttributes (self):
         return self.attributes
         
+    def getAttributesForRuleset (self,ruleset):
+        bunch = ruleset
+        return bunch.attributes
+        
     def getFileName (self):
         return self.fileName
         
-    def getKeywords (self,n):
-        keywords = self.keywords
+    def getKeywords (self,n,ruleset):
+        bunch = ruleset
+        keywords = bunch.keywords
         if keywords:
             return keywords.get('keyword%d'%(n),[])
-        else:
-            return []
-        
+        return []
+    
     def getLanguage (self):
         path,name = g.os_path_split(self.fileName)
         language,ext = g.os_path_splitext(name)
         return language
     
-    def getProperties (self):
+    def getPropertiesForMode (self):
         return self.props
         
-    def getRules (self):
-        return self.rules
+    def getPropertiesForRuleset (self,name=''):
+        bunch = self.getRuleset(name)
+        if bunch:
+            return bunch.properties
+        else:
+            return []
+        
+    def getRuleset(self,rule,name=''):
+        if name:
+            for ruleset in self.ruleSets:
+                attrs = self.getAttributesForRuleset
+                name2 = attrs.get('SET')
+                if name2 == name:
+                    return ruleset
+            else:
+                return None
+        else:
+            return self.ruleSets[0] # Return the main ruleset.
+            
+    def getRulesets(self):
+        return self.ruleSets
+        
+    def getRulesForRuleset (self,name=''):
+        bunch = self.getRuleset(name)
+        if bunch:
+            return bunch.rules
+        else:
+            return []
     #@nonl
     #@-node:ekr.20050530074431:getters
     #@+node:ekr.20050530065723.55:inRule
@@ -751,9 +828,13 @@ class modeClass:
             self.inProps = True
         if name == 'rules':
             self.inRules = True
+            self.attributes=[]
+            self.keywords=[]
+            self.rulesetProperties=[]
+            self.rules=[]
         if name == 'property':
             if self.inProps:
-                self.property = g.bunch(name=name,attributes={})
+                self.presentProperty = g.bunch(name=name,attributes={})
             else:
                 self.error('property not in props element')
         if name in self.ruleElements:
@@ -768,11 +849,27 @@ class modeClass:
     #@-others
 #@nonl
 #@-node:ekr.20050530065723.49:class modeClass
-#@+node:ekr.20050529143413.4:class colorizer
-class colorizer:
+#@+node:ekr.20050607073917.1:class rulesetClass
+class rulesetClass:
     
-    '''New colorizer using jEdit language description files'''
+    #@    @+others
+    #@+node:ekr.20050607073917.2:ctor
+    def __init__ (self,attributes,keywords,properties,rules):
+            
+        self.name=attributes.get('SET','')
+        self.attributes=attributes.copy()
+        self.properties=properties[:]
+        self.keywords=keywords
+        self.rules=rules
+    #@nonl
+    #@-node:ekr.20050607073917.2:ctor
+    #@-others
+#@nonl
+#@-node:ekr.20050607073917.1:class rulesetClass
+#@+node:ekr.20050606214036:class colorizer (baseColorizer)
+class baseColorizer:
 
+    '''New colorizer using jEdit language description files'''
     #@    @+others
     #@+node:ekr.20050529143413.24:Birth and init
     #@+node:ekr.20050602150957:__init__
@@ -958,13 +1055,12 @@ class colorizer:
     #@nonl
     #@-node:ekr.20050529143413.27:defineAndExtendForthWords
     #@+node:ekr.20050602152743:init_keywords
-    def init_keywords (self,mode):
+    def init_keywords (self,mode,ruleset):
         
         '''Initialize the keywords for the present language.
         
          Set word_chars to all non-alpha characters appearing in any keyword'''
     
-        g.trace(self.language)
         # Add any new user keywords to leoKeywords.
         for d in g.globalDirectiveList:
             name = '@' + d
@@ -974,13 +1070,13 @@ class colorizer:
         keywords = {}
         for key in leoKeywords:
             keywords[key] = 0
-        if mode:
-            for i in (1,2,3,4):
-                keys = mode.getKeywords(i)
-                for key in keys:
-                    if keywords.get(key):
-                        print 'keyword %s defined in multiple places' % key
-                    keywords[key] = i
+    
+        for i in (1,2,3,4):
+            keys = mode.getKeywords(i,ruleset)
+            for key in keys:
+                if keywords.get(key):
+                    print 'keyword %s defined in multiple places' % key
+                keywords[key] = i
         # g.trace(len(keywords.keys()))
         # Create the word_chars list. 
         word_chars = {}
@@ -991,10 +1087,15 @@ class colorizer:
                 for ch in word:
                     word_chars[ch] = None
         if 0: # Testing.
+            #@        << compute extra_word_chars >>
+            #@+node:ekr.20050607073917:<< compute extra_word_chars >>
             extra_word_chars = {}
             for ch in word_chars:
                 if ch not in string.letters and ch not in extra_word_chars:
                     extra_word_chars[ch] = None
+            #@nonl
+            #@-node:ekr.20050607073917:<< compute extra_word_chars >>
+            #@nl
                 
         return keywords,word_chars
     #@nonl
@@ -1002,6 +1103,7 @@ class colorizer:
     #@+node:ekr.20050602150619:init_mode
     def init_mode (self):
         
+        # bunch = self.modes.get(self.language)
         bunch = self.modes.get(self.language)
         if bunch:
             self.mode = bunch.mode
@@ -1010,27 +1112,25 @@ class colorizer:
             self.rulesDict=bunch.rulesDict
             self.word_chars = bunch.word_chars
         else:
-            g.trace(self.language)
-            modeList = self.parse_jEdit_file(self.language)
-            if modeList:
-                for mode in modeList:
-                    if self.language not in self.modes:
-                        mode.printSummary (printStats=False)
-                        self.keywords,self.word_chars = self.init_keywords(mode)
-                            # Sets self.word_chars: must be called before createRuleMatchers.
-    
-                        self.createRuleMatchers(mode.rules)
-                            # Sets self.defaultRulesList & self.rulesDict.
-                        self.mode = mode
-                        self.modes[self.language] = b = g.bunch(mode=mode,
-                            defaultRulesList=self.defaultRulesList,
-                            keywords=self.keywords,
-                            rulesDict=self.rulesDict,
-                            word_chars=self.word_chars)
-            else:
-                if self.language:
-                    g.trace('No language description for %s' % self.language)
-                self.mode = None
+            self.mode = mode = self.parse_jEdit_file(self.language)
+            if mode:
+                g.trace(self.language)
+                # Handle only the main rulese here.
+                rulesets = mode.getRulesets()
+                ruleset = rulesets[0]
+                # mode.printSummary (printStats=False)
+                self.keywords,self.word_chars = self.init_keywords(mode,ruleset)
+                    # Sets self.word_chars: must be called before createRuleMatchers.
+                self.createRuleMatchers(ruleset.rules)
+                    # Sets self.defaultRulesList & self.rulesDict.
+                bunch = g.bunch(mode=mode,
+                    defaultRulesList=self.defaultRulesList,
+                    keywords=self.keywords,
+                    rulesDict=self.rulesDict,
+                    word_chars=self.word_chars)
+                self.modes[self.language] = bunch
+            elif self.language:
+                g.trace('No language description for %s' % self.language)
     #@nonl
     #@-node:ekr.20050602150619:init_mode
     #@+node:ekr.20050530065723.47:parse_jEdit_file
@@ -1045,8 +1145,6 @@ class colorizer:
         path = os.path.join(g.app.loadDir,'../','modes',fileName)
         path = os.path.normpath(path)
         
-        g.trace(path)
-        
         try: f = open(path)
         except IOError:
             g.trace('can not open %s'%path)
@@ -1054,7 +1152,7 @@ class colorizer:
     
         try:
             try:
-                modes = None
+                mode = None
                 parser = xml.sax.make_parser()
                 # Do not include external general entities.
                 # The actual feature name is "http://xml.org/sax/features/external-general-entities"
@@ -1062,15 +1160,14 @@ class colorizer:
                 handler = contentHandler(self.c,fileName,verbose=verbose)
                 parser.setContentHandler(handler)
                 parser.parse(f)
-                if verbose: handler.printSummary()
-                modes = handler.getModes()
+                # if verbose: handler.printSummary()
+                mode = handler.getMode()
             except:
                 g.es('unexpected exception parsing %s' % (fileName),color='red')
                 g.es_exception()
-                return None
         finally:
             f.close()
-            return modes
+            return mode
     #@nonl
     #@-node:ekr.20050530065723.47:parse_jEdit_file
     #@+node:ekr.20050529143413.81:scanColorDirectives
@@ -1480,12 +1577,12 @@ class colorizer:
             must_color = True
             # Remove the old tags to j.
             self.removeTagsFromRange(s,self.chunk_last_i,j)
-            
+    
+        if must_color:
             # Remember the new tags.
             for k in xrange(i,j):
                 self.colored_ranges[k] = tag
-        
-        if must_color:
+    
             # Do the real coloring.
             row,col = g.convertPythonIndexToRowCol(s,i)
             x1 = '%d.%d' % (row+1,col)
@@ -1624,14 +1721,39 @@ class colorizer:
     #@nonl
     #@-node:ekr.20050603174749:removeTagsFromRange
     #@+node:ekr.20050602205810.1:sectionRefColorHelper
+    ## To do: this assumes the 2-character brackets.
+    
     def sectionRefColorHelper (self,token_type,s,i,j):
         
         # g.trace(i,j,s[i:j])
         
-        ## To do: this assumes the 2-character brackets.
-        
         self.colorRangeWithTag(s,i,i+2,'nameBrackets')
-        self.colorRangeWithTag(s,i+2,j-2,'link')
+    
+        ref = g.findReference(s[i:j],self.p)
+        if ref:
+            if self.use_hyperlinks:
+                #@            << set the hyperlink >>
+                #@+node:ekr.20050607065634:<< set the hyperlink >>
+                # Set the bindings to vnode callbacks.
+                # Create the tag.
+                # Create the tag name.
+                tagName = "hyper" + str(self.hyperCount)
+                self.hyperCount += 1
+                self.body.tag_delete(tagName)
+                self.tag(tagName,i+2,j)
+                
+                ref.tagName = tagName
+                self.body.tag_bind(tagName,"<Control-1>",ref.OnHyperLinkControlClick)
+                self.body.tag_bind(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
+                self.body.tag_bind(tagName,"<Any-Leave>",ref.OnHyperLinkLeave)
+                #@nonl
+                #@-node:ekr.20050607065634:<< set the hyperlink >>
+                #@nl
+            else:
+                self.colorRangeWithTag(s,i+2,j-2,'link')
+        else:
+            self.colorRangeWithTag(s,i+2,j-2,'name')
+    
         self.colorRangeWithTag(s,j-2,j,'nameBrackets')
     #@nonl
     #@-node:ekr.20050602205810.1:sectionRefColorHelper
@@ -1717,6 +1839,14 @@ class colorizer:
             
         for rule in rules:
             self.createRuleMatcher(rule)
+            
+        if 0:
+            total = 0 ; n = len(self.rulesDict.keys())
+            for key in self.rulesDict.keys():
+                theList = self.rulesDict.get(key,[])
+                total += len(theList)
+            total += len(self.defaultRulesList)
+            print 'mean length of rules list: %0.3f' % (float(total)/float(n+1))
     #@nonl
     #@-node:ekr.20050530112849:createRuleMatchers
     #@+node:ekr.20050530112849.1:createRuleMatcher
@@ -2085,8 +2215,46 @@ class colorizer:
     #@-node:ekr.20050529215732:match_span_regexp
     #@-node:ekr.20050529180421.47:Rule matching methods
     #@-others
+
+class colorizer (baseColorizer):
+    pass
 #@nonl
-#@-node:ekr.20050529143413.4:class colorizer
+#@-node:ekr.20050606214036:class colorizer (baseColorizer)
+#@+node:ekr.20050606213440:class nullColorizer (colorizer)
+class nullColorizer (colorizer):
+    
+    """A do-nothing colorer class"""
+    
+    #@    @+others
+    #@+node:ekr.20050606213440.1:__init__
+    def __init__ (self,c):
+        
+        colorizer.__init__(self,c) # init the base class.
+    
+        self.c = c
+        self.enabled = False
+    #@-node:ekr.20050606213440.1:__init__
+    #@+node:ekr.20050606213440.2:entry points
+    def colorize(self,p,incremental=False): pass
+    
+    def disable(self): pass
+        
+    def enable(self): pass
+        
+    def idle_colorize(self): pass
+            
+    def recolor_range(self,p,leading,trailing): pass
+    
+    def scanColorDirectives(self,p): pass
+        
+    def schedule(self,p,incremental=0): pass
+    
+    def updateSyntaxColorer (self,p): pass
+    #@nonl
+    #@-node:ekr.20050606213440.2:entry points
+    #@-others
+#@nonl
+#@-node:ekr.20050606213440:class nullColorizer (colorizer)
 #@-others
 #@nonl
 #@-node:ekr.20050529142847:@thin __jEdit_colorizer__.py
