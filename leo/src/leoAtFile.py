@@ -3996,31 +3996,15 @@ class atFile:
             ("@others",at.othersDirective),
             ("@raw",at.rawDirective))
             
-        if 1: # new code
-            if i+1 > n or s[i+1] in (' ','\t','\n'):
-                # Bare '@' not recognized in cweb mode.
-                return g.choose(at.language=="cweb",at.noDirective,at.atDirective)
-            if s[i+1] not in string.ascii_letters:
-                return at.noDirective # Bug fix: 6/8/04: do NOT return miscDirective.
-            if at.language=="cweb" and g.match_word(s,i,'@c'):
-                return at.noDirective
+        # Rewritten 6/8/2005.
+        if i+1 >= n or s[i+1] in (' ','\t','\n'):
+            # Bare '@' not recognized in cweb mode.
+            return g.choose(at.language=="cweb",at.noDirective,at.atDirective)
+        if s[i+1] not in string.ascii_letters:
+            return at.noDirective # Bug fix: do NOT return miscDirective here!
+        if at.language=="cweb" and g.match_word(s,i,'@c'):
+            return at.noDirective
         
-        else: # old code: did not handle @(nonalpha properly)
-    
-            # This code rarely gets executed, so simple code suffices.
-            if i+1 >= n or g.match(s,i,"@ ") or g.match(s,i,"@\t") or g.match(s,i,"@\n"):
-                # 10/25/02: @space is not recognized in cweb mode.
-                # Noweb doc parts are _never_ scanned in cweb mode.
-                return g.choose(at.language=="cweb",
-                    at.noDirective,at.atDirective)
-    
-            # @c and @(nonalpha) are not recognized in cweb mode.
-            # We treat @(nonalpha) separately because @ is in the colorizer table.
-            if at.language=="cweb" and (
-                g.match_word(s,i,"@c") or
-                i+1>= n or s[i+1] not in string.ascii_letters):
-                return at.noDirective
-    
         for name,directive in table:
             if g.match_word(s,i,name):
                 return directive
