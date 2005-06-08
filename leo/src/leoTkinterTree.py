@@ -268,7 +268,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         self.redrawing = False # Used only to disable traces.
         self.trace = False
-        self.verbose = False
+        self.verbose = True
         self.useBindtags = True
         self.generation = 0
         self.dragging = False
@@ -2587,8 +2587,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 insertSpot = c.frame.body.getInsertionPoint()
                 
                 if old_p != p:
-                    if self.trace and self.verbose:
-                        g.trace("unselect:",old_p.headString())
+                    # g.trace("unselect:",old_p.headString())
                     self.endEditLabel() # sets editPosition = None
                     self.setUnselectedLabelState(old_p)
                 
@@ -2622,6 +2621,8 @@ class leoTkinterTree (leoFrame.leoTree):
                 c.frame.bodyCtrl.see(p.v.t.insertSpot)
             else:
                 c.frame.bodyCtrl.mark_set("insert","1.0")
+                
+            # g.trace("select:",p.headString())
             #@nonl
             #@-node:ekr.20040803072955.130:<< select the new node >>
             #@nl

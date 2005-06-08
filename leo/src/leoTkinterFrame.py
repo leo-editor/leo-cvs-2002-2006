@@ -2325,11 +2325,11 @@ class leoTkinterBody (leoFrame.leoBody):
         
         __pychecker__ = 'maxlines=500'
     
-        # g.trace(ch,ord(ch))
         c = self.c
         if not c: return "break"
         if not p: return "break"
         if not c.isCurrentPosition(p): return "break"
+        # g.trace(ch,ord(ch))
     
         if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
             return "break" # The hook claims to have handled the event.
