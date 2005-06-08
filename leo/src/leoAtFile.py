@@ -3971,7 +3971,7 @@ class atFile:
             return False # Should never happen
     #@nonl
     #@-node:ekr.20041005105605.197:compareFiles
-    #@+node:ekr.20041005105605.198:directiveKind4
+    #@+node:ekr.20041005105605.198:directiveKind4 & test
     def directiveKind4(self,s,i):
         
         """Return the kind of at-directive or noDirective."""
@@ -4016,7 +4016,38 @@ class atFile:
     
         return at.noDirective
     #@nonl
-    #@-node:ekr.20041005105605.198:directiveKind4
+    #@+node:ekr.20050608103755:test_directiveKind4
+    def test_directiveKind4 (self):
+        
+        at=c.atFileCommands # Self is a dummy argument.
+        import leoColor
+        table = [
+            ('@=',0,at.noDirective),
+            ('@',0,at.atDirective),
+            ('@ ',0,at.atDirective),
+            ('@\t',0,at.atDirective),
+            ('@\n',0,at.atDirective),
+            ('@all',0,at.allDirective),
+            ('    @all',4,at.allDirective),
+            ("@c",0,at.cDirective),
+            ("@code",0,at.codeDirective),
+            ("@doc",0,at.docDirective),
+            ("@end_raw",0,at.endRawDirective),
+            ('@others',0,at.othersDirective),
+            ('    @others',4,at.othersDirective),
+            ("@raw",0,at.rawDirective),
+        ]
+        for name in leoColor.leoKeywords:
+            if name not in ('@','@all','@c','@code','@doc','@end_raw','@others','@raw',):
+                table.append((name,0,at.miscDirective),)
+    
+        for s,i,expected in table:
+            result = at.directiveKind4(s,i)
+            assert result == expected, '%d %s result: %s expected: %s' % (
+                i,repr(s),at.sentinelName(result),at.sentinelName(expected))
+    #@nonl
+    #@-node:ekr.20050608103755:test_directiveKind4
+    #@-node:ekr.20041005105605.198:directiveKind4 & test
     #@+node:ekr.20041005105605.199:hasSectionName
     def findSectionName(self,s,i):
         
