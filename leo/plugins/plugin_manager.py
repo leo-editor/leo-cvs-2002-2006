@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.12"
+__version__ = "0.13"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -73,6 +73,9 @@ __plugin_group__ = "Core"
 #     - Use stand-alone leoGlobals module to simplify code.
 # 0.12 EKR:
 #     - Folded in some minor changes from Paul to support AutoTrees plugin.
+# 0.13 Paul Paterson
+#     - Fixed path in installPlugin that ignore the local_paths setting
+#     - Generalized code to support LeoUpdate plugin
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
@@ -288,10 +291,11 @@ class PluginView(Tk.Frame):
     
     #@    @+others
     #@+node:pap.20041008224318.1:PluginView.__init__
-    def __init__(self, parent, *args, **kw):
+    def __init__(self, parent, file_text, *args, **kw):
         """Initialize the view"""
         Tk.Frame.__init__(self, parent, *args, **kw)
     
+        self.file_text = file_text
         self.top = Tk.Frame(self)
         self.top.pack(side="top", fill="both", expand=1)
         self.bottom = Tk.Frame(self)
@@ -381,7 +385,7 @@ class PluginView(Tk.Frame):
         self.description = Pmw.ScrolledText(description_panel,
                 # borderframe = 1,
                 labelpos = 'n',
-                label_text='Plugin Description',
+                label_text='%s Description' % self.file_text,
                 columnheader = 0,
                 rowheader = 0,
                 rowcolumnheader = 0,
@@ -401,7 +405,7 @@ class PluginView(Tk.Frame):
         self.version_history = Pmw.ScrolledText(version_panel,
                 # borderframe = 1,
                 labelpos = 'n',
-                label_text='Plugin History',
+                label_text='%s History' % self.file_text,
                 columnheader = 0,
                 rowheader = 0,
                 rowcolumnheader = 0,
@@ -501,13 +505,15 @@ class PluginList(Tk.Frame):
     
     #@    @+others
     #@+node:pap.20041008225226.1:__init__
-    def __init__(self, parent, plugin_view, plugins, *args, **kw):
+    def __init__(self, parent, plugin_view, plugins, file_text="Plugin", *args, **kw):
         """Initialize the list"""
         Tk.Frame.__init__(self, parent, *args, **kw)
         
+        self.file_text = file_text
+        
         self.box = Pmw.ScrolledListBox(self,
                 labelpos='nw',
-                label_text='Plugins:',
+                label_text='%s:' % (self.title % self.file_text),
                 listbox_height = 6,
                 selectioncommand=self.onClick,
                 usehullsize = 1,
@@ -519,7 +525,7 @@ class PluginList(Tk.Frame):
         
         self.filter = Pmw.OptionMenu(self,
                 labelpos = 'w',
-                label_text = '%s:' % self.title,
+                label_text = '%s:' % (self.title % self.file_text),
                 items = self.filter_options,
                 menubutton_width = 16,
                 command=self.populateList,
@@ -543,7 +549,6 @@ class PluginList(Tk.Frame):
         
         self.plugin_view = plugin_view
         self.plugins = plugins
-    #@nonl
     #@-node:pap.20041008225226.1:__init__
     #@+node:pap.20041006215903:onClick
     def onClick(self):
@@ -603,6 +608,11 @@ class PluginList(Tk.Frame):
         """Set the items to use in the second filter list"""
         self.secondfilter.setitems(list_items)
     #@-node:pap.20050305160811:setSecondFilterList
+    #@+node:pap.20050605192322:getAllPlugins
+    def getAllPlugins(self):
+        """Return all the plugins"""
+        return self.local_dict.values()
+    #@-node:pap.20050605192322:getAllPlugins
     #@-others
     
 
@@ -613,7 +623,7 @@ class PluginList(Tk.Frame):
 class LocalPluginList(PluginList):
     """A list showing plugins based on the local file system"""
     
-    title = "Locally Installed Plugins"
+    title = "Locally Installed %ss"
     filter_options = ['All', 'On', 'Off']
 #@nonl
 #@-node:pap.20041009013256:class LocalPluginList
@@ -621,7 +631,7 @@ class LocalPluginList(PluginList):
 class RemotePluginList(PluginList):
     """A list showing plugins based on a remote file system"""
     
-    title = "Plugins on CVS"
+    title = "%ss on CVS"
     filter_options = ['All', 'Up to date', 'Update available', 'Changed', 'Not installed']
 #@nonl
 #@-node:pap.20041009013556:class RemotePluginList
@@ -630,7 +640,10 @@ class ManagerDialog:
     """The dialog to show manager functions"""
     
     dialog_caption = "Plugin Manager"
-    
+    file_text = "Plugin"
+    has_enable_buttons = True 
+    has_conflict_buttons = True
+    install_text = "Install"   
     #@    @+others
     #@+node:pap.20041006215108.1:ManagerDialog._init__
     def __init__(self):
@@ -663,7 +676,7 @@ class ManagerDialog:
         #@nl
         #@    << create pluginView >>
         #@+node:pap.20041006223915.1:<< create pluginView >>
-        self.plugin_view = PluginView(self.upper)
+        self.plugin_view = PluginView(self.upper, self.file_text)
         self.plugin_view.pack(side="right", fill='both', expand=1, padx=5, pady=5)
         #@nonl
         #@-node:pap.20041006223915.1:<< create pluginView >>
@@ -673,14 +686,16 @@ class ManagerDialog:
         self.notebook = notebook = Pmw.NoteBook(self.upper)
         notebook.pack(side="left", fill='both', expand=1, padx=5, pady=5)
         
-        self.local_list_page = local_list_page = notebook.add('Installed Plugins')
-        self.remote_list_page = remote_list_page = notebook.add('CVS Plugins')
-        notebook.tab('Installed Plugins').focus_set()
+        self.local_list_page = local_list_page = notebook.add('Installed %ss' % self.file_text)
+        self.remote_list_page = remote_list_page = notebook.add('CVS %ss' % self.file_text)
+        notebook.tab('Installed %ss' % self.file_text).focus_set()
         #notebook.setnaturalsize()
         
-        self.plugin_list = LocalPluginList(local_list_page, self.plugin_view, self.local)
+        self.plugin_list = LocalPluginList(local_list_page, self.plugin_view, self.local, 
+                                           self.file_text)
         self.plugin_list.pack(side="top", fill='both', expand=1)
-        self.remote_plugin_list = RemotePluginList(remote_list_page, self.plugin_view, None)
+        self.remote_plugin_list = RemotePluginList(remote_list_page, self.plugin_view, None,
+                                                   self.file_text)
         self.remote_plugin_list.pack(side="top", fill='both', expand=1)
         
         self.plugin_list.setSecondFilterList(["All"] + self.local.getGroups())
@@ -696,11 +711,13 @@ class ManagerDialog:
             frame_relief = 'groove')
         
         # Add some buttons to the ButtonBox.
-        self.buttonBox.add('Enable', command = self.enablePlugin)
-        self.buttonBox.add('Disable', command = self.disablePlugin)
-        #self.buttonBox.add('Check for Updates', command = self.checkUpdates)
-        self.buttonBox.add('Check Conflicts', command = self.checkConflicts)
-        
+        if self.has_enable_buttons:
+            self.buttonBox.add('Enable', command = self.enablePlugin)
+            self.buttonBox.add('Disable', command = self.disablePlugin)
+            #self.buttonBox.add('Check for Updates', command = self.checkUpdates)
+        if self.has_conflict_buttons:
+            self.buttonBox.add('Check Conflicts', command = self.checkConflicts)
+            
         self.buttonBox.pack(side="top", padx=5)
         #@nonl
         #@-node:pap.20041006223915.2:<< create local buttons >>
@@ -714,7 +731,7 @@ class ManagerDialog:
             frame_relief = 'groove')
         
         # Add some buttons to the ButtonBox.
-        self.buttonBox.add('Install', command = self.installPlugin)
+        self.buttonBox.add(self.install_text, command = self.installPlugin)
         self.buttonBox.add('View', command = self.viewPlugin)
         self.buttonBox.add('Check for Updates', command = self.checkUpdates)
         
@@ -758,7 +775,6 @@ class ManagerDialog:
         """Set paths to the plugin locations"""
         self.local_path = g.os_path_join(g.app.loadDir,"..","plugins")
         self.remote_path = r"cvs.sourceforge.net/viewcvs.py/leo/leo/plugins"
-    #@nonl
     #@-node:ekr.20050329080427:setPaths
     #@+node:pap.20041006224206:disablePlugin
     def disablePlugin(self):
@@ -789,8 +805,8 @@ class ManagerDialog:
     def checkUpdates(self):
         """Check for updates"""
         url = self.remote_path
-        self.status_message = "Searching for plugin list"
-        self.messagebar.message("busy", "Searching for plugin list")
+        self.status_message = "Searching for file list"
+        self.messagebar.message("busy", "Searching for file list")
         #@    << define callbackPrint >>
         #@+node:ekr.20041010111700.1:<< define callbackPrint >>
         def callbackPrint(text):
@@ -811,7 +827,7 @@ class ManagerDialog:
             dialog = Pmw.MessageDialog(self.top,
                 title = 'CVS Error',
                 defaultbutton = 0,
-                message_text = 'Error retrieving CVS plugin information: %s' % err)
+                message_text = 'Error retrieving CVS file information: %s' % err)
             dialog.iconname('CVS')      
             dialog.activate()
             #@-node:pap.20041009163613:<< put up a connection failed dialog >>
@@ -844,7 +860,7 @@ class ManagerDialog:
         if not plugin: return
     
         self.messagebar.message("busy", "Writing file")
-        plugin.writeTo(g.os_path_join(g.app.loadDir,"..","plugins"))
+        plugin.writeTo(self.local_path)
         self.messagebar.message("busy", "Scanning local plugins") 
         # Go and check local filesystem for all plugins   
         self.initLocalCollection()
@@ -888,7 +904,7 @@ class ManagerDialog:
     #@nonl
     #@-node:pap.20041009025708:checkConflicts
     #@-others
-#@nonl
+
 #@-node:pap.20041006215108:class ManagerDialog
 #@+node:pap.20041009233937:class ListReportDialog
 class ListReportDialog:
@@ -1026,6 +1042,7 @@ class Plugin:
         self.requires = []
         self.group = None
         self.versions = ''
+        self.contents_valid = False
         
     #@nonl
     #@-node:pap.20041006185727.1:__init__
@@ -1214,6 +1231,10 @@ class Plugin:
     
         """Write this plugin to the file location"""
     
+        # Don't write if contents are invalid
+        if not self.contents_valid:
+            return 
+            
         filename = os.path.join(location, "%s.py" % self.name)
         try:
             f = file(filename, "w")
@@ -1228,7 +1249,6 @@ class Plugin:
         except Exception, err:
             raise InvalidPlugin(
                 "Unable to write plugin file '%s': %s" % (filename, err))
-    #@nonl
     #@-node:pap.20041009023004:writeTo
     #@+node:pap.20050305165333:getVersionHistory
     def getVersionHistory(self, text):
@@ -1339,7 +1359,7 @@ class LocalPlugin(Plugin):
     
         """Return the contents of the file"""
         
-        # g.trace('local')
+        self.contents_valid = False
     
         try:
             f = file(self.filename, "r")
@@ -1356,8 +1376,12 @@ class LocalPlugin(Plugin):
             s = "Unable to read plugin file '%s': %s" % (self.name, err)
             print s
             raise InvalidPlugin(s)              
+        
+        self.contents_valid = True
+        
         return text
-    #@nonl
+        
+        
     #@-node:pap.20041006193459.1:getContents
     #@-others
 #@nonl
@@ -1380,7 +1404,7 @@ class CVSPlugin(Plugin):
      
          """Return the contents of the file"""
          
-         # g.trace('cvs')
+         self.contents_valid = False
      
          # Connect to CVS
          try:
@@ -1397,6 +1421,8 @@ class CVSPlugin(Plugin):
          except Exception, err:
              raise InvalidPlugin("Could not read file '%s' from CVS: %s" % (self.filename, err))
              
+         self.contents_valid = True
+         
          return text        
      #@nonl
      #@-node:pap.20041006213006:getContents
@@ -1427,7 +1453,7 @@ class PluginCollection(dict):
         """Initialize the collection from the filesystem location.
         Returns a list of errors that occured.
         """
-        if callback: callback("Looking for list of plugins")
+        if callback: callback("Looking for list of files")
         errors = []
         plugin_files = self.getFilesMatching(location)  
         for plugin_file in plugin_files:
