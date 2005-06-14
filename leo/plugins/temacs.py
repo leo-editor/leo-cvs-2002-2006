@@ -369,11 +369,9 @@ __version__ = ".55"
 #@nl
 #@<< imports >>
 #@+node:mork.20041030164547.1:<< imports >>
-#@+at
 # pretty low level imports. These may be all the imports the module needs
-# 
-#@-at
-#@@c
+
+import leoGlobals as g # ekr
 
 import Tkinter
 import string
@@ -586,6 +584,7 @@ class ControlXHandler:
 #@-node:mork.20041031131847:class ControlXHandler
 #@+node:mork.20041031145157:class MC_StateManager
 class MC_StateManager:
+    
     '''MC_StateManager manages the state that the Emacs instance has entered and
        routes key events to the right method, dependent upon the state in the MC_StateManager'''
        
@@ -593,48 +592,46 @@ class MC_StateManager:
     #@+node:mork.20041031162857:__init__
     def __init__( self, emacs ):
             
-            self.emacs = emacs
-            self.state = None
-            self.states = {}
-            #@        <<statecommands>>
-            #@+node:mork.20041031150125:<<statecommands>>
-            
-            def eA( event ):
-                if self.emacs.expandAbbrev( event ) :
-                        return 'break'
-            
-            
-            self.stateCommands = { #1 == one parameter, 2 == all
-                'uC': ( 2, emacs.universalDispatch ),
-                'controlx': ( 2, emacs.doControlX ),
-                'isearch':( 2, emacs.iSearch ),
-                'goto': ( 1, emacs.Goto ),
-                'zap': ( 1, emacs.zapTo ),
-                'howM': ( 1, emacs.howMany ),
-                'abbrevMode': ( 1, emacs.abbrevCommand1 ),
-                'altx': ( 1, emacs.doAlt_X ),
-                'qlisten': ( 1, emacs.masterQR ),
-                'rString': ( 1, emacs.replaceString ),
-                'negativeArg':( 2, emacs.negativeArgument ),
-                'abbrevOn': ( 1, eA ),
-                'set-fill-column': ( 1, emacs.setFillColumn ),
-                'chooseBuffer': ( 1, emacs.chooseBuffer ),
-                'renameBuffer': ( 1, emacs.renameBuffer ),
-                're_search': ( 1, emacs.re_search ),
-                'alterlines': ( 1, emacs.processLines ),
-                'make_directory': ( 1, emacs.makeDirectory ),
-                'remove_directory': ( 1, emacs.removeDirectory ),
-                'delete_file': ( 1, emacs.deleteFile ),
-                'nonincr-search': ( 2, emacs.nonincrSearch ),
-                'word-search':( 1, emacs.wordSearch ),
-                'last-altx': ( 1, emacs.executeLastAltX ),
-                'escape': ( 1, emacs.watchEscape ),
-                'subprocess': ( 1, emacs.subprocesser ),
-                }
-                
-            #@nonl
-            #@-node:mork.20041031150125:<<statecommands>>
-            #@nl
+        self.emacs = emacs
+        self.state = None
+        self.states = {}
+        #@    <<statecommands>>
+        #@+node:mork.20041031150125:<<statecommands>>
+        # EKR: used only below.
+        def eA( event ):
+            if self.emacs.expandAbbrev( event ) :
+                return 'break'
+        
+        self.stateCommands = { #1 == one parameter, 2 == all
+            'uC': ( 2, emacs.universalDispatch ),
+            'controlx': ( 2, emacs.doControlX ),
+            'isearch':( 2, emacs.iSearch ),
+            'goto': ( 1, emacs.Goto ),
+            'zap': ( 1, emacs.zapTo ),
+            'howM': ( 1, emacs.howMany ),
+            'abbrevMode': ( 1, emacs.abbrevCommand1 ),
+            'altx': ( 1, emacs.doAlt_X ),
+            'qlisten': ( 1, emacs.masterQR ),
+            'rString': ( 1, emacs.replaceString ),
+            'negativeArg':( 2, emacs.negativeArgument ),
+            'abbrevOn': ( 1, eA ),
+            'set-fill-column': ( 1, emacs.setFillColumn ),
+            'chooseBuffer': ( 1, emacs.chooseBuffer ),
+            'renameBuffer': ( 1, emacs.renameBuffer ),
+            're_search': ( 1, emacs.re_search ),
+            'alterlines': ( 1, emacs.processLines ),
+            'make_directory': ( 1, emacs.makeDirectory ),
+            'remove_directory': ( 1, emacs.removeDirectory ),
+            'delete_file': ( 1, emacs.deleteFile ),
+            'nonincr-search': ( 2, emacs.nonincrSearch ),
+            'word-search':( 1, emacs.wordSearch ),
+            'last-altx': ( 1, emacs.executeLastAltX ),
+            'escape': ( 1, emacs.watchEscape ),
+            'subprocess': ( 1, emacs.subprocesser ),
+            }
+        #@nonl
+        #@-node:mork.20041031150125:<<statecommands>>
+        #@nl
     #@nonl
     #@-node:mork.20041031162857:__init__
     #@+node:mork.20041031162857.1:setState
@@ -647,13 +644,14 @@ class MC_StateManager:
     #@+node:mork.20041031162857.2:getState
     def getState( self, state ):
         
-        return self.states.get( state, False )
+        return self.states.get(state,False)
     #@nonl
     #@-node:mork.20041031162857.2:getState
     #@+node:mork.20041031162857.3:hasState
     def hasState( self ):
-        if self.state: return self.states[ self.state ]
-    #@nonl
+    
+        if self.state:
+            return self.states[ self.state ]
     #@-node:mork.20041031162857.3:hasState
     #@+node:mork.20041124094511:whichState
     def whichState( self ):
@@ -665,16 +663,20 @@ class MC_StateManager:
             
         if self.state:
             which = self.stateCommands[ self.state ]
+            
+            # EKR: which[0] is a flag: 1 == one parameter, 2 == all
+            # EKR: which[1] is the function.
+            
             if which[ 0 ] == 1:
                 return which[ 1 ]( args[ 0 ] )
             else:
                 return which[ 1 ]( *args )
-    #@nonl
     #@-node:mork.20041031162857.4:__call__
     #@+node:mork.20041031162857.5:clear
     def clear( self ):
             
         self.state = None
+    
         for z in self.states.keys():
             self.states[ z ] = False
     #@nonl
@@ -682,8 +684,9 @@ class MC_StateManager:
     #@-others
 
 
+
 #@-node:mork.20041031145157:class MC_StateManager
-#@+node:mork.20041101083527:class MC_KeyStrokeManager
+#@+node:mork.20041101083527:class MC_KeyStrokeManager  (hard-coded keystrokes)
 class MC_KeyStrokeManager:
     
     #@    @+others
@@ -691,8 +694,9 @@ class MC_KeyStrokeManager:
     def __init__( self, emacs ):
         
         self.emacs = emacs
+    
         #@    <<keystrokes>>
-        #@+node:mork.20041101083527.2:<<keystrokes>>
+        #@+node:mork.20041101083527.2:<<keystrokes>> (hard-coded keystrokes)
         self.keystrokes = {
         
             '<Control-s>': ( 2, emacs.startIncremental ), 
@@ -701,10 +705,9 @@ class MC_KeyStrokeManager:
             '<Alt-z>': ( 1, emacs.startZap ),
             '<Alt-percent>': ( 1,  emacs.masterQR ) ,
             '<Control-Alt-w>': ( 1, lambda event: 'break' ),
-        
         }
-        
-        #@-node:mork.20041101083527.2:<<keystrokes>>
+        #@nonl
+        #@-node:mork.20041101083527.2:<<keystrokes>> (hard-coded keystrokes)
         #@nl
     #@-node:mork.20041101083527.1:__init__
     #@+node:mork.20041101084148:hasKeyStroke
@@ -717,15 +720,28 @@ class MC_KeyStrokeManager:
     def __call__( self, event, stroke ):
         
         kstroke = self.keystrokes[ stroke ]
+        
+        if 0: # EKR: this would be better:
+            numberOfArgs,func = self.keystrokes[ stroke ]
+            if numberOfArgs == 1:
+                return func(event)
+            else:
+                return func(event,stroke)
+        
+        # EKR: which[0] is the number of params.
+        # EKR: which[1] is the function.
+    
         if kstroke[ 0 ] == 1:
             return kstroke[ 1 ]( event )
         else:
             return kstroke[ 1 ]( event, stroke )
+            
+        
     #@nonl
     #@-node:mork.20041101084148.1:__call__
     #@-others
 #@nonl
-#@-node:mork.20041101083527:class MC_KeyStrokeManager
+#@-node:mork.20041101083527:class MC_KeyStrokeManager  (hard-coded keystrokes)
 #@+node:mork.20041102131352:class Tracker
 class Tracker:
     '''A class designed to allow the user to cycle through a list
@@ -772,7 +788,7 @@ class Tracker:
         self.prefix = None
     #@-node:mork.20041102160313:clear
     #@-others
-        
+#@nonl
 #@-node:mork.20041102131352:class Tracker
 #@-others
 #@-node:mork.20041104102456:Emacs helper classes
@@ -784,9 +800,9 @@ class Emacs:
     Emacs_instances = weakref.WeakKeyDictionary()
     global_killbuffer = []
     global_registers = {}
-    lossage = list( ' ' * 100 )
+    lossage = [] ### EKR: list( ' ' * 100 )
     #@    @+others
-    #@+node:mork.20041030165020.1:__init__
+    #@+node:mork.20041030165020.1:Emacs.__init__
     def __init__( self , tbuffer = None , minibuffer = None, useGlobalKillbuffer = False, useGlobalRegisters = False):
         '''Sets up Emacs instance.
               If a Tkinter Text widget and Tkinter Label are passed in
@@ -866,7 +882,7 @@ class Emacs:
         self.abbrevOn = False # determines if abbreviations are on for masterCommand and toggle abbreviations
         self.abbrevs = {}
         
-        self.regXRpl = None
+        self.regXRpl = None # EKR: a generator: calling self.regXRpl.next() get the next value.
         self.regXKey = None
         
         self.fillPrefix = '' #for fill prefix functions
@@ -927,7 +943,7 @@ class Emacs:
     
     
     
-    #@-node:mork.20041030165020.1:__init__
+    #@-node:mork.20041030165020.1:Emacs.__init__
     #@+node:mork.20041030164547.41:getHelpText
     def getHelpText():
         '''This returns a string that describes what all the
@@ -1213,17 +1229,37 @@ class Emacs:
     def masterCommand( self, event, method , stroke):
         '''The masterCommand is the central routing method of the Emacs method.
            All commands and keystrokes pass through here.'''
-        #global previousStroke, regXKey
-        Emacs.lossage.pop() #The lossage list is already at 100, we keep it at 100 by popping it
-        Emacs.lossage.reverse()
-        Emacs.lossage.append( event.char )#Then we add the new char.  Hopefully this will keep Python from allocating a new array each time.
-        Emacs.lossage.reverse()
-        #print event.keysym
-        #print stroke
-        self.keysymhistory.reverse()
-        self.keysymhistory.append( event.keysym )
-        self.keysymhistory.reverse()
+           
+        special = event.keysym in ('Control_L','Control_R','Alt_L','Alt-R','Shift_L','Shift_R')
+        inserted = not special or len(self.keysymhistory) == 0 or self.keysymhistory[0] != event.keysym
+    
+        # Don't add multiple special characters to history.
+        if inserted:
+            self.keysymhistory.insert(0,event.keysym)
+            if len(event.char) > 0:
+                if len(Emacs.lossage) > 99: Emacs.lossage.pop()
+                Emacs.lossage.insert(0,event.char)
+            
+            if 1: # traces
+                print event.keysym,stroke
+                g.trace(self.keysymhistory)
+                g.trace(Emacs.lossage)
+            
+        if 0:
+            #@        << old insert code >>
+            #@+node:ekr.20050527112828:<< old insert code >>
+            Emacs.lossage.reverse()
+            Emacs.lossage.append( event.char ) #Then we add the new char.  Hopefully this will keep Python from allocating a new array each time.
+            Emacs.lossage.reverse()
+            
+            self.keysymhistory.reverse()
+            self.keysymhistory.append( event.keysym )
+            self.keysymhistory.reverse()
+            #@nonl
+            #@-node:ekr.20050527112828:<< old insert code >>
+            #@nl
         
+                
         if self.macroing:
             if self.macroing == 2 and stroke != '<Control-x>':
                 return self.nameLastMacro( event )
@@ -1231,21 +1267,22 @@ class Emacs:
                 return self.getMacroName( event )
             else:
                self.recordKBDMacro( event, stroke )
-               
-    
-        
+             
         if  stroke == '<Control-g>':
             self.previousStroke = stroke
             return self.keyboardQuit( event )
             
         if self.mcStateManager.hasState():
             self.previousStroke = stroke
-            return self.mcStateManager( event, stroke )
+            return self.mcStateManager( event, stroke ) # EKR: Invoke the __call__ method.
             
         if self.kstrokeManager.hasKeyStroke( stroke ):
             self.previousStroke = stroke
-            return self.kstrokeManager( event, stroke )
-                       
+            return self.kstrokeManager( event, stroke ) # EKR: Invoke the __call__ method.
+    
+        #@    << old code >>
+        #@+node:ekr.20050527084754:<< old code >>
+        
         #if self.uC:
         #    self.previousStroke = stroke
         #    return self.universalDispatch( event, stroke )
@@ -1253,15 +1290,15 @@ class Emacs:
         #if self.controlx:
         #    self.previousStroke = stroke
         #     return self.doControlX( event, stroke )
-            
-            
+        
+        
         #if stroke in ('<Control-s>', '<Control-r>' ): 
         #    self.previousStroke = stroke
         #    return self.startIncremental( event, stroke )
-                
+        
         #if self.isearch:
         #   return self.iSearch( event )
-           
+        
         #if stroke == '<Alt-g>':
         #    self.previousStroke = stroke
         #    return self.startGoto( event )
@@ -1271,53 +1308,58 @@ class Emacs:
         #if stroke == '<Alt-z>':
         #    self.previousStroke = stroke
         #    return self.startZap( event )
-    
+        
         #if self.zap:
         #    return self.zapTo( event )
-            
-        if self.regXRpl:
+        #@nonl
+        #@-node:ekr.20050527084754:<< old code >>
+        #@nl
+        if self.regXRpl: # EKR: a generator.
             try:
                 self.regXKey = event.keysym
-                self.regXRpl.next()
+                self.regXRpl.next() # EKR: next() may throw StopIteration.
             finally:
                 return 'break'
     
-        #if self.howM:
-        #    return self.howMany( event )
-            
-        #if self.abbrevMode:
-        #    return self.abbrevCommand1( event )
-            
-        #if self.altx:
-        #    return self.doAlt_X( event )
-    
-        #if stroke == '<Alt-percent>':
-        #    self.previousStroke = stroke
-        #    return self.masterQR( event )  
-        #if self.qlisten:
-        #    return self.masterQR( event )
-            
-        #if self.rString:
-        #    return self.replaceString( event )
-         
-        #if self.negativeArg:
-        #    return self.negativeArgument( event, stroke )
+        #@    << old code 2 >>
+        #@+node:ekr.20050527084754.1:<< old code 2 >>
         
-        #if stroke == '<Control-Alt-w>':
-        #    self.previousStroke = '<Control-Alt-w>'   
-        #    return 'break' 
+            #if self.howM:
+            #    return self.howMany( event )
+                
+            #if self.abbrevMode:
+            #    return self.abbrevCommand1( event )
+                
+            #if self.altx:
+            #    return self.doAlt_X( event )
+        
+            #if stroke == '<Alt-percent>':
+            #    self.previousStroke = stroke
+            #    return self.masterQR( event )  
+            #if self.qlisten:
+            #    return self.masterQR( event )
+                
+            #if self.rString:
+            #    return self.replaceString( event )
+             
+            #if self.negativeArg:
+            #    return self.negativeArgument( event, stroke )
             
+            #if stroke == '<Control-Alt-w>':
+            #    self.previousStroke = '<Control-Alt-w>'   
+            #    return 'break'
+        #@nonl
+        #@-node:ekr.20050527084754.1:<< old code 2 >>
+        #@nl
         if self.abbrevOn:
             if self.expandAbbrev( event ) :
                 return 'break'       
-            
-        
+    
         if method:
             rt = method( event )
             self.previousStroke = stroke
             return rt
-    
-    
+    #@nonl
     #@-node:mork.20041030164547.43:masterCommand
     #@+node:mork.20041102082023:keyboardQuit
     def keyboardQuit( self, event ):
@@ -1338,7 +1380,7 @@ class Emacs:
     
     
     #@+others
-    #@+node:mork.20041030183331:addCallBackDict
+    #@+node:mork.20041030183331:addCallBackDict (creates cbDict)
     def addCallBackDict( self ):
         '''This method adds a dictionary to the Emacs instance through which the masterCommand can
            call the specified method.'''
@@ -1433,7 +1475,7 @@ class Emacs:
         
         return cbDict
     #@nonl
-    #@-node:mork.20041030183331:addCallBackDict
+    #@-node:mork.20041030183331:addCallBackDict (creates cbDict)
     #@+node:mork.20041030183633:addXCommands
     def addXCommands( self ):
         
@@ -2225,6 +2267,7 @@ class Emacs:
         tbuffer.event_generate( '<Key>',  keysym = which  )
         tbuffer.update_idletasks()
         return 'break'
+    #@nonl
     #@-node:mork.20041030164547.95:manufactureKeyPress
     #@+node:mork.20041030164547.83:changecbDict
     def changecbDict( self, changes ):
@@ -2336,10 +2379,12 @@ class Emacs:
     #@+others
     #@+node:mork.20041030164547.112:getSvarLabel
     def getSvarLabel( self, event ):
+        
         '''returns the StringVar and Label( minibuffer ) for a specific Text editor'''
         svar = self.svars[ event.widget ]
         label = self.mbuffers[ event.widget ]
         return svar, label
+    
     #@-node:mork.20041030164547.112:getSvarLabel
     #@+node:mork.20041030164547.113:setSvar
     def setSvar( self, event, svar ):
@@ -2426,11 +2471,14 @@ class Emacs:
     #mbuffers = {}
     #svars = {}
     def setBufferStrokes( self, tbuffer, label ):
-            '''setBufferStrokes takes a Tk Text widget called buffer. 'stext' is a function or method
+            '''setBufferStrokes takes a Tk Text widget called 'tbuffer'. 'stext' is a function or method
             that when called will return the value of the search text. 'rtext' is a function or method
             that when called will return the value of the replace text.  It is this method and
             getHelpText that users of the temacs module should call.  The rest are callback functions
             that enable the Emacs emulation.'''
+            
+            g.trace(tbuffer,label)
+        
             Emacs.Emacs_instances[ tbuffer ] = self
             def cb( evstring ):
                 _cb = None
@@ -2438,10 +2486,13 @@ class Emacs:
                     _cb = self.cbDict[ evstring ]
                 evstring = '<%s>' % evstring
                 if evstring != '<Key>':
+                    # g.trace(evstring)
                     tbuffer.bind( evstring,  lambda event, meth = _cb: self.masterCommand( event, meth , evstring) )
                 else:
+                    # g.trace('+',evstring)
                     tbuffer.bind( evstring,  lambda event, meth = _cb: self.masterCommand( event, meth , evstring), '+' )
     
+            # EKR: create one binding for each entry in cbDict.
             for z in self.cbDict:
                 cb( z )
             
@@ -2456,6 +2507,8 @@ class Emacs:
                 event.widget.see( 'insert' )
             
             #tbuffer.bind( '<Enter>', scrollTo, '+' )
+            
+            # EKR: This _adds_ a binding for all <Key> events, so _all_ key events go through masterCommand.
             cb( 'Key' )
     #@-node:mork.20041030164547.30:setBufferStrokes
     #@+node:mork.20041101190309:extendAltX
@@ -2469,14 +2522,17 @@ class Emacs:
     #@-node:mork.20041101190309:extendAltX
     #@+node:mork.20041102094716:reconfigureKeyStroke
     def reconfigureKeyStroke( self, tbuffer, keystroke , set_to ):
+        
         '''This method allows the user to reconfigure what a keystroke does.
            This feature is alpha at best, and untested.'''
+    
         if self.cbDict.has_key( set_to ):
             
             command = self.cbDict[ set_to ]
             self.cbDict[ keystroke ] = command
             evstring = '<%s>' % keystroke
             tbuffer.bind( evstring,  lambda event, meth = command: self.masterCommand( event, meth , evstring)  )
+    #@nonl
     #@-node:mork.20041102094716:reconfigureKeyStroke
     #@+node:mork.20041103155347:buffer recognition and alterers
     #@+at
@@ -3466,6 +3522,10 @@ class Emacs:
         i1 = tbuffer.index( 'sel.first' )
         i2 = tbuffer.index( 'sel.last' ) 
         ins = tbuffer.index( 'insert' )
+        #@    << define a new generator searchXR >>
+        #@+node:ekr.20050527111832:<< define a new generator searchXR >>
+        # EKR: This is a generator (it contains a yield).
+        # EKR: To make this work we must define a new generator for each call to regionalExpandAbbrev.
         def searchXR( i1 , i2, ins, event ):
             tbuffer.tag_add( 'sXR', i1, i2 )
             while i1:
@@ -3494,9 +3554,14 @@ class Emacs:
             svar.set( '' )
             self.setLabelGrey( label )
             self._setRAvars()
+        #@nonl
+        #@-node:ekr.20050527111832:<< define a new generator searchXR >>
+        #@nl
+        # EKR: the 'result' of calling searchXR is a generator object.
         self.regXRpl = searchXR( i1, i2, ins, event)
-        self.regXRpl.next()
+        self.regXRpl.next() # Call it the first time.
         return 'break' 
+    #@nonl
     #@-node:mork.20041030164547.63:regionalExpandAbbrev
     #@+node:mork.20041030164547.64:_setRAvars
     def _setRAvars( self ):
@@ -5168,6 +5233,7 @@ class Emacs:
             self.mcStateManager.setState( 'altx', which )
         else:
             self.mcStateManager.setState( 'altx', 'True' )
+    
         svar, label = self.getSvarLabel( event )
         if which:
             svar.set( '%s M-x:' % which )
@@ -5812,7 +5878,6 @@ class Emacs:
     #@nonl
     #@-node:mork.20041208120232:shell and subprocess
     #@-others
-    
 #@nonl
 #@-node:mork.20041030165020:class Emacs
 #@-others

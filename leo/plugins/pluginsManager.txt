@@ -36,6 +36,8 @@ image.py
 #usetemacs.py
 #pie_menus.py
 #Tiddly.py
+#__jEdit_colorizer__.py
+leoupdate.py
 plugin_manager.py
 
 # Several plugins depend on TabbedLog.

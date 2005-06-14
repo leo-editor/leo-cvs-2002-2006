@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7009" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7011" clone_windows="0"/>
 <globals body_outline_ratio="0.555681818182">
-	<global_window_position top="64" left="269" height="880" width="856"/>
+	<global_window_position top="56" left="419" height="880" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20050415070840" a="M" annotate="7d71002e"
+<v t="ekr.20050415070840" annotate="7d71002e"
 marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
@@ -1208,96 +1208,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.115"><vh>Colorizer tests...</vh>
-<v t="ekr.20040712101754.116"><vh>@test @comment after @language plain</vh>
-<v t="ekr.20040712101754.117"><vh>Test</vh></v>
-</v>
-<v t="ekr.20040712101754.118"><vh>@test colorizer Actionscript</vh>
-<v t="ekr.20040712101754.119"><vh>Actionscript</vh></v>
-</v>
-<v t="ekr.20040712101754.120"><vh>@test colorizer C</vh>
-<v t="ekr.20040712101754.121"><vh>C</vh></v>
-</v>
-<v t="ekr.20040712101754.122"><vh>@test colorizer C#</vh>
-<v t="ekr.20040712101754.123"><vh>C#</vh></v>
-</v>
-<v t="ekr.20040712101754.124"><vh>@test colorizer css</vh>
-<v t="ekr.20040712101754.125"><vh>css</vh></v>
-</v>
-<v t="ekr.20040712101754.126"><vh>@test colorizer CWEB</vh>
-<v t="ekr.20040712101754.127"><vh>CWEB</vh>
-<v t="ekr.20040712101754.128"><vh>&lt;&lt; section ref &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.129"><vh>@test colorizer elisp</vh>
-<v t="ekr.20040712101754.130"><vh>elisp</vh></v>
-</v>
-<v t="ekr.20041107105213"><vh>@test colorizer forth</vh>
-<v t="ekr.20041107105213.1"><vh>forth</vh></v>
-</v>
-<v t="ekr.20040712101754.131"><vh>@test colorizer HTML string bug</vh>
-<v t="ekr.20040712101754.132"><vh>String bug in html</vh></v>
-</v>
-<v t="ekr.20040712101754.133"><vh>@test colorizer HTML1</vh>
-<v t="ekr.20040712101754.134"><vh>HTML1</vh></v>
-</v>
-<v t="ekr.20040712101754.135"><vh>@test colorizer HTML2</vh>
-<v t="ekr.20040712101754.136"><vh>HTML2</vh></v>
-</v>
-<v t="ekr.20040712101754.137"><vh>@test colorizer LaTex</vh>
-<v t="ekr.20040712101754.138"><vh>LaTex</vh></v>
-</v>
-<v t="ekr.20040712101754.139"><vh>@test colorizer mixed</vh>
-<v t="ekr.20040712101754.140"><vh>Mixed</vh></v>
-</v>
-<v t="ekr.20040712101754.141"><vh>@test colorizer PHP</vh>
-<v t="ekr.20040712101754.142"><vh>PHP</vh></v>
-</v>
-<v t="ekr.20040712101754.143"><vh>@test colorizer python.xml (jEdit)</vh>
-<v t="ekr.20040712101754.144"><vh>python.xml</vh>
-<v t="ekr.20040712101754.145"><vh>&lt;&lt; remarks &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.146"><vh>&lt;&lt; comments &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.147"><vh>&lt;&lt; literals &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.148"><vh>&lt;&lt; operators &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.149"><vh>&lt;&lt; keywords &gt;&gt;</vh>
-<v t="ekr.20040712101754.150"><vh>&lt;&lt; reserved words &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.151"><vh>&lt;&lt; builtins &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.152"><vh>&lt;&lt; exceptions &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.153"><vh>&lt;&lt; types &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040712101754.154"><vh>@test colorizer Python1</vh>
-<v t="ekr.20040712101754.155"><vh>Python1</vh></v>
-</v>
-<v t="ekr.20040712101754.156"><vh>@test colorizer Python2</vh>
-<v t="ekr.20040712101754.157"><vh>Python2</vh></v>
-</v>
-<v t="ekr.20040712101754.158"><vh>@test colorizer rapidq</vh>
-<v t="ekr.20040712101754.159"><vh>rapidq</vh></v>
-</v>
-<v t="ekr.20040712101754.160"><vh>@test colorizer Rebol</vh>
-<v t="ekr.20040712101754.161"><vh>Rebol</vh></v>
-</v>
-<v t="ekr.20040712101754.162"><vh>@test colorizer shell</vh>
-<v t="ekr.20040712101754.163"><vh>shell</vh></v>
-</v>
-<v t="ekr.20040712101754.164"><vh>@test colorizer tex.xml (jEdit)</vh>
-<v t="ekr.20040712101754.165"><vh>tex.xml</vh>
-<v t="ekr.20040712101754.166"><vh>&lt;&lt; general rules &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.167"><vh>&lt;&lt; math rules &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.168"><vh>@test colorizer wikiTest1</vh>
-<v t="ekr.20040712101754.169"><vh>wikiTest1</vh></v>
-</v>
-<v t="ekr.20040712101754.170"><vh>@test colorizer wikiTest2</vh>
-<v t="ekr.20040712101754.171"><vh>wikiTest2</vh></v>
-</v>
-<v t="ekr.20040712101754.172"><vh>@test colorizer wikiTest3</vh>
-<v t="ekr.20040712101754.173"><vh>wikiTest3</vh></v>
-</v>
-</v>
 <v t="ekr.20050210093857"><vh>Dialog tests...</vh>
 <v t="ekr.20050210085211"><vh>@test ctors for all dialogs</vh></v>
 <v t="ekr.20050210092742"><vh>@test ctors for all panels</vh></v>
@@ -1374,7 +1284,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040712101754.174"><vh>Mini tests...</vh>
 <v t="ekr.20040712101754.175"><vh>@test p.t == p.v.t</vh></v>
-<v t="ekr.20040712101754.176"><vh>@test python keywords</vh></v>
 <v t="ekr.20040712101754.177"><vh>@test convertTreeToString and allies</vh>
 <v t="ekr.20040712101754.178"><vh>File Conversion</vh>
 <v t="ekr.20040712101754.179"><vh>moreHead</vh></v>
@@ -1825,6 +1734,126 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
+<v t="ekr.20040712101754.115"><vh>Colorizer tests...</vh>
+<v t="ekr.20040712101754.176"><vh>@test python keywords</vh></v>
+<v t="ekr.20040712101754.116"><vh>@test @comment after @language plain</vh>
+<v t="ekr.20040712101754.117"><vh>Test</vh></v>
+</v>
+<v t="ekr.20040712101754.118"><vh>@test colorizer Actionscript</vh>
+<v t="ekr.20040712101754.119"><vh>Actionscript</vh></v>
+</v>
+<v t="ekr.20040712101754.120"><vh>@test colorizer C</vh>
+<v t="ekr.20040712101754.121"><vh>C</vh></v>
+</v>
+<v t="ekr.20040712101754.122"><vh>@test colorizer C#</vh>
+<v t="ekr.20040712101754.123"><vh>C#</vh></v>
+</v>
+<v t="ekr.20040712101754.124"><vh>@test colorizer css</vh>
+<v t="ekr.20040712101754.125"><vh>css</vh></v>
+</v>
+<v t="ekr.20040712101754.126"><vh>@test colorizer CWEB</vh>
+<v t="ekr.20040712101754.127"><vh>CWEB</vh>
+<v t="ekr.20040712101754.128"><vh>&lt;&lt; section ref &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.129"><vh>@test colorizer elisp</vh>
+<v t="ekr.20040712101754.130"><vh>elisp</vh></v>
+</v>
+<v t="ekr.20041107105213"><vh>@test colorizer forth</vh>
+<v t="ekr.20041107105213.1"><vh>forth</vh></v>
+</v>
+<v t="ekr.20040712101754.131"><vh>@test colorizer HTML string bug</vh>
+<v t="ekr.20040712101754.132"><vh>String bug in html</vh></v>
+</v>
+<v t="ekr.20040712101754.133"><vh>@test colorizer HTML1</vh>
+<v t="ekr.20040712101754.134"><vh>HTML1</vh></v>
+</v>
+<v t="ekr.20040712101754.135"><vh>@test colorizer HTML2</vh>
+<v t="ekr.20040712101754.136"><vh>HTML2</vh></v>
+</v>
+<v t="ekr.20040712101754.137"><vh>@test colorizer LaTex</vh>
+<v t="ekr.20040712101754.138"><vh>LaTex</vh></v>
+</v>
+<v t="ekr.20040712101754.139"><vh>@test colorizer mixed</vh>
+<v t="ekr.20040712101754.140"><vh>Mixed</vh></v>
+</v>
+<v t="ekr.20040712101754.141"><vh>@test colorizer PHP</vh>
+<v t="ekr.20040712101754.142"><vh>PHP</vh></v>
+</v>
+<v t="ekr.20040712101754.143"><vh>@test colorizer python.xml (jEdit)</vh>
+<v t="ekr.20040712101754.144"><vh>python.xml</vh>
+<v t="ekr.20040712101754.145"><vh>&lt;&lt; remarks &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.146"><vh>&lt;&lt; comments &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.147"><vh>&lt;&lt; literals &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.148"><vh>&lt;&lt; operators &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.149"><vh>&lt;&lt; keywords &gt;&gt;</vh>
+<v t="ekr.20040712101754.150"><vh>&lt;&lt; reserved words &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.151"><vh>&lt;&lt; builtins &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.152"><vh>&lt;&lt; exceptions &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.153"><vh>&lt;&lt; types &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040712101754.154"><vh>@test colorizer Python1</vh>
+<v t="ekr.20040712101754.155"><vh>Python1</vh></v>
+</v>
+<v t="ekr.20040712101754.156"><vh>@test colorizer Python2</vh>
+<v t="ekr.20040712101754.157"><vh>Python2</vh></v>
+</v>
+<v t="ekr.20040712101754.158"><vh>@test colorizer rapidq</vh>
+<v t="ekr.20040712101754.159"><vh>rapidq</vh></v>
+</v>
+<v t="ekr.20040712101754.160"><vh>@test colorizer Rebol</vh>
+<v t="ekr.20040712101754.161"><vh>Rebol</vh></v>
+</v>
+<v t="ekr.20040712101754.162"><vh>@test colorizer shell</vh>
+<v t="ekr.20040712101754.163"><vh>shell</vh></v>
+</v>
+<v t="ekr.20040712101754.164"><vh>@test colorizer tex.xml (jEdit)</vh>
+<v t="ekr.20040712101754.165"><vh>tex.xml</vh>
+<v t="ekr.20040712101754.166"><vh>&lt;&lt; general rules &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.167"><vh>&lt;&lt; math rules &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.168"><vh>@test colorizer wikiTest1</vh>
+<v t="ekr.20040712101754.169"><vh>wikiTest1</vh></v>
+</v>
+<v t="ekr.20040712101754.170"><vh>@test colorizer wikiTest2</vh>
+<v t="ekr.20040712101754.171"><vh>wikiTest2</vh></v>
+</v>
+<v t="ekr.20040712101754.172"><vh>@test colorizer wikiTest3</vh>
+<v t="ekr.20040712101754.173"><vh>wikiTest3</vh></v>
+</v>
+</v>
+<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
+<v t="ekr.20050106123646"><vh>unused</vh>
+<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
+<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
+<v t="ekr.20050106094854.2"><vh> fail</vh></v>
+<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
+<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
+<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
+<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
+<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
+</v>
+</v>
+<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
+<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
+<v t="ekr.20050106080318.3"><vh> fail</vh></v>
+<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
+<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
+<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
+<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
+<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
+<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
+<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
+</v>
 <v t="ekr.20050526131809"><vh>Test</vh>
 <v t="ekr.20050526144024"><vh>c</vh></v>
 <v t="ekr.20050526144024"><vh>c</vh></v>
@@ -1840,97 +1869,17 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050331065322"><vh>Node 2</vh></v>
 </v>
 </v>
-<v t="ekr.20050419115225" a="E"><vh>(parse jEdit files)</vh>
-<v t="ekr.20050419172816"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
-<v t="ekr.20050419173824" a="E"><vh>jEdit docs...</vh>
-<v t="ekr.20050419175429"><vh>Rule ordering</vh></v>
-<v t="ekr.20050419181328"><vh>Attributes</vh>
-<v t="ekr.20050529103436"><vh> Documentation of attributes</vh>
-<v t="ekr.20050529103859.1"><vh> For 'seq', 'span', 'begin', 'end'</vh>
-<v t="ekr.20050419182514.1"><vh>AT_LINE_START (bool)</vh></v>
-<v t="ekr.20050419182514.2"><vh>AT_WHITESPACE_END (bool)</vh></v>
-<v t="ekr.20050419182514.3"><vh>AT_WORD_START (bool)</vh></v>
+<v t="ekr.20050601072505"><vh>Large coloring test</vh></v>
+<v t="ekr.20050602213517"><vh>Doc part test</vh></v>
+<v t="ekr.20050603134109"><vh>C language test</vh></v>
+<v t="ekr.20050607084934"><vh>Plain test</vh></v>
+<v t="ekr.20050608082208"><vh>Leading @sign tests</vh>
+<v t="ekr.20050608081744" tnodeList="ekr.20050608081744"><vh>@file leadingAtTest.py</vh></v>
+<v t="ekr.20050608081942"><vh>@thin leadingAtTest2.py</vh></v>
+<v t="ekr.20050608082702" tnodeList="ekr.20050608082702"><vh>@file leadingAtTest3.py</vh></v>
+<v t="ekr.20050608082702.1"><vh>@thin leadingAtTest4.py</vh></v>
 </v>
-<v t="ekr.20050529104609"><vh> For 'span' only</vh>
-<v t="ekr.20050419182514.10"><vh>NO_WORD_BREAK (bool)</vh></v>
-<v t="ekr.20050419182514.9"><vh>NO_LINE_BREAK (bool)</vh></v>
-<v t="ekr.20050419182514.8"><vh>NO_ESCAPE (bool)</vh></v>
-<v t="ekr.20050419182514.6"><vh>EXCLUDE_MATCH (bool)</vh></v>
-</v>
-<v t="ekr.20050529110433"><vh> For 'rules' only</vh>
-<v t="ekr.20050529102116.4"><vh>DEFAULT</vh></v>
-<v t="ekr.20050419182514.5"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
-<v t="ekr.20050529102116.5"><vh>IGNORE_CASE (bool)</vh></v>
-<v t="ekr.20050529102116.6"><vh>SET</vh></v>
-<v t="ekr.20050529102116.7"><vh>NO_WORD_SEP</vh></v>
-</v>
-<v t="ekr.20050529103436.2" a="E"><vh>AT_CHAR (int) for 'terminate'</vh></v>
-<v t="ekr.20050529104244" a="E"><vh>DELEGATE: for 'import', 'span' &amp; 'seq'</vh></v>
-<v t="ekr.20050419182514.7"><vh>HASH_CHAR (char) For 'regx'</vh></v>
-<v t="ekr.20050419182514.11" a="E"><vh>TYPE (Token Types)</vh></v>
-</v>
-<v t="ekr.20050529103436.3"><vh>Attributes for 'begin' &amp; 'end'</vh></v>
-<v t="ekr.20050529102116" a="E"><vh>Attributes for 'import': delegate</vh></v>
-<v t="ekr.20050529102116.8"><vh>Attributes for 'mark' </vh></v>
-<v t="ekr.20050529102116.1"><vh>Attributes for 'property': name, value</vh></v>
-<v t="ekr.20050529102116.3" a="E"><vh>Attributes for 'rules'</vh></v>
-<v t="ekr.20050529102116.9" a="E"><vh>Attributes for 'span'</vh></v>
-<v t="ekr.20050529103436.4"><vh>Attributes for 'seq' </vh></v>
-</v>
-<v t="ekr.20050419200205" a="E"><vh>Elements</vh>
-<v t="ekr.20050419173824.13"><vh>eol_span</vh></v>
-<v t="ekr.20050419173824.12"><vh>eol_span_regexp</vh></v>
-<v t="ekr.20050419173824.16"><vh>import</vh></v>
-<v t="ekr.20050419173824.2"><vh>keywords</vh></v>
-<v t="ekr.20050419173824.17"><vh>mark_following</vh></v>
-<v t="ekr.20050419173824.18"><vh>mark_previous</vh></v>
-<v t="ekr.20050419173824.6"><vh>mode</vh></v>
-<v t="ekr.20050419173824.7" a="E"><vh>props &amp; property  (for auto-indent)</vh></v>
-<v t="ekr.20050419173824.3" a="ETV"><vh>rules</vh></v>
-<v t="ekr.20050419173824.14"><vh>seq</vh></v>
-<v t="ekr.20050419173824.15"><vh>seq_regexp</vh></v>
-<v t="ekr.20050419173824.4"><vh>span</vh></v>
-<v t="ekr.20050419173824.11"><vh>span_regexp</vh></v>
-<v t="ekr.20050419173824.5"><vh>terminate</vh></v>
-</v>
-</v>
-<v t="ekr.20050419115418"><vh>Parse jEdit script</vh>
-<v t="ekr.20050419120410.1"><vh>&lt;&lt; paths &gt;&gt;</vh></v>
-<v t="ekr.20050419215535" a="E"><vh>class modeClass</vh>
-<v t="ekr.20050419220140"><vh> mode.__init__</vh></v>
-<v t="ekr.20050528112438"><vh>doAttribute</vh></v>
-<v t="ekr.20050529062656"><vh>doContent</vh></v>
-<v t="ekr.20050528161834"><vh>endElement</vh></v>
-<v t="ekr.20050529051601"><vh>error</vh></v>
-<v t="ekr.20050529045503.1"><vh>inRule</vh></v>
-<v t="ekr.20050528102444"><vh>printSummary</vh></v>
-<v t="ekr.20050528110638"><vh>startElement</vh></v>
-</v>
-<v t="ekr.20050419115912.1"><vh>class jEdit_contentHandler</vh>
-<v t="ekr.20050419120819"><vh> __init__ &amp; helpers</vh></v>
-<v t="ekr.20050419140912"><vh>helpers</vh>
-<v t="ekr.20050419132345"><vh>attrsToList</vh></v>
-<v t="ekr.20050419124121"><vh>attrsToString</vh></v>
-<v t="ekr.20050419115912"><vh>clean</vh></v>
-<v t="ekr.20050528105213.3"><vh>error</vh></v>
-<v t="ekr.20050419192455"><vh>printStartElement</vh></v>
-<v t="ekr.20050419131709"><vh>printSummary</vh></v>
-</v>
-<v t="ekr.20050419140912.1"><vh>sax over-rides</vh>
-<v t="ekr.20050528105408"><vh> Do nothing...</vh>
-<v t="ekr.20050419115418.4"><vh>other methods</vh></v>
-<v t="ekr.20050419115418.2"><vh>endDocument</vh></v>
-<v t="ekr.20050419115418.5"><vh>startDocument</vh></v>
-</v>
-<v t="ekr.20050419115418.1"><vh>characters</vh></v>
-<v t="ekr.20050419115418.3"><vh>endElement</vh></v>
-<v t="ekr.20050419115418.6"><vh>startElement</vh></v>
-</v>
-<v t="ekr.20050419192133"><vh>doStartElement</vh></v>
-<v t="ekr.20050419214545"><vh>doEndElement</vh></v>
-</v>
-</v>
-</v>
+<v t="ekr.20050612154351" a="OTV"><vh>@thin testSecRef.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -2638,7 +2587,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -4665,7 +4614,11 @@ if 1 and 2:
 
 for p in root.allNodes_iter():
     assert(p.t == p.v.t)</t>
-<t tx="ekr.20040712101754.176">c.frame.body.colorizer.python_keywords.append("as")</t>
+<t tx="ekr.20040712101754.176">mode = c.frame.body.colorizer.modes.get('python')
+
+# g.printDict(mode.keywords)
+
+mode.keywords['as'] = 1 # append the keyword, colorize with 'keyword1' tag.</t>
 <t tx="ekr.20040712101754.177">p = p.firstChild()
 assert(p.headString()=="File Conversion")
 p.convertTreeToString()</t>
@@ -14397,751 +14350,6 @@ p.v.t.unknownAttributes = d</t>
 <t tx="ekr.20050419084109"></t>
 <t tx="ekr.20050419084109.1"></t>
 <t tx="ekr.20050419085933"></t>
-<t tx="ekr.20050419115225">&lt;!DOCTYPE MODE SYSTEM "xmode.dtd"&gt;</t>
-<t tx="ekr.20050419115418">@language python
-@tabwidth -4
-import leoNodes
-import os
-import xml.sax
-import xml.sax.saxutils
-&lt;&lt; paths &gt;&gt;
-
-@others
-
-try:
-    f = None
-    try:
-        print ; print ; print '*' * 80
-        print path
-        if 1:
-            source = f = open(path)
-        else: # not needed, and it works.
-            source = xml.sax.xmlreader.InputSource(path)
-            source.setEncoding(g.app.tkEncoding) # Not needed.
-        parser = xml.sax.make_parser()
-        handler = jEdit_contentHandler(c)
-        parser.setContentHandler(handler)
-        parser.parse(source)
-        handler.printSummary()
-    except: g.es_exception()
-finally:
-    if f: f.close()</t>
-<t tx="ekr.20050419115418.1">def characters(self,content):
-    
-    content = content.replace('\r','').strip()
-    content = self.clean(content)
-
-    elementName = self.elementStack and self.elementStack[-1]
-    elementName = elementName.lower()
-    
-    if 1: # new code
-        if self.printAllElements:
-            print content,
-        elif self.printCharacters and content and elementName not in self.suppressContent:
-            print 'content:',elementName,repr(content)
-    else:
-        if self.printCharacters and content and elementName not in self.suppressContent:
-            if self.printAllElements:
-                print content,
-            else:
-                print 'content:',elementName,repr(content)
-            
-    if self.mode:
-        self.mode.doContent(elementName,content)
-    else:
-        self.error('characters outside of mode')</t>
-<t tx="ekr.20050419115418.2">def endDocument(self):
-
-    pass
-
-
-</t>
-<t tx="ekr.20050419115418.3">def endElement(self,name):
-
-    self.doEndElement(name)
-
-    name2 = self.elementStack.pop()
-    assert name == name2</t>
-<t tx="ekr.20050419115418.4">def ignorableWhitespace(self):
-    g.trace()
-
-def processingInstruction (self,target,data):
-    g.trace()
-
-def skippedEntity(self,name):
-    g.trace(name)
-
-def startElementNS(self,name,qname,attrs):
-    g.trace(name)
-
-def endElementNS(self,name,qname):
-    g.trace(name)</t>
-<t tx="ekr.20050419115418.5">def startDocument(self):
-    
-    pass</t>
-<t tx="ekr.20050419115418.6">def startElement(self,name,attrs):
-    
-    if self.mode:
-        self.mode.numberOfElements += 1
-    else:
-        self.numberOfElements += 1
-        
-    self.elementStack.append(name)
-    self.doStartElement(name,attrs)</t>
-<t tx="ekr.20050419115912">def clean(self,s):
-
-    return g.toEncodedString(s,"ascii")</t>
-<t tx="ekr.20050419115912.1">class jEdit_contentHandler (xml.sax.saxutils.XMLGenerator):
-
-    @others
-</t>
-<t tx="ekr.20050419120410.1"># The last path takes effect.
-
-path = os.path.join(g.app.loadDir,"../","test","test2.leo")
-path = os.path.join(g.app.loadDir,"LeoPy.leo")
-
-path = os.path.join(g.app.loadDir,"../","test","python.xml") # jEdit description file
-
-path = os.path.normpath(path)</t>
-<t tx="ekr.20050419120819">def __init__ (self,c):
-
-    self.c = c
-    
-    # Init the base class.
-    xml.sax.saxutils.XMLGenerator.__init__(self)
-    
-    # Non-mode statistics.
-    self.numberOfAttributes = 0
-    self.numberOfElements = 0
-    
-    # Options...
-    self.ignoreWs = True # True: don't print contents with only ws.
-    self.newLineAfterStartElement = [
-        'keywords','mode','props','property','rules','span','eol_span',
-        # 'seq',
-    ]
-    
-    # Printing options
-    self.printAllElements = False
-    self.printCharacters = False or self.printAllElements
-    self.printAttributes = False and not self.printAllElements
-    self.printElements = [
-        # 'begin','end',
-        #'eol_span',
-        #'keyword1','keyword2','keyword3','keyword4',
-        #'mark_previous',
-        #'mode',
-        #'props',
-        #'property',
-        #'rules',
-        #'span',
-        #'seq',
-    ]
-    
-    if self.printAllElements:
-        self.suppressContent = []
-    else:
-        self.suppressContent = ['keyword1','keyword2','keyword3','keyword4']
-        
-    self.trace = False
-    self.verbose = False
-    
-    # Semantics: most of these should be mode ivars.
-    self.elementStack = []
-    self.mode = None # The present mode, or None if outside all modes.
-    self.modes = [] # All modes defined here or by imports.</t>
-<t tx="ekr.20050419124121">def attrsToString (self,attrs,sep='\n'):
-    
-    '''Convert the attributes to a string.
-    
-    attrs: an Attributes item passed to startElement.
-    
-    sep: the separator charater between attributes.'''
-
-    result = [
-        '%s="%s"' % (bunch.name,bunch.val)
-        for bunch in self.attrsToList(attrs)
-    ]
-
-    return sep.join(result)</t>
-<t tx="ekr.20050419131709">def printSummary (self):
-    
-    print '-' * 10, 'non- mode statistics'
-    print 'modes',len(self.modes)
-    print 'elements', self.numberOfElements</t>
-<t tx="ekr.20050419132345">def attrsToList (self,attrs):
-    
-    '''Convert the attributes to a list of g.Bunches.
-    
-    attrs: an Attributes item passed to startElement.
-    
-    sep: the separator charater between attributes.'''
-    
-    return [
-        g.Bunch(name=name,val=attrs.getValue(name))
-        for name in attrs.getNames()
-    ]</t>
-<t tx="ekr.20050419140912"></t>
-<t tx="ekr.20050419140912.1"></t>
-<t tx="ekr.20050419172816"></t>
-<t tx="ekr.20050419173824">@killcolor</t>
-<t tx="ekr.20050419173824.2">The KEYWORDS tag, which must be placed inside a RULES tag and can only appear
-once, specifies a list of keywords to highlight. Keywords are similar to SEQs,
-except that SEQs match anywhere in the text, whereas keywords only match whole
-words. Words are considered to be runs of text separated by non-alphanumeric
-characters.
-
-The KEYWORDS tag does not define any attributes.
-
-Each child element of the KEYWORDS tag is an element whose name is a token type,
-and whose content is the keyword to highlight.
-
-&lt;KEYWORDS&gt;
-  &lt;KEYWORD1&gt;if&lt;/KEYWORD1&gt;
-  &lt;KEYWORD1&gt;else&lt;/KEYWORD1&gt;
-  &lt;KEYWORD3&gt;int&lt;/KEYWORD3&gt;
-  &lt;KEYWORD3&gt;void&lt;/KEYWORD3&gt;
-&lt;/KEYWORDS&gt;</t>
-<t tx="ekr.20050419173824.3">RULES tags must be placed inside the MODE tag. Each RULES tag defines a ruleset.
-A ruleset consists of a number of parser rules, with each parser rule specifying
-how to highlight a specific syntax token. There must be at least one ruleset in
-each edit mode. There can also be more than one, with different rulesets being
-used to highlight different parts of a buffer (for example, in HTML mode, one
-rule set highlights HTML tags, and another highlights inline JavaScript). For
-information about using more than one ruleset, see the section called “The SPAN
-Tag”.
-
-The RULES tag supports the following attributes, all of which are optional: 
-
-SET the name of this ruleset. All rulesets other than the first must have a
-name.
-
-IGNORE_CASE if set to FALSE, matches will be case sensitive. Otherwise, case
-will not matter. Default is TRUE.
-
-NO_WORD_SEP Any non-alphanumeric character not in this list is treated as a word
-separator for the purposes of syntax highlighting.
-
-DEFAULT The token type for text which doesn't match any specific rule. Default
-is NULL. See the section called “Token Types” for a list of token types.
-
-HIGHLIGHT_DIGITS DIGIT_RE
-
-If the HIGHLIGHT_DIGITS attribute is set to TRUE, jEdit will attempt to
-highlight numbers in this ruleset.
-
-Any word consisting entirely of digits (0-9) will be highlighted with the DIGIT
-token type. A word that contains other letters in addition to digits will be
-highlighted with the DIGIT token type only if it matches the regular expression
-specified in the DIGIT_RE attribute. If this attribute is not specified, it will
-not be highlighted.
-
-Here is an example DIGIT_RE regular expression that highlights Java-style
-numeric literals (normal numbers, hexadecimals prefixed with 0x, numbers
-suffixed with various type indicators, and floating point literals containing an
-exponent):
-
-DIGIT_RE="(0x[[:xdigit:]]+|[[:digit:]]+(e[[:digit:]]*)?)[lLdDfF]?"
-
-Here is an example RULES tag:
-
-&lt;RULES IGNORE_CASE="FALSE" HIGHLIGHT_DIGITS="TRUE"&gt;
-    ... parser rules go here ...
-&lt;/RULES&gt;</t>
-<t tx="ekr.20050419173824.4">The SPAN rule, which must be placed inside a RULES tag, highlights text between
-a start and end string. The start and end strings are specified inside child
-elements of the SPAN tag. The following attributes are supported:
-
-TYPE - The token type to highlight the span with. See the section called “Token
-Types” for a list of token types.
-
-AT_LINE_START - If set to TRUE, the span will only be highlighted if the start
-sequence occurs at the beginning of a line.
-
-AT_WHITESPACE_END - If set to TRUE, the span will only be highlighted if the
-start sequence is the first non-whitespace text in the line.
-
-AT_WORD_START - If set to TRUE, the span will only be highlighted if the start
-sequence occurs at the beginning of a word.
-
-DELEGATE - text inside the span will be highlighted with the specified ruleset.
-To delegate to a ruleset defined in the current mode, just specify its name. To
-delegate to a ruleset defined in another mode, specify a name of the form
-mode::ruleset. Note that the first (unnamed) ruleset in a mode is called
-“MAIN”.
-
-EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be
-highlighted, only the text between them will.
-
-NO_ESCAPE - If set to TRUE, the ruleset's escape character will have no effect
-before the span's end string. Otherwise, the presence of the escape character
-will cause that occurrence of the end string to be ignored.
-
-NO_LINE_BREAK - If set to TRUE, the span will not cross line breaks.
-
-NO_WORD_BREAK - If set to TRUE, the span will not cross word breaks.
-
-Note that the AT_LINE_START, AT_WHITESPACE_END and AT_WORD_START attributes can
-also be used on the BEGIN and END elements. Setting these attributes to the same
-value on both elements has the same effect as setting them on the SPAN element.
-
-Here is a SPAN that highlights Java string literals, which cannot include line breaks:
-
-&lt;SPAN TYPE="LITERAL1" NO_LINE_BREAK="TRUE"&gt;
-  &lt;BEGIN&gt;"&lt;/BEGIN&gt;
-  &lt;END&gt;"&lt;/END&gt;
-&lt;/SPAN&gt;
-
-Here is a SPAN that highlights Java documentation comments by delegating to the “JAVADOC” ruleset defined elsewhere in the current mode:
-
-&lt;SPAN TYPE="COMMENT2" DELEGATE="JAVADOC"&gt;
-  &lt;BEGIN&gt;/**&lt;/BEGIN&gt;
-  &lt;END&gt;*/&lt;/END&gt;
-&lt;/SPAN&gt;
-
-Here is a SPAN that highlights HTML cascading stylesheets inside &lt;STYLE&gt; tags by delegating to the main ruleset in the CSS edit mode:
-
-&lt;SPAN TYPE="MARKUP" DELEGATE="css::MAIN"&gt;
-  &lt;BEGIN&gt;&amp;lt;style&amp;gt;&lt;/BEGIN&gt;
-  &lt;END&gt;&amp;lt;/style&amp;gt;&lt;/END&gt;
-&lt;/SPAN&gt;</t>
-<t tx="ekr.20050419173824.5">The TERMINATE rule, which must be placed inside a RULES tag, specifies that
-parsing should stop after the specified number of characters have been read from
-a line.
-
-The number of characters to terminate after should be specified with the AT_CHAR
-attribute. Here is an example:
-
-&lt;TERMINATE AT_CHAR="1" /&gt;
-
-This rule is used in Patch mode, for example, because only the first character
-of each line affects highlighting.</t>
-<t tx="ekr.20050419173824.6">Each mode definition must begin with the following:
-
-&lt;?xml version="1.0"?&gt;
-&lt;!DOCTYPE MODE SYSTEM "xmode.dtd"&gt;
-
-Each mode definition must also contain exactly one MODE tag. All other tags (PROPS, RULES) must be placed inside the MODE tag. The MODE tag does not have any defined attributes. Here is an example:
-
-&lt;MODE&gt;
-    ... mode definition goes here ...
-&lt;/MODE&gt;</t>
-<t tx="ekr.20050419173824.7">The PROPS tag and the PROPERTY tags inside it are used to define mode-specific
-properties. Each PROPERTY tag must have a NAME attribute set to the property's
-name, and a VALUE attribute with the property's value.
-
-All buffer-local properties listed in the section called “Buffer-Local
-Properties” may be given values in edit modes.
-
-The following mode properties specify commenting strings:
-
-* commentEnd - the comment end string, used by the Range Comment command.
-* commentStart - the comment start string, used by the Range Comment command.
-* lineComment - the line comment string, used by the Line Comment command. 
-
-When performing auto indent, a number of mode properties determine the resulting indent level:
-
-* The line and the one before it are scanned for brackets listed in the
-indentCloseBrackets and indentOpenBrackets properties. Opening brackets in the
-previous line increase indent.
-
-If lineUpClosingBracket is set to true, then closing brackets on the current
-line will line up with the line containing the matching opening bracket. For
-example, in Java mode lineUpClosingBracket is set to true, resulting in brackets
-being indented like so:
-
-{
-    // Code
-    {
-        // More code
-    }
-}
-
-If lineUpClosingBracket is set to false, the line after a closing bracket will
-be lined up with the line containing the matching opening bracket. For example,
-in Lisp mode lineUpClosingBracket is set to false, resulting in brackets being
-indented like so:
-
-(foo 'a-parameter
-    (crazy-p)
-    (bar baz ()))
-(print "hello world")
-
-* If the previous line contains no opening brackets, or if the
-doubleBracketIndent property is set to true, the previous line is checked
-against the regular expressions in the indentNextLine and indentNextLines
-properties. If the previous line matches the former, the indent of the current
-line is increased and the subsequent line is shifted back again. If the previous
-line matches the latter, the indent of the current and subsequent lines is
-increased.
-
-In Java mode, for example, the indentNextLine property is set to match control
-structures such as “if”, “else”, “while”, and so on.
-
-The doubleBracketIndent property, if set to the default of false, results in code indented like so:
-
-while(objects.hasNext())
-{
-    Object next = objects.hasNext();
-    if(next instanceof Paintable)
-        next.paint(g);
-}
-
-On the other hand, settings this property to “true” will give the following result:
-
-while(objects.hasNext())
-    {
-        Object next = objects.hasNext();
-        if(next instanceof Paintable)
-            next.paint(g);
-    }
-
-Here is the complete &lt;PROPS&gt; tag for Java mode:
-
-&lt;PROPS&gt;
-    &lt;PROPERTY NAME="commentStart" VALUE="/*" /&gt;
-    &lt;PROPERTY NAME="commentEnd" VALUE="*/" /&gt;
-    &lt;PROPERTY NAME="lineComment" VALUE="//" /&gt;
-    &lt;PROPERTY NAME="wordBreakChars" VALUE=",+-=&amp;lt;&amp;gt;/?^&amp;amp;*" /&gt;
-
-    &lt;!-- Auto indent --&gt;
-    &lt;PROPERTY NAME="indentOpenBrackets" VALUE="{" /&gt;
-    &lt;PROPERTY NAME="indentCloseBrackets" VALUE="}" /&gt;
-    &lt;PROPERTY NAME="indentNextLine"
-    	VALUE="\s*(((if|while)\s*\(|else\s*|else\s+if\s*\(|for\s*\(.*\))[^{;]*)" /&gt;
-    &lt;!-- set this to 'true' if you want to use GNU coding style --&gt;
-    &lt;PROPERTY NAME="doubleBracketIndent" VALUE="false" /&gt;
-    &lt;PROPERTY NAME="lineUpClosingBracket" VALUE="true" /&gt;
-&lt;/PROPS&gt;</t>
-<t tx="ekr.20050419173824.11">The SPAN_REGEXP rule is similar to the SPAN rule except the start sequence is
-taken to be a regular expression.
-
-In addition to the attributes supported by the SPAN tag, the HASH_CHAR attribute
-must be specified. It must be set to the first character that the regular
-expression matches. This rules out using regular expressions which can match
-more than one character at the start position. The regular expression match
-cannot span more than one line, either.
-
-Any text matched by groups in the BEGIN regular expression is substituted in the
-END string. See below for an example of where this is useful. 
-
-Here is a SPAN_REGEXP rule that highlights “read-ins” in shell scripts:
-
-&lt;SPAN_REGEXP HASH_CHAR="&lt;" TYPE="LITERAL1" DELEGATE="LITERAL"&gt;
-    &lt;BEGIN&gt;&lt;![CDATA[&lt;&lt;[[:space:]'"]*([[:alnum:]_]+)[[:space:]'"]*]]&gt;&lt;/BEGIN&gt;
-    &lt;END&gt;$1&lt;/END&gt;
-&lt;/SPAN_REGEXP&gt;
-
-Here is a SPAN_REGEXP rule that highlights constructs placed between &lt;#ftl and
-&gt;, as long as the &lt;#ftl is followed by a word break:
-
-&lt;SPAN_REGEXP TYPE="KEYWORD1" HASH_CHAR="&amp;lt;" DELEGATE="EXPRESSION"&gt;
-    &lt;BEGIN&gt;&amp;lt;#ftl\&amp;gt;&lt;/BEGIN&gt;
-    &lt;END&gt;&amp;gt;&lt;/END&gt;
-&lt;/SPAN_REGEXP&gt;</t>
-<t tx="ekr.20050419173824.12">The EOL_SPAN_REGEXP rule is similar to the EOL_SPAN rule except the match
-sequence is taken to be a regular expression.
-
-In addition to the attributes supported by the EOL_SPAN tag, the HASH_CHAR
-attribute must be specified. It must be set to the first character that the
-regular expression matches. This rules out using regular expressions which can
-match more than one character at the start position. The regular expression
-match cannot span more than one line, either.
-
-Here is an EOL_SPAN_REGEXP that highlights MS-DOS batch file comments, which
-start with REM, followed by any whitespace character, and extend until the end
-of the line:
-
-&lt;EOL_SPAN_REGEXP AT_WHITESPACE_END="TRUE" HASH_CHAR="R" TYPE="COMMENT1"&gt;REM\s&lt;/EOL_SPAN_REGEXP&gt;</t>
-<t tx="ekr.20050419173824.13">An EOL_SPAN is similar to a SPAN except that highlighting stops at the end of
-the line, and no end sequence needs to be specified. The text to match is
-specified between the opening and closing EOL_SPAN tags.
-
-The following attributes are supported:
-
-TYPE - The token type to highlight the span with. See the section called “Token
-Types” for a list of token types.
-
-AT_LINE_START - If set to TRUE, the span will only be highlighted if the start
-sequence occurs at the beginning of a line.
-
-AT_WHITESPACE_END - If set to TRUE, the span will only be highlighted if the
-sequence is the first non-whitespace text in the line.
-
-AT_WORD_START - If set to TRUE, the span will only be highlighted if the start
-sequence occurs at the beginning of a word.
-
-DELEGATE - text inside the span will be highlighted with the specified ruleset.
-To delegate to a ruleset defined in the current mode, just specify its name. To
-delegate to a ruleset defined in another mode, specify a name of the form
-mode::ruleset. Note that the first (unnamed) ruleset in a mode is called
-“MAIN”.
-
-EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be
-highlighted, only the text between them will.
-
-Here is an EOL_SPAN that highlights C++ comments:
-
-&lt;EOL_SPAN TYPE="COMMENT1"&gt;//&lt;/EOL_SPAN&gt;</t>
-<t tx="ekr.20050419173824.14">The SEQ rule, which must be placed inside a RULES tag, highlights fixed
-sequences of text. The text to highlight is specified between opening and
-closing SEQ tags. The following attributes are supported:
-
-TYPE - the token type to highlight the sequence with. See the section called
-“Token Types” for a list of token types.
-
-AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it
-occurs at the beginning of a line.
-
-AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it
-is the first non-whitespace text in the line.
-
-AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it
-occurs at the beginning of a word.
-
-DELEGATE - if this attribute is specified, all text after the sequence will be
-highlighted using this ruleset. To delegate to a ruleset defined in the current
-mode, just specify its name. To delegate to a ruleset defined in another mode,
-specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset
-in a mode is called “MAIN”.
-
-The following rules highlight a few Java operators:
-
-&lt;SEQ TYPE="OPERATOR"&gt;+&lt;/SEQ&gt;
-&lt;SEQ TYPE="OPERATOR"&gt;-&lt;/SEQ&gt;
-&lt;SEQ TYPE="OPERATOR"&gt;*&lt;/SEQ&gt;
-&lt;SEQ TYPE="OPERATOR"&gt;/&lt;/SEQ&gt;</t>
-<t tx="ekr.20050419173824.15">The SEQ_REGEXP rule is similar to the SEQ rule except the match sequence is
-taken to be a regular expression.
-
-In addition to the attributes supported by the SEQ tag, the HASH_CHAR attribute
-must be specified. It must be set to the first character that the regular
-expression matches. This rules out using regular expressions which can match
-more than one character at the start position. The regular expression match
-cannot span more than one line, either.
-
-Here is an example of a SEQ_REGEXP rule that highlights Perl's matcher
-constructions such as m/(.+):(\d+):(.+)/:
-
-&lt;SEQ_REGEXP TYPE="MARKUP"
-    HASH_CHAR="m"
-    AT_WORD_START="TRUE"
-&gt;m([[:punct:]])(?:.*?[^\\])*?\1[sgiexom]*&lt;/SEQ_REGEXP&gt;</t>
-<t tx="ekr.20050419173824.16">The IMPORT tag, which must be placed inside a RULES tag, loads all rules defined
-in a given ruleset into the current ruleset; in other words, it has the same
-effect as copying and pasting the imported ruleset.
-
-The only required attribute DELEGATE must be set to the name of a ruleset. To
-import a ruleset defined in the current mode, just specify its name. To import a
-ruleset defined in another mode, specify a name of the form mode::ruleset. Note
-that the first (unnamed) ruleset in a mode is called “MAIN”.
-
-One quirk is that the definition of the imported ruleset is not copied to the
-location of the IMPORT tag, but rather to the end of the containing ruleset.
-This has implications with rule-ordering; see the section called “Rule Ordering
-Requirements”.
-
-Here is an example from the PHP mode, which extends the inline JavaScript
-highlighting to support embedded PHP:
-
-
-   &lt;RULES SET="JAVASCRIPT+PHP"&gt;
-
-   &lt;SPAN TYPE="MARKUP" DELEGATE="php::PHP"&gt;
-       &lt;BEGIN&gt;&amp;lt;?php&lt;/BEGIN&gt;
-       &lt;END&gt;?&amp;gt;&lt;/END&gt;
-   &lt;/SPAN&gt;
-   
-   &lt;SPAN TYPE="MARKUP" DELEGATE="php::PHP"&gt;
-       &lt;BEGIN&gt;&amp;lt;?&lt;/BEGIN&gt;
-       &lt;END&gt;?&amp;gt;&lt;/END&gt;
-   &lt;/SPAN&gt;
-   
-   &lt;SPAN TYPE="MARKUP" DELEGATE="php::PHP"&gt;
-       &lt;BEGIN&gt;&amp;lt;%=&lt;/BEGIN&gt;
-       &lt;END&gt;%&amp;gt;&lt;/END&gt;
-   &lt;/SPAN&gt;
-
-   &lt;IMPORT DELEGATE="javascript::MAIN"/&gt;
-&lt;/RULES&gt;</t>
-<t tx="ekr.20050419173824.17">The MARK_FOLLOWING rule, which must be placed inside a RULES tag, highlights
-from the start of the match to the next syntax token. The text to match is
-specified between opening and closing MARK_FOLLOWING tags.
-
-The following attributes are supported:
-
-TYPE - The token type to highlight the text with. See the section called “Token
-Types” for a list of token types.
-
-AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it
-occurs at the beginning of a line.
-
-AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it
-is the first non-whitespace text in the line.
-
-AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it
-occurs at the beginning of a word.
-
-EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text
-after it will.
-
-Here is a rule that highlights variables in Unix shell scripts (“$CLASSPATH”,“$IFS”, etc):
-
-&lt;MARK_FOLLOWING TYPE="KEYWORD2"&gt;$&lt;/MARK_FOLLOWING&gt;</t>
-<t tx="ekr.20050419173824.18">The MARK_PREVIOUS rule, which must be placed inside a RULES tag, highlights from
-the end of the previous syntax token to the matched text. The text to match is
-specified between opening and closing MARK_PREVIOUS tags. The following
-attributes are supported:
-
-TYPE - The token type to highlight the text with. See the section called “Token
-Types” for a list of token types.
-
-AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it
-occurs at the beginning of a line.
-
-AT_WHITESPACE_END - If set to TRUE, the sequence will only be highlighted if it
-is the first non-whitespace text in the line.
-
-AT_WORD_START - If set to TRUE, the sequence will only be highlighted if it
-occurs at the beginning of a word.
-
-EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text
-before it will.
-
-Here is a rule that highlights labels in Java mode (for example, “XXX:”):
-
-&lt;MARK_PREVIOUS AT_WHITESPACE_END="TRUE" EXCLUDE_MATCH="TRUE"&gt;:&lt;/MARK_PREVIOUS&gt;</t>
-<t tx="ekr.20050419175429">You might encounter this very common pitfall when writing your own modes.
-
-Since jEdit checks buffer text against parser rules in the order they appear in the ruleset, more specific rules must be placed before generalized ones, otherwise the generalized rules will catch everything. </t>
-<t tx="ekr.20050419181328"></t>
-<t tx="ekr.20050419182514.1">If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line.</t>
-<t tx="ekr.20050419182514.2">If set to TRUE, the sequence will only be highlighted if it is the first non-whitespace text in the line.</t>
-<t tx="ekr.20050419182514.3">If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a word.</t>
-<t tx="ekr.20050419182514.5">If the HIGHLIGHT_DIGITS attribute is set to TRUE, jEdit will attempt to highlight numbers in this ruleset.
-
-Any word consisting entirely of digits (0-9) will be highlighted with the DIGIT token type.
-
-A word that contains other letters in addition to digits will be highlighted with the DIGIT token type only if it matches the regular expression specified in the DIGIT_RE attribute. If this attribute is not specified, it will not be highlighted.
-
-Here is an example DIGIT_RE regular expression that highlights Java-style numeric literals (normal numbers, hexadecimals prefixed with 0x, numbers suffixed with various type indicators, and floating point literals containing an exponent):
-
-DIGIT_RE="(0x[[:xdigit:]]+|[[:digit:]]+(e[[:digit:]]*)?)[lLdDfF]?"</t>
-<t tx="ekr.20050419182514.6">If set to TRUE, the match will not be highlighted, only the text before it will.</t>
-<t tx="ekr.20050419182514.7">Atribute            Elements used in
---------            ----------------
-HASH_CHAR           EOL_SPAN_REGEXP,SPAN_REGEXP,SEQ_REGEXP
-
-It must be set to the first character that the regular expression matches. This
-rules out using regular expressions which can match more than one character at
-the start position. The regular expression match cannot span more than one line,
-either.</t>
-<t tx="ekr.20050419182514.8">If set to TRUE, the ruleset's escape character will have no effect before the span's end string. Otherwise, the presence of the escape character will cause that occurrence of the end string to be ignored.
-
-</t>
-<t tx="ekr.20050419182514.9">If set to TRUE, the span will not cross line breaks.</t>
-<t tx="ekr.20050419182514.10">If set to TRUE, the span will not cross word breaks.</t>
-<t tx="ekr.20050419182514.11">The token type to highlight the text with.
-
-Parser rules can highlight tokens using any of the following token types:
-
-NULL - no special highlighting
-COMMENT1,COMMENT2,COMMENT3,COMMENT4
-FUNCTION
-KEYWORD1,KEYWORD2,KEYWORD3,KEYWORD4
-LABEL
-LITERAL1,LITERAL2,LITERAL3,LITERAL4
-MARKUP
-OPERATOR</t>
-<t tx="ekr.20050419192133">def doStartElement (self,elementName,attrs):
-    
-    if self.printAllElements or elementName.lower() in self.printElements:
-        self.printStartElement(elementName,attrs)
-
-    elementName = elementName.lower()
-    
-    if elementName == 'mode':
-        self.mode = modeClass(self)
-    elif self.mode:
-        self.mode.startElement(elementName)
-        for bunch in self.attrsToList(attrs):
-            if self.printAttributes:
-                print 'attr:',elementName,bunch.name,'=',bunch.val
-            self.mode.doAttribute(bunch.name,bunch.val)
-    else:
-        self.error('Start element appears outside of Mode:%s' % elementName)
-        for bunch in self.attrsToList(attrs):
-            self.error('Attribute appears outside of Mode:%s' % bunch.name)</t>
-<t tx="ekr.20050419192455">def printStartElement(self,name,attrs):
-
-    if attrs.getLength() &gt; 0:
-        print '&lt;%s %s&gt;' % (
-            self.clean(name).strip(),
-            self.attrsToString(attrs,sep=' ')),
-    else:
-        print '&lt;%s&gt;' % (self.clean(name).strip()),
-
-    if name.lower() in self.newLineAfterStartElement:
-        print</t>
-<t tx="ekr.20050419200205">@language html
-@color</t>
-<t tx="ekr.20050419214545">def doEndElement (self,elementName):
-    
-    if self.printAllElements or elementName.lower() in self.printElements:
-        print '&lt;/' + self.clean(elementName).strip() + '&gt;'
-        
-    if elementName.lower() == 'mode':
-        self.modes.append(self.mode)
-        self.mode.printSummary()
-        self.mode = None
-    elif self.mode:
-        self.mode.endElement(elementName)
-    else:
-        self.error('End element appears outside of Mode:%s' % elementName)
-        for bunch in self.attrsToList(attrs):
-            self.error('Attribute appears outside of Mode:%s' %bunch.name)</t>
-<t tx="ekr.20050419215535">class modeClass:
-    
-    @others</t>
-<t tx="ekr.20050419220140">def __init__ (self,contentHandler):
-
-    self.contentHandler = contentHandler
-    self.fileName = None # The file from which the mode was imported.
-    self.verbose = self.contentHandler.verbose
-
-    # Mode statistics...
-    self.numberOfAttributes = 0
-    self.numberOfElements = 0
-    self.numberOfErrors = 0
-    self.numberOfPropertyAttributes = 0
-    self.numberOfRuleAttributes = 0
-    
-    # List of boolean attributes.
-    self.boolAttrs = [
-        'at_line_start','at_whitespace_end','at_word_start',
-        'exclude_match','highlight_digits','ignore_case',
-        'no_escape','no_line_break','no_word_break','no_word_sep',]
-
-    # List of elements that start a rule.
-    self.ruleElements = [
-        'eol_span','eol_span_regexp','import','keywords',
-        'mark_following','mark_previous','seq','seq_regexp',
-        'span','span_regexp','terminate',]
-
-    if 0: # Not used at present.
-        self.seqSpanElements = [
-            'eol_span','eol_span_regexp','seq','seq_regexp',
-            'span','span_regexp',]
-
-    # Mode semantics.
-    self.attributes = {}
-    self.inProps = False
-    self.inRules = False
-    self.props = []
-    self.property = None
-    self.rule = None
-    self.rules = []
-    self.rulesAttributes = {}</t>
 <t tx="ekr.20050427101736">class ZipFile(  	file[, mode[, compression]])
     Open a ZIP file, where file can be either a path to a file (a string) or a file-like object. The mode parameter should be 'r' to read an existing file, 'w' to truncate and write a new file, or 'a' to append to an existing file. For mode is 'a' and file refers to an existing ZIP file, then additional files are added to it. If file does not refer to a ZIP file, then a new ZIP archive is appended to the file. This is meant for adding a ZIP archive to another file, such as python.exe. Using
 
@@ -15409,211 +14617,496 @@ after</t>
 <t tx="ekr.20050526144024">as</t>
 <t tx="ekr.20050526144024.1">@root aa</t>
 <t tx="ekr.20050526144024.2">@root bb</t>
-<t tx="ekr.20050528102444">def printSummary (self):
+<t tx="ekr.20050601072505">athis skkdfkjdkfjakdjf;akjf;akljf;asdjf;ajf;
+a;ljf;
 
-    print '-' * 10, 'mode statistics'
-    print 'elements',self.numberOfElements
-    print 'errors',self.numberOfErrors
-    print 'mode attributes',self.numberOfAttributes
-    print 'property attributes',self.numberOfPropertyAttributes
-    print 'rule attributes',self.numberOfRuleAttributes
+;alkjf;a
+;alkjf;akljf;lds;kfja;sdkfj;adskfjads;kfjads;kfljaa;ljf;ladskjf;dsalkjf;asdkf
+def this akjd;flk
+This is a test of coloring.  It works if we use a thread.
+lakjdf;kjadf
+alkjdf;kaljdf;kdkdkkdkd;what is going ondkjf;akf;ak
+for while do if const
+This is a test of something.
+I wonder what it could be.
+This could be the start of something wonderful.
 
-    if self.attributes:
-        print '%-20s' %'mode','attrs:',self.attributes
-    if self.rulesAttributes:
-        print '%-20s' %'rules','attrs:',self.rulesAttributes
-    for bunch in self.props:
-        d = bunch.attributes
-        if d: print '%-20s' %'property','attrs:',d
+This is a test.
+#dddddddddddddddddddddddddddddddddddddddThis
+this is a t
+I have no idea.
+;alkd;fkajd;fkjd
+this is a test for to from is a test of something
+kdkjf;akf;klja;dfkj
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
 
-    for bunch in self.rules:
-        if bunch.name == 'keywords':
-            for key in ('keyword1','keyword2','keyword3','keyword4'):
-                theList = bunch.get(key,[])
-                if self.verbose: print key,theList
-                else:            print key,len(theList)
-        else:
-            d = bunch.attributes
-            d2 = bunch.get('contents')
-            if d or d2:
-                print '%-20s' % ('rule:'+bunch.name),
-                if d and d2: print 'attrs:',d,'chars:',d2
-                elif d:  print 'attrs:',d
-                else:    print 'chars:',d2
-            </t>
-<t tx="ekr.20050528105213.3">def error (self, message):
-    
-    print
-    print
-    print 'XML error: %s' % (message)
-    print</t>
-<t tx="ekr.20050528105408"></t>
-<t tx="ekr.20050528110638">def startElement (self,elementName):
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
 
-    name = elementName.lower()
-    
-    if name == 'props':
-        self.inProps = True
-    if name == 'rules':
-        self.inRules = True
-    if name == 'property':
-        if self.inProps:
-            self.property = g.bunch(name=name,attributes={})
-        else:
-            self.error('property not in props element')
-    if name in self.ruleElements:
-        if self.inRules:
-            self.rule = g.bunch(name=name,attributes={})
-        else:
-            self.error('%s not in rules element' % name)</t>
-<t tx="ekr.20050528112438">def doAttribute (self,name,val):
-    
-    name = str(name.lower())
-    
-    if name in self.boolAttrs:
-        val = g.choose(val=='True',True,False)
-    else:
-        val = str(val) # Do NOT lower this value!
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
 
-    if self.rule:
-        d = self.rule.get('attributes')
-        d [name] = val
-        self.numberOfRuleAttributes += 1
-    elif self.property:
-        d = self.property.get('attributes')
-        d [name] = val
-        self.numberOfPropertyAttributes += 1
-    elif self.inRules:
-        self.rulesAttributes[name] = val
-        self.numberOfAttributes += 1
-    else:
-        self.attributes[name] = val
-        self.numberOfAttributes += 1</t>
-<t tx="ekr.20050528161834">def endElement (self,elementName):
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
 
-    name = elementName.lower()
-    
-    if name == 'props':
-        self.inProps = True
-    if name == 'rules':
-        self.inRules = False
-    if name == 'property':
-        if self.property:
-            self.props.append(self.property)
-            self.property = None
-        else:
-            self.error('end %s not matched by start %s' % (name,name))
-    if name in self.ruleElements:
-        if self.inRule(name):
-            self.rules.append(self.rule)
-            self.rule = None
-        else:
-            self.error('end %s not matched by start %s' % (name,name))</t>
-<t tx="ekr.20050529045503.1">def inRule (self,elementName):
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
 
-    return self.rule and self.rule.get('name') == elementName</t>
-<t tx="ekr.20050529051601">def error (self,message):
-    
-    self.numberOfErrors += 1
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
 
-    self.contentHandler.error(message)</t>
-<t tx="ekr.20050529062656">def doContent (self,elementName,content):
-    
-    if not content:
-        return
-    
-    name = str(elementName.lower())
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
 
-    if name in ('keyword1','keyword2','keyword3','keyword4'):
-        if self.inRule('keywords'):
-            theList = self.rule.get(name,[])
-            theList.append(content)
-            self.rule[name] = theList
-        else:
-            self.error('%d not in keywords' % name)
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
 
-    elif self.rule:
-        d = self.rule.get('contents',{})
-        s = d.get(name,'')
-        d [name] = s + content
-        self.rule['contents'] = d</t>
-<t tx="ekr.20050529102116">The only required attribute DELEGATE must be set to the name of a ruleset. To
-import a ruleset defined in the current mode, just specify its name. To import a
-ruleset defined in another mode, specify a name of the form mode::ruleset. Note
-that the first (unnamed) ruleset in a mode is called “MAIN”.
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from and still this is good.
 
-One quirk is that the definition of the imported ruleset is not copied to the
-location of the IMPORT tag, but rather to the end of the containing ruleset.
-This has implications with rule-ordering; see the section called “Rule Ordering
-Requirements”.</t>
-<t tx="ekr.20050529102116.1">Atribute            Elements used in
---------            ----------------
-NAME                PROPERTY
-VALUE               PROPERTY</t>
-<t tx="ekr.20050529102116.3">Atribute            Elements used in
---------            ----------------
-DEFAULT             RULES
-DIGIT_RE            RULES
-HIGHLIGHT_DIGITS    RULES
-IGNORE_CASE         RULES
-SET                 RULES
-NO_WORD_SEP         RULES</t>
-<t tx="ekr.20050529102116.4">The token type for text which doesn't match any specific rule. Default is NULL.
-See the section called “Token Types” for a list of token types.</t>
-<t tx="ekr.20050529102116.5">If set to FALSE, matches will be case sensitive.
-Otherwise, case will not matter. Default is TRUE.</t>
-<t tx="ekr.20050529102116.6">The name of this ruleset. All rulesets other than the first must have a name.</t>
-<t tx="ekr.20050529102116.7">Any non-alphanumeric character not in this list is treated as a word separator for the purposes of syntax highlighting.
+# Wow.  It is so cool to get beter performance.
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+a
+;alkd;fkajd;fkjd
+this is a test for to from 
+thkdj;akf;kja;dfkj;alkjkk;alkjf;akld;flkajd;flkajd;flkja;
+;aljf;akljf;adskfj
+;akjf;akljf;a
+a;kjf;alkjf;aksjf;asdjf;
+ajf;ajf;ads
+;alkjf;adsjf
+a;sjf;alkf
+from
+
+adkdfjk;;alkdjf;kjf;klajf
+alkjd;fkja;dfkj
+;akjf;ad
+;ajf;ajf
+
+
+
+
 </t>
-<t tx="ekr.20050529102116.8">Atribute            Elements used in
---------            ----------------
-AT_LINE_START       MARK_FOLLOWING,MARK_PREVIOUS
-AT_WHITESPACE_END   MARK_FOLLOWING,MARK_PREVIOUS
-AT_WORD_START       MARK_FOLLOWING,MARK_PREVIOUS 
-EXCLUDE_MATCH       MARK_FOLLOWING,MARK_PREVIOUS
-TYPE                MARK_FOLLOWING,MARK_PREVIOUS</t>
-<t tx="ekr.20050529102116.9">all_spans   = EOL_SPAN,EOL_SPAN_REGEXP,SPAN,SPAN_REGEXP
-plain_spans = SPAN,SPAN_REGEXP
-regx_spans  = EOL_SPAN_REGEXP,SPAN_REGEXP
+<t tx="ekr.20050602213517">@color
+@doc test
+line 2
+@c
+int
+@color
+@ doc
+line 2
+@c</t>
+<t tx="ekr.20050603134109">@language c // c delegates to cpp rule within c.xml
 
-Atribute            Elements used in
---------            ----------------
-AT_LINE_START       all_spans
-AT_WHITESPACE_END   all_spans
-AT_WORD_START       all_spans
-DELEGATE            all_spans
-EXCLUDE_MATCH       all_spans
-HASH_CHAR           regx_spans  (must be specified)
-NO_ESCAPE           plain_spans
-NO_LINE_BREAK       plain_spans
-NO_WORD_BREAK       plain_spans
-TYPE                all_spans</t>
-<t tx="ekr.20050529103436"></t>
-<t tx="ekr.20050529103436.2">The number of characters to terminate after.</t>
-<t tx="ekr.20050529103436.3">Atribute            Elements used in
---------            ----------------
-AT_LINE_START       BEGIN,END
-AT_WHITESPACE_END   BEGIN,END
-AT_WORD_START       BEGIN,END</t>
-<t tx="ekr.20050529103436.4">Atribute            Elements used in
---------            ----------------
-AT_LINE_START       SEQ,SEQ_REGEXP
-AT_WHITESPACE_END   SEQ,SEQ_REGEXP
-AT_WORD_START       SEQ,SEQ_REGEXP
-DELEGATE            SEQ,SEQ_REGEXP
-HASH_CHAR           SEQ_REGEXP (must be specified)
-TYPE                SEQ,SEQ_REGEXP</t>
-<t tx="ekr.20050529103859.1"></t>
-<t tx="ekr.20050529104244">Text inside the span will be highlighted with the specified ruleset. To delegate
-to a ruleset defined in the current mode, just specify its name. To delegate to
-a ruleset defined in another mode, specify a name of the form mode::ruleset.
-Note that the first (unnamed) ruleset in a mode is called “MAIN”.
+int enum
 
-One quirk is that the definition of the imported ruleset is not copied to the
-location of the IMPORT tag, but rather to the end of the containing ruleset.
-This has implications with rule-ordering; see the section called “Rule Ordering
-Requirements”.</t>
-<t tx="ekr.20050529104609"></t>
-<t tx="ekr.20050529110433"></t>
+assert(True)
+
+&lt;&lt; xyzzy &gt;&gt;
+
+/** Doxygen comment */</t>
+<t tx="ekr.20050607084934">@language plain
+</t>
+<t tx="ekr.20050608081744">Test of leading @ sign
+
+[HKEY_CLASSES_ROOT\*\shell\open]
+@="&amp;Notepad"
+
+Test of @ at end of text.
+@</t>
+<t tx="ekr.20050608082208">@language plain
+@nocolor</t>
+<t tx="ekr.20050608082702">Test of leading @ sign
+
+[HKEY_CLASSES_ROOT\*\shell\open]
+@notepad</t>
+<t tx="ekr.20050612154351">@ doc part
+@c
+&lt;&lt; section ref? &gt;&gt;
+
+</t>
 </tnodes>
 </leo_file>

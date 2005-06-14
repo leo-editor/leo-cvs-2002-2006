@@ -1278,6 +1278,7 @@ removeSentTest
 removeTrailing
 removeTrailingWs
 renderers
+reorderings
 reorg
 replaceAll
 replaceBody

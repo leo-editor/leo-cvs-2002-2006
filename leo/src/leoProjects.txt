@@ -38,11 +38,11 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     
     __pychecker__ = 'maxlines=500'
 
-    # g.trace(ch,ord(ch))
     c = self.c
     if not c: return "break"
     if not p: return "break"
     if not c.isCurrentPosition(p): return "break"
+    # g.trace(ch,ord(ch))
 
     if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -8983,6 +8983,7 @@ elif kind == at.endRawDirective:
     at.putSentinel("@@end_raw")
     i = g.skip_line(s,i)
 elif kind == at.miscDirective:
+    # g.trace('miscDirective')
     at.putDirective(s,i)
 else:
     assert(0) # Unknown directive.
@@ -9669,7 +9670,7 @@ def compareFiles (self,path1,path2,ignoreLineEndings):
         return False # Should never happen
 #@nonl
 #@-node:ekr.20041005105605.197:compareFiles
-#@+node:ekr.20041005105605.198:directiveKind4
+#@+node:ekr.20041005105605.198:directiveKind4 & test
 def directiveKind4(self,s,i):
     
     """Return the kind of at-directive or noDirective."""
@@ -9693,21 +9694,16 @@ def directiveKind4(self,s,i):
         ("@end_raw",at.endRawDirective),
         ("@others",at.othersDirective),
         ("@raw",at.rawDirective))
-
-    # This code rarely gets executed, so simple code suffices.
-    if i+1 >= n or g.match(s,i,"@ ") or g.match(s,i,"@\t") or g.match(s,i,"@\n"):
-        # 10/25/02: @space is not recognized in cweb mode.
-        # Noweb doc parts are _never_ scanned in cweb mode.
-        return g.choose(at.language=="cweb",
-            at.noDirective,at.atDirective)
-
-    # @c and @(nonalpha) are not recognized in cweb mode.
-    # We treat @(nonalpha) separately because @ is in the colorizer table.
-    if at.language=="cweb" and (
-        g.match_word(s,i,"@c") or
-        i+1>= n or s[i+1] not in string.ascii_letters):
+        
+    # Rewritten 6/8/2005.
+    if i+1 >= n or s[i+1] in (' ','\t','\n'):
+        # Bare '@' not recognized in cweb mode.
+        return g.choose(at.language=="cweb",at.noDirective,at.atDirective)
+    if s[i+1] not in string.ascii_letters:
+        return at.noDirective # Bug fix: do NOT return miscDirective here!
+    if at.language=="cweb" and g.match_word(s,i,'@c'):
         return at.noDirective
-
+    
     for name,directive in table:
         if g.match_word(s,i,name):
             return directive
@@ -9719,7 +9715,38 @@ def directiveKind4(self,s,i):
 
     return at.noDirective
 #@nonl
-#@-node:ekr.20041005105605.198:directiveKind4
+#@+node:ekr.20050608103755:test_directiveKind4
+def test_directiveKind4 (self):
+    
+    at=c.atFileCommands # Self is a dummy argument.
+    import leoColor
+    table = [
+        ('@=',0,at.noDirective),
+        ('@',0,at.atDirective),
+        ('@ ',0,at.atDirective),
+        ('@\t',0,at.atDirective),
+        ('@\n',0,at.atDirective),
+        ('@all',0,at.allDirective),
+        ('    @all',4,at.allDirective),
+        ("@c",0,at.cDirective),
+        ("@code",0,at.codeDirective),
+        ("@doc",0,at.docDirective),
+        ("@end_raw",0,at.endRawDirective),
+        ('@others',0,at.othersDirective),
+        ('    @others',4,at.othersDirective),
+        ("@raw",0,at.rawDirective),
+    ]
+    for name in leoColor.leoKeywords:
+        if name not in ('@','@all','@c','@code','@doc','@end_raw','@others','@raw',):
+            table.append((name,0,at.miscDirective),)
+
+    for s,i,expected in table:
+        result = at.directiveKind4(s,i)
+        assert result == expected, '%d %s result: %s expected: %s' % (
+            i,repr(s),at.sentinelName(result),at.sentinelName(expected))
+#@nonl
+#@-node:ekr.20050608103755:test_directiveKind4
+#@-node:ekr.20041005105605.198:directiveKind4 & test
 #@+node:ekr.20041005105605.199:hasSectionName
 def findSectionName(self,s,i):
     
@@ -10044,7 +10071,7 @@ def warnAboutOrphandAndIgnoredNodes (self):
     for p in root.self_and_subtree_iter():
         if not p.v.t.isVisited(): # Check tnode bit, not vnode bit.
             at.writeError("Orphan node:  " + p.headString())
-            if p.isCloned() and p.hasParent():
+            if p.hasParent(): ## and p.isCloned():
                 g.es("parent node: " + p.parent().headString(),color="blue")
             if not at.thinFile and p.isAtIgnoreNode():
                 at.writeError("@ignore node: " + p.headString())
@@ -11008,6 +11035,7 @@ elif kind == at.endRawDirective:
     at.putSentinel("@@end_raw")
     i = g.skip_line(s,i)
 elif kind == at.miscDirective:
+    # g.trace('miscDirective')
     at.putDirective(s,i)
 else:
     assert(0) # Unknown directive.
@@ -25096,8 +25124,7 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        if self.trace and self.verbose:
-            g.trace("unselect:",old_p.headString())
+        # g.trace("unselect:",old_p.headString())
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -25125,6 +25152,8 @@ if p.v and p.v.t.insertSpot != None:
     c.frame.bodyCtrl.see(p.v.t.insertSpot)
 else:
     c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())
 #@nonl
 #@-node:ekr.20040803072955.130:<< select the new node >>
 #@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
@@ -45009,8 +45038,7 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        if self.trace and self.verbose:
-            g.trace("unselect:",old_p.headString())
+        # g.trace("unselect:",old_p.headString())
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -45038,6 +45066,8 @@ if p.v and p.v.t.insertSpot != None:
     c.frame.bodyCtrl.see(p.v.t.insertSpot)
 else:
     c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())
 #@nonl
 #@-node:ekr.20040803072955.130:<< select the new node >>
 #@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
@@ -45325,8 +45355,7 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        if self.trace and self.verbose:
-            g.trace("unselect:",old_p.headString())
+        # g.trace("unselect:",old_p.headString())
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -45354,6 +45383,8 @@ if p.v and p.v.t.insertSpot != None:
     c.frame.bodyCtrl.see(p.v.t.insertSpot)
 else:
     c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())
 #@nonl
 #@-node:ekr.20040803072955.130:<< select the new node >>
 #@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
@@ -45667,11 +45698,11 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     
     __pychecker__ = 'maxlines=500'
 
-    # g.trace(ch,ord(ch))
     c = self.c
     if not c: return "break"
     if not p: return "break"
     if not c.isCurrentPosition(p): return "break"
+    # g.trace(ch,ord(ch))
 
     if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -48654,6 +48685,7 @@ elif kind == at.endRawDirective:
     at.putSentinel("@@end_raw")
     i = g.skip_line(s,i)
 elif kind == at.miscDirective:
+    # g.trace('miscDirective')
     at.putDirective(s,i)
 else:
     assert(0) # Unknown directive.
@@ -51570,8 +51602,7 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        if self.trace and self.verbose:
-            g.trace("unselect:",old_p.headString())
+        # g.trace("unselect:",old_p.headString())
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -51599,6 +51630,8 @@ if p.v and p.v.t.insertSpot != None:
     c.frame.bodyCtrl.see(p.v.t.insertSpot)
 else:
     c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())
 #@nonl
 #@-node:ekr.20040803072955.130:<< select the new node >>
 #@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
@@ -51646,11 +51679,11 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     
     __pychecker__ = 'maxlines=500'
 
-    # g.trace(ch,ord(ch))
     c = self.c
     if not c: return "break"
     if not p: return "break"
     if not c.isCurrentPosition(p): return "break"
+    # g.trace(ch,ord(ch))
 
     if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -52679,6 +52712,367 @@ def createText (self,parent,p):
 #@-node:ekr.20050512134219:createText
 #@-node:ekr.20041225063637.25:createWidgets & helpers
 #@-node:ekr.20050531105422:(Made sure comments are always visible in setting dialog even for non-@ nodes)
+#@+node:ekr.20050608084340:(Fixed problem with leading @ in body text)
+#@+node:ekr.20050608084340.1:Report
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3190593
+
+As luck would have it, I need to put an @ character at the beginning of a line
+in source code (windows registry file format) and can't figure out how to do
+it.  Any suggestions?
+#@-node:ekr.20050608084340.1:Report
+#@+node:ekr.20050608084340.2:Notes
+@nocolor
+This looks like a bug.  I suspect the fix will be relatively straightforward.  I plan to fix it today.  BTW, I have no idea why Leo thinks it must special-case an @-sign in this context.
+
+The rest of the posting are essentially notes to myself.  You can skip it if you like :-)
+
+Here is an example of the bug.  I put the following text in an @file node and an @thin node.  (All examples were with @language plain: I doubt if language has any major effect.)
+
+Test of leading @ sign
+
+[HKEY_CLASSES_ROOT\*\shell\open]
+@="&Notepad"
+
+The contents of the file derived from the @file tree was:
+
+#@verbatim
+#@+leo-ver=4
+#@verbatim
+#@+node:@file leadingAtTest.py
+Test of leading @ sign
+
+[HKEY_CLASSES_ROOT\*\shell\open]
+#@verbatim
+#@@="&Notepad"
+#@verbatim
+#@-node:@file leadingAtTest.py
+#@verbatim
+#@-leo
+
+The contents of the file derived from the @thin tree was:
+
+#@verbatim
+#@+leo-ver=4-thin
+#@verbatim
+#@+node:ekr.20050608081942:@thin leadingAtTest2.py
+Test of leading @ sign
+
+[HKEY_CLASSES_ROOT\*\shell\open]
+#@verbatim
+#@@="&Notepad"
+#@verbatim
+#@nonl
+#@verbatim
+#@-node:ekr.20050608081942:@thin leadingAtTest2.py
+#@verbatim
+#@-leo
+
+The bug does not appear if the @ sign is followed by what looks to be a keyword.  For example, I put the following text in an @file node and an @thin node:
+
+Test of leading @ sign
+
+[HKEY_CLASSES_ROOT\*\shell\open]
+@notepad
+
+The contents of the file derived from the @file tree was:
+
+#@verbatim
+#@+leo-ver=4
+#@verbatim
+#@+node:@file leadingAtTest3.py
+Test of leading @ sign
+
+[HKEY_CLASSES_ROOT\*\shell\open]
+@notepad
+#@verbatim
+#@nonl
+#@verbatim
+#@-node:@file leadingAtTest3.py
+#@verbatim
+#@-leo
+
+The contents of the file derived from the @thin tree was:
+
+#@verbatim
+#@+leo-ver=4-thin
+#@verbatim
+#@+node:ekr.20050608082702.1:@thin leadingAtTest4.py
+Test of leading @ sign
+
+[HKEY_CLASSES_ROOT\*\shell\open]
+@notepad
+#@verbatim
+#@-node:ekr.20050608082702.1:@thin leadingAtTest4.py
+#@verbatim
+#@-leo
+#@-node:ekr.20050608084340.2:Notes
+#@+node:ekr.20041005105605.161:putBody
+# oneNodeOnly is no longer used, but it might be used in the future?
+
+def putBody(self,p,oneNodeOnly=False,fromString=''):
+    
+    """ Generate the body enclosed in sentinel lines."""
+
+    at = self
+    
+    # New in 4.3 b2: get s from fromString if possible.
+    s = g.choose(fromString,fromString,p.bodyString())
+
+    p.v.t.setVisited() # Suppress orphans check.
+    p.v.setVisited() # Make sure v is never expanded again.
+    if not at.thinFile:
+        p.v.t.setWriteBit() # Mark the tnode to be written.
+    if not at.thinFile and not s: return
+
+    inCode = True
+    << Make sure all lines end in a newline >>
+    i = 0
+    while i < len(s):
+        next_i = g.skip_line(s,i)
+        assert(next_i > i)
+        kind = at.directiveKind4(s,i)
+        << handle line at s[i] >>
+        i = next_i
+    if not inCode:
+        at.putEndDocLine()
+    if at.sentinels and not trailingNewlineFlag:
+        at.putSentinel("@nonl")
+#@nonl
+#@+node:ekr.20041005105605.162:<< Make sure all lines end in a newline >>
+# 11/20/03: except in nosentinel mode.
+# 1/30/04: and especially in scripting mode.
+# If we add a trailing newline, we'll generate an @nonl sentinel below.
+
+if s:
+    trailingNewlineFlag = s and s[-1] == '\n'
+    if at.sentinels and not trailingNewlineFlag:
+        s = s + '\n'
+else:
+    trailingNewlineFlag = True # don't need to generate an @nonl
+#@nonl
+#@-node:ekr.20041005105605.162:<< Make sure all lines end in a newline >>
+#@+node:ekr.20041005105605.163:<< handle line at s[i]  >>
+if kind == at.noDirective:
+    if not oneNodeOnly:
+        if inCode:
+            hasRef,n1,n2 = at.findSectionName(s,i)
+            if hasRef and not at.raw:
+                at.putRefLine(s,i,n1,n2,p)
+            else:
+                at.putCodeLine(s,i)
+        else:
+            at.putDocLine(s,i)
+elif kind in (at.docDirective,at.atDirective):
+    assert(not at.pending)
+    if not inCode: # Bug fix 12/31/04: handle adjacent doc parts.
+        at.putEndDocLine() 
+    at.putStartDocLine(s,i,kind)
+    inCode = False
+elif kind in (at.cDirective,at.codeDirective):
+    # Only @c and @code end a doc part.
+    if not inCode:
+        at.putEndDocLine() 
+    at.putDirective(s,i)
+    inCode = True
+elif kind == at.allDirective:
+    if not oneNodeOnly:
+        if inCode: at.putAtAllLine(s,i,p)
+        else: at.putDocLine(s,i)
+elif kind == at.othersDirective:
+    if not oneNodeOnly:
+        if inCode: at.putAtOthersLine(s,i,p)
+        else: at.putDocLine(s,i)
+elif kind == at.rawDirective:
+    at.raw = True
+    at.putSentinel("@@raw")
+elif kind == at.endRawDirective:
+    at.raw = False
+    at.putSentinel("@@end_raw")
+    i = g.skip_line(s,i)
+elif kind == at.miscDirective:
+    # g.trace('miscDirective')
+    at.putDirective(s,i)
+else:
+    assert(0) # Unknown directive.
+#@nonl
+#@-node:ekr.20041005105605.163:<< handle line at s[i]  >>
+#@-node:ekr.20041005105605.161:putBody
+#@+node:ekr.20041005105605.206:putDirective  (handles @delims,@comment,@language) 4.x
+@ It is important for PHP and other situations that @first and @last directives get translated to verbatim lines that do _not_ include what follows the @first & @last directives.
+@c
+
+def putDirective(self,s,i):
+    
+    """Output a sentinel a directive or reference s."""
+
+    tag = "@delims"
+    assert(i < len(s) and s[i] == '@')
+    k = i
+    j = g.skip_to_end_of_line(s,i)
+    directive = s[i:j]
+
+    if g.match_word(s,k,"@delims"):
+        << handle @delims >>
+    elif g.match_word(s,k,"@language"):
+        << handle @language >>
+    elif g.match_word(s,k,"@comment"):
+        << handle @comment >>
+    elif g.match_word(s,k,"@last"):
+        self.putSentinel("@@last") # 10/27/03: Convert to an verbatim line _without_ anything else.
+    elif g.match_word(s,k,"@first"):
+        self.putSentinel("@@first") # 10/27/03: Convert to an verbatim line _without_ anything else.
+    else:
+        self.putSentinel("@" + directive)
+
+    i = g.skip_line(s,k)
+    return i
+#@nonl
+#@+node:ekr.20041005105605.207:<< handle @delims >>
+# Put a space to protect the last delim.
+self.putSentinel(directive + " ") # 10/23/02: put @delims, not @@delims
+
+# Skip the keyword and whitespace.
+j = i = g.skip_ws(s,k+len(tag))
+
+# Get the first delim.
+while i < len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
+    i += 1
+if j < i:
+    self.startSentinelComment = s[j:i]
+    # Get the optional second delim.
+    j = i = g.skip_ws(s,i)
+    while i < len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
+        i += 1
+    self.endSentinelComment = g.choose(j<i, s[j:i], "")
+else:
+    self.writeError("Bad @delims directive")
+#@nonl
+#@-node:ekr.20041005105605.207:<< handle @delims >>
+#@+node:ekr.20041005105605.208:<< handle @language >>
+self.putSentinel("@" + directive)
+
+# Skip the keyword and whitespace.
+i = k + len("@language")
+i = g.skip_ws(s,i)
+j = g.skip_c_id(s,i)
+language = s[i:j]
+
+delim1,delim2,delim3 = g.set_delims_from_language(language)
+
+# g.trace(delim1,delim2,delim3)
+
+# Returns a tuple (single,start,end) of comment delims
+if delim1:
+    self.startSentinelComment = delim1
+    self.endSentinelComment = ""
+elif delim2 and delim3:
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
+else:
+    line = g.get_line(s,i)
+    g.es("Ignoring bad @language directive: %s" % line,color="blue")
+#@nonl
+#@-node:ekr.20041005105605.208:<< handle @language >>
+#@+node:ekr.20041005105605.209:<< handle @comment >>
+self.putSentinel("@" + directive)
+
+j = g.skip_line(s,i)
+line = s[i:j]
+delim1,delim2,delim3 = g.set_delims_from_string(line)
+
+# g.trace(delim1,delim2,delim3)
+
+# Returns a tuple (single,start,end) of comment delims
+if delim1:
+    self.startSentinelComment = delim1
+    self.endSentinelComment = None
+elif delim2 and delim3:
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
+else:
+    g.es("Ignoring bad @comment directive: %s" % line,color="blue")
+#@nonl
+#@-node:ekr.20041005105605.209:<< handle @comment >>
+#@-node:ekr.20041005105605.206:putDirective  (handles @delims,@comment,@language) 4.x
+#@+node:ekr.20041005105605.198:directiveKind4 & test
+def directiveKind4(self,s,i):
+    
+    """Return the kind of at-directive or noDirective."""
+
+    at = self
+    n = len(s)
+    if i >= n or s[i] != '@':
+        j = g.skip_ws(s,i)
+        if g.match_word(s,j,"@others"):
+            return at.othersDirective
+        elif g.match_word(s,j,"@all"):
+            return at.allDirective
+        else:
+            return at.noDirective
+
+    table = (
+        ("@all",at.allDirective),
+        ("@c",at.cDirective),
+        ("@code",at.codeDirective),
+        ("@doc",at.docDirective),
+        ("@end_raw",at.endRawDirective),
+        ("@others",at.othersDirective),
+        ("@raw",at.rawDirective))
+        
+    # Rewritten 6/8/2005.
+    if i+1 >= n or s[i+1] in (' ','\t','\n'):
+        # Bare '@' not recognized in cweb mode.
+        return g.choose(at.language=="cweb",at.noDirective,at.atDirective)
+    if s[i+1] not in string.ascii_letters:
+        return at.noDirective # Bug fix: do NOT return miscDirective here!
+    if at.language=="cweb" and g.match_word(s,i,'@c'):
+        return at.noDirective
+    
+    for name,directive in table:
+        if g.match_word(s,i,name):
+            return directive
+
+    # Return miscDirective only for real directives.
+    for name in leoColor.leoKeywords:
+        if g.match_word(s,i,name):
+            return at.miscDirective
+
+    return at.noDirective
+#@nonl
+#@+node:ekr.20050608103755:test_directiveKind4
+def test_directiveKind4 (self):
+    
+    at=c.atFileCommands # Self is a dummy argument.
+    import leoColor
+    table = [
+        ('@=',0,at.noDirective),
+        ('@',0,at.atDirective),
+        ('@ ',0,at.atDirective),
+        ('@\t',0,at.atDirective),
+        ('@\n',0,at.atDirective),
+        ('@all',0,at.allDirective),
+        ('    @all',4,at.allDirective),
+        ("@c",0,at.cDirective),
+        ("@code",0,at.codeDirective),
+        ("@doc",0,at.docDirective),
+        ("@end_raw",0,at.endRawDirective),
+        ('@others',0,at.othersDirective),
+        ('    @others',4,at.othersDirective),
+        ("@raw",0,at.rawDirective),
+    ]
+    for name in leoColor.leoKeywords:
+        if name not in ('@','@all','@c','@code','@doc','@end_raw','@others','@raw',):
+            table.append((name,0,at.miscDirective),)
+
+    for s,i,expected in table:
+        result = at.directiveKind4(s,i)
+        assert result == expected, '%d %s result: %s expected: %s' % (
+            i,repr(s),at.sentinelName(result),at.sentinelName(expected))
+#@nonl
+#@-node:ekr.20050608103755:test_directiveKind4
+#@-node:ekr.20041005105605.198:directiveKind4 & test
+#@-node:ekr.20050608084340:(Fixed problem with leading @ in body text)
 #@-node:ekr.20050524102538:Bug fixes...
 #@+node:ekr.20050526081733:New features...
 #@+node:ekr.20050523075215:(Created separate helpers for idle_body_key)
@@ -52689,11 +53083,11 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     
     __pychecker__ = 'maxlines=500'
 
-    # g.trace(ch,ord(ch))
     c = self.c
     if not c: return "break"
     if not p: return "break"
     if not c.isCurrentPosition(p): return "break"
+    # g.trace(ch,ord(ch))
 
     if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -53212,11 +53606,11 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     
     __pychecker__ = 'maxlines=500'
 
-    # g.trace(ch,ord(ch))
     c = self.c
     if not c: return "break"
     if not p: return "break"
     if not c.isCurrentPosition(p): return "break"
+    # g.trace(ch,ord(ch))
 
     if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
