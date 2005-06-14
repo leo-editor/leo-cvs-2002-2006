@@ -112,6 +112,9 @@ __version__ = '0.13'
 #         - created following mode ivars:
 #             - modeProperties, 
 # rulesetProperties,presentProperty,rulesetAttributes.
+# 0.14 EKR:
+#     - Added support for delegated rulesets in modeClass, etc.
+#     - Handled delegated rulesets in colorByDelegate.
 #@-at
 #@nonl
 #@-node:ekr.20050607075752.1:0.11 up
@@ -125,8 +128,7 @@ __version__ = '0.13'
 #@+at
 # 
 # - Handle c.xml:
-#     - Handle delegated rulesets (for preprocessor keywords)
-#         - Make sure <markup> element in <keywords> element work in delegate.
+#     - Make sure <markup> element in <keywords> element work in delegate.
 # - Support NO_WORD_SEP, IGNORE_CASE and DEFAULT attributes in rules element.
 #     - Later: support DIGIT_RE and HIGHLIGHT_DIGITS attributes in rules 
 # element.
@@ -142,6 +144,7 @@ __version__ = '0.13'
 
 #@<< later >>
 #@+node:ekr.20050603121815:<< later >>
+#@@killcolor
 #@+at
 # - Support comment properties and self.comment_string:
 #     - Conditionally add rules for comment ivars: 
@@ -155,9 +158,6 @@ __version__ = '0.13'
 # - Support Show Invisibles.
 #     Conditionally add rule for whitespace.
 # 
-# - Support self.use_hyperlinks and self.underline_undefined.
-#     - Add code to sectionRefColorHelper.
-# 
 # - Handle cweb section references correctly.
 # 
 # - Handle logic of setFirstLineState.
@@ -165,19 +165,13 @@ __version__ = '0.13'
 # 
 # - Make sure pictures get drawn properly.
 # 
-# - Fix performance bug: it can take a long time on big text for the cursor to 
-# appear.
-# 
-# - Remove calls to recolor_range from Leo's core.
-# 
-# - Remove incremental keywords from entry points?
-# 
 # - Create forth.xml
+# 
+# - php.xml does not parse correctly.
 #@-at
 #@nonl
 #@-node:ekr.20050603121815:<< later >>
 #@nl
-#@nonl
 #@-node:ekr.20050601081132:<< to do >>
 #@nl
 #@<< imports >>
@@ -590,12 +584,12 @@ class modeClass:
         self.inProps = False
         self.inRules = False
         self.keywords = None
-        self.rulesetProperties = []
         self.modeProperties = []
         self.presentProperty = None # A bunch to be assigned to modeProperties or rulesetProperties.
         self.rule = None
-        self.ruleSets = []
+        self.rulesets = []
         self.rules = [] # The rules of the present rules element.
+        self.rulesetProperties = []
         self.rulesetAttributes = {} # The attributes of the present rules element.
     #@nonl
     #@-node:ekr.20050530065723.50: mode.__init__
@@ -613,9 +607,11 @@ class modeClass:
         
         self.printAttributesHelper('mode attributes',self.attributes)
         
-    def printRulesetAttributes (self):
+    def printRulesetAttributes (self,ruleset,tag=None):
+    
+        if not tag: tag = 'main ruleset'
         
-        self.printAttributesHelper('rule attributes',self.rulesetAttributes)
+        self.printAttributesHelper(tag,ruleset.attributes)
         
     def printAttributesHelper (self,kind,attrs):
         
@@ -651,6 +647,15 @@ class modeClass:
                 else:    print 'chars:',d2
     #@nonl
     #@-node:ekr.20050530075602.1:printRule
+    #@+node:ekr.20050607221915:printRuleset
+    def printRuleset (self,ruleset,tag):
+        
+        self.printRulesetAttributes(ruleset,tag)
+    
+        for rule in self.rulesets[0].rules:
+            self.printRule(rule)
+    #@nonl
+    #@-node:ekr.20050607221915:printRuleset
     #@+node:ekr.20050530065723.56:printSummary
     def printSummary (self,printStats=True):
     
@@ -663,11 +668,11 @@ class modeClass:
             print 'rule attributes',self.numberOfRuleAttributes
     
         self.printModeAttributes()
-        self.printRulesetAttributes()
+        
         for bunch in self.modeProperties:
             self.printProperty(bunch)
-        for rule in self.rules:
-            self.printRule(rule)
+    
+        self.printRuleset(self.rulesets[0],tag='main ruleset')
     #@nonl
     #@-node:ekr.20050530065723.56:printSummary
     #@-node:ekr.20050530081700: Printing...
@@ -730,7 +735,9 @@ class modeClass:
         if name == 'rules':
             self.inRules = False
             ruleset = rulesetClass(self.rulesetAttributes,self.keywords,self.rulesetProperties,self.rules)
-            self.ruleSets.append(ruleset)
+            self.rulesets.append(ruleset)
+            #g.trace('rules...\n',g.listToString(self.rules))
+            #g.trace('ruleset attributes...\n',g.dictToString(self.rulesetAttributes))
         if name == 'property':
             bunch = self.presentProperty
             if bunch:
@@ -790,20 +797,16 @@ class modeClass:
         else:
             return []
         
-    def getRuleset(self,rule,name=''):
-        if name:
-            for ruleset in self.ruleSets:
-                attrs = self.getAttributesForRuleset
-                name2 = attrs.get('SET')
-                if name2 == name:
-                    return ruleset
-            else:
-                return None
-        else:
-            return self.ruleSets[0] # Return the main ruleset.
-            
+    def getRuleset(self,name=''):
+        if not name:
+            return self.rulesets[0] # Return the main ruleset.
+        for ruleset in self.rulesets:
+            if ruleset.name.lower()==name.lower():
+                return ruleset
+        else: return None
+    
     def getRulesets(self):
-        return self.ruleSets
+        return self.rulesets
         
     def getRulesForRuleset (self,name=''):
         bunch = self.getRuleset(name)
@@ -856,11 +859,16 @@ class rulesetClass:
     #@+node:ekr.20050607073917.2:ctor
     def __init__ (self,attributes,keywords,properties,rules):
             
-        self.name=attributes.get('SET','')
-        self.attributes=attributes.copy()
-        self.properties=properties[:]
-        self.keywords=keywords
-        self.rules=rules
+        self.name=attributes.get('set','')
+        self.attributes=attributes.copy() # A dict.
+        self.properties=properties[:] # A list.
+        self.keywords=keywords # A bunch.
+        self.rules=rules[:] # A list.
+        
+        if self.name:
+            g.trace('ruleset',self.name)
+            
+        self.defaultColor = self.attributes.get('default')
     #@nonl
     #@-node:ekr.20050607073917.2:ctor
     #@-others
@@ -905,6 +913,7 @@ class baseColorizer:
         self.modes = {} # Keys are languages, values are bunches describing the mode.
         self.mode = None # The mode object for the present language.
         self.prev_mode = None
+        self.present_ruleset = None
         self.rulesDict = {}
         self.tags = [
             "blank","comment","cwebName","docPart","keyword","leoKeyword",
@@ -1101,10 +1110,10 @@ class baseColorizer:
     #@nonl
     #@-node:ekr.20050602152743:init_keywords
     #@+node:ekr.20050602150619:init_mode
-    def init_mode (self):
+    def init_mode (self,language):
         
-        # bunch = self.modes.get(self.language)
-        bunch = self.modes.get(self.language)
+        # bunch = self.modes.get(language)
+        bunch = self.modes.get(language)
         if bunch:
             self.mode = bunch.mode
             self.defaultRulesList=bunch.defaultRulesList
@@ -1112,12 +1121,12 @@ class baseColorizer:
             self.rulesDict=bunch.rulesDict
             self.word_chars = bunch.word_chars
         else:
-            self.mode = mode = self.parse_jEdit_file(self.language)
+            self.mode = mode = self.parse_jEdit_file(language)
             if mode:
-                g.trace(self.language)
+                g.trace(language)
                 # Handle only the main rulese here.
                 rulesets = mode.getRulesets()
-                ruleset = rulesets[0]
+                self.present_ruleset = ruleset = rulesets[0]
                 # mode.printSummary (printStats=False)
                 self.keywords,self.word_chars = self.init_keywords(mode,ruleset)
                     # Sets self.word_chars: must be called before createRuleMatchers.
@@ -1128,9 +1137,9 @@ class baseColorizer:
                     keywords=self.keywords,
                     rulesDict=self.rulesDict,
                     word_chars=self.word_chars)
-                self.modes[self.language] = bunch
-            elif self.language:
-                g.trace('No language description for %s' % self.language)
+                self.modes[language] = bunch
+            elif language:
+                g.trace('No language description for %s' % language)
     #@nonl
     #@-node:ekr.20050602150619:init_mode
     #@+node:ekr.20050530065723.47:parse_jEdit_file
@@ -1379,7 +1388,7 @@ class baseColorizer:
         
         '''Color the body pane.  All coloring starts here.'''
         
-        self.init_mode()
+        self.init_mode(self.language)
         if self.killcolorFlag or not self.mode:
             self.removeAllTags() ; return
         try:
@@ -1408,7 +1417,7 @@ class baseColorizer:
     #@nonl
     #@-node:ekr.20050529143413.31:colorizeAnyLanguage
     #@+node:ekr.20050601105358:colorOneChunk
-    def colorOneChunk(self):
+    def colorOneChunk(self,allowBreak=True):
         '''Colorize a fixed number of tokens.
         If not done, queue this method again to continue coloring later.'''
         s,i = self.chunk_s,self.chunk_i
@@ -1429,7 +1438,7 @@ class baseColorizer:
             # Exit only after finishing the row.  This reduces flash.
             if i == 0 or s[i-1] == '\n':
                 if self.kill_chunk: return
-                if self.incremental:
+                if self.incremental and allowBreak:
                     if count >= 50:
                         #@                    << queue up this method >>
                         #@+node:ekr.20050601162452.1:<< queue up this method >>
@@ -1439,92 +1448,21 @@ class baseColorizer:
                         #@-node:ekr.20050601162452.1:<< queue up this method >>
                         #@nl
                         return
-            for f,kind,token_type in self.rulesDict.get(s[i],self.defaultRulesList):
+            for f,kind,token_type,delegate in self.rulesDict.get(s[i],self.defaultRulesList):
                 n = f(self,s,i)
                 if n > 0:
-                    self.doRule(s,i,i+n,kind,token_type)
+                    self.doRule(s,i,i+n,kind,token_type,delegate)
                     i += n
                     break
             else:
+                if self.present_ruleset.defaultColor:
+                    self.colorRangeWithTag(s,i,i+1,self.present_ruleset.defaultColor.lower())
                 # g.trace('no match')
                 i += 1
     
         self.removeTagsFromRange(s,self.chunk_last_i,len(s))
     #@nonl
     #@-node:ekr.20050601105358:colorOneChunk
-    #@+node:ekr.20050601162452.3:doRule
-    def doRule (self,s,i,j,kind,token_type):
-        
-        if kind == 'mark_following':
-            pass
-        
-        elif kind == 'mark_previous':
-            if 0: # This make no sense at all.
-                if prev:
-                    i2,j2,token_type2 = self.prev
-                    g.trace('mark_previous',i2,j2,token_type2)
-                    self.doColor(s,i2,j2,token_type) # Use the type specified in the mark_previous.
-                    self.prev = None
-        else:
-            # g.trace('%3d %2d'%(i,j),state,repr(s[i:i+n]))
-            self.doColor(s,i,j,token_type)
-            self.prev = (i,j,token_type)
-    #@nonl
-    #@-node:ekr.20050601162452.3:doRule
-    #@+node:ekr.20050602144940:interrupt
-    # This is needed, even without threads.
-    def interrupt(self):
-        '''Interrupt colorOneChunk'''
-        self.kill_chunk = True
-    #@nonl
-    #@-node:ekr.20050602144940:interrupt
-    #@+node:ekr.20050529143413.42:recolor_all
-    def recolor_all (self):
-    
-        # This code is executed only if graphics characters will be inserted by user markup code.
-        
-        # Pass 1:  Insert all graphics characters.
-        self.removeAllImages()
-        s = self.body.getAllText()
-        lines = s.split('\n')
-        
-        self.color_pass = 1
-        self.line_index = 1
-        state = self.setFirstLineState()
-        for s in lines:
-            state = self.colorizeLine(s,state)
-            self.line_index += 1
-        
-        # Pass 2: Insert one blank for each previously inserted graphic.
-        self.color_pass = 2
-        self.line_index = 1
-        state = self.setFirstLineState()
-        for s in lines:
-            #@        << kludge: insert a blank in s for every image in the line >>
-            #@+node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
-            #@+at 
-            #@nonl
-            # A spectacular kludge.
-            # 
-            # Images take up a real index, yet the get routine does not return 
-            # any character for them!
-            # In order to keep the colorer in synch, we must insert dummy 
-            # blanks in s at the positions corresponding to each image.
-            #@-at
-            #@@c
-            
-            inserted = 0
-            
-            for photo,image,line_index,i in self.image_references:
-                if self.line_index == line_index:
-                    n = i+inserted ; 	inserted += 1
-                    s = s[:n] + ' ' + s[n:]
-            #@-node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
-            #@nl
-            state = self.colorizeLine(s,state)
-            self.line_index += 1
-    #@nonl
-    #@-node:ekr.20050529143413.42:recolor_all
     #@+node:ekr.20050601065451:doColor & helpers
     def doColor(self,s,i,j,token_type):
     
@@ -1565,7 +1503,7 @@ class baseColorizer:
     #@-node:ekr.20050603051440:atColorColorHelper & atNocolorColorHelper
     #@+node:ekr.20050602205810.4:colorRangeWithTag
     def colorRangeWithTag (self,s,i,j,tag):
-        
+    
         if self.was_non_incremental:
             must_color = True
             self.removeOldTagsFromRange(s,self.chunk_last_i,j)
@@ -1758,6 +1696,125 @@ class baseColorizer:
     #@nonl
     #@-node:ekr.20050602205810.1:sectionRefColorHelper
     #@-node:ekr.20050601065451:doColor & helpers
+    #@+node:ekr.20050601162452.3:doRule & colorByDelegate
+    def doRule (self,s,i,j,kind,token_type,delegate):
+        
+        if kind == 'mark_following':
+            pass
+        
+        elif kind == 'mark_previous':
+            if 0: # This make no sense at all.
+                if prev:
+                    i2,j2,token_type2 = self.prev
+                    g.trace('mark_previous',i2,j2,token_type2)
+                    self.doColor(s,i2,j2,token_type) # Use the type specified in the mark_previous.
+                    self.prev = None
+        elif delegate:
+            self.colorByDelegate(delegate,s,i,j,token_type)
+            self.prev = (i,j,token_type)
+        else:
+            # g.trace('%3d %2d'%(i,j),state,repr(s[i:i+n]))
+            self.doColor(s,i,j,token_type)
+            self.prev = (i,j,token_type)
+    #@nonl
+    #@+node:ekr.20050607212958:colorByDelegate
+    def colorByDelegate(self,delegate,s,i,j,token_type):
+        
+        # g.trace(delegate,repr(s[i:j]))
+        
+        if -1 == delegate.find('::'):
+            # Use the ruleset in the present mode.
+            rulesetName = delegate
+        else:
+            # file::ruleset
+            file,rulesetName = delegate.split('::')
+            self.init_mode(file)
+            
+        ruleset = self.mode.getRuleset(name=rulesetName)
+        if ruleset:
+            # self.mode.printRuleset(ruleset,tag=delegate)
+            # Save ivars
+            ### Bug: this doesn't handle nested delegates.
+            ### Fix: don't save here:  move the ivars to the ruleset class and keep a stack of rulesets.
+            self.save_present_ruleset = self.present_ruleset
+            self.save_keywords = self.keywords # A bunch.
+            self.save_word_chars = self.word_chars.copy()
+            self.save_defaultRulesList = self.defaultRulesList[:]
+            self.save_rulesDict = self.rulesDict.copy()
+            # Set ivars for the delegated string only.
+            # Sart at the real zero so row/column numbers are computed properly.
+            self.chunk_s = s[0:j+1]
+            self.chunk_i = i # Required.
+            self.present_ruleset = ruleset
+            self.keywords,self.word_chars = self.init_keywords(self.mode,ruleset)
+            self.createRuleMatchers(ruleset.rules) # Sets self.defaultRulesList & self.rulesDict.
+            # Do the coloring with no break.
+            self.colorOneChunk(allowBreak=False) 
+            # Restore ivars.
+            self.chunk_s = s
+            self.chunk_i = j+1
+            self.present_ruleset = self.save_present_ruleset
+            self.keywords = self.save_keywords
+            self.word_chars = self.save_word_chars
+            self.defaultRulesList = self.save_defaultRulesList
+            self.rulesDict = self.save_rulesDict
+    #@nonl
+    #@-node:ekr.20050607212958:colorByDelegate
+    #@-node:ekr.20050601162452.3:doRule & colorByDelegate
+    #@+node:ekr.20050602144940:interrupt
+    # This is needed, even without threads.
+    def interrupt(self):
+        '''Interrupt colorOneChunk'''
+        self.kill_chunk = True
+    #@nonl
+    #@-node:ekr.20050602144940:interrupt
+    #@+node:ekr.20050529143413.42:recolor_all
+    def recolor_all (self):
+    
+        # This code is executed only if graphics characters will be inserted by user markup code.
+        
+        # Pass 1:  Insert all graphics characters.
+        self.removeAllImages()
+        s = self.body.getAllText()
+        lines = s.split('\n')
+        
+        self.color_pass = 1
+        self.line_index = 1
+        state = self.setFirstLineState()
+        for s in lines:
+            state = self.colorizeLine(s,state)
+            self.line_index += 1
+        
+        # Pass 2: Insert one blank for each previously inserted graphic.
+        self.color_pass = 2
+        self.line_index = 1
+        state = self.setFirstLineState()
+        for s in lines:
+            #@        << kludge: insert a blank in s for every image in the line >>
+            #@+node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
+            #@+at 
+            #@nonl
+            # A spectacular kludge.
+            # 
+            # Images take up a real index, yet the get routine does not return 
+            # any character for them!
+            # In order to keep the colorer in synch, we must insert dummy 
+            # blanks in s at the positions corresponding to each image.
+            #@-at
+            #@@c
+            
+            inserted = 0
+            
+            for photo,image,line_index,i in self.image_references:
+                if self.line_index == line_index:
+                    n = i+inserted ; 	inserted += 1
+                    s = s[:n] + ' ' + s[n:]
+            #@-node:ekr.20050529143413.43:<< kludge: insert a blank in s for every image in the line >>
+            #@nl
+            state = self.colorizeLine(s,state)
+            self.line_index += 1
+    #@nonl
+    #@-node:ekr.20050529143413.42:recolor_all
     #@-node:ekr.20050529150436:Colorizer code
     #@+node:ekr.20050529143413.89:Utils
     #@+at 
@@ -1832,9 +1889,9 @@ class baseColorizer:
             ('@',self.createDocPartMatcher),
             ('<',self.createSectionRefMatcher),
         ):
-            f,name,token_type = createMatcher()
+            f,name,token_type,delegate = createMatcher()
             rulesList = self.rulesDict.get(key,[])
-            rulesList.append((f,name,token_type),)
+            rulesList.append((f,name,token_type,delegate),)
             self.rulesDict[key] = rulesList
             
         for rule in rules:
@@ -1857,6 +1914,7 @@ class baseColorizer:
         at_line_start = d.get('at_line_start',False)
         at_ws_end     = d.get('at_ws_end',False)
         at_word_start = d.get('at_word_start',False)
+        delegate      = d.get('delegate','')
         no_line_break = d.get('no_line_break',False)
         d2 = rule.get('contents',{})
         seq     = d2.get(name,'')
@@ -1916,14 +1974,14 @@ class baseColorizer:
             def f(self,s,i):
                 return 0
     
-        # Put f,name,token_type in the rulesDict or defaultRulesList.
+        # Put f,name,token_type,delegate in the rulesDict or defaultRulesList.
         for key in keys:
             if key in string.printable:
                 rulesList = self.rulesDict.get(key,[])
-                rulesList.append((f,name,token_type),)
+                rulesList.append((f,name,token_type,delegate),)
                 self.rulesDict[key] = rulesList
             else:
-                self.defaultRulesList.append((f,name,token_type),)
+                self.defaultRulesList.append((f,name,token_type,delegate),)
     
         # g.trace('%-25s'%(name+':'+token_type),at_line_start,at_ws_end,at_word_start,repr(seq),repr(begin),repr(end))
     #@nonl
@@ -1935,7 +1993,8 @@ class baseColorizer:
             return self.match_doc_part(s,i)
     
         name = token_type = 'doc_part'
-        return f,name,token_type
+        delegate = ''
+        return f,name,token_type,delegate
     
     def createSectionRefMatcher (self):
         
@@ -1943,7 +2002,8 @@ class baseColorizer:
             return self.match_section_ref(s,i)
     
         name = token_type = 'section_ref'
-        return f,name,token_type
+        delegate = ''
+        return f,name,token_type,delegate
     #@nonl
     #@-node:ekr.20050602204708:createDocPartMatcher & createSectionRefMatcher
     #@+node:ekr.20050603043840:createAtColorMatcher & createAtNocolorMatcher
@@ -1953,7 +2013,8 @@ class baseColorizer:
             return self.match_at_color(s,i)
     
         name = token_type = '@color'
-        return f,name,token_type
+        delegate = ''
+        return f,name,token_type,delegate
     
     def createAtNocolorMatcher (self):
         
@@ -1961,7 +2022,8 @@ class baseColorizer:
             return self.match_at_nocolor(s,i)
     
         name = token_type = '@nocolor'
-        return f,name,token_type
+        delegate = ''
+        return f,name,token_type,delegate
     #@nonl
     #@-node:ekr.20050603043840:createAtColorMatcher & createAtNocolorMatcher
     #@+node:ekr.20050603043840.1:match_at_color
