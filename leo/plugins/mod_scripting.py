@@ -312,8 +312,8 @@ class scriptingController:
         makeStatusLine = 'Make script button for: %s' % h
         
         for key,text,command,statusLine,bg in (
-            ("execButton","run Script",execCommand,runStatusLine,'MistyRose1'),
-            ("addScriptButton","script Button",addScriptButtonCommand,makeStatusLine,"#ffffcc")
+            ("execButton","Run Script",execCommand,runStatusLine,'MistyRose1'),
+            ("addScriptButton","Script Button",addScriptButtonCommand,makeStatusLine,"#ffffcc")
         ):
             #@        << define callbacks for standard buttons >>
             #@+node:EKR.20040614000551:<< define callbacks for standard buttons >>
