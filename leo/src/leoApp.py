@@ -112,6 +112,7 @@ class LeoApp:
             "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
             "php" : "//",
             "plain" : "#", # We must pick something.
+            "plsql" : "-- /* */", # SQL scripts qt02537 2005-05-27
             "python" : "#",
             "rapidq" : "'", # fil 2004-march-11
             "rebol" : ";",  # jason 2003-07-03
@@ -139,6 +140,7 @@ class LeoApp:
             "php" : "php",
             "plain" : "txt",
             "python" : "py",
+            "plsql" : "sql", # qt02537 2005-05-27
             "rapidq" : "bas", # fil 2004-march-11
             "rebol" : "r",    # jason 2003-07-03
             "shell" : "sh",   # DS 4/1/04
@@ -163,6 +165,7 @@ class LeoApp:
             "perl"  : "perl",
             "php"   : "php",
             "py"    : "python",
+            "sql"   : "plsql", # qt02537 2005-05-27
             "r"     : "rebol",
             "sh"    : "shell",
             "tex"   : "tex",
