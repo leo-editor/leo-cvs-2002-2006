@@ -3,7 +3,7 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20050513164506.1:To do 4.3.1
+#@+node:ekr.20050513164506.1:To do 4.3.2
 #@+node:ekr.20050524074930.2:temacs-like keystroke handling
 #@-node:ekr.20050524074930.2:temacs-like keystroke handling
 #@+node:ekr.20050524074930:Improve LeoPostings.leo
@@ -23,7 +23,7 @@ file. The  split between body and the others is, however.
 #@nonl
 #@-node:ekr.20050526090336:Request
 #@-node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio?)
-#@-node:ekr.20050513164506.1:To do 4.3.1
+#@-node:ekr.20050513164506.1:To do 4.3.2
 #@+node:ekr.20041228073219:4.3.x
 #@+node:ekr.20041228074125:(Make drawing more flexible)
 #@+node:ekr.20041228092223:Play with wiki markup
@@ -589,6 +589,7 @@ self.language_delims_dict = {
     "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
     "php" : "//",
     "plain" : "#", # We must pick something.
+    "plsql" : "-- /* */", # SQL scripts qt02537 2005-05-27
     "python" : "#",
     "rapidq" : "'", # fil 2004-march-11
     "rebol" : ";",  # jason 2003-07-03
@@ -616,6 +617,7 @@ self.language_extension_dict = {
     "php" : "php",
     "plain" : "txt",
     "python" : "py",
+    "plsql" : "sql", # qt02537 2005-05-27
     "rapidq" : "bas", # fil 2004-march-11
     "rebol" : "r",    # jason 2003-07-03
     "shell" : "sh",   # DS 4/1/04
@@ -640,6 +642,7 @@ self.extension_dict = {
     "perl"  : "perl",
     "php"   : "php",
     "py"    : "python",
+    "sql"   : "plsql", # qt02537 2005-05-27
     "r"     : "rebol",
     "sh"    : "shell",
     "tex"   : "tex",
@@ -3207,6 +3210,7 @@ self.language_delims_dict = {
     "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
     "php" : "//",
     "plain" : "#", # We must pick something.
+    "plsql" : "-- /* */", # SQL scripts qt02537 2005-05-27
     "python" : "#",
     "rapidq" : "'", # fil 2004-march-11
     "rebol" : ";",  # jason 2003-07-03
@@ -3234,6 +3238,7 @@ self.language_extension_dict = {
     "php" : "php",
     "plain" : "txt",
     "python" : "py",
+    "plsql" : "sql", # qt02537 2005-05-27
     "rapidq" : "bas", # fil 2004-march-11
     "rebol" : "r",    # jason 2003-07-03
     "shell" : "sh",   # DS 4/1/04
@@ -3258,6 +3263,7 @@ self.extension_dict = {
     "perl"  : "perl",
     "php"   : "php",
     "py"    : "python",
+    "sql"   : "plsql", # qt02537 2005-05-27
     "r"     : "rebol",
     "sh"    : "shell",
     "tex"   : "tex",
@@ -3973,6 +3979,13 @@ Whaterver pdb.pm does (I haven't used it) this might be the starting point for t
     - Represent breakpoints by node/offset/line-contents?
 #@nonl
 #@-node:ekr.20050515091432:LeoDb
+#@+node:ekr.20050614061954:jEdit debugger url
+@nocolor
+
+something else from jEdit, JpyDbg plugin. 
+<http://jpydbg.sourceforge.net>
+#@nonl
+#@-node:ekr.20050614061954:jEdit debugger url
 #@-node:ekr.20041228092223.2:Integrated Leo debugger
 #@+node:ekr.20031218072017.658:Resolve CVS Conflicts command (Stepen Schaefer)
 @nocolor

@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="96" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="101" left="390" height="703" width="911"/>
+	<global_window_position top="105" left="310" height="703" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -34,7 +34,7 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20041119034357.1"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
 <v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
@@ -116,9 +116,9 @@
 <v t="ekr.20041120152900.2"><vh>@bool script_search = None</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.28"><vh>@page Preferences panel options</vh>
+<v t="ekr.20041119034357.28" a="E"><vh>@page Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
-<v t="ekr.20041119034357.30"><vh>@language default_target_language = Python</vh></v>
+<v t="ekr.20041119034357.30" a="TV"><vh>@language default_target_language = Python</vh></v>
 <v t="ekr.20041119034357.31"><vh>@int tab_width = -4</vh></v>
 <v t="ekr.20041119034357.32"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041119034357.33"><vh>@bool output_doc_chunks = True</vh></v>
@@ -190,7 +190,7 @@
 </v>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 </v>
-<v t="ekr.20041213105954" a="V"><vh>Window options</vh>
+<v t="ekr.20041213105954"><vh>Window options</vh>
 <v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
@@ -506,7 +506,10 @@ The default directory used if no directory specified in @path, @root or @file di
 </t>
 <t tx="ekr.20041119034357.30">The default language if no @language or @comment is in effect.
 
-</t>
+Valid values are (case is ignored):
+
+actionscript,c,csharp,css,cweb,elisp,html,java,latex,
+pascal,perl,perlpod,php,plain,plsql,python,rapidq,rebol,shell,tcltk.</t>
 <t tx="ekr.20041119034357.31">The width of tabs on the screen.  This setting is also used when writing doc parts.
 
 Valid values: Any nonzero integer.
