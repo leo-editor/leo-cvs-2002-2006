@@ -534,6 +534,35 @@ class leoTkinterTree (leoFrame.leoTree):
                 t.bind("<Button-3>", self.onHeadlineRightClick)
                 t.bind("<Key>",      self.onHeadlineKey)
                 t.bind("<Control-t>",self.onControlT)
+    
+            if 0: # Crashes on XP.
+                #@            << patch by Maciej Kalisiak to handle scroll-wheel events >>
+                #@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+                def PropagateButton4(e):
+                    canvas.event_generate("<Button-4>")
+                    return "break"
+                
+                def PropagateButton5(e):
+                    canvas.event_generate("<Button-5>")
+                    return "break"
+                
+                def PropagateMouseWheel(e):
+                    canvas.event_generate("<MouseWheel>")
+                    return "break"
+                
+                if self.useBindtags:
+                    instance_tag = t.bindtags()[0]
+                    t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
+                    t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
+                    t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
+                else:
+                    # UNTESTED CASE!!!
+                    t.bind("<Button-4>", PropagateButton4)
+                    t.bind("<Button-5>", PropagateButton5)
+                    t.bind("<MouseWheel>", PropagateMouseWheel)
+                
+                #@-node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+                #@nl
         
             theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
             t.leo_window_id = theId # Never changes.
