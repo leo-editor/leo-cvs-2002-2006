@@ -3273,16 +3273,12 @@ class position (object):
         """Unlinks a position p from the tree before moving or deleting.
         
         The p.v._fistChild link does NOT change."""
-    
-        p = self ; v = p.v ; parent = p.parent()
         
-        # Note:  p.parent() is not necessarily the same as v._parent.
-        
-        if parent:
-            assert(p.v and p.v._parent in p.v.directParents())
-            assert(parent.v in p.v.directParents())
+        # Warning: p.parent() is NOT necessarily the same as p.v._parent!
     
-        # g.trace("parent",parent," child:",v.t._firstChild," back:",v._back, " next:",v._next)
+        p = self ; v = p.v
+        
+        # g.trace('p.v._parent',p.v._parent," child:",v.t._firstChild," back:",v._back, " next:",v._next)
         
         # Special case the root.
         if p == p.c.rootPosition():
@@ -3296,10 +3292,20 @@ class position (object):
         assert(v not in vnodeList)
         
         # Reset the firstChild link in its direct father.
-        if parent and parent.v.t._firstChild == v:
-            parent.v.t._firstChild = v._next
+        if p.v._parent:
+            assert(p.v and p.v._parent in p.v.directParents())
+            if p.v._parent.t._firstChild == v:
+                #g.trace('resetting _parent.v.t._firstChild to',v._next)
+                p.v._parent.t._firstChild = v._next
+        else:
+            parent = p.parent()
+            if parent:
+                assert(parent.v in p.v.directParents())
+                if parent.v.t._firstChild == v:
+                    #g.trace('resetting parent().v.t._firstChild to',v._next)
+                    parent.v.t._firstChild = v._next
     
-        # Do _not_ delete the links in any child nodes.
+        # Do NOT delete the links in any child nodes.
     
         # Clear the links in other nodes.
         if v._back: v._back._next = v._next
@@ -3312,6 +3318,7 @@ class position (object):
             g.trace('-'*20)
             p.dump(label="p")
             if parent: parent.dump(label="parent")
+    #@nonl
     #@-node:ekr.20040310062332.5:p.unlink
     #@-node:ekr.20040310062332:p.Link/Unlink methods
     #@-others
