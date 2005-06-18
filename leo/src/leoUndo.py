@@ -579,6 +579,9 @@ class baseUndoer:
         # Set helpers
         bunch.undoHelper = u.undoCloneNode
         bunch.redoHelper = u.redoCloneNode
+    
+        bunch.newBack = p.back() # 6/15/05
+        bunch.newParent = p.parent() # 6/15/05
         
         bunch.newP = p.copy()
         bunch.dirtyVnodeList = dirtyVnodeList
@@ -689,7 +692,6 @@ class baseUndoer:
         bunch.newP = p.copy()
         bunch.dirtyVnodeList = dirtyVnodeList
     
-        bunch.newCurrent = c.currentPosition()
         bunch.newBack = p.back()
         bunch.newParent = p.parent()
     
@@ -1705,7 +1707,7 @@ class baseUndoer:
         
         u = self ; c = u.c
     
-        # g.trace(u.p)
+        # g.trace(u.p,u.oldParent,u.oldN)
     
         if u.oldParent:
             u.p.moveToNthChildOf(u.oldParent,u.oldN)
