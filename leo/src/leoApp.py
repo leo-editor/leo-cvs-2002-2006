@@ -362,18 +362,23 @@ class LeoApp:
         
         """Set g.app.tkEncoding."""
     
+        try: locale_encoding = g.getpreferredencoding()
+        except exception: locale_encoding = None
+        
+        try: sys_encoding = sys.getdefaultencoding()
+        except exception: sys_encoding = None
+    
         for (encoding,src) in (
             (self.config.tkEncoding,"config"),
-            #(locale.getdefaultlocale()[1],"locale"),
-            (g.getpreferredencoding(),"locale"),
-            (sys.getdefaultencoding(),"sys"),
+            (locale_encoding,"locale"),
+            (sys_encoding,"sys"),
             ("utf-8","default")):
         
-            if g.isValidEncoding (encoding): # 3/22/03
+            if g.isValidEncoding (encoding):
                 self.tkEncoding = encoding
                 # g.trace(self.tkEncoding,src)
                 break
-            elif encoding and len(encoding) > 0:
+            elif encoding:
                 color = g.choose(self.tkEncoding=="ascii","red","blue")
                 g.trace("ignoring invalid %s encoding: %s" % (src,encoding),color=color)
                 
