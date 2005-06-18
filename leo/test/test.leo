@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7011" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7045" clone_windows="0"/>
 <globals body_outline_ratio="0.555681818182">
-	<global_window_position top="56" left="419" height="880" width="856"/>
+	<global_window_position top="15" left="294" height="880" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -616,6 +616,27 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050427101736.1"><vh>write zip</vh></v>
 <v t="ekr.20050427101736.2"><vh>read zip</vh></v>
 </v>
+<v t="ekr.20050331065217"><vh>Golf test</vh>
+<v t="ekr.20050331065217.1"><vh>@rst-directive myGolfDirective</vh></v>
+<v t="ekr.20050331071301"><vh>@rst-options myGolfOptions</vh></v>
+<v t="ekr.20050331065217.2"><vh>@rst-script myGolfScript</vh></v>
+<v t="ekr.20050331065217.3"><vh>Root</vh>
+<v t="ekr.20050331065217.4"><vh>Node 1</vh></v>
+<v t="ekr.20050331065322"><vh>Node 2</vh></v>
+</v>
+</v>
+<v t="ekr.20050618061950"><vh>Tests for new colorizer</vh>
+<v t="ekr.20050601072505"><vh>Large coloring test</vh></v>
+<v t="ekr.20050602213517"><vh>Doc part test</vh></v>
+<v t="ekr.20050603134109"><vh>C language test</vh></v>
+<v t="ekr.20050607084934"><vh>Plain test</vh></v>
+<v t="ekr.20050608082208"><vh>Leading @sign tests</vh>
+<v t="ekr.20050608081744" tnodeList="ekr.20050608081744"><vh>@file leadingAtTest.py</vh></v>
+<v t="ekr.20050608081942"><vh>@thin leadingAtTest2.py</vh></v>
+<v t="ekr.20050608082702" tnodeList="ekr.20050608082702"><vh>@file leadingAtTest3.py</vh></v>
+<v t="ekr.20050608082702.1"><vh>@thin leadingAtTest4.py</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -1084,7 +1105,38 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
+<v t="ekr.20050618061835.1"><vh>Intro</vh>
+<v t="ekr.20050618061835.2"><vh>@url http://www.onlamp.com/pub/a/python/2005/02/03/tdd_pyunit2.html</vh></v>
+</v>
+<v t="ekr.20050618061835.3"><vh>Preparations: adding a button</vh>
+<v t="ekr.20050618061835.4"><vh>@button Do @test</vh></v>
+</v>
+<v t="ekr.20050618061835.5"><vh>Alpha</vh>
+<v t="ekr.20050618061835.6"><vh>@test my first Leo test</vh></v>
+<v t="ekr.20050618061835.7"><vh>output on the console</vh></v>
+</v>
+<v t="ekr.20050618061835.8" a="E"><vh>Bravo</vh>
+<v t="ekr.20050618061835.9"><vh>@test my second Leo test</vh></v>
+<v t="ekr.20050618061835.10"><vh>output on the console</vh></v>
+</v>
+<v t="ekr.20050618061835.11"><vh>It takes two to tango</vh>
+<v t="ekr.20050618061835.6"><vh>@test my first Leo test</vh></v>
+<v t="ekr.20050618061835.9"><vh>@test my second Leo test</vh></v>
+<v t="ekr.20050618061835.12"><vh>output on the console</vh></v>
+</v>
+<v t="ekr.20050618061835.13"><vh>Life gets more interesting</vh>
+<v t="ekr.20050618061835.14"><vh>@test koekiemonster.wants()</vh>
+<v t="ekr.20050618061835.15"><vh>input data</vh></v>
+<v t="ekr.20050618061835.16"><vh>expected result</vh></v>
+</v>
+<v t="ekr.20050618061835.17"><vh>output on the console</vh></v>
+<v t="ekr.20050618061835.18"><vh>output on the console using print statements</vh></v>
+</v>
+<v t="ekr.20050618061835.19"><vh>How about @suite?</vh></v>
+<v t="ekr.20050618061835.20"><vh>Final remarks</vh></v>
+</v>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1206,6 +1258,100 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040713123617"><vh>tempNode</vh></v>
 <v t="ekr.20040713071919"><vh>before</vh></v>
 <v t="ekr.20040713123828.1"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.115"><vh>Colorizer tests...</vh>
+<v t="ekr.20040712101754.176"><vh>@test python keywords (new colorizer)</vh></v>
+<v t="ekr.20040712101754.116"><vh>@test @comment after @language plain</vh>
+<v t="ekr.20040712101754.117"><vh>Test</vh></v>
+</v>
+<v t="ekr.20040712101754.118"><vh>@test colorizer Actionscript</vh>
+<v t="ekr.20040712101754.119"><vh>Actionscript</vh></v>
+</v>
+<v t="ekr.20040712101754.120"><vh>@test colorizer C</vh>
+<v t="ekr.20040712101754.121"><vh>C</vh></v>
+</v>
+<v t="ekr.20040712101754.122"><vh>@test colorizer C#</vh>
+<v t="ekr.20040712101754.123"><vh>C#</vh></v>
+</v>
+<v t="ekr.20040712101754.124"><vh>@test colorizer css</vh>
+<v t="ekr.20040712101754.125"><vh>css</vh></v>
+</v>
+<v t="ekr.20040712101754.126"><vh>@test colorizer CWEB</vh>
+<v t="ekr.20040712101754.127"><vh>CWEB</vh>
+<v t="ekr.20040712101754.128"><vh>&lt;&lt; section ref &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.129"><vh>@test colorizer elisp</vh>
+<v t="ekr.20040712101754.130"><vh>elisp</vh></v>
+</v>
+<v t="ekr.20041107105213"><vh>@test colorizer forth</vh>
+<v t="ekr.20041107105213.1"><vh>forth</vh></v>
+</v>
+<v t="ekr.20040712101754.131"><vh>@test colorizer HTML string bug</vh>
+<v t="ekr.20040712101754.132"><vh>String bug in html</vh></v>
+</v>
+<v t="ekr.20040712101754.133"><vh>@test colorizer HTML1</vh>
+<v t="ekr.20040712101754.134"><vh>HTML1</vh></v>
+</v>
+<v t="ekr.20040712101754.135"><vh>@test colorizer HTML2</vh>
+<v t="ekr.20040712101754.136"><vh>HTML2</vh></v>
+</v>
+<v t="ekr.20040712101754.137"><vh>@test colorizer LaTex</vh>
+<v t="ekr.20040712101754.138"><vh>LaTex</vh></v>
+</v>
+<v t="ekr.20040712101754.139"><vh>@test colorizer mixed</vh>
+<v t="ekr.20040712101754.140"><vh>Mixed</vh></v>
+</v>
+<v t="ekr.20040712101754.141"><vh>@test colorizer PHP</vh>
+<v t="ekr.20040712101754.142"><vh>PHP</vh></v>
+</v>
+<v t="ekr.20050618053006"><vh>@test colorizer plsql</vh>
+<v t="ekr.20050618053006.1"><vh>plsql</vh></v>
+</v>
+<v t="ekr.20040712101754.143"><vh>@test colorizer python.xml (jEdit)</vh>
+<v t="ekr.20040712101754.144"><vh>python.xml</vh>
+<v t="ekr.20040712101754.145"><vh>&lt;&lt; remarks &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.146"><vh>&lt;&lt; comments &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.147"><vh>&lt;&lt; literals &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.148"><vh>&lt;&lt; operators &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.149"><vh>&lt;&lt; keywords &gt;&gt;</vh>
+<v t="ekr.20040712101754.150"><vh>&lt;&lt; reserved words &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.151"><vh>&lt;&lt; builtins &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.152"><vh>&lt;&lt; exceptions &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.153"><vh>&lt;&lt; types &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040712101754.154"><vh>@test colorizer Python1</vh>
+<v t="ekr.20040712101754.155"><vh>Python1</vh></v>
+</v>
+<v t="ekr.20040712101754.156"><vh>@test colorizer Python2</vh>
+<v t="ekr.20040712101754.157"><vh>Python2</vh></v>
+</v>
+<v t="ekr.20040712101754.158"><vh>@test colorizer rapidq</vh>
+<v t="ekr.20040712101754.159"><vh>rapidq</vh></v>
+</v>
+<v t="ekr.20040712101754.160"><vh>@test colorizer Rebol</vh>
+<v t="ekr.20040712101754.161"><vh>Rebol</vh></v>
+</v>
+<v t="ekr.20040712101754.162"><vh>@test colorizer shell</vh>
+<v t="ekr.20040712101754.163"><vh>shell</vh></v>
+</v>
+<v t="ekr.20040712101754.164"><vh>@test colorizer tex.xml (jEdit)</vh>
+<v t="ekr.20040712101754.165"><vh>tex.xml</vh>
+<v t="ekr.20040712101754.166"><vh>&lt;&lt; general rules &gt;&gt;</vh></v>
+<v t="ekr.20040712101754.167"><vh>&lt;&lt; math rules &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.168"><vh>@test colorizer wikiTest1</vh>
+<v t="ekr.20040712101754.169"><vh>wikiTest1</vh></v>
+</v>
+<v t="ekr.20040712101754.170"><vh>@test colorizer wikiTest2</vh>
+<v t="ekr.20040712101754.171"><vh>wikiTest2</vh></v>
+</v>
+<v t="ekr.20040712101754.172"><vh>@test colorizer wikiTest3</vh>
+<v t="ekr.20040712101754.173"><vh>wikiTest3</vh></v>
 </v>
 </v>
 <v t="ekr.20050210093857"><vh>Dialog tests...</vh>
@@ -1734,152 +1880,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20040712101754.115"><vh>Colorizer tests...</vh>
-<v t="ekr.20040712101754.176"><vh>@test python keywords</vh></v>
-<v t="ekr.20040712101754.116"><vh>@test @comment after @language plain</vh>
-<v t="ekr.20040712101754.117"><vh>Test</vh></v>
-</v>
-<v t="ekr.20040712101754.118"><vh>@test colorizer Actionscript</vh>
-<v t="ekr.20040712101754.119"><vh>Actionscript</vh></v>
-</v>
-<v t="ekr.20040712101754.120"><vh>@test colorizer C</vh>
-<v t="ekr.20040712101754.121"><vh>C</vh></v>
-</v>
-<v t="ekr.20040712101754.122"><vh>@test colorizer C#</vh>
-<v t="ekr.20040712101754.123"><vh>C#</vh></v>
-</v>
-<v t="ekr.20040712101754.124"><vh>@test colorizer css</vh>
-<v t="ekr.20040712101754.125"><vh>css</vh></v>
-</v>
-<v t="ekr.20040712101754.126"><vh>@test colorizer CWEB</vh>
-<v t="ekr.20040712101754.127"><vh>CWEB</vh>
-<v t="ekr.20040712101754.128"><vh>&lt;&lt; section ref &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.129"><vh>@test colorizer elisp</vh>
-<v t="ekr.20040712101754.130"><vh>elisp</vh></v>
-</v>
-<v t="ekr.20041107105213"><vh>@test colorizer forth</vh>
-<v t="ekr.20041107105213.1"><vh>forth</vh></v>
-</v>
-<v t="ekr.20040712101754.131"><vh>@test colorizer HTML string bug</vh>
-<v t="ekr.20040712101754.132"><vh>String bug in html</vh></v>
-</v>
-<v t="ekr.20040712101754.133"><vh>@test colorizer HTML1</vh>
-<v t="ekr.20040712101754.134"><vh>HTML1</vh></v>
-</v>
-<v t="ekr.20040712101754.135"><vh>@test colorizer HTML2</vh>
-<v t="ekr.20040712101754.136"><vh>HTML2</vh></v>
-</v>
-<v t="ekr.20040712101754.137"><vh>@test colorizer LaTex</vh>
-<v t="ekr.20040712101754.138"><vh>LaTex</vh></v>
-</v>
-<v t="ekr.20040712101754.139"><vh>@test colorizer mixed</vh>
-<v t="ekr.20040712101754.140"><vh>Mixed</vh></v>
-</v>
-<v t="ekr.20040712101754.141"><vh>@test colorizer PHP</vh>
-<v t="ekr.20040712101754.142"><vh>PHP</vh></v>
-</v>
-<v t="ekr.20040712101754.143"><vh>@test colorizer python.xml (jEdit)</vh>
-<v t="ekr.20040712101754.144"><vh>python.xml</vh>
-<v t="ekr.20040712101754.145"><vh>&lt;&lt; remarks &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.146"><vh>&lt;&lt; comments &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.147"><vh>&lt;&lt; literals &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.148"><vh>&lt;&lt; operators &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.149"><vh>&lt;&lt; keywords &gt;&gt;</vh>
-<v t="ekr.20040712101754.150"><vh>&lt;&lt; reserved words &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.151"><vh>&lt;&lt; builtins &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.152"><vh>&lt;&lt; exceptions &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.153"><vh>&lt;&lt; types &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040712101754.154"><vh>@test colorizer Python1</vh>
-<v t="ekr.20040712101754.155"><vh>Python1</vh></v>
-</v>
-<v t="ekr.20040712101754.156"><vh>@test colorizer Python2</vh>
-<v t="ekr.20040712101754.157"><vh>Python2</vh></v>
-</v>
-<v t="ekr.20040712101754.158"><vh>@test colorizer rapidq</vh>
-<v t="ekr.20040712101754.159"><vh>rapidq</vh></v>
-</v>
-<v t="ekr.20040712101754.160"><vh>@test colorizer Rebol</vh>
-<v t="ekr.20040712101754.161"><vh>Rebol</vh></v>
-</v>
-<v t="ekr.20040712101754.162"><vh>@test colorizer shell</vh>
-<v t="ekr.20040712101754.163"><vh>shell</vh></v>
-</v>
-<v t="ekr.20040712101754.164"><vh>@test colorizer tex.xml (jEdit)</vh>
-<v t="ekr.20040712101754.165"><vh>tex.xml</vh>
-<v t="ekr.20040712101754.166"><vh>&lt;&lt; general rules &gt;&gt;</vh></v>
-<v t="ekr.20040712101754.167"><vh>&lt;&lt; math rules &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.168"><vh>@test colorizer wikiTest1</vh>
-<v t="ekr.20040712101754.169"><vh>wikiTest1</vh></v>
-</v>
-<v t="ekr.20040712101754.170"><vh>@test colorizer wikiTest2</vh>
-<v t="ekr.20040712101754.171"><vh>wikiTest2</vh></v>
-</v>
-<v t="ekr.20040712101754.172"><vh>@test colorizer wikiTest3</vh>
-<v t="ekr.20040712101754.173"><vh>wikiTest3</vh></v>
-</v>
-</v>
-<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
-<v t="ekr.20050106123646"><vh>unused</vh>
-<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
-<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
-<v t="ekr.20050106094854.2"><vh> fail</vh></v>
-<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
-<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
-<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
-<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
-<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
-</v>
-</v>
-<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
-<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
-<v t="ekr.20050106080318.3"><vh> fail</vh></v>
-<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
-<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
-<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
-<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
-<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
-<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
-</v>
-<v t="ekr.20050526131809"><vh>Test</vh>
-<v t="ekr.20050526144024"><vh>c</vh></v>
-<v t="ekr.20050526144024"><vh>c</vh></v>
-<v t="ekr.20050526144024.1"><vh>@root a</vh></v>
-<v t="ekr.20050526144024.2" a="M"><vh>@root b</vh></v>
-</v>
-<v t="ekr.20050331065217"><vh>Golf test</vh>
-<v t="ekr.20050331065217.1"><vh>@rst-directive myGolfDirective</vh></v>
-<v t="ekr.20050331071301"><vh>@rst-options myGolfOptions</vh></v>
-<v t="ekr.20050331065217.2"><vh>@rst-script myGolfScript</vh></v>
-<v t="ekr.20050331065217.3"><vh>Root</vh>
-<v t="ekr.20050331065217.4"><vh>Node 1</vh></v>
-<v t="ekr.20050331065322"><vh>Node 2</vh></v>
-</v>
-</v>
-<v t="ekr.20050601072505"><vh>Large coloring test</vh></v>
-<v t="ekr.20050602213517"><vh>Doc part test</vh></v>
-<v t="ekr.20050603134109"><vh>C language test</vh></v>
-<v t="ekr.20050607084934"><vh>Plain test</vh></v>
-<v t="ekr.20050608082208"><vh>Leading @sign tests</vh>
-<v t="ekr.20050608081744" tnodeList="ekr.20050608081744"><vh>@file leadingAtTest.py</vh></v>
-<v t="ekr.20050608081942"><vh>@thin leadingAtTest2.py</vh></v>
-<v t="ekr.20050608082702" tnodeList="ekr.20050608082702"><vh>@file leadingAtTest3.py</vh></v>
-<v t="ekr.20050608082702.1"><vh>@thin leadingAtTest4.py</vh></v>
-</v>
-<v t="ekr.20050612154351" a="OTV"><vh>@thin testSecRef.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -4614,11 +4614,11 @@ if 1 and 2:
 
 for p in root.allNodes_iter():
     assert(p.t == p.v.t)</t>
-<t tx="ekr.20040712101754.176">mode = c.frame.body.colorizer.modes.get('python')
-
-# g.printDict(mode.keywords)
-
-mode.keywords['as'] = 1 # append the keyword, colorize with 'keyword1' tag.</t>
+<t tx="ekr.20040712101754.176">try:
+    mode = c.frame.body.colorizer.modes.get('python')
+    mode.keywords['as'] = 1 # append the keyword, colorize with 'keyword1' tag.
+except AttributeError:
+    pass # modes only exists for new colorizer.</t>
 <t tx="ekr.20040712101754.177">p = p.firstChild()
 assert(p.headString()=="File Conversion")
 p.convertTreeToString()</t>
@@ -14613,10 +14613,6 @@ after</t>
         sec line 2 indented
 sec line 3
 after</t>
-<t tx="ekr.20050526131809"></t>
-<t tx="ekr.20050526144024">as</t>
-<t tx="ekr.20050526144024.1">@root aa</t>
-<t tx="ekr.20050526144024.2">@root bb</t>
 <t tx="ekr.20050601072505">athis skkdfkjdkfjakdjf;akjf;akljf;asdjf;ajf;
 a;ljf;
 
@@ -15103,10 +15099,617 @@ Test of @ at end of text.
 
 [HKEY_CLASSES_ROOT\*\shell\open]
 @notepad</t>
-<t tx="ekr.20050612154351">@ doc part
-@c
-&lt;&lt; section ref? &gt;&gt;
+<t tx="ekr.20050618053006">p = c.currentPosition().firstChild()
 
-</t>
+c.selectVnode(p) # Sets body text.
+val = c.frame.body.colorizer.colorize(p,incremental=False)
+
+assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
+<t tx="ekr.20050618053006.1">@language plsql
+"a string"
+-- reserved keywords
+abort
+accept,
+access,
+add,
+admin,
+after,
+all,
+allocate,
+alter,
+analyze,
+and,
+any,
+archive,
+archivelog,
+array,
+arraylen,
+as,
+asc,
+assert,
+assign,
+at,
+audit,
+authorization,
+avg,
+backup,
+base_table,
+become,
+before,
+begin,
+between,
+binary_integer,
+block,
+body,
+boolean,
+by,
+cache,
+cancel,
+cascade,
+case,
+change,
+char,
+char_base,
+character,
+check,
+checkpoint,
+close,
+cluster,
+clusters,
+cobol,
+colauth,
+column,
+columns,
+comment,
+commit,
+compile,
+compress,
+connect,
+constant,
+constraint,
+constraints,
+contents,
+continue,
+controlfile,
+count,
+crash,
+create,
+current,
+currval,
+cursor,
+cycle,
+data_base,
+database,
+datafile,
+date,
+dba,
+debugoff,
+debugon,
+dec,
+decimal,
+declare,
+default,
+definition,
+delay,
+delete,
+delta,
+desc,
+digits,
+disable,
+dismount,
+dispose,
+distinct,
+distinct,
+do,
+double,
+drop,
+drop,
+dump,
+each,
+else,
+else,
+elsif,
+enable,
+end,
+end,
+entry,
+escape,
+events,
+except,
+exception,
+exception_init,
+exceptions,
+exclusive,
+exec,
+execute,
+exists,
+exists,
+exit,
+explain,
+extent,
+externally,
+false,
+fetch,
+fetch,
+file,
+float,
+float,
+flush,
+for,
+for,
+force,
+foreign,
+form,
+fortran,
+found,
+freelist,
+freelists,
+from,
+from,
+function,
+generic,
+go,
+goto,
+grant,
+group,
+groups,
+having,
+identified,
+if,
+immediate,
+in,
+including,
+increment,
+index,
+indexes,
+indicator,
+initial,
+initrans,
+insert,
+instance,
+int,
+integer,
+intersect,
+into,
+is,
+key,
+language,
+layer,
+level,
+like,
+limited,
+link,
+lists,
+lock,
+logfile,
+long,
+loop,
+manage,
+manual,
+max,
+maxdatafiles,
+maxextents,
+maxinstances,
+maxlogfiles,
+maxloghistory,
+maxlogmembers,
+maxtrans,
+maxvalue,
+min,
+minextents,
+minus,
+minvalue,
+mlslabel,
+mod,
+mode,
+modify,
+module,
+mount,
+natural,
+new,
+new,
+next,
+nextval,
+noarchivelog,
+noaudit,
+nocache,
+nocompress,
+nocycle,
+nomaxvalue,
+nominvalue,
+none,
+noorder,
+noresetlogs,
+normal,
+nosort,
+not,
+notfound,
+nowait,
+null,
+number,
+number_base,
+numeric,
+of,
+off,
+offline,
+old,
+on,
+online,
+only,
+open,
+open,
+optimal,
+option,
+or,
+order,
+others,
+out,
+own,
+package,
+package,
+parallel,
+partition,
+pctfree,
+pctincrease,
+pctused,
+plan,
+pli,
+positive,
+pragma,
+precision,
+primary,
+prior,
+private,
+private,
+privileges,
+procedure,
+procedure,
+profile,
+public,
+quota,
+raise,
+range,
+raw,
+read,
+real,
+record,
+recover,
+references,
+referencing,
+release,
+remr,
+rename,
+resetlogs,
+resource,
+restricted,
+return,
+reuse,
+reverse,
+revoke,
+role,
+roles,
+rollback,
+row,
+rowid,
+rowlabel,
+rownum,
+rows,
+rowtype,
+run,
+savepoint,
+schema,
+scn,
+section,
+segment,
+select,
+select,
+separate,
+sequence,
+session,
+set,
+set,
+share,
+shared,
+size,
+size,
+smallint,
+smallint,
+snapshot,
+some,
+sort,
+space,
+sql,
+sqlbuf,
+sqlcode,
+sqlerrm,
+sqlerror,
+sqlstate,
+start,
+start,
+statement,
+statement_id,
+statistics,
+stddev,
+stop,
+storage,
+subtype,
+successful,
+sum,
+sum,
+switch,
+synonym,
+sysdate,
+system,
+tabauth,
+table,
+tables,
+tables,
+tablespace,
+task,
+temporary,
+terminate,
+then,
+thread,
+time,
+to,
+tracing,
+transaction,
+trigger,
+triggers,
+true,
+truncate,
+type,
+uid,
+under,
+union,
+unique,
+unlimited,
+until,
+update,
+use,
+user,
+using,
+validate,
+values,
+varchar,
+varchar2,
+variance,
+view,
+views,
+when,
+whenever,
+where,
+while,
+with,
+work,
+write,
+xor</t>
+<t tx="ekr.20050618061835">@killcolor
+
+Here is a tutorial written by Roger Erens.
+
+Version Date        LeoID       Remarks
+------- ----        -----       -------
+0.1     20050519    rogererens  Initial version</t>
+<t tx="ekr.20050618061835.1">So you think "Well, since I've written this piece of funky Python software, and everybody keeps saying how useful unit testing is, I really ought to start using unit tests." And since Leo's creator has said countless times in the Leo forums how easy unit testing in Leo is, a few uncomplicated examples might help convince you that he's not spamming.
+
+Beware: this How-To should be the last time that you write tests AFTER having written your funky software! Test Driven Development dictates that tests have to be prepared BEFORE you get down to writing your actual code. See a nice tutorial on O'Reilly's website (url given in the descendant node).</t>
+<t tx="ekr.20050618061835.2"></t>
+<t tx="ekr.20050618061835.3">From the console, start up a Leo instance. On MS Windows: go to the folder in which you installed Leo 4.3, open up the 'src' folder and double click the 'leo.py' file. Opening a command window, and typing "python leo.py" may be another way.
+
+Use the File--&gt;Open... menu item to open the outline containing your code.
+
+Choose a good-looking position to insert a new node called 'Test zone'. Copy the child node of the node you're reading right now, and paste it as a child node of 'Test zone'. The code it contains is essentially the same as found in the node
+Unit tests...--&gt;Do @test
+in the file 'test.leo' in the 'test' folder. I just added my 0.2 cents by adding some starting and finishing remarks. Remove them if they clutter your console too much.
+
+Also, make sure that you have an entry 'Scripting' in the 'Plugins' menu (enable the plugin if neccessary). Now is a good time to save your leo file.
+
+With the 'Scripting' plugin (also known as the 'mod_scripting' plugin) enabled, the net effect will be that the next time you open your outline, a blue button with the caption 'Do @test' shows up in the tool bar of Leo, if your screen is wide enough.
+To get the button right away in the tool bar, I have to assume that you started Leo with the scripting plugin enabled. In this case, a yellow button with the caption 'script Button' can be pressed while having the node '@button Do @test' selected. Note: the resulting button will not be blue, but pink. Removing a button from the tool bar can be done by right-clicking it.
+
+We'll see the use of this added button soon, but before that, read up on the 'assert' function in the Python manuals, since it is used a lot in testing. It won't be long before you're back here!</t>
+<t tx="ekr.20050618061835.4">@color
+import leoTest
+
+print "\nStart of Do @test"
+leoTest.doTests(all=False)
+print "End of Do @test"</t>
+<t tx="ekr.20050618061835.5">The first child node of the node you're reading right now, contains the simplest succeeding test possible.
+Select it, and press the button 'Do @test'.
+You can find the verbatim result as it got sent to my console in the second child node.
+
+A few things are worth noting here:
+
+1.  The node containing the test must have its headline start with '@test'.
+2.  Whenever the 'assert' statement finds out that the expression given to it
+    is 'True', a test passes successfully. There are more ways to pass a test, but
+    for now, let us stick to the use of assert functions.
+3.  A passed test is denoted with a single dot in the output. See the line between
+    'Start of Do @test' and the line filled with dashes. This is compatible with the
+    way traditional unit testing shows its progress.
+4.  Below the dashed line in the output, a summary is printed. This one surely gives
+    us a reason to lean back for a moment, and congratualate ourselves with another
+    piece of robust, funky code!</t>
+<t tx="ekr.20050618061835.6">@color
+assert(True)</t>
+<t tx="ekr.20050618061835.7">Start of Do @test
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+OK
+End of Do @test</t>
+<t tx="ekr.20050618061835.8">Now that you've seen a passing test, it should be obvious to imagine how a failing test would look like. See the first child node, and then run it by pressing the 'Do @test' button as before.
+
+Instead of a dot denoting success, we get an 'F' denoting a failure on the line following 'Start of Do @test'. When running a lot of tests, the next part, following the lines filled with '='s, helps to identify which test failed.
+It also includes a trace back, but for AssertionErrors, it does not seem to offer much added value to me right now. On second thought: when you have multiple asserts in a test, the trace back can tell you which assert function failed. Still, I would choose for only one assert function per test and get rid of this trace back altogether. This would keep the console much cleaner, IMHO.</t>
+<t tx="ekr.20050618061835.9">@color
+assert('Spam' == 'Ham')</t>
+<t tx="ekr.20050618061835.10">Start of Do @test
+F
+======================================================================
+FAIL: @test my second Leo test
+
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Documents and Settings\re1705\My Documents\PythonStuff\leo\src\leoTes
+t.py", line 148, in runTest
+    exec script + '\n' in {'c':c,'g':g,'p':p}
+  File "&lt;string&gt;", line 3, in ?
+AssertionError
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+FAILED (failures=1)
+End of Do @test</t>
+<t tx="ekr.20050618061835.11">A real fun feature of Leo is that Leo saves you from having to select each and single @test node and press the 'Do @test' button to obtain testing results. Just collecting the @test nodes under an organizing node, selecting that organizing node, and pressing the 'Do @test' button will suffice.
+Of course, this was one of the key ideas of unit testing, but it's nice to see it being implemented by Leo so smoothly!
+
+So, press the button while having this node selected, and see if your console's output matches the third child node more or less. </t>
+<t tx="ekr.20050618061835.12">Start of Do @test
+.F
+======================================================================
+FAIL: @test my second Leo test
+
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\leo\src\leoTest.py", line 148, in runTest
+    exec script + '\n' in {'c':c,'g':g,'p':p}
+  File "&lt;string&gt;", line 3, in ?
+AssertionError
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.040s
+
+FAILED (failures=1)
+End of Do @test</t>
+<t tx="ekr.20050618061835.13">Okay: so you've seen now some simple stand-alone tests to get your toes wet.
+Now, we get to the 'grande finale' and see real-life usage of the @test nodes.
+
+The @test child node below illustrates the following points:
+
+1.  The node imports the module to test (and keeps it up to date by reloading it).
+2.  It also obtains data to use as input and referral. This is what you might call
+    the setUp methods in traditional unit tests. If more tests need the same data,
+    you can put the nodes in a central place where all the @test nodes can find
+    them. Likewise, common code for several unit tests might be collected in a
+    central place.
+3.  Comparable with the traditional unit tests' tearDown method, some statements
+    can follow the test itself, if neccessary. You might also consider using a
+    try/finally construct.
+4.  I have used g.es() statements instead of print statements, since the latter
+    clutter the console. Try replacing the g.es() statements by corresponding
+    print statements to see what I mean. With more than one @test node being tested,
+    this will give quite a dreadful look.</t>
+<t tx="ekr.20050618061835.14">@color
+
+try:
+    # SETUP
+    import koekiemonster # this module defines a function want() which we want to test
+    reload(koekiemonster) # changes in koekiemonster need to propagate to the test
+
+    # obtaining the input parameter for the function
+    inputNode = p.firstChild()
+    inputData = inputNode.bodyString()
+    
+    # obtaining the expected result from the function with above input parameter
+    expectedResultNode = inputNode.next()
+    expected = expectedResultNode.bodyString()
+    
+    # execute the function with above input parameter
+    result = koekiemonster.wants(inputData)
+    
+    # TEST
+    assert(result == expected)
+    
+    # TEARDOWN
+    g.es("Now it's time to clean up")
+
+except AssertionError:
+    # TEARDOWN
+    g.es("Oh oh! %s failed:" % p.headString().strip())
+    g.es("koekiemonster.wants(%s)==%s" % (inputData, result))
+    g.es("Expected: %s" % expected)
+    raise # pass the exception on to the unit test machinery</t>
+<t tx="ekr.20050618061835.15">vegetables</t>
+<t tx="ekr.20050618061835.16">Yuck!</t>
+<t tx="ekr.20050618061835.17">Start of Do @test
+F
+======================================================================
+FAIL: @test koekiemonster.wants()
+
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\leo\src\leoTest.py", line 148, in runTest
+    exec script + '\n' in {'c':c,'g':g,'p':p}
+  File "&lt;string&gt;", line 22, in ?
+AssertionError
+
+----------------------------------------------------------------------
+Ran 1 test in 0.070s
+
+FAILED (failures=1)
+End of Do @test</t>
+<t tx="ekr.20050618061835.18">Start of Do @test
+Oh oh: @test koekiemonster.wants() failed:
+koekiemonster.wants(vegetables)=Yack!
+Expected: Yuck!
+F
+======================================================================
+FAIL: @test koekiemonster.wants()
+
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\leo\src\leoTest.py", line 148, in runTest
+    exec script + '\n' in {'c':c,'g':g,'p':p}
+  File "&lt;string&gt;", line 22, in ?
+AssertionError
+
+----------------------------------------------------------------------
+Ran 1 test in 0.051s
+
+FAILED (failures=1)
+End of Do @test</t>
+<t tx="ekr.20050618061835.19">With the aforementioned possibilities of running all @test nodes in a subtree with a single click on a button, the sharing of input/expected data, and the sharing of setUp/tearDown code, there hardly seems a need for the @suite nodes.
+
+On Leo's website (http://webpages.charter.net/edreamleo/scripting.html#unit-testing-with-test-and-suite) I could still find some extra info on @suite nodes, not found in LeoDocs.leo:
+
+&lt;quote&gt;
+
+Using @suite nodes
+
+Such nodes create a suite of tests. Leo executes the script in these nodes similar to @test nodes, but Leo assumes that the script in an @suite node will do the following:
+
+    * Create a suite of unit tests
+    * Put the suite in g.app.scriptDict["suite"]
+
+The difference between @test and @suite is:
+
+    * Leo creates a unit test from script in an @test node by creating an instance of generalTestCase, a subclass of unittest.TestCase.
+    * The script in an @suite node creates the test suite.
+
+An @suite nodes allows us to create "legacy" unit tests simply. For example, rather than rewriting all the reformatParagraph unit tests to use @test nodes, I simply wrote an @suite node with the following body.
+import leoGlobals as g
+import leoTest ; reload(leoTest)
+suite = leoTest.makeReformatParagraphSuite()
+g.app.scriptDict['suite'] = suite
+
+&lt;/quote&gt;
+
+Well, that's almost, but not quite completely, totally incomprehensible to me. Fortunately, since Leo's creator removed most of this quote from LeoDocs.leo and test.leo, this information appears to be outdated.</t>
+<t tx="ekr.20050618061835.20">Don't forget to read the node
+Users Guide--&gt;Chapter 7: Scripting Leo with Python--&gt;Unit testing with @test, @suite
+in LeoDocs.leo, especially the final notes. Also investigate a little further in test.leo to see some heavy weight lifting.
+
+This concludes my How-To on using @test. It was not written by an expert on (unit) testing;
+it is more or less the result of keeping notes on my way to find out how I could get started
+with unit tests in Leo. Maybe it's useful for other newbies as well.
+
+Please post any remarks on one of the Leo Fora, and if deemed helpful, I'll be glad to incorporate them into a next version.
+
+Happy testing!</t>
+<t tx="ekr.20050618061950"></t>
 </tnodes>
 </leo_file>
