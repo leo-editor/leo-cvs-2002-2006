@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7045" clone_windows="0"/>
 <globals body_outline_ratio="0.555681818182">
-	<global_window_position top="15" left="294" height="880" width="856"/>
+	<global_window_position top="5" left="193" height="880" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -995,7 +995,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041013101029"><vh>headfind</vh>
 <v t="ekr.20041013101029.1"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041001161303"><vh>print all laoded plugins</vh></v>
+<v t="ekr.20041001161303"><vh>print all loaded plugins</vh></v>
 <v t="ekr.20041019080125"><vh>Report loaded plugins</vh></v>
 <v t="ekr.20041124144944"><vh>print sys.path</vh></v>
 <v t="ekr.20041126035448"><vh>Script to import a file</vh></v>
@@ -1105,19 +1105,18 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
-<v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
+<v t="ekr.20050618061835" a="TV"><vh>How to use the @test directive, by Roger Erens</vh>
 <v t="ekr.20050618061835.1"><vh>Intro</vh>
 <v t="ekr.20050618061835.2"><vh>@url http://www.onlamp.com/pub/a/python/2005/02/03/tdd_pyunit2.html</vh></v>
 </v>
 <v t="ekr.20050618061835.3"><vh>Preparations: adding a button</vh>
-<v t="ekr.20050618061835.4"><vh>@button Do @test</vh></v>
+<v t="ekr.20050618061835.4"><vh>@@button Do @test</vh></v>
 </v>
 <v t="ekr.20050618061835.5"><vh>Alpha</vh>
 <v t="ekr.20050618061835.6"><vh>@test my first Leo test</vh></v>
 <v t="ekr.20050618061835.7"><vh>output on the console</vh></v>
 </v>
-<v t="ekr.20050618061835.8" a="E"><vh>Bravo</vh>
+<v t="ekr.20050618061835.8"><vh>Bravo</vh>
 <v t="ekr.20050618061835.9"><vh>@test my second Leo test</vh></v>
 <v t="ekr.20050618061835.10"><vh>output on the console</vh></v>
 </v>
@@ -1137,6 +1136,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050618061835.19"><vh>How about @suite?</vh></v>
 <v t="ekr.20050618061835.20"><vh>Final remarks</vh></v>
 </v>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -15495,7 +15495,9 @@ Version Date        LeoID       Remarks
 
 Beware: this How-To should be the last time that you write tests AFTER having written your funky software! Test Driven Development dictates that tests have to be prepared BEFORE you get down to writing your actual code. See a nice tutorial on O'Reilly's website (url given in the descendant node).</t>
 <t tx="ekr.20050618061835.2"></t>
-<t tx="ekr.20050618061835.3">From the console, start up a Leo instance. On MS Windows: go to the folder in which you installed Leo 4.3, open up the 'src' folder and double click the 'leo.py' file. Opening a command window, and typing "python leo.py" may be another way.
+<t tx="ekr.20050618061835.3">Comment by EKR: There is no need to do this if you use test.leo for your unit tests:  just use the unit test button.
+
+From the console, start up a Leo instance. On MS Windows: go to the folder in which you installed Leo 4.3, open up the 'src' folder and double click the 'leo.py' file. Opening a command window, and typing "python leo.py" may be another way.
 
 Use the File--&gt;Open... menu item to open the outline containing your code.
 
