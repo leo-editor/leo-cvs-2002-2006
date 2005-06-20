@@ -4653,6 +4653,8 @@ class atFile:
         
         self.default_directory = None # 8/2: will be set later.
         
+        if c.target_language:
+            c.target_language = c.target_language.lower() # 6/20/05
         delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
         self.language = c.target_language
         
