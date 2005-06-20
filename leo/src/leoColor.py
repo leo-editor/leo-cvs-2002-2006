@@ -1362,7 +1362,7 @@ class baseColorizer:
             self.sel = sel = self.body.getInsertionPoint() # 10/27/03
             start,end = self.body.convertIndexToRowColumn(sel) # 10/27/03
             
-            # g.trace(self.language)
+            if self.language: self.language = self.language.lower() # 6/20/05
             # g.trace(self.count,self.p)
             # g.trace(body.tag_names())
             
@@ -2474,8 +2474,9 @@ class baseColorizer:
         p = p.copy() ; c = self.c
         if c == None: return # self.c may be None for testing.
     
-        language = c.target_language
-        self.language = language # 2/2/03
+        if c.target_language:
+            c.target_language = c.target_language.lower()
+        self.language = language = c.target_language
         self.comment_string = None
         self.rootMode = None # None, "code" or "doc"
         
@@ -2494,7 +2495,7 @@ class baseColorizer:
             if theDict.has_key("language"):
                 i = theDict["language"]
                 language,junk,junk,junk = g.set_language(s,i)
-                self.language = language # 2/2/03
+                self.language = language
             
             if theDict.has_key("comment") or theDict.has_key("language"):
                 break
