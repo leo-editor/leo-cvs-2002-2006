@@ -291,7 +291,7 @@ def set_delims_from_string(s):
 
     """Returns (delim1, delim2, delim2), the delims following the @comment directive.
     
-    This code can be called from @languge logic, in which case s can point at @comment"""
+    This code can be called from @language logic, in which case s can point at @comment"""
 
     # Skip an optional @comment
     tag = "@comment"
@@ -617,6 +617,8 @@ def scanDirectives(c,p=None):
     page_width = c.page_width
     tab_width  = c.tab_width
     language = c.target_language
+    if c.target_language:
+        c.target_language = c.target_language.lower()
     delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
     path = None
     encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
