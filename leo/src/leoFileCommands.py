@@ -851,6 +851,7 @@ class baseFileCommands:
                     if var:
                         self.getDquote() ; val = f() ; self.getDquote()
                         setattr(c,var,val)
+                        # g.trace(var,val)
                     else:
                         self.getDqString()
                     found = True ; break
