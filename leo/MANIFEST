@@ -316,6 +316,7 @@ plugins\UASearch.py
 plugins\UNL.py
 plugins\URLloader.py
 plugins\UniversalScrolling.py
+plugins\__jEdit_colorizer__.py
 plugins\__outlineExperiments.py
 plugins\__overrideClasses.py
 plugins\__wx_gui.py
@@ -358,6 +359,7 @@ plugins\leo-forthstringwords.txt
 plugins\leo-forthwords.txt
 plugins\leoPlugins.leo
 plugins\leo_interface.py
+plugins\leoupdate.py
 plugins\lineNumbers.py
 plugins\macros.py
 plugins\maximizeNewWindows.py

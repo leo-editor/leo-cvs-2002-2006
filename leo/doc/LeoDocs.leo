@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="14052" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="14292" clone_windows="0"/>
 <globals body_outline_ratio="0.635555555556">
 	<global_window_position top="10" left="411" height="907" width="722"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -19,7 +19,7 @@
 <v t="edream.110203163054.4"><vh>This is a cloned headline</vh></v>
 <v t="edream.110203163054.5"><vh>This node contains no text</vh></v>
 </v>
-<v t="ekr.20050404094627" a="E"><vh>Settings and buttons</vh>
+<v t="ekr.20050404094627"><vh>Settings and buttons</vh>
 <v t="ekr.20041226081019"><vh>@button Check Spelling...</vh></v>
 <v t="ekr.20050407144417"><vh>@settings</vh>
 <v t="ekr.20050407144342"><vh>@page http plugin</vh>
@@ -50,7 +50,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -63,14 +63,38 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="ekr.20050523092026"><vh>4.3-final</vh>
-<v t="ekr.20050523092056.1"><vh>Fixed crasher when pie-menu plugin enabled</vh></v>
-<v t="ekr.20050523092056.4"><vh>Fixed crasher in Extract Section Command</vh></v>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20050620144052" a="ETV"><vh>4.3.1</vh>
+<v t="ekr.20050620144052.2"><vh>Bug fixes...</vh>
+<v t="ekr.20050620144052.3" a="E"><vh>Fixed bug in @ratio setting</vh></v>
+<v t="ekr.20050620144052.6" a="E"><vh>Fixed crasher footprint plugin</vh></v>
+<v t="ekr.20050620144052.8" a="E"><vh>Fixed invalid position bug)</vh></v>
+<v t="ekr.20050620144052.48" a="E"><vh>Fixed undo problems in unit tests</vh></v>
+<v t="ekr.20050620144052.112" a="E"><vh>Made sure same case is used in all recent files entries</vh></v>
+<v t="ekr.20050620144052.114" a="E"><vh>Made sure all dialogs gets focus when they are run</vh></v>
+<v t="ekr.20050620144052.116" a="E"><vh>Improved Resize To Screen command</vh></v>
+<v t="ekr.20050620144052.119" a="E"><vh>Made sure comments are always visible in setting dialog even for non-@ nodes</vh></v>
+<v t="ekr.20050620144052.154" a="E"><vh>Fixed problem with leading @ in body text</vh></v>
+<v t="ekr.20050620144052.166" a="E"><vh>Fixed several  crashers while undoing a move involving clones</vh></v>
+<v t="ekr.20050620144052.182" a="E"><vh>Fixed Unicode encoding problem</vh></v>
+<v t="ekr.20050620144052.185" a="E"><vh>Fixed problem with coloring @language plain</vh></v>
+<v t="ekr.20050620144602"><vh>Fixed bug: Mark Clones command did not work</vh></v>
+</v>
+<v t="ekr.20050620144052.207"><vh>New features...</vh>
+<v t="ekr.20050620144052.208" a="E"><vh>Created separate helpers for idle_body_key</vh></v>
+<v t="ekr.20050620144052.210" a="E"><vh>Made all Mark commands undoable</vh></v>
+<v t="ekr.20050620144052.222" a="E"><vh>Removed dependence on profile and pstats modules from leoTest.py</vh></v>
+<v t="ekr.20050620144052.231" a="E"><vh>Added support for tk resource files</vh></v>
+<v t="ekr.20050620144425"><vh>Added support for coloring the PL/SQL language</vh></v>
+</v>
 </v>
 </v>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050523092026.1"><vh>4.3... @settings</vh>
+<v t="ekr.20050523092026"><vh>4.3-final</vh>
+<v t="ekr.20050523092056.1"><vh>Fixed crasher when pie-menu plugin enabled</vh></v>
+<v t="ekr.20050523092056.4"><vh>Fixed crasher in Extract Section Command</vh></v>
+</v>
 <v t="ekr.20050513141852"><vh>4.3-beta 2</vh>
 <v t="ekr.20050513141913.1"><vh>Fixed bugs...</vh>
 <v t="ekr.20050513141913.16"><vh>Fixed nodenavagator bug</vh></v>
@@ -1962,6 +1986,7 @@
 </v>
 </v>
 </v>
+<v t="ekr.20050620150517" a="E"><vh>Specifying Tk options using .leo_xresources</vh></v>
 </v>
 <v t="EKR.20040524104904.245"><vh>Chapter 9: History of Leo</vh>
 <v t="EKR.20040524104904.246"><vh>Beginnings</vh></v>
@@ -2381,7 +2406,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="TV"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414172212"><vh>@rst frontMatter.html</vh>
 <v t="ekr.20040414172218.2"><vh>Preface</vh>
 <v t="ekr.20040414172336"><vh>@rst</vh></v>
@@ -17919,5 +17944,111 @@ Enabling the Pie Menu plug-in caused Leo to quit when opening .leo files.</t>
 The crash happened if not section text was specified.
 Added new checks and new error messages.</t>
 <t tx="ekr.20050615092633"></t>
+<t tx="ekr.20050620144052">Leo 4.3.1                    June 20, 2005
+
+- Added support for Tk resource files.
+- Added support for coloring the PL/SQL language.
+- All Mark commands are now undoable.
+- Improved Resize To Screen command.
+- The usual assortment of minor bug fixes.</t>
+<t tx="ekr.20050620144052.2"></t>
+<t tx="ekr.20050620144052.3">http://sourceforge.net/forum/message.php?msg_id=3166883
+By: rogererens
+
+I swear I didn't wait for the release to be the first to report a bug! I just
+didn't try this in the alfa/beta versions:
+
+Leo 4.3 final, build  1.262 , May 23, 2005
+Python 2.4.1, Tk 8.4.7, win32
+
+Changing
+Global settings: C:\Leo\config\leoSettings.leo--&gt;Window options--&gt;@page Options
+for new windows--&gt;@ratio initial_horizontal_ratio = 0.3
+or any of the other ratios, does not save them to leoSettings.leo. So after
+restarting I still have the old settings in use.
+</t>
+<t tx="ekr.20050620144052.6">http://sourceforge.net/forum/message.php?msg_id=3167166
+
+The fix was to add the following line to the init function:
+
+    global click_registry, coloured_nodes</t>
+<t tx="ekr.20050620144052.8">Modifying outlines can invalidate existing positions!  This rarely happens.  At present it affects the atFile.read logic when reading an outline whose initial current position is a clone outside an @thin tree with another clone inside the @thin tree.  So the read logic computes the expected current position before reading all derived files, and this expected current position becomes invalid.
+
+What I did:
+
+1.  Moved &lt;&lt; set current and top positions &gt;&gt; from getVnodes to end of getLeoFile.
+This ensures that the outline won't change after computing the position.
+
+2. Unit tests will have to be revised to make sure that only valid positions get used.</t>
+<t tx="ekr.20050620144052.48">- Fixed bugs in convertAllBlanks and convertAllTabs.
+
+These must always call afterChangeGroup to match beforeChangeGroup, even if
+nothing has changed.
+
+- Added u.getMark and u.rollbackToMark.
+
+These allow unit tests to cut the undo stack back to an initial position in the
+tearDown method. This should be done for all tests that use u.undo and u.redo
+methods. The bug was probably the result of changing the outline in the tearDown
+method.
+
+Both the Reformat Paragraph and Edit Body unit tests now roll back the undo stack.
+
+- Added traces for unexpected conditions in u.undo, u.redo and tree.select.
+
+- Call u.setUndoTypes() in u.setUndoTypingParams when returning early.
+
+- Corrected Edit Body unit tests.
+
+These tests should not call undo/redo when nothing is expected to change. Doing
+so may trigger the new 'cant undo' traces in u.undo.
+
+- doTest in leoTest.py now makes copies of both p and p1.
+
+It's not clear that this is needed, it can't hurt, and it may have been important.</t>
+<t tx="ekr.20050620144052.112">The problem was that leo.__file__ returns a randomly upper or lower cased drive letter.</t>
+<t tx="ekr.20050620144052.114"># The About Leo dialog was not getting focus.</t>
+<t tx="ekr.20050620144052.116"></t>
+<t tx="ekr.20050620144052.119">http://sourceforge.net/forum/message.php?msg_id=3176499
+
+5) am I missing text in the Settings panels?  the outline shows that certain
+nodes have text (e.g., "About keyboard shortcuts" has the blue rectangle), yet
+the body pane is empty; heck, even the title suggests that something should
+be there...
+</t>
+<t tx="ekr.20050620144052.154">http://sourceforge.net/forum/message.php?msg_id=3190593
+
+As luck would have it, I need to put an @ character at the beginning of a line
+in source code (windows registry file format) and can't figure out how to do
+it. 
+</t>
+<t tx="ekr.20050620144052.166"></t>
+<t tx="ekr.20050620144052.182">http://sourceforge.net/forum/message.php?msg_id=3186385
+
+I just tried 4.3-final, and it seems it does not work with Chinese LC_CTYPE:</t>
+<t tx="ekr.20050620144052.185">http://sourceforge.net/forum/message.php?msg_id=3175553
+
+When I set default_target_language to plain in 4.2., no words in any body text
+is colored. This behavior seems to have changed in 4.3. Is it right, that I
+now have to write @nocolor on top of *every* body text to get rid of randomly
+colored words?
+ 
+What I did:
+
+- Added entries for target_language to ivarsDic and defaultsDict in leoConfig.py.
+- Added @language target_language = Python to leoSettings.leo.
+- Convert c.target_language to lowercase in several places.</t>
+<t tx="ekr.20050620144052.207"></t>
+<t tx="ekr.20050620144052.208">idle_body_key now calls doAutoIndent and convertBlanksToTabs.  The idea is that plugins could override these methods if desired.</t>
+<t tx="ekr.20050620144052.210"># I also fixed a bug: the Mark Clones command did not work!</t>
+<t tx="ekr.20050620144052.222">Some non-standard distributions don't include the profile and pstats modules.</t>
+<t tx="ekr.20050620144052.231">Leo will now look for a file called .leo_xresources in the users home directory.
+If found, Leo will pass that file to Tk's option_readfile method for the top
+widget. This allows users to set Tk options.</t>
+<t tx="ekr.20050620144425"></t>
+<t tx="ekr.20050620144602"></t>
+<t tx="ekr.20050620150517">Leo looks for a file called .leo_xresources in the users home directory. If
+found, Leo will pass that file to Tk's option_readfile method for the top
+widget. This allows users to set Tk options.</t>
 </tnodes>
 </leo_file>

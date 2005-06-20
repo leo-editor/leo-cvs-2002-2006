@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7045" clone_windows="0"/>
 <globals body_outline_ratio="0.555681818182">
-	<global_window_position top="5" left="193" height="880" width="856"/>
+	<global_window_position top="15" left="315" height="880" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1057,12 +1057,13 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20041218110904"><vh>@page local options</vh>
+<v t="ekr.20041218110904" a="E"><vh>@page local options</vh>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041213075902"><vh>@font log font</vh></v>
 <v t="ekr.20041217042849"><vh>@font body font</vh></v>
 <v t="ekr.20041217132317"><vh>@strings[a,b,c] stringsTest = c</vh></v>
 <v t="ekr.20041217132338"><vh>@ints[1,2,3] intsTest = 3</vh></v>
+<v t="ekr.20050620085732"><vh>@language target_language = Python</vh></v>
 </v>
 <v t="ekr.20041217144914"><vh>@page colors</vh>
 <v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
@@ -1105,7 +1106,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 </v>
-<v t="ekr.20050618061835" a="TV"><vh>How to use the @test directive, by Roger Erens</vh>
+<v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
 <v t="ekr.20050618061835.1"><vh>Intro</vh>
 <v t="ekr.20050618061835.2"><vh>@url http://www.onlamp.com/pub/a/python/2005/02/03/tdd_pyunit2.html</vh></v>
 </v>
@@ -1136,7 +1137,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050618061835.19"><vh>How about @suite?</vh></v>
 <v t="ekr.20050618061835.20"><vh>Final remarks</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -2587,7 +2588,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -15713,5 +15714,6 @@ Please post any remarks on one of the Leo Fora, and if deemed helpful, I'll be g
 
 Happy testing!</t>
 <t tx="ekr.20050618061950"></t>
+<t tx="ekr.20050620085732"></t>
 </tnodes>
 </leo_file>

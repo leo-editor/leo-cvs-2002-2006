@@ -118,7 +118,8 @@
 </v>
 <v t="ekr.20041119034357.28" a="E"><vh>@page Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
-<v t="ekr.20041119034357.30" a="TV"><vh>@language default_target_language = Python</vh></v>
+<v t="ekr.20041119034357.30"><vh>@language default_target_language = python</vh></v>
+<v t="ekr.20050620083647" a="TV"><vh>@language target_language = python</vh></v>
 <v t="ekr.20041119034357.31"><vh>@int tab_width = -4</vh></v>
 <v t="ekr.20041119034357.32"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041119034357.33"><vh>@bool output_doc_chunks = True</vh></v>
@@ -129,7 +130,7 @@
 <v t="ekr.20050203090810"><vh>@page For unit tests</vh>
 <v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
 </v>
-<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20041119034357.21" a="E"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
 <v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
@@ -1133,5 +1134,6 @@ Doing so would make unit tests fail.
 <t tx="ekr.20050513110847"># For manual testing
 xyzzy = Alt+Ctrl+Shift+y
 pdq = Alt+Ctrl+Shift+A</t>
+<t tx="ekr.20050620083647"></t>
 </tnodes>
 </leo_file>
