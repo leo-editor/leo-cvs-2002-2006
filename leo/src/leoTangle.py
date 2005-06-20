@@ -491,6 +491,7 @@ class baseTangleCommands:
         self.use_header_flag = c.use_header_flag
         
         # Default tangle language
+        if c.target_language: c.target_language = c.target_language.lower()
         self.language = c.target_language
         delim1,delim2,delim3 = g.set_delims_from_language(self.language)
         # g.trace(delim1,delim2,delim3)
