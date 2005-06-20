@@ -547,7 +547,8 @@ class configClass:
         ("search_body","bool",True),
         ("whole_word","bool",True),
         # Prefs panel.
-        ("default_target_language","language","Python"),
+        ("default_target_language","language","python"),
+        ("target_language","language","python"), # Bug fix: 6/20,2005.
         ("tab_width","int",-4),
         ("page_width","int",132),
         ("output_doc_chunks","bool",True),
@@ -621,6 +622,7 @@ class configClass:
         ("save_clears_undo_buffer","bool",False),
         ("stylesheet","string",None),
         ("tab_width","int",-4),
+        ("target_language","language","python"), # Bug fix: added: 6/20/2005.
         ("trailing_body_newlines","string","asis"),
         ("use_plugins","bool",True),
             # New in 4.3: use_plugins = True by default.
@@ -954,6 +956,7 @@ class configClass:
         """Return the setting whose value should be a language known to Leo."""
         
         language = self.getString(c,setting)
+        # g.trace(setting,language)
         
         return language
     #@nonl
@@ -1024,8 +1027,10 @@ class configClass:
             if val is None:
                 if not hasattr(c,setting):
                     setattr(c,setting,None)
+                    # g.trace(setting,None)
             else:
                 setattr(c,setting,val)
+                # g.trace(setting,val)
     #@nonl
     #@-node:ekr.20041117062717.17:setCommandsIvars
     #@+node:ekr.20041120074536:settingsRoot
