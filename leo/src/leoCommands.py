@@ -111,7 +111,7 @@ class baseCommands:
         self.use_header_flag = False
         self.output_doc_flag = False
         # Default Target Language
-        self.target_language = "python" # 8/11/02: Required if leoConfig.txt does not exist.
+        self.target_language = "python" # Required if leoConfig.txt does not exist.
         
         # These are defined here, and updated by the tree.select()
         self.beadList = [] # list of vnodes for the Back and Forward commands.
