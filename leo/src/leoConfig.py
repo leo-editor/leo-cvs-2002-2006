@@ -1170,7 +1170,7 @@ class configClass:
                 seen.append(path.lower())
                 if verbose:
                     s = 'reading settings in %s' % path
-                    print s ; g.es(s)
+                    print g.toEncodedString(s,'ascii') ; g.es(s)
                 c = self.openSettingsFile(path)
                 if c:
                     d = self.readSettings(c)
