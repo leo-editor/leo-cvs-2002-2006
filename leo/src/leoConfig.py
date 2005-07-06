@@ -2974,8 +2974,13 @@ class settingsController:
                 elif ikind == 'shortcuts':
                     s = 'updating shortcuts in %s' % ip.headString()
                 else:
-                    s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
-                print s ; g.es(s,color='blue')
+                    # Convert unicode strings to strings safe for printing.
+                    # The calls to str are needed because g.toEncodedString only changes unicode strings.
+                    strOldVal = str(g.toEncodedString(oldVal,'ascii'))
+                    strNewVal = str(g.toEncodedString(newVal,'ascii'))
+                    strIname  = str(g.toEncodedString(iname,'ascii'))
+                    s = "write  %10s -> %10s %s" % (strOldVal,strNewVal,strIname)
+                print s; g.es(s,color='blue')
                 self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
                 changedList.append((ip,iname,ikind,oldVal,newVal),)
                 
