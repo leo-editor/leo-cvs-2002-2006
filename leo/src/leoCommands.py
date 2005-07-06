@@ -685,7 +685,7 @@ class baseCommands:
         if fileName:
             fileName = g.ensure_extension(fileName, ".leo")
             c.fileCommands.saveTo(fileName)
-            c.updateRecentFiles(c.mFileName)
+            c.updateRecentFiles(fileName)
     #@nonl
     #@-node:ekr.20031218072017.2836:saveTo
     #@+node:ekr.20031218072017.2837:revert
