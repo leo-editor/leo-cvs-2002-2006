@@ -188,6 +188,8 @@ class LeoApp:
         if c.promptingForClose:
             # There is already a dialog open asking what to do.
             return False
+            
+        g.app.config.writeRecentFilesFile(c) # Make sure .leoRecentFiles.txt is written.
     
         if c.changed:
             c.promptingForClose = True
