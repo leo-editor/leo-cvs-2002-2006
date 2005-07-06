@@ -1253,7 +1253,7 @@ class configClass:
         
         localFileName = c.fileName()
         if not localFileName:
-            g.trace('----no file name')
+            # g.trace('----no file name')
             return
             
         # Create a list of bunches to control the comparison below.
@@ -1298,9 +1298,12 @@ class configClass:
     
         theFile = None
         try:
+            g.trace('writing',fileName)
             theFile = file(fileName,'w')
             if self.recentFiles:
                 theFile.write('\n'.join(self.recentFiles))
+            else:
+                theFile.write('\n')
     
         except IOError:
             # The user may have erased a file.  Not an error.
