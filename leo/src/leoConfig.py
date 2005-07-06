@@ -1298,7 +1298,7 @@ class configClass:
     
         theFile = None
         try:
-            g.trace('writing',fileName)
+            # g.trace('writing',fileName)
             theFile = file(fileName,'w')
             if self.recentFiles:
                 theFile.write('\n'.join(self.recentFiles))
