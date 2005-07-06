@@ -1718,7 +1718,7 @@ ref line 2
 #@-node:ekr.20031218072017.1406:@root c:\prog\test\tangleTest.txt
 #@-node:ekr.20031218072017.1401:Tests
 #@-node:ekr.20031218072017.1341:(scanAllDirectives, scanDirectives, related utils)
-#@+node:ekr.20050524073547:4.3 projects...
+#@+node:ekr.20050524073547:4.3 projects
 #@+node:ekr.20040929081120:4.3 a1 projects
 #@+node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20050123151628:Code
@@ -14805,7 +14805,7 @@ def readSettingsFiles (self,fileName,verbose=True):
             seen.append(path.lower())
             if verbose:
                 s = 'reading settings in %s' % path
-                print s ; g.es(s)
+                print g.toEncodedString(s,'ascii') ; g.es(s)
             c = self.openSettingsFile(path)
             if c:
                 d = self.readSettings(c)
@@ -16941,7 +16941,7 @@ def readSettingsFiles (self,fileName,verbose=True):
             seen.append(path.lower())
             if verbose:
                 s = 'reading settings in %s' % path
-                print s ; g.es(s)
+                print g.toEncodedString(s,'ascii') ; g.es(s)
             c = self.openSettingsFile(path)
             if c:
                 d = self.readSettings(c)
@@ -17178,7 +17178,7 @@ def readSettingsFiles (self,fileName,verbose=True):
             seen.append(path.lower())
             if verbose:
                 s = 'reading settings in %s' % path
-                print s ; g.es(s)
+                print g.toEncodedString(s,'ascii') ; g.es(s)
             c = self.openSettingsFile(path)
             if c:
                 d = self.readSettings(c)
@@ -17777,7 +17777,7 @@ def readSettingsFiles (self,fileName,verbose=True):
             seen.append(path.lower())
             if verbose:
                 s = 'reading settings in %s' % path
-                print s ; g.es(s)
+                print g.toEncodedString(s,'ascii') ; g.es(s)
             c = self.openSettingsFile(path)
             if c:
                 d = self.readSettings(c)
@@ -20698,8 +20698,13 @@ def writeChangedVars (self):
             elif ikind == 'shortcuts':
                 s = 'updating shortcuts in %s' % ip.headString()
             else:
-                s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
-            print s ; g.es(s,color='blue')
+                # Convert unicode strings to strings safe for printing.
+                # The calls to str are needed because g.toEncodedString only changes unicode strings.
+                strOldVal = str(g.toEncodedString(oldVal,'ascii'))
+                strNewVal = str(g.toEncodedString(newVal,'ascii'))
+                strIname  = str(g.toEncodedString(iname,'ascii'))
+                s = "write  %10s -> %10s %s" % (strOldVal,strNewVal,strIname)
+            print s; g.es(s,color='blue')
             self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
             changedList.append((ip,iname,ikind,oldVal,newVal),)
             
@@ -37519,8 +37524,13 @@ def writeChangedVars (self):
             elif ikind == 'shortcuts':
                 s = 'updating shortcuts in %s' % ip.headString()
             else:
-                s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
-            print s ; g.es(s,color='blue')
+                # Convert unicode strings to strings safe for printing.
+                # The calls to str are needed because g.toEncodedString only changes unicode strings.
+                strOldVal = str(g.toEncodedString(oldVal,'ascii'))
+                strNewVal = str(g.toEncodedString(newVal,'ascii'))
+                strIname  = str(g.toEncodedString(iname,'ascii'))
+                s = "write  %10s -> %10s %s" % (strOldVal,strNewVal,strIname)
+            print s; g.es(s,color='blue')
             self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
             changedList.append((ip,iname,ikind,oldVal,newVal),)
             
@@ -38461,7 +38471,7 @@ def readSettingsFiles (self,fileName,verbose=True):
             seen.append(path.lower())
             if verbose:
                 s = 'reading settings in %s' % path
-                print s ; g.es(s)
+                print g.toEncodedString(s,'ascii') ; g.es(s)
             c = self.openSettingsFile(path)
             if c:
                 d = self.readSettings(c)
@@ -43153,7 +43163,7 @@ def readSettingsFiles (self,fileName,verbose=True):
             seen.append(path.lower())
             if verbose:
                 s = 'reading settings in %s' % path
-                print s ; g.es(s)
+                print g.toEncodedString(s,'ascii') ; g.es(s)
             c = self.openSettingsFile(path)
             if c:
                 d = self.readSettings(c)
@@ -43287,7 +43297,7 @@ def writeRecentFilesFile (self,c):
     
     localFileName = c.fileName()
     if not localFileName:
-        g.trace('----no file name')
+        # g.trace('----no file name')
         return
         
     # Create a list of bunches to control the comparison below.
@@ -43332,9 +43342,12 @@ def writeRecentFilesFileHelper (self,fileName):
 
     theFile = None
     try:
+        g.trace('writing',fileName)
         theFile = file(fileName,'w')
         if self.recentFiles:
             theFile.write('\n'.join(self.recentFiles))
+        else:
+            theFile.write('\n')
 
     except IOError:
         # The user may have erased a file.  Not an error.
@@ -43397,7 +43410,7 @@ def writeRecentFilesFile (self,c):
     
     localFileName = c.fileName()
     if not localFileName:
-        g.trace('----no file name')
+        # g.trace('----no file name')
         return
         
     # Create a list of bunches to control the comparison below.
@@ -43442,9 +43455,12 @@ def writeRecentFilesFileHelper (self,fileName):
 
     theFile = None
     try:
+        g.trace('writing',fileName)
         theFile = file(fileName,'w')
         if self.recentFiles:
             theFile.write('\n'.join(self.recentFiles))
+        else:
+            theFile.write('\n')
 
     except IOError:
         # The user may have erased a file.  Not an error.
@@ -43588,8 +43604,13 @@ def writeChangedVars (self):
             elif ikind == 'shortcuts':
                 s = 'updating shortcuts in %s' % ip.headString()
             else:
-                s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
-            print s ; g.es(s,color='blue')
+                # Convert unicode strings to strings safe for printing.
+                # The calls to str are needed because g.toEncodedString only changes unicode strings.
+                strOldVal = str(g.toEncodedString(oldVal,'ascii'))
+                strNewVal = str(g.toEncodedString(newVal,'ascii'))
+                strIname  = str(g.toEncodedString(iname,'ascii'))
+                s = "write  %10s -> %10s %s" % (strOldVal,strNewVal,strIname)
+            print s; g.es(s,color='blue')
             self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
             changedList.append((ip,iname,ikind,oldVal,newVal),)
             
@@ -47877,8 +47898,13 @@ def writeChangedVars (self):
             elif ikind == 'shortcuts':
                 s = 'updating shortcuts in %s' % ip.headString()
             else:
-                s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
-            print s ; g.es(s,color='blue')
+                # Convert unicode strings to strings safe for printing.
+                # The calls to str are needed because g.toEncodedString only changes unicode strings.
+                strOldVal = str(g.toEncodedString(oldVal,'ascii'))
+                strNewVal = str(g.toEncodedString(newVal,'ascii'))
+                strIname  = str(g.toEncodedString(iname,'ascii'))
+                s = "write  %10s -> %10s %s" % (strOldVal,strNewVal,strIname)
+            print s; g.es(s,color='blue')
             self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
             changedList.append((ip,iname,ikind,oldVal,newVal),)
             
@@ -49413,7 +49439,7 @@ def extract(self):
 #@-node:ekr.20031218072017.1706:extract
 #@-node:ekr.20050516202739:(Fixed crasher in Extract Section Command)
 #@-node:ekr.20050518070428:4.3 final projects
-#@-node:ekr.20050524073547:4.3 projects...
+#@-node:ekr.20050524073547:4.3 projects
 #@+node:ekr.20050524073547.1:4.3.1 projects
 #@+node:ekr.20050524102538:Bug fixes...
 #@+node:ekr.20050524092311:(Fixed ratio bugs)
@@ -55459,6 +55485,359 @@ plsql_keywords = [
 #@-node:ekr.20050618045013.1:(Installed support for PL/SQL language)
 #@-node:ekr.20050526081733:New features...
 #@-node:ekr.20050524073547.1:4.3.1 projects
+#@+node:ekr.20050621084408:4.3.2 projects
+#@+node:ekr.20050705192437:Bug fixes...
+#@+node:ekr.20050705140158:(Fixed bug with non-unicode characters in file name)
+#@+node:ekr.20050705140158.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3224635
+By: madmike
+
+Leo doesn't seem to like to read leo-Files which has non-ascii charaters in
+the Filename (like "Präsentation.leo"). Trying to do so results in the following
+Exception raised:
+
+C:\>D:\Userdata\CH00JAP\Programme\Python\python.exe
+D:\Userdata\CH00JAP\Programme\leo\src\leo.py
+D:\Userdata\CH00JAP\programming\leo\Präsentation.leo
+reading settings in D:\Userdata\CH00JAP\Programme\leo\config\leoSettings.leo
+Traceback (most recent call last):
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leo.py", line 310, in ?
+    run(fileName)
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leo.py", line 95, in run
+    g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting
+g.app.config.
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leoConfig.py", line 1173,
+in readSettingsFiles
+    print s ; g.es(s)
+  File "D:\Userdata\CH00JAP\Programme\Python\lib\encodings\cp850.py", line 18,
+in encode
+    return codecs.charmap_encode(input,errors,encoding_map)
+UnicodeEncodeError: 'charmap' codec can't encode character u'\ufffd' in position
+58: character maps to <undefined>
+
+Renaming the File does work as a workaround.
+
+#@-node:ekr.20050705140158.1:Report
+#@+node:ekr.20050208093800:toEncodedString
+def toEncodedString (s,encoding,reportErrors=False):
+
+    if type(s) == type(u""):
+        try:
+            s = s.encode(encoding,"strict")
+        except UnicodeError:
+            if reportErrors:
+                g.reportBadChars(s,encoding)
+            s = s.encode(encoding,"replace")
+    return s
+#@nonl
+#@-node:ekr.20050208093800:toEncodedString
+#@+node:ekr.20041120064303:config.readSettingsFiles
+def readSettingsFiles (self,fileName,verbose=True):
+    
+    seen = []
+    
+    # Init settings from leoSettings.leo files.
+    for path,localFlag in (
+        (self.globalConfigFile,False),
+        (self.homeFile,False),
+        (fileName,True),
+    ):
+        if path and path.lower() not in seen:
+            seen.append(path.lower())
+            if verbose:
+                s = 'reading settings in %s' % path
+                print g.toEncodedString(s,'ascii') ; g.es(s)
+            c = self.openSettingsFile(path)
+            if c:
+                d = self.readSettings(c)
+                if d:
+                    d['_hash'] = theHash = c.hash()
+                    if localFlag:
+                        self.localOptionsDict[theHash] = d
+                    else:
+                        self.localOptionsList.insert(0,d)
+                g.app.destroyWindow(c.frame)
+            self.readRecentFilesFile(path)
+
+    self.inited = True
+    self.setIvarsFromSettings(None)
+#@nonl
+#@-node:ekr.20041120064303:config.readSettingsFiles
+#@-node:ekr.20050705140158:(Fixed bug with non-unicode characters in file name)
+#@+node:ekr.20050705142321:(Fixed bug with non-unicode characters in settings value)
+#@+node:ekr.20050705142321.1:Report
+@nocolor 
+http://sourceforge.net/forum/message.php?msg_id=3222750
+By: madmike
+
+Trying to set non-ascii characters in settingsraises exception on clicking
+"OK":
+
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "D:\Userdata\CH00JAP\Programme\Python\lib\lib-tk\Tkinter.py", line 1345,
+in __call__
+    return self.func(*args)
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leoConfig.py", line 1893,
+in buttonCallback
+    self.onAnyButton(name)
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leoConfig.py", line 2758,
+in onAnyButton
+    if f: f()
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leoConfig.py", line 2977,
+in writeChangedVars
+    s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
+UnicodeEncodeError: 'ascii' codec can't encode character u'\xf6' in position
+29: ordinal not in range(128)
+
+I've tested this in my own outline local preferences and with the global prefernces
+and get the same result.
+
+I've recieve reproduced the error on @string, @path und @directory.
+
+
+MadMike
+
+#@-node:ekr.20050705142321.1:Report
+#@+node:ekr.20050208093800:toEncodedString
+def toEncodedString (s,encoding,reportErrors=False):
+
+    if type(s) == type(u""):
+        try:
+            s = s.encode(encoding,"strict")
+        except UnicodeError:
+            if reportErrors:
+                g.reportBadChars(s,encoding)
+            s = s.encode(encoding,"replace")
+    return s
+#@nonl
+#@-node:ekr.20050208093800:toEncodedString
+#@+node:ekr.20041225063637.65:writeChangedVars & helpers
+def writeChangedVars (self):
+    
+    """Create per-file changes lists from diffs between what has been inited and written.
+    
+    Call writeChangedList to update each file from items in this list."""
+
+    changedList = []
+    fDict = self.fileValueDict
+    iDict = self.initValueDict
+    munge = g.app.config.munge
+    
+    for key in iDict.keys():
+
+        iData = iDict.get(key)
+        ip,iname,ikind,ival,getValueCallback = iData
+        newVal = getValueCallback()
+        fData = fDict.get(key)
+        if fData:
+            fp,fname,fkind,fval,junk = fData
+            assert(ip==fp and iname==fname and ikind==fkind)
+            changed = fval != newVal ; oldVal = fval
+        else:
+            changed = ival != newVal ; oldVal = ival
+            fval = '<none>'
+
+        if changed:
+            # print "write","key","ival",ival,"fval",fval
+            if type(oldVal) == type({}):
+                s = "write  %s" % (iname)
+            elif ikind == 'shortcuts':
+                s = 'updating shortcuts in %s' % ip.headString()
+            else:
+                # Convert unicode strings to strings safe for printing.
+                # The calls to str are needed because g.toEncodedString only changes unicode strings.
+                strOldVal = str(g.toEncodedString(oldVal,'ascii'))
+                strNewVal = str(g.toEncodedString(newVal,'ascii'))
+                strIname  = str(g.toEncodedString(iname,'ascii'))
+                s = "write  %10s -> %10s %s" % (strOldVal,strNewVal,strIname)
+            print s; g.es(s,color='blue')
+            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
+            changedList.append((ip,iname,ikind,oldVal,newVal),)
+            
+    self.writeChangedList(changedList,"write")
+#@nonl
+#@+node:ekr.20041225063637.66:updateConfig
+def updateConfig(self,c,changes):
+    
+    """Update the core config settings from the changes list."""
+    
+    munge = g.app.config.munge
+
+    for data in changes:
+        p,name,kind,oldval,val = data
+        if munge(kind) == 'font':
+            for key in ('family','size','slant','weight'):
+                data2 = val.get(key)
+                if data2:
+                    name2,val2 = data2
+                    kind2 = g.choose(key=='size','int','string')
+                    g.app.config.set(c,name2,kind2,val2)
+            # Update the visible fonts: c may not be the same as self.c.
+            for c2 in (c,self.c):
+                c2.frame.body.setFontFromConfig()
+                c2.frame.body.colorizer.setFontFromConfig()
+                c2.frame.log.setFontFromConfig()
+                c2.frame.tree.setFontFromConfig()
+                c2.redraw()
+        elif munge(kind) == "color":
+            # g.trace("setting colors")
+            g.app.config.set(c,name,kind,val)
+            for c2 in (c,self.c):
+                c2.frame.tree.setColorFromConfig()
+                c2.frame.log.setColorFromConfig()
+                c2.frame.body.setColorFromConfig()
+        else:
+            # g.trace(name,kind,val)
+            g.app.config.set(c,name,kind,val)
+#@nonl
+#@-node:ekr.20041225063637.66:updateConfig
+#@+node:ekr.20041225063637.67:updateOneNode & helper
+def updateOneNode (self,c,data):
+    
+    """Update the node in c corresponding to p = data[0]."""
+    
+    p,name,kind,oldVal,val = data
+    munge = g.app.config.munge
+    name = name.strip() ; kind = munge(kind.strip())
+
+    # Root1 is the root of the dialog's outline.
+    p1 = p
+    root1 = self.findSettingsRoot(p1.copy())
+    c1 = root1.c
+    
+    # Root2 is the root of the settings outline in the file.
+    root2 = g.app.config.settingsRoot(c) # c is NOT self.c
+    p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
+    if p2:
+        c2 = p2.c ; filename = c2.mFileName
+    else:
+        g.trace("can't happen: can't find node in root2:",root2.c.mFileName)
+        g.trace('root1',root1)
+        g.trace('root2',root2)
+        g.trace('p1',p1)
+        c2 = None ; filename = None
+
+    # Update the outline in the dialog and the target file.
+    for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
+        if p:
+            # g.trace("updating %s in %s" % (name,where))
+            if kind == 'shortcuts':
+                # Just put the new the values in the body.
+                p.setBodyStringOrPane(val)
+            elif kind == 'font':
+                body = self.computeBodyFromFontDict(val)
+                p.setBodyStringOrPane(body)
+            else:
+                # Put everything in the headline.
+                p.initHeadString("@%s %s = %s" % (kind,name,val))
+#@nonl
+#@+node:ekr.20041225063637.68:computeBodyFromFontDict
+def computeBodyFromFontDict(self,d):
+
+    lines = []
+    comments = d.get('comments')
+    if comments:
+        comment_lines = g.splitLines(comments)
+        comment_lines = ["# %s" % (line) for line in comment_lines]
+        lines.extend(comment_lines)
+        lines.extend('\n\n')
+        
+    for key in ('family','size','slant','weight'):
+        data = d.get(key)
+        if data:
+            name,val = data
+            if val in (None,'<none>'):
+                val = "None"
+            line = "%s = %s\n" % (name,val)
+            lines.extend(line)
+
+    body = ''.join(lines)
+    return body
+#@nonl
+#@-node:ekr.20041225063637.68:computeBodyFromFontDict
+#@-node:ekr.20041225063637.67:updateOneNode & helper
+#@+node:ekr.20041225063637.69:writeChangedList
+def writeChangedList (self,changedList,tag):
+    
+    __pychecker__ = '--no-argsused' # tag used for debugging.
+    
+    filesInfoDict = self.filesInfoDict
+    if 0:
+        << dump all the dicts in filesInfoDict >>
+
+    # Accumulate the changes for each file in a 'changes' list for each root.
+    for data in changedList:
+        p,name,kind,oldVal,newVal = data
+        # print "%6s %6s %10s -> %10s %s" % (tag,kind,str(oldVal),str(newVal),name)
+        root = self.findSettingsRoot(p)
+        d = filesInfoDict.get(root)
+        changes = d.get('changes')
+        changes.append(data)
+        d['changes'] = changes
+
+    for root in filesInfoDict.keys():
+        d = filesInfoDict.get(root)
+        # Keys are 'c','changes','path','islocal' (unused)
+        c = d.get('c')
+        changes = d.get('changes')
+        path = d.get('path')
+        # Always write the file so as to preserve expansion state.
+        self.writeChangesToFile(c,changes,path)
+        self.updateConfig(c,changes)
+        d['changes'] = []
+#@nonl
+#@+node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+for key in filesInfoDict.keys():
+    print ; print
+    print "key",key
+    g.printDict(filesInfoDict.get(key))
+print ; print
+#@nonl
+#@-node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+#@-node:ekr.20041225063637.69:writeChangedList
+#@+node:ekr.20041225063637.71:writeChangesToFile
+def writeChangesToFile (self,c,changes,path):
+
+    # Write the individual changes.
+    for data in changes:
+        self.updateOneNode(c,data)
+        
+    # Copy the expansion state of the dialog to the file.
+    for d in self.filesInfoDict.values():
+        c2 = d.get('c')
+        if c2 and c2 == c:
+            p2 = d.get('p')
+            p = g.app.config.settingsRoot(c)
+            # g.trace(c,p)
+            if p and p2:
+                p = p.copy() ; p2 = p2.copy()
+                # Defensive programming: don't assume p and p2 are in synch.
+                while p and p2:
+                    if p2.isExpanded(): p.expand()
+                    else: p.contract()
+                    p.moveToThreadNext()
+                    p2.moveToThreadNext()
+            break
+
+    if c.fileName():
+        self.es("writing " + g.shortFilename(path))
+        # Save the file corresponding to c.
+        # Non-local files aren't open otherwise!
+        c.fileCommands.save(c.fileName())
+        c.redraw() # This should work for non-local files too.
+        self.tree.redraw()
+    else:
+        print "no settings saved.  local file not named."
+#@nonl
+#@-node:ekr.20041225063637.71:writeChangesToFile
+#@-node:ekr.20041225063637.65:writeChangedVars & helpers
+#@-node:ekr.20050705142321:(Fixed bug with non-unicode characters in settings value)
+#@-node:ekr.20050705192437:Bug fixes...
+#@+node:ekr.20050705192437.1:New features...
+#@-node:ekr.20050705192437.1:New features...
+#@-node:ekr.20050621084408:4.3.2 projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt
