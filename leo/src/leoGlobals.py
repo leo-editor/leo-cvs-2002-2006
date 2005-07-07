@@ -921,7 +921,7 @@ def test_g_pdb():
     
     class myStdout:
         def write(self,s):
-            pass # ; g.es('From pdb:',s)
+            pass # g.es('From pdb:',s)
         
     class myStdin:
         def readline (self):
@@ -2285,7 +2285,7 @@ def doHook(tag,*args,**keywords):
     if not g.app.config.use_plugins:
         if tag == "start1":
             s = "Plugins disabled: use_plugins is 0 in a leoSettings.leo file."
-            print s ; g.es(s,color="blue")
+            g.es_print(s,color="blue")
         return None
          
     # Get the hook handler function.  Usually this is doPlugins.
@@ -2403,6 +2403,28 @@ def es(s,*args,**keys):
             # print s,
 #@nonl
 #@-node:ekr.20031218072017.1474:es, enl, ecnl
+#@+node:ekr.20050707064040:es_print & test
+def es_print(s,*args,**keys):
+    
+    print g.toEncodedString(s,'ascii')
+    g.es(s,*args,**keys)
+    
+def test_g_es_print():
+    
+    g.es_print('\ntest of es_print: Ă',color='red')
+#@nonl
+#@-node:ekr.20050707064040:es_print & test
+#@+node:ekr.20050707065530:es_trace & test
+def es_trace(s,*args,**keys):
+    
+    g.trace(g.toEncodedString(s,'ascii'))
+    g.es(s,*args,**keys)
+    
+def test_g_es_trace():
+    
+    g.es_trace('\ntest of es_trace: Ă',color='red')
+#@nonl
+#@-node:ekr.20050707065530:es_trace & test
 #@+node:ekr.20031218072017.3148:top
 #@+at 
 #@nonl
@@ -4761,7 +4783,7 @@ def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
         else: script = ''
     except Exception:
         s = "unexpected exception in g.getScript"
-        print s ; g.es(s)
+        g.es_print(s)
         g.es_exception()
         script = ''
 
@@ -4796,7 +4818,7 @@ def cantImport (moduleName,pluginName=None,verbose=True):
     if verbose and not g.app.unitTesting:
         s = "Can not import %s" % moduleName
         if pluginName: s += " from plugin %s" % pluginName
-        print s ; g.es(s,color="blue")
+        g.es_print(s,color="blue")
 
     return None
 #@nonl
