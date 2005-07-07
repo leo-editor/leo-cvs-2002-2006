@@ -960,7 +960,7 @@ class leoMenu:
             self.createMenuEntries(menu,table,openWith)
         except:
             s = "exception creating items for %s menu" % menuName
-            print s ; g.es(s)
+            g.es_print(s)
             g.es_exception()
             
         g.app.menuWarningsGiven = True

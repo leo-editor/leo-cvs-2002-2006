@@ -198,7 +198,7 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
         module = loadedModules.get(moduleName)
         if verbose:
             s = 'plugin %s already loaded' % moduleName
-            print s ; g.es(s,color="blue")
+            g.es_print(s,color="blue")
         return module
 
     plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
@@ -228,10 +228,10 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
         
     if result is None:
         s = 'can not load enabled %s plugin' % moduleName
-        print s ; g.es(s,color="red")
+        g.es_print(s,color="red")
     elif verbose:
         s = 'loaded %s plugin' % moduleName
-        print s ; g.es(s,color="blue")
+        g.es_print(s,color="blue")
     
     return result
 #@-node:ekr.20041113113140:loadOnePlugin

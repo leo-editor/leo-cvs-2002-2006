@@ -160,7 +160,7 @@ class parserBaseClass:
         
         if not g.app.gui or not g.app.gui.guiName():
             s = '@if-gui has no effect: g.app.gui not defined yet'
-            print s ; g.es(s,color='blue')
+            g.es_print(s,color='blue')
             return "skip"
         elif g.app.gui.guiName().lower() == name.lower():
             return None
@@ -485,7 +485,7 @@ class parserBaseClass:
             # g.trace(result,p.headString())
             if result == "skip":
                 s = 'skipping settings in %s' % p.headString()
-                print s ; g.es(s,color='blue')
+                g.es_print(s,color='blue')
                 p.moveToNodeAfterTree()
             else:
                 p.moveToThreadNext()
@@ -1169,8 +1169,7 @@ class configClass:
             if path and path.lower() not in seen:
                 seen.append(path.lower())
                 if verbose:
-                    s = 'reading settings in %s' % path
-                    print g.toEncodedString(s,'ascii') ; g.es(s)
+                    g.es_print('reading settings in %s' % path)
                 c = self.openSettingsFile(path)
                 if c:
                     d = self.readSettings(c)
@@ -1786,7 +1785,7 @@ class settingsController:
     
         if not Pmw:
             s = 'Setting dialog requires Pmw: see http://pmw.sourceforge.net'
-            print s ; g.es(s,color='red')
+            g.es_print(s,color='red')
             return
         
         # Reread the settings files so any changes will take effect.
@@ -2983,7 +2982,7 @@ class settingsController:
                     strNewVal = str(g.toEncodedString(newVal,'ascii'))
                     strIname  = str(g.toEncodedString(iname,'ascii'))
                     s = "write  %10s -> %10s %s" % (strOldVal,strNewVal,strIname)
-                print s; g.es(s,color='blue')
+                g.es_print(s,color='blue')
                 self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
                 changedList.append((ip,iname,ikind,oldVal,newVal),)
                 

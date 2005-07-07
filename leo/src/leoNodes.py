@@ -809,7 +809,7 @@ class baseVnode (object):
         # This message should never be printed and we want to avoid crashing here!
         if not g.isUnicode(self.t.bodyString):
             s = "Leo internal error: not unicode:" + repr(self.t.bodyString)
-            print s ; g.es(s,color="red")
+            g.es_print(s,color="red")
     
         # Make _sure_ we return a unicode string.
         return g.toUnicode(self.t.bodyString,g.app.tkEncoding)
@@ -836,7 +836,7 @@ class baseVnode (object):
         # This message should never be printed and we want to avoid crashing here!
         if not g.isUnicode(self.t.headString):
             s = "Leo internal error: not unicode:" + repr(self.t.headString)
-            print s ; g.es(s,color="red")
+            g.es_print(s,color="red")
             
         # Make _sure_ we return a unicode string.
         return g.toUnicode(self.t.headString,g.app.tkEncoding)

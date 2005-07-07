@@ -170,10 +170,10 @@ class baseFileCommands:
         
             if 0: # For debugging.
                 s = "unknown attributes for " + v.headString()
-                print s ; g.es(s,color="blue")
+                g.es_print(s,color="blue")
                 for key in keys:
                     s = "%s = %s" % (key,attrDict.get(key))
-                    print s ; g.es(s)
+                    g.es_print(s)
         #@nonl
         #@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
         #@nl
@@ -938,10 +938,10 @@ class baseFileCommands:
             t.unknownAttributes = attrDict
             if 0: # For debugging.
                 s = "unknown attributes for tnode"
-                print s ; g.es(s, color = "blue")
+                g.es_print(s, color = "blue")
                 for key in keys:
                     s = "%s = %s" % (key,attrDict.get(key))
-                    print s ; g.es(s)
+                    g.es_print(s)
         #@nonl
         #@-node:ekr.20031218072017.1564:<< handle unknown attributes >>
         #@nl

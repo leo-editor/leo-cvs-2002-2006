@@ -1416,7 +1416,7 @@ class baseUndoer:
             d = u.getBead(u.bead+1) # sets ivars, including u.p.
             if not d:
                 s = "Undo stack overrun for %s" % u.undoType
-                g.trace(s) ; g.es(s, color="red")
+                g.es_trace(s, color="red")
                 break
             elif u.kind == 'afterGroup':
                 break
@@ -1425,7 +1425,7 @@ class baseUndoer:
                 u.redoHelper()
             else:
                 s = "No group redo helper for %s" % u.undoType
-                g.trace(s) ; g.es(s, color="red")
+                g.es_trace(s,color="red")
         u.groupCount -= 1
         
         if u.dirtyVnodeList: # May be None instead of [].
@@ -1625,7 +1625,7 @@ class baseUndoer:
             d = u.getBead(u.bead) # sets ivars, including u.p.
             if not d:
                 s = "Undo stack underrun for %s" % u.undoType
-                g.trace(s) ; g.es(s, color="red")
+                g.es_trace(s,color="red")
                 break
             elif u.kind == 'beforeGroup':
                 break
@@ -1634,7 +1634,7 @@ class baseUndoer:
                 u.undoHelper()
             else:
                 s = "No group undo helper for %s" % u.undoType
-                g.trace(s) ; g.es(s, color="red")
+                g.es_trace(s, color="red")
                
         if u.dirtyVnodeList: # May be None instead of [].
             for v in u.dirtyVnodeList:

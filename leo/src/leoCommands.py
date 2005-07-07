@@ -1212,7 +1212,7 @@ class baseCommands:
                         lines = g.splitLines(script)
                     
                     s = '-' * 20
-                    print s; g.es(s)
+                    g.es_print(s)
                     
                     if 0:
                         # Just print the error line.
@@ -1402,7 +1402,7 @@ class baseCommands:
                 
                 if not hasattr(root.v.t,"tnodeList"):
                     s = "no child index for " + root.headString()
-                    print s ; g.es(s, color="red")
+                    g.es_print(s, color="red")
                     ok = False
                 
                 if ok:
@@ -1457,16 +1457,16 @@ class baseCommands:
                                 found = True ; break
                         if not found:
                             s = "tnode not found for " + vnodeName
-                            print s ; g.es(s, color="red") ; ok = False
+                            g.es_print(s, color="red") ; ok = False
                         elif p.headString().strip() != vnodeName:
                             if 0: # Apparently this error doesn't prevent a later scan for working properly.
                                 s = "Mismatched vnodeName\nExpecting: %s\n got: %s" % (p.headString(),vnodeName)
-                                print s ; g.es(s, color="red")
+                                g.es_print(s, color="red")
                             ok = False
                     else:
                         if root1 is None: # Kludge: disable this message when called by goToScriptLineNumber.
                             s = "Invalid computed tnodeIndex: %d" % tnodeIndex
-                            print s ; g.es(s, color = "red")
+                            g.es_print(s, color = "red")
                         ok = False
                     #@nonl
                     #@-node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
@@ -1483,7 +1483,7 @@ class baseCommands:
                     
                     if not found:
                         s = "not found: " + vnodeName
-                        print s ; g.es(s, color="red")
+                        g.es_print(s, color="red")
                         return
                     #@nonl
                     #@-node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
@@ -3104,7 +3104,7 @@ class baseCommands:
                 if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode():
                     if 0:
                         s = "deleting tnodeList for " + repr(v)
-                        print ; print s ; g.es(s,color="blue")
+                        print ; g.es_print(s,color="blue")
                     delattr(v.t,"tnodeList")
                 #@nonl
                 #@-node:ekr.20040313150633:<< remove unused tnodeList >>
@@ -3249,7 +3249,7 @@ class baseCommands:
             
             s = "%d nodes checked, %d errors" % (count,errors)
             if errors or verbose:
-                print s ; g.es(s,color="red")
+                g.es_print(s,color="red")
             elif verbose:
                 g.es(s,color="green")
             #@nonl
@@ -3354,7 +3354,7 @@ class baseCommands:
         except (parser.ParserError,SyntaxError):
             if not suppressErrors:
                 s = "Syntax error in: %s" % h
-                print s ; g.es(s,color="blue")
+                g.es_print(s,color="blue")
             if unittest: raise
             else:
                 g.es_exception(full=False,color="black")

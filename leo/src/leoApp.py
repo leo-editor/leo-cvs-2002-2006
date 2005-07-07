@@ -471,7 +471,7 @@ class LeoApp:
                     f.close()
                     if g.os_path_exists(fn):
                         s = "%s created in %s" % (tag,theDir)
-                        print s ; g.es(s, color="red")
+                        g.es_print(s, color="red")
                         return
                     else:
                         g.es(cant,color='red')
