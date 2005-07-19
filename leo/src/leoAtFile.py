@@ -4607,7 +4607,7 @@ class atFile:
             try:
                 print message
             except UnicodeError:
-                print g.toEncodedString(message,g.app.tkEncoding)
+                print g.toEncodedString(message,'ascii')
                 
     def test_atFile_printError(self):
     
