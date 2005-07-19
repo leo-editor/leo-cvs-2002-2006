@@ -20,6 +20,7 @@ if g.app and g.app.use_psyco:
 
 import leoAtFile
 import leoConfig
+import leoEditCommands
 import leoFileCommands
 import leoImport
 import leoNodes
@@ -63,6 +64,7 @@ class baseCommands:
         c.initIvars()
     
         # initialize the sub-commanders
+        self.editCommands = leoEditCommands.editCommands(c)
         self.fileCommands = leoFileCommands.fileCommands(c)
         self.atFileCommands = leoAtFile.atFile(c)
         self.importCommands = leoImport.leoImportCommands(c)
@@ -534,7 +536,7 @@ class baseCommands:
             for d in g.app.openWithFiles[:]:
                 p2 = d.get("p")
                 if p.v.t == p2.v.t:
-                    print "removing previous entry in g.app.openWithFiles for",p.headString()
+                    # print "removing previous entry in g.app.openWithFiles for",p.headString()
                     g.app.openWithFiles.remove(d)
             #@nonl
             #@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
@@ -3235,8 +3237,7 @@ class baseCommands:
                 #@            << give test failed message >>
                 #@+node:ekr.20040314044652:<< give test failed message >>
                 s = "test failed: %s %s" % (message,repr(p))
-                print s ; print
-                g.es(s,color="red")
+                print s ; g.es_print(s,color="red")
                 #@nonl
                 #@-node:ekr.20040314044652:<< give test failed message >>
                 #@nl
@@ -3289,7 +3290,7 @@ class baseCommands:
                         import traceback ; traceback.print_exc()
                         return "surprise" # abort
                     if unittest and result != "ok":
-                        print "Syntax error in %s" % p.headString()
+                        print "Syntax error in %s" % p.cleanHeadString()
                         return result # End the unit test: it has failed.
                 
         if not unittest:
@@ -3506,8 +3507,8 @@ class baseCommands:
         
             encoding = g.app.tkEncoding
             
-            print ; print '-'*10, p.headString()
-            
+            print ; print '-'*10, p.cleanHeadString()
+        
             if 0:
                 for line in lines:
                     line2 = g.toEncodedString(line,encoding,reportErrors=True)
@@ -4027,17 +4028,35 @@ class baseCommands:
     #@+node:ekr.20031218072017.2915:goToLastNode
     def goToLastNode(self):
         
-        c = self
-        v = c.rootVnode()
-        while v and v.threadNext():
-            v = v.threadNext()
-        if v:
+        c = self ; p = c.rootPosition()
+        while p and p.hasNext():
+            p.moveToThreadNext()
+    
+        if p:
             c.beginUpdate()
-            c.frame.tree.expandAllAncestors(v)
-            c.selectVnode(v)
+            c.frame.tree.expandAllAncestors(p)
+            c.selectVnode(p)
             c.endUpdate()
     
     #@-node:ekr.20031218072017.2915:goToLastNode
+    #@+node:ekr.20050711153537:goToLastVisibleNode
+    def goToLastVisibleNode (self):
+        
+        c = self ; p = c.rootPosition()
+        
+        while p.hasNext():
+            p.moveToNext()
+            
+        while p.isExpanded():
+            p.moveToLastChild()
+    
+        if p:
+            c.beginUpdate()
+            c.frame.tree.expandAllAncestors(p)
+            c.selectVnode(p)
+            c.endUpdate()
+    
+    #@-node:ekr.20050711153537:goToLastVisibleNode
     #@+node:ekr.20031218072017.2916:goToNextClone
     def goToNextClone(self):
     
