@@ -240,23 +240,24 @@ class leoBody:
     #@-node:ekr.20031218072017.3666:Idle time...
     #@+node:ekr.20031218072017.3667:Indices
     def adjustIndex (self,index,offset):
-        
         self.oops()
         
     def compareIndices(self,i,rel,j):
-    
         self.oops()
         
     def convertRowColumnToIndex (self,row,column):
-        
         self.oops()
         
     def convertIndexToRowColumn (self,index):
-        
         self.oops()
         
     def getImageIndex (self,image):
+        self.oops()
         
+    def getPythonInsertionPoint (self):
+        self.oops()
+        
+    def setPythonInsertionPoint (self,i):
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3667:Indices
@@ -684,7 +685,10 @@ class leoLog:
     def __init__ (self,frame,parentFrame):
         
         self.frame = frame
-        self.c = frame.c
+        if frame: # 7/16/05: Allow no commander for Null logs.
+            self.c = frame.c
+        else:
+            self.c = None
         self.enabled = True
         self.newlines = 0
         self.isNull = False
