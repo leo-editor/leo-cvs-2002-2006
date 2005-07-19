@@ -2834,6 +2834,25 @@ class leoTkinterBody (leoFrame.leoBody):
     #@-node:ekr.20031218072017.4012:tkIndex (internal use only)
     #@-node:ekr.20031218072017.4006:Indices (leoTkinterBody)
     #@+node:ekr.20031218072017.4013:Insert point
+    #@+node:ekr.20050710102922:get/setPythonInsertionPoint
+    def getPythonInsertionPoint (self,t=None,s=None):
+        
+        b = self ;
+        if t is None: t = self.bodyCtrl
+        if s is None: s = t.get('1.0','end')
+        i = t.index("insert")
+        row,col = b.convertIndexToRowColumn(i)
+        
+        return g.convertRowColToPythonIndex(s,row-1,col)
+        
+    def setPythonInsertionPoint (self,i,t=None,s=None):
+        
+        if t is None: t = self.bodyCtrl
+        if s is None: s = t.get('1.0','end')
+        row,col = g.convertPythonIndexToRowCol(s,i)
+        t.mark_set( 'insert','%d.%d' % (row+1,col))
+    #@nonl
+    #@-node:ekr.20050710102922:get/setPythonInsertionPoint
     #@+node:ekr.20031218072017.495:getInsertionPoint & getBeforeInsertionPoint
     def getBeforeInsertionPoint (self):
         
@@ -2925,6 +2944,42 @@ class leoTkinterBody (leoFrame.leoBody):
             return insert,insert
     #@nonl
     #@-node:ekr.20031218072017.4021:getTextSelection
+    #@+node:ekr.20050710104804:getPythonTextSelection
+    def getPythonTextSelection (self):
+        
+        """Return a tuple representing the selected range of body text.
+        
+        Return a tuple giving the insertion point if no range of text is selected."""
+    
+        t = self.bodyCtrl
+        sel = t.tag_ranges("sel")
+    
+        if len(sel) == 2:
+            s = t.get('1.0','end')
+            i,j = sel
+            row,col = b.convertIndexToRowColumn(i)
+            i1 = g.convertRowColToPythonIndex(s,row-1,col)
+            row,col = b.convertIndexToRowColumn(j)
+            i2 = g.convertRowColToPythonIndex(s,row-1,col)
+            return i1,i2
+        else:
+            # Return the insertion point if there is no selected text.
+            i = self.getPythonTextSelection()
+            return i,i
+    #@nonl
+    #@-node:ekr.20050710104804:getPythonTextSelection
+    #@+node:ekr.20050710104804.1:setPythonTextSelection
+    def setPythonTextSelection(self,i,j):
+    
+        t = self.bodyCtrl
+        s = t.get('1.0','end')
+        row,col = g.convertPythonIndexToRowCol(s,i)
+        i1 = '%d.%d' % (row+1,col)
+        row,col = g.convertPythonIndexToRowCol(s,j)
+        i2 = '%d.%d' % (row+1,col)
+        g.app.gui.setTextSelection(self.bodyCtrl,i1,i2)
+    #@nonl
+    #@-node:ekr.20050710104804.1:setPythonTextSelection
     #@+node:ekr.20031218072017.4022:hasTextSelection
     def hasTextSelection (self):
     
