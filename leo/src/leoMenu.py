@@ -59,6 +59,32 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20031218072017.839:<< define editMenuTopTable >>
         #@nl
+        #@<< define editMenuEditCursorTable >>
+        #@+node:ekr.20050711091931:<< define editMenuEditCursorTable >>
+        if 0: ### Not ready yet.
+            # These should have Emacs names...
+            self.editMenuEditCursorTable = (
+                ('Delete Right',c.deleteRightChar), # Tk: Del
+                ('Delete Left',c.deleteLeftChar), # Tk: Backspace
+                # Moving the cursor.
+                ('Start of Line',c.moveToStartOfLine), # Tk: Home
+                ('End of Line',c.moveToEndOfLine), # Tk: End
+                ('Start of Node',c.moveToStartOfNode), # Tk: c-Home
+                ('End of Node',c.moveToEndOfNode), # Tk: c-End
+                ('-',None,None),
+                # Extending the selection...
+                ('Select Line',c.selectEntireLine),
+                ('Extend To Start of Word',c.extendToStartOfWord),
+                ('Extend To End of Word',c.extendToEndOfWord),
+                ('Extend To Start Of Line',c.extendToStartOfLine), # Tk: s-Home
+                ('Extend To End Of Line',c.extendToEndOfLine), # Tk: s-End
+                ('Extend To End of Node',c.extendToEndOfNode), # Tk: s-c-End
+                
+                # The mark...
+            )
+        #@nonl
+        #@-node:ekr.20050711091931:<< define editMenuEditCursorTable >>
+        #@nl
         #@<< define editMenuEditBodyTable >>
         #@+node:ekr.20031218072017.3754:<< define editMenuEditBodyTable >>
         self.editMenuEditBodyTable = (
@@ -331,6 +357,7 @@ class leoMenu:
             ("-",None,None),
             ("Go To &First Node","Alt+Shift+G",c.goToFirstNode),
             ("Go To &Last Node","Alt+Shift+H",c.goToLastNode),
+            ('Go To Last Visible Node',None,c.goToLastVisibleNode),
             ("Go To &Parent","Alt+Shift+P",c.goToParent),
             ("Go To P&rev Sibling","Alt+Shift+R",c.goToPrevSibling),
             ("Go To Next &Sibling","Alt+Shift+S",c.goToNextSibling),
