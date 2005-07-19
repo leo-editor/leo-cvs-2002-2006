@@ -3285,7 +3285,10 @@ class settingsController:
             newVal = getValueCallback()
             
             if val != newVal:
-                print "%10s -> %10s %s" % (str(val),str(newVal),name)
+                name   = str(g.toEncodedString(name))
+                val    = str(g.toEncodedString(val))
+                newVal = str(g.toEncodedString(newVal))
+                print "%10s -> %10s %s" % (val,newVal,name)
     #@nonl
     #@-node:ekr.20041225063637.76:printChangedVars
     #@+node:ekr.20041225063637.77:printWidgets
