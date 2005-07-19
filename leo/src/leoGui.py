@@ -140,6 +140,8 @@ class leoGui:
         
         if not g.app.initing:
             g.doHook("after-create-leo-frame",c=c)
+            
+        # g.trace(c,frame)
     
         return c,frame
     #@nonl

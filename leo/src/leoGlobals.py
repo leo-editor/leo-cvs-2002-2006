@@ -769,9 +769,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         if munge(fileName) == munge(frame.c.mFileName):
             frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
-            # g.es("This window already open")
+            # g.trace('Already open',fileName)
             return True, frame
     try:
+        # g.trace('Not open',fileName)
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)

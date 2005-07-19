@@ -491,7 +491,7 @@ class LeoApp:
         # print "setLog:",tag,"locked:",self.logIsLocked,log
         if not self.logIsLocked:
             self.log = log
-            
+    
     def lockLog(self):
         """Disable changes to the log"""
         self.logIsLocked = True
@@ -504,10 +504,13 @@ class LeoApp:
     #@+node:ekr.20031218072017.2619:app.writeWaitingLog
     def writeWaitingLog (self):
     
+        # g.trace(g.app.gui,self.log)
+    
         if self.log:
-            for s,color in self.logWaiting:
-                g.es(s,color=color,newline=0) # The caller must write the newlines.
-            self.logWaiting = []
+            if 1: ## not self.log.isNull: # The test for isNull would probably interfere with batch mode.
+                for s,color in self.logWaiting:
+                    g.es(s,color=color,newline=0) # The caller must write the newlines.
+                self.logWaiting = []
         else:
             print 'writeWaitingLog: still no log!'
     #@nonl

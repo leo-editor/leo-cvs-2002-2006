@@ -194,6 +194,8 @@ def createFrame (fileName):
     """Create a LeoFrame during Leo's startup process."""
     
     import leoGlobals as g
+    
+    # g.trace(repr(fileName))
 
     # Try to create a frame for the file.
     if fileName:
@@ -201,7 +203,7 @@ def createFrame (fileName):
             ok, frame = g.openWithFileName(fileName,None)
             if ok:
                 return frame.c,frame
-    
+
     # Create a _new_ frame & indicate it is the startup window.
     c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
     frame.setInitialWindowGeometry()
