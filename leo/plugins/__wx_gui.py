@@ -5,7 +5,7 @@
 
 """A plugin to use wxPython as Leo's gui."""
 
-__version__ = "0.2"
+__version__ = "0.3"
 #@<< version history >>
 #@+node:ekr.20050719111045:<< version history >>
 #@@nocolor
@@ -15,6 +15,8 @@ __version__ = "0.2"
 # 0.2 EKR:
 #     - Version that works with Leo 4.3.
 #     - Created init function.
+# 0.3 EKR:
+#     - Ran script to put 'g.' in front of all functions in leoGlobals.py.
 #@-at
 #@nonl
 #@-node:ekr.20050719111045:<< version history >>
@@ -133,7 +135,7 @@ class wxGui(leoGui.leoGui):
     
         try:
             version = gui.root.getvar("tk_patchLevel")
-            if CheckVersion(version,"8.4.3"):
+            if g.CheckVersion(version,"8.4.3"):
                 # tk 8.4.3 or greater: load a 16 by 16 icon.
                 path = os.path.join(g.app.loadDir,"..","Icons")
                 if os.path.exists(path):
@@ -153,8 +155,9 @@ class wxGui(leoGui.leoGui):
     #@+at 
     #@nonl
     # According to Martin v. Löwis, getdefaultlocale() is broken, and cannot 
-    # be fixed. The workaround is to copy the getpreferredencoding() function 
-    # from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
+    # be fixed. The workaround is to copy the g.getpreferredencoding() 
+    # function from locale.py in Python 2.3a2.  This function is now in 
+    # leoGlobals.py.
     #@-at
     #@@c
     
@@ -163,11 +166,11 @@ class wxGui(leoGui.leoGui):
         for (encoding,src) in (
             (g.app.config.tkEncoding,"config"),
             #(locale.getdefaultlocale()[1],"locale"),
-            (getpreferredencoding(),"locale"),
+            (g.getpreferredencoding(),"locale"),
             (sys.getdefaultencoding(),"sys"),
             ("utf-8","default")):
         
-            if isValidEncoding (encoding): # 3/22/03
+            if g.isValidEncoding (encoding): # 3/22/03
                 g.app.tkEncoding = encoding
                 # g.trace(g.app.tkEncoding,src)
                 break
@@ -281,7 +284,7 @@ class wxGui(leoGui.leoGui):
         d = wx.wxMessageDialog(self.root,message,"Leo",wx.wxYES_NO)
         answer = d.ShowModal()
     
-        return choose(answer==wx.wxYES,"yes","no")
+        return g.choose(answer==wx.wxYES,"yes","no")
     #@nonl
     #@-node:edream.110203113231.325:runAskYesNoDialog
     #@+node:edream.110203113231.326:runAskYesNoCancelDialog
@@ -512,7 +515,7 @@ class wxGui(leoGui.leoGui):
             g.es("exception setting font from " + `family_name`)
             g.es("family,size,slant,weight:"+
                 `family`+':'+`size`+':'+`slant`+':'+`weight`)
-            es_exception()
+            g.es_exception()
             return g.app.config.defaultFont
     #@nonl
     #@-node:edream.110203113231.319:getFontFromParams
@@ -1659,7 +1662,7 @@ class wxLeoFrame(wx.wxFrame,leoFrame.leoFrame):
         split2Pane1,split2Pane2 = self.split2Pane1,self.split2Pane2
         # Switch directions.
         verticalFlag = self.splitVerticalFlag = not self.splitVerticalFlag
-        orientation = choose(verticalFlag,"vertical","horizontal")
+        orientation = g.choose(verticalFlag,"vertical","horizontal")
         g.app.config.setWindowPref("initial_splitter_orientation",orientation)
         # Reconfigure the bars.
         bar1.place_forget()
@@ -1712,7 +1715,7 @@ class wxLeoFrame(wx.wxFrame,leoFrame.leoFrame):
                         webbrowser.open_new(url)
                 except:
                     g.es("exception dowloading sbooks.chm")
-                    es_exception()
+                    g.es_exception()
     #@nonl
     #@+node:edream.111703103908.3:showProgressBar
     def showProgressBar (self,count,size,total):
@@ -2056,7 +2059,7 @@ class wxLeoMenu (leoMenu.leoMenu):
         id = menu.FindItem(realName)
         if id:
             item = menu.FindItemById(id)
-            val = choose(val,1,0)
+            val = g.choose(val,1,0)
             item.Enable(val)
         else:
             g.trace("no item",name,val)
@@ -3451,7 +3454,7 @@ class wxFindFrame (wx.wxFrame,leoFind.leoFind):
     def bringToFront (self):
         
         g.app.gui.bringToFront(self)
-        self.c = top()
+        self.c = g.top()
         self.init(self.c)
         self.findPanel.findText.SetFocus()
         self.findPanel.findText.SetSelection(-1,-1)
