@@ -34,7 +34,7 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
+<v t="ekr.20041119034357.1"><vh>@settings</vh>
 <v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
@@ -116,10 +116,10 @@
 <v t="ekr.20041120152900.2"><vh>@bool script_search = None</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.28" a="E"><vh>@page Preferences panel options</vh>
+<v t="ekr.20041119034357.28"><vh>@page Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
 <v t="ekr.20041119034357.30"><vh>@language default_target_language = python</vh></v>
-<v t="ekr.20050620083647" a="TV"><vh>@language target_language = python</vh></v>
+<v t="ekr.20050620083647" a="V"><vh>@language target_language = python</vh></v>
 <v t="ekr.20041119034357.31"><vh>@int tab_width = -4</vh></v>
 <v t="ekr.20041119034357.32"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041119034357.33"><vh>@bool output_doc_chunks = True</vh></v>
@@ -130,7 +130,7 @@
 <v t="ekr.20050203090810"><vh>@page For unit tests</vh>
 <v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
 </v>
-<v t="ekr.20041119034357.21" a="E"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
 <v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
@@ -202,7 +202,7 @@
 <v t="ekr.20041213105954.1"><vh>@page Log pane options</vh>
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
 </v>
-<v t="ekr.20041119034357.56" a="E"><vh>@page Options for new windows</vh>
+<v t="ekr.20041119034357.56"><vh>@page Options for new windows</vh>
 <v t="ekr.20041119034357.57"><vh>@ratio initial_horizontal_ratio = 0.3</vh></v>
 <v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.5</vh></v>
 <v t="ekr.20041119034357.59"><vh>@strings[vertical,horizontal] initial_splitter_orientation = vertical</vh></v>

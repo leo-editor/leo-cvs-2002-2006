@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7045" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7177" clone_windows="0"/>
 <globals body_outline_ratio="0.555681818182">
-	<global_window_position top="15" left="315" height="880" width="856"/>
+	<global_window_position top="52" left="235" height="880" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -637,6 +637,69 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050608082702.1"><vh>@thin leadingAtTest4.py</vh></v>
 </v>
 </v>
+<v t="ekr.20050707183613"><vh>Ipython Shell</vh>
+<v t="ekr.20050708110336"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20050708091220.78"><vh>&lt;&lt; use IPShellEmbed &gt;&gt;</vh></v>
+<v t="ekr.20050708095104"><vh>class dummyCache</vh>
+<v t="ekr.20050708142137"><vh>ctor</vh></v>
+<v t="ekr.20050708142137.2"><vh>All others</vh></v>
+</v>
+<v t="ekr.20050708143008"><vh>class dummyPrompt</vh>
+<v t="ekr.20050708143008.2"><vh>__init__</vh></v>
+<v t="ekr.20050708143008.3"><vh>set_p_str</vh></v>
+<v t="ekr.20050708143008.4"><vh>write</vh></v>
+<v t="ekr.20050708143008.5"><vh>__str__</vh></v>
+<v t="ekr.20050708144144.1"><vh>Unchanged</vh>
+<v t="ekr.20050708143008.6"><vh>cwd_filt</vh></v>
+<v t="ekr.20050708143008.7"><vh>cwd_filt2</vh></v>
+</v>
+<v t="ekr.20050708144144.2"><vh>auto_rewrite</vh></v>
+</v>
+<v t="ekr.20050708091220.76"><vh>class LeoShell</vh>
+<v t="ekr.20050708091220.77"><vh>ctor</vh>
+<v t="ekr.20050708110239"><vh>&lt;&lt; directory stuff &gt;&gt;</vh></v>
+<v t="ekr.20050708105742"><vh>&lt;&lt; set sensible command line defaults for self.rc &gt;&gt;</vh></v>
+<v t="ekr.20050708093114"><vh>&lt;&lt; define regexp's &gt;&gt;</vh></v>
+<v t="ekr.20050708093224"><vh>&lt;&lt; define escape stuff &gt;&gt;</vh></v>
+<v t="ekr.20050708093433"><vh>&lt;&lt; define namespaces &gt;&gt;</vh></v>
+<v t="ekr.20050708094606.1"><vh>&lt;&lt; create alias table &gt;&gt;</vh></v>
+<v t="ekr.20050708150223"><vh>&lt;&lt; define inpsector &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050708105323.2"><vh>usage</vh></v>
+<v t="ekr.20050708095104.1"><vh>log</vh></v>
+<v t="ekr.20050708113006.2"><vh>system</vh></v>
+<v t="ekr.20050708152111" a="M"><vh>_prefilter</vh>
+<v t="ekr.20050708152111.1"><vh>&lt;&lt; about this function &gt;&gt;</vh></v>
+<v t="ekr.20050708152111.2"><vh>&lt;&lt; handle empty line &gt;&gt;</vh></v>
+<v t="ekr.20050708152111.3"><vh>&lt;&lt; First check for explicit escapes in the last/first character &gt;&gt;</vh></v>
+<v t="ekr.20050708152111.4"><vh>&lt;&lt; Next, check if we can automatically execute this thing &gt;&gt;</vh></v>
+<v t="ekr.20050708152111.5"><vh>&lt;&lt; Let's try to find if the input line is a magic fn &gt;&gt;</vh></v>
+<v t="ekr.20050708152111.6"><vh>&lt;&lt; execute comparisons, assignsments or function calls &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050708152111.7"><vh>prefilter &amp; helpers</vh>
+<v t="ekr.20050708152111.9" a="M"><vh>_prefilter</vh>
+<v t="ekr.20050708152111.10"><vh>&lt;&lt; about this function &gt;&gt;</vh></v>
+<v t="ekr.20050708152111.12"><vh>&lt;&lt; First check for explicit escapes in the last/first character &gt;&gt;</vh></v>
+<v t="ekr.20050708152111.13"><vh>&lt;&lt; Next, check if we can automatically execute this thing &gt;&gt;</vh></v>
+<v t="ekr.20050708152111.14"><vh>&lt;&lt; Let's try to find if the input line is a magic fn &gt;&gt;</vh></v>
+<v t="ekr.20050708152111.15"><vh>&lt;&lt; execute comparisons, assignsments or function calls &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050708165401.1"><vh>handle_normal ( no longer used)</vh></v>
+<v t="ekr.20050708152111.17"><vh>handle_alias (done)</vh></v>
+<v t="ekr.20050708152111.18"><vh>handle_shell_escape (needs work)</vh></v>
+<v t="ekr.20050708152111.19"><vh>handle_magic (done)</vh></v>
+<v t="ekr.20050708152111.20"><vh>handle_auto (may need work)</vh></v>
+<v t="ekr.20050708152111.21"><vh>handle_help (may need work) (and it's stupid anyway)</vh></v>
+<v t="ekr.20050708152111.22"><vh>handle_emacs</vh></v>
+<v t="ekr.20050708152111.23"><vh>safe_execfile (not used)</vh></v>
+<v t="ekr.20050708152111.24"><vh>split_user_input</vh></v>
+<v t="ekr.20050708152111.25"><vh>update_cache</vh></v>
+</v>
+</v>
+<v t="ekr.20050708105323.3"><vh>ipmagic &amp; palias</vh></v>
+<v t="ekr.20050708165531.1"><vh>esc_quotes</vh></v>
+</v>
+<v t="ekr.20050715132524" a="E"><vh>Pymacs (hangs)</vh></v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -1054,10 +1117,11 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
 </v>
 </v>
+<v t="ekr.20050704172623"><vh>Print all headlines, properly indented</vh></v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20041218110904" a="E"><vh>@page local options</vh>
+<v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041213075902"><vh>@font log font</vh></v>
 <v t="ekr.20041217042849"><vh>@font body font</vh></v>
@@ -1095,6 +1159,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050511085027"><vh>@string undo_granularity = word</vh></v>
 <v t="ekr.20050512130051"><vh>@strings[vertical,horizontal] initial_splitter_orientation = vertical</vh></v>
 <v t="ekr.20050513103937"><vh>Original shortcuts</vh></v>
+<v t="ekr.20050705142631"><vh>@string unicodeTest = Präsentation.leo</vh></v>
 </v>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
@@ -1105,6 +1170,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
+<v t="ekr.20050704170739"><vh>@button Ipython</vh></v>
 </v>
 <v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
 <v t="ekr.20050618061835.1"><vh>Intro</vh>
@@ -2504,7 +2570,7 @@ Running unit tests from test.leo is easy, provided you have enabled the
 Scripting plugin. When this plugin is enabled Leo will create a blue 'script
 button' in the icon bar called 'unit test'. 
  
-- To run all unit tests, select the node in test.leo called 'Unit testing...',
+- To run all unit tests, select the node in test.leo called 'Unit tests...',
 then click the 'unit test' button. 
  
 - To run a single test, select an @test node and click the 'unit test' button. 
@@ -15715,5 +15781,693 @@ Please post any remarks on one of the Leo Fora, and if deemed helpful, I'll be g
 Happy testing!</t>
 <t tx="ekr.20050618061950"></t>
 <t tx="ekr.20050620085732"></t>
+<t tx="ekr.20050704170739">from IPython.Shell import IPShellEmbed
+
+ipshell = IPShellEmbed()
+ipshell()</t>
+<t tx="ekr.20050704172623">for p in c.allNodes_iter():
+    print p.level()*' ',p.headString()
+</t>
+<t tx="ekr.20050705142631"></t>
+<t tx="ekr.20050707183613">&lt;&lt; imports &gt;&gt;
+
+@others
+
+if 0:
+    &lt;&lt; use IPShellEmbed &gt;&gt;
+else:
+    
+    shell = LeoShell('shell')
+    # g.redirectStdout()
+    g.es_print('-'*40)
+    body = p.bodyString()
+    for line in g.splitLines(body):
+        g.es(str(shell.prefilter(line,None)))
+    #g.restoreStdout()</t>
+<t tx="ekr.20050708091220.76">class LeoShell (IPython.iplib.InteractiveShell):
+    
+    @others
+    
+    # Set the default prefilter() function (this can be user-overridden)
+    prefilter = _prefilter</t>
+<t tx="ekr.20050708091220.77">def __init__ (self,name):
+        
+    self.shell = self
+    self.name = name
+    
+    &lt;&lt; directory stuff &gt;&gt;
+    &lt;&lt; set sensible command line defaults for self.rc &gt;&gt;
+    &lt;&lt; define regexp's &gt;&gt;
+    &lt;&lt; define escape stuff &gt;&gt;
+    &lt;&lt; define namespaces &gt;&gt;
+    &lt;&lt; create alias table &gt;&gt;
+    &lt;&lt; define inpsector &gt;&gt;
+    
+    self.inputcache = dummyCache(self.user_ns)
+    self.outputcache = dummyCache(self.user_ns)
+    self.CACHELENGTH = 0</t>
+<t tx="ekr.20050708091220.78">shell = IPython.Shell.IPShellEmbed (
+    argv=[],
+    banner='Welcome to IPython in Leo',
+    exit_msg='Bye',
+    rc_override={
+        'confirm_exit':0,
+        #'readline':0, # Crashes the interactive interp.
+    },
+)
+shell()</t>
+<t tx="ekr.20050708093114"># Don't get carried away with trying to make the autocalling catch too
+# much:  it's better to be conservative rather than to trigger hidden
+# evals() somewhere and end up causing side effects.
+
+self.line_split = re.compile(
+    r'^([\s*,;/])'
+    r'([\?\w\.]+\w*\s*)'
+    r'(\(?.*$)'
+)
+
+# RegExp to identify potential function names
+self.re_fun_name = re.compile(r'[a-zA-Z_]([a-zA-Z0-9_.]*) *$')
+
+# RegExp to exclude strings with this start from autocalling
+self.re_exclude_auto = re.compile('^[!=()&lt;&gt;,\*/\+-]|^is ')
+
+# try to catch also methods for stuff in lists/tuples/dicts: off
+# (experimental). For this to work, the line_split regexp would need
+# to be modified so it wouldn't break things at '['. That line is
+# nasty enough that I shouldn't change it until I can test it _well_.
+#self.re_fun_name = re.compile (r'[a-zA-Z_]([a-zA-Z0-9_.\[\]]*) ?$')</t>
+<t tx="ekr.20050708093224"># escapes for automatic behavior on the command line
+self.ESC_SHELL = '!'
+self.ESC_HELP  = '?'
+self.ESC_MAGIC = '%'
+self.ESC_QUOTE = ','
+self.ESC_QUOTE2 = ';'
+self.ESC_PAREN = '/'
+
+# And their associated handlers
+self.esc_handlers = {
+    self.ESC_PAREN: self.handle_auto,
+    self.ESC_QUOTE: self.handle_auto,
+    self.ESC_QUOTE2:self.handle_auto,
+    self.ESC_MAGIC: self.handle_magic,
+    self.ESC_HELP:  self.handle_help,
+    self.ESC_SHELL: self.handle_shell_escape,
+}</t>
+<t tx="ekr.20050708093433"># Set __name__ to __main__ to better match the behavior of the normal interpreter.
+
+self.user_ns = {
+    '__name__'     :'__main__',
+    '__builtins__' : __builtin__,
+}
+
+self.internal_ns = __main__.__dict__.copy()</t>
+<t tx="ekr.20050708094606.1"># dict of names to be treated as system aliases.  Each entry in the
+# alias table must be a 2-tuple of the form (N,name), where N is the
+# number of positional arguments of the alias.
+self.alias_table = {}</t>
+<t tx="ekr.20050708095104">class dummyCache:
+    
+    @others</t>
+<t tx="ekr.20050708095104.1">def log(self,line,continuation=None):
+    
+    # Called by the logger (not sure how).
+    if 0:
+        g.trace(line)</t>
+<t tx="ekr.20050708105323.2">def usage(self):
+    
+    return 'A usage message'</t>
+<t tx="ekr.20050708105323.3">def ipmagic(s):
+    g.trace()
+    return IPython.iplib.ipmagic(s)
+    
+def ipalias(s):
+    g.trace()
+    return IPython.iplib.ipalias(s)</t>
+<t tx="ekr.20050708105742"># EKR: take from make_IPython
+
+# This should have everything from  cmdline_opts and cmdline_only
+self.rc = Struct(
+    autocall = 1,
+    autoindent=0,
+    automagic = 1,
+    banner = 1,
+    cache_size = 1000,
+    c = '',
+    classic = 0,
+    colors = 'NoColor',
+    color_info = 0,
+    confirm_exit = 1,
+    debug = 0,
+    deep_reload = 0,
+    editor = '0',
+    help = 0,
+    ignore = 0,
+    ipythondir = ipythondir,
+    log = 0,
+    logfile = '',
+    logplay = '',
+    multi_line_specials = 1,
+    messages = 1,
+    nosep = 0,
+    pdb = 0,
+    pprint = 0,
+    profile = '',
+    prompt_in1 = 'In [\\#]:',
+    prompt_in2 = '   .\\D.:',
+    prompt_out = 'Out[\\#]:',
+    prompts_pad_left = 1,
+    quick = 0,
+    readline = 1,
+    readline_merge_completions = 1,
+    readline_omit__names = 0,
+    rcfile = 'ipythonrc' + rc_suffix,
+    screen_length = 0,
+    separate_in = '\n',
+    separate_out = '\n',
+    separate_out2 = '',
+    system_verbose = 0,
+    gthread = 0,
+    qthread = 0,
+    wthread = 0,
+    pylab = 0,
+    tk = 0,
+    upgrade = 0,
+    Version = 0,
+    xmode = 'Verbose',
+    magic_docstrings = 0,  # undocumented, for doc generation
+)</t>
+<t tx="ekr.20050708110239"># EKR: take from make_IPython.
+
+# Platform-dependent suffix and directory names
+if os.name == 'posix':
+    rc_suffix = ''
+    ipdir_def = '.ipython'
+else:
+    rc_suffix = '.ini'
+    ipdir_def = '_ipython'
+
+# default directory for configuration
+if 1: ### Leo
+    ipythondir = g.app.loadDir
+else:
+    ipythondir = os.path.abspath(
+        os.environ.get('IPYTHONDIR',
+        os.path.join(IP.home_dir,ipdir_def)))</t>
+<t tx="ekr.20050708110336">import IPython
+import IPython.genutils
+from IPython.Struct import Struct
+
+import __builtin__
+import __main__
+import os
+import re
+import sys
+
+# we need the directory where IPython itself is installed
+IPython_dir = os.path.dirname(IPython.__file__)</t>
+<t tx="ekr.20050708113006.2">def system(self,s):
+    
+    g.trace(s)
+    pass</t>
+<t tx="ekr.20050708142137">def __init__ (self,user_ns):
+    
+    self.last_prompt = None
+    self.prompt_count = 0
+    self.user_ns = user_ns
+    
+    if 1:
+        self.prompt1 = dummyPrompt('name=prompt1')
+        self.prompt2 = dummyPrompt('name=prompt2')
+        self.prompt_out = dummyPrompt('name=prompt_out')
+    else:
+        input_sep='\n'
+        self.ps1_str = '&gt;&gt;&gt; '   ### self._set_prompt_str(ps1,'In [\\#]: ','&gt;&gt;&gt; ')
+        self.ps2_str = '... '   ### self._set_prompt_str(ps2,'   .\\D.: ','... ')
+        self.ps_out_str = ','   ### self._set_prompt_str(ps_out,'Out[\\#]: ','')
+        pad_left=True
+            
+        self.prompt1 = IPython.Prompts.Prompt1(self,
+            sep=input_sep,prompt=self.ps1_str,pad_left=pad_left)
+        self.prompt2 = IPython.Prompts.Prompt2(self,
+            prompt=self.ps2_str,pad_left=pad_left)
+        self.prompt_out = IPython.Prompts.PromptOut(self,
+            sep='',prompt=self.ps_out_str,pad_left=pad_left)
+        
+    self.last_prompt = self.prompt1 # Total kludge.</t>
+<t tx="ekr.20050708142137.2">def __len__ (self):
+    return 0
+    
+def insert(self,n,line):
+    pass
+    
+def pop(self):
+    return ''</t>
+<t tx="ekr.20050708143008">class dummyPrompt (IPython.Prompts.BasePrompt):
+
+    """Interactive prompt similar to Mathematica's."""
+
+	@others</t>
+<t tx="ekr.20050708143008.2">def __init__(self,cache=None,sep=None,prompt=None,pad_left=False,name='prompt'):
+    
+    self.name = name</t>
+<t tx="ekr.20050708143008.3">def set_p_str(self):
+    """ Set the interpolating prompt strings.
+
+    This must be called every time the color settings change, because the
+    prompt_specials global may have changed."""
+    
+    return ###
+
+    import os,time  # needed in locals for prompt string handling
+    loc = locals()
+    self.p_str = ItplNS('%s%s%s' %
+                        ('${self.sep}${self.col_p}',
+                         multiple_replace(prompt_specials, self.p_template),
+                         '${self.col_norm}'),self.cache.user_ns,loc)
+    
+    self.p_str_nocolor = ItplNS(multiple_replace(prompt_specials_nocolor,
+                                                 self.p_template),
+                                self.cache.user_ns,loc)
+</t>
+<t tx="ekr.20050708143008.4">def write(self,msg):  # dbg
+
+    return '' ###
+
+    sys.stdout.write(msg)
+    return ''
+</t>
+<t tx="ekr.20050708143008.5">def __str__(self):
+    """Return a string form of the prompt.
+
+    This for is useful for continuation and output prompts, since it is
+    left-padded to match lengths with the primary one (if the
+    self.pad_left attribute is set)."""
+    
+    return self.name ###
+
+    out_str = str_safe(self.p_str)
+    if self.pad_left:
+        # We must find the amount of padding required to match lengths,
+        # taking the color escapes (which are invisible on-screen) into
+        # account.
+        esc_pad = len(out_str) - len(str_safe(self.p_str_nocolor))
+        format = '%%%ss' % (len(str(self.cache.last_prompt))+esc_pad)
+        return format % out_str
+    else:
+        return out_str
+</t>
+<t tx="ekr.20050708143008.6"># these path filters are put in as methods so that we can control the
+# namespace where the prompt strings get evaluated.
+
+def cwd_filt(self,depth):
+
+    """Return the last depth elements of the current working directory.
+
+    $HOME is always replaced with '~'.
+    If depth==0, the full path is returned."""
+    
+    cwd = os.getcwd().replace(HOME,"~")
+    out = os.sep.join(cwd.split(os.sep)[-depth:])
+    if out:
+        return out
+    else:
+        return os.sep
+</t>
+<t tx="ekr.20050708143008.7">def cwd_filt2(self,depth):
+    """Return the last depth elements of the current working directory.
+
+    $HOME is always replaced with '~'.
+    If depth==0, the full path is returned."""
+
+    cwd = os.getcwd().replace(HOME,"~").split(os.sep)
+    if '~' in cwd and len(cwd) == depth+1:
+        depth += 1
+    out = os.sep.join(cwd[-depth:])
+    if out:
+        return out
+    else:
+        return os.sep
+</t>
+<t tx="ekr.20050708144144.1">if 0:
+    @others</t>
+<t tx="ekr.20050708144144.2">def auto_rewrite(self,*args,**keys):
+    return ''</t>
+<t tx="ekr.20050708150223">ins_colors = IPython.OInspect.InspectColors
+code_colors = IPython.PyColorize.ANSICodeColors
+
+self.inspector = IPython.OInspect.Inspector(ins_colors,code_colors,'NoColor')</t>
+<t tx="ekr.20050708152111">def _prefilter(self, line, continue_prompt):
+    """Calls different preprocessors, depending on the form of line."""
+    
+    &lt;&lt; about this function &gt;&gt;
+
+    # save the line away in case we crash, so the post-mortem handler can record it
+    self._last_input_line = line
+
+    #print '***line: &lt;%s&gt;' % line # dbg
+    if not line.strip():
+        &lt;&lt; handle empty line &gt;&gt;
+
+    # print '***cont',continue_prompt  # dbg
+    # special handlers are only allowed for single line statements
+    if continue_prompt and not self.rc.multi_line_specials:
+        return self.handle_normal(line,continue_prompt)
+
+    # Get the structure of the input
+    pre,iFun,theRest = self.split_user_input(line)
+    #print 'pre &lt;%s&gt; iFun &lt;%s&gt; rest &lt;%s&gt;' % (pre,iFun,theRest)  # dbg
+    
+    &lt;&lt; First check for explicit escapes in the last/first character &gt;&gt;
+    &lt;&lt; Next, check if we can automatically execute this thing &gt;&gt;
+    &lt;&lt; Let's try to find if the input line is a magic fn &gt;&gt;
+    &lt;&lt; execute comparisons, assignsments or function calls &gt;&gt;
+
+    # If we get here, we have a normal Python line. Log and return.
+    return self.handle_normal(line,continue_prompt)</t>
+<t tx="ekr.20050708152111.1"># All handlers *must* return a value, even if it's blank ('').
+
+# Lines are NOT logged here. Handlers should process the line as
+# needed, update the cache AND log it (so that the input cache array
+# stays synced).
+
+# This function is _very_ delicate, and since it's also the one which
+# determines IPython's response to user input, it must be as efficient
+# as possible.  For this reason it has _many_ returns in it, trying
+# always to exit as quickly as it can figure out what it needs to do.
+
+# This function is the main responsible for maintaining IPython's
+# behavior respectful of Python's semantics.  So be _very_ careful if
+# making changes to anything here.</t>
+<t tx="ekr.20050708152111.2"># the input history needs to track even empty lines
+
+if not continue_prompt:
+    self.outputcache.prompt_count -= 1
+
+return self.handle_normal('',continue_prompt)</t>
+<t tx="ekr.20050708152111.3">handler = None
+if line[-1] == self.ESC_HELP:
+    handler = self.esc_handlers.get(line[-1])  # the ? can be at the end
+    
+if handler is None:
+    # look at the first character of iFun, NOT of line, so we skip
+    # leading whitespace in multiline input
+    handler = self.esc_handlers.get(iFun[0:1])
+
+if handler is not None:
+    return handler(line,continue_prompt,pre,iFun,theRest)
+
+# Emacs ipython-mode tags certain input lines
+if line.endswith('# PYTHON-MODE'):
+    return self.handle_emacs(line,continue_prompt)</t>
+<t tx="ekr.20050708152111.4"># Allow ! in multi-line statements if multi_line_specials is on:
+if (
+    continue_prompt and self.rc.multi_line_specials and iFun.startswith(self.ESC_SHELL)
+):
+    return self.handle_shell_escape(line,continue_prompt,
+            pre=pre,iFun=iFun,theRest=theRest)</t>
+<t tx="ekr.20050708152111.5">oinfo = None
+
+if hasattr(self,'magic_'+iFun):
+    oinfo = self._ofind(iFun) # FIXME - _ofind is part of Magic
+    if oinfo['ismagic']:
+        # Be careful not to call magics when a variable assignment is
+        # being made (ls='hi', for example)
+        if (
+            self.rc.automagic and
+            (len(theRest)==0 or theRest[0] not in '!=()&lt;&gt;,') and 
+            (self.rc.multi_line_specials or not continue_prompt)
+        ):
+            return self.handle_magic(line,continue_prompt,pre,iFun,theRest)
+        else:
+            return self.handle_normal(line,continue_prompt)</t>
+<t tx="ekr.20050708152111.6"># If the rest of the line begins with an (in)equality, assginment or
+# function call, we should not call _ofind but simply execute it.
+# This avoids spurious geattr() accesses on objects upon assignment.
+#
+# It also allows users to assign to either alias or magic names true
+# python variables (the magic/alias systems always take second seat to
+# true python code).
+if theRest and theRest[0] in '!=()':
+    return self.handle_normal(line,continue_prompt)
+
+if oinfo is None:
+    oinfo = self._ofind(iFun) # FIXME - _ofind is part of Magic
+
+if not oinfo['found']:
+    return self.handle_normal(line,continue_prompt)
+else:
+    #print 'iFun &lt;%s&gt; rest &lt;%s&gt;' % (iFun,theRest) # dbg
+    if oinfo['isalias']:
+        return self.handle_alias(line,continue_prompt,
+                                     pre,iFun,theRest)
+
+    if self.rc.autocall and \
+           not self.re_exclude_auto.match(theRest) and \
+           self.re_fun_name.match(iFun) and \
+           callable(oinfo['obj']) :
+        #print 'going auto'  # dbg
+        return self.handle_auto(line,continue_prompt,pre,iFun,theRest)
+    else:
+        #print 'was callable?', callable(oinfo['obj'])  # dbg
+        return self.handle_normal(line,continue_prompt)</t>
+<t tx="ekr.20050708152111.7"></t>
+<t tx="ekr.20050708152111.9">def _prefilter(self, line, continue_prompt):
+    """Calls different preprocessors, depending on the form of line."""
+    
+    &lt;&lt; about this function &gt;&gt;
+
+    #if line.startswith('%crash'): raise RuntimeError,'Crash now!'  # dbg
+
+    # save the line away in case we crash, so the post-mortem handler can record it
+    self._last_input_line = line
+
+    if not line.strip():
+        return ''
+
+    # special handlers are only allowed for single line statements
+    if continue_prompt and not self.rc.multi_line_specials:
+        return line
+
+    # Get the structure of the input
+    pre,iFun,theRest = self.split_user_input(line)
+    #print 'pre &lt;%s&gt; iFun &lt;%s&gt; rest &lt;%s&gt;' % (pre,iFun,theRest)  # dbg
+    
+    &lt;&lt; First check for explicit escapes in the last/first character &gt;&gt;
+    &lt;&lt; Next, check if we can automatically execute this thing &gt;&gt;
+    &lt;&lt; Let's try to find if the input line is a magic fn &gt;&gt;
+    &lt;&lt; execute comparisons, assignsments or function calls &gt;&gt;
+
+    # A normal Python line.
+    return line</t>
+<t tx="ekr.20050708152111.10"># All handlers *must* return a value, even if it's blank ('').
+
+# Lines are NOT logged here. Handlers should process the line as
+# needed, update the cache AND log it (so that the input cache array
+# stays synced).
+
+# This function is the main responsible for maintaining IPython's
+# behavior respectful of Python's semantics.  So be _very_ careful if
+# making changes to anything here.</t>
+<t tx="ekr.20050708152111.12">handler = None
+if line[-1] == self.ESC_HELP:
+    handler = self.esc_handlers.get(line[-1])  # the ? can be at the end
+    
+if handler is None:
+    # look at the first character of iFun, NOT of line, so we skip
+    # leading whitespace in multiline input
+    handler = self.esc_handlers.get(iFun[0:1])
+
+if handler is not None:
+    return handler(line,continue_prompt,pre,iFun,theRest)
+
+# Emacs ipython-mode tags certain input lines
+if line.endswith('# PYTHON-MODE'):
+    return self.handle_emacs(line,continue_prompt)</t>
+<t tx="ekr.20050708152111.13"># Allow ! in multi-line statements if multi_line_specials is on:
+if (
+    continue_prompt and self.rc.multi_line_specials and iFun.startswith(self.ESC_SHELL)
+):
+    return self.handle_shell_escape(line,continue_prompt,pre=pre,iFun=iFun,theRest=theRest)</t>
+<t tx="ekr.20050708152111.14">oinfo = None
+
+if hasattr(self,'magic_'+iFun):
+    oinfo = self._ofind(iFun) # FIXME - _ofind is part of Magic
+    if oinfo['ismagic']:
+        # Be careful not to call magics when a variable assignment is
+        # being made (ls='hi', for example)
+        if (
+            self.rc.automagic and
+            (len(theRest)==0 or theRest[0] not in '!=()&lt;&gt;,') and 
+            (self.rc.multi_line_specials or not continue_prompt)
+        ):
+            return self.handle_magic(line,continue_prompt,pre,iFun,theRest)
+        else:
+            return line</t>
+<t tx="ekr.20050708152111.15"># If the rest of the line begins with an (in)equality, assginment or
+# function call, we should not call _ofind but simply execute it.
+# This avoids spurious geattr() accesses on objects upon assignment.
+#
+# It also allows users to assign to either alias or magic names true
+# python variables (the magic/alias systems always take second seat to
+# true python code).
+if theRest and theRest[0] in '!=()':
+    return line
+
+if oinfo is None:
+    oinfo = self._ofind(iFun) # FIXME - _ofind is part of Magic
+
+if not oinfo['found']:
+    return line
+
+if oinfo['isalias']:
+    return self.handle_alias(line,continue_prompt,pre,iFun,theRest)
+
+if (self.rc.autocall and not self.re_exclude_auto.match(theRest) and 
+    self.re_fun_name.match(iFun) and callable(oinfo['obj'])
+):
+    return self.handle_auto(line,continue_prompt,pre,iFun,theRest)
+else:
+    return line</t>
+<t tx="ekr.20050708152111.17">def handle_alias(self,line,continue_prompt=None,pre=None,iFun=None,theRest=None):
+
+    """Handle alias input lines. """
+
+    theRest = esc_quotes(theRest)
+
+    line_out = "%s%s.call_alias('%s','%s')" % (pre,self.name,iFun,theRest)
+
+    return line_out</t>
+<t tx="ekr.20050708152111.18">def handle_shell_escape(self, line, continue_prompt=None,pre=None,iFun=None,theRest=None):
+
+    """Execute the line in a shell, empty return value"""
+
+    # Example of a special handler. Others follow a similar pattern.
+    if continue_prompt:  # multi-line statements
+        if iFun.startswith('!!'):
+            print 'SyntaxError: !! is not allowed in multiline statements'
+            return pre
+        else:
+            cmd = ("%s %s" % (iFun[1:],theRest)).replace('"','\\"')
+            line_out = '%s%s.system("%s")' % (pre,self.name,cmd)
+    else: # single-line input
+        if line.startswith('!!'):
+            # rewrite iFun/theRest to properly hold the call to %sx and
+            # the actual command to be executed, so handle_magic can work
+            # correctly
+            theRest = '%s %s' % (iFun[2:],theRest)
+            iFun = 'sx'
+            return self.handle_magic('%ssx %s' % (
+                self.ESC_MAGIC,line[2:]),continue_prompt,pre,iFun,theRest)
+        else:
+            cmd = esc_quotes(line[1:])
+            line_out = '%s.system("%s")' % (self.name,cmd)
+
+    return line_out
+</t>
+<t tx="ekr.20050708152111.19">def handle_magic(self, line, continue_prompt=None,pre=None,iFun=None,theRest=None):
+    
+    """Execute magic functions.
+
+    Also log them with a prepended # so the log is clean Python."""
+
+    return '%sipmagic("%s")' % (pre,esc_quotes('%s %s' % (iFun,theRest)))</t>
+<t tx="ekr.20050708152111.20">def handle_auto(self, line, continue_prompt=None,pre=None,iFun=None,theRest=None):
+
+    """Hande lines which can be auto-executed, quoting if requested."""
+    
+    # This should only be active for single-line input!
+    if continue_prompt:
+        return line
+    elif pre == self.ESC_QUOTE: # Auto-quote splitting on whitespace
+        return '%s("%s")\n' % (iFun,'", "'.join(theRest.split()) )
+    elif pre == self.ESC_QUOTE2: # Auto-quote whole string
+        return '%s("%s")\n' % (iFun,theRest)
+    else: # Auto-paren
+        if theRest[0:1] in ('=','['):
+            # Don't autocall in these cases.  They can be rebindings of an existing callable's name,
+            # or item access for an object which is BOTH callable and implements __getitem__.
+            return '%s %s\n' % (iFun,theRest)
+        if theRest.endswith(';'):
+            return '%s(%s);\n' % (iFun.rstrip(),theRest[:-1])
+        else:
+            return '%s(%s)\n' % (iFun.rstrip(),theRest)</t>
+<t tx="ekr.20050708152111.21">def handle_help(self, line, continue_prompt=None,pre=None,iFun=None,theRest=None):
+    """Try to get some help for the object.
+
+    obj? or ?obj   -&gt; basic information.
+    obj?? or ??obj -&gt; more details.
+    """
+
+    # Don't process lines which would be otherwise valid python, such as "x=1 # what?"
+    try:
+        code.compile_command(line)
+    except SyntaxError: # Only handle stuff which is NOT valid syntax
+        if line[0]==self.ESC_HELP:
+            line = line[1:]
+        elif line[-1]==self.ESC_HELP:
+            line = line[:-1]
+        if line:
+            self.magic_pinfo(line)
+        else:
+            page(self.usage,screen_lines=self.rc.screen_length)
+        return '' # Empty string is needed here!
+    except: pass
+
+    return line</t>
+<t tx="ekr.20050708152111.22">def handle_emacs(self,line,continue_prompt=None,pre=None,iFun=None,theRest=None):
+    """Handle input lines marked by python-mode."""
+
+    # Currently, nothing is done.
+    # The input cache shouldn't be updated
+    return line</t>
+<t tx="ekr.20050708152111.23"></t>
+<t tx="ekr.20050708152111.24">if 0: # ref
+    self.line_split = re.compile(
+        r'^([\s*,;/])'          # Groups[0]: s, followed by special chars: , ; or /
+        r'([\?\w\.]+\w*\s*)'    # Groups[1]: one char,
+        r'(\(?.*$)' )           # Groups[2]: arg list
+
+def split_user_input(self,line):
+
+    """Split user input into pre-char, function part and rest."""
+
+    lsplit = self.line_split.match(line)
+
+    if lsplit is None:  # no regexp match returns None
+        try:
+            iFun,theRest = line.split(None,1)
+        except ValueError:
+            iFun,theRest = line,''
+        pre = re.match('^(\s*)(.*)',line).groups()[0]
+    else:
+        pre,iFun,theRest = lsplit.groups()
+
+    print 'line:&lt;%s&gt;' % line # dbg
+    print 'pre &lt;%s&gt; iFun &lt;%s&gt; rest &lt;%s&gt;' % (pre,iFun.strip(),theRest) # dbg
+
+    return pre,iFun.strip(),theRest</t>
+<t tx="ekr.20050708152111.25">def update_cache(self, line):
+    
+    """puts line into cache"""
+    
+    pass</t>
+<t tx="ekr.20050708165401.1">def handle_normal(self,line,continue_prompt=None,pre=None,iFun=None,theRest=None):
+    """Handle normal input lines. Use as a template for handlers."""
+    
+    g.trace(line)
+
+    if 0:
+        self.log(line,continue_prompt)
+        self.update_cache(line)
+
+    return line</t>
+<t tx="ekr.20050708165531.1">def esc_quotes(s):
+
+    return IPython.iplib.esc_quotes(s)</t>
+<t tx="ekr.20050715132524">from Pymacs import lisp
+print lisp
+
+lisp('2')</t>
 </tnodes>
 </leo_file>

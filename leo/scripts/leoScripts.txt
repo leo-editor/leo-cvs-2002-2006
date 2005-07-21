@@ -2198,7 +2198,7 @@ for p in c.allNodes_iter():
     
 pages = ((nodes * 10) + lines) / 50
 s = "%d files, %d nodes,  %d lines, %d pages" % (files,nodes,lines,pages)
-print s ; g.es(s)
+g.es_print(s)
 #@nonl
 #@-node:EKR.20040502195524.30:Count pages
 #@+node:EKR.20040502195524.31:Count separate nodes (tnodes)
@@ -2212,7 +2212,7 @@ for p in p.self_and_subtree_iter():
     count += 1
     
 s = "%4s: %d vnodes, %d distinct" % ("Code",count,len(tnodes.keys()))
-print s ; g.es(s)
+g.es_print(s)
 
 tnodes = {} ; count = 0
 for p in c.allNodes_iter():
@@ -2220,7 +2220,7 @@ for p in c.allNodes_iter():
     count += 1
         
 s = "%4s: %d vnodes, %d distinct" % ("All",count,len(tnodes.keys()))
-print s ; g.es(s)
+g.es_print(s)
 #@nonl
 #@-node:EKR.20040502195524.31:Count separate nodes (tnodes)
 #@+node:EKR.20040502195524.32:Count total, visible nodes
@@ -3349,14 +3349,14 @@ else:
     for name in nameList: g.es("'%s'," % name)
     
     s = "%d functions in leoGlobals.py" % len(nameList)
-    print s ; g.es(s)
+    g.es_print(s)
 
 if 0:
     p = g.findTopLevelNode(c,"Code")
     g.enl() ; g.enl()
     count = prependNamesInTree(p,nameList,"g.",replace=True) # Just prints if replace==False.
     s = "%d --- done --- " % count
-    print s ; g.es(s)
+    g.es_print(s)
 #@nonl
 #@-node:EKR.20040502195524.17:Script to find and replace all functions in leoGlobals.py
 #@-node:EKR.20040502195524.16:Other scripts

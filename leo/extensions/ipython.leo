@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1937" clone_windows="0"/>
 <globals body_outline_ratio="0.584988962472">
-	<global_window_position top="29" left="217" height="906" width="970"/>
+	<global_window_position top="34" left="262" height="906" width="970"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1443,7 +1443,7 @@
 <v t="ekr.20050704165326.173"><vh>get_pager_cmd</vh></v>
 <v t="ekr.20050704165326.174"><vh>get_pager_start</vh></v>
 <v t="ekr.20050704165326.175"><vh>page_dumb</vh></v>
-<v t="ekr.20050704165326.176"><vh>page</vh></v>
+<v t="ekr.20050704165326.176"><vh>page (genutils)</vh></v>
 <v t="ekr.20050704165326.177"><vh>page_file</vh></v>
 <v t="ekr.20050704165326.178"><vh>snip_print</vh></v>
 <v t="ekr.20050704165326.179"><vh>belong</vh></v>
@@ -1546,7 +1546,7 @@
 <v t="ekr.20050704165326.263"><vh>class SpaceInInput</vh>
 <v t="ekr.20050704165326.264"><vh>&lt;&lt; class SpaceInInput declarations &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050704165326.265" a="M"><vh>class InteractiveShell (code.InteractiveConsole,Logger,Magic) (in iplib.py)</vh>
+<v t="ekr.20050704165326.265" a="EM"><vh>class InteractiveShell (code.InteractiveConsole,Logger,Magic) (in iplib.py)</vh>
 <v t="ekr.20050704165326.266"><vh>__init__</vh>
 <v t="ekr.20050707212426"><vh>&lt;&lt; add stuff to builtins &gt;&gt;</vh></v>
 <v t="ekr.20050707212426.1"><vh>&lt;&lt; Create the namespace where the user will operate &gt;&gt;</vh></v>
@@ -1593,6 +1593,7 @@
 <v t="ekr.20050707230243.8"><vh>name_space_init</vh></v>
 </v>
 <v t="ekr.20050707230243.11"><vh>embed_mainloop</vh></v>
+<v t="ekr.20050707230243.15"><vh>runlines</vh></v>
 </v>
 <v t="ekr.20050708084235.2"><vh>Calling system stuff</vh>
 <v t="ekr.20050707230243.10"><vh>exec_init_cmd</vh></v>
@@ -1612,10 +1613,9 @@
 <v t="ekr.20050707230243.18"><vh>raw_input</vh></v>
 <v t="ekr.20050708072233.4"><vh>resetbuffer (use base class)</vh></v>
 </v>
-<v t="ekr.20050707230243.15" a="M"><vh>runlines  **** THIS IS WHAT LEO NEEDS  Who calls it??</vh></v>
-<v t="ekr.20050708074118.6"><vh>prefilter &amp; helpers</vh>
+<v t="ekr.20050708074118.6" a="E"><vh>prefilter &amp; helpers</vh>
 <v t="ekr.20050707230243.21"><vh>_prefilter_dumb</vh></v>
-<v t="ekr.20050707230243.20" a="M"><vh>_prefilter (Rewrite?)</vh>
+<v t="ekr.20050707230243.20" a="EM"><vh>_prefilter (Rewrite?)</vh>
 <v t="ekr.20050708074118"><vh>&lt;&lt; about this function &gt;&gt;</vh></v>
 <v t="ekr.20050708074118.1"><vh>&lt;&lt; handle empty line &gt;&gt;</vh></v>
 <v t="ekr.20050708074118.2"><vh>&lt;&lt; First check for explicit escapes in the last/first character &gt;&gt;</vh></v>
@@ -1631,7 +1631,7 @@
 <v t="ekr.20050707230243.27"><vh>handle_help</vh></v>
 <v t="ekr.20050707230243.28"><vh>handle_emacs</vh></v>
 <v t="ekr.20050707230243.29"><vh>safe_execfile</vh></v>
-<v t="ekr.20050707230243.19" a="E"><vh>split_user_input</vh></v>
+<v t="ekr.20050707230243.19"><vh>split_user_input</vh></v>
 <v t="ekr.20050707230243.7"><vh>update_cache</vh></v>
 </v>
 </v>
@@ -2037,7 +2037,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050708082932.3"><vh>Files</vh>
+<v t="ekr.20050708082932.3" a="E"><vh>Files</vh>
 <v t="ekr.20050704165326.2"><vh>background_jobs.py</vh>
 <v t="ekr.20050704170205.1"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
 <v t="ekr.20050704165326.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -2104,7 +2104,7 @@
 <v t="ekr.20050704165326.263"><vh>class SpaceInInput</vh>
 <v t="ekr.20050704165326.264"><vh>&lt;&lt; class SpaceInInput declarations &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050704165326.265" a="M"><vh>class InteractiveShell (code.InteractiveConsole,Logger,Magic) (in iplib.py)</vh>
+<v t="ekr.20050704165326.265" a="EM"><vh>class InteractiveShell (code.InteractiveConsole,Logger,Magic) (in iplib.py)</vh>
 <v t="ekr.20050704165326.266"><vh>__init__</vh>
 <v t="ekr.20050707212426"><vh>&lt;&lt; add stuff to builtins &gt;&gt;</vh></v>
 <v t="ekr.20050707212426.1"><vh>&lt;&lt; Create the namespace where the user will operate &gt;&gt;</vh></v>
@@ -2151,6 +2151,7 @@
 <v t="ekr.20050707230243.8"><vh>name_space_init</vh></v>
 </v>
 <v t="ekr.20050707230243.11"><vh>embed_mainloop</vh></v>
+<v t="ekr.20050707230243.15"><vh>runlines</vh></v>
 </v>
 <v t="ekr.20050708084235.2"><vh>Calling system stuff</vh>
 <v t="ekr.20050707230243.10"><vh>exec_init_cmd</vh></v>
@@ -2170,10 +2171,9 @@
 <v t="ekr.20050707230243.18"><vh>raw_input</vh></v>
 <v t="ekr.20050708072233.4"><vh>resetbuffer (use base class)</vh></v>
 </v>
-<v t="ekr.20050707230243.15" a="M"><vh>runlines  **** THIS IS WHAT LEO NEEDS  Who calls it??</vh></v>
-<v t="ekr.20050708074118.6"><vh>prefilter &amp; helpers</vh>
+<v t="ekr.20050708074118.6" a="E"><vh>prefilter &amp; helpers</vh>
 <v t="ekr.20050707230243.21"><vh>_prefilter_dumb</vh></v>
-<v t="ekr.20050707230243.20" a="M"><vh>_prefilter (Rewrite?)</vh>
+<v t="ekr.20050707230243.20" a="EM"><vh>_prefilter (Rewrite?)</vh>
 <v t="ekr.20050708074118"><vh>&lt;&lt; about this function &gt;&gt;</vh></v>
 <v t="ekr.20050708074118.1"><vh>&lt;&lt; handle empty line &gt;&gt;</vh></v>
 <v t="ekr.20050708074118.2"><vh>&lt;&lt; First check for explicit escapes in the last/first character &gt;&gt;</vh></v>
@@ -2189,10 +2189,110 @@
 <v t="ekr.20050707230243.27"><vh>handle_help</vh></v>
 <v t="ekr.20050707230243.28"><vh>handle_emacs</vh></v>
 <v t="ekr.20050707230243.29"><vh>safe_execfile</vh></v>
-<v t="ekr.20050707230243.19" a="E"><vh>split_user_input</vh></v>
+<v t="ekr.20050707230243.19"><vh>split_user_input</vh></v>
 <v t="ekr.20050707230243.7"><vh>update_cache</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20050704165326.108"><vh>genutils.py</vh>
+<v t="ekr.20050704165326.109"><vh>&lt;&lt; genutils declarations &gt;&gt;</vh></v>
+<v t="ekr.20050704165326.110"><vh>class Error</vh>
+<v t="ekr.20050704165326.111"><vh>&lt;&lt; class Error declarations &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050704165326.112"><vh>class Stream</vh>
+<v t="ekr.20050704165326.113"><vh>__init__</vh></v>
+</v>
+<v t="ekr.20050704165326.114"><vh>class Term</vh>
+<v t="ekr.20050704165326.115"><vh>&lt;&lt; class Term declarations &gt;&gt;</vh></v>
+<v t="ekr.20050704165326.116"><vh>reopen_all</vh></v>
+<v t="ekr.20050704165326.117"><vh>set_stdout</vh></v>
+<v t="ekr.20050704165326.118"><vh>set_stderr</vh></v>
+</v>
+<v t="ekr.20050704165326.119"><vh>warn</vh></v>
+<v t="ekr.20050704165326.120"><vh>info</vh></v>
+<v t="ekr.20050704165326.121"><vh>error</vh></v>
+<v t="ekr.20050704165326.122"><vh>fatal</vh></v>
+<v t="ekr.20050704165326.123"><vh>clock</vh></v>
+<v t="ekr.20050704165326.124"><vh>clock2</vh></v>
+<v t="ekr.20050704165326.125"><vh>timings_out</vh></v>
+<v t="ekr.20050704165326.126"><vh>timings</vh></v>
+<v t="ekr.20050704165326.127"><vh>timing</vh></v>
+<v t="ekr.20050704165326.128"><vh>system</vh></v>
+<v t="ekr.20050704165326.129"><vh>shell</vh></v>
+<v t="ekr.20050704165326.130"><vh>getoutput</vh></v>
+<v t="ekr.20050704165326.131"><vh>getoutputerror</vh></v>
+<v t="ekr.20050704165326.132"><vh>class SystemExec</vh>
+<v t="ekr.20050704165326.133"><vh>__init__</vh></v>
+<v t="ekr.20050704165326.134"><vh>system</vh></v>
+<v t="ekr.20050704165326.135"><vh>shell</vh></v>
+<v t="ekr.20050704165326.136"><vh>getoutput</vh></v>
+<v t="ekr.20050704165326.137"><vh>getoutputerror</vh></v>
+</v>
+<v t="ekr.20050704165326.138"><vh>mutex_opts</vh></v>
+<v t="ekr.20050704165326.139"><vh>filefind</vh></v>
+<v t="ekr.20050704165326.140"><vh>target_outdated</vh></v>
+<v t="ekr.20050704165326.141"><vh>target_update</vh></v>
+<v t="ekr.20050704165326.142"><vh>unquote_ends</vh></v>
+<v t="ekr.20050704165326.143"><vh>process_cmdline</vh></v>
+<v t="ekr.20050704165326.144"><vh>optstr2types</vh></v>
+<v t="ekr.20050704165326.145"><vh>read_dict</vh></v>
+<v t="ekr.20050704165326.146"><vh>flag_calls</vh></v>
+<v t="ekr.20050704165326.147"><vh>class HomeDirError</vh>
+<v t="ekr.20050704165326.148"><vh>&lt;&lt; class HomeDirError declarations &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050704165326.149"><vh>get_home_dir</vh></v>
+<v t="ekr.20050704165326.150"><vh>class LSString</vh>
+<v t="ekr.20050704165326.151"><vh>get_list</vh></v>
+<v t="ekr.20050704165326.152"><vh>get_spstr</vh></v>
+<v t="ekr.20050704165326.153"><vh>get_nlstr</vh></v>
+</v>
+<v t="ekr.20050704165326.154"><vh>class SList</vh>
+<v t="ekr.20050704165326.155"><vh>get_list</vh></v>
+<v t="ekr.20050704165326.156"><vh>get_spstr</vh></v>
+<v t="ekr.20050704165326.157"><vh>get_nlstr</vh></v>
+</v>
+<v t="ekr.20050704165326.158"><vh>raw_input_multi</vh></v>
+<v t="ekr.20050704165326.159"><vh>raw_input_ext</vh></v>
+<v t="ekr.20050704165326.160"><vh>ask_yes_no</vh></v>
+<v t="ekr.20050704165326.161"><vh>class EvalDict</vh>
+<v t="ekr.20050704165326.162"><vh>&lt;&lt; class EvalDict declarations &gt;&gt;</vh></v>
+<v t="ekr.20050704165326.163"><vh>__getitem__</vh></v>
+</v>
+<v t="ekr.20050704165326.164"><vh>qw</vh></v>
+<v t="ekr.20050704165326.165"><vh>qwflat</vh></v>
+<v t="ekr.20050704165326.166"><vh>list_strings</vh></v>
+<v t="ekr.20050704165326.167"><vh>grep</vh></v>
+<v t="ekr.20050704165326.168"><vh>dgrep</vh></v>
+<v t="ekr.20050704165326.169"><vh>idgrep</vh></v>
+<v t="ekr.20050704165326.170"><vh>igrep</vh></v>
+<v t="ekr.20050704165326.171"><vh>indent</vh></v>
+<v t="ekr.20050704165326.172"><vh>native_line_ends</vh></v>
+<v t="ekr.20050704165326.173"><vh>get_pager_cmd</vh></v>
+<v t="ekr.20050704165326.174"><vh>get_pager_start</vh></v>
+<v t="ekr.20050704165326.175"><vh>page_dumb</vh></v>
+<v t="ekr.20050704165326.176"><vh>page (genutils)</vh></v>
+<v t="ekr.20050704165326.177"><vh>page_file</vh></v>
+<v t="ekr.20050704165326.178"><vh>snip_print</vh></v>
+<v t="ekr.20050704165326.179"><vh>belong</vh></v>
+<v t="ekr.20050704165326.180"><vh>uniq_stable</vh></v>
+<v t="ekr.20050704165326.181"><vh>class NLprinter</vh>
+<v t="ekr.20050704165326.182"><vh>__init__</vh></v>
+<v t="ekr.20050704165326.183"><vh>__call__</vh></v>
+</v>
+<v t="ekr.20050704165326.184"><vh>all_belong</vh></v>
+<v t="ekr.20050704165326.185"><vh>sort_compare</vh></v>
+<v t="ekr.20050704165326.186"><vh>mkdict</vh></v>
+<v t="ekr.20050704165326.187"><vh>list2dict</vh></v>
+<v t="ekr.20050704165326.188"><vh>list2dict2</vh></v>
+<v t="ekr.20050704165326.189"><vh>flatten</vh></v>
+<v t="ekr.20050704165326.190"><vh>get_slice</vh></v>
+<v t="ekr.20050704165326.191"><vh>chop</vh></v>
+<v t="ekr.20050704165326.192"><vh>with</vh></v>
+<v t="ekr.20050704165326.193"><vh>setattr_list</vh></v>
+<v t="ekr.20050704165326.194"><vh>getattr_list</vh></v>
+<v t="ekr.20050704165326.195"><vh>map_method</vh></v>
+<v t="ekr.20050704165326.196"><vh>class NotGiven</vh></v>
+<v t="ekr.20050704165326.197"><vh>popkey</vh></v>
 </v>
 <v t="ekr.20050704165326.268"><vh>ipmaker.py</vh>
 <v t="ekr.20050704165326.269"><vh>&lt;&lt; ipmaker declarations &gt;&gt;</vh></v>
@@ -2379,7 +2479,7 @@
 <v t="ekr.20050704165326.542"><vh>start</vh></v>
 </v>
 </v>
-<v t="ekr.20050708084235.3"><vh>Classes</vh>
+<v t="ekr.20050708084235.3" a="E"><vh>Classes</vh>
 <v t="ekr.20050704165326.466"><vh>class CachedOutput (in Prompts.py)</vh>
 <v t="ekr.20050704165326.467"><vh>__init__</vh></v>
 <v t="ekr.20050704165326.468"><vh>_set_prompt_str</vh></v>
@@ -2436,6 +2536,7 @@
 <v t="ekr.20050707230243.8"><vh>name_space_init</vh></v>
 </v>
 <v t="ekr.20050707230243.11"><vh>embed_mainloop</vh></v>
+<v t="ekr.20050707230243.15"><vh>runlines</vh></v>
 </v>
 <v t="ekr.20050708084235.2"><vh>Calling system stuff</vh>
 <v t="ekr.20050707230243.10"><vh>exec_init_cmd</vh></v>
@@ -2455,10 +2556,9 @@
 <v t="ekr.20050707230243.18"><vh>raw_input</vh></v>
 <v t="ekr.20050708072233.4"><vh>resetbuffer (use base class)</vh></v>
 </v>
-<v t="ekr.20050707230243.15" a="M"><vh>runlines  **** THIS IS WHAT LEO NEEDS  Who calls it??</vh></v>
-<v t="ekr.20050708074118.6"><vh>prefilter &amp; helpers</vh>
+<v t="ekr.20050708074118.6" a="ETV"><vh>prefilter &amp; helpers</vh>
 <v t="ekr.20050707230243.21"><vh>_prefilter_dumb</vh></v>
-<v t="ekr.20050707230243.20" a="M"><vh>_prefilter (Rewrite?)</vh>
+<v t="ekr.20050707230243.20" a="EM"><vh>_prefilter (Rewrite?)</vh>
 <v t="ekr.20050708074118"><vh>&lt;&lt; about this function &gt;&gt;</vh></v>
 <v t="ekr.20050708074118.1"><vh>&lt;&lt; handle empty line &gt;&gt;</vh></v>
 <v t="ekr.20050708074118.2"><vh>&lt;&lt; First check for explicit escapes in the last/first character &gt;&gt;</vh></v>
@@ -2474,15 +2574,16 @@
 <v t="ekr.20050707230243.27"><vh>handle_help</vh></v>
 <v t="ekr.20050707230243.28"><vh>handle_emacs</vh></v>
 <v t="ekr.20050707230243.29"><vh>safe_execfile</vh></v>
-<v t="ekr.20050707230243.19" a="E"><vh>split_user_input</vh></v>
+<v t="ekr.20050707230243.19"><vh>split_user_input</vh></v>
 <v t="ekr.20050707230243.7"><vh>update_cache</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050708084235.4" a="E"><vh>Notes</vh>
-<v t="ekr.20050708074118.6" a="ETV"><vh>prefilter &amp; helpers</vh>
+<v t="ekr.20050708084235.4"><vh>Notes</vh>
+<v t="ekr.20050704165326.176"><vh>page (genutils)</vh></v>
+<v t="ekr.20050708074118.6"><vh>prefilter &amp; helpers</vh>
 <v t="ekr.20050707230243.21"><vh>_prefilter_dumb</vh></v>
-<v t="ekr.20050707230243.20" a="M"><vh>_prefilter (Rewrite?)</vh>
+<v t="ekr.20050707230243.20" a="EM"><vh>_prefilter (Rewrite?)</vh>
 <v t="ekr.20050708074118"><vh>&lt;&lt; about this function &gt;&gt;</vh></v>
 <v t="ekr.20050708074118.1"><vh>&lt;&lt; handle empty line &gt;&gt;</vh></v>
 <v t="ekr.20050708074118.2"><vh>&lt;&lt; First check for explicit escapes in the last/first character &gt;&gt;</vh></v>
@@ -2498,7 +2599,7 @@
 <v t="ekr.20050707230243.27"><vh>handle_help</vh></v>
 <v t="ekr.20050707230243.28"><vh>handle_emacs</vh></v>
 <v t="ekr.20050707230243.29"><vh>safe_execfile</vh></v>
-<v t="ekr.20050707230243.19" a="E"><vh>split_user_input</vh></v>
+<v t="ekr.20050707230243.19"><vh>split_user_input</vh></v>
 <v t="ekr.20050707230243.7"><vh>update_cache</vh></v>
 </v>
 </v>
@@ -27048,7 +27149,9 @@ want to merge them back into the new files.""" % locals()
             # pdb mucks up readline, fix it back
             self.readline.set_completer(self.Completer.complete)</t>
 <t tx="ekr.20050707230243.7">def update_cache(self, line):
+    
     """puts line into cache"""
+
     self.inputcache.insert(0, line) # This copies the cache every time ... :-(
     if len(self.inputcache) &gt;= self.CACHELENGTH:
         self.inputcache.pop()    # This not :-)</t>
@@ -27558,15 +27661,17 @@ There seemed to be a problem with your sys.stderr.
             # correctly
             theRest = '%s %s' % (iFun[2:],theRest)
             iFun = 'sx'
-            return self.handle_magic('%ssx %s' % (self.ESC_MAGIC,line[2:]),
-                                     continue_prompt,pre,iFun,theRest)
+            return self.handle_magic('%ssx %s' % (
+                self.ESC_MAGIC,line[2:]),
+                continue_prompt,pre,iFun,theRest)
         else:
             cmd = esc_quotes(line[1:])
             line_out = '%s.system("%s")' % (self.name,cmd)
     # update cache/log and return
     self.log(line_out,continue_prompt)
     self.update_cache(line_out)   # readline cache gets normal line
-    return line_out</t>
+    return line_out
+</t>
 <t tx="ekr.20050707230243.25">def handle_magic(self, line, continue_prompt=None,
                  pre=None,iFun=None,theRest=None):
     """Execute magic functions.
@@ -27612,8 +27717,7 @@ There seemed to be a problem with your sys.stderr.
     # final newline)
     self.log(newcmd.strip(),continue_prompt)
     return newcmd</t>
-<t tx="ekr.20050707230243.27">def handle_help(self, line, continue_prompt=None,
-                pre=None,iFun=None,theRest=None):
+<t tx="ekr.20050707230243.27">def handle_help(self, line, continue_prompt=None,pre=None,iFun=None,theRest=None):
     """Try to get some help for the object.
 
     obj? or ?obj   -&gt; basic information.
@@ -27643,8 +27747,7 @@ There seemed to be a problem with your sys.stderr.
     else:
         # If the code compiles ok, we should handle it normally
         return self.handle_normal(line,continue_prompt)</t>
-<t tx="ekr.20050707230243.28">def handle_emacs(self,line,continue_prompt=None,
-                pre=None,iFun=None,theRest=None):
+<t tx="ekr.20050707230243.28">def handle_emacs(self,line,continue_prompt=None,pre=None,iFun=None,theRest=None):
     """Handle input lines marked by python-mode."""
 
     # Currently, nothing is done.  Later more functionality can be added
@@ -27856,8 +27959,7 @@ if line.endswith('# PYTHON-MODE'):
     return self.handle_emacs(line,continue_prompt)</t>
 <t tx="ekr.20050708074118.3"># Allow ! in multi-line statements if multi_line_specials is on:
 if (
-    continue_prompt and self.rc.multi_line_specials and
-    iFun.startswith(self.ESC_SHELL)
+    continue_prompt and self.rc.multi_line_specials and iFun.startswith(self.ESC_SHELL)
 ):
     return self.handle_shell_escape(line,continue_prompt,
             pre=pre,iFun=iFun,theRest=theRest)</t>

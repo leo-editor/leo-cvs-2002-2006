@@ -304,7 +304,6 @@ extensions\Pmw\Pmw_1_2\tests\TextDialog_test.py
 extensions\Pmw\Pmw_1_2\tests\Tkinter_test.py
 extensions\Pmw\Pmw_1_2\tests\earthris.gif
 extensions\Pmw\Pmw_1_2\tests\flagup.bmp
-plugins\.leoID.txt
 plugins\ConceptualSort.py
 plugins\EditAttributes.py
 plugins\FileActions.py

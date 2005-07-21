@@ -8443,6 +8443,63 @@ def printChangedVars (self):
 #@-node:ekr.20041225063637.76:printChangedVars
 #@-node:ekr.20050706090801:(Added g.es_print, es_trace & eliminate corresponding print statements)
 #@-node:ekr.20050705192437.1:New features...
+#@+node:ekr.20050721095052:Comments about plugins from Rich
+#@+node:ekr.20050721095052.1:Post 1
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3247013
+By: rich_ries
+
+First, I D/L'd all the 'stuff' I could find in CVS, making sure none of the
+files were older than the LeoPy.leo file.
+
+
+CLEO - Nice! But I can't clear the priority marks.
+
+Group Operations - I _used_ to be able to use keypresses Alt+Shift+M/V/C/T/~
+to Mark/Move/Copy/Tag/Clone, which was a LOT easier than playing with the mouse.
+(Try Tagging three sequential nodes. Previously, it was Alt+Shift+T, Alt+Shift+T,
+Alt+Shift+T. Now it's Move-Mouse-to-location+ click+ Move-Mouse-to-another-location+
+Move-Mouse-to-another-location+ click JUST TO TAG ONE NODE! Now try doing that
+for  THREE nodes -- let alone the dozen I usually work with!
+
+I have (amongst other plugins) Nav_Buttons, NodeBar, and Hoist turned on, and
+it's a gamble regarding which button(s) will be full-sized, and which ones
+half-sized. NodeBar's 'about' claims to add buttons "to the bottom of the tree
+canvas", yet they are up with the other buttons.
+
+When I open an empty .LEO file, the focus is on the body pane. I press a key
+to start entering text, but after the first character, I'm in the Outline Pane,
+_adding_ text to "NewHeadline".
+
+--Rich
+#@nonl
+#@-node:ekr.20050721095052.1:Post 1
+#@+node:ekr.20050721095052.2:Post 2
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3248719
+By: nobody
+
+From: Rich
+
+Nit:
+Outline Pane Colors goes background/foreground until headline_text_editing_selection,
+which is then reversed: foreground/background. Similar thing with the Log Pane
+Colors. Changing leoSettings.leo corrected this.
+
+Hitting [ESC] no longer exits the editing mode.
+
+Also, running Preferences & clicking [OK] seems to have no effect, at least
+on the colors. If this is a case of "exit to enable" a message should be shown
+in BIG NEON LETTERS indicating this: It's an important functional detail, but
+I shouldn't need to remember it -- the computer can do that very nicely.
+
+Try as I can, I can not change the headline_text_unselected_background_color.
+It is stuck on white, and white it SHALL remain!
+
+--Rich
+#@nonl
+#@-node:ekr.20050721095052.2:Post 2
+#@-node:ekr.20050721095052:Comments about plugins from Rich
 #@-node:ekr.20050621084408:4.3.2 projects
 #@-all
 #@nonl

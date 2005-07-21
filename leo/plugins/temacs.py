@@ -805,13 +805,14 @@ class Emacs:
     #@+node:mork.20041030165020.1:Emacs.__init__
     def __init__( self , tbuffer = None , minibuffer = None, useGlobalKillbuffer = False, useGlobalRegisters = False):
         '''Sets up Emacs instance.
-              If a Tkinter Text widget and Tkinter Label are passed in
-           via the tbuffer and minibuffer parameters, these are bound to.
-           Otherwise an explicit call to setBufferStrokes must be done.
-           useGlobalRegisters set to True indicates that the Emacs instance should use a class attribute that functions
-           as a global register.
-           useGlobalKillbuffer set to True indicates that the Emacs instances should use a class attribute that functions
-           as a global killbuffer.'''
+        
+        If a Tkinter Text widget and Tkinter Label are passed in
+        via the tbuffer and minibuffer parameters, these are bound to.
+        Otherwise an explicit call to setBufferStrokes must be done.
+        useGlobalRegisters set to True indicates that the Emacs instance should use a class attribute that functions
+        as a global register.
+        useGlobalKillbuffer set to True indicates that the Emacs instances should use a class attribute that functions
+        as a global killbuffer.'''
         
         self.mbuffers = {} 
         self.svars = {}
@@ -939,9 +940,6 @@ class Emacs:
         
         if tbuffer and minibuffer:
             self.setBufferStrokes( tbuffer, minibuffer )
-    
-    
-    
     
     #@-node:mork.20041030165020.1:Emacs.__init__
     #@+node:mork.20041030164547.41:getHelpText
@@ -2809,6 +2807,7 @@ class Emacs:
     #@-node:mork.20041030164547.10:stopKBDMacro
     #@+node:mork.20041030164547.11:_executeMacro
     def _executeMacro( self, macro, tbuffer ):
+        
         for z in macro:
             if len( z ) == 2:
                 tbuffer.event_generate( '<Key>', keycode = z[ 0 ], keysym = z[ 1 ] ) 
@@ -2822,6 +2821,7 @@ class Emacs:
                 ev.char = z[ 3 ]
                 self.masterCommand( ev , method, '<%s>' % meth )
         return self._tailEnd( tbuffer )  
+    
     #@-node:mork.20041030164547.11:_executeMacro
     #@+node:mork.20041030164547.12:executeLastMacro
     def executeLastMacro( self, event ):
