@@ -134,7 +134,7 @@
 <v t="ekr.20050422071739.1"><vh>  2004-02-20 From 4.1 readme</vh></v>
 <v t="ekr.20050421214628.6"><vh>2003-11-03 4-1a1 released.doc</vh></v>
 </v>
-<v t="ekr.20050421214704" a="E"><vh>4.2 (2004) shared tnodes, positions and @thin (gnx's in derived files)</vh>
+<v t="ekr.20050421214704"><vh>4.2 (2004) shared tnodes, positions and @thin (gnx's in derived files)</vh>
 <v t="ekr.20050422071739.2"><vh>  2004-09-20 From 4.2 readme</vh></v>
 <v t="ekr.20050421214921.6" a="M"><vh>2004-02-05 at-file-thin.doc ***** (abandon the synchronization principle)</vh></v>
 <v t="ekr.20050421214921.16"><vh>2004-02-29 New plans-2-29-04.doc **</vh></v>
@@ -169,8 +169,8 @@
 <v t="ekr.20050421221330.3"><vh>Embedded sentinels are essential</vh></v>
 </v>
 </v>
-<v t="ekr.20050422065602.9"><vh>4.3 (2005)</vh></v>
-<v t="ekr.20050425053621" a="E"><vh>The essentials</vh>
+<v t="ekr.20050422065602.9"><vh>4.3 (2005) Settings dialog</vh></v>
+<v t="ekr.20050425053621"><vh>The essentials</vh>
 <v t="ekr.20050422065602.1"><vh>The big questions that Leo must answer</vh>
 <v t="ekr.20050422065602.2"><vh>How to read derived files reliably?</vh></v>
 <v t="ekr.20050422065602.3"><vh>How to ensure the integrity of data?</vh></v>
@@ -185,18 +185,18 @@
 <v t="ekr.20050421192149.10"><vh>2003-06-18 gnxs must go.doc ** (Valid concerns, wrong conclusion: see 2004-02-5)</vh></v>
 <v t="ekr.20050421214921.6"><vh>2004-02-05 at-file-thin.doc ***** (abandon the synchronization principle)</vh></v>
 </v>
-<v t="ekr.20050425060514" a="E"><vh>About positions</vh>
+<v t="ekr.20050425060514"><vh>About positions</vh>
 <v t="ekr.20050421203956.1"><vh>2003-06-02 Giant Aha re positions.doc ***</vh></v>
 <v t="ekr.20050421214921.21"><vh>2004-02-29 shared tnode design.doc ***</vh></v>
 <v t="ekr.20050421214921.15"><vh>2004-03-05 iterators make positions safe.doc ***</vh></v>
-<v t="ekr.20050425064819.11" a="TV"><vh>Missing paper here? Referenced in previous paper</vh></v>
+<v t="ekr.20050425064819.11"><vh>Missing paper here? Referenced in previous paper</vh></v>
 <v t="ekr.20050421214921.18"><vh>2004-03-07 positions can be compatible.doc **</vh></v>
 <v t="ekr.20050421214921.4"><vh>2004-03-08 A little gem.doc **</vh></v>
 <v t="ekr.20050421214921.22" a="E"><vh>2004-03-14 Small code--big aha.doc **</vh></v>
 <v t="ekr.20050421214921.26"><vh>2004-03-19 The taste of dog food.doc *** (eliminating positions)</vh></v>
 </v>
 </v>
-<v t="ekr.20050425060514.1"><vh>To do</vh></v>
+<v t="ekr.20050425060514.1" a="TV"><vh>To do</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20050421192149">What has been gained?

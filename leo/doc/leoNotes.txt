@@ -1311,6 +1311,16 @@ No information on XP.
 #@nonl
 #@-node:ekr.20031218072017.385:How to Increase environment space
 #@+node:ekr.20050316092232:How to install jyLeo
+- Unpack the .zip file, placing the result in c:\prog.
+
+- Edit jleo.bat:
+
+rem open jyLeo
+rem
+cd c:\prog\<path to jython>\src
+java -jar c:\jython22a0\jython.jar leo.py
+#@nonl
+#@+node:ekr.20050716104357:Old instructions
 @nocolor
 
 - put the jyleo-nnn.jar file in c:\prog
@@ -1339,7 +1349,7 @@ try:
     home = os.getenv('HOME' )#,default=dotDir)
 except Exception:
     home = ''
-#@nonl
+#@-node:ekr.20050716104357:Old instructions
 #@+node:ekr.20050317153447:jy-Leo install instructions by Paul Paterson
 @killcolor
 

@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="14292" clone_windows="0"/>
 <globals body_outline_ratio="0.635555555556">
-	<global_window_position top="10" left="411" height="907" width="722"/>
+	<global_window_position top="10" left="353" height="907" width="824"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -50,7 +50,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -64,7 +64,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20050620144052" a="ETV"><vh>4.3.1</vh>
+<v t="ekr.20050620144052" a="E"><vh>4.3.1</vh>
 <v t="ekr.20050620144052.2"><vh>Bug fixes...</vh>
 <v t="ekr.20050620144052.3" a="E"><vh>Fixed bug in @ratio setting</vh></v>
 <v t="ekr.20050620144052.6" a="E"><vh>Fixed crasher footprint plugin</vh></v>
@@ -1496,7 +1496,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1509,7 +1509,7 @@
 <v t="EKR.20040524104904.10"><vh>Overview</vh></v>
 <v t="EKR.20040524104904.11"><vh>Leo's main window</vh></v>
 <v t="EKR.20040524104904.12"><vh>Body text and sections</vh></v>
-<v t="EKR.20040524104904.13"><vh>Outlines organize sections</vh>
+<v t="EKR.20040524104904.13" a="E"><vh>Outlines organize sections</vh>
 <v t="EKR.20040524104904.14"><vh>removeSentinelsCommand</vh>
 <v t="EKR.20040524104904.15"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
 <v t="EKR.20040524104904.16"><vh>&lt;&lt; set delims from the header line &gt;&gt;</vh></v>
@@ -1902,15 +1902,15 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050122090016"><vh>Setting options...</vh>
-<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="ekr.20050122090016" a="E"><vh>Setting options...</vh>
+<v t="ekr.20050122084954" a="TV"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050419072509.1"><vh>NewHeadline</vh></v>
 <v t="EKR.20040524104904.212"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 </v>
 <v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
 <v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
-<v t="EKR.20040524104904.215"><vh>New plugin architecture</vh>
+<v t="EKR.20040524104904.215" a="E"><vh>New plugin architecture</vh>
 <v t="EKR.20040524104904.216"><vh>@file plugins/mod_open_with.py</vh>
 <v t="EKR.20040524104904.217"><vh>on_idle</vh>
 <v t="EKR.20040524104904.218"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
@@ -3044,9 +3044,7 @@ The Delete Node command deletes a headline and all its children.
 The Cut Outline and Copy Outline copy a text representation of the outline to the clipboard.  This representation is the same as the file format with some information deleted.  You may copy this text representation into a body pane (or into any other text editor) using the Paste command in the Edit menu.
 
 Warning:  In practice, it is almost always wiser to move clones rather than cutting or pasting them.  Cutting and pasting outlines preserves clones, but the links between clones only exist within the part of the outline that was pasted.  Therefore, if you are cutting and pasting an outline containing clones it is best to cut and paste the _entire_ outline.  Alternatively, you can paste part of an outline, then delete all clones.</t>
-<t tx="EKR.20040524104904.38">New in leo.py v2.4: You may drag an node (including all its descendents) from one place to another in an outline.  To start a drag, press the main (left) mouse button while the cursor is over the icon for a node.  The cursor will change to a hand icon. If you release the mouse button while the hand cursor is above the icon for another node, Leo will move the dragged node after that node.  If you release the mouse button when the hand cursor is not over an icon, Leo will print "not moved" and leave the outline pane as it is.  This can result in the dragged node not being visible on the screen, but it seems less alarming not to force the current node to become visible as that would undo any scrolling that has just been done.
-
-New in leo.py 3.0: If you drag outside the outline pane, the outline pane will scroll automatically.
+<t tx="EKR.20040524104904.38">You may drag an node (including all its descendents) from one place to another in an outline.  To start a drag, press the main (left) mouse button while the cursor is over the icon for a node.  The cursor will change to a hand icon. If you release the mouse button while the hand cursor is above the icon for another node, Leo will move the dragged node after that node.  If you release the mouse button when the hand cursor is not over an icon, Leo will leave the outline pane as it is.  This can result in the dragged node not being visible on the screen, but it seems less alarming not to force the current node to become visible as that would undo any scrolling that has just been done.  If you drag outside the outline pane, the outline pane will scroll automatically.
 
 Leo scrolls the outline pane as the result of mouse-moved events, so to continue scrolling you must keep moving the mouse.  I experimented with scrolling the outline pane whenever the cursor is dragged outside it, but the results were not good.  There was a noticeable delay between releasing the cursors and halting the scrolling.  The present code is simpler and more likely to work on all platforms.
 
@@ -3195,11 +3193,11 @@ Terminology: _Directives_ are commands that appear in body text.  Directives sta
 
 The essentials of writing programs in Leo are as follows:
 
-1. A Leo program is composed the all the body text in an outline, or part of an outline.
+1. A Leo program is composed of all the body text in an outline, or part of an outline.
 
 2. Body text is a sequence of _sections_.  There are two kinds of sections: doc sections and code sections.
 
-3. Sections may contain _section references_ that refer to other sections by their nam.
+3. Sections may contain _section references_ that refer to other sections by their name.
 
 4. Leo uses outline structure to control the scope of section definitions.
 
@@ -6955,7 +6953,7 @@ None of these bugs is serious:  I consider this version to be suitable for day-t
 
 This directive is similar to @others, but it is less restrictive: it dumps _all_ nodes to the derived file, including @ignore nodes and nodes that in an @others tree would be considered to be orphan nodes.
 
-The @all directive is required for files such as @thin leoProjects.txt in LeoPy.leo.  leoProjects.txt contains so-called project nodes.  It doesn't have an meaning as a program file:  it is simply a collection of unrelated data.  @others would not work at all: it would complain about lots of orphan nodes.</t>
+The @all directive is required for files such as @thin leoProjects.txt in LeoPy.leo.  leoProjects.txt contains so-called project nodes.  It doesn't have any meaning as a program file:  it is simply a collection of unrelated data.  @others would not work at all: it would complain about lots of orphan nodes.</t>
 <t tx="EKR.20040608091134.1">In most respects @file-thin (or equivalently, @thin) works just like @file as far as writing code is concerned.  In fact, you can convert from @file to @thin simply by opening an outline, changing @file to @thin, and saving the outline.
 
 Here are the differences between @file and @thin:
@@ -15769,7 +15767,13 @@ set the value of name to val, with the indicated type.
 &lt;type&gt;          Valid values
 -----           ------------
 @bool           True, False, 0, 1
-@color          A Tk color name or value, such as 'red' or 'xf2fddff'
+@color          A Tk color name or value, such as 'red' or 'xf2fddff' (without the quotes)
+
+For a list of Tk color specifiers see:
+
+- http://www.tcl.tk/man/tcl8.4/TkCmd/colors.htm
+- http://www.tcl.tk/man/tcl8.4/TkLib/GetColor.htm
+
 @directory      A path to a directory
 @float          A floating point number of the form nn.ff.
 @int            An integer

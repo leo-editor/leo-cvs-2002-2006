@@ -138,10 +138,10 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021" a="TV"><vh>Leo 4.3 installer: version stuff</vh>
+<v t="ekr.20050118095021" a="E"><vh>Leo 4.3 installer: version stuff</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
-<v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
+<v t="ekr.20050118103207" a="E"><vh>Keeping installer/uninstallers in synch</vh>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050118104149"><vh>config files</vh>
 <v t="ekr.20050118104149.1"><vh>&lt;&lt; install config files &gt;&gt;</vh></v>
@@ -151,9 +151,9 @@
 <v t="ekr.20050118104149.4"><vh>&lt;&lt; install dist files &gt;&gt;</vh></v>
 <v t="ekr.20050118104149.5"><vh>&lt;&lt; uninstall dist files &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050118104901"><vh>doc files</vh>
+<v t="ekr.20050118104901" a="E"><vh>doc files</vh>
 <v t="ekr.20050118104901.1"><vh>&lt;&lt; install doc files &gt;&gt;</vh></v>
-<v t="ekr.20050118104901.2"><vh>&lt;&lt; uninstall doc files &gt;&gt;</vh></v>
+<v t="ekr.20050118104901.2" a="TV"><vh>&lt;&lt; uninstall doc files &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050118122740"><vh>extensions files</vh>
 <v t="ekr.20050118122404"><vh>&lt;&lt; install extensions files &gt;&gt;</vh></v>
@@ -3502,6 +3502,8 @@ File "..\doc\Pkg-info.txt"
 File "..\doc\Install.txt"
 File "..\doc\License.txt"
 
+File "..\doc\LeoTechReport.pdf"
+
 File "..\doc\default.css"
 File "..\doc\leo_rst.css"
 File "..\doc\silver_city.css"
@@ -3523,6 +3525,8 @@ Delete "$INSTDIR\doc\License.txt"
 Delete "$INSTDIR\doc\Install.txt"
 Delete "$INSTDIR\doc\Pkg-info.txt"
 Delete "$INSTDIR\doc\Readme.txt"
+
+Delete "$INSTDIR\doc\LeoTechReport.pdf"
 
 Delete "$INSTDIR\doc\silver_city.css"
 Delete "$INSTDIR\doc\leo_rst.css"

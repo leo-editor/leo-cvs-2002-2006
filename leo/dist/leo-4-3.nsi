@@ -260,6 +260,8 @@ Section "Leo" SEC01
   File "..\doc\Install.txt"
   File "..\doc\License.txt"
   
+  File "..\doc\LeoTechReport.pdf"
+  
   File "..\doc\default.css"
   File "..\doc\leo_rst.css"
   File "..\doc\silver_city.css"
@@ -539,6 +541,8 @@ Section Uninstall
   Delete "$INSTDIR\doc\Install.txt"
   Delete "$INSTDIR\doc\Pkg-info.txt"
   Delete "$INSTDIR\doc\Readme.txt"
+  
+  Delete "$INSTDIR\doc\LeoTechReport.pdf"
   
   Delete "$INSTDIR\doc\silver_city.css"
   Delete "$INSTDIR\doc\leo_rst.css"
