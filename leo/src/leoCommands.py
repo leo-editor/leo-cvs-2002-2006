@@ -3459,12 +3459,15 @@ class baseCommands:
         #@+node:ekr.20040711135244.6:__init__
         def __init__ (self,c):
             
-            self.array = [] # List of strings comprising the line being accumulated.
+            self.array = []
+                # List of strings comprising the line being accumulated.
+                # Important: this list never crosses a line.
             self.bracketLevel = 0
             self.c = c
             self.changed = False
             self.dumping = False
             self.erow = self.ecol = 0 # The ending row/col of the token.
+            self.lastName = None # The name of the previous token type.
             self.line = 0 # Same as self.srow
             self.lines = [] # List of lines.
             self.name = None
@@ -3475,7 +3478,6 @@ class baseCommands:
             self.srow = self.scol = 0 # The starting row/col of the token.
             self.startline = True # True: the token starts a line.
             self.tracing = False
-        
             #@    << define dispatch dict >>
             #@+node:ekr.20041021100850:<< define dispatch dict >>
             self.dispatchDict = {
@@ -3551,6 +3553,10 @@ class baseCommands:
         #@+node:ekr.20040711135244.8:get
         def get (self):
             
+            if self.lastName != 'newline' and self.lines:
+                # Strip the trailing whitespace from the last line.
+                self.lines[-1] = self.lines[-1].rstrip()
+            
             return self.lines
         #@nonl
         #@-node:ekr.20040711135244.8:get
@@ -3601,7 +3607,7 @@ class baseCommands:
         #@+node:ekr.20041021104237:putArray
         def putArray (self):
             
-            """Add the next line by joining all the strings is self.array"""
+            """Add the next text by joining all the strings is self.array"""
             
             self.lines.append(''.join(self.array))
             self.array = []
@@ -3625,6 +3631,7 @@ class baseCommands:
             f = self.dispatchDict.get(self.name,self.oops)
             self.trace()
             f()
+            self.lastName = self.name
         #@nonl
         #@+node:ekr.20041021102938:doEndMarker
         def doEndMarker (self):
@@ -3655,31 +3662,52 @@ class baseCommands:
             
             self.array.append(self.val)
         #@-node:ekr.20041021102340.2:doIndent & doDedent
-        #@+node:ekr.20041021102340:doMultiLine
+        #@+node:ekr.20041021102340:doMultiLine (strings, etc).
         def doMultiLine (self):
+        
+            # Ensure a blank before comments not preceded entirely by whitespace.
             
+            if self.val.startswith('#') and self.array:
+                prev = self.array[-1]
+                if prev and prev[-1] != ' ':
+                    self.put(' ') 
+        
             # These may span lines, so duplicate the end-of-line logic.
             lines = g.splitLines(self.val)
             for line in lines:
                 self.array.append(line)
                 if line and line[-1] == '\n':
                     self.putArray()
+            
+            # Add a blank after the string if there is something in the last line.
+            if self.array:
+                line = self.array[-1]
+                if line.strip():
+                    self.put(' ')
                     
             # Suppress start-of-line logic.
             self.line = self.erow
         #@nonl
-        #@-node:ekr.20041021102340:doMultiLine
+        #@-node:ekr.20041021102340:doMultiLine (strings, etc).
         #@+node:ekr.20041021101911.5:doName
         def doName(self):
         
             self.array.append("%s " % self.val)
+        
             if self.prevName == "def": # A personal idiosyncracy.
                 self.array.append(' ') # Retain the blank before '('.
+        
             self.prevName = self.val
+        #@nonl
         #@-node:ekr.20041021101911.5:doName
         #@+node:ekr.20041021101911.3:doNewline
         def doNewline (self):
-            
+        
+            # Remove trailing whitespace.
+            # This never removes trailing whitespace from multi-line tokens.
+            if self.array:
+                self.array[-1] = self.array[-1].rstrip()
+        
             self.array.append('\n')
             self.putArray()
         #@nonl
@@ -3692,7 +3720,7 @@ class baseCommands:
         #@+node:ekr.20040711135244.11:doOp
         def doOp (self):
             
-            val = self.val
+            val = self.val ; outer = self.parenLevel == 0
             
             # New in Python 2.4: '@' is an operator, not an error token.
             if self.val == '@':
@@ -3701,18 +3729,50 @@ class baseCommands:
                 i = g.skip_ws(self.s,self.scol+1)
                 ws = self.s[self.scol+1:i]
                 if ws: self.array.append(ws)
+            elif val == ':':
+                self.put(': ')
+            elif val == '[':
+                s = g.choose(outer,' %s','%s')
+                self.put(s % val)
+            elif val == ']':
+                s = g.choose(outer,'%s ','%s')
+                self.put(s % val)
             elif val == '(':
                 self.parenLevel += 1
-                self.put(val)
+                self.put('(',strip=self.lastName=='name')
             elif val == ')':
                 self.parenLevel -= 1
-                self.put(val)
-            elif val == '=':
-                if self.parenLevel > 0: self.put('=')
-                else:                   self.put(' = ')
+                s = g.choose(outer,'%s ','%s')
+                self.put(s % val)
+            elif val == '<<':
+                self.put('<< ')
+            elif val == '>>':
+                self.put(' >>')
+            elif val in ('^','~'): # Unary ops.
+                s = g.choose(outer,' %s','%s')
+                self.put(s % val)
+            elif val in ('=','==','+=','-=','!=','<=','>=','<','>','<>'):
+                # Compress these inside parents.
+                s = g.choose(outer,' %s ','%s')
+                self.put(s % val)
+            elif val in ('&','%','|','*','**','/','//'):
+                # Always give these room.
+                self.put(' %s ' % val)
+            elif val in ('+','-'):
+                # Could be binary or unary.  Or could be a hyphen in a section name.
+                # Add preceding blank only for non-id's.
+                if 1:
+                    if self.array:
+                        prev = self.array[-1].rstrip()
+                        if prev and prev[-1] not in string.digits + string.letters:
+                            self.put(' %s' % val)
+                        else: self.put(val)
+                    else: self.put(val) # Try to leave whitespace unchanged.
+                else:
+                    self.put(val)
             elif val == ',':
-                if self.parenLevel > 0: self.put(',')
-                else:                   self.put(', ')
+                s = g.choose(outer,'%s ','%s')
+                self.put(s % val)
             elif val == ';':
                 self.put(" ; ")
             else:
