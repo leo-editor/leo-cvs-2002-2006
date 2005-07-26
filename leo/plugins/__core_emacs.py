@@ -352,7 +352,7 @@ def createBindings (self,frame):
     addTemacsAbbreviations( emacs )
     addLeoCommands( self.c, emacs )
     changeKeyStrokes( emacs, frame.bodyCtrl )
-    setBufferInteractionMethods( self.c, emacs, frame.bodyCtrl )
+    ### setBufferInteractionMethods( self.c, emacs, frame.bodyCtrl )
     orig_del = frame.bodyCtrl.delete
     #@    << define watchDelete >>
     #@+node:ekr.20050724074642.28:<< define watchDelete >>
@@ -372,6 +372,149 @@ def createBindings (self,frame):
     #@nl
     frame.bodyCtrl.delete = watchDelete
 #@nonl
+#@+node:ekr.20050724074642.39:addLeoCommands  (createBindings)
+def addLeoCommands( c, emacs ):
+    
+    global leocommandnames
+    f = c.frame
+    
+    commands = {
+        'new': c.new,
+        'open': c.open,
+        'openWith': c.openWith,
+        'close': c.close,
+        'save': c.save,
+        'saveAs': c.saveAs,
+        'saveTo': c.saveTo,
+        'revert': c.revert,
+        'readOutlineOnly': c.readOutlineOnly,
+        'readAtFileNodes': c.readAtFileNodes,
+        'importDerivedFile': c.importDerivedFile,
+        #'writeNewDerivedFiles': c.writeNewDerivedFiles,
+        #'writeOldDerivedFiles': c.writeOldDerivedFiles,
+        'tangle': c.tangle,
+        'tangle all': c.tangleAll,
+        'tangle marked': c.tangleMarked,
+        'untangle': c.untangle,
+        'untangle all': c.untangleAll,
+        'untangle marked': c.untangleMarked,
+        'export headlines': c.exportHeadlines,
+        'flatten outline': c.flattenOutline,
+        'import AtRoot': c.importAtRoot,
+        'import AtFile': c.importAtFile,
+        'import CWEB Files': c.importCWEBFiles,
+        'import Flattened Outline': c.importFlattenedOutline,
+        'import Noweb Files': c.importNowebFiles,
+        'outline to Noweb': c.outlineToNoweb,
+        'outline to CWEB': c.outlineToCWEB,
+        'remove sentinels': c.removeSentinels,
+        'weave': c.weave,
+        'delete': c.delete,
+        'execute script': c.executeScript,
+        'go to line number': c.goToLineNumber,
+        'set font': c.fontPanel,
+        'set colors': c.colorPanel,
+        'show invisibles': c.viewAllCharacters,
+        'preferences': c.preferences,
+        'convert all blanks': c.convertAllBlanks,
+        'convert all tabs': c.convertAllTabs,
+        'convert blanks': c.convertBlanks,
+        'convert tabs': c.convertTabs,
+        'indent': c.indentBody,
+        'unindent': c.dedentBody,
+        'reformat paragraph': c.reformatParagraph,
+        'insert time': c.insertBodyTime,
+        'extract section': c.extractSection,
+        'extract names': c.extractSectionNames,
+        'extract': c.extract,
+        'match bracket': c.findMatchingBracket,
+        'find panel': c.showFindPanel, ## c.findPanel,
+        'find next': c.findNext,
+        'find previous': c.findPrevious,
+        'replace': c.replace,
+        'replace then find': c.replaceThenFind,
+        'edit headline': c.editHeadline,
+        'toggle angle brackets': c.toggleAngleBrackets,
+        'cut node': c.cutOutline,
+        'copy node': c.copyOutline,
+        'paste node': c.pasteOutline,
+        'paste retaining clone': c.pasteOutlineRetainingClones,
+        'hoist': c.hoist,
+        'de-hoist': c.dehoist,
+        'insert node': c.insertHeadline,
+        'clone node': c.clone,
+        'delete node': c.deleteOutline,
+        'sort children': c.sortChildren,
+        'sort siblings': c.sortSiblings,
+        'demote': c.demote,
+        'promote': c.promote,
+        'move right': c.moveOutlineRight,
+        'move left': c.moveOutlineLeft,
+        'move up': c.moveOutlineUp,
+        'move down': c.moveOutlineDown,
+        'unmark all': c.unmarkAll,
+        'mark clones': c.markClones,
+        'mark': c.markHeadline,
+        'mark subheads': c.markSubheads,
+        'mark changed items': c.markChangedHeadlines,
+        'mark changed roots': c.markChangedRoots,
+        'contract all': c.contractAllHeadlines,
+        'contract node': c.contractNode,
+        'contract parent': c.contractParent,
+        'expand to level 1': c.expandLevel1,
+        'expand to level 2': c.expandLevel2,
+        'expand to level 3': c.expandLevel3,
+        'expand to level 4': c.expandLevel4,
+        'expand to level 5': c.expandLevel5,
+        'expand to level 6': c.expandLevel6,
+        'expand to level 7': c.expandLevel7,
+        'expand to level 8': c.expandLevel8,
+        'expand to level 9': c.expandLevel9,
+        'expand prev level': c.expandPrevLevel,
+        'expand next level': c.expandNextLevel,
+        'expand all': c.expandAllHeadlines,
+        'expand node': c.expandNode,
+        'check outline': c.checkOutline,
+        'dump outline': c.dumpOutline,
+        'check python code': c.checkPythonCode,
+        'check all python code': c.checkAllPythonCode,
+        'pretty print python code': c.prettyPrintPythonCode,
+        'pretty print all python code': c.prettyPrintAllPythonCode,
+        'goto parent': c.goToParent,
+        'goto next sibling': c.goToNextSibling,
+        'goto previous sibling': c.goToPrevSibling,
+        'goto next clone': c.goToNextClone,
+        'goto next marked': c.goToNextMarkedHeadline,
+        'goto next changed': c.goToNextDirtyHeadline,
+        'goto first': c.goToFirstNode,
+        'goto last': c.goToLastNode,
+        "go to prev visible":c.selectVisBack,
+        "go to next visible" : c.selectVisNext,
+        "go to prev node" : c.selectThreadBack,
+        "go to next node" : c.selectThreadNext,
+        'about leo...': c.about,
+        #'apply settings': c.applyConfig,
+        'open LeoConfig.leo': c.leoConfig,
+        'open LeoDocs.leo': c.leoDocumentation,
+        'open online home': c.leoHome,
+        'open online tutorial': c.leoTutorial,
+        'open compare window': c.openCompareWindow,
+        'open Python window': c.openPythonWindow,
+        "equal sized panes": f.equalSizedPanes,
+        "toggle active pane": f.toggleActivePane,
+        "toggle split direction": f.toggleSplitDirection,
+        "resize to screen": f.resizeToScreen,
+        "cascade": f.cascade,
+        "minimize all": f.minimizeAll,
+    }
+
+    for z in commands.keys():
+        #z2 = 'leo-%s' % z -- no need to do this, Leos command names dont clash with temacs so far
+        emacs.extendAltX(z,commands[z])
+
+    leocommandnames = commands.keys()
+#@nonl
+#@-node:ekr.20050724074642.39:addLeoCommands  (createBindings)
 #@+node:ekr.20050724074642.29:addTemacsAbbreviations:  To do:  get stuff from confic
 def addTemacsAbbreviations( Emacs ):
     
@@ -555,156 +698,13 @@ def setBufferInteractionMethods (c,emacs,buffer):
     #@-others
 
     # These add Leo-reated capabilities to the emacs instance.
-    emacs.setBufferListGetter(buffer,buildBufferList)
-    emacs.setBufferSetter(buffer,setBufferData)
-    emacs.setBufferGoto(buffer,gotoNode)
-    emacs.setBufferDelete(buffer,deleteNode)
-    emacs.setBufferRename(buffer,renameNode)
+    emacs.bufferCommmands.setBufferListGetter(buffer,buildBufferList)
+    emacs.bufferCommmands.setBufferSetter(buffer,setBufferData)
+    emacs.bufferCommmands.setBufferGoto(buffer,gotoNode)
+    emacs.bufferCommmands.setBufferDelete(buffer,deleteNode)
+    emacs.bufferCommmands.setBufferRename(buffer,renameNode)
 #@nonl
 #@-node:ekr.20050724074642.32:setBufferInteractionMethods & helpers
-#@+node:ekr.20050724074642.39:addLeoCommands  (createBindings)
-def addLeoCommands( c, emacs ):
-    
-    global leocommandnames
-    f = c.frame
-    
-    commands = {
-        'new': c.new,
-        'open': c.open,
-        'openWith': c.openWith,
-        'close': c.close,
-        'save': c.save,
-        'saveAs': c.saveAs,
-        'saveTo': c.saveTo,
-        'revert': c.revert,
-        'readOutlineOnly': c.readOutlineOnly,
-        'readAtFileNodes': c.readAtFileNodes,
-        'importDerivedFile': c.importDerivedFile,
-        #'writeNewDerivedFiles': c.writeNewDerivedFiles,
-        #'writeOldDerivedFiles': c.writeOldDerivedFiles,
-        'tangle': c.tangle,
-        'tangle all': c.tangleAll,
-        'tangle marked': c.tangleMarked,
-        'untangle': c.untangle,
-        'untangle all': c.untangleAll,
-        'untangle marked': c.untangleMarked,
-        'export headlines': c.exportHeadlines,
-        'flatten outline': c.flattenOutline,
-        'import AtRoot': c.importAtRoot,
-        'import AtFile': c.importAtFile,
-        'import CWEB Files': c.importCWEBFiles,
-        'import Flattened Outline': c.importFlattenedOutline,
-        'import Noweb Files': c.importNowebFiles,
-        'outline to Noweb': c.outlineToNoweb,
-        'outline to CWEB': c.outlineToCWEB,
-        'remove sentinels': c.removeSentinels,
-        'weave': c.weave,
-        'delete': c.delete,
-        'execute script': c.executeScript,
-        'go to line number': c.goToLineNumber,
-        'set font': c.fontPanel,
-        'set colors': c.colorPanel,
-        'show invisibles': c.viewAllCharacters,
-        'preferences': c.preferences,
-        'convert all blanks': c.convertAllBlanks,
-        'convert all tabs': c.convertAllTabs,
-        'convert blanks': c.convertBlanks,
-        'convert tabs': c.convertTabs,
-        'indent': c.indentBody,
-        'unindent': c.dedentBody,
-        'reformat paragraph': c.reformatParagraph,
-        'insert time': c.insertBodyTime,
-        'extract section': c.extractSection,
-        'extract names': c.extractSectionNames,
-        'extract': c.extract,
-        'match bracket': c.findMatchingBracket,
-        'find panel': c.showFindPanel, ## c.findPanel,
-        'find next': c.findNext,
-        'find previous': c.findPrevious,
-        'replace': c.replace,
-        'replace then find': c.replaceThenFind,
-        'edit headline': c.editHeadline,
-        'toggle angle brackets': c.toggleAngleBrackets,
-        'cut node': c.cutOutline,
-        'copy node': c.copyOutline,
-        'paste node': c.pasteOutline,
-        'paste retaining clone': c.pasteOutlineRetainingClones,
-        'hoist': c.hoist,
-        'de-hoist': c.dehoist,
-        'insert node': c.insertHeadline,
-        'clone node': c.clone,
-        'delete node': c.deleteOutline,
-        'sort children': c.sortChildren,
-        'sort siblings': c.sortSiblings,
-        'demote': c.demote,
-        'promote': c.promote,
-        'move right': c.moveOutlineRight,
-        'move left': c.moveOutlineLeft,
-        'move up': c.moveOutlineUp,
-        'move down': c.moveOutlineDown,
-        'unmark all': c.unmarkAll,
-        'mark clones': c.markClones,
-        'mark': c.markHeadline,
-        'mark subheads': c.markSubheads,
-        'mark changed items': c.markChangedHeadlines,
-        'mark changed roots': c.markChangedRoots,
-        'contract all': c.contractAllHeadlines,
-        'contract node': c.contractNode,
-        'contract parent': c.contractParent,
-        'expand to level 1': c.expandLevel1,
-        'expand to level 2': c.expandLevel2,
-        'expand to level 3': c.expandLevel3,
-        'expand to level 4': c.expandLevel4,
-        'expand to level 5': c.expandLevel5,
-        'expand to level 6': c.expandLevel6,
-        'expand to level 7': c.expandLevel7,
-        'expand to level 8': c.expandLevel8,
-        'expand to level 9': c.expandLevel9,
-        'expand prev level': c.expandPrevLevel,
-        'expand next level': c.expandNextLevel,
-        'expand all': c.expandAllHeadlines,
-        'expand node': c.expandNode,
-        'check outline': c.checkOutline,
-        'dump outline': c.dumpOutline,
-        'check python code': c.checkPythonCode,
-        'check all python code': c.checkAllPythonCode,
-        'pretty print python code': c.prettyPrintPythonCode,
-        'pretty print all python code': c.prettyPrintAllPythonCode,
-        'goto parent': c.goToParent,
-        'goto next sibling': c.goToNextSibling,
-        'goto previous sibling': c.goToPrevSibling,
-        'goto next clone': c.goToNextClone,
-        'goto next marked': c.goToNextMarkedHeadline,
-        'goto next changed': c.goToNextDirtyHeadline,
-        'goto first': c.goToFirstNode,
-        'goto last': c.goToLastNode,
-        "go to prev visible":c.selectVisBack,
-        "go to next visible" : c.selectVisNext,
-        "go to prev node" : c.selectThreadBack,
-        "go to next node" : c.selectThreadNext,
-        'about leo...': c.about,
-        #'apply settings': c.applyConfig,
-        'open LeoConfig.leo': c.leoConfig,
-        'open LeoDocs.leo': c.leoDocumentation,
-        'open online home': c.leoHome,
-        'open online tutorial': c.leoTutorial,
-        'open compare window': c.openCompareWindow,
-        'open Python window': c.openPythonWindow,
-        "equal sized panes": f.equalSizedPanes,
-        "toggle active pane": f.toggleActivePane,
-        "toggle split direction": f.toggleSplitDirection,
-        "resize to screen": f.resizeToScreen,
-        "cascade": f.cascade,
-        "minimize all": f.minimizeAll,
-    }
-
-    for z in commands.keys():
-        #z2 = 'leo-%s' % z -- no need to do this, Leos command names dont clash with temacs so far
-        emacs.extendAltX(z,commands[z])
-
-    leocommandnames = commands.keys()
-#@nonl
-#@-node:ekr.20050724074642.39:addLeoCommands  (createBindings)
 #@-node:ekr.20050724074642.25:createBindings & helpers  (Creates Emacs instance)
 #@-node:ekr.20050724074642.23:Overridden methods
 #@-node:ekr.20050724074619.1:Birth (From usetemacs)
@@ -923,8 +923,8 @@ class MC_StateManager:
             'negativeArg':( 2, emacs.negativeArgument ),
             'abbrevOn': ( 1, eA ),
             'set-fill-column': ( 1, emacs.setFillColumn ),
-            'chooseBuffer': ( 1, emacs.chooseBuffer ),
-            'renameBuffer': ( 1, emacs.renameBuffer ),
+            'chooseBuffer': ( 1, emacs.bufferCommands.chooseBuffer ), ##
+            'renameBuffer': ( 1, emacs.bufferCommands.renameBuffer ), ##
             're_search': ( 1, emacs.searchCommands.re_search ), ###
             'alterlines': ( 1, emacs.processLines ),
             'make_directory': ( 1, emacs.makeDirectory ),
@@ -1152,14 +1152,6 @@ class Emacs:
         self.renameBuffers ={}
         self.bufferDict = None 
         self.bufferTracker = Tracker()
-        self.bufferCommands ={
-            'append-to-buffer': self.appendToBuffer, 
-            'prepend-to-buffer':self.prependToBuffer, 
-            'copy-to-buffer':   self.copyToBuffer, 
-            'insert-buffer':    self.insertToBuffer, 
-            'switch-to-buffer': self.switchToBuffer, 
-             'kill-buffer':     self.killBuffer, 
-        }
         
         self.fillPrefix = ''#for fill prefix functions
         self.fillColumn = 70#for line centering
@@ -1464,10 +1456,11 @@ class Emacs:
     def createCommandsClasses (self):
         
         self.commandClasses = [
-            ('searchCommands',      self.searchCommandsClass),
-            ('killBufferCommands',  self.killBufferCommandsClass),
             ('abbrevCommands',      self.abbrevCommandsClass),
+            ('bufferCommands',      self.bufferCommandsClass),
+            ('killBufferCommands',  self.killBufferCommandsClass),
             ('registerCommands',    self.registerCommandsClass),
+            ('searchCommands',      self.searchCommandsClass),
         ]
         
         # Create the initial table.  (This may go away).
@@ -1483,7 +1476,7 @@ class Emacs:
                 if 1:
                     keys = d.keys()
                     keys.sort()
-                    print '----- adding from %s ----' % name
+                    print '----- %s' % name
                     for key in keys: print key
     #@nonl
     #@-node:ekr.20050725094519:createCommandsClasses
@@ -1665,13 +1658,13 @@ class Emacs:
         xcommands = {
             '<Control-t>': self.transposeLines, 
             '<Control-u>': lambda event , way ='up': self.upperLowerRegion( event, way ),
-            '<Control-l>':  lambda event , way ='low': self.upperLowerRegion( event, way ),
+            '<Control-l>': lambda event , way ='low': self.upperLowerRegion( event, way ),
             '<Control-o>': self.removeBlankLines,
             '<Control-i>': self.insertFile,
             '<Control-s>': self.saveFile,
             '<Control-x>': self.exchangePointMark,
             '<Control-c>': self.shutdown,
-            '<Control-b>': self.listBuffers,
+            '<Control-b>': self.bufferCommands.listBuffers,
             '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
             '<Delete>' : lambda event, back = True: self.killsentence( event, back ),
         }
@@ -1696,6 +1689,16 @@ class Emacs:
             # 'write-abbrev-file': self.writeAbbreviations,
             # 'read-abbrev-file': self.readAbbreviations,
             # 'list-abbrevs': self.listAbbrevs,
+            
+            # Buffers.
+            'copy-to-buffer': lambda event, which = 'copy-to-buffer': self.setInBufferMode( event, which ),
+            'insert-buffer': lambda event, which = 'insert-buffer': self.setInBufferMode( event, which ),
+            'append-to-buffer': lambda event , which = 'append-to-buffer':  self.setInBufferMode( event, which ),
+            'prepend-to-buffer': lambda event, which = 'prepend-to-buffer': self.setInBufferMode( event, which ),
+            'switch-to-buffer': lambda event, which = 'switch-to-buffer': self.setInBufferMode( event, which ),
+            'list-buffers' : lambda event: self.listBuffers( event ),
+            'kill-buffer' : lambda event, which = 'kill-buffer': self.setInBufferMode( event, which ),
+            'rename-buffer': lambda event: self.renameBuffer( event ),
             
             # Isearch
             # 'isearch-forward':          self.searchCommands.isearchForward,
@@ -1815,16 +1818,6 @@ class Emacs:
             'scroll-up': lambda event, way = 'north' : self.screenscroll( event, way ) and self.keyboardQuit( event ),
             'scroll-down': lambda event, way = 'south': self.screenscroll( event, way ) and self.keyboardQuit( event ),
             
-            # Buffers.
-            'copy-to-buffer': lambda event, which = 'copy-to-buffer': self.setInBufferMode( event, which ),
-            'insert-buffer': lambda event, which = 'insert-buffer': self.setInBufferMode( event, which ),
-            'append-to-buffer': lambda event , which = 'append-to-buffer':  self.setInBufferMode( event, which ),
-            'prepend-to-buffer': lambda event, which = 'prepend-to-buffer': self.setInBufferMode( event, which ),
-            'switch-to-buffer': lambda event, which = 'switch-to-buffer': self.setInBufferMode( event, which ),
-            'list-buffers' : lambda event: self.listBuffers( event ),
-            'kill-buffer' : lambda event, which = 'kill-buffer': self.setInBufferMode( event, which ),
-            'rename-buffer': lambda event: self.renameBuffer( event ),
-            
             # Query-replace.
             'query-replace': lambda event: self.masterQR( event ), 
             'query-replace-regex': lambda event: self.startRegexReplace() and self.masterQR( event ),
@@ -1874,9 +1867,8 @@ class Emacs:
     
     #@+others
     #@+node:ekr.20050724075352.284:alt_X
-    #self.altx = False
     def alt_X( self, event , which = None):
-        #global altx
+    
         if which:
             self.mcStateManager.setState( 'altx', which )
         else:
@@ -2138,229 +2130,6 @@ class Emacs:
             tbuffer.bind( evstring,  lambda event, meth = command: self.masterCommand( event, meth , evstring)  )
     #@nonl
     #@-node:ekr.20050724075352.116:reconfigureKeyStroke
-    #@+node:ekr.20050724075352.117:buffer recognition and alterers
-    #@+at
-    # an Emacs instance does not have knowledge of what is considered a buffer 
-    # in the environment.
-    # It must be configured by the user so that it can operate on the other 
-    # buffers.  Otherwise
-    # these methods will be useless.
-    # 
-    #@-at
-    #@@c
-    
-    
-    #@+others
-    #@+node:ekr.20050724075352.118:configure buffer methods
-    #@+others
-    #@+node:ekr.20050724075352.119:setBufferGetter
-    def setBufferListGetter( self, buffer, method ):
-        #Sets a method that returns a buffer name and its text, and its insert position.
-        self.bufferListGetters[ buffer ] = method
-    #@nonl
-    #@-node:ekr.20050724075352.119:setBufferGetter
-    #@+node:ekr.20050724075352.120:setBufferSetter
-    def setBufferSetter( self, buffer, method ):
-        #Sets a method that takes a buffer name and the new contents.
-        self.bufferSetters[ buffer ] = method
-    #@nonl
-    #@-node:ekr.20050724075352.120:setBufferSetter
-    #@+node:ekr.20050724075352.121:getBufferDict
-    def getBufferDict( self, event ):
-        
-        tbuffer = event.widget
-        meth = self.bufferListGetters[ tbuffer ]
-        return meth()
-    #@nonl
-    #@-node:ekr.20050724075352.121:getBufferDict
-    #@+node:ekr.20050724075352.122:setBufferData
-    def setBufferData( self, event, name, data ):
-        
-        tbuffer = event.widget
-        meth = self.bufferSetters[ tbuffer ]
-        meth( name, data )
-    #@nonl
-    #@-node:ekr.20050724075352.122:setBufferData
-    #@+node:ekr.20050724075352.123:setBufferGoto
-    def setBufferGoto( self, tbuffer, method ):
-        self.bufferGotos[ tbuffer ] = method
-    #@nonl
-    #@-node:ekr.20050724075352.123:setBufferGoto
-    #@+node:ekr.20050724075352.124:setBufferDelete
-    def setBufferDelete( self, tbuffer, method ):
-        
-        self.bufferDeletes[ tbuffer ] = method
-    #@nonl
-    #@-node:ekr.20050724075352.124:setBufferDelete
-    #@+node:ekr.20050724075352.125:setBufferRename
-    def setBufferRename( self, buffer, method ):
-        
-        self.renameBuffers[ buffer ] = method
-    #@nonl
-    #@-node:ekr.20050724075352.125:setBufferRename
-    #@-others
-    #@nonl
-    #@-node:ekr.20050724075352.118:configure buffer methods
-    #@+node:ekr.20050724075352.126:buffer operations
-    #@+others
-    #@+node:ekr.20050724075352.127:appendToBuffer
-    def appendToBuffer( self, event, name ):
-    
-        tbuffer = event.widget
-        try:
-            txt = tbuffer.get( 'sel.first', 'sel.last' )
-            bdata = self.bufferDict[ name ]
-            bdata = '%s%s' % ( bdata, txt )
-            self.setBufferData( event, name, bdata )
-        except Exception, x:
-            pass
-        return self.keyboardQuit( event )
-    #@nonl
-    #@-node:ekr.20050724075352.127:appendToBuffer
-    #@+node:ekr.20050724075352.128:prependToBuffer
-    def prependToBuffer( self, event, name ):
-        
-        tbuffer = event.widget
-        try:
-            txt = tbuffer.get( 'sel.first', 'sel.last' )
-            bdata = self.bufferDict[ name ]
-            bdata = '%s%s' % ( txt, bdata )
-            self.setBufferData( event, name, bdata )
-        except Exception, x:
-            pass
-        return self.keyboardQuit( event )
-    #@nonl
-    #@-node:ekr.20050724075352.128:prependToBuffer
-    #@+node:ekr.20050724075352.129:insertToBuffer
-    def insertToBuffer( self, event, name ):
-    
-        tbuffer = event.widget
-        bdata = self.bufferDict[ name ]
-        tbuffer.insert( 'insert', bdata )
-        self._tailEnd( tbuffer )
-        return self.keyboardQuit( event )
-    #@nonl
-    #@-node:ekr.20050724075352.129:insertToBuffer
-    #@+node:ekr.20050724075352.130:listBuffers
-    def listBuffers( self, event ):
-        
-        bdict  = self.getBufferDict( event )
-        list = bdict.keys()
-        list.sort()
-        svar, label = self.getSvarLabel( event )
-        data = '\n'.join( list )
-        self.keyboardQuit( event )
-        svar.set( data )
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050724075352.130:listBuffers
-    #@+node:ekr.20050724075352.131:copyToBuffer
-    def copyToBuffer( self, event, name ):
-        
-        tbuffer = event.widget
-        try:
-            txt = tbuffer.get( 'sel.first', 'sel.last' )
-            self.setBufferData( event, name, txt )
-        except Exception, x:
-            pass
-        return self.keyboardQuit( event )
-    #@nonl
-    #@-node:ekr.20050724075352.131:copyToBuffer
-    #@+node:ekr.20050724075352.132:switchToBuffer
-    def switchToBuffer( self, event, name ):
-        
-        method = self.bufferGotos[ event.widget ]
-        self.keyboardQuit( event )
-        method( name )
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050724075352.132:switchToBuffer
-    #@+node:ekr.20050724075352.133:killBuffer
-    def killBuffer( self, event, name ):
-        
-        method = self.bufferDeletes[ event.widget ]
-        self.keyboardQuit( event )
-        method( name )
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050724075352.133:killBuffer
-    #@+node:ekr.20050724075352.134:renameBuffer
-    def renameBuffer( self, event ):
-        
-        svar, label = self.getSvarLabel( event )
-        if not self.mcStateManager.getState( 'renameBuffer' ):
-            self.mcStateManager.setState( 'renameBuffer', True )
-            svar.set( '' )
-            label.configure( background = 'lightblue' )
-            return 'break'
-        if event.keysym == 'Return':
-           
-           nname = svar.get()
-           self.keyboardQuit( event )
-           self.renameBuffers[ event.widget ]( nname )
-            
-            
-        else:
-            self.setSvar( event, svar )
-            return 'break'
-    #@nonl
-    #@-node:ekr.20050724075352.134:renameBuffer
-    #@+node:ekr.20050724075352.135:chooseBuffer
-    def chooseBuffer( self, event ):
-        
-        svar, label = self.getSvarLabel( event )
-    
-        state = self.mcStateManager.getState( 'chooseBuffer' )
-        if state.startswith( 'start' ):
-            state = state[ 5: ]
-            self.mcStateManager.setState( 'chooseBuffer', state )
-            svar.set( '' )
-        if event.keysym == 'Tab':
-            
-            stext = svar.get().strip()
-            if self.bufferTracker.prefix and stext.startswith( self.bufferTracker.prefix ):
-                svar.set( self.bufferTracker.next() ) #get next in iteration
-            else:
-                prefix = svar.get()
-                pmatches = []
-                for z in self.bufferDict.keys():
-                    if z.startswith( prefix ):
-                        pmatches.append( z )
-                self.bufferTracker.setTabList( prefix, pmatches )
-                svar.set( self.bufferTracker.next() ) #begin iteration on new lsit
-            return 'break'        
-    
-            
-        elif event.keysym == 'Return':
-           
-           bMode = self.mcStateManager.getState( 'chooseBuffer' )
-           return self.bufferCommands[ bMode ]( event, svar.get() )
-            
-            
-        else:
-            self.setSvar( event, svar )
-            return 'break'
-    #@nonl
-    #@-node:ekr.20050724075352.135:chooseBuffer
-    #@+node:ekr.20050724075352.136:setInBufferMode
-    def setInBufferMode( self, event, which ):
-        
-        self.keyboardQuit( event )
-        tbuffer = event.widget
-        self.mcStateManager.setState( 'chooseBuffer', 'start%s' % which )
-        svar, label = self.getSvarLabel( event )
-        label.configure( background = 'lightblue' )
-        svar.set( 'Choose Buffer Name:' )
-        self.bufferDict = self.getBufferDict( event )
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050724075352.136:setInBufferMode
-    #@-others
-    #@nonl
-    #@-node:ekr.20050724075352.126:buffer operations
-    #@-others
-    #@nonl
-    #@-node:ekr.20050724075352.117:buffer recognition and alterers
     #@-others
     #@nonl
     #@-node:ekr.20050724075352.105:configurable methods
@@ -4907,20 +4676,37 @@ class Emacs:
         
         '''The base class for all emacs command classes'''
         
-        def init (self,emacs):
-            pass
+        #@    @+others
+        #@+node:ekr.20050726044533: ctor
+        def __init__ (self,emacs):
         
+            self.emacs = emacs
+            
+            # define delegators.
+            self.getSvarLabel   = emacs.getSvarLabel
+            self.keyboardQuit   = emacs.keyboardQuit
+            self.mcStateManager = emacs.mcStateManager
+            self.setEvent       = emacs.setEvent
+            self.setSvar        = emacs.setSvar
+        #@nonl
+        #@-node:ekr.20050726044533: ctor
+        #@+node:ekr.20050726044533.1:oops
         def oops (self):
             print ("emacs baseCommands oops:",
                 g.callerName(2),
                 "must be overridden in subclass")
-                
+        #@nonl
+        #@-node:ekr.20050726044533.1:oops
+        #@+node:ekr.20050726044533.2:getPublicCommands
         def getPublicCommands (self):
             '''Return a dict describing public commands implemented in the subclass.
             Keys are untranslated command names.  Values are methods of the subclass.'''
-    
+        
             self.oops()
             return {}
+        #@nonl
+        #@-node:ekr.20050726044533.2:getPublicCommands
+        #@-others
     #@nonl
     #@-node:ekr.20050725091822.1:<< define class baseCommands >>
     #@nl
@@ -4954,13 +4740,7 @@ class Emacs:
         #@+node:ekr.20050725125153: ctor
         def __init__ (self,emacs):
             
-            self.emacs = emacs
-        
-            # Delegators...
-            self.keyboardQuit = emacs.keyboardQuit
-            self.mcStateManager = emacs.mcStateManager
-            self.getSvarLabel = emacs.getSvarLabel
-            self.setSvar = emacs.setSvar
+            Emacs.baseCommands.__init__(self,emacs) # init the base class.
         
             # Set ivars in emacs.
             self.emacs.abbrevMode = False 
@@ -5184,8 +4964,8 @@ class Emacs:
         #@    @+others
         #@+node:ekr.20050725115600: ctor
         def __init__ (self,emacs):
-            
-            self.emacs = emacs
+        
+            Emacs.baseCommands.__init__(self,emacs) # init the base class.
             
             if emacs.useGlobalKillbuffer:
                 self.killbuffer = Emacs.global_killbuffer 
@@ -5412,14 +5192,8 @@ class Emacs:
         #@    @+others
         #@+node:ekr.20050725091822.2: ctor
         def __init__ (self,emacs):
-            
-            self.emacs = emacs
-            
-            # Delegators...
-            self.keyboardQuit = emacs.keyboardQuit
-            self.mcStateManager = emacs.mcStateManager
-            self.getSvarLabel = emacs.getSvarLabel
-            self.setSvar = emacs.setSvar
+        
+            Emacs.baseCommands.__init__(self,emacs) # init the base class.
             
             self.csr = { '<Control-s>': 'for', '<Control-r>':'bak' }
             self.pref = None
@@ -5788,7 +5562,7 @@ class Emacs:
         #@-others
     #@nonl
     #@-node:ekr.20050724075352.221:class searchCommandsClass
-    #@+node:ekr.20050724075352.170:class registerCommandsClass FINISH
+    #@+node:ekr.20050724075352.170:class registerCommandsClass
     class registerCommandsClass (baseCommands):
     
         '''A class to represent registers a-z and the corresponding Emacs commands.'''
@@ -5797,84 +5571,179 @@ class Emacs:
         #@+node:ekr.20050725134243: ctor
         def __init__ (self,emacs):
             
-            self.emacs = emacs
-            
-            # Delegators...
-            self.keyboardQuit = emacs.keyboardQuit
-            self.mcStateManager = emacs.mcStateManager
-            self.getSvarLabel = emacs.getSvarLabel
-            self.setSvar = emacs.setSvar
-            
-            #registers
+            Emacs.baseCommands.__init__(self,emacs) # init the base class.
+        
             if emacs.useGlobalRegisters:
                 self.registers = Emacs.global_registers 
             else:
                 self.registers = {}
         
-            self.regMeth = None 
-            self.methodKeys, self.keyText = self.addRegisterItems()
+            self.method = None 
+            self.methodDict, self.keyText = self.addRegisterItems()
         #@nonl
         #@-node:ekr.20050725134243: ctor
-        #@+node:ekr.20050724075352.52:addRegisterItems
-        def addRegisterItems( self ):
-            
-            methodKeys = {
-                's' : self.copyToRegister,
-                'i' : self.insertFromRegister,
-                'n': self.numberToRegister,
-                'plus': self.incrementRegister,
-                'space': self.pointToRegister,
-                'j': self.jumpToRegister,
-                'a': lambda event , which = 'a': self._ToReg( event, which ),
-                'p': lambda event , which = 'p': self._ToReg( event, which ),
-                'r': self.copyRectangleToRegister,
-                'view' : self.viewRegister,
-            }    
-            
-            keyText = {
-                's' : 'copy to register',
-                'i' : 'insert from register',
-                'plus': 'increment register',
-                'n' : 'number to register',
-                'p' : 'prepend to register',
-                'a' : 'append to register',
-                'space' : 'point to register',
-                'j': 'jump to register',
-                'r': 'rectangle to register',
-                'view': 'view register',
-            }
-            
-            return methodKeys, keyText
+        #@+node:ekr.20050725135621.1: Entry points
+        def copyToRegister (self,event):
+            return self.setEvent(event,'s') and self.setNextRegister(event)
+        def copyRectangleToRegister (self,event):
+            return self.setEvent(event,'r') and self.setNextRegister(event)
+        def incrementRegister (self,event):
+            return self.setEvent(event,'plus') and self.setNextRegister(event)
+        def insertRegister (self,event):
+            return self.setEvent(event,'i') and self.setNextRegister(event)
+        def jumpToRegister (self,event):
+            return self.setEvent(event,'j') and self.setNextRegister(event)
+        def numberToRegister (self,event):
+            return self.setEvent(event,'n') and self.setNextRegister(event)
+        def pointToRegister (self,event):
+            return self.setEvent(event,'space') and self.setNextRegister(event)
+        def viewRegister (self,event):
+            return self.setEvent(event,'view') and self.setNextRegister(event)
+        #@+node:ekr.20050724075352.174:appendToRegister
+        def appendToRegister (self,event):
+        
+            event.keysym = 'a'
+            self.setNextRegister(event)
+            self.mcStateManager.setState('controlx',True)
         #@nonl
-        #@-node:ekr.20050724075352.52:addRegisterItems
-        #@+node:ekr.20050725134243.1: getPublicCommands  FINISH
+        #@-node:ekr.20050724075352.174:appendToRegister
+        #@+node:ekr.20050724075352.173:prependToRegister
+        def prependToRegister (self,event):
+        
+            event.keysym = 'p'
+            self.setNextRegister(event)
+            self.mcStateManager.setState('controlx',False)
+        #@-node:ekr.20050724075352.173:prependToRegister
+        #@+node:ekr.20050724075352.172:_copyRectangleToRegister
+        def _copyRectangleToRegister (self,event):
+            
+            if not self._chckSel(event):
+                return 
+            if event.keysym in string.letters:
+                event.keysym = event.keysym.lower()
+                tbuffer = event.widget 
+                r1, r2, r3, r4 = self.getRectanglePoints(event)
+                rect =[]
+                while r1<=r3:
+                    txt = tbuffer.get('%s.%s'%(r1,r2),'%s.%s'%(r1,r4))
+                    rect.append(txt)
+                    r1 = r1+1
+                self.registers[event.keysym] = rect 
+            self.stopControlX(event)
+        #@-node:ekr.20050724075352.172:_copyRectangleToRegister
+        #@+node:ekr.20050724075352.171:_copyToRegister
+        def _copyToRegister (self,event):
+        
+            if not self._chckSel(event):
+                return 
+                
+            if event.keysym in string.letters:
+                event.keysym = event.keysym.lower()
+                tbuffer = event.widget 
+                txt = tbuffer.get('sel.first','sel.last')
+                self.registers[event.keysym] = txt 
+                return 
+        
+            self.stopControlX(event)
+        #@nonl
+        #@-node:ekr.20050724075352.171:_copyToRegister
+        #@+node:ekr.20050724075352.179:_incrementRegister
+        def _incrementRegister (self,event):
+            
+            if self.registers.has_key(event.keysym):
+                if self._checkIfRectangle(event):
+                    return 
+                if self.registers[event.keysym]in string.digits:
+                    i = self.registers[event.keysym]
+                    i = str(int(i)+1)
+                    self.registers[event.keysym] = i 
+                else:
+                    self.invalidRegister(event,'number')
+                    return 
+            self.stopControlX(event)
+        #@-node:ekr.20050724075352.179:_incrementRegister
+        #@+node:ekr.20050724075352.178:_insertRegister
+        def _insertRegister (self,event):
+            
+            tbuffer = event.widget 
+            if self.registers.has_key(event.keysym):
+                if isinstance(self.registers[event.keysym],list):
+                    self.yankRectangle(event,self.registers[event.keysym])
+                else:
+                    tbuffer.insert('insert',self.registers[event.keysym])
+                    tbuffer.event_generate('<Key>')
+                    tbuffer.update_idletasks()
+        
+            self.stopControlX(event)
+        #@nonl
+        #@-node:ekr.20050724075352.178:_insertRegister
+        #@+node:ekr.20050724075352.182:_jumpToRegister
+        def _jumpToRegister (self,event):
+            if event.keysym in string.letters:
+                if self._checkIfRectangle(event):
+                    return 
+                tbuffer = event.widget 
+                i = self.registers[event.keysym.lower()]
+                i2 = i.split('.')
+                if len(i2)==2:
+                    if i2[0].isdigit()and i2[1].isdigit():
+                        pass 
+                    else:
+                        self.invalidRegister(event,'index')
+                        return 
+                else:
+                    self.invalidRegister(event,'index')
+                    return 
+                tbuffer.mark_set('insert',i)
+                tbuffer.event_generate('<Key>')
+                tbuffer.update_idletasks()
+            self.stopControlX(event)
+        #@nonl
+        #@-node:ekr.20050724075352.182:_jumpToRegister
+        #@+node:ekr.20050724075352.180:_numberToRegister
+        def _numberToRegister (self,event):
+            if event.keysym in string.letters:
+                self.registers[event.keysym.lower()] = str(0)
+            self.stopControlX(event)
+        #@nonl
+        #@-node:ekr.20050724075352.180:_numberToRegister
+        #@+node:ekr.20050724075352.181:_pointToRegister
+        def _pointToRegister (self,event):
+            if event.keysym in string.letters:
+                tbuffer = event.widget 
+                self.registers[event.keysym.lower()] = tbuffer.index('insert')
+            self.stopControlX(event)
+        #@nonl
+        #@-node:ekr.20050724075352.181:_pointToRegister
+        #@+node:ekr.20050724075352.187:_viewRegister
+        def _viewRegister (self,event):
+            
+            self.stopControlX(event)
+            if event.keysym in string.letters:
+                text = self.registers[event.keysym.lower()]
+                svar, label = self.getSvarLabel(event)
+                svar.set(text)
+        #@nonl
+        #@-node:ekr.20050724075352.187:_viewRegister
+        #@-node:ekr.20050725135621.1: Entry points
+        #@+node:ekr.20050725134243.1: getPublicCommands 
         def getPublicCommands (self):
             
             return {
-                'append-to-register':   self.appendToRegister,
-                'prepend-to-register':  self.prependToRegister,
-                'copy-to-register': lambda event: self.setEvent( event, 's' ) and self.setNextRegister( event ),
-                'insert-register': lambda event: self.setEvent( event, 'i' ) and self.setNextRegister( event ),
-                'copy-rectangle-to-register': lambda event: self.setEvent( event, 'r' ) and self.setNextRegister( event ),
-                'jump-to-register': lambda event: self.setEvent( event, 'j' ) and self.setNextRegister( event ),
-                'point-to-register': lambda event: self.setEvent( event, 'space' ) and self.setNextRegister( event ),
-                'number-to-register': lambda event: self.setEvent( event, 'n' ) and self.setNextRegister( event ),
-                'increment-register': lambda event: self.setEvent( event, 'plus' ) and self.setNextRegister( event ),
-                'view-register': lambda event: self.setEvent( event, 'view' ) and self.setNextRegister( event ),
+                'append-to-register':           self.appendToRegister,
+                'copy-rectangle-to-register':   self.copyRectangleToRegister,
+                'copy-to-register':             self.copyToRegister,
+                'increment-register':           self.incrementRegister,
+                'insert-register':              self.insertRegister,
+                'jump-to-register':             self.jumpToRegister,
+                'number-to-register':           self.numberToRegister,
+                'point-to-register':            self.pointToRegister,
+                'prepend-to-register':          self.prependToRegister,
+                'view-register':                self.viewRegister,
             }
         #@nonl
-        #@-node:ekr.20050725134243.1: getPublicCommands  FINISH
-        #@+node:ekr.20050725135621.1: Entry points
-        # 'copy-to-register': lambda event: self.setEvent( event, 's' ) and self.setNextRegister( event ),
-        # 'insert-register': lambda event: self.setEvent( event, 'i' ) and self.setNextRegister( event ),
-        # 'copy-rectangle-to-register': lambda event: self.setEvent( event, 'r' ) and self.setNextRegister( event ),
-        # 'jump-to-register': lambda event: self.setEvent( event, 'j' ) and self.setNextRegister( event ),
-        # 'point-to-register': lambda event: self.setEvent( event, 'space' ) and self.setNextRegister( event ),
-        # 'number-to-register': lambda event: self.setEvent( event, 'n' ) and self.setNextRegister( event ),
-        # 'increment-register': lambda event: self.setEvent( event, 'plus' ) and self.setNextRegister( event ),
-        # 'view-register': lambda event: self.setEvent( event, 'view' ) and self.setNextRegister( event ),
-        #@nonl
-        #@-node:ekr.20050725135621.1: Entry points
+        #@-node:ekr.20050725134243.1: getPublicCommands 
+        #@+node:ekr.20050726043333.1:Helpers
         #@+node:ekr.20050724075352.176:_chckSel
         def _chckSel( self, event ):
              if not 'sel' in event.widget.tag_names():
@@ -5897,10 +5766,12 @@ class Emacs:
         #@-node:ekr.20050724075352.177:_checkIfRectangle
         #@+node:ekr.20050724075352.175:_ToReg
         def _ToReg( self, event , which):
+        
             if not self._chckSel( event ):
                 return
             if self._checkIfRectangle( event ):
                 return
+        
             if event.keysym in string.letters:
                 event.keysym = event.keysym.lower()
                 tbuffer = event.widget
@@ -5916,176 +5787,354 @@ class Emacs:
                 return
         #@nonl
         #@-node:ekr.20050724075352.175:_ToReg
-        #@+node:ekr.20050724075352.174:appendToRegister
-        def appendToRegister( self, event ):
-        
-            event.keysym = 'a'
-            self.setNextRegister( event )
-            self.mcStateManager.setState( 'controlx', True )
+        #@+node:ekr.20050724075352.52:addRegisterItems
+        def addRegisterItems( self ):
+            
+            methodDict = {
+                's' :       self._copyToRegister,
+                'i' :       self._insertRegister,
+                'n':        self._numberToRegister,
+                'plus':     self._incrementRegister,
+                'space':    self._pointToRegister,
+                'j':        self._jumpToRegister,
+                'a':        lambda event,which='a': self._ToReg(event,which), # _appendToRegister
+                'p':        lambda event,which='p': self._ToReg(event,which), # _prependToRegister
+                'r':        self._copyRectangleToRegister,
+                'view' :    self._viewRegister,
+            }    
+            
+            keyText = {
+                's' :   'copy to register',
+                'i' :   'insert from register',
+                'plus': 'increment register',
+                'n' :   'number to register',
+                'p' :   'prepend to register',
+                'a' :   'append to register',
+                'space': 'point to register',
+                'j':    'jump to register',
+                'r':    'rectangle to register',
+                'view': 'view register',
+            }
+            
+            return methodDict, keyText
         #@nonl
-        #@-node:ekr.20050724075352.174:appendToRegister
-        #@+node:ekr.20050724075352.172:copyRectangleToRegister
-        def copyRectangleToRegister( self, event ):
-            if not self._chckSel( event ):
-                return
-            if event.keysym in string.letters:
-                event.keysym = event.keysym.lower()
-                tbuffer = event.widget
-                r1, r2, r3, r4 = self.getRectanglePoints( event )
-                rect = []
-                while r1 <= r3:
-                    txt = tbuffer.get( '%s.%s' %( r1, r2 ), '%s.%s' %( r1, r4 ) )
-                    rect.append( txt )
-                    r1 = r1 +1
-                self.registers[ event.keysym ] = rect
-            self.stopControlX( event )
-        #@nonl
-        #@-node:ekr.20050724075352.172:copyRectangleToRegister
-        #@+node:ekr.20050724075352.171:copyToRegister
-        def copyToRegister( self, event ):
-        
-            if not self._chckSel( event ):
-                return
-                
-            if event.keysym in string.letters:
-                event.keysym = event.keysym.lower()
-                tbuffer = event.widget
-                txt = tbuffer.get( 'sel.first', 'sel.last' )
-                self.registers[ event.keysym ] = txt
-                return
-        
-            self.stopControlX( event )
-        #@nonl
-        #@-node:ekr.20050724075352.171:copyToRegister
+        #@-node:ekr.20050724075352.52:addRegisterItems
         #@+node:ekr.20050724075352.186:deactivateRegister
         def deactivateRegister( self, event ):
-            #global registermode, regMeth
+        
             svar, label = self.getSvarLabel( event )
             svar.set( '' )
             self.setLabelGrey( label )
             self.registermode = False
-            self.regMeth = None
+            self.method = None
         #@nonl
         #@-node:ekr.20050724075352.186:deactivateRegister
+        #@+node:ekr.20050724075352.183:invalidRegister
+        def invalidRegister( self, event, what ):
+            
+            self.deactivateRegister( event )
+            svar, label = self.getSvarLabel( event )
+            svar.set( 'Register does not contain valid %s'  % what)
+            return
+        #@-node:ekr.20050724075352.183:invalidRegister
+        #@+node:ekr.20050724075352.184:setNextRegister
+        def setNextRegister (self,event):
+        
+            if event.keysym=='Shift':
+                return 
+        
+            if self.methodDict.has_key(event.keysym):
+                self.mcStateManager.setState('controlx',True)
+                self.method = self.methodDict[event.keysym]
+                self.registermode = 2
+                svar = self.svars[event.widget]
+                svar.set(self.keyText[event.keysym])
+                return 
+        
+            self.stopControlX(event)
+        #@nonl
+        #@-node:ekr.20050724075352.184:setNextRegister
         #@+node:ekr.20050724075352.185:executeRegister
         def executeRegister( self, event ):
-            self.regMeth( event )
+        
+            self.method( event )
             if self.registermode: 
                 self.stopControlX( event )
             return
         #@nonl
         #@-node:ekr.20050724075352.185:executeRegister
-        #@+node:ekr.20050724075352.179:incrementRegister
-        def incrementRegister( self, event ):
-            if self.registers.has_key( event.keysym ):
-                if self._checkIfRectangle( event ):
-                    return
-                if self.registers[ event.keysym ] in string.digits:
-                    i = self.registers[ event.keysym ]
-                    i = str( int( i ) + 1 )
-                    self.registers[ event.keysym ] = i
-                else:
-                    self.invalidRegister( event, 'number' )
-                    return
-            self.stopControlX( event )
-        #@nonl
-        #@-node:ekr.20050724075352.179:incrementRegister
-        #@+node:ekr.20050724075352.178:insertFromRegister
-        def insertFromRegister( self, event ):
-            tbuffer = event.widget
-            if self.registers.has_key( event.keysym ):
-                if isinstance( self.registers[ event.keysym ], list ):
-                    self.yankRectangle( event, self.registers[ event.keysym ] )
-                else:
-                    tbuffer.insert( 'insert', self.registers[ event.keysym ] )
-                    tbuffer.event_generate( '<Key>' )
-                    tbuffer.update_idletasks()
-            self.stopControlX( event )
-        #@nonl
-        #@-node:ekr.20050724075352.178:insertFromRegister
-        #@+node:ekr.20050724075352.183:invalidRegister
-        def invalidRegister( self, event, what ):
-            self.deactivateRegister( event )
-            svar, label = self.getSvarLabel( event )
-            svar.set( 'Register does not contain valid %s'  % what)
-            return
-        #@nonl
-        #@-node:ekr.20050724075352.183:invalidRegister
-        #@+node:ekr.20050724075352.182:jumpToRegister
-        def jumpToRegister( self, event ):
-            if event.keysym in string.letters:
-                if self._checkIfRectangle( event ):
-                    return
-                tbuffer = event.widget
-                i = self.registers[ event.keysym.lower() ]
-                i2 = i.split( '.' )
-                if len( i2 ) == 2:
-                    if i2[ 0 ].isdigit() and i2[ 1 ].isdigit():
-                        pass
-                    else:
-                        self.invalidRegister( event, 'index' )
-                        return
-                else:
-                    self.invalidRegister( event, 'index' )
-                    return
-                tbuffer.mark_set( 'insert', i )
-                tbuffer.event_generate( '<Key>' )
-                tbuffer.update_idletasks() 
-            self.stopControlX( event )
-        #@nonl
-        #@-node:ekr.20050724075352.182:jumpToRegister
-        #@+node:ekr.20050724075352.180:numberToRegister
-        def numberToRegister( self, event ):
-            if event.keysym in string.letters:
-                self.registers[ event.keysym.lower() ] = str( 0 )
-            self.stopControlX( event )
-        #@nonl
-        #@-node:ekr.20050724075352.180:numberToRegister
-        #@+node:ekr.20050724075352.181:pointToRegister
-        def pointToRegister( self, event ):
-            if event.keysym in string.letters:
-                tbuffer = event.widget
-                self.registers[ event.keysym.lower() ] = tbuffer.index( 'insert' )
-            self.stopControlX( event )
-        #@nonl
-        #@-node:ekr.20050724075352.181:pointToRegister
-        #@+node:ekr.20050724075352.173:prependToRegister
-        def prependToRegister( self, event ):
-        
-            event.keysym = 'p'
-            self.setNextRegister( event )
-            self.mcStateManager.setState( 'controlx', False )
-        #@-node:ekr.20050724075352.173:prependToRegister
-        #@+node:ekr.20050724075352.184:setNextRegister
-        def setNextRegister( self, event ):
-        
-            if event.keysym == 'Shift':
-                return
-        
-            if self.methodKeys.has_key( event.keysym ):
-                self.mcStateManager.setState( 'controlx', True )
-                self.regMeth = self.methodKeys[ event.keysym ]
-                self.registermode = 2
-                svar = self.svars[ event.widget ]
-                svar.set( self.keyText[ event.keysym ] )
-                return
-        
-            self.stopControlX( event )
-        #@nonl
-        #@-node:ekr.20050724075352.184:setNextRegister
-        #@+node:ekr.20050724075352.187:viewRegister
-        def viewRegister( self, event ):
-            
-            self.stopControlX( event )
-            if event.keysym in string.letters:
-                text = self.registers[ event.keysym.lower() ]
-                svar, label = self.getSvarLabel( event )
-                svar.set( text )
-        #@nonl
-        #@-node:ekr.20050724075352.187:viewRegister
+        #@-node:ekr.20050726043333.1:Helpers
         #@-others
     #@nonl
-    #@-node:ekr.20050724075352.170:class registerCommandsClass FINISH
+    #@-node:ekr.20050724075352.170:class registerCommandsClass
+    #@+node:ekr.20050724075352.117:class bufferCommandsClass
+    #@+at 
+    #@nonl
+    # An Emacs instance does not have knowledge of what is considered a buffer 
+    # in the environment.
+    # 
+    # The call to setBufferInteractionMethods calls the buffer configuration 
+    # methods.
+    #@-at
+    #@@c
+    
+    class bufferCommandsClass  (baseCommands):
+    
+        #@    @+others
+        #@+node:ekr.20050726044533.4: ctor
+        def __init__ (self,emacs):
+            
+            Emacs.baseCommands.__init__(self,emacs) # init the base class.
+            
+            self.bufferListGetters = {} # Set by buffer configuration methods.
+            
+            # Used by chooseBuffer.
+            self.commandsDict = {
+                'append-to-buffer': self._appendToBuffer,
+                'copy-to-buffer':   self._copyToBuffer,
+                'insert-buffer':    self._insertToBuffer,
+                'kill-buffer':     self._killBuffer, 
+                'prepend-to-buffer':self._prependToBuffer, 
+                'switch-to-buffer': self._switchToBuffer, 
+            }
+        #@nonl
+        #@-node:ekr.20050726044533.4: ctor
+        #@+node:ekr.20050726045343: getPublicCommands
+        def getPublicCommands (self):
+        
+            return {
+                'append-to-buffer':     self.appendToBuffer,
+                'copy-to-buffer':       self.copyToBuffer,
+                'insert-buffer':        self.insertBuffer,
+                'kill-buffer' :         self.killBuffer,
+                'list-buffers' :        self.listBuffers,
+                'prepend-to-buffer':    self.prependToBuffer,
+                'rename-buffer':        self.renameBuffer,
+                'switch-to-buffer':     self.switchToBuffer,
+            }
+        #@nonl
+        #@-node:ekr.20050726045343: getPublicCommands
+        #@+node:ekr.20050726045343.1:Entry points
+        def appendToBuffer (self,event):
+            return self.setInBufferMode(event,which='append-to-buffer')
+        
+        def copyToBuffer (self,event):
+            return self.setInBufferMode(event,which='copy-to-buffer')
+        
+        def insertBuffer (self,event):
+            return self.setInBufferMode(event,which= 'insert-buffer')
+        
+        def killBuffer (self,event):
+            return self.setInBufferMode(event,which='kill-buffer')
+        
+        def prependToBuffer (self,event):
+            return self.setInBufferMode(event,which='prepend-to-buffer')
+        
+        def switchToBuffer (self,event):
+            return self.setInBufferMode(event,which='switch-to-buffer')
+        #@nonl
+        #@+node:ekr.20050724075352.127:_appendToBuffer
+        def _appendToBuffer (self,event,name):
+        
+            tbuffer = event.widget 
+            
+            try:
+                txt = tbuffer.get('sel.first','sel.last')
+                bdata = self.bufferDict[name]
+                bdata = '%s%s'%(bdata,txt)
+                self.setBufferData(event,name,bdata)
+            except Exception:
+                pass 
+        
+            return self.keyboardQuit(event)
+        #@nonl
+        #@-node:ekr.20050724075352.127:_appendToBuffer
+        #@+node:ekr.20050724075352.131:_copyToBuffer
+        def _copyToBuffer (self,event,name):
+            
+            tbuffer = event.widget 
+            try:
+                txt = tbuffer.get('sel.first','sel.last')
+                self.setBufferData(event,name,txt)
+            except Exception:
+                pass 
+            
+            return self.keyboardQuit(event)
+        #@nonl
+        #@-node:ekr.20050724075352.131:_copyToBuffer
+        #@+node:ekr.20050724075352.129:_insertToBuffer
+        def _insertToBuffer (self,event,name):
+        
+            tbuffer = event.widget 
+            bdata = self.bufferDict[name]
+            tbuffer.insert('insert',bdata)
+            self._tailEnd(tbuffer)
+        
+            return self.keyboardQuit(event)
+        #@nonl
+        #@-node:ekr.20050724075352.129:_insertToBuffer
+        #@+node:ekr.20050724075352.133:_killBuffer
+        def _killBuffer (self,event,name):
+            
+            method = self.bufferDeletes[event.widget]
+            self.keyboardQuit(event)
+            method(name)
+            return 'break'
+        #@nonl
+        #@-node:ekr.20050724075352.133:_killBuffer
+        #@+node:ekr.20050724075352.128:_prependToBuffer
+        def _prependToBuffer (self,event,name):
+            
+            tbuffer = event.widget
+        
+            try:
+                txt = tbuffer.get('sel.first','sel.last')
+                bdata = self.bufferDict[name]
+                bdata = '%s%s'%(txt,bdata)
+                self.setBufferData(event,name,bdata)
+            except Exception:
+                pass 
+        
+            return self.keyboardQuit(event)
+        #@nonl
+        #@-node:ekr.20050724075352.128:_prependToBuffer
+        #@+node:ekr.20050724075352.132:_switchToBuffer
+        def _switchToBuffer (self,event,name):
+            
+            method = self.bufferGotos[event.widget]
+            self.keyboardQuit(event)
+            method(name)
+            return 'break'
+        #@nonl
+        #@-node:ekr.20050724075352.132:_switchToBuffer
+        #@+node:ekr.20050724075352.135:chooseBuffer
+        def chooseBuffer (self,event):
+            
+            svar, label = self.getSvarLabel(event)
+            state = self.mcStateManager.getState('chooseBuffer')
+        
+            if state.startswith('start'):
+                state = state[5:]
+                self.mcStateManager.setState('chooseBuffer',state)
+                svar.set('')
+            if event.keysym=='Tab':
+                stext = svar.get().strip()
+                if self.bufferTracker.prefix and stext.startswith(self.bufferTracker.prefix):
+                    svar.set(self.bufferTracker.next())#get next in iteration
+                else:
+                    prefix = svar.get()
+                    pmatches =[]
+                    for z in self.bufferDict.keys():
+                        if z.startswith(prefix):
+                            pmatches.append(z)
+                    self.bufferTracker.setTabList(prefix,pmatches)
+                    svar.set(self.bufferTracker.next())#begin iteration on new lsit
+                return 'break'
+            elif event.keysym=='Return':
+               bMode = self.mcStateManager.getState('chooseBuffer')
+               return self.commandsDict[bMode](event,svar.get())
+            else:
+                self.setSvar(event,svar)
+                return 'break'
+        #@nonl
+        #@-node:ekr.20050724075352.135:chooseBuffer
+        #@+node:ekr.20050724075352.130:listBuffers
+        def listBuffers (self,event):
+            
+            bdict = self.getBufferDict(event)
+            list = bdict.keys()
+            list.sort()
+            svar, label = self.getSvarLabel(event)
+            data = '\n'.join(list)
+            self.keyboardQuit(event)
+            svar.set(data)
+        
+            return 'break'
+        #@nonl
+        #@-node:ekr.20050724075352.130:listBuffers
+        #@+node:ekr.20050724075352.134:renameBuffer
+        def renameBuffer (self,event):
+            
+            svar, label = self.getSvarLabel(event)
+        
+            if not self.mcStateManager.getState('renameBuffer'):
+                self.mcStateManager.setState('renameBuffer',True)
+                svar.set('')
+                label.configure(background='lightblue')
+                return 'break'
+            elif event.keysym=='Return':
+               nname = svar.get()
+               self.keyboardQuit(event)
+               self.renameBuffers[event.widget](nname)
+            else:
+                self.setSvar(event,svar)
+                return 'break'
+        #@nonl
+        #@-node:ekr.20050724075352.134:renameBuffer
+        #@-node:ekr.20050726045343.1:Entry points
+        #@+node:ekr.20050724075352.136:setInBufferMode
+        def setInBufferMode (self,event,which):
+            
+            self.keyboardQuit(event)
+            tbuffer = event.widget 
+            self.mcStateManager.setState('chooseBuffer','start%s' % which)
+            svar, label = self.getSvarLabel(event)
+            label.configure(background='lightblue')
+            svar.set('Choose Buffer Name:')
+            self.bufferDict = self.getBufferDict(event)
+            return 'break'
+        #@nonl
+        #@-node:ekr.20050724075352.136:setInBufferMode
+        #@+node:ekr.20050724075352.118:Buffer configuration methods
+        #@+node:ekr.20050724075352.119:setBufferListGetter
+        def setBufferListGetter( self, buffer, method ):
+            #Sets a method that returns a buffer name and its text, and its insert position.
+            self.bufferListGetters[ buffer ] = method
+        #@nonl
+        #@-node:ekr.20050724075352.119:setBufferListGetter
+        #@+node:ekr.20050724075352.120:setBufferSetter
+        def setBufferSetter( self, buffer, method ):
+            #Sets a method that takes a buffer name and the new contents.
+            self.bufferSetters[ buffer ] = method
+        #@nonl
+        #@-node:ekr.20050724075352.120:setBufferSetter
+        #@+node:ekr.20050724075352.121:getBufferDict
+        def getBufferDict( self, event ):
+            
+            tbuffer = event.widget
+            meth = self.bufferListGetters[ tbuffer ]
+            return meth()
+        #@nonl
+        #@-node:ekr.20050724075352.121:getBufferDict
+        #@+node:ekr.20050724075352.122:setBufferData
+        def setBufferData( self, event, name, data ):
+            
+            tbuffer = event.widget
+            meth = self.bufferSetters[ tbuffer ]
+            meth( name, data )
+        #@nonl
+        #@-node:ekr.20050724075352.122:setBufferData
+        #@+node:ekr.20050724075352.123:setBufferGoto
+        def setBufferGoto( self, tbuffer, method ):
+            self.bufferGotos[ tbuffer ] = method
+        #@nonl
+        #@-node:ekr.20050724075352.123:setBufferGoto
+        #@+node:ekr.20050724075352.124:setBufferDelete
+        def setBufferDelete( self, tbuffer, method ):
+            
+            self.bufferDeletes[ tbuffer ] = method
+        #@nonl
+        #@-node:ekr.20050724075352.124:setBufferDelete
+        #@+node:ekr.20050724075352.125:setBufferRename
+        def setBufferRename( self, buffer, method ):
+            
+            self.renameBuffers[ buffer ] = method
+        #@nonl
+        #@-node:ekr.20050724075352.125:setBufferRename
+        #@-node:ekr.20050724075352.118:Buffer configuration methods
+        #@-others
+    #@nonl
+    #@-node:ekr.20050724075352.117:class bufferCommandsClass
     #@+node:ekr.20050724075352.137:macro methods DO NEXT
     #@+at
     # general macro methods.
