@@ -3475,6 +3475,7 @@ class baseCommands:
             self.parenLevel = 0
             self.prevName = None
             self.s = None # The string containing the line.
+            self.squareBracketLevel = 0
             self.srow = self.scol = 0 # The starting row/col of the token.
             self.startline = True # True: the token starts a line.
             self.tracing = False
@@ -3720,7 +3721,8 @@ class baseCommands:
         #@+node:ekr.20040711135244.11:doOp
         def doOp (self):
             
-            val = self.val ; outer = self.parenLevel == 0
+            val = self.val
+            outer = self.parenLevel == 0 and self.squareBracketLevel == 0
             
             # New in Python 2.4: '@' is an operator, not an error token.
             if self.val == '@':
@@ -3729,39 +3731,39 @@ class baseCommands:
                 i = g.skip_ws(self.s,self.scol+1)
                 ws = self.s[self.scol+1:i]
                 if ws: self.array.append(ws)
-            elif val == ':':
-                self.put(': ')
-            elif val == '[':
-                s = g.choose(outer,' %s','%s')
-                self.put(s % val)
-            elif val == ']':
-                s = g.choose(outer,'%s ','%s')
-                self.put(s % val)
             elif val == '(':
-                self.parenLevel += 1
+                # Nothing added; possibly strip leading blank.
                 self.put('(',strip=self.lastName=='name')
-            elif val == ')':
-                self.parenLevel -= 1
-                s = g.choose(outer,'%s ','%s')
-                self.put(s % val)
-            elif val == '<<':
-                self.put('<< ')
-            elif val == '>>':
-                self.put(' >>')
-            elif val in ('^','~'): # Unary ops.
-                s = g.choose(outer,' %s','%s')
-                self.put(s % val)
+                self.parenLevel += 1
             elif val in ('=','==','+=','-=','!=','<=','>=','<','>','<>'):
-                # Compress these inside parents.
+                # Add leading and trailing blank in outer mode.
                 s = g.choose(outer,' %s ','%s')
                 self.put(s % val)
-            elif val in ('&','%','|','*','**','/','//'):
-                # Always give these room.
+            elif val in ('^','~','{','['):
+                # Add leading blank in outer mode.
+                s = g.choose(outer,' %s','%s')
+                self.put(s % val)
+                if val == '[': self.squareBracketLevel += 1
+            elif val in (',',':','}',']',')'):
+                # Add trailing blank in outer mode.
+                s = g.choose(outer,'%s ','%s')
+                self.put(s % val)
+                if val == ']': self.squareBracketLevel -= 1
+                if val == ')': self.parenLevel -= 1
+            # ----- no difference between outer and inner modes ---
+            elif val in (';','&','%','|','*','**','/','//'):
+                # Add leading and trailing blank.
                 self.put(' %s ' % val)
+            elif val == '>>':
+                # Add leading blank.
+                self.put(' %s' % val)
+            elif val == '<<':
+                # Add trailing blank.
+                self.put('%s ' % val)
             elif val in ('+','-'):
                 # Could be binary or unary.  Or could be a hyphen in a section name.
                 # Add preceding blank only for non-id's.
-                if 1:
+                if outer:
                     if self.array:
                         prev = self.array[-1].rstrip()
                         if prev and prev[-1] not in string.digits + string.letters:
@@ -3770,11 +3772,6 @@ class baseCommands:
                     else: self.put(val) # Try to leave whitespace unchanged.
                 else:
                     self.put(val)
-            elif val == ',':
-                s = g.choose(outer,'%s ','%s')
-                self.put(s % val)
-            elif val == ';':
-                self.put(" ; ")
             else:
                 self.put(val)
         #@nonl
