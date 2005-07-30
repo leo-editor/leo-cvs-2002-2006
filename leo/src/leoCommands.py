@@ -3692,6 +3692,16 @@ class baseCommands:
         #@-node:ekr.20041021102340:doMultiLine (strings, etc).
         #@+node:ekr.20041021101911.5:doName
         def doName(self):
+            
+            # Ensure whitespace or start-of-line precedes the name.
+            if self.array:
+                last = self.array[-1]
+                ch = last[-1]
+                outer = self.parenLevel == 0 and self.squareBracketLevel == 0
+                chars = '@ \t{([.'
+                if not outer: chars += ',=<>*-+&|/'
+                if ch not in chars:
+                    self.array.append(' ')
         
             self.array.append("%s " % self.val)
         
@@ -3732,10 +3742,10 @@ class baseCommands:
                 ws = self.s[self.scol+1:i]
                 if ws: self.array.append(ws)
             elif val == '(':
-                # Nothing added; possibly strip leading blank.
-                self.put('(',strip=self.lastName=='name')
+                # Nothing added; possibly strip leading blank before function calls but not before 'in'.
+                self.put('(',strip=self.lastName=='name' and self.prevName != 'in')
                 self.parenLevel += 1
-            elif val in ('=','==','+=','-=','!=','<=','>=','<','>','<>'):
+            elif val in ('=','==','+=','-=','!=','<=','>=','<','>','<>','*','**','+','&','|','/','//'):
                 # Add leading and trailing blank in outer mode.
                 s = g.choose(outer,' %s ','%s')
                 self.put(s % val)
@@ -3751,7 +3761,7 @@ class baseCommands:
                 if val == ']': self.squareBracketLevel -= 1
                 if val == ')': self.parenLevel -= 1
             # ----- no difference between outer and inner modes ---
-            elif val in (';','&','%','|','*','**','/','//'):
+            elif val in (';','%'):
                 # Add leading and trailing blank.
                 self.put(' %s ' % val)
             elif val == '>>':
@@ -3760,7 +3770,7 @@ class baseCommands:
             elif val == '<<':
                 # Add trailing blank.
                 self.put('%s ' % val)
-            elif val in ('+','-'):
+            elif val in ('-'):
                 # Could be binary or unary.  Or could be a hyphen in a section name.
                 # Add preceding blank only for non-id's.
                 if outer:
