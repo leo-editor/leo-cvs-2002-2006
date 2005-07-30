@@ -124,11 +124,11 @@ import weakref
 # - Allow one (or more?) stoppers that prevent backspacing.
 # - Backspacing after tab-completion should go back to previously typed char 
 # and remove _that_.
-# - Use status line (disable it) for minibuffer.
+# - Use status line (disable it) for miniBuffer.
 # - Create editor helper class.
 # 
 # Rather than passing an event to commands, masterCommand should globals for 
-# state, minibuffer, etc.
+# state, miniBuffer, etc.
 #@-at
 #@-node:ekr.20050729081915:Improve minibuffer
 #@+node:ekr.20050729081915.1:Improve state handling (simplify masterCommand)
@@ -192,8 +192,6 @@ USE_TEMACS = True  # False:  use SwingMacs code base  (will probably never happe
 if USE_TEMACS:
     #@    << define usetemacs globals >>
     #@+node:ekr.20050724080034:<< define usetemacs globals >>
-    ### editors = weakref.WeakKeyDictionary()
-    
     haveseen = weakref.WeakKeyDictionary()
     extensions = []
     new_keystrokes = {}
@@ -645,7 +643,7 @@ def modifyOnBodyKey (self,event):
     c = self.c
 
     if event.char.isspace(): 
-        if c.emacs.mcStateManager.hasState():
+        if c.emacs.stateManager.hasState():
            return None
     else:
         return orig_OnBodyKey(self,event)
@@ -698,24 +696,23 @@ def createBindings (self,frame):
     #@nonl
     #@-node:ekr.20050724074642.27:<< define utTailEnd >>
     #@nl
-    emacs.keyHandler.setTailEnd(frame.bodyCtrl,utTailEnd)
+    emacs.miniBuffer.setTailEnd(frame.bodyCtrl,utTailEnd)
     emacs.emacsControlCommands.setShutdownHook(self.c.close)
     addTemacsExtensions(emacs)
     addTemacsAbbreviations(emacs)
-    ### addLeoCommands(self.c,emacs)
     changeKeyStrokes(emacs,frame.bodyCtrl)
     ### setBufferInteractionMethods( self.c, emacs, frame.bodyCtrl )
     orig_del = frame.bodyCtrl.delete
     #@    << define watchDelete >>
     #@+node:ekr.20050724074642.28:<< define watchDelete >>
-    def watchDelete (i,j=None,emacs=emacs): ## ,Emacs=Emacs,orig_del=orig_del,frame=frame):
+    def watchDelete (i,j=None,emacs=emacs):
     
         '''Watches for complete text deletion.  If it occurs, turns off all state in the Emacs instance.'''
     
         if i == '1.0' and j == 'end':
             # g.trace()
             event = Tk.Event()
-            event.widget = frame.bodyCtrl ## Text
+            event.widget = frame.bodyCtrl
             emacs.keyboardQuit(event)
     
         return orig_del(i,j)
@@ -938,10 +935,10 @@ class Emacs:
     #@    @+others
     #@+node:ekr.20050728093027:Birth
     #@+node:ekr.20050724075352.41:Emacs.__init__
-    def __init__ (self,c,tbuffer=None,minibuffer=None,useGlobalKillbuffer=False,useGlobalRegisters=False):
+    def __init__ (self,c,tbuffer=None,miniBufferWidget=None,useGlobalKillbuffer=False,useGlobalRegisters=False):
         '''Sets up Emacs instance.
         
-        Use tbuffer (a Tk Text widget) and minibuffer (a Tk Label) if provided.
+        Use tbuffer (a Tk Text widget) and miniBufferWidget (a Tk Label) if provided.
         Otherwise, the caller must call setBufferStrokes.
         
         useGlobalRegisters and useGlobalKillbuffer indicate whether to use
@@ -958,21 +955,17 @@ class Emacs:
         self.regXKey = None
        
         # Create helper classes.  Order is important here...
-        self.miniBuffer   = self.miniBufferClass(self)
-        self.keyHandler   = self.keyHandlerClass(self)
+        self.miniBuffer   = self.miniBufferClass(self,miniBufferWidget)
         altX_commandsDict = self.createCommandsClasses()
     
         # define delegators.
-        self.mcStateManager = self.keyHandler.mcStateManager
-        self.kstrokeManager = self.keyHandler.kstrokeManager
-        
-        self.getSvarLabel   = self.keyHandler.getSvarLabel
-        self.keyboardQuit   = self.keyHandler.keyboardQuit
-        self.setEvent       = self.keyHandler.setEvent
-        self.setSvar        = self.keyHandler.setSvar
+        self.stateManager = self.miniBuffer.stateManager
+        self.kstrokeManager = self.miniBuffer.kstrokeManager
+        self.keyboardQuit   = self.miniBuffer.keyboardQuit
+        self.setEvent       = self.miniBuffer.setEvent
     
         # Last.
-        self.keyHandler.finishCreate(altX_commandsDict)
+        self.miniBuffer.finishCreate(altX_commandsDict)
         
         # This section sets up the buffer data structures
         self.bufferListGetters ={}
@@ -985,8 +978,8 @@ class Emacs:
         
         self.last_clipboard = None #For interacting with system clipboard.
       
-        if tbuffer and minibuffer:
-            self.keyHandler.setBufferStrokes(tbuffer,minibuffer)
+        if tbuffer and miniBufferWidget:
+            self.miniBuffer.setBufferStrokes(tbuffer)
     #@nonl
     #@-node:ekr.20050724075352.41:Emacs.__init__
     #@+node:ekr.20050725094519:createCommandsClasses
@@ -1036,7 +1029,7 @@ class Emacs:
             command = self.cbDict [set_to]
             self.cbDict [keystroke] = command
             evstring = '<%s>' % keystroke
-            tbuffer.bind(evstring,lambda event,meth=command: self.keyHandler.masterCommand(event,meth,evstring))
+            tbuffer.bind(evstring,lambda event,meth=command: self.miniBuffer.masterCommand(event,meth,evstring))
     #@nonl
     #@-node:ekr.20050724075352.116:reconfigureKeyStroke  WILL PROBABLY GO AWAY
     #@+node:ekr.20050724075352.109:undoer methods
@@ -1079,24 +1072,11 @@ class Emacs:
         def __init__ (self,emacs):
         
             self.c = emacs.c
-            self.miniBuffer = self.minibuffer = emacs.miniBuffer
+            
         
             # Class delegators.
             self.emacs = emacs
-            self.keyHandler     = self.emacs.keyHandler
-            self.mcStateManager = self.keyHandler.mcStateManager
-        
-            # Method delegators.
-        
-            # State...
-            self.getState   = self.mcStateManager.getState
-            self.setState   = self.mcStateManager.setState
-        
-            self.getSvarLabel   = self.keyHandler.getSvarLabel
-            self.keyboardQuit   = self.keyHandler.keyboardQuit
-            self.setEvent       = self.keyHandler.setEvent
-            self.setSvar        = self.keyHandler.setSvar
-            self._tailEnd       = self.keyHandler._tailEnd
+            self.miniBuffer = emacs.miniBuffer
         #@nonl
         #@-node:ekr.20050726044533: ctor
         #@+node:ekr.20050729095537:__call__
@@ -1218,7 +1198,7 @@ class Emacs:
     # an example:
     # type:
     # frogs
-    # after typing 's' type Control-x a i g.  This will turn the minibuffer 
+    # after typing 's' type Control-x a i g.  This will turn the miniBuffer 
     # blue, type in your definition. For example: turtles.
     # 
     # Now in the buffer type:
@@ -1262,24 +1242,27 @@ class Emacs:
         #@+node:ekr.20050725135621:expandAbbrev
         def expandAbbrev (self,event):
             
-            return self.keyboardQuit(event) and self._expandAbbrev(event)
+            b = self.miniBuffer
+        
+            return b.keyboardQuit(event) and self._expandAbbrev(event)
+        
         #@-node:ekr.20050725135621:expandAbbrev
         #@+node:ekr.20050724075352.195:killAllAbbrevs
         def killAllAbbrevs (self,event):
         
+            b = self.miniBuffer
             self.abbrevs = {}
-            return self.keyboardQuit(event)
+            return b.keyboardQuit(event)
         #@nonl
         #@-node:ekr.20050724075352.195:killAllAbbrevs
         #@+node:ekr.20050724075352.197:listAbbrevs
         def listAbbrevs (self,event):
         
-            svar, label = self.getSvarLabel(event)
+            b = self.miniBuffer
             txt = ''
             for z in self.abbrevs:
                 txt = '%s%s=%s\n' % (txt,z,self.abbrevs[z])
-            svar.set('')
-            svar.set(txt)
+            b.set(txt)
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.197:listAbbrevs
@@ -1308,6 +1291,8 @@ class Emacs:
             # EKR: This is a generator (it contains a yield).
             # EKR: To make this work we must define a new generator for each call to regionalExpandAbbrev.
             def searchXR( i1 , i2, ins, event ):
+            
+                b = self.miniBuffer ; tbuffer = event.widget
                 tbuffer.tag_add( 'sXR', i1, i2 )
                 while i1:
                     tr = tbuffer.tag_ranges( 'sXR' )
@@ -1319,8 +1304,7 @@ class Emacs:
                         tbuffer.tag_add( 'found',  '%s wordstart' % i1, '%s wordend' % i1 )
                         tbuffer.tag_config( 'found', background = 'yellow' )
                         if self.abbrevs.has_key( word ):
-                            svar, label = self.getSvarLabel( event )
-                            svar.set( 'Replace %s with %s? y/n' % ( word, self.abbrevs[ word ] ) )
+                            b.set( 'Replace %s with %s? y/n' % ( word, self.abbrevs[ word ] ) )
                             yield None
                             if self.regXKey == 'y':
                                 ind = tbuffer.index( '%s wordstart' % i1 )
@@ -1331,9 +1315,8 @@ class Emacs:
                 tbuffer.selection_clear()
                 tbuffer.tag_delete( 'sXR' )
                 tbuffer.tag_delete( 'found' )
-                svar, label = self.getSvarLabel( event )
-                svar.set( '' )
-                self.setLabelGrey( label )
+                b.set( '' )
+                b.setLabelGrey()
                 self._setRAvars()
             #@nonl
             #@-node:ekr.20050724075352.193:<< define a new generator searchXR >>
@@ -1347,10 +1330,10 @@ class Emacs:
         #@+node:ekr.20050724075352.196:toggleAbbrevMode
         def toggleAbbrevMode (self,event):
          
-            svar, label = self.getSvarLabel(event)
+            b = self.miniBuffer
             self.emacs.abbrevOn = not self.emacs.abbrevOn 
-            self.keyboardQuit(event)
-            svar.set('Abbreviations are ' + g.choose(self.emacs.abbrevOn,'On','Off'))
+            b.keyboardQuit(event)
+            b.set('Abbreviations are ' + g.choose(self.emacs.abbrevOn,'On','Off'))
         #@nonl
         #@-node:ekr.20050724075352.196:toggleAbbrevMode
         #@+node:ekr.20050724075352.200:writeAbbreviations
@@ -1366,46 +1349,46 @@ class Emacs:
         #@-node:ekr.20050725130925: Entry points
         #@+node:ekr.20050724075352.189:abbreviationDispatch
         def abbreviationDispatch (self,event,which):
+            
+            b = self.miniBuffer
         
-            aM = self.getState('abbrevMode')
+            state = b.getState('abbrevMode')
         
-            if not aM:
-                self.setState('abbrevMode',which)
-                svar, label = self.getSvarLabel(event)
-                svar.set('')
-                self.setLabelBlue(label)
-                return 'break'
-            if aM:
+            if state == 0:
+                b.setState('abbrevMode',which)
+                b.set('')
+                b.setLabelBlue()
+            else:
                 self.abbrevCommand1(event)
+                
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.189:abbreviationDispatch
         #@+node:ekr.20050724075352.190:abbrevCommand1
-        def abbrevCommand1( self, event ):
+        def abbrevCommand1 (self,event):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
         
             if event.keysym == 'Return':
-                tbuffer = event.widget
-                word = tbuffer.get( 'insert -1c wordstart', 'insert -1c wordend' )
+                word = tbuffer.get('insert -1c wordstart','insert -1c wordend')
                 if word == ' ': return
-                svar, label = self.getSvarLabel( event )
-                aM = self.getState( 'abbrevMode' )
-                if aM == 1:
-                    self.abbrevs[ svar.get() ] = word
-                elif aM == 2:
-                    self.abbrevs[ word ] = svar.get()
-                self.keyboardQuit( event )
-                self.resetMiniBuffer( event )
-                return 'break'
+                state = b.getState('abbrevMode')
+                if state == 1:
+                    self.abbrevs [b.get()] = word
+                elif state == 2:
+                    self.abbrevs [word] = b.get()
+                b.keyboardQuit(event)
+                b.reset()
+            else:
+                b.update(event)
         
-            svar, label = self.getSvarLabel( event )
-            self.setSvar( event, svar )
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.190:abbrevCommand1
         #@+node:ekr.20050724075352.191:_expandAbbrev
         def _expandAbbrev (self,event):
         
-            tbuffer = event.widget 
+            b = self.miniBuffer ; tbuffer = event.widget 
             word = tbuffer.get('insert -1c wordstart','insert -1c wordend')
             ch = event.char.strip()
         
@@ -1415,7 +1398,7 @@ class Emacs:
             if self.abbrevs.has_key(word):
                 tbuffer.delete('insert -1c wordstart','insert -1c wordend')
                 tbuffer.insert('insert',self.abbrevs[word])
-                return self._tailEnd(tbuffer)
+                return b._tailEnd(tbuffer)
             else:
                 return False 
         #@-node:ekr.20050724075352.191:_expandAbbrev
@@ -1517,9 +1500,9 @@ class Emacs:
             return self.setInBufferMode(event,which='switch-to-buffer')
         #@nonl
         #@+node:ekr.20050724075352.127:_appendToBuffer
-        def _appendToBuffer (self,event,name):
+        def _appendToBuffer (self,event,name): # event IS used.
         
-            tbuffer = event.widget 
+            b = self.miniBuffer ; tbuffer = event.widget
             
             try:
                 txt = tbuffer.get('sel.first','sel.last')
@@ -1529,38 +1512,39 @@ class Emacs:
             except Exception:
                 pass 
         
-            return self.keyboardQuit(event)
+            return b.keyboardQuit(event)
         #@nonl
         #@-node:ekr.20050724075352.127:_appendToBuffer
         #@+node:ekr.20050724075352.131:_copyToBuffer
-        def _copyToBuffer (self,event,name):
+        def _copyToBuffer (self,event,name): # event IS used.
             
-            tbuffer = event.widget 
+            b = self.miniBuffer ; tbuffer = event.widget 
             try:
                 txt = tbuffer.get('sel.first','sel.last')
                 self.setBufferData(event,name,txt)
             except Exception:
                 pass 
             
-            return self.keyboardQuit(event)
+            return b.keyboardQuit(event)
         #@nonl
         #@-node:ekr.20050724075352.131:_copyToBuffer
         #@+node:ekr.20050724075352.129:_insertToBuffer
         def _insertToBuffer (self,event,name):
         
-            tbuffer = event.widget 
+            b = self.miniBuffer ; tbuffer = event.widget 
             bdata = self.bufferDict[name]
             tbuffer.insert('insert',bdata)
-            self._tailEnd(tbuffer)
+            b._tailEnd(tbuffer)
         
-            return self.keyboardQuit(event)
+            return b.keyboardQuit(event)
         #@nonl
         #@-node:ekr.20050724075352.129:_insertToBuffer
         #@+node:ekr.20050724075352.133:_killBuffer
         def _killBuffer (self,event,name):
             
+            b = self.miniBuffer
             method = self.bufferDeletes[event.widget]
-            self.keyboardQuit(event)
+            b.keyboardQuit(event)
             method(name)
             return 'break'
         #@nonl
@@ -1568,7 +1552,7 @@ class Emacs:
         #@+node:ekr.20050724075352.128:_prependToBuffer
         def _prependToBuffer (self,event,name):
             
-            tbuffer = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
         
             try:
                 txt = tbuffer.get('sel.first','sel.last')
@@ -1578,14 +1562,15 @@ class Emacs:
             except Exception:
                 pass 
         
-            return self.keyboardQuit(event)
+            return b.keyboardQuit(event)
         #@nonl
         #@-node:ekr.20050724075352.128:_prependToBuffer
         #@+node:ekr.20050724075352.132:_switchToBuffer
         def _switchToBuffer (self,event,name):
             
+            b = self.miniBuffer
             method = self.bufferGotos[event.widget]
-            self.keyboardQuit(event)
+            b.keyboardQuit(event)
             method(name)
             return 'break'
         #@nonl
@@ -1593,44 +1578,44 @@ class Emacs:
         #@+node:ekr.20050724075352.135:chooseBuffer
         def chooseBuffer (self,event):
             
-            svar, label = self.getSvarLabel(event)
-            state = self.getState('chooseBuffer')
-        
+            b = self.miniBuffer
+            state = b.getState('chooseBuffer')
             if state.startswith('start'):
                 state = state[5:]
-                self.setState('chooseBuffer',state)
-                svar.set('')
+                b.setState('chooseBuffer',state)
+                b.set('')
             if event.keysym=='Tab':
-                stext = svar.get().strip()
+                stext = b.get().strip()
                 if self.bufferTracker.prefix and stext.startswith(self.bufferTracker.prefix):
-                    svar.set(self.bufferTracker.next())#get next in iteration
+                    b.set(self.bufferTracker.next())#get next in iteration
                 else:
-                    prefix = svar.get()
+                    prefix = b.get()
                     pmatches =[]
                     for z in self.bufferDict.keys():
                         if z.startswith(prefix):
                             pmatches.append(z)
                     self.bufferTracker.setTabList(prefix,pmatches)
-                    svar.set(self.bufferTracker.next())#begin iteration on new lsit
+                    b.set(self.bufferTracker.next())#begin iteration on new lsit
                 return 'break'
             elif event.keysym=='Return':
-               bMode = self.getState('chooseBuffer')
-               return self.commandsDict[bMode](event,svar.get())
+               bMode = b.getState('chooseBuffer')
+               return self.commandsDict[bMode](event,b.get())
             else:
-                self.setSvar(event,svar)
+                self.update(event)
                 return 'break'
         #@nonl
         #@-node:ekr.20050724075352.135:chooseBuffer
         #@+node:ekr.20050724075352.130:listBuffers
         def listBuffers (self,event):
             
+            b = self.miniBuffer ; tbuffer = event.widget
+        
             bdict = self.getBufferDict(event)
             list = bdict.keys()
             list.sort()
-            svar, label = self.getSvarLabel(event)
             data = '\n'.join(list)
-            self.keyboardQuit(event)
-            svar.set(data)
+            b.keyboardQuit(event)
+            b.set(data)
         
             return 'break'
         #@nonl
@@ -1638,19 +1623,19 @@ class Emacs:
         #@+node:ekr.20050724075352.134:renameBuffer
         def renameBuffer (self,event):
             
-            svar, label = self.getSvarLabel(event)
+            b = self.miniBuffer ; tbuffer = event.widget
         
-            if not self.getState('renameBuffer'):
-                self.setState('renameBuffer',True)
-                svar.set('')
-                label.configure(background='lightblue')
+            if not b.getState('renameBuffer'):
+                b.setState('renameBuffer',True)
+                b.set('')
+                b.setLabelBlue()
                 return 'break'
             elif event.keysym=='Return':
-               nname = svar.get()
-               self.keyboardQuit(event)
-               self.renameBuffers[event.widget](nname)
+               nname = b.get()
+               b.keyboardQuit(event)
+               self.renameBuffers[tbuffer](nname)
             else:
-                self.setSvar(event,svar)
+                b.update(event)
                 return 'break'
         #@nonl
         #@-node:ekr.20050724075352.134:renameBuffer
@@ -1658,12 +1643,11 @@ class Emacs:
         #@+node:ekr.20050724075352.136:setInBufferMode
         def setInBufferMode (self,event,which):
             
-            self.keyboardQuit(event)
-            tbuffer = event.widget 
-            self.setState('chooseBuffer','start%s' % which)
-            svar, label = self.getSvarLabel(event)
-            label.configure(background='lightblue')
-            svar.set('Choose Buffer Name:')
+            b = self.miniBuffer ; tbuffer = event.widget
+            b.keyboardQuit(event)
+            b.setState('chooseBuffer','start%s' % which)
+            b.setLabelBlue()
+            b.set('Choose Buffer Name:')
             self.bufferDict = self.getBufferDict(event)
             return 'break'
         #@nonl
@@ -1741,83 +1725,80 @@ class Emacs:
         #@-node:ekr.20050727092854: ctor
         #@+node:ekr.20050727093829: getPublicCommands
         def getPublicCommands (self):
-            
-            ### To do:  allow forward/backwards commands to cross node boundaries.
-           
+        
+            b = self.miniBuffer
         
             return {
-                'back-to-indentation': lambda event: self.backToIndentation( event ) and self.keyboardQuit( event ),
-                'backward-delete-char':lambda event, which = 'BackSpace': self.manufactureKeyPress( event, which ) and self.keyboardQuit( event ),
-                'backward-char': lambda event, which = 'Left': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+                'back-to-indentation': lambda event: self.backToIndentation(event) and b.keyboardQuit(event),
+                'backward-delete-char': lambda event, which = 'BackSpace': self.manufactureKeyPress(event,which) and b.keyboardQuit(event),
+                'backward-char': lambda event, which = 'Left': b.keyboardQuit(event) and self.manufactureKeyPress(event,which),
                 'backward-kill-paragraph': self.backwardKillParagraph,
-                'beginning-of-buffer': lambda event, spot = '1.0' : self.moveTo( event, spot ) and self.keyboardQuit( event ),
-                'beginning-of-line': lambda event, spot = 'insert linestart': self.moveTo( event, spot ) and self.keyboardQuit( event ),
-                'capitalize-word': lambda event, which = 'cap' : self.capitalize( event, which ) and self.keyboardQuit( event ),
-                'center-line': lambda event: self.centerLine( event ) and self.keyboardQuit( event ),
-                'center-region': lambda event: self.centerRegion( event ) and self.keyboardQuit( event ),
-                'dabbrev-completion': lambda event: self.dynamicExpansion2( event ) and self.keyboardQuit( event ),
-                'dabbrev-expands': lambda event: self.dynamicExpansion( event ) and self.keyboardQuit( event ),
-                'delete-char': lambda event: self.deleteNextChar( event ) and self.keyboardQuit( event ) ,
-                'delete-indentation': lambda event: self.deleteIndentation( event ) and self.keyboardQuit( event ),
-                'downcase-region': lambda event: self.upperLowerRegion( event , 'low' ) and self.keyboardQuit( event ),
-                'downcase-word': lambda event, which = 'low' : self.capitalize( event, which ) and self.keyboardQuit( event ),
-                'end-of-buffer': lambda event, spot = 'end' : self.moveTo( event, spot ) and self.keyboardQuit( event ),
-                'end-of-line': lambda event, spot = 'insert lineend': self.moveTo( event, spot ) and self.keyboardQuit( event ),
+                'beginning-of-buffer': lambda event, spot = '1.0': self.moveTo(event,spot) and b.keyboardQuit(event),
+                'beginning-of-line': lambda event, spot = 'insert linestart': self.moveTo(event,spot) and b.keyboardQuit(event),
+                'capitalize-word': lambda event, which = 'cap': self.capitalize(event,which) and b.keyboardQuit(event),
+                'center-line': lambda event: self.centerLine(event) and b.keyboardQuit(event),
+                'center-region': lambda event: self.centerRegion(event) and b.keyboardQuit(event),
+                'dabbrev-completion': lambda event: self.dynamicExpansion2(event) and b.keyboardQuit(event),
+                'dabbrev-expands': lambda event: self.dynamicExpansion(event) and b.keyboardQuit(event),
+                'delete-char': lambda event: self.deleteNextChar(event) and b.keyboardQuit(event),
+                'delete-indentation': lambda event: self.deleteIndentation(event) and b.keyboardQuit(event),
+                'downcase-region': lambda event: self.upperLowerRegion(event,'low') and b.keyboardQuit(event),
+                'downcase-word': lambda event, which = 'low': self.capitalize(event,which) and b.keyboardQuit(event),
+                'end-of-buffer': lambda event, spot = 'end': self.moveTo(event,spot) and b.keyboardQuit(event),
+                'end-of-line': lambda event, spot = 'insert lineend': self.moveTo(event,spot) and b.keyboardQuit(event),
                 'eval-expression': self.startEvaluate,
                 'fill-region-as-paragraph': self.fillRegionAsParagraph,
                 'fill-region': self.fillRegion,
                 'flush-lines': lambda event: self.flushLines,
-                'forward-char': lambda event, which = 'Right': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
-                'goto-char': lambda event: self.startGoto( event, True ),
-                'goto-line': lambda event: self.startGoto( event ),
-                'how-many': self.startHowMany,  ### Change name?
-                'indent-region': lambda event: self.indentRegion( event ) and self.keyboardQuit( event ),
-                'indent-rigidly': lambda event: self.tabIndentRegion( event ) and self.keyboardQuit( event ),
+                'forward-char': lambda event, which = 'Right': b.keyboardQuit(event) and self.manufactureKeyPress(event,which),
+                'goto-char': lambda event: self.startGoto(event,True),
+                'goto-line': lambda event: self.startGoto(event),
+                'how-many': self.startHowMany, ### Change name?
+                'indent-region': lambda event: self.indentRegion(event) and b.keyboardQuit(event),
+                'indent-rigidly': lambda event: self.tabIndentRegion(event) and b.keyboardQuit(event),
                 'indent-relative': self.indentRelative,
-                'insert-file' : lambda event: self.insertFile( event ) and self.keyboardQuit( event ),
+                'insert-file': lambda event: self.insertFile(event) and b.keyboardQuit(event),
                 'keep-lines': self.keepLines,
                 'kill-paragraph': self.killParagraph,
-                'newline-and-indent': lambda event: self.insertNewLineAndTab( event ) and self.keyboardQuit( event ),
-                'next-line': lambda event, which = 'Down': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
-                'previous-line': lambda event, which = 'Up': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
-                'replace-regex': lambda event:  self.activateReplaceRegex() and self.replaceString( event ),
+                'newline-and-indent': lambda event: self.insertNewLineAndTab(event) and b.keyboardQuit(event),
+                'next-line': lambda event, which = 'Down': b.keyboardQuit(event) and self.manufactureKeyPress(event,which),
+                'previous-line': lambda event, which = 'Up': b.keyboardQuit(event) and self.manufactureKeyPress(event,which),
+                'replace-regex': lambda event: self.activateReplaceRegex() and self.replaceString(event),
                 'replace-string': self.replaceString,
-                're-search-forward': lambda event: self.reStart( event ),
-                're-search-backward': lambda event: self.reStart( event, which = 'backward' ), 
                 'reverse-region': self.reverseRegion,
-                'save-buffer' : lambda event: self.saveFile( event ) and self.keyboardQuit( event ),
-                'scroll-down': lambda event, way = 'south': self.screenscroll( event, way ) and self.keyboardQuit( event ),
-                'scroll-up': lambda event, way = 'north' : self.screenscroll( event, way ) and self.keyboardQuit( event ),
+                'save-buffer': lambda event: self.saveFile(event) and b.keyboardQuit(event),
+                'scroll-down': lambda event, way = 'south': self.screenscroll(event,way) and b.keyboardQuit(event),
+                'scroll-up': lambda event, way = 'north': self.screenscroll(event,way) and b.keyboardQuit(event),
                 'set-fill-column': self.setFillColumn,
                 'set-fill-prefix': self.setFillPrefix,
-                'set-mark-command': lambda event: self.setRegion( event ) and self.keyboardQuit( event ),
+                'set-mark-command': lambda event: self.setRegion(event) and b.keyboardQuit(event),
                 'sort-columns': self.sortColumns,
                 'sort-fields': self.sortFields,
                 'sort-lines': self.sortLines,
-                'split-line' : lambda event: self.insertNewLineIndent( event ) and self.keyboardQuit( event ),
+                'split-line': lambda event: self.insertNewLineIndent(event) and b.keyboardQuit(event),
                 'tabify': self.tabify,
-                'transpose-chars': lambda event : self.swapCharacters( event ) and self.keyboardQuit( event ),
-                'transpose-words': lambda event, sw = self.swapSpots: self.swapWords( event, sw ) and self.keyboardQuit( event ),
-                'transpose-lines': lambda event: self.transposeLines( event ) and self.keyboardQuit( event ),
+                'transpose-chars': lambda event: self.swapCharacters(event) and b.keyboardQuit(event),
+                'transpose-words': lambda event, sw = self.swapSpots: self.swapWords(event,sw) and b.keyboardQuit(event),
+                'transpose-lines': lambda event: self.transposeLines(event) and b.keyboardQuit(event),
                 'untabify': self.untabify,
-                'upcase-region': lambda event: self.upperLowerRegion( event, 'up' ) and self.keyboardQuit( event ),
-                'upcase-word': lambda event, which = 'up' : self.capitalize( event, which ) and self.keyboardQuit( event ),
-                'view-lossage':         self.viewLossage,
-                'what-line':            self.whatLine,
-            
+                'upcase-region': lambda event: self.upperLowerRegion(event,'up') and b.keyboardQuit(event),
+                'upcase-word': lambda event, which = 'up': self.capitalize(event,which) and b.keyboardQuit(event),
+                'view-lossage': self.viewLossage,
+                'what-line': self.whatLine,
+        
                 # Added by EKR:
-                'back-sentence':            self.backSentence,
-                'delete-spaces':            self.deleteSpaces,
-                'forward-sentence':         self.forwardSentence,
-                'exchange-point-mark':      self.exchangePointMark,
+                'back-sentence': self.backSentence,
+                'delete-spaces': self.deleteSpaces,
+                'forward-sentence': self.forwardSentence,
+                'exchange-point-mark': self.exchangePointMark,
                 'indent-to-comment-column': self.indentToCommentColumn,
-                'insert-newline':           self.insertNewline,
-                'insert-parentheses':       self.insertParentheses,
-                'line-number':              self.lineNumber,
-                'move-past-close':          self.movePastClose,
-                'remove-blank-lines':       self.removeBlankLines,
-                'select-all':               self.selectAll,
-                'set-comment-column':       self.setCommentColumn,
+                'insert-newline': self.insertNewline,
+                'insert-parentheses': self.insertParentheses,
+                'line-number': self.lineNumber,
+                'move-past-close': self.movePastClose,
+                'remove-blank-lines': self.removeBlankLines,
+                'select-all': self.selectAll,
+                'set-comment-column': self.setCommentColumn,
             }
         #@nonl
         #@-node:ekr.20050727093829: getPublicCommands
@@ -1844,7 +1825,7 @@ class Emacs:
         #@+node:ekr.20050724075352.276:dynamicExpansion
         def dynamicExpansion( self, event ):#, store = {'rlist': [], 'stext': ''} ):
             
-            tbuffer = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
             rlist = self.store[ 'rlist' ]
             stext = self.store[ 'stext' ]
             i = tbuffer.index( 'insert -1c wordstart' )
@@ -1855,7 +1836,7 @@ class Emacs:
             def doDa( txt, from_ = 'insert -1c wordstart', to_ = 'insert -1c wordend' ):
                 tbuffer.delete( from_, to_ ) 
                 tbuffer.insert( 'insert', txt, 'dA' )
-                return self._tailEnd( tbuffer )
+                return b._tailEnd( tbuffer )
                 
             if dA:
                 dA1, dA2 = dA
@@ -1886,7 +1867,8 @@ class Emacs:
         #@+node:ekr.20050724075352.277:dynamicExpansion2
         def dynamicExpansion2( self, event ):
             
-            tbuffer = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
+        
             i = tbuffer.index( 'insert -1c wordstart' )
             i2 = tbuffer.index( 'insert -1c wordend' )
             txt = tbuffer.get( i, i2 )   
@@ -1896,7 +1878,7 @@ class Emacs:
             if dEstring:
                 tbuffer.delete( i , i2 )
                 tbuffer.insert( i, dEstring )    
-                return self._tailEnd( tbuffer )
+                return b._tailEnd( tbuffer )
         #@-node:ekr.20050724075352.277:dynamicExpansion2
         #@+node:ekr.20050724075352.278:getDynamicList (helper)
         def getDynamicList( self, tbuffer, txt , rlist ):
@@ -1916,70 +1898,65 @@ class Emacs:
         #@-node:ekr.20050724075352.275:dynamic abbreviation...
         #@+node:ekr.20050724075352.310:esc methods for Python evaluation
         #@+node:ekr.20050724075352.311:watchEscape
-        def watchEscape( self, event ):
-            
-            svar, label = self.getSvarLabel( event )
-            if not self.mcStateManager.hasState():
-                self.setState( 'escape' , 'start' )
-                self.setLabelBlue( label )
-                svar.set( 'Esc' )
+        def watchEscape (self,event):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+            if not b.hasState():
+                b.setState('escape','start')
+                b.setLabelBlue()
+                b.set('Esc')
                 return 'break'
-            if self.mcStateManager.whichState() == 'escape':
-                
-                state = self.getState( 'escape' )
-                hi1 = self.keysymhistory[ 0 ]
-                hi2 = self.keysymhistory[ 1 ]
+            if b.whichState() == 'escape':
+                state = b.getState('escape')
+                hi1 = self.keysymhistory [0]
+                hi2 = self.keysymhistory [1]
                 if state == 'esc esc' and event.keysym == 'colon':
-                    return self.startEvaluate( event )
+                    return self.startEvaluate(event)
                 elif state == 'evaluate':
-                    return self.escEvaluate( event )    
+                    return self.escEvaluate(event)
                 elif hi1 == hi2 == 'Escape':
-                    self.setState( 'escape', 'esc esc' )
-                    svar.set( 'Esc Esc -' )
+                    b.setState('escape','esc esc')
+                    b.set('Esc Esc -')
                     return 'break'
-                elif event.keysym in ( 'Shift_L', 'Shift_R' ):
+                elif event.keysym in ('Shift_L','Shift_R'):
                     return
                 else:
-                    return self.keyboardQuit( event )
+                    return b.keyboardQuit(event)
         #@nonl
         #@-node:ekr.20050724075352.311:watchEscape
         #@+node:ekr.20050724075352.312:escEvaluate
-        def escEvaluate( self, event ):
-            
-            svar, label = self.getSvarLabel( event )
-            if svar.get() == 'Eval:':
-                svar.set( '' )
-            
-            if event.keysym =='Return':
-            
-                expression = svar.get()
+        def escEvaluate (self,event):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+        
+            if b.get() == 'Eval:':
+                b.set('')
+        
+            if event.keysym == 'Return':
+                expression = b.get()
                 try:
                     ok = False
-                    tbuffer = event.widget
-                    result = eval( expression, {}, {} )
-                    result = str( result )
-                    tbuffer.insert( 'insert', result )
+                    result = eval(expression,{},{})
+                    result = str(result)
+                    tbuffer.insert('insert',result)
                     ok = True
                 finally:
-                    self.keyboardQuit( event )
+                    b.keyboardQuit(event)
                     if not ok:
-                        svar.set( 'Error: Invalid Expression' )
-                    return self._tailEnd( tbuffer )
-                
-                
+                        b.set('Error: Invalid Expression')
+                    return b._tailEnd(tbuffer)
             else:
-                
-                self.setSvar( event, svar )
+                b.update(event)
                 return 'break'
         #@nonl
         #@-node:ekr.20050724075352.312:escEvaluate
         #@+node:ekr.20050724075352.313:startEvaluate
-        def startEvaluate( self, event ):
-            
-            svar, label = self.getSvarLabel( event )
-            self.setLabelBlue( label )
-            svar.set( 'Eval:' )
-            self.setState( 'escape', 'evaluate' )
+        def startEvaluate (self,event):
+        
+            b = self.miniBuffer
+            b.setLabelBlue()
+            b.set('Eval:')
+            b.setState('escape','evaluate')
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.313:startEvaluate
@@ -2013,11 +1990,11 @@ class Emacs:
         def centerLine( self, event ):
             '''Centers line within current fillColumn'''
             
-            tbuffer = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
             ind = tbuffer.index( 'insert linestart' )
             txt = tbuffer.get( 'insert linestart', 'insert lineend' )
             txt = txt.strip()
-            if len( txt ) >= self.fillColumn: return self._tailEnd( tbuffer )
+            if len( txt ) >= self.fillColumn: return b._tailEnd( tbuffer )
             amount = ( self.fillColumn - len( txt ) ) / 2
             ws = ' ' * amount
             col, nind = ind.split( '.' )
@@ -2025,36 +2002,36 @@ class Emacs:
             if not ind: return 'break'
             tbuffer.delete( 'insert linestart', '%s' % ind )
             tbuffer.insert( 'insert linestart', ws )
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.210:centerLine
         #@+node:ekr.20050724075352.212:setFillColumn
-        def setFillColumn( self, event ):
-            
-            if self.getState( 'set-fill-column' ):
+        def setFillColumn (self,event):
+        
+            b = self.miniBuffer
+        
+            if b.getState('set-fill-column'):
                 if event.keysym == 'Return':
-                    svar, label = self.getSvarLabel( event )
-                    value = svar.get()
+                    value = b.get()
                     if value.isdigit():
-                        self.fillColumn = int( value )
-                    return self.keyboardQuit( event )
+                        self.fillColumn = int(value)
+                    return b.keyboardQuit(event)
                 elif event.char.isdigit() or event.char == '\b':
-                    svar, label = self.getSvarLabel( event )
-                    self.setSvar( event, svar )
-                    return 'break'
-                return 'break'
+                    b.update(event)
             else:
-                self.setState( 'set-fill-column', 1 )
-                svar, label = self.getSvarLabel( event )
-                svar.set( '' )
-                label.configure( background = 'lightblue' )
-                return 'break'
+                b.setState('set-fill-column',1)
+                b.set('')
+                b.setLabelBlue()
+        
+            return 'break'
         #@nonl
         #@-node:ekr.20050724075352.212:setFillColumn
         #@+node:ekr.20050724075352.211:centerRegion
         def centerRegion( self, event ):
+        
             '''This method centers the current region within the fill column'''
-            tbuffer = event.widget
+        
+            b = self.miniBuffer ; tbuffer = event.widget
             start = tbuffer.index( 'sel.first linestart' )
             sindex , x = start.split( '.' )
             sindex = int( sindex )
@@ -2076,7 +2053,7 @@ class Emacs:
                 tbuffer.delete( '%s.0' % sindex , '%s' % ind )
                 tbuffer.insert( '%s.0' % sindex , ws )
                 sindex = sindex + 1
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.211:centerRegion
         #@+node:ekr.20050724075352.207:setFillPrefix
@@ -2101,16 +2078,14 @@ class Emacs:
         #@-node:ekr.20050724075352.209:fill column and centering
         #@+node:ekr.20050727152153:goto...
         #@+node:ekr.20050724075352.300:startGoto
-        def startGoto( self, event , ch = False):
+        def startGoto (self,event,ch=False):
         
-            if not ch:
-                self.setState( 'goto', 1 )
-            else:
-                self.setState( 'goto', 2 )
-         
-            svar , label = self.getSvarLabel( event )
-            svar.set( '' )
-            label.configure( background = 'lightblue' )
+            b = self.miniBuffer
+        
+            b.setState('goto',b.getState()+1)
+            b.set('')
+            b.setLabelBlue()
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.300:startGoto
@@ -2129,14 +2104,15 @@ class Emacs:
         #@-node:ekr.20050724075352.73:backToIndentation
         #@+node:ekr.20050724075352.251:deleteIndentation
         def deleteIndentation( self, event ):
-            tbuffer = event.widget
+        
+            b = self.miniBuffer ; tbuffer = event.widget
             txt = tbuffer.get( 'insert linestart' , 'insert lineend' )
             txt = ' %s' % txt.lstrip()
             tbuffer.delete( 'insert linestart' , 'insert lineend +1c' )    
             i  = tbuffer.index( 'insert - 1c' )
             tbuffer.insert( 'insert -1c', txt )
             tbuffer.mark_set( 'insert', i )
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.251:deleteIndentation
         #@+node:ekr.20050724075352.66:insertNewLineIndent
@@ -2153,12 +2129,12 @@ class Emacs:
         #@+node:ekr.20050724075352.74:indentRelative
         def indentRelative( self, event ):
             
-            tbuffer = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
             i = tbuffer.index( 'insert' )
             l,c = i.split( '.' )
             c2 = int( c )
             l2 = int( l ) - 1
-            if l2 < 1: return self.keyboardQuit( event )
+            if l2 < 1: return b.keyboardQuit( event )
             txt = tbuffer.get( '%s.%s' % (l2, c2 ), '%s.0 lineend' % l2 )
             if len( txt ) <= len( tbuffer.get( 'insert', 'insert lineend' ) ):
                 tbuffer.insert(  'insert', '\t' )
@@ -2176,8 +2152,8 @@ class Emacs:
                         tbuffer.update_idletasks()
                 
                 
-            self.keyboardQuit( event )
-            return self._tailEnd( tbuffer )
+            b.keyboardQuit( event )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.74:indentRelative
         #@-node:ekr.20050727152153.1:indent...
@@ -2185,89 +2161,93 @@ class Emacs:
         #@+node:ekr.20050724075352.154:howMany
         def howMany (self,event):
         
-            svar, label = self.getSvarLabel(event)
+            b = self.miniBuffer ; tbuffer = event.widget
         
             if event.keysym == 'Return':
-                tbuffer = event.widget
                 txt = tbuffer.get('1.0','end')
-                import re
-                reg1 = svar.get()
+                reg1 = b.get()
                 reg = re.compile(reg1)
                 i = reg.findall(txt)
-                svar.set('%s occurances found of %s' % (len(i),reg1))
-                self.setLabelGrey(label)
-                self.setState('howM',False)
-                return 'break'
+                b.set('%s occurances found of %s' % (len(i),reg1))
+                b.setLabelGrey()
+                b.setState('howM',False)
+            else:
+                b.update(event)
         
-            self.setSvar(event,svar)
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.154:howMany
         #@+node:ekr.20050724075352.81:lineNumber
-        def lineNumber( self, event ):
-            
-            self.stopControlX( event )
-            svar, label = self.getSvarLabel( event )
-            tbuffer = event.widget
-            i = tbuffer.index( 'insert' )
-            i1, i2 = i.split( '.' )
-            c = tbuffer.get( 'insert', 'insert + 1c' )
-            txt = tbuffer.get( '1.0', 'end' )
-            txt2 = tbuffer.get( '1.0', 'insert' )
-            perc = len( txt ) * .01
-            perc = int( len( txt2 ) / perc )
-            svar.set( 'Char: %s point %s of %s(%s%s)  Column %s' %( c, len( txt2), len( txt), perc,'%', i1 ) )
+        def lineNumber (self,event):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+        
+            b.stopControlX(event)
+            i = tbuffer.index('insert')
+            i1, i2 = i.split('.')
+            c = tbuffer.get('insert','insert + 1c')
+            txt = tbuffer.get('1.0','end')
+            txt2 = tbuffer.get('1.0','insert')
+            perc = len(txt) * .01
+            perc = int(len(txt2)/perc)
+            b.set('Char: %s point %s of %s(%s%s)  Column %s' % (c,len(txt2),len(txt),perc,'%',i1))
+        
             return 'break'
+        
         #@-node:ekr.20050724075352.81:lineNumber
         #@+node:ekr.20050724075352.155:startHowMany
-        def startHowMany( self, event ):
+        def startHowMany (self,event):
         
-            self.setState( 'howM', True )
-            svar, label = self.getSvarLabel( event )
-            svar.set( '' )
-            self.setLabelBlue( label )
+            b = self.miniBuffer
+        
+            b.setState('howM',1)
+            b.set('')
+            b.setLabelBlue()
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.155:startHowMany
         #@+node:ekr.20050724075352.82:viewLossage
-        def viewLossage( self, event ):
-            
-            svar, label = self.getSvarLabel( event )
-            loss = ''.join( Emacs.lossage )
-            self.keyboardQuit( event )
-            svar.set( loss )
+        def viewLossage (self,event):
+        
+            b = self.miniBuffer
+            loss = ''.join(Emacs.lossage)
+            b.keyboardQuit(event)
+            b.set(loss)
         #@nonl
         #@-node:ekr.20050724075352.82:viewLossage
         #@+node:ekr.20050724075352.83:whatLine
-        def whatLine( self, event ):
-            
-            tbuffer = event.widget
-            svar, label = self.getSvarLabel( event )
-            i = tbuffer.index( 'insert' )
-            i1, i2 = i.split( '.' )
-            self.keyboardQuit( event )
-            svar.set( "Line %s" % i1 )
+        def whatLine (self,event):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+            i = tbuffer.index('insert')
+            i1, i2 = i.split('.')
+            b.keyboardQuit(event)
+            b.set("Line %s" % i1)
         #@nonl
         #@-node:ekr.20050724075352.83:whatLine
         #@-node:ekr.20050724075352.153:info...
         #@+node:ekr.20050727152153.2:Insert/delete...
         #@+node:ekr.20050724075352.67:insertNewLineAndTab
         def insertNewLineAndTab( self, event ):
+            
             '''Insert a newline and tab'''
-            tbuffer = event.widget
+            
+            b = self.miniBuffer ;tbuffer = event.widget
             self.insertNewLine( event )
             i = tbuffer.index( 'insert +1c' )
             tbuffer.insert( i, '\t' )
             tbuffer.mark_set( 'insert', '%s lineend' % i )
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.67:insertNewLineAndTab
         #@+node:ekr.20050724075352.252:deleteNextChar
         def deleteNextChar( self,event ):
-            tbuffer = event.widget
+        
+            b = self.miniBuffer ; tbuffer = event.widget
             i = tbuffer.index( 'insert' )
             tbuffer.delete( i, '%s +1c' % i )
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.252:deleteNextChar
         #@-node:ekr.20050727152153.2:Insert/delete...
@@ -2297,21 +2277,17 @@ class Emacs:
         #@+node:ekr.20050724075352.296:alterLines
         def alterLines( self, event, which ):
             
-            tbuffer = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
             i = tbuffer.index( 'insert' )
             end = 'end'
             if tbuffer.tag_ranges( 'sel' ):
                 i = tbuffer.index( 'sel.first' )
                 end = tbuffer.index( 'sel.last' )
-                
             txt = tbuffer.get( i, end )
             tlines = txt.splitlines( True )
-            if which == 'flush':
-                keeplines = list( tlines )
-            else:
-                keeplines = []
-            svar, label = self.getSvarLabel( event )
-            pattern = svar.get()
+            if which == 'flush':    keeplines = list( tlines )
+            else:                   keeplines = []
+            pattern = b.get()
             try:
                 regex = re.compile( pattern )
                 for n , z in enumerate( tlines ):
@@ -2322,42 +2298,41 @@ class Emacs:
                         keeplines.append( z )
             except Exception,x:
                 return
-            
             if which == 'flush':
                 keeplines = [ x for x in keeplines if x != None ]
             tbuffer.delete( i, end )
             tbuffer.insert( i, ''.join( keeplines ) )
             tbuffer.mark_set( 'insert', i )
-            self._tailEnd( tbuffer )
+            b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.296:alterLines
         #@+node:ekr.20050724075352.297:processLines
         def processLines (self,event):
         
-            svar, label = self.getSvarLabel(event)
-            state = self.getState('alterlines')
+            b = self.miniBuffer
+            state = b.getState('alterlines')
         
             if state.startswith('start'):
                 state = state [5:]
-                self.setState('alterlines',state)
-                svar.set('')
+                b.setState('alterlines',state)
+                b.set('')
         
             if event.keysym == 'Return':
                 self.alterLines(event,state)
-                return self.keyboardQuit(event)
+                return b.keyboardQuit(event)
             else:
-                self.setSvar(event,svar)
+                b.update(event)
                 return 'break'
         #@nonl
         #@-node:ekr.20050724075352.297:processLines
         #@+node:ekr.20050724075352.298:startLines
-        def startLines( self , event, which = 'flush' ):
+        def startLines (self,event,which='flush'):
         
-            self.keyboardQuit( event )
-            tbuffer = event.widget
-            self.setState( 'alterlines', 'start%s' % which )
-            svar, label = self.getSvarLabel( event )
-            label.configure( background = 'lightblue' )
+            b = self.miniBuffer
+            b.keyboardQuit(event)
+            b.setState('alterlines','start%s' % which)
+            b.setLabelBlue()
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.298:startLines
@@ -2366,7 +2341,8 @@ class Emacs:
         #@+others
         #@+node:ekr.20050724075352.157:selectParagraph
         def selectParagraph( self, event ):
-            tbuffer = event.widget
+        
+            b = self.miniBuffer ; tbuffer = event.widget
             txt = tbuffer.get( 'insert linestart', 'insert lineend' )
             txt = txt.lstrip().rstrip()
             i = tbuffer.index( 'insert' )
@@ -2390,7 +2366,7 @@ class Emacs:
                             i = tbuffer.index( '%s + 1 lines' % i )
                         self._selectParagraph( tbuffer, i )
                         break     
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.157:selectParagraph
         #@+node:ekr.20050724075352.158:_selectParagraph
@@ -2411,7 +2387,7 @@ class Emacs:
         #@+node:ekr.20050724075352.159:killParagraph
         def killParagraph( self, event ):
             
-            tbuffer = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
             i = tbuffer.index( 'insert' )
             txt = tbuffer.get( 'insert linestart', 'insert lineend' )
             if not txt.rstrip().lstrip():
@@ -2421,11 +2397,12 @@ class Emacs:
             self.kill( event, i, i2 )
             tbuffer.mark_set( 'insert', i )
             tbuffer.selection_clear()
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@-node:ekr.20050724075352.159:killParagraph
         #@+node:ekr.20050724075352.160:backwardKillParagraph
-        def backwardKillParagraph( self, event ):   
-            tbuffer = event.widget
+        def backwardKillParagraph( self, event ):
+         
+            b = self.miniBuffer ; tbuffer = event.widget
             i = tbuffer.index( 'insert' )
             i2 = i
             txt = tbuffer.get( 'insert linestart', 'insert lineend' )
@@ -2437,27 +2414,27 @@ class Emacs:
             self.kill( event, i3, i2 )
             tbuffer.mark_set( 'insert', i )
             tbuffer.selection_clear()
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.160:backwardKillParagraph
         #@+node:ekr.20050724075352.214:fillRegion
-        def fillRegion( self, event ):
-            if not self._chckSel( event ):
+        def fillRegion (self,event):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+            if not self._chckSel(event):
                 return
-            tbuffer = event.widget
-            #i = tbuffer.index( 'insert' ) 
-            s1 = tbuffer.index( 'sel.first' )
-            s2 = tbuffer.index( 'sel.last' )
-            tbuffer.mark_set( 'insert', s1 )
-            self.movingParagraphs( event, -1 )
-            if tbuffer.index( 'insert linestart' ) == '1.0':
-                self.fillParagraph( event )
+            s1 = tbuffer.index('sel.first')
+            s2 = tbuffer.index('sel.last')
+            tbuffer.mark_set('insert',s1)
+            self.movingParagraphs(event,-1)
+            if tbuffer.index('insert linestart') == '1.0':
+                self.fillParagraph(event)
             while 1:
-                self.movingParagraphs( event, 1 )
-                if tbuffer.compare( 'insert', '>', s2 ):
+                self.movingParagraphs(event,1)
+                if tbuffer.compare('insert','>',s2):
                     break
-                self.fillParagraph( event )
-            return self._tailEnd( tbuffer )
+                self.fillParagraph(event)
+            return b._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.214:fillRegion
         #@+node:ekr.20050724075352.202:UNTESTED
@@ -2472,9 +2449,8 @@ class Emacs:
         #@+others
         #@+node:ekr.20050724075352.203:movingParagraphs
         def movingParagraphs( self, event, way ):
-            tbuffer = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
             i = tbuffer.index( 'insert' )
-            
             if way == 1:
                 while 1:
                     txt = tbuffer.get( '%s linestart' % i, '%s lineend' %i )
@@ -2505,13 +2481,13 @@ class Emacs:
             if i : 
                 tbuffer.mark_set( 'insert', i )
                 tbuffer.see( 'insert' )
-                return self._tailEnd( tbuffer )
+                return b._tailEnd( tbuffer )
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.203:movingParagraphs
         #@+node:ekr.20050724075352.204:fillParagraph
         def fillParagraph( self, event ):
-            tbuffer = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
             txt = tbuffer.get( 'insert linestart', 'insert lineend' )
             txt = txt.lstrip().rstrip()
             if txt:
@@ -2541,21 +2517,22 @@ class Emacs:
                 tbuffer.delete( '%s linestart' %i2, '%s lineend' % i3 )
                 tbuffer.insert( i2, ntxt )
                 tbuffer.mark_set( 'insert', i )
-                return self._tailEnd( tbuffer )
+                return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.204:fillParagraph
         #@+node:ekr.20050724075352.205:fillRegionAsParagraph
         def fillRegionAsParagraph( self, event ):
+            
+            b = self.miniBuffer ; tbuffer = event.widget
             if not self._chckSel( event ):
                 return
-            tbuffer = event.widget
             i1 = tbuffer.index( 'sel.first linestart' )
             i2 = tbuffer.index( 'sel.last lineend' )
             txt = tbuffer.get(  i1,  i2 )
             txt = self._addPrefix( txt )
             tbuffer.delete( i1, i2 )
             tbuffer.insert( i1, txt )
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.205:fillRegionAsParagraph
         #@-others
@@ -2665,7 +2642,8 @@ class Emacs:
         #@-node:ekr.20050724075352.216:indentRegion
         #@+node:ekr.20050724075352.217:tabIndentRegion
         def tabIndentRegion( self,event ):
-            tbuffer = event.widget
+        
+            b = self.miniBuffer ; tbuffer = event.widget
             if not self._chckSel( event ):
                 return
             i = tbuffer.index( 'sel.first' )
@@ -2676,45 +2654,45 @@ class Emacs:
                 tbuffer.insert( i, '\t' )
                 if i == i2: break
                 i = tbuffer.index( '%s + 1 lines' % i )    
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.217:tabIndentRegion
         #@+node:ekr.20050724075352.218:countRegion
-        def countRegion( self, event ):
+        def countRegion (self,event):
         
-            tbuffer = event.widget
-            txt = tbuffer.get( 'sel.first', 'sel.last')
-            svar = self.svars[ tbuffer ]
+            b = self.miniBuffer ; tbuffer = event.widget
+            txt = tbuffer.get('sel.first','sel.last')
             lines = 1 ; chars = 0
             for z in txt:
-                if z == '\n': lines = lines + 1
-                else:
-                    chars = chars + 1       
-            svar.set( 'Region has %s lines, %s characters' %( lines, chars ) )
+                if z == '\n':   lines = lines + 1
+                else:           chars = chars + 1
+        
+            b.set('Region has %s lines, %s characters' % (lines,chars))
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.218:countRegion
         #@+node:ekr.20050724075352.219:reverseRegion
-        def reverseRegion( self, event ):
-            tbuffer = event.widget
-            if not self._chckSel( event ):
-                return
-            ins = tbuffer.index( 'insert' )
-            is1 = tbuffer.index( 'sel.first' )
-            is2 = tbuffer.index( 'sel.last' )    
-            txt = tbuffer.get( '%s linestart' % is1, '%s lineend' %is2 )
-            tbuffer.delete( '%s linestart' % is1, '%s lineend' %is2  )
-            txt = txt.split( '\n' )
+        def reverseRegion (self,event):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+        
+            if not self._chckSel(event): return
+            ins = tbuffer.index('insert')
+            is1 = tbuffer.index('sel.first')
+            is2 = tbuffer.index('sel.last')
+            txt = tbuffer.get('%s linestart' % is1,'%s lineend' % is2)
+            tbuffer.delete('%s linestart' % is1,'%s lineend' % is2)
+            txt = txt.split('\n')
             txt.reverse()
-            istart = is1.split( '.' )
-            istart = int( istart[ 0 ] )
+            istart = is1.split('.')
+            istart = int(istart[0])
             for z in txt:
-                tbuffer.insert( '%s.0' % istart, '%s\n' % z )
+                tbuffer.insert('%s.0' % istart,'%s\n' % z)
                 istart = istart + 1
-            tbuffer.mark_set( 'insert', ins )
-            self.mcStateManager.clear()
-            self.resetMiniBuffer( event )
-            return self._tailEnd( tbuffer )
+            tbuffer.mark_set('insert',ins)
+            b.stateManager.clear()
+            b.reset()
+            return b._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.219:reverseRegion
         #@+node:ekr.20050724075352.220:upperLowerRegion
@@ -2743,34 +2721,32 @@ class Emacs:
         #@-node:ekr.20050724075352.213:region...
         #@+node:ekr.20050724075352.60:replace...
         #@+node:ekr.20050724075352.61:replaceString
-        def replaceString (self,event):
+        def replaceString (self,event): # event IS used
             
-            b = self.minibuffer ; keyHandler = self.keyHandler ; stateKind = 'rString'
-            svar, label = self.getSvarLabel(event)
+            b = self.miniBuffer ; tbuffer = event.widget
+            stateKind = 'rString'
             # This should not be here.
-            if event.keysym in ('Control_L','Control_R'):
-                return
-            state = self.getState(stateKind)
+            if event.keysym in ('Control_L','Control_R'): return
+            state = b.getState(stateKind)
             regex = self._useRegex
             prompt = 'Replace ' + g.choose(regex,'Regex','String')
-            if not state:
+            if state == 0:
                 self._sString = self._rpString = ''
                 s = '%s: ' % prompt
-                svar.set(s)  ### b.set(s)
+                b.set(s)
                 # Get arg and enter state 1.
-                return keyHandler.getArg(event,stateKind,1) 
+                return b.getArg(event,stateKind,1) 
             elif state == 1:
-                self._sString = keyHandler.arg
+                self._sString = b.arg
                 s = '%s: %s With: ' % (prompt,self._sString)
-                svar.set(s) ### b.set(s)
+                b.set(s)
                 # Get arg and enter state 2.
-                return keyHandler.getArg(event,stateKind,2)
+                return b.getArg(event,stateKind,2)
             elif state == 2:
-                self._rpString = keyHandler.arg
+                self._rpString = b.arg
                 #@        << do the replace >>
                 #@+node:ekr.20050730074556.1:<< do the replace >>
                 # g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
-                tbuffer = event.widget
                 i = 'insert' ; end = 'end' ; count = 0
                 if tbuffer.tag_ranges('sel'):
                     i = tbuffer.index('sel.first')
@@ -2780,8 +2756,8 @@ class Emacs:
                     try:
                         pattern = re.compile(self._sString)
                     except:
-                        self.keyboardQuit(event)
-                        svar.set("Illegal regular expression")
+                        b.keyboardQuit(event)
+                        b.set("Illegal regular expression")
                         return 'break'
                     count = len(pattern.findall(txt))
                     if count:
@@ -2799,12 +2775,12 @@ class Emacs:
                 #@nonl
                 #@-node:ekr.20050730074556.1:<< do the replace >>
                 #@nl
-                ### b.set('Replaced %s occurances' % count)
-                svar.set('Replaced %s occurances' % count)
-                keyHandler.setLabelGrey(label)
-                self.mcStateManager.clear()
+                s = 'Replaced %s occurances' % count
+                b.set(s)
+                b.setLabelGrey()
+                b.stateManager.clear()
                 self._useRegex = False
-                return self._tailEnd(tbuffer)
+                return b._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.61:replaceString
         #@+node:ekr.20050724075352.62:activateReplaceRegex
@@ -2818,7 +2794,7 @@ class Emacs:
         #@+node:ekr.20050724075352.71:screenscroll
         def screenscroll (self,event,way='north'):
         
-            tbuffer = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
             chng = self.measure(tbuffer)
             i = tbuffer.index('insert')
         
@@ -2831,15 +2807,16 @@ class Emacs:
         
             tbuffer.mark_set('insert','%s.%s' % (i1,i2))
             tbuffer.see('insert')
-            return self._tailEnd(tbuffer)
+            return b._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.71:screenscroll
         #@+node:ekr.20050724075352.279:sort...
         #@+node:ekr.20050724075352.280:sortLines
-        def sortLines( self, event , which = None ):
-            tbuffer = event.widget  
+        def sortLines( self, event , which = None ): # event IS used.
+        
+            b = self.miniBuffer ; tbuffer = event.widget  
             if not self._chckSel( event ):
-                return self.keyboardQuit( event )
+                return b.keyboardQuit( event )
             i = tbuffer.index( 'sel.first' )
             i2 = tbuffer.index( 'sel.last' )
             is1 = i.split( '.' )
@@ -2856,15 +2833,16 @@ class Emacs:
                 tbuffer.insert( '%s.0' % inum, '%s\n' % z ) 
                 inum = inum + 1
             tbuffer.mark_set( 'insert', ins )
-            self.keyboardQuit( event )
-            return self._tailEnd( tbuffer )
+            b.keyboardQuit( event )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.280:sortLines
         #@+node:ekr.20050724075352.281:sortColumns
         def sortColumns( self, event ):
-            tbuffer = event.widget
+        
+            b = self.miniBuffer ; tbuffer = event.widget
             if not self._chckSel( event ):
-                return self.keyboardQuit( event )
+                return b.keyboardQuit( event )
                 
             ins = tbuffer.index( 'insert' )
             is1 = tbuffer.index( 'sel.first' )
@@ -2890,19 +2868,18 @@ class Emacs:
                  tbuffer.insert( '%s.0' % i, '%s\n' % zlist[ z ][ 1 ] ) 
                  i = i + 1
             tbuffer.mark_set( 'insert', ins )
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.281:sortColumns
         #@+node:ekr.20050724075352.282:sortFields
         def sortFields( self, event, which = None ):
-            tbuffer = event.widget
+            
+            b = self.miniBuffer ; tbuffer = event.widget
             if not self._chckSel( event ):
-                return self.keyboardQuit( event )
-        
+                return b.keyboardQuit( event )
             ins = tbuffer.index( 'insert' )
             is1 = tbuffer.index( 'sel.first' )
             is2 = tbuffer.index( 'sel.last' )
-            
             txt = tbuffer.get( '%s linestart' % is1, '%s lineend' % is2 )
             txt = txt.split( '\n' )
             fields = []
@@ -2916,7 +2893,7 @@ class Emacs:
                 else:
                     i =  int( which )
                     if len( f ) < i:
-                        return self._tailEnd( tbuffer )
+                        return b._tailEnd( tbuffer )
                     i = i - 1            
                     fields.append( f[ i ] )
             nz = zip( fields, txt )
@@ -2928,14 +2905,15 @@ class Emacs:
                 tbuffer.insert( '%s.0' % int1, '%s\n'% z[1] )
                 int1 = int1 + 1
             tbuffer.mark_set( 'insert' , ins )
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.282:sortFields
         #@-node:ekr.20050724075352.279:sort...
         #@+node:ekr.20050727152153.3:swap/transpose...
         #@+node:ekr.20050724075352.68:transposeLines
         def transposeLines( self, event ):
-            tbuffer = event.widget
+        
+            b = self.miniBuffer ; tbuffer = event.widget
             i = tbuffer.index( 'insert' )
             i1, i2 = i.split( '.' )
             i1 = str( int( i1 ) -1 )
@@ -2947,7 +2925,7 @@ class Emacs:
                 l2 = tbuffer.get( '2.0', '2.0 lineend' )
                 tbuffer.delete( '2.0', '2.0 lineend' )
                 tbuffer.insert( '1.0', l2 + '\n' )
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.68:transposeLines
         #@+node:ekr.20050724075352.58:swapWords
@@ -2980,7 +2958,7 @@ class Emacs:
         #@+node:ekr.20050724075352.63:swapCharacters
         def swapCharacters( self, event ):
         
-            tbuffer = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
             i = tbuffer.index( 'insert' )
             c1 = tbuffer.get( 'insert', 'insert +1c' )
             c2 = tbuffer.get( 'insert -1c', 'insert' )
@@ -2989,7 +2967,7 @@ class Emacs:
             tbuffer.delete( 'insert', 'insert +1c' )
             tbuffer.insert( 'insert', c2 )
             tbuffer.mark_set( 'insert', i )
-            return self._tailEnd( tbuffer )
+            return b._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.63:swapCharacters
         #@-node:ekr.20050727152153.3:swap/transpose...
@@ -3001,24 +2979,25 @@ class Emacs:
             return self._tabify (event,which='untabify')
         #@nonl
         #@+node:ekr.20050724075352.315:_tabify
-        def _tabify( self, event, which='tabify' ):
-            
-            tbuffer = event.widget
-            if tbuffer.tag_ranges( 'sel' ):
-                i = tbuffer.index( 'sel.first' )
-                end = tbuffer.index( 'sel.last' )
-                txt = tbuffer.get( i, end )
+        def _tabify (self,event,which='tabify'):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+            if tbuffer.tag_ranges('sel'):
+                i = tbuffer.index('sel.first')
+                end = tbuffer.index('sel.last')
+                txt = tbuffer.get(i,end)
                 if which == 'tabify':
-                    pattern = re.compile( ' {4,4}' )
-                    ntxt = pattern.sub( '\t', txt )
+                    pattern = re.compile(' {4,4}')
+                    ntxt = pattern.sub('\t',txt)
                 else:
-                    pattern = re.compile( '\t' )
-                    ntxt = pattern.sub( '    ', txt )
-                tbuffer.delete( i, end )
-                tbuffer.insert( i , ntxt )
-                self.keyboardQuit( event )
-                return self._tailEnd( tbuffer )
-            self.keyboardQuit( event )
+                    pattern = re.compile('\t')
+                    ntxt = pattern.sub('    ',txt)
+                tbuffer.delete(i,end)
+                tbuffer.insert(i,ntxt)
+                b.keyboardQuit(event)
+                return b._tailEnd(tbuffer)
+        
+            b.keyboardQuit(event)
         #@nonl
         #@-node:ekr.20050724075352.315:_tabify
         #@-node:ekr.20050724075352.314:tabify...
@@ -3026,10 +3005,11 @@ class Emacs:
         #@+node:ekr.20050724075352.240:startZap
         def startZap (self,event):
         
-            self.setState('zap',True)
-            svar, label = self.getSvarLabel(event)
-            label.configure(background='lightblue')
-            svar.set('Zap To Character')
+            b = self.miniBuffer
+        
+            b.setState('zap',1)
+            b.setLabelBlue()
+            b.set('Zap To Character')
         
             return 'break'
         #@nonl
@@ -3037,20 +3017,19 @@ class Emacs:
         #@+node:ekr.20050724075352.241:zapTo
         def zapTo (self,event):
         
-            widget = event.widget
+            b = self.miniBuffer ; tbuffer = event.widget
             s = string.ascii_letters+string.digits+string.punctuation
         
             if len(event.char) != 0 and event.char in s:
-                self.setState('zap',False)
-                i = widget.search(event.char,'insert',stopindex='end')
-                self.resetMiniBuffer(event)
+                b.setState('zap',False)
+                i = tbuffer.search(event.char,'insert',stopindex='end')
+                b.reset()
                 if i:
-                    t = widget.get('insert','%s+1c' % i)
+                    t = tbuffer.get('insert','%s+1c' % i)
                     self.killBufferCommands.addToKillBuffer(t)
-                    widget.delete('insert','%s+1c' % i)
-                    return 'break'
-            else:
-                return 'break'
+                    tbuffer.delete('insert','%s+1c' % i)
+        
+            return 'break'
         #@nonl
         #@-node:ekr.20050724075352.241:zapTo
         #@-node:ekr.20050724075352.239:zap...
@@ -3060,20 +3039,20 @@ class Emacs:
         def backSentence (self,event):
         
             tbuffer = event.widget
-            i = tbuffer.search( '.', 'insert', backwards = True, stopindex = '1.0' )
+            i = tbuffer.search('.','insert',backwards=True,stopindex='1.0')
         
             if i:
-                i2 = tbuffer.search( '.', i, backwards = True, stopindex = '1.0' )
+                i2 = tbuffer.search('.',i,backwards=True,stopindex='1.0')
                 if not i2:
                     i2 = '1.0'
                 if i2:
-                    i3 = tbuffer.search( '\w', i2, stopindex = i, regexp = True )
+                    i3 = tbuffer.search('\w',i2,stopindex=i,regexp=True)
                     if i3:
-                        tbuffer.mark_set( 'insert', i3 )
+                        tbuffer.mark_set('insert',i3)
             else:
-                tbuffer.mark_set( 'insert', '1.0' )
-                
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+                tbuffer.mark_set('insert','1.0')
+        
+            return self.miniBuffer._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050727104740:backSentence
         #@+node:ekr.20050724075352.150:comment column methods
@@ -3094,103 +3073,112 @@ class Emacs:
             i1, i2 = i.split('.')
             i2 = int(i2)
             c1 = int(self.ccolumn)
+        
             if i2 < c1:
-                wsn = c1-i2
-                tbuffer.insert('insert lineend',' ' * wsn)
+                wsn = c1- i2
+                tbuffer.insert('insert lineend',' '*wsn)
             if i2 >= c1:
                 tbuffer.insert('insert lineend',' ')
             tbuffer.mark_set('insert','insert lineend')
-            return self.emacs.keyHandler._tailEnd(tbuffer)
-        #@nonl
+        
+            return self.miniBuffer._tailEnd(tbuffer)
         #@-node:ekr.20050724075352.152:indentToCommentColumn
         #@-node:ekr.20050724075352.150:comment column methods
         #@+node:ekr.20050724075352.253:deleteSpaces
-        def deleteSpaces( self, event , insertspace = False):
-            
+        def deleteSpaces (self,event,insertspace=False):
+        
             tbuffer = event.widget
-            char = tbuffer.get( 'insert', 'insert + 1c ' )
+            char = tbuffer.get('insert','insert + 1c ')
+        
             if char.isspace():
-                i = tbuffer.index( 'insert' )
-                wf = tbuffer.search( r'\w', i, stopindex = '%s lineend' % i, regexp = True )
-                wb = tbuffer.search( r'\w', i, stopindex = '%s linestart' % i, regexp = True, backwards = True )
-                if '' in ( wf, wb ):
+                i = tbuffer.index('insert')
+                wf = tbuffer.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+                wb = tbuffer.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
+                if '' in (wf,wb):
                     return 'break'
-                tbuffer.delete( '%s +1c' %wb, wf )
+                tbuffer.delete('%s +1c' % wb,wf)
                 if insertspace:
-                    tbuffer.insert( 'insert', ' ' )
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+                    tbuffer.insert('insert',' ')
+        
+            return self.miniBuffer._tailEnd(tbuffer)
+        
         #@-node:ekr.20050724075352.253:deleteSpaces
         #@+node:ekr.20050724075352.72:exchangePointMark
-        def exchangePointMark( self, event ):
-            if not self._chckSel( event ):
-                return
+        def exchangePointMark (self,event):
+        
+            if not self._chckSel(event): return
             tbuffer = event.widget
-            s1 = tbuffer.index( 'sel.first' )
-            s2 = tbuffer.index( 'sel.last' )
-            i = tbuffer.index( 'insert' )
+            s1 = tbuffer.index('sel.first')
+            s2 = tbuffer.index('sel.last')
+            i = tbuffer.index('insert')
+        
             if i == s1:
-                tbuffer.mark_set( 'insert', s2 )
+                tbuffer.mark_set('insert',s2)
             else:
-                tbuffer.mark_set('insert', s1 )
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+                tbuffer.mark_set('insert',s1)
+        
+            return self.miniBuffer._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.72:exchangePointMark
         #@+node:ekr.20050727104740.1:forwardSentence
-        def forwardSentence( self, event , way ):
-            tbuffer = event.widget
-          
-            i = tbuffer.search( '.', 'insert', stopindex = 'end' )
-            if i:
-                tbuffer.mark_set( 'insert', '%s +1c' %i )
-            else:
-                tbuffer.mark_set( 'insert', 'end' )
-            return self.emacs.keyHandler._tailEnd( tbuffer )
-        #@nonl
-        #@-node:ekr.20050727104740.1:forwardSentence
-        #@+node:ekr.20050724075352.65:insertNewLine
-        def insertNewLine( self,event ):
-            tbuffer = event.widget
-            i = tbuffer.index( 'insert' )
-            tbuffer.insert( 'insert', '\n' )
-            tbuffer.mark_set( 'insert', i )
-            return self.emacs.keyHandler._tailEnd( tbuffer )
-            
-        insertNewline = insertNewLine
-        #@nonl
-        #@-node:ekr.20050724075352.65:insertNewLine
-        #@+node:ekr.20050724075352.59:insertParentheses
-        def insertParentheses( self, event ):
-            tbuffer = event.widget
-            tbuffer.insert( 'insert', '()' )
-            tbuffer.mark_set( 'insert', 'insert -1c' )
-            return self.emacs.keyHandler._tailEnd( tbuffer )
-        #@nonl
-        #@-node:ekr.20050724075352.59:insertParentheses
-        #@+node:ekr.20050724075352.76:movePastClose
-        def movePastClose( self, event ):
+        def forwardSentence (self,event,way):
         
             tbuffer = event.widget
-            i = tbuffer.search( '(', 'insert' , backwards = True ,stopindex = '1.0' )
-            icheck = tbuffer.search( ')', 'insert',  backwards = True, stopindex = '1.0' )
-            if ''  ==  i:
+        
+            i = tbuffer.search('.','insert',stopindex='end')
+            if i:
+                tbuffer.mark_set('insert','%s +1c' % i)
+            else:
+                tbuffer.mark_set('insert','end')
+        
+            return self.miniBuffer._tailEnd(tbuffer)
+        #@-node:ekr.20050727104740.1:forwardSentence
+        #@+node:ekr.20050724075352.65:insertNewLine
+        def insertNewLine (self,event):
+        
+            tbuffer = event.widget
+            i = tbuffer.index('insert')
+            tbuffer.insert('insert','\n')
+            tbuffer.mark_set('insert',i)
+            return self.miniBuffer._tailEnd(tbuffer)
+        
+        insertNewline = insertNewLine
+        #@-node:ekr.20050724075352.65:insertNewLine
+        #@+node:ekr.20050724075352.59:insertParentheses
+        def insertParentheses (self,event):
+        
+            tbuffer = event.widget
+            tbuffer.insert('insert','()')
+            tbuffer.mark_set('insert','insert -1c')
+            return self.miniBuffer._tailEnd(tbuffer)
+        #@-node:ekr.20050724075352.59:insertParentheses
+        #@+node:ekr.20050724075352.76:movePastClose
+        def movePastClose (self,event):
+        
+            tbuffer = event.widget
+            i = tbuffer.search('(','insert',backwards=True,stopindex='1.0')
+            icheck = tbuffer.search(')','insert',backwards=True,stopindex='1.0')
+        
+            if '' == i:
                 return 'break'
             if icheck:
-                ic = tbuffer.compare( i, '<', icheck )
-                if ic: 
+                ic = tbuffer.compare(i,'<',icheck)
+                if ic:
                     return 'break'
-            i2 = tbuffer.search( ')', 'insert' ,stopindex = 'end' )
-            i2check = tbuffer.search( '(', 'insert', stopindex = 'end' )
+            i2 = tbuffer.search(')','insert',stopindex='end')
+            i2check = tbuffer.search('(','insert',stopindex='end')
             if '' == i2:
                 return 'break'
             if i2check:
-                ic2 = tbuffer.compare( i2, '>', i2check )
+                ic2 = tbuffer.compare(i2,'>',i2check)
                 if ic2:
                     return 'break'
-            ib = tbuffer.index( 'insert' )
-            tbuffer.mark_set( 'insert', '%s lineend +1c' % i2 )
-            if tbuffer.index( 'insert' ) == tbuffer.index( '%s lineend' % ib ):
-                tbuffer.insert( 'insert' , '\n')
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+            ib = tbuffer.index('insert')
+            tbuffer.mark_set('insert','%s lineend +1c' % i2)
+            if tbuffer.index('insert') == tbuffer.index('%s lineend' % ib):
+                tbuffer.insert('insert','\n')
+        
+            return self.miniBuffer._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.76:movePastClose
         #@+node:ekr.20050724075352.70:removeBlankLines
@@ -3247,51 +3235,48 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.78:selectAll
         #@+node:ekr.20050724075352.301:Goto
-        def Goto( self, event ):
-            widget = event.widget
-            svar, label = self.getSvarLabel( event )
+        def Goto (self,event):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+        
             if event.keysym == 'Return':
-                i = svar.get()
-                self.resetMiniBuffer( event )
-                state = self.getState( 'goto' )
-                self.setState( 'goto', False )
+                i = b.get()
+                b.reset()
+                state = b.getState('goto')
+                b.setState('goto',0)
                 if i.isdigit():
-                  if state == 1:
-                        widget.mark_set( 'insert', '%s.0' % i )
-                  elif state == 2:
-                        widget.mark_set( 'insert', '1.0 +%sc' % i )
-                  widget.event_generate( '<Key>' )
-                  widget.update_idletasks()
-                  widget.see( 'insert' )
-                return 'break'
-            t = svar.get()
-            if event.char == '\b':
-               if len( t ) == 1: t = ''
-               else: t = t[ 0 : -1 ]
-               svar.set( t )
+                    if state == 1:
+                        widget.mark_set('insert','%s.0' % i)
+                    elif state == 2:
+                        widget.mark_set('insert','1.0 +%sc' % i)
+                    widget.event_generate('<Key>')
+                    widget.update_idletasks()
+                    widget.see('insert')
             else:
-                t = t + event.char
-                svar.set( t )
+                b.update(event)
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.301:Goto
         #@-node:ekr.20050727100634:New Entry points
         #@+node:ekr.20050727102142:Used by neg argss
         #@+node:ekr.20050724075352.69:changePreviousWord
-        def changePreviousWord( self, event, stroke ):
-            
+        def changePreviousWord (self,event,stroke):
+        
             tbuffer = event.widget
-            i = tbuffer.index( 'insert' )
-            self.moveword( event, -1  )
-            if stroke == '<Alt-c>': 
-                self.capitalize( event, 'cap' )
-            elif stroke =='<Alt-u>':
-                 self.capitalize( event, 'up' )
-            elif stroke == '<Alt-l>': 
-                self.capitalize( event, 'low' )
-            tbuffer.mark_set( 'insert', i )
-            self.stopControlX( event )
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+            i = tbuffer.index('insert')
+        
+            self.moveword(event,-1)
+            if stroke == '<Alt-c>':
+                self.capitalize(event,'cap')
+            elif stroke == '<Alt-u>':
+                 self.capitalize(event,'up')
+            elif stroke == '<Alt-l>':
+                self.capitalize(event,'low')
+            tbuffer.mark_set('insert',i)
+            self.stopControlX(event)
+        
+            return self.miniBuffer._tailEnd(tbuffer)
         #@-node:ekr.20050724075352.69:changePreviousWord
         #@-node:ekr.20050727102142:Used by neg argss
         #@+node:ekr.20050727152153.4:Utilities
@@ -3384,17 +3369,19 @@ class Emacs:
         #@-node:ekr.20050727152914: ctor
         #@+node:ekr.20050727153020: getPublicCommands
         def getPublicCommands (self):
+            
+            b = self.miniBuffer
         
             return {
-                'advertised-undo':              lambda event: self.doUndo( event ) and self.keyboardQuit( event ),
-                'iconfify-or-deiconify-frame':  lambda event: self.suspend( event ) and self.keyboardQuit( event ),
-                'keyboard-quit':                self.keyboardQuit,
-                'save-buffers-kill-emacs':      lambda event: self.keyboardQuit( event ) and self.shutdown( event ),
+                'advertised-undo':              lambda event: self.doUndo( event ) and b.keyboardQuit( event ),
+                'iconfify-or-deiconify-frame':  lambda event: self.suspend( event ) and b.keyboardQuit( event ),
+                'keyboard-quit':                b.keyboardQuit,
+                'save-buffers-kill-emacs':      lambda event: b.keyboardQuit( event ) and self.shutdown( event ),
                 'shell-command':                self.startSubprocess,
                 'shell-command-on-region':      lambda event: self.startSubprocess( event, which=1 ),
                 
                 # Added by ekr.
-                'suspend':                      lambda event: self.suspend( event ) and self.keyboardQuit( event ),
+                'suspend':                      lambda event: self.suspend( event ) and b.keyboardQuit( event ),
             }
         #@nonl
         #@-node:ekr.20050727153020: getPublicCommands
@@ -3426,81 +3413,82 @@ class Emacs:
         #@-node:ekr.20050724075352.94:shutdown methods
         #@+node:ekr.20050724075352.316:subprocess
         #@+node:ekr.20050724075352.317:startSubprocess
-        def startSubprocess( self, event, which = 0 ):
-            
-            svar, label = self.getSvarLabel( event )
-            statecontents = { 'state':'start', 'payload': None }
-            self.setState( 'subprocess', statecontents )
+        def startSubprocess (self,event,which=0):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+            statecontents = {'state': 'start', 'payload': None}
+            b.setState('subprocess',statecontents)
             if which:
-                tbuffer = event.widget
-                svar.set( "Shell command on region:" )
+                b.set("Shell command on region:")
                 is1 = is2 = None
                 try:
-                    is1 = tbuffer.index( 'sel.first' )
-                    is2 = tbuffer.index( 'sel.last' )
+                    is1 = tbuffer.index('sel.first')
+                    is2 = tbuffer.index('sel.last')
                 finally:
                     if is1:
-                        statecontents[ 'payload' ] = tbuffer.get( is1, is2 )
+                        ### Does nothing
+                        statecontents ['payload'] = tbuffer.get(is1,is2)
+                        ### ??? b.setState('subprocess',statecontents)
                     else:
-                        return self.keyboardQuit( event )
+                        return b.keyboardQuit(event)
             else:
-                svar.set( "Alt - !:" )
-            self.setLabelBlue( label )
+                b.set("Alt - !:")
+        
+            self.setLabelBlue()
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.317:startSubprocess
         #@+node:ekr.20050724075352.318:subprocess
-        def subprocesser( self, event ):
-            
-            state = self.getState( 'subprocess' )
-            svar, label = self.getSvarLabel( event )
-            if state[ 'state' ] == 'start':
-                state[ 'state' ] = 'watching'
-                svar.set( "" )
-            
+        def subprocesser (self,event):
+        
+            b = self.miniBuffer
+            state = b.getState('subprocess')
+        
+            if state ['state'] == 'start':
+                state ['state'] = 'watching'
+                b.set('')
+        
             if event.keysym == "Return":
-                #cmdline = svar.get().split()
-                cmdline = svar.get()
-                return self.executeSubprocess( event, cmdline, input=state[ 'payload' ] )
-               
+                cmdline = b.get()
+                return self.executeSubprocess(event,cmdline,input=state['payload'])
             else:
-                self.setSvar(  event, svar )
+                b.update(event)
                 return 'break'
         #@nonl
         #@-node:ekr.20050724075352.318:subprocess
         #@+node:ekr.20050724075352.319:executeSubprocess
-        def executeSubprocess( self, event, command  ,input = None ):
+        def executeSubprocess (self,event,command,input=None):
             import subprocess
+            b = self.miniBuffer
             try:
                 try:
-                    out ,err = os.tmpnam(), os.tmpnam()
-                    ofile = open( out, 'wt+' ) 
-                    efile = open( err, 'wt+' )
-                    process = subprocess.Popen( command, bufsize=-1, 
-                                                stdout = ofile.fileno(), 
-                                                stderr= ofile.fileno(), 
-                                                stdin=subprocess.PIPE,
-                                                shell=True )
+                    out, err = os.tmpnam(), os.tmpnam()
+                    ofile = open(out,'wt+')
+                    efile = open(err,'wt+')
+                    process = subprocess.Popen(command,bufsize=-1,
+                        stdout = ofile.fileno(), stderr = ofile.fileno(),
+                        stdin = subprocess.PIPE, shell = True)
                     if input:
-                        process.communicate( input )
-                    process.wait()   
+                        process.communicate(input)
+                    process.wait()
                     tbuffer = event.widget
-                    efile.seek( 0 )
+                    efile.seek(0)
                     errinfo = efile.read()
                     if errinfo:
-                        tbuffer.insert( 'insert', errinfo )
-                    ofile.seek( 0 )
+                        tbuffer.insert('insert',errinfo)
+                    ofile.seek(0)
                     okout = ofile.read()
                     if okout:
-                        tbuffer.insert( 'insert', okout )
+                        tbuffer.insert('insert',okout)
                 except Exception, x:
                     tbuffer = event.widget
-                    tbuffer.insert( 'insert', x )
+                    tbuffer.insert('insert',x)
             finally:
-                os.remove( out )
-                os.remove( err )
-            self.keyboardQuit( event )
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+                os.remove(out)
+                os.remove(err)
+            b.keyboardQuit(event)
+        
+            return self.miniBuffer._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.319:executeSubprocess
         #@-node:ekr.20050724075352.316:subprocess
@@ -3521,11 +3509,13 @@ class Emacs:
         #@-node:ekr.20050727155340: ctor
         #@+node:ekr.20050727155451: getPublicCommands
         def getPublicCommands (self):
+            
+            b = self.miniBuffer
         
             return {
                 'delete-file':      self.deleteFile,
                 'diff':             self.diff, 
-                'insert-file':      lambda event: self.insertFile( event ) and self.keyboardQuit( event ),
+                'insert-file':      lambda event: self.insertFile( event ) and b.keyboardQuit( event ),
                 'make-directory':   self.makeDirectory,
                 'remove-directory': self.removeDirectory,
                 'save-file':        self.saveFile
@@ -3533,29 +3523,27 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050727155451: getPublicCommands
         #@+node:ekr.20050724075352.306:deleteFile
-        def deleteFile( self, event ):
+        def deleteFile (self,event):
         
-            svar,label = self.getSvarLabel( event )
-            state = self.getState( 'delete_file' )
+            b = self.miniBuffer
+            state = b.getState('delete_file')
         
-            if not state:
-                self.setState( 'delete_file', True )
-                self.setLabelBlue( label )
+            if state == 0:
+                b.setState('delete_file',1)
+                b.setLabelBlue()
                 directory = os.getcwd()
-                svar.set( '%s%s' %( directory, os.sep ) )
-                return 'break'
-            
-            if event.keysym == 'Return':
-                dfile = svar.get()
-                self.keyboardQuit( event )
+                b.set('%s%s' % (directory,os.sep))
+            elif event.keysym == 'Return':
+                dfile = b.get()
+                b.keyboardQuit(event)
                 try:
-                    os.remove( dfile )
+                    os.remove(dfile)
                 except:
-                    svar.set( "Could not delete %s%" % dfile  )
-                return 'break'
+                    b.set("Could not delete %s%" % dfile)
             else:
-                self.setSvar( event, svar )
-                return 'break'
+                b.update(event)
+            
+            return 'break'
         #@nonl
         #@-node:ekr.20050724075352.306:deleteFile
         #@+node:ekr.20050724075352.238:diff
@@ -3563,6 +3551,8 @@ class Emacs:
             
             '''the diff command, accessed by Alt-x diff.
             Creates a buffer and puts the diff between 2 files into it..'''
+            
+            b = self.miniBuffer ; tbuffer = event.widget
         
             try:
                 f, name = self.getReadableTextFile()
@@ -3573,18 +3563,18 @@ class Emacs:
                 txt2 = f2.read()
                 f2.close()
             except:
-                return self.keyboardQuit( event )
+                return b.keyboardQuit( event )
         
             self.switchToBuffer( event, "*diff* of ( %s , %s )" %( name, name2 ) )
             data = difflib.ndiff( txt1, txt2 )
             idata = []
             for z in data:
                 idata.append( z )
-            tbuffer = event.widget
             tbuffer.delete( '1.0', 'end' )
             tbuffer.insert( '1.0', ''.join( idata ) )
-            self.emacs.keyHandler._tailEnd( tbuffer )
-            return self.keyboardQuit( event )
+            b._tailEnd( tbuffer )
+        
+            return b.keyboardQuit( event )
         #@nonl
         #@-node:ekr.20050724075352.238:diff
         #@+node:ekr.20050724075352.309:getReadableFile
@@ -3597,65 +3587,67 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.309:getReadableFile
         #@+node:ekr.20050724075352.307:insertFile
-        def insertFile( self, event ):
+        def insertFile (self,event):
+        
             tbuffer = event.widget
             f, name = self.getReadableTextFile()
             if not f: return None
             txt = f.read()
             f.close()
-            tbuffer.insert( 'insert', txt )
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+            tbuffer.insert('insert',txt)
+        
+            return self.miniBuffer._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.307:insertFile
         #@+node:ekr.20050724075352.303:makeDirectory
         def makeDirectory (self,event):
         
-            svar, label = self.getSvarLabel(event)
-            state = self.getState('make_directory')
+            b = self.miniBuffer
+            state = b.getState('make_directory')
         
-            if not state:
-                self.setState('make_directory',True)
-                self.setLabelBlue(label)
+            if state == 0:
+                b.setState('make_directory',1)
+                b.setLabelBlue()
                 directory = os.getcwd()
-                svar.set('%s%s' % (directory,os.sep))
+                b.set('%s%s' % (directory,os.sep))
                 return 'break'
         
             if event.keysym == 'Return':
-                ndirectory = svar.get()
-                self.keyboardQuit(event)
+                ndirectory = b.get()
+                b.keyboardQuit(event)
                 try:
                     os.mkdir(ndirectory)
                 except:
-                    svar.set("Could not make %s%" % ndirectory)
+                    b.set("Could not make %s%" % ndirectory)
                 return 'break'
             else:
-                self.setSvar(event,svar)
+                b.update(event)
                 return 'break'
         #@nonl
         #@-node:ekr.20050724075352.303:makeDirectory
         #@+node:ekr.20050724075352.304:removeDirectory
         def removeDirectory (self,event):
         
-            svar, label = self.getSvarLabel(event)
-            state = self.getState('remove_directory')
+            b = self.miniBuffer
+            state = b.getState('remove_directory')
         
             if not state:
-                self.setState('remove_directory',True)
-                self.setLabelBlue(label)
+                b.setState('remove_directory',True)
+                b.setLabelBlue()
                 directory = os.getcwd()
-                svar.set('%s%s' % (directory,os.sep))
+                b.set('%s%s' % (directory,os.sep))
                 return 'break'
         
             if event.keysym == 'Return':
-                ndirectory = svar.get()
-                self.keyboardQuit(event)
+                ndirectory = b.get()
+                b.keyboardQuit(event)
                 try:
                     os.rmdir(ndirectory)
                 except:
-                    svar.set("Could not remove %s%" % ndirectory)
+                    b.set("Could not remove %s%" % ndirectory)
                 return 'break'
             else:
-                self.setSvar(event,svar)
+                b.update(event)
                 return 'break'
         #@nonl
         #@-node:ekr.20050724075352.304:removeDirectory
@@ -3687,9 +3679,9 @@ class Emacs:
         def getPublicCommands (self):
             
             return {
-                'digit-argument':           self.emacs.keyHandler.digitArgument,
-                'repeat-complex-command':   self.emacs.keyHandler.repeatComplexCommand,
-                'universal-argument':       self.emacs.keyHandler.universalArgument,
+                'digit-argument':           self.miniBuffer.digitArgument,
+                'repeat-complex-command':   self.miniBuffer.repeatComplexCommand,
+                'universal-argument':       self.miniBuffer.universalArgument,
             }
         #@nonl
         #@-node:ekr.20050728090827:getPublicCommands
@@ -3734,30 +3726,30 @@ class Emacs:
         # backwardKillParagraph is in paragraph class.
         
         def backwardKillSentence (self,event):
-            return self.keyboardQuit(event) and self._killSentence(event,back=True)
+            return self.miniBuffer.keyboardQuit(event) and self._killSentence(event,back=True)
             
         def backwardKillWord (self,event):
-            return self.deletelastWord(event) and self.keyboardQuit(event)
+            return self.deletelastWord(event) and self.miniBuffer.keyboardQuit(event)
             
         def killLine (self,event):
-            self.kill(event,frm='insert',to='insert lineend') and self.keyboardQuit(event)
+            self.kill(event,frm='insert',to='insert lineend') and self.miniBuffer.keyboardQuit(event)
             
         def killRegion (self,event):
-            return self._killRegion(event,which='d') and self.keyboardQuit(event)
+            return self._killRegion(event,which='d') and self.miniBuffer.keyboardQuit(event)
             
         # killParagraph is in paragraph class.
         
         def killSentence (self,event):
-            return self.killsentence(event) and self.keyboardQuit(event)
+            return self.killsentence(event) and self.miniBuffer.keyboardQuit(event)
             
         def killWord (self,event):
-            return self.kill(event,frm='insert wordstart',to='insert wordend') and self.keyboardQuit(event)
+            return self.kill(event,frm='insert wordstart',to='insert wordend') and self.miniBuffer.keyboardQuit(event)
             
         def yank (self,event):
-            return self.walkKB(event,frm='insert',which='c') and self.keyboardQuit(event)
+            return self.walkKB(event,frm='insert',which='c') and self.miniBuffer.keyboardQuit(event)
             
         def yankPop (self,event):
-            return self.walkKB(event,frm="insert",which='a') and self.keyboardQuit(event)
+            return self.walkKB(event,frm="insert",which='a') and self.miniBuffer.keyboardQuit(event)
         #@nonl
         #@-node:ekr.20050725120303:Entry points
         #@+node:ekr.20050724075352.162:kill
@@ -3775,7 +3767,7 @@ class Emacs:
             else:
                 tbuffer.delete( frm, to )
         
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+            return self.miniBuffer._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.162:kill
         #@+node:ekr.20050724075352.163:walkKB
@@ -3807,7 +3799,7 @@ class Emacs:
                     tbuffer.tag_delete( 'kb' )
                     tbuffer.insert( frm, txt, ('kb') )
                     tbuffer.mark_set( 'insert', i )
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+            return self.miniBuffer._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.163:walkKB
         #@+node:ekr.20050724075352.164:deletelastWord
@@ -3866,7 +3858,7 @@ class Emacs:
             self.reset = True 
             
             if (
-                self.emacs.keyHandler.previousStroke in (
+                self.miniBuffer.previousStroke in (
                     '<Control-k>', '<Control-w>' ,
                     '<Alt-d>', '<Alt-Delete', '<Alt-z>', '<Delete>',
                     '<Control-Alt-w>' )
@@ -4108,53 +4100,57 @@ class Emacs:
         #@-node:ekr.20050727085306: getPublicCommands
         #@+node:ekr.20050727085306.1:Entry points
         #@+node:ekr.20050724075352.147:getMacroName (calls saveMacros)
-        def getMacroName( self, event ):
-            
+        def getMacroName (self,event):
+        
             '''A method to save your macros to file.'''
-            svar, label = self.getSvarLabel( event )
+        
+            b = self.miniBuffer
+        
             if not self.macroing:
                 self.macroing = 3
-                svar.set('')
-                self.setLabelBlue( label )
-                return 'break'
-            if event.keysym == 'Return':
+                b.set('')
+                b.setLabelBlue()
+            elif event.keysym == 'Return':
                 self.macroing = False
-                self.saveMacros( event, svar.get() )
-                return 'break'
-            if event.keysym == 'Tab':
-                svar.set( self._findMatch( svar, self.namedMacros ) )
-                return 'break'
-             
-            self.setSvar( event, svar )
-            return 'break'
-        #@nonl
-        #@+node:ekr.20050724075352.93:_findMatch
-        def _findMatch( self, svar, fdict = None ):
-            
-            '''This method finds the first match it can find in a sorted list'''
-            
-            if not fdict:
-                fdict = self.emacs.keyHandler.altX_commandsDict
+                self.saveMacros(event,b.get())
+            elif event.keysym == 'Tab':
+                b.set(self._findMatch(self.namedMacros))
+            else:
+                b.update(event)
         
-            txt = svar.get()
-            pmatches = filter( lambda a : a.startswith( txt ), fdict )
+            return 'break'
+        #@+node:ekr.20050724075352.93:_findMatch
+        def _findMatch (self,fdict=None):
+        
+            '''This method finds the first match it can find in a sorted list'''
+        
+            b = self.miniBuffer
+        
+            if not fdict:
+                fdict = self.miniBuffer.altX_commandsDict
+        
+            s = b.get()
+            pmatches = filter(lambda a: a.startswith(s),fdict)
             pmatches.sort()
             if pmatches:
-                mstring = reduce( self.findPre, pmatches )
+                mstring = reduce(self.findPre,pmatches)
                 return mstring
-            return txt
+        
+            return s
         
         #@-node:ekr.20050724075352.93:_findMatch
         #@-node:ekr.20050724075352.147:getMacroName (calls saveMacros)
         #@+node:ekr.20050724075352.145:loadMacros & helpers
-        def loadMacros( self,event ):
-            
+        def loadMacros (self,event):
+        
             '''Asks for a macro file name to load.'''
         
             f = tkFileDialog.askopenfile()
-            if f == None: return 'break'
+        
+            if f:
+                return self._loadMacros(f)
             else:
-                return self._loadMacros( f )
+                return 'break'
         #@nonl
         #@+node:ekr.20050724075352.146:_loadMacros
         def _loadMacros( self, f ):
@@ -4163,7 +4159,7 @@ class Emacs:
         
             macros = cPickle.load( f )
             for z in macros:
-                self.emacs.keyHandler.addToDoAltX( z, macros[ z ] )
+                self.miniBuffer.addToDoAltX( z, macros[ z ] )
         
             return 'break'
         #@nonl
@@ -4174,23 +4170,22 @@ class Emacs:
         
             '''Names the last macro defined.'''
         
-            svar, label = self.getSvarLabel(event)
+            b = self.miniBuffer
+        
             if not self.macroing:
                 self.macroing = 2
-                svar.set('')
-                self.setLabelBlue(label)
-                return 'break'
-        
-            if event.keysym == 'Return':
-                name = svar.get()
-                self.emacs.keyHandler.addToDoAltX(name,self.lastMacro)
-                svar.set('')
-                self.setLabelBlue(label)
+                b.set('')
+                b.setLabelBlue()
+            elif event.keysym == 'Return':
+                name = b.get()
+                b.addToDoAltX(name,self.lastMacro)
+                b.set('')
+                b.setLabelBlue()
                 self.macroing = False
-                self.stopControlX(event)
-                return 'break'
+                b.stopControlX(event)
+            else:
+                b.update(event)
         
-            self.setSvar(event,svar)
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.143:nameLastMacro
@@ -4252,22 +4247,19 @@ class Emacs:
                     ev.char = z[ 3 ]
                     self.masterCommand( ev , method, '<%s>' % meth )
         
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+            return self.miniBuffer._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.141:_executeMacro
         #@-node:ekr.20050724075352.142:executeLastMacro & helper (called from universal command)
         #@+node:ekr.20050724075352.138:startKBDMacro
-        #self.lastMacro = None
-        #self.macs = []
-        #self.macro = []
-        #self.namedMacros = {}
-        #self.macroing = False
         def startKBDMacro( self, event ):
         
-            svar, label = self.getSvarLabel( event )
-            svar.set( 'Recording Keyboard Macro' )
-            label.configure( background = 'lightblue' )
+            b = self.miniBuffer
+        
+            b.set( 'Recording Keyboard Macro' )
+            b.setLabelBlue()
             self.macroing = True
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.138:startKBDMacro
@@ -4282,18 +4274,20 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.139:recordKBDMacro
         #@+node:ekr.20050724075352.140:stopKBDMacro
-        def stopKBDMacro( self, event ):
-            #global macro, lastMacro, macroing
+        def stopKBDMacro (self,event):
+        
+            b = self.miniBuffer
+        
             if self.macro:
-                self.macro = self.macro[ : -4 ]
-                self.macs.insert( 0, self.macro )
+                self.macro = self.macro [: -4]
+                self.macs.insert(0,self.macro)
                 self.lastMacro = self.macro
                 self.macro = []
         
             self.macroing = False
-            svar, label = self.getSvarLabel( event )
-            svar.set( 'Keyboard macro defined' )
-            label.configure( background = 'lightgrey' )
+            b.set('Keyboard macro defined')
+            b.setLabelBlue()
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.140:stopKBDMacro
@@ -4302,8 +4296,6 @@ class Emacs:
     #@nonl
     #@-node:ekr.20050724075352.137:class macroCommandsClass
     #@+node:ekr.20050724075352.254:class queryReplaceCommandsClass
-    # Migrating to the self.mcStateManager mechanism should simplify things.
-    
     class queryReplaceCommandsClass (baseCommandsClass):
         
         '''A class to handle query replace commands.'''
@@ -4364,64 +4356,64 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.256:_qreplace
         #@+node:ekr.20050724075352.257:getQuery
-        def getQuery( self, event ):
+        def getQuery (self,event):
         
-            l = event.keysym
-            svar, label = self.getSvarLabel( event )
-            label.configure( textvariable = svar )
-            if l == 'Return':
+            b = self.miniBuffer
+        
+            if event.keysym == 'Return':
                 self.qgetQuery = False
                 self.qgetReplace = True
-                self.qQ = svar.get()
-                svar.set( "Replace with:" )
-                self.setState( 'qlisten', 'replace-caption' )
+                self.qQ = b.get()
+                b.set("Replace with:")
+                b.setState('qlisten','replace-caption')
                 return
         
-            if self.getState( 'qlisten' ) == 'replace-caption':
-                svar.set( '' )
-                self.setState( 'qlisten', True )
-            self.setSvar( event, svar )
+            if b.getState('qlisten') == 'replace-caption':
+                b.set('')
+                b.setState('qlisten',True)
+        
+            b.update(event)
         #@nonl
         #@-node:ekr.20050724075352.257:getQuery
         #@+node:ekr.20050724075352.258:getReplace
-        def getReplace( self, event ):
-            l = event.keysym
-            svar, label = self.getSvarLabel( event )
-            label.configure( textvariable = svar )
-            if l == 'Return':
+        def getReplace (self,event):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+            prompt = 'Replace %s with %s y/n(! for all )'
+        
+            if event.keysym == 'Return':
                 self.qgetReplace = False
-                self.qR = svar.get()
+                self.qR = b.get()
                 self.qrexecute = True
-                ok = self.qsearch( event )
+                ok = self.qsearch(event)
                 if self.querytype == 'regex' and ok:
-                    tbuffer = event.widget
-                    range = tbuffer.tag_ranges( 'qR' )
-                    txt = tbuffer.get( range[ 0 ], range[ 1 ] )
-                    svar.set( 'Replace %s with %s y/n(! for all )' %( txt, self.qR ) )
+                    range = tbuffer.tag_ranges('qR')
+                    s = tbuffer.get(range[0],range[1])
+                    b.set(prompt % (s,self.qR))
                 elif ok:
-                    svar.set( 'Replace %s with %s y/n(! for all )' %( self.qQ, self.qR ) )
+                    b.set(prompt % (self.qQ,self.qR))
                 return
-            if self.getState( 'qlisten' ) == 'replace-caption':
-                svar.set( '' )
-                self.setState( 'qlisten', True )
-            self.setSvar( event, svar )
+        
+            if b.getState('qlisten') == 'replace-caption':
+                b.set('')
+                b.setState('qlisten',True)
+        
+            b.update(event)
         #@nonl
         #@-node:ekr.20050724075352.258:getReplace
         #@+node:ekr.20050724075352.259:masterQR
-        def masterQR( self, event ):
+        def masterQR (self,event):
         
             if self.qgetQuery:
-                self.getQuery( event )
+                self.getQuery(event)
             elif self.qgetReplace:
-                self.getReplace( event )
+                self.getReplace(event)
             elif self.qrexecute:
-                self.qreplace( event )
+                self.qreplace(event)
             else:
-                #svar, label = self.getSvarLabel( event )
-                #svar.set( '' )
-                self.listenQR( event )
+                self.listenQR(event)
+        
             return 'break'
-        #@nonl
         #@-node:ekr.20050724075352.259:masterQR
         #@+node:ekr.20050724075352.260:startRegexReplace
         def startRegexReplace( self ):
@@ -4433,38 +4425,32 @@ class Emacs:
         #@+node:ekr.20050724075352.261:query search methods
         #@+others
         #@+node:ekr.20050724075352.262:listenQR
-        #self.qQ = None
-        #self.qR = None
-        #self.qlisten = False
-        #self.lqR = Tk.StringVar()
-        #self.lqR.set( 'Query with: ' )
-        def listenQR( self, event ):
-            #global qgetQuery, qlisten
-            #self.qlisten = True
-            self.setState( 'qlisten', 'replace-caption' )
-            #tbuffer = event.widget
-            svar, label = self.getSvarLabel( event )
-            self.setLabelBlue( label )
-            if self.querytype == 'regex':
-                svar.set( "Regex Query with:" )
-            else:
-                svar.set( "Query with:" )
-            #label.configure( background = 'lightblue' , textvariable = self.lqR)
+        def listenQR (self,event):
+        
+            b = self.miniBuffer
+        
+            b.setState('qlisten','replace-caption')
+            b.setLabelBlue()
+            b.set(
+                g.choose(self.querytype=='regex',
+                    'Regex Query with:'
+                    'Query with:'))
+        
             self.qgetQuery = True
         #@nonl
         #@-node:ekr.20050724075352.262:listenQR
         #@+node:ekr.20050724075352.263:qsearch
         def qsearch( self, event ):
+            
+            b = self.miniBuffer ; tbuffer = event.widget
             if self.qQ:
-                tbuffer = event.widget
                 tbuffer.tag_delete( 'qR' )
-                svar, label = self.getSvarLabel( event )
                 if self.querytype == 'regex':
                     try:
                         regex = re.compile( self.qQ )
                     except:
-                        self.keyboardQuit( event )
-                        svar.set( "Illegal regular expression" )
+                        b.keyboardQuit( event )
+                        b.set( "Illegal regular expression" )
                         
                     txt = tbuffer.get( 'insert', 'end' )
                     match = regex.search( txt )
@@ -4477,7 +4463,7 @@ class Emacs:
                         tbuffer.tag_add( 'qR', 'insert', 'insert +%sc' % length )
                         tbuffer.tag_config( 'qR', background = 'lightblue' )
                         txt = tbuffer.get( 'insert', 'insert +%sc' % length )
-                        svar.set( "Replace %s with %s? y/n(! for all )" % ( txt, self.qR ) )
+                        b.set( "Replace %s with %s? y/n(! for all )" % ( txt, self.qR ) )
                         return True
                 else:
                     i = tbuffer.search( self.qQ, 'insert', stopindex = 'end' )
@@ -4486,29 +4472,25 @@ class Emacs:
                         tbuffer.update_idletasks()
                         tbuffer.tag_add( 'qR', 'insert', 'insert +%sc'% len( self.qQ ) )
                         tbuffer.tag_config( 'qR', background = 'lightblue' )
-                        self.emacs.keyHandler._tailEnd( tbuffer )
+                        self.miniBuffer._tailEnd( tbuffer )
                         return True
                 self.quitQSearch( event )
                 return False
-        #@nonl
         #@-node:ekr.20050724075352.263:qsearch
         #@+node:ekr.20050724075352.264:quitQSearch
-        def quitQSearch( self,event ):
-            #global qQ, qR, qlisten, qrexecute
-            event.widget.tag_delete( 'qR' )
+        def quitQSearch (self,event):
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+        
+            tbuffer.tag_delete('qR')
             self.qQ = None
             self.qR = None
-            #self.qlisten = False
-            self.setState( 'qlisten', False )
+            b.setState('qlisten',0)
             self.qrexecute = False
-            svar, label = self.getSvarLabel( event )
-            svar.set( '' )
-            label.configure( background = 'lightgrey' )
-            #self.keyboardQuit( event )
+            b.set('')
+            b.setLabelGrey()
             self.querytype = 'normal'
-            self.emacs.keyHandler._tailEnd( event.widget )
-            #event.widget.event_generate( '<Key>' )
-            #event.widget.update_idletasks()
+            b._tailEnd(event.widget)
         #@nonl
         #@-node:ekr.20050724075352.264:quitQSearch
         #@-others
@@ -4526,7 +4508,7 @@ class Emacs:
         
             Emacs.baseCommandsClass.__init__(self,emacs) # init the base class.
         
-            self.sRect = False # State indicating string rectangle.  May be moved to MC_StateManager
+            self.sRect = False # State indicating string rectangle.  May be moved to stateManagerClass
             self.krectangle = None # The kill rectangle
             self.rectanglemode = 0 # Determines what state the rectangle system is in.
         #@nonl
@@ -4547,6 +4529,7 @@ class Emacs:
         #@+node:ekr.20050727091421.1:Entry points
         #@+node:ekr.20050724075352.268:clearRectangle
         def clearRectangle( self, event ):
+            
             if not self._chckSel( event ):
                 return
             tbuffer = event.widget
@@ -4557,60 +4540,62 @@ class Emacs:
                 tbuffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
                 tbuffer.insert( '%s.%s' % ( r1, r2 ) , lth)
                 r1 = r1 + 1
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+        
+            return self.miniBuffer._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.268:clearRectangle
         #@+node:ekr.20050724075352.272:closeRectangle
-        def closeRectangle( self, event ):
-            if not self._chckSel( event ):
-                return
+        def closeRectangle (self,event):
+        
+            if not self._chckSel(event): return
             tbuffer = event.widget
-            r1, r2, r3, r4 = self.getRectanglePoints( event ) 
+            r1, r2, r3, r4 = self.getRectanglePoints(event)
             ar1 = r1
             txt = []
             while ar1 <= r3:
-                txt.append( tbuffer.get( '%s.%s' %( ar1, r2 ), '%s.%s' %( ar1, r4 ) ) )
-                ar1 = ar1 + 1 
+                txt.append(tbuffer.get('%s.%s' % (ar1,r2),'%s.%s' % (ar1,r4)))
+                ar1 = ar1 + 1
             for z in txt:
                 if z.lstrip().rstrip():
                     return
             while r1 <= r3:
-                tbuffer.delete( '%s.%s' %(r1, r2 ), '%s.%s' %( r1, r4 ) )
+                tbuffer.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
                 r1 = r1 + 1
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+        
+            return self.miniBuffer._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.272:closeRectangle
         #@+node:ekr.20050724075352.269:deleteRectangle
-        def deleteRectangle( self, event ):
-            if not self._chckSel( event ):
-                return
+        def deleteRectangle (self,event):
+        
+            if not self._chckSel(event): return
             tbuffer = event.widget
-            r1, r2, r3, r4 = self.getRectanglePoints( event )
+            r1, r2, r3, r4 = self.getRectanglePoints(event)
             #lth = ' ' * ( r4 - r2 )
-            self.stopControlX( event )
+            self.stopControlX(event)
             while r1 <= r3:
-                tbuffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
+                tbuffer.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
                 r1 = r1 + 1
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+        
+            return self.miniBuffer._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.269:deleteRectangle
         #@+node:ekr.20050724075352.271:killRectangle
-        #self.krectangle = None       
-        def killRectangle( self, event ):
-            #global krectangle
-            if not self._chckSel( event ):
-                return
+        def killRectangle (self,event):
+        
+            if not self._chckSel(event): return
             tbuffer = event.widget
-            r1, r2, r3, r4 = self.getRectanglePoints( event )
-            #lth = ' ' * ( r4 - r2 )
-            self.stopControlX( event )
+            r1, r2, r3, r4 = self.getRectanglePoints(event)
+        
+            self.stopControlX(event)
             self.krectangle = []
             while r1 <= r3:
-                txt = tbuffer.get( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
-                self.krectangle.append( txt )
-                tbuffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
+                txt = tbuffer.get('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
+                self.krectangle.append(txt)
+                tbuffer.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
                 r1 = r1 + 1
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+        
+            return self.miniBuffer._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.271:killRectangle
         #@+node:ekr.20050724075352.273:yankRectangle
@@ -4635,7 +4620,7 @@ class Emacs:
                 if tbuffer.index( '%s.0 lineend +1c' % i1 ) == tbuffer.index( 'end' ):
                     tbuffer.insert( '%s.0 lineend' % i1, '\n' )
                 i1 = i1 + 1
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+            return self.miniBuffer._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.273:yankRectangle
         #@+node:ekr.20050724075352.267:openRectangle
@@ -4649,58 +4634,50 @@ class Emacs:
             while r1 <= r3:
                 tbuffer.insert( '%s.%s' % ( r1, r2 ) , lth)
                 r1 = r1 + 1
-            return self.emacs.keyHandler._tailEnd( tbuffer )
+            return self.miniBuffer._tailEnd( tbuffer )
         #@nonl
         #@-node:ekr.20050724075352.267:openRectangle
         #@-node:ekr.20050727091421.1:Entry points
         #@+node:ekr.20050724075352.266:activateRectangleMethods
-        def activateRectangleMethods( self, event ):
-            
+        def activateRectangleMethods (self,event):
+        
+            b = self.miniBuffer
+        
             self.rectanglemode = 1
-            svar = self.svars[ event.widget ]
-            svar.set( 'C - x r' )
+            b.set('C - x r')
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.266:activateRectangleMethods
         #@+node:ekr.20050724075352.270:stringRectangle (called from processKey)
-        def stringRectangle( self, event ):
+        def stringRectangle (self,event):
         
-            svar, label = self.getSvarLabel( event )
+            b = self.miniBuffer ; tbuffer = event.widget
             if not self.sRect:
                 self.sRect = 1
-                svar.set( 'String rectangle :' )
-                self.setLabelBlue( label )
+                b.set('String rectangle :')
+                b.setLabelBlue()
                 return 'break'
             if event.keysym == 'Return':
                 self.sRect = 3
             if self.sRect == 1:
-                svar.set( '' )
+                b.set('')
                 self.sRect = 2
             if self.sRect == 2:
-                self.setSvar( event, svar )
+                b.update(event)
                 return 'break'
             if self.sRect == 3:
-                if not self._chckSel( event ):
-                    self.stopControlX( event )
+                if not self._chckSel(event):
+                    b.stopControlX(event)
                     return
-                tbuffer = event.widget
-                r1, r2, r3, r4 = self.getRectanglePoints( event )
-                lth = svar.get()
-                #self.stopControlX( event )
+                r1, r2, r3, r4 = self.getRectanglePoints(event)
+                lth = b.get()
                 while r1 <= r3:
-                    tbuffer.delete( '%s.%s' % ( r1, r2 ),  '%s.%s' % ( r1, r4 ) )
-                    tbuffer.insert( '%s.%s' % ( r1, r2 ) , lth )
+                    tbuffer.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
+                    tbuffer.insert('%s.%s' % (r1,r2),lth)
                     r1 = r1 + 1
-                #i = tbuffer.index( 'insert' )
-                #tbuffer.mark_set( 'insert', 'insert wordend' )
-                #tbuffer.tag_remove( 'sel', '1.0', 'end' )
-                #return self.emacs.keyHandler._tailEnd( tbuffer )
-                self.stopControlX( event )
-                return self.emacs.keyHandler._tailEnd( tbuffer )
-                #return 'break'
-                #return 'break'
-                #tbuffer.mark_set( 'insert', i )
-                #return 'break'
+                b.stopControlX(event)
+                return b._tailEnd(tbuffer)
         #@nonl
         #@-node:ekr.20050724075352.270:stringRectangle (called from processKey)
         #@+node:ekr.20050724075352.274:getRectanglePoints
@@ -4741,35 +4718,38 @@ class Emacs:
         #@-node:ekr.20050725134243: ctor
         #@+node:ekr.20050725135621.1: Entry points
         def copyToRegister (self,event):
-            return self.setEvent(event,'s') and self.setNextRegister(event)
+            return self.miniBuffer.setEvent(event,'s') and self.setNextRegister(event)
         def copyRectangleToRegister (self,event):
-            return self.setEvent(event,'r') and self.setNextRegister(event)
+            return self.miniBuffer.setEvent(event,'r') and self.setNextRegister(event)
         def incrementRegister (self,event):
-            return self.setEvent(event,'plus') and self.setNextRegister(event)
+            return self.miniBuffer.setEvent(event,'plus') and self.setNextRegister(event)
         def insertRegister (self,event):
-            return self.setEvent(event,'i') and self.setNextRegister(event)
+            return self.miniBuffer.setEvent(event,'i') and self.setNextRegister(event)
         def jumpToRegister (self,event):
-            return self.setEvent(event,'j') and self.setNextRegister(event)
+            return self.miniBuffer.setEvent(event,'j') and self.setNextRegister(event)
         def numberToRegister (self,event):
-            return self.setEvent(event,'n') and self.setNextRegister(event)
+            return self.miniBuffer.setEvent(event,'n') and self.setNextRegister(event)
         def pointToRegister (self,event):
-            return self.setEvent(event,'space') and self.setNextRegister(event)
+            return self.miniBuffer.setEvent(event,'space') and self.setNextRegister(event)
         def viewRegister (self,event):
-            return self.setEvent(event,'view') and self.setNextRegister(event)
+            return self.miniBuffer.setEvent(event,'view') and self.setNextRegister(event)
+        #@nonl
         #@+node:ekr.20050724075352.174:appendToRegister
         def appendToRegister (self,event):
         
+            b = self.miniBuffer
             event.keysym = 'a'
             self.setNextRegister(event)
-            self.setState('controlx',True)
+            b.setState('controlx',True)
         #@nonl
         #@-node:ekr.20050724075352.174:appendToRegister
         #@+node:ekr.20050724075352.173:prependToRegister
         def prependToRegister (self,event):
         
+            b = self.miniBuffer
             event.keysym = 'p'
             self.setNextRegister(event)
-            self.setState('controlx',False)
+            b.setState('controlx',False)
         #@-node:ekr.20050724075352.173:prependToRegister
         #@+node:ekr.20050724075352.172:_copyRectangleToRegister
         def _copyRectangleToRegister (self,event):
@@ -4875,11 +4855,13 @@ class Emacs:
         #@+node:ekr.20050724075352.187:_viewRegister
         def _viewRegister (self,event):
             
-            self.stopControlX(event)
+            b = self.miniBuffer
+            
+            b.stopControlX(event)
+        
             if event.keysym in string.letters:
-                text = self.registers[event.keysym.lower()]
-                svar, label = self.getSvarLabel(event)
-                svar.set(text)
+                s = self.registers[event.keysym.lower()]
+                b.set(s)
         #@nonl
         #@-node:ekr.20050724075352.187:_viewRegister
         #@-node:ekr.20050725135621.1: Entry points
@@ -4911,13 +4893,16 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.176:_chckSel
         #@+node:ekr.20050724075352.177:_checkIfRectangle
-        def _checkIfRectangle( self, event ):
-            if self.registers.has_key( event.keysym ):
-                if isinstance( self.registers[ event.keysym ], list ):
-                    svar, label = self.getSvarLabel( event )
-                    self.stopControlX( event )
-                    svar.set( "Register contains Rectangle, not text" )
+        def _checkIfRectangle (self,event):
+        
+            b = self.miniBuffer
+        
+            if self.registers.has_key(event.keysym):
+                if isinstance(self.registers[event.keysym],list):
+                    b.stopControlX(event)
+                    b.set("Register contains Rectangle, not text")
                     return True
+        
             return False
         #@nonl
         #@-node:ekr.20050724075352.177:_checkIfRectangle
@@ -4977,38 +4962,41 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.52:addRegisterItems
         #@+node:ekr.20050724075352.186:deactivateRegister
-        def deactivateRegister( self, event ):
+        def deactivateRegister (self,event):
         
-            svar, label = self.getSvarLabel( event )
-            svar.set( '' )
-            self.setLabelGrey( label )
+            b = self.miniBuffer
+        
+            b.set('')
+            b.setLabelGrey()
+        
             self.registermode = False
             self.method = None
         #@nonl
         #@-node:ekr.20050724075352.186:deactivateRegister
         #@+node:ekr.20050724075352.183:invalidRegister
-        def invalidRegister( self, event, what ):
-            
-            self.deactivateRegister( event )
-            svar, label = self.getSvarLabel( event )
-            svar.set( 'Register does not contain valid %s'  % what)
-            return
+        def invalidRegister (self,event,what):
+        
+            b = self.miniBuffer
+        
+            self.deactivateRegister(event)
+            b.set('Register does not contain valid %s' % what)
+        #@nonl
         #@-node:ekr.20050724075352.183:invalidRegister
         #@+node:ekr.20050724075352.184:setNextRegister
         def setNextRegister (self,event):
+            
+            b = self.miniBuffer
         
             if event.keysym=='Shift':
                 return 
         
             if self.methodDict.has_key(event.keysym):
-                self.setState('controlx',True)
+                b.setState('controlx',True)
                 self.method = self.methodDict[event.keysym]
                 self.registermode = 2
-                svar = self.svars[event.widget]
-                svar.set(self.helpDict[event.keysym])
-                return 
-        
-            self.stopControlX(event)
+                b.set(self.helpDict[event.keysym])
+            else:
+                b.stopControlX(event)
         #@nonl
         #@-node:ekr.20050724075352.184:setNextRegister
         #@+node:ekr.20050724075352.185:executeRegister
@@ -5059,6 +5047,9 @@ class Emacs:
                 'isearch-forward-regexp':   self.isearchForwardRegexp,
                 'isearch-backward-regexp':  self.isearchBackwardRegexp,
                 
+                're-search-forward':        self.reSearchForward,
+                're-search-backward':       self.reSearchBackward,
+                
                 'search-forward':           self.searchForward,
                 'search-backward':          self.searchBackward,
                 'word-search-forward':      self.wordSearchForward,
@@ -5069,18 +5060,21 @@ class Emacs:
         #@+node:ekr.20050725093537:Entry points
         # Incremental...
         def isearchForward (self,event):
-            return self.keyboardQuit(event) and self.startIncremental(event,'<Control-s>')
+            return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'<Control-s>')
             
         def isearchBackward (self,event):
-            return self.keyboardQuit(event) and self.startIncremental(event,'<Control-r>')
+            return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'<Control-r>')
             
         def isearchForwardRegexp (self,event):
-            return self.keyboardQuit(event) and self.startIncremental(event,'<Control-s>',which='regexp')
+            return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'<Control-s>',which='regexp')
             
         def isearchBackwardRegexp (self,event):
-            return self.keyboardQuit(event) and self.startIncremental(event,'<Control-r>',which='regexp')
+            return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'<Control-r>',which='regexp')
         
         # Non-incremental...
+        def reSearchBackward (self,event):
+            return self.reStart(event,which='backward')
+        
         def searchForward (self,event):
             return self.startNonIncrSearch(event,'for')
             
@@ -5096,109 +5090,114 @@ class Emacs:
         #@-node:ekr.20050725093537:Entry points
         #@+node:ekr.20050724075352.222:incremental search methods
         #@+node:ekr.20050724075352.223:startIncremental
-        def startIncremental( self, event, stroke, which='normal' ):
-            
-            isearch = self.getState( 'isearch' )
+        def startIncremental (self,event,stroke,which='normal'):
         
-            if isearch:
-                self.search( event, way = self.csr[ stroke ], useregex = self.useRegex() )
-                self.pref = self.csr[ stroke ]
-                self.scolorizer( event )
-                return 'break'
+            b = self.miniBuffer
+        
+            state = b.getState('isearch')
+            
+            g.trace(stroke)
+            
+            if state == 0:
+                self.pref = self.csr [stroke]
+                if 0: # Interferes with code in isearch. isearch take account of the search arg.
+                    b.set('isearch:',protect=True)
+                b.setLabelBlue()
+                b.setState('isearch',which)
             else:
-                svar, label = self.getSvarLabel( event )
-                #self.isearch = True'
-                self.setState( 'isearch', which )
-                self.pref = self.csr[ stroke ]
-                label.configure( background = 'lightblue' )
-                label.configure( textvariable = svar )
-                return 'break'
+                self.search(event,way=self.csr[stroke],useregex=self.useRegex())
+                self.pref = self.csr [stroke]
+                self.scolorizer(event)
+        
+            return 'break'
         #@nonl
         #@-node:ekr.20050724075352.223:startIncremental
         #@+node:ekr.20050724075352.224:search
-        def search( self, event, way , useregex=False):
-            '''This method moves the insert spot to position that matches the pattern in the minibuffer'''
-            tbuffer = event.widget
-            svar, label = self.getSvarLabel( event )
-            stext = svar.get()
-            if stext == '': return 'break'
-            try:
-                if way == 'bak': #Means search backwards.
-                    i = tbuffer.search( stext, 'insert', backwards = True,  stopindex = '1.0' , regexp = useregex )
-                    if not i: #If we dont find one we start again at the bottom of the buffer. 
-                        i = tbuffer.search( stext, 'end', backwards = True, stopindex = 'insert', regexp = useregex)
-                else: #Since its not 'bak' it means search forwards.
-                    i = tbuffer.search(  stext, "insert + 1c", stopindex = 'end', regexp = useregex ) 
-                    if not i: #If we dont find one we start at the top of the buffer. 
-                        i = tbuffer.search( stext, '1.0', stopindex = 'insert', regexp = useregex )
-            except:
-                return 'break'
-            if not i or i.isspace(): return 'break'
-            tbuffer.mark_set( 'insert', i )
-            tbuffer.see( 'insert' )
+        def search (self,event,way,useregex=False):
+            '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+            s = b.get()
+            if s:
+                try:
+                    if way == 'bak': # Search backwards.
+                        i = tbuffer.search(s,'insert',backwards=True,stopindex='1.0',regexp=useregex)
+                        if not i:
+                            # Start again at the bottom of the buffer.
+                            i = tbuffer.search(s,'end',backwards=True,stopindex='insert',regexp=useregex)
+                    else: # Search forwards.
+                        i = tbuffer.search(s,"insert + 1c",stopindex='end',regexp=useregex)
+                        if not i:
+                            # Start again at the top of the buffer.
+                            i = tbuffer.search(s,'1.0',stopindex='insert',regexp=useregex)
+                except: pass
+        
+                if i and not i.isspace():
+                    tbuffer.mark_set('insert',i)
+                    tbuffer.see('insert')
+        
+            return 'break'
         #@nonl
         #@-node:ekr.20050724075352.224:search
         #@+node:ekr.20050724075352.225:iSearch
-        def iSearch( self, event, stroke ):
-            if len( event.char ) == 0: return
+        def iSearch (self,event,stroke):
             
-            if stroke in self.csr: return self.startIncremental( event, stroke )
-            svar, label = self.getSvarLabel( event )
+            g.trace(stroke)
+        
+            b = self.miniBuffer ; tbuffer = event.widget
+            if not event.char: return
+        
+            if stroke in self.csr:
+                return self.startIncremental(event,stroke)
+        
             if event.keysym == 'Return':
-                  if svar.get() == '':
-                      return self.startNonIncrSearch( event, self.pref )
+                  if b.get() == '':
+                      return self.startNonIncrSearch(event,self.pref)
                   else:
-                    return self.stopControlX( event )
-                  #return self.emacs.keyHandler._tailEnd( event.widget )
-            widget = event.widget
-            label.configure( textvariable = svar )
-            #if event.keysym == 'Return':
-            #      return self.stopControlX( event )
-            self.setSvar( event, svar )
+                    return self.stopControlX(event)
+            b.update(event)
             if event.char != '\b':
-               stext = svar.get()
-               z = widget.search( stext , 'insert' , stopindex = 'insert +%sc' % len( stext ) )
+               stext = b.get()
+               z = tbuffer.search(stext,'insert',stopindex='insert +%sc' % len(stext))
                if not z:
-                   self.search( event, self.pref, useregex= self.useRegex() )
-            self.scolorizer( event )
+                   self.search(event,self.pref,useregex=self.useRegex())
+            self.scolorizer(event)
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.225:iSearch
         #@+node:ekr.20050724075352.226:scolorizer
-        def scolorizer( self, event ):
+        def scolorizer (self,event):
         
-            tbuffer = event.widget
-            svar, label = self.getSvarLabel( event )
-            stext = svar.get()
-            tbuffer.tag_delete( 'color' )
-            tbuffer.tag_delete( 'color1' )
+            b = self.miniBuffer ; tbuffer = event.widget
+        
+            stext = b.get()
+            tbuffer.tag_delete('color')
+            tbuffer.tag_delete('color1')
             if stext == '': return 'break'
             ind = '1.0'
             while ind:
                 try:
-                    ind = tbuffer.search( stext, ind, stopindex = 'end', regexp = self.useRegex() )
+                    ind = tbuffer.search(stext,ind,stopindex='end',regexp=self.useRegex())
                 except:
                     break
                 if ind:
                     i, d = ind.split('.')
-                    d = str(int( d ) + len( stext ))
-                    index = tbuffer.index( 'insert' )
+                    d = str(int(d)+len(stext))
+                    index = tbuffer.index('insert')
                     if ind == index:
-                        tbuffer.tag_add( 'color1', ind, '%s.%s' % (i,d) )
-                    tbuffer.tag_add( 'color', ind, '%s.%s' % (i, d) )
-                    ind = i +'.'+d
-            tbuffer.tag_config( 'color', foreground = 'red' ) 
-            tbuffer.tag_config( 'color1', background = 'lightblue' )
+                        tbuffer.tag_add('color1',ind,'%s.%s' % (i,d))
+                    tbuffer.tag_add('color',ind,'%s.%s' % (i,d))
+                    ind = i + '.' + d
+            tbuffer.tag_config('color',foreground='red')
+            tbuffer.tag_config('color1',background='lightblue')
         #@nonl
         #@-node:ekr.20050724075352.226:scolorizer
         #@+node:ekr.20050724075352.227:useRegex
-        def useRegex( self ):
+        def useRegex (self):
         
-            isearch = self.getState( 'isearch' )
-            risearch = False
-            if isearch != 'normal':
-                risearch=True
-            return risearch
+            b = self.miniBuffer
+        
+            return b.getState('isearch') != 'normal'
         #@nonl
         #@-node:ekr.20050724075352.227:useRegex
         #@-node:ekr.20050724075352.222:incremental search methods
@@ -5209,51 +5208,45 @@ class Emacs:
         #@-at
         #@nonl
         #@+node:ekr.20050724075352.229:nonincrSearch
-        def nonincrSearch( self, event, stroke ):
-            
-            if event.keysym in ('Control_L', 'Control_R' ): return
+        def nonincrSearch (self,event,stroke):
         
-            state = self.getState( 'nonincr-search' )
-            svar, label = self.getSvarLabel( event )
-            if state.startswith( 'start' ):
-                state = state[ 5: ]
-                self.setState( 'nonincr-search', state )
-                svar.set( '' )
-                
-            if svar.get() == '' and stroke=='<Control-w>':
-                return self.startWordSearch( event, state )
-            
+            b = self.miniBuffer ; tbuffer = event.widget
+        
+            if event.keysym in ('Control_L','Control_R'): return
+            state = b.getState('nonincr-search')
+            if state.startswith('start'):
+                state = state [5:]
+                b.setState('nonincr-search',state)
+                b.set('')
+        
+            if b.get() == '' and stroke == '<Control-w>':
+                return self.startWordSearch(event,state)
+        
             if event.keysym == 'Return':
-                
-                tbuffer = event.widget
-                i = tbuffer.index( 'insert' )
-                word = svar.get()
+                i = tbuffer.index('insert')
+                word = b.get()
                 if state == 'for':
-                    s = tbuffer.search( word, i , stopindex = 'end' )
-                    if s:
-                        s = tbuffer.index( '%s +%sc' %( s, len( word ) ) )
-                else:            
-                    s = tbuffer.search( word,i, stopindex = '1.0', backwards = True )
-                    
-                if s:
-                    tbuffer.mark_set( 'insert', s )    
-                self.keyboardQuit( event )
-                return self.emacs.keyHandler._tailEnd( tbuffer )        
-                    
+                    s = tbuffer.search(word,i,stopindex='end')
+                    if s: s = tbuffer.index('%s +%sc' % (s,len(word)))
+                else: s = tbuffer.search(word,i,stopindex='1.0',backwards=True)
+                if s: tbuffer.mark_set('insert',s)
+                b.keyboardQuit(event)
+                return b._tailEnd(tbuffer)
             else:
-                self.setSvar( event, svar )
+                b.update(event)
                 return 'break'
         #@nonl
         #@-node:ekr.20050724075352.229:nonincrSearch
         #@+node:ekr.20050724075352.230:startNonIncrSearch
-        def startNonIncrSearch( self, event, which ):
-            
-            self.keyboardQuit( event )
-            tbuffer = event.widget
-            self.setState( 'nonincr-search', 'start%s' % which )
-            svar, label = self.getSvarLabel( event )
-            self.setLabelBlue( label )
-            svar.set( 'Search:' )
+        def startNonIncrSearch (self,event,which):
+        
+            b = self.miniBuffer
+        
+            b.keyboardQuit(event)
+            b.setState('nonincr-search','start%s' % which)
+            b.setLabelBlue()
+            b.set('Search:')
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.230:startNonIncrSearch
@@ -5272,62 +5265,52 @@ class Emacs:
         #@-at
         #@nonl
         #@+node:ekr.20050724075352.232:startWordSearch
-        def startWordSearch( self, event, which ):
+        def startWordSearch (self,event,which):
         
-            self.keyboardQuit( event )
-            tbuffer = event.widget
-            self.setState( 'word-search', 'start%s' % which )
-            svar, label = self.getSvarLabel( event )
-            self.setLabelBlue( label )
-            if which == 'bak':
-                txt = 'Backward'
-            else:
-                txt = 'Forward'
-            svar.set( 'Word Search %s:' % txt ) 
+            b = self.miniBuffer
+        
+            b.keyboardQuit(event)
+            b.setState('word-search','start%s' % which)
+            b.setLabelBlue()
+            b.set('Word Search %s:' % g.choose(which=='bak','Backward','Forward'))
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.232:startWordSearch
         #@+node:ekr.20050724075352.233:wordSearch
-        def wordSearch( self, event ):
+        def wordSearch (self,event):
         
-            state = self.getState( 'word-search' )
-            svar, label = self.getSvarLabel( event )
-            if state.startswith( 'start' ):
-                state = state[ 5: ]
-                self.setState( 'word-search', state )
-                svar.set( '' )
+            b = self.miniBuffer ; tbuffer = event.widget
+            state = b.getState('word-search')
+            if state.startswith('start'):
+                state = state [5:]
+                b.setState('word-search',state)
+                b.set('')
             if event.keysym == 'Return':
-                tbuffer = event.widget
-                i = tbuffer.index( 'insert' )
-                words = svar.get().split()
-                sep = '[%s%s]+' %( string.punctuation, string.whitespace )
-                pattern = sep.join( words )
-                cpattern = re.compile( pattern )
+                i = tbuffer.index('insert')
+                words = b.get().split()
+                sep = '[%s%s]+' % (string.punctuation,string.whitespace)
+                pattern = sep.join(words)
+                cpattern = re.compile(pattern)
                 if state == 'for':
-                    
-                    txt = tbuffer.get( 'insert', 'end' )
-                    match = cpattern.search( txt )
-                    if not match: return self.keyboardQuit( event )
+                    txt = tbuffer.get('insert','end')
+                    match = cpattern.search(txt)
+                    if not match: return b.keyboardQuit(event)
                     end = match.end()
-                    
-                else:            
-                    txt = tbuffer.get( '1.0', 'insert' ) #initially the reverse words formula for Python Cookbook was going to be used.
-                    a = re.split( pattern, txt )         #that didnt quite work right.  This one apparently does.   
-                    if len( a ) > 1:
-                        b = re.findall( pattern, txt )
-                        end = len( a[ -1 ] ) + len( b[ -1 ] )
-                    else:
-                        return self.keyboardQuit( event )
-                    
-                wdict ={ 'for': 'insert +%sc', 'bak': 'insert -%sc' }
-                
-                tbuffer.mark_set( 'insert', wdict[ state ] % end )                                
-                tbuffer.see( 'insert' )    
-                self.keyboardQuit( event )
-                return self.emacs.keyHandler._tailEnd( tbuffer )        
-                    
+                else:
+                    txt = tbuffer.get('1.0','insert') #initially the reverse words formula for Python Cookbook was going to be used.
+                    a = re.split(pattern,txt) #that didnt quite work right.  This one apparently does.
+                    if len(a) > 1:
+                        b = re.findall(pattern,txt)
+                        end = len(a[-1]) + len(b[-1])
+                    else: return b.keyboardQuit(event)
+                wdict = {'for': 'insert +%sc', 'bak': 'insert -%sc'}
+                tbuffer.mark_set('insert',wdict[state] % end)
+                tbuffer.see('insert')
+                b.keyboardQuit(event)
+                return b._tailEnd(tbuffer)
             else:
-                self.setSvar( event, svar )
+                b.update(event)
                 return 'break'
         #@nonl
         #@-node:ekr.20050724075352.233:wordSearch
@@ -5336,30 +5319,31 @@ class Emacs:
         # For the re-search-backward and re-search-forward Alt-x commands
         #@nonl
         #@+node:ekr.20050724075352.235:reStart
-        def reStart( self, event, which='forward' ):
-            self.keyboardQuit( event )
-            tbuffer = event.widget
-            self.setState( 're_search', 'start%s' % which )
-            svar, label = self.getSvarLabel( event )
-            label.configure( background = 'lightblue' )
-            svar.set( 'RE Search:' )
+        def reStart (self,event,which='forward'):
+        
+            b = self.miniBuffer
+        
+            b.keyboardQuit(event)
+            b.setState('re_search','start%s' % which)
+            b.setLabelBlue()
+            b.set('RE Search:')
+        
             return 'break'
+        
+        reSearchForward = reStart
         #@nonl
         #@-node:ekr.20050724075352.235:reStart
         #@+node:ekr.20050724075352.236:re_search
         def re_search( self, event ):
-            svar, label = self.getSvarLabel( event )
         
-            state = self.getState( 're_search' )
+            b = self.miniBuffer ; tbuffer = event.widget
+            state = b.getState( 're_search' )
             if state.startswith( 'start' ):
                 state = state[ 5: ]
-                self.setState( 're_search', state )
-                svar.set( '' )
-                
+                b.setState( 're_search', state )
+                b.set( '' )
             if event.keysym == 'Return':
-        
-                tbuffer = event.widget
-                pattern = svar.get()
+                pattern = b.get()
                 cpattern = re.compile( pattern )
                 end = None
                 if state == 'forward':
@@ -5375,11 +5359,11 @@ class Emacs:
                 if end:
                     wdict ={ 'forward': 'insert +%sc', 'backward': 'insert -%sc' }
                     tbuffer.mark_set( 'insert', wdict[ state ] % end )                                
-                    self.emacs.keyHandler._tailEnd( tbuffer )
+                    b._tailEnd( tbuffer )
                     tbuffer.see( 'insert' )
-                return self.keyboardQuit( event )    
+                return b.keyboardQuit( event )    
             else:
-                self.setSvar( event, svar )
+                b.update( event )
                 return 'break'
         #@nonl
         #@-node:ekr.20050724075352.236:re_search
@@ -5390,21 +5374,24 @@ class Emacs:
     #@-others
     #@nonl
     #@-node:ekr.20050725091822:Commands classes...
-    #@+node:ekr.20050727161004:class keyHandlerClass
-    class keyHandlerClass:
+    #@+node:ekr.20050727161004:class miniBufferClass 
+    class miniBufferClass:
     
         #@    @+others
         #@+node:ekr.20050728103627: Birth
         #@+node:ekr.20050727162112: ctor
-        def __init__ (self,emacs):
+        def __init__ (self,emacs,widget):
         
             self.emacs = emacs
             self.c = emacs.c
+            self.widget = widget # A Tk Label widget.
+            
+            self.svar = Tk.StringVar()
+            self.widget.configure(textvariable=self.svar)
         
             # Ivars.
             self.altx_history = []
             self.keysymhistory = []
-            self.mbuffers = {}
             self.previousStroke = ''
             self.svars = {}
             self.tailEnds = {} # functions to execute at the end of many Emac methods.  Configurable by environment.
@@ -5430,9 +5417,15 @@ class Emacs:
                 '<Alt-x>': self.alt_X
             }
         
-            self.mcStateManager = self.MC_StateManager(emacs) # Manages state for the master command
-            self.kstrokeManager = self.MC_KeyStrokeManager(emacs) # Manages some keystroke state for the master command.
+            self.stateManager = self.stateManagerClass(emacs) # Manages state for the master command
+            self.kstrokeManager = self.keyStrokeManagerClass(emacs) # Manages some keystroke state for the master command.
             self.cxHandler = self.controlX_handlerClass(emacs) # Create the handler for Control-x commands
+            
+            # Delegators.  These will go away if the state helper class goes away.
+            self.getState = self.stateManager.getState
+            self.setState = self.stateManager.setState
+            self.hasState = self.stateManager.hasState
+            self.whichState = self.stateManager.whichState
         #@nonl
         #@-node:ekr.20050727162112: ctor
         #@+node:ekr.20050729150051.2:add_ekr_altx_commands
@@ -5506,7 +5499,7 @@ class Emacs:
         
             '''Create callback dictionary for masterCommand.'''
         
-            emacs = self.emacs
+            b = self ; emacs = self.emacs
         
             cbDict = {
             'Alt-less':     lambda event, spot = '1.0': emacs.editCommands.moveTo(event,spot),
@@ -5534,7 +5527,7 @@ class Emacs:
             'Alt-t':        lambda event, sw = emacs.editCommands.swapSpots: emacs.editCommands.swapWords(event,sw),
             'Alt-x':        self.alt_X,
             'Control-x':    self.startControlX,
-            'Control-g':    self.keyboardQuit,
+            'Control-g':    b.keyboardQuit,
             'Control-Shift-at': emacs.editCommands.setRegion,
             'Control-w':    lambda event, which = 'd': emacs.editCommands.killRegion(event,which),
             'Alt-w':        lambda event, which = 'c': emacs.editCommands.killRegion(event,which),
@@ -5629,7 +5622,7 @@ class Emacs:
             emacs = self.emacs
         
             # Finish creating the helper classes.
-            self.mcStateManager.finishCreate()
+            self.stateManager.finishCreate()
             self.kstrokeManager.finishCreate()
             self.cxHandler.finishCreate()
         
@@ -5663,59 +5656,32 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050728093027.1:finishCreate TO DO: remove these tables?
         #@+node:ekr.20050724075352.112:setBufferStrokes  (creates svars & <key> bindings
-        def setBufferStrokes (self,tbuffer,minibuffer):
+        def setBufferStrokes (self,tbuffer):
         
-            '''Sets key bindings for a Tk Text widget and enters minibuffer into mbuffers dict.'''
+            '''Sets key bindings for a Tk Text widget.'''
         
-            #@    << define cb callback >>
-            #@+node:ekr.20050724075352.113:<< define cb callback >>
-            def cb (evstring):
-            
-                callback = self.cbDict.get(evstring)
-                evstring = '<%s>' % evstring
-            
-                def f (event):
-                    return self.masterCommand(event,callback,evstring)
-            
-                if evstring != '<Key>':
-                    tbuffer.bind(evstring,f)
-                else:
-                    tbuffer.bind(evstring,f,'+')
-            #@nonl
-            #@-node:ekr.20050724075352.113:<< define cb callback >>
-            #@nl
             # Create one binding for each entry in cbDict.
             for key in self.cbDict:
-                cb(key)
+                self.bindKey(tbuffer,key)
         
             # Add a binding for <Key> events, so _all_ key events go through masterCommand.
-            cb('Key')
-        
-            # Associate the minibuffer and a corresponding Tk.StringVar with tbuffer.
-            self.mbuffers [tbuffer] = minibuffer
-            self.svars [tbuffer] = svar = Tk.StringVar()
-        
-            if 1: # Why do we need to reconfigure this???
-                minibuffer.configure(textvariable=svar)
-            else:
-                #@        << define setVar callback >>
-                #@+node:ekr.20050724075352.114:<< define setVar callback >>
-                def setVar (event):
-                
-                    '''Set the event's minibuffer text to the corresponding Tk.StringVar.
-                    
-                    This is called on Focus in events.'''
-                
-                    # g.trace(event,event.widget)
-                
-                    minibuffer = self.mbuffers [event.widget]
-                    svar = self.svars [event.widget]
-                    minibuffer.configure(textvariable=svar)
-                #@nonl
-                #@-node:ekr.20050724075352.114:<< define setVar callback >>
-                #@nl
-                tbuffer.bind('<FocusIn>',setVar,'+')
+            self.bindKey(tbuffer,'Key')
         #@nonl
+        #@+node:ekr.20050724075352.113:bindKey
+        def bindKey (self,tbuffer,evstring):
+        
+            callback = self.cbDict.get(evstring)
+            evstring = '<%s>' % evstring
+        
+            def f (event):
+                return self.masterCommand(event,callback,evstring)
+        
+            if evstring != '<Key>':
+                tbuffer.bind(evstring,f)
+            else:
+                tbuffer.bind(evstring,f,'+')
+        #@nonl
+        #@-node:ekr.20050724075352.113:bindKey
         #@-node:ekr.20050724075352.112:setBufferStrokes  (creates svars & <key> bindings
         #@-node:ekr.20050728103627: Birth
         #@+node:ekr.20050728092044: Entry points
@@ -5728,103 +5694,175 @@ class Emacs:
             return self.universalDispatch(event,'')
         #@nonl
         #@-node:ekr.20050728092044: Entry points
+        #@+node:ekr.20050730113639: Getters & Setters
+        #@+node:ekr.20050724075352.85:setEvent
+        def setEvent (self,event,l):
+        
+            event.keysym = l
+            return event
+        #@nonl
+        #@-node:ekr.20050724075352.85:setEvent
+        #@+node:ekr.20050724075352.99:setLabelGrey
+        def setLabelGrey (self):
+        
+            self.widget.configure(background='lightgrey')
+        #@nonl
+        #@-node:ekr.20050724075352.99:setLabelGrey
+        #@+node:ekr.20050724075352.100:setLabelBlue
+        def setLabelBlue (self):
+        
+            self.widget.configure(background='lightblue')
+        #@nonl
+        #@-node:ekr.20050724075352.100:setLabelBlue
+        #@+node:ekr.20050724075352.101:reset
+        def reset (self):
+            
+            b = self
+        
+            b.set('')
+            b.setLabelGrey()
+        #@nonl
+        #@-node:ekr.20050724075352.101:reset
+        #@+node:ekr.20050724075352.104:update
+        def update (self,event):
+        
+            '''
+            Alters the StringVar svar to represent the change in the event.
+            This has the effect of changing the miniBuffer contents.
+        
+            It mimics what would happen with the keyboard and a Text editor
+            instead of plain accumalation.'''
+            
+            b = self ; s = b.get() ; ch = event.char
+        
+            if ch == '\b': # Handle backspace.
+                # Don't backspace over the prompt.
+                if len(s) <= self.argPromptLen:
+                    return 
+                elif len(s) == 1: s = ''
+                else: s = s [0:-1]
+            else:
+                # Add the character.
+                s = s + ch
+        
+            b.set(s)
+        #@nonl
+        #@-node:ekr.20050724075352.104:update
+        #@+node:ekr.20050730121359:get & set
+        def get (self):
+            
+            return self.svar.get()
+            
+        def set (self,s,protect=False):
+            
+            self.svar.set(s)
+            if protect:
+                self.argPromptLen = len(s)
+        #@nonl
+        #@-node:ekr.20050730121359:get & set
+        #@-node:ekr.20050730113639: Getters & Setters
         #@+node:ekr.20050724075352.283:Alt_X methods
         #@+node:ekr.20050724075352.285:doAlt_X & helpers
         def doAlt_X (self,event):
         
             '''This method executes the correct Alt-X command'''
+            
+            b = self
         
-            svar, label = self.getSvarLabel(event)
-            if svar.get().endswith('M-x:'):
-                self.axTabList.clear() # Clear the list, new Alt-x command is in effect.
-                svar.set('')
+            if b.get().endswith('M-x:'):
+                b.axTabList.clear() # Clear the list, new Alt-x command is in effect.
+                b.set('')
             if event.keysym == 'Return':
-                txt = svar.get()
-                func = self.altX_commandsDict.get(txt)
+                s = b.get()
+                func = b.altX_commandsDict.get(s)
                 if func:
-                    if txt != 'repeat-complex-command':
-                        self.altx_history.insert(0,txt)
-                    aX = self.mcStateManager.getState('altx')
-                    if aX.isdigit() and txt in self.x_hasNumeric:
+                    if s != 'repeat-complex-command': b.altx_history.insert(0,s)
+                    aX = b.getState('altx')
+                    if (type(aX) == type(1) or aX.isdigit()) and s in b.x_hasNumeric:
                         func(event,aX)
                     else:
                         func(event)
                 else:
-                    self.keyboardQuit(event)
-                    svar.set('Command does not exist')
+                    b.keyboardQuit(event)
+                    b.set('Command does not exist')
             elif event.keysym == 'Tab':
                 #@        << handle tab completion >>
                 #@+node:ekr.20050729094213:<< handle tab completion >>
-                stext = svar.get().strip()
-                if self.axTabList.prefix and stext.startswith(self.axTabList.prefix):
-                    svar.set(self.axTabList.next()) # get next in iteration
+                s = b.get().strip()
+                
+                if b.axTabList.prefix and s.startswith(b.axTabList.prefix):
+                    b.set(b.axTabList.next()) # get next in iteration
                 else:
-                    prefix = svar.get()
-                    pmatches = self._findMatch(svar)
-                    self.axTabList.setTabList(prefix,pmatches)
-                    svar.set(self.axTabList.next()) # begin iteration on new lsit
+                    prefix = b.get()
+                    pmatches = b._findMatch()
+                    b.axTabList.setTabList(prefix,pmatches)
+                    b.set(b.axTabList.next()) # begin iteration on new lsit
                 #@nonl
                 #@-node:ekr.20050729094213:<< handle tab completion >>
                 #@nl
             else:
-                self.axTabList.clear() #clear the list, any other character besides tab indicates that a new prefix is in effect.
-                self.setSvar(event,svar)
+                b.axTabList.clear() #clear the list, any other character besides tab indicates that a new prefix is in effect.
+                b.update(event)
             return 'break'
         #@nonl
         #@+node:ekr.20050724075352.92:_findMatch
-        def _findMatch (self,svar,fdict=None):
+        def _findMatch (self,fdict=None):
+            
             '''This method returns a sorted list of matches.'''
+        
             if not fdict:
                 fdict = self.altX_commandsDict
-            txt = svar.get()
-            if not txt.isspace() and txt != '':
-                txt = txt.strip()
-                pmatches = filter(lambda a: a.startswith(txt),fdict)
+        
+            s = self.get()
+            if not s.isspace() and s != '':
+                s = s.strip()
+                pmatches = filter(lambda a: a.startswith(s),fdict)
             else:
                 pmatches = []
+        
             pmatches.sort()
             return pmatches
         #@nonl
         #@-node:ekr.20050724075352.92:_findMatch
         #@-node:ekr.20050724075352.285:doAlt_X & helpers
         #@+node:ekr.20050724075352.284:alt_X
-        def alt_X (self,event,which=None):
+        def alt_X (self,event=None,which=None):
         
-            if which:
-                self.mcStateManager.setState('altx',which)
-            else:
-                self.mcStateManager.setState('altx','True')
+            b = self
         
-            svar, label = self.getSvarLabel(event)
-            if which:
-                svar.set('%s M-x:' % which)
-            else:
-                svar.set('M-x:')
-            self.setLabelBlue(label)
+            b.setState('altx',g.choose(which,which,1))
+            b.set(g.choose(which,'%s M-x:' % which,'M-x:'))
+            b.setLabelBlue()
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.284:alt_X
         #@+node:ekr.20050724075352.286:execute last altx methods
         #@+node:ekr.20050724075352.287:executeLastAltX
         def executeLastAltX (self,event):
+            
+            b = self
         
-            if event.keysym == 'Return' and self.altx_history:
+            if event.keysym == 'Return' and b.altx_history:
                 last = self.altx_history [0]
-                self.altX_commandsDict [last](event)
+                b.altX_commandsDict [last](event)
                 return 'break'
             else:
-                return self.keyboardQuit(event)
+                return b.keyboardQuit(event)
         #@nonl
         #@-node:ekr.20050724075352.287:executeLastAltX
         #@+node:ekr.20050724075352.288:repeatComplexCommand
-        def repeatComplexCommand (self,event):
+        def repeatComplexCommand (self,event=None):
         
-            self.keyboardQuit(event)
+            b = self
+        
+            b.keyboardQuit(event)
+        
             if self.altx_history:
-                svar, label = self.getSvarLabel(event)
-                self.setLabelBlue(label)
-                svar.set("Redo: %s" % self.altx_history[0])
-                self.mcStateManager.setState('last-altx',True)
+                self.setLabelBlue()
+                b.set("Redo: %s" % b.altx_history[0])
+                b.setState('last-altx',True)
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.288:repeatComplexCommand
@@ -5843,7 +5881,7 @@ class Emacs:
                 self.emacs = emacs
                 self.previous = []
             
-                # These are set in keyHandlerClass.finishCreate.
+                # These are set in miniBuffer.finishCreate.
                 self.rect_commands = {}
                 self.variety_commands = {}
                 self.abbreviationDispatch = {}
@@ -5913,7 +5951,7 @@ class Emacs:
             #@+node:ekr.20050724075352.17:processKey
             def processKey (self,event):
             
-                emacs = self.emacs
+                b = self ; emacs = self.emacs
                 previous = self.previous
                 if event.keysym in ('Shift_L','Shift_R'):
                     return
@@ -5946,8 +5984,7 @@ class Emacs:
                     if self.processAbbreviation(event): return 'break'
             
                 if event.keysym == 'g':
-                    svar, label = emacs.getSvarLabel(event)
-                    l = svar.get()
+                    l = b.get()
                     if self.abbreviationDispatch.has_key(l):
                         emacs.stopControlX(event)
                         return self.abbreviationDispatch [l](event)
@@ -5994,28 +6031,27 @@ class Emacs:
             #@+node:ekr.20050724075352.19:processAbbreviation
             def processAbbreviation (self,event):
             
-                emacs = self.emacs
-                svar, label = emacs.getSvarLabel(event)
+                b = self ; char = event.char
             
-                if svar.get() != 'a' and event.keysym == 'a':
-                    svar.set('a')
+                if b.get() != 'a' and event.keysym == 'a':
+                    b.set('a')
                     return 'break'
             
-                elif svar.get() == 'a':
-                    if event.char == 'i':
-                        svar.set('a i')
-                    elif event.char == 'e':
-                        emacs.stopControlX(event)
+                elif b.get() == 'a':
+                    if char == 'i':
+                        b.set('a i')
+                    elif char == 'e':
+                        b.stopControlX(event)
                         event.char = ''
-                        emacs.expandAbbrev(event)
+                        self.emacs.expandAbbrev(event)
                     return 'break'
             #@nonl
             #@-node:ekr.20050724075352.19:processAbbreviation
             #@-others
         #@nonl
         #@-node:ekr.20050724075352.14:class controlX_handlerClass
-        #@+node:ekr.20050724075352.29:class MC_KeyStrokeManager
-        class MC_KeyStrokeManager:
+        #@+node:ekr.20050724075352.29:class keyStrokeManagerClass
+        class keyStrokeManagerClass:
         
             #@    @+others
             #@+node:ekr.20050724075352.30:__init__
@@ -6060,12 +6096,12 @@ class Emacs:
             #@-node:ekr.20050724075352.33:hasKeyStroke
             #@-others
         #@nonl
-        #@-node:ekr.20050724075352.29:class MC_KeyStrokeManager
-        #@+node:ekr.20050724075352.20:class MC_StateManager
-        class MC_StateManager:
+        #@-node:ekr.20050724075352.29:class keyStrokeManagerClass
+        #@+node:ekr.20050724075352.20:class stateManagerClass
+        class stateManagerClass:
             
-            '''MC_StateManager manages the state that the Emacs instance has entered and
-               routes key events to the right method, dependent upon the state in the MC_StateManager'''
+            '''This class manages the state that the Emacs instance has entered and
+               routes key events to the right method, dependent upon the state in the stateManagerClass'''
                
             #@    @+others
             #@+node:ekr.20050724075352.21:__init__
@@ -6102,20 +6138,20 @@ class Emacs:
                     # 1 == one parameter, 2 == all
                     
                     # Utility states...
-                    'getArg':    (2,emacs.keyHandler.getArg),
+                    'getArg':    (2,emacs.miniBuffer.getArg),
                     
                     # Command states...
-                    'uC':               (2,emacs.keyHandler.universalDispatch),
-                    'controlx':         (2,emacs.keyHandler.doControlX),
+                    'uC':               (2,emacs.miniBuffer.universalDispatch),
+                    'controlx':         (2,emacs.miniBuffer.doControlX),
                     'isearch':          (2,emacs.searchCommands.iSearch),
                     'goto':             (1,emacs.editCommands.Goto),
                     'zap':              (1,emacs.editCommands.zapTo),
                     'howM':             (1,emacs.editCommands.howMany),
                     'abbrevMode':       (1,emacs.abbrevCommands.abbrevCommand1),
-                    'altx':             (1,emacs.keyHandler.doAlt_X),
+                    'altx':             (1,emacs.miniBuffer.doAlt_X),
                     'qlisten':          (1,emacs.queryReplaceCommands.masterQR),
                     'rString':          (1,emacs.editCommands.replaceString),
-                    'negativeArg':      (2,emacs.keyHandler.negativeArgument),
+                    'negativeArg':      (2,emacs.miniBuffer.negativeArgument),
                     'abbrevOn':         (1,eA),
                     'set-fill-column':  (1,emacs.editCommands.setFillColumn),
                     'chooseBuffer':     (1,emacs.bufferCommands.chooseBuffer),
@@ -6127,7 +6163,7 @@ class Emacs:
                     'delete_file':      (1,emacs.fileCommands.deleteFile),
                     'nonincr-search':   (2,emacs.searchCommands.nonincrSearch),
                     'word-search':      (1,emacs.searchCommands.wordSearch),
-                    'last-altx':        (1,emacs.keyHandler.executeLastAltX),
+                    'last-altx':        (1,emacs.miniBuffer.executeLastAltX),
                     'escape':           (1,emacs.editCommands.watchEscape),
                     'subprocess':       (1,emacs.emacsControlCommands.subprocesser),
                 }
@@ -6164,46 +6200,51 @@ class Emacs:
                 self.state = None
             
                 for z in self.states.keys():
-                    self.states [z] = False
+                    self.states [z] = 0 # More useful than False.
             #@nonl
             #@-node:ekr.20050724075352.28:clear
             #@-others
         #@nonl
-        #@-node:ekr.20050724075352.20:class MC_StateManager
+        #@-node:ekr.20050724075352.20:class stateManagerClass
         #@+node:ekr.20050724075352.242:ControlX methods
         #@+node:ekr.20050724075352.243:startControlX
         def startControlX (self,event):
         
             '''This method starts the Control-X command sequence.'''
+            
+            b = self
         
-            self.mcStateManager.setState('controlx',True)
-            svar, label = self.getSvarLabel(event)
-            svar.set('Control - X')
-            label.configure(background='lightblue')
+            b.setState('controlx',True)
+            b.set('Control - X')
+            b.setLabelBlue()
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.243:startControlX
         #@+node:ekr.20050724075352.244:stopControlX
-        def stopControlX (self,event):
+        def stopControlX (self,event): # event IS used.
         
             '''This method clears the state of the Emacs instance'''
+            
+            b = self ; emacs = self.emacs ; widget = event.widget
         
             # This will all be migrated to keyboardQuit eventually.
-            if self.emacs.emacsControlCommands.shuttingdown:
+            if emacs.emacsControlCommands.shuttingdown:
                 return
         
-            self.emacs.rectangleCommands.sRect = False
-            self.mcStateManager.clear()
-            event.widget.tag_delete('color')
-            event.widget.tag_delete('color1')
+            emacs.rectangleCommands.sRect = False
+            emacs.registerCommands.rectanglemode = 0
+            
+            b.stateManager.clear()
+            widget.tag_delete('color')
+            widget.tag_delete('color1')
         
-            if self.emacs.registerCommands.registermode:
-                self.emacs.registerCommands.deactivateRegister(event)
+            if emacs.registerCommands.registermode:
+                emacs.registerCommands.deactivateRegister(event)
         
-            self.rectanglemode = 0
-            self.bufferMode = None
-            self.resetMiniBuffer(event)
-            event.widget.update_idletasks()
+            self.bufferMode = None ### Correct???
+            b.reset()
+            widget.update_idletasks()
         
             return 'break'
         #@nonl
@@ -6221,98 +6262,56 @@ class Emacs:
             '''A simple method that extends the functions Alt-X offers.'''
         
             # Important: f need not be a method of the emacs class.
+            
+            b = self
         
             def f (event,aX=None,self=self,command=function):
                 # g.trace(event,self,command)
                 command()
-                self.keyboardQuit(event)
+                b.keyboardQuit(event)
         
-            self.altX_commandsDict [name] = f
+            b.altX_commandsDict [name] = f
         #@nonl
         #@-node:ekr.20050724075352.115:extendAltX
+        #@+node:ekr.20050730074556.3:getArg
+        def getArg (self,event,returnStateKind=None,returnState=None):
+            
+            '''Handle key state while accumulating an argument. Enter given state when done'''
+            
+            b = self ; stateKind = 'getArg'
+            state = b.getState(stateKind)
+            if not state:
+                b.argPromptLen = len(b.get()) ; b.arg = ''
+                b.afterGetArgState = (returnStateKind,returnState)
+                b.setState(stateKind,1)
+            elif event.keysym == 'Return':
+                # Compute the actual arg.
+                s = b.get() ; b.arg = s[b.argPromptLen:]
+                # Immediately enter the caller's requested state.
+                b.stateManager.clear()
+                stateKind,state = self.afterGetArgState
+                b.setState(stateKind,state)
+                b.stateManager(event,None) # Invoke the stateManager __call__ method.
+            else:
+                b.update(event)
+            return 'break'
+        #@nonl
+        #@-node:ekr.20050730074556.3:getArg
         #@+node:ekr.20050724075352.47:keyboardQuit
-        def keyboardQuit (self,event):
+        def keyboardQuit (self,event):  # The event arg IS used.
         
             '''This method cleans the Emacs instance of state and ceases current operations.'''
         
             return self.stopControlX(event) # This method will eventually contain the stopControlX code.
         #@nonl
         #@-node:ekr.20050724075352.47:keyboardQuit
-        #@+node:ekr.20050724075352.97:Label ( minibuffer ) and svar methods
-        # Svars are the internals of the minibuffer; labels are the presentation of those internals.
-        #@nonl
-        #@+node:ekr.20050724075352.98:label( minibuffer ) methods
-        #@+node:ekr.20050724075352.99:setLabelGrey
-        def setLabelGrey (self,label):
-        
-            label.configure(background='lightgrey')
-        #@-node:ekr.20050724075352.99:setLabelGrey
-        #@+node:ekr.20050724075352.100:setLabelBlue
-        def setLabelBlue (self,label):
-        
-            label.configure(background='lightblue')
-        #@-node:ekr.20050724075352.100:setLabelBlue
-        #@+node:ekr.20050724075352.101:resetMiniBuffer
-        def resetMiniBuffer (self,event):
-        
-            svar, label = self.getSvarLabel(event)
-            svar.set('')
-            label.configure(background='lightgrey')
-        #@nonl
-        #@-node:ekr.20050724075352.101:resetMiniBuffer
-        #@-node:ekr.20050724075352.98:label( minibuffer ) methods
-        #@+node:ekr.20050724075352.102:svar methods
-        #@+at
-        # These methods get and alter the Svar variable which is a Tkinter
-        # StringVar.  This StringVar contains what is displayed in the 
-        # minibuffer.
-        #@-at
-        #@@c
-        #@nonl
-        #@+node:ekr.20050724075352.103:getSvarLabel (gets StringVar and minibuffer)
-        def getSvarLabel (self,event):
-        
-            '''returns the StringVar and Label( minibuffer ) for a specific Text editor'''
-        
-            svar = self.svars [event.widget]
-            label = self.mbuffers [event.widget]
-            return svar, label
-        #@nonl
-        #@-node:ekr.20050724075352.103:getSvarLabel (gets StringVar and minibuffer)
-        #@+node:ekr.20050724075352.104:setSvar
-        def setSvar (self,event,svar):
-        
-            '''
-            Alters the StringVar svar to represent the change in the event.
-            This has the effect of changing the minibuffer contents.
-        
-            It mimics what would happen with the keyboard and a Text editor
-            instead of plain accumalation.'''
-        
-            s = svar.get() ; ch = event.char
-        
-            if ch == '\b': # Handle backspace.
-                # Don't backspace over the prompt.
-                if len(s) <= self.argPromptLen:
-                    return 
-                elif len(s) == 1: s = ''
-                else: s = s [0:-1]
-            else:
-                # Add the character.
-                s = s + ch
-        
-            # g.trace(s)
-            svar.set(s)
-        #@nonl
-        #@-node:ekr.20050724075352.104:setSvar
-        #@-node:ekr.20050724075352.102:svar methods
-        #@-node:ekr.20050724075352.97:Label ( minibuffer ) and svar methods
         #@+node:ekr.20050724075352.89:manufactureKeyPress
-        def manufactureKeyPress (self,event,which):
+        def manufactureKeyPress (self,event,which): # event IS used.
         
             tbuffer = event.widget
             tbuffer.event_generate('<Key>',keysym=which)
             tbuffer.update_idletasks()
+            
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.89:manufactureKeyPress
@@ -6357,9 +6356,9 @@ class Emacs:
                 self.previousStroke = stroke
                 return self.keyboardQuit(event)
         
-            if self.mcStateManager.hasState():
+            if self.stateManager.hasState():
                 self.previousStroke = stroke
-                return self.mcStateManager(event,stroke) # EKR: Invoke the __call__ method.
+                return self.stateManager(event,stroke) # EKR: Invoke the __call__ method.
         
             if self.kstrokeManager.hasKeyStroke(stroke):
                 self.previousStroke = stroke
@@ -6385,24 +6384,21 @@ class Emacs:
         #@+node:ekr.20050724075352.75:negativeArgument
         def negativeArgument (self,event,stroke=None):
         
-            svar, label = self.getSvarLabel(event)
-            svar.set("Negative Argument")
-            label.configure(background='lightblue')
-            nA = self.mcStateManager.getState('negativeArg')
-            if not nA:
-                self.mcStateManager.setState('negativeArg',True)
-            if nA:
+            b = self
+            
+            b.set("Negative Argument")
+            b.setLabelBlue()
+        
+            state = b.getState('negativeArg')
+            if state == 0:
+                b.setState('negativeArg',1)
+            else:
                 if self.negArgs.has_key(stroke):
                     self.negArgs [stroke](event,stroke)
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.75:negativeArgument
-        #@+node:ekr.20050724075352.85:setEvent
-        def setEvent (self,event,l):
-            event.keysym = l
-            return event
-        #@nonl
-        #@-node:ekr.20050724075352.85:setEvent
         #@+node:ekr.20050724075352.106:tailEnd methods
         #@+node:ekr.20050724075352.107:_tailEnd
         def _tailEnd (self,tbuffer):
@@ -6431,50 +6427,56 @@ class Emacs:
         #@+node:ekr.20050724075352.290:universalDispatch
         def universalDispatch (self,event,stroke):
         
-            uC = self.mcStateManager.getState('uC')
-            if not uC:
-                self.mcStateManager.setState('uC',1)
-                svar, label = self.getSvarLabel(event)
-                svar.set('')
-                self.setLabelBlue(label)
-            elif uC == 1:
-                self.universalCommand1(event,stroke)
-            elif uC == 2:
-                self.universalCommand3(event,stroke)
+            b = self
+            
+            state = b.getState('uC')
+            if state == 0:
+                b.setState('uC',1)
+                b.set('')
+                b.setLabelBlue()
+            elif state == 1:
+                b.universalCommand1(event,stroke)
+            elif state == 2:
+                b.universalCommand3(event,stroke)
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.290:universalDispatch
         #@+node:ekr.20050724075352.291:universalCommand1
         def universalCommand1 (self,event,stroke):
+            
+            b = self
         
-            if event.char not in self.uCstring:
-                return self.universalCommand2(event,stroke)
-            svar, label = self.getSvarLabel(event)
-            self.setSvar(event,svar)
+            if event.char not in b.uCstring:
+                return b.universalCommand2(event,stroke)
+         
+            b.update(event)
+        
             if event.char != '\b':
-                svar.set('%s ' % svar.get())
+                b.set('%s ' % b.get())
+        #@nonl
         #@-node:ekr.20050724075352.291:universalCommand1
         #@+node:ekr.20050724075352.292:universalCommand2
         def universalCommand2 (self,event,stroke):
-            svar, label = self.getSvarLabel(event)
-            txt = svar.get()
-            self.keyboardQuit(event)
+            
+            b = self ; tbuffer = event.widget # event IS used.
+            txt = b.get()
+            b.keyboardQuit(event)
             txt = txt.replace(' ','')
-            self.resetMiniBuffer(event)
+            b.reset()
             if not txt.isdigit():
                 # This takes us to macro state.
                 # For example Control-u Control-x ( will execute the last macro and begin editing of it.
                 if stroke == '<Control-x>':
-                    self.mcStateManager.setState('uC',2)
-                    return self.universalCommand3(event,stroke)
-                return self._tailEnd(event.widget)
-            if self.uCdict.has_key(stroke): # This executes the keystroke 'n' number of times.
-                    self.uCdict [stroke](event,txt)
+                    b.setState('uC',2)
+                    return b.universalCommand3(event,stroke)
+                return b._tailEnd(event.widget)
+            if b.uCdict.has_key(stroke): # This executes the keystroke 'n' number of times.
+                b.uCdict [stroke](event,txt)
             else:
-                tbuffer = event.widget
                 i = int(txt)
                 stroke = stroke.lstrip('<').rstrip('>')
-                if self.cbDict.has_key(stroke):
+                if b.cbDict.has_key(stroke):
                     for z in xrange(i):
                         method = self.cbDict [stroke]
                         ev = Tk.Event()
@@ -6482,94 +6484,41 @@ class Emacs:
                         ev.keysym = event.keysym
                         ev.keycode = event.keycode
                         ev.char = event.char
-                        self.masterCommand(ev,method,'<%s>' % stroke)
+                        b.masterCommand(ev,method,'<%s>' % stroke)
                 else:
                     for z in xrange(i):
                         tbuffer.event_generate('<Key>',keycode=event.keycode,keysym=event.keysym)
-                        self._tailEnd(tbuffer)
-        #@nonl
+                        b._tailEnd(tbuffer)
         #@-node:ekr.20050724075352.292:universalCommand2
         #@+node:ekr.20050724075352.293:universalCommand3
         def universalCommand3 (self,event,stroke):
-        
-            svar, label = self.getSvarLabel(event)
-            svar.set('Control-u %s' % stroke.lstrip('<').rstrip('>'))
-            self.setLabelBlue(label)
+            
+            b = self
+            b.set('Control-u %s' % stroke.lstrip('<').rstrip('>'))
+            b.setLabelBlue()
         
             if event.keysym == 'parenleft':
-                self.keyboardQuit(event)
-                self.startKBDMacro(event)
-                self.emacs.macroCommands.executeLastMacro(event)
+                b.keyboardQuit(event)
+                b.emacs.macroCommands.startKBDMacro(event)
+                b.emacs.macroCommands.executeLastMacro(event)
                 return 'break'
         #@nonl
         #@-node:ekr.20050724075352.293:universalCommand3
         #@+node:ekr.20050724075352.294:numberCommand
-        def numberCommand (self,event,stroke,number):
+        def numberCommand (self,event,stroke,number): # event IS used.
         
             self.universalDispatch(event,stroke)
-            tbuffer = event.widget
-            tbuffer.event_generate('<Key>',keysym=number)
+            event.widget.event_generate('<Key>',keysym=number)
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.294:numberCommand
         #@-others
         #@nonl
         #@-node:ekr.20050724075352.289:universal dispatch methods
-        #@+node:ekr.20050730074556.3:getArg
-        def getArg (self,event,returnStateKind=None,returnState=None):
-            
-            '''Handle key state while accumulating an argument.
-            
-            Enter given state when done'''
-            
-            stateManager = self.emacs.mcStateManager
-            svar, label = self.getSvarLabel(event) ### TO BE REMOVED
-            stateKind = 'getArg'
-            state = stateManager.getState(stateKind)
-            
-            # g.trace(repr(state),repr(event.keysym))
-            if not state:
-                s = svar.get()
-                self.argPromptLen = len(s)
-                self.arg = ''
-                self.afterGetArgState = (returnStateKind,returnState)
-                stateManager.setState(stateKind,1)
-            elif event.keysym == 'Return':
-                # Compute the actual arg.
-                s = svar.get()
-                self.arg = s[self.argPromptLen:]
-                # Immediately enter the caller's requested state.
-                stateManager.clear()
-                stateKind,state = self.afterGetArgState
-                stateManager.setState(stateKind,state)
-                stateManager(event,None) # Invoke the stateManager __call__ method.
-            else:
-                # Update the widget.
-                self.setSvar(event,svar)
-        
-            return 'break'
-        #@nonl
-        #@-node:ekr.20050730074556.3:getArg
         #@-others
     #@nonl
-    #@-node:ekr.20050727161004:class keyHandlerClass
-    #@+node:ekr.20050729120313.1:class miniBufferClass
-    class miniBufferClass:
-        
-        #@    @+others
-        #@+node:ekr.20050729120313.2: ctor
-        def __init__ (self,emacs):
-            
-            self.c = emacs.c
-            self.emacs = emacs
-        #@-node:ekr.20050729120313.2: ctor
-        #@+node:ekr.20050729120346:set
-        #@-node:ekr.20050729120346:set
-        #@+node:ekr.20050729120346.1:get
-        #@-node:ekr.20050729120346.1:get
-        #@-others
-    #@nonl
-    #@-node:ekr.20050729120313.1:class miniBufferClass
+    #@-node:ekr.20050727161004:class miniBufferClass 
     #@+node:ekr.20050724075352.34:class Tracker (an iterator)
     class Tracker:
     
