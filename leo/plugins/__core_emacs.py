@@ -3,6 +3,8 @@
 ''' A plugin to provide Emacs commands.
 Will move to Leo's core eventually.'''
 
+# Based on temacs version .57 EKR:
+
 #@<< imports >>
 #@+node:ekr.20050723062822.1:<< imports >>
 import leoGlobals as g
@@ -51,6 +53,31 @@ import weakref
 #@nonl
 #@-node:ekr.20050723062822.1:<< imports >>
 #@nl
+#@<< to do >>
+#@+node:ekr.20050730204402:<< to do >>
+#@@nocolor
+#@+at
+# 
+# *** Eliminate state-related tables.
+# 
+# ** Add emacs menus.
+# 
+# * Test all commands and make unit tests.
+# 
+# - convertCommandName utility converts to and from emacs-style (with '-' 
+# chars) to python/leo style (with capitalization).
+# 
+# - Eliminate all hard constants (except for tables of defaults).
+# 
+# - User options:
+#     - 'Emacs Compatibility' option: binds keys as done in present plugin.
+#     - 'Emacs Menu option':  On by default: adds emacs option.
+#     - Get keystrokes from user options.
+#     - User-specified keys for alt-x, control-c, etc.
+#@-at
+#@nonl
+#@-node:ekr.20050730204402:<< to do >>
+#@nl
 #@<< modification log >>
 #@+node:ekr.20050725074202:<< modification log >>
 #@@nocolor
@@ -97,121 +124,68 @@ import weakref
 #@-at
 #@nonl
 #@-node:ekr.20050725132137:Added baseCommands class
+#@+node:ekr.20050730192553:The big collapse (of complexity)
+#@+at
+# 
+# The miniBufferClass is the one half of the great divide.  The commands 
+# classes are the other.
+# 
+# - The commnds classes do not understand the details of the miniBufferClass: 
+# it can be rearranged as needed.
+# 
+# (done) Replace:
+#     svar, label = self.getSvarLabel( event )
+# by:
+#     b = self.miniBuffer ; tbuffer = event.widget
+# (done) self.setSvar(event,svar) -> b.update(event)
+# (done) svar ->  b
+# (done) label.configure(background='lightblue') --> b.setLabelBlue()
+# (done) self.miniBuffer -> b
+# 
+# (done) Replace alld delegators by b. methods.
+# 
+# (done) Removed unused args from most methods.
+#@-at
+#@nonl
+#@-node:ekr.20050730192553:The big collapse (of complexity)
+#@+node:ekr.20050730201742:Improvements to commands
+#@+at
+# 
+# - Improved feedback for interactive search.
+#     - The minibuffer now says isearch:
+#     - Added args to miniBuffer.set/get methods to protect/ignore initial 
+# prompt characters.
+# 
+# - Backspacing when tab completion cuts back to last 'really' typed 
+# character.
+#     - Further backspaces work as you would expect.
+#@-at
+#@nonl
+#@-node:ekr.20050730201742:Improvements to commands
 #@-others
 #@nonl
 #@-node:ekr.20050725074202:<< modification log >>
 #@nl
-#@<< to do >>
-#@+node:ekr.20050729080859:<< to do >>
-#@@nocolor
-#@+at
-# 
-# - Allow redefinitions of emacs command names (so people can use their own 
-# unique prefixes).
-# 
-# - convertCommandName utility converts to and from emacs-style (with '-' 
-# chars) to python/leo style (with capitalization).
-# 
-# - Eliminate all hard constants (except for tables of defaults).
-# 
-#@-at
-#@@c
-#@+others
-#@+node:ekr.20050729081915:Improve minibuffer
-#@+at
-# 
-# 
-# - Allow one (or more?) stoppers that prevent backspacing.
-# - Backspacing after tab-completion should go back to previously typed char 
-# and remove _that_.
-# - Use status line (disable it) for miniBuffer.
-# - Create editor helper class.
-# 
-# Rather than passing an event to commands, masterCommand should globals for 
-# state, miniBuffer, etc.
-#@-at
-#@-node:ekr.20050729081915:Improve minibuffer
-#@+node:ekr.20050729081915.1:Improve state handling (simplify masterCommand)
-#@+at
-# 
-# Eliminate state-related tables.
-# 
-# Master-command shouldn't need them.
-#@-at
+#@<< define module globals >>
+#@+node:ekr.20050724080034:<< define module globals >>
+haveseen = weakref.WeakKeyDictionary()
+extensions = []
+new_keystrokes = {}
+leocommandnames = None
+
+# For buffer interaction methods.
+tnodestnodes = {} # Keys are commanders.  Values are dicts.
+positions =  {}
+
+# Original versions of methods.
+orig_Bindings = None
+orig_OnBodyKey = None
 #@nonl
-#@-node:ekr.20050729081915.1:Improve state handling (simplify masterCommand)
-#@+node:ekr.20050729081915.2:User options
-#@+at
-# 
-# - 'Emacs Compatibility' option: binds keys as done in present plugin.
-# 
-# - 'Emacs Menu option':  On by default: adds emacs option.
-# 
-# - Get keystrokes from user options.
-# 
-# - User-specified keys for alt-x, control-c, etc.
-#@-at
-#@-node:ekr.20050729081915.2:User options
-#@+node:ekr.20050729120313:altX abbreviations and corresponding commands
-#@+at
-# 
-# fd  find-dialog
-# od  options-dialog
-# f   find
-# fr  find-reverse
-# fx  find-regex
-# frx find-regex-reverse
-# fxr find-regex-reverse
-# fw  find-word
-# i   incremental-find
-# ir  incremental-find-reverse
-# ix  incremental-find-regex
-# irx incremental-find-regex-reverse
-# ixr incremental-find-regex-reverse
-# sf  set-find-text
-# sr  set-find-replace
-# ss  script-search
-# ssr script-search-reverse
-# tfh  toggle-find-search-headline
-# tfb  toggle-find-search-body
-# tfw  toggle-find-word
-# tfn  toggle-find-node-only
-# tfi  toggle-find-ignore-case
-# tfmc toggle-find-mark-changes
-# tfmf toggle-find-mark-finds
-#@-at
-#@nonl
-#@-node:ekr.20050729120313:altX abbreviations and corresponding commands
-#@-others
-#@nonl
-#@-node:ekr.20050729080859:<< to do >>
+#@-node:ekr.20050724080034:<< define module globals >>
 #@nl
 
-USE_TEMACS = True  # False:  use SwingMacs code base  (will probably never happen).
-
-if USE_TEMACS:
-    #@    << define usetemacs globals >>
-    #@+node:ekr.20050724080034:<< define usetemacs globals >>
-    haveseen = weakref.WeakKeyDictionary()
-    extensions = []
-    new_keystrokes = {}
-    leocommandnames = None
-    
-    # For buffer interaction methods.
-    tnodestnodes = {} # Keys are commanders.  Values are dicts.
-    positions =  {}
-    
-    # Original versions of methods.
-    orig_Bindings = None
-    orig_OnBodyKey = None
-    #@nonl
-    #@-node:ekr.20050724080034:<< define usetemacs globals >>
-    #@nl
-else:
-    extensions = []
-    commandsFromPlugins = {}
-
 #@+others
+#@+node:ekr.20050730204529:Module-level...
 #@+node:ekr.20050723062822.2:init (plugin)
 def init ():
 
@@ -224,24 +198,19 @@ def init ():
         ok = g.app.gui.guiName() == "tkinter"
         if ok:
             g.plugin_signon(__name__)
-            if USE_TEMACS:
-                #@                << override createBindings and onBodyKey >>
-                #@+node:ekr.20050724080456:<< override createBindings and onBodyKey >>
-                global orig_Bindings, orig_OnBodyKey
-                
-                orig_Bindings = leoTkinterFrame.leoTkinterBody.createBindings
-                leoTkinterFrame.leoTkinterBody.createBindings = createBindings
-                
-                orig_OnBodyKey = leoTkinterFrame.leoTkinterBody.onBodyKey
-                leoTkinterFrame.leoTkinterBody.onBodyKey = modifyOnBodyKey
-                #@nonl
-                #@-node:ekr.20050724080456:<< override createBindings and onBodyKey >>
-                #@nl
-                leoPlugins.registerHandler(('open2',"new"),addMenu)
-            else:
-                global extensions
-                extensions = lookForExtensions()
-                leoPlugins.registerHandler(('open2',"new"),createEmacs)
+            #@            << override createBindings and onBodyKey >>
+            #@+node:ekr.20050724080456:<< override createBindings and onBodyKey >>
+            global orig_Bindings, orig_OnBodyKey
+            
+            orig_Bindings = leoTkinterFrame.leoTkinterBody.createBindings
+            leoTkinterFrame.leoTkinterBody.createBindings = createBindings
+            
+            orig_OnBodyKey = leoTkinterFrame.leoTkinterBody.onBodyKey
+            leoTkinterFrame.leoTkinterBody.onBodyKey = modifyOnBodyKey
+            #@nonl
+            #@-node:ekr.20050724080456:<< override createBindings and onBodyKey >>
+            #@nl
+            leoPlugins.registerHandler(('open2',"new"),addMenu)
 
     return ok
 #@nonl
@@ -280,9 +249,6 @@ def loadConfig ():
                 new_keystrokes [z.capitalize()] = cp.get(kstroke_sec,z)
 #@nonl
 #@-node:ekr.20050724074642.16:loadConfig (from usetemacs)
-#@+node:ekr.20050724074619.1:Birth (From usetemacs)
-# Based on version .57 EKR:
-#@nonl
 #@+node:ekr.20050724074642.17:usetemacs Hooks
 #@+node:ekr.20050724074642.18:addMenu
 def addMenu (tag,keywords):
@@ -914,7 +880,7 @@ def setBufferInteractionMethods (c,emacs,buffer):
 #@-node:ekr.20050724074642.32:setBufferInteractionMethods & helpers
 #@-node:ekr.20050724074642.25:createBindings & helpers  (Creates Emacs instance)
 #@-node:ekr.20050724074642.23:Overridden methods
-#@-node:ekr.20050724074619.1:Birth (From usetemacs)
+#@-node:ekr.20050730204529:Module-level...
 #@+node:ekr.20050724075352.40:class Emacs
 class Emacs:
     
@@ -934,8 +900,10 @@ class Emacs:
 
     #@    @+others
     #@+node:ekr.20050728093027:Birth
-    #@+node:ekr.20050724075352.41:Emacs.__init__
-    def __init__ (self,c,tbuffer=None,miniBufferWidget=None,useGlobalKillbuffer=False,useGlobalRegisters=False):
+    #@+node:ekr.20050724075352.41: ctor (Emacs)
+    def __init__ (self,c,
+        tbuffer=None,miniBufferWidget=None,
+        useGlobalKillbuffer=False,useGlobalRegisters=False):
         '''Sets up Emacs instance.
         
         Use tbuffer (a Tk Text widget) and miniBufferWidget (a Tk Label) if provided.
@@ -945,10 +913,9 @@ class Emacs:
         global (class vars) or per-instance (ivars) for kill buffers and registers.'''
         
         self.c = c
+        self.undoers = {} # Emacs instance tracks undoers given to it.
         self.useGlobalKillbuffer = useGlobalKillbuffer
         self.useGlobalRegisters = useGlobalRegisters
-        
-        self.undoers = {} # Emacs instance tracks undoers given to it.
     
         # For communication between keystroke handlers and other classes.
         self.regXRpl = None # EKR: a generator: calling self.regXRpl.next() get the next value.
@@ -958,7 +925,7 @@ class Emacs:
         self.miniBuffer   = self.miniBufferClass(self,miniBufferWidget)
         altX_commandsDict = self.createCommandsClasses()
     
-        # define delegators.
+        # Define delegators before calling finishCreate.
         self.stateManager = self.miniBuffer.stateManager
         self.kstrokeManager = self.miniBuffer.kstrokeManager
         self.keyboardQuit   = self.miniBuffer.keyboardQuit
@@ -966,22 +933,11 @@ class Emacs:
     
         # Last.
         self.miniBuffer.finishCreate(altX_commandsDict)
-        
-        # This section sets up the buffer data structures
-        self.bufferListGetters ={}
-        self.bufferSetters ={}
-        self.bufferGotos ={}
-        self.bufferDeletes ={}
-        self.renameBuffers ={}
-        self.bufferDict = None 
-        self.bufferTracker = self.Tracker()
-        
-        self.last_clipboard = None #For interacting with system clipboard.
       
         if tbuffer and miniBufferWidget:
             self.miniBuffer.setBufferStrokes(tbuffer)
     #@nonl
-    #@-node:ekr.20050724075352.41:Emacs.__init__
+    #@-node:ekr.20050724075352.41: ctor (Emacs)
     #@+node:ekr.20050725094519:createCommandsClasses
     def createCommandsClasses (self):
         
@@ -1452,7 +1408,14 @@ class Emacs:
             
             Emacs.baseCommandsClass.__init__(self,emacs) # init the base class.
             
-            self.bufferListGetters = {} # Set by buffer configuration methods.
+            # This section sets up the buffer data structures.
+            self.bufferListGetters ={}
+            self.bufferSetters ={}
+            self.bufferGotos ={}
+            self.bufferDeletes ={}
+            self.renameBuffers ={}
+            self.bufferDict = {} 
+            self.bufferTracker = Tracker()
             
             # Used by chooseBuffer.
             self.commandsDict = {
@@ -1654,22 +1617,24 @@ class Emacs:
         #@-node:ekr.20050724075352.136:setInBufferMode
         #@+node:ekr.20050724075352.118:Buffer configuration methods
         #@+node:ekr.20050724075352.119:setBufferListGetter
-        def setBufferListGetter( self, buffer, method ):
+        def setBufferListGetter (self,buffer,method):
+        
             #Sets a method that returns a buffer name and its text, and its insert position.
-            self.bufferListGetters[ buffer ] = method
+            self.bufferListGetters [buffer] = method
         #@nonl
         #@-node:ekr.20050724075352.119:setBufferListGetter
         #@+node:ekr.20050724075352.120:setBufferSetter
         def setBufferSetter( self, buffer, method ):
+        
             #Sets a method that takes a buffer name and the new contents.
             self.bufferSetters[ buffer ] = method
         #@nonl
         #@-node:ekr.20050724075352.120:setBufferSetter
         #@+node:ekr.20050724075352.121:getBufferDict
-        def getBufferDict( self, event ):
-            
+        def getBufferDict (self,event):
+        
             tbuffer = event.widget
-            meth = self.bufferListGetters[ tbuffer ]
+            meth = self.bufferListGetters [tbuffer]
             return meth()
         #@nonl
         #@-node:ekr.20050724075352.121:getBufferDict
@@ -3705,6 +3670,7 @@ class Emacs:
                 self.killbuffer = []
                 
             self.kbiterator = self.iterateKillBuffer()
+            self.last_clipboard = None # For interacting with system clipboard.
             self.reset = False 
         #@-node:ekr.20050725115600: ctor
         #@+node:ekr.20050725121247:getPublicCommands
@@ -3884,23 +3850,17 @@ class Emacs:
         #@-node:ekr.20050724075352.168:iterateKillBuffer
         #@+node:ekr.20050724075352.169:getClipboard
         def getClipboard (self,tbuffer):
-            
-            ctxt = None 
-            
+        
             try:
                 ctxt = tbuffer.selection_get(selection='CLIPBOARD')
-                if ctxt!=self.last_clipboard or not self.killbuffer:
-                    self.last_clipboard = ctxt 
-                    if self.killbuffer and self.killbuffer[0]==ctxt:
-                        return None 
-                    return ctxt 
-                else:
-                    return None 
-                
-            except:
-                return None 
-                
-            return None 
+                if not self.killbuffer or ctxt != self.last_clipboard:
+                    self.last_clipboard = ctxt
+                    if not self.killbuffer or self.killbuffer [0] != ctxt:
+                        return ctxt
+            except: pass
+        
+            return None
+        #@nonl
         #@-node:ekr.20050724075352.169:getClipboard
         #@-others
     #@nonl
@@ -5096,12 +5056,9 @@ class Emacs:
         
             state = b.getState('isearch')
             
-            g.trace(stroke)
-            
             if state == 0:
                 self.pref = self.csr [stroke]
-                if 0: # Interferes with code in isearch. isearch take account of the search arg.
-                    b.set('isearch:',protect=True)
+                b.set('isearch:',protect=True)
                 b.setLabelBlue()
                 b.setState('isearch',which)
             else:
@@ -5114,10 +5071,11 @@ class Emacs:
         #@-node:ekr.20050724075352.223:startIncremental
         #@+node:ekr.20050724075352.224:search
         def search (self,event,way,useregex=False):
+        
             '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
         
             b = self.miniBuffer ; tbuffer = event.widget
-            s = b.get()
+            s = b.get(ignorePrompt=True)
             if s:
                 try:
                     if way == 'bak': # Search backwards.
@@ -5141,8 +5099,6 @@ class Emacs:
         #@-node:ekr.20050724075352.224:search
         #@+node:ekr.20050724075352.225:iSearch
         def iSearch (self,event,stroke):
-            
-            g.trace(stroke)
         
             b = self.miniBuffer ; tbuffer = event.widget
             if not event.char: return
@@ -5151,17 +5107,20 @@ class Emacs:
                 return self.startIncremental(event,stroke)
         
             if event.keysym == 'Return':
-                  if b.get() == '':
-                      return self.startNonIncrSearch(event,self.pref)
-                  else:
-                    return self.stopControlX(event)
+                s = b.get(ignorePrompt=True)
+                if s:
+                    return b.stopControlX(event)
+                else:
+                    return self.startNonIncrSearch(event,self.pref)
+        
             b.update(event)
             if event.char != '\b':
-               stext = b.get()
-               z = tbuffer.search(stext,'insert',stopindex='insert +%sc' % len(stext))
+               s = b.get(ignorePrompt=True)
+               z = tbuffer.search(s,'insert',stopindex='insert +%sc' % len(s))
                if not z:
                    self.search(event,self.pref,useregex=self.useRegex())
             self.scolorizer(event)
+        
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.225:iSearch
@@ -5170,7 +5129,7 @@ class Emacs:
         
             b = self.miniBuffer ; tbuffer = event.widget
         
-            stext = b.get()
+            stext = b.get(ignorePrompt=True)
             tbuffer.tag_delete('color')
             tbuffer.tag_delete('color1')
             if stext == '': return 'break'
@@ -5374,23 +5333,24 @@ class Emacs:
     #@-others
     #@nonl
     #@-node:ekr.20050725091822:Commands classes...
-    #@+node:ekr.20050727161004:class miniBufferClass 
+    #@+node:ekr.20050727161004:class miniBufferClass
     class miniBufferClass:
     
         #@    @+others
         #@+node:ekr.20050728103627: Birth
-        #@+node:ekr.20050727162112: ctor
+        #@+node:ekr.20050727162112: ctor (miniBuffer)
         def __init__ (self,emacs,widget):
         
             self.emacs = emacs
             self.c = emacs.c
             self.widget = widget # A Tk Label widget.
-            
+            # Permanently associate a Tk.StringVar with the widget.
             self.svar = Tk.StringVar()
             self.widget.configure(textvariable=self.svar)
         
             # Ivars.
             self.altx_history = []
+            self.altX_prefix = ''
             self.keysymhistory = []
             self.previousStroke = ''
             self.svars = {}
@@ -5408,7 +5368,7 @@ class Emacs:
             # For alt-X commands...
             self.xcommands = None       # Done in finishCreate.
             self.altX_commandsDict = {} # Set later by finishCreate.
-            self.axTabList = emacs.Tracker()
+            self.axTabList = Tracker()
             self.x_hasNumeric = ['sort-lines','sort-fields']
         
             # For universal commands...
@@ -5427,7 +5387,7 @@ class Emacs:
             self.hasState = self.stateManager.hasState
             self.whichState = self.stateManager.whichState
         #@nonl
-        #@-node:ekr.20050727162112: ctor
+        #@-node:ekr.20050727162112: ctor (miniBuffer)
         #@+node:ekr.20050729150051.2:add_ekr_altx_commands
         def add_ekr_altx_commands (self):
         
@@ -5721,6 +5681,7 @@ class Emacs:
         
             b.set('')
             b.setLabelGrey()
+            b.argPromptLen = 0
         #@nonl
         #@-node:ekr.20050724075352.101:reset
         #@+node:ekr.20050724075352.104:update
@@ -5749,10 +5710,14 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.104:update
         #@+node:ekr.20050730121359:get & set
-        def get (self):
-            
-            return self.svar.get()
-            
+        def get (self,ignorePrompt=False):
+        
+            s = self.svar.get()
+            if ignorePrompt:
+                return s[self.argPromptLen:]
+            else:
+                return s
+        
         def set (self,s,protect=False):
             
             self.svar.set(s)
@@ -5762,69 +5727,6 @@ class Emacs:
         #@-node:ekr.20050730121359:get & set
         #@-node:ekr.20050730113639: Getters & Setters
         #@+node:ekr.20050724075352.283:Alt_X methods
-        #@+node:ekr.20050724075352.285:doAlt_X & helpers
-        def doAlt_X (self,event):
-        
-            '''This method executes the correct Alt-X command'''
-            
-            b = self
-        
-            if b.get().endswith('M-x:'):
-                b.axTabList.clear() # Clear the list, new Alt-x command is in effect.
-                b.set('')
-            if event.keysym == 'Return':
-                s = b.get()
-                func = b.altX_commandsDict.get(s)
-                if func:
-                    if s != 'repeat-complex-command': b.altx_history.insert(0,s)
-                    aX = b.getState('altx')
-                    if (type(aX) == type(1) or aX.isdigit()) and s in b.x_hasNumeric:
-                        func(event,aX)
-                    else:
-                        func(event)
-                else:
-                    b.keyboardQuit(event)
-                    b.set('Command does not exist')
-            elif event.keysym == 'Tab':
-                #@        << handle tab completion >>
-                #@+node:ekr.20050729094213:<< handle tab completion >>
-                s = b.get().strip()
-                
-                if b.axTabList.prefix and s.startswith(b.axTabList.prefix):
-                    b.set(b.axTabList.next()) # get next in iteration
-                else:
-                    prefix = b.get()
-                    pmatches = b._findMatch()
-                    b.axTabList.setTabList(prefix,pmatches)
-                    b.set(b.axTabList.next()) # begin iteration on new lsit
-                #@nonl
-                #@-node:ekr.20050729094213:<< handle tab completion >>
-                #@nl
-            else:
-                b.axTabList.clear() #clear the list, any other character besides tab indicates that a new prefix is in effect.
-                b.update(event)
-            return 'break'
-        #@nonl
-        #@+node:ekr.20050724075352.92:_findMatch
-        def _findMatch (self,fdict=None):
-            
-            '''This method returns a sorted list of matches.'''
-        
-            if not fdict:
-                fdict = self.altX_commandsDict
-        
-            s = self.get()
-            if not s.isspace() and s != '':
-                s = s.strip()
-                pmatches = filter(lambda a: a.startswith(s),fdict)
-            else:
-                pmatches = []
-        
-            pmatches.sort()
-            return pmatches
-        #@nonl
-        #@-node:ekr.20050724075352.92:_findMatch
-        #@-node:ekr.20050724075352.285:doAlt_X & helpers
         #@+node:ekr.20050724075352.284:alt_X
         def alt_X (self,event=None,which=None):
         
@@ -5837,7 +5739,90 @@ class Emacs:
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.284:alt_X
-        #@+node:ekr.20050724075352.286:execute last altx methods
+        #@+node:ekr.20050724075352.285:doAlt_X & helpers
+        def doAlt_X (self,event):
+        
+            '''This method executes the correct Alt-X command'''
+            
+            b = self ; keysym = event.keysym
+        
+            if b.get().endswith('M-x:'):
+                b.axTabList.clear() # Clear the list, new Alt-x command is in effect.
+                b.set('')
+            if keysym == 'Return':
+                #@        << dispatch the function >>
+                #@+node:ekr.20050730194026:<< dispatch the function >>
+                s = b.get()
+                func = b.altX_commandsDict.get(s)
+                if func:
+                    if s != 'repeat-complex-command': b.altx_history.insert(0,s)
+                    aX = b.getState('altx')
+                    if (type(aX) == type(1) or aX.isdigit()) and s in b.x_hasNumeric:
+                        func(event,aX)
+                    else:
+                        func(event)
+                else:
+                    b.keyboardQuit(event)
+                    b.set('Command does not exist')
+                #@nonl
+                #@-node:ekr.20050730194026:<< dispatch the function >>
+                #@nl
+            elif keysym == 'Tab':
+                #@        << handle tab completion >>
+                #@+node:ekr.20050729094213:<< handle tab completion >>
+                s = b.get().strip()
+                
+                if b.axTabList.prefix and s.startswith(b.axTabList.prefix):
+                    b.set(b.axTabList.next()) # get next in iteration
+                else:
+                    self.altX_prefix = prefix = b.get()
+                    pmatches = b._findMatch()
+                    b.axTabList.setTabList(prefix,pmatches)
+                    b.set(b.axTabList.next()) # begin iteration on new list
+                #@nonl
+                #@-node:ekr.20050729094213:<< handle tab completion >>
+                #@nl
+            elif keysym == 'BackSpace':
+                #@        << cut back to previous prefix and update prefix >>
+                #@+node:ekr.20050730204051:<< cut back to previous prefix and update prefix >>
+                s = self.altX_prefix
+                
+                b.set(s)
+                
+                if len(s) > 1:
+                    self.altX_prefix = s[:-1]
+                else:
+                    self.altX_prefix = ''
+                #@nonl
+                #@-node:ekr.20050730204051:<< cut back to previous prefix and update prefix >>
+                #@nl
+            else:
+                # Clear the list, any other character besides tab indicates that a new prefix is in effect.
+                b.axTabList.clear() 
+                b.update(event)
+        
+            return 'break'
+        #@nonl
+        #@+node:ekr.20050724075352.92:_findMatch
+        def _findMatch (self,fdict=None):
+            
+            '''This method returns a sorted list of matches.'''
+        
+            if not fdict:
+                fdict = self.altX_commandsDict
+        
+            s = self.get().strip()
+            if s:
+                # pmatches = filter(lambda a: a.startswith(s),fdict)
+                pmatches = [a for a in fdict if a.startswith(s)]
+            else:
+                pmatches = []
+        
+            pmatches.sort()
+            return pmatches
+        #@nonl
+        #@-node:ekr.20050724075352.92:_findMatch
+        #@-node:ekr.20050724075352.285:doAlt_X & helpers
         #@+node:ekr.20050724075352.287:executeLastAltX
         def executeLastAltX (self,event):
             
@@ -5852,7 +5837,7 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.287:executeLastAltX
         #@+node:ekr.20050724075352.288:repeatComplexCommand
-        def repeatComplexCommand (self,event=None):
+        def repeatComplexCommand (self,event):
         
             b = self
         
@@ -5866,7 +5851,6 @@ class Emacs:
             return 'break'
         #@nonl
         #@-node:ekr.20050724075352.288:repeatComplexCommand
-        #@-node:ekr.20050724075352.286:execute last altx methods
         #@-node:ekr.20050724075352.283:Alt_X methods
         #@+node:ekr.20050724075352.14:class controlX_handlerClass
         class controlX_handlerClass:
@@ -6276,7 +6260,8 @@ class Emacs:
         #@+node:ekr.20050730074556.3:getArg
         def getArg (self,event,returnStateKind=None,returnState=None):
             
-            '''Handle key state while accumulating an argument. Enter given state when done'''
+            '''Accumulate an argument until the user hits return (or control-g).
+            Enter the 'return' state when done.'''
             
             b = self ; stateKind = 'getArg'
             state = b.getState(stateKind)
@@ -6385,7 +6370,7 @@ class Emacs:
         def negativeArgument (self,event,stroke=None):
         
             b = self
-            
+        
             b.set("Negative Argument")
             b.setLabelBlue()
         
@@ -6393,8 +6378,9 @@ class Emacs:
             if state == 0:
                 b.setState('negativeArg',1)
             else:
-                if self.negArgs.has_key(stroke):
-                    self.negArgs [stroke](event,stroke)
+                func = b.negArgs.get(stroke)
+                if func:
+                    func(event,stroke)
         
             return 'break'
         #@nonl
@@ -6407,7 +6393,6 @@ class Emacs:
             
             func = self.tailEnds.get(tbuffer)
             if func:
-                # g.trace(func)
                 return func(tbuffer)
             else:
                 return 'break'
@@ -6518,60 +6503,59 @@ class Emacs:
         #@-node:ekr.20050724075352.289:universal dispatch methods
         #@-others
     #@nonl
-    #@-node:ekr.20050727161004:class miniBufferClass 
-    #@+node:ekr.20050724075352.34:class Tracker (an iterator)
-    class Tracker:
-    
-        '''A class designed to allow the user to cycle through a list
-           and to change the list as deemed appropiate.'''
-    
-        #@    @+others
-        #@+node:ekr.20050724075352.35:init
-        def __init__ (self):
-            
-            self.tablist = []
-            self.prefix = None 
-            self.ng = self._next()
-        #@nonl
-        #@-node:ekr.20050724075352.35:init
-        #@+node:ekr.20050724075352.36:setTabList
-        def setTabList (self,prefix,tlist):
-            
-            self.prefix = prefix 
-            self.tablist = tlist 
-        #@nonl
-        #@-node:ekr.20050724075352.36:setTabList
-        #@+node:ekr.20050724075352.37:_next
-        def _next (self):
-            
-            while 1:
-                tlist = self.tablist 
-                if not tlist:yield ''
-                for z in self.tablist:
-                    if tlist!=self.tablist:
-                        break 
-                    yield z 
-        #@nonl
-        #@-node:ekr.20050724075352.37:_next
-        #@+node:ekr.20050724075352.38:next
-        def next (self):
-            
-            return self.ng.next()
-        #@nonl
-        #@-node:ekr.20050724075352.38:next
-        #@+node:ekr.20050724075352.39:clear
-        def clear (self):
-        
-            self.tablist = []
-            self.prefix = None
-        #@nonl
-        #@-node:ekr.20050724075352.39:clear
-        #@-others
-    #@nonl
-    #@-node:ekr.20050724075352.34:class Tracker (an iterator)
+    #@-node:ekr.20050727161004:class miniBufferClass
     #@-others
 #@nonl
 #@-node:ekr.20050724075352.40:class Emacs
+#@+node:ekr.20050724075352.34:class Tracker
+class Tracker:
+
+    '''An iterator class to allow the user to cycle through and change a list.'''
+
+    #@    @+others
+    #@+node:ekr.20050724075352.35:init
+    def __init__ (self):
+        
+        self.tablist = []
+        self.prefix = None 
+        self.ng = self._next()
+    #@nonl
+    #@-node:ekr.20050724075352.35:init
+    #@+node:ekr.20050724075352.36:setTabList
+    def setTabList (self,prefix,tlist):
+        
+        self.prefix = prefix 
+        self.tablist = tlist 
+    #@nonl
+    #@-node:ekr.20050724075352.36:setTabList
+    #@+node:ekr.20050724075352.37:_next
+    def _next (self):
+        
+        while 1:
+            tlist = self.tablist 
+            if not tlist:yield ''
+            for z in self.tablist:
+                if tlist!=self.tablist:
+                    break 
+                yield z 
+    #@nonl
+    #@-node:ekr.20050724075352.37:_next
+    #@+node:ekr.20050724075352.38:next
+    def next (self):
+        
+        return self.ng.next()
+    #@nonl
+    #@-node:ekr.20050724075352.38:next
+    #@+node:ekr.20050724075352.39:clear
+    def clear (self):
+    
+        self.tablist = []
+        self.prefix = None
+    #@nonl
+    #@-node:ekr.20050724075352.39:clear
+    #@-others
+#@nonl
+#@-node:ekr.20050724075352.34:class Tracker
 #@-others
 #@nonl
 #@-node:ekr.20050723062822:@thin __core_emacs.py
