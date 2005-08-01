@@ -30,20 +30,33 @@ class leoMenu:
         self.defineMenuTables()
     #@nonl
     #@-node:ekr.20031218072017.3751: leoMenu.__init__
-    #@+node:ekr.20031218072017.3752:defineMenuTables
+    #@+node:ekr.20031218072017.3752:defineMenuTables & helpers
     def defineMenuTables (self):
         
-        __pychecker__ = 'maxlines=500'
+        g.trace()
         
+        self.defineEditMenuTables()
+        self.defineFileMenuTables()
+        self.defineOutlineMenuTables()
+        self.defineWindowMenuTables()
+        self.defineHelpMenuTables()
+    #@nonl
+    #@+node:ekr.20031218072017.3753:defineEditMenuTables & helpers
+    def defineEditMenuTables (self):
+    
+        self.defineEditMenuTopTable()
+        self.defineEditMenuEditCursorTable()
+        self.defineEditMenuEditBodyTable()
+        self.defineEditMenuEditHeadlineTable()
+        self.defineEditMenuFindMenuTable()
+        self.defineEditMenuTop2Table()
+    #@nonl
+    #@+node:ekr.20031218072017.839:defineEditMenuTopTable
+    def defineEditMenuTopTable (self):
+    
         c = self.c ; f = self.frame
         
-        # g.trace(c.shortFileName(),self,f)
-        
-        #@    << define edit menu tables >>
-        #@+node:ekr.20031218072017.3753:<< define edit menu tables >>
-        #@<< define editMenuTopTable >>
-        #@+node:ekr.20031218072017.839:<< define editMenuTopTable >>
-        self.editMenuTopTable = (
+        self.editMenuTopTable = [
             ("Can't Undo","Ctrl+Z",c.undoer.undo), # &U reserved for Undo
             ("Can't Redo","Shift+Ctrl+Z",c.undoer.redo), # &R reserved for Redo
             ("-",None,None),
@@ -52,18 +65,21 @@ class leoMenu:
             ("&Paste","Ctrl+V",f.OnPasteFromMenu),
             ("&Delete",None,c.delete),
             ("Select &All","Ctrl+A",f.body.selectAllText),
-            ("-",None,None))
+            ("-",None,None),
+        ]
             
         # Top-level shortcuts here:  a,d,p,t,u,y,z
         # Top-level shortcuts later: e,g,n,v
-        #@nonl
-        #@-node:ekr.20031218072017.839:<< define editMenuTopTable >>
-        #@nl
-        #@<< define editMenuEditCursorTable >>
-        #@+node:ekr.20050711091931:<< define editMenuEditCursorTable >>
+    #@nonl
+    #@-node:ekr.20031218072017.839:defineEditMenuTopTable
+    #@+node:ekr.20050711091931:defineEditMenuEditCursorTable
+    def defineEditMenuEditCursorTable (self):
+        
+        c = self.c ; f = self.frame
+    
         if 0: ### Not ready yet.
             # These should have Emacs names...
-            self.editMenuEditCursorTable = (
+            self.editMenuEditCursorTable = [
                 ('Delete Right',c.deleteRightChar), # Tk: Del
                 ('Delete Left',c.deleteLeftChar), # Tk: Backspace
                 # Moving the cursor.
@@ -79,15 +95,16 @@ class leoMenu:
                 ('Extend To Start Of Line',c.extendToStartOfLine), # Tk: s-Home
                 ('Extend To End Of Line',c.extendToEndOfLine), # Tk: s-End
                 ('Extend To End of Node',c.extendToEndOfNode), # Tk: s-c-End
-                
                 # The mark...
-            )
-        #@nonl
-        #@-node:ekr.20050711091931:<< define editMenuEditCursorTable >>
-        #@nl
-        #@<< define editMenuEditBodyTable >>
-        #@+node:ekr.20031218072017.3754:<< define editMenuEditBodyTable >>
-        self.editMenuEditBodyTable = (
+            ]
+    #@nonl
+    #@-node:ekr.20050711091931:defineEditMenuEditCursorTable
+    #@+node:ekr.20031218072017.3754:defineEditMenuEditBodyTable
+    def defineEditMenuEditBodyTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.editMenuEditBodyTable = [
             ("Extract &Section","Shift+Ctrl+E",c.extractSection),
             ("Extract &Names","Shift+Ctrl+N",c.extractSectionNames),
             ("&Extract","Shift+Ctrl+D",c.extract),
@@ -104,156 +121,199 @@ class leoMenu:
             ("&Match Brackets","Ctrl+K",c.findMatchingBracket),
             ("Add Comments",None,c.addComments),
             ("Delete Comments",None,c.deleteComments),
-        )
-        
+        ]
         # Shortcuts a,b,d,e,i,l,m,n,r,s,t,u
-        #@nonl
-        #@-node:ekr.20031218072017.3754:<< define editMenuEditBodyTable >>
-        #@nl
-        #@<< define editMenuEditHeadlineTable >>
-        #@+node:ekr.20031218072017.3755:<< define editMenuEditHeadlineTable >>
-        self.editMenuEditHeadlineTable = (
+    #@nonl
+    #@-node:ekr.20031218072017.3754:defineEditMenuEditBodyTable
+    #@+node:ekr.20031218072017.3755:defineEditMenuEditHeadlineTable
+    def defineEditMenuEditHeadlineTable (self):
+        
+        c = self.c ; f = self.frame
+        
+        self.editMenuEditHeadlineTable = [
             ("Edit &Headline","Ctrl+H",c.editHeadline),
             ("&End Edit Headline","Escape",f.endEditLabelCommand),
             ("&Abort Edit Headline","Shift+Escape",f.abortEditLabelCommand),
             ("Insert Headline Time/&Date","Shift+Ctrl+H",f.insertHeadlineTime),
             # 2/16/04: restore Toggle Angle Brackets command without any default shortcut.
-            ("Toggle Angle Brackets",None,c.toggleAngleBrackets))
-        #@nonl
-        #@-node:ekr.20031218072017.3755:<< define editMenuEditHeadlineTable >>
-        #@nl
-        #@<< define editMenuFindMenuTable >>
-        #@+node:ekr.20031218072017.3756:<< define editMenuFindMenuTable >>
-        self.editMenuFindMenuTable = (
+            ("Toggle Angle Brackets",None,c.toggleAngleBrackets),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3755:defineEditMenuEditHeadlineTable
+    #@+node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
+    def defineEditMenuFindMenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.editMenuFindMenuTable = [
             ("&Find Panel","Ctrl+F",c.showFindPanel),
             ("-",None,None),
             ("Find &Next","F3",c.findNext),
             ("Find &Previous","F4",c.findPrevious),
             ("&Replace","Ctrl+=",c.replace),
-            ("Replace, &Then Find","Ctrl+-",c.replaceThenFind))
-        #@nonl
-        #@-node:ekr.20031218072017.3756:<< define editMenuFindMenuTable >>
-        #@nl
-        #@<< define editMenuTop2Table >>
-        #@+node:ekr.20031218072017.3757:<< define editMenuTop2Table >>
-        try:
-            show = c.frame.body.getColorizer().showInvisibles
-        except:
-            show = False
-        
+            ("Replace, &Then Find","Ctrl+-",c.replaceThenFind),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
+    #@+node:ekr.20031218072017.3757:defineEditMenuTop2Table
+    def defineEditMenuTop2Table (self):
+    
+        c = self.c ; f = self.frame
+        try:        show = c.frame.body.getColorizer().showInvisibles
+        except:     show = False
         label = g.choose(show,"Hide In&visibles","Show In&visibles")
             
-        self.editMenuTop2Table = (
+        self.editMenuTop2Table = [
             ("&Go To Line Number","Alt+G",c.goToLineNumber),
             ("&Execute Script","Alt+Shift+E",c.executeScript),
             # ("Set Fon&t...",None,c.fontPanel), # To be replaced by general settings dialog.
             # ("Set &Colors...",None,c.colorPanel), # To be replaced by general settings dialog.
             (label,"Alt+V",c.viewAllCharacters),
             # ("-",None,None),
-            ("Setti&ngs",None,c.preferences)
-        )
-        
+            ("Setti&ngs",None,c.preferences),
+        ]
+    
         # Top-level shortcuts earlier: a,d,p,t,u,y,z
         # Top-level shortcuts here: e,g,n,v
-        #@nonl
-        #@-node:ekr.20031218072017.3757:<< define editMenuTop2Table >>
-        #@nl
-        #@nonl
-        #@-node:ekr.20031218072017.3753:<< define edit menu tables >>
-        #@nl
-        #@    << define file menu tables >>
-        #@+node:ekr.20031218072017.3758:<< define file menu tables >>
-        #@<< define fileMenuTopTable >>
-        #@+node:ekr.20031218072017.3759:<< define fileMenuTopTable >>
-        self.fileMenuTopTable = (
+    #@nonl
+    #@-node:ekr.20031218072017.3757:defineEditMenuTop2Table
+    #@-node:ekr.20031218072017.3753:defineEditMenuTables & helpers
+    #@+node:ekr.20031218072017.3758:defineFileMenuTables & helpers
+    def defineFileMenuTables (self):
+    
+        self.defineFileMenuTopTable()
+        self.defineFileMenuTop2Table()
+        self.defineFileMenuReadWriteMenuTable()
+        self.defineFileMenuTangleMenuTable()
+        self.defineFileMenuUntangleMenuTable()
+        self.defineFileMenuImportMenuTable()
+        self.defineFileMenuExportMenuTable()
+        self.defineFileMenuTop3MenuTable()
+    #@nonl
+    #@+node:ekr.20031218072017.3759:defineFileMenuTopTable
+    def defineFileMenuTopTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.fileMenuTopTable = [
             ("&New","Ctrl+N",c.new),
-            ("&Open...","Ctrl+O",c.open))
-        #@nonl
-        #@-node:ekr.20031218072017.3759:<< define fileMenuTopTable >>
-        #@nl
-        #@<< define fileMenuTop2Table >>
-        #@+node:ekr.20031218072017.3760:<< define fileMenuTop2Table >>
-        self.fileMenuTop2Table = (
+            ("&Open...","Ctrl+O",c.open),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3759:defineFileMenuTopTable
+    #@+node:ekr.20031218072017.3760:defineFileMenuTop2Table
+    def defineFileMenuTop2Table (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.fileMenuTop2Table = [
             ("-",None,None),
             ("&Close","Ctrl+W",c.close),
             ("&Save","Ctrl+S",c.save),
             ("Save &As","Shift+Ctrl+S",c.saveAs),
             ("Save To",None,c.saveTo), # &Tangle
-            ("Re&vert To Saved",None,c.revert)) # &Read/Write
-        #@nonl
-        #@-node:ekr.20031218072017.3760:<< define fileMenuTop2Table >>
-        #@nl
-        #@<< define fileMenuReadWriteMenuTable >>
-        #@+node:ekr.20031218072017.3761:<< define fileMenuReadWriteMenuTable >>
-        self.fileMenuReadWriteMenuTable = (
+            ("Re&vert To Saved",None,c.revert), # &Read/Write
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3760:defineFileMenuTop2Table
+    #@+node:ekr.20031218072017.3761:defineFileMenuReadWriteMenuTable
+    def defineFileMenuReadWriteMenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.fileMenuReadWriteMenuTable = [
             ("&Read Outline Only","Shift+Ctrl+R",c.readOutlineOnly),
             ("Read @file &Nodes",None,c.readAtFileNodes),
             ("-",None,None),
             ("Write &Dirty @file Nodes","Shift+Ctrl+Q",c.fileCommands.writeDirtyAtFileNodes),
             ("Write &Missing @file Nodes",None,c.fileCommands.writeMissingAtFileNodes),
             ("Write &Outline Only",None,c.fileCommands.writeOutlineOnly),
-            ("&Write @file Nodes","Shift+Ctrl+W",c.fileCommands.writeAtFileNodes))
-        #@nonl
-        #@-node:ekr.20031218072017.3761:<< define fileMenuReadWriteMenuTable >>
-        #@nl
-        #@<< define fileMenuTangleMenuTable >>
-        #@+node:ekr.20031218072017.3762:<< define fileMenuTangleMenuTable >>
-        self.fileMenuTangleMenuTable = (
+            ("&Write @file Nodes","Shift+Ctrl+W",c.fileCommands.writeAtFileNodes),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3761:defineFileMenuReadWriteMenuTable
+    #@+node:ekr.20031218072017.3762:defineFileMenuTangleMenuTable
+    def defineFileMenuTangleMenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.fileMenuTangleMenuTable = [
             ("Tangle &All","Shift+Ctrl+A",c.tangleAll),
             ("Tangle &Marked","Shift+Ctrl+M",c.tangleMarked),
-            ("&Tangle","Shift+Ctrl+T",c.tangle))
-        #@nonl
-        #@-node:ekr.20031218072017.3762:<< define fileMenuTangleMenuTable >>
-        #@nl
-        #@<< define fileMenuUntangleMenuTable >>
-        #@+node:ekr.20031218072017.3763:<< define fileMenuUntangleMenuTable >>
-        self.fileMenuUntangleMenuTable = (
+            ("&Tangle","Shift+Ctrl+T",c.tangle),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3762:defineFileMenuTangleMenuTable
+    #@+node:ekr.20031218072017.3763:defineFileMenuUntangleMenuTable
+    def defineFileMenuUntangleMenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.fileMenuUntangleMenuTable = [
             ("Untangle &All",None,c.untangleAll),
             ("Untangle &Marked",None,c.untangleMarked),
-            ("&Untangle","Shift+Ctrl+U",c.untangle))
-        #@nonl
-        #@-node:ekr.20031218072017.3763:<< define fileMenuUntangleMenuTable >>
-        #@nl
-        #@<< define fileMenuImportMenuTable >>
-        #@+node:ekr.20031218072017.3764:<< define fileMenuImportMenuTable >>
-        self.fileMenuImportMenuTable = (
+            ("&Untangle","Shift+Ctrl+U",c.untangle),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3763:defineFileMenuUntangleMenuTable
+    #@+node:ekr.20031218072017.3764:defineFileMenuImportMenuTable
+    def defineFileMenuImportMenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.fileMenuImportMenuTable = [
             ("Import Derived File",None,c.importDerivedFile),
             ("Import To @&file","Shift+Ctrl+F",c.importAtFile),
             ("Import To @&root",None,c.importAtRoot),
             ("Import &CWEB Files",None,c.importCWEBFiles),
             
             ("Import &noweb Files",None,c.importNowebFiles),
-            ("Import Flattened &Outline",None,c.importFlattenedOutline))
-        #@nonl
-        #@-node:ekr.20031218072017.3764:<< define fileMenuImportMenuTable >>
-        #@nl
-        #@<< define fileMenuExportMenuTable >>
-        #@+node:ekr.20031218072017.3765:<< define fileMenuExportMenuTable >>
+            ("Import Flattened &Outline",None,c.importFlattenedOutline),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3764:defineFileMenuImportMenuTable
+    #@+node:ekr.20031218072017.3765:defineFileMenuExportMenuTable
+    def defineFileMenuExportMenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
         self.fileMenuExportMenuTable = [
             ("Export &Headlines",None,c.exportHeadlines),
             ("Outline To &CWEB",None,c.outlineToCWEB),
             ("Outline To &Noweb",None,c.outlineToNoweb),
             ("&Flatten Outline",None,c.flattenOutline),
             ("&Remove Sentinels",None,c.removeSentinels),
-            ("&Weave",None,c.weave)]
-        #@nonl
-        #@-node:ekr.20031218072017.3765:<< define fileMenuExportMenuTable >>
-        #@nl
-        #@<< define fileMenuTop3MenuTable >>
-        #@+node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
-        self.fileMenuTop3MenuTable = (
-            ("E&xit","Ctrl+Q",g.app.onQuit),)
-        #@nonl
-        #@-node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
-        #@nl
-        #@nonl
-        #@-node:ekr.20031218072017.3758:<< define file menu tables >>
-        #@nl
-        #@    << define outline menu tables >>
-        #@+node:ekr.20031218072017.3767:<< define outline menu tables >>
-        #@<< define outlineMenuTopMenuTable >>
-        #@+node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
-        self.outlineMenuTopMenuTable = (
+            ("&Weave",None,c.weave),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3765:defineFileMenuExportMenuTable
+    #@+node:ekr.20031218072017.3766:defineFileMenuTop3MenuTable
+    def defineFileMenuTop3MenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.fileMenuTop3MenuTable = [
+            ("E&xit","Ctrl+Q",g.app.onQuit),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3766:defineFileMenuTop3MenuTable
+    #@-node:ekr.20031218072017.3758:defineFileMenuTables & helpers
+    #@+node:ekr.20031218072017.3767:defineOutlineMenuTables & helpers
+    def defineOutlineMenuTables (self):
+    
+        self.defineOutlineMenuTopMenuTable()
+        self.defineOutlineMenuCheckOutlineMenuTable()
+        self.defineOutlineMenuExpandContractMenuTable()
+        self.defineOutlineMenuMoveMenuTable()
+        self.defineOutlineMenuMarkMenuTable()
+        self.defineOutlineMenuGoToMenuTable()
+    #@nonl
+    #@+node:ekr.20031218072017.3768:defineOutlineMenuTopMenuTable
+    def defineOutlineMenuTopMenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.outlineMenuTopMenuTable = [
             ("C&ut Node","Shift+Ctrl+X",c.cutOutline),
             ("C&opy Node","Shift+Ctrl+C",c.copyOutline),
             ("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
@@ -267,17 +327,18 @@ class leoMenu:
             ("-",None,None),
             ("&Hoist",None,c.hoist),
             ("D&e-Hoist",None,f.c.dehoist),
-            ("-",None,None))
-            
+            ("-",None,None),
+        ]
         # Ampersand bindings:  a,c,d,e,h,i,n,o,p,t,s,
         # Bindings for entries that go to submenus: a,g,k,m,x
-        #@nonl
-        #@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
-        #@nl
-        #@<< define outlineMenuCheckOutlineMenuTable >>
-        #@+node:ekr.20040711140738:<< define outlineMenuCheckOutlineMenuTable >>
-        self.outlineMenuCheckOutlineMenuTable = (
+    #@nonl
+    #@-node:ekr.20031218072017.3768:defineOutlineMenuTopMenuTable
+    #@+node:ekr.20040711140738:defineOutlineMenuCheckOutlineMenuTable
+    def defineOutlineMenuCheckOutlineMenuTable (self):
         
+        c = self.c ; f = self.frame
+    
+        self.outlineMenuCheckOutlineMenuTable = [
             ("Check &Outline",None,c.checkOutline),
             ("&Dump Outline",None,c.dumpOutline),
             ("-",None,None),
@@ -286,16 +347,16 @@ class leoMenu:
             ("-",None,None),
             ("Pretty P&rint All Python Code",None,c.prettyPrintAllPythonCode),
             ("&Pretty Print Python Code",None,c.prettyPrintPythonCode),
-            
-        )
-        
+        ]
         # shortcuts used: a,c,d,o,p,r
-        #@nonl
-        #@-node:ekr.20040711140738:<< define outlineMenuCheckOutlineMenuTable >>
-        #@nl
-        #@<< define outlineMenuExpandContractMenuTable >>
-        #@+node:ekr.20031218072017.3769:<< define outlineMenuExpandContractMenuTable >>
-        self.outlineMenuExpandContractMenuTable = (
+    #@nonl
+    #@-node:ekr.20040711140738:defineOutlineMenuCheckOutlineMenuTable
+    #@+node:ekr.20031218072017.3769:defineOutlineMenuExpandContractMenuTable
+    def defineOutlineMenuExpandContractMenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.outlineMenuExpandContractMenuTable = [
             ("&Contract All","Alt+-",c.contractAllHeadlines),
             ("Contract &Node","Alt+[",c.contractNode),
             ("Contract &Parent","Alt+0",c.contractParent),
@@ -316,38 +377,47 @@ class leoMenu:
             # ("Expand To Level &9","Alt+9",c.expandLevel9),
             ("-",None,None),
             ("Expand &All","Alt+9",c.expandAllHeadlines),
-            ("Expand N&ode","Alt+]",c.expandNode))
-        #@nonl
-        #@-node:ekr.20031218072017.3769:<< define outlineMenuExpandContractMenuTable >>
-        #@nl
-        #@<< define outlineMenuMoveMenuTable >>
-        #@+node:ekr.20031218072017.3770:<< define outlineMenuMoveMenuTable >>
-        self.outlineMenuMoveMenuTable = (
+            ("Expand N&ode","Alt+]",c.expandNode),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3769:defineOutlineMenuExpandContractMenuTable
+    #@+node:ekr.20031218072017.3770:defineOutlineMenuMoveMenuTable
+    def defineOutlineMenuMoveMenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.outlineMenuMoveMenuTable = [
             ("Move &Down", "Ctrl+D",c.moveOutlineDown),
             ("Move &Left", "Ctrl+L",c.moveOutlineLeft),
             ("Move &Right","Ctrl+R",c.moveOutlineRight),
             ("Move &Up",   "Ctrl+U",c.moveOutlineUp),
             ("-",None,None),
             ("&Promote","Ctrl+{",c.promote),
-            ("&Demote", "Ctrl+}",c.demote))
-        #@nonl
-        #@-node:ekr.20031218072017.3770:<< define outlineMenuMoveMenuTable >>
-        #@nl
-        #@<< define outlineMenuMarkMenuTable >>
-        #@+node:ekr.20031218072017.3771:<< define outlineMenuMarkMenuTable >>
-        self.outlineMenuMarkMenuTable = (
+            ("&Demote", "Ctrl+}",c.demote),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3770:defineOutlineMenuMoveMenuTable
+    #@+node:ekr.20031218072017.3771:defineOutlineMenuMarkMenuTable
+    def defineOutlineMenuMarkMenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.outlineMenuMarkMenuTable = [
             ("&Mark","Ctrl+M",c.markHeadline),
             ("Mark &Subheads","Alt+S",c.markSubheads),
             ("Mark Changed &Items","Alt+C",c.markChangedHeadlines),
             ("Mark Changed &Roots","Alt+R",c.markChangedRoots),
             ("Mark &Clones","Alt+K",c.markClones),
-            ("&Unmark All","Alt+U",c.unmarkAll))
-        #@nonl
-        #@-node:ekr.20031218072017.3771:<< define outlineMenuMarkMenuTable >>
-        #@nl
-        #@<< define outlineMenuGoToMenuTable >>
-        #@+node:ekr.20031218072017.3772:<< define outlineMenuGoToMenuTable >>
-        self.outlineMenuGoToMenuTable = (
+            ("&Unmark All","Alt+U",c.unmarkAll),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3771:defineOutlineMenuMarkMenuTable
+    #@+node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
+    def defineOutlineMenuGoToMenuTable (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.outlineMenuGoToMenuTable = [
             ("Go Back",None,c.goPrevVisitedNode), # Usually use buttons for this.
             ("Go Forward",None,c.goNextVisitedNode),
             ("-",None,None),
@@ -365,16 +435,17 @@ class leoMenu:
             ("Go To Prev V&isible","Alt+UpArrow",c.selectVisBack),
             ("Go To Next &Visible","Alt+DnArrow",c.selectVisNext),
             ("Go To Prev Node","Alt+Shift+UpArrow",c.selectThreadBack),
-            ("Go To Next Node","Alt+Shift+DnArrow",c.selectThreadNext))
-        #@nonl
-        #@-node:ekr.20031218072017.3772:<< define outlineMenuGoToMenuTable >>
-        #@nl
-        #@nonl
-        #@-node:ekr.20031218072017.3767:<< define outline menu tables >>
-        #@nl
-        #@    << define window menu tables >>
-        #@+node:ekr.20031218072017.3773:<< define window menu tables >>
-        self.windowMenuTopTable = (
+            ("Go To Next Node","Alt+Shift+DnArrow",c.selectThreadNext),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
+    #@-node:ekr.20031218072017.3767:defineOutlineMenuTables & helpers
+    #@+node:ekr.20031218072017.3773:defineWindowMenuTables
+    def defineWindowMenuTables (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.windowMenuTopTable = [
             ("&Equal Sized Panes","Ctrl+E",f.equalSizedPanes),
             ("Toggle &Active Pane","Ctrl+T",f.toggleActivePane),
             ("Toggle &Split Direction",None,f.toggleSplitDirection),
@@ -384,33 +455,34 @@ class leoMenu:
             ("&Minimize All",None,f.minimizeAll),
             ("-",None,None),
             ("Open &Compare Window",None,c.openCompareWindow),
-            ("Open &Python Window","Alt+P",c.openPythonWindow))
-        #@nonl
-        #@-node:ekr.20031218072017.3773:<< define window menu tables >>
-        #@nl
-        #@    << define help menu tables >>
-        #@+node:ekr.20031218072017.3774:<< define help menu tables >>
-        self.helpMenuTopTable = (
+            ("Open &Python Window","Alt+P",c.openPythonWindow),
+        ]
+    #@nonl
+    #@-node:ekr.20031218072017.3773:defineWindowMenuTables
+    #@+node:ekr.20031218072017.3774:defineHelpMenuTables
+    def defineHelpMenuTables (self):
+        
+        c = self.c ; f = self.frame
+    
+        self.helpMenuTopTable = [
             ("&About Leo...",None,c.about),
             ("Online &Home Page",None,c.leoHome),
             ("Open Online &Tutorial",None,c.leoTutorial),
-        )
-            
-        self.helpMenuTop2Table = (
+        ]
+    
+        self.helpMenuTop2Table = [
             ("Open &Offline Tutorial",None,f.leoHelp),
-        )
-            
-        self.helpMenuTop3Table = (
+        ]
+    
+        self.helpMenuTop3Table = [
             ("-",None,None),
             ("Open Leo&Docs.leo",None,c.leoDocumentation),
             ("Open Leo&Plugins.leo",None,c.leoPlugins),
             ("Open Leo&Settings.leo",None,c.leoConfig),
-        )
-        #@nonl
-        #@-node:ekr.20031218072017.3774:<< define help menu tables >>
-        #@nl
+        ]
     #@nonl
-    #@-node:ekr.20031218072017.3752:defineMenuTables
+    #@-node:ekr.20031218072017.3774:defineHelpMenuTables
+    #@-node:ekr.20031218072017.3752:defineMenuTables & helpers
     #@+node:ekr.20031218072017.3775:oops
     def oops (self):
     
@@ -993,18 +1065,29 @@ class leoMenu:
         g.app.menuWarningsGiven = True
     #@nonl
     #@-node:ekr.20031218072017.3784:createMenuItemsFromTable
-    #@+node:ekr.20031218072017.3785:createMenusFromTables
+    #@+node:ekr.20031218072017.3785:createMenusFromTables & helpers
     def createMenusFromTables (self):
-    
-        c = self.c
-        #@    << create the file menu >>
-        #@+node:ekr.20031218072017.3790:<< create the file menu >>
-        fileMenu = self.createNewMenu("&File")
         
+        c = self.c
+        
+        self.createFileMenuFromTable()
+        self.createEditMenuFromTable()
+        self.createOutlineMenuFromTable()
+    
+        g.doHook("create-optional-menus",c=c)
+    
+        self.createWindowMenuFromTable()
+        self.createHelpMenuFromTable()
+    #@nonl
+    #@+node:ekr.20031218072017.3790:createFileMenuFromTable
+    def createFileMenuFromTable (self):
+        
+        c = self.c
+        fileMenu = self.createNewMenu("&File")
         self.createMenuEntries(fileMenu,self.fileMenuTopTable,init=True)
         self.createNewMenu("Open &With...","File")
         self.createMenuEntries(fileMenu,self.fileMenuTop2Table,init=True)
-        #@<< create the recent files submenu >>
+        #@    << create the recent files submenu >>
         #@+node:ekr.20031218072017.3791:<< create the recent files submenu >>
         self.createNewMenu("Recent &Files...","File")
         c.recentFiles = c.config.getRecentFiles()
@@ -1015,7 +1098,7 @@ class leoMenu:
         #@-node:ekr.20031218072017.3791:<< create the recent files submenu >>
         #@nl
         self.add_separator(fileMenu)
-        #@<< create the read/write submenu >>
+        #@    << create the read/write submenu >>
         #@+node:ekr.20031218072017.3792:<< create the read/write submenu >>
         readWriteMenu = self.createNewMenu("&Read/Write...","File")
         
@@ -1023,7 +1106,7 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20031218072017.3792:<< create the read/write submenu >>
         #@nl
-        #@<< create the tangle submenu >>
+        #@    << create the tangle submenu >>
         #@+node:ekr.20031218072017.3793:<< create the tangle submenu >>
         tangleMenu = self.createNewMenu("&Tangle...","File")
         
@@ -1031,7 +1114,7 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20031218072017.3793:<< create the tangle submenu >>
         #@nl
-        #@<< create the untangle submenu >>
+        #@    << create the untangle submenu >>
         #@+node:ekr.20031218072017.3794:<< create the untangle submenu >>
         untangleMenu = self.createNewMenu("&Untangle...","File")
         
@@ -1039,7 +1122,7 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20031218072017.3794:<< create the untangle submenu >>
         #@nl
-        #@<< create the import submenu >>
+        #@    << create the import submenu >>
         #@+node:ekr.20031218072017.3795:<< create the import submenu >>
         importMenu = self.createNewMenu("&Import...","File")
         
@@ -1047,7 +1130,7 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20031218072017.3795:<< create the import submenu >>
         #@nl
-        #@<< create the export submenu >>
+        #@    << create the export submenu >>
         #@+node:ekr.20031218072017.3796:<< create the export submenu >>
         exportMenu = self.createNewMenu("&Export...","File")
         
@@ -1057,16 +1140,16 @@ class leoMenu:
         #@nl
         self.add_separator(fileMenu)
         self.createMenuEntries(fileMenu,self.fileMenuTop3MenuTable,init=True)
-        #@nonl
-        #@-node:ekr.20031218072017.3790:<< create the file menu >>
-        #@nl
-        #@    << create the edit menu >>
-        #@+node:ekr.20031218072017.3786:<< create the edit menu >>
+    #@nonl
+    #@-node:ekr.20031218072017.3790:createFileMenuFromTable
+    #@+node:ekr.20031218072017.3786:createEditMenuFromTable
+    def createEditMenuFromTable (self):
+        
+        c = self.c
         editMenu = self.createNewMenu("&Edit")
-        
         self.createMenuEntries(editMenu,self.editMenuTopTable,init=True)
-        
-        #@<< create the edit body submenu >>
+    
+        #@    << create the edit body submenu >>
         #@+node:ekr.20031218072017.3787:<< create the edit body submenu >>
         editBodyMenu = self.createNewMenu("Edit &Body...","Edit")
         
@@ -1074,7 +1157,7 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20031218072017.3787:<< create the edit body submenu >>
         #@nl
-        #@<< create the edit headline submenu >>
+        #@    << create the edit headline submenu >>
         #@+node:ekr.20031218072017.3788:<< create the edit headline submenu >>
         editHeadlineMenu = self.createNewMenu("Edit &Headline...","Edit")
         
@@ -1082,7 +1165,7 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20031218072017.3788:<< create the edit headline submenu >>
         #@nl
-        #@<< create the find submenu >>
+        #@    << create the find submenu >>
         #@+node:ekr.20031218072017.3789:<< create the find submenu >>
         findMenu = self.createNewMenu("&Find...","Edit")
         
@@ -1092,16 +1175,18 @@ class leoMenu:
         #@nl
         
         self.createMenuEntries(editMenu,self.editMenuTop2Table,init=True)
-        #@nonl
-        #@-node:ekr.20031218072017.3786:<< create the edit menu >>
-        #@nl
-        #@    << create the outline menu >>
-        #@+node:ekr.20031218072017.3797:<< create the outline menu >>
+    #@nonl
+    #@-node:ekr.20031218072017.3786:createEditMenuFromTable
+    #@+node:ekr.20031218072017.3797:createOutlineMenuFromTable
+    def createOutlineMenuFromTable (self):
+        
+        c = self.c
+    
         outlineMenu = self.createNewMenu("&Outline")
         
         self.createMenuEntries(outlineMenu,self.outlineMenuTopMenuTable,init=True)
         
-        #@<< create check submenu >>
+        #@    << create check submenu >>
         #@+node:ekr.20040711140738.1:<< create check submenu >>
         checkOutlineMenu = self.createNewMenu("Chec&k...","Outline")
         
@@ -1109,7 +1194,7 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20040711140738.1:<< create check submenu >>
         #@nl
-        #@<< create expand/contract submenu >>
+        #@    << create expand/contract submenu >>
         #@+node:ekr.20031218072017.3798:<< create expand/contract submenu >>
         expandMenu = self.createNewMenu("E&xpand/Contract...","Outline")
         
@@ -1117,7 +1202,7 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20031218072017.3798:<< create expand/contract submenu >>
         #@nl
-        #@<< create move submenu >>
+        #@    << create move submenu >>
         #@+node:ekr.20031218072017.3799:<< create move submenu >>
         moveSelectMenu = self.createNewMenu("&Move...","Outline")
         
@@ -1125,7 +1210,7 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20031218072017.3799:<< create move submenu >>
         #@nl
-        #@<< create mark submenu >>
+        #@    << create mark submenu >>
         #@+node:ekr.20031218072017.3800:<< create mark submenu >>
         markMenu = self.createNewMenu("M&ark/Unmark...","Outline")
         
@@ -1133,7 +1218,7 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20031218072017.3800:<< create mark submenu >>
         #@nl
-        #@<< create goto submenu >>
+        #@    << create goto submenu >>
         #@+node:ekr.20031218072017.3801:<< create goto submenu >>
         gotoMenu = self.createNewMenu("&Go To...","Outline")
         
@@ -1141,20 +1226,23 @@ class leoMenu:
         #@nonl
         #@-node:ekr.20031218072017.3801:<< create goto submenu >>
         #@nl
-        #@nonl
-        #@-node:ekr.20031218072017.3797:<< create the outline menu >>
-        #@nl
-        g.doHook("create-optional-menus",c=c)
-        #@    << create the window menu >>
-        #@+node:ekr.20031218072017.3802:<< create the window menu >>
+    #@nonl
+    #@-node:ekr.20031218072017.3797:createOutlineMenuFromTable
+    #@+node:ekr.20031218072017.3802:createWindowMenuFromTable
+    def createWindowMenuFromTable (self):
+        
+        c = self.c
+    
         windowMenu = self.createNewMenu("&Window")
         
         self.createMenuEntries(windowMenu,self.windowMenuTopTable,init=True)
-        #@nonl
-        #@-node:ekr.20031218072017.3802:<< create the window menu >>
-        #@nl
-        #@    << create the help menu >>
-        #@+node:ekr.20031218072017.3803:<< create the help menu >>
+    #@nonl
+    #@-node:ekr.20031218072017.3802:createWindowMenuFromTable
+    #@+node:ekr.20031218072017.3803:createHelpMenuFromTable
+    def createHelpMenuFromTable (self):
+        
+        c = self.c
+    
         helpMenu = self.createNewMenu("&Help")
         
         self.createMenuEntries(helpMenu,self.helpMenuTopTable,init=True)
@@ -1163,11 +1251,9 @@ class leoMenu:
             self.createMenuEntries(helpMenu,self.helpMenuTop2Table,init=True)
         
         self.createMenuEntries(helpMenu,self.helpMenuTop3Table,init=True)
-        #@nonl
-        #@-node:ekr.20031218072017.3803:<< create the help menu >>
-        #@nl
     #@nonl
-    #@-node:ekr.20031218072017.3785:createMenusFromTables
+    #@-node:ekr.20031218072017.3803:createHelpMenuFromTable
+    #@-node:ekr.20031218072017.3785:createMenusFromTables & helpers
     #@+node:ekr.20031218072017.3804:createNewMenu
     def createNewMenu (self,menuName,parentName="top",before=None):
     
