@@ -25,11 +25,18 @@ import leoPlugins
 #@-node:ekr.20041021120859:<< imports >>
 #@nl
 
+__version__ = "1.1" # 8/1/05: updated example code to match latest code in leoCommands.py.
+
 oldPrettyPrinter = leoCommands.Commands.prettyPrinter
 
 #@+others
 #@+node:ekr.20041021120454:class myPrettyPrinter
 class myPrettyPrinter(leoCommands.Commands.prettyPrinter):
+    
+    '''An example subclass of Leo's prettyPrinter class.
+    
+    Not all the base class methods are shown here:
+    just the ones you are likely to want to override.'''
 
     #@    @+others
     #@+node:ekr.20041021123018:myPrettyPrinter.__init__
@@ -39,7 +46,7 @@ class myPrettyPrinter(leoCommands.Commands.prettyPrinter):
         oldPrettyPrinter.__init__(self,c)
         self.tracing = False
         
-        print "Overriding class leoCommands.prettyPrinter"
+        # print "Overriding class leoCommands.prettyPrinter"
     #@nonl
     #@-node:ekr.20041021123018:myPrettyPrinter.__init__
     #@+node:ekr.20041021123018.1:putNormalToken & allies
@@ -105,13 +112,26 @@ class myPrettyPrinter(leoCommands.Commands.prettyPrinter):
     if 0: # The orignal code...
     
         def doMultiLine (self):
+        
+            # Ensure a blank before comments not preceded entirely by whitespace.
             
+            if self.val.startswith('#') and self.array:
+                prev = self.array[-1]
+                if prev and prev[-1] != ' ':
+                    self.put(' ') 
+        
             # These may span lines, so duplicate the end-of-line logic.
             lines = g.splitLines(self.val)
             for line in lines:
                 self.array.append(line)
                 if line and line[-1] == '\n':
                     self.putArray()
+            
+            # Add a blank after the string if there is something in the last line.
+            if self.array:
+                line = self.array[-1]
+                if line.strip():
+                    self.put(' ')
                     
             # Suppress start-of-line logic.
             self.line = self.erow
@@ -121,10 +141,22 @@ class myPrettyPrinter(leoCommands.Commands.prettyPrinter):
     if 0: # The orignal code...
     
         def doName(self):
+            
+            # Ensure whitespace or start-of-line precedes the name.
+            if self.array:
+                last = self.array[-1]
+                ch = last[-1]
+                outer = self.parenLevel == 0 and self.squareBracketLevel == 0
+                chars = '@ \t{([.'
+                if not outer: chars += ',=<>*-+&|/'
+                if ch not in chars:
+                    self.array.append(' ')
         
             self.array.append("%s " % self.val)
+        
             if self.prevName == "def": # A personal idiosyncracy.
                 self.array.append(' ') # Retain the blank before '('.
+        
             self.prevName = self.val
     #@nonl
     #@-node:ekr.20041021123018.6:doName
@@ -132,7 +164,12 @@ class myPrettyPrinter(leoCommands.Commands.prettyPrinter):
     if 0: # The orignal code...
     
         def doNewline (self):
-            
+        
+            # Remove trailing whitespace.
+            # This never removes trailing whitespace from multi-line tokens.
+            if self.array:
+                self.array[-1] = self.array[-1].rstrip()
+        
             self.array.append('\n')
             self.putArray()
     #@nonl
@@ -152,21 +189,57 @@ class myPrettyPrinter(leoCommands.Commands.prettyPrinter):
         def doOp (self):
             
             val = self.val
-        
-            if val == '(':
-                self.parenLevel += 1
-                self.put(val)
-            elif val == ')':
-                self.parenLevel -= 1
-                self.put(val)
-            elif val == '=':
-                if self.parenLevel > 0: self.put('=')
-                else:                   self.put(' = ')
-            elif val == ',':
-                if self.parenLevel > 0: self.put(',')
-                else:                   self.put(', ')
-            elif val == ';':
-                self.put(" ; ")
+            outer = self.lineParenLevel <= 0 or (self.parenLevel == 0 and self.squareBracketLevel == 0)
+            # New in Python 2.4: '@' is an operator, not an error token.
+            if self.val == '@':
+                self.array.append(self.val)
+                # Preserve whitespace after @.
+                i = g.skip_ws(self.s,self.scol+1)
+                ws = self.s[self.scol+1:i]
+                if ws: self.array.append(ws)
+            elif val == '(':
+                # Nothing added; strip leading blank before function calls but not before Python keywords.
+                strip = self.lastName=='name' and not keyword.iskeyword(self.prevName)
+                self.put('(',strip=strip)
+                self.parenLevel += 1 ; self.lineParenLevel += 1
+            elif val in ('=','==','+=','-=','!=','<=','>=','<','>','<>','*','**','+','&','|','/','//'):
+                # Add leading and trailing blank in outer mode.
+                s = g.choose(outer,' %s ','%s')
+                self.put(s % val)
+            elif val in ('^','~','{','['):
+                # Add leading blank in outer mode.
+                s = g.choose(outer,' %s','%s')
+                self.put(s % val)
+                if val == '[': self.squareBracketLevel += 1
+            elif val in (',',':','}',']',')'):
+                # Add trailing blank in outer mode.
+                s = g.choose(outer,'%s ','%s')
+                self.put(s % val)
+                if val == ']': self.squareBracketLevel -= 1
+                if val == ')':
+                    self.parenLevel -= 1 ; self.lineParenLevel -= 1
+            # ----- no difference between outer and inner modes ---
+            elif val in (';','%'):
+                # Add leading and trailing blank.
+                self.put(' %s ' % val)
+            elif val == '>>':
+                # Add leading blank.
+                self.put(' %s' % val)
+            elif val == '<<':
+                # Add trailing blank.
+                self.put('%s ' % val)
+            elif val in ('-'):
+                # Could be binary or unary.  Or could be a hyphen in a section name.
+                # Add preceding blank only for non-id's.
+                if outer:
+                    if self.array:
+                        prev = self.array[-1].rstrip()
+                        if prev and prev[-1] not in string.digits + string.letters:
+                            self.put(' %s' % val)
+                        else: self.put(val)
+                    else: self.put(val) # Try to leave whitespace unchanged.
+                else:
+                    self.put(val)
             else:
                 self.put(val)
     #@nonl
@@ -213,8 +286,6 @@ class myPrettyPrinter(leoCommands.Commands.prettyPrinter):
 if not g.app.unitTesting: # Not for unit testing:  modifies core.
 
     leoCommands.Commands.prettyPrinter = myPrettyPrinter
-
-    __version__ = "1.0"
     g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20041021120118:@thin pretty_print.py
