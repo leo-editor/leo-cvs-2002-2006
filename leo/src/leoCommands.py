@@ -28,6 +28,7 @@ import leoTangle
 import leoUndo
 
 import compiler # for Check Python command
+import keyword
 import os
 import parser # needed only for weird Python 2.2 parser errors.
 import string
@@ -3452,6 +3453,23 @@ class baseCommands:
         pp.endUndo()
     #@nonl
     #@-node:ekr.20040712053025.1:prettyPrintPythonCode
+    #@+node:ekr.20050729211526:prettyPrintPythonNode
+    def prettyPrintPythonNode (self,p=None,dump=False):
+    
+        c = self
+        
+        if not p:
+            p = c.currentPosition()
+        
+        pp = c.prettyPrinter(c)
+    
+        # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+        if g.scanForAtLanguage(c,p) == "python":
+            pp.prettyPrintNode(p,dump=dump)
+              
+        pp.endUndo()
+    #@nonl
+    #@-node:ekr.20050729211526:prettyPrintPythonNode
     #@+node:ekr.20040711135244.5:class prettyPrinter
     class prettyPrinter:
         
@@ -3469,6 +3487,7 @@ class baseCommands:
             self.erow = self.ecol = 0 # The ending row/col of the token.
             self.lastName = None # The name of the previous token type.
             self.line = 0 # Same as self.srow
+            self.lineParenLevel = 0
             self.lines = [] # List of lines.
             self.name = None
             self.p = c.currentPosition()
@@ -3612,6 +3631,7 @@ class baseCommands:
             
             self.lines.append(''.join(self.array))
             self.array = []
+            self.lineParenLevel = 0
         #@nonl
         #@-node:ekr.20041021104237:putArray
         #@+node:ekr.20040711135244.10:putNormalToken & allies
@@ -3732,8 +3752,7 @@ class baseCommands:
         def doOp (self):
             
             val = self.val
-            outer = self.parenLevel == 0 and self.squareBracketLevel == 0
-            
+            outer = self.lineParenLevel <= 0 or (self.parenLevel == 0 and self.squareBracketLevel == 0)
             # New in Python 2.4: '@' is an operator, not an error token.
             if self.val == '@':
                 self.array.append(self.val)
@@ -3742,9 +3761,10 @@ class baseCommands:
                 ws = self.s[self.scol+1:i]
                 if ws: self.array.append(ws)
             elif val == '(':
-                # Nothing added; possibly strip leading blank before function calls but not before 'in'.
-                self.put('(',strip=self.lastName=='name' and self.prevName != 'in')
-                self.parenLevel += 1
+                # Nothing added; strip leading blank before function calls but not before Python keywords.
+                strip = self.lastName=='name' and not keyword.iskeyword(self.prevName)
+                self.put('(',strip=strip)
+                self.parenLevel += 1 ; self.lineParenLevel += 1
             elif val in ('=','==','+=','-=','!=','<=','>=','<','>','<>','*','**','+','&','|','/','//'):
                 # Add leading and trailing blank in outer mode.
                 s = g.choose(outer,' %s ','%s')
@@ -3759,7 +3779,8 @@ class baseCommands:
                 s = g.choose(outer,'%s ','%s')
                 self.put(s % val)
                 if val == ']': self.squareBracketLevel -= 1
-                if val == ')': self.parenLevel -= 1
+                if val == ')':
+                    self.parenLevel -= 1 ; self.lineParenLevel -= 1
             # ----- no difference between outer and inner modes ---
             elif val in (';','%'):
                 # Add leading and trailing blank.
