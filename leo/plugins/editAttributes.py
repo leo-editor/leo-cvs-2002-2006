@@ -27,7 +27,7 @@ Pmw = g.importExtension('Pmw',    pluginName=__name__,verbose=True)
 #@-node:mork.20041018162155.2:<< imports >>
 #@nl
 
-__version__ = ".3"
+__version__ = ".4"
 #@<< version history >>
 #@+node:ekr.20050226091502.1:<< version history >>
 #@@killcolor
@@ -35,10 +35,15 @@ __version__ = ".3"
 #@+at
 # 
 # 0.3 EKR:  Base on version 0.2 from Leo User.
-# 
 #     - Minor changes:  new/different section names.
 #     - Use g.importExtension to import PMW.
 #     - Added init function.
+# 
+# 0.4 EKR:
+#     - Corrected dispatch logic in newCreateCanvas.
+#     - Corrected AttrEditor.__init__ so the Pmw.Dialog is a child of 
+# c.frame.top.
+#       (Without this the dialog hangs).
 #@-at
 #@nonl
 #@-node:ekr.20050226091502.1:<< version history >>
@@ -60,20 +65,20 @@ def init ():
 class AttrEditor:
     #@	@+others
     #@+node:mork.20041018162155.4:__init__
-    def __init__( self, c , plist):
-        
-        self.c = c
-        pos = plist[ 0 ]
-        t = pos.v.t 
-        self.uAs = t.unknownAttributes = getattr( t, 'unknownAttributes', {} ) 
-        self.dialog = Pmw.Dialog( buttons = ( 'Add Attribute', 'Remove Attribute', 'Close' ),
-                                  title = t.headString,
-                                  command = self.buttonCommands )  
-        group = Pmw.Group( self.dialog.interior(), tag_text = t.headString )
-        group.pack( side = 'top' )
-        self._mkGui( group.interior())        
-        self.dialog.activate()
+    def __init__ (self,c,p):
     
+        self.c = c
+        t = p.v.t
+        self.uAs = t.unknownAttributes = getattr(t,'unknownAttributes',{})
+        self.dialog = Pmw.Dialog(c.frame.top, ## Required.
+            buttons = ('Add Attribute','Remove Attribute','Close'),
+                        title = t.headString,
+                        command = self.buttonCommands)
+        group = Pmw.Group(self.dialog.interior(),tag_text=p.headString())
+        group.pack(side='top')
+        self._mkGui(group.interior())
+        self.dialog.activate()
+    #@nonl
     #@-node:mork.20041018162155.4:__init__
     #@+node:mork.20041018162155.5:buttonCommands
     def buttonCommands( self, name ):
@@ -158,17 +163,24 @@ olCreateCanvas = leoTkinterFrame.leoTkinterFrame.createCanvas
 def newCreateCanvas( self, parentFrame ):
     
     can = olCreateCanvas( self, parentFrame )
+    
     def hit( event, self = self ):
+        
         c = self.c
         tree = c.frame.tree
         iddict = tree.iconIds
+        # g.printDict(iddict)
         can = event.widget
         x = can.canvasx( event.x )
         y = can.canvasy( event.y )
         olap = can.find_overlapping( x, y, x, y)
-        if olap and iddict.has_key( olap[ 0 ] ):
-            return AttrEditor( c, iddict[ olap[ 0 ] ])
-
+        # g.trace(olap)
+        id = olap[1]
+        if olap:
+            data = iddict.get(id)
+            if data:
+                p,junk = data
+                return AttrEditor(c,p)
             
     can.bind( '<Button-2>', hit, '+' )
     can.bind( '<Button-3>', hit, '+' )
