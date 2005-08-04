@@ -568,7 +568,7 @@ class baseCommands:
                 g.es("Could not retrieve your user name.")
                 g.es("Temporary files will be stored in: %s" % leoTempDir)
             
-            td = os.path.join(os.path.abspath(tempfile.gettempdir()),leoTempDir)
+            td = os.path.join(g.os_path_abspath(tempfile.gettempdir()),leoTempDir)
             if not os.path.exists(td):
                 os.mkdir(td)
             
