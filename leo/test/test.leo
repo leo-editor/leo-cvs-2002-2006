@@ -699,7 +699,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050708105323.3"><vh>ipmagic &amp; palias</vh></v>
 <v t="ekr.20050708165531.1"><vh>esc_quotes</vh></v>
 </v>
-<v t="ekr.20050715132524" a="E"><vh>Pymacs (hangs)</vh></v>
+<v t="ekr.20050715132524"><vh>Pymacs (hangs)</vh></v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -1323,7 +1323,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041019124050.1"><vh>Original</vh></v>
 <v t="ekr.20041019124050.2"><vh>Test</vh></v>
 </v>
-<v t="ekr.20040713070526" a="E"><vh>@test Pretty Print command</vh>
+<v t="ekr.20040713070526"><vh>@test Pretty Print command</vh>
 <v t="ekr.20040713123617"><vh>tempNode</vh></v>
 <v t="ekr.20050726141158"><vh>before</vh></v>
 <v t="ekr.20040713123828.1"><vh>after</vh></v>
@@ -1955,58 +1955,80 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726101926.2"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
 <v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050726112715" a="E"><vh>Multiline test</vh></v>
+<v t="ekr.20050726112715"><vh>Multiline test</vh></v>
 <v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
 <v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
-<v t="ekr.20050803075926" a="E"><vh>sudoku</vh>
-<v t="ekr.20050803075926.1" a="E"><vh>class sudokuClass</vh>
-<v t="ekr.20050803075926.2" a="E"><vh> ctor</vh></v>
-<v t="ekr.20050803121102"><vh>checkData</vh></v>
-<v t="ekr.20050803095202" a="E"><vh>groupNumber</vh></v>
-<v t="ekr.20050803080858"><vh>dump</vh></v>
-<v t="ekr.20050803075926.3"><vh>error</vh></v>
-<v t="ekr.20050803215553"><vh>trace</vh></v>
-<v t="ekr.20050803075926.4"><vh>finishInit</vh></v>
-<v t="ekr.20050803202932"><vh>initFromData</vh></v>
+<v t="ekr.20050803075926" a="TV"><vh>sudoku puzzle</vh>
+<v t="ekr.20050804073824"><vh>&lt;&lt; define data &gt;&gt;</vh></v>
+<v t="ekr.20050803075926.1"><vh>class sudokuClass</vh>
+<v t="ekr.20050803075926.2" a="E"><vh> ctor (main) &amp; helpers</vh>
 <v t="ekr.20050803204429"><vh>initFromGuess</vh></v>
 <v t="ekr.20050803204429.1"><vh>initFromParent</vh></v>
+<v t="ekr.20050803202932"><vh>initFromData</vh></v>
+<v t="ekr.20050803075926.4"><vh>finishInit</vh></v>
+<v t="ekr.20050803121102"><vh>checkData</vh></v>
+<v t="ekr.20050804070733"><vh>check</vh></v>
+<v t="ekr.20050804071049"><vh>checkGroup</vh></v>
+</v>
+<v t="ekr.20050804071242"><vh>printing &amp; dumping</vh>
+<v t="ekr.20050803080858"><vh>dump</vh></v>
+<v t="ekr.20050803121730"><vh>printData</vh></v>
+<v t="ekr.20050803200132"><vh>printCells</vh></v>
+</v>
+<v t="ekr.20050803095202"><vh>groupNumber</vh></v>
+<v t="ekr.20050803075926.3"><vh>error</vh></v>
+<v t="ekr.20050803215553"><vh>trace</vh></v>
 <v t="ekr.20050803202932.1"><vh>isFinished</vh></v>
 <v t="ekr.20050803203001"><vh>findBestGroup</vh></v>
 <v t="ekr.20050803210939"><vh>findGuesses</vh></v>
-<v t="ekr.20050803121730"><vh>printData</vh></v>
-<v t="ekr.20050803200132"><vh>printCells</vh></v>
-<v t="ekr.20050803075926.6"><vh>print_iter</vh></v>
+<v t="ekr.20050804060706"><vh>isValidGuess</vh></v>
 <v t="ekr.20050803075926.5"><vh>solve (main)</vh></v>
-<v t="ekr.20050803075926.7" a="E"><vh>class cellClass</vh>
-<v t="ekr.20050803081438" a="E"><vh> ctor</vh></v>
+<v t="ekr.20050803075926.7"><vh>class cellClass</vh>
+<v t="ekr.20050803081438"><vh> ctor</vh></v>
 <v t="ekr.20050803200724"><vh>__repr__</vh></v>
-<v t="ekr.20050803144522" a="E"><vh>finishCreate</vh></v>
+<v t="ekr.20050803144522"><vh>finishCreate</vh></v>
 <v t="ekr.20050803084951"><vh>error</vh></v>
 <v t="ekr.20050803215632"><vh>trace</vh></v>
 <v t="ekr.20050803195724"><vh>setVal</vh></v>
-<v t="ekr.20050803083933" a="E"><vh>solve</vh></v>
-<v t="ekr.20050803134436" a="E"><vh>reducePossibleFromGroup</vh></v>
-<v t="ekr.20050803134436.1" a="E"><vh>valIsPossible</vh></v>
+<v t="ekr.20050803083933"><vh>solve (cell)</vh></v>
+<v t="ekr.20050803134436"><vh>reducePossibleFromGroup</vh></v>
+<v t="ekr.20050803134436.1"><vh>valIsPossible</vh></v>
 </v>
 <v t="ekr.20050803121102.1"><vh>class groupClass</vh>
 <v t="ekr.20050803121102.2"><vh> ctor</vh></v>
-<v t="ekr.20050803130829" a="E"><vh>finishCreate</vh></v>
+<v t="ekr.20050803130829"><vh>finishCreate</vh></v>
 <v t="ekr.20050803205127"><vh>known&amp; unknown</vh></v>
-<v t="ekr.20050803161504" a="E"><vh>computeRelatedGroups</vh></v>
+<v t="ekr.20050803161504"><vh>computeRelatedGroups</vh></v>
 <v t="ekr.20050803154357"><vh>valIsPossibleAtCell</vh></v>
 </v>
 <v t="ekr.20050803123219"><vh>class rowColGroupClass</vh>
-<v t="ekr.20050803124111" a="E"><vh> ctor</vh></v>
-<v t="ekr.20050803130829.1" a="E"><vh>finishCreate</vh></v>
+<v t="ekr.20050803124111"><vh> ctor</vh></v>
+<v t="ekr.20050803130829.1"><vh>finishCreate</vh></v>
 <v t="ekr.20050803124111.1"><vh>update</vh></v>
 </v>
 </v>
+<v t="ekr.20050803202932.2"><vh>(important)</vh>
+<v t="ekr.20050804071242" a="E"><vh>printing &amp; dumping</vh>
+<v t="ekr.20050803080858"><vh>dump</vh></v>
+<v t="ekr.20050803121730"><vh>printData</vh></v>
+<v t="ekr.20050803200132"><vh>printCells</vh></v>
 </v>
-<v t="ekr.20050803202932.2" a="E"><vh>(important)</vh>
-<v t="ekr.20050803075926.5" a="TV"><vh>solve (main)</vh></v>
+<v t="ekr.20050803075926.2"><vh> ctor (main) &amp; helpers</vh>
+<v t="ekr.20050803204429"><vh>initFromGuess</vh></v>
+<v t="ekr.20050803204429.1"><vh>initFromParent</vh></v>
+<v t="ekr.20050803202932"><vh>initFromData</vh></v>
+<v t="ekr.20050803075926.4"><vh>finishInit</vh></v>
+<v t="ekr.20050803121102"><vh>checkData</vh></v>
+<v t="ekr.20050804070733"><vh>check</vh></v>
+<v t="ekr.20050804071049"><vh>checkGroup</vh></v>
+</v>
+<v t="ekr.20050803081438"><vh> ctor</vh></v>
+<v t="ekr.20050803075926.5"><vh>solve (main)</vh></v>
+<v t="ekr.20050803083933"><vh>solve (cell)</vh></v>
 <v t="ekr.20050803203001"><vh>findBestGroup</vh></v>
 <v t="ekr.20050803210939"><vh>findGuesses</vh></v>
-<v t="ekr.20050803204429"><vh>initFromGuess</vh></v>
+<v t="ekr.20050804060706"><vh>isValidGuess</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -2715,7 +2737,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -16636,19 +16658,11 @@ def loose ( a , b ) :
 </t>
 <t tx="ekr.20050803075926"># Solves the sudoku puzzle.
 
+import copy
+
 digits = '123456789' # valid digits.
 
-data = (
-    'x5xx9xxxx',
-    'xx48xxxx9',
-    'xxx1x728x',
-    '56xxxx137',
-    'xxxxxxxxx',
-    '173xxxx42',
-    'x215x8xxx',
-    '6xxxx38xx',
-    'xxxx1xx6x',
-)
+&lt;&lt; define data &gt;&gt;
 
 @others
 
@@ -16668,8 +16682,9 @@ if not solver.errors:
     self.errors = 0
     self.guess = guess
     self.parent = parent
-    self.tracing = False
+    self.tracing = True
     self.valid = True
+    self.verbose = False
 
     if parent:
         self.level = parent.level + 1
@@ -16677,6 +16692,7 @@ if not solver.errors:
         self.level = 0
 
     if data:
+        self.excludedGroupNumbers = []
         self.rowGroups = []
         self.colGroups = []
         self.errors = 0
@@ -16720,46 +16736,45 @@ if not solver.errors:
 <t tx="ekr.20050803075926.5">def solve (self):
     
     n = 0
-    g.trace(self.level)
     while not self.errors and self.valid:
         n += 1
         self.progress = False
-        print '*' * 40
-        print 'level %d, iteration %d' % (self.level,n)
+        if self.tracing: print '*' * 40
+        print 'solve: level %d, iteration %d' % (self.level,n)
+        
+        if not self.check():
+            return False
 
         new_vals = []
-        
         for cell in self.cells:
             new_val = cell.solve()
             if new_val:
                 new_vals.append((new_val,cell),)
-
         if new_vals:
             for data in new_vals:
                 val,cell = data
                 cell.setVal(val)
-                
+
         if self.isFinished():
-            print
-            print 'success!!!'
-            self.printData('solution')
+            self.printCells('success!!!')
             return True
-        elif not self.progress:
-            if self.tracing:
-                print ; print 'no progress'
-                self.printCells()
+        
+        if not new_vals and not self.progress:
+            print ; print 'no progress'
+            self.printCells()
             if self.level &lt; 2:
                 guesses = self.findGuesses()
                 for guess in guesses:
                     inner = sudokuClass(parent=self,guess=guess)
                     ok = inner.solve()
                     if ok: return ok
-                    else: inner.printData('after guesses')
+            else:
+                print 'maximum depth exceeded'
             return False
-    return False</t>
-<t tx="ekr.20050803075926.6">def print_iter (self):
-    
-    pass</t>
+    if not self.valid:
+        print ; print 'reached invalid state'
+    return False
+</t>
 <t tx="ekr.20050803075926.7">class cellClass:
     
     '''A class representing what is known about a particular cell.'''
@@ -16767,7 +16782,7 @@ if not solver.errors:
     @others</t>
 <t tx="ekr.20050803080858">def dump (self):
     
-    if self.tracing:
+    if 0:
         print ; print 'groups...'
         for group in self.groups:
             print 'group %d, rowsNumbers: %s colNumbers: %s' % (
@@ -16778,7 +16793,7 @@ if not solver.errors:
         for group in self.rowGroups:
             print '%d %s' % (group.rowNumber, group.rowcol)
             
-    if self.tracing:
+    if 0:
         print ; print 'related groups...'
         for group in self.groups:     
             print 'Groups related to group %d: %s' % (
@@ -16787,6 +16802,8 @@ if not solver.errors:
     
     self.main = sudoku
     self.val = val
+    self.verbose = self.main.verbose
+
     self.new_val = None
     self.i = i
     self.j = j
@@ -16810,7 +16827,8 @@ if not solver.errors:
     independent of the order in which cell.solve is called.'''
 
     if self.val:
-        self.trace('%s = %8s' % (self,self.val))
+        if self.verbose:
+            self.trace('%s = %8s' % (self,self.val))
         return
 
     cant_rows = [] ; cant_cols = [] ; cant_cells = []
@@ -16856,7 +16874,8 @@ if not solver.errors:
         self.main.progress = True
     else:
         possible.sort()
-        self.trace('%s = %8s' % (self,''.join(possible)))</t>
+        if self.verbose:
+            self.trace('%s = %8s' % (self,''.join(possible)))</t>
 <t tx="ekr.20050803084951">def error (self,s):
     
     self.main.error(s)</t>
@@ -16886,7 +16905,7 @@ if not solver.errors:
     self.relatedGroups = []</t>
 <t tx="ekr.20050803121730">def printData (self,tag='initial data'):
     
-    print tag ; print
+    print ; print tag ; print
 
     for row in self.rows:
         for ch in row:
@@ -16979,8 +16998,9 @@ if not solver.errors:
                 spots.append(cell)
         if len(spots) == 1:
             cell = spots[0]
-            self.trace('Only place in group %d for %s is at (%d,%d)' % (
-                self.group.groupNumber,val,cell.i,cell.j))
+            if self.verbose:
+                self.trace('Only place in group %d for %s is at (%d,%d)' % (
+                    self.group.groupNumber,val,cell.i,cell.j))
             return [val]
         if 0:
             g.trace('group: %d, val %s spots: %s' % (
@@ -16997,7 +17017,8 @@ if not solver.errors:
             new_possible.append(val)
     if len(new_possible) == 1:
         val = new_possible[0]
-        self.trace('Only %s from %s compatible with other groups for %s' % (val,possible,self))
+        if self.verbose:
+            self.trace('Only %s from %s compatible with other groups for %s' % (val,possible,self))
         return [val]
     elif len(new_possible) != len(possible):
         # print 'Reduced choices for %s = %s' % (self,new_possible)
@@ -17054,7 +17075,8 @@ if not solver.errors:
 <t tx="ekr.20050803161504">def computeRelatedGroups (self):
     
     self.relatedGroups = []
-    g.trace(self.groupNumber)
+
+    # g.trace(self.groupNumber)
 
     for group in self.main.groups:
         if group is not self:
@@ -17086,13 +17108,12 @@ if not solver.errors:
     cols [j] = col</t>
 <t tx="ekr.20050803200132">def printCells (self,tag=''):
     
-    print tag ; print
+    print
+    if tag: print tag ; print
     
     i = 0
     for cell in self.cells:
-        
-        print '%6s' % g.choose(cell.val,cell.val,''.join(cell.possible)),
-            
+        print '%7s' % g.choose(cell.val,cell.val,''.join(cell.possible)),
         i += 1
         if i % 9 == 0:
             print</t>
@@ -17125,53 +17146,65 @@ __str__ = __repr__</t>
         if not cell.val:
             return False
     return True</t>
-<t tx="ekr.20050803202932.2"></t>
-<t tx="ekr.20050803203001">def findBestGroup (self):
+<t tx="ekr.20050803202932.2">if 0:
+    @others</t>
+<t tx="ekr.20050803203001">def findBestGroup (self,excludedGroupNumbers):
     
     bestGroup = None
     bestKnown = 0
     for group in self.groups:
         known = group.knownCells()
         if 9 &gt; len(known) &gt; bestKnown:
-            bestGroup = group
-            bestKnown = len(known)
+            if group.groupNumber not in excludedGroupNumbers:
+                bestGroup = group
+                bestKnown = len(known)
 
     if bestGroup:
         if self.tracing:
-            print 'best group %d' % bestGroup.groupNumber
-            print 'unknown cells',
-            for cell in bestGroup.unknownCells():
-                print cell,
-            print 'unknown vals',
-            for val in bestGroup.unknownVals():
-                print val,
-            print
+            print ; print 'best group %d' % bestGroup.groupNumber
+            if self.verbose:
+                print 'unknown cells',
+                for cell in bestGroup.unknownCells():
+                    print cell,
+                print 'unknown vals',
+                for val in bestGroup.unknownVals():
+                    print val,
+                print
 
     return bestGroup</t>
 <t tx="ekr.20050803204429">def initFromGuess (self):
 
     for bunch in self.guess:
-    
         for cell in self.cells:
             if bunch.cell.i == cell.i and bunch.cell.j == cell.j:
                 cell.setVal(bunch.val)
-                self.trace('setting guess: %s = %s' % (cell,bunch.val))
+                # self.trace('setting guess: %s = %s' % (cell,bunch.val))
                 break
         else:
             print 'no matching cell for guess: %s' % bunch
-            self.valid = False</t>
+            self.valid = False
+            
+    if self.valid:
+        print 'level %d guesses...' % self.level
+        for bunch in self.guess:
+            print 'guess: %s = %s' % (bunch.cell,bunch.val)
+
+        if self.tracing:
+            self.printCells('after guesses')</t>
 <t tx="ekr.20050803204429.1">def initFromParent (self):
     
     parent = self.parent
+    
+    self.excludedGroupNumbers = parent.excludedGroupNumbers[:]
   
     # Make sure we don't contaminate the parent.
-    self.rows =      parent.rows[:]
-    self.cols =      parent.cols[:]
-    self.cells =     parent.cells[:]
+    self.rows =      copy.deepcopy(parent.rows)
+    self.cols =      copy.deepcopy(parent.cols)
+    self.cells =     copy.deepcopy(parent.cells)
 
-    self.groups =    parent.groups[:]
-    self.rowGroups = parent.rowGroups[:]
-    self.colGroups = parent.colGroups[:]</t>
+    self.groups =    copy.deepcopy(parent.groups)
+    self.rowGroups = copy.deepcopy(parent.rowGroups)
+    self.colGroups = copy.deepcopy(parent.colGroups)</t>
 <t tx="ekr.20050803205127">def knownCells (self):
     
     return [cell for cell in self.cells if cell.val is not None]
@@ -17189,26 +17222,34 @@ def unknownVals (self):
     return [val for val in digits if val not in self.knownVals()]</t>
 <t tx="ekr.20050803210939">def findGuesses (self):
     
-    group = self.findBestGroup()
+    guesses = []
+    group = self.findBestGroup(self.excludedGroupNumbers)
+    self.excludedGroupNumbers.append(group.groupNumber)
+    if not group:
+        g.trace('No groups left to guess: %s' % excludedGroupNumbers)
+        self.valid = False
+        return []
+        
+    # Generate all combinations of cells and unkown vals.
     vals =  group.unknownVals()
     cells = group.unknownCells()
-    
-    guesses = []
-    
-    # Generate all combinations of cells and unkown vals.
-    
     n = len(vals)
     for i in xrange(n):
         guess = [] ; j = 0
         for cell in cells:
             bunch = g.bunch(cell=cell,val=vals[(i+j)%n])
-            # g.trace(cell,(i+j)%n)
             j += 1
             guess.append(bunch)
-        guesses.append(guess)
+        if self.isValidGuess(guess):
+            guesses.append(guess)
     
-    if self.tracing:
-        print 'guesses'
+    if not guesses:
+        g.trace('No valid guess for group %d' % group.groupNumber)
+        self.valid = False
+        return []
+
+    if 0: # Another trace is in initFromGuess
+        print 'level %d guesses...' % self.level
         for guess in guesses:
             for bunch in guess:
                 print bunch.cell,bunch.val
@@ -17221,5 +17262,81 @@ def unknownVals (self):
 <t tx="ekr.20050803215632">def trace (self,s):
     
     self.main.trace(s)</t>
+<t tx="ekr.20050804060706">def isValidGuess (self,guess):
+    
+    for bunch in guess:
+        if not bunch.cell.valIsPossible(bunch.val):
+            return False
+
+    return True</t>
+<t tx="ekr.20050804070733">def check (self):
+    
+    for group in self.groups:
+        if not self.checkGroup(group):
+            return False
+            
+    for row in self.rows:
+        for n in digits:
+            count = row.count(n)
+            if count &gt; 1:
+                g.trace('%s appears %d times in row %s' % n,count,row)
+                self.valid = False
+                return False
+                
+    for col in self.cols:
+        for n in digits:
+            count = col.count(n)
+            if count &gt; 1:
+                g.trace('%s appears %d times in col %s' % n,count,col)
+                self.valid = False
+                return False
+                
+    return True</t>
+<t tx="ekr.20050804071049">def checkGroup (self,group):
+
+    vals = []
+
+    for cell in group.cells:
+        val = cell.val
+        if val and val in vals:
+            g.trace('%s appears twice in group %s' % val,group.groupNumber)
+            return False
+
+    return True
+</t>
+<t tx="ekr.20050804071242"></t>
+<t tx="ekr.20050804073824">
+data = (
+    'xxxxxxxxx',
+    'xxxxxxxxx',
+    'xxxxxxxxx',
+    'xxxxxxxxx',
+    'xxxxxxxxx',
+    'xxxxxxxxx',
+    'xxxxxxxxx',
+    'xxxxxxxxx',
+    'xxxxxxxxx')
+
+data = ( # 8/3
+    'x5xx9xxxx',
+    'xx48xxxx9',
+    'xxx1x728x',
+    '56xxxx137',
+    'xxxxxxxxx',
+    '173xxxx42',
+    'x215x8xxx',
+    '6xxxx38xx',
+    'xxxx1xx6x')
+
+data = ( # 8/4
+    '1x5xxx37x',
+    'xxxxxx2xx',
+    'x973xxx1x',
+    'xxxx531x2',
+    '3xx8x1xx4',
+    '2x147xxxx',
+    'x7xxx864x',
+    'xx8xxxxxx',
+    'x12xxx8x7')</t>
 </tnodes>
 </leo_file>
