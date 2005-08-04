@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7177" clone_windows="0"/>
-<globals body_outline_ratio="0.555681818182">
-	<global_window_position top="52" left="235" height="880" width="856"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7186" clone_windows="0"/>
+<globals body_outline_ratio="0.355681818182">
+	<global_window_position top="79" left="306" height="880" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1121,6 +1121,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20050801071700"><vh>@@string stylesheet = type="text/xsl" href="bpLEOHTM.xsl"</vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041213075902"><vh>@font log font</vh></v>
@@ -1171,6 +1172,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@ button golf</vh></v>
 <v t="ekr.20050704170739"><vh>@button Ipython</vh></v>
+<v t="ekr.20050726101758"><vh>@button Beautify</vh></v>
 </v>
 <v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
 <v t="ekr.20050618061835.1"><vh>Intro</vh>
@@ -1321,9 +1323,9 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041019124050.1"><vh>Original</vh></v>
 <v t="ekr.20041019124050.2"><vh>Test</vh></v>
 </v>
-<v t="ekr.20040713070526"><vh>@test Pretty Print command</vh>
+<v t="ekr.20040713070526" a="E"><vh>@test Pretty Print command</vh>
 <v t="ekr.20040713123617"><vh>tempNode</vh></v>
-<v t="ekr.20040713071919"><vh>before</vh></v>
+<v t="ekr.20050726141158"><vh>before</vh></v>
 <v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
 </v>
@@ -1947,7 +1949,65 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050722115320" a="TV"><vh>@button leoEmacs</vh></v>
+<v t="ekr.20050722115320"><vh>@button leoEmacs</vh></v>
+<v t="ekr.20050726101926"><vh>keyPressed</vh>
+<v t="ekr.20050726101926.1"><vh>&lt;&lt; create the command &gt;&gt;</vh></v>
+<v t="ekr.20050726101926.2"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
+<v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050726112715" a="E"><vh>Multiline test</vh></v>
+<v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
+<v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
+<v t="ekr.20050803075926" a="E"><vh>sudoku</vh>
+<v t="ekr.20050803075926.1" a="E"><vh>class sudokuClass</vh>
+<v t="ekr.20050803075926.2" a="E"><vh> ctor</vh></v>
+<v t="ekr.20050803121102"><vh>checkData</vh></v>
+<v t="ekr.20050803095202" a="E"><vh>groupNumber</vh></v>
+<v t="ekr.20050803080858"><vh>dump</vh></v>
+<v t="ekr.20050803075926.3"><vh>error</vh></v>
+<v t="ekr.20050803215553"><vh>trace</vh></v>
+<v t="ekr.20050803075926.4"><vh>finishInit</vh></v>
+<v t="ekr.20050803202932"><vh>initFromData</vh></v>
+<v t="ekr.20050803204429"><vh>initFromGuess</vh></v>
+<v t="ekr.20050803204429.1"><vh>initFromParent</vh></v>
+<v t="ekr.20050803202932.1"><vh>isFinished</vh></v>
+<v t="ekr.20050803203001"><vh>findBestGroup</vh></v>
+<v t="ekr.20050803210939"><vh>findGuesses</vh></v>
+<v t="ekr.20050803121730"><vh>printData</vh></v>
+<v t="ekr.20050803200132"><vh>printCells</vh></v>
+<v t="ekr.20050803075926.6"><vh>print_iter</vh></v>
+<v t="ekr.20050803075926.5"><vh>solve (main)</vh></v>
+<v t="ekr.20050803075926.7" a="E"><vh>class cellClass</vh>
+<v t="ekr.20050803081438" a="E"><vh> ctor</vh></v>
+<v t="ekr.20050803200724"><vh>__repr__</vh></v>
+<v t="ekr.20050803144522" a="E"><vh>finishCreate</vh></v>
+<v t="ekr.20050803084951"><vh>error</vh></v>
+<v t="ekr.20050803215632"><vh>trace</vh></v>
+<v t="ekr.20050803195724"><vh>setVal</vh></v>
+<v t="ekr.20050803083933" a="E"><vh>solve</vh></v>
+<v t="ekr.20050803134436" a="E"><vh>reducePossibleFromGroup</vh></v>
+<v t="ekr.20050803134436.1" a="E"><vh>valIsPossible</vh></v>
+</v>
+<v t="ekr.20050803121102.1"><vh>class groupClass</vh>
+<v t="ekr.20050803121102.2"><vh> ctor</vh></v>
+<v t="ekr.20050803130829" a="E"><vh>finishCreate</vh></v>
+<v t="ekr.20050803205127"><vh>known&amp; unknown</vh></v>
+<v t="ekr.20050803161504" a="E"><vh>computeRelatedGroups</vh></v>
+<v t="ekr.20050803154357"><vh>valIsPossibleAtCell</vh></v>
+</v>
+<v t="ekr.20050803123219"><vh>class rowColGroupClass</vh>
+<v t="ekr.20050803124111" a="E"><vh> ctor</vh></v>
+<v t="ekr.20050803130829.1" a="E"><vh>finishCreate</vh></v>
+<v t="ekr.20050803124111.1"><vh>update</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050803202932.2" a="E"><vh>(important)</vh>
+<v t="ekr.20050803075926.5" a="TV"><vh>solve (main)</vh></v>
+<v t="ekr.20050803203001"><vh>findBestGroup</vh></v>
+<v t="ekr.20050803210939"><vh>findGuesses</vh></v>
+<v t="ekr.20050803204429"><vh>initFromGuess</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -5293,54 +5353,30 @@ else:
     temp.scriptSetBodyString(before.bodyString())
     c.prettyPrintPythonCode(p=temp,dump=dump)
     assert temp.bodyString() == after.bodyString(),"Pretty Print Test failed"</t>
-<t tx="ekr.20040713071919">@ This is    a test of stuff.in doc parts.
-
-         I wonder           what will happen.
-@c
-
-def        spam (self         )  :   
-
-    """ This is a ' triple'   quoted string:
-        It should remain untouched."""
-    
-    if a==3:
-        print "Ä á Û"
-        
-    ''' Another ' triple'   quoted string:
-        It should remain untouched.'''
-        
-    "yet another\
-    multi-line string"
-        
-class eggs:
-    
-    """ A typical doc string """
-    
-    @others</t>
 <t tx="ekr.20040713123617">@ This is a test of stuff.in doc parts.
 
          I wonder what will happen.
-@c 
+@c
 
 def spam (self):
 
     """ This is a ' triple'   quoted string:
         It should remain untouched."""
-    
-    if a==3:
+
+    if a == 3:
         print "Ä á Û"
-        
+
     ''' Another ' triple'   quoted string:
         It should remain untouched.'''
-        
+
     "yet another\
     multi-line string"
-        
+
 class eggs:
-    
+
     """ A typical doc string """
-    
-    @others </t>
+
+    @others</t>
 <t tx="ekr.20040713123617.1">@language python
 @tabwidth -4
 
@@ -5359,27 +5395,27 @@ run(c)</t>
 <t tx="ekr.20040713123828.1">@ This is a test of stuff.in doc parts.
 
          I wonder what will happen.
-@c 
+@c
 
 def spam (self):
 
     """ This is a ' triple'   quoted string:
         It should remain untouched."""
-    
-    if a==3:
+
+    if a == 3:
         print "Ä á Û"
-        
+
     ''' Another ' triple'   quoted string:
         It should remain untouched.'''
-        
+
     "yet another\
     multi-line string"
-        
+
 class eggs:
-    
+
     """ A typical doc string """
-    
-    @others </t>
+
+    @others</t>
 <t tx="ekr.20040713130853"></t>
 <t tx="ekr.20040713130853.1">@ elisp2py converts elisp text into python text.  The conversion is not complete.  Nevertheless, elisp2py eliminates much of the tedious text manipulation that would otherwise be required.
 
@@ -16481,5 +16517,709 @@ e = leoEditCommands.leoEmacs(
 )
 
 print e</t>
+<t tx="ekr.20050726101758">c.prettyPrintPythonNode()</t>
+<t tx="ekr.20050726101926">def keyPressed( self, event ):
+
+    &lt;&lt; create the command &gt;&gt;
+    self.kTconsume = self.kRconsume = consume = self.emacs.masterCommand(event,command)
+    if consume:
+        # Block the event from going elsewhere, like the DocumentModel.
+        event.consume()
+        return
+
+    kc = event.getKeyChar()
+    if self.tab_for_colon and kc == '\n':
+        event.consume()
+        self.insertPreviousLeadAndNewline()
+    if self.completers.has_key(kc):
+        &lt;&lt; handle auto completion &gt;&gt;
+    elif kc == '\t' and self.tab_width == -4:
+        &lt;&lt; handle auto-tabbing &gt;&gt;
+</t>
+<t tx="ekr.20050726101926.1">modifiers = event.getModifiers()
+mtxt = event.getKeyModifiersText(modifiers)
+ktxt = event.getKeyText(event.getKeyCode())
+
+if mtxt == ktxt:
+    command = mtxt
+else:
+    command = '%s %s' % (mtxt,ktxt).strip()
+</t>
+<t tx="ekr.20050726101926.2">editor = self.emacs.editor
+doc = editor.getDocument()
+pos = editor.getCaretPosition()
+try:
+    pc = doc.getText( pos -1, 1 )
+    if pc in ( '"', "'" ): return
+except: pass
+
+event.consume()
+self.kTconsume = True
+self.kRconsume = True
+ac = self.completers[ kc ]
+doc.insertString( pos, '%s%s' %( kc, ac ), None )
+editor.setCaretPosition( pos + 1 )
+if hasattr(self.emacs.c.frame.body.editor, "autocompleter"):
+    self.emacs.c.frame.body.editor.autocompleter.hideAutoBox() </t>
+<t tx="ekr.20050726101926.3">self.kTconsume = True
+self.kRconsume = True
+event.consume()
+editor = self.emacs.editor
+doc = editor.getDocument()
+pos = editor.getCaretPosition()
+try:
+    doc.insertString( pos, " " * 4, None )
+except: pass</t>
+<t tx="ekr.20050726112715">self.kTconsume = self.kRconsume = consume = self.emacs.masterCommand(event,command)
+
+a = b() # Comment test.
+
+"""test"""
+
+# Comment test.
+    # Comment test.
+
+if 1:
+    '''Test of multi-line handling: tailing whitespace: 
+done.'''</t>
+<t tx="ekr.20050726141158">@ This is    a test of stuff.in doc parts.
+
+         I wonder           what will happen.
+@c
+
+def        spam (self         )  :   
+
+    """ This is a ' triple'   quoted string:
+        It should remain untouched."""
+    
+    if a==3:
+        print "Ä á Û"
+        
+    ''' Another ' triple'   quoted string:
+        It should remain untouched.'''
+        
+    "yet another\
+    multi-line string"
+        
+class eggs:
+    
+    """ A typical doc string """
+    
+    @others</t>
+<t tx="ekr.20050801070538">def compressed(a,b):
+    if(a==b):
+        a=b+c*d
+    if a==b:
+        return 1
+    return(a,b,c)
+        
+def loose ( a , b ) :
+    if a  ==  b:
+        return 1
+    while a != 2 :
+        a = b + c * d
+</t>
+<t tx="ekr.20050801071700">
+</t>
+<t tx="ekr.20050801075332">def compressed(a,b):
+    if(a==b):
+        a=b+c*d
+    if a==b:
+        return 1
+    return(a,b,c)
+        
+def loose ( a , b ) :
+    if a  ==  b:
+        return 1
+    while a != 2 :
+        a = b + c * d
+</t>
+<t tx="ekr.20050803075926"># Solves the sudoku puzzle.
+
+digits = '123456789' # valid digits.
+
+data = (
+    'x5xx9xxxx',
+    'xx48xxxx9',
+    'xxx1x728x',
+    '56xxxx137',
+    'xxxxxxxxx',
+    '173xxxx42',
+    'x215x8xxx',
+    '6xxxx38xx',
+    'xxxx1xx6x',
+)
+
+@others
+
+print '-' * 40
+
+solver = sudokuClass(data=data)
+if not solver.errors:
+    solver.solve()</t>
+<t tx="ekr.20050803075926.1">class sudokuClass:
+    
+    '''A class to solve the sudoku puzzle.'''
+    
+    @others</t>
+<t tx="ekr.20050803075926.2">def __init__ (self,data=None,parent=None,guess=None):
+    
+    self.data = data
+    self.errors = 0
+    self.guess = guess
+    self.parent = parent
+    self.tracing = False
+    self.valid = True
+
+    if parent:
+        self.level = parent.level + 1
+    else:
+        self.level = 0
+
+    if data:
+        self.rowGroups = []
+        self.colGroups = []
+        self.errors = 0
+        self.level = 0
+        self.rows = []
+        self.cols = []
+        self.cells = []
+        self.groups = []
+        self.checkData()
+        self.initFromData()
+        self.printData()
+        self.finishInit()
+        self.dump()
+    else:
+        self.initFromParent()
+        self.initFromGuess()
+        self.finishInit()</t>
+<t tx="ekr.20050803075926.3">def error (self,s):
+    
+    print 'oops',s
+    self.errors += 1</t>
+<t tx="ekr.20050803075926.4">def finishInit (self):
+
+    for i in xrange(9):
+        self.groups.append(self.groupClass(self,i))
+        #self.rowGroups.append(self.rowColGroupClass(self,rowNumber=i))
+        #self.colGroups.append(self.rowColGroupClass(self,j=i))
+
+    for z in self.cells:
+        z.finishCreate()
+    for z in self.groups:
+        z.finishCreate()
+    for z in self.rowGroups:
+        z.finishCreate()
+    for z in self.colGroups:
+        z.finishCreate()
+    # Must be done after finishCreate!
+    if not self.parent:
+        for z in self.groups:
+            z.computeRelatedGroups()</t>
+<t tx="ekr.20050803075926.5">def solve (self):
+    
+    n = 0
+    g.trace(self.level)
+    while not self.errors and self.valid:
+        n += 1
+        self.progress = False
+        print '*' * 40
+        print 'level %d, iteration %d' % (self.level,n)
+
+        new_vals = []
+        
+        for cell in self.cells:
+            new_val = cell.solve()
+            if new_val:
+                new_vals.append((new_val,cell),)
+
+        if new_vals:
+            for data in new_vals:
+                val,cell = data
+                cell.setVal(val)
+                
+        if self.isFinished():
+            print
+            print 'success!!!'
+            self.printData('solution')
+            return True
+        elif not self.progress:
+            if self.tracing:
+                print ; print 'no progress'
+                self.printCells()
+            if self.level &lt; 2:
+                guesses = self.findGuesses()
+                for guess in guesses:
+                    inner = sudokuClass(parent=self,guess=guess)
+                    ok = inner.solve()
+                    if ok: return ok
+                    else: inner.printData('after guesses')
+            return False
+    return False</t>
+<t tx="ekr.20050803075926.6">def print_iter (self):
+    
+    pass</t>
+<t tx="ekr.20050803075926.7">class cellClass:
+    
+    '''A class representing what is known about a particular cell.'''
+    
+    @others</t>
+<t tx="ekr.20050803080858">def dump (self):
+    
+    if self.tracing:
+        print ; print 'groups...'
+        for group in self.groups:
+            print 'group %d, rowsNumbers: %s colNumbers: %s' % (
+                group.groupNumber,group.rowNumbers,group.colNumbers)
+            
+    if 0:
+        print ; print 'row groups...'
+        for group in self.rowGroups:
+            print '%d %s' % (group.rowNumber, group.rowcol)
+            
+    if self.tracing:
+        print ; print 'related groups...'
+        for group in self.groups:     
+            print 'Groups related to group %d: %s' % (
+                group.groupNumber,[g.groupNumber for g in group.relatedGroups])</t>
+<t tx="ekr.20050803081438">def __init__ (self,sudoku,val,i,j):
+    
+    self.main = sudoku
+    self.val = val
+    self.new_val = None
+    self.i = i
+    self.j = j
+    self.groupNumber = self.main.groupNumber(i,j)
+    if val is None:
+        self.possible = [digit for digit in digits]
+    else:
+        self.possible = [val]
+
+    # Set by group ctors...
+    self.colGroup = None
+    self.group = None
+    self.rowGroup = None</t>
+<t tx="ekr.20050803083933">def solve (self):
+    
+    '''Compute the unique valid value for the cell, if possible.
+    
+    If found, set self.new_val.
+    
+    We could set self.val directly, but this way makes each iteration
+    independent of the order in which cell.solve is called.'''
+
+    if self.val:
+        self.trace('%s = %8s' % (self,self.val))
+        return
+
+    cant_rows = [] ; cant_cols = [] ; cant_cells = []
+    
+    for cell in self.group.cells:
+        ch = cell.val
+        if ch is not None and ch not in cant_cells:
+            cant_cells.append(ch)
+    for ch in self.row:
+        if ch is not None and ch not in cant_rows:
+            cant_rows.append(ch)
+    for ch in self.col:
+        if ch is not None and ch not in cant_cols:
+            cant_cols.append(ch)
+            
+    # g.trace(self.possible)
+
+    new_possible = [ch for ch in digits
+        if ch not in cant_cols and
+        ch not in cant_rows and
+        ch not in cant_cells]
+        
+    new_possible = [val for val in self.possible if val in new_possible]
+
+    self.possible = possible = self.reducePossibleFromGroup(new_possible)
+
+    if len(possible) == 1:
+        self.new_val = new_val = possible[0]
+        self.trace('%s = %8s *****' % (self,self.new_val))
+        return new_val
+    elif len(possible) == 0:
+        print '%s    NO POSSIBLE VAL' % self
+        self.main.valid = False
+        if 0:
+            cant_rows.sort()
+            cant_cols.sort()
+            cant_cells.sort()
+            print 'cant_rows',''.join(cant_rows)
+            print 'cant_cols',''.join(cant_cols)
+            print 'cant_cell',''.join(cant_cells)
+    elif len(possible) != len(new_possible):
+        self.trace('%s = %8s **' % (self,''.join(possible)))
+        self.main.progress = True
+    else:
+        possible.sort()
+        self.trace('%s = %8s' % (self,''.join(possible)))</t>
+<t tx="ekr.20050803084951">def error (self,s):
+    
+    self.main.error(s)</t>
+<t tx="ekr.20050803095202">def groupNumber (self,row,col):
+    
+    return (3 * (row // 3)) + (col // 3)</t>
+<t tx="ekr.20050803121102">def checkData (self):
+    
+    rows = len(self.data)
+    
+    if rows != 9:
+        return self.error('wrong number of rows: %d' % rows)
+        
+    for row in self.data:
+        cols = len(row)
+        if cols != 9:
+            return self.error('wrong number of columns in row %d: %d' % (i,cols))</t>
+<t tx="ekr.20050803121102.1">class groupClass:
+    
+    '''A class representing a group of cells.'''
+    
+    @others</t>
+<t tx="ekr.20050803121102.2">def __init__ (self,sudoku,n):
+    
+    self.main = sudoku
+    self.groupNumber = n
+    self.relatedGroups = []</t>
+<t tx="ekr.20050803121730">def printData (self,tag='initial data'):
+    
+    print tag ; print
+
+    for row in self.rows:
+        for ch in row:
+            print ch or 'x',
+        print
+
+    if 0: # Will be same as above.
+        print 'using self.cols...'
+        for i in xrange(9): # row index
+            for j in xrange(9): # col index
+                col = self.cols[j]
+                print col[i] or 'x',
+            print</t>
+<t tx="ekr.20050803123219">class rowColGroupClass:
+    
+    '''A class representing a group of cells in a single row or column.'''
+    
+    @others</t>
+<t tx="ekr.20050803124111">def __init__ (self,sudoku,i=None,j=None):
+    
+    self.main = sudoku
+    self.i = i
+    self.j = j</t>
+<t tx="ekr.20050803124111.1">def update (self):
+    
+    self.possible = [ch for ch in digits]
+    self.used = []
+    
+    for cell in self.cells:
+        if cell.val and cell.val not in self.used:
+            self.used.append(cell.val)
+            self.possible.remove(cell.val)</t>
+<t tx="ekr.20050803130829">def finishCreate (self):
+    
+    main = self.main
+
+    self.cells = [cell for cell in main.cells if cell.groupNumber == self.groupNumber]
+    
+    for cell in self.cells:
+        cell.group = self
+
+    self.rowNumbers = []
+    for cell in self.cells:
+        if cell.i not in self.rowNumbers:
+            self.rowNumbers.append(cell.i)
+    self.rowNumbers.sort()
+            
+    self.colNumbers = []
+    for cell in self.cells:
+        if cell.j not in self.colNumbers:
+            self.colNumbers.append(cell.j)
+    self.colNumbers.sort()
+    
+    if 0: ## Not used yet.
+        self.used = []
+        for cell in self.cells:
+            if cell.val and cell.val not in self.used:
+                self.used.append(cell.val)
+            
+    #g.trace('rowNumbers',self.rowNumbers)
+    #g.trace('colNumbers',self.colNumbers)
+    </t>
+<t tx="ekr.20050803130829.1">def finishCreate(self):
+    
+    i,j = self.i, self.j
+    main = self.main
+
+    if i is not None:
+        self.rowcol = self.main.rows[i]
+        self.cells = [cell for cell in main.cells if cell.i == i]
+        for cell in self.cells:
+            cell.rowGroup = self
+    else:
+        self.rowcol = self.main.cols[j]
+        self.cells = [cell for cell in main.cells if cell.j == j]
+        for cell in self.cells:
+            cell.colGroup = self
+
+    self.update()</t>
+<t tx="ekr.20050803134436">def reducePossibleFromGroup (self,possible):
+    
+    # This calculates whether there is only one possible position for a value in a group.
+    
+    # g.trace(possible)
+    
+    for val in possible:
+        spots = []
+        for cell in self.group.cells:
+            if cell.valIsPossible(val):
+                spots.append(cell)
+        if len(spots) == 1:
+            cell = spots[0]
+            self.trace('Only place in group %d for %s is at (%d,%d)' % (
+                self.group.groupNumber,val,cell.i,cell.j))
+            return [val]
+        if 0:
+            g.trace('group: %d, val %s spots: %s' % (
+               self.group.groupNumber,val,['(%d,%d)' % (cell.i,cell.j) for cell in spots]))
+            
+    new_possible = []
+    for val in possible:
+        ok = True
+        for group in self.group.relatedGroups:
+            if not group.valIsPossibleAtCell(val,self):
+                # g.trace('group incompatible',cell.i,cell.j)
+                ok = False
+        if ok:
+            new_possible.append(val)
+    if len(new_possible) == 1:
+        val = new_possible[0]
+        self.trace('Only %s from %s compatible with other groups for %s' % (val,possible,self))
+        return [val]
+    elif len(new_possible) != len(possible):
+        # print 'Reduced choices for %s = %s' % (self,new_possible)
+        return new_possible
+    else:
+        return possible</t>
+<t tx="ekr.20050803134436.1">def valIsPossible (self,val):
+    
+    cell = self ; group = self.group
+    
+    assert(val is not None)
+    
+    if cell.val:
+        return False
+
+    if val in self.main.rows[self.i]:
+        #g.trace('%s in row %d: %s' % (val,n,self.i,self.row)
+        return False
+    
+    if val in self.main.cols[self.j]:
+        #g.trace('%s in col %d: %s' % (val,n,j,self.col))
+        return False
+
+    return True</t>
+<t tx="ekr.20050803144522">def finishCreate (self):
+    
+    self.col = self.main.cols[self.j]
+    self.row = self.main.rows[self.i]
+</t>
+<t tx="ekr.20050803154357">def valIsPossibleAtCell (self,val,changedCell):
+    
+    i = changedCell.i
+    j = changedCell.j
+
+    for cell in self.cells:
+        
+        possible = cell.possible
+            
+        if i == cell.i:
+            row = self.main.rows[cell.i]
+            if val in row:
+                # g.trace(i,j)
+                print 'row conflict with candidate %s at %s' % (val,self)
+                return False
+                
+        if j == cell.j:
+            col = self.main.cols[cell.j]
+            if val in col:
+                # g.trace(i,j)
+                print 'col conflict with candidate %s at %s' % (val,self)
+                return False
+    
+    return True</t>
+<t tx="ekr.20050803161504">def computeRelatedGroups (self):
+    
+    self.relatedGroups = []
+    g.trace(self.groupNumber)
+
+    for group in self.main.groups:
+        if group is not self:
+            related = False
+            for n in group.colNumbers:
+                if n in self.colNumbers:
+                    related = True
+            for n in group.rowNumbers:
+                if n in self.rowNumbers:
+                    related = True
+            if related and group not in self.relatedGroups:
+                self.relatedGroups.append(group)</t>
+<t tx="ekr.20050803195724">def setVal (self,val):
+    
+    self.val = val
+    self.new_val = None
+    
+    i = self.i ; j = self.j
+    
+    rows = self.main.rows
+    cols = self.main.cols
+    
+    row = rows[i]
+    row [j] = val
+    rows [i] = row
+    
+    col = cols[j]
+    col [i] = val
+    cols [j] = col</t>
+<t tx="ekr.20050803200132">def printCells (self,tag=''):
+    
+    print tag ; print
+    
+    i = 0
+    for cell in self.cells:
+        
+        print '%6s' % g.choose(cell.val,cell.val,''.join(cell.possible)),
+            
+        i += 1
+        if i % 9 == 0:
+            print</t>
+<t tx="ekr.20050803200724">def __repr__ (self):
+    
+    return 'cell[%d,%d]' % (self.i, self.j)
+    
+__str__ = __repr__</t>
+<t tx="ekr.20050803202932">def initFromData (self):
+    
+    i = 0
+    for row in self.data:
+        thisRow = []
+        j = 0
+        for ch in row:
+            if ch in digits:    val = ch
+            else:               val = None
+            self.cells.append(self.cellClass(self,val,i,j))
+            thisRow.append(val)
+            j += 1
+        self.rows.append(thisRow)
+        i += 1
+
+    for j in xrange(9):
+        col = [row[j] for row in self.rows]
+        self.cols.append(col)</t>
+<t tx="ekr.20050803202932.1">def isFinished (self):
+    
+    for cell in self.cells:
+        if not cell.val:
+            return False
+    return True</t>
+<t tx="ekr.20050803202932.2"></t>
+<t tx="ekr.20050803203001">def findBestGroup (self):
+    
+    bestGroup = None
+    bestKnown = 0
+    for group in self.groups:
+        known = group.knownCells()
+        if 9 &gt; len(known) &gt; bestKnown:
+            bestGroup = group
+            bestKnown = len(known)
+
+    if bestGroup:
+        if self.tracing:
+            print 'best group %d' % bestGroup.groupNumber
+            print 'unknown cells',
+            for cell in bestGroup.unknownCells():
+                print cell,
+            print 'unknown vals',
+            for val in bestGroup.unknownVals():
+                print val,
+            print
+
+    return bestGroup</t>
+<t tx="ekr.20050803204429">def initFromGuess (self):
+
+    for bunch in self.guess:
+    
+        for cell in self.cells:
+            if bunch.cell.i == cell.i and bunch.cell.j == cell.j:
+                cell.setVal(bunch.val)
+                self.trace('setting guess: %s = %s' % (cell,bunch.val))
+                break
+        else:
+            print 'no matching cell for guess: %s' % bunch
+            self.valid = False</t>
+<t tx="ekr.20050803204429.1">def initFromParent (self):
+    
+    parent = self.parent
+  
+    # Make sure we don't contaminate the parent.
+    self.rows =      parent.rows[:]
+    self.cols =      parent.cols[:]
+    self.cells =     parent.cells[:]
+
+    self.groups =    parent.groups[:]
+    self.rowGroups = parent.rowGroups[:]
+    self.colGroups = parent.colGroups[:]</t>
+<t tx="ekr.20050803205127">def knownCells (self):
+    
+    return [cell for cell in self.cells if cell.val is not None]
+
+def knownVals (self):
+    
+    return [cell.val for cell in self.cells if cell.val is not None]
+    
+def unknownCells (self):
+
+    return [cell for cell in self.cells if cell.val is None]
+    
+def unknownVals (self):
+
+    return [val for val in digits if val not in self.knownVals()]</t>
+<t tx="ekr.20050803210939">def findGuesses (self):
+    
+    group = self.findBestGroup()
+    vals =  group.unknownVals()
+    cells = group.unknownCells()
+    
+    guesses = []
+    
+    # Generate all combinations of cells and unkown vals.
+    
+    n = len(vals)
+    for i in xrange(n):
+        guess = [] ; j = 0
+        for cell in cells:
+            bunch = g.bunch(cell=cell,val=vals[(i+j)%n])
+            # g.trace(cell,(i+j)%n)
+            j += 1
+            guess.append(bunch)
+        guesses.append(guess)
+    
+    if self.tracing:
+        print 'guesses'
+        for guess in guesses:
+            for bunch in guess:
+                print bunch.cell,bunch.val
+
+    return guesses</t>
+<t tx="ekr.20050803215553">def trace (self,s):
+    
+    if self.tracing:
+        print s</t>
+<t tx="ekr.20050803215632">def trace (self,s):
+    
+    self.main.trace(s)</t>
 </tnodes>
 </leo_file>
