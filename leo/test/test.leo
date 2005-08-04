@@ -701,7 +701,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050715132524"><vh>Pymacs (hangs)</vh></v>
 </v>
-<v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
+<v t="ekr.20040312021734" a="TV" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1023,6 +1023,78 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050220122447"><vh>removeBlankLines</vh></v>
 <v t="ekr.20050220100049"><vh>stripLws</vh></v>
 </v>
+</v>
+</v>
+<v t="ekr.20050803075926"><vh>sudoku puzzle</vh>
+<v t="ekr.20050804073824"><vh>&lt;&lt; define data &gt;&gt;</vh></v>
+<v t="ekr.20050803075926.1"><vh>class sudokuClass</vh>
+<v t="ekr.20050803075926.2"><vh> ctor (main) &amp; helpers</vh>
+<v t="ekr.20050803204429"><vh>initFromGuess</vh></v>
+<v t="ekr.20050803204429.1"><vh>initFromParent</vh></v>
+<v t="ekr.20050803202932"><vh>initFromData</vh></v>
+<v t="ekr.20050803075926.4"><vh>finishInit</vh></v>
+<v t="ekr.20050803121102"><vh>checkData</vh></v>
+<v t="ekr.20050804070733"><vh>check</vh></v>
+<v t="ekr.20050804071049"><vh>checkGroup</vh></v>
+</v>
+<v t="ekr.20050804071242"><vh>printing &amp; dumping</vh>
+<v t="ekr.20050803080858"><vh>dump</vh></v>
+<v t="ekr.20050803121730"><vh>printData</vh></v>
+<v t="ekr.20050803200132"><vh>printCells</vh></v>
+</v>
+<v t="ekr.20050803095202"><vh>groupNumber</vh></v>
+<v t="ekr.20050803075926.3"><vh>error</vh></v>
+<v t="ekr.20050803215553"><vh>trace</vh></v>
+<v t="ekr.20050803202932.1"><vh>isFinished</vh></v>
+<v t="ekr.20050803203001"><vh>findBestGroup</vh></v>
+<v t="ekr.20050803210939"><vh>findGuesses</vh></v>
+<v t="ekr.20050804060706"><vh>isValidGuess</vh></v>
+<v t="ekr.20050803075926.5"><vh>solve (main)</vh></v>
+<v t="ekr.20050803075926.7"><vh>class cellClass</vh>
+<v t="ekr.20050803081438"><vh> ctor</vh></v>
+<v t="ekr.20050803200724"><vh>__repr__</vh></v>
+<v t="ekr.20050803144522"><vh>finishCreate</vh></v>
+<v t="ekr.20050803084951"><vh>error</vh></v>
+<v t="ekr.20050803215632"><vh>trace</vh></v>
+<v t="ekr.20050803195724"><vh>setVal</vh></v>
+<v t="ekr.20050803083933"><vh>solve (cell)</vh></v>
+<v t="ekr.20050803134436"><vh>reducePossibleFromGroup</vh></v>
+<v t="ekr.20050803134436.1"><vh>valIsPossible</vh></v>
+</v>
+<v t="ekr.20050803121102.1"><vh>class groupClass</vh>
+<v t="ekr.20050803121102.2"><vh> ctor</vh></v>
+<v t="ekr.20050803130829"><vh>finishCreate</vh></v>
+<v t="ekr.20050803205127"><vh>known&amp; unknown</vh></v>
+<v t="ekr.20050803161504"><vh>computeRelatedGroups</vh></v>
+<v t="ekr.20050803154357"><vh>valIsPossibleAtCell</vh></v>
+</v>
+<v t="ekr.20050803123219"><vh>class rowColGroupClass (not used)</vh>
+<v t="ekr.20050803124111"><vh> ctor</vh></v>
+<v t="ekr.20050803130829.1"><vh>finishCreate</vh></v>
+<v t="ekr.20050803124111.1"><vh>update</vh></v>
+</v>
+</v>
+<v t="ekr.20050803202932.2"><vh>(important)</vh>
+<v t="ekr.20050804071242" a="E"><vh>printing &amp; dumping</vh>
+<v t="ekr.20050803080858"><vh>dump</vh></v>
+<v t="ekr.20050803121730"><vh>printData</vh></v>
+<v t="ekr.20050803200132"><vh>printCells</vh></v>
+</v>
+<v t="ekr.20050803075926.2"><vh> ctor (main) &amp; helpers</vh>
+<v t="ekr.20050803204429"><vh>initFromGuess</vh></v>
+<v t="ekr.20050803204429.1"><vh>initFromParent</vh></v>
+<v t="ekr.20050803202932"><vh>initFromData</vh></v>
+<v t="ekr.20050803075926.4"><vh>finishInit</vh></v>
+<v t="ekr.20050803121102"><vh>checkData</vh></v>
+<v t="ekr.20050804070733"><vh>check</vh></v>
+<v t="ekr.20050804071049"><vh>checkGroup</vh></v>
+</v>
+<v t="ekr.20050803081438"><vh> ctor</vh></v>
+<v t="ekr.20050803075926.5"><vh>solve (main)</vh></v>
+<v t="ekr.20050803083933"><vh>solve (cell)</vh></v>
+<v t="ekr.20050803203001"><vh>findBestGroup</vh></v>
+<v t="ekr.20050803210939"><vh>findGuesses</vh></v>
+<v t="ekr.20050804060706"><vh>isValidGuess</vh></v>
 </v>
 </v>
 </v>
@@ -1958,78 +2030,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726112715"><vh>Multiline test</vh></v>
 <v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
 <v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
-<v t="ekr.20050803075926" a="TV"><vh>sudoku puzzle</vh>
-<v t="ekr.20050804073824"><vh>&lt;&lt; define data &gt;&gt;</vh></v>
-<v t="ekr.20050803075926.1"><vh>class sudokuClass</vh>
-<v t="ekr.20050803075926.2" a="E"><vh> ctor (main) &amp; helpers</vh>
-<v t="ekr.20050803204429"><vh>initFromGuess</vh></v>
-<v t="ekr.20050803204429.1"><vh>initFromParent</vh></v>
-<v t="ekr.20050803202932"><vh>initFromData</vh></v>
-<v t="ekr.20050803075926.4"><vh>finishInit</vh></v>
-<v t="ekr.20050803121102"><vh>checkData</vh></v>
-<v t="ekr.20050804070733"><vh>check</vh></v>
-<v t="ekr.20050804071049"><vh>checkGroup</vh></v>
-</v>
-<v t="ekr.20050804071242"><vh>printing &amp; dumping</vh>
-<v t="ekr.20050803080858"><vh>dump</vh></v>
-<v t="ekr.20050803121730"><vh>printData</vh></v>
-<v t="ekr.20050803200132"><vh>printCells</vh></v>
-</v>
-<v t="ekr.20050803095202"><vh>groupNumber</vh></v>
-<v t="ekr.20050803075926.3"><vh>error</vh></v>
-<v t="ekr.20050803215553"><vh>trace</vh></v>
-<v t="ekr.20050803202932.1"><vh>isFinished</vh></v>
-<v t="ekr.20050803203001"><vh>findBestGroup</vh></v>
-<v t="ekr.20050803210939"><vh>findGuesses</vh></v>
-<v t="ekr.20050804060706"><vh>isValidGuess</vh></v>
-<v t="ekr.20050803075926.5"><vh>solve (main)</vh></v>
-<v t="ekr.20050803075926.7"><vh>class cellClass</vh>
-<v t="ekr.20050803081438"><vh> ctor</vh></v>
-<v t="ekr.20050803200724"><vh>__repr__</vh></v>
-<v t="ekr.20050803144522"><vh>finishCreate</vh></v>
-<v t="ekr.20050803084951"><vh>error</vh></v>
-<v t="ekr.20050803215632"><vh>trace</vh></v>
-<v t="ekr.20050803195724"><vh>setVal</vh></v>
-<v t="ekr.20050803083933"><vh>solve (cell)</vh></v>
-<v t="ekr.20050803134436"><vh>reducePossibleFromGroup</vh></v>
-<v t="ekr.20050803134436.1"><vh>valIsPossible</vh></v>
-</v>
-<v t="ekr.20050803121102.1"><vh>class groupClass</vh>
-<v t="ekr.20050803121102.2"><vh> ctor</vh></v>
-<v t="ekr.20050803130829"><vh>finishCreate</vh></v>
-<v t="ekr.20050803205127"><vh>known&amp; unknown</vh></v>
-<v t="ekr.20050803161504"><vh>computeRelatedGroups</vh></v>
-<v t="ekr.20050803154357"><vh>valIsPossibleAtCell</vh></v>
-</v>
-<v t="ekr.20050803123219"><vh>class rowColGroupClass</vh>
-<v t="ekr.20050803124111"><vh> ctor</vh></v>
-<v t="ekr.20050803130829.1"><vh>finishCreate</vh></v>
-<v t="ekr.20050803124111.1"><vh>update</vh></v>
-</v>
-</v>
-<v t="ekr.20050803202932.2"><vh>(important)</vh>
-<v t="ekr.20050804071242" a="E"><vh>printing &amp; dumping</vh>
-<v t="ekr.20050803080858"><vh>dump</vh></v>
-<v t="ekr.20050803121730"><vh>printData</vh></v>
-<v t="ekr.20050803200132"><vh>printCells</vh></v>
-</v>
-<v t="ekr.20050803075926.2"><vh> ctor (main) &amp; helpers</vh>
-<v t="ekr.20050803204429"><vh>initFromGuess</vh></v>
-<v t="ekr.20050803204429.1"><vh>initFromParent</vh></v>
-<v t="ekr.20050803202932"><vh>initFromData</vh></v>
-<v t="ekr.20050803075926.4"><vh>finishInit</vh></v>
-<v t="ekr.20050803121102"><vh>checkData</vh></v>
-<v t="ekr.20050804070733"><vh>check</vh></v>
-<v t="ekr.20050804071049"><vh>checkGroup</vh></v>
-</v>
-<v t="ekr.20050803081438"><vh> ctor</vh></v>
-<v t="ekr.20050803075926.5"><vh>solve (main)</vh></v>
-<v t="ekr.20050803083933"><vh>solve (cell)</vh></v>
-<v t="ekr.20050803203001"><vh>findBestGroup</vh></v>
-<v t="ekr.20050803210939"><vh>findGuesses</vh></v>
-<v t="ekr.20050804060706"><vh>isValidGuess</vh></v>
-</v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -2737,7 +2737,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
