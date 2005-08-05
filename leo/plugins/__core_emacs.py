@@ -1,9 +1,9 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20050723062822:@thin __core_emacs.py
 ''' A plugin to provide Emacs commands.
-Will move to Leo's core eventually.'''
+Soon to move to Leo's core.'''
 
-# Based on temacs version .57 EKR:
+# Based on temacs version .57
 
 #@<< imports >>
 #@+node:ekr.20050723062822.1:<< imports >>
@@ -31,8 +31,10 @@ if 0:
 
 import leoColor
 import leoPlugins
+import leoMenu
 import leoNodes
 import leoTkinterFrame
+import leoTkinterMenu
 
 try:
     import Tkinter as Tk
@@ -58,9 +60,15 @@ import weakref
 #@@nocolor
 #@+at
 # 
-# *** Eliminate state-related tables.
+# - Remove all module globals except those used to redefine core classes.
 # 
-# ** Add emacs menus.
+# ** Bind emacs keystroks in Leo's core.
+#     - That is, modify Leo's core to uses temacs-style masterCommand method 
+# for all keystrokes.
+# 
+# * Complete menu work.
+# 
+# * Eliminate state-related tables.
 # 
 # * Test all commands and make unit tests.
 # 
@@ -186,7 +194,7 @@ orig_OnBodyKey = None
 
 #@+others
 #@+node:ekr.20050730204529:Module-level...
-#@+node:ekr.20050723062822.2:init (plugin)
+#@+node:ekr.20050723062822.2:init
 def init ():
 
     ok = Tk and not g.app.unitTesting
@@ -198,23 +206,36 @@ def init ():
         ok = g.app.gui.guiName() == "tkinter"
         if ok:
             g.plugin_signon(__name__)
-            #@            << override createBindings and onBodyKey >>
-            #@+node:ekr.20050724080456:<< override createBindings and onBodyKey >>
-            global orig_Bindings, orig_OnBodyKey
+            #@            << override core methods >>
+            #@+node:ekr.20050724080456:<< override core methods >>
+            try:
+                global orig_Bindings
             
-            orig_Bindings = leoTkinterFrame.leoTkinterBody.createBindings
-            leoTkinterFrame.leoTkinterBody.createBindings = createBindings
+                orig_Bindings = leoTkinterFrame.leoTkinterBody.createBindings
+                leoTkinterFrame.leoTkinterBody.createBindings = createBindings
+                
+                global orig_OnBodyKey
+                
+                orig_OnBodyKey = leoTkinterFrame.leoTkinterBody.onBodyKey
+                leoTkinterFrame.leoTkinterBody.onBodyKey = modifyOnBodyKey
             
-            orig_OnBodyKey = leoTkinterFrame.leoTkinterBody.onBodyKey
-            leoTkinterFrame.leoTkinterBody.onBodyKey = modifyOnBodyKey
+                leoMenu.leoMenu.defineMenuTables = modifyDefineMenuTables
+                leoMenu.leoMenu.createMenusFromTables = modifyCreateMenusFromTables
+                leoMenu.leoMenu.createEmacsMenuFromTable = createEmacsMenuFromTable
+                leoMenu.leoMenu.defineEmacsMenuTables = defineEmacsMenuTables
+            
+            except Exception:
+                g.es_exception()
+                print 'overrides failed'
+                ok = False
             #@nonl
-            #@-node:ekr.20050724080456:<< override createBindings and onBodyKey >>
+            #@-node:ekr.20050724080456:<< override core methods >>
             #@nl
-            leoPlugins.registerHandler(('open2',"new"),addMenu)
 
+    # g.trace(ok)
     return ok
 #@nonl
-#@-node:ekr.20050723062822.2:init (plugin)
+#@-node:ekr.20050723062822.2:init
 #@+node:ekr.20050724074642.16:loadConfig (from usetemacs)
 def loadConfig ():
     '''Loads Emacs extensions and new keystrokes to be added to Emacs instances'''
@@ -249,21 +270,7 @@ def loadConfig ():
                 new_keystrokes [z.capitalize()] = cp.get(kstroke_sec,z)
 #@nonl
 #@-node:ekr.20050724074642.16:loadConfig (from usetemacs)
-#@+node:ekr.20050724074642.17:usetemacs Hooks
-#@+node:ekr.20050724074642.18:addMenu
-def addMenu (tag,keywords):
-
-    '''Adds the Temacs Help option to Leo's Help menu'''
-
-    c = keywords.get('c')
-    if not c: return
-
-    men = c.frame.menu.getMenu('Help')
-    men.add_separator()
-    men.add_command(label='Temacs Help',command=seeHelp)
-#@nonl
-#@-node:ekr.20050724074642.18:addMenu
-#@+node:ekr.20050724074642.19:seeHelp
+#@+node:ekr.20050724074642.19:seeHelp & helper (to be removed)
 def seeHelp ():
     '''Opens a Help dialog that shows the Emac systems commands and keystrokes'''
     tl = Tk.Toplevel()
@@ -332,8 +339,7 @@ def seeHelp ():
     #@nl
     ef.bind('<Return>',watch)
 #@nonl
-#@-node:ekr.20050724074642.19:seeHelp
-#@+node:ekr.20050724075352.42:getHelpText TO BE REMOVED
+#@+node:ekr.20050724075352.42:getHelpText
 def getHelpText ():
     '''This returns a string that describes what all the
     keystrokes do with a bound Text widget.'''
@@ -597,9 +603,9 @@ def getHelpText ():
 
 getHelpText = staticmethod(getHelpText)
 #@nonl
-#@-node:ekr.20050724075352.42:getHelpText TO BE REMOVED
-#@-node:ekr.20050724074642.17:usetemacs Hooks
-#@+node:ekr.20050724074642.23:Overridden methods
+#@-node:ekr.20050724075352.42:getHelpText
+#@-node:ekr.20050724074642.19:seeHelp & helper (to be removed)
+#@+node:ekr.20050724074642.23:Overridden methods in Leo's core
 #@+node:ekr.20050724074642.24:modifyOnBodyKey
 def modifyOnBodyKey (self,event):
     
@@ -879,7 +885,75 @@ def setBufferInteractionMethods (c,emacs,buffer):
 #@nonl
 #@-node:ekr.20050724074642.32:setBufferInteractionMethods & helpers
 #@-node:ekr.20050724074642.25:createBindings & helpers  (Creates Emacs instance)
-#@-node:ekr.20050724074642.23:Overridden methods
+#@+node:ekr.20050801090011:modifyDefineMenuTables & helper
+def modifyDefineMenuTables (self):
+
+    self.defineEditMenuTables()
+    self.defineFileMenuTables()
+    self.defineOutlineMenuTables()
+    self.defineWindowMenuTables()
+    self.defineEmacsMenuTables() # New menu.
+    self.defineHelpMenuTables()
+#@nonl
+#@+node:ekr.20050801093531:defineEmacsMenuTables
+def defineEmacsMenuTables (self):
+    
+    def dummyCommand():
+        g.trace()
+    
+    self.emacsMenuCmdsMenuTable = [
+        ('Cmnd Command 1',None,dummyCommand),
+    ]
+    
+    self.emacsMenuToolsMenuTable = [
+        ('Tools Command 1',None,dummyCommand),
+    ]
+
+    self.emacsMenuOptionsMenuTable = [
+        ('Options Command 1',None,dummyCommand),
+    ]
+
+    
+    self.emacsMenuBuffersMenuTable = [
+        ('Buffers Command 1',None,dummyCommand),
+    ]
+#@nonl
+#@-node:ekr.20050801093531:defineEmacsMenuTables
+#@-node:ekr.20050801090011:modifyDefineMenuTables & helper
+#@+node:ekr.20050801093531.1:modifyCreateMenusFromTables & helper
+def modifyCreateMenusFromTables (self):
+    
+    c = self.c
+    
+    self.createFileMenuFromTable()
+    self.createEditMenuFromTable()
+    self.createOutlineMenuFromTable()
+
+    g.doHook("create-optional-menus",c=c)
+
+    self.createWindowMenuFromTable()
+    self.createEmacsMenuFromTable() # New menu.
+    self.createHelpMenuFromTable()
+#@nonl
+#@+node:ekr.20050801093531.2:createEmacsMenuFromTable
+def createEmacsMenuFromTable (self):
+
+    emacsMenu = self.createNewMenu("Emacs")
+
+    for name,table,sep in (
+        #('View...',   self.emacsMenuViewMenuTable,    True),
+        ('Cmds...',    self.emacsMenuCmdsMenuTable,    True),
+        ('Tools...',   self.emacsMenuToolsMenuTable,   True),
+        ('Options...', self.emacsMenuOptionsMenuTable, True),
+        ('Buffers...', self.emacsMenuBuffersMenuTable, False),
+    ):
+        menu = self.createNewMenu(name,"Emacs")
+        self.createMenuEntries(menu,table,init=True)
+        if sep: self.add_separator(emacsMenu)
+#@nonl
+#@-node:ekr.20050801093531.2:createEmacsMenuFromTable
+#@-node:ekr.20050801093531.1:modifyCreateMenusFromTables & helper
+#@-node:ekr.20050724074642.23:Overridden methods in Leo's core
 #@-node:ekr.20050730204529:Module-level...
 #@+node:ekr.20050724075352.40:class Emacs
 class Emacs:
@@ -975,7 +1049,7 @@ class Emacs:
         return altX_commandsDict
     #@nonl
     #@-node:ekr.20050725094519:createCommandsClasses
-    #@+node:ekr.20050724075352.116:reconfigureKeyStroke  WILL PROBABLY GO AWAY
+    #@+node:ekr.20050724075352.116:reconfigureKeyStroke  Not tested -- why is it needed?
     def reconfigureKeyStroke (self,tbuffer,keystroke,set_to):
     
         '''This method allows the user to reconfigure what a keystroke does.
@@ -987,7 +1061,7 @@ class Emacs:
             evstring = '<%s>' % keystroke
             tbuffer.bind(evstring,lambda event,meth=command: self.miniBuffer.masterCommand(event,meth,evstring))
     #@nonl
-    #@-node:ekr.20050724075352.116:reconfigureKeyStroke  WILL PROBABLY GO AWAY
+    #@-node:ekr.20050724075352.116:reconfigureKeyStroke  Not tested -- why is it needed?
     #@+node:ekr.20050724075352.109:undoer methods
     #@+at
     # Emacs requires an undo mechanism be added from the environment.
@@ -1125,7 +1199,7 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.249:testinrange
         #@-node:ekr.20050724075352.246:range utilities
-        #@+node:ekr.20050724075352.91:removeRKeys
+        #@+node:ekr.20050724075352.91:removeRKeys (baseCommandsClass)
         def removeRKeys (self,widget):
         
             mrk = 'sel'
@@ -1135,7 +1209,7 @@ class Emacs:
             widget.unbind('<Up>')
             widget.unbind('<Down>')
         #@nonl
-        #@-node:ekr.20050724075352.91:removeRKeys
+        #@-node:ekr.20050724075352.91:removeRKeys (baseCommandsClass)
         #@-others
     #@nonl
     #@-node:ekr.20050725091822.1:<< define class baseCommandsClass >>
@@ -4304,16 +4378,17 @@ class Emacs:
                 #i = event.widget.index( 'insert' )
                 event.widget.mark_set( 'insert', 'insert +%sc' % len( self.qQ ) )
                 self.qsearch( event )
+        
             event.widget.see( 'insert' )
         #@nonl
         #@-node:ekr.20050724075352.255:qreplace
         #@+node:ekr.20050724075352.256:_qreplace
         def _qreplace( self, event ):
+            
             i = event.widget.tag_ranges( 'qR' )
             event.widget.delete( i[ 0 ], i[ 1 ] )
             event.widget.insert( 'insert', self.qR )
             self.qsearch( event )
-        #@nonl
         #@-node:ekr.20050724075352.256:_qreplace
         #@+node:ekr.20050724075352.257:getQuery
         def getQuery (self,event):
@@ -4411,7 +4486,6 @@ class Emacs:
                     except:
                         b.keyboardQuit( event )
                         b.set( "Illegal regular expression" )
-                        
                     txt = tbuffer.get( 'insert', 'end' )
                     match = regex.search( txt )
                     if match:
@@ -4844,12 +4918,18 @@ class Emacs:
         #@-node:ekr.20050725134243.1: getPublicCommands 
         #@+node:ekr.20050726043333.1:Helpers
         #@+node:ekr.20050724075352.176:_chckSel
-        def _chckSel( self, event ):
-             if not 'sel' in event.widget.tag_names():
-                return False
-             if not event.widget.tag_ranges( 'sel' ):
-                return False  
-             return True
+        def _chckSel (self,event):
+            
+            w = event.widget
+        
+            return 'sel' in w.tag_names() and w.tag_ranges('sel')
+        
+            if 0: # old code
+                if not 'sel' in event.widget.tag_names():
+                    return False
+                if not event.widget.tag_ranges('sel'):
+                    return False
+                return True
         #@nonl
         #@-node:ekr.20050724075352.176:_chckSel
         #@+node:ekr.20050724075352.177:_checkIfRectangle
@@ -4889,12 +4969,12 @@ class Emacs:
                 return
         #@nonl
         #@-node:ekr.20050724075352.175:_ToReg
-        #@+node:ekr.20050724075352.52:addRegisterItems
+        #@+node:ekr.20050724075352.52:addRegisterItems (registerCommandsClass)
         def addRegisterItems( self ):
             
             methodDict = {
-                's':       self._copyToRegister,
-                'i':       self._insertRegister,
+                's':        self._copyToRegister,
+                'i':        self._insertRegister,
                 'n':        self._numberToRegister,
                 'plus':     self._incrementRegister,
                 'space':    self._pointToRegister,
@@ -4920,7 +5000,7 @@ class Emacs:
         
             return methodDict, helpDict
         #@nonl
-        #@-node:ekr.20050724075352.52:addRegisterItems
+        #@-node:ekr.20050724075352.52:addRegisterItems (registerCommandsClass)
         #@+node:ekr.20050724075352.186:deactivateRegister
         def deactivateRegister (self,event):
         
@@ -5020,15 +5100,19 @@ class Emacs:
         #@+node:ekr.20050725093537:Entry points
         # Incremental...
         def isearchForward (self,event):
+            g.trace()
             return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'<Control-s>')
             
         def isearchBackward (self,event):
+            g.trace()
             return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'<Control-r>')
             
         def isearchForwardRegexp (self,event):
+            g.trace()
             return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'<Control-s>',which='regexp')
             
         def isearchBackwardRegexp (self,event):
+            g.trace()
             return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'<Control-r>',which='regexp')
         
         # Non-incremental...
@@ -5055,8 +5139,10 @@ class Emacs:
             b = self.miniBuffer
         
             state = b.getState('isearch')
+            g.trace(stroke)
             
             if state == 0:
+                ## ref: self.csr = { '<Control-s>': 'for', '<Control-r>':'bak' }
                 self.pref = self.csr [stroke]
                 b.set('isearch:',protect=True)
                 b.setLabelBlue()
@@ -5098,7 +5184,11 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.224:search
         #@+node:ekr.20050724075352.225:iSearch
+        # Called when from the state manager when the state is 'isearch'
+        
         def iSearch (self,event,stroke):
+            
+            g.trace(stroke)
         
             b = self.miniBuffer ; tbuffer = event.widget
             if not event.char: return
@@ -5338,6 +5428,50 @@ class Emacs:
     
         #@    @+others
         #@+node:ekr.20050728103627: Birth
+        #@+node:ekr.20050725112958:finishCreate (stateManagerClass) MUST BE GENERALIZED
+        def finishCreate (self):
+        
+            emacs = self.emacs
+        
+            # EKR: used only below.
+            def eA (event):
+                if self.emacs.expandAbbrev(event):
+                    return 'break'
+        
+            self.stateCommands = { 
+                # 1 == one parameter, 2 == all
+                
+                # Utility states...
+                'getArg':    (2,emacs.miniBuffer.getArg),
+                
+                # Command states...
+                'uC':               (2,emacs.miniBuffer.universalDispatch),
+                'controlx':         (2,emacs.miniBuffer.doControlX),
+                'isearch':          (2,emacs.searchCommands.iSearch),
+                'goto':             (1,emacs.editCommands.Goto),
+                'zap':              (1,emacs.editCommands.zapTo),
+                'howM':             (1,emacs.editCommands.howMany),
+                'abbrevMode':       (1,emacs.abbrevCommands.abbrevCommand1),
+                'altx':             (1,emacs.miniBuffer.doAlt_X),
+                'qlisten':          (1,emacs.queryReplaceCommands.masterQR),
+                'rString':          (1,emacs.editCommands.replaceString),
+                'negativeArg':      (2,emacs.miniBuffer.negativeArgument),
+                'abbrevOn':         (1,eA),
+                'set-fill-column':  (1,emacs.editCommands.setFillColumn),
+                'chooseBuffer':     (1,emacs.bufferCommands.chooseBuffer),
+                'renameBuffer':     (1,emacs.bufferCommands.renameBuffer),
+                're_search':        (1,emacs.searchCommands.re_search),
+                'alterlines':       (1,emacs.editCommands.processLines),
+                'make_directory':   (1,emacs.fileCommands.makeDirectory),
+                'remove_directory': (1,emacs.fileCommands.removeDirectory),
+                'delete_file':      (1,emacs.fileCommands.deleteFile),
+                'nonincr-search':   (2,emacs.searchCommands.nonincrSearch),
+                'word-search':      (1,emacs.searchCommands.wordSearch),
+                'last-altx':        (1,emacs.miniBuffer.executeLastAltX),
+                'escape':           (1,emacs.editCommands.watchEscape),
+                'subprocess':       (1,emacs.emacsControlCommands.subprocesser),
+            }
+        #@-node:ekr.20050725112958:finishCreate (stateManagerClass) MUST BE GENERALIZED
         #@+node:ekr.20050727162112: ctor (miniBuffer)
         def __init__ (self,emacs,widget):
         
@@ -5452,9 +5586,7 @@ class Emacs:
                     g.trace(('%-4s' % key),val)
                     self.altX_commandsDict [key] = func
         #@-node:ekr.20050729150051.2:add_ekr_altx_commands
-        #@+node:ekr.20050724075352.49:addCallBackDict (creates cbDict) TO BE REMOVED
-        ### This could be replaced by Leo's normal menu-creation logic.
-        
+        #@+node:ekr.20050724075352.49:addCallBackDict (miniBufferClass) MUST BE GENERALIZED
         def addCallBackDict (self):
         
             '''Create callback dictionary for masterCommand.'''
@@ -5541,8 +5673,11 @@ class Emacs:
             'Control-underscore': emacs.doUndo,
             'Alt-s':            emacs.editCommands.centerLine,
             'Control-z':        emacs.emacsControlCommands.suspend,
-            'Control-Alt-s':    lambda event, stroke = '<Control-s>': emacs.startIncremental(event,stroke,which='regexp'),
-            'Control-Alt-r':    lambda event, stroke = '<Control-r>': emacs.startIncremental(event,stroke,which='regexp'),
+            'Control-Alt-s': emacs.searchCommands.isearchForwardRegexp,
+                ### Hmmm.  the lambda doesn't call keyboardQuit
+                # lambda event, stroke = '<Control-s>': emacs.startIncremental(event,stroke,which='regexp'),
+            'Control-Alt-r': emacs.searchCommands.isearchBackwardRegexp,
+                # lambda event, stroke = '<Control-r>': emacs.startIncremental(event,stroke,which='regexp'),
             'Control-Alt-percent': lambda event: emacs.startRegexReplace()and emacs.masterQR(event),
             'Escape':       emacs.editCommands.watchEscape,
             'Alt-colon':    emacs.editCommands.startEvaluate,
@@ -5551,7 +5686,7 @@ class Emacs:
             }
         
             return cbDict
-        #@-node:ekr.20050724075352.49:addCallBackDict (creates cbDict) TO BE REMOVED
+        #@-node:ekr.20050724075352.49:addCallBackDict (miniBufferClass) MUST BE GENERALIZED
         #@+node:ekr.20050724075352.144:addToDoAltX
         def addToDoAltX (self,name,macro):
         
@@ -5576,7 +5711,7 @@ class Emacs:
                     self.cbDict [z] = self.changes [z]
         #@nonl
         #@-node:ekr.20050724075352.90:changecbDict NOT USED
-        #@+node:ekr.20050728093027.1:finishCreate TO DO: remove these tables?
+        #@+node:ekr.20050728093027.1:finishCreate (miniBufferClass) MUST BE GENERALIZED
         def finishCreate (self,altX_commandsDict):
         
             emacs = self.emacs
@@ -5614,7 +5749,7 @@ class Emacs:
                 '<Delete>': lambda event, back = True: emacs.editCommands.killsentence(event,back),
             }
         #@nonl
-        #@-node:ekr.20050728093027.1:finishCreate TO DO: remove these tables?
+        #@-node:ekr.20050728093027.1:finishCreate (miniBufferClass) MUST BE GENERALIZED
         #@+node:ekr.20050724075352.112:setBufferStrokes  (creates svars & <key> bindings
         def setBufferStrokes (self,tbuffer):
         
@@ -5883,16 +6018,16 @@ class Emacs:
                     self.previous.pop()
             
                 if stroke in ('<Key>','<Escape>'):
-                    return self.processKey(event)
+                    return self.processKey(event)  # Weird command-specific stuff.
             
                 if stroke in emacs.xcommands:
                     emacs.xcommands [stroke](event)
-                    if stroke != '<Control-b>': emacs.keyboardQuit(event)
+                    if stroke != '<Control-b>':
+                        emacs.keyboardQuit(event)
             
                 return 'break'
-            #@nonl
             #@-node:ekr.20050724075352.16:__call__
-            #@+node:ekr.20050728103627.2:finishCreate
+            #@+node:ekr.20050728103627.2:finishCreate (controlX_handlerClass)  MUST BE GENERALIZED
             def finishCreate (self):
             
                 emacs = self.emacs
@@ -5931,7 +6066,7 @@ class Emacs:
                     'k':            lambda event, which = 'kill-buffer': emacs.setInBufferMode(event,which),
                 }
             #@nonl
-            #@-node:ekr.20050728103627.2:finishCreate
+            #@-node:ekr.20050728103627.2:finishCreate (controlX_handlerClass)  MUST BE GENERALIZED
             #@+node:ekr.20050724075352.17:processKey
             def processKey (self,event):
             
@@ -5960,9 +6095,10 @@ class Emacs:
                     self.register_commands [emacs.registerCommands.registermode] (event)
                     return 'break'
             
-                if self.variety_commands.has_key(event.keysym):
+                func = self.variety_commands.get(event.keysym)
+                if func:
                     emacs.stopControlX(event)
-                    return self.variety_commands [event.keysym](event)
+                    return func(event)
             
                 if event.keysym in ('a','i','e'):
                     if self.processAbbreviation(event): return 'break'
@@ -5988,29 +6124,22 @@ class Emacs:
                             return emacs.repeatComplexCommand(event)
             #@-node:ekr.20050724075352.17:processKey
             #@+node:ekr.20050724075352.18:processRectangle
-            def processRectangle (self,event):
+            if 0: # Reference: actually defined in finishCreate.
+                self.rect_commands = {
+                    'o': emacs.rectangleCommands.openRectangle,
+                    'c': emacs.rectangleCommands.clearRectangle,
+                    't': emacs.rectangleCommands.stringRectangle,
+                    'y': emacs.rectangleCommands.yankRectangle,
+                    'd': emacs.rectangleCommands.deleteRectangle,
+                    'k': emacs.rectangleCommands.killRectangle,
+                    'r': emacs.rectangleCommands.activateRectangleMethods,
+                }
             
-                self.rect_commands [event.keysym] (event)
+            def processRectangle (self,event):
+                
+                func = self.rect_commands.get(event.keysym)
+                func(event)
                 return 'break'
-                #if event.keysym == 'o':
-                #    emacs.openRectangle( event )
-                #    return 'break'
-                #if event.keysym == 'c':
-                #    emacs.clearRectangle( event )
-                #    return 'break'
-                #if event.keysym == 't':
-                #    emacs.stringRectangle( event )
-                #    return 'break'
-                #if event.keysym == 'y':
-                #    emacs.yankRectangle( event )
-                #    return 'break'
-                #if event.keysym == 'd':
-                #    emacs.deleteRectangle( event )
-                #    return 'break'
-                #if event.keysym == 'k':
-                #    emacs.killRectangle( event )
-                #    return 'break'
-            #@nonl
             #@-node:ekr.20050724075352.18:processRectangle
             #@+node:ekr.20050724075352.19:processAbbreviation
             def processAbbreviation (self,event):
@@ -6046,7 +6175,7 @@ class Emacs:
                 self.keystrokes = {} # Defined later by finishCreate.
             #@nonl
             #@-node:ekr.20050724075352.30:__init__
-            #@+node:ekr.20050724075352.32:__call__ (keyboard manager)
+            #@+node:ekr.20050724075352.32:__call__ (keyStrokeManagerClass)
             def __call__ (self,event,stroke):
             
                 numberOfArgs, func = self.keystrokes [stroke]
@@ -6056,8 +6185,8 @@ class Emacs:
                 else:
                     return func(event,stroke)
             #@nonl
-            #@-node:ekr.20050724075352.32:__call__ (keyboard manager)
-            #@+node:ekr.20050728103627.1:finishCreate TO BE REMOVED
+            #@-node:ekr.20050724075352.32:__call__ (keyStrokeManagerClass)
+            #@+node:ekr.20050728103627.1:finishCreate (keyStrokeManagerClass) MUST BE GENERALIZED
             def finishCreate (self):
                 
                 emacs = self.emacs
@@ -6071,7 +6200,7 @@ class Emacs:
                     '<Control-Alt-w>':  ( 1, lambda event: 'break' ),
                 }
             #@nonl
-            #@-node:ekr.20050728103627.1:finishCreate TO BE REMOVED
+            #@-node:ekr.20050728103627.1:finishCreate (keyStrokeManagerClass) MUST BE GENERALIZED
             #@+node:ekr.20050724075352.33:hasKeyStroke
             def hasKeyStroke (self,stroke):
             
@@ -6108,7 +6237,7 @@ class Emacs:
                         return func(*args)
             #@nonl
             #@-node:ekr.20050724075352.23:__call__(state manager)
-            #@+node:ekr.20050725112958:finishCreate TO BE REMOVED
+            #@+node:ekr.20050725112958:finishCreate (stateManagerClass) MUST BE GENERALIZED
             def finishCreate (self):
             
                 emacs = self.emacs
@@ -6151,7 +6280,7 @@ class Emacs:
                     'escape':           (1,emacs.editCommands.watchEscape),
                     'subprocess':       (1,emacs.emacsControlCommands.subprocesser),
                 }
-            #@-node:ekr.20050725112958:finishCreate TO BE REMOVED
+            #@-node:ekr.20050725112958:finishCreate (stateManagerClass) MUST BE GENERALIZED
             #@+node:ekr.20050724075352.24:setState
             def setState (self,state,value):
             
@@ -6302,26 +6431,30 @@ class Emacs:
         #@-node:ekr.20050724075352.89:manufactureKeyPress
         #@+node:ekr.20050724075352.43:masterCommand
         def masterCommand (self,event,method,stroke):
-            '''The masterCommand is the central routing method of the Emacs method.
-               All commands and keystrokes pass through here.'''
+            '''This is the central routing method of the Emacs class.
+            All commands and keystrokes pass through here.'''
         
             special = event.keysym in ('Control_L','Control_R','Alt_L','Alt-R','Shift_L','Shift_R')
             inserted = not special or len(self.keysymhistory) == 0 or self.keysymhistory [0] != event.keysym
         
-            # Don't add multiple special characters to history.
             if inserted:
+                #@        << add character to history >>
+                #@+node:ekr.20050731084644:<< add character to history >>
+                # Don't add multiple special characters to history.
+                
                 self.keysymhistory.insert(0,event.keysym)
+                
                 if len(event.char) > 0:
-                    if len(Emacs.lossage) > 99: Emacs.lossage.pop()
+                    if len(Emacs.lossage) > 99:
+                        Emacs.lossage.pop()
                     Emacs.lossage.insert(0,event.char)
-                #@        << traces >>
-                #@+node:ekr.20050729150051:<< traces >>
+                
                 if 0: # traces
                     g.trace(event.keysym,stroke)
-                    #g.trace(self.keysymhistory)
-                    #g.trace(Emacs.lossage)
+                    g.trace(self.keysymhistory)
+                    g.trace(Emacs.lossage)
                 #@nonl
-                #@-node:ekr.20050729150051:<< traces >>
+                #@-node:ekr.20050731084644:<< add character to history >>
                 #@nl
         
             if self.emacs.macroCommands.macroing:
@@ -6329,11 +6462,12 @@ class Emacs:
                 #@+node:ekr.20050729150051.1:<< handle macro >>
                 if self.emacs.macroCommands.macroing == 2 and stroke != '<Control-x>':
                     return self.nameLastMacro(event)
+                    
                 elif self.emacs.macroCommands.macroing == 3 and stroke != '<Control-x>':
                     return self.getMacroName(event)
+                    
                 else:
                    self.recordKBDMacro(event,stroke)
-                #@nonl
                 #@-node:ekr.20050729150051.1:<< handle macro >>
                 #@nl
         
@@ -6341,13 +6475,14 @@ class Emacs:
                 self.previousStroke = stroke
                 return self.keyboardQuit(event)
         
+            # Important: This effectively over-rides the handling of most keystrokes with a state.
             if self.stateManager.hasState():
                 self.previousStroke = stroke
-                return self.stateManager(event,stroke) # EKR: Invoke the __call__ method.
+                return self.stateManager(event,stroke) # Invoke the __call__ method.
         
             if self.kstrokeManager.hasKeyStroke(stroke):
                 self.previousStroke = stroke
-                return self.kstrokeManager(event,stroke) # EKR: Invoke the __call__ method.
+                return self.kstrokeManager(event,stroke) # Invoke the __call__ method.
         
             if self.emacs.regXRpl: # EKR: a generator.
                 try:

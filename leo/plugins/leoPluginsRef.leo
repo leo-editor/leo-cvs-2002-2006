@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5006" clone_windows="0"/>
-<globals body_outline_ratio="0.522853957637">
-	<global_window_position top="32" left="381" height="897" width="868"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5818" clone_windows="0"/>
+<globals body_outline_ratio="0.627753303965">
+	<global_window_position top="36" left="369" height="908" width="871"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="edream.110203113231"
-marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></v>
+<v t="edream.110203113231"><vh>@thin pluginsNotes.txt</vh></v>
 <v t="ekr.20041211035618"><vh>Scripts, buttons &amp; settings</vh>
 <v t="ekr.20050217093214"><vh>@settings</vh>
 <v t="ekr.20050328101812"><vh>@page http plugin</vh>
 <v t="ekr.20050328101812.1"><vh>@bool http_active = True</vh></v>
 <v t="ekr.20050328101812.2"><vh>@int  port = 8080</vh></v>
 <v t="ekr.20050328101812.3"><vh>@string rst_http_attributename = rst_http_attribute</vh></v>
+</v>
+<v t="ekr.20050802090936"><vh>@page rst3 settings</vh>
+<v t="ekr.20050802090936.6"><vh>@bool rst2_clear_http_attributes = False</vh></v>
+<v t="ekr.20050802090936.4"><vh>@bool rst2_format_headlines = False</vh></v>
+<v t="ekr.20050802090936.5"><vh>@bool rst2_http_server_support = True</vh></v>
+<v t="ekr.20050802090936.1"><vh>@bool rst2_massage_body = False</vh></v>
+<v t="ekr.20050802090936.7"><vh>@bool rst2_run_on_window_open = False</vh></v>
+<v t="ekr.20050802090936.2"><vh>@bool rst2_use_file = False</vh></v>
+<v t="ekr.20050802090936.3"><vh>@bool rst2_write_pure_document = False</vh></v>
+<v t="ekr.20050802090936.11"><vh>@string rst2_http_attributename = 'rst_http_attribute'</vh></v>
+<v t="ekr.20050802090936.10"><vh>@string rst2_node_begin_marker = 'http-node-marker-'</vh></v>
 </v>
 </v>
 <v t="ekr.20041103052443"><vh>Script to find and replace all functions in leoGlobals.py</vh>
@@ -29,6 +39,8 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="ekr.20041103052443.6"><vh>&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
+<v t="ekr.20050724100334"><vh>@button Beautify</vh></v>
+<v t="ekr.20050722075812"><vh>Remove blank trailing lines</vh></v>
 </v>
 <v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
@@ -341,8 +353,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
 <v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
 </v>
-<v t="ekr.20041017043622"
-marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@thin autocompleter.py</vh></v>
+<v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
 </v>
 <v t="edream.110403140857"><vh>color_markup.py (requires add-directives plugin)</vh>
 <v t="edream.110403140857.1"><vh>Plugin documentation</vh>
@@ -386,7 +397,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="EKR.20040517075915.11"><vh>class AddClass</vh></v>
 <v t="EKR.20040517075915.12"><vh>class AddClassMethod</vh></v>
 <v t="ekr.20050313123322.5"><vh>class AddGenericPlugin</vh></v>
-<v t="ekr.20050329033007.1" a="M"><vh>class AddImportLeoGlobalsFunction</vh></v>
+<v t="ekr.20050329033007.1"><vh>class AddImportLeoGlobalsFunction</vh></v>
 <v t="ekr.20050313120714"><vh>class AddPluginImportsSection</vh></v>
 <v t="ekr.20050313120345"><vh>class AddPluginInitFunction</vh></v>
 <v t="ekr.20050313115107"><vh>class AddPluginTkInitFunction</vh></v>
@@ -455,8 +466,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="mork.20040926105355.9"><vh>openChaptersFile</vh></v>
 <v t="mork.20040929090525.1"><vh>zipChapters</vh></v>
 </v>
-<v t="mork.20040926105355.1"
-marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
+<v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
 </v>
 <v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
@@ -474,7 +484,6 @@ marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 </v>
 <v t="ekr.20040722134535"><vh>Experimental/unfinished</vh>
 <v t="ekr.20040918165427"><vh>To do</vh>
-<v t="ekr.20040918165144"><vh>4.3 Prototypes as plugins</vh>
 <v t="EKR.20040611044600"><vh>Mulder undo</vh>
 <v t="bwmulder.20040601212737"><vh>basic_undo.py</vh>
 <v t="bwmulder.20040601212737.1"><vh>class passthrough</vh>
@@ -642,18 +651,9 @@ marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 <v t="bwmulder.20040602230426"><vh>test_main</vh></v>
 </v>
 </v>
-<v t="ekr.20040918165144.2"><vh>Parse jEdit description files</vh></v>
-<v t="ekr.20040918165144.3"><vh>Convert to Python indices</vh></v>
-<v t="ekr.20040918165144.4"><vh>Convert to new Undo</vh></v>
-<v t="ekr.20040918165144.5"><vh>New syntax coloring (threaded)</vh></v>
-<v t="ekr.20040918165144.6"><vh>Check Import feature</vh></v>
-<v t="ekr.20040918165144.8"><vh>Maybe:  add translation feature to g.es</vh></v>
 <v t="ekr.20040918165144.9"><vh>Write script to find args to g.es()</vh></v>
-<v t="ekr.20040918165144.10"><vh>New atFile organization (user tangle/untangle)</vh></v>
-</v>
 <v t="ekr.20040918165427.4"><vh>Autocompletion dictionary files</vh></v>
 <v t="ekr.20040918165427.5"><vh>Leo to docbook xml plugin: Leo2AsciiDoc</vh></v>
-<v t="ekr.20040918165427.6"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
 <v t="ekr.20041002162608"><vh>Status Line (Experimental)</vh>
 <v t="ekr.20040201060959"><vh>@thin status_line.py</vh></v>
@@ -663,7 +663,7 @@ marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 <v t="bwmulder.20041017125718"><vh>@thin mod_shadow.py</vh></v>
 </v>
 <v t="edream.110203113231.233"><vh>wxPython plugin (pre-alpha quality)</vh>
-<v t="edream.110203113231.234"><vh> Diary</vh>
+<v t="edream.110203113231.234"><vh> wx Diary</vh>
 <v t="edream.111503110300"><vh>11/15/03  Leo becomes usuable (!)</vh></v>
 <v t="edream.111403093253"><vh>11/13 &amp; 11/14</vh></v>
 <v t="edream.110203113231.235"><vh>10/26 Code works with reorganized core</vh></v>
@@ -671,29 +671,7 @@ marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 <v t="edream.110203113231.237"><vh>10/12/03: Houston, we have ignition</vh></v>
 <v t="edream.110203113231.238"><vh>10/11/03: converted code using c2py, then hand converted code</vh></v>
 </v>
-<v t="edream.111403093253.1"><vh>Projects</vh>
-<v t="edream.110203113231.243"><vh>invoke c2py</vh></v>
-<v t="edream.111503111146"><vh>Finished or mostly finished</vh>
-<v t="edream.111303205442"><vh>(colorizing) (demo only)</vh>
-<v t="edream.111303204025"><vh>Indices</vh>
-<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
-<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
-<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
-<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
-<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
-<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
-</v>
-<v t="edream.111303204517"><vh>Color tags (hacks for styles)</vh>
-<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
-<v t="edream.111303205611"><vh>tag_add</vh></v>
-<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
-<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
-<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
-<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.111503111350"><vh>Unfinished</vh>
+<v t="edream.111503111350"><vh>To do</vh>
 <v t="edream.111303184347"><vh>(delete_range) doesn't work</vh>
 <v t="edream.111303103141.3"><vh>delete_range</vh></v>
 </v>
@@ -720,46 +698,586 @@ marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 </v>
 </v>
 </v>
+<v t="ekr.20050718142601"><vh>(Changes made 7/05)</vh>
+<v t="ekr.20050718142601.1"><vh>Notes</vh></v>
+<v t="edream.110203113231.347"><vh>OnInit  (wxLeoApp)</vh></v>
+<v t="ekr.20050718151826"><vh>(wxGui Stuff)</vh>
+<v t="edream.111303091300"><vh>app.gui.wx birth &amp; death</vh>
+<v t="edream.110203113231.307"><vh> wxGui.__init__</vh></v>
+<v t="edream.110203113231.308"><vh>createRootWindow &amp; allies</vh>
+<v t="edream.110203113231.309"><vh>setDefaultIcon CONTAINS TK CODE</vh></v>
+<v t="edream.110203113231.310"><vh>setEncoding</vh></v>
+<v t="edream.110203113231.311"><vh>getDefaultConfigFont CONTAINS TK CODE</vh></v>
+<v t="edream.110203113231.312"><vh>createGlobalWindows</vh></v>
+</v>
+<v t="edream.111303085447.1"><vh>destroySelf</vh></v>
+<v t="edream.110203113231.317"><vh>runMainLoop</vh></v>
+<v t="edream.110203113231.306"><vh>stubs</vh>
+<v t="edream.110203113231.314"><vh>finishCreate</vh></v>
+<v t="edream.110203113231.315"><vh>killGui</vh></v>
+<v t="edream.110203113231.316"><vh>recreateRootWindow</vh></v>
+</v>
+</v>
+<v t="edream.111303092328.4"><vh>createLeoFrame (wxGui panels)</vh></v>
+</v>
+<v t="edream.110203113231.350"><vh>Birth &amp; death (wxLeoFrame)</vh>
+<v t="edream.110203113231.266"><vh>__init__</vh></v>
+<v t="edream.110203113231.351"><vh>__repr__</vh></v>
+<v t="edream.110203113231.260"><vh>finishCreate (wxLeoFrame)</vh>
+<v t="edream.110203113231.261"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
+<v t="edream.110203113231.265"><vh>&lt;&lt; set the window icon &gt;&gt;</vh></v>
+<v t="edream.110203113231.264"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
+</v>
+<v t="edream.111403141810"><vh>initialRatios</vh></v>
+<v t="edream.111503105816"><vh>injectCallbacks</vh></v>
+<v t="edream.111303141147"><vh>signOnWithVersion</vh></v>
+<v t="edream.111503213533"><vh>destroySelf</vh></v>
+</v>
+<v t="edream.110203113231.540"><vh>Birth &amp; death (wxLeoBody)</vh>
+<v t="edream.110203113231.541"><vh>wxLeoBody.__init__</vh></v>
+<v t="edream.110203113231.542"><vh>wxLeoBody.createControl</vh></v>
+</v>
+</v>
+<v t="edream.111403093253.1"><vh>Projects</vh>
+<v t="edream.111303205442"><vh>(colorizing) (demo only)</vh>
+<v t="edream.111303204025"><vh>Indices</vh>
+<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
+<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
+<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
+<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
+<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
+<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
+</v>
+<v t="edream.111303204517"><vh>Color tags (hacks for styles)</vh>
+<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
+<v t="edream.111303205611"><vh>tag_add</vh></v>
+<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
+<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
+<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
+<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
+</v>
+</v>
 </v>
 <v t="edream.110203113231.242"><vh>Unused code</vh>
+<v t="ekr.20050718142601.3"><vh>From wxLeoApp.OnInit</vh></v>
 <v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
 <v t="edream.111303202917.1"><vh>Syntax coloring REMOVED: now in base body class</vh></v>
 </v>
 <v t="edream.110203113231.302"><vh>@thin __wx_gui.py</vh></v>
 </v>
-<v t="ekr.20050508203638"><vh>rst/golf</vh>
-<v t="ekr.20050508203638.1"><vh>@url https://sourceforge.net/forum/message.php?msg_id=2946194</vh></v>
-<v t="ekr.20050508203638.2"><vh>Responses</vh></v>
-<v t="ekr.20050508203638.3"><vh>from Kent</vh></v>
-<v t="ekr.20050508203638.4"><vh>New stylesheets for rst (Kent Tenny told me about there)</vh>
-<v t="ekr.20050508203638.5"><vh>@url http://www.voidspace.org.uk/stylesheets/blue_box.css</vh></v>
+<v t="ekr.20050723062822"><vh>@thin __core_emacs.py</vh></v>
+<v t="ekr.20050612074047"><vh>New colorizer</vh>
+<v t="ekr.20050529180421"><vh>jEdit docs...</vh>
+<v t="ekr.20050530065723"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
+<v t="ekr.20050529180421.1"><vh>Rule ordering</vh></v>
+<v t="ekr.20050529180421.2"><vh>Attributes</vh>
+<v t="ekr.20050529180421.3"><vh> Documentation of attributes</vh>
+<v t="ekr.20050529180421.4"><vh> For 'seq', 'span', 'begin', 'end'</vh>
+<v t="ekr.20050529180421.5"><vh>AT_LINE_START (bool)</vh></v>
+<v t="ekr.20050529180421.6"><vh>AT_WHITESPACE_END (bool)</vh></v>
+<v t="ekr.20050529180421.7"><vh>AT_WORD_START (bool)</vh></v>
 </v>
-<v t="ekr.20050508203638.6"><vh>get rid of double-click hack fir rst</vh></v>
-<v t="ekr.20050515093257.1"><vh>Summary of config settings for rst2 plugin</vh>
-<v t="ekr.20050515093257.2"><vh>@url http://sourceforge.net/forum/forum.php?thread_id=1251867&amp;forum_id=10226</vh></v>
-<v t="ekr.20050515093257.3"><vh>Post from Bernhard</vh>
-<v t="ekr.20050515093257.4"><vh>Suggested settings for regular rst files</vh></v>
-<v t="ekr.20050515093257.5"><vh>run_on_window_open (for http server)</vh></v>
-<v t="ekr.20050515093257.6"><vh>configuration settings</vh></v>
-<v t="ekr.20050515093257.7"><vh>Not implemented</vh></v>
-<v t="ekr.20050515093257.8"><vh>pure_document</vh></v>
-<v t="ekr.20050515093257.9"><vh>retain the headline nodes with  pure_document=True ?</vh></v>
-<v t="ekr.20050515093257.10"><vh>create_table_of_contents</vh></v>
+<v t="ekr.20050529180421.8"><vh> For 'span' only</vh>
+<v t="ekr.20050529180421.9"><vh>NO_WORD_BREAK (bool)</vh></v>
+<v t="ekr.20050529180421.10"><vh>NO_LINE_BREAK (bool)</vh></v>
+<v t="ekr.20050529180421.11"><vh>NO_ESCAPE (bool)</vh></v>
+<v t="ekr.20050529180421.12"><vh>EXCLUDE_MATCH (bool)</vh></v>
 </v>
-<v t="ekr.20040331071319.4"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
-<v t="ekr.20040331071319.5"><vh>&lt;&lt; define code-block &gt;&gt;</vh></v>
-<v t="bwmulder.20050326114320"><vh> &lt;&lt; define alternate code block implementation&gt;&gt;</vh></v>
+<v t="ekr.20050529180421.13"><vh> For 'rules' only</vh>
+<v t="ekr.20050529180421.14"><vh>DEFAULT</vh></v>
+<v t="ekr.20050529180421.15"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
+<v t="ekr.20050529180421.16"><vh>IGNORE_CASE (bool)</vh></v>
+<v t="ekr.20050529180421.17"><vh>SET</vh></v>
+<v t="ekr.20050529180421.18"><vh>NO_WORD_SEP</vh></v>
 </v>
-<v t="bwmulder.20050320000243"><vh>onFileOpen</vh></v>
-<v t="bwmulder.20050320092000"><vh>http_support_main</vh></v>
-<v t="ekr.20040331071319.7"><vh>writeTreeAsRst &amp; add_node_marker</vh>
-<v t="ekr.20040408160625.1"><vh>&lt;&lt; set encoding &gt;&gt;</vh></v>
-<v t="ekr.20040403202850"><vh>&lt;&lt; set code_dir &gt;&gt;</vh></v>
-<v t="ekr.20040403202850.1"><vh>&lt;&lt; handle an rst node &gt;&gt;</vh></v>
-<v t="ekr.20040403202850.2"><vh>&lt;&lt; handle a plain node &gt;&gt;</vh></v>
-<v t="bwmulder.20050315150045"><vh>&lt;&lt; clear attributes &gt;&gt;</vh></v>
+<v t="ekr.20050529180421.19"><vh>AT_CHAR (int) for 'terminate'</vh></v>
+<v t="ekr.20050529180421.20"><vh>DELEGATE: for 'import', 'span' &amp; 'seq'</vh></v>
+<v t="ekr.20050529180421.21"><vh>HASH_CHAR (char) For 'regx'</vh></v>
+<v t="ekr.20050529180421.22"><vh>TYPE (Token Types)</vh></v>
+</v>
+<v t="ekr.20050529180421.23"><vh>Attributes for 'begin' &amp; 'end'</vh></v>
+<v t="ekr.20050529180421.24"><vh>Attributes for 'import': delegate</vh></v>
+<v t="ekr.20050529180421.25"><vh>Attributes for 'mark' </vh></v>
+<v t="ekr.20050529180421.26"><vh>Attributes for 'property': name, value</vh></v>
+<v t="ekr.20050529180421.27"><vh>Attributes for 'rules'</vh></v>
+<v t="ekr.20050529180421.28"><vh>Attributes for 'span'</vh></v>
+<v t="ekr.20050529180421.29"><vh>Attributes for 'seq' </vh></v>
+</v>
+<v t="ekr.20050529180421.30"><vh>Elements</vh>
+<v t="ekr.20050529220821"><vh>Spans and seqs...</vh>
+<v t="ekr.20050529180421.31"><vh>eol_span</vh></v>
+<v t="ekr.20050529180421.32"><vh>eol_span_regexp</vh></v>
+<v t="ekr.20050529180421.35"><vh>mark_following</vh></v>
+<v t="ekr.20050529180421.36"><vh>mark_previous</vh></v>
+<v t="ekr.20050529180421.40"><vh>seq</vh></v>
+<v t="ekr.20050529180421.41"><vh>seq_regexp</vh></v>
+<v t="ekr.20050529180421.42"><vh>span</vh></v>
+<v t="ekr.20050529180421.43"><vh>span_regexp</vh></v>
+</v>
+<v t="ekr.20050529220821.1"><vh>All others...</vh>
+<v t="ekr.20050529180421.33"><vh>import</vh></v>
+<v t="ekr.20050529180421.34"><vh>keywords</vh></v>
+<v t="ekr.20050529180421.37"><vh>mode</vh></v>
+<v t="ekr.20050529180421.38"><vh>props &amp; property  (for auto-indent)</vh></v>
+<v t="ekr.20050529180421.39"><vh>rules</vh></v>
+<v t="ekr.20050529180421.44"><vh>terminate</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20050529142847"><vh>@thin __jEdit_colorizer__.py</vh></v>
+<v t="ekr.20050606214954"><vh>(state methods)</vh>
+<v t="ekr.20050529143413.30"><vh>colorize (Main entry point)</vh></v>
+<v t="ekr.20050529143413.31"><vh>colorizeAnyLanguage</vh></v>
+<v t="ekr.20050602205810.4"><vh>colorRangeWithTag</vh></v>
+</v>
+<v t="ekr.20050606221357"><vh>(init)</vh>
+<v t="ekr.20050602150619"><vh>init_mode</vh></v>
+<v t="ekr.20050602152743"><vh>init_keywords</vh>
+<v t="ekr.20050607073917"><vh>&lt;&lt; compute extra_word_chars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050530065723.47"><vh>parse_jEdit_file</vh></v>
+</v>
+<v t="ekr.20050607220512"><vh>(delegate)</vh>
+<v t="ekr.20050601105358"><vh>colorOneChunk</vh>
+<v t="ekr.20050605130806"><vh>&lt;&lt; queue up this method the first time &gt;&gt;</vh></v>
+<v t="ekr.20050601162452.1"><vh>&lt;&lt; queue up this method &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050607212958"><vh>colorByDelegate</vh></v>
+<v t="ekr.20050602205810.4"><vh>colorRangeWithTag</vh></v>
+</v>
+</v>
+<v t="ekr.20050730194215"><vh>New Emacs Projects &amp; Notes</vh>
+<v t="ekr.20050726081113"><vh>Comparing SwingMacs &amp; temacs classes</vh>
+<v t="ekr.20050726081152"><vh>kill buffer</vh>
+<v t="ekr.20050724075352.161"><vh>class killBufferCommandsClass</vh>
+<v t="ekr.20050725115600"><vh> ctor</vh></v>
+<v t="ekr.20050725121247"><vh>getPublicCommands</vh></v>
+<v t="ekr.20050725120303"><vh>Entry points</vh></v>
+<v t="ekr.20050724075352.162"><vh>kill</vh></v>
+<v t="ekr.20050724075352.163"><vh>walkKB</vh></v>
+<v t="ekr.20050724075352.164"><vh>deletelastWord</vh></v>
+<v t="ekr.20050724075352.165"><vh>_killSentence</vh></v>
+<v t="ekr.20050724075352.166"><vh>_killRegion</vh></v>
+<v t="ekr.20050724075352.167"><vh>addToKillBuffer</vh></v>
+<v t="ekr.20050724075352.168"><vh>iterateKillBuffer</vh></v>
+<v t="ekr.20050724075352.169"><vh>getClipboard</vh></v>
+</v>
+<v t="orkman.20050210202559"><vh>killbuffer (SwingMacs)</vh>
+<v t="orkman.20050212113553"><vh>kill</vh></v>
+<v t="orkman.20050212114641"><vh>insertIntoKillbuffer</vh></v>
+<v t="orkman.20050210202559.1"><vh>killToEndOfLine</vh></v>
+<v t="orkman.20050212115022"><vh>copyRegion</vh></v>
+<v t="orkman.20050212114308"><vh>killRegion</vh></v>
+<v t="orkman.20050212115022.1"><vh>getRegion</vh></v>
+<v t="orkman.20050212095512"><vh>walkKB</vh></v>
+<v t="orkman.20050210203511"><vh>yank</vh></v>
+<v t="orkman.20050212100715"><vh>iterateKillBuffer</vh></v>
+<v t="orkman.20050212100208"><vh>doesClipboardOfferNewData</vh></v>
+</v>
+</v>
+<v t="ekr.20050726081815.2"><vh>registers</vh>
+<v t="ekr.20050724075352.170"><vh>class registerCommandsClass</vh>
+<v t="ekr.20050725134243"><vh> ctor</vh></v>
+<v t="ekr.20050725135621.1"><vh> Entry points</vh>
+<v t="ekr.20050724075352.174"><vh>appendToRegister</vh></v>
+<v t="ekr.20050724075352.173"><vh>prependToRegister</vh></v>
+<v t="ekr.20050724075352.172"><vh>_copyRectangleToRegister</vh></v>
+<v t="ekr.20050724075352.171"><vh>_copyToRegister</vh></v>
+<v t="ekr.20050724075352.179"><vh>_incrementRegister</vh></v>
+<v t="ekr.20050724075352.178"><vh>_insertRegister</vh></v>
+<v t="ekr.20050724075352.182"><vh>_jumpToRegister</vh></v>
+<v t="ekr.20050724075352.180"><vh>_numberToRegister</vh></v>
+<v t="ekr.20050724075352.181"><vh>_pointToRegister</vh></v>
+<v t="ekr.20050724075352.187"><vh>_viewRegister</vh></v>
+</v>
+<v t="ekr.20050725134243.1"><vh> getPublicCommands </vh></v>
+<v t="ekr.20050726043333.1"><vh>Helpers</vh>
+<v t="ekr.20050724075352.176"><vh>_chckSel</vh></v>
+<v t="ekr.20050724075352.177"><vh>_checkIfRectangle</vh></v>
+<v t="ekr.20050724075352.175"><vh>_ToReg</vh></v>
+<v t="ekr.20050724075352.52"><vh>addRegisterItems (registerCommandsClass)</vh></v>
+<v t="ekr.20050724075352.186"><vh>deactivateRegister</vh></v>
+<v t="ekr.20050724075352.183"><vh>invalidRegister</vh></v>
+<v t="ekr.20050724075352.184"><vh>setNextRegister</vh></v>
+<v t="ekr.20050724075352.185"><vh>executeRegister</vh></v>
+</v>
+</v>
+<v t="zorcanda!.20050312155939"><vh>registers (SwingMacs)</vh>
+<v t="ekr.20050726081815"><vh>  __init__</vh></v>
+<v t="ekr.20050726081815.1"><vh> __call__</vh></v>
+<v t="zorcanda!.20050312160220"><vh>copy-to-register</vh></v>
+<v t="zorcanda!.20050312160220.1"><vh>insert-register</vh></v>
+<v t="zorcanda!.20050312171820"><vh>append-to-register</vh></v>
+<v t="zorcanda!.20050312171820.1"><vh>prepend-to-register</vh></v>
+</v>
+</v>
+<v t="ekr.20050726091527"><vh>State managers</vh>
+<v t="ekr.20050724075352.43"><vh>masterCommand</vh>
+<v t="ekr.20050729150051.1"><vh>&lt;&lt; handle macro &gt;&gt;</vh></v>
+<v t="ekr.20050731084644"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+</v>
+<v t="orkman.20050213110511"><vh>helper classes (SwingMacs)</vh>
+<v t="orkman.20050207162016"><vh>stateManager</vh></v>
+<v t="orkman.20050213105021"><vh>KeyProcessor</vh>
+<v t="orkman.20050213105021.1"><vh>__init__</vh></v>
+<v t="zorcanda!.20050411132747"><vh>addCompleter</vh></v>
+<v t="zorcanda!.20050604091924"><vh>removeCompleter</vh></v>
+<v t="orkman.20050213105021.2"><vh>keyReleased</vh></v>
+<v t="orkman.20050213105021.3"><vh>keyTyped</vh></v>
+<v t="orkman.20050213105021.4"><vh>keyPressed</vh>
+<v t="ekr.20050726094804"><vh>&lt;&lt; create the command &gt;&gt;</vh></v>
+<v t="ekr.20050726094804.1"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
+<v t="ekr.20050726094804.2"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
+</v>
+<v t="orkman.20050213105513"><vh>insertPreviousLeadAndNewline -- for autoindentation on newline</vh>
+<v t="orkman.20050213105513.1"><vh>&lt;&lt; why is this code here? &gt;&gt;</vh></v>
+</v>
+<v t="zorcanda!.20050522115325"><vh>calculateExtraSpaces</vh></v>
+</v>
+<v t="zorcanda!.20050520221746"><vh>TagMatcher</vh>
+<v t="ekr.20050727082959"><vh>keyPressed</vh></v>
+</v>
+<v t="zorcanda!.20050310170120"><vh>TabCompleter</vh>
+<v t="ekr.20050727083243"><vh>extend</vh></v>
+<v t="ekr.20050727083243.1"><vh>lookFor</vh></v>
+<v t="ekr.20050727083243.2"><vh>getNext</vh></v>
+</v>
+</v>
+<v t="orkman.20050213110803"><vh>masterCommand (SwingMacs)</vh></v>
+</v>
+</v>
+<v t="orkman.20050207150858"><vh>SwingMacs.py (as of 7/21) STUDY ONLY</vh>
+<v t="zorcanda!.20050313115453"><vh>&lt;&lt; addCommand &gt;&gt;</vh></v>
+<v t="orkman.20050210125253"><vh>What is SwingMacs?</vh></v>
+<v t="orkman.20050213110948"><vh>constructor: __init__</vh></v>
+<v t="zorcanda!.20050604091242"><vh>management listening</vh>
+<v t="zorcanda!.20050604091242.1"><vh>addCompleters</vh></v>
+<v t="zorcanda!.20050604091242.2"><vh>managementListener</vh></v>
+</v>
+<v t="zorcanda!.20050313142453"><vh>lookForExtensions</vh></v>
+<v t="zorcanda!.20050411132825"><vh>addCompleter</vh></v>
+<v t="zorcanda!.20050314142845"><vh>How to write an extension( alpha doc level )</vh></v>
+<v t="orkman.20050213110511"><vh>helper classes (SwingMacs)</vh>
+<v t="orkman.20050207162016"><vh>stateManager</vh></v>
+<v t="orkman.20050213105021"><vh>KeyProcessor</vh>
+<v t="orkman.20050213105021.1"><vh>__init__</vh></v>
+<v t="zorcanda!.20050411132747"><vh>addCompleter</vh></v>
+<v t="zorcanda!.20050604091924"><vh>removeCompleter</vh></v>
+<v t="orkman.20050213105021.2"><vh>keyReleased</vh></v>
+<v t="orkman.20050213105021.3"><vh>keyTyped</vh></v>
+<v t="orkman.20050213105021.4"><vh>keyPressed</vh>
+<v t="ekr.20050726094804"><vh>&lt;&lt; create the command &gt;&gt;</vh></v>
+<v t="ekr.20050726094804.1"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
+<v t="ekr.20050726094804.2"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
+</v>
+<v t="orkman.20050213105513"><vh>insertPreviousLeadAndNewline -- for autoindentation on newline</vh>
+<v t="orkman.20050213105513.1"><vh>&lt;&lt; why is this code here? &gt;&gt;</vh></v>
+</v>
+<v t="zorcanda!.20050522115325"><vh>calculateExtraSpaces</vh></v>
+</v>
+<v t="zorcanda!.20050520221746"><vh>TagMatcher</vh>
+<v t="ekr.20050727082959"><vh>keyPressed</vh></v>
+</v>
+<v t="zorcanda!.20050310170120"><vh>TabCompleter</vh>
+<v t="ekr.20050727083243"><vh>extend</vh></v>
+<v t="ekr.20050727083243.1"><vh>lookFor</vh></v>
+<v t="ekr.20050727083243.2"><vh>getNext</vh></v>
+</v>
+</v>
+<v t="ekr.20050722082741"><vh>Strategy stuff...</vh>
+<v t="orkman.20050213110235"><vh>defineStrategyObjects</vh></v>
+<v t="orkman.20050213110404"><vh>defineStrategiesForKeystrokes</vh></v>
+<v t="zorcanda!.20050417172712"><vh>addCommands</vh></v>
+</v>
+<v t="orkman.20050213110803"><vh>masterCommand (SwingMacs)</vh></v>
+<v t="orkman.20050223114739"><vh>setCommandText</vh></v>
+<v t="orkman.20050210204001"><vh>help</vh></v>
+<v t="zorcanda!.20050418121158"><vh>add*Help</vh></v>
+<v t="orkman.20050207164014"><vh>keyboardQuit</vh></v>
+<v t="zorcanda!.20050311123715"><vh>beep</vh></v>
+<v t="zorcanda!.20050311140549"><vh>determineLanguage</vh></v>
+<v t="zorcanda!.20050312123359"><vh>getTabWidth</vh></v>
+<v t="orkman.20050207164550"><vh>eventToMinibuffer</vh></v>
+<v t="orkman.20050209165908"><vh>text operations</vh></v>
+<v t="orkman.20050209170444"><vh>word operations</vh></v>
+<v t="orkman.20050210105230"><vh>findPre</vh></v>
+<v t="orkman.20050209180255"><vh>attribute and highlight operations</vh></v>
+<v t="zorcanda!.20050528101434"><vh>addToKillBuffer</vh></v>
+<v t="orkman.20050210110555"><vh>Stategies for keystroke and commands</vh>
+<v t="orkman.20050207152619"><vh>incremental search</vh>
+<v t="orkman.20050210110734"><vh>startIncremental</vh></v>
+<v t="orkman.20050210110734.1"><vh>incrementalSearch</vh></v>
+<v t="orkman.20050223124157"><vh>forward and backward search</vh></v>
+<v t="zorcanda!.20050720215058"><vh>class deferedHighlight</vh></v>
+</v>
+<v t="orkman.20050209165307"><vh>dynamic-abbrevs</vh>
+<v t="orkman.20050209165621"><vh>dynamicExpansion</vh></v>
+<v t="orkman.20050209165627"><vh>dynamicExpansion2</vh></v>
+<v t="orkman.20050209165908.1"><vh>getDynamicList</vh></v>
+<v t="orkman.20050209215951"><vh>clearDynamic</vh></v>
+<v t="zorcanda!.20050720141603"><vh>createDynamicList</vh></v>
+</v>
+<v t="zorcanda!.20050527190231"><vh>symbolcompletion</vh></v>
+<v t="orkman.20050210201413"><vh>formatter</vh>
+<v t="orkman.20050210201413.1"><vh>indent-region</vh></v>
+<v t="zorcanda!.20050312121738"><vh>indent-rigidly</vh></v>
+<v t="zorcanda!.20050312173225"><vh>indent-relative</vh></v>
+<v t="zorcanda!.20050523140526"><vh>deleteSurroundingSpaces</vh></v>
+<v t="zorcanda!.20050523141645"><vh>joinLineToPrevious</vh></v>
+<v t="zorcanda!.20050523143816"><vh>deleteBlankLines</vh></v>
+<v t="zorcanda!.20050312183416"><vh>definePreviousLine</vh></v>
+</v>
+<v t="orkman.20050210202559"><vh>killbuffer (SwingMacs)</vh>
+<v t="orkman.20050212113553"><vh>kill</vh></v>
+<v t="orkman.20050212114641"><vh>insertIntoKillbuffer</vh></v>
+<v t="orkman.20050210202559.1"><vh>killToEndOfLine</vh></v>
+<v t="orkman.20050212115022"><vh>copyRegion</vh></v>
+<v t="orkman.20050212114308"><vh>killRegion</vh></v>
+<v t="orkman.20050212115022.1"><vh>getRegion</vh></v>
+<v t="orkman.20050212095512"><vh>walkKB</vh></v>
+<v t="orkman.20050210203511"><vh>yank</vh></v>
+<v t="orkman.20050212100715"><vh>iterateKillBuffer</vh></v>
+<v t="orkman.20050212100208"><vh>doesClipboardOfferNewData</vh></v>
+</v>
+<v t="orkman.20050212120210"><vh>deleter</vh>
+<v t="orkman.20050212120210.1"><vh>deletePreviousChar</vh></v>
+<v t="orkman.20050212120620"><vh>deleteNextChar</vh></v>
+</v>
+<v t="orkman.20050212121301"><vh>alt_x_handler</vh>
+<v t="zorcanda!.20050310184934"><vh>getCommandHelp</vh></v>
+</v>
+<v t="zorcanda!.20050523143029"><vh>ctrl_x_handler</vh></v>
+<v t="zorcanda!.20050528193454"><vh>ctrl_u handler</vh></v>
+<v t="zorcanda!.20050310144300"><vh>rectangles</vh>
+<v t="zorcanda!.20050310172920"><vh>definePoints</vh></v>
+<v t="zorcanda!.20050311121612"><vh>insertText</vh></v>
+<v t="zorcanda!.20050310153830"><vh>open-rectangle</vh></v>
+<v t="zorcanda!.20050310182257"><vh>clear-rectangle</vh></v>
+<v t="zorcanda!.20050311102520"><vh>kill-rectangle</vh></v>
+<v t="zorcanda!.20050311102817"><vh>yank-rectangle</vh></v>
+<v t="zorcanda!.20050310172646"><vh>delete-rectangle</vh></v>
+<v t="zorcanda!.20050310183117"><vh>delete-whitespace-rectangle</vh></v>
+<v t="zorcanda!.20050311102030"><vh>string-rectangle</vh></v>
+<v t="zorcanda!.20050311095932"><vh>string-insert-rectangle</vh></v>
+</v>
+<v t="zorcanda!.20050311123122"><vh>zap</vh>
+<v t="zorcanda!.20050311123122.1"><vh>zap</vh></v>
+</v>
+<v t="zorcanda!.20050311140549.1"><vh>comment</vh>
+<v t="zorcanda!.20050311140549.2"><vh>comment-region</vh></v>
+<v t="zorcanda!.20050311143148"><vh>comment-kill</vh></v>
+</v>
+<v t="zorcanda!.20050311150743"><vh>movement</vh>
+<v t="zorcanda!.20050311150743.1"><vh>beginning-of-buffer</vh></v>
+<v t="zorcanda!.20050311150743.2"><vh>end-of-buffer</vh></v>
+<v t="zorcanda!.20050311151807"><vh>beginning-of-line</vh></v>
+<v t="zorcanda!.20050311151807.1"><vh>end-of-line</vh></v>
+<v t="zorcanda!.20050311154238"><vh>goto</vh></v>
+<v t="zorcanda!.20050311154238.1"><vh>gotoChar</vh></v>
+<v t="zorcanda!.20050512112449"><vh>startOfWord</vh></v>
+<v t="zorcanda!.20050512112449.1"><vh>endOfWord</vh></v>
+<v t="zorcanda!.20050523135303"><vh>beginning of indentation</vh></v>
+<v t="zorcanda!.20050512113820"><vh>isWord</vh></v>
+</v>
+<v t="zorcanda!.20050528093036"><vh>balanced parenthesis or sexp</vh>
+<v t="zorcanda!.20050528100638"><vh>killSexpForward and Backward</vh></v>
+</v>
+<v t="zorcanda!.20050528154411"><vh>tags</vh>
+<v t="zorcanda!.20050531130856"><vh>__defineLanguageRecognizers</vh></v>
+<v t="zorcanda!.20050528154411.1"><vh>gotoTag</vh></v>
+<v t="zorcanda!.20050528193932"><vh>alternativeDefinition</vh></v>
+<v t="zorcanda!.20050531101443"><vh>popBack</vh></v>
+<v t="zorcanda!.20050528154425"><vh>defineTagsTable</vh></v>
+<v t="zorcanda!.20050528154749"><vh>scanForTags</vh>
+<v t="zorcanda!.20050531112641"><vh>&lt;&lt;java&gt;&gt;</vh></v>
+</v>
+<v t="zorcanda!.20050528154749.1"><vh>valueChanged</vh></v>
+<v t="zorcanda!.20050528155247"><vh>run</vh></v>
+<v t="zorcanda!.20050528185814"><vh>class DeferedGotoLine</vh></v>
+</v>
+<v t="zorcanda!.20050311160343"><vh>transpose</vh>
+<v t="zorcanda!.20050311160343.1"><vh>transpose-lines</vh></v>
+<v t="zorcanda!.20050311215703"><vh>reverse-region</vh></v>
+<v t="zorcanda!.20050524093817"><vh>transpose-words</vh></v>
+</v>
+<v t="zorcanda!.20050311163509"><vh>capitalization</vh>
+<v t="zorcanda!.20050311163509.1"><vh>capitalize-region</vh></v>
+<v t="zorcanda!.20050311163509.2"><vh>upcase-region</vh></v>
+<v t="zorcanda!.20050311163509.3"><vh>downcase-region</vh></v>
+<v t="zorcanda!.20050312111617"><vh>capitalize-word</vh></v>
+<v t="zorcanda!.20050312111617.1"><vh>upcase-word</vh></v>
+<v t="zorcanda!.20050312111617.2"><vh>downcase-word</vh></v>
+</v>
+<v t="zorcanda!.20050311165606"><vh>replacement</vh>
+<v t="zorcanda!.20050311165606.1"><vh>query-replace</vh></v>
+<v t="zorcanda!.20050311165606.2"><vh>query-replace-regexp</vh></v>
+<v t="zorcanda!.20050311165732"><vh>replace-string</vh></v>
+<v t="zorcanda!.20050311170911"><vh>doReplacement</vh></v>
+<v t="zorcanda!.20050311205755"><vh>replaceAll</vh></v>
+</v>
+<v t="zorcanda!.20050311214332"><vh>sorters</vh>
+<v t="zorcanda!.20050311214332.1"><vh>sort-lines</vh></v>
+</v>
+<v t="zorcanda!.20050312114506"><vh>lines</vh>
+<v t="zorcanda!.20050312114506.1"><vh>keep-lines</vh></v>
+<v t="zorcanda!.20050312114506.2"><vh>flush-lines</vh></v>
+</v>
+<v t="zorcanda!.20050312122805"><vh>tabs</vh>
+<v t="zorcanda!.20050312122805.1"><vh>tabify</vh></v>
+<v t="zorcanda!.20050312122805.2"><vh>untabify</vh></v>
+</v>
+<v t="zorcanda!.20050312155939"><vh>registers (SwingMacs)</vh>
+<v t="ekr.20050726081815"><vh>  __init__</vh></v>
+<v t="ekr.20050726081815.1"><vh> __call__</vh></v>
+<v t="zorcanda!.20050312160220"><vh>copy-to-register</vh></v>
+<v t="zorcanda!.20050312160220.1"><vh>insert-register</vh></v>
+<v t="zorcanda!.20050312171820"><vh>append-to-register</vh></v>
+<v t="zorcanda!.20050312171820.1"><vh>prepend-to-register</vh></v>
+</v>
+<v t="zorcanda!.20050519094216"><vh>selection</vh></v>
+</v>
+<v t="zorcanda!.20050704092406.1"><vh>class vi_emulation (a strategy)</vh>
+<v t="zorcanda!.20050704092406.2"><vh>&lt;&lt;define vi keystrokes&gt;&gt;</vh></v>
+<v t="zorcanda!.20050704092406.3"><vh>cut</vh></v>
+<v t="zorcanda!.20050704092406.4"><vh>deleteLine</vh></v>
+<v t="zorcanda!.20050704092406.5"><vh>insert</vh></v>
+</v>
+</v>
+<v t="ekr.20050723063811"><vh>class editCommands ( do not delete)</vh>
+<v t="ekr.20050723063811.1"><vh>ctor</vh></v>
+<v t="ekr.20050723063811.2"><vh>Options...</vh>
+<v t="ekr.20050723063811.3"><vh>setDefaultOptions</vh></v>
+<v t="ekr.20050723063811.4"><vh>getOption</vh></v>
+</v>
+<v t="ekr.20050723063811.5"><vh>Word stuff...</vh>
+<v t="ekr.20050723063811.6"><vh>findWordStart</vh></v>
+<v t="ekr.20050723063811.7"><vh>insideWord</vh></v>
+<v t="ekr.20050723063811.8"><vh>skipWord</vh></v>
+<v t="ekr.20050723063811.9"><vh>startsWord</vh></v>
+<v t="ekr.20050723063811.10"><vh>setDefaultWordChars</vh></v>
+</v>
+<v t="ekr.20050723063811.11"><vh>Cursor movement</vh>
+<v t="ekr.20050723063811.12"><vh>moveBackwardChar</vh></v>
+<v t="ekr.20050723063811.13"><vh>moveBackwardWord (Finish)</vh></v>
+<v t="ekr.20050723063811.14"><vh>moveForwardChar</vh></v>
+<v t="ekr.20050723063811.15"><vh>moveForwardWord</vh></v>
+<v t="ekr.20050723063811.16"><vh>selectWord</vh></v>
+<v t="ekr.20050723063811.17"><vh>selectForwordWord</vh></v>
+</v>
+</v>
+<v t="ekr.20050723060629"><vh>(keystroke stuff)</vh>
+<v t="ekr.20050724102409"><vh>From SwingMacs</vh>
+<v t="ekr.20050723062822.14"><vh>stateManager</vh></v>
+<v t="ekr.20050723062822.34"><vh>masterCommand (SwingMacs) all processing goes through here</vh></v>
+<v t="ekr.20050723062822.38"><vh>keyboardQuit</vh></v>
+</v>
+<v t="ekr.20050724103251"><vh>From temacs</vh>
+<v t="ekr.20050724075352.43"><vh>masterCommand</vh>
+<v t="ekr.20050729150051.1"><vh>&lt;&lt; handle macro &gt;&gt;</vh></v>
+<v t="ekr.20050731084644"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050730204402"><vh>&lt;&lt; to do &gt;&gt;</vh></v>
+<v t="ekr.20050724075352.41"><vh> ctor (Emacs)</vh></v>
+<v t="ekr.20050727162112"><vh> ctor (miniBuffer)</vh></v>
+<v t="ekr.20050728195531"><vh>State machines</vh>
+<v t="ekr.20050730074556.3"><vh>getArg</vh></v>
+<v t="ekr.20050724075352.61"><vh>replaceString</vh>
+<v t="ekr.20050730074556.1"><vh>&lt;&lt; do the replace &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050724075352.285"><vh>doAlt_X &amp; helpers</vh>
+<v t="ekr.20050724075352.92"><vh>_findMatch</vh></v>
+<v t="ekr.20050729094213"><vh>&lt;&lt; handle tab completion &gt;&gt;</vh></v>
+<v t="ekr.20050730194026"><vh>&lt;&lt; dispatch the function &gt;&gt;</vh></v>
+<v t="ekr.20050730204051"><vh>&lt;&lt; cut back to previous prefix and update prefix &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050731084644.1"><vh>Dispatching commands...</vh>
+<v t="ekr.20050724075352.43"><vh>masterCommand</vh>
+<v t="ekr.20050729150051.1"><vh>&lt;&lt; handle macro &gt;&gt;</vh></v>
+<v t="ekr.20050731084644"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050724075352.32"><vh>__call__ (keyStrokeManagerClass)</vh></v>
+<v t="ekr.20050724075352.14"><vh>class controlX_handlerClass</vh>
+<v t="ekr.20050724075352.15"><vh>__init__</vh></v>
+<v t="ekr.20050724075352.16"><vh>__call__</vh></v>
+<v t="ekr.20050728103627.2"><vh>finishCreate (controlX_handlerClass)  MUST BE GENERALIZED</vh></v>
+<v t="ekr.20050724075352.17"><vh>processKey</vh></v>
+<v t="ekr.20050724075352.18"><vh>processRectangle</vh></v>
+<v t="ekr.20050724075352.19"><vh>processAbbreviation</vh></v>
+</v>
+</v>
+<v t="ekr.20050724075352.221"><vh>class searchCommandsClass</vh>
+<v t="ekr.20050725091822.2"><vh> ctor</vh></v>
+<v t="ekr.20050725093156"><vh>getPublicCommands</vh></v>
+<v t="ekr.20050725093537"><vh>Entry points</vh></v>
+<v t="ekr.20050724075352.222"><vh>incremental search methods</vh>
+<v t="ekr.20050724075352.223"><vh>startIncremental</vh></v>
+<v t="ekr.20050724075352.224"><vh>search</vh></v>
+<v t="ekr.20050724075352.225"><vh>iSearch</vh></v>
+<v t="ekr.20050724075352.226"><vh>scolorizer</vh></v>
+<v t="ekr.20050724075352.227"><vh>useRegex</vh></v>
+</v>
+<v t="ekr.20050724075352.228"><vh>non-incremental search methods</vh>
+<v t="ekr.20050724075352.229"><vh>nonincrSearch</vh></v>
+<v t="ekr.20050724075352.230"><vh>startNonIncrSearch</vh></v>
+</v>
+<v t="ekr.20050724075352.231"><vh>word search methods</vh>
+<v t="ekr.20050724075352.232"><vh>startWordSearch</vh></v>
+<v t="ekr.20050724075352.233"><vh>wordSearch</vh></v>
+</v>
+<v t="ekr.20050724075352.234"><vh>re-search methods</vh>
+<v t="ekr.20050724075352.235"><vh>reStart</vh></v>
+<v t="ekr.20050724075352.236"><vh>re_search</vh></v>
+</v>
+</v>
+<v t="ekr.20050731092507"><vh>Bindings</vh>
+<v t="ekr.20050729150051.2"><vh>add_ekr_altx_commands</vh>
+<v t="ekr.20050729150804"><vh>&lt;&lt; define dict d of abbreviations &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050724075352.49"><vh>addCallBackDict (miniBufferClass) MUST BE GENERALIZED</vh></v>
+<v t="ekr.20050724075352.52"><vh>addRegisterItems (registerCommandsClass)</vh></v>
+<v t="ekr.20050728103627.2"><vh>finishCreate (controlX_handlerClass)  MUST BE GENERALIZED</vh></v>
+<v t="ekr.20050728103627.1"><vh>finishCreate (keyStrokeManagerClass) MUST BE GENERALIZED</vh></v>
+<v t="ekr.20050728093027.1"><vh>finishCreate (miniBufferClass) MUST BE GENERALIZED</vh></v>
+<v t="ekr.20050725112958"><vh>finishCreate (stateManagerClass) MUST BE GENERALIZED</vh></v>
+<v t="ekr.20050724075352.116"><vh>reconfigureKeyStroke  Not tested -- why is it needed?</vh></v>
+<v t="ekr.20050724075352.91"><vh>removeRKeys (baseCommandsClass)</vh></v>
+</v>
+<v t="ekr.20050731101651"><vh>All xemacs commands</vh>
+<v t="ekr.20050731102358"><vh>B</vh></v>
+<v t="ekr.20050731102651.1"><vh>C, E, F, H</vh></v>
+<v t="ekr.20050731102651.3"><vh>I</vh></v>
+<v t="ekr.20050731102651.4"><vh>L, M, R, T, V</vh></v>
+<v t="ekr.20050731101651.1"><vh>a append- appropos- auto-</vh></v>
+<v t="ekr.20050731101651.2"><vh>b: backward- beginning- bookmark- br- browse- buffer- build- byte-</vh></v>
+<v t="ekr.20050731101651.3"><vh>c: c calc-, call- capitalize- center- checkdoc- command- completion- count- customize- cvs-</vh></v>
+<v t="ekr.20050731101651.4"><vh>d dabbrev- define- delete- describe- dired- downcase-</vh></v>
+<v t="ekr.20050731101651.5"><vh>e ediff- edit- emerge- end- exchange- expand-</vh></v>
+<v t="ekr.20050731101651.6"><vh>f fill- find- format- forward-</vh></v>
+<v t="ekr.20050731101651.7"><vh>g global- goto- grep-</vh></v>
+<v t="ekr.20050731102358.1"><vh>h help- html- hyper-</vh></v>
+<v t="ekr.20050731102358.2"><vh>i isearch- ispell- iswitchb itimer-</vh></v>
+<v t="ekr.20050731102358.3"><vh>j</vh></v>
+<v t="ekr.20050731102358.4"><vh>k kill- kimport-</vh></v>
+<v t="ekr.20050731102358.5"><vh>l list- load-</vh></v>
+<v t="ekr.20050731102358.6"><vh>m mouse- move-</vh></v>
+<v t="ekr.20050731102358.7"><vh>n narrow- newline- next-</vh></v>
+<v t="ekr.20050731102358.8"><vh>o open- other-</vh></v>
+<v t="ekr.20050731102358.9"><vh>p package- paren- pcomplete- pending- pop- popup- pp- prepend- prettyexapnd- previous- profile- ps-</vh></v>
+<v t="ekr.20050731102358.10"><vh>q query-</vh></v>
+<v t="ekr.20050731102358.11"><vh>r re- read- recentf- recover- recursive- rename- repeat- replace- reverse- run-</vh></v>
+<v t="ekr.20050731102358.12"><vh>s save- scroll- search- set- shell- sort- speedbar spell- strokes- suspend- switch- symbol-</vh></v>
+<v t="ekr.20050731102358.13"><vh>t tab tags- toggle- toolbar- turn-off turn-on</vh></v>
+<v t="ekr.20050731102358.14"><vh>u universal- upcase- url-</vh></v>
+<v t="ekr.20050731102358.15"><vh>v view- vm-</vh></v>
+<v t="ekr.20050731102358.16"><vh>w win32- winring- word- write-</vh></v>
+<v t="ekr.20050731102358.17"><vh>x xwem-</vh></v>
+<v t="ekr.20050731102358.18"><vh>y yank-</vh></v>
+<v t="ekr.20050731102358.19"><vh>z zap- </vh></v>
+</v>
+<v t="ekr.20050731115541"><vh>Goals</vh></v>
 </v>
 </v>
 <v t="EKR.20040517075715"><vh>External editors &amp; Open With</vh>
@@ -790,8 +1308,7 @@ marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 <v t="ekr.20050402080206.7"><vh>Notes</vh></v>
 </v>
 </v>
-<v t="ekr.20050402080206.8"
-marks="ekr.20050402080206.34,ekr.20050402080206.38,"><vh>@thin LeoN.py</vh></v>
+<v t="ekr.20050402080206.8"><vh>@thin LeoN.py</vh></v>
 </v>
 <v t="EKR.20040517080555"><vh>Menus &amp; translations</vh>
 <v t="ekr.20041019072632"><vh>Chinese:  Must use @file due to problems with cvs</vh>
@@ -812,8 +1329,7 @@ marks="ekr.20050402080206.34,ekr.20050402080206.38,"><vh>@thin LeoN.py</vh></v>
 </v>
 <v t="ekr.20041009112303"><vh>Plugins manager, updater &amp; menu</vh>
 <v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
-<v t="EKR.20040517080555.2"
-marks="EKR.20040517080555.4,"><vh>@thin plugins_menu.py</vh></v>
+<v t="EKR.20040517080555.2"><vh>@thin plugins_menu.py</vh></v>
 <v t="EKR.20040517080555.25"><vh>@thin pluginsTest.py</vh></v>
 <v t="EKR.20040517080555.32"><vh>Notes re plugins menu</vh>
 <v t="EKR.20040517080555.33"><vh> Changes made by E.K.Ream</vh></v>
@@ -821,8 +1337,7 @@ marks="EKR.20040517080555.4,"><vh>@thin plugins_menu.py</vh></v>
 <v t="EKR.20040517080555.35"><vh> Initial suggestion from Paul Paterson</vh></v>
 </v>
 </v>
-<v t="pap.20041006184225"
-marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.20041008200028,"><vh>@thin plugin_manager.py</vh></v>
+<v t="pap.20041006184225"><vh>@thin plugin_manager.py</vh></v>
 <v t="pap.20050605183206"><vh>@thin leoupdate.py</vh></v>
 </v>
 <v t="ekr.20041001210557"><vh>Scripting</vh>
@@ -858,133 +1373,14 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 </v>
 <v t="ekr.20041107165824"><vh>temacs &amp; usetemacs</vh>
-<v t="ekr.20050527081321"><vh>EKR Notes: usetemacs</vh>
-<v t="ekr.20050527084754.2"><vh>EKR Notes</vh></v>
-<v t="ekr.20050527081715"><vh>masterCommand...</vh>
-<v t="mork.20041030164547.30" a="M"><vh>setBufferStrokes</vh></v>
-<v t="mork.20041030164547.43"><vh>masterCommand</vh>
-<v t="ekr.20050527084754"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
-<v t="ekr.20050527084754.1"><vh>&lt;&lt; old code 2 &gt;&gt;</vh></v>
-<v t="ekr.20050527112828"><vh>&lt;&lt; old insert code &gt;&gt;</vh></v>
-</v>
-<v t="mork.20041123150836"><vh>the master command is the center of an Emacs instance</vh></v>
-<v t="mork.20041030164547.95"><vh>manufactureKeyPress</vh></v>
-<v t="mork.20041031182258"><vh>add command dictionary methods</vh>
-<v t="mork.20041030183331" a="M"><vh>addCallBackDict (creates cbDict)</vh></v>
-<v t="mork.20041030183633"><vh>addXCommands</vh></v>
-<v t="mork.20041030190903" a="M"><vh>addAltXCommands</vh></v>
-<v t="mork.20041030190729"><vh>addRegisterItems</vh></v>
-</v>
-<v t="mork.20041031194746"><vh>configurable methods</vh>
-<v t="mork.20041031182643"><vh>tailEnd methods</vh>
-<v t="mork.20041030164547.4"><vh>_tailEnd</vh></v>
-<v t="mork.20041030164547.5"><vh>setTailEnd</vh></v>
-</v>
-<v t="mork.20041031182643.1"><vh>undoer methods</vh>
-<v t="mork.20041030164547.6"><vh>setUndoer</vh></v>
-<v t="mork.20041030164547.7"><vh>doUndo</vh></v>
-</v>
-<v t="mork.20041030164547.30" a="M"><vh>setBufferStrokes</vh></v>
-<v t="mork.20041101190309"><vh>extendAltX</vh></v>
-<v t="mork.20041102094716"><vh>reconfigureKeyStroke</vh></v>
-<v t="mork.20041103155347"><vh>buffer recognition and alterers</vh>
-<v t="mork.20041104094826"><vh>configure buffer methods</vh>
-<v t="mork.20041103155347.1"><vh>setBufferGetter</vh></v>
-<v t="mork.20041103155347.2"><vh>setBufferSetter</vh></v>
-<v t="mork.20041103155347.3"><vh>getBufferDict</vh></v>
-<v t="mork.20041103162147"><vh>setBufferData</vh></v>
-<v t="mork.20041103191311"><vh>setBufferGoto</vh></v>
-<v t="mork.20041104090224"><vh>setBufferDelete</vh></v>
-<v t="mork.20041104092349"><vh>setBufferRename</vh></v>
-</v>
-<v t="mork.20041104094826.1"><vh>buffer operations</vh>
-<v t="mork.20041103155347.4"><vh>appendToBuffer</vh></v>
-<v t="mork.20041103155347.5"><vh>prependToBuffer</vh></v>
-<v t="mork.20041103155347.6"><vh>insertToBuffer</vh></v>
-<v t="mork.20041103190332"><vh>listBuffers</vh></v>
-<v t="mork.20041103155347.7"><vh>copyToBuffer</vh></v>
-<v t="mork.20041103191311.1"><vh>switchToBuffer</vh></v>
-<v t="mork.20041104090224.1"><vh>killBuffer</vh></v>
-<v t="mork.20041104092058"><vh>renameBuffer</vh></v>
-<v t="mork.20041103161202"><vh>chooseBuffer</vh></v>
-<v t="mork.20041103161202.1"><vh>setInBufferMode</vh></v>
-</v>
-</v>
-</v>
-<v t="mork.20041030164547.11"><vh>_executeMacro</vh></v>
-<v t="mork.20041031155455"><vh>universal methods</vh>
-<v t="mork.20041030164547.143"><vh>universalDispatch</vh></v>
-<v t="mork.20041030164547.144"><vh>universalCommand1</vh></v>
-<v t="mork.20041030164547.145"><vh>universalCommand2</vh></v>
-<v t="mork.20041030164547.146"><vh>universalCommand3</vh></v>
-<v t="mork.20041030164547.147"><vh>numberCommand</vh></v>
-</v>
-</v>
-<v t="ekr.20050527081715.1"><vh>bind and bindtags</vh>
-<v t="mork.20041030164547.30" a="M"><vh>setBufferStrokes</vh></v>
-<v t="mork.20041030183331" a="M"><vh>addCallBackDict (creates cbDict)</vh></v>
-<v t="mork.20041102094716"><vh>reconfigureKeyStroke</vh></v>
-<v t="mork.20041030164547.87"><vh>setRegion</vh></v>
-</v>
-<v t="mork.20041030165020.1"><vh>Emacs.__init__</vh></v>
-<v t="ekr.20050527084754.3"><vh>Commands that need state: mcStateManager</vh>
-<v t="mork.20041122152311"><vh>adding stateful commands to temacs</vh></v>
-<v t="mork.20041104102456"><vh>Emacs helper classes</vh>
-<v t="mork.20041031131847"><vh>class ControlXHandler</vh>
-<v t="mork.20041031162953"><vh>__init__</vh></v>
-<v t="mork.20041031132342"><vh>__call__</vh></v>
-<v t="mork.20041031133146"><vh>processKey</vh></v>
-<v t="mork.20041031134709"><vh>processRectangle</vh></v>
-<v t="mork.20041031135748"><vh>processAbbreviation</vh></v>
-</v>
-<v t="mork.20041031145157"><vh>class MC_StateManager</vh>
-<v t="mork.20041031162857"><vh>__init__</vh>
-<v t="mork.20041031150125"><vh>&lt;&lt;statecommands&gt;&gt;</vh></v>
-</v>
-<v t="mork.20041031162857.1"><vh>setState</vh></v>
-<v t="mork.20041031162857.2"><vh>getState</vh></v>
-<v t="mork.20041031162857.3"><vh>hasState</vh></v>
-<v t="mork.20041124094511"><vh>whichState</vh></v>
-<v t="mork.20041031162857.4"><vh>__call__</vh></v>
-<v t="mork.20041031162857.5"><vh>clear</vh></v>
-</v>
-<v t="mork.20041101083527"><vh>class MC_KeyStrokeManager  (hard-coded keystrokes)</vh>
-<v t="mork.20041101083527.1"><vh>__init__</vh>
-<v t="mork.20041101083527.2"><vh>&lt;&lt;keystrokes&gt;&gt; (hard-coded keystrokes)</vh></v>
-</v>
-<v t="mork.20041101084148"><vh>hasKeyStroke</vh></v>
-<v t="mork.20041101084148.1"><vh>__call__</vh></v>
-</v>
-<v t="mork.20041102131352"><vh>class Tracker</vh>
-<v t="mork.20041102131352.1"><vh>init</vh></v>
-<v t="mork.20041102131352.2"><vh>setTabList</vh></v>
-<v t="mork.20041102131352.3"><vh>_next</vh></v>
-<v t="mork.20041102132710"><vh>next</vh></v>
-<v t="mork.20041102160313"><vh>clear</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050527111832.1"><vh>regXRpl related (It's a generator)</vh>
-<v t="mork.20041030164547.63"><vh>regionalExpandAbbrev</vh>
-<v t="ekr.20050527111832"><vh>&lt;&lt; define a new generator searchXR &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20050527121522"><vh>Control-x stuff</vh>
-<v t="mork.20041030164547.43"><vh>masterCommand</vh>
-<v t="ekr.20050527084754"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
-<v t="ekr.20050527084754.1"><vh>&lt;&lt; old code 2 &gt;&gt;</vh></v>
-<v t="ekr.20050527112828"><vh>&lt;&lt; old insert code &gt;&gt;</vh></v>
-</v>
-<v t="mork.20041030183633"><vh>addXCommands</vh></v>
-<v t="mork.20041030164547.145"><vh>universalCommand2</vh></v>
-</v>
-</v>
-<v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
-<v t="mork.20041030164547"
-marks="mork.20041030183331,mork.20041030190903,mork.20041030164547.30,mork.20041122190403,"><vh>@thin temacs.py</vh></v>
-<v t="ekr.20050518085205"><vh>@thin usetemacs.ini</vh></v>
+<v t="ekr.20050527081321"><vh>EKR Notes</vh>
+<v t="ekr.20050710094310.2"><vh>@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (must do all these)</vh></v>
 <v t="ekr.20050514095136"><vh>ekr usetemacs.ini (doesn't solve the problem I was trying to solve)</vh></v>
 <v t="ekr.20050514095136.1"><vh>Key references</vh></v>
+</v>
+<v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
+<v t="mork.20041030164547"><vh>@thin temacs.py</vh></v>
+<v t="ekr.20050518085205"><vh>@thin usetemacs.ini</vh></v>
 </v>
 <v t="ekr.20050306081349"><vh>Text formatting</vh>
 <v t="edream.111803100242"><vh>@thin rst.py</vh></v>
@@ -1060,23 +1456,23 @@ marks="mork.20041030183331,mork.20041030190903,mork.20041030164547.30,mork.20041
 </v>
 </v>
 </v>
-<v t="ekr.20040408161258"><vh>rst2 plugin</vh>
-<v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
-<v t="ekr.20040408192158.1"><vh>@rst ../doc/rstplugin.html</vh>
-<v t="ekr.20040408192158.2"><vh>Overview</vh>
-<v t="ekr.20040408192158.3"><vh>@rst</vh></v>
+<v t="ekr.20050805105024"><vh>rst2 plugin</vh>
+<v t="ekr.20050805105024.3"><vh>Documentation for the rST plugin using rst</vh>
+<v t="ekr.20050805105024.4"><vh>@rst ../doc/rstplugin.html</vh>
+<v t="ekr.20050805105024.5"><vh>Overview</vh>
+<v t="ekr.20050805105024.6"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040408192158.4"><vh>Formatting</vh>
-<v t="ekr.20040408192158.5"><vh>@rst</vh></v>
+<v t="ekr.20050805105024.7"><vh>Formatting</vh>
+<v t="ekr.20050805105024.8"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040409051841"><vh>Embedding documentation in @file trees</vh>
-<v t="ekr.20040409051841.1"><vh>@rst</vh></v>
+<v t="ekr.20050805105024.9"><vh>Embedding documentation in @file trees</vh>
+<v t="ekr.20050805105024.10"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040408192158.6"><vh>The code-block directive</vh>
-<v t="ekr.20040408192158.7"><vh>@rst</vh></v>
+<v t="ekr.20050805105024.11"><vh>The code-block directive</vh>
+<v t="ekr.20050805105024.12"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040408192158.8"><vh>Cascading style sheets</vh>
-<v t="ekr.20040408192158.9"><vh>@rst</vh></v>
+<v t="ekr.20050805105024.13"><vh>Cascading style sheets</vh>
+<v t="ekr.20050805105024.14"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
@@ -1089,86 +1485,43 @@ marks="mork.20041030183331,mork.20041030190903,mork.20041030164547.30,mork.20041
 </v>
 </v>
 </v>
-<v t="ekr.20050612074047" a="ETV"><vh>New colorizer</vh>
-<v t="ekr.20050529180421"><vh>jEdit docs...</vh>
-<v t="ekr.20050530065723"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
-<v t="ekr.20050529180421.1"><vh>Rule ordering</vh></v>
-<v t="ekr.20050529180421.2"><vh>Attributes</vh>
-<v t="ekr.20050529180421.3"><vh> Documentation of attributes</vh>
-<v t="ekr.20050529180421.4"><vh> For 'seq', 'span', 'begin', 'end'</vh>
-<v t="ekr.20050529180421.5"><vh>AT_LINE_START (bool)</vh></v>
-<v t="ekr.20050529180421.6"><vh>AT_WHITESPACE_END (bool)</vh></v>
-<v t="ekr.20050529180421.7"><vh>AT_WORD_START (bool)</vh></v>
+<v t="ekr.20040408161258" a="TV"><vh>rst3 plugin</vh>
+<v t="ekr.20050802090936"><vh>@page rst3 settings</vh>
+<v t="ekr.20050802090936.6"><vh>@bool rst2_clear_http_attributes = False</vh></v>
+<v t="ekr.20050802090936.4"><vh>@bool rst2_format_headlines = False</vh></v>
+<v t="ekr.20050802090936.5"><vh>@bool rst2_http_server_support = True</vh></v>
+<v t="ekr.20050802090936.1"><vh>@bool rst2_massage_body = False</vh></v>
+<v t="ekr.20050802090936.7"><vh>@bool rst2_run_on_window_open = False</vh></v>
+<v t="ekr.20050802090936.2"><vh>@bool rst2_use_file = False</vh></v>
+<v t="ekr.20050802090936.3"><vh>@bool rst2_write_pure_document = False</vh></v>
+<v t="ekr.20050802090936.11"><vh>@string rst2_http_attributename = 'rst_http_attribute'</vh></v>
+<v t="ekr.20050802090936.10"><vh>@string rst2_node_begin_marker = 'http-node-marker-'</vh></v>
 </v>
-<v t="ekr.20050529180421.8"><vh> For 'span' only</vh>
-<v t="ekr.20050529180421.9"><vh>NO_WORD_BREAK (bool)</vh></v>
-<v t="ekr.20050529180421.10"><vh>NO_LINE_BREAK (bool)</vh></v>
-<v t="ekr.20050529180421.11"><vh>NO_ESCAPE (bool)</vh></v>
-<v t="ekr.20050529180421.12"><vh>EXCLUDE_MATCH (bool)</vh></v>
+<v t="ekr.20050508203638"><vh>Notes</vh>
+<v t="ekr.20050508203638.1"><vh>@url https://sourceforge.net/forum/message.php?msg_id=2946194</vh></v>
+<v t="ekr.20050508203638.2"><vh>Responses</vh></v>
+<v t="ekr.20050508203638.3"><vh>from Kent</vh></v>
+<v t="ekr.20050508203638.4"><vh>New stylesheets for rst (Kent Tenny told me about there)</vh>
+<v t="ekr.20050508203638.5"><vh>@url http://www.voidspace.org.uk/stylesheets/blue_box.css</vh></v>
 </v>
-<v t="ekr.20050529180421.13"><vh> For 'rules' only</vh>
-<v t="ekr.20050529180421.14"><vh>DEFAULT</vh></v>
-<v t="ekr.20050529180421.15"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
-<v t="ekr.20050529180421.16"><vh>IGNORE_CASE (bool)</vh></v>
-<v t="ekr.20050529180421.17"><vh>SET</vh></v>
-<v t="ekr.20050529180421.18"><vh>NO_WORD_SEP</vh></v>
-</v>
-<v t="ekr.20050529180421.19"><vh>AT_CHAR (int) for 'terminate'</vh></v>
-<v t="ekr.20050529180421.20"><vh>DELEGATE: for 'import', 'span' &amp; 'seq'</vh></v>
-<v t="ekr.20050529180421.21"><vh>HASH_CHAR (char) For 'regx'</vh></v>
-<v t="ekr.20050529180421.22"><vh>TYPE (Token Types)</vh></v>
-</v>
-<v t="ekr.20050529180421.23"><vh>Attributes for 'begin' &amp; 'end'</vh></v>
-<v t="ekr.20050529180421.24"><vh>Attributes for 'import': delegate</vh></v>
-<v t="ekr.20050529180421.25"><vh>Attributes for 'mark' </vh></v>
-<v t="ekr.20050529180421.26"><vh>Attributes for 'property': name, value</vh></v>
-<v t="ekr.20050529180421.27"><vh>Attributes for 'rules'</vh></v>
-<v t="ekr.20050529180421.28"><vh>Attributes for 'span'</vh></v>
-<v t="ekr.20050529180421.29"><vh>Attributes for 'seq' </vh></v>
-</v>
-<v t="ekr.20050529180421.30"><vh>Elements</vh>
-<v t="ekr.20050529220821"><vh>Spans and seqs...</vh>
-<v t="ekr.20050529180421.31"><vh>eol_span</vh></v>
-<v t="ekr.20050529180421.32"><vh>eol_span_regexp</vh></v>
-<v t="ekr.20050529180421.35"><vh>mark_following</vh></v>
-<v t="ekr.20050529180421.36"><vh>mark_previous</vh></v>
-<v t="ekr.20050529180421.40"><vh>seq</vh></v>
-<v t="ekr.20050529180421.41"><vh>seq_regexp</vh></v>
-<v t="ekr.20050529180421.42"><vh>span</vh></v>
-<v t="ekr.20050529180421.43"><vh>span_regexp</vh></v>
-</v>
-<v t="ekr.20050529220821.1"><vh>All others...</vh>
-<v t="ekr.20050529180421.33"><vh>import</vh></v>
-<v t="ekr.20050529180421.34"><vh>keywords</vh></v>
-<v t="ekr.20050529180421.37"><vh>mode</vh></v>
-<v t="ekr.20050529180421.38"><vh>props &amp; property  (for auto-indent)</vh></v>
-<v t="ekr.20050529180421.39"><vh>rules</vh></v>
-<v t="ekr.20050529180421.44"><vh>terminate</vh></v>
+<v t="ekr.20050515093257.1"><vh>Summary of config settings for rst2 plugin</vh>
+<v t="ekr.20050515093257.2"><vh>@url http://sourceforge.net/forum/forum.php?thread_id=1251867&amp;forum_id=10226</vh></v>
+<v t="ekr.20050515093257.3"><vh>Post from Bernhard</vh>
+<v t="ekr.20050515093257.4"><vh>Suggested settings for regular rst files</vh></v>
+<v t="ekr.20050515093257.5"><vh>run_on_window_open (for http server)</vh></v>
+<v t="ekr.20050515093257.6"><vh>configuration settings</vh></v>
+<v t="ekr.20050515093257.7"><vh>Not implemented</vh></v>
+<v t="ekr.20050515093257.8"><vh>pure_document</vh></v>
+<v t="ekr.20050515093257.9"><vh>retain the headline nodes with  pure_document=True ?</vh></v>
+<v t="ekr.20050515093257.10"><vh>create_table_of_contents</vh></v>
 </v>
 </v>
+<v t="ekr.20050802075101"><vh>From Kent Tenney</vh></v>
+<v t="ekr.20050804081215"><vh>From Kent Tenney 2</vh></v>
 </v>
-<v t="ekr.20050529142847"
-marks="ekr.20050602205810.4,"><vh>@thin __jEdit_colorizer__.py</vh></v>
-<v t="ekr.20050606214954"><vh>(state methods)</vh>
-<v t="ekr.20050529143413.30"><vh>colorize (Main entry point)</vh></v>
-<v t="ekr.20050529143413.31"><vh>colorizeAnyLanguage</vh></v>
-<v t="ekr.20050602205810.4" a="M"><vh>colorRangeWithTag</vh></v>
-</v>
-<v t="ekr.20050606221357"><vh>(init)</vh>
-<v t="ekr.20050602150619"><vh>init_mode</vh></v>
-<v t="ekr.20050602152743"><vh>init_keywords</vh>
-<v t="ekr.20050607073917"><vh>&lt;&lt; compute extra_word_chars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050530065723.47"><vh>parse_jEdit_file</vh></v>
-</v>
-<v t="ekr.20050607220512"><vh>(delegate)</vh>
-<v t="ekr.20050601105358"><vh>colorOneChunk</vh>
-<v t="ekr.20050605130806"><vh>&lt;&lt; queue up this method the first time &gt;&gt;</vh></v>
-<v t="ekr.20050601162452.1"><vh>&lt;&lt; queue up this method &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050607212958"><vh>colorByDelegate</vh></v>
-<v t="ekr.20050602205810.4" a="M"><vh>colorRangeWithTag</vh></v>
-</v>
+<v t="ekr.20050802091128"><vh>New to-do</vh></v>
+<v t="ekr.20050805162550"
+expanded="ekr.20050805162550.4,ekr.20050805162550.9,ekr.20050805162550.27,"><vh>@thin rst3.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2683,84 +3036,6 @@ class basic_dict_test(unittest.TestCase):
     dict.__init__(self, value)
     self.set_monitor_object(monitor)
 </t>
-<t tx="bwmulder.20050315150045">if config.rst2_clear_attributes:
-    if hasattr(p.v, 'unknownAttributes'):
-        if p.v.unknownAttributes.has_key(config.rst2_http_attributename):
-            del p.v.unknownAttributes[config.rst2_http_attributename]
-            if p.v.unknownAttributes == {}:
-                del p.v.unknownAttributes</t>
-<t tx="bwmulder.20050320000243">def onFileOpen(tag, keywords):
-    # c,old_c,new_c,fileName):
-    c = keywords["new_c"]
-    applyConfiguration(c)
-    if config.firstCall and config.rst2_install_menu_item_in_edit_menu:
-        config.firstCall = False
-        transform_rst2_text_in_subtree(c)
-    ignoreset = {}
-    if c.config.getBool("rst2_run_on_open_window"):
-    # if config.rst2_run_on_window_open:
-        http_map = {}
-        anchormap = {}
-        config.node_counter = 0
-        found_rst_trees = False
-        root = c.currentVnode()
-        
-        if tag == 'open2':
-            iterator = c.allNodes_iter(root)
-        else:
-            iterator = root.self_and_subtree_iter()
-        for p in iterator:
-            if p.v not in ignoreset:
-                s = p.v.headString()
-                if s.startswith("@rst ") and len(s.split()) &gt;= 2:
-                    for p1 in p.subtree_iter():
-                        ignoreset[p1.v] = True
-                    try:
-                        config.http_map = {}
-                        config.anchormap = {}
-                        onIconDoubleClick("open2", {"c": c, "p": p})
-                        http_map.update(config.http_map)
-                        anchormap.update(config.anchormap)
-                        found_rst_trees = True
-                    except SystemExit, s:
-                        g.es("Formatting failed for %s" % p, color='red')
-        if found_rst_trees:
-            config.http_map = http_map
-            config.anchormap = anchormap
-            relocate_references() 
-          
-            config.http_map = None
-            config.anchormap = None
-            g.es('html updated for html plugin', color="blue")
-        if config.rst2_clear_attributes:
-            g.es("http attributes cleared")
-</t>
-<t tx="bwmulder.20050320092000">def http_support_main(tag, fname):
-    if config.rst2_http_server_support:
-        set_initial_http_attributes(fname)
-        find_anchors()
-        if tag == 'open2':
-            return True
-        
-        # We relocate references here if we are only running
-        # for one file, otherwise we must postpone the
-        # relocation until we have processed all files.
-        relocate_references() 
-      
-        config.http_map = None
-        config.anchormap = None
-        g.es('html updated for html plugin', color="blue")
-        if config.rst2_clear_attributes:
-            g.es("http attributes cleared")</t>
-<t tx="bwmulder.20050326114320"># Don't know what to do here: Can someone make a suggestion?
-#import docutils.parsers.rst.directives.admonitions
-#import docutils.parsers.rst.directives.body
-# docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.block 
-# docutils.parsers.rst.directives.register_directive('code-block', docutils.parsers.rst.directives.admonitions.admonition)
-#docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.pull_quote 
-# g.es("Registered some alternate implementation for code-block directive")
-config.do_replace_code_blocks = config.rst2_replace_code_blocks
-</t>
 <t tx="edream.110203113231.233">@ To do:
     
      WARNING: problems with locking out event handlers could cause Leo to drop Text!
@@ -2788,11 +3063,6 @@ config.do_replace_code_blocks = config.rst2_replace_code_blocks
 - Removed idle-time pollution: created onUpdateAllMenus.</t>
 <t tx="edream.110203113231.238"></t>
 <t tx="edream.110203113231.242"></t>
-<t tx="edream.110203113231.243"># Used 10/11/03 to convert old wxLeo code 
-
-if 0: # This script calls c2py on the current node and all nodes of its subtree.
-    import c2py
-    c2py.convertCurrentTree()</t>
 <t tx="edream.110203113231.257"># This updates the text of joined _headlines_, not body text.
 
 if 0: # no longer used
@@ -2808,6 +3078,260 @@ if 0: # no longer used
             self.tree.SetItemText(id,text)
             v2 = v2.joinList()
         guard -= 1</t>
+<t tx="edream.110203113231.260">def finishCreate (self,c):
+    
+    # g.trace('wxLeoFrame')
+    
+    frame = self
+    frame.c = c
+    c.frame = frame
+    
+    # Init the wxFrame base class.  The leoFrame base class has already been inited.
+    wx.wxFrame.__init__(self, None, -1, self.title) # wx.wxNO_3D # hangs.
+    #self.outerPanel = wx.wxPanel(self,-1)
+    #self.iconPanel = wx.wxPanel(self.outerPanel, -1, "iconPanel")
+
+    self.CreateStatusBar()
+    &lt;&lt; create the splitters &gt;&gt;
+    frame.tree = wxLeoTree(frame,self.splitter2)
+    frame.log = wxLeoLog(frame,self.splitter2)
+    frame.body = wxLeoBody(frame,self.splitter1)
+    frame.bodyCtrl = frame.body
+    g.app.setLog(frame.log,'wxLeoFrame:finishCreate') # writeWaitingLog hangs without this(!)
+
+    # Attach the controls to the splitter.
+    self.splitter1.SplitHorizontally(self.splitter2,self.body.bodyCtrl,0)
+    self.splitter2.SplitVertically(self.tree.treeCtrl,self.log.logCtrl,cSplitterWidth/2)
+    
+    self.menu = wxLeoMenu(frame)
+    self.menu.createMenuBar()
+    
+    &lt;&lt; set the window icon &gt;&gt;
+    &lt;&lt; declare event handlers for frame &gt;&gt;
+    
+    if 0: # Not ready yet...
+        self.wxApp.SetTopWindow(self.wxFrame)
+        self.wxFrame.Show(True)
+        if not g.app.root:
+            g.app.root = self.wxFrame
+            
+    self.colorizer = self.body.colorizer
+            
+    c.initVersion()
+    self.signOnWithVersion()
+    
+    self.injectCallbacks()
+
+    # Add the frame to the global window list.
+    g.app.windowList.append(self)
+    self.tree.redraw()
+    self.Show(True) # required on some platforms: a cross-platform bug.</t>
+<t tx="edream.110203113231.261">self.splitter1 = wx.wxSplitterWindow(self,
+    const("cSplitterWindow"),
+    wx.wxDefaultPosition, wx.wxDefaultSize,
+    wx.wxSP_NOBORDER)
+
+# No effect, except to create a red flash.
+if 0:
+    self.splitter1.SetForegroundColour(wx.wxRED)
+    self.splitter1.SetBackgroundColour(wx.wxRED)
+
+self.splitter2 = wx.wxSplitterWindow(self.splitter1, -1,
+    wx.wxDefaultPosition, wx.wxDefaultSize,
+    wx.wxSP_NOBORDER)
+    # wx.wxSP_BORDER | wx.wxSP_3D, "splitterWindow");
+
+self.splitter1.SetMinimumPaneSize(4)
+self.splitter2.SetMinimumPaneSize(4)</t>
+<t tx="edream.110203113231.264">if wx.wxPlatform == "__WXMSW__": # Activate events exist only on Windows.
+    wx.EVT_ACTIVATE(self,self.onActivate)
+else:
+    wx.EVT_SET_FOCUS(self,self.OnSetFocus)
+
+wx.EVT_CLOSE(self,self.onCloseLeoFrame)
+
+wx.EVT_MENU_OPEN(self,self.updateAllMenus) 
+
+if 0: # Causes problems at present.  The screen isn't drawn properly.
+    wx.EVT_SIZE(self,self.onResize)</t>
+<t tx="edream.110203113231.265">if wx.wxPlatform == "__WXMSW__":
+
+    path = os.path.join(g.app.loadDir,"..","Icons","LeoApp16.ico")
+    icon = wx.wxIcon(path,wx.wxBITMAP_TYPE_ICO,16,16)
+    self.SetIcon(icon)
+</t>
+<t tx="edream.110203113231.266">def __init__ (self,title):
+    
+    # Init the leoFrame base class.
+    # We will init the wxFrame base class in finishCreate.
+    leoFrame.leoFrame.__init__(self,g.app.gui)
+    
+    self.c = None # set in finishCreate.
+    self.bodyCtrl = None # set in finishCreate
+    self.title = title
+    
+    # g.trace("wxLeoFrame",title)
+    self.activeFrame = None
+    self.lockout = 0 # Suppress further events
+    self.quitting = False
+    self.updateCount = 0
+    self.treeIniting = False
+    self.drawing = False # Lockout recursive draws.
+    self.menuIdDict = {}
+    self.menuBar = None
+    self.ratio = 0.5
+    self.secondary_ratio = 0.5
+    self.startupWindow=False
+    self.use_coloring = False # set True to enable coloring
+    
+    # These vars have corresponding getters/setters.
+    if 0: # now defined in base tree class.
+        self.mDragging = False
+        self.mRootVnode = None
+        self.mTopVnode = None
+        self.mCurrentVnode = None</t>
+<t tx="edream.110203113231.306"></t>
+<t tx="edream.110203113231.307">def __init__ (self):
+    
+    # g.trace("wxGui")
+    
+    # Initialize the base class.
+    if 1: # in plugin
+        leoGui.leoGui.__init__(self,"wxPython")
+    else:
+        leoGui.__init__(self,"wxPython")
+        
+    self.bitmap_name = None
+    self.bitmap = None</t>
+<t tx="edream.110203113231.308">def createRootWindow(self):
+
+    self.wxApp = wxLeoApp(None) # This redirects stdout &amp; stderr to stupid console.
+    self.wxFrame = None
+
+    if 0: # Not ready yet.
+        self.setDefaultIcon()
+        self.getDefaultConfigFont(g.app.config)
+        self.setEncoding()
+        self.createGlobalWindows()
+
+    return self.wxFrame</t>
+<t tx="edream.110203113231.309">def setDefaultIcon(self):
+    
+    """Set the icon to be used in all Leo windows.
+    
+    This code does nothing for Tk versions before 8.4.3."""
+    
+    gui = self
+
+    try:
+        version = gui.root.getvar("tk_patchLevel")
+        if g.CheckVersion(version,"8.4.3"):
+            # tk 8.4.3 or greater: load a 16 by 16 icon.
+            path = os.path.join(g.app.loadDir,"..","Icons")
+            if os.path.exists(path):
+                file = os.path.join(path,"LeoApp16.ico")
+                if os.path.exists(path):
+                    self.bitmap = Tk.BitmapImage(file)
+                else:
+                    g.es("LeoApp16.ico not in Icons directory", color="red")
+            else:
+                g.es("Icons directory not found: "+path, color="red")
+    except:
+        g.es_print("exception setting bitmap")
+        traceback.print_exc()</t>
+<t tx="edream.110203113231.310">@ According to Martin v. Löwis, getdefaultlocale() is broken, and cannot be fixed. The workaround is to copy the g.getpreferredencoding() function from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
+@c
+
+def setEncoding (self):
+
+    for (encoding,src) in (
+        (g.app.config.tkEncoding,"config"),
+        #(locale.getdefaultlocale()[1],"locale"),
+        (g.getpreferredencoding(),"locale"),
+        (sys.getdefaultencoding(),"sys"),
+        ("utf-8","default")):
+    
+        if g.isValidEncoding (encoding): # 3/22/03
+            g.app.tkEncoding = encoding
+            # g.trace(g.app.tkEncoding,src)
+            break
+        elif encoding and len(encoding) &gt; 0:
+            g.trace("ignoring invalid " + src + " encoding: " + `encoding`)
+            
+    # g.trace(g.app.tkEncoding)</t>
+<t tx="edream.110203113231.311">def getDefaultConfigFont(self,config):
+    
+    """Get the default font from a new text widget."""
+
+    t = Tk.Text()
+    fn = t.cget("font")
+    font = tkFont.Font(font=fn)
+    config.defaultFont = font
+    config.defaultFontFamily = font.cget("family")</t>
+<t tx="edream.110203113231.312">def createGlobalWindows (self):
+    
+    """Create the global windows for the application."""
+    
+    g.app.findFrame = wxFindFrame()
+    g.app.findFrame.top.withdraw()
+    g.app.globalWindows.append(g.app.findFrame)</t>
+<t tx="edream.110203113231.314">def finishCreate (self):
+
+   pass
+    
+</t>
+<t tx="edream.110203113231.315">def killGui(self,exitFlag=True):
+    
+    """Destroy a gui and terminate Leo if exitFlag is True."""
+
+    pass # Not ready yet.
+
+</t>
+<t tx="edream.110203113231.316">def recreateRootWindow(self):
+    """A do-nothing base class to create the hidden root window of a gui
+
+    after a previous gui has terminated with killGui(False)."""
+
+    g.trace('wx gui')
+
+</t>
+<t tx="edream.110203113231.317">def runMainLoop(self):
+
+    """Run tkinter's main loop."""
+    
+    # g.trace("wxGui")
+    self.wxApp.MainLoop()
+    # g.trace("done")</t>
+<t tx="edream.110203113231.347">def OnInit(self):
+
+    self.SetAppName("Leo")
+
+    return True</t>
+<t tx="edream.110203113231.350"></t>
+<t tx="edream.110203113231.351">def __repr__ (self):
+    
+    return "wxLeoFrame: " + self.title</t>
+<t tx="edream.110203113231.540"></t>
+<t tx="edream.110203113231.541">def __init__ (self,frame,parentFrame):
+
+    # Init the base class: calls createControl.
+    leoFrame.leoBody.__init__(self,frame,parentFrame)
+    
+    self.bodyCtrl = self.createControl(frame,parentFrame)
+
+    self.colorizer = leoColor.colorizer(self.c)
+
+    self.styles = {} # For syntax coloring.
+
+    wx.EVT_TEXT(self.bodyCtrl,const("cBodyCtrl"),self.onBodyTextUpdated)</t>
+<t tx="edream.110203113231.542">def createControl (self,frame,parentFrame):
+    
+    ctrl = wx.wxTextCtrl(parentFrame,
+            const("cBodyCtrl"), "",
+            wx.wxDefaultPosition, wx.wxDefaultSize,
+            wx.wxTE_RICH | wx.wxTE_RICH2 | wx.wxTE_MULTILINE)
+
+    return ctrl</t>
 <t tx="edream.110203113231.618">@ It is usually best _not_ to catch exceptions in plugins:
 doHook catches all exceptions and disables further calls to plugins.
 
@@ -3396,11 +3920,20 @@ Added support for clickable http tags.
 Version 1.4, November 4, 2003.
 Put import tkinter in a try/except block.
 Made changes for 4.1 g.app.gui architecture. (More work needed).</t>
+<t tx="edream.111303085447.1">def destroySelf(self):
+    
+    pass # Nothing more needs to be done once all windows have been destroyed.</t>
+<t tx="edream.111303091300"></t>
+<t tx="edream.111303092328.4">def createLeoFrame(self,title):
+    
+    """Create a new Leo frame."""
+
+    return wxLeoFrame(title)</t>
 <t tx="edream.111303100039"></t>
 <t tx="edream.111303100039.1"></t>
 <t tx="edream.111303100039.6">def insertHeadlineTime (self):
     
-    es("insertHeadlineTime not ready yet")
+    g.es("insertHeadlineTime not ready yet")
     return
 
     frame = self ; c = frame.c ; v = c.currentVnode()
@@ -3415,11 +3948,11 @@ Made changes for 4.1 g.app.gui architecture. (More work needed).</t>
 
     # A kludge to get around not knowing whether we are editing or not.
     if h.strip() == v.headString().strip():
-        es("Edit headline to append date/time")</t>
+        g.es("Edit headline to append date/time")</t>
 <t tx="edream.111303100039.7"></t>
 <t tx="edream.111303100039.8">def cascade(self):
     
-    es("cascade not ready yet")
+    g.es("cascade not ready yet")
     return
 
     x,y,delta = 10,10,10
@@ -3432,17 +3965,15 @@ Made changes for 4.1 g.app.gui architecture. (More work needed).</t>
         w,h = string.split(dim,'x')
         w,h = int(w),int(h)
         # Set new x,y and old w,h
-        geom = "%dx%d%+d%+d" % (w,h,x,y)
-        frame.setTopGeometry(geom) # frame.top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+        frame.setTopGeometry(w,h,x,y)
         # Compute the new offsets.
         x += 30 ; y += 30
         if x &gt; 200:
             x = 10 + delta ; y = 40 + delta
-            delta += 10
-</t>
+            delta += 10</t>
 <t tx="edream.111303100039.9">def equalSizedPanes(self):
     
-    es("equalSizedPanes not ready yet")
+    g.es("equalSizedPanes not ready yet")
     return
 
     frame = self
@@ -3450,14 +3981,14 @@ Made changes for 4.1 g.app.gui architecture. (More work needed).</t>
 </t>
 <t tx="edream.111303100039.10">def hideLogWindow (self):
     
-    es("hideLogWindow not ready yet")
+    g.es("hideLogWindow not ready yet")
     return
     
     frame = self
     frame.divideLeoSplitter2(0.99, not frame.splitVerticalFlag)</t>
 <t tx="edream.111303100039.11">def minimizeAll(self):
     
-    es("minimizeAll not ready yet")
+    g.es("minimizeAll not ready yet")
     return
 
     self.minimize(g.app.findFrame)
@@ -3472,7 +4003,7 @@ def minimize(self, frame):
 <t tx="edream.111303100039.12"># The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
 def toggleSplitDirection(self):
     
-    es("toggleSplitDirection not ready yet")
+    g.es("toggleSplitDirection not ready yet")
     return
 
     # Abbreviations.
@@ -3482,7 +4013,7 @@ def toggleSplitDirection(self):
     split2Pane1,split2Pane2 = self.split2Pane1,self.split2Pane2
     # Switch directions.
     verticalFlag = self.splitVerticalFlag = not self.splitVerticalFlag
-    orientation = choose(verticalFlag,"vertical","horizontal")
+    orientation = g.choose(verticalFlag,"vertical","horizontal")
     g.app.config.setWindowPref("initial_splitter_orientation",orientation)
     # Reconfigure the bars.
     bar1.place_forget()
@@ -3499,14 +4030,14 @@ def toggleSplitDirection(self):
     self.resizePanesToRatio(ratio,secondary_ratio)</t>
 <t tx="edream.111303101257">def abortEditLabelCommand (self):
 
-    es("abortEditLabelCommand not ready yet")
+    g.es("abortEditLabelCommand not ready yet")
     return
     
     c = self.c ; v = c.currentVnode ; tree = self.tree
-    # trace(v)
+    # g.trace(v)
     if self.revertHeadline and v.edit_text() and v == self.editVnode:
         
-        # trace(`self.revertHeadline`)
+        # g.trace(`self.revertHeadline`)
         v.edit_text().delete("1.0","end")
         v.edit_text().insert("end",self.revertHeadline)
         tree.idle_head_key(v) # Must be done immediately.
@@ -3517,7 +4048,7 @@ def toggleSplitDirection(self):
             tree.force_redraw() # force a redraw of joined headlines.</t>
 <t tx="edream.111303101257.1">def endEditLabelCommand (self):
     
-    es("endEditLabelCommand not ready yet")
+    g.es("endEditLabelCommand not ready yet")
     return
 
     c = self.c ; tree = self.tree ; v = self.editVnode
@@ -3534,7 +4065,7 @@ def toggleSplitDirection(self):
     
     # This can't work from the menu...
     
-    es("toggleActivePane not ready yet")
+    g.es("toggleActivePane not ready yet")
     return
 
     if self.FindFocus() == self.body.bodyCtrl:
@@ -3544,10 +4075,10 @@ def toggleSplitDirection(self):
 <t tx="edream.111303103141.3">def delete_range (self,menu,n1,n2):
     
     if not menu:
-        trace("no menu")
+        g.trace("no menu")
         return
         
-    # trace(n1,n2,menu.GetTitle())
+    # g.trace(n1,n2,menu.GetTitle())
     
     items = menu.GetMenuItems()
     
@@ -3555,7 +4086,7 @@ def toggleSplitDirection(self):
         for item in items:
             id = item.GetId()
             item = menu.FindItemById(id)
-            trace(item.GetText())
+            g.trace(item.GetText())
             
     ## Doesn't work:  a problem with wxPython.
     
@@ -3564,9 +4095,20 @@ def toggleSplitDirection(self):
         while i &lt;= n2:
             id = items[i].GetId()
             item = menu.FindItemById(id)
-            trace("deleting:",item.GetText())
+            g.trace("deleting:",item.GetText())
             menu.Delete(id)
             i += 1</t>
+<t tx="edream.111303141147">def signOnWithVersion (self):
+
+    c = self.c
+    color = c.config.getColor("log_error_color")
+    signon = c.getSignOnLine()
+    n1,n2,n3,junk,junk=sys.version_info
+    
+    g.es("Leo Log Window...",color=color)
+    g.es(signon)
+    g.es("Python %d.%d.%d wxWindows %s" % (n1,n2,n3,wx.wxVERSION_STRING))
+    g.enl()</t>
 <t tx="edream.111303184347">@ The wxWindows menu code has problems:  changes do not take effect immediately.</t>
 <t tx="edream.111303202917.1">def getColorizer(self):
 
@@ -3610,21 +4152,21 @@ def updateSyntaxColorer (self,v):
         pos2 = j
     
     val = eval("%d %s %d" % (pos1,rel,pos2))
-    trace(i,j,rel,val)
+    g.trace(i,j,rel,val)
     return val</t>
 <t tx="edream.111303204025.3">def convertRowColumnToIndex (self,row,column):
     
     index = self.bodyCtrl.XYToPosition(column,row-1)
-    # trace(column,row,"-&gt;",index)
+    # g.trace(column,row,"-&gt;",index)
     return index</t>
 <t tx="edream.111303204025.4">def convertIndexToRowColumn (self,index):
     
     x,y = self.bodyCtrl.PositionToXY(index)
-    # trace(index,"-&gt;",y+1,x)
+    # g.trace(index,"-&gt;",y+1,x)
     return y+1,x</t>
 <t tx="edream.111303204025.5">def getImageIndex (self,image):
     
-    trace(image)</t>
+    g.trace(image)</t>
 <t tx="edream.111303204517"></t>
 <t tx="edream.111303205442">@ The colorizer isn't ready for prime time:
     
@@ -3635,14 +4177,14 @@ def updateSyntaxColorer (self,v):
 wxLeo should use wxStc rather than wxText!</t>
 <t tx="edream.111303205611">def tag_add (self,tagName,index1,index2):
     
-    # trace(tagName,index1,index2)
+    # g.trace(tagName,index1,index2)
 
     style = self.styles.get(tagName)
     if style:
         self.bodyCtrl.SetStyle(index1,index2,style)</t>
 <t tx="edream.111303205611.1">def tag_bind (self,tagName,event,callback):
     
-    # trace(tagName,event,callback)
+    # g.trace(tagName,event,callback)
     pass
 </t>
 <t tx="edream.111303205611.2">def tag_configure (self,colorName,**keys):
@@ -3654,7 +4196,7 @@ wxLeo should use wxStc rather than wxText!</t>
         fcolor = self.tkColorToWxColor (foreground)
         bcolor = self.tkColorToWxColor (background)
         if fcolor and bcolor:
-            # trace(colorName,foreground,keys)
+            # g.trace(colorName,foreground,keys)
             style = wx.wxTextAttr(fcolor,bcolor)
             self.styles[colorName] = style
         elif fcolor:
@@ -3664,7 +4206,7 @@ wxLeo should use wxStc rather than wxText!</t>
 
     if tagName == "keyword": # A kludge.
 
-        # trace(tagName)
+        # g.trace(tagName)
         style = wx.wxTextAttr(wx.wxBLACK)
         last = self.maxWxIndex()
         
@@ -3672,7 +4214,7 @@ wxLeo should use wxStc rather than wxText!</t>
             self.bodyCtrl.SetStyle(0,last,style)</t>
 <t tx="edream.111303205611.4">def tag_remove (self,tagName,index1,index2):
     
-    trace(tagName,index1,index2)
+    g.trace(tagName,index1,index2)
     pass
 </t>
 <t tx="edream.111403080609">def maxWxIndex (self):
@@ -3697,6 +4239,41 @@ In particular:
 
 The syntax colorer is working in demo mode.  Almost certainly wxLeo should use a better control than wxText.</t>
 <t tx="edream.111403093253.1"></t>
+<t tx="edream.111403141810">def initialRatios (self):
+
+    config = g.app.config
+    s = config.getWindowPref("initial_splitter_orientation")
+    verticalFlag = s == None or (s != "h" and s != "horizontal")
+    
+    # Tweaked for tk.  Other tweaks may be best for wx.
+    if verticalFlag:
+        r = config.getFloatWindowPref("initial_vertical_ratio")
+        if r == None or r &lt; 0.0 or r &gt; 1.0: r = 0.5
+        r2 = config.getFloatWindowPref("initial_vertical_secondary_ratio")
+        if r2 == None or r2 &lt; 0.0 or r2 &gt; 1.0: r2 = 0.8
+    else:
+        r = config.getFloatWindowPref("initial_horizontal_ratio")
+        if r == None or r &lt; 0.0 or r &gt; 1.0: r = 0.3
+        r2 = config.getFloatWindowPref("initial_horizontal_secondary_ratio")
+        if r2 == None or r2 &lt; 0.0 or r2 &gt; 1.0: r2 = 0.8
+
+    return verticalFlag,r,r2</t>
+<t tx="edream.111503105816">def injectCallbacks(self):
+    
+    import leoNodes
+    
+    # Some callback is required.
+    def doNothingCallback(*args,**keys):
+        pass
+
+    for name in (
+        "OnBoxClick","OnDrag","OnEndDrag",
+        "OnHeadlineClick","OnHeadlineRightClick","OnHeadlineKey",
+        "OnHyperLinkControlClick","OnHyperLinkEnter","OnHyperLinkLeave",
+        "OnIconClick","OnIconDoubleClick","OnIconRightClick"):
+
+        # g.trace(f)
+        g.funcToMethod(doNothingCallback,leoNodes.vnode,name=name)</t>
 <t tx="edream.111503110300">At this point, Leo is useable.
 
 What I did:
@@ -3726,17 +4303,19 @@ Later:
     - Only the number dialog remains...
 
 Very little remains to be done, and nothing big.</t>
-<t tx="edream.111503111146"></t>
 <t tx="edream.111503111350"></t>
+<t tx="edream.111503213533">def destroySelf(self):
+    
+    self.Destroy()</t>
 <t tx="edream.111703103908"></t>
 <t tx="edream.111703103908.2">def leoHelp (self):
     
-    es("leoHelp not ready yet")
+    g.es("leoHelp not ready yet")
     
     return ##
     
     file = os.path.join(g.app.loadDir,"..","doc","sbooks.chm")
-    file = toUnicode(file,g.app.tkEncoding) # 10/20/03
+    file = g.toUnicode(file,g.app.tkEncoding) # 10/20/03
 
     if os.path.exists(file):
         os.startfile(file)
@@ -3761,11 +4340,11 @@ Very little remains to be done, and nothing big.</t>
                     os.chdir(g.app.loadDir)
                     webbrowser.open_new(url)
             except:
-                es("exception dowloading sbooks.chm")
-                es_exception()</t>
+                g.es("exception dowloading sbooks.chm")
+                g.es_exception()</t>
 <t tx="edream.111703103908.3">def showProgressBar (self,count,size,total):
 
-    # trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
+    # g.trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
     if self.scale == None:
         &lt;&lt; create the scale widget &gt;&gt;
     self.scale.set(count*size)
@@ -3887,154 +4466,6 @@ if Tk and not g.app.unitTesting: # Not (yet) for unit testing.
         ("insOK",'Ctrl+Shift+O',c.insertOKcmd)]
 
     c.frame.menu.createMenuEntries(c.pluginMenu,table)</t>
-<t tx="ekr.20040331071319.4">try:
-    import docutils
-except:
-    g.es('HTML/LaTeX generation requires docutils')
-    return
-else:
-    import docutils.parsers.rst
-    from docutils.core import Publisher
-    from docutils.io import StringOutput, StringInput, FileOutput,FileInput
-    import StringIO
-    
-# Set the writer and encoding for the converted file
-if ext in ('.html','.htm'):
-    writer='html' ; enc="utf-8"
-else:
-    writer='latex' ; enc="iso-8859-1"
-
-syntax = False
-if writer == 'html':
-    try:
-        import SilverCity
-        &lt;&lt; define code-block &gt;&gt;
-        syntax = True
-    except ImportError:
-        g.es('SilverCity not present so no syntax highlighting')
-        &lt;&lt; define alternate code block implementation&gt;&gt;
-
-if config.rst2file:
-    rstFileName = os.path.splitext(fname)[0] + ".txt"
-    rstFile = file(rstFileName, "w")
-    g.es("Using %s as rst file" % rstFileName)
-else:
-    rstFile = StringIO.StringIO()
-config.current_file = fname
-writeTreeAsRst(rstFile,fname,p,c,syntax=syntax)
-if config.rst2file:
-    rstFile.close()
-else:
-    rstText = rstFile.getvalue()
-
-# This code snipped has been taken from code contributed by Paul Paterson 2002-12-05.
-pub = Publisher()
-if config.rst2file:
-    pub.source = FileInput(source_path=rstFileName)
-    pub.destination = FileOutput(destination_path=fname, encoding='unicode')
-else:
-    pub.source = StringInput(source=rstText)
-    pub.destination = StringOutput(pub.settings, encoding=enc)
-pub.set_reader('standalone', None, 'restructuredtext')
-pub.set_writer(writer)
-output = pub.publish(argv=[''])
-
-if config.rst2file:
-    pass
-else:
-    convertedFile = file(fname,'w')
-    convertedFile.write(output)
-    convertedFile.close()
-rstFile.close()
-writeFullFileName(fname)
-return http_support_main(tag, fname)
-
-</t>
-<t tx="ekr.20040331071319.5">def code_block(name,arguments,options,content,lineno,content_offset,block_text,state,state_machine):
-    
-    """Create a code-block directive for docutils."""
-    
-    # See http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/252170
-    language = arguments[0]
-    module = getattr(SilverCity,language)
-    generator = getattr(module,language+"HTMLGenerator")
-    io = StringIO.StringIO()
-    generator().generate_html(io, '\n'.join(content))
-    html = '&lt;div class="code-block"&gt;\n%s\n&lt;/div&gt;\n'%io.getvalue()
-    raw = docutils.nodes.raw('',html, format='html') #(self, rawsource='', text='', *children, **attributes):
-    return [raw]
-    
-# These are documented at http://docutils.sourceforge.net/spec/howto/rst-directives.html.
-code_block.arguments = (
-    1, # Number of required arguments.
-    0, # Number of optional arguments.
-    0) # True if final argument may contain whitespace.
-
-# A mapping from option name to conversion function.
-code_block.options = {
-    'language' :
-    docutils.parsers.rst.directives.unchanged # Return the text argument, unchanged
-}
-
-code_block.content = 1 # True if content is allowed.
- 
-# Register the directive with docutils.
-docutils.parsers.rst.directives.register_directive('code-block',code_block)
-
-config.do_replace_code_blocks = False</t>
-<t tx="ekr.20040331071319.7">def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
-    
-    'Write the tree under position p to the file rstFile (fname is the filename)'
-    
-    def add_node_marker():
-        if config.rst2_http_server_support:
-            config.node_counter += 1
-            marker = rst_htmlparser.generate_node_marker(config.node_counter)
-            config.last_marker = marker
-            http_map[marker] = p.copy()
-            # the p.copy is necessary, since otherwise the
-            # position is modified and unusable later.
-            rstFile.write("\n\n.. _%s:\n\n" % marker)
-            
-    # we don't write a title, so the titlepage can be customized
-    # use '#' for title under/overline
-    directives = g.scanDirectives(c,p=p) # changed name because don't want to use keyword dict
-    &lt;&lt; set encoding &gt;&gt;
-    &lt;&lt; set code_dir &gt;&gt;
-    s = g.toEncodedString(fname,encoding,reportErrors=True)
-    rstFile.write('.. filename: '+s+'\n')
-    rstFile.write('\n')
-
-    if config.rst2_bodyfilter:
-        s = bodyfilter(p)
-    else:
-        s = p.bodyString()
-    s = g.toEncodedString(s,encoding,reportErrors=True)
-    rstFile.write(s+'\n')		# write body of titlepage.
-    rstFile.write('\n')
-    
-    toplevel = p.level()+1 # Dec 20
-    h = p.headString()
-    
-    if config.rst2_http_server_support:
-        if config.tag == 'open2':
-            http_map = config.http_map
-        else:
-            http_map = {}
-            config.anchormap = {}
-           # maps v nodes to markers.
-            config.node_counter = 0
-    for p in p.subtree_iter():
-        h = p.headString().strip()
-        if config.rst2_pure_document or g.match_word(h,0,"@rst"):
-            &lt;&lt; handle an rst node &gt;&gt;
-        else:
-            &lt;&lt; handle a plain node &gt;&gt;
-        &lt;&lt; clear attributes &gt;&gt;
-    add_node_marker()
-    if config.rst2_http_server_support:
-        config.http_map = http_map
-</t>
 <t tx="ekr.20040331071919"></t>
 <t tx="ekr.20040331071919.1">@language plain
 @ascfile "doc/mod_asc_dev.asc"
@@ -7420,245 +7851,7 @@ http://www.docbook.org[The official home page for DocBook: The Definitive Guide.
 
 
 @code</t>
-<t tx="ekr.20040403202850">if syntax:
-    lang_dict = {'python':'Python', 'ruby':'Ruby', 'perl':'Perl', 'c':'CPP'}
-    language = directives['language']
-    # SilverCity modules have first letter in caps
-    if language in lang_dict:
-        code_dir = '**code**:\n\n.. code-block:: %s\n\n' % lang_dict[language]
-    else:
-        code_dir = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
-else:
-    code_dir = '**code**:\n\n.. class:: code\n..\n\n::\n\n'</t>
-<t tx="ekr.20040403202850.1">s = p.bodyString()
-s = g.toEncodedString(s,encoding,reportErrors=True)
-
-# Skip any leading @ignore, @nocolor, @wrap directives.
-while (
-    g.match_word(s,0,"@ignore") or
-    g.match_word(s,0,"@nocolor") or
-    g.match_word(s,0,"@wrap")
-):
-    i = g.skip_line(s,0)
-    s = s[i:]
-
-add_node_marker()    
-
-if config.rst2_format_headlines:
-    rstFile.write(h+'\n')
-    rstFile.write(underline(h,p.level()-toplevel))
-    rstFile.write('\n')
-
-if config.do_replace_code_blocks and 'code-block::' in s:
-    s = '\n'.join([replace_code_block_directive(line) for line in s.split("\n")])
-
-rstFile.write('%s\n\n'%s.strip())</t>
-<t tx="ekr.20040403202850.2">if g.match_word(h,0,"@file-nosent"):
-    h = h[13:]
-h = g.toEncodedString(h,encoding,reportErrors=True)
-if config.rst2_bodyfilter:
-    s = bodyfilter(p)
-else:
-    s = p.bodyString()
-s = g.toEncodedString(s,encoding,reportErrors=True)
-
-add_node_marker()    
-
-if config.rst2_format_headlines:
-    pass
-else:
-    rstFile.write(h+'\n')
-    rstFile.write(underline(h,p.level()-toplevel))
-    rstFile.write('\n')
-
-if s.strip():
-    rstFile.write(code_dir)
-    s = s.split('\n')
-    for linenum,linetext in enumerate(s[:-1]):
-        if "@others" in linetext: #deleting lines with @other directive from output
-            continue
-        rstFile.write('\t%2d  %s\n'%(linenum+1,linetext))
-
-rstFile.write('\n')</t>
-<t tx="ekr.20040408160625.1">encoding = directives.get("encoding",None)
-if encoding == None:
-    encoding = c.config.default_derived_file_encoding</t>
 <t tx="ekr.20040408161258"></t>
-<t tx="ekr.20040408192158">@nocolor</t>
-<t tx="ekr.20040408192158.1">###########################
-|leo| Using the rst2 plugin
-###########################
-
-This page documents a nifty new plugin created by Josef Dalcolmo, Timo Honkasalo, Steve Zatz, Paul Paterson and Edward Ream.  This page was created using the rst2 plugin.  You can find the source code in LeoPlugins.leo (on cvs).
-
-.. contents::
-
-.. Here are the links used in this document.
-
-.. _LaTeX:                http://www.latex-project.org/
-.. _reStructuredText:     http://docutils.sourceforge.net/rst.html
-.. _docutils:             http://docutils.sourceforge.net
-.. _ListManagerDocs.html: http://webpages.charter.net/edreamleo/ListManagerDocs.html
-.. _wxListManager.leo:    http://webpages.charter.net/edreamleo/wxListManager.leo
-.. _SilverCity:           http://silvercity.sourceforge.net
-.. _front:                http://webpages.charter.net/edreamleo/front.html
-.. _home:                 http://webpages.charter.net/edreamleo/front.html
-
-.. |blank| image:: blank.gif
-.. |leo|   image:: leo.gif
-    :target: front_</t>
-<t tx="ekr.20040408192158.2"></t>
-<t tx="ekr.20040408192158.3">@ignore
-@nocolor
-@wrap
-
-This plugin creates output files from Leo outlines containing reStructuredText_
-(rST) The combination of Leo outlines and rST creates a simple, flexible and
-powerful way of generating HTML, LaTeX_ and other text documents.
-ReStructuredText is a simple and powerful text formatting markup language.
-
-The file ListManagerDocs.html_ is an impressive example of the kind of output
-that is possible to generate relatively easily using this plugin. The source
-file for this example is wxListManager.leo_.
-
-To use this plugin, you must have installed Python's docutils_ module. This
-module will also use the SilverCity_ syntax coloring package if you have
-installed it.
-
-This plugin assumes that a node whose headline is @rst &lt;filename&gt; contains a
-tree of nodes containing reStructuredText. Let us call such a node an **rst root**
-node. The plugin passes the headline and body text of the rst root and all the
-nodes of its subtree to Python's docutils module, which parses the
-reStructuredText and creates the output file.
-
-Double-clicking on an rst root node generates an output file from the
-reStructured Text input contained in the rst root node and all the nodes of its
-subtree. The output file will be HTML, LaTex or plain text depending on the
-extension of the filename specified in the rst root node. If the filename ends
-in .html or .htm the docutils module will create an HTML file. If the filename
-ends in .tex the docutils module will create a LaTex file. Otherwise, a plain
-.txt file is generated.
-
-If the output file is a .html or .htm file, it will use three .css (cascading
-style sheet) files provided they exist in the same directory as the output file.
-You can control the formatting of the HTML file by altering these .css files.
-See the node called "cascading style sheets" for more details.
-
-See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for
-many examples of how to use this plugin.</t>
-<t tx="ekr.20040408192158.4"></t>
-<t tx="ekr.20040408192158.5">@ignore
-@nocolor
-@wrap
-
-If an outline node contains @rst &lt;filename&gt;, that node is the root of a tree of
-nodes that will create the named output file. Let's call such a node the **rst
-root**.
-
-Subnodes of the rst root nodes may have headlines that contain just @rst. Such
-node should contain rst markup, possibly including the code-block directive
-defined by this plugin to format blocks of code.
-
-**Important:** All @rst nodes should start with the @ignore directive. This allows @rst to be embedded in @file-nosent trees: see the next section for details. This plugin strips leading @ignore, @nocolor and @wrap directives.  Such directives do not appear in the output.
-
-The root node may contain any rST directives.  In particular, to create a table of contents put::
-
-    .. contents:: Table of Contents
-
-on its own line in the rst root node.
-
-All other subnodes of the rst root, i.e., nodes whose headline is something
-other than @rst, are **code nodes**. This plugin converts the headline text of
-code nodes into an rST section headline whose level depends on the level of the
-node in the Leo outline. Higher-level headlines in the outline correspond to
-higher-level section headings; lower-level headlines in the outline correspond
-to lower-level section headings. Any text in a code node is formatted as if it
-were enclosed in a code-block directive.
-
-The plugin reserves the '#' character for your own use so that you can
-specify an rST headline explicitly. For example,::
-
-    #####
-    Title
-    #####
-
-You would typically put such a title in the rst root node.
-Otherwise, section underlining is discouraged, since the plugin automaticaly
-generates sections from headlines.</t>
-<t tx="ekr.20040408192158.6"></t>
-<t tx="ekr.20040408192158.7">@ignore
-@nocolor
-@wrap
-
-This plugin defines a code-block rST directive if the SilverCity syntax coloring module has been installed. This directive takes one argument, a language name.  For example::
-
-    .. code-block:: Python
-    
-        import leoGlobals as g
-
-This directive syntax colors the code in the indented code block that follows the directive.  The result looks like this:
-
-.. code-block:: Python
-    
-    import leoGlobals as g
-
-See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for many examples of how to use this directive.
-</t>
-<t tx="ekr.20040408192158.8"></t>
-<t tx="ekr.20040408192158.9">@ignore
-@nocolor
-@wrap
-
-When this plugin generates HTML files, this plugin assumes that three .css
-(cascading style sheet) files exist in the directory containing the output file.
-For the HTML output to look good the following .css files should exist in the
-directory containing the generatated HTML file: default.css, leo_rst.css and
-silver_city.css.
-
-- default.css is the default style sheet that docutils expects to exist.
-- leo_rst.css contains some style improvements based on Gunnar Schwant's DocFactory.
-- silver_city.css is the style sheet that controls the syntax highlighting generated by SilverCity.
-
-The latter two style sheets are imported at the end of the default.css.
-
-**N.B.** You can use cascading style sheets to do things that otherwise wouldn't be possible with "plain" rST.  For instance, the background color of this page was specified in a body style.
-
--------------
-
-|leo|</t>
-<t tx="ekr.20040409051841"></t>
-<t tx="ekr.20040409051841.1">As stated earlier, you must put an @ignore directive in any @rst node (except the root @rst node) whose rST text you want to contribute to the output.  This strange-looking convention allows you to embed documentation in @file-nosent trees *without* that documentation being included in the file derived from the @file-nosent tree.
-
-For example, consider the following outline, in which all the @rst nodes (except the root @rst node) contain @ignore directives::
-
-    @rst spamDocs.html
-        @file-nosent spam.py
-            code node 1
-                @rst
-            code node 2
-                @rst
-            code node 3
-                @rst
-
-The rst2 plugin will ouput all the reStructuredText contained in the three @rst nodes to spamDocs.html, but the contents of those @rst nodes will not become part of spam.py.  *Note:* The @ignore directive is valid only in @file-nosent trees, which is why we must use @file-noset to generate spam.py.
-
-It would be also be possible to use cloned nodes to embed code nodes in .html files.  This would allow you to use regular @file trees to generate derived files.  For example, suppose all similarly named code nodes are clones of each other::
-
-    @rst spamDocs.html
-        code node 1
-            @rst
-        code node 2
-            @rst
-        code node 3
-            @rst
-
-    @file-nosent spam.py
-        code node 1
-        code node 2
-        code node 3
-
-The disadvantage of this organization is that you must update spamDocs.html by hand to keep it up-to-date with spam.py.
-</t>
 <t tx="ekr.20040717133342"></t>
 <t tx="ekr.20040722134535"></t>
 <t tx="ekr.20040722135402"></t>
@@ -8101,17 +8294,7 @@ if not g.app.unitTesting: # Unpleasant for unit testing.
     ("Open LeoConfig.leo", "打开 LeoConfig.leo"),
     ("Apply Settings", "应用设置")</t>
 <t tx="ekr.20040915073259"></t>
-<t tx="ekr.20040918165144">@
-Each can be done without impacting other code.
-Each can be done relatively easily: one week or less</t>
-<t tx="ekr.20040918165144.2"></t>
-<t tx="ekr.20040918165144.3"></t>
-<t tx="ekr.20040918165144.4"></t>
-<t tx="ekr.20040918165144.5"></t>
-<t tx="ekr.20040918165144.6"></t>
-<t tx="ekr.20040918165144.8"></t>
 <t tx="ekr.20040918165144.9"></t>
-<t tx="ekr.20040918165144.10"></t>
 <t tx="ekr.20040918165427"></t>
 <t tx="ekr.20040918165427.4">@nocolor
 
@@ -8174,7 +8357,6 @@ That web site is produced from a Leo outline.
 
     ----------------------------------------
     Michael Dawson</t>
-<t tx="ekr.20040918165427.6"></t>
 <t tx="ekr.20041001210557"></t>
 <t tx="ekr.20041002162608"># Note: this work has been superceded by the temacs plugin.</t>
 <t tx="ekr.20041009112303"></t>
@@ -10488,15 +10670,6 @@ the config options are listed. I can't find the recent
 thread which gives the meanings of the settings.</t>
 <t tx="ekr.20050508203638.4"></t>
 <t tx="ekr.20050508203638.5"></t>
-<t tx="ekr.20050508203638.6">@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=3107951
-By: rdskaroff
-
-I also agree 100% with initiating the creation of an output file as a menu item
-rather than a double-click event. I am having enough trouble keeping track of
-where I am in the ui when I edit my outlines, select right-click menu items
-and drag nodes around.</t>
 <t tx="ekr.20050514095136">[ newkeystrokes ]
 
 #Alt-q=Alt-f # rebind Alt-q to what Alt-f does.
@@ -10722,9 +10895,7 @@ M-| cmd -- Run the shell command line cmd with region contents as input
 
 Alt-x commands:
 
-(Pressing Tab will result in auto completion of the options if an appropriate match is found
-
-</t>
+(Pressing Tab will result in auto completion of the options if an appropriate match is found</t>
 <t tx="ekr.20050515093257.1">rst2_bodyfilter = False
     # True: call body_filter to massage text.
     # Removes @ignore, @nocolor, @wrap directives.
@@ -10852,105 +11023,6 @@ The following steps must be done to get the aspell plugin to load:
     aspell_bin_dir = r'/other/leo/lib/leo/plugins'</t>
 <t tx="ekr.20050523073009"></t>
 <t tx="ekr.20050527081321"></t>
-<t tx="ekr.20050527081715"></t>
-<t tx="ekr.20050527081715.1"></t>
-<t tx="ekr.20050527084754">
-#if self.uC:
-#    self.previousStroke = stroke
-#    return self.universalDispatch( event, stroke )
-
-#if self.controlx:
-#    self.previousStroke = stroke
-#     return self.doControlX( event, stroke )
-
-
-#if stroke in ('&lt;Control-s&gt;', '&lt;Control-r&gt;' ): 
-#    self.previousStroke = stroke
-#    return self.startIncremental( event, stroke )
-
-#if self.isearch:
-#   return self.iSearch( event )
-
-#if stroke == '&lt;Alt-g&gt;':
-#    self.previousStroke = stroke
-#    return self.startGoto( event )
-#if self.goto:
-#    return self.Goto( event )
-
-#if stroke == '&lt;Alt-z&gt;':
-#    self.previousStroke = stroke
-#    return self.startZap( event )
-
-#if self.zap:
-#    return self.zapTo( event )</t>
-<t tx="ekr.20050527084754.1">
-    #if self.howM:
-    #    return self.howMany( event )
-        
-    #if self.abbrevMode:
-    #    return self.abbrevCommand1( event )
-        
-    #if self.altx:
-    #    return self.doAlt_X( event )
-
-    #if stroke == '&lt;Alt-percent&gt;':
-    #    self.previousStroke = stroke
-    #    return self.masterQR( event )  
-    #if self.qlisten:
-    #    return self.masterQR( event )
-        
-    #if self.rString:
-    #    return self.replaceString( event )
-     
-    #if self.negativeArg:
-    #    return self.negativeArgument( event, stroke )
-    
-    #if stroke == '&lt;Control-Alt-w&gt;':
-    #    self.previousStroke = '&lt;Control-Alt-w&gt;'   
-    #    return 'break'</t>
-<t tx="ekr.20050527084754.2">setBufferStrokes creates all additional bindings.
-    - Called at end of Emacs.__init__.
-    - </t>
-<t tx="ekr.20050527084754.3"></t>
-<t tx="ekr.20050527111832"># EKR: This is a generator (it contains a yield).
-# EKR: To make this work we must define a new generator for each call to regionalExpandAbbrev.
-def searchXR( i1 , i2, ins, event ):
-    tbuffer.tag_add( 'sXR', i1, i2 )
-    while i1:
-        tr = tbuffer.tag_ranges( 'sXR' )
-        if not tr: break
-        i1 = tbuffer.search( r'\w', i1, stopindex = tr[ 1 ] , regexp = True )
-        if i1:
-            word = tbuffer.get( '%s wordstart' % i1, '%s wordend' % i1 )
-            tbuffer.tag_delete( 'found' )
-            tbuffer.tag_add( 'found',  '%s wordstart' % i1, '%s wordend' % i1 )
-            tbuffer.tag_config( 'found', background = 'yellow' )
-            if self.abbrevs.has_key( word ):
-                svar, label = self.getSvarLabel( event )
-                svar.set( 'Replace %s with %s? y/n' % ( word, self.abbrevs[ word ] ) )
-                yield None
-                if self.regXKey == 'y':
-                    ind = tbuffer.index( '%s wordstart' % i1 )
-                    tbuffer.delete( '%s wordstart' % i1, '%s wordend' % i1 )
-                    tbuffer.insert( ind, self.abbrevs[ word ] )
-            i1 = '%s wordend' % i1
-    tbuffer.mark_set( 'insert', ins )
-    tbuffer.selection_clear()
-    tbuffer.tag_delete( 'sXR' )
-    tbuffer.tag_delete( 'found' )
-    svar, label = self.getSvarLabel( event )
-    svar.set( '' )
-    self.setLabelGrey( label )
-    self._setRAvars()</t>
-<t tx="ekr.20050527111832.1"></t>
-<t tx="ekr.20050527112828">Emacs.lossage.reverse()
-Emacs.lossage.append( event.char ) #Then we add the new char.  Hopefully this will keep Python from allocating a new array each time.
-Emacs.lossage.reverse()
-
-self.keysymhistory.reverse()
-self.keysymhistory.append( event.keysym )
-self.keysymhistory.reverse()</t>
-<t tx="ekr.20050527121522"></t>
 <t tx="ekr.20050529143413.30">def colorize(self,p,incremental=False):
     
     '''The main colorizer entry point.'''
@@ -11782,6 +11854,4746 @@ for ch in word_chars:
         self.rulesDict = self.save_rulesDict</t>
 <t tx="ekr.20050607220512"># To do: honor default:comment3 attribute of ruleset.</t>
 <t tx="ekr.20050612074047"></t>
+<t tx="ekr.20050710094310.2"></t>
+<t tx="ekr.20050718142601"></t>
+<t tx="ekr.20050718142601.1">@nocolor
+
+- The find frame is no longer global, so g.app.findFrame no longer exists.
+
+- Added gui arg in wxLeoFrame ctor.
+
+- Changed trace to g.trace, es to g.es, etc.
+
+- Changed calling sequence of setTopGeometry to (self,w,h,x,y,adjustSize=True):</t>
+<t tx="ekr.20050718142601.3"># The find window is no longer global.
+
+g.app.findFrame = wxFindFrame()
+g.app.globalWindows.append(g.app.findFrame)</t>
+<t tx="ekr.20050718151826"></t>
+<t tx="ekr.20050722075812">for p in p.self_and_subtree_iter():
+    s = p.bodyString()
+    target = s.rstrip()
+    if s != target:
+        p.setBodyStringOrPane(target)
+        g.es(p.headString())</t>
+<t tx="ekr.20050722082741"></t>
+<t tx="ekr.20050723060629"></t>
+<t tx="ekr.20050723062822.14">class stateManager:
+    
+    def __init__( self, emacs):
+        self.state = None
+        self.emacs = emacs
+
+    def hasState( self ):
+        return self.state
+        
+    def setState( self, state ):
+        self.state = state
+        
+    def filterTo( self, event, command ):
+        return self.emacs.strategyObjects[ self.state ]( event, command )
+        
+    def clear( self ):
+        self.state = None</t>
+<t tx="ekr.20050723062822.34">def masterCommand( self, event, command ):
+    '''All processing goes through here.  'consume' is a flag to the
+       KeyProcessor instance indicating if it should stop the event from
+       propagating by consuming the event'''
+
+    consume = False
+
+    if command == 'Ctrl G':  ### To do; make configurable.
+        return self.keyboardQuit( event )
+      
+    if self._stateManager.hasState():
+        return self._stateManager.filterTo( event, command )
+        
+    if self.callbacks.has_key( command ):
+        consume = self.callbacks[ command ]( event, command )
+        
+    if self._stateManager2.hasState():
+        self._stateManager2.filterTo( event, command )
+    
+    return consume</t>
+<t tx="ekr.20050723062822.38">def keyboardQuit( self, event=None ):
+    
+    self._stateManager.clear()
+    self._stateManager2.clear()
+    self.minibuffer.setText( '' )
+    self.clearHighlights()
+    sa = stext.SimpleAttributeSet()
+    sa.addAttribute( 'dy-ab', 'dy-ab' )
+    sa.addAttribute( 'kb', 'kb' )
+    self.clearAttributes( sa )
+    self.setCommandText( "" )
+    for z in self.modeStrategies:
+        z.mode = None
+    
+    cp = self.editor.getCaretPosition()
+    self.editor.setCaretPosition( cp )
+    return True</t>
+<t tx="ekr.20050723063811">class editCommands:
+
+    @others</t>
+<t tx="ekr.20050723063811.1">def __init__ (self,c):
+    
+    self.c = c
+
+    self.mode = 'default'
+    self.modeStack = []
+    
+    self.defaultWordChars1, self.defaultWordChars2 = self.setDefaultWordChars()
+    self.wordChars1 = self.defaultWordChars1
+    self.wordChars2 = self.defaultWordChars2
+
+    self.setDefaultOptions()</t>
+<t tx="ekr.20050723063811.2"></t>
+<t tx="ekr.20050723063811.3">def setDefaultOptions(self):
+    
+    self.options = {
+        'extendMovesForward':   True,  # True: moving forward may cross node boundaries.
+        'extendMovesBack':      True,  # True: moving back may cross node boundaries.
+        'extendFindsForward':   True,   # True: find forward may cross node boundaries.
+        'extendFindsBack':      True,   # True: find back may cross node boundaries.
+    }</t>
+<t tx="ekr.20050723063811.4">def getOption (self,optionName):
+    
+    # This may change when modes get put in.
+    return self.options.get(optionName)</t>
+<t tx="ekr.20050723063811.5"></t>
+<t tx="ekr.20050723063811.6">def findWordStart(self,s,i):
+    
+    while i &lt; len(s):
+        if s[i] in self.wordChars1:
+            return i
+        else:
+            i += 1
+    return i</t>
+<t tx="ekr.20050723063811.7">def insideWord (self,s,i):
+    
+    '''Return True if the char at s[i] is inside a word but does not start the word.'''
+    
+    return (
+        0 &lt; i &lt; len(s) and
+        s[i] in self.wordChars2 and
+        s[i-1] in self.wordChars2
+    )</t>
+<t tx="ekr.20050723063811.8">def skipWord(self,s,i):
+    
+    while i &lt; len(s) and s[i] in self.wordChars2:
+        i += 1
+    return i</t>
+<t tx="ekr.20050723063811.9">def startsWord (self,s,i):
+    
+    '''Return True if the char at s[i] is inside a word but does not start the word.'''
+    
+    return (
+        i &lt; len(s) and 
+        s[i] in self.wordChars1 and
+        (i == 0 or s[i-1] not in self.wordChars1)
+    )</t>
+<t tx="ekr.20050723063811.10">def setDefaultWordChars (self):
+    
+    chars1 = '_' + string.letters
+    chars2 = '_' + string.letters + string.digits
+    return chars1, chars2</t>
+<t tx="ekr.20050723063811.11"></t>
+<t tx="ekr.20050723063811.12">def moveBackwardChar (self):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    i = b.getPythonInsertionPoint(s=s)
+    i -= 1
+    if i &gt;= 0:
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
+        p = c.currentPosition().moveToThreadBack()
+        while p:
+            s = p.bodyString()
+            if len(s) &gt; 0:
+                c.selectPosition(p)
+                b.setPythonInsertionPoint(len(s)-1)
+                return True
+            else:
+                p.moveToThreadBack()
+        return False
+    else:
+        return False</t>
+<t tx="ekr.20050723063811.13">def moveBackwardWord (self,i=None):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    if i is None: i = b.getPythonInsertionPoint(s=s)
+
+    if self.startsWord(s,i) or self.insideWord(s,i):
+        i = self.findWordStart(s,i)
+    i = self.findWordStart(s,i) ###
+    if self.startsWord(s,i): ###
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
+        p = c.currentPosition().moveToThreadBack()
+        while p:
+            c.selectPosition(p)
+            if self.moveBackwardWord(0):
+                return True
+            p.moveToThreadBack()
+        return False
+    else:
+        return False</t>
+<t tx="ekr.20050723063811.14">def moveForwardChar (self):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    i = b.getPythonInsertionPoint(s=s)
+    i += 1
+    if i &lt; len(s):
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
+        p = c.currentPosition().moveToThreadNext()
+        while p:
+            if len(p.bodyString()) &gt; 0:
+                c.selectPosition(p)
+                b.setPythonInsertionPoint(0)
+                return True
+            else:
+                p.moveToThreadNext()
+        return False
+    else:
+        return False</t>
+<t tx="ekr.20050723063811.15">def moveForwardWord (self,i=None):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    if i is None: i = b.getPythonInsertionPoint(s=s)
+
+    if self.startsWord(s,i) or self.insideWord(s,i):
+        i = self.skipWord(s,i)
+    i = self.findWordStart(s,i)
+    if self.startsWord(s,i):
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
+        p = c.currentPosition().moveToThreadNext()
+        while p:
+            c.selectPosition(p)
+            if self.moveForwardWord(0):
+                return True
+            p.moveToThreadNext()
+        return False
+    else:
+        return False</t>
+<t tx="ekr.20050723063811.16"></t>
+<t tx="ekr.20050723063811.17">def selectForwardWord (self):
+    
+    c = self ; b = c.frame.body ; s = b.getAllText()
+
+    i = i1 = b.getPythonInsertionPoint()
+    
+    if i &lt; len(s) and g.is_c_id(s[i]):
+        i = g.skip_c_id(s,i+1)
+    
+    while i &lt; len(s) and not g.is_c_id(s[i]):
+        i += 1
+        
+    if i &lt; len(s) and g.is_c_id(s[i]):
+        # b.setPythonTextSelection(i1,i)
+        pass ### TODO</t>
+<t tx="ekr.20050724075352.14">class controlX_handlerClass:
+
+    '''The ControlXHandler manages how the Control-X based commands operate on the
+       Emacs instance.'''    
+    
+    @others</t>
+<t tx="ekr.20050724075352.15">def __init__ (self,emacs):
+
+    self.emacs = emacs
+    self.previous = []
+
+    # These are set in miniBuffer.finishCreate.
+    self.rect_commands = {}
+    self.variety_commands = {}
+    self.abbreviationDispatch = {}
+    self.register_commands = {}</t>
+<t tx="ekr.20050724075352.16">def __call__ (self,event,stroke):
+
+    emacs = self.emacs
+
+    self.previous.insert(0,event.keysym)
+
+    if len(self.previous) &gt; 10:
+        self.previous.pop()
+
+    if stroke in ('&lt;Key&gt;','&lt;Escape&gt;'):
+        return self.processKey(event)  # Weird command-specific stuff.
+
+    if stroke in emacs.xcommands:
+        emacs.xcommands [stroke](event)
+        if stroke != '&lt;Control-b&gt;':
+            emacs.keyboardQuit(event)
+
+    return 'break'
+</t>
+<t tx="ekr.20050724075352.17">def processKey (self,event):
+
+    b = self ; emacs = self.emacs
+    previous = self.previous
+    if event.keysym in ('Shift_L','Shift_R'):
+        return
+
+    if emacs.sRect:
+        return emacs.stringRectangle(event)
+
+    if (
+        event.keysym == 'r' and
+        emacs.rectangleCommands.rectanglemode == 0
+        and not emacs.registerCommands.registermode
+    ):
+        return self.processRectangle(event)
+
+    if (
+        self.rect_commands.has_key(event.keysym) and
+        emacs.rectangleCommands.rectanglemode == 1
+    ):
+        return self.processRectangle(event)
+
+    if self.register_commands.has_key(emacs.registerCommands.registermode):
+        self.register_commands [emacs.registerCommands.registermode] (event)
+        return 'break'
+
+    func = self.variety_commands.get(event.keysym)
+    if func:
+        emacs.stopControlX(event)
+        return func(event)
+
+    if event.keysym in ('a','i','e'):
+        if self.processAbbreviation(event): return 'break'
+
+    if event.keysym == 'g':
+        l = b.get()
+        if self.abbreviationDispatch.has_key(l):
+            emacs.stopControlX(event)
+            return self.abbreviationDispatch [l](event)
+
+    if event.keysym == 'e':
+        emacs.stopControlX(event)
+        return emacs.macroCommands.executeLastMacro(event)
+
+    if event.keysym == 'x' and previous [1] not in ('Control_L','Control_R'):
+        event.keysym = 's'
+        emacs.setNextRegister(event)
+        return 'break'
+
+    if event.keysym == 'Escape':
+        if len(previous) &gt; 1:
+            if previous [1] == 'Escape':
+                return emacs.repeatComplexCommand(event)
+</t>
+<t tx="ekr.20050724075352.18">if 0: # Reference: actually defined in finishCreate.
+    self.rect_commands = {
+        'o': emacs.rectangleCommands.openRectangle,
+        'c': emacs.rectangleCommands.clearRectangle,
+        't': emacs.rectangleCommands.stringRectangle,
+        'y': emacs.rectangleCommands.yankRectangle,
+        'd': emacs.rectangleCommands.deleteRectangle,
+        'k': emacs.rectangleCommands.killRectangle,
+        'r': emacs.rectangleCommands.activateRectangleMethods,
+    }
+
+def processRectangle (self,event):
+    
+    func = self.rect_commands.get(event.keysym)
+    func(event)
+    return 'break'
+</t>
+<t tx="ekr.20050724075352.19">def processAbbreviation (self,event):
+
+    b = self ; char = event.char
+
+    if b.get() != 'a' and event.keysym == 'a':
+        b.set('a')
+        return 'break'
+
+    elif b.get() == 'a':
+        if char == 'i':
+            b.set('a i')
+        elif char == 'e':
+            b.stopControlX(event)
+            event.char = ''
+            self.emacs.expandAbbrev(event)
+        return 'break'</t>
+<t tx="ekr.20050724075352.32">def __call__ (self,event,stroke):
+
+    numberOfArgs, func = self.keystrokes [stroke]
+
+    if numberOfArgs == 1:
+        return func(event)
+    else:
+        return func(event,stroke)</t>
+<t tx="ekr.20050724075352.41">def __init__ (self,c,
+    tbuffer=None,miniBufferWidget=None,
+    useGlobalKillbuffer=False,useGlobalRegisters=False):
+    '''Sets up Emacs instance.
+    
+    Use tbuffer (a Tk Text widget) and miniBufferWidget (a Tk Label) if provided.
+    Otherwise, the caller must call setBufferStrokes.
+    
+    useGlobalRegisters and useGlobalKillbuffer indicate whether to use
+    global (class vars) or per-instance (ivars) for kill buffers and registers.'''
+    
+    self.c = c
+    self.undoers = {} # Emacs instance tracks undoers given to it.
+    self.useGlobalKillbuffer = useGlobalKillbuffer
+    self.useGlobalRegisters = useGlobalRegisters
+
+    # For communication between keystroke handlers and other classes.
+    self.regXRpl = None # EKR: a generator: calling self.regXRpl.next() get the next value.
+    self.regXKey = None
+   
+    # Create helper classes.  Order is important here...
+    self.miniBuffer   = self.miniBufferClass(self,miniBufferWidget)
+    altX_commandsDict = self.createCommandsClasses()
+
+    # Define delegators before calling finishCreate.
+    self.stateManager = self.miniBuffer.stateManager
+    self.kstrokeManager = self.miniBuffer.kstrokeManager
+    self.keyboardQuit   = self.miniBuffer.keyboardQuit
+    self.setEvent       = self.miniBuffer.setEvent
+
+    # Last.
+    self.miniBuffer.finishCreate(altX_commandsDict)
+  
+    if tbuffer and miniBufferWidget:
+        self.miniBuffer.setBufferStrokes(tbuffer)</t>
+<t tx="ekr.20050724075352.43">def masterCommand (self,event,method,stroke):
+    '''This is the central routing method of the Emacs class.
+    All commands and keystrokes pass through here.'''
+
+    special = event.keysym in ('Control_L','Control_R','Alt_L','Alt-R','Shift_L','Shift_R')
+    inserted = not special or len(self.keysymhistory) == 0 or self.keysymhistory [0] != event.keysym
+
+    if inserted:
+        &lt;&lt; add character to history &gt;&gt;
+
+    if self.emacs.macroCommands.macroing:
+        &lt;&lt; handle macro &gt;&gt;
+
+    if stroke == '&lt;Control-g&gt;':
+        self.previousStroke = stroke
+        return self.keyboardQuit(event)
+
+    # Important: This effectively over-rides the handling of most keystrokes with a state.
+    if self.stateManager.hasState():
+        self.previousStroke = stroke
+        return self.stateManager(event,stroke) # Invoke the __call__ method.
+
+    if self.kstrokeManager.hasKeyStroke(stroke):
+        self.previousStroke = stroke
+        return self.kstrokeManager(event,stroke) # Invoke the __call__ method.
+
+    if self.emacs.regXRpl: # EKR: a generator.
+        try:
+            self.emacs.regXKey = event.keysym
+            self.emacs.regXRpl.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    if self.emacs.abbrevOn:
+        if self.emacs.abbrevCommands._expandAbbrev(event):
+            return 'break'
+
+    if method:
+        rt = method(event)
+        self.previousStroke = stroke
+        return rt</t>
+<t tx="ekr.20050724075352.49">def addCallBackDict (self):
+
+    '''Create callback dictionary for masterCommand.'''
+
+    b = self ; emacs = self.emacs
+
+    cbDict = {
+    'Alt-less':     lambda event, spot = '1.0': emacs.editCommands.moveTo(event,spot),
+    'Alt-greater':  lambda event, spot = 'end': emacs.editCommands.moveTo(event,spot),
+    'Control-Right': lambda event, way = 1: emacs.editCommands.moveword(event,way),
+    'Control-Left': lambda event, way = -1: emacs.editCommands.moveword(event,way),
+    'Control-a':    lambda event, spot = 'insert linestart': emacs.editCommands.moveTo(event,spot),
+    'Control-e':    lambda event, spot = 'insert lineend': emacs.editCommands.moveTo(event,spot),
+    'Alt-Up':       lambda event, spot = 'insert linestart': emacs.editCommands.moveTo(event,spot),
+    'Alt-Down':     lambda event, spot = 'insert lineend': emacs.editCommands.moveTo(event,spot),
+    'Alt-f':        lambda event, way = 1: emacs.editCommands.moveword(event,way),
+    'Alt-b':        lambda event, way = -1: emacs.editCommands.moveword(event,way),
+    'Control-o':    emacs.editCommands.insertNewLine,
+    'Control-k':    lambda event, frm = 'insert', to = 'insert lineend': emacs.kill(event,frm,to),
+    'Alt-d':        lambda event, frm = 'insert wordstart', to = 'insert wordend': emacs.kill(event,frm,to),
+    'Alt-Delete':   lambda event: emacs.deletelastWord(event),
+    "Control-y":    lambda event, frm = 'insert', which = 'c': emacs.walkKB(event,frm,which),
+    "Alt-y":        lambda event, frm = "insert", which = 'a': emacs.walkKB(event,frm,which),
+    "Alt-k":        lambda event: emacs.killsentence(event),
+    'Control-s':    None,
+    'Control-r':    None,
+    'Alt-c':        lambda event, which = 'cap': emacs.editCommands.capitalize(event,which),
+    'Alt-u':        lambda event, which = 'up': emacs.editCommands.capitalize(event,which),
+    'Alt-l':        lambda event, which = 'low': emacs.editCommands.capitalize(event,which),
+    'Alt-t':        lambda event, sw = emacs.editCommands.swapSpots: emacs.editCommands.swapWords(event,sw),
+    'Alt-x':        self.alt_X,
+    'Control-x':    self.startControlX,
+    'Control-g':    b.keyboardQuit,
+    'Control-Shift-at': emacs.editCommands.setRegion,
+    'Control-w':    lambda event, which = 'd': emacs.editCommands.killRegion(event,which),
+    'Alt-w':        lambda event, which = 'c': emacs.editCommands.killRegion(event,which),
+    'Control-t':    emacs.editCommands.swapCharacters,
+    'Control-u':    None,
+    'Control-l':    None,
+    'Alt-z':        None,
+    'Control-i':    None,
+    'Alt-Control-backslash': emacs.editCommands.indentRegion,
+    'Alt-m':            emacs.editCommands.backToIndentation,
+    'Alt-asciicircum':  emacs.editCommands.deleteIndentation,
+    'Control-d':        emacs.editCommands.deleteNextChar,
+    'Alt-backslash':    emacs.editCommands.deleteSpaces,
+    'Alt-g':        None,
+    'Control-v':    lambda event, way = 'south': emacs.editCommands.screenscroll(event,way),
+    'Alt-v':        lambda event, way = 'north': emacs.editCommands.screenscroll(event,way),
+    'Alt-equal':    emacs.editCommands.countRegion,
+    'Alt-parenleft':    emacs.editCommands.insertParentheses,
+    'Alt-parenright':   emacs.editCommands.movePastClose,
+    'Alt-percent':  None,
+    'Control-c':    None,
+    'Delete':       lambda event, which = 'BackSpace': self.manufactureKeyPress(event,which),
+    'Control-p':    lambda event, which = 'Up': self.manufactureKeyPress(event,which),
+    'Control-n':    lambda event, which = 'Down': self.manufactureKeyPress(event,which),
+    'Control-f':    lambda event, which = 'Right': self.manufactureKeyPress(event,which),
+    'Control-b':    lambda event, which = 'Left': self.manufactureKeyPress(event,which),
+    'Control-Alt-w': None,
+    'Alt-a':        emacs.editCommands.backSentence,
+    'Alt-e':        emacs.editCommands.forwardSentence,
+    'Control-Alt-o': emacs.editCommands.insertNewLineIndent,
+    'Control-j':    emacs.editCommands.insertNewLineAndTab,
+    'Alt-minus':    self.negativeArgument,
+    'Alt-slash':    emacs.editCommands.dynamicExpansion,
+    'Control-Alt-slash':    emacs.editCommands.dynamicExpansion2,
+    'Control-u':        lambda event, keystroke = '&lt;Control-u&gt;': self.universalDispatch(event,keystroke),
+    'Alt-braceright':   lambda event, which = 1: emacs.movingParagraphs(event,which),
+    'Alt-braceleft':    lambda event, which = 0: emacs.movingParagraphs(event,which),
+    'Alt-q':        emacs.editCommands.fillParagraph,
+    'Alt-h':        emacs.editCommands.selectParagraph,
+    'Alt-semicolon': emacs.editCommands.indentToCommentColumn,
+    'Alt-0': lambda event, stroke = '&lt;Alt-0&gt;', number = 0: self.numberCommand(event,stroke,number),
+    'Alt-1': lambda event, stroke = '&lt;Alt-1&gt;', number = 1: self.numberCommand(event,stroke,number),
+    'Alt-2': lambda event, stroke = '&lt;Alt-2&gt;', number = 2: self.numberCommand(event,stroke,number),
+    'Alt-3': lambda event, stroke = '&lt;Alt-3&gt;', number = 3: self.numberCommand(event,stroke,number),
+    'Alt-4': lambda event, stroke = '&lt;Alt-4&gt;', number = 4: self.numberCommand(event,stroke,number),
+    'Alt-5': lambda event, stroke = '&lt;Alt-5&gt;', number = 5: self.numberCommand(event,stroke,number),
+    'Alt-6': lambda event, stroke = '&lt;Alt-6&gt;', number = 6: self.numberCommand(event,stroke,number),
+    'Alt-7': lambda event, stroke = '&lt;Alt-7&gt;', number = 7: self.numberCommand(event,stroke,number),
+    'Alt-8': lambda event, stroke = '&lt;Alt-8&gt;', number = 8: self.numberCommand(event,stroke,number),
+    'Alt-9': lambda event, stroke = '&lt;Alt-9&gt;', number = 9: self.numberCommand(event,stroke,number),
+    'Control-underscore': emacs.doUndo,
+    'Alt-s':            emacs.editCommands.centerLine,
+    'Control-z':        emacs.emacsControlCommands.suspend,
+    'Control-Alt-s': emacs.searchCommands.isearchForwardRegexp,
+        ### Hmmm.  the lambda doesn't call keyboardQuit
+        # lambda event, stroke = '&lt;Control-s&gt;': emacs.startIncremental(event,stroke,which='regexp'),
+    'Control-Alt-r': emacs.searchCommands.isearchBackwardRegexp,
+        # lambda event, stroke = '&lt;Control-r&gt;': emacs.startIncremental(event,stroke,which='regexp'),
+    'Control-Alt-percent': lambda event: emacs.startRegexReplace()and emacs.masterQR(event),
+    'Escape':       emacs.editCommands.watchEscape,
+    'Alt-colon':    emacs.editCommands.startEvaluate,
+    'Alt-exclam':   emacs.emacsControlCommands.startSubprocess,
+    'Alt-bar':      lambda event: emacs.emacsControlCommands.startSubprocess(event,which=1),
+    }
+
+    return cbDict
+</t>
+<t tx="ekr.20050724075352.52">def addRegisterItems( self ):
+    
+    methodDict = {
+        's':        self._copyToRegister,
+        'i':        self._insertRegister,
+        'n':        self._numberToRegister,
+        'plus':     self._incrementRegister,
+        'space':    self._pointToRegister,
+        'j':        self._jumpToRegister,
+        'a':        lambda event,which='a': self._ToReg(event,which), # _appendToRegister
+        'p':        lambda event,which='p': self._ToReg(event,which), # _prependToRegister
+        'r':        self._copyRectangleToRegister,
+        'view' :    self._viewRegister,
+    }    
+    
+    helpDict = {
+        's':    'copy to register',
+        'i':    'insert from register',
+        'plus': 'increment register',
+        'n':    'number to register',
+        'p':    'prepend to register',
+        'a':    'append to register',
+        'space':'point to register',
+        'j':    'jump to register',
+        'r':    'rectangle to register',
+        'view': 'view register',
+    }
+
+    return methodDict, helpDict</t>
+<t tx="ekr.20050724075352.61">def replaceString (self,event): # event IS used
+    
+    b = self.miniBuffer ; tbuffer = event.widget
+    stateKind = 'rString'
+    # This should not be here.
+    if event.keysym in ('Control_L','Control_R'): return
+    state = b.getState(stateKind)
+    regex = self._useRegex
+    prompt = 'Replace ' + g.choose(regex,'Regex','String')
+    if state == 0:
+        self._sString = self._rpString = ''
+        s = '%s: ' % prompt
+        b.set(s)
+        # Get arg and enter state 1.
+        return b.getArg(event,stateKind,1) 
+    elif state == 1:
+        self._sString = b.arg
+        s = '%s: %s With: ' % (prompt,self._sString)
+        b.set(s)
+        # Get arg and enter state 2.
+        return b.getArg(event,stateKind,2)
+    elif state == 2:
+        self._rpString = b.arg
+        &lt;&lt; do the replace &gt;&gt;
+        s = 'Replaced %s occurances' % count
+        b.set(s)
+        b.setLabelGrey()
+        b.stateManager.clear()
+        self._useRegex = False
+        return b._tailEnd(tbuffer)</t>
+<t tx="ekr.20050724075352.91">def removeRKeys (self,widget):
+
+    mrk = 'sel'
+    widget.tag_delete(mrk)
+    widget.unbind('&lt;Left&gt;')
+    widget.unbind('&lt;Right&gt;')
+    widget.unbind('&lt;Up&gt;')
+    widget.unbind('&lt;Down&gt;')</t>
+<t tx="ekr.20050724075352.92">def _findMatch (self,fdict=None):
+    
+    '''This method returns a sorted list of matches.'''
+
+    if not fdict:
+        fdict = self.altX_commandsDict
+
+    s = self.get().strip()
+    if s:
+        # pmatches = filter(lambda a: a.startswith(s),fdict)
+        pmatches = [a for a in fdict if a.startswith(s)]
+    else:
+        pmatches = []
+
+    pmatches.sort()
+    return pmatches</t>
+<t tx="ekr.20050724075352.116">def reconfigureKeyStroke (self,tbuffer,keystroke,set_to):
+
+    '''This method allows the user to reconfigure what a keystroke does.
+       This feature is alpha at best, and untested.'''
+
+    if self.cbDict.has_key(set_to):
+        command = self.cbDict [set_to]
+        self.cbDict [keystroke] = command
+        evstring = '&lt;%s&gt;' % keystroke
+        tbuffer.bind(evstring,lambda event,meth=command: self.miniBuffer.masterCommand(event,meth,evstring))</t>
+<t tx="ekr.20050724075352.161">class killBufferCommandsClass (baseCommandsClass):
+    
+    '''A class to manage the kill buffer.'''
+
+    @others</t>
+<t tx="ekr.20050724075352.162">def kill( self, event, frm, to  ):
+
+    tbuffer = event.widget
+    text = tbuffer.get( frm, to )
+    self.addToKillBuffer( text )
+    tbuffer.clipboard_clear()
+    tbuffer.clipboard_append( text )   
+ 
+    if frm == 'insert' and to =='insert lineend' and tbuffer.index( frm ) == tbuffer.index( to ):
+        tbuffer.delete( 'insert', 'insert lineend +1c' )
+        self.addToKillBuffer( '\n' )
+    else:
+        tbuffer.delete( frm, to )
+
+    return self.miniBuffer._tailEnd( tbuffer )</t>
+<t tx="ekr.20050724075352.163">def walkKB( self, event, frm, which ):# kb = self.iterateKillBuffer() ):
+
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    t , t1 = i.split( '.' )
+    clip_text = self.getClipboard( tbuffer )    
+    if self.killbuffer or clip_text:
+        if which == 'c':
+            self.reset = True
+            if clip_text:
+                txt = clip_text
+            else:
+                txt = self.kbiterator.next()
+            tbuffer.tag_delete( 'kb' )
+            tbuffer.insert( frm, txt, ('kb') )
+            tbuffer.mark_set( 'insert', i )
+        else:
+            if clip_text:
+                txt = clip_text
+            else:
+                txt = self.kbiterator.next()
+            t1 = str( int( t1 ) + len( txt ) )
+            r = tbuffer.tag_ranges( 'kb' )
+            if r and r[ 0 ] == i:
+                tbuffer.delete( r[ 0 ], r[ -1 ] )
+            tbuffer.tag_delete( 'kb' )
+            tbuffer.insert( frm, txt, ('kb') )
+            tbuffer.mark_set( 'insert', i )
+    return self.miniBuffer._tailEnd( tbuffer )</t>
+<t tx="ekr.20050724075352.164">def deletelastWord( self, event ):
+    
+    #tbuffer = event.widget
+    #i = tbuffer.get( 'insert' )
+    self.editCommands.moveword( event, -1 )
+    self.kill( event, 'insert', 'insert wordend')
+    self.editCommands.moveword( event ,1 )
+    return 'break'
+</t>
+<t tx="ekr.20050724075352.165">def killsentence( self, event, back = False ):
+    tbuffer = event.widget
+    i = tbuffer.search( '.' , 'insert', stopindex = 'end' )
+    if back:
+        i = tbuffer.search( '.' , 'insert', backwards = True, stopindex = '1.0' ) 
+        if i == '':
+            return 'break'
+        i2 = tbuffer.search( '.' , i, backwards = True , stopindex = '1.0' )
+        if i2 == '':
+            i2 = '1.0'
+        return self.kill( event, i2, '%s + 1c' % i )
+        #return self.kill( event , '%s +1c' % i, 'insert' )
+    else:
+        i = tbuffer.search( '.' , 'insert', stopindex = 'end' )
+        i2 = tbuffer.search( '.', 'insert', backwards = True, stopindex = '1.0' )
+    if i2 == '':
+       i2 = '1.0'
+    else:
+       i2 = i2 + ' + 1c '
+    if i == '': return 'break'
+    return self.kill( event, i2, '%s + 1c' % i )</t>
+<t tx="ekr.20050724075352.166">def killRegion( self, event, which ):
+    mrk = 'sel'
+    tbuffer = event.widget
+    trange = tbuffer.tag_ranges( mrk )
+    if len( trange ) != 0:
+        txt = tbuffer.get( trange[ 0 ] , trange[ -1 ] )
+        if which == 'd':
+            tbuffer.delete( trange[ 0 ], trange[ -1 ] )   
+        self.addToKillBuffer( txt )
+        tbuffer.clipboard_clear()
+        tbuffer.clipboard_append( txt )
+    self.removeRKeys( tbuffer )
+    return 'break'</t>
+<t tx="ekr.20050724075352.167">def addToKillBuffer( self, text ):
+    
+    self.reset = True 
+    
+    if (
+        self.miniBuffer.previousStroke in (
+            '&lt;Control-k&gt;', '&lt;Control-w&gt;' ,
+            '&lt;Alt-d&gt;', '&lt;Alt-Delete', '&lt;Alt-z&gt;', '&lt;Delete&gt;',
+            '&lt;Control-Alt-w&gt;' )
+        and len(self.killbuffer)
+    ):
+        self.killbuffer[ 0 ] = self.killbuffer[ 0 ] + text
+        return
+
+    self.killbuffer.insert( 0, text )</t>
+<t tx="ekr.20050724075352.168">def iterateKillBuffer( self ):
+    
+    while 1:
+        if self.killbuffer:
+            self.last_clipboard = None
+            for z in self.killbuffer:
+                if self.reset:
+                    self.reset = False
+                    break        
+                yield z
+</t>
+<t tx="ekr.20050724075352.169">def getClipboard (self,tbuffer):
+
+    try:
+        ctxt = tbuffer.selection_get(selection='CLIPBOARD')
+        if not self.killbuffer or ctxt != self.last_clipboard:
+            self.last_clipboard = ctxt
+            if not self.killbuffer or self.killbuffer [0] != ctxt:
+                return ctxt
+    except: pass
+
+    return None</t>
+<t tx="ekr.20050724075352.170">class registerCommandsClass (baseCommandsClass):
+
+    '''A class to represent registers a-z and the corresponding Emacs commands.'''
+
+    @others</t>
+<t tx="ekr.20050724075352.171">def _copyToRegister (self,event):
+
+    if not self._chckSel(event):
+        return 
+
+    if event.keysym in string.letters:
+        event.keysym = event.keysym.lower()
+        tbuffer = event.widget 
+        txt = tbuffer.get('sel.first','sel.last')
+        self.registers[event.keysym] = txt 
+        return 
+
+    self.stopControlX(event)</t>
+<t tx="ekr.20050724075352.172">def _copyRectangleToRegister (self,event):
+    
+    if not self._chckSel(event):
+        return 
+    if event.keysym in string.letters:
+        event.keysym = event.keysym.lower()
+        tbuffer = event.widget 
+        r1, r2, r3, r4 = self.getRectanglePoints(event)
+        rect =[]
+        while r1&lt;=r3:
+            txt = tbuffer.get('%s.%s'%(r1,r2),'%s.%s'%(r1,r4))
+            rect.append(txt)
+            r1 = r1+1
+        self.registers[event.keysym] = rect 
+    self.stopControlX(event)
+</t>
+<t tx="ekr.20050724075352.173">def prependToRegister (self,event):
+
+    b = self.miniBuffer
+    event.keysym = 'p'
+    self.setNextRegister(event)
+    b.setState('controlx',False)
+</t>
+<t tx="ekr.20050724075352.174">def appendToRegister (self,event):
+
+    b = self.miniBuffer
+    event.keysym = 'a'
+    self.setNextRegister(event)
+    b.setState('controlx',True)</t>
+<t tx="ekr.20050724075352.175">def _ToReg( self, event , which):
+
+    if not self._chckSel( event ):
+        return
+    if self._checkIfRectangle( event ):
+        return
+
+    if event.keysym in string.letters:
+        event.keysym = event.keysym.lower()
+        tbuffer = event.widget
+        if not self.registers.has_key( event.keysym ):
+            self.registers[ event.keysym ] = ''
+        txt = tbuffer.get( 'sel.first', 'sel.last' )
+        rtxt = self.registers[ event.keysym ]
+        if self.which == 'p':
+            txt = txt + rtxt
+        else:
+            txt = rtxt + txt
+        self.registers[ event.keysym ] = txt
+        return</t>
+<t tx="ekr.20050724075352.176">def _chckSel (self,event):
+    
+    w = event.widget
+
+    return 'sel' in w.tag_names() and w.tag_ranges('sel')
+
+    if 0: # old code
+        if not 'sel' in event.widget.tag_names():
+            return False
+        if not event.widget.tag_ranges('sel'):
+            return False
+        return True</t>
+<t tx="ekr.20050724075352.177">def _checkIfRectangle (self,event):
+
+    b = self.miniBuffer
+
+    if self.registers.has_key(event.keysym):
+        if isinstance(self.registers[event.keysym],list):
+            b.stopControlX(event)
+            b.set("Register contains Rectangle, not text")
+            return True
+
+    return False</t>
+<t tx="ekr.20050724075352.178">def _insertRegister (self,event):
+    
+    tbuffer = event.widget 
+    if self.registers.has_key(event.keysym):
+        if isinstance(self.registers[event.keysym],list):
+            self.yankRectangle(event,self.registers[event.keysym])
+        else:
+            tbuffer.insert('insert',self.registers[event.keysym])
+            tbuffer.event_generate('&lt;Key&gt;')
+            tbuffer.update_idletasks()
+
+    self.stopControlX(event)</t>
+<t tx="ekr.20050724075352.179">def _incrementRegister (self,event):
+    
+    if self.registers.has_key(event.keysym):
+        if self._checkIfRectangle(event):
+            return 
+        if self.registers[event.keysym]in string.digits:
+            i = self.registers[event.keysym]
+            i = str(int(i)+1)
+            self.registers[event.keysym] = i 
+        else:
+            self.invalidRegister(event,'number')
+            return 
+    self.stopControlX(event)
+</t>
+<t tx="ekr.20050724075352.180">def _numberToRegister (self,event):
+    if event.keysym in string.letters:
+        self.registers[event.keysym.lower()] = str(0)
+    self.stopControlX(event)</t>
+<t tx="ekr.20050724075352.181">def _pointToRegister (self,event):
+    if event.keysym in string.letters:
+        tbuffer = event.widget 
+        self.registers[event.keysym.lower()] = tbuffer.index('insert')
+    self.stopControlX(event)</t>
+<t tx="ekr.20050724075352.182">def _jumpToRegister (self,event):
+    if event.keysym in string.letters:
+        if self._checkIfRectangle(event):
+            return 
+        tbuffer = event.widget 
+        i = self.registers[event.keysym.lower()]
+        i2 = i.split('.')
+        if len(i2)==2:
+            if i2[0].isdigit()and i2[1].isdigit():
+                pass 
+            else:
+                self.invalidRegister(event,'index')
+                return 
+        else:
+            self.invalidRegister(event,'index')
+            return 
+        tbuffer.mark_set('insert',i)
+        tbuffer.event_generate('&lt;Key&gt;')
+        tbuffer.update_idletasks()
+    self.stopControlX(event)</t>
+<t tx="ekr.20050724075352.183">def invalidRegister (self,event,what):
+
+    b = self.miniBuffer
+
+    self.deactivateRegister(event)
+    b.set('Register does not contain valid %s' % what)</t>
+<t tx="ekr.20050724075352.184">def setNextRegister (self,event):
+    
+    b = self.miniBuffer
+
+    if event.keysym=='Shift':
+        return 
+
+    if self.methodDict.has_key(event.keysym):
+        b.setState('controlx',True)
+        self.method = self.methodDict[event.keysym]
+        self.registermode = 2
+        b.set(self.helpDict[event.keysym])
+    else:
+        b.stopControlX(event)</t>
+<t tx="ekr.20050724075352.185">def executeRegister( self, event ):
+
+    self.method( event )
+    if self.registermode: 
+        self.stopControlX( event )
+    return</t>
+<t tx="ekr.20050724075352.186">def deactivateRegister (self,event):
+
+    b = self.miniBuffer
+
+    b.set('')
+    b.setLabelGrey()
+
+    self.registermode = False
+    self.method = None</t>
+<t tx="ekr.20050724075352.187">def _viewRegister (self,event):
+    
+    b = self.miniBuffer
+    
+    b.stopControlX(event)
+
+    if event.keysym in string.letters:
+        s = self.registers[event.keysym.lower()]
+        b.set(s)</t>
+<t tx="ekr.20050724075352.221">class searchCommandsClass (baseCommandsClass):
+    
+    '''Implements many kinds of searches.'''
+
+    @others</t>
+<t tx="ekr.20050724075352.222"></t>
+<t tx="ekr.20050724075352.223">def startIncremental (self,event,stroke,which='normal'):
+
+    b = self.miniBuffer
+
+    state = b.getState('isearch')
+    g.trace(stroke)
+    
+    if state == 0:
+        ## ref: self.csr = { '&lt;Control-s&gt;': 'for', '&lt;Control-r&gt;':'bak' }
+        self.pref = self.csr [stroke]
+        b.set('isearch:',protect=True)
+        b.setLabelBlue()
+        b.setState('isearch',which)
+    else:
+        self.search(event,way=self.csr[stroke],useregex=self.useRegex())
+        self.pref = self.csr [stroke]
+        self.scolorizer(event)
+
+    return 'break'</t>
+<t tx="ekr.20050724075352.224">def search (self,event,way,useregex=False):
+
+    '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
+
+    b = self.miniBuffer ; tbuffer = event.widget
+    s = b.get(ignorePrompt=True)
+    if s:
+        try:
+            if way == 'bak': # Search backwards.
+                i = tbuffer.search(s,'insert',backwards=True,stopindex='1.0',regexp=useregex)
+                if not i:
+                    # Start again at the bottom of the buffer.
+                    i = tbuffer.search(s,'end',backwards=True,stopindex='insert',regexp=useregex)
+            else: # Search forwards.
+                i = tbuffer.search(s,"insert + 1c",stopindex='end',regexp=useregex)
+                if not i:
+                    # Start again at the top of the buffer.
+                    i = tbuffer.search(s,'1.0',stopindex='insert',regexp=useregex)
+        except: pass
+
+        if i and not i.isspace():
+            tbuffer.mark_set('insert',i)
+            tbuffer.see('insert')
+
+    return 'break'</t>
+<t tx="ekr.20050724075352.225"># Called when from the state manager when the state is 'isearch'
+
+def iSearch (self,event,stroke):
+    
+    g.trace(stroke)
+
+    b = self.miniBuffer ; tbuffer = event.widget
+    if not event.char: return
+
+    if stroke in self.csr:
+        return self.startIncremental(event,stroke)
+
+    if event.keysym == 'Return':
+        s = b.get(ignorePrompt=True)
+        if s:
+            return b.stopControlX(event)
+        else:
+            return self.startNonIncrSearch(event,self.pref)
+
+    b.update(event)
+    if event.char != '\b':
+       s = b.get(ignorePrompt=True)
+       z = tbuffer.search(s,'insert',stopindex='insert +%sc' % len(s))
+       if not z:
+           self.search(event,self.pref,useregex=self.useRegex())
+    self.scolorizer(event)
+
+    return 'break'</t>
+<t tx="ekr.20050724075352.226">def scolorizer (self,event):
+
+    b = self.miniBuffer ; tbuffer = event.widget
+
+    stext = b.get(ignorePrompt=True)
+    tbuffer.tag_delete('color')
+    tbuffer.tag_delete('color1')
+    if stext == '': return 'break'
+    ind = '1.0'
+    while ind:
+        try:
+            ind = tbuffer.search(stext,ind,stopindex='end',regexp=self.useRegex())
+        except:
+            break
+        if ind:
+            i, d = ind.split('.')
+            d = str(int(d)+len(stext))
+            index = tbuffer.index('insert')
+            if ind == index:
+                tbuffer.tag_add('color1',ind,'%s.%s' % (i,d))
+            tbuffer.tag_add('color',ind,'%s.%s' % (i,d))
+            ind = i + '.' + d
+    tbuffer.tag_config('color',foreground='red')
+    tbuffer.tag_config('color1',background='lightblue')</t>
+<t tx="ekr.20050724075352.227">def useRegex (self):
+
+    b = self.miniBuffer
+
+    return b.getState('isearch') != 'normal'</t>
+<t tx="ekr.20050724075352.228">@
+Accessed by Control-s Enter or Control-r Enter.
+Alt-x forward-search or backward-search, just looks for words...</t>
+<t tx="ekr.20050724075352.229">def nonincrSearch (self,event,stroke):
+
+    b = self.miniBuffer ; tbuffer = event.widget
+
+    if event.keysym in ('Control_L','Control_R'): return
+    state = b.getState('nonincr-search')
+    if state.startswith('start'):
+        state = state [5:]
+        b.setState('nonincr-search',state)
+        b.set('')
+
+    if b.get() == '' and stroke == '&lt;Control-w&gt;':
+        return self.startWordSearch(event,state)
+
+    if event.keysym == 'Return':
+        i = tbuffer.index('insert')
+        word = b.get()
+        if state == 'for':
+            s = tbuffer.search(word,i,stopindex='end')
+            if s: s = tbuffer.index('%s +%sc' % (s,len(word)))
+        else: s = tbuffer.search(word,i,stopindex='1.0',backwards=True)
+        if s: tbuffer.mark_set('insert',s)
+        b.keyboardQuit(event)
+        return b._tailEnd(tbuffer)
+    else:
+        b.update(event)
+        return 'break'</t>
+<t tx="ekr.20050724075352.230">def startNonIncrSearch (self,event,which):
+
+    b = self.miniBuffer
+
+    b.keyboardQuit(event)
+    b.setState('nonincr-search','start%s' % which)
+    b.setLabelBlue()
+    b.set('Search:')
+
+    return 'break'</t>
+<t tx="ekr.20050724075352.231">@
+
+Control-s(r) Enter Control-w words Enter, pattern entered is treated as a regular expression.
+
+for example in the buffer we see:
+    cats......................dogs
+
+if we are after this and we enter the backwards look, search for 'cats dogs' if will take us to the match.</t>
+<t tx="ekr.20050724075352.232">def startWordSearch (self,event,which):
+
+    b = self.miniBuffer
+
+    b.keyboardQuit(event)
+    b.setState('word-search','start%s' % which)
+    b.setLabelBlue()
+    b.set('Word Search %s:' % g.choose(which=='bak','Backward','Forward'))
+
+    return 'break'</t>
+<t tx="ekr.20050724075352.233">def wordSearch (self,event):
+
+    b = self.miniBuffer ; tbuffer = event.widget
+    state = b.getState('word-search')
+    if state.startswith('start'):
+        state = state [5:]
+        b.setState('word-search',state)
+        b.set('')
+    if event.keysym == 'Return':
+        i = tbuffer.index('insert')
+        words = b.get().split()
+        sep = '[%s%s]+' % (string.punctuation,string.whitespace)
+        pattern = sep.join(words)
+        cpattern = re.compile(pattern)
+        if state == 'for':
+            txt = tbuffer.get('insert','end')
+            match = cpattern.search(txt)
+            if not match: return b.keyboardQuit(event)
+            end = match.end()
+        else:
+            txt = tbuffer.get('1.0','insert') #initially the reverse words formula for Python Cookbook was going to be used.
+            a = re.split(pattern,txt) #that didnt quite work right.  This one apparently does.
+            if len(a) &gt; 1:
+                b = re.findall(pattern,txt)
+                end = len(a[-1]) + len(b[-1])
+            else: return b.keyboardQuit(event)
+        wdict = {'for': 'insert +%sc', 'bak': 'insert -%sc'}
+        tbuffer.mark_set('insert',wdict[state] % end)
+        tbuffer.see('insert')
+        b.keyboardQuit(event)
+        return b._tailEnd(tbuffer)
+    else:
+        b.update(event)
+        return 'break'</t>
+<t tx="ekr.20050724075352.234"># For the re-search-backward and re-search-forward Alt-x commands</t>
+<t tx="ekr.20050724075352.235">def reStart (self,event,which='forward'):
+
+    b = self.miniBuffer
+
+    b.keyboardQuit(event)
+    b.setState('re_search','start%s' % which)
+    b.setLabelBlue()
+    b.set('RE Search:')
+
+    return 'break'
+
+reSearchForward = reStart</t>
+<t tx="ekr.20050724075352.236">def re_search( self, event ):
+
+    b = self.miniBuffer ; tbuffer = event.widget
+    state = b.getState( 're_search' )
+    if state.startswith( 'start' ):
+        state = state[ 5: ]
+        b.setState( 're_search', state )
+        b.set( '' )
+    if event.keysym == 'Return':
+        pattern = b.get()
+        cpattern = re.compile( pattern )
+        end = None
+        if state == 'forward':
+            txt = tbuffer.get( 'insert', 'end' )
+            match = cpattern.search( txt )
+            end = match.end()
+        else:
+            txt = tbuffer.get( '1.0', 'insert' ) #initially the reverse words formula for Python Cookbook was going to be used.
+            a = re.split( pattern, txt )         #that didnt quite work right.  This one apparently does.   
+            if len( a ) &gt; 1:
+                b = re.findall( pattern, txt )
+                end = len( a[ -1 ] ) + len( b[ -1 ] )
+        if end:
+            wdict ={ 'forward': 'insert +%sc', 'backward': 'insert -%sc' }
+            tbuffer.mark_set( 'insert', wdict[ state ] % end )                                
+            b._tailEnd( tbuffer )
+            tbuffer.see( 'insert' )
+        return b.keyboardQuit( event )    
+    else:
+        b.update( event )
+        return 'break'</t>
+<t tx="ekr.20050724075352.285">def doAlt_X (self,event):
+
+    '''This method executes the correct Alt-X command'''
+    
+    b = self ; keysym = event.keysym
+
+    if b.get().endswith('M-x:'):
+        b.axTabList.clear() # Clear the list, new Alt-x command is in effect.
+        b.set('')
+    if keysym == 'Return':
+        &lt;&lt; dispatch the function &gt;&gt;
+    elif keysym == 'Tab':
+        &lt;&lt; handle tab completion &gt;&gt;
+    elif keysym == 'BackSpace':
+        &lt;&lt; cut back to previous prefix and update prefix &gt;&gt;
+    else:
+        # Clear the list, any other character besides tab indicates that a new prefix is in effect.
+        b.axTabList.clear() 
+        b.update(event)
+
+    return 'break'</t>
+<t tx="ekr.20050724100334">c.prettyPrintPythonNode()</t>
+<t tx="ekr.20050724102409"></t>
+<t tx="ekr.20050724103251"></t>
+<t tx="ekr.20050725091822.2">def __init__ (self,emacs):
+
+    Emacs.baseCommandsClass.__init__(self,emacs) # init the base class.
+    
+    self.csr = { '&lt;Control-s&gt;': 'for', '&lt;Control-r&gt;':'bak' }
+    self.pref = None
+    
+    self.qQ = None
+    self.qR = None
+    self.qgetQuery = False
+    self.qgetReplace = False
+    self.qrexecute = False
+    self.querytype = 'normal'
+
+    # For replace-string and replace-regex
+    self._sString = ''
+    self._rpString = ''</t>
+<t tx="ekr.20050725093156">def getPublicCommands (self):
+    
+    return {
+        'isearch-forward':          self.isearchForward,
+        'isearch-backward':         self.isearchBackward,
+        'isearch-forward-regexp':   self.isearchForwardRegexp,
+        'isearch-backward-regexp':  self.isearchBackwardRegexp,
+        
+        're-search-forward':        self.reSearchForward,
+        're-search-backward':       self.reSearchBackward,
+        
+        'search-forward':           self.searchForward,
+        'search-backward':          self.searchBackward,
+        'word-search-forward':      self.wordSearchForward,
+        'word-search-backward':     self.wordSearchBackward,
+    }</t>
+<t tx="ekr.20050725093537"># Incremental...
+def isearchForward (self,event):
+    g.trace()
+    return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'&lt;Control-s&gt;')
+    
+def isearchBackward (self,event):
+    g.trace()
+    return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'&lt;Control-r&gt;')
+    
+def isearchForwardRegexp (self,event):
+    g.trace()
+    return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'&lt;Control-s&gt;',which='regexp')
+    
+def isearchBackwardRegexp (self,event):
+    g.trace()
+    return self.miniBuffer.keyboardQuit(event) and self.startIncremental(event,'&lt;Control-r&gt;',which='regexp')
+
+# Non-incremental...
+def reSearchBackward (self,event):
+    return self.reStart(event,which='backward')
+
+def searchForward (self,event):
+    return self.startNonIncrSearch(event,'for')
+    
+def searchBackward (self,event):
+    return self.startNonIncrSearch(event,'bak')
+    
+def wordSearchForward (self,event):
+    return self.startWordSearch(event,'for')
+    
+def wordSearchBackward (self,event):
+    return self.startWordSearch(event,'bak')</t>
+<t tx="ekr.20050725112958">def finishCreate (self):
+
+    emacs = self.emacs
+
+    # EKR: used only below.
+    def eA (event):
+        if self.emacs.expandAbbrev(event):
+            return 'break'
+
+    self.stateCommands = { 
+        # 1 == one parameter, 2 == all
+        
+        # Utility states...
+        'getArg':    (2,emacs.miniBuffer.getArg),
+        
+        # Command states...
+        'uC':               (2,emacs.miniBuffer.universalDispatch),
+        'controlx':         (2,emacs.miniBuffer.doControlX),
+        'isearch':          (2,emacs.searchCommands.iSearch),
+        'goto':             (1,emacs.editCommands.Goto),
+        'zap':              (1,emacs.editCommands.zapTo),
+        'howM':             (1,emacs.editCommands.howMany),
+        'abbrevMode':       (1,emacs.abbrevCommands.abbrevCommand1),
+        'altx':             (1,emacs.miniBuffer.doAlt_X),
+        'qlisten':          (1,emacs.queryReplaceCommands.masterQR),
+        'rString':          (1,emacs.editCommands.replaceString),
+        'negativeArg':      (2,emacs.miniBuffer.negativeArgument),
+        'abbrevOn':         (1,eA),
+        'set-fill-column':  (1,emacs.editCommands.setFillColumn),
+        'chooseBuffer':     (1,emacs.bufferCommands.chooseBuffer),
+        'renameBuffer':     (1,emacs.bufferCommands.renameBuffer),
+        're_search':        (1,emacs.searchCommands.re_search),
+        'alterlines':       (1,emacs.editCommands.processLines),
+        'make_directory':   (1,emacs.fileCommands.makeDirectory),
+        'remove_directory': (1,emacs.fileCommands.removeDirectory),
+        'delete_file':      (1,emacs.fileCommands.deleteFile),
+        'nonincr-search':   (2,emacs.searchCommands.nonincrSearch),
+        'word-search':      (1,emacs.searchCommands.wordSearch),
+        'last-altx':        (1,emacs.miniBuffer.executeLastAltX),
+        'escape':           (1,emacs.editCommands.watchEscape),
+        'subprocess':       (1,emacs.emacsControlCommands.subprocesser),
+    }
+</t>
+<t tx="ekr.20050725115600">def __init__ (self,emacs):
+
+    Emacs.baseCommandsClass.__init__(self,emacs) # init the base class.
+    
+    if emacs.useGlobalKillbuffer:
+        self.killbuffer = Emacs.global_killbuffer 
+    else:
+        self.killbuffer = []
+        
+    self.kbiterator = self.iterateKillBuffer()
+    self.last_clipboard = None # For interacting with system clipboard.
+    self.reset = False 
+</t>
+<t tx="ekr.20050725120303"># backwardKillParagraph is in paragraph class.
+
+def backwardKillSentence (self,event):
+    return self.miniBuffer.keyboardQuit(event) and self._killSentence(event,back=True)
+    
+def backwardKillWord (self,event):
+    return self.deletelastWord(event) and self.miniBuffer.keyboardQuit(event)
+    
+def killLine (self,event):
+    self.kill(event,frm='insert',to='insert lineend') and self.miniBuffer.keyboardQuit(event)
+    
+def killRegion (self,event):
+    return self._killRegion(event,which='d') and self.miniBuffer.keyboardQuit(event)
+    
+# killParagraph is in paragraph class.
+
+def killSentence (self,event):
+    return self.killsentence(event) and self.miniBuffer.keyboardQuit(event)
+    
+def killWord (self,event):
+    return self.kill(event,frm='insert wordstart',to='insert wordend') and self.miniBuffer.keyboardQuit(event)
+    
+def yank (self,event):
+    return self.walkKB(event,frm='insert',which='c') and self.miniBuffer.keyboardQuit(event)
+    
+def yankPop (self,event):
+    return self.walkKB(event,frm="insert",which='a') and self.miniBuffer.keyboardQuit(event)</t>
+<t tx="ekr.20050725121247">def getPublicCommands (self):
+    
+    return {
+        'backward-kill-sentence':   self.backwardKillSentence,
+        'backward-kill-word':       self.backwardKillWord,
+        'kill-line':                self.killLine,
+        'kill-word':                self.killWord,
+        'kill-sentence':            self.killSentence,
+        'kill-region':              self.killRegion,
+        'yank':                     self.yank,
+        'yank-pop':                 self.yankPop,
+    }</t>
+<t tx="ekr.20050725134243">def __init__ (self,emacs):
+    
+    Emacs.baseCommandsClass.__init__(self,emacs) # init the base class.
+
+    if emacs.useGlobalRegisters:
+        self.registers = Emacs.global_registers 
+    else:
+        self.registers = {}
+
+    self.method = None 
+    self.methodDict, self.helpDict = self.addRegisterItems()
+    
+    self.registermode = False # For rectangles and registers</t>
+<t tx="ekr.20050725134243.1">def getPublicCommands (self):
+    
+    return {
+        'append-to-register':           self.appendToRegister,
+        'copy-rectangle-to-register':   self.copyRectangleToRegister,
+        'copy-to-register':             self.copyToRegister,
+        'increment-register':           self.incrementRegister,
+        'insert-register':              self.insertRegister,
+        'jump-to-register':             self.jumpToRegister,
+        'number-to-register':           self.numberToRegister,
+        'point-to-register':            self.pointToRegister,
+        'prepend-to-register':          self.prependToRegister,
+        'view-register':                self.viewRegister,
+    }</t>
+<t tx="ekr.20050725135621.1">def copyToRegister (self,event):
+    return self.miniBuffer.setEvent(event,'s') and self.setNextRegister(event)
+def copyRectangleToRegister (self,event):
+    return self.miniBuffer.setEvent(event,'r') and self.setNextRegister(event)
+def incrementRegister (self,event):
+    return self.miniBuffer.setEvent(event,'plus') and self.setNextRegister(event)
+def insertRegister (self,event):
+    return self.miniBuffer.setEvent(event,'i') and self.setNextRegister(event)
+def jumpToRegister (self,event):
+    return self.miniBuffer.setEvent(event,'j') and self.setNextRegister(event)
+def numberToRegister (self,event):
+    return self.miniBuffer.setEvent(event,'n') and self.setNextRegister(event)
+def pointToRegister (self,event):
+    return self.miniBuffer.setEvent(event,'space') and self.setNextRegister(event)
+def viewRegister (self,event):
+    return self.miniBuffer.setEvent(event,'view') and self.setNextRegister(event)</t>
+<t tx="ekr.20050726043333.1"></t>
+<t tx="ekr.20050726081113"></t>
+<t tx="ekr.20050726081152"></t>
+<t tx="ekr.20050726081815">def __init__ (self,emacs):
+    
+    self.emacs = emacs 
+    self.mode = None 
+    self.submode = None 
+    emacs.modeStrategies.append(self)
+    self.registers = {}
+    self.commands = {
+        'copy-to-register':self.copyToRegister, 
+        'insert-register':self.insertRegister, 
+        'append-to-register':self.appendToRegister, 
+        'prepend-to-register':self.prependToRegister, 
+    }
+    self.mode_command = {  # The keys should command names, not numbers.
+        1:self.copyToRegister, 
+        3:self.appendToRegister, 
+        4:self.prependToRegister, 
+    }</t>
+<t tx="ekr.20050726081815.1">def __call__ (self,event,command):
+    if self.mode:
+        if self.mode in (1,3,4): # ('copy-to-register','append-to-register','prepend-to-register'):
+            self.emacs.eventToMinibuffer(event)
+            message = self.mode_command[self.mode]()
+            if message and message not in (True,False):
+                self.emacs.keyboardQuit(event)
+                self.emacs.setCommandText(message)
+                return True 
+            else:
+                return self.emacs.keyboardQuit(event)
+        elif self.mode == 2: # 'insert-register'
+            self.emacs.eventToMinibuffer(event)
+            message = self.insertRegister()
+            if message not in(True,False)and message:
+                self.emacs.keyboardQuit(event)
+                self.emacs.setCommandText(message)
+                return True 
+            return self.emacs.keyboardQuit(event)
+    
+    return self.commands[command]()</t>
+<t tx="ekr.20050726081815.2"></t>
+<t tx="ekr.20050726091527"></t>
+<t tx="ekr.20050726094804">modifiers = event.getModifiers()
+mtxt = event.getKeyModifiersText(modifiers)
+ktxt = event.getKeyText(event.getKeyCode())
+
+if mtxt == ktxt:
+    command = mtxt
+else:
+    command = '%s %s' % (mtxt,ktxt).strip()
+</t>
+<t tx="ekr.20050726094804.1">editor = self.emacs.editor
+doc = editor.getDocument()
+pos = editor.getCaretPosition()
+try:
+    pc = doc.getText(pos-1,1)
+    if pc in('"',"'"): return
+except: pass
+
+event.consume()
+self.kTconsume = True
+self.kRconsume = True
+ac = self.completers [kc]
+doc.insertString(pos,'%s%s' % (kc,ac),None)
+editor.setCaretPosition(pos+1)
+if hasattr(self.emacs.c.frame.body.editor,"autocompleter"):
+    self.emacs.c.frame.body.editor.autocompleter.hideAutoBox()</t>
+<t tx="ekr.20050726094804.2">self.kTconsume = True
+self.kRconsume = True
+event.consume()
+editor = self.emacs.editor
+doc = editor.getDocument()
+pos = editor.getCaretPosition()
+try:
+    doc.insertString(pos," " * 4,None)
+except: pass</t>
+<t tx="ekr.20050727082959">def keyPressed (self,event):
+
+    if not self.on and event.getKeyChar() == "&gt;":
+        return
+
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    start = stext.Utilities.getRowStart(editor,pos)
+    doc = editor.getDocument()
+    txt = doc.getText(start,pos-start)
+    txt = list(txt) ; txt.reverse()
+    matchone = 0 ; matchtwo = 0 ; data = []
+    if not text or text [0] == '/':
+        return
+
+    for z in txt:
+        if z == "&lt;" and not matchone:
+            matchone = 1
+            data.append(z)
+            continue
+        elif z == "&lt;" and matchone:
+            matchtwo = 1
+            break
+        elif matchone:
+            break
+        if not matchone:
+            data.append(z)
+
+    if not data: return
+    elif len(data) == 1and data [0] == "&lt;": return
+    elif len(data) &gt; 1and not data [-2].isalpha(): return
+
+    if matchone and not matchtwo:
+        data.reverse()
+        data.insert(1,"/")
+        element = ''.join(data)
+        pieces = element.split()
+        endelement = "%s%s" % (pieces[0],"&gt;")
+        doc.insertString(pos,endelement,None)
+        editor.setCaretPosition(pos)</t>
+<t tx="ekr.20050727083243">def extend (self,data):
+
+    for z in data:
+        if z in self.data: continue
+        self.data.append(z)
+</t>
+<t tx="ekr.20050727083243.1">def lookFor (self,txt):
+
+    nwdata = []
+    for z in self.data:
+        if z.startswith(txt):
+            nwdata.append(z)
+
+    if len(nwdata) &gt; 0:
+        nwdata.sort()
+        self.current = nwdata
+        self.current_iter = iter(nwdata)
+        return True
+    else:
+        return False</t>
+<t tx="ekr.20050727083243.2">def getNext (self):
+
+    try:
+        return self.current_iter.next()
+    except Exception:
+        self.current_iter = iter(self.current)
+        return self.getNext()</t>
+<t tx="ekr.20050727162112">def __init__ (self,emacs,widget):
+
+    self.emacs = emacs
+    self.c = emacs.c
+    self.widget = widget # A Tk Label widget.
+    # Permanently associate a Tk.StringVar with the widget.
+    self.svar = Tk.StringVar()
+    self.widget.configure(textvariable=self.svar)
+
+    # Ivars.
+    self.altx_history = []
+    self.altX_prefix = ''
+    self.keysymhistory = []
+    self.previousStroke = ''
+    self.svars = {}
+    self.tailEnds = {} # functions to execute at the end of many Emac methods.  Configurable by environment.
+    
+    # For accumlated args...
+    self.arg = ''
+    self.afterGetArgState = None
+    self.argPromptLen = 0
+
+    # For negative arguments...
+    self.negativeArg = False
+    self.negArgs = {} # Set in finishCreate.
+
+    # For alt-X commands...
+    self.xcommands = None       # Done in finishCreate.
+    self.altX_commandsDict = {} # Set later by finishCreate.
+    self.axTabList = Tracker()
+    self.x_hasNumeric = ['sort-lines','sort-fields']
+
+    # For universal commands...
+    self.uCstring = string.digits + '\b'
+    self.uCdict = {
+        '&lt;Alt-x&gt;': self.alt_X
+    }
+
+    self.stateManager = self.stateManagerClass(emacs) # Manages state for the master command
+    self.kstrokeManager = self.keyStrokeManagerClass(emacs) # Manages some keystroke state for the master command.
+    self.cxHandler = self.controlX_handlerClass(emacs) # Create the handler for Control-x commands
+    
+    # Delegators.  These will go away if the state helper class goes away.
+    self.getState = self.stateManager.getState
+    self.setState = self.stateManager.setState
+    self.hasState = self.stateManager.hasState
+    self.whichState = self.stateManager.whichState</t>
+<t tx="ekr.20050728093027.1">def finishCreate (self,altX_commandsDict):
+
+    emacs = self.emacs
+
+    # Finish creating the helper classes.
+    self.stateManager.finishCreate()
+    self.kstrokeManager.finishCreate()
+    self.cxHandler.finishCreate()
+
+    # Finish this class.
+    self.altX_commandsDict = altX_commandsDict
+
+    self.add_ekr_altx_commands()
+
+    # Command bindings.
+    self.cbDict = self.addCallBackDict() # Creates callback dictionary, primarily used in the master command
+
+    self.negArgs = {
+        '&lt;Alt-c&gt;': self.emacs.editCommands.changePreviousWord,
+        '&lt;Alt-u&gt;': self.emacs.editCommands.changePreviousWord,
+        '&lt;Alt-l&gt;': self.emacs.editCommands.changePreviousWord,
+    }
+
+    self.xcommands = {
+        '&lt;Control-t&gt;': emacs.editCommands.transposeLines,
+        '&lt;Control-u&gt;': lambda event, way = 'up': emacs.upperLowerRegion(event,way),
+        '&lt;Control-l&gt;': lambda event, way = 'low': emacs.upperLowerRegion(event,way),
+        '&lt;Control-o&gt;': emacs.editCommands.removeBlankLines,
+        '&lt;Control-i&gt;': emacs.fileCommands.insertFile,
+        '&lt;Control-s&gt;': emacs.fileCommands.saveFile,
+        '&lt;Control-x&gt;': emacs.editCommands.exchangePointMark,
+        '&lt;Control-c&gt;': emacs.emacsControlCommands.shutdown,
+        '&lt;Control-b&gt;': emacs.bufferCommands.listBuffers,
+        '&lt;Control-Shift-at&gt;': lambda event: event.widget.selection_clear(),
+        '&lt;Delete&gt;': lambda event, back = True: emacs.editCommands.killsentence(event,back),
+    }</t>
+<t tx="ekr.20050728103627.1">def finishCreate (self):
+    
+    emacs = self.emacs
+    
+    self.keystrokes = {
+        '&lt;Control-s&gt;':      ( 2, emacs.searchCommands.startIncremental ),
+        '&lt;Control-r&gt;':      ( 2, emacs.searchCommands.startIncremental ),
+        '&lt;Alt-g&gt;':          ( 1, emacs.editCommands.startGoto ),
+        '&lt;Alt-z&gt;':          ( 1, emacs.editCommands.startZap ),
+        '&lt;Alt-percent&gt;':    ( 1, emacs.queryReplaceCommands.masterQR ),
+        '&lt;Control-Alt-w&gt;':  ( 1, lambda event: 'break' ),
+    }</t>
+<t tx="ekr.20050728103627.2">def finishCreate (self):
+
+    emacs = self.emacs
+
+    self.abbreviationDispatch = {
+        'a':    lambda event: emacs.abbreviationDispatch(event,1),
+        'a i':  lambda event: emacs.abbreviationDispatch(event,2),
+    }
+
+    self.rect_commands = {
+        'o': emacs.rectangleCommands.openRectangle,
+        'c': emacs.rectangleCommands.clearRectangle,
+        't': emacs.rectangleCommands.stringRectangle,
+        'y': emacs.rectangleCommands.yankRectangle,
+        'd': emacs.rectangleCommands.deleteRectangle,
+        'k': emacs.rectangleCommands.killRectangle,
+        'r': emacs.rectangleCommands.activateRectangleMethods,
+    }
+
+    self.register_commands = {
+        1: emacs.registerCommands.setNextRegister,
+        2: emacs.registerCommands.executeRegister,
+    }
+
+    self.variety_commands = {
+        'period':       emacs.editCommands.setFillPrefix,
+        'parenleft':    emacs.macroCommands.startKBDMacro,
+        'parenright':   emacs.macroCommands.stopKBDMacro,
+        'semicolon':    emacs.editCommands.setCommentColumn,
+        'Tab':          emacs.editCommands.tabIndentRegion,
+        'u':            lambda event: emacs.doUndo(event,2),
+        'equal':        emacs.editCommands.lineNumber,
+        'h':            emacs.editCommands.selectAll,
+        'f':            emacs.editCommands.setFillColumn,
+        'b':            lambda event, which = 'switch-to-buffer': emacs.setInBufferMode(event,which),
+        'k':            lambda event, which = 'kill-buffer': emacs.setInBufferMode(event,which),
+    }</t>
+<t tx="ekr.20050728195531"></t>
+<t tx="ekr.20050729094213">s = b.get().strip()
+
+if b.axTabList.prefix and s.startswith(b.axTabList.prefix):
+    b.set(b.axTabList.next()) # get next in iteration
+else:
+    self.altX_prefix = prefix = b.get()
+    pmatches = b._findMatch()
+    b.axTabList.setTabList(prefix,pmatches)
+    b.set(b.axTabList.next()) # begin iteration on new list</t>
+<t tx="ekr.20050729150051.1">if self.emacs.macroCommands.macroing == 2 and stroke != '&lt;Control-x&gt;':
+    return self.nameLastMacro(event)
+    
+elif self.emacs.macroCommands.macroing == 3 and stroke != '&lt;Control-x&gt;':
+    return self.getMacroName(event)
+    
+else:
+   self.recordKBDMacro(event,stroke)
+</t>
+<t tx="ekr.20050729150051.2">def add_ekr_altx_commands (self):
+
+    &lt;&lt; define dict d of abbreviations &gt;&gt;
+
+    keys = d.keys()
+    keys.sort()
+    for key in keys:
+        val = d.get(key)
+        func = self.altX_commandsDict.get(val)
+        if func:
+            g.trace(('%-4s' % key),val)
+            self.altX_commandsDict [key] = func
+</t>
+<t tx="ekr.20050729150804">d = {
+    'i':    'isearch-forward', 
+    'ib':   'isearch-backward',      
+    'ix':   'isearch-forward-regexp',
+    'irx':  'isearch-backward-regexp',
+    'ixr':  'isearch-backward-regexp',
+    
+    'r':    'replace-string',
+    'rx':   'replace-regex',
+
+    's':    'search-forward',
+    'sb':   'search-backward',
+    
+    'sw':   'word-search-forward',    
+    'sbw':  'word-search-backward',
+    'swb':  'word-search-backward',
+    
+    #
+    # 'a1'  'abbrev-on'
+    # 'a0'  'abbrev-off'
+ 
+    ## Don't put these in: they might conflict with other abbreviatsions.
+    # 'fd':   'find-dialog',
+    # 'od':   'options-dialog',
+    
+    # At present these would be Leo Find stuff.
+    # 'f':    'find',
+    # 'fr':   'find-reverse',
+    # 'fx':   'find-regex',
+    # 'frx':  'find-regex-reverse',
+    # 'fxr':  'find-regex-reverse',
+    # 'fw':   'find-word',
+    # 'sf':   'set-find-text',
+    # 'sr':   'set-find-replace',
+    # 'ss':   'script-search',
+    # 'ssr':  'script-search-reverse',
+    
+    ## These could be shared...
+    # 'tfh':  'toggle-find-search-headline',
+    # 'tfb':  'toggle-find-search-body',
+    # 'tfw':  'toggle-find-word',
+    # 'tfn':  'toggle-find-node-only',
+    # 'tfi':  'toggle-find-ignore-case',
+    # 'tfmc': 'toggle-find-mark-changes',
+    # 'tfmf': 'toggle-find-mark-finds',
+}</t>
+<t tx="ekr.20050730074556.1"># g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
+i = 'insert' ; end = 'end' ; count = 0
+if tbuffer.tag_ranges('sel'):
+    i = tbuffer.index('sel.first')
+    end = tbuffer.index('sel.last')
+if regex:
+    txt = tbuffer.get(i,end)
+    try:
+        pattern = re.compile(self._sString)
+    except:
+        b.keyboardQuit(event)
+        b.set("Illegal regular expression")
+        return 'break'
+    count = len(pattern.findall(txt))
+    if count:
+        ntxt = pattern.sub(self._rpString,txt)
+        tbuffer.delete(i,end)
+        tbuffer.insert(i,ntxt)
+else:
+    # Problem: adds newline at end of text.
+    txt = tbuffer.get(i,end)
+    count = txt.count(self._sString)
+    if count:
+        ntxt = txt.replace(self._sString,self._rpString)
+        tbuffer.delete(i,end)
+        tbuffer.insert(i,ntxt)</t>
+<t tx="ekr.20050730074556.3">def getArg (self,event,returnStateKind=None,returnState=None):
+    
+    '''Accumulate an argument until the user hits return (or control-g).
+    Enter the 'return' state when done.'''
+    
+    b = self ; stateKind = 'getArg'
+    state = b.getState(stateKind)
+    if not state:
+        b.argPromptLen = len(b.get()) ; b.arg = ''
+        b.afterGetArgState = (returnStateKind,returnState)
+        b.setState(stateKind,1)
+    elif event.keysym == 'Return':
+        # Compute the actual arg.
+        s = b.get() ; b.arg = s[b.argPromptLen:]
+        # Immediately enter the caller's requested state.
+        b.stateManager.clear()
+        stateKind,state = self.afterGetArgState
+        b.setState(stateKind,state)
+        b.stateManager(event,None) # Invoke the stateManager __call__ method.
+    else:
+        b.update(event)
+    return 'break'</t>
+<t tx="ekr.20050730194026">s = b.get()
+func = b.altX_commandsDict.get(s)
+if func:
+    if s != 'repeat-complex-command': b.altx_history.insert(0,s)
+    aX = b.getState('altx')
+    if (type(aX) == type(1) or aX.isdigit()) and s in b.x_hasNumeric:
+        func(event,aX)
+    else:
+        func(event)
+else:
+    b.keyboardQuit(event)
+    b.set('Command does not exist')</t>
+<t tx="ekr.20050730194215"></t>
+<t tx="ekr.20050730204051">s = self.altX_prefix
+
+b.set(s)
+
+if len(s) &gt; 1:
+    self.altX_prefix = s[:-1]
+else:
+    self.altX_prefix = ''</t>
+<t tx="ekr.20050730204402">@nocolor
+@
+
+- Remove all module globals except those used to redefine core classes.
+
+** Bind emacs keystroks in Leo's core.
+    - That is, modify Leo's core to uses temacs-style masterCommand method for all keystrokes.
+
+* Complete menu work.
+
+* Eliminate state-related tables.
+
+* Test all commands and make unit tests.
+
+- convertCommandName utility converts to and from emacs-style (with '-' chars) to python/leo style (with capitalization).
+
+- Eliminate all hard constants (except for tables of defaults).
+
+- User options:
+    - 'Emacs Compatibility' option: binds keys as done in present plugin.
+    - 'Emacs Menu option':  On by default: adds emacs option.
+    - Get keystrokes from user options.
+    - User-specified keys for alt-x, control-c, etc.</t>
+<t tx="ekr.20050731084644"># Don't add multiple special characters to history.
+
+self.keysymhistory.insert(0,event.keysym)
+
+if len(event.char) &gt; 0:
+    if len(Emacs.lossage) &gt; 99:
+        Emacs.lossage.pop()
+    Emacs.lossage.insert(0,event.char)
+
+if 0: # traces
+    g.trace(event.keysym,stroke)
+    g.trace(self.keysymhistory)
+    g.trace(Emacs.lossage)</t>
+<t tx="ekr.20050731084644.1"></t>
+<t tx="ekr.20050731092507"></t>
+<t tx="ekr.20050731101651">@killcolor
+</t>
+<t tx="ekr.20050731101651.1">abbrev-mode
+abbrev-prefix-mark
+abort-recursive-edit
+about-xemacs
+activate-region
+ada-make-filename-from-adaname
+ada-mode
+add-change-log-entry
+add-change-log-entry-other-window
+add-global-abbrev
+add-log-convert
+add-mode-abbrev
+add-name-to-file
+advertised-switch-to-completions
+advertised-undo
+align
+align-current
+align-entire
+align-highlight-rule
+align-newline-and-indent
+align-regexp
+align-unhighlight-rule
+all-hail-emacs
+all-hail-xemacs
+ams-tex-mode
+ansi-color-for-comint-mode-on
+apache-mode
+append-next-kill
+append-to-buffer
+append-to-file
+append-to-register
+apply-macro-to-region-lines
+appt-add
+appt-delete
+apropos
+apropos-command
+apropos-documentation
+apropos-value
+apropos-zippy
+arp
+asm-mode
+assign-last-kbd-macro-to-key
+auto-compression-mode
+auto-fill-mode
+auto-insert
+auto-revert-mode
+auto-save-mode
+auto-show-make-point-visible
+auto-show-mode
+autoconf-mode
+awk-mode</t>
+<t tx="ekr.20050731101651.2">back-to-indentation
+background
+backtrace
+backward-block-of-lines
+backward-char
+backward-char-command
+backward-delete-char
+backward-delete-char-untabify
+backward-kill-line
+backward-kill-paragraph
+backward-kill-sentence
+backward-kill-sexp
+backward-kill-word
+backward-list
+backward-or-forward-delete-char
+backward-or-forward-kill-sentence
+backward-or-forward-kill-sexp
+backward-or-forward-kill-word
+backward-other-window
+backward-page
+backward-paragraph
+backward-sentence
+backward-sexp
+backward-to-indentation
+backward-up-list
+backward-word
+balance-windows
+balloon-help-minor-mode
+balloon-help-mode
+base64-decode-region
+base64-encode-region
+basic-save-buffer
+bbdb
+bbdb-add-or-remove-mail-alias
+bbdb-apply-next-command-to-all-records
+bbdb-changed
+bbdb-company
+bbdb-complete-name
+bbdb-create
+bbdb-create-ftp-site
+bbdb-creation-newer
+bbdb-creation-no-change
+bbdb-creation-older
+bbdb-delete-current-field-or-record
+bbdb-delete-current-record
+bbdb-dial
+bbdb-display-all-records-completely
+bbdb-display-record-completely
+bbdb-edit-current-field
+bbdb-finger
+bbdb-fontify-buffer
+bbdb-force-record-create
+bbdb-ftp
+bbdb-help
+bbdb-info
+bbdb-insert-new-field
+bbdb-load-touchtones
+bbdb-menu
+bbdb-merge-file
+bbdb-name
+bbdb-net
+bbdb-notes
+bbdb-omit-record
+bbdb-print
+bbdb-record-edit-notes
+bbdb-record-edit-property
+bbdb-refile-record
+bbdb-send-mail
+bbdb-show-all-recipients
+bbdb-snarf
+bbdb-snarf-region
+bbdb-submit-bug-report
+bbdb-timestamp-newer
+bbdb-timestamp-older
+bbdb-toggle-all-records-display-layout
+bbdb-toggle-records-display-layout
+bbdb-transpose-fields
+bbdb-whois
+bbdb-www
+bbdb-www-grab-homepage
+bbdb-yank
+bbdb/gnus-annotate-sender
+bbdb/gnus-show-all-recipients
+bbdb/gnus-show-records
+bbdb/gnus-snarf-signature
+bbdb/mh-annotate-sender
+bbdb/mh-show-sender
+bbdb/rmail-annotate-sender
+bbdb/rmail-show-sender
+bbdb/vm-annotate-sender
+bbdb/vm-set-auto-folder-alist
+bbdb/vm-show-all-recipients
+bbdb/vm-show-records
+bbdb/vm-show-sender
+beginning-of-buffer
+beginning-of-buffer-other-window
+beginning-of-defun
+beginning-of-defun-raw
+beginning-of-line
+beginning-of-line-text
+bib-cite-minor-mode
+bib-mode
+bibtex-mode
+binary-overwrite-mode
+blackbox
+blink-cursor-mode
+blink-matching-open
+blink-paren
+bnf-mode
+bookmark-bmenu-list
+bookmark-delete
+bookmark-insert
+bookmark-insert-location
+bookmark-jump
+bookmark-load
+bookmark-locate
+bookmark-menu-delete
+bookmark-menu-insert
+bookmark-menu-jump
+bookmark-menu-locate
+bookmark-menu-rename
+bookmark-relocate
+bookmark-rename
+bookmark-save
+bookmark-set
+bookmark-write
+br-complete-symbol
+br-env-browse
+br-env-load
+br-three-button-mouse
+br-to-from-viewer
+br-two-button-mouse
+browse-url
+browse-url-at-mouse
+browse-url-at-point
+browse-url-cci
+browse-url-firefox
+browse-url-galeon
+browse-url-generic
+browse-url-gnome-moz
+browse-url-grail
+browse-url-iximosaic
+browse-url-kde
+browse-url-lynx-emacs
+browse-url-lynx-xterm
+browse-url-mail
+browse-url-mmm
+browse-url-mosaic
+browse-url-mozilla
+browse-url-netscape
+browse-url-of-buffer
+browse-url-of-dired-file
+browse-url-of-file
+browse-url-of-region
+browse-url-opera
+browse-url-w3
+browse-url-w3-gnudoit
+browse-url-w3m
+browse-url-w3m-gnudoit
+bsh-script-help
+buffer-disable-undo
+buffer-enable-undo
+buffer-flush-undo
+buffer-menu
+buffer-menu-other-window
+build
+build-report
+build-version
+bury-buffer
+byte-compile-and-load-file
+byte-compile-buffer
+byte-compile-file
+byte-force-recompile
+byte-recompile-directory
+byte-recompile-file</t>
+<t tx="ekr.20050731101651.3">c++-browse
+c++-mode
+c-add-style
+c-comment-edit
+c-macro-expand
+c-mode
+c-set-offset
+c-set-style
+calc
+calc-dispatch
+calc-embedded
+calc-embedded-activate
+calc-grab-rectangle
+calc-grab-region
+calc-keypad
+calc-tutorial
+calendar
+call-last-kbd-macro
+call-tree
+caml-mode
+camldebug
+cancel-debug-on-entry
+canonically-space-region
+capitalize-region
+capitalize-region-as-title
+capitalize-region-or-word
+capitalize-word
+cd
+cde-start-drag
+cde-start-drag-region
+center-line
+center-paragraph
+center-region
+center-to-window-line
+change-log-merge
+change-log-mode
+change-log-redate
+check-ispell-version
+checkdoc
+checkdoc-continue
+checkdoc-current-buffer
+checkdoc-defun
+checkdoc-eval-current-buffer
+checkdoc-eval-defun
+checkdoc-interactive
+checkdoc-ispell
+checkdoc-ispell-comments
+checkdoc-ispell-continue
+checkdoc-ispell-current-buffer
+checkdoc-ispell-defun
+checkdoc-ispell-interactive
+checkdoc-ispell-message-interactive
+checkdoc-ispell-message-text
+checkdoc-ispell-start
+checkdoc-message-interactive
+checkdoc-message-text
+checkdoc-minor-mode
+checkdoc-rogue-spaces
+checkdoc-start
+choose-completion
+clear-profiling-info
+clear-rectangle
+clearcase-install
+clearcase-integrate
+clearcase-unintegrate
+clos-browse
+column-number-mode
+comint-dynamic-complete
+comint-mode
+comint-run
+command-apropos
+command-history-mode
+comment-region
+compare-windows
+compilation-minor-mode
+compilation-mode
+compilation-shell-minor-mode
+compile
+compile-defun
+complete
+completion-do-in-minibuffer
+completion-list-mode
+completion-list-mode-quit
+completion-switch-to-minibuffer
+compose-mail
+compose-mail-other-frame
+compose-mail-other-window
+consing-since-gc
+context-en-mode
+context-nl-mode
+conx
+conx-buffer
+conx-load
+conx-region
+copy-file
+copy-from-above-command
+copy-primary-selection
+copy-rectangle-to-register
+copy-region-as-kill
+copy-to-buffer
+copy-to-register
+count-lines-buffer
+count-lines-page
+count-lines-region
+count-matches
+count-words-buffer
+count-words-region
+cperl-mode
+cperl-perldoc
+cperl-perldoc-at-point
+css-mode
+ctypes-all-buffers
+ctypes-auto-parse-mode
+ctypes-buffer
+ctypes-define-type
+ctypes-define-type-in-mode
+ctypes-dir
+ctypes-file
+ctypes-read-file
+ctypes-tags
+customize
+customize-apropos
+customize-apropos-faces
+customize-apropos-groups
+customize-apropos-options
+customize-browse
+customize-changed-options
+customize-customized
+customize-face
+customize-face-other-window
+customize-group
+customize-group-other-window
+customize-option
+customize-option-other-window
+customize-other-window
+customize-save-customized
+customize-save-variable
+customize-saved
+customize-set-value
+customize-set-variable
+customize-variable
+customize-variable-other-window
+cvs-checkout
+cvs-examine
+cvs-log-mode
+cvs-quickdir
+cvs-status
+cvs-status-mode
+cvs-update</t>
+<t tx="ekr.20050731101651.4">dabbrev-completion
+dabbrev-expand
+dbx
+debug
+debug-on-entry
+decipher
+decipher-mode
+decrease-left-margin
+decrease-right-margin
+define-abbrevs
+define-global-abbrev
+define-mail-alias
+define-mode-abbrev
+defining-kbd-macro
+delete-backward-char
+delete-blank-lines
+delete-char
+delete-completion-window
+delete-directory
+delete-file
+delete-frame
+delete-horizontal-space
+delete-indentation
+delete-matching-lines
+delete-non-matching-lines
+delete-other-frames
+delete-other-windows
+delete-primary-selection
+delete-rectangle
+delete-region
+delete-selection-mode
+delete-window
+delete-windows-on
+deprecated-help-command
+describe-beta
+describe-bindings
+describe-buffer-case-table
+describe-class
+describe-copying
+describe-current-display-table
+describe-distribution
+describe-function
+describe-function-arglist
+describe-function-at-point
+describe-generic
+describe-installation
+describe-key
+describe-key-briefly
+describe-last-error
+describe-method
+describe-mode
+describe-no-warranty
+describe-pointer
+describe-prefix-bindings
+describe-project
+describe-stroke
+describe-syntax
+describe-variable
+describe-variable-at-point
+desktop-entry-mode
+desktop-read
+diary
+diary-mail-entries
+dictionary
+dictionary-lookup-definition
+dictionary-match-words
+dictionary-mouse-popup-matching-words
+dictionary-popup-matching-words
+dictionary-search
+diff
+diff-backup
+diff-minor-mode
+diff-mode
+digit-argument
+directory-tree-thing
+dired
+dired-apropos
+dired-backup-diff
+dired-cleanup
+dired-compress-subdir-files
+dired-describe-mode
+dired-diff
+dired-do-background-shell-command
+dired-do-compress
+dired-do-copy-regexp
+dired-do-grep
+dired-do-hardlink-regexp
+dired-do-igrep
+dired-do-igrep-find
+dired-do-print
+dired-do-relsymlink-regexp
+dired-do-rename-regexp
+dired-do-shell-command
+dired-do-symlink-regexp
+dired-do-uucode
+dired-downcase
+dired-ediff
+dired-emerge
+dired-emerge-with-ancestor
+dired-epatch
+dired-flag-extension
+dired-flag-files-regexp
+dired-jump-back
+dired-jump-back-other-frame
+dired-jump-back-other-window
+dired-mark-extension
+dired-mark-files-compilation-buffer
+dired-mark-files-from-other-dired-buffer
+dired-mark-files-regexp
+dired-mark-sexp
+dired-other-frame
+dired-other-window
+dired-read-mail
+dired-report-bug
+dired-rmail
+dired-summary
+dired-upcase
+dired-virtual
+dired-vm
+disable-command
+disassemble
+display-buffer
+display-call-tree
+display-column-mode
+display-time
+dissociated-press
+dns-mode
+dns-mode-soa-increment-serial
+do-auto-save
+docbook-grep
+docbook-mode
+docref-setup
+doctor
+down-list
+downcase-region
+downcase-region-or-word
+downcase-word
+drag-window-divider
+dsssl-mode
+dunnet</t>
+<t tx="ekr.20050731101651.5">ebuffers
+ebuffers3
+ecb-activate
+ecb-byte-compile
+ecb-minor-mode
+ecb-show-help
+edebug-defun
+edebug-eval-top-level-form
+ediff
+ediff-backup
+ediff-buffers
+ediff-buffers3
+ediff-customize
+ediff-directories
+ediff-directories3
+ediff-directory-revisions
+ediff-documentation
+ediff-files
+ediff-files3
+ediff-merge
+ediff-merge-buffers
+ediff-merge-buffers-with-ancestor
+ediff-merge-directories
+ediff-merge-directories-with-ancestor
+ediff-merge-directory-revisions
+ediff-merge-directory-revisions-with-ancestor
+ediff-merge-files
+ediff-merge-files-with-ancestor
+ediff-merge-revisions
+ediff-merge-revisions-with-ancestor
+ediff-merge-with-ancestor
+ediff-patch-buffer
+ediff-patch-file
+ediff-regions-linewise
+ediff-regions-wordwise
+ediff-revision
+ediff-show-registry
+ediff-toggle-multiframe
+ediff-toggle-use-toolbar
+ediff-version
+ediff-windows-linewise
+ediff-windows-wordwise
+ediff3
+edir-merge-revisions
+edir-merge-revisions-with-ancestor
+edir-revisions
+edirs
+edirs-merge
+edirs-merge-with-ancestor
+edirs3
+edit-abbrevs
+edit-abbrevs-mode
+edit-abbrevs-redefine
+edit-bookmarks
+edit-faces
+edit-itimers
+edit-kbd-macro
+edit-last-kbd-macro
+edit-mime
+edit-named-kbd-macro
+edit-picture
+edit-pr
+edit-tab-stops
+edit-tab-stops-note-changes
+edit-toolbar
+edt-emulation-on
+edt-set-scroll-margins
+efs-display-ftp-activity
+efs-nslookup-host
+efs-report-bug
+efs-set-passwd
+efs-set-user
+eieio-class-tree
+eieio-describe-class
+eieio-describe-generic
+eieio-describe-method
+eif-browse
+eiffel-mode
+eldoc-mode
+electric-buffer-list
+electric-command-history
+electric-nroff-mode
+elp-instrument-function
+elp-instrument-list
+elp-instrument-package
+elp-results
+emacs-lisp-byte-compile
+emacs-lisp-byte-compile-and-load
+emacs-lisp-mode
+emacs-version
+emerge
+emerge-buffers
+emerge-buffers-with-ancestor
+emerge-files
+emerge-files-with-ancestor
+emerge-merge-directories
+emerge-revisions
+emerge-revisions-with-ancestor
+enable-command
+enable-flow-control
+encrypt-insert-file-contents
+end-kbd-macro
+end-of-buffer
+end-of-buffer-other-window
+end-of-defun
+end-of-line
+enlarge-window
+enlarge-window-horizontally
+enlarge-window-pixels
+enriched-mode
+epatch
+epatch-buffer
+erase-buffer
+erc-add-dangerous-host
+erc-add-fool
+erc-add-keyword
+erc-add-pal
+erc-autojoin-mode
+erc-button-mode
+erc-chanlist
+erc-cmd-LIST
+erc-complete
+erc-completion-mode
+erc-delete-dangerous-host
+erc-delete-fool
+erc-delete-keyword
+erc-delete-pal
+erc-fill-mode
+erc-log-mode
+erc-nickserv-identify
+erc-nickserv-identify-mode
+erc-notify-mode
+erc-ring-mode
+erc-save-buffer-in-logs
+erc-select
+erc-server-select
+erc-services-mode
+erc-spelling-mode
+erc-timestamp-mode
+erc-track-mode
+erc-track-when-inactive-mode
+erc-truncate-buffer
+erc-truncate-mode
+erc-xdcc-add-file
+eregistry
+erevision
+escreen-install
+eshell
+eshell-command
+eshell-report-bug
+eshell-test
+eshell-toggle
+eshell-toggle-cd
+eudc-edit-hotlist
+eudc-expand-inline
+eudc-get-email
+eudc-get-phone
+eudc-insert-record-at-point-into-bbdb
+eudc-load-eudc
+eudc-query-form
+eudc-set-server
+eudc-try-bbdb-insert
+eval-buffer
+eval-current-buffer
+eval-defun
+eval-expr
+eval-expr-install
+eval-expression
+eval-last-sexp
+eval-print-last-sexp
+eval-region
+exchange-dot-and-mark
+exchange-point-and-mark
+executable-self-display
+executable-set-magic
+execute-extended-command
+exit-minibuffer
+exit-recursive-edit
+expand-abbrev
+expand-region-abbrevs</t>
+<t tx="ekr.20050731101651.6">f90-mode
+facemenu-make-larger
+facemenu-make-much-larger
+facemenu-make-much-smaller
+facemenu-make-smaller
+facemenu-remove-props
+facemenu-remove-special
+facemenu-set-background
+facemenu-set-face
+facemenu-set-face-from-menu
+facemenu-set-foreground
+facemenu-set-intangible
+facemenu-set-invisible
+facemenu-set-read-only
+facemenu-set-size-default
+fast-lock-mode
+feedmail-queue-reminder
+feedmail-run-the-queue
+feedmail-run-the-queue-global-prompt
+feedmail-run-the-queue-no-prompts
+ffap
+ffap-at-mouse
+ffap-menu
+ffap-next
+fill-individual-paragraphs
+fill-nonuniform-paragraphs
+fill-paragraph
+fill-paragraph-or-region
+fill-region
+fill-region-as-paragraph
+find-alternate-file
+find-alternate-file-other-window
+find-file
+find-file-at-point
+find-file-other-frame
+find-file-other-window
+find-file-read-only
+find-file-read-only-other-frame
+find-file-read-only-other-window
+find-function
+find-function-at-point
+find-function-on-key
+find-function-other-frame
+find-function-other-window
+find-library
+find-library-other-frame
+find-library-other-window
+find-tag
+find-tag-at-point
+find-tag-other-window
+find-variable
+find-variable-at-point
+find-variable-other-frame
+find-variable-other-window
+finder-by-keyword
+finder-commentary
+finger
+first-error
+fixup-whitespace
+flame
+floating-toolbar
+floating-toolbar-from-extent-or-popup-mode-menu
+floating-toolbar-or-popup-mode-menu
+flush-lines
+flyspell-buffer
+flyspell-mode
+flyspell-prog-mode
+flyspell-region
+flyspell-version
+folding-mode
+folding-mode-add-find-file-hook
+font-lock-fontify-buffer
+font-lock-mode
+footnote-mode
+format-decode-buffer
+format-decode-region
+format-encode-buffer
+format-encode-region
+format-find-file
+format-insert-file
+format-write-file
+forms-find-file
+forms-find-file-other-window
+forms-mode
+fortran-mode
+forward-block-of-lines
+forward-char
+forward-char-command
+forward-line
+forward-list
+forward-page
+forward-paragraph
+forward-sentence
+forward-sexp
+forward-to-indentation
+forward-word
+frame-configuration-to-register
+ftelnet
+ftp
+full-calc
+full-calc-keypad
+fume-mode
+fume-setup-buffer
+function-menu
+fundamental-mode
+fusion-mode</t>
+<t tx="ekr.20050731101651.7">garbage-collect
+gdb
+gdb-with-core
+gdbsrc
+generate-file-autoloads
+generic-page-setup
+generic-print-buffer
+getenv
+global-auto-revert-mode
+global-semantic-auto-parse-mode
+global-semantic-show-dirty-mode
+global-semantic-show-unmatched-syntax-mode
+global-semantic-summary-mode
+global-semanticdb-minor-mode
+global-senator-minor-mode
+global-set-key
+global-set-stroke
+global-unset-key
+gnats:edit-pr
+gnats:query-pr
+gnats:summ-pr
+gnats:view-pr
+gnuserv-start
+gomoku
+google-query
+google-query-region
+goto-address
+goto-address-at-mouse
+goto-address-at-point
+goto-char
+goto-line
+grep
+grep-all-files-in-current-directory
+grep-all-files-in-current-directory-and-below
+grep-find
+gtk-start-drag
+gtk-start-drag-region</t>
+<t tx="ekr.20050731102358">Buffer-menu-1-window
+Buffer-menu-2-window
+Buffer-menu-backup-unmark
+Buffer-menu-delete
+Buffer-menu-delete-backwards
+Buffer-menu-execute
+Buffer-menu-igrep
+Buffer-menu-mark
+Buffer-menu-maybe-mouse-select
+Buffer-menu-mouse-select
+Buffer-menu-not-modified
+Buffer-menu-other-window
+Buffer-menu-popup-menu
+Buffer-menu-quit
+Buffer-menu-save
+Buffer-menu-select
+Buffer-menu-switch-other-window
+Buffer-menu-this-window
+Buffer-menu-toggle-read-only
+Buffer-menu-unmark
+Buffer-menu-visit-tags-table</t>
+<t tx="ekr.20050731102358.1">hanoi
+haskell-doc-mode
+haskell-doc-show-type
+haskell-mode
+help
+help-for-help
+help-mode
+help-mode-bury
+help-mode-quit
+help-next-section
+help-next-symbol
+help-prev-section
+help-prev-symbol
+help-quit
+help-with-tutorial
+hexl-find-file
+hexl-mode
+hexlify-buffer
+hide-copyleft-region
+hide-ifdef-mode
+highlight-headers-follow-url
+highlight-headers-follow-url-kfm
+highlight-headers-follow-url-mosaic
+highlight-headers-follow-url-netscape
+highline-customize
+highline-local-mode
+highline-mode
+highline-mode-off
+highline-mode-on
+highline-off
+highline-on
+highline-view-mode
+highline-view-off
+highline-view-on
+hippie-expand
+hm--html-minor-mode
+hm--html-mode
+hmail:compose
+holidays
+how-many
+hs-minor-mode
+html-mode
+html-quote-region
+html-view-get-display
+html-view-goto-url
+html-view-start-mosaic
+html-view-view-buffer
+html-view-view-file
+htmlize-buffer
+htmlize-file
+htmlize-many-files
+htmlize-many-files-dired
+htmlize-region
+hyper-apropos
+hyper-apropos-popup-menu
+hyper-apropos-set-variable
+hyper-describe-face
+hyper-describe-function
+hyper-describe-key
+hyper-describe-key-briefly
+hyper-describe-variable
+hyper-set-variable
+hyper-where-is
+hyperb:customize
+hyperb:find-file-urls-mode
+hyperb:init-menubar
+hyperbole
+hypropos-popup-menu
+hypropos-set-variable</t>
+<t tx="ekr.20050731102358.2">ibuffer
+ibuffer-add-saved-filters
+ibuffer-add-to-tmp-hide
+ibuffer-add-to-tmp-show
+ibuffer-auto-mode
+ibuffer-backward-filter-group
+ibuffer-backwards-next-marked
+ibuffer-bs-show
+ibuffer-clear-filter-groups
+ibuffer-copy-filename-as-kill
+ibuffer-customize
+ibuffer-decompose-filter
+ibuffer-delete-saved-filter-groups
+ibuffer-delete-saved-filters
+ibuffer-diff-with-file
+ibuffer-do-kill-lines
+ibuffer-do-occur
+ibuffer-exchange-filters
+ibuffer-filter-disable
+ibuffer-filters-to-filter-group
+ibuffer-forward-next-marked
+ibuffer-invert-sorting
+ibuffer-jump-to-buffer
+ibuffer-jump-to-filter-group
+ibuffer-kill-filter-group
+ibuffer-kill-line
+ibuffer-list-buffers
+ibuffer-mark-by-file-name-regexp
+ibuffer-mark-by-mode
+ibuffer-mark-by-mode-regexp
+ibuffer-mark-by-name-regexp
+ibuffer-mark-dired-buffers
+ibuffer-mark-dissociated-buffers
+ibuffer-mark-help-buffers
+ibuffer-mark-modified-buffers
+ibuffer-mark-old-buffers
+ibuffer-mark-read-only-buffers
+ibuffer-mark-special-buffers
+ibuffer-mark-unsaved-buffers
+ibuffer-negate-filter
+ibuffer-or-filter
+ibuffer-other-window
+ibuffer-pop-filter
+ibuffer-pop-filter-group
+ibuffer-save-filter-groups
+ibuffer-save-filters
+ibuffer-set-filter-groups-by-mode
+ibuffer-switch-to-saved-filter-groups
+ibuffer-switch-to-saved-filters
+ibuffer-toggle-sorting-mode
+ibuffer-yank
+icomplete-mode
+icon-mode
+iconify-emacs
+iconify-frame
+id-select-and-copy-thing
+id-select-and-kill-thing
+id-select-goto-matching-tag
+id-select-install
+id-select-thing
+id-select-thing-with-mouse
+idl-mode
+idlwave-mode
+idlwave-shell
+ielm
+ifconfig
+ignore
+igrep
+igrep-find
+igrep-insinuate
+igrep-visited-files
+ilisp-imenu-add-menubar-index
+image-mode
+imenu
+imenu-add-menubar-index
+imenu-add-to-menubar
+increase-left-margin
+increase-right-margin
+increment-register
+indent-according-to-mode
+indent-code-rigidly
+indent-for-comment
+indent-for-tab-command
+indent-new-comment-line
+indent-region
+indent-relative
+indent-relative-maybe
+indent-rigidly
+indent-sexp
+indent-to
+indent-to-column
+indented-text-mode
+inferior-prolog-mode
+inferior-tcl
+info
+info-browse
+info-complete-file
+info-complete-symbol
+info-lookup-file
+info-lookup-reset
+info-lookup-symbol
+insert-abbrevs
+insert-buffer
+insert-file
+insert-kbd-macro
+insert-key-binding
+insert-parentheses
+insert-register
+insert-selection
+insert-zippyism
+install-where-was-i
+inverse-add-global-abbrev
+inverse-add-mode-abbrev
+invert-face
+ipconfig
+isearch-*-char
+isearch-abort
+isearch-backward
+isearch-backward-regexp
+isearch-cancel
+isearch-complete
+isearch-complete-edit
+isearch-delete-char
+isearch-edit-string
+isearch-exit
+isearch-forward
+isearch-forward-exit-minibuffer
+isearch-forward-regexp
+isearch-help-or-delete-char
+isearch-mode-help
+isearch-nonincremental-exit-minibuffer
+isearch-printing-char
+isearch-quote-char
+isearch-repeat-backward
+isearch-repeat-forward
+isearch-return-char
+isearch-reverse-exit-minibuffer
+isearch-ring-advance
+isearch-ring-advance-edit
+isearch-ring-retreat
+isearch-ring-retreat-edit
+isearch-toggle-case-fold
+isearch-toggle-regexp
+isearch-whitespace-chars
+isearch-yank-clipboard
+isearch-yank-kill
+isearch-yank-line
+isearch-yank-selection
+isearch-yank-sexp
+isearch-yank-word
+isearch-yank-x-clipboard
+isearch-yank-x-selection
+isearch-|-char
+iso-accents-mode
+ispell
+ispell-buffer
+ispell-change-dictionary
+ispell-comments-and-strings
+ispell-complete-word
+ispell-complete-word-interior-frag
+ispell-continue
+ispell-kill-ispell
+ispell-message
+ispell-minor-mode
+ispell-pdict-save
+ispell-region
+ispell-word
+iswitchb-buffer
+iswitchb-buffer-other-frame
+iswitchb-buffer-other-window
+iswitchb-default-keybindings
+iswitchb-display-buffer
+itimer-edit-delete-itimer
+itimer-edit-help
+itimer-edit-next-field
+itimer-edit-previous-field
+itimer-edit-quit
+itimer-edit-set-field</t>
+<t tx="ekr.20050731102358.3">japanese-latex-mode
+japanese-plain-tex-mode
+java-browse
+java-mode
+javascript-mode
+javascript-shell
+jde-ant-build
+jde-ant-projecthelp
+jde-ant-show-options
+jde-bug-debug-app
+jde-build
+jde-checkstyle
+jde-checkstyle-customize
+jde-compile
+jde-compile-jde
+jde-create-new-project
+jde-db-set-app-args
+jde-db-set-args
+jde-db-set-debugger
+jde-ejb-entity-bean-buffer
+jde-ejb-session-bean-buffer
+jde-gen-buffer
+jde-gen-class-buffer
+jde-gen-console-buffer
+jde-gen-interface-buffer
+jde-gen-jfc-app-buffer
+jde-gen-junit-test-class-buffer
+jde-help-browse-jdk-doc
+jde-import-organize
+jde-java-font-lock-setup-keywords
+jde-javadoc-autodoc-at-line
+jde-javadoc-checkdoc
+jde-javadoc-checkdoc-at-line
+jde-javadoc-checker-fix
+jde-javadoc-checker-next
+jde-javadoc-checker-previous
+jde-javadoc-checker-quit
+jde-javadoc-customize
+jde-javadoc-make
+jde-jdb
+jde-jdb-applet
+jde-make
+jde-make-show-options
+jde-mode
+jde-open-project-file
+jde-package-update
+jde-run
+jde-run-applet
+jde-run-set-app
+jde-run-set-app-args
+jde-run-set-applet-doc
+jde-run-set-applet-viewer
+jde-run-set-args
+jde-save-project
+jde-set-compile-options
+jde-set-global-classpath
+jde-show-help
+jde-stat-loc-report
+jde-stat-loc-report-directory
+jde-stat-loc-report-project
+jde-xref-customize
+jde-xref-display-call-tree
+jde-xref-first-caller
+jde-xref-list-uncalled-functions
+jde-xref-make-xref-db
+jde-xref-next-caller
+jde-xref-update
+join-line
+jump-to-register
+just-one-space
+justify-current-line</t>
+<t tx="ekr.20050731102358.4">kbd-macro-query
+keep-lines
+keyboard-escape-quit
+keyboard-quit
+kfile:find
+kfile:view
+kill-all-abbrevs
+kill-buffer
+kill-buffer-and-window
+kill-comment
+kill-console-local-variable
+kill-emacs
+kill-entire-line
+kill-line
+kill-local-variable
+kill-paragraph
+kill-primary-selection
+kill-rectangle
+kill-region
+kill-ring-save
+kill-sentence
+kill-sexp
+kill-some-buffers
+kill-this-buffer
+kill-word
+kimport:aug-post-outline
+kimport:file
+kimport:star-outline
+kimport:text
+klink:create
+kotl-mode
+kotl-mode:example
+ksh-mode</t>
+<t tx="ekr.20050731102358.5">latex-mode
+lazy-lock-mode
+lazy-shot-mode
+ledit-mode
+liece
+life
+line-number-mode
+linuxdoc-sgml-mode
+lisp-complete-symbol
+lisp-fill-paragraph
+lisp-indent-for-comment
+lisp-indent-line
+lisp-interaction-mode
+lisp-mode
+lisp-send-defun
+list-abbrevs
+list-bookmarks
+list-buffers
+list-colors-display
+list-command-history
+list-directory
+list-faces-display
+list-holidays
+list-itimers
+list-load-path-shadows
+list-matches-in-buffers
+list-matching-lines
+list-mode
+list-mode-item-keyboard-selected
+list-mode-item-mouse-selected
+list-packages
+list-processes
+list-strokes
+list-tags
+list-text-properties-at
+list-yahrzeit-dates
+literate-haskell-mode
+load-default-sounds
+load-file
+load-library
+load-sound-file
+load-user-strokes
+local-set-key
+local-unset-key
+locate-library
+lock-buffer
+lower-frame
+lpr-buffer
+lpr-region
+lua-mode</t>
+<t tx="ekr.20050731102358.6">m4-mode
+macroexpand-all-sexp
+macroexpand-sexp
+mail
+mail-mode
+mail-other-frame
+mail-other-window
+make-command-summary
+make-compatible
+make-compatible-variable
+make-directory
+make-directory-path
+make-face-bold
+make-face-bold-italic
+make-face-italic
+make-face-larger
+make-face-smaller
+make-face-unbold
+make-face-unitalic
+make-file-part
+make-frame
+make-indirect-buffer
+make-local-variable
+make-obsolete
+make-obsolete-variable
+make-search-dialog
+make-symbolic-link
+make-variable-buffer-local
+makefile-mode
+manual-entry
+map-query-replace-regexp
+mark-beginning-of-buffer
+mark-bob
+mark-defun
+mark-end-of-buffer
+mark-end-of-line
+mark-end-of-sentence
+mark-eob
+mark-page
+mark-paragraph
+mark-sexp
+mark-whole-buffer
+mark-word
+maybe-unmigrate-user-init-file
+mchat
+mchat-other-frame
+metamail-buffer
+metamail-interpret-body
+metamail-interpret-header
+metamail-region
+mew
+mew-send
+mh-letter-mode
+mh-nmail
+mh-rmail
+mh-smail
+mh-smail-other-window
+mh-version
+migrate-user-init-file
+mime-decode-region
+mime-encode-region
+mime-insert-encoded-file
+mime/editor-mode
+minibuffer-complete
+minibuffer-complete-and-exit
+minibuffer-complete-word
+minibuffer-completion-help
+minibuffer-electric-separator
+minibuffer-electric-tilde
+minibuffer-keyboard-quit
+minibuffer-smart-maybe-select-highlighted-completion
+minibuffer-smart-select-highlighted-completion
+mode-compile
+mode-compile-kill
+mode-compile-submit-bug-report
+modeline-buffers-menu
+modeline-menu
+modeline-minor-mode-menu
+modeline-toggle-read-only
+modify-syntax-entry
+modula-2-mode
+morse-region
+mouse-avoidance-mode
+mouse-bury-buffer
+mouse-choose-completion
+mouse-consolidated-yank
+mouse-del-char
+mouse-delete-window
+mouse-drag-modeline
+mouse-eval-last-sexpr
+mouse-eval-sexp
+mouse-ignore
+mouse-keep-one-window
+mouse-kill-line
+mouse-line-length
+mouse-me
+mouse-scroll
+mouse-select
+mouse-select-and-split
+mouse-set-mark
+mouse-set-point
+mouse-track
+mouse-track-adjust
+mouse-track-adjust-default
+mouse-track-default
+mouse-track-delete-and-insert
+mouse-track-do-rectangle
+mouse-track-insert
+mouse-unbury-buffer
+mouse-window-to-region
+mouse-yank
+move-past-close-and-reindent
+move-to-left-margin
+move-to-tab-stop
+move-to-window-line
+mpuz
+mswindows-paste-clipboard
+mwheel-install</t>
+<t tx="ekr.20050731102358.7">name-last-kbd-macro
+narrow-stack-mode
+narrow-to-defun
+narrow-to-page
+narrow-to-region
+narrow-window-to-region
+negative-argument
+netstat
+network-connection
+network-connection-to-service
+new-frame
+newline
+newline-and-indent
+next-complete-history-element
+next-error
+next-file
+next-history-element
+next-line
+next-list-mode-item
+next-matching-history-element
+next-multiframe-window
+normal-mode
+not-modified
+nroff-mode
+nslookup
+nslookup-host
+nuke-nroff-bs
+nuke-selective-display
+number-to-register</t>
+<t tx="ekr.20050731102358.8">objc-browse
+objc-mode
+occur
+occur-mode-goto-occurrence
+occur-mode-mouse-goto
+offix-start-drag
+offix-start-drag-region
+old-whitespace-incremental-mode
+old-whitespace-mode
+oo-browser
+open-dribble-file
+open-line
+open-rectangle
+open-termscript
+other-frame
+other-window
+outl-mouse-minor-mode
+outl-mouse-mode
+outline-minor-mode
+outline-mode
+overstrike-region
+overwrite-mode
+own-selection</t>
+<t tx="ekr.20050731102358.9">package-admin-add-binary-package
+package-admin-add-single-file-package
+package-get
+package-get-all
+package-get-custom
+package-get-delete-package
+package-get-package-provider
+package-get-save-base
+package-get-update-all
+package-get-update-base
+package-get-update-base-from-buffer
+paragraph-indent-text-mode
+paren-activate
+paren-backward-sexp
+paren-deactivate
+paren-forward-sexp
+paren-set-mode
+paren-toggle-matching-paired-delimiter
+paren-toggle-matching-quoted-paren
+paren-toggle-open-paren-context
+pascal-mode
+patch-to-change-log
+patcher-mail
+patcher-mail-subproject
+patcher-version
+pcomplete
+pcomplete-continue
+pcomplete-expand
+pcomplete-expand-and-complete
+pcomplete-help
+pcomplete-list
+pcomplete-reverse
+pdb
+pending-delete
+pending-delete-mode
+pending-delete-off
+pending-delete-on
+perl-mode
+perldb
+permanent-buffers-mode
+pgg-decrypt
+pgg-decrypt-region
+pgg-encrypt
+pgg-encrypt-region
+pgg-insert-key
+pgg-sign
+pgg-sign-region
+pgg-snarf-keys
+pgg-snarf-keys-region
+pgg-verify
+pgg-verify-region
+phases-of-moon
+php-mode
+picture-mode
+pike-mode
+ping
+plain-TeX-mode
+plain-tex-mode
+play-sound-file
+point-to-register
+pop-global-mark
+pop-tag-mark
+pop-window-configuration
+popper-install
+popup-buffer-menu
+popup-menubar-menu
+popup-mode-menu
+posix-search-backward
+posix-search-forward
+postscript-mode
+pp-eval-expression
+pp-eval-last-sexp
+pp-function
+pp-plist
+pp-variable
+praise-be-unto-emacs
+praise-be-unto-xemacs
+prefer-coding-system
+prefix-region
+prepend-to-buffer
+prepend-to-register
+press-toolbar-button
+prettyexpand-all-sexp
+prettyexpand-sexp
+previous-complete-history-element
+previous-error
+previous-history-element
+previous-line
+previous-list-mode-item
+previous-matching-history-element
+previous-multiframe-window
+print-buffer
+print-region
+profile-command
+profile-expression
+profile-key-sequence
+profile-results
+prolog-mode
+ps
+ps-despool
+ps-line-lengths
+ps-nb-pages-buffer
+ps-nb-pages-region
+ps-print-buffer
+ps-print-buffer-with-faces
+ps-print-customize
+ps-print-region
+ps-print-region-with-faces
+ps-spool-buffer
+ps-spool-buffer-with-faces
+ps-spool-region
+ps-spool-region-with-faces
+psychoanalyze-pinhead
+pui-add-install-directory
+pui-list-packages
+push-window-configuration
+pwd
+py-shell
+pydoc-apropos
+pydoc-commands
+pydoc-help
+pydoc-keywords
+pydoc-modules
+pydoc-packages
+pydoc-topics
+pydoc-xrefs
+pymacs-eval
+pymacs-load
+python-browse
+python-mode</t>
+<t tx="ekr.20050731102358.10">query-pr
+query-replace
+query-replace-regexp
+quick-calc
+quoted-insert</t>
+<t tx="ekr.20050731102358.11">raise-frame
+re-builder
+re-search-backward
+re-search-forward
+read-abbrev-file
+read-kbd-macro
+read-library-name
+recent-files-initialize
+recent-files-visit-file
+recenter
+recentf-cancel-dialog
+recentf-cleanup
+recentf-dialog-mode
+recentf-edit-list
+recentf-mode
+recentf-open-files
+recentf-open-more-files
+recentf-rebuild-virtual-pathes
+recentf-save-list
+recover-all-files
+recover-file
+recover-session
+recover-session-finish
+recursive-edit
+reftex-citation
+reftex-index-phrases-mode
+reftex-mode
+regexp-builder
+register-to-point
+reindent-then-newline-and-indent
+release-and-activate-toolbar-button
+release-toolbar-button
+remote-compile
+remove-directory
+rename-buffer
+rename-file
+rename-uniquely
+repeat-complex-command
+repeat-matching-complex-command
+replace-buffer-in-windows
+replace-rectangle
+replace-regexp
+replace-string
+report-emacs-bug
+report-xemacs-bug
+reposition-window
+resize-minibuffer-mode
+restore-initial-toolbar
+resume-console
+reverse-region
+revert-buffer
+rexx-mode
+riece
+rlogin
+rmail
+rmail-input
+rmail-mode
+rolo-add
+rolo-display-matches
+rolo-edit
+rolo-fgrep
+rolo-fgrep-logical
+rolo-grep
+rolo-kill
+rolo-sort
+rolo-toggle-datestamps
+rolo-yank
+rot13-other-window
+rotate-yank-pointer
+route
+rpm
+rpm-spec-mode
+rsh
+rtf-clip-buffer
+rtf-clip-region
+rtf-export
+rtf-export-region
+rtf-spool-buffer
+rtf-spool-region
+ruby-mode
+rubydb
+run-at-time
+run-caml
+run-ediff-from-cvs-buffer
+run-prolog
+run-ruby
+run-scheme
+run-scsh
+run-sml
+run-with-idle-timer
+run-with-timer</t>
+<t tx="ekr.20050731102358.12">s-region-bind
+s-region-bind-cua
+save-buffer
+save-buffers-kill-emacs
+save-some-buffers
+savehist-load
+savehist-save
+scheme-mode
+scribe-mode
+scroll-down
+scroll-down-command
+scroll-down-one
+scroll-left
+scroll-other-window
+scroll-other-window-down
+scroll-right
+scroll-up
+scroll-up-command
+scroll-up-one
+sdb
+search-backward
+search-backward-regexp
+search-forward
+search-forward-regexp
+self-insert-and-exit
+self-insert-command
+semantic-analyze-current-context
+semantic-auto-parse-mode
+semantic-bnf-mode
+semantic-cb-speedbar-mode
+semantic-chart-database-size
+semantic-chart-nonterminal-complexity-token
+semantic-chart-nonterminals-by-token
+semantic-show-dirty-mode
+semantic-show-unmatched-syntax-mode
+semantic-summary-mode
+senator-complete-symbol
+senator-completion-menu-popup
+senator-jump
+senator-jump-regexp
+senator-minor-mode
+senator-next-token
+senator-previous-token
+senator-re-search-backward
+senator-re-search-forward
+senator-search-backward
+senator-search-forward
+senator-word-search-backward
+senator-word-search-forward
+send-pr
+send-pr-mode
+send-pr:send-pr
+send-pr:send-pr-mode
+set-buffer-file-coding-system
+set-buffer-file-coding-system-for-read
+set-buffer-process-coding-system
+set-comment-column
+set-default-buffer-file-coding-system
+set-default-file-coding-system
+set-face-background
+set-face-background-pixmap
+set-face-blinking-p
+set-face-dim-p
+set-face-display-table
+set-face-doc-string
+set-face-font
+set-face-foreground
+set-face-highlight-p
+set-face-reverse-p
+set-face-strikethru-p
+set-face-underline-p
+set-file-coding-system
+set-file-coding-system-for-read
+set-fill-column
+set-fill-prefix
+set-goal-column
+set-justification
+set-justification-center
+set-justification-full
+set-justification-left
+set-justification-none
+set-justification-right
+set-keyboard-coding-system
+set-left-margin
+set-mark-command
+set-pathname-coding-system
+set-right-margin
+set-selective-display
+set-terminal-coding-system
+set-variable
+set-visited-file-name
+setenv
+setnu-mode
+sgml-mode
+sh-mode
+shell
+shell-command
+shell-command-on-region
+shell-script-mode
+show-message-log
+shrink-window
+shrink-window-horizontally
+shrink-window-if-larger-than-buffer
+shrink-window-pixels
+sieve-manage
+sieve-mode
+sieve-upload
+sieve-upload-and-bury
+signal-process
+simula-mode
+skeleton-pair-insert-maybe
+skeleton-proxy
+skeleton-proxy-new
+smart-c++
+smart-info
+smart-info-assist
+smart-java
+smart-objc
+smerge
+sml-mode
+smt-browse
+snake
+sokoban
+sort-columns
+sort-fields
+sort-float-fields
+sort-lines
+sort-numeric-fields
+sort-pages
+sort-paragraphs
+sort-regexp-fields
+sort-regexp-fields-numerically
+speedbar
+speedbar-frame-mode
+speedbar-get-focus
+spell-buffer
+spell-region
+spell-string
+spell-word
+split-line
+split-window
+split-window-horizontally
+split-window-vertically
+spook
+sql-db2
+sql-help
+sql-informix
+sql-ingres
+sql-interbase
+sql-linter
+sql-mode
+sql-ms
+sql-mysql
+sql-oracle
+sql-postgres
+sql-product-interactive
+sql-solid
+sql-sqlite
+sql-sybase
+ssh
+standard-display-european
+start-itimer
+start-kbd-macro
+startup-presentation-hack
+string-rectangle
+strokes-compose-complex-stroke
+strokes-decode-buffer
+strokes-describe-stroke
+strokes-do-complex-stroke
+strokes-do-stroke
+strokes-global-set-stroke
+strokes-help
+strokes-list-strokes
+strokes-load-user-strokes
+strokes-mode
+style-format
+summ-pr
+sunrise-sunset
+suspend-console
+suspend-emacs
+suspend-emacs-or-iconify-frame
+suspend-or-iconify-emacs
+switch-to-buffer
+switch-to-buffer-other-frame
+switch-to-buffer-other-window
+switch-to-completions
+switch-to-other-buffer
+symbol-file
+symbol-near-point</t>
+<t tx="ekr.20050731102358.13">tab-to-tab-stop
+tabify
+tag-complete-symbol
+tags-apropos
+tags-loop-continue
+tags-query-replace
+tags-search
+tcl-help-on-word
+tcl-mode
+tdbx
+teco-command
+telnet
+term
+terminal-emulator
+tetris
+tex-mode
+texi2info
+texinfo-format-buffer
+texinfo-format-region
+texinfo-mode
+texmathp
+text-mode
+tgdb
+time-stamp
+time-stamp-toggle-active
+tmpl-expand-templates-in-buffer
+tmpl-expand-templates-in-region
+tmpl-insert-template-file
+tmpl-insert-template-file-from-fixed-dirs
+tmpl-minor-mode
+toggle-auto-compression
+toggle-buffer-file-coding-system
+toggle-debug-on-error
+toggle-debug-on-quit
+toggle-debug-on-signal
+toggle-profiling
+toggle-read-only
+toggle-rot13-mode
+toggle-text-mode-auto-fill
+toggle-truncate-lines
+toggle-viper-mode
+toggle-where-was-i
+toolbar-add-button-on-the-fly
+toolbar-add-execute-macro-button
+toolbar-add-kbd-macro
+toolbar-compile
+toolbar-copy
+toolbar-cut
+toolbar-debug
+toolbar-dired
+toolbar-external
+toolbar-gnus
+toolbar-info
+toolbar-ispell
+toolbar-ispell-internal
+toolbar-mail
+toolbar-news
+toolbar-not-configured
+toolbar-open
+toolbar-paste
+toolbar-print
+toolbar-redo
+toolbar-replace
+toolbar-save
+toolbar-search
+toolbar-undo
+top-level
+tperldb
+tpu-edt
+tpu-edt-mode
+tpu-edt-on
+tpu-set-cursor-bound
+tpu-set-cursor-free
+tpu-set-scroll-margins
+tpum-global-mode
+tpum-minor-mode
+trace-function
+trace-function-background
+traceroute
+transpose-chars
+transpose-line-down
+transpose-line-up
+transpose-lines
+transpose-paragraphs
+transpose-preceding-chars
+transpose-sentences
+transpose-sexps
+transpose-words
+tree-test-it-all
+tsdb
+tshell
+turn-off-font-lock
+turn-off-haskell-doc-mode
+turn-off-pending-delete
+turn-on-auto-fill
+turn-on-eldoc-mode
+turn-on-font-lock
+turn-on-fume-mode
+turn-on-haskell-doc-mode
+turn-on-pending-delete
+turn-on-permanent-buffers
+txdb</t>
+<t tx="ekr.20050731102358.14">uil-mode
+undefined
+underline-region
+undo
+unexpand-abbrev
+unhide-copyleft-region
+universal-argument
+universal-argument-minus
+universal-argument-more
+universal-argument-other-key
+universal-coding-system-argument
+unix-sync
+unload-feature
+unlock-buffer
+unmigrate-user-init-file
+unmorse-region
+unoverstrike-region
+unpop-window-configuration
+unrmail
+untabify
+ununderline-and-unoverstrike-region
+ununderline-region
+up-list
+upcase-initials-region
+upcase-region
+upcase-region-or-word
+upcase-word
+update-autoloads-from-directory
+update-autoloads-here
+update-file-autoloads
+url-gateway-nslookup-host
+url-mail
+url-setup-save-timer
+use-hard-newlines
+user-mail-address</t>
+<t tx="ekr.20050731102358.15">vc-annotate
+vc-cancel-version
+vc-create-snapshot
+vc-diff
+vc-directory
+vc-insert-headers
+vc-load-vc-hooks
+vc-merge
+vc-next-action
+vc-print-log
+vc-register
+vc-rename-file
+vc-resolve-conflicts
+vc-retrieve-snapshot
+vc-revert-buffer
+vc-update-change-log
+vc-version-diff
+vc-version-other-window
+verilog-customize
+verilog-mode
+verilog-version
+version
+vertical-mode
+vhdl-mode
+view-buffer
+view-buffer-other-window
+view-emacs-news
+view-file
+view-file-other-window
+view-lossage
+view-major-mode
+view-minor-mode
+view-mode
+view-pr
+view-register
+view-sample-init-el
+viper-mode
+visit-tags-table
+vm
+vm-compose-mail
+vm-folders-summarize
+vm-mail
+vm-mail-other-frame
+vm-mail-other-window
+vm-mode
+vm-other-frame
+vm-other-window
+vm-submit-bug-report
+vm-visit-folder
+vm-visit-folder-other-frame
+vm-visit-folder-other-window
+vm-visit-imap-folder
+vm-visit-imap-folder-other-frame
+vm-visit-imap-folder-other-window
+vm-visit-pop-folder
+vm-visit-pop-folder-other-frame
+vm-visit-pop-folder-other-window
+vm-visit-virtual-folder
+vm-visit-virtual-folder-other-frame
+vm-visit-virtual-folder-other-window
+vrml-mode</t>
+<t tx="ekr.20050731102358.16">w3
+w3-display-stylesheet
+w3-fetch
+w3-fetch-other-frame
+w3-find-file
+w3-follow-link
+w3-follow-url-at-point
+w3-follow-url-at-point-other-frame
+w3-hotindex-add-key
+w3-hotindex-query
+w3-hotindex-rm-key
+w3-hotlist-add-document
+w3-hotlist-add-document-at-point
+w3-hotlist-append
+w3-hotlist-apropos
+w3-hotlist-delete
+w3-hotlist-refresh
+w3-hotlist-rename-entry
+w3-maybe-follow-link
+w3-maybe-follow-link-mouse
+w3-next-document
+w3-open-local
+w3-prev-document
+w3-preview-this-buffer
+w3-print-this-url
+w3-print-url-under-point
+w3-read-html-bookmarks
+w3-region
+w3-show-dvi
+w3-table-speak-current-table-column
+w3-use-hotlist
+w3-version
+wconfig-add-by-name
+wconfig-delete-by-name
+wconfig-delete-pop
+wconfig-restore-by-name
+wconfig-ring-save
+wconfig-yank-pop
+webjump
+what-coding-system
+what-cursor-position
+what-domain
+what-line
+what-page
+where-is
+whitespace-buffer
+whitespace-cleanup
+whitespace-cleanup-region
+whitespace-global-mode
+whitespace-region
+whitespace-toggle-ateol-check
+whitespace-toggle-indent-check
+whitespace-toggle-leading-check
+whitespace-toggle-spacetab-check
+whitespace-toggle-trailing-check
+whitespace-visual-incremental-mode
+whitespace-visual-mode
+whitespace-write-file-hook
+whois
+whois-reverse-lookup
+widen
+widget-backward
+widget-beginning-of-line
+widget-browse
+widget-browse-at
+widget-browse-other-window
+widget-button-click
+widget-button-press
+widget-button1-click
+widget-complete
+widget-end-of-line
+widget-field-activate
+widget-file-complete
+widget-forward
+widget-kill-line
+widget-minor-mode
+widget-transpose-chars
+win32-get-current-locale-id
+win32-get-default-locale-id
+win32-get-locale-info
+win32-get-valid-locale-ids
+win32-long-file-name
+win32-set-current-locale
+win32-set-process-priority
+win32-short-file-name
+window-configuration-to-register
+winmgr-mode
+winring-delete-configuration
+winring-duplicate-configuration
+winring-jump-to-configuration
+winring-new-configuration
+winring-next-configuration
+winring-prev-configuration
+winring-rename-configuration
+word-search-backward
+word-search-forward
+wordstar-mode
+write-abbrev-file
+write-file
+write-region
+write-region-internal
+wrolo-popup-menu</t>
+<t tx="ekr.20050731102358.17">x-symbol-decode
+x-symbol-decode-recode
+x-symbol-encode
+x-symbol-encode-recode
+x-symbol-fontify
+x-symbol-grid
+x-symbol-image-editor
+x-symbol-image-parse-buffer
+x-symbol-init-language-interactive
+x-symbol-initialize
+x-symbol-key-autoload
+x-symbol-map-autoload
+x-symbol-mode
+x-symbol-modify-key
+x-symbol-package-bug
+x-symbol-package-info
+x-symbol-package-reply-to-report
+x-symbol-package-web
+x-symbol-rotate-key
+x-symbol-unalias
+xdb
+xemacs-local-faq
+xemacs-splash-buffer
+xemacs-www-faq
+xemacs-www-page
+xetla
+xetla-add-log-entry
+xetla-apply-changeset
+xetla-archives
+xetla-bookmarks
+xetla-browse
+xetla-changelog
+xetla-changes
+xetla-changes-against
+xetla-changes-last-revision
+xetla-commit
+xetla-conflicts-finish
+xetla-delta
+xetla-ediff-add-log-entry
+xetla-edit-log
+xetla-file-diff
+xetla-file-ediff
+xetla-file-ediff-revisions
+xetla-file-view-original
+xetla-get-changeset
+xetla-help
+xetla-id-tagging-method
+xetla-inventory
+xetla-inventory-file-mode
+xetla-log-edit-mode
+xetla-logs
+xetla-make-archive
+xetla-missing
+xetla-my-id
+xetla-my-revision-library
+xetla-prepare-patch-submission
+xetla-revisions
+xetla-rm
+xetla-start-project
+xetla-submit-bug-report
+xetla-tag-insert
+xetla-tag-regenerate
+xetla-tree-lint
+xetla-tree-version
+xetla-version
+xetla-view-conflicts
+xmine
+xmine-mode
+xml-mode
+xpm-mode
+xrdb-mode
+xsl-grep
+xsl-mode
+xslt-process-mode
+xt-check-xlib
+xwem-attach-client
+xwem-backward-application
+xwem-balance-windows
+xwem-battery
+xwem-battery-popup-menu
+xwem-battery-status
+xwem-cl-pop-to-client
+xwem-cl-set-title
+xwem-cl-switch-other-frame
+xwem-cl-switch-other-win
+xwem-cl-switch-to-other
+xwem-cl-switch-to-other-in-other-win
+xwem-cl-transpose
+xwem-clgen-toggle-other-on-split
+xwem-clgen-turn-off-other-on-split
+xwem-clgen-turn-on-other-on-split
+xwem-client-demanage-others
+xwem-client-exchange-selected-and-mark
+xwem-client-iconify
+xwem-client-idestroy
+xwem-client-imove
+xwem-client-info
+xwem-client-iresize
+xwem-client-kill
+xwem-client-query-kill
+xwem-client-run-copy
+xwem-client-run-copy-other-frame
+xwem-client-run-copy-other-win
+xwem-client-set-mark
+xwem-client-unset-mark
+xwem-clswi-next
+xwem-clswi-next-other-window
+xwem-clswi-prev
+xwem-clswi-prev-other-window
+xwem-copy-cutbuffer
+xwem-copy-region-as-cutbuffer
+xwem-describe-prefix-bindings
+xwem-desktop-load
+xwem-desktop-load-onetime
+xwem-desktop-save
+xwem-desktop-save-onetime
+xwem-edit-client-properties
+xwem-edmacro-edit-kbd-macro
+xwem-eval-expression
+xwem-execute-extended-command
+xwem-fini
+xwem-focus-click-on
+xwem-forward-application
+xwem-frame-destroy
+xwem-frame-fit-screen
+xwem-frame-goto-next
+xwem-frame-goto-next-hor
+xwem-frame-goto-next-vert
+xwem-frame-goto-prev
+xwem-frame-goto-prev-hor
+xwem-frame-goto-prev-vert
+xwem-frame-hide
+xwem-frame-imove
+xwem-frame-iresize
+xwem-frame-lower
+xwem-frame-next
+xwem-frame-on-delim-menu
+xwem-frame-on-delim-resize
+xwem-frame-previous
+xwem-frame-raise
+xwem-frame-sbs-hor-split
+xwem-frame-sbs-vert-split
+xwem-frame-set-name
+xwem-frame-showroot
+xwem-frame-split-sbs
+xwem-frame-switch
+xwem-frame-switch-nth
+xwem-frame-switch-nth-linkage
+xwem-frame-transparency
+xwem-frame-transpose
+xwem-framei-dockapp-popup-alt-menu
+xwem-framei-dockapp-popup-menu
+xwem-fullscreen-mode
+xwem-help
+xwem-help-clients
+xwem-help-cutbuffers
+xwem-help-describe-bindings
+xwem-help-describe-key
+xwem-help-describe-key1
+xwem-help-for-help
+xwem-help-frames
+xwem-help-mode
+xwem-help-where-is
+xwem-help-wins
+xwem-ignore-command
+xwem-kbd-quit
+xwem-kbd-quote-command
+xwem-keyboard-quit
+xwem-keymacro-begin
+xwem-keymacro-end
+xwem-keymacro-exit-recursive-edit
+xwem-keymacro-recursive-edit
+xwem-keymacro-undefined
+xwem-keytt-minor-mode
+xwem-kill-cl-and-window
+xwem-launch-dock-down
+xwem-launch-dock-launch
+xwem-launch-dock-menu
+xwem-launch-lupe
+xwem-launch-lupe-other-frame
+xwem-launch-lupe-other-win
+xwem-launch-program
+xwem-launch-program-other-frame
+xwem-launch-program-other-win
+xwem-launch-xlock
+xwem-launch-xterm
+xwem-launch-xterm-other-frame
+xwem-launch-xterm-other-win
+xwem-launcher-toggle-frame-type
+xwem-launcher-toggle-split-type
+xwem-launcher-turn-on-embedded-frame-type
+xwem-launcher-turn-on-horizontal-split-type
+xwem-launcher-turn-on-normal-frame-type
+xwem-launcher-turn-on-vertical-split-type
+xwem-make-frame
+xwem-mini-calc
+xwem-minib-resize-mode
+xwem-minibuffer-activate
+xwem-misc-make-screenshot
+xwem-misc-pause
+xwem-misc-profiling-results
+xwem-misc-start-profiling
+xwem-modeline-disable
+xwem-modeline-enable
+xwem-open-file
+xwem-other-window
+xwem-pager
+xwem-pager-move-down
+xwem-pager-move-left
+xwem-pager-move-right
+xwem-pager-move-up
+xwem-paste-cutbuffer
+xwem-popup-auto-menu
+xwem-popup-clients-menu
+xwem-recover-do-recover
+xwem-recover-toggle
+xwem-recover-turn-off
+xwem-recover-turn-on
+xwem-register-client
+xwem-register-frame-config
+xwem-register-jump
+xwem-register-win-config
+xwem-report-bug
+xwem-rooter-lower
+xwem-rooter-raise
+xwem-run-program
+xwem-self-insert-or-undefined
+xwem-shell-command
+xwem-show-message-log
+xwem-sm-global-mode
+xwem-sm-mode
+xwem-strokes-begin
+xwem-strokes-cmplx-begin
+xwem-strokes-define
+xwem-strokes-ibutton1
+xwem-strokes-ibutton1up
+xwem-strokes-ibutton3
+xwem-strokes-idescribe
+xwem-strokes-list
+xwem-strokes-nocmd
+xwem-strokes-unset-last-stroke
+xwem-switch-client
+xwem-switch-other-client
+xwem-switch-to-fullscreen-cl
+xwem-tabber-popup-cl-menu
+xwem-tabber-switch-cl
+xwem-theme-set
+xwem-time
+xwem-toggle-fullscreen
+xwem-transpose-frames
+xwem-turn-off-keytt
+xwem-turn-off-vline
+xwem-turn-on-keytt
+xwem-turn-on-vline
+xwem-undefined-command
+xwem-universal-argument
+xwem-universal-command
+xwem-universal-digit
+xwem-universal-minus
+xwem-universal-more
+xwem-vline-minor-mode
+xwem-weather-popup-menu
+xwem-weather-popup-remove
+xwem-weather-show-details
+xwem-weather-update
+xwem-window-delete
+xwem-window-delete-others
+xwem-window-enlarge-horizontally
+xwem-window-enlarge-vertically
+xwem-window-split-horizontally
+xwem-window-split-vertically
+xwem-winmove-down
+xwem-winmove-left
+xwem-winmove-right
+xwem-winmove-up
+xwem-worklog-login
+xwem-worklog-logout</t>
+<t tx="ekr.20050731102358.18">yank
+yank-clipboard-selection
+yank-pop
+yank-rectangle
+yow
+</t>
+<t tx="ekr.20050731102358.19">zap-to-char
+zap-up-to-char
+zenirc</t>
+<t tx="ekr.20050731102651.1">Custom-buffer-done
+Custom-goto-parent
+Custom-make-dependencies
+Custom-mode-menu
+Custom-reset-current
+Custom-reset-saved
+Custom-reset-standard
+Custom-save
+Custom-set
+
+Electric-command-history-redo-expression
+
+Footnote-add-footnote
+
+Helper-describe-bindings
+Helper-help
+
+</t>
+<t tx="ekr.20050731102651.3">Info-elisp-ref
+Info-emacs-command
+Info-emacs-key
+Info-goto-emacs-command-node
+Info-goto-emacs-key-command-node
+Info-goto-node
+Info-query
+Info-search
+Info-speedbar-browser
+Info-split
+Info-tagify
+Info-validate
+Info-visit-file</t>
+<t tx="ekr.20050731102651.4">LaTeX-install-toolbar
+LaTeX-mode
+
+Manual-nuke-nroff-bs
+
+Rd-mode
+
+TeX-auto-generate
+TeX-auto-generate-global
+TeX-insert-quote
+TeX-mode
+TeX-submit-bug-report
+
+View-process-status</t>
+<t tx="ekr.20050731115541">@nocolor
+
+1.  Get present emacs functionality integrated into Leo asap.
+    - Working prototype by Aug 7.
+    - Next release by Sept. 1.
+    - Add a single emacs menu containing submenus for each of the following main emacs menu:
+        View, Cmds, Tools, Options, Buffers (but not Lisp yet)
+    - Possibly add items in existing File &amp; Edit menus.
+    - Dim unimplemented items.
+    - Get important Emacs items from settings dialog.
+        (Try not to change this too much in the future.)
+
+Subgoals:
+    
+- Allow future improvements without changing user options greatly.
+    - Allow for customizeEmacs plugin.
+- Implement all essential emacs commands:  cursor commands, find commands, etc.
+- Extend emacs commands to handler Leo improvements.
+- Integrate Leo commands with emacs commands.
+
+Other goals:
+    
+- Define all present xemacs names in Leo for the future.
+- emacs class should not know any details of 'interior modes'.
+- pushMode, popMode, setMode, clearMode commands.
+- Each important Leo widget should capture all &lt;key&gt; events.
+    - Send them to master key handler commander, widgetKind args.
+      (This makes it unnecessary to call possibly unreliable (or non-existent) gui methods.
+- (Optional?)  Don't bind menu items: let the key handler dispatch the menu commands.</t>
+<t tx="ekr.20050802075101">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3275310
+By: ktenney
+
+The rst2 plugin has lots of capability and flexibility
+which I don't understand. 
+
+I want to do very basic rst authoring. 
+I want a headline to be a section, and
+the body text to be the section contents.
+
+Do I need to place every node under a @rst node?
+
+Example;
+
+I want to do this
+
+@rst howto.html
+-Step 1
+-.this is how to do step 1
+-Step 2
+- .this is how to do step 2
+--Step 2 caveat
+--.be careful
+
+and have sections generated for Step 1 and 2, and 
+Step 2 caveat.
+
+It's looking like I need to write;
+@rst howto.html
+-Step 1
+--@rst
+--.this is how to do step 1
+-Step 2
+--@rst
+-- .this is how to do step 2
+--Step 2 caveat
+---@rst
+---.be careful
+
+Is my understanding correct?
+
+Thanks,
+Kent
+
+</t>
+<t tx="ekr.20050802090936">@nocolor</t>
+<t tx="ekr.20050802090936.1">True: call body_filter to massage text.
+
+Removes @ignore, @nocolor, @wrap directives.
+</t>
+<t tx="ekr.20050802090936.2">Controls whether to use external file or string.</t>
+<t tx="ekr.20050802090936.3">@nocolor
+
+Controls the following code in :
+
+@color
+    
+if config.rst2_pure_document or g.match_word(h,0,"@rst"):
+    &lt; &lt; handle an rst node &gt; &gt;
+    # Removes @ignore, @nocolor, @wrap directives.
+    # Removes code blocks if rst2_replace_code_blocks is True.
+    # Formats headlines only if rst2_format_headlines is True.
+else:
+    &lt; &lt; handle a plain node &gt; &gt;
+    # Deletes @others from output.
+    # Formats headlines only if rst2_format_headlines is False. (opposite of meaning in rst nodes!)</t>
+<t tx="ekr.20050802090936.4">Used differently.  See rst2_pure_document.</t>
+<t tx="ekr.20050802090936.5">@nocolor
+
+If False, add_node_marker and http_support_main  do nothing.  Otherwise add_node_marker does the following:
+    
+1. add_node_marker writes a string using generate_node_marker.
+
+Generates 'http-node-marker-'+str(number), where number is config.node_counter
+(incremented each time add_node_marker is called.
+
+2. Enables the following code in :
+@color
+
+    if config.tag == 'open2':
+        http_map = self.http_map
+    else:
+        http_map = {}
+        config.anchormap = {}
+        # maps v nodes to markers.
+        config.node_counter = 0
+    # [snip] code to write the tree
+    if config.rst2_http_server_support:
+        self.http_map = http_map</t>
+<t tx="ekr.20050802090936.6">Deletes p.v.rst2_http_attributename from all nodes after writing.
+
+Deletes p.v.unknownAttributes if it then becomes empty.</t>
+<t tx="ekr.20050802090936.7">Not used at present.
+
+Runs an alternative 'main line' in onFileOpen when a new window is opened.</t>
+<t tx="ekr.20050802090936.10"></t>
+<t tx="ekr.20050802090936.11"></t>
+<t tx="ekr.20050802091128">@nocolor
+
+- Init config from @settings options.  Remove configParser stuff.</t>
+<t tx="ekr.20050804081215">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3276408
+
+Leo has great potential for smoothing some of the bumps
+outside of learning the details of the markup.
+Here is my wish list;
+
+- Section level handling.
+  - one of the problems with using rst comes when a new
+    section level is inserted into a document. Leo can 
+    take care of this effortlessly, providing a correct 
+   underline character for each section heading.
+
+    Other than the section management, I want Leo to
+    assume that I'm writing rst, and should be rendered
+    as-is. If I want to include some pretty Python, I put
+    it in a ..  python-code:: block (or some such)
+
+    On top of this base could be built special case 
+    handling.
+
+- Assist in viewing rendered output
+  - easy access to the command to render a tree to 
+    html.
+  - I would like an option which automatically inserted
+    a @url node which pointed to the rendered file, or
+    some other trick to make switching between source
+    and output painless.
+
+- Assist in working with the CSS file
+  - a CSS file is now required by docutils. A @setting
+    could specify the file. I would like some kind of 
+    sugar which made it easy to edit the CSS file, maybe
+    an option to create a @file node automatically,
+    like the @url node above. Again, I want to be able
+    to effortlessly edit the CSS and see the results.
+
+- The third file of interest when writing rst is the config
+   file which controls many behaviours of the renderer.
+   Again, some intelligence which located it, made it
+   convenient to edit it, maybe even linked to 
+   documentation for it, would be very nice.
+
+- I would like a setting which would save the file with the
+  rst markup and make it easy to examine and edit.
+
+- On the someday/maybe list would be a @publish
+  feature, which configured a directory to ftp the rendered
+  file to.
+
+It seems common these days for software to involve a
+set of files, more than the traditional source and header
+files. Leo strikes me as very well situated to help in
+managing this complexity. I would really like 
+a framework which understood what files were involved
+in a use case, and eased my access to them. rst is
+the case in point here, the same principles apply to
+Zope3, Chandler etc.
+
+Thanks,
+Kent
+</t>
+<t tx="ekr.20050805105024"></t>
+<t tx="ekr.20050805105024.3">@nocolor</t>
+<t tx="ekr.20050805105024.4">###########################
+|leo| Using the rst2 plugin
+###########################
+
+This page documents a nifty new plugin created by Josef Dalcolmo, Timo Honkasalo, Steve Zatz, Paul Paterson and Edward Ream.  This page was created using the rst2 plugin.  You can find the source code in LeoPlugins.leo (on cvs).
+
+.. contents::
+
+.. Here are the links used in this document.
+
+.. _LaTeX:                http://www.latex-project.org/
+.. _reStructuredText:     http://docutils.sourceforge.net/rst.html
+.. _docutils:             http://docutils.sourceforge.net
+.. _ListManagerDocs.html: http://webpages.charter.net/edreamleo/ListManagerDocs.html
+.. _wxListManager.leo:    http://webpages.charter.net/edreamleo/wxListManager.leo
+.. _SilverCity:           http://silvercity.sourceforge.net
+.. _front:                http://webpages.charter.net/edreamleo/front.html
+.. _home:                 http://webpages.charter.net/edreamleo/front.html
+
+.. |blank| image:: blank.gif
+.. |leo|   image:: leo.gif
+    :target: front_</t>
+<t tx="ekr.20050805105024.5"></t>
+<t tx="ekr.20050805105024.6">@ignore
+@nocolor
+@wrap
+
+This plugin creates output files from Leo outlines containing reStructuredText_
+(rST) The combination of Leo outlines and rST creates a simple, flexible and
+powerful way of generating HTML, LaTeX_ and other text documents.
+ReStructuredText is a simple and powerful text formatting markup language.
+
+The file ListManagerDocs.html_ is an impressive example of the kind of output
+that is possible to generate relatively easily using this plugin. The source
+file for this example is wxListManager.leo_.
+
+To use this plugin, you must have installed Python's docutils_ module. This
+module will also use the SilverCity_ syntax coloring package if you have
+installed it.
+
+This plugin assumes that a node whose headline is @rst &lt;filename&gt; contains a
+tree of nodes containing reStructuredText. Let us call such a node an **rst root**
+node. The plugin passes the headline and body text of the rst root and all the
+nodes of its subtree to Python's docutils module, which parses the
+reStructuredText and creates the output file.
+
+Double-clicking on an rst root node generates an output file from the
+reStructured Text input contained in the rst root node and all the nodes of its
+subtree. The output file will be HTML, LaTex or plain text depending on the
+extension of the filename specified in the rst root node. If the filename ends
+in .html or .htm the docutils module will create an HTML file. If the filename
+ends in .tex the docutils module will create a LaTex file. Otherwise, a plain
+.txt file is generated.
+
+If the output file is a .html or .htm file, it will use three .css (cascading
+style sheet) files provided they exist in the same directory as the output file.
+You can control the formatting of the HTML file by altering these .css files.
+See the node called "cascading style sheets" for more details.
+
+See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for
+many examples of how to use this plugin.</t>
+<t tx="ekr.20050805105024.7"></t>
+<t tx="ekr.20050805105024.8">@ignore
+@nocolor
+@wrap
+
+If an outline node contains @rst &lt;filename&gt;, that node is the root of a tree of
+nodes that will create the named output file. Let's call such a node the **rst
+root**.
+
+Subnodes of the rst root nodes may have headlines that contain just @rst. Such
+node should contain rst markup, possibly including the code-block directive
+defined by this plugin to format blocks of code.
+
+**Important:** All @rst nodes should start with the @ignore directive. This allows @rst to be embedded in @file-nosent trees: see the next section for details. This plugin strips leading @ignore, @nocolor and @wrap directives.  Such directives do not appear in the output.
+
+The root node may contain any rST directives.  In particular, to create a table of contents put::
+
+    .. contents:: Table of Contents
+
+on its own line in the rst root node.
+
+All other subnodes of the rst root, i.e., nodes whose headline is something
+other than @rst, are **code nodes**. This plugin converts the headline text of
+code nodes into an rST section headline whose level depends on the level of the
+node in the Leo outline. Higher-level headlines in the outline correspond to
+higher-level section headings; lower-level headlines in the outline correspond
+to lower-level section headings. Any text in a code node is formatted as if it
+were enclosed in a code-block directive.
+
+The plugin reserves the '#' character for your own use so that you can
+specify an rST headline explicitly. For example,::
+
+    #####
+    Title
+    #####
+
+You would typically put such a title in the rst root node.
+Otherwise, section underlining is discouraged, since the plugin automaticaly
+generates sections from headlines.</t>
+<t tx="ekr.20050805105024.9"></t>
+<t tx="ekr.20050805105024.10">As stated earlier, you must put an @ignore directive in any @rst node (except the root @rst node) whose rST text you want to contribute to the output.  This strange-looking convention allows you to embed documentation in @file-nosent trees *without* that documentation being included in the file derived from the @file-nosent tree.
+
+For example, consider the following outline, in which all the @rst nodes (except the root @rst node) contain @ignore directives::
+
+    @rst spamDocs.html
+        @file-nosent spam.py
+            code node 1
+                @rst
+            code node 2
+                @rst
+            code node 3
+                @rst
+
+The rst2 plugin will ouput all the reStructuredText contained in the three @rst nodes to spamDocs.html, but the contents of those @rst nodes will not become part of spam.py.  *Note:* The @ignore directive is valid only in @file-nosent trees, which is why we must use @file-noset to generate spam.py.
+
+It would be also be possible to use cloned nodes to embed code nodes in .html files.  This would allow you to use regular @file trees to generate derived files.  For example, suppose all similarly named code nodes are clones of each other::
+
+    @rst spamDocs.html
+        code node 1
+            @rst
+        code node 2
+            @rst
+        code node 3
+            @rst
+
+    @file-nosent spam.py
+        code node 1
+        code node 2
+        code node 3
+
+The disadvantage of this organization is that you must update spamDocs.html by hand to keep it up-to-date with spam.py.
+</t>
+<t tx="ekr.20050805105024.11"></t>
+<t tx="ekr.20050805105024.12">@ignore
+@nocolor
+@wrap
+
+This plugin defines a code-block rST directive if the SilverCity syntax coloring module has been installed. This directive takes one argument, a language name.  For example::
+
+    .. code-block:: Python
+    
+        import leoGlobals as g
+
+This directive syntax colors the code in the indented code block that follows the directive.  The result looks like this:
+
+.. code-block:: Python
+    
+    import leoGlobals as g
+
+See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for many examples of how to use this directive.
+</t>
+<t tx="ekr.20050805105024.13"></t>
+<t tx="ekr.20050805105024.14">@ignore
+@nocolor
+@wrap
+
+When this plugin generates HTML files, this plugin assumes that three .css
+(cascading style sheet) files exist in the directory containing the output file.
+For the HTML output to look good the following .css files should exist in the
+directory containing the generatated HTML file: default.css, leo_rst.css and
+silver_city.css.
+
+- default.css is the default style sheet that docutils expects to exist.
+- leo_rst.css contains some style improvements based on Gunnar Schwant's DocFactory.
+- silver_city.css is the style sheet that controls the syntax highlighting generated by SilverCity.
+
+The latter two style sheets are imported at the end of the default.css.
+
+**N.B.** You can use cascading style sheets to do things that otherwise wouldn't be possible with "plain" rST.  For instance, the background color of this page was specified in a body style.
+
+-------------
+
+|leo|</t>
 <t tx="mork.20040926105355.9">def openChaptersFile( fileName ):
     zf = zipfile.ZipFile( fileName )
     import cStringIO
@@ -11827,1326 +16639,3723 @@ def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
         chapList[ x ].seek( 0 )
         zf.writestr( zif ,chapList[ x ].read() )
     zf.close()</t>
-<t tx="mork.20041030164547.4">def _tailEnd( self, tbuffer ):
-    '''This returns the tailEnd function that has been configure for the tbuffer parameter.'''
-    if self.tailEnds.has_key( tbuffer ):
-        return self.tailEnds[ tbuffer ]( tbuffer )
-    else:
-        return 'break'
-</t>
-<t tx="mork.20041030164547.5">#self.tailEnds = {}
-def setTailEnd( self, tbuffer , tailCall ):
-    '''This method sets a ending call that is specific for a particular Text widget.
-       Some environments require that specific end calls be made after a keystroke
-       or command is executed.'''
-    self.tailEnds[ tbuffer ] = tailCall
-</t>
-<t tx="mork.20041030164547.6">#self.undoers = {}
-def setUndoer( self, tbuffer, undoer ):
-    '''This method sets the undoer method for the Emacs instance.'''
-    self.undoers[ tbuffer ] = undoer
-</t>
-<t tx="mork.20041030164547.7">def doUndo(  self, event, amount = 1 ):
-    tbuffer = event.widget
-    if self.undoers.has_key( tbuffer ):
-        for z in xrange( amount ):
-            self.undoers[ tbuffer ]()
-    return 'break'
-</t>
-<t tx="mork.20041030164547.11">def _executeMacro( self, macro, tbuffer ):
-    for z in macro:
-        if len( z ) == 2:
-            tbuffer.event_generate( '&lt;Key&gt;', keycode = z[ 0 ], keysym = z[ 1 ] ) 
+<t tx="orkman.20050207150858">from __future__ import generators
+import javax.swing as swing
+import javax.swing.event as sevent
+import javax.swing.text as stext
+import java.awt.event as aevent
+import java.util.regex as regex
+import java.awt as awt
+import java.lang 
+import java.io
+import string    
+import re  
+import leoGlobals as g
+from DefCallable import DefCallable
+import LeoUtilities
+
+True =1
+False = 0
+extensions = None
+
+&lt;&lt; addCommand &gt;&gt;
+
+class SwingMacs:
+    '''A class that adds Emac derived commands and keystrokes to a JTextPane'''    
+
+    @others</t>
+<t tx="orkman.20050207152619">class incremental:
+    
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.iway = None
+        i = java.lang.Integer.decode( '#63c6de' )
+        self.highlight = awt.Color( i )
+    
+    def __call__( self, event, command ):
+        
+        component = event.getSource()
+        stxt = component.getText()
+        pos = component.getCaretPosition()
+        if command in ( 'Ctrl S', 'Ctrl R' ):
+            self.startIncremental( command )
+            if not self.emacs.minibuffer.getText():
+                return True
+        elif command == 'Enter':
+            return self.emacs.keyboardQuit( event )
         else:
-            meth = z[ 0 ].lstrip( '&lt;' ).rstrip( '&gt;' )
-            method = self.cbDict[ meth ]
-            ev = Tkinter.Event()
-            ev.widget = tbuffer
-            ev.keycode = z[ 1 ]
-            ev.keysym = z[ 2 ]
-            ev.char = z[ 3 ]
-            self.masterCommand( ev , method, '&lt;%s&gt;' % meth )
-    return self._tailEnd( tbuffer )  
-</t>
-<t tx="mork.20041030164547.30">#mbuffers = {}
-#svars = {}
-def setBufferStrokes( self, tbuffer, label ):
-        '''setBufferStrokes takes a Tk Text widget called 'tbuffer'. 'stext' is a function or method
-        that when called will return the value of the search text. 'rtext' is a function or method
-        that when called will return the value of the replace text.  It is this method and
-        getHelpText that users of the temacs module should call.  The rest are callback functions
-        that enable the Emacs emulation.'''
+            self.setMiniBuffer( event )
         
-        g.trace(tbuffer,label)
-    
-        Emacs.Emacs_instances[ tbuffer ] = self
-        def cb( evstring ):
-            _cb = None
-            if self.cbDict.has_key( evstring ):
-                _cb = self.cbDict[ evstring ]
-            evstring = '&lt;%s&gt;' % evstring
-            if evstring != '&lt;Key&gt;':
-                # g.trace(evstring)
-                tbuffer.bind( evstring,  lambda event, meth = _cb: self.masterCommand( event, meth , evstring) )
-            else:
-                # g.trace('+',evstring)
-                tbuffer.bind( evstring,  lambda event, meth = _cb: self.masterCommand( event, meth , evstring), '+' )
 
-        # EKR: create one binding for each entry in cbDict.
-        for z in self.cbDict:
-            cb( z )
+        if event.getKeyChar() == aevent.KeyEvent.CHAR_UNDEFINED :
+            return True
         
-        self.mbuffers[ tbuffer ] = label
-        self.svars[ tbuffer ] = Tkinter.StringVar()
-        def setVar( event ):
-            label = self.mbuffers[ event.widget ]
-            svar = self.svars[ event.widget ]
-            label.configure( textvariable = svar )
-        tbuffer.bind( '&lt;FocusIn&gt;', setVar, '+' )
-        def scrollTo( event ):
-            event.widget.see( 'insert' )
+        source = event.getSource()
+        wcursor = java.awt.Cursor.getPredefinedCursor( java.awt.Cursor.WAIT_CURSOR )
+        source.setCursor( wcursor )
+        dc = DefCallable( lambda : self.incrementalSearch( event , command, stxt, pos) )
+        swing.SwingUtilities.invokeLater( dc.wrappedAsFutureTask() )  
+        #return self.incrementalSearch( event , command, stxt, pos)
+        return True
         
-        #tbuffer.bind( '&lt;Enter&gt;', scrollTo, '+' )
+    def setMiniBuffer( self, event ):
+        self.emacs.eventToMinibuffer( event )
         
-        # EKR: This _adds_ a binding for all &lt;Key&gt; events, so _all_ key events go through masterCommand.
-        cb( 'Key' )
-</t>
-<t tx="mork.20041030164547.43">#self.controlx = False
-#self.csr = { '&lt;Control-s&gt;': 'for', '&lt;Control-r&gt;':'bak' }
-#self.pref = None
-#self.zap = False
-#self.goto = False
-#self.previousStroke = ''
-def masterCommand( self, event, method , stroke):
-    '''The masterCommand is the central routing method of the Emacs method.
-       All commands and keystrokes pass through here.'''
-       
-    special = event.keysym in ('Control_L','Control_R','Alt_L','Alt-R','Shift_L','Shift_R')
-    inserted = not special or len(self.keysymhistory) == 0 or self.keysymhistory[0] != event.keysym
+    @others</t>
+<t tx="orkman.20050207162016">class stateManager:
 
-    # Don't add multiple special characters to history.
-    if inserted:
-        self.keysymhistory.insert(0,event.keysym)
-        if len(event.char) &gt; 0:
-            if len(Emacs.lossage) &gt; 99: Emacs.lossage.pop()
-            Emacs.lossage.insert(0,event.char)
-        
-        if 1: # traces
-            print event.keysym,stroke
-            g.trace(self.keysymhistory)
-            g.trace(Emacs.lossage)
-        
-    if 0:
-        &lt;&lt; old insert code &gt;&gt;
+    def __init__ (self,emacs):
+        self.state = None
+        self.emacs = emacs
+
+    def hasState (self):
+        return self.state
+
+    def setState (self,state):
+        self.state = state
+
+    def filterTo (self,event,command):
+        return self.emacs.strategyObjects [self.state](event,command)
+
+    def clear (self):
+        self.state = None</t>
+<t tx="orkman.20050207164014">def keyboardQuit( self, event=None ):
     
+    self._stateManager.clear()
+    self._stateManager2.clear()
+    self.minibuffer.setText( '' )
+    self.clearHighlights()
+    sa = stext.SimpleAttributeSet()
+    sa.addAttribute( 'dy-ab', 'dy-ab' )
+    sa.addAttribute( 'kb', 'kb' )
+    self.clearAttributes( sa )
+    self.setCommandText( "" )
+    for z in self.modeStrategies:
+        z.mode = None
+    
+    cp = self.editor.getCaretPosition()
+    self.editor.setCaretPosition( cp )
+    return True</t>
+<t tx="orkman.20050207164550">def eventToMinibuffer( self, event ):
+    
+    code = event.getKeyCode()
+    code = event.getKeyText( code )
+    txt = self.minibuffer.getText()
+    if code == 'Backspace':
+        txt = txt[ : -1 ]
+    else:
+        char = event.getKeyChar()
+        #if java.lang.Character.isLetterOrDigit( char ) or java.lang.Character.isWhitespace( char ):
+        if java.lang.Character.isDefined( char ):
+            txt = '%s%s' %( txt, char )
+    self.minibuffer.setText( txt )
+    return txt</t>
+<t tx="orkman.20050209165307">class dynamicabbrevs:
+
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.dynaregex = re.compile( r'[%s%s\-_]+' %( string.ascii_letters, string.digits ) ) #for dynamic abbreviations
+        self.searchtext = None
+        self.returnlist = []
+        self.ind = 0 #last spot wordindex returned
+        self.dynamiclist = java.util.TreeSet()
+        self.createDynamicList()
+        
+    def __call__( self, event, command ):
+    
+        if command == 'Alt Slash':
+            self.dynamicExpansion( event )
+        if command == 'Ctrl+Alt Slash':
+            self.dynamicExpansion2( event )
+
+    @others</t>
+<t tx="orkman.20050209165621">def dynamicExpansion( self, event ):#, store = {'rlist': [], 'stext': ''} ):
+    
+    tag = 'dy-ab'
+    word = self.emacs.getWordStart()
+    ind = self.emacs.getWordStartIndex()
+    
+    if not word:
+        self.clearDynamic( tag )
+        return   
+    elif word and self.searchtext == None:
+        self.searchtext = word
+        self.ind = ind
+    elif not word.startswith( self.searchtext ) or self.ind != ind:
+
+        self.clearDynamic( tag )
+        self.searchtext = word
+        self.ind = ind
+
+    
+    if self.emacs.getAttributeRanges( tag ): #indicates that expansion has started
+        self.emacs.removeTextWithAttribute( tag )
+        if self.returnlist:
+            txt = self.returnlist.pop()
+            self.emacs.insertTextWithAttribute( txt, tag )
+        else:
+            self.getDynamicList( self.searchtext, self.returnlist )#rebuild
+            self.emacs.insertTextWithAttribute( self.searchtext , tag )
+        return   
+    elif self.searchtext:
+        self.getDynamicList( self.searchtext, self.returnlist )
+        if self.returnlist:
+            start = self.emacs.getWordStartIndex()
+            ntxt = self.returnlist.pop()
+            self.emacs.replaceText( start, start + len( word ), ntxt )
+            self.emacs.addAttributeToRange( tag, tag, start, len( ntxt ) )
             
-    if self.macroing:
-        if self.macroing == 2 and stroke != '&lt;Control-x&gt;':
-            return self.nameLastMacro( event )
-        elif self.macroing == 3 and stroke != '&lt;Control-x&gt;':
-            return self.getMacroName( event )
-        else:
-           self.recordKBDMacro( event, stroke )
-         
-    if  stroke == '&lt;Control-g&gt;':
-        self.previousStroke = stroke
-        return self.keyboardQuit( event )
+
+    #tbuffer = event.widget
+    #rlist = self.store[ 'rlist' ]
+    #stext = self.store[ 'stext' ]
+    #i = tbuffer.index( 'insert -1c wordstart' )
+    #i2 = tbuffer.index( 'insert -1c wordend' )
+    #txt = tbuffer.get( i, i2 )
+    #dA = tbuffer.tag_ranges( 'dA' )
+    #tbuffer.tag_delete( 'dA' )
+    #def doDa( txt, from_ = 'insert -1c wordstart', to_ = 'insert -1c wordend' ):
+    #
+    #    tbuffer.delete( from_, to_ ) 
+    #    tbuffer.insert( 'insert', txt, 'dA' )
+    #    return self._tailEnd( tbuffer )
         
-    if self.mcStateManager.hasState():
-        self.previousStroke = stroke
-        return self.mcStateManager( event, stroke ) # EKR: Invoke the __call__ method.
-        
-    if self.kstrokeManager.hasKeyStroke( stroke ):
-        self.previousStroke = stroke
-        return self.kstrokeManager( event, stroke ) # EKR: Invoke the __call__ method.
+    #if dA:
+    #    dA1, dA2 = dA
+    #    dtext = tbuffer.get( dA1, dA2 )
+    #    if dtext.startswith( stext ) and i2 == dA2: #This seems reasonable, since we cant get a whole word that has the '-' char in it, we do a good guess
+    #        if rlist:
+    #            txt = rlist.pop()
+    #        else:
+    #            txt = stext
+    #            tbuffer.delete( dA1, dA2 )
+    #            dA2 = dA1 #since the text is going to be reread, we dont want to include the last dynamic abbreviation
+    #            self.getDynamicList( tbuffer, txt, rlist )
+    #        return doDa( txt, dA1, dA2 )
+    #    else:
+    #        dA = None
+            
+    #if not dA:
+    #    self.store[ 'stext' ] = txt
+    #    self.store[ 'rlist' ] = rlist = []
+    #    self.getDynamicList( tbuffer, txt, rlist )
+    #    if not rlist:
+    #        return 'break'
+    #    txt = rlist.pop()
+    #    return doDa( txt )</t>
+<t tx="orkman.20050209165627">def dynamicExpansion2( self, event ):
 
-    &lt;&lt; old code &gt;&gt;
-    if self.regXRpl: # EKR: a generator.
-        try:
-            self.regXKey = event.keysym
-            self.regXRpl.next() # EKR: next() may throw StopIteration.
-        finally:
-            return 'break'
+    #i = tbuffer.index( 'insert -1c wordstart' )
+    #i2 = tbuffer.index( 'insert -1c wordend' )
+    i = self.emacs.getWordStartIndex()
+    i2 = self.emacs.getWordEndIndex()
+    #txt = tbuffer.get( i, i2 )   
+    txt = self.emacs.getTextSlice( i, i2 )
+    rlist = []
+    self.getDynamicList( txt, rlist )
+    dEstring = reduce( self.emacs.findPre, rlist )
+    if dEstring:
+        self.emacs.replaceText( i, i2, dEstring )
+        #tbuffer.delete( i , i2 )
+        #tbuffer.insert( i, dEstring )    
+        #return self._tailEnd( tbuffer )</t>
+<t tx="orkman.20050209165908">def getText( self ):
+    
+    doc = self.editor.getDocument()
+    txt = doc.getText( 0, doc.getLength() )
+    return txt
+    
+def getTextSlice( self, frm, to ):
+    
+    txt = self.getText()
+    return txt[ frm: to ]
+    
+def replaceText( self, frm, to, txt ):
+    
+    doc = self.editor.getStyledDocument()
+    doc.replace( frm, to - frm, txt, None )</t>
+<t tx="orkman.20050209165908.1">def getDynamicList( self, txt , rlist ):
 
-    &lt;&lt; old code 2 &gt;&gt;
-    if self.abbrevOn:
-        if self.expandAbbrev( event ) :
-            return 'break'       
-
-    if method:
-        rt = method( event )
-        self.previousStroke = stroke
-        return rt</t>
-<t tx="mork.20041030164547.63">#self.regXRpl = None
-#self.regXKey = None
-def regionalExpandAbbrev( self, event ):
-    #global regXRpl
-    if not self._chckSel( event ):
-        return
-    tbuffer = event.widget
-    i1 = tbuffer.index( 'sel.first' )
-    i2 = tbuffer.index( 'sel.last' ) 
-    ins = tbuffer.index( 'insert' )
-    &lt;&lt; define a new generator searchXR &gt;&gt;
-    # EKR: the 'result' of calling searchXR is a generator object.
-    self.regXRpl = searchXR( i1, i2, ins, event)
-    self.regXRpl.next() # Call it the first time.
-    return 'break' </t>
-<t tx="mork.20041030164547.87">def setRegion( self, event ):   
-    mrk = 'sel'
-    tbuffer = event.widget
-    def extend( event ):
-        widget = event.widget
-        widget.mark_set( 'insert', 'insert + 1c' )
-        if self.inRange( widget, mrk ):
-            widget.tag_remove( mrk, 'insert -1c' )
-        else:
-            widget.tag_add( mrk, 'insert -1c' )
-            widget.tag_configure( mrk, background = 'lightgrey' )
-            self.testinrange( widget )
-        return 'break'
-        
-    def truncate( event ):
-        widget = event.widget
-        widget.mark_set( 'insert', 'insert -1c' )
-        if self.inRange( widget, mrk ):
-            self.testinrange( widget )
-            widget.tag_remove( mrk, 'insert' )
-        else:
-            widget.tag_add( mrk, 'insert' )
-            widget.tag_configure( mrk, background = 'lightgrey' )
-            self.testinrange( widget  )
-        return 'break'
-        
-    def up( event ):
-        widget = event.widget
-        if not self.testinrange( widget ):
-            return 'break'
-        widget.tag_add( mrk, 'insert linestart', 'insert' )
-        i = widget.index( 'insert' )
-        i1, i2 = i.split( '.' )
-        i1 = str( int( i1 ) - 1 )
-        widget.mark_set( 'insert', i1+'.'+i2)
-        widget.tag_add( mrk, 'insert', 'insert lineend + 1c' )
-        if self.inRange( widget, mrk ,l = '-1c', r = '+1c') and widget.index( 'insert' ) != '1.0':
-            widget.tag_remove( mrk, 'insert', 'end' )  
-        return 'break'
-        
-    def down( event ):
-        widget = event.widget
-        if not self.testinrange( widget ):
-            return 'break'
-        widget.tag_add( mrk, 'insert', 'insert lineend' )
-        i = widget.index( 'insert' )
-        i1, i2 = i.split( '.' )
-        i1 = str( int( i1 ) + 1 )
-        widget.mark_set( 'insert', i1 +'.'+i2 )
-        widget.tag_add( mrk, 'insert linestart -1c', 'insert' )
-        if self.inRange( widget, mrk , l = '-1c', r = '+1c' ): 
-            widget.tag_remove( mrk, '1.0', 'insert' )
-        return 'break'
-        
-    extend( event )   
-    tbuffer.bind( '&lt;Right&gt;', extend, '+' )
-    tbuffer.bind( '&lt;Left&gt;', truncate, '+' )
-    tbuffer.bind( '&lt;Up&gt;', up, '+' )
-    tbuffer.bind( '&lt;Down&gt;', down, '+' )
-    return 'break'
-</t>
-<t tx="mork.20041030164547.95">def manufactureKeyPress( self, event, which ):
-    tbuffer = event.widget
-    tbuffer.event_generate( '&lt;Key&gt;',  keysym = which  )
-    tbuffer.update_idletasks()
-    return 'break'</t>
-<t tx="mork.20041030164547.143">#self.uC = False
-def universalDispatch( self, event, stroke ):
-    #global uC    
-    uC = self.mcStateManager.getState( 'uC' )
-    if not uC:
-        #self.uC = 1
-        self.mcStateManager.setState( 'uC', 1 )
-        svar, label = self.getSvarLabel( event )
-        svar.set( '' )
-        self.setLabelBlue( label ) 
-    elif uC == 1:
-        self.universalCommand1( event, stroke )
-    elif uC == 2:
-        self.universalCommand3( event, stroke )
-    return 'break'
-</t>
-<t tx="mork.20041030164547.144">#import string
-#self.uCstring = string.digits + '\b'
-
-def universalCommand1( self, event, stroke ):
-    #global uC
-    if event.char not in self.uCstring:
-        return self.universalCommand2( event, stroke )
-    svar, label = self.getSvarLabel( event )
-    self.setSvar( event, svar )
-    if event.char != '\b':
-        svar.set( '%s ' %svar.get() )
-</t>
-<t tx="mork.20041030164547.145">def universalCommand2(  self, event , stroke ):
-    #global uC
-    #self.uC = False
-    #self.mcStateManager.setState( 'uC', False )
-    svar, label = self.getSvarLabel( event )
-    txt = svar.get()
-    self.keyboardQuit( event )
-    txt = txt.replace( ' ', '' )
-    self.resetMiniBuffer( event )
-    if not txt.isdigit(): #This takes us to macro state.  For example Control-u Control-x (  will execute the last macro and begin editing of it.
-        if stroke == '&lt;Control-x&gt;':
-            #self.uC = 2
-            self.mcStateManager.setState( 'uC', 2 )
-            return self.universalCommand3( event, stroke )
-        return self._tailEnd( event.widget )
-    if self.uCdict.has_key( stroke ): #This executes the keystroke 'n' number of times.
-            self.uCdict[ stroke ]( event , txt )
-    else:
-        tbuffer = event.widget
-        i = int( txt )
-        stroke = stroke.lstrip( '&lt;' ).rstrip( '&gt;' )
-        if self.cbDict.has_key( stroke ):
-            for z in xrange( i ):
-                method = self.cbDict[ stroke ]
-                ev = Tkinter.Event()
-                ev.widget = event.widget
-                ev.keysym = event.keysym
-                ev.keycode = event.keycode
-                ev.char = event.char
-                self.masterCommand( ev , method, '&lt;%s&gt;' % stroke )
-        else:
-            for z in xrange( i ):
-                tbuffer.event_generate( '&lt;Key&gt;', keycode = event.keycode, keysym = event.keysym )
-                self._tailEnd( tbuffer )
-</t>
-<t tx="mork.20041030164547.146">#self.uCdict = { '&lt;Alt-x&gt;' : alt_X }
-def universalCommand3( self, event, stroke ):
-    svar, label = self.getSvarLabel( event )
-    svar.set( 'Control-u %s' % stroke.lstrip( '&lt;' ).rstrip( '&gt;' ) )
-    self.setLabelBlue( label )
-    if event.keysym == 'parenleft':
-        self.keyboardQuit( event )
-        self.startKBDMacro( event )
-        self.executeLastMacro( event )
-        return 'break'
-</t>
-<t tx="mork.20041030164547.147">def numberCommand( self, event, stroke, number ):
-    self.universalDispatch( event, stroke )
-    tbuffer = event.widget
-    tbuffer.event_generate( '&lt;Key&gt;', keysym = number )
-    return 'break'       
-</t>
-<t tx="mork.20041030165020.1">def __init__( self , tbuffer = None , minibuffer = None, useGlobalKillbuffer = False, useGlobalRegisters = False):
-    '''Sets up Emacs instance.
-          If a Tkinter Text widget and Tkinter Label are passed in
-       via the tbuffer and minibuffer parameters, these are bound to.
-       Otherwise an explicit call to setBufferStrokes must be done.
-       useGlobalRegisters set to True indicates that the Emacs instance should use a class attribute that functions
-       as a global register.
-       useGlobalKillbuffer set to True indicates that the Emacs instances should use a class attribute that functions
-       as a global killbuffer.'''
-    
-    self.mbuffers = {} 
-    self.svars = {}
-    
-    
-    #self.isearch = False
-    self.tailEnds = {} #functions to execute at the end of many Emac methods.  Configurable by environment.
-    self.undoers = {} #Emacs instance tracks undoers given to it.
-    
-    
-    self.store = {'rlist': [], 'stext': ''} 
-    
-    #macros
-    self.lastMacro = None 
-    self.macs = []
-    self.macro = []
-    self.namedMacros = {}
-    self.macroing = False
-    self.dynaregex = re.compile( r'[%s%s\-_]+' %( string.ascii_letters, string.digits ) ) #for dynamic abbreviations
-    self.altx_history = []
-    self.keysymhistory = [] 
-    
-    #This section sets up the buffer data structures
-    self.bufferListGetters = {}
-    self.bufferSetters = {}
-    self.bufferGotos = {}
-    self.bufferDeletes = {}
-    self.renameBuffers = {}
-    self.bufferDict = None
-    self.bufferTracker = Tracker()
-    self.bufferCommands = {
-    
-    'append-to-buffer': self.appendToBuffer,
-    'prepend-to-buffer': self.prependToBuffer,
-    'copy-to-buffer': self.copyToBuffer,
-    'insert-buffer': self.insertToBuffer,
-    'switch-to-buffer': self.switchToBuffer,
-     'kill-buffer': self.killBuffer,   
-    }
-    
-    self.swapSpots = []
-    self.ccolumn = '0'
-    #self.howM = False
-    self.reset = False
-    if useGlobalKillbuffer:
-        self.killbuffer = Emacs.global_killbuffer
-    else:
-        self.killbuffer = []
-    self.kbiterator = self.iterateKillBuffer()
-    
-    #self.controlx = False
-    self.csr = { '&lt;Control-s&gt;': 'for', '&lt;Control-r&gt;':'bak' }
-    self.pref = None
-    #self.zap = False
-    #self.goto = False
-    self.previousStroke = ''
-    if useGlobalRegisters:
-        self.registers = Emacs.global_registers
-    else:
-        self.registers = {}
-    
-    #registers
-    self.regMeth = None
-    self.regMeths, self.regText = self.addRegisterItems()
-
-    #Abbreviations
-    self.abbrevMode = False 
-    self.abbrevOn = False # determines if abbreviations are on for masterCommand and toggle abbreviations
-    self.abbrevs = {}
-    
-    self.regXRpl = None # EKR: a generator: calling self.regXRpl.next() get the next value.
-    self.regXKey = None
-    
-    self.fillPrefix = '' #for fill prefix functions
-    self.fillColumn = 70 #for line centering
-    self.registermode = False #for rectangles and registers
-    
-    self.qQ = None
-    self.qR = None
-    #self.qlisten = False
-    #self.lqR = Tkinter.StringVar()
-    #self.lqR.set( 'Query with: ' ) # replaced with using the svar and self.mcStateManager
-    self.qgetQuery = False
-    #self.lqQ = Tkinter.StringVar()
-    #self.lqQ.set( 'Replace with:' )# replaced with using the svar and self.mcStateManager
-    self.qgetReplace = False
-    self.qrexecute = False
-    self.querytype = 'normal'
-    
-    #self.rString = False
-    #These attributes are for replace-string and replace-regex
-    self._sString = ''
-    self._rpString = ''
-    self._useRegex = False
-    
-    self.sRect = False  #State indicating string rectangle.  May be moved to MC_StateManager
-    self.krectangle = None #The kill rectangle
-    self.rectanglemode = 0 #Determines what state the rectangle system is in.
-    
-    self.last_clipboard = None #For interacting with system clipboard.
-    
-    self.negativeArg = False 
-    self.negArgs = { '&lt;Alt-c&gt;': self.changePreviousWord,
-    '&lt;Alt-u&gt;' : self.changePreviousWord,
-    '&lt;Alt-l&gt;': self.changePreviousWord } #For negative argument functionality
-    
-    #self.altx = False
-    #Alt-X commands.
-    self.doAltX = self.addAltXCommands()
-    self.axTabList = Tracker()
-    self.x_hasNumeric = [ 'sort-lines' , 'sort-fields']
-    
-    #self.uC = False
-    #These attributes are for the universal command functionality.
-    self.uCstring = string.digits + '\b'
-    self.uCdict = { '&lt;Alt-x&gt;' : self.alt_X }
-    
-    self.cbDict = self.addCallBackDict()# Creates callback dictionary, primarily used in the master command
-    self.xcommands = self.addXCommands() # Creates the X commands dictionary
-    self.cxHandler = ControlXHandler( self ) #Creates the handler for Control-x commands
-    self.mcStateManager = MC_StateManager( self ) #Manages state for the master command
-    self.kstrokeManager = MC_KeyStrokeManager( self ) #Manages some keystroke state for the master command.
-    self.shutdownhook = None #If this is set via setShutdownHook, it is executed instead of sys.exit when Control-x Control-c is fired
-    self.shuttingdown = False #indicates that the Emacs instance is shutting down and no work needs to be done.
-    
-    if tbuffer and minibuffer:
-        self.setBufferStrokes( tbuffer, minibuffer )
-
-
-
-
-</t>
-<t tx="mork.20041030183331">def addCallBackDict( self ):
-    '''This method adds a dictionary to the Emacs instance through which the masterCommand can
-       call the specified method.'''
-    cbDict = {
-    'Alt-less' : lambda event, spot = '1.0' : self.moveTo( event, spot ),
-    'Alt-greater': lambda event, spot = 'end' : self.moveTo( event, spot ),
-    'Control-Right': lambda event, way = 1: self.moveword( event, way ),
-    'Control-Left': lambda event, way = -1: self.moveword( event, way ),
-    'Control-a': lambda event, spot = 'insert linestart': self.moveTo( event, spot ),
-    'Control-e': lambda event, spot = 'insert lineend': self.moveTo( event, spot ),
-    'Alt-Up': lambda event, spot = 'insert linestart': self.moveTo( event, spot ),
-    'Alt-Down': lambda event, spot = 'insert lineend': self.moveTo( event, spot ),
-    'Alt-f': lambda event, way = 1: self.moveword( event, way ),
-    'Alt-b' : lambda event, way = -1: self.moveword( event, way ),
-    'Control-o': self.insertNewLine,
-    'Control-k': lambda event, frm = 'insert', to = 'insert lineend': self.kill( event, frm, to) ,
-    'Alt-d': lambda event, frm = 'insert wordstart', to = 'insert wordend': self.kill( event,frm, to ),
-    'Alt-Delete': lambda event: self.deletelastWord( event ),
-    "Control-y": lambda event, frm = 'insert', which = 'c': self.walkKB( event, frm, which),
-    "Alt-y": lambda event , frm = "insert", which = 'a': self.walkKB( event, frm, which ),
-    "Alt-k": lambda event : self.killsentence( event ),
-    'Control-s' : None,
-    'Control-r' : None,
-    'Alt-c': lambda event, which = 'cap' : self.capitalize( event, which ),
-    'Alt-u': lambda event, which = 'up' : self.capitalize( event, which ),
-    'Alt-l': lambda event, which = 'low' : self.capitalize( event, which ),
-    'Alt-t': lambda event, sw = self.swapSpots: self.swapWords( event, sw ),
-    'Alt-x': self.alt_X,
-    'Control-x': self.startControlX,
-    'Control-g': self.keyboardQuit,
-    'Control-Shift-at': self.setRegion,
-    'Control-w': lambda event, which = 'd' :self.killRegion( event, which ),
-    'Alt-w': lambda event, which = 'c' : self.killRegion( event, which ),
-    'Control-t': self.swapCharacters,
-    'Control-u': None,
-    'Control-l': None,
-    'Alt-z': None,
-    'Control-i': None,
-    'Alt-Control-backslash': self.indentRegion,
-    'Alt-m' : self.backToIndentation,
-    'Alt-asciicircum' : self.deleteIndentation,
-    'Control-d': self.deleteNextChar,
-    'Alt-backslash': self.deleteSpaces, 
-    'Alt-g': None,
-    'Control-v' : lambda event, way = 'south': self.screenscroll( event, way ),
-    'Alt-v' : lambda event, way = 'north' : self.screenscroll( event, way ),
-    'Alt-equal': self.countRegion,
-    'Alt-parenleft': self.insertParentheses,
-    'Alt-parenright': self.movePastClose,
-    'Alt-percent' : None,
-    'Control-c': None,
-    'Delete': lambda event, which = 'BackSpace': self.manufactureKeyPress( event, which ),
-    'Control-p': lambda event, which = 'Up': self.manufactureKeyPress( event, which ),
-    'Control-n': lambda event, which = 'Down': self.manufactureKeyPress( event, which ),
-    'Control-f': lambda event, which = 'Right':self.manufactureKeyPress( event, which ),
-    'Control-b': lambda event, which = 'Left': self.manufactureKeyPress( event, which ),
-    'Control-Alt-w': None,
-    'Alt-a': lambda event, which = 'bak': self.prevNexSentence( event, which ),
-    'Alt-e': lambda event, which = 'for': self.prevNexSentence( event, which ),
-    'Control-Alt-o': self.insertNewLineIndent,
-    'Control-j': self.insertNewLineAndTab,
-    'Alt-minus': self.negativeArgument,
-    'Alt-slash': self.dynamicExpansion,
-    'Control-Alt-slash': self.dynamicExpansion2,
-    'Control-u': lambda event, keystroke = '&lt;Control-u&gt;': self.universalDispatch( event, keystroke ),
-    'Alt-braceright': lambda event, which = 1: self.movingParagraphs( event, which ),
-    'Alt-braceleft': lambda event , which = 0: self.movingParagraphs( event, which ),
-    'Alt-q': self.fillParagraph,
-    'Alt-h': self.selectParagraph,
-    'Alt-semicolon': self.indentToCommentColumn,
-    'Alt-0': lambda event, stroke = '&lt;Alt-0&gt;', number = 0: self.numberCommand( event, stroke, number ) ,
-    'Alt-1': lambda event, stroke = '&lt;Alt-1&gt;', number = 1: self.numberCommand( event, stroke, number ) ,
-    'Alt-2': lambda event, stroke = '&lt;Alt-2&gt;', number = 2: self.numberCommand( event, stroke, number ) ,
-    'Alt-3': lambda event, stroke = '&lt;Alt-3&gt;', number = 3: self.numberCommand( event, stroke, number ) ,
-    'Alt-4': lambda event, stroke = '&lt;Alt-4&gt;', number = 4: self.numberCommand( event, stroke, number ) ,
-    'Alt-5': lambda event, stroke = '&lt;Alt-5&gt;', number = 5: self.numberCommand( event, stroke, number ) ,
-    'Alt-6': lambda event, stroke = '&lt;Alt-6&gt;', number = 6: self.numberCommand( event, stroke, number ) ,
-    'Alt-7': lambda event, stroke = '&lt;Alt-7&gt;', number = 7: self.numberCommand( event, stroke, number ) ,
-    'Alt-8': lambda event, stroke = '&lt;Alt-8&gt;', number = 8: self.numberCommand( event, stroke, number ) ,
-    'Alt-9': lambda event, stroke = '&lt;Alt-9&gt;', number = 9: self.numberCommand( event, stroke, number ) ,
-    'Control-underscore': self.doUndo,
-    'Alt-s': self.centerLine,
-    'Control-z': self.suspend, 
-    'Control-Alt-s': lambda event, stroke='&lt;Control-s&gt;': self.startIncremental( event, stroke, which='regexp' ),
-    'Control-Alt-r': lambda event, stroke='&lt;Control-r&gt;': self.startIncremental( event, stroke, which='regexp' ),
-    'Control-Alt-percent': lambda event: self.startRegexReplace() and self.masterQR( event ),
-    'Escape': self.watchEscape,
-    'Alt-colon': self.startEvaluate,
-    'Alt-exclam': self.startSubprocess,
-    'Alt-bar': lambda event: self.startSubprocess( event, which = 1 ),
-    }
-    
-    return cbDict</t>
-<t tx="mork.20041030183633">def addXCommands( self ):
-    
-    xcommands = {
-    '&lt;Control-t&gt;': self.transposeLines, 
-    '&lt;Control-u&gt;': lambda event , way ='up': self.upperLowerRegion( event, way ),
-    '&lt;Control-l&gt;':  lambda event , way ='low': self.upperLowerRegion( event, way ),
-    '&lt;Control-o&gt;': self.removeBlankLines,
-    '&lt;Control-i&gt;': self.insertFile,
-    '&lt;Control-s&gt;': self.saveFile,
-    '&lt;Control-x&gt;': self.exchangePointMark,
-    '&lt;Control-c&gt;': self.shutdown,
-    '&lt;Control-b&gt;': self.listBuffers,
-    '&lt;Control-Shift-at&gt;': lambda event: event.widget.selection_clear(),
-    '&lt;Delete&gt;' : lambda event, back = True: self.killsentence( event, back ),
-    }
-    
-    return xcommands</t>
-<t tx="mork.20041030190729">def addRegisterItems( self ):
-    
-    regMeths = {
-    's' : self.copyToRegister,
-    'i' : self.insertFromRegister,
-    'n': self.numberToRegister,
-    'plus': self.incrementRegister,
-    'space': self.pointToRegister,
-    'j': self.jumpToRegister,
-    'a': lambda event , which = 'a': self._ToReg( event, which ),
-    'p': lambda event , which = 'p': self._ToReg( event, which ),
-    'r': self.copyRectangleToRegister,
-    'view' : self.viewRegister,
-    }    
-    
-    regText = {
-    's' : 'copy to register',
-    'i' : 'insert from register',
-    'plus': 'increment register',
-    'n' : 'number to register',
-    'p' : 'prepend to register',
-    'a' : 'append to register',
-    'space' : 'point to register',
-    'j': 'jump to register',
-    'r': 'rectangle to register',
-    'view': 'view register',
-    }
-    
-    return regMeths, regText</t>
-<t tx="mork.20041030190903">def addAltXCommands( self ):
-    
-    #many of the simpler methods need self.keyboardQuit( event ) appended to the end to stop the Alt-x mode.
-    doAltX= {
-    'prepend-to-register': self.prependToRegister,
-    'append-to-register': self.appendToRegister,
-    'replace-string': self.replaceString,
-    'replace-regex': lambda event:  self.activateReplaceRegex() and self.replaceString( event ),
-    'sort-lines': self.sortLines,
-    'sort-columns': self.sortColumns,
-    'reverse-region': self.reverseRegion,
-    'sort-fields': self.sortFields,
-    'abbrev-mode': self.toggleAbbrevMode,
-    'kill-all-abbrevs': self.killAllAbbrevs,
-    'expand-region-abbrevs': self.regionalExpandAbbrev,
-    'write-abbrev-file': self.writeAbbreviations,
-    'read-abbrev-file': self.readAbbreviations,
-    'fill-region-as-paragraph': self.fillRegionAsParagraph,
-    'fill-region': self.fillRegion,
-    'close-rectangle': self.closeRectangle,
-    'how-many': self.startHowMany,
-    'kill-paragraph': self.killParagraph,
-    'backward-kill-paragraph': self.backwardKillParagraph,
-    'backward-kill-sentence': lambda event: self.keyboardQuit( event ) and self.killsentence( event, back = True ),
-    'name-last-kbd-macro': self.nameLastMacro,
-    'load-file': self.loadMacros,
-    'insert-keyboard-macro' : self.getMacroName,
-    'list-abbrevs': self.listAbbrevs,
-    'kill-word': lambda event, frm = 'insert wordstart', to = 'insert wordend': self.kill( event,frm, to ) and self.keyboardQuit( event ),
-    'kill-line': lambda event, frm = 'insert', to = 'insert lineend': self.kill( event, frm, to) and self.keyboardQuit( event ), 
-    'kill-sentence': lambda event : self.killsentence( event ) and self.keyboardQuit( event ),
-    'kill-region': lambda event, which = 'd' :self.killRegion( event, which ) and self.keyboardQuit( event ),
-    'yank': lambda event, frm = 'insert', which = 'c': self.walkKB( event, frm, which) and self.keyboardQuit( event ),
-    'yank-pop' : lambda event , frm = "insert", which = 'a': self.walkKB( event, frm, which ) and self.keyboardQuit( event ),
-    'backward-kill-word': lambda event: self.deletelastWord( event ) and self.keyboardQuit( event ),
-    'backward-delete-char':lambda event, which = 'BackSpace': self.manufactureKeyPress( event, which ) and self.keyboardQuit( event ),
-    'delete-char': lambda event: self.deleteNextChar( event ) and self.keyboardQuit( event ) , 
-    'isearch-forward': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-s&gt;' ),
-    'isearch-backward': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-r&gt;' ),
-    'isearch-forward-regexp': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-s&gt;', which = 'regexp' ),
-    'isearch-backward-regexp': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-r&gt;', which = 'regexp' ),
-    'capitalize-word': lambda event, which = 'cap' : self.capitalize( event, which ) and self.keyboardQuit( event ),
-    'upcase-word': lambda event, which = 'up' : self.capitalize( event, which ) and self.keyboardQuit( event ),
-    'downcase-word': lambda event, which = 'low' : self.capitalize( event, which ) and self.keyboardQuit( event ),
-    'indent-region': lambda event: self.indentRegion( event ) and self.keyboardQuit( event ),
-    'indent-rigidly': lambda event: self.tabIndentRegion( event ) and self.keyboardQuit( event ),
-    'indent-relative': self.indent_relative,
-    'set-mark-command': lambda event: self.setRegion( event ) and self.keyboardQuit( event ),
-    'kill-rectangle': lambda event: self.killRectangle( event ),
-    'delete-rectangle': lambda event: self.deleteRectangle( event ),
-    'yank-rectangle': lambda event: self.yankRectangle( event ),
-    'open-rectangle': lambda event: self.openRectangle( event ),
-    'clear-rectangle': lambda event: self.clearRectangle( event ),
-    'copy-to-register': lambda event: self.setEvent( event, 's' ) and self.setNextRegister( event ),
-    'insert-register': lambda event: self.setEvent( event, 'i' ) and self.setNextRegister( event ),
-    'copy-rectangle-to-register': lambda event: self.setEvent( event, 'r' ) and self.setNextRegister( event ),
-    'jump-to-register': lambda event: self.setEvent( event, 'j' ) and self.setNextRegister( event ),
-    'point-to-register': lambda event: self.setEvent( event, 'space' ) and self.setNextRegister( event ),
-    'number-to-register': lambda event: self.setEvent( event, 'n' ) and self.setNextRegister( event ),
-    'increment-register': lambda event: self.setEvent( event, 'plus' ) and self.setNextRegister( event ),
-    'view-register': lambda event: self.setEvent( event, 'view' ) and self.setNextRegister( event ),
-    'beginning-of-line': lambda event, spot = 'insert linestart': self.moveTo( event, spot ) and self.keyboardQuit( event ),
-    'end-of-line': lambda event, spot = 'insert lineend': self.moveTo( event, spot ) and self.keyboardQuit( event ),
-    'keyboard-quit': lambda event: self.keyboardQuit( event ),
-    'advertised-undo': lambda event: self.doUndo( event ) and self.keyboardQuit( event ),
-    'back-to-indentation': lambda event: self.backToIndentation( event ) and self.keyboardQuit( event ),
-    'delete-indentation': lambda event: self.deleteIndentation( event ) and self.keyboardQuit( event ),    
-    'view-lossage': lambda event: self.viewLossage( event ),
-     'transpose-chars': lambda event : self.swapCharacters( event ) and self.keyboardQuit( event ),
-     'transpose-words': lambda event, sw = self.swapSpots: self.swapWords( event, sw ) and self.keyboardQuit( event ),
-     'transpose-lines': lambda event: self.transposeLines( event ) and self.keyboardQuit( event ),
-     'insert-file' : lambda event: self.insertFile( event ) and self.keyboardQuit( event ),
-     'save-buffer' : lambda event: self.saveFile( event ) and self.keyboardQuit( event ),
-     'split-line' : lambda event: self.insertNewLineIndent( event ) and self.keyboardQuit( event ),
-     'upcase-region': lambda event: self.upperLowerRegion( event, 'up' ) and self.keyboardQuit( event ),
-     'downcase-region': lambda event: self.upperLowerRegion( event , 'low' ) and self.keyboardQuit( event ),
-     'dabbrev-expands': lambda event: self.dynamicExpansion( event ) and self.keyboardQuit( event ),
-     'dabbrev-completion': lambda event: self.dynamicExpansion2( event ) and self.keyboardQuit( event ),
-     'goto-line': lambda event: self.startGoto( event ),
-     'goto-char': lambda event: self.startGoto( event, True ),
-     'set-fill-prefix': lambda event: self.setFillPrefix( event ) and self.keyboardQuit( event ),
-     'set-fill-column': lambda event: self.setFillColumn( event ),
-     'center-line': lambda event: self.centerLine( event ) and self.keyboardQuit( event ),
-     'center-region': lambda event: self.centerRegion( event ) and self.keyboardQuit( event ),
-     'forward-char': lambda event, which = 'Right': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
-     'backward-char': lambda event, which = 'Left': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
-     'previous-line': lambda event, which = 'Up': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
-     'next-line': lambda event, which = 'Down': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
-     'digit-argument': lambda event: self.universalDispatch( event, '' ),
-     'universal-argument': lambda event: self.universalDispatch( event, '' ),   
-     'newline-and-indent': lambda event: self.insertNewLineAndTab( event ) and self.keyboardQuit( event ),
-     'beginning-of-buffer': lambda event, spot = '1.0' : self.moveTo( event, spot ) and self.keyboardQuit( event ),
-     'end-of-buffer': lambda event, spot = 'end' : self.moveTo( event, spot ) and self.keyboardQuit( event ),
-     'scroll-up': lambda event, way = 'north' : self.screenscroll( event, way ) and self.keyboardQuit( event ),
-     'scroll-down': lambda event, way = 'south': self.screenscroll( event, way ) and self.keyboardQuit( event ),
-     'copy-to-buffer': lambda event, which = 'copy-to-buffer': self.setInBufferMode( event, which ),
-     'insert-buffer': lambda event, which = 'insert-buffer': self.setInBufferMode( event, which ),
-     'append-to-buffer': lambda event , which = 'append-to-buffer':  self.setInBufferMode( event, which ),
-     'prepend-to-buffer': lambda event, which = 'prepend-to-buffer': self.setInBufferMode( event, which ),
-     'switch-to-buffer': lambda event, which = 'switch-to-buffer': self.setInBufferMode( event, which ),
-     'list-buffers' : lambda event: self.listBuffers( event ),
-     'kill-buffer' : lambda event, which = 'kill-buffer': self.setInBufferMode( event, which ),
-     'rename-buffer': lambda event: self.renameBuffer( event ),
-     'query-replace': lambda event: self.masterQR( event ), 
-     'query-replace-regex': lambda event: self.startRegexReplace() and self.masterQR( event ),
-     'inverse-add-global-abbrev': lambda event: self.abbreviationDispatch( event, 2 ) ,  
-     'expand-abbrev': lambda event : self.keyboardQuit( event ) and self.expandAbbrev( event ), 
-     'iconfify-or-deiconify-frame': lambda event: self.suspend( event ) and self.keyboardQuit( event ),
-     'save-buffers-kill-emacs': lambda event: self.keyboardQuit( event ) and self.shutdown( event ),
-     're-search-forward': lambda event: self.reStart( event ),
-     're-search-backward': lambda event: self.reStart( event, which = 'backward' ),
-     'diff': self.diff, 
-     'what-line': self.whatLine,
-     'flush-lines': lambda event: self.startLines( event ),
-     'keep-lines': lambda event: self.startLines( event, which = 'keep' ),
-     'make-directory': lambda event: self.makeDirectory( event ),
-     'remove-directory': lambda event: self.removeDirectory( event ),
-     'delete-file': lambda event: self.deleteFile( event ),
-     'search-forward': lambda event: self.startNonIncrSearch( event, 'for' ),
-     'search-backward': lambda event: self.startNonIncrSearch( event, 'bak' ),
-     'word-search-forward': lambda event : self.startWordSearch( event, 'for' ),
-     'word-search-backward': lambda event: self.startWordSearch( event, 'bak' ),
-     'repeat-complex-command': lambda event: self.repeatComplexCommand( event ),
-     'eval-expression': self.startEvaluate,
-     'tabify': self.tabify,
-     'untabify': lambda event: self.tabify( event, which = 'untabify' ),
-     'shell-command': self.startSubprocess,
-     'shell-command-on-region': lambda event: self.startSubprocess( event, which=1 ),
-    }    
-    #Note: if we are reusing some of the cbDict lambdas we need to alter many by adding: self.keyboardQuit( event )
-    #Otherwise the darn thing just sits in Alt-X land.  Putting the 'and self.keyboardQuit( event )' part in the killbuffer
-    #and yanking it out for each new item, works well.  Adding it to a register might be good to.
-    return doAltX
-
-
-
-
-
-
- </t>
-<t tx="mork.20041031131847">class ControlXHandler:
-    '''The ControlXHandler manages how the Control-X based commands operate on the
-       Emacs instance.'''    
-    
-    @others
-
-</t>
-<t tx="mork.20041031132342">def __call__( self, event , stroke ):
-    
-    self.previous.insert( 0, event.keysym )
-    emacs = self.emacs 
-    if len( self.previous ) &gt; 10: self.previous.pop()
-    if stroke in ('&lt;Key&gt;', '&lt;Escape&gt;' ):
-        return self.processKey( event )
-    if stroke in emacs.xcommands:
-        emacs.xcommands[ stroke ]( event )
-        if stroke != '&lt;Control-b&gt;': emacs.keyboardQuit( event )
-    return 'break'</t>
-<t tx="mork.20041031133146">def processKey( self, event ):
-        
-    emacs = self.emacs 
-    previous = self.previous
-    if event.keysym in ( 'Shift_L', 'Shift_R' ):
-        return
-        
-    if emacs.sRect:
-        return emacs.stringRectangle( event )
-        
-    if ( event.keysym == 'r' and emacs.rectanglemode == 0 ) and not emacs.registermode:
-        return self.processRectangle( event )
-    elif self.rect_commands.has_key( event.keysym ) and emacs.rectanglemode == 1:
-        return self.processRectangle( event )
-        
-    if self.register_commands.has_key( emacs.registermode ):
-        self.register_commands[ emacs.registermode ]( event )
-        return 'break'
-    
-    if self.variety_commands.has_key( event.keysym ):
-        emacs.stopControlX( event )
-        return self.variety_commands[ event.keysym ]( event )
-        
-    
-    #if emacs.sRect:
-    #    return emacs.stringRectangle( event )
-    #    #return 'break'
-    if event.keysym in ( 'a', 'i' , 'e'):
-        if self.processAbbreviation( event ): return 'break'
-
-    if event.keysym == 'g':
-        svar, label = emacs.getSvarLabel( event )
-        l = svar.get()
-        if self.abbreviationDispatch.has_key( l ):
-            emacs.stopControlX( event )
-            return self.abbreviationDispatch[ l ]( event )
-        #if l == 'a':
-        #    emacs.stopControlX( event )
-        #    return emacs.abbreviationDispatch( event, 1 )
-        #elif l == 'a i':
-        #    emacs.stopControlX( event )
-        #    return emacs.abbreviationDispatch( event, 2 )
-    if event.keysym == 'e':
-        emacs.stopControlX( event )
-        return emacs.executeLastMacro( event )
-    if event.keysym == 'x' and previous[ 1 ] not in ( 'Control_L', 'Control_R'):
-        event.keysym = 's' 
-        emacs.setNextRegister( event )
-        return 'break'
-    
-    if event.keysym == 'Escape':
-        if len( previous ) &gt; 1:
-            if previous[ 1 ] == 'Escape':
-                return emacs.repeatComplexCommand( event )
-    #if event.keysym == 'r':
-    #    return emacs.activateRectangleMethods( event )
-    #if self.rect_commands.has_key( event.keysym ):# and emacs.registermode == 1:
-    #    return self.processRectangle( event )
+     ttext = self.emacs.getText()
+     items = self.dynaregex.findall( ttext )
+     for z in items:
+        self.dynamiclist.add( z )    
+            
+               
+                
+     started = 0
+     for z in self.dynamiclist:
+        if z.startswith( txt ):
+             if not started:
+                 started = 1
+             rlist.append( z)
+             continue
+        if started:
+            break
      
-    #if emacs.registermode == 1:
-    #    emacs.setNextRegister( event )
-    #    return 'break'
-    #elif emacs.registermode == 2:
-    #    emacs.executeRegister( event )
-    #    return 'break'
-    #if self.register_commands.has_key( emacs.registermode ):
-    #    print 'register commands'
-    #    self.register_commands[ emacs.registermode ]( event )
-    #    return 'break'
-    #if event.keysym == 'r':
-    #    return emacs.activateRectangleMethods( event )
-    #    emacs.registermode = 1
-    #    svar = emacs.svars[ event.widget ]
-    #    svar.set( 'C - x r' )
-    #    return 'break'
-    #if event.keysym== 'h':
-    #    emacs.stopControlX( event )
-    #    event.widget.tag_add( 'sel', '1.0', 'end' )
-    #tag_add( 'sel', '1.0', 'end' )    return 'break' 
-    #if event.keysym == 'equal':
-    #    emacs.lineNumber( event )
-    #    return 'break'
-    #if event.keysym == 'u':
-    #    emacs.stopControlX( event )
-    #    return emacs.doUndo( event, 2 )   
-        
-         
+     return rlist
 
-
-
-</t>
-<t tx="mork.20041031134709">def processRectangle( self, event ):
+@
+     ttext = self.emacs.getText()
+     items = self.dynaregex.findall( ttext ) #make a big list of what we are considering a 'word'
+     if items:
+         for word in items:
+             if not word.startswith( txt ) or word == txt: continue #dont need words that dont match or == the pattern
+             if word not in rlist:
+                 rlist.append( word )
+             else:
+                 rlist.remove( word )
+                 rlist.append( word )</t>
+<t tx="orkman.20050209170444">def getWordStart( self ):
     
-    self.rect_commands[ event.keysym ]( event )
-    return 'break'
-    #if event.keysym == 'o':
-    #    emacs.openRectangle( event )
-    #    return 'break'
-    #if event.keysym == 'c':
-    #    emacs.clearRectangle( event )
-    #    return 'break'
-    #if event.keysym == 't':
-    #    emacs.stringRectangle( event )
-    #    return 'break'
-    #if event.keysym == 'y':
-    #    emacs.yankRectangle( event )
-    #    return 'break'
-    #if event.keysym == 'd':
-    #    emacs.deleteRectangle( event )
-    #    return 'break'
-    #if event.keysym == 'k':
-    #    emacs.killRectangle( event )
-    #    return 'break'       
-</t>
-<t tx="mork.20041031135748">def processAbbreviation( self, event ):
+    pos = self.editor.getCaretPosition()
+    #start = stext.Utilities.getWordStart( self.editor, pos ) --this method acts screwy
+    doc = self.editor.getStyledDocument()
+    txt = doc.getText( 0, pos )
+    txtlines = txt.splitlines()
+    try:
+        line = txtlines[ -1 ]
+        chunks = line.split()
+        c2 = []
+        for z in chunks[ : ]:
+            [ c2.append( x ) for x in z.split( '.' ) ]
+        chunks = c2
+        word = chunks[ -1 ]
+        for z in xrange( len( word ) ):
+            w = word[ z ]
+            if w.isalnum() or w=='_': break
+        
+        word = word[ z: ]
+    except:
+        return None
+    return word
     
-    emacs = self.emacs
-    svar, label = emacs.getSvarLabel( event )
-    if svar.get() != 'a' and event.keysym == 'a':
-        svar.set( 'a' )
-        return 'break'
-    elif svar.get() == 'a':
-        if event.char == 'i':
-            svar.set( 'a i' )
-        elif event.char == 'e':
-            emacs.stopControlX( event )
-            event.char = ''
-            emacs.expandAbbrev( event )
-        return 'break'</t>
-<t tx="mork.20041031145157">class MC_StateManager:
+def getWordStartIndex( self, i = None ):
     
-    '''MC_StateManager manages the state that the Emacs instance has entered and
-       routes key events to the right method, dependent upon the state in the MC_StateManager'''
-       
-    @others
-
-
-
-</t>
-<t tx="mork.20041031150125"># EKR: used only below.
-def eA( event ):
-    if self.emacs.expandAbbrev( event ) :
-        return 'break'
-
-self.stateCommands = { #1 == one parameter, 2 == all
-    'uC': ( 2, emacs.universalDispatch ),
-    'controlx': ( 2, emacs.doControlX ),
-    'isearch':( 2, emacs.iSearch ),
-    'goto': ( 1, emacs.Goto ),
-    'zap': ( 1, emacs.zapTo ),
-    'howM': ( 1, emacs.howMany ),
-    'abbrevMode': ( 1, emacs.abbrevCommand1 ),
-    'altx': ( 1, emacs.doAlt_X ),
-    'qlisten': ( 1, emacs.masterQR ),
-    'rString': ( 1, emacs.replaceString ),
-    'negativeArg':( 2, emacs.negativeArgument ),
-    'abbrevOn': ( 1, eA ),
-    'set-fill-column': ( 1, emacs.setFillColumn ),
-    'chooseBuffer': ( 1, emacs.chooseBuffer ),
-    'renameBuffer': ( 1, emacs.renameBuffer ),
-    're_search': ( 1, emacs.re_search ),
-    'alterlines': ( 1, emacs.processLines ),
-    'make_directory': ( 1, emacs.makeDirectory ),
-    'remove_directory': ( 1, emacs.removeDirectory ),
-    'delete_file': ( 1, emacs.deleteFile ),
-    'nonincr-search': ( 2, emacs.nonincrSearch ),
-    'word-search':( 1, emacs.wordSearch ),
-    'last-altx': ( 1, emacs.executeLastAltX ),
-    'escape': ( 1, emacs.watchEscape ),
-    'subprocess': ( 1, emacs.subprocesser ),
-    }</t>
-<t tx="mork.20041031155455">@others</t>
-<t tx="mork.20041031162857">def __init__( self, emacs ):
-        
-    self.emacs = emacs
-    self.state = None
-    self.states = {}
-    &lt;&lt;statecommands&gt;&gt;</t>
-<t tx="mork.20041031162857.1">def setState( self, state, value ):
-        
-    self.state = state
-    self.states[ state ] = value</t>
-<t tx="mork.20041031162857.2">def getState( self, state ):
+    pos = self.editor.getCaretPosition()
+    doc = self.editor.getStyledDocument()
+    txt = doc.getText( 0, pos )
+    tlist = list( txt )
+    tlist.reverse()
+    for z in xrange( len( tlist ) ):
+        if tlist[ z ] not in ( '_', '-' ) and ( tlist[ z ].isspace() or not tlist[ z ].isalnum() ):
+            break
+    return pos - z
+    #start = stext.Utilities.getWordStart( self.editor, pos ) ---this method acts screwy, thats why Im not using it.
     
-    return self.states.get(state,False)</t>
-<t tx="mork.20041031162857.3">def hasState( self ):
+    
+def getWordEndIndex( self, i = None ):
+    pos = self.editor.getCaretPosition()
+    doc = self.editor.getStyledDocument()
+    txt = doc.getText( 0, doc.getLength())
+    txt = txt[ pos: ]
+    tlist = list( txt )
+    z = 0
+    for z in xrange( len( tlist ) ):
+        if tlist[ z ] != '_' and ( tlist[ z ].isspace() or not tlist[ z ].isalnum() ):
+            break
+    
+    if z == 0:
+        z = 1
+    return pos + z</t>
+<t tx="orkman.20050209180255">def getAttributeRanges( self, name ):
+    
+    dsd = self.editor.getStyledDocument()
+    alen = dsd.getLength()
+    range = []
+    for z in xrange( alen ):
+        element = dsd.getCharacterElement( z )
+        as = element.getAttributes()
+        if as.containsAttribute( name, name ):
+            range.append( z )
+            
+    return range
+    
+def addAttributeToRange( self, name, value, offset, length, color = None ):
 
-    if self.state:
-        return self.states[ self.state ]
-</t>
-<t tx="mork.20041031162857.4">def __call__( self, *args ):
-        
-    if self.state:
-        which = self.stateCommands[ self.state ]
-        
-        # EKR: which[0] is a flag: 1 == one parameter, 2 == all
-        # EKR: which[1] is the function.
-        
-        if which[ 0 ] == 1:
-            return which[ 1 ]( args[ 0 ] )
+    dsd = self.editor.getStyledDocument()
+    sa = stext.SimpleAttributeSet()
+    sa.addAttribute( name, value )
+    dsd.setCharacterAttributes( offset, length, sa, True )
+    if color != None:
+        self.addHighlight( offset, length+offset, color )
+
+def clearAttributes( self, attrset ):
+    dsd = self.editor.getStyledDocument()
+    alen = dsd.getLength()
+    for z in xrange( alen ):
+        element = dsd.getCharacterElement( z )
+        as = element.getAttributes()
+        if as.containsAttributes( attrset ):
+            mas = stext.SimpleAttributeSet() #We have to make a clean one and copy the data into it!  The one returned is immutable
+            mas.addAttributes( as )
+            mas.removeAttributes( attrset ) #we remove the tag from here.
+            amount = as.getEndOffset() - as.getStartOffset() #very important to do it like this, giving each character an attribute caused colorization problems/doing the whole thing at once seems to have cleared those problems up.
+            dsd.setCharacterAttributes( z, amount, mas, True )            
+    
+def clearAttribute( self, name ):
+    dsd = self.editor.getStyledDocument()
+    alen = dsd.getLength()
+    for z in xrange( alen ):
+        element = dsd.getCharacterElement( z )
+        as = element.getAttributes()
+        if as.containsAttribute( name, name ):
+            mas = stext.SimpleAttributeSet() #We have to make a clean one and copy the data into it!  The one returned is immutable
+            mas.addAttributes( as )
+            mas.removeAttribute( name ) #we remove the tag from here.
+            amount = as.getEndOffset() - as.getStartOffset() #very important to do it like this, giving each character an attribute caused colorization problems
+            dsd.setCharacterAttributes( z, amount, mas, True )
+    
+def clearHighlights( self ):
+    
+    self.editor.getHighlighter().removeAllHighlights()    
+    
+
+def addHighlight( self, start, end, color ):
+    
+    highlighter = self.editor.getHighlighter()
+    painter = stext.DefaultHighlighter.DefaultHighlightPainter( color )
+    highlighter.addHighlight( start, end, painter )
+    
+def getHighlights( self ):
+    
+    highlighter = self.editor.getHighlighter()
+    return highlighter.getHighlights()
+    
+    
+def removeTextWithAttribute( self, name ):
+    
+    arange = self.getAttributeRanges( name )
+    dsd = self.editor.getStyledDocument()
+    alen = len( arange )
+    if alen:
+        dsd.remove( arange[ 0 ], alen )
+    
+def insertTextWithAttribute( self, txt, name ):
+    
+    sa = stext.SimpleAttributeSet()
+    sa.addAttribute( name, name )
+    pos = self.editor.getCaretPosition()
+    dsd = self.editor.getStyledDocument()
+    dsd.insertString( pos, txt, sa )</t>
+<t tx="orkman.20050209215951">def clearDynamic( self, tag  ):
+
+    self.emacs.clearAttribute( tag )
+    self.returnlist = []
+    self.searchtext = None
+    self.ind = None</t>
+<t tx="orkman.20050210105230">def findPre( self, a, b ):
+    st = ''
+    for z in a:
+        st1 = st + z
+        if b.startswith( st1 ):
+            st = st1
         else:
-            return which[ 1 ]( *args )
-</t>
-<t tx="mork.20041031162857.5">def clear( self ):
-        
-    self.state = None
+            return st
+    return st</t>
+<t tx="orkman.20050210110555">@
+This node organizes the classes that implement a rough cut of the Strategy pattern for the keystrokes.
+Each recognized keystroke goes to the masterCommand, but the masterCommand just decides on the code that
+should be executed, in this case it delegates the call to a Strategy object that decides upon what methods
+to process the key stroke.  This has these benefits:
+1. State is broken further from the container Object( Emacs ).
+2. Changes to the processing methods no longer has global consequences.  It is conceivable that a different Strategy could
+be swapped in by configuration or some other means.  All a strategy has to do is implement the __call__ operator to have
+the event and keystroke passed into it.
 
-    for z in self.states.keys():
-        self.states[ z ] = False</t>
-<t tx="mork.20041031162953">def __init__( self, emacs ):
-        
-    self.emacs = emacs
-    self.previous = []
-    self.rect_commands = {
-    'o': emacs.openRectangle,
-    'c': emacs.clearRectangle,
-    't': emacs.stringRectangle,
-    'y': emacs.yankRectangle,
-    'd': emacs.deleteRectangle,
-    'k': emacs.killRectangle,
-    'r': emacs.activateRectangleMethods,             
-    }
-    
-    self.variety_commands = {
-    'period': emacs.setFillPrefix,
-    'parenleft': emacs.startKBDMacro,
-    'parenright' : emacs.stopKBDMacro,
-    'semicolon': emacs.setCommentColumn,
-    'Tab': emacs.tabIndentRegion,
-    'u': lambda event: emacs.doUndo( event, 2 ),
-    'equal': emacs.lineNumber,
-    'h': emacs.selectAll,
-    'f': emacs.setFillColumn,
-    'b': lambda event, which = 'switch-to-buffer': emacs.setInBufferMode( event, which ),
-    'k': lambda event, which = 'kill-buffer': emacs.setInBufferMode( event, which ),
-    }
-    
-    self.abbreviationDispatch = {    
-    'a': lambda event: emacs.abbreviationDispatch( event, 1 ),
-    'a i': lambda event: emacs.abbreviationDispatch( event, 2 ),    
-    }
-    
-    self.register_commands ={    
-    1: emacs.setNextRegister,
-    2: emacs.executeRegister,        
-    }
-</t>
-<t tx="mork.20041031182258">@
-These methods create the dispatch dictionarys that the
-Emacs instance uses to execute specific keystrokes and commands.
-Dont mess with it if you dont understand this section, without these dictionarys
-the Emacs system cant work.
+This design is based off of the lessons learned in the temacs plugin for CPython Leo.  Its evolution followed this pattern:
+1. It started as a flat function based module.  Though a useful learning experiment this grew too large and became
+    hard to think about.  Changes were becoming difficult.
+2. At this point it became apparent that more structure was needed.  It was refactored( in Refactoring this is a 'Big Refactoring')
+into a class, with some helper classes.  This eased the ability to reason about and modify the code.
+3. After working with this big class, it became apparent again that a further restructuring was needed.  The idea of breaking
+the methods that were grouped under one rubric into further classes arose; the Strategy pattern seemed to be what was called for.
+And here we are in SwingMacs making the first cut at this new decomposed design for the Jython port.
+
 
 @c
 
 
-@others</t>
-<t tx="mork.20041031182643">@others</t>
-<t tx="mork.20041031182643.1">@
-Emacs requires an undo mechanism be added from the environment.
-If there is no undo mechanism added, there will be no undo functionality in the instance.
-@c
-
 
 
 @others</t>
-<t tx="mork.20041031194746">@
-These methods contain methods by which an Emacs instance is extended, changed, added to , etc...
-
-@c
-
-
-@others</t>
-<t tx="mork.20041101083527">class MC_KeyStrokeManager:
-    
-    @others</t>
-<t tx="mork.20041101083527.1">def __init__( self, emacs ):
-    
-    self.emacs = emacs
-
-    &lt;&lt;keystrokes&gt;&gt;
-</t>
-<t tx="mork.20041101083527.2">self.keystrokes = {
-
-    '&lt;Control-s&gt;': ( 2, emacs.startIncremental ), 
-    '&lt;Control-r&gt;': ( 2, emacs.startIncremental ),
-    '&lt;Alt-g&gt;': ( 1, emacs.startGoto ),
-    '&lt;Alt-z&gt;': ( 1, emacs.startZap ),
-    '&lt;Alt-percent&gt;': ( 1,  emacs.masterQR ) ,
-    '&lt;Control-Alt-w&gt;': ( 1, lambda event: 'break' ),
-}</t>
-<t tx="mork.20041101084148">def hasKeyStroke( self, stroke ):
-    
-    return self.keystrokes.has_key( stroke )</t>
-<t tx="mork.20041101084148.1">def __call__( self, event, stroke ):
-    
-    kstroke = self.keystrokes[ stroke ]
-    
-    if 0: # EKR: this would be better:
-        numberOfArgs,func = self.keystrokes[ stroke ]
-        if numberOfArgs == 1:
-            return func(event)
-        else:
-            return func(event,stroke)
-    
-    # EKR: which[0] is the number of params.
-    # EKR: which[1] is the function.
-
-    if kstroke[ 0 ] == 1:
-        return kstroke[ 1 ]( event )
+<t tx="orkman.20050210110734">def startIncremental( self, command ):
+    if command == 'Ctrl S':
+        self.iway = 'forward'
     else:
-        return kstroke[ 1 ]( event, stroke )
+        self.iway = 'backward'
+    self.emacs._stateManager.setState( 'incremental' )  
+    self.emacs.setCommandText( "I-Search:" )</t>
+<t tx="orkman.20050210110734.1">def incrementalSearch( self, event, command, stxt, pos ):
         
-    </t>
-<t tx="mork.20041101190309">def extendAltX( self, name, function ):
-    '''A simple method that extends the functions Alt-X offers.'''
-    
-    nfunction = new.instancemethod( function, self, Emacs ) #making it an instance method allows the function to be passed 'self'.
-    self.doAltX[ name ] = nfunction
-    
+        #self.emacs.clearAttribute( 'incremental' ) 
+        self.emacs.clearHighlights()
+        txt = self.emacs.minibuffer.getText()
+        c = self.emacs.c
+        source = event.getSource()
+        #cursor = source.getCursor()
+        #wcursor = java.awt.Cursor.getPredefinedCursor( java.awt.Cursor.WAIT_CURSOR )
+        #source.setCursor( wcursor )
+        # opos = source.getCaretPosition() 
 
-</t>
-<t tx="mork.20041102094716">def reconfigureKeyStroke( self, tbuffer, keystroke , set_to ):
-    
-    '''This method allows the user to reconfigure what a keystroke does.
-       This feature is alpha at best, and untested.'''
-
-    if self.cbDict.has_key( set_to ):
+        if self.iway == 'forward':
+            if command != 'Ctrl S' and pos &gt;= len( txt ):
+                    pos = pos - len( txt )
+            i = self.forwardSearch( pos, txt, stxt )
+            if i != -1:
+                pos = pos + i + len( txt )
+            else: #start from beginning again
+                #i = self.forwardSearch( 0, txt, stxt )
+                #if i != -1:
+                #    pos = i + len( txt )
+                cp = c.currentPosition()
+                for z in c.currentPosition().fromSelfAllNodes_iter( copy = 1 ):
+                    if z == cp: continue
+                    i = self.forwardSearch( 0, txt, z.bodyString() )
+                    if i != -1:
+                        pos = i + len( txt )
+                        c.beginUpdate()
+                        c.setCurrentPosition( z )
+                        c.endUpdate()
+                        break
+        else:
+            if command != 'Ctrl R' and ( pos + len( txt ) ) &lt;= len( stxt ):
+                    pos = pos + len( txt )
+            i = self.backwardSearch( pos, txt, stxt )
+            if i != -1:
+                pos = i
+            else: #start from the back again
+                #i = self.backwardSearch( source.getDocument().getLength(), txt , stxt )
+                #if i != -1:
+                #    pos = i
+                cp = c.currentPosition()
+                for z in c.currentPosition().fromSelfBackAllNodes_iter( copy = 1 ):
+                    if z == cp: continue
+                    i = self.backwardSearch( len( z.bodyString() ), txt, z.bodyString() )
+                    if i != -1:
+                        pos = i
+                        c.beginUpdate()
+                        c.setCurrentPosition( z )
+                        c.endUpdate()
+                        break    
         
-        command = self.cbDict[ set_to ]
-        self.cbDict[ keystroke ] = command
-        evstring = '&lt;%s&gt;' % keystroke
-        tbuffer.bind( evstring,  lambda event, meth = command: self.masterCommand( event, meth , evstring)  )</t>
-<t tx="mork.20041102131352">class Tracker:
-    '''A class designed to allow the user to cycle through a list
-       and to change the list as deemed appropiate.'''
+        #source.setCursor( self.old_cursor )
+        if i == -1: 
+            tcursor = java.awt.Cursor.getPredefinedCursor( java.awt.Cursor.TEXT_CURSOR )
+            source.setCursor( tcursor )
+            swing.JOptionPane.showMessageDialog( None, "Can't find %s" % txt )
+            return True
+        dhl = self.deferedHighlight( source, pos, self.iway, self.highlight, len( txt ), self.emacs )   
+        swing.SwingUtilities.invokeLater( dhl )  
+        #source.setCaretPosition( pos )
+        #if self.iway == 'forward':
+        #    start = pos - len( txt )
+        #    self.emacs.addHighlight( start, start + len( txt ), self.highlight ) 
+        #else:
+        #    self.emacs.addHighlight( pos, pos + len( txt ), self.highlight )
+        return True</t>
+<t tx="orkman.20050210125253">@
+The answer is simple: SwingMacs is a component of the jython Leo port.  It is derived from the CPython
+Leo plugins temacs and usetemacs.  Though it would be wonderful just to use those plugins, they
+were targeted at the Tk and its Text widget( hence the 't' in temacs ).  The two technologies are different enough to warrent a new implementation.  Though as much reuse as possible is going to be attempted.
 
+The implementation strategy is:
+    
+1. Copy and Paste a node from temacs into SwingMacs.
+2. Analyze the node and begin the transition to Java/Jython/Swing.
+    
+Tags being absent from the JTextPane leads to the emulation of Tags through character Attributes.  The main
+SwingMacs Emacs object shall contain these tag emulator methods.  The developer should not have to think in Attributes
+when implementing a method that needs the simplicity of tags.  He will be able to use the SwingMacs virtual tag
+methods -- tags whose only existence is in a concept.
+@c</t>
+<t tx="orkman.20050210201413">class formatter:
+    
+    def __init__( self, emacs ):
+        
+        self.emacs = emacs
+        self.commands = {
+        
+        'Ctrl+Alt Back Slash': self.indentRegionToFirstLine,
+        'indent-region': self.indentRegionToFirstLine,
+        'indent-rigidly': self.indentRigidly,  
+        'indent-relative': self.indentRelative,
+        'Alt Back Slash': self.deleteSurroundingSpaces,
+        'Alt+Shift 6': self.joinLineToPrevious,
+        'Ctrl O': self.deleteBlankLines,
+        
+        }
+        
+        
+    def __call__( self, event, command ):
+        
+        
+        rval = self.commands[ command ]()        
+        self.emacs.keyboardQuit( event )
+        return rval
+                
     @others</t>
-<t tx="mork.20041102131352.1">def __init__( self ):
+<t tx="orkman.20050210201413.1">def indentRegionToFirstLine( self ):
     
-    self.tablist = []
-    self.prefix = None
-    self.ng = self._next()</t>
-<t tx="mork.20041102131352.2">def setTabList( self, prefix, tlist ):
-    
-    self.prefix = prefix
-    self.tablist = tlist
-    
-
-</t>
-<t tx="mork.20041102131352.3">def _next( self ):
-    
-    while 1:
+    editor = self.emacs.editor
+    start = editor.getSelectionStart()
+    end = editor.getSelectionEnd()
+    if start != end:
         
-        tlist = self.tablist
-        if not tlist: yield ''
-        for z in self.tablist:
-            if tlist != self.tablist:
+        sstart = stext.Utilities.getRowStart( editor, start )
+        send = stext.Utilities.getRowEnd( editor, end )
+        doc = editor.getStyledDocument()
+        txt = doc.getText( sstart, send - sstart )
+        lines = txt.splitlines()
+        firstline = lines[ 0 ]
+        ws_start = []
+        for z in firstline:
+            if z.isspace():
+                ws_start.append( z )
+            else:
                 break
-            yield z
-</t>
-<t tx="mork.20041102132710">def next( self ):
-    
-    return self.ng.next()
-</t>
-<t tx="mork.20041102160313">def clear( self ):
-
-    self.tablist = []
-    self.prefix = None
-</t>
-<t tx="mork.20041103155347">@
-an Emacs instance does not have knowledge of what is considered a buffer in the environment.
-It must be configured by the user so that it can operate on the other buffers.  Otherwise
-these methods will be useless.
-
-@c
-
-
-@others</t>
-<t tx="mork.20041103155347.1">def setBufferListGetter( self, buffer, method ):
-    #Sets a method that returns a buffer name and its text, and its insert position.
-    self.bufferListGetters[ buffer ] = method
-</t>
-<t tx="mork.20041103155347.2">def setBufferSetter( self, buffer, method ):
-    #Sets a method that takes a buffer name and the new contents.
-    self.bufferSetters[ buffer ] = method</t>
-<t tx="mork.20041103155347.3">def getBufferDict( self, event ):
-    
-    tbuffer = event.widget
-    meth = self.bufferListGetters[ tbuffer ]
-    return meth()</t>
-<t tx="mork.20041103155347.4">def appendToBuffer( self, event, name ):
-
-    tbuffer = event.widget
-    try:
-        txt = tbuffer.get( 'sel.first', 'sel.last' )
-        bdata = self.bufferDict[ name ]
-        bdata = '%s%s' % ( bdata, txt )
-        self.setBufferData( event, name, bdata )
-    except Exception, x:
-        pass
-    return self.keyboardQuit( event )</t>
-<t tx="mork.20041103155347.5">def prependToBuffer( self, event, name ):
-    
-    tbuffer = event.widget
-    try:
-        txt = tbuffer.get( 'sel.first', 'sel.last' )
-        bdata = self.bufferDict[ name ]
-        bdata = '%s%s' % ( txt, bdata )
-        self.setBufferData( event, name, bdata )
-    except Exception, x:
-        pass
-    return self.keyboardQuit( event )</t>
-<t tx="mork.20041103155347.6">def insertToBuffer( self, event, name ):
-
-    tbuffer = event.widget
-    bdata = self.bufferDict[ name ]
-    tbuffer.insert( 'insert', bdata )
-    self._tailEnd( tbuffer )
-    return self.keyboardQuit( event )
-</t>
-<t tx="mork.20041103155347.7">def copyToBuffer( self, event, name ):
-    
-    tbuffer = event.widget
-    try:
-        txt = tbuffer.get( 'sel.first', 'sel.last' )
-        self.setBufferData( event, name, txt )
-    except Exception, x:
-        pass
-    return self.keyboardQuit( event )
-    
-</t>
-<t tx="mork.20041103161202">def chooseBuffer( self, event ):
-    
-    svar, label = self.getSvarLabel( event )
-
-    state = self.mcStateManager.getState( 'chooseBuffer' )
-    if state.startswith( 'start' ):
-        state = state[ 5: ]
-        self.mcStateManager.setState( 'chooseBuffer', state )
-        svar.set( '' )
-    if event.keysym == 'Tab':
+                
+        ws_segment = ''.join( ws_start )
+        nwlines = [ firstline, ]
+        for x in lines[ 1: ]:
+            x_nws = x.lstrip()
+            x_new = '%s%s' % ( ws_segment, x_nws )
+            nwlines.append( x_new )
+            
+        new_txt = '\n'.join( nwlines )
+        pos = editor.getCaretPosition()
+        doc.replace( sstart, send - sstart, new_txt, None )
         
-        stext = svar.get().strip()
-        if self.bufferTracker.prefix and stext.startswith( self.bufferTracker.prefix ):
-            svar.set( self.bufferTracker.next() ) #get next in iteration
+    return True</t>
+<t tx="orkman.20050210202559">class killbuffer:
+    
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.killbuffer = []
+        self.cliptext = None
+        
+        #for killbuffer
+        self.last_clipboard = None
+        self.kbiterator = self.iterateKillBuffer()
+        self.reset = False
+        self.lastKBSpot = None
+        
+        
+    def __call__( self, event, command ):
+        
+        if command == 'Ctrl K':
+            self.killToEndOfLine()
+        if command == 'Alt Y':
+            self.walkKB()
+        if command == 'Ctrl Y':
+            self.yank()
+        if command == 'Ctrl W':
+            self.killRegion()
+        if command == 'Alt W':
+            self.copyRegion()
+           
+        self.emacs.keyboardQuit( event )
+        return True    
+        
+    @others</t>
+<t tx="orkman.20050210202559.1">def killToEndOfLine( self ):
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    end = stext.Utilities.getRowEnd( editor, pos )
+    self.kill( pos, end  )    
+    return True</t>
+<t tx="orkman.20050210203511">def yank( self ):
+    self.reset = True
+    return self.walkKB()</t>
+<t tx="orkman.20050210204001">def getHelp( self ):
+    
+    helptext ='''
+    
+    keystrokes:
+    
+    keyboard quit:
+        Ctrl-g: quits any current command. 
+    
+    selecting:
+        Ctrl-Spacebar : starts selecting.  To stop Ctrl-g.
+    
+    kill and yanking:
+        Ctrl-k : kills to end of line and inserts data into killbuffer
+        Ctrl-w: kills region and inserts data into killbuffer
+        Alt-w: copys region and inserts data into killbuffer   
+        Ctrl-y: inserts first item in the killbuffer
+        Alt-y: inserts next item in the killbuffer; allows the user to cycle 
+           through the killbuffer, selecting the desired 'killed' text.
+           
+           
+    deleting:    
+        Ctrl-d: deletes next character.
+        Delete: deletes previous character.
+    
+    
+    dynamic abbreviations:
+        Alt-/ : cycles through all words that match the starting word, which is used as a prefix.
+        Ctrl-Alt-/ : takes current word, using it as a prefix and finds the common 
+                    prefix among the matching prefix words. 'ea' with the words ( eat,
+                    eats, eater ) will become 'eat' upon execution of this command.
+                    
+    symbol completion:
+        Alt Ctrl I : takes the start of the current word and completes it if it matches a keyword
+                     of the current language in effect.  The user can cycle through the matches if there
+                     are multiple matches.  For example:
+                         d( Alt Ctrl I )
+                         del
+                         del( Alt Ctrl I )
+                         def
+                 
+                 
+    incremental search:
+        Ctrl-s : starts incremental search forward
+        Ctrl-r : starts incremental search backward
+    
+    
+    formating:
+        Ctrl-Alt-\ : takes the current selection and formats each line so that it has the same indentation
+                 as the first line in the selection.
+        Alt-\: deletes the surrounding whitespace
+        Alt-^: joins line to previous line. 
+        
+    transposing:
+        Alt-t: marks a word for moving.  2nd execution on word, trades positions of 1rst word with 2nd word. 
+                 
+    movement:
+        Alt-&lt; (less then sign ): move to the beginning of buffer
+        Alt-&gt; (greater then sign ): move to the end of the buffer
+        Ctrl a: move to the beginning of line
+        Ctrl e: move to end of the line
+        Alt m: move to the end of the indentation on the current line.
+        
+    balanced parentheses or sexps:
+        Ctrl Alt f: moves forward to matching parentheses.
+        Ctrl Alt b: moves backwards to matching parentheses 
+        Ctrl Alt k: kills the sexp forward. Can subsequently be yanked
+        Ctrl Alt Delete: kills the sexp backward. Can subsequently be yanked
+    
+    
+    zapping:
+        Alt-z: zaps to the character specified by the user.
+    
+    Ctrl x: This keystroke prepares SwingMacs for another keystroke.  These are:
+        Ctrl o: This deletes blanklines surrounding the current line. 
+        
+    tags:
+        tags are definitions of language constructs.  Language specific tags:
+            Python: def and class
+            Java: class and methods
+            
+        keystrokes:
+            Alt-. : queries the user for the tag they wish to goto.  If Enter is typed
+                    the current word is used for the tag
+            Ctrl-U Alt-. : goes to the next definition of a tag.  Useful if there are multiple
+                           definitions for a tag.
+            Alt-* : pops the buffer/node back to the last place Alt-. and friends were executed.
+                    This can be executed multiple times, if Alt-. was executed multiple times,
+                    taking the user back to where he started jumping.
+    
+    
+    '''
+    
+    addstring = "\n".join( self.keystroke_help )
+    
+    helptext += addstring
+    
+    return helptext</t>
+<t tx="orkman.20050212095512">def walkKB( self ): #, event , frm, which ):# kb = self.iterateKillBuffer() ):
+
+    #tbuffer = event.widget
+    #i = tbuffer.index( 'insert' )
+    #t , t1 = i.split( '.' )
+    pos = self.emacs.editor.getCaretPosition()
+    if pos != self.lastKBSpot:
+        self.emacs.clearAttribute( 'kb' )
+    self.lastKBSpot = pos
+    clip_text = self.doesClipboardOfferNewData() #  self.getClipboard()  
+    #clip_txt = g.app.gui.getTextFromClipboard().   
+    if self.killbuffer or clip_text:
+            #if which == 'c':
+            #self.reset = True
+            if clip_text:
+                txt = clip_text
+            else:
+                txt = self.kbiterator.next()
+            self.emacs.removeTextWithAttribute( 'kb' )
+            self.emacs.insertTextWithAttribute( txt, 'kb' )
+            self.emacs.editor.setCaretPosition( pos )
+            #tbuffer.tag_delete( 'kb' )
+            #tbuffer.insert( frm, txt, ('kb') )
+            #tbuffer.mark_set( 'insert', i )
+            #else:
+            #if clip_text:
+            #    txt = clip_text
+            #else:
+            #    txt = self.kbiterator.next()
+            #t1 = str( int( t1 ) + len( txt ) )
+            #r = tbuffer.tag_ranges( 'kb' )
+            #if r and r[ 0 ] == i:
+            #    tbuffer.delete( r[ 0 ], r[ -1 ] )
+            #tbuffer.tag_delete( 'kb' )
+            #tbuffer.insert( frm, txt, ('kb') )
+            #tbuffer.mark_set( 'insert', i )
+            #return self._tailEnd( tbuffer )
+            
+    return True</t>
+<t tx="orkman.20050212100208">def doesClipboardOfferNewData( self  ):
+    
+    ctxt = None
+    try:
+        #ctxt = tbuffer.selection_get( selection='CLIPBOARD' )
+        ctxt = g.app.gui.getTextFromClipboard()
+        if ctxt != self.last_clipboard or not self.killbuffer:
+            self.last_clipboard = ctxt
+            if self.killbuffer and self.killbuffer[ 0 ] == ctxt:
+                return None
+            return ctxt
         else:
-            prefix = svar.get()
-            pmatches = []
-            for z in self.bufferDict.keys():
-                if z.startswith( prefix ):
-                    pmatches.append( z )
-            self.bufferTracker.setTabList( prefix, pmatches )
-            svar.set( self.bufferTracker.next() ) #begin iteration on new lsit
-        return 'break'        
+            return None
+        
+    except:
+        return None
+        
+    return None</t>
+<t tx="orkman.20050212100715">def iterateKillBuffer( self ):
 
+    while 1:
+        if self.killbuffer:
+            self.last_clipboard = None
+            for z in self.killbuffer:
+                if self.reset:
+                    self.reset = False
+                    break        
+                yield z</t>
+<t tx="orkman.20050212113553">def kill( self, frm, end ):
+    
+    editor = self.emacs.editor
+    doc = editor.getStyledDocument()
+    if frm != end:
+        txt = doc.getText( frm, end - frm )
+        doc.replace( frm, end - frm, "", None )
+        self.insertIntoKillbuffer( txt )
+        g.app.gui.replaceClipboardWith( txt )
+    else:
+        if frm != doc.getLength():
+            doc.replace( frm, 1, "", None )</t>
+<t tx="orkman.20050212114308">def killRegion( self ):
+    
+    region = self.getRegion()
+    if region:
+        self.kill( *region )
+    return True</t>
+<t tx="orkman.20050212114641">def insertIntoKillbuffer( self, txt ):
+    
+    self.killbuffer.insert( 0, txt )
+    self.reset = True</t>
+<t tx="orkman.20050212115022">def copyRegion( self ):
+
+    region = self.getRegion()
+    if region:
+        editor = self.emacs.editor
+        doc = editor.getStyledDocument()
+        start = region[ 0 ]
+        end = region[ 1 ]
+        txt = doc.getText( start, end-start )
+        self.insertIntoKillbuffer( txt )
+    return True</t>
+<t tx="orkman.20050212115022.1">def getRegion( self ):
+
+    editor = self.emacs.editor
+    start = editor.getSelectionStart()
+    end = editor.getSelectionEnd()
+    if end == start: return None
+    else:
+        return start, end</t>
+<t tx="orkman.20050212120210">class deleter:
+    
+    def __init__( self, emacs ):
+        self.emacs = emacs
         
-    elif event.keysym == 'Return':
+        
+    def __call__( self, event, command ):
+        
+        
+        if command == 'Delete':
+            return self.deletePreviousChar()
+        if command == 'Ctrl D':
+            return self.deleteNextChar()
+            
+    @others</t>
+<t tx="orkman.20050212120210.1">def deletePreviousChar( self ):
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    if pos != 0:
+        doc = editor.getStyledDocument()
+        spos = pos -1
+        doc.replace( spos, 1 , "", None )
+    return True</t>
+<t tx="orkman.20050212120620">def deleteNextChar( self ):
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    doc = editor.getStyledDocument()
+    if pos != doc.getLength():
+        doc.replace( pos, 1 , "", None )
+    return True</t>
+<t tx="orkman.20050212121301">class alt_x_handler:
+    
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.defineCommands()
+        self.last_command = None
+        self.keys = []
+        
+    def defineCommands( self ):
+        
+        sO = self.emacs.strategyObjects
+        self.commands = {
+        
+        'open-rectangle': sO[ 'rectangles' ],        
+        'delete-rectangle': sO[ 'rectangles' ],
+        'clear-rectangle': sO[ 'rectangles' ],
+        'delete-whitespace-rectangle': sO[ 'rectangles' ],
+        'string-insert-rectangle': sO[ 'rectangles' ],
+        'string-rectangle': sO[ 'rectangles' ],
+        'kill-rectangle': sO[ 'rectangles' ],
+        'yank-rectangle': sO[ 'rectangles' ],
+        'zap-to-char': sO[ 'zap' ],
+        'comment-region': sO[ 'comment' ],
+        'comment-kill': sO[ 'comment' ],
+        'goto-line': sO[ 'movement' ],
+        'goto-char': sO[ 'movement' ],
+        'transpose-lines': sO[ 'transpose' ],
+        'upcase-region': sO[ 'capitalization' ],
+        'downcase-region': sO[ 'capitalization' ],
+        'capitalize-region': sO[ 'capitalization' ],
+        'capitalize-word': sO[ 'capitalization' ],
+         'downcase-word': sO[ 'capitalization' ],
+         'upcase-word': sO[ 'capitalization' ],
+        'query-replace': sO[ 'replacement' ],
+        'query-replace-regexp': sO[ 'replacement' ],
+        'replace-string': sO[ 'replacement' ],
+        'sort-lines': sO[ 'sorters' ],
+        'reverse-region': sO[ 'transpose' ],
+        'keep-lines': sO[ 'lines' ],
+        'flush-lines': sO[ 'lines' ],
+        'indent-rigidly': sO[ 'formatter' ],
+        'indent-region': sO[ 'formatter' ],
+        'indent-relative': sO[ 'formatter' ],
+        'tabify': sO[ 'tabs' ],
+        'untabify': sO[ 'tabs' ],
+        'copy-to-register': sO[ 'registers' ],
+        'insert-register': sO[ 'registers' ],
+        'append-to-register': sO[ 'registers' ],
+        'prepend-to-register': sO[ 'registers' ],
+        
+        } 
+     
+            
+        
+        
+    def createTabCompleter( self ):
+        self.keys = self.commands.keys()
+        self.tbCompleter = self.emacs.TabCompleter( self.keys )
        
-       bMode = self.mcStateManager.getState( 'chooseBuffer' )
-       return self.bufferCommands[ bMode ]( event, svar.get() )
+    def __call__( self, event, command ):
         
+        if command == 'Alt X':
+            self.tbCompleter.reset()
+            self.last_command = None
+            self.emacs._stateManager.setState( 'xcommand' ) 
+            self.emacs.setCommandText( "Alt-x:" )
+            return True
+        
+        if command == 'Tab':
+            
+            txt = self.emacs.minibuffer.getText()
+            if self.last_command == None or not txt.startswith( self.last_command ):
+                txt = self.emacs.minibuffer.getText()
+                fnd = self.tbCompleter.lookFor( txt )
+                if fnd:
+                    self.last_command = txt
+                    self.emacs.minibuffer.setText( self.tbCompleter.getNext() )
+            else :
+                self.emacs.minibuffer.setText( self.tbCompleter.getNext() )
+            return True
+        
+        if command == 'Enter':
+            return self.execute( event, command )
+        else:
+            self.emacs.eventToMinibuffer( event )
+            return True    
+    
+    def execute( self, event, command ):
+        
+        txt = self.emacs.minibuffer.getText()
+        if self.commands.has_key( txt ):
+            return self.commands[ txt ]( event, txt )
+        else:
+            self.emacs.keyboardQuit( event )
+            self.emacs.setCommandText( "Command Not Defined" )
+     
+
+    @others</t>
+<t tx="orkman.20050213105021">class KeyProcessor(aevent.KeyListener):
+
+    '''KeyListener calls and newline analyzer.'''
+
+    @others</t>
+<t tx="orkman.20050213105021.1">def __init__ (self,emacs):
+
+    self.emacs = emacs
+    self.kRconsume = False # True: consume the event for key-released eveants.
+    self.kTconsume = False # True: consume the event for key events.
+    self.completers = {}
+    self.tab_for_colon = False
+    self.tab_width = g.app.config.getInt(emacs.c,"tab_width")</t>
+<t tx="orkman.20050213105021.2">def keyReleased (self,event):
+
+    if self.kRconsume:
+        self.kRconsume = False
+        event.consume()</t>
+<t tx="orkman.20050213105021.3">def keyTyped (self,event):
+
+    if self.kTconsume:
+        self.kTconsume = False
+        event.consume()</t>
+<t tx="orkman.20050213105021.4">def keyPressed (self,event):
+
+    &lt;&lt; create the command &gt;&gt;
+    self.kTconsume = self.kRconsume = consume = self.emacs.masterCommand(event,command)
+    if consume:
+        # Block the event from going elsewhere, like the DocumentModel.
+        event.consume()
+        return
+
+    kc = event.getKeyChar()
+    if self.tab_for_colon and kc == '\n':
+        event.consume()
+        self.insertPreviousLeadAndNewline()
+    if self.completers.has_key(kc):
+        &lt;&lt; handle auto completion &gt;&gt;
+    elif kc == '\t' and self.tab_width == -4:
+        &lt;&lt; handle auto-tabbing &gt;&gt;
+</t>
+<t tx="orkman.20050213105513">def insertPreviousLeadAndNewline (self):
+    &lt;&lt; why is this code here       ? &gt;&gt;
+
+    editor = self.emacs.editor
+    doc = editor.getDocument()
+    pos = editor.getCaretPosition()
+    start_text = doc.getText(0,pos)
+    ind = start_text.rfind('\n')
+
+    if ind &gt; 0:
+        line = start_text [ind:].strip('\n')
+    else:
+        line = start_text.strip('\n')
+
+    i = len(line.lstrip())
+
+    if i == 0:
+        instring = line
+    else:
+        instring = line [:-i]
+
+    instring = '\n%s' % instring
+    #printspaces
+    #instring = "%s%s" %( spaces, instring )
+    if line.strip().endswith(":"):
+        if self.tab_width == -4:
+            instring += " " * 4
+        else:
+            instring += "\t"
+    doc.insertString(pos,instring,None)</t>
+<t tx="orkman.20050213105513.1">'''
+Originally this was in the leoSwingBody class.  This seemed right, it is core functionaliy.  But
+In light of SwingMacs I reconsidered where it should go.  Temacs was a plugin, SwingMacs is core.
+SwingMacs is responsible for processing key presses and such, consuming them if they are not to get
+to the DocumentModel.  By placing this method in leoSwingBody, the Key processing responsibilities get
+spread out.  Hence it makes more sense to move this method here, the responsibilites stay clearer.
+'''</t>
+<t tx="orkman.20050213110235">def defineStrategyObjects( self ):
+        
+    self.strategyObjects = {
+        
+    'incremental': self.incremental( self ),
+    'dynamic-abbrev' : self.dynamicabbrevs( self ),
+    'formatter' : self.formatter( self ),
+    'killbuffer': self.killbuffer( self ),
+    'deleter': self.deleter( self ),
+     #'xcommand': self.alt_x_handler( self ),
+    'rectangles': self.rectangles( self ),
+    'zap': self.zap( self ),
+    'comment': self.comment( self ),
+    'movement': self.movement( self ),
+    'transpose': self.transpose( self ),
+    'capitalization': self.capitalization( self ),
+    'replacement': self.replacement( self ),
+    'sorters': self.sorters( self ),
+    'lines': self.lines( self ),
+    'tabs': self.tabs( self ),
+    'registers': self.registers( self ),
+    'selection': self.selection( self ),
+    'completion': self.symbolcompletion( self ),
+    'sexps': self.balanced_parentheses( self ),
+    'tags': self.tags( self ),
+     
+    }
+    
+    self.strategyObjects[ 'xcommand' ] = self.alt_x_handler( self )
+    self.strategyObjects[ 'ctrlx' ] = self.ctrl_x_handler( self )
+    self.strategyObjects[ 'ctrlu' ] = self.ctrl_u_handler( self )
+    
+    for z in extensions:
+        try:
+            add = z.getCommands()
+            for z in add.keys():
+                try:
+                    sO = add[ z ]( self )
+                    self.strategyObjects[ z ] = sO
+                    ncommands = sO.addToAltX()
+                    for z in ncommands:
+                        self.strategyObjects[ 'xcommand' ].commands[ z ] = sO
+                finally:
+                    pass
+        finally:
+            pass    
+
+    self.strategyObjects[ 'xcommand' ].createTabCompleter()</t>
+<t tx="orkman.20050213110404">def defineStrategiesForKeystrokes( self ):
+    
+    cmds = self.strategyObjects
+    callbacks = {
+        'Ctrl S': cmds[ 'incremental' ],
+        'Ctrl R': cmds[ 'incremental' ],
+        'Alt Slash': cmds[ 'dynamic-abbrev' ],
+        'Ctrl+Alt Slash': cmds[ 'dynamic-abbrev' ],
+        'Ctrl+Alt Back Slash': cmds[ 'formatter' ],
+        'Alt Back Slash': cmds[ 'formatter' ],
+        'Alt+Shift 6': cmds[ 'formatter' ],
+        'Ctrl K': cmds[ 'killbuffer' ],
+        'Alt Y': cmds[ 'killbuffer' ],
+        'Ctrl Y': cmds[ 'killbuffer' ],
+        'Ctrl W': cmds[ 'killbuffer' ],
+        'Alt W': cmds[ 'killbuffer' ],
+        'Delete': cmds[ 'deleter' ],
+        'Ctrl D': cmds[ 'deleter' ],
+        'Alt X': cmds[ 'xcommand' ],
+        'Alt+Shift Period': cmds[ 'movement' ],
+        'Alt+Shift Comma': cmds[ 'movement' ],
+        'Ctrl Left': cmds[ 'movement'],
+        'Ctrl Right': cmds[ 'movement'],
+        'Alt M': cmds[ 'movement' ],
+        'Ctrl A': cmds[ 'movement' ],
+        'Ctrl E': cmds[ 'movement' ],
+        'Alt Z': cmds[ 'zap' ],
+        'Ctrl Space': cmds[ 'selection' ],
+        'Ctrl X': cmds[ 'ctrlx' ],
+        'Alt T': cmds[ 'transpose' ],
+        'Ctrl+Alt I': cmds[ 'completion' ],
+        'Ctrl+Alt F': cmds[ 'sexps' ],
+        'Ctrl+Alt B': cmds[ 'sexps' ],
+        'Ctrl+Alt K': cmds[ 'sexps' ],
+        'Ctrl+Alt Delete': cmds[ 'sexps' ],
+        'Alt Period': cmds[ 'tags' ],
+        'Alt+Shift 8': cmds[ 'tags' ],
+        'Ctrl U': cmds[ 'ctrlu' ],
+        
+        }
+        
+    for z in cmds.keys():
+        sO = cmds[ z ]
+        if hasattr( sO, 'addToKeyStrokes' ):
+            nstrokes = sO.addToKeyStrokes()
+            if nstrokes:
+                for z in nstrokes.keys():
+                    callbacks[ z ] = nstrokes[ z ]
+        
+    self.callbacks = callbacks</t>
+<t tx="orkman.20050213110511">@others</t>
+<t tx="orkman.20050213110803">def masterCommand (self,event,command):
+    '''
+    All processing goes through here.
+    Return True if the KeyProcessor should consume the event, thereby stopping its propagation.
+    '''
+
+    consume = False
+
+    if command == 'Ctrl G':
+        return self.keyboardQuit(event)
+
+    if self._stateManager.hasState():
+        # This handles the follow-on states of multi-state commands.
+        return self._stateManager.filterTo(event,command)
+
+    if self.callbacks.has_key(command):
+        # This handles the initial state of multi-state commands.
+        consume = self.callbacks [command] (event,command)
+
+    if self._stateManager2.hasState():
+        self._stateManager2.filterTo(event,command)
+
+    return consume
+</t>
+<t tx="orkman.20050213110948">def __init__( self, editor, minibuffer, commandlabel, c , extracommands = None ):
+    global extensions
+    if extensions == None:
+        x = self.lookForExtensions()
+        extensions = x
+        
+    self.editor = editor
+    self.minibuffer = minibuffer
+    self.commandlabel = commandlabel
+    self.c = c
+    self.modeStrategies = []
+    self.defineStrategyObjects()
+    self.defineStrategiesForKeystrokes()
+    
+    self.kcb = self.KeyProcessor( self )
+    self.editor.addKeyListener( self.kcb )
+    #if g.app.config.getBool( c, "complete_tags" ):
+    tm = self.TagMatcher( self )
+    self.editor.addKeyListener( tm )
+    
+    self._stateManager = self.stateManager( self )
+    self._stateManager2 = self.stateManager( self )
+    self.command_help = []
+    self.keystroke_help = []
+    self.addCompleters()</t>
+<t tx="orkman.20050223114739">def setCommandText( self, txt ):
+    
+    self.commandlabel.setText( txt )</t>
+<t tx="orkman.20050223124157">def forwardSearch( self, pos, txt, stxt ):
+    
+    _stxt = stxt[ pos : ]
+    return _stxt.find( txt )
+    
+
+def backwardSearch( self, pos, txt, stxt ):
+
+    end = len( stxt ) - pos
+    if end != 0:
+        stxt = stxt[ : -end ]
+
+    return stxt.rfind( txt )</t>
+<t tx="zorcanda!.20050310144300">class rectangles:
+    
+    
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.commands = {
+        
+        'open-rectangle': self.openRectangle,
+        'delete-rectangle': self.deleteRectangle,
+        'clear-rectangle': self.clearRectangle,
+        'delete-whitespace-rectangle': self.deleteWhiteSpaceRectangle,
+        'string-insert-rectangle': self.stringInsertRectangle,
+        'string-rectangle': self.stringRectangle,
+        'kill-rectangle': self.killRectangle,
+        'yank-rectangle': self.yankRectangle,
+        
+        }
+        
+        self.mode = None
+        emacs.modeStrategies.append( self )
+        self.last_killed_rectangle = None      
+        
+    def __call__( self, event, command ):
+        
+        if self.mode:
+            if command == 'Enter':
+                if self.mode == 1:
+                    self.stringInsertRectangle()
+                    return self.emacs.keyboardQuit( event )
+                elif self.mode == 2:
+                    self.stringRectangle()
+                    return self.emacs.keyboardQuit( event )
+            else:
+                return  self.emacs.eventToMinibuffer( event )
+        
+        if command in self.commands:
+            quit = self.commands[ command ]()
+            if quit:
+                return self.emacs.keyboardQuit( event )
+            else: return True
+        
+    @others</t>
+<t tx="zorcanda!.20050310153830">def openRectangle( self ):
+        
+    editor = self.emacs.editor
+    start = editor.getSelectionStart()
+    end = editor.getSelectionEnd()
+    if start &gt; -1:
+        
+        txt = editor.getText()
+        
+        pos, pos2, rl_start, rl_end = self.definePoints( start, end )  
+        txt = txt[ rl_start: end ]
+    
+        
+        insert = ' ' * ( pos2  - pos )
+
+        txtline = txt.split( '\n' )
+
+        ntxtlines = [  ]
+        for z in txtline[ : ]:
+            if( len( z ) - 1 ) &lt; pos:
+                ntxtlines.append( z )
+            else:
+                nwline = '%s%s%s' %( z[ :pos ], insert, z[ pos : ] )
+                ntxtlines.append( nwline )
+        
+        if txt[ -1 ] == '\n': ntxtlines.append( '\n' )            
+        ntxt = '\n'.join( ntxtlines ) 
+        
+        return self.insertText( rl_start, end, ntxt )
+        #sd = editor.getStyledDocument()
+        #sd.remove( rl_start, end - rl_start )
+        #sd.insertString( rl_start, ntxt, None ) 
+        #return True</t>
+<t tx="zorcanda!.20050310170120">class TabCompleter:
+
+    def __init__ (self,data):
+        self.data = data
+        self.current = None
+        self.current_iter = None
+
+    def reset (self):
+        self.current = None
+
+
+
+
+
+</t>
+<t tx="zorcanda!.20050310172646">def deleteRectangle( self ):
+    
+    editor = self.emacs.editor
+    start = editor.getSelectionStart()
+    end = editor.getSelectionEnd()
+    if start &gt; -1:
+        
+        txt = editor.getText()
+        
+        pos, pos2, rl_start, rl_end = self.definePoints( start, end )
+        txt = txt[ rl_start: end ]
+    
+
+        txtline = txt.split( '\n' )
+
+        ntxtlines = [  ]
+        for z in txtline[ : ]:
+            if( len( z ) - 1 ) &lt; pos:
+                ntxtlines.append( z )
+            else:
+                nwline = '%s%s' %( z[ :pos ], z[ pos2 : ] )
+                ntxtlines.append( nwline )
+        
+        if txt[ -1 ] == '\n': ntxtlines.append( '\n' )            
+        ntxt = '\n'.join( ntxtlines ) 
+        
+        #sd = editor.getStyledDocument()
+        #sd.remove( rl_start, end - rl_start )
+        #sd.insertString( rl_start, ntxt, None )     
+        #return True 
+        return self.insertText( rl_start, end, ntxt )</t>
+<t tx="zorcanda!.20050310172920">def definePoints( self, start, end ):
+
+    txt = self.emacs.editor.getText()
+    rl_start = txt.rfind( '\n', 0, start )
+    if rl_start == -1: rl_start = 0
+    else: 
+        rl_start = rl_start + 1
+        
+    pos = start - rl_start
+        
+    rl_end = txt.rfind( '\n', 0, end )
+    if rl_end == -1: rl_end = 0
+    else:
+        rl_end = rl_end + 1  
+        
+    pos2 = end - rl_end
+    
+    return pos, pos2, rl_start, rl_end</t>
+<t tx="zorcanda!.20050310182257">def clearRectangle( self ):
+    
+    
+    editor = self.emacs.editor
+    start = editor.getSelectionStart()
+    end = editor.getSelectionEnd()
+    if start &gt; -1:
+        
+        txt = editor.getText()
+        
+        pos, pos2, rl_start, rl_end = self.definePoints( start, end )
+        txt = txt[ rl_start: end ]
+    
+        replace = ' ' * ( pos2  - pos )
+        txtline = txt.split( '\n' )
+
+        ntxtlines = [  ]
+        for z in txtline[ : ]:
+            if( len( z ) - 1 ) &lt; pos:
+                ntxtlines.append( z )
+            else:
+                nwline = '%s%s%s' %( z[ :pos ], replace, z[ pos2 : ] )
+                ntxtlines.append( nwline )
+        
+        if txt[ -1 ] == '\n': ntxtlines.append( '\n' )            
+        ntxt = '\n'.join( ntxtlines ) 
+        
+        return self.insertText( rl_start, end, txt )
+        #sd = editor.getStyledDocument()
+        #sd.remove( rl_start, end - rl_start )
+        #sd.insertString( rl_start, ntxt, None )     
+        #return True</t>
+<t tx="zorcanda!.20050310183117">def deleteWhiteSpaceRectangle( self ):
+    
+    editor = self.emacs.editor
+    start = editor.getSelectionStart()
+    end = editor.getSelectionEnd()
+    if start &gt; -1:
+        
+        txt = editor.getText()
+        
+        pos, pos2, rl_start, rl_end = self.definePoints( start, end )
+        txt = txt[ rl_start: end ]
+        txtline = txt.split( '\n' )
+
+        ntxtlines = [  ]
+        for z in txtline[ : ]:
+            if( len( z ) - 1 ) &lt; pos:
+                ntxtlines.append( z )
+            else:
+                if z[ pos ].isspace():
+                    space_text = z[ pos: pos2 ]
+                    space_text = space_text.lstrip()
+                    nwline = '%s%s%s' % ( z[ :pos ], space_text, z[ pos2 : ] )
+                else:
+                    nwline = z
+                ntxtlines.append( nwline )
+        
+        if txt[ -1 ] == '\n': ntxtlines.append( '\n' )            
+        ntxt = '\n'.join( ntxtlines ) 
+        
+        return self.insertText( tl_start, end, ntxt )
+        #sd = editor.getStyledDocument()
+        #sd.remove( rl_start, end - rl_start )
+        #sd.insertString( rl_start, ntxt, None )      
+        #return True</t>
+<t tx="zorcanda!.20050310184934">def getCommandHelp( self ):
+    
+    commands = '''
+    Commands are accessed by the Alt-X keystroke.  This will put the system in command mode.
+    The user can type in the name of the command in the minibuffer and execute it with an Enter keypress.
+    
+    A shortcut to accessing commands is to type a prefix of the command in the minibuffer and hit Tab.
+    
+    For example:
+    op(Tab press )
+    could become:
+    open-rectangle
+    
+    the user then just has to type Enter and the open-rectangle command is executed.  Also by repeatedly
+    typing Tab the user will cycle through all commands that start with the entered prefix.  So if there
+    were 5 commands, for example, that started with 'op' the user could cycle through them and choose the
+    one that he wanted to execute.
+    
+    
+    Rectangles
+    -----------
+    A Rectangle is defined by connecting 4 parallel points derived from
+    the begining of the selction and the end of the selction.
+    
+    These commands operate on Rectangles:
+    
+    open-rectangle: inserts a whitespace equal to the rectangles width into each rectangle line.
+    clear-rectangle: wipes out character content within the rectangle and replaces it with whitespace.
+    delete-rectangle: removes characters within the rectangle.
+    kill-rectangle: removes characters within the rectangle and stores the data in the kill rectangle
+    yank-rectangle: inserts the data last stored by the kill-rectangle command
+    delete-whitespace-rectangle: removes whitespace from the begining of each line in the rectangle.
+    string-rectangle: replaces each section of the rectangle with a user specified string.
+    string-insert-rectangle: inserts a user specified string into each section of the rectangle.
+    
+    
+    Registers:
+    ------------
+    Registers are places, defined by the letters a-z, where the user can store data temporarily.  There
+    are a variety of register commands:
+        
+    copy-to-register: copy the selected text to a register specified by the user.
+    append-to-register: copy the selected text to the end of a register.
+    prepend-to-register: copy the selected text to the beginning of a register.
+    insert-register: insert a register into the current buffer.
+    
+    Zapping
+    --------
+    Zapping queries for a character from the current caret position.  If it finds the character,
+    all data between the caret and including that character is removed.
+    
+    commands:
+    zap-to-char: zaps to the specified character.
+    
+    Comments:
+    ---------
+    
+    commands:
+    comment-region: comments the selected region with the comment character for the current language.  If a line
+                    within the region is commented, it will remove the comments instead of commenting.
+    comment-kill: removes the comment on the current line
+    
+    Movement:
+    ---------
+    goto-line: moves the caret to the line specified by the user.
+    goto-char: moves the caret to the character specified by the user.
+    
+    
+    Transposition:
+    --------------
+    
+    transpose-lines: swaps the current line with the line above it.
+    reverse-region: takes region and reverses the ordering of the lines, last becomes first, first last.
+    
+    
+    Capitalization:
+    ---------------
+    
+    upcase-region: Upper cases all the text in the selection.
+    downcase-region: Lower cases all the text in the selection.
+    capitalize-region: Capitalizes all the text in the selection.
+    upcase-word: Upper cases the current word.
+    downcase-word: Lower cases the current word.
+    capitalize-word: Capitalizes the current word. 
+    
+    Querying and Replacing:
+    -----------------------
+    SwingMacs has several different query and replace commands.  Each asks the user
+    for a search string/pattern and text to replace matches with.  Each has different
+    levels of interactivity.
+    
+    commands:
+    query-replace: asks the user for a string to match and a string to replace.  Is asked for each individual word
+                   if replacement is desired. '!' replaces all.
+    query-replace-regexp: asks the user for a regular expression to match and a string to replace.  Is asked for each individual word
+                   if replacement is desired. '!' replaces all.  The regular expressions are executed from the java.util.regex
+                   package, see details in javadoc.
+    replace-string: asks user for a string to match and a replacement string.  Upon execution all matches are replaced.
+    
+    Sorting:
+    --------
+    
+    sort-lines: sorts the selected lines of text. 
+    
+    Lines:
+    ------
+    
+    flush-lines: removes lines that match a regular expression. The regular expressions are executed from the java.util.regex
+                   package, see details in javadoc.
+                   
+    keep-lines: keeps lines that match a regular expression.  Same regular expression details as flush-lines.
+    
+    Indenting:
+    ----------
+    
+    indent-region: indents region to the indentation of the first line in the region.
+    indent-rigidly: indents region by a tab   
+    indent-relative: indents by these rules:
+        1. If no previous line, indents by a tab
+        2. If a previous line, will indent to the first word of that line.  This process
+        continues from word to word on the previous line.
+    
+    Tabs:
+    -----
+    
+    tabify: changes spaces in selected region into tabs.
+    untabify: changes tabs in selected region into spaces.          
+    
+    '''
+    
+    more_help = '\n'.join( self.emacs.command_help )
+    
+    commands += more_help
+    
+    return commands</t>
+<t tx="zorcanda!.20050311095932">def stringInsertRectangle( self ):
+    
+    if self.mode == None:
+        self.mode = 1
+        self.emacs.setCommandText( "string-insert-rectangle" )
+        self.emacs.minibuffer.setText( "" )
+        self.emacs._stateManager.setState( 'rectangles' )
+        return False
+        
+        
+    self.mode = None
+    string_txt = self.emacs.minibuffer.getText()
+    
+    editor = self.emacs.editor
+    start = editor.getSelectionStart()
+    end = editor.getSelectionEnd()
+    if start &gt; -1:
+        
+        txt = editor.getText()
+        
+        pos, pos2, rl_start, rl_end = self.definePoints( start, end )
+        txt = txt[ rl_start: end ]
+        txtline = txt.split( '\n' )
+
+        ntxtlines = [  ]
+        for z in txtline[ : ]:
+            if( len( z ) - 1 ) &lt; pos:
+                ntxtlines.append( z )
+            else:
+                nwline = '%s%s%s' % ( z[ :pos ], string_txt , z[ pos : ] )
+                ntxtlines.append( nwline )
+        
+        if txt[ -1 ] == '\n': ntxtlines.append( '\n' )            
+        ntxt = '\n'.join( ntxtlines ) 
+        
+        return self.insertText( rl_start, end, ntxt )
+        #sd = editor.getStyledDocument()
+        #sd.remove( rl_start, end - rl_start )
+        #sd.insertString( rl_start, ntxt, None )         
+        #return True</t>
+<t tx="zorcanda!.20050311102030">def stringRectangle( self ):
+    
+    if self.mode == None:
+        self.mode = 2
+        self.emacs.setCommandText( "string-rectangle" )
+        self.emacs.minibuffer.setText( "" )
+        self.emacs._stateManager.setState( 'rectangles' )
+        return False
+        
+        
+    self.mode = None
+    string_txt = self.emacs.minibuffer.getText()
+    
+    editor = self.emacs.editor
+    start = editor.getSelectionStart()
+    end = editor.getSelectionEnd()
+    if start &gt; -1:
+        
+        txt = editor.getText()
+        
+        pos, pos2, rl_start, rl_end = self.definePoints( start, end )
+        txt = txt[ rl_start: end ]
+        txtline = txt.split( '\n' )
+
+        ntxtlines = [  ]
+        for z in txtline[ : ]:
+            if( len( z ) - 1 ) &lt; pos:
+                ntxtlines.append( z )
+            else:
+                nwline = '%s%s%s' % ( z[ :pos ], string_txt , z[ pos2 : ] )
+                ntxtlines.append( nwline )
+        
+        if txt[ -1 ] == '\n': ntxtlines.append( '\n' )            
+        ntxt = '\n'.join( ntxtlines ) 
+        
+        return self.insertText( rl_start, end, ntxt )
+        #sd = editor.getStyledDocument()
+        #sd.remove( rl_start, end - rl_start )
+        #sd.insertString( rl_start, ntxt, None )         
+        #return True</t>
+<t tx="zorcanda!.20050311102520">def killRectangle( self ):
+    
+    editor = self.emacs.editor
+    start = editor.getSelectionStart()
+    end = editor.getSelectionEnd()
+    if start &gt; -1:
+        
+        txt = editor.getText()
+        
+        pos, pos2, rl_start, rl_end = self.definePoints( start, end )
+        txt = txt[ rl_start: end ]
+    
+
+        txtline = txt.split( '\n' )
+
+        ntxtlines = [  ]
+        oldlines = []
+        for z in txtline[ : ]:
+            if( len( z ) - 1 ) &lt; pos:
+                ntxtlines.append( z )
+                oldlines.append( z )
+            else:
+                nwline = '%s%s' %( z[ :pos ], z[ pos2 : ] )
+                ntxtlines.append( nwline )
+                oldlines.append( z[ pos: pos2 ] )
+        
+        if txt[ -1 ] == '\n': ntxtlines.append( '\n' )            
+        ntxt = '\n'.join( ntxtlines ) 
+        
+        #sd = editor.getStyledDocument()
+        #sd.remove( rl_start, end - rl_start )
+        #sd.insertString( rl_start, ntxt, None )
+        self.last_killed_rectangle = oldlines  
+        return self.insertText( rl_start, end, ntxt )   
+        #return True</t>
+<t tx="zorcanda!.20050311102817">def yankRectangle( self ):
+    
+    if self.last_killed_rectangle == None: return True
+    
+    editor = self.emacs.editor
+    start = editor.getCaretPosition()
+    
+    if start &gt; -1:
+        
+        txt = editor.getText()
+        
+        rl_start = txt.rfind( '\n', 0, start )
+        if rl_start == -1: rl_start = 0
+        else: 
+            rl_start = rl_start + 1
+            
+        
+        pos = start - rl_start
+        
+        sd = editor.getStyledDocument()
+        start2 = rl_start
+        for itext in self.last_killed_rectangle:
+            
+            if sd.getLength() &lt; start2:
+                sd.insertString( sd.getLength(), '%s%s' %( itext, '\n' ), None )
+                start2 += len( itext ) + 1
+            else:
+                if( sd.getText( start2 , 1 ) == '\n' ):
+                    sd.insertString( start2, itext, None )
+                    nspot = start2 + len( itext )
+                else:
+                    sd.insertString( start2 + pos, itext, None )
+                    nspot = start2 + pos + len( itext )
+      
+                ftxt = sd.getText( 0, sd.getLength() )
+                where = ftxt.find( '\n', nspot )
+                if where == -1:
+                    sd.insertString( sd.getLength(), '\n', None )
+                    start2 = sd.getLength() + 1
+                else:
+                    start2 = where + 1   
+            
+        
+        return True</t>
+<t tx="zorcanda!.20050311121612">def insertText( self, rl_start, end, ntxt ):
+ 
+    sd = self.emacs.editor.getStyledDocument()
+    sd.remove( rl_start, end - rl_start )
+    sd.insertString( rl_start, ntxt, None ) 
+    return True</t>
+<t tx="zorcanda!.20050311123122">class zap:
+    
+    def __init__( self, emacs ):
+        
+        self.emacs = emacs
+        self.mode = None
+        emacs.modeStrategies.append( self )
+        
+    def __call__( self, event, command ):
+        
+        if self.mode == None:
+            
+            self.mode = 1
+            self.emacs._stateManager.setState( 'zap' )
+            self.emacs.setCommandText( "Zap To Character:" )
+            self.emacs.minibuffer.setText( "" )
+            return True
+            
+        if command == 'Enter':
+            c = self.emacs.minibuffer.getText()
+            if len( c ) &gt; 1:
+                self.emacs.keyboardQuit( event )
+                self.emacs.setCommandText( "Text longer than one Character" )
+                return True
+            
+            self.zap( c )
+            return self.emacs.keyboardQuit( event )
+        
+        else:
+            kc = event.getKeyChar()
+            if java.lang.Character.isDefined( kc ):
+                message = self.zap( kc )
+                self.emacs.keyboardQuit( event )
+                if message:
+                    self.emacs.setCommandText( message )
+                return True
+            else:
+                return True
+            
+            
+    @others</t>
+<t tx="zorcanda!.20050311123122.1">def zap( self, c ):
+    
+    editor = self.emacs.editor
+    doc = editor.getStyledDocument()
+    pos = editor.getCaretPosition()
+    txt = editor.getText( pos, ( doc.getLength() - 1 ) - pos  )
+    ind = txt.find( c )
+    if ind == -1:
+        self.emacs.beep()
+        return "Search Failed: '%s'" % c
+    else:
+        doc.remove( pos, ind + 1 )</t>
+<t tx="zorcanda!.20050311123715">def beep( self ):
+    
+    tk = awt.Toolkit.getDefaultToolkit()
+    tk.beep()</t>
+<t tx="zorcanda!.20050311140549">def determineLanguage( self ):
+    
+    pos = self.c.currentPosition()
+    language = g.scanForAtLanguage( self.c, pos )
+    return language</t>
+<t tx="zorcanda!.20050311140549.1">class comment:
+
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.commands ={
+            'comment-region': self.commentRegion,
+            'comment-kill': self.commentKill,
+        }
+        
+    def __call__( self, event, command ):
+        
+        message = self.commands[ command ]()
+        if message:
+            self.emacs.keyboardQuit( event )
+            self.emacs.setCommandText( message )
+            self.emacs.beep()
+            return True
+        else:
+            return self.emacs.keyboardQuit( event )
+
+    @others</t>
+<t tx="zorcanda!.20050311140549.2">def commentRegion( self ):
+    
+    language = self.emacs.determineLanguage()
+    delim1,delim2, delim3 = g.set_delims_from_language( language )
+    
+    editor = self.emacs.editor
+    sel = editor.getSelectedText()
+    if sel == None: return
+    
+    lines = sel.splitlines( True )
+    nwlines = []
+    for z in lines:
+        
+        if z.find( delim1 ) != -1:
+            nwline = z.replace( delim1, "" )
+            nwlines.append( nwline )
+        else:
+            z2 = z.lstrip()
+            ins = ( len( z ) - len( z2 ) )
+            if ins == -1: ins = 0
+            nwline = '%s%s%s' %( z[ : ins ], delim1, z[ ins: ] )
+            nwlines.append( nwline )
+        
+    
+    nwtext = ''.join( nwlines )
+    editor.replaceSelection( nwtext )</t>
+<t tx="zorcanda!.20050311143148">def commentKill( self ):
+    
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    if pos == -1: return "Invalid Caret position"
+    else:
+        txt = editor.getText()
+        i = txt.rfind( '\n', 0, pos )
+        if i == -1: i = 0
+        else: i += 1
+        
+        i2 = txt.find( '\n', pos )
+        if i2 == -1: i2 = len( txt )
+        
+        line = txt[ i: i2 ]
+        language = self.emacs.determineLanguage()
+        delim1,delim2, delim3 = g.set_delims_from_language( language )
+        
+        where = line.find( delim1 )
+        if where == -1: return "No comment found"
+        
+        else:
+            nline = line[ :where ]
+            
+            sdoc = editor.getStyledDocument()
+            sdoc.replace( i, len( line ), nline, None )
+            if ( pos - i ) &lt; where: editor.setCaretPosition( pos )
+            return</t>
+<t tx="zorcanda!.20050311150743">class movement:
+    
+    def __init__( self, emacs ):
+        
+        self.emacs = emacs
+        self.commands = {
+            'Alt+Shift Comma': self.beginningOfBuffer,
+            'Alt+Shift Period': self.endOfBuffer,
+            'Ctrl A': self.beginningOfLine,
+            'Ctrl E': self.endOfLine,
+            'Ctrl Left': self.startOfWord,
+            'Ctrl Right': self.endOfWord,
+            'goto-line': self.goto,
+            'goto-char': self.gotoChar,
+            'Alt M': self.moveToIndentStart
+        }
+        self.mode = None
+        self.emacs.modeStrategies.append ( self )
+        
+    def __call__( self, event, command ):
+        
+        if self.mode:
+            if command == 'Enter':
+                if self.mode == 1:
+                    message = self.goto()
+                else:
+                    message = self.gotoChar()
+                    
+                if message:
+                    self.emacs.keyboardQuit( event )
+                    self.emacs.setCommandText( message )
+                    self.emacs.beep()
+                    return True
+                else:
+                    return self.emacs.keyboardQuit( event )
+                
+            else:
+                return self.emacs.eventToMinibuffer( event )
+        self.commands[ command ]()
+        return True
+        
+    @others</t>
+<t tx="zorcanda!.20050311150743.1">def beginningOfBuffer( self ):
+
+    editor = self.emacs.editor
+    editor.setCaretPosition( 0 )</t>
+<t tx="zorcanda!.20050311150743.2">def endOfBuffer( self ):
+    
+    editor = self.emacs.editor
+    sdoc = editor.getStyledDocument()
+    editor.setCaretPosition( sdoc.getLength() -1 )</t>
+<t tx="zorcanda!.20050311151807">def beginningOfLine( self ):
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    if pos != -1:
+        
+        txt = editor.getText()
+        where = txt.rfind( '\n', 0, pos )
+        if where == -1: where = 0
+        else: where +=1
+        #print stext.Utilities.getRowStart( editor, pos )
+        #print where
+        spot = stext.Utilities.getRowStart( editor, pos )
+        editor.setCaretPosition( spot )
+        
+        #editor.setCaretPosition( where )</t>
+<t tx="zorcanda!.20050311151807.1">def endOfLine( self ):
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    if pos != -1:
+        
+        txt = editor.getText()
+        where = txt.find( '\n', pos )
+        if where == -1: where = len( txt )
+        #elif where != 0:
+        #    where -= 1
+        #print stext.Utilities.getRowEnd( editor, pos )
+        #print where
+        spot = stext.Utilities.getRowEnd( editor, pos )
+        editor.setCaretPosition( spot )
+        
+        #editor.setCaretPosition( where )</t>
+<t tx="zorcanda!.20050311154238">def goto( self ):
+    
+    if self.mode == None:
+        self.mode = 1
+        self.emacs._stateManager.setState( 'movement' )
+        self.emacs.minibuffer.setText( "" )
+        self.emacs.setCommandText( "Goto Line:" )
+        return True
+        
+        
+        
+    line = self.emacs.minibuffer.getText()
+    if not line.isdigit(): 
+        return "Is Not a Number"
+       
+    line = int( line )
+    editor = self.emacs.editor
+    
+    txt = editor.getText()
+    txtlines = txt.splitlines( True )
+    if len( txtlines ) &lt; line:
+        editor.setCaretPosition( len( txt ) )
+    else:
+        txtlines = txtlines[ : line ]
+        length =  len( ''.join( txtlines ) )
+        editor.setCaretPosition( length - len( txtlines[ -1 ] ) )</t>
+<t tx="zorcanda!.20050311154238.1">def gotoChar( self ):
+    
+    if self.mode == None:
+        self.mode = 2
+        self.emacs._stateManager.setState( 'movement' )
+        self.emacs.minibuffer.setText( "" )
+        self.emacs.setCommandText( "Goto Char:" )
+        return True
+        
+    line = self.emacs.minibuffer.getText()
+    if not line.isdigit(): 
+        return "Is Not a Number"
+        
+        
+    number = int( line )
+    editor = self.emacs.editor
+    ltxt = len( editor.getText() )
+    if ltxt &lt; number:
+        editor.setCaretPosition( ltxt )
+    else:
+        editor.setCaretPosition( number )</t>
+<t tx="zorcanda!.20050311160343">class transpose:
+    
+    def __init__( self, emacs ):
+        
+        self.emacs = emacs
+        self.commands = {
+            'transpose-lines': self.transposeLines,
+            'reverse-region': self.reverseRegion,
+            'Alt T': self.transposeWords,
+        }
+        
+    def __call__( self, event, command ):
+        
+    
+        if not self.commands[ command ]():
+            return self.emacs.keyboardQuit( event )  
+        return True
+        
+        
+    @others</t>
+<t tx="zorcanda!.20050311160343.1">def transposeLines( self ):
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    if pos != -1:
+        
+        txt = editor.getText()
+        start = txt.rfind( '\n', 0, pos )
+        if start == -1: start = 0
+        else:
+            if start != 0:
+                start = txt.rfind( '\n', 0, start )
+                if start == -1: start = 0
+                else: 
+                    start += 1
+        
+        end = txt.find( '\n', pos )
+        if end == -1: end = len( txt )
+           
+    
+        lines = txt[ start: end ]
+        lines_split = lines.split( '\n' )
+        if not len( lines_split ) == 2: return
+        l1, l2 = lines_split[ 0 ], lines_split[ 1 ]
+        
+        nwlines = '%s\n%s' %( l2, l1 )
+        sdoc = editor.getStyledDocument()
+        sdoc.replace( start, len( lines ), nwlines, None )</t>
+<t tx="zorcanda!.20050311163509">class capitalization:
+    
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.commands ={
+            'capitalize-region': self.capitalizeRegion,
+            'upcase-region': self.upcaseRegion,
+            'downcase-region': self.downcaseRegion,
+            'capitalize-word': self.capitalizeWord,
+            'downcase-word': self.downcaseWord,
+            'upcase-word': self.upcaseWord,
+        }
+        
+    def __call__( self, event, command ):
+        
+        message = self.commands[ command ]()
+        if message:
+            self.emacs.keyboardQuit( event )
+            self.emacs.setCommandText( message )
+            self.emacs.beep()
+            return True
+            
+        return self.emacs.keyboardQuit( event )
+
+    @others</t>
+<t tx="zorcanda!.20050311163509.1">def capitalizeRegion( self ):
+
+    editor = self.emacs.editor
+    stext = editor.getSelectedText()
+    if stext == None:
+        return "Region not selected"
+        
+    ntext = []
+    lc = ' '
+    for z in stext:
+        if lc.isspace():
+            z2 = z.capitalize()
+            ntext.append( z2 )
+        else:
+            ntext.append( z )
+        lc = z
+        
+    ntext = ''.join( ntext )
+    editor.replaceSelection( ntext )</t>
+<t tx="zorcanda!.20050311163509.2">def upcaseRegion( self ):
+    
+    editor = self.emacs.editor
+    stext = editor.getSelectedText()
+    if stext == None:
+        return "Region not selected"
+        
+    ntext = stext.upper()
+    editor.replaceSelection( ntext )</t>
+<t tx="zorcanda!.20050311163509.3">def downcaseRegion( self ):
+
+    editor = self.emacs.editor
+    stext = editor.getSelectedText()
+    if stext == None:
+        return "Region not selected"
+        
+    ntext = stext.lower()
+    editor.replaceSelection( ntext )</t>
+<t tx="zorcanda!.20050311165606">class replacement:
+    import java.util.regex as regex
+    
+    def __init__( self, emacs ):
+        
+        self.emacs = emacs
+        self.commands = {
+            'query-replace': self.queryReplace,
+            'query-replace-regexp': self.queryReplaceRegexp,
+            'replace-string': self.replaceString,
+        }
+
+        self.mode = None
+        self.submode = None
+        
+        self.search = None
+        self.replacement = None
+        
+        emacs.modeStrategies.append( self )
+        
+        
+    def __call__( self, event, command ):
+        
+        if self.mode:
+            if self.mode in( 1, 2 ):
+                qcommand = g.choose( self.mode == 1, self.queryReplace, self.queryReplaceRegexp )
+                if self.submode in( 1, 2 ):
+                    if command == 'Enter':
+                        return qcommand()
+                    else:
+                        return self.emacs.eventToMinibuffer( event )   
+                if self.submode == 3:
+                    message = self.doReplacement( event )
+                    if message == None:
+                        message = qcommand()
+                    if message not in( True, False ) and message:
+                        self.emacs.keyboardQuit( event )
+                        self.emacs.minibuffer.setText( "" )
+                        self.emacs.setCommandText( message )
+                        return True
+                    return True
+            elif self.mode == 3:
+                if command == 'Enter':
+                    message = self.replaceString()
+                    if message not in ( True, False ) and message:
+                        self.emacs.keyboardQuit( event )
+                        self.emacs.minibuffer.setText( "" )
+                        self.emacs.setCommandText( message )
+                        return True
+                    else: return True
+                else:
+                    return self.emacs.eventToMinibuffer( event )
+        
+        return self.commands[ command ]()
+        
+        
+    @others</t>
+<t tx="zorcanda!.20050311165606.1">def queryReplace( self ):
+    
+    if self.mode == None:
+        self.mode = 1
+        self.submode = 1
+        self.emacs.setCommandText( "Query For:" )
+        self.emacs.minibuffer.setText( "" )
+        self.emacs._stateManager.setState( "replacement" )
+        return True
+    
+    if self.submode == 1:
+        
+        self.search = self.emacs.minibuffer.getText()
+        self.emacs.minibuffer.setText( "" )
+        self.emacs.setCommandText( "Replace With:" )
+        self.submode = 2
+        return True
+        
+    if self.submode == 2:
+        
+        self.replacement = self.emacs.minibuffer.getText()
+        self.emacs.minibuffer.setText( "" )
+        self.submode = 3
+        
+        
+    if self.submode == 3:
+        
+        editor = self.emacs.editor
+        pos = editor.getCaretPosition()
+        txt = editor.getText()
+        where = txt.find( self.search, pos )
+        if where == -1:
+            editor.setCaretPosition( editor.getSelectionEnd() )
+            return "No more matches found"
+        else:
+            editor.setSelectionStart( where )
+            editor.setSelectionEnd( where + len( self.search ) )
+            self.emacs.setCommandText( "Replace %s with %s ? y/n(! replaces all)" %( self.search, self.replacement ) )
+            return True</t>
+<t tx="zorcanda!.20050311165606.2">def queryReplaceRegexp( self ):
+    
+    if self.mode == None:
+        self.mode = 2
+        self.submode = 1
+        self.emacs.setCommandText( "Query For:" )
+        self.emacs.minibuffer.setText( "" )
+        self.emacs._stateManager.setState( "replacement" )
+        return True
+    
+    if self.submode == 1:
+        
+        search = self.emacs.minibuffer.getText()
+        import java.util.regex
+        self.search = java.util.regex.Pattern.compile( search )
+        self.emacs.minibuffer.setText( "" )
+        self.emacs.setCommandText( "Replace With:" )
+        self.submode = 2
+        return True
+        
+    if self.submode == 2:
+        
+        self.replacement = self.emacs.minibuffer.getText()
+        self.emacs.minibuffer.setText( "" )
+        self.submode = 3
+        
+        
+    if self.submode == 3:
+        
+        editor = self.emacs.editor
+        pos = editor.getCaretPosition()
+        txt = editor.getText()
+        
+        import java.lang.String
+        match = self.search.matcher( java.lang.String( txt[ pos: ] ) )
+        found = match.find()
+        if found:
+            start = match.start()
+            end = match.end()
+        else:
+            start = end = -1
+        if start == -1:
+            editor.setCaretPosition( editor.getSelectionEnd() )
+            return "No more matches found"
+        else:
+            editor.setSelectionStart( pos + start )
+            editor.setSelectionEnd( pos + end )
+            self.emacs.setCommandText( "Replace %s with %s ? y/n(! replaces all)" %( editor.getSelectedText(), self.replacement ) )
+            return True</t>
+<t tx="zorcanda!.20050311165732">def replaceString( self ):
+
+    if self.mode == None:
+        self.mode = 3
+        self.submode = 1
+        self.emacs.setCommandText( "Replace String:" )
+        self.emacs.minibuffer.setText( "" )
+        self.emacs._stateManager.setState( "replacement" )
+        return True
+    
+    if self.submode == 1:
+        
+        self.search = self.emacs.minibuffer.getText()
+        self.emacs.minibuffer.setText( "" )
+        self.emacs.setCommandText( "Replace %s With:" % self.search )
+        self.submode = 2
+        return True    
+        
+    if self.submode == 2:
+        
+        replacement = self.emacs.minibuffer.getText()
+        editor = self.emacs.editor
+        pos = editor.getCaretPosition()
+        txt = editor.getText()[ pos: ]
+        amount = txt.count( self.search )
+        ntxt = txt.replace( self.search, replacement )
+        sd = editor.getStyledDocument()
+        sd.replace( pos, len( txt ), ntxt, None )
+        editor.setCaretPosition( pos )
+        return "%s occurances of %s replaced with %s" %( amount, self.search, replacement )</t>
+<t tx="zorcanda!.20050311170911">def doReplacement( self, event ):
+    
+    
+    kc = event.getKeyChar()
+    
+    if not java.lang.Character.isDefined( kc ): return False
+    elif kc == 'y':
+        self.emacs.editor.replaceSelection( self.replacement )
+        
+    elif kc =='!':
+        return self.replaceAll()
         
     else:
-        self.setSvar( event, svar )
-        return 'break'
-
-</t>
-<t tx="mork.20041103161202.1">def setInBufferMode( self, event, which ):
+        pass</t>
+<t tx="zorcanda!.20050311205755">def replaceAll( self ):
     
-    self.keyboardQuit( event )
-    tbuffer = event.widget
-    self.mcStateManager.setState( 'chooseBuffer', 'start%s' % which )
-    svar, label = self.getSvarLabel( event )
-    label.configure( background = 'lightblue' )
-    svar.set( 'Choose Buffer Name:' )
-    self.bufferDict = self.getBufferDict( event )
-    return 'break'</t>
-<t tx="mork.20041103162147">def setBufferData( self, event, name, data ):
+    editor = self.emacs.editor
+    spos = editor.getSelectionStart()
+    editor.setCaretPosition( spos )
+    cp = editor.getCaretPosition()
+    txt = editor.getText()[ cp : ]
+    sd = editor.getStyledDocument()
     
-    tbuffer = event.widget
-    meth = self.bufferSetters[ tbuffer ]
-    meth( name, data )</t>
-<t tx="mork.20041103190332">def listBuffers( self, event ):
-    
-    bdict  = self.getBufferDict( event )
-    list = bdict.keys()
-    list.sort()
-    svar, label = self.getSvarLabel( event )
-    data = '\n'.join( list )
-    self.keyboardQuit( event )
-    svar.set( data )
-    return 'break'
-    </t>
-<t tx="mork.20041103191311">def setBufferGoto( self, tbuffer, method ):
-    self.bufferGotos[ tbuffer ] = method </t>
-<t tx="mork.20041103191311.1">def switchToBuffer( self, event, name ):
-    
-    method = self.bufferGotos[ event.widget ]
-    self.keyboardQuit( event )
-    method( name )
-    return 'break'
-</t>
-<t tx="mork.20041104090224">def setBufferDelete( self, tbuffer, method ):
-    
-    self.bufferDeletes[ tbuffer ] = method
-    
-
-</t>
-<t tx="mork.20041104090224.1">def killBuffer( self, event, name ):
-    
-    method = self.bufferDeletes[ event.widget ]
-    self.keyboardQuit( event )
-    method( name )
-    return 'break'
-    
-
-</t>
-<t tx="mork.20041104092058">def renameBuffer( self, event ):
-    
-    svar, label = self.getSvarLabel( event )
-    if not self.mcStateManager.getState( 'renameBuffer' ):
-        self.mcStateManager.setState( 'renameBuffer', True )
-        svar.set( '' )
-        label.configure( background = 'lightblue' )
-        return 'break'
-    if event.keysym == 'Return':
-       
-       nname = svar.get()
-       self.keyboardQuit( event )
-       self.renameBuffers[ event.widget ]( nname )
-        
-        
+    if self.mode == 1:
+        amount = txt.count( self.search )
+        ntxt = txt.replace( self.search, self.replacement )
+        sd.replace( cp, len( txt ), ntxt, None )
+        editor.setCaretPosition( spos )
+        return '%s instances of %s replaced with %s' %( amount, self.search, self.replacement )
     else:
-        self.setSvar( event, svar )
-        return 'break'</t>
-<t tx="mork.20041104092349">def setBufferRename( self, buffer, method ):
+        import java.lang.String
+        txt_s = java.lang.String( txt )
+        scount = txt.count( self.replacement )
+        #natxt = self.search.split( txt_s )
+        #print "natxt len is %s" % len( natxt )
+        matcher = self.search.matcher( txt_s )
+        ntxt = matcher.replaceAll( self.replacement )
+        ncount = ntxt.count( self.replacement )
+        #ntxt = self.replacement.join( natxt )
+        sd.replace( cp, len( txt ), ntxt, None )
+        editor.setCaretPosition( spos )
+        return '%s instances of %s replaced with %s' %( ncount - scount, self.search.pattern(), self.replacement )</t>
+<t tx="zorcanda!.20050311214332">class sorters:
     
-    self.renameBuffers[ buffer ] = method</t>
-<t tx="mork.20041104094826">@others</t>
-<t tx="mork.20041104094826.1">@others</t>
-<t tx="mork.20041104102456">@others
-</t>
-<t tx="mork.20041122152311">@
-Ive noticed a general strategy that works for adding commands that need state to develop.
-
-1. Create a start method.  This sets the mcStateManager into a specific state
-2. Create a process method.  This watches events as they happen in the state
-3. Create endpoint methods. These perform the final steps in processing the stateful command.
-
-
-This general strategy works well so far.  A whole family of methods can be created in this manner.  Steps 1 and 2
-could be combined but at a cost of more complexity, so Id recommend keeping them separate.
-</t>
-<t tx="mork.20041123150836">@
-
-just a short note to anyone, including myself, that is working on temacs.  Currently all( well all the ones that we have registered interest in ) key events get
-routed through:
-
-def masterCommand( self, event, method , stroke):
-
-
-to understand the flow of the Emacs class, you need to understand this method.  Everything goes through it, there are no sidecuts or anything.  This offers the implementor complete control over what happens, and for the stateful commands it is essential to
-keep states from being corrupted.
-
-
-dont mess with this method lightly.
-</t>
-<t tx="mork.20041124094511">def whichState( self ):
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.commands ={
+        'sort-lines': self.sortLines
+        }
+        
+    def __call__( self, event, command ):
+        
+        self.commands[ command ]()
+        return self.emacs.keyboardQuit( event )
+        
+    @others</t>
+<t tx="zorcanda!.20050311214332.1">def sortLines( self ):
     
-    return self.state
-</t>
+    editor = self.emacs.editor
+    txt = editor.getSelectedText()
+    if txt == None: return
+    txtlines = txt.splitlines()
+    txtlines.sort()
+    ntxt = '\n'.join( txtlines )
+    if txt[ -1 ] == '\n': ntxt = '%s\n' % ntxt
+    editor.replaceSelection( ntxt )</t>
+<t tx="zorcanda!.20050311215703">def reverseRegion( self ):
+    
+    editor = self.emacs.editor
+    txt = editor.getSelectedText()
+    if txt == None: return
+    txtlines = txt.splitlines( True )
+    txtlines.reverse()
+    if not txt.endswith( '\n' ):
+        txtlines[ 0 ] = '%s\n' % txtlines[ 0 ]
+    ntxt = ''.join( txtlines )
+    editor.replaceSelection( ntxt )</t>
+<t tx="zorcanda!.20050312111617">def capitalizeWord( self ):
+    
+    start, end = self.emacs.getWordStartIndex(), self.emacs.getWordEndIndex()
+    
+    if start != -1:
+        
+        sdoc = self.emacs.editor.getStyledDocument()
+        txt = sdoc.getText( start, end - start )
+        txt = txt.capitalize()
+        pos = self.emacs.editor.getCaretPosition()
+        sdoc.replace( start, len( txt ), txt, None )  
+        self.emacs.editor.setCaretPosition( pos )</t>
+<t tx="zorcanda!.20050312111617.1">def upcaseWord( self ):
+    
+    start, end = self.emacs.getWordStartIndex(), self.emacs.getWordEndIndex()
+    
+    if start != -1:
+        
+        sdoc = self.emacs.editor.getStyledDocument()
+        txt = sdoc.getText( start, end - start )
+        txt = txt.upper()
+        pos = self.emacs.editor.getCaretPosition()
+        sdoc.replace( start, len( txt ), txt, None )
+        self.emacs.editor.setCaretPosition( pos )</t>
+<t tx="zorcanda!.20050312111617.2">def downcaseWord( self ):
+
+    start, end = self.emacs.getWordStartIndex(), self.emacs.getWordEndIndex()
+    
+    if start != -1:
+        
+        sdoc = self.emacs.editor.getStyledDocument()
+        txt = sdoc.getText( start, end - start )
+        txt = txt.lower()
+        pos = self.emacs.editor.getCaretPosition()
+        sdoc.replace( start, len( txt ), txt, None )
+        self.emacs.editor.setCaretPosition( pos )</t>
+<t tx="zorcanda!.20050312114506">class lines:
+    import java.util.regex as regexp
+    
+    def __init__( self, emacs ):
+        
+        self.emacs = emacs
+        self.mode = None
+        self.commands= {
+            'keep-lines': self.keepLines,
+            'flush-lines': self.flushLines,
+        }
+        emacs.modeStrategies.append( self )
+        
+    def __call__( self, event, command ):
+        
+        if self.mode:
+            if self.mode in ( 1, 2 ):
+                if command == 'Enter':
+                    if self.mode == 1:
+                        self.keepLines()
+                    else:
+                        self.flushLines()
+                    self.emacs.keyboardQuit( event )
+                    return True
+                else:
+                    return self.emacs.eventToMinibuffer( event )
+
+        return self.commands[ command ]()
+        
+    @others</t>
+<t tx="zorcanda!.20050312114506.1">def keepLines( self ):
+    import java.util.regex as regexp
+    if self.mode == None:
+        self.mode = 1
+        self.emacs.setCommandText( "Keep lines( containing match for regexp ):" )
+        self.emacs.minibuffer.setText( "" )
+        self.emacs._stateManager.setState( "lines" )
+        return True
+    
+    
+
+    pattern = self.emacs.minibuffer.getText()
+    regex = regexp.Pattern.compile( java.lang.String( pattern ) )
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    txt = editor.getText()
+    start = txt.rfind( '\n', 0, pos )
+    if start == -1: start = 0
+    else: start += 1
+    
+    
+    ntxt = txt[ start: ]
+    ntxt_lines = ntxt.splitlines( True )
+
+    matcher = regex.matcher( java.lang.String( ntxt_lines[ 0 ] ) )
+    keepers = []
+    for z in ntxt_lines:
+        matcher.reset( java.lang.String( z ) )
+        found = matcher.find()
+        if found: keepers.append( z )
+        
+        
+    keeptxt = ''.join( keepers )
+    
+    sdoc = editor.getStyledDocument()
+    sdoc.replace( start, len( ntxt ), keeptxt, None )
+    if ( sdoc.getLength() - 1 ) &gt;= pos:
+        editor.setCaretPosition( pos )</t>
+<t tx="zorcanda!.20050312114506.2">def flushLines( self ):
+
+    import java.util.regex as regexp
+    if self.mode == None:
+        self.mode = 2
+        self.emacs.setCommandText( "Flush lines( containing match for regexp ):" )
+        self.emacs.minibuffer.setText( "" )
+        self.emacs._stateManager.setState( "lines" )
+        return True
+    
+    
+
+    pattern = self.emacs.minibuffer.getText()
+    regex = regexp.Pattern.compile( java.lang.String( pattern ) )
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    txt = editor.getText()
+    start = txt.rfind( '\n', 0, pos )
+    if start == -1: start = 0
+    else: start += 1
+    
+    
+    ntxt = txt[ start: ]
+    ntxt_lines = ntxt.splitlines( True )
+
+    matcher = regex.matcher( java.lang.String( ntxt_lines[ 0 ] ) )
+    keepers = []
+    for z in ntxt_lines:
+        matcher.reset( java.lang.String( z ) )
+        found = matcher.find()
+        if found: continue
+        keepers.append( z )
+        
+        
+    keeptxt = ''.join( keepers )
+    
+    sdoc = editor.getStyledDocument()
+    sdoc.replace( start, len( ntxt ), keeptxt, None )
+    if ( sdoc.getLength() - 1 ) &gt;= pos:
+        editor.setCaretPosition( pos )</t>
+<t tx="zorcanda!.20050312121738">def indentRigidly( self ):
+    
+    editor = self.emacs.editor
+    txt = editor.getSelectedText()
+    if txt == None: return True
+    
+    txtlines = txt.splitlines( True )
+    ntxtlines = []
+    for z in txtlines:
+        
+        nline = '\t%s' % z
+        ntxtlines.append( nline )
+        
+    
+    ntxt = ''.join( ntxtlines )
+    pos = editor.getCaretPosition()
+    editor.replaceSelection( ntxt )
+    editor.setCaretPosition( pos )
+    return True</t>
+<t tx="zorcanda!.20050312122805">class tabs:
+    
+    def __init__( self, emacs ):
+        
+        self.emacs = emacs
+        self.commands ={
+        
+            'tabify': self.tabify,
+            'untabify': self.untabify,
+        
+        
+        
+        }
+        
+    def __call__( self, event, command ):
+        
+        
+        rval = self.commands[ command ]()
+        self.emacs.keyboardQuit( event )
+        return rval
+        
+    @others</t>
+<t tx="zorcanda!.20050312122805.1">def tabify( self ):
+
+    #tw = self.emacs.getTabWidth()
+    editor = self.emacs.editor
+    txt = editor.getSelectedText()
+    if txt == None: return True
+    
+    #space_replace = ' ' * tw
+    ntxt = txt.replace( ' ', '\t' )
+    pos = editor.getCaretPosition()
+    editor.replaceSelection( ntxt )
+    editor.setCaretPosition( pos )
+    return True</t>
+<t tx="zorcanda!.20050312122805.2">def untabify( self ):
+    
+    #tw = self.emacs.getTabWidth()
+    editor = self.emacs.editor
+    txt = editor.getSelectedText()
+    if txt == None: return True
+    
+    #space_replace = ' ' * tw
+    ntxt = txt.replace( '\t', ' ' )
+    pos = editor.getCaretPosition()
+    editor.replaceSelection( ntxt )
+    editor.setCaretPosition( pos )
+    return True</t>
+<t tx="zorcanda!.20050312123359">def getTabWidth( self ):
+    
+    return abs( self.c.tab_width )</t>
+<t tx="zorcanda!.20050312155939">class registers:
+        
+    @others </t>
+<t tx="zorcanda!.20050312160220">def copyToRegister (self):
+ 
+    if not self.mode:
+        self.mode = 1 # 'copy-to-register'
+        self.emacs.minibuffer.setText("")
+        self.emacs._stateManager.setState("registers")
+        self.emacs.setCommandText("Copy To Which Register( a-z )?")
+        return True 
+
+    register = self.emacs.minibuffer.getText()
+    self.emacs.minibuffer.setText("")
+    if not java.lang.Character.isLetter(register):
+        return 'Character is not a Letter'
+
+    register = register.lower()
+    txt = self.emacs.editor.getSelectedText()
+    if txt==None:
+        return 'Region not defined'
+
+    self.registers [register] = txt
+    self.emacs.editor.setCaretPosition(self.emacs.editor.getCaretPosition())</t>
+<t tx="zorcanda!.20050312160220.1">def insertRegister (self):
+ 
+    if self.mode == None:
+        self.mode = 2
+        self.emacs.minibuffer.setText("")
+        self.emacs._stateManager.setState("registers")
+        self.emacs.setCommandText("Insert From Which Register( a-z )?")
+        return True 
+
+    register = self.emacs.minibuffer.getText()
+    if not java.lang.Character.isLetter(register):
+        return 'Character is not a Letter'
+
+    register = register.lower()
+    if not self.registers.has_key(register):
+        return 'Register %s empty'%register 
+
+    data = self.registers[register]
+    sdoc = self.emacs.editor.getStyledDocument()
+    sdoc.insertString(self.emacs.editor.getCaretPosition(),data,None)</t>
+<t tx="zorcanda!.20050312171820">def appendToRegister (self):
+
+    if self.mode == None:
+        self.mode = 3
+        self.emacs.minibuffer.setText("")
+        self.emacs._stateManager.setState("registers")
+        self.emacs.setCommandText("Append To Which Register(a-z)?")
+        return True 
+
+    register = self.emacs.minibuffer.getText()
+    self.emacs.minibuffer.setText("")
+    if not java.lang.Character.isLetter(register):
+        return 'Character is not a Letter'
+        
+    register = register.lower()
+    txt = self.emacs.editor.getSelectedText()
+    if txt==None:
+        return 'Region not defined'
+        
+    if self.registers.has_key(register):
+        data = self.registers[register]
+        ndata = '%s%s'%(data,txt)
+        self.registers[register] = ndata 
+    else:
+        self.registers[register] = txt 
+        
+    self.emacs.editor.setCaretPosition(self.emacs.editor.getCaretPosition())</t>
+<t tx="zorcanda!.20050312171820.1">def prependToRegister (self):
+
+    if self.mode == None:
+        self.mode = 4
+        self.emacs.minibuffer.setText("")
+        self.emacs._stateManager.setState("registers")
+        self.emacs.setCommandText("Prepend To Which Register(a-z)?")
+        return True 
+        
+    register = self.emacs.minibuffer.getText()
+    self.emacs.minibuffer.setText("")
+    if not java.lang.Character.isLetter(register):
+        return 'Character is not a Letter'
+        
+    register = register.lower()
+    txt = self.emacs.editor.getSelectedText()
+    if txt==None:
+        return 'Region not defined'
+        
+    if self.registers.has_key(register):
+        data = self.registers[register]
+        ndata = '%s%s'%(txt,data)
+        self.registers[register] = ndata 
+    else:
+        self.registers[register] = txt 
+        
+    self.emacs.editor.setCaretPosition(self.emacs.editor.getCaretPosition())</t>
+<t tx="zorcanda!.20050312173225">def indentRelative( self ):
+
+    editor = self.emacs.editor
+    sd = editor.getStyledDocument()
+    pos = editor.getCaretPosition()
+    
+    txt = editor.getText()
+    
+    
+    plstart, plend = self.definePreviousLine()
+    
+    if plstart == -1 or plend == -1:
+        sd.insertString( pos, '\t', None )
+        return True         
+       
+
+    ltxt = txt[ plstart: plend ]
+
+    
+    find = txt.rfind( '\n', 0, pos )
+    find += 1
+    rlpos = pos - find
+    
+    if rlpos &gt; ( len( ltxt ) -1 ):
+        sd.insertString( pos, '\t', None )
+        return True
+        
+    addon = []
+    for z in ltxt[ : rlpos ]:
+        if z.isspace():
+            addon.append( z )
+        else:
+            addon.append( ' ' )
+            
+    add = ''.join( addon )
+    
+    if ltxt[ rlpos ].isspace():
+        addon = []
+        for z in ltxt[ rlpos: ]:
+            if z.isspace():
+                addon.append( z )
+            else:
+                break
+        add = add + ''.join( addon )
+    else:
+        addon = []
+        for z in ltxt[ rlpos: ]:
+            if z.isspace(): break
+            else:
+                addon.append( ' ' )
+        
+        add = add + ''.join( addon )
+        rlpos += len( addon )
+        addon = []
+        for z in ltxt[ rlpos: ]:
+            if z.isspace():
+                addon.append( z )
+            else:
+                break
+        add = add + ''.join( addon )
+    if txt[ find: pos ].isspace():               
+        sd.replace( find, pos - find, '' , None )
+        sd.insertString( find, add, None )
+    else:
+        atext = txt[ find: pos ]
+        atext = atext.rstrip()
+        atext = atext + add[ len( atext ) -1 : ]
+        sd.replace( find, pos - find, '', None )
+        sd.insertString( find, atext, None )
+         
+    return True</t>
+<t tx="zorcanda!.20050312183416">def definePreviousLine( self ):
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    
+    txt = editor.getText()
+    find = txt.rfind( '\n', 0, pos )
+    if find == -1:
+        return -1, -1
+    else:
+        find2 = txt.rfind( '\n', 0, find )
+        if ( find2 - 1 ) == find:
+            return -1, -1
+        elif find2 == -1:
+            find2 = 0
+        else:
+            find2 += 1    
+
+    return find2, find</t>
+<t tx="zorcanda!.20050313115453">def addCommand(  name, command ):
+    commandsFromPlugins[ name ] = command</t>
+<t tx="zorcanda!.20050313142453">def lookForExtensions( self ):
+
+    import sys    
+    path,file = g.os_path_split(g.app.loadDir)
+    try:    
+        tlevel = java.io.File( path )
+        directories = tlevel.listFiles()
+        exts = []
+        for z in directories:
+            if z.isDirectory() and z.getName() == 'swingmacs_exts':
+            
+                sys.path.append( z.getAbsolutePath() )
+                files = z.listFiles()
+                for z1 in files:
+                    if z1.isFile() and z1.getName().endswith( '.py' ):
+                        exts.append( z1 ) 
+                break
+    finally: pass
+            
+    mods = []
+    for z in exts:
+        try:
+            name = z.getName()
+            name = name[ : -3 ]
+            mod = __import__( name )
+            mods.append( mod )
+        finally: pass
+            
+    return mods</t>
+<t tx="zorcanda!.20050314142845">@
+An extension is defined like so:
+1. a function called:
+    getCommands()
+returns a dictionary of command names and command classes, an example:
+    return {  "j-library": JLibrary_Loc }
+this in turn causes an instance of the command class to be instatiated.
+Instantiation involves passing the emacs instance to the command via
+the costructor
+
+    returned_dict[ "akey" ]( self )   #self is the emacs instance
+
+the instance is then asked for new commands via a call to its 'addToAltX' method,
+which returns a list of commands:
+    return [ 'zoom-to-home', 'release-window' ]
+after this the command is queried to see if it has an 'addToKeyStrokes' method.  If so
+it is called.  This is to return keystrokes that activate the command:
+    return [ 'Ctrl W', ]
+all commands and keystrokes that are bound to the command object result in a call to
+its __call__ method which should be defined like so:
+    def __call__( self, event, command ):
+        ....code....</t>
+<t tx="zorcanda!.20050411132747">def addCompleter (self,ch,ch2):
+    self.completers [ch] = ch2
+
+def addTabForColon (self,torf):
+    self.tab_for_colon = torf</t>
+<t tx="zorcanda!.20050411132825">def addCompleter( self, ch, ch2 ):
+    self.kcb.addCompleter( ch, ch2 )
+    
+def addTabForColon( self, torf ):
+    self.kcb.addTabForColon( torf )</t>
+<t tx="zorcanda!.20050417172712">def addCommands( self, command, commands ):
+    
+    xcommand = self.strategyObjects[ 'xcommand' ]
+
+    for z in commands:
+        xcommand.commands[ z ] = command
+        xcommand.keys.append( z )
+
+    self.strategyObjects[ command.getName() ] = command</t>
+<t tx="zorcanda!.20050418121158">def addCommandHelp( self, chelp ):
+
+    self.command_help.append( chelp )
+    
+def addKeyStrokeHelp( self, kshelp ):
+    
+    self.keystroke_help.append( kshelp )</t>
+<t tx="zorcanda!.20050512112449">def startOfWord( self):
+    
+    doc = self.emacs.editor.getDocument()
+    cpos = self.emacs.editor.getCaretPosition()
+    txt = doc.getText( 0, cpos )
+    txt = list( txt)
+    txt.reverse()
+    if len( txt) == 0: return
+    i = 0
+    if not self.isWordCharacter( txt[ 0 ]):
+        for z in txt:
+            if not self.isWordCharacter( z ):
+                i += 1
+            else:
+                break
+    
+    for z in txt[ i: ]:
+        if not self.isWordCharacter( z ):
+            break
+        else:
+            i += 1
+
+    cpos -= i
+    self.emacs.editor.setCaretPosition( cpos )</t>
+<t tx="zorcanda!.20050512112449.1">def endOfWord( self ):
+    
+    doc = self.emacs.editor.getDocument()
+    cpos = self.emacs.editor.getCaretPosition()
+    txt = doc.getText( cpos, doc.getLength() - cpos )
+    txt = list( txt)
+    #txt.reverse()
+    if len( txt) == 0: return
+    i = 0
+    if not self.isWordCharacter( txt[ 0 ]):
+        for z in txt:
+            if not self.isWordCharacter( z ):
+                i += 1
+            else:
+                break
+    
+    for z in txt[ i: ]:
+        if not self.isWordCharacter( z ):
+            break
+        else:
+            i += 1
+
+    cpos += i
+    self.emacs.editor.setCaretPosition( cpos )</t>
+<t tx="zorcanda!.20050512113820">def isWordCharacter( self, c ):
+    
+    if c in string.ascii_letters:
+        return True
+    elif c in string.digits:
+        return True
+    elif c in ( "_"):
+        return True
+    return False</t>
+<t tx="zorcanda!.20050519094216">class selection( sevent.DocumentListener ):
+
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.emacs.editor.getDocument().addDocumentListener( self )
+        self.start = None
+        self.commands = {
+            "Ctrl Space": self.startSelection,       
+        }
+        
+    def __call__( self, event, command ):
+        if self.commands.has_key( command ):
+            return self.commands[ command ]()
+        elif self.emacs._stateManager2.hasState() == "selection":
+            self.select()
+        
+    def startSelection( self ):
+        self.start = self.emacs.editor.getCaretPosition()
+        self.emacs._stateManager2.setState( "selection" )
+        return True
+    
+    def executeSelection( self ):
+        if self.start != -1:
+            editor = self.emacs.editor
+            cp = editor.getCaretPosition()
+            editor.setCaretPosition( self.start )
+            editor.moveCaretPosition( cp )
+        else:
+            self.emacs.keyboardQuit()    
+
+    def select( self ):
+        dc = DefCallable( self.executeSelection )
+        ft = dc.wrappedAsFutureTask()
+        java.awt.EventQueue.invokeLater( ft )
+        
+    def changedUpdate( self, event ):
+        pass
+        
+    def insertUpdate( self, event ):
+        pass
+        
+    def removeUpdate( self, event ):
+        self.start = -1</t>
+<t tx="zorcanda!.20050520221746">class TagMatcher(aevent.KeyAdapter):
+
+    '''A class to match html/xml style tags.'''
+
+    def __init__ (self,emacs):
+
+        aevent.KeyAdapter.__init__(self)
+        self.emacs = emacs
+        self.configureMatching()
+        g.app.config.manager.addNotificationDef("complete_tags",self.configureMatching)
+
+    def configureMatching (self,notification=None,handback=None):
+
+        self.on = g.app.config.getBool(self.emacs.c,"complete_tags")</t>
+<t tx="zorcanda!.20050522115325">def calculateExtraSpaces (self,line):
+
+    endsWithColon = False
+    hasUncompleteBracket = False
+
+    count1 = 0
+    for z in line:
+        if z == '[': count += 1
+        elif z == ']': count -= 1
+
+    count2 = 0 ; last2 = None ; ll = len(line) -1
+    while ll &gt;= 0:
+        char = line [ll]
+        if char == '(':
+            count2 += 1 ; last2 = ll
+        elif char == ')':
+            count2 -= 1
+        ll -= 1
+
+    if count2 &gt; 0:
+        nwline = line [:last2]
+        ws = [g.choose(z.isspace(),z,' ')for z in nwline]
+        print "WS len is %s" % len(ws)
+        return ''.join(ws)
+
+    return ''</t>
+<t tx="zorcanda!.20050523135303">def moveToIndentStart( self ):
+
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    if pos != -1:
+        
+        #txt = editor.getText()
+        start = stext.Utilities.getRowStart( editor, pos )
+        end = stext.Utilities.getRowEnd( editor, pos )
+        doc = editor.getDocument()
+        txt = doc.getText( start, end - start )
+        add = 0
+        for z in txt:
+            if not z.isspace():
+                break
+            else:
+                add +=1
+                        
+        editor.setCaretPosition( start + add )</t>
+<t tx="zorcanda!.20050523140526">def deleteSurroundingSpaces( self ):
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()    
+    if pos != -1:
+        
+        start = stext.Utilities.getRowStart( editor, pos )
+        end = stext.Utilities.getRowEnd( editor, pos )
+        doc = editor.getDocument()
+        txt = doc.getText( start, end - start )
+        rpos = pos - start
+        part1 = txt[ : rpos ]
+        part1 = part1.rstrip()
+        part2 = txt[ rpos: ]
+        part2 = part2.lstrip()
+        doc.replace( start, end - start, "%s%s" %( part1, part2 ), None )
+        editor.setCaretPosition( start + len( part1 ) )</t>
+<t tx="zorcanda!.20050523141645">def joinLineToPrevious( self ):
+    
+    plstart, plend = self.definePreviousLine()
+    if plstart == -1 or plend == -1:
+        return
+        
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition() 
+    if pos != -1:
+        
+        doc = editor.getDocument()
+        start = stext.Utilities.getRowStart( editor, pos )
+        end = stext.Utilities.getRowEnd( editor, pos )
+        txt = doc.getText( start, end - start )
+        txt = ' %s' % txt.lstrip()
+        doc.remove( start, end - start )
+        doc.insertString( plend, txt, None )
+        editor.setCaretPosition( plend )</t>
+<t tx="zorcanda!.20050523143029">class ctrl_x_handler:
+    
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.defineCommands()
+        self.last_command = None
+        self.keys = []
+        
+    def defineCommands( self ):
+        
+        sO = self.emacs.strategyObjects
+        self.commands = {
+        
+            'Ctrl O': sO[ 'formatter' ],
+            
+            
+            }
+        
+    def __call__( self, event, command ):
+        
+        if command == 'Ctrl X':
+            #self.tbCompleter.reset()
+            self.last_command = None
+            self.emacs._stateManager.setState( 'ctrlx' ) 
+            self.emacs.setCommandText( "Ctrl-x:" )
+            return True
+            
+        if command in self.commands:
+            return self.commands[ command ]( event, command )</t>
+<t tx="zorcanda!.20050523143816">def deleteBlankLines( self ):
+
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    if pos != -1:
+        
+        doc = editor.getDocument()
+        start = stext.Utilities.getRowStart( editor, pos )
+        end = stext.Utilities.getRowEnd( editor, pos )
+        txt = doc.getText( 0, doc.getLength() )
+        cline = txt[ start: end ] + '\n'
+        
+        first = txt[ : start ]
+        lines = first.splitlines( 1 )
+        lines.reverse()
+        #line = lines[ 0 ]
+        #del lines[ 0 ]
+        #line = lines.pop()
+        cpos_minus = 0
+        if cline.isspace():
+            for z in xrange( len( lines )):
+                if lines[ 0 ].isspace() or lines[ 0 ] == "":                    
+                    cpos_minus += len( lines[ 0 ] )
+                    del lines[ 0 ]
+                else:
+                    break
+        lines.reverse()
+        #lines.append( line )
+        
+        
+        end = txt[ end: ]
+        lines2 = end.splitlines( 1 )
+        #line = lines2[ 0 ]
+        #del lines2[ 0 ]
+        for z in xrange( len( lines2 ) ):
+            if lines2[ 0 ].isspace() or lines2[ 0 ] == "":
+                #lines2.pop()
+                del lines2[ 0 ]
+            else:
+                break
+        #lines2.insert( 0, line )
+        fpart = ''.join( lines )
+        spart = ''.join( lines2 )
+        nwtext = '%s%s%s' %( fpart, cline, spart )
+        doc.replace( 0, doc.getLength(), nwtext, None )
+        editor.setCaretPosition( pos - cpos_minus )
+        return True</t>
+<t tx="zorcanda!.20050524093817">def transposeWords( self ):
+    
+    editor = self.emacs.editor
+    pos = editor.getCaretPosition()
+    if pos != -1:
+        
+        ranges = self.emacs.getAttributeRanges( "trans-word" )
+        if ranges:
+            start = self.emacs.getWordStartIndex()
+            end = self.emacs.getWordEndIndex()
+            doc = editor.getDocument()
+            w1 = doc.getText( start, end - start )
+            w2 = doc.getText( ranges[ 0 ], ranges[ -1 ] - ranges[ 0 ] )
+            doc.replace( ranges[ 0 ], ranges[ -1 ] - ranges[ 0 ], w1, None )
+            start = self.emacs.getWordStartIndex()
+            end = self.emacs.getWordEndIndex()
+            doc.replace( start, end - start, w2, None )
+            self.emacs.clearAttribute( "trans-word" )
+            return
+        
+        else:
+            start = self.emacs.getWordStartIndex()
+            end = self.emacs.getWordEndIndex()
+            self.emacs.addAttributeToRange( 'trans-word', "trans-word" , start, end-start, color = java.awt.Color.YELLOW )
+
+        return True</t>
+<t tx="zorcanda!.20050527190231">class symbolcompletion:
+    
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.start = -1
+        self.end = -1
+        self.segment = None
+        self.commands = {
+            
+            "Ctrl+Alt I" : self.complete
+        
+        
+        }
+        
+        import leoColor
+        c_dict = dir( leoColor.baseColorizer )
+        self.languages = {}
+        for z in c_dict:
+            if z.endswith( '_keywords' ):
+                language = z.rstrip( '_keywords' )
+                self.languages[ language ] = getattr( leoColor.baseColorizer, z )
+        
+        
+    def __call__( self, event, command ):
+
+        self.commands[ command ]()
+        return True
+        
+        
+    def complete( self ):
+        
+        language = self.emacs.determineLanguage()
+        if language == None or language not in self.languages:
+            m = self.languages[ 'python' ]
+        else:
+            m = self.languages[ language ]
+    
+        editor = self.emacs.editor
+        doc = editor.getDocument()
+        cp = editor.getCaretPosition()
+        word = self.emacs.getWordStart()
+        if not word:
+            self.start = self.end = -1; self.segment = None
+            return
+        lastword = word
+        if self.start != -1:
+
+            if self.start == cp - len( word ):
+                word2 = doc.getText( self.start, self.end - self.start )
+                if word2 == self.segment:
+                    word = word2
+                    doc.replace( cp - len( lastword ), len( lastword ), word, None )
+                    cp = editor.getCaretPosition()
+            
+        self.start = self.end = -1; self.segment = None
+        if word:
+            words = []
+            for z in m:
+                if z.startswith( word ):
+                    words.append( z )
+                
+            if not words: return
+            if lastword in m:
+                spot = words.index( lastword )
+    
+                if spot == 0 and len( words ) == 1:
+                    pass 
+                elif spot + 1 == len( words ):
+                    spot = 0
+                else:
+                    spot += 1
+                  
+                nword = words[ spot ]
+            else:
+                nword = words[ 0 ]
+            
+            doc.replace( cp - len( word ), len( word ), nword, None )
+            self.start = cp - len( word )
+            self.end = cp
+            self.segment = word</t>
+<t tx="zorcanda!.20050528093036">class balanced_parentheses:
+    
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.sexps = {
+        
+            '(': ')',
+            ')':'(',
+            '[':']',
+            ']':'[',
+            '&lt;':'&gt;',
+            '&gt;':'&lt;',
+            '{':'}',
+            '}':'{',
+        }
+        
+        self.forwards = ( "(", "&lt;", "{", "[" )
+        self.backwards = ( ")", "&gt;", "}", "]" )
+        
+        self.commands = {
+            'Ctrl+Alt F': self.forwardSexp,
+            'Ctrl+Alt B': self.backwardSexp,
+            'Ctrl+Alt K': self.killSexpForward,
+            'Ctrl+Alt Delete': self.killSexpBackward,
+        }
+        
+    def __call__( self, event , command ):
+        
+        self.commands[ command ]()
+        return True
+
+    def forwardSexp( self ):
+        
+        editor = self.emacs.editor
+        doc = editor.getDocument()
+        cp = editor.getCaretPosition()
+        if cp + 1 == doc.getLength(): return
+        txt = doc.getText( cp, doc.getLength() - cp )
+        sp = txt[ 0 ]
+        if sp not in self.forwards or len( txt ) == 1: return
+        matcher = self.sexps[ sp ]
+        i = 1
+        i2 = 0
+        for z in txt[ 1: ]:
+            i2 += 1
+            if z == sp:
+                i += 1
+                continue
+            elif z == matcher:
+                i -= 1
+            if i == 0: break
+        if i == 0:
+            editor.setCaretPosition( cp + i2 )
+    
+    def backwardSexp( self ):
+        
+        editor = self.emacs.editor
+        doc = editor.getDocument()
+        cp = editor.getCaretPosition()
+        txt = doc.getText( 0, cp + 1 )
+        sexp = txt[ -1 ]
+        if sexp not in self.backwards or len( txt ) == 1: return
+        matcher = self.sexps[ sexp ]
+        i = 1
+        i2 = 0
+        t2 = list( txt )
+        t2.reverse()
+        for z in t2[ 1: ]:
+            i2 += 1
+            if z == sexp:
+                i += 1
+                continue
+            elif z == matcher:
+                i -= 1
+            if i == 0:
+                break
+        
+        if i == 0:
+            editor.setCaretPosition( cp - i2 )
+ 
+    @others</t>
+<t tx="zorcanda!.20050528100638">def killSexpForward( self ):
+    
+    editor = self.emacs.editor
+    doc = editor.getDocument()
+    cp = editor.getCaretPosition()
+    self.forwardSexp()
+    cp2 = editor.getCaretPosition()
+    if cp != cp2:
+        txt = doc.getText( cp, ( cp2 - cp ) + 1 )
+        self.emacs.addToKillbuffer( txt )
+        doc.remove( cp, ( cp2 - cp ) + 1)
+        
+def killSexpBackward( self ):
+    
+    editor = self.emacs.editor
+    doc = editor.getDocument()
+    cp = editor.getCaretPosition()
+    self.backwardSexp()
+    cp2 = editor.getCaretPosition()
+    if cp != cp2:
+        txt = doc.getText( cp2, ( cp - cp2 ) + 1)
+        self.emacs.addToKillbuffer( txt )
+        doc.remove( cp2, ( cp - cp2 ) + 1)</t>
+<t tx="zorcanda!.20050528101434">def addToKillbuffer( self, text ):
+    
+    self.strategyObjects[ 'killbuffer' ].insertIntoKillbuffer( text )</t>
+<t tx="zorcanda!.20050528154411">class tags( java.lang.Runnable ):
+    
+    #tags_table = {}
+    
+    def __init__( self, emacs ):
+        
+        self.emacs = emacs
+        #self.emacs.c.frame.tree.jtree.addTreeSelectionListener( self )
+        self.last_tag = None
+        self.pop_back = []
+        self.positions = []
+        self.tag_table = {}
+        self.last_command = None
+        self.__defineLanguageRecognizers()
+        self.__defineLanguageMatchers()
+        self.xs = java.util.concurrent.Executors.newSingleThreadScheduledExecutor()
+        import leoPlugins
+        leoPlugins.registerHandler( "select1", self.valueChanged )
+        self.mode = None
+        emacs.modeStrategies.append( self )
+        self.commands = {
+            'Alt Period': self.gotoTag,
+            'Ctrl U Alt Period': self.alternativeDefinition,
+            'Alt+Shift 8': self.popBack,
+        
+        }
+        self.tab_completer = self.emacs.TabCompleter( [] )
+        dc = DefCallable( self.defineTagsTable )
+        g.app.gui.addStartupTask( dc )
+    
+    def __defineLanguageMatchers( self ):
+        
+        reg1 = java.util.regex.Pattern.compile( java.lang.String( "^\s*(def\s+\w+\s*)" ) )
+        reg2 = java.util.regex.Pattern.compile( java.lang.String(  "^\s*(class\s+\w+\s*)" ) )
+        self.python_matchers = ( reg1.matcher( java.lang.String( "" ) ), reg2.matcher( java.lang.String( "" ) ) )
+        
+    
+    def __call__( self, event, command ):
+        
+        if self.mode:
+            if command == 'Enter':
+                self.gotoTag()
+                return self.emacs.keyboardQuit( event )
+            elif command == 'Tab':
+            
+                txt = self.emacs.minibuffer.getText()
+                if self.last_command == None or not txt.startswith( self.last_command ):
+                    txt = self.emacs.minibuffer.getText()                
+                    fnd = self.tab_completer.lookFor( txt )
+                    if fnd:
+                        self.last_command = txt
+                        self.emacs.minibuffer.setText( self.tab_completer.getNext() )
+                else :
+                    self.emacs.minibuffer.setText( self.tab_completer.getNext() )
+                return True
+            else:
+                return self.emacs.eventToMinibuffer( event )   
+        
+        rv = self.commands[ command ]()
+        self.tab_completer.reset()
+        self.last_command = None
+        if rv:
+            self.emacs.keyboardQuit( event )
+        return True
+        
+        
+    @others</t>
+<t tx="zorcanda!.20050528154411.1">def gotoTag( self ):
+    
+    if self.mode == None:
+        self.emacs.setCommandText( "Goto tag:" )
+        self.emacs.minibuffer.setText( "" )
+        self.emacs._stateManager.setState( "tags" )    
+        self.mode = 1
+        return
+        
+    if self.mode == 1:
+        
+        tag = self.emacs.minibuffer.getText()
+        if not tag:
+            wsi = self.emacs.getWordStartIndex()
+            wse = self.emacs.getWordEndIndex()
+            tag = self.emacs.getTextSlice( wsi, wse )
+        if tag in self.tag_table:
+            td = self.tag_table[ tag ]
+            self.last_tag = ( tag, td[ 0 ] )
+            p = td[ 0 ][ -1 ]
+            c = self.emacs.c
+            cp = c.currentPosition()
+            self.pop_back.append( cp.copy() )
+            c.beginUpdate()
+            c.selectPosition( p.copy() )
+            c.endUpdate()
+            dgl = self.DeferedGotoLine( self.emacs.c, p, td[ 0 ][ 0 ] )
+            dc = DefCallable( dgl )
+            ft = dc.wrappedAsFutureTask()
+            java.awt.EventQueue.invokeLater( ft )
+            #self.emacs.keyboardQuit( event )
+            return True
+        else:
+            g.es( "Could not find definition for %s" % tag )
+            #self.emacs.keyboardQuit( event)
+            return True</t>
+<t tx="zorcanda!.20050528154425">def defineTagsTable( self ):
+
+    c = self.emacs.c
+    cp = c.rootPosition()
+    for z in cp.allNodes_iter( copy = True ):
+        tags = self.scanForTags( z )
+        if tags:
+            for x in tags:
+                if self.tag_table.has_key( x[ 1 ] ):
+                    self.tag_table[ x[ 1 ] ].append( x )
+                else:                    
+                    self.tag_table[ x[ 1 ] ] = []
+                    self.tag_table[ x[ 1 ] ].append( x )
+                    
+    self.tab_completer.extend( self.tag_table.keys() ) 
+    g.es( "tag table built" )
+    self.xs.scheduleAtFixedRate( self, 30000, 30000, java.util.concurrent.TimeUnit.MILLISECONDS )</t>
+<t tx="zorcanda!.20050528154749">def scanForTags( self, p ):
+    #print "SCANNING FOR TAGS!"
+    #language = g.scanForAtLanguage( self.emacs.c, p )
+    language = LeoUtilities.scanForLanguage( p )
+    if language == None: language = 'python'
+    if language == 'python':
+        tags = []
+        try:
+            #reg1 = "^\s*(def\s+\w+\s*)"
+            #reg2 = "^\s*(class\s+\w+\s*)"
+            #regs = ( reg1, reg2 )
+            tnt = p.v.t._bodyString
+            matches = LeoUtilities.scanFor( self.python_matchers , tnt )
+            #print matches
+            for z in matches:
+                tags.append( ( z[ 0 ], z[ 1 ], p ) )
+            #bs = p.bodyString()
+            #data = bs.split( '\n' )
+            # tags = []
+            #for z in data:
+            #    txt = z.lstrip()
+            #    txtpieces = txt.split()
+            #    if len( txtpieces )&gt; 1 and txtpieces[ 0 ] in ( "class", "def" ):
+            #        ntxt = txtpieces[ 1 ]
+            #        i1 = ntxt.find( "(" )
+            #        i2 = ntxt.find( ":" )
+            #        if i1 != -1: 
+            #            ntxt = ntxt[ : i1 ]
+            #        elif i2 != -1:
+            #            ntxt = ntxt[ : i2 ]
+            #        
+            #        tags.append( ( txt, ntxt, p ) )
+        except Exception, x:
+            print x
+        except java.lang.Exception, r:
+            print r            
+             
+        return tags
+    elif language == 'java':
+        &lt;&lt;java&gt;&gt;
+    else:
+        return None</t>
+<t tx="zorcanda!.20050528154749.1">def valueChanged( self, *args ):
+    
+    values = args[ 1 ]
+    self.positions.append( values[ 'new_p' ].copy() )</t>
+<t tx="zorcanda!.20050528155247">def run( self ):
+    
+    cp = self.emacs.c.currentPosition().copy()
+    if cp not in self.positions:
+        self.positions.append( cp )
+        
+    for z in self.positions:
+        tags = self.scanForTags( z )
+        if tags:
+            for x in tags:   
+                if self.tag_table.has_key( x[ 1 ] ):
+                    self.tag_table[ x[ 1 ] ].append( x ) 
+                else:
+                    self.tag_table[ x[ 1 ] ] = []
+                    self.tag_table[ x[ 1 ] ].append( x )
+                self.tab_completer.extend( x[ 1 ] )
+                    
+    self.positions = []</t>
+<t tx="zorcanda!.20050528185814">class DeferedGotoLine:
+    
+    def __init__( self, c, pos, tag ):
+        self.c = c
+        self.pos = pos
+        self.tag = tag
+        
+    def __call__( self ):
+        
+        bs = self.pos.bodyString()
+        where = bs.find( self.tag )
+        if where != -1:
+            self.c.frame.body.editor.editor.setCaretPosition( where )</t>
+<t tx="zorcanda!.20050528193454">class ctrl_u_handler:
+    
+    def __init__( self, emacs ):
+        self.emacs = emacs
+        self.defineCommands()
+        self.last_command = None
+        self.keys = []
+        
+    def defineCommands( self ):
+        
+        sO = self.emacs.strategyObjects
+        self.commands = {
+        
+            'Alt Period': sO[ 'tags' ],
+            
+            
+            }
+        
+    def __call__( self, event, command ):
+        
+        if command == 'Ctrl U':
+            #self.tbCompleter.reset()
+            self.last_command = None
+            self.emacs._stateManager.setState( 'ctrlu' ) 
+            self.emacs.setCommandText( "Ctrl-u:" )
+            return True
+            
+        if command in self.commands:
+            return self.commands[ command ]( event, "Ctrl U %s" % command )</t>
+<t tx="zorcanda!.20050528193932">def alternativeDefinition( self ):
+    
+    if self.last_tag:
+        
+        tag , td = self.last_tag
+        tags = self.tag_table[ tag ]
+        i = tags.index( td )
+        if i + 1 == len( tags ):
+            i = 0
+        else:
+            i += 1
+        
+        td = tags[ i ]
+        self.last_tag = ( tag, td )
+        p = td[ -1 ]
+        c = self.emacs.c
+        cp = c.currentPosition()
+        self.pop_back.append( cp.copy() )
+        c.beginUpdate()
+        c.selectPosition( p.copy() )
+        c.endUpdate()
+        dgl = self.DeferedGotoLine( self.emacs.c, p, td[ 0 ] )
+        dc = DefCallable( dgl )
+        ft = dc.wrappedAsFutureTask()
+        java.awt.EventQueue.invokeLater( ft )
+        #self.emacs.keyboardQuit( event )
+        return True</t>
+<t tx="zorcanda!.20050531101443">def popBack( self ):
+
+    if self.pop_back:
+        p = self.pop_back.pop()
+        c = self.emacs.c
+        c.beginUpdate()
+        c.selectPosition( p )
+        c.endUpdate()</t>
+<t tx="zorcanda!.20050531112641">bs = p.bodyString()
+data = bs.split( '\n' )
+tags = []
+for z in data:
+    #regex looking for methods
+    #regular scan for looking for class and interface
+    #class interface takes precedence over methods
+    try:
+        stxt = z.lstrip()
+        txt = java.lang.String( stxt )
+        self.java_class.reset( txt )
+        self.java_method.reset( txt )
+        start = end = -1
+        if self.java_class.find():
+            gc = self.java_class.groupCount()
+            ntxt = self.java_class.group( gc )
+        elif self.java_method.find():
+            gc = self.java_method.groupCount()
+            ntxt = self.java_method.group( gc )
+        else:
+            gc = 0
+        
+        if gc:
+            tags.append( (stxt, ntxt, p ) ) 
+    except Exception, x:
+        print x
+
+
+return tags</t>
+<t tx="zorcanda!.20050531130856">def __defineLanguageRecognizers( self ):
+    
+    sstring = java.lang.String( "" )
+    pattern = regex.Pattern.compile( "(class|interface)\s*(\w+)" )
+    self.java_class = pattern.matcher( sstring )
+    pattern = regex.Pattern.compile( "((public|private|protected)\s+)?(final\s+)?(static\s+)?(new\s+){0}\w+\s*(\w+)\s*\\(" )
+    self.java_method = pattern.matcher( sstring )</t>
+<t tx="zorcanda!.20050604091242">@others</t>
+<t tx="zorcanda!.20050604091242.1">def addCompleters( self ):
+    
+    manager = g.app.config.manager
+    manager.addNotificationDef( "complete-&lt;", self.managementListener )
+    manager.addNotificationDef( "complete-(", self.managementListener )
+    manager.addNotificationDef( "complete-[", self.managementListener )
+    manager.addNotificationDef( "complete-{", self.managementListener )
+    manager.addNotificationDef( "complete-'", self.managementListener )
+    manager.addNotificationDef( 'complete-"', self.managementListener )
+
+@
+    if config.getBool( self.c, "complete-&lt;" ):
+        self.swingmacs.addCompleter( "&lt;", "&gt;" )
+    if config.getBool( self.c, "complete-(" ):
+        self.swingmacs.addCompleter( "(", ")" )
+    if config.getBool( self.c, "complete-[" ):
+        self.swingmacs.addCompleter( "[", "]" )
+    if config.getBool( self.c, "complete-{"):
+        self.swingmacs.addCompleter( "{", "}" )
+    if config.getBool( self.c, "complete-'" ):
+        self.swingmacs.addCompleter( "'", "'" )
+    if config.getBool( self.c, 'complete-"' ):
+        self.swingmacs.addCompleter( '"', '"' )
+    if config.getBool( self.c, "add_tab_for-:" ):
+        self.swingmacs.addTabForColon( True )</t>
+<t tx="zorcanda!.20050604091242.2">def managementListener( self, notification= None, handback = None ):
+    
+    source = notification.getSource().toString()
+    source = source.lstrip( "MBean:name=" )
+    use = g.app.config.getBool( self.c, source )
+    completer = source[ -1 ]
+    if use:
+        completions = {
+            '(': ')',
+            '{': '}',
+            '&lt;': '&gt;',
+            '[':']',
+            '"': '"',
+            "'" : "'",        
+        }
+        self.kcb.addCompleter( completer, completions[ completer ] )
+    else:
+        self.kcb.removeCompleter( completer )</t>
+<t tx="zorcanda!.20050604091924">def removeCompleter (self,ch):
+
+    del self.completers [ch]</t>
+<t tx="zorcanda!.20050704092406.1">class vi_emulation:
+    
+    def __init__( self, c ):
+        self.c = c
+        self.mode = None
+        &lt;&lt;define vi keystrokes&gt;&gt;
+        
+    def __call__( self, event, command ):
+
+        if self.mode:
+            return self.mode( event, command )
+        else:
+            return self.vi_keystrokes[ command ]( event, command )</t>
+<t tx="zorcanda!.20050704092406.2">self.vi_keystrokes = {
+    'dd': self.deleteLine,
+    'i': self.insert,
+}</t>
+<t tx="zorcanda!.20050704092406.3">def cut( self, event ):
+    pass</t>
+<t tx="zorcanda!.20050704092406.4">def deleteLine( self, event, command ):
+    pass</t>
+<t tx="zorcanda!.20050704092406.5">def insert( self, event, command ):
+    pass</t>
+<t tx="zorcanda!.20050720141603">def createDynamicList( self ):
+    
+    c = self.emacs.c
+    class _buildDynamicList:
+        
+        def __init__( self, c, da ):
+            self.c = c
+            self.da = da
+            
+        def __call__( self ):
+            
+            rp = self.c.rootPosition().copy()
+            for z in rp.allNodes_iter( copy = 1 ):
+                btx = z.bodyString()
+                items = self.da.dynaregex.findall( btx )
+                self.da.dynamiclist.addAll( items )
+
+            g.es( "dynamic list built: dynamic abbreviations online" )
+            
+    
+    dc = DefCallable( _buildDynamicList( c, self ) )
+    self.emacs.c.frame.gui.addStartupTask( dc.wrappedAsFutureTask() )</t>
+<t tx="zorcanda!.20050720215058">class deferedHighlight( java.lang.Runnable ):
+    
+    def __init__( self, source, pos, iway, highlight, length, emacs ):
+        self.source = source
+        self.pos = pos
+        self.iway = iway
+        self.highlight = highlight
+        self.length = length
+        self.emacs = emacs
+
+    def run( self ):
+        source = self.source; pos = self.pos
+        source.setCaretPosition( pos )
+        if self.iway == 'forward':
+            start = pos - self.length
+            self.emacs.addHighlight( start, start + self.length, self.highlight ) 
+        else:
+            self.emacs.addHighlight( pos, pos + self.length, self.highlight )
+        tcursor = java.awt.Cursor.getPredefinedCursor( java.awt.Cursor.TEXT_CURSOR )
+        source.setCursor( tcursor )</t>
 </tnodes>
 </leo_file>
