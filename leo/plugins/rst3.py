@@ -1,7 +1,7 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040331071319:@thin rst3.py
+#@+node:ekr.20050805162550:@thin rst3.py
 #@<< docstring >>
-#@+node:ekr.20050420105800:<< docstring >>
+#@+node:ekr.20050805162550.1:<< docstring >>
 '''A plugin to generate HTML or LaTeX files from reStructured Text embedded in
 Leo outlines.
 
@@ -10,19 +10,15 @@ file in outline order.
 
 If the name of the <filename> has the extension .html, .htm or .tex, and if you have
 docutils installed, it will generate HTML or LaTeX, respectively.
-
-There are many possible options:
-
-- Headlines may be converted to section headings.
 '''
 #@nonl
-#@-node:ekr.20050420105800:<< docstring >>
+#@-node:ekr.20050805162550.1:<< docstring >>
 #@nl
 
-# By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
+__version__ = '0.0'
 
 #@<< imports >>
-#@+node:ekr.20050420105800.1:<< imports >>
+#@+node:ekr.20050805162550.2:<< imports >>
 import leoGlobals as g
 import leoPlugins
 
@@ -54,73 +50,43 @@ try:
     import SilverCity
 except ImportError:
     SilverCity = None
-#@-node:ekr.20050420105800.1:<< imports >>
+#@-node:ekr.20050805162550.2:<< imports >>
 #@nl
 #@<< change log >>
-#@+node:ekr.20040331071319.2:<< change log >>
-#@+at 
-#@nonl
-# Change log:
+#@+node:ekr.20050805162550.3:<< change log >>
+#@+at
 # 
-# - JD 2003-03-10 (rev 1.3): some more corrections to the unicode-> encoding 
-# translation.
-#   No only check for missing docutils (doesn't mask other errors any more).
+# - Original by Josef Dalcolmo: contributed under the same licensed as Leo.py 
+# itself.
 # 
-# - JD 2003-03-11 (rev 1.4): separated out the file launching code to a 
-# different pluging.
-# 
-# - 2003-11-02 Added generation of LaTeX files, just make the extension of the 
-# filename '.tex'. --Timo Honkasalo
-# 
-# - 2003-12-24 S Zatz modifications to introduce concept of plain @rst nodes 
-# to improve program documentation
-# 
-# - 2004-04-08 EKR:
-#     - Eliminated "comment" text at start of nodes.
-#     - Rewrote code that strips @nocolor, @ignore and @wrap directives from 
-# start of text.
-#     - Changed code to show explicitly that it uses positions.
-#     - Added comments to << define code-block>>
-#     - Added div.code-block style to silver_city.css (see documentation)
-#     - Rewrote documentation.
-# 2.2 EKR 2005-03-07 changed publish() to publish(argv=[''])
-# 
-# 2.3 bwmulder
-#     - added various options which can be set with @settings directive
-#     - add support for mod_http plugin.
-#     - added possible settings to the beginning of the Leo file
-# 2.4 EKR:
-#     - Call onFileOpen from both "new" and "open2" hooks.
-# 2.5 EKR:
-#     - Added init method.
+# - Based on rst2.py version 2.4.
 #@-at
 #@nonl
-#@-node:ekr.20040331071319.2:<< change log >>
+#@-node:ekr.20050805162550.3:<< change log >>
 #@nl
 
 #@+others
-#@+node:ekr.20050802091909:Module level
-#@+node:ekr.20050802084255: init
+#@+node:ekr.20050805162550.4:Module level
+#@+node:ekr.20050805162550.5: init
 def init ():
 
     ok = True # Ok for unit testing.
 
     ## leoPlugins.registerHandler("icondclick1",processTree)
     leoPlugins.registerHandler(("new","open2"), onCreate)
-    __version__ = "2.4"
 
     g.plugin_signon(__name__)
     return ok
 #@nonl
-#@-node:ekr.20050802084255: init
-#@+node:bwmulder.20050320000243:onCreate
+#@-node:ekr.20050805162550.5: init
+#@+node:ekr.20050805162550.6:onCreate
 def onCreate(tag, keywords):
     c = keywords.get('new_c') or keywords.get('c')
     if c:
-        rstClass(c)
+        return rstClass(c)
 #@nonl
-#@-node:bwmulder.20050320000243:onCreate
-#@+node:ekr.20040331071319.5:code_block
+#@-node:ekr.20050805162550.6:onCreate
+#@+node:ekr.20050805162550.7:code_block
 def code_block(name,arguments,options,content,lineno,content_offset,block_text,state,state_machine):
     
     '''Create a code-block directive for docutils.'''
@@ -152,9 +118,9 @@ code_block.content = 1 # True if content is allowed.
 # Register the directive with docutils.
 docutils.parsers.rst.directives.register_directive('code-block',code_block)
 #@nonl
-#@-node:ekr.20040331071319.5:code_block
-#@-node:ekr.20050802091909:Module level
-#@+node:ekr.20050802091909.1:class rstClass
+#@-node:ekr.20050805162550.7:code_block
+#@-node:ekr.20050805162550.4:Module level
+#@+node:ekr.20050805162550.8:class rstClass
 class rstClass:
     
     '''A class to write rst markup in Leo outlines.'''
@@ -177,15 +143,15 @@ class rstClass:
 #@@c
     
     #@    @+others
-    #@+node:ekr.20050802091909.2: Birth
-    #@+node:ekr.20050802091909.3: ctor
+    #@+node:ekr.20050805162550.9: Birth
+    #@+node:ekr.20050805162550.10: ctor
     def __init__ (self,c):
         
         global SilverCity
         
         self.c = c
         #@    << init ivars >>
-        #@+node:ekr.20050802135411:<< init ivars >>
+        #@+node:ekr.20050805162550.11:<< init ivars >>
         # Debugging...
         self.rst2_debug_anchors = False
         self.debug_before_and_after_replacement = False
@@ -215,7 +181,7 @@ class rstClass:
         self.node_begin_marker = 'http-node-marker-'
         self.http_attributename = 'rst_http_attribute'
         #@nonl
-        #@-node:ekr.20050802135411:<< init ivars >>
+        #@-node:ekr.20050805162550.11:<< init ivars >>
         #@nl
         
         self.applyConfiguration() ### This will become a pre-pass.
@@ -226,8 +192,8 @@ class rstClass:
         if c.config.getBool("rst2_run_on_open_window"):
             self.runOnOpen()
     #@nonl
-    #@-node:ekr.20050802091909.3: ctor
-    #@+node:bwmulder.20050327204614:addMenu
+    #@-node:ekr.20050805162550.10: ctor
+    #@+node:ekr.20050805162550.12:addMenu
     def addMenu(self):
         
         c = self.c ; editMenu = c.frame.menu.getMenu('Edit')
@@ -242,13 +208,12 @@ class rstClass:
             
         c.frame.menu.createMenuEntries(editMenu, table)
     #@nonl
-    #@-node:bwmulder.20050327204614:addMenu
-    #@+node:bwmulder.20050314131619:applyConfiguration
+    #@-node:ekr.20050805162550.12:addMenu
+    #@+node:ekr.20050805162550.13:applyConfiguration
     def applyConfiguration (self):
     
         c = self.c
     
-        
         self.getBool    ("clear_http_attributes",   'rst2_clear_http_attributes')
         self.getBool    ('format_headlines',        'rst2_format_headlines')
         self.getString  ('http_attributename',      'rst2_http_attributename')
@@ -262,8 +227,8 @@ class rstClass:
             g.es('No http_server_support: can not import mod_http plugin',color='red')
             self.http_server_support = False
     #@nonl
-    #@-node:bwmulder.20050314131619:applyConfiguration
-    #@+node:ekr.20050802095216:runOnOpen  DELETE???
+    #@-node:ekr.20050805162550.13:applyConfiguration
+    #@+node:ekr.20050805162550.14:runOnOpen  (delete??)
     def runOnOpen (self):
         
         g.trace()
@@ -298,8 +263,8 @@ class rstClass:
         if self.clear_http_attributes:
             g.es("http attributes cleared")
     #@nonl
-    #@-node:ekr.20050802095216:runOnOpen  DELETE???
-    #@+node:ekr.20050802093209.1:getboolean & getString
+    #@-node:ekr.20050805162550.14:runOnOpen  (delete??)
+    #@+node:ekr.20050805162550.15:getboolean & getString
     def getBool(self,ivar_name,setting_name):
         
         c = self.c
@@ -316,15 +281,15 @@ class rstClass:
         if newvalue is not None:
             setattr(self, ivar_name, newvalue)
     #@nonl
-    #@-node:ekr.20050802093209.1:getboolean & getString
-    #@-node:ekr.20050802091909.2: Birth
-    #@+node:ekr.20050802141932:encode
+    #@-node:ekr.20050805162550.15:getboolean & getString
+    #@-node:ekr.20050805162550.9: Birth
+    #@+node:ekr.20050805162550.16:encode
     def encode (self,s):
             
         return g.toEncodedString(s,encoding=self.encoding,reportErrors=True)
     #@nonl
-    #@-node:ekr.20050802141932:encode
-    #@+node:ekr.20040331071319.3:processTree & helpers
+    #@-node:ekr.20050805162550.16:encode
+    #@+node:ekr.20050805162550.17:processTree & helpers
     # by Josef Dalcolmo 2003-01-13
     
     # this does not check for proper filename syntax.
@@ -335,7 +300,7 @@ class rstClass:
     
         c = self.c ; h = p.headString().strip()
     
-        self.applyConfiguration(c)
+        self.applyConfiguration()
     
         if g.match_word(h,0,"@rst"):
             if len(h) > 5:
@@ -352,7 +317,7 @@ class rstClass:
                     self.writeTree(theFile,name,p)
                     self.report(name)
     #@nonl
-    #@+node:bwmulder.20041011145032:massageBody
+    #@+node:ekr.20050805162550.18:massageBody
     def massageBody (self,p):
         
         '''Remove @ignore, @nocolor and @wrap directives.'''
@@ -367,8 +332,8 @@ class rstClass:
     
         return s
     #@nonl
-    #@-node:bwmulder.20041011145032:massageBody
-    #@+node:ekr.20040331071319.8:underlineString
+    #@-node:ekr.20050805162550.18:massageBody
+    #@+node:ekr.20050805162550.19:underlineString
     # The first character is intentionally unused, to serve as the underline
     # character in a title (in the body of the @rst node)
     
@@ -380,16 +345,16 @@ class rstClass:
     
         return str * max(len(h),4) + '\n'
     #@nonl
-    #@-node:ekr.20040331071319.8:underlineString
-    #@+node:ekr.20040811064922:report
+    #@-node:ekr.20050805162550.19:underlineString
+    #@+node:ekr.20050805162550.20:report
     def report (self,name):
     
         path = g.os_path_abspath(g.os_path_join(os.getcwd(),name))
     
         g.es('wrote: %s' % (path),color="blue")
     #@nonl
-    #@-node:ekr.20040811064922:report
-    #@+node:ekr.20040331071319.4:writeSpecialTree
+    #@-node:ekr.20050805162550.20:report
+    #@+node:ekr.20050805162550.21:writeSpecialTree
     def writeSpecialFile (self,p,fname,ext):
     
         pub = docutils.core.Publisher()
@@ -405,13 +370,13 @@ class rstClass:
         source = stringFile.getvalue()
         if self.use_file:
             #@        << write source to fname.txt >>
-            #@+node:ekr.20050802111543:<< write source to fname.txt >>
+            #@+node:ekr.20050805162550.22:<< write source to fname.txt >>
             g.es('Writing %s.txt' % fname)
             theFile = file(name+'.txt','w')
             theFile.write(source)
             theFile.close()
             #@nonl
-            #@-node:ekr.20050802111543:<< write source to fname.txt >>
+            #@-node:ekr.20050805162550.22:<< write source to fname.txt >>
             #@nl
     
         # This code snipped has been taken from code contributed by Paul Paterson 2002-12-05.
@@ -431,8 +396,8 @@ class rstClass:
         self.report(fname)
         return self.http_support_main(tag,fname)
     #@nonl
-    #@-node:ekr.20040331071319.4:writeSpecialTree
-    #@+node:ekr.20040331071319.7:writeTree
+    #@-node:ekr.20050805162550.21:writeSpecialTree
+    #@+node:ekr.20050805162550.23:writeTree
     def writeTree(self,theFile,fname,p,syntax=False):
         
         '''Write p's tree to theFile.'''
@@ -443,7 +408,7 @@ class rstClass:
         d = g.scanDirectives(c,p=p)
         self.encoding = d.get('encoding',c.config.default_derived_file_encoding)
         #@    << set code_block_string >>
-        #@+node:ekr.20040403202850:<< set code_block_string >>
+        #@+node:ekr.20050805162550.24:<< set code_block_string >>
         if syntax:
             # SilverCity modules have first letter in caps.
             language = d.get('language','').lower()
@@ -454,7 +419,7 @@ class rstClass:
         else:
             code_block_string = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
         #@nonl
-        #@-node:ekr.20040403202850:<< set code_block_string >>
+        #@-node:ekr.20050805162550.24:<< set code_block_string >>
         #@nl
         theFile.write('.. filename: %d\n\n' % self.encode(fname))
         if self.massage_body:  ### should be a dynamic option.
@@ -465,7 +430,7 @@ class rstClass:
         toplevel = p.level() + 1
         if self.http_server_support:
             #@        << handle http support >>
-            #@+node:ekr.20050802105832:<< handle http support >>
+            #@+node:ekr.20050805162550.25:<< handle http support >>
             if self.tag == 'open2':
                 http_map = self.http_map
             else:
@@ -474,15 +439,15 @@ class rstClass:
                 # maps v nodes to markers.
                 self.node_counter = 0
             #@nonl
-            #@-node:ekr.20050802105832:<< handle http support >>
+            #@-node:ekr.20050805162550.25:<< handle http support >>
             #@nl
         for p in p.subtree_iter():
             self.writeNode(theFile,p)
         if self.http_server_support:
             self.http_map = http_map
     #@nonl
-    #@-node:ekr.20040331071319.7:writeTree
-    #@+node:ekr.20050802120055:writeHeadline
+    #@-node:ekr.20050805162550.23:writeTree
+    #@+node:ekr.20050805162550.26:writeHeadline
     def writeHeadline (self,theFile,p,toplevel):
         
         h = p.headString() ; level = p.level() - toplevel
@@ -493,8 +458,8 @@ class rstClass:
     
         theFile.write('%s\n%s\n' % (self.encode(h),self.underlineString(h,level)))
     #@nonl
-    #@-node:ekr.20050802120055:writeHeadline
-    #@+node:ekr.20050802113353:writeNode & helpers
+    #@-node:ekr.20050805162550.26:writeHeadline
+    #@+node:ekr.20050805162550.27:writeNode & helpers
     def writeNode (self,theFile,p):
         
         if self.http_server_support:
@@ -508,7 +473,7 @@ class rstClass:
         if self.clear_http_attributes:
             self.clearHttpAttributes(p)
     #@nonl
-    #@+node:ekr.20050802093751:add_node_marker
+    #@+node:ekr.20050805162550.28:add_node_marker
     def add_node_marker(self,p,theFile):
             
         self.node_counter += 1
@@ -516,8 +481,8 @@ class rstClass:
         self.http_map[marker] = p.copy()
         theFile.write("\n\n.. _%s:\n\n" % marker)
     #@nonl
-    #@-node:ekr.20050802093751:add_node_marker
-    #@+node:bwmulder.20050315150045:clearHttpAttributes
+    #@-node:ekr.20050805162550.28:add_node_marker
+    #@+node:ekr.20050805162550.29:clearHttpAttributes
     def clearHttpAttributes (self,p):
         
         name = self.http_attributename
@@ -528,8 +493,8 @@ class rstClass:
                 if p.v.unknownAttributes == {}:
                     del p.v.unknownAttributes
     #@nonl
-    #@-node:bwmulder.20050315150045:clearHttpAttributes
-    #@+node:bwmulder.20050326125712:replace_code_block_directives
+    #@-node:ekr.20050805162550.29:clearHttpAttributes
+    #@+node:ekr.20050805162550.30:replace_code_block_directives
     def replace_code_block_directives (self,s):
         
         lines = s.split('\n') ; result = []
@@ -543,8 +508,8 @@ class rstClass:
     
         return '\n'.join(result)
     #@nonl
-    #@-node:bwmulder.20050326125712:replace_code_block_directives
-    #@+node:ekr.20040403202850.2:writePlainNode
+    #@-node:ekr.20050805162550.30:replace_code_block_directives
+    #@+node:ekr.20050805162550.31:writePlainNode
     def writePlainNode (self,theFile,p):
     
         if not self.format_headlines: ### ??? not ???
@@ -566,8 +531,8 @@ class rstClass:
         
         theFile.write('\n')
     #@nonl
-    #@-node:ekr.20040403202850.2:writePlainNode
-    #@+node:ekr.20040403202850.1:writeRstNode
+    #@-node:ekr.20050805162550.31:writePlainNode
+    #@+node:ekr.20050805162550.32:writeRstNode
     def writeRstNode (self,theFile,p):
     
         s = self.encode(p.bodyString())
@@ -589,11 +554,11 @@ class rstClass:
         
         theFile.write('%s\n\n' % s.strip())
     #@nonl
-    #@-node:ekr.20040403202850.1:writeRstNode
-    #@-node:ekr.20050802113353:writeNode & helpers
-    #@-node:ekr.20040331071319.3:processTree & helpers
-    #@+node:bwmulder.20050319191929:http methods...
-    #@+node:bwmulder.20050320092000:http_support_main
+    #@-node:ekr.20050805162550.32:writeRstNode
+    #@-node:ekr.20050805162550.27:writeNode & helpers
+    #@-node:ekr.20050805162550.17:processTree & helpers
+    #@+node:ekr.20050805162550.33:http methods...
+    #@+node:ekr.20050805162550.34:http_support_main
     def http_support_main(tag, fname):
     
         if not self.http_server_support:
@@ -616,8 +581,8 @@ class rstClass:
         if self.clear_http_attributes:
             g.es("http attributes cleared")
     #@nonl
-    #@-node:bwmulder.20050320092000:http_support_main
-    #@+node:bwmulder.20050319152820.1:http_attribute_iter
+    #@-node:ekr.20050805162550.34:http_support_main
+    #@+node:ekr.20050805162550.35:http_attribute_iter
     def http_attribute_iter ():
     
         for p in self.http_map.values():
@@ -625,8 +590,8 @@ class rstClass:
             if attr:
                 yield (p.copy(),attr)
     #@nonl
-    #@-node:bwmulder.20050319152820.1:http_attribute_iter
-    #@+node:bwmulder.20050319131813:set_initial_http_attributes
+    #@-node:ekr.20050805162550.35:http_attribute_iter
+    #@+node:ekr.20050805162550.36:set_initial_http_attributes
     def set_initial_http_attributes(filename):
     
         theFile = file(filename)
@@ -635,8 +600,8 @@ class rstClass:
         for line in theFile.readline():
             parser.feed(line)
     #@nonl
-    #@-node:bwmulder.20050319131813:set_initial_http_attributes
-    #@+node:bwmulder.20050319131813.1:relocate_references
+    #@-node:ekr.20050805162550.36:set_initial_http_attributes
+    #@+node:ekr.20050805162550.37:relocate_references
     def relocate_references(self):
     
         for p, attr in http_attribute_iter():
@@ -664,8 +629,8 @@ class rstClass:
             pprint.pprint (attr)
             for i in range(3): print
     #@nonl
-    #@-node:bwmulder.20050319131813.1:relocate_references
-    #@+node:bwmulder.20050319152820:find_anchors
+    #@-node:ekr.20050805162550.37:relocate_references
+    #@+node:ekr.20050805162550.38:find_anchors
     def find_anchors(self):
     
         '''Find the anchors in all the nodes.'''
@@ -684,20 +649,20 @@ class rstClass:
         if self.debug_anchors:
             print "Anchors found:"
             pprint.pprint(self.anchormap)
-    #@-node:bwmulder.20050319152820:find_anchors
-    #@-node:bwmulder.20050319191929:http methods...
+    #@-node:ekr.20050805162550.38:find_anchors
+    #@-node:ekr.20050805162550.33:http methods...
     #@-others
 #@nonl
-#@-node:ekr.20050802091909.1:class rstClass
-#@+node:ekr.20050802093751.1:html parser classes
+#@-node:ekr.20050805162550.8:class rstClass
+#@+node:ekr.20050805162550.39:html parser classes
 #@<< class linkAnchorParserClass >>
-#@+node:bwmulder.20050319181934: << class linkAnchorParserClass >>
+#@+node:ekr.20050805162550.40: << class linkAnchorParserClass >>
 class linkAnchorParserClass (HTMLParser.HTMLParser):
     
     '''A class to recognize anchors and links in HTML documents.'''
 
     #@    @+others
-    #@+node:ekr.20050802140041:__init__
+    #@+node:ekr.20050805162550.41:__init__
     def __init__(self,rst):
     
         HTMLParser.HTMLParser.__init__(self) # Init the base class.
@@ -705,8 +670,8 @@ class linkAnchorParserClass (HTMLParser.HTMLParser):
         self.rst = rst
         self.c = rst.c
     #@nonl
-    #@-node:ekr.20050802140041:__init__
-    #@+node:bwmulder.20050319181934.2:is_anchor
+    #@-node:ekr.20050805162550.41:__init__
+    #@+node:ekr.20050805162550.42:is_anchor
     def is_anchor(self, tag, attrs):
     
         if tag != 'a':
@@ -718,8 +683,8 @@ class linkAnchorParserClass (HTMLParser.HTMLParser):
     
         return False
     #@nonl
-    #@-node:bwmulder.20050319181934.2:is_anchor
-    #@+node:bwmulder.20050323091905:is_link
+    #@-node:ekr.20050805162550.42:is_anchor
+    #@+node:ekr.20050805162550.43:is_link
     def is_link(self, tag, attrs):
     
         if tag != 'a':
@@ -731,14 +696,14 @@ class linkAnchorParserClass (HTMLParser.HTMLParser):
     
         return False
       
-    #@-node:bwmulder.20050323091905:is_link
+    #@-node:ekr.20050805162550.43:is_link
     #@-others
 #@nonl
-#@-node:bwmulder.20050319181934: << class linkAnchorParserClass >>
+#@-node:ekr.20050805162550.40: << class linkAnchorParserClass >>
 #@nl
 
 #@+others
-#@+node:bwmulder.20050314184440:class htmlparserClass (linkAnchorParserClass)
+#@+node:ekr.20050805162550.44:class htmlparserClass (linkAnchorParserClass)
 class htmlparserClass (linkAnchorParserClass):
     
     '''
@@ -752,7 +717,7 @@ class htmlparserClass (linkAnchorParserClass):
     '''
 
     #@    @+others
-    #@+node:bwmulder.20050315115739:__init__
+    #@+node:ekr.20050805162550.45:__init__
     def __init__(self, http_map):
     
         linkAnchorParserClass.__init__(self) # Init the base class.
@@ -781,8 +746,8 @@ class htmlparserClass (linkAnchorParserClass):
         self.last_position = None
         # Last position; we must attach html code to this node.
     #@nonl
-    #@-node:bwmulder.20050315115739:__init__
-    #@+node:bwmulder.20050315115739.1:handle_starttag
+    #@-node:ekr.20050805162550.45:__init__
+    #@+node:ekr.20050805162550.46:handle_starttag
     def handle_starttag(self, tag, attrs):
         '''
         1. Find out if the current tag is an achor.
@@ -826,8 +791,8 @@ class htmlparserClass (linkAnchorParserClass):
         self.node_marker_stack.append(is_node_marker)
                 
     #@nonl
-    #@-node:bwmulder.20050315115739.1:handle_starttag
-    #@+node:bwmulder.20050315115739.2:handle_endtag
+    #@-node:ekr.20050805162550.46:handle_starttag
+    #@+node:ekr.20050805162550.47:handle_endtag
     def handle_endtag(self, tag):
         '''
         1. Set the second element of the current top of stack.
@@ -854,8 +819,8 @@ class htmlparserClass (linkAnchorParserClass):
         self.stack = self.stack[2]
         
     #@nonl
-    #@-node:bwmulder.20050315115739.2:handle_endtag
-    #@+node:bwmulder.20050315115739.3:generate_node_marker (a class method)
+    #@-node:ekr.20050805162550.47:handle_endtag
+    #@+node:ekr.20050805162550.48:generate_node_marker (a class method)
     def generate_node_marker(cls, number):
         
         '''Generate a node marker.'''
@@ -864,18 +829,18 @@ class htmlparserClass (linkAnchorParserClass):
         
     generate_node_marker = classmethod(generate_node_marker)
     #@nonl
-    #@-node:bwmulder.20050315115739.3:generate_node_marker (a class method)
-    #@+node:bwmulder.20050315134705:feed
+    #@-node:ekr.20050805162550.48:generate_node_marker (a class method)
+    #@+node:ekr.20050805162550.49:feed
     def feed(self, line):
     
         self.node_code.append(line)
     
         HTMLParser.HTMLParser.feed(self, line)
-    #@-node:bwmulder.20050315134705:feed
+    #@-node:ekr.20050805162550.49:feed
     #@-others
 #@nonl
-#@-node:bwmulder.20050314184440:class htmlparserClass (linkAnchorParserClass)
-#@+node:bwmulder.20050319180047:class anchor_htmlparserClass (linkAnchorParserClass)
+#@-node:ekr.20050805162550.44:class htmlparserClass (linkAnchorParserClass)
+#@+node:ekr.20050805162550.50:class anchor_htmlparserClass (linkAnchorParserClass)
 class anchor_htmlparserClass (linkAnchorParserClass):
     
     '''
@@ -888,7 +853,7 @@ class anchor_htmlparserClass (linkAnchorParserClass):
     '''
 
     #@    @+others
-    #@+node:bwmulder.20050319235437: __init__
+    #@+node:ekr.20050805162550.51: __init__
     def __init__(self, vnode, first_node):
     
         linkAnchorParserClass.__init__(self)
@@ -896,8 +861,8 @@ class anchor_htmlparserClass (linkAnchorParserClass):
         self.vnode = vnode
         self.anchormap = self.anchormap
         self.first_node = first_node
-    #@-node:bwmulder.20050319235437: __init__
-    #@+node:bwmulder.20050319181934.3:handle_starttag
+    #@-node:ekr.20050805162550.51: __init__
+    #@+node:ekr.20050805162550.52:handle_starttag
     def handle_starttag(self, tag, attrs):
         '''
         1. Find out if the current tag is an achor.
@@ -917,11 +882,11 @@ class anchor_htmlparserClass (linkAnchorParserClass):
                     self.anchormap[value] = (self.current_file, self.vnode)
                   
     #@nonl
-    #@-node:bwmulder.20050319181934.3:handle_starttag
+    #@-node:ekr.20050805162550.52:handle_starttag
     #@-others
 #@nonl
-#@-node:bwmulder.20050319180047:class anchor_htmlparserClass (linkAnchorParserClass)
-#@+node:bwmulder.20050320102006:class link_htmlparserClass (linkAnchorParserClass)
+#@-node:ekr.20050805162550.50:class anchor_htmlparserClass (linkAnchorParserClass)
+#@+node:ekr.20050805162550.53:class link_htmlparserClass (linkAnchorParserClass)
 class link_htmlparserClass (linkAnchorParserClass):
     
     '''This html parser does the second step of relocating links:
@@ -931,7 +896,7 @@ class link_htmlparserClass (linkAnchorParserClass):
     '''
 
     #@    @+others
-    #@+node:bwmulder.20050320102006.2:__init__
+    #@+node:ekr.20050805162550.54:__init__
     def __init__(self, p):
         
         linkAnchorParserClass.__init__(self)
@@ -940,8 +905,8 @@ class link_htmlparserClass (linkAnchorParserClass):
         self.anchormap = self.anchormap ### ???
         self.replacements = []
     #@nonl
-    #@-node:bwmulder.20050320102006.2:__init__
-    #@+node:bwmulder.20050320102006.3:handle_starttag
+    #@-node:ekr.20050805162550.54:__init__
+    #@+node:ekr.20050805162550.55:handle_starttag
     def handle_starttag(self, tag, attrs):
         '''
         1. Find out if the current tag is an achor.
@@ -968,20 +933,20 @@ class link_htmlparserClass (linkAnchorParserClass):
                         line, column = self.getpos()
                         self.replacements.append((line, column, href, href_file, http_node_ref))
     #@nonl
-    #@-node:bwmulder.20050320102006.3:handle_starttag
-    #@+node:bwmulder.20050320155022:get_replacements
+    #@-node:ekr.20050805162550.55:handle_starttag
+    #@+node:ekr.20050805162550.56:get_replacements
     def get_replacements(self):
     
         return self.replacements
     #@nonl
-    #@-node:bwmulder.20050320155022:get_replacements
+    #@-node:ekr.20050805162550.56:get_replacements
     #@-others
 #@nonl
-#@-node:bwmulder.20050320102006:class link_htmlparserClass (linkAnchorParserClass)
+#@-node:ekr.20050805162550.53:class link_htmlparserClass (linkAnchorParserClass)
 #@-others
 #@nonl
-#@-node:ekr.20050802093751.1:html parser classes
+#@-node:ekr.20050805162550.39:html parser classes
 #@-others
 #@nonl
-#@-node:ekr.20040331071319:@thin rst3.py
+#@-node:ekr.20050805162550:@thin rst3.py
 #@-leo
