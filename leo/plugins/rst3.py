@@ -15,7 +15,7 @@ docutils installed, it will generate HTML or LaTeX, respectively.
 #@-node:ekr.20050805162550.1:<< docstring >>
 #@nl
 
-__version__ = '0.0'
+__version__ = '0.01'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -49,7 +49,7 @@ except ImportError:
 try:
     import SilverCity
 except ImportError:
-    print 'SilverCity not loaded'
+    print 'rst3 plugin: SilverCity not loaded'
     SilverCity = None
 #@-node:ekr.20050805162550.2:<< imports >>
 #@nl
@@ -65,6 +65,8 @@ except ImportError:
 #@nonl
 #@-node:ekr.20050805162550.3:<< change log >>
 #@nl
+
+controller = None
 
 #@+others
 #@+node:ekr.20050805162550.4:Module level
@@ -88,7 +90,11 @@ def onCreate(tag, keywords):
 
     c = keywords.get('new_c') or keywords.get('c')
     if c:
-        return rstClass(c)
+        global controller
+        controller = rstClass(c)
+        
+        # Warning: Do not return anything but None here!
+        # Doing so suppresses the loadeing of other 'new' or 'open2' hooks!
 #@nonl
 #@-node:ekr.20050805162550.6:onCreate
 #@+node:ekr.20050806101253:code_block
@@ -315,17 +321,14 @@ class rstClass:
             h = p.headString().strip()
             if len(h) > 5 and g.match_word(h,0,"@rst"):
                 name = h[5:] ; found = True
-                if g.os_path_exists(name):
-                    junk,ext = g.os_path_splitext(name)
-                    ext = ext.lower()
-                    if ext in ('.htm','.html','.tex'):
-                        self.writeSpecialTree(p,name,ext)
-                    else:
-                        theFile = file(name,'w')
-                        self.writeTree(theFile,name,p)
-                        self.report(name)
+                junk,ext = g.os_path_splitext(name)
+                ext = ext.lower()
+                if ext in ('.htm','.html','.tex'):
+                    self.writeSpecialTree(p,name,ext)
                 else:
-                     g.es('file does not exist: %s' % (name),color='blue')
+                    theFile = file(name,'w')
+                    self.writeTree(theFile,name,p)
+                    self.report(name)
         if not found:
             g.es('No @rst nodes in selected tree',color='blue')
     #@nonl
