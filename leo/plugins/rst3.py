@@ -15,7 +15,7 @@ docutils installed, it will generate HTML or LaTeX, respectively.
 #@-node:ekr.20050805162550.1:<< docstring >>
 #@nl
 
-__version__ = '0.01'
+__version__ = '0.02'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -57,10 +57,23 @@ except ImportError:
 #@+node:ekr.20050805162550.3:<< change log >>
 #@+at
 # 
-# - Original by Josef Dalcolmo: contributed under the same licensed as Leo.py 
-# itself.
+# - Original rst code by Josef Dalcolmo: contributed under the same licensed 
+# as Leo.py itself.
 # 
-# - Based on rst2.py version 2.4.
+# - rst3.py based on rst2.py v2.4.
+# 
+# - rst3.py 0.02 EKR: Minor improvments:
+# 
+# - The code_block callback function now works when SilverCity is not present,
+# which resolves a long-standing question.
+# 
+# - Options get set from @settings trees if possible.
+# 
+# - No longer uses double-click.  Adds item to Edit menu.
+# 
+# - @button rst3 in test.leo will run processTree method, or load the module 
+# if it
+# hasn't been loaded yet.
 #@-at
 #@nonl
 #@-node:ekr.20050805162550.3:<< change log >>
