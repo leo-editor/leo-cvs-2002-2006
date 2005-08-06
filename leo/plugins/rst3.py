@@ -2,20 +2,69 @@
 #@+node:ekr.20050805162550:@thin rst3.py
 #@<< docstring >>
 #@+node:ekr.20050805162550.1:<< docstring >>
-'''A plugin to generate HTML or LaTeX files from reStructured Text embedded in
-Leo outlines.
+'''This plugin adds the 'Write Restructured Text' command to the Edit menu. This
+command searches for all nodes whose headline starts with @rst <filename>. When
+the plugin finds such 'rst trees' it can take many different kinds of actions
+depending upon which options in effect.
 
-If a headline starts with @rst <filename>, double-clicking on it will write a
-file in outline order.
+This plugin processes rst trees in two passes. The first pass looks for options
+embedded within the tree. Such 'dynamic' options override defaults that are
+specified in whatever @settings trees are in effect.
 
-If the name of the <filename> has the extension .html, .htm or .tex, and if you have
-docutils installed, it will generate HTML or LaTeX, respectively.
+You can specify dynamic options in several equivalent ways:
+
+1. Nodes whose headlines start with @rst-options can set one or more options. The
+body text should contain lines of the form:
+    
+<option-name> = <value>
+
+2. Nodes whose headlines start with
+
+@rst-option <option-name> = <value>
+
+set a single named option.
+
+3. @doc parts (in body text) that have the form:
+    
+    @ @rst-options
+    
+should contain lines of the form:
+    
+<option-name> = <value>
+
+just as with @rst-option nodes. The entire doc part is scanned until the next @c
+directive or the end of the body text.
+
+There are too many options to describe fully here. See the documentation for
+this plugin in leoPlugins.leo and LeoDocs.leo for full details. In brief,
+options cause this plugin to do the following kinds of things:
+
+- Generate 'implicit' rst markup from outlines not containing rst markup.
+
+- Scan rst-trees for already-existing 'explicit' rst markup. This plugin can
+massage this add or change such markup. For example, various options control
+whether and how this plugin will generate further rst markup from headlines.
+
+- Send rst markup (either implicit or explicit markup) to docutils for further
+processing. Naturally, docutils must be installed for this to happen. In
+particular, this plugin can take advantage of docutils ability to format HTML
+and LaTeX files. Files with extensions .html, .htm and .tex are by processed as
+HTML or LaTeX files by default.
+
+- Options control whether this plugin writes debugging information and
+intermediate text files while performing these tasks. Other options control the
+location and names of style sheets and other kinds of files.
 '''
 #@nonl
 #@-node:ekr.20050805162550.1:<< docstring >>
 #@nl
 
-__version__ = '0.02'
+# Original rst code by Josef Dalcolmo:
+# contributed under the same licensed as Leo.py itself.
+
+# rst3.py based on rst2.py v2.4.
+
+__version__ = '0.03'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -55,14 +104,11 @@ except ImportError:
 #@nl
 #@<< change log >>
 #@+node:ekr.20050805162550.3:<< change log >>
-#@+at
-# 
-# - Original rst code by Josef Dalcolmo: contributed under the same licensed 
-# as Leo.py itself.
-# 
-# - rst3.py based on rst2.py v2.4.
-# 
-# - rst3.py 0.02 EKR: Minor improvments:
+#@+others
+#@+node:ekr.20050806161758.1:v 0.02
+#@+at 
+#@nonl
+# EKR: Minor improvments:
 # 
 # - The code_block callback function now works when SilverCity is not present,
 # which resolves a long-standing question.
@@ -76,10 +122,21 @@ except ImportError:
 # hasn't been loaded yet.
 #@-at
 #@nonl
+#@-node:ekr.20050806161758.1:v 0.02
+#@+node:ekr.20050806161758.2:v 0.03
+#@+at 
+#@nonl
+# EKR: The first cut at an accurate docstring.
+#@-at
+#@nonl
+#@-node:ekr.20050806161758.2:v 0.03
+#@-others
+#@@nocolor
+#@nonl
 #@-node:ekr.20050805162550.3:<< change log >>
 #@nl
 
-controller = None
+controller = None # For use by @button rst3 code.
 
 #@+others
 #@+node:ekr.20050805162550.4:Module level
