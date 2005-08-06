@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7186" clone_windows="0"/>
-<globals body_outline_ratio="0.355681818182">
-	<global_window_position top="79" left="306" height="880" width="856"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7198" clone_windows="0"/>
+<globals body_outline_ratio="0.517045454545">
+	<global_window_position top="45" left="302" height="860" width="880"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -701,7 +701,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050715132524"><vh>Pymacs (hangs)</vh></v>
 </v>
-<v t="ekr.20040312021734" a="TV" annotate="7d71002e"><vh>Scripts...</vh>
+<v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1027,7 +1027,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050803075926"><vh>sudoku puzzle</vh>
 <v t="ekr.20050804073824"><vh>&lt;&lt; define data &gt;&gt;</vh></v>
-<v t="ekr.20050803075926.1"><vh>class sudokuClass</vh>
+<v t="ekr.20050803075926.1" a="E"><vh>class sudokuClass</vh>
 <v t="ekr.20050803075926.2"><vh> ctor (main) &amp; helpers</vh>
 <v t="ekr.20050803204429"><vh>initFromGuess</vh></v>
 <v t="ekr.20050803204429.1"><vh>initFromParent</vh></v>
@@ -1037,7 +1037,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050804070733"><vh>check</vh></v>
 <v t="ekr.20050804071049"><vh>checkGroup</vh></v>
 </v>
-<v t="ekr.20050804071242"><vh>printing &amp; dumping</vh>
+<v t="ekr.20050804071242" a="E"><vh>printing &amp; dumping</vh>
 <v t="ekr.20050803080858"><vh>dump</vh></v>
 <v t="ekr.20050803121730"><vh>printData</vh></v>
 <v t="ekr.20050803200132"><vh>printCells</vh></v>
@@ -1074,8 +1074,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050803124111.1"><vh>update</vh></v>
 </v>
 </v>
-<v t="ekr.20050803202932.2"><vh>(important)</vh>
-<v t="ekr.20050804071242" a="E"><vh>printing &amp; dumping</vh>
+<v t="ekr.20050803202932.2" a="E"><vh>(important)</vh>
+<v t="ekr.20050804071242"><vh>printing &amp; dumping</vh>
 <v t="ekr.20050803080858"><vh>dump</vh></v>
 <v t="ekr.20050803121730"><vh>printData</vh></v>
 <v t="ekr.20050803200132"><vh>printCells</vh></v>
@@ -1234,17 +1234,17 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050513103937"><vh>Original shortcuts</vh></v>
 <v t="ekr.20050705142631"><vh>@string unicodeTest = Präsentation.leo</vh></v>
 </v>
-<v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
-<v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
+<v t="ekr.20041113113555"><vh>@@button check spelling...</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20041125145818.1"><vh>@button settings...</vh></v>
-<v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
-<v t="ekr.20041230143535"><vh>@ button help</vh></v>
-<v t="ekr.20050210180937"><vh>@ button jython</vh></v>
-<v t="ekr.20050331070207"><vh>@ button golf</vh></v>
-<v t="ekr.20050704170739"><vh>@button Ipython</vh></v>
-<v t="ekr.20050726101758"><vh>@button Beautify</vh></v>
+<v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
+<v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
+<v t="ekr.20050331070207"><vh>@@ button golf</vh></v>
+<v t="ekr.20050704170739"><vh>@@button Ipython</vh></v>
+<v t="ekr.20050726101758"><vh>@@button Beautify</vh></v>
+<v t="ekr.20050722115320"><vh>@@button leoEmacs</vh></v>
+<v t="ekr.20050805175217"><vh>@@button rst2</vh></v>
 </v>
 <v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
 <v t="ekr.20050618061835.1"><vh>Intro</vh>
@@ -2021,7 +2021,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050722115320"><vh>@button leoEmacs</vh></v>
 <v t="ekr.20050726101926"><vh>keyPressed</vh>
 <v t="ekr.20050726101926.1"><vh>&lt;&lt; create the command &gt;&gt;</vh></v>
 <v t="ekr.20050726101926.2"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
@@ -2030,6 +2029,27 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726112715"><vh>Multiline test</vh></v>
 <v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
 <v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
+<v t="ekr.20050805150320"><vh>@button rst3</vh></v>
+<v t="ekr.20050805165407" a="E"><vh>Documentation for the rST plugin using rst</vh>
+<v t="ekr.20050805165407.1" a="ETV"><vh>@rst ../doc/rstplugin2.html</vh>
+<v t="ekr.20050805165407.2"><vh>Overview</vh>
+<v t="ekr.20050805165407.3"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050805165407.4"><vh>Formatting</vh>
+<v t="ekr.20050805165407.5"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050805165407.6"><vh>Embedding documentation in @file trees</vh>
+<v t="ekr.20050805165407.7"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050805165407.8"><vh>The code-block directive</vh>
+<v t="ekr.20050805165407.9"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050805165407.10"><vh>Cascading style sheets</vh>
+<v t="ekr.20050805165407.11"><vh>@rst</vh></v>
+</v>
+</v>
+<v t="ekr.20050806113004"><vh>@rst ../doc/rstplugin3.tex</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -9631,7 +9651,6 @@ print g.toEncodedString(s,"latin_1")</t>
 import leoTest
 
 leoTest.doTests(all=False)</t>
-<t tx="ekr.20041001203411"></t>
 <t tx="ekr.20041001203411.1">g.es("hi",color="red")</t>
 <t tx="ekr.20041001211817"></t>
 <t tx="ekr.20041004093917">@color
@@ -11501,13 +11520,6 @@ def go():
     os.system(command)
     
 threading.Thread(target=go).start()</t>
-<t tx="ekr.20041230143535">import threading
-
-# This is not too useful :-)
-def doHelp():
-    help('leo')
-
-threading.Thread(target=doHelp).start()</t>
 <t tx="ekr.20041231083027">@ignore</t>
 <t tx="ekr.20041231083027.1">@others</t>
 <t tx="ekr.20041231083027.2">def foo():
@@ -16682,7 +16694,7 @@ if not solver.errors:
     self.errors = 0
     self.guess = guess
     self.parent = parent
-    self.tracing = True
+    self.tracing = False
     self.valid = True
     self.verbose = False
 
@@ -16764,10 +16776,15 @@ if not solver.errors:
             self.printCells()
             if self.level &lt; 2:
                 guesses = self.findGuesses()
+                print '%d valid guesses' % len(guesses)
+                i = 0
                 for guess in guesses:
+                    i += 1
                     inner = sudokuClass(parent=self,guess=guess)
                     ok = inner.solve()
-                    if ok: return ok
+                    if ok and i &lt; len(guesses):
+                        print 'looking for more solutions'
+                    ## if ok: return ok
             else:
                 print 'maximum depth exceeded'
             return False
@@ -16907,10 +16924,19 @@ if not solver.errors:
     
     print ; print tag ; print
 
+    i = 0
     for row in self.rows:
-        for ch in row:
-            print ch or 'x',
+        i += 1
         print
+        for ch in row:
+            if ch:
+                print ('  %s  ') % ch,
+            else:
+                print ' ___ ',
+        if i % 3 == 0 and i &lt; 9:
+            print ; print ; print '_' * 53
+        print
+    print
 
     if 0: # Will be same as above.
         print 'using self.cols...'
@@ -17337,6 +17363,225 @@ data = ( # 8/4
     '2x147xxxx',
     'x7xxx864x',
     'xx8xxxxxx',
-    'x12xxx8x7')</t>
+    'x12xxx8x7')
+    
+data = (
+    'x4xxxx179',
+    'xx2xx8x54',
+    'xx6xx5xx8',
+    'x8xx7x91x',
+    'x5xx9xx3x',
+    'x1xx6xx4x',
+    '3xx4xx7xx',
+    '57x1xx2xx',
+    '928xxxx6x')
+    
+data = ( # 8/6
+    '2x6xxxx49',
+    'x37xx9xxx',
+    '1xx7xxxx6',
+    'xxx58x9xx',
+    '7x5xxx8x4',
+    'xx9x62xxx',
+    '9xxxx4xx1',
+    'xxx3xx49x',
+    '41xxxx2x8')
+    </t>
+<t tx="ekr.20050805150320">import leoPlugins
+
+rst3 = leoPlugins.getPluginModule('rst3')
+
+if rst3:
+    rst3.controller.processTree(p)
+else:
+    rst3 = leoPlugins.loadOnePlugin('rst3',verbose=True)
+    if rst3:
+        g.es('rst3 loaded')
+        rst3.onCreate('tag',{'c':c})
+    else:
+        # Ask to be removed.
+        g.app.scriptDict['removeMe'] = True</t>
+<t tx="ekr.20050805165407">@nocolor
+@language python</t>
+<t tx="ekr.20050805165407.1">###########################
+|leo| Using the rst2 plugin
+###########################
+
+This page documents a nifty new plugin created by Josef Dalcolmo, Timo Honkasalo, Steve Zatz, Paul Paterson and Edward Ream.  This page was created using the rst2 plugin.  You can find the source code in LeoPlugins.leo (on cvs).
+
+.. contents::
+
+.. Here are the links used in this document.
+
+.. _LaTeX:                http://www.latex-project.org/
+.. _reStructuredText:     http://docutils.sourceforge.net/rst.html
+.. _docutils:             http://docutils.sourceforge.net
+.. _ListManagerDocs.html: http://webpages.charter.net/edreamleo/ListManagerDocs.html
+.. _wxListManager.leo:    http://webpages.charter.net/edreamleo/wxListManager.leo
+.. _SilverCity:           http://silvercity.sourceforge.net
+.. _front:                http://webpages.charter.net/edreamleo/front.html
+.. _home:                 http://webpages.charter.net/edreamleo/front.html
+
+.. |blank| image:: blank.gif
+.. |leo|   image:: leo.gif
+    :target: front_</t>
+<t tx="ekr.20050805165407.2"></t>
+<t tx="ekr.20050805165407.3">This plugin creates output files from Leo outlines containing reStructuredText_
+(rST) The combination of Leo outlines and rST creates a simple, flexible and
+powerful way of generating HTML, LaTeX_ and other text documents.
+ReStructuredText is a simple and powerful text formatting markup language.
+
+The file ListManagerDocs.html_ is an impressive example of the kind of output
+that is possible to generate relatively easily using this plugin. The source
+file for this example is wxListManager.leo_.
+
+To use this plugin, you must have installed Python's docutils_ module. This
+module will also use the SilverCity_ syntax coloring package if you have
+installed it.
+
+This plugin assumes that a node whose headline is @rst &lt;filename&gt; contains a
+tree of nodes containing reStructuredText. Let us call such a node an **rst root**
+node. The plugin passes the headline and body text of the rst root and all the
+nodes of its subtree to Python's docutils module, which parses the
+reStructuredText and creates the output file.
+
+Double-clicking on an rst root node generates an output file from the
+reStructured Text input contained in the rst root node and all the nodes of its
+subtree. The output file will be HTML, LaTex or plain text depending on the
+extension of the filename specified in the rst root node. If the filename ends
+in .html or .htm the docutils module will create an HTML file. If the filename
+ends in .tex the docutils module will create a LaTex file. Otherwise, a plain
+.txt file is generated.
+
+If the output file is a .html or .htm file, it will use three .css (cascading
+style sheet) files provided they exist in the same directory as the output file.
+You can control the formatting of the HTML file by altering these .css files.
+See the node called "cascading style sheets" for more details.
+
+See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for
+many examples of how to use this plugin.</t>
+<t tx="ekr.20050805165407.4"></t>
+<t tx="ekr.20050805165407.5">If an outline node contains @rst &lt;filename&gt;, that node is the root of a tree of
+nodes that will create the named output file. Let's call such a node the **rst
+root**.
+
+Subnodes of the rst root nodes may have headlines that contain just @rst. Such
+node should contain rst markup, possibly including the code-block directive
+defined by this plugin to format blocks of code.
+
+**Important:** All @rst nodes should start with the @ignore directive. This allows @rst to be embedded in @file-nosent trees: see the next section for details. This plugin strips leading @ignore, @nocolor and @wrap directives.  Such directives do not appear in the output.
+
+The root node may contain any rST directives.  In particular, to create a table of contents put::
+
+    .. contents:: Table of Contents
+
+on its own line in the rst root node.
+
+All other subnodes of the rst root, i.e., nodes whose headline is something
+other than @rst, are **code nodes**. This plugin converts the headline text of
+code nodes into an rST section headline whose level depends on the level of the
+node in the Leo outline. Higher-level headlines in the outline correspond to
+higher-level section headings; lower-level headlines in the outline correspond
+to lower-level section headings. Any text in a code node is formatted as if it
+were enclosed in a code-block directive.
+
+The plugin reserves the '#' character for your own use so that you can
+specify an rST headline explicitly. For example,::
+
+    #####
+    Title
+    #####
+
+You would typically put such a title in the rst root node.
+Otherwise, section underlining is discouraged, since the plugin automaticaly
+generates sections from headlines.</t>
+<t tx="ekr.20050805165407.6"></t>
+<t tx="ekr.20050805165407.7">As stated earlier, you must put an @ignore directive in any @rst node (except the root @rst node) whose rST text you want to contribute to the output.  This strange-looking convention allows you to embed documentation in @file-nosent trees *without* that documentation being included in the file derived from the @file-nosent tree.
+
+For example, consider the following outline, in which all the @rst nodes (except the root @rst node) contain @ignore directives::
+
+    @rst spamDocs.html
+        @file-nosent spam.py
+            code node 1
+                @rst
+            code node 2
+                @rst
+            code node 3
+                @rst
+
+The rst2 plugin will ouput all the reStructuredText contained in the three @rst nodes to spamDocs.html, but the contents of those @rst nodes will not become part of spam.py.  *Note:* The @ignore directive is valid only in @file-nosent trees, which is why we must use @file-noset to generate spam.py.
+
+It would be also be possible to use cloned nodes to embed code nodes in .html files.  This would allow you to use regular @file trees to generate derived files.  For example, suppose all similarly named code nodes are clones of each other::
+
+    @rst spamDocs.html
+        code node 1
+            @rst
+        code node 2
+            @rst
+        code node 3
+            @rst
+
+    @file-nosent spam.py
+        code node 1
+        code node 2
+        code node 3
+
+The disadvantage of this organization is that you must update spamDocs.html by hand to keep it up-to-date with spam.py.
+</t>
+<t tx="ekr.20050805165407.8"></t>
+<t tx="ekr.20050805165407.9">This plugin defines a code-block rST directive if the SilverCity syntax coloring module has been installed. This directive takes one argument, a language name.  For example::
+
+    .. code-block:: Python
+
+    import leoPlugins
+    import leoGlobals as g
+
+
+This directive syntax colors the code in the indented code block that follows the directive.  The result looks like this:
+
+.. code-block:: Python
+    
+    import leoPlugins
+    import leoGlobals as g
+
+See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for many examples of how to use this directive.
+</t>
+<t tx="ekr.20050805165407.10"></t>
+<t tx="ekr.20050805165407.11">When this plugin generates HTML files, this plugin assumes that three .css
+(cascading style sheet) files exist in the directory containing the output file.
+For the HTML output to look good the following .css files should exist in the
+directory containing the generatated HTML file: default.css, leo_rst.css and
+silver_city.css.
+
+- default.css is the default style sheet that docutils expects to exist.
+- leo_rst.css contains some style improvements based on Gunnar Schwant's DocFactory.
+- silver_city.css is the style sheet that controls the syntax highlighting generated by SilverCity.
+
+The latter two style sheets are imported at the end of the default.css.
+
+**N.B.** You can use cascading style sheets to do things that otherwise wouldn't be possible with "plain" rST.  For instance, the background color of this page was specified in a body style.
+
+-------------
+
+|leo|</t>
+<t tx="ekr.20050805175217">import leoPlugins
+
+rst2 = leoPlugins.getPluginModule('rst2')
+
+if rst2:
+    rst2.onIconDoubleClick('tag',{'c':c,'p':p,}) # Tag should not be 'open2'
+else:
+    rst2 = leoPlugins.loadOnePlugin('rst2',verbose=True)
+    if rst2:
+        g.es('rst2 loaded')
+    else:
+        # Ask to be removed.
+        g.app.scriptDict['removeMe'] = True</t>
+<t tx="ekr.20050806113004">########
+Headline
+########
+
+
+This is a test</t>
 </tnodes>
 </leo_file>
