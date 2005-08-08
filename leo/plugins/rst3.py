@@ -64,7 +64,7 @@ location and names of style sheets and other kinds of files.
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.03'
+__version__ = '0.04'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -72,7 +72,6 @@ import leoGlobals as g
 import leoPlugins
 
 import os
-import ConfigParser
 import HTMLParser
 import pprint
 import StringIO
@@ -130,10 +129,32 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050806161758.2:v 0.03
+#@+node:ekr.20050808083547:v 0.04
+#@+at 
+#@nonl
+# EKR: add preprocess and helpers in 'scanning for options'
+#@-at
+#@nonl
+#@-node:ekr.20050808083547:v 0.04
 #@-others
 #@@nocolor
 #@nonl
 #@-node:ekr.20050805162550.3:<< change log >>
+#@nl
+#@<< to do >>
+#@+node:ekr.20050806162146:<< to do >>
+#@@nocolor
+#@+at
+# 
+# - Simplify the code further, especially concerning the creation of files.
+# 
+# - Write the preprocessing code.
+# 
+# - Define enough options to support all useful style of embedding rst in Leo 
+# outlines.
+#@-at
+#@nonl
+#@-node:ekr.20050806162146:<< to do >>
 #@nl
 
 controller = None # For use by @button rst3 code.
@@ -230,12 +251,56 @@ class rstClass:
     
     #@    @+others
     #@+node:ekr.20050805162550.9: Birth
-    #@+node:ekr.20050805162550.10: ctor
+    #@+node:ekr.20050805162550.10: ctor (rstClass)
     def __init__ (self,c):
         
         global SilverCity
         
         self.c = c
+        
+        #@    << set optionsNameDict >>
+        #@+node:ekr.20050808064245:<< set optionsNameDict >>
+        self.optionsNameDict = {
+        
+            # How to interpret @rst-settings nodes and @rst-settings and @rst-markup doc parts...
+            'rst3_ignore_leo_directives_in_auto_mode': False,
+            'rst3_ignore_leo_directives_in_manual_mode': True,
+            'rst3_always_ignore_these_directives': None, # list of directives
+            'rst3_never_ignore_these_directives':  None, # list of directives
+            
+            'rst3_ignore_option_nodes_in_auto_mode': False,
+            'rst3_ignore_option_doc_parts_in_auto_mode': False,
+            'rst3_ignore_markup_doc_parts_in_auto_mode': False,
+            
+            'rst3_ignore_option_nodes_in_manual_mode': True,
+            'rst3_ignore_option_doc_parts_in_manual_mode': True,
+            'rst3_ignore_markup_doc_parts_in_manual_mode': True,
+            
+            # How to process nodes, headlines and body text...
+            'rst3_ignore_all_headlines_in_auto_mode': False,
+            'rst3_ignore_all_headlines_in_manual_mode': False,
+            
+            'rst3_ignore_organizer_nodes_in_auto_mode': False,
+            'rst3_ignore_organizer_nodes_in_manual_mode': False,
+            
+            'rst3_ignore_headlines_with_prefix_in_auto_mode': None,
+            'rst3_ignore_headlines_with_prefix_in_manual_mode': None,
+            
+            'rst3_process_only_headlines_with_prefix_in_auto_mode': None,
+            'rst3_process_only_headlines_with_prefix_in_manual_mode': None,
+            
+            'rst3_process_only_bodies_with_headline_prefix_in_auto_mode': None,
+            'rst3_process_only_bodies_with_headline_prefix_in_manual_mode': None,
+            
+            'rst3_process_only_nodes_with_headline_prefix_in_auto_mode': None,
+            'rst3_process_only_nodes_with_headline_prefix_in_manual_mode': None,
+            
+            # rst-specific options...
+            'rst3_underline_characters': '', #whatever the default chars are presently
+        }
+        #@nonl
+        #@-node:ekr.20050808064245:<< set optionsNameDict >>
+        #@nl
         #@    << init ivars >>
         #@+node:ekr.20050805162550.11:<< init ivars >>
         # Debugging...
@@ -283,7 +348,7 @@ class rstClass:
         if c.config.getBool("rst2_run_on_open_window"):
             self.runOnOpen()
     #@nonl
-    #@-node:ekr.20050805162550.10: ctor
+    #@-node:ekr.20050805162550.10: ctor (rstClass)
     #@+node:ekr.20050805162550.12:addMenu
     def addMenu(self):
         
@@ -380,12 +445,140 @@ class rstClass:
         return g.toEncodedString(s,encoding=self.encoding,reportErrors=True)
     #@nonl
     #@-node:ekr.20050805162550.16:encode
+    #@+node:ekr.20050807120331:scanning for options
+    #@+node:ekr.20050808072943:canonicalizeSettingName (munge)
+    def canonicalizeSettingName (self,name):
+        
+        return g.app.config.canonicalizeSettingName(name)
+    
+    munge = canonicalizeSettingName
+    #@nonl
+    #@-node:ekr.20050808072943:canonicalizeSettingName (munge)
+    #@+node:ekr.20050808072943.1:parseOptionLine
+    def parseOptionLine (self,s):
+    
+        '''Parse a line containing name=val and return (name,value) or None.'''
+    
+        s = s.strip()
+        # Get name.  Names may contain '-' and '_'.
+        i = g.skip_id(s,0,chars='-_')
+        name = s [:i]
+        if not name: return None
+        # Skip the '='.
+        j = g.skip_ws(s,i)
+        if not g.match(s,j,'='): return None
+        # Get val.
+        val = s [j+1:].strip()
+        if val:
+            return (name,val)
+        else:
+            return None
+    #@nonl
+    #@-node:ekr.20050808072943.1:parseOptionLine
+    #@+node:ekr.20050807120331.1:preprocessTree
+    def preprocessTree (self,root):
+        
+        self.tnodeOptionDict = {}
+        
+        for p in root.self_and_subtree_iter():
+            d = self.tnodeOptionDict.get(p.v.t)
+            if not d:
+                d = self.scanNodeForOptions(p)
+                if d:
+                    self.tnodeOptionDict [p.v.t] = (p.headString(),d)
+                
+        if 1:
+            g.trace(root.headString())
+            g.printDict(self.tnodeOptionDict)
+    #@nonl
+    #@-node:ekr.20050807120331.1:preprocessTree
+    #@+node:ekr.20050808070018.2:scanForOptionDocParts
+    def scanForOptionDocParts (self,p,s):
+        
+        '''Return a dictionary containing all options from @rst-options doc parts in p.
+        Multiple @rst-options doc parts are allowed: this code aggregates all options.
+        '''
+    
+        d = {} ; n = 0 ; lines = g.splitLines(s)
+        while n < len(lines):
+            line = lines[n] ; n += 1
+            if line.startswith('@'):
+                i = g.skip_ws(line,1)
+                if g.match_word(line,i,'@rst-options'):
+                    # Add options until the end of the doc part.
+                    while n < len(lines):
+                        line = lines[n] ; n += 1
+                        if g.match_word(line,0,'@c') or g.match_word(line,0,'@code'):
+                            break
+                        else:
+                            d2 = self.scanOption(p,line)
+                            if d2: d.update(d2)
+        return d
+    #@nonl
+    #@-node:ekr.20050808070018.2:scanForOptionDocParts
+    #@+node:ekr.20050807120331.2:scanNodeForOptions
+    def scanNodeForOptions (self,p):
+    
+        '''Return a dictionary containing all the option-name:value entries in p.
+        
+        Such entries may arise from @rst-option or @rst-options in the headline,
+        or from @ @rst-options doc parts.'''
+    
+        h = p.headString()
+    
+        if g.match_word(h,0,'@rst-option'):
+            s = h [len('@rst-option'):]
+            d = self.scanOption(p,s)
+        elif g.match_word(h,0,'@rst-options'):
+            d = self.scanOptions(p,p.bodyString())
+        else:
+            d = self.scanForOptionDocParts(p,p.bodyString())
+            
+        # g.trace(p.headString(),d)
+        return d
+    #@nonl
+    #@-node:ekr.20050807120331.2:scanNodeForOptions
+    #@+node:ekr.20050808070018:scanOption
+    def scanOption (self,p,s):
+        
+        '''Return { name:val } is s is a line of the form name=val.
+        Otherwise return {}'''
+        
+        data = self.parseOptionLine(s)
+    
+        if data:
+            name,val = data
+            if   val.lower() == 'true': val = True
+            elif val.lower() == 'false': val = False
+            return { self.munge(name): val }
+        else:
+            g.trace(repr(s))
+            s2 = 'bad rst3 option in %s: %s' % (p.headString(),s)
+            g.es(s2,color='blue')
+            return {}
+    #@-node:ekr.20050808070018:scanOption
+    #@+node:ekr.20050808070018.1:scanOptions
+    def scanOptions (self,p,s):
+        
+        '''Return a dictionary containing all the options in s.'''
+         
+        d = {}
+    
+        for line in g.splitLines(s):
+            d2 = self.scanOption(p,line)
+            if d2: d.update(d2)
+            
+        return d
+    #@nonl
+    #@-node:ekr.20050808070018.1:scanOptions
+    #@-node:ekr.20050807120331:scanning for options
     #@+node:ekr.20050805162550.17:processTree & helpers
     def processTree(self,p):
         
         '''Process all @rst nodes in a tree.'''
     
         self.applyConfiguration()
+        self.preprocessTree(p)
         found = False
         for p in p.self_and_subtree_iter():
             h = p.headString().strip()
