@@ -147,6 +147,17 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050808185746:v 0.05
+#@+node:ekr.20050809094214:v 0.06
+#@+at
+# 
+# - Reorganized and simplified top-level write code.
+# - The code that initializes settings appears to work.
+# - Simplified munge.
+# ** The big question now involve how do we use settings and context to 
+# generate what we want.
+#@-at
+#@nonl
+#@-node:ekr.20050809094214:v 0.06
 #@-others
 #@@nocolor
 #@nonl
@@ -156,6 +167,12 @@ except ImportError:
 #@+node:ekr.20050806162146:<< to do >>
 #@@nocolor
 #@+at
+# 
+# - Remove @ @rst-options parts from source.
+# 
+# - More flexible options:
+#     - Default to True if no value given.
+#     - Add encoding rst-option (can override @encoding directives)
 # 
 # - Add _multiple_doc_parts entry to dicts.
 # 
@@ -292,6 +309,11 @@ class rstClass:
         self.node_counter = 0
         self.toplevel = 0
         self.use_alternate_code_block = False ### SilverCity is None
+        
+        # For writing.
+        self.ext = None # The file extension.
+        self.outputFileName = None # The name of the file being written.
+        self.outputFile = None # The open file being written.
         #@nonl
         #@-node:ekr.20050805162550.11:<< init ivars >>
         #@nl
@@ -330,7 +352,6 @@ class rstClass:
             
             # rst2 options to be deleted...
             'rst2_massage_body': False,
-            'rst2_use_file': False,
             'rst2_write_pure_document': False,  # to be deleted
     
             # How to interpret @rst-settings nodes and @rst-settings and @rst-markup doc parts...
@@ -368,82 +389,29 @@ class rstClass:
             
             # rst-specific options...
             'rst3_underline_characters': '', #whatever the default chars are presently
+            'rst3_write_docutils_sources_to_file': False,
         }
         
     #@nonl
     #@-node:ekr.20050808064245:createDefaultOptionsDict
-    #@+node:ekr.20050805162550.15:getBool & getString (to be deleted?)
-    def getBool(self,ivar_name,setting_name):
-        
-        c = self.c
-        newvalue = c.config.getBool(setting_name)
-    
-        if newvalue is not None:
-            g.trace(ivar_name,newvalue)
-            setattr(self, ivar_name, newvalue)
-            
-    def getString(self,ivar_name,setting_name):
-        
-        c = self.c
-        newvalue = c.config.getString(setting_name)
-    
-        if newvalue is not None:
-            g.trace(ivar_name,newvalue)
-            setattr(self, ivar_name, newvalue)
-    #@nonl
-    #@-node:ekr.20050805162550.15:getBool & getString (to be deleted?)
     #@+node:ekr.20050808072943:munge
     def munge (self,name):
         
-        s = g.app.config.canonicalizeSettingName(name)
+        '''Remove rstNNN_ prefix.'''
         
-        if name.startswith('rst'):
-            name = name[3:]
-        if name and name[0].isdigit():
-            name = name[1:]
-        if name and name[0] == '_':
-            name = name[1:]
-        if not name:
-            name = ''
-        return name
+        # s = g.app.config.canonicalizeSettingName(name)
+        
+        i = g.choose(name.startswith('rst'),3,0)
+    
+        while i < len(name) and name[i].isdigit():
+            i += 1
+    
+        if i < len(name) and name[i] == '_':
+            i += 1
+        
+        return name[i:]
     #@nonl
     #@-node:ekr.20050808072943:munge
-    #@+node:ekr.20050805162550.14:runOnOpen  (delete??)
-    def runOnOpen (self):
-        
-        g.trace()
-        c = self.c
-        ignoreset = {} ; http_map = {} ; anchormap = {}
-        self.node_counter = 0 ; found = False
-        
-        for p in c.allNodes_iter():
-            if p.v in self.ignoreset:
-                continue
-            s = p.headString()
-            if s.startswith("@rst ") and len(s.split()) >= 2:
-                for p1 in p.subtree_iter():
-                    ignoreset[p1.v] = True
-                try:
-                    self.http_map = {}
-                    self.anchormap = {}
-                    self.processTree(p)
-                    http_map.update(self.http_map)
-                    anchormap.update(self.anchormap)
-                    found = True
-                except Exception:
-                    g.es("Formatting failed for %s" % p, color='red')
-                    g.es_exception()
-        if found:
-            self.http_map = http_map
-            self.anchormap = anchormap
-            relocate_references() 
-            self.http_map = None
-            self.anchormap = None
-            g.es('html updated for html plugin', color="blue")
-        if self.clear_http_attributes:
-            g.es("http attributes cleared")
-    #@nonl
-    #@-node:ekr.20050805162550.14:runOnOpen  (delete??)
     #@-node:ekr.20050805162550.9: Birth & init
     #@+node:ekr.20050805162550.16:encode
     def encode (self,s):
@@ -451,35 +419,22 @@ class rstClass:
         return g.toEncodedString(s,encoding=self.encoding,reportErrors=True)
     #@nonl
     #@-node:ekr.20050805162550.16:encode
-    #@+node:ekr.20050807120331:scanning for options
-    #@+node:ekr.20050805162550.13:initOptionsFromSettings
-    def initOptionsFromSettings (self):
-    
-        c = self.c ; d = self.defaultOptionsDict
-        keys = d.keys() ; keys.sort()
-        trace = False
-        if trace: g.trace()
-    
-        for key in keys:
-            # First, try to get the option from settings
-            for getter,kind in (
-                (c.config.getString,'@string'),
-                (c.config.getBool,'@bool'),
-                (d.get,'default'),
-            ):
-                val = getter(key)
-                if kind == 'default' or val is not None:
-                    ivar = self.munge(key)
-                    setattr(self,ivar,val)
-                    if trace: print '%7s %55s %s' % (kind,ivar,val)
-                    break
-    
-        # Special case.
-        if self.http_server_support and not mod_http:
-            g.es('No http_server_support: can not import mod_http plugin',color='red')
-            self.http_server_support = False
+    #@+node:ekr.20050807120331.1:preprocessTree & helpers
+    def preprocessTree (self,root):
+        
+        self.tnodeOptionDict = {}
+        
+        for p in root.self_and_subtree_iter():
+            d = self.tnodeOptionDict.get(p.v.t)
+            if not d:
+                d = self.scanNodeForOptions(p)
+                if d:
+                    self.tnodeOptionDict [p.v.t] = (p.headString(),d)
+                
+        if 0:
+            g.trace(root.headString())
+            g.printDict(self.tnodeOptionDict)
     #@nonl
-    #@-node:ekr.20050805162550.13:initOptionsFromSettings
     #@+node:ekr.20050808072943.1:parseOptionLine
     def parseOptionLine (self,s):
     
@@ -501,23 +456,6 @@ class rstClass:
             return None
     #@nonl
     #@-node:ekr.20050808072943.1:parseOptionLine
-    #@+node:ekr.20050807120331.1:preprocessTree
-    def preprocessTree (self,root):
-        
-        self.tnodeOptionDict = {}
-        
-        for p in root.self_and_subtree_iter():
-            d = self.tnodeOptionDict.get(p.v.t)
-            if not d:
-                d = self.scanNodeForOptions(p)
-                if d:
-                    self.tnodeOptionDict [p.v.t] = (p.headString(),d)
-                
-        if 1:
-            g.trace(root.headString())
-            g.printDict(self.tnodeOptionDict)
-    #@nonl
-    #@-node:ekr.20050807120331.1:preprocessTree
     #@+node:ekr.20050808070018.2:scanForOptionDocParts
     def scanForOptionDocParts (self,p,s):
         
@@ -597,16 +535,17 @@ class rstClass:
         return d
     #@nonl
     #@-node:ekr.20050808070018.1:scanOptions
-    #@+node:ekr.20050808142313.28:scanAllOptions
-    # Once an option is seen, no other related options in ancestor nodes haveany effect.@c
+    #@-node:ekr.20050807120331.1:preprocessTree & helpers
+    #@+node:ekr.20050808142313.28:scanAllOptions & helper
+    # Once an option is seen, no other related options in ancestor nodes haveany effect.
     
     def scanAllOptions(self,p):
         
         '''Scan position p and p's ancestors looking for options,
-        setting corresponding rst3 ivars.
+        setting corresponding ivars.
         '''
         
-        self.initOptionsFromSettings()
+        self.initOptionsFromSettings() # Must be done on every node.
         result = {}
         for p in p.self_and_parents_iter():
             d = tnodeOptionDict.get(p.v.t)
@@ -614,35 +553,132 @@ class rstClass:
                 for key in d.keys():
                     if not result.has_key(key):
                         val = d.get(key)
-                        g.trace(key,val)
-                        result [key] = val
+                        ivar = self.munge(key)
+                        result [ivar] = val
+                        g.trace(ivar,val)
         return result
     #@nonl
-    #@-node:ekr.20050808142313.28:scanAllOptions
-    #@-node:ekr.20050807120331:scanning for options
-    #@+node:ekr.20050805162550.17:processTree & helpers
+    #@+node:ekr.20050805162550.13:initOptionsFromSettings
+    def initOptionsFromSettings (self):
+    
+        c = self.c ; d = self.defaultOptionsDict
+        keys = d.keys() ; keys.sort()
+    
+        for key in keys:
+            for getter,kind in (
+                (c.config.getBool,'@bool'),
+                (c.config.getString,'@string'),
+                (d.get,'default'),
+            ):
+                val = getter(key)
+                if kind == 'default' or val is not None:
+                    ivar = self.munge(key)
+                    if kind != 'default': print '%7s %55s %s' % (kind,ivar,val)
+                    setattr(self,ivar,val)
+                    break
+    
+        # Special case.
+        if self.http_server_support and not mod_http:
+            g.es('No http_server_support: can not import mod_http plugin',color='red')
+            self.http_server_support = False
+    #@-node:ekr.20050805162550.13:initOptionsFromSettings
+    #@-node:ekr.20050808142313.28:scanAllOptions & helper
+    #@+node:ekr.20050809074827:write methods
+    #@+node:ekr.20050809082854: Top-level write code
+    #@+node:ekr.20050809075309:initWrite
+    def initWrite (self,p,encoding=None):
+        
+        # Set the encoding from any parent @encoding directive.
+        # This can be overridden by @rst-option encoding=whatever.
+        d = g.scanDirectives(c=self.c,p=p)
+        self.encoding = encoding or d.get('encoding') or self.defaultEncoding
+    
+        # Make sure all ivars are defined.  Also called by scanAllOptions.
+        self.initOptionsFromSettings()
+        
+        language = d.get('language','').lower()
+        syntax = SilverCity is not None
+    
+        if syntax and language in ('python','ruby','perl','c'):
+            self.code_block_string = '**code**:\n\n.. code-block:: %s\n\n' % language.swapcase()
+        else:
+            self.code_block_string = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
+            
+        self.toplevel = p.level() + 1
+    #@nonl
+    #@-node:ekr.20050809075309:initWrite
+    #@+node:ekr.20050805162550.17:processTree
     def processTree(self,p):
         
         '''Process all @rst nodes in a tree.'''
     
-        self.initOptionsFromSettings()
         self.preprocessTree(p)
         found = False
-        for p in p.self_and_subtree_iter():
+        p = p.copy() ; after= p.nodeAfterTree()
+        while p and p != after:
             h = p.headString().strip()
-            if len(h) > 5 and g.match_word(h,0,"@rst"):
-                name = h[5:] ; found = True
-                junk,ext = g.os_path_splitext(name)
-                ext = ext.lower()
-                if ext in ('.htm','.html','.tex'):
-                    self.writeSpecialTree(p,name,ext)
+            if g.match_word(h,0,"@rst"):
+                self.outputFileName = h[4:].strip()
+                if self.outputFileName:
+                    found = True
+                    g.trace(self.outputFileName)
+                    self.ext = ext = g.os_path_splitext(self.outputFileName)[1].lower()
+                    if ext in ('.htm','.html','.tex'):
+                        self.writeSpecialTree(p)
+                    else:
+                        self.writeNormalTree(p)
+                    self.report(self.outputFileName)
+                    p.moveToNodeAfterTree()
                 else:
-                    theFile = file(name,'w')
-                    self.writeTree(theFile,name,p)
-                    self.report(name)
+                    p.moveToThreadNext()
+            else: p.moveToThreadNext()
         if not found:
             g.es('No @rst nodes in selected tree',color='blue')
     #@nonl
+    #@-node:ekr.20050805162550.17:processTree
+    #@+node:ekr.20050809080925:writeNormalTree
+    def writeNormalTree (self,p):
+    
+        self.initWrite(p)
+        self.outputFile = file(self.outputFileName,'w')
+        self.writeTree(p)
+        self.outputFile.close()
+    #@nonl
+    #@-node:ekr.20050809080925:writeNormalTree
+    #@+node:ekr.20050805162550.21:writeSpecialTree
+    def writeSpecialTree (self,p):
+        
+        isHtml = self.ext in ('.html','.htm')
+        if isHtml and not SilverCity:
+            g.es('SilverCity not present so no syntax highlighting')
+        
+        self.initWrite(p,encoding=g.choose(isHtml,'utf-8','iso-8859-1'))
+        self.outputFile = StringIO.StringIO()
+        self.writeTree(p)
+        source = self.outputFile.getvalue()
+        self.outputFile = None
+    
+        if self.write_docutils_sources_to_file:
+            name = self.outputFileName + '.txt'
+            g.es('Writing docutils sources to %s' % (name),color='blue')
+            f = file(name,'w')
+            f.write(source)
+            f.close()
+            
+        try:
+            output = self.writeToDocutils(source,isHtml)
+        except Exception:
+            output = None
+            
+        if output:
+            f = file(self.outputFileName,'w')
+            f.write(output)
+            f.close()
+            
+        return self.http_support_main(self.outputFileName)
+    #@nonl
+    #@-node:ekr.20050805162550.21:writeSpecialTree
+    #@-node:ekr.20050809082854: Top-level write code
     #@+node:ekr.20050805162550.18:massageBody
     def massageBody (self,p):
         
@@ -659,6 +695,14 @@ class rstClass:
         return s
     #@nonl
     #@-node:ekr.20050805162550.18:massageBody
+    #@+node:ekr.20050805162550.20:report
+    def report (self,name):
+    
+        path = g.os_path_abspath(g.os_path_join(os.getcwd(),name))
+    
+        g.es('wrote: %s' % (path),color="blue")
+    #@nonl
+    #@-node:ekr.20050805162550.20:report
     #@+node:ekr.20050805162550.19:underlineString
     # The first character is intentionally unused, to serve as the underline
     # character in a title (in the body of the @rst node)
@@ -672,110 +716,16 @@ class rstClass:
         return str * max(len(h),4) + '\n'
     #@nonl
     #@-node:ekr.20050805162550.19:underlineString
-    #@+node:ekr.20050805162550.20:report
-    def report (self,name):
-    
-        path = g.os_path_abspath(g.os_path_join(os.getcwd(),name))
-    
-        g.es('wrote: %s' % (path),color="blue")
-    #@nonl
-    #@-node:ekr.20050805162550.20:report
-    #@+node:ekr.20050805162550.21:writeSpecialTree (sets argv)
-    def writeSpecialTree (self,p,fname,ext):
-    
-        pub = docutils.core.Publisher()
-        html = ext in ('.html','.htm')
-        writer = g.choose(html,'html','latex')
-        self.encoding = g.choose(html,'utf-8','iso-8859-1')
-        syntax = SilverCity is not None
-        if html and not SilverCity:
-            g.es('SilverCity not present so no syntax highlighting')
+    #@+node:ekr.20050809080031:write
+    def write (self,s):
         
-        # g.trace('self.use_file',self.use_file)
-    
-        stringFile = StringIO.StringIO()
-        self.writeTree(stringFile,fname,p,syntax=syntax)
-        source = stringFile.getvalue()
-        if self.use_file:
-            #@        << write source to fname.txt >>
-            #@+node:ekr.20050805162550.22:<< write source to fname.txt >>
-            g.es('Writing %s.txt' % fname)
-            theFile = file(name+'.txt','w')
-            theFile.write(source)
-            theFile.close()
-            #@nonl
-            #@-node:ekr.20050805162550.22:<< write source to fname.txt >>
-            #@nl
-    
-        if self.use_file:
-            pub.source      = docutils.io.FileInput(source_path=rstFileName)
-            pub.destination = docutils.io.FileOutput(destination_path=fname,encoding='unicode')
-        else:
-            pub.source      = docutils.io.StringInput(source=source)
-            pub.destination = docutils.io.StringOutput(pub.settings,encoding=self.encoding)
-    
-        pub.set_reader('standalone',None,'restructuredtext')
-        pub.set_writer(writer)
-        output = pub.publish(argv=[r'--stylesheet=c:\prog\leoCvs\leo\doc\default.css'])
-        if not self.use_file:
-            convertedFile = file(fname,'w')
-            convertedFile.write(output)
-            convertedFile.close()
-        self.report(fname)
-        return self.http_support_main(fname)
-    #@nonl
-    #@-node:ekr.20050805162550.21:writeSpecialTree (sets argv)
-    #@+node:ekr.20050805162550.23:writeTree
-    def writeTree(self,theFile,fname,p,syntax=False):
+        s = self.encode(s)
         
-        '''Write p's tree to theFile.'''
-                
-        # we don't write a title, so the titlepage can be customized
-        # use '#' for title under/overline
-        c = self.c
-        d = g.scanDirectives(c,p=p)
-        self.encoding = d.get('encoding') or self.defaultEncoding
-        #@    << set code_block_string ivar >>
-        #@+node:ekr.20050805162550.24:<< set code_block_string ivar >>
-        language = d.get('language','').lower()
-        
-        if syntax and language in ('python','ruby','perl','c'):
-            self.code_block_string = '**code**:\n\n.. code-block:: %s\n\n' % language.swapcase()
-        else:
-            self.code_block_string = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
-            
-        # g.trace(repr(self.code_block_string))
-        #@nonl
-        #@-node:ekr.20050805162550.24:<< set code_block_string ivar >>
-        #@nl
-        theFile.write('.. filename: %s\n\n' % self.encode(fname))
-        if self.massage_body:  ### should be a dynamic option.
-            s = massageBody(p)
-        else:
-            s = p.bodyString()
-        theFile.write('%s\n\n' % self.encode(s))		# write body of titlepage.
-        self.toplevel = p.level() + 1
-        if self.http_server_support:
-            #@        << handle http support >>
-            #@+node:ekr.20050805162550.25:<< handle http support >>
-            if self.tag == 'open2':
-                http_map = self.http_map
-            else:
-                http_map = {}
-                self.anchormap = {}
-                # maps v nodes to markers.
-                self.node_counter = 0
-            #@nonl
-            #@-node:ekr.20050805162550.25:<< handle http support >>
-            #@nl
-        for p in p.subtree_iter():
-            self.writeNode(theFile,p)
-        if self.http_server_support:
-            self.http_map = http_map
+        self.outputFile.write(s)
     #@nonl
-    #@-node:ekr.20050805162550.23:writeTree
+    #@-node:ekr.20050809080031:write
     #@+node:ekr.20050805162550.26:writeHeadline
-    def writeHeadline (self,theFile,p):
+    def writeHeadline (self,p):
         
         h = p.headString() ; level = p.level() - self.toplevel
         tag = '@file-nosent'
@@ -783,30 +733,30 @@ class rstClass:
         if g.match_word(h,0,tag):
             h = h[len(tag):]
     
-        theFile.write('%s\n%s\n' % (self.encode(h),self.underlineString(h,level)))
+        self.write('%s\n%s\n' % (self.encode(h),self.underlineString(h,level)))
     #@nonl
     #@-node:ekr.20050805162550.26:writeHeadline
     #@+node:ekr.20050805162550.27:writeNode & helpers
-    def writeNode (self,theFile,p):
+    def writeNode (self,p):
     
         if self.http_server_support:
-            self.add_node_marker(p,theFile)
+            self.add_node_marker(p)
     
         if self.write_pure_document or g.match_word(p.headString(),0,"@rst"):
-            self.writeRstNode(theFile,p)
+            self.writeRstNode(p)
         else:
-            self.writePlainNode(theFile,p)
+            self.writePlainNode(p)
     
         if self.clear_http_attributes:
             self.clearHttpAttributes(p)
     #@nonl
     #@+node:ekr.20050805162550.28:add_node_marker
-    def add_node_marker(self,p,theFile):
+    def add_node_marker(self,p):
             
         self.node_counter += 1
         self.last_marker = marker = htmlparserClass.generate_node_marker(self.node_counter)
         self.http_map[marker] = p.copy()
-        theFile.write("\n\n.. _%s:\n\n" % marker)
+        self.write("\n\n.. _%s:\n\n" % marker)
     #@nonl
     #@-node:ekr.20050805162550.28:add_node_marker
     #@+node:ekr.20050805162550.29:clearHttpAttributes
@@ -837,10 +787,10 @@ class rstClass:
     #@nonl
     #@-node:ekr.20050805162550.30:replace_code_block_directives
     #@+node:ekr.20050805162550.31:writePlainNode
-    def writePlainNode (self,theFile,p):
+    def writePlainNode (self,p):
     
         if not self.format_headlines: ### ??? not ???
-            self.writeHeadline(theFile,p)
+            self.writeHeadline(p)
             
         if self.massage_body:
             s = self.massageBody(p)
@@ -849,18 +799,18 @@ class rstClass:
         
         s = self.encode(s)
         if s.strip():
-            theFile.write(self.code_block_string)
+            self.write(self.code_block_string)
             i = 0 ; lines = g.splitLines(s)
             for line in lines:
                 i += 1
                 if not "@others" in linetext:
-                    theFile.write('\t%2d  %s\n'%(i,line))
+                    self.write('\t%2d  %s\n'%(i,line))
         
-        theFile.write('\n')
+        self.write('\n')
     #@nonl
     #@-node:ekr.20050805162550.31:writePlainNode
     #@+node:ekr.20050805162550.32:writeRstNode
-    def writeRstNode (self,theFile,p):
+    def writeRstNode (self,p):
     
         s = self.encode(p.bodyString())
     
@@ -874,16 +824,69 @@ class rstClass:
             s = s [i:]
     
         if self.format_headlines:
-            self.writeHeadline(theFile,p)
+            self.writeHeadline(p)
     
         if self.use_alternate_code_block and 'code-block::' in s:
             s = self.replace_code_block_directives(s)
     
-        theFile.write('%s\n\n' % s.strip())
+        self.write('%s\n\n' % s.strip())
     #@nonl
     #@-node:ekr.20050805162550.32:writeRstNode
     #@-node:ekr.20050805162550.27:writeNode & helpers
-    #@-node:ekr.20050805162550.17:processTree & helpers
+    #@+node:ekr.20050805162550.23:writeTree
+    def writeTree(self,p):
+        
+        '''Write p's tree to self.outputFile.'''
+                
+        # Don't write a title, so the titlepage can be customized
+        # use '#' for title under/overline
+        self.write('.. filename: %s\n\n' % self.outputFileName)
+        if self.massage_body:
+            s = massageBody(p)
+        else:
+            s = p.bodyString()
+        self.write('%s\n\n' % s)		# write body of titlepage.
+        
+        if self.http_server_support:
+            #@        << handle http support >>
+            #@+node:ekr.20050805162550.25:<< handle http support >>
+            if 1:
+                http_map = {}
+            else:  # Not ready yet.
+                if self.tag == 'open2':
+                    http_map = self.http_map
+                else:
+                    http_map = {}
+                    self.anchormap = {}
+                    # maps v nodes to markers.
+                    self.node_counter = 0
+            #@nonl
+            #@-node:ekr.20050805162550.25:<< handle http support >>
+            #@nl
+            
+        for p in p.subtree_iter():
+            self.writeNode(p)
+    
+        if self.http_server_support:
+            self.http_map = http_map
+    #@-node:ekr.20050805162550.23:writeTree
+    #@+node:ekr.20050809082854.1:writeToDocutils (sets argv)
+    def writeToDocutils (self,s,isHtml):
+        
+        '''Send s to docutils and return the result.'''
+    
+        pub = docutils.core.Publisher()
+    
+        pub.source      = docutils.io.StringInput(source=s)
+        pub.destination = docutils.io.StringOutput(pub.settings,encoding=self.encoding)
+    
+        pub.set_reader('standalone',None,'restructuredtext')
+        pub.set_writer(g.choose(isHtml,'html','latex'))
+        
+        return pub.publish(argv=[r'--stylesheet=c:\prog\leoCvs\leo\doc\default.css'])
+    #@nonl
+    #@-node:ekr.20050809082854.1:writeToDocutils (sets argv)
+    #@-node:ekr.20050809074827:write methods
     #@+node:ekr.20050805162550.33:http methods...
     #@+node:ekr.20050805162550.34:http_support_main
     def http_support_main (self,fname):
@@ -923,11 +926,13 @@ class rstClass:
     #@+node:ekr.20050805162550.36:set_initial_http_attributes
     def set_initial_http_attributes (self,filename):
     
-        theFile = file(filename)
+        f = file(filename)
         parser = htmlparserClass(self.http_map)
     
-        for line in theFile.readline():
+        for line in f.readline():
             parser.feed(line)
+            
+        f.close()
     #@nonl
     #@-node:ekr.20050805162550.36:set_initial_http_attributes
     #@+node:ekr.20050805162550.37:relocate_references
@@ -1149,16 +1154,18 @@ class htmlparserClass (linkAnchorParserClass):
         
     #@nonl
     #@-node:ekr.20050805162550.47:handle_endtag
-    #@+node:ekr.20050805162550.48:generate_node_marker (a class method)
+    #@+node:ekr.20050805162550.48:generate_node_marker (a class method) NOT READY
     def generate_node_marker(cls, number):
         
         '''Generate a node marker.'''
+        
+        return ### 
     
         return self.node_begin_marker + ("%s" % number)
         
     generate_node_marker = classmethod(generate_node_marker)
     #@nonl
-    #@-node:ekr.20050805162550.48:generate_node_marker (a class method)
+    #@-node:ekr.20050805162550.48:generate_node_marker (a class method) NOT READY
     #@+node:ekr.20050805162550.49:feed
     def feed(self, line):
     
