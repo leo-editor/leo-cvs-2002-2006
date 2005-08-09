@@ -64,7 +64,7 @@ location and names of style sheets and other kinds of files.
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.04'
+__version__ = '0.05'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -136,6 +136,17 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050808083547:v 0.04
+#@+node:ekr.20050808185746:v 0.05
+#@+at
+# 
+# Initing and scanning for options is mostly complete:
+# 
+# - Improved munge: it now removes rstN_ prefix where N is any digit.
+# - Added createDefaultOptionsDict and initOptionsFromSettings.
+# - Wrote scanAllOptions.
+#@-at
+#@nonl
+#@-node:ekr.20050808185746:v 0.05
 #@-others
 #@@nocolor
 #@nonl
@@ -146,12 +157,13 @@ except ImportError:
 #@@nocolor
 #@+at
 # 
+# - Add _multiple_doc_parts entry to dicts.
+# 
+# - scanOptionsDocPartFromLines
+# 
+# - visitTree (can't use iterator), visitNode, visitHeadline, visitBody
+# 
 # - Simplify the code further, especially concerning the creation of files.
-# 
-# - Write the preprocessing code.
-# 
-# - Define enough options to support all useful style of embedding rst in Leo 
-# outlines.
 #@-at
 #@nonl
 #@-node:ekr.20050806162146:<< to do >>
@@ -250,18 +262,77 @@ class rstClass:
 #@@c
     
     #@    @+others
-    #@+node:ekr.20050805162550.9: Birth
+    #@+node:ekr.20050805162550.9: Birth & init
     #@+node:ekr.20050805162550.10: ctor (rstClass)
     def __init__ (self,c):
         
         global SilverCity
         
         self.c = c
+        #@    << init ivars >>
+        #@+node:ekr.20050805162550.11:<< init ivars >>
+        # Debugging...
+        self.rst2_debug_anchors = False
+        self.debug_before_and_after_replacement = False
+        self.debug_handle_endtag = False
+        self.debug_handle_starttag = False
+        self.debug_node_html_1 = False
+        self.debug_show_unknownattributes = False
+        self.debug_store_lines = False
         
-        #@    << set optionsNameDict >>
-        #@+node:ekr.20050808064245:<< set optionsNameDict >>
-        self.optionsNameDict = {
+        self.defaultEncoding = 'utf-8'
+        self.encoding = self.defaultEncoding
         
+        # For communication between methods...
+        self.code_block_string = ''
+        self.http_map = {}
+            # A node anchor is a marker beginning with node_begin_marker.
+            # We assume that such markers do not occur in the rst document.
+        self.last_marker = None
+        self.node_counter = 0
+        self.toplevel = 0
+        self.use_alternate_code_block = False ### SilverCity is None
+        #@nonl
+        #@-node:ekr.20050805162550.11:<< init ivars >>
+        #@nl
+    
+        self.createDefaultOptionsDict()
+        self.addMenu()
+    #@nonl
+    #@-node:ekr.20050805162550.10: ctor (rstClass)
+    #@+node:ekr.20050805162550.12:addMenu
+    def addMenu(self):
+        
+        c = self.c ; editMenu = c.frame.menu.getMenu('Edit')
+        
+        def callback():
+            self.processTree(c.currentPosition())
+                
+        table = (
+            ("-", None, None),
+            ("Write Restructed Text", "", callback),
+        )
+            
+        c.frame.menu.createMenuEntries(editMenu, table)
+    #@nonl
+    #@-node:ekr.20050805162550.12:addMenu
+    #@+node:ekr.20050808064245:createDefaultOptionsDict
+    def createDefaultOptionsDict(self):
+        
+        self.defaultOptionsDict = {
+        
+            # Original rst2 options...
+            'rst2_clear_http_attributes': False,
+            'rst2_format_headlines': False,
+            'rst2_http_server_support': False,
+            'rst2_http_attributename': 'rst_http_attribute',
+            'rst2_node_begin_marker':   'http-node-marker-',
+            
+            # rst2 options to be deleted...
+            'rst2_massage_body': False,
+            'rst2_use_file': False,
+            'rst2_write_pure_document': False,  # to be deleted
+    
             # How to interpret @rst-settings nodes and @rst-settings and @rst-markup doc parts...
             'rst3_ignore_leo_directives_in_auto_mode': False,
             'rst3_ignore_leo_directives_in_manual_mode': True,
@@ -298,90 +369,45 @@ class rstClass:
             # rst-specific options...
             'rst3_underline_characters': '', #whatever the default chars are presently
         }
-        #@nonl
-        #@-node:ekr.20050808064245:<< set optionsNameDict >>
-        #@nl
-        #@    << init ivars >>
-        #@+node:ekr.20050805162550.11:<< init ivars >>
-        # Debugging...
-        self.rst2_debug_anchors = False
-        self.debug_before_and_after_replacement = False
-        self.debug_handle_endtag = False
-        self.debug_handle_starttag = False
-        self.debug_node_html_1 = False
-        debug_show_unknownattributes = False
-        self.debug_store_lines = False
         
-        self.defaultEncoding = 'utf-8'
-        self.encoding = self.defaultEncoding
-        
-        # For communication between methods...
-        self.code_block_string = ''
-        self.http_map = {}
-            # A node anchor is a marker beginning with node_begin_marker.
-            # We assume that such markers do not occur in the rst document.
-        self.last_marker = None
-        self.node_counter = 0
-        self.toplevel = 0
-        self.use_alternate_code_block = False ### SilverCity is None
-        
-        # Set default values for options.
-        self.add_menu_item = True
-        self.clear_http_attributes = False
-        self.http_server_support = False
-        self.massage_body = False
-        self.format_headlines = False
-        self.write_pure_document = False
-        self.use_file = False
-        
-        self.node_begin_marker = 'http-node-marker-'
-        self.http_attributename = 'rst_http_attribute'
-        #@nonl
-        #@-node:ekr.20050805162550.11:<< init ivars >>
-        #@nl
-        
-        self.applyConfiguration() ### This will become a pre-pass.
-    
-        if self.add_menu_item:
-            self.addMenu()
-    
-        if c.config.getBool("rst2_run_on_open_window"):
-            self.runOnOpen()
     #@nonl
-    #@-node:ekr.20050805162550.10: ctor (rstClass)
-    #@+node:ekr.20050805162550.12:addMenu
-    def addMenu(self):
+    #@-node:ekr.20050808064245:createDefaultOptionsDict
+    #@+node:ekr.20050805162550.15:getBool & getString (to be deleted?)
+    def getBool(self,ivar_name,setting_name):
         
-        c = self.c ; editMenu = c.frame.menu.getMenu('Edit')
-        
-        def callback():
-            self.processTree(c.currentPosition())
-                
-        table = (
-            ("-", None, None),
-            ("Write Restructed Text", "", callback),
-        )
+        c = self.c
+        newvalue = c.config.getBool(setting_name)
+    
+        if newvalue is not None:
+            g.trace(ivar_name,newvalue)
+            setattr(self, ivar_name, newvalue)
             
-        c.frame.menu.createMenuEntries(editMenu, table)
-    #@nonl
-    #@-node:ekr.20050805162550.12:addMenu
-    #@+node:ekr.20050805162550.13:applyConfiguration
-    def applyConfiguration (self):
-    
-        self.getBool    ("clear_http_attributes",   'rst2_clear_http_attributes')
-        self.getBool    ('format_headlines',        'rst2_format_headlines')
-        self.getString  ('http_attributename',      'rst2_http_attributename')
-        self.getBool    ('http_server_support',     'rst2_http_server_support')
-        self.getBool    ('massage_body',            'rst2_massage_body')
-        self.getString  ('node_begin_marker',       'rst2_node_begin_marker')
-        self.getBool    ('use_file',                'rst2_use_file')
-        self.getBool    ('write_pure_document',     'rst2_write_pure_document')
+    def getString(self,ivar_name,setting_name):
         
-        if self.http_server_support and not mod_http:
-            g.es('No http_server_support: can not import mod_http plugin',color='red')
-            self.http_server_support = False
+        c = self.c
+        newvalue = c.config.getString(setting_name)
+    
+        if newvalue is not None:
+            g.trace(ivar_name,newvalue)
+            setattr(self, ivar_name, newvalue)
     #@nonl
-    #@-node:ekr.20050805162550.13:applyConfiguration
+    #@-node:ekr.20050805162550.15:getBool & getString (to be deleted?)
+    #@+node:ekr.20050808072943:munge
+    def munge (self,name):
+        
+        s = g.app.config.canonicalizeSettingName(name)
+        
+        if name.startswith('rst'):
+            name = name[3:]
+        if name and name[0].isdigit():
+            name = name[1:]
+        if name and name[0] == '_':
+            name = name[1:]
+        if not name:
+            name = ''
+        return name
+    #@nonl
+    #@-node:ekr.20050808072943:munge
     #@+node:ekr.20050805162550.14:runOnOpen  (delete??)
     def runOnOpen (self):
         
@@ -418,27 +444,7 @@ class rstClass:
             g.es("http attributes cleared")
     #@nonl
     #@-node:ekr.20050805162550.14:runOnOpen  (delete??)
-    #@+node:ekr.20050805162550.15:getboolean & getString
-    def getBool(self,ivar_name,setting_name):
-        
-        c = self.c
-        newvalue = c.config.getBool(setting_name)
-    
-        if newvalue is not None:
-            g.trace(ivar_name,newvalue)
-            setattr(self, ivar_name, newvalue)
-            
-    def getString(self,ivar_name,setting_name):
-        
-        c = self.c
-        newvalue = c.config.getString(setting_name)
-    
-        if newvalue is not None:
-            g.trace(ivar_name,newvalue)
-            setattr(self, ivar_name, newvalue)
-    #@nonl
-    #@-node:ekr.20050805162550.15:getboolean & getString
-    #@-node:ekr.20050805162550.9: Birth
+    #@-node:ekr.20050805162550.9: Birth & init
     #@+node:ekr.20050805162550.16:encode
     def encode (self,s):
     
@@ -446,14 +452,34 @@ class rstClass:
     #@nonl
     #@-node:ekr.20050805162550.16:encode
     #@+node:ekr.20050807120331:scanning for options
-    #@+node:ekr.20050808072943:canonicalizeSettingName (munge)
-    def canonicalizeSettingName (self,name):
-        
-        return g.app.config.canonicalizeSettingName(name)
+    #@+node:ekr.20050805162550.13:initOptionsFromSettings
+    def initOptionsFromSettings (self):
     
-    munge = canonicalizeSettingName
+        c = self.c ; d = self.defaultOptionsDict
+        keys = d.keys() ; keys.sort()
+        trace = False
+        if trace: g.trace()
+    
+        for key in keys:
+            # First, try to get the option from settings
+            for getter,kind in (
+                (c.config.getString,'@string'),
+                (c.config.getBool,'@bool'),
+                (d.get,'default'),
+            ):
+                val = getter(key)
+                if kind == 'default' or val is not None:
+                    ivar = self.munge(key)
+                    setattr(self,ivar,val)
+                    if trace: print '%7s %55s %s' % (kind,ivar,val)
+                    break
+    
+        # Special case.
+        if self.http_server_support and not mod_http:
+            g.es('No http_server_support: can not import mod_http plugin',color='red')
+            self.http_server_support = False
     #@nonl
-    #@-node:ekr.20050808072943:canonicalizeSettingName (munge)
+    #@-node:ekr.20050805162550.13:initOptionsFromSettings
     #@+node:ekr.20050808072943.1:parseOptionLine
     def parseOptionLine (self,s):
     
@@ -571,13 +597,35 @@ class rstClass:
         return d
     #@nonl
     #@-node:ekr.20050808070018.1:scanOptions
+    #@+node:ekr.20050808142313.28:scanAllOptions
+    # Once an option is seen, no other related options in ancestor nodes haveany effect.@c
+    
+    def scanAllOptions(self,p):
+        
+        '''Scan position p and p's ancestors looking for options,
+        setting corresponding rst3 ivars.
+        '''
+        
+        self.initOptionsFromSettings()
+        result = {}
+        for p in p.self_and_parents_iter():
+            d = tnodeOptionDict.get(p.v.t)
+            if d:
+                for key in d.keys():
+                    if not result.has_key(key):
+                        val = d.get(key)
+                        g.trace(key,val)
+                        result [key] = val
+        return result
+    #@nonl
+    #@-node:ekr.20050808142313.28:scanAllOptions
     #@-node:ekr.20050807120331:scanning for options
     #@+node:ekr.20050805162550.17:processTree & helpers
     def processTree(self,p):
         
         '''Process all @rst nodes in a tree.'''
     
-        self.applyConfiguration()
+        self.initOptionsFromSettings()
         self.preprocessTree(p)
         found = False
         for p in p.self_and_subtree_iter():
