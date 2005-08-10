@@ -64,7 +64,7 @@ location and names of style sheets and other kinds of files.
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.05'
+__version__ = '0.07'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -158,6 +158,23 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050809094214:v 0.06
+#@+node:ekr.20050810085314:v 0.07
+#@+at
+# 
+# - Completed writeTree: it now allows for skipping subtrees.
+# 
+# - Simplified options and their names: see createDefaultOptionsDict.
+#     - Use rst3 prefix for all settings.
+#     - The generate_rst setting will be the basis for generating rst or plain 
+# text.
+# 
+# - Moved all headline-related stuff into writeHeadline.
+# 
+# - Added support for skip_this_node and skip_this_tree.
+#     - More work is needed.
+#@-at
+#@nonl
+#@-node:ekr.20050810085314:v 0.07
 #@-others
 #@@nocolor
 #@nonl
@@ -168,19 +185,23 @@ except ImportError:
 #@@nocolor
 #@+at
 # 
+# First:
+# 
+# - Handle options in headline.
+# 
 # - Remove @ @rst-options parts from source.
 # 
-# - More flexible options:
-#     - Default to True if no value given.
-#     - Add encoding rst-option (can override @encoding directives)
+# - Set option to True if no value given.
 # 
-# - Add _multiple_doc_parts entry to dicts.
+# Later:
+# 
+# - Specify location of stylesheet:  use it in argv vector.
+# 
+# - Add encoding rst-option (can override @encoding directives)
+# 
+# ? Support docutils config files?
 # 
 # - scanOptionsDocPartFromLines
-# 
-# - visitTree (can't use iterator), visitNode, visitHeadline, visitBody
-# 
-# - Simplify the code further, especially concerning the creation of files.
 #@-at
 #@nonl
 #@-node:ekr.20050806162146:<< to do >>
@@ -286,31 +307,38 @@ class rstClass:
         global SilverCity
         
         self.c = c
-        #@    << init ivars >>
-        #@+node:ekr.20050805162550.11:<< init ivars >>
-        # Debugging...
-        self.rst2_debug_anchors = False
+        #@    << init debugging ivars >>
+        #@+node:ekr.20050810090137:<< init debugging ivars >>
+        self.debug_anchors = False
         self.debug_before_and_after_replacement = False
         self.debug_handle_endtag = False
         self.debug_handle_starttag = False
         self.debug_node_html_1 = False
         self.debug_show_unknownattributes = False
         self.debug_store_lines = False
-        
-        self.defaultEncoding = 'utf-8'
-        self.encoding = self.defaultEncoding
-        
-        # For communication between methods...
+        #@nonl
+        #@-node:ekr.20050810090137:<< init debugging ivars >>
+        #@nl
+        #@    << init ivars >>
+        #@+node:ekr.20050805162550.11:<< init ivars >>
+        # Formatting...
         self.code_block_string = ''
+        self.last_marker = None
+        self.node_counter = 0
+        self.skip_this_node = False
+        self.skip_this_tree = False
+        self.toplevel = 0
+        self.topNode = None
+        self.use_alternate_code_block = SilverCity is None
+        
+        # Http support...
         self.http_map = {}
             # A node anchor is a marker beginning with node_begin_marker.
             # We assume that such markers do not occur in the rst document.
-        self.last_marker = None
-        self.node_counter = 0
-        self.toplevel = 0
-        self.use_alternate_code_block = False ### SilverCity is None
         
         # For writing.
+        self.defaultEncoding = 'utf-8'
+        self.encoding = self.defaultEncoding
         self.ext = None # The file extension.
         self.outputFileName = None # The name of the file being written.
         self.outputFile = None # The open file being written.
@@ -343,55 +371,45 @@ class rstClass:
         
         self.defaultOptionsDict = {
         
-            # Original rst2 options...
-            'rst2_clear_http_attributes': False,
-            'rst2_format_headlines': False,
-            'rst2_http_server_support': False,
-            'rst2_http_attributename': 'rst_http_attribute',
-            'rst2_node_begin_marker':   'http-node-marker-',
+            # Http options...
+            'rst3_clear_http_attributes':   False,
+            'rst3_http_server_support':     False,
+            'rst3_http_attributename':      'rst_http_attribute',
+            'rst3_node_begin_marker':       'http-node-marker-',
             
-            # rst2 options to be deleted...
-            'rst2_massage_body': False,
-            'rst2_write_pure_document': False,  # to be deleted
+            # To be deleted...(to be replaced by more specific options)
+            'rst3_massage_body': False,
+            
+            # Global options...
+            'rst3_underline_characters': '''#=+*^~"'`-:><_''',
+            'rst3_write_intermediate_file': False, # Used only if generate_rst is True.
+            
+            # Mode options.
+            'rst3_auto_code_mode': True, # True: enter code mode in @file trees.
+            'rst3_code_mode': False, # True: generate rst markup from @code and @doc parts.
+            'rst3_generate_rst': True, # Master switch: must be on to generate any rst.
+            
+            # Formatting options...
+            # These do _not_ depend on mode: use @rst-options markup to override.
+            'rst3_show_organizer_nodes': True,
+            'rst3_show_headlines': True,
+            'rst3_show_leo_directives': True,
+            'rst3_show_options_markup': False,
+            'rst3_show_options_nodes': False,
+            ## 'rst3_show_these_leo_directives': '', # String containing comma-separated list.
+            
+            # Headline prefixes that set options...
+            'rst3_code_prefix':         '@rst-code', # Enter code mode.
+            'rst3_rst_prefix':          '@rst',      # Leave code mode.
+            'rst3_ignore_node_prefix':  '@ignore-node',
+            'rst3_ignore_tree_prefix':  '@ignore-tree',
+            'rst3_option_prefix':       '@rst-option',
+            'rst3_options_prefix':      '@rst-options',
     
-            # How to interpret @rst-settings nodes and @rst-settings and @rst-markup doc parts...
-            'rst3_ignore_leo_directives_in_auto_mode': False,
-            'rst3_ignore_leo_directives_in_manual_mode': True,
-            'rst3_always_ignore_these_directives': None, # list of directives
-            'rst3_never_ignore_these_directives':  None, # list of directives
-            
-            'rst3_ignore_option_nodes_in_auto_mode': False,
-            'rst3_ignore_option_doc_parts_in_auto_mode': False,
-            'rst3_ignore_markup_doc_parts_in_auto_mode': False,
-            
-            'rst3_ignore_option_nodes_in_manual_mode': True,
-            'rst3_ignore_option_doc_parts_in_manual_mode': True,
-            'rst3_ignore_markup_doc_parts_in_manual_mode': True,
-            
-            # How to process nodes, headlines and body text...
-            'rst3_ignore_all_headlines_in_auto_mode': False,
-            'rst3_ignore_all_headlines_in_manual_mode': False,
-            
-            'rst3_ignore_organizer_nodes_in_auto_mode': False,
-            'rst3_ignore_organizer_nodes_in_manual_mode': False,
-            
-            'rst3_ignore_headlines_with_prefix_in_auto_mode': None,
-            'rst3_ignore_headlines_with_prefix_in_manual_mode': None,
-            
-            'rst3_process_only_headlines_with_prefix_in_auto_mode': None,
-            'rst3_process_only_headlines_with_prefix_in_manual_mode': None,
-            
-            'rst3_process_only_bodies_with_headline_prefix_in_auto_mode': None,
-            'rst3_process_only_bodies_with_headline_prefix_in_manual_mode': None,
-            
-            'rst3_process_only_nodes_with_headline_prefix_in_auto_mode': None,
-            'rst3_process_only_nodes_with_headline_prefix_in_manual_mode': None,
-            
-            # rst-specific options...
-            'rst3_underline_characters': '', #whatever the default chars are presently
-            'rst3_write_docutils_sources_to_file': False,
+            # Toc prefixes:  may not be needed.
+            'rst3_notoc_prefix':        '@notoc',
+            'rst3_toc_prefix':          '@toc',
         }
-        
     #@nonl
     #@-node:ekr.20050808064245:createDefaultOptionsDict
     #@+node:ekr.20050808072943:munge
@@ -429,7 +447,7 @@ class rstClass:
             if not d:
                 d = self.scanNodeForOptions(p)
                 if d:
-                    self.tnodeOptionDict [p.v.t] = (p.headString(),d)
+                    self.tnodeOptionDict [p.v.t] = d
                 
         if 0:
             g.trace(root.headString())
@@ -536,53 +554,6 @@ class rstClass:
     #@nonl
     #@-node:ekr.20050808070018.1:scanOptions
     #@-node:ekr.20050807120331.1:preprocessTree & helpers
-    #@+node:ekr.20050808142313.28:scanAllOptions & helper
-    # Once an option is seen, no other related options in ancestor nodes haveany effect.
-    
-    def scanAllOptions(self,p):
-        
-        '''Scan position p and p's ancestors looking for options,
-        setting corresponding ivars.
-        '''
-        
-        self.initOptionsFromSettings() # Must be done on every node.
-        result = {}
-        for p in p.self_and_parents_iter():
-            d = tnodeOptionDict.get(p.v.t)
-            if d:
-                for key in d.keys():
-                    if not result.has_key(key):
-                        val = d.get(key)
-                        ivar = self.munge(key)
-                        result [ivar] = val
-                        g.trace(ivar,val)
-        return result
-    #@nonl
-    #@+node:ekr.20050805162550.13:initOptionsFromSettings
-    def initOptionsFromSettings (self):
-    
-        c = self.c ; d = self.defaultOptionsDict
-        keys = d.keys() ; keys.sort()
-    
-        for key in keys:
-            for getter,kind in (
-                (c.config.getBool,'@bool'),
-                (c.config.getString,'@string'),
-                (d.get,'default'),
-            ):
-                val = getter(key)
-                if kind == 'default' or val is not None:
-                    ivar = self.munge(key)
-                    if kind != 'default': print '%7s %55s %s' % (kind,ivar,val)
-                    setattr(self,ivar,val)
-                    break
-    
-        # Special case.
-        if self.http_server_support and not mod_http:
-            g.es('No http_server_support: can not import mod_http plugin',color='red')
-            self.http_server_support = False
-    #@-node:ekr.20050805162550.13:initOptionsFromSettings
-    #@-node:ekr.20050808142313.28:scanAllOptions & helper
     #@+node:ekr.20050809074827:write methods
     #@+node:ekr.20050809082854: Top-level write code
     #@+node:ekr.20050809075309:initWrite
@@ -603,8 +574,6 @@ class rstClass:
             self.code_block_string = '**code**:\n\n.. code-block:: %s\n\n' % language.swapcase()
         else:
             self.code_block_string = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
-            
-        self.toplevel = p.level() + 1
     #@nonl
     #@-node:ekr.20050809075309:initWrite
     #@+node:ekr.20050805162550.17:processTree
@@ -621,7 +590,6 @@ class rstClass:
                 self.outputFileName = h[4:].strip()
                 if self.outputFileName:
                     found = True
-                    g.trace(self.outputFileName)
                     self.ext = ext = g.os_path_splitext(self.outputFileName)[1].lower()
                     if ext in ('.htm','.html','.tex'):
                         self.writeSpecialTree(p)
@@ -658,12 +626,12 @@ class rstClass:
         source = self.outputFile.getvalue()
         self.outputFile = None
     
-        if self.write_docutils_sources_to_file:
+        if self.write_intermediate_file:
             name = self.outputFileName + '.txt'
-            g.es('Writing docutils sources to %s' % (name),color='blue')
             f = file(name,'w')
             f.write(source)
             f.close()
+            self.report(name)
             
         try:
             output = self.writeToDocutils(source,isHtml)
@@ -678,198 +646,6 @@ class rstClass:
         return self.http_support_main(self.outputFileName)
     #@nonl
     #@-node:ekr.20050805162550.21:writeSpecialTree
-    #@-node:ekr.20050809082854: Top-level write code
-    #@+node:ekr.20050805162550.18:massageBody
-    def massageBody (self,p):
-        
-        '''Remove @ignore, @nocolor and @wrap directives.'''
-    
-        s = p.bodyString()
-    
-        while (s.startswith("@ignore") or
-               s.startswith("@nocolor") or
-               s.startswith("@wrap")):
-           i = g.skip_line(s,0)
-           s = s [i:]
-    
-        return s
-    #@nonl
-    #@-node:ekr.20050805162550.18:massageBody
-    #@+node:ekr.20050805162550.20:report
-    def report (self,name):
-    
-        path = g.os_path_abspath(g.os_path_join(os.getcwd(),name))
-    
-        g.es('wrote: %s' % (path),color="blue")
-    #@nonl
-    #@-node:ekr.20050805162550.20:report
-    #@+node:ekr.20050805162550.19:underlineString
-    # The first character is intentionally unused, to serve as the underline
-    # character in a title (in the body of the @rst node)
-    
-    def underlineString (self,h,level):
-    
-        '''Return the underlining string to be used at the given level for headline h.'''
-    
-        str = '''#=+*^~"'`-:><_''' [level]
-    
-        return str * max(len(h),4) + '\n'
-    #@nonl
-    #@-node:ekr.20050805162550.19:underlineString
-    #@+node:ekr.20050809080031:write
-    def write (self,s):
-        
-        s = self.encode(s)
-        
-        self.outputFile.write(s)
-    #@nonl
-    #@-node:ekr.20050809080031:write
-    #@+node:ekr.20050805162550.26:writeHeadline
-    def writeHeadline (self,p):
-        
-        h = p.headString() ; level = p.level() - self.toplevel
-        tag = '@file-nosent'
-    
-        if g.match_word(h,0,tag):
-            h = h[len(tag):]
-    
-        self.write('%s\n%s\n' % (self.encode(h),self.underlineString(h,level)))
-    #@nonl
-    #@-node:ekr.20050805162550.26:writeHeadline
-    #@+node:ekr.20050805162550.27:writeNode & helpers
-    def writeNode (self,p):
-    
-        if self.http_server_support:
-            self.add_node_marker(p)
-    
-        if self.write_pure_document or g.match_word(p.headString(),0,"@rst"):
-            self.writeRstNode(p)
-        else:
-            self.writePlainNode(p)
-    
-        if self.clear_http_attributes:
-            self.clearHttpAttributes(p)
-    #@nonl
-    #@+node:ekr.20050805162550.28:add_node_marker
-    def add_node_marker(self,p):
-            
-        self.node_counter += 1
-        self.last_marker = marker = htmlparserClass.generate_node_marker(self.node_counter)
-        self.http_map[marker] = p.copy()
-        self.write("\n\n.. _%s:\n\n" % marker)
-    #@nonl
-    #@-node:ekr.20050805162550.28:add_node_marker
-    #@+node:ekr.20050805162550.29:clearHttpAttributes
-    def clearHttpAttributes (self,p):
-        
-        name = self.http_attributename
-    
-        if hasattr(p.v,'unknownAttributes'):
-            if  p.v.unknownAttributes.has_key(name):
-                del p.v.unknownAttributes [name]
-                if p.v.unknownAttributes == {}:
-                    del p.v.unknownAttributes
-    #@nonl
-    #@-node:ekr.20050805162550.29:clearHttpAttributes
-    #@+node:ekr.20050805162550.30:replace_code_block_directives
-    def replace_code_block_directives (self,s):
-    
-        lines = s.split('\n') ; result = []
-    
-        for line in lines:
-            if u"code-block::" in line:
-                parts = line.split()
-                if len(parts) == 3 and (parts[0]=='..') and (parts[1]=='code-block::'):
-                    line = '%s code::\n' % parts [2]
-            result.append(line)
-    
-        return '\n'.join(result)
-    #@nonl
-    #@-node:ekr.20050805162550.30:replace_code_block_directives
-    #@+node:ekr.20050805162550.31:writePlainNode
-    def writePlainNode (self,p):
-    
-        if not self.format_headlines: ### ??? not ???
-            self.writeHeadline(p)
-            
-        if self.massage_body:
-            s = self.massageBody(p)
-        else:
-            s = p.bodyString()
-        
-        s = self.encode(s)
-        if s.strip():
-            self.write(self.code_block_string)
-            i = 0 ; lines = g.splitLines(s)
-            for line in lines:
-                i += 1
-                if not "@others" in linetext:
-                    self.write('\t%2d  %s\n'%(i,line))
-        
-        self.write('\n')
-    #@nonl
-    #@-node:ekr.20050805162550.31:writePlainNode
-    #@+node:ekr.20050805162550.32:writeRstNode
-    def writeRstNode (self,p):
-    
-        s = self.encode(p.bodyString())
-    
-        # Skip any leading @ignore, @nocolor, @wrap directives.
-        while (
-            g.match_word(s,0,"@ignore") or
-            g.match_word(s,0,"@nocolor") or
-            g.match_word(s,0,"@wrap")
-        ):
-            i = g.skip_line(s,0)
-            s = s [i:]
-    
-        if self.format_headlines:
-            self.writeHeadline(p)
-    
-        if self.use_alternate_code_block and 'code-block::' in s:
-            s = self.replace_code_block_directives(s)
-    
-        self.write('%s\n\n' % s.strip())
-    #@nonl
-    #@-node:ekr.20050805162550.32:writeRstNode
-    #@-node:ekr.20050805162550.27:writeNode & helpers
-    #@+node:ekr.20050805162550.23:writeTree
-    def writeTree(self,p):
-        
-        '''Write p's tree to self.outputFile.'''
-                
-        # Don't write a title, so the titlepage can be customized
-        # use '#' for title under/overline
-        self.write('.. filename: %s\n\n' % self.outputFileName)
-        if self.massage_body:
-            s = massageBody(p)
-        else:
-            s = p.bodyString()
-        self.write('%s\n\n' % s)		# write body of titlepage.
-        
-        if self.http_server_support:
-            #@        << handle http support >>
-            #@+node:ekr.20050805162550.25:<< handle http support >>
-            if 1:
-                http_map = {}
-            else:  # Not ready yet.
-                if self.tag == 'open2':
-                    http_map = self.http_map
-                else:
-                    http_map = {}
-                    self.anchormap = {}
-                    # maps v nodes to markers.
-                    self.node_counter = 0
-            #@nonl
-            #@-node:ekr.20050805162550.25:<< handle http support >>
-            #@nl
-            
-        for p in p.subtree_iter():
-            self.writeNode(p)
-    
-        if self.http_server_support:
-            self.http_map = http_map
-    #@-node:ekr.20050805162550.23:writeTree
     #@+node:ekr.20050809082854.1:writeToDocutils (sets argv)
     def writeToDocutils (self,s,isHtml):
         
@@ -886,6 +662,237 @@ class rstClass:
         return pub.publish(argv=[r'--stylesheet=c:\prog\leoCvs\leo\doc\default.css'])
     #@nonl
     #@-node:ekr.20050809082854.1:writeToDocutils (sets argv)
+    #@-node:ekr.20050809082854: Top-level write code
+    #@+node:ekr.20050805162550.23:writeTree
+    def writeTree(self,p):
+        
+        '''Write p's tree to self.outputFile.'''
+    
+        self.topNode = p
+        self.scanAllOptions(p)
+        self.toplevel = p.level()
+    
+        if self.generate_rst:
+            self.write(self.rstComment('filename: %s\n\n' % self.outputFileName))
+            
+        # We can't use an iterator because we may skip parts of the tree.
+        p = p.copy() # Only one copy is needed.
+        after = p.nodeAfterTree()
+        while p and p != after:
+            self.writeNode(p)
+    #@nonl
+    #@-node:ekr.20050805162550.23:writeTree
+    #@+node:ekr.20050810083057:writeNode & helpers
+    def writeNode (self,p):
+        
+        '''Format a node according to the options presently in effect.'''
+        
+        self.scanAllOptions(p)
+        
+        if self.skip_this_tree:
+            p.moveToNodeAfterTree()
+        elif self.skip_this_node:
+            p.moveToThreadNext()
+        else:
+            h = p.headString().strip()
+            if g.match_word(h,0,'@rst-options') and not self.print_options_nodes:
+                pass
+            elif self.generate_rst:
+                self.writeRstNode(p)
+            else:
+                self.writePlainNode(p)
+            p.moveToThreadNext()
+    #@nonl
+    #@+node:ekr.20050810083057.4:writePlainNode
+    def writePlainNode (self,p):
+    
+        self.writeHeadline(p)
+            
+        if self.massage_body:
+            s = self.massageBody(p)
+        else:
+            s = p.bodyString()
+    
+        if s.strip():
+            self.write(self.code_block_string)
+            i = 0 ; lines = g.splitLines(s)
+            for line in lines:
+                i += 1
+                if not "@others" in line:
+                    self.write('\t%2d  %s\n'%(i,line))
+        
+        self.write('\n')
+    #@nonl
+    #@-node:ekr.20050810083057.4:writePlainNode
+    #@+node:ekr.20050810083057.5:writeRstNode
+    def writeRstNode (self,p):
+    
+        s = self.encode(p.bodyString())
+    
+        # Skip any leading @ignore, @nocolor, @wrap directives.
+        while (
+            g.match_word(s,0,"@ignore") or
+            g.match_word(s,0,"@nocolor") or
+            g.match_word(s,0,"@wrap")
+        ):
+            i = g.skip_line(s,0)
+            s = s [i:]
+    
+        self.writeHeadline(p)
+    
+        if self.use_alternate_code_block and 'code-block::' in s:
+            s = self.replace_code_block_directives(s)
+    
+        self.write('%s\n\n' % s.strip())
+    #@nonl
+    #@-node:ekr.20050810083057.5:writeRstNode
+    #@+node:ekr.20050805162550.26:writeHeadline
+    def writeHeadline (self,p):
+        
+        h = p.headString().strip() ; level = p.level()
+        ignore_prefix = self.ignore_headline_prefix
+        
+        if (
+            p == self.topNode or
+            not self.generate_rst or
+            not self.underline_headlines or
+            (ignore_prefix and g.match_word(h,0,ignore_prefix))
+        ):
+            # g.trace(p==self.topNode,not self.underline_headlines,ignore_prefix,h)
+            return
+    
+        self.write('%s\n%s\n' % (h,self.underline(h,level)))
+    #@nonl
+    #@-node:ekr.20050805162550.26:writeHeadline
+    #@+node:ekr.20050805162550.18:massageBody
+    def massageBody (self,p):
+        
+        '''Remove @ignore, @nocolor and @wrap directives.'''
+    
+        s = p.bodyString()
+    
+        while (s.startswith("@ignore") or
+               s.startswith("@nocolor") or
+               s.startswith("@wrap")):
+           i = g.skip_line(s,0)
+           s = s [i:]
+    
+        return s
+    #@nonl
+    #@-node:ekr.20050805162550.18:massageBody
+    #@+node:ekr.20050805162550.30:replace_code_block_directives
+    def replace_code_block_directives (self,s):
+    
+        lines = s.split('\n') ; result = []
+    
+        for line in lines:
+            if u"code-block::" in line:
+                parts = line.split()
+                if len(parts) == 3 and (parts[0]=='..') and (parts[1]=='code-block::'):
+                    line = '%s code::\n' % parts [2]
+            result.append(line)
+    
+        return '\n'.join(result)
+    #@nonl
+    #@-node:ekr.20050805162550.30:replace_code_block_directives
+    #@-node:ekr.20050810083057:writeNode & helpers
+    #@+node:ekr.20050810083314:Utils
+    #@+node:ekr.20050805162550.20:report
+    def report (self,name):
+    
+        g.es_print('wrote: %s' % (name),color="blue")
+    #@nonl
+    #@-node:ekr.20050805162550.20:report
+    #@+node:ekr.20050810083856:rstComment
+    def rstComment (self,s):
+        
+        return '.. %s' % s
+    #@nonl
+    #@-node:ekr.20050810083856:rstComment
+    #@+node:ekr.20050808142313.28:scanAllOptions & helper
+    # Once an option is seen, no other related options in ancestor nodes have any effect.
+    
+    def scanAllOptions(self,p):
+        
+        '''Scan position p and p's ancestors looking for options,
+        setting corresponding ivars.
+        '''
+        
+        self.initOptionsFromSettings() # Must be done on every node.
+        self.initSingleNodeOptions()
+        result = {}
+        for p in p.self_and_parents_iter():
+            d = self.tnodeOptionDict.get(p.v.t)
+            if d:
+                for key in d.keys():
+                    if not result.has_key(key):
+                        val = d.get(key)
+                        ivar = self.munge(key)
+                        result [ivar] = val
+                        g.trace(ivar,val)
+        return result
+    #@nonl
+    #@+node:ekr.20050805162550.13:initOptionsFromSettings
+    def initOptionsFromSettings (self):
+    
+        c = self.c ; d = self.defaultOptionsDict
+        keys = d.keys() ; keys.sort()
+    
+        for key in keys:
+            for getter,kind in (
+                (c.config.getBool,'@bool'),
+                (c.config.getString,'@string'),
+                (d.get,'default'),
+            ):
+                val = getter(key)
+                if kind == 'default' or val is not None:
+                    ivar = self.munge(key)
+                    # if kind != 'default': print '%7s %55s %s' % (kind,ivar,val)
+                    setattr(self,ivar,val)
+                    break
+    
+        # Special case.
+        if self.http_server_support and not mod_http:
+            g.es('No http_server_support: can not import mod_http plugin',color='red')
+            self.http_server_support = False
+    #@-node:ekr.20050805162550.13:initOptionsFromSettings
+    #@+node:ekr.20050810103731:initSingleNodeOptions
+    def initSingleNodeOptions (self):
+        
+        self.skip_this_node = False
+        self.skip_this_tree = False
+    #@nonl
+    #@-node:ekr.20050810103731:initSingleNodeOptions
+    #@-node:ekr.20050808142313.28:scanAllOptions & helper
+    #@+node:ekr.20050805162550.19:underline
+    def underline (self,s,level):
+    
+        '''Return the underlining string to be used at the given level for string s.'''
+    
+        u = self.underline_characters #  '''#=+*^~"'`-:><_'''
+        
+        level1 = level
+        level = max(0,level-self.toplevel)
+        level = min(level+1,len(u)-1) # Reserve the first character for explicit titles.
+        
+        # g.trace(level1,self.toplevel,level)
+    
+        ch = u [level]
+    
+        n = max(4,len(s))
+    
+        return ch * n + '\n'
+    #@nonl
+    #@-node:ekr.20050805162550.19:underline
+    #@+node:ekr.20050809080031:write
+    def write (self,s):
+        
+        s = self.encode(s)
+        
+        self.outputFile.write(s)
+    #@nonl
+    #@-node:ekr.20050809080031:write
+    #@-node:ekr.20050810083314:Utils
     #@-node:ekr.20050809074827:write methods
     #@+node:ekr.20050805162550.33:http methods...
     #@+node:ekr.20050805162550.34:http_support_main
