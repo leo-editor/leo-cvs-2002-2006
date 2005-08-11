@@ -64,7 +64,7 @@ location and names of style sheets and other kinds of files.
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.07'
+__version__ = '0.09'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -179,10 +179,10 @@ except ImportError:
 #@+node:ekr.20050811092824:v 0.08
 #@+at
 # 
-# - Handled literal blocks properly in replace_code_block_directives.
+# - Handled literal blocks properly in replaceCodeBlockDirectives.
 #   This bug existed in rst2 plugin.
 # 
-# - Removed a confusing 'feature' from replace_code_block_directives.
+# - Removed a confusing 'feature' from replaceCodeBlockDirectives.
 # 
 # This method now creates starts the code block with just '::'. The old code
 # started the literal block with 'python code ::' This seemed very confusing.
@@ -198,6 +198,22 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050811092824:v 0.08
+#@+node:ekr.20050811112803:v 0.09
+#@+at
+# 
+# ** Code mode mostly works, as do most kinds of markup.
+# 
+# - Handled @rst-markup doc parts properly.
+# - Removed writePlainNode and writeRstNode.
+# - Allowed .. comments in special doc parts.
+# - settings in @rst-options doc parts may end with a comma.
+# - Special doc parts now also stop at the start of another doc part.
+# - Added number_code_lines option.
+# - Wrote handleCodeMode.
+# - Wrote scanHeadlineForOptions.
+#@-at
+#@nonl
+#@-node:ekr.20050811112803:v 0.09
 #@-others
 #@@nocolor
 #@nonl
@@ -210,13 +226,19 @@ except ImportError:
 # 
 # First:
 # 
-# - Remove @ @rst-options parts from source.
-# 
-# - Insert @ @rst-markup into source.
+# - show_context option.
 # 
 # - Support named options sets.
 # 
+# - Write the rst3 documentation.
+# 
+# - Options related to showing special doc parts may not be needed: we have 
+# literal blocks.
+# 
 # Later:
+# 
+# - support @ @rst-option lines.  (Not useful unless doc parts end at next doc 
+# part)
 # 
 # - Handle options in headline.
 # 
@@ -371,6 +393,7 @@ class rstClass:
         #@nl
     
         self.createDefaultOptionsDict()
+        self.initOptionsFromSettings() # Make sure all associated ivars exist.
         self.addMenu()
     #@nonl
     #@-node:ekr.20050805162550.10: ctor (rstClass)
@@ -396,35 +419,27 @@ class rstClass:
         # Warning: changing the names of options changes the names of the corresponding ivars.
         
         self.defaultOptionsDict = {
-        
             # Http options...
             'rst3_clear_http_attributes':   False,
             'rst3_http_server_support':     False,
             'rst3_http_attributename':      'rst_http_attribute',
             'rst3_node_begin_marker':       'http-node-marker-',
-            
-            # To be deleted...(to be replaced by more specific options)
-            'rst3_massage_body': False,
-            
             # Global options...
             'rst3_underline_characters': '''#=+*^~"'`-:><_''',
+            'rst3_verbose':True,
             'rst3_write_intermediate_file': False, # Used only if generate_rst is True.
-            
             # Mode options...
-            'rst3_auto_code_mode': True, # True: enter code mode in @file trees.
+            ### 'rst3_auto_code_mode': True, # True: enter code mode in @file trees.
             'rst3_code_mode': False, # True: generate rst markup from @code and @doc parts.
             'rst3_generate_rst': True, # Master switch: must be on to generate any rst.
-            
             # Formatting options...
-            # These do _not_ depend on mode: use @rst-options doc parts to override.
             'rst3_include_markup_doc_parts': True,
+            'rst3_number_code_lines': True,
             'rst3_show_organizer_nodes': True,
             'rst3_show_headlines': True,
             'rst3_show_leo_directives': True,
             'rst3_show_options_doc_parts': False,
             'rst3_show_options_nodes': False,
-            ## 'rst3_show_these_leo_directives': '', # String containing comma-separated list.
-            
             # Headline prefixes that set options...
             'rst3_code_prefix':         '@rst-code', # Enter code mode.
             'rst3_rst_prefix':          '@rst',      # Leave code mode.
@@ -433,10 +448,6 @@ class rstClass:
             'rst3_ignore_tree_prefix':  '@ignore-tree',
             'rst3_option_prefix':       '@rst-option',
             'rst3_options_prefix':      '@rst-options',
-    
-            # Toc prefixes:  may not be needed.
-            ### 'rst3_notoc_prefix':        '@notoc',
-            ### 'rst3_toc_prefix':          '@toc',
         }
     #@nonl
     #@-node:ekr.20050808064245:createDefaultOptionsDict
@@ -458,6 +469,16 @@ class rstClass:
         return name[i:]
     #@nonl
     #@-node:ekr.20050808072943:munge
+    #@+node:ekr.20050811135526:setIvar
+    def setIvar (self,name,val):
+        
+        ivar = self.munge(name)
+        
+        # g.trace('%10s %s' % (val,name))
+        
+        setattr(self,ivar,val)
+    #@nonl
+    #@-node:ekr.20050811135526:setIvar
     #@-node:ekr.20050805162550.9: Birth & init
     #@+node:ekr.20050805162550.16:encode
     def encode (self,s):
@@ -474,9 +495,8 @@ class rstClass:
             d = self.tnodeOptionDict.get(p.v.t)
             if not d:
                 d = self.scanNodeForOptions(p)
-                if d:
+                if d :
                     self.tnodeOptionDict [p.v.t] = d
-                
         if 0:
             g.trace(root.headString())
             g.printDict(self.tnodeOptionDict)
@@ -489,6 +509,7 @@ class rstClass:
         If no value is found, default to True.'''
     
         s = s.strip()
+        if s.endswith(','): s = s[:-1]
         # Get name.  Names may contain '-' and '_'.
         i = g.skip_id(s,0,chars='-_')
         name = s [:i]
@@ -500,7 +521,6 @@ class rstClass:
             val = ''
         return (name,val or 'True')
     #@nonl
-    #@-node:ekr.20050808072943.1:parseOptionLine
     #@+node:ekr.20050808070018.2:scanForOptionDocParts
     def scanForOptionDocParts (self,p,s):
         
@@ -516,8 +536,11 @@ class rstClass:
                 if g.match_word(line,i,'@rst-options'):
                     # Add options until the end of the doc part.
                     while n < len(lines):
-                        line = lines[n] ; n += 1
-                        if g.match_word(line,0,'@c') or g.match_word(line,0,'@code'):
+                        line = lines[n] ; n += 1 ; found = False
+                        for stop in ('@c','@code', '@'):
+                            if g.match_word(line,0,stop):
+                                found = True ; break
+                        if found:
                             break
                         else:
                             d2 = self.scanOption(p,line)
@@ -525,6 +548,35 @@ class rstClass:
         return d
     #@nonl
     #@-node:ekr.20050808070018.2:scanForOptionDocParts
+    #@-node:ekr.20050808072943.1:parseOptionLine
+    #@+node:ekr.20050811173750:scanHeadlineForOptions
+    def scanHeadlineForOptions (self,p):
+        
+        h = p.headString().strip()
+        
+        if g.match_word(h,0,'@rst-option'):
+            s = h [len('@rst-option'):]
+            d = self.scanOption(p,s)
+        elif g.match_word(h,0,'@rst-options'):
+            d = self.scanOptions(p,p.bodyString())
+        else:
+            for prefix,ivar,val in (
+                (self.code_prefix,'code_mode',True),
+                    # '@rst-code' # Enter code mode.
+                (self.rst_prefix,'code_mode',False),
+                    # '@rst'      # Leave code mode.
+                (self.ignore_headline_prefix,'show_headlines',False),
+                    # '@ignore-head'
+                (self.ignore_node_prefix,'ignore_node',True),
+                    # '@ignore-node'
+                (self.ignore_tree_prefix,'ignore_tree',True),
+                    # '@ignore-tree'
+            ):
+                if h.startswith(prefix) or h.startswith(self.munge(prefix)):
+                    return { ivar: val }
+                    
+            return None
+    #@-node:ekr.20050811173750:scanHeadlineForOptions
     #@+node:ekr.20050807120331.2:scanNodeForOptions
     def scanNodeForOptions (self,p):
     
@@ -534,16 +586,16 @@ class rstClass:
         or from @ @rst-options doc parts.'''
     
         h = p.headString()
+        
+        d = self.scanHeadlineForOptions(p)
+        if not d: d = {}
     
-        if g.match_word(h,0,'@rst-option'):
-            s = h [len('@rst-option'):]
-            d = self.scanOption(p,s)
-        elif g.match_word(h,0,'@rst-options'):
-            d = self.scanOptions(p,p.bodyString())
-        else:
-            d = self.scanForOptionDocParts(p,p.bodyString())
-            
-        # g.trace(p.headString(),d)
+        d2 = self.scanForOptionDocParts(p,p.bodyString())
+        if not d2: d2 = {}
+        
+        # A fine point: body options over-ride headline options.
+        d.update(d2)
+    
         return d
     #@nonl
     #@-node:ekr.20050807120331.2:scanNodeForOptions
@@ -551,7 +603,9 @@ class rstClass:
     def scanOption (self,p,s):
         
         '''Return { name:val } is s is a line of the form name=val.
-        Otherwise return {}'''
+        Otherwise return None'''
+        
+        if not s.strip() or s.strip().startswith('..'): return None
         
         data = self.parseOptionLine(s)
     
@@ -561,15 +615,16 @@ class rstClass:
             if fullName in self.defaultOptionsDict.keys():
                 if   val.lower() == 'true': val = True
                 elif val.lower() == 'false': val = False
+                # g.trace(self.munge(name),val)
                 return { self.munge(name): val }
             else:
                 g.es_print('ignoring unknown option: %s' % (name),color='red')
-                return {}
+                return None
         else:
             g.trace(repr(s))
             s2 = 'bad rst3 option in %s: %s' % (p.headString(),s)
             g.es_print(s2,color='red')
-            return {}
+            return None
     #@nonl
     #@-node:ekr.20050808070018:scanOption
     #@+node:ekr.20050808070018.1:scanOptions
@@ -604,11 +659,20 @@ class rstClass:
         syntax = SilverCity is not None
     
         if syntax and language in ('python','ruby','perl','c'):
-            self.code_block_string = '**code**:\n\n.. code-block:: %s\n\n' % language.swapcase()
+            self.code_block_string = '**code**:\n\n.. code-block:: %s\n' % language.title()
         else:
-            self.code_block_string = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
+            self.code_block_string = '**code**:\n\n.. class:: code\n..\n\n::\n'
     #@nonl
     #@-node:ekr.20050809075309:initWrite
+    #@+node:ekr.20050809080925:writeNormalTree
+    def writeNormalTree (self,p):
+    
+        self.initWrite(p)
+        self.outputFile = file(self.outputFileName,'w')
+        self.writeTree(p)
+        self.outputFile.close()
+    #@nonl
+    #@-node:ekr.20050809080925:writeNormalTree
     #@+node:ekr.20050805162550.17:processTree
     def processTree(self,p):
         
@@ -628,6 +692,7 @@ class rstClass:
                         self.writeSpecialTree(p)
                     else:
                         self.writeNormalTree(p)
+                    self.scanAllOptions(p) # Restore the top-level verbose setting.
                     self.report(self.outputFileName)
                     p.moveToNodeAfterTree()
                 else:
@@ -637,15 +702,6 @@ class rstClass:
             g.es('No @rst nodes in selected tree',color='blue')
     #@nonl
     #@-node:ekr.20050805162550.17:processTree
-    #@+node:ekr.20050809080925:writeNormalTree
-    def writeNormalTree (self,p):
-    
-        self.initWrite(p)
-        self.outputFile = file(self.outputFileName,'w')
-        self.writeTree(p)
-        self.outputFile.close()
-    #@nonl
-    #@-node:ekr.20050809080925:writeNormalTree
     #@+node:ekr.20050805162550.21:writeSpecialTree
     def writeSpecialTree (self,p):
         
@@ -715,29 +771,7 @@ class rstClass:
             self.writeNode(p)
     #@nonl
     #@-node:ekr.20050805162550.23:writeTree
-    #@+node:ekr.20050811101550:options used
-    #@@nocolor
-    #@+at
-    # 
-    # Mode options...
-    # 
-    # 'rst3_auto_code_mode': True, # True: enter code mode in @file trees.
-    # 'rst3_code_mode': False, # True: generate rst markup from @code and @doc 
-    # parts.
-    # 'rst3_generate_rst': True, # Master switch: must be on to generate any 
-    # rst.
-    # 
-    # # Formatting options...
-    # 
-    # 'rst3_show_organizer_nodes': True,
-    # 'rst3_show_headlines': True,
-    # 'rst3_show_leo_directives': True,
-    # 'rst3_show_options_markup': False,
-    # 'rst3_show_options_nodes': False,
-    #@-at
-    #@nonl
-    #@-node:ekr.20050811101550:options used
-    #@+node:ekr.20050810083057:writeNode & helpers
+    #@+node:ekr.20050810083057:writeNode
     def writeNode (self,p):
         
         '''Format a node according to the options presently in effect.'''
@@ -752,155 +786,167 @@ class rstClass:
             h = p.headString().strip()
             if g.match_word(h,0,'@rst-options') and not self.show_options_nodes:
                 pass
-            elif 1: # New code.
+            else:
                 self.writeHeadline(p)
                 self.writeBody(p)
-            else:
-                if self.generate_rst:
-                    self.writeRstNode(p)
-                else:
-                    self.writePlainNode(p)
+        
             p.moveToThreadNext()
     #@nonl
-    #@+node:ekr.20050811101550.2:old code
-    #@+node:ekr.20050810083057.4:writePlainNode
-    def writePlainNode (self,p):
-    
-        self.writeHeadline(p)
-            
-        if self.massage_body:
-            s = self.massageBody(p)
-        else:
-            s = p.bodyString()
-    
-        if s.strip():
-            self.write(self.code_block_string)
-            i = 0 ; lines = g.splitLines(s)
-            for line in lines:
-                i += 1
-                if not "@others" in line:
-                    self.write('\t%2d  %s\n'%(i,line))
-        
-        self.write('\n')
-    #@nonl
-    #@-node:ekr.20050810083057.4:writePlainNode
-    #@+node:ekr.20050810083057.5:writeRstNode
-    def writeRstNode (self,p):
-    
-        s = p.bodyString()
-    
-        # Skip any leading @ignore, @nocolor, @wrap directives.
-        while (
-            g.match_word(s,0,"@ignore") or
-            g.match_word(s,0,"@nocolor") or
-            g.match_word(s,0,"@wrap")
-        ):
-            i = g.skip_line(s,0)
-            s = s [i:]
-    
-        self.writeHeadline(p)
-    
-        if self.use_alternate_code_block and 'code-block::' in s:
-            lines = s.split('\n')
-            lines = self.replace_code_block_directives(lines)
-            s = '\n'.join(lines)
-    
-        self.write('%s\n\n' % s.strip())
-    #@nonl
-    #@-node:ekr.20050810083057.5:writeRstNode
-    #@+node:ekr.20050805162550.18:massageBody
-    def massageBody (self,p):
-        
-        '''Remove @ignore, @nocolor and @wrap directives.'''
-    
-        s = p.bodyString()
-    
-        while (s.startswith("@ignore") or
-               s.startswith("@nocolor") or
-               s.startswith("@wrap")):
-           i = g.skip_line(s,0)
-           s = s [i:]
-    
-        return s
-    #@nonl
-    #@-node:ekr.20050805162550.18:massageBody
-    #@-node:ekr.20050811101550.2:old code
-    #@-node:ekr.20050810083057:writeNode & helpers
+    #@-node:ekr.20050810083057:writeNode
     #@+node:ekr.20050811101550.1:writeBody & helpers
     def writeBody (self,p):
         
         s = p.bodyString() ; lines = s.split('\n')
     
         if not self.show_options_doc_parts:
-            lines = self.removeSpecialDocParts(lines,'@rst-options')
+            lines = self.handleSpecialDocParts(lines,'@rst-options',
+            retainContents=False)
     
-        if not self.include_markup_doc_parts:
-            lines = self.removeSpecialDocParts(lines,'@rst-markup')
+        if not self.code_mode: # Always handle @rst-markup lines in code mode.
+            lines = self.handleSpecialDocParts(lines,'@rst-markup',
+                retainContents=self.include_markup_doc_parts)
     
-        if not self.show_leo_directives:
-            lines = self.removeLeoDirectives(lines)
-    
-        if self.use_alternate_code_block:
-            lines = self.replace_code_block_directives(lines)
+        if self.code_mode:
+            lines = self.handleCodeMode(lines)
+        else:
+            if not self.show_leo_directives:
+                lines = self.removeLeoDirectives(lines)
+            if self.use_alternate_code_block:
+                lines = self.replaceCodeBlockDirectives(lines)
     
         s = '\n'.join(lines).strip()
         if s:
             self.write('%s\n\n' % s)
     #@nonl
+    #@+node:ekr.20050811154552:getSpecialDocPart
+    def getSpecialDocPart (self,lines,n):
+    
+        result = []
+        while n < len(lines):
+            s = lines [n] ; n += 1
+            if g.match_word(s,0,'@code') or g.match_word(s,0,'@c'):
+                break
+            result.append(s)
+        return n, result
+    #@nonl
+    #@-node:ekr.20050811154552:getSpecialDocPart
+    #@+node:ekr.20050811150541:handleCodeMode & helper
+    def handleCodeMode (self,lines):
+    
+        '''Handle the preprocessed body text in code mode as follows:
+            
+        - Blank lines are copied after being cleaned.
+        - @ @rst-markup lines get copied as is.
+        - Everything else gets put into a code-block directive.'''
+    
+        result = [] ; blockCount = 0 ; n = 0
+        while n < len(lines):
+            s = lines [n] ; n += 1
+            if self.isSpecialDocPart(s,'@rst-markup'):
+                blockCount = 0
+                result.append('')
+                n, lines2 = self.getSpecialDocPart(lines,n)
+                result.extend(lines2)
+            elif not s.strip() and not blockCount:
+                pass # Ignore blank lines before the first code block.
+            else: # Put the line in a code-block, starting the code-block if needed.
+                if not blockCount:
+                    result.append('')
+                    result.append(self.code_block_string)
+                blockCount += 1
+                s = self.formatCodeModeLine(s,blockCount)
+                result.append(s)
+    
+        return result
+    #@nonl
+    #@+node:ekr.20050811152104:formatCodeModeLine
+    def formatCodeModeLine (self,s,n):
+        
+        if not s.strip(): s = ''
+        
+        if self.number_code_lines:
+            return '\t%3d %s' % (n,s)
+        else:
+            return '\t%s' % s
+    #@nonl
+    #@-node:ekr.20050811152104:formatCodeModeLine
+    #@-node:ekr.20050811150541:handleCodeMode & helper
+    #@+node:ekr.20050811153208:isSpecialDocPart
+    def isSpecialDocPart (self,s,kind):
+        
+        if s.startswith('@') and len(s) > 1 and s[1].isspace():
+            i = g.skip_ws(s,1)
+            result = g.match_word(s,i,kind)
+        else:
+            result = False
+            
+        return result
+    #@nonl
+    #@-node:ekr.20050811153208:isSpecialDocPart
+    #@+node:ekr.20050811163802:isAnySpecialDocPart
+    def isAnySpecialDocPart (self,s):
+        
+        for kind in (
+            '@rst-markup',
+            '@rst-option',
+            '@rst-options',
+        ):
+            if self.isSpecialDocPart(s,kind):
+                return True
+    
+        return False
+    #@-node:ekr.20050811163802:isAnySpecialDocPart
     #@+node:ekr.20050811105438:removeLeoDirectives
     def removeLeoDirectives (self,lines):
-        
+    
         '''Remove all Leo directives, except within literal blocks.'''
     
         n = 0 ; result = []
         while n < len(lines):
-            s = lines[n] ; n += 1
+            s = lines [n] ; n += 1
             if s.strip().endswith('::'):
                 n, lit = self.skip_literal_block(lines,n-1)
                 result.extend(lit)
-            elif s.startswith('@'):
+            elif s.startswith('@') and not self.isAnySpecialDocPart(s):
                 for key in self.leoDirectivesList:
                     if g.match_word(s,0,key):
-                        g.trace('removing %s' % s)
+                        # g.trace('removing %s' % s)
                         break
                 else:
                     result.append(s)
             else:
                 result.append(s)
-        
+    
         return result
     #@nonl
     #@-node:ekr.20050811105438:removeLeoDirectives
-    #@+node:ekr.20050811105438.1:removeSpecialDocParts
-    def removeSpecialDocParts (self,lines,kind):
-        
+    #@+node:ekr.20050811105438.1:handleSpecialDocParts
+    def handleSpecialDocParts (self,lines,kind,retainContents):
+    
         n = 0 ; result = []
         while n < len(lines):
-            s = lines[n] ; n += 1
+            s = lines [n] ; n += 1
             if s.strip().endswith('::'):
                 n, lit = self.skip_literal_block(lines,n-1)
                 result.extend(lit)
-            elif s.startswith('@'):
-                i = g.skip_ws(s,1)
-                if g.match_word(s,i,kind):
-                    while n < len(lines):
-                        s = lines[n] ; n += 1
-                        if g.match_word(s,0,'@code') or g.match_word(s,0,'@c'):
-                            break
+            elif self.isSpecialDocPart(s,kind):
+                n, lines2 = self.getSpecialDocPart(lines,n)
+                if retainContents:
+                    result.extend(lines2)
             else:
                 result.append(s)
-        
+    
         return result
     #@nonl
-    #@-node:ekr.20050811105438.1:removeSpecialDocParts
-    #@+node:ekr.20050805162550.30:replace_code_block_directives
-    def replace_code_block_directives (self,lines):
-        
+    #@-node:ekr.20050811105438.1:handleSpecialDocParts
+    #@+node:ekr.20050805162550.30:replaceCodeBlockDirectives
+    def replaceCodeBlockDirectives (self,lines):
+    
         '''Replace code-block directive, but not in literal blocks.'''
     
         n = 0 ; result = []
         while n < len(lines):
-            s = lines[n] ; n += 1
+            s = lines [n] ; n += 1
             if s.strip().endswith('::'):
                 n, lit = self.skip_literal_block(lines,n-1)
                 result.extend(lit)
@@ -920,7 +966,7 @@ class rstClass:
     
         return result
     #@nonl
-    #@-node:ekr.20050805162550.30:replace_code_block_directives
+    #@-node:ekr.20050805162550.30:replaceCodeBlockDirectives
     #@-node:ekr.20050811101550.1:writeBody & helpers
     #@+node:ekr.20050805162550.26:writeHeadline
     def writeHeadline (self,p):
@@ -962,7 +1008,8 @@ class rstClass:
     #@+node:ekr.20050805162550.20:report
     def report (self,name):
     
-        g.es_print('wrote: %s' % (name),color="blue")
+        if self.verbose:
+            g.es_print('wrote: %s' % (name),color="blue")
     #@nonl
     #@-node:ekr.20050805162550.20:report
     #@+node:ekr.20050810083856:rstComment
@@ -982,17 +1029,16 @@ class rstClass:
         
         self.initOptionsFromSettings() # Must be done on every node.
         self.initSingleNodeOptions()
-        result = {}
+        seen = []
         for p in p.self_and_parents_iter():
             d = self.tnodeOptionDict.get(p.v.t)
             if d:
                 for key in d.keys():
-                    if not result.has_key(key):
+                    ivar = self.munge(key)
+                    if not ivar in seen:
+                        seen.append(ivar)
                         val = d.get(key)
-                        ivar = self.munge(key)
-                        result [ivar] = val
-                        g.trace(ivar,val)
-        return result
+                        self.setIvar(key,val)
     #@nonl
     #@+node:ekr.20050805162550.13:initOptionsFromSettings
     def initOptionsFromSettings (self):
@@ -1008,9 +1054,7 @@ class rstClass:
             ):
                 val = getter(key)
                 if kind == 'default' or val is not None:
-                    ivar = self.munge(key)
-                    # if kind != 'default': print '%7s %55s %s' % (kind,ivar,val)
-                    setattr(self,ivar,val)
+                    self.setIvar(key,val)
                     break
     
         # Special case.
