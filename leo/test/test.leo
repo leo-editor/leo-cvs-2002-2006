@@ -2053,7 +2053,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050809091430.2"><vh>@bool rst3_format_headlines = True</vh></v>
 <v t="ekr.20050809091430.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
 </v>
-<v t="ekr.20050805165407" a="E"><vh>Tests of rst3 plugin</vh>
+<v t="ekr.20050805165407" a="ETV"><vh>Tests of rst3 plugin</vh>
 <v t="ekr.20050805165407.1"><vh>@rst ../doc/rstplugin2.html</vh>
 <v t="ekr.20050808075913"><vh>@rst-options</vh></v>
 <v t="ekr.20050805165407.2"><vh>Overview</vh>
@@ -2081,24 +2081,23 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050806113004"><vh>@rst ../doc/rstplugin3.tex</vh></v>
 <v t="ekr.20050810081856"><vh>@rst ../doc/rstplugin4.text</vh></v>
-<v t="ekr.20050811141217" a="TV"><vh>@rst ../doc/ListManagerDocs.html</vh>
-<v t="ekr.20050811141217.1" a="E"><vh>wxListManager.py</vh>
+<v t="ekr.20050811141217"><vh>@rst ../doc/ListManagerDocs.html</vh>
+<v t="ekr.20050811141217.1"><vh>wxListManager.py</vh>
 <v t="ekr.20050811141217.2" a="E"><vh>Initial stuff</vh>
 <v t="ekr.20050811141217.4" a="E"><vh>Module Imports</vh>
-<v t="ekr.20050811141217.5"><vh>About imports</vh></v>
+<v t="ekr.20050811141217.5"><vh>@rst-no-head About imports</vh></v>
 </v>
 <v t="ekr.20050811141217.6"><vh>Constants</vh></v>
 <v t="ekr.20050811141217.8"><vh>Menu IDs</vh></v>
 <v t="ekr.20050811141217.10" a="E"><vh>Read Config File</vh>
-<v t="ekr.20050811141217.11"><vh>About configuration files</vh></v>
+<v t="ekr.20050811141217.11"><vh>@rst-no-head About configuration files</vh></v>
 </v>
 </v>
-<v t="ekr.20050811141217.12" a="E"><vh>class ListManager</vh>
-<v t="ekr.20050811141217.14" a="E"><vh>Instantiation</vh>
-<v t="ekr.20050811141217.15"><vh>@rst</vh></v>
-<v t="ekr.20050811141217.16" a="E"><vh>def __init__</vh>
-<v t="ekr.20050811141217.17"><vh>About the ctor</vh></v>
-<v t="ekr.20050811141217.18" a="E"><vh>&lt;&lt; List Manager Attributes &gt;&gt;</vh>
+<v t="ekr.20050811141217.12"><vh>class ListManager</vh>
+<v t="ekr.20050811141217.14"><vh>Instantiation</vh>
+<v t="ekr.20050811141217.16"><vh>def __init__</vh>
+<v t="ekr.20050811141217.17"><vh>@rst-no-head About the ctor</vh></v>
+<v t="ekr.20050811141217.18"><vh>&lt;&lt; List Manager Attributes &gt;&gt;</vh>
 <v t="ekr.20050811141217.19"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20050811141217.20"><vh>&lt;&lt; Menu Setup &gt;&gt;</vh>
@@ -2296,8 +2295,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050811141217.159"><vh>class Logger</vh></v>
 <v t="ekr.20050811141217.160" a="E"><vh>run</vh></v>
 </v>
-</v>
-<v t="ekr.20050811145852" a="E"><vh>From ListManagerDocs.html</vh>
 <v t="ekr.20050811141217.161"><vh>LMDialogs.py</vh>
 <v t="ekr.20050811141217.162"><vh>class PopDialog</vh>
 <v t="ekr.20050811141217.163"><vh>__init__</vh></v>
@@ -17940,12 +17937,9 @@ This page documents rst3 created by Josef Dalcolmo, Timo Honkasalo, Steve Zatz, 
 .. Any line starting with '..' is ignored in @rst-options doc parts.
 code_mode=False
 generate_rst=True
-include_markup_doc_parts=True
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-show_options_doc_parts=False
-show_options_nodes=False
 verbose=True
 @c
 
@@ -18172,7 +18166,8 @@ data = ( # 8/10 1 star
 
 @ @rst-options
 code_mode = False
-show_leo_directives = False
+.. The following affects only code mode
+show_leo_directives = True
 @c
 
 #########################
@@ -18240,11 +18235,6 @@ from LMDialogs import CalendarDialog, ModifierDialog, TicklerDialog, MailDialog,
 
 from printout import PrintTable</t>
 <t tx="ekr.20050811141217.5">@nocolor
-@ @rst-options
-show_headlines = False
-@c
-
-@ @rst-markup
 
 os
     uses ``os.getcwd``, ``os.path.split``, ``os.chdir``, ``os.path.join``, ``os.path.getmtime``, ``os.startfile``, ``os.environ``
@@ -18418,11 +18408,6 @@ else:
 
 </t>
 <t tx="ekr.20050811141217.11">@nocolor
-@ @rst-options
-show_headlines = False
-@c
-
-@ @rst-markup
 
 .. sidebar:: A typical *List Manager.ini* file:
 
@@ -18483,11 +18468,6 @@ ListManager is the main class in the application and is a sublass of ``wxFrame``
 Each ``wxListCtrl`` object has its own set of events that it is hooked to (see CreateNewNotebookPage`&lt;&lt; ListControl Events &gt;&gt;`_.
 </t>
 <t tx="ekr.20050811141217.14"></t>
-<t tx="ekr.20050811141217.15">@ignore
-@nocolor
-@wrap
-
-    </t>
 <t tx="ekr.20050811141217.16">def __init__(self, parent, id, title, size):
     wxFrame.__init__(self, parent, id, title, size = size)
 
@@ -18511,11 +18491,7 @@ Each ``wxListCtrl`` object has its own set of events that it is hooked to (see C
     self.ModifierDialog = None
 
 </t>
-<t tx="ekr.20050811141217.17">@ @rst-options
-show_headlines = False
-@c
-
-@ @rst-markup
+<t tx="ekr.20050811141217.17">@nocolor
 
 The ListManager ``__init__`` method is pretty straightforward.  The ``__init__`` arguments are the ones that need to be passed to ``wxFrame __init__`` method. The wxFrame class has the following form:
 
@@ -18586,7 +18562,6 @@ self.FindDialog = FindDialog(self, "Find...", "")
 self.EvalDialog = EvalDialog(self, "Evaluate...", "")
 </t>
 <t tx="ekr.20050811141217.19">@nocolor
-@ @rst-markup
 
 self.PropertyDicts
     list of dictionaries that describe properties of each ListManager List (note that when referring to a collection of ListManager items a capital *L* List and table are used interchangeably).
@@ -18798,9 +18773,7 @@ self.filehistory = wxFileHistory()
 self.filehistory.UseMenu(filemenu)
 
 </t>
-<t tx="ekr.20050811141217.21">@ignore
-@nocolor
-@wrap
+<t tx="ekr.20050811141217.21">@nocolor
 
 +------------------------+------------------------------------------------+
 |**File Menu**           |                                                |
@@ -21923,7 +21896,12 @@ This section in the OnIdle method checks to see if there are any open editors th
 if __name__ == '__main__':
     run()
 </t>
-<t tx="ekr.20050811141217.161">@language python
+<t tx="ekr.20050811141217.161">@ @rst-options
+code_mode = True
+@c
+
+
+@language python
 from wxPython.wx import *
 # the following two are needed for the calendar
 from wxPython.calendar import *
@@ -22493,7 +22471,11 @@ import os
 <t tx="ekr.20050811141217.197">def OnLeftDClick(self, event=None):
     self.EndModal(wxID_OK)
 </t>
-<t tx="ekr.20050811141217.198">@language python
+<t tx="ekr.20050811141217.198">@ @rst-options
+code_mode = True
+@c
+
+@language python
 &lt;&lt; outlookAddin declarations &gt;&gt;
 @others
 
@@ -22503,8 +22485,7 @@ if __name__ == '__main__':
     if "--unregister" in sys.argv:
         UnregisterAddin(OutlookAddin)
     else:
-        RegisterAddin(OutlookAddin)
-</t>
+        RegisterAddin(OutlookAddin)</t>
 <t tx="ekr.20050811141217.199"># This is mainly stolen from Mark Hammond's demo plugin for win32com.client
 # A demo plugin for Microsoft Outlook (NOT Outlook Express)
 
@@ -22642,6 +22623,5 @@ _reg_policy_spec_ = "win32com.server.policy.EventHandlerPolicy"
     except WindowsError:
         pass
 </t>
-<t tx="ekr.20050811145852"></t>
 </tnodes>
 </leo_file>
