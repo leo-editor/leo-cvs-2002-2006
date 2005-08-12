@@ -64,7 +64,7 @@ location and names of style sheets and other kinds of files.
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.09'
+__version__ = '0.010'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -214,6 +214,37 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050811112803:v 0.09
+#@+node:ekr.20050812033346:v 0.010
+#@+at 
+#@nonl
+# Another big step forward.  More collapses into simplicity...
+# 
+# There is no need for the following options:
+#     rst3_include_markup_doc_parts
+#     rst3_show_options_doc_parts
+#     rst3_show_options_nodes
+# 
+# There are now so few options that named option sets aren't so useful!
+# 
+# Special doc parts will never be shown.  You can use rst literal blocks to 
+# talk about such things!
+# 
+# - Always remove special doc parts
+# - Always remove Leo directives in rst mode.
+#     Again, you can use code-blocks or literal blocks if desired.
+# 
+# All @rst-xxx headlines enter rst mode, except for @rst-option and 
+# @rst-options.
+#     - This is a major simplification: most @rst-markup doc parts are not 
+# needed.
+# 
+# - Bare @rst headline is equivalent to @rst-no-head.
+#     - This makes rst3 compatible with rst2.
+# 
+# - Improved munge: changed - to underscore, lowercased everything.
+#@-at
+#@nonl
+#@-node:ekr.20050812033346:v 0.010
 #@-others
 #@@nocolor
 #@nonl
@@ -226,14 +257,19 @@ except ImportError:
 # 
 # First:
 # 
+# 
+# 
+# - Compute effective rst level, ignoring ignored headlines.
+# 
+# - Treat @rst-option and @rst-options identically.
+# 
+# - Test @ignore and @ignore-node
+# 
 # - show_context option.
 # 
 # - Support named options sets.
 # 
 # - Write the rst3 documentation.
-# 
-# - Options related to showing special doc parts may not be needed: we have 
-# literal blocks.
 # 
 # Later:
 # 
@@ -425,38 +461,39 @@ class rstClass:
             'rst3_http_attributename':      'rst_http_attribute',
             'rst3_node_begin_marker':       'http-node-marker-',
             # Global options...
+            'rst3_number_code_lines': True,
             'rst3_underline_characters': '''#=+*^~"'`-:><_''',
             'rst3_verbose':True,
             'rst3_write_intermediate_file': False, # Used only if generate_rst is True.
             # Mode options...
-            ### 'rst3_auto_code_mode': True, # True: enter code mode in @file trees.
             'rst3_code_mode': False, # True: generate rst markup from @code and @doc parts.
-            'rst3_generate_rst': True, # Master switch: must be on to generate any rst.
+            'rst3_generate_rst': True, # True: generate rst markup.  False: generate plain text.
             # Formatting options...
-            'rst3_include_markup_doc_parts': True,
-            'rst3_number_code_lines': True,
-            'rst3_show_organizer_nodes': True,
-            'rst3_show_headlines': True,
             'rst3_show_leo_directives': True,
-            'rst3_show_options_doc_parts': False,
-            'rst3_show_options_nodes': False,
+                # True: remove Leo directives in code-mode.
+                #ll Leo directives removed in rst-mode.
+            'rst3_show_organizer_nodes': True,
+            'rst3_show_headlines': True,  # Can be set by @rst-no-head headlines.
+            
+            ### To be removed ###
+            # 'rst3_auto_code_mode': True, # True: enter code mode in @file trees.
+            
+            
             # Headline prefixes that set options...
-            'rst3_code_prefix':         '@rst-code', # Enter code mode.
-            'rst3_rst_prefix':          '@rst',      # Leave code mode.
-            'rst3_ignore_headline_prefix': '@ignore-head',
-            'rst3_ignore_node_prefix':  '@ignore-node',
-            'rst3_ignore_tree_prefix':  '@ignore-tree',
-            'rst3_option_prefix':       '@rst-option',
-            'rst3_options_prefix':      '@rst-options',
+            'rst3_code_prefix':             '@rst-code', # Enter code mode.
+            'rst3_rst_prefix':              '@rst',      # Enter rst mode.
+            'rst3_ignore_headline_prefix':  '@rst-no-head',
+            'rst3_ignore_node_prefix':      '@rst-ignore-node',
+            'rst3_ignore_tree_prefix':      '@rst-ignore-tree',
+            'rst3_option_prefix':           '@rst-option',
+            'rst3_options_prefix':          '@rst-options',
         }
     #@nonl
     #@-node:ekr.20050808064245:createDefaultOptionsDict
     #@+node:ekr.20050808072943:munge
     def munge (self,name):
         
-        '''Remove rstNNN_ prefix.'''
-        
-        # s = g.app.config.canonicalizeSettingName(name)
+        '''Convert an option name to the equivalent ivar name.'''
         
         i = g.choose(name.startswith('rst'),3,0)
     
@@ -466,7 +503,10 @@ class rstClass:
         if i < len(name) and name[i] == '_':
             i += 1
         
-        return name[i:]
+        s = name[i:].lower()
+        s = s.replace('-','_')
+        
+        return s
     #@nonl
     #@-node:ekr.20050808072943:munge
     #@+node:ekr.20050811135526:setIvar
@@ -474,7 +514,9 @@ class rstClass:
         
         ivar = self.munge(name)
         
-        # g.trace('%10s %s' % (val,name))
+        if 0:
+            if ivar == 'show_headlines':
+                g.trace('%10s %s %s' % (val,ivar,name))
         
         setattr(self,ivar,val)
     #@nonl
@@ -550,6 +592,14 @@ class rstClass:
     #@-node:ekr.20050808070018.2:scanForOptionDocParts
     #@-node:ekr.20050808072943.1:parseOptionLine
     #@+node:ekr.20050811173750:scanHeadlineForOptions
+    # 'rst3_code_prefix':             '@rst-code', # Enter code mode.
+    # 'rst3_rst_prefix':              '@rst',      # Enter rst mode.
+    # 'rst3_ignore_headline_prefix':  '@rst-no-head',
+    # 'rst3_ignore_node_prefix':      '@rst-ignore-node',
+    # 'rst3_ignore_tree_prefix':      '@rst-ignore-tree',
+    # 'rst3_option_prefix':           '@rst-option',
+    # 'rst3_options_prefix':          '@rst-options',
+    
     def scanHeadlineForOptions (self,p):
         
         h = p.headString().strip()
@@ -560,22 +610,31 @@ class rstClass:
         elif g.match_word(h,0,'@rst-options'):
             d = self.scanOptions(p,p.bodyString())
         else:
+            # Careful: can't use g.match_word because options may have '-' chars.
+            i = g.skip_id(h,0,chars='@-')
+            word = h[0:i]
+            
             for prefix,ivar,val in (
-                (self.code_prefix,'code_mode',True),
-                    # '@rst-code' # Enter code mode.
-                (self.rst_prefix,'code_mode',False),
-                    # '@rst'      # Leave code mode.
-                (self.ignore_headline_prefix,'show_headlines',False),
-                    # '@ignore-head'
-                (self.ignore_node_prefix,'ignore_node',True),
-                    # '@ignore-node'
-                (self.ignore_tree_prefix,'ignore_tree',True),
-                    # '@ignore-tree'
+                (self.code_prefix,'code_mode',True), # '@rst-code' 
+                (self.rst_prefix,'code_mode',False), # '@rst'      
+                (self.ignore_headline_prefix,'show_headlines',False), # '@rst-no-head'
+                (self.ignore_node_prefix,'ignore_node',True), # '@rst-ignore-node'
+                (self.ignore_tree_prefix,'ignore_tree',True), # '@rst-ignore-tree'
             ):
-                if h.startswith(prefix) or h.startswith(self.munge(prefix)):
-                    return { ivar: val }
+                if word == prefix: # Do _not_ munge this prefix!
+                    d = { ivar: val }
+                    if ivar != 'code_mode':
+                        d ['code_mode'] = False # Enter rst mode.
+                    # Special case: Treat a bare @rst like @rst-no-head
+                    if h == self.rst_prefix:
+                        d ['show_headlines'] = False
+                    # g.trace('found',h,prefix,ivar,d)
+                    return d
+                    
+            if h.startswith('@rst'): g.trace('unknown kind of @rst headline',p.headString())
                     
             return None
+    #@nonl
     #@-node:ekr.20050811173750:scanHeadlineForOptions
     #@+node:ekr.20050807120331.2:scanNodeForOptions
     def scanNodeForOptions (self,p):
@@ -685,7 +744,7 @@ class rstClass:
             h = p.headString().strip()
             if g.match_word(h,0,"@rst"):
                 self.outputFileName = h[4:].strip()
-                if self.outputFileName:
+                if self.outputFileName and self.outputFileName[0] != '-':
                     found = True
                     self.ext = ext = g.os_path_splitext(self.outputFileName)[1].lower()
                     if ext in ('.htm','.html','.tex'):
@@ -798,20 +857,21 @@ class rstClass:
         
         s = p.bodyString() ; lines = s.split('\n')
     
-        if not self.show_options_doc_parts:
+        if 1: ### not self.show_options_doc_parts:
             lines = self.handleSpecialDocParts(lines,'@rst-options',
             retainContents=False)
     
         if not self.code_mode: # Always handle @rst-markup lines in code mode.
             lines = self.handleSpecialDocParts(lines,'@rst-markup',
-                retainContents=self.include_markup_doc_parts)
+                retainContents=self.generate_rst) ### self.include_markup_doc_parts)
+                
+        if not self.code_mode or not self.show_leo_directives:
+            lines = self.removeLeoDirectives(lines)
     
         if self.code_mode:
             lines = self.handleCodeMode(lines)
         else:
-            if not self.show_leo_directives:
-                lines = self.removeLeoDirectives(lines)
-            if self.use_alternate_code_block:
+            if self.generate_rst and self.use_alternate_code_block:
                 lines = self.replaceCodeBlockDirectives(lines)
     
         s = '\n'.join(lines).strip()
@@ -971,18 +1031,24 @@ class rstClass:
     #@+node:ekr.20050805162550.26:writeHeadline
     def writeHeadline (self,p):
         
-        h = p.headString().strip() ; level = p.level()
-        ignore_prefix = self.ignore_headline_prefix
+        h = p.headString().strip()
         
         if (
             p == self.topNode or
-            not self.generate_rst or
-            not self.show_headlines or
-            (ignore_prefix and g.match_word(h,0,ignore_prefix))
+            (not h and not self.show_organizer_nodes) or
+            not self.show_headlines
+            ### No longer needed: show_headlines does the same thing.
+            ### or (self.ignore_headline_prefix and g.match_word(h,0,self.ignore_headline_prefix))
         ):
             return
+            
+        if g.match_word(h,0,self.ignore_headline_prefix):
+            g.trace(self.show_headlines,h)
     
-        self.write('%s\n%s\n' % (h,self.underline(h,level)))
+        if self.generate_rst:
+            self.write('%s\n%s\n' % (h,self.underline(h,p.level())))
+        else:
+            self.write('\n%s\n' % h)
     #@nonl
     #@-node:ekr.20050805162550.26:writeHeadline
     #@+node:ekr.20050811102607:skip_literal_block
