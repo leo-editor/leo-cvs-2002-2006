@@ -10,7 +10,8 @@
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20050415070840" annotate="7d71002e"
-marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
+marks="ekr.20050415070840.12,"
+expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -1241,8 +1242,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050809091430.4"><vh>@bool rst3_http_server_support = False</vh></v>
 <v t="ekr.20050809091430.6"><vh>@string rst3_node_begin_marker = 'http-node-marker-'</vh></v>
 </v>
-<v t="ekr.20050809091430.5"><vh>@bool rst3_massage_body = False</vh></v>
-<v t="ekr.20050809091430.2"><vh>@bool rst3_format_headlines = True</vh></v>
 <v t="ekr.20050809091430.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
 </v>
 </v>
@@ -2041,7 +2040,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726112715"><vh>Multiline test</vh></v>
 <v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
 <v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
-<v t="ekr.20050805150320"><vh>@button rst3</vh></v>
+<v t="ekr.20050805150320" a="E"><vh>@button rst3</vh></v>
 <v t="ekr.20050808191449"><vh>@page rst3 options</vh>
 <v t="ekr.20050810095252"><vh>Http options...</vh>
 <v t="ekr.20050809091430.1"><vh>@bool rst3_clear_http_attributes = False</vh></v>
@@ -2049,8 +2048,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050809091430.4"><vh>@bool rst3_http_server_support = False</vh></v>
 <v t="ekr.20050809091430.6"><vh>@string rst3_node_begin_marker = 'http-node-marker-'</vh></v>
 </v>
-<v t="ekr.20050809091430.5"><vh>@bool rst3_massage_body = False</vh></v>
-<v t="ekr.20050809091430.2"><vh>@bool rst3_format_headlines = True</vh></v>
 <v t="ekr.20050809091430.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
 </v>
 <v t="ekr.20050805165407" a="E"><vh>Tests of rst3 plugin</vh>
@@ -2072,9 +2069,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050805165407.11"><vh>@rst</vh></v>
 </v>
 </v>
-<v t="ekr.20050806113004"><vh>@rst ../doc/rstplugin3.tex</vh></v>
 <v t="ekr.20050810081856"><vh>@rst ../doc/rstplugin4.text</vh></v>
-<v t="ekr.20050811141217"><vh>@rst ../doc/ListManagerDocs.html</vh>
+<v t="ekr.20050811141217" a="TV"><vh>@rst ../doc/ListManagerDocs.html</vh>
 <v t="ekr.20050811141217.1"><vh>wxListManager.py</vh>
 <v t="ekr.20050811141217.2" a="E"><vh>Initial stuff</vh>
 <v t="ekr.20050811141217.4" a="E"><vh>Module Imports</vh>
@@ -2355,23 +2351,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050811141217.211"><vh>RegisterAddin</vh></v>
 <v t="ekr.20050811141217.212"><vh>UnregisterAddin</vh></v>
 </v>
-</v>
-<v t="ekr.20050810093532" a="E"><vh>@rst ../doc/rstplugin3.html</vh>
-<v t="ekr.20050812200437"><vh>@rst-no-head links</vh></v>
-<v t="ekr.20050810093532.2"><vh>Overview</vh></v>
-<v t="ekr.20050812215203"><vh>Comparison with previous rst plugins</vh></v>
-<v t="ekr.20050810093532.4" a="E"><vh>Formatting options</vh></v>
-<v t="ekr.20050812223732"><vh>Setting default options in @settings trees</vh></v>
-<v t="ekr.20050812215203.1"><vh>Setting options in headlines</vh></v>
-<v t="ekr.20050812200437.1" a="E"><vh>Setting options in body text</vh></v>
-<v t="ekr.20050810093532.8"><vh>The code-block directive</vh></v>
-<v t="ekr.20050810093532.10"><vh>Using cascading style sheets</vh></v>
-<v t="ekr.20050812203617.1"><vh>Using rST markup</vh></v>
-<v t="ekr.20050812200437.4" a="TV"><vh>@rst-no-head end notes</vh>
-<v t="ekr.20050812200437.5"><vh>Examples</vh></v>
-<v t="ekr.20050812200437.6"><vh>Acknowledgements</vh></v>
-</v>
-<v t="ekr.20050812200437.7"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
 </v>
 </vnodes>
@@ -17890,19 +17869,12 @@ else:
     else:
         # Ask to be removed.
         g.app.scriptDict['removeMe'] = True</t>
-<t tx="ekr.20050806113004">########
-Headline
-########
-
-
-This is a test</t>
 <t tx="ekr.20050808075913">option1 = True
 option2 = False</t>
 <t tx="ekr.20050808191449"></t>
 <t tx="ekr.20050809091430.1">Deletes p.v.rst2_http_attributename from all nodes after writing.
 
 Deletes p.v.unknownAttributes if it then becomes empty.</t>
-<t tx="ekr.20050809091430.2">Used differently.  See rst2_pure_document.</t>
 <t tx="ekr.20050809091430.3"></t>
 <t tx="ekr.20050809091430.4">@nocolor
 
@@ -17926,10 +17898,6 @@ Generates 'http-node-marker-'+str(number), where number is config.node_counter
     # [snip] code to write the tree
     if config.rst2_http_server_support:
         self.http_map = http_map</t>
-<t tx="ekr.20050809091430.5">True: call body_filter to massage text.
-
-Removes @ignore, @nocolor, @wrap directives.
-</t>
 <t tx="ekr.20050809091430.6"></t>
 <t tx="ekr.20050809091430.8"></t>
 <t tx="ekr.20050810081856">########
@@ -17938,141 +17906,6 @@ Headline
 
 
 This is a test</t>
-<t tx="ekr.20050810093532">###########################
-|leo| Using the rst3 plugin
-###########################
-
-@ @rst-options
-.. Any line starting with '..' is ignored in @rst-options doc parts.
-code_mode=False
-generate_rst=True
-show_organizer_nodes=True
-show_headlines=True
-show_leo_directives=True
-verbose=True
-@c
-
-.. contents::</t>
-<t tx="ekr.20050810093532.2">The rst3 plugin creates output files from Leo outlines containing
-reStructuredText_ (rST) ReStructuredText is a simple and powerful text
-formatting markup language. Outlines are a natural way to organize rST (or any
-text).
-
-This plugin adds the Write Restructured Text command to the edit menu. The Write
-Restructured Text command searches the selected outline looking for **rst root
-nodes** whose headline have the form @rst &lt;filename&gt;. The plugin then creates
-the named file in various ways depending which rst3 options are in effect.
-
-By default, the rst3 plugin creates rST headings automatically from outlines, so
-the higher-level nodes in the outline correspond to higher-level sections in the
-output. Creating rST headings automatically relieves you from one of the most
-tedious chores in creating rST markup.
-
-To use this plugin effectively, Python's docutils_ module must be installed. This
-module will use the SilverCity_ syntax coloring package if it installed.
-
-This plugin sends .htm, .html or .tex files to the docutils module for further
-processing. Docutils generates HTML files or LaTeX files depending on the file's
-extension. HTML files generated by docutils refer to three .css (cascading style
-sheet) files that should exist in the same directory as the generated HTML file.
-You can control the formatting of the HTML file by altering these .css files.
-See the node called "cascading style sheets" for more details.</t>
-<t tx="ekr.20050810093532.4">You can set any option in any node, so you have complete control over how this plugin processes each
-node.  The following is a list of options that control how the rst3 plugin formats each particular node.
-
-code_mode
-    The code_mode option controls whether the rst3 plugin processes a node in code mode or rst mode.
-    In code mode, the rst3 plugin automatically creates rST markup to display the body text as an
-    rst code-block. In rst mode the rst3 simply copies the body text of the node to the output. That
-    is, the plugin assumes that body text is already valid rST markup.
-
-generate_rst
-    The generate_rst is a master switch. If True, this plugin will generate rST markup for construct
-    such as rST sections and rST code-blocks. If false, this plugin will not generate any rST markup
-    and will ignore @ @rst-markup doc parts.
-
-ignore_node
-    If True, suppress all output from one node.  This option can not be inherited.
-
-ignore_node
-    If True, suppress all output from a node and all its descendents.  This option can not be inherited.
-
-number_code_lines
-    This option controls whether to number code lines in code mode.  It has no effect in rst mode.
-
-show_headlines
-    The show_headlines option controls whether Leo will autmatically generates rST
-    sections from headlines. Important: the show_headline option does not depend on
-    the code_mode option. They completely separate options.
-    
-    The level of the node in the outline determines the level of the
-    section underling in the rST markup. Higher-level headlines in the outline
-    correspond to higher-level section headings; lower-level headlines in the
-    outline correspond to lower-level section headings.
-
-show_leo_directives
-    The show_leo_directives controls whether the rst3 plugin includes Leo options in code mode.
-    This option has no effect in rst mode: you can always show Leo directives in rst mode if you like.
-
-show_organizer_nodes
-    The show_organizer_nodes option controls whether the rst3 plugin will generate rST sections for
-    nodes that do not contain body text. This option has no effect unless the show_headlines option
-    is True. 
-
-underline_characters
-    The underline_characters option specifies the underlining characters to be used to specify rST
-    sections. The default value is #=+*^~\"\'\`-:&gt;&lt;_ The first character is reserved so you can specify
-    the top-level section explicitly.
-
-verbose
-    The verbose option specifies whether the rst3 plugin writes informational messages.
-
-write_intermediate_file
-    The write_intermediate_file options specifies whether the rst3 plugin writes intermediate files
-    before sending them to docutils. This option only applies to .htm, .html and .tex files. The
-    name of the intermediate file has the name of the output file with .txt appended. This option
-    has effect only if the generate_rst option is True.</t>
-<t tx="ekr.20050810093532.8">This plugin defines a code-block rST directive.  The primary purpose of this directive is to show formatted source code.
-
-In rst mode you can insert the code-block directive like any other rST markup.  The rst3 plugin generates code-block directives when handling nodes in code mode.
-
-This directive takes one argument, a language name.  Like this::
-
-    .. code-block:: Python
-
-        import leoPlugins
-        import leoGlobals as g
-
-This directive syntax colors the code in the indented code block that follows the directive.
-The result looks like this if the SilverCity syntax coloring module has been installed.
-
-.. code-block:: Python
-    
-    import leoPlugins
-    import leoGlobals as g
-
-Otherwise, the output looks like this:
-
-    import leoPlugins
-    import leoGlobals as g
-
-See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for many examples of how to use code-blocks.
-</t>
-<t tx="ekr.20050810093532.10">When this plugin generates HTML files, this plugin assumes that three .css
-(cascading style sheet) files exist in the directory containing the output file.
-For the HTML output to look good the following .css files should exist in the
-directory containing the generatated HTML file: default.css, leo_rst.css and
-silver_city.css.
-
-- default.css is the default style sheet that docutils expects to exist.
-- leo_rst.css contains some style improvements based on Gunnar Schwant's DocFactory.
-- silver_city.css is the style sheet that controls the syntax highlighting generated by SilverCity.
-
-The latter two style sheets are imported at the end of the default.css.
-
-**Important:** You can use cascading style sheets to do things that otherwise
-wouldn't be possible with "plain" rST. For instance, the background color of
-this page was specified in a body style.</t>
 <t tx="ekr.20050810095252"></t>
 <t tx="ekr.20050811075608">data = ( # 8/3
     'x5xx9xxxx',
@@ -22600,130 +22433,5 @@ _reg_policy_spec_ = "win32com.server.policy.EventHandlerPolicy"
     except WindowsError:
         pass
 </t>
-<t tx="ekr.20050812200437">.. Links used in this document...
-
-.. _LaTeX:                http://www.latex-project.org/
-.. _reStructuredText:     http://docutils.sourceforge.net/rst.html
-.. _docutils:             http://docutils.sourceforge.net
-.. _ListManagerDocs.html: http://webpages.charter.net/edreamleo/ListManagerDocs.html
-.. _wxListManager.leo:    http://webpages.charter.net/edreamleo/wxListManager.leo
-.. _SilverCity:           http://silvercity.sourceforge.net
-.. _front:                http://webpages.charter.net/edreamleo/front.html
-.. _home:                 http://webpages.charter.net/edreamleo/front.html
-
-.. |blank| image:: blank.gif
-.. |leo|   image:: leo.gif
-    :target: front_</t>
-<t tx="ekr.20050812200437.1">There are several ways to specify options
-
-1. Using @settings nodes in leoSettings.leo or the Leo file containing the root node.
-
-2. Using special kinds of doc parts.  Such doc parts have the form::
-
-    @ @rst-options
-    list of name=value settings, one per line
-    @c
-
-3. Using headlines that start with '@rst-'
-</t>
-<t tx="ekr.20050812200437.4"></t>
-<t tx="ekr.20050812200437.5">The file ListManagerDocs.html_ is an impressive example of the kind of output
-that can be generated relatively easily using this plugin. The source
-file for this example is wxListManager.leo_.
-
-The files in LeoDocs.leo under the node 'Leo's HTML Users Guide' contain
-examples of using the rst3 plugin.
-
-This documentation was created using the rst3 plugin. The source code for this
-documentation is in LeoDocs.leo. The source code for all the rst plugins is in
-LeoPlugins.leo.</t>
-<t tx="ekr.20050812200437.6">Josef Dalcolmo wrote the initial rst plugin.  Timo Honkasalo, Bernhard Mulder, Paul Paterson, Kent Tenney and Steve Zatz made contributions to the rst and rst2 plugins.  Edward K. Ream wrote the rst3 plugin.</t>
-<t tx="ekr.20050812200437.7">-------------
-
-|leo|</t>
-<t tx="ekr.20050812203617.1">The plugin reserves the '#' character for your own use so that you can
-specify an rST headline explicitly. For example,::
-
-    #####
-    Title
-    #####
-
-You would typically put such a title in the rst root node. Otherwise, you should
-let the rst3 plugin automaticaly generate rST sections from headlines.
-
-To create a table of contents (TOC) put::
-
-    .. contents:: Table of Contents
-
-on its own line wherever you want the TOC to appear.  This line can appear in body text in rst mode,
-or in an @ @rst-markup doc part in code mode.</t>
-<t tx="ekr.20050812215203">This plugin provides several important benefits compared to previous rst plugins:
-
-1. This plugin allows much more flexible control over its operations using rst3 options. You can set
-options in @settings trees, in headlines and in body text. Nodes inherit rst3 options from ancestor
-nodes much like nodes inherit Leo directives.
-
-The most important option is the code_mode option. This option specifies whether to process the
-body text of a node as rst markup (rst mode) or source code that is to be converted to rST
-markup (code mode). Unlike previous versions of this plugin, any node can be processed in any
-mode.
-
-2. Headlines can set any option. This turns out to be very convenient. See `Headline Options` for
-details.  Nodes whose headlines start with @rst-options are treated specially. The body text of such **rst
-options nodes** should contain nothing but lines of the form::
-
-    &lt;option&gt;=&lt;value&gt;
-
-3. You can set any rst3 options in the *body text* of any node
-using doc parts of the form::
-
-    @ @rst-option
-    list of rst3 options, one per line
-    @c
-
-Such **option doc parts** allows you to specify rst3 options even with source code files.
-
-4. You can embed rST markup in the body text
-of any node using doc parts of the form::
-
-    @ @rst-markup
-    any rST markup
-    @c
-
-Such **markup doc parts** allow you to fine-tune the formatting of your source files.
-
-The effect of all these features is remarkable. For the first time there is complete integration of
-Leo outlines with rST markup. You can embed both rst3 options and rST markup in any node, even node
-in derived files.</t>
-<t tx="ekr.20050812215203.1">It is often convenient to set options in headlines.  The rst3 plugin handles nodes whose headlines start with @rst as follows:
-
-@rst &lt;text&gt;
-    Enters rst mode.  Creates a section called &lt;text&gt; provided the show_headlines option is set.
-
-@rst-code &lt;text&gt;
-    Enters code mode.  Creates a section called &lt;text&gt; provided the show_headlines option is set.
-
-@rst-ignore-node &lt;text&gt;
-    Sets the ignore_node option.  Suppresses all output from the node.  &lt;text&gt; is ignored.
-
-@rst-ignore-tree &lt;text&gt;
-    Sets the ignore_tree option.  Suppresses all output from the node and its descendents.  &lt;text&gt; is ignored.
-
-@rst-no-head &lt;text&gt;
-    Sets the show_headlines option to False.
-
-@rst-option &lt;option&gt; = &lt;value&gt;
-    Sets a single option to the given value.  The default value is True.
-
-@rst-options &lt;text&gt;
-    Sets zero or more options from the body text of the node.  The body text should be composed of lines of the form::
-
-        &lt;option&gt;=&lt;value&gt;
-
-    - &lt;text&gt; is ignored and never generates an rST section.
-    - The body text is only scanned for options.
-      That is, the body text is treated neither as code mode nor as rst mode.
-    - Lines starting with .. (the rST comment delimiter) are ignored.</t>
-<t tx="ekr.20050812223732"></t>
 </tnodes>
 </leo_file>
