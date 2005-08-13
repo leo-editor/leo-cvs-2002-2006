@@ -64,7 +64,7 @@ location and names of style sheets and other kinds of files.
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.010'
+__version__ = '0.1'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -105,6 +105,7 @@ except ImportError:
 #@<< change log >>
 #@+node:ekr.20050805162550.3:<< change log >>
 #@+others
+#@+node:ekr.20050813103025:v 0.0x
 #@+node:ekr.20050806161758.1:v 0.02
 #@+at 
 #@nonl
@@ -245,6 +246,38 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050812033346:v 0.010
+#@+node:ekr.20050812092209:v 0.011
+#@+at
+# 
+# - Wrote full path in report.
+#@-at
+#@nonl
+#@-node:ekr.20050812092209:v 0.011
+#@-node:ekr.20050813103025:v 0.0x
+#@+node:ekr.20050813100922:v 0.1
+#@+at
+# 
+# See http://webpages.charter.net/edreamleo/rstplugin3.html for full 
+# documentation.
+# 
+# You can start reporting bugs now :-)
+# 
+# All major features work, and have been tested for usability while writing 
+# the
+# documentation for this plugin. Some bugs remain, but this version should be
+# usable.
+# 
+# - Properly initied 'single node options'
+# 
+# - Use general names for @rst-option and @rst-options in 
+# scanHeadlineForOptions.
+# 
+# - Added support for headlline commands.
+# 
+# - Handles ListManagerDocs.html in test.leo.
+#@-at
+#@nonl
+#@-node:ekr.20050813100922:v 0.1
 #@-others
 #@@nocolor
 #@nonl
@@ -257,32 +290,33 @@ except ImportError:
 # 
 # First:
 # 
+# * rst3_default_path option.
 # 
+# - New option: how to format plain @doc parts in code mode: as code, or as an 
+# rst paragraph.
 # 
-# - Compute effective rst level, ignoring ignored headlines.
+# - Strip trailing blank lines from code-blocks.
 # 
 # - Treat @rst-option and @rst-options identically.
 # 
 # - Test @ignore and @ignore-node
 # 
-# - show_context option.
+# ? show_context option.
 # 
-# - Support named options sets.
-# 
-# - Write the rst3 documentation.
+# ? Support named options sets.
 # 
 # Later:
 # 
-# - support @ @rst-option lines.  (Not useful unless doc parts end at next doc 
-# part)
+# - Option for location of stylesheet:  use it in argv vector.
 # 
-# - Handle options in headline.
+# - Option for rst encoding: can override @encoding directives
 # 
-# - Specify location of stylesheet:  use it in argv vector.
+# ? Support docutils config files.
 # 
-# - Add encoding rst-option (can override @encoding directives)
-# 
-# ? Support docutils config files?
+# - (not so important now) Compute effective rst level, ignoring ignored 
+# headlines.
+#     - That is, most ignored headlines will be @rst nodes that don't have 
+# descendents.
 #@-at
 #@nonl
 #@-node:ekr.20050806162146:<< to do >>
@@ -311,6 +345,9 @@ def init ():
 def onCreate(tag, keywords):
 
     c = keywords.get('new_c') or keywords.get('c')
+
+    # g.trace(c)
+    
     if c:
         global controller
         controller = rstClass(c)
@@ -388,6 +425,7 @@ class rstClass:
         global SilverCity
         
         self.c = c
+        self.trace = False
         #@    << init debugging ivars >>
         #@+node:ekr.20050810090137:<< init debugging ivars >>
         self.debug_anchors = False
@@ -402,12 +440,15 @@ class rstClass:
         #@nl
         #@    << init ivars >>
         #@+node:ekr.20050805162550.11:<< init ivars >>
+        # Non-inheritable options...
+        self.ignore_this_headline = False
+        self.skip_this_node = False
+        self.skip_this_tree = False
+        
         # Formatting...
         self.code_block_string = ''
         self.last_marker = None
         self.node_counter = 0
-        self.skip_this_node = False
-        self.skip_this_tree = False
         self.toplevel = 0
         self.topNode = None
         self.use_alternate_code_block = SilverCity is None
@@ -430,6 +471,8 @@ class rstClass:
     
         self.createDefaultOptionsDict()
         self.initOptionsFromSettings() # Make sure all associated ivars exist.
+        self.initHeadlineCommands() # Only needs to be done once.
+        self.initSingleNodeOptions()
         self.addMenu()
     #@nonl
     #@-node:ekr.20050805162550.10: ctor (rstClass)
@@ -474,15 +517,12 @@ class rstClass:
                 #ll Leo directives removed in rst-mode.
             'rst3_show_organizer_nodes': True,
             'rst3_show_headlines': True,  # Can be set by @rst-no-head headlines.
-            
-            ### To be removed ###
-            # 'rst3_auto_code_mode': True, # True: enter code mode in @file trees.
-            
-            
+         
             # Headline prefixes that set options...
             'rst3_code_prefix':             '@rst-code', # Enter code mode.
             'rst3_rst_prefix':              '@rst',      # Enter rst mode.
             'rst3_ignore_headline_prefix':  '@rst-no-head',
+            'rst3_ignore_headlines_prefix': '@rst-no-headlines',
             'rst3_ignore_node_prefix':      '@rst-ignore-node',
             'rst3_ignore_tree_prefix':      '@rst-ignore-tree',
             'rst3_option_prefix':           '@rst-option',
@@ -490,6 +530,33 @@ class rstClass:
         }
     #@nonl
     #@-node:ekr.20050808064245:createDefaultOptionsDict
+    #@+node:ekr.20050813083007:initHeadlineCommands
+    def initHeadlineCommands (self):
+    
+        '''Init the list of headline commands used by writeHeadline.'''
+    
+        self.headlineCommands = [
+            self.code_prefix,
+            self.rst_prefix,
+            self.ignore_headline_prefix,
+            self.ignore_headlines_prefix,
+            self.ignore_node_prefix,
+            self.ignore_tree_prefix,
+            self.option_prefix,
+            self.options_prefix,
+        ]
+    #@nonl
+    #@-node:ekr.20050813083007:initHeadlineCommands
+    #@+node:ekr.20050813085236:initSingleNodeOptions
+    def initSingleNodeOptions (self):
+        
+        self.singleNodeOptions = [
+            'ignore_this_headline',
+            'skip_this_node',
+            'skip_this_tree',
+        ]
+    #@nonl
+    #@-node:ekr.20050813085236:initSingleNodeOptions
     #@+node:ekr.20050808072943:munge
     def munge (self,name):
         
@@ -509,18 +576,6 @@ class rstClass:
         return s
     #@nonl
     #@-node:ekr.20050808072943:munge
-    #@+node:ekr.20050811135526:setIvar
-    def setIvar (self,name,val):
-        
-        ivar = self.munge(name)
-        
-        if 0:
-            if ivar == 'show_headlines':
-                g.trace('%10s %s %s' % (val,ivar,name))
-        
-        setattr(self,ivar,val)
-    #@nonl
-    #@-node:ekr.20050811135526:setIvar
     #@-node:ekr.20050805162550.9: Birth & init
     #@+node:ekr.20050805162550.16:encode
     def encode (self,s):
@@ -528,8 +583,22 @@ class rstClass:
         return g.toEncodedString(s,encoding=self.encoding,reportErrors=True)
     #@nonl
     #@-node:ekr.20050805162550.16:encode
+    #@+node:ekr.20050812122236:options...
+    #@+node:ekr.20050812120933:dumpSettings
+    def dumpSettings (self):
+        
+        d = self.defaultOptionsDict
+        keys = d.keys() ; keys.sort()
+        
+        print 'present settings...'
+        for key in keys:
+            print '%20s %s' % (key,d.get(key))
+    #@nonl
+    #@-node:ekr.20050812120933:dumpSettings
     #@+node:ekr.20050807120331.1:preprocessTree & helpers
     def preprocessTree (self,root):
+        
+        # g.trace(self.topNode)
         
         self.tnodeOptionDict = {}
         
@@ -592,22 +661,16 @@ class rstClass:
     #@-node:ekr.20050808070018.2:scanForOptionDocParts
     #@-node:ekr.20050808072943.1:parseOptionLine
     #@+node:ekr.20050811173750:scanHeadlineForOptions
-    # 'rst3_code_prefix':             '@rst-code', # Enter code mode.
-    # 'rst3_rst_prefix':              '@rst',      # Enter rst mode.
-    # 'rst3_ignore_headline_prefix':  '@rst-no-head',
-    # 'rst3_ignore_node_prefix':      '@rst-ignore-node',
-    # 'rst3_ignore_tree_prefix':      '@rst-ignore-tree',
-    # 'rst3_option_prefix':           '@rst-option',
-    # 'rst3_options_prefix':          '@rst-options',
-    
     def scanHeadlineForOptions (self,p):
         
         h = p.headString().strip()
         
-        if g.match_word(h,0,'@rst-option'):
-            s = h [len('@rst-option'):]
+        if p == self.topNode:
+            return # Don't mess with the root node.
+        elif g.match_word(h,0,self.option_prefix): # '@rst-option'
+            s = h [len(self.option_prefix):]
             d = self.scanOption(p,s)
-        elif g.match_word(h,0,'@rst-options'):
+        elif g.match_word(h,0,self.options_prefix): # '@rst-options'
             d = self.scanOptions(p,p.bodyString())
         else:
             # Careful: can't use g.match_word because options may have '-' chars.
@@ -616,8 +679,9 @@ class rstClass:
             
             for prefix,ivar,val in (
                 (self.code_prefix,'code_mode',True), # '@rst-code' 
-                (self.rst_prefix,'code_mode',False), # '@rst'      
-                (self.ignore_headline_prefix,'show_headlines',False), # '@rst-no-head'
+                (self.rst_prefix,'code_mode',False), # '@rst'    
+                (self.ignore_headline_prefix,'ignore_this_headline',True), # '@rst-no-head'  
+                (self.ignore_headlines_prefix,'show_headlines',False), # '@rst-no-headlines'
                 (self.ignore_node_prefix,'ignore_node',True), # '@rst-ignore-node'
                 (self.ignore_tree_prefix,'ignore_tree',True), # '@rst-ignore-tree'
             ):
@@ -627,8 +691,8 @@ class rstClass:
                         d ['code_mode'] = False # Enter rst mode.
                     # Special case: Treat a bare @rst like @rst-no-head
                     if h == self.rst_prefix:
-                        d ['show_headlines'] = False
-                    # g.trace('found',h,prefix,ivar,d)
+                        d ['ignore_this_headline'] = True
+                    # g.trace(repr(h),repr(prefix),ivar,d)
                     return d
                     
             if h.startswith('@rst'): g.trace('unknown kind of @rst headline',p.headString())
@@ -701,6 +765,82 @@ class rstClass:
     #@nonl
     #@-node:ekr.20050808070018.1:scanOptions
     #@-node:ekr.20050807120331.1:preprocessTree & helpers
+    #@+node:ekr.20050808142313.28:scanAllOptions & helpers
+    # Once an option is seen, no other related options in ancestor nodes have any effect.
+    
+    def scanAllOptions(self,p):
+        
+        '''Scan position p and p's ancestors looking for options,
+        setting corresponding ivars.
+        '''
+        
+        self.initOptionsFromSettings() # Must be done on every node.
+        self.handleSingleNodeOptions(p)
+        seen = self.singleNodeOptions[:] # Suppress inheritance of single-node options.
+        for p in p.self_and_parents_iter():
+            d = self.tnodeOptionDict.get(p.v.t)
+            if d:
+                for key in d.keys():
+                    ivar = self.munge(key)
+                    if not ivar in seen:
+                        seen.append(ivar)
+                        val = d.get(key)
+                        self.setIvar(key,val,p.headString())
+    #@nonl
+    #@+node:ekr.20050805162550.13:initOptionsFromSettings
+    def initOptionsFromSettings (self):
+    
+        c = self.c ; d = self.defaultOptionsDict
+        keys = d.keys() ; keys.sort()
+    
+        for key in keys:
+            for getter,kind in (
+                (c.config.getBool,'@bool'),
+                (c.config.getString,'@string'),
+                (d.get,'default'),
+            ):
+                val = getter(key)
+                if kind == 'default' or val is not None:
+                    self.setIvar(key,val,'initOptionsFromSettings')
+                    break
+    
+        # Special case.
+        if self.http_server_support and not mod_http:
+            g.es('No http_server_support: can not import mod_http plugin',color='red')
+            self.http_server_support = False
+    #@nonl
+    #@-node:ekr.20050805162550.13:initOptionsFromSettings
+    #@+node:ekr.20050810103731:handleSingleNodeOptions
+    def handleSingleNodeOptions (self,p):
+    
+        '''Init the settings of single-node options from the tnodeOptionsDict.
+        
+        All such options default to False.'''
+        
+        d = self.tnodeOptionDict.get(p.v.t, {} )
+        
+        for ivar in self.singleNodeOptions:
+            val = d.get(ivar,False)
+            #g.trace('%24s %8s %s' % (ivar,val,p.headString()))
+            self.setIvar(ivar,val,p.headString())
+    #@nonl
+    #@-node:ekr.20050810103731:handleSingleNodeOptions
+    #@-node:ekr.20050808142313.28:scanAllOptions & helpers
+    #@+node:ekr.20050811135526:setIvar
+    def setIvar (self,name,val,tag):
+        
+        ivar = self.munge(name)
+             
+        if self.trace:   
+            if not hasattr(self,ivar):
+                g.trace('init %24s %20s %s' % (ivar,val,tag))
+            elif getattr(self,ivar) != val:
+                g.trace('set  %24s %20s %s' % (ivar,val,tag))
+        
+        setattr(self,ivar,val)
+    #@nonl
+    #@-node:ekr.20050811135526:setIvar
+    #@-node:ekr.20050812122236:options...
     #@+node:ekr.20050809074827:write methods
     #@+node:ekr.20050809082854: Top-level write code
     #@+node:ekr.20050809075309:initWrite
@@ -737,6 +877,7 @@ class rstClass:
         
         '''Process all @rst nodes in a tree.'''
     
+        self.topNode = p.copy()
         self.preprocessTree(p)
         found = False
         p = p.copy() ; after= p.nodeAfterTree()
@@ -816,7 +957,6 @@ class rstClass:
         
         '''Write p's tree to self.outputFile.'''
     
-        self.topNode = p
         self.scanAllOptions(p)
         self.toplevel = p.level()
     
@@ -836,6 +976,9 @@ class rstClass:
         '''Format a node according to the options presently in effect.'''
         
         self.scanAllOptions(p)
+        
+        if 0:
+            g.trace('%24s code_mode %s' % (p.headString(),self.code_mode))
         
         if self.skip_this_tree:
             p.moveToNodeAfterTree()
@@ -1030,20 +1173,37 @@ class rstClass:
     #@-node:ekr.20050811101550.1:writeBody & helpers
     #@+node:ekr.20050805162550.26:writeHeadline
     def writeHeadline (self,p):
-        
+    
+        '''Generate an rST section if options permit it.
+        Remove headline commands from the headline first,
+        and never generate an rST section for @rst-option and @rst-options.'''
+    
         h = p.headString().strip()
-        
+    
         if (
             p == self.topNode or
             (not h and not self.show_organizer_nodes) or
-            not self.show_headlines
-            ### No longer needed: show_headlines does the same thing.
-            ### or (self.ignore_headline_prefix and g.match_word(h,0,self.ignore_headline_prefix))
+            self.ignore_this_headline or
+            not self.show_headlines or 
+            (not self.show_organizer_nodes and not p.bodyString().strip())
         ):
+            if 0:
+                g.trace('top:%-5s show:%-5s ignore:%-5s h: %s' % (
+                    p == self.topNode,self.ignore_this_headline,self.show_headlines,h))
             return
-            
-        if g.match_word(h,0,self.ignore_headline_prefix):
-            g.trace(self.show_headlines,h)
+    
+        # Remove any headline command before writing the 
+        i = g.skip_id(h,0,chars='@-')
+        word = h [:i]
+        if word:
+            # Never generate a section for @rst-option or @rst-options.
+            if word in (self.option_prefix,self.options_prefix):
+                return
+            # Remove all other headline commands from the headline.
+            for prefix in self.headlineCommands:
+                if word == prefix:
+                    h = h [len(word):].strip()
+                    break
     
         if self.generate_rst:
             self.write('%s\n%s\n' % (h,self.underline(h,p.level())))
@@ -1070,11 +1230,15 @@ class rstClass:
         return n, result
     #@nonl
     #@-node:ekr.20050811102607:skip_literal_block
+    #@-node:ekr.20050809074827:write methods
     #@+node:ekr.20050810083314:Utils
     #@+node:ekr.20050805162550.20:report
     def report (self,name):
     
         if self.verbose:
+            
+            name = g.os_path_abspath(name)
+    
             g.es_print('wrote: %s' % (name),color="blue")
     #@nonl
     #@-node:ekr.20050805162550.20:report
@@ -1084,59 +1248,6 @@ class rstClass:
         return '.. %s' % s
     #@nonl
     #@-node:ekr.20050810083856:rstComment
-    #@+node:ekr.20050808142313.28:scanAllOptions & helper
-    # Once an option is seen, no other related options in ancestor nodes have any effect.
-    
-    def scanAllOptions(self,p):
-        
-        '''Scan position p and p's ancestors looking for options,
-        setting corresponding ivars.
-        '''
-        
-        self.initOptionsFromSettings() # Must be done on every node.
-        self.initSingleNodeOptions()
-        seen = []
-        for p in p.self_and_parents_iter():
-            d = self.tnodeOptionDict.get(p.v.t)
-            if d:
-                for key in d.keys():
-                    ivar = self.munge(key)
-                    if not ivar in seen:
-                        seen.append(ivar)
-                        val = d.get(key)
-                        self.setIvar(key,val)
-    #@nonl
-    #@+node:ekr.20050805162550.13:initOptionsFromSettings
-    def initOptionsFromSettings (self):
-    
-        c = self.c ; d = self.defaultOptionsDict
-        keys = d.keys() ; keys.sort()
-    
-        for key in keys:
-            for getter,kind in (
-                (c.config.getBool,'@bool'),
-                (c.config.getString,'@string'),
-                (d.get,'default'),
-            ):
-                val = getter(key)
-                if kind == 'default' or val is not None:
-                    self.setIvar(key,val)
-                    break
-    
-        # Special case.
-        if self.http_server_support and not mod_http:
-            g.es('No http_server_support: can not import mod_http plugin',color='red')
-            self.http_server_support = False
-    #@nonl
-    #@-node:ekr.20050805162550.13:initOptionsFromSettings
-    #@+node:ekr.20050810103731:initSingleNodeOptions
-    def initSingleNodeOptions (self):
-        
-        self.skip_this_node = False
-        self.skip_this_tree = False
-    #@nonl
-    #@-node:ekr.20050810103731:initSingleNodeOptions
-    #@-node:ekr.20050808142313.28:scanAllOptions & helper
     #@+node:ekr.20050805162550.19:underline
     def underline (self,s,level):
     
@@ -1166,7 +1277,6 @@ class rstClass:
     #@nonl
     #@-node:ekr.20050809080031:write
     #@-node:ekr.20050810083314:Utils
-    #@-node:ekr.20050809074827:write methods
     #@+node:ekr.20050805162550.33:http methods...
     #@+node:ekr.20050805162550.34:http_support_main
     def http_support_main (self,fname):
