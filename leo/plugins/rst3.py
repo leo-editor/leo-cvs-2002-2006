@@ -64,7 +64,7 @@ location and names of style sheets and other kinds of files.
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.1'
+__version__ = '0.2'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -278,6 +278,24 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050813100922:v 0.1
+#@+node:ekr.20050813145858:v 0.2
+#@+at
+# 
+# - Added support for rst3_stylesheet_name ad rst3_stylesheet_path options.
+# 
+# - Revised and simplified writeBody.
+# 
+# - Removed blank lines from code parts.
+# 
+# - Added support for show_doc_parts_as_paragraphs option.
+# 
+# Oh happy day. Doc parts included in code mode as the result of
+# show_doc_parts_as_paragraphs option are equivalent to @ @rst-markup doc 
+# parts!
+# That is, they can contain rST markup.
+#@-at
+#@nonl
+#@-node:ekr.20050813145858:v 0.2
 #@-others
 #@@nocolor
 #@nonl
@@ -290,26 +308,19 @@ except ImportError:
 # 
 # First:
 # 
-# * rst3_default_path option.
-# 
-# - New option: how to format plain @doc parts in code mode: as code, or as an 
-# rst paragraph.
-# 
-# - Strip trailing blank lines from code-blocks.
-# 
 # - Treat @rst-option and @rst-options identically.
 # 
 # - Test @ignore and @ignore-node
+# 
+# * Handle http options.
+# 
+# Later:
 # 
 # ? show_context option.
 # 
 # ? Support named options sets.
 # 
-# Later:
-# 
-# - Option for location of stylesheet:  use it in argv vector.
-# 
-# - Option for rst encoding: can override @encoding directives
+# ? Option for rst encoding: can override @encoding directives
 # 
 # ? Support docutils config files.
 # 
@@ -503,6 +514,9 @@ class rstClass:
             'rst3_http_server_support':     False,
             'rst3_http_attributename':      'rst_http_attribute',
             'rst3_node_begin_marker':       'http-node-marker-',
+            # Path options...
+            'rst3_stylesheet_name': 'default.css',
+            'rst3_stylesheet_path': '',
             # Global options...
             'rst3_number_code_lines': True,
             'rst3_underline_characters': '''#=+*^~"'`-:><_''',
@@ -511,14 +525,16 @@ class rstClass:
             # Mode options...
             'rst3_code_mode': False, # True: generate rst markup from @code and @doc parts.
             'rst3_generate_rst': True, # True: generate rst markup.  False: generate plain text.
-            # Formatting options...
-            'rst3_show_leo_directives': True,
-                # True: remove Leo directives in code-mode.
-                #ll Leo directives removed in rst-mode.
-            'rst3_show_organizer_nodes': True,
+            # Formatting options that apply to both code and rst modes....
             'rst3_show_headlines': True,  # Can be set by @rst-no-head headlines.
+            'rst3_show_organizer_nodes': True,
+            # Formatting options that apply only to code mode.
+            'rst3_show_doc_parts_as_paragraphs': False,
+            'rst3_show_leo_directives': True,
+            'rst3_show_markup_doc_parts': False,
+            'rst3_show_options_doc_parts': False,
          
-            # Headline prefixes that set options...
+            # Names of headline commands...
             'rst3_code_prefix':             '@rst-code', # Enter code mode.
             'rst3_rst_prefix':              '@rst',      # Enter rst mode.
             'rst3_ignore_headline_prefix':  '@rst-no-head',
@@ -948,7 +964,13 @@ class rstClass:
         pub.set_reader('standalone',None,'restructuredtext')
         pub.set_writer(g.choose(isHtml,'html','latex'))
         
-        return pub.publish(argv=[r'--stylesheet=c:\prog\leoCvs\leo\doc\default.css'])
+        path = g.os_path_abspath(g.os_path_join(self.stylesheet_path, self.stylesheet_name))
+        
+        if g.os_path_exists(path):
+            return pub.publish(argv=['--stylesheet=%s' % path])
+        else:
+            g.es_print('stylesheet does not exist: %s' % (path),color='red')
+            return pub.publish(argv=[])
     #@nonl
     #@-node:ekr.20050809082854.1:writeToDocutils (sets argv)
     #@-node:ekr.20050809082854: Top-level write code
@@ -998,22 +1020,25 @@ class rstClass:
     #@+node:ekr.20050811101550.1:writeBody & helpers
     def writeBody (self,p):
         
-        s = p.bodyString() ; lines = s.split('\n')
-    
-        if 1: ### not self.show_options_doc_parts:
-            lines = self.handleSpecialDocParts(lines,'@rst-options',
-            retainContents=False)
-    
-        if not self.code_mode: # Always handle @rst-markup lines in code mode.
-            lines = self.handleSpecialDocParts(lines,'@rst-markup',
-                retainContents=self.generate_rst) ### self.include_markup_doc_parts)
-                
-        if not self.code_mode or not self.show_leo_directives:
-            lines = self.removeLeoDirectives(lines)
+        # remove trailing cruft and split into lines.
+        lines = p.bodyString().rstrip().split('\n') 
     
         if self.code_mode:
+            if not self.show_options_doc_parts:
+                lines = self.handleSpecialDocParts(lines,'@rst-options',
+                    retainContents=False)
+            if not self.show_markup_doc_parts:
+                lines = self.handleSpecialDocParts(lines,'@rst-markup',
+                    retainContents=False)
+            if not self.show_leo_directives:
+                lines = self.removeLeoDirectives(lines)
             lines = self.handleCodeMode(lines)
         else:
+            lines = self.handleSpecialDocParts(lines,'@rst-options',
+                retainContents=False)
+            lines = self.handleSpecialDocParts(lines,'@rst-markup',
+                retainContents=self.generate_rst)
+            lines = self.removeLeoDirectives(lines)
             if self.generate_rst and self.use_alternate_code_block:
                 lines = self.replaceCodeBlockDirectives(lines)
     
@@ -1021,8 +1046,8 @@ class rstClass:
         if s:
             self.write('%s\n\n' % s)
     #@nonl
-    #@+node:ekr.20050811154552:getSpecialDocPart
-    def getSpecialDocPart (self,lines,n):
+    #@+node:ekr.20050811154552:getDocPart
+    def getDocPart (self,lines,n):
     
         result = []
         while n < len(lines):
@@ -1032,7 +1057,7 @@ class rstClass:
             result.append(s)
         return n, result
     #@nonl
-    #@-node:ekr.20050811154552:getSpecialDocPart
+    #@-node:ekr.20050811154552:getDocPart
     #@+node:ekr.20050811150541:handleCodeMode & helper
     def handleCodeMode (self,lines):
     
@@ -1042,25 +1067,32 @@ class rstClass:
         - @ @rst-markup lines get copied as is.
         - Everything else gets put into a code-block directive.'''
     
-        result = [] ; blockCount = 0 ; n = 0
+        result = [] ; n = 0 ; code = []
         while n < len(lines):
             s = lines [n] ; n += 1
-            if self.isSpecialDocPart(s,'@rst-markup'):
-                blockCount = 0
+            if (
+                self.isSpecialDocPart(s,'@rst-markup') or
+                (self.show_doc_parts_as_paragraphs and self.isSpecialDocPart(s,None))
+            ):
+                if code:
+                    self.finishCodePart(result,code)
+                    code = []
                 result.append('')
-                n, lines2 = self.getSpecialDocPart(lines,n)
+                n, lines2 = self.getDocPart(lines,n)
                 result.extend(lines2)
-            elif not s.strip() and not blockCount:
+            elif not s.strip() and not code:
                 pass # Ignore blank lines before the first code block.
-            else: # Put the line in a code-block, starting the code-block if needed.
-                if not blockCount:
-                    result.append('')
-                    result.append(self.code_block_string)
-                blockCount += 1
-                s = self.formatCodeModeLine(s,blockCount)
-                result.append(s)
+            elif not code: # Start the code block.
+                result.append('')
+                result.append(self.code_block_string)
+                code.append(s)
+            else: # Continue the code block.
+                code.append(s)
     
-        return result
+        if code:
+            self.finishCodePart(result,code)
+            code = []
+        return self.rstripList(result)
     #@nonl
     #@+node:ekr.20050811152104:formatCodeModeLine
     def formatCodeModeLine (self,s,n):
@@ -1068,18 +1100,46 @@ class rstClass:
         if not s.strip(): s = ''
         
         if self.number_code_lines:
-            return '\t%3d %s' % (n,s)
+            return '\t%d: %s' % (n,s)
         else:
             return '\t%s' % s
     #@nonl
     #@-node:ekr.20050811152104:formatCodeModeLine
+    #@+node:ekr.20050813155021:rstripList
+    def rstripList (self,theList):
+        
+        '''Removed trailing blank lines from theList.'''
+        
+        s = '\n'.join(theList).rstrip()
+        return s.split('\n')
+    #@nonl
+    #@-node:ekr.20050813155021:rstripList
+    #@+node:ekr.20050813160208:finishCodePart
+    def finishCodePart (self,result,code):
+        
+        code = self.rstripList(code)
+        i = 0
+        for line in code:
+            i += 1
+            result.append(self.formatCodeModeLine(line,i))
+    #@nonl
+    #@-node:ekr.20050813160208:finishCodePart
     #@-node:ekr.20050811150541:handleCodeMode & helper
     #@+node:ekr.20050811153208:isSpecialDocPart
     def isSpecialDocPart (self,s,kind):
         
+        '''Return True if s is a special doc part of the indicated kind.
+        
+        If kind is None, return True if s is any doc part.'''
+        
         if s.startswith('@') and len(s) > 1 and s[1].isspace():
-            i = g.skip_ws(s,1)
-            result = g.match_word(s,i,kind)
+            if kind:
+                i = g.skip_ws(s,1)
+                result = g.match_word(s,i,kind)
+            else:
+                result = True
+        elif not kind:
+            result = g.match_word(s,0,'@doc') or g.match_word(s,0,'@')
         else:
             result = False
             
@@ -1133,7 +1193,7 @@ class rstClass:
                 n, lit = self.skip_literal_block(lines,n-1)
                 result.extend(lit)
             elif self.isSpecialDocPart(s,kind):
-                n, lines2 = self.getSpecialDocPart(lines,n)
+                n, lines2 = self.getDocPart(lines,n)
                 if retainContents:
                     result.extend(lines2)
             else:
