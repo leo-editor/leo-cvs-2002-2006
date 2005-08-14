@@ -64,7 +64,7 @@ location and names of style sheets and other kinds of files.
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.3'
+__version__ = '0.4'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -172,7 +172,7 @@ except ImportError:
 # 
 # - Moved all headline-related stuff into writeHeadline.
 # 
-# - Added support for skip_this_node and skip_this_tree.
+# - Added support for ignore_this_node and ignore_this_tree.
 #     - More work is needed.
 #@-at
 #@nonl
@@ -310,6 +310,30 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050813173425:v 0.3
+#@+node:ekr.20050814074529:v 0.4
+#@+at
+# - Added support for show_options_nodes option.
+# - Fixed bug: self.toplevel now defined in processTree.
+# - Fixed bugs related to @rst-skip-node and @rst-skip-tree.
+# - Fixed another bug in scanOption.
+# - scanForOptionDocParts now treats @ @rst-option and @ @rst-options 
+# identically.
+# 
+# There is a problem with section levels that I don't know how to solve except 
+# with a warning:
+# 
+# The first node at each level must not be ignored: because rst treats the 
+# first occurance of an underlining character to be the next highest section 
+# level.  For example:
+# 
+# - @ignore-node
+# ..- a
+# - b
+# 
+# rst thinks that A is at a higher level than b!
+# 
+#@-at
+#@-node:ekr.20050814074529:v 0.4
 #@-others
 #@@nocolor
 #@nonl
@@ -320,28 +344,13 @@ except ImportError:
 #@@nocolor
 #@+at
 # 
-# First:
+# - Handle http options.
 # 
-# - Treat @rst-option and @rst-options identically.
-# 
-# - Test @rst-ignore-head and @rst-ignore-tree
-# 
-# * Handle http options.
-# 
-# Later:
-# 
-# ? show_context option.
-# 
-# ? Support named options sets.
-# 
-# ? encoding option: can override @encoding directives
-# 
-# ? Support docutils config files.
-# 
-# - (not so important now) Compute effective rst level, ignoring ignored 
-# headlines.
-#     - That is, most ignored headlines will be @rst nodes that don't have 
-# descendents.
+# Later or never:
+#     - show_context option.
+#     - Support named options sets.
+#     - encoding option: can override @encoding directives
+#     - Support docutils config files.
 #@-at
 #@nonl
 #@-node:ekr.20050806162146:<< to do >>
@@ -466,9 +475,9 @@ class rstClass:
         #@+node:ekr.20050805162550.11:<< init ivars >>
         # Non-inheritable options...
         self.ignore_this_headline = False
+        self.ignore_this_node = False
+        self.ignore_this_tree = False
         self.show_this_headline = False
-        self.skip_this_node = False
-        self.skip_this_tree = False
         
         # Formatting...
         self.code_block_string = ''
@@ -542,12 +551,12 @@ class rstClass:
             # Formatting options that apply to both code and rst modes....
             'rst3_show_headlines': True,  # Can be set by @rst-no-head headlines.
             'rst3_show_organizer_nodes': True,
+            'rst3_show_options_nodes': False,
             # Formatting options that apply only to code mode.
             'rst3_show_doc_parts_as_paragraphs': False,
             'rst3_show_leo_directives': True,
             'rst3_show_markup_doc_parts': False,
             'rst3_show_options_doc_parts': False,
-         
             # Names of headline commands...
             'rst3_code_prefix':             '@rst-code', # Enter code mode.
             'rst3_rst_prefix':              '@rst',      # Enter rst mode.
@@ -584,9 +593,9 @@ class rstClass:
         
         self.singleNodeOptions = [
             'ignore_this_headline',
+            'ignore_this_node',
+            'ignore_this_tree',
             'show_this_headline',
-            'skip_this_node',
-            'skip_this_tree',
         ]
     #@nonl
     #@-node:ekr.20050813085236:initSingleNodeOptions
@@ -680,18 +689,22 @@ class rstClass:
             line = lines[n] ; n += 1
             if line.startswith('@'):
                 i = g.skip_ws(line,1)
-                if g.match_word(line,i,'@rst-options'):
-                    # Add options until the end of the doc part.
-                    while n < len(lines):
-                        line = lines[n] ; n += 1 ; found = False
-                        for stop in ('@c','@code', '@'):
-                            if g.match_word(line,0,stop):
-                                found = True ; break
-                        if found:
-                            break
-                        else:
-                            d2 = self.scanOption(p,line)
-                            if d2: d.update(d2)
+                for kind in ('@rst-options','@rst-option'):
+                    if g.match_word(line,i,kind):
+                        # Allow options on the same line.
+                        line = line[i+len(kind):]
+                        d.update(self.scanOption(p,line))
+                        # Add options until the end of the doc part.
+                        while n < len(lines):
+                            line = lines[n] ; n += 1 ; found = False
+                            for stop in ('@c','@code', '@'):
+                                if g.match_word(line,0,stop):
+                                    found = True ; break
+                            if found:
+                                break
+                            else:
+                                d.update(self.scanOption(p,line))
+                        break
         return d
     #@nonl
     #@-node:ekr.20050808070018.2:scanForOptionDocParts
@@ -720,8 +733,8 @@ class rstClass:
                 (self.ignore_headline_prefix,'ignore_this_headline',True), # '@rst-no-head'
                 (self.show_headline_prefix,'show_this_headline',True), # '@rst-head'  
                 (self.ignore_headlines_prefix,'show_headlines',False), # '@rst-no-headlines'
-                (self.ignore_node_prefix,'ignore_node',True), # '@rst-ignore-node'
-                (self.ignore_tree_prefix,'ignore_tree',True), # '@rst-ignore-tree'
+                (self.ignore_node_prefix,'ignore_this_node',True), # '@rst-ignore-node'
+                (self.ignore_tree_prefix,'ignore_this_tree',True), # '@rst-ignore-tree'
             ):
                 if word == prefix: # Do _not_ munge this prefix!
                     d = { ivar: val }
@@ -764,7 +777,7 @@ class rstClass:
         '''Return { name:val } if s is a line of the form name=val.
         Otherwise return {}'''
         
-        if not s.strip() or s.strip().startswith('..'): return None
+        if not s.strip() or s.strip().startswith('..'): return {}
         
         data = self.parseOptionLine(s)
     
@@ -915,6 +928,7 @@ class rstClass:
         '''Process all @rst nodes in a tree.'''
     
         self.topNode = p.copy()
+        self.toplevel = p.level()
         self.preprocessTree(p)
         found = False
         p = p.copy() ; after= p.nodeAfterTree()
@@ -1001,7 +1015,6 @@ class rstClass:
         '''Write p's tree to self.outputFile.'''
     
         self.scanAllOptions(p)
-        self.toplevel = p.level()
     
         if self.generate_rst:
             self.write(self.rstComment('rst3: filename: %s\n\n' % self.outputFileName))
@@ -1023,9 +1036,9 @@ class rstClass:
         if 0:
             g.trace('%24s code_mode %s' % (p.headString(),self.code_mode))
         
-        if self.skip_this_tree:
+        if self.ignore_this_tree:
             p.moveToNodeAfterTree()
-        elif self.skip_this_node:
+        elif self.ignore_this_node:
             p.moveToThreadNext()
         else:
             h = p.headString().strip()
@@ -1288,9 +1301,11 @@ class rstClass:
                 if word == prefix:
                     h = h [len(word):].strip()
                     break
+                    
+        if not h.strip(): return
     
         if self.generate_rst:
-            self.write('%s\n%s\n' % (h,self.underline(h,p.level())))
+            self.write('%s\n%s\n' % (h,self.underline(h,p)))
         else:
             self.write('\n%s\n' % h)
     #@nonl
@@ -1333,19 +1348,18 @@ class rstClass:
     #@nonl
     #@-node:ekr.20050810083856:rstComment
     #@+node:ekr.20050805162550.19:underline
-    def underline (self,s,level):
+    def underline (self,s,p):
     
         '''Return the underlining string to be used at the given level for string s.'''
     
         u = self.underline_characters #  '''#=+*^~"'`-:><_'''
-        
-        level1 = level
-        level = max(0,level-self.toplevel)
+    
+        level = max(0,p.level()-self.toplevel)
         level = min(level+1,len(u)-1) # Reserve the first character for explicit titles.
         
-        # g.trace(level1,self.toplevel,level)
-    
         ch = u [level]
+        
+        # g.trace(self.toplevel,p.level(),level,repr(ch),p.headString())
     
         n = max(4,len(s))
     
