@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="14322" clone_windows="0"/>
 <globals body_outline_ratio="0.492833517089">
-	<global_window_position top="28" left="405" height="907" width="821"/>
+	<global_window_position top="51" left="376" height="907" width="821"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -2424,22 +2424,25 @@
 <v t="ekr.20050813102008.2"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050813102008.3"><vh>Overview</vh></v>
 <v t="ekr.20050813102008.4"><vh>Comparison with previous rst plugins</vh></v>
-<v t="ekr.20050813102008.5" a="E"><vh>Options</vh></v>
+<v t="ekr.20050813102008.5"><vh>Options</vh>
+<v t="ekr.20050814093016"><vh>Support for http servers</vh></v>
+</v>
 <v t="ekr.20050813102008.6"><vh>Headline Commands</vh></v>
 <v t="ekr.20050813102008.7" a="E"><vh>Using doc parts</vh></v>
 <v t="ekr.20050813102008.9"><vh>Setting defaults</vh></v>
 <v t="ekr.20050813102008.10"><vh>The code-block directive</vh></v>
 <v t="ekr.20050813102008.11"><vh>Required cascading style sheets</vh></v>
 <v t="ekr.20050813102008.12"><vh>Notes about rST markup</vh></v>
-<v t="ekr.20050813102008.13" a="E"><vh>@rst-no-head end stuff</vh>
 <v t="ekr.20050813102008.14"><vh>Examples</vh></v>
+<v t="ekr.20050814144727"><vh>Theory of operation</vh></v>
+<v t="ekr.20050813102008.13" a="E"><vh>@rst-no-head end stuff</vh>
 <v t="ekr.20050813102008.15"><vh>Acknowledgements</vh></v>
 </v>
 <v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
 </v>
 <v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Input to the rst3 plugin)</vh>
-<v t="ekr.20040414172212" a="E"><vh>@rst frontMatter.html</vh>
+<v t="ekr.20040414172212"><vh>@rst frontMatter.html</vh>
 <v t="ekr.20050812134441"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20040414172218.2"><vh>Preface</vh>
 <v t="ekr.20040416070800"><vh>@rst-no-head why Leo works</vh></v>
@@ -18133,7 +18136,7 @@ Removes @ignore, @nocolor, @wrap directives.
 |leo| Using the rst3 plugin
 ###########################
 
-.. To do: better links between sections.
+August 14, 2005
 
 @ @rst-options
 .. Any line starting with '..' is ignored in @rst-options doc parts.
@@ -18477,5 +18480,65 @@ p = g.findNodeAnywhere('@rst ../doc/rstplugin3.html')
 
 if p:
     rst3.controller.processTree(p)</t>
+<t tx="ekr.20050814093016">if enabled, this plugin stores information for the http plugin.
+
+Each node can have one additional attribute, with the name config.rst_http_attributename, which is a list.
+
+The first three elements are stack of tags, the rest is html code.
+
+[&lt;tag n start&gt;, &lt;tag n end&gt;, &lt;other stack elements&gt;, &lt;html line 1&gt;, &lt;html line 2&gt;, ...]
+
+&lt;other stack elements has the same structure:
+    [&lt;tag n-1 start&gt;, &lt;tag n-1 end&gt;, &lt;other stack elements&gt;]
+
+
+rst3_node_begin_marker = 'http-node-marker-'
+rst3_http_attributename = 'rst_http_attribute'</t>
+<t tx="ekr.20050814144727">The code for the rst3 plugin is more complex than usual.  Fortunately, the overall organization is straightforward.
+
+defaultOptionsDict
+    This dictionary represents each rst3 option.
+    To add another option, just add another entry to this dictionary.
+    Keys are the option name, including the `rst3_` prefix.
+    Values are the default value of the option.
+    The hard values in the dictionary may be changed as the result of @settings entries.
+
+processTree
+    processTree is the top-level code that handles one rst root node.
+    It calls preprocessTree to create the **tnodeOptionDict** ivar.
+    processTree then calls either writeNormalTree or writeSpecialTree
+    depending on whether text will be sent to docutils for further processing.
+    These two methods handle mundane details of opening an closing files.
+    Both writeNormalTree and writeSpecialTree call **writeTree** to do the actual work.
+
+tnodeOptionDict
+    The entries in this dictionary represents the options that are set in one particular node.
+    The keys of tnodeOptionDict are tnodes, the values are anonymous dictionaries.
+    These anonymous inner dictionaries contain the options that are explicitly set at each tnode
+    (and thus each position).
+    Preprocessing the tree this way ensures that each node (headline and body text) is parsed exactly once.
+
+writeTree
+    writeTree first calls **scanAllOptions**, which has the effect of
+    initializing all options. writeTree then calls **writeNode** for each node
+    that will be processed by the rst3 plugin. Options may cause the plugin to
+    skip a node or an entire subtree.
+
+writeNode
+    writeNode first calls **scanAllOptions** to compute the options that are in
+    effect for that *single* node. Once options have computed, processing the
+    node is straightforward. writeNode calls writeBody and writeHeadline
+    to do the real work. These methods generate or skip text based on various
+    options.
+
+scanAllOptions
+    scanAllOptions recreates the optionsDict ivar to represent *all* the options
+    in effect for *for the particular node being processed by writeNode*. Client
+    code gets these options by calling the getOption method.
+
+    scanAllOptions first inits all options from settings,
+    then updates those options using the anonymous
+    dictionaries contained in the tnodeOptionsDict.
+    scanAllOptions works like g.scanAllDirectives, but the code is much simpler.</t>
 </tnodes>
 </leo_file>
