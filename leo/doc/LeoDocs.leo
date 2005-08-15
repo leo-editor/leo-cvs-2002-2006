@@ -2424,8 +2424,8 @@
 <v t="ekr.20050813102008.2"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050813102008.3"><vh>Overview</vh></v>
 <v t="ekr.20050813102008.4"><vh>Comparison with previous rst plugins</vh></v>
-<v t="ekr.20050813102008.5"><vh>Options</vh>
-<v t="ekr.20050814093016"><vh>Support for http servers</vh></v>
+<v t="ekr.20050813102008.5" a="E"><vh>Options</vh>
+<v t="ekr.20050814093016"><vh>Options supporting the http plugin</vh></v>
 </v>
 <v t="ekr.20050813102008.6"><vh>Headline Commands</vh></v>
 <v t="ekr.20050813102008.7" a="E"><vh>Using doc parts</vh></v>
@@ -18480,20 +18480,53 @@ p = g.findNodeAnywhere('@rst ../doc/rstplugin3.html')
 
 if p:
     rst3.controller.processTree(p)</t>
-<t tx="ekr.20050814093016">if enabled, this plugin stores information for the http plugin.
+<t tx="ekr.20050814093016">The following options are for the use of Bernhard Mulder's http plugin.  The http plugin creates an http server running on a local port, typically 8080.  When the http plugin is running you will see a purple message in the log window that looks something like this::
 
-Each node can have one additional attribute, with the name config.rst_http_attributename, which is a list.
+    http serving enabled on port 8080, version 0.91
 
-The first three elements are stack of tags, the rest is html code.
+To use the http plugin, start a web browser and enter this url::
 
-[&lt;tag n start&gt;, &lt;tag n end&gt;, &lt;other stack elements&gt;, &lt;html line 1&gt;, &lt;html line 2&gt;, ...]
+    http://localhost:8080/
 
-&lt;other stack elements has the same structure:
-    [&lt;tag n-1 start&gt;, &lt;tag n-1 end&gt;, &lt;other stack elements&gt;]
+You will see a a top level page containing one link for every open .leo file.  Clicking on link will cause the http server to pass a new page to the browser.  You can use the browser's refresh button to update the top-level view in the browser after you have opened or closed files.
 
+**Important**: See the docstring for the http plugin for information on configuring the plugin.
+Some of the following rst3 settings must match values of settings for the http plugin. 
+Here are the rst3 options that support the http plugin:
 
-rst3_node_begin_marker = 'http-node-marker-'
-rst3_http_attributename = 'rst_http_attribute'</t>
+http_server_support
+    A master switch: none of the following options have any effect unless this option is True.
+    If True, the rst3 plugin does the following:
+
+    - Writes **node markers** in the rst output for use by the http plugin.
+
+        Node markers are rst comments of the form::
+    
+            .. _node-markerN
+    
+        where node-marker is the string specified by the rst3 node_begin_marker option and
+        N is a unique node number.
+
+    - Adds additional information to all nodes of the tree being formatted using Leo's
+      unknownAttributes mechanism.
+
+http_attributename
+    The name of the attribute name written to the unknownAttributes attribute of
+    each each outline node in the rst root tree.
+    The default is 'rst_http_attribute';
+    it should match the following setting of the *http* plugin::
+
+        @string rst_http_attributename = 'rst_http_attribute'
+    
+    This option has no effect unless the http_server_support option is True.
+
+clear_http_attributes
+    If True the rst3 plugin initially clears the fields specified by `http_attributename`.  
+    This option has no effect unless the http_server_support option is True.
+
+node_begin_marker
+    The string used for node markers. The default is 'http-node-marker-'.
+    This option has no effect unless the http_server_support option is True.</t>
 <t tx="ekr.20050814144727">The code for the rst3 plugin is more complex than usual.  Fortunately, the overall organization is straightforward.
 
 defaultOptionsDict
