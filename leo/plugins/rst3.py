@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.5'
+__version__ = '0.6'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -324,6 +324,18 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050814092014:v 0.5
+#@+node:ekr.20050814152137:v 0.6
+#@+at
+# 
+# - Hooked up support for http stuff.  It probably isn't working, but I'm not 
+# sure what it is supposed to do.
+# 
+#     - relocate_references gets called after every file is generated.  I'm 
+# not sure that is correct.
+#     - The present code may be clearing rst.anchor_map too often...
+#@-at
+#@nonl
+#@-node:ekr.20050814152137:v 0.6
 #@-others
 #@@nocolor
 #@nonl
@@ -334,15 +346,10 @@ except ImportError:
 #@@nocolor
 #@+at
 # 
+# - Warn if option gets set twice in same vnode.
+# 
 # - Handle http options.
 #     - Put traces in rst2 to see what is happening.
-# 
-# - Add theory of operation documentation.
-#     - Prepass sets tnodeOptionsDict.
-#     - scanAllOptions sets ivars for the present node.
-#         - Node only options are handled only in one node.
-# 
-# - Warn if option set twice in same vnode.
 # 
 # Later or never:
 #     - show_context option.
@@ -359,6 +366,12 @@ controller = None # For use by @button rst3 code.
 #@+others
 #@+node:ekr.20050805162550.4:Module level
 #@+node:ekr.20050805162550.5: init
+#@+at 
+#@nonl
+# comment
+#@-at
+#@@c
+
 def init ():
 
     ok = docutils is not None # Ok for unit testing.
@@ -427,355 +440,6 @@ docutils.parsers.rst.directives.register_directive('code-block',code_block)
 #@nonl
 #@-node:ekr.20050806101253:code_block
 #@-node:ekr.20050805162550.4:Module level
-#@+node:ekr.20050809072722:http stuff
-if 0:
-    #@    @+others
-    #@+node:ekr.20050805162550.14:runOnOpen
-    def runOnOpen (self):
-        
-        g.trace()
-        c = self.c
-        ignoreset = {} ; http_map = {} ; anchormap = {}
-        self.node_counter = 0 ; found = False
-        
-        for p in c.allNodes_iter():
-            if p.v in self.ignoreset:
-                continue
-            s = p.headString()
-            if s.startswith("@rst ") and len(s.split()) >= 2:
-                for p1 in p.subtree_iter():
-                    ignoreset[p1.v] = True
-                try:
-                    self.http_map = {}
-                    self.anchormap = {}
-                    self.processTree(p)
-                    http_map.update(self.http_map)
-                    anchormap.update(self.anchormap)
-                    found = True
-                except Exception:
-                    g.es("Formatting failed for %s" % p, color='red')
-                    g.es_exception()
-        if found:
-            self.http_map = http_map
-            self.anchormap = anchormap
-            relocate_references() 
-            self.http_map = None
-            self.anchormap = None
-            g.es('html updated for html plugin', color="blue")
-        if self.clear_http_attributes:
-            g.es("http attributes cleared")
-    #@nonl
-    #@-node:ekr.20050805162550.14:runOnOpen
-    #@+node:ekr.20050805162550.25:Handle http support (code snippet)
-    if 1:
-        http_map = {}
-    else:  # Not ready yet.
-        if self.tag == 'open2':
-            http_map = self.http_map
-        else:
-            http_map = {}
-            self.anchormap = {}
-            # maps v nodes to markers.
-            self.node_counter = 0
-    #@nonl
-    #@-node:ekr.20050805162550.25:Handle http support (code snippet)
-    #@+node:ekr.20050805162550.39:html parser classes
-    #@<< class linkAnchorParserClass >>
-    #@+node:ekr.20050805162550.40: << class linkAnchorParserClass >>
-    class linkAnchorParserClass (HTMLParser.HTMLParser):
-        
-        '''A class to recognize anchors and links in HTML documents.'''
-    
-        #@    @+others
-        #@+node:ekr.20050805162550.41:__init__
-        def __init__(self,rst):
-        
-            HTMLParser.HTMLParser.__init__(self) # Init the base class.
-            
-            self.rst = rst
-            self.c = rst.c
-        #@nonl
-        #@-node:ekr.20050805162550.41:__init__
-        #@+node:ekr.20050805162550.42:is_anchor
-        def is_anchor(self, tag, attrs):
-        
-            if tag != 'a':
-                return False
-        
-            for name, value in attrs:
-                if name == 'name':
-                    return True
-        
-            return False
-        #@nonl
-        #@-node:ekr.20050805162550.42:is_anchor
-        #@+node:ekr.20050805162550.43:is_link
-        def is_link(self, tag, attrs):
-        
-            if tag != 'a':
-                return False
-        
-            for name, value in attrs:
-                if name == 'href':
-                    return True
-        
-            return False
-          
-        #@-node:ekr.20050805162550.43:is_link
-        #@-others
-    #@nonl
-    #@-node:ekr.20050805162550.40: << class linkAnchorParserClass >>
-    #@nl
-    
-    #@+others
-    #@+node:ekr.20050805162550.44:class htmlparserClass (linkAnchorParserClass)
-    class htmlparserClass (linkAnchorParserClass):
-        
-        '''
-        The responsibility of the html parser is:
-            1. to find out which html belongs to which node.
-            2. to keep a stack of html markings which proceed each node.
-            
-        Later, we have to relocate inter-file links: if a reference to another location
-        is in a file, we must change the link.
-        
-        '''
-    
-        #@    @+others
-        #@+node:ekr.20050805162550.45:__init__
-        def __init__(self, http_map):
-        
-            linkAnchorParserClass.__init__(self) # Init the base class.
-            self.stack = None
-            # The stack contains lists of the form:
-                # [text1, text2, previous].
-                # text1 is the opening tag
-                # text2 is the closing tag
-                # previous points to the previous stack element
-            
-            self.http_map = http_map  # see comments in rstClass ctor.
-                
-            self.node_marker_stack = []
-            # self.node_marker_stack.pop() returns True for a closing
-            # tag if the opening tag identified an anchor belonging to a vnode.
-            
-            self.node_code = []
-                # Accumulated html code.
-                # Once the hmtl code is assigned a vnode, it is deleted here.
-            
-            self.deleted_lines = 0 # Number of lines deleted in self.node_code
-            
-            self.endpos_pending = False
-            # Do not include self.node_code[0:self.endpos_pending] in the html code.
-            
-            self.last_position = None
-            # Last position; we must attach html code to this node.
-        #@nonl
-        #@-node:ekr.20050805162550.45:__init__
-        #@+node:ekr.20050805162550.46:handle_starttag
-        def handle_starttag(self, tag, attrs):
-            '''
-            1. Find out if the current tag is an achor.
-            2. If it is an anchor, we check if this anchor marks the beginning of a new 
-               node
-            3. If a new node begins, then we might have to store html code in the
-               previous code.
-            4. In any case, put the new tag on the stack.
-            '''
-            is_node_marker = False
-            if self.is_anchor(tag, attrs):
-                for name, value in attrs:
-                    if name == 'name' and value.startswith(self.node_begin_marker):
-                        is_node_marker = True
-                        break
-                if is_node_marker:
-                    is_node_marker = value
-                    line, column = self.getpos()
-                    if self.last_position:
-                        lines = self.node_code[:]
-                        lines[0] = lines[0][self.startpos:]
-                        del lines[line - self.deleted_lines - 1:]
-                        if self.debug_store_lines:
-                            print "rst2: Storing in", self.last_position, ":"
-                            print lines
-                        mod_http.get_http_attribute(self.last_position).extend(lines)
-        
-                        if self.debug_show_unknownattributes:
-                            print "rst2: unknownAttributes[self.http_attributename]"
-                            print "For:", self.last_position
-                            pprint.pprint(get_http_attr(self.last_position))
-                                    
-                    if self.deleted_lines < line - 1:
-                        del self.node_code[:line - 1 - self.deleted_lines]
-                        self.deleted_lines = line - 1
-                        self.endpos_pending = True
-            if self.debug_handle_starttag:
-                print "rst2: handle_starttag:", tag, attrs, is_node_marker
-            starttag = self.get_starttag_text( ) 
-            self.stack = [starttag, None, self.stack]
-            self.node_marker_stack.append(is_node_marker)
-                    
-        #@nonl
-        #@-node:ekr.20050805162550.46:handle_starttag
-        #@+node:ekr.20050805162550.47:handle_endtag
-        def handle_endtag(self, tag):
-            '''
-            1. Set the second element of the current top of stack.
-            2. If this is the end tag for an anchor for a node,
-               store the current stack for that node.
-            '''
-            self.stack[1] = "</" + tag + ">"
-        
-            if self.debug_handle_endtag:
-                print "rst2: handle_endtag:", tag
-                pprint.pprint(self.stack)
-        
-            if self.endpos_pending:
-                line, column = self.getpos()
-                self.startpos = self.node_code[0].find(">", column) + 1
-                self.endpos_pending = False
-            is_node_marker = self.node_marker_stack.pop()
-        
-            if is_node_marker and not self.clear_http_attributes:
-                self.last_position = self.http_map[is_node_marker]
-                if is_node_marker != self.last_marker:
-                    mod_http.set_http_attribute(self.http_map[is_node_marker], self.stack)
-        
-            self.stack = self.stack[2]
-            
-        #@nonl
-        #@-node:ekr.20050805162550.47:handle_endtag
-        #@+node:ekr.20050805162550.48:generate_node_marker (a class method) NOT READY
-        def generate_node_marker(cls, number):
-            
-            '''Generate a node marker.'''
-            
-            return ### 
-        
-            return self.node_begin_marker + ("%s" % number)
-            
-        generate_node_marker = classmethod(generate_node_marker)
-        #@nonl
-        #@-node:ekr.20050805162550.48:generate_node_marker (a class method) NOT READY
-        #@+node:ekr.20050805162550.49:feed
-        def feed(self, line):
-        
-            self.node_code.append(line)
-        
-            HTMLParser.HTMLParser.feed(self, line)
-        #@-node:ekr.20050805162550.49:feed
-        #@-others
-    #@nonl
-    #@-node:ekr.20050805162550.44:class htmlparserClass (linkAnchorParserClass)
-    #@+node:ekr.20050805162550.50:class anchor_htmlparserClass (linkAnchorParserClass)
-    class anchor_htmlparserClass (linkAnchorParserClass):
-        
-        '''
-        This htmlparser does the first step of relocating: finding all the anchors within the html node.
-        
-        Each anchor is mapped to a tuple:
-            (current_file, vnode).
-            
-        Filters out markers which mark the beginning of the html code for a node.
-        '''
-    
-        #@    @+others
-        #@+node:ekr.20050805162550.51: __init__
-        def __init__(self, vnode, first_node):
-        
-            linkAnchorParserClass.__init__(self)
-        
-            self.vnode = vnode
-            self.anchormap = self.anchormap
-            self.first_node = first_node
-        #@-node:ekr.20050805162550.51: __init__
-        #@+node:ekr.20050805162550.52:handle_starttag
-        def handle_starttag(self, tag, attrs):
-            '''
-            1. Find out if the current tag is an achor.
-            2. If the current tag is an anchor, update the mapping;
-                 anchor -> vnode
-            '''
-            if not self.is_anchor(tag, attrs):
-                return
-        
-            if self.first_node:
-                self.anchormap[self.current_file] = (self.current_file, self.vnode)
-                self.first_node = False
-        
-            for name, value in attrs:
-                if name == 'name':
-                    if not value.startswith(self.node_begin_marker):
-                        self.anchormap[value] = (self.current_file, self.vnode)
-                      
-        #@nonl
-        #@-node:ekr.20050805162550.52:handle_starttag
-        #@-others
-    #@nonl
-    #@-node:ekr.20050805162550.50:class anchor_htmlparserClass (linkAnchorParserClass)
-    #@+node:ekr.20050805162550.53:class link_htmlparserClass (linkAnchorParserClass)
-    class link_htmlparserClass (linkAnchorParserClass):
-        
-        '''This html parser does the second step of relocating links:
-        1. It scans the html code for links.
-        2. If there is a link which links to a previously processed file
-           then this link is changed so that it now refers to the node.
-        '''
-    
-        #@    @+others
-        #@+node:ekr.20050805162550.54:__init__
-        def __init__(self, p):
-            
-            linkAnchorParserClass.__init__(self)
-        
-            self.p = p
-            self.anchormap = self.anchormap ### ???
-            self.replacements = []
-        #@nonl
-        #@-node:ekr.20050805162550.54:__init__
-        #@+node:ekr.20050805162550.55:handle_starttag
-        def handle_starttag(self, tag, attrs):
-            '''
-            1. Find out if the current tag is an achor.
-            2. If the current tag is an anchor, update the mapping;
-                 anchor -> p
-            '''
-            if not self.is_link(tag, attrs):
-                return
-        
-            marker = self.node_begin_marker
-        
-            for name, value in attrs:
-                if name == 'href':
-                    href = value
-                    href_parts = href.split("#")
-                    if len(href_parts) == 1:
-                        href_a = href_parts[0]
-                    else:
-                        href_a = href_parts[1]
-                    if not href_a.startswith(marker):
-                        if href_a in self.anchormap:
-                            href_file, href_node = self.anchormap[href_a]
-                            http_node_ref = mod_http.node_reference(href_node)
-                            line, column = self.getpos()
-                            self.replacements.append((line, column, href, href_file, http_node_ref))
-        #@nonl
-        #@-node:ekr.20050805162550.55:handle_starttag
-        #@+node:ekr.20050805162550.56:get_replacements
-        def get_replacements(self):
-        
-            return self.replacements
-        #@nonl
-        #@-node:ekr.20050805162550.56:get_replacements
-        #@-others
-    #@nonl
-    #@-node:ekr.20050805162550.53:class link_htmlparserClass (linkAnchorParserClass)
-    #@-others
-    #@nonl
-    #@-node:ekr.20050805162550.39:html parser classes
-    #@-others
-#@nonl
-#@-node:ekr.20050809072722:http stuff
 #@+node:ekr.20050805162550.8:class rstClass
 class rstClass:
     
@@ -808,13 +472,14 @@ class rstClass:
         self.c = c
         #@    << init debugging ivars >>
         #@+node:ekr.20050810090137:<< init debugging ivars >>
-        self.debug_anchors = False
-        self.debug_before_and_after_replacement = False
-        self.debug_handle_endtag = False
-        self.debug_handle_starttag = False
-        self.debug_node_html_1 = False
-        self.debug_show_unknownattributes = False
-        self.debug_store_lines = False
+        if 0:
+            self.debug_anchors = False
+            self.debug_before_and_after_replacement = False
+            self.debug_handle_endtag = False
+            self.debug_handle_starttag = False
+            self.debug_node_html_1 = False
+            self.debug_show_unknownattributes = False
+            self.debug_store_lines = False
         #@nonl
         #@-node:ekr.20050810090137:<< init debugging ivars >>
         #@nl
@@ -838,9 +503,9 @@ class rstClass:
         self.use_alternate_code_block = SilverCity is None
         
         # Http support...
-        self.http_map = {}
-            # A node anchor is a marker beginning with node_begin_marker.
-            # We assume that such markers do not occur in the rst document.
+        self.nodeNumber = 0
+        self.http_map = {} # Keys are named hyperlink targets.  Value are positions.
+        self.anchor_map = {}
         
         # For writing.
         self.defaultEncoding = 'utf-8'
@@ -876,50 +541,6 @@ class rstClass:
         c.frame.menu.createMenuEntries(editMenu, table)
     #@nonl
     #@-node:ekr.20050805162550.12:addMenu
-    #@+node:ekr.20050808064245:createDefaultOptionsDict
-    def createDefaultOptionsDict(self):
-        
-        # Warning: changing the names of options changes the names of the corresponding ivars.
-        
-        self.defaultOptionsDict = {
-            # Http options...
-            'rst3_clear_http_attributes':   False,
-            'rst3_http_server_support':     False,
-            'rst3_http_attributename':      'rst_http_attribute',
-            'rst3_node_begin_marker':       'http-node-marker-',
-            # Path options...
-            'rst3_stylesheet_name': 'default.css',
-            'rst3_stylesheet_path': '',
-            # Global options...
-            'rst3_number_code_lines': True,
-            'rst3_underline_characters': '''#=+*^~"'`-:><_''',
-            'rst3_verbose':True,
-            'rst3_write_intermediate_file': False, # Used only if generate_rst is True.
-            # Mode options...
-            'rst3_code_mode': False, # True: generate rst markup from @code and @doc parts.
-            'rst3_generate_rst': True, # True: generate rst markup.  False: generate plain text.
-            # Formatting options that apply to both code and rst modes....
-            'rst3_show_headlines': True,  # Can be set by @rst-no-head headlines.
-            'rst3_show_organizer_nodes': True,
-            'rst3_show_options_nodes': False,
-            # Formatting options that apply only to code mode.
-            'rst3_show_doc_parts_as_paragraphs': False,
-            'rst3_show_leo_directives': True,
-            'rst3_show_markup_doc_parts': False,
-            'rst3_show_options_doc_parts': False,
-            # Names of headline commands...
-            'rst3_code_prefix':             '@rst-code', # Enter code mode.
-            'rst3_rst_prefix':              '@rst',      # Enter rst mode.
-            'rst3_ignore_headline_prefix':  '@rst-no-head',
-            'rst3_ignore_headlines_prefix': '@rst-no-headlines',
-            'rst3_ignore_node_prefix':      '@rst-ignore-node',
-            'rst3_ignore_tree_prefix':      '@rst-ignore-tree',
-            'rst3_option_prefix':           '@rst-option',
-            'rst3_options_prefix':          '@rst-options',
-            'rst3_show_headline_prefix':    '@rst-head',
-        }
-    #@nonl
-    #@-node:ekr.20050808064245:createDefaultOptionsDict
     #@+node:ekr.20050813083007:initHeadlineCommands
     def initHeadlineCommands (self):
     
@@ -969,13 +590,51 @@ class rstClass:
     #@nonl
     #@-node:ekr.20050808072943:munge
     #@-node:ekr.20050805162550.9: Birth & init
-    #@+node:ekr.20050805162550.16:encode
-    def encode (self,s):
-    
-        return g.toEncodedString(s,encoding=self.encoding,reportErrors=True)
-    #@nonl
-    #@-node:ekr.20050805162550.16:encode
     #@+node:ekr.20050812122236:options...
+    #@+node:ekr.20050808064245:createDefaultOptionsDict
+    def createDefaultOptionsDict(self):
+        
+        # Warning: changing the names of options changes the names of the corresponding ivars.
+        
+        self.defaultOptionsDict = {
+            # Http options...
+            'rst3_clear_http_attributes':   False,
+            'rst3_http_server_support':     False,
+            'rst3_http_attributename':      'rst_http_attribute',
+            'rst3_node_begin_marker':       'http-node-marker-',
+            # Path options...
+            'rst3_stylesheet_name': 'default.css',
+            'rst3_stylesheet_path': '',
+            # Global options...
+            'rst3_number_code_lines': True,
+            'rst3_underline_characters': '''#=+*^~"'`-:><_''',
+            'rst3_verbose':True,
+            'rst3_write_intermediate_file': False, # Used only if generate_rst is True.
+            # Mode options...
+            'rst3_code_mode': False, # True: generate rst markup from @code and @doc parts.
+            'rst3_generate_rst': True, # True: generate rst markup.  False: generate plain text.
+            # Formatting options that apply to both code and rst modes....
+            'rst3_show_headlines': True,  # Can be set by @rst-no-head headlines.
+            'rst3_show_organizer_nodes': True,
+            'rst3_show_options_nodes': False,
+            # Formatting options that apply only to code mode.
+            'rst3_show_doc_parts_as_paragraphs': False,
+            'rst3_show_leo_directives': True,
+            'rst3_show_markup_doc_parts': False,
+            'rst3_show_options_doc_parts': False,
+            # Names of headline commands...
+            'rst3_code_prefix':             '@rst-code', # Enter code mode.
+            'rst3_rst_prefix':              '@rst',      # Enter rst mode.
+            'rst3_ignore_headline_prefix':  '@rst-no-head',
+            'rst3_ignore_headlines_prefix': '@rst-no-headlines',
+            'rst3_ignore_node_prefix':      '@rst-ignore-node',
+            'rst3_ignore_tree_prefix':      '@rst-ignore-tree',
+            'rst3_option_prefix':           '@rst-option',
+            'rst3_options_prefix':          '@rst-options',
+            'rst3_show_headline_prefix':    '@rst-head',
+        }
+    #@nonl
+    #@-node:ekr.20050808064245:createDefaultOptionsDict
     #@+node:ekr.20050812120933:dumpSettings (not used)
     def dumpSettings (self):
         
@@ -1308,7 +967,7 @@ class rstClass:
                     found = True
                     self.ext = ext = g.os_path_splitext(self.outputFileName)[1].lower()
                     if ext in ('.htm','.html','.tex'):
-                        self.writeSpecialTree(p)
+                        ok = self.writeSpecialTree(p)
                     else:
                         self.writeNormalTree(p)
                     self.scanAllOptions(p) # Restore the top-level verbose setting.
@@ -1343,15 +1002,19 @@ class rstClass:
             
         try:
             output = self.writeToDocutils(source,isHtml)
+            ok = True
         except Exception:
-            output = None
+            print 'Exception in docutils'
+            g.es_exception()
+            ok = False
             
-        if output:
+        if ok:
             f = file(self.outputFileName,'w')
             f.write(output)
             f.close()
-            
-        return self.http_support_main(self.outputFileName)
+            self.http_endTree(self.outputFileName)
+    
+        return ok
     #@nonl
     #@-node:ekr.20050805162550.21:writeSpecialTree
     #@+node:ekr.20050809082854.1:writeToDocutils (sets argv)
@@ -1384,7 +1047,8 @@ class rstClass:
     def writeTree(self,p):
         
         '''Write p's tree to self.outputFile.'''
-    
+        
+        self.http_startTree()
         self.scanAllOptions(p)
     
         if self.getOption('generate_rst'):
@@ -1393,6 +1057,7 @@ class rstClass:
         # We can't use an iterator because we may skip parts of the tree.
         p = p.copy() # Only one copy is needed.
         after = p.nodeAfterTree()
+        
         while p and p != after:
             self.writeNode(p)
     #@nonl
@@ -1416,6 +1081,7 @@ class rstClass:
             if g.match_word(h,0,'@rst-options') and not self.getOption('show_options_nodes'):
                 pass
             else:
+                self.http_addNodeMarker(p)
                 self.writeHeadline(p)
                 self.writeBody(p)
         
@@ -1697,6 +1363,12 @@ class rstClass:
     #@-node:ekr.20050811102607:skip_literal_block
     #@-node:ekr.20050809074827:write methods
     #@+node:ekr.20050810083314:Utils
+    #@+node:ekr.20050805162550.16:encode
+    def encode (self,s):
+    
+        return g.toEncodedString(s,encoding=self.encoding,reportErrors=True)
+    #@nonl
+    #@-node:ekr.20050805162550.16:encode
     #@+node:ekr.20050805162550.20:report
     def report (self,name):
     
@@ -1741,63 +1413,86 @@ class rstClass:
     #@nonl
     #@-node:ekr.20050809080031:write
     #@-node:ekr.20050810083314:Utils
-    #@+node:ekr.20050805162550.33:http methods...
-    #@+node:ekr.20050805162550.34:http_support_main
-    def http_support_main (self,fname):
+    #@+node:ekr.20050805162550.33:Support for http plugin
+    #@+node:ekr.20050815091008.1:http_addNodeMarker
+    def http_addNodeMarker (self,p):
     
-        if not self.getOption('http_server_support'):
-            return
-    
-        g.trace()
-    
-        self.set_initial_http_attributes(fname)
-        self.find_anchors()
-        # if tag == 'open2':
-            # return True
-    
-        # We relocate references here if we are only running
-        # for one file, otherwise we must postpone the
-        # relocation until we have processed all files.
-        self.relocate_references()
-    
-        self.http_map = None
-        self.anchormap = None
-    
-        g.es('html updated for html plugin',color="blue")
-        if self.clear_http_attributes:
-            g.es("http attributes cleared")
+        if (
+            self.getOption('http_server_support') and
+            self.getOption('generate_rst')
+        ):
+            self.nodeNumber += 1
+            s = "\n\n.. _%s%s:\n\n" % (self.getOption('node_begin_marker'),self.nodeNumber)
+            self.write(s)
+            self.http_map [s] = p.copy()
     #@nonl
-    #@-node:ekr.20050805162550.34:http_support_main
-    #@+node:ekr.20050805162550.35:http_attribute_iter
-    def http_attribute_iter (self):
+    #@-node:ekr.20050815091008.1:http_addNodeMarker
+    #@+node:ekr.20050805162550.34:http_endTree & helpers
+    # Was http_support_main
     
-        for p in self.http_map.values():
-            attr = mod_http.get_http_attribute(p)
-            if attr:
-                yield (p.copy(),attr)
+    def http_endTree (self,filename):
+        
+        '''Do end-of-tree processing to support the http plugin.'''
+        
+        if (
+            self.getOption('http_server_support') and
+            self.getOption('generate_rst')
+        ):
+            self.set_initial_http_attributes(filename)
+            self.find_anchors()
+            self.relocate_references()
+        
+            g.es_print('html updated for http plugin',color="blue")
+        
+            if self.getOption('clear_http_attributes'):
+                g.es_print("http attributes cleared")
     #@nonl
-    #@-node:ekr.20050805162550.35:http_attribute_iter
     #@+node:ekr.20050805162550.36:set_initial_http_attributes
     def set_initial_http_attributes (self,filename):
     
         f = file(filename)
-        parser = htmlparserClass(self.http_map)
+        parser = htmlParserClass(self)
     
-        for line in f.readline():
+        for line in f.readlines():
             parser.feed(line)
             
         f.close()
     #@nonl
     #@-node:ekr.20050805162550.36:set_initial_http_attributes
+    #@+node:ekr.20050805162550.38:find_anchors
+    def find_anchors (self):
+    
+        '''Find the anchors in all the nodes.'''
+    
+        first_node = True
+    
+        for p,attrs in self.http_attribute_iter():
+            html = mod_http.reconstruct_html_from_attrs(attrs)
+            # g.trace(pprint.pprint(html))
+            parser = anchor_htmlParserClass(self,p,first_node)
+            for line in html:
+                parser.feed(line)
+            first_node = parser.first_node
+            
+        # g.trace(g.dictToString(self.anchor_map,tag='anchor_map'))
+    #@nonl
+    #@-node:ekr.20050805162550.38:find_anchors
     #@+node:ekr.20050805162550.37:relocate_references
+    #@+at 
+    #@nonl
+    # Relocate references here if we are only running for one file.
+    # 
+    # Otherwise we must postpone the relocation until we have processed all 
+    # files.
+    #@-at
+    #@@c
+    
     def relocate_references (self):
     
-        for p, attr in http_attribute_iter():
-            if self.debug_before_and_after_replacement:
-                print "Before replacement:", p
-                pprint.pprint(attr)
+        for p, attr in self.http_attribute_iter():
+            # g.trace('before',p.headString(),attr)
             http_lines = attr [3:]
-            parser = link_htmlparserClass(p)
+            parser = link_htmlparserClass(self,p)
             for line in attr [3:]:
                 parser.feed(line)
             replacements = parser.get_replacements()
@@ -1811,37 +1506,320 @@ class rstClass:
                 else:
                     filename = marker_parts [0]
                     attr [line + 2] = attr [line + 2].replace('href="%s"' % href,'href="%s"' % http_node_ref)
-    
-        if self.debug_before_and_after_replacement:
-            print "After replacement"
-            pprint.pprint(attr)
-            for i in range(3): print
+        # g.trace('after %s\n\n\n',attr)
     #@nonl
     #@-node:ekr.20050805162550.37:relocate_references
-    #@+node:ekr.20050805162550.38:find_anchors
-    def find_anchors (self):
+    #@+node:ekr.20050805162550.35:http_attribute_iter
+    def http_attribute_iter (self):
     
-        '''Find the anchors in all the nodes.'''
+        for p in self.http_map.values():
+            attr = mod_http.get_http_attribute(p)
+            if attr:
+                yield (p.copy(),attr)
+    #@nonl
+    #@-node:ekr.20050805162550.35:http_attribute_iter
+    #@-node:ekr.20050805162550.34:http_endTree & helpers
+    #@+node:ekr.20050815091008.4:http_startTree
+    def http_startTree (self):
+        
+        '''Init the ivars used by the http support code.'''
     
-        first_node = True
-    
-        for vnode, attrs in http_attribute_iter():
-            html = mod_http.reconstruct_html_from_attrs(attrs)
-            if self.debug_node_html_1:
-                pprint.pprint(html)
-            parser = anchor_htmlparserClass(vnode,first_node)
-            for line in html:
-                parser.feed(line)
-            first_node = parser.first_node
-    
-        if self.debug_anchors:
-            print "Anchors found:"
-            pprint.pprint(self.anchormap)
-    #@-node:ekr.20050805162550.38:find_anchors
-    #@-node:ekr.20050805162550.33:http methods...
+        self.nodeNumber = 0
+        self.http_map = {}
+        self.anchor_map = {}
+    #@nonl
+    #@-node:ekr.20050815091008.4:http_startTree
+    #@-node:ekr.20050805162550.33:Support for http plugin
     #@-others
 #@nonl
 #@-node:ekr.20050805162550.8:class rstClass
+#@+node:ekr.20050805162550.39:html parser classes
+#@<< class linkAnchorParserClass >>
+#@+node:ekr.20050805162550.40: << class linkAnchorParserClass >> (subclass of HTMLParser.HTMLParser)
+class linkAnchorParserClass (HTMLParser.HTMLParser):
+    
+    '''A class to recognize anchors and links in HTML documents.'''
+
+    #@    @+others
+    #@+node:ekr.20050805162550.41:__init__
+    def __init__(self,rst):
+    
+        HTMLParser.HTMLParser.__init__(self) # Init the base class.
+        
+        self.rst = rst
+        
+        # Set ivars from options.  This works only if we don't change nodes!
+        self.node_begin_marker      = rst.getOption('node_begin_marker')
+        self.clear_http_attributes  = rst.getOption('clear_http_attributes')
+    #@nonl
+    #@-node:ekr.20050805162550.41:__init__
+    #@+node:ekr.20050805162550.42:is_anchor
+    def is_anchor(self, tag, attrs):
+    
+        if tag != 'a':
+            return False
+    
+        for name, value in attrs:
+            if name == 'name':
+                return True
+    
+        return False
+    #@nonl
+    #@-node:ekr.20050805162550.42:is_anchor
+    #@+node:ekr.20050805162550.43:is_link
+    def is_link(self, tag, attrs):
+    
+        if tag != 'a':
+            return False
+    
+        for name, value in attrs:
+            if name == 'href':
+                return True
+    
+        return False
+    #@nonl
+    #@-node:ekr.20050805162550.43:is_link
+    #@+node:ekr.20050815164715:is_node_marker
+    def is_node_marker (self,attrs):
+    
+        for name,value in attrs:
+            if name == 'name' and value.startswith(self.node_begin_marker):
+                return True
+                
+        return False
+    #@nonl
+    #@-node:ekr.20050815164715:is_node_marker
+    #@-others
+#@nonl
+#@-node:ekr.20050805162550.40: << class linkAnchorParserClass >> (subclass of HTMLParser.HTMLParser)
+#@nl
+
+#@+others
+#@+node:ekr.20050805162550.44:class htmlParserClass (linkAnchorParserClass)
+class htmlParserClass (linkAnchorParserClass):
+    
+    '''
+    The responsibility of the html parser is:
+        1. to find out which html belongs to which node.
+        2. to keep a stack of html markings which proceed each node.
+        
+    Later, we have to relocate inter-file links: if a reference to another location
+    is in a file, we must change the link.
+    
+    '''
+
+    #@    @+others
+    #@+node:ekr.20050805162550.45:__init__
+    def __init__ (self,rst):
+    
+        linkAnchorParserClass.__init__(self,rst) # Init the base class.
+    
+        self.stack = None
+        # The stack contains lists of the form:
+            # [text1, text2, previous].
+            # text1 is the opening tag
+            # text2 is the closing tag
+            # previous points to the previous stack element
+    
+        self.node_marker_stack = []
+        # self.node_marker_stack.pop() returns True for a closing
+        # tag if the opening tag identified an anchor belonging to a vnode.
+    
+        self.node_code = []
+            # Accumulated html code.
+            # Once the hmtl code is assigned a vnode, it is deleted here.
+    
+        self.deleted_lines = 0 # Number of lines deleted in self.node_code
+    
+        self.endpos_pending = False
+        # Do not include self.node_code[0:self.endpos_pending] in the html code.
+    
+        self.last_position = None
+        # Last position; we must attach html code to this node.
+    #@nonl
+    #@-node:ekr.20050805162550.45:__init__
+    #@+node:ekr.20050805162550.46:handle_starttag
+    def handle_starttag (self,tag,attrs):
+        '''
+        1. Find out if the current tag is an achor.
+        2. If it is an anchor, we check if this anchor marks the beginning of a new 
+           node
+        3. If a new node begins, then we might have to store html code in the
+           previous code.
+        4. In any case, put the new tag on the stack.
+        '''
+        is_node_marker = False
+        if self.is_anchor(tag,attrs) and self.is_node_marker(attrs):
+            # g.trace(tag,attrs)
+            line, column = self.getpos()
+            if self.last_position:
+                lines = self.node_code [:]
+                lines [0] = lines [0] [self.startpos:]
+                del lines [line-self.deleted_lines-1:]
+                # g.trace('Storing in %s...\n%s' % self.last_position, lines)
+                mod_http.get_http_attribute(self.last_position).extend(lines)
+                #@            << trace the unknownAttribute >>
+                #@+node:ekr.20050815164715.1:<< trace the unknownAttribute >>
+                if 0:
+                    print "rst2: unknownAttributes[self.http_attributename]"
+                    print "For:", self.last_position
+                    pprint.pprint(get_http_attr(self.last_position))
+                #@nonl
+                #@-node:ekr.20050815164715.1:<< trace the unknownAttribute >>
+                #@nl
+            if self.deleted_lines < line-1:
+                del self.node_code [: line-1-self.deleted_lines]
+                self.deleted_lines = line-1
+                self.endpos_pending = True
+        # g.trace("rst2: handle_starttag:", tag, attrs, is_node_marker)
+        starttag = self.get_starttag_text()
+        self.stack = [starttag, None, self.stack]
+        self.node_marker_stack.append(is_node_marker)
+    #@nonl
+    #@-node:ekr.20050805162550.46:handle_starttag
+    #@+node:ekr.20050805162550.47:handle_endtag
+    def handle_endtag(self, tag):
+        '''
+        1. Set the second element of the current top of stack.
+        2. If this is the end tag for an anchor for a node,
+           store the current stack for that node.
+        '''
+        self.stack[1] = "</" + tag + ">"
+    
+        # g.trace(tag,g.listToString(self.stack))
+        if self.endpos_pending:
+            line, column = self.getpos()
+            self.startpos = self.node_code[0].find(">", column) + 1
+            self.endpos_pending = False
+    
+        is_node_marker = self.node_marker_stack.pop()
+    
+        if is_node_marker and not self.clear_http_attributes:
+            self.last_position = self.rst.http_map[is_node_marker]
+            if is_node_marker != self.last_marker:
+                mod_http.set_http_attribute(self.rst.http_map[is_node_marker], self.stack)
+    
+        self.stack = self.stack[2]
+        
+    #@nonl
+    #@-node:ekr.20050805162550.47:handle_endtag
+    #@+node:ekr.20050805162550.49:feed
+    def feed(self, line):
+        
+        # g.trace(repr(line))
+    
+        self.node_code.append(line)
+    
+        HTMLParser.HTMLParser.feed(self, line) # Call the base class's feed().
+    #@-node:ekr.20050805162550.49:feed
+    #@-others
+#@nonl
+#@-node:ekr.20050805162550.44:class htmlParserClass (linkAnchorParserClass)
+#@+node:ekr.20050805162550.50:class anchor_htmlParserClass (linkAnchorParserClass)
+class anchor_htmlParserClass (linkAnchorParserClass):
+    
+    '''
+    This htmlparser does the first step of relocating: finding all the anchors within the html node.
+    
+    Each anchor is mapped to a tuple:
+        (current_file, vnode).
+        
+    Filters out markers which mark the beginning of the html code for a node.
+    '''
+
+    #@    @+others
+    #@+node:ekr.20050805162550.51: __init__
+    def __init__ (self,rst,p,first_node):
+    
+        linkAnchorParserClass.__init__(self,rst)
+    
+        self.p = p.copy()
+        self.anchor_map = rst.anchor_map
+        self.first_node = first_node
+    #@-node:ekr.20050805162550.51: __init__
+    #@+node:ekr.20050805162550.52:handle_starttag
+    def handle_starttag(self, tag, attrs):
+        '''
+        1. Find out if the current tag is an achor.
+        2. If the current tag is an anchor, update the mapping;
+             anchor -> p
+        '''
+        if not self.is_anchor(tag, attrs):
+            return
+    
+        if self.first_node:
+            self.anchor_map[self.current_file] = (self.current_file, self.p)
+            self.first_node = False
+    
+        for name, value in attrs:
+            if name == 'name':
+                if not value.startswith(self.node_begin_marker):
+                    self.anchor_map[value] = (self.current_file, self.p)
+                  
+    #@nonl
+    #@-node:ekr.20050805162550.52:handle_starttag
+    #@-others
+#@nonl
+#@-node:ekr.20050805162550.50:class anchor_htmlParserClass (linkAnchorParserClass)
+#@+node:ekr.20050805162550.53:class link_htmlParserClass (linkAnchorParserClass)
+class link_htmlparserClass (linkAnchorParserClass):
+    
+    '''This html parser does the second step of relocating links:
+    1. It scans the html code for links.
+    2. If there is a link which links to a previously processed file
+       then this link is changed so that it now refers to the node.
+    '''
+
+    #@    @+others
+    #@+node:ekr.20050805162550.54:__init__
+    def __init__ (self,rst,p):
+    
+        linkAnchorParserClass.__init__(self,rst)
+    
+        self.p = p.copy()
+        self.anchor_map = rst.anchor_map
+        self.replacements = []
+    #@nonl
+    #@-node:ekr.20050805162550.54:__init__
+    #@+node:ekr.20050805162550.55:handle_starttag
+    def handle_starttag(self, tag, attrs):
+        '''
+        1. Find out if the current tag is an achor.
+        2. If the current tag is an anchor, update the mapping;
+             anchor -> p
+        '''
+        if not self.is_link(tag, attrs):
+            return
+    
+        marker = self.node_begin_marker
+        for name, value in attrs:
+            if name == 'href':
+                href = value
+                href_parts = href.split("#")
+                if len(href_parts) == 1:
+                    href_a = href_parts[0]
+                else:
+                    href_a = href_parts[1]
+                if not href_a.startswith(marker):
+                    if href_a in self.anchor_map:
+                        href_file, href_node = self.anchor_map[href_a]
+                        http_node_ref = mod_http.node_reference(href_node)
+                        line, column = self.getpos()
+                        self.replacements.append((line, column, href, href_file, http_node_ref))
+    #@nonl
+    #@-node:ekr.20050805162550.55:handle_starttag
+    #@+node:ekr.20050805162550.56:get_replacements
+    def get_replacements(self):
+    
+        return self.replacements
+    #@nonl
+    #@-node:ekr.20050805162550.56:get_replacements
+    #@-others
+#@nonl
+#@-node:ekr.20050805162550.53:class link_htmlParserClass (linkAnchorParserClass)
+#@-others
+#@nonl
+#@-node:ekr.20050805162550.39:html parser classes
 #@-others
 #@nonl
 #@-node:ekr.20050805162550:@thin rst3.py
