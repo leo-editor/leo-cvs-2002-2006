@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="14322" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="14324" clone_windows="0"/>
 <globals body_outline_ratio="0.492833517089">
 	<global_window_position top="51" left="376" height="907" width="821"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -22,7 +22,7 @@
 <v t="ekr.20050404094627"><vh>Settings and buttons</vh>
 <v t="ekr.20041226081019"><vh>@button Check Spelling...</vh></v>
 <v t="ekr.20050812090111"><vh>@button rst3</vh></v>
-<v t="ekr.20050813102553"><vh>@button Format</vh></v>
+<v t="ekr.20050813102553"><vh>@button Format rst</vh></v>
 <v t="ekr.20050407144417"><vh>@settings</vh>
 <v t="ekr.20050407144342"><vh>@page http plugin</vh>
 <v t="ekr.20050407144342.1"><vh>@bool http_active = True</vh></v>
@@ -2419,29 +2419,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050813102008" a="E"><vh>Documentation for the rst3 plugin</vh>
-<v t="ekr.20050813102008.1" a="TV"><vh>@rst ../doc/rstplugin3.html</vh>
-<v t="ekr.20050813102008.2"><vh>@rst-no-head links</vh></v>
-<v t="ekr.20050813102008.3"><vh>Overview</vh></v>
-<v t="ekr.20050813102008.4"><vh>Comparison with previous rst plugins</vh></v>
-<v t="ekr.20050813102008.5" a="E"><vh>Options</vh>
-<v t="ekr.20050814093016"><vh>Options supporting the http plugin</vh></v>
-</v>
-<v t="ekr.20050813102008.6"><vh>Headline Commands</vh></v>
-<v t="ekr.20050813102008.7" a="E"><vh>Using doc parts</vh></v>
-<v t="ekr.20050813102008.9"><vh>Setting defaults</vh></v>
-<v t="ekr.20050813102008.10"><vh>The code-block directive</vh></v>
-<v t="ekr.20050813102008.11"><vh>Required cascading style sheets</vh></v>
-<v t="ekr.20050813102008.12"><vh>Notes about rST markup</vh></v>
-<v t="ekr.20050813102008.14"><vh>Examples</vh></v>
-<v t="ekr.20050814144727"><vh>Theory of operation</vh></v>
-<v t="ekr.20050813102008.13" a="E"><vh>@rst-no-head end stuff</vh>
-<v t="ekr.20050813102008.15"><vh>Acknowledgements</vh></v>
-</v>
-<v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
-</v>
-</v>
-<v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Input to the rst3 plugin)</vh>
+<v t="ekr.20040414161647" a="E"><vh>Leo's HTML Users Guide</vh>
 <v t="ekr.20040414172212"><vh>@rst frontMatter.html</vh>
 <v t="ekr.20050812134441"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20040414172218.2"><vh>Preface</vh>
@@ -2456,7 +2434,7 @@
 <v t="ekr.20040414174439" a="E"><vh>DISCLAIMER OF LIABILITY</vh></v>
 <v t="ekr.20050812125502"><vh>@rst-no-head End stuff</vh></v>
 </v>
-<v t="ekr.20040403171740"><vh>@rst ../doc/scripting.html</vh>
+<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
 <v t="ekr.20050812134441.1"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20040403183229" a="E" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3122206e616d653d22687474702d6e6f64652d6d61726b65722d31223e710155043c2f613e71025d710328553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710455063c2f6469763e71055d71062855063c626f64793e710755073c2f626f64793e71085d71092855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710a55073c2f68746d6c3e710b4e65656555243c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e0a710c55493c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643122206e616d653d226f76657276696577223e4f766572766965773c2f613e3c2f68313e0a710d652e"><vh>Overview</vh></v>
 <v t="ekr.20040403175011" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3322206e616d653d22687474702d6e6f64652d6d61726b65722d33223e710155043c2f613e71025d71032855233c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555073c2f6469763e0a710f55413c64697620636c6173733d2273656374696f6e222069643d22672d746f702d7468652d636f6d6d616e6465722d6f662d7468652d746f702d77696e646f77223e0a711055863c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643222206e616d653d22672d746f702d7468652d636f6d6d616e6465722d6f662d7468652d746f702d77696e646f77223e672e746f7028293a2074686520636f6d6d616e646572206f662074686520746f702077696e646f773c2f613e3c2f68313e0a7111652e"><vh>g.top(): the commander of the top window</vh>
@@ -2538,9 +2516,42 @@
 <v t="ekr.20040906100201.1" rst_http_attribute="5d71002855463c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d353222206e616d653d22687474702d6e6f64652d6d61726b65722d3532223e710155043c2f613e71025d710328553b3c64697620636c6173733d2273656374696f6e222069643d22756e69742d74657374696e672d776974682d746573742d616e642d7375697465223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555133c703e4e657720696e20342e323a3c2f703e0a710f554b3c703e52756e6e696e6720756e69742074657374732066726f6d20746573742e6c656f20697320656173792c2070726f766964656420796f75206861766520656e61626c6564207468650a7110554d536372697074696e6720706c7567696e2e205768656e207468697320706c7567696e20697320656e61626c6564204c656f2077696c6c20637265617465206120626c756520277363726970740a71115530627574746f6e2720696e207468652069636f6e206261722063616c6c65642027756e69742074657374272e3c2f703e0a711255143c756c20636c6173733d2273696d706c65223e0a711355783c6c693e546f2072756e20616c6c20756e69742074657374732c2073656c65637420746865206e6f646520696e20746573742e6c656f2063616c6c65642027556e69742074657374696e672e2e2e272c7468656e20636c69636b207468652027756e697420746573742720627574746f6e2e3c2f6c693e0a7114555a3c6c693e546f2072756e20612073696e676c6520746573742c2073656c65637420616e20262336343b74657374206e6f646520616e6420636c69636b207468652027756e697420746573742720627574746f6e2e3c2f6c693e0a7115555e3c6c693e546f2072756e2061207375697465206f662074657374732c2073656c65637420616e20262336343b7375697465206e6f646520616e6420636c69636b207468652027756e697420746573742720627574746f6e2e3c2f6c693e0a711655b03c6c693e546f2072756e20616e79206f7468657220636f6c6c656374696f6e206f662074657374732c2063726561746520616e206f75746c696e6520636f6e7461696e696e672074686f736520262336343b74657374206f7220262336343b7375697465206e6f6465732c2073656c6563742074686520726f6f74206f662074686174207472656520616e6420636c69636b207468652027756e697420746573742720627574746f6e2e3c2f6c693e0a711755063c2f756c3e0a711855513c703e54686174277320616c6c2e205365652074686520646f63737472696e6720666f72206d6f645f736372697074696e6720666f72206d6f72652064657461696c732061626f7574207363726970740a71195550627574746f6e732e20596f752063616e20736565207468697320646f63737472696e67207573696e672074686520706c7567696e5f6d616e6167657220706c7567696e20696620796f7520686176650a711a5512697420696e7374616c6c65642e3c2f703e0a711b55573c703e5365766572616c206e6f64657320696e20746865207472656520262336343b7468696e202e2e2f7372632f6c656f546573742e70792028696e20746573742e6c656f2920636f6e7461696e20737570706f72740a711c5556636f646520666f7220262336343b746573742c20262336343b73756974652c206574632e20736f20696620796f752077616e7420616c6c2074686520676f72792064657461696c7320796f752063616e20726561640a711d555174686520636f64652e2049742773206e6f7420636f6d706c6963617465643a204c656f206372656174657320556e69745465737420636c6173736573206175746f6d61746963616c6c792077686f73650a711e554072756e206d6574686f642069732074686520626f6479206f662074686520262336343b7375697465206f7220262336343b74657374206e6f64652e3c2f703e0a711f553b3c703e54686520646966666572656e6365206265747765656e20262336343b7465737420616e6420262336343b73756974652069733a3c2f703e0a712055143c756c20636c6173733d2273696d706c65223e0a7121558f3c6c693e4c656f2063726561746573206120756e697420746573742066726f6d2073637269707420696e20616e20262336343b74657374206e6f6465206279206372656174696e6720616e20696e7374616e6365206f662067656e6572616c54657374436173652c206120737562636c617373206f6620756e6974746573742e54657374436173652e3c2f6c693e0a712255423c6c693e5468652073637269707420696e20616e20262336343b7375697465206e6f646520637265617465732074686520746573742073756974652e3c2f6c693e0a712355063c2f756c3e0a7124550e3c703e4e6f7465733a3c2f703e0a712555143c756c20636c6173733d2273696d706c65223e0a712655db3c6c693e262336343b74657374206e6f646573206472616d61746963616c6c792073696d706c696669657320746865207465737420636f64652e205468657265206973206e6f206e65656420666f72206578706c6963697420756e69742074657374696e6720636c617373657320616e64206d6574686f64732e204e6f7220697320746865726520616e79206e65656420666f7220736574557020616e642074656172446f776e206d6574686f64733b20736372697074732063616e20757365207472792f66696e616c6c7920696e73746561642e3c2f6c693e0a712754950100003c6c693e6c656f546573742e646f546573747320706572666f726d7320697473206f776e206b696e64206f662073657455702f74656172446f776e20636f64652e20497420656e737572657320746861742074686520736372697074206265696e67206578656375746564206973207468652070726573656e746c792073656c6563746564206e6f64652e2054686973206d616b6573206974207472697669616c20666f72206120746573742073637269707420746f2066696e6420697473206f776e20646174613a20746865207363726970742063616e206a757374206c6f6f6b20696e2061207369626c696e67206f722064657363656e64656e74206e6f64652e20546865726520697320686172646c7920616e79206e65656420666f7220746573745574696c732e66696e644e6f6465416e7977686572652e206c656f546573742e646f546573747320616c736f20736176657320616e6420726573746f72657320746865202671756f743b6368616e6765642671756f743b207374617465206f6620746573742e6c656f2e3c2f6c693e0a712855a33c6c693e5465737420736372697074732063616e27742075736520262336343b6f74686572732069662064657363656e64656e74206e6f64657320686f6c6420646174612e20496e207072616374696365207468697320646f65736e2774206d61747465722e2049207265636f6d6d656e642070757474696e67206c656e677468792073686172656420636f646520696e206c656f546573742e70792e3c2f6c693e0a712955063c2f756c3e0a712a55073c6872202f3e0a712b546d0100003c703e3c6120636c6173733d227265666572656e63652220687265663d22687474703a2f2f77656270616765732e636861727465722e6e65742f65647265616d6c656f2f64657369676e2e68746d6c223e3c696d6720616c743d227072657622207372633d226172726f775f6c742e67696622202f3e3c2f613e203c6120636c6173733d227265666572656e63652220687265663d22687474703a2f2f77656270616765732e636861727465722e6e65742f65647265616d6c656f2f66726f6e742e68746d6c223e3c696d6720616c743d226c656f22207372633d226c656f2e67696622202f3e3c2f613e203c6120636c6173733d227265666572656e63652220687265663d22687474703a2f2f77656270616765732e636861727465722e6e65742f65647265616d6c656f2f637573746f6d697a696e672e68746d6c223e3c696d6720616c743d226e65787422207372633d226172726f775f72742e67696622202f3e3c2f613e3c2f703e0a712c652e"><vh>@rst</vh></v>
 </v>
 </v>
-<v t="ekr.20040414162124"><vh>@rst ../doc/leo_TOC.html</vh>
+<v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
 <v t="ekr.20040414163815"><vh>Table of Contents</vh></v>
 <v t="ekr.20050812134441.3"><vh>@rst-no-head end</vh></v>
+</v>
+<v t="ekr.20050813102008.1"><vh>@rst rstplugin3.html</vh>
+<v t="ekr.20050813102008.2"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20050813102008.3"><vh>Overview</vh></v>
+<v t="ekr.20050813102008.4"><vh>Comparison with previous rst plugins</vh></v>
+<v t="ekr.20050813102008.5"><vh>Options</vh>
+<v t="ekr.20050814093016"><vh>Options supporting the http plugin</vh></v>
+<v t="ekr.20050816051911"><vh>Options that set command names</vh></v>
+</v>
+<v t="ekr.20050813102008.6"><vh>Headline Commands</vh></v>
+<v t="ekr.20050813102008.7" a="E"><vh>Using doc parts</vh></v>
+<v t="ekr.20050813102008.9"><vh>Setting defaults</vh></v>
+<v t="ekr.20050813102008.10"><vh>The code-block directive</vh></v>
+<v t="ekr.20050813102008.11"><vh>Required cascading style sheets</vh></v>
+<v t="ekr.20050813102008.12"><vh>Notes about rST markup</vh></v>
+<v t="ekr.20050813102008.14"><vh>Examples</vh></v>
+<v t="ekr.20050814144727"><vh>Theory of operation</vh></v>
+<v t="ekr.20050813102008.13" a="E"><vh>@rst-no-head end stuff</vh>
+<v t="ekr.20050813102008.15"><vh>Acknowledgements</vh></v>
+</v>
+<v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
+</v>
+<v t="ekr.20050816073412" a="MTV"><vh>@rst newTutorial.html</vh>
+<v t="ekr.20050816073814"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20050816073412.1"><vh>@rst-no-head Intro</vh></v>
+<v t="ekr.20050816074100" a="E"><vh>@rst-ignore-tree Prewriting</vh>
+<v t="ekr.20050816074944"><vh>Notes</vh></v>
+<v t="ekr.20050816074100.2"><vh>@url http://sourceforge.net/forum/message.php?msg_id=3259508</vh></v>
+<v t="ekr.20050816074100.3" a="E"><vh>From Rich</vh></v>
+<v t="ekr.20050816074944.1"><vh>From e</vh></v>
+<v t="ekr.20050816074944.2"><vh>From James</vh></v>
+</v>
+<v t="ekr.20050816073824"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
 </v>
 </vnodes>
@@ -14996,7 +15007,8 @@ Iterators exist only in the position class:
 
 Use the rst3 plugin to generate these files.
 
-Code blocks will be syntax colored only if SilverCity is installed. (it only works with Python 2.3 on my machine.)</t>
+Code blocks will be syntax colored only if SilverCity is installed
+(it only works with Python 2.3 on my machine.)</t>
 <t tx="ekr.20040414162124">@ @rst-options
 code_mode=False
 generate_rst=True
@@ -18131,21 +18143,20 @@ Removes @ignore, @nocolor, @wrap directives.
 <t tx="ekr.20050812134441.3">------------
 
 |leo| |next|</t>
-<t tx="ekr.20050813102008">@nocolor</t>
 <t tx="ekr.20050813102008.1">###########################
 |leo| Using the rst3 plugin
 ###########################
 
-August 14, 2005
+.. August 14, 2005
 
 @ @rst-options
-.. Any line starting with '..' is ignored in @rst-options doc parts.
 code_mode=False
 generate_rst=True
-.. Allows organizer nodes to lower the section-level of descendants without being shown.
+http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
+.. stylesheet_path=c:\prog\leoCVS\leo\doc
 write_intermediate_file = True
 verbose=True
 @c
@@ -18476,7 +18487,7 @@ LeoPlugins.leo.</t>
 
 rst3 = leoPlugins.getPluginModule('rst3')
 
-p = g.findNodeAnywhere('@rst ../doc/rstplugin3.html')
+p = g.findNodeAnywhere('@rst rstplugin3.html')
 
 if p:
     rst3.controller.processTree(p)</t>
@@ -18498,14 +18509,11 @@ http_server_support
     A master switch: none of the following options have any effect unless this option is True.
     If True, the rst3 plugin does the following:
 
-    - Writes **node markers** in the rst output for use by the http plugin.
-
-        Node markers are rst comments of the form::
+    - Writes **node markers** in the rst output for use by the http plugin. Node markers are rst named hyperlink targets.  By default they look like::
     
-            .. _node-markerN
+            .. _http-node-marker-N
     
-        where node-marker is the string specified by the rst3 node_begin_marker option and
-        N is a unique node number.
+      where N is a unique node number.
 
     - Adds additional information to all nodes of the tree being formatted using Leo's
       unknownAttributes mechanism.
@@ -18573,5 +18581,148 @@ scanAllOptions
     then updates those options using the anonymous
     dictionaries contained in the tnodeOptionsDict.
     scanAllOptions works like g.scanAllDirectives, but the code is much simpler.</t>
+<t tx="ekr.20050816051911">The following options specify the 'spelling' of headline commands.  The option_prefix and option_prefixes command also define the spelling of special doc parts.
+
+You can change these to make them shorter or to avoid conflicts with headlines in your Leo files.  The list below merely gives the default value for each setting.
+
+.. escape the '@' signs so they don't become email addresses.
+
+`code_prefix`: '\@rst-code'
+
+`ignore_headline_prefix`: '\@rst-no-head'
+
+`ignore_headlines_prefix`: '\@rst-no-headlines'
+
+`ignore_node_prefix`: '\@rst-ignore-node'
+
+`ignore_tree_prefix`: '\@rst-ignore-tree'
+
+`option_prefix`: '\@rst-option'
+
+`options_prefix`: '\@rst-options'
+
+`rst_prefix`: '\@rst'
+
+`show_headline_prefix`: '\@rst-head'</t>
+<t tx="ekr.20050816073412">#################################
+|leo| A quick introduction to Leo
+#################################
+
+.. August 14, 2005
+
+@ @rst-options
+code_mode=False
+generate_rst=True
+http_server_support = False
+show_organizer_nodes=True
+show_headlines=True
+show_leo_directives=True
+.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+write_intermediate_file = True
+verbose=True
+@c
+
+.. contents::</t>
+<t tx="ekr.20050816073412.1">The main features of Leo:
+
+- Outlines
+- Derived files
+- Clones
+- Leo directives
+- Sections and @others
+- Support for scripting</t>
+<t tx="ekr.20050816073814">.. Links used in this document...
+
+.. _front:                http://webpages.charter.net/edreamleo/front.html
+.. _home:                 http://webpages.charter.net/edreamleo/front.html
+
+.. Other parts of the documentation
+
+.. _scriptingChapter:  http://webpages.charter.net/edreamleo/scripting.html
+
+.. |blank| image:: blank.gif
+.. |leo|   image:: leo.gif
+    :target: front_
+
+.. NOT YET: define back/next links</t>
+<t tx="ekr.20050816073824">-------------
+
+|leo|</t>
+<t tx="ekr.20050816074100">Prewriting for tutorial
+
+Here are the topics I am considering for a revised tutorial.  This following is prewriting: it is a list of the essential features and Aha's that newcomers should understand.  I'm concerned here with the general plan, not with order of presentation, wording or other details.
+
+1.  You can use Leo as a stand-alone outliner.  You can also generate derived files from outlines.  @thin nodes and their descendents generate derived files.  Leo can produce any kind of derived file, from text files to xml files to source code in any programming language.
+
+2.  Clones allow multiple views of data.  Views are one kind of relationship (relation).  Being able to define your _own_ views of complex data is the key to understanding and manipulating complex data.
+
+3.  Leo outlines can contain scripts.  (I'll use the term script to mean any kind of Python code, including code in @thin nodes).  In this sense Leo is like a (highly flexible) filing cabinet.  But outline structure can also be an essential part of scripts and programs.  The @others directive and sections and section references make Leo aware of the outline structure of a script or program.
+
+4. Scripts have full and easy access to all the data in a Leo outline.  The commander represents the outline and its data.  The position class and iterators provide an easy way of traversing the nodes of an outline.  Accessors of the position class allow scripts to get and set the contents of any node. (The tutorial will merely give some common examples.)
+
+5. Leo is a nifty environment for Python scripting.  Leo's Execute Script command understands @others and sections.  Script buttons bring scripts to data.  @test nodes and the 'Unit Test' script buttons greatly simplify unit testing.
+
+6. Plugins allow users to customize Leo without changing Leo's core.
+
+Discussion
+
+The present introduction focuses too much on point 3 above, and contains too much detail about @thin and @root nodes etc. that are of little immediate use to newbies.  My plan is to have the tutorial skip all non-essential details so that people can see more clearly what the general ideas are.
+
+Any and all comments are welcome.
+
+Edward
+
+</t>
+<t tx="ekr.20050816074100.2"></t>
+<t tx="ekr.20050816074100.3">From: Rich Ries
+
+This info should be in a "README" file.
+
+1 &amp; 2 are fine for newcomers, IF there's an associated LEO file with examples. (emailing an example)
+
+3, 4, &amp; 5 are too 'deep' for newcomers.
+
+6 "Tech-ese." It shouild be more like: "Plugins allow you to easily add features to Leo. Plugins are written by other Leo users, and are available by/at ..."
+
+
+If I'm a newcomer, I'm already somewhat interested in Leo. I want to know how to get it running (and who to ask for help doing so) so I can evaluate it for myself.
+
+What I need is:
+Leo can do this, that, and the other thing, with example Leo files that "load-and-go" and I can experiment with.
+
+ P.S. -- Leo needs this "Leo for Dummies" _desparately_!!
+</t>
+<t tx="ekr.20050816074944">** The main tutorial should be in LeoDocs.leo:
+    - No need for screen shots.
+    - Can 'execute' everything.
+    - 'Find next tutorial' button.
+
+** The readme file should contain
+    - Simple tutorial.
+    - Reference to tutorial in LeoDocs.leo.</t>
+<t tx="ekr.20050816074944.1">7. @directives are used in the body text.  
+they change how text is viewed as in @wrap 
+or what appears in derived files as in @lineending 
+@language etc. 
+ 
+8. settings. pending further development, 
+scripts and plugins can easily utilize or reset 
+settings for all leo's,  
+for all leo's per user from your $HOME dir 
+using leoSettings.leo  
+or in any and every leo using @settings nodes. 
+and each level overrides the previous. 
+from keystroke accelerators to window sizes. 
+Leo also looks for  
+leo_xresources global font, color, style settings. 
+(Note: Tk only and not fully supported on windows) 
+.leoRecentFiles.txt recent files user controlled list. 
+ 
+these two qualify as key concepts. 
+e
+</t>
+<t tx="ekr.20050816074944.2">Realistically, a Leo beginner needs to understand how to get info in and out of leo while using some other editing tool.  
+ 
+Leo is ridiculously easy to enter infomation in, but how to format that info is important. Best practices for formating an example HTML and CSS file would be a great start. Please include multiple strategies for achieving just a basic web design.  </t>
 </tnodes>
 </leo_file>
