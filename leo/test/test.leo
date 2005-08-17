@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7642" clone_windows="0"/>
-<globals body_outline_ratio="0.598837209302">
-	<global_window_position top="22" left="302" height="860" width="857"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7645" clone_windows="0"/>
+<globals body_outline_ratio="0.673768308921">
+	<global_window_position top="84" left="197" height="751" width="925"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -2052,8 +2052,7 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050805165407" a="E"><vh>Tests of rst3 plugin</vh>
 <v t="ekr.20050805165407.1"><vh>@rst ../doc/rstplugin2.html</vh>
-<v t="ekr.20050808075913"><vh>@rst-options</vh></v>
-<v t="ekr.20050805165407.2"><vh>Overview</vh>
+<v t="ekr.20050805165407.2" a="E"><vh>Overview</vh>
 <v t="ekr.20050805165407.3"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20050805165407.4"><vh>Formatting</vh>
@@ -2069,8 +2068,7 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050805165407.11"><vh>@rst</vh></v>
 </v>
 </v>
-<v t="ekr.20050810081856"><vh>@rst ../doc/rstplugin4.text</vh></v>
-<v t="ekr.20050811141217" a="TV"><vh>@rst ../doc/ListManagerDocs.html</vh>
+<v t="ekr.20050811141217"><vh>@rst ../doc/ListManagerDocs.html</vh>
 <v t="ekr.20050811141217.1"><vh>wxListManager.py</vh>
 <v t="ekr.20050811141217.2" a="E"><vh>Initial stuff</vh>
 <v t="ekr.20050811141217.4" a="E"><vh>Module Imports</vh>
@@ -2352,6 +2350,21 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050811141217.212"><vh>UnregisterAddin</vh></v>
 </v>
 </v>
+<v t="ekr.20050810081856"><vh>@rst ../doc/rstplugin4.html</vh>
+<v t="ekr.20050815144658" a="E"><vh>child node</vh>
+<v t="ekr.20050815145023"><vh>@rst</vh></v>
+</v>
+</v>
+<v t="ekr.20050817110133" a="TV"><vh>@rst ../doc/pdfTest.pdf</vh>
+<v t="ekr.20050817110133.1" a="E"><vh>child node</vh>
+<v t="ekr.20050817110133.2"><vh>@rst</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050816172657"><vh>ReportLab </vh>
+<v t="ekr.20050816181619"><vh>hello</vh></v>
+<v t="ekr.20050816181619.1"><vh>pencil</vh></v>
+<v t="ekr.20050816181813"><vh>penciltip</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -17869,8 +17882,6 @@ else:
     else:
         # Ask to be removed.
         g.app.scriptDict['removeMe'] = True</t>
-<t tx="ekr.20050808075913">option1 = True
-option2 = False</t>
 <t tx="ekr.20050808191449"></t>
 <t tx="ekr.20050809091430.1">Deletes p.v.rst2_http_attributename from all nodes after writing.
 
@@ -17904,6 +17915,18 @@ Generates 'http-node-marker-'+str(number), where number is config.node_counter
 Headline
 ########
 
+@ @rst-options
+.. These options have NO EFFECT for rst2 plugin!
+code_mode=False
+generate_rst=True
+http_server_support = True
+show_organizer_nodes=True
+show_headlines=True
+show_leo_directives=True
+stylesheet_path=c:\prog\leoCVS\leo\doc
+write_intermediate_file = True
+verbose=True
+@c
 
 This is a test</t>
 <t tx="ekr.20050810095252"></t>
@@ -17976,8 +17999,8 @@ data = ( # 8/10 1 star
 
 @ @rst-options
 code_mode = False
-.. The following affects only code mode
 show_leo_directives = True
+number_code_lines = False
 @c
 
 #########################
@@ -22433,5 +22456,97 @@ _reg_policy_spec_ = "win32com.server.policy.EventHandlerPolicy"
     except WindowsError:
         pass
 </t>
+<t tx="ekr.20050815144658"></t>
+<t tx="ekr.20050815145023">child node text</t>
+<t tx="ekr.20050816172657">import sys
+sys.path.append(r'c:\reportlab_1_20')
+
+debug = True
+
+@others
+
+from reportlab.pdfgen import canvas
+c = canvas.Canvas('hello.pdf')
+pencil(c,text='Note')
+
+c.showPage()
+c.save()</t>
+<t tx="ekr.20050816181619">def hello(c):
+    c.drawString(100,100,'Hello World')</t>
+<t tx="ekr.20050816181619.1">def pencil(canvas, text="No.2"):
+    from reportlab.lib.colors import yellow, red, black,white
+    from reportlab.lib.units import inch
+    u = inch/10.0
+    canvas.setStrokeColor(black)
+    canvas.setLineWidth(4)
+    # draw erasor
+    canvas.setFillColor(red)
+    canvas.circle(30*u, 5*u, 5*u, stroke=1, fill=1)
+    # draw all else but the tip (mainly rectangles with different fills)
+    canvas.setFillColor(yellow)
+    canvas.rect(10*u,0,20*u,10*u, stroke=1, fill=1)
+    canvas.setFillColor(black)
+    canvas.rect(23*u,0,8*u,10*u,fill=1)
+    canvas.roundRect(14*u, 3.5*u, 8*u, 3*u, 1.5*u, stroke=1, fill=1)
+    canvas.setFillColor(white)
+    canvas.rect(25*u,u,1.2*u,8*u, fill=1,stroke=0)
+    canvas.rect(27.5*u,u,1.2*u,8*u, fill=1, stroke=0)
+    canvas.setFont("Times-Roman", 3*u)
+    canvas.drawCentredString(18*u, 4*u, text)
+    # now draw the tip
+    penciltip(canvas,debug=0)
+    # draw broken lines across the body.
+    canvas.setDash([10,5,16,10],0)
+    canvas.line(11*u,2.5*u,22*u,2.5*u)
+    canvas.line(22*u,7.5*u,12*u,7.5*u)
+</t>
+<t tx="ekr.20050816181813">def penciltip(canvas, debug=1):
+    from reportlab.lib.colors import tan, black, green
+    from reportlab.lib.units import inch
+    u = inch/10.0
+    canvas.setLineWidth(4)
+    if debug:
+        canvas.scale(2.8,2.8) # make it big
+        canvas.setLineWidth(1) # small lines
+    canvas.setStrokeColor(black)
+    canvas.setFillColor(tan)
+    p = canvas.beginPath()
+    p.moveTo(10*u,0)
+    p.lineTo(0,5*u)
+    p.lineTo(10*u,10*u)
+    p.curveTo(11.5*u,10*u, 11.5*u,7.5*u, 10*u,7.5*u)
+    p.curveTo(12*u,7.5*u, 11*u,2.5*u, 9.7*u,2.5*u)
+    p.curveTo(10.5*u,2.5*u, 11*u,0, 10*u,0)
+    canvas.drawPath(p, stroke=1, fill=1)
+    canvas.setFillColor(black)
+    p = canvas.beginPath()
+    p.moveTo(0,5*u)
+    p.lineTo(4*u,3*u)
+    p.lineTo(5*u,4.5*u)
+    p.lineTo(3*u,6.5*u)
+    canvas.drawPath(p, stroke=1, fill=1)
+    if debug:
+        canvas.setStrokeColor(green) # put in a frame of reference
+        canvas.grid([0,5*u,10*u,15*u], [0,5*u,10*u])</t>
+<t tx="ekr.20050817110133">########
+Headline
+########
+
+@ @rst-options
+.. These options have NO EFFECT for rst2 plugin!
+code_mode=False
+generate_rst=True
+http_server_support = True
+show_organizer_nodes=True
+show_headlines=True
+show_leo_directives=True
+stylesheet_path=c:\prog\leoCVS\leo\doc
+write_intermediate_file = True
+verbose=True
+@c
+
+This is a test of pdf stuff</t>
+<t tx="ekr.20050817110133.1"></t>
+<t tx="ekr.20050817110133.2">child node text</t>
 </tnodes>
 </leo_file>
