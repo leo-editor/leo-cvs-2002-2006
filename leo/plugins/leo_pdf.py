@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #@+leo-ver=4
-#@+node:@file C:/Python24/Lib/site-packages/docutils/writers/leo_pdf.py
+#@+node:@file leo_pdf.py
 #@@first
 
 #@<< docstring >>
@@ -21,6 +21,8 @@ Some stylesheet is needed.
 
 #@-node:<< docstring >>
 #@nl
+
+# Note: you must copy this file to the Python/Lib/site-packages/docutils/writers folder.
 
 # This file is derived from rlpdf.py at 
 # The copyright below applies only to this file.
@@ -1109,5 +1111,5 @@ class PDFTranslator(nodes.NodeVisitor):
 #@-node:class PDFTranslator
 #@-others
 #@nonl
-#@-node:@file C:/Python24/Lib/site-packages/docutils/writers/leo_pdf.py
+#@-node:@file leo_pdf.py
 #@-leo
