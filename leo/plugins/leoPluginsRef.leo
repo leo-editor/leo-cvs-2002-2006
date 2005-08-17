@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5818" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5869" clone_windows="0"/>
 <globals body_outline_ratio="0.627753303965">
-	<global_window_position top="36" left="369" height="908" width="871"/>
+	<global_window_position top="16" left="186" height="629" width="785"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -16,17 +16,6 @@
 <v t="ekr.20050328101812.1"><vh>@bool http_active = True</vh></v>
 <v t="ekr.20050328101812.2"><vh>@int  port = 8080</vh></v>
 <v t="ekr.20050328101812.3"><vh>@string rst_http_attributename = rst_http_attribute</vh></v>
-</v>
-<v t="ekr.20050802090936"><vh>@page rst3 settings</vh>
-<v t="ekr.20050802090936.6"><vh>@bool rst2_clear_http_attributes = False</vh></v>
-<v t="ekr.20050802090936.4"><vh>@bool rst2_format_headlines = False</vh></v>
-<v t="ekr.20050802090936.5"><vh>@bool rst2_http_server_support = True</vh></v>
-<v t="ekr.20050802090936.1"><vh>@bool rst2_massage_body = False</vh></v>
-<v t="ekr.20050802090936.7"><vh>@bool rst2_run_on_window_open = False</vh></v>
-<v t="ekr.20050802090936.2"><vh>@bool rst2_use_file = False</vh></v>
-<v t="ekr.20050802090936.3"><vh>@bool rst2_write_pure_document = False</vh></v>
-<v t="ekr.20050802090936.11"><vh>@string rst2_http_attributename = 'rst_http_attribute'</vh></v>
-<v t="ekr.20050802090936.10"><vh>@string rst2_node_begin_marker = 'http-node-marker-'</vh></v>
 </v>
 </v>
 <v t="ekr.20041103052443"><vh>Script to find and replace all functions in leoGlobals.py</vh>
@@ -1385,6 +1374,8 @@
 <v t="ekr.20050306081349"><vh>Text formatting</vh>
 <v t="edream.111803100242"><vh>@thin rst.py</vh></v>
 <v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
+<v t="ekr.20040331071319"
+marks="ekr.20040331071319.7,"><vh>@thin rst2.py</vh></v>
 <v t="ekr.20040331071919"><vh>Leo to AsciiDoc</vh>
 <v t="ekr.20050128070307"><vh>@url http://www.marshallresearch.com/michael-dawson/os/leo.html</vh></v>
 <v t="ekr.20040331071919.38"><vh>Leo 2 AsciiDoc Users Guide</vh>
@@ -1456,72 +1447,216 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050805105024"><vh>rst2 plugin</vh>
-<v t="ekr.20050805105024.3"><vh>Documentation for the rST plugin using rst</vh>
-<v t="ekr.20050805105024.4"><vh>@rst ../doc/rstplugin.html</vh>
-<v t="ekr.20050805105024.5"><vh>Overview</vh>
-<v t="ekr.20050805105024.6"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050805105024.7"><vh>Formatting</vh>
-<v t="ekr.20050805105024.8"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050805105024.9"><vh>Embedding documentation in @file trees</vh>
-<v t="ekr.20050805105024.10"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050805105024.11"><vh>The code-block directive</vh>
-<v t="ekr.20050805105024.12"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050805105024.13"><vh>Cascading style sheets</vh>
-<v t="ekr.20050805105024.14"><vh>@rst</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
-</v>
-<v t="ekr.20050331061925"><vh>golf prototype</vh>
-<v t="ekr.20050331081136"><vh>Design notes</vh></v>
-<v t="ekr.20050331100205"><vh>To do</vh></v>
-<v t="ekr.20050331061925.2"><vh>@thin golf.py</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040408161258" a="TV"><vh>rst3 plugin</vh>
-<v t="ekr.20050802090936"><vh>@page rst3 settings</vh>
-<v t="ekr.20050802090936.6"><vh>@bool rst2_clear_http_attributes = False</vh></v>
-<v t="ekr.20050802090936.4"><vh>@bool rst2_format_headlines = False</vh></v>
-<v t="ekr.20050802090936.5"><vh>@bool rst2_http_server_support = True</vh></v>
-<v t="ekr.20050802090936.1"><vh>@bool rst2_massage_body = False</vh></v>
-<v t="ekr.20050802090936.7"><vh>@bool rst2_run_on_window_open = False</vh></v>
-<v t="ekr.20050802090936.2"><vh>@bool rst2_use_file = False</vh></v>
-<v t="ekr.20050802090936.3"><vh>@bool rst2_write_pure_document = False</vh></v>
-<v t="ekr.20050802090936.11"><vh>@string rst2_http_attributename = 'rst_http_attribute'</vh></v>
-<v t="ekr.20050802090936.10"><vh>@string rst2_node_begin_marker = 'http-node-marker-'</vh></v>
-</v>
-<v t="ekr.20050508203638"><vh>Notes</vh>
+<v t="ekr.20050817132814" a="ETV"><vh>rst3</vh>
+<v t="ekr.20050813191445"><vh>(rst3 stuff)</vh>
+<v t="ekr.20050508203638"><vh>rst3 Notes</vh>
 <v t="ekr.20050508203638.1"><vh>@url https://sourceforge.net/forum/message.php?msg_id=2946194</vh></v>
-<v t="ekr.20050508203638.2"><vh>Responses</vh></v>
-<v t="ekr.20050508203638.3"><vh>from Kent</vh></v>
 <v t="ekr.20050508203638.4"><vh>New stylesheets for rst (Kent Tenny told me about there)</vh>
 <v t="ekr.20050508203638.5"><vh>@url http://www.voidspace.org.uk/stylesheets/blue_box.css</vh></v>
 </v>
-<v t="ekr.20050515093257.1"><vh>Summary of config settings for rst2 plugin</vh>
-<v t="ekr.20050515093257.2"><vh>@url http://sourceforge.net/forum/forum.php?thread_id=1251867&amp;forum_id=10226</vh></v>
-<v t="ekr.20050515093257.3"><vh>Post from Bernhard</vh>
-<v t="ekr.20050515093257.4"><vh>Suggested settings for regular rst files</vh></v>
-<v t="ekr.20050515093257.5"><vh>run_on_window_open (for http server)</vh></v>
-<v t="ekr.20050515093257.6"><vh>configuration settings</vh></v>
-<v t="ekr.20050515093257.7"><vh>Not implemented</vh></v>
-<v t="ekr.20050515093257.8"><vh>pure_document</vh></v>
-<v t="ekr.20050515093257.9"><vh>retain the headline nodes with  pure_document=True ?</vh></v>
-<v t="ekr.20050515093257.10"><vh>create_table_of_contents</vh></v>
+<v t="ekr.20050804081215"><vh>From Kent Tenney: requests for options</vh></v>
 </v>
+<v t="ekr.20050808064245"><vh>createDefaultOptionsDict</vh></v>
+<v t="ekr.20050805162550.3"><vh>&lt;&lt; change log &gt;&gt;</vh>
+<v t="ekr.20050813103025"><vh>v 0.0x</vh>
+<v t="ekr.20050806161758.1"><vh>v 0.02</vh></v>
+<v t="ekr.20050806161758.2"><vh>v 0.03</vh></v>
+<v t="ekr.20050808083547"><vh>v 0.04</vh></v>
+<v t="ekr.20050808185746"><vh>v 0.05</vh></v>
+<v t="ekr.20050809094214"><vh>v 0.06</vh></v>
+<v t="ekr.20050810085314"><vh>v 0.07</vh></v>
+<v t="ekr.20050811092824"><vh>v 0.08</vh></v>
+<v t="ekr.20050811112803"><vh>v 0.09</vh></v>
+<v t="ekr.20050812033346"><vh>v 0.010</vh></v>
+<v t="ekr.20050812092209"><vh>v 0.011</vh></v>
 </v>
-<v t="ekr.20050802075101"><vh>From Kent Tenney</vh></v>
-<v t="ekr.20050804081215"><vh>From Kent Tenney 2</vh></v>
+<v t="ekr.20050813100922"><vh>v 0.1</vh></v>
+<v t="ekr.20050813145858"><vh>v 0.2</vh></v>
+<v t="ekr.20050813173425"><vh>v 0.3</vh></v>
+<v t="ekr.20050814074529"><vh>v 0.4</vh></v>
+<v t="ekr.20050814092014"><vh>v 0.5</vh></v>
+<v t="ekr.20050814152137"><vh>v 0.6</vh></v>
 </v>
-<v t="ekr.20050802091128"><vh>New to-do</vh></v>
+<v t="ekr.20050806162146"><vh>&lt;&lt; to do &gt;&gt;</vh>
+<v t="ekr.20050815173941"><vh>Look for stylsheet more flexibly</vh></v>
+<v t="ekr.20050816094344" a="M"><vh>Add support for ReportLab</vh></v>
+</v>
+<v t="ekr.20050811173750"><vh>scanHeadlineForOptions</vh></v>
+</v>
 <v t="ekr.20050805162550"
-expanded="ekr.20050805162550.4,ekr.20050805162550.9,ekr.20050805162550.27,"><vh>@thin rst3.py</vh></v>
+marks="ekr.20050816094344,ekr.20050811101550.1,"><vh>@thin rst3.py</vh></v>
+<v t="ekr.20050817120850.1" tnodeList="ekr.20050817120850.1,ekr.20050817122915,ekr.20050817124859,ekr.20050817124859.1,ekr.20050817115636.2,ekr.20050817115636.4,ekr.20050817115636.5,ekr.20050817115636.6,ekr.20050817115636.7,ekr.20050817115636.8,ekr.20050817115636.9,ekr.20050817120850.10,ekr.20050817120850.11,ekr.20050817120850.12,ekr.20050817120850.13,ekr.20050817120850.14,ekr.20050817120850.15,ekr.20050817120850.16,ekr.20050817120850.17,ekr.20050817120850.18,ekr.20050817120850.19,ekr.20050817120850.20,ekr.20050817120850.21,ekr.20050817120850.22,ekr.20050817120850.23,ekr.20050817120850.24,ekr.20050817120850.25,ekr.20050817120850.26,ekr.20050817120850.27,ekr.20050817120850.28,ekr.20050817120850.29,ekr.20050817120850.30,ekr.20050817120850.31,ekr.20050817120850.32,ekr.20050817120850.33,ekr.20050817120850.34,ekr.20050817120850.35,ekr.20050817120850.36,ekr.20050817120850.37,ekr.20050817120850.38,ekr.20050817120850.39,ekr.20050817120850.40,ekr.20050817120850.41,ekr.20050817120850.42,ekr.20050817120850.43,ekr.20050817120850.44,ekr.20050817120850.45,ekr.20050817120850.46,ekr.20050817120850.47,ekr.20050817120850.48,ekr.20050817120850.49,ekr.20050817120850.50,ekr.20050817120850.51,ekr.20050817120850.52,ekr.20050817120850.53,ekr.20050817120850.54,ekr.20050817120850.55,ekr.20050817120850.56,ekr.20050817120850.57,ekr.20050817120850.58,ekr.20050817120850.59,ekr.20050817120850.60,ekr.20050817120850.61,ekr.20050817120850.62,ekr.20050817120850.63,ekr.20050817120850.64,ekr.20050817120850.65,ekr.20050817120850.66,ekr.20050817120850.67,ekr.20050817120850.68,ekr.20050817120850.69,ekr.20050817120850.70,ekr.20050817120850.71,ekr.20050817120850.72,ekr.20050817120850.73,ekr.20050817120850.74,ekr.20050817120850.75,ekr.20050817120850.76,ekr.20050817120850.77,ekr.20050817120850.78,ekr.20050817120850.79,ekr.20050817120850.80,ekr.20050817120850.81,ekr.20050817120850.82,ekr.20050817120850.83,ekr.20050817120850.84,ekr.20050817120850.85,ekr.20050817120850.86,ekr.20050817120850.87,ekr.20050817120850.88,ekr.20050817120850.89,ekr.20050817120850.90,ekr.20050817120850.91,ekr.20050817120850.92,ekr.20050817120850.93,ekr.20050817120850.94,ekr.20050817120850.95,ekr.20050817120850.96,ekr.20050817120850.97,ekr.20050817120850.98,ekr.20050817120850.99,ekr.20050817120850.100,ekr.20050817120850.101,ekr.20050817120850.102,ekr.20050817120850.103,ekr.20050817120850.104,ekr.20050817120850.105,ekr.20050817120850.106,ekr.20050817120850.107,ekr.20050817120850.108,ekr.20050817120850.109,ekr.20050817120850.110,ekr.20050817120850.111,ekr.20050817120850.112,ekr.20050817120850.113,ekr.20050817120850.114,ekr.20050817120850.115,ekr.20050817120850.116,ekr.20050817120850.117,ekr.20050817120850.118,ekr.20050817120850.119,ekr.20050817120850.120,ekr.20050817120850.121,ekr.20050817120850.122,ekr.20050817120850.123,ekr.20050817120850.124,ekr.20050817120850.125,ekr.20050817120850.126,ekr.20050817120850.127,ekr.20050817120850.128,ekr.20050817120850.129,ekr.20050817120850.130,ekr.20050817120850.131,ekr.20050817120850.132,ekr.20050817120850.133,ekr.20050817120850.134,ekr.20050817120850.135,ekr.20050817120850.136,ekr.20050817120850.137,ekr.20050817120850.138,ekr.20050817120850.139,ekr.20050817120850.140,ekr.20050817120850.141,ekr.20050817120850.142,ekr.20050817120850.143,ekr.20050817120850.144,ekr.20050817120850.145,ekr.20050817120850.146,ekr.20050817120850.147,ekr.20050817120850.148,ekr.20050817120850.149,ekr.20050817120850.150,ekr.20050817120850.151,ekr.20050817120850.152,ekr.20050817120850.153,ekr.20050817120850.154,ekr.20050817120850.155,ekr.20050817120850.156,ekr.20050817120850.157,ekr.20050817120850.158,ekr.20050817120850.159,ekr.20050817120850.160,ekr.20050817120850.161,ekr.20050817120850.162,ekr.20050817120850.163,ekr.20050817120850.164,ekr.20050817120850.165"><vh>@file leo_pdf.py</vh>
+<v t="ekr.20050817122915"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050817115636.2"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20050817124859"><vh>&lt;&lt; copyright &gt;&gt;</vh></v>
+<v t="ekr.20050817124859.1"><vh>&lt;&lt; what I did &gt;&gt;</vh></v>
+<v t="ekr.20050817115636.4"><vh>class Writer</vh>
+<v t="ekr.20050817115636.5"><vh>&lt;&lt; class Writer declarations &gt;&gt;</vh></v>
+<v t="ekr.20050817115636.6"><vh>__init__</vh></v>
+<v t="ekr.20050817115636.7"><vh>translate</vh></v>
+<v t="ekr.20050817115636.8"><vh>record</vh></v>
+<v t="ekr.20050817115636.9"><vh>lower</vh></v>
+</v>
+<v t="ekr.20050817120850.10"><vh>class PDFTranslator</vh>
+<v t="ekr.20050817120850.11"><vh>__init__</vh></v>
+<v t="ekr.20050817120850.12"><vh>as_what</vh></v>
+<v t="ekr.20050817120850.13"><vh>encode</vh></v>
+<v t="ekr.20050817120850.14"><vh>append_para</vh></v>
+<v t="ekr.20050817120850.15"><vh>starttag</vh></v>
+<v t="ekr.20050817120850.16"><vh>visit_Text</vh></v>
+<v t="ekr.20050817120850.17"><vh>depart_Text</vh></v>
+<v t="ekr.20050817120850.18"><vh>visit_admonition</vh></v>
+<v t="ekr.20050817120850.19"><vh>depart_admonition</vh></v>
+<v t="ekr.20050817120850.20"><vh>visit_attention</vh></v>
+<v t="ekr.20050817120850.21"><vh>depart_attention</vh></v>
+<v t="ekr.20050817120850.22"><vh>visit_author</vh></v>
+<v t="ekr.20050817120850.23"><vh>depart_author</vh></v>
+<v t="ekr.20050817120850.24"><vh>visit_address</vh></v>
+<v t="ekr.20050817120850.25"><vh>depart_address</vh></v>
+<v t="ekr.20050817120850.26"><vh>visit_version</vh></v>
+<v t="ekr.20050817120850.27"><vh>depart_version</vh></v>
+<v t="ekr.20050817120850.28"><vh>visit_system_message</vh></v>
+<v t="ekr.20050817120850.29"><vh>depart_system_message</vh></v>
+<v t="ekr.20050817120850.30"><vh>visit_term</vh></v>
+<v t="ekr.20050817120850.31"><vh>depart_term</vh></v>
+<v t="ekr.20050817120850.32"><vh>visit_authors</vh></v>
+<v t="ekr.20050817120850.33"><vh>depart_authors</vh></v>
+<v t="ekr.20050817120850.34"><vh>visit_block_quote</vh></v>
+<v t="ekr.20050817120850.35"><vh>depart_block_quote</vh></v>
+<v t="ekr.20050817120850.36"><vh>visit_bullet_list</vh></v>
+<v t="ekr.20050817120850.37"><vh>depart_bullet_list</vh></v>
+<v t="ekr.20050817120850.38"><vh>visit_caption</vh></v>
+<v t="ekr.20050817120850.39"><vh>depart_caption</vh></v>
+<v t="ekr.20050817120850.40"><vh>visit_caution</vh></v>
+<v t="ekr.20050817120850.41"><vh>depart_caution</vh></v>
+<v t="ekr.20050817120850.42"><vh>visit_citation</vh></v>
+<v t="ekr.20050817120850.43"><vh>depart_citation</vh></v>
+<v t="ekr.20050817120850.44"><vh>visit_citation_reference</vh></v>
+<v t="ekr.20050817120850.45"><vh>depart_citation_reference</vh></v>
+<v t="ekr.20050817120850.46"><vh>visit_classifier</vh></v>
+<v t="ekr.20050817120850.47"><vh>depart_classifier</vh></v>
+<v t="ekr.20050817120850.48"><vh>visit_colspec</vh></v>
+<v t="ekr.20050817120850.49"><vh>depart_colspec</vh></v>
+<v t="ekr.20050817120850.50"><vh>visit_contact</vh></v>
+<v t="ekr.20050817120850.51"><vh>depart_contact</vh></v>
+<v t="ekr.20050817120850.52"><vh>visit_copyright</vh></v>
+<v t="ekr.20050817120850.53"><vh>depart_copyright</vh></v>
+<v t="ekr.20050817120850.54"><vh>visit_danger</vh></v>
+<v t="ekr.20050817120850.55"><vh>depart_danger</vh></v>
+<v t="ekr.20050817120850.56"><vh>visit_date</vh></v>
+<v t="ekr.20050817120850.57"><vh>depart_date</vh></v>
+<v t="ekr.20050817120850.58"><vh>visit_definition</vh></v>
+<v t="ekr.20050817120850.59"><vh>depart_definition</vh></v>
+<v t="ekr.20050817120850.60"><vh>visit_definition_list</vh></v>
+<v t="ekr.20050817120850.61"><vh>depart_definition_list</vh></v>
+<v t="ekr.20050817120850.62"><vh>visit_definition_list_item</vh></v>
+<v t="ekr.20050817120850.63"><vh>depart_definition_list_item</vh></v>
+<v t="ekr.20050817120850.64"><vh>visit_description</vh></v>
+<v t="ekr.20050817120850.65"><vh>depart_description</vh></v>
+<v t="ekr.20050817120850.66"><vh>visit_docinfo</vh></v>
+<v t="ekr.20050817120850.67"><vh>depart_docinfo</vh></v>
+<v t="ekr.20050817120850.68"><vh>visit_docinfo_item</vh></v>
+<v t="ekr.20050817120850.69"><vh>depart_docinfo_item</vh></v>
+<v t="ekr.20050817120850.70"><vh>visit_doctest_block</vh></v>
+<v t="ekr.20050817120850.71"><vh>depart_doctest_block</vh></v>
+<v t="ekr.20050817120850.72"><vh>visit_line_block</vh></v>
+<v t="ekr.20050817120850.73"><vh>depart_line_block</vh></v>
+<v t="ekr.20050817120850.74"><vh>visit_document</vh></v>
+<v t="ekr.20050817120850.75"><vh>depart_document</vh></v>
+<v t="ekr.20050817120850.76"><vh>visit_emphasis</vh></v>
+<v t="ekr.20050817120850.77"><vh>depart_emphasis</vh></v>
+<v t="ekr.20050817120850.78"><vh>visit_entry</vh></v>
+<v t="ekr.20050817120850.79"><vh>depart_entry</vh></v>
+<v t="ekr.20050817120850.80"><vh>visit_enumerated_list</vh></v>
+<v t="ekr.20050817120850.81"><vh>depart_enumerated_list</vh></v>
+<v t="ekr.20050817120850.82"><vh>visit_error</vh></v>
+<v t="ekr.20050817120850.83"><vh>depart_error</vh></v>
+<v t="ekr.20050817120850.84"><vh>visit_field</vh></v>
+<v t="ekr.20050817120850.85"><vh>depart_field</vh></v>
+<v t="ekr.20050817120850.86"><vh>visit_field_argument</vh></v>
+<v t="ekr.20050817120850.87"><vh>depart_field_argument</vh></v>
+<v t="ekr.20050817120850.88"><vh>visit_field_list</vh></v>
+<v t="ekr.20050817120850.89"><vh>depart_field_list</vh></v>
+<v t="ekr.20050817120850.90"><vh>visit_field_name</vh></v>
+<v t="ekr.20050817120850.91"><vh>depart_field_name</vh></v>
+<v t="ekr.20050817120850.92"><vh>visit_field_body</vh></v>
+<v t="ekr.20050817120850.93"><vh>depart_field_body</vh></v>
+<v t="ekr.20050817120850.94"><vh>visit_footnote</vh></v>
+<v t="ekr.20050817120850.95"><vh>footnote_backrefs</vh></v>
+<v t="ekr.20050817120850.96"><vh>footnote_backrefs_depart</vh></v>
+<v t="ekr.20050817120850.97"><vh>depart_footnote</vh></v>
+<v t="ekr.20050817120850.98"><vh>visit_footnote_reference</vh></v>
+<v t="ekr.20050817120850.99"><vh>depart_footnote_reference</vh></v>
+<v t="ekr.20050817120850.100"><vh>visit_hint</vh></v>
+<v t="ekr.20050817120850.101"><vh>depart_hint</vh></v>
+<v t="ekr.20050817120850.102"><vh>visit_image</vh></v>
+<v t="ekr.20050817120850.103"><vh>depart_image</vh></v>
+<v t="ekr.20050817120850.104"><vh>visit_important</vh></v>
+<v t="ekr.20050817120850.105"><vh>depart_important</vh></v>
+<v t="ekr.20050817120850.106"><vh>visit_interpreted</vh></v>
+<v t="ekr.20050817120850.107"><vh>depart_interpreted</vh></v>
+<v t="ekr.20050817120850.108"><vh>visit_label</vh></v>
+<v t="ekr.20050817120850.109"><vh>depart_label</vh></v>
+<v t="ekr.20050817120850.110"><vh>visit_legend</vh></v>
+<v t="ekr.20050817120850.111"><vh>depart_legend</vh></v>
+<v t="ekr.20050817120850.112"><vh>visit_list_item</vh></v>
+<v t="ekr.20050817120850.113"><vh>depart_list_item</vh></v>
+<v t="ekr.20050817120850.114"><vh>visit_literal</vh></v>
+<v t="ekr.20050817120850.115"><vh>depart_literal</vh></v>
+<v t="ekr.20050817120850.116"><vh>visit_literal_block</vh></v>
+<v t="ekr.20050817120850.117"><vh>depart_literal_block</vh></v>
+<v t="ekr.20050817120850.118"><vh>visit_meta</vh></v>
+<v t="ekr.20050817120850.119"><vh>depart_meta</vh></v>
+<v t="ekr.20050817120850.120"><vh>visit_note</vh></v>
+<v t="ekr.20050817120850.121"><vh>depart_note</vh></v>
+<v t="ekr.20050817120850.122"><vh>visit_option</vh></v>
+<v t="ekr.20050817120850.123"><vh>depart_option</vh></v>
+<v t="ekr.20050817120850.124"><vh>visit_option_argument</vh></v>
+<v t="ekr.20050817120850.125"><vh>depart_option_argument</vh></v>
+<v t="ekr.20050817120850.126"><vh>visit_option_group</vh></v>
+<v t="ekr.20050817120850.127"><vh>depart_option_group</vh></v>
+<v t="ekr.20050817120850.128"><vh>visit_option_list</vh></v>
+<v t="ekr.20050817120850.129"><vh>depart_option_list</vh></v>
+<v t="ekr.20050817120850.130"><vh>visit_option_list_item</vh></v>
+<v t="ekr.20050817120850.131"><vh>depart_option_list_item</vh></v>
+<v t="ekr.20050817120850.132"><vh>visit_option_string</vh></v>
+<v t="ekr.20050817120850.133"><vh>depart_option_string</vh></v>
+<v t="ekr.20050817120850.134"><vh>visit_organization</vh></v>
+<v t="ekr.20050817120850.135"><vh>depart_organization</vh></v>
+<v t="ekr.20050817120850.136"><vh>visit_paragraph</vh></v>
+<v t="ekr.20050817120850.137"><vh>depart_paragraph</vh></v>
+<v t="ekr.20050817120850.138"><vh>visit_problematic</vh></v>
+<v t="ekr.20050817120850.139"><vh>depart_problematic</vh></v>
+<v t="ekr.20050817120850.140"><vh>visit_raw</vh></v>
+<v t="ekr.20050817120850.141"><vh>visit_target</vh></v>
+<v t="ekr.20050817120850.142"><vh>depart_target</vh></v>
+<v t="ekr.20050817120850.143"><vh>visit_reference</vh></v>
+<v t="ekr.20050817120850.144"><vh>depart_reference</vh></v>
+<v t="ekr.20050817120850.145"><vh>visit_revision</vh></v>
+<v t="ekr.20050817120850.146"><vh>depart_revision</vh></v>
+<v t="ekr.20050817120850.147"><vh>visit_row</vh></v>
+<v t="ekr.20050817120850.148"><vh>depart_row</vh></v>
+<v t="ekr.20050817120850.149"><vh>visit_section</vh></v>
+<v t="ekr.20050817120850.150"><vh>depart_section</vh></v>
+<v t="ekr.20050817120850.151"><vh>visit_status</vh></v>
+<v t="ekr.20050817120850.152"><vh>depart_status</vh></v>
+<v t="ekr.20050817120850.153"><vh>visit_strong</vh></v>
+<v t="ekr.20050817120850.154"><vh>depart_strong</vh></v>
+<v t="ekr.20050817120850.155"><vh>visit_subtitle</vh></v>
+<v t="ekr.20050817120850.156"><vh>depart_subtitle</vh></v>
+<v t="ekr.20050817120850.157"><vh>visit_title</vh></v>
+<v t="ekr.20050817120850.158"><vh>depart_title</vh></v>
+<v t="ekr.20050817120850.159"><vh>unimplemented_visit</vh></v>
+<v t="ekr.20050817120850.160"><vh>visit_topic</vh></v>
+<v t="ekr.20050817120850.161"><vh>depart_topic</vh></v>
+<v t="ekr.20050817120850.162"><vh>visit_generated</vh></v>
+<v t="ekr.20050817120850.163"><vh>depart_generated</vh></v>
+<v t="ekr.20050817120850.164"><vh>invisible_visit</vh></v>
+<v t="ekr.20050817120850.165"><vh>visit_comment</vh></v>
+</v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -7851,7 +7986,6 @@ http://www.docbook.org[The official home page for DocBook: The Definitive Guide.
 
 
 @code</t>
-<t tx="ekr.20040408161258"></t>
 <t tx="ekr.20040717133342"></t>
 <t tx="ekr.20040722134535"></t>
 <t tx="ekr.20040722135402"></t>
@@ -10323,45 +10457,6 @@ http://hardware.slashdot.org/article.pl?shttp://hardware.slashdot.org/article.pl
 Memorize writes "A company called Daystartech has released a new type of photovoltaic cell which, unlike almost all the cells currently in use, does not silicon. This is based on a thin titanium film. Given the current shortage of solar-grade silicon, and all-time high oil prices, maybe titanium solar panels are here at the right time. The questions are, will they release it as a consumer solar product, and what will be the price per kilowatt hour?"
 
 http://science.slashdot.org/article.pl?shttp://science.slashdot.org/article.pl?sid=05/03/28/2320211&amp;from=rss=05/03/28/2320211&amp;from=rss</t>
-<t tx="ekr.20050331061925"></t>
-<t tx="ekr.20050331081136">@killcolor
-
-Design
-
-Add another pass after the prepass?
-    - This would allow scripts to a list of nodes to process. (Gathering pass)
-
-- @golf-options
-    Execute the body text as a script with 'self' bound to the settingsController?
-
-- @golf-script
-    Similar to script button.  When do we call the script:
-        - @golf-run-script myScript directive.
-        - Specified by option:
-            onStartup = myScript, onNode = myScript
-        - Specified by node name:  (Can't replace pass 0)
-            @golf-pass1-script # Replaces default pass 1
-            @golf-pass2-script, # Replaces default pass 2
-            @golf-node-script # Called once per node during pass 1.
-
-- @golf-directive
-    Similar to script button.  Run when corresponding directive is seen.
-
-Questions
-
-- Is @golf-others useful?
-    - Maybe not.  Maybe all golf sections should be named.
-- How to specify output processor?
-- Do we need hooks ?  How to register?
-
-
-</t>
-<t tx="ekr.20050331100205">@killcolor
-
-Write a script that supports golf sections.
-    - Similar to atFile.write logic, but probably simpler:
-        - @golf-others probably not needed.
-        - It's not clear that @golf-root or @golf-unit are needed.</t>
 <t tx="ekr.20050402080206">@
 
 This is LeoN-0.0.1 as created by Rodrigo Benenson, very slightly reorganized form.
@@ -10644,30 +10739,11 @@ token_bg         =  #FFFAFA  ;snow
 </t>
 <t tx="ekr.20050427102121"></t>
 <t tx="ekr.20050508203638"></t>
-<t tx="ekr.20050508203638.1"></t>
-<t tx="ekr.20050508203638.2">@killcolor
+<t tx="ekr.20050508203638.1">@nocolor
 
-- Leo is a potentially 'killer' app for documentation.
-    - rst2 is a start, and will be improved.
-    - Making rst2 work really well is a high priority.
-- Leo files contain multiple documents.
-- Need to specify settings dynamically.
-    - This is the idea behind golf.</t>
-<t tx="ekr.20050508203638.3">@killcolor
-https://sourceforge.net/forum/message.php?msg_id=3109034
-By: ktenney
+This is a bug report regarding clicks while docutils is cranking away.
 
-There are a number of settings which effect the way rst2 works.
-
-What you describe is the result of one mode of rst2 operation,
-where a node is considered to be source code unless
-it's headline is "@rst"
-
-In the file leo/plugins/leoPluginsRef.leo, node
-Plugins--&gt;Text formatting--&gt;rst2 plugin--&gt;@thin rst2.py--&gt;config
-
-the config options are listed. I can't find the recent
-thread which gives the meanings of the settings.</t>
+I'm not sure how important it is...</t>
 <t tx="ekr.20050508203638.4"></t>
 <t tx="ekr.20050508203638.5"></t>
 <t tx="ekr.20050514095136">[ newkeystrokes ]
@@ -10896,116 +10972,6 @@ M-| cmd -- Run the shell command line cmd with region contents as input
 Alt-x commands:
 
 (Pressing Tab will result in auto completion of the options if an appropriate match is found</t>
-<t tx="ekr.20050515093257.1">rst2_bodyfilter = False
-    # True: call body_filter to massage text.
-    # Removes @ignore, @nocolor, @wrap directives.
-    # Extension: specify ignored directives.
-
-rst2file = False
-    # Controls whether to use external file or string.
-
-rst2_pure_document = False
-    # Controls the following code in writeTreeAsRst
-    if config.rst2_pure_document or g.match_word(h,0,"@rst"):
-        &lt;&lt; handle an rst node &gt;&gt;
-        # Removes @ignore, @nocolor, @wrap directives.
-        # Removes code blocks if rst2_replace_code_blocks is True.
-        # Formats headlines only if rst2_format_headlines is True.
-    else:
-        &lt;&lt; handle a plain node &gt;&gt;
-        # Deletes @others from output.
-        # Formats headlines only if rst2_format_headlines is False. (opposite of meaning in rst nodes!)
-        
-rst2_format_headlines = False
-    # Used differently.  See rst2_pure_document.
-    
-rst2_http_server_support = True
-    # True:
-        # 1. add_node_marker writes a string using generate_node_marker.
-        # Generates 'http-node-marker-'+str(number), where number is config.node_counter (incremented each time add_node_marker is called.
-        # 2. Enables the following code in writeTreeAsRst
-            if config.tag == 'open2':
-                http_map = config.http_map
-            else:
-                http_map = {}
-                config.anchormap = {}
-               # maps v nodes to markers.
-                config.node_counter = 0
-            # [snip] code to write the tree
-            if config.rst2_http_server_support:
-                config.http_map = http_map
-        # 3. http_support_main does nothing unless this option is True.
-    # False: add_node_marker does nothing.
-
-rst2_clear_attributes = False
-    # Deletes p.v.rst2_http_attributename from all nodes after writing.
-    # Deletes p.v.unknownAttributes if it then becomes empty.
-    
-rst2_run_on_window_open = False
-    # Runs an alternative 'main line' in onFileOpen when a new window is opened.
-
-rst2_replace_code_blocks = True
-    # See notes for rst2_pure_document. (Uses do_replace_code_blocks)
-    &lt;&lt; define alternate code block implementation&gt;&gt;
-        # Don't know what to do here: Can someone make a suggestion?
-        #import docutils.parsers.rst.directives.admonitions
-        #import docutils.parsers.rst.directives.body
-        # docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.block 
-        # docutils.parsers.rst.directives.register_directive('code-block', docutils.parsers.rst.directives.admonitions.admonition)
-        #docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.pull_quote 
-        # g.es("Registered some alternate implementation for code-block directive")
-        config.do_replace_code_blocks = config.rst2_replace_code_blocks
-        
-rst2_install_menu_item_in_edit_menu = True
-    # True: install 'Transform rst text in subtree'command to Edit menu.
-
-rst2_node_begin_marker = 'http-node-marker-'
-rst2_http_attributename = 'rst_http_attribute'</t>
-<t tx="ekr.20050515093257.2"></t>
-<t tx="ekr.20050515093257.3">@killcolor
-
-My current thinking is to use the logic of 'run_on_window_open' and 
-make this command available as a menu (maybe in the 'Edit' menu). The 
-command would run the convertion on all rst subnodes of the current 
-selected node. For large documents, 'doubleclick' is a really bad interface choice. 
-</t>
-<t tx="ekr.20050515093257.4">bodyfilter = True 
-underline_change = True # Not used!
-rst2file = 'rst2.txt' 
-pure_document = True </t>
-<t tx="ekr.20050515093257.5">If you set the following flag, then all rst trees will be generated 
-upon opening the outline. This is in preparation for the next flag: 
- 
-run_on_window_open = True 
- 
-You should be able to set the next flag, but it I have not yet made 
-all required changes: 
- 
-http_server_support = False </t>
-<t tx="ekr.20050515093257.6">The following settings are really configuration settings. No anchor in 
-your document should begin with the value of node_begin_marker. 
- 
-rst_http_attributename is the name of the attribute used in the 
-'unknownAttribute' of vnodes. 
- 
-node_begin_marker = 'http-node-marker-' 
-rst_http_attributename = 'rst_http_attribute' </t>
-<t tx="ekr.20050515093257.7">The following options is not yet implemented: 
- 
-number_headlines = False 
- 
-I am not sure yet what to do with the next option: 
- 
-warnofdrags = False </t>
-<t tx="ekr.20050515093257.8">&gt; Is there, or could there be, a setting which treats all node content as rst? 
-
-That's what the new configuration switch "pure_document", currently on cvs, is for. </t>
-<t tx="ekr.20050515093257.9">Is there a way to retain the headline nodes with  
-pure_document=True ? </t>
-<t tx="ekr.20050515093257.10">I would like a setting create_table_of_contents or some such 
-which would add a  
-.. contents::  
-directive </t>
 <t tx="ekr.20050518064900">@killcolor
 
 The following steps must be done to get the aspell plugin to load:
@@ -16254,108 +16220,6 @@ Other goals:
     - Send them to master key handler commander, widgetKind args.
       (This makes it unnecessary to call possibly unreliable (or non-existent) gui methods.
 - (Optional?)  Don't bind menu items: let the key handler dispatch the menu commands.</t>
-<t tx="ekr.20050802075101">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3275310
-By: ktenney
-
-The rst2 plugin has lots of capability and flexibility
-which I don't understand. 
-
-I want to do very basic rst authoring. 
-I want a headline to be a section, and
-the body text to be the section contents.
-
-Do I need to place every node under a @rst node?
-
-Example;
-
-I want to do this
-
-@rst howto.html
--Step 1
--.this is how to do step 1
--Step 2
-- .this is how to do step 2
---Step 2 caveat
---.be careful
-
-and have sections generated for Step 1 and 2, and 
-Step 2 caveat.
-
-It's looking like I need to write;
-@rst howto.html
--Step 1
---@rst
---.this is how to do step 1
--Step 2
---@rst
--- .this is how to do step 2
---Step 2 caveat
----@rst
----.be careful
-
-Is my understanding correct?
-
-Thanks,
-Kent
-
-</t>
-<t tx="ekr.20050802090936">@nocolor</t>
-<t tx="ekr.20050802090936.1">True: call body_filter to massage text.
-
-Removes @ignore, @nocolor, @wrap directives.
-</t>
-<t tx="ekr.20050802090936.2">Controls whether to use external file or string.</t>
-<t tx="ekr.20050802090936.3">@nocolor
-
-Controls the following code in :
-
-@color
-    
-if config.rst2_pure_document or g.match_word(h,0,"@rst"):
-    &lt; &lt; handle an rst node &gt; &gt;
-    # Removes @ignore, @nocolor, @wrap directives.
-    # Removes code blocks if rst2_replace_code_blocks is True.
-    # Formats headlines only if rst2_format_headlines is True.
-else:
-    &lt; &lt; handle a plain node &gt; &gt;
-    # Deletes @others from output.
-    # Formats headlines only if rst2_format_headlines is False. (opposite of meaning in rst nodes!)</t>
-<t tx="ekr.20050802090936.4">Used differently.  See rst2_pure_document.</t>
-<t tx="ekr.20050802090936.5">@nocolor
-
-If False, add_node_marker and http_support_main  do nothing.  Otherwise add_node_marker does the following:
-    
-1. add_node_marker writes a string using generate_node_marker.
-
-Generates 'http-node-marker-'+str(number), where number is config.node_counter
-(incremented each time add_node_marker is called.
-
-2. Enables the following code in :
-@color
-
-    if config.tag == 'open2':
-        http_map = self.http_map
-    else:
-        http_map = {}
-        config.anchormap = {}
-        # maps v nodes to markers.
-        config.node_counter = 0
-    # [snip] code to write the tree
-    if config.rst2_http_server_support:
-        self.http_map = http_map</t>
-<t tx="ekr.20050802090936.6">Deletes p.v.rst2_http_attributename from all nodes after writing.
-
-Deletes p.v.unknownAttributes if it then becomes empty.</t>
-<t tx="ekr.20050802090936.7">Not used at present.
-
-Runs an alternative 'main line' in onFileOpen when a new window is opened.</t>
-<t tx="ekr.20050802090936.10"></t>
-<t tx="ekr.20050802090936.11"></t>
-<t tx="ekr.20050802091128">@nocolor
-
-- Init config from @settings options.  Remove configParser stuff.</t>
 <t tx="ekr.20050804081215">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3276408
 
@@ -16363,7 +16227,7 @@ Leo has great potential for smoothing some of the bumps
 outside of learning the details of the markup.
 Here is my wish list;
 
-- Section level handling.
+(done) - Section level handling.
   - one of the problems with using rst comes when a new
     section level is inserted into a document. Leo can 
     take care of this effortlessly, providing a correct 
@@ -16399,201 +16263,1220 @@ Here is my wish list;
    convenient to edit it, maybe even linked to 
    documentation for it, would be very nice.
 
-- I would like a setting which would save the file with the
+(done) - I would like a setting which would save the file with the
   rst markup and make it easy to examine and edit.
 
 - On the someday/maybe list would be a @publish
   feature, which configured a directory to ftp the rendered
-  file to.
+  file to.</t>
+<t tx="ekr.20050805162550.3">@others
+@nocolor</t>
+<t tx="ekr.20050806161758.1">@ EKR: Minor improvments:
 
-It seems common these days for software to involve a
-set of files, more than the traditional source and header
-files. Leo strikes me as very well situated to help in
-managing this complexity. I would really like 
-a framework which understood what files were involved
-in a use case, and eased my access to them. rst is
-the case in point here, the same principles apply to
-Zope3, Chandler etc.
+- The code_block callback function now works when SilverCity is not present,
+which resolves a long-standing question.
 
-Thanks,
-Kent
-</t>
-<t tx="ekr.20050805105024"></t>
-<t tx="ekr.20050805105024.3">@nocolor</t>
-<t tx="ekr.20050805105024.4">###########################
-|leo| Using the rst2 plugin
-###########################
+- Options get set from @settings trees if possible.
 
-This page documents a nifty new plugin created by Josef Dalcolmo, Timo Honkasalo, Steve Zatz, Paul Paterson and Edward Ream.  This page was created using the rst2 plugin.  You can find the source code in LeoPlugins.leo (on cvs).
+- No longer uses double-click.  Adds item to Edit menu.
 
-.. contents::
+- @button rst3 in test.leo will run processTree method, or load the module if it
+hasn't been loaded yet.</t>
+<t tx="ekr.20050806161758.2">@ EKR: The first cut at an accurate docstring.</t>
+<t tx="ekr.20050806162146">@nocolor
+@
 
-.. Here are the links used in this document.
+- Specify option for the spelling of special doc parts.
+    - The present code assumes to much about these commands.
 
-.. _LaTeX:                http://www.latex-project.org/
-.. _reStructuredText:     http://docutils.sourceforge.net/rst.html
-.. _docutils:             http://docutils.sourceforge.net
-.. _ListManagerDocs.html: http://webpages.charter.net/edreamleo/ListManagerDocs.html
-.. _wxListManager.leo:    http://webpages.charter.net/edreamleo/wxListManager.leo
-.. _SilverCity:           http://silvercity.sourceforge.net
-.. _front:                http://webpages.charter.net/edreamleo/front.html
-.. _home:                 http://webpages.charter.net/edreamleo/front.html
+- Fix path problems
 
-.. |blank| image:: blank.gif
-.. |leo|   image:: leo.gif
-    :target: front_</t>
-<t tx="ekr.20050805105024.5"></t>
-<t tx="ekr.20050805105024.6">@ignore
-@nocolor
-@wrap
+- Warn if option gets set twice in same vnode.
 
-This plugin creates output files from Leo outlines containing reStructuredText_
-(rST) The combination of Leo outlines and rST creates a simple, flexible and
-powerful way of generating HTML, LaTeX_ and other text documents.
-ReStructuredText is a simple and powerful text formatting markup language.
+Later or never:
+    - show_context option.
+    - Support named options sets.
+    - encoding option: can override @encoding directives
+    - Support docutils config files.
 
-The file ListManagerDocs.html_ is an impressive example of the kind of output
-that is possible to generate relatively easily using this plugin. The source
-file for this example is wxListManager.leo_.
+@c
 
-To use this plugin, you must have installed Python's docutils_ module. This
-module will also use the SilverCity_ syntax coloring package if you have
-installed it.
-
-This plugin assumes that a node whose headline is @rst &lt;filename&gt; contains a
-tree of nodes containing reStructuredText. Let us call such a node an **rst root**
-node. The plugin passes the headline and body text of the rst root and all the
-nodes of its subtree to Python's docutils module, which parses the
-reStructuredText and creates the output file.
-
-Double-clicking on an rst root node generates an output file from the
-reStructured Text input contained in the rst root node and all the nodes of its
-subtree. The output file will be HTML, LaTex or plain text depending on the
-extension of the filename specified in the rst root node. If the filename ends
-in .html or .htm the docutils module will create an HTML file. If the filename
-ends in .tex the docutils module will create a LaTex file. Otherwise, a plain
-.txt file is generated.
-
-If the output file is a .html or .htm file, it will use three .css (cascading
-style sheet) files provided they exist in the same directory as the output file.
-You can control the formatting of the HTML file by altering these .css files.
-See the node called "cascading style sheets" for more details.
-
-See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for
-many examples of how to use this plugin.</t>
-<t tx="ekr.20050805105024.7"></t>
-<t tx="ekr.20050805105024.8">@ignore
-@nocolor
-@wrap
-
-If an outline node contains @rst &lt;filename&gt;, that node is the root of a tree of
-nodes that will create the named output file. Let's call such a node the **rst
-root**.
-
-Subnodes of the rst root nodes may have headlines that contain just @rst. Such
-node should contain rst markup, possibly including the code-block directive
-defined by this plugin to format blocks of code.
-
-**Important:** All @rst nodes should start with the @ignore directive. This allows @rst to be embedded in @file-nosent trees: see the next section for details. This plugin strips leading @ignore, @nocolor and @wrap directives.  Such directives do not appear in the output.
-
-The root node may contain any rST directives.  In particular, to create a table of contents put::
-
-    .. contents:: Table of Contents
-
-on its own line in the rst root node.
-
-All other subnodes of the rst root, i.e., nodes whose headline is something
-other than @rst, are **code nodes**. This plugin converts the headline text of
-code nodes into an rST section headline whose level depends on the level of the
-node in the Leo outline. Higher-level headlines in the outline correspond to
-higher-level section headings; lower-level headlines in the outline correspond
-to lower-level section headings. Any text in a code node is formatted as if it
-were enclosed in a code-block directive.
-
-The plugin reserves the '#' character for your own use so that you can
-specify an rST headline explicitly. For example,::
-
-    #####
-    Title
-    #####
-
-You would typically put such a title in the rst root node.
-Otherwise, section underlining is discouraged, since the plugin automaticaly
-generates sections from headlines.</t>
-<t tx="ekr.20050805105024.9"></t>
-<t tx="ekr.20050805105024.10">As stated earlier, you must put an @ignore directive in any @rst node (except the root @rst node) whose rST text you want to contribute to the output.  This strange-looking convention allows you to embed documentation in @file-nosent trees *without* that documentation being included in the file derived from the @file-nosent tree.
-
-For example, consider the following outline, in which all the @rst nodes (except the root @rst node) contain @ignore directives::
-
-    @rst spamDocs.html
-        @file-nosent spam.py
-            code node 1
-                @rst
-            code node 2
-                @rst
-            code node 3
-                @rst
-
-The rst2 plugin will ouput all the reStructuredText contained in the three @rst nodes to spamDocs.html, but the contents of those @rst nodes will not become part of spam.py.  *Note:* The @ignore directive is valid only in @file-nosent trees, which is why we must use @file-noset to generate spam.py.
-
-It would be also be possible to use cloned nodes to embed code nodes in .html files.  This would allow you to use regular @file trees to generate derived files.  For example, suppose all similarly named code nodes are clones of each other::
-
-    @rst spamDocs.html
-        code node 1
-            @rst
-        code node 2
-            @rst
-        code node 3
-            @rst
-
-    @file-nosent spam.py
-        code node 1
-        code node 2
-        code node 3
-
-The disadvantage of this organization is that you must update spamDocs.html by hand to keep it up-to-date with spam.py.
-</t>
-<t tx="ekr.20050805105024.11"></t>
-<t tx="ekr.20050805105024.12">@ignore
-@nocolor
-@wrap
-
-This plugin defines a code-block rST directive if the SilverCity syntax coloring module has been installed. This directive takes one argument, a language name.  For example::
-
-    .. code-block:: Python
+@others</t>
+<t tx="ekr.20050808064245">def createDefaultOptionsDict(self):
     
-        import leoGlobals as g
-
-This directive syntax colors the code in the indented code block that follows the directive.  The result looks like this:
-
-.. code-block:: Python
+    # Warning: changing the names of options changes the names of the corresponding ivars.
     
-    import leoGlobals as g
+    self.defaultOptionsDict = {
+        # Http options...
+        'rst3_clear_http_attributes':   False,
+        'rst3_http_server_support':     False,
+        'rst3_http_attributename':      'rst_http_attribute',
+        'rst3_node_begin_marker':       'http-node-marker-',
+        # Path options...
+        'rst3_stylesheet_name': 'default.css',
+        'rst3_stylesheet_path': '',
+        # Global options...
+        'rst3_number_code_lines': True,
+        'rst3_underline_characters': '''#=+*^~"'`-:&gt;&lt;_''',
+        'rst3_verbose':True,
+        'rst3_write_intermediate_file': False, # Used only if generate_rst is True.
+        # Mode options...
+        'rst3_code_mode': False, # True: generate rst markup from @code and @doc parts.
+        'rst3_generate_rst': True, # True: generate rst markup.  False: generate plain text.
+        # Formatting options that apply to both code and rst modes....
+        'rst3_show_headlines': True,  # Can be set by @rst-no-head headlines.
+        'rst3_show_organizer_nodes': True,
+        'rst3_show_options_nodes': False,
+        # Formatting options that apply only to code mode.
+        'rst3_show_doc_parts_as_paragraphs': False,
+        'rst3_show_leo_directives': True,
+        'rst3_show_markup_doc_parts': False,
+        'rst3_show_options_doc_parts': False,
+        # Names of headline commands...
+        'rst3_code_prefix':             '@rst-code', # Enter code mode.
+        'rst3_rst_prefix':              '@rst',      # Enter rst mode.
+        'rst3_ignore_headline_prefix':  '@rst-no-head',
+        'rst3_ignore_headlines_prefix': '@rst-no-headlines',
+        'rst3_ignore_node_prefix':      '@rst-ignore-node',
+        'rst3_ignore_tree_prefix':      '@rst-ignore-tree',
+        'rst3_option_prefix':           '@rst-option',
+        'rst3_options_prefix':          '@rst-options',
+        'rst3_show_headline_prefix':    '@rst-head',
+    }</t>
+<t tx="ekr.20050808083547">@ EKR: add preprocess and helpers in 'scanning for options'</t>
+<t tx="ekr.20050808185746">@
 
-See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for many examples of how to use this directive.
+Initing and scanning for options is mostly complete:
+
+- Improved munge: it now removes rstN_ prefix where N is any digit.
+- Added createDefaultOptionsDict and initOptionsFromSettings.
+- Wrote scanAllOptions.</t>
+<t tx="ekr.20050809094214">@
+
+- Reorganized and simplified top-level write code.
+- The code that initializes settings appears to work.
+- Simplified munge.
+** The big question now involve how do we use settings and context to generate what we want.</t>
+<t tx="ekr.20050810085314">@
+
+- Completed writeTree: it now allows for skipping subtrees.
+
+- Simplified options and their names: see createDefaultOptionsDict.
+    - Use rst3 prefix for all settings.
+    - The generate_rst setting will be the basis for generating rst or plain text.
+
+- Moved all headline-related stuff into writeHeadline.
+
+- Added support for ignore_this_node and ignore_this_tree.
+    - More work is needed.</t>
+<t tx="ekr.20050811092824">@
+
+- Handled literal blocks properly in replaceCodeBlockDirectives.
+  This bug existed in rst2 plugin.
+
+- Removed a confusing 'feature' from replaceCodeBlockDirectives.
+
+This method now creates starts the code block with just '::'. The old code
+started the literal block with 'python code ::' This seemed very confusing.
+
+- Default to True for all options.  This is especially useful for the skip_node and skip_tree options.
+
+- scanOption now warns if a unknown option is seen.
+
+- Created writeBody method to replace writePlainNode and writeRstNode.
+    - writeBody removes special doc parts and leoDirectives under control of user options.</t>
+<t tx="ekr.20050811112803">@
+
+** Code mode mostly works, as do most kinds of markup.
+
+- Handled @rst-markup doc parts properly.
+- Removed writePlainNode and writeRstNode.
+- Allowed .. comments in special doc parts.
+- settings in @rst-options doc parts may end with a comma.
+- Special doc parts now also stop at the start of another doc part.
+- Added number_code_lines option.
+- Wrote handleCodeMode.
+- Wrote scanHeadlineForOptions.</t>
+<t tx="ekr.20050811173750">def scanHeadlineForOptions (self,p):
+    
+    '''Return a dictionary containing the options implied by p's headline.'''
+    
+    h = p.headString().strip()
+    
+    if p == self.topNode:
+        return {} # Don't mess with the root node.
+    elif g.match_word(h,0,self.getOption('option_prefix')): # '@rst-option'
+        s = h [len(self.option_prefix):]
+        return self.scanOption(p,s)
+    elif g.match_word(h,0,self.getOption('options_prefix')): # '@rst-options'
+        return self.scanOptions(p,p.bodyString())
+    else:
+        # Careful: can't use g.match_word because options may have '-' chars.
+        i = g.skip_id(h,0,chars='@-')
+        word = h[0:i]
+        
+        for prefix,ivar,val in (
+            ('code_prefix','code_mode',True), # '@rst-code' 
+            ('rst_prefix','code_mode',False), # '@rst'    
+            ('ignore_headline_prefix','ignore_this_headline',True), # '@rst-no-head'
+            ('show_headline_prefix','show_this_headline',True), # '@rst-head'  
+            ('ignore_headlines_prefix','show_headlines',False), # '@rst-no-headlines'
+            ('ignore_node_prefix','ignore_this_node',True), # '@rst-ignore-node'
+            ('ignore_tree_prefix','ignore_this_tree',True), # '@rst-ignore-tree'
+        ):
+            prefix = self.getOption(prefix)
+            if prefix and word == prefix: # Do _not_ munge this prefix!
+                d = { ivar: val }
+                if ivar != 'code_mode':
+                    d ['code_mode'] = False # Enter rst mode.
+                # Special case: Treat a bare @rst like @rst-no-head
+                if h == self.getOption('rst_prefix'):
+                    d ['ignore_this_headline'] = True
+                # g.trace(repr(h),repr(prefix),ivar,d)
+                return d
+                
+        if h.startswith('@rst'):
+            g.trace('unknown kind of @rst headline',p.headString())
+                
+        return {}
 </t>
-<t tx="ekr.20050805105024.13"></t>
-<t tx="ekr.20050805105024.14">@ignore
-@nocolor
-@wrap
+<t tx="ekr.20050812033346">@ Another big step forward.  More collapses into simplicity...
 
-When this plugin generates HTML files, this plugin assumes that three .css
-(cascading style sheet) files exist in the directory containing the output file.
-For the HTML output to look good the following .css files should exist in the
-directory containing the generatated HTML file: default.css, leo_rst.css and
-silver_city.css.
+There is no need for the following options:
+    rst3_include_markup_doc_parts
+    rst3_show_options_doc_parts
+    rst3_show_options_nodes
 
-- default.css is the default style sheet that docutils expects to exist.
-- leo_rst.css contains some style improvements based on Gunnar Schwant's DocFactory.
-- silver_city.css is the style sheet that controls the syntax highlighting generated by SilverCity.
+There are now so few options that named option sets aren't so useful!
 
-The latter two style sheets are imported at the end of the default.css.
+Special doc parts will never be shown.  You can use rst literal blocks to talk about such things!
 
-**N.B.** You can use cascading style sheets to do things that otherwise wouldn't be possible with "plain" rST.  For instance, the background color of this page was specified in a body style.
+- Always remove special doc parts
+- Always remove Leo directives in rst mode.
+    Again, you can use code-blocks or literal blocks if desired.
 
--------------
+All @rst-xxx headlines enter rst mode, except for @rst-option and @rst-options.
+    - This is a major simplification: most @rst-markup doc parts are not needed.
 
-|leo|</t>
+- Bare @rst headline is equivalent to @rst-no-head.
+    - This makes rst3 compatible with rst2.
+
+- Improved munge: changed - to underscore, lowercased everything.</t>
+<t tx="ekr.20050812092209">@
+
+- Wrote full path in report.</t>
+<t tx="ekr.20050813100922">@
+
+See http://webpages.charter.net/edreamleo/rstplugin3.html for full documentation.
+
+You can start reporting bugs now :-)
+
+All major features work, and have been tested for usability while writing the
+documentation for this plugin. Some bugs remain, but this version should be
+usable.
+
+- Properly initied 'single node options'
+
+- Use general names for @rst-option and @rst-options in scanHeadlineForOptions.
+
+- Added support for headlline commands.
+
+- Handles ListManagerDocs.html in test.leo.</t>
+<t tx="ekr.20050813103025"></t>
+<t tx="ekr.20050813145858">@
+
+- Added support for rst3_stylesheet_name ad rst3_stylesheet_path options.
+
+- Revised and simplified writeBody.
+
+- Removed blank lines from code parts.
+
+- Added support for show_doc_parts_as_paragraphs option.
+
+Oh happy day. Doc parts included in code mode as the result of
+show_doc_parts_as_paragraphs option are equivalent to @ @rst-markup doc parts!
+That is, they can contain rST markup.</t>
+<t tx="ekr.20050813173425">@
+
+- Added support for @rst-head command.
+
+Testing @rst-head revealed the following bugs:
+
+    - parseOptionLine: everything was getting turned to 'True'!
+
+    - scanHeadlineForOptions was returning None instead of the dicts returned by scanOption/s.</t>
+<t tx="ekr.20050813191445"></t>
+<t tx="ekr.20050814074529">@
+- Added support for show_options_nodes option.
+- Fixed bug: self.toplevel now defined in processTree.
+- Fixed bugs related to @rst-skip-node and @rst-skip-tree.
+- Fixed another bug in scanOption.
+- scanForOptionDocParts now treats @ @rst-option and @ @rst-options identically.
+
+There is a problem with section levels that I don't know how to solve except with a warning:
+
+The first node at each level must not be ignored: because rst treats the first occurance of an underlining character to be the next highest section level.  For example:
+
+- @ignore-node
+..- a
+- b
+
+rst thinks that A is at a higher level than b!
+
+</t>
+<t tx="ekr.20050814092014">@
+
+- Improved doc string.
+
+- Store options in self.optionsDict instead of directly in ivars.
+    - The old way was too cute, and might be a security problem.
+    - The new way also prevents accidental collisions between ivars and settings.
+    - Created get/setOption methods.</t>
+<t tx="ekr.20050814152137">@
+
+- Hooked up support for http stuff.  It probably isn't working, but I'm not sure what it is supposed to do.
+
+    - relocate_references gets called after every file is generated.  I'm not sure that is correct.
+    - The present code may be clearing rst.anchor_map too often...</t>
+<t tx="ekr.20050815173941">@
+
+http://sourceforge.net/forum/message.php?msg_id=3294976
+e
+
+stylesheet does not exist: C:\c\leo\V43leos\default.css
+wrote: C:\c\leo\HTML\rstplugin.html
+
+it should look where the html will be written for the default.css
+
+Documentation for the rst3 plugin--&gt;@rst ../doc/rstplugin3.html
+
+IOError: [Errno 2] No such file or directory: u'../doc/rstplugin3.html.txt'
+
+few are going to have leo/src as the curent dir.
+not sure how to handle it
+short of a script to set @path to doc/
+removing the ../doc/ will generate less nubiee errors.
+
+seems to handle reSt errors better</t>
+<t tx="ekr.20050816094344">@
+
+I used reportlab, I believe, in the pdf generation facility of the Chapters plugin... at least I think I did. There may be some code in there that you can just cut out and use as starter code...
+maybe not... :D
+leouserz
+</t>
+<t tx="ekr.20050817115636.2">import sys
+sys.path.append(r'c:\reportlab_1_20') 
+
+import leoGlobals as g # EKR
+
+import time
+from types import ListType, TupleType, UnicodeType
+from docutils import writers, nodes, languages
+
+from stylesheet import getStyleSheet # Got this module from same place as rlpdf.py
+
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.enums import *
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import *
+from reportlab.platypus.para import Paragraph
+from reportlab.lib import colors
+from reportlab.lib.units import inch
+
+from StringIO import StringIO</t>
+<t tx="ekr.20050817115636.4">class Writer(writers.Writer):
+	
+	&lt;&lt; class Writer declarations &gt;&gt;
+
+	@others</t>
+<t tx="ekr.20050817115636.5">supported = ('pdf','rlpdf')
+"""Formats this writer supports."""
+
+settings_spec = (
+    'PDF-Specific Options',
+    None,
+    (
+        # EKR: added this entry.
+    (   'Specify a stylesheet URL, used verbatim.  Overrides '
+        '--stylesheet-path.  Either --stylesheet or --stylesheet-path '
+        'must be specified.',
+        ['--stylesheet'],
+        {'metavar': '&lt;URL&gt;', 'overrides': 'stylesheet_path'}),
+         
+    (   'Specify a stylesheet file, relative to the current working '
+        'directory.  The path is adjusted relative to the output HTML '
+        'file.  Overrides --stylesheet.',
+        ['--stylesheet-path'],
+        {'metavar': '&lt;file&gt;', 'overrides': 'stylesheet'}),
+
+    (   'Format for footnote references: one of "superscript" or '
+        '"brackets".  Default is "brackets".',
+        ['--footnote-references'],
+        {'choices': ['superscript', 'brackets'], 'default': 'brackets',
+        'metavar': '&lt;FORMAT&gt;'}),
+    )
+)
+
+output = None
+"""Final translated form of `document`."""</t>
+<t tx="ekr.20050817115636.6">def __init__(self):
+
+    writers.Writer.__init__(self)
+    self.translator_class = PDFTranslator
+    g.trace('(Writer)')
+</t>
+<t tx="ekr.20050817115636.7">def translate(self):
+    
+    visitor = self.translator_class(self.document)
+    self.document.walkabout(visitor)
+    self.story = visitor.as_what()
+    self.output = self.record()</t>
+<t tx="ekr.20050817115636.8">def record(self):
+
+    from reportlab.platypus import SimpleDocTemplate
+
+    out = StringIO()
+    doc = SimpleDocTemplate(out, pagesize=A4)
+    doc.build(self.story)
+    return out.getvalue()
+</t>
+<t tx="ekr.20050817115636.9">def lower(self):
+
+    return 'pdf'</t>
+<t tx="ekr.20050817120850.1">@first #! /usr/bin/env python
+
+&lt;&lt; docstring &gt;&gt;
+
+# Note: you must copy this file to the Python/Lib/site-packages/docutils/writers folder.
+
+# This file is derived from rlpdf.py at 
+# The copyright below applies only to this file.
+
+@language python
+@tabwidth -4
+
+&lt;&lt; copyright &gt;&gt;
+&lt;&lt; what I did &gt;&gt;
+__docformat__ = 'reStructuredText'
+&lt;&lt; imports &gt;&gt;
+
+@others</t>
+<t tx="ekr.20050817120850.10">class PDFTranslator(nodes.NodeVisitor):
+
+	@others
+
+    depart_comment = invisible_visit
+    visit_substitution_definition = visit_comment
+    depart_substitution_definition = depart_comment
+    visit_figure = visit_comment
+    depart_figure = depart_comment
+
+    visit_sidebar = invisible_visit
+    visit_warning = invisible_visit
+    visit_tip = invisible_visit
+    visit_tbody = invisible_visit
+    visit_thead = invisible_visit
+    visit_tgroup = invisible_visit
+    visit_table = invisible_visit
+    visit_title_reference = invisible_visit
+    visit_transition = invisible_visit
+    visit_pending = invisible_visit
+    depart_pending = invisible_visit
+    depart_transition = invisible_visit
+    depart_title_reference = invisible_visit
+    depart_table = invisible_visit
+    depart_tgroup = invisible_visit
+    depart_thead = invisible_visit
+    depart_tbody = invisible_visit
+    depart_tip = invisible_visit
+    depart_warning = invisible_visit
+    depart_sidebar = invisible_visit</t>
+<t tx="ekr.20050817120850.11">def __init__(self, doctree):
+    
+    g.trace('PDFTranslator')
+
+    self.settings = settings = doctree.settings
+    self.styleSheet = getStyleSheet()
+    g.trace(self.styleSheet)
+    nodes.NodeVisitor.__init__(self, doctree)
+    self.language = languages.get_language(doctree.settings.language_code)
+    self.in_docinfo = None
+    self.head = []
+    self.body = []
+    self.foot = []
+    self.sectionlevel = 0
+    self.context = []
+    self.topic_class = ''
+    self.story = []
+    self.bulletText = '\267'	# maybe move this into stylesheet.
+    self.bulletlevel = 0
+
+</t>
+<t tx="ekr.20050817120850.12">def as_what(self):
+
+    return self.story
+</t>
+<t tx="ekr.20050817120850.13">def encode(self, text):
+
+    """Encode special characters in `text` &amp; return."""
+    if type(text) is UnicodeType:
+        text = text.replace(u'\u2020', u' ')
+        text = text.replace(u'\xa0', u' ')
+        text = text.encode('utf-8')
+    #text = text.replace("&amp;", "&amp;amp;")
+    #text = text.replace("&lt;", '"')
+    #text = text.replace('"', "(quot)")
+    #text = text.replace("&gt;", '"')
+    # footnotes have character values above 128 ?
+    return text
+</t>
+<t tx="ekr.20050817120850.14">def append_para (self,text,in_style='Normal',bulletText=None):
+
+    if type(text) in (ListType,TupleType):
+        text = ''.join([self.encode(t) for t in text])
+
+    try:
+        style = self.styleSheet [in_style.strip()] ### EKR: added strip.
+    except KeyError:
+        g.trace('in_style not found',repr(in_style),'using "Normal"')
+        style = self.styleSheet ['Normal'] ### EKR
+
+    self.story.append(
+        Paragraph(self.encode(text),style,
+        bulletText = bulletText, context = self.styleSheet))
+</t>
+<t tx="ekr.20050817120850.15">def starttag (self,node,tagname,suffix='\n',**attributes):
+    atts = {}
+    for (name,value) in attributes.items():
+        atts [name.lower()] = value
+    for att in ('class',): # append to node attribute
+        if node.has_key(att):
+            if atts.has_key(att):
+                atts [att] = node [att] + ' ' + atts [att]
+    for att in ('id',): # node attribute overrides
+        if node.has_key(att):
+            atts [att] = node [att]
+    attlist = atts.items()
+    attlist.sort()
+    parts = [tagname]
+    for name, value in attlist:
+        if value is None: # boolean attribute
+            parts.append(name.lower())
+        elif isinstance(value,ListType):
+            values = [str(v) for v in value]
+            parts.append('%s="%s"' % (name.lower(),
+                                      self.encode(' '.join(values))))
+        else:
+            parts.append('%s="%s"' % (name.lower(),
+                                      self.encode(str(value))))
+    return '&lt;%s&gt;%s' % (' '.join(parts),suffix)</t>
+<t tx="ekr.20050817120850.16">def visit_Text(self, node):
+    self.context.append('#text')
+    self.body.append(node.astext())
+</t>
+<t tx="ekr.20050817120850.17">def depart_Text(self, node):
+    self.context.pop()
+</t>
+<t tx="ekr.20050817120850.18">def visit_admonition(self, node, name):
+    pass
+</t>
+<t tx="ekr.20050817120850.19">def depart_admonition(self):
+    pass
+</t>
+<t tx="ekr.20050817120850.20">def visit_attention(self, node):
+    self.visit_admonition(node, 'attention')
+</t>
+<t tx="ekr.20050817120850.21">def depart_attention(self, node):
+    self.depart_admonition()
+</t>
+<t tx="ekr.20050817120850.22">def visit_author(self, node):
+    self.visit_docinfo_item(node, 'author')
+</t>
+<t tx="ekr.20050817120850.23">def depart_author(self, node):
+    self.depart_docinfo_item()
+</t>
+<t tx="ekr.20050817120850.24">def visit_address(self, node):
+    self.visit_docinfo_item(node, 'address')
+</t>
+<t tx="ekr.20050817120850.25">def depart_address(self, node):
+    self.depart_docinfo_item()
+</t>
+<t tx="ekr.20050817120850.26">def visit_version(self, node):
+    self.visit_docinfo_item(node, 'version')
+</t>
+<t tx="ekr.20050817120850.27">def depart_version(self, node):
+    self.depart_docinfo_item()
+</t>
+<t tx="ekr.20050817120850.28">def visit_system_message(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.29">def depart_system_message(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.30">def visit_term(self, node):
+    self.context.append('dt')
+    self.body.append(self.starttag(node, 'dt', ''))
+</t>
+<t tx="ekr.20050817120850.31">def depart_term(self, node):
+    # Closes on visit_definition
+    self.context.pop()
+</t>
+<t tx="ekr.20050817120850.32">def visit_authors(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.33">def depart_authors(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.34">def visit_block_quote(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.35">def depart_block_quote(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.36">def visit_bullet_list(self, node):
+    self.context.append(len(self.body))
+    self.context.append('ul')
+    self.body.append('&lt;ul bulletText="%s"&gt;' % self.bulletText)
+</t>
+<t tx="ekr.20050817120850.37">def depart_bullet_list(self, node):
+    self.context.pop()
+    self.body.append('&lt;/ul&gt;')
+    start = self.context.pop()
+    if not 'ul' in self.context:
+        self.append_para(self.body[start:])
+        self.body = self.body[:start]
+</t>
+<t tx="ekr.20050817120850.38">def visit_caption(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.39">def depart_caption(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.40">def visit_caution(self, node):
+    self.visit_admonition(node, 'caution')
+</t>
+<t tx="ekr.20050817120850.41">def depart_caution(self, node):
+    self.depart_admonition()
+</t>
+<t tx="ekr.20050817120850.42">def visit_citation(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.43">def depart_citation(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.44">def visit_citation_reference(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.45">def depart_citation_reference(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.46">def visit_classifier(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.47">def depart_classifier(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.48">def visit_colspec(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.49">def depart_colspec(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.50">def visit_contact(self, node):
+    self.visit_docinfo_item(node, 'contact')
+</t>
+<t tx="ekr.20050817120850.51">def depart_contact(self, node):
+    self.depart_docinfo_item()
+</t>
+<t tx="ekr.20050817120850.52">def visit_copyright(self, node):
+    self.visit_docinfo_item(node, 'copyright')
+</t>
+<t tx="ekr.20050817120850.53">def depart_copyright(self, node):
+    self.depart_docinfo_item()
+</t>
+<t tx="ekr.20050817120850.54">def visit_danger(self, node):
+    self.visit_admonition(node, 'danger')
+</t>
+<t tx="ekr.20050817120850.55">def depart_danger(self, node):
+    self.depart_admonition()
+</t>
+<t tx="ekr.20050817120850.56">def visit_date(self, node):
+    self.visit_docinfo_item(node, 'date')
+</t>
+<t tx="ekr.20050817120850.57">def depart_date(self, node):
+    self.depart_docinfo_item()
+</t>
+<t tx="ekr.20050817120850.58">def visit_definition(self, node):
+
+    self.body.append('&lt;/dt&gt;')
+    self.context.append('dd')
+    self.body.append(self.starttag(node, 'dd'))
+</t>
+<t tx="ekr.20050817120850.59">def depart_definition(self, node):
+    self.context.pop()
+    self.body.append('&lt;/dd&gt;')
+</t>
+<t tx="ekr.20050817120850.60">def visit_definition_list(self, node):
+    self.context.append(len(self.body))
+    self.context.append('dl')
+    self.body.append(self.starttag(node, 'dl'))
+</t>
+<t tx="ekr.20050817120850.61">def depart_definition_list(self, node):
+    self.context.pop()
+    self.body.append('&lt;/dl&gt;')
+    start = self.context.pop()
+    if not 'dl' in self.context:
+        self.append_para(self.body[start:])
+        self.body = self.body[:start]
+</t>
+<t tx="ekr.20050817120850.62">def visit_definition_list_item(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.63">def depart_definition_list_item(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.64">def visit_description(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.65">def depart_description(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.66">def visit_docinfo(self, node):
+    self.context.append(len(self.body))
+    self.in_docinfo = 1
+</t>
+<t tx="ekr.20050817120850.67">def depart_docinfo(self, node):
+    start = self.context.pop()
+    docinfo = self.body[start:]
+    self.body = self.body[:start]
+    self.append_para(docinfo)
+    self.in_docinfo = None
+</t>
+<t tx="ekr.20050817120850.68">def visit_docinfo_item(self, node, name):
+    
+    self.body.append('&lt;para style="DocInfo"&gt;&lt;b&gt;%s: &lt;/b&gt;' % self.language.labels[name])
+
+</t>
+<t tx="ekr.20050817120850.69">def depart_docinfo_item(self):
+    self.body.append('&lt;/para&gt;')
+</t>
+<t tx="ekr.20050817120850.70">def visit_doctest_block(self, node):
+    self.visit_literal_block(node)
+</t>
+<t tx="ekr.20050817120850.71">def depart_doctest_block(self, node):
+    self.depart_literal_block(node)
+</t>
+<t tx="ekr.20050817120850.72">def visit_line_block(self, node):
+    self.visit_literal_block(node)
+</t>
+<t tx="ekr.20050817120850.73">def depart_line_block(self, node):
+    self.depart_literal_block(node)
+</t>
+<t tx="ekr.20050817120850.74">def visit_document(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.75">def depart_document(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.76">def visit_emphasis(self, node):
+    self.context.append('i')
+    self.body.append('&lt;i&gt;')
+</t>
+<t tx="ekr.20050817120850.77">def depart_emphasis(self, node):
+    self.context.pop()
+    self.body.append('&lt;/i&gt;')
+</t>
+<t tx="ekr.20050817120850.78">def visit_entry(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.79">def depart_entry(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.80">def visit_enumerated_list(self, node):
+    self.context.append(len(self.body))
+    self.context.append('ol')
+    self.body.append('&lt;ol&gt;')
+</t>
+<t tx="ekr.20050817120850.81">def depart_enumerated_list(self, node):
+    self.context.pop()
+    self.body.append('&lt;/ol&gt;')
+    start = self.context.pop()
+    if not 'ol' in self.context:
+        self.append_para(self.body[start:])
+        self.body = self.body[:start]
+</t>
+<t tx="ekr.20050817120850.82">def visit_error(self, node):
+    self.visit_admonition(node, 'error')
+</t>
+<t tx="ekr.20050817120850.83">def depart_error(self, node):
+    self.depart_admonition()
+</t>
+<t tx="ekr.20050817120850.84">def visit_field(self, node):
+    self.body.append('&lt;para&gt;')
+</t>
+<t tx="ekr.20050817120850.85">def depart_field(self, node):
+    self.body.append('&lt;/para&gt;')
+</t>
+<t tx="ekr.20050817120850.86">def visit_field_argument(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.87">def depart_field_argument(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.88">def visit_field_list(self, node):
+    self.context.append(len(self.body))
+    self.body.append('&lt;para&gt;')
+</t>
+<t tx="ekr.20050817120850.89">def depart_field_list(self, node):
+    start = self.context.pop()
+    self.body.append('&lt;/para&gt;')
+    self.append_para(self.body[start:])
+    self.body = self.body[:start]
+</t>
+<t tx="ekr.20050817120850.90">def visit_field_name(self, node):
+    self.body.append('&lt;b&gt;')
+</t>
+<t tx="ekr.20050817120850.91">def depart_field_name(self, node):
+    self.body.append(': &lt;/b&gt;')
+</t>
+<t tx="ekr.20050817120850.92">def visit_field_body(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.93">def depart_field_body(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.94">def visit_footnote(self, node):
+    
+    self.context.append('footnotes')
+    self.footnote_backrefs(node)
+
+</t>
+<t tx="ekr.20050817120850.95">def footnote_backrefs (self,node):
+    if self.settings.footnote_backlinks and node.hasattr('backrefs'):
+        backrefs = node ['backrefs']
+        if len(backrefs) == 1:
+            self.context.append("%s%s" % (
+                self.starttag({},'setLink','',destination=node['id']),
+                '&lt;/setLink&gt;'))
+            self.context.append("%s%s" % (
+                self.starttag({},'link','',destination=backrefs[0]),
+                '&lt;/link&gt;'))
+        else:
+            i = 1
+            backlinks = []
+            for backref in backrefs:
+                backlinks.append("%s%s%s" % (
+                    self.starttag({},'link','',destination=backref),
+                    i, '&lt;/link&gt;'))
+                i += 1
+            self.context.append(' &lt;i&gt;(%s)&lt;/i&gt; ' % ', '.join(backlinks))
+            self.context.append("%s%s" % (
+                self.starttag({},'setLink','',destination=node['id']),
+                '&lt;/setLink&gt;'))
+    else:
+        self.context.append("%s%s" % (
+            self.starttag({},'setLink','',destination=node['id']),
+            '&lt;/setLink&gt;'))
+        self.context.append('')
+</t>
+<t tx="ekr.20050817120850.96">def footnote_backrefs_depart(self, node):
+    if not self.context and self.body:
+        self.append_para(self.body)
+        self.body = []
+</t>
+<t tx="ekr.20050817120850.97">def depart_footnote(self, node):
+    self.context.pop()
+    self.footnote_backrefs_depart(node)
+</t>
+<t tx="ekr.20050817120850.98">def visit_footnote_reference(self, node):
+    # for backrefs
+    if self.settings.footnote_backlinks and node.has_key('id'):
+        self.body.append(self.starttag(node, 'setLink', '', destination=node['id']))
+        self.context.append('&lt;/setLink&gt;')
+    else:
+        self.context.append('')
+
+    href = ''
+    if node.has_key('refid'):
+        href = node['refid']
+    elif node.has_key('refname'):
+        href = self.document.nameids[node['refname']]
+    format = self.settings.footnote_references
+    if format == 'brackets':
+        suffix = '['
+        self.context.append(']')
+    elif format == 'superscript':
+        suffix = '&lt;super&gt;'
+        self.context.append('&lt;/super&gt;')
+    else: # shouldn't happen
+        suffix = '???'
+        self.content.append('???')
+    self.body.append(self.starttag(node, 'link', suffix, destination=href))</t>
+<t tx="ekr.20050817120850.99">def depart_footnote_reference(self, node):
+    self.body.append(self.context.pop())
+    self.body.append('&lt;/link&gt;')
+    self.body.append(self.context.pop())
+</t>
+<t tx="ekr.20050817120850.100">def visit_hint(self, node):
+    self.visit_admonition(node, 'hint')
+</t>
+<t tx="ekr.20050817120850.101">def depart_hint(self, node):
+    self.depart_admonition()
+</t>
+<t tx="ekr.20050817120850.102">def visit_image(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.103">def depart_image(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.104">def visit_important(self, node):
+    self.visit_admonition(node, 'important')
+</t>
+<t tx="ekr.20050817120850.105">def depart_important(self, node):
+    self.depart_admonition()
+</t>
+<t tx="ekr.20050817120850.106">def visit_interpreted(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.107">def depart_interpreted(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.108">def visit_label(self, node):
+    if 'footnotes' in self.context:
+        self.body.append('[')
+</t>
+<t tx="ekr.20050817120850.109">def depart_label(self, node):
+    if 'footnotes' in self.context:
+        self.body.append(']')
+        self.body.append(self.context.pop())
+        self.body.append(self.context.pop())
+    self.body.append('   ')
+</t>
+<t tx="ekr.20050817120850.110">def visit_legend(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.111">def depart_legend(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.112">def visit_list_item(self, node):
+    self.context.append('li')
+    self.body.append('&lt;li&gt;')
+</t>
+<t tx="ekr.20050817120850.113">def depart_list_item(self, node):
+    self.context.pop()
+    self.body.append('&lt;/li&gt;')
+</t>
+<t tx="ekr.20050817120850.114">def visit_literal(self, node):
+    self.context.append('literal')
+</t>
+<t tx="ekr.20050817120850.115">def depart_literal(self, node):
+    self.context.pop()
+</t>
+<t tx="ekr.20050817120850.116">def visit_literal_block(self, node):
+    self.story.append(Preformatted(node.astext(), self.styleSheet['Code']))
+    raise nodes.SkipNode
+</t>
+<t tx="ekr.20050817120850.117">def depart_literal_block(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.118">def visit_meta(self, node):
+    self.head.append(self.starttag(node, 'meta', **node.attributes))
+</t>
+<t tx="ekr.20050817120850.119">def depart_meta(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.120">def visit_note(self, node):
+    self.visit_admonition(node, 'note')
+</t>
+<t tx="ekr.20050817120850.121">def depart_note(self, node):
+    self.depart_admonition()
+</t>
+<t tx="ekr.20050817120850.122">def visit_option(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.123">def depart_option(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.124">def visit_option_argument(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.125">def depart_option_argument(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.126">def visit_option_group(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.127">def depart_option_group(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.128">def visit_option_list(self, node):
+    self.context.append(len(self.body))
+    self.context.append('option_list')
+</t>
+<t tx="ekr.20050817120850.129">def depart_option_list(self, node):
+    self.context.pop()
+    start = self.context.pop()
+    if not 'option_list' in self.context:
+        self.append_para(self.body[start:])
+        self.body = self.body[:start]
+</t>
+<t tx="ekr.20050817120850.130">def visit_option_list_item(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.131">def depart_option_list_item(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.132">def visit_option_string(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.133">def depart_option_string(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.134">def visit_organization(self, node):
+    self.visit_docinfo_item(node, 'organization')
+</t>
+<t tx="ekr.20050817120850.135">def depart_organization(self, node):
+    self.depart_docinfo_item()
+</t>
+<t tx="ekr.20050817120850.136">def visit_paragraph(self, node):
+    self.context.append(len(self.body))
+    self.context.append('p')
+</t>
+<t tx="ekr.20050817120850.137">def depart_paragraph(self, node):
+    self.context.pop()
+    start = self.context.pop()
+    if not self.context and self.body:
+        self.append_para(self.body[start:])
+        self.body = self.body[:start]
+</t>
+<t tx="ekr.20050817120850.138">def visit_problematic(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.139">def depart_problematic(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.140">def visit_raw(self, node):
+    if node.has_key('format') and node['format'] == 'html':
+        self.body.append(node.astext())
+    raise nodes.SkipNode
+</t>
+<t tx="ekr.20050817120850.141">def visit_target(self, node):
+
+    if not (node.has_key('refuri') or node.has_key('refid')
+            or node.has_key('refname')):
+        href = ''
+        if node.has_key('id'):
+            href = node['id']
+        elif node.has_key('name'):
+            href = node['name']
+        self.body.append("%s%s" % (self.starttag(node, 'setLink', '', destination=href), \
+                         '&lt;/setLink&gt;'))
+    raise nodes.SkipNode
+</t>
+<t tx="ekr.20050817120850.142">def depart_target(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.143">def visit_reference (self,node):
+
+    self.context.append('a')
+
+    if node.has_key('refuri'):
+        href = node ['refuri']
+        self.body.append(self.starttag(node,'a','',href=href))
+        self.context.append('&lt;/a&gt;')
+    else:
+        if node.has_key('id'):
+            self.body.append(self.starttag({},'setLink','',destination=node['id']))
+            self.context.append('&lt;/setLink&gt;')
+        if node.has_key('refid'):
+            href = node ['refid']
+        elif node.has_key('refname'):
+            href = self.document.nameids [node ['refname']]
+        self.body.append(self.starttag(node,'link','',destination=href))
+        self.context.append('&lt;/link&gt;')
+</t>
+<t tx="ekr.20050817120850.144">def depart_reference(self, node):
+    if node.has_key('id') and \
+       not node.has_key('refuri'):
+        self.body.append(self.context.pop())
+    self.body.append(self.context.pop())
+    self.context.pop()
+</t>
+<t tx="ekr.20050817120850.145">def visit_revision(self, node):
+    self.visit_docinfo_item(node, 'revision')
+</t>
+<t tx="ekr.20050817120850.146">def depart_revision(self, node):
+    self.depart_docinfo_item()
+</t>
+<t tx="ekr.20050817120850.147">def visit_row(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.148">def depart_row(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.149">def visit_section(self, node):
+    self.sectionlevel += 1
+</t>
+<t tx="ekr.20050817120850.150">def depart_section(self, node):
+    self.sectionlevel -= 1
+</t>
+<t tx="ekr.20050817120850.151">def visit_status(self, node):
+    self.visit_docinfo_item(node, 'status')
+</t>
+<t tx="ekr.20050817120850.152">def depart_status(self, node):
+    self.depart_docinfo_item()
+</t>
+<t tx="ekr.20050817120850.153">def visit_strong(self, node):
+    self.context.append('b')
+    self.body.append('&lt;b&gt;')
+</t>
+<t tx="ekr.20050817120850.154">def depart_strong(self, node):
+    self.context.pop()
+    self.body.append('&lt;/b&gt;')
+</t>
+<t tx="ekr.20050817120850.155">def visit_subtitle(self, node):
+    self.context.append(len(self.body))
+    self.context.append('subtitle')
+</t>
+<t tx="ekr.20050817120850.156">def depart_subtitle(self, node):
+    style = self.context.pop()
+    start = self.context.pop()
+    self.append_para(self.body[start:], style)
+    self.body = self.body[:start]
+</t>
+<t tx="ekr.20050817120850.157">def visit_title (self,node):
+    atts = {}
+    self.context.append(len(self.body))
+    self.context.append('title')
+    if isinstance(node.parent,nodes.topic):
+        self.context.append('')
+        self.topic_class = 'topic-title'
+    elif self.sectionlevel == 0:
+        self.context.append('title')
+    else:
+        self.context.append("h%s" % self.sectionlevel)
+
+    if self.context [ -1] != 'title':
+        if node.parent.hasattr('id'):
+            self.context.append('&lt;/setLink&gt;')
+            self.body.append(self.starttag({},'setLink','',destination=node.parent['id']))
+        if node.hasattr('refid'):
+            self.context.append('&lt;/link&gt;')
+            self.body.append(self.starttag({},'link','',destination=node['refid']))
+    else:
+        self.context.append('')
+</t>
+<t tx="ekr.20050817120850.158">def depart_title(self, node):
+
+    # g.trace(repr(node))
+    if node.hasattr('refid'):
+        self.body.append(self.context.pop())
+    if node.parent.hasattr('id'):
+        self.body.append(self.context.pop())
+    style = self.context.pop()
+    self.context.pop()
+    if isinstance(node.parent, nodes.topic):
+        style = self.topic_class
+    start = self.context.pop()
+    
+    #g.trace('body',repr(self.body))
+    g.trace('start',repr(start))
+    try:
+        self.append_para(self.body[start:], style)
+    except:
+        start = len(start) ### EKR
+        self.append_para(self.body[start:], style)
+    
+    self.body = self.body[:start]</t>
+<t tx="ekr.20050817120850.159">def unimplemented_visit(self, node):
+    
+    raise NotImplementedError(
+        'visiting unimplemented node type: %s' % node.__class__.__name__)
+</t>
+<t tx="ekr.20050817120850.160">def visit_topic(self, node):
+    if node.hasattr('id'):
+        self.context.append('&lt;/setLink&gt;')
+        self.body.append(self.starttag({}, 'setLink', '', destination=node['id']))
+</t>
+<t tx="ekr.20050817120850.161">def depart_topic(self, node):
+    if node.hasattr('id'):
+        self.body.append(self.context.pop())
+</t>
+<t tx="ekr.20050817120850.162">def visit_generated(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.163">def depart_generated(self, node):
+    pass
+</t>
+<t tx="ekr.20050817120850.164">def invisible_visit(self, node):
+    """Invisible nodes should be ignored."""
+    pass
+</t>
+<t tx="ekr.20050817120850.165">def visit_comment(self, node):
+    raise nodes.SkipNode
+</t>
+<t tx="ekr.20050817122915">"""
+:Author: Engelbert Gruber
+:Contact: goodger@users.sourceforge.net
+:Revision: $Revision$
+:Date: $Date$
+:Copyright: This module has been placed in the public domain.
+
+Simple pdf writer.
+
+The output uses reportlabs module.
+
+Some stylesheet is needed.
+"""
+
+</t>
+<t tx="ekr.20050817124859">#####################################################################################
+#
+#	Copyright (c) 2000-2001, ReportLab Inc.
+#	All rights reserved.
+#
+#	Redistribution and use in source and binary forms, with or without modification,
+#	are permitted provided that the following conditions are met:
+#
+#		*	Redistributions of source code must retain the above copyright notice,
+#			this list of conditions and the following disclaimer. 
+#		*	Redistributions in binary form must reproduce the above copyright notice,
+#			this list of conditions and the following disclaimer in the documentation
+#			and/or other materials provided with the distribution. 
+#		*	Neither the name of the company nor the names of its contributors may be
+#			used to endorse or promote products derived from this software without
+#			specific prior written permission. 
+#
+#	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+#	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+#	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+#	IN NO EVENT SHALL THE OFFICERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+#	INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+#	TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#	OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+#	IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+#	IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+#	SUCH DAMAGE.
+#
+#####################################################################################</t>
+<t tx="ekr.20050817124859.1">@nocolor
+@
+
+- Added 'c:\reportlab_1_20' to sys.path.
+
+- Obtained this file and stylesheet.py from
+  http://docutils.sourceforge.net/sandbox/dreamcatcher/rlpdf/
+
+- Put stylesheet.py in docutils/writers directory.
+  This is a stylesheet class used by the file.
+
+- Made minor mods to stop crashes.
+    - Added support for the '--stylesheet' option.
+        - This may be doing more harm than good.
+    - Changed the following methods of the PDFTranslator class:
+        - append_para
+        - depart_title</t>
+<t tx="ekr.20050817132814"></t>
 <t tx="mork.20040926105355.9">def openChaptersFile( fileName ):
     zf = zipfile.ZipFile( fileName )
     import cStringIO
