@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.6'
+__version__ = '0.7'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -346,17 +346,58 @@ except ImportError:
 #@@nocolor
 #@+at
 # 
-# - Warn if option gets set twice in same vnode.
+# - Specify option for the spelling of special doc parts.
+#     - The present code assumes to much about these commands.
 # 
-# - Handle http options.
-#     - Put traces in rst2 to see what is happening.
+# - Fix path problems
+# 
+# - Warn if option gets set twice in same vnode.
 # 
 # Later or never:
 #     - show_context option.
 #     - Support named options sets.
 #     - encoding option: can override @encoding directives
 #     - Support docutils config files.
+# 
 #@-at
+#@@c
+
+#@+others
+#@+node:ekr.20050815173941:Look for stylsheet more flexibly
+#@+at
+# 
+# http://sourceforge.net/forum/message.php?msg_id=3294976
+# e
+# 
+# stylesheet does not exist: C:\c\leo\V43leos\default.css
+# wrote: C:\c\leo\HTML\rstplugin.html
+# 
+# it should look where the html will be written for the default.css
+# 
+# Documentation for the rst3 plugin-->@rst ../doc/rstplugin3.html
+# 
+# IOError: [Errno 2] No such file or directory: u'../doc/rstplugin3.html.txt'
+# 
+# few are going to have leo/src as the curent dir.
+# not sure how to handle it
+# short of a script to set @path to doc/
+# removing the ../doc/ will generate less nubiee errors.
+# 
+# seems to handle reSt errors better
+#@-at
+#@nonl
+#@-node:ekr.20050815173941:Look for stylsheet more flexibly
+#@+node:ekr.20050816094344:Add support for ReportLab
+#@+at
+# 
+# I used reportlab, I believe, in the pdf generation facility of the Chapters 
+# plugin... at least I think I did. There may be some code in there that you 
+# can just cut out and use as starter code...
+# maybe not... :D
+# leouserz
+#@-at
+#@-node:ekr.20050816094344:Add support for ReportLab
+#@-others
 #@nonl
 #@-node:ekr.20050806162146:<< to do >>
 #@nl
@@ -966,7 +1007,7 @@ class rstClass:
                 if self.outputFileName and self.outputFileName[0] != '-':
                     found = True
                     self.ext = ext = g.os_path_splitext(self.outputFileName)[1].lower()
-                    if ext in ('.htm','.html','.tex'):
+                    if ext in ('.htm','.html','.tex','.pdf'):
                         ok = self.writeSpecialTree(p)
                     else:
                         self.writeNormalTree(p)
@@ -1001,7 +1042,7 @@ class rstClass:
             self.report(name)
             
         try:
-            output = self.writeToDocutils(source,isHtml)
+            output = self.writeToDocutils(source)
             ok = True
         except Exception:
             print 'Exception in docutils'
@@ -1018,9 +1059,9 @@ class rstClass:
     #@nonl
     #@-node:ekr.20050805162550.21:writeSpecialTree
     #@+node:ekr.20050809082854.1:writeToDocutils (sets argv)
-    def writeToDocutils (self,s,isHtml):
+    def writeToDocutils (self,s):
         
-        '''Send s to docutils and return the result.'''
+        '''Send s to docutils using the writer implied by self.ext and return the result.'''
     
         pub = docutils.core.Publisher()
     
@@ -1028,8 +1069,24 @@ class rstClass:
         pub.destination = docutils.io.StringOutput(pub.settings,encoding=self.encoding)
     
         pub.set_reader('standalone',None,'restructuredtext')
-        pub.set_writer(g.choose(isHtml,'html','latex'))
         
+        for ext,writer in (
+            ('.html','html'),
+            ('.htm','html'),
+            ('.tex','latex'),
+            ('.pdf','leo_pdf'),
+        ):
+            if self.ext == ext:
+                break
+        else:
+            g.es_print('unknown docutils extension: %s' % (self.ext),color='red')
+            return ''
+        
+        # The actual file is gotten by: writers.get_writer_class(writer_name)
+        # There is a list of aliases in the __init__ file in the writers folder.
+        # If no such alias exists, docutils tries to import the actual name give.
+        pub.set_writer(writer)
+    
         path = g.os_path_abspath(
             g.os_path_join(
                 self.getOption('stylesheet_path'),
