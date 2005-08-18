@@ -1,24 +1,16 @@
 #! /usr/bin/env python
 #@+leo-ver=4
-#@+node:@file leo_pdf.py
+#@+node:@file C:/Python24/Lib/site-packages/docutils/writers/leo_pdf.py
 #@@first
 
 #@<< docstring >>
 #@+node:<< docstring >>
-"""
-:Author: Engelbert Gruber
-:Contact: goodger@users.sourceforge.net
-:Revision: $Revision$
-:Date: $Date$
-:Copyright: This module has been placed in the public domain.
+'''This is a docutils writer that emits a pdf file using the reportlab module.
 
-Simple pdf writer.
+The original code written by Engelbert Gruber.
+Rewritten by Edward K. Ream for the Leo rst3 plugin.
 
-The output uses reportlabs module.
-
-Some stylesheet is needed.
-"""
-
+'''
 #@-node:<< docstring >>
 #@nl
 
@@ -64,9 +56,11 @@ Some stylesheet is needed.
 #@nonl
 #@-node:<< copyright >>
 #@nl
-#@<< what I did >>
-#@+node:<< what I did >>
+#@<< version history >>
+#@+node:<< version history >>
 #@@nocolor
+#@+others
+#@+node:Initial conversion
 #@+at
 # 
 # - Added 'c:\reportlab_1_20' to sys.path.
@@ -81,42 +75,62 @@ Some stylesheet is needed.
 #     - Added support for the '--stylesheet' option.
 #         - This may be doing more harm than good.
 #     - Changed the following methods of the PDFTranslator class:
-#         - append_para
+#         - createPlatypusParagraph
 #         - depart_title
 #@-at
 #@nonl
-#@-node:<< what I did >>
+#@-node:Initial conversion
+#@+node:0.0.1
+#@+at
+# 
+# - Removed '\r' characters in Writer.translate.
+# - Created self.push and self.pop.
+# - Rewrote visit/depart_title.  The code now is clear and works properly.
+# 
+# To do:
+#     The code in several places uses x in self.context.
+#     This won't work when g.Bunches are on the context stack,
+#     so we shall need a method that searches the bunches on the stack.
+#@-at
+#@nonl
+#@-node:0.0.1
+#@-others
+#@nonl
+#@-node:<< version history >>
 #@nl
+
+__version__ = '0.0.1'
 __docformat__ = 'reStructuredText'
 #@<< imports >>
 #@+node:<< imports >>
 import sys
 sys.path.append(r'c:\reportlab_1_20') 
 
-import leoGlobals as g # EKR
+import leoGlobals as g
 
+# Formatting imports...
+import docutils
+import reportlab.platypus
+import reportlab.platypus.para
+import stylesheet # To do: get this a better way.
+
+# General imports...
+import StringIO
 import time
-from types import ListType, TupleType, UnicodeType
-from docutils import writers, nodes, languages
+import types
 
-from stylesheet import getStyleSheet # Got this module from same place as rlpdf.py
 
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.enums import *
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import *
-from reportlab.platypus.para import Paragraph
-from reportlab.lib import colors
-from reportlab.lib.units import inch
 
-from StringIO import StringIO
-#@nonl
+
+
+
+
 #@-node:<< imports >>
 #@nl
 
 #@+others
-#@+node:class Writer
-class Writer(writers.Writer):
+#@+node:class Writer (docutils.writers.Writer)
+class Writer (docutils.writers.Writer):
 	
     #@	<< class Writer declarations >>
     #@+node:<< class Writer declarations >>
@@ -158,29 +172,46 @@ class Writer(writers.Writer):
     #@+node:__init__
     def __init__(self):
     
-        writers.Writer.__init__(self)
-        self.translator_class = PDFTranslator
-        g.trace('(Writer)')
+        docutils.writers.Writer.__init__(self)
+    
+        # self.translator_class = PDFTranslator
     #@-node:__init__
     #@+node:translate
     def translate(self):
         
-        visitor = self.translator_class(self.document)
+        # Create a list of paragraphs using Platypus.
+        visitor = PDFTranslator(self.document)
         self.document.walkabout(visitor)
-        self.story = visitor.as_what()
-        self.output = self.record()
+        story = visitor.as_what()
+        
+        if 0:
+            g.trace('story','*'*40)
+            g.printList(story)
+        
+        # Create the .pdf file using Platypus.
+        self.output = self.createPDF_usingPlatypus(story)
+        
+        # Solve the newline problem by brute force.
+        self.output = self.output.replace('\r','')
+        
+        if 0:
+            g.trace('output','*'*40)
+            lines = g.splitLines(self.output)
+            g.printList(lines)
     #@nonl
     #@-node:translate
-    #@+node:record
-    def record(self):
+    #@+node:createPDF_usingPlatypus
+    def createPDF_usingPlatypus (self,story):
     
-        from reportlab.platypus import SimpleDocTemplate
+        out = StringIO.StringIO()
     
-        out = StringIO()
-        doc = SimpleDocTemplate(out, pagesize=A4)
-        doc.build(self.story)
+        doc = reportlab.platypus.SimpleDocTemplate(out,
+            pagesize=reportlab.lib.pagesizes.A4)
+        
+        doc.build(story)
+    
         return out.getvalue()
-    #@-node:record
+    #@-node:createPDF_usingPlatypus
     #@+node:lower
     def lower(self):
     
@@ -189,21 +220,18 @@ class Writer(writers.Writer):
     #@-node:lower
     #@-others
 #@nonl
-#@-node:class Writer
-#@+node:class PDFTranslator
-class PDFTranslator(nodes.NodeVisitor):
+#@-node:class Writer (docutils.writers.Writer)
+#@+node:class PDFTranslator (docutils.nodes.NodeVisitor)
+class PDFTranslator (docutils.nodes.NodeVisitor):
 
     #@	@+others
     #@+node:__init__
     def __init__(self, doctree):
-        
-        g.trace('PDFTranslator')
     
         self.settings = settings = doctree.settings
-        self.styleSheet = getStyleSheet()
-        g.trace(self.styleSheet)
-        nodes.NodeVisitor.__init__(self, doctree)
-        self.language = languages.get_language(doctree.settings.language_code)
+        self.styleSheet = stylesheet.getStyleSheet()
+        docutils.nodes.NodeVisitor.__init__(self, doctree) # Init the base class.
+        self.language = docutils.languages.get_language(doctree.settings.language_code)
         self.in_docinfo = None
         self.head = []
         self.body = []
@@ -214,8 +242,9 @@ class PDFTranslator(nodes.NodeVisitor):
         self.story = []
         self.bulletText = '\267'	# maybe move this into stylesheet.
         self.bulletlevel = 0
-    
+    #@nonl
     #@-node:__init__
+    #@+node:Utilities
     #@+node:as_what
     def as_what(self):
     
@@ -225,7 +254,7 @@ class PDFTranslator(nodes.NodeVisitor):
     def encode(self, text):
     
         """Encode special characters in `text` & return."""
-        if type(text) is UnicodeType:
+        if type(text) is types.UnicodeType:
             text = text.replace(u'\u2020', u' ')
             text = text.replace(u'\xa0', u' ')
             text = text.encode('utf-8')
@@ -236,24 +265,44 @@ class PDFTranslator(nodes.NodeVisitor):
         # footnotes have character values above 128 ?
         return text
     #@-node:encode
-    #@+node:append_para
-    def append_para (self,text,in_style='Normal',bulletText=None):
+    #@+node:push & pop
+    def push (self,bunch):
+        
+        self.context.append(bunch)
+        
+    def pop (self,kind):
+        
+        bunch = self.context.pop()
+        assert bunch.kind == kind,'wrong bunch kind popped.  Expected: %s Got: %s' % (
+            kind, bunch.kind)
     
-        if type(text) in (ListType,TupleType):
+        return bunch
+    #@nonl
+    #@-node:push & pop
+    #@-node:Utilities
+    #@+node:createPlatypusParagraph
+    def createPlatypusParagraph (self,text,in_style='Normal',bulletText=None):
+    
+        if type(text) in (types.ListType,types.TupleType):
             text = ''.join([self.encode(t) for t in text])
     
-        try:
-            style = self.styleSheet [in_style.strip()] ### EKR: added strip.
-        except KeyError:
-            g.trace('in_style not found',repr(in_style),'using "Normal"')
-            style = self.styleSheet ['Normal'] ### EKR
+        if not in_style.strip(): ### EKR
+            in_style = 'Normal'
+            
+        # g.trace('%8s, text: %s' % (in_style,repr(text)))
+    
+        style = self.styleSheet [in_style]
     
         self.story.append(
-            Paragraph(self.encode(text),style,
-            bulletText = bulletText, context = self.styleSheet))
-    #@-node:append_para
+            reportlab.platypus.para.Paragraph (
+                self.encode(text), style,
+                bulletText = bulletText,
+                context = self.styleSheet))
+    #@nonl
+    #@-node:createPlatypusParagraph
     #@+node:starttag
     def starttag (self,node,tagname,suffix='\n',**attributes):
+        g.trace(tagname,repr(node))
         atts = {}
         for (name,value) in attributes.items():
             atts [name.lower()] = value
@@ -264,97 +313,231 @@ class PDFTranslator(nodes.NodeVisitor):
         for att in ('id',): # node attribute overrides
             if node.has_key(att):
                 atts [att] = node [att]
-        attlist = atts.items()
-        attlist.sort()
+        
+        attlist = atts.items() ; attlist.sort()
         parts = [tagname]
         for name, value in attlist:
             if value is None: # boolean attribute
                 parts.append(name.lower())
-            elif isinstance(value,ListType):
+            elif isinstance(value,types.ListType):
                 values = [str(v) for v in value]
-                parts.append('%s="%s"' % (name.lower(),
-                                          self.encode(' '.join(values))))
+                parts.append('%s="%s"' % (
+                    name.lower(),
+                    self.encode(' '.join(values))))
             else:
-                parts.append('%s="%s"' % (name.lower(),
-                                          self.encode(str(value))))
+                parts.append('%s="%s"' % (
+                    name.lower(),
+                    self.encode(str(value))))
+    
         return '<%s>%s' % (' '.join(parts),suffix)
     #@nonl
     #@-node:starttag
-    #@+node:visit_Text
-    def visit_Text(self, node):
-        self.context.append('#text')
+    #@+node:paragraph...
+    def visit_paragraph(self, node):
+        
+        self.push (g.Bunch(kind='p',start=len(self.body)))
+        
+    def depart_paragraph(self, node):
+        
+        b = self.pop('p')
+        start = b.start
+        
+        if not self.context and self.body:
+            self.createPlatypusParagraph(self.body[start:])
+            self.body = self.body[:start]
+    #@nonl
+    #@-node:paragraph...
+    #@+node:reference...
+    #@+node:visit_reference
+    def visit_reference (self,node):
+        
+        b = g.Bunch(kind='a',markup=[])
+        if node.has_key('refuri'):
+            href = node ['refuri']
+            self.body.append(self.starttag(node,'a','',href=href))
+            b.markup.append('</a>')
+        else:
+            if node.has_key('id'):
+                self.body.append(self.starttag({},'setLink','',destination=node['id']))
+                b.markup.append('</setLink>')
+            if node.has_key('refid'):
+                href = node ['refid']
+            elif node.has_key('refname'):
+                href = self.document.nameids [node ['refname']]
+            self.body.append(self.starttag(node,'link','',destination=href))
+            b.markup.append('</link>')
+    #@nonl
+    #@-node:visit_reference
+    #@+node:depart_reference
+    def depart_reference(self, node):
+        
+        b = self.pop('a')
+        for s in b.markup:
+            self.body.append(s)
+    #@nonl
+    #@-node:depart_reference
+    #@-node:reference...
+    #@+node:Text...
+    def visit_Text (self,node):
+    
+        self.push(g.bunch(kind='#text'))
+    
         self.body.append(node.astext())
-    #@-node:visit_Text
-    #@+node:depart_Text
-    def depart_Text(self, node):
-        self.context.pop()
-    #@-node:depart_Text
-    #@+node:visit_admonition
+    
+        # g.trace('body',repr(self.body))
+    
+    def depart_Text (self,node):
+    
+        self.pop('#text')
+    #@nonl
+    #@-node:Text...
+    #@+node:Title...
+    #@+node:visit_title
+    def visit_title (self,node):
+    
+        atts = {}
+        isTopic = isinstance(node.parent,docutils.nodes.topic)
+        isTitle = self.sectionlevel == 0
+        b = g.Bunch(kind='title',start=len(self.body),markup=[])
+    
+        if isTopic:   b.style = 'topic-title'
+        elif isTitle: b.style = 'title'
+        else:         b.style = "h%s" % self.sectionlevel
+    
+        if b.style != 'title':
+            if node.parent.hasattr('id'):
+                self.body.append(
+                    self.starttag({},'setLink','',destination=node.parent['id']))
+                b.markup.append('</setLink>')
+            if node.hasattr('refid'):
+                self.body.append(
+                    self.starttag({},'link','',destination=node['refid']))
+                b.markup.append('</link>')
+        self.push(b)
+    
+        if 0:
+            #@        << old code >>
+            #@+node:<< old code >>
+            self.context.append(len(self.body))
+            self.context.append('title')
+            if isinstance(node.parent,docutils.nodes.topic):
+                self.context.append('')
+                self.topic_class = 'topic-title'
+            elif self.sectionlevel == 0:
+                self.context.append('title')
+            else:
+                self.context.append("h%s" % self.sectionlevel)
+            
+            if self.context [ -1] != 'title':
+                if node.parent.hasattr('id'):
+                    self.context.append('</setLink>')
+                    self.body.append(self.starttag({},'setLink','',destination=node.parent['id']))
+                if node.hasattr('refid'):
+                    self.context.append('</link>')
+                    self.body.append(self.starttag({},'link','',destination=node['refid']))
+            else:
+                self.context.append('')
+            #@nonl
+            #@-node:<< old code >>
+            #@nl
+    #@nonl
+    #@-node:visit_title
+    #@+node:depart_title
+    def depart_title (self,node):
+    
+        b = self.pop('title')
+        for z in b.markup:
+            self.body.append(z)
+    
+        self.createPlatypusParagraph(self.body[b.start:],b.style)
+        self.body = self.body [:b.start]
+    
+        if 0:
+            #@        << old code >>
+            #@+node:<< old code >>
+            if node.hasattr('refid'):
+                self.body.append(self.context.pop())
+            
+            if node.parent.hasattr('id'):
+                self.body.append(self.context.pop())
+            
+            style = self.context.pop()
+            self.context.pop()
+            
+            if isinstance(node.parent, docutils.nodes.topic):
+                style = self.topic_class
+            start = self.context.pop()
+            
+            self.createPlatypusParagraph(self.body[start:], style)
+            self.body = self.body[:start]
+            #@nonl
+            #@-node:<< old code >>
+            #@nl
+    #@nonl
+    #@-node:depart_title
+    #@-node:Title...
+    #@+node:Others...
+    #@+node:admonition
     def visit_admonition(self, node, name):
         pass
-    #@-node:visit_admonition
-    #@+node:depart_admonition
+    
     def depart_admonition(self):
         pass
-    #@-node:depart_admonition
-    #@+node:visit_attention
+    #@-node:admonition
+    #@+node:attention
     def visit_attention(self, node):
+    
         self.visit_admonition(node, 'attention')
-    #@-node:visit_attention
-    #@+node:depart_attention
+    
     def depart_attention(self, node):
+    
         self.depart_admonition()
-    #@-node:depart_attention
-    #@+node:visit_author
+    #@-node:attention
+    #@+node:author
     def visit_author(self, node):
         self.visit_docinfo_item(node, 'author')
-    #@-node:visit_author
-    #@+node:depart_author
+    
     def depart_author(self, node):
         self.depart_docinfo_item()
-    #@-node:depart_author
-    #@+node:visit_address
+    #@-node:author
+    #@+node:address
     def visit_address(self, node):
         self.visit_docinfo_item(node, 'address')
-    #@-node:visit_address
-    #@+node:depart_address
+    
     def depart_address(self, node):
         self.depart_docinfo_item()
-    #@-node:depart_address
-    #@+node:visit_version
+    #@-node:address
+    #@+node:version
     def visit_version(self, node):
         self.visit_docinfo_item(node, 'version')
-    #@-node:visit_version
-    #@+node:depart_version
+    
     def depart_version(self, node):
         self.depart_docinfo_item()
-    #@-node:depart_version
-    #@+node:visit_system_message
+    #@-node:version
+    #@+node:system_message
     def visit_system_message(self, node):
         pass
-    #@-node:visit_system_message
-    #@+node:depart_system_message
+    
     def depart_system_message(self, node):
         pass
-    #@-node:depart_system_message
-    #@+node:visit_term
+    #@-node:system_message
+    #@+node:term (weird use of context)
     def visit_term(self, node):
         self.context.append('dt')
         self.body.append(self.starttag(node, 'dt', ''))
-    #@-node:visit_term
-    #@+node:depart_term
+    
     def depart_term(self, node):
         # Closes on visit_definition
         self.context.pop()
-    #@-node:depart_term
-    #@+node:visit_authors
+    #@nonl
+    #@-node:term (weird use of context)
+    #@+node:authors
     def visit_authors(self, node):
         pass
-    #@-node:visit_authors
-    #@+node:depart_authors
+    
     def depart_authors(self, node):
         pass
-    #@-node:depart_authors
+    #@-node:authors
     #@+node:visit_block_quote
     def visit_block_quote(self, node):
         pass
@@ -375,7 +558,7 @@ class PDFTranslator(nodes.NodeVisitor):
         self.body.append('</ul>')
         start = self.context.pop()
         if not 'ul' in self.context:
-            self.append_para(self.body[start:])
+            self.createPlatypusParagraph(self.body[start:])
             self.body = self.body[:start]
     #@-node:depart_bullet_list
     #@+node:visit_caption
@@ -470,141 +653,132 @@ class PDFTranslator(nodes.NodeVisitor):
         self.context.pop()
         self.body.append('</dd>')
     #@-node:depart_definition
-    #@+node:visit_definition_list
+    #@+node:definition_list  (non-trivial)
     def visit_definition_list(self, node):
         self.context.append(len(self.body))
         self.context.append('dl')
         self.body.append(self.starttag(node, 'dl'))
-    #@-node:visit_definition_list
-    #@+node:depart_definition_list
+    
     def depart_definition_list(self, node):
         self.context.pop()
         self.body.append('</dl>')
         start = self.context.pop()
         if not 'dl' in self.context:
-            self.append_para(self.body[start:])
+            self.createPlatypusParagraph(self.body[start:])
             self.body = self.body[:start]
-    #@-node:depart_definition_list
-    #@+node:visit_definition_list_item
+    #@nonl
+    #@-node:definition_list  (non-trivial)
+    #@+node:definition_list_item
     def visit_definition_list_item(self, node):
         pass
-    #@-node:visit_definition_list_item
-    #@+node:depart_definition_list_item
+    
     def depart_definition_list_item(self, node):
         pass
-    #@-node:depart_definition_list_item
-    #@+node:visit_description
+    #@nonl
+    #@-node:definition_list_item
+    #@+node:description
     def visit_description(self, node):
         pass
-    #@-node:visit_description
-    #@+node:depart_description
+    
     def depart_description(self, node):
         pass
-    #@-node:depart_description
-    #@+node:visit_docinfo
+    #@-node:description
+    #@+node:docinfo (non-trivial)
     def visit_docinfo(self, node):
         self.context.append(len(self.body))
         self.in_docinfo = 1
-    #@-node:visit_docinfo
-    #@+node:depart_docinfo
+    
     def depart_docinfo(self, node):
         start = self.context.pop()
         docinfo = self.body[start:]
         self.body = self.body[:start]
-        self.append_para(docinfo)
+        self.createPlatypusParagraph(docinfo)
         self.in_docinfo = None
-    #@-node:depart_docinfo
-    #@+node:visit_docinfo_item
+    #@-node:docinfo (non-trivial)
+    #@+node:docinfo_item
     def visit_docinfo_item(self, node, name):
         
-        self.body.append('<para style="DocInfo"><b>%s: </b>' % self.language.labels[name])
+        self.body.append(
+            '<para style="DocInfo"><b>%s: </b>' % (
+                self.language.labels[name]))
     
-    #@-node:visit_docinfo_item
-    #@+node:depart_docinfo_item
     def depart_docinfo_item(self):
+        
         self.body.append('</para>')
-    #@-node:depart_docinfo_item
-    #@+node:visit_doctest_block
+    #@-node:docinfo_item
+    #@+node:doctest_block
     def visit_doctest_block(self, node):
         self.visit_literal_block(node)
-    #@-node:visit_doctest_block
-    #@+node:depart_doctest_block
+    
     def depart_doctest_block(self, node):
         self.depart_literal_block(node)
-    #@-node:depart_doctest_block
-    #@+node:visit_line_block
+    #@-node:doctest_block
+    #@+node:line_block
     def visit_line_block(self, node):
         self.visit_literal_block(node)
-    #@-node:visit_line_block
-    #@+node:depart_line_block
+    
     def depart_line_block(self, node):
         self.depart_literal_block(node)
-    #@-node:depart_line_block
-    #@+node:visit_document
+    #@-node:line_block
+    #@+node:document
     def visit_document(self, node):
         pass
-    #@-node:visit_document
-    #@+node:depart_document
+    
     def depart_document(self, node):
         pass
-    #@-node:depart_document
-    #@+node:visit_emphasis
+    #@-node:document
+    #@+node:emphasis
     def visit_emphasis(self, node):
         self.context.append('i')
         self.body.append('<i>')
-    #@-node:visit_emphasis
-    #@+node:depart_emphasis
+    
     def depart_emphasis(self, node):
         self.context.pop()
         self.body.append('</i>')
-    #@-node:depart_emphasis
-    #@+node:visit_entry
+    #@-node:emphasis
+    #@+node:entry
     def visit_entry(self, node):
         pass
-    #@-node:visit_entry
-    #@+node:depart_entry
+    
     def depart_entry(self, node):
         pass
-    #@-node:depart_entry
-    #@+node:visit_enumerated_list
+    #@-node:entry
+    #@+node:enumerated_list (non-trivial)
     def visit_enumerated_list(self, node):
         self.context.append(len(self.body))
         self.context.append('ol')
         self.body.append('<ol>')
-    #@-node:visit_enumerated_list
-    #@+node:depart_enumerated_list
+    
     def depart_enumerated_list(self, node):
         self.context.pop()
         self.body.append('</ol>')
         start = self.context.pop()
         if not 'ol' in self.context:
-            self.append_para(self.body[start:])
+            self.createPlatypusParagraph(self.body[start:])
             self.body = self.body[:start]
-    #@-node:depart_enumerated_list
-    #@+node:visit_error
+    #@-node:enumerated_list (non-trivial)
+    #@+node:error
     def visit_error(self, node):
         self.visit_admonition(node, 'error')
-    #@-node:visit_error
-    #@+node:depart_error
+    
     def depart_error(self, node):
         self.depart_admonition()
-    #@-node:depart_error
-    #@+node:visit_field
+    #@nonl
+    #@-node:error
+    #@+node:field
     def visit_field(self, node):
         self.body.append('<para>')
-    #@-node:visit_field
-    #@+node:depart_field
+    
     def depart_field(self, node):
         self.body.append('</para>')
-    #@-node:depart_field
-    #@+node:visit_field_argument
+    #@-node:field
+    #@+node:field_argument
     def visit_field_argument(self, node):
         pass
-    #@-node:visit_field_argument
-    #@+node:depart_field_argument
+    
     def depart_field_argument(self, node):
         pass
-    #@-node:depart_field_argument
+    #@-node:field_argument
     #@+node:visit_field_list
     def visit_field_list(self, node):
         self.context.append(len(self.body))
@@ -614,7 +788,7 @@ class PDFTranslator(nodes.NodeVisitor):
     def depart_field_list(self, node):
         start = self.context.pop()
         self.body.append('</para>')
-        self.append_para(self.body[start:])
+        self.createPlatypusParagraph(self.body[start:])
         self.body = self.body[:start]
     #@-node:depart_field_list
     #@+node:visit_field_name
@@ -672,7 +846,7 @@ class PDFTranslator(nodes.NodeVisitor):
     #@+node:footnote_backrefs_depart
     def footnote_backrefs_depart(self, node):
         if not self.context and self.body:
-            self.append_para(self.body)
+            self.createPlatypusParagraph(self.body)
             self.body = []
     #@-node:footnote_backrefs_depart
     #@+node:depart_footnote
@@ -786,8 +960,10 @@ class PDFTranslator(nodes.NodeVisitor):
     #@-node:depart_literal
     #@+node:visit_literal_block
     def visit_literal_block(self, node):
+        
         self.story.append(Preformatted(node.astext(), self.styleSheet['Code']))
-        raise nodes.SkipNode
+        raise docutils.nodes.SkipNode
+    
     #@-node:visit_literal_block
     #@+node:depart_literal_block
     def depart_literal_block(self, node):
@@ -843,7 +1019,7 @@ class PDFTranslator(nodes.NodeVisitor):
         self.context.pop()
         start = self.context.pop()
         if not 'option_list' in self.context:
-            self.append_para(self.body[start:])
+            self.createPlatypusParagraph(self.body[start:])
             self.body = self.body[:start]
     #@-node:depart_option_list
     #@+node:visit_option_list_item
@@ -870,19 +1046,6 @@ class PDFTranslator(nodes.NodeVisitor):
     def depart_organization(self, node):
         self.depart_docinfo_item()
     #@-node:depart_organization
-    #@+node:visit_paragraph
-    def visit_paragraph(self, node):
-        self.context.append(len(self.body))
-        self.context.append('p')
-    #@-node:visit_paragraph
-    #@+node:depart_paragraph
-    def depart_paragraph(self, node):
-        self.context.pop()
-        start = self.context.pop()
-        if not self.context and self.body:
-            self.append_para(self.body[start:])
-            self.body = self.body[:start]
-    #@-node:depart_paragraph
     #@+node:visit_problematic
     def visit_problematic(self, node):
         pass
@@ -895,7 +1058,7 @@ class PDFTranslator(nodes.NodeVisitor):
     def visit_raw(self, node):
         if node.has_key('format') and node['format'] == 'html':
             self.body.append(node.astext())
-        raise nodes.SkipNode
+        raise docutils.nodes.SkipNode
     #@-node:visit_raw
     #@+node:visit_target
     def visit_target(self, node):
@@ -909,40 +1072,12 @@ class PDFTranslator(nodes.NodeVisitor):
                 href = node['name']
             self.body.append("%s%s" % (self.starttag(node, 'setLink', '', destination=href), \
                              '</setLink>'))
-        raise nodes.SkipNode
+        raise docutils.nodes.SkipNode
     #@-node:visit_target
     #@+node:depart_target
     def depart_target(self, node):
         pass
     #@-node:depart_target
-    #@+node:visit_reference
-    def visit_reference (self,node):
-    
-        self.context.append('a')
-    
-        if node.has_key('refuri'):
-            href = node ['refuri']
-            self.body.append(self.starttag(node,'a','',href=href))
-            self.context.append('</a>')
-        else:
-            if node.has_key('id'):
-                self.body.append(self.starttag({},'setLink','',destination=node['id']))
-                self.context.append('</setLink>')
-            if node.has_key('refid'):
-                href = node ['refid']
-            elif node.has_key('refname'):
-                href = self.document.nameids [node ['refname']]
-            self.body.append(self.starttag(node,'link','',destination=href))
-            self.context.append('</link>')
-    #@-node:visit_reference
-    #@+node:depart_reference
-    def depart_reference(self, node):
-        if node.has_key('id') and \
-           not node.has_key('refuri'):
-            self.body.append(self.context.pop())
-        self.body.append(self.context.pop())
-        self.context.pop()
-    #@-node:depart_reference
     #@+node:visit_revision
     def visit_revision(self, node):
         self.visit_docinfo_item(node, 'revision')
@@ -985,66 +1120,17 @@ class PDFTranslator(nodes.NodeVisitor):
         self.context.pop()
         self.body.append('</b>')
     #@-node:depart_strong
-    #@+node:visit_subtitle
+    #@+node:subtitle
     def visit_subtitle(self, node):
         self.context.append(len(self.body))
         self.context.append('subtitle')
-    #@-node:visit_subtitle
-    #@+node:depart_subtitle
+    
     def depart_subtitle(self, node):
         style = self.context.pop()
         start = self.context.pop()
-        self.append_para(self.body[start:], style)
+        self.createPlatypusParagraph(self.body[start:], style)
         self.body = self.body[:start]
-    #@-node:depart_subtitle
-    #@+node:visit_title
-    def visit_title (self,node):
-        atts = {}
-        self.context.append(len(self.body))
-        self.context.append('title')
-        if isinstance(node.parent,nodes.topic):
-            self.context.append('')
-            self.topic_class = 'topic-title'
-        elif self.sectionlevel == 0:
-            self.context.append('title')
-        else:
-            self.context.append("h%s" % self.sectionlevel)
-    
-        if self.context [ -1] != 'title':
-            if node.parent.hasattr('id'):
-                self.context.append('</setLink>')
-                self.body.append(self.starttag({},'setLink','',destination=node.parent['id']))
-            if node.hasattr('refid'):
-                self.context.append('</link>')
-                self.body.append(self.starttag({},'link','',destination=node['refid']))
-        else:
-            self.context.append('')
-    #@-node:visit_title
-    #@+node:depart_title
-    def depart_title(self, node):
-    
-        # g.trace(repr(node))
-        if node.hasattr('refid'):
-            self.body.append(self.context.pop())
-        if node.parent.hasattr('id'):
-            self.body.append(self.context.pop())
-        style = self.context.pop()
-        self.context.pop()
-        if isinstance(node.parent, nodes.topic):
-            style = self.topic_class
-        start = self.context.pop()
-        
-        #g.trace('body',repr(self.body))
-        g.trace('start',repr(start))
-        try:
-            self.append_para(self.body[start:], style)
-        except:
-            start = len(start) ### EKR
-            self.append_para(self.body[start:], style)
-        
-        self.body = self.body[:start]
-    #@nonl
-    #@-node:depart_title
+    #@-node:subtitle
     #@+node:unimplemented_visit
     def unimplemented_visit(self, node):
         
@@ -1072,13 +1158,17 @@ class PDFTranslator(nodes.NodeVisitor):
     #@-node:depart_generated
     #@+node:invisible_visit
     def invisible_visit(self, node):
+        
         """Invisible nodes should be ignored."""
         pass
+    
     #@-node:invisible_visit
     #@+node:visit_comment
     def visit_comment(self, node):
-        raise nodes.SkipNode
+    
+        raise docutils.nodes.SkipNode
     #@-node:visit_comment
+    #@-node:Others...
     #@-others
 
     depart_comment = invisible_visit
@@ -1108,8 +1198,8 @@ class PDFTranslator(nodes.NodeVisitor):
     depart_warning = invisible_visit
     depart_sidebar = invisible_visit
 #@nonl
-#@-node:class PDFTranslator
+#@-node:class PDFTranslator (docutils.nodes.NodeVisitor)
 #@-others
 #@nonl
-#@-node:@file leo_pdf.py
+#@-node:@file C:/Python24/Lib/site-packages/docutils/writers/leo_pdf.py
 #@-leo
