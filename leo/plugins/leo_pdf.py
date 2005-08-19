@@ -5,25 +5,27 @@
 
 #@<< docstring >>
 #@+node:<< docstring >>
-'''This is a docutils writer that emits a pdf file using the reportlab module.
+'''This is a docutils writer for .pdf files.
+
+That file uses the reportlab module to convert html markup to pdf.
 
 The original code written by Engelbert Gruber.
-Rewritten by Edward K. Ream for the Leo rst3 plugin.
 
+Rewritten by Edward K. Ream for the Leo rst3 plugin.
 '''
 #@-node:<< docstring >>
 #@nl
 
 # Note: you must copy this file to the Python/Lib/site-packages/docutils/writers folder.
 
-# This file is derived from rlpdf.py at 
-# The copyright below applies only to this file.
-
 #@@language python
 #@@tabwidth -4
 
 #@<< copyright >>
 #@+node:<< copyright >>
+# This file is derived from rlpdf.py. 
+# The following copyright below applies only to this file, and to no other part of Leo.
+
 #####################################################################################
 #
 #	Copyright (c) 2000-2001, ReportLab Inc.
@@ -98,22 +100,65 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@+at
 # 
 # - Fixed bug in visit_reference: added self.push(b).
+# - Added putHead, putTail utilities.
+# - Simplified most of the code.
+# - Reorganized node handlers so that it is clear what the important methods 
+# are.
+# - Almost all the grunt work is done.
 #@-at
 #@nonl
 #@-node:0.0.2
+#@+node:0.0.3
+#@+at
+# 
+# All grunt work completed:
+# 
+# - Moved Bunch class into this file (so no dependencies on leoGlobals.py).
+# 
+# - Simplified calls to self.push
+# 
+# - Finish all simple methods.
+# 
+# - Better dumps in createParagraph.
+#@-at
+#@nonl
+#@-node:0.0.3
 #@-others
 #@nonl
 #@-node:<< version history >>
 #@nl
+#@<< to do >>
+#@+node:<< to do >>
+#@@nocolor
+#@+at
+# 
+# - Some symbols are undefined.  Hopefully this is a problem in visit_title.
+# 
+# - Complete the conversion to using Bunches on the context stack.
+#     - There are a few 'complex' methods that haven't been converted.
+# 
+# - Fix numbered lists.
+# 
+# - self.traceToFile writes intermediate file to name.pdf.trace.txt
+#     - Will require filename arg to ctor.
+#@-at
+#@nonl
+#@-node:<< to do >>
+#@nl
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 __docformat__ = 'reStructuredText'
 #@<< imports >>
 #@+node:<< imports >>
 import sys
 sys.path.append(r'c:\reportlab_1_20') 
 
-import leoGlobals as g
+if 1: # This dependency could easily be removed.
+    # Used only for tracing and error reporting.
+    import leoGlobals as g
+    
+# from reportlab.lib.enums import *
+# from reportlab.platypus import *
 
 # Formatting imports...
 import docutils
@@ -136,6 +181,66 @@ import types
 #@nl
 
 #@+others
+#@+node:class Bunch (object)
+#@+at 
+#@nonl
+# From The Python Cookbook:  Often we want to just collect a bunch of stuff 
+# together, naming each item of the bunch; a dictionary's OK for that, but a 
+# small do-nothing class is even handier, and prettier to use.
+# 
+# Create a Bunch whenever you want to group a few variables:
+# 
+#     point = Bunch(datum=y, squared=y*y, coord=x)
+# 
+# You can read/write the named attributes you just created, add others, del 
+# some of them, etc:
+#     if point.squared > threshold:
+#         point.isok = True
+#@-at
+#@@c
+
+class Bunch (object):
+    
+    """A class that represents a colection of things.
+    
+    Especially useful for representing a collection of related variables."""
+    
+    def __init__(self,**keywords):
+        self.__dict__.update (keywords)
+        
+    def __repr__(self):
+        return self.toString()
+
+    def ivars(self):
+        return self.__dict__.keys()
+        
+    def keys(self):
+        return self.__dict__.keys()
+        
+    def toString(self):
+        tag = self.__dict__.get('tag')
+        entries = ["%s: %s" % (key,str(self.__dict__.get(key)))
+            for key in self.ivars() if key != 'tag']
+        if tag:
+            return "Bunch(tag=%s)...\n%s\n" % (tag,'\n'.join(entries))
+        else:
+            return "Bunch...\n%s\n" % '\n'.join(entries)
+
+    # Used by new undo code.
+    def __setitem__ (self,key,value):
+        '''Support aBunch[key] = val'''
+        return operator.setitem(self.__dict__,key,value)
+        
+    def __getitem__ (self,key):
+        '''Support aBunch[key]'''
+        return operator.getitem(self.__dict__,key)
+        
+    def get (self,key,theDefault=None):
+        return self.__dict__.get(key,theDefault)
+        
+bunch = Bunch
+#@nonl
+#@-node:class Bunch (object)
 #@+node:class Writer (docutils.writers.Writer)
 class Writer (docutils.writers.Writer):
 	
@@ -183,30 +288,6 @@ class Writer (docutils.writers.Writer):
     
         # self.translator_class = PDFTranslator
     #@-node:__init__
-    #@+node:translate
-    def translate(self):
-        
-        # Create a list of paragraphs using Platypus.
-        visitor = PDFTranslator(self.document)
-        self.document.walkabout(visitor)
-        story = visitor.as_what()
-        
-        if 0:
-            g.trace('story','*'*40)
-            g.printList(story)
-        
-        # Create the .pdf file using Platypus.
-        self.output = self.createPDF_usingPlatypus(story)
-        
-        # Solve the newline problem by brute force.
-        self.output = self.output.replace('\r','')
-        
-        if 0:
-            g.trace('output','*'*40)
-            lines = g.splitLines(self.output)
-            g.printList(lines)
-    #@nonl
-    #@-node:translate
     #@+node:createPDF_usingPlatypus
     def createPDF_usingPlatypus (self,story):
     
@@ -225,6 +306,31 @@ class Writer (docutils.writers.Writer):
         return 'pdf'
     #@nonl
     #@-node:lower
+    #@+node:translate
+    def translate(self):
+        
+        # Create a list of paragraphs using Platypus.
+        visitor = PDFTranslator(self.document)
+        self.document.walkabout(visitor)
+        story = visitor.as_what()
+        
+        if 0: # Not useful: story is a list of reportlab.platypus.para.Para objects.
+            # Use the trade in createParagraph instead.
+            g.trace('story','*'*40)
+            print story
+        
+        # Create the .pdf file using Platypus.
+        self.output = self.createPDF_usingPlatypus(story)
+        
+        # Solve the newline problem by brute force.
+        self.output = self.output.replace('\r','')
+        
+        if 0:
+            g.trace('output','*'*40)
+            lines = g.splitLines(self.output)
+            g.printList(lines)
+    #@nonl
+    #@-node:translate
     #@-others
 #@nonl
 #@-node:class Writer (docutils.writers.Writer)
@@ -232,109 +338,32 @@ class Writer (docutils.writers.Writer):
 class PDFTranslator (docutils.nodes.NodeVisitor):
 
     #@	@+others
-    #@+node:__init__
+    #@+node:   __init__
     def __init__(self, doctree):
     
         self.settings = settings = doctree.settings
         self.styleSheet = stylesheet.getStyleSheet()
         docutils.nodes.NodeVisitor.__init__(self, doctree) # Init the base class.
         self.language = docutils.languages.get_language(doctree.settings.language_code)
-        self.in_docinfo = None
+        
+        self.in_docinfo = False
         self.head = []
         self.body = []
         self.foot = []
         self.sectionlevel = 0
         self.context = []
-        self.topic_class = ''
+        ## self.topic_class = ''
         self.story = []
         self.bulletText = '\267'	# maybe move this into stylesheet.
-        self.bulletlevel = 0
+        # self.bulletlevel = 0
     #@nonl
-    #@-node:__init__
-    #@+node:Utilities
+    #@-node:   __init__
+    #@+node:Helpers
     #@+node:as_what
     def as_what(self):
     
         return self.story
     #@-node:as_what
-    #@+node:inContext
-    def inContext (self,kind):
-        
-        '''Return true if any context bunch has the indicated kind.'''
-        
-        g.trace(kind)
-        
-        for obj in self.context:
-            # Eventually everything on the context stack will be a g.Bunch.
-            try:
-                if kind == obj:
-                    return True
-                if kind == obj.kind:
-                    return True
-            except Exception:
-                pass
-    
-        return False
-    #@nonl
-    #@-node:inContext
-    #@+node:dumpContext
-    def dumpContext (self):
-        
-        print ; print '-' * 40
-        print 'Dump of context'
-            
-        i = 0
-        for obj in self.context:
-            print '%2d %s' % (i,obj)
-            i += 1
-    #@nonl
-    #@-node:dumpContext
-    #@+node:encode
-    def encode(self, text):
-    
-        """Encode special characters in `text` & return."""
-        if type(text) is types.UnicodeType:
-            text = text.replace(u'\u2020', u' ')
-            text = text.replace(u'\xa0', u' ')
-            text = text.encode('utf-8')
-        #text = text.replace("&", "&amp;")
-        #text = text.replace("<", '"')
-        #text = text.replace('"', "(quot)")
-        #text = text.replace(">", '"')
-        # footnotes have character values above 128 ?
-        return text
-    #@-node:encode
-    #@+node:push & pop
-    def push (self,bunch):
-        
-        self.context.append(bunch)
-        
-    def pop (self,kind):
-        
-        bunch = self.context.pop()
-        assert bunch.kind == kind,'wrong bunch kind popped.  Expected: %s Got: %s' % (
-            kind, bunch.kind)
-    
-        return bunch
-    #@nonl
-    #@-node:push & pop
-    #@-node:Utilities
-    #@+node:putHead & putTail
-    def putHead (self,start,style='Normal',bulletText=None):
-        
-        self.createParagraph(self.body[:start],
-            style=style,bulletText=bulletText)
-    
-        self.body = self.body[start:]
-    
-    
-    def putTail (self,start,style='Normal',bulletText=None):
-        
-        self.createParagraph(self.body[start:],
-            style=style,bulletText=bulletText)
-    
-        self.body = self.body[:start]
-    #@-node:putHead & putTail
     #@+node:createParagraph
     def createParagraph (self,text,style='Normal',bulletText=None):
     
@@ -344,7 +373,15 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         if not style.strip(): ### EKR
             style = 'Normal'
             
-        g.trace('%8s, text: %s' % (style,repr(text)))
+        if 1:
+            s = text.split('>')
+            s = '>\n'.join(s)
+            print
+            if 1: # just print the text.
+                print s
+            else:
+                g.trace('%8s\n\n%s' % (style,s))
+            print
     
         style = self.styleSheet [style]
         
@@ -361,40 +398,86 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
             raise
     #@nonl
     #@-node:createParagraph
-    #@+node:starttag
-    def starttag (self,node,tagname,suffix='\n',**attributes):
-        
-        g.trace(tagname,repr(node))
-        atts = {}
-        for (name,value) in attributes.items():
-            atts [name.lower()] = value
-        for att in ('class',): # append to node attribute
-            if node.has_key(att):
-                if atts.has_key(att):
-                    atts [att] = node [att] + ' ' + atts [att]
-        for att in ('id',): # node attribute overrides
-            if node.has_key(att):
-                atts [att] = node [att]
-        
-        attlist = atts.items() ; attlist.sort()
-        parts = [tagname]
-        for name, value in attlist:
-            if value is None: # boolean attribute
-                parts.append(name.lower())
-            elif isinstance(value,types.ListType):
-                values = [str(v) for v in value]
-                parts.append('%s="%s"' % (
-                    name.lower(),
-                    self.encode(' '.join(values))))
-            else:
-                parts.append('%s="%s"' % (
-                    name.lower(),
-                    self.encode(str(value))))
+    #@+node:encode
+    def encode(self, text):
     
-        return '<%s>%s' % (' '.join(parts),suffix)
-    #@-node:starttag
-    #@+node:Node handlers...
-    #@+node:  do nothings...
+        """Encode special characters in `text` & return."""
+        if type(text) is types.UnicodeType:
+            text = text.replace(u'\u2020', u' ')
+            text = text.replace(u'\xa0', u' ')
+            text = text.encode('utf-8')
+        #text = text.replace("&", "&amp;")
+        #text = text.replace("<", '"')
+        #text = text.replace('"', "(quot)")
+        #text = text.replace(">", '"')
+        # footnotes have character values above 128 ?
+        return text
+    #@-node:encode
+    #@+node:dumpContext
+    def dumpContext (self):
+        
+        print ; print '-' * 40
+        print 'Dump of context'
+            
+        i = 0
+        for bunch in self.context:
+            print '%2d %s' % (i,bunch)
+            i += 1
+    #@nonl
+    #@-node:dumpContext
+    #@+node:inContext
+    def inContext (self,kind):
+        
+        '''Return true if any context bunch has the indicated kind.'''
+        
+        for obj in self.context:
+            try: # Eventually everything on the context stack will be a Bunch.
+                if kind == obj:
+                    val = True
+                if kind == obj.kind:
+                    val = True
+            except Exception:
+                pass
+    
+        val = False
+        # g.trace(kind,val)
+        return val
+    #@nonl
+    #@-node:inContext
+    #@+node:push & pop
+    def push (self,**keys):
+        
+        self.context.append(Bunch(**keys))
+        
+    def pop (self,kind):
+        
+        bunch = self.context.pop()
+        assert bunch.kind == kind,\
+            'wrong bunch kind popped.  Expected: %s Got: %s' % (
+                kind, bunch.kind)
+    
+        return bunch
+    #@nonl
+    #@-node:push & pop
+    #@+node:putHead & putTail
+    def putHead (self,start,style='Normal',bulletText=None):
+        
+        self.createParagraph(self.body[:start],
+            style=style,bulletText=bulletText)
+    
+        self.body = self.body[start:]
+    
+    
+    def putTail (self,start,style='Normal',bulletText=None):
+        
+        self.createParagraph(self.body[start:],
+            style=style,bulletText=bulletText)
+    
+        self.body = self.body[:start]
+    #@-node:putHead & putTail
+    #@-node:Helpers
+    #@+node:Simple...
+    #@+node: do nothings...
     #@+node:authors
     def visit_authors(self, node):
         pass
@@ -572,36 +655,8 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     def depart_row(self, node):
         pass
     #@-node:visit_row
-    #@-node:  do nothings...
-    #@+node:  special handlers...
-    #@+node:comment
-    def visit_comment(self, node):
-    
-        raise docutils.nodes.SkipNode
-    #@-node:comment
-    #@+node:invisible_visit
-    def invisible_visit(self, node):
-        
-        """Invisible nodes should be ignored."""
-        pass
-    #@nonl
-    #@-node:invisible_visit
-    #@+node:unimplemented_visit
-    def unimplemented_visit(self, node):
-        
-        raise NotImplementedError(
-            'visiting unimplemented node type: %s' % node.__class__.__name__)
-    #@-node:unimplemented_visit
-    #@+node:visit_raw
-    def visit_raw(self, node):
-    
-        if node.has_key('format') and node['format'] == 'html':
-            self.body.append(node.astext())
-    
-        raise docutils.nodes.SkipNode
-    #@-node:visit_raw
-    #@-node:  special handlers...
-    #@+node: admonitions...
+    #@-node: do nothings...
+    #@+node:admonitions...
     def visit_admonition(self, node, name):
         pass
     
@@ -663,8 +718,56 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     
         self.depart_admonition()
     #@-node:note
-    #@-node: admonitions...
-    #@+node: docinfos...
+    #@-node:admonitions...
+    #@+node:bullet_list
+    def visit_bullet_list(self, node):
+        
+        self.push(kind='ul',start=len(self.body))
+    
+        # At present self.bulletText is a constant.
+        self.body.append('<ul bulletText="%s">' % self.bulletText)
+    
+    def depart_bullet_list(self, node):
+        
+        b = self.pop('ul')
+    
+        self.body.append('</ul>')
+        
+        if not self.inContext('ul'):
+            self.putTail(b.start)
+    #@nonl
+    #@-node:bullet_list
+    #@+node:definition
+    def visit_definition(self, node):
+        
+        self.push(kind='dd')
+    
+        self.body.append('</dt>')
+        self.body.append(self.starttag(node, 'dd'))
+    
+    def depart_definition(self, node):
+        
+        self.pop('dd')
+        self.body.append('</dd>')
+    #@nonl
+    #@-node:definition
+    #@+node:definition_list
+    def visit_definition_list(self, node):
+        
+        self.push(kind='dl',start=len(self.body))
+        
+        self.body.append(self.starttag(node, 'dl'))
+    
+    def depart_definition_list(self, node):
+        
+        b = self.pop('dl')
+    
+        self.body.append('</dl>')
+    
+        if not self.inContext('dl'):
+            self.putTail(b.start)
+    #@-node:definition_list
+    #@+node:docinfos...
     #@+node:address
     def visit_address(self, node):
         self.visit_docinfo_item(node, 'address')
@@ -710,7 +813,7 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     #@+node:docinfo
     def visit_docinfo(self, node):
         
-        self.push(g.Bunch(kind='docinfo',start=len(self.body)))
+        self.push(kind='docinfo',start=len(self.body))
         self.in_docinfo = True
     
     def depart_docinfo(self, node):
@@ -765,33 +868,284 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     def depart_version(self, node):
         self.depart_docinfo_item()
     #@-node:version
-    #@-node: docinfos...
-    #@+node: Incomplete
-    #@+node:definition
-    def visit_definition(self, node):
+    #@-node:docinfos...
+    #@+node:emphasis
+    def visit_emphasis(self, node):
+        
+        self.push(kind='i')
+        
+        self.body.append('<i>')
     
-        self.body.append('</dt>')
-        self.context.append('dd')
-        self.body.append(self.starttag(node, 'dd'))
+    def depart_emphasis(self, node):
+        
+        self.pop('i')
     
-    def depart_definition(self, node):
-        self.context.pop()
-        self.body.append('</dd>')
-    #@-node:definition
-    #@+node:footnotes (complex)
-    #@+node:footnote
+        self.body.append('</i>')
+    #@-node:emphasis
+    #@+node:enumerated_list
+    def visit_enumerated_list(self, node):
+        
+        self.push(kind='ol',start=len(self.body))
+    
+        self.body.append('<ol>')
+    
+    def depart_enumerated_list(self, node):
+        
+        b = self.pop('ol')
+    
+        self.body.append('</ol>')
+    
+        if not self.inContext('ol'):
+            self.putTail(b.start)
+    #@nonl
+    #@-node:enumerated_list
+    #@+node:field_list
+    def visit_field_list(self, node):
+        
+        self.push(kind='<para>',start=len(self.body))
+    
+    def depart_field_list(self, node):
+        
+        b = self.pop('<para>')
+        
+        self.body.append('</para>')
+        
+        self.putTail(b.start)
+    #@nonl
+    #@-node:field_list
+    #@+node:list_item
+    def visit_list_item(self, node):
+        
+        self.push(kind='li')
+        
+        self.body.append('<li>')
+    
+    def depart_list_item(self, node):
+        
+        self.pop('li')
+    
+        self.body.append('</li>')
+    #@-node:list_item
+    #@+node:option_list
+    def visit_option_list(self, node):
+        
+        self.push(kind='option-list',start=len(self.body))
+    
+    def depart_option_list(self, node):
+        
+        b = self.pop('option-list')
+    
+        if not self.inContext('option_list'):
+            self.putTail(b.start)
+            
+    #@nonl
+    #@-node:option_list
+    #@+node:paragraph...
+    def visit_paragraph(self, node):
+        
+        self.push(kind='p',start=len(self.body))
+        
+    def depart_paragraph(self, node):
+        
+        b = self.pop('p')
+        
+        if not self.context and self.body:
+            self.putTail(b.start)
+    #@nonl
+    #@-node:paragraph...
+    #@+node:strong
+    def visit_strong(self, node):
+        
+        self.push(kind='b')
+    
+        self.body.append('<b>')
+    
+    def depart_strong(self, node):
+        
+        self.pop('b')
+    
+        self.body.append('</b>')
+    
+    #@-node:strong
+    #@+node:subtitle
+    def visit_subtitle(self, node):
+        
+        self.push(kind='subtitle',start=len(self.body))
+    
+    def depart_subtitle(self, node):
+        
+        b = self.pop('subtitle')
+    
+        self.putTail(b.start,b.style)
+    #@-node:subtitle
+    #@+node:term
+    def visit_term(self, node):
+        
+        self.push(kind='dt')
+    
+        self.body.append(self.starttag(node, 'dt', ''))
+    
+    def depart_term(self, node):
+    
+        self.pop('dt')
+    #@nonl
+    #@-node:term
+    #@+node:Text...
+    def visit_Text (self,node):
+    
+        self.push(kind='#text')
+    
+        self.body.append(node.astext())
+    
+    def depart_Text (self,node):
+    
+        self.pop('#text')
+    #@nonl
+    #@-node:Text...
+    #@+node:topic
+    def visit_topic (self,node):
+    
+        if node.hasattr('id'):
+            self.push(kind='topic-id',markup='</setLink>')
+            self.body.append(self.starttag({},'setLink','',destination=node['id']))
+    
+    def depart_topic (self,node):
+    
+        if node.hasattr('id'):
+            b = self.pop('topic-id')
+            self.body.append(b.markup)
+    
+    #@-node:topic
+    #@-node:Simple...
+    #@+node:Unusual...
+    #@+node: Does not set context
+    #@+node:field
+    def visit_field(self, node):
+        
+        self.body.append('<para>')
+    
+    def depart_field(self, node):
+    
+        self.body.append('</para>')
+    #@-node:field
+    #@+node:field_name
+    def visit_field_name(self, node):
+    
+        self.body.append('<b>')
+    
+    def depart_field_name(self, node):
+    
+        self.body.append(': </b>')
+    #@nonl
+    #@-node:field_name
+    #@-node: Does not set context
+    #@+node: Raises SkipNode
+    #@+node:comment
+    def visit_comment(self, node):
+    
+        raise docutils.nodes.SkipNode
+    #@-node:comment
+    #@+node: literal_blocks...
+    def visit_literal_block(self, node):
+        
+        self.story.append(
+            reportlab.platypus.Preformatted(
+                node.astext(),self.styleSheet['Code']))
+    
+        raise docutils.nodes.SkipNode
+    
+    def depart_literal_block(self, node):
+        pass
+    #@nonl
+    #@+node:doctest_block
+    def visit_doctest_block(self, node):
+        
+        self.visit_literal_block(node)
+    
+    def depart_doctest_block(self, node):
+        
+        self.depart_literal_block(node)
+    
+    #@-node:doctest_block
+    #@+node:line_block
+    def visit_line_block(self, node):
+        self.visit_literal_block(node)
+    
+    def depart_line_block(self, node):
+        self.depart_literal_block(node)
+    #@-node:line_block
+    #@-node: literal_blocks...
+    #@-node: Raises SkipNode
+    #@+node:invisible_visit
+    def invisible_visit(self, node):
+        
+        """Invisible nodes should be ignored."""
+        pass
+    #@nonl
+    #@-node:invisible_visit
+    #@+node:literal (only changes context)
+    def visit_literal(self, node):
+        
+        self.push(kind='literal')
+        
+    def depart_literal(self, node):
+        
+        self.pop('literal')
+    #@nonl
+    #@-node:literal (only changes context)
+    #@+node:meta (appends to self.head)
+    def visit_meta(self, node):
+    
+        self.head.append(
+            self.starttag(node, 'meta', **node.attributes))
+    
+    def depart_meta(self, node):
+        pass
+    #@nonl
+    #@-node:meta (appends to self.head)
+    #@+node:section
+    def visit_section(self, node):
+        
+        self.sectionlevel += 1
+    
+    def depart_section(self, node):
+    
+        self.sectionlevel -= 1
+    #@-node:section
+    #@+node:unimplemented_visit
+    def unimplemented_visit(self, node):
+        
+        raise NotImplementedError(
+            'visiting unimplemented node type: %s' % node.__class__.__name__)
+    #@-node:unimplemented_visit
+    #@+node:visit_raw
+    def visit_raw(self, node):
+    
+        if node.has_key('format') and node['format'] == 'html':
+            self.body.append(node.astext())
+    
+        raise docutils.nodes.SkipNode
+    #@-node:visit_raw
+    #@-node:Unusual...
+    #@+node:Complex TODO
+    #@+node:footnotes TODO 
+    #@+node:footnote & helpers
     def visit_footnote(self, node):
         
-        self.context.append('footnotes')
+        g.trace() ; return ###
+        
+        self.push(kind='footnotes')
+    
         self.footnote_backrefs(node)
     
     def depart_footnote(self, node):
         
-        self.context.pop()
+        g.trace() ; return ###
+        
+        self.pop('footnotes')
+    
         self.footnote_backrefs_depart(node)
     
-    #@-node:footnote
-    #@+node:footnote_backrefs  (Leaves unusual stuff on context)
     #@+node:footnote_backrefs
     def footnote_backrefs (self,node):
     
@@ -829,10 +1183,12 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
             self.createParagraph(self.body)
             self.body = []
     #@-node:footnote_backrefs_depart
-    #@-node:footnote_backrefs  (Leaves unusual stuff on context)
-    #@+node:footnode_reference
+    #@-node:footnote & helpers
+    #@+node:footnode_reference TODO
     #@+node:visit_footnote_reference
     def visit_footnote_reference(self, node):
+        
+        g.trace() ; return ###
         # for backrefs
         if self.settings.footnote_backlinks and node.has_key('id'):
             self.body.append(self.starttag(node, 'setLink', '', destination=node['id']))
@@ -860,13 +1216,16 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     #@-node:visit_footnote_reference
     #@+node:depart_footnote_reference
     def depart_footnote_reference(self, node):
+        
+        g.trace() ; return ###
+        
         self.body.append(self.context.pop())
         self.body.append('</link>')
         self.body.append(self.context.pop())
+    
     #@-node:depart_footnote_reference
-    #@-node:footnode_reference
-    #@-node:footnotes (complex)
-    #@+node:label (non-trivial)  (extra pops: may balance footnote stuff)
+    #@-node:footnode_reference TODO
+    #@+node:label (extra pops for footnote stuff) TODO
     def visit_label(self, node):
         
         if self.inContext('footnotes'):
@@ -875,100 +1234,47 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     def depart_label(self, node):
         
         if self.inContext('footnotes'):
+    
             self.body.append(']')
             self.body.append(self.context.pop())
             self.body.append(self.context.pop())
     
         self.body.append('   ')
-    #@-node:label (non-trivial)  (extra pops: may balance footnote stuff)
-    #@+node:strong
-    def visit_strong(self, node):
-        
-        self.context.append('b')
-        self.body.append('<b>')
+    #@-node:label (extra pops for footnote stuff) TODO
+    #@-node:footnotes TODO 
+    #@+node:reference...
+    #@+node:visit_reference
+    def visit_reference (self,node):
     
-    def depart_strong(self, node):
-        
-        self.context.pop()
-        self.body.append('</b>')
+        markup = []
     
-    #@-node:strong
-    #@+node:subtitle
-    def visit_subtitle(self, node):
-        
-        self.context.append(len(self.body))
-        self.context.append('subtitle')
+        if node.has_key('refuri'):
+            href = node ['refuri']
+            self.body.append(self.starttag(node,'a','',href=href))
+            markup.append('</a>')
+        else:
+            if node.has_key('id'):
+                self.body.append(self.starttag({},'setLink','',destination=node['id']))
+                markup.append('</setLink>')
+            if node.has_key('refid'):
+                href = node ['refid']
+            elif node.has_key('refname'):
+                href = self.document.nameids [node ['refname']]
+            self.body.append(self.starttag(node,'link','',destination=href))
+            markup.append('</link>')
     
-    def depart_subtitle(self, node):
+        self.push(kind='a',markup=markup)
+    #@-node:visit_reference
+    #@+node:depart_reference
+    def depart_reference(self, node):
         
-        style = self.context.pop()
-        start = self.context.pop()
-        self.putTail(start,style)
-    #@-node:subtitle
-    #@+node:term (weird use of context)
-    def visit_term(self, node):
-        self.context.append('dt')
-        self.body.append(self.starttag(node, 'dt', ''))
+        b = self.pop('a')
     
-    def depart_term(self, node):
-        # Closes on visit_definition
-        self.context.pop()
+        for s in b.markup:
+            self.body.append(s)
     #@nonl
-    #@-node:term (weird use of context)
-    #@+node:topic
-    def visit_topic(self, node):
-        
-        if node.hasattr('id'):
-            self.context.append('</setLink>')
-            self.body.append(self.starttag({}, 'setLink', '', destination=node['id']))
-    
-    def depart_topic(self, node):
-        
-        if node.hasattr('id'):
-            self.body.append(self.context.pop())
-    
-    #@-node:topic
-    #@+node:list_item
-    def visit_list_item(self, node):
-        
-        self.context.append('li')
-        self.body.append('<li>')
-    
-    def depart_list_item(self, node):
-        
-        self.context.pop()
-        self.body.append('</li>')
-    #@-node:list_item
-    #@-node: Incomplete
-    #@+node: Unusual...
-    #@+node: Raise SkipNode
-    #@+node: literal_blocks...
-    def visit_literal_block(self, node):
-        
-        self.story.append(Preformatted(node.astext(),self.styleSheet['Code']))
-    
-        raise docutils.nodes.SkipNode
-    
-    def depart_literal_block(self, node):
-        pass
-    #@+node:doctest_block
-    def visit_doctest_block(self, node):
-        
-        self.visit_literal_block(node)
-    
-    def depart_doctest_block(self, node):
-        
-        self.depart_literal_block(node)
-    
-    #@-node:doctest_block
-    #@+node:line_block
-    def visit_line_block(self, node):
-        self.visit_literal_block(node)
-    
-    def depart_line_block(self, node):
-        self.depart_literal_block(node)
-    #@-node:line_block
-    #@-node: literal_blocks...
+    #@-node:depart_reference
+    #@-node:reference...
     #@+node:target
     def visit_target (self,node):
     
@@ -991,291 +1297,83 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         pass
     #@nonl
     #@-node:target
-    #@-node: Raise SkipNode
-    #@+node:meta
-    def visit_meta(self, node):
-    
-        self.head.append(
-            self.starttag(node, 'meta', **node.attributes))
-    
-    def depart_meta(self, node):
-        pass
-    #@nonl
-    #@-node:meta
-    #@+node:section
-    def visit_section(self, node):
-        
-        self.sectionlevel += 1
-    
-    def depart_section(self, node):
-    
-        self.sectionlevel -= 1
-    #@-node:section
-    #@-node: Unusual...
-    #@+node:bullet_list
-    def visit_bullet_list(self, node):
-        
-        self.push(g.Bunch(kind='ul',start=len(self.body)))
-    
-        self.body.append('<ul bulletText="%s">' % self.bulletText)
-    
-    def depart_bullet_list(self, node):
-        
-        b = self.pop('ul')
-    
-        self.body.append('</ul>')
-        
-        if not self.inContext('ul'):
-            self.putTail(b.start)
-    #@nonl
-    #@-node:bullet_list
-    #@+node:definition_list
-    def visit_definition_list(self, node):
-        
-        self.push(g.Bunch(kind='dl',start=len(self.body)))
-        
-        self.body.append(self.starttag(node, 'dl'))
-    
-    def depart_definition_list(self, node):
-        
-        b = self.pop('dl')
-    
-        self.body.append('</dl>')
-    
-        if not self.inContext('dl'):
-            self.putTail(b.start)
-    #@-node:definition_list
-    #@+node:emphasis
-    def visit_emphasis(self, node):
-        
-        self.push(g.Bunch(kind='i'))
-        
-        self.body.append('<i>')
-    
-    def depart_emphasis(self, node):
-        
-        self.pop('i')
-    
-        self.body.append('</i>')
-    #@-node:emphasis
-    #@+node:enumerated_list
-    def visit_enumerated_list(self, node):
-        
-        self.push(g.Bunch(kind='ol',start=len(self.body)))
-    
-        self.body.append('<ol>')
-    
-    def depart_enumerated_list(self, node):
-        
-        b = self.pop('ol')
-    
-        self.body.append('</ol>')
-    
-        if not self.inContext('ol'):
-            self.putTail(b.start)
-    #@nonl
-    #@-node:enumerated_list
-    #@+node:field (does not change context)
-    def visit_field(self, node):
-        
-        self.body.append('<para>')
-    
-    def depart_field(self, node):
-    
-        self.body.append('</para>')
-    #@-node:field (does not change context)
-    #@+node:field_list
-    def visit_field_list(self, node):
-        
-        self.push(g.Bunch(kind='<para>',start=len(self.body)))
-    
-    def depart_field_list(self, node):
-        
-        b = self.pop('<para>')
-        
-        self.body.append('</para>')
-        
-        self.putTail(b.start)
-    #@nonl
-    #@-node:field_list
-    #@+node:field_name (does not change context)
-    def visit_field_name(self, node):
-    
-        self.body.append('<b>')
-    
-    def depart_field_name(self, node):
-    
-        self.body.append(': </b>')
-    #@nonl
-    #@-node:field_name (does not change context)
-    #@+node:literal
-    def visit_literal(self, node):
-        
-        self.push(g.Bunch(kind='literal'))
-        
-    def depart_literal(self, node):
-        
-        self.pop('literal')
-    #@nonl
-    #@-node:literal
-    #@+node:option_list
-    def visit_option_list(self, node):
-        
-        self.push(g.Bunch(kind='option-list',start=len(self.body)))
-    
-    def depart_option_list(self, node):
-        
-        b = self.pop('option-list')
-    
-        if not self.inContext('option_list'):
-            self.putTail(b.start)
-            
-    #@nonl
-    #@-node:option_list
-    #@+node:paragraph...
-    def visit_paragraph(self, node):
-        
-        self.push (g.Bunch(kind='p',start=len(self.body)))
-        
-    def depart_paragraph(self, node):
-        
-        b = self.pop('p')
-        
-        if not self.context and self.body:
-            self.putTail(b.start)
-    #@nonl
-    #@-node:paragraph...
-    #@+node:reference... (complex, may be buggy)
-    #@+node:visit_reference
-    def visit_reference (self,node):
-        
-        b = g.Bunch(kind='a',markup=[])
-        if node.has_key('refuri'):
-            href = node ['refuri']
-            self.body.append(self.starttag(node,'a','',href=href))
-            b.markup.append('</a>')
-        else:
-            if node.has_key('id'):
-                self.body.append(self.starttag({},'setLink','',destination=node['id']))
-                b.markup.append('</setLink>')
-            if node.has_key('refid'):
-                href = node ['refid']
-            elif node.has_key('refname'):
-                href = self.document.nameids [node ['refname']]
-            self.body.append(self.starttag(node,'link','',destination=href))
-            b.markup.append('</link>')
-        self.push(b)
-    #@nonl
-    #@-node:visit_reference
-    #@+node:depart_reference
-    def depart_reference(self, node):
-        
-        b = self.pop('a')
-    
-        for s in b.markup:
-            self.body.append(s)
-    #@nonl
-    #@-node:depart_reference
-    #@-node:reference... (complex, may be buggy)
-    #@+node:Text...
-    def visit_Text (self,node):
-    
-        self.push(g.bunch(kind='#text'))
-    
-        self.body.append(node.astext())
-    
-        # g.trace('body',repr(self.body))
-    
-    def depart_Text (self,node):
-    
-        self.pop('#text')
-    #@nonl
-    #@-node:Text...
     #@+node:title
     #@+node:visit_title
     def visit_title (self,node):
     
-        atts = {}
+        start = len(self.body) ; markup = []
         isTopic = isinstance(node.parent,docutils.nodes.topic)
         isTitle = self.sectionlevel == 0
-        b = g.Bunch(kind='title',start=len(self.body),markup=[])
+        
+        # Set the style.
+        if isTopic:   style = 'topic-title'
+        elif isTitle: style = 'title'
+        else:         style = "h%s" % self.sectionlevel
     
-        if isTopic:   b.style = 'topic-title'
-        elif isTitle: b.style = 'title'
-        else:         b.style = "h%s" % self.sectionlevel
-    
-        if b.style != 'title':
+        if style != 'title':
+            ################## May be a bug.  Do we need several defs here?
             if node.parent.hasattr('id'):
                 self.body.append(
                     self.starttag({},'setLink','',destination=node.parent['id']))
-                b.markup.append('</setLink>')
+                markup.append('</setLink>')
             if node.hasattr('refid'):
                 self.body.append(
                     self.starttag({},'link','',destination=node['refid']))
-                b.markup.append('</link>')
-        self.push(b)
+                markup.append('</link>')
     
-        if 0:
-            #@        << old code >>
-            #@+node:<< old code >>
-            self.context.append(len(self.body))
-            self.context.append('title')
-            if isinstance(node.parent,docutils.nodes.topic):
-                self.context.append('')
-                self.topic_class = 'topic-title'
-            elif self.sectionlevel == 0:
-                self.context.append('title')
-            else:
-                self.context.append("h%s" % self.sectionlevel)
-            
-            if self.context [ -1] != 'title':
-                if node.parent.hasattr('id'):
-                    self.context.append('</setLink>')
-                    self.body.append(self.starttag({},'setLink','',destination=node.parent['id']))
-                if node.hasattr('refid'):
-                    self.context.append('</link>')
-                    self.body.append(self.starttag({},'link','',destination=node['refid']))
-            else:
-                self.context.append('')
-            #@nonl
-            #@-node:<< old code >>
-            #@nl
+        self.push(kind='title',markup=markup,start=start,style=style)
     #@nonl
     #@-node:visit_title
     #@+node:depart_title
     def depart_title (self,node):
     
         b = self.pop('title')
+    
         for z in b.markup:
             self.body.append(z)
             
         self.putTail(b.start,style=b.style)
-    
-        if 0:
-            #@        << old code >>
-            #@+node:<< old code >>
-            if node.hasattr('refid'):
-                self.body.append(self.context.pop())
-            
-            if node.parent.hasattr('id'):
-                self.body.append(self.context.pop())
-            
-            style = self.context.pop()
-            self.context.pop()
-            
-            if isinstance(node.parent, docutils.nodes.topic):
-                style = self.topic_class
-            start = self.context.pop()
-            
-            self.createParagraph(self.body[start:], style)
-            self.body = self.body[:start]
-            #@nonl
-            #@-node:<< old code >>
-            #@nl
     #@nonl
     #@-node:depart_title
     #@-node:title
-    #@-node:Node handlers...
+    #@+node: starttag
+    # The suffix is always '\n' except for a cant-happen situation.
+    
+    def starttag (self,node,tagname,suffix='\n',**attributes):
+        
+        g.trace(repr(attributes))
+    
+        atts = {}
+        for (name,value) in attributes.items():
+            atts [name.lower()] = value
+        for att in ('class',): # append to node attribute
+            if node.has_key(att):
+                if atts.has_key(att):
+                    atts [att] = node [att] + ' ' + atts [att]
+        for att in ('id',): # node attribute overrides
+            if node.has_key(att):
+                atts [att] = node [att]
+        
+        attlist = atts.items() ; attlist.sort()
+        parts = [tagname]
+        for name, value in attlist:
+            if value is None: # boolean attribute
+                parts.append(name.lower())
+            elif isinstance(value,types.ListType):
+                values = [str(v) for v in value]
+                parts.append('%s="%s"' % (
+                    name.lower(),
+                    self.encode(' '.join(values))))
+            else:
+                parts.append('%s="%s"' % (
+                    name.lower(),
+                    self.encode(str(value))))
+    
+        val = '<%s>%s' % (' '.join(parts),suffix)
+        g.trace(val)
+        return val
+    #@-node: starttag
+    #@-node:Complex TODO
     #@-others
 
     depart_comment = invisible_visit
