@@ -123,6 +123,15 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@-at
 #@nonl
 #@-node:0.0.3
+#@+node:0.0.4
+#@+at
+# 
+# - Added dummyPDFTranslator class.
+# 
+# - Added support for this dummy class to Writer.translate.
+#@-at
+#@nonl
+#@-node:0.0.4
 #@-others
 #@nonl
 #@-node:<< version history >>
@@ -131,6 +140,8 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@+node:<< to do >>
 #@@nocolor
 #@+at
+# 
+# - Understand all ivars.
 # 
 # - Some symbols are undefined.  Hopefully this is a problem in visit_title.
 # 
@@ -146,7 +157,7 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@-node:<< to do >>
 #@nl
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 __docformat__ = 'reStructuredText'
 #@<< imports >>
 #@+node:<< imports >>
@@ -281,13 +292,35 @@ class Writer (docutils.writers.Writer):
     #@nl
 
     #@	@+others
-    #@+node:__init__
+    #@+node:__init__ (Writer)
     def __init__(self):
     
         docutils.writers.Writer.__init__(self)
     
         # self.translator_class = PDFTranslator
-    #@-node:__init__
+        
+        if 1: # for debugging
+            self.intermediateFile = True
+    #@nonl
+    #@-node:__init__ (Writer)
+    #@+node:createParagraphsFromIntermediateFile & helpers
+    def createParagraphsFromIntermediateFile (self,s,story,visitor):
+        
+        if 0: # Not needed now that putParaFromIntermediateFile is in the visitor.
+            self.styleSheet = visitor.styleSheet
+            self.encode = visitor.encode
+        
+        out = StringIO.StringIO()
+    
+        doc = reportlab.platypus.SimpleDocTemplate(out,
+            pagesize=reportlab.lib.pagesizes.A4)
+    
+        # The 'real' code is doc.build(story)
+        self.buildFromIntermediateFile(s,story,visitor)
+    
+        return out.getvalue()
+    #@nonl
+    #@-node:createParagraphsFromIntermediateFile & helpers
     #@+node:createPDF_usingPlatypus
     def createPDF_usingPlatypus (self,story):
     
@@ -295,10 +328,11 @@ class Writer (docutils.writers.Writer):
     
         doc = reportlab.platypus.SimpleDocTemplate(out,
             pagesize=reportlab.lib.pagesizes.A4)
-        
+    
         doc.build(story)
     
         return out.getvalue()
+    #@nonl
     #@-node:createPDF_usingPlatypus
     #@+node:lower
     def lower(self):
@@ -309,22 +343,35 @@ class Writer (docutils.writers.Writer):
     #@+node:translate
     def translate(self):
         
+        '''Do final translation of self.document into self.output.'''
+    
+        if 1: # Use intermediate file, and dummy pdf translator.
+            
+            # This allows me to try experiments.
+            try:
+                filename = 'intermediateFile.txt'
+                s = file(filename).read()
+                g.trace('creating .pdf file from %s...' % filename)
+                visitor = dummyPDFTranslator(self,self.document,s)
+            except IOError:
+                g.trace('can not open %s' % filename)
+        else:
+            visitor = PDFTranslator(self,self.document)
+    
         # Create a list of paragraphs using Platypus.
-        visitor = PDFTranslator(self.document)
         self.document.walkabout(visitor)
         story = visitor.as_what()
         
         if 0: # Not useful: story is a list of reportlab.platypus.para.Para objects.
-            # Use the trade in createParagraph instead.
+            # Use the trace in createParagraph instead.
             g.trace('story','*'*40)
-            print story
+            print story        
         
-        # Create the .pdf file using Platypus.
+        # Generate self.output.  Gets sent to reportlab.
         self.output = self.createPDF_usingPlatypus(story)
-        
         # Solve the newline problem by brute force.
-        self.output = self.output.replace('\r','')
-        
+        self.output = self.output.replace('\n\r','\n')
+        self.output = self.output.replace('\r\n','\n')
         if 0:
             g.trace('output','*'*40)
             lines = g.splitLines(self.output)
@@ -338,16 +385,17 @@ class Writer (docutils.writers.Writer):
 class PDFTranslator (docutils.nodes.NodeVisitor):
 
     #@	@+others
-    #@+node:   __init__
-    def __init__(self, doctree):
+    #@+node:   __init__ (PDFTranslator)
+    def __init__(self, writer,doctree):
     
+        self.writer = writer
         self.settings = settings = doctree.settings
         self.styleSheet = stylesheet.getStyleSheet()
         docutils.nodes.NodeVisitor.__init__(self, doctree) # Init the base class.
         self.language = docutils.languages.get_language(doctree.settings.language_code)
         
         self.in_docinfo = False
-        self.head = []
+        self.head = [] # Set only by meta() method.  
         self.body = []
         self.foot = []
         self.sectionlevel = 0
@@ -357,7 +405,7 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         self.bulletText = '\267'	# maybe move this into stylesheet.
         # self.bulletlevel = 0
     #@nonl
-    #@-node:   __init__
+    #@-node:   __init__ (PDFTranslator)
     #@+node:Helpers
     #@+node:as_what
     def as_what(self):
@@ -373,11 +421,11 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         if not style.strip(): ### EKR
             style = 'Normal'
             
-        if 1:
+        if not self.intermediateFile:
             s = text.split('>')
             s = '>\n'.join(s)
             print
-            if 1: # just print the text.
+            if 0: # just print the text.
                 print s
             else:
                 g.trace('%8s\n\n%s' % (style,s))
@@ -398,6 +446,66 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
             raise
     #@nonl
     #@-node:createParagraph
+    #@+node:dumpNode
+    def dumpNode (self,node,tag=''):
+        
+        #@    << define keys to be printed >>
+        #@+node:<< define keys to be printed >>
+        keys = (
+            'anonymous_refs'
+            'anonymous_targets'
+            'attributes'
+            'autofootnote_refs'
+            'autofootnote_start'
+            'autofootnotes'
+            #'children'
+            'citation_refs'
+            'citations'
+            #'current_line'
+            #'current_source'
+            #'decoration'
+            #'document'
+            'footnote_refs'
+            'footnotes'
+            'id_start'
+            'ids'  # keys are sectinon names, values are section objects or reference objects.
+            'indirect_targets'
+            'nameids' # This might be what we want: keys are section names, values are munged names.
+            #'nametypes'
+            #'parse_messages'
+            #'rawsource'
+            'refids'
+            'refnames'
+            #'reporter'
+            #'settings'
+            #'substitution_defs'
+            #'substitution_names'
+            #'substitution_refs'
+            'symbol_footnote_refs'
+            'symbol_footnote_start'
+            'symbol_footnotes'
+            # 'tagname'
+            #'transform_messages'
+            #'transformer',
+        )
+        #@nonl
+        #@-node:<< define keys to be printed >>
+        #@nl
+        
+        d = node.__dict__
+        
+        nkeys = d.keys() ; nkeys.sort()
+        
+        print ; print 'dump of node %s\n' % (g.choose(tag,'(%s)' % tag,''))
+        
+        for nkey in nkeys:
+            if nkey in keys:
+                val = d.get(nkey)
+                print nkey,':',g.toString(val,verbose=False)
+                
+        print ; print 'end dump'
+    #@nonl
+    #@-node:dumpNode
     #@+node:encode
     def encode(self, text):
     
@@ -743,7 +851,8 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         self.push(kind='dd')
     
         self.body.append('</dt>')
-        self.body.append(self.starttag(node, 'dd'))
+        self.body.append(
+            self.starttag(node,'dd',caller='visit_destination'))
     
     def depart_definition(self, node):
         
@@ -979,13 +1088,14 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         self.putTail(b.start,b.style)
     #@-node:subtitle
     #@+node:term
-    def visit_term(self, node):
-        
+    def visit_term (self,node):
+    
         self.push(kind='dt')
     
-        self.body.append(self.starttag(node, 'dt', ''))
+        self.body.append(
+            self.starttag(node,'dt',suffix='',caller='visit_term'))
     
-    def depart_term(self, node):
+    def depart_term (self,node):
     
         self.pop('dt')
     #@nonl
@@ -1007,7 +1117,8 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     
         if node.hasattr('id'):
             self.push(kind='topic-id',markup='</setLink>')
-            self.body.append(self.starttag({},'setLink','',destination=node['id']))
+            self.body.append(self.starttag({},'setLink',
+                suffix='',destination=node['id'],caller='visit_topic'))
     
     def depart_topic (self,node):
     
@@ -1095,11 +1206,14 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     #@-node:literal (only changes context)
     #@+node:meta (appends to self.head)
     def visit_meta(self, node):
+        
+        g.trace(**node.attributes)
     
         self.head.append(
             self.starttag(node, 'meta', **node.attributes))
     
     def depart_meta(self, node):
+    
         pass
     #@nonl
     #@-node:meta (appends to self.head)
@@ -1246,21 +1360,25 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     #@+node:visit_reference
     def visit_reference (self,node):
     
-        markup = []
+        markup = [] ; caller = 'visit_reference'
     
         if node.has_key('refuri'):
             href = node ['refuri']
-            self.body.append(self.starttag(node,'a','',href=href))
+            self.body.append(
+                self.starttag(node,'a',suffix='',href=href,caller=caller))
             markup.append('</a>')
         else:
             if node.has_key('id'):
-                self.body.append(self.starttag({},'setLink','',destination=node['id']))
+                self.body.append(
+                    self.starttag({},'setLink','',
+                        destination=node['id'],caller=caller))
                 markup.append('</setLink>')
             if node.has_key('refid'):
                 href = node ['refid']
             elif node.has_key('refname'):
                 href = self.document.nameids [node ['refname']]
-            self.body.append(self.starttag(node,'link','',destination=href))
+            self.body.append(
+                self.starttag(node,'link','',destination=href,caller=caller))
             markup.append('</link>')
     
         self.push(kind='a',markup=markup)
@@ -1289,7 +1407,8 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
             elif node.has_key('name'):
                 href = node ['name']
             self.body.append("%s%s" % (
-                self.starttag(node,'setLink','',destination=href),
+                self.starttag(node,'setLink',suffix='',
+                    destination=href,caller='visit_targtet'),
                 '</setLink>'))
         raise docutils.nodes.SkipNode
     
@@ -1301,6 +1420,7 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     #@+node:visit_title
     def visit_title (self,node):
     
+        caller='visit_title'
         start = len(self.body) ; markup = []
         isTopic = isinstance(node.parent,docutils.nodes.topic)
         isTitle = self.sectionlevel == 0
@@ -1310,15 +1430,19 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         elif isTitle: style = 'title'
         else:         style = "h%s" % self.sectionlevel
     
-        if style != 'title':
-            ################## May be a bug.  Do we need several defs here?
+        if 1: ## style != 'title':
+            if not self.intermediateFile:
+                self.dumpNode(node.parent,tag='node.parent')
+                self.dumpNode(node,tag='node')
             if node.parent.hasattr('id'):
                 self.body.append(
-                    self.starttag({},'setLink','',destination=node.parent['id']))
+                    self.starttag({},'setLink','',
+                        destination=node.parent['id'],caller=caller))
                 markup.append('</setLink>')
             if node.hasattr('refid'):
                 self.body.append(
-                    self.starttag({},'link','',destination=node['refid']))
+                    self.starttag({},'link','',
+                        destination=node['refid'],caller=caller))
                 markup.append('</link>')
     
         self.push(kind='title',markup=markup,start=start,style=style)
@@ -1339,9 +1463,9 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     #@+node: starttag
     # The suffix is always '\n' except for a cant-happen situation.
     
-    def starttag (self,node,tagname,suffix='\n',**attributes):
+    def starttag (self,node,tagname,suffix='\n',caller='',**attributes):
         
-        g.trace(repr(attributes))
+        # g.trace(repr(attributes))
     
         atts = {}
         for (name,value) in attributes.items():
@@ -1356,22 +1480,24 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         
         attlist = atts.items() ; attlist.sort()
         parts = [tagname]
+        # Convert the attributes in attlist to a single string.
         for name, value in attlist:
+            # g.trace('attlist element:',repr(name),repr(value))
             if value is None: # boolean attribute
-                parts.append(name.lower())
+                parts.append(name.lower().strip())
             elif isinstance(value,types.ListType):
                 values = [str(v) for v in value]
+                val = ' '.join(values).strip()
                 parts.append('%s="%s"' % (
-                    name.lower(),
-                    self.encode(' '.join(values))))
+                    name.lower(), self.encode(val)))
             else:
                 parts.append('%s="%s"' % (
-                    name.lower(),
-                    self.encode(str(value))))
+                    name.lower(),self.encode(str(value).strip())))
     
         val = '<%s>%s' % (' '.join(parts),suffix)
-        g.trace(val)
+        g.trace('%-24s %s' % (caller,val))
         return val
+    #@nonl
     #@-node: starttag
     #@-node:Complex TODO
     #@-others
@@ -1404,6 +1530,107 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
     depart_sidebar = invisible_visit
 #@nonl
 #@-node:class PDFTranslator (docutils.nodes.NodeVisitor)
+#@+node:class dummyPDFTranslator
+class dummyPDFTranslator (docutils.nodes.NodeVisitor):
+
+    #@	@+others
+    #@+node:   __init__ (dummyPDFTranslator)
+    def __init__(self, writer,doctree,contents):
+    
+        self.writer = writer
+        self.settings = settings = doctree.settings
+        self.styleSheet = stylesheet.getStyleSheet()
+        docutils.nodes.NodeVisitor.__init__(self, doctree) # Init the base class.
+        self.language = docutils.languages.get_language(doctree.settings.language_code)
+        
+        self.in_docinfo = False
+        self.head = [] # Set only by meta() method.  
+        self.body = []
+        self.foot = []
+        self.sectionlevel = 0
+        self.context = []
+        ## self.topic_class = ''
+        self.story = []
+        self.bulletText = '\267'	# maybe move this into stylesheet.
+        # self.bulletlevel = 0
+    
+        self.contents = contents
+    #@nonl
+    #@-node:   __init__ (dummyPDFTranslator)
+    #@+node:as_what
+    def as_what(self):
+    
+        return self.story
+    #@-node:as_what
+    #@+node:encode
+    def encode(self, text):
+    
+        """Encode special characters in `text` & return."""
+        
+        if type(text) is types.UnicodeType:
+            text = text.replace(u'\u2020', u' ')
+            text = text.replace(u'\xa0', u' ')
+            text = text.encode('utf-8')
+    
+        return text
+    
+    #@-node:encode
+    #@+node:visit/depart_document
+    def visit_document(self, node):
+        
+        g.trace()
+    
+        self.buildFromIntermediateFile()
+        
+        raise docutils.nodes.SkipNode
+        
+    def depart_document(self, node):
+        
+        g.trace()
+    #@-node:visit/depart_document
+    #@+node:buildFromIntermediateFile
+    def buildFromIntermediateFile (self):
+        
+        'Synthesize calls to reportlab.platypus.para.Paragraph from an intermediate file.'
+        
+        lines = g.splitLines(self.contents)
+        para = [] # The lines of the next paragraph.
+    
+        for line in lines:
+            if line:
+                if line.startswith('createParagraph:'):
+                    if para:
+                        self.putParaFromIntermediateFile(para,style)
+                        para = []
+                    style = line[len('createParagraph:'):].strip()
+                elif line.startswith('starttag:') or line.startswith('..'):
+                    pass
+                else:
+                    para.append(line)
+        if para:
+            self.putParaFromIntermediateFile(para,style)
+    #@nonl
+    #@-node:buildFromIntermediateFile
+    #@+node:putParaFromIntermediateFile
+    def putParaFromIntermediateFile (self,lines,style):
+    
+        bulletText = None
+        text = '\n'.join(lines)
+        
+        g.trace(style,repr(text))
+        
+        style = self.styleSheet [style]
+    
+        self.story.append(
+            reportlab.platypus.para.Paragraph (
+                self.encode(text), style,
+                bulletText = bulletText,
+                context = self.styleSheet))
+    #@nonl
+    #@-node:putParaFromIntermediateFile
+    #@-others
+#@nonl
+#@-node:class dummyPDFTranslator
 #@-others
 #@nonl
 #@-node:@file C:/Python24/Lib/site-packages/docutils/writers/leo_pdf.py
