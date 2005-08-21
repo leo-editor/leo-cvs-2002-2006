@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7645" clone_windows="0"/>
-<globals body_outline_ratio="0.673768308921">
-	<global_window_position top="84" left="197" height="751" width="925"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7647" clone_windows="0"/>
+<globals body_outline_ratio="0.579227696405">
+	<global_window_position top="83" left="329" height="751" width="927"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -2050,7 +2050,7 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050809091430.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
 </v>
-<v t="ekr.20050805165407" a="E"><vh>Tests of rst3 plugin</vh>
+<v t="ekr.20050805165407"><vh>Tests of rst3 plugin</vh>
 <v t="ekr.20050805165407.1"><vh>@rst ../doc/rstplugin2.html</vh>
 <v t="ekr.20050805165407.2" a="E"><vh>Overview</vh>
 <v t="ekr.20050805165407.3"><vh>@rst</vh></v>
@@ -2355,16 +2355,22 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050815145023"><vh>@rst</vh></v>
 </v>
 </v>
-<v t="ekr.20050817110133" a="TV"><vh>@rst ../doc/pdfTest.pdf</vh>
+<v t="ekr.20050817110133"><vh>@rst ../doc/pdfTest.pdf</vh>
 <v t="ekr.20050817110133.1" a="E"><vh>child node</vh>
 <v t="ekr.20050817110133.2"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
 <v t="ekr.20050816172657"><vh>ReportLab </vh>
-<v t="ekr.20050816181619"><vh>hello</vh></v>
+<v t="ekr.20050816181619"><vh>text</vh></v>
 <v t="ekr.20050816181619.1"><vh>pencil</vh></v>
 <v t="ekr.20050816181813"><vh>penciltip</vh></v>
+</v>
+<v t="ekr.20050821072028" a="E"><vh>@button Lines Up</vh>
+<v t="ekr.20050821072028.1" a="E"><vh>moveLinesUp</vh></v>
+</v>
+<v t="ekr.20050821081021" a="E"><vh>@button Lines Down</vh>
+<v t="ekr.20050821081021.1" a="EMTV"><vh>moveLinesDown</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -22467,12 +22473,14 @@ debug = True
 
 from reportlab.pdfgen import canvas
 c = canvas.Canvas('hello.pdf')
-pencil(c,text='Note')
+for i in xrange(1,100):
+    text(c,'x'*10,i,i)
+# pencil(c,text='Note')
 
 c.showPage()
 c.save()</t>
-<t tx="ekr.20050816181619">def hello(c):
-    c.drawString(100,100,'Hello World')</t>
+<t tx="ekr.20050816181619">def text(c,text,i=100,j=100):
+    c.drawString(i,j,text)</t>
 <t tx="ekr.20050816181619.1">def pencil(canvas, text="No.2"):
     from reportlab.lib.colors import yellow, red, black,white
     from reportlab.lib.units import inch
@@ -22536,7 +22544,7 @@ Headline
 .. These options have NO EFFECT for rst2 plugin!
 code_mode=False
 generate_rst=True
-http_server_support = True
+http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
@@ -22545,8 +22553,67 @@ write_intermediate_file = True
 verbose=True
 @c
 
-This is a test of pdf stuff</t>
+This is a test of pdf stuff
+
+.. contents::</t>
 <t tx="ekr.20050817110133.1"></t>
 <t tx="ekr.20050817110133.2">child node text</t>
+<t tx="ekr.20050821072028"># Move selected text of the body up one line.
+
+@others
+
+moveLinesUp(c,p)</t>
+<t tx="ekr.20050821072028.1">def moveLinesUp(c,p):
+    
+    undoType = 'Move Lines Up'
+    head,lines,tail,oldSel,oldYview = c.getBodyLines()
+    if not head or not lines: return
+    # A slight adjustment: lines doesn't end in '\n'.
+    head = g.splitLines(head)
+    lines = '\n'.join(lines) + '\n'
+    lines = g.splitLines(lines)
+    # Move the lines up.
+    lines.append(head[-1])
+    head = head[:-1]
+    # Convert back to strings.
+    head = ''.join(head)
+    lines = ''.join(lines)[:-1] # Undo the adjustment above.
+    # Adjust selection.
+    sel1,sel2 = oldSel
+    row,col = sel1.split('.') ; sel1 = '%d.%s' % (int(row)-1,col)
+    row,col = sel2.split('.') ; sel2 = '%d.%s' % (int(row)-1,col)
+    newSel = sel1,sel2
+    c.updateBodyPane(head,lines,tail,undoType,newSel,oldYview)</t>
+<t tx="ekr.20050821081021"># Move selected text of the body down one line.
+
+@others
+
+moveLinesDown(c,p)</t>
+<t tx="ekr.20050821081021.1">def moveLinesDown(c,p):
+    
+    undoType = 'Move Lines Down'
+    head,lines,tail,oldSel,oldYview = c.getBodyLines()
+    if not tail or not lines: return
+    print '-' * 20
+    tail = g.splitLines(tail)[1:]
+    lines = '\n'.join(lines) + '\n'
+    lines = g.splitLines(lines)
+    # Move the lines down.
+    g.trace('lines',lines)
+    g.trace('tail',tail)
+    lines.insert(0,tail[0])
+    tail = tail[1:]
+    if not tail: lines.insert(1,'\n')
+    g.trace('lines',lines)
+    g.trace('tail',tail)
+    # Convert back to strings.
+    tail = ''.join(tail)
+    lines = ''.join(lines)
+    # Adjust selection.
+    sel1,sel2 = oldSel
+    row,col = sel1.split('.') ; sel1 = '%d.%s' % (int(row)+1,col)
+    row,col = sel2.split('.') ; sel2 = '%d.%s' % (int(row)+1,col)
+    newSel = sel1,sel2
+    c.updateBodyPane(head,lines,tail,undoType,newSel,oldYview)</t>
 </tnodes>
 </leo_file>
