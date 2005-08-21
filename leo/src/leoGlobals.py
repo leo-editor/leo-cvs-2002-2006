@@ -1141,10 +1141,10 @@ def file_date (theFile,format=None):
             pass # Time module is platform dependent.
     return ""
 #@-node:ekr.20031218072017.1317:file/module/plugin_date
-#@+node:ekr.20031218072017.3121:redirecting stderr and stdout
+#@+node:ekr.20031218072017.3121:redirecting stderr and stdout to Leo's log pane
 class redirectClass:
     
-    """A class to redirect stdout and stderr."""
+    """A class to redirect stdout and stderr to Leo's log pane."""
 
     #@    << redirectClass methods >>
     #@+node:ekr.20031218072017.1656:<< redirectClass methods >>
@@ -1304,7 +1304,7 @@ if 0: # Test code: may be executed in the child node.
     #@-node:ekr.20031218072017.3123:<< test code >>
     #@nl
 #@nonl
-#@-node:ekr.20031218072017.3121:redirecting stderr and stdout
+#@-node:ekr.20031218072017.3121:redirecting stderr and stdout to Leo's log pane
 #@+node:ekr.20031218072017.3127:get_line & get_line_after
 # Very useful for tracing.
 
@@ -1337,55 +1337,97 @@ def pause (s):
         i += 1
 #@nonl
 #@-node:ekr.20031218072017.3128:pause
-#@+node:ekr.20041224080039:print_dict & dictToString
-def print_dict(d,tag=None):
+#@+node:ekr.20050819064157:print_obj & toString
+def print_obj (obj,tag=None,sort=False,verbose=True,indent=''):
     
-    keys = d.keys()
-    keys.sort()
+    if type(obj) in (type(()),type([])):
+        g.print_list(obj,tag,sort,indent)
+    elif type(obj) == type({}):
+        g.print_dict(obj,tag,verbose,indent)
+    else:
+        print '%s%s' % (indent,repr(obj).strip())
+        
+def toString (obj,tag=None,sort=False,verbose=True,indent=''):
+
+    if type(obj) in (type(()),type([])):
+        return g.listToString(obj,tag,sort,indent)
+    elif type(obj) == type({}):
+        return g.dictToString(obj,tag,verbose,indent)
+    else:
+        return '%s%s' % (indent,repr(obj).strip())
+#@nonl
+#@-node:ekr.20050819064157:print_obj & toString
+#@+node:ekr.20041224080039:print_dict & dictToString
+def print_dict(d,tag='',verbose=True,indent=''):
+    
+    if not d:
+        if tag: print '%s...{}' % tag
+        else:   print '{}'
+        return
+    
+    keys = d.keys() ; keys.sort()
     n = 6
     for key in keys:
         if type(key) == type(''):
             n = max(n,len(key))
-    if tag:
-        print '%s...' % tag
+    if tag: print '%s...{\n' % tag
+    else:   print '{\n'
     for key in keys:
-        print "%*s: %s" % (n,key,d.get(key))
+        print "%s%*s: %s" % (indent,n,key,repr(d.get(key)).strip())
+    print '}'
 
 printDict = print_dict
 
-def dictToString(d,tag=None):
-    keys = d.keys()
-    keys.sort()
+def dictToString(d,tag=None,verbose=True,indent=''):
+    
+    if not d:
+        if tag: return '%s...{}' % tag
+        else:   return '{}'
+    keys = d.keys() ; keys.sort()
     n = 6
     for key in keys:
         if type(key) == type(''):
             n = max(n,len(key))
-    lines = ["%*s: %s" % (n,key,d.get(key)) for key in keys]
+    lines = ["%s%*s: %s" % (indent,n,key,repr(d.get(key)).strip()) for key in keys]
     s = '\n'.join(lines)
     if tag:
-        return '%s...\n%s' % (tag,s)
+        return '%s...{\n%s}\n' % (tag,s)
     else:
-        return s
+        return '{\n%s}\n' % s
 #@nonl
 #@-node:ekr.20041224080039:print_dict & dictToString
 #@+node:ekr.20041126060136:print_list & listToString
-def print_list(aList,tag=None):
+def print_list(aList,tag=None,sort=False,indent=''):
     
-    if tag:
-        print '%s...' % tag
+    if not aList:
+        if tag: print '%s...{}' % tag
+        else:   print '{}'
+        return
+    if sort:
+        aList = aList[:] # Sort a copy!
+        aList.sort()
+    if tag: print '%s...[' % tag
+    else:   print '['
     for e in aList:
-        print repr(e)
+        print '%s%s' % (indent,repr(e).strip())
+    print ']'
 
 printList = print_list
 
-def listToString(aList,tag=None):
+def listToString(aList,tag=None,sort=False,indent=''):
     
-    lines = ["%s" % repr(e) for e in aList]
+    if not aList:
+        if tag: return '%s...{}' % tag
+        else:   return '{}'
+    if sort:
+        aList = aList[:] # Sort a copy!
+        aList.sort()
+    lines = ["%s%s" % (indent,repr(e).strip()) for e in aList]
     s = '\n'.join(lines)
     if tag:
-        return '%s...\n%s' % (tag,s)
+        return '[%s...\n%s\n]' % (tag,s)
     else:
-        return s
+        return '[%s]' % s
 #@nonl
 #@-node:ekr.20041126060136:print_list & listToString
 #@+node:ekr.20041122153823:print_stack (printStack)
@@ -3454,10 +3496,14 @@ def splitLines (s):
         return s.splitlines(True) # This is a Python string function!
     else:
         return []
+        
+splitlines = splitLines
 
 def joinLines (aList):
     
     return ''.join(aList)
+    
+joinlines = joinLines
 #@nonl
 #@-node:ekr.20031218072017.3195:splitLines & joinLines
 #@-node:ekr.20031218072017.3151:Scanning... (leoGlobals.py)
