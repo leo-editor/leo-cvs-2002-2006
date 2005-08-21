@@ -2370,8 +2370,9 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050821072028.1" a="E"><vh>moveLinesUp</vh></v>
 </v>
 <v t="ekr.20050821081021" a="E"><vh>@button Lines Down</vh>
-<v t="ekr.20050821081021.1" a="EMTV"><vh>moveLinesDown</vh></v>
+<v t="ekr.20050821081021.1" a="EM"><vh>moveLinesDown</vh></v>
 </v>
+<v t="ekr.20050821084736" a="TV"><vh>test of move up/down buttons</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -3079,7 +3080,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -22594,18 +22595,13 @@ moveLinesDown(c,p)</t>
     undoType = 'Move Lines Down'
     head,lines,tail,oldSel,oldYview = c.getBodyLines()
     if not tail or not lines: return
-    print '-' * 20
     tail = g.splitLines(tail)[1:]
     lines = '\n'.join(lines) + '\n'
     lines = g.splitLines(lines)
     # Move the lines down.
-    g.trace('lines',lines)
-    g.trace('tail',tail)
     lines.insert(0,tail[0])
     tail = tail[1:]
     if not tail: lines.insert(1,'\n')
-    g.trace('lines',lines)
-    g.trace('tail',tail)
     # Convert back to strings.
     tail = ''.join(tail)
     lines = ''.join(lines)
@@ -22615,5 +22611,11 @@ moveLinesDown(c,p)</t>
     row,col = sel2.split('.') ; sel2 = '%d.%s' % (int(row)+1,col)
     newSel = sel1,sel2
     c.updateBodyPane(head,lines,tail,undoType,newSel,oldYview)</t>
+<t tx="ekr.20050821084736">a
+bb
+cccc
+dd
+eeee
+f</t>
 </tnodes>
 </leo_file>
