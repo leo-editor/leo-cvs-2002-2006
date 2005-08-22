@@ -1093,7 +1093,10 @@ class rstClass:
                 self.getOption('stylesheet_name')))
         
         if g.os_path_exists(path):
-            return pub.publish(argv=['--stylesheet=%s' % path])
+            if self.ext == '.pdf':
+                return pub.publish(argv=[])
+            else:
+                return pub.publish(argv=['--stylesheet=%s' % path])
         else:
             g.es_print('stylesheet does not exist: %s' % (path),color='red')
             return pub.publish(argv=[])
