@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5869" clone_windows="0"/>
-<globals body_outline_ratio="0.627753303965">
-	<global_window_position top="16" left="186" height="629" width="785"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5874" clone_windows="0"/>
+<globals body_outline_ratio="0.471882640587">
+	<global_window_position top="48" left="302" height="842" width="899"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -29,6 +29,7 @@
 </v>
 <v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
 <v t="ekr.20050724100334"><vh>@button Beautify</vh></v>
+<v t="ekr.20050819055746"><vh>@button Save</vh></v>
 <v t="ekr.20050722075812"><vh>Remove blank trailing lines</vh></v>
 </v>
 <v t="edream.110203113231.618"><vh>Plugins</vh>
@@ -1449,15 +1450,15 @@ marks="ekr.20040331071319.7,"><vh>@thin rst2.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050817132814" a="ETV"><vh>rst3</vh>
-<v t="ekr.20050813191445"><vh>(rst3 stuff)</vh>
-<v t="ekr.20050508203638"><vh>rst3 Notes</vh>
+<v t="ekr.20050817132814" a="TV"><vh>rst3</vh>
+<v t="ekr.20050508203638"><vh>Notes</vh>
 <v t="ekr.20050508203638.1"><vh>@url https://sourceforge.net/forum/message.php?msg_id=2946194</vh></v>
 <v t="ekr.20050508203638.4"><vh>New stylesheets for rst (Kent Tenny told me about there)</vh>
 <v t="ekr.20050508203638.5"><vh>@url http://www.voidspace.org.uk/stylesheets/blue_box.css</vh></v>
 </v>
 <v t="ekr.20050804081215"><vh>From Kent Tenney: requests for options</vh></v>
 </v>
+<v t="ekr.20050813191445"><vh>(projects)</vh>
 <v t="ekr.20050808064245"><vh>createDefaultOptionsDict</vh></v>
 <v t="ekr.20050805162550.3"><vh>&lt;&lt; change log &gt;&gt;</vh>
 <v t="ekr.20050813103025"><vh>v 0.0x</vh>
@@ -1485,176 +1486,448 @@ marks="ekr.20040331071319.7,"><vh>@thin rst2.py</vh></v>
 </v>
 <v t="ekr.20050811173750"><vh>scanHeadlineForOptions</vh></v>
 </v>
+<v t="ekr.20050817185248.1"><vh>nodes.py</vh>
+<v t="ekr.20050817185248.2"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050817185248.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20050817185722"><vh>Node base classses...</vh>
+<v t="ekr.20050817185248.4"><vh>class Node</vh>
+<v t="ekr.20050817185248.6"><vh>__nonzero__</vh></v>
+<v t="ekr.20050817185248.7"><vh>asdom</vh></v>
+<v t="ekr.20050817185248.8"><vh>pformat</vh></v>
+<v t="ekr.20050817185248.9"><vh>copy</vh></v>
+<v t="ekr.20050817185248.10"><vh>setup_child</vh></v>
+<v t="ekr.20050817185248.11"><vh>walk</vh></v>
+<v t="ekr.20050817185248.12"><vh>walkabout</vh></v>
+<v t="ekr.20050817185248.13"><vh>traverse</vh></v>
+<v t="ekr.20050817185248.14"><vh>next_node</vh></v>
+</v>
+<v t="ekr.20050817185248.15"><vh>class Text (Node)</vh>
+<v t="ekr.20050817185248.17"><vh>__init__</vh></v>
+<v t="ekr.20050817185248.18"><vh>__repr__</vh></v>
+<v t="ekr.20050817185248.19"><vh>__len__</vh></v>
+<v t="ekr.20050817185248.20"><vh>shortrepr</vh></v>
+<v t="ekr.20050817185248.21"><vh>_dom_node</vh></v>
+<v t="ekr.20050817185248.22"><vh>astext</vh></v>
+<v t="ekr.20050817185248.23"><vh>copy</vh></v>
+<v t="ekr.20050817185248.24"><vh>pformat</vh></v>
+</v>
+<v t="ekr.20050817185248.25"><vh>class Element (Node)</vh>
+<v t="ekr.20050817185248.26"><vh>&lt;&lt; class Element declarations &gt;&gt;</vh></v>
+<v t="ekr.20050817185248.27"><vh>__init__</vh></v>
+<v t="ekr.20050817185248.28"><vh>_dom_node</vh></v>
+<v t="ekr.20050817185248.29"><vh>__repr__</vh></v>
+<v t="ekr.20050817185248.30"><vh>shortrepr</vh></v>
+<v t="ekr.20050817185248.31"><vh>__str__</vh></v>
+<v t="ekr.20050817185248.32"><vh>__unicode__</vh></v>
+<v t="ekr.20050817185248.33"><vh>starttag</vh></v>
+<v t="ekr.20050817185248.34"><vh>endtag</vh></v>
+<v t="ekr.20050817185248.35"><vh>emptytag</vh></v>
+<v t="ekr.20050817185248.36"><vh>__len__</vh></v>
+<v t="ekr.20050817185248.37"><vh>__getitem__</vh></v>
+<v t="ekr.20050817185248.38"><vh>__setitem__</vh></v>
+<v t="ekr.20050817185248.39"><vh>__delitem__</vh></v>
+<v t="ekr.20050817185248.40"><vh>__add__</vh></v>
+<v t="ekr.20050817185248.41"><vh>__radd__</vh></v>
+<v t="ekr.20050817185248.42"><vh>__iadd__</vh></v>
+<v t="ekr.20050817185248.43"><vh>astext</vh></v>
+<v t="ekr.20050817185248.44"><vh>non_default_attributes</vh></v>
+<v t="ekr.20050817185248.45"><vh>attlist</vh></v>
+<v t="ekr.20050817185248.46"><vh>get</vh></v>
+<v t="ekr.20050817185248.47"><vh>hasattr</vh></v>
+<v t="ekr.20050817185248.48"><vh>delattr</vh></v>
+<v t="ekr.20050817185248.49"><vh>setdefault</vh></v>
+<v t="ekr.20050817185248.50"><vh>append</vh></v>
+<v t="ekr.20050817185248.51"><vh>extend</vh></v>
+<v t="ekr.20050817185248.52"><vh>insert</vh></v>
+<v t="ekr.20050817185248.53"><vh>pop</vh></v>
+<v t="ekr.20050817185248.54"><vh>remove</vh></v>
+<v t="ekr.20050817185248.55"><vh>index</vh></v>
+<v t="ekr.20050817185248.56"><vh>is_not_default</vh></v>
+<v t="ekr.20050817185248.57"><vh>clear</vh></v>
+<v t="ekr.20050817185248.58"><vh>replace</vh></v>
+<v t="ekr.20050817185248.59"><vh>first_child_matching_class</vh></v>
+<v t="ekr.20050817185248.60"><vh>first_child_not_matching_class</vh></v>
+<v t="ekr.20050817185248.61"><vh>pformat</vh></v>
+<v t="ekr.20050817185248.62"><vh>copy</vh></v>
+<v t="ekr.20050817185248.63"><vh>set_class</vh></v>
+<v t="ekr.20050817185248.64"><vh>note_referenced_by</vh></v>
+</v>
+<v t="ekr.20050817185248.65"><vh>class TextElement (Element)</vh>
+<v t="ekr.20050817185248.66"><vh>&lt;&lt; class TextElement declarations &gt;&gt;</vh></v>
+<v t="ekr.20050817185248.67"><vh>__init__</vh></v>
+</v>
+<v t="ekr.20050817185248.68"><vh>class FixedTextElement (TextElement)</vh>
+<v t="ekr.20050817185248.69"><vh>__init__</vh></v>
+</v>
+</v>
+<v t="ekr.20050817185722.1"><vh>Mixins...</vh>
+<v t="ekr.20050817185248.70"><vh>class Resolvable</vh></v>
+<v t="ekr.20050817185248.72"><vh>class BackLinkable</vh>
+<v t="ekr.20050817185248.73"><vh>add_backref</vh></v>
+</v>
+</v>
+<v t="ekr.20050817185722.2"><vh>Element categories...</vh>
+<v t="ekr.20050817185248.74"><vh>class Root</vh></v>
+<v t="ekr.20050817185248.75"><vh>class Titular</vh></v>
+<v t="ekr.20050817185248.76"><vh>class PreBibliographic</vh></v>
+<v t="ekr.20050817185248.77"><vh>class Bibliographic</vh></v>
+<v t="ekr.20050817185248.78"><vh>class Decorative</vh></v>
+<v t="ekr.20050817185248.79"><vh>class Structural</vh></v>
+<v t="ekr.20050817185248.80"><vh>class Body</vh></v>
+<v t="ekr.20050817185248.81"><vh>class General</vh></v>
+<v t="ekr.20050817185248.82"><vh>class Sequential</vh></v>
+<v t="ekr.20050817185248.83"><vh>class Admonition</vh></v>
+<v t="ekr.20050817185248.84"><vh>class Special</vh></v>
+<v t="ekr.20050817185248.85"><vh>class Invisible</vh></v>
+<v t="ekr.20050817185248.86"><vh>class Part</vh></v>
+<v t="ekr.20050817185248.87"><vh>class Inline</vh></v>
+<v t="ekr.20050817185248.88"><vh>class Referential</vh></v>
+<v t="ekr.20050817185248.89"><vh>class Targetable</vh></v>
+<v t="ekr.20050817185248.91"><vh>class Labeled</vh></v>
+</v>
+<v t="ekr.20050817185248.93"><vh>class document</vh>
+<v t="ekr.20050817185248.94"><vh>__init__</vh></v>
+<v t="ekr.20050817185248.95"><vh>asdom</vh></v>
+<v t="ekr.20050817185248.96"><vh>set_id</vh></v>
+<v t="ekr.20050817185248.97"><vh>set_name_id_map</vh></v>
+<v t="ekr.20050817185248.98"><vh>set_duplicate_name_id</vh></v>
+<v t="ekr.20050817185248.99"><vh>has_name</vh></v>
+<v t="ekr.20050817185248.100"><vh>note_implicit_target</vh></v>
+<v t="ekr.20050817185248.101"><vh>note_explicit_target</vh></v>
+<v t="ekr.20050817185248.102"><vh>note_refname</vh></v>
+<v t="ekr.20050817185248.103"><vh>note_refid</vh></v>
+<v t="ekr.20050817185248.104"><vh>note_indirect_target</vh></v>
+<v t="ekr.20050817185248.105"><vh>note_anonymous_target</vh></v>
+<v t="ekr.20050817185248.106"><vh>note_anonymous_ref</vh></v>
+<v t="ekr.20050817185248.107"><vh>note_autofootnote</vh></v>
+<v t="ekr.20050817185248.108"><vh>note_autofootnote_ref</vh></v>
+<v t="ekr.20050817185248.109"><vh>note_symbol_footnote</vh></v>
+<v t="ekr.20050817185248.110"><vh>note_symbol_footnote_ref</vh></v>
+<v t="ekr.20050817185248.111"><vh>note_footnote</vh></v>
+<v t="ekr.20050817185248.112"><vh>note_footnote_ref</vh></v>
+<v t="ekr.20050817185248.113"><vh>note_citation</vh></v>
+<v t="ekr.20050817185248.114"><vh>note_citation_ref</vh></v>
+<v t="ekr.20050817185248.115"><vh>note_substitution_def</vh></v>
+<v t="ekr.20050817185248.116"><vh>note_substitution_ref</vh></v>
+<v t="ekr.20050817185248.117"><vh>note_pending</vh></v>
+<v t="ekr.20050817185248.118"><vh>note_parse_message</vh></v>
+<v t="ekr.20050817185248.119"><vh>note_transform_message</vh></v>
+<v t="ekr.20050817185248.120"><vh>note_source</vh></v>
+<v t="ekr.20050817185248.121"><vh>copy</vh></v>
+<v t="ekr.20050817185248.122"><vh>get_decoration</vh></v>
+</v>
+<v t="ekr.20050817185722.3"><vh>Title Elements...</vh>
+<v t="ekr.20050817185248.123"><vh>class title</vh></v>
+<v t="ekr.20050817185248.124"><vh>class subtitle</vh></v>
+<v t="ekr.20050817185248.125"><vh>class rubric</vh></v>
+</v>
+<v t="ekr.20050817185930"><vh>Bibliographic Elements...</vh>
+<v t="ekr.20050817185248.127"><vh>class docinfo</vh></v>
+<v t="ekr.20050817185248.128"><vh>class author</vh></v>
+<v t="ekr.20050817185248.129"><vh>class authors</vh></v>
+<v t="ekr.20050817185248.130"><vh>class organization</vh></v>
+<v t="ekr.20050817185248.131"><vh>class address</vh></v>
+<v t="ekr.20050817185248.132"><vh>class contact</vh></v>
+<v t="ekr.20050817185248.133"><vh>class version</vh></v>
+<v t="ekr.20050817185248.134"><vh>class revision</vh></v>
+<v t="ekr.20050817185248.135"><vh>class status</vh></v>
+<v t="ekr.20050817185248.136"><vh>class date</vh></v>
+<v t="ekr.20050817185248.137"><vh>class copyright</vh></v>
+</v>
+<v t="ekr.20050817185248.138"><vh>Decorative Elements...</vh>
+<v t="ekr.20050817185248.139"><vh>class decoration</vh>
+<v t="ekr.20050817185248.140"><vh>get_header</vh></v>
+<v t="ekr.20050817185248.141"><vh>get_footer</vh></v>
+</v>
+<v t="ekr.20050817185248.142"><vh>class header</vh></v>
+<v t="ekr.20050817185248.143"><vh>class footer</vh></v>
+</v>
+<v t="ekr.20050817185248.144"><vh>Structural Elements...</vh>
+<v t="ekr.20050817185248.145"><vh>class section</vh></v>
+<v t="ekr.20050817185248.146"><vh>class topic</vh></v>
+<v t="ekr.20050817185248.147"><vh>class sidebar</vh></v>
+<v t="ekr.20050817185248.148"><vh>class transition</vh></v>
+</v>
+<v t="ekr.20050817185248.149"><vh>Body Elements...</vh>
+<v t="ekr.20050817185248.150"><vh>class paragraph</vh></v>
+<v t="ekr.20050817185248.151"><vh>class compound</vh></v>
+<v t="ekr.20050817185248.152"><vh>class bullet_list</vh></v>
+<v t="ekr.20050817185248.153"><vh>class enumerated_list</vh></v>
+<v t="ekr.20050817185248.154"><vh>class list_item</vh></v>
+<v t="ekr.20050817185248.155"><vh>class definition_list</vh></v>
+<v t="ekr.20050817185248.156"><vh>class definition_list_item</vh></v>
+<v t="ekr.20050817185248.157"><vh>class term</vh></v>
+<v t="ekr.20050817185248.158"><vh>class classifier</vh></v>
+<v t="ekr.20050817185248.159"><vh>class definition</vh></v>
+<v t="ekr.20050817185248.160"><vh>class field_list</vh></v>
+<v t="ekr.20050817185248.161"><vh>class field</vh></v>
+<v t="ekr.20050817185248.162"><vh>class field_name</vh></v>
+<v t="ekr.20050817185248.163"><vh>class field_body</vh></v>
+<v t="ekr.20050817185248.164"><vh>class option</vh></v>
+<v t="ekr.20050817185248.166"><vh>class option_argument</vh>
+<v t="ekr.20050817185248.167"><vh>astext</vh></v>
+</v>
+<v t="ekr.20050817185248.168"><vh>class option_group</vh></v>
+<v t="ekr.20050817185248.170"><vh>class option_list</vh></v>
+<v t="ekr.20050817185248.171"><vh>class option_list_item</vh></v>
+<v t="ekr.20050817185248.173"><vh>class option_string</vh></v>
+<v t="ekr.20050817185248.174"><vh>class description</vh></v>
+<v t="ekr.20050817185248.175"><vh>class literal_block</vh></v>
+<v t="ekr.20050817185248.176"><vh>class doctest_block</vh></v>
+<v t="ekr.20050817185248.177"><vh>class line_block</vh></v>
+<v t="ekr.20050817185248.178"><vh>class line</vh></v>
+<v t="ekr.20050817185248.180"><vh>class block_quote</vh></v>
+<v t="ekr.20050817185248.181"><vh>class attribution</vh></v>
+<v t="ekr.20050817185248.182"><vh>class attention</vh></v>
+<v t="ekr.20050817185248.183"><vh>class caution</vh></v>
+<v t="ekr.20050817185248.184"><vh>class danger</vh></v>
+<v t="ekr.20050817185248.185"><vh>class error</vh></v>
+<v t="ekr.20050817185248.186"><vh>class important</vh></v>
+<v t="ekr.20050817185248.187"><vh>class note</vh></v>
+<v t="ekr.20050817185248.188"><vh>class tip</vh></v>
+<v t="ekr.20050817185248.189"><vh>class hint</vh></v>
+<v t="ekr.20050817185248.190"><vh>class warning</vh></v>
+<v t="ekr.20050817185248.191"><vh>class admonition</vh></v>
+<v t="ekr.20050817185248.192"><vh>class comment</vh></v>
+<v t="ekr.20050817185248.193"><vh>class substitution_definition</vh></v>
+<v t="ekr.20050817185248.194"><vh>class target</vh></v>
+<v t="ekr.20050817185248.195"><vh>class footnote</vh></v>
+<v t="ekr.20050817185248.196"><vh>class citation</vh></v>
+<v t="ekr.20050817185248.197"><vh>class label</vh></v>
+<v t="ekr.20050817185248.198"><vh>class figure</vh></v>
+<v t="ekr.20050817185248.199"><vh>class caption</vh></v>
+<v t="ekr.20050817185248.200"><vh>class legend</vh></v>
+<v t="ekr.20050817185248.201"><vh>class table</vh></v>
+<v t="ekr.20050817185248.202"><vh>class tgroup</vh></v>
+<v t="ekr.20050817185248.203"><vh>class colspec</vh></v>
+<v t="ekr.20050817185248.204"><vh>class thead</vh></v>
+<v t="ekr.20050817185248.205"><vh>class tbody</vh></v>
+<v t="ekr.20050817185248.206"><vh>class row</vh></v>
+<v t="ekr.20050817185248.207"><vh>class entry</vh></v>
+<v t="ekr.20050817185248.208"><vh>class system_message</vh>
+<v t="ekr.20050817185248.209"><vh>__init__</vh></v>
+<v t="ekr.20050817185248.210"><vh>astext</vh></v>
+</v>
+<v t="ekr.20050817185248.211"><vh>class pending</vh>
+<v t="ekr.20050817185248.212"><vh>__init__</vh></v>
+<v t="ekr.20050817185248.213"><vh>pformat</vh></v>
+<v t="ekr.20050817185248.214"><vh>copy</vh></v>
+</v>
+<v t="ekr.20050817185248.215"><vh>class raw</vh></v>
+</v>
+<v t="ekr.20050817185248.216"><vh>Inline Elements</vh>
+<v t="ekr.20050817185248.217"><vh>class emphasis</vh></v>
+<v t="ekr.20050817185248.218"><vh>class strong</vh></v>
+<v t="ekr.20050817185248.219"><vh>class literal</vh></v>
+<v t="ekr.20050817185248.220"><vh>class reference</vh></v>
+<v t="ekr.20050817185248.221"><vh>class footnote_reference</vh></v>
+<v t="ekr.20050817185248.222"><vh>class citation_reference</vh></v>
+<v t="ekr.20050817185248.223"><vh>class substitution_reference</vh></v>
+<v t="ekr.20050817185248.224"><vh>class title_reference</vh></v>
+<v t="ekr.20050817185248.225"><vh>class abbreviation</vh></v>
+<v t="ekr.20050817185248.226"><vh>class acronym</vh></v>
+<v t="ekr.20050817185248.227"><vh>class superscript</vh></v>
+<v t="ekr.20050817185248.228"><vh>class subscript</vh></v>
+<v t="ekr.20050817185248.229"><vh>class image</vh>
+<v t="ekr.20050817185248.230"><vh>astext</vh></v>
+</v>
+<v t="ekr.20050817185248.231"><vh>class inline</vh></v>
+<v t="ekr.20050817185248.232"><vh>class problematic</vh></v>
+<v t="ekr.20050817185248.233"><vh>class generated</vh></v>
+</v>
+<v t="ekr.20050817185248.234"><vh>Auxiliary Classes, Functions, and Data...</vh>
+<v t="ekr.20050817185248.235"><vh>class NodeVisitor</vh>
+<v t="ekr.20050817185248.236"><vh>&lt;&lt; class NodeVisitor declarations &gt;&gt;</vh></v>
+<v t="ekr.20050817185248.237"><vh>__init__</vh></v>
+<v t="ekr.20050817185248.238"><vh>dispatch_visit</vh></v>
+<v t="ekr.20050817185248.239"><vh>dispatch_departure</vh></v>
+<v t="ekr.20050817185248.240"><vh>unknown_visit</vh></v>
+<v t="ekr.20050817185248.241"><vh>unknown_departure</vh></v>
+</v>
+<v t="ekr.20050817185248.242"><vh>class SparseNodeVisitor</vh></v>
+<v t="ekr.20050817185248.243"><vh>class GenericNodeVisitor</vh>
+<v t="ekr.20050817185248.244"><vh>default_visit</vh></v>
+<v t="ekr.20050817185248.245"><vh>default_departure</vh></v>
+</v>
+<v t="ekr.20050817185248.246"><vh>_call_default_visit</vh></v>
+<v t="ekr.20050817185248.247"><vh>_call_default_departure</vh></v>
+<v t="ekr.20050817185248.248"><vh>_nop</vh></v>
+<v t="ekr.20050817185248.249"><vh>_add_node_class_names</vh></v>
+<v t="ekr.20050817185248.250"><vh>class TreeCopyVisitor</vh>
+<v t="ekr.20050817185248.251"><vh>__init__</vh></v>
+<v t="ekr.20050817185248.252"><vh>get_tree_copy</vh></v>
+<v t="ekr.20050817185248.253"><vh>default_visit</vh></v>
+<v t="ekr.20050817185248.254"><vh>default_departure</vh></v>
+</v>
+<v t="ekr.20050817185248.255"><vh>class TreePruningException</vh></v>
+<v t="ekr.20050817185248.257"><vh>class SkipChildren</vh></v>
+<v t="ekr.20050817185248.259"><vh>class SkipSiblings</vh></v>
+<v t="ekr.20050817185248.261"><vh>class SkipNode</vh></v>
+<v t="ekr.20050817185248.263"><vh>class SkipDeparture</vh></v>
+<v t="ekr.20050817185248.265"><vh>class NodeFound</vh></v>
+<v t="ekr.20050817185248.267"><vh>make_id</vh></v>
+<v t="ekr.20050817185248.268"><vh>dupname</vh></v>
+<v t="ekr.20050817185248.269"><vh>fully_normalize_name</vh></v>
+<v t="ekr.20050817185248.270"><vh>whitespace_normalize_name</vh></v>
+</v>
+</v>
 <v t="ekr.20050805162550"
 marks="ekr.20050816094344,ekr.20050811101550.1,"><vh>@thin rst3.py</vh></v>
-<v t="ekr.20050817120850.1" tnodeList="ekr.20050817120850.1,ekr.20050817122915,ekr.20050817124859,ekr.20050817124859.1,ekr.20050817115636.2,ekr.20050817115636.4,ekr.20050817115636.5,ekr.20050817115636.6,ekr.20050817115636.7,ekr.20050817115636.8,ekr.20050817115636.9,ekr.20050817120850.10,ekr.20050817120850.11,ekr.20050817120850.12,ekr.20050817120850.13,ekr.20050817120850.14,ekr.20050817120850.15,ekr.20050817120850.16,ekr.20050817120850.17,ekr.20050817120850.18,ekr.20050817120850.19,ekr.20050817120850.20,ekr.20050817120850.21,ekr.20050817120850.22,ekr.20050817120850.23,ekr.20050817120850.24,ekr.20050817120850.25,ekr.20050817120850.26,ekr.20050817120850.27,ekr.20050817120850.28,ekr.20050817120850.29,ekr.20050817120850.30,ekr.20050817120850.31,ekr.20050817120850.32,ekr.20050817120850.33,ekr.20050817120850.34,ekr.20050817120850.35,ekr.20050817120850.36,ekr.20050817120850.37,ekr.20050817120850.38,ekr.20050817120850.39,ekr.20050817120850.40,ekr.20050817120850.41,ekr.20050817120850.42,ekr.20050817120850.43,ekr.20050817120850.44,ekr.20050817120850.45,ekr.20050817120850.46,ekr.20050817120850.47,ekr.20050817120850.48,ekr.20050817120850.49,ekr.20050817120850.50,ekr.20050817120850.51,ekr.20050817120850.52,ekr.20050817120850.53,ekr.20050817120850.54,ekr.20050817120850.55,ekr.20050817120850.56,ekr.20050817120850.57,ekr.20050817120850.58,ekr.20050817120850.59,ekr.20050817120850.60,ekr.20050817120850.61,ekr.20050817120850.62,ekr.20050817120850.63,ekr.20050817120850.64,ekr.20050817120850.65,ekr.20050817120850.66,ekr.20050817120850.67,ekr.20050817120850.68,ekr.20050817120850.69,ekr.20050817120850.70,ekr.20050817120850.71,ekr.20050817120850.72,ekr.20050817120850.73,ekr.20050817120850.74,ekr.20050817120850.75,ekr.20050817120850.76,ekr.20050817120850.77,ekr.20050817120850.78,ekr.20050817120850.79,ekr.20050817120850.80,ekr.20050817120850.81,ekr.20050817120850.82,ekr.20050817120850.83,ekr.20050817120850.84,ekr.20050817120850.85,ekr.20050817120850.86,ekr.20050817120850.87,ekr.20050817120850.88,ekr.20050817120850.89,ekr.20050817120850.90,ekr.20050817120850.91,ekr.20050817120850.92,ekr.20050817120850.93,ekr.20050817120850.94,ekr.20050817120850.95,ekr.20050817120850.96,ekr.20050817120850.97,ekr.20050817120850.98,ekr.20050817120850.99,ekr.20050817120850.100,ekr.20050817120850.101,ekr.20050817120850.102,ekr.20050817120850.103,ekr.20050817120850.104,ekr.20050817120850.105,ekr.20050817120850.106,ekr.20050817120850.107,ekr.20050817120850.108,ekr.20050817120850.109,ekr.20050817120850.110,ekr.20050817120850.111,ekr.20050817120850.112,ekr.20050817120850.113,ekr.20050817120850.114,ekr.20050817120850.115,ekr.20050817120850.116,ekr.20050817120850.117,ekr.20050817120850.118,ekr.20050817120850.119,ekr.20050817120850.120,ekr.20050817120850.121,ekr.20050817120850.122,ekr.20050817120850.123,ekr.20050817120850.124,ekr.20050817120850.125,ekr.20050817120850.126,ekr.20050817120850.127,ekr.20050817120850.128,ekr.20050817120850.129,ekr.20050817120850.130,ekr.20050817120850.131,ekr.20050817120850.132,ekr.20050817120850.133,ekr.20050817120850.134,ekr.20050817120850.135,ekr.20050817120850.136,ekr.20050817120850.137,ekr.20050817120850.138,ekr.20050817120850.139,ekr.20050817120850.140,ekr.20050817120850.141,ekr.20050817120850.142,ekr.20050817120850.143,ekr.20050817120850.144,ekr.20050817120850.145,ekr.20050817120850.146,ekr.20050817120850.147,ekr.20050817120850.148,ekr.20050817120850.149,ekr.20050817120850.150,ekr.20050817120850.151,ekr.20050817120850.152,ekr.20050817120850.153,ekr.20050817120850.154,ekr.20050817120850.155,ekr.20050817120850.156,ekr.20050817120850.157,ekr.20050817120850.158,ekr.20050817120850.159,ekr.20050817120850.160,ekr.20050817120850.161,ekr.20050817120850.162,ekr.20050817120850.163,ekr.20050817120850.164,ekr.20050817120850.165"><vh>@file leo_pdf.py</vh>
+<v t="ekr.20050817120850.1" tnodeList="ekr.20050817120850.1,ekr.20050817122915,ekr.20050822123348,ekr.20050817124859,ekr.20050817165745,ekr.20050817124859.1,ekr.20050817165745.1,ekr.20050818033610,ekr.20050818095347,ekr.20050819055746.1,ekr.20050820112549,ekr.20050822065754,ekr.20050822125824,ekr.20050818103031,ekr.20050817115636.2,ekr.20050818103441,ekr.20050817115636.4,ekr.20050817115636.5,ekr.20050817115636.6,ekr.20050820092312,ekr.20050817115636.8,ekr.20050817115636.9,ekr.20050817115636.7,ekr.20050820100547,ekr.20050820101355,ekr.20050820103029,ekr.20050820101522,ekr.20050820101355.1,ekr.20050820094818,ekr.20050820092312.1,ekr.20050817120850.10,ekr.20050817120850.11,ekr.20050818094118.2,ekr.20050818090152,ekr.20050818090152.1,ekr.20050817120850.98,ekr.20050817120850.99,ekr.20050817120850.94,ekr.20050817120850.95,ekr.20050817120850.96,ekr.20050817120850.108,ekr.20050817142135.1,ekr.20050817120850.143,ekr.20050817120850.144,ekr.20050817120850.141,ekr.20050817135706.1,ekr.20050817120850.157,ekr.20050817120850.158,ekr.20050818105023,ekr.20050817120850.15,ekr.20050817120850.12,ekr.20050817120850.14,ekr.20050818081715,ekr.20050819072001,ekr.20050819072001.1,ekr.20050817120850.13,ekr.20050818083045,ekr.20050821153838,ekr.20050818022030,ekr.20050818084920,ekr.20050818130249,ekr.20050818090907,ekr.20050817120850.32,ekr.20050817120850.34,ekr.20050817120850.39,ekr.20050817120850.42,ekr.20050817120850.44,ekr.20050817120850.46,ekr.20050817120850.48,ekr.20050817120850.62,ekr.20050817120850.64,ekr.20050817120850.74,ekr.20050817120850.78,ekr.20050817120850.86,ekr.20050817120850.92,ekr.20050817120850.162,ekr.20050817120850.102,ekr.20050817120850.106,ekr.20050817120850.110,ekr.20050817120850.122,ekr.20050817120850.124,ekr.20050817120850.126,ekr.20050817120850.130,ekr.20050817120850.132,ekr.20050817120850.138,ekr.20050817120850.28,ekr.20050817120850.147,ekr.20050817120850.18,ekr.20050817120850.20,ekr.20050817120850.40,ekr.20050817120850.54,ekr.20050817120850.82,ekr.20050817120850.100,ekr.20050817120850.105,ekr.20050817120850.120,ekr.20050817120850.36,ekr.20050817120850.58,ekr.20050817120850.60,ekr.20050817120850.66,ekr.20050817120850.24,ekr.20050817120850.22,ekr.20050817120850.50,ekr.20050817120850.52,ekr.20050817120850.56,ekr.20050818094118.1,ekr.20050817120850.68,ekr.20050817120850.134,ekr.20050817120850.145,ekr.20050817120850.151,ekr.20050817120850.26,ekr.20050817120850.76,ekr.20050817120850.80,ekr.20050817120850.88,ekr.20050817120850.112,ekr.20050817120850.128,ekr.20050817142135,ekr.20050817120850.153,ekr.20050817120850.155,ekr.20050817120850.30,ekr.20050817135706,ekr.20050817120850.160,ekr.20050818094954,ekr.20050818105023.1,ekr.20050817120850.84,ekr.20050817120850.90,ekr.20050818094954.1,ekr.20050817120850.165,ekr.20050817120850.116,ekr.20050817120850.70,ekr.20050817120850.72,ekr.20050817120850.164,ekr.20050817120850.114,ekr.20050817120850.118,ekr.20050817120850.149,ekr.20050817120850.159,ekr.20050817120850.140"><vh>@file leo_pdf.py</vh>
 <v t="ekr.20050817122915"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
 <v t="ekr.20050817115636.2"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20050822123348" a="M"><vh>&lt;&lt; about this code &gt;&gt;</vh></v>
 <v t="ekr.20050817124859"><vh>&lt;&lt; copyright &gt;&gt;</vh></v>
-<v t="ekr.20050817124859.1"><vh>&lt;&lt; what I did &gt;&gt;</vh></v>
-<v t="ekr.20050817115636.4"><vh>class Writer</vh>
-<v t="ekr.20050817115636.5"><vh>&lt;&lt; class Writer declarations &gt;&gt;</vh></v>
-<v t="ekr.20050817115636.6"><vh>__init__</vh></v>
-<v t="ekr.20050817115636.7"><vh>translate</vh></v>
-<v t="ekr.20050817115636.8"><vh>record</vh></v>
-<v t="ekr.20050817115636.9"><vh>lower</vh></v>
+<v t="ekr.20050817165745"><vh>&lt;&lt; version history &gt;&gt;</vh>
+<v t="ekr.20050817124859.1"><vh>Initial conversion</vh></v>
+<v t="ekr.20050817165745.1"><vh>0.0.1</vh></v>
+<v t="ekr.20050818033610"><vh>0.0.2</vh></v>
+<v t="ekr.20050818095347"><vh>0.0.3</vh></v>
+<v t="ekr.20050819055746.1"><vh>0.0.4</vh></v>
+<v t="ekr.20050820112549"><vh>0.0.5</vh></v>
+<v t="ekr.20050822065754"><vh>0.1</vh></v>
+<v t="ekr.20050822125824"><vh>0.2</vh></v>
 </v>
-<v t="ekr.20050817120850.10"><vh>class PDFTranslator</vh>
-<v t="ekr.20050817120850.11"><vh>__init__</vh></v>
-<v t="ekr.20050817120850.12"><vh>as_what</vh></v>
-<v t="ekr.20050817120850.13"><vh>encode</vh></v>
-<v t="ekr.20050817120850.14"><vh>append_para</vh></v>
-<v t="ekr.20050817120850.15"><vh>starttag</vh></v>
-<v t="ekr.20050817120850.16"><vh>visit_Text</vh></v>
-<v t="ekr.20050817120850.17"><vh>depart_Text</vh></v>
-<v t="ekr.20050817120850.18"><vh>visit_admonition</vh></v>
-<v t="ekr.20050817120850.19"><vh>depart_admonition</vh></v>
-<v t="ekr.20050817120850.20"><vh>visit_attention</vh></v>
-<v t="ekr.20050817120850.21"><vh>depart_attention</vh></v>
-<v t="ekr.20050817120850.22"><vh>visit_author</vh></v>
-<v t="ekr.20050817120850.23"><vh>depart_author</vh></v>
-<v t="ekr.20050817120850.24"><vh>visit_address</vh></v>
-<v t="ekr.20050817120850.25"><vh>depart_address</vh></v>
-<v t="ekr.20050817120850.26"><vh>visit_version</vh></v>
-<v t="ekr.20050817120850.27"><vh>depart_version</vh></v>
-<v t="ekr.20050817120850.28"><vh>visit_system_message</vh></v>
-<v t="ekr.20050817120850.29"><vh>depart_system_message</vh></v>
-<v t="ekr.20050817120850.30"><vh>visit_term</vh></v>
-<v t="ekr.20050817120850.31"><vh>depart_term</vh></v>
-<v t="ekr.20050817120850.32"><vh>visit_authors</vh></v>
-<v t="ekr.20050817120850.33"><vh>depart_authors</vh></v>
-<v t="ekr.20050817120850.34"><vh>visit_block_quote</vh></v>
-<v t="ekr.20050817120850.35"><vh>depart_block_quote</vh></v>
-<v t="ekr.20050817120850.36"><vh>visit_bullet_list</vh></v>
-<v t="ekr.20050817120850.37"><vh>depart_bullet_list</vh></v>
-<v t="ekr.20050817120850.38"><vh>visit_caption</vh></v>
-<v t="ekr.20050817120850.39"><vh>depart_caption</vh></v>
-<v t="ekr.20050817120850.40"><vh>visit_caution</vh></v>
-<v t="ekr.20050817120850.41"><vh>depart_caution</vh></v>
-<v t="ekr.20050817120850.42"><vh>visit_citation</vh></v>
-<v t="ekr.20050817120850.43"><vh>depart_citation</vh></v>
-<v t="ekr.20050817120850.44"><vh>visit_citation_reference</vh></v>
-<v t="ekr.20050817120850.45"><vh>depart_citation_reference</vh></v>
-<v t="ekr.20050817120850.46"><vh>visit_classifier</vh></v>
-<v t="ekr.20050817120850.47"><vh>depart_classifier</vh></v>
-<v t="ekr.20050817120850.48"><vh>visit_colspec</vh></v>
-<v t="ekr.20050817120850.49"><vh>depart_colspec</vh></v>
-<v t="ekr.20050817120850.50"><vh>visit_contact</vh></v>
-<v t="ekr.20050817120850.51"><vh>depart_contact</vh></v>
-<v t="ekr.20050817120850.52"><vh>visit_copyright</vh></v>
-<v t="ekr.20050817120850.53"><vh>depart_copyright</vh></v>
-<v t="ekr.20050817120850.54"><vh>visit_danger</vh></v>
-<v t="ekr.20050817120850.55"><vh>depart_danger</vh></v>
-<v t="ekr.20050817120850.56"><vh>visit_date</vh></v>
-<v t="ekr.20050817120850.57"><vh>depart_date</vh></v>
-<v t="ekr.20050817120850.58"><vh>visit_definition</vh></v>
-<v t="ekr.20050817120850.59"><vh>depart_definition</vh></v>
-<v t="ekr.20050817120850.60"><vh>visit_definition_list</vh></v>
-<v t="ekr.20050817120850.61"><vh>depart_definition_list</vh></v>
-<v t="ekr.20050817120850.62"><vh>visit_definition_list_item</vh></v>
-<v t="ekr.20050817120850.63"><vh>depart_definition_list_item</vh></v>
-<v t="ekr.20050817120850.64"><vh>visit_description</vh></v>
-<v t="ekr.20050817120850.65"><vh>depart_description</vh></v>
-<v t="ekr.20050817120850.66"><vh>visit_docinfo</vh></v>
-<v t="ekr.20050817120850.67"><vh>depart_docinfo</vh></v>
-<v t="ekr.20050817120850.68"><vh>visit_docinfo_item</vh></v>
-<v t="ekr.20050817120850.69"><vh>depart_docinfo_item</vh></v>
-<v t="ekr.20050817120850.70"><vh>visit_doctest_block</vh></v>
-<v t="ekr.20050817120850.71"><vh>depart_doctest_block</vh></v>
-<v t="ekr.20050817120850.72"><vh>visit_line_block</vh></v>
-<v t="ekr.20050817120850.73"><vh>depart_line_block</vh></v>
-<v t="ekr.20050817120850.74"><vh>visit_document</vh></v>
-<v t="ekr.20050817120850.75"><vh>depart_document</vh></v>
-<v t="ekr.20050817120850.76"><vh>visit_emphasis</vh></v>
-<v t="ekr.20050817120850.77"><vh>depart_emphasis</vh></v>
-<v t="ekr.20050817120850.78"><vh>visit_entry</vh></v>
-<v t="ekr.20050817120850.79"><vh>depart_entry</vh></v>
-<v t="ekr.20050817120850.80"><vh>visit_enumerated_list</vh></v>
-<v t="ekr.20050817120850.81"><vh>depart_enumerated_list</vh></v>
-<v t="ekr.20050817120850.82"><vh>visit_error</vh></v>
-<v t="ekr.20050817120850.83"><vh>depart_error</vh></v>
-<v t="ekr.20050817120850.84"><vh>visit_field</vh></v>
-<v t="ekr.20050817120850.85"><vh>depart_field</vh></v>
-<v t="ekr.20050817120850.86"><vh>visit_field_argument</vh></v>
-<v t="ekr.20050817120850.87"><vh>depart_field_argument</vh></v>
-<v t="ekr.20050817120850.88"><vh>visit_field_list</vh></v>
-<v t="ekr.20050817120850.89"><vh>depart_field_list</vh></v>
-<v t="ekr.20050817120850.90"><vh>visit_field_name</vh></v>
-<v t="ekr.20050817120850.91"><vh>depart_field_name</vh></v>
-<v t="ekr.20050817120850.92"><vh>visit_field_body</vh></v>
-<v t="ekr.20050817120850.93"><vh>depart_field_body</vh></v>
-<v t="ekr.20050817120850.94"><vh>visit_footnote</vh></v>
-<v t="ekr.20050817120850.95"><vh>footnote_backrefs</vh></v>
-<v t="ekr.20050817120850.96"><vh>footnote_backrefs_depart</vh></v>
-<v t="ekr.20050817120850.97"><vh>depart_footnote</vh></v>
+<v t="ekr.20050818103031"><vh>&lt;&lt; to do &gt;&gt;</vh></v>
+<v t="ekr.20050818103441"><vh>class Bunch (object)</vh></v>
+<v t="ekr.20050817115636.4"><vh>class Writer (docutils.writers.Writer)</vh>
+<v t="ekr.20050817115636.5"><vh>&lt;&lt; class Writer declarations &gt;&gt;</vh></v>
+<v t="ekr.20050817115636.6"><vh>__init__ (Writer)</vh></v>
+<v t="ekr.20050820092312"><vh>createParagraphsFromIntermediateFile</vh></v>
+<v t="ekr.20050817115636.8"><vh>createPDF_usingPlatypus</vh></v>
+<v t="ekr.20050817115636.9"><vh>lower</vh></v>
+<v t="ekr.20050817115636.7"><vh>translate</vh></v>
+</v>
+<v t="ekr.20050820100547"><vh>class dummyPDFTranslator</vh>
+<v t="ekr.20050820101355"><vh>   __init__ (dummyPDFTranslator)</vh></v>
+<v t="ekr.20050820103029"><vh>as_what</vh></v>
+<v t="ekr.20050820101522"><vh>encode</vh></v>
+<v t="ekr.20050820101355.1"><vh>visit/depart_document</vh></v>
+<v t="ekr.20050820094818"><vh>buildFromIntermediateFile</vh></v>
+<v t="ekr.20050820092312.1"><vh>putParaFromIntermediateFile</vh></v>
+</v>
+<v t="ekr.20050817120850.10"><vh>class PDFTranslator (docutils.nodes.NodeVisitor)</vh>
+<v t="ekr.20050817120850.11"><vh>   __init__ (PDFTranslator)</vh></v>
+<v t="ekr.20050818094118.2"><vh>Complex</vh>
+<v t="ekr.20050818090152" a="E"><vh>footnotes</vh>
+<v t="ekr.20050818090152.1" a="E"><vh>footnote_reference</vh>
 <v t="ekr.20050817120850.98"><vh>visit_footnote_reference</vh></v>
 <v t="ekr.20050817120850.99"><vh>depart_footnote_reference</vh></v>
-<v t="ekr.20050817120850.100"><vh>visit_hint</vh></v>
-<v t="ekr.20050817120850.101"><vh>depart_hint</vh></v>
-<v t="ekr.20050817120850.102"><vh>visit_image</vh></v>
-<v t="ekr.20050817120850.103"><vh>depart_image</vh></v>
-<v t="ekr.20050817120850.104"><vh>visit_important</vh></v>
-<v t="ekr.20050817120850.105"><vh>depart_important</vh></v>
-<v t="ekr.20050817120850.106"><vh>visit_interpreted</vh></v>
-<v t="ekr.20050817120850.107"><vh>depart_interpreted</vh></v>
-<v t="ekr.20050817120850.108"><vh>visit_label</vh></v>
-<v t="ekr.20050817120850.109"><vh>depart_label</vh></v>
-<v t="ekr.20050817120850.110"><vh>visit_legend</vh></v>
-<v t="ekr.20050817120850.111"><vh>depart_legend</vh></v>
-<v t="ekr.20050817120850.112"><vh>visit_list_item</vh></v>
-<v t="ekr.20050817120850.113"><vh>depart_list_item</vh></v>
-<v t="ekr.20050817120850.114"><vh>visit_literal</vh></v>
-<v t="ekr.20050817120850.115"><vh>depart_literal</vh></v>
-<v t="ekr.20050817120850.116"><vh>visit_literal_block</vh></v>
-<v t="ekr.20050817120850.117"><vh>depart_literal_block</vh></v>
-<v t="ekr.20050817120850.118"><vh>visit_meta</vh></v>
-<v t="ekr.20050817120850.119"><vh>depart_meta</vh></v>
-<v t="ekr.20050817120850.120"><vh>visit_note</vh></v>
-<v t="ekr.20050817120850.121"><vh>depart_note</vh></v>
-<v t="ekr.20050817120850.122"><vh>visit_option</vh></v>
-<v t="ekr.20050817120850.123"><vh>depart_option</vh></v>
-<v t="ekr.20050817120850.124"><vh>visit_option_argument</vh></v>
-<v t="ekr.20050817120850.125"><vh>depart_option_argument</vh></v>
-<v t="ekr.20050817120850.126"><vh>visit_option_group</vh></v>
-<v t="ekr.20050817120850.127"><vh>depart_option_group</vh></v>
-<v t="ekr.20050817120850.128"><vh>visit_option_list</vh></v>
-<v t="ekr.20050817120850.129"><vh>depart_option_list</vh></v>
-<v t="ekr.20050817120850.130"><vh>visit_option_list_item</vh></v>
-<v t="ekr.20050817120850.131"><vh>depart_option_list_item</vh></v>
-<v t="ekr.20050817120850.132"><vh>visit_option_string</vh></v>
-<v t="ekr.20050817120850.133"><vh>depart_option_string</vh></v>
-<v t="ekr.20050817120850.134"><vh>visit_organization</vh></v>
-<v t="ekr.20050817120850.135"><vh>depart_organization</vh></v>
-<v t="ekr.20050817120850.136"><vh>visit_paragraph</vh></v>
-<v t="ekr.20050817120850.137"><vh>depart_paragraph</vh></v>
-<v t="ekr.20050817120850.138"><vh>visit_problematic</vh></v>
-<v t="ekr.20050817120850.139"><vh>depart_problematic</vh></v>
-<v t="ekr.20050817120850.140"><vh>visit_raw</vh></v>
-<v t="ekr.20050817120850.141"><vh>visit_target</vh></v>
-<v t="ekr.20050817120850.142"><vh>depart_target</vh></v>
+</v>
+<v t="ekr.20050817120850.94" a="E"><vh>footnote &amp; helpers</vh>
+<v t="ekr.20050817120850.95"><vh>footnote_backrefs</vh></v>
+<v t="ekr.20050817120850.96"><vh>footnote_backrefs_depart</vh></v>
+</v>
+<v t="ekr.20050817120850.108"><vh>label</vh></v>
+</v>
+<v t="ekr.20050817142135.1"><vh>reference...</vh>
 <v t="ekr.20050817120850.143"><vh>visit_reference</vh></v>
 <v t="ekr.20050817120850.144"><vh>depart_reference</vh></v>
-<v t="ekr.20050817120850.145"><vh>visit_revision</vh></v>
-<v t="ekr.20050817120850.146"><vh>depart_revision</vh></v>
-<v t="ekr.20050817120850.147"><vh>visit_row</vh></v>
-<v t="ekr.20050817120850.148"><vh>depart_row</vh></v>
-<v t="ekr.20050817120850.149"><vh>visit_section</vh></v>
-<v t="ekr.20050817120850.150"><vh>depart_section</vh></v>
-<v t="ekr.20050817120850.151"><vh>visit_status</vh></v>
-<v t="ekr.20050817120850.152"><vh>depart_status</vh></v>
-<v t="ekr.20050817120850.153"><vh>visit_strong</vh></v>
-<v t="ekr.20050817120850.154"><vh>depart_strong</vh></v>
-<v t="ekr.20050817120850.155"><vh>visit_subtitle</vh></v>
-<v t="ekr.20050817120850.156"><vh>depart_subtitle</vh></v>
+</v>
+<v t="ekr.20050817120850.141"><vh>target</vh></v>
+<v t="ekr.20050817135706.1"><vh>title</vh>
 <v t="ekr.20050817120850.157"><vh>visit_title</vh></v>
 <v t="ekr.20050817120850.158"><vh>depart_title</vh></v>
-<v t="ekr.20050817120850.159"><vh>unimplemented_visit</vh></v>
-<v t="ekr.20050817120850.160"><vh>visit_topic</vh></v>
-<v t="ekr.20050817120850.161"><vh>depart_topic</vh></v>
-<v t="ekr.20050817120850.162"><vh>visit_generated</vh></v>
-<v t="ekr.20050817120850.163"><vh>depart_generated</vh></v>
+</v>
+</v>
+<v t="ekr.20050818105023" a="E"><vh>Helpers</vh>
+<v t="ekr.20050817120850.15"><vh> starttag</vh></v>
+<v t="ekr.20050817120850.12"><vh>as_what</vh></v>
+<v t="ekr.20050817120850.14"><vh>createParagraph</vh></v>
+<v t="ekr.20050818081715"><vh>dumpContext</vh></v>
+<v t="ekr.20050819072001"><vh>dumpNode</vh>
+<v t="ekr.20050819072001.1"><vh>&lt;&lt; define keys to be printed &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050817120850.13"><vh>encode</vh></v>
+<v t="ekr.20050818083045"><vh>inContext</vh></v>
+<v t="ekr.20050821153838"><vh>pdfMunge</vh></v>
+<v t="ekr.20050818022030"><vh>push, pop, peek</vh></v>
+<v t="ekr.20050818084920"><vh>putHead &amp; putTail</vh></v>
+</v>
+<v t="ekr.20050818130249"><vh>Simple...</vh>
+<v t="ekr.20050818090907"><vh> do nothings...</vh>
+<v t="ekr.20050817120850.32"><vh>authors</vh></v>
+<v t="ekr.20050817120850.34"><vh>block_quote</vh></v>
+<v t="ekr.20050817120850.39"><vh>caption</vh></v>
+<v t="ekr.20050817120850.42"><vh>citation</vh></v>
+<v t="ekr.20050817120850.44"><vh>citation_reference</vh></v>
+<v t="ekr.20050817120850.46"><vh>classifier</vh></v>
+<v t="ekr.20050817120850.48"><vh>colspec</vh></v>
+<v t="ekr.20050817120850.62"><vh>definition_list_item</vh></v>
+<v t="ekr.20050817120850.64"><vh>description</vh></v>
+<v t="ekr.20050817120850.74"><vh>document</vh></v>
+<v t="ekr.20050817120850.78"><vh>entry</vh></v>
+<v t="ekr.20050817120850.86"><vh>field_argument</vh></v>
+<v t="ekr.20050817120850.92"><vh>field_body</vh></v>
+<v t="ekr.20050817120850.162"><vh>generated</vh></v>
+<v t="ekr.20050817120850.102"><vh>image</vh></v>
+<v t="ekr.20050817120850.106"><vh>interpreted</vh></v>
+<v t="ekr.20050817120850.110"><vh>legend</vh></v>
+<v t="ekr.20050817120850.122"><vh>option</vh></v>
+<v t="ekr.20050817120850.124"><vh>option_argument</vh></v>
+<v t="ekr.20050817120850.126"><vh>option_group</vh></v>
+<v t="ekr.20050817120850.130"><vh>option_list_item</vh></v>
+<v t="ekr.20050817120850.132"><vh>option_string</vh></v>
+<v t="ekr.20050817120850.138"><vh>problematic</vh></v>
+<v t="ekr.20050817120850.28"><vh>system_message</vh></v>
+<v t="ekr.20050817120850.147"><vh>visit_row</vh></v>
+</v>
+<v t="ekr.20050817120850.18"><vh>admonitions...</vh>
+<v t="ekr.20050817120850.20"><vh>attention</vh></v>
+<v t="ekr.20050817120850.40"><vh>caution</vh></v>
+<v t="ekr.20050817120850.54"><vh>danger</vh></v>
+<v t="ekr.20050817120850.82"><vh>error</vh></v>
+<v t="ekr.20050817120850.100"><vh>hint</vh></v>
+<v t="ekr.20050817120850.105"><vh>important</vh></v>
+<v t="ekr.20050817120850.120"><vh>note</vh></v>
+</v>
+<v t="ekr.20050817120850.36"><vh>bullet_list</vh></v>
+<v t="ekr.20050817120850.58"><vh>definition</vh></v>
+<v t="ekr.20050817120850.60"><vh>definition_list</vh></v>
+<v t="ekr.20050817120850.66"><vh>docinfos...</vh>
+<v t="ekr.20050817120850.24"><vh>address</vh></v>
+<v t="ekr.20050817120850.22"><vh>author</vh></v>
+<v t="ekr.20050817120850.50"><vh>contact</vh></v>
+<v t="ekr.20050817120850.52"><vh>copyright</vh></v>
+<v t="ekr.20050817120850.56"><vh>date</vh></v>
+<v t="ekr.20050818094118.1"><vh>docinfo</vh></v>
+<v t="ekr.20050817120850.68"><vh>docinfo_item</vh></v>
+<v t="ekr.20050817120850.134"><vh>organization</vh></v>
+<v t="ekr.20050817120850.145"><vh>revision</vh></v>
+<v t="ekr.20050817120850.151"><vh>status</vh></v>
+<v t="ekr.20050817120850.26"><vh>version</vh></v>
+</v>
+<v t="ekr.20050817120850.76"><vh>emphasis</vh></v>
+<v t="ekr.20050817120850.80"><vh>enumerated_list</vh></v>
+<v t="ekr.20050817120850.88"><vh>field_list</vh></v>
+<v t="ekr.20050817120850.112"><vh>list_item</vh></v>
+<v t="ekr.20050817120850.128"><vh>option_list</vh></v>
+<v t="ekr.20050817142135"><vh>paragraph...</vh></v>
+<v t="ekr.20050817120850.153"><vh>strong</vh></v>
+<v t="ekr.20050817120850.155"><vh>subtitle</vh></v>
+<v t="ekr.20050817120850.30"><vh>term</vh></v>
+<v t="ekr.20050817135706"><vh>Text...</vh></v>
+<v t="ekr.20050817120850.160"><vh>topic</vh></v>
+</v>
+<v t="ekr.20050818094954"><vh>Unusual...</vh>
+<v t="ekr.20050818105023.1"><vh> Does not set context</vh>
+<v t="ekr.20050817120850.84"><vh>field</vh></v>
+<v t="ekr.20050817120850.90"><vh>field_name</vh></v>
+</v>
+<v t="ekr.20050818094954.1"><vh> Raises SkipNode</vh>
+<v t="ekr.20050817120850.165"><vh>comment</vh></v>
+<v t="ekr.20050817120850.116"><vh> literal_blocks...</vh>
+<v t="ekr.20050817120850.70"><vh>doctest_block</vh></v>
+<v t="ekr.20050817120850.72"><vh>line_block</vh></v>
+</v>
+</v>
 <v t="ekr.20050817120850.164"><vh>invisible_visit</vh></v>
-<v t="ekr.20050817120850.165"><vh>visit_comment</vh></v>
+<v t="ekr.20050817120850.114"><vh>literal (only changes context)</vh></v>
+<v t="ekr.20050817120850.118"><vh>meta (appends to self.head)</vh></v>
+<v t="ekr.20050817120850.149"><vh>section</vh></v>
+<v t="ekr.20050817120850.159"><vh>unimplemented_visit</vh></v>
+<v t="ekr.20050817120850.140"><vh>visit_raw</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -16567,24 +16840,32 @@ leouserz
 <t tx="ekr.20050817115636.2">import sys
 sys.path.append(r'c:\reportlab_1_20') 
 
-import leoGlobals as g # EKR
+if 0: # This dependency could easily be removed.
+    # Used only for tracing and error reporting.
+    import leoGlobals as g
+    
+# from reportlab.lib.enums import *
+# from reportlab.platypus import *
 
+# Formatting imports...
+import docutils
+import reportlab.platypus
+import reportlab.platypus.para
+import stylesheet # To do: get this a better way.
+
+# General imports...
+import StringIO
 import time
-from types import ListType, TupleType, UnicodeType
-from docutils import writers, nodes, languages
+import types
 
-from stylesheet import getStyleSheet # Got this module from same place as rlpdf.py
 
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.enums import *
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import *
-from reportlab.platypus.para import Paragraph
-from reportlab.lib import colors
-from reportlab.lib.units import inch
 
-from StringIO import StringIO</t>
-<t tx="ekr.20050817115636.4">class Writer(writers.Writer):
+
+
+
+
+</t>
+<t tx="ekr.20050817115636.4">class Writer (docutils.writers.Writer):
 	
 	&lt;&lt; class Writer declarations &gt;&gt;
 
@@ -16621,25 +16902,55 @@ output = None
 """Final translated form of `document`."""</t>
 <t tx="ekr.20050817115636.6">def __init__(self):
 
-    writers.Writer.__init__(self)
-    self.translator_class = PDFTranslator
-    g.trace('(Writer)')
-</t>
+    docutils.writers.Writer.__init__(self)
+
+    # self.translator_class = PDFTranslator</t>
 <t tx="ekr.20050817115636.7">def translate(self):
     
-    visitor = self.translator_class(self.document)
+    '''Do final translation of self.document into self.output.'''
+    
+    if 1: # Production code.
+        visitor = PDFTranslator(self,self.document)
+    else: # Use intermediate file, and dummy pdf translator.
+        # We can modify the intermediate file by hand to test proposed code generation.
+        try:
+            filename = 'intermediateFile.txt'
+            s = file(filename).read()
+            # g.trace('creating .pdf file from %s...' % filename)
+            visitor = dummyPDFTranslator(self,self.document,s)
+        except IOError:
+            # g.trace('can not open %s' % filename)
+            return
+
+    # Create a list of paragraphs using Platypus.
     self.document.walkabout(visitor)
-    self.story = visitor.as_what()
-    self.output = self.record()</t>
-<t tx="ekr.20050817115636.8">def record(self):
+    story = visitor.as_what()
+    
+    if 0: # Not useful: story is a list of reportlab.platypus.para.Para objects.
+        # Use the trace in createParagraph instead.
+        g.trace('story','*'*40)
+        print story        
+    
+    # Generate self.output.  Gets sent to reportlab.
+    self.output = self.createPDF_usingPlatypus(story)
+    # Solve the newline problem by brute force.
+    self.output = self.output.replace('\n\r','\n')
+    self.output = self.output.replace('\r\n','\n')
+    if 0: # This is the actual .pdf output returned from doc.build(story)
+        # doc is a Platypus (and this reportlab) document.
+        g.trace('output','*'*40)
+        lines = g.splitLines(self.output)
+        g.printList(lines)</t>
+<t tx="ekr.20050817115636.8">def createPDF_usingPlatypus (self,story):
 
-    from reportlab.platypus import SimpleDocTemplate
+    out = StringIO.StringIO()
 
-    out = StringIO()
-    doc = SimpleDocTemplate(out, pagesize=A4)
-    doc.build(self.story)
-    return out.getvalue()
-</t>
+    doc = reportlab.platypus.SimpleDocTemplate(out,
+        pagesize=reportlab.lib.pagesizes.A4)
+
+    doc.build(story)
+
+    return out.getvalue()</t>
 <t tx="ekr.20050817115636.9">def lower(self):
 
     return 'pdf'</t>
@@ -16649,19 +16960,20 @@ output = None
 
 # Note: you must copy this file to the Python/Lib/site-packages/docutils/writers folder.
 
-# This file is derived from rlpdf.py at 
-# The copyright below applies only to this file.
-
 @language python
 @tabwidth -4
 
+&lt;&lt; about this code &gt;&gt;
 &lt;&lt; copyright &gt;&gt;
-&lt;&lt; what I did &gt;&gt;
+&lt;&lt; version history &gt;&gt;
+&lt;&lt; to do &gt;&gt;
+
+__version__ = '0.2'
 __docformat__ = 'reStructuredText'
 &lt;&lt; imports &gt;&gt;
 
 @others</t>
-<t tx="ekr.20050817120850.10">class PDFTranslator(nodes.NodeVisitor):
+<t tx="ekr.20050817120850.10">class PDFTranslator (docutils.nodes.NodeVisitor):
 
 	@others
 
@@ -16691,26 +17003,29 @@ __docformat__ = 'reStructuredText'
     depart_tip = invisible_visit
     depart_warning = invisible_visit
     depart_sidebar = invisible_visit</t>
-<t tx="ekr.20050817120850.11">def __init__(self, doctree):
-    
-    g.trace('PDFTranslator')
+<t tx="ekr.20050817120850.11">def __init__(self, writer,doctree):
 
+    self.writer = writer
     self.settings = settings = doctree.settings
-    self.styleSheet = getStyleSheet()
-    g.trace(self.styleSheet)
-    nodes.NodeVisitor.__init__(self, doctree)
-    self.language = languages.get_language(doctree.settings.language_code)
-    self.in_docinfo = None
-    self.head = []
-    self.body = []
+    self.styleSheet = stylesheet.getStyleSheet()
+    docutils.nodes.NodeVisitor.__init__(self, doctree) # Init the base class.
+    self.language = docutils.languages.get_language(doctree.settings.language_code)
+    
+    self.in_docinfo = False
+    self.head = [] # Set only by meta() method.  
+    self.body = [] # The body text being accumulated.
     self.foot = []
     self.sectionlevel = 0
     self.context = []
-    self.topic_class = ''
+    
     self.story = []
-    self.bulletText = '\267'	# maybe move this into stylesheet.
-    self.bulletlevel = 0
+    self.bulletText = '\267'
+        # maybe move this into stylesheet.
+        # This looks like the wrong glyph.
 
+    if 0: # no longer used.
+        self.topic_class = ''
+        self.bulletlevel = 0
 </t>
 <t tx="ekr.20050817120850.12">def as_what(self):
 
@@ -16719,7 +17034,7 @@ __docformat__ = 'reStructuredText'
 <t tx="ekr.20050817120850.13">def encode(self, text):
 
     """Encode special characters in `text` &amp; return."""
-    if type(text) is UnicodeType:
+    if type(text) is types.UnicodeType:
         text = text.replace(u'\u2020', u' ')
         text = text.replace(u'\xa0', u' ')
         text = text.encode('utf-8')
@@ -16730,22 +17045,42 @@ __docformat__ = 'reStructuredText'
     # footnotes have character values above 128 ?
     return text
 </t>
-<t tx="ekr.20050817120850.14">def append_para (self,text,in_style='Normal',bulletText=None):
+<t tx="ekr.20050817120850.14">def createParagraph (self,text,style='Normal',bulletText=None):
 
-    if type(text) in (ListType,TupleType):
+    if type(text) in (types.ListType,types.TupleType):
         text = ''.join([self.encode(t) for t in text])
 
-    try:
-        style = self.styleSheet [in_style.strip()] ### EKR: added strip.
-    except KeyError:
-        g.trace('in_style not found',repr(in_style),'using "Normal"')
-        style = self.styleSheet ['Normal'] ### EKR
+    if not style.strip(): ### EKR
+        style = 'Normal'
+        
+    if 0:
+        s = text.split('&gt;')
+        s = '&gt;\n'.join(s)
+        print
+        if 1: # just print the text.
+            print s
+        else:
+            g.trace('%8s\n\n%s' % (style,s))
+        print
 
-    self.story.append(
-        Paragraph(self.encode(text),style,
-        bulletText = bulletText, context = self.styleSheet))
-</t>
-<t tx="ekr.20050817120850.15">def starttag (self,node,tagname,suffix='\n',**attributes):
+    style = self.styleSheet [style]
+    
+    try:
+        self.story.append(
+            reportlab.platypus.para.Paragraph (
+                self.encode(text), style,
+                bulletText = bulletText,
+                context = self.styleSheet))
+    except Exception:
+        g.es_print('Exception in createParagraph')
+        g.es_exception()
+        self.dumpContext()
+        raise</t>
+<t tx="ekr.20050817120850.15"># The suffix is always '\n' except for a cant-happen situation.
+
+def starttag (self,node,tagname,suffix='\n',caller='',**attributes):
+    
+    # g.trace(repr(attributes))
     atts = {}
     for (name,value) in attributes.items():
         atts [name.lower()] = value
@@ -16756,679 +17091,743 @@ __docformat__ = 'reStructuredText'
     for att in ('id',): # node attribute overrides
         if node.has_key(att):
             atts [att] = node [att]
-    attlist = atts.items()
-    attlist.sort()
+    
+    attlist = atts.items() ; attlist.sort()
     parts = [tagname]
+    # Convert the attributes in attlist to a single string.
     for name, value in attlist:
+        # g.trace('attlist element:',repr(name),repr(value))
         if value is None: # boolean attribute
-            parts.append(name.lower())
-        elif isinstance(value,ListType):
+            parts.append(name.lower().strip())
+        elif isinstance(value,types.ListType):
             values = [str(v) for v in value]
-            parts.append('%s="%s"' % (name.lower(),
-                                      self.encode(' '.join(values))))
+            val = ' '.join(values).strip()
+            parts.append('%s="%s"' % (
+                name.lower(), self.encode(val)))
         else:
-            parts.append('%s="%s"' % (name.lower(),
-                                      self.encode(str(value))))
-    return '&lt;%s&gt;%s' % (' '.join(parts),suffix)</t>
-<t tx="ekr.20050817120850.16">def visit_Text(self, node):
-    self.context.append('#text')
-    self.body.append(node.astext())
-</t>
-<t tx="ekr.20050817120850.17">def depart_Text(self, node):
-    self.context.pop()
-</t>
+            parts.append('%s="%s"' % (
+                name.lower(),self.encode(str(value).strip())))
+
+    val = '&lt;%s&gt;%s' % (' '.join(parts),suffix)
+    # g.trace('%-24s %s' % (caller,val))
+    return val</t>
 <t tx="ekr.20050817120850.18">def visit_admonition(self, node, name):
     pass
-</t>
-<t tx="ekr.20050817120850.19">def depart_admonition(self):
+
+def depart_admonition(self):
     pass
 </t>
 <t tx="ekr.20050817120850.20">def visit_attention(self, node):
+
     self.visit_admonition(node, 'attention')
-</t>
-<t tx="ekr.20050817120850.21">def depart_attention(self, node):
+
+def depart_attention(self, node):
+
     self.depart_admonition()
 </t>
 <t tx="ekr.20050817120850.22">def visit_author(self, node):
     self.visit_docinfo_item(node, 'author')
-</t>
-<t tx="ekr.20050817120850.23">def depart_author(self, node):
+
+def depart_author(self, node):
     self.depart_docinfo_item()
 </t>
 <t tx="ekr.20050817120850.24">def visit_address(self, node):
     self.visit_docinfo_item(node, 'address')
-</t>
-<t tx="ekr.20050817120850.25">def depart_address(self, node):
+
+def depart_address(self, node):
     self.depart_docinfo_item()
 </t>
 <t tx="ekr.20050817120850.26">def visit_version(self, node):
     self.visit_docinfo_item(node, 'version')
-</t>
-<t tx="ekr.20050817120850.27">def depart_version(self, node):
+
+def depart_version(self, node):
     self.depart_docinfo_item()
 </t>
 <t tx="ekr.20050817120850.28">def visit_system_message(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.29">def depart_system_message(self, node):
+
+def depart_system_message(self, node):
     pass
 </t>
-<t tx="ekr.20050817120850.30">def visit_term(self, node):
-    self.context.append('dt')
-    self.body.append(self.starttag(node, 'dt', ''))
-</t>
-<t tx="ekr.20050817120850.31">def depart_term(self, node):
-    # Closes on visit_definition
-    self.context.pop()
-</t>
+<t tx="ekr.20050817120850.30">def visit_term (self,node):
+
+    self.push(kind='dt')
+
+    self.body.append(
+        self.starttag(node,'dt',suffix='',caller='visit_term'))
+
+def depart_term (self,node):
+
+    self.pop('dt')</t>
 <t tx="ekr.20050817120850.32">def visit_authors(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.33">def depart_authors(self, node):
+
+def depart_authors(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.34">def visit_block_quote(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.35">def depart_block_quote(self, node):
-    pass
-</t>
+    
+def depart_block_quote(self, node):
+    pass</t>
 <t tx="ekr.20050817120850.36">def visit_bullet_list(self, node):
-    self.context.append(len(self.body))
-    self.context.append('ul')
+    
+    self.push(kind='ul',start=len(self.body))
+
+    # At present self.bulletText is a constant.
     self.body.append('&lt;ul bulletText="%s"&gt;' % self.bulletText)
-</t>
-<t tx="ekr.20050817120850.37">def depart_bullet_list(self, node):
-    self.context.pop()
+
+def depart_bullet_list(self, node):
+    
+    b = self.pop('ul')
+
     self.body.append('&lt;/ul&gt;')
-    start = self.context.pop()
-    if not 'ul' in self.context:
-        self.append_para(self.body[start:])
-        self.body = self.body[:start]
-</t>
-<t tx="ekr.20050817120850.38">def visit_caption(self, node):
+    
+    if not self.inContext('ul'):
+        self.putTail(b.start)</t>
+<t tx="ekr.20050817120850.39">def visit_caption(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.39">def depart_caption(self, node):
+
+def depart_caption(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.40">def visit_caution(self, node):
     self.visit_admonition(node, 'caution')
-</t>
-<t tx="ekr.20050817120850.41">def depart_caution(self, node):
+
+def depart_caution(self, node):
     self.depart_admonition()
 </t>
 <t tx="ekr.20050817120850.42">def visit_citation(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.43">def depart_citation(self, node):
+
+def depart_citation(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.44">def visit_citation_reference(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.45">def depart_citation_reference(self, node):
+
+def depart_citation_reference(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.46">def visit_classifier(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.47">def depart_classifier(self, node):
+
+def depart_classifier(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.48">def visit_colspec(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.49">def depart_colspec(self, node):
+
+def depart_colspec(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.50">def visit_contact(self, node):
+    
     self.visit_docinfo_item(node, 'contact')
-</t>
-<t tx="ekr.20050817120850.51">def depart_contact(self, node):
+
+def depart_contact(self, node):
+
     self.depart_docinfo_item()
 </t>
 <t tx="ekr.20050817120850.52">def visit_copyright(self, node):
+    
     self.visit_docinfo_item(node, 'copyright')
-</t>
-<t tx="ekr.20050817120850.53">def depart_copyright(self, node):
+
+def depart_copyright(self, node):
+
     self.depart_docinfo_item()
 </t>
 <t tx="ekr.20050817120850.54">def visit_danger(self, node):
+    
     self.visit_admonition(node, 'danger')
-</t>
-<t tx="ekr.20050817120850.55">def depart_danger(self, node):
+
+def depart_danger(self, node):
+
     self.depart_admonition()
 </t>
 <t tx="ekr.20050817120850.56">def visit_date(self, node):
+    
     self.visit_docinfo_item(node, 'date')
-</t>
-<t tx="ekr.20050817120850.57">def depart_date(self, node):
+
+def depart_date(self, node):
+    
     self.depart_docinfo_item()
+
 </t>
 <t tx="ekr.20050817120850.58">def visit_definition(self, node):
+    
+    self.push(kind='dd')
 
     self.body.append('&lt;/dt&gt;')
-    self.context.append('dd')
-    self.body.append(self.starttag(node, 'dd'))
-</t>
-<t tx="ekr.20050817120850.59">def depart_definition(self, node):
-    self.context.pop()
-    self.body.append('&lt;/dd&gt;')
-</t>
+    self.body.append(
+        self.starttag(node,'dd',caller='visit_destination'))
+
+def depart_definition(self, node):
+    
+    self.pop('dd')
+    self.body.append('&lt;/dd&gt;')</t>
 <t tx="ekr.20050817120850.60">def visit_definition_list(self, node):
-    self.context.append(len(self.body))
-    self.context.append('dl')
+    
+    self.push(kind='dl',start=len(self.body))
+    
     self.body.append(self.starttag(node, 'dl'))
-</t>
-<t tx="ekr.20050817120850.61">def depart_definition_list(self, node):
-    self.context.pop()
+
+def depart_definition_list(self, node):
+    
+    b = self.pop('dl')
+
     self.body.append('&lt;/dl&gt;')
-    start = self.context.pop()
-    if not 'dl' in self.context:
-        self.append_para(self.body[start:])
-        self.body = self.body[:start]
+
+    if not self.inContext('dl'):
+        self.putTail(b.start)
 </t>
 <t tx="ekr.20050817120850.62">def visit_definition_list_item(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.63">def depart_definition_list_item(self, node):
-    pass
-</t>
+
+def depart_definition_list_item(self, node):
+    pass</t>
 <t tx="ekr.20050817120850.64">def visit_description(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.65">def depart_description(self, node):
+
+def depart_description(self, node):
     pass
 </t>
-<t tx="ekr.20050817120850.66">def visit_docinfo(self, node):
-    self.context.append(len(self.body))
-    self.in_docinfo = 1
-</t>
-<t tx="ekr.20050817120850.67">def depart_docinfo(self, node):
-    start = self.context.pop()
-    docinfo = self.body[start:]
-    self.body = self.body[:start]
-    self.append_para(docinfo)
-    self.in_docinfo = None
-</t>
+<t tx="ekr.20050817120850.66"></t>
 <t tx="ekr.20050817120850.68">def visit_docinfo_item(self, node, name):
     
-    self.body.append('&lt;para style="DocInfo"&gt;&lt;b&gt;%s: &lt;/b&gt;' % self.language.labels[name])
+    self.body.append(
+        '&lt;para style="DocInfo"&gt;&lt;b&gt;%s: &lt;/b&gt;' % (
+            self.language.labels[name]))
 
-</t>
-<t tx="ekr.20050817120850.69">def depart_docinfo_item(self):
+def depart_docinfo_item(self):
+    
     self.body.append('&lt;/para&gt;')
 </t>
 <t tx="ekr.20050817120850.70">def visit_doctest_block(self, node):
+    
     self.visit_literal_block(node)
-</t>
-<t tx="ekr.20050817120850.71">def depart_doctest_block(self, node):
+
+def depart_doctest_block(self, node):
+    
     self.depart_literal_block(node)
+
 </t>
 <t tx="ekr.20050817120850.72">def visit_line_block(self, node):
     self.visit_literal_block(node)
-</t>
-<t tx="ekr.20050817120850.73">def depart_line_block(self, node):
+
+def depart_line_block(self, node):
     self.depart_literal_block(node)
 </t>
 <t tx="ekr.20050817120850.74">def visit_document(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.75">def depart_document(self, node):
-    pass
-</t>
+    
+def depart_document(self, node):
+    pass</t>
 <t tx="ekr.20050817120850.76">def visit_emphasis(self, node):
-    self.context.append('i')
+    
+    self.push(kind='i')
+    
     self.body.append('&lt;i&gt;')
-</t>
-<t tx="ekr.20050817120850.77">def depart_emphasis(self, node):
-    self.context.pop()
+
+def depart_emphasis(self, node):
+    
+    self.pop('i')
+
     self.body.append('&lt;/i&gt;')
 </t>
 <t tx="ekr.20050817120850.78">def visit_entry(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.79">def depart_entry(self, node):
+
+def depart_entry(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.80">def visit_enumerated_list(self, node):
-    self.context.append(len(self.body))
-    self.context.append('ol')
+    
+    self.push(kind='ol',start=len(self.body))
+
     self.body.append('&lt;ol&gt;')
-</t>
-<t tx="ekr.20050817120850.81">def depart_enumerated_list(self, node):
-    self.context.pop()
+
+def depart_enumerated_list(self, node):
+    
+    b = self.pop('ol')
+
     self.body.append('&lt;/ol&gt;')
-    start = self.context.pop()
-    if not 'ol' in self.context:
-        self.append_para(self.body[start:])
-        self.body = self.body[:start]
-</t>
+
+    if not self.inContext('ol'):
+        self.putTail(b.start)</t>
 <t tx="ekr.20050817120850.82">def visit_error(self, node):
     self.visit_admonition(node, 'error')
-</t>
-<t tx="ekr.20050817120850.83">def depart_error(self, node):
-    self.depart_admonition()
-</t>
+
+def depart_error(self, node):
+    self.depart_admonition()</t>
 <t tx="ekr.20050817120850.84">def visit_field(self, node):
+    
     self.body.append('&lt;para&gt;')
-</t>
-<t tx="ekr.20050817120850.85">def depart_field(self, node):
+
+def depart_field(self, node):
+
     self.body.append('&lt;/para&gt;')
 </t>
 <t tx="ekr.20050817120850.86">def visit_field_argument(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.87">def depart_field_argument(self, node):
+
+def depart_field_argument(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.88">def visit_field_list(self, node):
-    self.context.append(len(self.body))
-    self.body.append('&lt;para&gt;')
-</t>
-<t tx="ekr.20050817120850.89">def depart_field_list(self, node):
-    start = self.context.pop()
+    
+    self.push(kind='&lt;para&gt;',start=len(self.body))
+
+def depart_field_list(self, node):
+    
+    b = self.pop('&lt;para&gt;')
+    
     self.body.append('&lt;/para&gt;')
-    self.append_para(self.body[start:])
-    self.body = self.body[:start]
-</t>
+    
+    self.putTail(b.start)</t>
 <t tx="ekr.20050817120850.90">def visit_field_name(self, node):
+
     self.body.append('&lt;b&gt;')
-</t>
-<t tx="ekr.20050817120850.91">def depart_field_name(self, node):
-    self.body.append(': &lt;/b&gt;')
-</t>
+
+def depart_field_name(self, node):
+
+    self.body.append(': &lt;/b&gt;')</t>
 <t tx="ekr.20050817120850.92">def visit_field_body(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.93">def depart_field_body(self, node):
+
+def depart_field_body(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.94">def visit_footnote(self, node):
     
-    self.context.append('footnotes')
+    self.push(kind='footnotes',context=[])
+
     self.footnote_backrefs(node)
 
-</t>
-<t tx="ekr.20050817120850.95">def footnote_backrefs (self,node):
-    if self.settings.footnote_backlinks and node.hasattr('backrefs'):
-        backrefs = node ['backrefs']
-        if len(backrefs) == 1:
-            self.context.append("%s%s" % (
-                self.starttag({},'setLink','',destination=node['id']),
-                '&lt;/setLink&gt;'))
-            self.context.append("%s%s" % (
-                self.starttag({},'link','',destination=backrefs[0]),
-                '&lt;/link&gt;'))
-        else:
-            i = 1
-            backlinks = []
-            for backref in backrefs:
-                backlinks.append("%s%s%s" % (
-                    self.starttag({},'link','',destination=backref),
-                    i, '&lt;/link&gt;'))
-                i += 1
-            self.context.append(' &lt;i&gt;(%s)&lt;/i&gt; ' % ', '.join(backlinks))
-            self.context.append("%s%s" % (
-                self.starttag({},'setLink','',destination=node['id']),
-                '&lt;/setLink&gt;'))
-    else:
-        self.context.append("%s%s" % (
-            self.starttag({},'setLink','',destination=node['id']),
-            '&lt;/setLink&gt;'))
-        self.context.append('')
-</t>
-<t tx="ekr.20050817120850.96">def footnote_backrefs_depart(self, node):
-    if not self.context and self.body:
-        self.append_para(self.body)
-        self.body = []
-</t>
-<t tx="ekr.20050817120850.97">def depart_footnote(self, node):
-    self.context.pop()
+def depart_footnote(self, node):
+    
+    self.pop('footnotes')
+
     self.footnote_backrefs_depart(node)
 </t>
-<t tx="ekr.20050817120850.98">def visit_footnote_reference(self, node):
-    # for backrefs
-    if self.settings.footnote_backlinks and node.has_key('id'):
-        self.body.append(self.starttag(node, 'setLink', '', destination=node['id']))
-        self.context.append('&lt;/setLink&gt;')
-    else:
-        self.context.append('')
+<t tx="ekr.20050817120850.95">@ Bug fixes, EKR 8/22/05:
+    - Get attributes from node.attributes, not node.
+    - The proper key is 'ids', not 'id'
+Warning: this does not work for auto-numbered footnotes.
+@c
 
-    href = ''
-    if node.has_key('refid'):
-        href = node['refid']
-    elif node.has_key('refname'):
-        href = self.document.nameids[node['refname']]
+def footnote_backrefs (self,node):
+    
+    '''Create b.link and b.setLink for visit/depart_label.'''
+    
+    # self.dumpNode(node,tag='backrefs-node')
+    
+    b = self.peek('footnotes')
+    a = node.attributes ; backrefs = a.get('backrefs',[]) # EKR.
+
+    # Set b.setLink.
+    b.setLink = self.starttag(
+        {},'setLink','',destination=a['ids']) # EKR.
+
+    # Set b.links.
+    b.links = []
+    if self.settings.footnote_backlinks:
+        for backref in backrefs:
+            b.links.append(
+                self.starttag(
+                    {},'link',suffix='',destination=backref))</t>
+<t tx="ekr.20050817120850.96">def footnote_backrefs_depart(self, node):
+
+    if not self.context and self.body:
+        self.createParagraph(self.body)
+        self.body = []
+</t>
+<t tx="ekr.20050817120850.98">@ Bug fixes, EKR 8/22/05:
+    - Get attributes from node.attributes, not node.
+    - The proper key is 'ids', not 'id'
+@c
+
+def visit_footnote_reference (self,node):
+    
+    '''Generate code for a footnote reference.'''
+    
+    # self.dumpNode(node,tag='footnote-ref-node')
+
+    markup = [] # The terminating markup to be supplied by depart_footnote_reference.
+    a = node.attributes # EKR.
+    if self.settings.footnote_backlinks and a.get('ids'):
+        self.body.append(
+            self.starttag(node,'setLink','',destination=a['ids']))
+        markup.append('&lt;/setLink&gt;')
+    
+    if   node.hasattr('refid'):   href = a ['refid']
+    elif node.hasattr('refname'): href = self.document.nameids [a ['refname']]
+    else:                         href = ''
+    # g.trace('href:',href)
+
     format = self.settings.footnote_references
     if format == 'brackets':
-        suffix = '['
-        self.context.append(']')
+        suffix = '[' ; markup.append(']')
     elif format == 'superscript':
-        suffix = '&lt;super&gt;'
-        self.context.append('&lt;/super&gt;')
+        suffix = '&lt;super&gt;' ; markup.append('&lt;/super&gt;')
     else: # shouldn't happen
-        suffix = '???'
-        self.content.append('???')
-    self.body.append(self.starttag(node, 'link', suffix, destination=href))</t>
+        suffix = None
+
+    if suffix:
+        self.body.append(
+            self.starttag(node,'link',suffix,destination=href))
+        markup.append('&lt;/link&gt;')
+
+    markup.reverse()
+    self.push(kind='footnote-ref',markup=markup)</t>
 <t tx="ekr.20050817120850.99">def depart_footnote_reference(self, node):
-    self.body.append(self.context.pop())
-    self.body.append('&lt;/link&gt;')
-    self.body.append(self.context.pop())
-</t>
+    
+    b = self.pop('footnote-ref')
+    
+    for z in b.markup:
+        self.body.append(z)</t>
 <t tx="ekr.20050817120850.100">def visit_hint(self, node):
     self.visit_admonition(node, 'hint')
-</t>
-<t tx="ekr.20050817120850.101">def depart_hint(self, node):
+
+def depart_hint(self, node):
     self.depart_admonition()
 </t>
 <t tx="ekr.20050817120850.102">def visit_image(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.103">def depart_image(self, node):
+
+def depart_image(self, node):
     pass
 </t>
-<t tx="ekr.20050817120850.104">def visit_important(self, node):
+<t tx="ekr.20050817120850.105">def visit_important(self, node):
     self.visit_admonition(node, 'important')
-</t>
-<t tx="ekr.20050817120850.105">def depart_important(self, node):
+
+def depart_important(self, node):
     self.depart_admonition()
 </t>
 <t tx="ekr.20050817120850.106">def visit_interpreted(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.107">def depart_interpreted(self, node):
+
+def depart_interpreted(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.108">def visit_label(self, node):
-    if 'footnotes' in self.context:
+    
+    b = self.inContext('footnotes')
+    if b:
+        self.body.append(b.setLink)
+        self.body.append('&lt;/setLink&gt;')
+        # Start all links.
+        for link in b.links:
+            self.body.append(link)
         self.body.append('[')
-</t>
-<t tx="ekr.20050817120850.109">def depart_label(self, node):
-    if 'footnotes' in self.context:
+
+def depart_label(self, node):
+    
+    b = self.inContext('footnotes')
+    if b:
         self.body.append(']')
-        self.body.append(self.context.pop())
-        self.body.append(self.context.pop())
-    self.body.append('   ')
-</t>
+        # End all links.
+        for link in b.links:
+            self.body.append('&lt;/link&gt;')
+        # Who knows why this is here...
+        self.body.append('   ')</t>
 <t tx="ekr.20050817120850.110">def visit_legend(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.111">def depart_legend(self, node):
+
+def depart_legend(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.112">def visit_list_item(self, node):
-    self.context.append('li')
+    
+    self.push(kind='li')
+    
     self.body.append('&lt;li&gt;')
-</t>
-<t tx="ekr.20050817120850.113">def depart_list_item(self, node):
-    self.context.pop()
+
+def depart_list_item(self, node):
+    
+    self.pop('li')
+
     self.body.append('&lt;/li&gt;')
 </t>
 <t tx="ekr.20050817120850.114">def visit_literal(self, node):
-    self.context.append('literal')
-</t>
-<t tx="ekr.20050817120850.115">def depart_literal(self, node):
-    self.context.pop()
-</t>
+    
+    self.push(kind='literal')
+    
+def depart_literal(self, node):
+    
+    self.pop('literal')</t>
 <t tx="ekr.20050817120850.116">def visit_literal_block(self, node):
-    self.story.append(Preformatted(node.astext(), self.styleSheet['Code']))
-    raise nodes.SkipNode
-</t>
-<t tx="ekr.20050817120850.117">def depart_literal_block(self, node):
-    pass
-</t>
+    
+    self.story.append(
+        reportlab.platypus.Preformatted(
+            node.astext(),self.styleSheet['Code']))
+
+    raise docutils.nodes.SkipNode
+
+def depart_literal_block(self, node):
+    pass</t>
 <t tx="ekr.20050817120850.118">def visit_meta(self, node):
-    self.head.append(self.starttag(node, 'meta', **node.attributes))
-</t>
-<t tx="ekr.20050817120850.119">def depart_meta(self, node):
-    pass
-</t>
+    
+    g.trace(**node.attributes)
+
+    self.head.append(
+        self.starttag(node, 'meta', **node.attributes))
+
+def depart_meta(self, node):
+
+    pass</t>
 <t tx="ekr.20050817120850.120">def visit_note(self, node):
+    
     self.visit_admonition(node, 'note')
-</t>
-<t tx="ekr.20050817120850.121">def depart_note(self, node):
+
+def depart_note(self, node):
+
     self.depart_admonition()
 </t>
 <t tx="ekr.20050817120850.122">def visit_option(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.123">def depart_option(self, node):
+
+def depart_option(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.124">def visit_option_argument(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.125">def depart_option_argument(self, node):
+
+def depart_option_argument(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.126">def visit_option_group(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.127">def depart_option_group(self, node):
+
+def depart_option_group(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.128">def visit_option_list(self, node):
-    self.context.append(len(self.body))
-    self.context.append('option_list')
-</t>
-<t tx="ekr.20050817120850.129">def depart_option_list(self, node):
-    self.context.pop()
-    start = self.context.pop()
-    if not 'option_list' in self.context:
-        self.append_para(self.body[start:])
-        self.body = self.body[:start]
-</t>
+    
+    self.push(kind='option-list',start=len(self.body))
+
+def depart_option_list(self, node):
+    
+    b = self.pop('option-list')
+
+    if not self.inContext('option_list'):
+        self.putTail(b.start)
+        </t>
 <t tx="ekr.20050817120850.130">def visit_option_list_item(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.131">def depart_option_list_item(self, node):
+
+def depart_option_list_item(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.132">def visit_option_string(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.133">def depart_option_string(self, node):
+
+def depart_option_string(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.134">def visit_organization(self, node):
+    
     self.visit_docinfo_item(node, 'organization')
-</t>
-<t tx="ekr.20050817120850.135">def depart_organization(self, node):
+
+def depart_organization(self, node):
+
     self.depart_docinfo_item()
-</t>
-<t tx="ekr.20050817120850.136">def visit_paragraph(self, node):
-    self.context.append(len(self.body))
-    self.context.append('p')
-</t>
-<t tx="ekr.20050817120850.137">def depart_paragraph(self, node):
-    self.context.pop()
-    start = self.context.pop()
-    if not self.context and self.body:
-        self.append_para(self.body[start:])
-        self.body = self.body[:start]
 </t>
 <t tx="ekr.20050817120850.138">def visit_problematic(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.139">def depart_problematic(self, node):
+
+def depart_problematic(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.140">def visit_raw(self, node):
+
     if node.has_key('format') and node['format'] == 'html':
         self.body.append(node.astext())
-    raise nodes.SkipNode
-</t>
-<t tx="ekr.20050817120850.141">def visit_target(self, node):
 
-    if not (node.has_key('refuri') or node.has_key('refid')
-            or node.has_key('refname')):
+    raise docutils.nodes.SkipNode
+</t>
+<t tx="ekr.20050817120850.141">def visit_target (self,node):
+
+    if not (
+        node.has_key('refuri') or
+        node.has_key('refid') or
+        node.has_key('refname')
+    ):
         href = ''
         if node.has_key('id'):
-            href = node['id']
+            href = node ['id']
         elif node.has_key('name'):
-            href = node['name']
-        self.body.append("%s%s" % (self.starttag(node, 'setLink', '', destination=href), \
-                         '&lt;/setLink&gt;'))
-    raise nodes.SkipNode
-</t>
-<t tx="ekr.20050817120850.142">def depart_target(self, node):
-    pass
-</t>
+            href = node ['name']
+        self.body.append("%s%s" % (
+            self.starttag(node,'setLink',suffix='',
+                destination=href,caller='visit_targtet'),
+            '&lt;/setLink&gt;'))
+    raise docutils.nodes.SkipNode
+
+def depart_target (self,node):
+    pass</t>
 <t tx="ekr.20050817120850.143">def visit_reference (self,node):
 
-    self.context.append('a')
+    markup = [] ; caller = 'visit_reference'
 
     if node.has_key('refuri'):
         href = node ['refuri']
-        self.body.append(self.starttag(node,'a','',href=href))
-        self.context.append('&lt;/a&gt;')
+        self.body.append(
+            self.starttag(node,'a',suffix='',href=href,caller=caller))
+        markup.append('&lt;/a&gt;')
     else:
         if node.has_key('id'):
-            self.body.append(self.starttag({},'setLink','',destination=node['id']))
-            self.context.append('&lt;/setLink&gt;')
+            self.body.append(
+                self.starttag({},'setLink','',
+                    destination=node['id'],caller=caller))
+            markup.append('&lt;/setLink&gt;')
         if node.has_key('refid'):
             href = node ['refid']
         elif node.has_key('refname'):
             href = self.document.nameids [node ['refname']]
-        self.body.append(self.starttag(node,'link','',destination=href))
-        self.context.append('&lt;/link&gt;')
+        self.body.append(
+            self.starttag(node,'link','',destination=href,caller=caller))
+        markup.append('&lt;/link&gt;')
+
+    self.push(kind='a',markup=markup)
 </t>
 <t tx="ekr.20050817120850.144">def depart_reference(self, node):
-    if node.has_key('id') and \
-       not node.has_key('refuri'):
-        self.body.append(self.context.pop())
-    self.body.append(self.context.pop())
-    self.context.pop()
-</t>
+    
+    b = self.pop('a')
+
+    for s in b.markup:
+        self.body.append(s)</t>
 <t tx="ekr.20050817120850.145">def visit_revision(self, node):
+
     self.visit_docinfo_item(node, 'revision')
-</t>
-<t tx="ekr.20050817120850.146">def depart_revision(self, node):
+
+def depart_revision(self, node):
+
     self.depart_docinfo_item()
 </t>
 <t tx="ekr.20050817120850.147">def visit_row(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.148">def depart_row(self, node):
+
+def depart_row(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.149">def visit_section(self, node):
+    
     self.sectionlevel += 1
-</t>
-<t tx="ekr.20050817120850.150">def depart_section(self, node):
+
+def depart_section(self, node):
+
     self.sectionlevel -= 1
 </t>
 <t tx="ekr.20050817120850.151">def visit_status(self, node):
+    
     self.visit_docinfo_item(node, 'status')
-</t>
-<t tx="ekr.20050817120850.152">def depart_status(self, node):
+
+def depart_status(self, node):
+
     self.depart_docinfo_item()
 </t>
 <t tx="ekr.20050817120850.153">def visit_strong(self, node):
-    self.context.append('b')
+    
+    self.push(kind='b')
+
     self.body.append('&lt;b&gt;')
-</t>
-<t tx="ekr.20050817120850.154">def depart_strong(self, node):
-    self.context.pop()
+
+def depart_strong(self, node):
+    
+    self.pop('b')
+
     self.body.append('&lt;/b&gt;')
+
 </t>
 <t tx="ekr.20050817120850.155">def visit_subtitle(self, node):
-    self.context.append(len(self.body))
-    self.context.append('subtitle')
-</t>
-<t tx="ekr.20050817120850.156">def depart_subtitle(self, node):
-    style = self.context.pop()
-    start = self.context.pop()
-    self.append_para(self.body[start:], style)
-    self.body = self.body[:start]
+    
+    self.push(kind='subtitle',start=len(self.body))
+
+def depart_subtitle(self, node):
+    
+    b = self.pop('subtitle')
+
+    self.putTail(b.start,b.style)
 </t>
 <t tx="ekr.20050817120850.157">def visit_title (self,node):
-    atts = {}
-    self.context.append(len(self.body))
-    self.context.append('title')
-    if isinstance(node.parent,nodes.topic):
-        self.context.append('')
-        self.topic_class = 'topic-title'
-    elif self.sectionlevel == 0:
-        self.context.append('title')
-    else:
-        self.context.append("h%s" % self.sectionlevel)
 
-    if self.context [ -1] != 'title':
-        if node.parent.hasattr('id'):
-            self.context.append('&lt;/setLink&gt;')
-            self.body.append(self.starttag({},'setLink','',destination=node.parent['id']))
-        if node.hasattr('refid'):
-            self.context.append('&lt;/link&gt;')
-            self.body.append(self.starttag({},'link','',destination=node['refid']))
-    else:
-        self.context.append('')
-</t>
-<t tx="ekr.20050817120850.158">def depart_title(self, node):
+    caller='visit_title'
+    start = len(self.body) ; markup = []
+    isTopic = isinstance(node.parent,docutils.nodes.topic)
+    isTitle = self.sectionlevel == 0
+    
+    # Set the style.
+    if isTopic:   style = 'topic-title'
+    elif isTitle: style = 'title'
+    else:         style = "h%s" % self.sectionlevel
 
-    # g.trace(repr(node))
+    ## The old code was equivalent to: if style != 'title'.
+    if 0:
+        self.dumpNode(node.parent,tag='node.parent')
+        self.dumpNode(node,tag='node')
+    # Bug fix: 8/21/05: changed 'id' to 'ids'.
+    if node.parent.hasattr('ids'):
+        self.body.append(
+        self.starttag({},'setLink','',
+            destination=node.parent['ids'],caller=caller))
+        markup.append('&lt;/setLink&gt;')
     if node.hasattr('refid'):
-        self.body.append(self.context.pop())
-    if node.parent.hasattr('id'):
-        self.body.append(self.context.pop())
-    style = self.context.pop()
-    self.context.pop()
-    if isinstance(node.parent, nodes.topic):
-        style = self.topic_class
-    start = self.context.pop()
-    
-    #g.trace('body',repr(self.body))
-    g.trace('start',repr(start))
-    try:
-        self.append_para(self.body[start:], style)
-    except:
-        start = len(start) ### EKR
-        self.append_para(self.body[start:], style)
-    
-    self.body = self.body[:start]</t>
+        self.body.append(
+        self.starttag({},'setLink','',
+            destination=node['refid'],caller=caller))
+        markup.append('&lt;/setLink&gt;')
+
+    self.push(kind='title',markup=markup,start=start,style=style)</t>
+<t tx="ekr.20050817120850.158">def depart_title (self,node):
+
+    b = self.pop('title')
+
+    for z in b.markup:
+        self.body.append(z)
+        
+    self.putTail(b.start,style=b.style)</t>
 <t tx="ekr.20050817120850.159">def unimplemented_visit(self, node):
     
     raise NotImplementedError(
         'visiting unimplemented node type: %s' % node.__class__.__name__)
 </t>
-<t tx="ekr.20050817120850.160">def visit_topic(self, node):
+<t tx="ekr.20050817120850.160">def visit_topic (self,node):
+
     if node.hasattr('id'):
-        self.context.append('&lt;/setLink&gt;')
-        self.body.append(self.starttag({}, 'setLink', '', destination=node['id']))
-</t>
-<t tx="ekr.20050817120850.161">def depart_topic(self, node):
+        self.push(kind='topic-id',markup='&lt;/setLink&gt;')
+        self.body.append(self.starttag({},'setLink',
+            suffix='',destination=node['id'],caller='visit_topic'))
+
+def depart_topic (self,node):
+
     if node.hasattr('id'):
-        self.body.append(self.context.pop())
+        b = self.pop('topic-id')
+        self.body.append(b.markup)
+
 </t>
 <t tx="ekr.20050817120850.162">def visit_generated(self, node):
     pass
-</t>
-<t tx="ekr.20050817120850.163">def depart_generated(self, node):
+
+def depart_generated(self, node):
     pass
 </t>
 <t tx="ekr.20050817120850.164">def invisible_visit(self, node):
+    
     """Invisible nodes should be ignored."""
-    pass
-</t>
+    pass</t>
 <t tx="ekr.20050817120850.165">def visit_comment(self, node):
-    raise nodes.SkipNode
+
+    raise docutils.nodes.SkipNode
 </t>
-<t tx="ekr.20050817122915">"""
-:Author: Engelbert Gruber
-:Contact: goodger@users.sourceforge.net
-:Revision: $Revision$
-:Date: $Date$
-:Copyright: This module has been placed in the public domain.
+<t tx="ekr.20050817122915">'''This is a docutils writer for .pdf files.
 
-Simple pdf writer.
+That file uses the reportlab module to convert html markup to pdf.
 
-The output uses reportlabs module.
+The original code written by Engelbert Gruber.
 
-Some stylesheet is needed.
-"""
-
+Rewritten by Edward K. Ream for the Leo rst3 plugin.
+'''
 </t>
 <t tx="ekr.20050817124859">#####################################################################################
 #
@@ -17459,8 +17858,7 @@ Some stylesheet is needed.
 #	SUCH DAMAGE.
 #
 #####################################################################################</t>
-<t tx="ekr.20050817124859.1">@nocolor
-@
+<t tx="ekr.20050817124859.1">@
 
 - Added 'c:\reportlab_1_20' to sys.path.
 
@@ -17474,9 +17872,2200 @@ Some stylesheet is needed.
     - Added support for the '--stylesheet' option.
         - This may be doing more harm than good.
     - Changed the following methods of the PDFTranslator class:
-        - append_para
+        - createParagraph
         - depart_title</t>
 <t tx="ekr.20050817132814"></t>
+<t tx="ekr.20050817135706">def visit_Text (self,node):
+
+    self.push(kind='#text')
+
+    self.body.append(node.astext())
+
+def depart_Text (self,node):
+
+    self.pop('#text')</t>
+<t tx="ekr.20050817135706.1"></t>
+<t tx="ekr.20050817142135">def visit_paragraph(self, node):
+    
+    self.push(kind='p',start=len(self.body))
+    
+def depart_paragraph(self, node):
+    
+    b = self.pop('p')
+    
+    if not self.context and self.body:
+        self.putTail(b.start)</t>
+<t tx="ekr.20050817142135.1"></t>
+<t tx="ekr.20050817165745">@nocolor
+@others</t>
+<t tx="ekr.20050817165745.1">@
+
+- Removed '\r' characters in Writer.translate.
+- Created self.push and self.pop.
+- Rewrote visit/depart_title.  The code now is clear and works properly.
+
+To do:
+    The code in several places uses x in self.context.
+    This won't work when g.Bunches are on the context stack,
+    so we shall need a method that searches the bunches on the stack.</t>
+<t tx="ekr.20050817185248.1">@language python
+@tabwidth -4
+
+&lt;&lt; docstring &gt;&gt;
+
+__docformat__ = 'reStructuredText'
+
+&lt;&lt; imports &gt;&gt;
+
+@others</t>
+<t tx="ekr.20050817185248.2"># Author: David Goodger
+# Contact: goodger@users.sourceforge.net
+# Revision: $Revision$
+# Date: $Date$
+# Copyright: This module has been placed in the public domain.
+
+"""
+Docutils document tree element class library.
+
+Classes in CamelCase are abstract base classes or auxiliary classes. The one
+exception is `Text`, for a text (PCDATA) node; uppercase is used to
+differentiate from element classes.  Classes in lower_case_with_underscores
+are element classes, matching the XML element generic identifiers in the DTD_.
+
+The position of each node (the level at which it can occur) is significant and
+is represented by abstract base classes (`Root`, `Structural`, `Body`,
+`Inline`, etc.).  Certain transformations will be easier because we can use
+``isinstance(node, base_class)`` to determine the position of the node in the
+hierarchy.
+
+.. _DTD: http://docutils.sourceforge.net/docs/ref/docutils.dtd
+"""</t>
+<t tx="ekr.20050817185248.3">import sys
+import os
+import re
+import warnings
+
+from types import IntType, SliceType, StringType, UnicodeType, \
+     TupleType, ListType, ClassType
+     
+from UserString import UserString
+</t>
+<t tx="ekr.20050817185248.4">class Node:
+
+    """Abstract base class of nodes in a document tree."""
+    
+	parent = None
+    """Back-reference to the Node immediately containing this Node."""
+    
+    document = None
+    """The `document` node at the root of the tree containing this Node."""
+    
+    source = None
+    """Path or description of the input source which generated this Node."""
+    
+    line = None
+    """The line number (1-based) of the beginning of this Node in `source`."""
+
+	@others
+</t>
+<t tx="ekr.20050817185248.6">def __nonzero__(self):
+    """
+    Node instances are always true, even if they're empty.  A node is more
+    than a simple container.  Its boolean "truth" does not depend on
+    having one or more subnodes in the doctree.
+
+    Use `len()` to check node length.  Use `None` to represent a boolean
+    false value.
+    """
+    return 1
+</t>
+<t tx="ekr.20050817185248.7">def asdom(self, dom=None):
+
+    """Return a DOM **fragment** representation of this Node."""
+    if dom is None:
+        import xml.dom.minidom as dom
+    domroot = dom.Document()
+    return self._dom_node(domroot)
+</t>
+<t tx="ekr.20050817185248.8">def pformat(self, indent='    ', level=0):
+    """
+    Return an indented pseudo-XML representation, for test purposes.
+
+    Override in subclasses.
+    """
+    raise NotImplementedError
+</t>
+<t tx="ekr.20050817185248.9">def copy(self):
+    """Return a copy of self."""
+    raise NotImplementedError
+</t>
+<t tx="ekr.20050817185248.10">def setup_child(self, child):
+    child.parent = self
+    if self.document:
+        child.document = self.document
+        if child.source is None:
+            child.source = self.document.current_source
+        if child.line is None:
+            child.line = self.document.current_line
+</t>
+<t tx="ekr.20050817185248.11">def walk(self, visitor):
+    """
+    Traverse a tree of `Node` objects, calling the
+    `dispatch_visit()` method of `visitor` when entering each
+    node.  (The `walkabout()` method is similar, except it also
+    calls the `dispatch_departure()` method before exiting each
+    node.)
+
+    This tree traversal supports limited in-place tree
+    modifications.  Replacing one node with one or more nodes is
+    OK, as is removing an element.  However, if the node removed
+    or replaced occurs after the current node, the old node will
+    still be traversed, and any new nodes will not.
+
+    Within ``visit`` methods (and ``depart`` methods for
+    `walkabout()`), `TreePruningException` subclasses may be raised
+    (`SkipChildren`, `SkipSiblings`, `SkipNode`, `SkipDeparture`).
+
+    Parameter `visitor`: A `NodeVisitor` object, containing a
+    ``visit`` implementation for each `Node` subclass encountered.
+    """
+    visitor.document.reporter.debug(
+        'docutils.nodes.Node.walk calling dispatch_visit for %s'
+        % self.__class__.__name__)
+    try:
+        visitor.dispatch_visit(self)
+    except (SkipChildren, SkipNode):
+        return
+    except SkipDeparture:           # not applicable; ignore
+        pass
+    children = self.children
+    try:
+        for child in children[:]:
+            child.walk(visitor)
+    except SkipSiblings:
+        pass
+</t>
+<t tx="ekr.20050817185248.12">def walkabout(self, visitor):
+    """
+    Perform a tree traversal similarly to `Node.walk()` (which
+    see), except also call the `dispatch_departure()` method
+    before exiting each node.
+
+    Parameter `visitor`: A `NodeVisitor` object, containing a
+    ``visit`` and ``depart`` implementation for each `Node`
+    subclass encountered.
+    """
+    call_depart = 1
+    visitor.document.reporter.debug(
+        'docutils.nodes.Node.walkabout calling dispatch_visit for %s'
+        % self.__class__.__name__)
+    try:
+        try:
+            visitor.dispatch_visit(self)
+        except SkipNode:
+            return
+        except SkipDeparture:
+            call_depart = 0
+        children = self.children
+        try:
+            for child in children[:]:
+                child.walkabout(visitor)
+        except SkipSiblings:
+            pass
+    except SkipChildren:
+        pass
+    if call_depart:
+        visitor.document.reporter.debug(
+            'docutils.nodes.Node.walkabout calling dispatch_departure '
+            'for %s' % self.__class__.__name__)
+        visitor.dispatch_departure(self)
+</t>
+<t tx="ekr.20050817185248.13">def traverse(self, condition=None,
+             include_self=1, descend=1, siblings=0, ascend=0):
+    """
+    Return an iterable containing
+
+    * self (if include_self is true)
+    * all descendants in tree traversal order (if descend is true)
+    * all siblings (if siblings is true) and their descendants (if
+      also descend is true)
+    * the siblings of the parent (if ascend is true) and their
+      descendants (if also descend is true), and so on
+
+    If `condition` is not None, the iterable contains only nodes
+    for which ``condition(node)`` is true.  If `condition` is a
+    node class ``cls``, it is equivalent to a function consisting
+    of ``return isinstance(node, cls)``.
+
+    If ascend is true, assume siblings to be true as well.
+
+    For example, given the following tree::
+
+        &lt;paragraph&gt;
+            &lt;emphasis&gt;      &lt;--- emphasis.traverse() and
+                &lt;strong&gt;    &lt;--- strong.traverse() are called.
+                    Foo
+                Bar
+            &lt;reference name="Baz" refid="baz"&gt;
+                Baz
+
+    Then list(emphasis.traverse()) equals ::
+
+        [&lt;emphasis&gt;, &lt;strong&gt;, &lt;#text: Foo&gt;, &lt;#text: Bar&gt;]
+
+    and list(strong.traverse(ascend=1)) equals ::
+
+        [&lt;strong&gt;, &lt;#text: Foo&gt;, &lt;#text: Bar&gt;, &lt;reference&gt;, &lt;#text: Baz&gt;]
+    """
+    r = []
+    if ascend:
+        siblings=1
+    if isinstance(condition, ClassType) and issubclass(condition, Node):
+        node_class = condition
+        def condition(node, node_class=node_class):
+            return isinstance(node, node_class)
+    if include_self and (condition is None or condition(self)):
+        r.append(self)
+    if descend and len(self.children):
+        for child in self:
+            r.extend(child.traverse(
+                include_self=1, descend=1, siblings=0, ascend=0,
+                condition=condition))
+    if siblings or ascend:
+        node = self
+        while node.parent:
+            index = node.parent.index(node)
+            for sibling in node.parent[index+1:]:
+                r.extend(sibling.traverse(include_self=1, descend=descend,
+                                          siblings=0, ascend=0,
+                                          condition=condition))
+            if not ascend:
+                break
+            else:
+                node = node.parent
+    return r
+</t>
+<t tx="ekr.20050817185248.14">def next_node(self, condition=None,
+              include_self=0, descend=1, siblings=0, ascend=0):
+    """
+    Return the first node in the iterable returned by traverse(),
+    or None if the iterable is empty.
+
+    Parameter list is the same as of traverse.  Note that
+    include_self defaults to 0, though.
+    """
+    iterable = self.traverse(condition=condition,
+                             include_self=include_self, descend=descend,
+                             siblings=siblings, ascend=ascend)
+    try:
+        return iterable[0]
+    except IndexError:
+        return None
+</t>
+<t tx="ekr.20050817185248.15">class Text(Node):
+
+    """
+    Instances are terminal nodes (leaves) containing text only; no child
+    nodes or attributes.  Initialize by passing a string to the constructor.
+    Access the text itself with the `astext` method.
+    """
+	tagname = '#text'
+
+    children = ()
+    """Text nodes have no children, and cannot have children."""
+
+	@others
+</t>
+<t tx="ekr.20050817185248.17">def __init__(self, data, rawsource=''):
+
+    self.data = data
+
+    self.rawsource = rawsource
+    """The raw text from which this element was constructed."""
+</t>
+<t tx="ekr.20050817185248.18">def __repr__(self):
+    
+    data = repr(self.data)
+    
+    if len(data) &gt; 70:
+        data = repr(self.data[:64] + ' ...')
+
+    return '&lt;%s: %s&gt;' % (self.tagname, data)
+</t>
+<t tx="ekr.20050817185248.19">def __len__(self):
+    return len(self.data)
+</t>
+<t tx="ekr.20050817185248.20">def shortrepr(self):
+    data = repr(self.data)
+    if len(data) &gt; 20:
+        data = repr(self.data[:16] + ' ...')
+    return '&lt;%s: %s&gt;' % (self.tagname, data)
+</t>
+<t tx="ekr.20050817185248.21">def _dom_node(self, domroot):
+    return domroot.createTextNode(self.data)
+</t>
+<t tx="ekr.20050817185248.22">def astext(self):
+    return self.data
+</t>
+<t tx="ekr.20050817185248.23">def copy(self):
+    return self.__class__(self.data)
+</t>
+<t tx="ekr.20050817185248.24">def pformat(self, indent='    ', level=0):
+    result = []
+    indent = indent * level
+    for line in self.data.splitlines():
+        result.append(indent + line + '\n')
+    return ''.join(result)
+</t>
+<t tx="ekr.20050817185248.25">class Element(Node):
+
+    """
+    `Element` is the superclass to all specific elements.
+
+    Elements contain attributes and child nodes.  Elements emulate
+    dictionaries for attributes, indexing by attribute name (a string).  To
+    set the attribute 'att' to 'value', do::
+
+        element['att'] = 'value'
+
+    There are two special attributes: 'ids' and 'names'.  Both are
+    lists of unique identifiers, and names serve as human interfaces
+    to IDs.  Names are case- and whitespace-normalized (see the
+    fully_normalize_name() function), and IDs conform to the regular
+    expression ``[a-z](-?[a-z0-9]+)*`` (see the make_id() function).
+
+    Elements also emulate lists for child nodes (element nodes and/or text
+    nodes), indexing by integer.  To get the first child node, use::
+
+        element[0]
+
+    Elements may be constructed using the ``+=`` operator.  To add one new
+    child node to element, do::
+
+        element += node
+
+    This is equivalent to ``element.append(node)``.
+
+    To add a list of multiple child nodes at once, use the same ``+=``
+    operator::
+
+        element += [node1, node2]
+
+    This is equivalent to ``element.extend([node1, node2])``.
+    """
+	&lt;&lt; class Element declarations &gt;&gt;
+	@others
+</t>
+<t tx="ekr.20050817185248.26">attr_defaults = {'ids': [], 'classes': [], 'names': [],
+                 'dupnames': [], 'backrefs': []}
+"""Default attributes."""
+
+tagname = None
+"""The element generic identifier. If None, it is set as an instance
+attribute to the name of the class."""
+
+child_text_separator = '\n\n'
+"""Separator for child nodes, used by `astext()` method."""
+
+</t>
+<t tx="ekr.20050817185248.27">def __init__(self, rawsource='', *children, **attributes):
+
+    self.rawsource = rawsource
+    """The raw text from which this element was constructed."""
+
+    self.children = []
+    """List of child nodes (elements and/or `Text`)."""
+
+    self.extend(children)           # maintain parent info
+
+    self.attributes = {}
+    """Dictionary of attribute {name: value}."""
+
+    # Copy default values.
+    for att, value in self.attr_defaults.items():
+        # Default values are always lists (at the moment).
+        self.attributes[att] = value[:]
+
+    for att, value in attributes.items():
+        self.attributes[att.lower()] = value
+
+    if self.tagname is None:
+        self.tagname = self.__class__.__name__
+</t>
+<t tx="ekr.20050817185248.28">def _dom_node(self, domroot):
+    element = domroot.createElement(self.tagname)
+    for attribute, value in self.attlist():
+        if isinstance(value, ListType):
+            value = ' '.join(['%s' % v for v in value])
+        element.setAttribute(attribute, '%s' % value)
+    for child in self.children:
+        element.appendChild(child._dom_node(domroot))
+    return element
+</t>
+<t tx="ekr.20050817185248.29">def __repr__(self):
+    data = ''
+    for c in self.children:
+        data += c.shortrepr()
+        if len(data) &gt; 60:
+            data = data[:56] + ' ...'
+            break
+    if self['names']:
+        return '&lt;%s "%s": %s&gt;' % (self.__class__.__name__,
+                                  '; '.join(self['names']), data)
+    else:
+        return '&lt;%s: %s&gt;' % (self.__class__.__name__, data)
+</t>
+<t tx="ekr.20050817185248.30">def shortrepr(self):
+    if self['names']:
+        return '&lt;%s "%s"...&gt;' % (self.__class__.__name__,
+                                 '; '.join(self['names']))
+    else:
+        return '&lt;%s...&gt;' % self.tagname
+</t>
+<t tx="ekr.20050817185248.31">def __str__(self):
+    return self.__unicode__().encode('raw_unicode_escape')
+</t>
+<t tx="ekr.20050817185248.32">def __unicode__(self):
+    if self.children:
+        return u'%s%s%s' % (self.starttag(),
+                             ''.join([str(c) for c in self.children]),
+                             self.endtag())
+    else:
+        return self.emptytag()
+</t>
+<t tx="ekr.20050817185248.33">def starttag(self):
+    parts = [self.tagname]
+    for name, value in self.attlist():
+        if value is None:           # boolean attribute
+            parts.append(name)
+        elif isinstance(value, ListType):
+            values = ['%s' % v for v in value]
+            parts.append('%s="%s"' % (name, ' '.join(values)))
+        else:
+            parts.append('%s="%s"' % (name, value))
+    return '&lt;%s&gt;' % ' '.join(parts)
+</t>
+<t tx="ekr.20050817185248.34">def endtag(self):
+    return '&lt;/%s&gt;' % self.tagname
+</t>
+<t tx="ekr.20050817185248.35">def emptytag(self):
+    return u'&lt;%s/&gt;' % ' '.join([self.tagname] +
+                                ['%s="%s"' % (n, v)
+                                 for n, v in self.attlist()])
+</t>
+<t tx="ekr.20050817185248.36">def __len__(self):
+    return len(self.children)
+</t>
+<t tx="ekr.20050817185248.37">def __getitem__(self, key):
+    if isinstance(key, UnicodeType) or isinstance(key, StringType):
+        return self.attributes[key]
+    elif isinstance(key, IntType):
+        return self.children[key]
+    elif isinstance(key, SliceType):
+        assert key.step in (None, 1), 'cannot handle slice with stride'
+        return self.children[key.start:key.stop]
+    else:
+        raise TypeError, ('element index must be an integer, a slice, or '
+                          'an attribute name string')
+</t>
+<t tx="ekr.20050817185248.38">def __setitem__(self, key, item):
+    if isinstance(key, UnicodeType) or isinstance(key, StringType):
+        self.attributes[str(key)] = item
+    elif isinstance(key, IntType):
+        self.setup_child(item)
+        self.children[key] = item
+    elif isinstance(key, SliceType):
+        assert key.step in (None, 1), 'cannot handle slice with stride'
+        for node in item:
+            self.setup_child(node)
+        self.children[key.start:key.stop] = item
+    else:
+        raise TypeError, ('element index must be an integer, a slice, or '
+                          'an attribute name string')
+</t>
+<t tx="ekr.20050817185248.39">def __delitem__(self, key):
+    if isinstance(key, UnicodeType) or isinstance(key, StringType):
+        del self.attributes[key]
+    elif isinstance(key, IntType):
+        del self.children[key]
+    elif isinstance(key, SliceType):
+        assert key.step in (None, 1), 'cannot handle slice with stride'
+        del self.children[key.start:key.stop]
+    else:
+        raise TypeError, ('element index must be an integer, a simple '
+                          'slice, or an attribute name string')
+</t>
+<t tx="ekr.20050817185248.40">def __add__(self, other):
+    return self.children + other
+</t>
+<t tx="ekr.20050817185248.41">def __radd__(self, other):
+    return other + self.children
+</t>
+<t tx="ekr.20050817185248.42">def __iadd__(self, other):
+    """Append a node or a list of nodes to `self.children`."""
+    if isinstance(other, Node):
+        self.append(other)
+    elif other is not None:
+        self.extend(other)
+    return self
+</t>
+<t tx="ekr.20050817185248.43">def astext(self):
+    return self.child_text_separator.join(
+          [child.astext() for child in self.children])
+</t>
+<t tx="ekr.20050817185248.44">def non_default_attributes(self):
+    atts = {}
+    for key, value in self.attributes.items():
+        if self.is_not_default(key):
+            atts[key] = value
+    return atts
+</t>
+<t tx="ekr.20050817185248.45">def attlist(self):
+    attlist = self.non_default_attributes().items()
+    attlist.sort()
+    return attlist
+</t>
+<t tx="ekr.20050817185248.46">def get(self, key, failobj=None):
+    return self.attributes.get(key, failobj)
+</t>
+<t tx="ekr.20050817185248.47">def hasattr(self, attr):
+    return self.attributes.has_key(attr)
+</t>
+<t tx="ekr.20050817185248.48">def delattr(self, attr):
+    if self.attributes.has_key(attr):
+        del self.attributes[attr]
+</t>
+<t tx="ekr.20050817185248.49">def setdefault(self, key, failobj=None):
+    return self.attributes.setdefault(key, failobj)
+</t>
+<t tx="ekr.20050817185248.50">has_key = hasattr
+
+def append(self, item):
+    self.setup_child(item)
+    self.children.append(item)
+</t>
+<t tx="ekr.20050817185248.51">def extend(self, item):
+    for node in item:
+        self.append(node)
+</t>
+<t tx="ekr.20050817185248.52">def insert(self, index, item):
+    if isinstance(item, Node):
+        self.setup_child(item)
+        self.children.insert(index, item)
+    elif item is not None:
+        self[index:index] = item
+</t>
+<t tx="ekr.20050817185248.53">def pop(self, i=-1):
+    return self.children.pop(i)
+</t>
+<t tx="ekr.20050817185248.54">def remove(self, item):
+    self.children.remove(item)
+</t>
+<t tx="ekr.20050817185248.55">def index(self, item):
+    return self.children.index(item)
+</t>
+<t tx="ekr.20050817185248.56">def is_not_default(self, key):
+    try:
+        return self[key] != self.attr_defaults[key]
+    except KeyError:
+        return 1
+</t>
+<t tx="ekr.20050817185248.57">def clear(self):
+    self.children = []
+</t>
+<t tx="ekr.20050817185248.58">def replace(self, old, new):
+    """Replace one child `Node` with another child or children."""
+    index = self.index(old)
+    if isinstance(new, Node):
+        self.setup_child(new)
+        self[index] = new
+    elif new is not None:
+        self[index:index+1] = new
+</t>
+<t tx="ekr.20050817185248.59">def first_child_matching_class(self, childclass, start=0, end=sys.maxint):
+    """
+    Return the index of the first child whose class exactly matches.
+
+    Parameters:
+
+    - `childclass`: A `Node` subclass to search for, or a tuple of `Node`
+      classes. If a tuple, any of the classes may match.
+    - `start`: Initial index to check.
+    - `end`: Initial index to *not* check.
+    """
+    if not isinstance(childclass, TupleType):
+        childclass = (childclass,)
+    for index in range(start, min(len(self), end)):
+        for c in childclass:
+            if isinstance(self[index], c):
+                return index
+    return None
+</t>
+<t tx="ekr.20050817185248.60">def first_child_not_matching_class(self, childclass, start=0,
+                                   end=sys.maxint):
+    """
+    Return the index of the first child whose class does *not* match.
+
+    Parameters:
+
+    - `childclass`: A `Node` subclass to skip, or a tuple of `Node`
+      classes. If a tuple, none of the classes may match.
+    - `start`: Initial index to check.
+    - `end`: Initial index to *not* check.
+    """
+    if not isinstance(childclass, TupleType):
+        childclass = (childclass,)
+    for index in range(start, min(len(self), end)):
+        for c in childclass:
+            if isinstance(self.children[index], c):
+                break
+        else:
+            return index
+    return None
+</t>
+<t tx="ekr.20050817185248.61">def pformat(self, indent='    ', level=0):
+    return ''.join(['%s%s\n' % (indent * level, self.starttag())] +
+                   [child.pformat(indent, level+1)
+                    for child in self.children])
+</t>
+<t tx="ekr.20050817185248.62">def copy(self):
+    return self.__class__(**self.attributes)
+</t>
+<t tx="ekr.20050817185248.63">def set_class(self, name):
+    """Add a new class to the "classes" attribute."""
+    warnings.warn('docutils.nodes.Element.set_class deprecated; '
+                  "append to Element['classes'] list attribute directly",
+                  DeprecationWarning, stacklevel=2)
+    assert ' ' not in name
+    self['classes'].append(name.lower())
+</t>
+<t tx="ekr.20050817185248.64">def note_referenced_by(self, name=None, id=None):
+    """Note that this Element has been referenced by its name
+    `name` or id `id`."""
+    self.referenced = 1
+    # Element.expect_referenced_by_* dictionaries map names or ids
+    # to nodes whose ``referenced`` attribute is set to true as
+    # soon as this node is referenced by the given name or id.
+    # Needed for target propagation.
+    by_name = getattr(self, 'expect_referenced_by_name', {}).get(name)
+    by_id = getattr(self, 'expect_referenced_by_id', {}).get(id)
+    if by_name:
+        assert name is not None
+        by_name.referenced = 1
+    if by_id:
+        assert id is not None
+        by_id.referenced = 1
+</t>
+<t tx="ekr.20050817185248.65">class TextElement(Element):
+
+    """
+    An element which directly contains text.
+
+    Its children are all `Text` or `Inline` subclass nodes.  You can
+    check whether an element's context is inline simply by checking whether
+    its immediate parent is a `TextElement` instance (including subclasses).
+    This is handy for nodes like `image` that can appear both inline and as
+    standalone body elements.
+
+    If passing children to `__init__()`, make sure to set `text` to
+    ``''`` or some other suitable value.
+    """
+	&lt;&lt; class TextElement declarations &gt;&gt;
+	@others
+</t>
+<t tx="ekr.20050817185248.66">child_text_separator = ''
+"""Separator for child nodes, used by `astext()` method."""
+
+</t>
+<t tx="ekr.20050817185248.67">def __init__(self, rawsource='', text='', *children, **attributes):
+    if text != '':
+        textnode = Text(text)
+        Element.__init__(self, rawsource, textnode, *children,
+                          **attributes)
+    else:
+        Element.__init__(self, rawsource, *children, **attributes)
+</t>
+<t tx="ekr.20050817185248.68">class FixedTextElement(TextElement):
+
+    """An element which directly contains preformatted text."""
+	@others
+</t>
+<t tx="ekr.20050817185248.69">def __init__(self, rawsource='', text='', *children, **attributes):
+    TextElement.__init__(self, rawsource, text, *children, **attributes)
+    self.attributes['xml:space'] = 'preserve'
+</t>
+<t tx="ekr.20050817185248.70">class Resolvable:
+	resolved = 0
+</t>
+<t tx="ekr.20050817185248.72">class BackLinkable:
+	@others
+</t>
+<t tx="ekr.20050817185248.73">def add_backref(self, refid):
+    self['backrefs'].append(refid)
+</t>
+<t tx="ekr.20050817185248.74">class Root: pass
+</t>
+<t tx="ekr.20050817185248.75">class Titular: pass
+</t>
+<t tx="ekr.20050817185248.76">class PreBibliographic:
+    """Category of Node which may occur before Bibliographic Nodes."""
+</t>
+<t tx="ekr.20050817185248.77">class Bibliographic: pass
+</t>
+<t tx="ekr.20050817185248.78">class Decorative(PreBibliographic): pass
+</t>
+<t tx="ekr.20050817185248.79">class Structural: pass
+</t>
+<t tx="ekr.20050817185248.80">class Body: pass
+</t>
+<t tx="ekr.20050817185248.81">class General(Body): pass
+</t>
+<t tx="ekr.20050817185248.82">class Sequential(Body):
+    """List-like elements."""
+</t>
+<t tx="ekr.20050817185248.83">class Admonition(Body): pass
+</t>
+<t tx="ekr.20050817185248.84">class Special(Body):
+    """Special internal body elements."""
+</t>
+<t tx="ekr.20050817185248.85">class Invisible(PreBibliographic):
+    """Internal elements that don't appear in output."""
+</t>
+<t tx="ekr.20050817185248.86">class Part: pass
+</t>
+<t tx="ekr.20050817185248.87">class Inline: pass
+</t>
+<t tx="ekr.20050817185248.88">class Referential(Resolvable): pass
+</t>
+<t tx="ekr.20050817185248.89">class Targetable(Resolvable):
+	referenced = 0
+</t>
+<t tx="ekr.20050817185248.91">class Labeled:
+    """Contains a `label` as its first element."""</t>
+<t tx="ekr.20050817185248.93"># ==============
+#  Root Element
+# ==============
+
+class document(Root, Structural, Element):
+
+    """
+    The document root element.
+
+    Do not instantiate this class directly; use
+    `docutils.utils.new_document()` instead.
+    """
+	@others
+</t>
+<t tx="ekr.20050817185248.94">def __init__(self, settings, reporter, *args, **kwargs):
+    Element.__init__(self, *args, **kwargs)
+
+    self.current_source = None
+    """Path to or description of the input source being processed."""
+
+    self.current_line = None
+    """Line number (1-based) of `current_source`."""
+
+    self.settings = settings
+    """Runtime settings data record."""
+
+    self.reporter = reporter
+    """System message generator."""
+
+    self.indirect_targets = []
+    """List of indirect target nodes."""
+
+    self.substitution_defs = {}
+    """Mapping of substitution names to substitution_definition nodes."""
+
+    self.substitution_names = {}
+    """Mapping of case-normalized substitution names to case-sensitive
+    names."""
+
+    self.refnames = {}
+    """Mapping of names to lists of referencing nodes."""
+
+    self.refids = {}
+    """Mapping of ids to lists of referencing nodes."""
+
+    self.nameids = {}
+    """Mapping of names to unique id's."""
+
+    self.nametypes = {}
+    """Mapping of names to hyperlink type (boolean: True =&gt; explicit,
+    False =&gt; implicit."""
+
+    self.ids = {}
+    """Mapping of ids to nodes."""
+
+    self.substitution_refs = {}
+    """Mapping of substitution names to lists of substitution_reference
+    nodes."""
+
+    self.footnote_refs = {}
+    """Mapping of footnote labels to lists of footnote_reference nodes."""
+
+    self.citation_refs = {}
+    """Mapping of citation labels to lists of citation_reference nodes."""
+
+    self.anonymous_targets = []
+    """List of anonymous target nodes."""
+
+    self.anonymous_refs = []
+    """List of anonymous reference nodes."""
+
+    self.autofootnotes = []
+    """List of auto-numbered footnote nodes."""
+
+    self.autofootnote_refs = []
+    """List of auto-numbered footnote_reference nodes."""
+
+    self.symbol_footnotes = []
+    """List of symbol footnote nodes."""
+
+    self.symbol_footnote_refs = []
+    """List of symbol footnote_reference nodes."""
+
+    self.footnotes = []
+    """List of manually-numbered footnote nodes."""
+
+    self.citations = []
+    """List of citation nodes."""
+
+    self.autofootnote_start = 1
+    """Initial auto-numbered footnote number."""
+
+    self.symbol_footnote_start = 0
+    """Initial symbol footnote symbol index."""
+
+    self.id_start = 1
+    """Initial ID number."""
+
+    self.parse_messages = []
+    """System messages generated while parsing."""
+
+    self.transform_messages = []
+    """System messages generated while applying transforms."""
+
+    import docutils.transforms
+    self.transformer = docutils.transforms.Transformer(self)
+    """Storage for transforms to be applied to this document."""
+
+    self.decoration = None
+    """Document's `decoration` node."""
+
+    self.document = self
+</t>
+<t tx="ekr.20050817185248.95">def asdom(self, dom=None):
+    """Return a DOM representation of this document."""
+    if dom is None:
+        import xml.dom.minidom as dom
+    domroot = dom.Document()
+    domroot.appendChild(self._dom_node(domroot))
+    return domroot
+</t>
+<t tx="ekr.20050817185248.96">def set_id(self, node, msgnode=None):
+    for id in node['ids']:
+        if self.ids.has_key(id) and self.ids[id] is not node:
+            msg = self.reporter.severe('Duplicate ID: "%s".' % id)
+            if msgnode != None:
+                msgnode += msg
+    if not node['ids']:
+        for name in node['names']:
+            id = self.settings.id_prefix + make_id(name)
+            if id and not self.ids.has_key(id):
+                break
+        else:
+            id = ''
+            while not id or self.ids.has_key(id):
+                id = (self.settings.id_prefix +
+                      self.settings.auto_id_prefix + str(self.id_start))
+                self.id_start += 1
+        node['ids'].append(id)
+    self.ids[id] = node
+    return id
+</t>
+<t tx="ekr.20050817185248.97">def set_name_id_map(self, node, id, msgnode=None, explicit=None):
+    """
+    `self.nameids` maps names to IDs, while `self.nametypes` maps names to
+    booleans representing hyperlink type (True==explicit,
+    False==implicit).  This method updates the mappings.
+
+    The following state transition table shows how `self.nameids` ("ids")
+    and `self.nametypes` ("types") change with new input (a call to this
+    method), and what actions are performed:
+
+    ====  =====  ========  ========  =======  ====  =====  =====
+     Old State    Input          Action        New State   Notes
+    -----------  --------  -----------------  -----------  -----
+    ids   types  new type  sys.msg.  dupname  ids   types
+    ====  =====  ========  ========  =======  ====  =====  =====
+    --    --     explicit  --        --       new   True
+    --    --     implicit  --        --       new   False
+    None  False  explicit  --        --       new   True
+    old   False  explicit  implicit  old      new   True
+    None  True   explicit  explicit  new      None  True
+    old   True   explicit  explicit  new,old  None  True   [#]_
+    None  False  implicit  implicit  new      None  False
+    old   False  implicit  implicit  new,old  None  False
+    None  True   implicit  implicit  new      None  True
+    old   True   implicit  implicit  new      old   True
+    ====  =====  ========  ========  =======  ====  =====  =====
+
+    .. [#] Do not clear the name-to-id map or invalidate the old target if
+       both old and new targets are external and refer to identical URIs.
+       The new target is invalidated regardless.
+    """
+    for name in node['names']:
+        if self.nameids.has_key(name):
+            self.set_duplicate_name_id(node, id, name, msgnode, explicit)
+        else:
+            self.nameids[name] = id
+            self.nametypes[name] = explicit
+</t>
+<t tx="ekr.20050817185248.98">def set_duplicate_name_id(self, node, id, name, msgnode, explicit):
+    old_id = self.nameids[name]
+    old_explicit = self.nametypes[name]
+    self.nametypes[name] = old_explicit or explicit
+    if explicit:
+        if old_explicit:
+            level = 2
+            if old_id is not None:
+                old_node = self.ids[old_id]
+                if node.has_key('refuri'):
+                    refuri = node['refuri']
+                    if old_node['names'] \
+                           and old_node.has_key('refuri') \
+                           and old_node['refuri'] == refuri:
+                        level = 1   # just inform if refuri's identical
+                if level &gt; 1:
+                    dupname(old_node, name)
+                    self.nameids[name] = None
+            msg = self.reporter.system_message(
+                level, 'Duplicate explicit target name: "%s".' % name,
+                backrefs=[id], base_node=node)
+            if msgnode != None:
+                msgnode += msg
+            dupname(node, name)
+        else:
+            self.nameids[name] = id
+            if old_id is not None:
+                old_node = self.ids[old_id]
+                dupname(old_node, name)
+    else:
+        if old_id is not None and not old_explicit:
+            self.nameids[name] = None
+            old_node = self.ids[old_id]
+            dupname(old_node, name)
+        dupname(node, name)
+    if not explicit or (not old_explicit and old_id is not None):
+        msg = self.reporter.info(
+            'Duplicate implicit target name: "%s".' % name,
+            backrefs=[id], base_node=node)
+        if msgnode != None:
+            msgnode += msg
+</t>
+<t tx="ekr.20050817185248.99">def has_name(self, name):
+    return self.nameids.has_key(name)
+</t>
+<t tx="ekr.20050817185248.100"># "note" here is an imperative verb: "take note of".
+def note_implicit_target(self, target, msgnode=None):
+    id = self.set_id(target, msgnode)
+    self.set_name_id_map(target, id, msgnode, explicit=None)
+</t>
+<t tx="ekr.20050817185248.101">def note_explicit_target(self, target, msgnode=None):
+    id = self.set_id(target, msgnode)
+    self.set_name_id_map(target, id, msgnode, explicit=1)
+</t>
+<t tx="ekr.20050817185248.102">def note_refname(self, node):
+    self.refnames.setdefault(node['refname'], []).append(node)
+</t>
+<t tx="ekr.20050817185248.103">def note_refid(self, node):
+    self.refids.setdefault(node['refid'], []).append(node)
+</t>
+<t tx="ekr.20050817185248.104">def note_indirect_target(self, target):
+    self.indirect_targets.append(target)
+    if target['names']:
+        self.note_refname(target)
+</t>
+<t tx="ekr.20050817185248.105">def note_anonymous_target(self, target):
+    self.set_id(target)
+    self.anonymous_targets.append(target)
+</t>
+<t tx="ekr.20050817185248.106">def note_anonymous_ref(self, ref):
+    self.anonymous_refs.append(ref)
+</t>
+<t tx="ekr.20050817185248.107">def note_autofootnote(self, footnote):
+    self.set_id(footnote)
+    self.autofootnotes.append(footnote)
+</t>
+<t tx="ekr.20050817185248.108">def note_autofootnote_ref(self, ref):
+    self.set_id(ref)
+    self.autofootnote_refs.append(ref)
+</t>
+<t tx="ekr.20050817185248.109">def note_symbol_footnote(self, footnote):
+    self.set_id(footnote)
+    self.symbol_footnotes.append(footnote)
+</t>
+<t tx="ekr.20050817185248.110">def note_symbol_footnote_ref(self, ref):
+    self.set_id(ref)
+    self.symbol_footnote_refs.append(ref)
+</t>
+<t tx="ekr.20050817185248.111">def note_footnote(self, footnote):
+    self.set_id(footnote)
+    self.footnotes.append(footnote)
+</t>
+<t tx="ekr.20050817185248.112">def note_footnote_ref(self, ref):
+    self.set_id(ref)
+    self.footnote_refs.setdefault(ref['refname'], []).append(ref)
+    self.note_refname(ref)
+</t>
+<t tx="ekr.20050817185248.113">def note_citation(self, citation):
+    self.citations.append(citation)
+</t>
+<t tx="ekr.20050817185248.114">def note_citation_ref(self, ref):
+    self.set_id(ref)
+    self.citation_refs.setdefault(ref['refname'], []).append(ref)
+    self.note_refname(ref)
+</t>
+<t tx="ekr.20050817185248.115">def note_substitution_def(self, subdef, def_name, msgnode=None):
+    name = whitespace_normalize_name(def_name)
+    subdef['names'].append(name)
+    if self.substitution_defs.has_key(name):
+        msg = self.reporter.error(
+              'Duplicate substitution definition name: "%s".' % name,
+              base_node=subdef)
+        if msgnode != None:
+            msgnode += msg
+        oldnode = self.substitution_defs[name]
+        dupname(oldnode, name)
+    # keep only the last definition:
+    self.substitution_defs[name] = subdef
+    # case-insensitive mapping:
+    self.substitution_names[fully_normalize_name(name)] = name
+</t>
+<t tx="ekr.20050817185248.116">def note_substitution_ref(self, subref, refname):
+    name = subref['refname'] = whitespace_normalize_name(refname)
+    self.substitution_refs.setdefault(name, []).append(subref)
+</t>
+<t tx="ekr.20050817185248.117">def note_pending(self, pending, priority=None):
+    self.transformer.add_pending(pending, priority)
+</t>
+<t tx="ekr.20050817185248.118">def note_parse_message(self, message):
+    self.parse_messages.append(message)
+</t>
+<t tx="ekr.20050817185248.119">def note_transform_message(self, message):
+    self.transform_messages.append(message)
+</t>
+<t tx="ekr.20050817185248.120">def note_source(self, source, offset):
+    self.current_source = source
+    if offset is None:
+        self.current_line = offset
+    else:
+        self.current_line = offset + 1
+</t>
+<t tx="ekr.20050817185248.121">def copy(self):
+    return self.__class__(self.settings, self.reporter,
+                          **self.attributes)
+</t>
+<t tx="ekr.20050817185248.122">def get_decoration(self):
+    if not self.decoration:
+        self.decoration = decoration()
+        index = self.first_child_not_matching_class(Titular)
+        if index is None:
+            self.append(self.decoration)
+        else:
+            self.insert(index, self.decoration)
+    return self.decoration
+</t>
+<t tx="ekr.20050817185248.123">class title(Titular, PreBibliographic, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.124">class subtitle(Titular, PreBibliographic, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.125">class rubric(Titular, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.127">class docinfo(Bibliographic, Element): pass
+</t>
+<t tx="ekr.20050817185248.128">class author(Bibliographic, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.129">class authors(Bibliographic, Element): pass
+</t>
+<t tx="ekr.20050817185248.130">class organization(Bibliographic, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.131">class address(Bibliographic, FixedTextElement): pass
+</t>
+<t tx="ekr.20050817185248.132">class contact(Bibliographic, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.133">class version(Bibliographic, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.134">class revision(Bibliographic, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.135">class status(Bibliographic, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.136">class date(Bibliographic, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.137">class copyright(Bibliographic, TextElement): pass
+
+</t>
+<t tx="ekr.20050817185248.138"># =====================
+#  Decorative Elements
+# =====================
+
+</t>
+<t tx="ekr.20050817185248.139">class decoration(Decorative, Element):
+	@others
+</t>
+<t tx="ekr.20050817185248.140">def get_header(self):
+    if not len(self.children) or not isinstance(self.children[0], header):
+        self.insert(0, header())
+    return self.children[0]
+</t>
+<t tx="ekr.20050817185248.141">def get_footer(self):
+    if not len(self.children) or not isinstance(self.children[-1], footer):
+        self.append(footer())
+    return self.children[-1]
+</t>
+<t tx="ekr.20050817185248.142">class header(Decorative, Element): pass
+</t>
+<t tx="ekr.20050817185248.143">class footer(Decorative, Element): pass
+	&lt;&lt; class footer declarations &gt;&gt;
+</t>
+<t tx="ekr.20050817185248.144"># =====================
+#  Structural Elements
+# =====================
+
+</t>
+<t tx="ekr.20050817185248.145">class section(Structural, Element): pass
+</t>
+<t tx="ekr.20050817185248.146">class topic(Structural, Element):
+
+    """
+    Topics are terminal, "leaf" mini-sections, like block quotes with titles,
+    or textual figures.  A topic is just like a section, except that it has no
+    subsections, and it doesn't have to conform to section placement rules.
+
+    Topics are allowed wherever body elements (list, table, etc.) are allowed,
+    but only at the top level of a section or document.  Topics cannot nest
+    inside topics, sidebars, or body elements; you can't have a topic inside a
+    table, list, block quote, etc.
+    """
+</t>
+<t tx="ekr.20050817185248.147">class sidebar(Structural, Element):
+
+    """
+    Sidebars are like miniature, parallel documents that occur inside other
+    documents, providing related or reference material.  A sidebar is
+    typically offset by a border and "floats" to the side of the page; the
+    document's main text may flow around it.  Sidebars can also be likened to
+    super-footnotes; their content is outside of the flow of the document's
+    main text.
+
+    Sidebars are allowed wherever body elements (list, table, etc.) are
+    allowed, but only at the top level of a section or document.  Sidebars
+    cannot nest inside sidebars, topics, or body elements; you can't have a
+    sidebar inside a table, list, block quote, etc.
+    """
+</t>
+<t tx="ekr.20050817185248.148">class transition(Structural, Element): pass
+</t>
+<t tx="ekr.20050817185248.149"># ===============
+#  Body Elements
+# ===============</t>
+<t tx="ekr.20050817185248.150">class paragraph(General, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.151">class compound(General, Element): pass
+</t>
+<t tx="ekr.20050817185248.152">class bullet_list(Sequential, Element): pass
+</t>
+<t tx="ekr.20050817185248.153">class enumerated_list(Sequential, Element): pass
+</t>
+<t tx="ekr.20050817185248.154">class list_item(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.155">class definition_list(Sequential, Element): pass
+</t>
+<t tx="ekr.20050817185248.156">class definition_list_item(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.157">class term(Part, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.158">class classifier(Part, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.159">class definition(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.160">class field_list(Sequential, Element): pass
+</t>
+<t tx="ekr.20050817185248.161">class field(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.162">class field_name(Part, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.163">class field_body(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.164">class option(Part, Element):
+	child_text_separator = ''
+</t>
+<t tx="ekr.20050817185248.166">class option_argument(Part, TextElement):
+	@others
+</t>
+<t tx="ekr.20050817185248.167">def astext(self):
+    return self.get('delimiter', ' ') + TextElement.astext(self)
+</t>
+<t tx="ekr.20050817185248.168">class option_group(Part, Element):
+	child_text_separator = ', '
+</t>
+<t tx="ekr.20050817185248.170">class option_list(Sequential, Element): pass
+</t>
+<t tx="ekr.20050817185248.171">class option_list_item(Part, Element):
+	child_text_separator = '  '
+</t>
+<t tx="ekr.20050817185248.173">class option_string(Part, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.174">class description(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.175">class literal_block(General, FixedTextElement): pass
+</t>
+<t tx="ekr.20050817185248.176">class doctest_block(General, FixedTextElement): pass
+</t>
+<t tx="ekr.20050817185248.177">class line_block(General, Element): pass
+</t>
+<t tx="ekr.20050817185248.178">class line(Part, TextElement):
+	indent = None
+</t>
+<t tx="ekr.20050817185248.180">class block_quote(General, Element): pass
+</t>
+<t tx="ekr.20050817185248.181">class attribution(Part, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.182">class attention(Admonition, Element): pass
+</t>
+<t tx="ekr.20050817185248.183">class caution(Admonition, Element): pass
+</t>
+<t tx="ekr.20050817185248.184">class danger(Admonition, Element): pass
+</t>
+<t tx="ekr.20050817185248.185">class error(Admonition, Element): pass
+</t>
+<t tx="ekr.20050817185248.186">class important(Admonition, Element): pass
+</t>
+<t tx="ekr.20050817185248.187">class note(Admonition, Element): pass
+</t>
+<t tx="ekr.20050817185248.188">class tip(Admonition, Element): pass
+</t>
+<t tx="ekr.20050817185248.189">class hint(Admonition, Element): pass
+</t>
+<t tx="ekr.20050817185248.190">class warning(Admonition, Element): pass
+</t>
+<t tx="ekr.20050817185248.191">class admonition(Admonition, Element): pass
+</t>
+<t tx="ekr.20050817185248.192">class comment(Special, Invisible, FixedTextElement): pass
+</t>
+<t tx="ekr.20050817185248.193">class substitution_definition(Special, Invisible, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.194">class target(Special, Invisible, Inline, TextElement, Targetable): pass
+</t>
+<t tx="ekr.20050817185248.195">class footnote(General, BackLinkable, Element, Labeled, Targetable): pass
+</t>
+<t tx="ekr.20050817185248.196">class citation(General, BackLinkable, Element, Labeled, Targetable): pass
+</t>
+<t tx="ekr.20050817185248.197">class label(Part, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.198">class figure(General, Element): pass
+</t>
+<t tx="ekr.20050817185248.199">class caption(Part, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.200">class legend(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.201">class table(General, Element): pass
+</t>
+<t tx="ekr.20050817185248.202">class tgroup(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.203">class colspec(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.204">class thead(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.205">class tbody(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.206">class row(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.207">class entry(Part, Element): pass
+</t>
+<t tx="ekr.20050817185248.208">class system_message(Special, BackLinkable, PreBibliographic, Element):
+
+    """
+    System message element.
+
+    Do not instantiate this class directly; use
+    ``document.reporter.info/warning/error/severe()`` instead.
+    """
+	@others
+</t>
+<t tx="ekr.20050817185248.209">def __init__(self, message=None, *children, **attributes):
+    if message:
+        p = paragraph('', message)
+        children = (p,) + children
+    try:
+        Element.__init__(self, '', *children, **attributes)
+    except:
+        print 'system_message: children=%r' % (children,)
+        raise
+</t>
+<t tx="ekr.20050817185248.210">def astext(self):
+    line = self.get('line', '')
+    return u'%s:%s: (%s/%s) %s' % (self['source'], line, self['type'],
+                                   self['level'], Element.astext(self))
+</t>
+<t tx="ekr.20050817185248.211">class pending(Special, Invisible, Element):
+
+    """
+    The "pending" element is used to encapsulate a pending operation: the
+    operation (transform), the point at which to apply it, and any data it
+    requires.  Only the pending operation's location within the document is
+    stored in the public document tree (by the "pending" object itself); the
+    operation and its data are stored in the "pending" object's internal
+    instance attributes.
+
+    For example, say you want a table of contents in your reStructuredText
+    document.  The easiest way to specify where to put it is from within the
+    document, with a directive::
+
+        .. contents::
+
+    But the "contents" directive can't do its work until the entire document
+    has been parsed and possibly transformed to some extent.  So the directive
+    code leaves a placeholder behind that will trigger the second phase of its
+    processing, something like this::
+
+        &lt;pending ...public attributes...&gt; + internal attributes
+
+    Use `document.note_pending()` so that the
+    `docutils.transforms.Transformer` stage of processing can run all pending
+    transforms.
+    """
+	@others
+</t>
+<t tx="ekr.20050817185248.212">def __init__(self, transform, details=None,
+             rawsource='', *children, **attributes):
+    Element.__init__(self, rawsource, *children, **attributes)
+
+    self.transform = transform
+    """The `docutils.transforms.Transform` class implementing the pending
+    operation."""
+
+    self.details = details or {}
+    """Detail data (dictionary) required by the pending operation."""
+</t>
+<t tx="ekr.20050817185248.213">def pformat(self, indent='    ', level=0):
+    internals = [
+          '.. internal attributes:',
+          '     .transform: %s.%s' % (self.transform.__module__,
+                                      self.transform.__name__),
+          '     .details:']
+    details = self.details.items()
+    details.sort()
+    for key, value in details:
+        if isinstance(value, Node):
+            internals.append('%7s%s:' % ('', key))
+            internals.extend(['%9s%s' % ('', line)
+                              for line in value.pformat().splitlines()])
+        elif value and isinstance(value, ListType) \
+              and isinstance(value[0], Node):
+            internals.append('%7s%s:' % ('', key))
+            for v in value:
+                internals.extend(['%9s%s' % ('', line)
+                                  for line in v.pformat().splitlines()])
+        else:
+            internals.append('%7s%s: %r' % ('', key, value))
+    return (Element.pformat(self, indent, level)
+            + ''.join([('    %s%s\n' % (indent * level, line))
+                       for line in internals]))
+</t>
+<t tx="ekr.20050817185248.214">def copy(self):
+    return self.__class__(self.transform, self.details, self.rawsource,
+                          **self.attributes)
+</t>
+<t tx="ekr.20050817185248.215">class raw(Special, Inline, PreBibliographic, FixedTextElement):
+
+    """
+    Raw data that is to be passed untouched to the Writer.
+    """
+
+	pass
+</t>
+<t tx="ekr.20050817185248.216"># =================
+#  Inline Elements
+# =================</t>
+<t tx="ekr.20050817185248.217">class emphasis(Inline, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.218">class strong(Inline, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.219">class literal(Inline, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.220">class reference(General, Inline, Referential, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.221">class footnote_reference(Inline, Referential, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.222">class citation_reference(Inline, Referential, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.223">class substitution_reference(Inline, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.224">class title_reference(Inline, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.225">class abbreviation(Inline, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.226">class acronym(Inline, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.227">class superscript(Inline, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.228">class subscript(Inline, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.229">class image(General, Inline, Element):
+	@others
+</t>
+<t tx="ekr.20050817185248.230">def astext(self):
+    return self.get('alt', '')
+</t>
+<t tx="ekr.20050817185248.231">class inline(Inline, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.232">class problematic(Inline, TextElement): pass
+</t>
+<t tx="ekr.20050817185248.233">class generated(Inline, TextElement): pass
+	&lt;&lt; class generated declarations &gt;&gt;
+</t>
+<t tx="ekr.20050817185248.234"># ========================================
+#  Auxiliary Classes, Functions, and Data
+# ========================================
+
+</t>
+<t tx="ekr.20050817185248.235">node_class_names = """
+    Text
+    abbreviation acronym address admonition attention attribution author
+        authors
+    block_quote bullet_list
+    caption caution citation citation_reference classifier colspec comment
+        compound contact copyright
+    danger date decoration definition definition_list definition_list_item
+        description docinfo doctest_block document
+    emphasis entry enumerated_list error
+    field field_body field_list field_name figure footer
+        footnote footnote_reference
+    generated
+    header hint
+    image important inline
+    label legend line line_block list_item literal literal_block
+    note
+    option option_argument option_group option_list option_list_item
+        option_string organization
+    paragraph pending problematic
+    raw reference revision row rubric
+    section sidebar status strong subscript substitution_definition
+        substitution_reference subtitle superscript system_message
+    table target tbody term tgroup thead tip title title_reference topic
+        transition
+    version
+    warning""".split()
+"""A list of names of all concrete Node subclasses."""
+
+
+class NodeVisitor:
+
+    """
+    "Visitor" pattern [GoF95]_ abstract superclass implementation for
+    document tree traversals.
+
+    Each node class has corresponding methods, doing nothing by
+    default; override individual methods for specific and useful
+    behaviour.  The `dispatch_visit()` method is called by
+    `Node.walk()` upon entering a node.  `Node.walkabout()` also calls
+    the `dispatch_departure()` method before exiting a node.
+
+    The dispatch methods call "``visit_`` + node class name" or
+    "``depart_`` + node class name", resp.
+
+    This is a base class for visitors whose ``visit_...`` &amp; ``depart_...``
+    methods should be implemented for *all* node types encountered (such as
+    for `docutils.writers.Writer` subclasses).  Unimplemented methods will
+    raise exceptions.
+
+    For sparse traversals, where only certain node types are of interest,
+    subclass `SparseNodeVisitor` instead.  When (mostly or entirely) uniform
+    processing is desired, subclass `GenericNodeVisitor`.
+
+    .. [GoF95] Gamma, Helm, Johnson, Vlissides. *Design Patterns: Elements of
+       Reusable Object-Oriented Software*. Addison-Wesley, Reading, MA, USA,
+       1995.
+    """
+	&lt;&lt; class NodeVisitor declarations &gt;&gt;
+	@others
+</t>
+<t tx="ekr.20050817185248.236">optional = ()
+"""
+Tuple containing node class names (as strings).
+
+No exception will be raised if writers do not implement visit
+or departure functions for these node classes.
+
+Used to ensure transitional compatibility with existing 3rd-party writers.
+"""
+
+</t>
+<t tx="ekr.20050817185248.237">def __init__(self, document):
+    self.document = document
+</t>
+<t tx="ekr.20050817185248.238">def dispatch_visit(self, node):
+    """
+    Call self."``visit_`` + node class name" with `node` as
+    parameter.  If the ``visit_...`` method does not exist, call
+    self.unknown_visit.
+    """
+    node_name = node.__class__.__name__
+    method = getattr(self, 'visit_' + node_name, self.unknown_visit)
+    self.document.reporter.debug(
+        'docutils.nodes.NodeVisitor.dispatch_visit calling %s for %s'
+        % (method.__name__, node_name))
+    return method(node)
+</t>
+<t tx="ekr.20050817185248.239">def dispatch_departure(self, node):
+    """
+    Call self."``depart_`` + node class name" with `node` as
+    parameter.  If the ``depart_...`` method does not exist, call
+    self.unknown_departure.
+    """
+    node_name = node.__class__.__name__
+    method = getattr(self, 'depart_' + node_name, self.unknown_departure)
+    self.document.reporter.debug(
+        'docutils.nodes.NodeVisitor.dispatch_departure calling %s for %s'
+        % (method.__name__, node_name))
+    return method(node)
+</t>
+<t tx="ekr.20050817185248.240">def unknown_visit(self, node):
+    """
+    Called when entering unknown `Node` types.
+
+    Raise an exception unless overridden.
+    """
+    if  (node.document.settings.strict_visitor
+         or node.__class__.__name__ not in self.optional):
+        raise NotImplementedError(
+            '%s visiting unknown node type: %s'
+            % (self.__class__, node.__class__.__name__))
+</t>
+<t tx="ekr.20050817185248.241">def unknown_departure(self, node):
+    """
+    Called before exiting unknown `Node` types.
+
+    Raise exception unless overridden.
+    """
+    if  (node.document.settings.strict_visitor
+         or node.__class__.__name__ not in self.optional):
+        raise NotImplementedError(
+            '%s departing unknown node type: %s'
+            % (self.__class__, node.__class__.__name__))
+</t>
+<t tx="ekr.20050817185248.242">class SparseNodeVisitor(NodeVisitor):
+
+    """
+    Base class for sparse traversals, where only certain node types are of
+    interest.  When ``visit_...`` &amp; ``depart_...`` methods should be
+    implemented for *all* node types (such as for `docutils.writers.Writer`
+    subclasses), subclass `NodeVisitor` instead.
+    """
+</t>
+<t tx="ekr.20050817185248.243">class GenericNodeVisitor(NodeVisitor):
+
+    """
+    Generic "Visitor" abstract superclass, for simple traversals.
+
+    Unless overridden, each ``visit_...`` method calls `default_visit()`, and
+    each ``depart_...`` method (when using `Node.walkabout()`) calls
+    `default_departure()`. `default_visit()` (and `default_departure()`) must
+    be overridden in subclasses.
+
+    Define fully generic visitors by overriding `default_visit()` (and
+    `default_departure()`) only. Define semi-generic visitors by overriding
+    individual ``visit_...()`` (and ``depart_...()``) methods also.
+
+    `NodeVisitor.unknown_visit()` (`NodeVisitor.unknown_departure()`) should
+    be overridden for default behavior.
+    """
+	@others
+</t>
+<t tx="ekr.20050817185248.244">def default_visit(self, node):
+    """Override for generic, uniform traversals."""
+    raise NotImplementedError
+</t>
+<t tx="ekr.20050817185248.245">def default_departure(self, node):
+    """Override for generic, uniform traversals."""
+    raise NotImplementedError
+</t>
+<t tx="ekr.20050817185248.246">def _call_default_visit(self, node):
+    self.default_visit(node)
+</t>
+<t tx="ekr.20050817185248.247">def _call_default_departure(self, node):
+    self.default_departure(node)
+</t>
+<t tx="ekr.20050817185248.248">def _nop(self, node):
+    pass
+</t>
+<t tx="ekr.20050817185248.249">def _add_node_class_names(names):
+    """Save typing with dynamic assignments:"""
+    for _name in names:
+        setattr(GenericNodeVisitor, "visit_" + _name, _call_default_visit)
+        setattr(GenericNodeVisitor, "depart_" + _name, _call_default_departure)
+        setattr(SparseNodeVisitor, 'visit_' + _name, _nop)
+        setattr(SparseNodeVisitor, 'depart_' + _name, _nop)
+</t>
+<t tx="ekr.20050817185248.250">
+_add_node_class_names(node_class_names)
+
+
+class TreeCopyVisitor(GenericNodeVisitor):
+
+    """
+    Make a complete copy of a tree or branch, including element attributes.
+    """
+	@others
+</t>
+<t tx="ekr.20050817185248.251">def __init__(self, document):
+    GenericNodeVisitor.__init__(self, document)
+    self.parent_stack = []
+    self.parent = []
+</t>
+<t tx="ekr.20050817185248.252">def get_tree_copy(self):
+    return self.parent[0]
+</t>
+<t tx="ekr.20050817185248.253">def default_visit(self, node):
+    """Copy the current node, and make it the new acting parent."""
+    newnode = node.copy()
+    self.parent.append(newnode)
+    self.parent_stack.append(self.parent)
+    self.parent = newnode
+</t>
+<t tx="ekr.20050817185248.254">def default_departure(self, node):
+    """Restore the previous acting parent."""
+    self.parent = self.parent_stack.pop()
+</t>
+<t tx="ekr.20050817185248.255">class TreePruningException(Exception):
+
+    """
+    Base class for `NodeVisitor`-related tree pruning exceptions.
+
+    Raise subclasses from within ``visit_...`` or ``depart_...`` methods
+    called from `Node.walk()` and `Node.walkabout()` tree traversals to prune
+    the tree traversed.
+    """
+	pass
+</t>
+<t tx="ekr.20050817185248.257">class SkipChildren(TreePruningException):
+
+    """
+    Do not visit any children of the current node.  The current node's
+    siblings and ``depart_...`` method are not affected.
+    """
+	pass
+</t>
+<t tx="ekr.20050817185248.259">class SkipSiblings(TreePruningException):
+
+    """
+    Do not visit any more siblings (to the right) of the current node.  The
+    current node's children and its ``depart_...`` method are not affected.
+    """
+	pass
+</t>
+<t tx="ekr.20050817185248.261">class SkipNode(TreePruningException):
+
+    """
+    Do not visit the current node's children, and do not call the current
+    node's ``depart_...`` method.
+    """
+	pass
+</t>
+<t tx="ekr.20050817185248.263">class SkipDeparture(TreePruningException):
+
+    """
+    Do not call the current node's ``depart_...`` method.  The current node's
+    children and siblings are not affected.
+    """
+	pass
+</t>
+<t tx="ekr.20050817185248.265">class NodeFound(TreePruningException):
+
+    """
+    Raise to indicate that the target of a search has been found.  This
+    exception must be caught by the client; it is not caught by the traversal
+    code.
+    """
+	pass
+</t>
+<t tx="ekr.20050817185248.267">def make_id(string):
+    """
+    Convert `string` into an identifier and return it.
+
+    Docutils identifiers will conform to the regular expression
+    ``[a-z](-?[a-z0-9]+)*``.  For CSS compatibility, identifiers (the "class"
+    and "id" attributes) should have no underscores, colons, or periods.
+    Hyphens may be used.
+
+    - The `HTML 4.01 spec`_ defines identifiers based on SGML tokens:
+
+          ID and NAME tokens must begin with a letter ([A-Za-z]) and may be
+          followed by any number of letters, digits ([0-9]), hyphens ("-"),
+          underscores ("_"), colons (":"), and periods (".").
+
+    - However the `CSS1 spec`_ defines identifiers based on the "name" token,
+      a tighter interpretation ("flex" tokenizer notation; "latin1" and
+      "escape" 8-bit characters have been replaced with entities)::
+
+          unicode     \\[0-9a-f]{1,4}
+          latin1      [&amp;iexcl;-&amp;yuml;]
+          escape      {unicode}|\\[ -~&amp;iexcl;-&amp;yuml;]
+          nmchar      [-a-z0-9]|{latin1}|{escape}
+          name        {nmchar}+
+
+    The CSS1 "nmchar" rule does not include underscores ("_"), colons (":"),
+    or periods ("."), therefore "class" and "id" attributes should not contain
+    these characters. They should be replaced with hyphens ("-"). Combined
+    with HTML's requirements (the first character must be a letter; no
+    "unicode", "latin1", or "escape" characters), this results in the
+    ``[a-z](-?[a-z0-9]+)*`` pattern.
+
+    .. _HTML 4.01 spec: http://www.w3.org/TR/html401
+    .. _CSS1 spec: http://www.w3.org/TR/REC-CSS1
+    """
+    id = _non_id_chars.sub('-', ' '.join(string.lower().split()))
+    id = _non_id_at_ends.sub('', id)
+    return str(id)
+</t>
+<t tx="ekr.20050817185248.268">_non_id_chars = re.compile('[^a-z0-9]+')
+_non_id_at_ends = re.compile('^[-0-9]+|-+$')
+
+def dupname(node, name):
+    node['dupnames'].append(name)
+    node['names'].remove(name)
+    # Assume that this method is referenced, even though it isn't; we
+    # don't want to throw unnecessary system_messages.
+    node.referenced = 1
+</t>
+<t tx="ekr.20050817185248.269">def fully_normalize_name(name):
+    """Return a case- and whitespace-normalized name."""
+    return ' '.join(name.lower().split())
+</t>
+<t tx="ekr.20050817185248.270">def whitespace_normalize_name(name):
+    """Return a whitespace-normalized name."""
+    return ' '.join(name.split())
+</t>
+<t tx="ekr.20050817185722"># ==============================
+#  Functional Node Base Classes
+# ==============================</t>
+<t tx="ekr.20050817185722.1"># ========
+#  Mixins
+# ========</t>
+<t tx="ekr.20050817185722.2"># ====================
+#  Element Categories
+# ====================</t>
+<t tx="ekr.20050817185722.3"># ================
+#  Title Elements
+# ================
+</t>
+<t tx="ekr.20050817185930"># ========================
+#  Bibliographic Elements
+# ========================
+
+</t>
+<t tx="ekr.20050818022030">def push (self,**keys):
+    
+    self.context.append(Bunch(**keys))
+    
+def pop (self,kind):
+    
+    bunch = self.context.pop()
+    assert bunch.kind == kind,\
+        'wrong bunch kind popped.  Expected: %s Got: %s' % (
+            kind, bunch.kind)
+
+    return bunch
+    
+def peek (self,kind):
+    
+    bunch = self.context[-1]
+    assert bunch.kind == kind,\
+        'peek at wrong bunch.  Expected: %s Got: %s' % (
+            kind, bunch.kind)
+    return bunch</t>
+<t tx="ekr.20050818033610">@
+
+- Fixed bug in visit_reference: added self.push(b).
+- Added putHead, putTail utilities.
+- Simplified most of the code.
+- Reorganized node handlers so that it is clear what the important methods are.
+- Almost all the grunt work is done.</t>
+<t tx="ekr.20050818081715">def dumpContext (self):
+    
+    print ; print '-' * 40
+    print 'Dump of context'
+        
+    i = 0
+    for bunch in self.context:
+        print '%2d %s' % (i,bunch)
+        i += 1</t>
+<t tx="ekr.20050818083045">def inContext (self,kind):
+    
+    '''Return the most recent bunch having the indicated kind, or None.'''
+    
+    i = len(self.context) - 1
+
+    while i &gt;= 0:
+        bunch = self.context[i]
+        if bunch.kind == kind:
+            return bunch
+        i -= 1
+        
+    return None</t>
+<t tx="ekr.20050818084920">def putHead (self,start,style='Normal',bulletText=None):
+    
+    self.createParagraph(self.body[:start],
+        style=style,bulletText=bulletText)
+
+    self.body = self.body[start:]
+
+
+def putTail (self,start,style='Normal',bulletText=None):
+    
+    self.createParagraph(self.body[start:],
+        style=style,bulletText=bulletText)
+
+    self.body = self.body[:start]
+</t>
+<t tx="ekr.20050818090152"></t>
+<t tx="ekr.20050818090152.1"></t>
+<t tx="ekr.20050818090907"></t>
+<t tx="ekr.20050818094118.1">def visit_docinfo(self, node):
+    
+    self.push(kind='docinfo',start=len(self.body))
+    self.in_docinfo = True
+
+def depart_docinfo(self, node):
+    
+    b = self.pop('docinfo')
+    self.putHead(b.start)
+    self.in_docinfo = False</t>
+<t tx="ekr.20050818094118.2"></t>
+<t tx="ekr.20050818094954"></t>
+<t tx="ekr.20050818094954.1"></t>
+<t tx="ekr.20050818095347">@
+
+All grunt work completed:
+
+- Moved Bunch class into this file (so no dependencies on leoGlobals.py).
+
+- Simplified calls to self.push
+
+- Finish all simple methods.
+
+- Better dumps in createParagraph.</t>
+<t tx="ekr.20050818103031">@nocolor
+@
+
+- Bullets show up as a black 2 ball.
+
+- More flexible handling of style sheets.
+
+** The big one: is there a way to put the TOC in the pdf outline frame?
+    - There is a way in reportlab/platypus, but NOT using the code in reportlab.para.py.</t>
+<t tx="ekr.20050818103441">@ From The Python Cookbook:  Often we want to just collect a bunch of stuff together, naming each item of the bunch; a dictionary's OK for that, but a small do-nothing class is even handier, and prettier to use.
+
+Create a Bunch whenever you want to group a few variables:
+
+    point = Bunch(datum=y, squared=y*y, coord=x)
+
+You can read/write the named attributes you just created, add others, del some of them, etc:
+    if point.squared &gt; threshold:
+        point.isok = True
+@c
+
+class Bunch (object):
+    
+    """A class that represents a colection of things.
+    
+    Especially useful for representing a collection of related variables."""
+    
+    def __init__(self,**keywords):
+        self.__dict__.update (keywords)
+        
+    def __repr__(self):
+        return self.toString()
+
+    def ivars(self):
+        return self.__dict__.keys()
+        
+    def keys(self):
+        return self.__dict__.keys()
+        
+    def toString(self):
+        tag = self.__dict__.get('tag')
+        entries = ["%s: %s" % (key,str(self.__dict__.get(key)))
+            for key in self.ivars() if key != 'tag']
+        if tag:
+            return "Bunch(tag=%s)...\n%s\n" % (tag,'\n'.join(entries))
+        else:
+            return "Bunch...\n%s\n" % '\n'.join(entries)
+
+    # Used by new undo code.
+    def __setitem__ (self,key,value):
+        '''Support aBunch[key] = val'''
+        return operator.setitem(self.__dict__,key,value)
+        
+    def __getitem__ (self,key):
+        '''Support aBunch[key]'''
+        return operator.getitem(self.__dict__,key)
+        
+    def get (self,key,theDefault=None):
+        return self.__dict__.get(key,theDefault)
+        
+bunch = Bunch</t>
+<t tx="ekr.20050818105023"></t>
+<t tx="ekr.20050818105023.1"></t>
+<t tx="ekr.20050818130249"></t>
+<t tx="ekr.20050819055746">c.save()</t>
+<t tx="ekr.20050819055746.1">@
+
+- Added dummyPDFTranslator class.
+
+- Added support for this dummy class to Writer.translate.</t>
+<t tx="ekr.20050819072001">def dumpNode (self,node,tag=''):
+    
+    &lt;&lt; define keys to be printed &gt;&gt;
+    
+    d = node.__dict__
+    
+    nkeys = d.keys() ; nkeys.sort()
+    
+    print ; print '-' * 30
+    print 'dump of node %s\n' % (g.choose(tag,'(%s)' % tag,''))
+    
+    print 'class',node.__class__
+    
+    for nkey in nkeys:
+        if nkey in keys:
+            val = d.get(nkey)
+            print nkey,':',g.toString(val,verbose=False,indent='\t')
+            
+    print ; print 'done', '-' * 25</t>
+<t tx="ekr.20050819072001.1">keys = (
+    #'anonymous_refs'
+    #'anonymous_targets'
+    'attributes'
+    'autofootnote_refs'
+    'autofootnote_start'
+    'autofootnotes'
+    #'children'
+    #'citation_refs'
+    #'citations'
+    #'current_line'
+    #'current_source'
+    #'decoration'
+    #'document'
+    'footnote_refs'
+    'footnotes'
+    'id_start'
+    'ids'  # keys are sectinon names, values are section objects or reference objects.
+    'indirect_targets'
+    'nameids' # This might be what we want: keys are section names, values are munged names.
+    #'nametypes'
+    #'parse_messages'
+    #'rawsource'
+    'refids'
+    'refnames'
+    #'reporter'
+    #'settings'
+    #'substitution_defs'
+    #'substitution_names'
+    #'substitution_refs'
+    #'symbol_footnote_refs'
+    #'symbol_footnote_start'
+    #'symbol_footnotes'
+    #'tagname'
+    #'transform_messages'
+    #'transformer',
+)</t>
+<t tx="ekr.20050820092312">def createParagraphsFromIntermediateFile (self,s,story,visitor):
+    
+    if 0: # Not needed now that putParaFromIntermediateFile is in the visitor.
+        self.styleSheet = visitor.styleSheet
+        self.encode = visitor.encode
+    
+    out = StringIO.StringIO()
+
+    doc = reportlab.platypus.SimpleDocTemplate(out,
+        pagesize=reportlab.lib.pagesizes.A4)
+
+    # The 'real' code is doc.build(story)
+    self.buildFromIntermediateFile(s,story,visitor)
+
+    return out.getvalue()</t>
+<t tx="ekr.20050820092312.1">def putParaFromIntermediateFile (self,lines,style):
+
+    bulletText = None
+    text = '\n'.join(lines)
+    
+    # g.trace(style,repr(text))
+    
+    style = self.styleSheet [style]
+
+    self.story.append(
+        reportlab.platypus.para.Paragraph (
+            self.encode(text), style,
+            bulletText = bulletText,
+            context = self.styleSheet))</t>
+<t tx="ekr.20050820094818">def buildFromIntermediateFile (self):
+    
+    'Synthesize calls to reportlab.platypus.para.Paragraph from an intermediate file.'
+    
+    lines = g.splitLines(self.contents)
+    para = [] # The lines of the next paragraph.
+
+    for line in lines:
+        if line:
+            if line.startswith('createParagraph:'):
+                if para:
+                    self.putParaFromIntermediateFile(para,style)
+                    para = []
+                style = line[len('createParagraph:'):].strip()
+            elif line.startswith('starttag:') or line.startswith('..'):
+                pass
+            else:
+                para.append(line)
+    if para:
+        self.putParaFromIntermediateFile(para,style)</t>
+<t tx="ekr.20050820100547">class dummyPDFTranslator (docutils.nodes.NodeVisitor):
+
+	@others</t>
+<t tx="ekr.20050820101355">def __init__(self, writer,doctree,contents):
+
+    self.writer = writer
+    self.contents = contents
+    self.story = []
+    
+    # Some of these may be needed, even though they are not referenced directly.
+    self.settings = settings = doctree.settings
+    self.styleSheet = stylesheet.getStyleSheet()
+    docutils.nodes.NodeVisitor.__init__(self, doctree) # Init the base class.
+    self.language = docutils.languages.get_language(doctree.settings.language_code)</t>
+<t tx="ekr.20050820101355.1">def visit_document(self, node):
+
+    self.buildFromIntermediateFile()
+    
+    raise docutils.nodes.SkipNode
+    
+def depart_document(self, node):
+    
+    pass</t>
+<t tx="ekr.20050820101522">def encode(self, text):
+
+    """Encode special characters in `text` &amp; return."""
+    
+    if type(text) is types.UnicodeType:
+        text = text.replace(u'\u2020', u' ')
+        text = text.replace(u'\xa0', u' ')
+        text = text.encode('utf-8')
+
+    return text
+
+</t>
+<t tx="ekr.20050820103029">def as_what(self):
+
+    return self.story
+</t>
+<t tx="ekr.20050820112549">@
+
+- First working version.
+
+</t>
+<t tx="ekr.20050821153838">def pdfMunge (self,s):
+    
+    '''Duplicate the munging done (somewhere in docutils) of section names.
+    
+    This allows us to use the nameids attribute in the document element.'''
+    
+    s = s.lower.replace('\t',' ')
+
+    while s != s.replace('  ',' '):
+        s = s.replace('  ',' ')
+    
+    return s.replace(' ','-')</t>
+<t tx="ekr.20050822065754">@
+
+- Completed the conversion to using Bunches on the context stack.
+    - Added peek method.
+    - In context now searches from top of context stack and returns a Bunch.
+    - Rewrote the footnote logic to use bunches:
+        - footnote_backrefs sets b.setLink and b.links.  Much clearer code.
+        - visit/depart_label uses b.setLink and b.links to generate code.
+- The code now passes a minimal test of footnote code.
+
+- WARNING: auto-footnote numbering does not work.  I doubt it ever did.  I feel under no obligation to make it work.</t>
+<t tx="ekr.20050822123348">@
+I. Bugs and bug fixes
+
+This file, leo_pdf.py, is derived from rlpdf.py. It is intended as a replacement
+for it. The copyright below applies only to this file, and to no other part of
+Leo.
+
+This code fixes numerous bugs that must have existed in rlpdf.py. That code was
+apparently out-of-date. For known bugs in the present code see the 'to do'
+section.
+
+II. New and improved code.
+
+This code pushes only Bunch's on the context stack. The Bunch class is slightly
+adapted from the Python Cookbook.
+
+Pushing only Bunches greatly simplifies the code and makes it more robust: there
+is no longer any need for one part of the code to pop as many entries as another
+part pushed. Furthermore, Bunch's can have as much internal structure as needed
+without affecting any other part of the code.
+
+The following methods make using Bunch's trivial: push, pop, peek, inContext.
+inContext searches the context stack for a Bunch of the indicated 'kind'
+attribute, returning the Bunch if found.
+
+The following 'code generator' methods were heavily rewritten:
+visit/depart_title, visit/depart_visit_footnote_reference, footnote_backrefs
+and visit/depart_label.
+
+III. Passing intermediateFile.txt to reportlab.
+
+You can use an 'intermediate' file as the input to reportlab. This can be highly
+useful: you can see what output reportlab will accept before the code generators
+can actually generate it.
+
+The way this works is as follows:
+1. Run this code as usual, with the trace in PDFTranslator.createParagraph
+enabled. This trace will print the contents of each paragraph to be sent to
+reportlab, along with the paragraph's style.
+
+2. Take the resulting console output and put it in the file called
+intermediateFile.txt, in the same folder as the original document.
+
+3. At the start of Writer.translate, change the 'if 1:' to 'if: 0'. This causes
+the code to use the dummyPDFTranslator class instead of the usual PDFTranslator
+class.
+
+4. *Rerun* this code. Because of step 3, the code will read
+intermediateFile.txt and send it, paragraph by paragraph, to reportlab. The
+actual work is done in buildFromIntermediateFile. This method assumes the output
+was produced by the trace in PDFTranslator.createParagraph as discussed
+in point 2 above.
+
+IV. About tracing and debugging.
+
+As mentioned in the imports section, it is not necessary to import leoGlobals.
+This file is part of Leo, and contains debugging stuff such as g.trace and
+g.toString. There are also g.splitLines, g.es_exception, etc. used by debugging
+code.
+
+The trace in PDFTranslator.createParagraph is extremely useful for figuring out
+what happened. Various other calls to g.trace are commented out throughout the
+code. These were the way I debugged this code.
+
+Edward K. Ream:  Aug 22, 2005.</t>
+<t tx="ekr.20050822125824">@
+
+- Added 'about this code' section.</t>
 <t tx="mork.20040926105355.9">def openChaptersFile( fileName ):
     zf = zipfile.ZipFile( fileName )
     import cStringIO
