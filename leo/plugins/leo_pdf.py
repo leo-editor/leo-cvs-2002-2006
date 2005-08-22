@@ -21,11 +21,96 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@@language python
 #@@tabwidth -4
 
+#@<< about this code >>
+#@+node:<< about this code >>
+#@+at
+# I. Bugs and bug fixes
+# 
+# This file, leo_pdf.py, is derived from rlpdf.py. It is intended as a 
+# replacement
+# for it. The copyright below applies only to this file, and to no other part 
+# of
+# Leo.
+# 
+# This code fixes numerous bugs that must have existed in rlpdf.py. That code 
+# was
+# apparently out-of-date. For known bugs in the present code see the 'to do'
+# section.
+# 
+# II. New and improved code.
+# 
+# This code pushes only Bunch's on the context stack. The Bunch class is 
+# slightly
+# adapted from the Python Cookbook.
+# 
+# Pushing only Bunches greatly simplifies the code and makes it more robust: 
+# there
+# is no longer any need for one part of the code to pop as many entries as 
+# another
+# part pushed. Furthermore, Bunch's can have as much internal structure as 
+# needed
+# without affecting any other part of the code.
+# 
+# The following methods make using Bunch's trivial: push, pop, peek, 
+# inContext.
+# inContext searches the context stack for a Bunch of the indicated 'kind'
+# attribute, returning the Bunch if found.
+# 
+# The following 'code generator' methods were heavily rewritten:
+# visit/depart_title, visit/depart_visit_footnote_reference, footnote_backrefs
+# and visit/depart_label.
+# 
+# III. Passing intermediateFile.txt to reportlab.
+# 
+# You can use an 'intermediate' file as the input to reportlab. This can be 
+# highly
+# useful: you can see what output reportlab will accept before the code 
+# generators
+# can actually generate it.
+# 
+# The way this works is as follows:
+# 1. Run this code as usual, with the trace in PDFTranslator.createParagraph
+# enabled. This trace will print the contents of each paragraph to be sent to
+# reportlab, along with the paragraph's style.
+# 
+# 2. Take the resulting console output and put it in the file called
+# intermediateFile.txt, in the same folder as the original document.
+# 
+# 3. At the start of Writer.translate, change the 'if 1:' to 'if: 0'. This 
+# causes
+# the code to use the dummyPDFTranslator class instead of the usual 
+# PDFTranslator
+# class.
+# 
+# 4. *Rerun* this code. Because of step 3, the code will read
+# intermediateFile.txt and send it, paragraph by paragraph, to reportlab. The
+# actual work is done in buildFromIntermediateFile. This method assumes the 
+# output
+# was produced by the trace in PDFTranslator.createParagraph as discussed
+# in point 2 above.
+# 
+# IV. About tracing and debugging.
+# 
+# As mentioned in the imports section, it is not necessary to import 
+# leoGlobals.
+# This file is part of Leo, and contains debugging stuff such as g.trace and
+# g.toString. There are also g.splitLines, g.es_exception, etc. used by 
+# debugging
+# code.
+# 
+# The trace in PDFTranslator.createParagraph is extremely useful for figuring 
+# out
+# what happened. Various other calls to g.trace are commented out throughout 
+# the
+# code. These were the way I debugged this code.
+# 
+# Edward K. Ream:  Aug 22, 2005.
+#@-at
+#@nonl
+#@-node:<< about this code >>
+#@nl
 #@<< copyright >>
 #@+node:<< copyright >>
-# This file is derived from rlpdf.py. 
-# The following copyright below applies only to this file, and to no other part of Leo.
-
 #####################################################################################
 #
 #	Copyright (c) 2000-2001, ReportLab Inc.
@@ -135,9 +220,9 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@+node:0.0.5
 #@+at
 # 
-# - First working
+# - First working version.
+# 
 #@-at
-#@nonl
 #@-node:0.0.5
 #@+node:0.1
 #@+at
@@ -155,6 +240,13 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@-at
 #@nonl
 #@-node:0.1
+#@+node:0.2
+#@+at
+# 
+# - Added 'about this code' section.
+#@-at
+#@nonl
+#@-node:0.2
 #@-others
 #@nonl
 #@-node:<< version history >>
@@ -176,14 +268,14 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@-node:<< to do >>
 #@nl
 
-__version__ = '0.1'
+__version__ = '0.2'
 __docformat__ = 'reStructuredText'
 #@<< imports >>
 #@+node:<< imports >>
 import sys
 sys.path.append(r'c:\reportlab_1_20') 
 
-if 1: # This dependency could easily be removed.
+if 0: # This dependency could easily be removed.
     # Used only for tracing and error reporting.
     import leoGlobals as g
     
@@ -319,7 +411,7 @@ class Writer (docutils.writers.Writer):
         # self.translator_class = PDFTranslator
     #@nonl
     #@-node:__init__ (Writer)
-    #@+node:createParagraphsFromIntermediateFile & helpers
+    #@+node:createParagraphsFromIntermediateFile
     def createParagraphsFromIntermediateFile (self,s,story,visitor):
         
         if 0: # Not needed now that putParaFromIntermediateFile is in the visitor.
@@ -336,7 +428,7 @@ class Writer (docutils.writers.Writer):
     
         return out.getvalue()
     #@nonl
-    #@-node:createParagraphsFromIntermediateFile & helpers
+    #@-node:createParagraphsFromIntermediateFile
     #@+node:createPDF_usingPlatypus
     def createPDF_usingPlatypus (self,story):
     
@@ -368,10 +460,10 @@ class Writer (docutils.writers.Writer):
             try:
                 filename = 'intermediateFile.txt'
                 s = file(filename).read()
-                g.trace('creating .pdf file from %s...' % filename)
+                # g.trace('creating .pdf file from %s...' % filename)
                 visitor = dummyPDFTranslator(self,self.document,s)
             except IOError:
-                g.trace('can not open %s' % filename)
+                # g.trace('can not open %s' % filename)
                 return
     
         # Create a list of paragraphs using Platypus.
