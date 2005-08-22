@@ -139,6 +139,22 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@-at
 #@nonl
 #@-node:0.0.5
+#@+node:0.1
+#@+at
+# 
+# - Completed the conversion to using Bunches on the context stack.
+#     - Added peek method.
+#     - In context now searches from top of context stack and returns a Bunch.
+#     - Rewrote the footnote logic to use bunches:
+#         - footnote_backrefs sets b.setLink and b.links.  Much clearer code.
+#         - visit/depart_label uses b.setLink and b.links to generate code.
+# - The code now passes a minimal test of footnote code.
+# 
+# - WARNING: auto-footnote numbering does not work.  I doubt it ever did.  I 
+# feel under no obligation to make it work.
+#@-at
+#@nonl
+#@-node:0.1
 #@-others
 #@nonl
 #@-node:<< version history >>
@@ -147,9 +163,6 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@+node:<< to do >>
 #@@nocolor
 #@+at
-# 
-# - Complete the conversion to using Bunches on the context stack.
-#     - There are a few 'complex' methods that haven't been converted.
 # 
 # - Bullets show up as a black 2 ball.
 # 
@@ -163,7 +176,7 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@-node:<< to do >>
 #@nl
 
-__version__ = '0.0.5'
+__version__ = '0.1'
 __docformat__ = 'reStructuredText'
 #@<< imports >>
 #@+node:<< imports >>
@@ -393,23 +406,14 @@ class dummyPDFTranslator (docutils.nodes.NodeVisitor):
     def __init__(self, writer,doctree,contents):
     
         self.writer = writer
+        self.contents = contents
+        self.story = []
+        
+        # Some of these may be needed, even though they are not referenced directly.
         self.settings = settings = doctree.settings
         self.styleSheet = stylesheet.getStyleSheet()
         docutils.nodes.NodeVisitor.__init__(self, doctree) # Init the base class.
         self.language = docutils.languages.get_language(doctree.settings.language_code)
-        
-        self.in_docinfo = False
-        self.head = [] # Set only by meta() method.  
-        self.body = []
-        self.foot = []
-        self.sectionlevel = 0
-        self.context = []
-        ## self.topic_class = ''
-        self.story = []
-        self.bulletText = '\267'	# maybe move this into stylesheet.
-        # self.bulletlevel = 0
-    
-        self.contents = contents
     #@nonl
     #@-node:   __init__ (dummyPDFTranslator)
     #@+node:as_what
@@ -432,8 +436,6 @@ class dummyPDFTranslator (docutils.nodes.NodeVisitor):
     #@-node:encode
     #@+node:visit/depart_document
     def visit_document(self, node):
-        
-        g.trace()
     
         self.buildFromIntermediateFile()
         
@@ -441,7 +443,8 @@ class dummyPDFTranslator (docutils.nodes.NodeVisitor):
         
     def depart_document(self, node):
         
-        g.trace()
+        pass
+    #@nonl
     #@-node:visit/depart_document
     #@+node:buildFromIntermediateFile
     def buildFromIntermediateFile (self):
@@ -472,7 +475,7 @@ class dummyPDFTranslator (docutils.nodes.NodeVisitor):
         bulletText = None
         text = '\n'.join(lines)
         
-        g.trace(style,repr(text))
+        # g.trace(style,repr(text))
         
         style = self.styleSheet [style]
     
@@ -501,20 +504,299 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         
         self.in_docinfo = False
         self.head = [] # Set only by meta() method.  
-        self.body = []
+        self.body = [] # The body text being accumulated.
         self.foot = []
         self.sectionlevel = 0
         self.context = []
-        ## self.topic_class = ''
-        self.story = []
-        self.bulletText = '\267'	# maybe move this into stylesheet.
-        # self.bulletlevel = 0
         
-        # Added by EKR.
-        self.documentNode = None
-    #@nonl
+        self.story = []
+        self.bulletText = '\267'
+            # maybe move this into stylesheet.
+            # This looks like the wrong glyph.
+    
+        if 0: # no longer used.
+            self.topic_class = ''
+            self.bulletlevel = 0
     #@-node:   __init__ (PDFTranslator)
+    #@+node:Complex
+    #@+node:footnotes
+    #@+node:footnote_reference
+    #@+node:visit_footnote_reference
+    #@+at 
+    #@nonl
+    # Bug fixes, EKR 8/22/05:
+    #     - Get attributes from node.attributes, not node.
+    #     - The proper key is 'ids', not 'id'
+    #@-at
+    #@@c
+    
+    def visit_footnote_reference (self,node):
+        
+        '''Generate code for a footnote reference.'''
+        
+        # self.dumpNode(node,tag='footnote-ref-node')
+    
+        markup = [] # The terminating markup to be supplied by depart_footnote_reference.
+        a = node.attributes # EKR.
+        if self.settings.footnote_backlinks and a.get('ids'):
+            self.body.append(
+                self.starttag(node,'setLink','',destination=a['ids']))
+            markup.append('</setLink>')
+        
+        if   node.hasattr('refid'):   href = a ['refid']
+        elif node.hasattr('refname'): href = self.document.nameids [a ['refname']]
+        else:                         href = ''
+        # g.trace('href:',href)
+    
+        format = self.settings.footnote_references
+        if format == 'brackets':
+            suffix = '[' ; markup.append(']')
+        elif format == 'superscript':
+            suffix = '<super>' ; markup.append('</super>')
+        else: # shouldn't happen
+            suffix = None
+    
+        if suffix:
+            self.body.append(
+                self.starttag(node,'link',suffix,destination=href))
+            markup.append('</link>')
+    
+        markup.reverse()
+        self.push(kind='footnote-ref',markup=markup)
+    #@nonl
+    #@-node:visit_footnote_reference
+    #@+node:depart_footnote_reference
+    def depart_footnote_reference(self, node):
+        
+        b = self.pop('footnote-ref')
+        
+        for z in b.markup:
+            self.body.append(z)
+    #@nonl
+    #@-node:depart_footnote_reference
+    #@-node:footnote_reference
+    #@+node:footnote & helpers
+    def visit_footnote(self, node):
+        
+        self.push(kind='footnotes',context=[])
+    
+        self.footnote_backrefs(node)
+    
+    def depart_footnote(self, node):
+        
+        self.pop('footnotes')
+    
+        self.footnote_backrefs_depart(node)
+    #@+node:footnote_backrefs
+    #@+at 
+    #@nonl
+    # Bug fixes, EKR 8/22/05:
+    #     - Get attributes from node.attributes, not node.
+    #     - The proper key is 'ids', not 'id'
+    # Warning: this does not work for auto-numbered footnotes.
+    #@-at
+    #@@c
+    
+    def footnote_backrefs (self,node):
+        
+        '''Create b.link and b.setLink for visit/depart_label.'''
+        
+        # self.dumpNode(node,tag='backrefs-node')
+        
+        b = self.peek('footnotes')
+        a = node.attributes ; backrefs = a.get('backrefs',[]) # EKR.
+    
+        # Set b.setLink.
+        b.setLink = self.starttag(
+            {},'setLink','',destination=a['ids']) # EKR.
+    
+        # Set b.links.
+        b.links = []
+        if self.settings.footnote_backlinks:
+            for backref in backrefs:
+                b.links.append(
+                    self.starttag(
+                        {},'link',suffix='',destination=backref))
+    #@nonl
+    #@-node:footnote_backrefs
+    #@+node:footnote_backrefs_depart
+    def footnote_backrefs_depart(self, node):
+    
+        if not self.context and self.body:
+            self.createParagraph(self.body)
+            self.body = []
+    #@-node:footnote_backrefs_depart
+    #@-node:footnote & helpers
+    #@+node:label
+    def visit_label(self, node):
+        
+        b = self.inContext('footnotes')
+        if b:
+            self.body.append(b.setLink)
+            self.body.append('</setLink>')
+            # Start all links.
+            for link in b.links:
+                self.body.append(link)
+            self.body.append('[')
+    
+    def depart_label(self, node):
+        
+        b = self.inContext('footnotes')
+        if b:
+            self.body.append(']')
+            # End all links.
+            for link in b.links:
+                self.body.append('</link>')
+            # Who knows why this is here...
+            self.body.append('   ')
+    #@nonl
+    #@-node:label
+    #@-node:footnotes
+    #@+node:reference...
+    #@+node:visit_reference
+    def visit_reference (self,node):
+    
+        markup = [] ; caller = 'visit_reference'
+    
+        if node.has_key('refuri'):
+            href = node ['refuri']
+            self.body.append(
+                self.starttag(node,'a',suffix='',href=href,caller=caller))
+            markup.append('</a>')
+        else:
+            if node.has_key('id'):
+                self.body.append(
+                    self.starttag({},'setLink','',
+                        destination=node['id'],caller=caller))
+                markup.append('</setLink>')
+            if node.has_key('refid'):
+                href = node ['refid']
+            elif node.has_key('refname'):
+                href = self.document.nameids [node ['refname']]
+            self.body.append(
+                self.starttag(node,'link','',destination=href,caller=caller))
+            markup.append('</link>')
+    
+        self.push(kind='a',markup=markup)
+    #@-node:visit_reference
+    #@+node:depart_reference
+    def depart_reference(self, node):
+        
+        b = self.pop('a')
+    
+        for s in b.markup:
+            self.body.append(s)
+    #@nonl
+    #@-node:depart_reference
+    #@-node:reference...
+    #@+node:target
+    def visit_target (self,node):
+    
+        if not (
+            node.has_key('refuri') or
+            node.has_key('refid') or
+            node.has_key('refname')
+        ):
+            href = ''
+            if node.has_key('id'):
+                href = node ['id']
+            elif node.has_key('name'):
+                href = node ['name']
+            self.body.append("%s%s" % (
+                self.starttag(node,'setLink',suffix='',
+                    destination=href,caller='visit_targtet'),
+                '</setLink>'))
+        raise docutils.nodes.SkipNode
+    
+    def depart_target (self,node):
+        pass
+    #@nonl
+    #@-node:target
+    #@+node:title
+    #@+node:visit_title
+    def visit_title (self,node):
+    
+        caller='visit_title'
+        start = len(self.body) ; markup = []
+        isTopic = isinstance(node.parent,docutils.nodes.topic)
+        isTitle = self.sectionlevel == 0
+        
+        # Set the style.
+        if isTopic:   style = 'topic-title'
+        elif isTitle: style = 'title'
+        else:         style = "h%s" % self.sectionlevel
+    
+        ## The old code was equivalent to: if style != 'title'.
+        if 0:
+            self.dumpNode(node.parent,tag='node.parent')
+            self.dumpNode(node,tag='node')
+        # Bug fix: 8/21/05: changed 'id' to 'ids'.
+        if node.parent.hasattr('ids'):
+            self.body.append(
+            self.starttag({},'setLink','',
+                destination=node.parent['ids'],caller=caller))
+            markup.append('</setLink>')
+        if node.hasattr('refid'):
+            self.body.append(
+            self.starttag({},'setLink','',
+                destination=node['refid'],caller=caller))
+            markup.append('</setLink>')
+    
+        self.push(kind='title',markup=markup,start=start,style=style)
+    #@nonl
+    #@-node:visit_title
+    #@+node:depart_title
+    def depart_title (self,node):
+    
+        b = self.pop('title')
+    
+        for z in b.markup:
+            self.body.append(z)
+            
+        self.putTail(b.start,style=b.style)
+    #@nonl
+    #@-node:depart_title
+    #@-node:title
+    #@-node:Complex
     #@+node:Helpers
+    #@+node: starttag
+    # The suffix is always '\n' except for a cant-happen situation.
+    
+    def starttag (self,node,tagname,suffix='\n',caller='',**attributes):
+        
+        # g.trace(repr(attributes))
+        atts = {}
+        for (name,value) in attributes.items():
+            atts [name.lower()] = value
+        for att in ('class',): # append to node attribute
+            if node.has_key(att):
+                if atts.has_key(att):
+                    atts [att] = node [att] + ' ' + atts [att]
+        for att in ('id',): # node attribute overrides
+            if node.has_key(att):
+                atts [att] = node [att]
+        
+        attlist = atts.items() ; attlist.sort()
+        parts = [tagname]
+        # Convert the attributes in attlist to a single string.
+        for name, value in attlist:
+            # g.trace('attlist element:',repr(name),repr(value))
+            if value is None: # boolean attribute
+                parts.append(name.lower().strip())
+            elif isinstance(value,types.ListType):
+                values = [str(v) for v in value]
+                val = ' '.join(values).strip()
+                parts.append('%s="%s"' % (
+                    name.lower(), self.encode(val)))
+            else:
+                parts.append('%s="%s"' % (
+                    name.lower(),self.encode(str(value).strip())))
+    
+        val = '<%s>%s' % (' '.join(parts),suffix)
+        # g.trace('%-24s %s' % (caller,val))
+        return val
+    #@nonl
+    #@-node: starttag
     #@+node:as_what
     def as_what(self):
     
@@ -529,11 +811,11 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         if not style.strip(): ### EKR
             style = 'Normal'
             
-        if 1:
+        if 0:
             s = text.split('>')
             s = '>\n'.join(s)
             print
-            if 0: # just print the text.
+            if 1: # just print the text.
                 print s
             else:
                 g.trace('%8s\n\n%s' % (style,s))
@@ -554,6 +836,18 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
             raise
     #@nonl
     #@-node:createParagraph
+    #@+node:dumpContext
+    def dumpContext (self):
+        
+        print ; print '-' * 40
+        print 'Dump of context'
+            
+        i = 0
+        for bunch in self.context:
+            print '%2d %s' % (i,bunch)
+            i += 1
+    #@nonl
+    #@-node:dumpContext
     #@+node:dumpNode
     def dumpNode (self,node,tag=''):
         
@@ -563,9 +857,9 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
             #'anonymous_refs'
             #'anonymous_targets'
             'attributes'
-            #'autofootnote_refs'
-            #'autofootnote_start'
-            #'autofootnotes'
+            'autofootnote_refs'
+            'autofootnote_start'
+            'autofootnotes'
             #'children'
             #'citation_refs'
             #'citations'
@@ -573,8 +867,8 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
             #'current_source'
             #'decoration'
             #'document'
-            #'footnote_refs'
-            #'footnotes'
+            'footnote_refs'
+            'footnotes'
             'id_start'
             'ids'  # keys are sectinon names, values are section objects or reference objects.
             'indirect_targets'
@@ -592,7 +886,7 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
             #'symbol_footnote_refs'
             #'symbol_footnote_start'
             #'symbol_footnotes'
-            # 'tagname'
+            #'tagname'
             #'transform_messages'
             #'transformer',
         )
@@ -632,35 +926,20 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         # footnotes have character values above 128 ?
         return text
     #@-node:encode
-    #@+node:dumpContext
-    def dumpContext (self):
-        
-        print ; print '-' * 40
-        print 'Dump of context'
-            
-        i = 0
-        for bunch in self.context:
-            print '%2d %s' % (i,bunch)
-            i += 1
-    #@nonl
-    #@-node:dumpContext
     #@+node:inContext
     def inContext (self,kind):
         
-        '''Return true if any context bunch has the indicated kind.'''
+        '''Return the most recent bunch having the indicated kind, or None.'''
         
-        for obj in self.context:
-            try: # Eventually everything on the context stack will be a Bunch.
-                if kind == obj:
-                    val = True
-                if kind == obj.kind:
-                    val = True
-            except Exception:
-                pass
+        i = len(self.context) - 1
     
-        val = False
-        # g.trace(kind,val)
-        return val
+        while i >= 0:
+            bunch = self.context[i]
+            if bunch.kind == kind:
+                return bunch
+            i -= 1
+            
+        return None
     #@nonl
     #@-node:inContext
     #@+node:pdfMunge
@@ -678,7 +957,7 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         return s.replace(' ','-')
     #@nonl
     #@-node:pdfMunge
-    #@+node:push & pop
+    #@+node:push, pop, peek
     def push (self,**keys):
         
         self.context.append(Bunch(**keys))
@@ -691,8 +970,16 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
                 kind, bunch.kind)
     
         return bunch
+        
+    def peek (self,kind):
+        
+        bunch = self.context[-1]
+        assert bunch.kind == kind,\
+            'peek at wrong bunch.  Expected: %s Got: %s' % (
+                kind, bunch.kind)
+        return bunch
     #@nonl
-    #@-node:push & pop
+    #@-node:push, pop, peek
     #@+node:putHead & putTail
     def putHead (self,start,style='Normal',bulletText=None):
         
@@ -1368,266 +1655,6 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
         raise docutils.nodes.SkipNode
     #@-node:visit_raw
     #@-node:Unusual...
-    #@+node:Complex TODO
-    #@+node:footnotes TODO 
-    #@+node:footnote & helpers
-    def visit_footnote(self, node):
-        
-        g.trace() ; return ###
-        
-        self.push(kind='footnotes')
-    
-        self.footnote_backrefs(node)
-    
-    def depart_footnote(self, node):
-        
-        g.trace() ; return ###
-        
-        self.pop('footnotes')
-    
-        self.footnote_backrefs_depart(node)
-    
-    #@+node:footnote_backrefs
-    def footnote_backrefs (self,node):
-    
-        if self.settings.footnote_backlinks and node.hasattr('backrefs'):
-            backrefs = node ['backrefs']
-            if len(backrefs) == 1:
-                self.context.append("%s%s" % (
-                    self.starttag({},'setLink','',destination=node['id']),
-                    '</setLink>'))
-                self.context.append("%s%s" % (
-                    self.starttag({},'link','',destination=backrefs[0]),
-                    '</link>'))
-            else:
-                i = 1
-                backlinks = []
-                for backref in backrefs:
-                    backlinks.append("%s%s%s" % (
-                        self.starttag({},'link','',destination=backref),
-                        i, '</link>'))
-                    i += 1
-                self.context.append(' <i>(%s)</i> ' % ', '.join(backlinks))
-                self.context.append("%s%s" % (
-                    self.starttag({},'setLink','',destination=node['id']),
-                    '</setLink>'))
-        else:
-            self.context.append("%s%s" % (
-                self.starttag({},'setLink','',destination=node['id']),
-                '</setLink>'))
-            self.context.append('')
-    #@-node:footnote_backrefs
-    #@+node:footnote_backrefs_depart
-    def footnote_backrefs_depart(self, node):
-    
-        if not self.context and self.body:
-            self.createParagraph(self.body)
-            self.body = []
-    #@-node:footnote_backrefs_depart
-    #@-node:footnote & helpers
-    #@+node:footnode_reference TODO
-    #@+node:visit_footnote_reference
-    def visit_footnote_reference(self, node):
-        
-        g.trace() ; return ###
-        # for backrefs
-        if self.settings.footnote_backlinks and node.has_key('id'):
-            self.body.append(self.starttag(node, 'setLink', '', destination=node['id']))
-            self.context.append('</setLink>')
-        else:
-            self.context.append('')
-    
-        href = ''
-        if node.has_key('refid'):
-            href = node['refid']
-        elif node.has_key('refname'):
-            href = self.document.nameids[node['refname']]
-        format = self.settings.footnote_references
-        if format == 'brackets':
-            suffix = '['
-            self.context.append(']')
-        elif format == 'superscript':
-            suffix = '<super>'
-            self.context.append('</super>')
-        else: # shouldn't happen
-            suffix = '???'
-            self.content.append('???')
-        self.body.append(self.starttag(node, 'link', suffix, destination=href))
-    #@nonl
-    #@-node:visit_footnote_reference
-    #@+node:depart_footnote_reference
-    def depart_footnote_reference(self, node):
-        
-        g.trace() ; return ###
-        
-        self.body.append(self.context.pop())
-        self.body.append('</link>')
-        self.body.append(self.context.pop())
-    
-    #@-node:depart_footnote_reference
-    #@-node:footnode_reference TODO
-    #@+node:label (extra pops for footnote stuff) TODO
-    def visit_label(self, node):
-        
-        if self.inContext('footnotes'):
-            self.body.append('[')
-    
-    def depart_label(self, node):
-        
-        if self.inContext('footnotes'):
-    
-            self.body.append(']')
-            self.body.append(self.context.pop())
-            self.body.append(self.context.pop())
-    
-        self.body.append('   ')
-    #@-node:label (extra pops for footnote stuff) TODO
-    #@-node:footnotes TODO 
-    #@+node:reference...
-    #@+node:visit_reference
-    def visit_reference (self,node):
-    
-        markup = [] ; caller = 'visit_reference'
-    
-        if node.has_key('refuri'):
-            href = node ['refuri']
-            self.body.append(
-                self.starttag(node,'a',suffix='',href=href,caller=caller))
-            markup.append('</a>')
-        else:
-            if node.has_key('id'):
-                self.body.append(
-                    self.starttag({},'setLink','',
-                        destination=node['id'],caller=caller))
-                markup.append('</setLink>')
-            if node.has_key('refid'):
-                href = node ['refid']
-            elif node.has_key('refname'):
-                href = self.document.nameids [node ['refname']]
-            self.body.append(
-                self.starttag(node,'link','',destination=href,caller=caller))
-            markup.append('</link>')
-    
-        self.push(kind='a',markup=markup)
-    #@-node:visit_reference
-    #@+node:depart_reference
-    def depart_reference(self, node):
-        
-        b = self.pop('a')
-    
-        for s in b.markup:
-            self.body.append(s)
-    #@nonl
-    #@-node:depart_reference
-    #@-node:reference...
-    #@+node:target
-    def visit_target (self,node):
-    
-        if not (
-            node.has_key('refuri') or
-            node.has_key('refid') or
-            node.has_key('refname')
-        ):
-            href = ''
-            if node.has_key('id'):
-                href = node ['id']
-            elif node.has_key('name'):
-                href = node ['name']
-            self.body.append("%s%s" % (
-                self.starttag(node,'setLink',suffix='',
-                    destination=href,caller='visit_targtet'),
-                '</setLink>'))
-        raise docutils.nodes.SkipNode
-    
-    def depart_target (self,node):
-        pass
-    #@nonl
-    #@-node:target
-    #@+node:title
-    #@+node:visit_title
-    def visit_title (self,node):
-    
-        caller='visit_title'
-        start = len(self.body) ; markup = []
-        isTopic = isinstance(node.parent,docutils.nodes.topic)
-        isTitle = self.sectionlevel == 0
-        
-        # Set the style.
-        if isTopic:   style = 'topic-title'
-        elif isTitle: style = 'title'
-        else:         style = "h%s" % self.sectionlevel
-    
-        ## The old code was equivalent to: if style != 'title'.
-        if 0:
-            self.dumpNode(node.parent,tag='node.parent')
-            self.dumpNode(node,tag='node')
-        # Bug fix: 8/21/05: changed 'id' to 'ids'.
-        if node.parent.hasattr('ids'):
-            self.body.append(
-            self.starttag({},'setLink','',
-                destination=node.parent['ids'],caller=caller))
-            markup.append('</setLink>')
-        if node.hasattr('refid'):
-            self.body.append(
-            self.starttag({},'setLink','',
-                destination=node['refid'],caller=caller))
-            markup.append('</setLink>')
-    
-        self.push(kind='title',markup=markup,start=start,style=style)
-    #@nonl
-    #@-node:visit_title
-    #@+node:depart_title
-    def depart_title (self,node):
-    
-        b = self.pop('title')
-    
-        for z in b.markup:
-            self.body.append(z)
-            
-        self.putTail(b.start,style=b.style)
-    #@nonl
-    #@-node:depart_title
-    #@-node:title
-    #@+node: starttag
-    # The suffix is always '\n' except for a cant-happen situation.
-    
-    def starttag (self,node,tagname,suffix='\n',caller='',**attributes):
-        
-        # g.trace(repr(attributes))
-    
-        atts = {}
-        for (name,value) in attributes.items():
-            atts [name.lower()] = value
-        for att in ('class',): # append to node attribute
-            if node.has_key(att):
-                if atts.has_key(att):
-                    atts [att] = node [att] + ' ' + atts [att]
-        for att in ('id',): # node attribute overrides
-            if node.has_key(att):
-                atts [att] = node [att]
-        
-        attlist = atts.items() ; attlist.sort()
-        parts = [tagname]
-        # Convert the attributes in attlist to a single string.
-        for name, value in attlist:
-            # g.trace('attlist element:',repr(name),repr(value))
-            if value is None: # boolean attribute
-                parts.append(name.lower().strip())
-            elif isinstance(value,types.ListType):
-                values = [str(v) for v in value]
-                val = ' '.join(values).strip()
-                parts.append('%s="%s"' % (
-                    name.lower(), self.encode(val)))
-            else:
-                parts.append('%s="%s"' % (
-                    name.lower(),self.encode(str(value).strip())))
-    
-        val = '<%s>%s' % (' '.join(parts),suffix)
-        g.trace('%-24s %s' % (caller,val))
-        return val
-    #@nonl
-    #@-node: starttag
-    #@-node:Complex TODO
     #@-others
 
     depart_comment = invisible_visit
