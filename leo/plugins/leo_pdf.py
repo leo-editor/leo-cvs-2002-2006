@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #@+leo-ver=4
-#@+node:@file C:/Python24/Lib/site-packages/docutils/writers/leo_pdf.py
+#@+node:@file leo_pdf.py
 #@@first
 
 #@<< docstring >>
@@ -147,6 +147,7 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@+node:<< version history >>
 #@@nocolor
 #@+others
+#@+node:Early versions
 #@+node:Initial conversion
 #@+at
 # 
@@ -224,6 +225,7 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 # 
 #@-at
 #@-node:0.0.5
+#@-node:Early versions
 #@+node:0.1
 #@+at
 # 
@@ -247,6 +249,13 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@-at
 #@nonl
 #@-node:0.2
+#@+node:0.3
+#@+at 
+#@nonl
+# Minor improvements to documentation.
+#@-at
+#@nonl
+#@-node:0.3
 #@-others
 #@nonl
 #@-node:<< version history >>
@@ -260,6 +269,8 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 # 
 # - More flexible handling of style sheets.
 # 
+# - Auto-footnote numbering does not work.
+# 
 # ** The big one: is there a way to put the TOC in the pdf outline frame?
 #     - There is a way in reportlab/platypus, but NOT using the code in 
 # reportlab.para.py.
@@ -268,7 +279,7 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@-node:<< to do >>
 #@nl
 
-__version__ = '0.2'
+__version__ = '0.3'
 __docformat__ = 'reStructuredText'
 #@<< imports >>
 #@+node:<< imports >>
@@ -490,7 +501,7 @@ class Writer (docutils.writers.Writer):
     #@-others
 #@nonl
 #@-node:class Writer (docutils.writers.Writer)
-#@+node:class dummyPDFTranslator
+#@+node:class dummyPDFTranslator (docutils.nodes.NodeVisitor)
 class dummyPDFTranslator (docutils.nodes.NodeVisitor):
 
     #@	@+others
@@ -580,7 +591,7 @@ class dummyPDFTranslator (docutils.nodes.NodeVisitor):
     #@-node:putParaFromIntermediateFile
     #@-others
 #@nonl
-#@-node:class dummyPDFTranslator
+#@-node:class dummyPDFTranslator (docutils.nodes.NodeVisitor)
 #@+node:class PDFTranslator (docutils.nodes.NodeVisitor)
 class PDFTranslator (docutils.nodes.NodeVisitor):
 
@@ -1779,5 +1790,5 @@ class PDFTranslator (docutils.nodes.NodeVisitor):
 #@-node:class PDFTranslator (docutils.nodes.NodeVisitor)
 #@-others
 #@nonl
-#@-node:@file C:/Python24/Lib/site-packages/docutils/writers/leo_pdf.py
+#@-node:@file leo_pdf.py
 #@-leo
