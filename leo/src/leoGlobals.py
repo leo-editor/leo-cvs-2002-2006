@@ -3645,20 +3645,42 @@ def reportBadChars (s,encoding):
     if type(s) == type(u""):
         for ch in s:
             try: ch.encode(encoding,"strict")
-            except: errors += 1
+            except UnicodeEncodeError:
+                errors += 1
         if errors:
-            # traceback.print_stack()
-            g.es("%d errors converting %s to %s" % 
-                (errors, s.encode(encoding,"replace"),encoding))
-
+            g.es("%d errors converting %s to %s" % (
+                errors, s.encode(encoding,'replace'),
+                encoding.encode('ascii','replace')),
+            color='red')
     elif type(s) == type(""):
         for ch in s:
             try: unicode(ch,encoding,"strict")
             except: errors += 1
         if errors:
-            g.es("%d errors converting %s (%s encoding) to unicode" % 
-                (errors, unicode(s,encoding,"replace"),encoding)) # 10/23/03
+            g.es("%d errors converting %s (%s encoding) to unicode" % (
+                errors,
+                unicode(s,encoding,'replace'),
+                encoding.encode('ascii','replace')),
+            color='red')
 #@nonl
+#@+node:ekr.20050825092149:test_g_reportBadChars
+def test_g_reportBadChars ():
+    
+    for s,encoding in (
+        ('aĂbĂ',  'ascii'),
+        (u'aĂbĂ', 'ascii'),
+        ('炰',    'ascii'),
+        (u'炰',   'ascii'),
+        
+        ('aĂbĂ',  'utf-8'),
+        (u'aĂbĂ', 'utf-8'),
+        ('炰',    'utf-8'),
+        (u'炰',   'utf-8'),
+    ):
+    
+        g.reportBadChars(s,encoding)
+#@nonl
+#@-node:ekr.20050825092149:test_g_reportBadChars
 #@-node:ekr.20031218072017.1501:reportBadChars
 #@+node:ekr.20031218072017.1502:toUnicode & toEncodedString (and tests)
 #@+node:ekr.20050208093800:toEncodedString
