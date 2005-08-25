@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7647" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7648" clone_windows="0"/>
 <globals body_outline_ratio="0.579227696405">
-	<global_window_position top="83" left="329" height="751" width="927"/>
+	<global_window_position top="106" left="324" height="751" width="927"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20050415070840" annotate="7d71002e"
-marks="ekr.20050415070840.12,"
-expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
+marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -1192,6 +1191,9 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20050704172623"><vh>Print all headlines, properly indented</vh></v>
+<v t="ekr.20050726112715"><vh>Multiline test</vh></v>
+<v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
+<v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
@@ -1256,6 +1258,12 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726101758"><vh>@@button Beautify</vh></v>
 <v t="ekr.20050722115320"><vh>@@button leoEmacs</vh></v>
 <v t="ekr.20050805175217"><vh>@button rst2</vh></v>
+<v t="ekr.20050821072028"><vh>@@button Lines Up</vh>
+<v t="ekr.20050821072028.1"><vh>moveLinesUp</vh></v>
+</v>
+<v t="ekr.20050821081021"><vh>@@button Lines Down</vh>
+<v t="ekr.20050821081021.1" a="M"><vh>moveLinesDown</vh></v>
+</v>
 </v>
 <v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
 <v t="ekr.20050618061835.1"><vh>Intro</vh>
@@ -2037,22 +2045,15 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726101926.2"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
 <v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050726112715"><vh>Multiline test</vh></v>
-<v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
-<v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
-<v t="ekr.20050805150320" a="E"><vh>@button rst3</vh></v>
-<v t="ekr.20050808191449"><vh>@page rst3 options</vh>
-<v t="ekr.20050810095252"><vh>Http options...</vh>
-<v t="ekr.20050809091430.1"><vh>@bool rst3_clear_http_attributes = False</vh></v>
-<v t="ekr.20050809091430.3"><vh>@string rst3_http_attributename = 'rst_http_attribute'</vh></v>
-<v t="ekr.20050809091430.4"><vh>@bool rst3_http_server_support = False</vh></v>
-<v t="ekr.20050809091430.6"><vh>@string rst3_node_begin_marker = 'http-node-marker-'</vh></v>
-</v>
-<v t="ekr.20050809091430.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
+<v t="ekr.20050805150320"><vh>@button rst3</vh></v>
+<v t="ekr.20050816172657"><vh>ReportLab sample scripts</vh>
+<v t="ekr.20050816181619"><vh>text</vh></v>
+<v t="ekr.20050816181619.1"><vh>pencil</vh></v>
+<v t="ekr.20050816181813"><vh>penciltip</vh></v>
 </v>
 <v t="ekr.20050805165407"><vh>Tests of rst3 plugin</vh>
 <v t="ekr.20050805165407.1"><vh>@rst ../doc/rstplugin2.html</vh>
-<v t="ekr.20050805165407.2" a="E"><vh>Overview</vh>
+<v t="ekr.20050805165407.2"><vh>Overview</vh>
 <v t="ekr.20050805165407.3"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20050805165407.4"><vh>Formatting</vh>
@@ -2070,13 +2071,13 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050811141217"><vh>@rst ../doc/ListManagerDocs.html</vh>
 <v t="ekr.20050811141217.1"><vh>wxListManager.py</vh>
-<v t="ekr.20050811141217.2" a="E"><vh>Initial stuff</vh>
-<v t="ekr.20050811141217.4" a="E"><vh>Module Imports</vh>
+<v t="ekr.20050811141217.2"><vh>Initial stuff</vh>
+<v t="ekr.20050811141217.4"><vh>Module Imports</vh>
 <v t="ekr.20050811141217.5"><vh>@rst-no-head About imports</vh></v>
 </v>
 <v t="ekr.20050811141217.6"><vh>Constants</vh></v>
 <v t="ekr.20050811141217.8"><vh>Menu IDs</vh></v>
-<v t="ekr.20050811141217.10" a="E"><vh>Read Config File</vh>
+<v t="ekr.20050811141217.10"><vh>Read Config File</vh>
 <v t="ekr.20050811141217.11"><vh>@rst-no-head About configuration files</vh></v>
 </v>
 </v>
@@ -2280,7 +2281,7 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050811141217.158"><vh>OnInit</vh></v>
 </v>
 <v t="ekr.20050811141217.159"><vh>class Logger</vh></v>
-<v t="ekr.20050811141217.160" a="E"><vh>run</vh></v>
+<v t="ekr.20050811141217.160"><vh>run</vh></v>
 </v>
 <v t="ekr.20050811141217.161"><vh>LMDialogs.py</vh>
 <v t="ekr.20050811141217.162"><vh>class PopDialog</vh>
@@ -2351,28 +2352,17 @@ expanded="ekr.20050415070840.2,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20050810081856"><vh>@rst ../doc/rstplugin4.html</vh>
-<v t="ekr.20050815144658" a="E"><vh>child node</vh>
+<v t="ekr.20050815144658"><vh>child node</vh>
 <v t="ekr.20050815145023"><vh>@rst</vh></v>
 </v>
 </v>
 <v t="ekr.20050817110133"><vh>@rst ../doc/pdfTest.pdf</vh>
-<v t="ekr.20050817110133.1" a="E"><vh>child node</vh>
+<v t="ekr.20050817110133.1"><vh>child node</vh>
 <v t="ekr.20050817110133.2"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050816172657"><vh>ReportLab </vh>
-<v t="ekr.20050816181619"><vh>text</vh></v>
-<v t="ekr.20050816181619.1"><vh>pencil</vh></v>
-<v t="ekr.20050816181813"><vh>penciltip</vh></v>
-</v>
-<v t="ekr.20050821072028" a="E"><vh>@button Lines Up</vh>
-<v t="ekr.20050821072028.1" a="E"><vh>moveLinesUp</vh></v>
-</v>
-<v t="ekr.20050821081021" a="E"><vh>@button Lines Down</vh>
-<v t="ekr.20050821081021.1" a="EM"><vh>moveLinesDown</vh></v>
-</v>
-<v t="ekr.20050821084736" a="TV"><vh>test of move up/down buttons</vh></v>
+<v t="ekr.20050824190822" a="TV"><vh> Zope test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -3080,7 +3070,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -22474,9 +22464,15 @@ debug = True
 
 from reportlab.pdfgen import canvas
 c = canvas.Canvas('hello.pdf')
-for i in xrange(1,100):
+for i in (10,50):
     text(c,'x'*10,i,i)
 # pencil(c,text='Note')
+
+key = 'key1'
+
+c.bookmarkPage(key)
+c.addOutlineEntry('OutlineEntry',key)
+
 
 c.showPage()
 c.save()</t>
@@ -22611,11 +22607,34 @@ moveLinesDown(c,p)</t>
     row,col = sel2.split('.') ; sel2 = '%d.%s' % (int(row)+1,col)
     newSel = sel1,sel2
     c.updateBodyPane(head,lines,tail,undoType,newSel,oldYview)</t>
-<t tx="ekr.20050821084736">a
-bb
-cccc
-dd
-eeee
-f</t>
+<t tx="ekr.20050824190822">@color
+
+import ZODB
+import ZODB.FileStorage
+
+storage = ZODB.FileStorage.FileStorage(r"c:\prog\zopeTemp\leo.fs")
+# g.trace(storage)
+db = ZODB.DB(storage)
+try:
+    try:
+        print '-' * 20
+        print 'opening ZODB'
+        connection = db.open()
+        g.trace(connection)
+        root = connection.root()
+        if 1:
+            t = get_transaction()
+            t.begin()
+            # root.clear()
+            root ['count'] = root.get('count',0) + 1
+            t.commit()
+        g.trace(root)
+        connection.close()
+    except Exception:
+        g.es_exception()
+finally:
+    print 'closing ZODB'
+    db.close()
+    </t>
 </tnodes>
 </leo_file>
