@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.13"
+__version__ = "0.14"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -75,7 +75,10 @@ __plugin_group__ = "Core"
 #     - Folded in some minor changes from Paul to support AutoTrees plugin.
 # 0.13 Paul Paterson
 #     - Fixed path in installPlugin that ignore the local_paths setting
-#     - Generalized code to support LeoUpdate plugin
+#     - Generalized code to support LeoUpdate plugin.
+# 0.14 EKR:
+#     - Several methods now return if get.keywords('c') is None.
+#       This may fix some startup bugs, or not.
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
@@ -380,8 +383,6 @@ class PluginView(Tk.Frame):
         
         #@<< Description >>
         #@+node:pap.20050305170921:<< Description >>
-        #@@c
-        
         self.description = Pmw.ScrolledText(description_panel,
                 # borderframe = 1,
                 labelpos = 'n',
@@ -836,8 +837,6 @@ class ManagerDialog:
             if errors:
                 #@            << put up a file error dialog >>
                 #@+node:pap.20041009163613.1:<< put up a file error dialog >>
-                #@@c
-                
                 dialog = ListReportDialog('CVS File Errors',
                                           'Errors',
                                           ["%s - %s" % item for item in errors],
@@ -1015,15 +1014,12 @@ class ListReportDialog:
 class Plugin:   
     """Represents a single plugin instance"""
     
-    #@    @+others
-    #@+node:pap.20050305141939:Class Properties
-    
+    # Class properties.
     max_name_width = 30
     max_group_width = 10
-    #@nonl
-    #@-node:pap.20050305141939:Class Properties
-    #@+node:pap.20041006185727.1:__init__
     
+    #@    @+others
+    #@+node:pap.20041006185727.1:__init__
     def __init__(self):
         """Initialize the plugin"""
         self.filename = None
@@ -1287,7 +1283,6 @@ class Plugin:
         requires = []
         #@    << Check UI toolkits >>
         #@+node:pap.20041009230050:<< Check UI toolkits >>
-        #@@c
         # Check for UI toolkits
         if self.hasImport(self.text, "Tkinter"):
             requires.append("Tkinter")
@@ -1299,7 +1294,6 @@ class Plugin:
         #@nl
         #@    << Check other plugins >>
         #@+node:pap.20041009230652:<< Check other plugins >>
-        #@@c
         # Check for importing other plugin files
         
         imports = self.getPatterns(self.text, "import (\w+)") + \
@@ -1314,7 +1308,6 @@ class Plugin:
         #@nl
         #@    << Directives >>
         #@+node:pap.20041009230953:<< Directives >>
-        #@@c
         # Look for __plugin_requires__ directive
         
         directive_text = self.getPattern(self.text, r'__plugin_requires__\s*=\s*(.*?)$', "[]")

@@ -397,6 +397,59 @@ except ImportError:
 # leouserz
 #@-at
 #@-node:ekr.20050816094344:Add support for ReportLab
+#@+node:ekr.20050804081215:More options
+#@@nocolor
+#@+at
+# http://sourceforge.net/forum/message.php?msg_id=3276408
+# 
+# Leo has great potential for smoothing some of the bumps
+# outside of learning the details of the markup.
+# Here is my wish list;
+# 
+# (done) - Section level handling.
+#   - one of the problems with using rst comes when a new
+#     section level is inserted into a document. Leo can
+#     take care of this effortlessly, providing a correct
+#    underline character for each section heading.
+# 
+#     Other than the section management, I want Leo to
+#     assume that I'm writing rst, and should be rendered
+#     as-is. If I want to include some pretty Python, I put
+#     it in a ..  python-code:: block (or some such)
+# 
+#     On top of this base could be built special case
+#     handling.
+# 
+# - Assist in viewing rendered output
+#   - easy access to the command to render a tree to  html.
+#   - I would like an option which automatically inserted
+#     a @url node which pointed to the rendered file, or
+#     some other trick to make switching between source
+#     and output painless.
+# 
+# - Assist in working with the CSS file
+#   - a CSS file is now required by docutils. A @setting
+#     could specify the file. I would like some kind of
+#     sugar which made it easy to edit the CSS file, maybe
+#     an option to create a @file node automatically,
+#     like the @url node above. Again, I want to be able
+#     to effortlessly edit the CSS and see the results.
+# 
+# - The third file of interest when writing rst is the config
+#    file which controls many behaviours of the renderer.
+#    Again, some intelligence which located it, made it
+#    convenient to edit it, maybe even linked to
+#    documentation for it, would be very nice.
+# 
+# (done) - I would like a setting which would save the file with the
+#   rst markup and make it easy to examine and edit.
+# 
+# - On the someday/maybe list would be a @publish
+#   feature, which configured a directory to ftp the rendered
+#   file to.
+#@-at
+#@nonl
+#@-node:ekr.20050804081215:More options
 #@-others
 #@nonl
 #@-node:ekr.20050806162146:<< to do >>

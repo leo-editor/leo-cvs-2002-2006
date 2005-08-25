@@ -457,6 +457,8 @@ class PluginAbout:
 def createPluginsMenu (tag,keywords):
 
     c = keywords.get("c")
+    if not c: return
+
     old_path = sys.path[:] # Make a _copy_ of the path.
 
     path = os.path.join(g.app.loadDir,"..","plugins")
@@ -482,8 +484,6 @@ def createPluginsMenu (tag,keywords):
             PluginDatabase.setMenu("Default", pluginMenu)
             #@            << Add group menus >>
             #@+node:pap.20050305152223:<< Add group menus >>
-            #@@c
-            
             for group_name in PluginDatabase.getGroups():
                 PluginDatabase.setMenu(group_name, c.frame.menu.createNewMenu(group_name, "&Plugins"))
             #@-node:pap.20050305152223:<< Add group menus >>
@@ -507,8 +507,6 @@ def createPluginsMenu (tag,keywords):
                 elif p.hasconfig or p.othercmds:
                     #@        << Get menu location >>
                     #@+node:pap.20050305153147:<< Get menu location >>
-                    #@@c
-                    
                     if p.group:
                         menu_location = p.group
                     else:

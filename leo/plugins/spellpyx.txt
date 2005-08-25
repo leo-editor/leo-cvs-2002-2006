@@ -30,7 +30,9 @@ DEBUG_STATS
 DOCTYPE
 DTD
 DTHEIN
+Dalcolmo
 Dehoisting
+DocFactory
 DocTestSuite
 EOD
 EOL_SPAN
@@ -49,6 +51,7 @@ H1
 HIGHLIGHT_DIGITS
 Hein
 Hmmmmmm
+Honkasalo
 IDE
 IGNORE_CASE
 IMG
@@ -106,6 +109,7 @@ Ouvre
 OverflowError
 PCDATA
 PDF
+PDFTranslator
 PIL
 PRN
 PY_COMPILED
@@ -129,20 +133,24 @@ SProvide
 STL
 SWEB
 SWT
+Schwant's
 ScreenBook
 SilverCity
+SilverCity_
 SimpleHTTPServer
 Snobol
 StopIteration
 StormReady
 StringIO
 SyntaxError
+TOC
 TST
 TestCase
 TestSuite
 TextTestRunner
 Textpad
 ThoughtManager
+Timo
 Tix
 Tk
 Tkinter
@@ -166,6 +174,7 @@ XP
 XPrompt
 XSLT
 XSave
+Zatz
 Zope
 _Appendices
 _Chapter
@@ -426,6 +435,7 @@ cms
 codeLine
 codeList
 codeName
+code_mode
 color_markup
 colorizer
 colortag
@@ -467,6 +477,7 @@ createLeoDist
 createMenuEntries
 createNewMenu
 createNthChild
+createParagraph
 createSpellMenu
 createThinChild
 createTkGui
@@ -498,6 +509,7 @@ defalias
 defaultButton
 defaultFont
 defaultLoc
+default_path
 defconst
 defmacro
 defsubst
@@ -515,6 +527,8 @@ delim2
 delim3
 delims
 delta2
+depart_label
+depart_title
 destroySelf
 df
 dialog_
@@ -537,10 +551,12 @@ doImport
 doLeoTranslations
 doTests
 docList
+docstring
 docstrings
 doctest
 doctests
 docutils
+docutils_
 doesn
 drag1
 drag2
@@ -646,6 +662,7 @@ fn
 fname
 focus_set
 font_size
+footnote_backrefs
 forceShutdown
 foreach
 forum_id
@@ -688,6 +705,7 @@ gen_unless
 gen_when
 gen_while
 generalTestCase
+generate_rst
 generate_tokens
 getAllText
 getBack
@@ -700,6 +718,7 @@ getFontSettings
 getLeoOutline
 getNewIndex
 getNext
+getOption
 getPrefs
 getRowCol
 getScript
@@ -802,6 +821,7 @@ importFiles
 importIndentTest
 importModule
 importTests
+inContext
 in_headline
 incompletions
 indices
@@ -812,6 +832,7 @@ inline
 inodes
 input_ins
 insertAfter
+intermediateFile
 internet
 ints
 isAncestorOf
@@ -923,6 +944,8 @@ leoUtils
 leo_TOC
 leo_file
 leo_header
+leo_pdf
+leo_rst
 leodir
 leopath
 leosetup
@@ -1062,6 +1085,7 @@ nnnn
 nocolor
 nodeAfterTree
 nodeIndices
+node_begin_marker
 nodenavigator
 nondirectory
 nonl
@@ -1078,6 +1102,7 @@ nthChild
 nullLog
 nullMenu
 nullPosition
+number_code_lines
 nw
 nz
 occurances
@@ -1123,6 +1148,7 @@ openPipes
 openWith
 openWriteFile
 opening_delim
+optionsDict
 os
 os_path_join
 otherKeyword
@@ -1193,6 +1219,7 @@ pre
 preSetup
 prefsPanel
 prepended
+preprocessTree
 preprocesses
 prettyPrinter
 prev
@@ -1206,6 +1233,7 @@ printGcRefs
 printHeading
 print_exc
 printf
+processTree
 processWord
 process_tokens
 prog
@@ -1286,6 +1314,7 @@ replaceComments
 replaceOutline
 replacePatterns
 reportBadChars
+reportlab
 repr
 resizePanesToRatio
 resizeable
@@ -1295,6 +1324,7 @@ ret
 rexec
 rfind
 right_data
+rlpdf
 root1
 root2
 rootPosition
@@ -1302,6 +1332,7 @@ rootVnode
 root_bits
 rst
 rst2
+rst3
 rstFile
 rstrip
 runAtFileTest
@@ -1329,6 +1360,7 @@ sbm
 sbook
 sbooks
 sbyte
+scanAllOptions
 scanDirectives
 scanError
 scanHeader
@@ -1384,6 +1416,9 @@ sharedNodes
 shortDescription
 shortFileName
 showInvisibles
+show_headlines
+show_leo_directives
+show_organizer_nodes
 showfiles
 shutil
 siblings_iter
@@ -1391,6 +1426,7 @@ signonGiven
 signons
 silentfile
 silentfiles
+silver_city
 single_class
 single_clss
 sitecustomize
@@ -1463,6 +1499,7 @@ strippedLines
 struct
 structs
 stylesheet
+stylesheet_name
 subcommanders
 subdictionary
 subheadlines
@@ -1513,6 +1550,7 @@ test_iter
 test_iter_class
 testmod
 testsName
+tex
 text1
 text2
 theDict
@@ -1663,13 +1701,18 @@ workflow
 writeAll
 writeAtFileNodes
 writeBit
+writeHeadline
+writeNode
 writeNodeToNode
 writeNodesToNode
+writeNormalTree
+writeTree
 writeTreeAsRst
 write_Leo_file
 ws
 wsToString
 wx
+wxListManager
 wxPython
 wxString
 wxTreeCtrl

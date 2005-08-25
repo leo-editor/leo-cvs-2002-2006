@@ -52,6 +52,8 @@ def onSelect (tag,keywords):
         # Display the image file in the text pane, if you can find the file
         a = g.app
         c = keywords.get("c")
+        if not c: return
+        
         body = c.frame.body
         
         if os.path.isfile(filename):
@@ -80,6 +82,8 @@ def onUnselect (tag,keywords):
 
     a = g.app
     c = keywords.get("c")
+    if not c: return
+
     old_v = keywords.get("old_v")
 
     if old_v:
