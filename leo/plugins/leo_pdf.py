@@ -5,7 +5,7 @@
 
 #@<< docstring >>
 #@+node:<< docstring >>
-'''This is a docutils writer for .pdf files.
+'''This NOT a Leo plugin: this is a docutils writer for .pdf files.  
 
 That file uses the reportlab module to convert html markup to pdf.
 
@@ -256,6 +256,16 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@-at
 #@nonl
 #@-node:0.3
+#@+node:0.4
+#@+at
+# 
+# - Added warning to docstring that this is not a valid Leo plugin.
+# 
+# - Added init function that always returns False.  This helps Leo's unit 
+# tests.
+#@-at
+#@nonl
+#@-node:0.4
 #@-others
 #@nonl
 #@-node:<< version history >>
@@ -263,6 +273,10 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 #@<< to do >>
 #@+node:<< to do >>
 #@@nocolor
+
+#@+others
+#@-others
+
 #@+at
 # 
 # - Bullets show up as a black 2 ball.
@@ -271,42 +285,39 @@ Rewritten by Edward K. Ream for the Leo rst3 plugin.
 # 
 # - Auto-footnote numbering does not work.
 # 
-# ** The big one: is there a way to put the TOC in the pdf outline frame?
-#     - There is a way in reportlab/platypus, but NOT using the code in 
-# reportlab.para.py.
+# - Test rST raw: pdf feature.
 #@-at
 #@nonl
 #@-node:<< to do >>
 #@nl
 
-__version__ = '0.3'
+__version__ = '0.4'
 __docformat__ = 'reStructuredText'
 #@<< imports >>
 #@+node:<< imports >>
 import sys
 sys.path.append(r'c:\reportlab_1_20') 
 
-if 0: # This dependency could easily be removed.
+if 1: # This dependency could easily be removed.
     # Used only for tracing and error reporting.
     import leoGlobals as g
     
-# from reportlab.lib.enums import *
-# from reportlab.platypus import *
-
-# Formatting imports...
-import docutils
-import reportlab.platypus
-import reportlab.platypus.para
-import stylesheet # To do: get this a better way.
-
-# General imports...
-import StringIO
-import time
-import types
-
-
-
-
+try:
+    # from reportlab.lib.enums import *
+    # from reportlab.platypus import *
+    
+    # Formatting imports...
+    import docutils
+    import reportlab.platypus
+    import reportlab.platypus.para
+    import stylesheet # To do: get this a better way.
+    
+    # General imports...
+    import StringIO
+    import time
+    import types
+except ImportError:
+    pass
 
 
 
@@ -314,6 +325,18 @@ import types
 #@nl
 
 #@+others
+#@+node:init
+def init ():
+    
+    '''This file may be distributed in Leo's plugin folder, but this file is NOT
+    a Leo plugin!
+    
+    The init method returns None to tell Leo's plugin manager and unit tests to
+    skip this file.'''
+    
+    return None
+#@nonl
+#@-node:init
 #@+node:class Bunch (object)
 #@+at 
 #@nonl
