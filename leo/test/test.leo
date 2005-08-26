@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7648" clone_windows="0"/>
 <globals body_outline_ratio="0.579227696405">
-	<global_window_position top="106" left="324" height="751" width="927"/>
+	<global_window_position top="30" left="217" height="819" width="961"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1296,7 +1296,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050618061835.19"><vh>How about @suite?</vh></v>
 <v t="ekr.20050618061835.20"><vh>Final remarks</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -2362,7 +2362,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050824190822" a="TV"><vh> Zope test</vh></v>
+<v t="ekr.20050824190822"><vh> Zope test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -12600,8 +12600,16 @@ else: # For script button nodes.  Good for testing.
 <t tx="ekr.20050106081120.2">def findTestsInModule (module,moduleName):
     
     toString = g.listToString
-    functions = inspect.getmembers(module,inspect.isfunction)
-    classes   = inspect.getmembers(module,inspect.isclass)
+    try:
+        functions = inspect.getmembers(module,inspect.isfunction)
+    except Exception:
+        g.trace('Exception in inspect.getmembers(module,inspect.isfunction) for %s' % moduleName)
+        functions = []
+    try:
+        classes   = inspect.getmembers(module,inspect.isclass)
+    except Exception:
+        g.trace('Exception in inspect.getmembers(module,inspect.isclass) for %s' % moduleName)
+        classes = []
 
     # Ignore subclasses of TestCase.
     classes = [theClass for className,theClass in classes
@@ -12633,7 +12641,11 @@ else: # For script button nodes.  Good for testing.
     
     allMethods = []
     for theClass in classes:
-        methods = inspect.getmembers(theClass,inspect.ismethod)
+        try:
+            methods = inspect.getmembers(theClass,inspect.ismethod)
+        except Exception:
+            g.trace('Exception in inspect.getmembers(theClass,inspect.ismethod) for %s' % moduleName)
+            methods = []
         # print '\nmethods of class %s...\n\n%s' % (theClass,toString(methods))
         methods = [(theClass,f) for name,f in methods if name.startswith('test_')]
         allMethods.extend(methods)
@@ -13521,8 +13533,16 @@ else: # For script button nodes.  Good for testing.
 <t tx="ekr.20050218015346.19">def findTestsInModule (module,moduleName):
     
     toString = g.listToString
-    functions = inspect.getmembers(module,inspect.isfunction)
-    classes   = inspect.getmembers(module,inspect.isclass)
+    try:
+        functions = inspect.getmembers(module,inspect.isfunction)
+    except Exception:
+        g.trace('Exception in inspect.getmembers(module,inspect.isfunction) for %s' % moduleName)
+        functions = []
+    try:
+        classes = inspect.getmembers(module,inspect.isclass)
+    except Exception:
+        g.trace('Exception in inspect.getmembers(module,inspect.isclass) for %s' % moduleName)
+        classes = []
 
     # Ignore subclasses of TestCase.
     classes = [theClass for className,theClass in classes
@@ -13530,7 +13550,12 @@ else: # For script button nodes.  Good for testing.
     
     allMethods = []
     for theClass in classes:
-        methods = inspect.getmembers(theClass,inspect.ismethod)
+        try:
+            methods = inspect.getmembers(theClass,inspect.ismethod)
+        except Exception:
+            # This looks like a bug in inspect: The zodb classes have no methods.
+            # g.trace('Exception in inspect.getmembers(theClass,inspect.ismethod) for %s' % moduleName)
+            methods = []
         # print '\nmethods of class %s...\n\n%s' % (theClass,toString(methods))
         methods = [(theClass,f) for name,f in methods if name.startswith('test_')]
         allMethods.extend(methods)

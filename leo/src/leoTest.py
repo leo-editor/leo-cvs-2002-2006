@@ -43,6 +43,8 @@ except ImportError:
 #@-node:ekr.20050415070840.1:<< leoTest imports >>
 #@nl
 
+# print 'leoTest.py.__file__',__file__
+
 if g.app: # Make sure we can import this module stand-alone.
     import leoPlugins
     newAtFile = leoPlugins.isLoaded("___proto_atFile")
@@ -184,12 +186,13 @@ def makeTestSuite (c,p):
         return None
 
     try:
-        exec script + '\n' in {'c':c,'g':g,'p':p} # 3/10/05.
+        exec script + '\n' in {'c':c,'g':g,'p':p}
         suite = g.app.scriptDict.get("suite")
         if not suite:
             print "%s script did not set g.app.scriptDict" % h
         return suite
     except:
+        g.trace('Exception creating test cases for %s' % p.headString())
         g.es_exception()
         return None
 #@nonl
