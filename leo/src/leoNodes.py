@@ -230,10 +230,27 @@ if g.app and g.app.use_psyco:
 import string
 import time
 
+#@<< define base classes >>
+#@+node:ekr.20050825195611:<< define base classes >>
+# These base classes are here so the zodb plugin can replace them
+# With subclasses of ZODB.Persistence.Persistent 
+
+class baseTnodeClass (object):
+    pass
+    
+class baseVnodeClass (object):
+    pass
+
+class basePositionClass (object):
+    pass
+#@nonl
+#@-node:ekr.20050825195611:<< define base classes >>
+#@nl
+
 #@+others
 #@+node:ekr.20031218072017.3321:class tnode
-class baseTnode (object):
-    """The base class of the tnode class."""
+class tnode (baseTnodeClass):
+    
     #@    << tnode constants >>
     #@+node:ekr.20031218072017.3322:<< tnode constants >>
     dirtyBit    =		0x01
@@ -243,6 +260,7 @@ class baseTnode (object):
     #@nonl
     #@-node:ekr.20031218072017.3322:<< tnode constants >>
     #@nl
+
     #@    @+others
     #@+node:ekr.20031218072017.2006:t.__init__
     # All params have defaults, so t = tnode() is valid.
@@ -418,15 +436,11 @@ class baseTnode (object):
     #@-node:ekr.20050418101546:setHeadString (new in 4.3)
     #@-node:ekr.20031218072017.3331:Setters
     #@-others
-    
-class tnode (baseTnode):
-    """A class that implements tnodes."""
-    pass
 #@nonl
 #@-node:ekr.20031218072017.3321:class tnode
 #@+node:ekr.20031218072017.3341:class vnode
-class baseVnode (object):
-    """The base class of the vnode class."""
+class vnode (baseVnodeClass):
+    
     #@    << vnode constants >>
     #@+node:ekr.20031218072017.951:<< vnode constants >>
     # Define the meaning of status bits in new vnodes.
@@ -447,6 +461,7 @@ class baseVnode (object):
     visitedBit	 = 0x100
     #@-node:ekr.20031218072017.951:<< vnode constants >>
     #@nl
+
     #@    @+others
     #@+node:ekr.20031218072017.3342:Birth & death
     #@+node:ekr.20031218072017.3343:v.__cmp__ (not used)
@@ -1215,10 +1230,6 @@ class baseVnode (object):
     #@-node:EKR.20040528151551.3:unique_subtree_iter
     #@-node:EKR.20040528151551:v.Iterators
     #@-others
-    
-class vnode (baseVnode):
-    """A class that implements vnodes."""
-    pass
 #@nonl
 #@-node:ekr.20031218072017.3341:class vnode
 #@+node:ekr.20031218072017.1991:class nodeIndices
@@ -1360,7 +1371,7 @@ class nodeIndices (object):
 #@+node:ekr.20031218072017.889:class position
 # Warning: this code implies substantial changes to code that uses them, both core and scripts.
 
-class position (object):
+class position (basePositionClass):
     
     """A class representing a position in a traversal of a tree containing shared tnodes."""
 
