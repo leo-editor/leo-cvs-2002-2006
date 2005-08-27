@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="14324" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="14342" clone_windows="0"/>
 <globals body_outline_ratio="0.492833517089">
-	<global_window_position top="51" left="376" height="907" width="821"/>
+	<global_window_position top="24" left="337" height="907" width="881"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -22,7 +22,7 @@
 <v t="ekr.20050404094627"><vh>Settings and buttons</vh>
 <v t="ekr.20041226081019"><vh>@button Check Spelling...</vh></v>
 <v t="ekr.20050812090111"><vh>@button rst3</vh></v>
-<v t="ekr.20050813102553"><vh>@button Format rst</vh></v>
+<v t="ekr.20050813102553"><vh>@button Format tutorial</vh></v>
 <v t="ekr.20050407144417"><vh>@settings</vh>
 <v t="ekr.20050407144342"><vh>@page http plugin</vh>
 <v t="ekr.20050407144342.1"><vh>@bool http_active = True</vh></v>
@@ -76,28 +76,28 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20050620144052" a="E"><vh>4.3.1</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20050620144052"><vh>4.3.1</vh>
 <v t="ekr.20050620144052.2"><vh>Bug fixes...</vh>
-<v t="ekr.20050620144052.3" a="E"><vh>Fixed bug in @ratio setting</vh></v>
-<v t="ekr.20050620144052.6" a="E"><vh>Fixed crasher footprint plugin</vh></v>
-<v t="ekr.20050620144052.8" a="E"><vh>Fixed invalid position bug)</vh></v>
-<v t="ekr.20050620144052.48" a="E"><vh>Fixed undo problems in unit tests</vh></v>
-<v t="ekr.20050620144052.112" a="E"><vh>Made sure same case is used in all recent files entries</vh></v>
-<v t="ekr.20050620144052.114" a="E"><vh>Made sure all dialogs gets focus when they are run</vh></v>
-<v t="ekr.20050620144052.116" a="E"><vh>Improved Resize To Screen command</vh></v>
-<v t="ekr.20050620144052.119" a="E"><vh>Made sure comments are always visible in setting dialog even for non-@ nodes</vh></v>
-<v t="ekr.20050620144052.154" a="E"><vh>Fixed problem with leading @ in body text</vh></v>
-<v t="ekr.20050620144052.166" a="E"><vh>Fixed several  crashers while undoing a move involving clones</vh></v>
-<v t="ekr.20050620144052.182" a="E"><vh>Fixed Unicode encoding problem</vh></v>
-<v t="ekr.20050620144052.185" a="E"><vh>Fixed problem with coloring @language plain</vh></v>
+<v t="ekr.20050620144052.3"><vh>Fixed bug in @ratio setting</vh></v>
+<v t="ekr.20050620144052.6"><vh>Fixed crasher footprint plugin</vh></v>
+<v t="ekr.20050620144052.8"><vh>Fixed invalid position bug)</vh></v>
+<v t="ekr.20050620144052.48"><vh>Fixed undo problems in unit tests</vh></v>
+<v t="ekr.20050620144052.112"><vh>Made sure same case is used in all recent files entries</vh></v>
+<v t="ekr.20050620144052.114"><vh>Made sure all dialogs gets focus when they are run</vh></v>
+<v t="ekr.20050620144052.116"><vh>Improved Resize To Screen command</vh></v>
+<v t="ekr.20050620144052.119"><vh>Made sure comments are always visible in setting dialog even for non-@ nodes</vh></v>
+<v t="ekr.20050620144052.154"><vh>Fixed problem with leading @ in body text</vh></v>
+<v t="ekr.20050620144052.166"><vh>Fixed several  crashers while undoing a move involving clones</vh></v>
+<v t="ekr.20050620144052.182"><vh>Fixed Unicode encoding problem</vh></v>
+<v t="ekr.20050620144052.185"><vh>Fixed problem with coloring @language plain</vh></v>
 <v t="ekr.20050620144602"><vh>Fixed bug: Mark Clones command did not work</vh></v>
 </v>
 <v t="ekr.20050620144052.207"><vh>New features...</vh>
-<v t="ekr.20050620144052.208" a="E"><vh>Created separate helpers for idle_body_key</vh></v>
-<v t="ekr.20050620144052.210" a="E"><vh>Made all Mark commands undoable</vh></v>
-<v t="ekr.20050620144052.222" a="E"><vh>Removed dependence on profile and pstats modules from leoTest.py</vh></v>
-<v t="ekr.20050620144052.231" a="E"><vh>Added support for tk resource files</vh></v>
+<v t="ekr.20050620144052.208"><vh>Created separate helpers for idle_body_key</vh></v>
+<v t="ekr.20050620144052.210"><vh>Made all Mark commands undoable</vh></v>
+<v t="ekr.20050620144052.222"><vh>Removed dependence on profile and pstats modules from leoTest.py</vh></v>
+<v t="ekr.20050620144052.231"><vh>Added support for tk resource files</vh></v>
 <v t="ekr.20050620144425"><vh>Added support for coloring the PL/SQL language</vh></v>
 </v>
 </v>
@@ -1522,7 +1522,7 @@
 <v t="EKR.20040524104904.10"><vh>Overview</vh></v>
 <v t="EKR.20040524104904.11"><vh>Leo's main window</vh></v>
 <v t="EKR.20040524104904.12"><vh>Body text and sections</vh></v>
-<v t="EKR.20040524104904.13" a="E"><vh>Outlines organize sections</vh>
+<v t="EKR.20040524104904.13"><vh>Outlines organize sections</vh>
 <v t="EKR.20040524104904.14"><vh>removeSentinelsCommand</vh>
 <v t="EKR.20040524104904.15"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
 <v t="EKR.20040524104904.16"><vh>&lt;&lt; set delims from the header line &gt;&gt;</vh></v>
@@ -1916,14 +1916,14 @@
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
 <v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050122090016" a="E"><vh>Setting options...</vh>
+<v t="ekr.20050122090016"><vh>Setting options...</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050419072509.1"><vh>NewHeadline</vh></v>
 <v t="EKR.20040524104904.212"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 </v>
 <v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
 <v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
-<v t="EKR.20040524104904.215" a="E"><vh>New plugin architecture</vh>
+<v t="EKR.20040524104904.215"><vh>New plugin architecture</vh>
 <v t="EKR.20040524104904.216"><vh>@file plugins/mod_open_with.py</vh>
 <v t="EKR.20040524104904.217"><vh>on_idle</vh>
 <v t="EKR.20040524104904.218"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
@@ -1999,7 +1999,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050620150517" a="E"><vh>Specifying Tk options using .leo_xresources</vh></v>
+<v t="ekr.20050620150517"><vh>Specifying Tk options using .leo_xresources</vh></v>
 </v>
 <v t="EKR.20040524104904.245"><vh>Chapter 9: History of Leo</vh>
 <v t="EKR.20040524104904.246"><vh>Beginnings</vh></v>
@@ -2419,6 +2419,73 @@
 </v>
 </v>
 </v>
+<v t="EKR.20040524104904.49"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="EKR.20040524104904.50"><vh>Overview</vh></v>
+<v t="EKR.20040524104904.51"><vh>Sections and section references</vh></v>
+<v t="EKR.20040524104904.52"><vh>Organizing @file trees.</vh>
+<v t="EKR.20040524104904.53"><vh>Examples</vh>
+<v t="EKR.20040524104904.54"><vh>@file f.c</vh>
+<v t="EKR.20040524104904.55"><vh>&lt;&lt; constants &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.56"><vh>&lt;&lt; declarations &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.57"><vh>function 1</vh></v>
+<v t="EKR.20040524104904.58"><vh>function 2</vh></v>
+</v>
+<v t="EKR.20040524104904.59"><vh>@file classX.py</vh>
+<v t="EKR.20040524104904.60"><vh>&lt;&lt; imports for classX &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.61"><vh>Getters</vh>
+<v t="EKR.20040524104904.62"><vh>getter 1</vh></v>
+<v t="EKR.20040524104904.63"><vh>getter 2</vh></v>
+</v>
+<v t="EKR.20040524104904.64"><vh>Setters</vh>
+<v t="EKR.20040524104904.65"><vh>setter 1</vh></v>
+<v t="EKR.20040524104904.66"><vh>setter 2</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.67"><vh>@file mainClass.py</vh>
+<v t="EKR.20040524104904.68"><vh>&lt;&lt;mainClass imports &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.69"><vh>&lt;&lt;class mainClass&gt;&gt;</vh>
+<v t="EKR.20040524104904.70"><vh>method 1</vh></v>
+<v t="EKR.20040524104904.71"><vh>method 2</vh></v>
+</v>
+<v t="EKR.20040524104904.72"><vh>&lt;&lt;class helperClass&gt;&gt;</vh>
+<v t="EKR.20040524104904.73"><vh>method 1</vh></v>
+<v t="EKR.20040524104904.74"><vh>method 2</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.75"><vh>@file bad</vh>
+<v t="EKR.20040524104904.76"><vh>Methods</vh>
+<v t="EKR.20040524104904.77"><vh>&lt;&lt; section 1 &gt;&gt;</vh>
+<v t="EKR.20040524104904.78"><vh>A</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="EKR.20040524104904.79"><vh>More about directives</vh>
+<v t="EKR.20040608091134"><vh>@all directive copies all nodes in @thin trees</vh></v>
+<v t="EKR.20040524104904.80"><vh>@color, @nocolor and @killcolor control syntax coloring</vh></v>
+<v t="EKR.20040524104904.81"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
+<v t="EKR.20040524104904.82"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
+<v t="EKR.20040524104904.83"><vh>@encoding directive specifies encoding of text</vh></v>
+<v t="EKR.20040524104904.84"><vh>@first and @last directives allow leading and trailing lines in @file trees</vh></v>
+<v t="EKR.20040524104904.85"><vh>@language specifying the target language</vh></v>
+<v t="EKR.20040524104904.86"><vh>@lineending directive specifies line endings</vh></v>
+<v t="EKR.20040524104904.87"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
+<v t="EKR.20040524104904.88"><vh>@raw and @end_raw directives delimit raw text</vh></v>
+<v t="EKR.20040524104904.89"><vh>@root options</vh></v>
+<v t="EKR.20040524104904.90"><vh>@wrap and @nowrap directives control line wrapping in the body pane</vh></v>
+</v>
+<v t="EKR.20040524104904.91"><vh>About cweb mode</vh></v>
+<v t="EKR.20040524104904.92"><vh>Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees</vh></v>
+<v t="EKR.20040524104904.93"><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
+<v t="EKR.20040524104904.94"><vh>@root vs. @file trees</vh></v>
+<v t="EKR.20040524104904.95"><vh>Sections and section definitions</vh></v>
+<v t="EKR.20040524104904.96"><vh>Tangling @root trees with the Tangle commands</vh></v>
+<v t="EKR.20040524104904.97"><vh>Untangling @root trees with the Untangle commands</vh></v>
+<v t="EKR.20040524104904.98"><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
+</v>
+<v t="EKR.20040608091134.1"><vh>Appendix 3 to Chapter 4: Using @thin instead of @file</vh></v>
+</v>
 <v t="ekr.20040414161647" a="E"><vh>Leo's HTML Users Guide</vh>
 <v t="ekr.20040414172212"><vh>@rst frontMatter.html</vh>
 <v t="ekr.20050812134441"><vh>@rst-no-head Links</vh></v>
@@ -2430,13 +2497,13 @@
 <v t="ekr.20040416075437"><vh>@rst-no-head contributors of plugins</vh></v>
 <v t="ekr.20040416080538"><vh>@rst-no-head special mentions</vh></v>
 </v>
-<v t="ekr.20040414172218.5" a="E"><vh>Copyright</vh></v>
-<v t="ekr.20040414174439" a="E"><vh>DISCLAIMER OF LIABILITY</vh></v>
+<v t="ekr.20040414172218.5"><vh>Copyright</vh></v>
+<v t="ekr.20040414174439"><vh>DISCLAIMER OF LIABILITY</vh></v>
 <v t="ekr.20050812125502"><vh>@rst-no-head End stuff</vh></v>
 </v>
 <v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
 <v t="ekr.20050812134441.1"><vh>@rst-no-head Links</vh></v>
-<v t="ekr.20040403183229" a="E" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3122206e616d653d22687474702d6e6f64652d6d61726b65722d31223e710155043c2f613e71025d710328553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710455063c2f6469763e71055d71062855063c626f64793e710755073c2f626f64793e71085d71092855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710a55073c2f68746d6c3e710b4e65656555243c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e0a710c55493c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643122206e616d653d226f76657276696577223e4f766572766965773c2f613e3c2f68313e0a710d652e"><vh>Overview</vh></v>
+<v t="ekr.20040403183229" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3122206e616d653d22687474702d6e6f64652d6d61726b65722d31223e710155043c2f613e71025d710328553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710455063c2f6469763e71055d71062855063c626f64793e710755073c2f626f64793e71085d71092855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710a55073c2f68746d6c3e710b4e65656555243c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e0a710c55493c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643122206e616d653d226f76657276696577223e4f766572766965773c2f613e3c2f68313e0a710d652e"><vh>Overview</vh></v>
 <v t="ekr.20040403175011" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3322206e616d653d22687474702d6e6f64652d6d61726b65722d33223e710155043c2f613e71025d71032855233c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555073c2f6469763e0a710f55413c64697620636c6173733d2273656374696f6e222069643d22672d746f702d7468652d636f6d6d616e6465722d6f662d7468652d746f702d77696e646f77223e0a711055863c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643222206e616d653d22672d746f702d7468652d636f6d6d616e6465722d6f662d7468652d746f702d77696e646f77223e672e746f7028293a2074686520636f6d6d616e646572206f662074686520746f702077696e646f773c2f613e3c2f68313e0a7111652e"><vh>g.top(): the commander of the top window</vh>
 <v t="ekr.20040403175011.1" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3422206e616d653d22687474702d6e6f64652d6d61726b65722d34223e710155043c2f613e71025d71032855403c64697620636c6173733d2273656374696f6e222069643d22672d746f702d7468652d636f6d6d616e6465722d6f662d7468652d746f702d77696e646f77223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e65656565554f3c703e54686520672e746f7028292066756e6374696f6e2072657475726e732074686520436f6d6d616e6473206f626a656374206f662074686520746f70204c656f2077696e646f773a3c2f703e0a710f55193c64697620636c6173733d22636f64652d626c6f636b223e0a711054370100003c7370616e20636c6173733d22705f6964656e746966696572223e633c2f7370616e3e3c7370616e20636c6173733d22705f64656661756c74223e266e6273703b3c2f7370616e3e3c7370616e20636c6173733d22705f6f70657261746f72223e3d3c2f7370616e3e3c7370616e20636c6173733d22705f64656661756c74223e266e6273703b3c2f7370616e3e3c7370616e20636c6173733d22705f6964656e746966696572223e673c2f7370616e3e3c7370616e20636c6173733d22705f6f70657261746f72223e2e3c2f7370616e3e3c7370616e20636c6173733d22705f6964656e746966696572223e746f703c2f7370616e3e3c7370616e20636c6173733d22705f6f70657261746f72223e28293c2f7370616e3e3c7370616e20636c6173733d22705f64656661756c74223e3c62722f3e0a711155f23c2f7370616e3e3c7370616e20636c6173733d22705f6964656e746966696572223e673c2f7370616e3e3c7370616e20636c6173733d22705f6f70657261746f72223e2e3c2f7370616e3e3c7370616e20636c6173733d22705f6964656e746966696572223e65733c2f7370616e3e3c7370616e20636c6173733d22705f6f70657261746f72223e283c2f7370616e3e3c7370616e20636c6173733d22705f6964656e746966696572223e633c2f7370616e3e3c7370616e20636c6173733d22705f6f70657261746f72223e293c2f7370616e3e3c7370616e20636c6173733d22705f64656661756c74223e3c62722f3e0a711254260100003c2f7370616e3e3c7370616e20636c6173733d22705f6964656e746966696572223e673c2f7370616e3e3c7370616e20636c6173733d22705f6f70657261746f72223e2e3c2f7370616e3e3c7370616e20636c6173733d22705f6964656e746966696572223e65733c2f7370616e3e3c7370616e20636c6173733d22705f6f70657261746f72223e283c2f7370616e3e3c7370616e20636c6173733d22705f6964656e746966696572223e633c2f7370616e3e3c7370616e20636c6173733d22705f6f70657261746f72223e2e3c2f7370616e3e3c7370616e20636c6173733d22705f6964656e746966696572223e726f6f74506f736974696f6e3c2f7370616e3e3c7370616e20636c6173733d22705f6f70657261746f72223e2829293c2f7370616e3e0a711355073c2f6469763e0a711455e03c703e3c656d3e4e657720696e2076657273696f6e20342e333c2f656d3e3a204c656f277320657865637574652073637269707420636f6d6d616e6420707265646566696e657320746865207661726961626c65206320746f2074686520636f6d6d616e646572206f66207468652077696e646f7720696e207768696368207468652073637269707420726573696465732e2020496e646565642c20672e746f70282920697320646570726563617465642e2020596f757220736372697074732073686f756c64206a75737420757365206320696e73746561642e3c2f703e0a7115652e"><vh>@rst</vh></v>
 </v>
@@ -2520,36 +2587,77 @@
 <v t="ekr.20040414163815"><vh>Table of Contents</vh></v>
 <v t="ekr.20050812134441.3"><vh>@rst-no-head end</vh></v>
 </v>
-<v t="ekr.20050813102008.1"><vh>@rst rstplugin3.html</vh>
+<v t="ekr.20050813102008.1"><vh>@rst rstplugin3.pdf</vh>
 <v t="ekr.20050813102008.2"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050813102008.3"><vh>Overview</vh></v>
 <v t="ekr.20050813102008.4"><vh>Comparison with previous rst plugins</vh></v>
-<v t="ekr.20050813102008.5"><vh>Options</vh>
+<v t="ekr.20050813102008.5" a="M"><vh>Options</vh>
 <v t="ekr.20050814093016"><vh>Options supporting the http plugin</vh></v>
 <v t="ekr.20050816051911"><vh>Options that set command names</vh></v>
 </v>
 <v t="ekr.20050813102008.6"><vh>Headline Commands</vh></v>
-<v t="ekr.20050813102008.7" a="E"><vh>Using doc parts</vh></v>
+<v t="ekr.20050813102008.7"><vh>Using doc parts</vh></v>
 <v t="ekr.20050813102008.9"><vh>Setting defaults</vh></v>
 <v t="ekr.20050813102008.10"><vh>The code-block directive</vh></v>
 <v t="ekr.20050813102008.11"><vh>Required cascading style sheets</vh></v>
 <v t="ekr.20050813102008.12"><vh>Notes about rST markup</vh></v>
 <v t="ekr.20050813102008.14"><vh>Examples</vh></v>
 <v t="ekr.20050814144727"><vh>Theory of operation</vh></v>
-<v t="ekr.20050813102008.13" a="E"><vh>@rst-no-head end stuff</vh>
+<v t="ekr.20050813102008.13"><vh>@rst-no-head end stuff</vh>
 <v t="ekr.20050813102008.15"><vh>Acknowledgements</vh></v>
 </v>
+<v t="ekr.20050822081728"><vh>@rst-ignore-tree Footnotes</vh></v>
 <v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
-<v t="ekr.20050816073412" a="MTV"><vh>@rst newTutorial.html</vh>
+<v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
+<v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20050818163826.2"><vh>Overview</vh></v>
+<v t="ekr.20050818163826.3"><vh>Comparison with previous rst plugins</vh></v>
+<v t="ekr.20050818163826.4" a="M"><vh>Options</vh>
+<v t="ekr.20050818163826.5"><vh>Options supporting the http plugin</vh></v>
+<v t="ekr.20050818163826.6"><vh>Options that set command names</vh></v>
+</v>
+<v t="ekr.20050818163826.7"><vh>Headline Commands</vh></v>
+<v t="ekr.20050818163826.8"><vh>Using doc parts</vh></v>
+<v t="ekr.20050818163826.9"><vh>Setting defaults</vh></v>
+<v t="ekr.20050818163826.10"><vh>The code-block directive</vh></v>
+<v t="ekr.20050818163826.11"><vh>Required cascading style sheets</vh></v>
+<v t="ekr.20050818163826.12"><vh>Notes about rST markup</vh></v>
+<v t="ekr.20050818163826.13"><vh>Examples</vh></v>
+<v t="ekr.20050818163826.14"><vh>Theory of operation</vh></v>
+<v t="ekr.20050818163826.15"><vh>@rst-no-head end stuff</vh>
+<v t="ekr.20050818163826.16"><vh>Acknowledgements</vh></v>
+</v>
+<v t="ekr.20050818163826.17"><vh>@rst-no-head end-of-page stuff</vh></v>
+</v>
+<v t="ekr.20050816073412" a="EM"><vh>@rst newTutorial.html</vh>
 <v t="ekr.20050816073814"><vh>@rst-no-head links</vh></v>
-<v t="ekr.20050816073412.1"><vh>@rst-no-head Intro</vh></v>
-<v t="ekr.20050816074100" a="E"><vh>@rst-ignore-tree Prewriting</vh>
+<v t="ekr.20050816074100"><vh>@rst-ignore-tree Prewriting</vh>
 <v t="ekr.20050816074944"><vh>Notes</vh></v>
 <v t="ekr.20050816074100.2"><vh>@url http://sourceforge.net/forum/message.php?msg_id=3259508</vh></v>
-<v t="ekr.20050816074100.3" a="E"><vh>From Rich</vh></v>
+<v t="ekr.20050816074100.3"><vh>From Rich</vh></v>
 <v t="ekr.20050816074944.1"><vh>From e</vh></v>
-<v t="ekr.20050816074944.2"><vh>From James</vh></v>
+<v t="ekr.20050816074944.2"><vh>From James: formatting data</vh></v>
+</v>
+<v t="ekr.20050816073412.1"><vh>Introduction</vh>
+<v t="ekr.20050822173420"><vh>Leo's main window</vh></v>
+<v t="ekr.20050823082517"><vh>Using Leo as an outliner</vh></v>
+</v>
+<v t="ekr.20050824151926"><vh>Key features of Leo</vh>
+<v t="ekr.20050822173420.1"><vh>Derived files</vh></v>
+<v t="ekr.20050822173420.2" a="E"><vh>Clones &amp; views</vh></v>
+<v t="ekr.20050827055403"><vh>Outline structure is significant in body text</vh></v>
+<v t="ekr.20050822173420.3"><vh>Leo directives</vh></v>
+</v>
+<v t="ekr.20050827102655" a="TV"><vh>Leo for Programmers</vh>
+<v t="ekr.20050827061847"><vh>Doc parts</vh></v>
+<v t="ekr.20050827090532"><vh>Sections and their definitions</vh></v>
+<v t="ekr.20050827090532.1" a="E"><vh>More about @others</vh></v>
+<v t="ekr.20050827094813"><vh>Good style and bad:  sections vs. @others</vh></v>
+<v t="ekr.20050822173420.5"><vh>Scripting Leo: accessing data in Leo outlines</vh></v>
+<v t="ekr.20050823081317" a="M"><vh>Settings</vh></v>
+<v t="ekr.20050823081317.1" a="M"><vh>Plugins &amp; the icon area</vh></v>
+<v t="ekr.20050827090802"><vh>Further study</vh></v>
 </v>
 <v t="ekr.20050816073824"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
@@ -13527,9 +13635,7 @@ Leap 101: How to administer Leaps.
 
 - Assigned to nobody. 
 - No formality needed yet. </t>
-<t tx="edream.110203163054.1655">
-
-- Assigned to nobody. 
+<t tx="edream.110203163054.1655">- Assigned to nobody. 
 - Create, plan, promote &amp; administer a gathering of Leo enthusiasts. 
 - Part of the planning would be to create a date and setting for the conferences. </t>
 <t tx="edream.110203163054.1656"></t>
@@ -18181,15 +18287,21 @@ reStructuredText_ (rST) ReStructuredText is a simple and powerful text
 formatting markup language. Outlines are a natural way to organize rST (or any
 text).
 
+.. The line @rst &lt;xyzzy&gt; causes problems.
+
 This plugin adds the Write Restructured Text command to Leo's Edit menu. The Write
-Restructured Text command searches the selected outline looking for **rst root
-nodes** whose headline have the form @rst &lt;filename&gt;. The plugin then creates
+Restructured Text command searches the selected outline looking for **rst root nodes**
+whose headline have the form @rst xyzzy. The plugin then creates
 the named file in various ways depending which rst3 options are in effect.
 
 By default, the rst3 plugin creates rST headings automatically from outlines, so
 the higher-level nodes in the outline correspond to higher-level sections in the
 output. Creating rST headings automatically relieves you from one of the most
 tedious chores in creating rST markup.
+
+.. .. [1] See footnote 1.
+
+.. .. [2] See footnote 2.
 
 To use this plugin effectively, Python's docutils_ module must be installed. The
 rst3 plugin will use the SilverCity_ syntax coloring package if it installed.
@@ -18199,7 +18311,8 @@ processing. Docutils generates HTML files or LaTeX files depending on the file's
 extension. HTML files generated by docutils refer to three .css (cascading style
 sheet) files that should exist in the same directory as the generated HTML file.
 You can control the formatting of the HTML file by altering these .css files.
-See `Required cascading style sheets`_ for more details.</t>
+.. .. See `Required cascading style sheets`_ for more details.
+See Required cascading style sheets for more details.</t>
 <t tx="ekr.20050813102008.4">The rst3 plugin provides several important benefits compared to previous rst plugins:
 
 1. This plugin allows much more flexible control over its operations using **rst3 options**. You can
@@ -18301,8 +18414,8 @@ stylesheet_path
     The directory containing the stylesheet passed to docutils.  The default is an empty string.
 
 underline_characters
-    The underlining characters to be used to specify rST sections.
-    The default value is #=+*^~\"\'\`-:&gt;&lt;_
+    The underlining characters to be used to specify rST sections.  
+    The default value is xxxxyyyy.
     The first character is reserved so you can specify the top-level section explicitly.
 
 verbose
@@ -18315,39 +18428,41 @@ write_intermediate_file
     This option has effect only if the generate_rst option is True.</t>
 <t tx="ekr.20050813102008.6">It is often convenient to set options in headlines.  This is done with the following **headline commands**:
 
-@rst &lt;text&gt;
-    Enter rst mode.  Create a section called &lt;text&gt; provided the show_headlines option is set.
+.. changed &lt;text&gt; to TEXT to avoid problems.
 
-@rst-code &lt;text&gt;
-    Enter code mode.  Create a section called &lt;text&gt; provided the show_headlines option is set.
+@rst TEXT
+    Enter rst mode.  Create a section called TEXT provided the show_headlines option is set.
 
-@rst-ignore-node &lt;text&gt;
-    Suppress all output from a single node. &lt;text&gt; is ignored.
+@rst-code TEXT
+    Enter code mode.  Create a section called TEXT provided the show_headlines option is set.
+
+@rst-ignore-node TEXT
+    Suppress all output from a single node. TEXT is ignored.
     Has *no* effect on descendant nodes and does **not** change any rst3 option. 
 
-@rst-ignore-tree &lt;text&gt;
-    Suppress all output from the node and its descendants.  &lt;text&gt; is ignored.
+@rst-ignore-tree TEXT
+    Suppress all output from the node and its descendants.  TEXT is ignored.
     Does **not** change any rst3 formatting option.
 
-@rst-no-head &lt;text&gt;
+@rst-no-head TEXT
     Suppress the generation of an rST section for this node only.  Does not affect descendant nodes.
     Has *no* effect on descendant nodes and does **not** change any rst3 option. 
 
-@rst-no-headlines &lt;text&gt;
-    Set the show_headlines option to False.  As a result, &lt;text&gt; is ignored.
+@rst-no-headlines TEXT
+    Set the show_headlines option to False.  As a result, TEXT is ignored.
 
-@rst-option &lt;option&gt; = &lt;value&gt;
+@rst-option OPTION = VALUE
     Set a single option to the given value.  The default value is True.
 
-@rst-options &lt;text&gt;
-    Set zero or more options from the body text of the node.  &lt;text&gt; is ignored.
+@rst-options TEXT
+    Set zero or more options from the body text of the node.  TEXT is ignored.
     The entire body text is treated as if it were in an @ @rst-options doc part.
 
 **Notes**:
 
 - Several of these commands affect only the node in which they appear.  Such commands set internal settings variables only: they have no effect on the visible rst3 options.
 
-- If a headline generates an rST section, the section name does not include the headline command.  Furthermore, no rST section is generated if the &lt;text&gt; is empty.</t>
+- If a headline generates an rST section, the section name does not include the headline command.  Furthermore, no rST section is generated if the TEXT is empty.</t>
 <t tx="ekr.20050813102008.7">Recall that in Leo a doc part starts with the '@' directive and continues until the end of body text or until the '@c' directive is seen.  For example::
 
     @ This is a comment in a doc part.
@@ -18487,10 +18602,11 @@ LeoPlugins.leo.</t>
 
 rst3 = leoPlugins.getPluginModule('rst3')
 
-p = g.findNodeAnywhere('@rst rstplugin3.html')
+p = g.findNodeAnywhere('@rst newTutorial.html')
 
 if p:
-    rst3.controller.processTree(p)</t>
+    rst3.controller.processTree(p)
+    g.es('format complete',color='blue')</t>
 <t tx="ekr.20050814093016">The following options are for the use of Bernhard Mulder's http plugin.  The http plugin creates an http server running on a local port, typically 8080.  When the http plugin is running you will see a purple message in the log window that looks something like this::
 
     http serving enabled on port 8080, version 0.91
@@ -18604,11 +18720,11 @@ You can change these to make them shorter or to avoid conflicts with headlines i
 `rst_prefix`: '\@rst'
 
 `show_headline_prefix`: '\@rst-head'</t>
-<t tx="ekr.20050816073412">#################################
-|leo| A quick introduction to Leo
-#################################
+<t tx="ekr.20050816073412">#####################################
+|leo| A Tutorial Introduction to Leo
+#####################################
 
-.. August 14, 2005
+.. August 24, 2005
 
 @ @rst-options
 code_mode=False
@@ -18623,18 +18739,33 @@ verbose=True
 @c
 
 .. contents::</t>
-<t tx="ekr.20050816073412.1">The main features of Leo:
+<t tx="ekr.20050816073412.1">This tutorial describes the basics of what Leo can does and how it does it.
+After reading this tutorial you should have a sense that everything in Leo is directly related to outlines.  Indeed, Leo has only a few basic features,
+but these features are general purpose and they interact with each other in powerful ways.
 
-- Outlines
-- Derived files
-- Clones
-- Leo directives
-- Sections and @others
-- Support for scripting</t>
+**Important**: please install Leo before reading this tutorial, using
+`detailed installation instructions`_.
+If you have any problem installing Leo, please do ask for help on `Leo's help forum`_.
+
+Now that you have Leo installed, please launch Leo.
+You should see an empty outline window.
+Please do launch Leo before reading the rest of this tutorial.
+You really will benefit greatly from seeing how Leo shows a real Leo outline.</t>
 <t tx="ekr.20050816073814">.. Links used in this document...
 
-.. _front:                http://webpages.charter.net/edreamleo/front.html
-.. _home:                 http://webpages.charter.net/edreamleo/front.html
+.. _front:                      http://webpages.charter.net/edreamleo/front.html
+.. _home:                       http://webpages.charter.net/edreamleo/front.html
+
+.. _`detailed installation instructions`: http://webpages.charter.net/edreamleo/Install.html
+.. _`Leo's help forum`:          http://sourceforge.net/forum/forum.php?forum_id=10227
+
+.. _`Literate Programming`:     http://www.literateprogramming.com/
+.. _`Chapter 4`:                http://webpages.charter.net/edreamleo/directives.html
+.. _`Chapter 7`:                http://webpages.charter.net/edreamleo/scripting.html
+.. _`Users Guide`:              http://webpages.charter.net/edreamleo/leo_TOC.html
+
+.. _directives: `Leo Directives`_
+.. _directive: `Leo Directives`_
 
 .. Other parts of the documentation
 
@@ -18682,7 +18813,7 @@ This info should be in a "README" file.
 
 3, 4, &amp; 5 are too 'deep' for newcomers.
 
-6 "Tech-ese." It shouild be more like: "Plugins allow you to easily add features to Leo. Plugins are written by other Leo users, and are available by/at ..."
+6 "Tech-ese." It should be more like: "Plugins allow you to easily add features to Leo. Plugins are written by other Leo users, and are available by/at ..."
 
 
 If I'm a newcomer, I'm already somewhat interested in Leo. I want to know how to get it running (and who to ask for help doing so) so I can evaluate it for myself.
@@ -18724,5 +18855,957 @@ e
 <t tx="ekr.20050816074944.2">Realistically, a Leo beginner needs to understand how to get info in and out of leo while using some other editing tool.  
  
 Leo is ridiculously easy to enter infomation in, but how to format that info is important. Best practices for formating an example HTML and CSS file would be a great start. Please include multiple strategies for achieving just a basic web design.  </t>
+<t tx="ekr.20050818163826">###########################
+|leo| Using the rst3 plugin
+###########################
+
+.. August 14, 2005
+
+@ @rst-options
+code_mode=False
+generate_rst=True
+http_server_support = False
+show_organizer_nodes=True
+show_headlines=True
+show_leo_directives=True
+.. stylesheet_path=c:\prog\leoCVS\leo\doc
+write_intermediate_file = True
+verbose=True
+@c
+
+.. contents::</t>
+<t tx="ekr.20050818163826.1">.. Links used in this document...
+
+.. _LaTeX:                http://www.latex-project.org/
+.. _reStructuredText:     http://docutils.sourceforge.net/rst.html
+.. _docutils:             http://docutils.sourceforge.net
+.. _ListManagerDocs.html: http://webpages.charter.net/edreamleo/ListManagerDocs.html
+.. _wxListManager.leo:    http://webpages.charter.net/edreamleo/wxListManager.leo
+.. _SilverCity:           http://silvercity.sourceforge.net
+.. _front:                http://webpages.charter.net/edreamleo/front.html
+.. _home:                 http://webpages.charter.net/edreamleo/front.html
+
+.. |blank| image:: blank.gif
+.. |leo|   image:: leo.gif
+    :target: front_</t>
+<t tx="ekr.20050818163826.2">The rst3 plugin creates output files from Leo outlines containing
+reStructuredText_ (rST) ReStructuredText is a simple and powerful text
+formatting markup language. Outlines are a natural way to organize rST (or any
+text).
+
+This plugin adds the Write Restructured Text command to Leo's Edit menu. The Write
+Restructured Text command searches the selected outline looking for **rst root nodes**
+whose headline have the form @rst &lt;filename&gt;. The plugin then creates
+the named file in various ways depending which rst3 options are in effect.
+
+By default, the rst3 plugin creates rST headings automatically from outlines, so
+the higher-level nodes in the outline correspond to higher-level sections in the
+output. Creating rST headings automatically relieves you from one of the most
+tedious chores in creating rST markup.
+
+To use this plugin effectively, Python's docutils_ module must be installed. The
+rst3 plugin will use the SilverCity_ syntax coloring package if it installed.
+
+This plugin sends .htm, .html or .tex files to the docutils module for further
+processing. Docutils generates HTML files or LaTeX files depending on the file's
+extension. HTML files generated by docutils refer to three .css (cascading style
+sheet) files that should exist in the same directory as the generated HTML file.
+You can control the formatting of the HTML file by altering these .css files.
+See `Required cascading style sheets`_ for more details.</t>
+<t tx="ekr.20050818163826.3">The rst3 plugin provides several important benefits compared to previous rst plugins:
+
+1. This plugin allows much more flexible control over its operations using **rst3 options**. You can
+set options in @settings trees, in headlines and in body text. Nodes inherit most rst3 options from
+ancestor nodes much like nodes inherit Leo directives.  See `Options`_.
+
+The most important option is the code_mode option. This option specifies whether to process the
+body text of a node as rst markup (rst mode) or source code that is to be converted to rST
+markup (code mode). Unlike previous versions of this plugin, any node can be processed in any
+mode.
+
+2. Headlines can set any option. This turns out to be very convenient. See `Headline commands`_ for
+details.  Nodes whose headlines start with @rst-options are treated specially. The body text of such **rst
+options nodes** should contain nothing but lines of the form::
+
+    &lt;option&gt;=&lt;value&gt;
+
+3. You can set any rst3 options in the *body text* of any node
+using doc parts of the form::
+
+    @ @rst-option
+    list of rst3 options, one per line
+    @c
+
+Such **option doc parts** allows you to specify rst3 options even with source code files.
+
+4. You can embed rST markup in the body text
+of any node using doc parts of the form::
+
+    @ @rst-markup
+    any rST markup
+    @c
+
+Such **markup doc parts** allow you to fine-tune the formatting of your source files.
+See `Using doc parts`_ for full details.
+
+All these features create a wonderful environment for using rST.
+There is complete integration of Leo outlines with rST markup.
+You can embed both rst3 options and rST markup in any node, even node in derived files.</t>
+<t tx="ekr.20050818163826.4">You can set any option in any node, so you have complete control over how this plugin processes each
+node.  The following is a list of options that control how the rst3 plugin formats each particular node.
+
+code_mode
+    True: process nodes in code mode.  False: process nodes in rst mode.
+    In code mode, the rst3 plugin automatically creates rST markup to display the body text as an
+    rst code-block. In rst mode the rst3 simply copies the body text of the node to the output. That
+    is, the plugin assumes that body text is already valid rST markup.
+
+default_path
+    The path to be prepended to filenames given in root nodes.  The default is an empty string.
+    
+generate_rst
+    A master switch.
+    True: generate rST markup for rST sections and rST code-blocks.
+    False: don't generate rST markup and ignore @ @rst-markup doc parts.
+
+number_code_lines
+    Controls whether to number code lines in code mode.
+    This option has no effect in rst mode.
+
+show_doc_parts_as_paragraphs
+    True: Move doc parts outside of the code-block directive in code mode.
+    This option has no effect in rst mode.
+
+    **Cool**: Any rST markup in doc parts included as the result of this option will be rendered properly.
+
+show_headlines
+    True: automatically generate rST sections from headlines.
+    Applies to both code mode and rst mode.
+
+    The level of the node in the outline determines the level of the section
+    underling in the rST markup. Higher-level headlines in the outline
+    correspond to higher-level section headings; lower-level headlines in the
+    outline correspond to lower-level section headings.
+
+show_leo_directives
+    True: include Leo directives in code mode.
+    This option has no effect in rst mode.
+
+show_markup_doc_parts
+    True: include markup doc parts in code mode.
+    This option has no effect in rst mode.
+
+show_options_doc_parts
+    True: include options doc parts in code mode.
+    This option has no effect in rst mode.
+
+show_options_nodes
+    True: show @rst-options nodes.
+
+show_organizer_nodes
+    True: generate rST sections for nodes that do not contain body text.
+    This option has no effect unless the rST section would otherwise be written.
+
+stylesheet_name
+    The name of the stylesheet passed to docutils.  The default is 'default.css'
+
+stylesheet_path
+    The directory containing the stylesheet passed to docutils.  The default is an empty string.
+
+underline_characters
+    The underlining characters to be used to specify rST sections.  
+    The default value is `#=+*^~"'`-:&gt;&lt;_`
+    The first character is reserved so you can specify the top-level section explicitly.
+
+verbose
+    True: write informational messages.
+
+write_intermediate_file
+    True: writes intermediate files before sending them to docutils.
+    This option only applies to .htm, .html and .tex files.
+    The name of the intermediate file has the name of the output file with .txt appended.
+    This option has effect only if the generate_rst option is True.</t>
+<t tx="ekr.20050818163826.5">The following options are for the use of Bernhard Mulder's http plugin.  The http plugin creates an http server running on a local port, typically 8080.  When the http plugin is running you will see a purple message in the log window that looks something like this::
+
+    http serving enabled on port 8080, version 0.91
+
+To use the http plugin, start a web browser and enter this url::
+
+    http://localhost:8080/
+
+You will see a a top level page containing one link for every open .leo file.  Clicking on link will cause the http server to pass a new page to the browser.  You can use the browser's refresh button to update the top-level view in the browser after you have opened or closed files.
+
+**Important**: See the docstring for the http plugin for information on configuring the plugin.
+Some of the following rst3 settings must match values of settings for the http plugin. 
+Here are the rst3 options that support the http plugin:
+
+http_server_support
+    A master switch: none of the following options have any effect unless this option is True.
+    If True, the rst3 plugin does the following:
+
+    - Writes **node markers** in the rst output for use by the http plugin. Node markers are rst named hyperlink targets.  By default they look like::
+    
+            .. _http-node-marker-N
+    
+      where N is a unique node number.
+
+    - Adds additional information to all nodes of the tree being formatted using Leo's
+      unknownAttributes mechanism.
+
+http_attributename
+    The name of the attribute name written to the unknownAttributes attribute of
+    each each outline node in the rst root tree.
+    The default is 'rst_http_attribute';
+    it should match the following setting of the *http* plugin::
+
+        @string rst_http_attributename = 'rst_http_attribute'
+    
+    This option has no effect unless the http_server_support option is True.
+
+clear_http_attributes
+    If True the rst3 plugin initially clears the fields specified by `http_attributename`.  
+    This option has no effect unless the http_server_support option is True.
+
+node_begin_marker
+    The string used for node markers. The default is 'http-node-marker-'.
+    This option has no effect unless the http_server_support option is True.</t>
+<t tx="ekr.20050818163826.6">The following options specify the 'spelling' of headline commands.  The option_prefix and option_prefixes command also define the spelling of special doc parts.
+
+You can change these to make them shorter or to avoid conflicts with headlines in your Leo files.  The list below merely gives the default value for each setting.
+
+.. escape the '@' signs so they don't become email addresses.
+
+`code_prefix`: '\@rst-code'
+
+`ignore_headline_prefix`: '\@rst-no-head'
+
+`ignore_headlines_prefix`: '\@rst-no-headlines'
+
+`ignore_node_prefix`: '\@rst-ignore-node'
+
+`ignore_tree_prefix`: '\@rst-ignore-tree'
+
+`option_prefix`: '\@rst-option'
+
+`options_prefix`: '\@rst-options'
+
+`rst_prefix`: '\@rst'
+
+`show_headline_prefix`: '\@rst-head'</t>
+<t tx="ekr.20050818163826.7">It is often convenient to set options in headlines.  This is done with the following **headline commands**:
+
+@rst TEXT
+    Enter rst mode.  Create a section called TEXT provided the show_headlines option is set.
+
+@rst-code TEXT
+    Enter code mode.  Create a section called TEXT provided the show_headlines option is set.
+
+@rst-ignore-node TEXT
+    Suppress all output from a single node. TEXT is ignored.
+    Has *no* effect on descendant nodes and does **not** change any rst3 option. 
+
+@rst-ignore-tree TEXT
+    Suppress all output from the node and its descendants.  TEXT is ignored.
+    Does **not** change any rst3 formatting option.
+
+@rst-no-head TEXT
+    Suppress the generation of an rST section for this node only.  Does not affect descendant nodes.
+    Has *no* effect on descendant nodes and does **not** change any rst3 option. 
+
+@rst-no-headlines TEXT
+    Set the show_headlines option to False.  As a result, TEXT is ignored.
+
+@rst-option &lt;option&gt; = &lt;value&gt;
+    Set a single option to the given value.  The default value is True.
+
+@rst-options TEXT
+    Set zero or more options from the body text of the node.  TEXT is ignored.
+    The entire body text is treated as if it were in an @ @rst-options doc part.
+
+**Notes**:
+
+- Several of these commands affect only the node in which they appear.  Such commands set internal settings variables only: they have no effect on the visible rst3 options.
+
+- If a headline generates an rST section, the section name does not include the headline command.  Furthermore, no rST section is generated if the TEXT is empty.</t>
+<t tx="ekr.20050818163826.8">Recall that in Leo a doc part starts with the '@' directive and continues until the end of body text or until the '@c' directive is seen.  For example::
+
+    @ This is a comment in a doc part.
+    Doc parts can span multiple lines.
+    The next line ends the doc part
+    @c
+
+Leo converts doc parts into comments using whatever comment delimiters are in effect.
+
+**Option doc parts** are doc parts that start with @ @rst-options. All other
+lines of such doc parts should be of the form name=value. (rST comments lines
+starting with '..' are allowed). For example::
+
+    @ @rst-options
+    .. This comment line is ignored.
+    show_headlines=False
+    show_leo_directives=False
+    verbose=True
+    @c
+
+The rst3 plugin sets options from option doc parts, even in code mode.
+
+**Markup doc parts** are doc parts that start with @ @rst-markup.  For example::
+
+    @ @rst-markup
+    .. contents::
+
+The rst3 plugin replaces markup doc parts by the markup they contain, even in code mode.
+
+Option and markup doc parts are especially useful in code mode. They allow you
+to specify options or insert rST markup directly from with derived files. This
+makes your source files self contained: there is no need to add other nodes to
+make the rst3 plugin happy.
+
+A cool feature: In code mode, rST markup in *ordinary* doc parts will be
+rendered properly when the show_doc_parts_as_paragraphs option is in effect.
+*Important*: Regardless of the show_doc_parts_as_paragraphs option, doc parts
+have no special significance in rst mode. That is, the entire `doc part` from
+the opening '@' to the closing '@c and everything in between are treated normal
+rST markup.</t>
+<t tx="ekr.20050818163826.9">You can set the defaults for any rst3 option in several ways:
+
+\1.  By setting options in the root node using @ @rst-options doc parts.
+For example, the root of the file that generated this documentation contains::
+
+    @ @rst-options
+    code_mode=False
+    generate_rst=True
+    show_organizer_nodes=True
+    show_headlines=True
+    show_leo_directives=True
+    verbose=True
+    @c
+
+\2. By setting options in @settings trees.  To do this, you must prefix the option name shown in this documentation with the prefix 'rst3\_'.  For example::
+
+    @settings
+        @page rst3 options
+            @bool rst3_write_intermediate_file = True
+</t>
+<t tx="ekr.20050818163826.10">This plugin defines a code-block rST directive.  The primary purpose of this directive is to show formatted source code.
+
+In rst mode you can insert the code-block directive like any other rST markup.  The rst3 plugin generates code-block directives when handling nodes in code mode.
+
+This directive takes one argument, a language name.  Like this::
+
+    .. code-block:: Python
+
+        import leoPlugins
+        import leoGlobals as g
+
+This directive syntax colors the code in the indented code block that follows the directive.
+The result looks like this if the SilverCity syntax coloring module has been installed.
+
+.. code-block:: Python
+    
+    import leoPlugins
+    import leoGlobals as g
+
+Otherwise, the output looks like this::
+
+    import leoPlugins
+    import leoGlobals as g
+
+See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for many examples of how to use code-blocks.
+</t>
+<t tx="ekr.20050818163826.11">HTML files generated by the rst3 plugin assume that three .css (cascading style sheet) files exist
+in the same directory. For the HTML output to look good the following .css
+files should exist:
+
+- default.css is the default style sheet that docutils expects to exist.
+
+- leo_rst.css contains some style improvements based on Gunnar Schwant's DocFactory.
+
+- silver_city.css is the style sheet that controls the syntax highlighting generated by SilverCity.
+
+The latter two style sheets are imported at the end of the default.css.
+
+**Important:** You can use cascading style sheets to do things that otherwise
+wouldn't be possible with "plain" rST. For instance, the background color of
+this page was specified in a body style.</t>
+<t tx="ekr.20050818163826.12">The plugin reserves the '#' character for your own use so that you can
+specify an rST headline explicitly. For example,::
+
+    #####
+    Title
+    #####
+
+You would typically put such a title in the rst root node. Otherwise, you should
+let the rst3 plugin automatically generate rST sections from headlines.
+
+To create a table of contents (TOC) put::
+
+    .. contents:: Table of Contents
+
+on its own line wherever you want the TOC to appear.  This line can appear in body text in rst mode,
+or in an @ @rst-markup doc part in code mode.</t>
+<t tx="ekr.20050818163826.13">The file ListManagerDocs.html_ is an impressive example of the kind of output
+that can be generated relatively easily using this plugin.
+
+The source for ListManagerDocs.html is wxListManager.leo_.
+**Important**: wxListManager.leo was written for the rst2 plugin; it
+could be greatly simplified if adapted for the rst3 plugin.
+
+The files in LeoDocs.leo under the node 'Leo's HTML Users Guide' contain
+examples of using the rst3 plugin.
+
+This documentation was created using the rst3 plugin. The source code for this
+documentation is in LeoDocs.leo. The source code for all the rst plugins is in
+LeoPlugins.leo.</t>
+<t tx="ekr.20050818163826.14">The code for the rst3 plugin is more complex than usual.  Fortunately, the overall organization is straightforward.
+
+defaultOptionsDict
+    This dictionary represents each rst3 option.
+    To add another option, just add another entry to this dictionary.
+    Keys are the option name, including the `rst3_` prefix.
+    Values are the default value of the option.
+    The hard values in the dictionary may be changed as the result of @settings entries.
+
+processTree
+    processTree is the top-level code that handles one rst root node.
+    It calls preprocessTree to create the **tnodeOptionDict** ivar.
+    processTree then calls either writeNormalTree or writeSpecialTree
+    depending on whether text will be sent to docutils for further processing.
+    These two methods handle mundane details of opening an closing files.
+    Both writeNormalTree and writeSpecialTree call **writeTree** to do the actual work.
+
+tnodeOptionDict
+    The entries in this dictionary represents the options that are set in one particular node.
+    The keys of tnodeOptionDict are tnodes, the values are anonymous dictionaries.
+    These anonymous inner dictionaries contain the options that are explicitly set at each tnode
+    (and thus each position).
+    Preprocessing the tree this way ensures that each node (headline and body text) is parsed exactly once.
+
+writeTree
+    writeTree first calls **scanAllOptions**, which has the effect of
+    initializing all options. writeTree then calls **writeNode** for each node
+    that will be processed by the rst3 plugin. Options may cause the plugin to
+    skip a node or an entire subtree.
+
+writeNode
+    writeNode first calls **scanAllOptions** to compute the options that are in
+    effect for that *single* node. Once options have computed, processing the
+    node is straightforward. writeNode calls writeBody and writeHeadline
+    to do the real work. These methods generate or skip text based on various
+    options.
+
+scanAllOptions
+    scanAllOptions recreates the optionsDict ivar to represent *all* the options
+    in effect for *for the particular node being processed by writeNode*. Client
+    code gets these options by calling the getOption method.
+
+    scanAllOptions first inits all options from settings,
+    then updates those options using the anonymous
+    dictionaries contained in the tnodeOptionsDict.
+    scanAllOptions works like g.scanAllDirectives, but the code is much simpler.</t>
+<t tx="ekr.20050818163826.15"></t>
+<t tx="ekr.20050818163826.16">Josef Dalcolmo wrote the initial rst plugin.
+Timo Honkasalo, Bernhard Mulder, Paul Paterson, Kent Tenney and
+Steve Zatz made contributions to the rst and rst2 plugins.
+Edward K. Ream designed and wrote the rst3 plugin.</t>
+<t tx="ekr.20050818163826.17">-------------
+
+|leo|</t>
+<t tx="ekr.20050822081728">.. This was used only for testing.
+
+[1]_ Footnote 1.
+
+[2]_ Footnote 2.
+</t>
+<t tx="ekr.20050822173420">Ok.  You should have launched Leo by now.
+If not, please do so now; it's important.
+
+You are looking at Leo's **main window.**
+.. TO DO: Screen shot.
+The main window represents an entire project and is stored in a single **Leo file**,
+a file with a .leo extension.
+
+As you can see, the main window contains three panes:
+the **outline pane** at the top left,
+the **log pane** at the top right, and the **body pane** at the bottom.
+The window also contains an **icon area** at the very top and a **status area** at the very bottom.
+
+Outline pane &amp; nodes
+    The outline pane shows your project as an outline.
+    The outline contains all your projects data.
+    Technically, an outline consists of **nodes**.
+    Nodes have two parts, a **headline** and **body text**.
+    The outline pane shows only headlines; the body text of the selected headline appears in the body pane.
+
+Body pane
+    This pane contains the body text of the headline selected in the outline pane.
+    You can control how Leo shows this body text using directives and settings.
+    For example, Leo directives specify whether to syntax color the body text and whether to wrap the text.
+    We'll discuss both directives and settings in later sections of this tutorial.
+
+Log pane
+    The log pane contains informational messages from Leo
+    Leo writes more such messages than other editors do because
+    as we shall see Leo is actually doing more than other editors.
+    Furthermore, scripts and plugins (discussed below) may also write message to the log pane.
+
+Icon area
+    Depending on what plugins are enabled,
+    the icon area may contain buttons and other widgets that extend what Leo can do.
+    If the scripting plugin is enabled, it is very easy to add buttons to the icon area.
+    We'll discuss how to do this at `Plugins &amp; the icon area`_
+
+Status area
+    The status area shows the line and column containing the body text's cursor.
+    Other information may follow.
+    Usually this is the **UNL** (Uniform Node Location) that describes the path in the outline
+    to the selected node.
+    Please select nodes at several levels of the outline to see how the UNL changes.
+
+Now that we are familiar with Leo's main window,
+let's see how to use Leo as a simple outliner.</t>
+<t tx="ekr.20050822173420.1">You don't have to store all outline data in Leo (.leo) files.
+Leo allows you to store data visible in an outline is external files called **derived files**.
+This is useful for creating programming files, documentation files such as LaTex files, and web pages.
+
+**Important**: You can edit derived files outside of Leo.
+Leo will update the outline to reflect those changes when Leo next opens the outline.
+
+It is easy to create derived files; just put ``@file`` *filename* in a headline.
+That creates an **@file node**.
+The **@file tree** (the ``@file`` node and all its descendants) corresponds to the derived file *filename*.
+Leo writes ``@file`` nodes to your hard drive when Leo saves your outline (.leo file).
+Leo reads all derived files when it opens any .leo file.
+
+**Important**: Leo does *not* simply copy an ``@file`` tree to the derived file.
+Instead, you must explictly tell Leo how to create the derived file.
+See `Leo for Programmers`_ for details.
+
+To anticipate a bit, if you *do* want to have Leo just to
+copy the body text of an ``@file`` tree to a derived file,
+just put ``@others`` in the body text of the ``@file`` node.
+``@others`` is an example of a Leo `directive`_.
+Leo will copy the body text of the ``@file`` node to the derived file,
+and will *replace* the ``@others`` directive by the body text of all the descendent nodes.
+When expanding ``@others``, Leo copies body text to the derived file in **outline order**,
+the order that nodes appear on the screen when all nodes are expanded.
+Note that Leo does copies headlines to the derived file as comments.
+This means that headlines do not affect the meaning of derived files and
+you can use headlines to contain whatever data you wish.
+
+**Important**: use ``@thin`` instead of ``@file`` when creating files that are to be shared using
+CVS or other Source Code Control Systems.
+``@thin`` nodes works just like ``@file`` nodes,
+but the information in files derived from ``@thin`` is more friendly to CVS.</t>
+<t tx="ekr.20050822173420.2">A cloned node is a copy of a node that changes when the original changes.
+Changes to the children, grandchildren, etc. of a node are simultaneously made to the corresponding nodes contained in all cloned nodes.
+Clones are marked by a small arrow  by their leader characters.
+
+Please take a few moments to experiment with clones.
+Start with a single node, say a node whose headline is A.
+Clone node A using the Clone Node command in Leo's Outline menu.
+Both clones are identical; there is no distinction between the original node and any of its clones.
+
+Type some text into the body of either node A.
+The same text appears in the bodies of all other clones of A.
+Now insert a node, say B, as a child of any of the A nodes.
+All the A nodes now have a B child.
+See what happens if you clone B.
+See what happens if you insert, delete or move nodes that are children of A.
+Verify that when the second-to-last cloned node is deleted the
+last cloned node becomes a regular node again.
+
+Clones are much more than a cute feature.
+**Clones allow multiple views of an data to exist within a single outline**.
+The abilitiy to create multiple views of data is crucial;
+you don't have to try to decide what is the 'correct' view of data.
+You can as many views as you like, each tailored exactly to the task at hand.
+
+To create a new view of the data, just create any *ordinary* node.
+This node will *represent* the new view.
+Let us call it a **view node.**
+Now just put any nodes that are related to the view as descendant nodes of your view node.
+Let us call the descendants of the view nodes the **components** of the view.
+Component nodes are typically clones of other nodes in the outline.
+This is what gives the view is power:
+a view can contain nodes gathered from all over the outline.
+However, it is also sometimes useful to add non-cloned nodes as components of views.
+
+For example, when I begin to fix a bug I first create a view node to represent the bug.
+I then create a component node (not cloned) that contains the original bug report.
+I may also create other non-cloned nodes to contain notes and documentation.
+Next, I go looking throughout Leo's code for nodes that relate in some way to the bug.
+When I find such a node I clone it and move one of the clones so
+it becomes a component of the view node for the bug.
+*Note:* I can organize the components of the view node as I please.
+In particular, I can create **organizer nodes** whose only purpose is to
+contain groups of component nodes.
+In other words, the full power of Leo outlines is available within view nodes.
+
+**Important**: Once I have created the view of the bug, I can concentrate *only* on that view.
+In particular, I can fix code by changing *component* nodes.
+Because the code nodes are cloned, any changes I make to a component node also get made
+to the other cloned nodes throughout the outline.
+In effect, my view node for the bug lets me work only on the nodes of the outline
+that are directly related to the bug.
+In other words, the view nodes lets me focus *only* on the task at hand,
+and lets me ignore all other details.
+
+Clones are the basis for Leo's project management capabilities.
+Indeed, the ability to create multiple views of a project is most helpful.</t>
+<t tx="ekr.20050822173420.3">Leo directives control such things as syntax coloring, line wrapping withing the body pane and the width of tabs.
+Leo directives start with '@' in the leftmost column, followed by the name of the directive.  For example::
+
+    @language python
+    @tabwidth -4
+    @wrap
+    @nowrap
+    @color
+    @nocolor
+    @killcolor
+    @encoding utf-8
+
+\@language
+    Tells how to syntax color body text.
+
+\@tabwidth
+    Specifies the width of tabs.
+    A negative tab width causes Leo to convert tabs to spaces.
+    Negative tab width are highly recommended for Python programming.
+
+\@wrap and \@nowrap
+    Turns line wrapping in the body pane on and off.
+    Only the first ``@wrap`` or ``@nowrap`` directive in a node has any effect.
+
+\@nocolor, \@color and \@killcolor
+    Turn syntax coloring on and off.
+    You can mix ``@nocolor`` and ``@color`` directives in a single node,
+    but the ``@killcolor`` directive disables syntax coloring regardless of
+    the presence of ``@color`` or ``@nocolor`` directives in that node.
+
+    As mentioned previously, a Leo directive applies to a node and all its descendants,
+    but a Leo directive in an descendant node can **override** a directive in an ancestor node.
+    However, the``@color`` and ``@nocolor`` directives apply to descendant nodes only
+    if they are **unambiguous**,
+    that is, if a node contains only one of the ``@color``, ``@nocolor`` or ``@killcolor`` directives.
+
+\@encoding
+    Sets the Unicode encoding to be used in a derived file.
+
+There are other Leo directives not discussed here.
+See `Chapter 4`_ of Leo's `Users Guide`_ for a discussion of all of Leo's directives.</t>
+<t tx="ekr.20050822173420.5">Leo is fully scriptable using the Python language.
+Leo can execute any body text as a Python script.
+To run the entire body text as a script, simply choose the node and execute the ``Execute Script`` command.
+If text is selected, the ``Execute Script`` command will run just that text as the script.
+
+**Important**:
+The execute script **preprocesses** the script before executing it.
+Leo preprocess as script in exactly the same way that Leo writes a derived file.
+In other words,
+*Leo expands section references and processes @others directives* before executing the script.
+This allows you to use all of Leo's normal capabilities to organize your scripts.
+**Note**: test.leo contains dozens of examples of using Leo outline structure to organize stand-alone scripts.
+
+Python scripts can easily access data in an outline.  For example, the following script will print all the headlines in an outline::
+
+    for p in c.allNodes_iter():
+        print ' '*p.level(),p.headString()
+
+As this example implies, your scripts can use outline structure to avoid having to parse data.  With a little forethought you can arrange outlines to make scripts easier to write.
+The example above is only the beginning of what scripts can do.
+See `Chapter 7`_ of Leo's `Users Guide`_ for a complete discussion of how script Leo.</t>
+<t tx="ekr.20050823081317">To be written.</t>
+<t tx="ekr.20050823081317.1">To be written.</t>
+<t tx="ekr.20050823082517">You can use Leo as fairly typical outliner.
+Play around with some of the commands from the Outline menu:
+
+- The Insert Node command inserts a new headline into the outline.
+
+- The Delete Node command deletes a headline and all its children.
+
+- The Move Up, Move Down, Move Left and Move Right commands move the currently selected outline. 
+
+- The Promote command makes all the children of a headline siblings of the headline. The Demote command makes all following siblings of a headline children of the headline.
+
+- You can cut, copy and paste nodes with the Cut Node, Copy Node and Paste Node commands.
+
+- We'll discuss the Clone Node command in the next section.
+
+You can enter body text for any Node simply by selecting the node's headline in the outline pane and
+then typing in the body pane.
+Leo has a full range of editing commands that apply to the body pane:
+see the Edit Menu for details.
+</t>
+<t tx="ekr.20050824151926">So far we have discussed features that Leo shares with other editors and outliners.
+The following sections explain what makes Leo unique.</t>
+<t tx="ekr.20050827055403">So far we have been focusing on Leo's outline pane: creating and cloning nodes.
+Let us turn our attention now Leo's body pane.
+
+Leo's outline structure is significant even within each body pane.
+There are several ways that outline structure affects body text:
+
+- Body text can contain **Leo directives** that control how Leo works.
+  By default, a Leo directive applies to a node and all its descendants,
+  but a Leo directive in an descendant node can **override** a directive in an ancestor node.
+
+- Body text can contain optional markup consisting of **sections** and **section references**.
+  Sections and references to sections are useful in programming.
+  Sections must be defined in a node descending from the node containing the section reference.
+
+In short, outline structure affects all aspects of Leo.</t>
+<t tx="ekr.20050827061847">Doc parts are blocks of text that Leo treats as comments.
+Leo syntax colors doc parts as comments,
+and Leo converts doc parts into comments in derived files.
+Doc parts are valid anywhere.
+Doc parts start with an ``@`` directive and continue until
+an ``@c`` directive or the end of the body text.
+For example::
+
+    @ This is a comment in a doc part.
+    Doc parts can span multiple lines.
+    The next line ends the doc part
+    @c
+
+The ``@pagewidth`` directive gives the page width used to break lines when formatting doc parts in derived files.
+For example::
+
+    @pagewidth 100
+
+**Note**:
+``@doc`` is a synonym for ``@`` and and ``@code`` is a synonym for ``@code``.
+However, ``@`` and ``@c`` are the preferred way of starting and ending doc parts.</t>
+<t tx="ekr.20050827090532">This section is of utmost importance if you plan to use Leo for programming.
+Please study it carefully.
+
+You explicitly specify the order in which Leo writes text to a derived files using **sections**.
+A section is a simply a named unit of text.
+Leo does not care what text is in a section; it can be anything you please.
+A **section name** has the form::
+
+    &lt;&lt; any text &gt;&gt;
+
+`Any text` is just that: *any* sequence of text not containing '&gt;&gt;'.  For example::
+
+    &lt;&lt; initialize ivars &gt;&gt;
+
+Leo ignores case and whitespace in section names, so the following are all equivalent::
+
+    &lt;&lt; Peanut Butter &amp; Jelly &gt;&gt;
+    &lt;&lt; peanut butter&amp;jelly &gt;&gt;
+    &lt;&lt;peanut butter &amp; jelly&gt;&gt;
+    &lt;&lt;peanutbutter&amp;jelly&gt;&gt;
+    &lt;&lt;PEANUTBUTTER&amp;JELLY&gt;&gt;
+
+A **section reference** is simply a section name appearing in body text.
+Leo expands the the section reference by *replacing* the section name by the section's definition.
+You **define** a section by putting its name in the headline of a node.
+The body text of such a node is the **section definition.**
+The node containing the section definition is a **section definition node**.
+**A section must be defined in a descendant of the node containing the section reference.**
+In other words, section definition nodes must be descendants of the nodes that reference them.
+
+For example, suppose we have the following outline.
+**Note**: In this notation, lines that start with '+' denote headlines.
+The lines between headlines are body text of the preceding headline::
+
+    + @file myDerivedFile.py
+      &lt;&lt; imports &gt;&gt;
+      @others
+        + &lt;&lt; imports &gt;&gt;
+          import leoGlobals as g
+        + test
+          def test():
+            assert(1==2)
+
+That is, the node @file myDerivedFile.py contains::
+
+    &lt;&lt; imports &gt;&gt;
+    @others
+
+the &lt;&lt;imports&gt;&gt; node contains::
+
+    import leoGlobals as g
+
+and the test node contains::
+
+    def test():
+        assert(1==2)
+
+Leo will create a myDerivedFile.py equivalent to the following::
+
+    import leoGlobals as g
+    def test():
+      assert(1==2)
+
+Section definitions can contain references to other sections.
+The **expansion** of a section reference is the section's definition,
+with all section references in the definition expanded recursively.
+In this respect, section definitions work like macro definitions,
+and section references work like macro calls.
+
+For example::
+
+    + @file myDerivedFile2.py
+      &lt;&lt; a &gt;&gt; # reference to section a.
+        + &lt;&lt; a &gt;&gt; # definition of section a.
+            first line of a
+            &lt;&lt; b &gt;&gt; # reference to section b.
+            if 1:
+                &lt;&lt; c &gt;&gt; # reference to section x, indented.
+            last line of a
+            + &lt;&lt; b &gt;&gt;
+                line b
+            + &lt;&lt; c &gt;&gt;
+                line c
+
+Leo will create a myDerivedFile2.py equivalent to the following::
+    
+    first line of a
+    line b
+    if 1:
+        line c
+    last line of a
+        
+As shown above, Leo adds the whitespace that precedes the
+section reference to all lines of the sections definition.
+For example, the following will work properly in Python::
+
+    if path:
+        &lt;&lt; create or recreate temp file as needed &gt;&gt;
+
+That is, you do *not* need to add extra whitespace in definition of
+``&lt;&lt; create or recreate temp file as needed &gt;&gt;``
+to 'compensate' for the fact that the section is used in an ``'if'`` statement.</t>
+<t tx="ekr.20050827090532.1">The rules for how Leo expands ``@others`` are not quite as stated previously.
+In fact, Leo replaces ``@others`` by the body text of all nodes *other than* section definition nodes.
+That's how ``@others`` got its name.
+An example will make this clear.
+With Leo you would typically define classes using this pattern::
+
+    class myClass:
+        &lt;&lt; class attributes &gt;&gt;
+        @others
+
+This puts the class attributes first, followed by all the methods of the class.
+Another advantage of this pattern is that it makes clear which classes do,
+in fact, have attributes, and makes those attributes easy to find.
+
+**Important**: You can use several ``@others`` in a single ``@file`` tree.
+Typically, you would put an ``@others`` directive in the ``@file`` node.
+This causes Leo to copy the class definition in the previous example
+to the derived file.
+But the ``@others`` directive in the class definition above causes the methods of the class
+to be inserted *properly indented* with respect to the ``class`` statement.
+
+The exact rules for how ``@others`` works are a bit complicated.
+For full details, see `Chapter 4`_ of Leo's `Users Guide`_.
+In practice, however, everything 'just works' as you would expect.</t>
+<t tx="ekr.20050827090802">LeoPy.leo (in the src subdirctory of the leo folder) contains almost all of Leo's source code.
+It provides hundreds of examples of everything discussed in the previous section.
+This file will repay close study.
+For full details on all aspects of Leo see LeoDocs.leo or Leo's `Users Guide`_.</t>
+<t tx="ekr.20050827094813">Newcomers to Leo frequently ask when to use ``@others`` and when to use sections.
+It is good style to use section references only when the order of text within a derived file matters.
+For example, Python programmers put docstrings and imports at the start of a file.
+So @file nodes typically look something like this::
+
+    &lt;&lt; docstring &gt;&gt;
+    @language python
+    @tabwidth -4
+    &lt;&lt; imports &gt;&gt;
+    @others
+
+This ensures that the docstring is first in the file, followed by imports, followed by everything else.
+Note that the order in which functions are defined in a file, or methods defined within a class, typically does *not* matter.  Thus, it is good style to define classes like this::
+
+  class myClass:
+        &lt;&lt; class attributes &gt;&gt;
+        @others
+
+It would be bad style to define a class like this::
+
+  class myClass:
+        &lt;&lt; class attributes &gt;&gt;
+        &lt;&lt; method 1 &gt;&gt;
+        &lt;&lt; method 2 &gt;&gt;
+        ...
+
+Not only does this 'over-specify' the order in which methods are defined,
+but it requires headlines like &lt;&lt; method 1 &gt;&gt;, &lt;&lt;method 2&gt;&gt;, etc.
+When using ``@others`` it is good style simply to put the name of each method in the headline.
+
+A few more words about style:
+
+- It is good style to **put each function or method in its own node**.
+  This makes it easy to find functions and methods.
+
+- It is good style to use **organizer nodes** to group related functions or methods.
+  An organizer node has no content except maybe for comments.
+  Like this::
+
+    + myClass
+        + birth and death
+            + __init__
+            etc.
+        + getters
+            etc.
+        + setters
+            etc.
+        + misc methods
+            etc.
+
+  This is far superior to using comments like::
+
+    ###########
+    # Getters #
+    ###########
+
+  You will find such comments to be hideous after using Leo for awhile.
+
+- It is bad style to use @others in organizer nodes.
+  There is no need to do so.
+
+- It is bad style to use @others when order does matter.
+  The reason is that it is very easy to move nodes in a tree by mistake,
+  say by alphabetizing nodes.
+  One wants to make the meaning of a derived file immune from such movements.
+
+One last word about style.
+The world won't end if you happen to use bad style by mistake:
+you just might cause a bit more work for yourself than was strictly necessary.
+And feel free to invent your own style of using Leo.
+On the other hand, one of my favorite sayings is,
+"know the rules before you break them."</t>
+<t tx="ekr.20050827102655">The previous sections have discussed the basics of Leo.
+Non-programmers can stop reading this tutorial now:
+you know enought to use Leo as a full-featured outliner,
+a data organizer, and as a project manager.
+
+The following sections introduce you to Leo's computer programming and scripting features.
+In other words, how to create derived files from ``@file`` (or ``@thin``) trees.
+If all you want to do is copy the nodes of an ``@file`` tree to a derived file,
+you can just use the ``@others`` directive as explained previously.
+However, Leo gives you many other ways of creating derived files from outlines.
+This flexibility turns out most useful.
+
+**Important**: The features described below are *entirely optional*.
+Even if you are a programmer you can ignore the following features and just
+create your derived files using just ``@others``.
+I strongly recommend, however,
+that you find out what Leo can do before dismissing the features described below.
+In particular, Leo can support a style of programming similar to
+`Literate Programming`_ (LP).
+LP has a bad reputation in some quarters.
+That's too bad: Leo fixes the defects of LP and shows that LP is perfectly usuable.
+*Please* don't let the words 'Literate Programming' get in the way of your using Leo effectively.
+That would be *your* mistake, and a big one.
+
+There is considerable detail in the following sections.
+Please study these sections carefully and don't be discouraged.
+It is *much* more difficult to tell people how to use Leo for programming
+than it is to actually use Leo for programming.
+Please *do* ask questions an `Leo's help forum`_ if anything is unclear.
+Not only will you be helping yourself, you will help me improve this documentation.</t>
 </tnodes>
 </leo_file>
