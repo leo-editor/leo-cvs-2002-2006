@@ -2631,7 +2631,8 @@
 <v t="ekr.20050818163826.17"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
 <v t="ekr.20050816073412" a="EM"><vh>@rst newTutorial.html</vh>
-<v t="ekr.20050816073814"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20050816073814" a="TV"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20050827130828"><vh>@rst-ignore-node To do</vh></v>
 <v t="ekr.20050816074100"><vh>@rst-ignore-tree Prewriting</vh>
 <v t="ekr.20050816074944"><vh>Notes</vh></v>
 <v t="ekr.20050816074100.2"><vh>@url http://sourceforge.net/forum/message.php?msg_id=3259508</vh></v>
@@ -2649,11 +2650,17 @@
 <v t="ekr.20050827055403"><vh>Outline structure is significant in body text</vh></v>
 <v t="ekr.20050822173420.3"><vh>Leo directives</vh></v>
 </v>
-<v t="ekr.20050827102655" a="TV"><vh>Leo for Programmers</vh>
-<v t="ekr.20050827061847"><vh>Doc parts</vh></v>
-<v t="ekr.20050827090532"><vh>Sections and their definitions</vh></v>
-<v t="ekr.20050827090532.1" a="E"><vh>More about @others</vh></v>
+<v t="ekr.20050827102655" a="E"><vh>Leo for Programmers</vh>
+<v t="ekr.20050827090532" a="E"><vh>Quick Start</vh>
+<v t="ekr.20050827155902"><vh>Syntax of section names</vh></v>
+<v t="ekr.20050827061847"><vh>Code and doc parts</vh></v>
+<v t="ekr.20050827090532.1" a="E"><vh>@rst-ignore-node More about @others</vh></v>
+<v t="ekr.20050827162826"><vh>@rst-ignore-node ask for help</vh></v>
+<v t="ekr.20050827160739"><vh>@rst-ignore-node more details</vh></v>
+<v t="ekr.20050827155620"><vh>@rst-ignore-node still more details</vh></v>
 <v t="ekr.20050827094813"><vh>Good style and bad:  sections vs. @others</vh></v>
+<v t="ekr.20050827162537"><vh>Leo and literate programming</vh></v>
+</v>
 <v t="ekr.20050822173420.5"><vh>Scripting Leo: accessing data in Leo outlines</vh></v>
 <v t="ekr.20050823081317" a="M"><vh>Settings</vh></v>
 <v t="ekr.20050823081317.1" a="M"><vh>Plugins &amp; the icon area</vh></v>
@@ -18724,7 +18731,7 @@ You can change these to make them shorter or to avoid conflicts with headlines i
 |leo| A Tutorial Introduction to Leo
 #####################################
 
-.. August 24, 2005
+.. August 27, 2005
 
 @ @rst-options
 code_mode=False
@@ -18753,29 +18760,23 @@ Please do launch Leo before reading the rest of this tutorial.
 You really will benefit greatly from seeing how Leo shows a real Leo outline.</t>
 <t tx="ekr.20050816073814">.. Links used in this document...
 
-.. _front:                      http://webpages.charter.net/edreamleo/front.html
-.. _home:                       http://webpages.charter.net/edreamleo/front.html
+.. _`detailed installation instructions`:   http://webpages.charter.net/edreamleo/Install.html
+.. _`Leo's help forum`:                     http://sourceforge.net/forum/forum.php?forum_id=10227
+.. _`Literate Programming`:                 http://www.literateprogramming.com/
 
-.. _`detailed installation instructions`: http://webpages.charter.net/edreamleo/Install.html
-.. _`Leo's help forum`:          http://sourceforge.net/forum/forum.php?forum_id=10227
-
-.. _`Literate Programming`:     http://www.literateprogramming.com/
-.. _`Chapter 4`:                http://webpages.charter.net/edreamleo/directives.html
-.. _`Chapter 7`:                http://webpages.charter.net/edreamleo/scripting.html
-.. _`Users Guide`:              http://webpages.charter.net/edreamleo/leo_TOC.html
-
-.. _directives: `Leo Directives`_
+.. _front:                                      http://webpages.charter.net/edreamleo/front.html
+.. _home:                                       http://webpages.charter.net/edreamleo/front.html
+.. _`Leo's Users Guide`:                        http://webpages.charter.net/edreamleo/leo_TOC.html
+.. _`Chapter 4: Writing Programs in Leo`:       http://webpages.charter.net/edreamleo/directives.html
+.. _`Chapter 6: Leo and Literate Programming`:  http://webpages.charter.net/edreamleo/design.html
+.. _`Chapter 7: Scripting Leo with Python`:     http://webpages.charter.net/edreamleo/scripting.html
 .. _directive: `Leo Directives`_
 
-.. Other parts of the documentation
-
-.. _scriptingChapter:  http://webpages.charter.net/edreamleo/scripting.html
+.. NOT YET: define back/next links
 
 .. |blank| image:: blank.gif
 .. |leo|   image:: leo.gif
-    :target: front_
-
-.. NOT YET: define back/next links</t>
+    :target: front_</t>
 <t tx="ekr.20050816073824">-------------
 
 |leo|</t>
@@ -19383,11 +19384,11 @@ See `Leo for Programmers`_ for details.
 
 To anticipate a bit, if you *do* want to have Leo just to
 copy the body text of an ``@file`` tree to a derived file,
-just put ``@others`` in the body text of the ``@file`` node.
-``@others`` is an example of a Leo `directive`_.
+just put ``@all`` in the body text of the ``@file`` node.
+``@all`` is an example of a Leo `directive`_.
 Leo will copy the body text of the ``@file`` node to the derived file,
-and will *replace* the ``@others`` directive by the body text of all the descendent nodes.
-When expanding ``@others``, Leo copies body text to the derived file in **outline order**,
+and will *replace* the ``@akk`` directive by the body text of all the descendent nodes.
+When replacing the ``@all`` directive, Leo copies body text to the derived file in **outline order**,
 the order that nodes appear on the screen when all nodes are expanded.
 Note that Leo does copies headlines to the derived file as comments.
 This means that headlines do not affect the meaning of derived files and
@@ -19493,7 +19494,7 @@ Leo directives start with '@' in the leftmost column, followed by the name of th
     Sets the Unicode encoding to be used in a derived file.
 
 There are other Leo directives not discussed here.
-See `Chapter 4`_ of Leo's `Users Guide`_ for a discussion of all of Leo's directives.</t>
+See `Chapter 4: Writing Programs in Leo`_ of `Leo's Users Guide`_ for a discussion of all of Leo's directives.</t>
 <t tx="ekr.20050822173420.5">Leo is fully scriptable using the Python language.
 Leo can execute any body text as a Python script.
 To run the entire body text as a script, simply choose the node and execute the ``Execute Script`` command.
@@ -19514,7 +19515,7 @@ Python scripts can easily access data in an outline.  For example, the following
 
 As this example implies, your scripts can use outline structure to avoid having to parse data.  With a little forethought you can arrange outlines to make scripts easier to write.
 The example above is only the beginning of what scripts can do.
-See `Chapter 7`_ of Leo's `Users Guide`_ for a complete discussion of how script Leo.</t>
+See `Chapter 7: Scripting Leo with Python`_ of `Leo's Users Guide`_ for a complete discussion of how script Leo.</t>
 <t tx="ekr.20050823081317">To be written.</t>
 <t tx="ekr.20050823081317.1">To be written.</t>
 <t tx="ekr.20050823082517">You can use Leo as fairly typical outliner.
@@ -19554,7 +19555,7 @@ There are several ways that outline structure affects body text:
   Sections must be defined in a node descending from the node containing the section reference.
 
 In short, outline structure affects all aspects of Leo.</t>
-<t tx="ekr.20050827061847">Doc parts are blocks of text that Leo treats as comments.
+<t tx="ekr.20050827061847">**Doc parts** are blocks of text that Leo treats as comments.
 Leo syntax colors doc parts as comments,
 and Leo converts doc parts into comments in derived files.
 Doc parts are valid anywhere.
@@ -19567,6 +19568,9 @@ For example::
     The next line ends the doc part
     @c
 
+In body text, everything not in a doc part is in a **code part**.
+If a node does not contain a doc part, the entire body text is a code part.
+
 The ``@pagewidth`` directive gives the page width used to break lines when formatting doc parts in derived files.
 For example::
 
@@ -19575,27 +19579,153 @@ For example::
 **Note**:
 ``@doc`` is a synonym for ``@`` and and ``@code`` is a synonym for ``@code``.
 However, ``@`` and ``@c`` are the preferred way of starting and ending doc parts.</t>
-<t tx="ekr.20050827090532">This section is of utmost importance if you plan to use Leo for programming.
-Please study it carefully.
+<t tx="ekr.20050827090532">Leo allows you to write *functional pseudo-code*, as in this example::
 
-You explicitly specify the order in which Leo writes text to a derived files using **sections**.
+    &lt;&lt; print summary message &gt;&gt;
+
+This is a **reference** to a **section** called ``&lt;&lt; print summary message &gt;&gt;``.
+When writing a derived file,
+Leo replaces all section references by their definition.
+You define section with **section definition nodes**.
+A section definition node is a node whose headline starts with a section name;
+its body text is the section's definition.  **Notes**:
+
+- Section definition nodes must be descendants of the node containing the section reference.
+
+- Section definitions may contain references to other sections.
+
+- The **@others** directive is a special kind of section reference.
+  Leo replaces the ``@others`` directive by the body text of all descendant nodes
+  *except* section definition nodes.
+  That's how ``@others`` got its name.
+
+- A derived file may contain multiple ``@others directives:
+  Each ``@others`` directive expands to the body text of all descendent nodes,
+  excluding any nodes (and *their* descendents) that contain other ``@others`` directives.
+  In practice, everything 'just works'.
+
+- You may precede section references (incuding the ``@others`` directive) with whitespace.
+  When expanding the section references,
+  Leo inserts the preceding whitespace before every expanded line.
+  For example, the following will work properly in Python::
+
+    if path:
+        &lt;&lt; create or recreate temp file as needed &gt;&gt;
+
+You now know enough to understand Leo's source code.
+The following sections discuss some details.</t>
+<t tx="ekr.20050827090532.1">There are two important details you must understand about the ``@others`` directive:
+
+\1. An ``@file`` tree or ``@thin may contain multiple ``@others directives:
+Each ``@others`` directive expands to the body text of all descendent nodes,
+excluding any nodes (and *their* descendents) that contain other ``@others`` directives.
+In practice, everything 'just works'.
+
+\2. Unlike most other directives, you may precede the ``@others`` directive with whitespace.
+When expanding the ``@others`` directive,
+Leo inserts the preceding whitespace before every expanded line.
+For example, the following will work properly in Python::
+
+    if path:
+        &lt;&lt; create or recreate temp file as needed &gt;&gt;
+
+That is, you do *not* need to add extra whitespace in definition of
+``&lt;&lt; create or recreate temp file as needed &gt;&gt;``
+to 'compensate' for the fact that the section is used in an ``'if'`` statement.</t>
+<t tx="ekr.20050827090802">LeoPy.leo (in the src subdirctory of the leo folder) contains almost all of Leo's source code.
+It provides hundreds of examples of everything discussed in the previous section.
+This file will repay close study.
+For full details on all aspects of Leo see LeoDocs.leo or `Leo's Users Guide`_.</t>
+<t tx="ekr.20050827094813">Newcomers to Leo frequently ask when to use ``@others`` and when to use sections.
+It is good style to use section references only when the order of text within a derived file matters.
+For example, Python programmers put docstrings and imports at the start of a file.
+So @file nodes typically look something like this::
+
+    &lt;&lt; docstring &gt;&gt;
+    @language python
+    @tabwidth -4
+    &lt;&lt; imports &gt;&gt;
+    @others
+
+This ensures that the docstring is first in the file, followed by imports, followed by everything else.
+Note that the order in which functions are defined in a file, or methods defined within a class, typically does *not* matter.  Thus, it is good style to define classes like this::
+
+  class myClass:
+        &lt;&lt; class attributes &gt;&gt;
+        @others
+
+It would be bad style to define a class like this::
+
+  class myClass:
+        &lt;&lt; class attributes &gt;&gt;
+        &lt;&lt; method 1 &gt;&gt;
+        &lt;&lt; method 2 &gt;&gt;
+        ...
+
+Not only does this 'over-specify' the order in which methods are defined,
+but it requires lots of extra typing.
+Not only must you add a line for each method,
+but headlines must contain section names such as &lt;&lt; method 1 &gt;&gt;, &lt;&lt;method 2&gt;&gt;, etc.
+When using ``@others`` it is good style simply to put the name of each method in the headline.
+
+A few more words about style:
+
+- It is good style to **put each function or method in its own node**.
+  This makes it easy to find functions and methods.
+
+- It is good style to use **organizer nodes** to group related functions or methods.
+  An organizer node has no content except maybe for comments.
+  Like this::
+
+    + myClass
+        + birth and death
+            + __init__
+            etc.
+        + getters
+            etc.
+        + setters
+            etc.
+        + misc methods
+            etc.
+
+  This is far superior to using comments like::
+
+    ###########
+    # Getters #
+    ###########
+
+  You will find such comments to be hideous after using Leo for awhile.
+
+- It is bad style to use @others in organizer nodes.
+  There is no need to do so.
+
+- It is bad style to use @others when order does matter.
+  The reason is that it is very easy to move nodes in a tree by mistake,
+  say by alphabetizing nodes.
+  One wants to make the meaning of a derived file immune from such movements.
+
+One last word about style.
+The world won't end if you happen to use bad style by mistake:
+you just might cause a bit more work for yourself than was strictly necessary.
+And feel free to invent your own style of using Leo.
+On the other hand, one of my favorite sayings is,
+"know the rules before you break them."</t>
+<t tx="ekr.20050827102655">The previous sections have discussed the basics of Leo.
+Non-programmers can stop reading this tutorial now:
+you know enought to use Leo as a full-featured outliner,
+a data organizer, and as a project manager.
+
+The following sections tell how to create derived files that contain computer programs.
+Yes, you could create program files just by using the ``@all`` directive,
+but the following section explain how you can take advantage of **power-user**
+features designed specifically for computer programmers.
+Even if you don't read manuals, please read the following `Quick Start`_.</t>
+<t tx="ekr.20050827130828">- Add screen shot to intro.
+
+- Use SilverCity?</t>
+<t tx="ekr.20050827155620">You explicitly specify the order in which Leo writes text to a derived files using **sections**.
 A section is a simply a named unit of text.
 Leo does not care what text is in a section; it can be anything you please.
-A **section name** has the form::
-
-    &lt;&lt; any text &gt;&gt;
-
-`Any text` is just that: *any* sequence of text not containing '&gt;&gt;'.  For example::
-
-    &lt;&lt; initialize ivars &gt;&gt;
-
-Leo ignores case and whitespace in section names, so the following are all equivalent::
-
-    &lt;&lt; Peanut Butter &amp; Jelly &gt;&gt;
-    &lt;&lt; peanut butter&amp;jelly &gt;&gt;
-    &lt;&lt;peanut butter &amp; jelly&gt;&gt;
-    &lt;&lt;peanutbutter&amp;jelly&gt;&gt;
-    &lt;&lt;PEANUTBUTTER&amp;JELLY&gt;&gt;
 
 A **section reference** is simply a section name appearing in body text.
 Leo expands the the section reference by *replacing* the section name by the section's definition.
@@ -19665,23 +19795,23 @@ Leo will create a myDerivedFile2.py equivalent to the following::
     line b
     if 1:
         line c
-    last line of a
-        
-As shown above, Leo adds the whitespace that precedes the
-section reference to all lines of the sections definition.
-For example, the following will work properly in Python::
+    last line of a</t>
+<t tx="ekr.20050827155902">A section name has the form::
 
-    if path:
-        &lt;&lt; create or recreate temp file as needed &gt;&gt;
+    &lt;&lt; any text &gt;&gt;
 
-That is, you do *not* need to add extra whitespace in definition of
-``&lt;&lt; create or recreate temp file as needed &gt;&gt;``
-to 'compensate' for the fact that the section is used in an ``'if'`` statement.</t>
-<t tx="ekr.20050827090532.1">The rules for how Leo expands ``@others`` are not quite as stated previously.
-In fact, Leo replaces ``@others`` by the body text of all nodes *other than* section definition nodes.
-That's how ``@others`` got its name.
-An example will make this clear.
-With Leo you would typically define classes using this pattern::
+`Any text` is just that: *any* sequence of text not containing '&gt;&gt;'.  For example::
+
+    &lt;&lt; initialize ivars &gt;&gt;
+
+Leo ignores case and whitespace in section names, so the following are all equivalent::
+
+    &lt;&lt; Peanut Butter &amp; Jelly &gt;&gt;
+    &lt;&lt; peanut butter&amp;jelly &gt;&gt;
+    &lt;&lt;peanut butter &amp; jelly&gt;&gt;
+    &lt;&lt;peanutbutter&amp;jelly&gt;&gt;
+    &lt;&lt;PEANUTBUTTER&amp;JELLY&gt;&gt;</t>
+<t tx="ekr.20050827160739">With Leo you would typically define classes using this pattern::
 
     class myClass:
         &lt;&lt; class attributes &gt;&gt;
@@ -19699,109 +19829,16 @@ But the ``@others`` directive in the class definition above causes the methods o
 to be inserted *properly indented* with respect to the ``class`` statement.
 
 The exact rules for how ``@others`` works are a bit complicated.
-For full details, see `Chapter 4`_ of Leo's `Users Guide`_.
+For full details, see `Chapter 4: Writing Programs in Leo`_ of `Leo's Users Guide`_.
 In practice, however, everything 'just works' as you would expect.</t>
-<t tx="ekr.20050827090802">LeoPy.leo (in the src subdirctory of the leo folder) contains almost all of Leo's source code.
-It provides hundreds of examples of everything discussed in the previous section.
-This file will repay close study.
-For full details on all aspects of Leo see LeoDocs.leo or Leo's `Users Guide`_.</t>
-<t tx="ekr.20050827094813">Newcomers to Leo frequently ask when to use ``@others`` and when to use sections.
-It is good style to use section references only when the order of text within a derived file matters.
-For example, Python programmers put docstrings and imports at the start of a file.
-So @file nodes typically look something like this::
-
-    &lt;&lt; docstring &gt;&gt;
-    @language python
-    @tabwidth -4
-    &lt;&lt; imports &gt;&gt;
-    @others
-
-This ensures that the docstring is first in the file, followed by imports, followed by everything else.
-Note that the order in which functions are defined in a file, or methods defined within a class, typically does *not* matter.  Thus, it is good style to define classes like this::
-
-  class myClass:
-        &lt;&lt; class attributes &gt;&gt;
-        @others
-
-It would be bad style to define a class like this::
-
-  class myClass:
-        &lt;&lt; class attributes &gt;&gt;
-        &lt;&lt; method 1 &gt;&gt;
-        &lt;&lt; method 2 &gt;&gt;
-        ...
-
-Not only does this 'over-specify' the order in which methods are defined,
-but it requires headlines like &lt;&lt; method 1 &gt;&gt;, &lt;&lt;method 2&gt;&gt;, etc.
-When using ``@others`` it is good style simply to put the name of each method in the headline.
-
-A few more words about style:
-
-- It is good style to **put each function or method in its own node**.
-  This makes it easy to find functions and methods.
-
-- It is good style to use **organizer nodes** to group related functions or methods.
-  An organizer node has no content except maybe for comments.
-  Like this::
-
-    + myClass
-        + birth and death
-            + __init__
-            etc.
-        + getters
-            etc.
-        + setters
-            etc.
-        + misc methods
-            etc.
-
-  This is far superior to using comments like::
-
-    ###########
-    # Getters #
-    ###########
-
-  You will find such comments to be hideous after using Leo for awhile.
-
-- It is bad style to use @others in organizer nodes.
-  There is no need to do so.
-
-- It is bad style to use @others when order does matter.
-  The reason is that it is very easy to move nodes in a tree by mistake,
-  say by alphabetizing nodes.
-  One wants to make the meaning of a derived file immune from such movements.
-
-One last word about style.
-The world won't end if you happen to use bad style by mistake:
-you just might cause a bit more work for yourself than was strictly necessary.
-And feel free to invent your own style of using Leo.
-On the other hand, one of my favorite sayings is,
-"know the rules before you break them."</t>
-<t tx="ekr.20050827102655">The previous sections have discussed the basics of Leo.
-Non-programmers can stop reading this tutorial now:
-you know enought to use Leo as a full-featured outliner,
-a data organizer, and as a project manager.
-
-The following sections introduce you to Leo's computer programming and scripting features.
-In other words, how to create derived files from ``@file`` (or ``@thin``) trees.
-If all you want to do is copy the nodes of an ``@file`` tree to a derived file,
-you can just use the ``@others`` directive as explained previously.
-However, Leo gives you many other ways of creating derived files from outlines.
-This flexibility turns out most useful.
-
-**Important**: The features described below are *entirely optional*.
-Even if you are a programmer you can ignore the following features and just
-create your derived files using just ``@others``.
-I strongly recommend, however,
-that you find out what Leo can do before dismissing the features described below.
-In particular, Leo can support a style of programming similar to
+<t tx="ekr.20050827162537">Leo can support a style of programming similar to
 `Literate Programming`_ (LP).
 LP has a bad reputation in some quarters.
-That's too bad: Leo fixes the defects of LP and shows that LP is perfectly usuable.
+That's too bad; Leo fixes all the problems with 'traditional' LP.
+See `Chapter 6: Leo and Literate Programming`_ in `Leo's Users Guide`_ for more details.
 *Please* don't let the words 'Literate Programming' get in the way of your using Leo effectively.
-That would be *your* mistake, and a big one.
-
-There is considerable detail in the following sections.
+That would be *your* mistake, and a big one.</t>
+<t tx="ekr.20050827162826">There is considerable detail in the following sections.
 Please study these sections carefully and don't be discouraged.
 It is *much* more difficult to tell people how to use Leo for programming
 than it is to actually use Leo for programming.
