@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="14407" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="14408" clone_windows="0"/>
 <globals body_outline_ratio="0.492833517089">
-	<global_window_position top="13" left="326" height="907" width="950"/>
+	<global_window_position top="13" left="380" height="907" width="867"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -2568,10 +2568,10 @@
 </v>
 <v t="ekr.20050818163826.17"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
-<v t="ekr.20050816073412"><vh>@rst newTutorial.html</vh>
+<v t="ekr.20050816073412"><vh>@rst intro.html</vh>
 <v t="ekr.20050816073814"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050827130828"><vh>@rst-ignore-node To do</vh></v>
-<v t="ekr.20050816074100"><vh>@rst-ignore-tree Prewriting</vh>
+<v t="ekr.20050816074100"><vh>@rst-ignore-tree Notes</vh>
 <v t="ekr.20050816074944.2"><vh>From James: formatting data</vh></v>
 </v>
 <v t="ekr.20050816073412.1"><vh>Introduction</vh>
@@ -2588,8 +2588,10 @@
 <v t="ekr.20050827090532"><vh>Quick Start</vh>
 <v t="ekr.20050827155902"><vh>Syntax of section names</vh></v>
 <v t="ekr.20050827061847"><vh>Code and doc parts</vh></v>
+<v t="ekr.20050828161117"><vh>Orphan nodes</vh></v>
 <v t="ekr.20050828103319"><vh>Sentinel lines</vh></v>
 <v t="ekr.20050827094813"><vh>Good style and bad:  sections vs. @others</vh></v>
+<v t="ekr.20050828161620"><vh>@ %def lines</vh></v>
 <v t="ekr.20050827162537"><vh>Leo and literate programming</vh></v>
 </v>
 <v t="ekr.20050822173420.5"><vh>Scripting Leo: accessing data in Leo outlines</vh></v>
@@ -2598,20 +2600,19 @@
 </v>
 <v t="ekr.20050816073824"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
-<v t="ekr.20050828061213" a="EMTV"><vh>@rst directives.html</vh>
+<v t="ekr.20050828061213" a="EM"><vh>@rst directives.html</vh>
+<v t="ekr.20050828160132"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050828065955"><vh>@rst-ignore-node To do</vh></v>
-<v t="ekr.20050828061501.1"><vh>Overview</vh>
-<v t="ekr.20050828070311"><vh>@rst-ignore-node old stuff, very complex and confusing</vh></v>
-</v>
-<v t="ekr.20050828061501.2"><vh>Details</vh>
-<v t="ekr.20050828070311.2"><vh>@ %def lines</vh></v>
-<v t="ekr.20050828065955.1"><vh>Orpan nodes</vh></v>
-</v>
-<v t="ekr.20050828061501.30"><vh>Directives</vh>
+<v t="ekr.20050828061501.1" a="E"><vh>@rst-no-head Intro.</vh></v>
+<v t="ekr.20050828163557"><vh>Overview: the six ways of creating derived files</vh></v>
+<v t="ekr.20050828174628" a="TV"><vh>Overview of directives</vh></v>
+<v t="ekr.20050828061501.30"><vh>Reference: all about directives</vh>
+<v t="ekr.20050828173234" a="M"><vh>@ and @doc: start a doc part TO DO</vh></v>
 <v t="ekr.20050828061501.31"><vh>@all: copies all nodes in @thin trees</vh></v>
+<v t="ekr.20050828173234.1" a="M"><vh>@c and @code: start a code part  TO DO</vh></v>
 <v t="ekr.20050828061501.32"><vh>@color, @nocolor and @killcolor: control syntax coloring</vh></v>
 <v t="ekr.20050828061501.33"><vh>@comment: set comment delimiters in @root and @unit trees</vh></v>
-<v t="ekr.20050828061501.34"><vh>@delims: set comment delimiters in @file trees</vh></v>
+<v t="ekr.20050828061501.34" a="E"><vh>@delims: set comment delimiters in @file trees</vh></v>
 <v t="ekr.20050828061501.35"><vh>@encoding: set encoding of text</vh></v>
 <v t="ekr.20050828061501.36"><vh>@first, @last: set leading and trailing lines in @file trees</vh></v>
 <v t="ekr.20050828065955.3"><vh>@ignore: ignore a tree</vh></v>
@@ -2623,18 +2624,22 @@
 <v t="ekr.20050828061501.41"><vh>@root-code, @root-doc: set default mode in body text</vh></v>
 <v t="ekr.20050828061501.42"><vh>@wrap, @nowrap: set ine wrapping</vh></v>
 </v>
-<v t="ekr.20050828062751" a="E"><vh>Different kinds of derived files</vh>
-<v t="ekr.20050828061501.43"><vh>Cweb mode</vh></v>
-<v t="ekr.20050828061501.44"><vh>Using @asis, @noref and @nosent trees</vh></v>
-<v t="ekr.20050828061501.45"><vh>Using the @root directive, Tangling and Untangling</vh>
+<v t="ekr.20050828062751" a="E"><vh>Reference: the six ways of creating derived files</vh>
+<v t="ekr.20050828061501.44"><vh>Overview</vh></v>
+<v t="ekr.20050828061501.51"><vh>@thin</vh></v>
+<v t="ekr.20050828174453"><vh>@file</vh></v>
+<v t="ekr.20050828174453.1"><vh>@nosent</vh></v>
+<v t="ekr.20050828174453.2"><vh>@noref</vh></v>
+<v t="ekr.20050828174453.3"><vh>@asis</vh></v>
+<v t="ekr.20050828061501.45" a="E"><vh>@root</vh>
 <v t="ekr.20050828061501.46"><vh>@root vs. @file trees</vh></v>
 <v t="ekr.20050828061501.47"><vh>Sections and section definitions REWRITE</vh></v>
 <v t="ekr.20050828061501.48"><vh>Tangling @root trees with the Tangle commands</vh></v>
 <v t="ekr.20050828061501.49"><vh>Untangling @root trees with the Untangle commands</vh></v>
 <v t="ekr.20050828061501.50"><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
 </v>
-<v t="ekr.20050828061501.51"><vh>Using @thin instead of @file</vh></v>
 </v>
+<v t="ekr.20050828061501.43"><vh>Cweb mode</vh></v>
 <v t="ekr.20050828115003"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
@@ -18675,11 +18680,7 @@ You can change these to make them shorter or to avoid conflicts with headlines i
 `rst_prefix`: '\@rst'
 
 `show_headline_prefix`: '\@rst-head'</t>
-<t tx="ekr.20050816073412">#####################################
-|leo| A Tutorial Introduction to Leo
-#####################################
-
-.. August 27, 2005
+<t tx="ekr.20050816073412">.. August 28, 2005
 
 @ @rst-options
 code_mode=False
@@ -18693,9 +18694,16 @@ write_intermediate_file = True
 verbose=True
 @c
 
+|back| |leo| |next|
+
+##########################################
+Chapter 1: A Tutorial Introduction to Leo
+##########################################
+
 .. contents::</t>
 <t tx="ekr.20050816073412.1">This tutorial describes the basics of what Leo can does and how it does it.
-After reading this tutorial you should have a sense that everything in Leo is directly related to outlines.  Indeed, Leo has only a few basic features,
+After reading this tutorial you should have a sense that everything in Leo is directly related to outlines.
+Indeed, Leo has only a few basic features,
 but these features are general purpose and they interact with each other in powerful ways.
 **Important**: please install Leo before reading this tutorial,
 using these `detailed installation instructions`_.
@@ -18723,10 +18731,19 @@ You should see Leo's main window, something like this:
 
 .. _directive: `Leo Directives`_
 
-.. NOT YET: define back/next links
+.. _back: http://webpages.charter.net/edreamleo/frontMatter.html
+.. _next: http://webpages.charter.net/edreamleo/Install.html
 
 .. |leoMainWinow| image:: PCWindow.gif
+
 .. |blank| image:: blank.gif
+
+.. |back| image:: arrow_lt.gif
+    :target: back_
+
+.. |next| image:: arrow_rt.gif
+    :target: next_
+
 .. |leo|   image:: leo.gif
     :target: front_</t>
 <t tx="ekr.20050816073824">-------------
@@ -19219,10 +19236,8 @@ Body pane
     We'll discuss both directives and settings in later sections of this tutorial.
 
 Log pane
-    The log pane contains informational messages from Leo
-    Leo writes more such messages than other editors do because
-    as we shall see Leo is actually doing more than other editors.
-    Furthermore, scripts and plugins (discussed below) may also write message to the log pane.
+    The log pane contains informational messages from Leo.
+    Scripts and plugins (discussed below) may also write message to the log pane.
 
 Icon area
     Depending on what plugins are enabled,
@@ -19410,7 +19425,8 @@ Play around with some of the commands from the Outline menu:
 
 - The Delete Node command deletes a headline and all its children.
 
-- The Move Up, Move Down, Move Left and Move Right commands move the currently selected outline. 
+- The Move Up, Move Down, Move Left and Move Right commands move the currently selected node,
+  along with all its descendants. 
 
 - The Promote command makes all the children of a headline siblings of the headline. The Demote command makes all following siblings of a headline children of the headline.
 
@@ -19500,8 +19516,8 @@ its body text is the section's definition.  **Notes**:
     if path:
         &lt;&lt; create or recreate temp file as needed &gt;&gt;
 
-You now know enough to understand Leo's source code.
-The following sections discuss some details.</t>
+*You now know enough to understand Leo's source code*.  Hurray!
+The following sections discuss some relatively minor details.</t>
 <t tx="ekr.20050827090802">LeoPy.leo (in the src subdirectory of the leo folder) contains almost all of Leo's source code.
 It provides hundreds of examples of everything discussed here.
 This file will repay close study.
@@ -19642,22 +19658,6 @@ verbose=True
 
 .. August 28, 2005
 
-.. _front:      http://webpages.charter.net/edreamleo/front.html
-.. _home:       http://webpages.charter.net/edreamleo/front.html
-.. _back:       http://webpages.charter.net/edreamleo/outlines.html
-.. _next:       http://webpages.charter.net/edreamleo/commands.html
-
-.. |back| image:: arrow_lt.gif
-    :target: back_
-
-.. |next| image:: arrow_rt.gif
-    :target: next_
-
-.. |blank| image:: blank.gif
-
-.. |leo|   image:: leo.gif
-    :target: front_
-
 |back| |leo| |next|
 
 #####################################
@@ -19665,8 +19665,13 @@ Chapter 4: Writing Programs in Leo
 #####################################
 
 .. contents::</t>
-<t tx="ekr.20050828061501.1">- Read the tutorial, and become familiar with all terminology.</t>
-<t tx="ekr.20050828061501.2"></t>
+<t tx="ekr.20050828061501.1">This chapter is a *reference guide* to computer programming with Leo.
+This chapter does *not* teach you how to use Leo:
+for that you should read `Leo's tutorial`_.
+This chapter assumes you are thoroughly familiar with the terminology introduced in the tutorial.
+**Note**: Are you *sure* you want to read this chapter?
+It contains many details that are no interest to the average use of Leo.
+I recommend using Leo for two weeks, or longer, before attempting this chapter.</t>
 <t tx="ekr.20050828061501.30">The following sections are a reference guide for each directive.</t>
 <t tx="ekr.20050828061501.31">The ``@all`` directive is valid only in @thin trees.
 The ``@all`` directive is similar to @others, but it is less restrictive:
@@ -20241,16 +20246,7 @@ There are several minor restrictions on the ``@others`` directive:
 
 - Add description of @code, @doc, @ and @c.
 
-- Spell check.
-
-** Change name of chapter to 'Chapter 4: Programming Reference'
-    - Change name in all other chapters too.</t>
-<t tx="ekr.20050828065955.1">A node that is not referenced is called an **orphan node**.
-If an ``@file`` tree contains an orphan node or ``@ignore`` node,
-Leo issues a warning and does not write the derived file when saving an outline.
-Leo saves all the information in the ``@file`` tree in the .leo file, so nothing is lost;
-Leo will recreate the @file tree from the .leo file when reading the outline the next time.
-</t>
+- Spell check.</t>
 <t tx="ekr.20050828065955.3">- The @ignore directive is not valid in @file trees, except in the root node.
 
 Note: the @ignore directive has several uses:
@@ -20266,39 +20262,6 @@ The .leo file also contains a copy of the information in the @file tree,
 but this information is used for backup and error recovery.
 As a result, everything in an @file trees must correspond to information the derived file and
 the @ignore directive may not appear in @file trees.</t>
-<t tx="ekr.20050828070311">Important note 1: This chapter tells how to use the noweb markup language.  See the node called About CWEB if you plan to use the CWEB markup language.
-
-Important note 2: This chapter discusses only the @file directive.
-
--- Appendix 1 to this chapter tells how to use the new @rawfile directive.
--- Appendix 2 to this chapter tells how to use the older @root directive.
--- Appendix 3 to this chapter tells how to use the older @thin directive.
-
-This is the most important chapter because it describes everything you need to know to write programs with Leo. Unless otherwise mentioned, this chapter applies to all versions of Leo.  Newcomers to Leo should read Introducing Leo before reading further.
-
-I *strongly recommend* that you have look at an example of a Leo outline like LeoPy.leo while you read this documentation. It is much easier to use Leo than to describe all the rules in detail.  Looking at a real Leo outline will make many points clear that are difficult to describe succinctly in words.
-
-Terminology: **Directives** are commands that appear in body text.  Directives start with an @ in the leftmost column followed by a directive name. We often refer to outline nodes by the directives they contain.  For example, an @others node is a node containing an @others directive, an @ignore node is a node containing an @ignore directive, and so on.  Exception: an @file node is a node whose headline starts with @file.  We also speak of @root trees, trees whose is an @root node, @file trees, trees whose root is an @file node, and so on.
-
-The essentials of writing programs in Leo are as follows:
-
-1. A Leo program is composed of all the body text in an outline, or part of an outline.
-
-2. Body text is a sequence of _sections_.  There are two kinds of sections: doc sections and code sections.
-
-3. Sections may contain _section references_ that refer to other sections by their name.
-
-4. Leo uses outline structure to control the scope of section definitions.
-
-5. Leo creates source files called _derived files_ by expanding all section references in an @file tree.
-</t>
-<t tx="ekr.20050828070311.2">A line of the form:
-	
-@ %def identifiers
-
-terminates the previous code section and indicates that the preceding code section defines the list of identifiers.
-This list contains identifiers separated by whitespace; any sequence of non-white characters may be an identifier.
-This construction is used in traditional noweb programming to generate indices.</t>
 <t tx="ekr.20050828092803"></t>
 <t tx="ekr.20050828092803.1">- No need for screen shots.
 
@@ -20360,5 +20323,114 @@ see `Chapter 4: Writing Programs in Leo`_ in `Leo's Users Guide`_.</t>
 <t tx="ekr.20050828115003">------------------
 
 |back| |leo| |next|</t>
+<t tx="ekr.20050828160132">.. _front:      http://webpages.charter.net/edreamleo/front.html
+.. _home:       http://webpages.charter.net/edreamleo/front.html
+.. _back:       http://webpages.charter.net/edreamleo/outlines.html
+.. _next:       http://webpages.charter.net/edreamleo/commands.html
+
+.. _`CWEB`:     http://www-cs-faculty.stanford.edu/~knuth/cweb.html
+.. _`noweb`:    http://www.eecs.harvard.edu/~nr/noweb/
+
+.. |back| image:: arrow_lt.gif
+    :target: back_
+
+.. |next| image:: arrow_rt.gif
+    :target: next_
+
+.. |blank| image:: blank.gif
+
+.. |leo|   image:: leo.gif
+    :target: front_
+
+.. _`Leo's tutorial`:       http://webpages.charter.net/edreamleo/intro.html
+</t>
+<t tx="ekr.20050828161117">An **orphan node** is a descendant of an ``@thin`` node that will not be copied to the derived file.
+Orphan nodes can arise because an ``@thin`` tree has no ``@others`` or ``@all`` directives.
+Sections that are defined but not used also create orphan nodes.
+Leo issues a warning when attempting to write an ``@thin`` tree containing orphan nodes,
+and does not save the derived file.
+Instead Leo saves the information in the ``@thin tree`` in the .leo file.
+No information is lost;
+Leo will load the ``@thin`` tree from the .leo file the next time Leo opens the .leo file.
+
+</t>
+<t tx="ekr.20050828161620">A line of the form::
+	
+    @ %def identifiers
+
+declares that the preceding code part contains the list of identifiers.
+Whitespace separate the identifiers; everything else is taken to be the identifiers.
+This construct is a convention of `noweb`_ language.
+Syntactically, this line begins a doc part, and thus terminates any preceding code part.</t>
+<t tx="ekr.20050828163557">You can create derived files using six kinds of directives.
+The first five,
+``@file-thin``, ``@file``, ``@file-nosent``, ``@file-noref``, ``@file-asis``,
+are collectively known as ``@file`` trees.
+The abbreviated forms are most common:
+``@thin``, ``@file``, ``@nosent``, ``@noref`` and ``@asis``.
+There is also a sixth directive: ``@root``.
+
+**Important**: You create the ``@file`` trees by putting
+``@thin``, ``@file``, ``@nosent``, ``@noref`` or ``@asis`` (or the long forms) in a *headline*.
+In contrast, you create ``@root`` trees by putting the ``root`` directive in *body text*.
+The term 'directive' usually refers to a construct in Leo's body text.
+In this chapter *I'll stretch the term* to include all 10 ``@file`` forms,
+as well as the true ``@root`` directive.
+
+The essential features of these six ways of creating derived files are are as follows:
+
+- **@thin**:
+  Use this unless you have a good reason not to.
+  It is the 'state-of-the-art' in derived files.
+  This form is easy to use and is cvs friendly.
+  Using ``@thin`` reduces the size of .leo files,
+  and saves all essential information in the derived file.
+  ``@all`` directives are valid only in ``@thin`` trees.
+
+- **@file**:
+  This is the old 'state-of-the-art' directive.
+  There is not much reason to use it now,
+  except that its sentinels are more readable than ``@thin`` sentinels.
+  However, it is not nearly as cvs friendly as ``@thin``,
+  so you should avoid ``@file`` in cooperative environments.
+
+- **@nosent**:
+  Use this directive only if you absolutely can not tolerate any sentinels in derived files.
+  Without sentinels, Leo can not update ``@nosent`` trees from changes made to the derived files.
+  When producing derived files for code reviews or for publications you might consider
+  developing the derived file using ``@thin``.
+  You can then change ``@thin`` to ``@nosent`` when producing the derived file for public scrutiny.
+
+- **@noref**:
+  This directive produces derived files with minimal sentinels.
+  Section references are not allowed.
+  This is the least often used way of producing derived files.
+  Don't use this unless you are sure you must.
+
+- **@asis**:
+  This directive copies body text verbatim,
+  without even ensuring that newlines terminate each node.
+  Use this directive only when you must have complete control over every character of the derived file.
+
+- **@root**:
+  This directive is the most flexible, and the most difficult to use.
+  **Note**: ``@root`` is a true directive: you put ``@root`` in body text.
+  Historically, this was the first directive that created derived files.
+  It comes closest in spirit to traditional literate programming tools.
+  However, it is seldom necessary to suffer the drawbacks of using ``@root``.
+  It is certainly never necessary when programming in Python.
+  My advice is to avoid using ``@root`` unless you have a compelling reason.
+
+To complicate matters further,
+you use `CWEB`_ markup instead of `noweb`_ markup.
+See the section called `CWEB mode`_ for the details.
+The choice between CWEB and noweb is independent of the directive is used to create derived files.</t>
+<t tx="ekr.20050828173234"></t>
+<t tx="ekr.20050828173234.1"></t>
+<t tx="ekr.20050828174453"></t>
+<t tx="ekr.20050828174453.1"></t>
+<t tx="ekr.20050828174453.2"></t>
+<t tx="ekr.20050828174453.3"></t>
+<t tx="ekr.20050828174628"></t>
 </tnodes>
 </leo_file>
