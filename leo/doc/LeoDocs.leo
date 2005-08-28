@@ -2632,7 +2632,7 @@
 </v>
 <v t="ekr.20050816073412" a="EM"><vh>@rst newTutorial.html</vh>
 <v t="ekr.20050816073814"><vh>@rst-no-head links</vh></v>
-<v t="ekr.20050827130828"><vh>@rst-ignore-node To do</vh></v>
+<v t="ekr.20050827130828" a="TV"><vh>@rst-ignore-node To do</vh></v>
 <v t="ekr.20050816074100"><vh>@rst-ignore-tree Prewriting</vh>
 <v t="ekr.20050816074944"><vh>Notes</vh></v>
 <v t="ekr.20050816074100.2"><vh>@url http://sourceforge.net/forum/message.php?msg_id=3259508</vh></v>
@@ -2650,17 +2650,13 @@
 <v t="ekr.20050827055403"><vh>Outline structure is significant in body text</vh></v>
 <v t="ekr.20050822173420.3"><vh>Leo directives</vh></v>
 </v>
-<v t="ekr.20050827102655" a="E"><vh>Leo for Programmers</vh>
-<v t="ekr.20050827090532" a="E"><vh>Quick Start</vh>
+<v t="ekr.20050827102655"><vh>Leo for Programmers</vh>
+<v t="ekr.20050827090532"><vh>Quick Start</vh>
 <v t="ekr.20050827155902"><vh>Syntax of section names</vh></v>
 <v t="ekr.20050827061847"><vh>Code and doc parts</vh></v>
-<v t="ekr.20050827090532.1"><vh>@rst-ignore-node More about @others</vh></v>
-<v t="ekr.20050827173551"><vh>@rst-ignore-node @pagewidth</vh></v>
-<v t="ekr.20050827162826"><vh>@rst-ignore-node ask for help</vh></v>
-<v t="ekr.20050827160739"><vh>@rst-ignore-node more details</vh></v>
-<v t="ekr.20050827155620"><vh>@rst-ignore-node still more details</vh></v>
-<v t="ekr.20050827094813" a="TV"><vh>Good style and bad:  sections vs. @others</vh></v>
+<v t="ekr.20050827094813"><vh>Good style and bad:  sections vs. @others</vh></v>
 <v t="ekr.20050827162537"><vh>Leo and literate programming</vh></v>
+<v t="ekr.20050827155620"><vh>@rst-ignore-node details about expansion</vh></v>
 </v>
 <v t="ekr.20050822173420.5"><vh>Scripting Leo: accessing data in Leo outlines</vh></v>
 <v t="ekr.20050823081317" a="M"><vh>Settings</vh></v>
@@ -18750,15 +18746,15 @@ verbose=True
 <t tx="ekr.20050816073412.1">This tutorial describes the basics of what Leo can does and how it does it.
 After reading this tutorial you should have a sense that everything in Leo is directly related to outlines.  Indeed, Leo has only a few basic features,
 but these features are general purpose and they interact with each other in powerful ways.
-
 **Important**: please install Leo before reading this tutorial, using
 `detailed installation instructions`_.
 If you have any problem installing Leo, please do ask for help on `Leo's help forum`_.
 
 Now that you have Leo installed, please launch Leo.
-You should see an empty outline window.
-Please do launch Leo before reading the rest of this tutorial.
-You really will benefit greatly from seeing how Leo shows a real Leo outline.</t>
+You should see Leo's main window, something like this:
+
+|leoMainWinow|
+</t>
 <t tx="ekr.20050816073814">.. Links used in this document...
 
 .. _`detailed installation instructions`:   http://webpages.charter.net/edreamleo/Install.html
@@ -18775,6 +18771,7 @@ You really will benefit greatly from seeing how Leo shows a real Leo outline.</t
 
 .. NOT YET: define back/next links
 
+.. |leoMainWinow| image:: PCWindow.gif
 .. |blank| image:: blank.gif
 .. |leo|   image:: leo.gif
     :target: front_</t>
@@ -19319,12 +19316,7 @@ Edward K. Ream designed and wrote the rst3 plugin.</t>
 
 [2]_ Footnote 2.
 </t>
-<t tx="ekr.20050822173420">Ok.  You should have launched Leo by now.
-If not, please do so now; it's important.
-
-You are looking at Leo's **main window.**
-.. TO DO: Screen shot.
-The main window represents an entire project and is stored in a single **Leo file**,
+<t tx="ekr.20050822173420">The main window represents an entire project and is stored in a single **Leo file**,
 a file with a .leo extension.
 
 As you can see, the main window contains three panes:
@@ -19456,7 +19448,9 @@ and lets me ignore all other details.
 Clones are the basis for Leo's project management capabilities.
 Indeed, the ability to create multiple views of a project is most helpful.</t>
 <t tx="ekr.20050822173420.3">Leo directives control such things as syntax coloring, line wrapping withing the body pane and the width of tabs.
-Leo directives start with '@' in the leftmost column, followed by the name of the directive.  For example::
+Leo directives start with '@' in the leftmost column, followed by the name of the directive.  For example:
+
+.. code-block:: Python
 
     @language python
     @tabwidth -4
@@ -19508,7 +19502,9 @@ In other words,
 This allows you to use all of Leo's normal capabilities to organize your scripts.
 **Note**: ``test.leo`` contains dozens of examples of using Leo outline structure to organize stand-alone scripts.
 
-Your Python scripts can easily access data in an outline.  For example, the following script will print all the headlines in an outline::
+Your Python scripts can easily access data in an outline.  For example, the following script will print all the headlines in an outline:
+
+.. code-block:: Python
 
     for p in c.allNodes_iter():
         print ' '*p.level(),p.headString()
@@ -19561,7 +19557,9 @@ Leo syntax colors doc parts as comments,
 and Leo converts doc parts into comments in derived files.
 Doc parts start with an ``@`` directive and continue until
 an ``@c`` directive or the end of the body text.
-For example::
+For example:
+
+.. code-block:: Python
 
     @ This is a comment in a doc part.
     Doc parts can span multiple lines.
@@ -19576,7 +19574,9 @@ For example::
 - ``@doc`` is a synonym for ``@`` and ``@code`` is a synonym for ``@c``.
   However, ``@`` and ``@c`` are preferred.
 </t>
-<t tx="ekr.20050827090532">Leo allows you to write *functional pseudo-code*, as in this example::
+<t tx="ekr.20050827090532">Leo allows you to write *functional pseudo-code*, as in this example:
+
+.. code-block:: Python
 
     &lt;&lt; print summary message &gt;&gt;
 
@@ -19604,31 +19604,15 @@ its body text is the section's definition.  **Notes**:
 - You may precede section references (incuding the ``@others`` directive) with whitespace.
   When expanding the section references,
   Leo inserts the preceding whitespace before every expanded line.
-  For example, the following will work properly in Python::
+  For example, the following will work properly in Python:
+
+.. code-block:: Python
 
     if path:
         &lt;&lt; create or recreate temp file as needed &gt;&gt;
 
 You now know enough to understand Leo's source code.
 The following sections discuss some details.</t>
-<t tx="ekr.20050827090532.1">There are two important details you must understand about the ``@others`` directive:
-
-\1. An ``@file`` tree or ``@thin may contain multiple ``@others directives:
-Each ``@others`` directive expands to the body text of all descendent nodes,
-excluding any nodes (and *their* descendents) that contain other ``@others`` directives.
-In practice, everything 'just works'.
-
-\2. Unlike most other directives, you may precede the ``@others`` directive with whitespace.
-When expanding the ``@others`` directive,
-Leo inserts the preceding whitespace before every expanded line.
-For example, the following will work properly in Python::
-
-    if path:
-        &lt;&lt; create or recreate temp file as needed &gt;&gt;
-
-That is, you do *not* need to add extra whitespace in definition of
-``&lt;&lt; create or recreate temp file as needed &gt;&gt;``
-to 'compensate' for the fact that the section is used in an ``'if'`` statement.</t>
 <t tx="ekr.20050827090802">LeoPy.leo (in the src subdirctory of the leo folder) contains almost all of Leo's source code.
 It provides hundreds of examples of everything discussed in the previous section.
 This file will repay close study.
@@ -19636,7 +19620,9 @@ For full details on all aspects of Leo see LeoDocs.leo or `Leo's Users Guide`_.<
 <t tx="ekr.20050827094813">Newcomers to Leo frequently ask when to use ``@others`` and when to use sections.
 It is good style to use section references only when the order of text within a derived file matters.
 For example, Python programmers put docstrings and imports at the start of a file.
-So ``@file`` nodes typically look something like this::
+So ``@file`` nodes typically look something like this:
+
+.. code-block:: Python
 
     &lt;&lt; docstring &gt;&gt;
     @language python
@@ -19645,13 +19631,17 @@ So ``@file`` nodes typically look something like this::
     @others
 
 This ensures that the docstring is first in the file, followed by imports, followed by everything else.
-Note that the order in which functions are defined in a file, or methods defined within a class, typically does *not* matter.  Thus, it is good style to define classes like this::
+Note that the order in which functions are defined in a file, or methods defined within a class, typically does *not* matter.  Thus, it is good style to define classes like this:
+
+.. code-block:: Python
 
   class myClass:
         &lt;&lt; class attributes &gt;&gt;
         @others
 
-It would be bad style to define a class like this::
+It would be bad style to define a class like this:
+
+.. code-block:: Python
 
   class myClass:
         &lt;&lt; class attributes &gt;&gt;
@@ -19685,7 +19675,9 @@ A few more words about style:
         + misc methods
             etc.
 
-  This is far superior to using comments like::
+  This is far superior to using comments like:
+
+.. code-block:: Python
 
     ###########
     # Getters #
@@ -19717,22 +19709,8 @@ Yes, you could create program files just by using the ``@all`` directive,
 but the following section explain how you can take advantage of **power-user**
 features designed specifically for computer programmers.
 Even if you don't read manuals, please read the following `Quick Start`_.</t>
-<t tx="ekr.20050827130828">- Add screen shot to intro.
-
-- Use SilverCity?</t>
-<t tx="ekr.20050827155620">You explicitly specify the order in which Leo writes text to a derived files using **sections**.
-A section is a simply a named unit of text.
-Leo does not care what text is in a section; it can be anything you please.
-
-A **section reference** is simply a section name appearing in body text.
-Leo expands the the section reference by *replacing* the section name by the section's definition.
-You **define** a section by putting its name in the headline of a node.
-The body text of such a node is the **section definition.**
-The node containing the section definition is a **section definition node**.
-**A section must be defined in a descendant of the node containing the section reference.**
-In other words, section definition nodes must be descendants of the nodes that reference them.
-
-For example, suppose we have the following outline.
+<t tx="ekr.20050827130828">(Not likely) Support Leo markup in SilverCity.</t>
+<t tx="ekr.20050827155620">For example, suppose we have the following outline.
 **Note**: In this notation, lines that start with '+' denote headlines.
 The lines between headlines are body text of the preceding headline::
 
@@ -19793,41 +19771,27 @@ Leo will create a myDerivedFile2.py equivalent to the following::
     if 1:
         line c
     last line of a</t>
-<t tx="ekr.20050827155902">A section name has the form::
+<t tx="ekr.20050827155902">A section name has the form:
+
+.. code-block:: Python
 
     &lt;&lt; any text &gt;&gt;
 
-`Any text` is just that: *any* sequence of text not containing '&gt;&gt;'.  For example::
+`Any text` is just that: *any* sequence of text not containing '&gt;&gt;'.  For example:
+
+.. code-block:: Python
 
     &lt;&lt; initialize ivars &gt;&gt;
 
-Leo ignores case and whitespace in section names, so the following are all equivalent::
+Leo ignores case and whitespace in section names, so the following are all equivalent:
+
+.. code-block:: Python
 
     &lt;&lt; Peanut Butter &amp; Jelly &gt;&gt;
     &lt;&lt; peanut butter&amp;jelly &gt;&gt;
     &lt;&lt;peanut butter &amp; jelly&gt;&gt;
     &lt;&lt;peanutbutter&amp;jelly&gt;&gt;
     &lt;&lt;PEANUTBUTTER&amp;JELLY&gt;&gt;</t>
-<t tx="ekr.20050827160739">With Leo you would typically define classes using this pattern::
-
-    class myClass:
-        &lt;&lt; class attributes &gt;&gt;
-        @others
-
-This puts the class attributes first, followed by all the methods of the class.
-Another advantage of this pattern is that it makes clear which classes do,
-in fact, have attributes, and makes those attributes easy to find.
-
-**Important**: You can use several ``@others`` in a single ``@file`` tree.
-Typically, you would put an ``@others`` directive in the ``@file`` node.
-This causes Leo to copy the class definition in the previous example
-to the derived file.
-But the ``@others`` directive in the class definition above causes the methods of the class
-to be inserted *properly indented* with respect to the ``class`` statement.
-
-The exact rules for how ``@others`` works are a bit complicated.
-For full details, see `Chapter 4: Writing Programs in Leo`_ of `Leo's Users Guide`_.
-In practice, however, everything 'just works' as you would expect.</t>
 <t tx="ekr.20050827162537">Leo can support a style of programming similar to
 `Literate Programming`_ (LP).
 LP has a bad reputation in some quarters.
@@ -19835,15 +19799,5 @@ That's too bad; Leo fixes all the problems with 'traditional' LP.
 See `Chapter 6: Leo and Literate Programming`_ in `Leo's Users Guide`_ for more details.
 *Please* don't let the words 'Literate Programming' get in the way of your using Leo effectively.
 That would be *your* mistake, and a big one.</t>
-<t tx="ekr.20050827162826">There is considerable detail in the following sections.
-Please study these sections carefully and don't be discouraged.
-It is *much* more difficult to tell people how to use Leo for programming
-than it is to actually use Leo for programming.
-Please *do* ask questions an `Leo's help forum`_ if anything is unclear.
-Not only will you be helping yourself, you will help me improve this documentation.</t>
-<t tx="ekr.20050827173551">The ``@pagewidth`` directive gives the page width used to break lines when formatting doc parts in derived files.
-For example::
-
-    @pagewidth 100</t>
 </tnodes>
 </leo_file>
