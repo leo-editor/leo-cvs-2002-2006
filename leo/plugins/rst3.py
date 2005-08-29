@@ -336,6 +336,14 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050814152137:v 0.6
+#@+node:ekr.20050829085538:v 0.7
+#@+at
+# 
+# - Added controllers dict so each commander has its own controller.
+# This was the source of crashes when mutliple windows were opened.
+#@-at
+#@nonl
+#@-node:ekr.20050829085538:v 0.7
 #@-others
 #@@nocolor
 #@nonl
@@ -455,22 +463,17 @@ except ImportError:
 #@-node:ekr.20050806162146:<< to do >>
 #@nl
 
-controller = None # For use by @button rst3 code.
+controllers = {} # For use by @button rst3 code.
 
 #@+others
 #@+node:ekr.20050805162550.4:Module level
 #@+node:ekr.20050805162550.5: init
-#@+at 
-#@nonl
-# comment
-#@-at
-#@@c
-
 def init ():
 
     ok = docutils is not None # Ok for unit testing.
     
     if ok:
+        
         leoPlugins.registerHandler(("new","open2"), onCreate)
         g.plugin_signon(__name__)
     else:
@@ -478,7 +481,6 @@ def init ():
         print s ; g.es(s,color='red')
 
     return ok
-#@nonl
 #@-node:ekr.20050805162550.5: init
 #@+node:ekr.20050805162550.6:onCreate
 def onCreate(tag, keywords):
@@ -488,8 +490,8 @@ def onCreate(tag, keywords):
     # g.trace(c)
     
     if c:
-        global controller
-        controller = rstClass(c)
+        global controllers
+        controllers[c] = rstClass(c)
         
         # Warning: Do not return anything but None here!
         # Doing so suppresses the loadeing of other 'new' or 'open2' hooks!
