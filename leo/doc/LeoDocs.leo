@@ -18715,14 +18715,14 @@ verbose=True
 
 ##########################################
 Chapter 1: A Tutorial Introduction to Leo
-##########################################
-
-.. contents::</t>
+##########################################</t>
 <t tx="ekr.20050816073412.1">This tutorial describes the basics of what Leo can does and how it does it.
 After reading this tutorial you should have a sense that everything in Leo is directly related to outlines.
 Indeed, Leo has only a few basic features,
 but these features are general purpose and they interact with each other in powerful ways.
-..
+
+.. contents::
+
 **Important**: please install Leo before reading this tutorial,
 using these `detailed installation instructions`_.
 If you have any problem installing Leo, please do ask for help on `Leo's help forum`_.
@@ -19669,15 +19669,16 @@ verbose=True
 #####################################
 Chapter 4: Writing Programs in Leo
 #####################################
-
-.. contents::</t>
+</t>
 <t tx="ekr.20050828061501.1">This chapter is a *reference guide* to computer programming with Leo.
 This chapter does *not* teach you how to use Leo:
 for that you should read `Leo's tutorial`_.
 This chapter assumes you are thoroughly familiar with the terminology introduced in the tutorial.
 **Note**: Are you *sure* you want to read this chapter?
-It contains many details that are no interest to the average use of Leo.
-I recommend using Leo for two weeks, or longer, before attempting this chapter.</t>
+It contains many details that are no interest to the average user of Leo.
+I recommend using Leo for two weeks, or longer, before attempting this chapter.
+
+.. contents::</t>
 <t tx="ekr.20050828061501.30">The following sections give full details about each directive.
 </t>
 <t tx="ekr.20050828061501.31">The ``@all`` directive is valid only in ``@thin`` trees.
@@ -19967,14 +19968,13 @@ Such lines also start named code parts.
 Named code parts in ``@root`` trees may be defined in several places.
 The definition of a named code part is the concatenation of all code parts with the same name.
 Body text that defines no code part is ignored.
+At least one non-blank line must follow the section definition line;
+empty sections are not allowed. 
 
 As in ``@file`` trees, paired ``&lt;&lt;`` and ``&gt;&gt;`` characters on the same line always denote a section name,
 even within comments are strings.
 Thus, ``&lt;&lt;`` and ``&gt;&gt;`` characters that do not delimit a section name must be placed on separate lines.
 If ``&lt;&lt;`` and ``&gt;&gt;`` are not paired on a line, they are treated as ordinary ``&lt;&lt;`` and ``&gt;&gt;`` characters.
-
-At least one non-blank line must follow the section definition line;
-empty sections are not allowed. 
 
 Here is a typical example of body text within an @root tree::
 
@@ -20035,11 +20035,11 @@ If a section is referenced in more than one node,
 I usually place its definition in a node containing all the nodes that refer to it.
 Using this rule of thumb creates an outline whose structure mirrors the intrinsic organization of a program.
 
-The ``Tangle`` command creates derived files from @root node.
+The ``Tangle`` command creates derived files from ``@root`` node.
 The ``@root`` directive indicates which sections constitute an output file.
 The text following a @root directive forms the entire content of the file,
 that is, after section references are expanded.
-An outline can contain arbitrarily many @root directives:
+An outline can contain arbitrarily many ``@root`` directives:
 Leo's ``Tangle`` commands will create one output file for each.
 The process of creating derived files is called "tangling" because
 the code from the outline is rearrange to create the derived files.
@@ -20057,7 +20057,7 @@ For example, the following ``@root`` section shows a typical way of specifying a
 
 The ``Tangle`` commands will create the file ``xx.h`` from this body text by expanding all the section references.
 Incidentally, the introductory documentation will be included in the header file:
-any text preceding the @root directive is treated just like the documentation part of an section definition.
+any text preceding the ``@root`` directive is treated just like the documentation part of an section definition.
 
 As another example, the following shows a typical way of specifying the corresponding ``xx.c`` file::
 
@@ -20086,7 +20086,7 @@ Otherwise, if the ``@root`` node contains a relative filename, the location of t
 	
 1. the directory specified by an ``@path`` directive, or
 
-2. the "Default Tangle Directory" in the Settings dialog if no ``@path`` directive is in effect, or
+2. the ``default_tangle_directory`` setting if no ``@path`` directive is in effect, or
 
 3. the directory in which the .leo resides if the .leo file has ever been saved.
 
@@ -20094,12 +20094,13 @@ An error occurs if no absolute path can be computed according to these rules,
 or if the filename or directory does not exist.
 
 The scope of a definition is the tree in which the definition is known.
-By default, ``Tangle`` commands look for section definitions only in the suboutline of the ``@root`` node being tangled.
+By default, ``Tangle`` commands look for section definitions only
+in the suboutline of the ``@root`` node being tangled.
 That is, all sections are assumed to be defined either in the body text of the headline,
 say h, containing the ``@root`` directive, or in the body texts of the descendants of h.
 ..
 The ``@unit`` directive explicitly indicates the scope of section definitions.
-When a ``Tangle`` command encounters the @unit directive it treats the suboutline containing
+When a ``Tangle`` command encounters the ``@unit`` directive it treats the suboutline containing
 the ``@unit`` command as the scope for all enclosed roots.
 This ensures that the group of roots in the subtree use the same section definitions.
 
