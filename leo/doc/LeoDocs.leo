@@ -2419,7 +2419,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="TV"><vh>Leo's HTML Users Guide</vh>
+<v t="ekr.20040414161647" a="E"><vh>Leo's HTML Users Guide</vh>
 <v t="ekr.20050828092803"><vh>To do</vh>
 <v t="ekr.20050828092803.1"><vh>Create 'executable' tutorial in LeoDocs.leo</vh></v>
 <v t="ekr.20050828092803.2"><vh>Put reference to new tutorial in readme file</vh></v>
@@ -2589,7 +2589,7 @@
 </v>
 <v t="ekr.20050827102655"><vh>Leo for Programmers</vh>
 <v t="ekr.20050827090532"><vh>Quick Start for programmers</vh></v>
-<v t="ekr.20050829081318"><vh>Beginners reference guide</vh>
+<v t="ekr.20050829081318"><vh>Beginner`s reference guide</vh>
 <v t="ekr.20050827155902"><vh>Syntax of section names</vh></v>
 <v t="ekr.20050827061847"><vh>Code and doc parts</vh></v>
 <v t="ekr.20050828205054"><vh>Directives for programming</vh>
@@ -2607,11 +2607,11 @@
 </v>
 <v t="ekr.20050816073824"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
-<v t="ekr.20050828061213" a="M"><vh>@rst directives.html</vh>
+<v t="ekr.20050828061213" a="EM"><vh>@rst directives.html</vh>
 <v t="ekr.20050828160132"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050828065955"><vh>@rst-ignore-node To do</vh></v>
 <v t="ekr.20050828061501.1"><vh>@rst-no-head Intro.</vh></v>
-<v t="ekr.20050828163557"><vh>Overview: the six ways of creating derived files</vh></v>
+<v t="ekr.20050828163557" a="TV"><vh>Overview: the six ways of creating derived files</vh></v>
 <v t="ekr.20050828211507"><vh>Overview: summary of directives</vh>
 <v t="ekr.20050829083129"><vh>@rst-ignore-node alternate representation</vh></v>
 </v>
@@ -19290,7 +19290,6 @@ but ``@thin`` is more friendly to CVS and other Source Code Control Systems.
 This tutorial only discusses ``@thin`` nodes.
 A good rule of thumb is to use ``@thin`` nodes unless you have a specific reason to do otherwise.
 See `Chapter 4: Writing Programs in Leo`_ for a full discussions of the various ways of creating derived files.
-..
 **Important**:
 You must tell Leo the order in which to write data from the ``@file`` tree to the derived file.
 The simplest way to specify the contents of a derived file is to insert::
@@ -19416,12 +19415,10 @@ The example above is only the beginning of what scripts can do.
 See `Chapter 7: Scripting Leo with Python`_ for a complete discussion of scripting.</t>
 <t tx="ekr.20050823081317.1">**Plugins** are Python modules that are not part of Leo's core code that change how Leo works.
 Leo's user have contributed dozens of plugins that have extended Leo's capabilities in many new directions.
-..
 Plugins can get their options from **@settings** trees, outlines whose headline is ``@settings``. 
 When opening a .leo file,
 Leo looks for @settings trees in the outline being opened and also in various leoSettings.leo files.
 ``@settings`` trees allow plugins to get options without any further support from Leo's core code.
-..
 For a full discussion plugins and @settings trees, see `Chapter 8: Customizing Leo`_.</t>
 <t tx="ekr.20050823082517">You can use Leo as fairly typical outliner.
 Play around with some of the commands from the Outline menu:
@@ -19694,7 +19691,6 @@ It doesn't have any meaning as a program file: it is simply a collection of unre
 Leo formats comments and documentation parts in red,
 directives and C keywords in blue,
 strings and character constants in gray and all other text in code parts in black.
-..
 The ``@nocolor`` directive disables syntax coloring for the body text in which it appears.
 No syntax coloring is done until an ``@color`` directive re-enables syntax coloring.
 
@@ -19708,7 +19704,6 @@ never affect the coloring of their offspring.
 The ``@killcolor`` directive completely disables the colorizer for that node.
 The result much faster syntax coloring of large body text.
 As usual ``@killcolor`` may itself be overridden in descendant nodes.
-..
 The differences between ``@killcolor`` and ``@nocolor``:
 
 - ``@nocolor`` suppresses coloring only until the next ``@color`` directive.
@@ -19732,7 +19727,6 @@ an ``@comment`` directive is in effect because
 ``Untangle`` can't be sure of properly parsing a derived file if the language of the derived file isn't known.
 It might be possible to assume some defaults in this case,
 but that is not done at present and is not a high priority.
-..
 By default, the ``Tangle`` commands produces C-language comments.
 Single-line comments generated during tangling start with ``///``,
 while documentation parts are surrounded by ``/*`` and ``*/``.
@@ -19894,7 +19888,6 @@ No section references are recognized within raw text,
 and no additional leading whitespace is generated within raw text when writing the derived file.
 </t>
 <t tx="ekr.20050828061501.41">Leo allows you to choose whether body text in ``@root`` trees will start in code mode or doc mode by default.
-..
 ``@root-doc`` *filename* and ``@root-code`` *filename* directives
 specify that body text is assumed to start in doc mode or code mode respectively.
 The options (``-doc`` and ``-code``) must follow ``@root`` immediately with no intervening whitespace.
@@ -19907,7 +19900,6 @@ which only means that it is better style to use either ``@root-code`` or ``@root
 The reason is simple:
 the meaning of plain ``@root`` trees will depend on the ``at_root_bodies_start_in_doc_mode`` setting.
 It's better to be explicit.
-..
 By default, ``at_root_bodies_start_in_doc_mode = 1`` for compatibility for old ``@root`` trees.
 I actually don't think this option is good for much;
 I created it before I created ``@root-doc`` and ``@root-code`` settings,
@@ -19919,7 +19911,6 @@ You may override this setting for a particular tree using the ``@wrap`` and ``@n
 Only the first ``@wrap`` or ``@nowrap`` directive in a node has any effect.</t>
 <t tx="ekr.20050828061501.43">Cweb mode refers to how Leo tangles an outline when ``@language cweb`` is in effect or
 the ``cweb`` setting is in effect.
-..
 Leo treats *all* cweb code in cweb mode as unevaluated text.
 That is, Leo treats cweb control codes, including
 ``@&lt;...@&gt;``, ``@&lt;..@&gt;=``, ``@c``, ``@``, ``@*`` and ``@**`` as "raw" text within cweb mode.
@@ -20098,7 +20089,6 @@ By default, ``Tangle`` commands look for section definitions only
 in the suboutline of the ``@root`` node being tangled.
 That is, all sections are assumed to be defined either in the body text of the headline,
 say h, containing the ``@root`` directive, or in the body texts of the descendants of h.
-..
 The ``@unit`` directive explicitly indicates the scope of section definitions.
 When a ``Tangle`` command encounters the ``@unit`` directive it treats the suboutline containing
 the ``@unit`` command as the scope for all enclosed roots.
@@ -20408,7 +20398,7 @@ Here are the six ways of creating derived files:
   My advice is to avoid using ``@root`` unless you have a compelling reason.
 
 To complicate matters further,
-you use `CWEB`_ markup instead of `noweb`_ markup.
+you can use `CWEB`_ markup instead of `noweb`_ markup.
 See the section called `CWEB mode`_ for the details.
 The choice between CWEB and noweb is independent of the directive is used to create derived files.</t>
 <t tx="ekr.20050828173234">The ``@`` directive starts a doc part.
