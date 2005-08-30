@@ -14,7 +14,7 @@ Written by Paul Paterson and 'e', with revisions by EKR.
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.9"
+__version__ = "0.11"
 #@<< version history >>
 #@+node:ekr.20040915052810:<< version history >>
 #@+at
@@ -46,6 +46,10 @@ __version__ = "0.9"
 # 0.9 EKR:  Added top-level init method.
 # 0.10 EKR:
 #     - Distinguish between aspell_dir and aspell_bin_dir in < < imports > >
+# 0.11 ERK:
+#     - A major improvement to findNextWord:
+#       It now strips quotes and underscores from beginning and end, but not 
+# from middle.
 #@-at
 #@nonl
 #@-node:ekr.20040915052810:<< version history >>
@@ -771,39 +775,48 @@ class spellDialog(leoTkinterFind.leoTkinterFind):
     #@nonl
     #@-node:ekr.20040809151600.42:findNextMisspelledWord
     #@+node:ekr.20040809151600.44:findNextWord
+    # Unicode characters may cause index problems.
+    
     def findNextWord(self,v):
     
         """Scan for the next word, leaving the result in the work widget"""
     
         t = self.workCtrl
-        word_start = string.letters + '_'
-        t.mark_set("insert", "insert wordend + 1c")
+    
+        # Allow quotes and underscores in the middle of words, but not at the beginning or end.
+        word_start = string.letters
+        word_end = string.letters
+        word_chars = string.letters + string.digits + "`" + "'" + "_"
         while 1:
-            # gtrace(t.index("insert"),t.index("end-1c"))
-            if t.compare("insert",">=", "end - 1c"):
-                v = v.threadNext()
-                if not v: return None,None
-                t.delete("1.0", "end")
-                t.insert("end", v.bodyString())
-                t.mark_set("insert", "1.0")
-            elif t.compare("insert",">=", "insert lineend - 1c"):
-                t.mark_set("insert", "insert lineend + 1line")
+            line = t.get('insert wordstart','insert lineend')
+            # Start the word at the first letter.
+            i = 0
+            while i < len(line) and line[i] not in word_start:
+                i += 1
+            if i < len(line):
+                # A non-empty word has been found.
+                # Add characters to the word.
+                j = i
+                while j < len(line) and line[j] in word_chars:
+                    j += 1
+                word = line[i:j]
+                while word and word[-1] not in word_end:
+                    word = word[:-1]
+                # This trace is important: it verifies that all words have actually been checked.
+                # g.trace(repr(word))
+                g.app.gui.setTextSelection(t,'insert + %dc' % (i), 'insert + %dc' % (i+len(word)))
+                return v, word
             else:
-                ch = t.get("insert")
-                if ch in word_start:
-                    word = t.get("insert wordstart", "insert wordend")
-                    ch2 = t.get("insert wordend")
-                    if ch2 in "'`":
-                        word = t.get("insert wordstart", "insert wordend + 1c wordend")
-                        g.app.gui.setTextSelection(
-                            t, "insert wordstart", "insert wordend + 1c wordend")
-                    else:
-                        g.app.gui.setTextSelection(
-                            t, "insert wordstart", "insert wordend")
-                    # g.trace(word)
-                    return v, word
-                elif ch:
-                    t.mark_set("insert", "insert + 1c")
+                # End of the line.
+                t.mark_set('insert','insert wordend')
+                if t.compare("insert",">=", "end - 1c"):
+                    v = v.threadNext()
+                    if not v: return None,None
+                    t.delete("1.0", "end")
+                    t.insert("end", v.bodyString())
+                    t.mark_set("insert", "1.0")
+                elif t.compare("insert",">=", "insert lineend - 1c"):
+                    t.mark_set("insert", "insert lineend + 1line")
     #@nonl
     #@-node:ekr.20040809151600.44:findNextWord
     #@+node:ekr.20040809151600.45:getSuggestion
