@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.7'
+__version__ = '0.8'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -344,6 +344,13 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050829085538:v 0.7
+#@+node:ekr.20050830091043:v 0.8
+#@+at
+# 
+# - Made @rst-ignore the same as @rst-ignore-tree
+#@-at
+#@nonl
+#@-node:ekr.20050830091043:v 0.8
 #@-others
 #@@nocolor
 #@nonl
@@ -724,6 +731,7 @@ class rstClass:
             'rst3_ignore_headline_prefix':  '@rst-no-head',
             'rst3_ignore_headlines_prefix': '@rst-no-headlines',
             'rst3_ignore_node_prefix':      '@rst-ignore-node',
+            'rst3_ignore_prefix':           '@rst-ignore',
             'rst3_ignore_tree_prefix':      '@rst-ignore-tree',
             'rst3_option_prefix':           '@rst-option',
             'rst3_options_prefix':          '@rst-options',
@@ -838,6 +846,7 @@ class rstClass:
                 ('ignore_headline_prefix','ignore_this_headline',True), # '@rst-no-head'
                 ('show_headline_prefix','show_this_headline',True), # '@rst-head'  
                 ('ignore_headlines_prefix','show_headlines',False), # '@rst-no-headlines'
+                ('ignore_prefix','ignore_this_tree',True),      # '@rst-ignore'
                 ('ignore_node_prefix','ignore_this_node',True), # '@rst-ignore-node'
                 ('ignore_tree_prefix','ignore_this_tree',True), # '@rst-ignore-tree'
             ):
@@ -856,6 +865,7 @@ class rstClass:
                 g.trace('unknown kind of @rst headline',p.headString())
                     
             return {}
+    #@nonl
     #@-node:ekr.20050811173750:scanHeadlineForOptions
     #@+node:ekr.20050807120331.2:scanNodeForOptions
     def scanNodeForOptions (self,p):
