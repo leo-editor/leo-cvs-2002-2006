@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="14601" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="14602" clone_windows="0"/>
 <globals body_outline_ratio="0.364939360529">
 	<global_window_position top="13" left="341" height="907" width="923"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20050404094627" a="TV"><vh>Settings and buttons</vh>
+<v t="ekr.20050404094627"><vh>Settings and buttons</vh>
 <v t="ekr.20041226081019"><vh>@button Check Spelling...</vh></v>
 <v t="ekr.20050812090111"><vh>@button rst3</vh></v>
 <v t="ekr.20050813102553"><vh>@@button Format 4</vh></v>
@@ -33,7 +33,7 @@
 </v>
 <v t="ekr.20050901054622"><vh>@button save</vh></v>
 <v t="ekr.20050901055150"><vh>@button demote</vh></v>
-<v t="ekr.20050901060119" a="E"><vh>@button def list</vh>
+<v t="ekr.20050901060119"><vh>@button def list</vh>
 <v t="ekr.20050901061220"><vh>createDefList</vh></v>
 </v>
 </v>
@@ -1895,63 +1895,9 @@
 <v t="EKR.20040524104904.269"><vh>Unlimited undo</vh></v>
 <v t="EKR.20040524104904.273"><vh>4.0 Theory of operation WRONG: The synchronization principle is invalid!</vh></v>
 </v>
-<v t="EKR.20040524104904.380"><vh>Glossary</vh>
-<v t="EKR.20040524104904.381"><vh>@file node, @others node, @root node, etc.</vh></v>
-<v t="EKR.20040524104904.382"><vh>@file tree, @others tree, @root tree, etc.</vh></v>
-<v t="ekr.20050429093748"><vh>@asis, @file, @noref, @nosent, @thin and related forms</vh>
-<v t="EKR.20040524104904.92"><vh>Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees</vh></v>
-</v>
-<v t="EKR.20040524104904.383"><vh>Body pane</vh></v>
-<v t="EKR.20040524104904.384"><vh>Body text</vh></v>
-<v t="EKR.20040524104904.385"><vh>Body text box</vh></v>
-<v t="EKR.20040524104904.386"><vh>Child</vh></v>
-<v t="EKR.20040524104904.387"><vh>Chunk</vh></v>
-<v t="EKR.20040524104904.388"><vh>Clone</vh></v>
-<v t="EKR.20040524104904.389"><vh>Clone Arrow</vh></v>
-<v t="EKR.20040524104904.390"><vh>Code section</vh></v>
-<v t="EKR.20040524104904.391"><vh>CWEB</vh></v>
-<v t="EKR.20040524104904.392"><vh>Demote</vh></v>
-<v t="EKR.20040524104904.393"><vh>Derived file</vh></v>
-<v t="EKR.20040524104904.394"><vh>Descendent</vh></v>
-<v t="EKR.20040524104904.395"><vh>Directive</vh></v>
-<v t="EKR.20040524104904.396"><vh>Doc section</vh></v>
-<v t="EKR.20040524104904.397"><vh>Escape convention</vh></v>
-<v t="EKR.20040524104904.398"><vh>Grandchild</vh></v>
-<v t="EKR.20040524104904.399"><vh>Headline</vh></v>
-<v t="EKR.20040524104904.400"><vh>Hoist &amp; dehoist</vh></v>
-<v t="EKR.20040524104904.401"><vh>Leo, Leo1 and Leo2</vh></v>
-<v t="EKR.20040524104904.402"><vh>Literate programming</vh></v>
-<v t="EKR.20040524104904.403"><vh>Marking</vh></v>
-<v t="EKR.20040524104904.404"><vh>Named nodes</vh></v>
-<v t="EKR.20040524104904.405"><vh>Node</vh></v>
-<v t="EKR.20040524104904.406"><vh>noweb</vh></v>
-<v t="EKR.20040524104904.407"><vh>Offspring</vh></v>
-<v t="EKR.20040524104904.408"><vh>Organizing node</vh></v>
-<v t="EKR.20040524104904.409"><vh>Orphan node</vh></v>
-<v t="EKR.20040524104904.410"><vh>Outline</vh></v>
-<v t="EKR.20040524104904.411"><vh>Outline pane</vh></v>
-<v t="EKR.20040524104904.412"><vh>Parent</vh></v>
-<v t="EKR.20040524104904.413"><vh>Part</vh></v>
-<v t="EKR.20040524104904.414"><vh>pdf file</vh></v>
-<v t="EKR.20040524104904.415"><vh>Promote</vh></v>
-<v t="EKR.20040524104904.416"><vh>Root</vh></v>
-<v t="EKR.20040524104904.417"><vh>Scope</vh></v>
-<v t="EKR.20040524104904.418"><vh>Section</vh></v>
-<v t="EKR.20040524104904.419"><vh>Section name</vh></v>
-<v t="EKR.20040524104904.420"><vh>Section reference</vh></v>
-<v t="EKR.20040524104904.421"><vh>Sentinels, sentinel lines</vh></v>
-<v t="EKR.20040524104904.422"><vh>Sibling</vh></v>
-<v t="EKR.20040524104904.423"><vh>Status Icon</vh></v>
-<v t="EKR.20040524104904.424"><vh>Tangling</vh></v>
-<v t="EKR.20040524104904.425"><vh>Target language</vh></v>
-<v t="EKR.20040524104904.426"><vh>Tree</vh></v>
-<v t="EKR.20040524104904.427"><vh>Unnamed node</vh></v>
-<v t="EKR.20040524104904.428"><vh>Untangling</vh></v>
-<v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
-</v>
 </v>
 <v t="ekr.20050829191655"><vh>pdf files (there are many problems with pdf at present)</vh>
-<v t="ekr.20050829134901" a="E"><vh>@rst directives.pdf</vh>
+<v t="ekr.20050829134901"><vh>@rst directives.pdf</vh>
 <v t="ekr.20050829134901.1"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050829134901.2"><vh>@rst-ignore-node To do</vh></v>
 <v t="ekr.20050829134901.3"><vh>@rst-no-head Intro.</vh></v>
@@ -1981,11 +1927,11 @@
 <v t="ekr.20050829134901.26"><vh>@verbose, @terse, @quiet and @silent</vh></v>
 <v t="ekr.20050829134901.27"><vh>@wrap and @nowrap</vh></v>
 </v>
-<v t="ekr.20050829134901.28" a="E"><vh>Reference: the six ways of creating derived files</vh>
+<v t="ekr.20050829134901.28"><vh>Reference: the six ways of creating derived files</vh>
 <v t="ekr.20050829134901.29"><vh> @file and @thin</vh></v>
 <v t="ekr.20050829134901.30"><vh> @nosent</vh></v>
 <v t="ekr.20050829134901.31"><vh> @asis and @noref</vh></v>
-<v t="ekr.20050829134901.32" a="EM"><vh> @root</vh>
+<v t="ekr.20050829134901.32" a="M"><vh> @root</vh>
 <v t="ekr.20050829134901.33"><vh>Sections and section definitions</vh></v>
 <v t="ekr.20050829134901.34"><vh>Tangling @root trees with the Tangle commands</vh></v>
 <v t="ekr.20050829134901.35"><vh>Untangling @root trees with the Untangle commands</vh></v>
@@ -2027,7 +1973,7 @@
 </v>
 <v t="ekr.20050831134335"><vh>Tell about 'reference' .leo files somewhere</vh></v>
 </v>
-<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="ETV"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -2144,7 +2090,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.2" a="M"><vh>Chapter 1: Installing Leo (to do)</vh>
-<v t="edream.110203163054.48" a="E"><vh>Installation notes</vh>
+<v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
 <v t="edream.110203163054.50"><vh>How to install Leo on Linux</vh></v>
 <v t="edream.110203163054.51"><vh>How to install Leo on Windows</vh></v>
@@ -2228,7 +2174,7 @@
 <v t="ekr.20050828061501.50"><vh>@verbose, @terse, @quiet and @silent</vh></v>
 <v t="ekr.20050828061501.42"><vh>@wrap and @nowrap</vh></v>
 </v>
-<v t="ekr.20050828062751" a="E"><vh>Reference: the six ways of creating derived files</vh>
+<v t="ekr.20050828062751"><vh>Reference: the six ways of creating derived files</vh>
 <v t="ekr.20050828061501.51"><vh> @file and @thin</vh></v>
 <v t="ekr.20050828174453.1"><vh> @nosent</vh></v>
 <v t="ekr.20050828174453.2"><vh> @asis and @noref</vh></v>
@@ -2244,7 +2190,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.4"><vh>Chapter 7: Scripting Leo with Python</vh>
-<v t="ekr.20040403171740" a="E"><vh>@rst scripting.html</vh>
+<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
 <v t="ekr.20050812134441.1"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20040403183229" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3122206e616d653d22687474702d6e6f64652d6d61726b65722d31223e710155043c2f613e71025d710328553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710455063c2f6469763e71055d71062855063c626f64793e710755073c2f626f64793e71085d71092855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710a55073c2f68746d6c3e710b4e65656555243c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e0a710c55493c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643122206e616d653d226f76657276696577223e4f766572766965773c2f613e3c2f68313e0a710d652e"><vh>Overview</vh></v>
 <v t="ekr.20040403175011" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3322206e616d653d22687474702d6e6f64652d6d61726b65722d33223e710155043c2f613e71025d71032855233c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555073c2f6469763e0a710f55413c64697620636c6173733d2273656374696f6e222069643d22672d746f702d7468652d636f6d6d616e6465722d6f662d7468652d746f702d77696e646f77223e0a711055863c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643222206e616d653d22672d746f702d7468652d636f6d6d616e6465722d6f662d7468652d746f702d77696e646f77223e672e746f7028293a2074686520636f6d6d616e646572206f662074686520746f702077696e646f773c2f613e3c2f68313e0a7111652e"><vh>g.top(): the commander of the top window</vh>
@@ -2344,63 +2290,25 @@
 </v>
 </v>
 <v t="EKR.20040524104904.274"><vh>Appendices</vh>
-<v t="ekr.20050831231852" a="EM"><vh>@rst appendices.html</vh>
+<v t="ekr.20050831231852" a="M"><vh>@rst appendices.html</vh>
 <v t="ekr.20050831232205"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.351"><vh>Bugs</vh></v>
-<v t="EKR.20040524104904.307"><vh>Errors while tangling</vh>
-<v t="EKR.20040524104904.308"><vh>Can not re-open temp file</vh></v>
-<v t="EKR.20040524104904.309"><vh>Can not rename temporary file name</vh></v>
-<v t="EKR.20040524104904.310"><vh>@code expects the header: [text of header] to contain a section name</vh></v>
-<v t="EKR.20040524104904.311"><vh>@directive not valid here</vh></v>
-<v t="EKR.20040524104904.312"><vh>Halting Tangle: too many errors</vh></v>
-<v t="EKR.20040524104904.313"><vh>Invalid recursive reference of &lt;&lt; section name &gt;&gt;</vh></v>
-<v t="EKR.20040524104904.314"><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
-<v t="EKR.20040524104904.315"><vh>No file written because of errors</vh></v>
-<v t="EKR.20040524104904.316"><vh>Run on comment</vh></v>
-<v t="EKR.20040524104904.317"><vh>Run on file name in @root directive</vh></v>
-<v t="EKR.20040524104904.318"><vh>Run on section name</vh></v>
-<v t="EKR.20040524104904.319"><vh>Run on string</vh></v>
-<v t="EKR.20040524104904.320"><vh>Section definition not valid here.</vh></v>
-<v t="EKR.20040524104904.321"><vh>Sections nested too deeply</vh></v>
-<v t="EKR.20040524104904.322"><vh>The outline contains no roots</vh></v>
-<v t="EKR.20040524104904.323"><vh>Undefined section:  &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="EKR.20040524104904.324"><vh>Unexpected @directive while putting code</vh></v>
-<v t="EKR.20040524104904.325"><vh>Warning: possible duplicate definition of: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="EKR.20040524104904.326"><vh>Warning: &lt;&lt;&lt; section name &gt;&gt;&gt; has been defined but not used</vh></v>
-</v>
-<v t="EKR.20040524104904.327" a="E"><vh>Errors while untangling</vh>
-<v t="EKR.20040524104904.328"><vh>Incompatible definitions of &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="EKR.20040524104904.329"><vh>Missing root part</vh></v>
-<v t="EKR.20040524104904.330"><vh>Missing root section</vh></v>
-<v t="EKR.20040524104904.331"><vh>Missing sentinel line for &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="EKR.20040524104904.332"><vh>Unterminated section: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-</v>
-<v t="EKR.20040524104904.333" a="E"><vh>Errors while reading @file nodes</vh></v>
+<v t="EKR.20040524104904.307"><vh>Errors while tangling</vh></v>
+<v t="EKR.20040524104904.327"><vh>Errors while untangling</vh></v>
+<v t="EKR.20040524104904.333"><vh>Errors while reading @file nodes</vh></v>
 <v t="EKR.20040524104904.336"><vh>Errors while writing @file nodes</vh></v>
-<v t="EKR.20040524104904.357"><vh>Format of .leo files</vh>
-<v t="EKR.20040524104904.359"><vh>@rst-no-head &lt;?xml?&gt; &amp; &lt;?xml-stylesheet?&gt;</vh></v>
-<v t="EKR.20040524104904.360" a="E"><vh>@rst-no-head &lt;leo_file&gt;</vh></v>
-<v t="EKR.20040524104904.361"><vh>@rst-no-head &lt;leo_header&gt;</vh></v>
-<v t="EKR.20040524104904.362" a="E"><vh>@rst-no-head &lt;globals&gt;</vh></v>
-<v t="ekr.20050129080711" a="E"><vh>@rst-no-head Vestigial elements</vh></v>
-<v t="EKR.20040524104904.365" a="E"><vh>@rst-no-head &lt;vnodes&gt;</vh></v>
-<v t="EKR.20040524104904.366"><vh>@rst-no-head &lt;v&gt;</vh></v>
-<v t="ekr.20050831224732"><vh>@rst-no-head &lt;tnodes&gt;</vh></v>
-<v t="EKR.20040524104904.368"><vh>@rst-no-head &lt;t&gt;</vh></v>
+<v t="EKR.20040524104904.357"><vh>Format of .leo files</vh></v>
+<v t="EKR.20040524104904.337"><vh>Format of derived files (3.x)</vh></v>
+<v t="EKR.20040524104904.349"><vh>Format of derived files (4.x)</vh></v>
+<v t="EKR.20040524104904.354"><vh>Unicode reference</vh></v>
+<v t="ekr.20050901071613"><vh>@rst-no-head end stuff</vh></v>
 </v>
-<v t="EKR.20040524104904.337" a="E"><vh>Format of derived files (3.x)</vh>
-<v t="EKR.20040524104904.348"><vh>@rst-no-head @&lt;&lt;</vh></v>
-<v t="EKR.20040524104904.346"><vh>@rst-no-head @@</vh></v>
-<v t="EKR.20040524104904.345"><vh>@rst-no-head @@delims</vh></v>
-<v t="EKR.20040524104904.343"><vh>@rst-no-head @at and @doc</vh></v>
-<v t="EKR.20040524104904.342"><vh>@rst-no-head @body</vh></v>
-<v t="EKR.20040524104904.340"><vh>@rst-no-head @leo</vh></v>
-<v t="EKR.20040524104904.341"><vh>@rst-no-head @node</vh></v>
-<v t="EKR.20040524104904.344"><vh>@rst-no-head @others</vh></v>
-<v t="EKR.20040524104904.347"><vh>@rst-no-head @verbatim and @verbatimAfterRef</vh></v>
 </v>
-<v t="EKR.20040524104904.349" a="E"><vh>Format of derived files (4.x)</vh></v>
-<v t="EKR.20040524104904.354" a="E"><vh>Unicode reference</vh></v>
+<v t="EKR.20040524104904.380"><vh>Glossary</vh>
+<v t="ekr.20050901071041" a="M"><vh>@rst glossary.html</vh>
+<v t="ekr.20050901071300"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20050901073048"><vh>@rst-no-head glossary</vh></v>
+<v t="ekr.20050901083017"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
 </v>
@@ -5098,9 +5006,9 @@ To convert ``@root`` trees to ``@file`` trees by hand:
 ``Multiple parts not allowed for &lt;&lt; section name &gt;&gt;``
     Sections can be defined in several parts in two ways:
 
-    1.  Using &lt;&lt; section name &gt;&gt;= in several places with the same section name.
+    1.  Using ``&lt;&lt; section name &gt;&gt;=`` in several places with the same section name.
     
-    2.  Using several ``@code` directives within the same body text.
+    2.  Using several ``@code`` directives within the same body text.
     
     As a precaution against mistakenly defining a section in more than one place,
     it is invalid to use @code in different nodes to define multiple parts for the same section.
@@ -5113,123 +5021,60 @@ To convert ``@root`` trees to ``@file`` trees by hand:
 ``Run on comment``
     A C-language comment was not properly terminated.
 
+``Run on file name in @root directive``
+    The file name in an @root directive was not terminated with the proper delimiter.
 
-Run on file name in @root directive
-The file name in an @root directive was not terminated with the proper delimiter.
+``Run on section name``
+    A section name was not properly terminated before the end of the line in which it started.
 
+``Run on string``
+    A C-language string or character constant was not properly terminated.
 
-Run on section name
-A section name was not properly terminated before the end of the line in which it started.
+``Section definition not valid here.``
+    Something that looks like a section definition was seen in the middle of a line.
 
+``Sections nested too deeply``
+    A section was defined using more than 100 levels of section definitions (!)
+    You could easily create an outline containing every computer program ever written in less than 50 levels.
 
-Run on string
-A C-language string or character constant was not properly terminated.
+``The outline contains no roots``
+    The selected outline contained no @root directive.
 
+``Undefined section:  &lt;&lt;&lt; section name &gt;&gt;&gt;``
+    A reference to an undefined section was encountered.
 
-Section definition not valid here.
-Something that looks like a section definition was seen in the middle of a line.
+``Unexpected @directive while putting code``
+    Tangle outputs 2-character WEB control code in a comment.
+    This message is given if we find such comments in a code definition.
 
+``Warning: possible duplicate definition of: &lt;&lt;&lt; section name &gt;&gt;&gt;``
+    (The text of the duplicate definition follows.)
+    The section may have been defined in more than one place.
 
-Sections nested too deeply
-A section was defined using more than 100 levels of section definitions (!)
-
-You could easily create an outline containing every computer program ever written in less than 50 levels.
-
-
-The outline contains no roots
-The selected outline contained no @root directive.
-
-
-Undefined section:  &lt;&lt;&lt; section name &gt;&gt;&gt;
-A reference to an undefined section was encountered.
-
-
-Unexpected @directive while putting code
-Tangle outputs 2-character WEB control code in a comment.  This message is given if we find such comments in a code definition.
-
-
-Warning: possible duplicate definition of: &lt;&lt;&lt; section name &gt;&gt;&gt;
-(The text of the duplicate definition follows.)
-
-The section may have been defined in more than one place.
-
-
-Warning: &lt;&lt;&lt; section name &gt;&gt;&gt; has been defined but not used
-The indicated section appears in the outline but is never referenced.</t>
-<t tx="EKR.20040524104904.308">A file error occurred while trying to reopen the temporary file used during tangling.</t>
-<t tx="EKR.20040524104904.309">A file error occurred while trying to change the name of the temporary file used during tangling.</t>
-<t tx="EKR.20040524104904.310">An @code directive appeared in body text whose header does not contain a section name.</t>
-<t tx="EKR.20040524104904.311">An @directive was seen somewhere other than the start of a line.</t>
-<t tx="EKR.20040524104904.312">Tangle detected more than 20 errors.</t>
-<t tx="EKR.20040524104904.313">A section was defined in terms of itself, either directly or indirectly.  The trace shows the chain of section definitions that resulted in the illegal definition.
-
-This message is followed by a walkback of the section names that recursively reference the section.
-The walkback looks like this::
-
-    called from &lt;&lt; section name &gt;&gt;
-    called from &lt;&lt; section name &gt;&gt;
-    ...</t>
-<t tx="EKR.20040524104904.314">Sections can be defined in several parts in two ways:
-
-1.  Using &lt;&lt; section name &gt;&gt;= in several places with the same section name.
-
-2.  Using several @code directives within the _same_ body text.
-
-As a precaution against mistakenly defining a section in more than one place, it is invalid to use @code in different nodes to define multiple parts for the same section.  In particular, this error may arise when using cloned nodes.
-
-This error may always be eliminated by using &lt;&lt; section name &gt;&gt;= instead of @code.
-	
-</t>
-<t tx="EKR.20040524104904.315">Tangle did not write a file because errors were found.</t>
-<t tx="EKR.20040524104904.316">A C-language comment was not properly terminated.</t>
-<t tx="EKR.20040524104904.317">The file name in an @root directive was not terminated with the proper delimiter.</t>
-<t tx="EKR.20040524104904.318">A section name was not properly terminated before the end of the line in which it started.
-</t>
-<t tx="EKR.20040524104904.319">A C-language string or character constant was not properly terminated.</t>
-<t tx="EKR.20040524104904.320">Something that looks like a section definition was seen in the middle of a line.</t>
-<t tx="EKR.20040524104904.321">A section was defined using more than 100 levels of section definitions (!)
-
-You could easily create an outline containing every computer program ever written in less than 50 levels.</t>
-<t tx="EKR.20040524104904.322">The selected outline contained no @root directive.</t>
-<t tx="EKR.20040524104904.323">A reference to an undefined section was encountered.</t>
-<t tx="EKR.20040524104904.324">Tangle outputs 2-character WEB control code in a comment.  This message is given if we find such comments in a code definition.</t>
-<t tx="EKR.20040524104904.325">(The text of the duplicate definition follows.)
-
-The section may have been defined in more than one place.</t>
-<t tx="EKR.20040524104904.326">The indicated section appears in the outline but is never referenced.</t>
+``Warning: &lt;&lt;&lt; section name &gt;&gt;&gt; has been defined but not used``
+    The indicated section appears in the outline but is never referenced.</t>
 <t tx="EKR.20040524104904.327">The following error messages may be generated by the Untangle commands.
 
 Incompatible definitions of &lt;&lt;&lt; section name &gt;&gt;&gt;
-    Two expansions of &lt;&lt; section name &gt;&gt; were different in the derived file.
+    Two expansions of ``&lt;&lt; section name &gt;&gt;`` were different in the derived file.
     This typically arises when the programmer changes one of the expansions but not the other.
 
 Missing root part
-    No end sentinel line was found for a part of the expansion of the code in the @root node.
+    No end sentinel line was found for a part of the expansion of the code in the ``@root`` node.
     This is likely the result of adding, deleting or altering a sentinel line.
 
-Missing root section
-No end sentinel line was found for the expansion of the code in the ``@root`` node.
-This is likely the result of adding, deleting or altering a sentinel line.
+``Missing root section``
+    No end sentinel line was found for the expansion of the code in the ``@root`` node.
+    This is likely the result of adding, deleting or altering a sentinel line.
 
+``Missing sentinel line for &lt;&lt;&lt; section name &gt;&gt;&gt;``
+    The end sentinel name for ``&lt;&lt; section name &gt;&gt;`` was expected but not found.
+    This is likely the result of adding, deleting or altering a sentinel line.
 
-Missing sentinel line for &lt;&lt;&lt; section name &gt;&gt;&gt;
-The end sentinel name for ``&lt;&lt; section name &gt;&gt;`` was expected but not found.
-This is likely the result of adding, deleting or altering a sentinel line.
-
-
-Unterminated section: &lt;&lt;&lt; section name &gt;&gt;&gt;
-The end of the file was reached before encountering the end sentinel line for ``&lt;&lt; section name &gt;&gt;``.
-This is likely the result of adding, deleting or altering a sentinel line.
-
+``Unterminated section: &lt;&lt;&lt; section name &gt;&gt;&gt;``
+    The end of the file was reached before encountering the end sentinel line for ``&lt;&lt; section name &gt;&gt;``.
+    This is likely the result of adding, deleting or altering a sentinel line.
 </t>
-<t tx="EKR.20040524104904.328">Two expansions of &lt;&lt; section name &gt;&gt; were different in the derived file.  This typically arises when the programmer changes one of the expansions but not the other.</t>
-<t tx="EKR.20040524104904.329">No end sentinel line was found for a part of the expansion of the code in the @root node.  This is likely the result of adding, deleting or altering a sentinel line.</t>
-<t tx="EKR.20040524104904.330">No end sentinel line was found for the expansion of the code in the ``@root`` node.
-This is likely the result of adding, deleting or altering a sentinel line.</t>
-<t tx="EKR.20040524104904.331">The end sentinel name for ``&lt;&lt; section name &gt;&gt;`` was expected but not found.
-This is likely the result of adding, deleting or altering a sentinel line.</t>
-<t tx="EKR.20040524104904.332">The end of the file was reached before encountering the end sentinel line for ``&lt;&lt; section name &gt;&gt;``.
-This is likely the result of adding, deleting or altering a sentinel line.</t>
 <t tx="EKR.20040524104904.333">The following are all serious errors, meaning that the data in a derived file has been corrupted::
 
     Bad @+leosentinel in &lt;filename&gt;
@@ -5273,17 +5118,58 @@ No information is lost because all information is written to the .leo file rathe
 ``undefined section: &lt;section name&gt; referenced from: &lt;headline&gt;``
     The node given by *headline* contains a reference to *section name*
     but no section definition node for *section name* exists in the descendents of *headline*.</t>
-<t tx="EKR.20040524104904.337">Leo suppresses blank lines between sentinels by default.
-This is an upward compatible change in the format of derived files: Leo v2.0 can read derived files from all previous versions of Leo, but previous versions of Leo can not read derived files without blanks lines.
-The following sections describe the comment lines embedded in derived files.  It is not necessary to understand this in detail.  All you need to know is this:
+<t tx="EKR.20040524104904.337">**Important**: Do not alter blank lines in front of, behind or between sentinels.
+Doing so will corrupt the outline structure in older versions of Leo.
+Leo suppresses blank lines between sentinels by default.
+This is an upward compatible change in the format of derived files:
+Leo v2.0 can read derived files from all previous versions of Leo,
+but previous versions of Leo can not read derived files without blanks lines.
 
-1.  Sentinel lines are comment lines whose first character (following the comment delimiter) is @.
+The following sections describe the comment lines embedded in derived files.
 
-2.  Do not alter sentinel lines in derived files.  Doing so will corrupt the outline structure!
+\@&lt;&lt;
+    A sentinel of the form ``@&lt;&lt;section_name&gt;&gt;`` represents a section reference.
+    If the reference does not end the line,
+    the sentinel line ending the expansion is followed by the remainder of the reference line.
+    This allows the Read code to recreate the reference line exactly.
 
-3.  Do not alter blank lines in front of, behind or between sentinels.
-    Doing so will corrupt the outline structure in older versions of Leo.</t>
-<t tx="EKR.20040524104904.340">\@leo
+\@@
+    The ``@@`` sentinel represents any line starting with ``@`` in body text
+    except ``@``*whitespace*, ``@doc`` and ``@others``.
+    Examples::
+    
+      @@nocolor
+      @@pagewidth 80
+      @@tabwidth 4
+      @@code
+
+\@@delims
+    The ``@delims`` sentinel inserts ``@@delims`` sentinels into the derived file.
+    The new delimiter strings continue in effect until the next ``@@delims`` sentinel
+    *in the derived file* or until the end of the derived file.
+    Adding, deleting or changing ``@@delim`` *sentinels* will destroy Leo's ability to read the derived file.
+    Mistakes in using the ``@delims`` *directives* have no effect on Leo,
+    though such mistakes will thoroughly mess up a derived file as far as compilers, HTML renderers, etc. are concerned.
+
+\@at and \@doc
+    The ``@+doc`` and ``@-doc`` sentinels delimit doc parts within a node that starts with ``@doc``.
+    These sentinels are nested within ``@body`` directives.
+    Similarly, ``@+at`` and ``@-at`` sentinels delimit doc parts within a node that start with ``@`` *whitespace*.
+    We use the following **trailing whitespace convention**
+    to determine where putDocPart has inserted line breaks::
+    
+        A line in a doc part is followed by an inserted newline
+        if and only if the newline if preceded by whitespace.
+    
+    To make this convention work,
+    Leo's write code deletes the trailing whitespace of all lines that are followed by a "real" newline.
+
+\@body
+    If a node contains significant (non-whitespace) body text,
+    the ``@+body`` and ``@-body`` sentinels surround the text.
+    These sentinels are nested within ``@node`` directives.
+
+\@leo
     A file produced by an ``@file`` node begins with an ``@+leo`` sentinel.
     The last lines of the file should be the matching ``@-leo`` sentinel.
     The ```@+leo`` sentinel line has the form::
@@ -5291,8 +5177,9 @@ The following sections describe the comment lines embedded in derived files.  It
         &lt;opening_delim&gt;@leo&lt;closing_delim&gt;
     
     The read code uses single-line comments if ``&lt;closing_delim&gt;`` is empty.
-    The write code generates single-line comments if possible.</t>
-<t tx="EKR.20040524104904.341">\@node
+    The write code generates single-line comments if possible.
+
+\@node
     Suppose the parent node of a node N is P and that P has n children.  The sentinel:: 
 
       @+node:&lt;child_index&gt;:&lt;status_fields&gt;:&lt;headline&gt;
@@ -5307,47 +5194,15 @@ The following sections describe the comment lines embedded in derived files.  It
     ``&lt;headline&gt;`` contains *headline* text, not reference text.
     
     The indentation of the expansion is increased by the extra indentation of preceding the reference.
-    tree level never affects indentation level.</t>
-<t tx="EKR.20040524104904.342">\@body
-    If a node contains significant (non-whitespace) body text,
-    the ``@+body`` and ``@-body`` sentinels surround the text.
-    These sentinels are nested within ``@node`` directives.
-    </t>
-<t tx="EKR.20040524104904.343">\@at and \@doc
-    The ``@+doc`` and ``@-doc`` sentinels delimit doc parts within a node that starts with ``@doc``.
-    These sentinels are nested within ``@body`` directives.
-    Similarly, ``@+at`` and ``@-at`` sentinels delimit doc parts within a node that start with ``@`` *whitespace*.
-    We use the following **trailing whitespace convention**
-    to determine where putDocPart has inserted line breaks::
-    
-        A line in a doc part is followed by an inserted newline
-        if and only if the newline if preceded by whitespace.
-    
-    To make this convention work,
-    the Write code deletes the trailing whitespace of all lines that are followed by a "real" newline.</t>
-<t tx="EKR.20040524104904.344">\@others
+    tree level never affects indentation level.
+
+\@others
     The ``@+others`` sentinel indicates the start of the expansion of an ``@+others`` directive,
     which continues until the matching ``@-others`` sentinel.
     ``@others`` sentinels are nested within ``@body`` sentinels;
     the expansion of the ``@others`` directive always occurs within the body text of some node.
-    </t>
-<t tx="EKR.20040524104904.345">\@@delims
-    The ``@delims`` sentinel inserts ``@@delims`` sentinels into the derived file.
-    The new delimiter strings continue in effect until the next ``@@delims`` sentinel
-    *in the derived file* or until the end of the derived file.
-    Adding, deleting or changing ``@@delim`` *sentinels* will destroy Leo's ability to read the derived file.
-    Mistakes in using the ``@delims`` *directives* have no effect on Leo,
-    though such mistakes will thoroughly mess up a derived file as far as compilers, HTML renderers, etc. are concerned.</t>
-<t tx="EKR.20040524104904.346">\@@
-    The ``@@`` sentinel represents any line starting with ``@`` in body text
-    except ``@``*whitespace*, ``@doc`` and ``@others``.
-    Examples::
-    
-      @@nocolor
-      @@pagewidth 80
-      @@tabwidth 4
-      @@code</t>
-<t tx="EKR.20040524104904.347">\@verbatim
+
+\@verbatim
     ``@verbatim`` indicates that the next line of the derived file is not a sentinel.
     This escape convention allows body text to contain lines that would otherwise be considered sentinel lines.
     
@@ -5358,12 +5213,7 @@ The following sections describe the comment lines embedded in derived files.  It
       &lt;&lt; ref &gt;&gt; #+others
     
     This sentinel is required only when blank lines are suppressed between sentinel lines.</t>
-<t tx="EKR.20040524104904.348">\@&lt;&lt;
-    A sentinel of the form ``@&lt;&lt;section_name&gt;&gt;`` represents a section reference.
-    If the reference does not end the line,
-    the sentinel line ending the expansion is followed by the remainder of the reference line.
-    This allows the Read code to recreate the reference line exactly.</t>
-<t tx="EKR.20040524104904.349">The 4.0 file format meets all of the following goals:
+<t tx="EKR.20040524104904.349">The 4.0 file format meets the following goals:
 
 - The minimum of sentinels needed to properly recreate the outline.
 
@@ -5371,20 +5221,20 @@ The following sections describe the comment lines embedded in derived files.  It
 
 - A minimum of intrusion and ugliness.
 
-Changes to derived file format:
+Changes from the 3.0 file format:
 
 -   The ``@+leo`` sentinel indicates whether the format is 3.x or 4.x.
 
 -   ``@+node`` and ``@-node`` sentinels no longer contain child or clone indices.
     Therefore, such sentinels do not change when outline nodes are inserted, deleted or moved.
-    This will reduces cvs conflicts involving sentinel lines.
+    This reduces cvs conflicts involving sentinel lines.
 
 -   Leo generates ``@+node`` sentinels only for nodes containing body text.
     Leo no longer generates other ``@+node`` sentinels to indicate outline structure.
     As a result, there is no longer any need for ``@+body`` sentinels.
 
 -   The ``@nl`` and ``@nonl`` sentinels adjust the contribution of *previous* sentinels.
-    This eliminates all lookahead logic and greatly simplifies the read code.
+    This greatly simplifies the read code.
 
 -   The ``@+others`` and ``@&lt;&lt;`` sentinels indicate leading whitespace appearing before
     ``@others`` directives and section refs.
@@ -5397,16 +5247,18 @@ Changes to derived file format:
 New in 4.2:
 
 -   Files derived from ``@thin`` use gnx's in ``@+-node`` sentinels.
-    gnx's permanently and uniquely identify nodes.
-    gnx's have one of these two formats::
+    gnx's permanently and uniquely identify nodes.  Examples::
 
-        id.timestamp
-        id.timestamp.n
+        id.yyyymmddhhmmss
+        id.yyyymmddhhmmss.n
 
     The second form is used if two gnx's would otherwise be identical.
-    ``id`` is a string unique to a developer, e.g., a cvs id.
-    ``timestamp`` is the date the node was first created, in ``yyyymmddhhmmss`` format.
-    ``n`` is a disambiguating integer.
+
+    - ``id`` is a string unique to a developer, e.g., a cvs id.
+
+    - ``yyyymmddhhmmss`` is the node's creation date.
+
+    - ``n`` is an integer.
 
 -   The ``@+-all`` sentinel corresponds to the range of the ``@all`` directive.
 
@@ -5416,27 +5268,29 @@ New in 4.2:
 <t tx="EKR.20040524104904.351">The following bugs can not be fixed:
 
 1.  The ``Untangle`` command has no way of updating a section whose name has been changed in the derived file.
+    
     Because of the ``@unit`` directive, there is not even a way to issue a meaningful warning.
 
 2.  The ``Tangle`` command treats ``@c`` like ``@code`` in ``CWEB`` mode.
+
     I recommend changing ``@c`` to ``@&lt; c @&gt;=`` throughout your ``CWEB`` sources
     and adding a reference to ``@&lt; c @&gt;`` in all roots of ``CWEB`` files.</t>
 <t tx="EKR.20040524104904.354">Leo uses unicode internally for all strings.
 
 1.  Leo converts headline and body text to unicode when reading .leo files and derived files.
-    Both .leo files and derived files may specify their encoding.  The default is "utf-8".
+    Both .leo files and derived files may specify their encoding.  The default is ``utf-8``.
     If the encoding used in a derived file is not "utf-8" it is represented in the ``@+leo`` sentinel line.
     For example::
 
         #@+leo-encoding=iso-8859-1.
 
-    The "utf-8" encoding is a "lossless" encoding (it can represent all unicode code points),
+    The ``utf-8`` encoding is a "lossless" encoding (it can represent all unicode code points),
     so converting to and from utf-8 plain strings will never cause a problem.
     When reading or writing a character not in a "lossy" encoding,
     Leo converts such characters to '?' and issues a warning. 
 
 2.  When writing .leo files and derived files Leo uses the same encoding used to read the file,
-    again with ``"utf-8"`` used as a default.
+    again with ``utf-8`` used as a default.
 
 3.  leoSettings.leo contains the following Unicode settings, with the defaults as shown::
 
@@ -5448,47 +5302,44 @@ New in 4.2:
     See the comments in leoSettings.leo.
     You may set ``default_derived_file_encoding`` to anything that makes sense for you.
 
-4.  You may use the ``@encoding`` directive to specify the encoding used in a derived file.
+4.  The ``@encoding`` directive specifies the encoding used in a derived file.
     You can't mix encodings in a single derived file.</t>
 <t tx="EKR.20040524104904.357">This technical information may be of use to those wanting to process Leo files with special-purpose filters.
 Leo's uses XML for its file format.
 The following sections describe this format in detail.
-**Important**: The following descriptions may contain slight errors.
+**Important**:
 The actual read/write code in leoFileCommands.py is the authoritative guide.
 When in doubt about what Leo actually writes, look at an actual .leo file in another editor.
 
 Here are the elements that may appear in Leo files.
-These elements must appear in this order.</t>
-<t tx="EKR.20040524104904.359">``&lt;?xml&gt;``
-    Leo files start out with the following line::
+These elements must appear in this order.
+
+``&lt;?xml&gt;``
+    Leo files start with the following line::
 
         &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 ``&lt;?xml-stylesheet&gt;``
-    An xml-stylesheet line may optionally follow this line::
+    An xml-stylesheet line is option.  For example::
     
-        &lt;?xml-stylesheet ekr_stylesheet?&gt;</t>
-<t tx="EKR.20040524104904.360">``&lt;leo_file&gt;``
+        &lt;?xml-stylesheet ekr_stylesheet?&gt;
+
+``&lt;leo_file&gt;``
     The ``&lt;leo_file&gt;`` element opens an element that contains the entire file.
-    ``&lt;/leo_file&gt;`` ends the file.</t>
-<t tx="EKR.20040524104904.361">``&lt;leo_header&gt;`` 
+    ``&lt;/leo_file&gt;`` ends the file.
+
+``&lt;leo_header&gt;`` 
     The ``&lt;leo_header&gt;`` element specifies version information and other information
-    that affects how Leo parses the file.  The following attributes are required::
-    
-        file_format
-        tnodes
-        max_tnode_index
-        clone_windows
-    
-    For example::
+    that affects how Leo parses the file.  For example::
     
         &lt;leo_header file_format="2" tnodes="0" max_tnode_index="5725" clone_windows="0"/&gt;
     
     The ``file_format`` attribute gives the 'major' format number.
     It is '2' for all 4.x versions of Leo.
     The ``tnodes`` and ``clone_windows`` attributes are no longer used.
-    The ``max_tnode_index``	attribute is the largest tnode index.</t>
-<t tx="EKR.20040524104904.362">``&lt;globals&gt;``
+    The ``max_tnode_index``	attribute is the largest tnode index.
+
+``&lt;globals&gt;``
     The ``globals`` element specifies information relating to the entire file.
     For example::
     
@@ -5502,12 +5353,29 @@ These elements must appear in this order.</t>
         It initializes the position of the splitter separating the outline pane from the body pane.
     
     -   The ``global_window_position`` and ``global_log_window_position`` elements
-        specify the position of the Leo window and Log window in global coordinates:</t>
-<t tx="EKR.20040524104904.365">`&lt;vnodes&gt;``
+        specify the position of the Leo window and Log window in global coordinates:
+
+``&lt;preferences&gt;``
+    This element is vestigial.
+    Leo ignores the ``&lt;preferences&gt;`` element when reading.
+    Leo writes an empty ``&lt;preferences&gt;`` element.
+
+``&lt;find_panel_settings&gt;``
+    This element is vestigial.
+    Leo ignores the ``&lt;find_panel_settings&gt;`` element when reading.
+    Leo writes an empty ``&lt;find_panel_settings&gt;`` element.
+
+``&lt;clone_windows&gt;``
+    This element is vestigial.
+    Leo ignores the ``&lt;clone_windows&gt;`` element when reading.
+    Leo no longer writes ``&lt;clone_windows&gt;`` elements.
+
+``&lt;vnodes&gt;``
     A single ``&lt;vnodes&gt;`` element contains nested ``&lt;v&gt;`` elements.
     ``&lt;v&gt;`` elements correspond to vnodes.
-    The nesting of ``&lt;v&gt;`` elements indicates outline structure in the obvious way.</t>
-<t tx="EKR.20040524104904.366">``&lt;v&gt;``
+    The nesting of ``&lt;v&gt;`` elements indicates outline structure in the obvious way.
+
+``&lt;v&gt;``
     The ``&lt;v&gt;`` element represents a single vnode and has the following form::
     
         &lt;v...&gt;&lt;vh&gt;sss&lt;/vh&gt; (zero or more nested v elements) &lt;/v&gt;
@@ -5541,8 +5409,12 @@ These elements must appear in this order.</t>
         See ``Format of derived files (4.x)`` for the format of gnx's.
     
     -   Plugins and scripts may add attributes to ``&lt;v&gt;`` and ``&lt;t&gt;`` elements.
-        See `Chapter 8: Customizing Leo`_ for details.</t>
-<t tx="EKR.20040524104904.368">``&lt;t&gt;``
+        See `Chapter 8: Customizing Leo`_ for details.
+
+``&lt;tnodes&gt;``
+    A single ``&lt;tnodes&gt;`` element contains a non-nested list of ``&lt;t&gt;`` elements.
+
+``&lt;t&gt;``
     The ``&lt;t&gt;`` element represents a single tnode and has this form::
     
         &lt;t tx="Tnnn"&gt;&lt;tb&gt;sss&lt;/tb&gt;&lt;/t&gt;
@@ -5554,123 +5426,9 @@ These elements must appear in this order.</t>
 
     **New in 4.0**:
     Plugins and scripts may add attributes to ``&lt;v&gt;`` and ``&lt;t&gt;`` elements.
-    See `Chapter 8: Customizing Leo`_ for details.</t>
-<t tx="EKR.20040524104904.380">@nocolor
-@ignore</t>
-<t tx="EKR.20040524104904.381">We often refer to outline nodes by the directives they contain.  For example, an @root node is a node containing an @root directive, an @ignore node is a node containing an @ignore directive, and so on.
-
-Exception: an @file node is a node whose headline starts with @file.</t>
-<t tx="EKR.20040524104904.382">An @root tree is a tree whose is an @root node.  An @file tree is a tree whose root is an @file node, and so on.</t>
-<t tx="EKR.20040524104904.383">The pane containing the body text of the currently selected headline in the outline pane.</t>
-<t tx="EKR.20040524104904.384">The text in the body pane.  Body text is always associated with a particular headline.</t>
-<t tx="EKR.20040524104904.385">A small blue box in the icon just to the left of a headline that indicates that the node contains body text.</t>
-<t tx="EKR.20040524104904.386">A node directly contained by a node.</t>
-<t tx="EKR.20040524104904.387">Another name for a section or part.</t>
-<t tx="EKR.20040524104904.388">A copy of a tree that changes whenever the original changes.  The original and all clones are treated equally:  no special status is given to the "original" node.</t>
-<t tx="EKR.20040524104904.389">A small red arrow in the icon just to the left of a headline that indicates that the node is a clone of another node.</t>
-<t tx="EKR.20040524104904.390">A section containing code.  Code sections start with @c or @code directives.</t>
-<t tx="EKR.20040524104904.391">A literate programming language invented by Donald Knuth and Silvio Levy.  CWEB produces derived files for the C language.
-
-http://www-cs-faculty.stanford.edu/~knuth/cweb.html</t>
-<t tx="EKR.20040524104904.392">To move right all following siblings of a node so that they become children of a node.</t>
-<t tx="EKR.20040524104904.393">The output file created as the result of tangling a node containing an @root directive. The file consists of the expansion of the text following the @root directive.</t>
-<t tx="EKR.20040524104904.394">An offspring of a node.  That is, a child, grandchild, etc. of a node.</t>
-<t tx="EKR.20040524104904.395">A keyword, preceded by an '@' sign, in body text that controls Leo's operation.</t>
-<t tx="EKR.20040524104904.396">A section containing only documentation. That is, a section that start with @.  Doc sections are associated with the immediately following code section, if any.</t>
-<t tx="EKR.20040524104904.397">A convention for representing sequences of characters that would otherwise have special meaning.  Leo has only one such convention: in @root trees, @@ in the leftmost column of a code part stands for a single @ character.
-
-Note: the markup language Leo uses in body pane is based on noweb.  However, Leo does not support noweb's @&lt;&lt; and @&gt;&gt; escape conventions.  If a line in a code part contains &lt;&lt; followed by &gt;&gt;, then that line does contain a section name, regardless of context.  If the &lt;&lt; and &gt;&gt; characters should not, if fact, delimit a section name, then you must place the &lt;&lt; and &gt;&gt; on separate lines.
-
-Eliminating noweb's escape conventions for &lt;&lt; and &gt;&gt; characters solves some difficult problems when automatically untangling derived files.  Moreover, it is typically easier to split source lines than to use @&lt;&lt; and @&gt;&gt;.  Finally, Leo's Export and Import commands do support the @&lt;&lt; and @&gt;&gt; conventions.</t>
-<t tx="EKR.20040524104904.398">The child of a child of a node.</t>
-<t tx="EKR.20040524104904.399">The organizational unit of an outline.  A node.  Each headline contains headline text and (possibly empty) body text.</t>
-<t tx="EKR.20040524104904.400">Hoisting a node redraws the screen that node and its descendants becomes the only visible part of the outline.  Leo prevents the you from moving nodes outside the hoisted outline.  Dehoisting a node restores the outline.
-
-Multiple hoists may be in effect: each dehoist undoes the effect of the immediately preceding hoist.</t>
-<t tx="EKR.20040524104904.401">Leo stands for Literate Editor with Outlines. That is, Leo supports both literate programming and outlining.
-
-Leo1 denotes all versions of Leo that write version 1 .leo files, that is, all Windows version of Leo prior to version 2.0.  The last version of Leo1, version 1.15, understands enough about Leo2 to issue a warning when opening version 2 files.
-
-Leo2 denotes all versions of Leo that write version 2 .leo files, that is, all versions of leo.py and all Windows versions with version number 2.0 and above.  Only Leo2 can generate derived files from @file trees.</t>
-<t tx="EKR.20040524104904.402">A style of programming that aims at producing the highest quality program listings.  Literate programming languages apply two fundamental operations to text: weaving and tangling.  Leo supports two literate programming languages, CWEB and noweb.
-
-Knuth's book is the best overall introduction to literate programming:
-Literate Programming, by D. E. Knuth ISBN 0-937073-80-6.
-
-More information is available at Knuth's web site:
-http://www-cs-faculty.stanford.edu/%7Eknuth/lp.html</t>
-<t tx="EKR.20040524104904.403">Marking a node by placing a red mark near its leader character. Marks can be placed using the Mark command, as the result of Find and Change commands, or as the result of the Mark Changed Roots and Mark Changed Items command. The Tangle Marked command tangles only those subtrees that are marked.</t>
-<t tx="EKR.20040524104904.404">Within an @file tree, a node that contain a section name, like &lt;&lt;x&gt;&gt;, at the start of its headline text.
-
-Within an @file tree, all nodes containing a section reference must have a descendant named node corresponding to the reference.
-
-Within an @root or @unit tree, an @code directive is an abbreviation for &lt;&lt;x&gt;&gt;=, where &lt;&lt; x &gt;&gt; is found in the headline.
-
+    See `Chapter 8: Customizing Leo`_ for details.
 </t>
-<t tx="EKR.20040524104904.405">The organizational unit of an outline.  A headline.  The combination of headline text and outline text.
-</t>
-<t tx="EKR.20040524104904.406">A simple literate programming language invented by Norman Ramsey.  noweb can produce derived files for any text-based programming language.
-
-http://www.eecs.harvard.edu/~nr/noweb/</t>
-<t tx="EKR.20040524104904.407">The children, grandchildren, etc. of a node.</t>
-<t tx="EKR.20040524104904.408">An unnamed node in an @tree that contains no body text.  Such nodes may appear anywhere in an @file tree; they do not affect the derived file in any way.  In particular, organizing nodes do not affect indentation in the derived file.</t>
-<t tx="EKR.20040524104904.409">An unnamed node that is either 1) a descendant of a named node or 2) the descendant of no @others node.
-
-Orphan and @ignore nodes are not allowed in @file trees: no derived file is written if an @file node contains an @ignore or orphan node.</t>
-<t tx="EKR.20040524104904.410">1. A visual representation of a hierarchy on the screen.
-
-2. The data contained by the hierarchy.
-
-Outlines are composed of headlines representing data.  The combination of a headline and its associated body text is called a node.
-</t>
-<t tx="EKR.20040524104904.411">he pane containing a visual representation of outlines.</t>
-<t tx="EKR.20040524104904.412">The node the directly contains a node.</t>
-<t tx="EKR.20040524104904.413">Another name for a section or chunk.</t>
-<t tx="EKR.20040524104904.414">A file that can be read by Adobe Acrobat.</t>
-<t tx="EKR.20040524104904.415">To move all children of a node left in an outline so that they become siblings of the node.</t>
-<t tx="EKR.20040524104904.416">The first node of the entire outline.  In the PC version of Leo several nodes may be siblings of the root.</t>
-<t tx="EKR.20040524104904.417">The portion of the outline in which a section definition is known. By default the scope of a section definition is the smallest subtree containing both the section and a node containing an @root directive. The @unit directive declares that the subtree containing the @unit directive is the scope for all sections defined in that tree.</t>
-<t tx="EKR.20040524104904.418">A fragment of text that can be incorporated into derived files.  A syntactic unit of body text.
-
-There are two kinds of sections: code sections and doc sections. Sections are defined in slightly different ways in @file in @root trees (that's the difference between the two kinds of trees.)
-
-In @file trees
---------------
-Code sections start with the @c directive.  The entire body text of a node is a code section by default, so the @c directive can be omitted if there are no doc sections in the body pane.  Doc sections start with @ followed by a space at the start of a line. Doc sections continue until the end of body text or until the next @c or @(space) directive.
-
-In @root trees
---------------
-Code sections start with the @c directive or section definition lines of the form:
-&lt;&lt; section name &gt;&gt;=
-Such lines begin named code sections.  Other code sections are unnamed. Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
-
-The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaning of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.</t>
-<t tx="EKR.20040524104904.419">A name enclosed in &lt;&lt; and &gt;&gt;.  Section names may contain any characters except newlines and "&gt;&gt;".</t>
-<t tx="EKR.20040524104904.420">A section name appearing in a code part. Tangling replaces all references by their definitions.</t>
-<t tx="EKR.20040524104904.421">Comment lines in files derived from @file nodes.  Such lines start with an @ following the opening comment delimiter.  Sentinels embed outline structure into derived files.  Do not alter such lines!  Doing so can corrupt the outline structure.</t>
-<t tx="EKR.20040524104904.422">Nodes with the same parent.  Siblings of the root have no parent.</t>
-<t tx="EKR.20040524104904.423">The icon that appears just to the left of headline text in the outline pane.  This icon shows: a blue body text box if the node contains body text, a red clone arrow if the node is cloned, and a red marker bar if the node is marked.  The icon is outlined in black if the node is dirty, that is, if the node has been changed since the file was last change.
-</t>
-<t tx="EKR.20040524104904.424">The process of creating derived files from @root or @file trees.  Leo tangles @file automatically when writing a .leo file.  The user must explicitly tangle @root trees using the Tangle command.  Tangling expands all references in an @root node or @file node.</t>
-<t tx="EKR.20040524104904.425">The language used to syntax color text.  This language determines the default comment delimiters used during tangling and untangling.
-</t>
-<t tx="EKR.20040524104904.426">Another name for an outline.</t>
-<t tx="EKR.20040524104904.427">A node whose headline text does not start with &lt;&lt; name &gt;&gt;.
-
-Unnamed nodes in @file trees must be a descendant of an @others node and must not be the descendant of any named node.
-
-For example, the following tree is invalid:
-
-@others node
-  &lt;&lt; name &gt;&gt;
-    unnamed node
-	
-The unnamed node would be an orphan node.</t>
-<t tx="EKR.20040524104904.428">Updating an outline based on changes to derived files.  Untangling allows changes to be propagated from derived files back to the outline.  Especially useful when fixing syntax errors outside Leo.
-</t>
-<t tx="EKR.20040524104904.429">The process of creating typeset documentation from a noweb or CWEB source file.  Weaving creates documentation. Tangling creates source code files known as derived files.
-
-Leo does not support weaving directly.  If you want to weave a file you can create noweb or CWEB files using Leo's export commands, then use the noweb or CWEB systems to weave those files.</t>
+<t tx="EKR.20040524104904.380">@killcolor</t>
 <t tx="EKR.20040601084317">Leo 4.2 alpha 3           June 1, 2004
 
 This version fixes completes the essential features of version 4.2.  All known incompletions and bugs involving shared nodes and Leo's new file format have been fixed.  BTW, this version of Leo completes Leaps 201 and 202.
@@ -13674,20 +13432,6 @@ Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
 will attempt to import such extensions from the extensions directory if normal
 imports fail.  Leo is distributed with Pmw (Python Mega Widgets) in this directory.</t>
 <t tx="ekr.20050126100405.1"></t>
-<t tx="ekr.20050129080711">``&lt;preferences&gt;``
-    This element is vestigial.
-    Leo ignores the ``&lt;preferences&gt;`` element when reading.
-    Leo writes an empty ``&lt;preferences&gt;`` element.
-
-``&lt;find_panel_settings&gt;``
-    This element is vestigial.
-    Leo ignores the ``&lt;find_panel_settings&gt;`` element when reading.
-    Leo writes an empty ``&lt;find_panel_settings&gt;`` element.
-
-``&lt;clone_windows&gt;``
-    This element is vestigial.
-    Leo ignores the ``&lt;clone_windows&gt;`` element when reading.
-    Leo no longer writes ``&lt;clone_windows&gt;`` elements.</t>
 <t tx="ekr.20050130112336.1">Warning: The following features of @recentfiles nodes are confusing and probably
 will be changed:
 
@@ -14300,9 +14044,6 @@ how Leo's core calls the u.before/afterX methods.</t>
 # Note: Leo calls g.app.config.readSettingsFiles before opening the settings dialog.
 
 g.app.config.readSettingsFiles(c.fileName(),verbose=True)</t>
-<t tx="ekr.20050429093748">Headlines that start with one of these mark a tree corresponding to a derived file.
-
-See the child of this node for full details.</t>
 <t tx="ekr.20050429094215">Leo 4.3 beta 1                 April 30, 2005
 
 Leo 4.3 beta 1 completes all major features of Leo 4.3. There are no known
@@ -19666,9 +19407,6 @@ There are several reasons why Leo works so well:
  RE: Learning Leo - frustration for newbies   
 2005-06-22 13:52  
 TOC </t>
-<t tx="ekr.20050831224732">``&lt;tnodes&gt;``
-    A single ``&lt;tnodes&gt;`` element containing a list of ``&lt;t&gt;`` elements.
-    ``&lt;t&gt;`` elements are not nested.</t>
 <t tx="ekr.20050831231852">@ @rst-options
 code_mode=False
 generate_rst=True
@@ -19683,7 +19421,7 @@ verbose=True
 
 .. August 30, 2005
 
-|prev| |leo|
+|prev| |leo| |next|
 
 ############
 Appendices
@@ -19695,11 +19433,15 @@ Appendices
 
 .. _home:           http://webpages.charter.net/edreamleo/front.html
 .. _chapter10:      http://webpages.charter.net/edreamleo/theory.html
+.. _glossary:       http://webpages.charter.net/edreamleo/glossary.html
 
 .. _`Chapter 8: Customizing Leo`:   http://webpages.charter.net/edreamleo/customizing.html
 
 .. |prev| image:: arrow_lt.gif
 	:target: chapter10_
+
+.. |next| image:: arrow_rt.gif
+	:target: glossary_
 
 .. |leo|   image:: leo.gif
 	:target: home_
@@ -19733,29 +19475,257 @@ createDefList(c,p)</t>
     result = ['``%s``\n' % lines[0].strip()]
     
     for line in lines[1:]:
-        result.append('    %s' % line.lstrip())
-    lines = ''.join(result)
-        
-    if 0:
-        tail = g.splitLines(tail)[1:]
-        lines = '\n'.join(lines) + '\n'
-        lines = g.splitLines(lines)
-        # Move the lines down.
-        lines.insert(0,tail[0])
-        tail = tail[1:]
-        if not tail: lines.insert(1,'\n')
-        # Convert back to strings.
-        tail = ''.join(tail)
-        
-   
-    # Adjust selection.
-    if 0:
-        sel1,sel2 = oldSel
-        row,col = sel1.split('.') ; sel1 = '%d.%s' % (int(row)+1,col)
-        row,col = sel2.split('.') ; sel2 = '%d.%s' % (int(row)+1,col)
-        newSel = sel1,sel2
-    
-    # print g.toString(lines)
+        result.append('    %s' % line.lstrip()+'\n')
+    lines = ''.join(result).rstrip()
+
     c.updateBodyPane(head,lines,tail,undoType,oldSel,oldYview)</t>
+<t tx="ekr.20050901071041">@ @rst-options
+code_mode=False
+generate_rst=True
+http_server_support = False
+show_organizer_nodes=True
+show_headlines=True
+show_leo_directives=True
+.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+write_intermediate_file = False
+verbose=True
+@c
+
+.. August 30, 2005
+
+|prev| |leo| |next|
+
+############
+Glossary
+############
+</t>
+<t tx="ekr.20050901071300">.. Links used in this document.
+
+.. _home:           http://webpages.charter.net/edreamleo/front.html
+.. _appendices:     http://webpages.charter.net/edreamleo/appendices.html
+
+.. _`CWEB`:     http://www-cs-faculty.stanford.edu/~knuth/cweb.html
+.. _`noweb`:    http://www.eecs.harvard.edu/~nr/noweb/
+.. _`Quick start for programmers`:   http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
+
+.. |prev| image:: arrow_lt.gif
+	:target: appendices_
+
+.. |leo|  image:: leo.gif
+	:target: home_
+
+.. |next| image:: Blank.gif</t>
+<t tx="ekr.20050901071613">----------------------
+
+|prev| |leo| |next|</t>
+<t tx="ekr.20050901073048">**Important**: We often refer to outline nodes by the directives they contain.
+For example, an ``@root`` node is a node containing an @root directive, etc.
+**Exception**: An ``@file`` node is a node whose *headline* starts with ``@file``.
+
+``@file node``
+    An ``@file`` node is a node whose *headline* starts with ``@file``.
+    **Important**: Headlines that start with ``@file-asis``, ``@file-noref``, ``@file-nosent``
+    (and their abbreviations ``@asis``, ``@noref``, ``@nosent``) are collectively called ``@file`` nodes.
+
+``@file tree, @others tree, @root tree, etc.``
+    An @file tree is a tree whose root is an @file node, etc.
+
+``@asis, @file, @noref, @nosent, @thin``
+    Headlines that start with one of these create (correspond to) derived files.
+    The following synonyms exist::
+
+        @asis, @file-asis
+        @noref, @file-noref
+        @nosent, @file-nosent
+
+``Body pane``
+    The pane containing the body text of the currently selected headline in the outline pane.
+
+``Body text``
+    The text in the body pane.  Body text is always associated with a particular node.
+
+``Body text box``
+    A small blue box in the icon box indicating that the node contains body text.
+
+``Child``
+    A node directly contained by a node.
+
+``Chunk``
+    A section (noweb terminology).
+
+``Clone``
+    A copy of a tree that changes whenever the original changes.
+    The original and all clones are treated equally:
+    no special status is given to the "original" node.
+
+``Clone Arrow``
+    A small red arrow in the icon box indicating that the node is a clone.
+
+``Code section``
+    A section containing code.  Code sections start with ``@c`` or ``@code`` directives.
+
+``CWEB``
+    A literate programming language invented by Donald Knuth and Silvio Levy.
+    `CWEB`_ produces derived files for the C language.
+
+``Demote``
+    To move right all following siblings of a node so that they become children of a node.
+
+``Derived file``
+    The file created as the result of tangling a node containing an @root directive.
+    The file consists of the expansion of the text following the @root directive.
+
+``Descendant``
+    An offspring of a node.  That is, a child, grandchild, etc. of a node.
+
+``Directive``
+    A keyword, preceded by an '@' sign, in body text that controls Leo's operation.
+
+``Doc part, @doc part, document part, etc.``
+    A section that starts with @.
+    In ``@root`` trees, doc parts are associated with the immediately following code section, if any.
+
+``Escape convention``
+    A convention for representing sequences of characters that would otherwise have special meaning.
+    Leo has only one such convention:
+    in ``@root`` trees, ``@@`` in the leftmost column of a code part stands for a single ``@`` character.
+    **Important**:
+    Leo does not support noweb's ``@&lt;&lt;`` and ``@&gt;&gt;`` escape conventions.
+    Any line containing matched ``&lt;&lt;`` and ``&gt;&gt;`` is a section reference, regardless of context.
+    To use ``&lt;&lt;`` and ``&gt;&gt;`` as ordinary characters, place them on separate lines.
+
+``Grandchild``
+    The child of a child of a node.
+
+``Headline``
+    The headline text of a node.
+
+``Hoist &amp; dehoist``
+    Hoisting a node redraws the screen that node and its descendants becomes the only visible part of the outline.
+    Leo prevents the you from moving nodes outside the hoisted outline.  Dehoisting a node restores the outline.
+    Multiple hoists may be in effect: each dehoist undoes the effect of the immediately preceding hoist.
+
+``Icon box``
+    An icon just to the left of headline text indicating whether a node is cloned, marked or dirty,
+    and indicating whether a node contains body text.
+
+``Leo1 and Leo2``
+    **Leo1** denotes all versions of Leo that write version 1 .leo files, that is,
+    all Windows version of Leo prior to version 2.0.
+    The last version of Leo1, version 1.15, understands enough about Leo2 to issue a warning when opening version 2 files.
+    
+    **Leo2** denotes all versions of Leo that write version 2 .leo files, that is,
+    all versions of leo.py and all Windows versions with version number 2.0 and above.
+    Only Leo2 can generate derived files from @file trees.
+
+``Literate programming``
+    A style of programming that aims at producing the highest quality program listings.
+    Literate programming languages apply two fundamental operations to text: weaving and tangling.
+    Leo supports two literate programming languages, `CWEB`_ and `noweb`_.
+
+``Mark``
+    A red mark in its icon box leader character.
+
+``Node``
+    The organizational unit of an outline. The combination of headline text and outline text.
+
+``noweb``
+    A literate programming language invented by Norman Ramsey.
+    `noweb`_ can produce derived files for any text-based programming language.
+
+``Offspring``
+    The children, grandchildren, etc. of a node.
+
+``Organizing node``
+    A node containing no body text.
+    Organizing nodes may appear anywhere in an ``@file tree``; they do not affect the derived file in any way.
+    In particular, organizing nodes do not affect indentation in the derived file.
+
+``Orphan node``
+    A node that would not be copied to a derived file.
+    Orphan nodes can arise because an ``@thin`` tree has no ``@others`` or ``@all`` directives.
+    Sections that are defined but not used also create orphan nodes.
+
+    Leo issues a warning when attempting to write an ``@thin`` tree containing orphan nodes,
+    and does not save the derived file.
+    No information is lost; Leo saves the information in the ``@thin`` tree in the .leo file.
+    Leo will load the ``@thin`` tree from the .leo file the next time Leo opens the .leo file.
+
+``Outline``
+    - A node and its descendants.
+
+    - All the nodes of a .leo file.
+
+``Outline pane``
+    The pane containing a visual representation of the entire outline, or a part of the outline if the outline is hoisted.
+
+``Parent``
+    The node the directly contains a node.
+
+``Part``
+    A section.
+
+``pdf file``
+    A file that can be read by Adobe Acrobat.
+
+``Promote``
+    To move all children of a node left in an outline so that they become siblings of the node.
+
+``Root``
+    The first node of a .leo file.
+
+``Scope``
+    The portion of the outline in which a section definition is known.
+
+``Section``
+    A fragment of text that can be incorporated into derived files.
+    See `Quick start for programmers` for an introduction.
+
+``Section definition node``
+    A node whose headline starts with a section name.
+
+``Section name``
+    A name enclosed in ``&lt;&lt;`` and ``&gt;&gt;``.
+    Section names may contain any characters except newlines and "&gt;&gt;".
+
+``Section reference``
+    A section name appearing in a code part. Tangling replaces all references by their definitions.
+
+``Sentinels, sentinel lines``
+    Comment lines in files derived from ``@file`` nodes.
+    Such lines start with an ``@`` following the opening comment delimiter.
+    Sentinels embed outline structure into derived files.
+    **Do not alter sentinel lines**.  Doing so can corrupt the outline structure.
+
+``Siblings``
+    Nodes with the same parent.  Siblings of the root have no parent.
+
+``Tangling``
+    The process of creating derived files from @root or @file trees.
+    Leo tangles @file automatically when writing a .leo file.
+    You must explicitly tangle ``@root`` trees using the Tangle command.
+    Tangling expands all references in an @root node or @file node.
+
+``Target language``
+    The language used to syntax color text.
+    This determines the default comment delimiters used during tangling and untangling.
+
+``Tree``
+    An outline.
+
+``Untangling``
+    Updating an outline based on changes to derived files.
+    Untangling allows changes to be propagated from derived files back to the outline.
+    Especially useful when fixing syntax errors outside Leo.
+
+``Weaving``
+    The process of creating typeset documentation from a noweb or `CWEB`_ source file.
+    Weaving creates documentation. Tangling creates derived files.
+    Leo does not support weaving directly.
+    To weave a file you can create ``noweb`` or ``CWEB`` files using Leo's ``Export`` commands,
+    then use the noweb or CWEB systems to weave those files.</t>
+<t tx="ekr.20050901083017">-----------------------
+
+|prev| |leo| |next|</t>
 </tnodes>
 </leo_file>
