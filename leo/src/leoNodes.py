@@ -2016,7 +2016,7 @@ class position (object):
         p.setBodyStringOrPane(body + s,encoding)
     #@nonl
     #@-node:ekr.20040315032503:p.appendStringToBody
-    #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
+    #@+node:ekr.20040305223522:p.setBodyStringOrPane & setBodyString
     def setBodyStringOrPane (self,s,encoding="utf-8"):
     
         p = self ; v = p.v ; c = p.c
@@ -2043,8 +2043,8 @@ class position (object):
                 c.setChanged(True)
     
     setBodyTextOrPane = setBodyStringOrPane # Compatibility with old scripts
-    #@nonl
-    #@-node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
+    setBodyString = setBodyStringOrPane
+    #@-node:ekr.20040305223522:p.setBodyStringOrPane & setBodyString
     #@+node:ekr.20040305222924.1:p.setHeadString & p.initHeadString
     def setHeadString (self,s,encoding="utf-8"):
         
