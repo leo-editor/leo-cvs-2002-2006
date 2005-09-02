@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="14618" clone_windows="0"/>
-<globals body_outline_ratio="0.384785005513">
-	<global_window_position top="19" left="344" height="907" width="922"/>
+<globals body_outline_ratio="0.396912899669">
+	<global_window_position top="9" left="345" height="907" width="922"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -32,9 +32,12 @@
 </v>
 </v>
 <v t="ekr.20050901054622"><vh>@button save</vh></v>
-<v t="ekr.20050901055150"><vh>@button demote</vh></v>
-<v t="ekr.20050901060119"><vh>@button def list</vh>
+<v t="ekr.20050901055150"><vh>@@button demote</vh></v>
+<v t="ekr.20050901060119"><vh>@@button def list</vh>
 <v t="ekr.20050901061220"><vh>createDefList</vh></v>
+</v>
+<v t="ekr.20050901121617"><vh>@@button sentence</vh>
+<v t="ekr.20050901121617.1"><vh>splitSentences</vh></v>
 </v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh>
@@ -1610,7 +1613,7 @@
 <v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831101501" a="MTV"><vh>To do</vh>
+<v t="ekr.20050831101501" a="M"><vh>To do</vh>
 <v t="ekr.20050831075008" a="M"><vh>Bug: doesn't reset properly when multiple files</vh></v>
 <v t="ekr.20050831134335"><vh>Tell about 'reference' .leo files somewhere</vh></v>
 <v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
@@ -1630,10 +1633,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050901121617"><vh>@button sentence</vh>
-<v t="ekr.20050901121617.1"><vh>splitSentences</vh></v>
-</v>
-<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="ETV"><vh>Users Guide</vh>
 <v t="ekr.20050828112159" a="M"><vh>@rst-no-head All links (TOC)</vh></v>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
@@ -2088,6 +2088,7 @@
 <v t="ekr.20040403175157.1" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3722206e616d653d22687474702d6e6f64652d6d61726b65722d37223e710155043c2f613e71025d71032855353c64697620636c6173733d2273656374696f6e222069643d22672d65732d77726974652d746f2d7468652d6c6f672d70616e65223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555073c2f6469763e0a710f55463c64697620636c6173733d2273656374696f6e222069643d226170702d77696e646f776c6973742d7468652d6c6973742d6f662d616c6c2d6f70656e2d6672616d6573223e0a7110558e3c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643422206e616d653d226170702d77696e646f776c6973742d7468652d6c6973742d6f662d616c6c2d6f70656e2d6672616d6573223e6170702e77696e646f774c6973743a20746865206c697374206f6620616c6c206f70656e206672616d65733c2f613e3c2f68313e0a7111652e"><vh>app.windowList: the list of all open frames</vh></v>
 <v t="ekr.20040403173920.6" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3922206e616d653d22687474702d6e6f64652d6d61726b65722d39223e710155043c2f613e71025d71032855453c64697620636c6173733d2273656374696f6e222069643d226170702d77696e646f776c6973742d7468652d6c6973742d6f662d616c6c2d6f70656e2d6672616d6573223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555073c2f6469763e0a710f55463c64697620636c6173733d2273656374696f6e222069643d2267657474696e672d616e642d73657474696e672d686561646c696e652d616e642d626f64792d74657874223e0a7110558d3c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643522206e616d653d2267657474696e672d616e642d73657474696e672d686561646c696e652d616e642d626f64792d74657874223e47657474696e6720616e642073657474696e6720686561646c696e6520616e6420626f647920746578743c2f613e3c2f68313e0a7111652e"><vh>Getting and setting headline and body text</vh></v>
 <v t="ekr.20040403173920.9" rst_http_attribute="5d71002855463c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d313122206e616d653d22687474702d6e6f64652d6d61726b65722d3131223e710155043c2f613e71025d71032855453c64697620636c6173733d2273656374696f6e222069643d2267657474696e672d616e642d73657474696e672d686561646c696e652d616e642d626f64792d74657874223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555073c2f6469763e0a710f552f3c64697620636c6173733d2273656374696f6e222069643d2274726176657273696e672d6f75746c696e6573223e0a7110555f3c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643622206e616d653d2274726176657273696e672d6f75746c696e6573223e54726176657273696e67206f75746c696e65733c2f613e3c2f68313e0a7111652e"><vh>Traversing outlines</vh>
+<v t="ekr.20050902073404"><vh>About copying positions</vh></v>
 <v t="ekr.20040403173920.10" rst_http_attribute="5d71002855463c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d313322206e616d653d22687474702d6e6f64652d6d61726b65722d3133223e710155043c2f613e71025d710328552e3c64697620636c6173733d2273656374696f6e222069643d2274726176657273696e672d6f75746c696e6573223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e65656565552b3c64697620636c6173733d2273656374696f6e222069643d22632d616c6c6e6f6465732d69746572223e0a710f55573c68323e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643722206e616d653d22632d616c6c6e6f6465732d69746572223e632e616c6c4e6f6465735f697465723c2f613e3c2f68323e0a7110652e"><vh>c.allNodes_iter</vh></v>
 <v t="ekr.20040403173920.13" rst_http_attribute="5d71002855463c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d313522206e616d653d22687474702d6e6f64652d6d61726b65722d3135223e710155043c2f613e71025d710328552a3c64697620636c6173733d2273656374696f6e222069643d22632d616c6c6e6f6465732d69746572223e710455063c2f6469763e71055d710628552e3c64697620636c6173733d2273656374696f6e222069643d2274726176657273696e672d6f75746c696e6573223e710755063c2f6469763e71085d710928553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710a55063c2f6469763e710b5d710c2855063c626f64793e710d55073c2f626f64793e710e5d710f2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e711055073c2f68746d6c3e71114e656565656555073c2f6469763e0a7112552b3c64697620636c6173733d2273656374696f6e222069643d22702d6368696c6472656e2d69746572223e0a711355573c68323e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643822206e616d653d22702d6368696c6472656e2d69746572223e702e6368696c6472656e5f697465723c2f613e3c2f68323e0a7114652e"><vh>p.children_iter</vh></v>
 <v t="ekr.20040403173920.14" rst_http_attribute="5d71002855463c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d313722206e616d653d22687474702d6e6f64652d6d61726b65722d3137223e710155043c2f613e71025d710328552a3c64697620636c6173733d2273656374696f6e222069643d22702d6368696c6472656e2d69746572223e710455063c2f6469763e71055d710628552e3c64697620636c6173733d2273656374696f6e222069643d2274726176657273696e672d6f75746c696e6573223e710755063c2f6469763e71085d710928553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710a55063c2f6469763e710b5d710c2855063c626f64793e710d55073c2f626f64793e710e5d710f2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e711055073c2f68746d6c3e71114e656565656555073c2f6469763e0a711255463c64697620636c6173733d2273656374696f6e222069643d22702d706172656e74732d697465722d616e642d702d73656c662d616e642d706172656e74732d69746572223e0a7113558d3c68323e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643922206e616d653d22702d706172656e74732d697465722d616e642d702d73656c662d616e642d706172656e74732d69746572223e702e706172656e74735f6974657220616e6420702e73656c665f616e645f706172656e74735f697465723c2f613e3c2f68323e0a7114652e"><vh>p.parents_iter &amp; p.self_and_parents_iter</vh></v>
@@ -11452,9 +11453,7 @@ Here is how to access data at position ``p``.
 <t tx="ekr.20040403173920.9">The proper way to traverse an outline is with an iterator.
 Iterators are defined only by the position class;
 vnodes can not have iterators because vnodes may appear in multiple places in an outline.
-All iterators take an optional copy keyword argument.
-You should use ``copy=True`` if your script actually alters the position returned by the iterator,
-say by calling ``p.moveToThreadNext()``.</t>
+</t>
 <t tx="ekr.20040403173920.10">The ``c.allNodes_iter`` iterator returns a list of all positions in the outline.
 This script makes a list of all the nodes in an outline::
 
@@ -11731,32 +11730,44 @@ for that frame::
     Given a commander ``c``, ``c.frame`` is commanders frame.
     Given a frame ``f``, ``f.c`` is the frame's commander.
 
+**position**
+    An instance of the ``position`` class in ``leoNodes.py``.
+    A position object represents the location of a particular node *in a tree traversal*.
+    By convention, variables named ``p``, ``p1`` or ``p2`` are positions.
+    For any ``position`` ``p``, ``p.v`` is the vnode at that position and ``p.v.t`` is the tnode at that position.
+    **Positions are the primary way to access data.**
+    ``c.currentPosition`` and ``c.rootPosition`` return positions.
+    From those starting point, it is possible to access the data in any node.
+
+    **Important**:
+    Positions can become *invalid* when the structure of the outline changes.
+    Therefore, plugins and scripts must *not* store positions for use at a later time if the outline
+    could have changed in the meantime.
+
+    **Important**:
+    For compatibility with old (pre-4.2) scripts, ``c.currentVnode`` and
+    ``c.rootVnode`` methods return *positions* not vnodes. Old scripts appear to
+    be using vnodes; in fact they are using positions. I call such scripts
+    **confused** scripts. Confused scripts work because the ``position`` class
+    is designed to make them work. We'll see how this works in detail in `About
+    copying positions`_.  This section is **supremely important**.
+
 **vnode**
     An instance of the ``vnode`` class in ``leoNodes.py``.
     vnodes represent an outline node.
     Normally, scripts access vnodes via the ``position`` class described below. 
     By convention, variables named ``v``, ``v1`` or ``v2`` refer to vnodes.
+    **Important**: scripts normally should use positions, not vnodes.
 
 **tnode**
     An instance of the ``tnode`` class in ``leoNodes.py``.
     tnodes represent the actual data in a vnode, including headline and body text.
     Cloned *vnodes* share the tnode *of their first child*.
     For any vnode ``v``, ``v.t`` is v's tnode.
+    **Important**: If ``p`` is a ``position``, ``p.v.t`` is the tnode associated with that position.
+    Many positions may share the same tnode.
 
-**position**
-    An instance of the ``position`` class in ``leoNodes.py``.
-    A position object represents the location of a particular node *in a tree traversal*.
-    By convention, variables named ``p``, ``p1`` or ``p2`` are positions.
-    For any position ``p``, ``p.v`` is the vnode at that position and ``p.v.t`` is the tnode at that position.
-    For compatibility with old (pre-4.2) scripts,
-    ``c.currentVnode`` and ``c.rootVnode`` methods return *positions* not vnodes.
-    The old scripts 'think' they are using vnodes;
-    in fact, they are using positions that simulate the old vnodes.
-    The position class simulates all the common vnode methods that were used in scripts prior to Leo 4.2.
-    As a result, most scripts written before Leo 4.2 will continue to work in Leo 4.2.
-    *Aside*: the preferred way of get the position of the root node and the presently select node is
-    ``c.rootPosition`` and ``c.currentPosition`` respectively.
-    The ``c.currentVnode`` and ``c.rootVnode`` methods exist only for compatibility with old code.</t>
+</t>
 <t tx="ekr.20040411151245">Iterators exist only in the position class::
 
 	c.allNodes_iter            # returns all positions in c's outline.
@@ -18799,13 +18810,13 @@ The benefits of the new workflow:
 <t tx="ekr.20050831075008"></t>
 <t tx="ekr.20050831101501">@nocolor
 
-** Talk about copying positions in scripting chapter!
-
 - Remove references to leo.py and Leo2, except in the appendix, where they belongs.
 
 - Remove all references to leoConfig.txt.
 
-- Use better looking quotes.
+- Use better looking quotes. (use a script!)
+
+- Create a script that calls Reformat Paragraph repeatedly.
 
 * Create a *summary* of Leo's history:
     - Important milestones.
@@ -19650,6 +19661,7 @@ This is discussed below.</t>
 <t tx="ekr.20050901121617">@color
 
 # Puts each sentence on a separate line
+# Not as useful as I had hoped.  The Reformat Paragraph command is better.
 
 @others
 
@@ -19824,5 +19836,40 @@ execute and run the Execute Script command.
 
 **Important**: Python is finicky about indentation, so you must be careful to
 select the leading whitespace of the first line.</t>
+<t tx="ekr.20050902073404">Understanding this section is **supremely important** for anyone who wants to
+script Leo properly.
+
+By default, all iterators discussed below use a **single** position to move
+through the outline. This is a vital optimization; otherwise Leo would generate
+one or more position object for each node of a tree traversal. However, it means
+that it is **useless** to try to capture a position with::
+
+    p2 = p  # Wrong.  p2 will change after this assignment.
+
+Instead, scripts and plugins should use ``p.copy()`` to 'capture' the value of a position::
+
+    p2 = p.copy()   # Write: p2 will not change when p changes later.
+
+Another way to solve this problem is to set ``copy=True`` when using an iterator::
+
+    d = {}
+    for p in c.allNodes_iter(copy=True):
+        d[p.v.t] = p
+
+This creates a dictionary of (unchanging!) positions, indexed via tnode.
+**Warning** The positions in this dictionary will become invalid when the
+outline's structure changes. It would be wrong to save a dictionary like this
+for use between commands.
+
+Setting the ``copy=True`` argument to iterators is an acceptable strategy for
+infrequently used scripts; it is not acceptable for heavily used code in Leo's
+core: it would create huge numbers of positions that would immediately be
+candidates for garbage collection.
+
+**Important**: 'Confused' scripts work because the ``position`` methods that
+simulate the old ``vnode`` methods automatically create copies of positions when
+'moving' through an outline. Thus, confused scripts generate many more positions
+than would the equivalent script that uses ``position`` iterators. Such is the
+price of compatibility.</t>
 </tnodes>
 </leo_file>
