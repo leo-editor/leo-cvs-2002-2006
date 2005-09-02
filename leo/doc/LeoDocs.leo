@@ -3,13 +3,13 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="14618" clone_windows="0"/>
 <globals body_outline_ratio="0.578831312018">
-	<global_window_position top="-3" left="275" height="907" width="874"/>
+	<global_window_position top="8" left="381" height="907" width="845"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20050404094627"><vh>Settings and buttons</vh>
+<v t="ekr.20050404094627" a="E"><vh>Settings and buttons</vh>
 <v t="ekr.20041226081019"><vh>@button Check Spelling...</vh></v>
 <v t="ekr.20050812090111"><vh>@button rst3</vh></v>
 <v t="ekr.20050813102553"><vh>@@button Format 4</vh></v>
@@ -50,7 +50,7 @@
 </v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.63"><vh>Latest version</vh>
 <v t="ekr.20050620144052"><vh>4.3.1</vh>
 <v t="ekr.20050620144052.2"><vh>Bug fixes...</vh>
@@ -77,8 +77,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.117" a="E"><vh>Previous versions...</vh>
-<v t="ekr.20050523092026.1" a="E"><vh>4.3... @settings</vh>
+<v t="edream.110203163054.117"><vh>Previous versions...</vh>
+<v t="ekr.20050523092026.1"><vh>4.3... @settings</vh>
 <v t="ekr.20050523092026"><vh>4.3-final</vh>
 <v t="ekr.20050523092056.1"><vh>Fixed crasher when pie-menu plugin enabled</vh></v>
 <v t="ekr.20050523092056.4"><vh>Fixed crasher in Extract Section Command</vh></v>
@@ -168,8 +168,8 @@
 </v>
 <v t="ekr.20050313101229.100"><vh>Revised plugins for the 4.3 code base</vh></v>
 </v>
-<v t="ekr.20050221104844" a="E"><vh>4.3-a3</vh>
-<v t="ekr.20050221104844.2" a="E"><vh>Bugs</vh>
+<v t="ekr.20050221104844"><vh>4.3-a3</vh>
+<v t="ekr.20050221104844.2"><vh>Bugs</vh>
 <v t="ekr.20050221104844.3"><vh>Fixed crasher in Tangle</vh></v>
 <v t="ekr.20050221104844.12"><vh>Applied patch to rst2 plugin</vh></v>
 <v t="ekr.20050221104844.14"><vh>Revised searchbox plugin so it works with Leo 4.3</vh></v>
@@ -327,7 +327,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050210102150" a="E"><vh>4.2... @file-thin, shared tnodes</vh>
+<v t="ekr.20050210102150"><vh>4.2... @file-thin, shared tnodes</vh>
 <v t="ekr.20040922074200"><vh>4.2 final</vh></v>
 <v t="ekr.20040914103359"><vh>4.2 rc1</vh>
 <v t="ekr.20040914103743.1"><vh>Added new features</vh>
@@ -532,7 +532,7 @@
 <v t="EKR.20040518075457"><vh>Dangers of @file-thin</vh></v>
 </v>
 </v>
-<v t="ekr.20050210102150.1" a="E"><vh>4.1... gnx's</vh>
+<v t="ekr.20050210102150.1"><vh>4.1... gnx's</vh>
 <v t="ekr.20040216151748"><vh>4.1 final</vh>
 <v t="ekr.20040217085036"><vh>Added several new plugins</vh></v>
 <v t="ekr.20040216152948"><vh>Added Toggle Angle Brackets command</vh></v>
@@ -656,7 +656,7 @@
 </v>
 <v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
 </v>
-<v t="ekr.20050210102358" a="E"><vh>4.0... New read logic eliminates read errors, eliminated child indices</vh>
+<v t="ekr.20050210102358"><vh>4.0... New read logic eliminates read errors, eliminated child indices</vh>
 <v t="edream.110203163054.66"><vh>4.0.1 through 4.0.4</vh></v>
 <v t="edream.110203163054.67"><vh>4.0 final</vh>
 <v t="edream.110203163054.68"><vh>4.0 beta 4</vh></v>
@@ -721,7 +721,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.118" a="E"><vh>3.x...</vh>
+<v t="edream.110203163054.118"><vh>3.x...</vh>
 <v t="edream.110203163054.119"><vh>3.12 final</vh>
 <v t="edream.110203163054.120"><vh>Bug fixes (major)</vh>
 <v t="edream.110203163054.121"><vh>Fixed major undo bug</vh></v>
@@ -1804,7 +1804,7 @@
 <v t="ekr.20050816073824"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.26" a="M"><vh>Chapter 3: Using Outlines</vh>
+<v t="EKR.20040524104904.26"><vh>Chapter 3: Using Outlines</vh>
 <v t="ekr.20050901101608"><vh>@rst outlines.html</vh>
 <v t="ekr.20050901101608.1"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.27"><vh>Cloning nodes</vh></v>
@@ -1868,19 +1868,14 @@
 <v t="ekr.20050828115003"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.99" a="M"><vh>Chapter 5: Using Leo's Commands</vh>
-<v t="ekr.20050901101608.2" a="E"><vh>@rst commands.html</vh>
+<v t="EKR.20040524104904.99"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="ekr.20050901101608.2"><vh>@rst commands.html</vh>
 <v t="ekr.20050901101852"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.100"><vh> The File Menu</vh>
-<v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
-<v t="EKR.20040524104904.102"><vh>Communicating with external editors</vh>
-<v t="EKR.20040524104904.103"><vh>Open With command</vh>
-<v t="EKR.20040524104904.104"><vh>createOpenWithMenuFromTable</vh></v>
-</v>
-</v>
+<v t="EKR.20040524104904.101" a="E"><vh>Loading, Saving and Reverting Files</vh></v>
+<v t="EKR.20040524104904.102" a="E"><vh>Communicating with external editors</vh></v>
 <v t="EKR.20040524104904.105"><vh>Tangling an outline: Producing Derived Files</vh></v>
 <v t="EKR.20040524104904.106"><vh>Untangling: updating an outline</vh></v>
-<v t="EKR.20040524104904.107"><vh>Tangling and Untangling: the Interface with the IDE</vh></v>
 <v t="EKR.20040524104904.108"><vh>Importing Files into Leo Outlines</vh></v>
 <v t="EKR.20040524104904.109"><vh>Exporting Files from Leo Outlines</vh></v>
 <v t="EKR.20040524104904.110"><vh>Quitting Leo</vh></v>
@@ -1889,68 +1884,33 @@
 <v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
 <v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
 <v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
-<v t="ekr.20050313102319"><vh>Adding and deleting comments in body text</vh></v>
+<v t="ekr.20050313102319" a="M"><vh>Adding and deleting comments in body text</vh></v>
 <v t="EKR.20040524104904.115"><vh>Creating nodes from body text</vh></v>
 <v t="EKR.20040524104904.116"><vh>Converting leading blanks and tabs in body text</vh></v>
 <v t="EKR.20040524104904.117"><vh>Executing Python scripts in body text</vh></v>
-<v t="EKR.20040524104904.118"><vh>Finding and changing text</vh>
-<v t="EKR.20040524104904.119"><vh> Script Find and Script Change</vh>
-<v t="EKR.20040524104904.120"><vh>How it works</vh></v>
-<v t="EKR.20040524104904.121"><vh>Using the initScriptFind script</vh></v>
-<v t="EKR.20040524104904.122"><vh>Ideas for using scripts</vh></v>
-</v>
-<v t="EKR.20040524104904.123"><vh>Show Context</vh></v>
-<v t="EKR.20040524104904.124"><vh>Ignore Case</vh></v>
-<v t="EKR.20040524104904.125"><vh>Mark Changes</vh></v>
-<v t="EKR.20040524104904.126"><vh>Mark Matches</vh></v>
-<v t="EKR.20040524104904.127"><vh>Pattern Match</vh></v>
-<v t="EKR.20040524104904.128"><vh>Reverse</vh></v>
-<v t="EKR.20040524104904.129"><vh>Search Body Text</vh></v>
-<v t="EKR.20040524104904.130"><vh>Search Headline Text</vh></v>
-<v t="EKR.20040524104904.131"><vh>Suboutline Only</vh></v>
-<v t="EKR.20040524104904.132"><vh>Whole Word</vh></v>
-<v t="EKR.20040524104904.133"><vh>Wrap Around</vh></v>
-</v>
-<v t="EKR.20040524104904.134"><vh>Finding locations in outlines corresponding to line in derived files</vh>
-<v t="EKR.20040524104904.135"><vh>Go To Line Number command</vh></v>
-</v>
+<v t="EKR.20040524104904.118" a="E"><vh>Finding and changing text</vh></v>
+<v t="ekr.20050902160924"><vh>Script search</vh></v>
+<v t="EKR.20040524104904.134" a="E"><vh>Go To Line Number</vh></v>
 <v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
-<v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh>
-<v t="EKR.20040524104904.138"><vh>Reformat Paragraph command</vh></v>
-</v>
+<v t="EKR.20040524104904.137" a="E"><vh>Reformatting paragraphs in body text</vh></v>
 <v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
-<v t="EKR.20040524104904.140"><vh>Specifying settings</vh>
-<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
-<v t="EKR.20040524104904.141"><vh>PHP keywords</vh></v>
-<v t="EKR.20040524104904.142"><vh>LaTex keywords</vh></v>
-</v>
+<v t="EKR.20040524104904.140" a="E"><vh>Specifying settings</vh></v>
 </v>
 <v t="EKR.20040524104904.143"><vh> The Outline Menu</vh>
 <v t="EKR.20040524104904.144"><vh> Checking outlines</vh></v>
-<v t="EKR.20040524104904.145"><vh> Creating and deleting headlines</vh></v>
-<v t="EKR.20040524104904.146"><vh> Cutting, pasting and deleting headlines</vh></v>
-<v t="EKR.20040524104904.147"><vh> Expanding and contracting headlines</vh></v>
-<v t="EKR.20040524104904.148"><vh> Hoisting &amp; De-hoisting headlines</vh></v>
-<v t="EKR.20040524104904.149"><vh> Marking headlines</vh></v>
-<v t="EKR.20040524104904.150"><vh> Moving, sorting and reorganizing headlines</vh></v>
-<v t="EKR.20040524104904.27"><vh>Cloning nodes</vh></v>
+<v t="EKR.20040524104904.145"><vh> Creating &amp; cloning nodes</vh></v>
+<v t="EKR.20040524104904.146"><vh> Cutting, pasting and deleting nodes</vh></v>
+<v t="EKR.20040524104904.147"><vh> Expanding and contracting nodes</vh></v>
+<v t="EKR.20040524104904.149"><vh> Marking nodes</vh></v>
+<v t="EKR.20040524104904.150"><vh> Moving, sorting and reorganizing nodes</vh></v>
+<v t="EKR.20040524104904.148"><vh> Hoisting &amp; De-hoisting nodes</vh></v>
 </v>
-<v t="EKR.20040524104904.151"><vh> The Window Menu</vh>
-<v t="EKR.20040524104904.152"><vh> Resizing panes</vh></v>
-<v t="EKR.20040524104904.153"><vh> Cascading &amp; minimizing windows</vh></v>
-<v t="EKR.20040524104904.154"><vh>Toggling the active pane</vh></v>
-<v t="EKR.20040524104904.155"><vh>Toggling the orientation of the Leo window</vh></v>
-<v t="EKR.20040524104904.156"><vh>Comparing files</vh></v>
-</v>
-<v t="EKR.20040524104904.157"><vh>The Help Menu</vh>
-<v t="EKR.20040524104904.158"><vh>Getting Leo's version</vh></v>
-<v t="EKR.20040524104904.159"><vh>Reading documentation</vh></v>
-<v t="EKR.20040524104904.160"><vh>Configuring Leo</vh></v>
-</v>
+<v t="EKR.20040524104904.151" a="E"><vh> The Window Menu</vh></v>
+<v t="EKR.20040524104904.157" a="E"><vh>The Help Menu</vh></v>
 <v t="ekr.20050901102400.1"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.161" a="M"><vh>Chapter 6: Leo and Literate Programming</vh>
+<v t="EKR.20040524104904.161" a="MTV"><vh>Chapter 6: Leo and Literate Programming</vh>
 <v t="ekr.20050901101608.3"><vh>@rst design.html</vh>
 <v t="ekr.20050901101949"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.162"><vh>Why I like Literate Programming</vh>
@@ -1979,7 +1939,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.4"><vh>Chapter 7: Scripting Leo with Python</vh>
-<v t="ekr.20040403171740" a="E"><vh>@rst scripting.html</vh>
+<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
 <v t="ekr.20050812134441.1"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050901184158"><vh>@rst-ignore Important: you can run these examples!</vh></v>
 <v t="ekr.20040403183229" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3122206e616d653d22687474702d6e6f64652d6d61726b65722d31223e710155043c2f613e71025d710328553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710455063c2f6469763e71055d71062855063c626f64793e710755073c2f626f64793e71085d71092855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710a55073c2f68746d6c3e710b4e65656555243c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e0a710c55493c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643122206e616d653d226f76657276696577223e4f766572766965773c2f613e3c2f68313e0a710d652e"><vh>Overview</vh></v>
@@ -2102,12 +2062,12 @@
 <v t="ekr.20050901102400.4"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.245" a="EM"><vh>Chapter 9: History of Leo</vh>
-<v t="ekr.20050901101608.5" a="E"><vh>@rst history.html</vh>
+<v t="EKR.20040524104904.245"><vh>Chapter 9: History of Leo</vh>
+<v t="ekr.20050901101608.5"><vh>@rst history.html</vh>
 <v t="ekr.20050901102147"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050902105852"><vh>Beginnings</vh></v>
 <v t="ekr.20050902105852.1"><vh>Breakthrough</vh></v>
-<v t="ekr.20050902105852.2" a="E"><vh>Apple and YellowBox</vh></v>
+<v t="ekr.20050902105852.2"><vh>Apple and YellowBox</vh></v>
 <v t="ekr.20050902105852.3"><vh>Borland C++</vh></v>
 <v t="ekr.20050902105852.4"><vh>Discovering Python</vh></v>
 <v t="ekr.20050902105852.5"><vh>SourceForge</vh></v>
@@ -2116,9 +2076,9 @@
 <v t="ekr.20050902105852.8"><vh>Leo 3.x: Continuous improvement</vh></v>
 <v t="ekr.20050902105852.9"><vh>Leo 4.0: Eliminating error 'recovery'</vh></v>
 <v t="ekr.20050902105852.10"><vh>Leo 4.1: The debut of gnx's</vh></v>
-<v t="ekr.20050902105852.11" a="TV"><vh>Leo 4.2: Complete at last</vh></v>
+<v t="ekr.20050902105852.11"><vh>Leo 4.2: Complete at last</vh></v>
 <v t="ekr.20050902105852.12"><vh>Leo 4.3 Settings</vh></v>
-<v t="ekr.20050902100834" a="E"><vh>@rst-ignore-tree Details</vh>
+<v t="ekr.20050902100834"><vh>@rst-ignore-tree Details</vh>
 <v t="EKR.20040524104904.247"><vh>Versions</vh></v>
 <v t="EKR.20040524104904.248"><vh>Designing @file trees</vh>
 <v t="EKR.20040524104904.249"><vh>Deciding to do Leo2</vh></v>
@@ -2666,35 +2626,53 @@ Notes:
 3. Files derived from @asis trees contain _nothing_ not contained in body text (or @@ headlines).  In particular, if body text does not end in a newline, the first line from the next node will concatenated to the last line of the preceding node.</t>
 <t tx="EKR.20040524104904.99"></t>
 <t tx="EKR.20040524104904.100"></t>
-<t tx="EKR.20040524104904.101">The New command creates a new Leo main window.  The Open command opens an existing Leo file and shows it in a main window.  The Close command closes the topmost Leo window, and gives you an opportunity to save your work if you haven't yet done so.
+<t tx="EKR.20040524104904.101">-   The ``New`` command creates a new Leo main window.
 
-The Save, Save As and Save To commands save the topmost Leo window to a file.  The Save As command changes the name of the outline being edited; the Save To command does not.
+-   The ``Open`` command opens an existing Leo file and shows it in a main window.
 
-The Revert command reloads a file, discarding any changes made to the file since it was last saved.
+-   The ``Close`` command closes the topmost Leo window,
+    giving you an opportunity to save your work if you haven't yet done so.
 
-New in Leo 2.5: The Recent Files... command brings up a submenu containing a list of recently opened files.  Choosing an item in this submenu opens the selected file or brings it to the front. Leo adds files to this submenu even if leoConfig.txt is missing or read-only, but those additions will not be remembered unless leoConfig.txt is present and writable.
+-   The ``Save``, ``Save As`` and ``Save To`` commands save the Leo window to a file.
+    The ``Save A``s command changes the name of the outline being edited;
+    the ``Save To`` command does not.
 
-New in Leo 4.0: The Clear Recent Files command deletes all entries in the Recent Files submenu except the most recent file.  The files themselves are not affected, just the menu entries.
+-   The ``Revert`` command reloads a file, discarding any changes made to the file since it was last saved.
 
-The following four file commands are located in the File:Read/Write submenu.
+-   The ``Recent Files`` command brings up a submenu containing a list of recently
+    opened files. Choosing an item in this submenu opens the selected file or brings
+    it to the front.
 
-Read Outline Only: reads an outline using only the .leo file, not any files derived from @file nodes.  This command is useful for reverting a project to a previously saved state.
+-   The ``Clear Recent Files`` command deletes all entries in the Recent
+    Files submenu except the most recent file. The files themselves are not
+    affected, just the menu entries.
 
-Read @file Nodes: updates all @file nodes in an outline.  This ensures that the state of an outline matches all files derived from @file nodes.  Included for completeness.  This happens automatically when a .leo file is first read, and it also happens automatically when Leo2 is reactivated.
+The following commands are located in the ``Read/Write`` menu, part of the
+``File`` menu.
 
-Write Outline Only: saves an outline without writing any @file trees.  Useful for inserting an @file node into an outline without modifying a derived file with the same name.
+-   The ``Read Outline Only`` command reads an outline using only the .leo file, not any files derived
+    from ``@file`` nodes. This command is useful for reverting a project to a
+    previously saved state.
 
-Write @file Nodes: forces an update of all @file trees.  Surprisingly useful.
+-   The ``Read @file Nodes`` command updates all ``@file`` nodes in an outline.
+    This ensures that the state of an outline matches all files derived
+    from ``@file`` nodes. 
 
-New in Leo 3.12:  The Write Dirty @file Nodes command writes all @file trees that have been changed.
+-   The ``Write Outline Only`` command saves an outline without writing any ``@file``
+    trees. Useful for inserting an @file node into an outline without modifying a
+    derived file with the same name.
 
-New in Leo 4.0: The Write 4.x Derived Files command and Write 3.x Derived Files command work just like the Write @file Nodes command, except that they write the indicated format off derived file.  In contrast, the Write @file Nodes command writes 3.x format derived files if and only if the write_old_format_derived_files = 1 in leoConfig.txt.  Auto Save: all three of these commands automatically save the outline (the .leo file) if any derived file was actually written.  This is necessary so that information in the .leo file always remains in synch with all derived files.</t>
-<t tx="EKR.20040524104904.102">The Open With command allows you to communicate with external editor.  See the child of this node for full details.</t>
-<t tx="EKR.20040524104904.103">The Open With command allows you to communicate with external editor.  When you select this command Leo creates a temporary file and invokes an external program.  Leo periodically checks whether this temporary file has changed; Leo changes the corresponding node in the outline if so.
+-   The ``Write @file Nodes`` command forces an update of all @file trees.
 
-You must create the entries in the Open With submenu. This would typically be done in a hook routine, using the createOpenWithMenuFromTable routine described in the child of this node.
-
-The @file mod_open_with.py node in LeoPy.leo gives a complete example of handling the Open With menu.</t>
+-   The ``Write Dirty @file Nodes`` command writes all ``@file`` trees that have been changed.</t>
+<t tx="EKR.20040524104904.102">The ``Open With`` command allows you to communicate with external editor. When
+you select this command Leo creates a temporary file and invokes an external
+program. Leo periodically checks whether this temporary file has changed; Leo
+changes the corresponding node in the outline if so. You must create the entries
+in the Open With submenu. This would typically be done in a hook routine, using
+the createOpenWithMenuFromTable routine described in the child of this node. The
+``@file mod_open_with.py`` node in ``LeoPlugins.leo`` gives a complete example
+of handling the ``Open With`` menu.</t>
 <t tx="EKR.20040524104904.104">createOpenWithMenuFromTable (self,table)
 
 This method adds items to submenu of the Open With menu item in the File menu.
@@ -2723,107 +2701,204 @@ table = (
 
 top().frame.createOpenWithMenuFromTable(table)
 	</t>
-<t tx="EKR.20040524104904.105">The Tangle, Tangle All and Tangle Marked commands create derived files from portions of an outline.  These commands indent and format the derived files so that they are easy to read and so that it is clear what sections produced the code.  The .c file in the Examples folder shows the code produced by the Tangle commands.
+<t tx="EKR.20040524104904.105">The ``Tangle``, ``Tangle All`` and ``Tangle Marked`` commands create derived
+files from portions of an outline. These commands indent and format the derived
+files so that they are easy to read and so that it is clear what sections
+produced the code. The .c file in the Examples folder shows the code produced by
+the Tangle commands. The ``Tangle`` command tangles only the selected portion of
+the outline, the ``Tangle All`` command tangles the entire outline, and the
+``Tangle Marked`` command tangles only marked headlines.
 
-The three Tangle commands are identical except for how much of the outline is tangled.  The Tangle command tangles only the selected portion of the outline, the Tangle All command tangles the entire outline, and the Tangle Marked command tangles only marked headlines.
+The ``Tangle`` commands create a derived file, call it F, from each ``@root``
+node. This process is like macro expansion. The contents of F are simply the
+body text of the ``@root node``, with each section reference replaced by its
+definition. Substitution continues until all references to sections are replaced
+with their definitions. By default, ``Tangle`` commands look for section
+definitions only in the suboutline containing the ``@root`` directive being
+tangled. That is, all sections are assumed to be defined either in the body text
+of the headline, say h, containing the
+@root directive, or in the body texts of the descendants of h.
+The ``@unit`` directive changes the default scope of the tangle command, while
+the ``@ignore`` directive causes the tangle commands to ignore a subtree. For
+more details, see: `Tangling @root trees with the Tangle commands`_</t>
+<t tx="EKR.20040524104904.106">The ``Untangle``, ``Untangle All`` and ``Untangle Marked`` commands are the
+reverse of the corresponding ``Tangle`` commands. They update an outline based
+on changes made to one or more derived files. These are exceptionally useful
+commands. For example, suppose you create a new part of the outline and
+``Tangle`` it for the first time. When you compile the resulting derived files
+for the first time, you are likely to get many syntax errors. You could fix
+those errors in the outline and Tangle the outline again, but there is a much
+easier way: you fix the errors in the derived files using the compiler's editor,
+then run the untangle command on the part of the outline that created the
+derived file. The ``Untangle`` command updates the selected outline to match the
+changes in the derived files. It's as simple as that. The ``Untangle`` command
+marks all the nodes in the outline that it updates; you can examine all such
+nodes with the ``Go To Next Marked`` command in the Outline menu. You cannot use
+``Untangle`` to update doc parts, or leading comments in code parts or "trivial"
+whitespace in code parts. This is a limitation of the ``Untangle`` command that
+cannot be fixed; ``Untangle`` has no way of knowing whether leading comments
+came from doc parts or are just leading comments.
 
-Derived files are usually .h or .c files (C), .cpp files (C++), or .m files (Objective-C) files, and they can also be other files such as "make" or "help" files.
+``Untangle`` never changes the structure of an outline; it never inserts,
+deletes or moves nodes. Don't attempt to change the structure of an outline by
+modifying derived files; it won't work. Also, never delete, move or alter the
+sentinel lines in derived files written by the Tangle command. Such lines start
+with ``///`` followed by a section name. If you change the section name in a
+sentinel line ``Untangle`` will not update the code in the outline (with the old
+name) that generated the renamed section. Untangle now warns about sections that
+appear in a derived file but not in the outline. Untangle has no trouble with
+changed section references in derived files; it is only changed sentinel lines
+that cause problems. Cloned nodes that generate code in several files may cause
+problems for ``Untangle`` if not all the code is changed the same way in derived
+files. If ``Untangle`` is run separately on these derived files, Untangle will
+update all cloned nodes each time it is run, so only the code in the last
+``Untangle`` run will take effect. Therefore, the only reliable way to update
+text in cloned nodes is to make the change in the .leo file rather than the
+derived files.</t>
+<t tx="EKR.20040524104904.108">The ``Import`` commands do not attempt to do perfect translations; they merely automate the bulk of the drudgery:
 
-The Tangle commands create a derived file, call it F, from each @root node.  This process is very much like macro expansion.  The contents of F are simply the body text of the @root node, with each section reference replaced by its definition.  Substitution continues until all references to sections are replaced with their definitions.
+-   The ``Import to @file`` command creates an ``@file`` node from a file.
 
-By default, Tangle commands look for section definitions only in the suboutline containing the @root directive being tangled.  That is, all sections are assumed to be defined either in the body text of the headline, say h, containing the @root directive, or in the body texts of the descendants of h.
+-   The ``Import to @root`` command creates an ``@root node`` from a file.
 
-The @unit directive changes the default scope of the tangle command, while the @ignore directive causes the tangle commands to ignore a subtree.  For more details, see the discussion of the @unit and @ignore commands in Chapter called "Using noweb, CWEB and directives". 
-</t>
-<t tx="EKR.20040524104904.106">The Untangle, Untangle All and Untangle Marked commands are the reverse of the corresponding Tangle commands.  They update an outline based on changes made to one or more derived files.  These are exceptionally useful commands.
+-   The ``Import CWEB Files`` command creates an @file node from a `CWEB`_ file.
 
-For example, suppose you create a new part of the outline and Tangle it for the first time.  When you compile the resulting derived files for the first time, you are likely to get many syntax errors.  You could fix those errors in the outline and Tangle the outline again, but there is a much easier way:  you fix the errors in the derived files using the compiler's editor, then run the untangle command on the part of the outline that created the derived file.  The Untangle command updates the selected outline to match the changes in the derived files.  It's as simple as that.  By the way, the Untangle command marks all the nodes in the outline that it updates, and you can examine all such nodes with the Go To Next Marked command in the Outline menu.
+-   The ``Import noweb Files`` command creates an @file node from a `noweb`_ file.
 
-You cannot use Untangle to update doc parts, or leading comments in code parts or "trivial" whitespace in code parts.  This is a limitation of the Untangle command that cannot be fixed; Untangle has no way of knowing whether leading comments came from doc parts or are just leading comments.
+-   The Import Derived File command imports all the nodes in a derived file into the outline.
+    Unlike the read commands, the command preserves no outline structure.
 
-Untangle never changes the structure of an outline;  it never inserts, deletes or moves nodes.  Don't attempt to change the structure of an outline by modifying derived files; it won't work.  Also, never delete, move or alter the sentinel lines in derived files written by the Tangle command.  Such lines start with /// followed by a section name.
+-   The ``Import Flattened Outline`` command converts plain text written in ``MORE`` format to an outline.
 
-If you change the section name in a sentinel line Untangle will not update the code in the outline (with the old name) that generated the renamed section.  Untangle now warns about sections that appear in a derived file but not in the outline.  Untangle has no trouble with changed section references in derived files; it is only changed sentinel lines that cause problems.
+The ``Import Flattened Outline`` command brings up a dialog which will accept at
+most one file. If that file contains MORE-format text it creates an outline
+corresponding to that text. ``MORE`` is a now-defunct outliner program. ``MORE``
+represents outlines as follows. Headlines are denoted by a leading ``+`` or
+``-`` character, preceding by zero or more tabs that denote the level of the
+headline. Body text follows its headline, with no indentation. The original
+``MORE`` format did not escape lines in the body text that started with ``+`` or ``-``.
+Leo escapes such characters by preceding ``+``, ``-`` or backslash with a
+backslash.</t>
+<t tx="EKR.20040524104904.109">-   The ``Outline To CWEB`` command creates a `CWEB`_ file from the selected outline.
 
-Cloned nodes that generate code in several files may cause problems for Untangle if not all the code is changed the same way in derived files.  If Untangle is run separately on these derived files, Untangle will update all cloned nodes each time it is run, so only the code in the last Untangle run will take effect.  Therefore, the only reliable way to update text in cloned nodes is to make the change in the .leo file rather than the derived files.</t>
-<t tx="EKR.20040524104904.107">When using the Tangle and Untangle commands there are several issues to be aware of concerning your IDE (Integrated Development Environment). This section applies particularly to the Borland IDE; similar remarks apply to other IDE's.
+-   The ``Outline TO noweb`` command creates a `noweb`_ file from the selected outline.
 
-Assuming you have added a .cpp file to your project, you update the file with the Tangle command.  When you switch to the IDE you will get a dialog asking whether you want to update the file.  Say yes and rebuild or remake.
+-   The ``Flatten Outline`` command creates a text file in ``MORE`` format from the selected outline.
+    See the previous section for a discussion of ``MORE`` format.
 
-You won't get the dialog unless the file is already open in the IDE.  There is a bug in the Borland IDE: the dialog doesn't come to the front, so it can be easy to miss.
+-   The ``Remove Sentinels`` command removes all sentinel lines from a file derived from an ``@file`` node.
 
-Now suppose you compile the file and get 20 errors all over the .cpp file. You fix the errors _in the IDE_, save the file, switch to Leo, and run the Untangle command. All your changes will appear in the outline! Each changed node will be marked by the Untangle command.
-
-If you like you can use the Go To Next Marked command to find each changed node.
-</t>
-<t tx="EKR.20040524104904.108">Note: the following describe the import and export commands found in leo.py.  This documentation notes differences with the Windows version of Leo.
-
-The Import to @file command creates an @file node from a file.  The Import to @root command creates an @root node from a file.  These commands do not attempt to do perfect translations; they merely automate the bulk of the drudgery.  The Import to @root command is called Import Files in the Borland/Windows version of Leo.  The Import to @file command does not exist in the Borland/Windows version of Leo.
-
-The Import CWEB Files command creates an @file node from a CWEB file.  This command does not exist in the Borland/Windows version of Leo.
-
-The Import noweb Files command creates an @file node from a CWEB file.  The Borland/Windows version of this command creates an @root node.
-
-The Import Flattened Outline command (called Import MORE Text in the Borland/Windows version of Leo) converts plain text written in MORE format to an outline. This command brings up a dialog which will accept at most one file. If that file contains MORE-format text it creates an outline corresponding to that text.
-
-MORE is a now- defunct Macintosh outliner program. MORE represents outlines as follows. Headlines are denoted by a leading + or - character, preceding by zero or more tabs that denote the level of the headline. Body text follows its headline, with no indentation. The original MORE format did not escape lines in the body text that started with + or -. Leo escapes such characters by preceding +, - or backslash with a backslash.
-
-New in Leo 4.0: The Import Derived File command imports all the nodes in a derived file into the outline.  Unlike the read commands, no outline structure is preserved.  This command can import either 3.x or 4.x derived files.  This command is necessary in version 4.0 because there is no other way to read derived files that are out-of-synch with a .leo file.</t>
-<t tx="EKR.20040524104904.109">The Outline To CWEB command creates a CWEB file from the selected outline.
-
-The Outline TO noweb command creates a noweb file from the selected outline.
-
-The Flatten Outline command creates a text file in MORE format from the selected outline.  See the previous section for a discussion of the MORE format.
-
-The Remove Sentinels command removes all sentinel lines from a file derived from an @file node.</t>
-<t tx="EKR.20040524104904.110">The Quit command causes Leo to exit.   You may also exit Leo by closing the main window.  In either event you will be prompted to save any file that has been altered but not saved. </t>
+-   The ``Weave`` Command formats the selected text and writes it to a file.</t>
+<t tx="EKR.20040524104904.110">The ``Quit`` command causes Leo to exit. You may also exit Leo by closing the
+main window. You will be prompted to save any file that has been altered but not
+saved.</t>
 <t tx="EKR.20040524104904.111"></t>
-<t tx="EKR.20040524104904.112">For leo.py version 2.0 and above:
-
-leo.py supports unlimited Undo and Redo.  All outline operations, including the Change All command and all operations and commands that affect body text may be undone and redone.  Only the "Read @file Nodes" command is undoable; it clears the undo state. This command raises a dialog to allow the user to cancel.
-
-Think of actions that may be Undone or Redone as a string of beads.  A "bead pointer" points to the present bead.  Performing an operation creates a new bead after the present bead and removes all following beads.  Undoing an operation moves the bead pointer backwards; redoing an operation moves the bead pointer forwards.  The Undo command is disabled when the bead pointer moves in front of the first bead; the Redo command is disabled when the bead pointer points to the last bead.
-
-For all Borland versions:
-
-The body pane supports unlimited undo.  However, you can not undo an operation affecting body text after selecting a new headline.  You can undo or redo the last operation involving the outline itself.  You can not undo operations affecting headline text.</t>
-<t tx="EKR.20040524104904.113">Leo supports the standard editing commands that appear in the edit menu: Undo, Cut, Copy, Paste and Clear. These commands work with either headline (when a headlines text is being edited) or body text. Text may be cut, copied and pasted between headline text and body text.
-
-The Select All command selects all text in the body pane.
+<t tx="EKR.20040524104904.112">Leo supports unlimited undo and redo. Think of actions that may be undone or
+redone as a string of beads. A "bead pointer" points to the present bead.
+Performing an operation creates a new bead after the present bead and removes
+all following beads. Undoing an operation moves the bead pointer backwards;
+redoing an operation moves the bead pointer forwards. The ``Undo`` command is
+disabled when the bead pointer moves in front of the first bead; the ``Redo``
+command is disabled when the bead pointer points to the last bead.
 </t>
-<t tx="EKR.20040524104904.114">The Shift Left and Shift Right commands shift selected lines in the body text left or right one tab position. The entire line is shifted if any characters of the line are selected.</t>
+<t tx="EKR.20040524104904.113">Leo supports the standard editing commands: ``Cut``, ``Copy``, ``Paste``,
+``Clear`` and ``Select All``. These commands work with either headline or body
+text.
+</t>
+<t tx="EKR.20040524104904.114">The ``Shift Left`` and ``Shift Right`` commands shift selected lines in the body
+text left or right one tab position. These commands shift the entire line if any
+characters in that line are selected.</t>
 <t tx="EKR.20040524104904.115">The Extract, Extract Section and Extract Section Names commands create child nodes whose headline is the first line of the selected body text.
 
-The Extract command creates a new node whose headline is the first line of selected body text and whose body is all other lines of selected text.  All selected text is deleted from the original body text. 
+-   The ``Extract command`` creates a new node whose headline is the first line of selected body text and
+    whose body is all other lines of selected text.
+    Previously selected text is deleted from the original body text. 
 
-The Extract Section command creates a new node whose headline is the first line of selected text and whose body is @code followed by all the other lines of selected text.  All selected text lines except the first line are deleted from the original body text. This command is enabled only if the first line contains a section name (enclosed in angle brackets) on a line by itself.
+-   The ``Extract Section command`` creates a new node whose headline is the first line of selected text and
+    whose body is ``@code`` followed by all the other lines of selected text.
+    All selected text lines except the first line are deleted from the original body text.
+    This command is enabled only if the first line contains nothing but section name.
 
-The Extract Section Names command creates one or more child nodes, one for each section name (enclosed in angle brackets) in the selected body text.  The headline of each created node is the section name and the body text of each created node is just @code followed by a newline.</t>
-<t tx="EKR.20040524104904.116">New in leo.py v2.5.
+-   The ``Extract Section Names`` command creates one or more child nodes,
+    one for each section name in the selected body text.
+    The headline of each created node is the section name; the body text is ``@code`` followed by a newline.</t>
+<t tx="EKR.20040524104904.116">-   The Convert Tabs command converts leading tabs to blanks in a single node.
+-   The Convert Blanks command converts blanks to tabs in a single node.
+-   The Convert All Tabs converts leading tabs to blanks throughout the selected tree.
+-   The Convert All Blanks command converts leading blanks to tabs throughout the selected tree.
 
-The Convert Tabs command converts leading tabs to blanks in a single node.  The Convert Blanks command converts blanks to tabs in a single node.  The Convert All Tabs converts leading tabs to blanks throughout the selected tree.  The Convert All Blanks command converts leading blanks to tabs throughout the selected tree.
+All these commands convert between tabs and blanks using the tab width presently in effect.</t>
+<t tx="EKR.20040524104904.117">The ``Execute Script`` command executes body text as a Python script. Leo
+execute the selected text, or the entire body text if no text is selected. The
+``Execute Script`` command pre-defines the values ``c``, ``g`` and ``p`` as
+follows:
 
-All these commands convert between tabs and blanks using the tab width shown in the Settings dialog.</t>
-<t tx="EKR.20040524104904.117">The Execute Script command executes body text as a Python script.  Leo execute the selected text, or the entire body text if no text is selected.
+- ``c`` is the commander of the outline containing the script.
+- ``g`` is the leoGlobals modules.
+- ``p`` is ``c.currentPosition()``.
 
-Scripts are executed in a "pristine" environment, that is, with __builtins__ as both the local and global environments.
+**Important**: Body text may contain Leo directives and section references. You
+can now use all of Leo's features to organize scripts that you execute
+interactively. Section definitions must appear in the node containing the script
+or in descendant nodes.
 
-New in version 4.1:  Body text may now contain @directives and section references. This is a major step forward: you can now use all of Leo's features to organize scripts that you execute interactively.
+Leo preprocesses all scripts by simulating the writing of a derived file to a
+string. The ``Execute Script`` command sets ``app.scriptDict["script1"]`` to the
+value of the script before preprocessing, and sets ``app.scriptDict["script2"]``
+to the value of the script after preprocessing. Scripts may examine and change
+app.scriptDict as they please.</t>
+<t tx="EKR.20040524104904.118">The following check boxes options appear in the search dialog and control the operations of the find and change commands.
 
-Section definitions must appear in the node containing the script or in descendant nodes.  Leo "preprocesses" all scripts by simulating the writing of a derived file to a string.
+Show Context
+    When checked, the ``Find and Change`` commands show additional context information when printing matches.
 
-The Execute Script command sets app.scriptDict["script1"] to the value of the script before preprocessing, and sets app.scriptDict["script2"] to the value of the script after preprocessing.  Scripts may examine and change app.scriptDict as they please.</t>
-<t tx="EKR.20040524104904.118">The Edit menu contains four commands for searching and replacing text.  The Find and Find Again commands search through the outline for text and the Change and Change, Then Find commands change selected text.
+Ignore Case
+    When checked, the ``Find and Change`` commands ignore the case of alphabetic characters when determining matches.
 
-New in Leo 4.1:  The Esc key dismisses the dialog.  Pressing the enter key is the same a pressing the Find button.
+Mark Changes
+    When checked, the ``Change`` command marks all headlines whose headline or body text are changed by the command.
 
-The following check boxes options appear in the search dialog and control the operations of the find and change commands.
-</t>
-<t tx="EKR.20040524104904.119">@nocolor
+Mark Matches
+    When checked, the ``Find and Change`` commands mark all headlines in which a match is found with the pattern.
 
-New in 4.1: Leo now supports scripts in Leo's Find/Change dialog.
+Pattern Match
+    When checked, the ``Find and Change`` commands treat several characters specially in the find pattern.
+    
+    - '*'  matches any sequence of zero or more characters.
+    - '.'  matches any single character.
+    - '^'  matches a newline at the start of a pattern.
+    - '$'  matches a newline at the end of a pattern.
 
-Leo's find panel now contains the Script Search radio button and the Script
+Examples::
+
+    "^abc$" matches lines that only contain "abc".
+    "^a" matches any line starting with "A".
+    "a$" matches any line ending with "a".
+    "^*$" matches any line at all.
+
+Reverse
+    When checked, the ``Find and Change`` commands search backward through the file.
+
+Search Body Text
+    When checked, the ``Find and Change`` commands search body text.
+
+Search Headline Text
+    When checked, the ``Find and Change`` commands search headline text.
+
+Suboutline Only
+    When checked, the ``Find and Change`` commands search only the currently selected headline and its offspring.
+
+Whole Word
+    When checked, the find pattern must match an entire word.
+    Words consist of an alphabetic character or underscore, followed by zero or more
+    alphabetic characters, numbers or underscores.
+
+Wrap Around
+    When checked, the ``Find and Change`` commands continues at the top of the file when
+    the command reaches the bottom of the file.
+    For reverse searches, the find or change command continues at the bottom of the file when
+    the command reaches the top of the file.</t>
+<t tx="EKR.20040524104904.119">Leo's find panel contains the Script Search radio button and the Script
 Change checkbox. When the Script Search radio button is selected Leo treats the
 contents of the Search Text as a script to execute whenever any kind of Find
 command is executed. Similarly, when the Script Change checkbox is selected Leo
@@ -2917,299 +2992,242 @@ within a Leo outline. These scripts could as easily traverse your file system
 as the Leo outline. But notice: scripts could pull data from the file system
 into the outline so that you can see the effects of changes as the scripts
 operate. Again, this can all happen interactively if you like.</t>
-<t tx="EKR.20040524104904.123">When checked, the Find and Change commands show additional context information when printing matches.</t>
-<t tx="EKR.20040524104904.124">When checked, the Find and Change commands ignore the case of alphabetic characters when determining matches.
+<t tx="EKR.20040524104904.134">The ``Go To Line Number`` command selects the locations in your outlines corresponding to a line in a derived file.
 </t>
-<t tx="EKR.20040524104904.125">When checked, the Change command marks all headlines whose headline or body text are changed by the command.
-</t>
-<t tx="EKR.20040524104904.126">When checked, the Find and Change commands mark all headlines in which a match is found with the pattern.
-</t>
-<t tx="EKR.20040524104904.127">When checked, the Find and Change commands treat several characters specially in the find pattern.  The '*' character matches any sequence of zero or more characters.  The '.' character matches any single character. The '^' character at the start of a pattern, or a '$' character at the end of a pattern matches a newline.
-
-Examples:
-The pattern "^abc$" matches lines that only contain "abc".
-The pattern "^a" matches any line starting with "A".
-The pattern "a$" matches any line ending with "a".
-The pattern "^*$" matches any line at all.</t>
-<t tx="EKR.20040524104904.128">When checked, the Find and Change commands search backward through the file.
-</t>
-<t tx="EKR.20040524104904.129">When checked, the Find and Change commands search body text.
-</t>
-<t tx="EKR.20040524104904.130">When checked, the Find and Change commands search headline text.
-</t>
-<t tx="EKR.20040524104904.131">When checked, the Find and Change commands search only the currently selected headline and its offspring.
-</t>
-<t tx="EKR.20040524104904.132">When checked, the find pattern must match an entire word.  Words consist of an alphabetic character or underscore, followed by zero or more alphabetic characters, numbers or underscores.
-</t>
-<t tx="EKR.20040524104904.133">When checked, the Find and Change commands continues at the top of the file when the command reaches the bottom of the file.  For reverse searches, the find or change command continues at the bottom of the file when the command reaches the top of the file.
-</t>
-<t tx="EKR.20040524104904.134">The Go To Line Number command selects the locations in your outlines corresponding to a line in a derived file.  See the child of this node for full details.</t>
-<t tx="EKR.20040524104904.135">The present version should be quite usable for its main purpose: tracking
-down lines corresponding to error messages. In particular, except for possible
-pathological cases, Leo should always put the cursor in the node containing the
-referenced line. Possible pathologies involve asking Leo to "go to" a sentinel
-line. It won't always be clear what node contains the sentinel.
-
-I am well aware that Leo may not put the cursor on the proper line within
-the vnode, but human beings being the excellent pattern matchers that we are,
-we should be easily be able to find a line within a node.
-
-Notes in LeoPy.leo, in the node called (Go to line number), discuss a variety
-of issues that may cause the cursor not to go to the "proper" line. It also
-discusses a better way to position the cursor.
-
-Internally, there are two main versions of this command: one for @silentfile
-trees, and one for @rawfile and @file trees. In the first case, there are no
-sentinels in the derived file, so Leo just steps through the outline. This is
-the easy case, and should work well. In the second case (@rawfile and @file
-trees), the derived file contains sentinels, and Leo uses those sentinels to
-determine in what vnode the given line occurs.
-
-In this second case, Leo can almost always position the cursor within the
-proper node, because Leo just scans back in the derived file looking for the
-proper @+node sentinel. However, in order to "count" lines in the derived file
-(to place the cursor properly _within_ the body text) Leo must recreate exactly
-the logic used by the atFile.read logic, and that isn't easy. Moreover, there
-is _no_ guarantee that the derived file is unchanged from when it was written;
-after all, if you get syntax errors you tend to want to fix them ;-)
-
-Please do not report bugs in this command, unless the bug involves a
-crash, which would be reported both in Leo's log pane and in the console
-window. This command will probably be improved in 3.10.</t>
-<t tx="EKR.20040524104904.136">New in leo.py 3.11: Insert Body Time/Date and Insert Headline Time/Date
-commands. These are in the Edit Body and Edit Headline menus respectively.
-These commands insert the formatted time &amp; date into t body or headline text.
-You must be editing a headline to be able to insert the time/date into the
-headline. If you aren't Leo will say: "Edit headline to append date/time"
-
-Leo allows you to specify your preferred format for time and date using settings
-in leoConfig.leo/.txt: body_time_format_string in &lt;&lt; body pane options &gt;&gt; and
-headline_time_format_string in &lt;&lt; outline pane options&gt;&gt;
-
-These settings specify the format string passed to time.strftime(format). For a
-complete list of the format options see
+<t tx="EKR.20040524104904.136">The ``Insert Body Time/Date`` and ``Insert Headline Time/Date`` commands insert
+formatted time and date into body or headline text. You must be editing a
+headline to be able to insert the time/date into the headline.
+The `` body_time_format_string`` and ``headline_time_format_string`` settings
+specify the format of the inserted text. These settings are the format string
+passed to time.strftime. For a complete list of the format options see
 http://www.python.org/doc/current/lib/module-time.html
-
 If the format specified by either of these two settings is erroneous the
-"%m/%d/%Y %H:%M:%S" format is used by default, resulting in a time/date format
-like 1/30/2003 8:31:55</t>
-<t tx="EKR.20040524104904.137">The Reformat Paragraph command allows you to easily reformat body text.  See the child of this node for full details.</t>
-<t tx="EKR.20040524104904.138">New in leo.py v3.9
+``"%m/%d/%Y %H:%M:%S"`` format is used by default, resulting in a time/date
+format like::
 
-Whether importing text from an outside source, typing in text, or modifying text, eventually you end up with a block of text in which some lines are too long and some are too short.  The Reformat Paragraph command will rearrange the words in a text paragraph to fill each line as full as possible, up to the @pagewidth setting.
+    1/30/2003 8:31:55</t>
+<t tx="EKR.20040524104904.137">The Reformat Paragraph command rearranges the words in a text paragraph to fill
+each line as full as possible, up to the ``@pagewidth`` setting. A paragraph is
+delimited by blank lines, Leo directives, and (of course) start and end of text
+in a node. The width of the line used by the reformatting operation is governed
+by ``@pagewidth`` and the indentation that would be applied to the node when
+tangled (as part of a ``@root``) or written (as part of a ``@file``).
 
-A paragraph is delimited by blank lines, Leo directives, and (of course) start and end of text in a node.  The width of the line used by the reformatting operation is governed by @pagewidth and the indentation that would be applied to the node when tangled (as part of a @root) or written (as part of a @file).
+The command operates on the paragraph containing the insert cursor. If the
+insert cursor is on a blank line or directive, nothing happens. If the cursor is
+on a line containing text, then the paragraph containing that text line is
+reformatted and the insert cursor is moved to the next paragraph.
 
-The command operates on the paragraph containing the insert cursor.  If the insert cursor is on a blank line or directive, nothing happens.  If the cursor is on a line containing text, then the paragraph containing that text line is reformatted and the insert cursor is moved to the next paragraph.
+**Note**: Hanging indentation is preserved. This is most useful for bulleted or
+numbered lists, such as::
 
-Be careful that you don't do this on source code!  Of course, if you do reformat something that should have been left alone, then just Undo.
+  1. This is the first paragraph,
+     and it has a hanging indentation.
 
-NOTE: Lines with hanging indentation are handled so that the hanging indentation is preserved.  This is most useful for bulleted or numbered lists, such as:
+  2. This is the second paragraph,
+     and it too has a hanging indentation.</t>
+<t tx="EKR.20040524104904.139">The ``Match Brackets`` command is enabled if the cursor is next to one of the
+following characters in the body pane:
 
-  1. This is the first paragraph, and
-     it has a hanging indentation.
+    ( ) [ ] { } &lt; &gt;
 
-  2. This is the second paragraph, and
-     it too has a hanging indentation.</t>
-<t tx="EKR.20040524104904.139">The Match Brackets command is enabled if the cursor is next to one of the following characters in the body pane:
+This command looks for the matching character, searching backwards through the
+body text if the cursor is next to `)` `]` `}` or `&gt;` and searching forward through the
+text otherwise. If the cursor is between two brackets the search is made for the
+bracket matching the leftmost bracket. If a match is found, the entire range of
+characters delimited by the brackets is highlighted and the cursor is placed
+just to the left of the matching characters. Thus, executing this command twice
+highlights the range of matched characters without changing the cursor.</t>
+<t tx="EKR.20040524104904.140">Leo stores options in ``@settings`` trees, that is, outlines whose headline is
+``@settings``. When opening a .leo file, Leo looks for ``@settings`` trees not only
+in the outline being opened but also in various leoSettings.leo files.
+The key design goal of ``@settings`` trees was that Leo's user options must be
+infinitely flexible. That goal has been accomplished. Indeed, users can create
+arbitrarily complex user options with ``@settings`` trees. Leo settings outlines
+are, in fact, much more flexible and powerful than any scheme based on
+flat text.
 
-( ) [ ] { } &lt; &gt;
+The ``Settings`` command temporarily replaces the outline pane with an outline
+showing all the ``@settings`` trees in effect. The Settings command also
+replaces the body pane with a "settings pane". This settings pane allows you to
+change the settings selected in the outline pane using standard gui widgets. The
+settings pane is dynamically created from nodes in the settings tree; it is as
+extensible as the ``@settings`` tree itself.
 
-This command looks for the matching character, searching backwards through the body text if the cursor is next to ) ] } or &gt; and searching forward through the text otherwise.  If the cursor is between two brackets the search is made for the bracket matching the leftmost bracket.
+Leo stores options in ``@settings`` trees, that is, parts of Leo outlines whose root
+node has the headline ``@settings``. When opening a .leo file, Leo looks for
+``@settings`` trees in the following places:
 
-If a match is found, the entire range of characters delimited by the brackets is highlighted and the cursor is placed just to the left of the matching characters.  Thus, executing this command twice highlights the range of matched characters without changing the cursor.</t>
-<t tx="EKR.20040524104904.140">New in 4.3:
+- The file ``leoSettings.leo`` in the leo/config directory.
+- The file ``leoSettings.leo`` in the user's home directory.
+- The file being loaded.
 
-Leo now stores options in @settings trees, that is, outlines whose headline is '@settings'. When opening a .leo file, Leo looks for @settings trees not only in the outline being opened but also in various leoSettings.leo files.
+Settings that appear later in the above list override settings found earlier. For
+example, any setting specified in an ``@settings`` tree in the file being loaded
+overrides any setting seen in any ``leoSettings.leo`` file.
 
-The key design goal of @settings trees was that Leo's user options must be infinitely flexible. That goal has been accomplished. Indeed, users can create arbitrarily complex user options with @settings trees. Leo settings outlines are, in fact, infinitely more flexible and powerful than any scheme based on flat text.
+The Settings command temporarily replaces the outline pane with an outline
+showing all the ``@settings`` trees in effect. The Settings command also replaces
+the body pane with a "settings dialog" pane. This settings dialog pane allows
+you to change the settings selected in the outline pane using standard gui
+widgets.
 
-The Settings command temporarily replaces the outline pane with an outline showing all the @settings trees in effect. The Settings command also replaces the body pane with a "settings pane". This settings pane allows you to change the settings selected in the outline pane using standard gui widgets. The settings pane is dynamically created from nodes in the settings tree; it is as extensible as the @settings tree itself.
+The format of nodes in ``@settings`` trees are as follows:
 
-For full details, see the children of this node.</t>
-<t tx="EKR.20040524104904.141">Leo understands the following PHP keywords:
+1. "Simple settings nodes" have headlines of the form::
 
-&lt;?php, ?&gt;, __CLASS__, __FILE__, __FUNCTION__, __LINE__, and,	as, break, case, cfunction, class, const, continue, declare, default, do, else, elseif,  enddeclare, endfor, endforeach, endif, endswitch, endwhile, eval,  extends, for, foreach, function, global, if, new, old_function, or, static, switch, unset(), use, var, while, xor,
+    @&lt;type&gt; name = val
 
-Leo does not yet color the following keywords containing():
+set the value of ``name`` to ``val``, with the indicated type.
 
-array(), die(), echo(), empty(), exit(), include(), include_once(), isset(), list(), print(), require(), require_once(), return()</t>
-<t tx="EKR.20040524104904.142">Leo understands the following LaTex keywords: capitalization is significant.  For example, \vert produces a single vertical line and \Vert produces a double vertical line.
+&lt;type&gt; may be one of the following:
 
-\@, \(, \), \{, \},
+=============== ================================================================================
+&lt;type&gt;          Valid values
+--------------- --------------------------------------------------------------------------------
+\@bool           True, False, 0, 1
+\@color          A Tk color name or value, such as 'red' or 'xf2fddff' (without the quotes)
+\@directory      A path to a directory
+\@float          A floating point number of the form nn.ff.
+\@int            An integer
+\@ints[list]     An integer (must be one of the ints in the list).
+                 Example: @ints meaningOfLife[0,42,666]=42
+\@path           A path to a directory or file
+\@ratio          A floating point number between 0.0 and 1.0, inclusive.
+\@shortcut       A valid shortcut specifier.
+\@string         A string
+\@strings[list]  A string (must be one of the strings in the list).
+                 Example: @strings tk_relief['flat','groove','raised']='groove'
+=============== ================================================================================
 
-\acute, \addcontentsline, \addtocontents, \addtocounter, \address,
-\addtolength, \addvspace, \AE, \ae, \aleph, \alph, \angle, \appendix, 
-\approx,\arabic, \arccos, \arcsin, \arctan, \ast, \author,
+**Note**: For a list of Tk color specifiers see:
 
-\b, \backmatter, \backslash, \bar, \baselineskip, \baselinestretch,
-\begin, \beta, \bezier, \bf, \bfseries, \bibitem, \bigcap, 
-\bigcup, \bigodot, \bigoplus, \bigotimes, \bigskip, \biguplus, 
-\bigvee, \bigwedge,\bmod, \boldmath, \Box, \breve, \bullet,
+- http://www.tcl.tk/man/tcl8.4/TkCmd/colors.htm
+- http://www.tcl.tk/man/tcl8.4/TkLib/GetColor.htm
 
-\c, \cal, \caption, \cdot, \cdots, \centering, \chapter, 
-\check, \chi, \circ, \circle, \cite, \cleardoublepage, \clearpage, 
-\cline,\closing, \clubsuit, \coprod, \copywright, \cos, \cosh, 
-\cot, \coth,csc,
+2. "Complex settings nodes" have headlines of the form::
 
-\d, \dag, \dashbox, \date, \ddag, \ddot, \ddots, \decl, 
-\deg, \Delta, \delta, \depthits, \det, 
-\DH, \dh, \Diamond, \diamondsuit, \dim, \div, \DJ, \dj, 
-\documentclass, \documentstyle, \dot, \dotfil, \downarrow,
+    @&lt;type&gt; description
 
-\ell, \em, \emph, \end, \enlargethispage, \ensuremath, 
-\enumi, \enuii, \enumiii, \enuiv, \epsilon, \equation, \equiv,
-\eta, \example, \exists, \exp,
+The actual settings are specified in the body text.  At present, there are two such kinds of complex settings nodes:
 
-\fbox, \figure, \flat, \flushbottom, \fnsymbol, \footnote, 
-\footnotemark, \fotenotesize, 
-\footnotetext, \forall, \frac, \frame, \framebox, \frenchspacing, 
-\frontmatter,
+- ``@font``
 
-\Gamma, \gamma, \gcd, \geq, \gg, \grave, \guillemotleft, 
-\guillemotright,\guilsinglleft, \guilsinglright,
+The body text contains a list of settings for a font.  For example::
 
-\H, \hat, \hbar, \heartsuit, \heightits, \hfill, \hline, \hom, \hrulefill,\hspace, \huge,\Huge,\hyphenation
+    body_text_font_family = Courier New
+    body_text_font_size = None
+    body_text_font_slant = None
+    body_text_font_weight = None
 
-\Im, \imath, \include, includeonly, indent, \index, \inf, \infty, \input, \int, \iota,\it, \item, \itshape,
+- ``@recentFiles``
 
-\jmath, \Join,
+The body text contains a list of paths of recently opened files, one path per line.
 
-\k, \kappa, \ker, \kill,
+The following features of ``@recentfiles`` nodes are confusing and probably
+will be changed:
 
-\label, \Lambda, \lambda, \langle, \large, \Large, \LARGE, 
-\LaTeX, \LaTeXe, 
-\ldots, \leadsto, \left, \Leftarrow, \leftarrow, \lefteqn, \leq,
-\lg, \lhd, \lim, \liminf, \limsup, \line, \linebreak, 
-\linethickness, \linewidth,\listfiles,
-\ll, \ln, \location, \log, \Longleftarrow, \longleftarrow, 
-\Longrightarrow,longrightarrow,
+-   Leo does not save recent file information unless the open .leo file has an
+    ``@settings`` tree and an ``@recentfiles`` node within the ``@settings`` tree.
+    That is, Leo does not save recent files information in leoSettings.leo files.
 
-\mainmatter, \makebox, \makeglossary, \makeindex,\maketitle, \markboth, \markright,
-\mathbf, \mathcal, \mathit, \mathnormal, \mathop,
-\mathrm, \mathsf, \mathtt, \max, \mbox, \mdseries, \medskip,
-\mho, \min, \mp, \mpfootnote, \mu, \multicolumn, \multiput,
+-   Changing the ``@rencentfiles`` node doesn't mark the Leo file as dirty,
+    so if you don't save the .leo file the recent files information will not be updated.
 
-\nabla, \natural, \nearrow, \neq, \newcommand, \newcounter, 
-\newenvironment, \newfont,
-\newlength,\newline, \newpage, \newsavebox, \newtheorem, \NG, \ng,
-\nocite, \noindent, \nolinbreak, \nopagebreak, \normalsize,
-\not, \nu, nwarrow,
+-   **Page nodes** have headlines of the form ``@page &lt;description&gt;``
+    Such nodes have the effect of gathering all descendant settings nodes into a single settings page.
 
-\Omega, \omega, \onecolumn, \oint, \opening, \oval, 
-\overbrace, \overline,
+-   All other nodes are **Organizer nodes**.
+    Such nodes have no effect on the settings shown in the dialog.
+    You may use them as you please to organize settings.
 
-\P, \page, \pagebreak, \pagenumbering, \pageref, \pagestyle, 
-\par, \parbox,\paragraph, \parindent, \parskip, \part, 
-\partial, \per, \Phi, \phi,\Pi, \pi, \pm, 
-\pmod, \pounds, \prime, \printindex, \prod, \propto, \protext, 
-\providecomamnd, \Psi,\psi, \put,
-
-\qbezier, \quoteblbase, \quotesinglbase,
-
-\r, \raggedbottom, \raggedleft, \raggedright, \raisebox, \rangle, 
-\Re, \ref, \renewcommand, \renewenvironment, \rhd, \rho, \right, 
-\Rightarrow,\rightarrow, \rm, \rmfamily,
-\Roman, \roman, \rule, 
-
-\s, \samepage, \savebox, \sbox, \sc, \scriptsize, \scshape, 
-\searrow, \sec, \section,
-\setcounter, \setlength, \settowidth, \settodepth, \settoheight, 
-\settowidth, \sf, \sffamily, \sharp, \shortstack, \Sigma, \sigma, 
-\signature, \sim, \simeq, \sin, \sinh, \sl, \SLiTeX,
-\slshape, \small, \smallskip, \spadesuit, \sqrt, \sqsubset,
-\sqsupset, \SS,
-\stackrel, \star, \subsection, \subset, 
-\subsubsection, \sum, \sup, \supressfloats, \surd, \swarrow,
-
-\t, \table, \tableofcontents, \tabularnewline, \tan, \tanh, 
-\tau, \telephone,\TeX, \textbf,
-\textbullet, \textcircled, \textcompworkmark,\textemdash, 
-\textendash, \textexclamdown, \textheight, \textquestiondown, 
-\textquoteblleft, \textquoteblright, \textquoteleft,
-\textperiod, \textquotebl, \textquoteright, \textmd, \textit, \textrm, 
-\textsc, \textsl, \textsf, \textsuperscript, \texttt, \textup,
-\textvisiblespace, \textwidth, \TH, \th, \thanks, \thebibligraphy,
-\Theta, theta, 
-\tilde, \thinlines, 
-\thispagestyle, \times, \tiny, \title,\today, \totalheightits, 
-\triangle, \tt, 
-\ttfamily, \twocoloumn, \typeout, \typein,
-
-\u, \underbrace, \underline, \unitlength, \unlhd, \unrhd, \Uparrow,
-\uparrow,\updownarrow, \upshape, \Upsilon, \upsilon, \usebox,
-\usecounter, \usepackage, 
-
-\v, \value, \varepsilon, \varphi, \varpi, \varrho, \varsigma, 
-\vartheta, \vdots, \vec, \vector, \verb, \Vert, \vert, \vfill,
-\vline, \vphantom, \vspace,
-
-\widehat, \widetilde, \widthits, \wp,
-
-\Xi, \xi,
-
-\zeta</t>
+You can not change ``@settings`` trees while executing the Settings command.
+You can, however, change any ``@settings`` tree normally when not executing the
+Settings command.</t>
 <t tx="EKR.20040524104904.143"></t>
-<t tx="EKR.20040524104904.144">The Check Outline command checks the outline for consistency.
+<t tx="EKR.20040524104904.144">-   The ``Check Outline`` command checks the outline for consistency.
 
-The Check All Python Code and Check Python Code commands report any syntax errors or tabnanny errors.  These commands mark erroneous nodes.  These commands work on the selected Node and its descendants.  These commands ignore any nodes for which a) @ignore is in effect or b) @language python is in not effect.
+-   The ``Check All Python Code`` and ``Check Python Code`` commands report any syntax errors or tabnanny errors.
+    These commands mark erroneous nodes and ignore any nodes for which:
 
-The Check Python Code and Pretty Print Python Code commands replace nodes with their pretty-printed alternative.
+        - ``@ignore`` is in effect or
+        - ``@language python`` is in not effect.
 
-You may implement alternate pretty printers in a plugin merely by overriding the following methods of class prettyPrinter in leoCommands.py:
+-   The ``Check Python Code`` and ``Pretty Print Python Code`` pretty print body text.
+    You can customize this code by overriding the following methods of class ``prettyPrinter`` in ``leoCommands.py``::
     
-- putOperator:      puts whitespace around operators.
-- putNormalToken:   puts whitespace around everything else.</t>
-<t tx="EKR.20040524104904.145">The Insert Headline command inserts a new headline after the presently selected headline, either as the next sibling or the first child of the presently selected headline if the presently selected headline has children and is expanded.</t>
-<t tx="EKR.20040524104904.146">The Cut Outline, Paste Outline, Copy Outline and Delete Outline commands work on nodes rather than text.  For example, to delete a headline, select the headline and choose the Cut Outline or Delete Outline commands.
+        putOperator:      puts whitespace around operators.
+        putNormalToken:   puts whitespace around everything else.</t>
+<t tx="EKR.20040524104904.145">-   The ``Insert Headline`` command inserts a new headline after the presently selected headline,
+    either as the next sibling or the first child of the presently selected headline
+    if the presently selected headline has children and is expanded.
 
-The Cut Outline and Copy Outline copy a text representation of the outline to the clipboard.  This representation is the same as the file format with some information deleted.  You may copy this text representation into a body pane (or into any other text editor) using the Paste command in the Edit menu.
+-   The ``Clone Node`` creates a clone of the selected node.
+    See `Clones and views`_ for full details about clones.</t>
+<t tx="EKR.20040524104904.146">-   The ``Cut Outline`` and ``Copy Outline`` commands copy a text
+    representation of the outline to the clipboard. This representation is the same
+    as the file format with some information deleted.
 
-New in 4.2:  The Paste Node As Clone command retains the identity of nodes, so if the pasted node already exists in the outline the newly pasted node will become of a clone of the already-existing node.  In contrast, the Paste Outline creates nodes with new identities (new gnx's).</t>
-<t tx="EKR.20040524104904.147">The Expand command expands the currently selected node so that all its children are visible.  The Expand All Subheads command expands the currently selected node so that all its offspring are visible.  The Expand All command expands all the nodes of the entire tree.
+-   The ``Paste`` command (in the ``Edit`` menu) copies this representation into the *body* pane.
 
-New with leo.py version 1.0 and Borland Leo v2.6:
+-   The ``Paste Node As Clone`` command pastes the node from the clipboard, retaining the
+    identity of nodes.  Thus, if the pasted node already exists in the outline the newly
+    pasted node will become of a clone of the already-existing node.
 
-The Contract Parent contracts the parent node of the present node, making the parent the new present node.</t>
-<t tx="EKR.20040524104904.148">The Hoist command redraws the screen so presently selected tree becomes the only visible part of the outline.  Leo prevents the you from moving nodes outside the hoisted outline.  The De-hoist command restores the outline.  Hoist commands may be nested.</t>
-<t tx="EKR.20040524104904.149">The Mark Headline command marks a headline with a red marker  near the leader characters, while the Unmark Headline command removes such a mark.  Only one of these commands appear in the Outline menu at any time: the Mark Headline command appears if the currently selected headline is unmarked.  Otherwise, the Unmark Headline command appears.  The Mark Subheads command marks all offspring of the currently selected node.  The Unmark All command removes the marks from the entire tree.
+-   The ``Paste Outline`` command creates nodes with new identities (new gnx's).</t>
+<t tx="EKR.20040524104904.147">-   The ``Expand`` command expands the currently selected node so that all its children are visible.
+-   The ``Expand All Subheads`` command expands the currently selected node so that all its offspring are visible.
+-   The ``Expand All`` command expands all the nodes of the entire tree.
+-   The ``Contract Parent`` contracts contracts the selected node's parent and selects the parent node.</t>
+<t tx="EKR.20040524104904.148">-   The ``Hoist`` command redraws the screen so presently selected tree becomes the only visible part of the outline.
+    Hoist commands may be nested.  
 
-The Mark Changed Items command marks all headlines whose headline or body text has been changed since the file was last saved.  The Mark Changed Roots command marks all changed headlines whose body text contains the @root directive.  This command is especially useful with the Tangle Marked command.</t>
-<t tx="EKR.20040524104904.150">The Move Up, Move Down, Move Left and Move Right commands move the currently selected node in the indicated direction.  The Promote command makes all the children of a node siblings of the node.  The Demote command makes all the siblings that follow a node children of the node.
+-   The De-hoist command restores the outline.</t>
+<t tx="EKR.20040524104904.149">-   The ``Mark Headline`` command marks a headline with a red marker  near the leader characters.
+-   The ``Unmark Headline`` command removes such a mark.
+-   The ``Mark Subheads`` command marks all offspring of the currently selected node.
+-   The ``Unmark All`` command removes the marks from the entire tree.
+-   The ``Mark Changed Items`` command marks all headlines whose headline or
+    body text has been changed since the file was last saved.
+-   The ``Mark Changed Roots`` command marks all changed headlines whose body text contains the ``@root`` directive.
+    This command is especially useful with the Tangle Marked command.</t>
+<t tx="EKR.20040524104904.150">-   The ``Move Up``, ``Move Down``, ``Move Left`` and ``Move Right`` commands move the currently selected node.
 
-The Sort Children command sorts all children of the present node in alphabetical order, based on the headlines of the children.
+-   The ``Promote command`` makes all the children of a node siblings of the node.
 
-The Sort Siblings command sorts all siblings of the present node in alphabetical order.
+-   The ``Demote`` command makes all the siblings that follow a node children of the node.
 
-New in version 4.1:  The Hoist command redraws the outline making the present node the root node.  The outline itself is unaffected by the Hoist command.  The De-Hoist command removes one level of hoisting.</t>
-<t tx="EKR.20040524104904.151"></t>
-<t tx="EKR.20040524104904.152">The Equal Sized Panes command adjusts the sizes of the code and body pane of the topmost window so that they are the same height.
+-   The ``Sort Children`` command sorts all children of the present node in alphabetical order of their headlines.
+
+-   The ``Sort Siblings`` command sorts all siblings of the present node in alphabetical order.</t>
+<t tx="EKR.20040524104904.151">-   The ``Equal Sized Panes`` command adjusts the sizes of the outline and body
+    panes so that they are the same height.
+-   The ``Cascade`` command cleans up the screen by cascading all Leo windows.
+-   The ``Minimize All`` command minimizes all Leo windows.
+-   The ``Toggle Active Pane`` command toggles keyboard focus between the outline and body panes.
+-   The ``Toggle Split Direction`` command switches between vertical and horizontal
+    orientations of the Leo window. In the vertical orientation, the body pane
+    appears below the pane containing the outline and log panes. In the horizontal
+    orientation, the body pane appears to the left the pane containing the outline
+    and log panes. By default, the ratio of pane outline pane to the body pane is
+    0.5 in the vertical orientation and 0.3 in the horizontal orientation. These two
+    ratios may be changed using settings.
+-   The ``Open Compare Window`` command opens a dialog that allows you to compare
+    two files, one containing sentinels and one not.
 </t>
-<t tx="EKR.20040524104904.153">The Cascade command cleans up the screen by cascading all Leo windows.  The Minimize All command minimizes all Leo windows.</t>
-<t tx="EKR.20040524104904.154">This command changes the pane that is currently active.  If the outline pane was active, the body pane becomes active, and vice versa.  This command makes it possible to switch between panes without using the mouse.</t>
-<t tx="EKR.20040524104904.155">New in leo.py 3.0:  The Toggle Split Direction command switches between vertical and horizontal orientations of the Leo window.  In the vertical orientation, the body pane appears below the pane containing the outline and log panes.  In the horizontal orientation, the body pane appears to the left the pane containing the outline and log panes.
-
-leoConfig.txt specifies the default direction.  If leoConfig.txt does not exist, or does not specify the direction, the "vertical" orientation is used, just as in previous versions.
-
-By default, the ratio of pane outline pane to the body pane is 0.5 in the vertical orientation and 0.3 in the horizontal orientation.  These two ratios may be changed using leoConfig.txt.</t>
-<t tx="EKR.20040524104904.156">The Open Compare Window command opens a dialog that allows you to compare two files.
-
-This is not really a general-purpose file-compare dialog.  The purpose of this window is to show what sentinels a derived file contains.  One file is assumed to contain sentinels, the other file is assumed not to contain sentinels.</t>
-<t tx="EKR.20040524104904.157"></t>
-<t tx="EKR.20040524104904.158">The About Leo command puts up a dialog box showing the version of Leo.
-</t>
-<t tx="EKR.20040524104904.159">The Online Home Page command opens Leo's home page at http://webpages.charter.net/edreamleo/front.html.
-
-The Open Online Tutorial command opens Joe Orr's excellent ScreenBook tutorial at http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm.
-
-The Open Offline Tutorial command opens the file sbooks.chm if it exists in the folder containing leo.py.  If sbooks.chm does not exist, you will be asked whether you want to download it from Leo's SourceForge web site.  If you say yes, the page http://sourceforge.net/project/showfiles.php?group_id=3458 will open.  You should then download sbooks.sbm to the folder containing leo.py.
-
-The Open LeoDocs.leo command opens this file, leoDocs.leo.
+<t tx="EKR.20040524104904.157">-   The ``About Leo`` command puts up a dialog box showing the version of Leo.
+-   The ``Online Home Page`` command opens Leo's home page at http://webpages.charter.net/edreamleo/front.html.
+-   The Open Online Tutorial command opens Joe Orr's excellent ScreenBook tutorial at
+    http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm.
+-   The Open Offline Tutorial command opens the file sbooks.chm if it exists.
+    Otherwise, you will be asked whether you want to download it from Leo's SourceForge web site.
+    If you say yes, the page http://sourceforge.net/project/showfiles.php?group_id=3458 will open.
+    You may then download sbooks.sbm to the folder containing leo.py.
+-   The ``Open LeoDocs.leo`` command opens ``leoDocs.leo``.
+-   The ``Open LeoPlugins.leo`` command opens ``LeoPlugins.leo``.
+-   The ``Open LeoSettings.leo`` command opens ``LeoSettings.leo``.
 
 </t>
-<t tx="EKR.20040524104904.160">The Open LeoConfig.leo command opens the file leoConfig.leo, the primary source file for the derived file leoConfig.txt.  Use the Tangle All command to update leoConfig.txt from changes made to leoConfig.leo.
-
-The Apply Settings command applies the settings in leoConfig.txt.  Leo reads these settings when it begins execution, so the only time you would need to use this command is just after changing leoConfig.txt.</t>
 <t tx="EKR.20040524104904.161"></t>
 <t tx="EKR.20040524104904.162">The following sections discuss the main benefits of traditional literate programming. It's worth noting that none of these benefits derives from being able to produce printed output.</t>
 <t tx="EKR.20040524104904.163">Sections add a new dimension to the design and coding process. Choices about what sections do, what they are named, what order they appear in, are choices in a design space different from "normal" programming. This an abstract concept, to be sure. However, the following concrete discussions are really manifestation of working in this new design space.</t>
@@ -11759,7 +11777,7 @@ for that frame::
 	p.self_and_subtree_iter    # returns all positions in p's subtree, including p.</t>
 <t tx="ekr.20040414161647">@nocolor
 
-Enclosed are the sources for the html version of Leo's users guide,
+These are the sources for the html version of Leo's users guide,
 as well as the documentation for the rst3 plugin used to create the actual html files.
 
 These sources contain rST (reStructuredText) markup that is easy to read.
@@ -12353,11 +12371,7 @@ if spellpyx:
         spellFrame.createSpellMenu('tag',keys)
     if spellFrame:
         spellFrame.checkSpelling()</t>
-<t tx="ekr.20050122084954">@killcolor
-
-The following information discusses how Leo 4.3 and all later versions handle user configuration settings. For all previous versions, see the node called 'Obsolete: Using leoConfig.leo and leoConfig.txt'
-
-Leo stores options in @settings trees, that is, parts of Leo outlines whose root node has the headline @settings.  When opening a .leo file, Leo looks for @settings trees in the following places:
+<t tx="ekr.20050122084954">Leo stores options in @settings trees, that is, parts of Leo outlines whose root node has the headline @settings.  When opening a .leo file, Leo looks for @settings trees in the following places:
 
 - The file called leoSettings.leo in the leo/config directory.
 - The file called leoSettings.leo in the users home directory.
@@ -12380,29 +12394,29 @@ set the value of name to val, with the indicated type.
 
 &lt;type&gt;          Valid values
 -----           ------------
-@bool           True, False, 0, 1
-@color          A Tk color name or value, such as 'red' or 'xf2fddff' (without the quotes)
+\@bool           True, False, 0, 1
+\@color          A Tk color name or value, such as 'red' or 'xf2fddff' (without the quotes)
 
 For a list of Tk color specifiers see:
 
 - http://www.tcl.tk/man/tcl8.4/TkCmd/colors.htm
 - http://www.tcl.tk/man/tcl8.4/TkLib/GetColor.htm
 
-@directory      A path to a directory
-@float          A floating point number of the form nn.ff.
-@int            An integer
-@ints[list]     An integer (must be one of the ints in the list).
-                Example: @ints meaningOfLife[0,42,666]=42
-@path           A path to a directory or file
-@ratio          A floating point number between 0.0 and 1.0, inclusive.
-@shortcut       A valid shortcut specifier.
-@string         A string
-@strings[list]  A string (must be one of the strings in the list).
-                Example: @strings tk_relief['flat','groove','raised']='groove'
+\@directory      A path to a directory
+\@float          A floating point number of the form nn.ff.
+\@int            An integer
+\@ints[list]     An integer (must be one of the ints in the list).
+                 Example: @ints meaningOfLife[0,42,666]=42
+\@path           A path to a directory or file
+\@ratio          A floating point number between 0.0 and 1.0, inclusive.
+\@shortcut       A valid shortcut specifier.
+\@string         A string
+\@strings[list]  A string (must be one of the strings in the list).
+                 Example: @strings tk_relief['flat','groove','raised']='groove'
 
 2. "Complex settings nodes" have headlines of the form:
 
-@&lt;type&gt; description
+\@&lt;type&gt; description
 
 The actual settings are specified in the body text.  At present, there are two such kinds of complex settings nodes:
 
@@ -13459,12 +13473,10 @@ xsltWithNodes.py</t>
 <t tx="ekr.20050313101229.101">atFile.copyAllTempBodyStringsToTnodes calls:
 
     c.mod_label_controller.add_label(p,"before change:",old_body)</t>
-<t tx="ekr.20050313102319">The Add Comments command puts comments around a block of code. This command uses
-single-line comments if the language in effect for the node supports single-line
-comments.
+<t tx="ekr.20050313102319">-   The ``Add Comments`` command puts comments around a block of code.
+    This command uses single-line comments if possible.
 
-The Delete Comments command deletes the comments specified by the Add Comments
-command.</t>
+-   The ``Delete Comments`` command deletes the comments specified by the ``Add Comments`` command.</t>
 <t tx="ekr.20050313103448"></t>
 <t tx="ekr.20050313103448.1">Leo calls the 'before-create-leo-frame' hook just before calling frame.onCreate.
 Similarly, Leo calls the 'after-create-leo-frame' just after calling
@@ -19469,6 +19481,11 @@ This chapter will be of use primarily to those wanting to change Leo's code.
 <t tx="ekr.20050901101852">.. _`Chapter 4\: Writing Programs in Leo`:          http://webpages.charter.net/edreamleo/directives.html
 .. _`Chapter 6\: Leo and Literate Programming`:     http://webpages.charter.net/edreamleo/design.html
 
+.. _`Clones and views`:     http://webpages.charter.net/edreamleo/intro.html#clones-views
+.. _CWEB:       http://www-cs-faculty.stanford.edu/~knuth/cweb.html
+.. _noweb:      http://www.eecs.harvard.edu/~nr/noweb/
+
+.. _`Tangling @root trees with the Tangle commands`: http://webpages.charter.net/edreamleo/directives.html#tangling-root-trees-with-the-tangle-commands
 
 .. WARNING: image targets may not have upper case letters!
 
@@ -20012,5 +20029,23 @@ what life with Leo was like before it.</t>
 <t tx="ekr.20050902105852.12">Leo 4.3 corrected many problems with ``leoConfig.txt``. Instead, Leo gets
 settings from one or more ``leoSettings.leo files``. This version also
 introduced a way to changed settings using a settings dialog.</t>
+<t tx="ekr.20050902160924">Leo's find panel contains the ``Script Search`` radio button and the ``Script
+Change`` checkbox. When the ``Script Search`` radio button is selected Leo treats the
+contents of the ``Search Text`` as a script to execute whenever any kind of Find
+command is executed. Similarly, when the ``Script Change`` checkbox is selected Leo
+treats the context of the ``Change Text`` as a script to execute whenever any kind
+of Change command is executed.
+
+Script-based find-change is extremely powerful. In effect, Leo's Find/Change
+panel becomes a new platform for running scripts interactively. Leo now has all
+the find/change capability of pattern matching languages like Snobol and Icon,
+just by using the capabilities of the plain Python language. Moreover, Leo can
+deliver these capabilities interactively or not depending which buttons you push
+in Leo's Find/Change panel.
+
+Script-based find/change frees the user from having to control script-based
+searches interactively. Rather than forcing find/change scripts to implement
+their own interactive controls, it is much easier to use what Leo already has.
+</t>
 </tnodes>
 </leo_file>
