@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="14618" clone_windows="0"/>
-<globals body_outline_ratio="0.396912899669">
-	<global_window_position top="9" left="345" height="907" width="922"/>
+<globals body_outline_ratio="0.578831312018">
+	<global_window_position top="-3" left="275" height="907" width="874"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -50,7 +50,7 @@
 </v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.63"><vh>Latest version</vh>
 <v t="ekr.20050620144052"><vh>4.3.1</vh>
 <v t="ekr.20050620144052.2"><vh>Bug fixes...</vh>
@@ -77,8 +77,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.117"><vh>Previous versions...</vh>
-<v t="ekr.20050523092026.1"><vh>4.3... @settings</vh>
+<v t="edream.110203163054.117" a="E"><vh>Previous versions...</vh>
+<v t="ekr.20050523092026.1" a="E"><vh>4.3... @settings</vh>
 <v t="ekr.20050523092026"><vh>4.3-final</vh>
 <v t="ekr.20050523092056.1"><vh>Fixed crasher when pie-menu plugin enabled</vh></v>
 <v t="ekr.20050523092056.4"><vh>Fixed crasher in Extract Section Command</vh></v>
@@ -168,8 +168,8 @@
 </v>
 <v t="ekr.20050313101229.100"><vh>Revised plugins for the 4.3 code base</vh></v>
 </v>
-<v t="ekr.20050221104844"><vh>4.3-a3</vh>
-<v t="ekr.20050221104844.2"><vh>Bugs</vh>
+<v t="ekr.20050221104844" a="E"><vh>4.3-a3</vh>
+<v t="ekr.20050221104844.2" a="E"><vh>Bugs</vh>
 <v t="ekr.20050221104844.3"><vh>Fixed crasher in Tangle</vh></v>
 <v t="ekr.20050221104844.12"><vh>Applied patch to rst2 plugin</vh></v>
 <v t="ekr.20050221104844.14"><vh>Revised searchbox plugin so it works with Leo 4.3</vh></v>
@@ -327,7 +327,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050210102150"><vh>4.2... @file-thin, shared tnodes</vh>
+<v t="ekr.20050210102150" a="E"><vh>4.2... @file-thin, shared tnodes</vh>
 <v t="ekr.20040922074200"><vh>4.2 final</vh></v>
 <v t="ekr.20040914103359"><vh>4.2 rc1</vh>
 <v t="ekr.20040914103743.1"><vh>Added new features</vh>
@@ -532,7 +532,7 @@
 <v t="EKR.20040518075457"><vh>Dangers of @file-thin</vh></v>
 </v>
 </v>
-<v t="ekr.20050210102150.1"><vh>4.1... gnx's</vh>
+<v t="ekr.20050210102150.1" a="E"><vh>4.1... gnx's</vh>
 <v t="ekr.20040216151748"><vh>4.1 final</vh>
 <v t="ekr.20040217085036"><vh>Added several new plugins</vh></v>
 <v t="ekr.20040216152948"><vh>Added Toggle Angle Brackets command</vh></v>
@@ -656,7 +656,7 @@
 </v>
 <v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
 </v>
-<v t="ekr.20050210102358"><vh>4.0... New read logic eliminates read errors, eliminated child indices</vh>
+<v t="ekr.20050210102358" a="E"><vh>4.0... New read logic eliminates read errors, eliminated child indices</vh>
 <v t="edream.110203163054.66"><vh>4.0.1 through 4.0.4</vh></v>
 <v t="edream.110203163054.67"><vh>4.0 final</vh>
 <v t="edream.110203163054.68"><vh>4.0 beta 4</vh></v>
@@ -721,7 +721,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.118"><vh>3.x...</vh>
+<v t="edream.110203163054.118" a="E"><vh>3.x...</vh>
 <v t="edream.110203163054.119"><vh>3.12 final</vh>
 <v t="edream.110203163054.120"><vh>Bug fixes (major)</vh>
 <v t="edream.110203163054.121"><vh>Fixed major undo bug</vh></v>
@@ -1633,7 +1633,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="ETV"><vh>Users Guide</vh>
+<v t="ekr.20050902080416"><vh>@button paragraph</vh></v>
+<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
 <v t="ekr.20050828112159" a="M"><vh>@rst-no-head All links (TOC)</vh></v>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
@@ -1806,69 +1807,16 @@
 <v t="EKR.20040524104904.26" a="M"><vh>Chapter 3: Using Outlines</vh>
 <v t="ekr.20050901101608"><vh>@rst outlines.html</vh>
 <v t="ekr.20050901101608.1"><vh>@rst-no-head links</vh></v>
-<v t="EKR.20040524104904.27"><vh>Cloning headlines</vh>
-<v t="EKR.20040524104904.28"><vh>read me</vh></v>
-<v t="EKR.20040524104904.29"><vh>a</vh>
-<v t="EKR.20040524104904.30"><vh>b</vh>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.30"><vh>b</vh>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.34"><vh>g</vh></v>
-</v>
-<v t="EKR.20040524104904.29"><vh>a</vh>
-<v t="EKR.20040524104904.30"><vh>b</vh>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.30"><vh>b</vh>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.34"><vh>g</vh></v>
-</v>
-<v t="EKR.20040524104904.35"><vh>f</vh></v>
-</v>
-<v t="EKR.20040524104904.36"><vh>Creating and destroying headlines</vh></v>
-<v t="EKR.20040524104904.37"><vh>Cutting, pasting and deleting headlines</vh></v>
-<v t="EKR.20040524104904.38"><vh>Dragging headlines</vh></v>
+<v t="EKR.20040524104904.27"><vh>Cloning nodes</vh></v>
+<v t="EKR.20040524104904.36"><vh>Creating and destroying nodes</vh></v>
+<v t="EKR.20040524104904.37"><vh>Cutting, pasting and deleting nodes</vh></v>
+<v t="EKR.20040524104904.38"><vh>Dragging nodes</vh></v>
 <v t="EKR.20040524104904.39"><vh>Editing body text</vh></v>
-<v t="EKR.20040524104904.40"><vh>Expanding &amp; contracting headlines</vh></v>
-<v t="EKR.20040524104904.41"><vh>Indenting body text automatically</vh>
-<v t="EKR.20040524104904.42"><vh>Optional Emacs-style auto-indent</vh></v>
-</v>
-<v t="EKR.20040524104904.43"><vh>Marking headlines</vh></v>
-<v t="EKR.20040524104904.44"><vh>Moving &amp; Reorganizing headlines</vh></v>
-<v t="EKR.20040524104904.45"><vh>Opening URL's automatically</vh>
-<v t="EKR.20040524104904.46"><vh>@url</vh></v>
-</v>
+<v t="EKR.20040524104904.40"><vh>Expanding &amp; contracting nodes</vh></v>
+<v t="EKR.20040524104904.41"><vh>Indenting body text automatically</vh></v>
+<v t="EKR.20040524104904.43"><vh>Marking nodes</vh></v>
+<v t="EKR.20040524104904.44"><vh>Moving &amp; Reorganizing nodes</vh></v>
+<v t="EKR.20040524104904.45"><vh>Opening URL's automatically</vh></v>
 <v t="EKR.20040524104904.47"><vh>Resizing panes</vh></v>
 <v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
 <v t="ekr.20050901102400"><vh>@rst-no-head end stuff</vh></v>
@@ -1921,7 +1869,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.99" a="M"><vh>Chapter 5: Using Leo's Commands</vh>
-<v t="ekr.20050901101608.2"><vh>@rst commands.html</vh>
+<v t="ekr.20050901101608.2" a="E"><vh>@rst commands.html</vh>
 <v t="ekr.20050901101852"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.100"><vh> The File Menu</vh>
 <v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
@@ -1985,56 +1933,7 @@
 <v t="EKR.20040524104904.148"><vh> Hoisting &amp; De-hoisting headlines</vh></v>
 <v t="EKR.20040524104904.149"><vh> Marking headlines</vh></v>
 <v t="EKR.20040524104904.150"><vh> Moving, sorting and reorganizing headlines</vh></v>
-<v t="EKR.20040524104904.27"><vh>Cloning headlines</vh>
-<v t="EKR.20040524104904.28"><vh>read me</vh></v>
-<v t="EKR.20040524104904.29"><vh>a</vh>
-<v t="EKR.20040524104904.30"><vh>b</vh>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.30"><vh>b</vh>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.34"><vh>g</vh></v>
-</v>
-<v t="EKR.20040524104904.29"><vh>a</vh>
-<v t="EKR.20040524104904.30"><vh>b</vh>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.30"><vh>b</vh>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-<v t="EKR.20040524104904.31"><vh>c</vh>
-<v t="EKR.20040524104904.32"><vh>d</vh></v>
-<v t="EKR.20040524104904.33"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.34"><vh>g</vh></v>
-</v>
-<v t="EKR.20040524104904.35"><vh>f</vh></v>
-</v>
+<v t="EKR.20040524104904.27"><vh>Cloning nodes</vh></v>
 </v>
 <v t="EKR.20040524104904.151"><vh> The Window Menu</vh>
 <v t="EKR.20040524104904.152"><vh> Resizing panes</vh></v>
@@ -2080,7 +1979,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.4"><vh>Chapter 7: Scripting Leo with Python</vh>
-<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
+<v t="ekr.20040403171740" a="E"><vh>@rst scripting.html</vh>
 <v t="ekr.20050812134441.1"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050901184158"><vh>@rst-ignore Important: you can run these examples!</vh></v>
 <v t="ekr.20040403183229" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3122206e616d653d22687474702d6e6f64652d6d61726b65722d31223e710155043c2f613e71025d710328553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710455063c2f6469763e71055d71062855063c626f64793e710755073c2f626f64793e71085d71092855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710a55073c2f68746d6c3e710b4e65656555243c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e0a710c55493c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643122206e616d653d226f76657276696577223e4f766572766965773c2f613e3c2f68313e0a710d652e"><vh>Overview</vh></v>
@@ -2203,11 +2102,24 @@
 <v t="ekr.20050901102400.4"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.245" a="M"><vh>Chapter 9: History of Leo</vh>
-<v t="ekr.20050901101608.5"><vh>@rst history.html</vh>
+<v t="EKR.20040524104904.245" a="EM"><vh>Chapter 9: History of Leo</vh>
+<v t="ekr.20050901101608.5" a="E"><vh>@rst history.html</vh>
 <v t="ekr.20050901102147"><vh>@rst-no-head links</vh></v>
-<v t="EKR.20040524104904.246"><vh>Beginnings</vh></v>
-<v t="EKR.20040524104904.247"><vh>Versions, and more versions</vh></v>
+<v t="ekr.20050902105852"><vh>Beginnings</vh></v>
+<v t="ekr.20050902105852.1"><vh>Breakthrough</vh></v>
+<v t="ekr.20050902105852.2" a="E"><vh>Apple and YellowBox</vh></v>
+<v t="ekr.20050902105852.3"><vh>Borland C++</vh></v>
+<v t="ekr.20050902105852.4"><vh>Discovering Python</vh></v>
+<v t="ekr.20050902105852.5"><vh>SourceForge</vh></v>
+<v t="ekr.20050902105852.6"><vh>Allowing sentinel lines in derived files</vh></v>
+<v t="ekr.20050902105852.7"><vh>Untangling @file is easy!</vh></v>
+<v t="ekr.20050902105852.8"><vh>Leo 3.x: Continuous improvement</vh></v>
+<v t="ekr.20050902105852.9"><vh>Leo 4.0: Eliminating error 'recovery'</vh></v>
+<v t="ekr.20050902105852.10"><vh>Leo 4.1: The debut of gnx's</vh></v>
+<v t="ekr.20050902105852.11" a="TV"><vh>Leo 4.2: Complete at last</vh></v>
+<v t="ekr.20050902105852.12"><vh>Leo 4.3 Settings</vh></v>
+<v t="ekr.20050902100834" a="E"><vh>@rst-ignore-tree Details</vh>
+<v t="EKR.20040524104904.247"><vh>Versions</vh></v>
 <v t="EKR.20040524104904.248"><vh>Designing @file trees</vh>
 <v t="EKR.20040524104904.249"><vh>Deciding to do Leo2</vh></v>
 <v t="EKR.20040524104904.250"><vh>A prototype</vh></v>
@@ -2218,6 +2130,7 @@
 <v t="EKR.20040524104904.255"><vh>Attributes, mirroring and dummy nodes</vh></v>
 <v t="EKR.20040524104904.256"><vh>Clones</vh></v>
 <v t="EKR.20040524104904.257"><vh>Error recovery, at last</vh></v>
+</v>
 </v>
 <v t="ekr.20050901102400.5"><vh>@rst-no-head end stuff</vh></v>
 </v>
@@ -2498,160 +2411,228 @@ DISCLAIMER OF WARRANTIES
 
 EDWARD K. REAM (REAM) SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESSED OR IMPLIED, WITH RESPECT TO THIS COMPUTER SOFTWARE, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS RO A PARTICULAR PURPOSE.  IN NO EVENT SHALL REAM BE LIABLE FOR ANY LOSS OF PROFIT OR ANY COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER DAMAGES.</t>
 <t tx="EKR.20040524104904.26"></t>
-<t tx="EKR.20040524104904.27">A cloned node is a copy of a node that changes when the original changes. Changes to the children, grandchildren, etc. of a node are simultaneously made to the corresponding nodes contained in all cloned nodes.  Clones are marked by a small arrow  by their leader characters.
-
-There is no real distinction between the "original" node and any of its clones.  This makes it possible to update any of the clones and the original node will change as well.  When the second-to-last cloned node is deleted the last cloned node becomes a regular node again.
-
-Clones are useful for making alternate views of a program.  For example, when I begin to fix a bug I clone all the sections of the code that relate to the bug, and place those cloned sections under a new headline whose name is the name of the bug I am fixing.
-
-The children of this headline show some complex clones.  To see how clones work, try moving the node marked f around with the nodes marked a fully expanded.  Not all moves are allowed:  you can't move a cloned node so it would become a child of another clone of itself.</t>
-<t tx="EKR.20040524104904.28">This is a kind of bizarre outline that I use to test clone operations.  Try moving the nodes a through g around and see what happens to the children of the various clones.</t>
-<t tx="EKR.20040524104904.29"></t>
-<t tx="EKR.20040524104904.30"></t>
-<t tx="EKR.20040524104904.31"></t>
-<t tx="EKR.20040524104904.32"></t>
-<t tx="EKR.20040524104904.33"></t>
-<t tx="EKR.20040524104904.34"></t>
-<t tx="EKR.20040524104904.35"></t>
-<t tx="EKR.20040524104904.36">The Insert Node command inserts a new headline into the outline.
-
-The Delete Node command deletes a headline and all its children.
+<t tx="EKR.20040524104904.27">A cloned node is a copy of a node that changes when the original changes.
+Changes to the children, grandchildren, etc. of a node are simultaneously made
+to the corresponding nodes contained in all cloned nodes. A small red arrow in
+the icon box marks cloned nodes. There is no real distinction between the
+"original" node and any of its clones. This makes it possible to update any of
+the clones and the original node will change as well. A cloned nodes becomes a
+regular node again when its penultimate clone is deleted. Clones are useful for
+making alternate views of a program. See `Clones and views`_ for full details.</t>
+<t tx="EKR.20040524104904.36">The ``Insert Node`` command inserts a new node into the outline. The
+``Delete Node`` command deletes a node and all its children.
 </t>
-<t tx="EKR.20040524104904.37">The Cut Outline, Paste Outline, Copy Outline and Delete Outline commands work on nodes rather than text.  For example, to delete a headline, select the headline and choose the Cut Outline or Delete Outline commands.
+<t tx="EKR.20040524104904.37">The ``Cut Outline``, ``Paste Outline``, ``Copy Outline`` and ``Delete Outline``
+commands work on nodes rather than text. For example, to delete a node,
+select the node and choose the ``Cut Outline`` or ``Delete Outline``
+command. The ``Cut Outline`` and ``Copy Outline`` commands copy a text
+representation of the outline to the clipboard. This representation is the same
+as Leo's .leo file format with some information deleted. You may copy this text
+representation into a body pane (or into any other text editor) using the
+``Edit:Paste`` command.
 
-The Cut Outline and Copy Outline copy a text representation of the outline to the clipboard.  This representation is the same as the file format with some information deleted.  You may copy this text representation into a body pane (or into any other text editor) using the Paste command in the Edit menu.
+**Warning**: In practice, it is almost always wiser to move clones rather than
+cutting or pasting them. Cutting and pasting outlines preserves clones, but the
+links between clones only exist within the part of the outline that was pasted.
+Therefore, if you are cutting and pasting an outline containing clones it is
+best to cut and paste the *entire* outline. Alternatively, you can paste part of
+an outline, then delete all clones.</t>
+<t tx="EKR.20040524104904.38">You may drag an node (including all its descendants) from one place to another
+in an outline. To start a drag, press the main (left) mouse button while the
+cursor is over the icon for a node. The cursor will change to a hand icon. If
+you release the mouse button while the hand cursor is above the icon for another
+node, Leo will move the dragged node after that node. If you release the mouse
+button when the hand cursor is not over an icon, Leo will leave the outline pane
+as it is. Leo scrolls the outline pane as the result of mouse-moved events, so
+to continue scrolling you must keep moving the mouse.</t>
+<t tx="EKR.20040524104904.39">Leo auto indents unless ``@nocolor`` is in effect. Typing a newline
+automatically inserts the same leading whitespace present on the previous line.
+If Python is the present language, Leo inserts an additional tab if the previous
+line ends with a colon.
 
-Warning:  In practice, it is almost always wiser to move clones rather than cutting or pasting them.  Cutting and pasting outlines preserves clones, but the links between clones only exist within the part of the outline that was pasted.  Therefore, if you are cutting and pasting an outline containing clones it is best to cut and paste the _entire_ outline.  Alternatively, you can paste part of an outline, then delete all clones.</t>
-<t tx="EKR.20040524104904.38">You may drag an node (including all its descendants) from one place to another in an outline.  To start a drag, press the main (left) mouse button while the cursor is over the icon for a node.  The cursor will change to a hand icon. If you release the mouse button while the hand cursor is above the icon for another node, Leo will move the dragged node after that node.  If you release the mouse button when the hand cursor is not over an icon, Leo will leave the outline pane as it is.  This can result in the dragged node not being visible on the screen, but it seems less alarming not to force the current node to become visible as that would undo any scrolling that has just been done.  If you drag outside the outline pane, the outline pane will scroll automatically.
+The default features of Leo's body text derive from the Tk.Text widget,
+described at: http://www.tcl.tk/man/tcl8.3/TkCmd/text.htm Not all these features
+are found on all platforms.
+The following features are derived from the Tk Text widget. Some default
+behaviors have been changed because they conflict with other Leo features.
 
-Leo scrolls the outline pane as the result of mouse-moved events, so to continue scrolling you must keep moving the mouse.  I experimented with scrolling the outline pane whenever the cursor is dragged outside it, but the results were not good.  There was a noticeable delay between releasing the cursors and halting the scrolling.  The present code is simpler and more likely to work on all platforms.
+-   Clicking mouse button 1 positions the insertion cursor just before the character
+    underneath the mouse cursor, sets the input focus to this widget, and clears any
+    selection in the widget. Dragging with mouse button 1 strokes out a selection
+    between the insertion cursor and the character under the mouse. 
+    
+-   Double-clicking mouse button 1 selects the word under the mouse and
+    positions the insertion cursor at the end of the word.
+    
+-   The ends of the selection can be adjusted by dragging with mouse button 1 while
+    the Shift key is down; this will adjust the end of the selection that was
+    nearest to the mouse cursor when button 1 was pressed. 
+    
+-   Clicking mouse button 1 with the ``Control`` key down will reposition the insertion
+    cursor without affecting the selection. 
+    
+-   Normal printing characters are inserted at the point of the insertion cursor. 
+    
+-   If the mouse is dragged out of the body pane while button 1 is pressed, the
+    entry will automatically scroll to make more text visible.
+    
+-   ``Left Arrow`` and ``Right Arrow`` move the cursor one
+    character to the left or right and clear any selection in the text.
 
-Leo only allows dragging from one icon to another.  In particular, you can't move a node to the first child of another node unless that node is already expanded.   I experimented with automatically open nodes when the cursor moves over an unexpanded node with children.  However, this was confusing and alarming.  It seems best to expand and contract nodes explicitly.</t>
-<t tx="EKR.20040524104904.39">Body text in leo.py has the following features:
+-   ``Shift Left`` or ``Shift Right`` is typed with the ``Shift`` move the cursor
+    moves and extend the selection.
 
-Leo auto indents when @nocolor is not in effect.  That is, typing a newline automatically inserts the same leading whitespace present on the previous line.  If the present language is Python (set either in the Settings dialog or with an @language Python command), Leo inserts an additional tab if the previous line ends with a colon.
+-   ``Control-Left`` and ``Control-Right`` move the insertion cursor by words,
+    and ``Control-Shift-Left`` and ``Control-Shift-Right`` move the insertion
+    cursor by words and also extend the selection.
+    
+-   ``Up Arrow`` and ``Down Arrow`` move the insertion cursor one line up or down and
+    clear any selection in the text. 
 
-The default features of Leo's body text derive from the Tk Text widget, described at:
-http://www.tcl.tk/man/tcl8.3/TkCmd/text.htm
-Not all these features are found on all platforms.
+-   ``Shift Up`` and ``Shift Right`` move the cursor moves and extend the selection.
 
-The following features are mostly derived from the Tk Text widget.  Some default behaviors have been changed because they conflict with other Leo features.
+-   ``Control-Up`` and ``Control-Down`` move the insertion cursor by paragraphs.
 
-Clicking mouse button 1 positions the insertion cursor just before the character underneath the mouse cursor, sets the input focus to this widget, and clears any selection in the widget. Dragging with mouse button 1 strokes out a selection between the insertion cursor and the character under the mouse. 
+-   ``Control-Shift-Up and ``Control-Shift-Down`` move the insertion cursor by
+    paragraphs and extend the selection. ``Control-p`` and ``Control-n`` behave
+    the same as ``Up`` and ``Down``, respectively. **Note**: by default, Leo
+    binds ``Control-p`` and ``control-n`` to commands.
+    
+-   ``Next`` (``Page Down``) and ``Prior`` (``Page Up``) keys move the
+    insertion cursor one screen and clear any text selection.
 
-Double-clicking with mouse button 1 selects the word under the mouse and positions the insertion cursor at the end of the word.
+-   ``Shift Next`` and ``Shift Prior`` move the cursor one screen and extend the selection.
+    
+-   Line movement is by text lines terminated by hard returns (newlines), not by
+    displayed lines; if a text line is long and wraps across more than one display
+    line, then the ``Up`` and ``Down`` movement will skip the extra wrapped display lines.
+    
+-   ``Home`` moves the insertion cursor to the beginning of its line and clears any
+    selection in the widget.
 
-The ends of the selection can be adjusted by dragging with mouse button 1 while the Shift key is down; this will adjust the end of the selection that was nearest to the mouse cursor when button 1 was pressed. 
+-   ``Shift-Home`` moves the insertion cursor to the beginning of the line and extends the selection. 
+    
+-   ``End`` moves the insertion cursor to the end of the line and clear any selection in
+    the widget.
 
-Clicking mouse button 1 with the Control key down will reposition the insertion cursor without affecting the selection. 
+-   ``Shift-End moves`` the cursor to the end of the line and extends the selection. 
+    
+-   ``Control-Home`` moves the insertion cursor to the beginning of the text and clears
+    any selection in the widget.
 
-If any normal printing characters are typed, they are inserted at the point of the insertion cursor. 
+-   ``Control-Shift-Home`` moves the insertion cursor to the beginning of the text and extends the selection. 
+    
+-   ``Control-End`` moves the insertion cursor to the end of the text and clears any
+    selection.
 
-If the mouse is dragged out of the body pane while button 1 is pressed, the entry will automatically scroll to make more text visible (if there is more text off-screen on the side where the mouse left the window). 
+-   ``Control-Shift-End`` moves the cursor to the end of the text and extends the selection. 
+    
+-   ``Select`` and ``Control-Space`` set the selection anchor to the position of the
+    insertion cursor. They don't affect the current selection.
 
-The Left and Right (arrow) keys move the insertion cursor one character to the left or right; they also clear any selection in the text. If Left or Right is typed with the Shift key down, then the insertion cursor moves and the selection is extended to include the new character. Control-Left and Control-Right move the insertion cursor by words, and Control-Shift-Left and Control-Shift-Right move the insertion cursor by words and also extend the selection.
+-   ``Shift-Select`` and ``Control-Shift-Space`` adjust the selection to the current position of the
+    insertion cursor, selecting from the anchor to the insertion cursor if there was
+    no previous selection. 
+    
+-   ``Control-/`` selects the entire contents of the widget. 
+    
+-   ``Control-\`` clears any selection in the widget. 
+    
+-   ``F16``  (``Copy`` on many Sun workstations) or ``Control-c`` copies the
+    selection in the widget to the clipboard, if there is a selection.
+    
+-   ``F20` (``Cut`` on many Sun workstations) or ``Control-x`` copies the
+    selection in the widget to the clipboard and deletes the selection.
+    These keys have no effect if no text is selected.
+    
+-   ``F18`` (``Paste`` on many Sun workstations) or ``Control-v`` inserts the
+    contents of the clipboard at the position of the insertion cursor.
+    
+-   ``Delete`` deletes the text selection, or the character to the right of the cursor
+    if there is no text selection.
+    
+-   ``Backspace`` deletes the selection, or character to the left of the cursor
+    if there is no text selection.</t>
+<t tx="EKR.20040524104904.40">You can expand or contract a node by clicking in the standard Windows Tree
+View icon to the left of the status icon. Expanding a node shows its immediate
+children; contracting a node hides all its children. The ``Expand All Subheads``
+command expands all of a nodes offspring (children, grandchildren, etc.)</t>
+<t tx="EKR.20040524104904.41">Leo auto indents body text following colons when ``@language Python`` is in
+effect. When the ``smart_auto_indent`` setting is True, Leo uses Emacs-style
+auto-indentation instead. This style of auto-indent aligns newly created lines
+with unmatched ``(`` ``[`` or ``{`` brackets in the previous line.</t>
+<t tx="EKR.20040524104904.43">You can mark nodes in several ways:
 
-The Up and Down (arrow) keys move the insertion cursor one line up or down and clear any selection in the text. If Up or Right is typed with the Shift key down, then the insertion cursor moves and the selection is extended to include the new character. Control-Up and Control-Down move the insertion cursor by paragraphs (groups of lines separated by blank lines), and Control-Shift-Up and Control-Shift-Down move the insertion cursor by paragraphs and also extend the selection. Control-p and Control-n behave the same as Up and Down, respectively. Note: by default, Leo binds Control-p and control-n to commands.
+- With the ``Mark`` commands.
 
-The Next(Page Down) and Prior(Page Up) keys move the insertion cursor forward or backwards by one screen full and clear any selection in the text. If the Shift key is held down while Next or Prior is typed, then the selection is extended to include the new character.
+- With the ``Find`` or ``Change`` commands.
 
-Line movement is by text lines terminated by hard returns (newlines), not by displayed lines;  if a text line is long and wraps across more than one display line, then the Up and Down movement will skip the extra wrapped display lines.
+- With the ``Untangle`` command.
 
-Home moves the insertion cursor to the beginning of its line and clear any selection in the widget. Shift-Home moves the insertion cursor to the beginning of the line and also extends the selection to that point. 
+The ``Go To Next Marked`` command selects the next marked node, if any.
+The ``Mark`` command unmarks the selected headline if it is already marked.</t>
+<t tx="EKR.20040524104904.44">The ``Move Up``, ``Move Down``, ``Move Left`` and ``Move Right`` commands move the currently
+selected node. The ``Promote`` command makes all the children of a node
+siblings of the node. The ``Demote`` command makes all following siblings of a
+node children of the node.
 
-End moves the insertion cursor to the end of the line and clear any selection in the widget. Shift-End moves the cursor to the end of the line and extends the selection to that point. 
+You can cut and paste any part of a tree. If a node contains selected text,
+the cut, copy, clear or paste operation affects only the selected text.
+Otherwise, the cut, copy, clear or paste operations acts on the node and all
+nodes contained by it. For example, you can move a node by cutting it,
+selecting another location in the outline and pasting the node in the new
+location.
 
-Control-Home moves the insertion cursor to the beginning of the text and clear any selection in the widget. Control-Shift-Home moves the insertion cursor to the beginning of the text and also extends the selection to that point. 
-
-Control-End moves the insertion cursor to the end of the text and clear any selection in the widget. Control-Shift-End moves the cursor to the end of the text and extends the selection to that point. 
-
-The Select key and Control-Space set the selection anchor to the position of the insertion cursor. They don't affect the current selection. Shift-Select and Control-Shift-Space adjust the selection to the current position of the insertion cursor, selecting from the anchor to the insertion cursor if there was not any selection previously. 
-
-Control-/ selects the entire contents of the widget. 
-
-Control-\ clears any selection in the widget. 
-
-The F16 key (labeled Copy on many Sun workstations) or Control-c copies the selection in the widget to the clipboard, if there is a selection. This action is carried out by the command tk_textCopy. 
-
-The F20 key (labeled Cut on many Sun workstations) or Control-x copies the selection in the widget to the clipboard and deletes the selection. This action is carried out by the command tk_textCut. If there is no selection in the widget then these keys have no effect. 
-
-The F18 key (labeled Paste on many Sun workstations) or Control-v inserts the contents of the clipboard at the position of the insertion cursor. This action is carried out by the command tk_textPaste. 
-
-The Delete key deletes the selection, if there is one in the widget. If there is no selection, it deletes the character to the right of the insertion cursor. 
-
-Backspace deletes the selection, if there is one in the widget. If there is no selection, they delete the character to the left of the insertion cursor. </t>
-<t tx="EKR.20040524104904.40">You can expand or contract a headline by clicking in the standard Windows Tree View icon to the left of the status icon.
-
-Expanding a node shows its immediate children; contracting a node hides all its children.  The Expand All Subheads command expands all of a nodes offspring (children, grandchildren, etc.)</t>
-<t tx="EKR.20040524104904.41">Leo auto indents body text following colons when @language is in effect.
-
-You may use Emacs-style auto-indentation instead.  The child of this node provides full details.</t>
-<t tx="EKR.20040524104904.42">Leo now supports optional Emacs-style auto-indent.  This style of auto-indent aligns newly created lines with unmatched ( [ or { brackets in the previous line. This feature is enabled only if smart_auto_indent = 1 in leoConfig.txt.
-
-This code was contributed by David McNab, david@rebirthing.co.nz.</t>
-<t tx="EKR.20040524104904.43">You can mark headlines in several ways: with the various Outline:Mark commands, with the Find or Change commands, or with the Untangle command.  The "Go To Next Marked" command will go to the next marked node, if any.
-
-The Mark command will unmark the selected headline if it is already marked.</t>
-<t tx="EKR.20040524104904.44">There are a number of ways to move and reorganize headlines.
-
-The Move Up, Move Down, Move Left and Move Right commands move the currently selected outline.  The Promote command makes all the children of a headline siblings of the headline.  The Demote command makes all following siblings of a headline children of the headline.
-
-You can cut and paste any part of a tree.  If a headline contains selected text, the cut, copy, clear or paste operation affects only the selected text. Otherwise, the cut, copy, clear or paste operations acts on the node and all nodes contained by it.  For example, you can move a headline by cutting it, selecting another location in the outline and pasting the headline in the new location.
-
-Warning:  In practice, it is almost always wiser to move clones rather than cutting or pasting them.  Cutting and pasting outlines preserves clones, but the links between clones only exist within the part of the outline that was pasted.  Therefore, if you are cutting and pasting an outline containing clones it is best to cut and paste the _entire_ outline.  Alternatively, you can paste part of an outline, then delete all clones.  
+**Warning**: In practice, it is almost always wiser to move clones rather than
+cutting or pasting them. Cutting and pasting outlines preserves clones, but the
+links between clones only exist within the part of the outline that was pasted.
+Therefore, if you are cutting and pasting an outline containing clones it is
+best to cut and paste the _entire_ outline. Alternatively, you can paste part of
+an outline, then delete all clones. 
 </t>
-<t tx="EKR.20040524104904.45">Double-clicking the icon box of a node whose headline has the form:
+<t tx="EKR.20040524104904.45">Double-clicking the icon box of a node whose headline has the form::
 
-@url &lt;any url&gt;
-
-executes the url in your default web browser.  See the child of this node for full details.</t>
-<t tx="EKR.20040524104904.46">Double-clicking the icon box of a node whose headline has the form:
-
-@url &lt;any url&gt;
+    @url &lt;any url&gt;
 
 executes the url in your default web browser.
 
 Leo checks that the url is valid before doing so. A valid url is:
 
--- 3 or more lowercase alphas,
--- followed by one ':',
--- followed by one or more of: $%&amp;'()*+,-./0-9:=?@A-Z_a-z{}~
--- followed by one of:         $%&amp;'()*+/0-9:=?@A-Z_a-z}~
+-   3 or more lowercase alphas
+-   followed by one ``:``
+-   followed by one or more of:
+-   ``$%&amp;'()*+,-./0-9:=?@A-Z_a-z{}~``
+-   followed by one of: ``$%&amp;'()*+/0-9:=?@A-Z_a-z}~``
 
-Url's should contain no spaces: use %20 to indicate spaces.
+Url's should contain no spaces: use ``%20`` to indicate spaces. You may use any
+type of url that your browser supports: http, mailto, ftp, file, etc.</t>
+<t tx="EKR.20040524104904.47">You can change the relative sizes of the outline and body panes by dragging the
+splitter bar. The ``Equal Sized Panes`` command resizes the panes so that each
+fills half of the main window.</t>
+<t tx="EKR.20040524104904.48">Leo supports unlimited undo for all typing and all commands. The
+'undo_granularity' setting controls the granularity of undo. There are four
+possible values:
 
-You may use any type of url that your browser supports: http,mailto,ftp,file,etc.
-</t>
-<t tx="EKR.20040524104904.47">You can change the relative sizes of the outline and body panes by dragging the splitter bar.  The Equal Sized Panes command resizes the panes so that each fills half of the main window.</t>
-<t tx="EKR.20040524104904.48">Leo supports unlimited undo for all typing and all commands.
+``node``
+    Starts a new undo unit when typing moves to a new node.
 
-Up until Leo 4.3, Leo's undo-typing mechanism was character-by-character. This
-was clunky, to say the least.
+``line`` (default)
+    Starts a new undo unit when typing moves to new line.
 
-leoSettings.leo now contains an 'undo_granularity' setting. There are four
-possible value for this setting:
+``word``
+    Starts a new undo unit when typing starts a new word.
 
-node: start a new undo unit when typing moves to a new node.
-line: start a new undo unit when typing moves to new line.
-word: start a new undo unit when typing starts a new word.
-char: start a new undo unit for each character typed.
+``char`` (not recommended)
+    Starts a new undo unit for each character typed.
+    This wastes lots of computer memory.
 
-'line' granularity is the default used if no valid setting is specified. 'char'
-granularity is not recommened: it wastes lots of computer memory.
-
-The definitions of 'node', 'line' and 'char' granularities are straightforward.
-However, recognizing the start of a word for the purposes of undo is something
-people may want to play with. Therefore, setUndoTypingParams calls the
-recognizeStartOfTypingWord helper method to do this.
-
-recognizeStartOfTypingWord is potentially user-modifiable method that should
-return True if the typing indicated by the params starts a new 'word' for the
-purposes of undo with 'word' granularity.
-    
-setUndoTypingParams calls this method only when the typing could possibly
-continue a previous word. In other words, undo will work safely regardless of
-the value returned. See the actual code for recognizeStartOfTypingWord for more
-details.</t>
+``setUndoTypingParams`` calls ``recognizeStartOfTypingWord`` to recognize the
+start of words. Plugins can modify ``recognizeStartOfTypingWord``. It should
+return ``True`` if the typing indicated by the params starts a new 'word' for the
+purposes of undo with 'word' granularity. ``setUndoTypingParams`` calls this
+method only when the typing could possibly continue a previous word. In other
+words, undo will work safely regardless of the value returned. See the actual
+code for ``recognizeStartOfTypingWord`` for more details.</t>
 <t tx="EKR.20040524104904.92">An @asis tree is a tree whose root headline starts with @asis &lt;filename&gt;.  Similarly, for @noref and @nosent trees.
 
 New in 4.2:  The following terms are equivalent.  The first form is preferred in each case.
@@ -4463,27 +4444,25 @@ if d is None:
 
 Now the plugin can set and get fields in d.  Similar code would be used for the t.tempAttributes, v.unknownAttributes and t.unknownAttributes dictionaries.</t>
 <t tx="EKR.20040524104904.245"></t>
-<t tx="EKR.20040524104904.246">Leo grew out of my efforts to use Donald Knuth's "CWEB system of Structured documentation."  I had known of literate programming since the mid 1980's, but I never understood how to make it work for me: I was confused about when to create new sections and it was difficult to keep track of all the sections once they were created.
+<t tx="EKR.20040524104904.247">In May of 1999 I began work on the Borland version of Leo for Windows.  The Borland Delphi classes were a pleasure to use and free of bugs.  I redesigned Leo's file format for the Windows version of Leo;  the Yellow Box file format is a binary format that requires the Yellow Box runtime.  Fortunately, I choose to use XML for Leo's file format. I have Marc-Antoine Parent to thank for this decision; he urged me to use XML and patiently explained how to use XML properly.  However, there are two significant problems with the Borland version of Leo.  First, it works only on Windows.  Second, it can never be Open software, because it uses Borland's Delphi classes and a commercial syntax coloring component.
 
-In November 1995 I started thinking about literate programming in earnest.  Over the holidays I mused about making literate programs more understandable.  In January 1996 the fog of confusion suddenly cleared.  I summarized my thinking with the phrase, "Webs are outlines in disguise".  I strongly suspected that outline views were the key to literate programming, but many details remained obscure.  It still wasn't clear exactly how to represent webs in an outline.
 
-March 5, 1996, is the most important date in Leo's history.   While returning from a day of skiing, I discussed my thoughts with Rebecca.  During that conversation I realized that I could use the MORE outliner as a prototype for a "literate outliner." I immediately started work on my first literate outline. It quickly became apparent that outlines work: all my old problems with literate programming vanished.   Furthermore, I realized that MORE's outlines could form the basis for Leo's screen design. Rather than opening body text within the outline, as MORE does, I decided to use a separate body pane.
-
-In about a week I hacked a translator called M2C which allowed me to use MORE to write real code.  I would write code in MORE, copy the text to the clipboard in MORE format, then run M2C, which would tangle the outline into C code.  This process was useful, if clumsy.  I called the language used in the outline SWEB, for simplified CWEB.  Much later I converted to the noweb language. noweb is simpler than SWEB, more standard and more general.</t>
-<t tx="EKR.20040524104904.247">Throughout 1996 I created a version of Leo on the Macintosh in plain C and the native Mac Toolbox.   This was a poor choice; I wasted a huge amount of time programming with these primitive tools.  However, this effort convinced me that Leo was a great way to program.
-
-Late in 1997 I wrote a Print command to typeset an outline. Printing (Weaving) is supposedly a key feature of literate programming.  Imagine my surprise when I realized that such a "beautiful" program listing was almost unintelligible; all the structure inherent in the outline was lost!  I saw clearly that typesetting, no matter how well done, is no substitute for explicit structure.
-
-Starting in May of 1998 I began work on a version of Leo using objective C and Apple's Yellow Box environment.  In some ways, this was the most powerful version of Leo.  Alas, a year later Apple chose not to support Yellow Box on Windows, so I had to begin again.  I was most unhappy.
-
-In May of 1999 I began work on the Borland version of Leo for Windows.  The Borland Delphi classes were a pleasure to use and free of bugs.  I redesigned Leo's file format for the Windows version of Leo;  the Yellow Box file format is a binary format that requires the Yellow Box runtime.  Fortunately, I choose to use XML for Leo's file format. I have Marc-Antoine Parent to thank for this decision; he urged me to use XML and patiently explained how to use XML properly.  However, there are two significant problems with the Borland version of Leo.  First, it works only on Windows.  Second, it can never be Open software, because it uses Borland's Delphi classes and a commercial syntax coloring component.
-
-In May of 2000 I began work an wxWindows version of Leo.  This was supposed to be a cross-platform version.  Alas, after much work I chose to abandon the wxWindows version.  There were too many bugs and too many incompatibilities between platforms.  Something good did come from this effort.  I spent a lot of time adding Python scripting to the wxWindows code and I became familiar with Python and its internals.
 
 In October of 2001 I began work on the leo.py, an Open Software version of leo.py, a version of Leo written in Python and Tk.  At last I have found the proper platform for Leo.  leo.py naturally supports scripting in Python.  The combination of Python and Tk is incredibly powerful, very easy to use, and truly cross platform.  I rewrote Leo in Python in about two months!  For the first time in my career I no longer am anxious while programming; it simply isn't possible to create bad bugs in Python.</t>
-<t tx="EKR.20040524104904.248">The following sections give a pseudo-chronological list of the major Aha's involved in creating Leo2. These Aha's form the real design and theory of operation of Leo. See the "Diary", "Notes" and "Letters to Speed Ream" sections in LeoDocs.leo for a more accurate and less tidy history of Leo2.
+<t tx="EKR.20040524104904.248">The following sections give a pseudo-chronological list of the major Aha's
+involved in creating Leo2. These Aha's form the real design and theory of
+operation of Leo. See the "Diary", "Notes" and "Letters to Speed Ream" sections
+in LeoDocs.leo for a more accurate and less tidy history of Leo2.
 
-I am writing these notes for several reasons.  First, the initial design and coding of Leo2, spanning a period of about 8 weeks, was some of the most creative and rewarding work I have ever done. The result is elegant and simple.  I'm proud of it.  Second, much of the design work is not reflected in the code, because improved design often eliminated code entirely. The final code is so elegant that it obscures the hard work that created it.  Third, you must understand this design in order to understand the implementation of @file trees and their derived files.  Someday someone else may take charge of Leo. That person should know what really makes Leo2 work.</t>
+I am writing these notes for several reasons. First, the initial design and
+coding of Leo2, spanning a period of about 8 weeks, was some of the most
+creative and rewarding work I have ever done. The result is elegant and simple.
+I'm proud of it. Second, much of the design work is not reflected in the code,
+because improved design often eliminated code entirely. The final code is so
+elegant that it obscures the hard work that created it. Third, you must
+understand this design in order to understand the implementation of @file trees
+and their derived files. Someday someone else may take charge of Leo. That
+person should know what really makes Leo2 work.</t>
 <t tx="EKR.20040524104904.249">In the summer of 2001 I began work on a project that for a long time I had considered impossible.  I had long considered that "private" file formats such as .leo files were the only way to represent an outline properly and safely.  I'm not sure exactly what changed my mind, but I finally was willing to consider that information embedded in derived files might be useful.  This meant accepting the possibility that sentinel lines might be corrupted.  This was a crucial first step.  If we can trust the user not to corrupt sentinel lines than we can embed almost any kind of information into a derived file.
 
 There were several motivations for this work.  I wanted to eliminate the need for explicit Tangle and Untangle commands. I thought of this as "Untangle on Read/Tangle on Write."  If tangling and untangling could be made automatic it would save the user a lot of work.  I also wanted to make derived files the primary sources files.  .leo files might be made much smaller derived files contained the primary source information. This hope turned out to be false.
@@ -14990,7 +14969,9 @@ verbose=True
 
 ##########################################
 Chapter 2: A Tutorial Introduction to Leo
-##########################################</t>
+##########################################
+
+.. contents::</t>
 <t tx="ekr.20050816073412.1">This tutorial describes the basics of what Leo can does and how it does it.
 After reading this tutorial you should have a sense that everything in Leo is directly related to outlines.
 Indeed, Leo has only a few basic features,
@@ -19353,9 +19334,13 @@ verbose=True
 Chapter 3: Using Outlines
 ##########################################
 
-This chapter tells how to use Leo's outlines.</t>
+This chapter tells how to use Leo's outlines.
+
+.. contents::</t>
 <t tx="ekr.20050901101608.1">.. _`Chapter 2\: A Tutorial Introduction to Leo`:   http://webpages.charter.net/edreamleo/intro.html
 .. _`Chapter 4\: Writing Programs in Leo`:          http://webpages.charter.net/edreamleo/directives.html
+
+.. _`Clones and views`:     http://webpages.charter.net/edreamleo/intro.html#clones-views
 
 .. WARNING: image targets may not have upper case letters!
 
@@ -19454,10 +19439,10 @@ verbose=True
 Chapter 9: History of Leo
 ##########################################
 
-This chapter discusses the history of Leo and discusses the differences between versions.
-A large part of this chapter discusses how I discovered how to implement ``@file`` trees.
+This chapter discusses the history of Leo and tells the essential features of each version.
+Here are the most important dates in Leo's history:
 
-.. contents::</t>
+</t>
 <t tx="ekr.20050901101608.6">@ @rst-options
 code_mode=False
 generate_rst=True
@@ -19535,6 +19520,8 @@ This chapter will be of use primarily to those wanting to change Leo's code.
     :target: next_</t>
 <t tx="ekr.20050901102147">.. _`Chapter 8\: Customizing Leo`:          http://webpages.charter.net/edreamleo/customizing.html
 .. _`Chapter 10\: Theory of Operation`:     http://webpages.charter.net/edreamleo/theory.html
+
+.. _`Chapter 7: Scripting Leo with Python`: http://webpages.charter.net/edreamleo/scripting.html
 
 .. WARNING: image targets may not have upper case letters!
 
@@ -19871,5 +19858,159 @@ simulate the old ``vnode`` methods automatically create copies of positions when
 'moving' through an outline. Thus, confused scripts generate many more positions
 than would the equivalent script that uses ``position`` iterators. Such is the
 price of compatibility.</t>
+<t tx="ekr.20050902080416"># Start at the top.
+b = c.frame.body.bodyCtrl
+b.mark_set('insert','1.0')
+b.tag_remove('sel','1.0','end')
+b.tag_add('sel','1.0','1.0')
+b.update_idletasks()
+
+# Format until the end.
+while 1:
+    s = p.bodyString()
+    if not s.strip():
+        break
+    c.reformatParagraph()
+    s2 = p.bodyString()
+    
+    index = b.index('insert')
+    if b.compare(index,'&gt;=','end-1c'):
+        break
+</t>
+<t tx="ekr.20050902100834">This following information may be of interest to historians. It is not of
+general enough interest to put in Leo's Users Guide on the web. I am including
+this mass of detail here to indicate the complexities that were involved in
+designing Leo's simple-looking mechanisms.</t>
+<t tx="ekr.20050902105852">Leo grew out of my efforts to use Donald Knuth's "CWEB system of Structured
+documentation." I had known of literate programming since the mid 1980's, but I
+never understood how to make it work for me. In November 1995 I started thinking
+about literate programming in earnest. Over the holidays I mused about making
+literate programs more understandable. In January 1996 the fog of confusion
+suddenly cleared. I summarized my thinking with the phrase, **web are outlines
+in disguise**. I suspected that outline views were the key to literate
+programming, but many details remained obscure.
+</t>
+<t tx="ekr.20050902105852.1">March 5, 1996, is the most important date in Leo's history. While returning from
+a day of skiing, I discussed my thoughts with Rebecca. During that conversation
+I realized that I could use the ``MORE`` outliner as a prototype for a "literate
+outliner." I immediately started work on my first literate outline. It quickly
+became apparent that outlines work: all my old problems with literate
+programming vanished. The ``@others`` directive dates from this day. I realized
+that ``MORE``'s outlines could form the basis for Leo's screen design. Rather
+than opening body text within the outline, as ``MORE`` does, I decided to use a
+separate body pane.
+
+I hacked a translator called ``M2C`` which allowed me to use ``MORE`` to write
+real code. I would write code in ``MORE``, copy the text to the clipboard in
+``MORE`` format, then run ``M2C``, which would tangle the outline into C code.
+This process was useful, if clumsy. I called the language used in the outline
+``SWEB``, for simplified ``CWEB``. Much later Leo started supporting the noweb
+language.</t>
+<t tx="ekr.20050902105852.2">Throughout 1996 I created a version of Leo on the Macintosh in plain C and the
+native Mac Toolbox. This was a poor choice; I wasted a huge amount of time
+programming with these primitive tools. However, this effort convinced me that
+Leo was a great way to program.
+
+Late in 1997 I wrote a ``Print`` command to typeset an outline. Printing (Weaving)
+is supposedly a key feature of literate programming. Imagine my surprise when I
+realized that such a "beautiful" program listing was almost unintelligible; all
+the structure inherent in the outline was lost! I saw clearly that typesetting,
+no matter how well done, is no substitute for explicit structure.
+
+In 1998 I created a version of Leo using Apple's YellowBox environment. Alas,
+Apple broke its promises to Apple developers. I had to start again.</t>
+<t tx="ekr.20050902105852.3">I rewrote Leo for Borland C++ starting in May 1999. Borland C++ was much better
+than CodeWarrior C, but it was still C++. This version of Leo was the first
+version to use xml as the format of .leo files. The last version of Borland Leo,
+3.12 Final went out the door July 17, 2003.</t>
+<t tx="ekr.20050902105852.4">I attended the Python conference in early 2001. In May of 2000 I began work on
+an wxWindows version of Leo. This did not work out, but something good did come
+from this effort. I spent a lot of time adding Python scripting to the wxWindows
+code and I became familiar with Python and its internals.
+
+I really started to 'get' Python in September 2001. I wrote the white papers at
+about this time. Python solved *all* my programming problems. I rewrote Leo in
+Python in about two months! For the first time in my career I was no longer
+anxious while programming; it simply isn't possible to create bad bugs in
+Python. The Python version of Leo the first officially OpenSoftware version of
+Leo. The first function version of Leo in Python was 0.05 alpha, December 17,
+2001.</t>
+<t tx="ekr.20050902105852.5">I registered the Leo project on SourceForge on March 10, 2003. It is certainly
+no accident that Leo started a new life shortly thereafter. Prior to SourceForge
+my interst in Leo had been waning.</t>
+<t tx="ekr.20050902105852.6">In the summer of 2001 I began to consider using sentinel lines in derived files.
+Previously I had thought that outline structure must be 'protected' by remaining
+inside .leo files. Accepting the possibility that sentinels might be corrupted
+opened vast new design possibilities. In retrospect, problems with sentinel
+almost never happen, but that wasn't obvious at the time! The result of this
+design was known at first as ``Leo2``. That terminology is extinct. I think of
+this version as the first version to support ``@file`` and automatic tangling
+and untangling.</t>
+<t tx="ekr.20050902105852.7">The biggest surprise in Leo's history was the realization it is **much** easier
+to untangle files derived from ``@file``. Indeed, ``@root`` creates all sorts of
+problems that just disappear when using ``@file``. The new Python version of Leo
+became fully operational in early 2002. It was probably about this time that I chose
+noweb as Leo's preferred markup language. My decision not to support noweb's
+escape sequences made Leo's read code much more robust.
+</t>
+<t tx="ekr.20050902105852.8">I spent 2002 taking advantages of Python's tremendous power and safety.
+Many improvements were at last easy enough to do:
+
+- Nested ``@others`` directives appeared in 3.2.
+- Unicode support started in 3.3, as did leoConfix.txt.
+- @first and @last appeared in 3.7
+- @asis and @nosent appeared in 3.8.
+- Incremental syntax coloring and incremental undo appeared in 3.9.
+- 3.12 fixed a huge memory leak.
+- 3.12 Final, the last 3.x version, appeared July 17, 2003.
+</t>
+<t tx="ekr.20050902105852.9">In late 2002 and throughout 2003 I worked on an entirely new file format.
+4.0 final went out the door October 17, 2003 after almost a year intense
+design work trying to improve error recovery scheme used while reading
+derived files. In the summer of 2003 I realized that orphan and ``@ignore``'d
+nodes must be prohibited in ``@file`` trees. With this restriction, Leo
+could finally recreate ``@file`` trees in outlines using **only** the
+information in derived files. This made the read code much more robust, and
+eliminated all the previous unworkable error recovery schemes. At last Leo
+was on a completely firm foundation.
+</t>
+<t tx="ekr.20050902105852.10">Leo first used gnx's (global node indices) as a foolproof way of associated
+nodes in .leo files with nodes in derived files. At the time, there was
+still intense discussions about protecting the logical consistency of
+outlines. ``@thin`` was later to solve all those problems, but nobody knew
+that then.
+</t>
+<t tx="ekr.20050902105852.11">Leo 4.2 Final went out the door September 20, 2004.
+This surely is one of the most significant dates in Leo's history:
+
+-   This marked the end worries about consistency of outlines and derived files:
+    Leo recreates all essential information from thin derived files,
+    so *there is nothing left in the .leo file to get out of synch*.
+
+-   Thin derived files use gnx's extensively.  This simplifies the file format and makes thin derived files
+    more cvs friendly.
+
+-   A sensational scripting plugin showed how to create script buttons.
+    This has lead to improvements in the Execute Script command and
+    other significant improvements in Unit testing.
+
+-   As if this were not enough, 4.2 marked the 'great divide' in Leo's internal
+    data structures. Before 4.2, Leo every node in the outline had its own
+    ``vnode``. This was a big performance problem: clone operations had to
+    traverse the entire outline! 4.2 represents clones by sharing subtrees.
+    Changing Leo's fundamental data structures while retaining compatibility
+    with old scripts was engineering work of which the entire Leo communicty can
+    be proud. `Chapter 7: Scripting Leo with Python`_ tells how the position
+    class makes this happen.
+    This was a cooperative effort. Kent Tenney and Bernhard Mulder made
+    absolutely crucial contributions. Kent pointed out that it is a ``tnode``,
+    not a ``vnode`` that must form the root of the shared data. Bernhard showed
+    that iterators are the way to avoid creating huge numbers of positions.
+
+Leo 4.2 marked so many significant changes. I often find it hard to remember
+what life with Leo was like before it.</t>
+<t tx="ekr.20050902105852.12">Leo 4.3 corrected many problems with ``leoConfig.txt``. Instead, Leo gets
+settings from one or more ``leoSettings.leo files``. This version also
+introduced a way to changed settings using a settings dialog.</t>
 </tnodes>
 </leo_file>
