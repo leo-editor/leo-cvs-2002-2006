@@ -1613,7 +1613,7 @@
 <v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831101501" a="MTV"><vh>To do</vh>
+<v t="ekr.20050831101501" a="M"><vh>To do</vh>
 <v t="ekr.20050831075008" a="M"><vh>Bug: doesn't reset properly when multiple files</vh></v>
 <v t="ekr.20050831134335"><vh>Tell about 'reference' .leo files somewhere</vh></v>
 <v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
@@ -1872,7 +1872,7 @@
 <v t="ekr.20050828115003"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.99"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="EKR.20040524104904.99" a="M"><vh>Chapter 5: Using Leo's Commands</vh>
 <v t="ekr.20050901101608.2"><vh>@rst commands.html</vh>
 <v t="ekr.20050901101852"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.100"><vh> The File Menu</vh>
@@ -2042,38 +2042,23 @@
 </v>
 </v>
 <v t="EKR.20040524104904.211" a="EM"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050901101608.4"><vh>@rst customizing.html</vh>
+<v t="ekr.20050901101608.4" a="ETV"><vh>@rst customizing.html</vh>
 <v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
-<v t="ekr.20050901110110.2"><vh>@rst-no-head intro</vh></v>
 <v t="ekr.20050122090016"><vh>Setting options...</vh></v>
 <v t="EKR.20040524104904.213" a="E"><vh>Using plugins and hooks</vh>
 <v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
 <v t="EKR.20040524104904.215"><vh>New plugin architecture</vh></v>
 <v t="EKR.20040524104904.223"><vh>About hooks</vh></v>
-<v t="EKR.20040524104904.224"><vh>SECURITY WARNINGS</vh>
+<v t="EKR.20040524104904.224"><vh>Security warnings</vh>
 <v t="EKR.20040524104904.225"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="EKR.20040524104904.226"><vh>Never use this kind of code in a hook</vh></v>
-<v t="EKR.20040524104904.227"><vh>Don't use rexec !!</vh>
-<v t="EKR.20040524104904.228"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
-<v t="EKR.20040524104904.229"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
-<v t="EKR.20040524104904.230"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.227" a="E"><vh>Don't use rexec</vh></v>
 </v>
-</v>
-<v t="EKR.20040524104904.231" a="E"><vh>Convenience routines for plugins</vh>
-<v t="EKR.20040524104904.232"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
-<v t="EKR.20040524104904.233" a="E"><vh>Convenience methods to create, destroy and modify menus</vh>
-<v t="EKR.20040524104904.234"><vh>createMenuItemsFromTable</vh></v>
-<v t="EKR.20040524104904.235"><vh>createNewMenu</vh></v>
-<v t="EKR.20040524104904.104"><vh>createOpenWithMenuFromTable</vh></v>
-<v t="EKR.20040524104904.236"><vh>deleteMenu</vh></v>
-<v t="EKR.20040524104904.237"><vh>deleteMenuItem</vh></v>
-<v t="EKR.20040524104904.238"><vh>Example: how to create a menu</vh></v>
-</v>
-</v>
+<v t="EKR.20040524104904.231" a="E"><vh>Convenience routines for plugins</vh></v>
 <v t="EKR.20040524104904.239"><vh>Translating menus into other languages</vh></v>
 <v t="EKR.20040524104904.240"><vh>Support for unit testing</vh></v>
 </v>
-<v t="ekr.20050306090601"><vh>Adding attributes to nodes and .leo files</vh>
+<v t="ekr.20050306090601" a="E"><vh>Adding attributes to nodes and .leo files</vh>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
 <v t="EKR.20040524104904.243"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
 <v t="EKR.20040524104904.244"><vh>Recommended conventions for plugins</vh></v>
@@ -2609,32 +2594,6 @@ in the Open With submenu. This would typically be done in a hook routine, using
 the createOpenWithMenuFromTable routine described in the child of this node. The
 ``@file mod_open_with.py`` node in ``LeoPlugins.leo`` gives a complete example
 of handling the ``Open With`` menu.</t>
-<t tx="EKR.20040524104904.104">createOpenWithMenuFromTable (self,table)
-
-This method adds items to submenu of the Open With menu item in the File menu.
-
-The table argument describes the entries to be created.  This table is a sequence of items of the form (name,shortcut,data).
-
-- name is the command name
-- shortcut is the shortcut, or None to indicate no shortcut.
-- data is a tuple of the form (command,arg,ext)
-- command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
-- arg is an argument to be passed to the given command.
-- ext is a file extension or None.
-
-When the user selects the Open With item corresponding to the table item Leo executes command(arg).
-If ext is not None, the temp file has the given extension.
-Otherwise, Leo computes an extension based on what @language directive is in effect.
-
-For example::
-
-    table = (
-        ("Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
-        ("Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
-        ("Wordpad","Alt+Shift+T",("os.startfile",None,".txt")))
-    
-    top().frame.createOpenWithMenuFromTable(table)
-	</t>
 <t tx="EKR.20040524104904.105">The ``Tangle``, ``Tangle All`` and ``Tangle Marked`` commands create derived
 files from portions of an outline. These commands indent and format the derived
 files so that they are easy to read and so that it is clear what sections
@@ -3795,7 +3754,7 @@ Plugins are permanent: they will not go away when Leo is updated.  You can take
 advantage of the latest CVS updates _without_ having to throw away your modifications.
 
 Important warning: plugins must avoid blindly executing scripts in .leo files.  Doing so could expose all parts of your computer to malicious Python code.  The section called "Security warnings and precautions" discusses how to customize Leo safely and how to avoid several pitfalls.</t>
-<t tx="EKR.20040524104904.214">A **plugin** is a .py file that appears in Leo's plugin subdirectory. Leo tries to
+<t tx="EKR.20040524104904.214">A **plugin** is a Python file that appears in Leo's plugin subdirectory. Leo tries to
 import all such files while starting up. This is done at "start1" time, that
 is, in the call to doHook("start1") in the run function in leo.py. Plugins
 exist to define "hook code".
@@ -4147,7 +4106,6 @@ For example, consider the following script, which is valid in rexec mode::
     badNode = c.currentPosition()
     for p in c.allNodes_iter():
         &lt;&lt; change `rexec` to `exec` in p's body &gt;&gt;
-     
     &lt;&lt; delete badNode &gt;&gt;
     &lt;&lt; clear the undo stack &gt;&gt;
 
@@ -4155,39 +4113,31 @@ This script will introduce a security hole the .leo file without doing anything
 prohibited by rexec, and without leaving any traces of the perpetrating script
 behind. The damage will become permanent *outside* this script when the user
 saves the .leo file.</t>
-<t tx="EKR.20040524104904.228">pass</t>
-<t tx="EKR.20040524104904.229">pass</t>
-<t tx="EKR.20040524104904.230">pass</t>
-<t tx="EKR.20040524104904.231">Hooks have full access to all of Leo's source code simply by importing it.
+<t tx="EKR.20040524104904.231">The following methods exist for the convenience of plugins.
 
-Moreover, several convenience methods have been added to make customizing menus and commands easier.  The following paragraphs discuss these routines and how to use them.
+**g.enableIdleTimeHook(idleTimeDelay=100)**
 
-</t>
-<t tx="EKR.20040524104904.232">The following routines enable and disable "idle" hooks.  They are defined in leoGlobals.py.
+Enables the "idle" hook. Afterwards, Leo will call the "idle" hook approximately every idleTimeDelay milliseconds.
+Leo will continue to call the "idle" hook periodically until ``disableIdleTimeHook`` is called.
 
-enableIdleTimeHook(idleTimeDelay=100)
+**g.disableIdleTimeHook()**
 
-Enables the "idle" hook. After this routine is called Leo will call the "idle" hook approximately every idleTimeDelay milliseconds.  Leo will continue to call the "idle" hook periodically until disableIdleTimeHook() is called.
+Disables the "idle" hook.
 
-disableIdleTimeHook()
+The following methods of the ``leoFrame`` class make creating menus easier.
+These methods do complete error checking.
+They write error messages to the log pane and to the console.
 
-Disables the "idle" hook.</t>
-<t tx="EKR.20040524104904.233">The following convenience routines make creating menus easier.
+**c.frame.createMenuItemsFromTable (self,menuName,table,openWith=0)**
 
-These are methods of the leoFrame class.  Use top().frame to get the frame object for the presently active Leo window.
+This method adds items to the menu whose name is menuName.
+The table argument describes the entries to be created.
+This table is a sequence of items of the form ``(name,shortcut,command)``:
 
-The plugins node in LeoPy.leo gives examples of how to use these routines to create custom menus and to add items to the Open With menu.
-
-These convenience methods all do complete error checking and write messages to the log pane and to the console if errors are encountered.</t>
-<t tx="EKR.20040524104904.234">createMenuItemsFromTable (self,menuName,table,openWith=0)
-
-This method adds items to the menu whose name is menuName.  The table argument describes the entries to be created.  This table is a sequence of items of the form (name,shortcut,command).
-
-- name is the command name
-- shortcut is the shortcut, or None to indicate no shortcut.
-- command is the routine to execute when the menu item is selected.
-
-An entry of the form ("-",None,None) indicates a separator line between menu items.
+- ``name`` is the command name.
+- ``shortcut`` is the shortcut, or`` None`` to indicate no shortcut.
+- ``command`` is the routine to execute when the menu item is selected.
+- An entry of the form ``("-",None,None)`` creates a separator line between menu items.
 
 For example::
 
@@ -4195,44 +4145,55 @@ For example::
         ("Toggle Active Pane","Ctrl-T",self.OnToggleActivePane),
         ("-",None,None),
         ("Toggle Split Direction",None,self.OnToggleSplitDirection))
-    
-    top().frame.createMenuItemsFromTable("Window",table)
+    c.frame.createMenuItemsFromTable("Window",table)
 
-If the openWith keyword argument is 1 the items are added to a submenu of the Open With menu.  However, it will be more convenient to use the createOpenWithMenuFromTable method to create the Open With menu.</t>
-<t tx="EKR.20040524104904.235">createNewMenu (self,menuName,parentName="top")
+If the ``openWith`` keyword argument is 1 the items are added to a submenu of the Open With menu.
+However, it will be more convenient to use the ``createOpenWithMenuFromTable`` method to create the ``Open With`` menu.
+
+**c.frame.createNewMenu (self,menuName,parentName="top")**
 
 This method creates a new menu:
 
 - menuName is the name of the menu to be created.
 - parentName is the name of the parent menu, or "top" if the menu is to created in the menu bar.
 
-This method returns the menu object that was created, or None if there was a problem.  Your code need not remember the value returned by this method.  Instead, your code will refer to menus by name.
-</t>
-<t tx="EKR.20040524104904.236">deleteMenu (self,menuName)
+This method returns the menu object that was created, or None if there was a problem.
+Your code need not remember the value returned by this method.  Instead, your code will refer to menus by name.
 
-Deletes the menu whose name is given, including all entries in the menu.</t>
-<t tx="EKR.20040524104904.237">deleteMenuItem (self,itemName,menuName="top")
+**c.frame.createOpenWithMenuFromTable (self,table)**
 
-Deletes the item whose name is itemName from the menu whose name is menuName.  To delete a menu in the menubar, specify menuName="top".</t>
-<t tx="EKR.20040524104904.238">@nocolor
-The leoFrame class creates the Window menu as follows:
-@color
+This method adds items to submenu of the ``Open With`` menu item in the ``File`` menu.
+The table argument describes the entries to be created.
+This table is a sequence of items of the form ``(name,shortcut,data)``:
 
-windowMenu = self.createNewMenu("&amp;Window")
+- name is the command name
+- shortcut is the shortcut, or None to indicate no shortcut.
+- data is a tuple of the form (command,arg,ext)
+- command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
+- arg is an argument to be passed to the given command.
+- ext is a file extension or None.
 
-table = (
-	("&amp;Equal Sized Panes","Ctrl-E",self.OnEqualSizedPanes),
-	("Toggle &amp;Active Pane","Ctrl-T",self.OnToggleActivePane),
-	("Toggle &amp;Split Direction",None,self.OnToggleSplitDirection),
-	("-",None,None),
-	("Casca&amp;de",None,self.OnCascade),
-	("&amp;Minimize All",None,self.OnMinimizeAll),
-	("-",None,None),
-	("Open &amp;Compare Window",None,self.OnOpenCompareWindow),
-	("Open &amp;Python Window","Alt+P",self.OnOpenPythonWindow))
+When the user selects the ``Open With`` item corresponding to the table item Leo executes ``command(arg)``.
+If ``ext`` is not ``None``, the temp file has the given extension.
+Otherwise, Leo computes an extension based on what ``@language`` directive is in effect.
 
-self.createMenuEntries(windowMenu,table)
-</t>
+For example::
+
+    table = (
+        ("Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
+        ("Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
+        ("Wordpad","Alt+Shift+T",("os.startfile",None,".txt")))
+    
+    top().frame.createOpenWithMenuFromTable(table)
+
+**c.frame.deleteMenu (self,menuName)**
+
+Deletes the menu whose name is given, including all entries in the menu.
+
+**c.frame.deleteMenuItem (self,itemName,menuName="top")**
+
+Deletes the item whose name is itemName from the menu whose name is menuName.
+To delete a menu in the menubar, specify ``menuName="top"``.</t>
 <t tx="EKR.20040524104904.239">It is easy for hooks to translate menus into another language.  For example, code similar to the following code would typically be found in the "start2" hook::
 
     table = (
@@ -4246,59 +4207,73 @@ self.createMenuEntries(windowMenu,table)
 
     # Call the convenience routine to do the work.
     app().setRealMenuNamesFromTable(table)</t>
-<t tx="EKR.20040524104904.240">New in 4.1: The plugins test suite creates a new convention: if a plugin has a
-function at the outer (module) level called unitTest, Leo will call that
-function when doing unit testing for plugins. So it would be good if writers of
-plugins would create such a unitTest funcion. The unitTest function should run
-some tests. All unitTest needs to do to indicate failure is throw an exception
-or cause an assert to fail. Leo's plugins test suite takes care of the rest.</t>
-<t tx="EKR.20040524104904.242">New in 4.0: Leo can now read and write "foreign" attributes in &lt;v&gt; and &lt;t&gt; elements in .leo files:
+<t tx="EKR.20040524104904.240">The plugins test suite creates a new convention: if a plugin has a function at
+the outer (module) level called ``unitTest``, Leo will call that function when
+doing unit testing for plugins. So it would be good if writers of plugins would
+create such a ``unitTest funcion``. To indicate a failure the ``unitTest`` just
+throws an exception. Leo's plugins test suite takes care of the rest.</t>
+<t tx="EKR.20040524104904.242">Leo reads and writes "foreign" attributes in ``&lt;v&gt;`` and ``&lt;t&gt;`` elements in .leo files as follows:
 
-- When reading a .leo file, Leo will create t.unknownAttributes or v.unknownAttributes ivars for any tnode and vnode object whose corresponding &lt;v&gt; or &lt;t&gt; element in the .leo file contains a foreign attribute.
+- When reading a .leo file, Leo will create ``t.unknownAttributes`` or ``v.unknownAttributes`` ivars for
+  any ``tnode`` or ``vnode`` whose corresponding ``&lt;v&gt;`` or ``&lt;t&gt;`` element in the .leo file contains a foreign attribute.
 
-- The unknownAttributes ivars are a dictionary whose keys are the attribute names and whose values are strings.
+- The ``unknownAttributes`` ivars are dictionaries whose keys are the attribute names and whose values are strings.
 
-- When writing a file, Leo will write "foreign" attributes if  a vnode or tnode contains an unknownAttributes ivar.
+- When writing a file, Leo will write "foreign" attributes if a ``vnode`` or ``tnode`` contains an ``unknownAttributes`` ivar.
 
-- The only "native" attributes that Leo expects to find are the "tx" attribute in &lt;t&gt; elements and the "a", "t", "vtag" and "tnodeList" attributes of &lt;v&gt; elements.  Everything else is a foreign attribute.
+- The only native attribute of ``&lt;t&gt;`` elements is ``tx``.
 
-New in 4.2: The "marks", "expanded" and "descendentTnodeUnknownAttributes" attributes are "native" attribute of &lt;v&gt; elements.
+- The native attributes of ``&lt;v&gt;`` elements are ``a``, ``t``, ``vtag`` and ``tnodeList``.
 
-- Leo performs the usual xml escapes on these strings when reading or writing the unknownAttributes ivars.
+- The native attributes of ``&lt;v&gt;`` elements are ``marks``, ``expanded`` and ``descendentTnodeUnknownAttributes``.
 
-Plugins may cause Leo to write such foreign attributes simply by attaching unknownAttributes ivars to a vnode or tnode.  For example:
+- Non-native attributes are called **foreign** attributes.
 
-	v.unknownAttributes = {"vnodeIcon" : pathToIcon}
+- Leo performs the usual xml escapes on these strings when reading or writing the ``unknownAttributes`` ivars.
 
-It would be best not to delete other foreign attributes, so the following would be preferred:
+Plugins may cause Leo to write such foreign attributes simply by attaching unknownAttributes ivars to a vnode or tnode.
+Like this::
 
 	if hasattr(v,"unknownAttributes"):
-		v.unknownAttributes["vnodeIcon"] = pathToIcon
+		v.unknownAttributes ["vnodeIcon"] = pathToIcon
 	else:
 		v.unknownAttributes = {"vnodeIcon" : pathToIcon}
 
-Another way:
+See the section called "Recommended conventions for plugins" for advice about
+how to avoid potential conflicts in naming new attributes.
 
-	try:
-		v.unknownAttributes["vnodeIcon"] = pathToIcon
-	except AttributeError:
-		v.unknownAttributes = {"vnodeIcon" : pathToIcon}
+All members of these dictionaries should be "pickleable". That is, Leo uses
+Python's Pickle module to encode all values in these dictionaries. Leo will
+discard any attributes that can not be pickled. This should not be a major
+problem to plugins. For example, instead of putting a tnode into these
+dictionaries, a plugin could put the tnode's gnx (a string) in the dictionary.
 
-See the section called "Recommended conventions for plugins" for advice about how to avoid potential conflicts in naming new attributes.
+Leo writes only ``t.unknownAttributes`` when writing ``@thin`` trees to the .leo
+file. Leo puts (the encoding of) these elements into an attribute called
+``descendentTnodeUnknownAttributes``. This attribute is part of the ``&lt;v&gt;``
+element representing the ``@thin`` node. Leo does _not_ write
+``v.unknownAttributes`` in ``@thin`` trees because *only tnodes have gnx's in
+thin derived files*. In effect, vnodes are anonymous. We could attempt to get
+around this by identifying vnodes by their corresponding tnodes, but that's not
+a general solution and it is, in effect, equivalent to writing only
+``t.unknownAttributes``. So it seems pointless to "pretend" to be writing
+``v.unknownAttributes``.
 
-New in 4.2:
-
-All members of these dictionaries should be "pickleable".  That is, Leo uses Python's Pickle module to encode all values in these dictionaries.  Leo will discard any attributes that can not be pickled.  This should not be a major problem to plugins.  For example, instead of putting a tnode into these dictionaries, a plugin could put the tnode's gnx (a string) in the dictionary.
-
-Leo writes only t.unknownAttributes when writing @thin trees to the .leo file.  Leo puts (the encoding of) these elements into an attribute called descendentTnodeUnknownAttributes.  This attribute is part of the &lt;v&gt; element representing the @thin node.
-
-The reason Leo does _not_ write v.unknownAttributes in @thin trees is that only tnodes have gnx's in thin derived files.  In effect, vnodes are anonymous.  We could attempt to get around this by identifying vnodes by their corresponding tnodes, but that's not a general solution and it is, in effect, equivalent to writing only t.unknownAttributes.  So it seems pointless to "pretend" to be writing v.unknownAttributes.
-
-The effect of this is to make all vnodes identical, as far as using unknownAttributes is concerned.  This won't work in all cases.  For example, a plugin that creates an arbitrary directed graph between vnodes must distinguish between joined vnodes.  In that case, the plugin should confine itself to @file trees, or just vnodes in .leo files, for that matter.</t>
-<t tx="EKR.20040524104904.243">Plugins may create (or add to) v.tempAttributes (for vnodes) or t.tempAttributes (for tnodes).  These will work just like the corresponding unknownAttributes dicts except that Leo will _not_ read or write these dictionaries when reading or writing files.  Note: nothing needs to change in Leo to support this convention.</t>
-<t tx="EKR.20040524104904.244">We wish to avoid the possibility that two plugins might unwittingly choose the same name for attributes in the unknownAttributes or tempAttributes dictionaries.  The following convention eliminates that possibility.
-
-Each plugin should create its own dictionary _inside_ any tempAttributes or unknownAttributes dictionaries that it intends to create or modify.  Something like this::
+The effect of this is to make all vnodes identical, as far as using
+unknownAttributes is concerned. This won't work in all cases. For example, a
+plugin that creates an arbitrary directed graph between vnodes must distinguish
+between joined vnodes. In that case, the plugin should confine itself to @file
+trees, or just vnodes in .leo files, for that matter.</t>
+<t tx="EKR.20040524104904.243">Plugins may create (or add to) ``v.tempAttributes`` or ``t.tempAttributes``.
+These work just like the corresponding ``unknownAttributes`` dictionaries except
+that Leo will *not* read or write these dictionaries when reading or writing
+files.</t>
+<t tx="EKR.20040524104904.244">We wish to avoid the possibility that two plugins might unwittingly choose the
+same name for attributes in the ``unknownAttributes`` or ``tempAttributes``
+dictionaries. The following convention eliminates that possibility. Each plugin
+should create its own dictionary *inside* ``tempAttributes`` or
+``unknownAttributes`` dictionaries that it intends to create or modify.
+Something like this::
 
     # Create the tempAttributes dict for this vnode.
     if not v.hasattr("tempAttributes"):
@@ -4309,7 +4284,9 @@ Each plugin should create its own dictionary _inside_ any tempAttributes or unkn
     if d is None:
         v.tempAttributes["myPluginName"] = d = {}
 
-Now the plugin can set and get fields in d.  Similar code would be used for the t.tempAttributes, v.unknownAttributes and t.unknownAttributes dictionaries.</t>
+Now the plugin can set and get fields in d. Similar code would be used for the
+``t.tempAttributes``, ``v.unknownAttributes`` and ``t.unknownAttributes``
+dictionaries.</t>
 <t tx="EKR.20040524104904.245"></t>
 <t tx="EKR.20040524104904.247">In May of 1999 I began work on the Borland version of Leo for Windows.  The Borland Delphi classes were a pleasure to use and free of bugs.  I redesigned Leo's file format for the Windows version of Leo;  the Yellow Box file format is a binary format that requires the Yellow Box runtime.  Fortunately, I choose to use XML for Leo's file format. I have Marc-Antoine Parent to thank for this decision; he urged me to use XML and patiently explained how to use XML properly.  However, there are two significant problems with the Borland version of Leo.  First, it works only on Windows.  Second, it can never be Open software, because it uses Borland's Delphi classes and a commercial syntax coloring component.
 
@@ -13356,32 +13333,33 @@ g.es('log_pane_background_color',c.config.getColor('log_pane_background_color'))
 <t tx="ekr.20050407144342.2"></t>
 <t tx="ekr.20050407144342.3"></t>
 <t tx="ekr.20050407144417"></t>
-<t tx="ekr.20050417072710.1">User (client) code should call u.beforeX and u.afterX methods to create a bead
-describing the operation that is being performed. (By convention, the code sets
-u = c.undoer for undoable operations.) Most u.beforeX methods return 'undoData'
-that the client code merely passes to the corresponding u.afterX method. This
-data contains the 'before' snapshot. The u.afterX methods then create a bead
-containing both the 'before' and 'after' snapshots.
+<t tx="ekr.20050417072710.1">Client code should call ``u.beforeX`` and ``u.afterX`` methods to create a bead
+describing the operation that is being performed. **Note**: ``u`` is shorthand for
+``c.undoer``. Most ``u.beforeX`` methods return ``undoData`` that the client
+code merely passes to the corresponding ``u.afterX`` method. This data contains
+the 'before' snapshot. The ``u.afterX`` methods then create a bead containing
+both the 'before' and 'after' snapshots.
 
-u.beforeChangeGroup and u.afterChangeGroup allow multiple calls to u.beforeX and
-u.afterX methods to be treated as a single undoable entry. See the code for the
-Change All, Sort, Promote and Demote commands for examples. The
-u.before/afterChangeGroup methods substantially reduce the number of
-u.before/afterX methods needed.
+``u.beforeChangeGroup`` and ``u.afterChangeGroup`` allow multiple calls to
+``u.beforeX`` and ``u.afterX`` methods to be treated as a single undoable entry.
+See the code for the ``Change All``, ``Sort``, ``Promote`` and ``Demote``
+commands for examples. The ``u.beforeChangeGroup`` and ``u.afterChangeGroup``
+methods substantially reduce the number of ``u.beforeX`` and ``afterX`` methods
+needed.
 
-Plugins may define their own u.before/afterX methods. Indeed, u.afterX merely
-needs to set the bunch.undoHelper and bunch.redoHelper ivars to the methods used
-to undo and redo the operation. See the code for the various u.before/afterX
-methods for guidance.
+Plugins may define their own ``u.beforeX`` and ``afterX`` methods. Indeed,
+``u.afterX`` merely needs to set the ``bunch.undoHelper`` and
+``bunch.redoHelper`` ivars to the methods used to undo and redo the operation.
+See the code for the various ``u.beforeX`` and ``afterX`` methods for guidance.
 
-p.setDirty and p.setAllAncestorAtFileNodesDirty now return a 'dirtyVnodeList'
-that all vnodes that became dirty as the result of an operation. More than one
-list may be generated: client code is responsible for merging lists using the
-pattern dirtyVnodeList.extend(dirtyVnodeList2)
+``p.setDirty`` and ``p.setAllAncestorAtFileNodesDirty`` now return a
+``dirtyVnodeList`` that all vnodes that became dirty as the result of an
+operation. More than one list may be generated: client code is responsible for
+merging lists using the pattern ``dirtyVnodeList.extend(dirtyVnodeList2)``
 
-See the section called &lt;&lt; How Leo implements unlimited undo &gt;&gt; in leoUndo.py for
-more details. In general, the best way to see how to implement undo is to see
-how Leo's core calls the u.before/afterX methods.</t>
+See the section ``&lt;&lt; How Leo implements unlimited undo &gt;&gt;`` in ``leoUndo.py``
+for more details. In general, the best way to see how to implement undo is to
+see how Leo's core calls the ``u.beforeX`` and ``afterX`` methods.</t>
 <t tx="ekr.20050419072748"># Scripts or plugins may reload settings files using g.app.config.readSettingsFiles
 # Note: Leo calls g.app.config.readSettingsFiles before opening the settings dialog.
 
@@ -14240,8 +14218,8 @@ If found, Leo will pass that file to Tk's option_readfile method for the top
 widget. This allows users to set Tk options.</t>
 <t tx="ekr.20050620144425"></t>
 <t tx="ekr.20050620144602"></t>
-<t tx="ekr.20050620150517">Leo looks for a file called .leo_xresources in the users home directory. If
-found, Leo will pass that file to Tk's option_readfile method for the top
+<t tx="ekr.20050620150517">Leo looks for a file called ``.leo_xresources`` in the users home directory. If
+found, Leo will pass that file to Tk's ``option_readfile`` method for the top
 widget. This allows users to set Tk options.</t>
 <t tx="ekr.20050812090111">import leoPlugins
 
@@ -19276,7 +19254,7 @@ verbose=True
 Chapter 8: Customizing Leo
 ##########################################
 
-This chapter discusses how to customize leo using plugins and scripts.
+This chapter discusses how to customize leo in various ways.
 
 .. contents::</t>
 <t tx="ekr.20050901101608.5">@ @rst-options
@@ -19459,58 +19437,6 @@ This chapter will be of use primarily to those wanting to change Leo's code.
 
 .. |next| image:: arrow_rt.gif
     :target: next_</t>
-<t tx="ekr.20050901110110.2">You may customize Leo in several ways:
-
-I.  With leoSettings.leo files and @settings trees.
-
-When opening a .leo file, Leo looks for @settings trees in the following places:
-
-- The file called leoSettings.leo in the leo/config directory.
-- The file called leoSettings.leo in the users home directory.
-- The file being loaded.
-
-@settings tree specify settings such as:
-
-- Fonts used in Leo's body, outline and log panes.
-- Colors used for syntax coloring.
-- Menu shortcuts for all menu items.
-- Sizes and splitter orientation for newly created windows.
-- The format of .leo files.
-
-The section called "Using leoSettings.leo and @settings trees" provides full details for using leoSettings.leo files.
-
-II. Using plugins and hooks
-
-New in 3.11:  It is no longer necessary to modify customizeLeo.py.  Instead of modifying customizeLeo.py you now should add plugins to the plugins directory.  In fact, customizeLeo.py will soon disappear entirely.
-
-During startup, Leo looks for plugins, i.e., files whose name matches mod_*.py in the plugins directory.  These plugins register functions called "hooks" to be called a various times during execution.  Full details are provided below.
-
-Plugins provide the following advantages:
-
-- Any time you see a nice hook handler that someone has written you can just copy it to a plugin file and it runs next time you start Leo.
-- You don't have to keep updating a large and growing customizeLeo.py file.
-- You can disable and enable hooks by renaming the relevant plugin file.
-  (or by enabling or disabling the code in the plugin that registers hook functions).
-- You don't have to merge code from hooks pertaining to the same Leo event.
-
-When executing any command or handling any event, Leo calls hook routines registered from the plugin files.  The arguments to hooks are:
-
-- "tag", a string telling the kind of command or event about to be executed, and
-- "keywords", a Python dictionary whose keys depend on the specific command or event.
-
-This is a very simple, powerful and general mechanism for customizing Leo as you see fit.  There are dozens of kinds of hooks, including the "command1" and "command2" hooks that are called before and after each of Leo's menu commands.  Leo will allow you to override most commands and event handling.  In many cases, if a hook returns any value except None Leo will assume that the hook has completely handled the command or event and will take no further action.  The details will be explained in full below.
-
-Leo catches all exceptions raised in hook code, so you can modify hooks without worry.
-
-SECURITY WARNINGS: Using hooks naively can create the potential for virus-like behavior.  Please read the section called SECURITY WARNINGS for full details.
-
-III. Using convenience routines called from hooks.
-
-Hook routines can import any file in Leo's source code and execute routines in that file.  Leo's contains a number of convenience routines designed to make common customization tasks easier.  Hooks can use these routines to create your own menus, to translate menus into other languages, and to create entries in the Open With menu.  These convenience routines are discussed in detail below.
-
-IV. Setting app().realMenuNameDict inside hooks to translate menus into other languages.
-
-This is discussed below.</t>
 <t tx="ekr.20050901121617">@color
 
 # Puts each sentence on a separate line
