@@ -32,7 +32,7 @@
 </v>
 </v>
 <v t="ekr.20050901054622"><vh>@@button save</vh></v>
-<v t="ekr.20050901055150"><vh>@button promote</vh></v>
+<v t="ekr.20050901055150"><vh>@@button promote</vh></v>
 <v t="ekr.20050901060119"><vh>@@button def list</vh>
 <v t="ekr.20050901061220"><vh>createDefList</vh></v>
 </v>
@@ -1615,6 +1615,7 @@
 </v>
 </v>
 <v t="ekr.20050831101501" a="EM"><vh>To do</vh>
+<v t="ekr.20050903092450" a="MTV"><vh>** Add scetion to Chapter 8 telling about scrip buttons</vh></v>
 <v t="ekr.20050831075008" a="M"><vh>Bug: doesn't reset properly when multiple files</vh></v>
 <v t="ekr.20050831134335"><vh>Tell about 'reference' .leo files somewhere</vh></v>
 <v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
@@ -1633,13 +1634,8 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.119" a="M"><vh> Script Find and Script Change  MOVE TO CHAPTER 5</vh>
-<v t="EKR.20040524104904.120"><vh>How it works</vh></v>
-<v t="EKR.20040524104904.121"><vh>Using the initScriptFind script</vh></v>
-<v t="EKR.20040524104904.122"><vh>Ideas for using scripts</vh></v>
 </v>
-</v>
-<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -1872,48 +1868,6 @@
 <v t="ekr.20050828115003"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.99"><vh>Chapter 5: Using Leo's Commands</vh>
-<v t="ekr.20050901101608.2"><vh>@rst commands.html</vh>
-<v t="ekr.20050901101852"><vh>@rst-no-head links</vh></v>
-<v t="EKR.20040524104904.100"><vh> The File Menu</vh>
-<v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
-<v t="EKR.20040524104904.102"><vh>Communicating with external editors</vh></v>
-<v t="EKR.20040524104904.105"><vh>Tangling an outline: Producing Derived Files</vh></v>
-<v t="EKR.20040524104904.106"><vh>Untangling: updating an outline</vh></v>
-<v t="EKR.20040524104904.108"><vh>Importing Files into Leo Outlines</vh></v>
-<v t="EKR.20040524104904.109"><vh>Exporting Files from Leo Outlines</vh></v>
-<v t="EKR.20040524104904.110"><vh>Quitting Leo</vh></v>
-</v>
-<v t="EKR.20040524104904.111"><vh> The Edit Menu</vh>
-<v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
-<v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
-<v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
-<v t="ekr.20050313102319" a="M"><vh>Adding and deleting comments in body text</vh></v>
-<v t="EKR.20040524104904.115"><vh>Creating nodes from body text</vh></v>
-<v t="EKR.20040524104904.116"><vh>Converting leading blanks and tabs in body text</vh></v>
-<v t="EKR.20040524104904.117"><vh>Executing Python scripts in body text</vh></v>
-<v t="EKR.20040524104904.118"><vh>Finding and changing text</vh></v>
-<v t="ekr.20050902160924"><vh>Script search</vh></v>
-<v t="EKR.20040524104904.134"><vh>Go To Line Number</vh></v>
-<v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
-<v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh></v>
-<v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
-<v t="EKR.20040524104904.140"><vh>Specifying settings</vh></v>
-</v>
-<v t="EKR.20040524104904.143"><vh> The Outline Menu</vh>
-<v t="EKR.20040524104904.144"><vh> Checking outlines</vh></v>
-<v t="EKR.20040524104904.145"><vh> Creating &amp; cloning nodes</vh></v>
-<v t="EKR.20040524104904.146"><vh> Cutting, pasting and deleting nodes</vh></v>
-<v t="EKR.20040524104904.147"><vh> Expanding and contracting nodes</vh></v>
-<v t="EKR.20040524104904.149"><vh> Marking nodes</vh></v>
-<v t="EKR.20040524104904.150"><vh> Moving, sorting and reorganizing nodes</vh></v>
-<v t="EKR.20040524104904.148"><vh> Hoisting &amp; De-hoisting nodes</vh></v>
-</v>
-<v t="EKR.20040524104904.151"><vh> The Window Menu</vh></v>
-<v t="EKR.20040524104904.157"><vh>The Help Menu</vh></v>
-<v t="ekr.20050901102400.1"><vh>@rst-no-head end stuff</vh></v>
-</v>
-</v>
 <v t="EKR.20040524104904.161"><vh>Chapter 6: Leo and Literate Programming</vh>
 <v t="ekr.20050901101608.3"><vh>@rst design.html</vh>
 <v t="ekr.20050901101949"><vh>@rst-no-head links</vh></v>
@@ -1956,8 +1910,8 @@
 <v t="ekr.20050901102400.3"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050901101608.4" a="ETV"><vh>@rst customizing.html</vh>
+<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
+<v t="ekr.20050901101608.4" a="E"><vh>@rst customizing.html</vh>
 <v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050903075144"><vh>Overview</vh></v>
 <v t="EKR.20040524104904.224"><vh>Important security warnings</vh></v>
@@ -2054,6 +2008,48 @@
 <v t="ekr.20050901071300"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050901073048"><vh>@rst-no-head glossary</vh></v>
 <v t="ekr.20050901083017"><vh>@rst-no-head end stuff</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.99" a="E"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="ekr.20050901101608.2"><vh>@rst commands.html</vh>
+<v t="ekr.20050901101852"><vh>@rst-no-head links</vh></v>
+<v t="EKR.20040524104904.100"><vh> The File Menu</vh>
+<v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
+<v t="EKR.20040524104904.102"><vh>Communicating with external editors</vh></v>
+<v t="EKR.20040524104904.105"><vh>Tangling an outline: Producing Derived Files</vh></v>
+<v t="EKR.20040524104904.106"><vh>Untangling: updating an outline</vh></v>
+<v t="EKR.20040524104904.108"><vh>Importing Files into Leo Outlines</vh></v>
+<v t="EKR.20040524104904.109"><vh>Exporting Files from Leo Outlines</vh></v>
+<v t="EKR.20040524104904.110"><vh>Quitting Leo</vh></v>
+</v>
+<v t="EKR.20040524104904.111" a="E"><vh> The Edit Menu</vh>
+<v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
+<v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
+<v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
+<v t="ekr.20050313102319" a="M"><vh>Adding and deleting comments in body text</vh></v>
+<v t="EKR.20040524104904.115"><vh>Creating nodes from body text</vh></v>
+<v t="EKR.20040524104904.116"><vh>Converting leading blanks and tabs in body text</vh></v>
+<v t="EKR.20040524104904.117"><vh>Executing Python scripts in body text</vh></v>
+<v t="EKR.20040524104904.118"><vh>Finding and changing text</vh></v>
+<v t="ekr.20050902160924" a="E"><vh>Script search</vh></v>
+<v t="EKR.20040524104904.134"><vh>Go To Line Number</vh></v>
+<v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
+<v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh></v>
+<v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
+<v t="EKR.20040524104904.140"><vh>Specifying settings</vh></v>
+</v>
+<v t="EKR.20040524104904.143"><vh> The Outline Menu</vh>
+<v t="EKR.20040524104904.144"><vh> Checking outlines</vh></v>
+<v t="EKR.20040524104904.145"><vh> Creating &amp; cloning nodes</vh></v>
+<v t="EKR.20040524104904.146"><vh> Cutting, pasting and deleting nodes</vh></v>
+<v t="EKR.20040524104904.147"><vh> Expanding and contracting nodes</vh></v>
+<v t="EKR.20040524104904.149"><vh> Marking nodes</vh></v>
+<v t="EKR.20040524104904.150"><vh> Moving, sorting and reorganizing nodes</vh></v>
+<v t="EKR.20040524104904.148"><vh> Hoisting &amp; De-hoisting nodes</vh></v>
+</v>
+<v t="EKR.20040524104904.151"><vh> The Window Menu</vh></v>
+<v t="EKR.20040524104904.157"><vh>The Help Menu</vh></v>
+<v t="ekr.20050901102400.1"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
 </v>
@@ -2779,100 +2775,6 @@ Wrap Around
     the command reaches the bottom of the file.
     For reverse searches, the find or change command continues at the bottom of the file when
     the command reaches the top of the file.</t>
-<t tx="EKR.20040524104904.119">Leo's find panel contains the Script Search radio button and the Script
-Change checkbox. When the Script Search radio button is selected Leo treats the
-contents of the Search Text as a script to execute whenever any kind of Find
-command is executed. Similarly, when the Script Change checkbox is selected Leo
-treats the context of the Change Text as a script to execute whenever any kind
-of Change command is executed. See below for just how this works.
-
-Script-based find-change is extremely powerful. In effect, Leo's Find/Change
-panel becomes a new platform for running scripts interactively. Leo now has all
-the find/change capability of pattern matching languages like Snobol and Icon,
-just by using the capabilities of the plain Python language. Moreover, Leo can
-deliver these capabilities interactively or not depending which buttons you push
-in Leo's Find/Change panel.
-
-Script-based find/change frees the user from having to control script-based
-searches interactively. Rather than forcing find/change scripts to implement
-their own interactive controls, it is much easier to use what Leo already has.</t>
-<t tx="EKR.20040524104904.120">Leo dedicates a Python dictionary called app.searchDict for communication
-between Leo and the search and change scripts. The search and change scripts may
-also use app.searchDict for communication between themselves. Leo sets
-app.searchDict["type"] to "find", "change", "findAll" or "changeAll" to indicate
-the kind of command being executed. Scripts may use all other entries in
-app.searchDict as they please.
-
-Leo executes the find script once when you press the Find button (or the Change
-then Find button) in Leo's Find/Change dialog. Typically, the find script would
-traverse the tree and highlight the found text or otherwise indicate to the
-user that the find operation has succeeded. However, the script can do anything
-it pleases.
-
-Leo executes the the find script repeatedly when you press the Find All button.
-Leo keeps executing the find script until app.searchDict["continue"] evaluates
-to false. Initially there is no entry for app.searchDict["continue"], so the
-find script must set app.searchDict["continue"] = true if it wants Leo to keep
-executing it.
-
-Leo executes the change script once when you press the Change button. Typically,
-the change script would change the selected text. Usually the change script will
-compute the new value of body text and call v.setBodyStringOrPane(newText) to
-make that change permanent. 
-
-The change script also may handle undo, typically by calling
-c.frame.onBodyChanged(v,"Change",oldText=oldText). Leo does not handle undo
-automatically. Indeed, Leo makes no assumptions whatever about what the change
-script really does.
-
-Leo executes the the change script repeatedly when you press the Change All
-button. Just as with the Find All command, Leo keeps executing the change script
-until app.searchDict["continue"] evaluates to false.
-
-Most find and change scripts will ignore settings in the Find Panel like "whole
-word", "pattern match", and "reverse". However, these settings are available to
-the scripts via ivars such as c.whole_word_flag, etc. if desired.</t>
-<t tx="EKR.20040524104904.121">@nocolor
-
-The Scripts node in LeoPy.leo contains a script called initScriptFind.  This script makes it easy to set up script based searches as follows:
-
-1. Put the following code in the root of a tree that will contain your script search:
-
-@color
-# Initialize Leo's find panel using the named children of this node.
-from leoGlobals import *
-initScriptFind("Find script","Change script") # Second argument is optional.
-# Start searching at the top.
-top().selectVnode(c.rootVnode())
-@nocolor
-
-2. Put the search script in a child node called "Find script" (no quotes).
-
-3. (Optional) Put the change script in a child node called "Change script"
-
-4.  Execute the code above.  Leo does the following:
-
-- Puts the body of the "Find script" into the find text of Leo's Find/Change dialog.
-- Puts the body of the "Change script" into the change text of Leo's Find/Change dialog.
-- Selects the Script Find radio button.
-- Selects the Script Change checkbox if the change script exists.
-- Selects the root of the entire outline.
-
-Presto!  Leo is ready for a script search.</t>
-<t tx="EKR.20040524104904.122">@nocolor
-
-Some ideas for using scripts:
-	
-Either the find and change scripts may use Python's re module.  For
-example, the find script could set app.searchDict["m"] to the match object
-returned by re's match method.  The change script would then compute the
-result, change the text and set the undo info as usual.
-
-There is no reason to confine find/change scripts to operate on data only
-within a Leo outline. These scripts could as easily traverse your file system
-as the Leo outline. But notice: scripts could pull data from the file system
-into the outline so that you can see the effects of changes as the scripts
-operate. Again, this can all happen interactively if you like.</t>
 <t tx="EKR.20040524104904.134">The ``Go To Line Number`` command selects the locations in your outlines corresponding to a line in a derived file.
 </t>
 <t tx="EKR.20040524104904.136">The ``Insert Body Time/Date`` and ``Insert Headline Time/Date`` commands insert
@@ -19525,17 +19427,81 @@ command is executed. Similarly, when the ``Script Change`` checkbox is selected 
 treats the context of the ``Change Text`` as a script to execute whenever any kind
 of Change command is executed.
 
-Script-based find-change is extremely powerful. In effect, Leo's Find/Change
-panel becomes a new platform for running scripts interactively. Leo now has all
-the find/change capability of pattern matching languages like Snobol and Icon,
-just by using the capabilities of the plain Python language. Moreover, Leo can
-deliver these capabilities interactively or not depending which buttons you push
-in Leo's Find/Change panel.
+Script-based find-change turns Leo's Find/Change panel into a platform for
+running scripts interactively. The script writer need not write code to control
+interactive searches.
 
-Script-based find/change frees the user from having to control script-based
-searches interactively. Rather than forcing find/change scripts to implement
-their own interactive controls, it is much easier to use what Leo already has.
-</t>
+Here's how it works. Leo dedicates ``g.app.searchDict`` for
+communication between Leo and the search and change scripts. The search and
+change scripts may also use ``gapp.searchDict`` for communication between themselves.
+Leo sets ``g.app.searchDict["type"]`` to "find", "change", "findAll" or "changeAll" to
+indicate the kind of command being executed. Scripts may use all other entries
+in ``gapp.searchDict`` as they please.
+
+Here is what Leo does when the user presses buttons with ``Script Search`` enable:
+
+``Find and Change, then Find`` buttons
+    Leo executes the find script once. Typically, the find script would traverse
+    the tree and highlight the found text or otherwise indicate to the user that
+    the find operation has succeeded. However, the script can do anything it
+    pleases.
+
+``Find All`` button
+    Leo executes the the find script repeatedly until ``g.app.searchDict["continue"]`` evaluates
+    to ``False``. Initially there is no entry for ``g.app.searchDict["continue"]``, so the
+    find script must set ``g.app.searchDict["continue"] = True`` if it wants Leo call it again.
+
+``Change`` button
+    Leo executes the change script once.Typically, the change script would change
+    the selected text. Usually the change script will compute the new value of body
+    text and call ``p.setBodyStringOrPane(newText)`` to make that change permanent. 
+    To handle undo, the change script can call
+    ``c.frame.onBodyChanged(v,"Change",oldText=oldText)``.
+
+``Change All`` button
+    Leo executes the the change script repeatedly
+    until app.searchDict["continue"] evaluates to false.
+
+Most find and change scripts will ignore settings in the Find Panel like "whole
+word", "pattern match", and "reverse". However, these settings are available to
+the scripts via ivars such as ``c.whole_word_flag``, etc. if desired.
+
+The ``initScriptFind`` script in ``LeoPy.leo`` makes it easy to set up script based searches:
+
+1. Put the following code in the root of a tree that will contain your script search::
+
+    # Initialize Leo's find panel using the named children of this node.
+    from leoGlobals import *
+    initScriptFind("Find script","Change script") # Second argument is optional.
+    # Start searching at the top.
+    top().selectVnode(c.rootVnode())
+
+2. Put the search script in a child node called "Find script" (no quotes).
+
+3. (Optional) Put the change script in a child node called "Change script"
+
+4.  Execute the code above.  Leo does the following:
+
+- Puts the body of the "Find script" into the find text of Leo's Find/Change dialog.
+- Puts the body of the "Change script" into the change text of Leo's Find/Change dialog.
+- Selects the Script Find radio button.
+- Selects the Script Change checkbox if the change script exists.
+- Selects the root of the entire outline.
+
+Presto!  Leo is ready for a script search.
+
+Here are some ideas for using script find/change.
+	
+-   Find and change scripts may use Python's re module.  For
+    example, the find script could set ``g.app.searchDict["m"]`` to the match object
+    returned by re's match method.  The change script would then compute the
+    result, change the text and set the undo info as usual.
+    
+-   Find and change scripts may operate on data outside any Leo outline.
+    For example, script-find scripts could traverse your file system.
+    Scripts could even pull data from the file system
+    into the outline so that you can see the effects of changes as the scripts
+    operate.</t>
 <t tx="ekr.20050903074833">``leoPlugins.leo`` contains all of Leo's official hooks. Studying this file is
 the best way to learn how to write plugins.  This section discusses just a few details.
 
@@ -19749,5 +19715,6 @@ Here are some important features of plugins:
 
 -   Leo loads plugins in the order in which they appear in ``pluginsManager.txt.``
     Leo disables all plugins if ``pluginsManager.txt`` does not exist in the plugins directory.</t>
+<t tx="ekr.20050903092450"></t>
 </tnodes>
 </leo_file>
