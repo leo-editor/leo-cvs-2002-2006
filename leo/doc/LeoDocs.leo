@@ -3,13 +3,13 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="14618" clone_windows="0"/>
 <globals body_outline_ratio="0.578831312018">
-	<global_window_position top="8" left="381" height="907" width="845"/>
+	<global_window_position top="15" left="291" height="907" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20050404094627" a="E"><vh>Settings and buttons</vh>
+<v t="ekr.20050404094627"><vh>Settings and buttons</vh>
 <v t="ekr.20041226081019"><vh>@button Check Spelling...</vh></v>
 <v t="ekr.20050812090111"><vh>@button rst3</vh></v>
 <v t="ekr.20050813102553"><vh>@@button Format 4</vh></v>
@@ -32,7 +32,7 @@
 </v>
 </v>
 <v t="ekr.20050901054622"><vh>@button save</vh></v>
-<v t="ekr.20050901055150"><vh>@@button demote</vh></v>
+<v t="ekr.20050901055150"><vh>@button promote</vh></v>
 <v t="ekr.20050901060119"><vh>@@button def list</vh>
 <v t="ekr.20050901061220"><vh>createDefList</vh></v>
 </v>
@@ -127,7 +127,7 @@
 <v t="ekr.20050429094215.353"><vh>Leo  saves recent files info in .leoRecentFiles.txt files</vh>
 <v t="ekr.20050429094215.354"><vh>What I did</vh></v>
 <v t="ekr.20050429094215.355"><vh>New plan</vh></v>
-<v t="ekr.20050429094215.161"><vh>write_Leo_file</vh>
+<v t="ekr.20050429094215.161" a="E"><vh>write_Leo_file</vh>
 <v t="ekr.20050429094215.162"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
 <v t="ekr.20050429094215.163"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
 <v t="ekr.20050429094215.164"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
@@ -1613,7 +1613,7 @@
 <v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831101501" a="M"><vh>To do</vh>
+<v t="ekr.20050831101501" a="MTV"><vh>To do</vh>
 <v t="ekr.20050831075008" a="M"><vh>Bug: doesn't reset properly when multiple files</vh></v>
 <v t="ekr.20050831134335"><vh>Tell about 'reference' .leo files somewhere</vh></v>
 <v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
@@ -1632,10 +1632,14 @@
 </v>
 </v>
 </v>
+<v t="EKR.20040524104904.119"><vh> Script Find and Script Change  MOVE TO CHAPTER 5</vh>
+<v t="EKR.20040524104904.120"><vh>How it works</vh></v>
+<v t="EKR.20040524104904.121"><vh>Using the initScriptFind script</vh></v>
+<v t="EKR.20040524104904.122"><vh>Ideas for using scripts</vh></v>
+</v>
 </v>
 <v t="ekr.20050902080416"><vh>@button paragraph</vh></v>
 <v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
-<v t="ekr.20050828112159" a="M"><vh>@rst-no-head All links (TOC)</vh></v>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -1872,8 +1876,8 @@
 <v t="ekr.20050901101608.2"><vh>@rst commands.html</vh>
 <v t="ekr.20050901101852"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.100"><vh> The File Menu</vh>
-<v t="EKR.20040524104904.101" a="E"><vh>Loading, Saving and Reverting Files</vh></v>
-<v t="EKR.20040524104904.102" a="E"><vh>Communicating with external editors</vh></v>
+<v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
+<v t="EKR.20040524104904.102"><vh>Communicating with external editors</vh></v>
 <v t="EKR.20040524104904.105"><vh>Tangling an outline: Producing Derived Files</vh></v>
 <v t="EKR.20040524104904.106"><vh>Untangling: updating an outline</vh></v>
 <v t="EKR.20040524104904.108"><vh>Importing Files into Leo Outlines</vh></v>
@@ -1888,13 +1892,13 @@
 <v t="EKR.20040524104904.115"><vh>Creating nodes from body text</vh></v>
 <v t="EKR.20040524104904.116"><vh>Converting leading blanks and tabs in body text</vh></v>
 <v t="EKR.20040524104904.117"><vh>Executing Python scripts in body text</vh></v>
-<v t="EKR.20040524104904.118" a="E"><vh>Finding and changing text</vh></v>
+<v t="EKR.20040524104904.118"><vh>Finding and changing text</vh></v>
 <v t="ekr.20050902160924"><vh>Script search</vh></v>
-<v t="EKR.20040524104904.134" a="E"><vh>Go To Line Number</vh></v>
+<v t="EKR.20040524104904.134"><vh>Go To Line Number</vh></v>
 <v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
-<v t="EKR.20040524104904.137" a="E"><vh>Reformatting paragraphs in body text</vh></v>
+<v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh></v>
 <v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
-<v t="EKR.20040524104904.140" a="E"><vh>Specifying settings</vh></v>
+<v t="EKR.20040524104904.140"><vh>Specifying settings</vh></v>
 </v>
 <v t="EKR.20040524104904.143"><vh> The Outline Menu</vh>
 <v t="EKR.20040524104904.144"><vh> Checking outlines</vh></v>
@@ -1905,35 +1909,16 @@
 <v t="EKR.20040524104904.150"><vh> Moving, sorting and reorganizing nodes</vh></v>
 <v t="EKR.20040524104904.148"><vh> Hoisting &amp; De-hoisting nodes</vh></v>
 </v>
-<v t="EKR.20040524104904.151" a="E"><vh> The Window Menu</vh></v>
-<v t="EKR.20040524104904.157" a="E"><vh>The Help Menu</vh></v>
+<v t="EKR.20040524104904.151"><vh> The Window Menu</vh></v>
+<v t="EKR.20040524104904.157"><vh>The Help Menu</vh></v>
 <v t="ekr.20050901102400.1"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.161" a="MTV"><vh>Chapter 6: Leo and Literate Programming</vh>
+<v t="EKR.20040524104904.161"><vh>Chapter 6: Leo and Literate Programming</vh>
 <v t="ekr.20050901101608.3"><vh>@rst design.html</vh>
 <v t="ekr.20050901101949"><vh>@rst-no-head links</vh></v>
-<v t="EKR.20040524104904.162"><vh>Why I like Literate Programming</vh>
-<v t="EKR.20040524104904.163"><vh>Literate programming creates a new design dimension</vh></v>
-<v t="EKR.20040524104904.164"><vh>Design and coding happen at the highest possible level</vh></v>
-<v t="EKR.20040524104904.165"><vh>The visual weight of code is separate from its actual length</vh></v>
-<v t="EKR.20040524104904.166"><vh>Sections show relations between snippets of code</vh></v>
-<v t="EKR.20040524104904.167"><vh>Complex section names invite improvements</vh></v>
-<v t="EKR.20040524104904.168"><vh>Sections create a place for extensive comments</vh></v>
-<v t="EKR.20040524104904.169"><vh>Section names eliminate mundane comments</vh></v>
-<v t="EKR.20040524104904.170"><vh>Sections create comments automatically</vh></v>
-<v t="EKR.20040524104904.171"><vh>Literate programming clarifies the shape of functions</vh></v>
-<v t="EKR.20040524104904.172"><vh>I spend less time formatting code</vh></v>
-</v>
-<v t="EKR.20040524104904.173"><vh>How Leo Improves Literate Programming</vh>
-<v t="EKR.20040524104904.174"><vh>Outlines add context</vh></v>
-<v t="EKR.20040524104904.175"><vh>Outlines provide scope for commands</vh></v>
-<v t="EKR.20040524104904.176"><vh>Clones create different views and focus attention</vh></v>
-<v t="EKR.20040524104904.177"><vh>Outlines increase flexibility</vh></v>
-<v t="EKR.20040524104904.178"><vh>Outlines express hierarchy directly</vh></v>
-<v t="EKR.20040524104904.179"><vh>Outlines create new design dimensions</vh></v>
-<v t="EKR.20040524104904.180"><vh>Leo improves tangling and adds untangling</vh></v>
-</v>
+<v t="EKR.20040524104904.162"><vh>Why I like Literate Programming</vh></v>
+<v t="EKR.20040524104904.173"><vh>How Leo Improves Literate Programming</vh></v>
 <v t="EKR.20040524104904.181"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
 <v t="ekr.20050901102400.2"><vh>@rst-no-head end stuff</vh></v>
 </v>
@@ -1969,97 +1954,6 @@
 </v>
 <v t="ekr.20040906100201" rst_http_attribute="5d71002855463c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d353122206e616d653d22687474702d6e6f64652d6d61726b65722d3531223e710155043c2f613e71025d71032855223c64697620636c6173733d2273656374696f6e222069643d2273657474657273223e710455063c2f6469763e71055d71062855443c64697620636c6173733d2273656374696f6e222069643d2273756d6d6172792d6f662d7468652d766e6f64652d616e642d706f736974696f6e2d636c6173736573223e710755063c2f6469763e71085d710928553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710a55063c2f6469763e710b5d710c2855063c626f64793e710d55073c2f626f64793e710e5d710f2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e711055073c2f68746d6c3e71114e656565656555073c2f6469763e0a711255073c2f6469763e0a7113553c3c64697620636c6173733d2273656374696f6e222069643d22756e69742d74657374696e672d776974682d746573742d616e642d7375697465223e0a711455843c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d22236964323622206e616d653d22756e69742d74657374696e672d776974682d746573742d616e642d7375697465223e556e69742074657374696e67207769746820262336343b7465737420616e6420262336343b73756974653c2f613e3c2f68313e0a7115652e"><vh>@rst-ignore NOT READY Unit testing with @test and @suite</vh></v>
 <v t="ekr.20050901102400.3"><vh>@rst-no-head end stuff</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.211" a="M"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050901101608.4"><vh>@rst customizing.html</vh>
-<v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
-<v t="ekr.20050901110110.2"><vh>@rst-no-head intro</vh></v>
-<v t="ekr.20050122090016"><vh>Setting options...</vh>
-<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
-<v t="ekr.20050419072509.1"><vh>NewHeadline</vh></v>
-<v t="EKR.20040524104904.212"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
-</v>
-<v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
-<v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
-<v t="EKR.20040524104904.215"><vh>New plugin architecture</vh>
-<v t="EKR.20040524104904.216"><vh>@file plugins/mod_open_with.py</vh>
-<v t="EKR.20040524104904.217"><vh>on_idle</vh>
-<v t="EKR.20040524104904.218"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
-<v t="EKR.20040524104904.219"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
-<v t="EKR.20040524104904.220"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.221"><vh>create_open_with_menu</vh>
-<v t="EKR.20040524104904.222"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="EKR.20040524104904.223"><vh>About hooks</vh></v>
-<v t="EKR.20040524104904.224"><vh>SECURITY WARNINGS</vh>
-<v t="EKR.20040524104904.225"><vh>The danger of trusting code in shared .leo files</vh></v>
-<v t="EKR.20040524104904.226"><vh>NEVER use this kind of code in a hook!!</vh></v>
-<v t="EKR.20040524104904.227"><vh>Don't use rexec !!</vh>
-<v t="EKR.20040524104904.228"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
-<v t="EKR.20040524104904.229"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
-<v t="EKR.20040524104904.230"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.231"><vh>Convenience routines for plugins</vh>
-<v t="EKR.20040524104904.232"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
-<v t="EKR.20040524104904.233"><vh>Convenience methods to create, destroy and modify menus</vh>
-<v t="EKR.20040524104904.234"><vh>createMenuItemsFromTable</vh></v>
-<v t="EKR.20040524104904.235"><vh>createNewMenu</vh></v>
-<v t="EKR.20040524104904.104"><vh>createOpenWithMenuFromTable</vh></v>
-<v t="EKR.20040524104904.236"><vh>deleteMenu</vh></v>
-<v t="EKR.20040524104904.237"><vh>deleteMenuItem</vh></v>
-<v t="EKR.20040524104904.238"><vh>Example: how to create a menu</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.239"><vh>Translating menus into other languages</vh></v>
-<v t="EKR.20040524104904.240"><vh>Support for unit testing</vh></v>
-</v>
-<v t="EKR.20040524104904.241"><vh>Putting the Leo icon in Leo windows</vh></v>
-<v t="ekr.20050306090601"><vh>Adding attributes to nodes and .leo files</vh>
-<v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
-<v t="EKR.20040524104904.243"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
-<v t="EKR.20040524104904.244"><vh>Recommended conventions for plugins</vh></v>
-</v>
-<v t="EKR.20040524104904.119"><vh> Script Find and Script Change</vh>
-<v t="EKR.20040524104904.120"><vh>How it works</vh></v>
-<v t="EKR.20040524104904.121"><vh>Using the initScriptFind script</vh></v>
-<v t="EKR.20040524104904.122"><vh>Ideas for using scripts</vh></v>
-</v>
-<v t="ekr.20050417072710.1"><vh>How to make operations undoable</vh></v>
-<v t="ekr.20050429094215.353"><vh>Leo  saves recent files info in .leoRecentFiles.txt files</vh>
-<v t="ekr.20050429094215.354"><vh>What I did</vh></v>
-<v t="ekr.20050429094215.355"><vh>New plan</vh></v>
-<v t="ekr.20050429094215.161"><vh>write_Leo_file</vh>
-<v t="ekr.20050429094215.162"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.163"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.164"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.165"><vh>&lt;&lt; put the .leo file &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.166"><vh>&lt;&lt; delete fileName &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.167"><vh>&lt;&lt; rename backupName to fileName &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.168"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050429094215.141"><vh>Scanning @settings (g.app.config)</vh>
-<v t="ekr.20050429094215.142"><vh>openSettingsFile</vh></v>
-<v t="ekr.20050429094215.143"><vh>config.readSettingsFiles</vh></v>
-<v t="ekr.20050429094215.144"><vh>readSettings</vh></v>
-</v>
-<v t="ekr.20050429094215.350"><vh>setRecentFiles (c.configSettings)</vh></v>
-<v t="ekr.20050429094215.356"><vh>appendToRecentFiles (g.app.config)</vh></v>
-<v t="ekr.20050429094215.349"><vh>clearRecentFiles</vh></v>
-<v t="ekr.20050429094215.357"><vh>Reading and writing .leoRecentFiles.txt (g.app.config)</vh>
-<v t="ekr.20050429094215.358"><vh>readRecentFilesFile</vh></v>
-<v t="ekr.20050429094215.359"><vh>writeRecentFilesFile &amp; helper</vh>
-<v t="ekr.20050429094215.360"><vh>writeRecentFilesFileHelper</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050620150517"><vh>Specifying Tk options using .leo_xresources</vh></v>
-<v t="ekr.20050901102400.4"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
 <v t="EKR.20040524104904.245"><vh>Chapter 9: History of Leo</vh>
@@ -2145,6 +2039,48 @@
 <v t="ekr.20050901071300"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050901073048"><vh>@rst-no-head glossary</vh></v>
 <v t="ekr.20050901083017"><vh>@rst-no-head end stuff</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.211" a="EM"><vh>Chapter 8: Customizing Leo</vh>
+<v t="ekr.20050901101608.4"><vh>@rst customizing.html</vh>
+<v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20050901110110.2"><vh>@rst-no-head intro</vh></v>
+<v t="ekr.20050122090016"><vh>Setting options...</vh></v>
+<v t="EKR.20040524104904.213" a="E"><vh>Using plugins and hooks</vh>
+<v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
+<v t="EKR.20040524104904.215"><vh>New plugin architecture</vh></v>
+<v t="EKR.20040524104904.223"><vh>About hooks</vh></v>
+<v t="EKR.20040524104904.224"><vh>SECURITY WARNINGS</vh>
+<v t="EKR.20040524104904.225"><vh>The danger of trusting code in shared .leo files</vh></v>
+<v t="EKR.20040524104904.226"><vh>Never use this kind of code in a hook</vh></v>
+<v t="EKR.20040524104904.227"><vh>Don't use rexec !!</vh>
+<v t="EKR.20040524104904.228"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.229"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.230"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.231" a="E"><vh>Convenience routines for plugins</vh>
+<v t="EKR.20040524104904.232"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
+<v t="EKR.20040524104904.233" a="E"><vh>Convenience methods to create, destroy and modify menus</vh>
+<v t="EKR.20040524104904.234"><vh>createMenuItemsFromTable</vh></v>
+<v t="EKR.20040524104904.235"><vh>createNewMenu</vh></v>
+<v t="EKR.20040524104904.104"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="EKR.20040524104904.236"><vh>deleteMenu</vh></v>
+<v t="EKR.20040524104904.237"><vh>deleteMenuItem</vh></v>
+<v t="EKR.20040524104904.238"><vh>Example: how to create a menu</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.239"><vh>Translating menus into other languages</vh></v>
+<v t="EKR.20040524104904.240"><vh>Support for unit testing</vh></v>
+</v>
+<v t="ekr.20050306090601"><vh>Adding attributes to nodes and .leo files</vh>
+<v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
+<v t="EKR.20040524104904.243"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
+<v t="EKR.20040524104904.244"><vh>Recommended conventions for plugins</vh></v>
+</v>
+<v t="ekr.20050417072710.1"><vh>How to make operations undoable</vh></v>
+<v t="ekr.20050620150517"><vh>Specifying Tk options using .leo_xresources</vh></v>
+<v t="ekr.20050901102400.4"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
 </v>
@@ -2686,20 +2622,18 @@ The table argument describes the entries to be created.  This table is a sequenc
 - arg is an argument to be passed to the given command.
 - ext is a file extension or None.
 
-New in Leo 4.3:
-
 When the user selects the Open With item corresponding to the table item Leo executes command(arg).
 If ext is not None, the temp file has the given extension.
 Otherwise, Leo computes an extension based on what @language directive is in effect.
 
-For example:
+For example::
 
-table = (
-	("Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
-	("Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
-	("Wordpad","Alt+Shift+T",("os.startfile",None,".txt")))
-
-top().frame.createOpenWithMenuFromTable(table)
+    table = (
+        ("Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
+        ("Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
+        ("Wordpad","Alt+Shift+T",("os.startfile",None,".txt")))
+    
+    top().frame.createOpenWithMenuFromTable(table)
 	</t>
 <t tx="EKR.20040524104904.105">The ``Tangle``, ``Tangle All`` and ``Tangle Marked`` commands create derived
 files from portions of an outline. These commands indent and format the derived
@@ -3229,62 +3163,163 @@ Settings command.</t>
 
 </t>
 <t tx="EKR.20040524104904.161"></t>
-<t tx="EKR.20040524104904.162">The following sections discuss the main benefits of traditional literate programming. It's worth noting that none of these benefits derives from being able to produce printed output.</t>
-<t tx="EKR.20040524104904.163">Sections add a new dimension to the design and coding process. Choices about what sections do, what they are named, what order they appear in, are choices in a design space different from "normal" programming. This an abstract concept, to be sure. However, the following concrete discussions are really manifestation of working in this new design space.</t>
-<t tx="EKR.20040524104904.164">The names of sections are constrained only by one's design skill, not by any rules of language. You say what you mean, and that becomes both the design and the code. You never have to simulate a concept because concepts become section names.</t>
-<t tx="EKR.20040524104904.165">The visual weight of a web section is simply the length and complexity of the section's name, regardless of how complex the actual definition of the section is. The results of this separation are spectacular. No longer is one reluctant to do extensive error handling (or any other kind of minutia) for fear that it would obscure the essence of the program. Donald Knuth stresses this aspect of literate programming and I fully agree.</t>
-<t tx="EKR.20040524104904.166">Sections can show and enforce relationships between apparently unrelated pieces of code. Comments, macros or functions are other ways to indicate such relationships, but often sections are ideal. Indeed, a natural progression is to create sections as a matter of course. I typically convert a section to a function only when it becomes apparent that a function's greater generality outweighs the inconvenience of having to declare and define the function.</t>
-<t tx="EKR.20040524104904.167">A section name is complex when it implies unwholesome dependencies between the caller (user) of the section and the section itself. Such section names tend to be conspicuous, so that the programmer is lead to revise both the section name and its purpose. Many times my attention has been drawn to a poorly conceived section because I didn't like what its name implied. I have always been able to revise the code to improve the design, either by splitting a section into parts or be simplifying its relation to colleagues.</t>
-<t tx="EKR.20040524104904.168">One of the most surprising thing about literate programming is how severely traditional programming tends to limit comments. In a conventional program the formatting of code must indicate structure, and comments obscure that formatting. Sections in literate programming provide a place for lengthy comments that do not clutter up the code at the place the section is referenced.</t>
-<t tx="EKR.20040524104904.169">The section name often says it all. The reference to the section says everything that the user needs to know, and the section name at the point of definition also eliminates the need for many comments.</t>
-<t tx="EKR.20040524104904.170">@nocolor
+<t tx="EKR.20040524104904.162">The following paragraphs discuss the main benefits of traditional literate programming.
+**Note**: none of these benefits depends on printed output.
 
-A typical root starts out with something like.
-@color
+**Literate programming creates a new design dimension**.
+Sections add a new dimension to the design and coding process. Choices about
+what sections do, what they are named, what order they appear in, are choices in
+a design space different from "normal" programming. This an abstract concept, to
+be sure. However, the following concrete discussions are really manifestation of
+working in this new design space.
+
+**Design and coding happen at the highest possible level**.
+The names of sections are constrained only by one's design skill, not by any
+rules of language. You say what you mean, and that becomes both the design and
+the code. You never have to simulate a concept because concepts become section
+names.
+
+**The visual weight of code is separate from its actual length**.
+The visual weight of a web section is simply the length and complexity of the section's name, regardless of how complex the actual definition of the section is. The results of this separation are spectacular. No longer is one reluctant to do extensive error handling (or any other kind of minutia) for fear that it would obscure the essence of the program. Donald Knuth stresses this aspect of literate programming and I fully agree.
+
+**Sections show relations between snippets of code**.
+Sections can show and enforce relationships between apparently unrelated pieces of code. Comments, macros or functions are other ways to indicate such relationships, but often sections are ideal. Indeed, a natural progression is to create sections as a matter of course. I typically convert a section to a function only when it becomes apparent that a function's greater generality outweighs the inconvenience of having to declare and define the function.
+
+**Complex section names invite improvements**.
+A section name is complex when it implies unwholesome dependencies between the
+caller (user) of the section and the section itself. Such section names tend to
+be conspicuous, so that the programmer is lead to revise both the section name
+and its purpose. Many times my attention has been drawn to a poorly conceived
+section because I didn't like what its name implied. I have always been able to
+revise the code to improve the design, either by splitting a section into parts
+or be simplifying its relation to colleagues.
+
+**Sections create a place for extensive comments**.
+One of the most surprising thing about literate programming is how severely
+traditional programming tends to limit comments. In a conventional program the
+formatting of code must indicate structure, and comments obscure that
+formatting. Sections in literate programming provide a place for lengthy
+comments that do not clutter up the code at the place the section is
+referenced.
+
+**Section names eliminate mundane comments**.
+The section name often says it all. The reference to the section says everything
+that the user needs to know, and the section name at the point of definition
+also eliminates the need for many comments.
+
+**Sections create comments automatically**.
+A typical root starts out with something like::
 
 	&lt;&lt; includes for class x &gt;&gt;
 	&lt;&lt; private data for class x &gt;&gt;
 	&lt;&lt; private prototypes for class x &gt;&gt;
 	&lt;&lt; functions of class x &gt;&gt;
 
-@nocolor
-In the derived file there is a comment that looks like this:
-@color
+In the derived file there is a comment that looks like this::
 
 	/// &lt;&lt; includes for class x &gt;&gt;
 
-@nocolor
-It would be silly to write this comment by hand, though often programmers do just that in order to have a place holder for a mark in the source file. With literate programming the situation is different: the comment indicates that the code came from a particular section; that is, the comment servers a real purpose.
-</t>
-<t tx="EKR.20040524104904.171">These last several paragraphs have discussed comments in detail because the net effect of "putting comments where they belong" is that comments don't clutter the code. Section references hide irrelevant detail, so larger-scale patterns within functions (or declarations) become more apparent. Often just recasting code into web format has created Ahas about my own code, with no special attention to recoding or redesign! Recasting a function as a web raises the real and apparent level of abstraction.</t>
-<t tx="EKR.20040524104904.172">Formatting no longer has to indicate overall design; sections do that. I am less obsessive about formatting code; it simply doesn't matter much whether different sections are formatted consistently because the format of one section has no effect on the look of other sections. Also, I don't worry about most line breaks within documentation parts, or about adding comment delimiters.</t>
-<t tx="EKR.20040524104904.173">Outlines add something brand new to traditional literate programming, namely an explicit mechanism for expressing structure at any level of detail, from largest overall view to smallest detail. The following sections elaborate on this theme.</t>
-<t tx="EKR.20040524104904.174">By far the biggest drawback of conventional literate programming is that there are so many sections; it becomes difficult to understand the relationships, if any, between sections. Using an outline to express a literate programming instantly solves this problem. The programmer is always aware of how sections are related.</t>
-<t tx="EKR.20040524104904.175">Outlines provide a convenient way of expressing the intended scope of commands.  For example, the Tangle command operates only on the presently selected tree. The Extract Section command creates a new section as the last child of the present node.</t>
-<t tx="EKR.20040524104904.176">Clones transform a tree into a directed graph without loops. This is a very powerful data structure. Nothing would be gained by cloning an arbitrary directed graph: in general, the clone would simply become the entire tree. Cloning a tree, however, is very effective.
+It would be silly to write this comment by hand, though often programmers do
+just that in order to have a place holder for a mark in the source file. With
+literate programming the situation is different: the comment indicates that the
+code came from a particular section; that is, the comment servers a real
+purpose.
 
-A set of clones becomes essentially a different view of the outline. The set is itself part of the outline, so the outline itself contains an elegant mechanism for representing arbitrarily many views of the same data. It is because of the power of clones that I described MORE in the dedication as possibly the most elegant computer program ever written.
+**Literate programming clarifies the shape of code**.
+These last several paragraphs have discussed comments in detail because the net
+effect of "putting comments where they belong" is that comments don't clutter
+the code. Section references hide irrelevant detail, so larger-scale patterns
+within functions (or declarations) become more apparent. Often just recasting
+code into web format has created Ahas about my own code, with no special
+attention to recoding or redesign! Recasting a function as a web raises the real
+and apparent level of abstraction.
 
-It is easy to create different (and useful) view of a literate outline. For example, I often make clones of all relevant sections of my outline while debugging or adding new features. The clones carry along relevant suboutlines, so essential context is retained, but gathering all the clones together automatically concentrates attention on the problem at hand.</t>
-<t tx="EKR.20040524104904.177">The meaning of a well written literate outline is independent on the order in which sections appear, so outlines may be reorganized at will. In addition, headlines without body text do not affect derived files in any way; such headlines can be inserted freely at any time. In fact, such "nonfunctional" headlines often convey the most information about the structure and design of a large system. Decoupling structure from content in this way is precisely what is needed for flexibility: one can reorganize at will without worrying about changing the meaning of the code.</t>
-<t tx="EKR.20040524104904.178">Hierarchy is often implicit in programming: for example, the grouping of functions into files, or the organization of a single file as a set of functions, etc. An outline directly expresses hierarchy. For example, Leo's tangle or Find and Change commands may be restricted to a particular suboutline. That's a direct expression of an hierarchical constraint or property: I only want to deal with this part of the outline. With outlines, I can do so effortlessly.
+**I spend less time formatting code**.
+Formatting no longer has to indicate overall design; sections do that. I am less
+obsessive about formatting code; it simply doesn't matter much whether different
+sections are formatted consistently because the format of one section has no
+effect on the look of other sections. Also, I don't worry about most line breaks
+within documentation parts, or about adding comment delimiters.</t>
+<t tx="EKR.20040524104904.173">Outlines add something brand new to traditional literate programming, namely an
+explicit mechanism for expressing structure at any level of detail, from largest
+overall view to smallest detail. The following paragraphs elaborate on this theme.
 
-Traditional literate programming often simulates the hierarchy using "bridge" comments. Those comments are far weaker than explicit structure. Experience with the Print command clearly shows that a clear literate outline can easily become unintelligible when printed, no matter how "beautiful" the typeset printout is.
+**Outlines add context**.
+By far the biggest drawback of conventional literate programming is that there
+are so many sections. It becomes difficult to understand the relationships
+between sections. Using an outline to express a literate programming instantly
+solves this problem. The programmer is always aware of how sections are
+related.
 
-My experience shows that organizational crutches such as printed listings, tables of contents and indices are much less clear than the corresponding outline. You could say the entire outline is a table of contents!</t>
-<t tx="EKR.20040524104904.179">There are many ways to express a program as a literate outline. Again, the choices made when doing so are choices in another design space. Such choices are important, and add clarity to the entire program, but can only be expressed when the hierarchy is expressed explicitly.</t>
-<t tx="EKR.20040524104904.180">Tangling and untangling are the fundamental operations of literate programming. Any editor that supports literate programming should provide these operations directly. Moreover, Leo automatically untangles @file trees when reading .leo files and tangles @file trees when writing .leo files.  Eliminating the need for explicit tangling and untangling is a huge improvement.</t>
+**Outlines provide scope for commands**.
+Outlines provide a convenient way of expressing the intended scope of commands.
+For example, the Tangle command operates only on the presently selected tree.
+The Extract Section command creates a new section as the last child of the
+present node.
+
+**Clones create different views and focus attention**.
+Clones can create different view of the outline. An outline can contain many such views.
+`Clones &amp; views`_ discusses the implications of clones in detail.
+
+**Outlines increase flexibility**.
+`Organizer nodes`_ do not affect derived files in any way, but organizer nodes
+often convey the most information about the structure and design of a large
+system. Decoupling structure from content in this way is precisely what is
+needed for flexibility: one can reorganize at will without worrying about
+changing the meaning of the code.
+
+**Outlines express hierarchy directly**.
+Hierarchy is often implicit in programming: for example, the grouping of
+functions into files, or the organization of a single file as a set of
+functions, etc. An outline directly expresses hierarchy. Many of Leo's commands
+operate on the presently selected node. It is natural to apply operations on
+selected parts of the outline. Traditional literate programming often simulates
+the hierarchy using "bridge" comments. Those comments are far weaker than
+explicit structure. Experience with the Print command clearly shows that a clear
+literate outline can easily become unintelligible when printed, no matter how
+"beautiful" the typeset printout is. Experience shows that organizational
+crutches such as printed listings, tables of contents and indices are much less
+clear than the corresponding outline. You could say the entire outline is a
+table of contents!
+
+**Outlines create new design dimensions**.
+There are many ways to express a program as a Leo outline. Such choices are
+important. They add clarity to the entire program. These are different *kind* of
+choices. They simply can not be expressed at all in other editors. In other
+words, such choices exist in a new design space. 
+
+**Leo improves tangling and adds untangling**.
+Tangling and untangling are fundamental operations of literate programming.
+Leo tangles and untangles files derived from ``@file`` trees automatically. This
+is an important convenience.</t>
 <t tx="EKR.20040524104904.181">Leo changes the theory and practice of literate programming as follows:
 
-1. Leo reduces the need for comments within a program. In particular, bridge or transition phrases are almost always unnecessary in a literate outline. One never needs to say something like, "having just finished with topic x, we turn now to topic y." Literate outlines tend to be far less chatty than flat literate programs.
+**Leo reduces the need for comments**.
+In particular, bridge or transition phrases are almost always unnecessary in a
+Leo outline. One never needs to say something like, "having just finished
+with topic x, we turn now to topic y." Leo's outlines tend to be far less
+chatty than flat literate programs.
 
-2. Leo shows that printed listings are not necessary to understand noweb or CWEB programs. No printed listing can be as clear as Leo's outline view. It is possible to make printed listings intelligible by adding "context lines" that show the outline context of a section definition. Without such context lines a literate program must rely on extensive bridge comments.
+**Leo shows that printed listings are not necessary to understand webs.**
+No printed listing can be as clear as Leo's outline view. It is possible to make
+printed listings intelligible by adding "context lines" that show the outline
+context of a section definition. Without such context lines a literate program
+must rely on extensive bridge comments.
 
-3. Leo shows that simple, standard, yet flexible outline organizations provide a more natural way to organize large programs than narrative organizations. Indeed, narrative style creates severe maintenance problems. The narrative is soon forgotten, and when that happens it becomes difficult to find anything. The few times I have tried narrative organization I soon regretted it: things just weren't where I expected them to be.
+**Leo shows that outline structure is more powerful than narrative.**
+Indeed, narrative style creates severe maintenance problems. The narrative is
+soon forgotten, and when that happens it becomes difficult to find anything. The
+few times I have tried narrative organization I soon regretted it: things just
+weren't where I expected them to be.
 
-4. Leo shows that traditional literate programming encourages a too creative approach to programming. A dictionary is a better model for programs than a novel. Literate outlines provide a more regular organization, while providing space for the most lengthy discussions when those discussions are required.
+**Leo shows that traditional literate programming encourages a too creative approach to programming.**
+A dictionary is a better model for programs than a novel. Leo's outlines provide
+a more regular organization, while providing space for the most lengthy
+discussions when those discussions are required. In short, Leo shows that the
+phrase "literate programming" is a misnomer:
 
-In short, Leo shows that the phrase "literate programming" is a misnomer. Indeed, chunks or sections, the atoms of literate programming, have little to do with literature. Outlines eliminate the need for narrative. One can use chunks or sections to write narrative prose, but Leo demonstrates that one is under no obligation to do so.  Printed listings can be important when producing textbooks and other printed material.</t>
+-   Sections have little to do with literature.
+-   Outlines eliminate the need for narrative bridge comments.</t>
 <t tx="EKR.20040524104904.182">@nocolor
 @language python
 
@@ -3748,40 +3783,6 @@ c.clearAllVisited() # Clears all visited bits in c's tree.
 p.clearVisited()
 p.setVisited()</t>
 <t tx="EKR.20040524104904.211"></t>
-<t tx="EKR.20040524104904.212">@nocolor
-
-Warning:  The following information applies only to versions of Leo before Leo 4.3.  Leo 4.3 uses an entirely different mechanism.
-
-Leo will override settings in .leo files if it finds a file called leoConfig.txt in the config subdirectory.  Leo works just as before if it does not find a leoConfig.txt file.
-
-You should make changes to leoConfig.txt by changing leoConfig.leo and then executing the Tangle All command.  There are two advantages to changing leoConfig.txt in this manner.  First, it is just easier to change leoConfig.leo.  Second, all comments are lost in leoConfig.txt when Leo updates it, so using leoConfig.leo as the primary data file means you will always have the comments available.
-
-Leo looks for leoConfig.txt first in the directory specified by the Python variable sys.leo_config_directory.  You would typically set this variable in Python's sitecustomize.py file.  If this variable does not exist, Leo looks in the directory from which Leo was loaded.
-
-The child of this node contains an example of leoConfig.txt that shows all the options that may be set.
-
-Settings in leoConfig.txt overrides preferences in .leo files, but only for those items actually in leoConfig.txt, so you can choose which settings you want to override.  Also, a Leo ignores any setting in leoConfig.txt whose value is "ignore" (without the quotes). For example:
-
-[prefs panel options]
-tab_width = ignore
-
-If a setting is overridden, it is _not_ written to the .leo file when the outline is saved.  Note that this does not change the file format: all previous versions of Leo will be able to read such .leo files.
-
-The preceding is probably all you need to know to use leoConfig.txt.  The following discuss some minor details: 
-
-1. When reading a .leo file, if a setting is found neither in leoConfig.txt nor in the .leo file, Leo uses a default, hard-coded value.  In leo.py 3.0 and later these default settings are found in tables that appear in the section called:
-
-	&lt;&lt; define default tables for settings &gt;&gt;
-
-in the file leoConfig.py. So it is now convenient to change settings in leo.py itself as well as in leoConfig.txt.
-
-2. Leo will update leoConfig.txt unless the read_only option is on in leoConfig.txt.  
-
-WARNING: there are problems when Leo does write leoConfig.txt: all comments are lost and options and sections are written in a random order.  This is due to problems in Python's ConfigParser module and will not be changed any time soon.
-
-3. Provided the read_only option is off, Leo updates leoConfig.txt whenever it saves a .leo file or whenever the Preferences panel is closed without being canceled.  When updating leoConfig.txt, Leo will write only existing settings whose value is not "ignore".
-
-4. When Leo saves a .leo file, Leo will write a Preferences setting to the .leo file only if the setting will not be written when updating leoConfig.txt.  In particular, changes made in the Preferences Panel will become permanent immediately if Leo the read_only option is off.  Otherwise the change will become permanent when any .leo file is saved.</t>
 <t tx="EKR.20040524104904.213">Beginning with version 3.11, you may use plugins to customize how Leo works.  You can
 
 - override or modify any command
@@ -3794,25 +3795,19 @@ Plugins are permanent: they will not go away when Leo is updated.  You can take
 advantage of the latest CVS updates _without_ having to throw away your modifications.
 
 Important warning: plugins must avoid blindly executing scripts in .leo files.  Doing so could expose all parts of your computer to malicious Python code.  The section called "Security warnings and precautions" discusses how to customize Leo safely and how to avoid several pitfalls.</t>
-<t tx="EKR.20040524104904.214">@nocolor
-
-What is a plugin?
-
-A plugin is a .py file that appears in Leo's plugin subdirectory. Leo tries to
+<t tx="EKR.20040524104904.214">A **plugin** is a .py file that appears in Leo's plugin subdirectory. Leo tries to
 import all such files while starting up. This is done at "start1" time, that
 is, in the call to doHook("start1") in the run function in leo.py. Plugins
 exist to define "hook code".
 
-New in 3.11: Leo looks in the plugins folder for .py files. Leo tries to
+Leo looks in the plugins folder for .py files. Leo tries to
 import all such files at startup ("start2") time.
 
-New in 4.1: Leo enables only plugins whose name appears in pluginsManager.txt.
+Leo enables only plugins whose name appears in pluginsManager.txt.
 Leo loads plugins in the order in which they appear in pluginsManager.txt. Leo
 loads no plugins if pluginsManager.txt does not exist in the plugins directory.
 
-What is hook code?
-
-Leo automatically calls hook code at various times during Leo's execution.
+Leo automatically calls **hooks** at various times during Leo's execution.
 Typical hooks are:
 
 - "start2", called at the end of Leo's startup process,
@@ -3821,24 +3816,21 @@ Typical hooks are:
 
 See the documentation for hooks in this file for full details.
 
-N.B. Plugins can use "start2" hooks to override any of Leo's classes. See
+Important. Plugins can use "start2" hooks to override any of Leo's classes. See
 "Overriding functions, methods &amp; classes" in leoPlugins.leo for several
 examples of how to do this.
 
 How do plugins work?
 
 Plugins register themselves when Leo imports them using the following code,
-which should appear as the outer level of the .py file:
+which should appear as the outer level of the .py file::
 
-@color
-
-"""A description of this plugin"""
-
-registerHandler("xxx", onXXX)
-__version__ = "1.2"
-plugin_signon(__name__)
+    """A description of this plugin"""
+    
+    registerHandler("xxx", onXXX)
+    __version__ = "1.2"
+    plugin_signon(__name__)
 	
-@nocolor
 
 Line by line:
 
@@ -3877,16 +3869,12 @@ About hook handlers
 
 See the "About hooks" section of leoPlugins.leo for full documentation about
 how to write hook handler routines, like onXXX or onKey in the examples above.
-Basically, each hook should have this pattern:
-	
-@color
+Basically, each hook should have this pattern::
 
-def onXXX (tag,keywords):
-	c = keywords.get("c")
-	otherKeyword = keywords.get("otherKeyword")
-	&lt;&lt; do something with c and otherKeyword, etc. &gt;&gt;
-	
-@nocolor
+    def onXXX (tag,keywords):
+        c = keywords.get("c")
+        otherKeyword = keywords.get("otherKeyword")
+        &lt;&lt; do something with c and otherKeyword, etc. &gt;&gt;
 
 In other words, keywords is a Python dictionary containing the keyword
 arguments passed to the hook handler. See the See the "About hooks" section of
@@ -3903,9 +3891,7 @@ actually change Leo. Obviously, some study is needed. The place to start your
 study is LeoPy.leo. In particular, study very carefully the section called
 "Overview of code". Leo is a highly modular program, and Python is ideally
 suited to this style of programming.</t>
-<t tx="EKR.20040524104904.215">@nocolor
-
-Leo looks in the plugins folder for .py files. Leo tries to import all such
+<t tx="EKR.20040524104904.215">Leo looks in the plugins folder for .py files. Leo tries to import all such
 files at startup ("start2") time. Leo enables only plugins whose name appears in
 pluginsManager.txt. Leo loads no plugins if pluginsManager.txt does not exist in
 the plugins directory.
@@ -3913,16 +3899,13 @@ the plugins directory.
 The child of this node gives an example of the code that creates the Open With
 menu. The following code, appearing at the end of mod_open_with.py, registers
 two different hook functions. The on_idle function is the "idle" hook. The
-create_open_with_menu is the "start2","open2" and "command2" hooks.
+create_open_with_menu is the "start2","open2" and "command2" hooks::
 
-@color
+    # Register the handlers... 
+    registerHandler("idle", on_idle) 
+    registerHandler(("start2","open2","command2"), create_open_with_menu) 
+    es("...open with")
 
-# Register the handlers... 
-registerHandler("idle", on_idle) 
-registerHandler(("start2","open2","command2"), create_open_with_menu) 
-es("...open with")
-	
-@nocolor
 Plugins may call registerHandler with a hook name like "idle" or a list of hook
 names like ("start2","open2","command2"). Also, you can use the "all" hook name
 to indicate that code will be called for all hooks. This is useful for tracing
@@ -3936,117 +3919,8 @@ You will find many examples of this in LeoPy.leo.
 About error checking:
 
 At present Leo will disable all hooks if any hook throws an exception. In
-practice this isn't a big deal, but something better could be done.
-
-How to send me your plugins:
-
-It is easy to submit a plugin for inclusion in LeoPy.leo. Just send me a file
-derived from @thin your_plugin.py.</t>
-<t tx="EKR.20040524104904.216">@color
-@language python
-@ignore
-
-"""Open With handler"""
-
-from customizeLeo import *
-from leoGlobals import *
-
-@others
-
-if 1: # Register the handlers...
-	registerHandler("idle", on_idle)
-	registerHandler(("start2","open2","command2"), create_open_with_menu)
-	es("...open with")</t>
-<t tx="EKR.20040524104904.217"># frame.OnOpenWith creates the dict as follows:
-# dict = {"c":c, "v":v, "f":f, "path":path, "time":time}
-
-def on_idle (tag,keywords):
-
-	import os
-	a = app()
-	for dict in a.openWithFiles:
-		path = dict.get("path")
-		c = dict.get("c")
-		v = dict.get("v")
-		if path and os.path.exists(path):
-			try:
-				time = os.path.getmtime(path)
-				if time and time != dict.get("time"):
-					dict["time"] = time
-					&lt;&lt; update v's body text &gt;&gt;
-			except: pass</t>
-<t tx="EKR.20040524104904.218">&lt;&lt; set s to the new text &gt;&gt;
-body = v.bodyString()
-&lt;&lt; set conflict flag &gt;&gt;
-
-if conflict:
-	# Report the conflict &amp; set update.
-	import leoDialog
-	d = leoDialog.leoDialog()
-	message = "Conflict in %s.\n\n" % (v.headString())
-	message += "Replace outline with external changes?"
-	update = d.askYesNo("Conflict!",message) == "yes"
-else:
-	update = s != body
-
-if update:
-	h = v.headString()
-	es("changed:" + h)
-	v.setBodyStringOrPane(s)
-	c.selectVnode(v)
-	v.OpenWithOldBody = s
-</t>
-<t tx="EKR.20040524104904.219">try:
-	# Update v from the changed temp file.
-	f=open(path)
-	s=f.read()
-	f.close()
-except:
-	es("can not open " + shortFileName(path))
-	break
-</t>
-<t tx="EKR.20040524104904.220">try:
-	# The OpenWithOldBody attribute does not normally exist in vnodes.
-	old_body = v.OpenWithOldBody
-	conflict = body != old_body and body != s
-except:
-	conflict = v.isDirty() and body != s
-</t>
-<t tx="EKR.20040524104904.221">def create_open_with_menu (tag,keywords):
-
-	if  (tag in ("start2","open2") or
-		(tag=="command2" and keywords.get("label")=="new")):
-	
-		&lt;&lt; create the Open With menu &gt;&gt;
-
-		# Enable the idle-time hook so we can check temp files created by Open With.
-		from leoGlobals import enableIdleTimeHook
-		enableIdleTimeHook(idleTimeDelay=500)
-</t>
-<t tx="EKR.20040524104904.222">@ Entries in the following table are the tuple (commandName,shortcut,data).
-data is the tuple (command,arg,ext).
-command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
-Leo executes command(arg+path) where path is the full path to the temp file.
-If ext is not None, the temp file has the extension ext,
-Otherwise, Leo computes an extension based on what @language directive is in effect.
-@c
-
-idle_arg = "c:/python22/tools/idle/idle.py -e "
-
-if 1: # Default table.
- table = (
-  ("&amp;Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
-  ("&amp;Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
-  ("Word&amp;Pad","Alt+Shift+T",("os.startfile",None,".txt")))
-else: # David McNab's table.
- table = (
-  ("X&amp;Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)))
-
-top().frame.createOpenWithMenuFromTable(table)
-</t>
-<t tx="EKR.20040524104904.223">@nowrap
-
-At startup time Leo looks all files of the form .py in the plugins
+practice this isn't a big deal, but something better could be done.</t>
+<t tx="EKR.20040524104904.223">At startup time Leo looks all files of the form .py in the plugins
 directory. Leo assumes that these files are 'plugins' containing Python modules
 that customizes Leo's operation. Leo attempts to import each file.
 
@@ -4068,91 +3942,92 @@ The following table summarizes the arguments passed to hooks: 'Overrides?' is
 'yes' if returning anything other than None overrides Leo's normal command or
 event processing.)
 
-New in version Leo 4.2: the 'v', 'old_v' and 'new_v' keys in the keyword dictionary
+The 'v', 'old_v' and 'new_v' keys in the keyword dictionary
 contain _positions_, not vnodes. These keys are deprecated.
+The 'new_c' key is deprecated.  Use the 'c' key instead.
 
-New in version Leo 4.3: the 'new_c' key is deprecated.  Use the 'c' key instead.
-
-tag argument               over-                                        keys in keywords
-(hook name)                rides?   when called                         dictionary
----------                  ------   -----------                         ----------------
-'after-create-leo-frame'            after creating any frame            c
-'after-redraw-outline'              end of tree.redraw                  c (note 6)
-'before-create-leo-frame'           before frame.finishCreate           c
-'bodyclick1'                yes     before normal click in body         c,p,v,event
-'bodyclick2'                        after normal click in body          c,p,v,event
-'bodydclick1'               yes     before double click in body         c,p,v,event
-'bodydclick2'                       after  double click in body         c,p,v,event
-'bodykey1'                  yes     before body keystrokes              c,p,v,ch,oldSel,undoType
-'bodykey2'                          after  body keystrokes              c,p,v,ch,oldSel,undoType
-'bodyrclick1'               yes     before right click in body          c,p,v,event
-'bodyrclick2'                       after  right click in body          c,p,v,event
-'boxclick1'                 yes     before click in +- box              c,p,v,event
-'boxclick2'                         after  click in +- box              c,p,v,event
-'clear-mark'                        when mark is set                    c,p,v
-'close-frame'                       in app.closeLeoWindow               c
-'color-optional-markup'     yes *   (note 7)                            colorer,p,v,s,i,j,colortag (note 7)
-'command1'                  yes     before each command                 c,p,v,label (note 2)
-'command2'                          after  each command                 c,p,v,label (note 2)
-'create-optional-menus'             (note 8)                            c (note 8)
-'create-popup-menu-items'           in tree.OnPopup                     c,p,v,event (new)
-'destroy-all-global-windows'        (note 12)                           None
-'draw-outline-box',         yes     when drawing +- box                 tree,p,v,x,y
-'draw-outline-icon',        yes     when drawing icon                   tree,p,v,x,y
-'draw-outline-node',        yes     when drawing node                   tree,p,v,x,y
-'draw-outline-text-box',    yes     when drawing headline               tree,p,v,x,y
-'drag1'                     yes     before start of drag                c,p,v,event
-'drag2'                             after  start of drag                c,p,v,event
-'dragging1'                 yes     before continuing to drag           c,p,v,event
-'dragging2'                         after  continuing to drag           c,p,v,event
-'enable-popup-menu-items'           in tree.OnPopup                     c,p,v,event
-'end1'                              start of app.quit()                 None
-'enddrag1'                  yes     before end of drag                  c,p,v,event
-'enddrag2'                          after  end of drag                  c,p,v,event
-'headclick1'                yes     before normal click in headline     c,p,v,event
-'headclick2'                        after  normal click in headline     c,p,v,event
-'headrclick1'               yes     before right click in headline      c,p,v,event
-'headrclick2'                       after  right click in headline      c,p,v,event
-'headkey1'                  yes     before headline keystrokes          c,p,v,ch
-'headkey2'                          after  headline keystrokes          c,p,v,ch
-'hypercclick1'              yes     before control click in hyperlink   c,p,v,event
-'hypercclick2'                      after  control click in hyperlink   c,p,v,event
-'hyperenter1'               yes     before entering hyperlink           c,p,v,event
-'hyperenter2'                       after  entering hyperlink           c,p,v,event
-'hyperleave1'               yes     before leaving  hyperlink           c,p,v,event
-'hyperleave2'                       after  leaving  hyperlink           c,p,v,event
-'iconclick1'                yes     before single click in icon box     c,p,v,event
-'iconclick2'                        after  single click in icon box     c,p,v,event
-'iconrclick1'               yes     before right click in icon box      c,p,v,event
-'iconrclick2'                       after  right click in icon box      c,p,v,event
-'icondclick1'               yes     before double click in icon box     c,p,v,event
-'icondclick2'                       after  double click in icon box     c,p,v,event
-'idle'                              periodically (at idle time)         c
-'init-color-markup'                 (note 7)                            colorer,p,v (note 7)
-'menu1'                     yes     before creating menus               c,p,v (note 3)
-'menu2'                     yes     before updating menus               c,p,v
-'new'                               start of New command                c,old_c,new_c (note 9)
-'open1'                     yes     before opening any file             c,old_c,new_c,fileName (note 4)
-'open2'                             after  opening any file             c,old_c,new_c,fileName (note 4)
-'openwith1'                 yes     before Open With command            c,p,v,openType,arg,ext
-'openwith2'                         after  Open With command            c,p,v,openType,arg,ext
-'recentfiles1'              yes     before Recent Files command         c,p,v,fileName,closeFlag
-'recentfiles2'                      after  Recent Files command         c,p,v,fileName,closeFlag
-'redraw-entire-outline'     yes     start of tree.redraw                c (note 6)
-'save1'                     yes     before any Save command             c,p,v,fileName
-'save2'                             after  any Save command             c,p,v,fileName
-'scan-directives'                   in scanDirectives                   c,p,v,s,old_dict,dict,pluginsList (note 10)
-'select1'                   yes     before selecting a position         c,new_p,old_p,new_v,new_v
-'select2'                           after  selecting a position         c,new_p,old_p,new_v,old_v
-'select3'                           after  selecting a position         c,new_p,old_p,new_v,old_v
-'set-mark'                          when a mark is set                  c,p,v
-'show-popup-menu'                   in tree.OnPopup                     c,p,v,event
-'start1'                            after app.finishCreate()            None
-'start2'                            after opening first Leo window      c,p,v,fileName
-'unselect1'                 yes     before unselecting a vnode          c,new_p,old_p,new_v,old_v
-'unselect2'                         after  unselecting a vnode          c,new_p,old_p,old_v,old_v
-'@url1'                     yes     before double-click @url node       c,p,v,url (note 5)
-'@url2'                             after  double-click @url node       c,p,v(note 5)
+============================= ======== =================================== =============================
+tag argument                  over-                                        keys in keywords
+(hook name)                   rides?   when called                         dictionary
+----------------------------- -------- ----------------------------------- -----------------------------
+'after-create-leo-frame'               after creating any frame            c
+'after-redraw-outline'                 end of tree.redraw                  c (note 6)
+'before-create-leo-frame'              before frame.finishCreate           c
+'bodyclick1'                   yes     before normal click in body         c,p,v,event
+'bodyclick2'                           after normal click in body          c,p,v,event
+'bodydclick1'                  yes     before double click in body         c,p,v,event
+'bodydclick2'                          after  double click in body         c,p,v,event
+'bodykey1'                     yes     before body keystrokes              c,p,v,ch,oldSel,undoType
+'bodykey2'                             after  body keystrokes              c,p,v,ch,oldSel,undoType
+'bodyrclick1'                  yes     before right click in body          c,p,v,event
+'bodyrclick2'                          after  right click in body          c,p,v,event
+'boxclick1'                    yes     before click in +- box              c,p,v,event
+'boxclick2'                            after  click in +- box              c,p,v,event
+'clear-mark'                           when mark is set                    c,p,v
+'close-frame'                          in app.closeLeoWindow               c
+'color-optional-markup'        yes *   (note 7)                            colorer,p,v,s,i,j,colortag (note 7)
+'command1'                     yes     before each command                 c,p,v,label (note 2)
+'command2'                             after  each command                 c,p,v,label (note 2)
+'create-optional-menus'                (note 8)                            c (note 8)
+'create-popup-menu-items'              in tree.OnPopup                     c,p,v,event (new)
+'destroy-all-global-windows'           (note 12)                           None
+'draw-outline-box'             yes     when drawing +- box                 tree,p,v,x,y
+'draw-outline-icon'            yes     when drawing icon                   tree,p,v,x,y
+'draw-outline-node'            yes     when drawing node                   tree,p,v,x,y
+'draw-outline-text-box'        yes     when drawing headline               tree,p,v,x,y
+'drag1'                        yes     before start of drag                c,p,v,event
+'drag2'                                after  start of drag                c,p,v,event
+'dragging1'                    yes     before continuing to drag           c,p,v,event
+'dragging2'                            after  continuing to drag           c,p,v,event
+'enable-popup-menu-items'              in tree.OnPopup                     c,p,v,event
+'end1'                                 start of app.quit()                 None
+'enddrag1'                     yes     before end of drag                  c,p,v,event
+'enddrag2'                             after  end of drag                  c,p,v,event
+'headclick1'                   yes     before normal click in headline     c,p,v,event
+'headclick2'                           after  normal click in headline     c,p,v,event
+'headrclick1'                  yes     before right click in headline      c,p,v,event
+'headrclick2'                          after  right click in headline      c,p,v,event
+'headkey1'                     yes     before headline keystrokes          c,p,v,ch
+'headkey2'                             after  headline keystrokes          c,p,v,ch
+'hypercclick1'                 yes     before control click in hyperlink   c,p,v,event
+'hypercclick2'                         after  control click in hyperlink   c,p,v,event
+'hyperenter1'                  yes     before entering hyperlink           c,p,v,event
+'hyperenter2'                          after  entering hyperlink           c,p,v,event
+'hyperleave1'                  yes     before leaving  hyperlink           c,p,v,event
+'hyperleave2'                          after  leaving  hyperlink           c,p,v,event
+'iconclick1'                   yes     before single click in icon box     c,p,v,event
+'iconclick2'                           after  single click in icon box     c,p,v,event
+'iconrclick1'                  yes     before right click in icon box      c,p,v,event
+'iconrclick2'                          after  right click in icon box      c,p,v,event
+'icondclick1'                  yes     before double click in icon box     c,p,v,event
+'icondclick2'                          after  double click in icon box     c,p,v,event
+'idle'                                 periodically (at idle time)         c
+'init-color-markup'                    (note 7)                            colorer,p,v (note 7)
+'menu1'                        yes     before creating menus               c,p,v (note 3)
+'menu2'                        yes     before updating menus               c,p,v
+'new'                                  start of New command                c,old_c,new_c (note 9)
+'open1'                        yes     before opening any file             c,old_c,new_c,fileName (note 4)
+'open2'                                after  opening any file             c,old_c,new_c,fileName (note 4)
+'openwith1'                    yes     before Open With command            c,p,v,openType,arg,ext
+'openwith2'                            after  Open With command            c,p,v,openType,arg,ext
+'recentfiles1'                 yes     before Recent Files command         c,p,v,fileName,closeFlag
+'recentfiles2'                         after  Recent Files command         c,p,v,fileName,closeFlag
+'redraw-entire-outline'        yes     start of tree.redraw                c (note 6)
+'save1'                        yes     before any Save command             c,p,v,fileName
+'save2'                                after  any Save command             c,p,v,fileName
+'scan-directives'                      in scanDirectives                   c,p,v,s,old_dict,dict,pluginsList (note 10)
+'select1'                      yes     before selecting a position         c,new_p,old_p,new_v,new_v
+'select2'                              after  selecting a position         c,new_p,old_p,new_v,old_v
+'select3'                              after  selecting a position         c,new_p,old_p,new_v,old_v
+'set-mark'                             when a mark is set                  c,p,v
+'show-popup-menu'                      in tree.OnPopup                     c,p,v,event
+'start1'                               after app.finishCreate()            None
+'start2'                               after opening first Leo window      c,p,v,fileName
+'unselect1'                    yes     before unselecting a vnode          c,new_p,old_p,new_v,old_v
+'unselect2'                            after  unselecting a vnode          c,new_p,old_p,old_v,old_v
+'@url1'                        yes     before double-click @url node       c,p,v,url (note 5)
+'@url2'                                after  double-click @url node       c,p,v(note 5)
+============================= ======== =================================== =============================
 
 Notes:
 
@@ -4217,8 +4092,8 @@ whose key is 'pluginsList'. The value of this item is a list of tuples
 
 - d is the spelling of the @directive, without the leading @.
 - v is the vnode containing the directive, _not_ the original vnode.
-- s[k:] is a string containing whatever follows the @directive. k has already
-been moved past any whitespace that follows the @directive.
+- s[k:] is a string containing whatever follows the @directive.
+  k has already been moved past any whitespace that follows the @directive.
 
 See the add_directives plugins directive for a complete example of how to use
 the 'scan-directives' hook.
@@ -4243,49 +4118,43 @@ This hook gives plugins the chance to clean up after themselves when Leo shuts d
 This succinctly illustrates the fundamental problem: when we share "our" .leo files we can _not_ assume that we know what is our "own" documents.  So hooks that naively searches through .leo files looking for scripts to execute is looking for big trouble.
 
 The following node contains an example of the kind of code that is extremely dangerous.</t>
-<t tx="EKR.20040524104904.226">@color
-@ WARNING ***** Using the following routine exposes you to malicious code in .leo files! *****
+<t tx="EKR.20040524104904.226">**Warning** The following code exposes you to malicious code::
 
-Do not EVER use code that blindly executes code in .leo files!
-Someone could send you malicious code embedded in the .leo file.
+    # Execute the body text of all nodes that start with `@script`.
+    def onLoadFile():
+        for p in c.allNodes_iter():
+            h = p.headString().lower()
+            if match_word(h,0,"@script"):
+                s = p.bodyString()
+                if s and len(s) &gt; 0:
+                    try: # SECURITY BREACH: s may be malicious!
+                        exec(s + '\n')
+                    except:
+                        es_exception()
 
-WARNING 1: Changing "@onloadpythonscript" to something else will NOT protect
-           you if you EVER share either your files with anyone else.
+Executing this kind of code is typically an intolerable security risk.
+It might be justified only in a setting in which you trust everyone who sends you .leo files.
+There is *no* way to avoid trusting the people who send you .leo files:
 
-WARNING 2: Replacing exec by rexec below provides NO additional protection!
-           A malicious rexec script could trash your .leo file in subtle ways.
-@c
-if 0: # WRONG: This blindly execute scripts found in an .leo file! NEVER DO THIS!
-	def onLoadFile():
-		v = top().rootVnode()
-		while v:
-			h = v.headString().lower()
-			if match_word(h,0,"@onloadpythonscript"):
-				s = v.bodyString()
-				if s and len(s) &gt; 0:
-					try: # SECURITY BREACH: s may be malicious!
-						exec(s + '\n',__builtins__,__builtins__)
-					except:
-						es_exception()
-			v = v.threadNext()
-</t>
-<t tx="EKR.20040524104904.227">@color
-@ It would be most foolish to expect rexec to protect you against malicious code contained in .leo files.  Remember that Leo is a repository of source code, so any text operation is potentially malicious.
+- Changing "@script" to something else will not protect you.
 
-For example, consider the following script.  This script is valid in rexec mode:
-@c
+- Using rexec instead of exec is also no protection:
+  a malicious rexec script could trash your .leo file in subtle ways.</t>
+<t tx="EKR.20040524104904.227">rexec can not protect you against malicious code contained in .leo files.
+Leo is a repository of source code, so any text operation is potentially malicious.
+For example, consider the following script, which is valid in rexec mode::
 
-c = top()
-thisNode = c.currentVnode()
-v = c.rootVnode()
-while v:
-	&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;
-	v = v.threadNext()
-&lt;&lt; delete thisNode &gt;&gt;
-&lt;&lt; clear the undo stack &gt;&gt;
+    badNode = c.currentPosition()
+    for p in c.allNodes_iter():
+        &lt;&lt; change `rexec` to `exec` in p's body &gt;&gt;
+     
+    &lt;&lt; delete badNode &gt;&gt;
+    &lt;&lt; clear the undo stack &gt;&gt;
 
-@ This script will introduce a security hole the .leo file without doing anything prohibited by rexec, and without leaving any traces of the perpetrating script behind.  The damage will become permanent _outside_ this script when the user saves the .leo file.
-</t>
+This script will introduce a security hole the .leo file without doing anything
+prohibited by rexec, and without leaving any traces of the perpetrating script
+behind. The damage will become permanent *outside* this script when the user
+saves the .leo file.</t>
 <t tx="EKR.20040524104904.228">pass</t>
 <t tx="EKR.20040524104904.229">pass</t>
 <t tx="EKR.20040524104904.230">pass</t>
@@ -4310,8 +4179,7 @@ These are methods of the leoFrame class.  Use top().frame to get the frame objec
 The plugins node in LeoPy.leo gives examples of how to use these routines to create custom menus and to add items to the Open With menu.
 
 These convenience methods all do complete error checking and write messages to the log pane and to the console if errors are encountered.</t>
-<t tx="EKR.20040524104904.234">@nocolor
-createMenuItemsFromTable (self,menuName,table,openWith=0)
+<t tx="EKR.20040524104904.234">createMenuItemsFromTable (self,menuName,table,openWith=0)
 
 This method adds items to the menu whose name is menuName.  The table argument describes the entries to be created.  This table is a sequence of items of the form (name,shortcut,command).
 
@@ -4321,18 +4189,16 @@ This method adds items to the menu whose name is menuName.  The table argument d
 
 An entry of the form ("-",None,None) indicates a separator line between menu items.
 
-For example:
-@color
-table =
-	("Toggle Active Pane","Ctrl-T",self.OnToggleActivePane),
-	("-",None,None),
-	("Toggle Split Direction",None,self.OnToggleSplitDirection))
+For example::
 
-top().frame.createMenuItemsFromTable("Window",table)
-@nocolor
+    table =
+        ("Toggle Active Pane","Ctrl-T",self.OnToggleActivePane),
+        ("-",None,None),
+        ("Toggle Split Direction",None,self.OnToggleSplitDirection))
+    
+    top().frame.createMenuItemsFromTable("Window",table)
 
-If the openWith keyword argument is 1 the items are added to a submenu of the Open With menu.  However, it will be more convenient to use the createOpenWithMenuFromTable method to create the Open With menu.
-</t>
+If the openWith keyword argument is 1 the items are added to a submenu of the Open With menu.  However, it will be more convenient to use the createOpenWithMenuFromTable method to create the Open With menu.</t>
 <t tx="EKR.20040524104904.235">createNewMenu (self,menuName,parentName="top")
 
 This method creates a new menu:
@@ -4367,36 +4233,25 @@ table = (
 
 self.createMenuEntries(windowMenu,table)
 </t>
-<t tx="EKR.20040524104904.239">@nocolor
+<t tx="EKR.20040524104904.239">It is easy for hooks to translate menus into another language.  For example, code similar to the following code would typically be found in the "start2" hook::
 
-It is easy for hooks to translate menus into another language.  For example, code similar to the following code would typically be found in the "start2" hook:
+    table = (
+        ("Open...","&amp;Ouvre"),
+        ("OpenWith","O&amp;uvre Avec..."),
+        ("close","&amp;Ferme"),
+        ("Undo Typing","French &amp;Undo Typing"), # Shows you how much French I know ;-)
+        ("Redo Typing","French &amp;Redo Typing"),
+        ("Can't Undo", "French Can't Undo"),
+        ("Can't Redo", "French Can't Redo"))
 
-@color
-
-table = (
-	("Open...","&amp;Ouvre"),
-	("OpenWith","O&amp;uvre Avec..."),
-	("close","&amp;Ferme"),
-	("Undo Typing","French &amp;Undo Typing"), # Shows you how much French I know ;-)
-	("Redo Typing","French &amp;Redo Typing"),
-	("Can't Undo", "French Can't Undo"),
-	("Can't Redo", "French Can't Redo"))
-# Call the convenience routine to do the work.
-app().setRealMenuNamesFromTable(table)</t>
+    # Call the convenience routine to do the work.
+    app().setRealMenuNamesFromTable(table)</t>
 <t tx="EKR.20040524104904.240">New in 4.1: The plugins test suite creates a new convention: if a plugin has a
 function at the outer (module) level called unitTest, Leo will call that
 function when doing unit testing for plugins. So it would be good if writers of
 plugins would create such a unitTest funcion. The unitTest function should run
 some tests. All unitTest needs to do to indicate failure is throw an exception
 or cause an assert to fail. Leo's plugins test suite takes care of the rest.</t>
-<t tx="EKR.20040524104904.241">New in Leo 4.0 and Python 2.3: Leo will draw a Leo icon in all Leo windows.  There is no need to install PIL or tkIcon.
-
-Otherwise (for versions of Leo before 4.0 and for versions of Python before 2.3) Leo will draw a Leo icon in Leo windows only if you have installed Fredrik Lundh's PIL and tkIcon packages.
-
-Download PIL from http://www.pythonware.com/downloads/index.htm#pil
-Download tkIcon from http://www.effbot.org/downloads/#tkIcon
-
-Many thanks to Jonathan M. Gilligan for suggesting this code.</t>
 <t tx="EKR.20040524104904.242">New in 4.0: Leo can now read and write "foreign" attributes in &lt;v&gt; and &lt;t&gt; elements in .leo files:
 
 - When reading a .leo file, Leo will create t.unknownAttributes or v.unknownAttributes ivars for any tnode and vnode object whose corresponding &lt;v&gt; or &lt;t&gt; element in the .leo file contains a foreign attribute.
@@ -4441,24 +4296,18 @@ The reason Leo does _not_ write v.unknownAttributes in @thin trees is that only 
 
 The effect of this is to make all vnodes identical, as far as using unknownAttributes is concerned.  This won't work in all cases.  For example, a plugin that creates an arbitrary directed graph between vnodes must distinguish between joined vnodes.  In that case, the plugin should confine itself to @file trees, or just vnodes in .leo files, for that matter.</t>
 <t tx="EKR.20040524104904.243">Plugins may create (or add to) v.tempAttributes (for vnodes) or t.tempAttributes (for tnodes).  These will work just like the corresponding unknownAttributes dicts except that Leo will _not_ read or write these dictionaries when reading or writing files.  Note: nothing needs to change in Leo to support this convention.</t>
-<t tx="EKR.20040524104904.244">@nocolor
+<t tx="EKR.20040524104904.244">We wish to avoid the possibility that two plugins might unwittingly choose the same name for attributes in the unknownAttributes or tempAttributes dictionaries.  The following convention eliminates that possibility.
 
-We wish to avoid the possibility that two plugins might unwittingly choose the same name for attributes in the unknownAttributes or tempAttributes dictionaries.  The following convention eliminates that possibility.
+Each plugin should create its own dictionary _inside_ any tempAttributes or unknownAttributes dictionaries that it intends to create or modify.  Something like this::
 
-Each plugin should create its own dictionary _inside_ any tempAttributes or unknownAttributes dictionaries that it intends to create or modify.  Something like this:
-
-@color
-
-# Create the tempAttributes dict for this vnode.
-if not v.hasattr("tempAttributes"):
-	v.tempAttributes = {}
-
-# Create a subdictionary for the private use of my plugin.
-d = v.tempAttributes.get("myPluginName")
-if d is None:
-	v.tempAttributes["myPluginName"] = d = {}
-
-@nocolor
+    # Create the tempAttributes dict for this vnode.
+    if not v.hasattr("tempAttributes"):
+        v.tempAttributes = {}
+    
+    # Create a subdictionary for the private use of my plugin.
+    d = v.tempAttributes.get("myPluginName")
+    if d is None:
+        v.tempAttributes["myPluginName"] = d = {}
 
 Now the plugin can set and get fields in d.  Similar code would be used for the t.tempAttributes, v.unknownAttributes and t.unknownAttributes dictionaries.</t>
 <t tx="EKR.20040524104904.245"></t>
@@ -12460,7 +12309,7 @@ The key design goal of @settings trees was that Leo's user options must be infin
 
 The Settings command temporarily replaces the outline pane with an outline showing all the @settings trees in effect. The Settings command also replaces the body pane with a "settings pane". This settings pane allows you to change the settings selected in the outline pane using standard gui widgets. The settings pane is dynamically created from nodes in the settings tree; it is as extensible as the @settings tree itself.
 
-For full details, see the children of this node.</t>
+PUT LINK TO Chapter 5 here.</t>
 <t tx="ekr.20050122090311">Leo 4.3 alpha 1                 January 24, 2005
 
 Leo 4.3 is the culmination of more than four months of work. 
@@ -13533,7 +13382,6 @@ pattern dirtyVnodeList.extend(dirtyVnodeList2)
 See the section called &lt;&lt; How Leo implements unlimited undo &gt;&gt; in leoUndo.py for
 more details. In general, the best way to see how to implement undo is to see
 how Leo's core calls the u.before/afterX methods.</t>
-<t tx="ekr.20050419072509.1"></t>
 <t tx="ekr.20050419072748"># Scripts or plugins may reload settings files using g.app.config.readSettingsFiles
 # Note: Leo calls g.app.config.readSettingsFiles before opening the settings dialog.
 
@@ -13909,9 +13757,7 @@ Note: most(all?) top-level atFile.write methods pass toString to initWriteIvars.
 
     # Append the files to the global list.
     g.app.config.appendToRecentFiles(files)</t>
-<t tx="ekr.20050429094215.353">New in Leo 4.3 beta 1:
-
-Storing recent files data in .leo files was a dubious idea. Leo now does the following:
+<t tx="ekr.20050429094215.353">Leo stores recent files information as follows.
 
 1. Leo stores recent files info in files called .leoRecentFiles.txt. These will
 be a plain text files with one line per recent files entry. An Easter egg: if
@@ -18926,7 +18772,7 @@ Appendices
 </t>
 <t tx="ekr.20050901054622">c.save()</t>
 <t tx="ekr.20050901055150">@color
-# Script to demote headlines and body text
+# Script to promote headlines and body text
 
 root = p.copy()
 body = [root.bodyString()+'\n']
@@ -19503,6 +19349,9 @@ This chapter will be of use primarily to those wanting to change Leo's code.
     :target: next_</t>
 <t tx="ekr.20050901101949">.. _`Chapter 5\: Using Leo's Commands`:             http://webpages.charter.net/edreamleo/commands.html
 .. _`Chapter 7\: Scripting Leo with Python`:        http://webpages.charter.net/edreamleo/scripting.html
+
+.. _`Clones &amp; views`:   http://webpages.charter.net/edreamleo/intro.html#clones-views
+.. _`Organizer nodes`:   http://webpages.charter.net/edreamleo/intro.html#good-style-and-bad-sections-vs-others
 
 .. WARNING: image targets may not have upper case letters!
 
