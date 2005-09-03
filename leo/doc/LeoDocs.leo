@@ -1614,8 +1614,8 @@
 <v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831101501" a="EM"><vh>To do</vh>
-<v t="ekr.20050903092450" a="MTV"><vh>** Add scetion to Chapter 8 telling about scrip buttons</vh></v>
+<v t="ekr.20050831101501" a="M"><vh>To do</vh>
+<v t="ekr.20050903092450" a="M"><vh>** Add scetion to Chapter 8 telling about scrip buttons</vh></v>
 <v t="ekr.20050831075008" a="M"><vh>Bug: doesn't reset properly when multiple files</vh></v>
 <v t="ekr.20050831134335"><vh>Tell about 'reference' .leo files somewhere</vh></v>
 <v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
@@ -1635,7 +1635,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -1868,6 +1868,48 @@
 <v t="ekr.20050828115003"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
+<v t="EKR.20040524104904.99"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="ekr.20050901101608.2"><vh>@rst commands.html</vh>
+<v t="ekr.20050901101852"><vh>@rst-no-head links</vh></v>
+<v t="EKR.20040524104904.100"><vh> The File Menu</vh>
+<v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
+<v t="EKR.20040524104904.102"><vh>Communicating with external editors</vh></v>
+<v t="EKR.20040524104904.105"><vh>Tangling an outline: Producing Derived Files</vh></v>
+<v t="EKR.20040524104904.106"><vh>Untangling: updating an outline</vh></v>
+<v t="EKR.20040524104904.108"><vh>Importing Files into Leo Outlines</vh></v>
+<v t="EKR.20040524104904.109"><vh>Exporting Files from Leo Outlines</vh></v>
+<v t="EKR.20040524104904.110"><vh>Quitting Leo</vh></v>
+</v>
+<v t="EKR.20040524104904.111"><vh> The Edit Menu</vh>
+<v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
+<v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
+<v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
+<v t="ekr.20050313102319" a="M"><vh>Adding and deleting comments in body text</vh></v>
+<v t="EKR.20040524104904.115"><vh>Creating nodes from body text</vh></v>
+<v t="EKR.20040524104904.116"><vh>Converting leading blanks and tabs in body text</vh></v>
+<v t="EKR.20040524104904.117"><vh>Executing Python scripts in body text</vh></v>
+<v t="EKR.20040524104904.118"><vh>Finding and changing text</vh></v>
+<v t="ekr.20050902160924"><vh>Script search</vh></v>
+<v t="EKR.20040524104904.134"><vh>Go To Line Number</vh></v>
+<v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
+<v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh></v>
+<v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
+<v t="EKR.20040524104904.140"><vh>Specifying settings</vh></v>
+</v>
+<v t="EKR.20040524104904.143"><vh> The Outline Menu</vh>
+<v t="EKR.20040524104904.144"><vh> Checking outlines</vh></v>
+<v t="EKR.20040524104904.145"><vh> Creating &amp; cloning nodes</vh></v>
+<v t="EKR.20040524104904.146"><vh> Cutting, pasting and deleting nodes</vh></v>
+<v t="EKR.20040524104904.147"><vh> Expanding and contracting nodes</vh></v>
+<v t="EKR.20040524104904.149"><vh> Marking nodes</vh></v>
+<v t="EKR.20040524104904.150"><vh> Moving, sorting and reorganizing nodes</vh></v>
+<v t="EKR.20040524104904.148"><vh> Hoisting &amp; De-hoisting nodes</vh></v>
+</v>
+<v t="EKR.20040524104904.151"><vh> The Window Menu</vh></v>
+<v t="EKR.20040524104904.157"><vh>The Help Menu</vh></v>
+<v t="ekr.20050901102400.1"><vh>@rst-no-head end stuff</vh></v>
+</v>
+</v>
 <v t="EKR.20040524104904.161"><vh>Chapter 6: Leo and Literate Programming</vh>
 <v t="ekr.20050901101608.3"><vh>@rst design.html</vh>
 <v t="ekr.20050901101949"><vh>@rst-no-head links</vh></v>
@@ -1911,9 +1953,10 @@
 </v>
 </v>
 <v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050901101608.4" a="E"><vh>@rst customizing.html</vh>
+<v t="ekr.20050901101608.4"><vh>@rst customizing.html</vh>
 <v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050903075144"><vh>Overview</vh></v>
+<v t="ekr.20050903161843"><vh>Creating script buttons</vh></v>
 <v t="EKR.20040524104904.224"><vh>Important security warnings</vh></v>
 <v t="ekr.20050903074833"><vh>Writing plugins and hooks</vh></v>
 <v t="ekr.20050903074833.1"><vh>Summary of hooks</vh></v>
@@ -2008,48 +2051,6 @@
 <v t="ekr.20050901071300"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050901073048"><vh>@rst-no-head glossary</vh></v>
 <v t="ekr.20050901083017"><vh>@rst-no-head end stuff</vh></v>
-</v>
-</v>
-<v t="EKR.20040524104904.99" a="E"><vh>Chapter 5: Using Leo's Commands</vh>
-<v t="ekr.20050901101608.2"><vh>@rst commands.html</vh>
-<v t="ekr.20050901101852"><vh>@rst-no-head links</vh></v>
-<v t="EKR.20040524104904.100"><vh> The File Menu</vh>
-<v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
-<v t="EKR.20040524104904.102"><vh>Communicating with external editors</vh></v>
-<v t="EKR.20040524104904.105"><vh>Tangling an outline: Producing Derived Files</vh></v>
-<v t="EKR.20040524104904.106"><vh>Untangling: updating an outline</vh></v>
-<v t="EKR.20040524104904.108"><vh>Importing Files into Leo Outlines</vh></v>
-<v t="EKR.20040524104904.109"><vh>Exporting Files from Leo Outlines</vh></v>
-<v t="EKR.20040524104904.110"><vh>Quitting Leo</vh></v>
-</v>
-<v t="EKR.20040524104904.111" a="E"><vh> The Edit Menu</vh>
-<v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
-<v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
-<v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
-<v t="ekr.20050313102319" a="M"><vh>Adding and deleting comments in body text</vh></v>
-<v t="EKR.20040524104904.115"><vh>Creating nodes from body text</vh></v>
-<v t="EKR.20040524104904.116"><vh>Converting leading blanks and tabs in body text</vh></v>
-<v t="EKR.20040524104904.117"><vh>Executing Python scripts in body text</vh></v>
-<v t="EKR.20040524104904.118"><vh>Finding and changing text</vh></v>
-<v t="ekr.20050902160924" a="E"><vh>Script search</vh></v>
-<v t="EKR.20040524104904.134"><vh>Go To Line Number</vh></v>
-<v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
-<v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh></v>
-<v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
-<v t="EKR.20040524104904.140"><vh>Specifying settings</vh></v>
-</v>
-<v t="EKR.20040524104904.143"><vh> The Outline Menu</vh>
-<v t="EKR.20040524104904.144"><vh> Checking outlines</vh></v>
-<v t="EKR.20040524104904.145"><vh> Creating &amp; cloning nodes</vh></v>
-<v t="EKR.20040524104904.146"><vh> Cutting, pasting and deleting nodes</vh></v>
-<v t="EKR.20040524104904.147"><vh> Expanding and contracting nodes</vh></v>
-<v t="EKR.20040524104904.149"><vh> Marking nodes</vh></v>
-<v t="EKR.20040524104904.150"><vh> Moving, sorting and reorganizing nodes</vh></v>
-<v t="EKR.20040524104904.148"><vh> Hoisting &amp; De-hoisting nodes</vh></v>
-</v>
-<v t="EKR.20040524104904.151"><vh> The Window Menu</vh></v>
-<v t="EKR.20040524104904.157"><vh>The Help Menu</vh></v>
-<v t="ekr.20050901102400.1"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
 </v>
@@ -13841,7 +13842,10 @@ rst3 = leoPlugins.getPluginModule('rst3')
 if rst3:
     controller = rst3.controllers.get(c)
     if controller:
-        controller.processTree(p)
+        for p in p.self_and_parents_iter():
+            if p.headString().startswith('@rst '):
+                controller.processTree(p)
+                break
 else:
     rst3 = leoPlugins.loadOnePlugin('rst3',verbose=True)
     if rst3:
@@ -18867,8 +18871,12 @@ verbose=True
 Chapter 8: Customizing Leo
 ##########################################
 
-This chapter discusses how to customize Leo in various ways.
+This chapter discusses how to customize Leo using the plugins and other means.
 See `Specifying settings`_ for a description of how to change Leo's settings.
+The scripting plugin (``mod_scripting.py``) deserves special mention. This
+plugin lets you create **script buttons** in a matter of seconds. See `Creating
+script buttons`_. Script buttons are extraordinarily usefu. Try them, you'll be
+instantly hooked.
 
 .. contents::</t>
 <t tx="ekr.20050901101608.5">@ @rst-options
@@ -18922,6 +18930,8 @@ This chapter will be of use primarily to those wanting to change Leo's code.
 .. _`Clones and views`:     http://webpages.charter.net/edreamleo/intro.html#clones-views
 .. _CWEB:       http://www-cs-faculty.stanford.edu/~knuth/cweb.html
 .. _noweb:      http://www.eecs.harvard.edu/~nr/noweb/
+
+.. _`Creating script buttons`:  http://webpages.charter.net/edreamleo/customizing.html#creating-script-buttons
 
 .. _`Tangling @root trees with the Tangle commands`: http://webpages.charter.net/edreamleo/directives.html#tangling-root-trees-with-the-tangle-commands
 
@@ -19420,7 +19430,13 @@ what life with Leo was like before it.</t>
 <t tx="ekr.20050902105852.12">Leo 4.3 corrected many problems with ``leoConfig.txt``. Instead, Leo gets
 settings from one or more ``leoSettings.leo files``. This version also
 introduced a way to changed settings using a settings dialog.</t>
-<t tx="ekr.20050902160924">Leo's find panel contains the ``Script Search`` radio button and the ``Script
+<t tx="ekr.20050902160924">**Important**: Script buttons are easier to use that the script-oriented
+find/change commands described next. I recommend using script buttons whenever
+possible. See `Creating script buttons`_.
+You are not likely to need all the firepower that script-orient find/change commands,
+but it could save you lots of time for complex jobs.
+
+Leo's find panel contains the ``Script Search`` radio button and the ``Script
 Change`` checkbox. When the ``Script Search`` radio button is selected Leo treats the
 contents of the ``Search Text`` as a script to execute whenever any kind of Find
 command is executed. Similarly, when the ``Script Change`` checkbox is selected Leo
@@ -19488,7 +19504,8 @@ The ``initScriptFind`` script in ``LeoPy.leo`` makes it easy to set up script ba
 - Selects the Script Change checkbox if the change script exists.
 - Selects the root of the entire outline.
 
-Presto!  Leo is ready for a script search.
+Presto! Leo is ready for a script search. **Note**: you could also consider creating a
+script button to set up complex find/change scripts.
 
 Here are some ideas for using script find/change.
 	
@@ -19716,5 +19733,60 @@ Here are some important features of plugins:
 -   Leo loads plugins in the order in which they appear in ``pluginsManager.txt.``
     Leo disables all plugins if ``pluginsManager.txt`` does not exist in the plugins directory.</t>
 <t tx="ekr.20050903092450"></t>
+<t tx="ekr.20050903161843">Creating a script button should be your first thought whenever you want to
+automate any task. The scripting plugin, ``mod_scripting.py``, puts two buttons
+in the icon menu, a pink ``Run Script`` button and a yellow ``Script Button``
+button. The ``Run Script`` button does the same thing as the ``Execute Script``
+command. The ``Script Button`` button is the interesting one. It creates a
+button, confusingly called a **script button** in the icon area. A script button
+executes a script when you push it.
+
+Suppose node N is selected. When you press the ``Script Button`` button a new
+(pink) script button is created. The name of the new button is N's headline
+text. The script associated with the new button is N's body text. Now whenever
+you press the new button, N's script is executed on the **presently** selected
+node. Script buttons are extraordinarily useful. In effect, each script button
+defines an instant command! For example, sometimes my fingers get tired of
+saving a file. I simply put ``Save`` in a node's headline and ``c.save()`` in
+the body text. I hit the ``Script Button`` button and I get a new button called
+``Save`` that will save the outline when I press it.
+
+Here's a more intesting example. The following script searches the present node
+and its ancestors looking for an ``@rst`` node. When such a node is found the
+script calls the rst3 plugin to format it. I don't have to select the actual
+``@rst`` node; I can select any of its children::
+
+    import leoPlugins
+    rst3 = leoPlugins.getPluginModule('rst3')
+    if rst3: # already loaded.
+        controller = rst3.controllers.get(c)
+        if controller:
+            for p in p.self_and_parents_iter():
+                if p.headString().startswith('@rst '):
+                    controller.processTree(p)
+                    break
+    else: # Just load the plugin.
+        rst3 = leoPlugins.loadOnePlugin('rst3',verbose=True)
+        if rst3:
+            g.es('rst3 loaded')
+            rst3.onCreate('tag',{'c':c})
+        else:
+            # Ask to be removed.
+            g.app.scriptDict['removeMe'] = True
+
+**Notes**:
+
+-   The scripting plugin pre-defines the ``c``, ``g`` and ``p`` symbols
+    just as the ``Execute Script`` command does.
+
+-   By default a script button executes the **present** body text of the node that original created the script button.
+    This is very handy: you can modify a script button's script at any time without having to recreate the script button.
+
+-   You can delete any script button by right-clicking on it.
+
+-   On startup, the scripting plugin scans the entire .leo file and creates a script button
+    for every node whose headline starts with ``@button scriptName``.
+    **Warning**: this is indeed a security risk of the kind discussed later.
+    This feature can be disabled by setting ``atButtonNodes = True`` at the start of ``mod_scripting.py``.</t>
 </tnodes>
 </leo_file>
