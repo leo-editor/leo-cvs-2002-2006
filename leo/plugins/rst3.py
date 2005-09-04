@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.8'
+__version__ = '0.9'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -351,6 +351,15 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050830091043:v 0.8
+#@+node:ekr.20050903211210:v 0.9
+#@+at
+# 
+# - EKR: Fixed bug that caused the filename to appear when many files were 
+# handled at once.
+#     - self.topNode must be set in writeTree, not processTree.
+#@-at
+#@nonl
+#@-node:ekr.20050903211210:v 0.9
 #@-others
 #@@nocolor
 #@nonl
@@ -753,8 +762,6 @@ class rstClass:
     #@+node:ekr.20050807120331.1:preprocessTree & helpers
     def preprocessTree (self,root):
         
-        # g.trace(self.topNode)
-        
         self.tnodeOptionDict = {}
         
         for p in root.self_and_subtree_iter():
@@ -1060,7 +1067,6 @@ class rstClass:
         
         '''Process all @rst nodes in a tree.'''
     
-        self.topNode = p.copy()
         self.toplevel = p.level()
         self.preprocessTree(p)
         found = False
@@ -1070,6 +1076,7 @@ class rstClass:
             if g.match_word(h,0,"@rst"):
                 self.outputFileName = h[4:].strip()
                 if self.outputFileName and self.outputFileName[0] != '-':
+                    # g.trace(p.headString())
                     found = True
                     self.ext = ext = g.os_path_splitext(self.outputFileName)[1].lower()
                     if ext in ('.htm','.html','.tex','.pdf'):
@@ -1180,7 +1187,8 @@ class rstClass:
             self.write(self.rstComment('rst3: filename: %s\n\n' % self.outputFileName))
             
         # We can't use an iterator because we may skip parts of the tree.
-        p = p.copy() # Only one copy is needed.
+        p = p.copy() # Only one copy is needed for traversal.
+        self.topNode = p.copy() # Indicate the top of this tree.
         after = p.nodeAfterTree()
         
         while p and p != after:
