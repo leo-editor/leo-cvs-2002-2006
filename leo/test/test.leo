@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7648" clone_windows="0"/>
 <globals body_outline_ratio="0.579227696405">
-	<global_window_position top="30" left="217" height="819" width="961"/>
+	<global_window_position top="75" left="271" height="819" width="961"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -325,15 +325,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040909103024.2"><vh>TestNode</vh></v>
 </v>
 </v>
-<v t="ekr.20040909123122"><vh>@rst rstTest.txt</vh>
-<v t="ekr.20040909123122.1"><vh>node 1</vh>
-<v t="ekr.20040909123122.2"><vh>node 1.1</vh></v>
-</v>
-<v t="ekr.20040909123122.3"><vh>node 2</vh>
-<v t="ekr.20040909123122.4"><vh>node 2.1</vh></v>
-<v t="ekr.20040909123122.5"><vh>node 2.2</vh></v>
-</v>
-</v>
 <v t="ekr.20040914072438"><vh>Tests of @root</vh>
 <v t="ekr.20040914072438.1"><vh>atRootTest1.txt</vh></v>
 <v t="ekr.20040914072438.2"><vh>atRootTest2.txt</vh></v>
@@ -543,6 +534,300 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050509072745.3"><vh>body</vh></v>
 </v>
 </v>
+<v t="ekr.20050805165407"><vh>Tests of rst3 plugin</vh>
+<v t="ekr.20050811141217"><vh>@rst ../doc/ListManagerDocs.html</vh>
+<v t="ekr.20050811141217.1"><vh>wxListManager.py</vh>
+<v t="ekr.20050811141217.2"><vh>Initial stuff</vh>
+<v t="ekr.20050811141217.4"><vh>Module Imports</vh>
+<v t="ekr.20050811141217.5"><vh>@rst-no-head About imports</vh></v>
+</v>
+<v t="ekr.20050811141217.6"><vh>Constants</vh></v>
+<v t="ekr.20050811141217.8"><vh>Menu IDs</vh></v>
+<v t="ekr.20050811141217.10"><vh>Read Config File</vh>
+<v t="ekr.20050811141217.11"><vh>@rst-no-head About configuration files</vh></v>
+</v>
+</v>
+<v t="ekr.20050811141217.12"><vh>class ListManager</vh>
+<v t="ekr.20050811141217.14"><vh>Instantiation</vh>
+<v t="ekr.20050811141217.16"><vh>def __init__</vh>
+<v t="ekr.20050811141217.17"><vh>@rst-no-head About the ctor</vh></v>
+<v t="ekr.20050811141217.18"><vh>&lt;&lt; List Manager Attributes &gt;&gt;</vh>
+<v t="ekr.20050811141217.19"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.20"><vh>&lt;&lt; Menu Setup &gt;&gt;</vh>
+<v t="ekr.20050811141217.21"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.22"><vh>&lt;&lt; Toolbar Setup &gt;&gt;</vh>
+<v t="ekr.20050811141217.23"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.24"><vh>&lt;&lt; Menu/Toolbar Events &gt;&gt;</vh>
+<v t="ekr.20050811141217.25"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.26"><vh>&lt;&lt; Create Controls&gt;&gt;</vh>
+<v t="ekr.20050811141217.27"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.28"><vh>&lt;&lt; Other Events &gt;&gt;</vh>
+<v t="ekr.20050811141217.29"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.30"><vh>&lt;&lt; Layout Stuff &gt;&gt;</vh>
+<v t="ekr.20050811141217.31"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.32"><vh>&lt;&lt; GUI Instance Objects &gt;&gt;</vh>
+<v t="ekr.20050811141217.33"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.34"><vh>&lt;&lt; Create Socket &gt;&gt;</vh>
+<v t="ekr.20050811141217.35"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.36"><vh>&lt;&lt; Load Recent Files &gt;&gt;</vh>
+<v t="ekr.20050811141217.37"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.38"><vh>&lt;&lt; Idle Timer &gt;&gt;</vh>
+<v t="ekr.20050811141217.39"><vh>@rst</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050811141217.40"><vh>Ownerlist creation methods (used by thread)</vh>
+<v t="ekr.20050811141217.41"><vh>@rst</vh></v>
+<v t="ekr.20050811141217.42"><vh>def createownerlist</vh>
+<v t="ekr.20050811141217.43"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.44"><vh>def createownerdialog</vh>
+<v t="ekr.20050811141217.45"><vh>@rst</vh></v>
+</v>
+</v>
+<v t="ekr.20050811141217.46"><vh>Notebook methods</vh>
+<v t="ekr.20050811141217.47"><vh>@rst</vh></v>
+<v t="ekr.20050811141217.48"><vh>def CreateNewNotebookPage</vh>
+<v t="ekr.20050811141217.49"><vh>@rst</vh></v>
+<v t="ekr.20050811141217.50"><vh>&lt;&lt; Fill OwnerListBox &gt;&gt;</vh>
+<v t="ekr.20050811141217.51"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.52"><vh>&lt;&lt; ListControl Events &gt;&gt;</vh>
+<v t="ekr.20050811141217.53"><vh>@rst</vh></v>
+</v>
+</v>
+<v t="ekr.20050811141217.54"><vh>def OnPageChange</vh>
+<v t="ekr.20050811141217.55"><vh>@rst</vh></v>
+<v t="ekr.20050811141217.56"><vh>&lt;&lt; Find Highlighted Row &gt;&gt;</vh>
+<v t="ekr.20050811141217.57"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.58"><vh>&lt;&lt; Update Title &gt;&gt;</vh>
+<v t="ekr.20050811141217.59"><vh>@rst</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050811141217.60"><vh>Tickler methods</vh>
+<v t="ekr.20050811141217.61"><vh>def OnShowTickler</vh></v>
+<v t="ekr.20050811141217.62"><vh>def OnActivateTickler</vh></v>
+</v>
+<v t="ekr.20050811141217.63"><vh>Email methods</vh>
+<v t="ekr.20050811141217.64"><vh>OnMailItem</vh></v>
+<v t="ekr.20050811141217.65"><vh>OnMailView</vh></v>
+</v>
+<v t="ekr.20050811141217.66"><vh>Cut/Copy/Paste methods</vh>
+<v t="ekr.20050811141217.67"><vh>OnCopyItems</vh>
+<v t="ekr.20050811141217.68"><vh>&lt;&lt; Find Highlighted Items &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050811141217.69"><vh>OnPasteItems</vh></v>
+<v t="ekr.20050811141217.70"><vh>OnDeleteItems</vh></v>
+</v>
+<v t="ekr.20050811141217.71"><vh>MouseDown methods</vh>
+<v t="ekr.20050811141217.72"><vh>OnLeftDown (Action depends on x coordinate)</vh></v>
+<v t="ekr.20050811141217.73"><vh>OnRightDown (Display popup sendto menu)</vh></v>
+</v>
+<v t="ekr.20050811141217.74"><vh>Move/Combine items methods</vh>
+<v t="ekr.20050811141217.75"><vh>OnCombineItems</vh></v>
+<v t="ekr.20050811141217.76"><vh>OnMoveToList</vh></v>
+<v t="ekr.20050811141217.77"><vh>OnMoveToSpecificList</vh></v>
+</v>
+<v t="ekr.20050811141217.78"><vh>Change/update items methods</vh>
+<v t="ekr.20050811141217.79"><vh>OnToggleFinished</vh>
+<v t="ekr.20050811141217.80"><vh>&lt;&lt; draw item &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050811141217.81"><vh>OnPriority</vh>
+<v t="ekr.20050811141217.82"><vh>&lt;&lt; draw item &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050811141217.83"><vh>Inplace Edit Methods</vh>
+<v t="ekr.20050811141217.84"><vh>OnDisplayInPlaceEditor</vh></v>
+<v t="ekr.20050811141217.85"><vh>OnCloseInPlaceEditor</vh></v>
+</v>
+<v t="ekr.20050811141217.86"><vh>OnDueDate</vh></v>
+<v t="ekr.20050811141217.87"><vh>OnEditOwner</vh>
+<v t="ekr.20050811141217.88"><vh>&lt;&lt; Common Owner Code &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050811141217.89"><vh>OnUpdate</vh>
+<v t="ekr.20050811141217.90"><vh>&lt;&lt; Common Owner Code &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050811141217.91"><vh>OnNewItem</vh>
+<v t="ekr.20050811141217.92"><vh>&lt;&lt; Clear data fields &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050811141217.93"><vh>Conflict (not in use)</vh></v>
+<v t="ekr.20050811141217.94"><vh>OnEditNote</vh></v>
+</v>
+<v t="ekr.20050811141217.95"><vh>File menu methods</vh>
+<v t="ekr.20050811141217.96"><vh>OnNewList</vh></v>
+<v t="ekr.20050811141217.97"><vh>OnFileList</vh></v>
+<v t="ekr.20050811141217.98"><vh>OnOpenList</vh></v>
+<v t="ekr.20050811141217.99"><vh>OnDeleteList</vh></v>
+<v t="ekr.20050811141217.100"><vh>OnCloseList</vh></v>
+<v t="ekr.20050811141217.101"><vh>OnCloseAll</vh></v>
+<v t="ekr.20050811141217.102"><vh>OnSaveAsText</vh></v>
+<v t="ekr.20050811141217.103"><vh>OnArchive</vh></v>
+<v t="ekr.20050811141217.104"><vh>OnWorkOffline</vh>
+<v t="ekr.20050811141217.105"><vh>@rst</vh></v>
+</v>
+</v>
+<v t="ekr.20050811141217.106"><vh>Display methods</vh>
+<v t="ekr.20050811141217.107"><vh>OnItemSelected</vh></v>
+<v t="ekr.20050811141217.108"><vh>OnItemActivated</vh></v>
+<v t="ekr.20050811141217.109"><vh>OnShowAll</vh></v>
+<v t="ekr.20050811141217.110"><vh>OnRefresh</vh></v>
+<v t="ekr.20050811141217.111"><vh>OnFilterOwners</vh></v>
+<v t="ekr.20050811141217.112"><vh>OnColumnClick (to sort columns)</vh></v>
+<v t="ekr.20050811141217.113"><vh>OnShowFinished</vh></v>
+<v t="ekr.20050811141217.114"><vh>OnColumnRightClick (popup to change date displayed)</vh></v>
+<v t="ekr.20050811141217.115"><vh>OnDisplayDateCategory</vh></v>
+<v t="ekr.20050811141217.116"><vh>ChangeDateDisplayed</vh></v>
+<v t="ekr.20050811141217.117"><vh>DisplayList</vh>
+<v t="ekr.20050811141217.118"><vh>&lt;&lt; draw item &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050811141217.119"><vh>Printing methods</vh>
+<v t="ekr.20050811141217.120"><vh>OnPageSetup</vh></v>
+<v t="ekr.20050811141217.121"><vh>OnPrint</vh></v>
+</v>
+<v t="ekr.20050811141217.122"><vh>Exiting methods</vh>
+<v t="ekr.20050811141217.123"><vh>OnWindowExit</vh></v>
+<v t="ekr.20050811141217.124"><vh>OnExit</vh>
+<v t="ekr.20050811141217.125"><vh>&lt;&lt;save configuration file&gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050811141217.126"><vh>Find methods</vh>
+<v t="ekr.20050811141217.127"><vh>OnFind</vh></v>
+<v t="ekr.20050811141217.128"><vh>FindString</vh></v>
+<v t="ekr.20050811141217.129"><vh>FindNode</vh></v>
+</v>
+<v t="ekr.20050811141217.130"><vh>Database-related methods</vh>
+<v t="ekr.20050811141217.131"><vh>GetCursor</vh></v>
+<v t="ekr.20050811141217.132"><vh>GetNote</vh></v>
+<v t="ekr.20050811141217.133"><vh>CreateTable</vh></v>
+<v t="ekr.20050811141217.134"><vh>ReadFromDB (returns db results)</vh></v>
+<v t="ekr.20050811141217.135"><vh>CreateAndDisplayList (returns Item List)</vh>
+<v t="ekr.20050811141217.136"><vh>&lt;&lt; assign item attributes &gt;&gt;</vh></v>
+<v t="ekr.20050811141217.137"><vh>&lt;&lt; draw item &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050811141217.138"><vh>OnSync</vh></v>
+<v t="ekr.20050811141217.139"><vh>TimeStamper</vh></v>
+</v>
+<v t="ekr.20050811141217.140"><vh>Evaluate methods</vh>
+<v t="ekr.20050811141217.141"><vh>OnShowEvaluate</vh></v>
+<v t="ekr.20050811141217.142"><vh>OnEvaluate</vh></v>
+</v>
+<v t="ekr.20050811141217.143"><vh>Help menu methods</vh>
+<v t="ekr.20050811141217.144"><vh>OnShowAbout</vh></v>
+<v t="ekr.20050811141217.145"><vh>OnShowHelp</vh></v>
+</v>
+<v t="ekr.20050811141217.146"><vh>GetUID</vh></v>
+<v t="ekr.20050811141217.147"><vh>OnIdle</vh>
+<v t="ekr.20050811141217.148"><vh>@rst</vh></v>
+<v t="ekr.20050811141217.149"><vh>&lt;&lt; Check for Transfers From Outlook &gt;&gt;</vh>
+<v t="ekr.20050811141217.150"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20050811141217.151"><vh>&lt;&lt; Check if Edited File has Changed &gt;&gt;</vh>
+<v t="ekr.20050811141217.152"><vh>@rst</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050811141217.153"><vh>class ListCtrl</vh>
+<v t="ekr.20050811141217.154"><vh>__init__</vh></v>
+<v t="ekr.20050811141217.155"><vh>SetUpColumns</vh></v>
+<v t="ekr.20050811141217.156"><vh>OnColBeginDrag</vh></v>
+</v>
+<v t="ekr.20050811141217.157"><vh>class MyApp</vh>
+<v t="ekr.20050811141217.158"><vh>OnInit</vh></v>
+</v>
+<v t="ekr.20050811141217.159"><vh>class Logger</vh></v>
+<v t="ekr.20050811141217.160"><vh>run</vh></v>
+</v>
+<v t="ekr.20050811141217.161"><vh>LMDialogs.py</vh>
+<v t="ekr.20050811141217.162"><vh>class PopDialog</vh>
+<v t="ekr.20050811141217.163"><vh>__init__</vh></v>
+<v t="ekr.20050811141217.164"><vh>OnLeftDown</vh></v>
+<v t="ekr.20050811141217.165"><vh>OnForward</vh></v>
+<v t="ekr.20050811141217.166"><vh>OnMail</vh></v>
+</v>
+<v t="ekr.20050811141217.167"><vh>class StartupDialog</vh>
+<v t="ekr.20050811141217.168"><vh>__init__</vh></v>
+<v t="ekr.20050811141217.169"><vh>OnSelection</vh></v>
+</v>
+<v t="ekr.20050811141217.170"><vh>class ModifierDialog</vh>
+<v t="ekr.20050811141217.171"><vh>__init__</vh></v>
+<v t="ekr.20050811141217.172"><vh>GetUserInput</vh></v>
+<v t="ekr.20050811141217.173"><vh>SelectCurrent</vh></v>
+<v t="ekr.20050811141217.174"><vh>ClearSelections</vh></v>
+</v>
+<v t="ekr.20050811141217.175"><vh>class MailDialog</vh>
+<v t="ekr.20050811141217.176"><vh>__init__</vh></v>
+</v>
+<v t="ekr.20050811141217.177"><vh>class CalendarDialog</vh>
+<v t="ekr.20050811141217.178"><vh>__init__</vh></v>
+<v t="ekr.20050811141217.179"><vh>OnCalSelected</vh></v>
+<v t="ekr.20050811141217.180"><vh>OnChangeMonth</vh></v>
+<v t="ekr.20050811141217.181"><vh>OnCloseWindow</vh></v>
+<v t="ekr.20050811141217.182"><vh>GetDate</vh></v>
+</v>
+<v t="ekr.20050811141217.183"><vh>class FindDialog</vh>
+<v t="ekr.20050811141217.184"><vh>__init__</vh></v>
+</v>
+<v t="ekr.20050811141217.185"><vh>class EvalDialog</vh>
+<v t="ekr.20050811141217.186"><vh>__init__</vh></v>
+<v t="ekr.20050811141217.187"><vh>PostOKEvent</vh></v>
+</v>
+<v t="ekr.20050811141217.188"><vh>class LoggerDialog</vh>
+<v t="ekr.20050811141217.189"><vh>__init__</vh></v>
+<v t="ekr.20050811141217.190"><vh>OnSave</vh></v>
+</v>
+<v t="ekr.20050811141217.191"><vh>class FinishedDialog</vh>
+<v t="ekr.20050811141217.192"><vh>__init__</vh></v>
+<v t="ekr.20050811141217.193"><vh>OnSpin</vh></v>
+<v t="ekr.20050811141217.194"><vh>OnCheck</vh></v>
+</v>
+<v t="ekr.20050811141217.195"><vh>class TreeDialog</vh>
+<v t="ekr.20050811141217.196"><vh>__init__</vh></v>
+<v t="ekr.20050811141217.197"><vh>OnLeftDClick:</vh></v>
+</v>
+</v>
+<v t="ekr.20050811141217.198"><vh>outlookAddin.py</vh>
+<v t="ekr.20050811141217.199"><vh>&lt;&lt; outlookAddin declarations &gt;&gt;</vh></v>
+<v t="ekr.20050811141217.200"><vh>class ButtonEvent</vh>
+<v t="ekr.20050811141217.201"><vh>OnClick</vh></v>
+</v>
+<v t="ekr.20050811141217.202"><vh>class FolderEvent</vh>
+<v t="ekr.20050811141217.203"><vh>OnItemAdd</vh></v>
+</v>
+<v t="ekr.20050811141217.204"><vh>class OutlookAddin</vh>
+<v t="ekr.20050811141217.205"><vh>&lt;&lt; class OutlookAddin declarations &gt;&gt;</vh></v>
+<v t="ekr.20050811141217.206"><vh>OnConnection</vh></v>
+<v t="ekr.20050811141217.207"><vh>OnDisconnection</vh></v>
+<v t="ekr.20050811141217.208"><vh>OnAddInsUpdate</vh></v>
+<v t="ekr.20050811141217.209"><vh>OnStartupComplete</vh></v>
+<v t="ekr.20050811141217.210"><vh>OnBeginShutdown</vh></v>
+</v>
+<v t="ekr.20050811141217.211"><vh>RegisterAddin</vh></v>
+<v t="ekr.20050811141217.212"><vh>UnregisterAddin</vh></v>
+</v>
+</v>
+<v t="ekr.20050817110133"><vh>@rst ../doc/pdfTest.pdf</vh>
+<v t="ekr.20050817110133.1"><vh>child node</vh>
+<v t="ekr.20050817110133.2"><vh>@rst</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050816172657"><vh>ReportLab sample scripts</vh>
+<v t="ekr.20050816181619"><vh>text</vh></v>
+<v t="ekr.20050816181619.1"><vh>pencil</vh></v>
+<v t="ekr.20050816181813"><vh>penciltip</vh></v>
+</v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes...</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -615,15 +900,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050427102426"><vh>@url http://docs.python.org/lib/module-zipfile.html</vh></v>
 <v t="ekr.20050427101736.1"><vh>write zip</vh></v>
 <v t="ekr.20050427101736.2"><vh>read zip</vh></v>
-</v>
-<v t="ekr.20050331065217"><vh>Golf test</vh>
-<v t="ekr.20050331065217.1"><vh>@rst-directive myGolfDirective</vh></v>
-<v t="ekr.20050331071301"><vh>@rst-options myGolfOptions</vh></v>
-<v t="ekr.20050331065217.2"><vh>@rst-script myGolfScript</vh></v>
-<v t="ekr.20050331065217.3"><vh>Root</vh>
-<v t="ekr.20050331065217.4"><vh>Node 1</vh></v>
-<v t="ekr.20050331065322"><vh>Node 2</vh></v>
-</v>
 </v>
 <v t="ekr.20050618061950"><vh>Tests for new colorizer</vh>
 <v t="ekr.20050601072505"><vh>Large coloring test</vh></v>
@@ -700,6 +976,11 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050708165531.1"><vh>esc_quotes</vh></v>
 </v>
 <v t="ekr.20050715132524"><vh>Pymacs (hangs)</vh></v>
+<v t="ekr.20050726101926"><vh>keyPressed</vh>
+<v t="ekr.20050726101926.1"><vh>&lt;&lt; create the command &gt;&gt;</vh></v>
+<v t="ekr.20050726101926.2"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
+<v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
+</v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -1025,7 +1306,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050803075926"><vh>sudoku puzzle</vh>
+<v t="ekr.20050803075926" a="E"><vh>sudoku puzzle</vh>
 <v t="ekr.20050804073824"><vh>&lt;&lt; define data &gt;&gt;</vh></v>
 <v t="ekr.20050803075926.1"><vh>class sudokuClass</vh>
 <v t="ekr.20050803075926.2"><vh> ctor (main) &amp; helpers</vh>
@@ -1195,7 +1476,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
 <v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
 </v>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20050801071700"><vh>@@string stylesheet = type="text/xsl" href="bpLEOHTM.xsl"</vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
@@ -1257,13 +1538,14 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050704170739"><vh>@@button Ipython</vh></v>
 <v t="ekr.20050726101758"><vh>@@button Beautify</vh></v>
 <v t="ekr.20050722115320"><vh>@@button leoEmacs</vh></v>
-<v t="ekr.20050805175217"><vh>@button rst2</vh></v>
+<v t="ekr.20050805175217"><vh>@@button rst2</vh></v>
 <v t="ekr.20050821072028"><vh>@@button Lines Up</vh>
 <v t="ekr.20050821072028.1"><vh>moveLinesUp</vh></v>
 </v>
 <v t="ekr.20050821081021"><vh>@@button Lines Down</vh>
 <v t="ekr.20050821081021.1" a="M"><vh>moveLinesDown</vh></v>
 </v>
+<v t="ekr.20050805150320"><vh>@@button rst3</vh></v>
 </v>
 <v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
 <v t="ekr.20050618061835.1"><vh>Intro</vh>
@@ -1296,7 +1578,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050618061835.19"><vh>How about @suite?</vh></v>
 <v t="ekr.20050618061835.20"><vh>Final remarks</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -2040,329 +2322,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050726101926"><vh>keyPressed</vh>
-<v t="ekr.20050726101926.1"><vh>&lt;&lt; create the command &gt;&gt;</vh></v>
-<v t="ekr.20050726101926.2"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
-<v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050805150320"><vh>@button rst3</vh></v>
-<v t="ekr.20050816172657"><vh>ReportLab sample scripts</vh>
-<v t="ekr.20050816181619"><vh>text</vh></v>
-<v t="ekr.20050816181619.1"><vh>pencil</vh></v>
-<v t="ekr.20050816181813"><vh>penciltip</vh></v>
-</v>
-<v t="ekr.20050805165407"><vh>Tests of rst3 plugin</vh>
-<v t="ekr.20050805165407.1"><vh>@rst ../doc/rstplugin2.html</vh>
-<v t="ekr.20050805165407.2"><vh>Overview</vh>
-<v t="ekr.20050805165407.3"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050805165407.4"><vh>Formatting</vh>
-<v t="ekr.20050805165407.5"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050805165407.6"><vh>Embedding documentation in @file trees</vh>
-<v t="ekr.20050805165407.7"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050805165407.8"><vh>The code-block directive</vh>
-<v t="ekr.20050805165407.9"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050805165407.10"><vh>Cascading style sheets</vh>
-<v t="ekr.20050805165407.11"><vh>@rst</vh></v>
-</v>
-</v>
-<v t="ekr.20050811141217"><vh>@rst ../doc/ListManagerDocs.html</vh>
-<v t="ekr.20050811141217.1"><vh>wxListManager.py</vh>
-<v t="ekr.20050811141217.2"><vh>Initial stuff</vh>
-<v t="ekr.20050811141217.4"><vh>Module Imports</vh>
-<v t="ekr.20050811141217.5"><vh>@rst-no-head About imports</vh></v>
-</v>
-<v t="ekr.20050811141217.6"><vh>Constants</vh></v>
-<v t="ekr.20050811141217.8"><vh>Menu IDs</vh></v>
-<v t="ekr.20050811141217.10"><vh>Read Config File</vh>
-<v t="ekr.20050811141217.11"><vh>@rst-no-head About configuration files</vh></v>
-</v>
-</v>
-<v t="ekr.20050811141217.12"><vh>class ListManager</vh>
-<v t="ekr.20050811141217.14"><vh>Instantiation</vh>
-<v t="ekr.20050811141217.16"><vh>def __init__</vh>
-<v t="ekr.20050811141217.17"><vh>@rst-no-head About the ctor</vh></v>
-<v t="ekr.20050811141217.18"><vh>&lt;&lt; List Manager Attributes &gt;&gt;</vh>
-<v t="ekr.20050811141217.19"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.20"><vh>&lt;&lt; Menu Setup &gt;&gt;</vh>
-<v t="ekr.20050811141217.21"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.22"><vh>&lt;&lt; Toolbar Setup &gt;&gt;</vh>
-<v t="ekr.20050811141217.23"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.24"><vh>&lt;&lt; Menu/Toolbar Events &gt;&gt;</vh>
-<v t="ekr.20050811141217.25"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.26"><vh>&lt;&lt; Create Controls&gt;&gt;</vh>
-<v t="ekr.20050811141217.27"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.28"><vh>&lt;&lt; Other Events &gt;&gt;</vh>
-<v t="ekr.20050811141217.29"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.30"><vh>&lt;&lt; Layout Stuff &gt;&gt;</vh>
-<v t="ekr.20050811141217.31"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.32"><vh>&lt;&lt; GUI Instance Objects &gt;&gt;</vh>
-<v t="ekr.20050811141217.33"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.34"><vh>&lt;&lt; Create Socket &gt;&gt;</vh>
-<v t="ekr.20050811141217.35"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.36"><vh>&lt;&lt; Load Recent Files &gt;&gt;</vh>
-<v t="ekr.20050811141217.37"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.38"><vh>&lt;&lt; Idle Timer &gt;&gt;</vh>
-<v t="ekr.20050811141217.39"><vh>@rst</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050811141217.40"><vh>Ownerlist creation methods (used by thread)</vh>
-<v t="ekr.20050811141217.41"><vh>@rst</vh></v>
-<v t="ekr.20050811141217.42"><vh>def createownerlist</vh>
-<v t="ekr.20050811141217.43"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.44"><vh>def createownerdialog</vh>
-<v t="ekr.20050811141217.45"><vh>@rst</vh></v>
-</v>
-</v>
-<v t="ekr.20050811141217.46"><vh>Notebook methods</vh>
-<v t="ekr.20050811141217.47"><vh>@rst</vh></v>
-<v t="ekr.20050811141217.48"><vh>def CreateNewNotebookPage</vh>
-<v t="ekr.20050811141217.49"><vh>@rst</vh></v>
-<v t="ekr.20050811141217.50"><vh>&lt;&lt; Fill OwnerListBox &gt;&gt;</vh>
-<v t="ekr.20050811141217.51"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.52"><vh>&lt;&lt; ListControl Events &gt;&gt;</vh>
-<v t="ekr.20050811141217.53"><vh>@rst</vh></v>
-</v>
-</v>
-<v t="ekr.20050811141217.54"><vh>def OnPageChange</vh>
-<v t="ekr.20050811141217.55"><vh>@rst</vh></v>
-<v t="ekr.20050811141217.56"><vh>&lt;&lt; Find Highlighted Row &gt;&gt;</vh>
-<v t="ekr.20050811141217.57"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.58"><vh>&lt;&lt; Update Title &gt;&gt;</vh>
-<v t="ekr.20050811141217.59"><vh>@rst</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050811141217.60"><vh>Tickler methods</vh>
-<v t="ekr.20050811141217.61"><vh>def OnShowTickler</vh></v>
-<v t="ekr.20050811141217.62"><vh>def OnActivateTickler</vh></v>
-</v>
-<v t="ekr.20050811141217.63"><vh>Email methods</vh>
-<v t="ekr.20050811141217.64"><vh>OnMailItem</vh></v>
-<v t="ekr.20050811141217.65"><vh>OnMailView</vh></v>
-</v>
-<v t="ekr.20050811141217.66"><vh>Cut/Copy/Paste methods</vh>
-<v t="ekr.20050811141217.67"><vh>OnCopyItems</vh>
-<v t="ekr.20050811141217.68"><vh>&lt;&lt; Find Highlighted Items &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050811141217.69"><vh>OnPasteItems</vh></v>
-<v t="ekr.20050811141217.70"><vh>OnDeleteItems</vh></v>
-</v>
-<v t="ekr.20050811141217.71"><vh>MouseDown methods</vh>
-<v t="ekr.20050811141217.72"><vh>OnLeftDown (Action depends on x coordinate)</vh></v>
-<v t="ekr.20050811141217.73"><vh>OnRightDown (Display popup sendto menu)</vh></v>
-</v>
-<v t="ekr.20050811141217.74"><vh>Move/Combine items methods</vh>
-<v t="ekr.20050811141217.75"><vh>OnCombineItems</vh></v>
-<v t="ekr.20050811141217.76"><vh>OnMoveToList</vh></v>
-<v t="ekr.20050811141217.77"><vh>OnMoveToSpecificList</vh></v>
-</v>
-<v t="ekr.20050811141217.78"><vh>Change/update items methods</vh>
-<v t="ekr.20050811141217.79"><vh>OnToggleFinished</vh>
-<v t="ekr.20050811141217.80"><vh>&lt;&lt; draw item &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050811141217.81"><vh>OnPriority</vh>
-<v t="ekr.20050811141217.82"><vh>&lt;&lt; draw item &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050811141217.83"><vh>Inplace Edit Methods</vh>
-<v t="ekr.20050811141217.84"><vh>OnDisplayInPlaceEditor</vh></v>
-<v t="ekr.20050811141217.85"><vh>OnCloseInPlaceEditor</vh></v>
-</v>
-<v t="ekr.20050811141217.86"><vh>OnDueDate</vh></v>
-<v t="ekr.20050811141217.87"><vh>OnEditOwner</vh>
-<v t="ekr.20050811141217.88"><vh>&lt;&lt; Common Owner Code &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050811141217.89"><vh>OnUpdate</vh>
-<v t="ekr.20050811141217.90"><vh>&lt;&lt; Common Owner Code &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050811141217.91"><vh>OnNewItem</vh>
-<v t="ekr.20050811141217.92"><vh>&lt;&lt; Clear data fields &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050811141217.93"><vh>Conflict (not in use)</vh></v>
-<v t="ekr.20050811141217.94"><vh>OnEditNote</vh></v>
-</v>
-<v t="ekr.20050811141217.95"><vh>File menu methods</vh>
-<v t="ekr.20050811141217.96"><vh>OnNewList</vh></v>
-<v t="ekr.20050811141217.97"><vh>OnFileList</vh></v>
-<v t="ekr.20050811141217.98"><vh>OnOpenList</vh></v>
-<v t="ekr.20050811141217.99"><vh>OnDeleteList</vh></v>
-<v t="ekr.20050811141217.100"><vh>OnCloseList</vh></v>
-<v t="ekr.20050811141217.101"><vh>OnCloseAll</vh></v>
-<v t="ekr.20050811141217.102"><vh>OnSaveAsText</vh></v>
-<v t="ekr.20050811141217.103"><vh>OnArchive</vh></v>
-<v t="ekr.20050811141217.104"><vh>OnWorkOffline</vh>
-<v t="ekr.20050811141217.105"><vh>@rst</vh></v>
-</v>
-</v>
-<v t="ekr.20050811141217.106"><vh>Display methods</vh>
-<v t="ekr.20050811141217.107"><vh>OnItemSelected</vh></v>
-<v t="ekr.20050811141217.108"><vh>OnItemActivated</vh></v>
-<v t="ekr.20050811141217.109"><vh>OnShowAll</vh></v>
-<v t="ekr.20050811141217.110"><vh>OnRefresh</vh></v>
-<v t="ekr.20050811141217.111"><vh>OnFilterOwners</vh></v>
-<v t="ekr.20050811141217.112"><vh>OnColumnClick (to sort columns)</vh></v>
-<v t="ekr.20050811141217.113"><vh>OnShowFinished</vh></v>
-<v t="ekr.20050811141217.114"><vh>OnColumnRightClick (popup to change date displayed)</vh></v>
-<v t="ekr.20050811141217.115"><vh>OnDisplayDateCategory</vh></v>
-<v t="ekr.20050811141217.116"><vh>ChangeDateDisplayed</vh></v>
-<v t="ekr.20050811141217.117"><vh>DisplayList</vh>
-<v t="ekr.20050811141217.118"><vh>&lt;&lt; draw item &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20050811141217.119"><vh>Printing methods</vh>
-<v t="ekr.20050811141217.120"><vh>OnPageSetup</vh></v>
-<v t="ekr.20050811141217.121"><vh>OnPrint</vh></v>
-</v>
-<v t="ekr.20050811141217.122"><vh>Exiting methods</vh>
-<v t="ekr.20050811141217.123"><vh>OnWindowExit</vh></v>
-<v t="ekr.20050811141217.124"><vh>OnExit</vh>
-<v t="ekr.20050811141217.125"><vh>&lt;&lt;save configuration file&gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20050811141217.126"><vh>Find methods</vh>
-<v t="ekr.20050811141217.127"><vh>OnFind</vh></v>
-<v t="ekr.20050811141217.128"><vh>FindString</vh></v>
-<v t="ekr.20050811141217.129"><vh>FindNode</vh></v>
-</v>
-<v t="ekr.20050811141217.130"><vh>Database-related methods</vh>
-<v t="ekr.20050811141217.131"><vh>GetCursor</vh></v>
-<v t="ekr.20050811141217.132"><vh>GetNote</vh></v>
-<v t="ekr.20050811141217.133"><vh>CreateTable</vh></v>
-<v t="ekr.20050811141217.134"><vh>ReadFromDB (returns db results)</vh></v>
-<v t="ekr.20050811141217.135"><vh>CreateAndDisplayList (returns Item List)</vh>
-<v t="ekr.20050811141217.136"><vh>&lt;&lt; assign item attributes &gt;&gt;</vh></v>
-<v t="ekr.20050811141217.137"><vh>&lt;&lt; draw item &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050811141217.138"><vh>OnSync</vh></v>
-<v t="ekr.20050811141217.139"><vh>TimeStamper</vh></v>
-</v>
-<v t="ekr.20050811141217.140"><vh>Evaluate methods</vh>
-<v t="ekr.20050811141217.141"><vh>OnShowEvaluate</vh></v>
-<v t="ekr.20050811141217.142"><vh>OnEvaluate</vh></v>
-</v>
-<v t="ekr.20050811141217.143"><vh>Help menu methods</vh>
-<v t="ekr.20050811141217.144"><vh>OnShowAbout</vh></v>
-<v t="ekr.20050811141217.145"><vh>OnShowHelp</vh></v>
-</v>
-<v t="ekr.20050811141217.146"><vh>GetUID</vh></v>
-<v t="ekr.20050811141217.147"><vh>OnIdle</vh>
-<v t="ekr.20050811141217.148"><vh>@rst</vh></v>
-<v t="ekr.20050811141217.149"><vh>&lt;&lt; Check for Transfers From Outlook &gt;&gt;</vh>
-<v t="ekr.20050811141217.150"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20050811141217.151"><vh>&lt;&lt; Check if Edited File has Changed &gt;&gt;</vh>
-<v t="ekr.20050811141217.152"><vh>@rst</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050811141217.153"><vh>class ListCtrl</vh>
-<v t="ekr.20050811141217.154"><vh>__init__</vh></v>
-<v t="ekr.20050811141217.155"><vh>SetUpColumns</vh></v>
-<v t="ekr.20050811141217.156"><vh>OnColBeginDrag</vh></v>
-</v>
-<v t="ekr.20050811141217.157"><vh>class MyApp</vh>
-<v t="ekr.20050811141217.158"><vh>OnInit</vh></v>
-</v>
-<v t="ekr.20050811141217.159"><vh>class Logger</vh></v>
-<v t="ekr.20050811141217.160"><vh>run</vh></v>
-</v>
-<v t="ekr.20050811141217.161"><vh>LMDialogs.py</vh>
-<v t="ekr.20050811141217.162"><vh>class PopDialog</vh>
-<v t="ekr.20050811141217.163"><vh>__init__</vh></v>
-<v t="ekr.20050811141217.164"><vh>OnLeftDown</vh></v>
-<v t="ekr.20050811141217.165"><vh>OnForward</vh></v>
-<v t="ekr.20050811141217.166"><vh>OnMail</vh></v>
-</v>
-<v t="ekr.20050811141217.167"><vh>class StartupDialog</vh>
-<v t="ekr.20050811141217.168"><vh>__init__</vh></v>
-<v t="ekr.20050811141217.169"><vh>OnSelection</vh></v>
-</v>
-<v t="ekr.20050811141217.170"><vh>class ModifierDialog</vh>
-<v t="ekr.20050811141217.171"><vh>__init__</vh></v>
-<v t="ekr.20050811141217.172"><vh>GetUserInput</vh></v>
-<v t="ekr.20050811141217.173"><vh>SelectCurrent</vh></v>
-<v t="ekr.20050811141217.174"><vh>ClearSelections</vh></v>
-</v>
-<v t="ekr.20050811141217.175"><vh>class MailDialog</vh>
-<v t="ekr.20050811141217.176"><vh>__init__</vh></v>
-</v>
-<v t="ekr.20050811141217.177"><vh>class CalendarDialog</vh>
-<v t="ekr.20050811141217.178"><vh>__init__</vh></v>
-<v t="ekr.20050811141217.179"><vh>OnCalSelected</vh></v>
-<v t="ekr.20050811141217.180"><vh>OnChangeMonth</vh></v>
-<v t="ekr.20050811141217.181"><vh>OnCloseWindow</vh></v>
-<v t="ekr.20050811141217.182"><vh>GetDate</vh></v>
-</v>
-<v t="ekr.20050811141217.183"><vh>class FindDialog</vh>
-<v t="ekr.20050811141217.184"><vh>__init__</vh></v>
-</v>
-<v t="ekr.20050811141217.185"><vh>class EvalDialog</vh>
-<v t="ekr.20050811141217.186"><vh>__init__</vh></v>
-<v t="ekr.20050811141217.187"><vh>PostOKEvent</vh></v>
-</v>
-<v t="ekr.20050811141217.188"><vh>class LoggerDialog</vh>
-<v t="ekr.20050811141217.189"><vh>__init__</vh></v>
-<v t="ekr.20050811141217.190"><vh>OnSave</vh></v>
-</v>
-<v t="ekr.20050811141217.191"><vh>class FinishedDialog</vh>
-<v t="ekr.20050811141217.192"><vh>__init__</vh></v>
-<v t="ekr.20050811141217.193"><vh>OnSpin</vh></v>
-<v t="ekr.20050811141217.194"><vh>OnCheck</vh></v>
-</v>
-<v t="ekr.20050811141217.195"><vh>class TreeDialog</vh>
-<v t="ekr.20050811141217.196"><vh>__init__</vh></v>
-<v t="ekr.20050811141217.197"><vh>OnLeftDClick:</vh></v>
-</v>
-</v>
-<v t="ekr.20050811141217.198"><vh>outlookAddin.py</vh>
-<v t="ekr.20050811141217.199"><vh>&lt;&lt; outlookAddin declarations &gt;&gt;</vh></v>
-<v t="ekr.20050811141217.200"><vh>class ButtonEvent</vh>
-<v t="ekr.20050811141217.201"><vh>OnClick</vh></v>
-</v>
-<v t="ekr.20050811141217.202"><vh>class FolderEvent</vh>
-<v t="ekr.20050811141217.203"><vh>OnItemAdd</vh></v>
-</v>
-<v t="ekr.20050811141217.204"><vh>class OutlookAddin</vh>
-<v t="ekr.20050811141217.205"><vh>&lt;&lt; class OutlookAddin declarations &gt;&gt;</vh></v>
-<v t="ekr.20050811141217.206"><vh>OnConnection</vh></v>
-<v t="ekr.20050811141217.207"><vh>OnDisconnection</vh></v>
-<v t="ekr.20050811141217.208"><vh>OnAddInsUpdate</vh></v>
-<v t="ekr.20050811141217.209"><vh>OnStartupComplete</vh></v>
-<v t="ekr.20050811141217.210"><vh>OnBeginShutdown</vh></v>
-</v>
-<v t="ekr.20050811141217.211"><vh>RegisterAddin</vh></v>
-<v t="ekr.20050811141217.212"><vh>UnregisterAddin</vh></v>
-</v>
-</v>
-<v t="ekr.20050810081856"><vh>@rst ../doc/rstplugin4.html</vh>
-<v t="ekr.20050815144658"><vh>child node</vh>
-<v t="ekr.20050815145023"><vh>@rst</vh></v>
-</v>
-</v>
-<v t="ekr.20050817110133"><vh>@rst ../doc/pdfTest.pdf</vh>
-<v t="ekr.20050817110133.1"><vh>child node</vh>
-<v t="ekr.20050817110133.2"><vh>@rst</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050824190822"><vh> Zope test</vh></v>
+<v t="ekr.20050824190822" a="TV"><vh> Zope test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -3070,7 +3030,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -9805,15 +9765,6 @@ test</t>
 	
 # Line doesn't end in newline.
 </t>
-<t tx="ekr.20040909123122">@language plain
-
-This is a test of the rst plugin.</t>
-<t tx="ekr.20040909123122.1">Node 1 text</t>
-<t tx="ekr.20040909123122.2">- bullet list 1
-- bullet list 2</t>
-<t tx="ekr.20040909123122.3"></t>
-<t tx="ekr.20040909123122.4"></t>
-<t tx="ekr.20040909123122.5"></t>
 <t tx="ekr.20040910092950"></t>
 <t tx="ekr.20040910092950.3"></t>
 <t tx="ekr.20040910094343">@ignore # To suppress syntax checks in @arg nodes</t>
@@ -10906,7 +10857,8 @@ headline_text_font_weight = normal
 exec 'import %s ; module = %s' % (moduleName,moduleName)
 
 print module</t>
-<t tx="ekr.20041219074843"></t>
+<t tx="ekr.20041219074843">@ignore</t>
+<t tx="ekr.20041219074843.1"># A dummy file to test g.importExtension</t>
 <t tx="ekr.20041219075144">print g.importExtension('testExtension')
 
 print g.importModule('leoNodes')
@@ -14259,14 +14211,6 @@ leoTest.throwAssertionError()</t>
 <t tx="ekr.20050328101834.1"></t>
 <t tx="ekr.20050328101834.2"></t>
 <t tx="ekr.20050328101834.3"></t>
-<t tx="ekr.20050331065217"></t>
-<t tx="ekr.20050331065217.1">print 'myRstDirective'</t>
-<t tx="ekr.20050331065217.2">print 'myRstScript'</t>
-<t tx="ekr.20050331065217.3"></t>
-<t tx="ekr.20050331065217.4">Node 1, line 1.
-line 2.
-</t>
-<t tx="ekr.20050331065322">Node 2, line 1</t>
 <t tx="ekr.20050331070207">import leoPlugins
 
 golf = leoPlugins.getPluginModule('golf')
@@ -14284,7 +14228,6 @@ if golf:
 if not golf or not controller:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
-<t tx="ekr.20050331071301">optionName = True</t>
 <t tx="ekr.20050406082407">@language html
 @ignore</t>
 <t tx="ekr.20050406082407.1">@first &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -15569,12 +15512,24 @@ assert(True)
 
 Test of @ at end of text.
 @</t>
-<t tx="ekr.20050608082208">@language plain
-@nocolor</t>
+<t tx="ekr.20050608081942">Test of leading @ sign
+
+[HKEY_CLASSES_ROOT\*\shell\open]
+@="&amp;Notepad"</t>
+<t tx="ekr.20050608082208">@ignore
+
+@language plain
+@nocolor
+</t>
 <t tx="ekr.20050608082702">Test of leading @ sign
 
 [HKEY_CLASSES_ROOT\*\shell\open]
 @notepad</t>
+<t tx="ekr.20050608082702.1">Test of leading @ sign
+
+[HKEY_CLASSES_ROOT\*\shell\open]
+@notepad
+</t>
 <t tx="ekr.20050618053006">p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
@@ -17690,29 +17645,19 @@ def unknownVals (self):
 <t tx="ekr.20050804071242"></t>
 <t tx="ekr.20050804073824">data = (
     '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '')
+)
    
 data = (
-    '6xx75x1xx',
-    '8xxxx34xx',
-    'x3x96xx25',
-    'xxx4xx3x2',
-    '7xxxxxxx6',
-    '2x1xx5xxx',
-    '31xx89x4x',
-    'xx65xxxx1',
-    'xx5x42xx3')
-
-    
-
-</t>
+    'xx2xx7xx9',
+    'x8x249x3x',
+    'x31xx572x',
+    'xx9xx8xx1',
+    'x65xxx847',
+    '4xx7xx2xx',
+    'x931xx65x',
+    'x5x862x73',
+    '8xx5xx4xx',
+)</t>
 <t tx="ekr.20050805150320">import leoPlugins
 
 rst3 = leoPlugins.getPluginModule('rst3')
@@ -17730,167 +17675,6 @@ else:
 <t tx="ekr.20050805165407">@nocolor
 @pagewidth 100
 @language python</t>
-<t tx="ekr.20050805165407.1">###########################
-|leo| Using the rst2 plugin
-###########################
-
-This page documents a nifty new plugin created by Josef Dalcolmo, Timo Honkasalo, Steve Zatz, Paul Paterson and Edward Ream.  This page was created using the rst2 plugin.  You can find the source code in LeoPlugins.leo (on cvs).
-
-.. contents::
-
-.. Here are the links used in this document.
-
-.. _LaTeX:                http://www.latex-project.org/
-.. _reStructuredText:     http://docutils.sourceforge.net/rst.html
-.. _docutils:             http://docutils.sourceforge.net
-.. _ListManagerDocs.html: http://webpages.charter.net/edreamleo/ListManagerDocs.html
-.. _wxListManager.leo:    http://webpages.charter.net/edreamleo/wxListManager.leo
-.. _SilverCity:           http://silvercity.sourceforge.net
-.. _front:                http://webpages.charter.net/edreamleo/front.html
-.. _home:                 http://webpages.charter.net/edreamleo/front.html
-
-.. |blank| image:: blank.gif
-.. |leo|   image:: leo.gif
-    :target: front_</t>
-<t tx="ekr.20050805165407.2"></t>
-<t tx="ekr.20050805165407.3">This plugin creates output files from Leo outlines containing reStructuredText_
-(rST) The combination of Leo outlines and rST creates a simple, flexible and
-powerful way of generating HTML, LaTeX_ and other text documents.
-ReStructuredText is a simple and powerful text formatting markup language.
-
-The file ListManagerDocs.html_ is an impressive example of the kind of output
-that is possible to generate relatively easily using this plugin. The source
-file for this example is wxListManager.leo_.
-
-To use this plugin, you must have installed Python's docutils_ module. This
-module will also use the SilverCity_ syntax coloring package if you have
-installed it.
-
-This plugin assumes that a node whose headline is @rst &lt;filename&gt; contains a
-tree of nodes containing reStructuredText. Let us call such a node an **rst root**
-node. The plugin passes the headline and body text of the rst root and all the
-nodes of its subtree to Python's docutils module, which parses the
-reStructuredText and creates the output file.
-
-Double-clicking on an rst root node generates an output file from the
-reStructured Text input contained in the rst root node and all the nodes of its
-subtree. The output file will be HTML, LaTex or plain text depending on the
-extension of the filename specified in the rst root node. If the filename ends
-in .html or .htm the docutils module will create an HTML file. If the filename
-ends in .tex the docutils module will create a LaTex file. Otherwise, a plain
-.txt file is generated.
-
-If the output file is a .html or .htm file, it will use three .css (cascading
-style sheet) files provided they exist in the same directory as the output file.
-You can control the formatting of the HTML file by altering these .css files.
-See the node called "cascading style sheets" for more details.
-
-See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for
-many examples of how to use this plugin.</t>
-<t tx="ekr.20050805165407.4"></t>
-<t tx="ekr.20050805165407.5">If an outline node contains @rst &lt;filename&gt;, that node is the root of a tree of
-nodes that will create the named output file. Let's call such a node the **rst
-root**.
-
-Subnodes of the rst root nodes may have headlines that contain just @rst. Such
-node should contain rst markup, possibly including the code-block directive
-defined by this plugin to format blocks of code.
-
-**Important:** All @rst nodes should start with the @ignore directive. This allows @rst to be embedded in @file-nosent trees: see the next section for details. This plugin strips leading @ignore, @nocolor and @wrap directives.  Such directives do not appear in the output.
-
-The root node may contain any rST directives.  In particular, to create a table of contents put::
-
-    .. contents:: Table of Contents
-
-on its own line in the rst root node.
-
-All other subnodes of the rst root, i.e., nodes whose headline is something
-other than @rst, are **code nodes**. This plugin converts the headline text of
-code nodes into an rST section headline whose level depends on the level of the
-node in the Leo outline. Higher-level headlines in the outline correspond to
-higher-level section headings; lower-level headlines in the outline correspond
-to lower-level section headings. Any text in a code node is formatted as if it
-were enclosed in a code-block directive.
-
-The plugin reserves the '#' character for your own use so that you can
-specify an rST headline explicitly. For example,::
-
-    #####
-    Title
-    #####
-
-You would typically put such a title in the rst root node.
-Otherwise, section underlining is discouraged, since the plugin automaticaly
-generates sections from headlines.</t>
-<t tx="ekr.20050805165407.6"></t>
-<t tx="ekr.20050805165407.7">As stated earlier, you must put an @ignore directive in any @rst node (except the root @rst node) whose rST text you want to contribute to the output.  This strange-looking convention allows you to embed documentation in @file-nosent trees *without* that documentation being included in the file derived from the @file-nosent tree.
-
-For example, consider the following outline, in which all the @rst nodes (except the root @rst node) contain @ignore directives::
-
-    @rst spamDocs.html
-        @file-nosent spam.py
-            code node 1
-                @rst
-            code node 2
-                @rst
-            code node 3
-                @rst
-
-The rst2 plugin will ouput all the reStructuredText contained in the three @rst nodes to spamDocs.html, but the contents of those @rst nodes will not become part of spam.py.  *Note:* The @ignore directive is valid only in @file-nosent trees, which is why we must use @file-noset to generate spam.py.
-
-It would be also be possible to use cloned nodes to embed code nodes in .html files.  This would allow you to use regular @file trees to generate derived files.  For example, suppose all similarly named code nodes are clones of each other::
-
-    @rst spamDocs.html
-        code node 1
-            @rst
-        code node 2
-            @rst
-        code node 3
-            @rst
-
-    @file-nosent spam.py
-        code node 1
-        code node 2
-        code node 3
-
-The disadvantage of this organization is that you must update spamDocs.html by hand to keep it up-to-date with spam.py.
-</t>
-<t tx="ekr.20050805165407.8"></t>
-<t tx="ekr.20050805165407.9">This plugin defines a code-block rST directive if the SilverCity syntax coloring module has been installed. This directive takes one argument, a language name.  For example::
-
-    .. code-block:: Python
-
-    import leoPlugins
-    import leoGlobals as g
-
-
-This directive syntax colors the code in the indented code block that follows the directive.  The result looks like this:
-
-.. code-block:: Python
-    
-    import leoPlugins
-    import leoGlobals as g
-
-See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for many examples of how to use this directive.
-</t>
-<t tx="ekr.20050805165407.10"></t>
-<t tx="ekr.20050805165407.11">When this plugin generates HTML files, this plugin assumes that three .css
-(cascading style sheet) files exist in the directory containing the output file.
-For the HTML output to look good the following .css files should exist in the
-directory containing the generatated HTML file: default.css, leo_rst.css and
-silver_city.css.
-
-- default.css is the default style sheet that docutils expects to exist.
-- leo_rst.css contains some style improvements based on Gunnar Schwant's DocFactory.
-- silver_city.css is the style sheet that controls the syntax highlighting generated by SilverCity.
-
-The latter two style sheets are imported at the end of the default.css.
-
-**N.B.** You can use cascading style sheets to do things that otherwise wouldn't be possible with "plain" rST.  For instance, the background color of this page was specified in a body style.
-
--------------
-
-|leo|</t>
 <t tx="ekr.20050805175217">import leoPlugins
 
 rst2 = leoPlugins.getPluginModule('rst2')
@@ -17933,24 +17717,6 @@ Generates 'http-node-marker-'+str(number), where number is config.node_counter
         self.http_map = http_map</t>
 <t tx="ekr.20050809091430.6"></t>
 <t tx="ekr.20050809091430.8"></t>
-<t tx="ekr.20050810081856">########
-Headline
-########
-
-@ @rst-options
-.. These options have NO EFFECT for rst2 plugin!
-code_mode=False
-generate_rst=True
-http_server_support = True
-show_organizer_nodes=True
-show_headlines=True
-show_leo_directives=True
-stylesheet_path=c:\prog\leoCVS\leo\doc
-write_intermediate_file = True
-verbose=True
-@c
-
-This is a test</t>
 <t tx="ekr.20050810095252"></t>
 <t tx="ekr.20050811075608">data = ( # 8/3
     'x5xx9xxxx',
@@ -18016,7 +17782,31 @@ data = ( # 8/10 1 star
     '2x17x4xxx',
     'xx3x86x4x',
     'xxxx27x6x',
-    '47x5xxx8x')</t>
+    '47x5xxx8x')
+    
+data = (
+    '6xx75x1xx',
+    '8xxxx34xx',
+    'x3x96xx25',
+    'xxx4xx3x2',
+    '7xxxxxxx6',
+    '2x1xx5xxx',
+    '31xx89x4x',
+    'xx65xxxx1',
+    'xx5x42xx3')
+    
+data = (
+    '9xx7x3xx6',
+    'x87xx2xxx',
+    '15xxxxx9x',
+    'xxx6xx82x',
+    'xx8xxx1xx',
+    'x26xx8xxx',
+    'x6xxxxx31',
+    'xxx4xx97x',
+    '4xx2x1xx8')
+    
+# 8/30 2 stars</t>
 <t tx="ekr.20050811141217">@language python
 
 @ @rst-options
@@ -22478,8 +22268,6 @@ _reg_policy_spec_ = "win32com.server.policy.EventHandlerPolicy"
     except WindowsError:
         pass
 </t>
-<t tx="ekr.20050815144658"></t>
-<t tx="ekr.20050815145023">child node text</t>
 <t tx="ekr.20050816172657">import sys
 sys.path.append(r'c:\reportlab_1_20')
 
