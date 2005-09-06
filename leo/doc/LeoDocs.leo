@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="14618" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="14707" clone_windows="0"/>
 <globals body_outline_ratio="0.578831312018">
-	<global_window_position top="25" left="429" height="907" width="1042"/>
+	<global_window_position top="18" left="255" height="907" width="1042"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -51,7 +51,136 @@
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 </v>
 <v t="edream.110203163054.46"><vh>Release Notes</vh>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh></v>
+<v t="ekr.20050906104918"><vh>4.3.2</vh>
+<v t="ekr.20050906104918.1"><vh>Rewrote documentation</vh></v>
+<v t="ekr.20050906104931.1"><vh>Bug fixes...</vh>
+<v t="ekr.20050906104931.2"><vh>(Fixed bug with non-unicode characters in file name)</vh>
+<v t="ekr.20050906104931.3"><vh>Report</vh></v>
+<v t="ekr.20050906104931.4"><vh>toEncodedString</vh></v>
+<v t="ekr.20050906104931.5"><vh>config.readSettingsFiles</vh></v>
+</v>
+<v t="ekr.20050906104931.6"><vh>(Fixed bug with non-unicode characters in settings value)</vh>
+<v t="ekr.20050906104931.7"><vh>Report</vh></v>
+<v t="ekr.20050906104931.4"><vh>toEncodedString</vh></v>
+<v t="ekr.20050906104931.8"><vh>writeChangedVars &amp; helpers</vh>
+<v t="ekr.20050906104931.9"><vh>updateConfig</vh></v>
+<v t="ekr.20050906104931.10"><vh>updateOneNode &amp; helper</vh>
+<v t="ekr.20050906104931.11"><vh>computeBodyFromFontDict</vh></v>
+</v>
+<v t="ekr.20050906104931.12"><vh>writeChangedList</vh>
+<v t="ekr.20050906104931.13"><vh>&lt;&lt; dump all the dicts in filesInfoDict &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050906104931.14"><vh>writeChangesToFile</vh></v>
+</v>
+</v>
+<v t="ekr.20050906104931.15"><vh>(Fixed two recent files bugs</vh>
+<v t="ekr.20050906104931.16"><vh>Report</vh></v>
+<v t="ekr.20050906104931.17"><vh>saveAs</vh></v>
+<v t="ekr.20050906104931.18"><vh>saveTo</vh></v>
+<v t="ekr.20050906104931.19"><vh>writeRecentFilesFile &amp; helper</vh>
+<v t="ekr.20050906104931.20"><vh>writeRecentFilesFileHelper</vh></v>
+</v>
+<v t="ekr.20050906104931.21"><vh>app.closeLeoWindow</vh></v>
+</v>
+<v t="ekr.20050906104931.22"><vh>(Fixed bug in g.reportBadChars)</vh>
+<v t="ekr.20050906104931.23"><vh>Report</vh></v>
+<v t="ekr.20050906104931.24"><vh>Unicode utils...</vh>
+<v t="ekr.20050906104931.25"><vh>isUnicode</vh></v>
+<v t="ekr.20050906104931.26"><vh>isValidEncoding</vh></v>
+<v t="ekr.20050906104931.27"><vh>reportBadChars</vh>
+<v t="ekr.20050906104931.28"><vh>test_g_reportBadChars</vh></v>
+</v>
+<v t="ekr.20050906104931.29"><vh>toUnicode &amp; toEncodedString (and tests)</vh>
+<v t="ekr.20050906104931.4"><vh>toEncodedString</vh></v>
+<v t="ekr.20050906104931.30"><vh>toEncodedStringWithErrorCode</vh></v>
+<v t="ekr.20050906104931.31"><vh>toUnicode</vh></v>
+<v t="ekr.20050906104931.32"><vh>toUnicodeWithErrorCode</vh></v>
+<v t="ekr.20050906104931.33"><vh>test_round_trip_toUnicode_toEncodedString</vh></v>
+<v t="ekr.20050906104931.34"><vh>test_failure_with_ascii_encodings</vh></v>
+</v>
+<v t="ekr.20050906104931.35"><vh>getpreferredencoding from 2.3a2</vh>
+<v t="ekr.20050906104931.36"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
+<v t="ekr.20050906104931.37"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050906104931.38"><vh>(Fixed minor crash in colorizer)</vh>
+<v t="ekr.20050906104931.39"><vh>What I did</vh></v>
+<v t="ekr.20050906104931.40"><vh>Traceback</vh></v>
+<v t="ekr.20050906104931.41"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050906104931.42"><vh>Protected several methods used by plugin manager</vh></v>
+<v t="ekr.20050906104931.43"><vh>(Added test files to distribution list and cvs)</vh>
+<v t="ekr.20050906104931.44"><vh>Report</vh></v>
+</v>
+<v t="ekr.20050906104931.45"><vh>Investigated bug report: dead link for leoPy.leo in help menu: not a problem</vh>
+<v t="ekr.20050906104931.46"><vh>Report</vh></v>
+<v t="ekr.20050906104931.47"><vh>Post 2</vh></v>
+</v>
+</v>
+<v t="ekr.20050906104931.48"><vh>New &amp; improved features...</vh>
+<v t="ekr.20050906104931.49"><vh>(Added g.es_print, es_trace &amp; eliminate corresponding print statements)</vh>
+<v t="ekr.20050906104931.50"><vh>es, enl, ecnl</vh></v>
+<v t="ekr.20050906104931.51"><vh>es_print &amp; test</vh></v>
+<v t="ekr.20050906104931.52"><vh>es_trace &amp; test</vh></v>
+<v t="ekr.20050906104931.53"><vh>checkAllPythonCode</vh>
+<v t="ekr.20050906104931.54"><vh>&lt;&lt; print dots &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050906104931.55"><vh>printChangedVars</vh></v>
+</v>
+<v t="ekr.20050906104931.56"><vh>(Improved PrettyPrinting)</vh>
+<v t="ekr.20050906104931.57"><vh>What I did</vh></v>
+<v t="ekr.20050906104931.58"><vh>Pretty Print commands</vh>
+<v t="ekr.20050906104931.59"><vh>prettyPrintAllPythonCode</vh></v>
+<v t="ekr.20050906104931.60"><vh>prettyPrintPythonCode</vh></v>
+<v t="ekr.20050906104931.61"><vh>prettyPrintPythonNode</vh></v>
+<v t="ekr.20050906104931.62"><vh>class prettyPrinter</vh>
+<v t="ekr.20050906104931.63"><vh>__init__</vh>
+<v t="ekr.20050906104931.64"><vh>&lt;&lt; define dispatch dict &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050906104931.65"><vh>clear</vh></v>
+<v t="ekr.20050906104931.66"><vh>dumpLines</vh></v>
+<v t="ekr.20050906104931.67"><vh>dumpToken</vh></v>
+<v t="ekr.20050906104931.68"><vh>endUndo</vh></v>
+<v t="ekr.20050906104931.69"><vh>get</vh></v>
+<v t="ekr.20050906104931.70"><vh>prettyPrintNode</vh></v>
+<v t="ekr.20050906104931.71"><vh>put</vh></v>
+<v t="ekr.20050906104931.72"><vh>putArray</vh></v>
+<v t="ekr.20050906104931.73"><vh>putNormalToken &amp; allies</vh>
+<v t="ekr.20050906104931.74"><vh>doEndMarker</vh></v>
+<v t="ekr.20050906104931.75"><vh>doErrorToken</vh></v>
+<v t="ekr.20050906104931.76"><vh>doIndent &amp; doDedent</vh></v>
+<v t="ekr.20050906104931.77"><vh>doMultiLine (strings, etc).</vh></v>
+<v t="ekr.20050906104931.78"><vh>doName</vh></v>
+<v t="ekr.20050906104931.79"><vh>doNewline</vh></v>
+<v t="ekr.20050906104931.80"><vh>doNumber</vh></v>
+<v t="ekr.20050906104931.81" a="M"><vh>doOp</vh></v>
+<v t="ekr.20050906104931.82"><vh>doStartLine</vh></v>
+<v t="ekr.20050906104931.83"><vh>oops</vh></v>
+<v t="ekr.20050906104931.84"><vh>trace</vh></v>
+</v>
+<v t="ekr.20050906104931.85"><vh>putToken</vh></v>
+<v t="ekr.20050906104931.86"><vh>replaceBody</vh></v>
+</v>
+</v>
+<v t="ekr.20050906104931.73"><vh>putNormalToken &amp; allies</vh>
+<v t="ekr.20050906104931.74"><vh>doEndMarker</vh></v>
+<v t="ekr.20050906104931.75"><vh>doErrorToken</vh></v>
+<v t="ekr.20050906104931.76"><vh>doIndent &amp; doDedent</vh></v>
+<v t="ekr.20050906104931.77"><vh>doMultiLine (strings, etc).</vh></v>
+<v t="ekr.20050906104931.78"><vh>doName</vh></v>
+<v t="ekr.20050906104931.79"><vh>doNewline</vh></v>
+<v t="ekr.20050906104931.80"><vh>doNumber</vh></v>
+<v t="ekr.20050906104931.81" a="M"><vh>doOp</vh></v>
+<v t="ekr.20050906104931.82"><vh>doStartLine</vh></v>
+<v t="ekr.20050906104931.83"><vh>oops</vh></v>
+<v t="ekr.20050906104931.84"><vh>trace</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050620144052"><vh>4.3.1</vh>
 <v t="ekr.20050620144052.2"><vh>Bug fixes...</vh>
 <v t="ekr.20050620144052.3"><vh>Fixed bug in @ratio setting</vh></v>
@@ -76,8 +205,6 @@
 <v t="ekr.20050620144425"><vh>Added support for coloring the PL/SQL language</vh></v>
 </v>
 </v>
-</v>
-<v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050523092026.1"><vh>4.3... @settings</vh>
 <v t="ekr.20050523092026"><vh>4.3-final</vh>
 <v t="ekr.20050523092056.1"><vh>Fixed crasher when pie-menu plugin enabled</vh></v>
@@ -1571,6 +1698,7 @@
 <v t="ekr.20050830115714.115" a="M"><vh>Error messages from the rst3 plugin aren't helpful. What can I do?</vh></v>
 <v t="ekr.20050830115714.117"><vh>The new Python decorator syntax causes problems.  What can I do?</vh></v>
 </v>
+<v t="ekr.20050906105946"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
 <v t="ekr.20050831184021.4"><vh>What people are saying about Leo</vh>
@@ -1608,6 +1736,7 @@
 <v t="edream.110203163054.60"><vh>How to associate Leo with .leo files on Windows</vh></v>
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="ekr.20050901174937"><vh>Running Leo</vh></v>
+<v t="ekr.20050906105335"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
 <v t="ekr.20050831195331.3"><vh>Chapter 2: A Tutorial Introduction to Leo</vh>
@@ -16951,7 +17080,7 @@ verbose=True
 
 .. August 30, 2005
 
-|prev| |leo| |next|
+|back| |leo| |next|
 
 ####
 FAQ
@@ -17474,24 +17603,22 @@ HTML code (e.g. an image link gets mapped to an &lt;img&gt; HTML tag, a link to 
 Flash file gets mapped to an &lt;embed&gt; tag, etc).</t>
 <t tx="ekr.20050830120007">.. Links used in this document...
 
-.. _`CWEB`:         http://www-cs-faculty.stanford.edu/~knuth/cweb.html
-.. _`CWEB mode`:    http://webpages.charter.net/edreamleo/directives.html#cweb-mode
+.. _`CWEB`:                             http://www-cs-faculty.stanford.edu/~knuth/cweb.html
+.. _`CWEB mode`:                        http://webpages.charter.net/edreamleo/directives.html#cweb-mode
+.. _`Run Leo from a console window`:    `How can I run Leo from a console window?`_
+.. _`Associating Leo with .leo Files`:  http://webpages.charter.net/edreamleo/install.html#how-to-associate-leo-with-leo-files-on-windows
 
-.. _`Run Leo from a console window`: `How can I run Leo from a console window?`_
+.. WARNING: image targets may not have upper case letters!
 
-.. _`Associating Leo with .leo Files`: http://webpages.charter.net/edreamleo/install.html#how-to-associate-leo-with-leo-files-on-windows
+.. _quotes:     http://webpages.charter.net/edreamleo/testimonials.html
+.. _home:       http://webpages.charter.net/edreamleo/front.html
+.. _install:    http://webpages.charter.net/edreamleo/install.html
 
-.. _quotes:         http://webpages.charter.net/edreamleo/testimonials.html
-.. _toc:            http://webpages.charter.net/edreamleo/leo_TOC.html
-.. _install:       http://webpages.charter.net/edreamleo/install.html
-
-.. _home:           http://webpages.charter.net/edreamleo/front.html
+.. |back| image:: arrow_lt.gif
+	:target: quotes_
 
 .. |leo|  image:: leo.gif
 	:target: home_
-
-.. |prev| image:: arrow_lt.gif
-	:target: quotes_
 
 .. |next| image:: arrow_rt.gif
     :target: install_</t>
@@ -19299,5 +19426,1429 @@ environments, python programs normally execute with the console window visible.
 On Windows, can run Leo with the console window visible by associating .leo
 files with ``python.exe`` *not* ``pythonw.exe``. For full instructions about how
 to do this, see `Associating Leo with .leo Files`_.</t>
+<t tx="ekr.20050906104918">Leo 4.3.2                    September 9, 2005
+
+To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
+
+The highligts of 4.3.2:
+-----------------------
+
+- Improved Leo's documentation:
+    - A tutorial introduction to Leo:
+      http://webpages.charter.net/edreamleo/intro.html
+    - A 5-minute guide to programming with Leo:
+      http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
+- Improved pretty printing.
+- The usual assortment of bug fixes.</t>
+<t tx="ekr.20050906104918.1">Here is a summary of the changes:
+
+- General:  All chapters created with rst3 plugin.  This ensures a uniform look.  The source is in LeoDocs.leo.  Removed all references to older versions of Leo, except when discussing old file formats in the Appendices.  Corrected all text so it discusses present version.
+
+- rst3 plugin itself:  Correct bug that caused chapters to be formatted differently when processing multiple @rst trees.  
+
+- rst3 button in LeoDocs.leo:  The script first looks *up* the tree, looking for an @rst node.  If found, it processes just that tree.  If not found, it processes all @rst nodes *below* the originally selected node.  The button is now much more convenient to use.
+
+- Preface: Shorter, no history.  No longer a dead end.
+
+- What People are Saying About Leo: No longer a dead end.
+
+- FAQ: Reorganized, simplified, revised.  Added entries for running Leo in a console window and debugging docutils.  Improved entry for using cvs.
+
+- Chapter 1: Installation: Now the first chapter.  Revised.
+
+- Chapter 2: Tutorial: Completely rewritten.  Like Python's tutorial, this chapter contains everything a beginner needs to understand and use Leo.  The `Quickstart for programmers` section is the heart of this chapter.  All terms used have links either to their definition in the tutorial or in the Glossary.  Newbies should be able to digest this chapter easily.  This chapter should make Leo comprehensible to many more people.
+
+- Chapter 3: Using Outlines: Revised per general remarks above.
+
+- Chapter 4: Writing Programs in Leo.  Completely rewritten.  The old chapter was an embarrassment. The new chapter is a reference guide, properly organized as such.  The introduction warns newbies away.
+
+- Chapter 5: Using Leo's Commands.  'Minor' revisions and corrections create a substantially better result.
+
+- Chapter 6: Leo and literate programming: Reformatting helps.  New words about rST markup and other improvements over traditional LP.
+
+- Chapter 7: Scripting Leo with Python: Rewritten, simplified, updated and corrected.  The sources in LeoDocs.leo are directly executable.  rST sources use literal blocks instead of code-blocks so that the sources are simplified. (Important when executing examples).  Properly discusses positions, including 'supremely important' section on copying positions.
+
+- Chapter 8: Customizing Leo.  Heavily revised.  Discusses leoSettings.leo, not leoConfig.txt.  Security warnings are more reasonable.  Section on script buttons. Rewrote section on uA's (Adding extensible attributes to nodes and .leo files).
+
+- Chapter 9: History of Leo.  Rewritten.  Much shorter and more useful.  Discusses the major milestones, concentrating on explaining the major differences between versions.  Gone are details of how discoveries came to be.  They are in LeoPostings.leo, which will be included in the distribution.
+
+- Chapter 10: Theory of Operation.  Largely rewritten.  Discusses positions properly.  Omits discussion of how clones were implemented before 4.2.
+
+- Chapter 11: White Papers.  A new chapter.  This is a slightly-edited version of writing that had been buried in the appendices.
+
+- Appendices.  Heavily revised and reformatted.  Rewrote sections on file formats.
+
+- Glossary: A separate chapter.  All terms have links to their definition.  All definitions are rST targets so other chapters may refer to them.  Added several new entries.
+</t>
+<t tx="ekr.20050906104931.1"></t>
+<t tx="ekr.20050906104931.2"></t>
+<t tx="ekr.20050906104931.3">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3224635
+By: madmike
+
+Leo doesn't seem to like to read leo-Files which has non-ascii charaters in
+the Filename (like "Präsentation.leo"). Trying to do so results in the following
+Exception raised:
+
+C:\&gt;D:\Userdata\CH00JAP\Programme\Python\python.exe
+D:\Userdata\CH00JAP\Programme\leo\src\leo.py
+D:\Userdata\CH00JAP\programming\leo\Präsentation.leo
+reading settings in D:\Userdata\CH00JAP\Programme\leo\config\leoSettings.leo
+Traceback (most recent call last):
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leo.py", line 310, in ?
+    run(fileName)
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leo.py", line 95, in run
+    g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting
+g.app.config.
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leoConfig.py", line 1173,
+in readSettingsFiles
+    print s ; g.es(s)
+  File "D:\Userdata\CH00JAP\Programme\Python\lib\encodings\cp850.py", line 18,
+in encode
+    return codecs.charmap_encode(input,errors,encoding_map)
+UnicodeEncodeError: 'charmap' codec can't encode character u'\ufffd' in position
+58: character maps to &lt;undefined&gt;
+
+Renaming the File does work as a workaround.
+
+</t>
+<t tx="ekr.20050906104931.4">def toEncodedString (s,encoding,reportErrors=False):
+
+    if type(s) == type(u""):
+        try:
+            s = s.encode(encoding,"strict")
+        except UnicodeError:
+            if reportErrors:
+                g.reportBadChars(s,encoding)
+            s = s.encode(encoding,"replace")
+    return s</t>
+<t tx="ekr.20050906104931.5">def readSettingsFiles (self,fileName,verbose=True):
+    
+    seen = []
+    
+    # Init settings from leoSettings.leo files.
+    for path,localFlag in (
+        (self.globalConfigFile,False),
+        (self.homeFile,False),
+        (fileName,True),
+    ):
+        if path and path.lower() not in seen:
+            seen.append(path.lower())
+            if verbose:
+                g.es_print('reading settings in %s' % path)
+            c = self.openSettingsFile(path)
+            if c:
+                d = self.readSettings(c)
+                if d:
+                    d['_hash'] = theHash = c.hash()
+                    if localFlag:
+                        self.localOptionsDict[theHash] = d
+                    else:
+                        self.localOptionsList.insert(0,d)
+                g.app.destroyWindow(c.frame)
+            self.readRecentFilesFile(path)
+
+    self.inited = True
+    self.setIvarsFromSettings(None)</t>
+<t tx="ekr.20050906104931.6"></t>
+<t tx="ekr.20050906104931.7">@nocolor 
+http://sourceforge.net/forum/message.php?msg_id=3222750
+By: madmike
+
+Trying to set non-ascii characters in settingsraises exception on clicking
+"OK":
+
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "D:\Userdata\CH00JAP\Programme\Python\lib\lib-tk\Tkinter.py", line 1345,
+in __call__
+    return self.func(*args)
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leoConfig.py", line 1893,
+in buttonCallback
+    self.onAnyButton(name)
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leoConfig.py", line 2758,
+in onAnyButton
+    if f: f()
+  File "D:\Userdata\CH00JAP\Programme\leo\src\leoConfig.py", line 2977,
+in writeChangedVars
+    s = "write  %10s -&gt; %10s %s" % (str(oldVal),str(newVal),iname)
+UnicodeEncodeError: 'ascii' codec can't encode character u'\xf6' in position
+29: ordinal not in range(128)
+
+I've tested this in my own outline local preferences and with the global prefernces
+and get the same result.
+
+I've recieve reproduced the error on @string, @path und @directory.
+
+
+MadMike
+
+</t>
+<t tx="ekr.20050906104931.8">def writeChangedVars (self):
+    
+    """Create per-file changes lists from diffs between what has been inited and written.
+    
+    Call writeChangedList to update each file from items in this list."""
+
+    changedList = []
+    fDict = self.fileValueDict
+    iDict = self.initValueDict
+    munge = g.app.config.munge
+    
+    for key in iDict.keys():
+
+        iData = iDict.get(key)
+        ip,iname,ikind,ival,getValueCallback = iData
+        newVal = getValueCallback()
+        fData = fDict.get(key)
+        if fData:
+            fp,fname,fkind,fval,junk = fData
+            assert(ip==fp and iname==fname and ikind==fkind)
+            changed = fval != newVal ; oldVal = fval
+        else:
+            changed = ival != newVal ; oldVal = ival
+            fval = '&lt;none&gt;'
+
+        if changed:
+            # print "write","key","ival",ival,"fval",fval
+            if type(oldVal) == type({}):
+                s = "write  %s" % (iname)
+            elif ikind == 'shortcuts':
+                s = 'updating shortcuts in %s' % ip.headString()
+            else:
+                # Convert unicode strings to strings safe for printing.
+                # The calls to str are needed because g.toEncodedString only changes unicode strings.
+                strOldVal = str(g.toEncodedString(oldVal,'ascii'))
+                strNewVal = str(g.toEncodedString(newVal,'ascii'))
+                strIname  = str(g.toEncodedString(iname,'ascii'))
+                s = "write  %10s -&gt; %10s %s" % (strOldVal,strNewVal,strIname)
+            g.es_print(s,color='blue')
+            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
+            changedList.append((ip,iname,ikind,oldVal,newVal),)
+            
+    self.writeChangedList(changedList,"write")</t>
+<t tx="ekr.20050906104931.9">def updateConfig(self,c,changes):
+    
+    """Update the core config settings from the changes list."""
+    
+    munge = g.app.config.munge
+
+    for data in changes:
+        p,name,kind,oldval,val = data
+        if munge(kind) == 'font':
+            for key in ('family','size','slant','weight'):
+                data2 = val.get(key)
+                if data2:
+                    name2,val2 = data2
+                    kind2 = g.choose(key=='size','int','string')
+                    g.app.config.set(c,name2,kind2,val2)
+            # Update the visible fonts: c may not be the same as self.c.
+            for c2 in (c,self.c):
+                c2.frame.body.setFontFromConfig()
+                c2.frame.body.colorizer.setFontFromConfig()
+                c2.frame.log.setFontFromConfig()
+                c2.frame.tree.setFontFromConfig()
+                c2.redraw()
+        elif munge(kind) == "color":
+            # g.trace("setting colors")
+            g.app.config.set(c,name,kind,val)
+            for c2 in (c,self.c):
+                c2.frame.tree.setColorFromConfig()
+                c2.frame.log.setColorFromConfig()
+                c2.frame.body.setColorFromConfig()
+        else:
+            # g.trace(name,kind,val)
+            g.app.config.set(c,name,kind,val)</t>
+<t tx="ekr.20050906104931.10">def updateOneNode (self,c,data):
+    
+    """Update the node in c corresponding to p = data[0]."""
+    
+    p,name,kind,oldVal,val = data
+    munge = g.app.config.munge
+    name = name.strip() ; kind = munge(kind.strip())
+
+    # Root1 is the root of the dialog's outline.
+    p1 = p
+    root1 = self.findSettingsRoot(p1.copy())
+    c1 = root1.c
+    
+    # Root2 is the root of the settings outline in the file.
+    root2 = g.app.config.settingsRoot(c) # c is NOT self.c
+    p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
+    if p2:
+        c2 = p2.c ; filename = c2.mFileName
+    else:
+        g.trace("can't happen: can't find node in root2:",root2.c.mFileName)
+        g.trace('root1',root1)
+        g.trace('root2',root2)
+        g.trace('p1',p1)
+        c2 = None ; filename = None
+
+    # Update the outline in the dialog and the target file.
+    for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
+        if p:
+            # g.trace("updating %s in %s" % (name,where))
+            if kind == 'shortcuts':
+                # Just put the new the values in the body.
+                p.setBodyStringOrPane(val)
+            elif kind == 'font':
+                body = self.computeBodyFromFontDict(val)
+                p.setBodyStringOrPane(body)
+            else:
+                # Put everything in the headline.
+                p.initHeadString("@%s %s = %s" % (kind,name,val))</t>
+<t tx="ekr.20050906104931.11">def computeBodyFromFontDict(self,d):
+
+    lines = []
+    comments = d.get('comments')
+    if comments:
+        comment_lines = g.splitLines(comments)
+        comment_lines = ["# %s" % (line) for line in comment_lines]
+        lines.extend(comment_lines)
+        lines.extend('\n\n')
+        
+    for key in ('family','size','slant','weight'):
+        data = d.get(key)
+        if data:
+            name,val = data
+            if val in (None,'&lt;none&gt;'):
+                val = "None"
+            line = "%s = %s\n" % (name,val)
+            lines.extend(line)
+
+    body = ''.join(lines)
+    return body</t>
+<t tx="ekr.20050906104931.12">def writeChangedList (self,changedList,tag):
+    
+    __pychecker__ = '--no-argsused' # tag used for debugging.
+    
+    filesInfoDict = self.filesInfoDict
+    if 0:
+        &lt;&lt; dump all the dicts in filesInfoDict &gt;&gt;
+
+    # Accumulate the changes for each file in a 'changes' list for each root.
+    for data in changedList:
+        p,name,kind,oldVal,newVal = data
+        # print "%6s %6s %10s -&gt; %10s %s" % (tag,kind,str(oldVal),str(newVal),name)
+        root = self.findSettingsRoot(p)
+        d = filesInfoDict.get(root)
+        changes = d.get('changes')
+        changes.append(data)
+        d['changes'] = changes
+
+    for root in filesInfoDict.keys():
+        d = filesInfoDict.get(root)
+        # Keys are 'c','changes','path','islocal' (unused)
+        c = d.get('c')
+        changes = d.get('changes')
+        path = d.get('path')
+        # Always write the file so as to preserve expansion state.
+        self.writeChangesToFile(c,changes,path)
+        self.updateConfig(c,changes)
+        d['changes'] = []</t>
+<t tx="ekr.20050906104931.13">for key in filesInfoDict.keys():
+    print ; print
+    print "key",key
+    g.printDict(filesInfoDict.get(key))
+print ; print</t>
+<t tx="ekr.20050906104931.14">def writeChangesToFile (self,c,changes,path):
+
+    # Write the individual changes.
+    for data in changes:
+        self.updateOneNode(c,data)
+        
+    # Copy the expansion state of the dialog to the file.
+    for d in self.filesInfoDict.values():
+        c2 = d.get('c')
+        if c2 and c2 == c:
+            p2 = d.get('p')
+            p = g.app.config.settingsRoot(c)
+            # g.trace(c,p)
+            if p and p2:
+                p = p.copy() ; p2 = p2.copy()
+                # Defensive programming: don't assume p and p2 are in synch.
+                while p and p2:
+                    if p2.isExpanded(): p.expand()
+                    else: p.contract()
+                    p.moveToThreadNext()
+                    p2.moveToThreadNext()
+            break
+
+    if c.fileName():
+        self.es("writing " + g.shortFilename(path))
+        # Save the file corresponding to c.
+        # Non-local files aren't open otherwise!
+        c.fileCommands.save(c.fileName())
+        c.redraw() # This should work for non-local files too.
+        self.tree.redraw()
+    else:
+        print "no settings saved.  local file not named."</t>
+<t tx="ekr.20050906104931.15"></t>
+<t tx="ekr.20050906104931.16">@nocolor 
+http://sourceforge.net/forum/message.php?msg_id=3218558
+By: billp9619
+
+Leo Log Window...
+Leo 4.3.1, build  1.266 , June 20, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+On a new install with no prior Recent Files, I opened a file without saving
+and exited Leo. On return there were still no Recent Files listed.
+
+I opened another file and saved under a different name. After exiting leo and
+restarting, the different name saved did not appear listed but the original
+opened file was.I guess both should have been listed.
+
+My preference for Recent Files list is that there would be a very long history
+maintained and any file name I view is in the the list. :)
+
+I guess you need to update the list anytime a name is dropped from the open
+widow status including if the current open file is Closed or superceded using
+Save As.
+
+regards,
+
+bill p
+</t>
+<t tx="ekr.20050906104931.17">def saveAs(self):
+    
+    c = self
+    
+    if g.app.disableSave:
+        g.es("Save commands disabled",color="purple")
+        return
+
+    # Make sure we never pass None to the ctor.
+    if not c.mFileName:
+        c.frame.title = ""
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile = c.mFileName,
+        title="Save As",
+        filetypes=[("Leo files", "*.leo")],
+        defaultextension=".leo")
+
+    if fileName:
+        # 7/2/02: don't change mFileName until the dialog has suceeded.
+        c.mFileName = g.ensure_extension(fileName, ".leo")
+        c.frame.title = c.mFileName
+        c.frame.setTitle(g.computeWindowTitle(c.mFileName))
+        # Calls c.setChanged(False) if no error.
+        c.fileCommands.saveAs(c.mFileName)
+        c.updateRecentFiles(c.mFileName)</t>
+<t tx="ekr.20050906104931.18">def saveTo(self):
+    
+    c = self
+    
+    if g.app.disableSave:
+        g.es("Save commands disabled",color="purple")
+        return
+
+    # Make sure we never pass None to the ctor.
+    if not c.mFileName:
+        c.frame.title = ""
+
+    # set local fileName, _not_ c.mFileName
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile = c.mFileName,
+        title="Save To",
+        filetypes=[("Leo files", "*.leo")],
+        defaultextension=".leo")
+
+    if fileName:
+        fileName = g.ensure_extension(fileName, ".leo")
+        c.fileCommands.saveTo(fileName)
+        c.updateRecentFiles(fileName)</t>
+<t tx="ekr.20050906104931.19">def writeRecentFilesFile (self,c):
+    
+    '''Write the appropriate .leoRecentFiles.txt file.'''
+    
+    tag = '.leoRecentFiles.txt'
+    
+    localFileName = c.fileName()
+    if not localFileName:
+        # g.trace('----no file name')
+        return
+        
+    # Create a list of bunches to control the comparison below.
+    files = []
+    for fileName,kind in (
+        (localFileName,'local'),
+        (self.homeFile,'home'),
+        (self.globalConfigFile,'global'),
+    ):
+        if fileName:
+            path,junk = g.os_path_split(fileName)
+            files.append(g.Bunch(
+                fileName=g.os_path_join(path,tag),kind=kind))
+
+    # Search local file first, then home and global files.                
+    for kind in ('local','home','global'):
+        for bunch in files:
+            for bunch2 in self.recentFilesFiles:
+                if bunch.kind == bunch2.kind:
+                    # g.trace('----- comparing',bunch.kind,bunch.fileName)
+                    if bunch.fileName == bunch2.fileName:
+                        self.writeRecentFilesFileHelper(bunch.fileName)
+                        return
+                    
+    # g.trace('----- not found:',localFileName)</t>
+<t tx="ekr.20050906104931.20">def writeRecentFilesFileHelper (self,fileName):
+    # g.trace(fileName)
+    
+    # Don't update the file if it begins with read-only.
+    theFile = None
+    try:
+        theFile = file(fileName)
+        lines = theFile.readlines()
+        if lines and self.munge(lines[0])=='readonly':
+            # g.trace('read-only: %s' %fileName)
+            return
+    except IOError:
+        # The user may have erased a file.  Not an error.
+        if theFile: theFile.close()
+
+    theFile = None
+    try:
+        # g.trace('writing',fileName)
+        theFile = file(fileName,'w')
+        if self.recentFiles:
+            theFile.write('\n'.join(self.recentFiles))
+        else:
+            theFile.write('\n')
+
+    except IOError:
+        # The user may have erased a file.  Not an error.
+        pass
+            
+    except Exception:
+        g.es('unexpected exception writing %s' % fileName,color='red')
+        g.es_exception()
+    
+    if theFile:
+        theFile.close()</t>
+<t tx="ekr.20050906104931.21">def closeLeoWindow (self,frame):
+    
+    """Attempt to close a Leo window.
+    
+    Return False if the user veto's the close."""
+    
+    c = frame.c
+    
+    if c.promptingForClose:
+        # There is already a dialog open asking what to do.
+        return False
+        
+    g.app.config.writeRecentFilesFile(c) # Make sure .leoRecentFiles.txt is written.
+
+    if c.changed:
+        c.promptingForClose = True
+        veto = frame.promptForSave()
+        c.promptingForClose = False
+        if veto: return False
+
+    g.app.setLog(None) # no log until we reactive a window.
+    
+    g.doHook("close-frame",c=c) # This may remove frame from the window list.
+    
+    if frame in g.app.windowList:
+        g.app.destroyWindow(frame)
+    
+    if g.app.windowList:
+        # Pick a window to activate so we can set the log.
+        w = g.app.windowList[0]
+        w.deiconify()
+        w.lift()
+        g.app.setLog(w.log)
+    else:
+        g.app.finishQuit()
+
+    return True # The window has been closed.</t>
+<t tx="ekr.20050906104931.22"></t>
+<t tx="ekr.20050906104931.23">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3307318
+By: zhms
+
+Error in tangling when section name contain unicode.
+
+reading: D:\doc\digest\buddha\amtb\amtb.leo
+Tangling...
+exception executing command
+Traceback (most recent call last):
+  File "C:\tool\Leo\src\leoCommands.py", line 177, in doCommand
+    command()
+  File "C:\tool\Leo\src\leoCommands.py", line 889, in tangle
+    c.tangleCommands.tangle()
+  File "C:\tool\Leo\src\leoTangle.py", line 604, in tangle
+    if not self.tangleTree(p,report_errors):
+  File "C:\tool\Leo\src\leoTangle.py", line 744, in tangleTree
+    self.tanglePass2() # self.p invalid in pass 2.
+  File "C:\tool\Leo\src\leoTangle.py", line 712, in tanglePass2
+    self.put_all_roots() # pass 2 top level function.
+  File "C:\tool\Leo\src\leoTangle.py", line 1466, in put_all_roots
+    self.put_part_node(part,False) # output first lws
+  File "C:\tool\Leo\src\leoTangle.py", line 1782, in put_part_node
+    self.put_code(part.code,no_first_lws_flag)
+  File "C:\tool\Leo\src\leoTangle.py", line 1525, in put_code
+    self.put_section(s,i,name,name_end)
+  File "C:\tool\Leo\src\leoTangle.py", line 1907, in put_section
+    self.put_part_node(part,no_first_leading_ws_flag)
+  File "C:\tool\Leo\src\leoTangle.py", line 1782, in put_part_node
+    self.put_code(part.code,no_first_lws_flag)
+  File "C:\tool\Leo\src\leoTangle.py", line 1525, in put_code
+    self.put_section(s,i,name,name_end)
+  File "C:\tool\Leo\src\leoTangle.py", line 1879, in put_section
+    self.os(self.single_comment_string) ; self.oblank() ; self.os(name)
+  File "C:\tool\Leo\src\leoTangle.py", line 1382, in os
+    s = g.toEncodedString(s,self.encoding,reportErrors=True)
+  File "C:\tool\Leo\src\leoGlobals.py", line 3603, in toEncodedString
+    g.reportBadChars(s,encoding)
+  File "C:\tool\Leo\src\leoGlobals.py", line 3582, in reportBadChars
+    g.es("%d errors converting %s to %s" %
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xcc in position 23: ordinal
+not in range(128)
+</t>
+<t tx="ekr.20050906104931.24"></t>
+<t tx="ekr.20050906104931.25">def isUnicode(s):
+    
+    return s is None or type(s) == type(u' ')</t>
+<t tx="ekr.20050906104931.26">def isValidEncoding (encoding):
+    
+    try:
+        if len(encoding) == 0:
+            return False
+        unicode("a",encoding)
+        return True
+    except:
+        return False
+</t>
+<t tx="ekr.20050906104931.27">def reportBadChars (s,encoding):
+    
+    errors = 0
+    if type(s) == type(u""):
+        for ch in s:
+            try: ch.encode(encoding,"strict")
+            except UnicodeEncodeError:
+                errors += 1
+        if errors:
+            g.es("%d errors converting %s to %s" % (
+                errors, s.encode(encoding,'replace'),
+                encoding.encode('ascii','replace')),
+            color='red')
+    elif type(s) == type(""):
+        for ch in s:
+            try: unicode(ch,encoding,"strict")
+            except: errors += 1
+        if errors:
+            g.es("%d errors converting %s (%s encoding) to unicode" % (
+                errors,
+                unicode(s,encoding,'replace'),
+                encoding.encode('ascii','replace')),
+            color='red')</t>
+<t tx="ekr.20050906104931.28">def test_g_reportBadChars ():
+    
+    for s,encoding in (
+        ('aĂbĂ',  'ascii'),
+        (u'aĂbĂ', 'ascii'),
+        ('炰',    'ascii'),
+        (u'炰',   'ascii'),
+        
+        ('aĂbĂ',  'utf-8'),
+        (u'aĂbĂ', 'utf-8'),
+        ('炰',    'utf-8'),
+        (u'炰',   'utf-8'),
+    ):
+    
+        g.reportBadChars(s,encoding)</t>
+<t tx="ekr.20050906104931.29"></t>
+<t tx="ekr.20050906104931.30">def toEncodedStringWithErrorCode (s,encoding):
+    
+    ok = True
+
+    if type(s) == type(u""):
+        try:
+            s = s.encode(encoding,"strict")
+        except UnicodeError:
+            s = s.encode(encoding,"replace")
+            ok = False
+
+    return s,ok</t>
+<t tx="ekr.20050906104931.31">def toUnicode (s,encoding,reportErrors=False):
+    
+    if s is None:
+        s = u""
+    if type(s) == type(""):
+        try:
+            s = unicode(s,encoding,"strict")
+        except UnicodeError:
+            if reportErrors:
+                g.reportBadChars(s,encoding)
+            s = unicode(s,encoding,"replace")
+    return s
+    
+</t>
+<t tx="ekr.20050906104931.32">def toUnicodeWithErrorCode (s,encoding):
+    
+    ok = True
+    
+    if s is None:
+        s = u""
+    if type(s) == type(""):
+        try:
+            s = unicode(s,encoding,"strict")
+        except UnicodeError:
+            s = unicode(s,encoding,"replace")
+            ok = False
+
+    return s,ok</t>
+<t tx="ekr.20050906104931.33">def test_round_trip_toUnicode_toEncodedString ():
+   
+    for s,encoding in (
+        ('a',    'utf-8'),
+        ('a',    'ascii'),
+        ('äöü',  'utf-8'),
+        ('äöü',  'mbcs'),
+        ('炰',   'utf-8'),
+        ('炰',   'mbcs'),
+    ):
+        if g.isValidEncoding(encoding):
+            s2,ok = g.toUnicodeWithErrorCode(s,encoding)
+            assert ok, 'toUnicodeWithErrorCode fails for %s' %s
+            s3,ok = g.toEncodedStringWithErrorCode(s2,encoding)
+            assert ok, 'toEncodedStringWithErrorCode fails for %s' % s2
+            assert s3 == s, 'Round-trip one failed for %s' %s
+            
+            s2 = g.toUnicode(s,encoding)
+            s3 = g.toEncodedString(s2,encoding)
+            assert s3 == s, 'Round-trip two failed for %s' %s</t>
+<t tx="ekr.20050906104931.34">def test_failure_with_ascii_encodings():
+
+    encoding = 'ascii'
+    
+    s = '炰'
+    s2,ok = g.toUnicodeWithErrorCode(s,encoding)
+    assert not ok, 'toUnicodeWithErrorCode returns True for %s with ascii encoding' % s
+    
+    s = u'炰'
+    s3,ok = g.toEncodedStringWithErrorCode(s,encoding)
+    assert not ok, 'toEncodedStringWithErrorCode returns True for %s with ascii encoding' % s</t>
+<t tx="ekr.20050906104931.35"># Suppress warning about redefining getpreferredencoding
+__pychecker__ = '--no-reuseattr'
+
+try:
+    # Use Python's version of getpreferredencoding if it exists.
+    # It is new in Python 2.3.
+    import locale
+    getpreferredencoding = locale.getpreferredencoding
+except Exception:
+    # Use code copied from locale.py in Python 2.3alpha2.
+    if sys.platform in ('win32', 'darwin', 'mac'):
+        &lt;&lt; define getpreferredencoding using _locale &gt;&gt;
+    else:
+        &lt;&lt; define getpreferredencoding for *nix &gt;&gt;
+        
+__pychecker__ = '--reuseattr'
+</t>
+<t tx="ekr.20050906104931.36"># On Win32, this will return the ANSI code page
+# On the Mac, it should return the system encoding;
+# it might return "ascii" instead.
+
+def getpreferredencoding(do_setlocale = True):
+    """Return the charset that the user is likely using."""
+    try:
+        import _locale
+        return _locale._getdefaultlocale()[1]
+    except:
+        return None</t>
+<t tx="ekr.20050906104931.37"># On Unix, if CODESET is available, use that.
+
+__pychecker__ = '--no-noeffect' # Note: this is at the top level!
+
+try:
+    locale.CODESET # Bug fix, 2/12/05
+except NameError:
+    # Fall back to parsing environment variables :-(
+    def getpreferredencoding(do_setlocale = True):
+        """Return the charset that the user is likely using,
+        by looking at environment variables."""
+        try:
+            return locale.getdefaultlocale()[1]
+        except:
+            return None
+else:
+    def getpreferredencoding(do_setlocale = True):
+        """Return the charset that the user is likely using,
+        according to the system configuration."""
+        try:
+            if do_setlocale:
+                oldloc = locale.setlocale(LC_CTYPE)
+                locale.setlocale(LC_CTYPE, "")
+                result = locale.nl_langinfo(CODESET)
+                locale.setlocale(LC_CTYPE, oldloc)
+                return result
+            else:
+                return locale.nl_langinfo(CODESET)
+        except:
+            return None</t>
+<t tx="ekr.20050906104931.38"></t>
+<t tx="ekr.20050906104931.39">@nocolor
+
+The fix was to add an entry of 'unknown' state to state_dict. This fixes the
+crash by brute force, but may not be strictly correct. However, this is pretty
+much moot: we shall soon be moving to the new colorizer.</t>
+<t tx="ekr.20050906104931.40">Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoColor.py", line 1688, in colorizeAnyLanguage
+    state = self.colorizeLine(new_lines[i],state)
+  File "C:\prog\leoCVS\leo\src\leoColor.py", line 1803, in colorizeLine
+    func = self.state_dict[state]
+KeyError: 'unknown'
+</t>
+<t tx="ekr.20050906104931.41">self.state_dict = {
+    "blockComment" : self.continueBlockComment,
+    "doubleString" : self.continueDoubleString, # 1/25/03
+    "nocolor"      : self.continueNocolor,
+    "normal"       : self.doNormalState,
+    "singleString" : self.continueSingleString,  # 1/25/03
+    "string3s"     : self.continueSinglePythonString,
+    "string3d"     : self.continueDoublePythonString,
+    "doc"          : self.continueDocPart,
+    "unknown"      : self.doNormalState, # 8/25/05
+}
+    
+# Eventually all entries in these dicts will be entered dynamically
+# under the control of the XML description of the present language.
+
+if 0: # not ready yet.
+
+    self.dict1 = { # 1-character patterns.
+        '"' : self.doString,
+        "'" : self.doString,
+        '@' : self.doPossibleLeoKeyword,
+        ' ' : self.doBlank,
+        '\t': self.doTab }
+
+    self.dict2 = {} # 2-character patterns
+    
+    # Searching this list might be very slow!
+    mutli_list = [] # Multiple character patterns.
+    
+    # Enter single-character patterns...
+    if self.has_pp_directives:
+        dict1 ["#"] = self.doPPDirective
+                
+    for ch in string.ascii_letters:
+        dict1 [ch] = self.doPossibleKeyword
+    dict1 ['_'] = self.doPossibleKeyword
+    
+    if self.language == "latex":
+        dict1 ['\\'] = self.doPossibleKeyword
+        
+    if self.language == "php":
+        dict1 ['&lt;'] = self.doSpecialPHPKeyword
+        dict1 ['?'] = self.doSpecialPHPKeyword
+    
+    # Enter potentially multi-character patterns.  (or should this be just 2-character patterns)
+    if self.language == "cweb":
+        dict2 ["@("] = self.doPossibleSectionRefOrDef
+    else:
+        dict2 ["&lt;&lt;"] = self.doPossibleSectionRefOrDef
+        
+    if self.single_comment_start:
+        n = len(self.single_comment_start)
+        if n == 1:
+            dict1 [self.single_comment_start] = self.doSingleCommentLine
+        elif n == 2:
+            dict2 [self.single_comment_start] = self.doSingleCommentLine
+        else:
+            mutli_list.append((self.single_comment_start,self.doSingleCommentLine),)
+    
+    if self.block_comment_start:
+        n = len(self.block_comment_start)
+        if n == 1:
+            dict1 [self.block_comment_start] = self.doBlockComment
+        elif n == 2:
+            ddict2 [self.block_comment_start] = self.doBlockComment
+        else:
+            mutli_list.append((self.block_comment_start,self.doBlockComment),)</t>
+<t tx="ekr.20050906104931.42">@nocolor
+
+The code gets c = keywords.get('c') in several places.
+The protection is to return if c is None.
+
+This affects the following files: plugins_menu.py, pluginsTest.py, plugin_manager.py</t>
+<t tx="ekr.20050906104931.43">@
+
+- Only files used by unit tests should be on cvs and the distribution.
+    - test\unittest\batchTest.py and test\unittest\errorTest.py were already on cvs.
+    - Added these files to the distribution.
+- Other test files should be distributed in @ignore nodes.
+- Leo's distribution checklist now has an item to check that the distributed test.leo can be opened without errors.</t>
+<t tx="ekr.20050906104931.44">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3231597
+By: edcdave
+
+After uninstalling my earlier version of Leo and deleting all files, I installed
+Leo 4.3.1 Build 1.266. (Python 2.3.3)
+
+Making no other changes or installing any other files, I opened leo/test/test.leo.
+The document opens with the following errors:
+
+fixed:
+    can not open: '@file C:\Program Files\Leo\extensions\testExtension.py'
+    can not open: '@file C:\Program Files\Leo\test\leadingAtTest.py'
+    can not open: '@file C:\Program Files\Leo\test\leadingAtTest2.py'
+    can not open: '@file C:\Program Files\Leo\test\leadingAtTest3.py'
+    can not open: '@file C:\Program Files\Leo\test\leadingAtTest4.py'
+
+Add to distribution list (and cvs)
+    can not open: '@file C:\Program Files\Leo\test\unittest\errorTest.py'
+    can not open: '@file C:\Program Files\Leo\test\unittest\batchTest.py'
+
+And sure enough none of these files are in leo/test and the directory
+leo/test/unittest was not created by the installation.
+
+Dave
+</t>
+<t tx="ekr.20050906104931.45">@ This does not seem to be a problem.
+
+Leo is distributed with the expected file names for LeoDocs.leo, LeoPy.leo, LeoPluings.leo.</t>
+<t tx="ekr.20050906104931.46">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3274505
+By: ktenney
+
+I like that, a nice way to access the source 
+without risking unwanted changes.
+
+Does the same principle apply to 
+LeoPy.leo/LeoPyRef.leo ?
+
+Didn't there used to be an entry for leoPy.leo 
+on the 'Help' menu?
+
+That means that Leo ships with a dead link on the 
+'Help' menu, I wonder how we could make sure the
+ reason for that is explained.
+
+We don't want to cause discouragement among folks
+wanting to dive into the source.
+
+Maybe the menu text could be;
+leoPlugins.leo (leoPluginsRef.leo save as)
+leoPy.leo (leoPyRef.leo save as)
+... must be a better way ...
+
+Thanks,
+Kent
+</t>
+<t tx="ekr.20050906104931.47">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3274666
+By: ktenney
+
+Maybe the menu item could be 'Leo plugins source'
+
+When selected, create leoPlugins.leo if required, explaining that this is a safe
+copy of the source file.
+
+An entry which behaved like this called 'Leo source' which did the same routine
+with LeoPy.leo might be nice for folks in the 'Use the source, Luke' category.</t>
+<t tx="ekr.20050906104931.48"></t>
+<t tx="ekr.20050906104931.49">@ Calling print directly is dangerous: it will fail for unicode characters.</t>
+<t tx="ekr.20050906104931.50">def ecnl():
+    g.ecnls(1)
+
+def ecnls(n):
+    log = app.log
+    if log and not log.isNull:
+        while log.newlines &lt; n:
+            g.enl()
+
+def enl():
+    log = app.log
+    if log and not log.isNull:
+        log.newlines += 1
+        log.putnl()
+
+def es(s,*args,**keys):
+    if app.killed:
+        return
+    newline = keys.get("newline",True)
+    color = keys.get("color",None)
+    if color == 'suppress': return # New in 4.3.
+    if type(s) != type("") and type(s) != type(u""): # 1/20/03
+        s = repr(s)
+    for arg in args:
+        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
+            arg = repr(arg)
+        s = s + ", " + arg
+    if app.batchMode:
+        if app.log:
+            app.log.put(s)
+    else:
+        log = app.log
+        if log and not log.isNull:
+            # print 'g.es',s
+            log.put(s,color=color)
+            for ch in s:
+                if ch == '\n': log.newlines += 1
+                else: log.newlines = 0
+            if newline:
+                g.ecnl() # only valid here
+        elif newline:
+            app.logWaiting.append((s+'\n',color),)
+            # print s
+        else:
+            app.logWaiting.append((s,color),)
+            # print s,</t>
+<t tx="ekr.20050906104931.51">def es_print(s,*args,**keys):
+    
+    print g.toEncodedString(s,'ascii')
+    g.es(s,*args,**keys)
+    
+def test_g_es_print():
+    
+    g.es_print('\ntest of es_print: Ă',color='red')</t>
+<t tx="ekr.20050906104931.52">def es_trace(s,*args,**keys):
+    
+    g.trace(g.toEncodedString(s,'ascii'))
+    g.es(s,*args,**keys)
+    
+def test_g_es_trace():
+    
+    g.es_trace('\ntest of es_trace: Ă',color='red')</t>
+<t tx="ekr.20050906104931.53">def checkAllPythonCode(self,unittest=False,ignoreAtIgnore=True):
+    
+    c = self ; count = 0 ; result = "ok"
+
+    for p in c.all_positions_iter():
+        
+        count += 1
+        if not unittest:
+            &lt;&lt; print dots &gt;&gt;
+
+        if g.scanForAtLanguage(c,p) == "python":
+            if not g.scanForAtSettings(p) and (not ignoreAtIgnore or not g.scanForAtIgnore(c,p)):
+                try:
+                    c.checkPythonNode(p,unittest)
+                except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                    result = "error" # Continue to check.
+                except:
+                    import traceback ; traceback.print_exc()
+                    return "surprise" # abort
+                if unittest and result != "ok":
+                    print "Syntax error in %s" % p.cleanHeadString()
+                    return result # End the unit test: it has failed.
+            
+    if not unittest:
+        g.es("Check complete",color="blue")
+        
+    return result</t>
+<t tx="ekr.20050906104931.54">if count % 100 == 0:
+    g.es('.',newline=False)
+
+if count % 2000 == 0:
+    g.enl()</t>
+<t tx="ekr.20050906104931.55">def printChangedVars (self):
+
+    d = self.initValueDict
+    
+    for key in d.keys():
+        
+        data = d.get(key)
+        p,name,kind,val,getValueCallback = data
+        newVal = getValueCallback()
+        
+        if val != newVal:
+            name   = str(g.toEncodedString(name))
+            val    = str(g.toEncodedString(val))
+            newVal = str(g.toEncodedString(newVal))
+            print "%10s -&gt; %10s %s" % (val,newVal,name)</t>
+<t tx="ekr.20050906104931.56"></t>
+<t tx="ekr.20050906104931.57">@nocolor
+
+- Strip trailing blanks in get.
+- Many improvement to doOp.
+- Improved DoMultiline:
+    - Added special case logic to ensure '#' is preceded by space except at start of line.
+    - Added blank after multi-line string if needed.
+- Added lastName token for special-case handling depending on previous token.
+- No change to put, putArray or doName.</t>
+<t tx="ekr.20050906104931.58"></t>
+<t tx="ekr.20050906104931.59">def prettyPrintAllPythonCode (self,dump=False):
+
+    c = self ; pp = c.prettyPrinter(c)
+
+    for p in c.all_positions_iter():
+        
+        # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+        if g.scanForAtLanguage(c,p) == "python":
+
+            pp.prettyPrintNode(p,dump=dump)
+            
+    pp.endUndo()</t>
+<t tx="ekr.20050906104931.60">def prettyPrintPythonCode (self,p=None,dump=False):
+
+    c = self
+    
+    if p: root = p.copy()
+    else: root = c.currentPosition();
+    
+    pp = c.prettyPrinter(c)
+    
+    for p in root.self_and_subtree_iter():
+        
+        # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+        if g.scanForAtLanguage(c,p) == "python":
+    
+            pp.prettyPrintNode(p,dump=dump)
+          
+    pp.endUndo()</t>
+<t tx="ekr.20050906104931.61">def prettyPrintPythonNode (self,p=None,dump=False):
+
+    c = self
+    
+    if not p:
+        p = c.currentPosition()
+    
+    pp = c.prettyPrinter(c)
+
+    # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+    if g.scanForAtLanguage(c,p) == "python":
+        pp.prettyPrintNode(p,dump=dump)
+          
+    pp.endUndo()</t>
+<t tx="ekr.20050906104931.62">class prettyPrinter:
+    
+    @others</t>
+<t tx="ekr.20050906104931.63">def __init__ (self,c):
+    
+    self.array = []
+        # List of strings comprising the line being accumulated.
+        # Important: this list never crosses a line.
+    self.bracketLevel = 0
+    self.c = c
+    self.changed = False
+    self.dumping = False
+    self.erow = self.ecol = 0 # The ending row/col of the token.
+    self.lastName = None # The name of the previous token type.
+    self.line = 0 # Same as self.srow
+    self.lineParenLevel = 0
+    self.lines = [] # List of lines.
+    self.name = None
+    self.p = c.currentPosition()
+    self.parenLevel = 0
+    self.prevName = None
+    self.s = None # The string containing the line.
+    self.squareBracketLevel = 0
+    self.srow = self.scol = 0 # The starting row/col of the token.
+    self.startline = True # True: the token starts a line.
+    self.tracing = False
+    &lt;&lt; define dispatch dict &gt;&gt;</t>
+<t tx="ekr.20050906104931.64">self.dispatchDict = {
+    
+    "comment":    self.doMultiLine,
+    "dedent":     self.doDedent,
+    "endmarker":  self.doEndMarker,
+    "errortoken": self.doErrorToken,
+    "indent":     self.doIndent,
+    "name":       self.doName,
+    "newline":    self.doNewline,
+    "nl" :        self.doNewline,
+    "number":     self.doNumber,
+    "op":         self.doOp,
+    "string":     self.doMultiLine,
+}</t>
+<t tx="ekr.20050906104931.65">def clear (self):
+    self.lines = []</t>
+<t tx="ekr.20050906104931.66">def dumpLines (self,p,lines):
+
+    encoding = g.app.tkEncoding
+    
+    print ; print '-'*10, p.cleanHeadString()
+
+    if 0:
+        for line in lines:
+            line2 = g.toEncodedString(line,encoding,reportErrors=True)
+            print line2, # Don't add a trailing newline!
+    else:
+        for i in xrange(len(lines)):
+            line = lines[i]
+            line = g.toEncodedString(line,encoding,reportErrors=True)
+            print "%3d" % i, repr(lines[i])</t>
+<t tx="ekr.20050906104931.67">def dumpToken (self,token5tuple):
+
+    t1,t2,t3,t4,t5 = token5tuple
+    srow,scol = t3 ; erow,ecol = t4
+    line = str(t5) # can fail
+    name = token.tok_name[t1].lower()
+    val = str(t2) # can fail
+
+    startLine = self.line != srow
+    if startLine:
+        print "----- line",srow,repr(line)
+    self.line = srow
+
+    print "%10s (%2d,%2d) %-8s" % (name,scol,ecol,repr(val))</t>
+<t tx="ekr.20050906104931.68">def endUndo (self):
+    
+    c = self.c ; u = c.undoer ; undoType = 'Pretty Print'
+    current = c.currentPosition()
+    
+    if self.changed:
+        # Tag the end of the command.
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=self.dirtyVnodeList)</t>
+<t tx="ekr.20050906104931.69">def get (self):
+    
+    if self.lastName != 'newline' and self.lines:
+        # Strip the trailing whitespace from the last line.
+        self.lines[-1] = self.lines[-1].rstrip()
+    
+    return self.lines</t>
+<t tx="ekr.20050906104931.70">def prettyPrintNode(self,p,dump):
+
+    c = self.c
+    h = p.headString()
+    s = p.bodyString()
+    if not s: return
+    
+    readlines = g.readLinesGenerator(s).next
+
+    try:
+        self.clear()
+        for token5tuple in tokenize.generate_tokens(readlines):
+            self.putToken(token5tuple)
+        lines = self.get()
+
+    except tokenize.TokenError:
+        g.es("Error pretty-printing %s.  Not changed." % h, color="blue")
+        return
+
+    if dump:
+        self.dumpLines(p,lines)
+    else:
+        self.replaceBody(p,lines)</t>
+<t tx="ekr.20050906104931.71">def put (self,s,strip=True):
+    
+    """Put s to self.array, and strip trailing whitespace if strip is True."""
+    
+    if self.array and strip:
+        prev = self.array[-1]
+        if len(self.array) == 1:
+            if prev.rstrip():
+                # Stripping trailing whitespace doesn't strip leading whitespace.
+                self.array[-1] = prev.rstrip()
+        else:
+            # The previous entry isn't leading whitespace, so we can strip whitespace.
+            self.array[-1] = prev.rstrip()
+
+    self.array.append(s)</t>
+<t tx="ekr.20050906104931.72">def putArray (self):
+    
+    """Add the next text by joining all the strings is self.array"""
+    
+    self.lines.append(''.join(self.array))
+    self.array = []
+    self.lineParenLevel = 0</t>
+<t tx="ekr.20050906104931.73">def putNormalToken (self,token5tuple):
+
+    t1,t2,t3,t4,t5 = token5tuple
+    self.name = token.tok_name[t1].lower() # The token type
+    self.val = t2  # the token string
+    self.srow,self.scol = t3 # row &amp; col where the token begins in the source.
+    self.erow,self.ecol = t4 # row &amp; col where the token ends in the source.
+    self.s = t5 # The line containing the token.
+    self.startLine = self.line != self.srow
+    self.line = self.srow
+
+    if self.startLine:
+        self.doStartLine()
+
+    f = self.dispatchDict.get(self.name,self.oops)
+    self.trace()
+    f()
+    self.lastName = self.name</t>
+<t tx="ekr.20050906104931.74">def doEndMarker (self):
+    
+    self.putArray()</t>
+<t tx="ekr.20050906104931.75">def doErrorToken (self):
+    
+    self.array.append(self.val)
+
+    # This code is executed for versions of Python earlier than 2.4
+    if self.val == '@':
+        # Preserve whitespace after @.
+        i = g.skip_ws(self.s,self.scol+1)
+        ws = self.s[self.scol+1:i]
+        if ws:
+            self.array.append(ws)</t>
+<t tx="ekr.20050906104931.76">def doDedent (self):
+    
+    pass
+    
+def doIndent (self):
+    
+    self.array.append(self.val)
+</t>
+<t tx="ekr.20050906104931.77">def doMultiLine (self):
+
+    # Ensure a blank before comments not preceded entirely by whitespace.
+    
+    if self.val.startswith('#') and self.array:
+        prev = self.array[-1]
+        if prev and prev[-1] != ' ':
+            self.put(' ') 
+
+    # These may span lines, so duplicate the end-of-line logic.
+    lines = g.splitLines(self.val)
+    for line in lines:
+        self.array.append(line)
+        if line and line[-1] == '\n':
+            self.putArray()
+    
+    # Add a blank after the string if there is something in the last line.
+    if self.array:
+        line = self.array[-1]
+        if line.strip():
+            self.put(' ')
+            
+    # Suppress start-of-line logic.
+    self.line = self.erow</t>
+<t tx="ekr.20050906104931.78">def doName(self):
+    
+    # Ensure whitespace or start-of-line precedes the name.
+    if self.array:
+        last = self.array[-1]
+        ch = last[-1]
+        outer = self.parenLevel == 0 and self.squareBracketLevel == 0
+        chars = '@ \t{([.'
+        if not outer: chars += ',=&lt;&gt;*-+&amp;|/'
+        if ch not in chars:
+            self.array.append(' ')
+
+    self.array.append("%s " % self.val)
+
+    if self.prevName == "def": # A personal idiosyncracy.
+        self.array.append(' ') # Retain the blank before '('.
+
+    self.prevName = self.val</t>
+<t tx="ekr.20050906104931.79">def doNewline (self):
+
+    # Remove trailing whitespace.
+    # This never removes trailing whitespace from multi-line tokens.
+    if self.array:
+        self.array[-1] = self.array[-1].rstrip()
+
+    self.array.append('\n')
+    self.putArray()</t>
+<t tx="ekr.20050906104931.80">def doNumber (self):
+
+    self.array.append(self.val)
+</t>
+<t tx="ekr.20050906104931.81">def doOp (self):
+    
+    val = self.val
+    outer = self.lineParenLevel &lt;= 0 or (self.parenLevel == 0 and self.squareBracketLevel == 0)
+    # New in Python 2.4: '@' is an operator, not an error token.
+    if self.val == '@':
+        self.array.append(self.val)
+        # Preserve whitespace after @.
+        i = g.skip_ws(self.s,self.scol+1)
+        ws = self.s[self.scol+1:i]
+        if ws: self.array.append(ws)
+    elif val == '(':
+        # Nothing added; strip leading blank before function calls but not before Python keywords.
+        strip = self.lastName=='name' and not keyword.iskeyword(self.prevName)
+        self.put('(',strip=strip)
+        self.parenLevel += 1 ; self.lineParenLevel += 1
+    elif val in ('=','==','+=','-=','!=','&lt;=','&gt;=','&lt;','&gt;','&lt;&gt;','*','**','+','&amp;','|','/','//'):
+        # Add leading and trailing blank in outer mode.
+        s = g.choose(outer,' %s ','%s')
+        self.put(s % val)
+    elif val in ('^','~','{','['):
+        # Add leading blank in outer mode.
+        s = g.choose(outer,' %s','%s')
+        self.put(s % val)
+        if val == '[': self.squareBracketLevel += 1
+    elif val in (',',':','}',']',')'):
+        # Add trailing blank in outer mode.
+        s = g.choose(outer,'%s ','%s')
+        self.put(s % val)
+        if val == ']': self.squareBracketLevel -= 1
+        if val == ')':
+            self.parenLevel -= 1 ; self.lineParenLevel -= 1
+    # ----- no difference between outer and inner modes ---
+    elif val in (';','%'):
+        # Add leading and trailing blank.
+        self.put(' %s ' % val)
+    elif val == '&gt;&gt;':
+        # Add leading blank.
+        self.put(' %s' % val)
+    elif val == '&lt;&lt;':
+        # Add trailing blank.
+        self.put('%s ' % val)
+    elif val in ('-'):
+        # Could be binary or unary.  Or could be a hyphen in a section name.
+        # Add preceding blank only for non-id's.
+        if outer:
+            if self.array:
+                prev = self.array[-1].rstrip()
+                if prev and prev[-1] not in string.digits + string.letters:
+                    self.put(' %s' % val)
+                else: self.put(val)
+            else: self.put(val) # Try to leave whitespace unchanged.
+        else:
+            self.put(val)
+    else:
+        self.put(val)</t>
+<t tx="ekr.20050906104931.82">def doStartLine (self):
+    
+    before = self.s[0:self.scol]
+    i = g.skip_ws(before,0)
+    self.ws = self.s[0:i]
+     
+    if self.ws:
+        self.array.append(self.ws)</t>
+<t tx="ekr.20050906104931.83">def oops(self):
+    
+    print "unknown PrettyPrinting code: %s" % (self.name)</t>
+<t tx="ekr.20050906104931.84">def trace(self):
+    
+    if self.tracing:
+
+        g.trace("%10s: %s" % (
+            self.name,
+            repr(g.toEncodedString(self.val,"utf-8"))
+        ))</t>
+<t tx="ekr.20050906104931.85">def putToken (self,token5tuple):
+    
+    if self.dumping:
+        self.dumpToken(token5tuple)
+    else:
+        self.putNormalToken(token5tuple)</t>
+<t tx="ekr.20050906104931.86">def replaceBody (self,p,lines):
+    
+    c = self.c ; u = c.undoer ; undoType = 'Pretty Print'
+    
+    sel = c.frame.body.getInsertionPoint()
+    oldBody = p.bodyString()
+    body = string.join(lines,'')
+    
+    if oldBody != body:
+        if not self.changed:
+            # Start the group.
+            u.beforeChangeGroup(p,undoType)
+            self.changed = True
+            self.dirtyVnodeList = []
+        undoData = u.beforeChangeNodeContents(p)
+        p.setBodyStringOrPane(body)
+        dirtyVnodeList2 = p.setDirty()
+        self.dirtyVnodeList.extend(dirtyVnodeList2)
+        u.afterChangeNodeContents(p,undoType,undoData,dirtyVnodeList=self.dirtyVnodeList)
+    </t>
+<t tx="ekr.20050906105335">-------------
+
+|back| |leo| |next|</t>
+<t tx="ekr.20050906105946">-------------
+
+|back| |leo| |next|</t>
 </tnodes>
 </leo_file>
