@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="14618" clone_windows="0"/>
 <globals body_outline_ratio="0.578831312018">
-	<global_window_position top="-1" left="316" height="907" width="913"/>
+	<global_window_position top="25" left="429" height="907" width="1042"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1484,94 +1484,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
-<v t="ekr.20050903174637"><vh>Not used</vh>
-<v t="ekr.20050829191655" a="E"><vh>pdf files (there are many problems with pdf at present)</vh>
-<v t="ekr.20050829134901" a="E"><vh>@@rst directives.pdf</vh>
-<v t="ekr.20050829134901.1"><vh>@rst-no-head links</vh></v>
-<v t="ekr.20050829134901.2"><vh>@rst-ignore-node To do</vh></v>
-<v t="ekr.20050829134901.3"><vh>@rst-no-head Intro.</vh></v>
-<v t="ekr.20050829134901.4"><vh>Overview: the six ways of creating derived files</vh></v>
-<v t="ekr.20050829134901.5"><vh>Overview: summary of directives</vh>
-<v t="ekr.20050829134901.6"><vh>@rst-ignore-node alternate representation</vh></v>
-</v>
-<v t="ekr.20050829134901.7"><vh>Reference: all about directives</vh>
-<v t="ekr.20050829134901.8"><vh>@ and @doc</vh></v>
-<v t="ekr.20050829134901.9"><vh>@all</vh></v>
-<v t="ekr.20050829134901.10"><vh>@c and @code</vh></v>
-<v t="ekr.20050829134901.11"><vh>@color, @nocolor and @killcolor</vh></v>
-<v t="ekr.20050829134901.12"><vh>@comment</vh></v>
-<v t="ekr.20050829134901.13"><vh>@delims</vh></v>
-<v t="ekr.20050829134901.14"><vh>@encoding</vh></v>
-<v t="ekr.20050829134901.15"><vh>@first</vh></v>
-<v t="ekr.20050829134901.16"><vh>@ignore</vh></v>
-<v t="ekr.20050829134901.17"><vh>@language</vh></v>
-<v t="ekr.20050829134901.18"><vh>@last</vh></v>
-<v t="ekr.20050829134901.19"><vh>@lineending</vh></v>
-<v t="ekr.20050829134901.20"><vh>@others</vh></v>
-<v t="ekr.20050829134901.21"><vh>@path</vh></v>
-<v t="ekr.20050829134901.22"><vh>@pagewidth</vh></v>
-<v t="ekr.20050829134901.23"><vh>@tabwidth</vh></v>
-<v t="ekr.20050829134901.24"><vh>@raw and @end_raw</vh></v>
-<v t="ekr.20050829134901.25"><vh>@root-code and @root-doc</vh></v>
-<v t="ekr.20050829134901.26"><vh>@verbose, @terse, @quiet and @silent</vh></v>
-<v t="ekr.20050829134901.27"><vh>@wrap and @nowrap</vh></v>
-</v>
-<v t="ekr.20050829134901.28" a="E"><vh>Reference: the six ways of creating derived files</vh>
-<v t="ekr.20050829134901.29"><vh> @file and @thin</vh></v>
-<v t="ekr.20050829134901.30"><vh> @nosent</vh></v>
-<v t="ekr.20050829134901.31"><vh> @asis and @noref</vh></v>
-<v t="ekr.20050829134901.32" a="EM"><vh> @root</vh>
-<v t="ekr.20050829134901.33"><vh>Sections and section definitions</vh></v>
-<v t="ekr.20050829134901.34"><vh>Tangling @root trees with the Tangle commands</vh></v>
-<v t="ekr.20050829134901.35"><vh>Untangling @root trees with the Untangle commands</vh></v>
-</v>
-</v>
-<v t="ekr.20050829134901.36"><vh>Cweb mode</vh>
-<v t="ekr.20050829140911"><vh>@rst-ignore-node original</vh></v>
-</v>
-<v t="ekr.20050829134901.37"><vh>@rst-no-head end stuff</vh></v>
-</v>
-<v t="ekr.20050813102008.1"><vh>@@rst rstplugin3.pdf</vh>
-<v t="ekr.20050813102008.2"><vh>@rst-no-head links</vh></v>
-<v t="ekr.20050813102008.3"><vh>Overview</vh></v>
-<v t="ekr.20050813102008.4"><vh>Comparison with previous rst plugins</vh></v>
-<v t="ekr.20050813102008.5" a="M"><vh>Options</vh>
-<v t="ekr.20050814093016"><vh>Options supporting the http plugin</vh></v>
-<v t="ekr.20050816051911"><vh>Options that set command names</vh></v>
-</v>
-<v t="ekr.20050813102008.6"><vh>Headline Commands</vh></v>
-<v t="ekr.20050813102008.7"><vh>Using doc parts</vh></v>
-<v t="ekr.20050813102008.9"><vh>Setting defaults</vh></v>
-<v t="ekr.20050813102008.10"><vh>The code-block directive</vh></v>
-<v t="ekr.20050813102008.11"><vh>Required cascading style sheets</vh></v>
-<v t="ekr.20050813102008.12"><vh>Notes about rST markup</vh></v>
-<v t="ekr.20050813102008.14"><vh>Examples</vh></v>
-<v t="ekr.20050814144727"><vh>Theory of operation</vh></v>
-<v t="ekr.20050813102008.13"><vh>@rst-no-head end stuff</vh>
-<v t="ekr.20050813102008.15"><vh>Acknowledgements</vh></v>
-</v>
-<v t="ekr.20050822081728"><vh>@rst-ignore-tree Footnotes</vh></v>
-<v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
-<v t="edream.110203163054.1654"><vh>100's administering Leaps (and LeoCon)</vh>
-<v t="edream.110203163054.1655"><vh>Leap 102: LeoCon 1</vh></v>
-</v>
-<v t="edream.110203163054.1656"><vh>200's single-user Leo</vh>
-<v t="edream.110203163054.1657"><vh>Leap 201. (Finished)  Represent clones as shared trees of vnodes</vh></v>
-<v t="edream.110203163054.1658"><vh>Leap 202. (Finished) Create cvs-friendly file format for derived files</vh></v>
-<v t="edream.110203163054.1659"><vh>Leap 203. (Finished) Use Python Mega Widgets</vh></v>
-</v>
-<v t="edream.110203163054.1661"><vh>300's LeoN and beyond</vh>
-<v t="edream.110203163054.1662"><vh>Leap 301: Use central server</vh></v>
-<v t="edream.110203163054.1663"><vh>Leap 302: Resolve CVS Conflicts command</vh>
-<v t="edream.110203163054.1664"><vh>Comments by Josef</vh></v>
-</v>
-</v>
-</v>
+<v t="ekr.20040414161647" a="ETV"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -1649,12 +1562,13 @@
 <v t="ekr.20050830115714.116"><vh>How can I show Leo files with Excel?</vh></v>
 </v>
 <v t="ekr.20050830115714.76"><vh>Trouble shooting</vh>
+<v t="ekr.20050906090012"><vh>How can I run Leo from a console window?</vh></v>
 <v t="ekr.20050830115714.9"><vh>Some characters in derived files look funny. What can I do?</vh></v>
 <v t="ekr.20050830115714.10"><vh>Some characters are garbled when importing files. What can I do?</vh></v>
 <v t="ekr.20050830115714.17"><vh>I can't write Imported files.  What's going on?</vh></v>
 <v t="ekr.20050830115714.75"><vh>Leo is hanging on my Linux box.  What should I do?</vh></v>
 <v t="ekr.20050830115714.114"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
-<v t="ekr.20050830115714.115"><vh>The rst plugins sometimes crash.  What can I do?</vh></v>
+<v t="ekr.20050830115714.115" a="M"><vh>Error messages from the rst3 plugin aren't helpful. What can I do?</vh></v>
 <v t="ekr.20050830115714.117"><vh>The new Python decorator syntax causes problems.  What can I do?</vh></v>
 </v>
 </v>
@@ -1683,7 +1597,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.2"><vh>Chapter 1: Installing Leo</vh>
-<v t="edream.110203163054.48" a="E"><vh>@rst install.html</vh>
+<v t="edream.110203163054.48"><vh>@rst install.html</vh>
 <v t="ekr.20050901110110"><vh>@rst-no-head links</vh></v>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
 <v t="edream.110203163054.50"><vh>How to install Leo on Linux</vh></v>
@@ -1693,12 +1607,12 @@
 <v t="ekr.20050225070247.1"><vh>How to create MacOS X .pkg files</vh></v>
 <v t="edream.110203163054.60"><vh>How to associate Leo with .leo files on Windows</vh></v>
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
-<v t="ekr.20050901174937" a="E"><vh>Running Leo</vh></v>
+<v t="ekr.20050901174937"><vh>Running Leo</vh></v>
 </v>
 </v>
-<v t="ekr.20050831195331.3" a="E"><vh>Chapter 2: A Tutorial Introduction to Leo</vh>
-<v t="ekr.20050816073412" a="E"><vh>@rst intro.html</vh>
-<v t="ekr.20050816073814" a="TV"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20050831195331.3"><vh>Chapter 2: A Tutorial Introduction to Leo</vh>
+<v t="ekr.20050816073412"><vh>@rst intro.html</vh>
+<v t="ekr.20050816073814"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050816073412.1"><vh>Introduction</vh>
 <v t="ekr.20050822173420"><vh>Leo's main window</vh></v>
 <v t="ekr.20050823082517"><vh>Using Leo as an outliner</vh></v>
@@ -1707,7 +1621,7 @@
 <v t="ekr.20050822173420.1"><vh>Derived files</vh></v>
 <v t="ekr.20050822173420.2"><vh>Clones &amp; views</vh></v>
 <v t="ekr.20050827055403"><vh>Outline structure is significant everywhere</vh></v>
-<v t="ekr.20050822173420.3" a="E"><vh>Leo directives</vh></v>
+<v t="ekr.20050822173420.3"><vh>Leo directives</vh></v>
 </v>
 <v t="ekr.20050827102655"><vh>Leo for Programmers</vh>
 <v t="ekr.20050827090532"><vh>Quick start for programmers</vh></v>
@@ -1749,7 +1663,7 @@
 </v>
 </v>
 <v t="ekr.20050831184021.5"><vh>Chapter 4: Programming with Leo</vh>
-<v t="ekr.20050828061213" a="E"><vh>@rst directives.html</vh>
+<v t="ekr.20050828061213"><vh>@rst directives.html</vh>
 <v t="ekr.20050828160132"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050828065955"><vh>@rst-ignore To do</vh></v>
 <v t="ekr.20050828061501.1"><vh>@rst-no-head Intro.</vh></v>
@@ -1757,7 +1671,7 @@
 <v t="ekr.20050828211507"><vh>Overview: summary of directives</vh>
 <v t="ekr.20050829083129"><vh>@rst-ignore alternate representation</vh></v>
 </v>
-<v t="ekr.20050828061501.30" a="E"><vh>Reference: all about directives</vh>
+<v t="ekr.20050828061501.30"><vh>Reference: all about directives</vh>
 <v t="ekr.20050828173234"><vh>@ and @doc</vh></v>
 <v t="ekr.20050828061501.31"><vh>@all</vh></v>
 <v t="ekr.20050828173234.1"><vh>@c and @code</vh></v>
@@ -1973,11 +1887,96 @@
 </v>
 </v>
 <v t="EKR.20040524104904.380"><vh>Glossary</vh>
-<v t="ekr.20050901071041" a="E"><vh>@rst glossary.html</vh>
+<v t="ekr.20050901071041"><vh>@rst glossary.html</vh>
 <v t="ekr.20050901071300"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050901073048" a="M"><vh>@rst-no-head glossary</vh></v>
 <v t="ekr.20050901083017"><vh>@rst-no-head end stuff</vh></v>
 </v>
+</v>
+<v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
+<v t="edream.110203163054.1654"><vh>100's administering Leaps (and LeoCon)</vh>
+<v t="edream.110203163054.1655"><vh>Leap 102: LeoCon 1</vh></v>
+</v>
+<v t="edream.110203163054.1656"><vh>200's single-user Leo</vh>
+<v t="edream.110203163054.1657"><vh>Leap 201. (Finished)  Represent clones as shared trees of vnodes</vh></v>
+<v t="edream.110203163054.1658"><vh>Leap 202. (Finished) Create cvs-friendly file format for derived files</vh></v>
+<v t="edream.110203163054.1659"><vh>Leap 203. (Finished) Use Python Mega Widgets</vh></v>
+</v>
+<v t="edream.110203163054.1661"><vh>300's LeoN and beyond</vh>
+<v t="edream.110203163054.1662"><vh>Leap 301: Use central server</vh></v>
+<v t="edream.110203163054.1663"><vh>Leap 302: Resolve CVS Conflicts command</vh>
+<v t="edream.110203163054.1664"><vh>Comments by Josef</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20050903174637"><vh>Not used (pdf sources)</vh>
+<v t="ekr.20050829134901"><vh>@@rst directives.pdf</vh>
+<v t="ekr.20050829134901.1"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20050829134901.2"><vh>@rst-ignore-node To do</vh></v>
+<v t="ekr.20050829134901.3"><vh>@rst-no-head Intro.</vh></v>
+<v t="ekr.20050829134901.4"><vh>Overview: the six ways of creating derived files</vh></v>
+<v t="ekr.20050829134901.5"><vh>Overview: summary of directives</vh>
+<v t="ekr.20050829134901.6"><vh>@rst-ignore-node alternate representation</vh></v>
+</v>
+<v t="ekr.20050829134901.7"><vh>Reference: all about directives</vh>
+<v t="ekr.20050829134901.8"><vh>@ and @doc</vh></v>
+<v t="ekr.20050829134901.9"><vh>@all</vh></v>
+<v t="ekr.20050829134901.10"><vh>@c and @code</vh></v>
+<v t="ekr.20050829134901.11"><vh>@color, @nocolor and @killcolor</vh></v>
+<v t="ekr.20050829134901.12"><vh>@comment</vh></v>
+<v t="ekr.20050829134901.13"><vh>@delims</vh></v>
+<v t="ekr.20050829134901.14"><vh>@encoding</vh></v>
+<v t="ekr.20050829134901.15"><vh>@first</vh></v>
+<v t="ekr.20050829134901.16"><vh>@ignore</vh></v>
+<v t="ekr.20050829134901.17"><vh>@language</vh></v>
+<v t="ekr.20050829134901.18"><vh>@last</vh></v>
+<v t="ekr.20050829134901.19"><vh>@lineending</vh></v>
+<v t="ekr.20050829134901.20"><vh>@others</vh></v>
+<v t="ekr.20050829134901.21"><vh>@path</vh></v>
+<v t="ekr.20050829134901.22"><vh>@pagewidth</vh></v>
+<v t="ekr.20050829134901.23"><vh>@tabwidth</vh></v>
+<v t="ekr.20050829134901.24"><vh>@raw and @end_raw</vh></v>
+<v t="ekr.20050829134901.25"><vh>@root-code and @root-doc</vh></v>
+<v t="ekr.20050829134901.26"><vh>@verbose, @terse, @quiet and @silent</vh></v>
+<v t="ekr.20050829134901.27"><vh>@wrap and @nowrap</vh></v>
+</v>
+<v t="ekr.20050829134901.28"><vh>Reference: the six ways of creating derived files</vh>
+<v t="ekr.20050829134901.29"><vh> @file and @thin</vh></v>
+<v t="ekr.20050829134901.30"><vh> @nosent</vh></v>
+<v t="ekr.20050829134901.31"><vh> @asis and @noref</vh></v>
+<v t="ekr.20050829134901.32" a="M"><vh> @root</vh>
+<v t="ekr.20050829134901.33"><vh>Sections and section definitions</vh></v>
+<v t="ekr.20050829134901.34"><vh>Tangling @root trees with the Tangle commands</vh></v>
+<v t="ekr.20050829134901.35"><vh>Untangling @root trees with the Untangle commands</vh></v>
+</v>
+</v>
+<v t="ekr.20050829134901.36"><vh>Cweb mode</vh>
+<v t="ekr.20050829140911"><vh>@rst-ignore-node original</vh></v>
+</v>
+<v t="ekr.20050829134901.37"><vh>@rst-no-head end stuff</vh></v>
+</v>
+<v t="ekr.20050813102008.1"><vh>@@rst rstplugin3.pdf</vh>
+<v t="ekr.20050813102008.2"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20050813102008.3"><vh>Overview</vh></v>
+<v t="ekr.20050813102008.4"><vh>Comparison with previous rst plugins</vh></v>
+<v t="ekr.20050813102008.5" a="M"><vh>Options</vh>
+<v t="ekr.20050814093016"><vh>Options supporting the http plugin</vh></v>
+<v t="ekr.20050816051911"><vh>Options that set command names</vh></v>
+</v>
+<v t="ekr.20050813102008.6"><vh>Headline Commands</vh></v>
+<v t="ekr.20050813102008.7"><vh>Using doc parts</vh></v>
+<v t="ekr.20050813102008.9"><vh>Setting defaults</vh></v>
+<v t="ekr.20050813102008.10"><vh>The code-block directive</vh></v>
+<v t="ekr.20050813102008.11"><vh>Required cascading style sheets</vh></v>
+<v t="ekr.20050813102008.12"><vh>Notes about rST markup</vh></v>
+<v t="ekr.20050813102008.14"><vh>Examples</vh></v>
+<v t="ekr.20050814144727"><vh>Theory of operation</vh></v>
+<v t="ekr.20050813102008.13"><vh>@rst-no-head end stuff</vh>
+<v t="ekr.20050813102008.15"><vh>Acknowledgements</vh></v>
+</v>
+<v t="ekr.20050822081728"><vh>@rst-ignore-tree Footnotes</vh></v>
+<v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
 </v>
 </vnodes>
@@ -2818,31 +2817,34 @@ Settings command.</t>
 
 </t>
 <t tx="EKR.20040524104904.161"></t>
-<t tx="EKR.20040524104904.162">The following paragraphs discuss the main benefits of traditional literate programming.
+<t tx="EKR.20040524104904.162">The following paragraphs discuss the main benefits of traditional `literate programming`_.
 **Note**: none of these benefits depends on printed output.
 
-**Literate programming creates a new design dimension**.
-Sections add a new dimension to the design and coding process. Choices about
-what sections do, what they are named, what order they appear in, are choices in
-a design space different from "normal" programming. This an abstract concept, to
-be sure. However, the following concrete discussions are really manifestation of
-working in this new design space.
-
 **Design and coding happen at the highest possible level**.
-The names of sections are constrained only by one's design skill, not by any
+The names of sections_ are constrained only by one's design skill, not by any
 rules of language. You say what you mean, and that becomes both the design and
-the code. You never have to simulate a concept because concepts become section
-names.
+the code. You never have to simulate a concept because concepts become `section
+names`_.
 
 **The visual weight of code is separate from its actual length**.
-The visual weight of a web section is simply the length and complexity of the section's name, regardless of how complex the actual definition of the section is. The results of this separation are spectacular. No longer is one reluctant to do extensive error handling (or any other kind of minutia) for fear that it would obscure the essence of the program. Donald Knuth stresses this aspect of literate programming and I fully agree.
+The visual weight of a section_ is simply the length and complexity of the
+`section name`_, regardless of how complex the actual definition of the section
+is. The results of this separation are spectacular. No longer is one reluctant
+to do extensive error handling (or any other kind of minutia) for fear that it
+would obscure the essence of the program. Donald Knuth stresses this aspect of
+literate programming and I fully agree.
 
 **Sections show relations between snippets of code**.
-Sections can show and enforce relationships between apparently unrelated pieces of code. Comments, macros or functions are other ways to indicate such relationships, but often sections are ideal. Indeed, a natural progression is to create sections as a matter of course. I typically convert a section to a function only when it becomes apparent that a function's greater generality outweighs the inconvenience of having to declare and define the function.
+Sections_ can show and enforce relationships between apparently unrelated pieces
+of code. Comments, macros or functions are other ways to indicate such
+relationships, but often sections are ideal. Indeed, a natural progression is to
+create sections as a matter of course. I typically convert a section to a
+function only when it becomes apparent that a function's greater generality
+outweighs the inconvenience of having to declare and define the function.
 
 **Complex section names invite improvements**.
-A section name is complex when it implies unwholesome dependencies between the
-caller (user) of the section and the section itself. Such section names tend to
+A `section name`_ is complex when it implies unwholesome dependencies between the
+caller (user) of the section and the section_ itself. Such section names tend to
 be conspicuous, so that the programmer is lead to revise both the section name
 and its purpose. Many times my attention has been drawn to a poorly conceived
 section because I didn't like what its name implied. I have always been able to
@@ -2850,20 +2852,20 @@ revise the code to improve the design, either by splitting a section into parts
 or be simplifying its relation to colleagues.
 
 **Sections create a place for extensive comments**.
-One of the most surprising thing about literate programming is how severely
+One of the most surprising thing about `literate programming`_ is how severely
 traditional programming tends to limit comments. In a conventional program the
 formatting of code must indicate structure, and comments obscure that
-formatting. Sections in literate programming provide a place for lengthy
-comments that do not clutter up the code at the place the section is
-referenced.
+formatting. Sections_ in literate programming provide a place for lengthy
+comments that do not clutter the code at the place the section is
+referenced_.
 
 **Section names eliminate mundane comments**.
-The section name often says it all. The reference to the section says everything
+The `section name`_ often says it all. The reference_ to the section says everything
 that the user needs to know, and the section name at the point of definition
 also eliminates the need for many comments.
 
 **Sections create comments automatically**.
-A typical root starts out with something like::
+A typical `@root node`_ starts out with something like::
 
 	&lt;&lt; includes for class x &gt;&gt;
 	&lt;&lt; private data for class x &gt;&gt;
@@ -2876,14 +2878,14 @@ In the derived file there is a comment that looks like this::
 
 It would be silly to write this comment by hand, though often programmers do
 just that in order to have a place holder for a mark in the source file. With
-literate programming the situation is different: the comment indicates that the
-code came from a particular section; that is, the comment servers a real
+`literate programming`_ the situation is different: the comment indicates that the
+code came from a particular section_; that is, the comment servers a real
 purpose.
 
 **Literate programming clarifies the shape of code**.
 These last several paragraphs have discussed comments in detail because the net
 effect of "putting comments where they belong" is that comments don't clutter
-the code. Section references hide irrelevant detail, so larger-scale patterns
+the code. `Section references`_ hide irrelevant detail, so larger-scale patterns
 within functions (or declarations) become more apparent. Often just recasting
 code into web format has created Aha's about my own code, with no special
 attention to recoding or redesign! Recasting a function as a web raises the real
@@ -2894,26 +2896,32 @@ Formatting no longer has to indicate overall design; sections do that. I am less
 obsessive about formatting code; it simply doesn't matter much whether different
 sections are formatted consistently because the format of one section has no
 effect on the look of other sections. Also, I don't worry about most line breaks
-within documentation parts, or about adding comment delimiters.</t>
-<t tx="EKR.20040524104904.173">Outlines add something brand new to traditional literate programming, namely an
+within `documentation parts`, or about adding comment delimiters.
+
+**Literate programming creates a new design dimension**.
+Sections_ add a new dimension to the design and coding process. Choices about
+what sections do, what they are named, what order they appear in, are choices in
+a design space different from "normal" programming. This an abstract concept, to
+be sure. However, the previous paragraphs are really a manifestation of
+working in this new design space.</t>
+<t tx="EKR.20040524104904.173">Outlines_ add something brand new to traditional `literate programming`_, namely an
 explicit mechanism for expressing structure at any level of detail, from largest
 overall view to smallest detail. The following paragraphs elaborate on this theme.
 
 **Outlines add context**.
-By far the biggest drawback of conventional literate programming is that there
-are so many sections. It becomes difficult to understand the relationships
-between sections. Using an outline to express a literate programming instantly
-solves this problem. The programmer is always aware of how sections are
-related.
+There are too many sections_ in conventional `literate programming`. It becomes
+difficult to understand the relationships between sections. Using an outline_ to
+express a literate programming instantly solves this problem. The programmer is
+always aware of how sections are related.
 
 **Outlines provide scope for commands**.
-Outlines provide a convenient way of expressing the intended scope of commands.
-For example, the Tangle command operates only on the presently selected tree.
-The Extract Section command creates a new section as the last child of the
-present node.
+Outlines_ provide a convenient way of expressing the intended scope of commands.
+For example, the ``Tangle`` command operates only on the presently selected tree_.
+The ``Extract Section`` command creates a new section_ as the last child_ of the
+present node_.
 
 **Clones create different views and focus attention**.
-Clones can create different view of the outline. An outline can contain many such views.
+Clones_ can create different views of the outline. An outline_ can contain many such views.
 `Clones &amp; views`_ discusses the implications of clones in detail.
 
 **Outlines increase flexibility**.
@@ -2926,16 +2934,14 @@ changing the meaning of the code.
 **Outlines express hierarchy directly**.
 Hierarchy is often implicit in programming: for example, the grouping of
 functions into files, or the organization of a single file as a set of
-functions, etc. An outline directly expresses hierarchy. Many of Leo's commands
+functions, etc. An outline_ directly expresses hierarchy. Many of Leo's commands_
 operate on the presently selected node. It is natural to apply operations on
-selected parts of the outline. Traditional literate programming often simulates
-the hierarchy using "bridge" comments. Those comments are far weaker than
-explicit structure. Experience with the Print command clearly shows that a clear
-literate outline can easily become unintelligible when printed, no matter how
-"beautiful" the typeset printout is. Experience shows that organizational
-crutches such as printed listings, tables of contents and indices are much less
-clear than the corresponding outline. You could say the entire outline is a
-table of contents!
+selected node_ of the outline.
+
+**reStructuredText is much easier to use than CWEB markup.**
+Leo's `rst3 plugin`_ makes it easy to use reStructuredText_ (rST) instead of CWEB_
+markup. For most purposes, rST suffices, and rST is much easier to use and less
+intrusive than CWEB_.
 
 **Outlines create new design dimensions**.
 There are many ways to express a program as a Leo outline. Such choices are
@@ -2944,22 +2950,26 @@ choices. They simply can not be expressed at all in other editors. In other
 words, such choices exist in a new design space. 
 
 **Leo improves tangling and adds untangling**.
-Tangling and untangling are fundamental operations of literate programming.
-Leo tangles and untangles files derived from ``@file`` trees automatically. This
+Tangling_ and untangling_ are fundamental operations of `literate programming`_.
+Leo tangles and untangles files derived from `@file trees`_ automatically. This
 is an important convenience.</t>
 <t tx="EKR.20040524104904.181">Leo changes the theory and practice of literate programming as follows:
 
 **Leo reduces the need for comments**.
 In particular, bridge or transition phrases are almost always unnecessary in a
-Leo outline. One never needs to say something like, "having just finished
+Leo outline_. One never needs to say something like, "having just finished
 with topic x, we turn now to topic y." Leo's outlines tend to be far less
 chatty than flat literate programs.
 
-**Leo shows that printed listings are not necessary to understand webs.**
-No printed listing can be as clear as Leo's outline view. It is possible to make
-printed listings intelligible by adding "context lines" that show the outline
-context of a section definition. Without such context lines a literate program
-must rely on extensive bridge comments.
+**Leo reduces the need for printed listings**.
+Experience with the ``Weave`` command shows that an outline can easily become
+unintelligible when printed, no matter how "beautiful" the typeset printout is.
+No printed listing can be as clear as Leo's outline view.
+
+**Leo reduces the need for indices and tables of contents**.
+You could say the entire outline is a table of contents. Moreover, sections_
+must always be defined in a descendant of the node_ containing the `section
+reference`_, so there is very little need for an index. 
 
 **Leo shows that outline structure is more powerful than narrative.**
 Indeed, narrative style creates severe maintenance problems. The narrative is
@@ -10476,8 +10486,8 @@ for that frame::
 These are the sources for the html version of Leo's users guide,
 as well as the documentation for the rst3 plugin used to create the actual html files.
 
-These sources contain rST (reStructuredText) markup that is easy to read.
-See http://docutils.sourceforge.net/docs/user/rst/quickstart.html for an introduct to rST.
+These sources contain reStructuredText_ (rST) markup that is easy to read.
+See http://docutils.sourceforge.net/docs/user/rst/quickstart.html for an introduction to rST.
 
 To create the html files, choose one of the @rst nodes and run the rst3 plugin
 by clicking on the blue 'rst' button in the icon area.
@@ -14477,7 +14487,7 @@ The body text of this node is its definition.  For example::
     import leoGlobals as g
     import sys
 
-As you can see, section defintions can be *fragments* of code;
+As you can see, section definitions can be *fragments* of code;
 they don't have to be complete functions or methods.
 
 **Notes**:
@@ -16573,7 +16583,6 @@ By default, cweb colors ``@``, ``@*`` and ``@**`` sections using the same syntax
 In addition, cweb colors ``C`` ``//`` and ``/*..*/`` comments using ``LaTeX`` coloring by default.
 You may change these defaults using the
 ``color_cweb_doc_parts_with_latex`` and ``color_cweb_comments_with_latex`` settings.</t>
-<t tx="ekr.20050829191655"></t>
 <t tx="ekr.20050830074716">@ @rst-options
 code_mode=False
 generate_rst=True
@@ -17071,6 +17080,15 @@ You have two options:
 -   The cvs repository contains "reference" .leo files.
     These reference files should containing nothing but ``@thin`` nodes.
     Reference files will change only when new derived files get added to the project.
+
+    **Important**:
+    Leo's cvs repository contains the *reference* versions of the following .leo files:
+    ``LeoPyRef.leo`` and ``LeoPluginsRef.leo``.
+    However,  Leo's distributions contain the *non-reference* versions of those files:
+    ``LeoPy.leo`` and ``LeoPlugins.leo``.
+    These two files have many ``@thin`` nodes.
+    There is no reference file for ``test.leo`` even though it contains ``@thin leoTest.py``.
+    It would be clumsy to use testRef.leo, and there is less need to do so.
     
 -   Developers will use local copies of reference files for their own work.
     For example, instead of using ``LeoPyRef.leo`` directly,
@@ -17322,10 +17340,50 @@ I'm still working on that.
 I'm also not able to get xmodmap to make this change during X11 startup
 (again because of conflicts with xdb).
 But I'm working on that as well.</t>
-<t tx="ekr.20050830115714.115">Python's docutils module 'reports' syntax errors in rst markup by crashing.
-Obviously, this is not great, but it's not really the fault of the rst plugins.
-You can isolate rst syntax errors by reducing your input files until they work again,
-then adding sections until you get a crash.</t>
+<t tx="ekr.20050830115714.115">For the most part, docutils does a good job of reporting errors. docutils prints
+a message to the console and inserts an unmistakable error message in the
+generated .html file.  **Important**: On Windows it is helpful to `Run Leo from a console window`_.
+
+However, in some cases, docutils crashes instead of properly reporting the
+problem. There are several workarounds:
+
+1.  The crashes I have seen arise from the following bug in docutils.
+    **Hyperlinks in image:: markup must be lower case**.  This will work::
+
+        .. |back| image:: arrow_lt.gif
+            :target: faq_
+
+    This will **crash**::
+
+        .. |back| image:: arrow_lt.gif
+            :target: FAQ_
+
+    So avoid this crash by making sure to use lower case targets in ``:target:`` markup.
+
+2.  You can change docutils source slightly so that it prints a traceback when it
+    crashes. (The rst3 plugin should be able to do this, but I haven't figured
+    out how yet.) It's easy enough to do this:
+
+    - Find the file ``core.py`` in top-level ``docutils`` folder.
+      Typically this folder will be in Python's ``site-packages`` folder.
+
+    - Open ``core.py`` in some editor other than Leo.
+
+    - Find the method called ``report_Exceptions``.
+
+    - Insert the following lines at the very start of this method::
+
+        print 'EKR: added traceback'
+        import traceback ; traceback.print_exc()
+
+    This will cause a traceback whenever docutils crashes.
+    I have found that such tracebacks are generally enough to locate the general area of the problem.
+    **Note**: These tracebacks go to the console window,
+    so you should `Run Leo from a console window`_.
+
+3.  As a last resort, you can isolate syntax errors by reducing your input files until they work again,
+    then adding sections until you get a crash.
+    This is easy enough to do (when using the rst3 plugin) by change a headline ``x`` to ``@rst-ignore-tree x``.</t>
 <t tx="ekr.20050830115714.116">From: http://sourceforge.net/forum/message.php?msg_id=3240374
 Using Leo's ``File-Export-Flatten Outline`` commands creates a ``MORE`` style outline which places
 all Leo body sections on the left margin.
@@ -17418,6 +17476,10 @@ Flash file gets mapped to an &lt;embed&gt; tag, etc).</t>
 
 .. _`CWEB`:         http://www-cs-faculty.stanford.edu/~knuth/cweb.html
 .. _`CWEB mode`:    http://webpages.charter.net/edreamleo/directives.html#cweb-mode
+
+.. _`Run Leo from a console window`: `How can I run Leo from a console window?`_
+
+.. _`Associating Leo with .leo Files`: http://webpages.charter.net/edreamleo/install.html#how-to-associate-leo-with-leo-files-on-windows
 
 .. _quotes:         http://webpages.charter.net/edreamleo/testimonials.html
 .. _toc:            http://webpages.charter.net/edreamleo/leo_TOC.html
@@ -17595,9 +17657,11 @@ Glossary
 .. _home:           http://webpages.charter.net/edreamleo/front.html
 .. _appendices:     http://webpages.charter.net/edreamleo/appendices.html
 
-.. _`CWEB language`:    http://www-cs-faculty.stanford.edu/~knuth/cweb.html
-.. _`noweb language`:   http://www.eecs.harvard.edu/~nr/noweb/
-.. _`Quick start for programmers`:   http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
+.. _`CWEB language`:                http://www-cs-faculty.stanford.edu/~knuth/cweb.html
+.. _`noweb language`:               http://www.eecs.harvard.edu/~nr/noweb/
+.. _`Quick start for programmers`:  http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
+.. _`rST primer`:                   http://docutils.sourceforge.net/docs/user/rst/quickstart.html
+.. _`Writing plugins and hooks`:    http://webpages.charter.net/edreamleo/customizing.html#writing-plugins-and-hooks
 
 .. |prev| image:: arrow_lt.gif
 	:target: appendices_
@@ -17781,6 +17845,12 @@ For example, an `@root node`_ is a node containing an @root directive_, etc.
 .. _`icon box`:
 .. _`icon boxes`:
 
+.. _`LaTex`:
+
+``LaTex``
+    A markup language often used in `literate programming` environments.
+    See: http://www.latex-project.org/
+
 ``Icon box``
     An icon just to the left of `headline text`_ of a node_ indicating whether the node is cloned, marked or dirty,
     and indicating whether the node contains `body text`_.
@@ -17887,16 +17957,39 @@ For example, an `@root node`_ is a node containing an @root directive_, etc.
 ``pdf file``
     A file that can be read by Adobe Acrobat.
 
+.. _`plugin`:
+
+``Plugin``
+    - A Python file in Leo's ``plugins`` folder.
+    - A way to modify and extend Leo without changing Leo's core code.
+      ``leoPlugins.leo`` contains all of Leo's official plugins.
+
+    See `Writing plugins and hooks`.
+
 .. _`promote`:
 
 ``Promote``
     To move all children_ of a node_ in an outline so that they become siblings_ of the node.
 
+.. _reStructuredText:
+.. _rST:
+
+``_reStructuredText (rST)``
+    A simple, yet powerful markup language for creating .html, or LaTeX output files.
+    See the `rST primer`_.
+
 .. _`root`:
 .. _`root node`:
 
 ``Root``
-    The first node_ of a .leo file.
+    - The first node_ of a .leo file.
+    - The first node of an `@root tree`_ or `@file tree`_.
+
+.. _`rst3 plugin`:
+
+``rST plugin``
+    A plugin_ that supports reStructuredText_.
+    Unlike previous rst plugins, the rst3 plugin supports per-node options.
 
 .. _`scope`:
 
@@ -17931,6 +18024,9 @@ For example, an `@root node`_ is a node containing an @root directive_, etc.
 
 .. _`section reference`:
 .. _`section references`:
+.. _`reference`:
+.. _`references`:
+.. _`referenced`:
 
 ``Section reference``
     A `section name`_ appearing in a `code part`_. Tangling_ replaces all references by their definitions.
@@ -18200,7 +18296,7 @@ verbose=True
 Chapter 6: Leo and Literate Programming
 ##########################################
 
-This chapter discusses Leo's relationship with traditional literate programming.
+This chapter discusses Leo's relationship with traditional `literate programming`_.
 
 .. contents::</t>
 <t tx="ekr.20050901101608.4">@ @rst-options
@@ -18303,7 +18399,31 @@ This chapter will be of use primarily to those wanting to change Leo's code.
 .. _`Chapter 7\: Scripting Leo with Python`:        http://webpages.charter.net/edreamleo/scripting.html
 
 .. _`Clones &amp; views`:   http://webpages.charter.net/edreamleo/intro.html#clones-views
-.. _`Organizer nodes`:   http://webpages.charter.net/edreamleo/intro.html#good-style-and-bad-sections-vs-others
+.. _`Organizer nodes`:  http://webpages.charter.net/edreamleo/intro.html#good-style-and-bad-sections-vs-others
+
+.. _`@file trees`:          http://webpages.charter.net/edreamleo/glossary.html#file-trees
+.. _`@root node`:           http://webpages.charter.net/edreamleo/glossary.html#root-node
+.. _child:                  http://webpages.charter.net/edreamleo/glossary.html#child
+.. _clones:                 http://webpages.charter.net/edreamleo/glossary.html#clones
+.. _commands:               `Chapter 5\: Using Leo's Commands`_
+.. _cweb:                   http://webpages.charter.net/edreamleo/glossary.html#cweb
+.. _`literate programming`: http://webpages.charter.net/edreamleo/glossary.html#literate-programming
+.. _node:                   http://webpages.charter.net/edreamleo/glossary.html#node
+.. _outline:                http://webpages.charter.net/edreamleo/glossary.html#outline
+.. _outlines:               http://webpages.charter.net/edreamleo/glossary.html#outlines
+.. _`reference`:            http://webpages.charter.net/edreamleo/glossary.html#reference
+.. _`referenced`:           http://webpages.charter.net/edreamleo/glossary.html#referenced
+.. _reStructuredText:       http://webpages.charter.net/edreamleo/glossary.html#restructuredtext
+.. _`rst3 plugin`:          http://webpages.charter.net/edreamleo/glossary.html#rst3-plugin
+.. _section:                http://webpages.charter.net/edreamleo/glossary.html#section
+.. _sections:               http://webpages.charter.net/edreamleo/glossary.html#sections
+.. _`section name`:         http://webpages.charter.net/edreamleo/glossary.html#section-name
+.. _`section names`:        http://webpages.charter.net/edreamleo/glossary.html#section-names
+.. _`section reference`:    http://webpages.charter.net/edreamleo/glossary.html#section-reference
+.. _`section references`:   http://webpages.charter.net/edreamleo/glossary.html#section-references
+.. _tangling:               http://webpages.charter.net/edreamleo/glossary.html#tangling
+.. _tree:                   http://webpages.charter.net/edreamleo/glossary.html#tree
+.. _untangling:             http://webpages.charter.net/edreamleo/glossary.html#untangling
 
 .. WARNING: image targets may not have upper case letters!
 
@@ -18323,6 +18443,8 @@ This chapter will be of use primarily to those wanting to change Leo's code.
 .. _`Chapter 9\: History of Leo`:                   http://webpages.charter.net/edreamleo/history.html
 
 .. _`Specifying settings`:  http://webpages.charter.net/edreamleo/commands.html#specifying-settings
+
+.. _`rst3 plugin`:          http://webpages.charter.net/edreamleo/glossary.html#rst3-plugin
 
 .. WARNING: image targets may not have upper case letters!
 
@@ -19133,7 +19255,7 @@ the body text. I hit the ``Script Button`` button and I get a new button called
 
 Here's a more interesting example. The following script searches the present node
 and its ancestors looking for an ``@rst`` node. When such a node is found the
-script calls the rst3 plugin to format it. I don't have to select the actual
+script calls the `rst3 plugin`_ to format it. I don't have to select the actual
 ``@rst`` node; I can select any of its children::
 
     import leoPlugins
@@ -19168,6 +19290,14 @@ script calls the rst3 plugin to format it. I don't have to select the actual
     for every node whose headline starts with ``@button scriptName``.
     **Warning**: this is indeed a security risk of the kind discussed later.
     This feature can be disabled by setting ``atButtonNodes = True`` at the start of ``mod_scripting.py``.</t>
-<t tx="ekr.20050903174637">@ignore</t>
+<t tx="ekr.20050903174637">There are many problems with pdf at present.
+
+@ignore</t>
+<t tx="ekr.20050906090012">Leo (and other programs) often send more detailed error messages to ``stderr``,
+the output stream that goes to the console window. In Linux and MacOS
+environments, python programs normally execute with the console window visible.
+On Windows, can run Leo with the console window visible by associating .leo
+files with ``python.exe`` *not* ``pythonw.exe``. For full instructions about how
+to do this, see `Associating Leo with .leo Files`_.</t>
 </tnodes>
 </leo_file>
