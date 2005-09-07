@@ -101,3 +101,6 @@ include src/oldLeoProjects.leo
 
 include test/__init__.py
 include test/test.leo
+
+include test/unittest/batchTest.py"
+include test/unittest/errorTest.py"

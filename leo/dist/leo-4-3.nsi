@@ -354,8 +354,14 @@ Section "Leo" SEC01
   ;@+node:ekr.20050118122404.1:<< install test files >>
   File "..\test\__init__.py"
   File "..\test\test.leo"
-  ;@nonl
   ;@-node:ekr.20050118122404.1:<< install test files >>
+  ;@nl
+  SetOutPath "$INSTDIR\test\unittest"
+  ;@  << install unittest files >>
+  ;@+node:ekr.20050830052109:<< install unittest files >>
+  File "..\test\unittest\batchTest.py"
+  File "..\test\unittest\errorTest.py"
+  ;@-node:ekr.20050830052109:<< install unittest files >>
   ;@nl
 
 SectionEnd
@@ -618,8 +624,13 @@ Section Uninstall
   ;@+node:ekr.20050118122740.3:<< uninstall test files >>
   Delete "$INSTDIR\test\__init__.py"
   Delete "$INSTDIR\test\test.leo"
-  ;@nonl
   ;@-node:ekr.20050118122740.3:<< uninstall test files >>
+  ;@nl
+  ;@  << uninstall unittest files >>
+  ;@+node:ekr.20050830052109.1:<< uninstall unittest files >>
+  Delete "$INSTDIR\test\unittest\batchTest.py"
+  Delete "$INSTDIR\test\unittest\errorTest.py"
+  ;@-node:ekr.20050830052109.1:<< uninstall unittest files >>
   ;@nl
   ;@  << uninstall top-level files >>
   ;@+node:ekr.20050118103447.1:<< uninstall top-level files >>

@@ -1,7 +1,14 @@
-Leo 4.3.1                    June 20, 2005
+Leo 4.3.2                    September 9, 2005
 
-- Added support for Tk resource files.
-- Added support for coloring the PL/SQL language.
-- All Mark commands are now undoable.
-- Improved Resize To Screen command.
-- The usual assortment of minor bug fixes.
+To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
+
+The highligts of 4.3.2:
+-----------------------
+
+- Improved Leo's documentation:
+    - A tutorial introduction to Leo:
+      http://webpages.charter.net/edreamleo/intro.html
+    - A 5-minute guide to programming with Leo:
+      http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
+- Improved pretty printing.
+- The usual assortment of bug fixes.
