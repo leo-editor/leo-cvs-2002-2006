@@ -50,8 +50,9 @@ import leoGlobals as g
 # self.s_ctrl is a Tk.Text widget that contains the text to be searched or 
 # changed and the insert and sel Tk attributes of self.search_text indicate 
 # the range of text to be searched. Searching headline and body text 
-# simultaneously is complicated. The selectNextVnode() method handles the many 
-# details involved by setting self.s_ctrl and its insert and sel attributes.
+# simultaneously is complicated. The selectNextPosition() method handles the 
+# many details involved by setting self.s_ctrl and its insert and sel 
+# attributes.
 #@-at
 #@-node:ekr.20031218072017.2414:<< Theory of operation of find/change >>
 #@nl
@@ -144,9 +145,9 @@ class leoFind:
         #@+at 
         #@nonl
         # Initializing a wrapped search is tricky.  The search() method will 
-        # fail if p==wrapPosition and pos >= wrapPos.  selectNextVnode() will 
-        # fail if p == wrapPosition.  We set wrapPos on entry, before the 
-        # first search.  We set wrapPosition in selectNextVnode after the 
+        # fail if p==wrapPosition and pos >= wrapPos.  selectNextPosition() 
+        # will fail if p == wrapPosition.  We set wrapPos on entry, before the 
+        # first search.  We set wrapPosition in selectNextPosition after the 
         # first search fails.  We also set wrapPosition on exit if the first 
         # search suceeds.
         #@-at
@@ -667,7 +668,7 @@ class leoFind:
             elif self.node_only:
                 return None,None # We are only searching one node.
             else:
-                p = self.p = self.selectNextVnode()
+                p = self.p = self.selectNextPosition()
         return None, None
     #@nonl
     #@-node:ekr.20031218072017.3075:findNextMatch
@@ -776,7 +777,7 @@ class leoFind:
     #@+node:ekr.20031218072017.3081:selectNextVnode
     # Selects the next node to be searched.
     
-    def selectNextVnode(self):
+    def selectNextPosition(self):
     
         c = self.c ; p = self.p
     
