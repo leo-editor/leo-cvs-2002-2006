@@ -33,8 +33,6 @@ class leoMenu:
     #@+node:ekr.20031218072017.3752:defineMenuTables & helpers
     def defineMenuTables (self):
         
-        g.trace()
-        
         self.defineEditMenuTables()
         self.defineFileMenuTables()
         self.defineOutlineMenuTables()
