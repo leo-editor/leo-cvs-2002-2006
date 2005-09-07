@@ -726,7 +726,6 @@ if Tk and not g.app.unitTesting: # Ok for unit testing, but doesn't work ;-)
             
             """Scan for the next word, leaving the result in the work widget"""
         
-            t = self.workCtrl
             word_start = string.letters + '_'
             t.mark_set("insert","insert wordend + 1c")
             while 1:
