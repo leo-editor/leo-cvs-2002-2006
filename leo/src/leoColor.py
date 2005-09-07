@@ -1166,7 +1166,9 @@ class baseColorizer:
             "singleString" : self.continueSingleString,  # 1/25/03
             "string3s"     : self.continueSinglePythonString,
             "string3d"     : self.continueDoublePythonString,
-            "doc"          : self.continueDocPart }
+            "doc"          : self.continueDocPart,
+            "unknown"      : self.doNormalState, # 8/25/05
+        }
             
         # Eventually all entries in these dicts will be entered dynamically
         # under the control of the XML description of the present language.
@@ -1792,6 +1794,7 @@ class baseColorizer:
     def colorizeLine (self,s,state):
     
         # print "line,inc,state,s:",self.line_index,self.incremental,state,s
+    
         s = g.toUnicode(s,g.app.tkEncoding) # 10/28/03
     
         if self.incremental:
@@ -2044,8 +2047,6 @@ class baseColorizer:
     #@nonl
     #@-node:ekr.20031218072017.1895:doLatexLine
     #@+node:ekr.20031218072017.1896:doNormalState
-    ## To do: rewrite using dynamically generated tables.
-    
     def doNormalState (self,s,i):
         
         __pychecker__ = 'maxlines=500'
