@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '0.9'
+__version__ = '1.0'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -360,6 +360,16 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050903211210:v 0.9
+#@+node:ekr.20050908120111:v 1.0
+#@+at
+# 
+# EKR:
+# 
+# Write output files to the directory containing the .leo file by default.
+# This is c.frame.openDirectory, *not* g.app.loadDir.
+#@-at
+#@nonl
+#@-node:ekr.20050908120111:v 1.0
 #@-others
 #@@nocolor
 #@nonl
@@ -1057,6 +1067,14 @@ class rstClass:
     def writeNormalTree (self,p):
     
         self.initWrite(p)
+        
+        # Write the file to the directory containing the .leo file.
+        openDirectory = self.c.frame.openDirectory
+        if openDirectory:
+            self.outputFileName = g.os_path_join(openDirectory,self.outputFileName)
+        else:
+            self.outputFileName = self.outputFileName
+    
         self.outputFile = file(self.outputFileName,'w')
         self.writeTree(p)
         self.outputFile.close()
@@ -1122,6 +1140,13 @@ class rstClass:
             ok = False
             
         if ok:
+            # Write the file to the directory containing the .leo file.
+            openDirectory = self.c.frame.openDirectory
+            if openDirectory:
+                self.outputFileName = g.os_path_join(openDirectory,self.outputFileName)
+            else:
+                self.outputFileName = self.outputFileName
+    
             f = file(self.outputFileName,'w')
             f.write(output)
             f.close()
