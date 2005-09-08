@@ -14,7 +14,7 @@ Written by Paul Paterson and 'e', with revisions by EKR.
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.11"
+__version__ = "0.12"
 #@<< version history >>
 #@+node:ekr.20040915052810:<< version history >>
 #@+at
@@ -46,10 +46,12 @@ __version__ = "0.11"
 # 0.9 EKR:  Added top-level init method.
 # 0.10 EKR:
 #     - Distinguish between aspell_dir and aspell_bin_dir in < < imports > >
-# 0.11 ERK:
+# 0.11 EKR:
 #     - A major improvement to findNextWord:
 #       It now strips quotes and underscores from beginning and end, but not 
 # from middle.
+# 0.12 EKR:
+#     - Fixed several bugs in findNextWord.
 #@-at
 #@nonl
 #@-node:ekr.20040915052810:<< version history >>
@@ -726,13 +728,13 @@ class spellDialog(leoTkinterFind.leoTkinterFind):
         """Find the next unknown word."""
         
         aspell = self.aspell ; alts = None ; word = None
-        c = self.c ; v = self.v
+        c = self.c ; p = self.v ; t = self.workCtrl
         try:
             #aspell.openPipes()
             try:
                 while 1:
-                    v, word = self.findNextWord(v) 
-                    if not v or not word:
+                    p, word = self.findNextWord(p) 
+                    if not p or not word:
                         alts = None
                         break
                     #@                << Skip word if ignored or in local dictionary >>
@@ -761,10 +763,10 @@ class spellDialog(leoTkinterFind.leoTkinterFind):
                     #@nl
                     alts = aspell.processWord(word)
                     if alts:
-                        self.v = v
+                        self.v = p
                         c.beginUpdate()
-                        c.frame.tree.expandAllAncestors(v)
-                        c.selectVnode(v)
+                        c.frame.tree.expandAllAncestors(p)
+                        c.selectPosition(p)
                         c.endUpdate()
                         break
             except:
@@ -777,25 +779,28 @@ class spellDialog(leoTkinterFind.leoTkinterFind):
     #@+node:ekr.20040809151600.44:findNextWord
     # Unicode characters may cause index problems.
     
-    def findNextWord(self,v):
+    def findNextWord(self,p):
     
         """Scan for the next word, leaving the result in the work widget"""
     
         t = self.workCtrl
     
         # Allow quotes and underscores in the middle of words, but not at the beginning or end.
+        # This breaks words at non-ascii 'letters' such as é.  I don't know what the solution is.
         word_start = string.letters
-        word_end = string.letters
+        word_end   = string.letters + string.digits
         word_chars = string.letters + string.digits + "`" + "'" + "_"
         while 1:
             line = t.get('insert wordstart','insert lineend')
+            # g.trace('insert',t.index('insert'),'insert wordstart',t.index('insert wordstart'))
+            # g.trace(repr(line))
             # Start the word at the first letter.
             i = 0
             while i < len(line) and line[i] not in word_start:
                 i += 1
             if i < len(line):
                 # A non-empty word has been found.
-                # Add characters to the word.
+                line = t.get('insert wordstart','insert lineend')
                 j = i
                 while j < len(line) and line[j] in word_chars:
                     j += 1
@@ -804,19 +809,19 @@ class spellDialog(leoTkinterFind.leoTkinterFind):
                     word = word[:-1]
                 # This trace is important: it verifies that all words have actually been checked.
                 # g.trace(repr(word))
-                g.app.gui.setTextSelection(t,'insert + %dc' % (i), 'insert + %dc' % (i+len(word)))
-                return v, word
+                x1 = t.index('insert + %dc' % (i))
+                x2 = t.index('insert + %dc' % (i+len(word)))
+                g.app.gui.setTextSelection(t,x1,x2)
+                return p, word
             else:
-                # End of the line.
-                t.mark_set('insert','insert wordend')
+                # End of the line. Bug fix: 9/8/05.
+                t.mark_set('insert','insert lineend + 1c')
                 if t.compare("insert",">=", "end - 1c"):
-                    v = v.threadNext()
-                    if not v: return None,None
+                    p.moveToThreadNext()
+                    if not p: return None,None
                     t.delete("1.0", "end")
-                    t.insert("end", v.bodyString())
+                    t.insert("end", p.bodyString())
                     t.mark_set("insert", "1.0")
-                elif t.compare("insert",">=", "insert lineend - 1c"):
-                    t.mark_set("insert", "insert lineend + 1line")
     #@nonl
     #@-node:ekr.20040809151600.44:findNextWord
     #@+node:ekr.20040809151600.45:getSuggestion
