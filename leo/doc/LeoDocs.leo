@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="14707" clone_windows="0"/>
 <globals body_outline_ratio="0.578831312018">
-	<global_window_position top="51" left="335" height="907" width="977"/>
+	<global_window_position top="24" left="242" height="907" width="977"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -17568,8 +17568,7 @@ this in the leo body::
 
 In Excel you would see 4500 below those two numbers. This is completely
 independent of where the block of three cells exists on the sheet.</t>
-<t tx="ekr.20050830115714.117">From: http://sourceforge.net/forum/message.php?msg_id=3126190
-Python's decorator_ syntax is ill-concieved.
+<t tx="ekr.20050830115714.117">Python's decorator_ syntax is ill-concieved.
 This syntax file hack works well enough anyway to work with Leo ``@`` markup::
 
     syn region leoComment start="^@\s*" end="^@c\s*$"
@@ -17837,13 +17836,17 @@ Glossary
 </t>
 <t tx="ekr.20050901071300">.. Links used in this document.
 
+.. ----- External links.
+.. _`literate programming web page`:    http://www.literateprogramming.com/
+.. _`noweb language`:                   http://www.eecs.harvard.edu/~nr/noweb/
+.. _`rST primer`:                       http://docutils.sourceforge.net/docs/user/rst/quickstart.html
+
+.. ----- Other links to Leo's documentation.
 .. _`Chapter 8: Customizing Leo`:   http://webpages.charter.net/edreamleo/customizing.html
 .. _`CWEB language`:                http://www-cs-faculty.stanford.edu/~knuth/cweb.html
-.. _`noweb language`:               http://www.eecs.harvard.edu/~nr/noweb/
-.. _`rST primer`:                   http://docutils.sourceforge.net/docs/user/rst/quickstart.html
 .. _`Writing plugins and hooks`:    http://webpages.charter.net/edreamleo/customizing.html#writing-plugins-and-hooks
 
-.. ----------- References to the reference chapter.
+.. ----- References to the reference chapter.
 .. _`programming reference`:    http://webpages.charter.net/edreamleo/directives.html
 .. _`@asis`:                    http://webpages.charter.net/edreamleo/directives.html#asis-and-noref
 .. _`@file`:                    http://webpages.charter.net/edreamleo/directives.html#file-and-thin
@@ -17855,7 +17858,7 @@ Glossary
 .. _`tangling @root trees`:     http://webpages.charter.net/edreamleo/directives.html#tangling-root-trees-with-the-tangle-commands
 .. _`untangling @root trees`:   http://webpages.charter.net/edreamleo/directives.html#untangling-root-trees-with-the-untangle-commands
 
-.. ----------- References to the tutorial.
+.. ----- References to the tutorial.
 .. _`leo's tutorial`:               http://webpages.charter.net/edreamleo/intro.html
 .. _`derived files section`:        http://webpages.charter.net/edreamleo/intro.html#derived-files
 .. _`directives for programming`:   http://webpages.charter.net/edreamleo/intro.html#directives-for-programming
@@ -18105,6 +18108,7 @@ For example, an `@root node`_ is a node containing an @root directive_, etc.
     A style of programming that aims at producing the highest quality program listings.
     Literate programming languages apply two fundamental operations to text: weaving_ and tangling_.
     Leo supports two literate programming languages, `CWEB`_ and `noweb`_.
+    For more links see the `literate programming web page`_.
 
 .. _`mark`:
 .. _`marks`:

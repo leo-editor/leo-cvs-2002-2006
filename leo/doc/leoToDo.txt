@@ -747,13 +747,11 @@ if 1:   # Jim Sizelove's table.
 #@-node:JSBiz.20050817134120.5:Plugins
 #@-node:JSBiz.20050817134120:leo_changes (Jim Sizelove)
 #@-node:ekr.20050906191052.1:tests 2
-#@+node:ekr.20050906105002:Docs 2
-#@+node:ekr.20050831140123:Document defaults for all rst3 options
-#@-node:ekr.20050831140123:Document defaults for all rst3 options
-#@+node:ekr.20050906103636:Add cross references to all files: esp preface, faq & install
-#@-node:ekr.20050906103636:Add cross references to all files: esp preface, faq & install
-#@-node:ekr.20050906105002:Docs 2
 #@+node:ekr.20050906081155:dist 2
+- Add the following files to the distribution:
+    - libpy-2.4
+    - leoPostings.leo
+#@nonl
 #@+node:ekr.20050831132340:Include libpy-2.4 with distribution
 From e,
 
@@ -772,8 +770,6 @@ there is a consensus building that spell checking in Leo
 doesn't work. 
 unfortunate, after all the work you and Paul have done.
 #@-node:ekr.20050831132340:Include libpy-2.4 with distribution
-#@+node:ekr.20050906075701:add leoPostings.leo to distibution list
-#@-node:ekr.20050906075701:add leoPostings.leo to distibution list
 #@-node:ekr.20050906081155:dist 2
 #@-node:ekr.20050830053405.1:To do 4.3.2
 #@+node:ekr.20050816165305:To do 4.4
