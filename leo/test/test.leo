@@ -982,7 +982,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
+<v t="ekr.20040312021734" a="TV" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1306,7 +1306,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050803075926" a="E"><vh>sudoku puzzle</vh>
+<v t="ekr.20050803075926"><vh>sudoku puzzle</vh>
 <v t="ekr.20050804073824"><vh>&lt;&lt; define data &gt;&gt;</vh></v>
 <v t="ekr.20050803075926.1"><vh>class sudokuClass</vh>
 <v t="ekr.20050803075926.2"><vh> ctor (main) &amp; helpers</vh>
@@ -2322,7 +2322,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050824190822" a="TV"><vh> Zope test</vh></v>
+<v t="ekr.20050824190822"><vh> Zope test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -17645,19 +17645,19 @@ def unknownVals (self):
 <t tx="ekr.20050804071242"></t>
 <t tx="ekr.20050804073824">data = (
     '',
-)
-   
+) 
+
 data = (
-    'xx2xx7xx9',
-    'x8x249x3x',
-    'x31xx572x',
-    'xx9xx8xx1',
-    'x65xxx847',
-    '4xx7xx2xx',
-    'x931xx65x',
-    'x5x862x73',
-    '8xx5xx4xx',
-)</t>
+    'xxxxx6xx5',
+    'xx41xx8xx',
+    'x5xx78x42',
+    '58xxxx9xx',
+    '3xxxxxxx7',
+    'xx6xxxx18',
+    '24x39xx7x',
+    'xx7xx52xx',
+    '9xx7xxxxx',
+) </t>
 <t tx="ekr.20050805150320">import leoPlugins
 
 rst3 = leoPlugins.getPluginModule('rst3')
@@ -17806,7 +17806,32 @@ data = (
     'xxx4xx97x',
     '4xx2x1xx8')
     
-# 8/30 2 stars</t>
+# 8/30 2 stars
+
+data = (
+    'xx2xx7xx9',
+    'x8x249x3x',
+    'x31xx572x',
+    'xx9xx8xx1',
+    'x65xxx847',
+    '4xx7xx2xx',
+    'x931xx65x',
+    'x5x862x73',
+    '8xx5xx4xx',
+) # 1 star
+
+data = (
+    '8xx3xxx7x',
+    'xx57xxxxx',
+    '9xx165x3x',
+    '34xxxxxx9',
+    'xxx5x4xxx',
+    '7xxxxxx83',
+    'x8x253xx4',
+    'xxxxx65xx',
+    'x2xxx1xx6',
+) # 9/9/ 2 stars
+</t>
 <t tx="ekr.20050811141217">@language python
 
 @ @rst-options

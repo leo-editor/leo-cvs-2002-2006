@@ -8765,6 +8765,10 @@ with LeoPy.leo might be nice for folks in the 'Use the source, Luke' category.
 #@nonl
 #@-node:ekr.20050802082948:Post 2
 #@-node:ekr.20050801102407:Investigated bug report: dead link for leoPy.leo in help menu: not a problem
+#@+node:ekr.20050906192101:Fixed bug in mod_spelling
+# Sometimes the word wasn't selected properly.
+#@nonl
+#@-node:ekr.20050906192101:Fixed bug in mod_spelling
 #@-node:ekr.20050705192437:Bug fixes...
 #@+node:ekr.20050705192437.1:New & improved features...
 #@+node:ekr.20050706090801:(Added g.es_print, es_trace & eliminate corresponding print statements)

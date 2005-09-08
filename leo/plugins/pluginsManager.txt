@@ -42,6 +42,7 @@ plugins_menu.py
 #__core_emacs.py
 #pretty_print.py
 rst3.py
+# zodb.py
 plugin_manager.py
 
 # Several plugins depend on TabbedLog.
@@ -58,7 +59,7 @@ mod_scripting.py
 open_with.py
 #nav_buttons.py
 #base64Packager.py
-#EditAttributes.py
+EditAttributes.py
 #groupOperations.py
 #multifile.py
 #xsltWithNodes.py
