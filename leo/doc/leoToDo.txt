@@ -480,7 +480,6 @@ bill p
 #@+node:ekr.20050830053405.1:To do 4.3.2
 @nocolor
 #@nonl
-#@+node:ekr.20050906191052:bugs 3
 #@+node:ekr.20050721095052:Fix problems with outline colors
 #@+node:ekr.20050721095052.1:Post 1
 http://sourceforge.net/forum/message.php?msg_id=3247013
@@ -567,13 +566,6 @@ in case this would have an effect. No difference.
 --Rich
 #@-node:ekr.20050831130936:Post 3
 #@-node:ekr.20050721095052:Fix problems with outline colors
-#@+node:ekr.20050906092016:Fix rst so it writes to folder containing the sources
-#@-node:ekr.20050906092016:Fix rst so it writes to folder containing the sources
-#@+node:ekr.20050906192101:Fix bug in mod_spelling
-Sometimes the word isn't selected properly.
-#@nonl
-#@-node:ekr.20050906192101:Fix bug in mod_spelling
-#@-node:ekr.20050906191052:bugs 3
 #@+node:ekr.20050906191052.1:tests 2
 #@+node:ekr.20050711185846.1:Test emacs patch from mackal
 #@+node:ekr.20050711185846.2:Patch

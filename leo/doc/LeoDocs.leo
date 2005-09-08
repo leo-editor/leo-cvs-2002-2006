@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="14707" clone_windows="0"/>
 <globals body_outline_ratio="0.578831312018">
-	<global_window_position top="24" left="242" height="907" width="977"/>
+	<global_window_position top="24" left="373" height="907" width="846"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
