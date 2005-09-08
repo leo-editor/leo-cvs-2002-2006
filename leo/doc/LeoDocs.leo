@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="14707" clone_windows="0"/>
 <globals body_outline_ratio="0.578831312018">
-	<global_window_position top="31" left="273" height="907" width="977"/>
+	<global_window_position top="51" left="335" height="907" width="977"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1693,6 +1693,7 @@
 <v t="ekr.20050830115714.9"><vh>Some characters in derived files look funny. What can I do?</vh></v>
 <v t="ekr.20050830115714.10"><vh>Some characters are garbled when importing files. What can I do?</vh></v>
 <v t="ekr.20050830115714.17"><vh>I can't write Imported files.  What's going on?</vh></v>
+<v t="ekr.20050908113904"><vh>Can I scroll the outline pane with the mouse wheel?</vh></v>
 <v t="ekr.20050830115714.75"><vh>Leo is hanging on my Linux box.  What should I do?</vh></v>
 <v t="ekr.20050830115714.114"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
 <v t="ekr.20050830115714.115"><vh>Error messages from the rst3 plugin aren't helpful. What can I do?</vh></v>
@@ -1725,7 +1726,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.2"><vh>Chapter 1: Installing Leo</vh>
-<v t="edream.110203163054.48" a="E"><vh>@rst install.html</vh>
+<v t="edream.110203163054.48"><vh>@rst install.html</vh>
 <v t="ekr.20050901110110"><vh>@rst-no-head links</vh></v>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
 <v t="edream.110203163054.50"><vh>How to install Leo on Linux</vh></v>
@@ -21086,5 +21087,12 @@ for each ``test`` node and zero or more unit tests for each ``@suite`` node. The
     code that supports ``@test`` and ``@suite`` nodes. **Important**: you could
     customize how ``@test`` and ``@suite`` nodes work by using your own script
     in the ``@button unit test`` node.</t>
+<t tx="ekr.20050908113904">This is a known bug in Tk that prevents this on Windows. The obvious Tk code
+causes a hard crash in the Python dll: it's the only time Leo has taken such a
+hard crash. The ``UniversalScrolling`` plugin is an attempt at a workaround.
+
+Scrolling with the mouse wheel may be possible on Linux. See the code in
+createTkTreeCanvas in leoTkinterFrame.py
+</t>
 </tnodes>
 </leo_file>
