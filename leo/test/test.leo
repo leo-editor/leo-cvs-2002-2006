@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7648" clone_windows="0"/>
 <globals body_outline_ratio="0.579227696405">
-	<global_window_position top="75" left="271" height="819" width="961"/>
+	<global_window_position top="75" left="164" height="819" width="961"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -982,7 +982,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20040312021734" a="TV" annotate="7d71002e"><vh>Scripts...</vh>
+<v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1476,8 +1476,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
 <v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
 </v>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
-<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041121151002" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20050801071700"><vh>@@string stylesheet = type="text/xsl" href="bpLEOHTM.xsl"</vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
@@ -1487,11 +1487,11 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041217132338"><vh>@ints[1,2,3] intsTest = 3</vh></v>
 <v t="ekr.20050620085732"><vh>@language target_language = Python</vh></v>
 </v>
-<v t="ekr.20041217144914"><vh>@page colors</vh>
+<v t="ekr.20041217144914" a="E"><vh>@page colors</vh>
 <v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
-<v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
+<v t="ekr.20041217142026" a="E"><vh>@color log_pane_background_color = None</vh></v>
 <v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
-<v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
+<v t="ekr.20041218100259" a="TV"><vh>@color headline_text_selected_background_color = None</vh></v>
 </v>
 <v t="ekr.20041218141525"><vh>@page Fonts</vh>
 <v t="ekr.20041218141525.1"><vh>@font log font</vh></v>
