@@ -10,7 +10,7 @@ __pychecker__ = '--no-constCond -- no-constant1'
     # Disable checks for constant conditionals.
 
 #@<< imports >>
-#@+node:ekr.20040712045933:<< imports  >>
+#@+node:ekr.20040712045933:<< imports  >> (leoCommands)
 import leoGlobals as g
 
 if g.app and g.app.use_psyco:
@@ -32,6 +32,12 @@ import keyword
 import os
 import parser # needed only for weird Python 2.2 parser errors.
 import string
+
+try:
+    import subprocess   # only available in Python 2.4 and later
+except ImportError:
+    pass
+
 import sys
 import tempfile
 
@@ -42,7 +48,7 @@ import tokenize # for Check Python command
 __pychecker__ = '--no-import'
 import token    # for Check Python command
 #@nonl
-#@-node:ekr.20040712045933:<< imports  >>
+#@-node:ekr.20040712045933:<< imports  >> (leoCommands)
 #@nl
 
 #@+others
@@ -484,10 +490,25 @@ class baseCommands:
                         apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
                     elif openType == "os.spawnv":
                         filename = os.path.basename(arg[0]) 
-                        vtuple = arg[1:] 
+                        vtuple = arg[1:]
+                        vtuple.insert(0, filename)
+                            # add the name of the program as the first argument.
+                            # Change suggested by Jim Sizelove.
                         vtuple.append(path)
                         command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
                         apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+                    # This clause by Jim Sizelove.
+                    elif openType == "subprocess.Popen":
+                        if isinstance(arg, basestring):
+                            vtuple = arg + " " + path
+                        elif isinstance(arg, (list, tuple)):
+                            vtuple = arg[:]
+                            vtuple.append(path)
+                        command = "subprocess.Popen(%s)" % repr(vtuple)
+                        if subprocess:
+                            subprocess.Popen(vtuple)
+                        else:
+                            g.grace('Can not import subprocess.  Skipping: "%"' % command)
                     else:
                         command="bad command:"+str(openType)
                         g.trace(command)
