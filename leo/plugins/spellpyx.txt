@@ -44,6 +44,7 @@ DTHEIN
 Dalcolmo
 Dehoisting
 Dethe
+DoMultiline
 DocBook
 DocFactory
 DocTestSuite
@@ -123,6 +124,7 @@ LeoDocs
 LeoFind
 LeoN
 LeoPackage
+LeoPostings
 LeoPy
 LeoPyRef
 Liechti
@@ -601,6 +603,8 @@ doDelete
 doHook
 doImport
 doLeoTranslations
+doName
+doOp
 doTests
 docList
 docstring
@@ -655,6 +659,7 @@ endif
 enum
 env
 eq
+errorTest
 es_exception
 eval
 event1
@@ -887,6 +892,7 @@ idle_head_key
 idle_redraw
 ifdef
 ifndef
+ignore'd
 ignoreAtIgnore
 ignoreLineEndings
 ignore``'d
@@ -974,6 +980,7 @@ ko
 lang
 lang_var
 langauge
+lastName
 lastThinNode
 lastTypesDict
 lastWord
@@ -1322,6 +1329,7 @@ plugin_signon
 plugins
 pluginsList
 pluginsManager
+pluginsTest
 plugins_menu
 plusMinus
 pmsp
@@ -1364,6 +1372,7 @@ prolog_string
 proven
 ps
 pstats
+putArray
 putDirective
 putDocPart
 putOperator
@@ -1627,6 +1636,7 @@ start1
 start2
 startfile
 startswith
+state_dict
 status_field
 status_fields
 stderr
