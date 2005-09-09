@@ -20,7 +20,7 @@ except ImportError:
 #@-node:ekr.20050101090207.8:<< imports >>
 #@nl
 
-__version__ = '1.5'
+__version__ = '1.6'
 #@<< version history >>
 #@+node:ekr.20050311110052:<< version history >>
 #@@killcolor
@@ -29,6 +29,9 @@ __version__ = '1.5'
 # 
 # 1.5 EKR:
 #     - Use only 'new' and 'open2' hooks to create menu.
+# 1.6 EKR:
+#     - Installed patches from Jim Sizelove to use subprocess module if 
+# possible.
 #@-at
 #@nonl
 #@-node:ekr.20050311110052:<< version history >>
