@@ -36,7 +36,7 @@ Otherwise, if you are using Python 2.4 or earlier, you must start the vim server
 #@@language python
 #@@tabwidth -4
 
-__version__ = "1.7"
+__version__ = "1.8"
 #@<< version history >>
 #@+node:ekr.20050226184411.1:<< version history >>
 #@@killcolor
@@ -64,6 +64,8 @@ __version__ = "1.7"
 # 1.7 EKR:
 #     - Excellent new code by Jim Sizelove solves weird message on first open 
 # of vim.
+# 1.8 EKR:
+#     - Set subprocess = None if import fails.
 #@-at
 #@nonl
 #@-node:ekr.20050226184411.1:<< version history >>
@@ -162,7 +164,7 @@ import sys
 try:
     import subprocess   # only available in Python 2.4 and later
 except ImportError:
-    pass
+    subprocess = None
 #@nonl
 #@-node:ekr.20050226184411.2:<< imports >>
 #@nl

@@ -15,12 +15,12 @@ Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 try:
     import subprocess   # only available in Python 2.4 and later
 except ImportError:
-    pass
+    subprocess = None
 #@nonl
 #@-node:ekr.20050101090207.8:<< imports >>
 #@nl
 
-__version__ = '1.6'
+__version__ = '1.7'
 #@<< version history >>
 #@+node:ekr.20050311110052:<< version history >>
 #@@killcolor
@@ -32,6 +32,8 @@ __version__ = '1.6'
 # 1.6 EKR:
 #     - Installed patches from Jim Sizelove to use subprocess module if 
 # possible.
+# 1.7 EKR:
+#     - Set subprocess = None if import fails.
 #@-at
 #@nonl
 #@-node:ekr.20050311110052:<< version history >>
