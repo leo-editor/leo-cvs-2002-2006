@@ -11,6 +11,11 @@ import leoGlobals as g
 import leoPlugins
 
 Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+
+try:
+    import subprocess   # only available in Python 2.4 and later
+except ImportError:
+    pass
 #@nonl
 #@-node:ekr.20050101090207.8:<< imports >>
 #@nl
@@ -138,15 +143,54 @@ def create_open_with_menu (tag,keywords):
 
     idle_arg = "c:/python22/tools/idle/idle.py -e "
     
-    if  1: # Default table.
+    if subprocess:
+        if 1: # Default table.
+            table = (
+                ("Idle", "Alt+Ctrl+I",
+                    ("subprocess.Popen",
+                        ["pythonw", "C:/Python24/Lib/idlelib/idle.pyw"], ".py")),
+                ("Word", "Alt+Ctrl+W",
+                    ("subprocess.Popen",
+                    "C:/Program Files/Microsoft Office/Office/WINWORD.exe",
+                    None)),
+                ("WordPad", "Alt+Ctrl+T",
+                    ("subprocess.Popen",
+                    "C:/Program Files/Windows NT/Accessories/wordpad.exe",
+                    None)),
+            )
+            
+        if 0:
+            #@            << Jim Sizelove's table >>
+            #@+node:ekr.20050909101202:<< Jim Sizelove's table >>
+            table = (
+                ("Emacs", "Alt+Ctrl+E",
+                    ("subprocess.Popen", "C:/Program Files/Emacs/bin/emacs.exe", None)),
+                ("Gvim", "Alt+Ctrl+G",
+                    ("subprocess.Popen",
+                    ["C:/Program Files/Vim/vim63/gvim.exe", 
+                    "--servername", "LEO", "--remote-silent"], None)),
+                ("Idle", "Alt+Ctrl+I",
+                    ("subprocess.Popen",
+                    ["pythonw", "C:/Python24/Lib/idlelib/idle.pyw"], ".py")),
+                ("NotePad", "Alt+Ctrl+N",
+                    ("os.startfile", None, ".txt")),
+                ("PythonWin", "Alt+Ctrl+P",
+                    ("subprocess.Popen", "C:/Python24/Lib/site-packages/pythonwin/Pythonwin.exe", None)),
+                ("WordPad", "Alt+Ctrl+W",
+                    ("subprocess.Popen", "C:/Program Files/Windows NT/Accessories/wordpad.exe", None)),
+            )
+            #@nonl
+            #@-node:ekr.20050909101202:<< Jim Sizelove's table >>
+            #@nl
+    elif 1: # Default table.
         table = (
             # Opening idle this way doesn't work so well.
             # ("&Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
             ("&Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
             ("Word&Pad","Alt+Shift+T",("os.startfile",None,".txt")))
-    if 0: # Test table.
+    elif 0: # Test table.
         table = ("&Word","Alt+Shift+W",("os.startfile",None,".doc")),
-    if 0: # David McNab's table.
+    elif 0: # David McNab's table.
         table = ("X&Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)),
     
     c.frame.menu.createOpenWithMenuFromTable(table)
