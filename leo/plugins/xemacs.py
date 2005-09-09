@@ -18,7 +18,7 @@ import sys
 #@nonl
 #@-node:ekr.20050218024153:<< imports >>
 #@nl
-__version__ = "1.8"
+__version__ = "1.9"
 #@<< version history >>
 #@+node:ekr.20050218024153.1:<< version history >>
 #@@killcolor
@@ -37,6 +37,9 @@ __version__ = "1.8"
 #     - Get c from keywords, not g.top().
 #     - Simplified the search of g.app.openWithFiles.
 #     - Fixed bug in open_in_emacs: hanged v.bodyString to v.bodyString()
+# 1.9 EKR:
+#     - Installed patch from mackal to find client on Linux.
+#       See http://sourceforge.net/forum/message.php?msg_id=3219471
 #@-at
 #@nonl
 #@-node:ekr.20050218024153.1:<< version history >>
@@ -50,6 +53,16 @@ useDoubleClick = True
 if sys.platform == "win32":
     # This path must not contain blanks in XP.  Sheesh.
     _emacs_cmd = r"c:\XEmacs\XEmacs-21.4.13\i586-pc-win32\xemacs.exe"
+elif sys.platform.startswith("linux"):
+    clients = ["gnuclient", "emacsclient", "xemacs"]
+    _emacs_cmd = ""
+    for client in clients:
+        path = "/usr/bin/"+client
+        if os.path.exists(path):
+            _emacs_cmd = path
+            break
+    if not _emacs_cmd:
+        print >> sys.stderr, "Unable to locate a usable version of *Emacs"
 else:
     _emacs_cmd = "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
 
