@@ -3155,6 +3155,9 @@ C-x a i l	inverse-add-mode-abbrev
 
 #@-node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
 #@+node:ekr.20050419060645:Alternate lead-in characters
+An @decorator setting might be good. This would be a list of all Python
+decorators. Leo would create @verbatim sentinels for these.
+#@nonl
 #@-node:ekr.20050419060645:Alternate lead-in characters
 #@+node:ekr.20041228092223.2:Integrated Leo debugger
 #@+node:ekr.20041029085429:Use pdb.pm as starting point for integrated Leo debugger
@@ -5521,6 +5524,9 @@ finally:
     c.endUpdate(flag)
 #@-node:ekr.20050902074723:Protect c.beginEndUpdate against exceptions.
 #@+node:ekr.20050419060645:Alternate lead-in characters
+An @decorator setting might be good. This would be a list of all Python
+decorators. Leo would create @verbatim sentinels for these.
+#@nonl
 #@-node:ekr.20050419060645:Alternate lead-in characters
 #@+node:ekr.20050902115502:Any way to fix this bug?
 @nocolor

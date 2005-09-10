@@ -41,9 +41,9 @@
 <v t="ekr.20050902080416"><vh>@@button paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="ekr.20050906104918"><vh>4.3.2</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20050906104918" a="ETV"><vh>4.3.2 beta 1</vh>
 <v t="ekr.20050906104918.1"><vh>Rewrote documentation</vh></v>
 <v t="ekr.20050906104931.1"><vh>Bug fixes...</vh>
 <v t="ekr.20050909082711"><vh>Fixed various unicode bugs</vh></v>
@@ -55,6 +55,7 @@
 <v t="ekr.20050908164150"><vh>New and improved  plugins</vh>
 <v t="ekr.20050908164150.1"><vh>New rst3 plugin</vh></v>
 <v t="ekr.20050908164150.2"><vh>Improved spellpyx plugin</vh></v>
+<v t="ekr.20050910143326"><vh>Improved vim and openWith plugins</vh></v>
 </v>
 <v t="ekr.20050906104931.48"><vh>New &amp; improved features...</vh>
 <v t="ekr.20050906104931.49"><vh>Added g.es_print, g.es_trace function</vh></v>
@@ -1493,7 +1494,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -1537,7 +1538,7 @@
 </v>
 <v t="ekr.20050831195331.1"><vh>FAQ</vh>
 <v t="ekr.20050830115714"><vh>@rst FAQ.html</vh>
-<v t="ekr.20050830120007" a="M"><vh>@rst-no-head Links</vh></v>
+<v t="ekr.20050830120007"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050830115714.1"><vh>Learning about Leo</vh>
 <v t="ekr.20050830115714.2"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="ekr.20050830115714.4"><vh>Why should I use clones?</vh></v>
@@ -1570,7 +1571,7 @@
 <v t="ekr.20050830115714.113"><vh>How can I create a template .leo file?</vh></v>
 <v t="ekr.20050830115714.116"><vh>How can I show Leo files with Excel?</vh></v>
 </v>
-<v t="ekr.20050830115714.76"><vh>Trouble shooting</vh>
+<v t="ekr.20050830115714.76" a="E"><vh>Trouble shooting</vh>
 <v t="ekr.20050906090012"><vh>How can I run Leo from a console window?</vh></v>
 <v t="ekr.20050830115714.9"><vh>Some characters in derived files look funny. What can I do?</vh></v>
 <v t="ekr.20050830115714.10"><vh>Some characters are garbled when importing files. What can I do?</vh></v>
@@ -1635,17 +1636,14 @@
 <v t="ekr.20050827055403"><vh>Outline structure is significant everywhere</vh></v>
 <v t="ekr.20050822173420.3"><vh>Leo directives</vh></v>
 </v>
-<v t="ekr.20050827102655" a="M"><vh>Leo for Programmers</vh>
+<v t="ekr.20050827102655"><vh>Leo for Programmers</vh>
 <v t="ekr.20050827090532"><vh>Quick start for programmers</vh></v>
 <v t="ekr.20050829081318"><vh>Beginner`s reference guide</vh>
 <v t="ekr.20050827155902"><vh>Syntax of section names</vh></v>
 <v t="ekr.20050827061847"><vh>Code and doc parts</vh></v>
-<v t="ekr.20050828205054"><vh>Directives for programming</vh>
-<v t="ekr.20050829070352"><vh>@rst-ignore alternate format</vh></v>
-</v>
+<v t="ekr.20050828205054" a="E"><vh>Directives for programming</vh></v>
 <v t="ekr.20050828161117"><vh>Orphan nodes</vh></v>
 <v t="ekr.20050828103319"><vh>Sentinel lines</vh></v>
-<v t="ekr.20050828161620"><vh>@ %def lines</vh></v>
 <v t="ekr.20050827162537"><vh>Leo and literate programming</vh></v>
 </v>
 <v t="ekr.20050827094813"><vh>Good style and bad:  sections vs. @others</vh></v>
@@ -1660,7 +1658,7 @@
 <v t="ekr.20050901101608"><vh>@rst outlines.html</vh>
 <v t="ekr.20050901101608.1"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.27"><vh>Cloning nodes</vh></v>
-<v t="EKR.20040524104904.36"><vh>Creating and destroying nodes</vh></v>
+<v t="EKR.20040524104904.36" a="E"><vh>Creating and destroying nodes</vh></v>
 <v t="EKR.20040524104904.37"><vh>Cutting, pasting and deleting nodes</vh></v>
 <v t="EKR.20040524104904.38"><vh>Dragging nodes</vh></v>
 <v t="EKR.20040524104904.39"><vh>Editing body text</vh></v>
@@ -1804,7 +1802,7 @@
 <v t="ekr.20050901102400.3"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.211" a="TV"><vh>Chapter 8: Customizing Leo</vh>
+<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
 <v t="ekr.20050901101608.4"><vh>@rst customizing.html</vh>
 <v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050903075144"><vh>Overview</vh></v>
@@ -2094,14 +2092,15 @@ How to recover the data:
 	- Remove @ignore
 	- Import derived file... </t>
 <t tx="EKR.20040524104904.26"></t>
-<t tx="EKR.20040524104904.27">A cloned node is a copy of a node that changes when the original changes.
-Changes to the children, grandchildren, etc. of a node are simultaneously made
-to the corresponding nodes contained in all cloned nodes. A small red arrow in
-the icon box marks cloned nodes. There is no real distinction between the
-"original" node and any of its clones. This makes it possible to update any of
-the clones and the original node will change as well. A cloned nodes becomes a
-regular node again when its penultimate clone is deleted. Clones are useful for
-making alternate views of a program. See `Clones and views`_ for full details.</t>
+<t tx="EKR.20040524104904.27">A cloned node is a copy of a node that changes when the original changes. Not
+only are changes maintained across all the the clones of a node, changes to its
+offspring (children, grandchildren, etc). are simultaneously made to the
+corresponding offspring of all of those clones. A small red arrow in the icon
+box marks cloned nodes. There is no real distinction between the "original" node
+and any of its clones. This makes it possible to update any of the clones and
+the original node will change as well. A cloned nodes becomes a regular node
+again when its penultimate clone is deleted. Clones are useful for making
+alternate views of a program. See `Clones and views`_ for full details.</t>
 <t tx="EKR.20040524104904.36">The ``Insert Node`` command inserts a new node into the outline. The
 ``Delete Node`` command deletes a node and all its children.
 </t>
@@ -2162,8 +2161,7 @@ behaviors have been changed because they conflict with other Leo features.
 -   ``Left Arrow`` and ``Right Arrow`` move the cursor one
     character to the left or right and clear any selection in the text.
 
--   ``Shift Left`` or ``Shift Right`` is typed with the ``Shift`` move the cursor
-    moves and extend the selection.
+-   ``Shift Left`` or ``Shift Right`` move the cursor and extend the selection.
 
 -   ``Control-Left`` and ``Control-Right`` move the insertion cursor by words,
     and ``Control-Shift-Left`` and ``Control-Shift-Right`` move the insertion
@@ -2172,7 +2170,7 @@ behaviors have been changed because they conflict with other Leo features.
 -   ``Up Arrow`` and ``Down Arrow`` move the insertion cursor one line up or down and
     clear any selection in the text. 
 
--   ``Shift Up`` and ``Shift Right`` move the cursor moves and extend the selection.
+-   ``Shift Up`` and ``Shift Right`` move the cursor and extend the selection.
 
 -   ``Control-Up`` and ``Control-Down`` move the insertion cursor by paragraphs.
 
@@ -14474,7 +14472,17 @@ The ``@pagewidth`` directive specifies the width of those lines.
   If a node does not contain a doc part, the entire body text is a code part.
 
 - ``@doc`` is a synonym for ``@`` and ``@code`` is a synonym for ``@c``.
-  However, ``@`` and ``@c`` are preferred.</t>
+  However, ``@`` and ``@c`` are preferred.
+
+- A doc part of the form::
+	
+    @ %def identifiers
+
+declares that the preceding code part contains the list of identifiers.
+Whitespace separate the identifiers; everything else is taken to be the
+identifiers. This construct is a convention of the noweb_ language, and will be
+of use *only* for those who want to create .nw output files for use with the
+offical noweb_ system.</t>
 <t tx="ekr.20050827090532">`@thin trees`_ create `derived files`_ containing your program.
 Within ``@thin trees`` you can write *functional pseudo-code*, like this::
 
@@ -14615,11 +14623,11 @@ wise to "know the rules before you break them."
 <t tx="ekr.20050827102655">The previous sections have discussed the basics of Leo.
 *Non-programmers can stop reading this tutorial now*!
 
-The following sections tell how to create derived files that contain computer programs.
-Yes, you could create program files using the ``@all`` directive,
-but the following section explain how you can take advantage of **power-user**
-features designed specifically for computer programmers.
-Even if you don't read manuals, please read the following short `Quick start for programmers`_ section.</t>
+The following sections tell how to create derived files that contain computer
+programs. Yes, you could create program files using the ``@all`` directive, but
+the following section explain how you can take advantage of **power-user**
+features designed specifically for computer programmers. Even if you don't read
+manuals, please read the following short `Quick start for programmers`_ section.</t>
 <t tx="ekr.20050827155902">A section name has the form::
 
     &lt;&lt; any text &gt;&gt;
@@ -15344,14 +15352,6 @@ lost; Leo will load the `@thin`_ tree from the .leo file the next time Leo
 opens the .leo file.
 
 </t>
-<t tx="ekr.20050828161620">A line of the form::
-	
-    @ %def identifiers
-
-declares that the preceding code part contains the list of identifiers.
-Whitespace separate the identifiers; everything else is taken to be the identifiers.
-This construct is a convention of `noweb`_ language.
-Syntactically, this line begins a `doc part`_, and thus terminates any preceding `code part`_.</t>
 <t tx="ekr.20050828163557">You can create derived files using six kinds of directives.
 The first five,
 ``@file-thin``, ``@file``, ``@file-nosent``, ``@file-noref``, ``@file-asis``,
@@ -15478,7 +15478,7 @@ See `Chapter 4: Writing Programs in Leo`_ for full details.
 
 - **@pagewidth** Sets the page width used to break doc parts into lines.
 
-- **@path** Sets the path to be appended to filenames in descendant ``@file`` nodes.</t>
+- **@path** Sets the path to be prepended to filenames in descendant ``@file`` nodes.</t>
 <t tx="ekr.20050828210721">The ``@last`` directive allows you to place lines at the very end of files derived from ``@file`` nodes.
 The ``@last`` directive is recognized only at the end of body text of ``@file`` nodes.
 No text may follow ``@last`` directives.
@@ -15573,44 +15573,6 @@ Negative values cause Leo to convert tabs to blanks.</t>
 
 - **\@wrap** and **\@nowrap**
   Enable or disable line wrapping the Leo's body pane.</t>
-<t tx="ekr.20050829070352">The following directives are commonly used by Leo programmers:
-
-\@
-    Starts doc parts.
-
-\@all
-    Copies *all* descendant nodes to the derived file.
-
-\@c
-    Starts code parts.
-
-\@encoding
-    Sets the Unicode encoding used in derived files.
-
-\@first
-    Forces lines to appear before the first sentinel of a derived file.
-   
-\@language
-    Sets the language used for syntax coloring and sets the comment delimiters
-    used in sentinel lines and in doc parts.
-
-\@last
-    Forces lines to appear after the last sentinel of a derived file.
-
-\@lineending
-    Specifies the line ending to be used in derived files.
-
-\@others
-    Copies all nodes *except* section definition nodes to the derived file.
-
-\@pagewidth
-    Sets the page width used to break doc parts into lines.
-
-\@path
-    Sets the path to be appended to filenames in descendant ``@file`` nodes.
-
-There are other Leo directives not discussed here.
-See `Chapter 4: Writing Programs in Leo`_ of `Leo's Users Guide`_ for a discussion of all of Leo's directives.</t>
 <t tx="ekr.20050829081318">This section covers all the details of programming with Leo that beginners are likely to need.
 `Chapter 4: Writing Programs in Leo`_ is the full reference guide.
 I recommend avoiding that chapter until you have been programming with Leo for some time.
@@ -17279,8 +17241,17 @@ There is also an importFiles script in ``LeoPy.leo``.  You can use that script a
 This will import all .py files from aDirectory, which should be a full path to a particular directory.
 You could use ".c" to import all .c files, etc.</t>
 <t tx="ekr.20050830115714.75">From: http://sourceforge.net/forum/message.php?msg_id=1685399
+
 When building Tcl on Linux, do not specify "--enable-threads"
 Only use Tcl with the default "threads not enabled" case.
+
+Here is how to build Tk without thread support:
+
+- Go to www.tcl.tk, and download the sources for Tcl and Tk.
+- Build those two pack's as is told in the "How to Compile Tcl Source Releases"
+- Go to www.python.org and download your favorite Python (2.3.5 for me).
+- Build it as is told on the download page.
+- Enjoy using Leo on Linux.
 </t>
 <t tx="ekr.20050830115714.76"></t>
 <t tx="ekr.20050830115714.77">Just run Leo in a console window. At the point you want to drop into the
@@ -19431,7 +19402,7 @@ environments, python programs normally execute with the console window visible.
 On Windows, can run Leo with the console window visible by associating .leo
 files with ``python.exe`` *not* ``pythonw.exe``. For full instructions about how
 to do this, see `Associating Leo with .leo Files`_.</t>
-<t tx="ekr.20050906104918">Leo 4.3.2                    September 9, 2005
+<t tx="ekr.20050906104918">Leo 4.3.2 beta 1                  September 10, 2005
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
@@ -19678,7 +19649,13 @@ sheet) files that should exist in the same directory as the generated HTML file.
 You can control the formatting of the HTML file by altering these .css files.</t>
 <t tx="ekr.20050908164150.2">This plugin now allows quotes within words, but strips quotes and other cruft
 from the beginning and end of words. As a result, using the spellpyx spell
-checker is much easier than before.</t>
+checker is much easier than before.
+
+Leo's extensions folder now contains aspell23.pyd and aspell24.pyd. These are
+Python dll's compiled for Python 2.3 and 2.4 respectively. You must rename one
+of these files to be aspell.pyd and move aspell.pyd to the aspell folder. For
+more details, see the installation nodes in the docstring for the spellpyx
+plugin.</t>
 <t tx="ekr.20050909082711">- Fixed bug with non-unicode characters in file name
 
     http://sourceforge.net/forum/message.php?msg_id=3224635
@@ -19694,5 +19671,20 @@ checker is much easier than before.</t>
 - Fixed bug tangling sections with non-unicode characters.
 
     http://sourceforge.net/forum/message.php?msg_id=3307318</t>
+<t tx="ekr.20050910143326">These plugins now use Python's subprocess module if it is present. The
+subprocess module comes standard with Python 2.4. For Linux systems, Leo will
+use subprocess.py in Leo's extensions folder if necessary.
+
+For Windows systems you can install Python's subprocess module in Python 2.2 or
+2.3 as follows:
+    
+    - Go to http://www.effbot.org/downloads/#subprocess
+
+    - Download and execute one of the following installers, depending on your version of Python:
+        subprocess-0.1-20041012.win32-py2.3.exe 
+        subprocess-0.1-20041012.win32-py2.2.exe
+        
+This installer installs the subprocess sources and also _subprocess.pyd in Python's site-packages folder.
+</t>
 </tnodes>
 </leo_file>
