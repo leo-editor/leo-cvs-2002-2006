@@ -208,6 +208,7 @@ Ries
 RodrigoB's
 Rossum
 SProvide
+SQL
 STL
 SWEB
 SWT
@@ -346,6 +347,8 @@ asis
 asisWrite
 asm
 aspell
+aspell23
+aspell24
 aspell_dir
 aspell_return
 assignFileIndices
@@ -597,6 +600,7 @@ dirtyVnodeList2
 disposableTokens
 distutils
 dll
+dll's
 doAtKeyword
 doCommand
 doDelete
@@ -1382,6 +1386,7 @@ putTnodes
 putVnode
 put_all_roots
 py
+py2
 pyc
 pycheckrc
 pyd
@@ -1466,6 +1471,7 @@ rexec
 rfind
 right_data
 rlpdf
+rogererens
 root1
 root2
 rootPosition

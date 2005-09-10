@@ -1449,7 +1449,7 @@ class settingsDialogParserClass (parserBaseClass):
     #@-node:ekr.20041225063637.100:kind handlers (settingsDialogParserClass)
     #@-others
 #@-node:ekr.20041225063637.96:class settingsDialogParserClass (parserBaseClass)
-#@+node:ekr.20041225063637.78:class settingsTree (leoTkinterTree)
+#@+node:ekr.20041225063637.78:class settingsTree (leoConfig)
 class settingsTree (leoTkinterTree.leoTkinterTree):
 
     #@    @+others
@@ -1622,7 +1622,7 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
     #@-node:ekr.20041225063637.95:drawTopTree
     #@-others
 #@nonl
-#@-node:ekr.20041225063637.78:class settingsTree (leoTkinterTree)
+#@-node:ekr.20041225063637.78:class settingsTree (leoConfig)
 #@+node:ekr.20041119203941.3:class settingsTreeParser (parserBaseClass)
 class settingsTreeParser (parserBaseClass):
     

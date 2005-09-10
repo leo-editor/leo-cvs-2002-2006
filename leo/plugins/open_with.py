@@ -1,6 +1,27 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040517075715.4:@thin open_with.py
-"""Create menu for Open With command and handle the resulting commands"""
+#@<< docstring >>
+#@+node:ekr.20050910140846:<< docstring >>
+'''Create menu for Open With command and handle the resulting commands.
+
+This code will take advantage of Python's new subprocess module if it is
+present. This module comes standard with Python 2.4. For Linux systems, Leo will
+use subprocess.py in Leo's extensions folder if necessary.
+
+For Windows systems you can install Python's subprocess module in Python 2.2 or
+2.3 as follows:
+    
+    - Go to http://www.effbot.org/downloads/#subprocess
+
+    - Download and execute one of the following installers, depending on your version of Python:
+        subprocess-0.1-20041012.win32-py2.3.exe 
+        subprocess-0.1-20041012.win32-py2.2.exe
+        
+This installer installs the subprocess sources and also _subprocess.pyd in Python's site-packages folder.
+'''
+#@nonl
+#@-node:ekr.20050910140846:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
@@ -10,17 +31,13 @@
 import leoGlobals as g
 import leoPlugins
 
-Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
-
-try:
-    import subprocess   # only available in Python 2.4 and later
-except ImportError:
-    subprocess = None
+Tk =            g.importExtension('Tkinter',   pluginName=__name__,verbose=True)
+subprocess =    g.importExtension('subprocess',pluginName=__name__,verbose=True)
 #@nonl
 #@-node:ekr.20050101090207.8:<< imports >>
 #@nl
 
-__version__ = '1.7'
+__version__ = '1.8'
 #@<< version history >>
 #@+node:ekr.20050311110052:<< version history >>
 #@@killcolor
@@ -34,6 +51,10 @@ __version__ = '1.7'
 # possible.
 # 1.7 EKR:
 #     - Set subprocess = None if import fails.
+# 1.8 EKR:
+#     - Document how install subproces, and use g.importExtension to import 
+# subprocess.
+#     - Import subprocess with g.importExtension.
 #@-at
 #@nonl
 #@-node:ekr.20050311110052:<< version history >>
@@ -150,6 +171,7 @@ def create_open_with_menu (tag,keywords):
     
     if subprocess:
         if 1: # Default table.
+            # g.trace('using subprocess')
             table = (
                 ("Idle", "Alt+Ctrl+I",
                     ("subprocess.Popen",

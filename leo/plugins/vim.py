@@ -17,16 +17,28 @@ To install this plugin do the following:
 1. Set the variable _vim_cmd at the top level of the plugin to the path to vim
 or gvim.
 
-2.  If you are using Python 2.4 or above, that's all you need to do.
-Jim Sizeloves new code will start vim automatically using Python's subprocess module.
+2. If you are using Python 2.4 or above, that's all you need to do. Jim
+Sizelove's new code will start vim automatically using Python's subprocess
+module. The subprocess module comes standard with Python 2.4. For Linux systems,
+Leo will use subprocess.py in Leo's extensions folder if necessary.
 
-Otherwise, if you are using Python 2.4 or earlier, you must start the vim server, either automatically or manually.
+On Windows, you can install Python's subprocess module in Python 2.2 or 2.3 as follows:
     
-**Manually**, from a console::
+    - Go to http://www.effbot.org/downloads/#subprocess
+
+    - Download and execute one of the following installers, depending on your verions of Python:
+        subprocess-0.1-20041012.win32-py2.3.exe 
+        subprocess-0.1-20041012.win32-py2.2.exe
+        
+This installer installs the subprocess sources and also _subprocess.pyd in Python's site-packages folder.
+        
+3. If you **don't** have Python's subprocess module available you must start the vim server in one of two ways:
+            
+- **Manually**, from a console::
     
     vim --servername "LEO" # The name of the server *must* be LEO.
 
-**Automatically**, when Leo starts up.  Uncomment the following line in the init function::
+- **Automatically**, when Leo starts up.  Uncomment the following line in the init function::
     
     os.system(_vim_cmd) # Don't do this if using Python 2.4 or above!
 '''
@@ -36,7 +48,7 @@ Otherwise, if you are using Python 2.4 or earlier, you must start the vim server
 #@@language python
 #@@tabwidth -4
 
-__version__ = "1.8"
+__version__ = "1.9"
 #@<< version history >>
 #@+node:ekr.20050226184411.1:<< version history >>
 #@@killcolor
@@ -66,6 +78,10 @@ __version__ = "1.8"
 # of vim.
 # 1.8 EKR:
 #     - Set subprocess = None if import fails.
+# 1.9 EKR:
+#     - Document how install subproces, and use g.importExtension to import 
+# subprocess.
+#     - Import subprocess with g.importExtension.
 #@-at
 #@nonl
 #@-node:ekr.20050226184411.1:<< version history >>
@@ -161,10 +177,7 @@ import leoPlugins
 import os
 import sys
 
-try:
-    import subprocess   # only available in Python 2.4 and later
-except ImportError:
-    subprocess = None
+subprocess = g.importExtension('subprocess',pluginName=__name__,verbose=True)
 #@nonl
 #@-node:ekr.20050226184411.2:<< imports >>
 #@nl

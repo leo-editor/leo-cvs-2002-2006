@@ -7765,7 +7765,7 @@ plsql_keywords = [
 #@-node:ekr.20050524073547.1:4.3.1 projects
 #@+node:ekr.20050621084408:4.3.2 projects
 #@+node:ekr.20050705192437:Bug fixes...
-#@+node:ekr.20050705140158:(Fixed bug with non-unicode characters in file name)
+#@+node:ekr.20050705140158:Fixed bug with non-unicode characters in file name
 #@+node:ekr.20050705140158.1:Report
 @nocolor
 http://sourceforge.net/forum/message.php?msg_id=3224635
@@ -7841,8 +7841,8 @@ def readSettingsFiles (self,fileName,verbose=True):
     self.setIvarsFromSettings(None)
 #@nonl
 #@-node:ekr.20041120064303:config.readSettingsFiles
-#@-node:ekr.20050705140158:(Fixed bug with non-unicode characters in file name)
-#@+node:ekr.20050705142321:(Fixed bug with non-unicode characters in settings value)
+#@-node:ekr.20050705140158:Fixed bug with non-unicode characters in file name
+#@+node:ekr.20050705142321:Fixed bug with non-unicode characters in settings value
 #@+node:ekr.20050705142321.1:Report
 @nocolor 
 http://sourceforge.net/forum/message.php?msg_id=3222750
@@ -8110,8 +8110,8 @@ def writeChangesToFile (self,c,changes,path):
 #@nonl
 #@-node:ekr.20041225063637.71:writeChangesToFile
 #@-node:ekr.20041225063637.65:writeChangedVars & helpers
-#@-node:ekr.20050705142321:(Fixed bug with non-unicode characters in settings value)
-#@+node:ekr.20050706081854:(Fixed two recent files bugs
+#@-node:ekr.20050705142321:Fixed bug with non-unicode characters in settings value
+#@+node:ekr.20050706081854:Fixed two recent files bugs
 #@+node:ekr.20050706081854.1:Report
 @nocolor 
 http://sourceforge.net/forum/message.php?msg_id=3218558
@@ -8308,8 +8308,8 @@ def closeLeoWindow (self,frame):
     return True # The window has been closed.
 #@nonl
 #@-node:ekr.20031218072017.2609:app.closeLeoWindow
-#@-node:ekr.20050706081854:(Fixed two recent files bugs
-#@+node:ekr.20050825081645:(Fixed bug in g.reportBadChars)
+#@-node:ekr.20050706081854:Fixed two recent files bugs
+#@+node:ekr.20050825081645:Fixed bug in g.reportBadChars
 #@+node:ekr.20050825084513:Report
 @nocolor
 http://sourceforge.net/forum/message.php?msg_id=3307318
@@ -8581,8 +8581,8 @@ else:
 #@-node:ekr.20031218072017.1505:<< define getpreferredencoding for *nix >>
 #@-node:ekr.20031218072017.1503:getpreferredencoding from 2.3a2
 #@-node:ekr.20031218072017.1498:Unicode utils...
-#@-node:ekr.20050825081645:(Fixed bug in g.reportBadChars)
-#@+node:ekr.20050723093228:(Fixed minor crash in colorizer)
+#@-node:ekr.20050825081645:Fixed bug in g.reportBadChars
+#@+node:ekr.20050723093228:Fixed minor crash in colorizer
 #@+node:ekr.20050825095048:What I did
 @nocolor
 
@@ -8669,7 +8669,7 @@ if 0: # not ready yet.
             mutli_list.append((self.block_comment_start,self.doBlockComment),)
 #@nonl
 #@-node:ekr.20031218072017.1607:<< define dispatch dicts >>
-#@-node:ekr.20050723093228:(Fixed minor crash in colorizer)
+#@-node:ekr.20050723093228:Fixed minor crash in colorizer
 #@+node:ekr.20050825101028:Protected several methods used by plugin manager
 @nocolor
 
@@ -8679,7 +8679,7 @@ The protection is to return if c is None.
 This affects the following files: plugins_menu.py, pluginsTest.py, plugin_manager.py
 #@nonl
 #@-node:ekr.20050825101028:Protected several methods used by plugin manager
-#@+node:ekr.20050704090830:(Added test files to distribution list and cvs)
+#@+node:ekr.20050704090830:Added test files to distribution list and cvs
 @
 
 - Only files used by unit tests should be on cvs and the distribution.
@@ -8715,7 +8715,7 @@ leo/test/unittest was not created by the installation.
 
 Dave
 #@-node:ekr.20050830051128:Report
-#@-node:ekr.20050704090830:(Added test files to distribution list and cvs)
+#@-node:ekr.20050704090830:Added test files to distribution list and cvs
 #@+node:ekr.20050801102407:Investigated bug report: dead link for leoPy.leo in help menu: not a problem
 @ This does not seem to be a problem.
 
@@ -8769,7 +8769,7 @@ with LeoPy.leo might be nice for folks in the 'Use the source, Luke' category.
 # Sometimes the word wasn't selected properly.
 #@nonl
 #@-node:ekr.20050906192101:Fixed bug in mod_spelling
-#@+node:ekr.20050721095052:(Investigated problems with outline colors: works for me)
+#@+node:ekr.20050721095052:Investigated problems with outline colors: works for me
 #@+node:ekr.20050721095052.1:Post 1
 http://sourceforge.net/forum/message.php?msg_id=3247013
 By: rich_ries
@@ -8854,7 +8854,60 @@ in case this would have an effect. No difference.
 
 --Rich
 #@-node:ekr.20050831130936:Post 3
-#@-node:ekr.20050721095052:(Investigated problems with outline colors: works for me)
+#@-node:ekr.20050721095052:Investigated problems with outline colors: works for me
+#@+node:ekr.20050909113245.4:Investigated problems with *some* settings (still works for me)
+#@+node:ekr.20050909113245.5:Report
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3331806
+By: nobody
+
+From: Rich
+Further tests
+
+I changed leoSettings to:
+
++ @page Outline pane colors
+   - @color headline_text_unselected_background_color = black
+   - @color headline_text_unselected_foreground_color = brown
+
+   - @color headline_text_selected_background_color = red
+   - @color headline_text_selected_foreground_color = orange
+   - @color headline_text_editing_background_color = yellow
+   - @color headline_text_editing_foreground_color = green
+   - @color headline_text_editing_selection_foreground_color = blue
+   - @color headline_text_editing_selection_background_color = purple
+   - @color outline_pane_background_color = AntiqueWhite1
+
+saved the file, and opened a new (empty) .leo file. I would expect the colors
+to follow the scheme in config\leoSettings.leo. However, what I got was:
+
++ @page Outline pane colors
+   - @color headline_text_unselected_background_color = white
+   - @color headline_text_unselected_foreground_color = black
+
+   - @color headline_text_selected_background_color = red
+   - @color headline_text_selected_foreground_color = orange
+   - @color headline_text_editing_background_color = yellow
+   - @color headline_text_editing_foreground_color = green
+   - @color headline_text_editing_selection_foreground_color = blue
+   - @color headline_text_editing_selection_background_color = purple
+   - @color outline_pane_background_color = AntiqueWhite1
+
+That is, everything changed _except_ the unselected background and foreground
+colors!? When I hit Ctrl-Y, the UBG/UFG colors changed to black/brown, thereby
+matching the @settings selection. Hitting [Apply] and closing the preferences
+window brought UBG/UFG back to white/black.
+
+--Rich
+
+
+______________________________________________________________________
+You are receiving this email because you elected to monitor this forum.
+To stop monitoring this forum, login to SourceForge.net and visit: 
+https://sourceforge.net/forum/unmonitor.php?forum_id=10226
+
+#@-node:ekr.20050909113245.5:Report
+#@-node:ekr.20050909113245.4:Investigated problems with *some* settings (still works for me)
 #@-node:ekr.20050705192437:Bug fixes...
 #@+node:ekr.20050705192437.1:New & improved features...
 #@+node:ekr.20050706090801:(Added g.es_print, es_trace & eliminate corresponding print statements)
@@ -9852,6 +9905,12 @@ except Exception:
 #@nonl
 #@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
 #@-node:JSBiz.20050817134120:Installed patches for vim, openWith: Jim Sizelove
+#@+node:ekr.20050910103843:added aspell23.pyd and aspell24.pyd to Leo's extension folder
+@nocolor
+
+See the installation nodes in the docstring for the spellpyx plugin for how to use these files.
+#@nonl
+#@-node:ekr.20050910103843:added aspell23.pyd and aspell24.pyd to Leo's extension folder
 #@-node:ekr.20050705192437.1:New & improved features...
 #@-node:ekr.20050621084408:4.3.2 projects
 #@+node:ekr.20050718150452:(Stuff used by wx plugin)
