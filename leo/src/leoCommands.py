@@ -508,7 +508,7 @@ class baseCommands:
                         if subprocess:
                             subprocess.Popen(vtuple)
                         else:
-                            g.grace('Can not import subprocess.  Skipping: "%"' % command)
+                            g.grace('Can not import subprocess.  Skipping: "%s"' % command)
                     else:
                         command="bad command:"+str(openType)
                         g.trace(command)
@@ -4336,7 +4336,6 @@ class baseCommands:
         if not p: return
     
         after = p.nodeAfterTree()
-        changed = False
         c.beginUpdate()
         if 1: # In update...
             while p and p != after:
