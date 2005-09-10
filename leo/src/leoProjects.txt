@@ -9657,6 +9657,201 @@ def trace(self):
 #@-node:ekr.20041021101911.2:trace
 #@-node:ekr.20040711135244.10:putNormalToken & allies
 #@-node:ekr.20050726101110.1:(Improved PrettyPrinting)
+#@+node:ekr.20050906081155:Added leoPostings.leo to distribution
+#@-node:ekr.20050906081155:Added leoPostings.leo to distribution
+#@+node:ekr.20050711185846.1:Installed patch for xemacs plugin from mackal
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3219471
+By: mackal
+
+Here's a simple patch to have this plugin work in Linux:
+
+*** xemacs.py.orig Sat Jun 25 19:12:52 2005
+--- xemacs.py Sat Jun 25 19:15:15 2005
+***************
+*** 51,54 ****
+--- 51,64 ----
+      # This path must not contain blanks in XP.  Sheesh.
+      _emacs_cmd = r"c:\XEmacs\XEmacs-21.4.13\i586-pc-win32\xemacs.exe"
++ elif sys.platform.startswith("linux"):
++     clients = ["gnuclient", "emacsclient", "xemacs"]
++     _emacs_cmd = ""
++     for cl in clients:
++         path = "/usr/bin/"+cl
++         if os.path.exists(path):
++             _emacs_cmd = path
++             break
++     if not _emacs_cmd:
++         print>> sys.stderr, "Unable to locate a usable version of *Emacs"
+  else:
+      _emacs_cmd = "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
+#@nonl
+#@-node:ekr.20050711185846.1:Installed patch for xemacs plugin from mackal
+#@+node:JSBiz.20050817134120:Installed patches for vim, openWith: Jim Sizelove
+#@+node:JSBiz.20050817145837:Problems spawning gVim, and the solutions I came up with.
+@nocolor
+
+I was trying to get Leo to work more effectively with Vim, my editor of choice.
+To do so, I made several changes to Leo which (I believe) make it work better.
+
+After much exploring and trying various things, I made a change to the os.spawnv
+section of the openWith function in leoCommands.py. This added line seems to
+prevent the "weird error message on first open of Vim." (vim.py, line 32) when
+opening Vim with os.spawnv.
+
+os.spawnv needs the command it is calling as the first argument in the args list
+in addition, so the command actually shows twice in the total args to os.spawnv,
+e.g.::
+    
+    os.spawnv(os.P_NOWAIT, "C:/Program Files/Vim/vim63/gvim.exe",
+        ["gvim.exe", "--servername", "LEO", "--remote", "foo.txt"])
+    
+If the call is made without the command-name as the first item in the list of
+args, like so::
+    
+    os.spawnv(os.P_NOWAIT, "C:/Program Files/Vim/vim63/gvim.exe",
+        ["--servername", "LEO", "--remote", "foo.txt"])
+
+an error message pops up::
+    
+    E247: no registered server named "GVIM": Send failed.  Trying to execute locally
+    
+This message means that gVim is not looking for a server named "LEO", which
+presumably the user has already opened with the command "gvim --servername LEO".
+Instead it is looking for a server named "GVIM", and not finding it, opens the
+files "foo.txt" and "LEO" (notice that it didn't catch the "--servername"
+argument and thinks that "LEO" is the name of a new file to create) in two
+buffers in a local copy of gVim. Now, if the command is::
+
+    os.spawnv(
+        os.P_NOWAIT, "C:/Program Files/Vim/vim63/gvim.exe",
+        ["gvim.exe", "--servername", "LEO", "--remote", "foo.txt"])
+
+everything works great, as long as the user doesn't close the gVim window. If
+the user has closed the gVim window, then tries to open a node in Vim, they will
+see this error message::
+
+    E247: no registered server named "LEO": Send failed.
+
+Trying to execute locally If you use the "--remote-silent" argument, gVim will
+start the LEO server without the error message.
+
+One other comment:  you can see which servers gVim has running by typing::
+
+    vim --serverlist
+
+at the command prompt.
+#@nonl
+#@-node:JSBiz.20050817145837:Problems spawning gVim, and the solutions I came up with.
+#@+node:JSBiz.20050817145837.1:Using the subprocess module from Python 2.4
+@nocolor
+
+The rest of my changes have to do with using the subprocess module instead of
+the os.system, and various os.spawn* calls. I find subprocess easier to
+understand, and it is fairly simple to use for the most common kinds of process
+calls, but is capable of all the variations you may need. It is designed to
+replace all the os.system, os.spawn*, and popen* calls. It is available in
+Python 2.4.
+
+So I added some lines to use subprocess in the OpenWith plugin and the Vim
+plugin. I also have added a table in the "create_open_with_menu" function that
+makes use of the various editors I have used at times. Most of those editors are
+called with subprocess.Popen.
+#@nonl
+#@-node:JSBiz.20050817145837.1:Using the subprocess module from Python 2.4
+#@+node:ekr.20040712045933:<< imports  >> (leoCommands)
+import leoGlobals as g
+
+if g.app and g.app.use_psyco:
+    # print "enabled psyco classes",__file__
+    try: from psyco.classes import *
+    except ImportError: pass
+
+import leoAtFile
+import leoConfig
+import leoEditCommands
+import leoFileCommands
+import leoImport
+import leoNodes
+import leoTangle
+import leoUndo
+
+import compiler # for Check Python command
+import keyword
+import os
+import parser # needed only for weird Python 2.2 parser errors.
+import string
+
+try:
+    import subprocess   # only available in Python 2.4 and later
+except ImportError:
+    pass
+
+import sys
+import tempfile
+
+import tabnanny # for Check Python command
+import tokenize # for Check Python command
+
+# The following import _is_ used.
+__pychecker__ = '--no-import'
+import token    # for Check Python command
+#@nonl
+#@-node:ekr.20040712045933:<< imports  >> (leoCommands)
+#@+node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+try:
+    if arg == None: arg = ""
+    shortPath = path # g.shortFileName(path)
+    if openType == "os.system":
+        if 1:
+            # This works, _provided_ that arg does not contain blanks.  Sheesh.
+            command = 'os.system(%s)' % (arg+shortPath)
+            os.system(arg+shortPath)
+        else:
+            # XP does not like this format!
+            command = 'os.system("%s" "%s")' % (arg,shortPath)
+            os.system('"%s" "%s"' % (arg,shortPath))
+    elif openType == "os.startfile":
+        command = "os.startfile(%s)" % (arg+shortPath)
+        os.startfile(arg+path)
+    elif openType == "exec":
+        command = "exec(%s)" % (arg+shortPath)
+        exec arg+path in {}
+    elif openType == "os.spawnl":
+        filename = g.os_path_basename(arg)
+        command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
+        apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
+    elif openType == "os.spawnv":
+        filename = os.path.basename(arg[0]) 
+        vtuple = arg[1:]
+        vtuple.insert(0, filename)
+            # add the name of the program as the first argument.
+            # Change suggested by Jim Sizelove.
+        vtuple.append(path)
+        command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+        apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+    # This clause by Jim Sizelove.
+    elif openType == "subprocess.Popen":
+        if isinstance(arg, basestring):
+            vtuple = arg + " " + path
+        elif isinstance(arg, (list, tuple)):
+            vtuple = arg[:]
+            vtuple.append(path)
+        command = "subprocess.Popen(%s)" % repr(vtuple)
+        if subprocess:
+            subprocess.Popen(vtuple)
+        else:
+            g.grace('Can not import subprocess.  Skipping: "%"' % command)
+    else:
+        command="bad command:"+str(openType)
+        g.trace(command)
+except Exception:
+    g.es("exception executing: "+command)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+#@-node:JSBiz.20050817134120:Installed patches for vim, openWith: Jim Sizelove
 #@-node:ekr.20050705192437.1:New & improved features...
 #@-node:ekr.20050621084408:4.3.2 projects
 #@+node:ekr.20050718150452:(Stuff used by wx plugin)
