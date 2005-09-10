@@ -254,10 +254,10 @@ class leoBody:
     def getImageIndex (self,image):
         self.oops()
         
-    def getPythonInsertionPoint (self):
+    def getPythonInsertionPoint (self,t=None,s=None):
         self.oops()
         
-    def setPythonInsertionPoint (self,i):
+    def setPythonInsertionPoint (self,i,t=None,s=None):
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3667:Indices
