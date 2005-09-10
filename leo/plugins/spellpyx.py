@@ -3,18 +3,81 @@
 #@+node:ekr.20040809151600.1:@thin spellpyx.py
 #@@first
 
-"""Spell Checker Plugin.
+#@<< docstring >>
+#@+node:ekr.20050910094135:<< docstring >>
+'''aspell.pyx: Leo's new spell checking plugin that uses aspell.exe. It is much
+faster than the old mod_spelling plugin, but requires Python 2.3 or above and a
+recent version of Aspell.
 
-- Perfoms spell checking on nodes within a Leo document.
-- Uses aspell.exe to do the checking and suggest alternatives.
+When properly installed and enabled (see below), this plugin adds a Check
+Spelling command to Leo's Edit menu. This command brings up a spell checking
+dialog. You can set options by changing entries in spellpyx.ini in Leo's plugins
+menu. One of these settings is the name of the dictionary, spellpyx.txt by
+default. **Warning**: do not create spellpyx.txt with an @asis tree in
+leoPlugins.leo: only the plugin code should typically change spellpyx.txt. You
+**can** edit spellpyx.txt yourself in an external editor: just make sure that
+Leo isn't running when you do this.
 
-Written by Paul Paterson and 'e', with revisions by EKR.
-"""
+You can bring up the spell checker without enabling the spellpyx plugin by using
+an @button Check Spelling... script button. LeoDocs.leo contains such a script
+button.
+
+Here is how to install the spellpyx plugin:
+    
+1. Install aspell: here are some links:
+    
+    <http://aspell.net>
+    <http://aspell.net/win32/>
+    
+  This will create an aspell folder.
+  
+  Here are some more details for Linux:
+      
+    - Install aspell-python from
+      http://www.republika.pl/wmula/proj/aspell-python/
+
+    - Make a symbolic link to aspell.so:
+      cd /other/leo/lib/leo/plugins/
+      ln -s /other/aspell-python/lib/python2.4/site-packages/aspell.so .
+
+2. Leo's extensions folder contains aspell23.pyd, aspell24.pyd, etc. Python dll's
+  compiled for a specific version of Python.  aspell24.pyd for Python 2.4, etc.
+  Make a copy of the appropriate dll and rename it to be aspell.pyd.
+
+3a. (Linux) Copy aspell.pyd to the aspell folder created in step 1.
+
+3b. (XP) Copy aspell.pyd to the bin subfolder of the aspell folder created in step 1.
+ 
+4.  In the < < spellpx imports > > section in spellpyx.py, do the following:
+
+    - Set aspell_dir to the top-level Aspell directory.
+
+    - Set aspell_bin_dir to the bin subdirectory.
+    
+Here are some links for those wishing to compile their own aspell.pyd file:
+
+- A Pyrex wrapper for the aspell api.
+    <http://prdownloads.sourceforge.net/uncpythontools/aspell-1.0.zip?download>
+    <http://sourceforge.net/project/showfiles.php?group_id=82407>
+
+    if you want to compile it get
+    <http://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/>
+    works with the latest pyrex and mingw gcc .
+    you can just copy the python*.dll and *aspell.dll
+    to mingw/lib now instead of the grueling lib building steps. <http://www.mingw.org>
+
+- http://sourceforge.net/forum/forum.php?thread_id=1107275&forum_id=10226
+'''
+#@nonl
+#@-node:ekr.20050910094135:<< docstring >>
+#@nl
+
+# Written by Paul Paterson and 'e', and EKR.
 
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.12"
+__version__ = "0.13"
 #@<< version history >>
 #@+node:ekr.20040915052810:<< version history >>
 #@+at
@@ -52,6 +115,7 @@ __version__ = "0.12"
 # from middle.
 # 0.12 EKR:
 #     - Fixed several bugs in findNextWord.
+# 0.13 EKR: Added installation instructions to docstring.
 #@-at
 #@nonl
 #@-node:ekr.20040915052810:<< version history >>
