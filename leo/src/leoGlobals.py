@@ -1360,6 +1360,9 @@ def toString (obj,tag=None,sort=False,verbose=True,indent=''):
 #@+node:ekr.20041224080039:print_dict & dictToString
 def print_dict(d,tag='',verbose=True,indent=''):
     
+    __pychecker__ = '--no-argsused'
+        # verbose unused, but present for compatibility with similar methods.
+    
     if not d:
         if tag: print '%s...{}' % tag
         else:   print '{}'
@@ -1379,6 +1382,9 @@ def print_dict(d,tag='',verbose=True,indent=''):
 printDict = print_dict
 
 def dictToString(d,tag=None,verbose=True,indent=''):
+    
+    __pychecker__ = '--no-argsused'
+        # verbose unused, but present for compatibility with similar methods.
     
     if not d:
         if tag: return '%s...{}' % tag
