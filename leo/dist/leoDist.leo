@@ -23,7 +23,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20050905095110"><vh>ANN: Leo 4.3.2</vh></v>
+<v t="ekr.20050905095110"><vh>ANN: Leo 4.3.2-b1</vh></v>
 <v t="ekr.20050909083954"><vh>ANN: New docs for Leo</vh></v>
 <v t="ekr.20050620150256"><vh>ANN: Leo 4.3.1</vh></v>
 <v t="ekr.20050523091828"><vh>ANN: Leo 4.3-final</vh></v>
@@ -97,7 +97,7 @@
 <v t="ekr.20050118125236"><vh>Write a script to make sure .nsi and main install scripts create the same files</vh></v>
 <v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
-<v t="EKR.20040519080201.1" a="E"><vh>Distribution checklist</vh></v>
+<v t="EKR.20040519080201.1"><vh>Distribution checklist</vh></v>
 <v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="ekr.20050430095952"><vh>Pychecker statements</vh></v>
@@ -168,7 +168,8 @@
 <v t="ekr.20050118103447.1"><vh>&lt;&lt; uninstall top-level files &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
+<v t="ekr.20050118092706"
+expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 </v>
 <v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
@@ -641,7 +642,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.3.1
+Version: 4.3.2-b1
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -680,8 +681,9 @@ The highlights of 4.3.2:
   plugin from sources in LeoDocs.leo. For full documentation for rst3 see:
   http://webpages.charter.net/edreamleo/rstplugin3.html
 
-- Small but important improvements to the spellpyx (spell checking) plugin make
-  this plugin much easier to use.
+- The spellpyx (spell checking) plugin is now much easier to use.
+
+- The vim and openWith plugins now use Python's subprocess module if it is present.
  
 - Improved the Pretty Printing command.
 
@@ -736,17 +738,16 @@ include doc\LeoN\sun97generic.pdf
 include doc\LeoN\sun98operational.pdf
 include doc\LeoN\sun98reversible.pdf
 
-# New in 4.3a2: include path.py and sets.py.
+include extensions/aspell23.pyd
+include extensions/aspell24.pyd
 include extensions/path.py
 include extensions/sets.py
+include extensions/subprocess.py
 
-# New in 4.3a2: include all Pmw files (except .pyc and .pyo files)
 include extensions/__init__.py
 
 include extensions/Pmw/__init__.py
-
 include extensions/Pmw/Pmw_1_2/__init__.py
-
 include extensions/Pmw/Pmw_1_2/bin/*.*
 include extensions/Pmw/Pmw_1_2/contrib/*.*
 include extensions/Pmw/Pmw_1_2/demos/*.*
@@ -772,8 +773,6 @@ exclude extensions/Pmw/Pmw_1_2/tests/*.pyo
 
 include Icons/*.*
 
-include plugins/aspell23.pyd
-include plugins/aspell24.pyd
 include plugins/leoPlugins.leo
 include plugins/*.ini
 include plugins/*.txt
@@ -792,8 +791,8 @@ include src/oldLeoProjects.leo
 include test/__init__.py
 include test/test.leo
 
-include test/unittest/batchTest.py"
-include test/unittest/errorTest.py"
+include test/unittest/batchTest.py
+include test/unittest/errorTest.py
 </t>
 <t tx="EKR.20040519091259">@pagewidth 70
 @killcolor</t>
@@ -3468,7 +3467,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-3-1.exe"
+OutFile "LeoSetup-4-3-2-b1.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3572,17 +3571,13 @@ Delete "$INSTDIR\doc\LeoN\sun98reversible.pdf"</t>
 <t tx="ekr.20050118104901.4">File "..\Icons\*.*"</t>
 <t tx="ekr.20050118104901.5">Delete "$INSTDIR\icons\*.*"</t>
 <t tx="ekr.20050118104901.6"></t>
-<t tx="ekr.20050118104901.7">File "..\plugins\aspell23.pyd"
-File "..\plugins\aspell24.pyd"
-File "..\plugins\leoPlugins.leo"
+<t tx="ekr.20050118104901.7">File "..\plugins\leoPlugins.leo"
 
 File "..\plugins\*.ini"
 File "..\plugins\*.txt"
 
 File "..\plugins\*.py"</t>
-<t tx="ekr.20050118104901.8">Delete "$INSTDIR\plugins\aspell23.pyd"
-Delete "$INSTDIR\plugins\aspell24.pyd"
-Delete "$INSTDIR\plugins\leoPlugins.leo"
+<t tx="ekr.20050118104901.8">Delete "$INSTDIR\plugins\leoPlugins.leo"
 
 Delete "$INSTDIR\plugins\*.txt"
 Delete "$INSTDIR\plugins\*.ini"
@@ -3616,9 +3611,13 @@ Delete "$INSTDIR\scripts\*.p*"
 
 Delete "$INSTDIR\scripts\openLeoScript.sh"</t>
 <t tx="ekr.20050118113631"></t>
-<t tx="ekr.20050118122404">File "..\extensions\__init__.py"
+<t tx="ekr.20050118122404">File "..\extensions\aspell23.pyd"
+File "..\extensions\aspell24.pyd"
+
+File "..\extensions\__init__.py"
 File "..\extensions\path.py"
 File "..\extensions\sets.py"
+File "..\extensions\subprocess.py"
 
 SetOutPath "$INSTDIR\extensions\Pmw"
 File "..\extensions\Pmw\__init__.py"
@@ -3647,10 +3646,14 @@ File "..\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 File "..\test\test.leo"
 </t>
 <t tx="ekr.20050118122740"></t>
-<t tx="ekr.20050118122740.1">Delete "$INSTDIR\extensions\__init__.p*"
+<t tx="ekr.20050118122740.1">Delete "$INSTDIR\extensions\aspell23.pyd"
+Delete "$INSTDIR\extensions\aspell24.pyd"
+
+Delete "$INSTDIR\extensions\__init__.p*"
 
 Delete "$INSTDIR\extensions\path.p*"
 Delete "$INSTDIR\extensions\sets.p*"
+Delete "$INSTDIR\extensions\subprocess.p*"
 
 Delete "$INSTDIR\extensions\Pmw\__init__.p*"
 
@@ -4349,11 +4352,13 @@ File "..\test\unittest\errorTest.py"
 <t tx="ekr.20050830052109.1">Delete "$INSTDIR\test\unittest\batchTest.py"
 Delete "$INSTDIR\test\unittest\errorTest.py"
 </t>
-<t tx="ekr.20050905095110">Leo 4.3.2 final is now available at:
+<t tx="ekr.20050905095110">Leo 4.3.2 beta 1  is now available at:
 
 http://sourceforge.net/project/showfiles.php?group_id=3458&amp;package_id=29106
 
-The highligts of 4.3.2:
+To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of 4.3.2:
 -----------------------
 
 - Improved Leo's documentation:
@@ -4361,26 +4366,21 @@ The highligts of 4.3.2:
       http://webpages.charter.net/edreamleo/intro.html
     - A 5-minute guide to programming with Leo:
       http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
-- Improved pretty printing.
-- The usual assortment of bug fixes.
 
-What is Leo?
-------------
+- The new rst3 plugin creates .html and .tex files from reStructuredText
+  embedded in Leo files. Any node of the source outline may contain options for
+  the rst3 plugin, which makes this plugin much more useful and flexible than
+  the previous rst plugins. All of Leo's documentation was created using this
+  plugin from sources in LeoDocs.leo. For full documentation for rst3 see:
+  http://webpages.charter.net/edreamleo/rstplugin3.html
 
-See: http://webpages.charter.net/edreamleo/intro.html
+- The spellpyx (spell checking) plugin is now much easier to use.
 
-What people are saying about Leo
---------------------------------
+- The vim and openWith plugins now use Python's subprocess module if it is present.
+ 
+- Improved the Pretty Printing command.
 
-See: http://webpages.charter.net/edreamleo/testimonials.html
-
-Links:
-------
-Leo home:   http://webpages.charter.net/edreamleo/front.html
-Tutorial:   http://webpages.charter.net/edreamleo/intro.html
-SourcForge: http://sourceforge.net/projects/leo/
-Download:   http://http://sourceforge.net/project/showfiles.php?group_id=3458&amp;package_id=29106
-CVS:        http://sourceforge.net/cvs/?group_id=3458</t>
+- The usual assortment of bug fixes.</t>
 <t tx="ekr.20050909083954">@nocolor
 
 Leo has new documentation: simpler, clearer, shorter. See:

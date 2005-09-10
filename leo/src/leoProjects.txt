@@ -209,6 +209,8 @@ c.endUpdate(redraw_flag) # redraw only if necessary
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
 def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
     
+    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
+    
     c = self.c
     # Get the previous line.
     s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
@@ -4119,6 +4121,8 @@ c.endUpdate(redraw_flag) # redraw only if necessary
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
 def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
     
+    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
+    
     c = self.c
     # Get the previous line.
     s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
@@ -5718,10 +5722,10 @@ def setEncoding (self):
     """Set g.app.tkEncoding."""
 
     try: locale_encoding = g.getpreferredencoding()
-    except exception: locale_encoding = None
+    except Exception: locale_encoding = None
     
     try: sys_encoding = sys.getdefaultencoding()
-    except exception: sys_encoding = None
+    except Exception: sys_encoding = None
 
     for (encoding,src) in (
         (self.config.tkEncoding,"config"),
@@ -5736,8 +5740,6 @@ def setEncoding (self):
         elif encoding:
             color = g.choose(self.tkEncoding=="ascii","red","blue")
             g.trace("ignoring invalid %s encoding: %s" % (src,encoding),color=color)
-            
-    
 #@nonl
 #@-node:ekr.20031218072017.2618:app.setEncoding
 #@-node:ekr.20050614065022:(Fixed Unicode encoding problem)
@@ -6440,6 +6442,8 @@ c.endUpdate(redraw_flag) # redraw only if necessary
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
 def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
     
+    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
+    
     c = self.c
     # Get the previous line.
     s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
@@ -6545,7 +6549,10 @@ def afterMark (self,p,command,bunch,dirtyVnodeList=[]):
     
     '''Create an undo node for mark and unmark commands.'''
     
-    u = self ; body = u.c.frame.body
+    __pychecker__ = '--no-argsused'
+        # 'command' unused, but present for compatibility with similar methods.
+    
+    u = self
     if u.redoing or u.undoing: return
 
     # Set the type & helpers.
@@ -6632,7 +6639,6 @@ def markAtFileNodesDirty (self):
     if not p: return
 
     after = p.nodeAfterTree()
-    changed = False
     c.beginUpdate()
     if 1: # In update...
         while p and p != after:
@@ -6962,6 +6968,8 @@ c.endUpdate(redraw_flag) # redraw only if necessary
 #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
 def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
+    
+    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
     
     c = self.c
     # Get the previous line.
@@ -9895,7 +9903,7 @@ try:
         if subprocess:
             subprocess.Popen(vtuple)
         else:
-            g.grace('Can not import subprocess.  Skipping: "%"' % command)
+            g.grace('Can not import subprocess.  Skipping: "%s"' % command)
     else:
         command="bad command:"+str(openType)
         g.trace(command)
@@ -10853,6 +10861,8 @@ c.endUpdate(redraw_flag) # redraw only if necessary
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
 def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
     
+    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
+    
     c = self.c
     # Get the previous line.
     s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
@@ -11150,7 +11160,7 @@ def test_g_convertPythonIndexToRowCol ():
 #@+node:ekr.20050710102922:get/setPythonInsertionPoint
 def getPythonInsertionPoint (self,t=None,s=None):
     
-    b = self ;
+    b = self
     if t is None: t = self.bodyCtrl
     if s is None: s = t.get('1.0','end')
     i = t.index("insert")
@@ -11173,7 +11183,7 @@ def getPythonTextSelection (self):
     
     Return a tuple giving the insertion point if no range of text is selected."""
 
-    t = self.bodyCtrl
+    b = self ; t = self.bodyCtrl
     sel = t.tag_ranges("sel")
 
     if len(sel) == 2:

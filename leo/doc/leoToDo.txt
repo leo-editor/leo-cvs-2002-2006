@@ -4156,6 +4156,8 @@ c.endUpdate(redraw_flag) # redraw only if necessary
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
 def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
     
+    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
+    
     c = self.c
     # Get the previous line.
     s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
@@ -10596,6 +10598,8 @@ c.endUpdate(redraw_flag) # redraw only if necessary
 #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
 def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
+    
+    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
     
     c = self.c
     # Get the previous line.

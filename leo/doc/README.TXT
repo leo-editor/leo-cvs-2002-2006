@@ -18,8 +18,9 @@ The highlights of 4.3.2:
   plugin from sources in LeoDocs.leo. For full documentation for rst3 see:
   http://webpages.charter.net/edreamleo/rstplugin3.html
 
-- Small but important improvements to the spellpyx (spell checking) plugin make
-  this plugin much easier to use.
+- The spellpyx (spell checking) plugin is now much easier to use.
+
+- The vim and openWith plugins now use Python's subprocess module if it is present.
  
 - Improved the Pretty Printing command.
 

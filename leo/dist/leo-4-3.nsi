@@ -73,7 +73,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-3-1.exe"
+OutFile "LeoSetup-4-3-2-b1.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -278,9 +278,13 @@ Section "Leo" SEC01
   SetOutPath "$INSTDIR\extensions"
   ;@  << install extensions files >>
   ;@+node:ekr.20050118122404:<< install extensions files >>
+  File "..\extensions\aspell23.pyd"
+  File "..\extensions\aspell24.pyd"
+  
   File "..\extensions\__init__.py"
   File "..\extensions\path.py"
   File "..\extensions\sets.py"
+  File "..\extensions\subprocess.py"
   
   SetOutPath "$INSTDIR\extensions\Pmw"
   File "..\extensions\Pmw\__init__.py"
@@ -318,8 +322,6 @@ Section "Leo" SEC01
   SetOutPath "$INSTDIR\plugins"
   ;@  << install plugins >>
   ;@+node:ekr.20050118104901.7:<< install plugins >>
-  File "..\plugins\aspell23.pyd"
-  File "..\plugins\aspell24.pyd"
   File "..\plugins\leoPlugins.leo"
   
   File "..\plugins\*.ini"
@@ -566,10 +568,14 @@ Section Uninstall
   ;@nl
   ;@  << uninstall extensions files >>
   ;@+node:ekr.20050118122740.1:<< uninstall extensions files >>
+  Delete "$INSTDIR\extensions\aspell23.pyd"
+  Delete "$INSTDIR\extensions\aspell24.pyd"
+  
   Delete "$INSTDIR\extensions\__init__.p*"
   
   Delete "$INSTDIR\extensions\path.p*"
   Delete "$INSTDIR\extensions\sets.p*"
+  Delete "$INSTDIR\extensions\subprocess.p*"
   
   Delete "$INSTDIR\extensions\Pmw\__init__.p*"
   
@@ -592,8 +598,6 @@ Section Uninstall
   ;@nl
   ;@  << uninstall plugins >>
   ;@+node:ekr.20050118104901.8:<< uninstall plugins >>
-  Delete "$INSTDIR\plugins\aspell23.pyd"
-  Delete "$INSTDIR\plugins\aspell24.pyd"
   Delete "$INSTDIR\plugins\leoPlugins.leo"
   
   Delete "$INSTDIR\plugins\*.txt"
@@ -675,6 +679,7 @@ Section Uninstall
   RMDir "$INSTDIR\src"
   RMDir "$INSTDIR\scripts"
   RMDir "$INSTDIR\plugins"
+  RMDir "$INSTDIR\test\unittest"
   RMDir "$INSTDIR\test"
   
   ; Delete top-level folder.

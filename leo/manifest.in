@@ -48,17 +48,16 @@ include doc\LeoN\sun97generic.pdf
 include doc\LeoN\sun98operational.pdf
 include doc\LeoN\sun98reversible.pdf
 
-# New in 4.3a2: include path.py and sets.py.
+include extensions/aspell23.pyd
+include extensions/aspell24.pyd
 include extensions/path.py
 include extensions/sets.py
+include extensions/subprocess.py
 
-# New in 4.3a2: include all Pmw files (except .pyc and .pyo files)
 include extensions/__init__.py
 
 include extensions/Pmw/__init__.py
-
 include extensions/Pmw/Pmw_1_2/__init__.py
-
 include extensions/Pmw/Pmw_1_2/bin/*.*
 include extensions/Pmw/Pmw_1_2/contrib/*.*
 include extensions/Pmw/Pmw_1_2/demos/*.*
@@ -84,8 +83,6 @@ exclude extensions/Pmw/Pmw_1_2/tests/*.pyo
 
 include Icons/*.*
 
-include plugins/aspell23.pyd
-include plugins/aspell24.pyd
 include plugins/leoPlugins.leo
 include plugins/*.ini
 include plugins/*.txt
@@ -104,5 +101,5 @@ include src/oldLeoProjects.leo
 include test/__init__.py
 include test/test.leo
 
-include test/unittest/batchTest.py"
-include test/unittest/errorTest.py"
+include test/unittest/batchTest.py
+include test/unittest/errorTest.py
