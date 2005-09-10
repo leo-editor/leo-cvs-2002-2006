@@ -18,7 +18,7 @@
 ;@+node:ekr.20050118092706.1:<< defines >>
 ;@<< 4.3 nsi installer version >>
 ;@+node:ekr.20050118124408:<< 4.3 nsi installer version >>
-!define PRODUCT_VERSION "4.3.1"
+!define PRODUCT_VERSION "4.3.2-beta-1"
 ;@nonl
 ;@-node:ekr.20050118124408:<< 4.3 nsi installer version >>
 ;@nl
@@ -251,6 +251,7 @@ Section "Leo" SEC01
   ;@+node:ekr.20050118104901.1:<< install doc files >>
   File "..\doc\leoDiary.leo"
   File "..\doc\LeoDocs.leo"
+  File "..\doc\LeoPostings.leo"
   
   File "..\doc\leoNotes.txt"
   File "..\doc\leoToDo.txt"
@@ -317,7 +318,8 @@ Section "Leo" SEC01
   SetOutPath "$INSTDIR\plugins"
   ;@  << install plugins >>
   ;@+node:ekr.20050118104901.7:<< install plugins >>
-  File "..\plugins\aspell.pyd"
+  File "..\plugins\aspell23.pyd"
+  File "..\plugins\aspell24.pyd"
   File "..\plugins\leoPlugins.leo"
   
   File "..\plugins\*.ini"
@@ -539,6 +541,7 @@ Section Uninstall
   ;@+node:ekr.20050118104901.2:<< uninstall doc files >>
   Delete "$INSTDIR\doc\LeoDocs.leo"
   Delete "$INSTDIR\doc\leoDiary.leo"
+  Delete "$INSTDIR\doc\LeoPostings.leo"
   
   Delete "$INSTDIR\doc\leoNotes.txt"
   Delete "$INSTDIR\doc\leoToDo.txt"
@@ -589,7 +592,8 @@ Section Uninstall
   ;@nl
   ;@  << uninstall plugins >>
   ;@+node:ekr.20050118104901.8:<< uninstall plugins >>
-  Delete "$INSTDIR\plugins\aspell.pyd"
+  Delete "$INSTDIR\plugins\aspell23.pyd"
+  Delete "$INSTDIR\plugins\aspell24.pyd"
   Delete "$INSTDIR\plugins\leoPlugins.leo"
   
   Delete "$INSTDIR\plugins\*.txt"

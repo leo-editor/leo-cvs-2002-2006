@@ -981,6 +981,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726101926.2"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
 <v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20050824190822"><vh> Zope test</vh></v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -1476,8 +1477,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
 <v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
 </v>
-<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
-<v t="ekr.20041121151002" a="E" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20050801071700"><vh>@@string stylesheet = type="text/xsl" href="bpLEOHTM.xsl"</vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
@@ -1487,11 +1488,11 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041217132338"><vh>@ints[1,2,3] intsTest = 3</vh></v>
 <v t="ekr.20050620085732"><vh>@language target_language = Python</vh></v>
 </v>
-<v t="ekr.20041217144914" a="E"><vh>@page colors</vh>
+<v t="ekr.20041217144914"><vh>@page colors</vh>
 <v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
-<v t="ekr.20041217142026" a="E"><vh>@color log_pane_background_color = None</vh></v>
+<v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
 <v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
-<v t="ekr.20041218100259" a="TV"><vh>@color headline_text_selected_background_color = None</vh></v>
+<v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = None</vh></v>
 </v>
 <v t="ekr.20041218141525"><vh>@page Fonts</vh>
 <v t="ekr.20041218141525.1"><vh>@font log font</vh></v>
@@ -1578,7 +1579,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050618061835.19"><vh>How about @suite?</vh></v>
 <v t="ekr.20050618061835.20"><vh>Final remarks</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -2322,7 +2323,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050824190822"><vh> Zope test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -3030,7 +3030,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -3090,7 +3090,8 @@ def onDoubleClick(p=p):
         print "deleting unknownAttributes:",p
         delattr(p.v.t,"unknownAttributes")
             
-c.redraw()</t>
+c.redraw()
+</t>
 <t tx="ekr.20040319111213">from leoPlugins import *
 from leoGlobals import *
 from leoNodes import *
@@ -17648,16 +17649,16 @@ def unknownVals (self):
 ) 
 
 data = (
-    'xxxxx6xx5',
-    'xx41xx8xx',
-    'x5xx78x42',
-    '58xxxx9xx',
-    '3xxxxxxx7',
-    'xx6xxxx18',
-    '24x39xx7x',
-    'xx7xx52xx',
-    '9xx7xxxxx',
-) </t>
+    'x13xxxxx2',
+    '6x2xx4xx8',
+    '4xx3xxx6x',
+    '2xx8xxxx7',
+    'xxx715xxx',
+    '9xxxx3xx4',
+    'x2xxx1xx3',
+    '1xx5xx4x9',
+    '8xxxxx62x',
+)</t>
 <t tx="ekr.20050805150320">import leoPlugins
 
 rst3 = leoPlugins.getPluginModule('rst3')
@@ -17830,8 +17831,43 @@ data = (
     'x8x253xx4',
     'xxxxx65xx',
     'x2xxx1xx6',
-) # 9/9/ 2 stars
-</t>
+) # 9/6/ 2 stars
+
+data = (
+    'xxxxx6xx5',
+    'xx41xx8xx',
+    'x5xx78x42',
+    '58xxxx9xx',
+    '3xxxxxxx7',
+    'xx6xxxx18',
+    '24x39xx7x',
+    'xx7xx52xx',
+    '9xx7xxxxx',
+) 
+
+data = (
+    'xxxxx6xx5',
+    'xx41xx8xx',
+    'x5xx78x42',
+    '58xxxx9xx',
+    '3xxxxxxx7',
+    'xx6xxxx18',
+    '24x39xx7x',
+    'xx7xx52xx',
+    '9xx7xxxxx',
+) # 9/8/05 3 stars
+
+data = (
+    'xxxx64x15',
+    'x549xx6x2',
+    'xxxxxxx7x',
+    'xxxx8x2xx',
+    '1x8xxx5x7',
+    'xx7x4xxxx',
+    'x3xxxxxxx',
+    '8x2xx319x',
+    '94x87xxxx'
+) # 9/9/05 3 stars</t>
 <t tx="ekr.20050811141217">@language python
 
 @ @rst-options

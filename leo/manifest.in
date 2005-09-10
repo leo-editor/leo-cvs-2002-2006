@@ -31,6 +31,7 @@ include doc/LeoDiary.leo
 
 include doc/LeoDocs.leo
 include doc/leoNotes.txt
+include doc/LeoPostings.leo
 include doc/leoToDo.txt
 
 include doc/README.TXT
@@ -83,7 +84,8 @@ exclude extensions/Pmw/Pmw_1_2/tests/*.pyo
 
 include Icons/*.*
 
-include plugins/aspell.pyd
+include plugins/aspell23.pyd
+include plugins/aspell24.pyd
 include plugins/leoPlugins.leo
 include plugins/*.ini
 include plugins/*.txt
