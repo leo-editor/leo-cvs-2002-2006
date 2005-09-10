@@ -15,7 +15,7 @@
 </v>
 <v t="ekr.20050315084922"><vh>@button check spelling...</vh></v>
 </v>
-<v t="EKR.20040519091259"><vh>Annoucnements (don't split into lines)</vh>
+<v t="EKR.20040519091259" a="TV"><vh>Annoucnements (don't split into lines)</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -192,7 +192,7 @@ expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050118113631" a="TV"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -4380,7 +4380,10 @@ The highlights of 4.3.2:
  
 - Improved the Pretty Printing command.
 
-- The usual assortment of bug fixes.</t>
+- The usual assortment of bug fixes.
+
+Edward K. Ream
+September 10, 2005</t>
 <t tx="ekr.20050909083954">@nocolor
 
 Leo has new documentation: simpler, clearer, shorter. See:
