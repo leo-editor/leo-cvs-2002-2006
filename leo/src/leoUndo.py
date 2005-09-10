@@ -722,7 +722,10 @@ class baseUndoer:
         
         '''Create an undo node for mark and unmark commands.'''
         
-        u = self ; body = u.c.frame.body
+        __pychecker__ = '--no-argsused'
+            # 'command' unused, but present for compatibility with similar methods.
+        
+        u = self
         if u.redoing or u.undoing: return
     
         # Set the type & helpers.

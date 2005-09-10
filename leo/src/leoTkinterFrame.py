@@ -2511,6 +2511,8 @@ class leoTkinterBody (leoFrame.leoBody):
     #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
     def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
         
+        __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
+        
         c = self.c
         # Get the previous line.
         s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
@@ -2837,7 +2839,7 @@ class leoTkinterBody (leoFrame.leoBody):
     #@+node:ekr.20050710102922:get/setPythonInsertionPoint
     def getPythonInsertionPoint (self,t=None,s=None):
         
-        b = self ;
+        b = self
         if t is None: t = self.bodyCtrl
         if s is None: s = t.get('1.0','end')
         i = t.index("insert")
@@ -2951,7 +2953,7 @@ class leoTkinterBody (leoFrame.leoBody):
         
         Return a tuple giving the insertion point if no range of text is selected."""
     
-        t = self.bodyCtrl
+        b = self ; t = self.bodyCtrl
         sel = t.tag_ranges("sel")
     
         if len(sel) == 2:
