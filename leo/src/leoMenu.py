@@ -51,6 +51,8 @@ class leoMenu:
     #@nonl
     #@+node:ekr.20031218072017.839:defineEditMenuTopTable
     def defineEditMenuTopTable (self):
+        
+        __pychecker__ = 'no-unusednames=[f]' # We define 'f' just in case.
     
         c = self.c ; f = self.frame
         
@@ -72,6 +74,8 @@ class leoMenu:
     #@-node:ekr.20031218072017.839:defineEditMenuTopTable
     #@+node:ekr.20050711091931:defineEditMenuEditCursorTable
     def defineEditMenuEditCursorTable (self):
+        
+        __pychecker__ = 'no-unusednames=c,f'
         
         c = self.c ; f = self.frame
     
@@ -100,6 +104,8 @@ class leoMenu:
     #@+node:ekr.20031218072017.3754:defineEditMenuEditBodyTable
     def defineEditMenuEditBodyTable (self):
         
+        __pychecker__ = 'no-unusednames=c,f'
+        
         c = self.c ; f = self.frame
     
         self.editMenuEditBodyTable = [
@@ -126,6 +132,8 @@ class leoMenu:
     #@+node:ekr.20031218072017.3755:defineEditMenuEditHeadlineTable
     def defineEditMenuEditHeadlineTable (self):
         
+        __pychecker__ = 'no-unusednames=c,f'
+        
         c = self.c ; f = self.frame
         
         self.editMenuEditHeadlineTable = [
@@ -141,6 +149,8 @@ class leoMenu:
     #@+node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
     def defineEditMenuFindMenuTable (self):
         
+        __pychecker__ = 'no-unusednames=c,f'
+        
         c = self.c ; f = self.frame
     
         self.editMenuFindMenuTable = [
@@ -155,8 +165,11 @@ class leoMenu:
     #@-node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
     #@+node:ekr.20031218072017.3757:defineEditMenuTop2Table
     def defineEditMenuTop2Table (self):
+        
+        __pychecker__ = 'no-unusednames=c,f'
     
         c = self.c ; f = self.frame
+    
         try:        show = c.frame.body.getColorizer().showInvisibles
         except:     show = False
         label = g.choose(show,"Hide In&visibles","Show In&visibles")
@@ -191,6 +204,8 @@ class leoMenu:
     #@+node:ekr.20031218072017.3759:defineFileMenuTopTable
     def defineFileMenuTopTable (self):
         
+        __pychecker__ = 'no-unusednames=c,f'
+        
         c = self.c ; f = self.frame
     
         self.fileMenuTopTable = [
@@ -201,6 +216,8 @@ class leoMenu:
     #@-node:ekr.20031218072017.3759:defineFileMenuTopTable
     #@+node:ekr.20031218072017.3760:defineFileMenuTop2Table
     def defineFileMenuTop2Table (self):
+        
+        __pychecker__ = 'no-unusednames=c,f'
         
         c = self.c ; f = self.frame
     
@@ -216,6 +233,8 @@ class leoMenu:
     #@-node:ekr.20031218072017.3760:defineFileMenuTop2Table
     #@+node:ekr.20031218072017.3761:defineFileMenuReadWriteMenuTable
     def defineFileMenuReadWriteMenuTable (self):
+        
+        __pychecker__ = 'no-unusednames=c,f'
         
         c = self.c ; f = self.frame
     
@@ -233,6 +252,8 @@ class leoMenu:
     #@+node:ekr.20031218072017.3762:defineFileMenuTangleMenuTable
     def defineFileMenuTangleMenuTable (self):
         
+        __pychecker__ = 'no-unusednames=c,f'
+        
         c = self.c ; f = self.frame
     
         self.fileMenuTangleMenuTable = [
@@ -245,6 +266,8 @@ class leoMenu:
     #@+node:ekr.20031218072017.3763:defineFileMenuUntangleMenuTable
     def defineFileMenuUntangleMenuTable (self):
         
+        __pychecker__ = 'no-unusednames=c,f'
+        
         c = self.c ; f = self.frame
     
         self.fileMenuUntangleMenuTable = [
@@ -256,6 +279,8 @@ class leoMenu:
     #@-node:ekr.20031218072017.3763:defineFileMenuUntangleMenuTable
     #@+node:ekr.20031218072017.3764:defineFileMenuImportMenuTable
     def defineFileMenuImportMenuTable (self):
+        
+        __pychecker__ = 'no-unusednames=c,f'
         
         c = self.c ; f = self.frame
     
@@ -273,6 +298,8 @@ class leoMenu:
     #@+node:ekr.20031218072017.3765:defineFileMenuExportMenuTable
     def defineFileMenuExportMenuTable (self):
         
+        __pychecker__ = 'no-unusednames=c,f'
+        
         c = self.c ; f = self.frame
     
         self.fileMenuExportMenuTable = [
@@ -287,6 +314,8 @@ class leoMenu:
     #@-node:ekr.20031218072017.3765:defineFileMenuExportMenuTable
     #@+node:ekr.20031218072017.3766:defineFileMenuTop3MenuTable
     def defineFileMenuTop3MenuTable (self):
+        
+        __pychecker__ = 'no-unusednames=c,f'
         
         c = self.c ; f = self.frame
     
@@ -308,6 +337,8 @@ class leoMenu:
     #@nonl
     #@+node:ekr.20031218072017.3768:defineOutlineMenuTopMenuTable
     def defineOutlineMenuTopMenuTable (self):
+        
+        __pychecker__ = 'no-unusednames=c,f'
         
         c = self.c ; f = self.frame
     
@@ -334,6 +365,8 @@ class leoMenu:
     #@+node:ekr.20040711140738:defineOutlineMenuCheckOutlineMenuTable
     def defineOutlineMenuCheckOutlineMenuTable (self):
         
+        __pychecker__ = 'no-unusednames=c,f'
+        
         c = self.c ; f = self.frame
     
         self.outlineMenuCheckOutlineMenuTable = [
@@ -351,6 +384,8 @@ class leoMenu:
     #@-node:ekr.20040711140738:defineOutlineMenuCheckOutlineMenuTable
     #@+node:ekr.20031218072017.3769:defineOutlineMenuExpandContractMenuTable
     def defineOutlineMenuExpandContractMenuTable (self):
+        
+        __pychecker__ = 'no-unusednames=c,f'
         
         c = self.c ; f = self.frame
     
@@ -382,6 +417,8 @@ class leoMenu:
     #@+node:ekr.20031218072017.3770:defineOutlineMenuMoveMenuTable
     def defineOutlineMenuMoveMenuTable (self):
         
+        __pychecker__ = 'no-unusednames=c,f'
+        
         c = self.c ; f = self.frame
     
         self.outlineMenuMoveMenuTable = [
@@ -398,6 +435,8 @@ class leoMenu:
     #@+node:ekr.20031218072017.3771:defineOutlineMenuMarkMenuTable
     def defineOutlineMenuMarkMenuTable (self):
         
+        __pychecker__ = 'no-unusednames=c,f'
+        
         c = self.c ; f = self.frame
     
         self.outlineMenuMarkMenuTable = [
@@ -412,6 +451,8 @@ class leoMenu:
     #@-node:ekr.20031218072017.3771:defineOutlineMenuMarkMenuTable
     #@+node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
     def defineOutlineMenuGoToMenuTable (self):
+        
+        __pychecker__ = 'no-unusednames=c,f'
         
         c = self.c ; f = self.frame
     
@@ -441,6 +482,8 @@ class leoMenu:
     #@+node:ekr.20031218072017.3773:defineWindowMenuTables
     def defineWindowMenuTables (self):
         
+        __pychecker__ = 'no-unusednames=c,f'
+        
         c = self.c ; f = self.frame
     
         self.windowMenuTopTable = [
@@ -459,6 +502,8 @@ class leoMenu:
     #@-node:ekr.20031218072017.3773:defineWindowMenuTables
     #@+node:ekr.20031218072017.3774:defineHelpMenuTables
     def defineHelpMenuTables (self):
+        
+        __pychecker__ = 'no-unusednames=c,f'
         
         c = self.c ; f = self.frame
     
@@ -1142,8 +1187,7 @@ class leoMenu:
     #@-node:ekr.20031218072017.3790:createFileMenuFromTable
     #@+node:ekr.20031218072017.3786:createEditMenuFromTable
     def createEditMenuFromTable (self):
-        
-        c = self.c
+    
         editMenu = self.createNewMenu("&Edit")
         self.createMenuEntries(editMenu,self.editMenuTopTable,init=True)
     
@@ -1177,8 +1221,6 @@ class leoMenu:
     #@-node:ekr.20031218072017.3786:createEditMenuFromTable
     #@+node:ekr.20031218072017.3797:createOutlineMenuFromTable
     def createOutlineMenuFromTable (self):
-        
-        c = self.c
     
         outlineMenu = self.createNewMenu("&Outline")
         
@@ -1228,8 +1270,6 @@ class leoMenu:
     #@-node:ekr.20031218072017.3797:createOutlineMenuFromTable
     #@+node:ekr.20031218072017.3802:createWindowMenuFromTable
     def createWindowMenuFromTable (self):
-        
-        c = self.c
     
         windowMenu = self.createNewMenu("&Window")
         
@@ -1238,8 +1278,6 @@ class leoMenu:
     #@-node:ekr.20031218072017.3802:createWindowMenuFromTable
     #@+node:ekr.20031218072017.3803:createHelpMenuFromTable
     def createHelpMenuFromTable (self):
-        
-        c = self.c
     
         helpMenu = self.createNewMenu("&Help")
         
