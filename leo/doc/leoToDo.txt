@@ -17719,6 +17719,8 @@ def createBindings (self,frame):
 #@-node:ekr.20031218072017.838:tkBody.createBindings
 #@+node:ekr.20031218072017.839:defineEditMenuTopTable
 def defineEditMenuTopTable (self):
+    
+    __pychecker__ = 'no-unusednames=[f]' # We define 'f' just in case.
 
     c = self.c ; f = self.frame
     

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1116" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1117" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
 	<global_window_position top="40" left="406" height="778" width="794"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -15,7 +15,7 @@
 </v>
 <v t="ekr.20050315084922"><vh>@button check spelling...</vh></v>
 </v>
-<v t="EKR.20040519091259" a="TV"><vh>Annoucnements (don't split into lines)</vh>
+<v t="EKR.20040519091259"><vh>Annoucnements (don't split into lines)</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -119,6 +119,7 @@
 <v t="ekr.20040701160830"><vh>@url http://pychecker.sourceforge.net/</vh></v>
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
+<v t="ekr.20050910192724" a="E"><vh>Pychecker incorrect errors</vh></v>
 </v>
 <v t="ekr.20050118095021"><vh>Leo 4.3 installer: version stuff</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
@@ -192,7 +193,7 @@ expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050118113631"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631" a="TV"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -4189,7 +4190,9 @@ Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
 
 # __pychecker__ = '--no-constCond -- no-constant1'
 
-# __pychecker__ = 'maxlines=500'</t>
+# __pychecker__ = 'maxlines=500'
+
+# __pychecker__ = 'no-unusednames=[c,f]'</t>
 <t tx="ekr.20050516064011">Leo 4.3 beta 2 is now available at http://sourceforge.net/projects/leo/
 
 Leo 4.3 beta 2 completes all major features of Leo 4.3.  There are no known significant bugs.
@@ -4397,5 +4400,11 @@ http://sourceforge.net/forum/forum.php?forum_id=10226
 
 
 </t>
+<t tx="ekr.20050910192724"># Incorrect errors
+C:\prog\leoCVS\leo\src\leoGlobals.py:1413: Setting aList to itself has no effect
+C:\prog\leoCVS\leo\src\leoGlobals.py:1429: Setting aList to itself has no effect
+
+# Incorrect error.
+C:\prog\leoCVS\leo\src\leoUndo.py:968: No class attribute (bead) found</t>
 </tnodes>
 </leo_file>
