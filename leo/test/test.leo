@@ -2251,8 +2251,9 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050803075926" a="E"><vh>sudoku puzzle</vh>
+<v t="ekr.20050803075926" a="TV"><vh>sudoku puzzle</vh>
 <v t="ekr.20050804073824"><vh>&lt;&lt; define data &gt;&gt;</vh></v>
+<v t="ekr.20050911123109"><vh>&lt;&lt; 5-star puzzles &gt;&gt;</vh></v>
 <v t="ekr.20050811075608"><vh>&lt;&lt; old puzzles &gt;&gt;</vh></v>
 <v t="ekr.20050911112043"><vh>Unused</vh>
 <v t="ekr.20050911094859"><vh>Guessing</vh>
@@ -2266,7 +2267,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050803083933"><vh>OLDsolve (cell)</vh></v>
 <v t="ekr.20050803154357"><vh>valIsPossibleAtCell</vh></v>
 </v>
-<v t="ekr.20050803075926.1" a="E"><vh>class sudokuClass</vh>
+<v t="ekr.20050803075926.1"><vh>class sudokuClass</vh>
 <v t="ekr.20050803075926.2"><vh> ctor (main) &amp; helpers</vh>
 <v t="ekr.20050911101254"><vh>init from guess</vh>
 <v t="ekr.20050803204429"><vh>initFromGuess</vh></v>
@@ -2290,7 +2291,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050803215553"><vh>trace</vh></v>
 <v t="ekr.20050803202932.1"><vh>isFinished</vh></v>
 </v>
-<v t="ekr.20050803075926.5" a="TV"><vh>solve (main)</vh></v>
+<v t="ekr.20050803075926.5"><vh>solve (main)</vh></v>
 <v t="ekr.20050803121102.1"><vh>class groupClass</vh>
 <v t="ekr.20050803205127"><vh>known&amp; unknown (not used)</vh></v>
 <v t="ekr.20050910195216"><vh>update (not used)</vh></v>
@@ -2317,7 +2318,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050803200724"><vh>__repr__ &amp; __str__</vh></v>
 <v t="ekr.20050911112043.2"><vh>error &amp; trace</vh></v>
 <v t="ekr.20050911092707"><vh>reduce (cell)</vh></v>
-<v t="ekr.20050911092707.1"><vh>unique (cell)</vh></v>
+<v t="ekr.20050911092707.1" a="E"><vh>unique (cell)</vh></v>
 <v t="ekr.20050911111404"><vh>removeConflicts (cell)</vh></v>
 <v t="ekr.20050911094544"><vh>setValue (cell)</vh></v>
 </v>
@@ -16970,6 +16971,7 @@ digits = '123456789' # valid digits.
 
 if 0:
     &lt;&lt; old puzzles &gt;&gt;
+    &lt;&lt; 5-star puzzles &gt;&gt;
 
 &lt;&lt; define data &gt;&gt;
 
@@ -17044,13 +17046,13 @@ if not solver.errors:
 <t tx="ekr.20050803075926.5">def solve (self):
     
     n = 0 ; self.valid = True
-    self.printCells()
     while not self.errors and self.valid:
         n += 1
         self.progress = 0
         if self.tracing: print '*' * 40
         print 'solve: iteration %d' % (n)
         if not self.check(): return False
+        self.printCells()
         for cell in self.cells:
             # Reduce the possible values for the cell.
             cell.reduce()
@@ -17058,6 +17060,9 @@ if not solver.errors:
         for cell in self.cells:
             # Find any values that appear only in one place in a group.
             cell.unique()
+        if self.isFinished():
+            self.printCells('success!') ; return True
+        if self.trace: self.printCells()
         for cell in self.cells:
             # Remove any possible values that would make other groups impossible.
             cell.removeConflicts()
@@ -17065,7 +17070,6 @@ if not solver.errors:
         if self.isFinished():
             self.printCells('success!') ; return True
         if self.progress == 0: break
-        if self.trace: self.printCells()
 
     if not self.valid:
         print ; print 'reached invalid state'
@@ -17352,7 +17356,10 @@ if not solver.errors:
     
     i = 0
     for cell in self.cells:
-        print '%7s' % ''.join(cell.values),
+        if len(cell.values) == 9:
+            print '%7s' % '1..9',
+        else:
+            print '%7s' % ''.join(cell.values),
         i += 1
         if i % 9 == 0:
             print</t>
@@ -17540,17 +17547,17 @@ __str__ = __repr__</t>
     '',
 ) 
 
-data = (
-    'x13xxxxx2',
-    '6x2xx4xx8',
-    '4xx3xxx6x',
-    '2xx8xxxx7',
-    'xxx715xxx',
-    '9xxxx3xx4',
-    'x2xxx1xx3',
-    '1xx5xx4x9',
-    '8xxxxx62x',
-)</t>
+data = ( 
+    '1x5xxx37x',
+    'xxxxxx2xx',
+    'x973xxx1x',
+    'xxxx531x2',
+    '3xx8x1xx4',
+    '2x147xxxx',
+    'x7xxx864x',
+    'xx8xxxxxx',
+    'x12xxx8x7') # 8/4 5 stars
+</t>
 <t tx="ekr.20050805150320">import leoPlugins
 
 rst3 = leoPlugins.getPluginModule('rst3')
@@ -17611,7 +17618,7 @@ Generates 'http-node-marker-'+str(number), where number is config.node_counter
 <t tx="ekr.20050809091430.6"></t>
 <t tx="ekr.20050809091430.8"></t>
 <t tx="ekr.20050810095252"></t>
-<t tx="ekr.20050811075608">data = ( # 8/3
+<t tx="ekr.20050811075608">data = ( # 8/3: solvable.
     'x5xx9xxxx',
     'xx48xxxx9',
     'xxx1x728x',
@@ -17621,17 +17628,6 @@ Generates 'http-node-marker-'+str(number), where number is config.node_counter
     'x215x8xxx',
     '6xxxx38xx',
     'xxxx1xx6x')
-
-data = ( # 8/4 5 stars
-    '1x5xxx37x',
-    'xxxxxx2xx',
-    'x973xxx1x',
-    'xxxx531x2',
-    '3xx8x1xx4',
-    '2x147xxxx',
-    'x7xxx864x',
-    'xx8xxxxxx',
-    'x12xxx8x7')
     
 data = ( # 1 stars
     'x4xxxx179',
@@ -17655,17 +17651,6 @@ data = ( # 8/6 2 stars
     'xxx3xx49x',
     '41xxxx2x8')
     
-data = ( # 8/9 5 stars
-    '2xxxx1834',
-    'xxxx9xxxx',
-    'x1x3xxx5x',
-    'xx75xxxxx',
-    '16xxxxx72',
-    'xxxxx93xx',
-    'x7xxx4x1x',
-    'xxxx8xxxx',
-    '8549xxxx3')
-    
 data = ( # 8/10 1 star
     'x6xxx5x19',
     'x9x34xxxx',
@@ -17686,7 +17671,7 @@ data = (
     '2x1xx5xxx',
     '31xx89x4x',
     'xx65xxxx1',
-    'xx5x42xx3')
+    'xx5x42xx3') # solvable.
     
 data = (
     '9xx7x3xx6',
@@ -17697,9 +17682,7 @@ data = (
     'x26xx8xxx',
     'x6xxxxx31',
     'xxx4xx97x',
-    '4xx2x1xx8')
-    
-# 8/30 2 stars
+    '4xx2x1xx8') # 8/30 2 stars
 
 data = (
     'xx2xx7xx9',
@@ -17710,8 +17693,7 @@ data = (
     '4xx7xx2xx',
     'x931xx65x',
     'x5x862x73',
-    '8xx5xx4xx',
-) # 1 star
+    '8xx5xx4xx') # 1 star
 
 data = (
     '8xx3xxx7x',
@@ -17734,8 +17716,7 @@ data = (
     'xx6xxxx18',
     '24x39xx7x',
     'xx7xx52xx',
-    '9xx7xxxxx',
-) 
+    '9xx7xxxxx') # solvable
 
 data = (
     'xxxxx6xx5',
@@ -17746,8 +17727,7 @@ data = (
     'xx6xxxx18',
     '24x39xx7x',
     'xx7xx52xx',
-    '9xx7xxxxx',
-) # 9/8/05 3 stars
+    '9xx7xxxxx') # 9/8/05 3 stars
 
 data = (
     'xxxx64x15',
@@ -17758,8 +17738,18 @@ data = (
     'xx7x4xxxx',
     'x3xxxxxxx',
     '8x2xx319x',
-    '94x87xxxx'
-) # 9/9/05 3 stars</t>
+    '94x87xxxx') # 9/9/05 3 stars
+
+data = (
+    'x13xxxxx2',
+    '6x2xx4xx8',
+    '4xx3xxx6x',
+    '2xx8xxxx7',
+    'xxx715xxx',
+    '9xxxx3xx4',
+    'x2xxx1xx3',
+    '1xx5xx4x9',
+    '8xxxxx62x') # 9/10/05 4 stars</t>
 <t tx="ekr.20050811141217">@language python
 
 @ @rst-options
@@ -22500,10 +22490,14 @@ if not new_vals and not self.progress:
                 cell.values[0] in self.values
             ):
                 self.values.remove(cell.values[0])
-                n -= 1 ; self.main.progress += 1
+                n -= 1 
                 if n == 0:
                     self.main.valid = False
-                    return</t>
+                    return
+                if n == 1:
+                    self.setValue(self.values[0])
+                else:
+                    self.main.progress += 1</t>
 <t tx="ekr.20050911092707.1">def unique (self):
     
     '''Set self.values to [val] if val appears in only one place in any of this cells groups.
@@ -22605,7 +22599,7 @@ def removeConflicts (self):
                 if i != cell.i and val in cell.values:
                     spots += 1
             if spots == 0:
-                self.trace('row conflict: val: %s, group %s' % (val,group))
+                self.trace('row conflict: cell: %s, val: %s, group %s' % (self,val,group))
                 self.values.remove(val)
                 n -= 1 ; self.main.progress += 1
                 if n == 0:
@@ -22620,11 +22614,15 @@ def removeConflicts (self):
                 if j != cell.j and val in cell.values:
                     spots += 1
             if spots == 0:
-                self.trace('col conflict: val: %s, group %s' % (val,group))
+                self.trace('col conflict: cell: %s, val: %s, group %s' % (self,val,group))
                 self.values.remove(val)
-                n -= 1 ; self.main.progress += 1
+                n -= 1
                 if n == 0:
                     self.main.valid = False
+                if n == 1:
+                    self.setValue(self.values[0])
+                else:
+                    self.main.progress += 1
                 return</t>
 <t tx="ekr.20050911112043">if 0:
     @others</t>
@@ -22650,5 +22648,18 @@ def trace (self,s):
     if 0:
         g.trace('col groups for',self,self.colGroups)
         g.trace('row groups for',self,self.rowGroups)</t>
+<t tx="ekr.20050911123109"># Neither of these are solvable without guessing.
+
+data = ( 
+    '2xxxx1834',
+    'xxxx9xxxx',
+    'x1x3xxx5x',
+    'xx75xxxxx',
+    '16xxxxx72',
+    'xxxxx93xx',
+    'x7xxx4x1x',
+    'xxxx8xxxx',
+    '8549xxxx3') # 8/9 5 stars
+</t>
 </tnodes>
 </leo_file>
