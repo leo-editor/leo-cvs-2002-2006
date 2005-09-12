@@ -1,6 +1,55 @@
 #@+leo-ver=4-thin
 #@+node:edream.110203113231.876:@thin read_only_nodes.py
-"""Inhibit changes to @read-only nodes"""
+#@<< docstring >>
+#@+node:ekr.20050912052854:<< docstring >>
+'''A plugin to create and update @read-only nodes.
+
+Here's my first attempt at customizing leo. I wanted to have the ability to
+import files in "read-only" mode, that is, in a mode where files could only
+be read by leo (not tangled), and also kept in sync with the content on the
+drive.
+
+The reason for this is for example that I have external programs that generate
+resource files. I want these files to be part of a leo outline, but I don't
+want leo to tangle or in any way modify them. At the same time, I want them
+to be up-to-date in the leo outline.
+
+So I coded the directive plugin. It has the following characteristics:
+
+- It reads the specified file and puts it into the node content.
+
+- If the @read-only directive was in the leo outline already, and the file content
+on disk has changed from what is stored in the outline, it marks the node as
+changed and prints a "changed" message to the log window; if, on the other hand,
+the file content has _not_ changed, the file is simply read and the node is
+not marked as changed.
+
+- When you write a @read-only directive, the file content is added to the node
+immediately, i.e. as soon as you press Enter (no need to call a menu
+entry to import the content).
+
+- If you want to refresh/update the content of the file, just edit the headline
+and press Enter. The file is reloaded, and if in the meantime it has changed,
+a "change" message is sent to the log window.
+
+- The body text of a @read-only file cannot be modified in leo.
+
+The syntax to access files in @read-only via ftp/http is the following:
+
+    @read-only http://www.ietf.org/rfc/rfc0791.txt
+    @read-only ftp://ftp.someserver.org/filepath
+
+If FTP authentication (username/password) is required, it can be specified as follows:
+
+    @read-only ftp://username:password@ftp.someserver.org/filepath
+
+For more details, see the doc string for the class FTPurl.
+
+Davide Salomoni
+'''
+#@nonl
+#@-node:ekr.20050912052854:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
@@ -29,7 +78,7 @@ except ImportError:
 #@nonl
 #@-node:ekr.20050311091110.1:<< imports >>
 #@nl
-__version__ = '1.7'
+__version__ = '1.8'
 #@<< version history >>
 #@+node:ekr.20050311091110:<< version history >>
 #@@killcolor
@@ -41,6 +90,10 @@ __version__ = '1.7'
 # 
 # 1.7 EKR:
 #     - Use 'new' and 'open2' hooks.
+# 
+# 1.8 EKR:
+#     - Moved documentation into docstring so it is visible from the plugins 
+# manager.
 #@-at
 #@nonl
 #@-node:ekr.20050311091110:<< version history >>
@@ -71,66 +124,6 @@ def init ():
     return ok
 #@nonl
 #@-node:ekr.20050311092840:init
-#@+node:edream.110203113231.877:documentation for @read-only nodes
-#@+at 
-#@nonl
-# Dear Leo users,
-# 
-# Here's my first attempt at customizing leo. I wanted to have the ability to
-# import files in "read-only" mode, that is, in a mode where files could only
-# be read by leo (not tangled), and also kept in sync with the content on the
-# drive.
-# 
-# The reason for this is for example that I have external programs that 
-# generate
-# resource files. I want these files to be part of a leo outline, but I don't
-# want leo to tangle or in any way modify them. At the same time, I want them
-# to be up-to-date in the leo outline.
-# 
-# So I coded the directive plugin. It has the following characteristics:
-# 
-# - It reads the specified file and puts it into the node content.
-# 
-# - If the @read-only directive was in the leo outline already, and the file 
-# content
-# on disk has changed from what is stored in the outline, it marks the node as
-# changed and prints a "changed" message to the log window; if, on the other 
-# hand,
-# the file content has _not_ changed, the file is simply read and the node is
-# not marked as changed.
-# 
-# - When you write a @read-only directive, the file content is added to the 
-# node
-# immediately, i.e. as soon as you press Enter (no need to call a menu
-# entry to import the content).
-# 
-# - If you want to refresh/update the content of the file, just edit the 
-# headline
-# and press Enter. The file is reloaded, and if in the meantime it has 
-# changed,
-# a "change" message is sent to the log window.
-# 
-# - The body text of a @read-only file cannot be modified in leo.
-# 
-# Davide Salomoni
-#@-at
-#@+node:edream.110203113231.878:ftp/http access
-#@+at 
-#@nonl
-# The syntax to access files in @read-only via ftp/http is the following:
-# 
-# @read-only http://www.ietf.org/rfc/rfc0791.txt
-# @read-only ftp://ftp.someserver.org/filepath
-# 
-# If FTP authentication (username/password) is required, it can be specified 
-# as follows:
-# 
-# @read-only ftp://username:password@ftp.someserver.org/filepath
-# 
-# For more details, see the doc string for the class FTPurl.
-#@-at
-#@-node:edream.110203113231.878:ftp/http access
-#@-node:edream.110203113231.877:documentation for @read-only nodes
 #@+node:edream.110203113231.879:class FTPurl
 class FTPurl:
     """An FTP wrapper class to store/retrieve files using an FTP URL.
