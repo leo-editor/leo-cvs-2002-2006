@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="14707" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="18921" clone_windows="0"/>
 <globals body_outline_ratio="0.578831312018">
-	<global_window_position top="24" left="373" height="907" width="846"/>
+	<global_window_position top="10" left="394" height="907" width="851"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -41,9 +41,9 @@
 <v t="ekr.20050902080416"><vh>@@button paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20050906104918" a="ETV"><vh>4.3.2 beta 1</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20050906104918"><vh>4.3.2 beta 1</vh>
 <v t="ekr.20050906104918.1"><vh>Rewrote documentation</vh></v>
 <v t="ekr.20050906104931.1"><vh>Bug fixes...</vh>
 <v t="ekr.20050909082711"><vh>Fixed various unicode bugs</vh></v>
@@ -1494,7 +1494,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -1571,7 +1571,7 @@
 <v t="ekr.20050830115714.113"><vh>How can I create a template .leo file?</vh></v>
 <v t="ekr.20050830115714.116"><vh>How can I show Leo files with Excel?</vh></v>
 </v>
-<v t="ekr.20050830115714.76" a="E"><vh>Trouble shooting</vh>
+<v t="ekr.20050830115714.76"><vh>Trouble shooting</vh>
 <v t="ekr.20050906090012"><vh>How can I run Leo from a console window?</vh></v>
 <v t="ekr.20050830115714.9"><vh>Some characters in derived files look funny. What can I do?</vh></v>
 <v t="ekr.20050830115714.10"><vh>Some characters are garbled when importing files. What can I do?</vh></v>
@@ -1641,7 +1641,7 @@
 <v t="ekr.20050829081318"><vh>Beginner`s reference guide</vh>
 <v t="ekr.20050827155902"><vh>Syntax of section names</vh></v>
 <v t="ekr.20050827061847"><vh>Code and doc parts</vh></v>
-<v t="ekr.20050828205054" a="E"><vh>Directives for programming</vh></v>
+<v t="ekr.20050828205054"><vh>Directives for programming</vh></v>
 <v t="ekr.20050828161117"><vh>Orphan nodes</vh></v>
 <v t="ekr.20050828103319"><vh>Sentinel lines</vh></v>
 <v t="ekr.20050827162537"><vh>Leo and literate programming</vh></v>
@@ -1658,7 +1658,7 @@
 <v t="ekr.20050901101608"><vh>@rst outlines.html</vh>
 <v t="ekr.20050901101608.1"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.27"><vh>Cloning nodes</vh></v>
-<v t="EKR.20040524104904.36" a="E"><vh>Creating and destroying nodes</vh></v>
+<v t="EKR.20040524104904.36"><vh>Creating and destroying nodes</vh></v>
 <v t="EKR.20040524104904.37"><vh>Cutting, pasting and deleting nodes</vh></v>
 <v t="EKR.20040524104904.38"><vh>Dragging nodes</vh></v>
 <v t="EKR.20040524104904.39"><vh>Editing body text</vh></v>
@@ -1882,6 +1882,124 @@
 <v t="ekr.20050901092232.7"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
+<v t="ekr.20050912125144" a="E"><vh>Chapter 12: Summary of Plugins</vh>
+<v t="ekr.20050912125144.1" a="ETV"><vh>@rst plugins.html</vh>
+<v t="ekr.20050912125735"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20050912125735.26"><vh>Commands &amp; directives</vh>
+<v t="ekr.20050912125735.82"><vh>add_directives.py</vh></v>
+<v t="ekr.20050912125735.85"><vh>bibtex.py</vh></v>
+<v t="ekr.20050912125735.98"><vh>ConceptualSort.py</vh></v>
+<v t="ekr.20050912125735.245"><vh>datenodes.py</vh></v>
+<v t="ekr.20050912125735.113"><vh>FileActions.py</vh></v>
+<v t="ekr.20050912125735.129"><vh>groupOperations.py</vh></v>
+<v t="ekr.20050912125735.28"><vh>import_cisco_config.py</vh></v>
+<v t="ekr.20050912125735.273"><vh>Library.py</vh></v>
+<v t="ekr.20050912125735.164"><vh>macros.py</vh></v>
+<v t="ekr.20050912125735.314"><vh>mod_autosave.py</vh></v>
+<v t="ekr.20050912125735.172"><vh>mod_read_dir_outline.py</vh></v>
+<v t="ekr.20050912125735.184"><vh>mod_timestamp.py</vh></v>
+<v t="ekr.20050912125735.186"><vh>outline_export.py</vh></v>
+<v t="ekr.20050912125735.188"><vh>pretty_print.py</vh></v>
+<v t="ekr.20050912125735.204"><vh>scheduler.py</vh></v>
+<v t="ekr.20050912125735.318"><vh>table.py</vh></v>
+<v t="ekr.20050912125735.225"><vh>templates.py</vh></v>
+</v>
+<v t="ekr.20050912125735.334"><vh>Debugging &amp;  testing</vh>
+<v t="ekr.20050912125735.335"><vh>failed_import.py</vh></v>
+<v t="ekr.20050912125735.336"><vh>dump_globals.py</vh></v>
+<v t="ekr.20050912125735.338"><vh>enable_gc.py</vh></v>
+<v t="ekr.20050912125735.341"><vh>trace_gc.py</vh></v>
+<v t="ekr.20050912125735.344"><vh>trace_keys.py</vh></v>
+<v t="ekr.20050912125735.346"><vh>trace_tags.py</vh></v>
+</v>
+<v t="ekr.20050912125735.525"><vh>Enhanced nodes</vh>
+<v t="ekr.20050912125735.526"><vh>at_folder.py</vh></v>
+<v t="ekr.20050912125735.529"><vh>at_produce.py</vh></v>
+<v t="ekr.20050912125735.540"><vh>at_view.py</vh></v>
+<v t="ekr.20050912125735.699"><vh>autotrees.py</vh></v>
+<v t="ekr.20050912125735.556"><vh>base64Packager.py</vh></v>
+<v t="ekr.20050912125735.565"><vh>fastGotoNode.py</vh></v>
+<v t="ekr.20050912125735.597"><vh>mod_labels.py</vh></v>
+<v t="ekr.20050912125735.647"><vh>read_only_nodes.py</vh></v>
+<v t="ekr.20050912125735.674"><vh>run_nodes.py</vh></v>
+<v t="ekr.20050912125735.694"><vh>startfile.py</vh></v>
+</v>
+<v t="ekr.20050912125735.868"><vh>Enhancing the body pane</vh>
+<v t="ekr.20050912125735.869"><vh>arrows.py</vh></v>
+<v t="ekr.20050912125735.874"><vh>image.py</vh></v>
+<v t="ekr.20050912125735.880"><vh>rClick.py</vh></v>
+<v t="ekr.20050912125735.904"><vh>autocompleter.py</vh></v>
+<v t="ekr.20050912125735.942"><vh>color_markup.py</vh></v>
+<v t="ekr.20050912125735.974"><vh>script_io_to_body.py</vh></v>
+</v>
+<v t="ekr.20050912125735.980"><vh>Enhancing the icon and status areas</vh>
+<v t="ekr.20050912125735.981"><vh>nav_buttons.py</vh></v>
+<v t="ekr.20050912125735.1008"><vh>newButtons.py</vh></v>
+<v t="ekr.20050912125735.1041"><vh>hoist.py</vh></v>
+<v t="ekr.20050912125735.1050"><vh>nodenavigator.py</vh></v>
+<v t="ekr.20050912125735.1072"><vh>searchbox.py</vh></v>
+<v t="ekr.20050912125735.1092"><vh>UNL.py</vh></v>
+</v>
+<v t="ekr.20050912125735.1105"><vh>Enhancing windows</vh>
+<v t="ekr.20050912125735.1135" annotate="540c0100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334643066323736323535303436653666363436353731303532383638303236663731303635353034363636393663363537313037363235353032363236373731303832383638303236663731303935353030373130613632353530393631373236333638363537343739373036353731306232383638303236663731306335353035346637343638363537323731306436323535303236363637373130653238363830323666373130663638306136323735326571002e"><vh>cleo.py</vh></v>
+<v t="ekr.20050912125735.1187"><vh>footprints.py</vh></v>
+<v t="ekr.20050912125735.1205"><vh>chapters.py</vh></v>
+<v t="ekr.20050912125735.1285"><vh>EditAttributes.py</vh></v>
+<v t="ekr.20050912125735.1299"><vh>maximizeNewWindows.py</vh></v>
+<v t="ekr.20050912125735.1301"><vh>nodebar.py</vh></v>
+<v t="ekr.20050912125735.1316"><vh>redirect_to_log.py</vh></v>
+<v t="ekr.20050912125735.1317"><vh>TabbedLog.py</vh></v>
+<v t="ekr.20050912125735.1323"><vh>UASearch.py</vh></v>
+<v t="ekr.20050912125735.1333"><vh>UniversalScrolling.py</vh></v>
+<v t="ekr.20050912125735.1342"><vh>URLloader.py</vh></v>
+</v>
+<v t="ekr.20050912125735.2712"><vh>External editors &amp; Open With</vh>
+<v t="ekr.20050912125735.2713"><vh>mod_tempfname.py</vh></v>
+<v t="ekr.20050912125735.2716"><vh>open_shell.py</vh></v>
+<v t="ekr.20050912125735.2726"><vh>open_with.py</vh></v>
+<v t="ekr.20050912125735.3209"><vh>temacs.py &amp; usetemacs.py</vh></v>
+<v t="ekr.20050912125735.2736"><vh>vim.py</vh></v>
+<v t="ekr.20050912125735.2749"><vh>word_export.py</vh></v>
+<v t="ekr.20050912125735.2743"><vh>xemacs.py</vh></v>
+</v>
+<v t="ekr.20050912125735.2759"><vh>Files</vh>
+<v t="ekr.20050912125735.2760"><vh>empty_leo_file.py</vh></v>
+<v t="ekr.20050912125735.2763"><vh>lineNumbers.py</vh></v>
+<v t="ekr.20050912125735.2768"><vh>multifile.py</vh></v>
+<v t="ekr.20050912125735.2779"><vh>niceNosent.py</vh></v>
+</v>
+<v t="ekr.20050912125735.2786"><vh>LeoN</vh></v>
+<v t="ekr.20050912125735.2826"><vh>Menus &amp; translations</vh>
+<v t="ekr.20050912125735.2828"><vh>chinese_menu.py</vh></v>
+<v t="ekr.20050912125735.2836"><vh>french_fm.py</vh></v>
+<v t="ekr.20050912125735.2844"><vh>pie_menus.py</vh></v>
+</v>
+<v t="ekr.20050912125735.2867"><vh>Plugins manager, updater &amp; menu</vh>
+<v t="ekr.20050912125735.3040"><vh>leoupdate.py</vh></v>
+<v t="ekr.20050912125735.2918"><vh>plugin_manager.py</vh></v>
+<v t="ekr.20050912125735.2869"><vh>plugins_menu.py</vh></v>
+</v>
+<v t="ekr.20050912125735.3056"><vh>Scripting</vh>
+<v t="ekr.20050912125735.363"><vh>dyna_menu</vh></v>
+<v t="ekr.20050912125735.3057"><vh>mod_scripting.py</vh></v>
+</v>
+<v t="ekr.20050912125735.3077"><vh>Servers</vh>
+<v t="ekr.20050912125735.3078"><vh>mod_http.py</vh></v>
+</v>
+<v t="ekr.20050912125735.3136"><vh>Spell Checking</vh>
+<v t="ekr.20050912125735.3138"><vh>spellpyx.py</vh></v>
+</v>
+<v t="ekr.20050912125735.3559"><vh>Text formatting</vh>
+<v t="ekr.20050912125735.3642"><vh>Leo to AsciiDoc</vh></v>
+<v t="ekr.20050912125735.3832"><vh>rst3.py</vh></v>
+<v t="ekr.20050912125735.3621"><vh>xsltWithNodes.py</vh></v>
+</v>
+<v t="ekr.20050912125735.3944"><vh>Zodb</vh>
+<v t="ekr.20050912125735.3945"><vh>zodb.py</vh></v>
+</v>
+<v t="ekr.20050912133515"><vh>@rst-no-head end stuff</vh></v>
+</v>
+</v>
 <v t="EKR.20040524104904.274"><vh>Appendices</vh>
 <v t="ekr.20050831231852" a="M"><vh>@rst appendices.html</vh>
 <v t="ekr.20050831232205"><vh>@rst-no-head links</vh></v>
@@ -1902,6 +2020,7 @@
 <v t="ekr.20050901071300"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050901073048" a="M"><vh>@rst-no-head glossary</vh></v>
 <v t="ekr.20050901083017"><vh>@rst-no-head end stuff</vh></v>
+</v>
 </v>
 </v>
 <v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
@@ -1987,7 +2106,6 @@
 </v>
 <v t="ekr.20050822081728"><vh>@rst-ignore-tree Footnotes</vh></v>
 <v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
-</v>
 </v>
 </v>
 </vnodes>
@@ -10519,6 +10637,8 @@ Leo's Users Guide
 
 `Chapter 11: White Papers`_
 
+`Chapter 12: Plugins`_
+
 Appendices_
 
 Glossary_</t>
@@ -13104,26 +13224,28 @@ Removes @ignore, @nocolor, @wrap directives.
 <t tx="ekr.20050812125502">----------------
 
 |prev| |leo| |next|</t>
-<t tx="ekr.20050812134441">.. .. _front:          http://webpages.charter.net/edreamleo/front.html
-.. .. _`CWEB`:         http://www-cs-faculty.stanford.edu/~knuth/cweb.html
+<t tx="ekr.20050812134441">.. External links...
 
+.. .. _`CWEB`:          http://www-cs-faculty.stanford.edu/~knuth/cweb.html
 .. _`Open Software`:    http://www.opensource.org/
 .. _Python:             http://www.python.org/
 .. _`SourceForge`:      http://sourceforge.net/projects/leo/
 
-.. _clones:             http://webpages.charter.net/edreamleo/intro.html#clones-views
-.. _leo:                http://webpages.charter.net/edreamleo/front.html
-.. _outline:            http://webpages.charter.net/edreamleo/intro.html#introduction
-.. _outlines:           http://webpages.charter.net/edreamleo/intro.html#introduction
-.. _plugins:            http://webpages.charter.net/edreamleo/intro.html#plugins-settings
-.. _scripting:          http://webpages.charter.net/edreamleo/intro.html#scripting-leo
+.. Relative links...
+
+.. _clones:             intro.html#clones-views
+.. _leo:                front.html
+.. _outline:            intro.html#introduction
+.. _outlines:           intro.html#introduction
+.. _plugins:            intro.html#plugins-settings
+.. _scripting:          intro.html#scripting-leo
 .. _users:              http://sourceforge.net/projects/leo/
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _home:           http://webpages.charter.net/edreamleo/front.html
-.. _toc:            http://webpages.charter.net/edreamleo/leo_TOC.html
-.. _quotes:         http://webpages.charter.net/edreamleo/testimonials.html
+.. _home:           front.html
+.. _toc:            leo_TOC.html
+.. _quotes:         testimonials.html
 
 .. |leo|  image:: leo.gif
 	:target: home_
@@ -13135,15 +13257,15 @@ Removes @ignore, @nocolor, @wrap directives.
     :target: quotes_</t>
 <t tx="ekr.20050812134441.1">.. Links used in this document.
 
-.. _front:      http://webpages.charter.net/edreamleo/front.html
-.. _chapter6:   http://webpages.charter.net/edreamleo/design.html
-.. _chapter8:   http://webpages.charter.net/edreamleo/customizing.html
+.. _front:      front.html
+.. _chapter6:   design.html
+.. _chapter8:   customizing.html
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _back:   http://webpages.charter.net/edreamleo/design.html
-.. _home:   http://webpages.charter.net/edreamleo/front.html
-.. _next:   http://webpages.charter.net/edreamleo/customizing.html
+.. _back:   design.html
+.. _home:   front.html
+.. _next:   customizing.html
 
 .. |back| image:: arrow_lt.gif
 	:target: back_
@@ -13661,20 +13783,18 @@ You should see Leo's main window, something like this:
 </t>
 <t tx="ekr.20050816073814">.. Links used in this document...
 
-.. |leoMainWinow| image:: PCWindow.gif
-
 .. ----- External references.
 
 .. _`Leo's help forum`:         http://sourceforge.net/forum/forum.php?forum_id=10227
 .. _`Literate Programming`:     http://www.literateprogramming.com/
 .. _`noweb`:                    http://www.eecs.harvard.edu/~nr/noweb/
-.. _glossary:                   http://webpages.charter.net/edreamleo/glossary.html
 
-.. ----- References within this chapter.
+.. ----- Relative links....
 
 .. _directive:              `Leo directives`_
 .. _directives:             `Leo directives`_
 .. _`derived file`:         `Derived files`_
+.. _glossary:               glossary.html
 .. _`Good style and bad`:   `Good style and bad:  sections vs. @others`_
 .. _outline:                `Leo's main window`_
 .. _outlines:               `Leo's main window`_
@@ -13686,65 +13806,67 @@ You should see Leo's main window, something like this:
 
 .. ----- References to other chapters.
 
-.. _command:                                    http://webpages.charter.net/edreamleo/commands.html
-.. _commands:                                   http://webpages.charter.net/edreamleo/commands.html
-.. _`editing commands`:                         http://webpages.charter.net/edreamleo/commands.html#the-edit-menu
-.. _front:                                      http://webpages.charter.net/edreamleo/front.html
-.. _`install Leo`:                              http://webpages.charter.net/edreamleo/install.html
-.. _`launch Leo`:                               http://webpages.charter.net/edreamleo/install.html#running-leo
-.. _`Leo's Users Guide`:                        http://webpages.charter.net/edreamleo/leo_TOC.html
-.. _`Chapter 4: Writing Programs in Leo`:       http://webpages.charter.net/edreamleo/directives.html
-.. _`Chapter 6: Leo and Literate Programming`:  http://webpages.charter.net/edreamleo/design.html
-.. _`Chapter 7: Scripting Leo with Python`:     http://webpages.charter.net/edreamleo/scripting.html
-.. _`Chapter 8: Customizing Leo`:               http://webpages.charter.net/edreamleo/customizing.html
+.. _command:                                    commands.html
+.. _commands:                                   commands.html
+.. _`editing commands`:                         commands.html#the-edit-menu
+.. _front:                                      front.html
+.. _`install Leo`:                              install.html
+.. _`launch Leo`:                               install.html#running-leo
+.. _`Leo's Users Guide`:                        leo_TOC.html
+.. _`Chapter 4: Writing Programs in Leo`:       directives.html
+.. _`Chapter 6: Leo and Literate Programming`:  design.html
+.. _`Chapter 7: Scripting Leo with Python`:     scripting.html
+.. _`Chapter 8: Customizing Leo`:               customizing.html
 
 .. ----- References to the glossary
 
-.. _`@file`:                    http://webpages.charter.net/edreamleo/glossary.html#file
-.. _`@nosent`:                  http://webpages.charter.net/edreamleo/glossary.html#nosent
-.. _`@others`:                  http://webpages.charter.net/edreamleo/glossary.html#others
-.. _`@thin`:                    http://webpages.charter.net/edreamleo/glossary.html#thin
-.. _`@thin trees`:              http://webpages.charter.net/edreamleo/glossary.html#thin-trees
-.. _`body text`:                http://webpages.charter.net/edreamleo/glossary.html#body-text
-.. _ancestor:                   http://webpages.charter.net/edreamleo/glossary.html#ancestor
-.. _children:                   http://webpages.charter.net/edreamleo/glossary.html#child
-.. _clone:                      http://webpages.charter.net/edreamleo/glossary.html#clone
-.. _cloned:                     http://webpages.charter.net/edreamleo/glossary.html#cloned
-.. _cloning:                    http://webpages.charter.net/edreamleo/glossary.html#clone
-.. _clones:                     http://webpages.charter.net/edreamleo/glossary.html#clones
-.. _`code part`:                http://webpages.charter.net/edreamleo/glossary.html#code-part
-.. _`doc part`:                 http://webpages.charter.net/edreamleo/glossary.html#doc-part
-.. _descendant:                 http://webpages.charter.net/edreamleo/glossary.html#descendant
-.. _descendants:                http://webpages.charter.net/edreamleo/glossary.html#descendants
-.. _`doc part`:                 http://webpages.charter.net/edreamleo/glossary.html#doc-part
-.. _grandchildren:              http://webpages.charter.net/edreamleo/glossary.html#grandchildren
-.. _headline:                   http://webpages.charter.net/edreamleo/glossary.html#headline
-.. _headlines:                  http://webpages.charter.net/edreamleo/glossary.html#headlines
-.. _`organizer node`:           http://webpages.charter.net/edreamleo/glossary.html#organizer-node
-.. _`organizer nodes`:          http://webpages.charter.net/edreamleo/glossary.html#organizer-nodes
-.. _`outline order`:            http://webpages.charter.net/edreamleo/glossary.html#outline-order
-.. _node:                       http://webpages.charter.net/edreamleo/glossary.html#node
-.. _nodes:                      http://webpages.charter.net/edreamleo/glossary.html#nodes
-.. _reference:                  http://webpages.charter.net/edreamleo/glossary.html#reference
-.. _references:                 http://webpages.charter.net/edreamleo/glossary.html#references
-.. _root:                       http://webpages.charter.net/edreamleo/glossary.html#root
-.. _`root node`:   	            http://webpages.charter.net/edreamleo/glossary.html#root
-.. _section:                    http://webpages.charter.net/edreamleo/glossary.html#section
-.. _sections:                   http://webpages.charter.net/edreamleo/glossary.html#section
-.. _`section definition`:       http://webpages.charter.net/edreamleo/glossary.html#section-definition
-.. _`section definitions`:      http://webpages.charter.net/edreamleo/glossary.html#section-definitions
-.. _`section definition nodes`: http://webpages.charter.net/edreamleo/glossary.html#section-definition-nodes
-.. _`section name`:             http://webpages.charter.net/edreamleo/glossary.html#section-name
-.. _`section names`:            http://webpages.charter.net/edreamleo/glossary.html#section-names
-.. _`section reference`:        http://webpages.charter.net/edreamleo/glossary.html#section-reference
-.. _`section references`:       http://webpages.charter.net/edreamleo/glossary.html#section-references
-.. _siblings:                   http://webpages.charter.net/edreamleo/glossary.html#siblings
+.. _`@file`:                    glossary.html#file
+.. _`@nosent`:                  glossary.html#nosent
+.. _`@others`:                  glossary.html#others
+.. _`@thin`:                    glossary.html#thin
+.. _`@thin trees`:              glossary.html#thin-trees
+.. _`body text`:                glossary.html#body-text
+.. _ancestor:                   glossary.html#ancestor
+.. _children:                   glossary.html#child
+.. _clone:                      glossary.html#clone
+.. _cloned:                     glossary.html#cloned
+.. _cloning:                    glossary.html#clone
+.. _clones:                     glossary.html#clones
+.. _`code part`:                glossary.html#code-part
+.. _`doc part`:                 glossary.html#doc-part
+.. _descendant:                 glossary.html#descendant
+.. _descendants:                glossary.html#descendants
+.. _`doc part`:                 glossary.html#doc-part
+.. _grandchildren:              glossary.html#grandchildren
+.. _headline:                   glossary.html#headline
+.. _headlines:                  glossary.html#headlines
+.. _`organizer node`:           glossary.html#organizer-node
+.. _`organizer nodes`:          glossary.html#organizer-nodes
+.. _`outline order`:            glossary.html#outline-order
+.. _node:                       glossary.html#node
+.. _nodes:                      glossary.html#nodes
+.. _reference:                  glossary.html#reference
+.. _references:                 glossary.html#references
+.. _root:                       glossary.html#root
+.. _`root node`:   	            glossary.html#root
+.. _section:                    glossary.html#section
+.. _sections:                   glossary.html#section
+.. _`section definition`:       glossary.html#section-definition
+.. _`section definitions`:      glossary.html#section-definitions
+.. _`section definition nodes`: glossary.html#section-definition-nodes
+.. _`section name`:             glossary.html#section-name
+.. _`section names`:            glossary.html#section-names
+.. _`section reference`:        glossary.html#section-reference
+.. _`section references`:       glossary.html#section-references
+.. _siblings:                   glossary.html#siblings
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _back: http://webpages.charter.net/edreamleo/install.html
-.. _home: http://webpages.charter.net/edreamleo/front.html
-.. _next: http://webpages.charter.net/edreamleo/outlines.html
+.. _back: install.html
+.. _home: front.html
+.. _next: outlines.html
+
+.. |leoMainWinow| image:: PCWindow.gif
 
 .. |back| image:: arrow_lt.gif
     :target: back_
@@ -13778,14 +13900,22 @@ verbose=True
 .. contents::</t>
 <t tx="ekr.20050818163826.1">.. rST links used in this document...
 
+.. External links...
+
+.. _docutils:             http://docutils.sourceforge.net
 .. _LaTeX:                http://www.latex-project.org/
 .. _reStructuredText:     http://docutils.sourceforge.net/rst.html
-.. _docutils:             http://docutils.sourceforge.net
+.. _SilverCity:           http://silvercity.sourceforge.net
+
+.. Hard links to Leo's web site...
+
 .. _ListManagerDocs.html: http://webpages.charter.net/edreamleo/ListManagerDocs.html
 .. _wxListManager.leo:    http://webpages.charter.net/edreamleo/wxListManager.leo
-.. _SilverCity:           http://silvercity.sourceforge.net
-.. _front:                http://webpages.charter.net/edreamleo/front.html
-.. _home:                 http://webpages.charter.net/edreamleo/front.html
+
+.. WARNING: image targets may not have upper case letters!
+
+.. _front:  front.html
+.. _home:   front.html
 
 .. |blank| image:: blank.gif
 .. |leo|   image:: leo.gif
@@ -15288,46 +15418,51 @@ is the kind of sentinel lines that Leo writes:
 `Chapter 4: Writing Programs in Leo`_ discusses the various ways of creating derived files.
 This is a highly complex subject: you should ignore these details at first.
 Just use ``@thin`` to create your `derived files`_.</t>
-<t tx="ekr.20050828112159">
-.. _home:                                           http://webpages.charter.net/edreamleo/front.html
-.. _`Front Matter`:                                 http://webpages.charter.net/edreamleo/frontMatter.html
-.. _`What people are saying about Leo`:             http://webpages.charter.net/edreamleo/testimonials.html
-.. _`FAQ`:                                          http://webpages.charter.net/edreamleo/FAQ.html
-.. _`Chapter 1\: Installing Leo`:                   http://webpages.charter.net/edreamleo/install.html
-.. _`Chapter 2\: A Tutorial Introduction to Leo`:   http://webpages.charter.net/edreamleo/intro.html
-.. _`Chapter 3\: Using Leo's Outlines`:             http://webpages.charter.net/edreamleo/outlines.html
-.. _`Chapter 4\: Writing Programs in Leo`:          http://webpages.charter.net/edreamleo/directives.html
-.. _`Chapter 5\: Using Leo's Commands`:             http://webpages.charter.net/edreamleo/commands.html
-.. _`Chapter 6\: Leo and Literate Programming`:     http://webpages.charter.net/edreamleo/design.html
-.. _`Chapter 7\: Scripting Leo with Python`:        http://webpages.charter.net/edreamleo/scripting.html
-.. _`Chapter 8\: Customizing Leo`:                  http://webpages.charter.net/edreamleo/customizing.html
-.. _`Chapter 9\: History of Leo`:                   http://webpages.charter.net/edreamleo/history.html
-.. _`Chapter 10\: Theory of Operation`:             http://webpages.charter.net/edreamleo/theory.html
-.. _`Chapter 11\: White Papers`:                    http://webpages.charter.net/edreamleo/whitepapers.html
-.. _`Appendices`:                                   http://webpages.charter.net/edreamleo/appendices.html
-.. _`Glossary`:                                     http://webpages.charter.net/edreamleo/glossary.html
+<t tx="ekr.20050828112159">.. _`Front Matter`:                                 frontMatter.html
+.. _`What people are saying about Leo`:             testimonials.html
+.. _`FAQ`:                                          FAQ.html
+.. _`Chapter 1\: Installing Leo`:                   install.html
+.. _`Chapter 2\: A Tutorial Introduction to Leo`:   intro.html
+.. _`Chapter 3\: Using Leo's Outlines`:             outlines.html
+.. _`Chapter 4\: Writing Programs in Leo`:          directives.html
+.. _`Chapter 5\: Using Leo's Commands`:             commands.html
+.. _`Chapter 6\: Leo and Literate Programming`:     design.html
+.. _`Chapter 7\: Scripting Leo with Python`:        scripting.html
+.. _`Chapter 8\: Customizing Leo`:                  customizing.html
+.. _`Chapter 9\: History of Leo`:                   history.html
+.. _`Chapter 10\: Theory of Operation`:             theory.html
+.. _`Chapter 11\: White Papers`:                    whitepapers.html
+.. _`Chapter 12\: Plugins`:                         plugins.html
+.. _`Appendices`:                                   appendices.html
+.. _`Glossary`:                                     glossary.html
 
 .. WARNING: image targets may not have upper case letters!
 
 .. |leo|  image:: leo.gif
-    :target: home_
+    :target: front.html
 
 .. |next| image:: arrow_rt.gif
-    :target: http://webpages.charter.net/edreamleo/frontMatter.html
+    :target: frontMatter.html
 
 .. |blank| image:: Blank.gif</t>
 <t tx="ekr.20050828115003">------------------
 
 |back| |leo| |next|</t>
-<t tx="ekr.20050828160132">.. _front:      http://webpages.charter.net/edreamleo/front.html
+<t tx="ekr.20050828160132">.. External links...
+
 .. _`CWEB`:     http://www-cs-faculty.stanford.edu/~knuth/cweb.html
 .. _`noweb`:    http://www.eecs.harvard.edu/~nr/noweb/
 
+.. Relative links...
+
+.. _front:      front.html
+.. _`Leo's tutorial`:       intro.html
+
 .. WARNING: image targets may not have upper case letters!
 
-.. _back:   http://webpages.charter.net/edreamleo/outlines.html
-.. _home:   http://webpages.charter.net/edreamleo/front.html
-.. _next:   http://webpages.charter.net/edreamleo/commands.html
+.. _back:   outlines.html
+.. _home:   front.html
+.. _next:   commands.html
 
 .. |back| image:: arrow_lt.gif
     :target: back_
@@ -15338,10 +15473,7 @@ Just use ``@thin`` to create your `derived files`_.</t>
 .. |blank| image:: blank.gif
 
 .. |leo|   image:: leo.gif
-    :target: home_
-
-.. _`Leo's tutorial`:       http://webpages.charter.net/edreamleo/intro.html
-</t>
+    :target: home_</t>
 <t tx="ekr.20050828161117">An **orphan node** is a descendant of an `@thin`_ node_ that will not be copied
 to the `derived file`_. Orphan nodes can arise because an `@thin`_ tree has no
 ``@others`` or ``@all`` directives. Sections that are defined but not used also
@@ -16887,14 +17019,15 @@ pasting it into a lisp interpreter and then copying the result back into
 the same Leo node for LaTeX to process.
 
 -- Dan</t>
-<t tx="ekr.20050830075229">.. Links used in this document...
+<t tx="ekr.20050830075229">.. Relative links...
 
-.. _frontmatter:    http://webpages.charter.net/edreamleo/frontMatter.html
-.. _toc:            http://webpages.charter.net/edreamleo/leo_TOC.html
-.. _quotes:         http://webpages.charter.net/edreamleo/testimonials.html
-.. _faq:            http://webpages.charter.net/edreamleo/FAQ.html
+.. _faq:            FAQ.html
+.. _frontmatter:    frontMatter.html
+.. _home:           front.html
+.. _quotes:         testimonials.html
+.. _toc:            leo_TOC.html
 
-.. _home:           http://webpages.charter.net/edreamleo/front.html
+.. WARNING: image targets may not have upper case letters!
 
 .. |leo|  image:: leo.gif
 	:target: home_
@@ -16946,7 +17079,7 @@ just look for the following common usage patterns:
 -   Most other files show how to use a single ``@others`` directive to define one class.
 
 -   Most methods are defined using ``@others``, *not* section definition nodes.</t>
-<t tx="ekr.20050830115714.4">.. _`Clones &amp; views`:      http://webpages.charter.net/edreamleo/intro.html#clones-views
+<t tx="ekr.20050830115714.4">.. _`Clones &amp; views`:   intro.html#clones-views
 
 You will lose much of Leo's power if you don't use clones.
 See `Clones &amp; views`_ for full details.</t>
@@ -17458,54 +17591,54 @@ Flash file gets mapped to an &lt;embed&gt; tag, etc).</t>
 .. _docutils:           http://docutils.sourceforge.net/
 .. _unicode:            http://www.unicode.org/
 
-.. ----- Misc links into Leo's documentation.
+.. ----- Relative links into Leo's documentation.
 
-.. _`Associating Leo with .leo Files`:  http://webpages.charter.net/edreamleo/install.html#how-to-associate-leo-with-leo-files-on-windows
+.. _`Associating Leo with .leo Files`:  install.html#how-to-associate-leo-with-leo-files-on-windows
 
-.. _`CWEB mode`:                    http://webpages.charter.net/edreamleo/directives.html#cweb-mode
-.. _command:                        http://webpages.charter.net/edreamleo/commands.html
-.. _commands:                       http://webpages.charter.net/edreamleo/commands.html
-.. _`quick start for programmers`:  http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
-.. _`rst3 plugin`:                  http://webpages.charter.net/edreamleo/rstplugin3.html
+.. _`CWEB mode`:                    directives.html#cweb-mode
+.. _command:                        commands.html
+.. _commands:                       commands.html
+.. _`quick start for programmers`:  intro.html#quick-start-for-programmers
+.. _`rst3 plugin`:                  rstplugin3.html
 .. _`Run Leo from a console window`: `How can I run Leo from a console window?`_
-.. _`Tangle and Untangle`:          http://webpages.charter.net/edreamleo/commands.html#tangling-an-outline-producing-derived-files
-.. _tutorial:                       http://webpages.charter.net/edreamleo/intro.html
+.. _`Tangle and Untangle`:          commands.html#tangling-an-outline-producing-derived-files
+.. _tutorial:                       intro.html
 
 .. ----- References to the glossary: the glossary now contains references to the tutorial.
-.. _`@asis`:                        http://webpages.charter.net/edreamleo/glossary.html#asis-trees
-.. _`@file`:                        http://webpages.charter.net/edreamleo/glossary.html#file-trees
-.. _`@others directive`:            http://webpages.charter.net/edreamleo/glossary.html#others
-.. _`@noref`:                       http://webpages.charter.net/edreamleo/glossary.html#noref
-.. _`@nosent`:                      http://webpages.charter.net/edreamleo/glossary.html#nosent
-.. _`@root`:                        http://webpages.charter.net/edreamleo/glossary.html#root
-.. _`@thin`:                        http://webpages.charter.net/edreamleo/glossary.html#thin-trees
-.. _`@unit`:                        http://webpages.charter.net/edreamleo/glossary.html#unit
-.. _`body text`:                    http://webpages.charter.net/edreamleo/glossary.html#body-text
-.. _cweb:                           http://webpages.charter.net/edreamleo/glossary.html#cweb
-.. _directive:                      http://webpages.charter.net/edreamleo/glossary.html#directive
-.. _directives:                     http://webpages.charter.net/edreamleo/glossary.html#directives
-.. _`derived file`:                 http://webpages.charter.net/edreamleo/glossary.html#derived-file
-.. _`derived files`:                http://webpages.charter.net/edreamleo/glossary.html#derived-files
-.. _headline:                       http://webpages.charter.net/edreamleo/glossary.html#headline
-.. _headlines:                      http://webpages.charter.net/edreamleo/glossary.html#headlines
-.. _node:                           http://webpages.charter.net/edreamleo/glossary.html#node
-.. _nodes:                          http://webpages.charter.net/edreamleo/glossary.html#nodes
-.. _outliner:                       http://webpages.charter.net/edreamleo/glossary.html#outliner
-.. _sections:                       http://webpages.charter.net/edreamleo/glossary.html#sections
-.. _`section names`:                http://webpages.charter.net/edreamleo/glossary.html#section-names
-.. _sentinels:                      http://webpages.charter.net/edreamleo/glossary.html#sentinels
-.. _`sentinel line`:                http://webpages.charter.net/edreamleo/glossary.html#sentinel
-.. _`sentinel lines`:               http://webpages.charter.net/edreamleo/glossary.html#sentinel
-.. _setting:                        http://webpages.charter.net/edreamleo/glossary.html#setting
-.. _settings:                       http://webpages.charter.net/edreamleo/glossary.html#settings
-.. _tangle:                         http://webpages.charter.net/edreamleo/glossary.html#tangle
-.. _untangle:                       http://webpages.charter.net/edreamleo/glossary.html#untangle
+.. _`@asis`:                glossary.html#asis-trees
+.. _`@file`:                glossary.html#file-trees
+.. _`@others directive`:    glossary.html#others
+.. _`@noref`:               glossary.html#noref
+.. _`@nosent`:              glossary.html#nosent
+.. _`@root`:                glossary.html#root
+.. _`@thin`:                glossary.html#thin-trees
+.. _`@unit`:                glossary.html#unit
+.. _`body text`:            glossary.html#body-text
+.. _cweb:                   glossary.html#cweb
+.. _directive:              glossary.html#directive
+.. _directives:             glossary.html#directives
+.. _`derived file`:         glossary.html#derived-file
+.. _`derived files`:        glossary.html#derived-files
+.. _headline:               glossary.html#headline
+.. _headlines:              glossary.html#headlines
+.. _node:                   glossary.html#node
+.. _nodes:                  glossary.html#nodes
+.. _outliner:               glossary.html#outliner
+.. _sections:               glossary.html#sections
+.. _`section names`:        glossary.html#section-names
+.. _sentinels:              glossary.html#sentinels
+.. _`sentinel line`:        glossary.html#sentinel
+.. _`sentinel lines`:       glossary.html#sentinel
+.. _setting:                glossary.html#setting
+.. _settings:               glossary.html#settings
+.. _tangle:                 glossary.html#tangle
+.. _untangle:               glossary.html#untangle
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _quotes:     http://webpages.charter.net/edreamleo/testimonials.html
-.. _home:       http://webpages.charter.net/edreamleo/front.html
-.. _install:    http://webpages.charter.net/edreamleo/install.html
+.. _quotes:     testimonials.html
+.. _home:       front.html
+.. _install:    install.html
 
 .. |back| image:: arrow_lt.gif
 	:target: quotes_
@@ -17601,7 +17734,7 @@ verbose=True
 
 .. August 30, 2005
 
-|prev| |leo| |next|
+|back| |leo| |next|
 
 ############
 Appendices
@@ -17609,23 +17742,20 @@ Appendices
 
 .. contents::
 </t>
-<t tx="ekr.20050831232205">.. Links used in this document.
+<t tx="ekr.20050831232205">.. Relative links.
 
-.. _home:           http://webpages.charter.net/edreamleo/front.html
-.. _whitepapers:    http://webpages.charter.net/edreamleo/whitepapers.html
-.. _glossary:       http://webpages.charter.net/edreamleo/glossary.html
+.. _`Chapter 8: Customizing Leo`:   customizing.html
 
-.. _`Chapter 8: Customizing Leo`:   http://webpages.charter.net/edreamleo/customizing.html
+.. WARNING: image targets may not have upper case letters!
 
-.. |prev| image:: arrow_lt.gif
-	:target: whitepapers_
+.. |back| image:: arrow_lt.gif
+	:target: plugins.html
 
 .. |next| image:: arrow_rt.gif
-	:target: glossary_
+	:target: glossary.html
 
 .. |leo|   image:: leo.gif
-	:target: home_
-</t>
+	:target: front.html</t>
 <t tx="ekr.20050901054622">c.save()</t>
 <t tx="ekr.20050901055150">@color
 # Script to promote headlines and body text
@@ -17682,39 +17812,40 @@ Glossary
 <t tx="ekr.20050901071300">.. Links used in this document.
 
 .. ----- External links.
+
+.. _`CWEB language`:                http://www-cs-faculty.stanford.edu/~knuth/cweb.html
 .. _`literate programming web page`:    http://www.literateprogramming.com/
 .. _`noweb language`:                   http://www.eecs.harvard.edu/~nr/noweb/
 .. _`rST primer`:                       http://docutils.sourceforge.net/docs/user/rst/quickstart.html
 
-.. ----- Other links to Leo's documentation.
-.. _`Chapter 8: Customizing Leo`:   http://webpages.charter.net/edreamleo/customizing.html
-.. _`CWEB language`:                http://www-cs-faculty.stanford.edu/~knuth/cweb.html
-.. _`Writing plugins and hooks`:    http://webpages.charter.net/edreamleo/customizing.html#writing-plugins-and-hooks
+.. ----- Relative links.
 
-.. ----- References to the reference chapter.
-.. _`programming reference`:    http://webpages.charter.net/edreamleo/directives.html
-.. _`@asis`:                    http://webpages.charter.net/edreamleo/directives.html#asis-and-noref
-.. _`@file`:                    http://webpages.charter.net/edreamleo/directives.html#file-and-thin
-.. _`@noref`:                   http://webpages.charter.net/edreamleo/directives.html#asis-and-noref
-.. _`@nosent`:                  http://webpages.charter.net/edreamleo/directives.html#nosent
-.. _`@root`:                    http://webpages.charter.net/edreamleo/directives.html#root
-.. _`@thin`:                    http://webpages.charter.net/edreamleo/directives.html#file-and-thin
-.. _`@unit documentation`:      http://webpages.charter.net/edreamleo/directives.html#root
-.. _`tangling @root trees`:     http://webpages.charter.net/edreamleo/directives.html#tangling-root-trees-with-the-tangle-commands
-.. _`untangling @root trees`:   http://webpages.charter.net/edreamleo/directives.html#untangling-root-trees-with-the-untangle-commands
+.. _`Chapter 8: Customizing Leo`:   customizing.html
+.. _`Writing plugins and hooks`:    customizing.html#writing-plugins-and-hooks
+
+.. _`programming reference`:    directives.html
+.. _`@asis`:                    directives.html#asis-and-noref
+.. _`@file`:                    directives.html#file-and-thin
+.. _`@noref`:                   directives.html#asis-and-noref
+.. _`@nosent`:                  directives.html#nosent
+.. _`@root`:                    directives.html#root
+.. _`@thin`:                    directives.html#file-and-thin
+.. _`@unit documentation`:      directives.html#root
+.. _`tangling @root trees`:     directives.html#tangling-root-trees-with-the-tangle-commands
+.. _`untangling @root trees`:   directives.html#untangling-root-trees-with-the-untangle-commands
 
 .. ----- References to the tutorial.
-.. _`leo's tutorial`:               http://webpages.charter.net/edreamleo/intro.html
-.. _`derived files section`:        http://webpages.charter.net/edreamleo/intro.html#derived-files
-.. _`directives for programming`:   http://webpages.charter.net/edreamleo/intro.html#directives-for-programming
-.. _`leo directives`:               http://webpages.charter.net/edreamleo/intro.html#leo-directives
-.. _`quick start for programmers`:  http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
-.. _`sentinels lines`:              http://webpages.charter.net/edreamleo/intro.html#sentinel-lines
+.. _`leo's tutorial`:               intro.html
+.. _`derived files section`:        intro.html#derived-files
+.. _`directives for programming`:   intro.html#directives-for-programming
+.. _`leo directives`:               intro.html#leo-directives
+.. _`quick start for programmers`:  intro.html#quick-start-for-programmers
+.. _`sentinels lines`:              intro.html#sentinel-lines
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _appendices:                     http://webpages.charter.net/edreamleo/appendices.html
-.. _home:       http://webpages.charter.net/edreamleo/front.html
+.. _appendices: appendices.html
+.. _home:       front.html
 
 .. |prev| image:: arrow_lt.gif
 	:target: appendices_
@@ -17725,7 +17856,7 @@ Glossary
 .. |next| image:: Blank.gif</t>
 <t tx="ekr.20050901071613">----------------------
 
-|prev| |leo| |next|</t>
+|back| |leo| |next|</t>
 <t tx="ekr.20050901073048">**Important**: We often refer to outline_ nodes_ by the directives_ they contain.
 For example, an `@root node`_ is a node containing an @root directive_, etc.
 **Exception**: An `@file node`_ is a node whose *headline* starts with ``@file``.
@@ -18218,17 +18349,20 @@ Chapter 11: White Papers
 
 .. contents::
 </t>
-<t tx="ekr.20050901092232.1">.. links used in this document
-
-.. _home:           http://webpages.charter.net/edreamleo/front.html
-.. _chapter10:      http://webpages.charter.net/edreamleo/theory.html
-.. _appendices:     http://webpages.charter.net/edreamleo/appendices.html
-
+<t tx="ekr.20050901092232.1">.. External links...
 
 .. _pychecker:      http://pychecker.sourceforge.net/
 
-.. _back:       http://webpages.charter.net/edreamleo/theory.html
-.. _next:       http://webpages.charter.net/edreamleo/appendices.html
+.. Relative links...
+
+.. _chapter10:      theory.html
+.. _appendices:     appendices.html
+
+.. WARNING: image targets may not have upper case letters!
+
+.. _back:   theory.html
+.. _home:   front.html
+.. _next:   plugins.html
 
 .. |back| image:: arrow_lt.gif
     :target: back_
@@ -18339,16 +18473,15 @@ Chapter 3: Using Outlines
 This chapter tells how to use Leo's outlines.
 
 .. contents::</t>
-<t tx="ekr.20050901101608.1">.. _`Chapter 2\: A Tutorial Introduction to Leo`:   http://webpages.charter.net/edreamleo/intro.html
-.. _`Chapter 4\: Writing Programs in Leo`:          http://webpages.charter.net/edreamleo/directives.html
-
-.. _`Clones and views`:     http://webpages.charter.net/edreamleo/intro.html#clones-views
+<t tx="ekr.20050901101608.1">.. _`Chapter 2\: A Tutorial Introduction to Leo`:   intro.html
+.. _`Chapter 4\: Writing Programs in Leo`:          directives.html
+.. _`Clones and views`:                             intro.html#clones-views
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _back:   http://webpages.charter.net/edreamleo/intro.html
-.. _home:   http://webpages.charter.net/edreamleo/front.html
-.. _next:   http://webpages.charter.net/edreamleo/directives.html
+.. _back:   intro.html
+.. _home:   front.html
+.. _next:   directives.html
 
 .. |back| image:: arrow_lt.gif
     :target: back_
@@ -18473,22 +18606,24 @@ paying particular attention to topics that have caused difficulties in design or
 This chapter will be of use primarily to those wanting to change Leo's code.
 
 .. contents::</t>
-<t tx="ekr.20050901101852">.. _`Chapter 4\: Writing Programs in Leo`:          http://webpages.charter.net/edreamleo/directives.html
-.. _`Chapter 6\: Leo and Literate Programming`:     http://webpages.charter.net/edreamleo/design.html
+<t tx="ekr.20050901101852">.. External links...
 
-.. _`Clones and views`:     http://webpages.charter.net/edreamleo/intro.html#clones-views
 .. _CWEB:       http://www-cs-faculty.stanford.edu/~knuth/cweb.html
 .. _noweb:      http://www.eecs.harvard.edu/~nr/noweb/
 
-.. _`Creating script buttons`:  http://webpages.charter.net/edreamleo/customizing.html#creating-script-buttons
+.. Relative links...
 
-.. _`Tangling @root trees with the Tangle commands`: http://webpages.charter.net/edreamleo/directives.html#tangling-root-trees-with-the-tangle-commands
+.. _`Chapter 4\: Writing Programs in Leo`:              directives.html
+.. _`Chapter 6\: Leo and Literate Programming`:         design.html
+.. _`Clones and views`:                                 intro.html#clones-views
+.. _`Creating script buttons`:                          customizing.html#creating-script-buttons
+.. _`Tangling @root trees with the Tangle commands`:    directives.html#tangling-root-trees-with-the-tangle-commands
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _back:   http://webpages.charter.net/edreamleo/directives.html
-.. _home:   http://webpages.charter.net/edreamleo/front.html
-.. _next:   http://webpages.charter.net/edreamleo/design.html
+.. _back:   directives.html
+.. _home:   front.html
+.. _next:   design.html
 
 .. |back| image:: arrow_lt.gif
     :target: back_
@@ -18498,41 +18633,42 @@ This chapter will be of use primarily to those wanting to change Leo's code.
 
 .. |next| image:: arrow_rt.gif
     :target: next_</t>
-<t tx="ekr.20050901101949">.. _`Chapter 5\: Using Leo's Commands`:             http://webpages.charter.net/edreamleo/commands.html
-.. _`Chapter 7\: Scripting Leo with Python`:        http://webpages.charter.net/edreamleo/scripting.html
+<t tx="ekr.20050901101949">.. Relative links...
 
-.. _`Clones &amp; views`:   http://webpages.charter.net/edreamleo/intro.html#clones-views
-.. _`Organizer nodes`:  http://webpages.charter.net/edreamleo/intro.html#good-style-and-bad-sections-vs-others
+.. _`Chapter 5\: Using Leo's Commands`:             commands.html
+.. _`Chapter 7\: Scripting Leo with Python`:        scripting.html
+.. _`Clones &amp; views`:                               intro.html#clones-views
+.. _`Organizer nodes`:                              intro.html#good-style-and-bad-sections-vs-others
 
-.. _`@file trees`:          http://webpages.charter.net/edreamleo/glossary.html#file-trees
-.. _`@root node`:           http://webpages.charter.net/edreamleo/glossary.html#root-node
-.. _child:                  http://webpages.charter.net/edreamleo/glossary.html#child
-.. _clones:                 http://webpages.charter.net/edreamleo/glossary.html#clones
+.. _`@file trees`:          glossary.html#file-trees
+.. _`@root node`:           glossary.html#root-node
+.. _child:                  glossary.html#child
+.. _clones:                 glossary.html#clones
 .. _commands:               `Chapter 5\: Using Leo's Commands`_
-.. _cweb:                   http://webpages.charter.net/edreamleo/glossary.html#cweb
-.. _`literate programming`: http://webpages.charter.net/edreamleo/glossary.html#literate-programming
-.. _node:                   http://webpages.charter.net/edreamleo/glossary.html#node
-.. _outline:                http://webpages.charter.net/edreamleo/glossary.html#outline
-.. _outlines:               http://webpages.charter.net/edreamleo/glossary.html#outlines
-.. _`reference`:            http://webpages.charter.net/edreamleo/glossary.html#reference
-.. _`referenced`:           http://webpages.charter.net/edreamleo/glossary.html#referenced
-.. _reStructuredText:       http://webpages.charter.net/edreamleo/glossary.html#restructuredtext
-.. _`rst3 plugin`:          http://webpages.charter.net/edreamleo/glossary.html#rst3-plugin
-.. _section:                http://webpages.charter.net/edreamleo/glossary.html#section
-.. _sections:               http://webpages.charter.net/edreamleo/glossary.html#sections
-.. _`section name`:         http://webpages.charter.net/edreamleo/glossary.html#section-name
-.. _`section names`:        http://webpages.charter.net/edreamleo/glossary.html#section-names
-.. _`section reference`:    http://webpages.charter.net/edreamleo/glossary.html#section-reference
-.. _`section references`:   http://webpages.charter.net/edreamleo/glossary.html#section-references
-.. _tangling:               http://webpages.charter.net/edreamleo/glossary.html#tangling
-.. _tree:                   http://webpages.charter.net/edreamleo/glossary.html#tree
-.. _untangling:             http://webpages.charter.net/edreamleo/glossary.html#untangling
+.. _cweb:                   glossary.html#cweb
+.. _`literate programming`: glossary.html#literate-programming
+.. _node:                   glossary.html#node
+.. _outline:                glossary.html#outline
+.. _outlines:               glossary.html#outlines
+.. _`reference`:            glossary.html#reference
+.. _`referenced`:           glossary.html#referenced
+.. _reStructuredText:       glossary.html#restructuredtext
+.. _`rst3 plugin`:          glossary.html#rst3-plugin
+.. _section:                glossary.html#section
+.. _sections:               glossary.html#sections
+.. _`section name`:         glossary.html#section-name
+.. _`section names`:        glossary.html#section-names
+.. _`section reference`:    glossary.html#section-reference
+.. _`section references`:   glossary.html#section-references
+.. _tangling:               glossary.html#tangling
+.. _tree:                   glossary.html#tree
+.. _untangling:             glossary.html#untangling
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _back:   http://webpages.charter.net/edreamleo/commands.html
-.. _home:   http://webpages.charter.net/edreamleo/front.html
-.. _next:   http://webpages.charter.net/edreamleo/scripting.html
+.. _back:   commands.html
+.. _home:   front.html
+.. _next:   scripting.html
 
 .. |back| image:: arrow_lt.gif
     :target: back_
@@ -18542,18 +18678,16 @@ This chapter will be of use primarily to those wanting to change Leo's code.
 
 .. |next| image:: arrow_rt.gif
     :target: next_</t>
-<t tx="ekr.20050901102055">.. _`Chapter 7\: Scripting Leo with Python`:        http://webpages.charter.net/edreamleo/scripting.html
-.. _`Chapter 9\: History of Leo`:                   http://webpages.charter.net/edreamleo/history.html
-
-.. _`Specifying settings`:  http://webpages.charter.net/edreamleo/commands.html#specifying-settings
-
-.. _`rst3 plugin`:          http://webpages.charter.net/edreamleo/glossary.html#rst3-plugin
+<t tx="ekr.20050901102055">.. _`Chapter 7\: Scripting Leo with Python`:    scripting.html
+.. _`Chapter 9\: History of Leo`:               history.html
+.. _`rst3 plugin`:                              glossary.html#rst3-plugin
+.. _`Specifying settings`:                      commands.html#specifying-settings
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _back:   http://webpages.charter.net/edreamleo/scripting.html
-.. _home:   http://webpages.charter.net/edreamleo/front.html
-.. _next:   http://webpages.charter.net/edreamleo/history.html
+.. _back:   scripting.html
+.. _home:   front.html
+.. _next:   history.html
 
 .. |back| image:: arrow_lt.gif
     :target: back_
@@ -18563,16 +18697,17 @@ This chapter will be of use primarily to those wanting to change Leo's code.
 
 .. |next| image:: arrow_rt.gif
     :target: next_</t>
-<t tx="ekr.20050901102147">.. _`Chapter 8\: Customizing Leo`:          http://webpages.charter.net/edreamleo/customizing.html
-.. _`Chapter 10\: Theory of Operation`:     http://webpages.charter.net/edreamleo/theory.html
+<t tx="ekr.20050901102147">.. Relative links...
 
-.. _`Chapter 7: Scripting Leo with Python`: http://webpages.charter.net/edreamleo/scripting.html
+.. _`Chapter 7\: Scripting Leo with Python`:    scripting.html
+.. _`Chapter 8\: Customizing Leo`:              customizing.html
+.. _`Chapter 10\: Theory of Operation`:         theory.html
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _back:   http://webpages.charter.net/edreamleo/customizing.html
-.. _home:   http://webpages.charter.net/edreamleo/front.html
-.. _next:   http://webpages.charter.net/edreamleo/theory.html
+.. _back:   customizing.html
+.. _home:   front.html
+.. _next:   theory.html
 
 .. |back| image:: arrow_lt.gif
     :target: back_
@@ -18582,14 +18717,14 @@ This chapter will be of use primarily to those wanting to change Leo's code.
 
 .. |next| image:: arrow_rt.gif
     :target: next_</t>
-<t tx="ekr.20050901102300">.. _`Chapter 9\: History of Leo`:       http://webpages.charter.net/edreamleo/history.html
-.. _`Chapter 11\: White Papers`:        http://webpages.charter.net/edreamleo/whitepapers.html
+<t tx="ekr.20050901102300">.. _`Chapter 9\: History of Leo`:   history.html
+.. _`Chapter 11\: White Papers`:    whitepapers.html
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _back:   http://webpages.charter.net/edreamleo/history.html
-.. _home:   http://webpages.charter.net/edreamleo/front.html
-.. _next:   http://webpages.charter.net/edreamleo/whitepapers.html
+.. _back:   history.html
+.. _home:   front.html
+.. _next:   whitepapers.html
 
 .. |back| image:: arrow_lt.gif
     :target: back_
@@ -18630,9 +18765,9 @@ This chapter will be of use primarily to those wanting to change Leo's code.
 
 .. WARNING: image targets may not have upper case letters!
 
-.. _back: http://webpages.charter.net/edreamleo/FAQ.html
-.. _home: http://webpages.charter.net/edreamleo/front.html
-.. _next: http://webpages.charter.net/edreamleo/intro.html
+.. _back: FAQ.html
+.. _home: front.html
+.. _next: intro.html
 
 .. |back| image:: arrow_lt.gif
     :target: back_
@@ -19687,5 +19822,1111 @@ For Windows systems you can install Python's subprocess module in Python 2.2 or
         
 This installer installs the subprocess sources and also _subprocess.pyd in Python's site-packages folder.
 </t>
+<t tx="ekr.20050912125144"></t>
+<t tx="ekr.20050912125144.1">@ @rst-options
+code_mode=False
+generate_rst=True
+http_server_support = False
+show_organizer_nodes=True
+show_headlines=True
+show_leo_directives=True
+.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+write_intermediate_file = False
+verbose=True
+@c
+
+.. August 30, 2005
+
+|back| |leo| |next|
+
+##########################
+Chapter 12: Plugins
+##########################
+
+This chapter discusses the plugins contained in leoPlugins.leo.
+These plugins are part of Leo's official distribution.
+`Chapter 8: Customizing Leo`_ tells how to write plugins.
+
+.. contents::
+</t>
+<t tx="ekr.20050912125735">.. External links...
+
+.. _docutils:             http://docutils.sourceforge.net
+.. _LaTeX:                http://www.latex-project.org/
+.. _reStructuredText:     http://docutils.sourceforge.net/rst.html
+.. _SilverCity:           http://silvercity.sourceforge.net
+
+.. Relative links...
+
+.. _`Chapter 8\: Customizing Leo`:  customizing.html
+
+.. WARNING: image targets may not have upper case letters!
+
+.. _back:   whitepapers.html
+.. _home:   front.html
+.. _next:   appendices.html
+
+.. |back| image:: arrow_lt.gif
+    :target: back_
+
+.. |leo|  image:: leo.gif
+    :target: home_
+
+.. |next| image:: arrow_rt.gif
+    :target: next_</t>
+<t tx="ekr.20050912125735.26"></t>
+<t tx="ekr.20050912125735.28">This plugin adds a menu item under the File-&gt;Import menu to import
+Cisco configuration files.
+
+The plugin will:
+
+1)  Create a new node, under the current node, where the configuration will be
+    written. This node will typically have references to several sections (see below).
+
+2)  Create sections (child nodes) for the indented blocks present in the original
+    config file. These child nodes will have sub-nodes grouping similar blocks (e.g.
+    there will be an 'interface' child node, with as many sub-nodes as there are real
+    interfaces in the configuration file).
+
+3)  Create sections for the custom keywords specified in the customBlocks[] list in
+    importCiscoConfig(). You can modify this list to specify different keywords. DO
+    NOT put keywords that are followed by indented blocks (these are taken care of by
+    point 2 above). The negated form of the keywords (for example, if the keyword is
+    'service', the negated form is 'no service') is also included in the sections.
+    
+    
+4)  Not display consecutive empty comment lines (lines with only a '!').
+
+All created sections are alphabetically ordered.
+
+</t>
+<t tx="ekr.20050912125735.82">Support new Leo direcives.</t>
+<t tx="ekr.20050912125735.85">This plugin manages BibTeX files with Leo. Create a bibliographic database by
+putting '@bibtex filename' in a headline. Entries are added as nodes, with
+'@entrytype key' as the headline, and the contents of the entry in body text.
+The plugin will automatically insert a template for the entry in the body pane
+when a new entry is created (hooked to pressing enter when typing the headline
+text). The templates are defined in dictionary 'templates' in the &lt;&lt;globals&gt;&gt;
+section, by default containing all required fields for every entry.
+
+The file is written by double-clicking the node. Thus the following outline::
+
+    -@bibtex biblio.bib
+     +@book key
+      author = {A. Uthor},
+      year = 1999
+
+will be written in the file 'biblio.bib' as::
+
+    @book{key,
+    author = {A. Uthor},
+    year= 1999}
+
+Strings are defined in @string nodes and they can contain multiple entries.
+All @string nodes are written at the start of the file. Thus the following
+outline::
+
+    -@bibtext biblio.bib
+     +@string
+      j1 = {Journal1}
+     +@article AUj1
+      author = {A. Uthor},
+      journal = j1
+     +@string
+      j2 = {Journal2}
+      j3 = {Journal3}
+    
+Will be written as::
+
+    @string{j1 = {Journal1}}
+    @string{j2 = {Journal2}}
+    @string{j3 = {Journal3}}
+    
+    @article{AUj1,
+    author = {A. Uthor},
+    journal = j1}
+
+No error checking is made on the syntax. The entries can be organised under
+nodes --- if the headline doesn't start with '@', the headline and body text are
+ignored, but the child nodes are parsed as usual.
+
+BibTeX files can be imported by creating an empty node with '@bibtex filename'
+in the headline. Double-clicking it will read the file 'filename' and parse it
+into a @bibtex tree. No syntax checking is made, 'filename' is expected to be a
+valid BibTeX file.</t>
+<t tx="ekr.20050912125735.98">This plugin is enhances the EditAttributes.py plugin. It puts a command in
+Outline called ConceptualSort. This will prompt you for a concept to sort by.
+This gives the user some more flexibility in how they want to arrange their
+nodes. Nodes without the attribute in question go to the bottom of the sort. :)
+
+The dialog has been redone. The user can:
+
+- Select which attribute he wants to sort on by clicking on the Attribute box.
+
+- Select the type of sort he wants by clicking on the radio buttons:
+
+    -   Normal.
+    -   Reversed. Like normal but the results are reversed.
+    -   Used defined. For advanced users. The text box is where a user can type in
+        their own python code to sort the nodes-attributes. There is no need for a
+        def. That gets appended to the beginning of the code. It prototype looks
+        like::
+
+            def( a, b, att ):
+
+where a and b are nodes and att is dictionary of the nodes and the respective
+value of the selected attribute. There is no need to indent on the first level
+since indentation is added at compile time.</t>
+<t tx="ekr.20050912125735.113">Leo plugin that permits the definition of actions for double-clicking on file nodes.
+Written by Konrad Hinsen &lt;konrad.hinsen@laposte.net&gt;
+Distributed under the same licence as Leo.
+
+Double-clicking in a @file node writes out the file if changes
+have been made since the last save, and then runs a script on
+it, which is retrieved from the outline.
+
+Scripts are located in a node whose headline is FileActions. This node can be
+anywhere in the outline. If there is more than one such node, the first one in
+outline order is used.
+
+The children of that node are expected to contain a file pattern in the headline
+and the script to be executed in the body. The file name is matched against the
+patterns (which are Unix-style shell patterns), and the first matching node is
+selected. If the filename is a path, only the last item is matched.
+
+Execution of the scripts is similar to the "Execute Script"
+command in Leo. The main difference is that the namespace
+in which the scripts are run contains two elements:
+
+-   "filename", which contains the filename from the @file directive.
+
+-   "shellScriptInWindow", a utility function that runs
+    a shell script in an external windows, thus permitting
+    programs to be called that require user interaction
+
+File actions are implemented for @file nodes and all its variants
+(@file-nosent, @thin, etc.). There is also a new node type
+@file-ref for referring to files purely for the purpose of
+file actions, Leo does not do anything with or to such files.</t>
+<t tx="ekr.20050912125735.129">A Leo Plugin that adds Group commands functionality.  Restrictions currently apply to using Leo with a Tk frontend.
+There are several commands in this plugin:
+
+-   Mark Node: marks a node for further operations such as copying, cloning and moving.
+
+-   Mark Spot: marks a node as the place where group operations are to target.
+
+-   Operate On Marked: moves lassoed nodes to the spot where the roundup node is
+    placed. Clones are maintained.
+
+-   Clear Marked: unmarks all marked nodes and removes the roundup node.
+
+-   Transfer Lassoed Nodes: this is a menu for inter-window communication.
+    The windows must all be spawned from the same Leo instance. 
+    It allows the user to move all node marked for copying and moving from another window to this one.</t>
+<t tx="ekr.20050912125735.164">Creates new nodes containing parameterized section references.
+</t>
+<t tx="ekr.20050912125735.172">This plugin allows Leo to read a complete directory's outline into a Leo's
+Outline. Directories are converted into headlines and files names are listed
+into the bodies.
+
+Ce plug-in permet de traduire l'arborescence d'un répertoire en une arborescence
+Leo : Chaque dossier est converti en noeud dans Leo ; son nom est placé dans
+l'entête du noeud et chaque nom de fichier qu'il contient est listé dans son
+contenu.
+
+Feedback on this plugin can be sent to::
+
+    Frédéric Momméja
+    &lt;frederic [point] mommeja [at] laposte [point] net&gt;
+</t>
+<t tx="ekr.20050912125735.184">Timestamp all save operations to show when they occur.</t>
+<t tx="ekr.20050912125735.186">Modify the way exported outlines are displayed.</t>
+<t tx="ekr.20050912125735.188">A plugin that helps customize pretty printing. It creates a do-nothing subclass
+of the default pretty printer. To customize, simply override in this file the
+methods of the base prettyPrinter class in leoCommands.py. You would typically
+want to override putNormalToken or its allies. Templates for these methods have
+been provided. You may, however, override any methods you like. You could even
+define your own class entirely, provided you implement the prettyPrintNode
+method.
+</t>
+<t tx="ekr.20050912125735.204">A plugin to schedule commands for later execution. It's provides the ability to
+issue commands at a future time and to write messages that will be displayed at
+a later time.
+
+To record commands You goto Schedule and choose begin recording. Then you jump
+to the nodes and select the commands you want issued on them. This process is
+ended with the end recording option.
+
+A dialog pops up. You can then click on the individual commands and set the time
+for execution. To set the execution time for all, enter a value and hit set_all.
+All times must be in the form hh:mm. For example I want to issue a save command
+for 5:00 PM. I would do so by using the value 17:00.
+
+The Schedule Message is simple. There is a Text box to enter the message and a
+Entry to place the time. View Queue will summon a view of The Queue. This dialog
+will show the commands that have been enqued. There is also the option to Cancel
+out any scheduled commands/messages.</t>
+<t tx="ekr.20050912125735.225">This plugin lets you add customizable templates to an outline. Templates are
+like any other node except that the plugin replaces %s in the body text by
+values that you specify when using template. Templates may have section
+references; this plugin uses Leo's @nosent write machinery to create one string
+out of possibly many nodes.
+
+This plugin creates two buttons in Leo's icon area:
+
+- The '%s' button marks or unmarks a node as a template. A %s symbol will apear to
+  the left of the node when it is marked as a template.
+
+- The '----&gt; %s' button brings up a dialog that shows you the template text and
+  asks you to specify the value for all %s instances. Dismissing this dialog
+  inserts the template as the first child of the node, and creates a section
+  reference in the node that references the template.
+
+If a template does not have a '%s' in it, then the templates plugin just adds
+the text as a node. Templates once marked are stored across sessions. Do not put
+a template in a thin file, as your template mark will be erased between
+sessions.
+
+This plugin requires the simplified atFile write code that is new in 4.2.1.
+</t>
+<t tx="ekr.20050912125735.245">This plugin adds 'date nodes' (nodes with dates as their headlines) to the
+current outline. Date nodes may be added one at a time, a month's-worth at a
+time, or a year's-worth at a time. The format of the labels (headlines) is
+configurable in the ini file.</t>
+<t tx="ekr.20050912125735.273">A plugin to store Leo trees in anydbm files. Note: there isnt such a thing as an
+anydbm file: it's whatever the anydbm module uses.
+
+Under Outline, there is an option called 'Library'. This will open an PMW
+dialog with a list of the trees that you have saved. You can insert trees stored
+in the library, remove them and add trees to the library. Be aware of unicode,
+any characters outside of the ascii set gets turned into a ?. I found this
+problem in storing some trees from ed's Leo outline. Id like it to be able to
+store unicode, but that may require a more specific db background, than anydbm.
+Also note, that your library files may not be OS independent. If your python
+distribution does not have the backing db on another machine, it will not be
+able to open your library.
+
+This should help people develop templates that they want to reuse between Leo
+projects.  For example, Id like a template of many Java interfaces to be easily
+accessable.</t>
+<t tx="ekr.20050912125735.314">Autosave the Leo document every so often. \The time between saves is given in
+seconds in autosave.ini.</t>
+<t tx="ekr.20050912125735.318">This plugin puts the View Table command in the Outline menu.
+
+This command checks the current node using the csv (comma separated values) mods
+Sniffer. It tries to determine the format that is in the nodes data. If you had
+excel data in it, it should be able to determine its excel data. It then creates
+a dialog with the data presented as in a table for the user to see it.
+ 
+Requires Pmw and the tktable widget at http://sourceforge.net/projects/tktable
+</t>
+<t tx="ekr.20050912125735.334"></t>
+<t tx="ekr.20050912125735.335">A plugin to test import problems.</t>
+<t tx="ekr.20050912125735.336">Dump Python globals at startup.</t>
+<t tx="ekr.20050912125735.338">Enable debugging and tracing for Python's garbage collector.</t>
+<t tx="ekr.20050912125735.341">Trace changes to Leo's objects at idle time.</t>
+<t tx="ekr.20050912125735.344">Trace keystrokes in the outline and body panes.</t>
+<t tx="ekr.20050912125735.346">Trace most common hooks, but not key, drag or idle hooks.</t>
+<t tx="ekr.20050912125735.363">The dyna_menu plugin is a remarkable body of work by 'e'.
+This plugin creates a dyna_menu menu from which you can execute commands.
+You may download the latest version at: http://rclick.netfirms.com/dyna_menu.py.html</t>
+<t tx="ekr.20050912125735.525"></t>
+<t tx="ekr.20050912125735.526">If a node is named '@folder path_to_folder', the content (filenames) of the
+folder and the children of that node will be sync. Whenever a new file is put
+there, a new node will appear on top of the children list (with mark). So that
+I can put my description (ie. annotation) as the content of that node. In this
+way, I can find any files much easier from leo.
+
+Moreover, I add another feature to allow you to group files(in leo) into
+children of another group. This will help when there are many files in that
+folder. You can logically group it in leo (or even clone it to many groups),
+while keep every files in a flat/single directory on your computer.
+</t>
+<t tx="ekr.20050912125735.529">Executes commands in nodes whose body text starts with @produce.
+To use, put in the body text of a node::
+
+    @produce javac -verbose Test.java
+
+To execute, you goto Outline and look at Produce.  Choose Execute All Produce
+or Execute Tree Produce.  The Tree does the current Tree, All does the whole
+Outline.  Executing will fire javac, or whatever your using.  @produce functions
+as a directive.  After executing, a log file/node is created at the top of the
+Outline.  Any output, even error messages, should be there.
+
+It executes in a hierarchal manner.  Nodes that come before that contain @produce
+go first.
+
+Im hoping that this orthogonal to @run nodes and anything like that.  Its not
+intended as a replacement for make or Ant, but as a simple substitute when that
+machinery is overkill.
+
+WARNING: trying to execute a non-existent command will hang Leo.</t>
+<t tx="ekr.20050912125735.540">A plugin that supports ``@clip``, ``@view`` and ``@strip`` nodes.
+
+-   Selecting a headline containing ``@clip`` appends the contents of the clipboard to
+    the end of the body pane.
+
+-   Double clicking the icon box of a node whose headline contains ``@view &lt;path-to-file&gt;``
+    places the contents of the file in the body pane.
+
+-   Double clicking the icon box of a node whose headline contains ``@strip &lt;path-to-file&gt;``
+    places the contents of the file in the body pane, with all sentinels removed.
+
+This plugin also accumulates the effect of all ``@path`` nodes.</t>
+<t tx="ekr.20050912125735.556">This plugin allows the user to import binary data and store it in Leo as a
+base64 string.
+
+This plugin adds 'Import base64' and 'Export base64' commands to the Import menu
+and adds the 'View base64' command to the outline menu.
+
+The Import base64 command creates a new node with the headline '@base64
+&lt;filename&gt;'. The body of this node will kill the colorizer, add some info on
+the original file and create a section reference to the payload node, which
+contains the data.
+
+The Export base64 command asks for a location to place the file. The plugin
+checks that the structrue of the base64 node is what it expected, basically what
+an import operation creates. If Ok, it will write the file to the selected
+directory.
+
+The View base64 command brings up a Pmw Dialog that displays the data as a
+PhotoImage. This currently only supports formats recognized by the PhotoImage
+class. This would be the .gif format. This functionality may be enhanced in the
+future by PIL to support more image types.
+
+Depending on the size of the image, you may have to scroll around to see it. For
+example, a leo clone icon will require scrolling to find. Id like to change this
+in the future.</t>
+<t tx="ekr.20050912125735.565">A Leo plugin that adds quick Utility commands through a pop-up menu.
+
+To summon Menu, type control-space.
+To Unsummon, Right Click.
+
+This plugin offers 3 main feature sets:
+    
+1. Movement. If a node has ancestors,siblings or children a menu option will
+appear offering the user the ability to jump to the node from the current node.
+This is an improvement over moving one node at a time with the keyboard
+commands.
+
+2. Inserting text. These menus offer the current language keywords, the
+directives the body recognizes and any @file type headline directives. It offers
+the new user easy access to the different directives and ways to write a file.
+
+3. Moving Nodes( experimental feature ). You can quickly move a node to its
+parent's parent or after a sibling, if they exist.</t>
+<t tx="ekr.20050912125735.597">This plugin allows you to associate information with nodes.
+
+This information is organized around "labels", which is are just strings and
+freely chosen by the user.
+
+The plugin allows you to create such a label quickly for each marked node, and
+to mark all nodes which have a certain label.
+
+"labels" can be converted to subnodes, and vice versa. This facility allows you
+to add additional information for each label.
+
+You can create clones for each node which has a label. These clones are
+created as children of the current node.
+
+This last facility can be used to create clones for each node which has been
+found or changed by the standard search / replace dialog:
+
+- Delete all marks.
+- Do a "find all" / "change all".
+- Convert the marks to a label.
+- Run the "Clone label subnodes" command.
+
+Finally, if you read a derived file, and the content of a node changes, the
+previous content is available under the label "before change:"</t>
+<t tx="ekr.20050912125735.647">A plugin to create and update @read-only nodes.
+
+Here's my first attempt at customizing leo. I wanted to have the ability to
+import files in "read-only" mode, that is, in a mode where files could only
+be read by leo (not tangled), and also kept in sync with the content on the
+drive.
+
+The reason for this is for example that I have external programs that generate
+resource files. I want these files to be part of a leo outline, but I don't
+want leo to tangle or in any way modify them. At the same time, I want them
+to be up-to-date in the leo outline.
+
+So I coded the directive plugin. It has the following characteristics:
+
+- It reads the specified file and puts it into the node content.
+
+- If the @read-only directive was in the leo outline already, and the file content
+  on disk has changed from what is stored in the outline, it marks the node as
+  changed and prints a "changed" message to the log window; if, on the other hand,
+  the file content has _not_ changed, the file is simply read and the node is
+  not marked as changed.
+
+- When you write a @read-only directive, the file content is added to the node
+  immediately, i.e. as soon as you press Enter (no need to call a menu
+  entry to import the content).
+
+- If you want to refresh/update the content of the file, just edit the headline
+  and press Enter. The file is reloaded, and if in the meantime it has changed,
+  a "change" message is sent to the log window.
+
+- The body text of a @read-only file cannot be modified in leo.
+
+The syntax to access files in @read-only via ftp/http is the following::
+
+    @read-only http://www.ietf.org/rfc/rfc0791.txt
+    @read-only ftp://ftp.someserver.org/filepath
+
+If FTP authentication (username/password) is required, it can be specified as follows::
+
+    @read-only ftp://username:password@ftp.someserver.org/filepath
+
+For more details, see the doc string for the class FTPurl.
+
+Davide Salomoni</t>
+<t tx="ekr.20050912125735.674">Runs a program and interface Leo through its input/output/error streams.
+Double clicking the icon box whose headlines are @run 'cmd args' will execute
+the command. There are several other features, including @arg and @input nodes.
+
+The run_nodes.py plugin introduce two new nodes that transform leo into a terminal.
+It was mostly intended to run compilers and debuggers while having the possibility to send messages to the program.
+
+- Double clicking on the icon of an node whose headline is @run &lt;command&gt; &lt;args&gt; will launch &lt;command&gt; with the given arguments.  It will also mark the node.  # Terminates the argument list.  @run # &lt;comment&gt; is also valid.
+
+- @in nodes are used to send input to the running process.  Double clicking on the icon of an @in &lt;message&gt; node will append a "\n" to &lt;message&gt; and write it to the program, no matter where the node is placed. If no @run node is active, nothing happens.
+
+- The body text of every child, in which the headlines do not begin with '@run' or '@in', will be appended to &lt;command&gt;,  allowing you to add an infinite number of arguments to &lt;command&gt;.
+
+- The output of the program is written in the log pane (Error outputed in red). When the program exit the node is set unmarked and the return value is displayed... When the enter key is pressed in the body pane of an active @run node the content of it body pane is written to the program and then emptied ready for another line of input. If the node have @run nodes in its descendance, they will be launched successivelly. (Unless one returned an exit code other than 0, then it will stop there)
+
+- Please send comments to the Leo forums.
+- by Alexis Gendron Paquette
+
+</t>
+<t tx="ekr.20050912125735.694">Launches (starts) a file given by a headline when double-clicking the icon.
+Ignores headlines starting with an '@'.
+
+Uses the @folder path if the headline is under an @folder headline.
+Otherwise the path is relative to the Leo file.
+</t>
+<t tx="ekr.20050912125735.699">The AutoTrees plugin is a helper plugin designed to make it very easy to write
+"hanlder" plugins to manage dynamic content in Leo outlines. AutoTrees provides:
+
+- Convenient handler base classes which can be specialized for particular uses.
+
+- A manager to turn handlers on and off.
+
+- A set of example handlers to show the kinds of things that are possible.
+
+AutoTrees doesn't do anything that you cannot do in other ways, but it does
+provide a consistent way of adding dynamic content. This means that individual
+plugin writers don't have to rewrite all the same kinds of code each time and
+also makes it easier to maintain Leo, since it standardizes the way that certain
+classes of plugin interact with the Leo core.
+
+Why use this? I'm a plugin writer and I want to write a plugin to display
+dynamic content - ie content not directly contained in the .leo or derived
+files, e.g.,
+
+- email messages 
+- news feeds
+- news groups
+- documentation
+- remote files
+- statistics
+- file system data
+- data base records
+
+You can do this as a standard plugin, but as an AutoTrees handler you,
+
+- don't need to write code that interacts with the tree (this is done for you)
+- get centralized management
+- can still do everything else you could as a normal plugin
+
+Details.  AutoTrees is itself a plugin. When it starts it,
+
+1. Scans the leo\plugins\trees folder to find handlers.
+
+2. Activates specific handlers (this is managed via a plugin manager type window).
+
+3. Waits for clicks and double-clicks on special nodes.
+
+To create an AutoTree node, you add a node with @auto-my_handler. The @auto
+tells the plugin to go and look for the "my_handler" handler, if it is enabled.
+The handler is then called and this is then used to populate the node body and
+child nodes below this node.
+
+For example, for an @auto-rss node, the node headline is "@auto-rss
+http://myurl/news.xml". The handler goes to the URL mentioned and downloads the
+news stories. It then creates child nodes for each story and populates the
+bodies.
+
+For example handlers, see the source code in leoPlugins.leo</t>
+<t tx="ekr.20050912125735.868"></t>
+<t tx="ekr.20050912125735.869">Rebinds up/down arrow keys.</t>
+<t tx="ekr.20050912125735.874">Handles images in body text. Based on work by Gil Scwartz. Brent Burley provided
+many important insights. See:
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52264</t>
+<t tx="ekr.20050912125735.880">Create a context menu when right-clicking in the body pane.</t>
+<t tx="ekr.20050912125735.904">Autocompletion and calltips plugin.
+
+- ``.`` summons the autocompletion.
+- ``(`` summons the calltips
+- ``Escape`` closes either box.
+- ``Ctrl`` selects an item.
+- ``alt-up_arrow``, ``alt-down_arrow`` move up or down in the list.
+  The mouse will work for this as well.
+
+This plugin scans the complete outline at startup.
+You many enable or disable features in autocomplete.ini.
+This file contains two options under the [ autocompleter ] section::
+
+    useauto
+    usecalltips
+
+Setting either to 1 will turn on the feature. 0 means off. If there is a section
+called [ newlanguages ] it will read each option as a new language for
+autocompleter to recognize, and compile its value as a regex pattern for the
+autocompleter system to recognize as a calltip. This has relevance for the .ato
+system described below.  Languages that currently have patterns::
+
+    python, java, c++, c, perl
+
+Autocompleter looks in the plugin directory for a directory called
+autocompleter. If it doesnt find one it will attempt to create this directory.
+This directory should contain what are called .ato files ( pronounced auto ).
+Autocompleter will scan each .ato file that has a first part that matches a
+languages name. For example: python.ato autocompleter recognizes python, and
+will scan this file. The contents are read with the same mechanism that reads
+the information in the nodes, so calltip and autocompleter information is added
+to autocompleters runtime database. If a new language has been added in the
+autocompleter.ini file then an .ato file that starts with the new languages name
+will be recognized and read in. Note, this language needs to be recognizable to
+Leo. Used correctly an .ato file is a mechanism by which a user can carry
+autocompletion and calltip information between .leo files/sessions.</t>
+<t tx="ekr.20050912125735.942">Handle coloring for markup in doc parts and Python triple-double-quoted strings.
+This plugin requires that the ``add_directives`` plugin is enabled.
+
+The currently supported markups are:
+
+''text''                   # write text in italics
+__text__                   # write text in bold
+~~&lt;color&gt;:text~~           # write text in the color specified by &lt;color&gt; (e.g. blue, grey, etc)
+{picture file=&lt;filename&gt;}  # load the picture indicated by &lt;filename&gt;
+http://url                 # URL support: double clicking on the url will open it in the default browser.
+https://url                # URL support: double clicking on the url will open it in the default browser.
+
+-   Note 1: italics and bold markups can be nested, e.g.
+
+        ''__text__''               # write text in italics and bold
+
+    Just remember to terminate the tags in the order they were opened.
+
+- Note 2: URLs must be terminated by a space.
+
+By default, once the text has been markup up, the actual tags (e.g. __ for bold) are not displayed anymore. You can choose to display them selecting "Show Invisibles" from the Edit menu.</t>
+<t tx="ekr.20050912125735.974">Send output from the Execute Script command to the end of the body pane.</t>
+<t tx="ekr.20050912125735.980"></t>
+<t tx="ekr.20050912125735.981">Adds navigation buttons to icon bar.</t>
+<t tx="ekr.20050912125735.1008">Automatically add nodes for common tasks.</t>
+<t tx="ekr.20050912125735.1041">Add Hoist/De-Hoist buttons to the toolbar.
+</t>
+<t tx="ekr.20050912125735.1050">Adds "Recent" and "Marks" pulldown buttons to the toolbar.</t>
+<t tx="ekr.20050912125735.1072">Add a quick search to the toolbar in Leo
+
+A search box which behaves like a web site search is added, along with
+a "GO" button to do quick searches right from the main Leo window. All the
+current search options are retained except that "search body text" is
+explicitely set - mainly because this is by far the most common use case.
+
+Pressing &lt;CR&gt; while editing the text automatically does a search. Repeated
+searches can be done by clicking the "GO" button.
+
+The combo box also stores a list of previous searches, which can be
+selected to quickly repeat a search. When activating a previous
+search the original search mode is used.
+
+Still to do:
+
+- incremental search
+- reverse search
+- persist recent searches across Leo sessions
+- use INI file to set options for list size etc</t>
+<t tx="ekr.20050912125735.1092">This plugin supports Uniform Node Locators (UNL's). UNL's specify nodes within
+Leo files. UNL's are not limited to nodes within the present Leo file; you can
+use them to create cross-Leo-file links! UNL
+
+This plugin consists of two parts:
+
+1) Selecting a node shows the UNL in the status line at the bottom of the Leo
+   window. You can copy from the status line and paste it into headlines, emails,
+   whatever. 
+
+2) Double-clicking @url nodes containing UNL's select the node specified in the
+   UNL. If the UNL species in another Leo file, the other file will be opened.
+
+Format of UNL's:
+
+UNL's referring to nodes within the present outline have the form::
+
+    headline1--&gt;headline2--&gt;...--&gt;headlineN
+
+headline1 is the headline of a top-level node, and each successive headline is
+the headline of a child node.
+
+UNL's of the form::
+
+    file:&lt;path&gt;#headline1--&gt;...--&gt;headlineN
+
+refer to a node specified in &lt;path&gt; For example, double clicking the following
+headline will take you to Chapter 8 of Leo's Users Guide::
+
+    @url file:c:/prog/leoCvs/leo/doc/leoDocs.leo#Users Guide--&gt;Chapter 8: Customizing Leo
+    
+For example, suppose you want to email someone with comments about a Leo file.
+Create a comments.leo file containing @url UNL nodes. That is, headlines are
+@url followed by a UNL. The body text contains your comments about the nodes in
+the _other_ Leo file! Send the comments.leo to your friend, who can use the
+comments.leo file to quickly navigate to the various nodes you are talking
+about. As another example, you can copy UNL's into emails. The recipient can
+navigate to the nodes 'by hand' by following the arrows in the UNL.
+
+**Notes**:
+
+- At present, UNL's refer to nodes by their position in the outline. Moving a
+  node will break the link.
+
+- Don't refer to nodes that contain UNL's in the headline. Instead, refer to the
+  parent or child of such nodes.
+
+- You don't have to replace spaces in URL's or UNL's by '%20'.</t>
+<t tx="ekr.20050912125735.1105"></t>
+<t tx="ekr.20050912125735.1135">cleo.py  -- Coloured LEo Outlines
+
+Cleo allows you to annotate or colour leo outlines based on priority, code
+archetype, node types or some arbitary criteria. The annotations and colour
+coding can play a similar role like that of syntax highlighting. Right-click on
+the icon area to popup its menu to play with it.</t>
+<t tx="ekr.20050912125735.1187">A plugin to leave footprints! This colours the Leo nodes so that the ones you
+have visited most and most recently will stand out.</t>
+<t tx="ekr.20050912125735.1205">This plugin creates separate outlines called "chapters" within a single .leo file.  Clones work between Chapters.
+
+Requires Python Mega Widgets and Leo 4.2 or above.
+
+Numbered tabs at the top of the body pane represent each chapter.  Right clicking the tab will show a popup menu containing commands.  These commands allow you to:
+    
+- insert and delete chapters.
+- add names to chapters.
+- split the body pane to create multiple "editors".
+- create a "trash barrel that hold all deleted nodes.
+- import and export outlines and chapters.
+- create a pdf file from your chapters (requires reportlab toolkit at http://www.reportlab.org).
+- and more...
+ 
+Warnings:
+    
+- This plugin makes substantial changes to Leo's core.
+- Outlines containing multiple chapters are stored as a zipped file that can only be read when this plugin has been enabled.</t>
+<t tx="ekr.20050912125735.1285">A plugin that lets the user to associate text with a specific node.
+
+Summon it by pressing button-2 or button-3 on an icon Box in the outline. This
+will create an attribute editor where the user can add, remove and edit
+attributes. Since attributes use the underlying tnode, clones will share the
+attributes of one another.</t>
+<t tx="ekr.20050912125735.1299">Maximizes all new windows.</t>
+<t tx="ekr.20050912125735.1301">The nodebar plugin adds buttons at the bottom of the tree canvas. The buttons
+correspond to commands found in the Outline commands. It is intended to speed up
+a new users ability to use the outline. Experienced users may find value in
+being able to quickly execute commands they do not use very often.</t>
+<t tx="ekr.20050912125735.1316">Send all output to the log pane.</t>
+<t tx="ekr.20050912125735.1317">Turns the log into a tabbed component.  Other plugins may add tabs.
+To get a new tab in TabbedLog::
+
+    import TabbedLog
+    pane = TabbedLog.getPane(name,c)
+
+
+- ``pane`` is the pane returned for you to work with.
+
+- ``name`` is the name of the tab you want for the pane.
+
+- ``c`` is the commander for the leoFrame.</t>
+<t tx="ekr.20050912125735.1323">A plugin for searching unknownAttributes (uA's).</t>
+<t tx="ekr.20050912125735.1333">A plugin that enables the user to scroll down with a left mouse click and
+hold, and to scroll up with a right mouse click and hold. Scrolling continues
+until the user releases the mouse. 
+
+Originally designed as a workaround for various bugs in Tkinter scrolling,
+this may actually be superior to wheel scrolling, in that there is little work
+a user has to do to scroll except to press a button.
+
+We use a Thread and 4 Tkinter Events to enable this. Threading was
+necessary to deserialise Button Press and Button Release. Without a Thread
+there apparently was no way to split the two apart. Exterior processes were
+not considered as serious pieces of the mechanism, threading kept things
+simple.</t>
+<t tx="ekr.20050912125735.1342">This plugin uses Python's urllib module to download files and import them into Leo.
+
+It requires the TabbedLog plugin.
+</t>
+<t tx="ekr.20050912125735.2712"></t>
+<t tx="ekr.20050912125735.2713">Replace Commands.openWithTempFilePath so Leo opens temporary
+files with a filename that begins with the headline text, and
+located in a "username_Leo" subdirectory of the temporary
+directory. The "LeoTemp" prefix is omitted.  This makes it easier to
+see which temporary file is related to which outline node.</t>
+<t tx="ekr.20050912125735.2716">Creates an 'extensions' menu with commands to open either an xterm on linux
+or a cmd windows/explorer window on win32 in the directory of the current @file.
+This allows quick navigation to facilitate testing and navigating large systems
+with complex direcgtories.</t>
+<t tx="ekr.20050912125735.2726">Create menu for Open With command and handle the resulting commands.
+
+This code will take advantage of Python's new subprocess module if it is
+present. This module comes standard with Python 2.4. For Linux systems, Leo will
+use subprocess.py in Leo's extensions folder if necessary.
+
+For Windows systems you can install Python's subprocess module in Python 2.2 or
+2.3 as follows:
+    
+    - Go to http://www.effbot.org/downloads/#subprocess
+
+    - Download and execute one of the following installers, depending on your version of Python:
+        subprocess-0.1-20041012.win32-py2.3.exe 
+        subprocess-0.1-20041012.win32-py2.2.exe
+        
+This installer installs the subprocess sources and also _subprocess.pyd in Python's site-packages folder.</t>
+<t tx="ekr.20050912125735.2736">A plugin that communicates with VIM.
+
+When properly installed, this plugin does the following:
+    
+- Double clickin on a node's icon opens that node in VIM. You can open nodes in
+  VIM with a single-click if you set useDoubleClick = False. However, that
+  interfere's with Leo's dragging logic.
+
+- Leo will update the node in the outline when you save the file in VIM.
+
+To install this plugin do the following:
+    
+1. Set the variable _vim_cmd at the top level of the plugin to the path to vim
+or gvim.
+
+2. If you are using Python 2.4 or above, that's all you need to do. Jim
+Sizelove's new code will start vim automatically using Python's subprocess
+module. The subprocess module comes standard with Python 2.4. For Linux systems,
+Leo will use subprocess.py in Leo's extensions folder if necessary.
+
+On Windows, you can install Python's subprocess module in Python 2.2 or 2.3 as follows:
+    
+- Go to http://www.effbot.org/downloads/#subprocess
+
+- Download and execute one of the following installers, depending on your verions of Python::
+
+    subprocess-0.1-20041012.win32-py2.3.exe 
+    subprocess-0.1-20041012.win32-py2.2.exe
+        
+This installer installs the subprocess sources and also _subprocess.pyd in Python's site-packages folder.
+        
+3. If you **don't** have Python's subprocess module available you must start the vim server in one of two ways:
+            
+- **Manually**, from a console::
+    
+    vim --servername "LEO" # The name of the server *must* be LEO.
+
+- **Automatically**, when Leo starts up.  Uncomment the following line in the init function::
+    
+    os.system(_vim_cmd) # Don't do this if using Python 2.4 or above!</t>
+<t tx="ekr.20050912125735.2743">This plugin allows you to edit nodes in emacs/xemacs.
+
+Depending on your preference, selecting or double-clicking a node will pass the
+body text of that node to emacs. You may edit the node in the emacs buffer and
+changes will appear in Leo.</t>
+<t tx="ekr.20050912125735.2749">Use commands in the Plugins:Word Export:Export menu to formats and export
+the selected outline to a Word document, starting Word if necessary.</t>
+<t tx="ekr.20050912125735.2759"></t>
+<t tx="ekr.20050912125735.2760">Open any empty file as a minimal .leo file.</t>
+<t tx="ekr.20050912125735.2763">Adds #line directives in perl and perlpod programs.
+
+Over-rides two methods in leoAtFile.py to write #line directives after node sentinels.
+This allows compilers to give locations of errors in relation to the node name rather than the filename.
+Currently supports only perl and perlpod.</t>
+<t tx="ekr.20050912125735.2768">Multipath enables the ability to write a file to multiple locations.
+
+It acts as a post-write mechanism, a file must be written to the filesystem for
+it to work. At this point it is not a replacement for @path or an absolute path,
+it works in tandem with them.
+
+To use, place @multipath at the start of a line in the root node or an ancestor
+of the node. The format is (On Unixy systems):
+    
+    @multipath /machine/unit/:/machine/robot/:/machine/
+    
+It will places copy of the written file in each of these directories.
+
+There is an additional directive that simplifies common paths, it is called
+@multiprefix. By typing @multiprefix with a path following it, before a
+@multipath directive you set the beginning of the paths in the @multipath
+directive.
+
+For example: (note I put # in front of the directives here because I
+dont want someone browsing this file to accidentilly save mulitple copies of
+this file to their system :) )
+
+#@multiprefix /leo #@multipath /plugins 
+
+or
+
+#@multiprefix /leo/
+#@multipath plugins: fungus : drain
+
+copies a file to /leo/plugins /leo/fungus /leo/drain.
+
+The @multiprefix stays in effect for the entire tree until reset with another
+@multiprefix directive. @multipath is cumulitive, in that for each @multipath in
+an ancestor a copy of the file is created. These directives must at the
+beginning of the line and by themselves.</t>
+<t tx="ekr.20050912125735.2779">Preprocess @file-nosent nodes: make sure each subnode ends
+with exactly one newline, replace all tabs with spaces, and
+add a newline before class and functions in the derived file.
+</t>
+<t tx="ekr.20050912125735.2786">LeoN is Leo over the Network. LeoN is Collaborative Leo. This is an important
+project for Leo's long-term development.
+
+See leo/doc/LeoN for important research papers that form the basis of this project.</t>
+<t tx="ekr.20050912125735.2826"></t>
+<t tx="ekr.20050912125735.2828">Translate a few menu items into Simplified Chinese
+本插件将部分Leo菜单翻译成简体中文
+By Zhang Le &lt;ejoy@xinhuanet.com&gt;</t>
+<t tx="ekr.20050912125735.2836">Traduit les menus en Français.</t>
+<t tx="ekr.20050912125735.2844">Addes pie menus.</t>
+<t tx="ekr.20050912125735.2867"></t>
+<t tx="ekr.20050912125735.2869">Create a Plugins menu
+
+Adds an item to the plugin menu for each active plugin. Selecting
+this menu item will bring up a short About dialog with the details of the
+plugin.
+
+Plugins can create additional menu items by defining functions named
+"cmd_XZY". These will apear in a sub menu. 
+
+If the plugin requires an INI file then a configure menu item will be
+created which will show an INI file editor. the plugin can define an
+"applyConfiguration" function, which will be called when the configuration 
+changes.
+
+Plugins can also define a top level function to be called instead of
+the default "About" dialog by defining a "topLevelMenu" function in
+the plugin. This function will be called when the user clicks on the
+plugin name in the plugins menu, but only if the plugin was loaded
+properly and registered with g.plugin_signon.
+
+Plugins can define their name by setting the __plugin_name__ property.
+
+Plugins can also attempt to select the order they will apear in the menu
+by defining a __plugin_prioriy__. The menu will be created with the
+highest priority items first. This behaviour is not guaranteed since
+other plugins can define any priority. This priority does not affect
+the order of calling handlers.
+
+To change the order select a number outside the range 0-200 since this
+range is used internally for sorting alphabetically.</t>
+<t tx="ekr.20050912125735.2918">A plugin to manage Leo's Plugins:
+
+- Enables and disables plugins.
+- Shows plugin details.
+- Checks for conflicting hook handlers.
+- Checks for and updates plugins from the web.
+</t>
+<t tx="ekr.20050912125735.3040">A plugin to automatically update Leo from the current CVS version
+of the code stored on the SourceForge site. You can view individual
+files and update your entire Leo installation directly without needing
+a CVS client.</t>
+<t tx="ekr.20050912125735.3056"></t>
+<t tx="ekr.20050912125735.3057">A plugin to create script buttons and @button, @plugin and @script nodes.
+
+This plugin puts two buttons in the icon area: a button called ``run Script`` and
+a button called ``script Button``. The ``run Script`` button is simply another way
+of doing the Execute Script command: it executes the selected text of the
+presently selected node, or the entire text if no text is selected. The 'script
+Button' button creates another button in the icon area every time you push it.
+The name of the button is the headline of the presently selected node. Hitting
+this _new_ button executes the button's script.
+
+For example, to run a script on any part of an outline do the following:
+
+1.  Select the node containing the script.
+2.  Press the scriptButton button.  This will create a new button, call it X.
+3.  Select the node on which you want to run the script.
+4.  Push button X.
+
+That's all.  You can delete a script button by right-clicking on it.
+
+This plugin optionally scans for @button nodes, @plugin nodes and @script nodes
+whenever a .leo file is opened.
+
+- @button nodes create script buttons.
+- @plugin nodes cause plugins to be loaded.
+- @script nodes cause a script to be executed when opening a .leo file.
+
+Such nodes may be security risks. This plugin scans for such nodes only if the
+corresponding atButtonNodes, atPluginNodes, and atScriptNodes constants are set
+to True in this plugin.
+
+Notes:
+    
+- This plugin is based on ideas from e's dynabutton plugin.
+    
+- The bindLate option in this file determines whether changing the text of the
+  node will affect what script gets executed when a script button is pressed. The
+  default (recommended) setting is True, in which case the script that gets
+  executed is the present contents of the node used to create the script button.
+  If bindLate is False, the original script is used whenever you press the script
+  button.</t>
+<t tx="ekr.20050912125735.3077"></t>
+<t tx="ekr.20050912125735.3078">A minimal http plugin for LEO, based on AsyncHttpServer.py.
+
+Based on the asyncore / asynchat framework.
+
+Use this plugin is as follows:
+
+1. Start Leo with the plugin enabled.  You will see a purple message that says something like:
+
+"http serving enabled on port 8080, version 0.91"
+
+2. Start a web browser, and enter the following url: http://localhost:8080/
+
+You will see a a "top" level page containing one link for every open .leo file.  Start clicking :-)
+
+You can use the browser's refresh button to update the top-level view in the browser after you have opened or closed files.
+
+To enable this plugin put this into your file::
+
+    @settings
+        @page http plugin
+        @bool http_active = True
+        @int  port = 8080
+        @string rst_http_attributename = 'rst_http_attribute'</t>
+<t tx="ekr.20050912125735.3136"></t>
+<t tx="ekr.20050912125735.3138">aspell.pyx: Leo's new spell checking plugin that uses aspell.exe. It is much
+faster than the old mod_spelling plugin, but requires Python 2.3 or above and a
+recent version of Aspell.
+
+When properly installed and enabled (see below), this plugin adds a Check
+Spelling command to Leo's Edit menu. This command brings up a spell checking
+dialog. You can set options by changing entries in spellpyx.ini in Leo's plugins
+menu. One of these settings is the name of the dictionary, spellpyx.txt by
+default. **Warning**: do not create spellpyx.txt with an @asis tree in
+leoPlugins.leo: only the plugin code should typically change spellpyx.txt. You
+**can** edit spellpyx.txt yourself in an external editor: just make sure that
+Leo isn't running when you do this.
+
+You can bring up the spell checker without enabling the spellpyx plugin by using
+an @button Check Spelling... script button. LeoDocs.leo contains such a script
+button.
+
+Here is how to install the spellpyx plugin:
+    
+1. Install aspell: here are some links::
+    
+    &lt;http://aspell.net&gt;
+    &lt;http://aspell.net/win32/&gt;
+    
+This will create an aspell folder.
+Here are some more details for Linux:
+      
+- Install aspell-python from
+  http://www.republika.pl/wmula/proj/aspell-python/
+
+- Make a symbolic link to aspell.so:
+  cd /other/leo/lib/leo/plugins/
+  ln -s /other/aspell-python/lib/python2.4/site-packages/aspell.so .
+
+2. Leo's extensions folder contains aspell23.pyd, aspell24.pyd, etc. Python dll's
+   compiled for a specific version of Python.  aspell24.pyd for Python 2.4, etc.
+   Make a copy of the appropriate dll and rename it to be aspell.pyd.
+
+3a. (Linux) Copy aspell.pyd to the aspell folder created in step 1.
+
+3b. (XP) Copy aspell.pyd to the bin subfolder of the aspell folder created in step 1.
+ 
+4.  In the \&lt;\&lt; spellpx imports \&gt;\&gt; section in spellpyx.py, do the following:
+
+    - Set aspell_dir to the top-level Aspell directory.
+    - Set aspell_bin_dir to the bin subdirectory.</t>
+<t tx="ekr.20050912125735.3209">``temacs`` is a binding module for the Tkinter Text widget.
+``usetemacs`` is a Leo plugin that patches the temacs modules Emacs emulation
+into the standard Leo Tkinter Text editor.</t>
+<t tx="ekr.20050912125735.3559"></t>
+<t tx="ekr.20050912125735.3621">Adds XSLT-Node Command submen item to the Outline menu.
+
+This menu contains the following items:
+    
+``Set StyleSheet Node``
+    Selects the current node as the xsl stylesheet the plugin will use.
+
+``Process Node with Stylesheet Node``
+    Processes the current node as an xml document,
+    resolving section references and Leo directives,
+    and creates a sibling containing the results.
+
+Requires 4Suite 1.0a3 or better, downloadable from http://4Suite.org.</t>
+<t tx="ekr.20050912125735.3642">Leo2AsciiDoc is a small Python program which has been built to be used as a
+plugin module for the Leo outlining editor.
+
+I am still using Leo version 4.1 (rc3, build 1.62), as I've been unable to keep
+up with the speed of Edward's Leo development. He has made such significant
+changes to Leo since 4.1 that I doubt that Leo2AsciiDoc will work with any
+version later than 4.1. I do intend to rewrite Leo2AsciiDoc for the new Leo, but
+there is no schedule set. 
+
+Leo2Asc enables the contents of plain text Leo outlines to be published to HTML
+or PDF via the AsciiDoc program and the DocBook set of publishing tools. Plain
+text from the Leo outline can be transformed into a final result that has: 
+
+typeset body text, in which bulleted and numbered lists, variable lists, page
+numbers, URLs, index terms,and bold and italic text are automatically
+recognized. typeset Headings a Table of Contents an Index containing any items
+marked by the user, and any Python classes or functions. To produce HTML and
+PDF, you'll need to have the AsciiDoc program installed (a trivial task) and a
+DocBook tool chain installed, which is not a trivial task. And, of course,
+Python and Leo. In sum, this little program is an easy install for people who
+are already using Leo and DocBook. As noted later, Leo2AsciiDoc has only been
+tested on Linux
+
+For more information see:  http://www.marshallresearch.com/michael-dawson/os/leo.html</t>
+<t tx="ekr.20050912125735.3832">The rst3 plugin creates output files from Leo outlines containing rST
+(reStructuredText_) markup.
+
+This is a powerful plugin with many options.  The full documentation is at:
+http://webpages.charter.net/edreamleo/rstplugin3.html
+
+The rst3 plugin adds the Write Restructured Text command to Leo's Edit menu. This
+command searches the selected outline looking for **rst root nodes** whose
+headline have the form \@rst &lt;filename&gt;. The plugin then creates the named file
+in various ways depending which rst3 options are in effect.
+
+By default, the rst3 plugin creates rST headings automatically from outlines, so
+the higher-level nodes in the outline correspond to higher-level sections in the
+output. Creating rST headings automatically eliminates one of the most tedious
+chores associated with rST markup.
+
+To use this plugin effectively, Python's docutils_ module must be installed. The
+rst3 plugin will use the SilverCity_ syntax coloring package if it installed.
+
+This plugin sends .htm, .html or .tex files to the docutils module for further
+processing. Docutils generates HTML files or LaTeX files depending on the file's
+extension. HTML files generated by docutils refer to three .css (cascading style
+sheet) files that should exist in the same directory as the generated HTML file.
+You can control the formatting of the HTML file by altering these .css files.
+
+rst3 options control most aspects of this plugin's operations. You can set
+options in @settings trees, in headlines and in body text. There are too many
+details to discuss here. For full details see:
+http://webpages.charter.net/edreamleo/rstplugin3.html</t>
+<t tx="ekr.20050912125735.3944"></t>
+<t tx="ekr.20050912125735.3945">An experimental plugin that stores all Leo outline data in a single zodb
+database. This plugin replaces the Open, Save and Revert commands with methods
+that access the zodb database.</t>
+<t tx="ekr.20050912133515">-----------------------
+
+|back| |leo| |next|</t>
 </tnodes>
 </leo_file>
