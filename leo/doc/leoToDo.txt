@@ -5517,7 +5517,7 @@ Scott
 #@-node:ekr.20041228084018.5:Finish zodb plugin
 #@-node:ekr.20050707081822:Top priorities
 #@+node:ekr.20050816165305:To do 4.4
-#@+node:ekr.20050909150134:First
+#@+node:ekr.20050909150134:First: cleanup & bugs
 #@+node:ekr.20050902074723:Protect c.beginEndUpdate against exceptions.
 c.beginUpdate()
 try:
@@ -5525,11 +5525,6 @@ try:
 finally:
     c.endUpdate(flag)
 #@-node:ekr.20050902074723:Protect c.beginEndUpdate against exceptions.
-#@+node:ekr.20050419060645:Alternate lead-in characters
-An @decorator setting might be good. This would be a list of all Python
-decorators. Leo would create @verbatim sentinels for these.
-#@nonl
-#@-node:ekr.20050419060645:Alternate lead-in characters
 #@+node:ekr.20050902115502:Any way to fix this bug?
 @nocolor
 http://sourceforge.net/forum/message.php?msg_id=3322277
@@ -5543,7 +5538,12 @@ rectangle is around the outline, so partly it worked.
 Is this a bug or am I misunderstanding what the 
 command does?
 #@-node:ekr.20050902115502:Any way to fix this bug?
-#@-node:ekr.20050909150134:First
+#@-node:ekr.20050909150134:First: cleanup & bugs
+#@+node:ekr.20050419060645:Alternate lead-in characters
+An @decorator setting might be good. This would be a list of all Python
+decorators. Leo would create @verbatim sentinels for these.
+#@nonl
+#@-node:ekr.20050419060645:Alternate lead-in characters
 #@+node:ekr.20050524074930.2:Mouseless leo
 #@+node:ekr.20050712092501.1:xemacs variables
 @killcolor
@@ -9330,7 +9330,7 @@ Scott
 #@-node:ekr.20031218072017.737:Leo & data bases
 #@-node:ekr.20031218072017.412:Zope postings
 #@-node:ekr.20041228084018.5:Finish zodb plugin
-#@+node:ekr.20050727075336:New features
+#@+node:ekr.20050727075336:Minor
 #@+node:ekr.20050713105353:(Add configuration setting to set menu fonts)
 #@+node:ekr.20050713105353.1:Email from Martin Moncrieffe <mcm35@cam.ac.uk>
 @nocolor
@@ -9473,7 +9473,7 @@ Apply incremental search commands to headlines.  This might be fast, but is it u
 #@-node:ekr.20050712065231:New commands
 #@+node:ekr.20050621130815:Rewrite tech report with rst3
 #@-node:ekr.20050621130815:Rewrite tech report with rst3
-#@-node:ekr.20050727075336:New features
+#@-node:ekr.20050727075336:Minor
 #@-node:ekr.20050816165305:To do 4.4
 #@+node:ekr.20041228073219:4.4.x
 #@+node:ekr.20041228074125:(Make drawing more flexible)
