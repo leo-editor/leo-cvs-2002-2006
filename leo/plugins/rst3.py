@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -360,16 +360,20 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050903211210:v 0.9
-#@+node:ekr.20050908120111:v 1.0
+#@+node:ekr.20050908120111:v 1.x
 #@+at
 # 
-# EKR:
+# 1.0 EKR:
 # 
 # Write output files to the directory containing the .leo file by default.
 # This is c.frame.openDirectory, *not* g.app.loadDir.
+# 
+# 1.1 EKR:
+# 
+# By default, look for stylesheet in output directory.
 #@-at
 #@nonl
-#@-node:ekr.20050908120111:v 1.0
+#@-node:ekr.20050908120111:v 1.x
 #@-others
 #@@nocolor
 #@nonl
@@ -383,8 +387,6 @@ except ImportError:
 # - Specify option for the spelling of special doc parts.
 #     - The present code assumes to much about these commands.
 # 
-# - Fix path problems
-# 
 # - Warn if option gets set twice in same vnode.
 # 
 # Later or never:
@@ -397,40 +399,6 @@ except ImportError:
 #@@c
 
 #@+others
-#@+node:ekr.20050815173941:Look for stylsheet more flexibly
-#@+at
-# 
-# http://sourceforge.net/forum/message.php?msg_id=3294976
-# e
-# 
-# stylesheet does not exist: C:\c\leo\V43leos\default.css
-# wrote: C:\c\leo\HTML\rstplugin.html
-# 
-# it should look where the html will be written for the default.css
-# 
-# Documentation for the rst3 plugin-->@rst ../doc/rstplugin3.html
-# 
-# IOError: [Errno 2] No such file or directory: u'../doc/rstplugin3.html.txt'
-# 
-# few are going to have leo/src as the curent dir.
-# not sure how to handle it
-# short of a script to set @path to doc/
-# removing the ../doc/ will generate less nubiee errors.
-# 
-# seems to handle reSt errors better
-#@-at
-#@nonl
-#@-node:ekr.20050815173941:Look for stylsheet more flexibly
-#@+node:ekr.20050816094344:Add support for ReportLab
-#@+at
-# 
-# I used reportlab, I believe, in the pdf generation facility of the Chapters 
-# plugin... at least I think I did. There may be some code in there that you 
-# can just cut out and use as starter code...
-# maybe not... :D
-# leouserz
-#@-at
-#@-node:ekr.20050816094344:Add support for ReportLab
 #@+node:ekr.20050804081215:More options
 #@@nocolor
 #@+at
@@ -1184,9 +1152,14 @@ class rstClass:
         # If no such alias exists, docutils tries to import the actual name give.
         pub.set_writer(writer)
     
+        # New in version 
+        stylesheet_path = self.getOption('stylesheet_path')
+        if not stylesheet_path:
+            stylesheet_path,junk = g.os_path_split(self.outputFileName)
+    
         path = g.os_path_abspath(
             g.os_path_join(
-                self.getOption('stylesheet_path'),
+                stylesheet_path,
                 self.getOption('stylesheet_name')))
         
         if g.os_path_exists(path):
