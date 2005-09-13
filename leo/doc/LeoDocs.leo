@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="18921" clone_windows="0"/>
 <globals body_outline_ratio="0.578831312018">
-	<global_window_position top="10" left="394" height="907" width="851"/>
+	<global_window_position top="20" left="405" height="880" width="890"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -41,9 +41,9 @@
 <v t="ekr.20050902080416"><vh>@@button paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="ekr.20050906104918"><vh>4.3.2 beta 1</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20050906104918" a="TV"><vh>4.3.2 beta 1</vh>
 <v t="ekr.20050906104918.1"><vh>Rewrote documentation</vh></v>
 <v t="ekr.20050906104931.1"><vh>Bug fixes...</vh>
 <v t="ekr.20050909082711"><vh>Fixed various unicode bugs</vh></v>
@@ -1494,7 +1494,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -1882,8 +1882,8 @@
 <v t="ekr.20050901092232.7"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050912125144" a="E"><vh>Chapter 12: Summary of Plugins</vh>
-<v t="ekr.20050912125144.1" a="ETV"><vh>@rst plugins.html</vh>
+<v t="ekr.20050912125144"><vh>Chapter 12: Plugins</vh>
+<v t="ekr.20050912125144.1"><vh>@rst plugins.html</vh>
 <v t="ekr.20050912125735"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050912125735.26"><vh>Commands &amp; directives</vh>
 <v t="ekr.20050912125735.82"><vh>add_directives.py</vh></v>
@@ -1994,7 +1994,7 @@
 <v t="ekr.20050912125735.3832"><vh>rst3.py</vh></v>
 <v t="ekr.20050912125735.3621"><vh>xsltWithNodes.py</vh></v>
 </v>
-<v t="ekr.20050912125735.3944"><vh>Zodb</vh>
+<v t="ekr.20050912125735.3944"><vh>Zope and zodb</vh>
 <v t="ekr.20050912125735.3945"><vh>zodb.py</vh></v>
 </v>
 <v t="ekr.20050912133515"><vh>@rst-no-head end stuff</vh></v>
@@ -2020,7 +2020,6 @@
 <v t="ekr.20050901071300"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050901073048" a="M"><vh>@rst-no-head glossary</vh></v>
 <v t="ekr.20050901083017"><vh>@rst-no-head end stuff</vh></v>
-</v>
 </v>
 </v>
 <v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
@@ -2106,6 +2105,7 @@
 </v>
 <v t="ekr.20050822081728"><vh>@rst-ignore-tree Footnotes</vh></v>
 <v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -19877,7 +19877,6 @@ These plugins are part of Leo's official distribution.
 <t tx="ekr.20050912125735.26"></t>
 <t tx="ekr.20050912125735.28">This plugin adds a menu item under the File-&gt;Import menu to import
 Cisco configuration files.
-
 The plugin will:
 
 1)  Create a new node, under the current node, where the configuration will be
@@ -19897,16 +19896,14 @@ The plugin will:
     
 4)  Not display consecutive empty comment lines (lines with only a '!').
 
-All created sections are alphabetically ordered.
-
-</t>
-<t tx="ekr.20050912125735.82">Support new Leo direcives.</t>
+All created sections are alphabetically ordered.</t>
+<t tx="ekr.20050912125735.82">Supports new Leo directives.</t>
 <t tx="ekr.20050912125735.85">This plugin manages BibTeX files with Leo. Create a bibliographic database by
-putting '@bibtex filename' in a headline. Entries are added as nodes, with
-'@entrytype key' as the headline, and the contents of the entry in body text.
+putting ``@bibtex filename`` in a headline. Entries are added as nodes, with
+``@entrytype key`` as the headline, and the contents of the entry in body text.
 The plugin will automatically insert a template for the entry in the body pane
 when a new entry is created (hooked to pressing enter when typing the headline
-text). The templates are defined in dictionary 'templates' in the &lt;&lt;globals&gt;&gt;
+text). The templates are defined in dictionary ``templates`` in the \&lt;\&lt;globals\&gt;\&gt;
 section, by default containing all required fields for every entry.
 
 The file is written by double-clicking the node. Thus the following outline::
@@ -19922,13 +19919,13 @@ will be written in the file 'biblio.bib' as::
     author = {A. Uthor},
     year= 1999}
 
-Strings are defined in @string nodes and they can contain multiple entries.
-All @string nodes are written at the start of the file. Thus the following
+Strings are defined in ``@string`` nodes and they can contain multiple entries.
+All ``@string`` nodes are written at the start of the file. Thus the following
 outline::
 
     -@bibtext biblio.bib
      +@string
-      j1 = {Journal1}
+      j1 = {Journal}
      +@article AUj1
       author = {A. Uthor},
       journal = j1
@@ -19947,19 +19944,17 @@ Will be written as::
     journal = j1}
 
 No error checking is made on the syntax. The entries can be organised under
-nodes --- if the headline doesn't start with '@', the headline and body text are
-ignored, but the child nodes are parsed as usual.
-
-BibTeX files can be imported by creating an empty node with '@bibtex filename'
-in the headline. Double-clicking it will read the file 'filename' and parse it
-into a @bibtex tree. No syntax checking is made, 'filename' is expected to be a
+nodes--if the headline doesn't start with '@', the headline and body text are
+ignored, but the child nodes are parsed as usual. BibTeX files can be imported
+by creating an empty node with ``@bibtex filename`` in the headline.
+Double-clicking it will read the file ``filename`` and parse it into a
+``@bibtex`` tree. No syntax checking is made, ``filename`` is expected to be a
 valid BibTeX file.</t>
 <t tx="ekr.20050912125735.98">This plugin is enhances the EditAttributes.py plugin. It puts a command in
 Outline called ConceptualSort. This will prompt you for a concept to sort by.
 This gives the user some more flexibility in how they want to arrange their
-nodes. Nodes without the attribute in question go to the bottom of the sort. :)
-
-The dialog has been redone. The user can:
+nodes. Nodes without the attribute in question go to the bottom of the sort.
+The user can:
 
 - Select which attribute he wants to sort on by clicking on the Attribute box.
 
@@ -19977,38 +19972,30 @@ The dialog has been redone. The user can:
 where a and b are nodes and att is dictionary of the nodes and the respective
 value of the selected attribute. There is no need to indent on the first level
 since indentation is added at compile time.</t>
-<t tx="ekr.20050912125735.113">Leo plugin that permits the definition of actions for double-clicking on file nodes.
-Written by Konrad Hinsen &lt;konrad.hinsen@laposte.net&gt;
-Distributed under the same licence as Leo.
+<t tx="ekr.20050912125735.113">Leo plugin that permits the definition of actions for double-clicking on file
+nodes. Double-clicking in a ``@file`` node writes out the file if changes have
+been made since the last save, and then runs a script on it, which is retrieved
+from the outline. Scripts are located in a node whose headline is FileActions.
+This node can be anywhere in the outline. If there is more than one such node,
+the first one in outline order is used. The children of that node are expected
+to contain a file pattern in the headline and the script to be executed in the
+body. The file name is matched against the patterns (which are Unix-style shell
+patterns), and the first matching node is selected. If the filename is a path,
+only the last item is matched. Execution of the scripts is similar to the
+``Execute Script`` command in Leo. The main difference is that the namespace in
+which the scripts are run contains two elements:
 
-Double-clicking in a @file node writes out the file if changes
-have been made since the last save, and then runs a script on
-it, which is retrieved from the outline.
+-   ``filename``, which contains the filename from the ``@file`` directive.
 
-Scripts are located in a node whose headline is FileActions. This node can be
-anywhere in the outline. If there is more than one such node, the first one in
-outline order is used.
-
-The children of that node are expected to contain a file pattern in the headline
-and the script to be executed in the body. The file name is matched against the
-patterns (which are Unix-style shell patterns), and the first matching node is
-selected. If the filename is a path, only the last item is matched.
-
-Execution of the scripts is similar to the "Execute Script"
-command in Leo. The main difference is that the namespace
-in which the scripts are run contains two elements:
-
--   "filename", which contains the filename from the @file directive.
-
--   "shellScriptInWindow", a utility function that runs
+-   ``shellScriptInWindow``, a utility function that runs
     a shell script in an external windows, thus permitting
     programs to be called that require user interaction
 
-File actions are implemented for @file nodes and all its variants
-(@file-nosent, @thin, etc.). There is also a new node type
-@file-ref for referring to files purely for the purpose of
+File actions are implemented for ``@file`` nodes and all its variants
+(``@file-nosent``, ``@thin``, etc.). There is also a new node type
+``@file-ref`` for referring to files purely for the purpose of
 file actions, Leo does not do anything with or to such files.</t>
-<t tx="ekr.20050912125735.129">A Leo Plugin that adds Group commands functionality.  Restrictions currently apply to using Leo with a Tk frontend.
+<t tx="ekr.20050912125735.129">A Leo Plugin that adds Group commands functionality.  Restrictions currently apply to using Leo with a Tk front end.
 There are several commands in this plugin:
 
 -   Mark Node: marks a node for further operations such as copying, cloning and moving.
@@ -20027,18 +20014,7 @@ There are several commands in this plugin:
 </t>
 <t tx="ekr.20050912125735.172">This plugin allows Leo to read a complete directory's outline into a Leo's
 Outline. Directories are converted into headlines and files names are listed
-into the bodies.
-
-Ce plug-in permet de traduire l'arborescence d'un répertoire en une arborescence
-Leo : Chaque dossier est converti en noeud dans Leo ; son nom est placé dans
-l'entête du noeud et chaque nom de fichier qu'il contient est listé dans son
-contenu.
-
-Feedback on this plugin can be sent to::
-
-    Frédéric Momméja
-    &lt;frederic [point] mommeja [at] laposte [point] net&gt;
-</t>
+into the bodies.</t>
 <t tx="ekr.20050912125735.184">Timestamp all save operations to show when they occur.</t>
 <t tx="ekr.20050912125735.186">Modify the way exported outlines are displayed.</t>
 <t tx="ekr.20050912125735.188">A plugin that helps customize pretty printing. It creates a do-nothing subclass
@@ -20051,30 +20027,26 @@ method.
 </t>
 <t tx="ekr.20050912125735.204">A plugin to schedule commands for later execution. It's provides the ability to
 issue commands at a future time and to write messages that will be displayed at
-a later time.
-
-To record commands You goto Schedule and choose begin recording. Then you jump
-to the nodes and select the commands you want issued on them. This process is
-ended with the end recording option.
-
-A dialog pops up. You can then click on the individual commands and set the time
-for execution. To set the execution time for all, enter a value and hit set_all.
-All times must be in the form hh:mm. For example I want to issue a save command
-for 5:00 PM. I would do so by using the value 17:00.
-
-The Schedule Message is simple. There is a Text box to enter the message and a
-Entry to place the time. View Queue will summon a view of The Queue. This dialog
-will show the commands that have been enqued. There is also the option to Cancel
-out any scheduled commands/messages.</t>
+a later time. To record commands You goto Schedule and choose begin recording.
+Then you jump to the nodes and select the commands you want issued on them. This
+process is ended with the end recording option. A dialog pops up. You can then
+click on the individual commands and set the time for execution. To set the
+execution time for all, enter a value and hit set_all. All times must be in the
+form hh:mm. For example I want to issue a save command for 5:00 PM. I would do
+so by using the value 17:00. The Schedule Message is simple. There is a Text box
+to enter the message and a Entry to place the time. View Queue will summon a
+view of The Queue. This dialog will show the commands that have been enqueued.
+There is also the option to Cancel out any scheduled commands/messages.</t>
 <t tx="ekr.20050912125735.225">This plugin lets you add customizable templates to an outline. Templates are
 like any other node except that the plugin replaces %s in the body text by
 values that you specify when using template. Templates may have section
-references; this plugin uses Leo's @nosent write machinery to create one string
-out of possibly many nodes.
+references; this plugin uses Leo's ``@nosent`` write machinery to create one
+string out of possibly many nodes. This plugin requires the simplified atFile
+write code that is new in 4.2.1.
 
 This plugin creates two buttons in Leo's icon area:
 
-- The '%s' button marks or unmarks a node as a template. A %s symbol will apear to
+- The '%s' button marks or unmarks a node as a template. A %s symbol will appear to
   the left of the node when it is marked as a template.
 
 - The '----&gt; %s' button brings up a dialog that shows you the template text and
@@ -20087,38 +20059,33 @@ the text as a node. Templates once marked are stored across sessions. Do not put
 a template in a thin file, as your template mark will be erased between
 sessions.
 
-This plugin requires the simplified atFile write code that is new in 4.2.1.
 </t>
-<t tx="ekr.20050912125735.245">This plugin adds 'date nodes' (nodes with dates as their headlines) to the
+<t tx="ekr.20050912125735.245">This plugin adds **date nodes** (nodes with dates as their headlines) to the
 current outline. Date nodes may be added one at a time, a month's-worth at a
-time, or a year's-worth at a time. The format of the labels (headlines) is
+time, or a year's-worth at a time. The format of the headlines is
 configurable in the ini file.</t>
-<t tx="ekr.20050912125735.273">A plugin to store Leo trees in anydbm files. Note: there isnt such a thing as an
+<t tx="ekr.20050912125735.273">A plugin to store Leo trees in anydbm files. Note: there isn't such a thing as an
 anydbm file: it's whatever the anydbm module uses.
-
-Under Outline, there is an option called 'Library'. This will open an PMW
+Under Outline, there is an option called ``Library``. This will open a
 dialog with a list of the trees that you have saved. You can insert trees stored
 in the library, remove them and add trees to the library. Be aware of unicode,
 any characters outside of the ascii set gets turned into a ?. I found this
-problem in storing some trees from ed's Leo outline. Id like it to be able to
+problem in storing some trees from Edward's Leo outline. Id like it to be able to
 store unicode, but that may require a more specific db background, than anydbm.
 Also note, that your library files may not be OS independent. If your python
 distribution does not have the backing db on another machine, it will not be
 able to open your library.
-
 This should help people develop templates that they want to reuse between Leo
 projects.  For example, Id like a template of many Java interfaces to be easily
-accessable.</t>
-<t tx="ekr.20050912125735.314">Autosave the Leo document every so often. \The time between saves is given in
+accessible.</t>
+<t tx="ekr.20050912125735.314">Autosave the Leo document every so often. The time between saves is given in
 seconds in autosave.ini.</t>
-<t tx="ekr.20050912125735.318">This plugin puts the View Table command in the Outline menu.
-
-This command checks the current node using the csv (comma separated values) mods
-Sniffer. It tries to determine the format that is in the nodes data. If you had
-excel data in it, it should be able to determine its excel data. It then creates
-a dialog with the data presented as in a table for the user to see it.
- 
-Requires Pmw and the tktable widget at http://sourceforge.net/projects/tktable
+<t tx="ekr.20050912125735.318">This plugin puts the View Table command in the Outline menu. This command checks
+the current node using the csv (comma separated values) mods Sniffer. It tries
+to determine the format that is in the nodes data. If you had excel data in it,
+it should be able to determine its excel data. It then creates a dialog with the
+data presented as in a table for the user to see it. Requires Pmw and the
+tktable widget at http://sourceforge.net/projects/tktable.
 </t>
 <t tx="ekr.20050912125735.334"></t>
 <t tx="ekr.20050912125735.335">A plugin to test import problems.</t>
@@ -20126,41 +20093,36 @@ Requires Pmw and the tktable widget at http://sourceforge.net/projects/tktable
 <t tx="ekr.20050912125735.338">Enable debugging and tracing for Python's garbage collector.</t>
 <t tx="ekr.20050912125735.341">Trace changes to Leo's objects at idle time.</t>
 <t tx="ekr.20050912125735.344">Trace keystrokes in the outline and body panes.</t>
-<t tx="ekr.20050912125735.346">Trace most common hooks, but not key, drag or idle hooks.</t>
+<t tx="ekr.20050912125735.346">Trace the most common hooks, but not key, drag or idle hooks.</t>
 <t tx="ekr.20050912125735.363">The dyna_menu plugin is a remarkable body of work by 'e'.
 This plugin creates a dyna_menu menu from which you can execute commands.
 You may download the latest version at: http://rclick.netfirms.com/dyna_menu.py.html</t>
 <t tx="ekr.20050912125735.525"></t>
-<t tx="ekr.20050912125735.526">If a node is named '@folder path_to_folder', the content (filenames) of the
-folder and the children of that node will be sync. Whenever a new file is put
-there, a new node will appear on top of the children list (with mark). So that
-I can put my description (ie. annotation) as the content of that node. In this
-way, I can find any files much easier from leo.
-
-Moreover, I add another feature to allow you to group files(in leo) into
-children of another group. This will help when there are many files in that
-folder. You can logically group it in leo (or even clone it to many groups),
-while keep every files in a flat/single directory on your computer.
+<t tx="ekr.20050912125735.526">Synchronizes ``@folder`` nodes with folders. If a node is named ``@folder
+path_to_folder``, the content (filenames) of the folder and the children of that
+node will be sync. Whenever a new file is put there, a new node will appear on
+top of the children list (with mark). So that I can put my description (i.e.,
+annotation) as the content of that node. In this way, I can find any files much
+easier from leo. Moreover, I add another feature to allow you to group files(in
+leo) into children of another group. This will help when there are many files in
+that folder. You can logically group it in leo (or even clone it to many
+groups), while keep every files in a flat/single directory on your computer.
 </t>
-<t tx="ekr.20050912125735.529">Executes commands in nodes whose body text starts with @produce.
+<t tx="ekr.20050912125735.529">Executes commands in nodes whose body text starts with ``@produce``.
 To use, put in the body text of a node::
 
     @produce javac -verbose Test.java
 
-To execute, you goto Outline and look at Produce.  Choose Execute All Produce
-or Execute Tree Produce.  The Tree does the current Tree, All does the whole
-Outline.  Executing will fire javac, or whatever your using.  @produce functions
-as a directive.  After executing, a log file/node is created at the top of the
-Outline.  Any output, even error messages, should be there.
-
-It executes in a hierarchal manner.  Nodes that come before that contain @produce
-go first.
-
-Im hoping that this orthogonal to @run nodes and anything like that.  Its not
+To execute, you goto Outline and look at Produce. Choose Execute All Produce or
+Execute Tree Produce. The Tree does the current Tree, All does the whole
+Outline. Executing will fire javac, or whatever your using. ``@produce`` functions
+as a directive. After executing, a log file/node is created at the top of the
+Outline. Any output, even error messages, should be there. It executes in a
+hierarchal manner. Nodes that come before that contain ``@produce`` go first. I'm
+hoping that this orthogonal to ``@run`` nodes and anything like that. Its not
 intended as a replacement for make or Ant, but as a simple substitute when that
-machinery is overkill.
-
-WARNING: trying to execute a non-existent command will hang Leo.</t>
+machinery is overkill. **Warning**: trying to execute a non-existent command
+will hang Leo.</t>
 <t tx="ekr.20050912125735.540">A plugin that supports ``@clip``, ``@view`` and ``@strip`` nodes.
 
 -   Selecting a headline containing ``@clip`` appends the contents of the clipboard to
@@ -20174,35 +20136,26 @@ WARNING: trying to execute a non-existent command will hang Leo.</t>
 
 This plugin also accumulates the effect of all ``@path`` nodes.</t>
 <t tx="ekr.20050912125735.556">This plugin allows the user to import binary data and store it in Leo as a
-base64 string.
+base64 string. This plugin adds ``Import base64`` and ``Export base64`` commands
+to the Import menu and adds the 'View base64' command to the outline menu. The
+Import base64 command creates a new node with the headline::
 
-This plugin adds 'Import base64' and 'Export base64' commands to the Import menu
-and adds the 'View base64' command to the outline menu.
+    @base64 &lt;filename&gt;
 
-The Import base64 command creates a new node with the headline '@base64
-&lt;filename&gt;'. The body of this node will kill the colorizer, add some info on
-the original file and create a section reference to the payload node, which
-contains the data.
-
-The Export base64 command asks for a location to place the file. The plugin
-checks that the structrue of the base64 node is what it expected, basically what
-an import operation creates. If Ok, it will write the file to the selected
-directory.
-
-The View base64 command brings up a Pmw Dialog that displays the data as a
-PhotoImage. This currently only supports formats recognized by the PhotoImage
-class. This would be the .gif format. This functionality may be enhanced in the
-future by PIL to support more image types.
-
-Depending on the size of the image, you may have to scroll around to see it. For
-example, a leo clone icon will require scrolling to find. Id like to change this
-in the future.</t>
-<t tx="ekr.20050912125735.565">A Leo plugin that adds quick Utility commands through a pop-up menu.
-
+The body of this node will kill the colorizer, add some info on the original
+file and create a section reference to the payload node, which contains the
+data. The Export base64 command asks for a location to place the file. The
+plugin checks that the structure of the base64 node is what it expected,
+basically what an import operation creates. If Ok, it will write the file to the
+selected directory. The View base64 command brings up a Pmw Dialog that displays
+the data as a PhotoImage. This currently only supports formats recognized by the
+PhotoImage class. This would be the .gif format. This functionality may be
+enhanced in the future by PIL to support more image types. Depending on the size
+of the image, you may have to scroll around to see it. For example, a leo clone
+icon will require scrolling to find. Id like to change this in the future.</t>
+<t tx="ekr.20050912125735.565">A Leo plugin that adds quick utility commands through a pop-up menu.
 To summon Menu, type control-space.
-To Unsummon, Right Click.
-
-This plugin offers 3 main feature sets:
+To unsummon, Right Click.
     
 1. Movement. If a node has ancestors,siblings or children a menu option will
 appear offering the user the ability to jump to the node from the current node.
@@ -20210,27 +20163,20 @@ This is an improvement over moving one node at a time with the keyboard
 commands.
 
 2. Inserting text. These menus offer the current language keywords, the
-directives the body recognizes and any @file type headline directives. It offers
+directives the body recognizes and any ``@file`` type headline directives. It offers
 the new user easy access to the different directives and ways to write a file.
 
-3. Moving Nodes( experimental feature ). You can quickly move a node to its
+3. Moving Nodes(experimental). You can quickly move a node to its
 parent's parent or after a sibling, if they exist.</t>
-<t tx="ekr.20050912125735.597">This plugin allows you to associate information with nodes.
-
-This information is organized around "labels", which is are just strings and
-freely chosen by the user.
-
-The plugin allows you to create such a label quickly for each marked node, and
-to mark all nodes which have a certain label.
-
-"labels" can be converted to subnodes, and vice versa. This facility allows you
-to add additional information for each label.
-
-You can create clones for each node which has a label. These clones are
-created as children of the current node.
-
-This last facility can be used to create clones for each node which has been
-found or changed by the standard search / replace dialog:
+<t tx="ekr.20050912125735.597">This plugin allows you to associate information with nodes. This information is
+organized around "labels", which is are just strings and freely chosen by the
+user. The plugin allows you to create such a label quickly for each marked node,
+and to mark all nodes which have a certain label. Labels can be converted to
+subnodes, and vice versa. This facility allows you to add additional information
+for each label. You can create clones for each node which has a label. These
+clones are created as children of the current node. This last facility can be
+used to create clones for each node which has been found or changed by the
+standard search/replace dialog:
 
 - Delete all marks.
 - Do a "find all" / "change all".
@@ -20239,29 +20185,23 @@ found or changed by the standard search / replace dialog:
 
 Finally, if you read a derived file, and the content of a node changes, the
 previous content is available under the label "before change:"</t>
-<t tx="ekr.20050912125735.647">A plugin to create and update @read-only nodes.
-
-Here's my first attempt at customizing leo. I wanted to have the ability to
-import files in "read-only" mode, that is, in a mode where files could only
-be read by leo (not tangled), and also kept in sync with the content on the
-drive.
-
+<t tx="ekr.20050912125735.647">A plugin to create and update ``@read-only`` nodes. I wanted to have the ability to
+import files in "read-only" mode, that is, in a mode where files could only be
+read by leo (not tangled), and also kept in sync with the content on the drive.
 The reason for this is for example that I have external programs that generate
-resource files. I want these files to be part of a leo outline, but I don't
-want leo to tangle or in any way modify them. At the same time, I want them
-to be up-to-date in the leo outline.
-
-So I coded the directive plugin. It has the following characteristics:
+resource files. I want these files to be part of a leo outline, but I don't want
+leo to tangle or in any way modify them. At the same time, I want them to be
+up-to-date in the leo outline. This plugin has the following characteristics:
 
 - It reads the specified file and puts it into the node content.
 
-- If the @read-only directive was in the leo outline already, and the file content
+- If the ``@read-only`` directive was in the leo outline already, and the file content
   on disk has changed from what is stored in the outline, it marks the node as
   changed and prints a "changed" message to the log window; if, on the other hand,
-  the file content has _not_ changed, the file is simply read and the node is
+  the file content has *not* changed, the file is simply read and the node is
   not marked as changed.
 
-- When you write a @read-only directive, the file content is added to the node
+- When you write a ``@read-only`` directive, the file content is added to the node
   immediately, i.e. as soon as you press Enter (no need to call a menu
   entry to import the content).
 
@@ -20269,63 +20209,65 @@ So I coded the directive plugin. It has the following characteristics:
   and press Enter. The file is reloaded, and if in the meantime it has changed,
   a "change" message is sent to the log window.
 
-- The body text of a @read-only file cannot be modified in leo.
+- The body text of a ``@read-only`` file cannot be modified in leo.
 
-The syntax to access files in @read-only via ftp/http is the following::
+The syntax to access files in ``@read-only`` via ftp/http is the following::
 
     @read-only http://www.ietf.org/rfc/rfc0791.txt
     @read-only ftp://ftp.someserver.org/filepath
 
 If FTP authentication (username/password) is required, it can be specified as follows::
 
-    @read-only ftp://username:password@ftp.someserver.org/filepath
-
-For more details, see the doc string for the class FTPurl.
-
-Davide Salomoni</t>
+    @read-only ftp://username:password@ftp.someserver.org/filepath</t>
 <t tx="ekr.20050912125735.674">Runs a program and interface Leo through its input/output/error streams.
-Double clicking the icon box whose headlines are @run 'cmd args' will execute
-the command. There are several other features, including @arg and @input nodes.
+Double clicking the icon box whose headlines are ``@run 'cmd args'`` will execute
+the command. There are several other features, including ``@arg`` and ``@input`` nodes.
 
-The run_nodes.py plugin introduce two new nodes that transform leo into a terminal.
-It was mostly intended to run compilers and debuggers while having the possibility to send messages to the program.
+The run_nodes.py plugin introduce two new nodes that transform leo into a
+terminal. It was mostly intended to run compilers and debuggers while having the
+possibility to send messages to the program.
 
-- Double clicking on the icon of an node whose headline is @run &lt;command&gt; &lt;args&gt; will launch &lt;command&gt; with the given arguments.  It will also mark the node.  # Terminates the argument list.  @run # &lt;comment&gt; is also valid.
+- Double clicking on the icon of an node whose headline is::
 
-- @in nodes are used to send input to the running process.  Double clicking on the icon of an @in &lt;message&gt; node will append a "\n" to &lt;message&gt; and write it to the program, no matter where the node is placed. If no @run node is active, nothing happens.
+    @run &lt;command&gt; &lt;args&gt;
 
-- The body text of every child, in which the headlines do not begin with '@run' or '@in', will be appended to &lt;command&gt;,  allowing you to add an infinite number of arguments to &lt;command&gt;.
+will launch &lt;command&gt; with the given arguments. It will also mark the node. #
+Terminates the argument list. ``@run # &lt;comment&gt;`` is also valid.
 
-- The output of the program is written in the log pane (Error outputed in red). When the program exit the node is set unmarked and the return value is displayed... When the enter key is pressed in the body pane of an active @run node the content of it body pane is written to the program and then emptied ready for another line of input. If the node have @run nodes in its descendance, they will be launched successivelly. (Unless one returned an exit code other than 0, then it will stop there)
+- ``@in`` nodes are used to send input to the running process. Double clicking
+  on the icon of an ``@in &lt;message&gt;`` node will append a "\n" to &lt;message&gt; and
+  write it to the program, no matter where the node is placed. If no ``@run`` node is
+  active, nothing happens.
 
-- Please send comments to the Leo forums.
-- by Alexis Gendron Paquette
+- The body text of every child, in which the headlines do not begin with ``@run``
+  or ``@in``, will be appended to &lt;command&gt;, allowing you to add an infinite number
+  of arguments to &lt;command&gt;.
 
-</t>
+- The output of the program is written in the log pane (Error outputted in red).
+  When the program exit the node is set unmarked and the return value is
+  displayed...When the enter key is pressed in the body pane of an active ``@run``
+  node the content of it body pane is written to the program and then emptied
+  ready for another line of input. If the node have ``@run`` nodes in its descendants,
+  they will be launched successively (unless one returned an exit code other
+  than 0, then it will stop there).</t>
 <t tx="ekr.20050912125735.694">Launches (starts) a file given by a headline when double-clicking the icon.
-Ignores headlines starting with an '@'.
-
-Uses the @folder path if the headline is under an @folder headline.
-Otherwise the path is relative to the Leo file.
+Ignores headlines starting with an '@'. Uses the ``@folder`` path if the headline
+is under an ``@folder`` headline. Otherwise the path is relative to the Leo file.
 </t>
 <t tx="ekr.20050912125735.699">The AutoTrees plugin is a helper plugin designed to make it very easy to write
-"hanlder" plugins to manage dynamic content in Leo outlines. AutoTrees provides:
+"handler" plugins to manage dynamic content in Leo outlines. AutoTrees provides:
 
 - Convenient handler base classes which can be specialized for particular uses.
-
 - A manager to turn handlers on and off.
-
 - A set of example handlers to show the kinds of things that are possible.
 
 AutoTrees doesn't do anything that you cannot do in other ways, but it does
 provide a consistent way of adding dynamic content. This means that individual
 plugin writers don't have to rewrite all the same kinds of code each time and
 also makes it easier to maintain Leo, since it standardizes the way that certain
-classes of plugin interact with the Leo core.
-
-Why use this? I'm a plugin writer and I want to write a plugin to display
-dynamic content - ie content not directly contained in the .leo or derived
-files, e.g.,
+classes of plugin interact with the Leo core. Why use this? I'm a plugin writer
+and I want to write a plugin to display dynamic content, i.e., content not
+directly contained in the .leo or derived files, e.g.,
 
 - email messages 
 - news feeds
@@ -20341,29 +20283,10 @@ You can do this as a standard plugin, but as an AutoTrees handler you,
 - don't need to write code that interacts with the tree (this is done for you)
 - get centralized management
 - can still do everything else you could as a normal plugin
-
-Details.  AutoTrees is itself a plugin. When it starts it,
-
-1. Scans the leo\plugins\trees folder to find handlers.
-
-2. Activates specific handlers (this is managed via a plugin manager type window).
-
-3. Waits for clicks and double-clicks on special nodes.
-
-To create an AutoTree node, you add a node with @auto-my_handler. The @auto
-tells the plugin to go and look for the "my_handler" handler, if it is enabled.
-The handler is then called and this is then used to populate the node body and
-child nodes below this node.
-
-For example, for an @auto-rss node, the node headline is "@auto-rss
-http://myurl/news.xml". The handler goes to the URL mentioned and downloads the
-news stories. It then creates child nodes for each story and populates the
-bodies.
-
-For example handlers, see the source code in leoPlugins.leo</t>
+</t>
 <t tx="ekr.20050912125735.868"></t>
 <t tx="ekr.20050912125735.869">Rebinds up/down arrow keys.</t>
-<t tx="ekr.20050912125735.874">Handles images in body text. Based on work by Gil Scwartz. Brent Burley provided
+<t tx="ekr.20050912125735.874">Handles images in body text. Based on work by Gil Shwartz. Brent Burley provided
 many important insights. See:
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52264</t>
 <t tx="ekr.20050912125735.880">Create a context menu when right-clicking in the body pane.</t>
@@ -20377,7 +20300,7 @@ http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52264</t>
   The mouse will work for this as well.
 
 This plugin scans the complete outline at startup.
-You many enable or disable features in autocomplete.ini.
+You many enable or disable features in autocompleter.ini.
 This file contains two options under the [ autocompleter ] section::
 
     useauto
@@ -20392,38 +20315,39 @@ system described below.  Languages that currently have patterns::
     python, java, c++, c, perl
 
 Autocompleter looks in the plugin directory for a directory called
-autocompleter. If it doesnt find one it will attempt to create this directory.
+autocompleter. If it doesn't find one it will attempt to create this directory.
 This directory should contain what are called .ato files ( pronounced auto ).
 Autocompleter will scan each .ato file that has a first part that matches a
 languages name. For example: python.ato autocompleter recognizes python, and
 will scan this file. The contents are read with the same mechanism that reads
 the information in the nodes, so calltip and autocompleter information is added
-to autocompleters runtime database. If a new language has been added in the
+to autocompleter's runtime database. If a new language has been added in the
 autocompleter.ini file then an .ato file that starts with the new languages name
 will be recognized and read in. Note, this language needs to be recognizable to
 Leo. Used correctly an .ato file is a mechanism by which a user can carry
 autocompletion and calltip information between .leo files/sessions.</t>
 <t tx="ekr.20050912125735.942">Handle coloring for markup in doc parts and Python triple-double-quoted strings.
 This plugin requires that the ``add_directives`` plugin is enabled.
+The currently supported markups are::
 
-The currently supported markups are:
+    ''text''                    # write text in italics
+    __text__                    # write text in bold
+    ~~&lt;color&gt;:text~~            # write text in the color specified by &lt;color&gt; (e.g. blue, grey, etc)
+    {picture file=&lt;filename&gt;}   # load the picture indicated by &lt;filename&gt;
+    http://url                  # URL support: double clicking on the url will open it in the default browser.
+    https://url                 # URL support: double clicking on the url will open it in the default browser.
+    
+-   Note 1: italics and bold markups can be nested, e.g.,::
 
-''text''                   # write text in italics
-__text__                   # write text in bold
-~~&lt;color&gt;:text~~           # write text in the color specified by &lt;color&gt; (e.g. blue, grey, etc)
-{picture file=&lt;filename&gt;}  # load the picture indicated by &lt;filename&gt;
-http://url                 # URL support: double clicking on the url will open it in the default browser.
-https://url                # URL support: double clicking on the url will open it in the default browser.
-
--   Note 1: italics and bold markups can be nested, e.g.
-
-        ''__text__''               # write text in italics and bold
+        ''__text__''            # write text in italics and bold
 
     Just remember to terminate the tags in the order they were opened.
 
 - Note 2: URLs must be terminated by a space.
 
-By default, once the text has been markup up, the actual tags (e.g. __ for bold) are not displayed anymore. You can choose to display them selecting "Show Invisibles" from the Edit menu.</t>
+By default, once the text has been markup up, the actual tags (e.g. ``__`` for
+bold) are not displayed anymore. You can choose to display them selecting "Show
+Invisibles" from the Edit menu.</t>
 <t tx="ekr.20050912125735.974">Send output from the Execute Script command to the end of the body pane.</t>
 <t tx="ekr.20050912125735.980"></t>
 <t tx="ekr.20050912125735.981">Adds navigation buttons to icon bar.</t>
@@ -20431,49 +20355,32 @@ By default, once the text has been markup up, the actual tags (e.g. __ for bold)
 <t tx="ekr.20050912125735.1041">Add Hoist/De-Hoist buttons to the toolbar.
 </t>
 <t tx="ekr.20050912125735.1050">Adds "Recent" and "Marks" pulldown buttons to the toolbar.</t>
-<t tx="ekr.20050912125735.1072">Add a quick search to the toolbar in Leo
-
-A search box which behaves like a web site search is added, along with
-a "GO" button to do quick searches right from the main Leo window. All the
-current search options are retained except that "search body text" is
-explicitely set - mainly because this is by far the most common use case.
-
-Pressing &lt;CR&gt; while editing the text automatically does a search. Repeated
-searches can be done by clicking the "GO" button.
-
-The combo box also stores a list of previous searches, which can be
-selected to quickly repeat a search. When activating a previous
-search the original search mode is used.
-
-Still to do:
-
-- incremental search
-- reverse search
-- persist recent searches across Leo sessions
-- use INI file to set options for list size etc</t>
+<t tx="ekr.20050912125735.1072">Adds a quick search to Leo's toolbar, along with a "GO" button to do quick
+searches right from the main Leo window. All the current search options are
+retained except that "search body text" is explicitly set - mainly because this
+is by far the most common use case. Pressing &lt;CR&gt; while editing the text
+automatically does a search. Repeated searches can be done by clicking the "GO"
+button. The combo box also stores a list of previous searches, which can be
+selected to quickly repeat a search. When activating a previous search the
+original search mode is used.
+</t>
 <t tx="ekr.20050912125735.1092">This plugin supports Uniform Node Locators (UNL's). UNL's specify nodes within
 Leo files. UNL's are not limited to nodes within the present Leo file; you can
-use them to create cross-Leo-file links! UNL
-
-This plugin consists of two parts:
+use them to create cross-Leo-file links. This plugin consists of two parts:
 
 1) Selecting a node shows the UNL in the status line at the bottom of the Leo
    window. You can copy from the status line and paste it into headlines, emails,
    whatever. 
 
-2) Double-clicking @url nodes containing UNL's select the node specified in the
+2) Double-clicking ``@url`` nodes containing UNL's select the node specified in the
    UNL. If the UNL species in another Leo file, the other file will be opened.
-
-Format of UNL's:
 
 UNL's referring to nodes within the present outline have the form::
 
     headline1--&gt;headline2--&gt;...--&gt;headlineN
 
-headline1 is the headline of a top-level node, and each successive headline is
-the headline of a child node.
-
-UNL's of the form::
+where headline1 is the headline of a top-level node, and each successive headline is
+the headline of a child node.  UNL's of the form::
 
     file:&lt;path&gt;#headline1--&gt;...--&gt;headlineN
 
@@ -20483,8 +20390,8 @@ headline will take you to Chapter 8 of Leo's Users Guide::
     @url file:c:/prog/leoCvs/leo/doc/leoDocs.leo#Users Guide--&gt;Chapter 8: Customizing Leo
     
 For example, suppose you want to email someone with comments about a Leo file.
-Create a comments.leo file containing @url UNL nodes. That is, headlines are
-@url followed by a UNL. The body text contains your comments about the nodes in
+Create a comments.leo file containing ``@url UNL`` nodes. That is, headlines are
+``@url`` followed by a UNL. The body text contains your comments about the nodes in
 the _other_ Leo file! Send the comments.leo to your friend, who can use the
 comments.leo file to quickly navigate to the various nodes you are talking
 about. As another example, you can copy UNL's into emails. The recipient can
@@ -20500,19 +20407,19 @@ navigate to the nodes 'by hand' by following the arrows in the UNL.
 
 - You don't have to replace spaces in URL's or UNL's by '%20'.</t>
 <t tx="ekr.20050912125735.1105"></t>
-<t tx="ekr.20050912125735.1135">cleo.py  -- Coloured LEo Outlines
-
-Cleo allows you to annotate or colour leo outlines based on priority, code
-archetype, node types or some arbitary criteria. The annotations and colour
+<t tx="ekr.20050912125735.1135">Cleo allows you to annotate or colour leo outlines based on priority, code
+archetype, node types or some arbitrary criteria. The annotations and colour
 coding can play a similar role like that of syntax highlighting. Right-click on
 the icon area to popup its menu to play with it.</t>
 <t tx="ekr.20050912125735.1187">A plugin to leave footprints! This colours the Leo nodes so that the ones you
 have visited most and most recently will stand out.</t>
-<t tx="ekr.20050912125735.1205">This plugin creates separate outlines called "chapters" within a single .leo file.  Clones work between Chapters.
+<t tx="ekr.20050912125735.1205">This plugin creates separate outlines called "chapters" within a single .leo
+file. Clones work between Chapters. **Warning**: This plugin must be considered
+**buggy** and **unsafe**. Use with extreme caution.
 
-Requires Python Mega Widgets and Leo 4.2 or above.
-
-Numbered tabs at the top of the body pane represent each chapter.  Right clicking the tab will show a popup menu containing commands.  These commands allow you to:
+Numbered tabs at the top of the body pane represent each chapter. Right clicking
+the tab will show a popup menu containing commands. These commands allow you
+to:
     
 - insert and delete chapters.
 - add names to chapters.
@@ -20522,12 +20429,12 @@ Numbered tabs at the top of the body pane represent each chapter.  Right clickin
 - create a pdf file from your chapters (requires reportlab toolkit at http://www.reportlab.org).
 - and more...
  
-Warnings:
-    
+**Warnings**:
+
+- This plugin must be considered **buggy** and **unsafe**. Use with extreme caution.
 - This plugin makes substantial changes to Leo's core.
 - Outlines containing multiple chapters are stored as a zipped file that can only be read when this plugin has been enabled.</t>
 <t tx="ekr.20050912125735.1285">A plugin that lets the user to associate text with a specific node.
-
 Summon it by pressing button-2 or button-3 on an icon Box in the outline. This
 will create an attribute editor where the user can add, remove and edit
 attributes. Since attributes use the underlying tnode, clones will share the
@@ -20544,189 +20451,109 @@ To get a new tab in TabbedLog::
     import TabbedLog
     pane = TabbedLog.getPane(name,c)
 
-
 - ``pane`` is the pane returned for you to work with.
-
 - ``name`` is the name of the tab you want for the pane.
-
 - ``c`` is the commander for the leoFrame.</t>
 <t tx="ekr.20050912125735.1323">A plugin for searching unknownAttributes (uA's).</t>
-<t tx="ekr.20050912125735.1333">A plugin that enables the user to scroll down with a left mouse click and
-hold, and to scroll up with a right mouse click and hold. Scrolling continues
-until the user releases the mouse. 
-
-Originally designed as a workaround for various bugs in Tkinter scrolling,
-this may actually be superior to wheel scrolling, in that there is little work
-a user has to do to scroll except to press a button.
-
-We use a Thread and 4 Tkinter Events to enable this. Threading was
-necessary to deserialise Button Press and Button Release. Without a Thread
-there apparently was no way to split the two apart. Exterior processes were
-not considered as serious pieces of the mechanism, threading kept things
-simple.</t>
+<t tx="ekr.20050912125735.1333">A plugin that enables the user to scroll down with a left mouse click and hold,
+and to scroll up with a right mouse click and hold. Scrolling continues until
+the user releases the mouse. Originally designed as a workaround for various
+bugs in Tkinter scrolling, this may actually be superior to wheel scrolling, in
+that there is little work a user has to do to scroll except to press a button.</t>
 <t tx="ekr.20050912125735.1342">This plugin uses Python's urllib module to download files and import them into Leo.
-
 It requires the TabbedLog plugin.
 </t>
 <t tx="ekr.20050912125735.2712"></t>
-<t tx="ekr.20050912125735.2713">Replace Commands.openWithTempFilePath so Leo opens temporary
+<t tx="ekr.20050912125735.2713">Replaces ``Commands.openWithTempFilePath`` so Leo opens temporary
 files with a filename that begins with the headline text, and
-located in a "username_Leo" subdirectory of the temporary
-directory. The "LeoTemp" prefix is omitted.  This makes it easier to
+located in a ``username_Leo`` subdirectory of the temporary
+directory. The ``LeoTemp`` prefix is omitted.  This makes it easier to
 see which temporary file is related to which outline node.</t>
-<t tx="ekr.20050912125735.2716">Creates an 'extensions' menu with commands to open either an xterm on linux
-or a cmd windows/explorer window on win32 in the directory of the current @file.
+<t tx="ekr.20050912125735.2716">Creates an 'extensions' menu with commands to open either an xterm on Linux
+or a cmd windows/explorer window on win32 in the directory of the current ``@file`` node.
 This allows quick navigation to facilitate testing and navigating large systems
-with complex direcgtories.</t>
+with complex directories.</t>
 <t tx="ekr.20050912125735.2726">Create menu for Open With command and handle the resulting commands.
-
 This code will take advantage of Python's new subprocess module if it is
 present. This module comes standard with Python 2.4. For Linux systems, Leo will
-use subprocess.py in Leo's extensions folder if necessary.
-
-For Windows systems you can install Python's subprocess module in Python 2.2 or
-2.3 as follows:
+use subprocess.py in Leo's extensions folder if necessary.</t>
+<t tx="ekr.20050912125735.2736">A plugin that communicates with VIM:
     
-    - Go to http://www.effbot.org/downloads/#subprocess
-
-    - Download and execute one of the following installers, depending on your version of Python:
-        subprocess-0.1-20041012.win32-py2.3.exe 
-        subprocess-0.1-20041012.win32-py2.2.exe
-        
-This installer installs the subprocess sources and also _subprocess.pyd in Python's site-packages folder.</t>
-<t tx="ekr.20050912125735.2736">A plugin that communicates with VIM.
-
-When properly installed, this plugin does the following:
-    
-- Double clickin on a node's icon opens that node in VIM. You can open nodes in
+- Double clicking on a node's icon opens that node in VIM. You can open nodes in
   VIM with a single-click if you set useDoubleClick = False. However, that
-  interfere's with Leo's dragging logic.
+  interferes with Leo's dragging logic.
 
-- Leo will update the node in the outline when you save the file in VIM.
-
-To install this plugin do the following:
-    
-1. Set the variable _vim_cmd at the top level of the plugin to the path to vim
-or gvim.
-
-2. If you are using Python 2.4 or above, that's all you need to do. Jim
-Sizelove's new code will start vim automatically using Python's subprocess
-module. The subprocess module comes standard with Python 2.4. For Linux systems,
-Leo will use subprocess.py in Leo's extensions folder if necessary.
-
-On Windows, you can install Python's subprocess module in Python 2.2 or 2.3 as follows:
-    
-- Go to http://www.effbot.org/downloads/#subprocess
-
-- Download and execute one of the following installers, depending on your verions of Python::
-
-    subprocess-0.1-20041012.win32-py2.3.exe 
-    subprocess-0.1-20041012.win32-py2.2.exe
-        
-This installer installs the subprocess sources and also _subprocess.pyd in Python's site-packages folder.
-        
-3. If you **don't** have Python's subprocess module available you must start the vim server in one of two ways:
-            
-- **Manually**, from a console::
-    
-    vim --servername "LEO" # The name of the server *must* be LEO.
-
-- **Automatically**, when Leo starts up.  Uncomment the following line in the init function::
-    
-    os.system(_vim_cmd) # Don't do this if using Python 2.4 or above!</t>
+- Leo will update the node in the outline when you save the file in VIM.</t>
 <t tx="ekr.20050912125735.2743">This plugin allows you to edit nodes in emacs/xemacs.
-
 Depending on your preference, selecting or double-clicking a node will pass the
 body text of that node to emacs. You may edit the node in the emacs buffer and
 changes will appear in Leo.</t>
-<t tx="ekr.20050912125735.2749">Use commands in the Plugins:Word Export:Export menu to formats and export
+<t tx="ekr.20050912125735.2749">Use commands in the ``Plugins:Word Export:Export`` menu to formats and export
 the selected outline to a Word document, starting Word if necessary.</t>
 <t tx="ekr.20050912125735.2759"></t>
-<t tx="ekr.20050912125735.2760">Open any empty file as a minimal .leo file.</t>
+<t tx="ekr.20050912125735.2760">Opens any empty file as a minimal .leo file.</t>
 <t tx="ekr.20050912125735.2763">Adds #line directives in perl and perlpod programs.
-
-Over-rides two methods in leoAtFile.py to write #line directives after node sentinels.
-This allows compilers to give locations of errors in relation to the node name rather than the filename.
 Currently supports only perl and perlpod.</t>
-<t tx="ekr.20050912125735.2768">Multipath enables the ability to write a file to multiple locations.
-
-It acts as a post-write mechanism, a file must be written to the filesystem for
-it to work. At this point it is not a replacement for @path or an absolute path,
-it works in tandem with them.
-
-To use, place @multipath at the start of a line in the root node or an ancestor
-of the node. The format is (On Unixy systems):
+<t tx="ekr.20050912125735.2768">Multipath enables the ability to write a file to multiple locations. It acts as
+a post-write mechanism, a file must be written to the file system for it to work.
+At this point it is not a replacement for ``@path`` or an absolute path, it works in
+tandem with them. To use, place ``@multipath`` at the start of a line in the root
+node or an ancestor of the node. The format is (On Unix systems)::
     
     @multipath /machine/unit/:/machine/robot/:/machine/
     
-It will places copy of the written file in each of these directories.
+It will place a copy of the written file in each of these directories.
 
 There is an additional directive that simplifies common paths, it is called
-@multiprefix. By typing @multiprefix with a path following it, before a
-@multipath directive you set the beginning of the paths in the @multipath
-directive.
+``@multiprefix``. By typing ``@multiprefix`` with a path following it, before a
+``@multipath`` directive you set the beginning of the paths in the
+``@multipath`` directive. For example::
 
-For example: (note I put # in front of the directives here because I
-dont want someone browsing this file to accidentilly save mulitple copies of
-this file to their system :) )
+    @multiprefix /leo #@multipath /plugins 
 
-#@multiprefix /leo #@multipath /plugins 
+or::
 
-or
-
-#@multiprefix /leo/
-#@multipath plugins: fungus : drain
+    @multiprefix /leo/
+    @multipath plugins: fungus : drain
 
 copies a file to /leo/plugins /leo/fungus /leo/drain.
 
-The @multiprefix stays in effect for the entire tree until reset with another
-@multiprefix directive. @multipath is cumulitive, in that for each @multipath in
-an ancestor a copy of the file is created. These directives must at the
-beginning of the line and by themselves.</t>
-<t tx="ekr.20050912125735.2779">Preprocess @file-nosent nodes: make sure each subnode ends
+The ``@multiprefix`` stays in effect for the entire tree until reset with
+another ``@multiprefix`` directive. ``@multipath`` is cumulative, in that for
+each ``@multipath`` in an ancestor a copy of the file is created. These
+directives must at the beginning of the line and by themselves.</t>
+<t tx="ekr.20050912125735.2779">Preprocess ``@file-nosent`` nodes: make sure each subnode ends
 with exactly one newline, replace all tabs with spaces, and
 add a newline before class and functions in the derived file.
 </t>
 <t tx="ekr.20050912125735.2786">LeoN is Leo over the Network. LeoN is Collaborative Leo. This is an important
-project for Leo's long-term development.
-
-See leo/doc/LeoN for important research papers that form the basis of this project.</t>
+project for Leo's long-term development. See leo/doc/LeoN for important research
+papers that form the basis of this project.</t>
 <t tx="ekr.20050912125735.2826"></t>
 <t tx="ekr.20050912125735.2828">Translate a few menu items into Simplified Chinese
 本插件将部分Leo菜单翻译成简体中文
 By Zhang Le &lt;ejoy@xinhuanet.com&gt;</t>
 <t tx="ekr.20050912125735.2836">Traduit les menus en Français.</t>
-<t tx="ekr.20050912125735.2844">Addes pie menus.</t>
+<t tx="ekr.20050912125735.2844">Adds pie menus.  See http://www.piemenus.com/</t>
 <t tx="ekr.20050912125735.2867"></t>
-<t tx="ekr.20050912125735.2869">Create a Plugins menu
+<t tx="ekr.20050912125735.2869">Create a Plugins menu and adds an item to the plugin menu for each active
+plugin. Selecting this menu item will bring up a short About dialog with the
+details of the plugin. Plugins can create additional menu items by defining
+functions named ``cmd_XZY``. These will appear in a submenu. If the plugin
+requires an INI file then a configure menu item will be created which will show
+an INI file editor. The plugin can define an ``applyConfiguration`` function,
+which will be called when the configuration changes. Plugins can also define a
+top level function to be called instead of the default "About" dialog by
+defining a "topLevelMenu" function in the plugin. This function will be called
+when the user clicks on the plugin name in the plugins menu, but only if the
+plugin was loaded properly and registered with ``g.plugin_signon``.
 
-Adds an item to the plugin menu for each active plugin. Selecting
-this menu item will bring up a short About dialog with the details of the
-plugin.
-
-Plugins can create additional menu items by defining functions named
-"cmd_XZY". These will apear in a sub menu. 
-
-If the plugin requires an INI file then a configure menu item will be
-created which will show an INI file editor. the plugin can define an
-"applyConfiguration" function, which will be called when the configuration 
-changes.
-
-Plugins can also define a top level function to be called instead of
-the default "About" dialog by defining a "topLevelMenu" function in
-the plugin. This function will be called when the user clicks on the
-plugin name in the plugins menu, but only if the plugin was loaded
-properly and registered with g.plugin_signon.
-
-Plugins can define their name by setting the __plugin_name__ property.
-
-Plugins can also attempt to select the order they will apear in the menu
-by defining a __plugin_prioriy__. The menu will be created with the
-highest priority items first. This behaviour is not guaranteed since
-other plugins can define any priority. This priority does not affect
-the order of calling handlers.
-
-To change the order select a number outside the range 0-200 since this
+Plugins can define their name by setting the ``__plugin_name__`` property.
+Plugins can also attempt to select the order they will appear in the menu by
+defining a ``__plugin_prioriy__``. The menu will be created with the highest
+priority items first. This behaviour is not guaranteed since other plugins can
+define any priority. This priority does not affect the order of calling
+handlers. To change the order select a number outside the range 0-200 since this
 range is used internally for sorting alphabetically.</t>
 <t tx="ekr.20050912125735.2918">A plugin to manage Leo's Plugins:
 
@@ -20740,8 +20567,7 @@ of the code stored on the SourceForge site. You can view individual
 files and update your entire Leo installation directly without needing
 a CVS client.</t>
 <t tx="ekr.20050912125735.3056"></t>
-<t tx="ekr.20050912125735.3057">A plugin to create script buttons and @button, @plugin and @script nodes.
-
+<t tx="ekr.20050912125735.3057">A plugin to create script buttons and ``@button``, ``@plugin`` and ``@script`` nodes.
 This plugin puts two buttons in the icon area: a button called ``run Script`` and
 a button called ``script Button``. The ``run Script`` button is simply another way
 of doing the Execute Script command: it executes the selected text of the
@@ -20758,42 +20584,27 @@ For example, to run a script on any part of an outline do the following:
 4.  Push button X.
 
 That's all.  You can delete a script button by right-clicking on it.
-
-This plugin optionally scans for @button nodes, @plugin nodes and @script nodes
+This plugin optionally scans for ``@button`` nodes, ``@plugin`` nodes and ``@script`` nodes
 whenever a .leo file is opened.
 
-- @button nodes create script buttons.
-- @plugin nodes cause plugins to be loaded.
-- @script nodes cause a script to be executed when opening a .leo file.
+- ``@button`` nodes create script buttons.
+- ``@plugin`` nodes cause plugins to be loaded.
+- ``@script`` nodes cause a script to be executed when opening a .leo file.
 
 Such nodes may be security risks. This plugin scans for such nodes only if the
 corresponding atButtonNodes, atPluginNodes, and atScriptNodes constants are set
-to True in this plugin.
-
-Notes:
-    
-- This plugin is based on ideas from e's dynabutton plugin.
-    
-- The bindLate option in this file determines whether changing the text of the
-  node will affect what script gets executed when a script button is pressed. The
-  default (recommended) setting is True, in which case the script that gets
-  executed is the present contents of the node used to create the script button.
-  If bindLate is False, the original script is used whenever you press the script
-  button.</t>
+to True in this plugin.</t>
 <t tx="ekr.20050912125735.3077"></t>
 <t tx="ekr.20050912125735.3078">A minimal http plugin for LEO, based on AsyncHttpServer.py.
-
-Based on the asyncore / asynchat framework.
-
 Use this plugin is as follows:
 
-1. Start Leo with the plugin enabled.  You will see a purple message that says something like:
+1. Start Leo with the plugin enabled.  You will see a purple message that says something like::
 
-"http serving enabled on port 8080, version 0.91"
+    http serving enabled on port 8080, version 0.91
 
-2. Start a web browser, and enter the following url: http://localhost:8080/
-
-You will see a a "top" level page containing one link for every open .leo file.  Start clicking :-)
+2. Start a web browser, and enter the following url: http://localhost:8080/ You
+   will see a a "top" level page containing one link for every open .leo
+   file.  Start clicking :-)
 
 You can use the browser's refresh button to update the top-level view in the browser after you have opened or closed files.
 
@@ -20807,56 +20618,21 @@ To enable this plugin put this into your file::
 <t tx="ekr.20050912125735.3136"></t>
 <t tx="ekr.20050912125735.3138">aspell.pyx: Leo's new spell checking plugin that uses aspell.exe. It is much
 faster than the old mod_spelling plugin, but requires Python 2.3 or above and a
-recent version of Aspell.
-
-When properly installed and enabled (see below), this plugin adds a Check
-Spelling command to Leo's Edit menu. This command brings up a spell checking
-dialog. You can set options by changing entries in spellpyx.ini in Leo's plugins
-menu. One of these settings is the name of the dictionary, spellpyx.txt by
-default. **Warning**: do not create spellpyx.txt with an @asis tree in
-leoPlugins.leo: only the plugin code should typically change spellpyx.txt. You
-**can** edit spellpyx.txt yourself in an external editor: just make sure that
-Leo isn't running when you do this.
-
-You can bring up the spell checker without enabling the spellpyx plugin by using
-an @button Check Spelling... script button. LeoDocs.leo contains such a script
-button.
-
-Here is how to install the spellpyx plugin:
-    
-1. Install aspell: here are some links::
-    
-    &lt;http://aspell.net&gt;
-    &lt;http://aspell.net/win32/&gt;
-    
-This will create an aspell folder.
-Here are some more details for Linux:
-      
-- Install aspell-python from
-  http://www.republika.pl/wmula/proj/aspell-python/
-
-- Make a symbolic link to aspell.so:
-  cd /other/leo/lib/leo/plugins/
-  ln -s /other/aspell-python/lib/python2.4/site-packages/aspell.so .
-
-2. Leo's extensions folder contains aspell23.pyd, aspell24.pyd, etc. Python dll's
-   compiled for a specific version of Python.  aspell24.pyd for Python 2.4, etc.
-   Make a copy of the appropriate dll and rename it to be aspell.pyd.
-
-3a. (Linux) Copy aspell.pyd to the aspell folder created in step 1.
-
-3b. (XP) Copy aspell.pyd to the bin subfolder of the aspell folder created in step 1.
- 
-4.  In the \&lt;\&lt; spellpx imports \&gt;\&gt; section in spellpyx.py, do the following:
-
-    - Set aspell_dir to the top-level Aspell directory.
-    - Set aspell_bin_dir to the bin subdirectory.</t>
+recent version of Aspell. When properly installed and enabled, this plugin adds
+a Check Spelling command to Leo's Edit menu. This command brings up a spell
+checking dialog. You can set options by changing entries in spellpyx.ini in
+Leo's plugins menu. One of these settings is the name of the dictionary,
+spellpyx.txt by default. **Warning**: do not create spellpyx.txt with an ``@asis``
+tree in leoPlugins.leo: only the plugin code should typically change
+spellpyx.txt. You **can** edit ``spellpyx.txt`` yourself in an external editor: just
+make sure that Leo isn't running when you do this. You can bring up the spell
+checker without enabling the spellpyx plugin by using an ``@button Check
+Spelling...`` script button. LeoDocs.leo contains such a script button.</t>
 <t tx="ekr.20050912125735.3209">``temacs`` is a binding module for the Tkinter Text widget.
 ``usetemacs`` is a Leo plugin that patches the temacs modules Emacs emulation
 into the standard Leo Tkinter Text editor.</t>
 <t tx="ekr.20050912125735.3559"></t>
-<t tx="ekr.20050912125735.3621">Adds XSLT-Node Command submen item to the Outline menu.
-
+<t tx="ekr.20050912125735.3621">Adds XSLT-Node Command submenu item to the Outline menu.
 This menu contains the following items:
     
 ``Set StyleSheet Node``
@@ -20870,17 +20646,16 @@ This menu contains the following items:
 Requires 4Suite 1.0a3 or better, downloadable from http://4Suite.org.</t>
 <t tx="ekr.20050912125735.3642">Leo2AsciiDoc is a small Python program which has been built to be used as a
 plugin module for the Leo outlining editor.
-
+For more information see:  http://www.marshallresearch.com/michael-dawson/os/leo.html
 I am still using Leo version 4.1 (rc3, build 1.62), as I've been unable to keep
 up with the speed of Edward's Leo development. He has made such significant
 changes to Leo since 4.1 that I doubt that Leo2AsciiDoc will work with any
 version later than 4.1. I do intend to rewrite Leo2AsciiDoc for the new Leo, but
 there is no schedule set. 
 
-Leo2Asc enables the contents of plain text Leo outlines to be published to HTML
+Leo2AscDoc enables the contents of plain text Leo outlines to be published to HTML
 or PDF via the AsciiDoc program and the DocBook set of publishing tools. Plain
-text from the Leo outline can be transformed into a final result that has: 
-
+text from the Leo outline can be transformed into a final result that has
 typeset body text, in which bulleted and numbered lists, variable lists, page
 numbers, URLs, index terms,and bold and italic text are automatically
 recognized. typeset Headings a Table of Contents an Index containing any items
@@ -20889,38 +20664,34 @@ PDF, you'll need to have the AsciiDoc program installed (a trivial task) and a
 DocBook tool chain installed, which is not a trivial task. And, of course,
 Python and Leo. In sum, this little program is an easy install for people who
 are already using Leo and DocBook. As noted later, Leo2AsciiDoc has only been
-tested on Linux
-
-For more information see:  http://www.marshallresearch.com/michael-dawson/os/leo.html</t>
+tested on Linux</t>
 <t tx="ekr.20050912125735.3832">The rst3 plugin creates output files from Leo outlines containing rST
 (reStructuredText_) markup.
-
-This is a powerful plugin with many options.  The full documentation is at:
-http://webpages.charter.net/edreamleo/rstplugin3.html
-
-The rst3 plugin adds the Write Restructured Text command to Leo's Edit menu. This
-command searches the selected outline looking for **rst root nodes** whose
-headline have the form \@rst &lt;filename&gt;. The plugin then creates the named file
-in various ways depending which rst3 options are in effect.
-
-By default, the rst3 plugin creates rST headings automatically from outlines, so
-the higher-level nodes in the outline correspond to higher-level sections in the
-output. Creating rST headings automatically eliminates one of the most tedious
-chores associated with rST markup.
-
+rst3 options control most aspects of this plugin's operations. You can set
+options in ``@settings`` trees, in headlines and in body text.
+There are too many options to describe here.  See:
+http://webpages.charter.net/edreamleo/rstplugin3.html for full documentation.
 To use this plugin effectively, Python's docutils_ module must be installed. The
 rst3 plugin will use the SilverCity_ syntax coloring package if it installed.
 
+The rst3 plugin adds the Write Restructured Text command to Leo's Edit menu. This
+command searches the selected outline looking for **rst root nodes** whose
+headline have the form::
+
+    @rst &lt;filename&gt;
+
+The plugin then creates the named file in various ways depending which rst3
+options are in effect. By default, the rst3 plugin creates rST headings
+automatically from outlines, so the higher-level nodes in the outline correspond
+to higher-level sections in the output. Creating rST headings automatically
+eliminates one of the most tedious chores associated with rST markup.
 This plugin sends .htm, .html or .tex files to the docutils module for further
 processing. Docutils generates HTML files or LaTeX files depending on the file's
 extension. HTML files generated by docutils refer to three .css (cascading style
 sheet) files that should exist in the same directory as the generated HTML file.
 You can control the formatting of the HTML file by altering these .css files.
 
-rst3 options control most aspects of this plugin's operations. You can set
-options in @settings trees, in headlines and in body text. There are too many
-details to discuss here. For full details see:
-http://webpages.charter.net/edreamleo/rstplugin3.html</t>
+</t>
 <t tx="ekr.20050912125735.3944"></t>
 <t tx="ekr.20050912125735.3945">An experimental plugin that stores all Leo outline data in a single zodb
 database. This plugin replaces the Open, Save and Revert commands with methods
