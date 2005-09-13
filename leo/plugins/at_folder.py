@@ -1,6 +1,23 @@
 #@+leo-ver=4-thin
 #@+node:edream.110203113231.873:@thin at_folder.py
-"""Synchronize @folder nodes with folders"""
+#@<< docstring >>
+#@+node:edream.110203113231.874:<< docstring >>
+'''Synchronize @folder nodes with folders.
+
+If a node is named '@folder path_to_folder', the content (filenames) of the
+folder and the children of that node will be sync. Whenever a new file is put
+there, a new node will appear on top of the children list (with mark). So that
+I can put my description (ie. annotation) as the content of that node. In this
+way, I can find any files much easier from leo.
+
+Moreover, I add another feature to allow you to group files(in leo) into
+children of another group. This will help when there are many files in that
+folder. You can logically group it in leo (or even clone it to many groups),
+while keep every files in a flat/single directory on your computer.
+'''
+#@nonl
+#@-node:edream.110203113231.874:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
@@ -9,26 +26,6 @@ import leoGlobals as g
 import leoPlugins
 import os  # added JD 2004-09-10
 
-#@<< about this plugin >>
-#@+node:edream.110203113231.874:<< about this plugin >>
-#@+at 
-#@nonl
-# If a node is named '@folder path_to_folder', the content (filenames) of the
-# folder and the children of that node will be sync. Whenever a new file is 
-# put
-# there, a new node will appear on top of the children list (with mark). So 
-# that
-# I can put my description (ie. annotation) as the content of that node. In 
-# this
-# way, I can find any files much easier from leo.
-# 
-# Moreover, I add another feature to allow you to group files(in leo) into
-# children of another group. This will help when there are many files in that
-# folder. You can logically group it in leo (or even clone it to many groups),
-# while keep every files in a flat/single directory on your computer.
-#@-at
-#@-node:edream.110203113231.874:<< about this plugin >>
-#@nl
 __version__ = "1.3"
 
 #@+others

@@ -2,18 +2,18 @@
 #@+node:ktenney.20041211072654.1:@thin at_view.py
 #@<< docstring >>
 #@+node:ekr.20041231104454:<< docstring >>
-'''A plugin that supports @clip, @view and @strip nodes.
+'''A plugin that supports ``@clip``, ``@view`` and ``@strip`` nodes.
 
-- Selecting a headline containing @clip appends the contents of the clipboard to
-the end of the body pane.
+- Selecting a headline containing ``@clip`` appends the contents of the clipboard to
+  the end of the body pane.
 
-- Double clicking the icon box of a node whose headline contains @view <path-to-file>
-places the contents of the file in the body pane.
+- Double clicking the icon box of a node whose headline contains ``@view <path-to-file>``
+  places the contents of the file in the body pane.
 
-- Double clicking the icon box of a node whose headline contains @strip <path-to-file>
-places the contents of the file in the body pane, with all sentinels removed.
+- Double clicking the icon box of a node whose headline contains ``@strip <path-to-file>``
+  places the contents of the file in the body pane, with all sentinels removed.
 
-This plugin also accumulates the effect of all @path nodes.
+This plugin also accumulates the effect of all ``@path`` nodes.
 '''
 #@nonl
 #@-node:ekr.20041231104454:<< docstring >>

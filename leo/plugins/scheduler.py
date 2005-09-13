@@ -1,41 +1,32 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040331153923:@thin scheduler.py
-"""A plugin to schedule commands for later execution."""
+#@<< docstring >>
+#@+node:ekr.20040331153923.1:<< docstring >>
+'''A plugin to schedule commands for later execution. It's provides the ability to
+issue commands at a future time and to write messages that will be displayed at
+a later time.
 
-#@<< about this plugin >>
-#@+node:ekr.20040331153923.1:<< about this plugin >>
-#@+at
-# 
-# Scheduler.py is a plugin for Leo. It's purpose is to provide the ability to
-# issue commands at a future time and to write messages that will be displayed 
-# at
-# a later time.
-# 
-# To record commands You goto Schedule and choose begin recording. Then you 
-# jump
-# to the nodes and select the commands you want issued on them. This process 
-# is
-# ended with the end recording option.
-# 
-# A dialog pops up. You can then click on the individual commands and set the 
-# time
-# for execution. To set the execution time for all, enter a value and hit 
-# set_all.
-# All times must be in the form hh:mm. For example I want to issue a save 
-# command
-# for 5:00 PM. I would do so by using the value 17:00.
-# 
-# The Schedule Message is simple. There is a Text box to enter the message and 
-# a
-# Entry to place the time. View Queue will summon a view of The Queue. This 
-# dialog
-# will show the commands that have been enqued. There is also the option to 
-# Cancel
-# out any scheduled commands/messages.
-#@-at
+To record commands You goto Schedule and choose begin recording. Then you jump
+to the nodes and select the commands you want issued on them. This process is
+ended with the end recording option.
+
+A dialog pops up. You can then click on the individual commands and set the time
+for execution. To set the execution time for all, enter a value and hit set_all.
+All times must be in the form hh:mm. For example I want to issue a save command
+for 5:00 PM. I would do so by using the value 17:00.
+
+The Schedule Message is simple. There is a Text box to enter the message and a
+Entry to place the time. View Queue will summon a view of The Queue. This dialog
+will show the commands that have been enqued. There is also the option to Cancel
+out any scheduled commands/messages.
+'''
 #@nonl
-#@-node:ekr.20040331153923.1:<< about this plugin >>
+#@-node:ekr.20040331153923.1:<< docstring >>
 #@nl
+
+#@@language python
+#@@tabwidth -4
+
 #@<< imports >>
 #@+node:ekr.20050101090207.7:<< imports >>
 import leoGlobals as g

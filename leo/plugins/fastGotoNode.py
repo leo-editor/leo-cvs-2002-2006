@@ -19,7 +19,8 @@ directives the body recognizes and any @file type headline directives. It offers
 the new user easy access to the different directives and ways to write a file.
 
 3. Moving Nodes( experimental feature ). You can quickly move a node to its
-parent's parent or after a sibling, if they exist.'''
+parent's parent or after a sibling, if they exist.
+'''
 #@nonl
 #@-node:ekr.20050226120947:<< docstring >>
 #@nl

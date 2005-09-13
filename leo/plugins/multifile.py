@@ -9,7 +9,7 @@ it to work. At this point it is not a replacement for @path or an absolute path,
 it works in tandem with them.
 
 To use, place @multipath at the start of a line in the root node or an ancestor
-of the node. The format is (On Unixy systems):
+of the node. The format is (On Unixy systems)::
     
     @multipath /machine/unit/:/machine/robot/:/machine/
     
@@ -39,7 +39,8 @@ copies a file to /leo/plugins /leo/fungus /leo/drain.
 The @multiprefix stays in effect for the entire tree until reset with another
 @multiprefix directive. @multipath is cumulitive, in that for each @multipath in
 an ancestor a copy of the file is created. These directives must at the
-beginning of the line and by themselves.'''
+beginning of the line and by themselves.
+'''
 #@nonl
 #@-node:ekr.20050226114732:<< docstring >>
 #@nl

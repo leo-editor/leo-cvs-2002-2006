@@ -19,27 +19,27 @@ So I coded the directive plugin. It has the following characteristics:
 - It reads the specified file and puts it into the node content.
 
 - If the @read-only directive was in the leo outline already, and the file content
-on disk has changed from what is stored in the outline, it marks the node as
-changed and prints a "changed" message to the log window; if, on the other hand,
-the file content has _not_ changed, the file is simply read and the node is
-not marked as changed.
+  on disk has changed from what is stored in the outline, it marks the node as
+  changed and prints a "changed" message to the log window; if, on the other hand,
+  the file content has _not_ changed, the file is simply read and the node is
+  not marked as changed.
 
 - When you write a @read-only directive, the file content is added to the node
-immediately, i.e. as soon as you press Enter (no need to call a menu
-entry to import the content).
+  immediately, i.e. as soon as you press Enter (no need to call a menu
+  entry to import the content).
 
 - If you want to refresh/update the content of the file, just edit the headline
-and press Enter. The file is reloaded, and if in the meantime it has changed,
-a "change" message is sent to the log window.
+  and press Enter. The file is reloaded, and if in the meantime it has changed,
+  a "change" message is sent to the log window.
 
 - The body text of a @read-only file cannot be modified in leo.
 
-The syntax to access files in @read-only via ftp/http is the following:
+The syntax to access files in @read-only via ftp/http is the following::
 
     @read-only http://www.ietf.org/rfc/rfc0791.txt
     @read-only ftp://ftp.someserver.org/filepath
 
-If FTP authentication (username/password) is required, it can be specified as follows:
+If FTP authentication (username/password) is required, it can be specified as follows::
 
     @read-only ftp://username:password@ftp.someserver.org/filepath
 

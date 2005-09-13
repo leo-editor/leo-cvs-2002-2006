@@ -1,5 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040828122150:@thin pie_menus.py
+'''Adds pie menus: http://www.piemenus.com/'''
+
 #@@language python
 #@@tabwidth -4
 

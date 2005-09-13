@@ -1,26 +1,23 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040831122004:@thin UniversalScrolling.py
-""" A plugin that enables the user to scroll down with a left mouse click and
+#@<< docstring >>
+#@+node:ekr.20050913084245:<< docstring >>
+'''A plugin that enables the user to scroll down with a left mouse click and
 hold, and to scroll up with a right mouse click and hold. Scrolling continues
-until the user releases the mouse. """
+until the user releases the mouse. 
 
-#@<< about this plugin >>
-#@+node:ekr.20040915104230.5:<< about this plugin >>
-#@+at
-# 
-# Originally designed as a workaround for various bugs in Tkinter scrolling,
-# this may actually be superior to wheel scrolling, in that there is little 
-# work
-# a user has to do to scroll except to press a button.
-# 
-# We use a Thread and 4 Tkinter Events to enable this. Threading was
-# necessary to deserialise Button Press and Button Release. Without a Thread
-# there apparently was no way to split the two apart. Exterior processes were
-# not considered as serious pieces of the mechanism, threading kept things
-# simple.
-#@-at
+Originally designed as a workaround for various bugs in Tkinter scrolling,
+this may actually be superior to wheel scrolling, in that there is little work
+a user has to do to scroll except to press a button.
+
+We use a Thread and 4 Tkinter Events to enable this. Threading was
+necessary to deserialise Button Press and Button Release. Without a Thread
+there apparently was no way to split the two apart. Exterior processes were
+not considered as serious pieces of the mechanism, threading kept things
+simple.
+'''
 #@nonl
-#@-node:ekr.20040915104230.5:<< about this plugin >>
+#@-node:ekr.20050913084245:<< docstring >>
 #@nl
 #@<< imports >>
 #@+node:ekr.20050101090207.5:<< imports >>

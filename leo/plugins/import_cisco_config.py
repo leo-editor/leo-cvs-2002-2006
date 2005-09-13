@@ -1,6 +1,34 @@
 #@+leo-ver=4-thin
 #@+node:edream.110203113231.669:@thin import_cisco_config.py
-"""Import cisco configuration files"""
+#@<< docstring >>
+#@+node:ekr.20050912180321:<< docstring >>
+'''This plugin adds a menu item under the File->Import menu to import
+Cisco configuration files.
+
+The plugin will:
+
+1)  Create a new node, under the current node, where the configuration will be
+    written. This node will typically have references to several sections (see below).
+
+2)  Create sections (child nodes) for the indented blocks present in the original
+    config file. These child nodes will have sub-nodes grouping similar blocks (e.g.
+    there will be an 'interface' child node, with as many sub-nodes as there are real
+    interfaces in the configuration file).
+
+3)  Create sections for the custom keywords specified in the customBlocks[] list in
+    importCiscoConfig(). You can modify this list to specify different keywords. DO
+    NOT put keywords that are followed by indented blocks (these are taken care of by
+    point 2 above). The negated form of the keywords (for example, if the keyword is
+    'service', the negated form is 'no service') is also included in the sections.
+    
+    
+4)  Not display consecutive empty comment lines (lines with only a '!').
+
+All created sections are alphabetically ordered.
+'''
+#@nonl
+#@-node:ekr.20050912180321:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
@@ -13,48 +41,6 @@ import leoPlugins
 tkFileDialog = g.importExtension('tkFileDialog',pluginName=__name__,verbose=True)
 #@nonl
 #@-node:ekr.20050111085909:<< imports >>
-#@nl
-#@<< about this plugin >>
-#@+node:edream.110203113231.670:<< about this plugin >>
-#@+at 
-#@nonl
-# This plugin adds a menu item under the File->Import menu to import
-# Cisco configuration files.
-# 
-# The plugin will:
-# 
-# 1) create a new node, under the current node, where the configuration will 
-# be
-# written. This node will typically have references to several sections (see 
-# below).
-# 
-# 2) create sections (child nodes) for the indented blocks present in the 
-# original
-# config file. These child nodes will have sub-nodes grouping similar blocks 
-# (e.g.
-# there will be an 'interface' child node, with as many sub-nodes as there are 
-# real
-# interfaces in the configuration file).
-# 
-# 3) create sections for the custom keywords specified in the customBlocks[] 
-# list in
-# importCiscoConfig(). You can modify this list to specify different keywords. 
-# DO
-# NOT put keywords that are followed by indented blocks (these are taken care 
-# of by
-# point 2 above). The negated form of the keywords (for example, if the 
-# keyword is
-# 'service', the negated form is 'no service') is also included in the 
-# sections.
-# 
-# 4) not display consecutive empty comment lines (lines with only a '!').
-# 
-# All created sections are alphabetically ordered.
-# 
-# Feedback on this plugin can be sent to Davide Salomoni 
-# (dsalomoni@yahoo.com).
-#@-at
-#@-node:edream.110203113231.670:<< about this plugin >>
 #@nl
 __version__ = "1.4"
 #@<< version history >>

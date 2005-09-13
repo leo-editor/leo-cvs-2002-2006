@@ -1,11 +1,16 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040828103325:@thin startfile.py
-"""Lauches (starts) a file given by a headline when double-clicking the icon.
+#@<< docstring >>
+#@+node:ekr.20050912182050:<< docstring >>
+"""Launches (starts) a file given by a headline when double-clicking the icon.
 Ignores headlines starting with an '@'.
 
 Uses the @folder path if the headline is under an @folder headline.
 Otherwise the path is relative to the Leo file.
 """
+#@nonl
+#@-node:ekr.20050912182050:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4

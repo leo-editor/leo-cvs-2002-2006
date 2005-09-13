@@ -1,6 +1,6 @@
 #@+leo-ver=4-thin
 #@+node:edream.110203113231.738:@thin trace_tags.py
-'''Trace most common events, but not key, drag or idle events.'''
+'''Trace most common hooks, but not key, drag or idle hooks.'''
 
 #@@language python
 #@@tabwidth -4

@@ -1,18 +1,12 @@
 #@+leo-ver=4-thin
 #@+node:pap.20041020001240:@thin footprints.py
 """ 
-A plugin to leave footprints! 
- 
-This colours the Leo nodes so that the ones 
-you have visited most and most recently will 
-stand out. 
- 
-(Most of the drawing code and idea from the 
-cleo plugin by Mark Ng) 
- 
-Paul Paterson 
-""" 
- 
+A plugin to leave footprints! This colours the Leo nodes so that the ones you
+have visited most and most recently will stand out.
+"""
+
+# By Paul Paterson. Most of the drawing code and idea from the cleo plugin by Mark Ng.
+
 __version__ = "0.3" 
 __plugin_name__ = "Footprints" 
  

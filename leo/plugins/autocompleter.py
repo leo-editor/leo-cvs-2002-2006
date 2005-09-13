@@ -1,17 +1,47 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20041017043622:@thin autocompleter.py
-"""
-autocompletion and calltips plugin.  Special characters:
+#@<< docstring >>
+#@+node:ekr.20050912182341:<< docstring >>
+'''Autocompletion and calltips plugin.
 
-. summons the autocompletion.
-( summons the calltips
-Escape closes either box.
-Ctrl selects an item.
-alt-up_arrow, alt-down_arrow moves up or down in the list.  The mouse will work for this as well.
-This plugin scans the complete outline at startup..
+- ``.`` summons the autocompletion.
+- ``(`` summons the calltips
+- ``Escape`` closes either box.
+- ``Ctrl`` selects an item.
+- ``alt-up_arrow``, ``alt-down_arrow`` move up or down in the list.
+  The mouse will work for this as well.
 
-You many enable or disable features in autocomplete.ini( see configuration section ).
-"""
+This plugin scans the complete outline at startup.
+You many enable or disable features in autocomplete.ini.
+This file contains two options under the [ autocompleter ] section::
+
+    useauto
+    usecalltips
+
+Setting either to 1 will turn on the feature. 0 means off. If there is a section
+called [ newlanguages ] it will read each option as a new language for
+autocompleter to recognize, and compile its value as a regex pattern for the
+autocompleter system to recognize as a calltip. This has relevance for the .ato
+system described below.  Languages that currently have patterns::
+
+    python, java, c++, c, perl
+
+Autocompleter looks in the plugin directory for a directory called
+autocompleter. If it doesnt find one it will attempt to create this directory.
+This directory should contain what are called .ato files ( pronounced auto ).
+Autocompleter will scan each .ato file that has a first part that matches a
+languages name. For example: python.ato autocompleter recognizes python, and
+will scan this file. The contents are read with the same mechanism that reads
+the information in the nodes, so calltip and autocompleter information is added
+to autocompleters runtime database. If a new language has been added in the
+autocompleter.ini file then an .ato file that starts with the new languages name
+will be recognized and read in. Note, this language needs to be recognizable to
+Leo. Used correctly an .ato file is a mechanism by which a user can carry
+autocompletion and calltip information between .leo files/sessions.
+'''
+#@nonl
+#@-node:ekr.20050912182341:<< docstring >>
+#@nl
 
 #@@language python 
 #@@tabwidth-4

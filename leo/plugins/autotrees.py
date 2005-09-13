@@ -2,16 +2,59 @@
 #@+node:ekr.20050329082101.115:@thin autotrees.py
 #@<< docstring >>
 #@+node:ekr.20050329082101.116:<< docstring >>
-"""
+"""The AutoTrees plugin is a helper plugin designed to make it very easy to write
+"hanlder" plugins to manage dynamic content in Leo outlines. AutoTrees provides:
 
-A plugin to automatically create tree views from a node. This
-is a helper plugin since it doesn't do anything by itself. You
-must install one or more tree plugins in the "trees" subfolder in
-the plugins location.
+- Convenient handler base classes which can be specialized for particular uses.
 
-Trees will automatically populate when you double click on their
-nodes.
+- A manager to turn handlers on and off.
 
+- A set of example handlers to show the kinds of things that are possible.
+
+AutoTrees doesn't do anything that you cannot do in other ways, but it does
+provide a consistent way of adding dynamic content. This means that individual
+plugin writers don't have to rewrite all the same kinds of code each time and
+also makes it easier to maintain Leo, since it standardizes the way that certain
+classes of plugin interact with the Leo core.
+
+Why use this? I'm a plugin writer and I want to write a plugin to display
+dynamic content - ie content not directly contained in the .leo or derived
+files, e.g.,
+
+- email messages 
+- news feeds
+- news groups
+- documentation
+- remote files
+- statistics
+- file system data
+- data base records
+
+You can do this as a standard plugin, but as an AutoTrees handler you,
+
+- don't need to write code that interacts with the tree (this is done for you)
+- get centralized management
+- can still do everything else you could as a normal plugin
+
+Details.  AutoTrees is itself a plugin. When it starts it,
+
+1. Scans the leo\plugins\trees folder to find handlers.
+
+2. Activates specific handlers (this is managed via a plugin manager type window).
+
+3. Waits for clicks and double-clicks on special nodes.
+
+To create an AutoTree node, you add a node with @auto-my_handler. The @auto
+tells the plugin to go and look for the "my_handler" handler, if it is enabled.
+The handler is then called and this is then used to populate the node body and
+child nodes below this node.
+
+For example, for an @auto-rss node, the node headline is "@auto-rss
+http://myurl/news.xml". The handler goes to the URL mentioned and downloads the
+news stories. It then creates child nodes for each story and populates the
+bodies.
+
+For example handlers, see the source code in leoPlugins.leo
 """
 #@-node:ekr.20050329082101.116:<< docstring >>
 #@nl

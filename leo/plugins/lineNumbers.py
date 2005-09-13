@@ -1,11 +1,10 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040419105219:@thin lineNumbers.py
-'''
-Adds #line directives in perl and perlpod programs.
+'''Adds #line directives in perl and perlpod programs.
 
-Over-rides two methods in leoAtFile.py to write #line directives after node sentinels.
-This allows compilers to give locations of errors in relation to the node name rather than the filename.
-Currently supports only perl and perlpod.
+Over-rides two methods in leoAtFile.py to write #line directives after node
+sentinels. This allows compilers to give locations of errors in relation to the
+node name rather than the filename. Currently supports only perl and perlpod.
 '''
 
 # Use and distribute under the same terms as Leo.

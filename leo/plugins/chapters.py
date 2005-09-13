@@ -4,6 +4,8 @@
 #@+node:ekr.20041109123143:<<docstring>>
 '''This plugin creates separate outlines called "chapters" within a single .leo file.  Clones work between Chapters.
 
+**Warning**: This plugin must be considered **buggy** and **unsafe**.  Use with extreme caution.
+
 Requires Python Mega Widgets and Leo 4.2 or above.
 
 Numbered tabs at the top of the body pane represent each chapter.  Right clicking the tab will show a popup menu containing commands.  These commands allow you to:

@@ -1,19 +1,33 @@
 #@+leo-ver=4-thin
 #@+node:mork.20041018131258.1:@thin groupOperations.py
+#@<< docstring >>
+#@+node:ekr.20050912180223:<< docstring >>
+'''A Leo Plugin that adds Group commands functionality. Restrictions currently
+apply to using Leo with a Tk frontend. There are several commands in this
+plugin:
+
+-   Mark Node: marks a node for further operations such as copying, cloning and moving.
+
+-   Mark Spot: marks a node as the place where group operations are to target.
+
+-   Operate On Marked: moves lassoed nodes to the spot where the roundup node is
+    placed. Clones are maintained.
+
+-   Clear Marked: unmarks all marked nodes and removes the roundup node.
+
+-   Transfer Lassoed Nodes: this is a menu for inter-window communication.
+    The windows must all be spawned from the same Leo instance. 
+    It allows the user to move all node marked for copying and moving from another window to this one.
+'''
+#@nonl
+#@-node:ekr.20050912180223:<< docstring >>
+#@nl
+
 #@@language python
 #@@tabwidth -4
 
 #@<< imports >>
 #@+node:mork.20041018131258.2:<< imports >>
-''' a Leo Plugin that adds Group commands functionality.  Restrictions currently apply to using Leo with a Tk frontend.
-There are several commands in this plugin:
- 1. Mark Node:.  This marks the node for further operations such as Copying, Cloning and Moving
- 2. Mark Spot. This Markes a Node as the place where group operations are to target.
- 3. Operate On Marked.  This Moves Lassoed Nodes to the spot where the Roundup Node is placed. Clones are maintained.
- 4. Clear Marked.  This unmarks all marked Nodes and Removes the Roundup Node.
- 5. Transfer Lassoed Nodes.  This is a Menu for inter-Window communication.  The Windows must all be spawned from the same Leo instance.  It allows the user to move all node marked for copying and moving from another window to this one
-'''  
-
 import leoPlugins 
 import leoGlobals as g      
 import leoNodes

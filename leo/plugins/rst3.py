@@ -3,7 +3,7 @@
 #@<< docstring >>
 #@+node:ekr.20050805162550.1:<< docstring >>
 '''The rst3 plugin creates output files from Leo outlines containing rST
-(reStructuredText_) markup.
+(reStructuredText) markup.
 
 This is a powerful plugin with many options.  The full documentation is at:
 http://webpages.charter.net/edreamleo/rstplugin3.html

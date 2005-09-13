@@ -1,49 +1,31 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040910070811.1:@thin run_nodes.py
-"""Runs a program and interface Leo through its input/output/error streams.
+#@<< docstring >>
+#@+node:ekr.20050912181956:<< docstring >>
+'''Runs a program and interface Leo through its input/output/error streams.
 Double clicking the icon box whose headlines are @run 'cmd args' will execute
 the command. There are several other features, including @arg and @input nodes.
-"""
+
+The run_nodes.py plugin introduce two new nodes that transform leo into a terminal.
+It was mostly intended to run compilers and debuggers while having the possibility to send messages to the program.
+
+- Double clicking on the icon of an node whose headline is @run <command> <args> will launch <command> with the given arguments.  It will also mark the node.  # Terminates the argument list.  @run # <comment> is also valid.
+
+- @in nodes are used to send input to the running process.  Double clicking on the icon of an @in <message> node will append a "\n" to <message> and write it to the program, no matter where the node is placed. If no @run node is active, nothing happens.
+
+- The body text of every child, in which the headlines do not begin with '@run' or '@in', will be appended to <command>,  allowing you to add an infinite number of arguments to <command>.
+
+- The output of the program is written in the log pane (Error outputed in red). When the program exit the node is set unmarked and the return value is displayed... When the enter key is pressed in the body pane of an active @run node the content of it body pane is written to the program and then emptied ready for another line of input. If the node have @run nodes in its descendance, they will be launched successivelly. (Unless one returned an exit code other than 0, then it will stop there)
+
+- Please send comments to the Leo forums.
+- by Alexis Gendron Paquette
+'''
+#@nonl
+#@-node:ekr.20050912181956:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
-
-#@<< about this plugin >>
-#@+node:ekr.20040910070811.2:<< about this plugin >>
-#@+at
-# 
-# The run_nodes.py plugin introduce two new nodes that transform leo into a 
-# terminal.
-# It was mostly intended to run compilers and debuggers while having the 
-# possibility to send messages to the program.
-# 
-# - Double clicking on the icon of an node whose headline is @run <command> 
-# <args> will launch <command> with the given arguments.  It will also mark 
-# the node.  # Terminates the argument list.  @run # <comment> is also valid.
-# 
-# - @in nodes are used to send input to the running process.  Double clicking 
-# on the icon of an @in <message> node will append a "\n" to <message> and 
-# write it to the program, no matter where the node is placed. If no @run node 
-# is active, nothing happens.
-# 
-# - The body text of every child, in which the headlines do not begin with 
-# '@run' or '@in', will be appended to <command>,  allowing you to add an 
-# infinite number of arguments to <command>.
-# 
-# - The output of the program is written in the log pane (Error outputed in 
-# red). When the program exit the node is set unmarked and the return value is 
-# displayed... When the enter key is pressed in the body pane of an active 
-# @run node the content of it body pane is written to the program and then 
-# emptied ready for another line of input. If the node have @run nodes in its 
-# descendance, they will be launched successivelly. (Unless one returned an 
-# exit code other than 0, then it will stop there)
-# 
-# - Please send comments to the Leo forums.
-# - by Alexis Gendron Paquette
-#@-at
-#@nonl
-#@-node:ekr.20040910070811.2:<< about this plugin >>
-#@nl
 
 __version__ = "0.13"
 

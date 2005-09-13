@@ -1,6 +1,6 @@
 #@+leo-ver=4-thin
 #@+node:edream.110203113231.735:@thin trace_gc.py
-"""Trace changes to objects at idle time"""
+"""Trace changes to Leo's objects at idle time"""
 
 #@@language python
 #@@tabwidth -4

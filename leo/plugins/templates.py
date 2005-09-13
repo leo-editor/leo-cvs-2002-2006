@@ -2,29 +2,26 @@
 #@+node:mork.20041022090036.1:@thin templates.py
 #@<<docstring>>
 #@+node:ekr.20041109173848:<< docstring >>
-'''This plugin lets you add customizable templates to an outline.
-
-Templates are like any other node except that the plugin replaces %s in the body
-text by values that you specify when using template.
-
-Templates may have section references; this plugin uses Leo's @nosent write
-machinery to create one string out of possibly many nodes.
+'''This plugin lets you add customizable templates to an outline. Templates are
+like any other node except that the plugin replaces %s in the body text by
+values that you specify when using template. Templates may have section
+references; this plugin uses Leo's @nosent write machinery to create one string
+out of possibly many nodes.
 
 This plugin creates two buttons in Leo's icon area:
 
 - The '%s' button marks or unmarks a node as a template. A %s symbol will apear to
-the left of the node when it is marked as a template.
+  the left of the node when it is marked as a template.
 
 - The '----> %s' button brings up a dialog that shows you the template text and
-asks you to specify the value for all %s instances. Dismissing this dialog
-inserts the template as the first child of the node, and creates a section
-reference in the node that references the template.
+  asks you to specify the value for all %s instances. Dismissing this dialog
+  inserts the template as the first child of the node, and creates a section
+  reference in the node that references the template.
 
 If a template does not have a '%s' in it, then the templates plugin just adds
-the text as a node.
-
-Templates once marked are stored across sessions. Do not put a template in a
-thin file, as your template mark will be erased between sessions.
+the text as a node. Templates once marked are stored across sessions. Do not put
+a template in a thin file, as your template mark will be erased between
+sessions.
 
 This plugin requires the simplified atFile write code that is new in 4.2.1.
 '''
@@ -33,7 +30,7 @@ This plugin requires the simplified atFile write code that is new in 4.2.1.
 #@nl
 
 #@@language python 
-#@@tabwidth-4
+#@@tabwidth -4
 
 __version__ = ".3"
 #@<<version history>>

@@ -25,7 +25,8 @@ future by PIL to support more image types.
 
 Depending on the size of the image, you may have to scroll around to see it. For
 example, a leo clone icon will require scrolling to find. Id like to change this
-in the future.'''
+in the future.
+'''
 #@nonl
 #@-node:ekr.20050307134613:<< docstring >>
 #@nl

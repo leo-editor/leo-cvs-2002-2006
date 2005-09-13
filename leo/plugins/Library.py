@@ -1,74 +1,27 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20050328092641.4:@thin Library.py
-"""A plugin to store Leo trees in anydbm files.
+#@<< docstring >>
+#@+node:ekr.20050912180445:<< docstring >>
 
-there is an ini you can put an absolute directory
-you can shutdown and start up again with a different library
-an @setting of Library_libN where N is 0..5 will override libN in ini.
+'''A plugin to store Leo trees in anydbm files. Note: there isnt such a thing as an
+anydbm file: it's whatever the anydbm module uses.
 
-dropdown combobox for multiple libraries, select between them.
+Under Outline, there is an option called 'Library'. This will open an PMW
+dialog with a list of the trees that you have saved. You can insert trees stored
+in the library, remove them and add trees to the library. Be aware of unicode,
+any characters outside of the ascii set gets turned into a ?. I found this
+problem in storing some trees from ed's Leo outline. Id like it to be able to
+store unicode, but that may require a more specific db background, than anydbm.
+Also note, that your library files may not be OS independent. If your python
+distribution does not have the backing db on another machine, it will not be
+able to open your library.
 
-you have to be aware of deadlock issues 
-if you have more than one python/Leo open
-or more than one leo open they will share.
-see the docs on anydbm for more details.
-
-a library isn't opened till the first time you click Outline->Library
-if it doesn't exist it is created. assuming all the directories exist.
-if you have trouble try starting from a new created library.
-check you have permission and the directory exists.
-
-force backend not implimented yet.
-default should be fine.
-more testing needed if default same 
-for all version of python on same and on different systems.
-
-set path/lib to default/library.dbm for library.dbm to exist in Leo plugins dir.
-~/library.dbm for library.dbm to exist in your home dir as Leo sees it.
-(set the environ var HOME)
-
-"""
-
-#@<< about this plugin >>
-#@+node:ekr.20050328092641.5:<< about this plugin >>
-#@+at
-# 
-# Note: there isnt such a thing as an anydbm file: it's whatever the anydbm 
-# module
-# uses).
-# 
-# Under Outline, there is an option called 'Library'. This will open an PMW
-# dialog with a list of the trees that you have saved. You can insert trees 
-# stored
-# in the library, remove them and add trees to the library. Be aware of 
-# unicode,
-# any characters outside of the ascii set gets turned into a ?. I found this
-# problem in storing some trees from ed's Leo outline. Id like it to be able 
-# to
-# store unicode, but that may require a more specific db background, than 
-# anydbm.
-# Also note, that your library files may not be OS independent. If your python
-# distribution does not have the backing db on another machine, it will not be
-# able to open your library.
-# 
-# This should help people develop templates that they want to reuse between 
-# Leo
-# projects.  For example, Id like a template of many Java interfaces to be 
-# easily
-# accessable.  This solves my problem I think.
-# 
-# w05309 no longer works in earlier Leo than 4.3a4 init & hooks refactor
-#   adding configuration to change database while in a leo
-#   trapping some errors and maybe adding some tests
-#   make dialog follow focus of current leo, recreated or reused.
-#   more than one library recent file list
-# 
-# todo
-#   write libN to ini or @settings on quit if changed from dropdown.
-#  force a particular backend might have to be extension dependant.
-#  roundup & scons uses anydbm as a fallback quite extensively
-#@-at
-#@-node:ekr.20050328092641.5:<< about this plugin >>
+This should help people develop templates that they want to reuse between Leo
+projects.  For example, Id like a template of many Java interfaces to be easily
+accessable.
+'''
+#@nonl
+#@-node:ekr.20050912180445:<< docstring >>
 #@nl
 
 __version__ = ".28"  #f05325p10
@@ -874,6 +827,7 @@ def init():
 #@-node:ekr.20050328092641.28:init et al
 #@-others
 
-#@@color 
+#@@color
+#@nonl
 #@-node:ekr.20050328092641.4:@thin Library.py
 #@-leo

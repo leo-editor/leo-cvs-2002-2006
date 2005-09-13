@@ -1,91 +1,71 @@
 #@+leo-ver=4-thin
 #@+node:timo.20050213160555:@thin bibtex.py
-"""Manage BibTeX files with Leo.
 
-Create a bibliographic database by putting '@bibtex filename' in a headline.
-Entries are added as nodes, with '@entrytype key' as the headline (for example
-'@book jones99'), and the contents of the entry in the body text. The file is
-written by double-clicking the node.
+#@<< docstring >>
+#@+node:ekr.20050912175750:<< docstring >>
+'''This plugin manages BibTeX files with Leo. Create a bibliographic database by
+putting '@bibtex filename' in a headline. Entries are added as nodes, with
+'@entrytype key' as the headline, and the contents of the entry in body text.
+The plugin will automatically insert a template for the entry in the body pane
+when a new entry is created (hooked to pressing enter when typing the headline
+text). The templates are defined in dictionary 'templates' in the \<\<globals\>\>
+section, by default containing all required fields for every entry.
 
-Strings are defined in @string nodes and they can contain multiple entries. 
-All @string nodes are written at the start of the file.
+The file is written by double-clicking the node. Thus the following outline::
+
+    -@bibtex biblio.bib
+     +@book key
+      author = {A. Uthor},
+      year = 1999
+
+will be written in the file 'biblio.bib' as::
+
+    @book{key,
+    author = {A. Uthor},
+    year= 1999}
+
+Strings are defined in @string nodes and they can contain multiple entries.
+All @string nodes are written at the start of the file. Thus the following
+outline::
+
+    -@bibtext biblio.bib
+     +@string
+      j1 = {Journal1}
+     +@article AUj1
+      author = {A. Uthor},
+      journal = j1
+     +@string
+      j2 = {Journal2}
+      j3 = {Journal3}
+    
+Will be written as::
+
+    @string{j1 = {Journal1}}
+    @string{j2 = {Journal2}}
+    @string{j3 = {Journal3}}
+    
+    @article{AUj1,
+    author = {A. Uthor},
+    journal = j1}
+
+No error checking is made on the syntax. The entries can be organised under
+nodes --- if the headline doesn't start with '@', the headline and body text are
+ignored, but the child nodes are parsed as usual.
 
 BibTeX files can be imported by creating an empty node with '@bibtex filename'
 in the headline. Double-clicking it will read the file 'filename' and parse it
-into a @bibtex tree.
-"""
+into a @bibtex tree. No syntax checking is made, 'filename' is expected to be a
+valid BibTeX file.
+'''
+#@nonl
+#@-node:ekr.20050912175750:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
 
 # By Timo Honkasalo: contributed under the same license as Leo.py itself.
 
-#@<< about this plugin >>
-#@+node:timo.20050213160555.1:<<about this plugin >>
-#@+at 
-#@nonl
-# This plugin can be used to manage BibTeX files with Leo.
-# 
-# Create a bibliographic database by putting '@bibtex filename' in a headline. 
-# Entries are added as nodes, with '@entrytype key' as the headline, and the 
-# contents of the entry in body text. The plugin will automatically insert a 
-# template for the entry in the body pane when a new entry is created (hooked 
-# to pressing enter when typing the headline text). The templates are defined 
-# in dictionary 'templates' in the <<globals>> section, by default containing 
-# all required fields for every entry.
-# 
-# The file is written by double-clicking the node. Thus the following outline:
-# 
-# -@bibtex biblio.bib
-#  +@book key
-#   author = {A. Uthor},
-#   year = 1999
-# 
-# 
-# will be written in the file 'biblio.bib' as:
-# 
-#  @book{key,
-#  author = {A. Uthor},
-#  year= 1999}
-# 
-# Strings are defined in @string nodes and they can contain multiple entries.
-# All @string nodes are written at the start of the file. Thus the following
-# outline:
-# 
-# -@bibtext biblio.bib
-#  +@string
-#   j1 = {Journal1}
-#  +@article AUj1
-#   author = {A. Uthor},
-#   journal = j1
-#  +@string
-#   j2 = {Journal2}
-#   j3 = {Journal3}
-# 
-# 
-# Will be written as:
-# 
-#  @string{j1 = {Journal1}}
-#  @string{j2 = {Journal2}}
-#  @string{j3 = {Journal3}}
-# 
-#  @article{AUj1,
-#  author = {A. Uthor},
-#  journal = j1}
-# 
-# No error checking is made on the syntax. The entries can be organised under
-# nodes --- if the headline doesn't start with '@', the headline and body text
-# are ignored, but the child nodes are parsed as usual.
-# 
-# BibTeX files can be imported by creating an empty node with '@bibtex 
-# filename'
-# in the headline. Double-clicking it will read the file 'filename' and parse 
-# it
-# into a @bibtex tree. No syntax checking is made, 'filename' is expected to 
-# be a valid BibTeX file.
-#@-at
-#@-node:timo.20050213160555.1:<<about this plugin >>
-#@nl
 __version__ = "0.4" # Set version for the plugin handler.
 #@<< change log >>
 #@+node:timo.20050213160555.2:<<change log>>

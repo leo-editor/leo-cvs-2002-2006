@@ -1,11 +1,10 @@
 #@+leo-ver=4-thin
 #@+node:edream.110203113231.753:@thin image.py
-"""Handle images in body text"""
+"""Handles images in body text.
 
-# Based on work by Gil Scwartz
-
-# Brent Burley provided many important insights.  See:
-# http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52264
+Based on work by Gil Scwartz.
+Brent Burley provided many important insights. See:
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52264"""
 
 #@@language python
 #@@tabwidth -4

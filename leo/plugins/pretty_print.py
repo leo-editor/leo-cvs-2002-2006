@@ -1,16 +1,18 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20041021120118:@thin pretty_print.py
-"""A plugin that helps customize pretty printing.
-
-Creates a do-nothing subclass of the default pretty printer. To customize,
-simply override in this file the methods of the base prettyPrinter class in
-leoCommands.py.
-
-You would typically want to override putNormalToken or its allies. Templates for
-these methods have been provided. You may, however, override any methods you
-like. You could even define your own class entirely, provided you implement the
-prettyPrintNode method.
-"""
+#@<< docstring >>
+#@+node:ekr.20050912180735:<< docstring >>
+'''A plugin that helps customize pretty printing. It creates a do-nothing subclass
+of the default pretty printer. To customize, simply override in this file the
+methods of the base prettyPrinter class in leoCommands.py. You would typically
+want to override putNormalToken or its allies. Templates for these methods have
+been provided. You may, however, override any methods you like. You could even
+define your own class entirely, provided you implement the prettyPrintNode
+method.
+'''
+#@nonl
+#@-node:ekr.20050912180735:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4

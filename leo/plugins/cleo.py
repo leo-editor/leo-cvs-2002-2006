@@ -4,15 +4,12 @@
 #@+node:ekr.20050227071948.34:<< docstring >>
 '''cleo.py  -- Coloured LEo Outlines
 
-Cleo allows you to annotate or colour leo outlines based on priority,
-code archetype, node types or some arbitary criteria.  The annotations
-and colour coding can play a similar role like that of syntax
-highlighting.
+Cleo allows you to annotate or colour leo outlines based on priority, code
+archetype, node types or some arbitary criteria. The annotations and colour
+coding can play a similar role like that of syntax highlighting. Right-click on
+the icon area to popup its menu to play with it.
 
-Right-click on the icon area to popup its menu to play with it.
-
-Requires a version of Leo greater than 4.2a3, as it uses the
-newly restored draw hooks.
+Requires Leo 4.2a3 or greater, as it uses new drawing hooks.
 '''
 #@nonl
 #@-node:ekr.20050227071948.34:<< docstring >>

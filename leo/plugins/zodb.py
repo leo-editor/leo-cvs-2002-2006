@@ -2,10 +2,9 @@
 #@+node:ekr.20050825154553:@thin zodb.py
 #@<< docstring >>
 #@+node:ekr.20050825154605:<< docstring >>
-'''A plugin that stores all Leo outline data in a single zodb database.
-
-This plugin replaces the Open, Save and Revert commands with methods that
-access the zodb database.
+'''An experimental plugin that stores all Leo outline data in a single zodb
+database. This plugin replaces the Open, Save and Revert commands with methods
+that access the zodb database.
 '''
 #@nonl
 #@-node:ekr.20050825154605:<< docstring >>

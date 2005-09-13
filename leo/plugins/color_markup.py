@@ -1,6 +1,32 @@
 #@+leo-ver=4-thin
 #@+node:edream.110403140857.8:@thin color_markup.py
-"""Handle coloring for markup in doc parts and Python triple-double-quoted strings"""
+#@<< docstring >>
+#@+node:ekr.20050912182434:<< docstring >>
+'''Handle coloring for markup in doc parts and Python triple-double-quoted strings.
+This plugin requires that the ``add_directives`` plugin is enabled.
+
+The currently supported markups are:
+
+''text''                   # write text in italics
+__text__                   # write text in bold
+~~<color>:text~~           # write text in the color specified by <color> (e.g. blue, grey, etc)
+{picture file=<filename>}  # load the picture indicated by <filename>
+http://url                 # URL support: double clicking on the url will open it in the default browser.
+https://url                # URL support: double clicking on the url will open it in the default browser.
+
+-   Note 1: italics and bold markups can be nested, e.g.
+
+        ''__text__''               # write text in italics and bold
+
+    Just remember to terminate the tags in the order they were opened.
+
+- Note 2: URLs must be terminated by a space.
+
+By default, once the text has been markup up, the actual tags (e.g. __ for bold) are not displayed anymore. You can choose to display them selecting "Show Invisibles" from the Edit menu.
+'''
+#@nonl
+#@-node:ekr.20050912182434:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4

@@ -1,8 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:edream.110203113231.724:@thin mod_autosave.py
 """Autosave the Leo document every so often.
-
-The time between saves is given in seconds in autosave.ini"""
+The time between saves is given in seconds in autosave.ini."""
 
 #@@language python
 #@@tabwidth -4

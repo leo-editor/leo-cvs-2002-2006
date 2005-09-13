@@ -1,9 +1,10 @@
 #@+leo-ver=4-thin
 #@+node:gfunch.20041207100416:@thin datenodes.py
 """
-A Leo plugin that adds an Insert Date Nodes command to the Outline Menu.
-This command nodes with date headings.
-The format of nodes can be controlled through the ini file or Properties dialog.
+This plugin adds 'date nodes' (nodes with dates as their headlines) to the
+current outline. Date nodes may be added one at a time, a month's-worth at a
+time, or a year's-worth at a time. The format of the labels (headlines) is
+configurable in the ini file.
 """
 
 #@@language python

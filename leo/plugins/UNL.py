@@ -2,56 +2,55 @@
 #@+node:rogererens.20041013082304:@thin UNL.py
 #@<< docstring >>
 #@+node:ekr.20050119144617:<< docstring >>
-"""This plugin supports Uniform Node Locators (UNL's). UNL's specify nodes within
+'''This plugin supports Uniform Node Locators (UNL's). UNL's specify nodes within
 Leo files. UNL's are not limited to nodes within the present Leo file; you can
 use them to create cross-Leo-file links! UNL
 
 This plugin consists of two parts:
 
 1) Selecting a node shows the UNL in the status line at the bottom of the Leo
-window. You can copy from the status line and paste it into headlines, emails,
-whatever. 
+   window. You can copy from the status line and paste it into headlines, emails,
+   whatever. 
 
 2) Double-clicking @url nodes containing UNL's select the node specified in the
-UNL. If the UNL species in another Leo file, the other file will be opened.
+   UNL. If the UNL species in another Leo file, the other file will be opened.
 
 Format of UNL's:
 
-UNL's referring to nodes within the present outline have the form
+UNL's referring to nodes within the present outline have the form::
 
     headline1-->headline2-->...-->headlineN
 
 headline1 is the headline of a top-level node, and each successive headline is
 the headline of a child node.
 
-UNL's of the form file:<path>#headline1-->...-->headlineN
+UNL's of the form::
+
+    file:<path>#headline1-->...-->headlineN
 
 refer to a node specified in <path> For example, double clicking the following
-headline will take you to Chapter 8 of Leo's Users Guide.
+headline will take you to Chapter 8 of Leo's Users Guide::
 
     @url file:c:/prog/leoCvs/leo/doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
-    
-Examples:
     
 For example, suppose you want to email someone with comments about a Leo file.
 Create a comments.leo file containing @url UNL nodes. That is, headlines are
 @url followed by a UNL. The body text contains your comments about the nodes in
 the _other_ Leo file! Send the comments.leo to your friend, who can use the
 comments.leo file to quickly navigate to the various nodes you are talking
-about.
+about. As another example, you can copy UNL's into emails. The recipient can
+navigate to the nodes 'by hand' by following the arrows in the UNL.
 
-As another example, you can copy UNL's into emails. The recipient can navigate
-to the nodes 'by hand' by following the arrows in the UNL.
-
-Details and warnings:
+**Notes**:
 
 - At present, UNL's refer to nodes by their position in the outline. Moving a
-node will break the link.
+  node will break the link.
 
 - Don't refer to nodes that contain UNL's in the headline. Instead, refer to the
-parent or child of such nodes.
+  parent or child of such nodes.
 
-- You don't have to replace spaces in URL's or UNL's by '%20'."""
+- You don't have to replace spaces in URL's or UNL's by '%20'.
+'''
 #@nonl
 #@-node:ekr.20050119144617:<< docstring >>
 #@nl

@@ -1,6 +1,8 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20041017035937:@thin table.py
-"""This plugin puts the View Table command in the Outline menu.
+#@<< docstring >>
+#@+node:ekr.20050912180921:<< docstring >>
+'''This plugin puts the View Table command in the Outline menu.
 
 This command checks the current node using the csv (comma separated values) mods
 Sniffer. It tries to determine the format that is in the nodes data. If you had
@@ -8,7 +10,10 @@ excel data in it, it should be able to determine its excel data. It then creates
 a dialog with the data presented as in a table for the user to see it.
  
 Requires Pmw and the tktable widget at http://sourceforge.net/projects/tktable
-"""
+'''
+#@nonl
+#@-node:ekr.20050912180921:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4

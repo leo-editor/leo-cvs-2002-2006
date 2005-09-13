@@ -1,30 +1,29 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040915073637:@thin TabbedLog.py
-"""
-Turns the log into a tabbed component.  Other plugins may add tabs.
-"""
+#@<<docstring>>
+#@+node:ekr.20050913084153:<<docstring>>
+'''Turns the log into a tabbed component.  Other plugins may add tabs.
+
+To get a new tab in TabbedLog::
+
+    import TabbedLog
+    pane = TabbedLog.getPane(name,c)
+
+- ``pane`` is the pane returned for you to work with.
+
+- ``name`` is the name of the tab you want for the pane.
+
+- ``c`` is the commander for the leoFrame.
+'''
+#@nonl
+#@-node:ekr.20050913084153:<<docstring>>
+#@nl
 
 #@@language python
 #@@tabwidth -4
 
 __version__ = ".2"
 
-#@<< how to use this plugin >>
-#@+node:ekr.20040915082919:<< how to use this plugin >>
-#@+at
-# 
-# To get a new tab in TabbedLog:
-# 
-# import TabbedLog
-# p = TabbedLog.getPane(name,c)
-# 
-# 
-# p is the pane returned for you to work with.
-# name is the name of the tab you want for the pane.
-# c is the commander for the leoFrame.
-#@-at
-#@-node:ekr.20040915082919:<< how to use this plugin >>
-#@nl
 #@<< version history >>
 #@+node:ekr.20040915074133:<< version history >>
 #@+at

@@ -4,10 +4,9 @@
 #@+node:ekr.20050311110307:<< docstring >>
 '''
 Executes commands in nodes whose body text starts with @produce.
+To use, put in the body text of a node::
 
-To use, put in the body text of a node:
-
-@produce javac -verbose Test.java
+    @produce javac -verbose Test.java
 
 To execute, you goto Outline and look at Produce.  Choose Execute All Produce
 or Execute Tree Produce.  The Tree does the current Tree, All does the whole

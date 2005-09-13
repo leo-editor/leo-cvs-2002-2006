@@ -1,56 +1,48 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040915105758.13:@thin FileActions.py
+#@<< docstring >>
+#@+node:ekr.20050912180106:<< docstring >>
 """
-A Leo plugin that implements configurable actions on
-@file (and similar) nodes.
+Leo plugin that permits the definition of actions for double-clicking on file nodes.
+Written by Konrad Hinsen <konrad.hinsen@laposte.net>
+Distributed under the same licence as Leo.
+
+Double-clicking in a @file node writes out the file if changes
+have been made since the last save, and then runs a script on
+it, which is retrieved from the outline.
+
+Scripts are located in a node whose headline is FileActions. This node can be
+anywhere in the outline. If there is more than one such node, the first one in
+outline order is used.
+
+The children of that node are expected to contain a file pattern in the headline
+and the script to be executed in the body. The file name is matched against the
+patterns (which are Unix-style shell patterns), and the first matching node is
+selected. If the filename is a path, only the last item is matched.
+
+Execution of the scripts is similar to the "Execute Script"
+command in Leo. The main difference is that the namespace
+in which the scripts are run contains two elements:
+
+-   "filename", which contains the filename from the @file directive.
+
+-   "shellScriptInWindow", a utility function that runs
+    a shell script in an external windows, thus permitting
+    programs to be called that require user interaction
+
+File actions are implemented for @file nodes and all its variants
+(@file-nosent, @thin, etc.). There is also a new node type
+@file-ref for referring to files purely for the purpose of
+file actions, Leo does not do anything with or to such files.
+
 """
+#@nonl
+#@-node:ekr.20050912180106:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
 
-#@<< about this plugin >>
-#@+node:ekr.20040915110406:<< about this plugin >>
-#@+at 
-# 
-# Leo plugin that permits the definition of actions for double-clicking on 
-# file nodes.
-# Written by Konrad Hinsen <konrad.hinsen@laposte.net>
-# Distributed under the same licence as Leo.
-# 
-# Double-clicking in a @file node writes out the file if changes
-# have been made since the last save, and then runs a script on
-# it, which is retrieved from the outline.
-# 
-# Scripts are located in a node whose headline is FileActions. This node can 
-# be
-# anywhere in the outline. If there is more than one such node, the first one 
-# in
-# outline order is used.
-# 
-# The children of that node are expected to contain a file pattern in the 
-# headline
-# and the script to be executed in the body. The file name is matched against 
-# the
-# patterns (which are Unix-style shell patterns), and the first matching node 
-# is
-# selected. If the filename is a path, only the last item is matched.
-# 
-# Execution of the scripts is similar to the "Execute Script"
-# command in Leo. The main difference is that the namespace
-# in which the scripts are run contains two elements:
-# - "filename", which contains the filename from the @file
-#   directive
-# - "shellScriptInWindow", a utility function that runs
-#   a shell script in an external windows, thus permitting
-#   programs to be called that require user interaction
-# File actions are implemented for @file nodes and all its variants
-# (@file-nosent, @thin, etc.). There is also a new node type
-# @file-ref for referring to files purely for the purpose of
-# file actions, Leo does not do anything with or to such files.
-#@-at
-#@nonl
-#@-node:ekr.20040915110406:<< about this plugin >>
-#@nl
 __version__ = "0.2"
 #@<< version history >>
 #@+node:ekr.20040915110738:<< version history >>

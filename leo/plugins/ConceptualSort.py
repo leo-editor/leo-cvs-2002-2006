@@ -1,9 +1,33 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040916073636:@thin ConceptualSort.py
-"""
-A plugin to enhance the EditAttributes.py plugin.
-Puts ConceptualSort command in the Outline Menu.
-"""
+#@<< docstring >>
+#@+node:ekr.20050912175951:<< docstring >>
+'''This plugin is enhances the EditAttributes.py plugin. It puts a command in
+Outline called ConceptualSort. This will prompt you for a concept to sort by.
+This gives the user some more flexibility in how they want to arrange their
+nodes. Nodes without the attribute in question go to the bottom of the sort. :)
+
+The dialog has been redone. The user can:
+
+- Select which attribute he wants to sort on by clicking on the Attribute box.
+
+- Select the type of sort he wants by clicking on the radio buttons:
+
+    -   Normal.
+    -   Reversed. Like normal but the results are reversed.
+    -   Used defined. For advanced users. The text box is where a user can type in
+        their own python code to sort the nodes-attributes. There is no need for a
+        def. That gets appended to the beginning of the code. It prototype looks
+        like::
+
+            def( a, b, att ):
+
+where a and b are nodes and att is dictionary of the nodes and the respective
+value of the selected attribute. There is no need to indent on the first level
+since indentation is added at compile time.'''
+#@nonl
+#@-node:ekr.20050912175951:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
