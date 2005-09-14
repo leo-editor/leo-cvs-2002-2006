@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="18921" clone_windows="0"/>
 <globals body_outline_ratio="0.578831312018">
-	<global_window_position top="20" left="405" height="880" width="890"/>
+	<global_window_position top="62" left="351" height="880" width="890"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -41,9 +41,9 @@
 <v t="ekr.20050902080416"><vh>@@button paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20050906104918" a="TV"><vh>4.3.2 beta 1</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20050913131848"><vh>4.3.2 final</vh>
 <v t="ekr.20050906104918.1"><vh>Rewrote documentation</vh></v>
 <v t="ekr.20050906104931.1"><vh>Bug fixes...</vh>
 <v t="ekr.20050909082711"><vh>Fixed various unicode bugs</vh></v>
@@ -64,6 +64,7 @@
 </v>
 </v>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
+<v t="ekr.20050906104918"><vh>4.3.2 beta 1</vh></v>
 <v t="ekr.20050620144052"><vh>4.3.1</vh>
 <v t="ekr.20050620144052.2"><vh>Bug fixes...</vh>
 <v t="ekr.20050620144052.3"><vh>Fixed bug in @ratio setting</vh></v>
@@ -1494,9 +1495,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
-<v t="ekr.20050818163826"><vh>@rst rstplugin3.html</vh>
+<v t="ekr.20050818163826"><vh>@rst html docs\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050818163826.2"><vh>Overview</vh></v>
 <v t="ekr.20050818163826.3"><vh>Comparison with previous rst plugins</vh></v>
@@ -1517,14 +1518,14 @@
 </v>
 </v>
 <v t="ekr.20050831184021.2"><vh>Table of contents</vh>
-<v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
+<v t="ekr.20040414162124"><vh>@rst html docs\leo_TOC.html</vh>
 <v t="ekr.20050828112159"><vh>@rst-no-head All links (TOC)</vh></v>
 <v t="ekr.20040414163815"><vh>Table of Contents</vh></v>
 <v t="ekr.20050812134441.3"><vh>@rst-no-head end</vh></v>
 </v>
 </v>
-<v t="ekr.20050831184021.3"><vh>Front matter</vh>
-<v t="ekr.20040414172212" a="M"><vh>@rst frontMatter.html</vh>
+<v t="ekr.20050831184021.3" a="E"><vh>Front matter</vh>
+<v t="ekr.20040414172212" a="EM"><vh>@rst html docs\frontMatter.html</vh>
 <v t="ekr.20050812134441"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20040414172218.2"><vh>Preface</vh></v>
 <v t="ekr.20040414172218.4"><vh>Acknowledgements</vh>
@@ -1536,8 +1537,8 @@
 <v t="ekr.20050812125502"><vh>@rst-no-head End stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831195331.1"><vh>FAQ</vh>
-<v t="ekr.20050830115714"><vh>@rst FAQ.html</vh>
+<v t="ekr.20050831195331.1" a="E"><vh>FAQ</vh>
+<v t="ekr.20050830115714" a="E"><vh>@rst html docs\FAQ.html</vh>
 <v t="ekr.20050830120007"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050830115714.1"><vh>Learning about Leo</vh>
 <v t="ekr.20050830115714.2"><vh>What's the best way to learn to use Leo?</vh></v>
@@ -1562,7 +1563,7 @@
 <v t="ekr.20050830115714.30"><vh>How do I submit a plugin?</vh></v>
 <v t="ekr.20050830120844"><vh>How do I add a new menu item from a plugin?</vh></v>
 </v>
-<v t="ekr.20050830115714.118"><vh>Tips and techniques</vh>
+<v t="ekr.20050830115714.118" a="E"><vh>Tips and techniques</vh>
 <v t="ekr.20050830120857"><vh>How can I use Leo to develop Leo itself?</vh></v>
 <v t="ekr.20050830115714.74"><vh>How can I import many files at once?</vh></v>
 <v t="ekr.20050830115714.119"><vh>How can I use two copies of Leo to advantage?</vh></v>
@@ -1585,8 +1586,8 @@
 <v t="ekr.20050906105946"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831184021.4"><vh>What people are saying about Leo</vh>
-<v t="ekr.20050830074716"><vh>@rst testimonials.html</vh>
+<v t="ekr.20050831184021.4" a="E"><vh>What people are saying about Leo</vh>
+<v t="ekr.20050830074716" a="E"><vh>@rst html docs\testimonials.html</vh>
 <v t="ekr.20050830075229"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050830074815.1"><vh>Leo is revolutionary</vh></v>
 <v t="ekr.20050830074815.2"><vh>Leo is a showcase Python/Tkinter application</vh></v>
@@ -1609,7 +1610,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.2"><vh>Chapter 1: Installing Leo</vh>
-<v t="edream.110203163054.48"><vh>@rst install.html</vh>
+<v t="edream.110203163054.48"><vh>@rst html docs\install.html</vh>
 <v t="ekr.20050901110110"><vh>@rst-no-head links</vh></v>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
 <v t="edream.110203163054.50"><vh>How to install Leo on Linux</vh></v>
@@ -1624,7 +1625,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.3"><vh>Chapter 2: A Tutorial Introduction to Leo</vh>
-<v t="ekr.20050816073412"><vh>@rst intro.html</vh>
+<v t="ekr.20050816073412"><vh>@rst html docs\intro.html</vh>
 <v t="ekr.20050816073814"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050816073412.1"><vh>Introduction</vh>
 <v t="ekr.20050822173420"><vh>Leo's main window</vh></v>
@@ -1655,7 +1656,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.26"><vh>Chapter 3: Using Outlines</vh>
-<v t="ekr.20050901101608"><vh>@rst outlines.html</vh>
+<v t="ekr.20050901101608"><vh>@rst html docs\outlines.html</vh>
 <v t="ekr.20050901101608.1"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.27"><vh>Cloning nodes</vh></v>
 <v t="EKR.20040524104904.36"><vh>Creating and destroying nodes</vh></v>
@@ -1673,7 +1674,7 @@
 </v>
 </v>
 <v t="ekr.20050831184021.5"><vh>Chapter 4: Programming with Leo</vh>
-<v t="ekr.20050828061213"><vh>@rst directives.html</vh>
+<v t="ekr.20050828061213"><vh>@rst html docs\directives.html</vh>
 <v t="ekr.20050828160132"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050828065955"><vh>@rst-ignore To do</vh></v>
 <v t="ekr.20050828061501.1"><vh>@rst-no-head Intro.</vh></v>
@@ -1718,8 +1719,8 @@
 <v t="ekr.20050828115003"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.99"><vh>Chapter 5: Using Leo's Commands</vh>
-<v t="ekr.20050901101608.2"><vh>@rst commands.html</vh>
+<v t="EKR.20040524104904.99" a="E"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="ekr.20050901101608.2" a="E"><vh>@rst html docs\commands.html</vh>
 <v t="ekr.20050901101852"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.100"><vh> The File Menu</vh>
 <v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
@@ -1730,7 +1731,7 @@
 <v t="EKR.20040524104904.109"><vh>Exporting Files from Leo Outlines</vh></v>
 <v t="EKR.20040524104904.110"><vh>Quitting Leo</vh></v>
 </v>
-<v t="EKR.20040524104904.111"><vh> The Edit Menu</vh>
+<v t="EKR.20040524104904.111" a="E"><vh> The Edit Menu</vh>
 <v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
 <v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
 <v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
@@ -1739,7 +1740,7 @@
 <v t="EKR.20040524104904.116"><vh>Converting leading blanks and tabs in body text</vh></v>
 <v t="EKR.20040524104904.117"><vh>Executing Python scripts in body text</vh></v>
 <v t="EKR.20040524104904.118"><vh>Finding and changing text</vh></v>
-<v t="ekr.20050902160924"><vh>Script search</vh></v>
+<v t="ekr.20050902160924" a="TV"><vh>Script search</vh></v>
 <v t="EKR.20040524104904.134"><vh>Go To Line Number</vh></v>
 <v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
 <v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh></v>
@@ -1761,7 +1762,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.161"><vh>Chapter 6: Leo and Literate Programming</vh>
-<v t="ekr.20050901101608.3"><vh>@rst design.html</vh>
+<v t="ekr.20050901101608.3"><vh>@rst html docs\design.html</vh>
 <v t="ekr.20050901101949"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.162"><vh>Why I like Literate Programming</vh></v>
 <v t="EKR.20040524104904.173"><vh>How Leo Improves Literate Programming</vh></v>
@@ -1770,7 +1771,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.4"><vh>Chapter 7: Scripting Leo with Python</vh>
-<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
+<v t="ekr.20040403171740"><vh>@rst html docs\scripting.html</vh>
 <v t="ekr.20050812134441.1"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050901184158"><vh>@rst-ignore Important: you can run these examples!</vh></v>
 <v t="ekr.20040403183229" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3122206e616d653d22687474702d6e6f64652d6d61726b65722d31223e710155043c2f613e71025d710328553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710455063c2f6469763e71055d71062855063c626f64793e710755073c2f626f64793e71085d71092855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710a55073c2f68746d6c3e710b4e65656555243c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e0a710c55493c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643122206e616d653d226f76657276696577223e4f766572766965773c2f613e3c2f68313e0a710d652e"><vh>Overview</vh></v>
@@ -1803,7 +1804,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050901101608.4"><vh>@rst customizing.html</vh>
+<v t="ekr.20050901101608.4"><vh>@rst html docs\customizing.html</vh>
 <v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050903075144"><vh>Overview</vh></v>
 <v t="ekr.20050903161843"><vh>Creating script buttons</vh></v>
@@ -1820,7 +1821,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.245"><vh>Chapter 9: History of Leo</vh>
-<v t="ekr.20050901101608.5"><vh>@rst history.html</vh>
+<v t="ekr.20050901101608.5"><vh>@rst html docs\history.html</vh>
 <v t="ekr.20050901102147"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050902105852"><vh>Beginnings</vh></v>
 <v t="ekr.20050902105852.1"><vh>Breakthrough</vh></v>
@@ -1853,7 +1854,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.261"><vh>Chapter 10: Theory of Operation</vh>
-<v t="ekr.20050901101608.6"><vh>@rst theory.html</vh>
+<v t="ekr.20050901101608.6"><vh>@rst html docs\theory.html</vh>
 <v t="ekr.20050901102300"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.262"><vh>Overview</vh></v>
 <v t="EKR.20040524104904.263"><vh>Nodes</vh></v>
@@ -1869,7 +1870,7 @@
 </v>
 </v>
 <v t="ekr.20050901084134"><vh>Chapter 11: White papers</vh>
-<v t="ekr.20050901092232"><vh>@rst whitepapers.html</vh>
+<v t="ekr.20050901092232"><vh>@rst html docs\whitepapers.html</vh>
 <v t="ekr.20050901092232.1"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.259"><vh>Tk is the future of Leo</vh></v>
 <v t="EKR.20040524104904.260"><vh>Why I like Python</vh>
@@ -1883,7 +1884,7 @@
 </v>
 </v>
 <v t="ekr.20050912125144"><vh>Chapter 12: Plugins</vh>
-<v t="ekr.20050912125144.1"><vh>@rst plugins.html</vh>
+<v t="ekr.20050912125144.1"><vh>@rst html docs\plugins.html</vh>
 <v t="ekr.20050912125735"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050912125735.26"><vh>Commands &amp; directives</vh>
 <v t="ekr.20050912125735.82"><vh>add_directives.py</vh></v>
@@ -2001,7 +2002,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.274"><vh>Appendices</vh>
-<v t="ekr.20050831231852" a="M"><vh>@rst appendices.html</vh>
+<v t="ekr.20050831231852" a="M"><vh>@rst html docs\appendices.html</vh>
 <v t="ekr.20050831232205"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.351"><vh>Bugs</vh></v>
 <v t="EKR.20040524104904.307"><vh>Errors while tangling</vh></v>
@@ -2016,7 +2017,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.380"><vh>Glossary</vh>
-<v t="ekr.20050901071041"><vh>@rst glossary.html</vh>
+<v t="ekr.20050901071041"><vh>@rst html docs\glossary.html</vh>
 <v t="ekr.20050901071300"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050901073048" a="M"><vh>@rst-no-head glossary</vh></v>
 <v t="ekr.20050901083017"><vh>@rst-no-head end stuff</vh></v>
@@ -2039,7 +2040,7 @@
 </v>
 </v>
 <v t="ekr.20050903174637"><vh>Not used (pdf sources)</vh>
-<v t="ekr.20050829134901"><vh>@@rst directives.pdf</vh>
+<v t="ekr.20050829134901"><vh>@@rst pdf docs\directives.pdf</vh>
 <v t="ekr.20050829134901.1"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050829134901.2"><vh>@rst-ignore-node To do</vh></v>
 <v t="ekr.20050829134901.3"><vh>@rst-no-head Intro.</vh></v>
@@ -2084,7 +2085,7 @@
 </v>
 <v t="ekr.20050829134901.37"><vh>@rst-no-head end stuff</vh></v>
 </v>
-<v t="ekr.20050813102008.1"><vh>@@rst rstplugin3.pdf</vh>
+<v t="ekr.20050813102008.1"><vh>@@rst pdf docs\rstplugin3.pdf</vh>
 <v t="ekr.20050813102008.2"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050813102008.3"><vh>Overview</vh></v>
 <v t="ekr.20050813102008.4"><vh>Comparison with previous rst plugins</vh></v>
@@ -19171,7 +19172,7 @@ what life with Leo was like before it.</t>
 <t tx="ekr.20050902105852.12">Leo 4.3 corrected many problems with ``leoConfig.txt``. Instead, Leo gets
 settings from one or more ``leoSettings.leo files``. This version also
 introduced a way to changed settings using a settings dialog.</t>
-<t tx="ekr.20050902160924">**Important**: Script buttons are easier to use that the script-oriented
+<t tx="ekr.20050902160924">**Important**: Script buttons are easier to use than the script-oriented
 find/change commands described next. I recommend using script buttons whenever
 possible. See `Creating script buttons`_.
 You are not likely to need all the firepower that script-orient find/change commands,
@@ -19555,7 +19556,7 @@ The highlights of 4.3.2:
   the rst3 plugin, which makes this plugin much more useful and flexible than
   the previous rst plugins. All of Leo's documentation was created using this
   plugin from sources in LeoDocs.leo. For full documentation for rst3 see:
-  http://webpages.charter.net/edreamleo/rstplugin3.html
+  http://webpages.charter.net/edreamleo/rstplugin3.html.
 
 - The spellpyx (spell checking) plugin is now much easier to use.
 
@@ -20699,5 +20700,32 @@ that access the zodb database.</t>
 <t tx="ekr.20050912133515">-----------------------
 
 |back| |leo| |next|</t>
+<t tx="ekr.20050913131848">Leo 4.3.2 final                 September 16, 2005
+
+To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of 4.3.2:
+-----------------------
+
+- Improved Leo's documentation:
+    - A tutorial introduction to Leo:
+      http://webpages.charter.net/edreamleo/intro.html
+    - A 5-minute guide to programming with Leo:
+      http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
+
+- The new rst3 plugin creates .html and .tex files from reStructuredText
+  embedded in Leo files. Any node of the source outline may contain options for
+  the rst3 plugin, which makes this plugin much more useful and flexible than
+  the previous rst plugins. All of Leo's documentation was created using this
+  plugin from sources in LeoDocs.leo. For full documentation for rst3 see:
+  http://webpages.charter.net/edreamleo/rstplugin3.html.
+
+- The spellpyx (spell checking) plugin is now much easier to use.
+
+- The vim and openWith plugins now use Python's subprocess module if it is present.
+ 
+- Improved the Pretty Printing command.
+
+- The usual assortment of bug fixes.</t>
 </tnodes>
 </leo_file>
