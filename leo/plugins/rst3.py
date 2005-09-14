@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '1.1'
+__version__ = '1.2'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -371,6 +371,10 @@ except ImportError:
 # 1.1 EKR:
 # 
 # By default, look for stylesheet in output directory.
+# 
+# 1.2 EKR:
+# 
+# Make sure code doesn't crash if docutils can not be imported.
 #@-at
 #@nonl
 #@-node:ekr.20050908120111:v 1.x
@@ -518,16 +522,18 @@ code_block.arguments = (
     0) # True if final argument may contain whitespace.
 
 # A mapping from option name to conversion function.
-code_block.options = {
-    'language':
-    docutils.parsers.rst.directives.unchanged # Return the text argument, unchanged.
-}
+if docutils:
+    code_block.options = {
+        'language':
+        docutils.parsers.rst.directives.unchanged # Return the text argument, unchanged.
+    }
+    code_block.content = 1 # True if content is allowed.
 
-code_block.content = 1 # True if content is allowed.
+    # Register the directive with docutils.
+    docutils.parsers.rst.directives.register_directive('code-block',code_block)
+else:
+    code_block.options = {}
 
-# Register the directive with docutils.
-docutils.parsers.rst.directives.register_directive('code-block',code_block)
-#@nonl
 #@-node:ekr.20050806101253:code_block
 #@-node:ekr.20050805162550.4:Module level
 #@+node:ekr.20050805162550.8:class rstClass
