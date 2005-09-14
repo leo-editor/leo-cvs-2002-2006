@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '1.2'
+__version__ = '1.3'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -375,6 +375,11 @@ except ImportError:
 # 1.2 EKR:
 # 
 # Make sure code doesn't crash if docutils can not be imported.
+# 
+# 1.3 ER:
+# 
+# Make the stylesheet path relative to the directory containing the output 
+# file.
 #@-at
 #@nonl
 #@-node:ekr.20050908120111:v 1.x
@@ -1134,6 +1139,7 @@ class rstClass:
         
         '''Send s to docutils using the writer implied by self.ext and return the result.'''
     
+        openDirectory = self.c.frame.openDirectory
         pub = docutils.core.Publisher()
     
         pub.source      = docutils.io.StringInput(source=s)
@@ -1158,10 +1164,13 @@ class rstClass:
         # If no such alias exists, docutils tries to import the actual name give.
         pub.set_writer(writer)
     
-        # New in version 
+    
+        # Make the stylesheet path relative to the directory containing the output file.
         stylesheet_path = self.getOption('stylesheet_path')
         if not stylesheet_path:
             stylesheet_path,junk = g.os_path_split(self.outputFileName)
+        stylesheet_path = g.os_path_abspath(
+            g.os_path_join(openDirectory,stylesheet_path))
     
         path = g.os_path_abspath(
             g.os_path_join(
