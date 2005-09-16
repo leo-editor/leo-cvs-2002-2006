@@ -759,8 +759,10 @@ class baseTangleCommands:
         self.initUntangleCommand()
         
         c.beginUpdate()
-        self.untangleTree(p,report_errors)
-        c.endUpdate()
+        try:
+            self.untangleTree(p,report_errors)
+        finally:
+            c.endUpdate()
         g.es("Untangle complete")
     #@nonl
     #@-node:ekr.20031218072017.3478:untangle
@@ -772,10 +774,12 @@ class baseTangleCommands:
         has_roots = False
     
         c.beginUpdate()
-        for p in c.rootPosition().self_and_siblings_iter():
-            ok = self.untangleTree(p,False)
-            if ok: has_roots = True
-        c.endUpdate()
+        try:
+            for p in c.rootPosition().self_and_siblings_iter():
+                ok = self.untangleTree(p,False)
+                if ok: has_roots = True
+        finally:
+            c.endUpdate()
     
         if not has_roots:
             self.warning("----- The outline contains no roots")
@@ -793,15 +797,17 @@ class baseTangleCommands:
         marked_flag = False
     
         c.beginUpdate()
-        while p: # Don't use an iterator.
-            if p.isMarked():
-                ok = self.untangleTree(p,dont_report_errors)
-                if ok: marked_flag = True
-                if self.errors > 0: break
-                p.moveToNodeAfterTree()
-            else:
-                p.moveToThreadNext()
-        c.endUpdate()
+        try:
+            while p: # Don't use an iterator.
+                if p.isMarked():
+                    ok = self.untangleTree(p,dont_report_errors)
+                    if ok: marked_flag = True
+                    if self.errors > 0: break
+                    p.moveToNodeAfterTree()
+                else:
+                    p.moveToThreadNext()
+        finally:
+            c.endUpdate()
     
         if not marked_flag:
             self.warning("----- The outline contains no marked roots")
@@ -3054,10 +3060,12 @@ class baseTangleCommands:
         p.setBodyStringOrPane(s)
     
         c.beginUpdate()
-        c.setChanged(True)
-        p.setDirty()
-        p.setMarked()
-        c.endUpdate()
+        try:
+            c.setChanged(True)
+            p.setDirty()
+            p.setMarked()
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.3575:update_current_vnode
     #@-node:ekr.20031218072017.3544:untangle

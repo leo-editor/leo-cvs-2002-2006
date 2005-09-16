@@ -1310,11 +1310,13 @@ class baseUndoer:
     
         # Execute the redoHelper.
         c.beginUpdate()
-        if u.redoHelper:
-            u.redoHelper()
-        else:
-            g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
-        c.endUpdate(u.redrawFlag)
+        try:
+            if u.redoHelper:
+                u.redoHelper()
+            else:
+                g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
+        finally:
+            c.endUpdate(u.redrawFlag)
     
         u.redoing = False
         u.bead += 1
@@ -1564,11 +1566,13 @@ class baseUndoer:
     
         # Execute the undoHelper.
         c.beginUpdate()
-        if u.undoHelper:
-            u.undoHelper()
-        else:
-            g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
-        c.endUpdate(u.redrawFlag)
+        try:
+            if u.undoHelper:
+                u.undoHelper()
+            else:
+                g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
+        finally:
+            c.endUpdate(u.redrawFlag)
     
         u.undoing = False
         u.bead -= 1

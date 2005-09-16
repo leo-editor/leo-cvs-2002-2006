@@ -202,11 +202,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         p.moveToRoot()
         c.beginUpdate()
-        c.selectVnode(p)
-        c.redraw()
-        c.frame.getFocus()
-        c.editPosition(p)
-        c.endUpdate(False)
+        try:
+            c.selectVnode(p)
+            c.redraw()
+            c.frame.getFocus()
+            c.editPosition(p)
+        finally:
+            c.endUpdate(False)
+        #@nonl
         #@-node:ekr.20031218072017.2180:<< create the first tree node >>
         #@nl
         #@    << create the menu bar >>
@@ -2485,23 +2488,20 @@ class leoTkinterBody (leoFrame.leoBody):
         #@    << redraw the screen if necessary >>
         #@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
         redraw_flag = False
-        
         c.beginUpdate()
-        
-        # Update dirty bits.
-        if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-            redraw_flag = True
-            
-        # Update icons.
-        val = p.computeIcon()
-        
-        # 7/8/04: During unit tests the node may not have been drawn,
-        # So p.v.iconVal may not exist yet.
-        if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-            p.v.iconVal = val
-            redraw_flag = True
-        
-        c.endUpdate(redraw_flag) # redraw only if necessary
+        try:
+            # Update dirty bits.
+            if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+                redraw_flag = True
+            # Update icons.
+            val = p.computeIcon()
+            # During unit tests the node may not have been drawn,
+            # So p.v.iconVal may not exist yet.
+            if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+                p.v.iconVal = val
+                redraw_flag = True
+        finally:
+            c.endUpdate(redraw_flag) # redraw only if necessary
         #@nonl
         #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
         #@nl

@@ -351,8 +351,10 @@ class leoTkinterTree (leoFrame.leoTree):
                     # Call self.redraw to inhibit calls to setLabelState.
                     c.frame.tree.redraw()
                     c.beginUpdate()
-                    c.selectVnode(p)
-                    c.endUpdate()
+                    try:
+                        c.selectVnode(p)
+                    finally:
+                        c.endUpdate()
                     c.frame.bodyCtrl.mark_set("insert","1.0")
                 g.doHook("hypercclick2",c=c,p=p,v=p,event=event)
             except:
@@ -1909,21 +1911,17 @@ class leoTkinterTree (leoFrame.leoTree):
             #@        << update p >>
             #@+node:ekr.20040803072955.95:<< update p >>
             c.beginUpdate()
-            if 1: # In update...
-            
+            try: # In update...
                 # Update changed bit.
-                if not c.changed:
-                    c.setChanged(True)
-            
+                if not c.changed: c.setChanged(True)
                 # We must call p.setDirty even if p is dirty!
                 dirtyVnodeList = p.setDirty()
-            
                 # Update p.
                 p.initHeadString(s)
                 self.setText(edit_text,s,tag="idle_head_key2")
                 edit_text.mark_set("insert",index)
-            
-            c.endUpdate(False) # do not redraw now.
+            finally:
+                c.endUpdate(False) # do not redraw now.
             #@nonl
             #@-node:ekr.20040803072955.95:<< update p >>
             #@nl
@@ -1944,8 +1942,10 @@ class leoTkinterTree (leoFrame.leoTree):
             if done:
                 # g.trace("done")
                 c.beginUpdate()
-                self.endEditLabel()
-                c.endUpdate()
+                try:
+                    self.endEditLabel()
+                finally:
+                    c.endUpdate()
             
             elif changed:
                 # g.trace("changed")

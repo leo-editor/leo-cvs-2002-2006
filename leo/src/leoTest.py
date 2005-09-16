@@ -87,8 +87,10 @@ def doTests(all,verbosity=1):
 
     # Verbosity: 1: print just dots.
     c.beginUpdate()
-    unittest.TextTestRunner(verbosity=verbosity).run(suite)
-    c.endUpdate()
+    try:
+        unittest.TextTestRunner(verbosity=verbosity).run(suite)
+    finally:
+        c.endUpdate()
     c.setChanged(changed) # Restore changed state.
     c.selectVnode(p1) # N.B. Restore the selected node.
 #@nonl

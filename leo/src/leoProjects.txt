@@ -187,23 +187,20 @@ self.forceFullRecolorFlag = False
 #@-node:ekr.20031218072017.1327:<< recolor the body >>
 #@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 redraw_flag = False
-
 c.beginUpdate()
-
-# Update dirty bits.
-if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-    redraw_flag = True
-    
-# Update icons.
-val = p.computeIcon()
-
-# 7/8/04: During unit tests the node may not have been drawn,
-# So p.v.iconVal may not exist yet.
-if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-    p.v.iconVal = val
-    redraw_flag = True
-
-c.endUpdate(redraw_flag) # redraw only if necessary
+try:
+    # Update dirty bits.
+    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+        redraw_flag = True
+    # Update icons.
+    val = p.computeIcon()
+    # During unit tests the node may not have been drawn,
+    # So p.v.iconVal may not exist yet.
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    c.endUpdate(redraw_flag) # redraw only if necessary
 #@nonl
 #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
@@ -461,21 +458,17 @@ if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
 #@-node:ekr.20040803072955.94:<< set s to the widget text >>
 #@+node:ekr.20040803072955.95:<< update p >>
 c.beginUpdate()
-if 1: # In update...
-
+try: # In update...
     # Update changed bit.
-    if not c.changed:
-        c.setChanged(True)
-
+    if not c.changed: c.setChanged(True)
     # We must call p.setDirty even if p is dirty!
     dirtyVnodeList = p.setDirty()
-
     # Update p.
     p.initHeadString(s)
     self.setText(edit_text,s,tag="idle_head_key2")
     edit_text.mark_set("insert",index)
-
-c.endUpdate(False) # do not redraw now.
+finally:
+    c.endUpdate(False) # do not redraw now.
 #@nonl
 #@-node:ekr.20040803072955.95:<< update p >>
 #@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
@@ -490,8 +483,10 @@ edit_text.configure(width=self.headWidth(p))
 if done:
     # g.trace("done")
     c.beginUpdate()
-    self.endEditLabel()
-    c.endUpdate()
+    try:
+        self.endEditLabel()
+    finally:
+        c.endUpdate()
 
 elif changed:
     # g.trace("changed")
@@ -2131,7 +2126,7 @@ def extractSection(self):
     if head: head = head.rstrip()
 
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         u.beforeChangeGroup(current,undoType)
         if 1: # In group...
             undoData = u.beforeInsertNode(current)
@@ -2139,7 +2134,8 @@ def extractSection(self):
             u.afterInsertNode(p,undoType,undoData)
             c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
         u.afterChangeGroup(current,undoType)
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 #@nonl
 #@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
 if len(headline) < 5:
@@ -3043,7 +3039,7 @@ def convertAllBlanks (self):
     d = g.scanDirectives(c)
     tabWidth  = d.get("tabwidth")
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         count = 0 ; dirtyVnodeList = []
         u.beforeChangeGroup(current,undoType)
         for p in current.self_and_subtree_iter():
@@ -3073,7 +3069,8 @@ def convertAllBlanks (self):
                     u.afterChangeNodeContents(p,undoType,innerUndoData)
         u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
         g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
-    c.endUpdate(count > 0)
+    finally:
+        c.endUpdate(count > 0)
 #@nonl
 #@-node:ekr.20031218072017.1704:convertAllBlanks
 #@+node:ekr.20031218072017.1705:convertAllTabs
@@ -3088,7 +3085,7 @@ def convertAllTabs (self):
     theDict = g.scanDirectives(c)
     tabWidth  = theDict.get("tabwidth")
     c.beginUpdate()
-    if 1: # In update:
+    try: # In update:
         count = 0 ; dirtyVnodeList = []
         u.beforeChangeGroup(current,undoType)
         for p in current.self_and_subtree_iter():
@@ -3117,7 +3114,8 @@ def convertAllTabs (self):
                     u.afterChangeNodeContents(p,undoType,undoData)
         u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
         g.es("tabs converted to blanks in %d nodes" % count)
-    c.endUpdate(count > 0)
+    finally:
+        c.endUpdate(count > 0)
 #@nonl
 #@-node:ekr.20031218072017.1705:convertAllTabs
 #@+node:ekr.20031218072017.1821:convertBlanks
@@ -3254,7 +3252,7 @@ def extract(self):
     if head: head = head.rstrip()
 
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         u.beforeChangeGroup(current,undoType)
         if 1: # In group...
             undoData = u.beforeInsertNode(current)
@@ -3262,7 +3260,8 @@ def extract(self):
             u.afterInsertNode(p,undoType,undoData)
             c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
         u.afterChangeGroup(current,undoType)
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.1706:extract
 #@+node:ekr.20031218072017.1708:extractSection
@@ -3293,7 +3292,7 @@ def extractSection(self):
     if head: head = head.rstrip()
 
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         u.beforeChangeGroup(current,undoType)
         if 1: # In group...
             undoData = u.beforeInsertNode(current)
@@ -3301,7 +3300,8 @@ def extractSection(self):
             u.afterInsertNode(p,undoType,undoData)
             c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
         u.afterChangeGroup(current,undoType)
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 #@nonl
 #@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
 if len(headline) < 5:
@@ -3332,7 +3332,7 @@ def extractSectionNames(self):
     if not lines: return
 
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         u.beforeChangeGroup(current,undoType)
         if 1: # In group...
             found = False
@@ -3348,7 +3348,8 @@ def extractSectionNames(self):
             if not found:
                 g.es("Selected text should contain one or more section names",color="blue")
         u.afterChangeGroup(current,undoType)
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 
     # Restore the selection.
     body.setTextSelection(oldSel)
@@ -3809,13 +3810,14 @@ def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
 
     # Update the changed mark and icon.
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         c.setChanged(True)
         if p.isDirty():
             dirtyVnodeList = []
         else:
             dirtyVnodeList = p.setDirty()
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 
     # Scroll as necessary.
     if oldYview:
@@ -4099,23 +4101,20 @@ self.forceFullRecolorFlag = False
 #@-node:ekr.20031218072017.1327:<< recolor the body >>
 #@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 redraw_flag = False
-
 c.beginUpdate()
-
-# Update dirty bits.
-if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-    redraw_flag = True
-    
-# Update icons.
-val = p.computeIcon()
-
-# 7/8/04: During unit tests the node may not have been drawn,
-# So p.v.iconVal may not exist yet.
-if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-    p.v.iconVal = val
-    redraw_flag = True
-
-c.endUpdate(redraw_flag) # redraw only if necessary
+try:
+    # Update dirty bits.
+    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+        redraw_flag = True
+    # Update icons.
+    val = p.computeIcon()
+    # During unit tests the node may not have been drawn,
+    # So p.v.iconVal may not exist yet.
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    c.endUpdate(redraw_flag) # redraw only if necessary
 #@nonl
 #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
@@ -6420,23 +6419,20 @@ self.forceFullRecolorFlag = False
 #@-node:ekr.20031218072017.1327:<< recolor the body >>
 #@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 redraw_flag = False
-
 c.beginUpdate()
-
-# Update dirty bits.
-if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-    redraw_flag = True
-    
-# Update icons.
-val = p.computeIcon()
-
-# 7/8/04: During unit tests the node may not have been drawn,
-# So p.v.iconVal may not exist yet.
-if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-    p.v.iconVal = val
-    redraw_flag = True
-
-c.endUpdate(redraw_flag) # redraw only if necessary
+try:
+    # Update dirty bits.
+    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+        redraw_flag = True
+    # Update icons.
+    val = p.computeIcon()
+    # During unit tests the node may not have been drawn,
+    # So p.v.iconVal may not exist yet.
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    c.endUpdate(redraw_flag) # redraw only if necessary
 #@nonl
 #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
@@ -6580,16 +6576,18 @@ def markChangedHeadlines (self):
     current = c.currentPosition()
     
     c.beginUpdate()
-    u.beforeChangeGroup(current,undoType)
-    for p in c.allNodes_iter():
-        if p.isDirty()and not p.isMarked():
-            bunch = u.beforeMark(p,undoType)
-            p.setMarked()
-            c.setChanged(True)
-            u.afterMark(p,undoType,bunch)
-    u.afterChangeGroup(current,undoType)
-    g.es("done",color="blue")
-    c.endUpdate()
+    try:
+        u.beforeChangeGroup(current,undoType)
+        for p in c.allNodes_iter():
+            if p.isDirty()and not p.isMarked():
+                bunch = u.beforeMark(p,undoType)
+                p.setMarked()
+                c.setChanged(True)
+                u.afterMark(p,undoType,bunch)
+        u.afterChangeGroup(current,undoType)
+        g.es("done",color="blue")
+    finally:
+        c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2923:markChangedHeadlines
 #@+node:ekr.20031218072017.2924:markChangedRoots
@@ -6599,19 +6597,21 @@ def markChangedRoots (self):
     current = c.currentPosition()
 
     c.beginUpdate()
-    u.beforeChangeGroup(current,undoType)
-    for p in c.allNodes_iter():
-        if p.isDirty()and not p.isMarked():
-            s = p.bodyString()
-            flag, i = g.is_special(s,0,"@root")
-            if flag:
-                bunch = u.beforeMark(p,undoType)
-                p.setMarked()
-                c.setChanged(True)
-                u.afterMark(p,undoType,bunch)
-    u.afterChangeGroup(current,undoType)
-    g.es("done",color="blue")
-    c.endUpdate()
+    try:
+        u.beforeChangeGroup(current,undoType)
+        for p in c.allNodes_iter():
+            if p.isDirty()and not p.isMarked():
+                s = p.bodyString()
+                flag, i = g.is_special(s,0,"@root")
+                if flag:
+                    bunch = u.beforeMark(p,undoType)
+                    p.setMarked()
+                    c.setChanged(True)
+                    u.afterMark(p,undoType,bunch)
+        u.afterChangeGroup(current,undoType)
+        g.es("done",color="blue")
+    finally:
+        c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2924:markChangedRoots
 #@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty (not used)
@@ -6620,7 +6620,7 @@ def markAllAtFileNodesDirty (self):
     c = self ; p = c.rootPosition()
 
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         while p:
             if p.isAtFileNode()and not p.isDirty():
                 p.setDirty()
@@ -6628,7 +6628,8 @@ def markAllAtFileNodesDirty (self):
                 p.moveToNodeAfterTree()
             else:
                 p.moveToThreadNext()
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2925:markAllAtFileNodesDirty (not used)
 #@+node:ekr.20031218072017.2926:markAtFileNodesDirty (not used)
@@ -6640,7 +6641,7 @@ def markAtFileNodesDirty (self):
 
     after = p.nodeAfterTree()
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         while p and p != after:
             if p.isAtFileNode() and not p.isDirty():
                 p.setDirty()
@@ -6648,7 +6649,8 @@ def markAtFileNodesDirty (self):
                 p.moveToNodeAfterTree()
             else:
                 p.moveToThreadNext()
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2926:markAtFileNodesDirty (not used)
 #@+node:ekr.20031218072017.2927:markClones
@@ -6662,7 +6664,7 @@ def markClones (self):
 
     c.beginUpdate()
     u.beforeChangeGroup(current,undoType)
-    if 1: # In update...
+    try: # In update...
         dirtyVnodeList = []
         for p in c.allNodes_iter():
             if p.v.t == current.v.t:
@@ -6672,8 +6674,9 @@ def markClones (self):
                 dirtyVnodeList2 = p.setDirty()
                 dirtyVnodeList.extend(dirtyVnodeList2)
                 u.afterMark(p,undoType,bunch)
-    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
-    c.endUpdate()
+    finally:
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+        c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2927:markClones
 #@+node:ekr.20031218072017.2928:markHeadline
@@ -6683,7 +6686,7 @@ def markHeadline (self):
     if not p: return
 
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         undoType = g.choose(p.isMarked(),'Unmark','Mark')
         bunch = u.beforeMark(p,undoType)
         if p.isMarked():
@@ -6693,7 +6696,8 @@ def markHeadline (self):
         dirtyVnodeList = p.setDirty()
         c.setChanged(True)
         u.afterMark(p,undoType,bunch,dirtyVnodeList=dirtyVnodeList)
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 #@-node:ekr.20031218072017.2928:markHeadline
 #@+node:ekr.20031218072017.2929:markSubheads
 def markSubheads(self):
@@ -6704,7 +6708,7 @@ def markSubheads(self):
 
     c.beginUpdate()
     u.beforeChangeGroup(current,undoType)
-    if 1: # In update...
+    try: # In update...
         dirtyVnodeList = []
         for p in current.children_iter():
             if not p.isMarked():
@@ -6714,8 +6718,10 @@ def markSubheads(self):
                 dirtyVnodeList.extend(dirtyVnodeList2)
                 c.setChanged(True)
                 u.afterMark(p,undoType,bunch)
-    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
-    c.endUpdate()
+    finally:
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+        c.endUpdate()
+#@nonl
 #@-node:ekr.20031218072017.2929:markSubheads
 #@+node:ekr.20031218072017.2930:unmarkAll
 def unmarkAll(self):
@@ -6726,7 +6732,7 @@ def unmarkAll(self):
     
     c.beginUpdate()
     u.beforeChangeGroup(current,undoType)
-    if 1: # In update...
+    try: # In update...
         dirtyVnodeList = []
         for p in c.allNodes_iter():
             if p.isMarked():
@@ -6736,8 +6742,9 @@ def unmarkAll(self):
                 dirtyVnodeList.extend(dirtyVnodeList2)
                 c.setChanged(True)
                 u.afterMark(p,undoType,bunch)
-    u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
-    c.endUpdate()
+    finally:
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+        c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2930:unmarkAll
 #@-node:ekr.20031218072017.2922:Mark...
@@ -6947,23 +6954,20 @@ self.forceFullRecolorFlag = False
 #@-node:ekr.20031218072017.1327:<< recolor the body >>
 #@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 redraw_flag = False
-
 c.beginUpdate()
-
-# Update dirty bits.
-if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-    redraw_flag = True
-    
-# Update icons.
-val = p.computeIcon()
-
-# 7/8/04: During unit tests the node may not have been drawn,
-# So p.v.iconVal may not exist yet.
-if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-    p.v.iconVal = val
-    redraw_flag = True
-
-c.endUpdate(redraw_flag) # redraw only if necessary
+try:
+    # Update dirty bits.
+    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+        redraw_flag = True
+    # Update icons.
+    val = p.computeIcon()
+    # During unit tests the node may not have been drawn,
+    # So p.v.iconVal may not exist yet.
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    c.endUpdate(redraw_flag) # redraw only if necessary
 #@nonl
 #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
@@ -10035,6 +10039,73 @@ def test_g_es_print():
 #@+node:ekr.20050911084855:Added doc/html/*.html to distribution list
 #@-node:ekr.20050911084855:Added doc/html/*.html to distribution list
 #@-node:ekr.20050914132013:4.3.2 final projects
+#@+node:ekr.20050916095957:4.4 a1 projects
+#@+node:ekr.20050916101421:Cleanup
+#@+node:ekr.20050902074723:Protected c.beginEndUpdate against exceptions.
+@nocolor
+
+Use the following pattern throughout:
+
+@color
+
+    c.beginUpdate()
+    try:
+        << whatever >>
+    finally:
+        c.endUpdate(flag)
+        
+@nocolor
+
+c.endUpdate re-raises any pending exception.
+#@nonl
+#@+node:ekr.20031218072017.2952:c.endUpdate & test
+def endUpdate(self, flag=True):
+    
+    '''End a beginUpdate/endUpdate region.
+    
+    Redraw the tree if this is the outermost endUpdate.
+    
+    Note that calls to g.es() will disable redraws, so calls to endUpdate
+    should follow all such writes to the log pane.
+    
+    New in Python 4.4:  All of Leo's core code uses this pattern::
+        
+        c.beginUpdate()
+        try:
+            ...
+        finally:
+            c.endUpdate()
+        
+    Python automatically re-raises an exception after executing a finally block,
+    so there is no need to do so here.'''
+
+    try:
+        self.frame.tree.endUpdate(flag)
+    except Exception:
+        pass
+    
+EndUpdate = endUpdate # Compatibility with old scripts
+#@nonl
+#@+node:ekr.20050916100046:test_c_endUpdate
+def test_c_endUpdate (self):
+
+    try:
+        c.beginUpdate()
+        try:
+            assert(0)
+        finally:
+            c.endUpdate()
+    except AssertionError:
+        return
+    
+    # This will never happen: finally always re-raises a pending exception.
+    assert(0,'no re-raise after finally')
+#@nonl
+#@-node:ekr.20050916100046:test_c_endUpdate
+#@-node:ekr.20031218072017.2952:c.endUpdate & test
+#@-node:ekr.20050902074723:Protected c.beginEndUpdate against exceptions.
+#@-node:ekr.20050916101421:Cleanup
+#@-node:ekr.20050916095957:4.4 a1 projects
 #@+node:ekr.20050718150452:(Stuff used by wx plugin)
 #@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
 def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
@@ -10953,23 +11024,20 @@ self.forceFullRecolorFlag = False
 #@-node:ekr.20031218072017.1327:<< recolor the body >>
 #@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 redraw_flag = False
-
 c.beginUpdate()
-
-# Update dirty bits.
-if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-    redraw_flag = True
-    
-# Update icons.
-val = p.computeIcon()
-
-# 7/8/04: During unit tests the node may not have been drawn,
-# So p.v.iconVal may not exist yet.
-if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-    p.v.iconVal = val
-    redraw_flag = True
-
-c.endUpdate(redraw_flag) # redraw only if necessary
+try:
+    # Update dirty bits.
+    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+        redraw_flag = True
+    # Update icons.
+    val = p.computeIcon()
+    # During unit tests the node may not have been drawn,
+    # So p.v.iconVal may not exist yet.
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    c.endUpdate(redraw_flag) # redraw only if necessary
 #@nonl
 #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)

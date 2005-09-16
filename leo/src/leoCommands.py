@@ -301,14 +301,15 @@ class baseCommands:
         frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
         
         c.beginUpdate()
-        if 1: # within update
+        try:
             t = leoNodes.tnode()
             v = leoNodes.vnode(c,t)
             p = leoNodes.position(v,[])
             v.initHeadString("NewHeadline")
             v.moveToRoot()
             c.editPosition(p)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     
         frame.body.setFocus()
         return c # For unit test.
@@ -1536,9 +1537,11 @@ class baseCommands:
         #@    << select p and make it visible >>
         #@+node:ekr.20031218072017.2875:<< select p and make it visible >>
         c.beginUpdate()
-        c.frame.tree.expandAllAncestors(p)
-        c.selectVnode(p)
-        c.endUpdate()
+        try:
+            c.frame.tree.expandAllAncestors(p)
+            c.selectVnode(p)
+        finally:
+            c.endUpdate()
         #@nonl
         #@-node:ekr.20031218072017.2875:<< select p and make it visible >>
         #@nl
@@ -1823,7 +1826,7 @@ class baseCommands:
         d = g.scanDirectives(c)
         tabWidth  = d.get("tabwidth")
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             count = 0 ; dirtyVnodeList = []
             u.beforeChangeGroup(current,undoType)
             for p in current.self_and_subtree_iter():
@@ -1853,7 +1856,8 @@ class baseCommands:
                         u.afterChangeNodeContents(p,undoType,innerUndoData)
             u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
             g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
-        c.endUpdate(count > 0)
+        finally:
+            c.endUpdate(count > 0)
     #@nonl
     #@-node:ekr.20031218072017.1704:convertAllBlanks
     #@+node:ekr.20031218072017.1705:convertAllTabs
@@ -1868,7 +1872,7 @@ class baseCommands:
         theDict = g.scanDirectives(c)
         tabWidth  = theDict.get("tabwidth")
         c.beginUpdate()
-        if 1: # In update:
+        try: # In update:
             count = 0 ; dirtyVnodeList = []
             u.beforeChangeGroup(current,undoType)
             for p in current.self_and_subtree_iter():
@@ -1897,7 +1901,8 @@ class baseCommands:
                         u.afterChangeNodeContents(p,undoType,undoData)
             u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
             g.es("tabs converted to blanks in %d nodes" % count)
-        c.endUpdate(count > 0)
+        finally:
+            c.endUpdate(count > 0)
     #@nonl
     #@-node:ekr.20031218072017.1705:convertAllTabs
     #@+node:ekr.20031218072017.1821:convertBlanks
@@ -2034,7 +2039,7 @@ class baseCommands:
         if head: head = head.rstrip()
     
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             u.beforeChangeGroup(current,undoType)
             if 1: # In group...
                 undoData = u.beforeInsertNode(current)
@@ -2042,7 +2047,8 @@ class baseCommands:
                 u.afterInsertNode(p,undoType,undoData)
                 c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
             u.afterChangeGroup(current,undoType)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.1706:extract
     #@+node:ekr.20031218072017.1708:extractSection
@@ -2089,7 +2095,7 @@ class baseCommands:
         if head: head = head.rstrip()
     
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             u.beforeChangeGroup(current,undoType)
             if 1: # In group...
                 undoData = u.beforeInsertNode(current)
@@ -2097,7 +2103,8 @@ class baseCommands:
                 u.afterInsertNode(p,undoType,undoData)
                 c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
             u.afterChangeGroup(current,undoType)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.1708:extractSection
     #@+node:ekr.20031218072017.1710:extractSectionNames
@@ -2113,7 +2120,7 @@ class baseCommands:
         if not lines: return
     
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             u.beforeChangeGroup(current,undoType)
             if 1: # In group...
                 found = False
@@ -2145,7 +2152,8 @@ class baseCommands:
                 if not found:
                     g.es("Selected text should contain one or more section names",color="blue")
             u.afterChangeGroup(current,undoType)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     
         # Restore the selection.
         body.setTextSelection(oldSel)
@@ -2596,13 +2604,14 @@ class baseCommands:
     
         # Update the changed mark and icon.
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             c.setChanged(True)
             if p.isDirty():
                 dirtyVnodeList = []
             else:
                 dirtyVnodeList = p.setDirty()
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     
         # Scroll as necessary.
         if oldYview:
@@ -2812,8 +2821,8 @@ class baseCommands:
             pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
     
         c.beginUpdate()
-        c.endEditing()
-        if 1: # inside update...
+        try: # inside update...
+            c.endEditing()
             c.validateOutline()
             c.selectPosition(pasted)
             pasted.setDirty()
@@ -2823,7 +2832,8 @@ class baseCommands:
             if back and back.isExpanded():
                 pasted.moveToNthChildOf(back,0)
             u.afterInsertNode(pasted,undoType,undoData)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.recolor()
     #@nonl
     #@-node:ekr.20031218072017.1551:pasteOutline
@@ -2909,14 +2919,15 @@ class baseCommands:
         if not newNode: return
     
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             c.endEditing() # Make sure we capture the headline for Undo.
             undoData = u.beforeDeleteNode(p)
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
             p.doDelete(newNode)
             c.setChanged(True)
             u.afterDeleteNode(newNode,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.validateOutline()
     #@nonl
     #@-node:ekr.20031218072017.1193:c.deleteOutline
@@ -2931,7 +2942,7 @@ class baseCommands:
         if not current: return
     
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             undoData = c.undoer.beforeInsertNode(current)
             # Make sure the new node is visible when hoisting.
             if ((current.hasChildren() and current.isExpanded()) or
@@ -2944,7 +2955,8 @@ class baseCommands:
             u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
             c.editPosition(p)
             c.selectPosition(p)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         return p # for mod_labels plugin.
     #@nonl
     #@-node:ekr.20031218072017.1761:c.insertHeadline
@@ -2955,7 +2967,7 @@ class baseCommands:
         if not p: return
         
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             undoData = c.undoer.beforeCloneNode(p)
             clone = p.clone(p)
             dirtyVnodeList = clone.setAllAncestorAtFileNodesDirty()
@@ -2963,7 +2975,8 @@ class baseCommands:
             if c.validateOutline():
                 u.afterCloneNode(clone,'Clone Node',undoData,dirtyVnodeList=dirtyVnodeList)
                 c.selectPosition(clone)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     
         return clone # For mod_labels plugin.
     #@nonl
@@ -2996,14 +3009,15 @@ class baseCommands:
         if not p or not p.hasChildren(): return
     
         c.beginUpdate()
-        if 1: # In update
+        try: # In update
             c.endEditing()
             u.beforeChangeGroup(p,undoType)
             c.sortChildrenHelper(p)
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
             c.setChanged(True)
             u.afterChangeGroup(p,undoType,dirtyVnodeList=dirtyVnodeList)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20050415134809:c.sortChildren
     #@+node:ekr.20040303175026.12:c.sortChildrenHelper
@@ -3036,14 +3050,15 @@ class baseCommands:
             c.sortTopLevel()
         else:
             c.beginUpdate()
-            if 1: # In update...
+            try: # In update...
                 c.endEditing()
                 u.beforeChangeGroup(p,undoType)
                 c.sortChildrenHelper(parent)
                 dirtyVnodeList = parent.setAllAncestorAtFileNodesDirty()
                 c.setChanged(True)
                 u.afterChangeGroup(p,'Sort Siblings',dirtyVnodeList=dirtyVnodeList)
-            c.endUpdate()
+            finally:
+                c.endUpdate()
     #@nonl
     #@-node:ekr.20050415134809.1:c.sortSiblings
     #@+node:ekr.20031218072017.2896:c.sortTopLevel
@@ -3059,7 +3074,7 @@ class baseCommands:
         pairs.sort()
      
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             dirtyVnodeList = []
             u.beforeChangeGroup(root,undoType)
             if 1: # In group...
@@ -3078,7 +3093,8 @@ class baseCommands:
                     u.afterMoveNode(next,'Sort',undoData)
                     p = next
             u.afterChangeGroup(root,undoType,dirtyVnodeList=dirtyVnodeList)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2896:c.sortTopLevel
     #@-node:ekr.20031218072017.2895: Top Level... (Commands)
@@ -3902,7 +3918,7 @@ class baseCommands:
         c = self
         
         c.beginUpdate()
-        if 1: # update...
+        try: # update...
             for p in c.allNodes_iter():
                 p.contract()
             # Select the topmost ancestor of the presently selected node.
@@ -3910,7 +3926,8 @@ class baseCommands:
             while p and p.hasParent():
                 p.moveToParent()
             c.selectVnode(p)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     
         c.expansionLevel = 1 # Reset expansion level.
     #@nonl
@@ -3921,8 +3938,10 @@ class baseCommands:
         c = self ; v = c.currentVnode()
         
         c.beginUpdate()
-        v.contract()
-        c.endUpdate()
+        try:
+            v.contract()
+        finally:
+            c.endUpdate()
     #@-node:ekr.20031218072017.2901:contractNode
     #@+node:ekr.20040930064232:contractNodeOrGoToParent
     def contractNodeOrGoToParent(self):
@@ -3945,9 +3964,11 @@ class baseCommands:
         if not parent: return
         
         c.beginUpdate()
-        c.selectVnode(parent)
-        parent.contract()
-        c.endUpdate()
+        try:
+            c.selectVnode(parent)
+            parent.contract()
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2902:contractParent
     #@+node:ekr.20031218072017.2903:expandAllHeadlines
@@ -3955,11 +3976,13 @@ class baseCommands:
     
         c = self ; v = root = c.rootVnode()
         c.beginUpdate()
-        while v:
-            c.expandSubtree(v)
-            v = v.next()
-        c.selectVnode(root)
-        c.endUpdate()
+        try:
+            while v:
+                c.expandSubtree(v)
+                v = v.next()
+            c.selectVnode(root)
+        finally:
+            c.endUpdate()
         c.expansionLevel = 0 # Reset expansion level.
     #@nonl
     #@-node:ekr.20031218072017.2903:expandAllHeadlines
@@ -3971,12 +3994,14 @@ class baseCommands:
     
         child = v.firstChild()
         c.beginUpdate()
-        c.expandSubtree(v)
-        while child:
-            c.expandSubtree(child)
-            child = child.next()
-        c.selectVnode(v)
-        c.endUpdate()
+        try:
+            c.expandSubtree(v)
+            while child:
+                c.expandSubtree(child)
+                child = child.next()
+            c.selectVnode(v)
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2904:expandAllSubheads
     #@+node:ekr.20031218072017.2905:expandLevel1..9
@@ -4008,8 +4033,10 @@ class baseCommands:
         c = self ; v = c.currentVnode()
         
         c.beginUpdate()
-        v.expand()
-        c.endUpdate()
+        try:
+            v.expand()
+        finally:
+            c.endUpdate()
     
     #@-node:ekr.20031218072017.2907:expandNode
     #@+node:ekr.20040930064232.1:expandNodeOrGoToFirstChild
@@ -4022,8 +4049,10 @@ class baseCommands:
     
         if v.isExpanded():
             c.beginUpdate()
-            c.selectVnode(v.firstChild())
-            c.endUpdate()
+            try:
+                c.selectVnode(v.firstChild())
+            finally:
+                c.endUpdate()
         else:
             c.expandNode()
     #@nonl
@@ -4060,33 +4089,23 @@ class baseCommands:
         c.redraw()
     #@nonl
     #@-node:ekr.20031218072017.2911:expandSubtree
-    #@+node:ekr.20031218072017.2912:expandToLevel
+    #@+node:ekr.20031218072017.2912:expandToLevel (rewritten in 4.4)
     def expandToLevel (self,level):
     
         c = self
         c.beginUpdate()
-        if 1: # 1/31/03: The expansion is local to the present node.
-            v = c.currentVnode() ; n = v.level()
-            after = v.nodeAfterTree()
-            while v and v != after:
-                if v.level() - n + 1 < level:
-                    v.expand()
+        try:
+            for p in c.currentPosition().self_and_subtree_iter():
+                if p.level() - n + 1 < level:
+                    p.expand()
                 else:
-                    v.contract()
-                v = v.threadNext()
-        else: # The expansion is global
-            # Start the recursion.
-            # First contract everything.
-            c.contractAllHeadlines()
-            v = c.rootVnode()
-            while v:
-                c.expandTreeToLevelFromLevel(v,level,1)
-                v = v.next()
-        c.expansionLevel = level
-        c.expansionNode = c.currentVnode()
-        c.endUpdate()
+                    p.contract()
+            c.expansionLevel = level
+            c.expansionNode = c.currentPosition()
+        finally:
+            c.endUpdate()
     #@nonl
-    #@-node:ekr.20031218072017.2912:expandToLevel
+    #@-node:ekr.20031218072017.2912:expandToLevel (rewritten in 4.4)
     #@-node:ekr.20031218072017.2909:Utilities
     #@-node:ekr.20031218072017.2898:Expand & Contract...
     #@+node:ekr.20031218072017.2913:Goto
@@ -4100,9 +4119,11 @@ class baseCommands:
             v = c.beadList[c.beadPointer]
             if v.exists(c):
                 c.beginUpdate()
-                c.frame.tree.expandAllAncestors(v)
-                c.selectVnode(v,updateBeadList=False)
-                c.endUpdate()
+                try:
+                    c.frame.tree.expandAllAncestors(v)
+                    c.selectVnode(v,updateBeadList=False)
+                finally:
+                    c.endUpdate()
                 c.frame.tree.idle_scrollTo(v)
                 return
     #@nonl
@@ -4117,9 +4138,11 @@ class baseCommands:
             v = c.beadList[c.beadPointer]
             if v.exists(c):
                 c.beginUpdate()
-                c.frame.tree.expandAllAncestors(v)
-                c.selectVnode(v,updateBeadList=False)
-                c.endUpdate()
+                try:
+                    c.frame.tree.expandAllAncestors(v)
+                    c.selectVnode(v,updateBeadList=False)
+                finally:
+                    c.endUpdate()
                 c.frame.tree.idle_scrollTo(v)
                 return
     #@-node:ekr.20031218072017.1627:goPrevVisitedNode
@@ -4130,8 +4153,10 @@ class baseCommands:
         v = c.rootVnode()
         if v:
             c.beginUpdate()
-            c.selectVnode(v)
-            c.endUpdate()
+            try:
+                c.selectVnode(v)
+            finally:
+                c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2914:goToFirstNode
     #@+node:ekr.20031218072017.2915:goToLastNode
@@ -4143,9 +4168,11 @@ class baseCommands:
     
         if p:
             c.beginUpdate()
-            c.frame.tree.expandAllAncestors(p)
-            c.selectVnode(p)
-            c.endUpdate()
+            try:
+                c.frame.tree.expandAllAncestors(p)
+                c.selectVnode(p)
+            finally:
+                c.endUpdate()
     
     #@-node:ekr.20031218072017.2915:goToLastNode
     #@+node:ekr.20050711153537:goToLastVisibleNode
@@ -4161,10 +4188,12 @@ class baseCommands:
     
         if p:
             c.beginUpdate()
-            c.frame.tree.expandAllAncestors(p)
-            c.selectVnode(p)
-            c.endUpdate()
-    
+            try:
+                c.frame.tree.expandAllAncestors(p)
+                c.selectVnode(p)
+            finally:
+                c.endUpdate()
+    #@nonl
     #@-node:ekr.20050711153537:goToLastVisibleNode
     #@+node:ekr.20031218072017.2916:goToNextClone
     def goToNextClone(self):
@@ -4185,9 +4214,11 @@ class baseCommands:
     
         if v:
             c.beginUpdate()
-            c.endEditing()
-            c.selectVnode(v)
-            c.endUpdate()
+            try:
+                c.endEditing()
+                c.selectVnode(v)
+            finally:
+                c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2916:goToNextClone
     #@+node:ekr.20031218072017.2917:goToNextDirtyHeadline
@@ -4224,9 +4255,11 @@ class baseCommands:
     
         if v:
             c.beginUpdate()
-            c.endEditing()
-            c.selectVnode(v)
-            c.endUpdate()
+            try:
+                c.endEditing()
+                c.selectVnode(v)
+            finally:
+                c.endUpdate()
         else:
             g.es("done",color="blue")
     #@nonl
@@ -4240,8 +4273,10 @@ class baseCommands:
         next = v.next()
         if next:
             c.beginUpdate()
-            c.selectVnode(next)
-            c.endUpdate()
+            try:
+                c.selectVnode(next)
+            finally:
+                c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2919:goToNextSibling
     #@+node:ekr.20031218072017.2920:goToParent
@@ -4253,8 +4288,10 @@ class baseCommands:
         p = v.parent()
         if p:
             c.beginUpdate()
-            c.selectVnode(p)
-            c.endUpdate()
+            try:
+                c.selectVnode(p)
+            finally:
+                c.endUpdate()
     #@-node:ekr.20031218072017.2920:goToParent
     #@+node:ekr.20031218072017.2921:goToPrevSibling
     def goToPrevSibling(self):
@@ -4265,8 +4302,11 @@ class baseCommands:
         back = v.back()
         if back:
             c.beginUpdate()
-            c.selectVnode(back)
-            c.endUpdate()
+            try:
+                c.selectVnode(back)
+            finally:
+                c.endUpdate()
+    #@nonl
     #@-node:ekr.20031218072017.2921:goToPrevSibling
     #@-node:ekr.20031218072017.2913:Goto
     #@+node:ekr.20031218072017.2922:Mark...
@@ -4277,16 +4317,18 @@ class baseCommands:
         current = c.currentPosition()
         
         c.beginUpdate()
-        u.beforeChangeGroup(current,undoType)
-        for p in c.allNodes_iter():
-            if p.isDirty()and not p.isMarked():
-                bunch = u.beforeMark(p,undoType)
-                p.setMarked()
-                c.setChanged(True)
-                u.afterMark(p,undoType,bunch)
-        u.afterChangeGroup(current,undoType)
-        g.es("done",color="blue")
-        c.endUpdate()
+        try:
+            u.beforeChangeGroup(current,undoType)
+            for p in c.allNodes_iter():
+                if p.isDirty()and not p.isMarked():
+                    bunch = u.beforeMark(p,undoType)
+                    p.setMarked()
+                    c.setChanged(True)
+                    u.afterMark(p,undoType,bunch)
+            u.afterChangeGroup(current,undoType)
+            g.es("done",color="blue")
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2923:markChangedHeadlines
     #@+node:ekr.20031218072017.2924:markChangedRoots
@@ -4296,19 +4338,21 @@ class baseCommands:
         current = c.currentPosition()
     
         c.beginUpdate()
-        u.beforeChangeGroup(current,undoType)
-        for p in c.allNodes_iter():
-            if p.isDirty()and not p.isMarked():
-                s = p.bodyString()
-                flag, i = g.is_special(s,0,"@root")
-                if flag:
-                    bunch = u.beforeMark(p,undoType)
-                    p.setMarked()
-                    c.setChanged(True)
-                    u.afterMark(p,undoType,bunch)
-        u.afterChangeGroup(current,undoType)
-        g.es("done",color="blue")
-        c.endUpdate()
+        try:
+            u.beforeChangeGroup(current,undoType)
+            for p in c.allNodes_iter():
+                if p.isDirty()and not p.isMarked():
+                    s = p.bodyString()
+                    flag, i = g.is_special(s,0,"@root")
+                    if flag:
+                        bunch = u.beforeMark(p,undoType)
+                        p.setMarked()
+                        c.setChanged(True)
+                        u.afterMark(p,undoType,bunch)
+            u.afterChangeGroup(current,undoType)
+            g.es("done",color="blue")
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2924:markChangedRoots
     #@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty (not used)
@@ -4317,7 +4361,7 @@ class baseCommands:
         c = self ; p = c.rootPosition()
     
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             while p:
                 if p.isAtFileNode()and not p.isDirty():
                     p.setDirty()
@@ -4325,7 +4369,8 @@ class baseCommands:
                     p.moveToNodeAfterTree()
                 else:
                     p.moveToThreadNext()
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2925:markAllAtFileNodesDirty (not used)
     #@+node:ekr.20031218072017.2926:markAtFileNodesDirty (not used)
@@ -4337,7 +4382,7 @@ class baseCommands:
     
         after = p.nodeAfterTree()
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             while p and p != after:
                 if p.isAtFileNode() and not p.isDirty():
                     p.setDirty()
@@ -4345,7 +4390,8 @@ class baseCommands:
                     p.moveToNodeAfterTree()
                 else:
                     p.moveToThreadNext()
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2926:markAtFileNodesDirty (not used)
     #@+node:ekr.20031218072017.2927:markClones
@@ -4359,7 +4405,7 @@ class baseCommands:
     
         c.beginUpdate()
         u.beforeChangeGroup(current,undoType)
-        if 1: # In update...
+        try: # In update...
             dirtyVnodeList = []
             for p in c.allNodes_iter():
                 if p.v.t == current.v.t:
@@ -4369,8 +4415,9 @@ class baseCommands:
                     dirtyVnodeList2 = p.setDirty()
                     dirtyVnodeList.extend(dirtyVnodeList2)
                     u.afterMark(p,undoType,bunch)
-        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
-        c.endUpdate()
+        finally:
+            u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2927:markClones
     #@+node:ekr.20031218072017.2928:markHeadline
@@ -4380,7 +4427,7 @@ class baseCommands:
         if not p: return
     
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             undoType = g.choose(p.isMarked(),'Unmark','Mark')
             bunch = u.beforeMark(p,undoType)
             if p.isMarked():
@@ -4390,7 +4437,8 @@ class baseCommands:
             dirtyVnodeList = p.setDirty()
             c.setChanged(True)
             u.afterMark(p,undoType,bunch,dirtyVnodeList=dirtyVnodeList)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     #@-node:ekr.20031218072017.2928:markHeadline
     #@+node:ekr.20031218072017.2929:markSubheads
     def markSubheads(self):
@@ -4401,7 +4449,7 @@ class baseCommands:
     
         c.beginUpdate()
         u.beforeChangeGroup(current,undoType)
-        if 1: # In update...
+        try: # In update...
             dirtyVnodeList = []
             for p in current.children_iter():
                 if not p.isMarked():
@@ -4411,8 +4459,10 @@ class baseCommands:
                     dirtyVnodeList.extend(dirtyVnodeList2)
                     c.setChanged(True)
                     u.afterMark(p,undoType,bunch)
-        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
-        c.endUpdate()
+        finally:
+            u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+            c.endUpdate()
+    #@nonl
     #@-node:ekr.20031218072017.2929:markSubheads
     #@+node:ekr.20031218072017.2930:unmarkAll
     def unmarkAll(self):
@@ -4423,7 +4473,7 @@ class baseCommands:
         
         c.beginUpdate()
         u.beforeChangeGroup(current,undoType)
-        if 1: # In update...
+        try: # In update...
             dirtyVnodeList = []
             for p in c.allNodes_iter():
                 if p.isMarked():
@@ -4433,8 +4483,9 @@ class baseCommands:
                     dirtyVnodeList.extend(dirtyVnodeList2)
                     c.setChanged(True)
                     u.afterMark(p,undoType,bunch)
-        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
-        c.endUpdate()
+        finally:
+            u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2930:unmarkAll
     #@-node:ekr.20031218072017.2922:Mark...
@@ -4452,7 +4503,7 @@ class baseCommands:
             if not c.checkMoveWithParentWithWarning(child,current,True):
                 return
         c.beginUpdate()
-        if 1: # update...
+        try: # update...
             c.endEditing()
             u.beforeChangeGroup(current,command)
             p = current.copy()
@@ -4467,7 +4518,8 @@ class baseCommands:
             c.setChanged(True)
             u.afterChangeGroup(current,command,dirtyVnodeList=dirtyVnodeList)
             c.selectPosition(current)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.updateSyntaxColorer(current) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1767:demote
@@ -4497,7 +4549,7 @@ class baseCommands:
             next = next.visNext()
         if not next: return
         c.beginUpdate()
-        if 1: # update...
+        try: # update...
             c.endEditing()
             undoData = u.beforeMoveNode(p)
             #@        << Move p down & set moved if successful >>
@@ -4528,7 +4580,8 @@ class baseCommands:
                 c.setChanged(True)
                 u.afterMoveNode(p,'Move Down',undoData,dirtyVnodeList)
                 c.selectPosition(p)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1768:moveOutlineDown
@@ -4545,7 +4598,7 @@ class baseCommands:
         inAtIgnoreRange = p.inAtIgnoreRange()
         parent = p.parent()
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             c.endEditing()
             undoData = u.beforeMoveNode(p)
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
@@ -4559,7 +4612,8 @@ class baseCommands:
             c.setChanged(True)
             u.afterMoveNode(p,'Move Left',undoData,dirtyVnodeList)
             c.selectPosition(p)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1770:moveOutlineLeft
@@ -4576,7 +4630,7 @@ class baseCommands:
         if not c.checkMoveWithParentWithWarning(p,back,True): return
     
         c.beginUpdate()
-        if 1: # update...
+        try: # update...
             c.endEditing()
             undoData = u.beforeMoveNode(p)
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
@@ -4588,7 +4642,8 @@ class baseCommands:
             c.setChanged(True)
             u.afterMoveNode(p,'Move Right',undoData,dirtyVnodeList)
             c.selectPosition(p)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1771:moveOutlineRight
@@ -4610,7 +4665,7 @@ class baseCommands:
             return
     
         c.beginUpdate()
-        if 1: # update...
+        try: # update...
             c.endEditing()
             undoData = u.beforeMoveNode(p)
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
@@ -4650,7 +4705,8 @@ class baseCommands:
                 c.setChanged(True)
                 u.afterMoveNode(p,'Move Right',undoData,dirtyVnodeList)
                 c.selectPosition(p)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1772:moveOutlineUp
@@ -4664,7 +4720,7 @@ class baseCommands:
         isAtIgnoreNode = p.isAtIgnoreNode()
         inAtIgnoreRange = p.inAtIgnoreRange()
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             c.endEditing()
             u.beforeChangeGroup(p,command)
             after = p
@@ -4682,7 +4738,8 @@ class baseCommands:
                 dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
             u.afterChangeGroup(p,command,dirtyVnodeList=dirtyVnodeList)
             c.selectPosition(p)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1774:promote
@@ -4921,7 +4978,7 @@ class baseCommands:
         if not c.checkMoveWithParentWithWarning(p,after.parent(),True): return
     
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             c.endEditing()
             undoData = u.beforeMoveNode(current)
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty() # 1/12/04
@@ -4936,7 +4993,8 @@ class baseCommands:
             c.setChanged(True)
             u.afterMoveNode(p,undoType,undoData,dirtyVnodeList=dirtyVnodeList)
             c.selectPosition(p)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.updateSyntaxColorer(p) # Dragging can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.2353:c.dragAfter
@@ -4948,7 +5006,7 @@ class baseCommands:
         inAtIgnoreRange = p.inAtIgnoreRange()
         
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             # g.trace("p,parent,n:",p.headString(),parent.headString(),n)
             clone = p.clone(p) # Creates clone & dependents, does not set undo.
             if not c.checkMoveWithParentWithWarning(clone,parent,True):
@@ -4969,7 +5027,8 @@ class baseCommands:
             c.setChanged(True)
             u.afterInsertNode(clone,undoType,undoData,dirtyVnodeList=dirtyVnodeList)
             c.selectPosition(clone)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.2946:c.dragCloneToNthChildOf
@@ -4982,7 +5041,7 @@ class baseCommands:
         if not c.checkMoveWithParentWithWarning(p,parent,True): return
     
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             c.endEditing()
             undoData = u.beforeMoveNode(current)
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
@@ -4997,7 +5056,8 @@ class baseCommands:
             c.setChanged(True)
             u.afterMoveNode(p,undoType,undoData,dirtyVnodeList=dirtyVnodeList)
             c.selectPosition(p)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.updateSyntaxColorer(p) # Dragging can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.2947:c.dragToNthChildOf
@@ -5008,7 +5068,7 @@ class baseCommands:
         current = c.currentPosition()
     
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             clone = p.clone(p) # Creates clone.  Does not set undo.
             # g.trace("p,after:",p.headString(),after.headString())
             if not c.checkMoveWithParentWithWarning(clone,after.parent(),True):
@@ -5031,7 +5091,8 @@ class baseCommands:
             c.setChanged(True)
             u.afterInsertNode(clone,undoType,undoData,dirtyVnodeList=dirtyVnodeList)
             c.selectPosition(clone)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.2948:c.dragCloneAfter
@@ -5053,7 +5114,7 @@ class baseCommands:
     BringToFront = bringToFront # Compatibility with old scripts
     #@nonl
     #@-node:ekr.20031218072017.2951:bringToFront
-    #@+node:ekr.20031218072017.2952:c.endUpdate
+    #@+node:ekr.20031218072017.2952:c.endUpdate & test
     def endUpdate(self, flag=True):
         
         '''End a beginUpdate/endUpdate region.
@@ -5061,14 +5122,43 @@ class baseCommands:
         Redraw the tree if this is the outermost endUpdate.
         
         Note that calls to g.es() will disable redraws, so calls to endUpdate
-        should follow all such writes to the log pane.'''
+        should follow all such writes to the log pane.
         
-        
-        self.frame.tree.endUpdate(flag)
+        New in Python 4.4:  All of Leo's core code uses this pattern::
+            
+            c.beginUpdate()
+            try:
+                ...
+            finally:
+                c.endUpdate()
+            
+        Python automatically re-raises an exception after executing a finally block,
+        so there is no need to do so here.'''
+    
+        try:
+            self.frame.tree.endUpdate(flag)
+        except Exception:
+            pass
         
     EndUpdate = endUpdate # Compatibility with old scripts
     #@nonl
-    #@-node:ekr.20031218072017.2952:c.endUpdate
+    #@+node:ekr.20050916100046:test_c_endUpdate
+    def test_c_endUpdate (self):
+    
+        try:
+            c.beginUpdate()
+            try:
+                assert(0)
+            finally:
+                c.endUpdate()
+        except AssertionError:
+            return
+        
+        # This will never happen: finally always re-raises a pending exception.
+        assert(0,'no re-raise after finally')
+    #@nonl
+    #@-node:ekr.20050916100046:test_c_endUpdate
+    #@-node:ekr.20031218072017.2952:c.endUpdate & test
     #@+node:ekr.20031218072017.2953:recolor
     def recolor(self):
     
@@ -5749,8 +5839,10 @@ class baseCommands:
         v = current.threadBack()
         if v:
             c.beginUpdate()
-            c.selectVnode(v)
-            c.endUpdate()
+            try:
+                c.selectVnode(v)
+            finally:
+                c.endUpdate()
     #@-node:ekr.20031218072017.2993:selectThreadBack
     #@+node:ekr.20031218072017.2994:selectThreadNext
     def selectThreadNext(self):
@@ -5761,8 +5853,10 @@ class baseCommands:
         v = current.threadNext()
         if v:
             c.beginUpdate()
-            c.selectVnode(v)
-            c.endUpdate()
+            try:
+                c.selectVnode(v)
+            finally:
+                c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2994:selectThreadNext
     #@+node:ekr.20031218072017.2995:selectVisBack
@@ -5776,8 +5870,10 @@ class baseCommands:
         v = current.visBack()
         if v:
             c.beginUpdate()
-            c.selectVnode(v)
-            c.endUpdate()
+            try:
+                c.selectVnode(v)
+            finally:
+                c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2995:selectVisBack
     #@+node:ekr.20031218072017.2996:selectVisNext
@@ -5789,8 +5885,10 @@ class baseCommands:
         v = current.visNext()
         if v:
             c.beginUpdate()
-            c.selectVnode(v)
-            c.endUpdate()
+            try:
+                c.selectVnode(v)
+            finally:
+                c.endUpdate()
     #@-node:ekr.20031218072017.2996:selectVisNext
     #@+node:ekr.20031218072017.2997:selectVnode & selectPosition (calls tree.select)
     def selectVnode(self,p,updateBeadList=True):

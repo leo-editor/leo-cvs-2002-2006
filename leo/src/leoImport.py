@@ -124,7 +124,7 @@ class baseLeoImportCommands:
         command = 'Import'
     
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             u.beforeChangeGroup(current,command)
             for fileName in paths:
                 #@            << set isThin if fileName is a thin derived file >>
@@ -153,7 +153,8 @@ class baseLeoImportCommands:
             current.expand()
             c.selectPosition(current)
             u.afterChangeGroup(p,command)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.1810:importDerivedFiles
     #@+node:ekr.20031218072017.3212:importFilesCommand
@@ -168,7 +169,7 @@ class baseLeoImportCommands:
         self.tab_width = self.getTabWidth() # New in 4.3.
         self.treeType = treeType
         c.beginUpdate()
-        if 1: # range of update...
+        try: # range of update...
             if len(files) == 2:
                 #@            << Create a parent for two files having a common prefix >>
                 #@+node:ekr.20031218072017.3213:<< Create a parent for two files having a common prefix >>
@@ -205,7 +206,8 @@ class baseLeoImportCommands:
                     c.setChanged(True)
             c.validateOutline()
             current.expand()
-        c.endUpdate()
+        finally:
+            c.endUpdate()
         c.selectVnode(current)
     #@nonl
     #@-node:ekr.20031218072017.3212:importFilesCommand
@@ -228,89 +230,91 @@ class baseLeoImportCommands:
         if len(strings) == 0: return None
         if not self.stringsAreValidMoreFile(strings): return None
         c.beginUpdate()
-        firstLevel, junk = self.moreHeadlineLevel(strings[0])
-        lastLevel = -1 ; theRoot = lastVnode = None
-        index = 0
-        while index < len(strings):
-            progress = index
-            s = strings[index]
-            level, newFlag = self.moreHeadlineLevel(s)
-            level -= firstLevel
-            if level >= 0:
-                #@            << Link a new vnode v into the outline >>
-                #@+node:ekr.20031218072017.3216:<< Link a new vnode v into the outline >>
-                assert(level >= 0)
-                if lastVnode is None:
-                    # g.trace(firstVnode)
-                    theRoot = v = firstVnode.insertAfter()
-                elif level == lastLevel:
-                    v = lastVnode.insertAfter()
-                elif level == lastLevel + 1:
-                    v = lastVnode.insertAsNthChild(0)
-                else:
-                    assert(level < lastLevel)
-                    while level < lastLevel:
-                        lastLevel -= 1
-                        lastVnode = lastVnode.parent()
-                        assert(lastVnode)
-                        assert(lastLevel >= 0)
-                    v = lastVnode.insertAfter()
-                lastVnode = v
-                lastLevel = level
-                #@nonl
-                #@-node:ekr.20031218072017.3216:<< Link a new vnode v into the outline >>
-                #@nl
-                #@            << Set the headline string, skipping over the leader >>
-                #@+node:ekr.20031218072017.3217:<< Set the headline string, skipping over the leader >>
-                j = 0
-                while g.match(s,j,'\t'):
-                    j += 1
-                if g.match(s,j,"+ ") or g.match(s,j,"- "):
-                    j += 2
-                
-                v.initHeadString(s[j:])
-                #@nonl
-                #@-node:ekr.20031218072017.3217:<< Set the headline string, skipping over the leader >>
-                #@nl
-                #@            << Count the number of following body lines >>
-                #@+node:ekr.20031218072017.3218:<< Count the number of following body lines >>
-                bodyLines = 0
-                index += 1 # Skip the headline.
-                while index < len(strings):
-                    s = strings[index]
-                    level, junk = self.moreHeadlineLevel(s)
-                    level -= firstLevel
-                    if level >= 0:
-                        break
-                    # Remove first backslash of the body line.
-                    if g.match(s,0,'\\'):
-                        strings[index] = s[1:]
-                    bodyLines += 1
-                    index += 1
-                #@nonl
-                #@-node:ekr.20031218072017.3218:<< Count the number of following body lines >>
-                #@nl
-                #@            << Add the lines to the body text of v >>
-                #@+node:ekr.20031218072017.3219:<< Add the lines to the body text of v >>
-                if bodyLines > 0:
-                    body = ""
-                    n = index - bodyLines
-                    while n < index:
-                        body += strings[n]
-                        if n != index - 1:
-                            body += "\n"
-                        n += 1
-                    v.setTnodeText(body)
-                #@nonl
-                #@-node:ekr.20031218072017.3219:<< Add the lines to the body text of v >>
-                #@nl
-                v.setDirty()
-            else: index += 1
-            assert progress < index
-        if theRoot:
-            theRoot.setDirty()
-            c.setChanged(True)
-        c.endUpdate()
+        try: # range of update...
+            firstLevel, junk = self.moreHeadlineLevel(strings[0])
+            lastLevel = -1 ; theRoot = lastVnode = None
+            index = 0
+            while index < len(strings):
+                progress = index
+                s = strings[index]
+                level, newFlag = self.moreHeadlineLevel(s)
+                level -= firstLevel
+                if level >= 0:
+                    #@                << Link a new vnode v into the outline >>
+                    #@+node:ekr.20031218072017.3216:<< Link a new vnode v into the outline >>
+                    assert(level >= 0)
+                    if lastVnode is None:
+                        # g.trace(firstVnode)
+                        theRoot = v = firstVnode.insertAfter()
+                    elif level == lastLevel:
+                        v = lastVnode.insertAfter()
+                    elif level == lastLevel + 1:
+                        v = lastVnode.insertAsNthChild(0)
+                    else:
+                        assert(level < lastLevel)
+                        while level < lastLevel:
+                            lastLevel -= 1
+                            lastVnode = lastVnode.parent()
+                            assert(lastVnode)
+                            assert(lastLevel >= 0)
+                        v = lastVnode.insertAfter()
+                    lastVnode = v
+                    lastLevel = level
+                    #@nonl
+                    #@-node:ekr.20031218072017.3216:<< Link a new vnode v into the outline >>
+                    #@nl
+                    #@                << Set the headline string, skipping over the leader >>
+                    #@+node:ekr.20031218072017.3217:<< Set the headline string, skipping over the leader >>
+                    j = 0
+                    while g.match(s,j,'\t'):
+                        j += 1
+                    if g.match(s,j,"+ ") or g.match(s,j,"- "):
+                        j += 2
+                    
+                    v.initHeadString(s[j:])
+                    #@nonl
+                    #@-node:ekr.20031218072017.3217:<< Set the headline string, skipping over the leader >>
+                    #@nl
+                    #@                << Count the number of following body lines >>
+                    #@+node:ekr.20031218072017.3218:<< Count the number of following body lines >>
+                    bodyLines = 0
+                    index += 1 # Skip the headline.
+                    while index < len(strings):
+                        s = strings[index]
+                        level, junk = self.moreHeadlineLevel(s)
+                        level -= firstLevel
+                        if level >= 0:
+                            break
+                        # Remove first backslash of the body line.
+                        if g.match(s,0,'\\'):
+                            strings[index] = s[1:]
+                        bodyLines += 1
+                        index += 1
+                    #@nonl
+                    #@-node:ekr.20031218072017.3218:<< Count the number of following body lines >>
+                    #@nl
+                    #@                << Add the lines to the body text of v >>
+                    #@+node:ekr.20031218072017.3219:<< Add the lines to the body text of v >>
+                    if bodyLines > 0:
+                        body = ""
+                        n = index - bodyLines
+                        while n < index:
+                            body += strings[n]
+                            if n != index - 1:
+                                body += "\n"
+                            n += 1
+                        v.setTnodeText(body)
+                    #@nonl
+                    #@-node:ekr.20031218072017.3219:<< Add the lines to the body text of v >>
+                    #@nl
+                    v.setDirty()
+                else: index += 1
+                assert progress < index
+            if theRoot:
+                theRoot.setDirty()
+                c.setChanged(True)
+        finally:
+            c.endUpdate()
         return theRoot
     #@nonl
     #@-node:ekr.20031218072017.3215:convertMoreString/StringsToOutlineAfter
@@ -434,13 +438,15 @@ class baseLeoImportCommands:
         self.webType = webType
     
         c.beginUpdate()
-        for fileName in files:
-            v = self.createOutlineFromWeb(fileName,current)
-            v.contract()
-            v.setDirty()
-            c.setChanged(True)
-        c.selectVnode(current)
-        c.endUpdate()
+        try:
+            for fileName in files:
+                v = self.createOutlineFromWeb(fileName,current)
+                v.contract()
+                v.setDirty()
+                c.setChanged(True)
+            c.selectVnode(current)
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.3226:importWebCommand
     #@+node:ekr.20031218072017.3227:findFunctionDef

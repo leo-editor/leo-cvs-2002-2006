@@ -1018,8 +1018,10 @@ class baseVnode (object):
         g.trace()
         v = self ; c = v.c
         c.beginUpdate()
-        v.t.clearDirty()
-        c.endUpdate() # recomputes all icons
+        try:
+            v.t.clearDirty()
+        finally:
+            c.endUpdate() # recomputes all icons
     #@nonl
     #@-node:ekr.20031218072017.3390:clearDirty & clearDirtyJoined (redundant code)
     #@+node:ekr.20031218072017.3391:v.clearMarked
@@ -2170,9 +2172,11 @@ class position (object):
         changed = len(dirtyVnodeList) > 0
     
         c.beginUpdate()
-        for v in dirtyVnodeList:
-            v.t.setDirty() # Do not call v.setDirty here!
-        c.endUpdate(changed)
+        try:
+            for v in dirtyVnodeList:
+                v.t.setDirty() # Do not call v.setDirty here!
+        finally:
+            c.endUpdate(changed)
     
         return dirtyVnodeList
     #@nonl
@@ -2187,7 +2191,7 @@ class position (object):
         # g.trace(g.app.count) ; g.app.count += 1
     
         c.beginUpdate()
-        if 1: # update...
+        try: # update...
             if not p.v.t.isDirty():
                 p.v.t.setDirty()
                 dirtyVnodeList.append(p.v)
@@ -2196,8 +2200,8 @@ class position (object):
             dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty(setDescendentsDirty)
             dirtyVnodeList.extend(dirtyVnodeList2)
             changed = len(dirtyVnodeList) > 0
-        c.endUpdate(changed)
-    
+        finally:
+            c.endUpdate(changed)
         return dirtyVnodeList
     #@nonl
     #@-node:ekr.20040303163330:p.setDirty

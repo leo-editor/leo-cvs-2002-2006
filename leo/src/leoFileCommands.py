@@ -205,31 +205,33 @@ class baseFileCommands:
         c = self.c
         current = c.currentPosition()
         c.beginUpdate()
-        if reassignIndices:
-            #@        << reassign tnode indices >>
-            #@+node:ekr.20031218072017.1558:<< reassign tnode indices >>
-            #@+at 
-            #@nonl
-            # putLeoOutline calls assignFileIndices (when copying nodes) so 
-            # that vnode can be associated with tnodes.
-            # However, we must _reassign_ the indices here so that no "False 
-            # clones" are created.
-            #@-at
-            #@@c
-            
-            current.clearVisitedInTree()
-            
-            for p in current.self_and_subtree_iter():
-                t = p.v.t
-                if not t.isVisited():
-                    t.setVisited()
-                    self.maxTnodeIndex += 1
-                    t.setFileIndex(self.maxTnodeIndex)
-            #@nonl
-            #@-node:ekr.20031218072017.1558:<< reassign tnode indices >>
-            #@nl
-        c.selectVnode(current)
-        c.endUpdate()
+        try:
+            if reassignIndices:
+                #@            << reassign tnode indices >>
+                #@+node:ekr.20031218072017.1558:<< reassign tnode indices >>
+                #@+at 
+                #@nonl
+                # putLeoOutline calls assignFileIndices (when copying nodes) 
+                # so that vnode can be associated with tnodes.
+                # However, we must _reassign_ the indices here so that no 
+                # "False clones" are created.
+                #@-at
+                #@@c
+                
+                current.clearVisitedInTree()
+                
+                for p in current.self_and_subtree_iter():
+                    t = p.v.t
+                    if not t.isVisited():
+                        t.setVisited()
+                        self.maxTnodeIndex += 1
+                        t.setFileIndex(self.maxTnodeIndex)
+                #@nonl
+                #@-node:ekr.20031218072017.1558:<< reassign tnode indices >>
+                #@nl
+            c.selectVnode(current)
+        finally:
+            c.endUpdate()
         return current
     #@nonl
     #@-node:ekr.20031218072017.1557:finishPaste
@@ -1325,12 +1327,17 @@ class baseFileCommands:
         #@nl
         self.topPosition = None
         c.beginUpdate()
-        ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
-        frame.resizePanesToRatio(ratio,frame.secondary_ratio)
-        if 0: # 1/30/04: this is useless.
-            if self.topPosition: 
-                c.setTopVnode(self.topPosition)
-        c.endUpdate()
+        try:
+            ok, ratio = self.getLeoFile(
+                fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag,
+                silent=silent)
+            frame.resizePanesToRatio(ratio,frame.secondary_ratio)
+            if 0: # 1/30/04: this is useless.
+                if self.topPosition: 
+                    c.setTopVnode(self.topPosition)
+        finally:
+            c.endUpdate()
         # Delete the file buffer
         self.fileBuffer = ""
         return ok
@@ -1362,8 +1369,10 @@ class baseFileCommands:
         #@-node:ekr.20031218072017.2298:<< Set the default directory >>
         #@nl
         c.beginUpdate()
-        ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=False)
-        c.endUpdate()
+        try:
+            ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=False)
+        finally:
+            c.endUpdate()
         c.frame.deiconify()
         vflag,junk,secondary_ratio = self.frame.initialRatios()
         c.frame.resizePanesToRatio(ratio,secondary_ratio)
@@ -2010,16 +2019,18 @@ class baseFileCommands:
         ok = g.doHook("save1",c=c,p=v,v=v,fileName=fileName)
         if ok is None:
             c.beginUpdate()
-            c.endEditing()# Set the current headline text.
-            self.setDefaultDirectoryForNewFiles(fileName)
-            ok = self.write_Leo_file(fileName,False) # outlineOnlyFlag
-            if ok:
-                c.setChanged(False) # Clears all dirty bits.
-                g.es("saved: " + g.shortFileName(fileName))
-                if c.config.save_clears_undo_buffer:
-                    g.es("clearing undo")
-                    c.undoer.clearUndoState()
-            c.endUpdate()
+            try:
+                c.endEditing()# Set the current headline text.
+                self.setDefaultDirectoryForNewFiles(fileName)
+                ok = self.write_Leo_file(fileName,False) # outlineOnlyFlag
+                if ok:
+                    c.setChanged(False) # Clears all dirty bits.
+                    g.es("saved: " + g.shortFileName(fileName))
+                    if c.config.save_clears_undo_buffer:
+                        g.es("clearing undo")
+                        c.undoer.clearUndoState()
+            finally:
+                c.endUpdate()
         g.doHook("save2",c=c,p=v,v=v,fileName=fileName)
         return ok
     #@nonl
@@ -2031,13 +2042,16 @@ class baseFileCommands:
     
         if not g.doHook("save1",c=c,p=v,v=v,fileName=fileName):
             c.beginUpdate()
-            c.endEditing() # Set the current headline text.
-            self.setDefaultDirectoryForNewFiles(fileName)
-            if self.write_Leo_file(fileName,False): # outlineOnlyFlag
-                c.setChanged(False) # Clears all dirty bits.
-                g.es("saved: " + g.shortFileName(fileName))
-            c.endUpdate()
+            try:
+                c.endEditing() # Set the current headline text.
+                self.setDefaultDirectoryForNewFiles(fileName)
+                if self.write_Leo_file(fileName,False): # outlineOnlyFlag
+                    c.setChanged(False) # Clears all dirty bits.
+                    g.es("saved: " + g.shortFileName(fileName))
+            finally:
+                c.endUpdate()
         g.doHook("save2",c=c,p=v,v=v,fileName=fileName)
+    #@nonl
     #@-node:ekr.20031218072017.3043:saveAs
     #@+node:ekr.20031218072017.3044:saveTo
     def saveTo (self,fileName):
@@ -2046,11 +2060,13 @@ class baseFileCommands:
     
         if not g.doHook("save1",c=c,p=v,v=v,fileName=fileName):
             c.beginUpdate()
-            c.endEditing()# Set the current headline text.
-            self.setDefaultDirectoryForNewFiles(fileName)
-            if self.write_Leo_file(fileName,False): # outlineOnlyFlag
-                g.es("saved: " + g.shortFileName(fileName))
-            c.endUpdate()
+            try:
+                c.endEditing()# Set the current headline text.
+                self.setDefaultDirectoryForNewFiles(fileName)
+                if self.write_Leo_file(fileName,False): # outlineOnlyFlag
+                    g.es("saved: " + g.shortFileName(fileName))
+            finally:
+                c.endUpdate()
         g.doHook("save2",c=c,p=v,v=v,fileName=fileName)
     #@nonl
     #@-node:ekr.20031218072017.3044:saveTo

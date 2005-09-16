@@ -466,7 +466,7 @@ class leoFind:
         self.initBatchCommands()
         count = 0
         c.beginUpdate()
-        if 1: # In update...
+        try: # In update...
             u.beforeChangeGroup(current,undoType)
             while 1:
                 pos1, pos2 = self.findNextMatch()
@@ -479,7 +479,9 @@ class leoFind:
             u.afterChangeGroup(p,undoType,reportFlag=True)
             g.es("changed: %d instances" % (count))
             self.restore(saveData)
-        c.endUpdate()
+        finally:
+            c.endUpdate()
+    #@nonl
     #@-node:ekr.20031218072017.3069:changeAll (sets end of change-all group)
     #@+node:ekr.20031218072017.3070:changeSelection
     # Replace selection with self.change_text.
@@ -510,15 +512,17 @@ class leoFind:
         gui.set_focus(c,t)
     
         c.beginUpdate()
-        if self.mark_changes:
-            p.setMarked()
-        # update node, undo status, dirty flag, changed mark & recolor
-        if self.in_headline:
-            c.frame.tree.idle_head_key(p)
-        else:
-            c.frame.body.onBodyChanged(p,"Change",oldSel=oldSel,newSel=newSel)
-        c.frame.tree.drawIcon(p) # redraw only the icon.
-        c.endUpdate(False) # No redraws here: they would destroy the headline selection.
+        try:
+            if self.mark_changes:
+                p.setMarked()
+            # update node, undo status, dirty flag, changed mark & recolor
+            if self.in_headline:
+                c.frame.tree.idle_head_key(p)
+            else:
+                c.frame.body.onBodyChanged(p,"Change",oldSel=oldSel,newSel=newSel)
+            c.frame.tree.drawIcon(p) # redraw only the icon.
+        finally:
+            c.endUpdate(False) # No redraws here: they would destroy the headline selection.
         return True
     #@nonl
     #@-node:ekr.20031218072017.3070:changeSelection
@@ -600,15 +604,17 @@ class leoFind:
         self.initBatchCommands()
         count = 0
         c.beginUpdate()
-        while 1:
-            pos, newpos = self.findNextMatch()
-            if pos:
-                # g.trace(pos,newpos,self.p.headString())
-                count += 1
-                line = gui.getLineContainingIndex(t,pos)
-                self.printLine(line,allFlag=True)
-            else: break
-        c.endUpdate()
+        try:
+            while 1:
+                pos, newpos = self.findNextMatch()
+                if pos:
+                    # g.trace(pos,newpos,self.p.headString())
+                    count += 1
+                    line = gui.getLineContainingIndex(t,pos)
+                    self.printLine(line,allFlag=True)
+                else: break
+        finally:
+            c.endUpdate()
         g.es("found: %d matches" % (count))
         self.restore(data)
     #@nonl
@@ -628,8 +634,10 @@ class leoFind:
             data = self.save()
     
         c.beginUpdate()
-        pos, newpos = self.findNextMatch()
-        c.endUpdate(False) # Inhibit redraws so that headline remains selected.
+        try:
+            pos, newpos = self.findNextMatch()
+        finally:
+            c.endUpdate(False) # Inhibit redraws so that headline remains selected.
     
         if pos:
             self.showSuccess(pos,newpos)
@@ -1022,7 +1030,7 @@ class leoFind:
         c.frame.bringToFront() # Needed on the Mac
     
         c.beginUpdate()
-        if 1: # range of update...
+        try: # range of update...
             c.selectPosition(p)
             c.frame.tree.redraw_now() # Redraw now so selections are not destroyed.
             # Select the found vnode again after redraw.
@@ -1032,7 +1040,8 @@ class leoFind:
                 assert(p.edit_text())
             else:
                 c.selectVnode(p)
-        c.endUpdate(False) # Do not draw again!
+        finally:
+            c.endUpdate(False) # Do not draw again!
     
         t = g.choose(self.in_headline,p.edit_text(),c.frame.bodyCtrl)
         
