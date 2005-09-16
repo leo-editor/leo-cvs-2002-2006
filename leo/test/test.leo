@@ -1307,7 +1307,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050803075926"><vh>sudoku puzzle</vh>
+<v t="ekr.20050803075926" a="E"><vh>sudoku puzzle</vh>
 <v t="ekr.20050804073824"><vh>&lt;&lt; define data &gt;&gt;</vh></v>
 <v t="ekr.20050911123109"><vh>&lt;&lt; 5-star puzzles &gt;&gt;</vh></v>
 <v t="ekr.20050911145104"><vh>&lt;&lt; 4-star puzzles &gt;&gt;</vh></v>
@@ -7858,7 +7858,6 @@ Also: convert DIRECTORY to DIRECTORY/* file name pattern."
 	(expand-file-name "*" file-name)
       file-name)))</t>
 <t tx="ekr.20040713132127.69">
-
 ;;; Local Variables:
 ;;; eval: (put 'igrep-define 'lisp-indent-hook 1)
 ;;; eval: (put 'igrep-find-define 'lisp-indent-hook 1)
@@ -17316,6 +17315,8 @@ __str__ = __repr__</t>
         print s</t>
 <t tx="ekr.20050804060706">def isValidGuess (self,guess):
     
+    return True ##
+    
     for bunch in guess:
         if not bunch.cell.valIsPossible(bunch.val):
             return False
@@ -17337,7 +17338,7 @@ __str__ = __repr__</t>
         if n == 1:
             val = cell.values[0]
             if val in vals:
-                g.trace('%s appears twice in group %s' % val,repr(group))
+                g.trace('%s appears twice in group %s' % (val,repr(group)))
                 return False
             vals.append(val)
     return True</t>
@@ -17347,15 +17348,16 @@ __str__ = __repr__</t>
 ) 
 
 data = ( 
-    '1x5xxx37x',
-    'xxxxxx2xx',
-    'x973xxx1x',
-    'xxxx531x2',
-    '3xx8x1xx4',
-    '2x147xxxx',
-    'x7xxx864x',
-    'xx8xxxxxx',
-    'x12xxx8x7') # 8/4 5 stars</t>
+    'x6x29xx8x',
+    'xx8xxxx3x',
+    'x1xx78xxx',
+    'x217x9xx8',
+    '6xxxxxxx3',
+    '7xx6x492x',
+    'xxx12xx4x',
+    'x7xxxx3xx',
+    'x5xx86x7x')
+</t>
 <t tx="ekr.20050805150320">import leoPlugins
 
 rst3 = leoPlugins.getPluginModule('rst3')

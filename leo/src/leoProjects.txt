@@ -9921,6 +9921,120 @@ See the installation nodes in the docstring for the spellpyx plugin for how to u
 #@-node:ekr.20050910103843:added aspell23.pyd and aspell24.pyd to Leo's extension folder
 #@-node:ekr.20050705192437.1:New & improved features...
 #@-node:ekr.20050621084408:4.3.2 projects
+#@+node:ekr.20050914132013:4.3.2 final projects
+#@+node:ekr.20050912070506:Fixed crasher in rst3 plugin when docutils not present
+#@+node:ekr.20050912070506.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3333638
+By: tfer
+
+As downloaded; log pane notes problems with rst3 and aspell plug-ins.  Will,
+aspell still appears in the plugin menu and supplies directions for downloading
+and setting up needed components for that plugin in its "about".
+
+Following those directions (and searching help for aspell tips that lead me
+to making the using raw strings for the pathnames, (i.e. <pathvar> = r'<pahtname>')),
+I get the following in the log pane:
+
+global config dir: C:\Program Files\Leo\config
+home dir: None
+reading settings in C:\Program Files\Leo\config\leoSettings.leo
+unexpected exception in g.importFromPath
+Traceback (most recent call last):
+
+  File "C:\Program Files\Leo\src\leoGlobals.py", line 4964, in importFromPath
+    module = imp.load_module(moduleName,theFile,pathname,description)
+
+  File "C:\Program Files\Leo\plugins\rst3.py", line 553, in ?
+    code_block.options = {
+
+AttributeError: 'NoneType' object has no attribute 'parsers'
+
+can not load enabled rst3 plugin
+Can not import aspell from plugin spellpyx
+can not load enabled spellpyx plugin
+5 plugins loaded
+#@-node:ekr.20050912070506.1:Report
+#@-node:ekr.20050912070506:Fixed crasher in rst3 plugin when docutils not present
+#@+node:ekr.20050911085148:Investigated problems with es_print (works for me)
+#@+node:ekr.20050914132954:Report
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3333424
+Viktor Ransmayr
+
+  with your release of the beta I tried to generate the Leo
+User Guide locally at my laptop and encountered the
+following problems:
+
+2005-09-11 09:04:20
+
+o Try creation of leo-documentation with rst3-plugin. 
+ - Help->Open LeoDocs.leo
+ - Edit->Write Restructured Text
+ - See <<Log2>>
+
+### Begin of Log2 content
+
+Leo Log Window...
+Leo 4.3.2 beta 1, build  1.278 , September 10, 2005
+Python 2.4.1, Tk 8.4.7, win32
+
+reading: C:\Programme\Leo\doc\LeoDocs.leo
+SilverCity not present so no syntax highlighting
+stylesheet does not exist: C:\Dokumente und Einstellungen\VR\Eigene
+Dateien\Tools\Leo\default.css
+wrote: C:\Programme\Leo\doc\rstplugin3.html
+SilverCity not present so no syntax highlighting
+stylesheet does not exist: C:\Dokumente und Einstellungen\VR\Eigene
+Dateien\Tools\Leo\default.css
+wrote: C:\Programme\Leo\doc\leo_TOC.html
+SilverCity not present so no syntax highlighting
+stylesheet does not exist: C:\Dokumente und Einstellungen\VR\Eigene
+Dateien\Tools\Leo\default.css
+
+...
+
+SilverCity not present so no syntax highlighting
+stylesheet does not exist: C:\Dokumente und Einstellungen\VR\Eigene
+Dateien\Tools\Leo\default.css
+wrote: C:\Programme\Leo\doc\directives.html
+SilverCity not present so no syntax highlighting
+stylesheet does not exist: C:\Dokumente und Einstellungen\VR\Eigene
+Dateien\Tools\Leo\default.css
+exception executing command
+Traceback (most recent call last):
+  File "C:\Programme\Leo\src\leoCommands.py", line 186, in doCommand
+    command()
+  File "C:\Programme\Leo\plugins\rst3.py", line 656, in callback
+    self.processTree(c.currentPosition())
+  File "C:\Programme\Leo\plugins\rst3.py", line 1105, in processTree
+    self.report(self.outputFileName)
+  File "C:\Programme\Leo\plugins\rst3.py", line 1537, in report
+    g.es_print('wrote: %s' % (name),color="blue")
+  File "C:\Programme\Leo\src\leoGlobals.py", line 2458, in es_print
+    print g.toEncodedString(s,'ascii')
+IOError: [Errno 9] Bad file descriptor
+
+### End of Log2 content
+
+When I tried to generate the various chapters manually
+by hand using the rst3 button in the outline I succeeded.
+#@-node:ekr.20050914132954:Report
+#@+node:ekr.20050707064040:es_print & test
+def es_print(s,*args,**keys):
+    
+    print g.toEncodedString(s,'ascii')
+    g.es(s,*args,**keys)
+    
+def test_g_es_print():
+    
+    g.es_print('\ntest of es_print: Ă',color='red')
+#@nonl
+#@-node:ekr.20050707064040:es_print & test
+#@-node:ekr.20050911085148:Investigated problems with es_print (works for me)
+#@+node:ekr.20050911084855:Added doc/html/*.html to distribution list
+#@-node:ekr.20050911084855:Added doc/html/*.html to distribution list
+#@-node:ekr.20050914132013:4.3.2 final projects
 #@+node:ekr.20050718150452:(Stuff used by wx plugin)
 #@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
 def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):

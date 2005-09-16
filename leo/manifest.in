@@ -11,11 +11,9 @@ include install
 include uninstall
 exclude createLeoDist.py
 
-# New in Leo 4.3: use leoSettings.leo, .leoRecentFiles.txt
 include config/leoSettings.leo
 include config/.leoRecentFiles.txt
 
-# New in Leo 4.3:
 # 1. createLeoDist.py is distributed in dist directory.
 #    The distribution script temporarily copies createLeoDist.py to the leo directory.
 # 2. Distribute leoDist.leo, not leoDistRef.leo.
@@ -28,7 +26,6 @@ include dist/leoDist.leo
 include dist/.pycheckrc
 
 include doc/LeoDiary.leo
-
 include doc/LeoDocs.leo
 include doc/leoNotes.txt
 include doc/LeoPostings.leo
@@ -47,6 +44,8 @@ include doc\LeoN\sun98achieving.pdf
 include doc\LeoN\sun97generic.pdf
 include doc\LeoN\sun98operational.pdf
 include doc\LeoN\sun98reversible.pdf
+
+include doc\html\*.*
 
 include extensions/aspell23.pyd
 include extensions/aspell24.pyd

@@ -50,6 +50,7 @@ import difflib
 import os
 import re
 import string
+subprocess = g.importExtension('subprocess',pluginName=__name__,verbose=True)
 import sys
 import weakref
 #@nonl
@@ -3497,7 +3498,6 @@ class Emacs:
         #@-node:ekr.20050724075352.318:subprocess
         #@+node:ekr.20050724075352.319:executeSubprocess
         def executeSubprocess (self,event,command,input=None):
-            import subprocess
             b = self.miniBuffer
             try:
                 try:

@@ -1,4 +1,4 @@
-Leo 4.3.2 beta 1                  September 10, 2005
+Leo 4.3.2 final                  September 16, 2005
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 

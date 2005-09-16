@@ -44,9 +44,9 @@ Here is how to install the spellpyx plugin:
   compiled for a specific version of Python.  aspell24.pyd for Python 2.4, etc.
   Make a copy of the appropriate dll and rename it to be aspell.pyd.
 
-3a. (Linux) Copy aspell.pyd to the aspell folder created in step 1.
+3a. (Linux) Copy aspell.so to the python/site-packages folder.
 
-3b. (XP) Copy aspell.pyd to the bin subfolder of the aspell folder created in step 1.
+3b. (XP) Copy aspell.pyd python/site-packages folder.
  
 4.  In the < < spellpx imports > > section in spellpyx.py, do the following:
 
@@ -67,6 +67,8 @@ Here are some links for those wishing to compile their own aspell.pyd file:
     to mingw/lib now instead of the grueling lib building steps. <http://www.mingw.org>
 
 - http://sourceforge.net/forum/forum.php?thread_id=1107275&forum_id=10226
+
+For more detailed notes for Linux see: http://sourceforge.net/forum/message.php?msg_id=3337385
 '''
 #@nonl
 #@-node:ekr.20050910094135:<< docstring >>

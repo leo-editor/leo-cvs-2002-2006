@@ -51,7 +51,7 @@ plugin_manager.py
 # Icon area: order is important.
 mod_scripting.py
 #hoist.py
-spellpyx.py
+#spellpyx.py
 #nodenavigator.py
 #rst2.py
 #searchbox.py

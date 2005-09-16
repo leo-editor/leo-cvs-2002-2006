@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1117" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1118" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
 	<global_window_position top="40" left="406" height="778" width="794"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -23,6 +23,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
+<v t="ekr.20050916073410"><vh>ANN: Leo 4.3.2-final</vh></v>
 <v t="ekr.20050905095110"><vh>ANN: Leo 4.3.2-b1</vh></v>
 <v t="ekr.20050909083954"><vh>ANN: New docs for Leo</vh></v>
 <v t="ekr.20050620150256"><vh>ANN: Leo 4.3.1</vh></v>
@@ -119,9 +120,10 @@
 <v t="ekr.20040701160830"><vh>@url http://pychecker.sourceforge.net/</vh></v>
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
-<v t="ekr.20050910192724" a="E"><vh>Pychecker incorrect errors</vh></v>
+<v t="ekr.20050910192724"><vh>Pychecker incorrect errors</vh></v>
 </v>
 <v t="ekr.20050118095021"><vh>Leo 4.3 installer: version stuff</vh>
+<v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
@@ -169,11 +171,9 @@
 <v t="ekr.20050118103447.1"><vh>&lt;&lt; uninstall top-level files &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050118092706"
-expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
-<v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
+<v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
+<v t="EKR.20040519090846" a="TV"><vh>Distribution files (update for each release)</vh>
 <v t="EKR.20040519090846.2"><vh>@asis ../doc/INSTALL.TXT</vh>
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
 <v t="EKR.20040519090846.4"><vh>Linux installation</vh></v>
@@ -193,7 +193,7 @@ expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050118113631" a="TV"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -212,6 +212,10 @@ expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 # Run pychecker by enabling code in leo.py
 # Run all unit tests.
 @nocolor
+pluginsManager.txt
+    - *Disable* Spellpyx plugin.
+    - Enable only these plugins:
+        - Open With, Plugins Manager, Plugins Menu, Rst3, Scripting, UNL.
 Documentation
 	- Update readme.txt
 	- Update LeoDocs.leo
@@ -470,7 +474,7 @@ else: # Doesn't work
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4-3-2-beta-1", # No spaces here!
+version="4-3-2", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -643,7 +647,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.3.2-b1
+Version: 4.3.2
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -662,7 +666,7 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.3.2 beta 1                  September 10, 2005
+<t tx="EKR.20040519090846.9">Leo 4.3.2 final                  September 16, 2005
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
@@ -702,11 +706,9 @@ include install
 include uninstall
 exclude createLeoDist.py
 
-# New in Leo 4.3: use leoSettings.leo, .leoRecentFiles.txt
 include config/leoSettings.leo
 include config/.leoRecentFiles.txt
 
-# New in Leo 4.3:
 # 1. createLeoDist.py is distributed in dist directory.
 #    The distribution script temporarily copies createLeoDist.py to the leo directory.
 # 2. Distribute leoDist.leo, not leoDistRef.leo.
@@ -719,7 +721,6 @@ include dist/leoDist.leo
 include dist/.pycheckrc
 
 include doc/LeoDiary.leo
-
 include doc/LeoDocs.leo
 include doc/leoNotes.txt
 include doc/LeoPostings.leo
@@ -738,6 +739,8 @@ include doc\LeoN\sun98achieving.pdf
 include doc\LeoN\sun97generic.pdf
 include doc\LeoN\sun98operational.pdf
 include doc\LeoN\sun98reversible.pdf
+
+include doc\html\*.*
 
 include extensions/aspell23.pyd
 include extensions/aspell24.pyd
@@ -3468,7 +3471,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-3-2-b1.exe"
+OutFile "LeoSetup-4-3-2.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3545,6 +3548,8 @@ File "..\doc\LeoN\sun98achieving.pdf"
 File "..\doc\LeoN\sun97generic.pdf"
 File "..\doc\LeoN\sun98operational.pdf"
 File "..\doc\LeoN\sun98reversible.pdf"
+
+File "..\doc\html\*.*"
 </t>
 <t tx="ekr.20050118104901.2">Delete "$INSTDIR\doc\LeoDocs.leo"
 Delete "$INSTDIR\doc\leoDiary.leo"
@@ -3567,7 +3572,9 @@ Delete "$INSTDIR\doc\default.css"
 Delete "$INSTDIR\doc\LeoN\sun98achieving.pdf"
 Delete "$INSTDIR\doc\LeoN\sun97generic.pdf"
 Delete "$INSTDIR\doc\LeoN\sun98operational.pdf"
-Delete "$INSTDIR\doc\LeoN\sun98reversible.pdf"</t>
+Delete "$INSTDIR\doc\LeoN\sun98reversible.pdf"
+
+Delete "$INSTDIR\doc\doc\html\*.*"</t>
 <t tx="ekr.20050118104901.3"></t>
 <t tx="ekr.20050118104901.4">File "..\Icons\*.*"</t>
 <t tx="ekr.20050118104901.5">Delete "$INSTDIR\icons\*.*"</t>
@@ -3670,7 +3677,7 @@ Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 <t tx="ekr.20050118122740.3">Delete "$INSTDIR\test\__init__.py"
 Delete "$INSTDIR\test\test.leo"
 </t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3.2-beta-1"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3.2-final"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119191034"></t>
 <t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/
@@ -4406,5 +4413,37 @@ C:\prog\leoCVS\leo\src\leoGlobals.py:1429: Setting aList to itself has no effect
 
 # Incorrect error.
 C:\prog\leoCVS\leo\src\leoUndo.py:968: No class attribute (bead) found</t>
+<t tx="ekr.20050916073410">Leo 4.3.2 final  is now available at:
+
+http://sourceforge.net/project/showfiles.php?group_id=3458&amp;package_id=29106
+
+To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of 4.3.2:
+-----------------------
+
+- Improved Leo's documentation:
+    - A tutorial introduction to Leo:
+      http://webpages.charter.net/edreamleo/intro.html
+    - A 5-minute guide to programming with Leo:
+      http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
+
+- The new rst3 plugin creates .html and .tex files from reStructuredText
+  embedded in Leo files. Any node of the source outline may contain options for
+  the rst3 plugin, which makes this plugin much more useful and flexible than
+  the previous rst plugins. All of Leo's documentation was created using this
+  plugin from sources in LeoDocs.leo. For full documentation for rst3 see:
+  http://webpages.charter.net/edreamleo/rstplugin3.html
+
+- The spellpyx (spell checking) plugin is now much easier to use.
+
+- The vim and openWith plugins now use Python's subprocess module if it is present.
+ 
+- Improved the Pretty Printing command.
+
+- The usual assortment of bug fixes.
+
+Edward K. Ream
+September 16, 2005</t>
 </tnodes>
 </leo_file>

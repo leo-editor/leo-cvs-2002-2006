@@ -6,6 +6,7 @@ ASPN
 Aha's
 Alireza
 Alireze
+Appliquer
 AsciiDoc
 AssertionError
 AttributeError
@@ -114,6 +115,9 @@ Javadoc
 Javascript
 Jobling
 Johansson
+Journal1
+Journal2
+Journal3
 Jtobler
 Jurjen
 Jython
@@ -127,6 +131,7 @@ LeBlanc
 Leo1
 Leo1's
 Leo2
+Leo2AscDoc
 Leo2AsciiDoc
 LeoApp16
 LeoDoc
@@ -187,6 +192,7 @@ OpenSoftware
 OpenSource
 Ousterhout
 Ouvre
+Ouvrir
 OverflowError
 PCDATA
 PCWindow
@@ -274,6 +280,7 @@ Tobler
 TokenError
 Tomaz
 Toplevel
+Traduit
 TreePad
 TypeError
 UNL
@@ -381,6 +388,7 @@ ato
 auto_save
 autocomplete
 autocompleter
+autocompleter's
 autoload
 autosave
 autoscrolling
@@ -581,6 +589,7 @@ customizeLeo
 cweave
 cweb_language
 cxx
+d'Accueil
 d1
 d2
 darwin
@@ -899,6 +908,7 @@ headrclick1
 headrclick2
 heredoc
 hexlify
+hh
 hoistFlag
 href
 htm
@@ -1007,6 +1017,7 @@ iters
 ivar
 ivars
 ivarsDict
+j3
 j_lines
 java_language
 javac
@@ -1103,6 +1114,7 @@ leosetup
 level1
 levelSpaces
 lf
+ligne
 limit_count
 line1
 line2
@@ -1448,6 +1460,7 @@ pycheckrc
 pyd
 pydoc
 pypi
+python2
 python22
 python24
 pythonDecorator
@@ -1525,6 +1538,7 @@ restoreStdout
 restructuredtext
 ret
 rexec
+rfc0791
 rfind
 right_data
 rlpdf
@@ -1750,6 +1764,7 @@ targetfilename
 targettime
 tb
 tcl
+tcl8
 tcltk
 tcltktest
 tds
@@ -1874,6 +1889,7 @@ unselect
 unselect1
 unselect2
 unselecting
+unsummon
 untar
 up_arrow
 updateButtons

@@ -9474,6 +9474,8 @@ Apply incremental search commands to headlines.  This might be fast, but is it u
 #@+node:ekr.20050621130815:Rewrite tech report with rst3
 #@-node:ekr.20050621130815:Rewrite tech report with rst3
 #@-node:ekr.20050727075336:Minor
+#@+node:ekr.20050914132954.1:Have rst3 plugin honor the @ignore directive
+#@-node:ekr.20050914132954.1:Have rst3 plugin honor the @ignore directive
 #@-node:ekr.20050816165305:To do 4.4
 #@+node:ekr.20041228073219:4.4.x
 #@+node:ekr.20041228074125:(Make drawing more flexible)

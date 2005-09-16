@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="18921" clone_windows="0"/>
-<globals body_outline_ratio="0.578831312018">
+<leo_header file_format="2" tnodes="0" max_tnode_index="18922" clone_windows="0"/>
+<globals body_outline_ratio="0.464772727273">
 	<global_window_position top="62" left="351" height="880" width="890"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -41,9 +41,9 @@
 <v t="ekr.20050902080416"><vh>@@button paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="ekr.20050913131848"><vh>4.3.2 final</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20050913131848" a="TV"><vh>4.3.2 final</vh>
 <v t="ekr.20050906104918.1"><vh>Rewrote documentation</vh></v>
 <v t="ekr.20050906104931.1"><vh>Bug fixes...</vh>
 <v t="ekr.20050909082711"><vh>Fixed various unicode bugs</vh></v>
@@ -1495,13 +1495,13 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
-<v t="ekr.20050818163826"><vh>@rst html docs\rstplugin3.html</vh>
+<v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050818163826.2"><vh>Overview</vh></v>
 <v t="ekr.20050818163826.3"><vh>Comparison with previous rst plugins</vh></v>
-<v t="ekr.20050818163826.4" a="M"><vh>Options</vh>
+<v t="ekr.20050818163826.4"><vh>Options</vh>
 <v t="ekr.20050818163826.5"><vh>Options supporting the http plugin</vh></v>
 <v t="ekr.20050818163826.6"><vh>Options that set command names</vh></v>
 </v>
@@ -1518,14 +1518,14 @@
 </v>
 </v>
 <v t="ekr.20050831184021.2"><vh>Table of contents</vh>
-<v t="ekr.20040414162124"><vh>@rst html docs\leo_TOC.html</vh>
+<v t="ekr.20040414162124"><vh>@rst html\leo_TOC.html</vh>
 <v t="ekr.20050828112159"><vh>@rst-no-head All links (TOC)</vh></v>
 <v t="ekr.20040414163815"><vh>Table of Contents</vh></v>
 <v t="ekr.20050812134441.3"><vh>@rst-no-head end</vh></v>
 </v>
 </v>
-<v t="ekr.20050831184021.3" a="E"><vh>Front matter</vh>
-<v t="ekr.20040414172212" a="EM"><vh>@rst html docs\frontMatter.html</vh>
+<v t="ekr.20050831184021.3"><vh>Front matter</vh>
+<v t="ekr.20040414172212"><vh>@rst html\frontMatter.html</vh>
 <v t="ekr.20050812134441"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20040414172218.2"><vh>Preface</vh></v>
 <v t="ekr.20040414172218.4"><vh>Acknowledgements</vh>
@@ -1537,8 +1537,8 @@
 <v t="ekr.20050812125502"><vh>@rst-no-head End stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831195331.1" a="E"><vh>FAQ</vh>
-<v t="ekr.20050830115714" a="E"><vh>@rst html docs\FAQ.html</vh>
+<v t="ekr.20050831195331.1"><vh>FAQ</vh>
+<v t="ekr.20050830115714"><vh>@rst html\FAQ.html</vh>
 <v t="ekr.20050830120007"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050830115714.1"><vh>Learning about Leo</vh>
 <v t="ekr.20050830115714.2"><vh>What's the best way to learn to use Leo?</vh></v>
@@ -1563,7 +1563,7 @@
 <v t="ekr.20050830115714.30"><vh>How do I submit a plugin?</vh></v>
 <v t="ekr.20050830120844"><vh>How do I add a new menu item from a plugin?</vh></v>
 </v>
-<v t="ekr.20050830115714.118" a="E"><vh>Tips and techniques</vh>
+<v t="ekr.20050830115714.118"><vh>Tips and techniques</vh>
 <v t="ekr.20050830120857"><vh>How can I use Leo to develop Leo itself?</vh></v>
 <v t="ekr.20050830115714.74"><vh>How can I import many files at once?</vh></v>
 <v t="ekr.20050830115714.119"><vh>How can I use two copies of Leo to advantage?</vh></v>
@@ -1586,8 +1586,8 @@
 <v t="ekr.20050906105946"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831184021.4" a="E"><vh>What people are saying about Leo</vh>
-<v t="ekr.20050830074716" a="E"><vh>@rst html docs\testimonials.html</vh>
+<v t="ekr.20050831184021.4"><vh>What people are saying about Leo</vh>
+<v t="ekr.20050830074716"><vh>@rst html\testimonials.html</vh>
 <v t="ekr.20050830075229"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050830074815.1"><vh>Leo is revolutionary</vh></v>
 <v t="ekr.20050830074815.2"><vh>Leo is a showcase Python/Tkinter application</vh></v>
@@ -1610,7 +1610,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.2"><vh>Chapter 1: Installing Leo</vh>
-<v t="edream.110203163054.48"><vh>@rst html docs\install.html</vh>
+<v t="edream.110203163054.48"><vh>@rst html\install.html</vh>
 <v t="ekr.20050901110110"><vh>@rst-no-head links</vh></v>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
 <v t="edream.110203163054.50"><vh>How to install Leo on Linux</vh></v>
@@ -1625,7 +1625,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.3"><vh>Chapter 2: A Tutorial Introduction to Leo</vh>
-<v t="ekr.20050816073412"><vh>@rst html docs\intro.html</vh>
+<v t="ekr.20050816073412"><vh>@rst html\intro.html</vh>
 <v t="ekr.20050816073814"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050816073412.1"><vh>Introduction</vh>
 <v t="ekr.20050822173420"><vh>Leo's main window</vh></v>
@@ -1656,7 +1656,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.26"><vh>Chapter 3: Using Outlines</vh>
-<v t="ekr.20050901101608"><vh>@rst html docs\outlines.html</vh>
+<v t="ekr.20050901101608"><vh>@rst html\outlines.html</vh>
 <v t="ekr.20050901101608.1"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.27"><vh>Cloning nodes</vh></v>
 <v t="EKR.20040524104904.36"><vh>Creating and destroying nodes</vh></v>
@@ -1674,7 +1674,7 @@
 </v>
 </v>
 <v t="ekr.20050831184021.5"><vh>Chapter 4: Programming with Leo</vh>
-<v t="ekr.20050828061213"><vh>@rst html docs\directives.html</vh>
+<v t="ekr.20050828061213"><vh>@rst html\directives.html</vh>
 <v t="ekr.20050828160132"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050828065955"><vh>@rst-ignore To do</vh></v>
 <v t="ekr.20050828061501.1"><vh>@rst-no-head Intro.</vh></v>
@@ -1708,7 +1708,7 @@
 <v t="ekr.20050828061501.51"><vh> @file and @thin</vh></v>
 <v t="ekr.20050828174453.1"><vh> @nosent</vh></v>
 <v t="ekr.20050828174453.2"><vh> @asis and @noref</vh></v>
-<v t="ekr.20050828061501.45" a="M"><vh> @root</vh>
+<v t="ekr.20050828061501.45"><vh> @root</vh>
 <v t="ekr.20050828061501.47"><vh>Sections and section definitions</vh></v>
 <v t="ekr.20050828061501.48"><vh>Tangling @root trees with the Tangle commands</vh></v>
 <v t="ekr.20050828061501.49"><vh>Untangling @root trees with the Untangle commands</vh></v>
@@ -1719,8 +1719,8 @@
 <v t="ekr.20050828115003"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.99" a="E"><vh>Chapter 5: Using Leo's Commands</vh>
-<v t="ekr.20050901101608.2" a="E"><vh>@rst html docs\commands.html</vh>
+<v t="EKR.20040524104904.99"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="ekr.20050901101608.2"><vh>@rst html\commands.html</vh>
 <v t="ekr.20050901101852"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.100"><vh> The File Menu</vh>
 <v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
@@ -1731,16 +1731,16 @@
 <v t="EKR.20040524104904.109"><vh>Exporting Files from Leo Outlines</vh></v>
 <v t="EKR.20040524104904.110"><vh>Quitting Leo</vh></v>
 </v>
-<v t="EKR.20040524104904.111" a="E"><vh> The Edit Menu</vh>
+<v t="EKR.20040524104904.111"><vh> The Edit Menu</vh>
 <v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
 <v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
 <v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
-<v t="ekr.20050313102319" a="M"><vh>Adding and deleting comments in body text</vh></v>
+<v t="ekr.20050313102319"><vh>Adding and deleting comments in body text</vh></v>
 <v t="EKR.20040524104904.115"><vh>Creating nodes from body text</vh></v>
 <v t="EKR.20040524104904.116"><vh>Converting leading blanks and tabs in body text</vh></v>
 <v t="EKR.20040524104904.117"><vh>Executing Python scripts in body text</vh></v>
 <v t="EKR.20040524104904.118"><vh>Finding and changing text</vh></v>
-<v t="ekr.20050902160924" a="TV"><vh>Script search</vh></v>
+<v t="ekr.20050902160924"><vh>Script search</vh></v>
 <v t="EKR.20040524104904.134"><vh>Go To Line Number</vh></v>
 <v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
 <v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh></v>
@@ -1762,7 +1762,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.161"><vh>Chapter 6: Leo and Literate Programming</vh>
-<v t="ekr.20050901101608.3"><vh>@rst html docs\design.html</vh>
+<v t="ekr.20050901101608.3"><vh>@rst html\design.html</vh>
 <v t="ekr.20050901101949"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.162"><vh>Why I like Literate Programming</vh></v>
 <v t="EKR.20040524104904.173"><vh>How Leo Improves Literate Programming</vh></v>
@@ -1771,7 +1771,7 @@
 </v>
 </v>
 <v t="ekr.20050831195331.4"><vh>Chapter 7: Scripting Leo with Python</vh>
-<v t="ekr.20040403171740"><vh>@rst html docs\scripting.html</vh>
+<v t="ekr.20040403171740"><vh>@rst html\scripting.html</vh>
 <v t="ekr.20050812134441.1"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050901184158"><vh>@rst-ignore Important: you can run these examples!</vh></v>
 <v t="ekr.20040403183229" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3122206e616d653d22687474702d6e6f64652d6d61726b65722d31223e710155043c2f613e71025d710328553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710455063c2f6469763e71055d71062855063c626f64793e710755073c2f626f64793e71085d71092855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710a55073c2f68746d6c3e710b4e65656555243c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e0a710c55493c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643122206e616d653d226f76657276696577223e4f766572766965773c2f613e3c2f68313e0a710d652e"><vh>Overview</vh></v>
@@ -1804,7 +1804,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050901101608.4"><vh>@rst html docs\customizing.html</vh>
+<v t="ekr.20050901101608.4"><vh>@rst html\customizing.html</vh>
 <v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050903075144"><vh>Overview</vh></v>
 <v t="ekr.20050903161843"><vh>Creating script buttons</vh></v>
@@ -1821,7 +1821,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.245"><vh>Chapter 9: History of Leo</vh>
-<v t="ekr.20050901101608.5"><vh>@rst html docs\history.html</vh>
+<v t="ekr.20050901101608.5"><vh>@rst html\history.html</vh>
 <v t="ekr.20050901102147"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050902105852"><vh>Beginnings</vh></v>
 <v t="ekr.20050902105852.1"><vh>Breakthrough</vh></v>
@@ -1854,7 +1854,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.261"><vh>Chapter 10: Theory of Operation</vh>
-<v t="ekr.20050901101608.6"><vh>@rst html docs\theory.html</vh>
+<v t="ekr.20050901101608.6"><vh>@rst html\theory.html</vh>
 <v t="ekr.20050901102300"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.262"><vh>Overview</vh></v>
 <v t="EKR.20040524104904.263"><vh>Nodes</vh></v>
@@ -1870,7 +1870,7 @@
 </v>
 </v>
 <v t="ekr.20050901084134"><vh>Chapter 11: White papers</vh>
-<v t="ekr.20050901092232"><vh>@rst html docs\whitepapers.html</vh>
+<v t="ekr.20050901092232"><vh>@rst html\whitepapers.html</vh>
 <v t="ekr.20050901092232.1"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.259"><vh>Tk is the future of Leo</vh></v>
 <v t="EKR.20040524104904.260"><vh>Why I like Python</vh>
@@ -1884,7 +1884,7 @@
 </v>
 </v>
 <v t="ekr.20050912125144"><vh>Chapter 12: Plugins</vh>
-<v t="ekr.20050912125144.1"><vh>@rst html docs\plugins.html</vh>
+<v t="ekr.20050912125144.1"><vh>@rst html\plugins.html</vh>
 <v t="ekr.20050912125735"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050912125735.26"><vh>Commands &amp; directives</vh>
 <v t="ekr.20050912125735.82"><vh>add_directives.py</vh></v>
@@ -2002,7 +2002,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.274"><vh>Appendices</vh>
-<v t="ekr.20050831231852" a="M"><vh>@rst html docs\appendices.html</vh>
+<v t="ekr.20050831231852"><vh>@rst html\appendices.html</vh>
 <v t="ekr.20050831232205"><vh>@rst-no-head links</vh></v>
 <v t="EKR.20040524104904.351"><vh>Bugs</vh></v>
 <v t="EKR.20040524104904.307"><vh>Errors while tangling</vh></v>
@@ -2017,12 +2017,14 @@
 </v>
 </v>
 <v t="EKR.20040524104904.380"><vh>Glossary</vh>
-<v t="ekr.20050901071041"><vh>@rst html docs\glossary.html</vh>
+<v t="ekr.20050901071041"><vh>@rst html\glossary.html</vh>
 <v t="ekr.20050901071300"><vh>@rst-no-head links</vh></v>
-<v t="ekr.20050901073048" a="M"><vh>@rst-no-head glossary</vh></v>
+<v t="ekr.20050901073048"><vh>@rst-no-head glossary</vh></v>
 <v t="ekr.20050901083017"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20050914132220"><vh>Other docs</vh>
 <v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
 <v t="edream.110203163054.1654"><vh>100's administering Leaps (and LeoCon)</vh>
 <v t="edream.110203163054.1655"><vh>Leap 102: LeoCon 1</vh></v>
@@ -2074,7 +2076,7 @@
 <v t="ekr.20050829134901.29"><vh> @file and @thin</vh></v>
 <v t="ekr.20050829134901.30"><vh> @nosent</vh></v>
 <v t="ekr.20050829134901.31"><vh> @asis and @noref</vh></v>
-<v t="ekr.20050829134901.32" a="M"><vh> @root</vh>
+<v t="ekr.20050829134901.32"><vh> @root</vh>
 <v t="ekr.20050829134901.33"><vh>Sections and section definitions</vh></v>
 <v t="ekr.20050829134901.34"><vh>Tangling @root trees with the Tangle commands</vh></v>
 <v t="ekr.20050829134901.35"><vh>Untangling @root trees with the Untangle commands</vh></v>
@@ -2089,7 +2091,7 @@
 <v t="ekr.20050813102008.2"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050813102008.3"><vh>Overview</vh></v>
 <v t="ekr.20050813102008.4"><vh>Comparison with previous rst plugins</vh></v>
-<v t="ekr.20050813102008.5" a="M"><vh>Options</vh>
+<v t="ekr.20050813102008.5"><vh>Options</vh>
 <v t="ekr.20050814093016"><vh>Options supporting the http plugin</vh></v>
 <v t="ekr.20050816051911"><vh>Options that set command names</vh></v>
 </v>
@@ -2108,6 +2110,7 @@
 <v t="ekr.20050813102008.16"><vh>@rst-no-head end-of-page stuff</vh></v>
 </v>
 </v>
+<v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -14366,7 +14369,7 @@ Outline pane &amp; nodes
     Clicking this **expansion box** expands or contracts the node.
 
 Body pane
-    The body pane contains the body text node selected in the outline pane.
+    The body pane contains the body text of the node selected in the outline pane.
     You can control how Leo shows body text using `Leo directives`_ and settings_.
     For example, directives specify whether to syntax color the body text and whether to wrap the text.
 
@@ -14399,7 +14402,7 @@ Leo will update the outline to reflect those changes when Leo next opens the out
 It is easy to create derived files; just put ``@thin`` *filename* in a headline_.
 That creates an **@thin node**.
 The **@thin tree** (the ``@thin`` node and all its descendants) corresponds to the derived file *filename*.
-Leo writes ``@thin`` nodes to your hard drive when Leo saves your outline (.leo file).
+Leo writes a `derived file`_ corresponding to the ``@thin`` tree to your hard drive when Leo saves your outline (.leo file).
 When opening a .leo file, Leo reads all the `derived files`_ corresponding to ``@thin`` nodes in the outline_.
 
 **Note**: you can ``@file`` instead of ``@thin`` to create derived files.
@@ -14409,7 +14412,7 @@ A good rule of thumb is to use `@thin`_ nodes_ unless you have a specific reason
 See `Chapter 4: Writing Programs in Leo`_ for a full discussions of the various ways of creating `derived files`_.
 
 **Important**:
-You must tell Leo the order in which to write data from the ``@file`` tree to the `derived file`_.
+You must tell Leo the order in which to write data from the ``@thin`` tree to the `derived file`_.
 The simplest way to specify the contents of a derived file is to insert::
 
     @all
@@ -14445,14 +14448,14 @@ becomes a regular node again.
 Clones are much more than a cute feature. **Clones allow multiple views of data
 to exist within a single outline**. The ability to create multiple views of data
 is crucial; you don't have to try to decide what is the 'correct' view of data.
-You can as many views as you like, each tailored exactly to the task at hand.
+You can create as many views as you like, each tailored exactly to the task at hand.
 
 To create a new view of the data, just create any *ordinary* node. This node
 will *represent* the new view. Let us call it a **view node.** Now just put any
 nodes that are related to the view as descendant nodes of your view node. Let us
 call the descendants of the view nodes the **components** of the view. Component
 nodes are typically clones of other nodes in the outline. This is what gives the
-view is power: a view can contain nodes gathered from all over the outline.
+view its power: a view can contain nodes gathered from all over the outline.
 However, it is also sometimes useful to add non-cloned nodes as components of
 views.
 
@@ -14613,7 +14616,7 @@ declares that the preceding code part contains the list of identifiers.
 Whitespace separate the identifiers; everything else is taken to be the
 identifiers. This construct is a convention of the noweb_ language, and will be
 of use *only* for those who want to create .nw output files for use with the
-offical noweb_ system.</t>
+official noweb_ system.</t>
 <t tx="ekr.20050827090532">`@thin trees`_ create `derived files`_ containing your program.
 Within ``@thin trees`` you can write *functional pseudo-code*, like this::
 
@@ -14716,7 +14719,7 @@ A few more words about style:
 - It is good style to **put each class, function or method in its own node**.
   This makes it easy to see the shape of your code.
 
-- It is good style to use **organizer nodes** to group related functions or methods.
+- It is good style to use `organizer nodes`_ to group related functions or methods.
   An organizer node has no content except maybe for comments.
   Like this::
 
@@ -17836,6 +17839,7 @@ Glossary
 .. _`untangling @root trees`:   directives.html#untangling-root-trees-with-the-untangle-commands
 
 .. ----- References to the tutorial.
+.. _`clones &amp; views`:               intro.html#clones-views
 .. _`leo's tutorial`:               intro.html
 .. _`derived files section`:        intro.html#derived-files
 .. _`directives for programming`:   intro.html#directives-for-programming
@@ -17946,6 +17950,7 @@ For example, an `@root node`_ is a node containing an @root directive_, etc.
 
 .. _`clone`:
 .. _`clones`:
+.. _`cloned`:
 
 ``Clone``
     A copy of a tree_ that changes whenever the original changes.
@@ -18114,8 +18119,10 @@ For example, an `@root node`_ is a node containing an @root directive_, etc.
 
 .. _`organizing node`:
 .. _`organizing nodes`:
+.. _`organizer node`:
+.. _`organizer nodes`:
 
-``Organizing node``
+``Organizing node``, ``organizer node``
     A node_ containing no `body text`_.
     Organizing nodes may appear anywhere in an `@file tree`_; they do not affect the derived file in any way.
     In particular, organizing nodes do not affect indentation in `derived files`_.
@@ -18318,6 +18325,16 @@ For example, an `@root node`_ is a node containing an @root directive_, etc.
 .. _`weaves`:
 .. _`weaving`:
 
+.. _`view node`:
+.. _`view nodes`:
+
+``View node``
+    A `node`_ that represents a view of an `outline`_.
+    View nodes are typically ordinary, non-`cloned`_ nodes that contain cloned `descendant`_ nodes.
+    The cloned descendant nodes comprise most of the data of the view.
+    Other non-cloned nodes may add additional information to the view.
+    See `clones &amp; views`_ in the `Leo's tutorial`_ for more information.
+
 ``Weaving``
     The process of creating typeset documentation from a noweb_ or CWEB_ source file.
     Weaving creates documentation. Tangling_ creates `derived files`_.
@@ -18347,6 +18364,9 @@ verbose=True
 ##########################
 Chapter 11: White Papers
 ##########################
+
+The following are some papers I wrote just after discovering Python.
+The conclusions in these papers have remained largely unchanged.
 
 .. contents::
 </t>
@@ -20667,16 +20687,15 @@ Python and Leo. In sum, this little program is an easy install for people who
 are already using Leo and DocBook. As noted later, Leo2AsciiDoc has only been
 tested on Linux</t>
 <t tx="ekr.20050912125735.3832">The rst3 plugin creates output files from Leo outlines containing rST
-(reStructuredText_) markup.
-rst3 options control most aspects of this plugin's operations. You can set
-options in ``@settings`` trees, in headlines and in body text.
-There are too many options to describe here.  See:
-http://webpages.charter.net/edreamleo/rstplugin3.html for full documentation.
-To use this plugin effectively, Python's docutils_ module must be installed. The
+(reStructuredText_) markup. rst3 options control most aspects of this plugin's
+operations. You can set options in ``@settings`` trees, in headlines and in body
+text. There are too many options to describe here. See:
+http://webpages.charter.net/edreamleo/rstplugin3.html for full documentation. To
+use this plugin effectively, Python's docutils_ module must be installed. The
 rst3 plugin will use the SilverCity_ syntax coloring package if it installed.
 
-The rst3 plugin adds the Write Restructured Text command to Leo's Edit menu. This
-command searches the selected outline looking for **rst root nodes** whose
+The rst3 plugin adds the ``Write Restructured Text`` command to Leo's Edit menu.
+This command searches the selected outline looking for **rst root nodes** whose
 headline have the form::
 
     @rst &lt;filename&gt;
@@ -20690,9 +20709,7 @@ This plugin sends .htm, .html or .tex files to the docutils module for further
 processing. Docutils generates HTML files or LaTeX files depending on the file's
 extension. HTML files generated by docutils refer to three .css (cascading style
 sheet) files that should exist in the same directory as the generated HTML file.
-You can control the formatting of the HTML file by altering these .css files.
-
-</t>
+You can control the formatting of the HTML file by altering these .css files.</t>
 <t tx="ekr.20050912125735.3944"></t>
 <t tx="ekr.20050912125735.3945">An experimental plugin that stores all Leo outline data in a single zodb
 database. This plugin replaces the Open, Save and Revert commands with methods
@@ -20727,5 +20744,18 @@ The highlights of 4.3.2:
 - Improved the Pretty Printing command.
 
 - The usual assortment of bug fixes.</t>
+<t tx="ekr.20050914132220"></t>
+<t tx="ekr.20050916065715">@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3341105
+By: rogererens
+
+Here would be a nice place to insert 2 screenshots that illustrate the points
+discussed: one of a very small @thin tree in Leo, and one of the contents of
+the file that's derived from that node, as seen in vim or jEdit or notepad.
+
+Also the paragraph on clones might benefit from a screen shot or two, especially
+since the tutorial contains a lot of text and ideas to grasp. Pictures in between
+give the opportunity to ponder on the meaning of all that for a while while
+staring at them...</t>
 </tnodes>
 </leo_file>

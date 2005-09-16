@@ -18,7 +18,7 @@
 ;@+node:ekr.20050118092706.1:<< defines >>
 ;@<< 4.3 nsi installer version >>
 ;@+node:ekr.20050118124408:<< 4.3 nsi installer version >>
-!define PRODUCT_VERSION "4.3.2-beta-1"
+!define PRODUCT_VERSION "4.3.2-final"
 ;@nonl
 ;@-node:ekr.20050118124408:<< 4.3 nsi installer version >>
 ;@nl
@@ -73,7 +73,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-3-2-b1.exe"
+OutFile "LeoSetup-4-3-2.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -273,6 +273,8 @@ Section "Leo" SEC01
   File "..\doc\LeoN\sun97generic.pdf"
   File "..\doc\LeoN\sun98operational.pdf"
   File "..\doc\LeoN\sun98reversible.pdf"
+  
+  File "..\doc\html\*.*"
   ;@-node:ekr.20050118104901.1:<< install doc files >>
   ;@nl
   SetOutPath "$INSTDIR\extensions"
@@ -563,6 +565,8 @@ Section Uninstall
   Delete "$INSTDIR\doc\LeoN\sun97generic.pdf"
   Delete "$INSTDIR\doc\LeoN\sun98operational.pdf"
   Delete "$INSTDIR\doc\LeoN\sun98reversible.pdf"
+  
+  Delete "$INSTDIR\doc\doc\html\*.*"
   ;@nonl
   ;@-node:ekr.20050118104901.2:<< uninstall doc files >>
   ;@nl
@@ -660,6 +664,7 @@ Section Uninstall
   ; First, delete sub-folders...
   RMDir "$INSTDIR\config"
   RMDir "$INSTDIR\dist"
+  RmDir "$INSTDIR\doc\html"
   RmDir "$INSTDIR\doc\LeoN"
   RMDir "$INSTDIR\doc"
   
