@@ -359,6 +359,7 @@ plugins\__ipython.py
 plugins\__jEdit_colorizer__.py
 plugins\__outlineExperiments.py
 plugins\__overrideClasses.py
+plugins\__vnx__.py
 plugins\__wx_gui.py
 plugins\add_directives.py
 plugins\arrows.py

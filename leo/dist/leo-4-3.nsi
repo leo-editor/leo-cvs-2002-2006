@@ -274,6 +274,8 @@ Section "Leo" SEC01
   File "..\doc\LeoN\sun98operational.pdf"
   File "..\doc\LeoN\sun98reversible.pdf"
   
+  SetOutPath "$INSTDIR\doc\html"
+  
   File "..\doc\html\*.*"
   ;@-node:ekr.20050118104901.1:<< install doc files >>
   ;@nl
@@ -566,7 +568,7 @@ Section Uninstall
   Delete "$INSTDIR\doc\LeoN\sun98operational.pdf"
   Delete "$INSTDIR\doc\LeoN\sun98reversible.pdf"
   
-  Delete "$INSTDIR\doc\doc\html\*.*"
+  Delete "$INSTDIR\doc\html\*.*"
   ;@nonl
   ;@-node:ekr.20050118104901.2:<< uninstall doc files >>
   ;@nl

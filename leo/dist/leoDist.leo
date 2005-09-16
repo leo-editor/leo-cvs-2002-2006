@@ -122,11 +122,11 @@
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 <v t="ekr.20050910192724"><vh>Pychecker incorrect errors</vh></v>
 </v>
-<v t="ekr.20050118095021"><vh>Leo 4.3 installer: version stuff</vh>
+<v t="ekr.20050118095021" a="E"><vh>Leo 4.3 installer: version stuff</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
-<v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
+<v t="ekr.20050118103207" a="E"><vh>Keeping installer/uninstallers in synch</vh>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
 <v t="ekr.20050118104149"><vh>config files</vh>
 <v t="ekr.20050118104149.1"><vh>&lt;&lt; install config files &gt;&gt;</vh></v>
@@ -136,7 +136,7 @@
 <v t="ekr.20050118104149.4"><vh>&lt;&lt; install dist files &gt;&gt;</vh></v>
 <v t="ekr.20050118104149.5"><vh>&lt;&lt; uninstall dist files &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050118104901"><vh>doc files</vh>
+<v t="ekr.20050118104901" a="E"><vh>doc files</vh>
 <v t="ekr.20050118104901.1"><vh>&lt;&lt; install doc files &gt;&gt;</vh></v>
 <v t="ekr.20050118104901.2"><vh>&lt;&lt; uninstall doc files &gt;&gt;</vh></v>
 </v>
@@ -171,9 +171,10 @@
 <v t="ekr.20050118103447.1"><vh>&lt;&lt; uninstall top-level files &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
+<v t="ekr.20050118092706" a="E"
+expanded="ekr.20050118092706.1,ekr.20050118092706.13,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="EKR.20040519090846" a="TV"><vh>Distribution files (update for each release)</vh>
+<v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
 <v t="EKR.20040519090846.2"><vh>@asis ../doc/INSTALL.TXT</vh>
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
 <v t="EKR.20040519090846.4"><vh>Linux installation</vh></v>
@@ -3549,6 +3550,8 @@ File "..\doc\LeoN\sun97generic.pdf"
 File "..\doc\LeoN\sun98operational.pdf"
 File "..\doc\LeoN\sun98reversible.pdf"
 
+SetOutPath "$INSTDIR\doc\html"
+
 File "..\doc\html\*.*"
 </t>
 <t tx="ekr.20050118104901.2">Delete "$INSTDIR\doc\LeoDocs.leo"
@@ -3574,7 +3577,7 @@ Delete "$INSTDIR\doc\LeoN\sun97generic.pdf"
 Delete "$INSTDIR\doc\LeoN\sun98operational.pdf"
 Delete "$INSTDIR\doc\LeoN\sun98reversible.pdf"
 
-Delete "$INSTDIR\doc\doc\html\*.*"</t>
+Delete "$INSTDIR\doc\html\*.*"</t>
 <t tx="ekr.20050118104901.3"></t>
 <t tx="ekr.20050118104901.4">File "..\Icons\*.*"</t>
 <t tx="ekr.20050118104901.5">Delete "$INSTDIR\icons\*.*"</t>
