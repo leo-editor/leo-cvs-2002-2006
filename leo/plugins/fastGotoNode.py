@@ -40,7 +40,7 @@ import os
 #@nonl
 #@-node:mork.20041018091414.2:<< imports >>
 #@nl
-__version__ = ".101"
+__version__ = ".103"
 #@<< version history >>
 #@+node:ekr.20050226120947.1:<< version history >>
 #@@killcolor
@@ -54,6 +54,8 @@ __version__ = ".101"
 #     - Get c from keywords, not g.top().
 # .102 EKR:
 #     - Added 'return True' to end of init function.
+# .103 EKR:
+#     - Fixed crasher in addLanguageMenu.
 #@-at
 #@nonl
 #@-node:ekr.20050226120947.1:<< version history >>
@@ -294,7 +296,12 @@ def addLanguageMenu( pmenu , c , haveseen = {}):
     if colorizer.language:
         if not haveseen.has_key( colorizer.language ): 
             lk = colorizer.language + '_keywords'
-            kwords = list( getattr( colorizer , lk ) )
+            # Bug fix: 9/17/05: x_keywords may not exist.
+            try:
+                kwords = getattr( colorizer , lk )
+            except AttributeError:
+                kwords = ()
+            kwords = list( kwords )
             if langdict.has_key( colorizer.language ):
                 l = langdict[ colorizer.language ]
                 for z in l:
