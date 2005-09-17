@@ -33,10 +33,8 @@ import os
 import parser # needed only for weird Python 2.2 parser errors.
 import string
 
-try:
-    import subprocess   # only available in Python 2.4 and later
-except ImportError:
-    pass
+# Bug fix: 9-16-05
+subprocess = g.importExtension('subprocess',None,verbose=False)
 
 import sys
 import tempfile

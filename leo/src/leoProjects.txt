@@ -9848,10 +9848,8 @@ import os
 import parser # needed only for weird Python 2.2 parser errors.
 import string
 
-try:
-    import subprocess   # only available in Python 2.4 and later
-except ImportError:
-    pass
+# Bug fix: 9-16-05
+subprocess = g.importExtension('subprocess',None,verbose=False)
 
 import sys
 import tempfile
@@ -10104,7 +10102,31 @@ def test_c_endUpdate (self):
 #@-node:ekr.20050916100046:test_c_endUpdate
 #@-node:ekr.20031218072017.2952:c.endUpdate & test
 #@-node:ekr.20050902074723:Protected c.beginEndUpdate against exceptions.
+#@+node:ekr.20050902115502:Any way to fix this bug? (works for me)
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3322277
+By: dcbbcd
+
+If I use Toggle Active Pane to switch to the outline, the
+outline does not get the keyboard focus. I.e. I can't select
+another node by using the arrow keys. The black focus
+rectangle is around the outline, so partly it worked.
+
+Is this a bug or am I misunderstanding what the 
+command does?
+#@-node:ekr.20050902115502:Any way to fix this bug? (works for me)
 #@-node:ekr.20050916101421:Cleanup
+#@+node:ekr.20050916190932:Docs
+#@+node:ekr.20050621130815:Rewrote tech report with rst3
+@nocolor
+
+This is the rST version of the Tech Report handed out at EuroPython in 2005.
+
+**Important**: Leo's tutorial is now a clearer explanation of the basics.
+This tech report should be rewritten.
+#@nonl
+#@-node:ekr.20050621130815:Rewrote tech report with rst3
+#@-node:ekr.20050916190932:Docs
 #@-node:ekr.20050916095957:4.4 a1 projects
 #@+node:ekr.20050718150452:(Stuff used by wx plugin)
 #@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)

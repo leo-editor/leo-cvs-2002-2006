@@ -3114,62 +3114,64 @@ def prependNamesInTree(p,nameList,prefix,replace=False):
     prefix_n = len(prefix)
     total = 0
     c.beginUpdate()
-    for p in p.self_and_subtree_iter():
-        count = 0 ; s = p.bodyString()
-        printFlag = False
-        if s:
-            for name in nameList:
-                i = 0 ; n = len(name)
-                while 1:
-                    #@                    << look for name followed by '(' >>
-                    #@+node:EKR.20040502195524.22:<< look for name followed by '(' >>
-                    i = s.find(name,i)
-                    if i == -1:
-                        break
-                    elif g.match(s,i-1,'.'):
-                        i += n # Already an attribute.
-                    elif g.match(s,i-prefix_n,prefix):
-                        i += n # Already preceded by the prefix.
-                    elif g.match(s,i-def_n,def_s):
-                        i += n # preceded by "def"
-                    elif i > 0 and s[i-1] in ch1:
-                        i += n # Not a word match.
-                    elif i+n < len(s) and s[i+n] in ch2:
-                        i += n # Not a word match.
-                    else:
-                        j = i + n
-                        j = g.skip_ws(s,j)
-                        if j >= len(s) or s[j] != '(':
-                            i += n
-                        else: # Replace name by prefix+name
-                            s = s[:i] + prefix + name + s[i+n:]
-                            i += n ; count += 1
-                            # g.es('.',newline=False)
-                            if 1:
-                                if not printFlag:
-                                    printFlag = True
-                                    # print p.headString()
-                                print g.get_line(s,i-n)
-                    #@nonl
-                    #@-node:EKR.20040502195524.22:<< look for name followed by '(' >>
-                    #@nl
-            if count and replace:
-                if 0:
-                    #@                    << print before and after >>
-                    #@+node:EKR.20040502195524.23:<< print before and after >>
-                    print "-"*10,count,p.headString()
-                    print "before..."
-                    print p.bodyString()
-                    print "-"*10,"after..."
-                    print s
-                    #@nonl
-                    #@-node:EKR.20040502195524.23:<< print before and after >>
-                    #@nl
-                p.setBodyStringOrPane(s)
-                p.setDirty()
-        g.es("%3d %s" % (count,p.headString()))
-        total += count
-    c.endUpdate()
+    try:
+        for p in p.self_and_subtree_iter():
+            count = 0 ; s = p.bodyString()
+            printFlag = False
+            if s:
+                for name in nameList:
+                    i = 0 ; n = len(name)
+                    while 1:
+                        #@                        << look for name followed by '(' >>
+                        #@+node:EKR.20040502195524.22:<< look for name followed by '(' >>
+                        i = s.find(name,i)
+                        if i == -1:
+                            break
+                        elif g.match(s,i-1,'.'):
+                            i += n # Already an attribute.
+                        elif g.match(s,i-prefix_n,prefix):
+                            i += n # Already preceded by the prefix.
+                        elif g.match(s,i-def_n,def_s):
+                            i += n # preceded by "def"
+                        elif i > 0 and s[i-1] in ch1:
+                            i += n # Not a word match.
+                        elif i+n < len(s) and s[i+n] in ch2:
+                            i += n # Not a word match.
+                        else:
+                            j = i + n
+                            j = g.skip_ws(s,j)
+                            if j >= len(s) or s[j] != '(':
+                                i += n
+                            else: # Replace name by prefix+name
+                                s = s[:i] + prefix + name + s[i+n:]
+                                i += n ; count += 1
+                                # g.es('.',newline=False)
+                                if 1:
+                                    if not printFlag:
+                                        printFlag = True
+                                        # print p.headString()
+                                    print g.get_line(s,i-n)
+                        #@nonl
+                        #@-node:EKR.20040502195524.22:<< look for name followed by '(' >>
+                        #@nl
+                if count and replace:
+                    if 0:
+                        #@                        << print before and after >>
+                        #@+node:EKR.20040502195524.23:<< print before and after >>
+                        print "-"*10,count,p.headString()
+                        print "before..."
+                        print p.bodyString()
+                        print "-"*10,"after..."
+                        print s
+                        #@nonl
+                        #@-node:EKR.20040502195524.23:<< print before and after >>
+                        #@nl
+                    p.setBodyStringOrPane(s)
+                    p.setDirty()
+            g.es("%3d %s" % (count,p.headString()))
+            total += count
+    finally:
+        c.endUpdate()
     return total
 #@nonl
 #@-node:EKR.20040502195524.21:prependNamesInTree
@@ -3380,13 +3382,16 @@ def importFiles (dir,type=None,kind="@file",recursive=False):
         return
     
     c.beginUpdate()
-    root = createLastChildOf(v,"imported files")
     try:
-        importDir (dir,type,kind,recursive,root)
-        root.contract()
-    except:
-        g.es_exception()
-    c.endUpdate()
+        root = createLastChildOf(v,"imported files")
+        try:
+            importDir (dir,type,kind,recursive,root)
+            root.contract()
+        except:
+            g.es_exception()
+    finally:
+        c.endUpdate()
+#@nonl
 #@-node:EKR.20040502195524.36:importFiles
 #@+node:EKR.20040502195524.37:importDir
 def importDir (dir,types,kind,recursive,root):

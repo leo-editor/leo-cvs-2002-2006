@@ -3134,74 +3134,101 @@ C-x return t	set-terminal-coding-system
 C-x a i g	inverse-add-global-abbrev
 C-x a i l	inverse-add-mode-abbrev
 #@-node:ekr.20050712092501:All xemacs key bindings
+#@+node:ekr.20050707085637:Suggestions from an emacs user
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3237845
+By: eichin
+
+First, I'd like to thank Mr. Ream for presenting at EuroPython; I've been an
+emacs user 'forever' (anyone else remember CCA emacs?) and have seen enough
+"this could change your world as much as emacs did" sorts of comments, finally
+seeing it on-screen live finally kicked me into trying it myself.
+
+My overall experience was mixed; some of this may be due to my laziness (I just
+unpacked 4-3-1 on my mac and ran src/leo.py, which got me a window so I counted
+it as working.)  I did the original version of this in leo to attempt to get
+some experience with it...
+
+I am an emacs user.  So of course, I will use emacs bindings first - and since
+some of them work (c-f, c-b) I get in trouble because the others then don't
+(c-p pops up a python shell, c-a does something dramatic.)  *definitely* needs
+at least a simple "you're an emacs user, here is basic editing in emacs bindings,
+the leo-specific stuff is pushed out of the way."  Note that this is not actually
+odd for a mac user - most of the basic emacs bindings work in text entry boxes,
+like the Safari textarea I'm typing this in now - I'm not asking for m-x, but
+for c-f/c-b/c-n/c-p/c-a/c-e and maybe a few more, but those are key.
+
+Pure keyboard usage is also key - one thing that worried me watching the demo
+was that Mr. Ream kept switching back and forth, keyboard to mouse, and that's
+bad - and when I say bad, I mean that Raskin's book had a good footnote pointing
+to a clinical study showing that RSIs correllated with *mouse* usage, not keyboard
+usage, in a mainstream computer user context.  Note that I don't really mean
+emacs-level keyboard-only use - just that in a typical hour of leo usage, I
+shouldn't need the mouse for anything I use twice.  Having unusual stuff only
+menus is fine.  Not having keybindings that I could find for *next-node* and
+*prev-node* is *not* fine.  Frankly, just logging everything *you* use in an
+hour and adding bindings for it might be enough...
+
+Similarly, think of simple use-cases/workflows and make them easier.  Can node-titles
+actually be multiple lines?  If not, why not have hitting return in a node title
+take me to the text window? (This is just one example I tried and was surprised
+didn't work.)  More critically, I couldn't find any keystroke at all to take
+me from editing nodes to editing text, but I may have been confused at that
+point.
+
+For another, mac-specific case: *don't steal system bindings*.  M-`
+(command-backtick, in macspeak) should cycle windows (M-~ the other direction.)
+Breaking this dooms you on the Mac; even if that's an important binding on other
+platforms, you just *have* to make it different on the mac - or you will only
+have cross platform occasional mac users and *never* have any users who are
+primarily mac users.  I suppose I should submit that one as a direct bug report.
+
+Minor nit - on startup, it asked me for a unique id, "possibly your CVS username".
+As a non-windows-user, that made no sense at all to me - at very least, it should
+fill in os.getenv("USER") as a default, because it's right on non-windows systems,
+isn't it?  (If it isn't, there's no explanation at that point that would tell
+me otherwise, that's the value I used anyway...)  Just an out-of-box-experience
+issue.
+
+Defaulting to python-mode: sure, maybe it's just coloring, but coming into it
+expecting it to be primarily a text-in-outlines editor, that confused me a lot.
+I don't actually have an answer here - you can't cheat the way emacs does and
+use an extension or #! line to decide "this is python code", though you may
+be able to use other tricks - but a first time user is probably going to start
+with bits of text and *then* move on to code, and if there's a sane way to support
+that, please consider it.
+
+More mac nits: two HELP menus, one is empty; "open leo docs.leo" from the help
+menu gives a window that doesn't fit on-screen on my mac (tiger 10.4.1 12" powerbook)
+and this leaves the resize control off-screen, so I can't fix it either.
+
+Also (not so mac specific, but more glaring on the mac than elsewhere) - no
+context-menu on nodes or text, and I couldn't seem to drag nodes with the mouse
+at all (one of the things the mouse *is* obviously useful for, especially if
+I'm doing a bunch of rearrangement in one place and *not* going back and forth.)
+
+Finally, one comment from the talk that bothered me for a while and didn't click
+until later - "emacs doesn't really have an outline mode".  This is true, at
+face value - outline mode in fact is just some regexp and hiding kludging, powerful
+in it's own way but not "deep".  However, the operations felt familiar, and
+it wasn't until I went home and checked mail that I caught it -- *GNUS* is actually
+surprisingly close in function set to an outliner.  Not in any immediately useful
+way, but it both clarifies why I think emacs could work this way *and* possibly
+clarifies why gnus users are so engaged by the interface :-)  Though that does
+mean gnus might be a reasonable source of suggestions for key bindings...
+
+Again, thanks for the demo.  It at least inspired a lot of interest, if not
+actually a new convert, but I'll be watching more closely, at least.
+
+_Mark_
+#@nonl
+#@-node:ekr.20050707085637:Suggestions from an emacs user
 #@-node:ekr.20050524074930.2:Mouseless leo
-#@+node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
-@ To do:
-
-- ** Use a general purpose XML parser to parse the jEdit mode files.
-- ** Do incremental syntax coloring
-	- Create lines table.
-	- Initialize lines table when select new node.
-- Use strings for states.
-- Define colorizeLine method.
-- Create self.state ivar
-- Use a keyword lead-in table.
-	- Use this for latex keywords and Leo keywords.
-	- Add ignore-case ivar.
-- Define @language xml.
-- Defined syntax coloring for all jEdit token types:
-	KEYWORD1,KEYWORD2,KEYWORD3,LABEL,LITERAL1,LITERAL2,MARKUP,OPERATOR
-	Where do Leo keywords fit in?
-
-#@-node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
 #@+node:ekr.20050419060645:Alternate lead-in characters
 An @decorator setting might be good. This would be a list of all Python
 decorators. Leo would create @verbatim sentinels for these.
 #@nonl
 #@-node:ekr.20050419060645:Alternate lead-in characters
-#@+node:ekr.20041228092223.2:Integrated Leo debugger
-#@+node:ekr.20041029085429:Use pdb.pm as starting point for integrated Leo debugger
-@killcolor
-
-> pdb.set_trace() is...quite a pain to use if you are used to pdb.pm() in an interactive session.
-
-Whaterver pdb.pm does (I haven't used it) this might be the starting point for the design of a better interface between pdb and Leo.
-
-#@-node:ekr.20041029085429:Use pdb.pm as starting point for integrated Leo debugger
-#@+node:ekr.20050515091432:LeoDb
-@killcolor
-
-- Create window with breakpoint symbols.
-    - Replace sections with helper functions in f.finishCreate.
-
-- How/when to set breakpoints?
-    - Inverse function to go-to line number.
-    - Represent breakpoints by node/offset/line-contents?
-#@nonl
-#@-node:ekr.20050515091432:LeoDb
-#@+node:ekr.20050614061954:jEdit debugger url
-@nocolor
-
-something else from jEdit, JpyDbg plugin. 
-<http://jpydbg.sourceforge.net>
-#@nonl
-#@-node:ekr.20050614061954:jEdit debugger url
-#@+node:ekr.20050831131452.2:DBGp standard
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3286395
-By: tfer
-
-Some time in the future when we might be wanting to add more graphical debugging
-facilates to Leo (multilanguage), might we want to go with DBGp open source
-standard?
-
-I came accross this while looking over ActiveState's Komodo editor.
-
-Tom
-#@nonl
-#@-node:ekr.20050831131452.2:DBGp standard
-#@-node:ekr.20041228092223.2:Integrated Leo debugger
 #@+node:ekr.20040919182750.1:Better handling of whitespace (cvs fiendly)
 #@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
 add python -t to test suite to catch mixed tab & space in derived files.
@@ -4134,23 +4161,20 @@ self.forceFullRecolorFlag = False
 #@-node:ekr.20031218072017.1327:<< recolor the body >>
 #@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 redraw_flag = False
-
 c.beginUpdate()
-
-# Update dirty bits.
-if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-    redraw_flag = True
-    
-# Update icons.
-val = p.computeIcon()
-
-# 7/8/04: During unit tests the node may not have been drawn,
-# So p.v.iconVal may not exist yet.
-if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-    p.v.iconVal = val
-    redraw_flag = True
-
-c.endUpdate(redraw_flag) # redraw only if necessary
+try:
+    # Update dirty bits.
+    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+        redraw_flag = True
+    # Update icons.
+    val = p.computeIcon()
+    # During unit tests the node may not have been drawn,
+    # So p.v.iconVal may not exist yet.
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    c.endUpdate(redraw_flag) # redraw only if necessary
 #@nonl
 #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
@@ -4408,21 +4432,17 @@ if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
 #@-node:ekr.20040803072955.94:<< set s to the widget text >>
 #@+node:ekr.20040803072955.95:<< update p >>
 c.beginUpdate()
-if 1: # In update...
-
+try: # In update...
     # Update changed bit.
-    if not c.changed:
-        c.setChanged(True)
-
+    if not c.changed: c.setChanged(True)
     # We must call p.setDirty even if p is dirty!
     dirtyVnodeList = p.setDirty()
-
     # Update p.
     p.initHeadString(s)
     self.setText(edit_text,s,tag="idle_head_key2")
     edit_text.mark_set("insert",index)
-
-c.endUpdate(False) # do not redraw now.
+finally:
+    c.endUpdate(False) # do not redraw now.
 #@nonl
 #@-node:ekr.20040803072955.95:<< update p >>
 #@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
@@ -4437,8 +4457,10 @@ edit_text.configure(width=self.headWidth(p))
 if done:
     # g.trace("done")
     c.beginUpdate()
-    self.endEditLabel()
-    c.endUpdate()
+    try:
+        self.endEditLabel()
+    finally:
+        c.endUpdate()
 
 elif changed:
     # g.trace("changed")
@@ -4513,6 +4535,68 @@ def putCodeLine (self,s,i):
 #@-node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040628085831:@import, @shadow
 #@-node:ekr.20040919182750.1:Better handling of whitespace (cvs fiendly)
+#@+node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
+@ To do:
+
+- ** Use a general purpose XML parser to parse the jEdit mode files.
+- ** Do incremental syntax coloring
+	- Create lines table.
+	- Initialize lines table when select new node.
+- Use strings for states.
+- Define colorizeLine method.
+- Create self.state ivar
+- Use a keyword lead-in table.
+	- Use this for latex keywords and Leo keywords.
+	- Add ignore-case ivar.
+- Define @language xml.
+- Defined syntax coloring for all jEdit token types:
+	KEYWORD1,KEYWORD2,KEYWORD3,LABEL,LITERAL1,LITERAL2,MARKUP,OPERATOR
+	Where do Leo keywords fit in?
+
+#@-node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
+#@+node:ekr.20041228092223.2:Integrated Leo debugger
+#@+node:ekr.20041029085429:Use pdb.pm as starting point for integrated Leo debugger
+@killcolor
+
+> pdb.set_trace() is...quite a pain to use if you are used to pdb.pm() in an interactive session.
+
+Whaterver pdb.pm does (I haven't used it) this might be the starting point for the design of a better interface between pdb and Leo.
+
+#@-node:ekr.20041029085429:Use pdb.pm as starting point for integrated Leo debugger
+#@+node:ekr.20050515091432:LeoDb
+@killcolor
+
+- Create window with breakpoint symbols.
+    - Replace sections with helper functions in f.finishCreate.
+
+- How/when to set breakpoints?
+    - Inverse function to go-to line number.
+    - Represent breakpoints by node/offset/line-contents?
+#@nonl
+#@-node:ekr.20050515091432:LeoDb
+#@+node:ekr.20050614061954:jEdit debugger url
+@nocolor
+
+something else from jEdit, JpyDbg plugin. 
+<http://jpydbg.sourceforge.net>
+#@nonl
+#@-node:ekr.20050614061954:jEdit debugger url
+#@+node:ekr.20050831131452.2:DBGp standard
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3286395
+By: tfer
+
+Some time in the future when we might be wanting to add more graphical debugging
+facilates to Leo (multilanguage), might we want to go with DBGp open source
+standard?
+
+I came accross this while looking over ActiveState's Komodo editor.
+
+Tom
+#@nonl
+#@-node:ekr.20050831131452.2:DBGp standard
+#@-node:ekr.20041228092223.2:Integrated Leo debugger
 #@+node:ekr.20031218072017.658:Resolve CVS Conflicts command (Stepen Schaefer)
 @nocolor
 
@@ -5517,33 +5601,106 @@ Scott
 #@-node:ekr.20041228084018.5:Finish zodb plugin
 #@-node:ekr.20050707081822:Top priorities
 #@+node:ekr.20050816165305:To do 4.4
-#@+node:ekr.20050909150134:First: cleanup & bugs
-#@+node:ekr.20050902074723:Protect c.beginEndUpdate against exceptions.
-c.beginUpdate()
-try:
-    << whatever >>
-finally:
-    c.endUpdate(flag)
-#@-node:ekr.20050902074723:Protect c.beginEndUpdate against exceptions.
-#@+node:ekr.20050902115502:Any way to fix this bug?
+#@+node:ekr.20050831131028:opml
+#@+node:ekr.20050912063133:@url http://sourceforge.net/forum/message.php?msg_id=3273977
+#@-node:ekr.20050912063133:@url http://sourceforge.net/forum/message.php?msg_id=3273977
+#@+node:ekr.20050912065811:@url http://sourceforge.net/forum/message.php?msg_id=3279900 (summary)
+#@-node:ekr.20050912065811:@url http://sourceforge.net/forum/message.php?msg_id=3279900 (summary)
+#@+node:ekr.20050831131452:Original post
 @nocolor
-http://sourceforge.net/forum/message.php?msg_id=3322277
-By: dcbbcd
+http://sourceforge.net/forum/message.php?msg_id=3280949
+By: billp9619
 
-If I use Toggle Active Pane to switch to the outline, the
-outline does not get the keyboard focus. I.e. I can't select
-another node by using the arrow keys. The black focus
-rectangle is around the outline, so partly it worked.
+>>Making Leo a friendly part of the opml world has the potential to be very
+important to Leo. <<
 
-Is this a bug or am I misunderstanding what the 
-command does?
-#@-node:ekr.20050902115502:Any way to fix this bug?
-#@-node:ekr.20050909150134:First: cleanup & bugs
-#@+node:ekr.20050419060645:Alternate lead-in characters
-An @decorator setting might be good. This would be a list of all Python
-decorators. Leo would create @verbatim sentinels for these.
-#@nonl
-#@-node:ekr.20050419060645:Alternate lead-in characters
+This is probably point 5. and covers the implementation of opml features as
+exposed in Leo.
+
+Because Leo is highly scripted there may be many requests... currently out on
+the OPML list... that are solveable....such as how to see their outlines as
+HTML without passing thru the OPML web server /host. BTW...all this new opml
+stuff is only a week or two in production. The first message on
+http://groups.yahoo.com/group/opml-newbies/
+is July 25.
+
+>> The question of whether to duplicate body text in <outline> elements
+is minor<<
+
+Good. 
+
+Really, the opml tools are pretty much raw text/xml  and I was thinking the
+default fallback is ... all clone text is "duplicate". If you want clones then
+you will take care to only edit them in Leo. But if opml users all know and
+use clones routinely in other editors,  then this is good news for opml
+as technology.
+
+>>more complicated than it needs to be<<
+
+Well, both Leo and opml have only a few elements and each primarilly uses one
+which recusively nests to make up the outline portion. I suppose body nodes
+could be included more directly in headlines ... allowing un-numbered headlines
+basically, ... but I am not sure that the current way is inferior
+or complicated.
+
+ A simpler (forgiving?) format might make it easier to create with external
+apps and encourage transforming other xml to Leo via XSLT. It would have to
+just "work".
+
+(One thing about Leo's bias towards elements to contain markup, versus attributes,
+is that ...you can cheat a little on escaping &quot; in vh or t nodes ?...which
+makes code blocks smaller in the Leo xml.)
+
+Your list above is pretty much how I see it as well.
+
+regards,
+
+bill p
+
+#@-node:ekr.20050831131452:Original post
+#@+node:ekr.20050831131452.1:opml attributes v elements
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3282460
+By: billp9619
+
+Looking at some discussion of outline formats there was a remark that because
+opml places all text in attributes it is limited in not being able to contan
+other elements. On xml-dev I also saw some advice about opml followed by the
+comment that it is not a good format.
+
+opml is crippled in this regard but  Leo only restricts itself as a choice in
+order to  discern leo xml from content.(out of necessity we know).
+
+Of course with xml you can mix vocabularies based on the use of namespaces.
+By becoming namespace aware Leo could be adapted for non-escaped markup. The
+purpose then is xml parsing of leo as a standard container of other xml. I do
+not believe this is unthinkable  for some future capabilities... especially
+if such nodes would contain exclusively xml from another namespace.
+
+Just interesting that leo's format is more versatile than opml, 
+but, ...by choice for its own purposes, ...
+ is in this part "backward" compatible with opml. :)  
+
+regards,
+
+bill p
+#@-node:ekr.20050831131452.1:opml attributes v elements
+#@+node:ekr.20050915062404:My post
+@nocolor
+
+Hi,
+
+I am the author of Leo http://webpages.charter.net/edreamleo/front.html an outline editor supporting clones http://webpages.charter.net/edreamleo/intro.html#clones-views.
+
+I am interested in having Leo be able to read and write opml files.  My understanding is that applications are free to use attributes of <outline> elements as they please, but I am wondering whether there are guidelines or existing conventions for representing clones.  Have any namespaces been defined for that purpose?
+
+Thanks.
+
+Edward
+#@-node:ekr.20050915062404:My post
+#@-node:ekr.20050831131028:opml
+#@+node:ekr.20050914132954.1:Have rst3 plugin honor the @ignore directive
+#@-node:ekr.20050914132954.1:Have rst3 plugin honor the @ignore directive
 #@+node:ekr.20050524074930.2:Mouseless leo
 #@+node:ekr.20050712092501.1:xemacs variables
 @killcolor
@@ -8674,703 +8831,6 @@ C-x return t	set-terminal-coding-system
 C-x a i g	inverse-add-global-abbrev
 C-x a i l	inverse-add-mode-abbrev
 #@-node:ekr.20050712092501:All xemacs key bindings
-#@-node:ekr.20050524074930.2:Mouseless leo
-#@+node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
-@ To do:
-
-- ** Use a general purpose XML parser to parse the jEdit mode files.
-- ** Do incremental syntax coloring
-	- Create lines table.
-	- Initialize lines table when select new node.
-- Use strings for states.
-- Define colorizeLine method.
-- Create self.state ivar
-- Use a keyword lead-in table.
-	- Use this for latex keywords and Leo keywords.
-	- Add ignore-case ivar.
-- Define @language xml.
-- Defined syntax coloring for all jEdit token types:
-	KEYWORD1,KEYWORD2,KEYWORD3,LABEL,LITERAL1,LITERAL2,MARKUP,OPERATOR
-	Where do Leo keywords fit in?
-
-#@-node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
-#@+node:ekr.20041228084018.5:Finish zodb plugin
-@ New notes:
-
-- openFromZODB would be similar to openWithFileName, but gets root, current positions from zodb.
-
-- Either we save positions in the zodb, or we figure out how to create root, current positions from vnodes.
-    - Root positions is easy, but current position could be anywhere.
-
-- Save commands would commit to zodb.  Revert would abort.
-#@nonl
-#@+node:ekr.20040226114127: Zope test
-@color
-
-import leoGlobals as g
-import ZODB
-
-d = dir(ZODB) ; d.sort()
-
-g.trace(g.toString(d))
-
-if 0:
-    storage = ZODB.FileStorage.FileStorage(r"c:\prog\zopeTemp\leo.fs")
-    g.trace(storage)
-    if 0:
-        db = ZODB.DB(storage)
-        g.es(storage)
-        g.es(db)
-        db.close()
-#@nonl
-#@-node:ekr.20040226114127: Zope test
-#@+node:ekr.20041002151816:ZODB docs
-#@+node:ekr.20041002151816.1:What is the ZODB?
-http://zope.org/Wikis/ZODB/FrontPage/guide/node2.html#SECTION000210000000000000000
-
-1.1 What is the ZODB?
-
-The ZODB is a persistence system for Python objects. Persistent programming
-languages provide facilities that automatically write objects to disk and read
-them in again when they're required by a running program. By installing the
-ZODB, you add such facilities to Python.
-
-#@-node:ekr.20041002151816.1:What is the ZODB?
-#@+node:ekr.20041002151816.2:How ZODB Works
-2.2 How ZODB Works
-
-The ZODB is conceptually simple. Python classes subclass a persistent.Persistent
-class to become ZODB-aware. Instances of persistent objects are brought in from
-a permanent storage medium, such as a disk file, when the program needs them,
-and remain cached in RAM. The ZODB traps modifications to objects, so that when
-a statement such as obj.size = 1 is executed, the modified object is marked as
-``dirty.'' On request, any dirty objects are written out to permanent storage;
-this is called committing a transaction. Transactions can also be aborted or
-rolled back, which results in any changes being discarded, dirty objects
-reverting to their initial state before the transaction began.
-
-#@-node:ekr.20041002151816.2:How ZODB Works
-#@+node:ekr.20041002151816.3:Rules for Writing Persistent Classes
-2.6 Rules for Writing Persistent Classes
-
-Practically all persistent languages impose some restrictions on programming
-style, warning against constructs they can't handle or adding subtle semantic
-changes, and the ZODB is no exception. Happily, the ZODB's restrictions are
-fairly simple to understand, and in practice it isn't too painful to work around
-them.
-
-The summary of rules is as follows:
-
-* If you modify a mutable object that's the value of an object's attribute, the
-ZODB can't catch that, and won't mark the object as dirty. The solution is to
-either set the dirty bit yourself when you modify mutable objects, or use a
-wrapper for Python's lists and dictionaries (PersistentList, PersistentMapping)
-that will set the dirty bit properly.
-
-* Recent versions of the ZODB allow writing a class with __setattr__ ,
-__getattr__, or __delattr__ methods. (Older versions didn't support this at
-all.) If you write such a __setattr__ or __delattr__ method, its code has to set
-the dirty bit manually.
-
-* A persistent class should not have an __del__ method. The database moves
-objects freely between memory and storage. If an object has not been used in a
-while, it may be released and its contents loaded from storage the next time it
-is used. Since the Python interpreter is unaware of persistence, it would call
-the __del__ each time the object was freed.
-#@nonl
-#@-node:ekr.20041002151816.3:Rules for Writing Persistent Classes
-#@-node:ekr.20041002151816:ZODB docs
-#@+node:ekr.20031218072017.406:Zop url's
-#@+node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
-#@-node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
-#@+node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
-#@-node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
-#@+node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
-#@-node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
-#@-node:ekr.20031218072017.406:Zop url's
-#@+node:ekr.20040107064101.5:Zope notes
-#@+node:ekr.20031218072017.405:Kent Tenny Notes
-@nocolor
-
-Outlook: server for email, addresses & calendar.  Groupware.  Chandler similar.
-
-Zope: back end is ZODB.  Zope like an OS: run Python code on Zope.
-
-Zope: another way to access Leo files.  Maybe twisted is better?
-
-Wiki anology: edit Leo files with browser.  Write through the web.
-
-longrun.org
-
-Wiki principles: 
-	- Sharing is 90% of collaboration.
-	- Zope: Subscribe to a wiki: email when page changes.
-	- RSS: xml that defines piece of info(tile,url,abstract)
-		- Client has a list of rss feeds: an xml file.
-		- List of intesting people: notified when they say something.
-
-Two goals:
-	- publish Leo files
-	- edit Leo files
-
-Brother needs cvs.
-Kent not so worried about cvs.
-	-Leo file is a web site!
-	- Helper layer between user and OS.
-		- Look at aap project.  Author of vim. a-p.org
-			- Replacement for make in Python.  Automating tool.
-		- Expert prepares Leo file.  User uses it.
-#@nonl
-#@-node:ekr.20031218072017.405:Kent Tenny Notes
-#@+node:ekr.20040107065006:posting
-@nocolor
-
-Yes he's absolutely right -- focus on the ZODB.
-
-..stay alway from ZTP. ZPT, TPZ, CMF, Plone and all that other stuff for now.
-
-I jsut came accross a handy slide show overview from last spring:
-http://jace.seacrow.com/tech/zope/blug-zodb
-
-BerkeyDB Storage is cool too and fits Leo well I think. plays nicely wiht ZODB
-standalnioe and in Zope.
-#@-node:ekr.20040107065006:posting
-#@+node:ekr.20040107064854:example Code
-from ZODG import FileStorage,DB
-from Persistence import Persistent
-
-# Connect to db.
-# FileStorage is standard: entire db is stored in a single file.
-storage = FileStorage.FileStorage("/tmp/test-filestorage.fs")
-db = DB.(storage)
-conn = db.open()
-
-# Get the root of the db.
-root = conn.root()
-
-# Defining user classes.
-class leoData(Persistent):
-	pass
-	
-# Commit or revert.
-get_transaction().commit()
-get_transaction().abort()
-#@nonl
-#@-node:ekr.20040107064854:example Code
-#@+node:ekr.20040107080609.1:Zshell
-@nocolor
-
-By: jasonic ( Jason Cunliffe )
-ZShell  
-2003-12-31 22:25
-
-Hi, Just another friendly reminder to check out Jerome Alet's ZShell, one of Zope's best kept secrets:
-
-http://www.librelogiciel.com/software/
-
-ZShell : Manipulate the Zope Object DataBase with Unix shell like commands
-
-and also
-
-ZShellScripts : Unifies the Zope notion of Scripts and provides several Script interpreters : Python, Unix shell , Lisp, Perl, PHP, Ruby, and Zope ZShell
-
-Not only for obvious usefullness, but also as a valuable study of Python access to the ZODB.
-
-JAXML is cool too..
-http://www.librelogiciel.com/software/jaxml/action_Presentation
-
-- Jason
-#@nonl
-#@-node:ekr.20040107080609.1:Zshell
-#@+node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
-#@-node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
-#@+node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
-#@-node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
-#@-node:ekr.20040107064101.5:Zope notes
-#@+node:ekr.20031218072017.412:Zope postings
-#@+node:ekr.20031218072017.413:From Rodrigo re: Zope.
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007586
-By: rodrigo_b
-
-z2.py,
->Supposing that that I did find this file, what would I be looking for? 
-
-This is the Main script, the principal program, the code that startup all the
-servers, the only python program that make run Zope, it the code called by start.py,
-and it is the one to which you pass the command lines.
-
-With the command line you can indicate which services to start up at which ports.
-This is IMPORTANT. Also you can enable/disable the Debug mode.
-
-python z2.py --help will give you some infos about what I'm talking about.
-
-In linux the debug or not debug mode, enable the console or daemon mode (that
-means 'background task mode').
-
-In windows, I'm not sure that disabling the debug mode will be enough.
-I know that at the install time you can setup Zope as a Windows Service, so
-it will start automatically every time Windows Startup, and it will not open
-a console window.
-
-But first look at the debug mode.
-
-Start.bat give some defaults command lines to z2.py
-
-Webdav,
->What issues are involved in this choice, and why should I care today? 
-
-from www.webdav.org
-
-What is WebDAV? 
-Briefly: WebDAV stands for "Web-based Distributed Authoring and Versioning".
-It is a set of extensions to the HTTP protocol which allows users to collaboratively
-edit and manage files on remote web servers.
-
-For example that means that you can open you Windows Explorer (from your mail
-I understand that you work on an MsWindows OS),
-tip the url "localhost:%i"%(your webdav port) and you will be able to navigate,
-view and edit the Zope Objects just as a normal file system (well, almost).
-
-WebDav is a standard and there are Python implementations. WebDav is support
-by  Oscom.
-
-WebDav is cool.
-WebDav is the 'highest level tool'.
-
-ZODB,
-
->Does that mean that gnx's aren't needed with Zope? Could Leo nodes live in
-the ZODB?
-
-You have to thinks to ZODB just as what it is: a Persistent Object Database.
-Most objects in Zope are Persistents, that mean that their instances do not
-die when you shutdown the server.
-
-The ZODB store his data in it own format.
-I think that GNX should be keeped.
-You have to basic ways to put nodes into Zope.
-
-First: the hard way: create a new Product (Products are something like Zope
-plugins) that is based on the Leo code, but were there is no node storage, instead
-the node should be Persistents. Then add rendering code to this objects.
-
-Leo node object + Persistence + ZClass + Rendering Code -> Leo Zope node.
-
-Additionaly you should create an Folder like object that should be an 'Leo Outline
-Zope Object',  actuating as an Leo nodes container.
-
-This shema is similar to the Zwiki way, with a Zwiki Web and the Zwiki Pages.
-
-Second: Use A zope folder just as Leo manage the @file nodes. Let have simple
-DTMLDocuments, edited via WebDav, with <dtml-comments> , and stuff like that.
-The Leo import/export that nodes.
-
-RodrigoB.
-
-#@-node:ekr.20031218072017.413:From Rodrigo re: Zope.
-#@+node:ekr.20031218072017.414:Clarification from Kent Tenny
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2009081
-By: ktenney
-
-Edward,
-
-I don't see ZLeo replacing Leo, rather a method of accessing
-Leo files.
-
-When I write, I almost always want it to be web accessable,
-so that I can access it from any browser, and so that I can
-share it easily. I would like myfile.leo to live
-at http://longrun.org/leo/myfile.leo. It can be read and
-written to from any browser (according to how permissions are
-configured) The page describing how to configure Apache would
-be found at http://longrun.org/leo/myfile.leo/Apache/configure
-The only requirement to work with Leo files is a browser.
-
-I wouldn't want to lose the capability to edit outside
-the browser, using a standalone version of Leo or Zope's
-ExternalEditor product. ExternalEditor allows me to click
-an icon to open the page I'm viewing in any editor. I could
-open it in Leo as a Leo file, or open just the page in
-Vim (http://vim.sourceforge.net/index.php)
-
-Zope is ponderous, I think of it as more of a platform
-than an application. My understanding of how Zope works
-grows slowly, in the mean time my focus is on _products_.
-Installing a product in Zope is like installing an application
-in Windows or Linux.
-
-One of the most evolved products is Plone/CMF http://plone.org
-which is basically a turnkey web site.
-
-twisted http://twistedmatrix.com is a brilliant set of network
-programming tools. That's all I know about it.
-
-I'm not sure about Chandler (http://www.osafoundation.org/) 
-(they did choose Python and ZODB http://www.osafoundation.org/technology.htm)
-
-You might try subscribing to a Zope mailing list or two
-http://www.zope.org/Resources/MailingLists
-The community of users and developers is very important to Zope.
-
-Thanks,
-Kent
-#@-node:ekr.20031218072017.414:Clarification from Kent Tenny
-#@+node:ekr.20031218072017.415:From Rodrigo re: ip
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007817
-By: rodrigo_b
-
-If zope is running some server then this server will be accesible from your
-network if and only if there is no firewall in the way.
-
-The people can access to your services using (normally on internet you do not
-have a domain name)
-
-your_ip:the_service_port
-
-Example:
-zope http service on port 8080 on your machine.
-When  you connect to internet your machine got an extra IP.
-Then simple put on the web browser
-
-http://your_conexion_ip:8080
-
-and Tada you will see the root_zope/index_html object rendered intro HTML.
-
-Most of the ISP give you a dinamic IP.
-Some companies provides you dinamic IP Domain Name services, allowing to attach
-a domain name to your machine dinamically (each time you reconect).
-
-then you can have:
-
-http://leo.edward.com:8080/
-
-The 8080 stuff can be avoied if you setup zope to use the standard port 80 for
-HTTP service.
-
-With this in mind you can access ftp
-
-ftp://your_ip_or_domain_name:8021
-
-or webdav, or anything else.
-#@-node:ekr.20031218072017.415:From Rodrigo re: ip
-#@+node:ekr.20031218072017.416:Other servers
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007832
-By: rodrigo_b
-
-I would made a warning.
-
-Zope IT IS NOT the only way to obtain an local HTTP server, pythonic and
-flexible.
-
-There is a lot of other way.
-
-Also Zope IT IS NOT THE BEST pythonic http/ftp/webdav or anything server
-aviable.
-
-I think that we should define better 
-
-What we want to do?
-
-before choosing the tool.
-
-As I said, I had already used Zope, I choosed it because of very specific features,
-but nothing indicate that Zope is the best way to get Leo to the colaborative
-network universe.
-
-I think that we should at least consider:
-- SimpleHTTPServer
-- To take of the Medusa Server from Zope (that is use Zope code in the standard
-Leo distribution, avoying dependences)
-- Twisted matrix (I had no experience with it, but it looks much more
-flexible/powerfull)
-
-Zope provides you a specific framework, you have to match you application to
-this framework, Zope (in my opinion) it is not a tool, it's an ambient.
-
-It's seems that Edward it is new in the web oriented software, I think it has
-a lot of potencialities and it will benefits Leo devellopment.
-
-Please Edward, look at Zope as an example but not as THE options. Think about
-what can be done, what should be done, and then we will take the best tool.
-
-Anyway my opinion:
-- SimpleHTTP server: usefull, it is in python, not very eficiente, just http
-server	
-- Medusa: usefull, very eficiente, just http server...
-- Twisted Matrix: very powerfull, fresh comunity, confusing documentation, a
-new paradigm, a devellopment tool.
-- Zope: powerfull, eficient, comes with battery included, bad documentation,
-to very paradigm oriented, the apps have to fit the paradigm, don't believe
-all the promises, strong enthousiast comunity, poor web examples.
-
-
-RodrigoB. 
-#@-node:ekr.20031218072017.416:Other servers
-#@+node:ekr.20031218072017.417:Is my ip public?
-https://sourceforge.net/forum/message.php?msg_id=2007962
-By: bwmulder
-
-Since no one else answered this question, let me take a first take on the
-question:
-
-If you are connected to the internet, people can use your IP number to connect
-to your computer. This IP number is often given dynamically, though some DSL
-providers give you fixed IP numbers for an additional fee. If you did not ask
-for fixed IP numbers, you probably have an dynamic IP number (I think).
-
-An IP number consist of four digits. A connection to the (example) IP number
-111.222.333.444 can by made via the request http://111.222.333.444
-
-If you have a dynamic IP number, and your Internet provider provides you with
-some space to publish HTML, you could, via a script, upload your current IP
-number dynamically.
-
-You might also consider buying a domain name. In this case, people can use the
-domain name to connect to your computer instead of the IP number.
-
-Another consideration are firewalls. Normally, you want a firewall isolating
-your computer from attacks from the Internet. I firewall can be some additional
-software. I am currently using a router, a piece of hardware, as a firewall.
-Windows XP has firewall software build in. You might have to configure your
-firewall to let requests for your server go through.
-
-Finally, you might want to check the agreement you entered with your Internet
-service provider, if you are allowed to run a server from your connection. It
-might become a problem if your server becomes very popular.
-#@-node:ekr.20031218072017.417:Is my ip public?
-#@+node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2009279
-By: paulpaterson
-
-What I see Zope offering is an alternative way of storing and retrieving nodes.
-What you also get for "free" with Zope is concurrent access, security,
-http/ftp/webdav access to the same node information etc. The hidden price you
-pay is that Zope is big and many users will have other tools which can provide
-these facilities also.
-
-So, my thinking is that we can abstract the basic idea (alternative ways of
-storing and retrieving node information) into Leo and then let the magic really
-happen in the concrete implementation stage.
-
-What does this mean? Well, we could change Leo so that whenever it goes to retrieve
-Headline or Body it goes to a Node Server object to do that. The Node Server
-object uses whatever method it wants to retrieve or set the information. The
-Node server would also be responsible for telling Leo what child nodes an object
-has and whether they are clones or not.
-
-The cool part is that we could implement different kinds of Node server to talk
-to different back-ends. These can then be thought of as drivers. So we might
-have,
-
-- a file system driver where all information is stored in files and directories
-- a database driver where the DB stores all information
-- an ftp driver
-- a Zope driver
-- the default Leo driver
-
-People could write a driver to their own back end storage system. 
-
-What is the advantage of this?
-
-Well, the magic really happens in the back-end. If you choose a back end which
-supports versioning, security, concurrent working, web access, etc etc then
-Leo now supports them. If you choose a back-end which supports dynamic mark-up
-or some other fancy stuff then Leo supports it. The key is that Leo doesn't
-need to bind itself to any one system to achieve this - the end user can install
-the relevant driver, configure the back-end and just go with it.
-
-Paul
-#@-node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
-#@+node:ekr.20031218072017.419:From Paul Paterson
-Ok, I'll have a bash in a rough order or when things occurred...
-
-
-1. Everything is web based. I had the same problem you did. I ran the
-thing and said, "ok, so what did it do". Others have pointed you in the
-right direction now with visiting http://localhost:8080 and
-http://localhost:8080/manage to view the site and mange it respectively.
-
-If you are running WinNT, 2000 or XP you can also run Zope as a service,
-which is much more convenient as you don't need the console window open
-all the time.
-
-
-2. Everything in Zope is an object. Ok, you'll see this a lot. The best
-thing to do is think "wow, cool" and then forget it again as you
-probably wont really see how this helps at all until you get much deeper
-into Zope. 
-
-
-3. DTML allows you to construct web pages by piecing together bits much
-like writing a program from functions. In fact you will find DTML is a
-lot like tangling Leo's @root nodes. Here's a bit...
-
-<!-- start html -->
-
-<h>DTML allows you to assemble web pages much like Leo tangles
-documents</h>
-
-<p>For instance, have a look at how this page is constructed</p>
-
-<dtml-var first_bit>
-<dtml-var second_bit>
-<dtml-var third_bit>
-
-<!-- end html -->
-
-The <dtml-var name> bit is like a < < name > > directive. It effectively
-inserts the object (could be HTML, an image or something more complex)
-in the current page. 
-
-To see this snippet in action you can visit my server at
-http://24.243.129.68:8080/members/sandbox/index_html
-
-To see the code, visit http://24.243.129.68:8080/members/sandbox/manage
-(username=edream, pwd=leo) and then click on the index_html to see the
-main DTML. Feel free to mess around in here but please don't publish the
-IP address as my ISP doesn't allow servers!
-
-
-4. There is a lot of power in Zope products. Try going to www.zope.org
-and seeing what is available. As an example I put a Wiki in the sandbox
-area http://24.243.129.68:8080/members/sandbox/edswiki
-
-
-5. If you are looking for a good book to begin with then steer clear of
-"The Zope Book"! If you don't mind paying then "The book of Zope" is a
-much better introduction. When you have read this then "The Zope Book"
-will make some sense but really I found this book tremendously hard to
-get through.
-
-
-6. Web standards are very cool! Zope supports FTP. Point your favourite
-FTP tool to,
-
-ftp://24.243.129.68:8021/members/sandbox/
-
-Or try using WebDav by creating a network place pointing to
-
-http://24.243.129.68:8080/members/sandbox
-
-You can then use windows explorer or an ftp tool to browse your objects.
-
-
-7. Everything is an object! I can't do justice to the concept of
-Acquisition here but by the time you have messed around with Zope a bit
-you should start to see how acquisition starts to make things really
-work like classes in Python. 
-
-
-I realize this isn't very coherent - if I get a spare moment this
-weekend I'll knock up a quick demo showing Leo interacting with Zope.
-
-Regards,
-
-Paul
-#@-node:ekr.20031218072017.419:From Paul Paterson
-#@+node:ekr.20040117092727.2:using zodb versions
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2379351
-By: korakot
-
-If leo use database storage (ZODB or otherwise)
-it could scale much better. This will bring us some
-possiblity to store all versions of changes to a node
-or a tree.
-
-Cloning will then point to a specific version. If there
-is no conflict, it can update to a later version when
-the primary clone change. If there is a conflict
-we can deal with it wisely using 'diff information'
-because we have 'all versions' stored.
-
-#@-node:ekr.20040117092727.2:using zodb versions
-#@+node:ekr.20031218072017.737:Leo & data bases
-From: "Scott Chapman" <scott_list@mischko.com>
-To: <edreamleo@charter.net>
-Sent: Monday, November 10, 2003 11:05 AM
-Subject: Enhancement request: Make Leo deal with a database
-
-It would be Way Cool if Leo could deal with psycopg or other DataBase 
-API compliant implementations and fetch and store database records.
-
-Details of what I'd like to see:
-
-I'm working on Python source code. I want Leo to pull a source code file 
-from a database record built something like this:
-
-filename: text
-updated: datetimestamp
-code: text
-
-Leo would insert a new record, not update an existing one, each time a 
-Save was done, with a more current time stamp.  
-
-When a File Open was requested (i.e. a node on a existing Leo outline 
-was being pulled from a database), Leo would fetch the most recent 
-time-stamped version only.
-
-I use this same technique for my wiki pages.  It's very easy to 
-implement in SQL and works great.
-
-Leo would also need the ability to save the same file to a regular 
-python source code file on disk at a specific location, so you'd have 
-to be able to put more than one save/load directive in a given node.
-
-This would provide a nice version history and could lead to other Useful 
-Things in Leo.
-
-Scott
-#@nonl
-#@-node:ekr.20031218072017.737:Leo & data bases
-#@-node:ekr.20031218072017.412:Zope postings
-#@-node:ekr.20041228084018.5:Finish zodb plugin
-#@+node:ekr.20050727075336:Minor
-#@+node:ekr.20050713105353:(Add configuration setting to set menu fonts)
-#@+node:ekr.20050713105353.1:Email from Martin Moncrieffe <mcm35@cam.ac.uk>
-@nocolor
-
-Hi Edward,
-
-I have looked into leo's code and managed to figure out how to change 
-some fonts. Here's what I did to change the menu fonts for example.
-
-Fonts for the menu can be set in Code->Gui Tkinter classes->@thin 
-leoTkinterMenu.py->Tkinter menu bindings->Routines with Tk 
-spellings->new_menu
-
-so to use the system font (linux) I changed the return statement to:
-
-return Tk.Menu(parent,tearoff=tearoff, font=("System",11))
-
-I'll try using .leo_xresources file and see if that works as well.
-
-Thanks.
-
-__martin
-#@nonl
-#@-node:ekr.20050713105353.1:Email from Martin Moncrieffe <mcm35@cam.ac.uk>
-#@-node:ekr.20050713105353:(Add configuration setting to set menu fonts)
-#@+node:ekr.20050513164506.2:Make Expand/Contract undoable?
-#@-node:ekr.20050513164506.2:Make Expand/Contract undoable?
-#@+node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio?)
-#@+node:ekr.20050526090336:Request
-@killcolor
-
-https://sourceforge.net/forum/message.php?msg_id=3147054
-By: niccl
-
-In the CVS leo from 12 May, yet another minor but mildly irritating bug: the
-split ratio between log and outline windows isn't restored on re-opening a .leo
-file. The  split between body and the others is, however.
-#@nonl
-#@-node:ekr.20050526090336:Request
-#@-node:ekr.20050512031131:(Use global_log_window_position to specify outline/log ratio?)
 #@+node:ekr.20050707085637:Suggestions from an emacs user
 @nocolor
 http://sourceforge.net/forum/message.php?msg_id=3237845
@@ -9460,193 +8920,12 @@ actually a new convert, but I'll be watching more closely, at least.
 _Mark_
 #@nonl
 #@-node:ekr.20050707085637:Suggestions from an emacs user
-#@+node:ekr.20050712065231:New commands
-@nocolor
-
-Make Alt-arrow commands undoable.
-    Example:  Alt-left Alt-right is not the same, in general, as Alt-left, Undo.
-
-A variation on Alt-left would close the parent when visiting it.  (This is the Contract Parent command)
-
-Apply incremental search commands to headlines.  This might be fast, but is it useful if nodes aren't visible?
+#@-node:ekr.20050524074930.2:Mouseless leo
+#@+node:ekr.20050419060645:Alternate lead-in characters
+An @decorator setting might be good. This would be a list of all Python
+decorators. Leo would create @verbatim sentinels for these.
 #@nonl
-#@-node:ekr.20050712065231:New commands
-#@+node:ekr.20050621130815:Rewrite tech report with rst3
-#@-node:ekr.20050621130815:Rewrite tech report with rst3
-#@-node:ekr.20050727075336:Minor
-#@+node:ekr.20050914132954.1:Have rst3 plugin honor the @ignore directive
-#@-node:ekr.20050914132954.1:Have rst3 plugin honor the @ignore directive
-#@-node:ekr.20050816165305:To do 4.4
-#@+node:ekr.20041228073219:4.4.x
-#@+node:ekr.20041228074125:(Make drawing more flexible)
-#@+node:ekr.20041228092223:Play with wiki markup
-http://sourceforge.net/forum/message.php?msg_id=2205285
-From: Rich
-
-Color ''and'' italic/bold characters with @markup. One thing I'd like to
-''not'' see are the markup characters in @file-nosent files.  "~~red:NOTE:~~"
-does nothing for readability in plain text.
-#@nonl
-#@-node:ekr.20041228092223:Play with wiki markup
-#@+node:EKR.20040602153716:(Finish drawUserIcons)
-# Create a better way of writing user icons.
-#@nonl
-#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-Also add corresponding commands.
-#@nonl
-#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-#@+node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2477913
-By: edream
-
-A better design for user icons
-
-Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
-to have t.unknownAttributes["icons"] be a list of g.Bunches rather
-than a list of tuples.  Each of these bunches could have the
-following keys:
-
-"type"
-
-"file", "icon" or "url".  At present my prototype code uses "file" to specify
-the location of an icon.
-
-"where":
-
-"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
-where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
-means before the plus/minus box.  "beforeIcon" means before the standard icon.
-
-"height":
-
-the height of the icon to use when calculating the line height.  Default: get
-from the icon itself, if possible.
-
-"width":
-
-the width of the icon to use when calculating where to put the following element.
-Default: get from the icon, if possible.
-
-"xoffset"
-
-Leo draws the icon at x + xoffset, where x is determined by the where param
-above.  Default 0.
-
-"xpad"
-
-The amount of extra space following the icon.  Default 0.
-
-"yoffset"
-
-Leo draws the icon at y + yoffset.  Default 0.
-
-"ypad"
-
-The amount of extra vertical space to add to the line height.  Default 0.
-
-These offset and pad values are integer pixel values and may be positive or
-negative.
-
-"lineHeight"  NOT USED.
-
-Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-
-Edward
-
-P.S.  Other gui's might not be able to support all these options.  That's ok.
-The drawing code in gui plugins should degrade gracefully.
-
-EKR
-#@nonl
-#@-node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
-#@+node:ekr.20040317184631.2:Changes
-@nocolor
-
-"lineHeight"
-
-This key won't be used.
-
-t.unknownAttributes["lineYOffset"] 
-
-An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
-#@nonl
-#@-node:ekr.20040317184631.2:Changes
-#@+node:ekr.20040317184631.1:To do
-@nocolor
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-#@nonl
-#@-node:ekr.20040317184631.1:To do
-#@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv):
-    
-    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
-    
-    attrDict = torv.unknownAttributes
-    if type(attrDict) != type({}):
-        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
-        return
-
-    for key in attrDict.keys():
-        val = attrDict[key]
-        self.putUa(torv,key,val)
-#@nonl
-#@-node:EKR.20040526202501:putUnknownAttributes
-#@-node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2877106
-
-By: Paul Paterson - paulpaterson
-RE: Can I color the headline text ?  
-2004-12-01 08:01
-
-The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
- 
-Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
- 
-Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
- 
-Between the two of them there should be enough information to help you achieve what you want. 
- 
-It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
-#@nonl
-#@-node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
-#@-node:ekr.20041228074125:(Make drawing more flexible)
+#@-node:ekr.20050419060645:Alternate lead-in characters
 #@+node:ekr.20040919182750.1:Better handling of whitespace (cvs fiendly)
 #@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
 add python -t to test suite to catch mixed tab & space in derived files.
@@ -10579,23 +9858,20 @@ self.forceFullRecolorFlag = False
 #@-node:ekr.20031218072017.1327:<< recolor the body >>
 #@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 redraw_flag = False
-
 c.beginUpdate()
-
-# Update dirty bits.
-if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-    redraw_flag = True
-    
-# Update icons.
-val = p.computeIcon()
-
-# 7/8/04: During unit tests the node may not have been drawn,
-# So p.v.iconVal may not exist yet.
-if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-    p.v.iconVal = val
-    redraw_flag = True
-
-c.endUpdate(redraw_flag) # redraw only if necessary
+try:
+    # Update dirty bits.
+    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+        redraw_flag = True
+    # Update icons.
+    val = p.computeIcon()
+    # During unit tests the node may not have been drawn,
+    # So p.v.iconVal may not exist yet.
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    c.endUpdate(redraw_flag) # redraw only if necessary
 #@nonl
 #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 #@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
@@ -10853,21 +10129,17 @@ if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
 #@-node:ekr.20040803072955.94:<< set s to the widget text >>
 #@+node:ekr.20040803072955.95:<< update p >>
 c.beginUpdate()
-if 1: # In update...
-
+try: # In update...
     # Update changed bit.
-    if not c.changed:
-        c.setChanged(True)
-
+    if not c.changed: c.setChanged(True)
     # We must call p.setDirty even if p is dirty!
     dirtyVnodeList = p.setDirty()
-
     # Update p.
     p.initHeadString(s)
     self.setText(edit_text,s,tag="idle_head_key2")
     edit_text.mark_set("insert",index)
-
-c.endUpdate(False) # do not redraw now.
+finally:
+    c.endUpdate(False) # do not redraw now.
 #@nonl
 #@-node:ekr.20040803072955.95:<< update p >>
 #@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
@@ -10882,8 +10154,10 @@ edit_text.configure(width=self.headWidth(p))
 if done:
     # g.trace("done")
     c.beginUpdate()
-    self.endEditLabel()
-    c.endUpdate()
+    try:
+        self.endEditLabel()
+    finally:
+        c.endUpdate()
 
 elif changed:
     # g.trace("changed")
@@ -10958,6 +10232,880 @@ def putCodeLine (self,s,i):
 #@-node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040628085831:@import, @shadow
 #@-node:ekr.20040919182750.1:Better handling of whitespace (cvs fiendly)
+#@+node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
+@ To do:
+
+- ** Use a general purpose XML parser to parse the jEdit mode files.
+- ** Do incremental syntax coloring
+	- Create lines table.
+	- Initialize lines table when select new node.
+- Use strings for states.
+- Define colorizeLine method.
+- Create self.state ivar
+- Use a keyword lead-in table.
+	- Use this for latex keywords and Leo keywords.
+	- Add ignore-case ivar.
+- Define @language xml.
+- Defined syntax coloring for all jEdit token types:
+	KEYWORD1,KEYWORD2,KEYWORD3,LABEL,LITERAL1,LITERAL2,MARKUP,OPERATOR
+	Where do Leo keywords fit in?
+
+#@-node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
+#@+node:ekr.20041228084018.5:Finish zodb plugin
+@ New notes:
+
+- openFromZODB would be similar to openWithFileName, but gets root, current positions from zodb.
+
+- Either we save positions in the zodb, or we figure out how to create root, current positions from vnodes.
+    - Root positions is easy, but current position could be anywhere.
+
+- Save commands would commit to zodb.  Revert would abort.
+#@nonl
+#@+node:ekr.20040226114127: Zope test
+@color
+
+import leoGlobals as g
+import ZODB
+
+d = dir(ZODB) ; d.sort()
+
+g.trace(g.toString(d))
+
+if 0:
+    storage = ZODB.FileStorage.FileStorage(r"c:\prog\zopeTemp\leo.fs")
+    g.trace(storage)
+    if 0:
+        db = ZODB.DB(storage)
+        g.es(storage)
+        g.es(db)
+        db.close()
+#@nonl
+#@-node:ekr.20040226114127: Zope test
+#@+node:ekr.20041002151816:ZODB docs
+#@+node:ekr.20041002151816.1:What is the ZODB?
+http://zope.org/Wikis/ZODB/FrontPage/guide/node2.html#SECTION000210000000000000000
+
+1.1 What is the ZODB?
+
+The ZODB is a persistence system for Python objects. Persistent programming
+languages provide facilities that automatically write objects to disk and read
+them in again when they're required by a running program. By installing the
+ZODB, you add such facilities to Python.
+
+#@-node:ekr.20041002151816.1:What is the ZODB?
+#@+node:ekr.20041002151816.2:How ZODB Works
+2.2 How ZODB Works
+
+The ZODB is conceptually simple. Python classes subclass a persistent.Persistent
+class to become ZODB-aware. Instances of persistent objects are brought in from
+a permanent storage medium, such as a disk file, when the program needs them,
+and remain cached in RAM. The ZODB traps modifications to objects, so that when
+a statement such as obj.size = 1 is executed, the modified object is marked as
+``dirty.'' On request, any dirty objects are written out to permanent storage;
+this is called committing a transaction. Transactions can also be aborted or
+rolled back, which results in any changes being discarded, dirty objects
+reverting to their initial state before the transaction began.
+
+#@-node:ekr.20041002151816.2:How ZODB Works
+#@+node:ekr.20041002151816.3:Rules for Writing Persistent Classes
+2.6 Rules for Writing Persistent Classes
+
+Practically all persistent languages impose some restrictions on programming
+style, warning against constructs they can't handle or adding subtle semantic
+changes, and the ZODB is no exception. Happily, the ZODB's restrictions are
+fairly simple to understand, and in practice it isn't too painful to work around
+them.
+
+The summary of rules is as follows:
+
+* If you modify a mutable object that's the value of an object's attribute, the
+ZODB can't catch that, and won't mark the object as dirty. The solution is to
+either set the dirty bit yourself when you modify mutable objects, or use a
+wrapper for Python's lists and dictionaries (PersistentList, PersistentMapping)
+that will set the dirty bit properly.
+
+* Recent versions of the ZODB allow writing a class with __setattr__ ,
+__getattr__, or __delattr__ methods. (Older versions didn't support this at
+all.) If you write such a __setattr__ or __delattr__ method, its code has to set
+the dirty bit manually.
+
+* A persistent class should not have an __del__ method. The database moves
+objects freely between memory and storage. If an object has not been used in a
+while, it may be released and its contents loaded from storage the next time it
+is used. Since the Python interpreter is unaware of persistence, it would call
+the __del__ each time the object was freed.
+#@nonl
+#@-node:ekr.20041002151816.3:Rules for Writing Persistent Classes
+#@-node:ekr.20041002151816:ZODB docs
+#@+node:ekr.20031218072017.406:Zop url's
+#@+node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
+#@-node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
+#@+node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
+#@-node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
+#@+node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
+#@-node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
+#@-node:ekr.20031218072017.406:Zop url's
+#@+node:ekr.20040107064101.5:Zope notes
+#@+node:ekr.20031218072017.405:Kent Tenny Notes
+@nocolor
+
+Outlook: server for email, addresses & calendar.  Groupware.  Chandler similar.
+
+Zope: back end is ZODB.  Zope like an OS: run Python code on Zope.
+
+Zope: another way to access Leo files.  Maybe twisted is better?
+
+Wiki anology: edit Leo files with browser.  Write through the web.
+
+longrun.org
+
+Wiki principles: 
+	- Sharing is 90% of collaboration.
+	- Zope: Subscribe to a wiki: email when page changes.
+	- RSS: xml that defines piece of info(tile,url,abstract)
+		- Client has a list of rss feeds: an xml file.
+		- List of intesting people: notified when they say something.
+
+Two goals:
+	- publish Leo files
+	- edit Leo files
+
+Brother needs cvs.
+Kent not so worried about cvs.
+	-Leo file is a web site!
+	- Helper layer between user and OS.
+		- Look at aap project.  Author of vim. a-p.org
+			- Replacement for make in Python.  Automating tool.
+		- Expert prepares Leo file.  User uses it.
+#@nonl
+#@-node:ekr.20031218072017.405:Kent Tenny Notes
+#@+node:ekr.20040107065006:posting
+@nocolor
+
+Yes he's absolutely right -- focus on the ZODB.
+
+..stay alway from ZTP. ZPT, TPZ, CMF, Plone and all that other stuff for now.
+
+I jsut came accross a handy slide show overview from last spring:
+http://jace.seacrow.com/tech/zope/blug-zodb
+
+BerkeyDB Storage is cool too and fits Leo well I think. plays nicely wiht ZODB
+standalnioe and in Zope.
+#@-node:ekr.20040107065006:posting
+#@+node:ekr.20040107064854:example Code
+from ZODG import FileStorage,DB
+from Persistence import Persistent
+
+# Connect to db.
+# FileStorage is standard: entire db is stored in a single file.
+storage = FileStorage.FileStorage("/tmp/test-filestorage.fs")
+db = DB.(storage)
+conn = db.open()
+
+# Get the root of the db.
+root = conn.root()
+
+# Defining user classes.
+class leoData(Persistent):
+	pass
+	
+# Commit or revert.
+get_transaction().commit()
+get_transaction().abort()
+#@nonl
+#@-node:ekr.20040107064854:example Code
+#@+node:ekr.20040107080609.1:Zshell
+@nocolor
+
+By: jasonic ( Jason Cunliffe )
+ZShell  
+2003-12-31 22:25
+
+Hi, Just another friendly reminder to check out Jerome Alet's ZShell, one of Zope's best kept secrets:
+
+http://www.librelogiciel.com/software/
+
+ZShell : Manipulate the Zope Object DataBase with Unix shell like commands
+
+and also
+
+ZShellScripts : Unifies the Zope notion of Scripts and provides several Script interpreters : Python, Unix shell , Lisp, Perl, PHP, Ruby, and Zope ZShell
+
+Not only for obvious usefullness, but also as a valuable study of Python access to the ZODB.
+
+JAXML is cool too..
+http://www.librelogiciel.com/software/jaxml/action_Presentation
+
+- Jason
+#@nonl
+#@-node:ekr.20040107080609.1:Zshell
+#@+node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
+#@-node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
+#@+node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
+#@-node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
+#@-node:ekr.20040107064101.5:Zope notes
+#@+node:ekr.20031218072017.412:Zope postings
+#@+node:ekr.20031218072017.413:From Rodrigo re: Zope.
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2007586
+By: rodrigo_b
+
+z2.py,
+>Supposing that that I did find this file, what would I be looking for? 
+
+This is the Main script, the principal program, the code that startup all the
+servers, the only python program that make run Zope, it the code called by start.py,
+and it is the one to which you pass the command lines.
+
+With the command line you can indicate which services to start up at which ports.
+This is IMPORTANT. Also you can enable/disable the Debug mode.
+
+python z2.py --help will give you some infos about what I'm talking about.
+
+In linux the debug or not debug mode, enable the console or daemon mode (that
+means 'background task mode').
+
+In windows, I'm not sure that disabling the debug mode will be enough.
+I know that at the install time you can setup Zope as a Windows Service, so
+it will start automatically every time Windows Startup, and it will not open
+a console window.
+
+But first look at the debug mode.
+
+Start.bat give some defaults command lines to z2.py
+
+Webdav,
+>What issues are involved in this choice, and why should I care today? 
+
+from www.webdav.org
+
+What is WebDAV? 
+Briefly: WebDAV stands for "Web-based Distributed Authoring and Versioning".
+It is a set of extensions to the HTTP protocol which allows users to collaboratively
+edit and manage files on remote web servers.
+
+For example that means that you can open you Windows Explorer (from your mail
+I understand that you work on an MsWindows OS),
+tip the url "localhost:%i"%(your webdav port) and you will be able to navigate,
+view and edit the Zope Objects just as a normal file system (well, almost).
+
+WebDav is a standard and there are Python implementations. WebDav is support
+by  Oscom.
+
+WebDav is cool.
+WebDav is the 'highest level tool'.
+
+ZODB,
+
+>Does that mean that gnx's aren't needed with Zope? Could Leo nodes live in
+the ZODB?
+
+You have to thinks to ZODB just as what it is: a Persistent Object Database.
+Most objects in Zope are Persistents, that mean that their instances do not
+die when you shutdown the server.
+
+The ZODB store his data in it own format.
+I think that GNX should be keeped.
+You have to basic ways to put nodes into Zope.
+
+First: the hard way: create a new Product (Products are something like Zope
+plugins) that is based on the Leo code, but were there is no node storage, instead
+the node should be Persistents. Then add rendering code to this objects.
+
+Leo node object + Persistence + ZClass + Rendering Code -> Leo Zope node.
+
+Additionaly you should create an Folder like object that should be an 'Leo Outline
+Zope Object',  actuating as an Leo nodes container.
+
+This shema is similar to the Zwiki way, with a Zwiki Web and the Zwiki Pages.
+
+Second: Use A zope folder just as Leo manage the @file nodes. Let have simple
+DTMLDocuments, edited via WebDav, with <dtml-comments> , and stuff like that.
+The Leo import/export that nodes.
+
+RodrigoB.
+
+#@-node:ekr.20031218072017.413:From Rodrigo re: Zope.
+#@+node:ekr.20031218072017.414:Clarification from Kent Tenny
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2009081
+By: ktenney
+
+Edward,
+
+I don't see ZLeo replacing Leo, rather a method of accessing
+Leo files.
+
+When I write, I almost always want it to be web accessable,
+so that I can access it from any browser, and so that I can
+share it easily. I would like myfile.leo to live
+at http://longrun.org/leo/myfile.leo. It can be read and
+written to from any browser (according to how permissions are
+configured) The page describing how to configure Apache would
+be found at http://longrun.org/leo/myfile.leo/Apache/configure
+The only requirement to work with Leo files is a browser.
+
+I wouldn't want to lose the capability to edit outside
+the browser, using a standalone version of Leo or Zope's
+ExternalEditor product. ExternalEditor allows me to click
+an icon to open the page I'm viewing in any editor. I could
+open it in Leo as a Leo file, or open just the page in
+Vim (http://vim.sourceforge.net/index.php)
+
+Zope is ponderous, I think of it as more of a platform
+than an application. My understanding of how Zope works
+grows slowly, in the mean time my focus is on _products_.
+Installing a product in Zope is like installing an application
+in Windows or Linux.
+
+One of the most evolved products is Plone/CMF http://plone.org
+which is basically a turnkey web site.
+
+twisted http://twistedmatrix.com is a brilliant set of network
+programming tools. That's all I know about it.
+
+I'm not sure about Chandler (http://www.osafoundation.org/) 
+(they did choose Python and ZODB http://www.osafoundation.org/technology.htm)
+
+You might try subscribing to a Zope mailing list or two
+http://www.zope.org/Resources/MailingLists
+The community of users and developers is very important to Zope.
+
+Thanks,
+Kent
+#@-node:ekr.20031218072017.414:Clarification from Kent Tenny
+#@+node:ekr.20031218072017.415:From Rodrigo re: ip
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2007817
+By: rodrigo_b
+
+If zope is running some server then this server will be accesible from your
+network if and only if there is no firewall in the way.
+
+The people can access to your services using (normally on internet you do not
+have a domain name)
+
+your_ip:the_service_port
+
+Example:
+zope http service on port 8080 on your machine.
+When  you connect to internet your machine got an extra IP.
+Then simple put on the web browser
+
+http://your_conexion_ip:8080
+
+and Tada you will see the root_zope/index_html object rendered intro HTML.
+
+Most of the ISP give you a dinamic IP.
+Some companies provides you dinamic IP Domain Name services, allowing to attach
+a domain name to your machine dinamically (each time you reconect).
+
+then you can have:
+
+http://leo.edward.com:8080/
+
+The 8080 stuff can be avoied if you setup zope to use the standard port 80 for
+HTTP service.
+
+With this in mind you can access ftp
+
+ftp://your_ip_or_domain_name:8021
+
+or webdav, or anything else.
+#@-node:ekr.20031218072017.415:From Rodrigo re: ip
+#@+node:ekr.20031218072017.416:Other servers
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2007832
+By: rodrigo_b
+
+I would made a warning.
+
+Zope IT IS NOT the only way to obtain an local HTTP server, pythonic and
+flexible.
+
+There is a lot of other way.
+
+Also Zope IT IS NOT THE BEST pythonic http/ftp/webdav or anything server
+aviable.
+
+I think that we should define better 
+
+What we want to do?
+
+before choosing the tool.
+
+As I said, I had already used Zope, I choosed it because of very specific features,
+but nothing indicate that Zope is the best way to get Leo to the colaborative
+network universe.
+
+I think that we should at least consider:
+- SimpleHTTPServer
+- To take of the Medusa Server from Zope (that is use Zope code in the standard
+Leo distribution, avoying dependences)
+- Twisted matrix (I had no experience with it, but it looks much more
+flexible/powerfull)
+
+Zope provides you a specific framework, you have to match you application to
+this framework, Zope (in my opinion) it is not a tool, it's an ambient.
+
+It's seems that Edward it is new in the web oriented software, I think it has
+a lot of potencialities and it will benefits Leo devellopment.
+
+Please Edward, look at Zope as an example but not as THE options. Think about
+what can be done, what should be done, and then we will take the best tool.
+
+Anyway my opinion:
+- SimpleHTTP server: usefull, it is in python, not very eficiente, just http
+server	
+- Medusa: usefull, very eficiente, just http server...
+- Twisted Matrix: very powerfull, fresh comunity, confusing documentation, a
+new paradigm, a devellopment tool.
+- Zope: powerfull, eficient, comes with battery included, bad documentation,
+to very paradigm oriented, the apps have to fit the paradigm, don't believe
+all the promises, strong enthousiast comunity, poor web examples.
+
+
+RodrigoB. 
+#@-node:ekr.20031218072017.416:Other servers
+#@+node:ekr.20031218072017.417:Is my ip public?
+https://sourceforge.net/forum/message.php?msg_id=2007962
+By: bwmulder
+
+Since no one else answered this question, let me take a first take on the
+question:
+
+If you are connected to the internet, people can use your IP number to connect
+to your computer. This IP number is often given dynamically, though some DSL
+providers give you fixed IP numbers for an additional fee. If you did not ask
+for fixed IP numbers, you probably have an dynamic IP number (I think).
+
+An IP number consist of four digits. A connection to the (example) IP number
+111.222.333.444 can by made via the request http://111.222.333.444
+
+If you have a dynamic IP number, and your Internet provider provides you with
+some space to publish HTML, you could, via a script, upload your current IP
+number dynamically.
+
+You might also consider buying a domain name. In this case, people can use the
+domain name to connect to your computer instead of the IP number.
+
+Another consideration are firewalls. Normally, you want a firewall isolating
+your computer from attacks from the Internet. I firewall can be some additional
+software. I am currently using a router, a piece of hardware, as a firewall.
+Windows XP has firewall software build in. You might have to configure your
+firewall to let requests for your server go through.
+
+Finally, you might want to check the agreement you entered with your Internet
+service provider, if you are allowed to run a server from your connection. It
+might become a problem if your server becomes very popular.
+#@-node:ekr.20031218072017.417:Is my ip public?
+#@+node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2009279
+By: paulpaterson
+
+What I see Zope offering is an alternative way of storing and retrieving nodes.
+What you also get for "free" with Zope is concurrent access, security,
+http/ftp/webdav access to the same node information etc. The hidden price you
+pay is that Zope is big and many users will have other tools which can provide
+these facilities also.
+
+So, my thinking is that we can abstract the basic idea (alternative ways of
+storing and retrieving node information) into Leo and then let the magic really
+happen in the concrete implementation stage.
+
+What does this mean? Well, we could change Leo so that whenever it goes to retrieve
+Headline or Body it goes to a Node Server object to do that. The Node Server
+object uses whatever method it wants to retrieve or set the information. The
+Node server would also be responsible for telling Leo what child nodes an object
+has and whether they are clones or not.
+
+The cool part is that we could implement different kinds of Node server to talk
+to different back-ends. These can then be thought of as drivers. So we might
+have,
+
+- a file system driver where all information is stored in files and directories
+- a database driver where the DB stores all information
+- an ftp driver
+- a Zope driver
+- the default Leo driver
+
+People could write a driver to their own back end storage system. 
+
+What is the advantage of this?
+
+Well, the magic really happens in the back-end. If you choose a back end which
+supports versioning, security, concurrent working, web access, etc etc then
+Leo now supports them. If you choose a back-end which supports dynamic mark-up
+or some other fancy stuff then Leo supports it. The key is that Leo doesn't
+need to bind itself to any one system to achieve this - the end user can install
+the relevant driver, configure the back-end and just go with it.
+
+Paul
+#@-node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
+#@+node:ekr.20031218072017.419:From Paul Paterson
+Ok, I'll have a bash in a rough order or when things occurred...
+
+
+1. Everything is web based. I had the same problem you did. I ran the
+thing and said, "ok, so what did it do". Others have pointed you in the
+right direction now with visiting http://localhost:8080 and
+http://localhost:8080/manage to view the site and mange it respectively.
+
+If you are running WinNT, 2000 or XP you can also run Zope as a service,
+which is much more convenient as you don't need the console window open
+all the time.
+
+
+2. Everything in Zope is an object. Ok, you'll see this a lot. The best
+thing to do is think "wow, cool" and then forget it again as you
+probably wont really see how this helps at all until you get much deeper
+into Zope. 
+
+
+3. DTML allows you to construct web pages by piecing together bits much
+like writing a program from functions. In fact you will find DTML is a
+lot like tangling Leo's @root nodes. Here's a bit...
+
+<!-- start html -->
+
+<h>DTML allows you to assemble web pages much like Leo tangles
+documents</h>
+
+<p>For instance, have a look at how this page is constructed</p>
+
+<dtml-var first_bit>
+<dtml-var second_bit>
+<dtml-var third_bit>
+
+<!-- end html -->
+
+The <dtml-var name> bit is like a < < name > > directive. It effectively
+inserts the object (could be HTML, an image or something more complex)
+in the current page. 
+
+To see this snippet in action you can visit my server at
+http://24.243.129.68:8080/members/sandbox/index_html
+
+To see the code, visit http://24.243.129.68:8080/members/sandbox/manage
+(username=edream, pwd=leo) and then click on the index_html to see the
+main DTML. Feel free to mess around in here but please don't publish the
+IP address as my ISP doesn't allow servers!
+
+
+4. There is a lot of power in Zope products. Try going to www.zope.org
+and seeing what is available. As an example I put a Wiki in the sandbox
+area http://24.243.129.68:8080/members/sandbox/edswiki
+
+
+5. If you are looking for a good book to begin with then steer clear of
+"The Zope Book"! If you don't mind paying then "The book of Zope" is a
+much better introduction. When you have read this then "The Zope Book"
+will make some sense but really I found this book tremendously hard to
+get through.
+
+
+6. Web standards are very cool! Zope supports FTP. Point your favourite
+FTP tool to,
+
+ftp://24.243.129.68:8021/members/sandbox/
+
+Or try using WebDav by creating a network place pointing to
+
+http://24.243.129.68:8080/members/sandbox
+
+You can then use windows explorer or an ftp tool to browse your objects.
+
+
+7. Everything is an object! I can't do justice to the concept of
+Acquisition here but by the time you have messed around with Zope a bit
+you should start to see how acquisition starts to make things really
+work like classes in Python. 
+
+
+I realize this isn't very coherent - if I get a spare moment this
+weekend I'll knock up a quick demo showing Leo interacting with Zope.
+
+Regards,
+
+Paul
+#@-node:ekr.20031218072017.419:From Paul Paterson
+#@+node:ekr.20040117092727.2:using zodb versions
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2379351
+By: korakot
+
+If leo use database storage (ZODB or otherwise)
+it could scale much better. This will bring us some
+possiblity to store all versions of changes to a node
+or a tree.
+
+Cloning will then point to a specific version. If there
+is no conflict, it can update to a later version when
+the primary clone change. If there is a conflict
+we can deal with it wisely using 'diff information'
+because we have 'all versions' stored.
+
+#@-node:ekr.20040117092727.2:using zodb versions
+#@+node:ekr.20031218072017.737:Leo & data bases
+From: "Scott Chapman" <scott_list@mischko.com>
+To: <edreamleo@charter.net>
+Sent: Monday, November 10, 2003 11:05 AM
+Subject: Enhancement request: Make Leo deal with a database
+
+It would be Way Cool if Leo could deal with psycopg or other DataBase 
+API compliant implementations and fetch and store database records.
+
+Details of what I'd like to see:
+
+I'm working on Python source code. I want Leo to pull a source code file 
+from a database record built something like this:
+
+filename: text
+updated: datetimestamp
+code: text
+
+Leo would insert a new record, not update an existing one, each time a 
+Save was done, with a more current time stamp.  
+
+When a File Open was requested (i.e. a node on a existing Leo outline 
+was being pulled from a database), Leo would fetch the most recent 
+time-stamped version only.
+
+I use this same technique for my wiki pages.  It's very easy to 
+implement in SQL and works great.
+
+Leo would also need the ability to save the same file to a regular 
+python source code file on disk at a specific location, so you'd have 
+to be able to put more than one save/load directive in a given node.
+
+This would provide a nice version history and could lead to other Useful 
+Things in Leo.
+
+Scott
+#@nonl
+#@-node:ekr.20031218072017.737:Leo & data bases
+#@-node:ekr.20031218072017.412:Zope postings
+#@-node:ekr.20041228084018.5:Finish zodb plugin
+#@+node:ekr.20050727075336:Minor 4
+#@+node:ekr.20050713105353:Add configuration setting to set menu fonts
+#@+node:ekr.20050713105353.1:Email from Martin Moncrieffe <mcm35@cam.ac.uk>
+@nocolor
+
+I have looked into leo's code and managed to figure out how to change 
+some fonts. Here's what I did to change the menu fonts for example.
+
+Fonts for the menu can be set in Code->Gui Tkinter classes->@thin 
+leoTkinterMenu.py->Tkinter menu bindings->Routines with Tk 
+spellings->new_menu
+
+so to use the system font (linux) I changed the return statement to:
+
+return Tk.Menu(parent,tearoff=tearoff, font=("System",11))
+
+I'll try using .leo_xresources file and see if that works as well.
+#@nonl
+#@-node:ekr.20050713105353.1:Email from Martin Moncrieffe <mcm35@cam.ac.uk>
+#@-node:ekr.20050713105353:Add configuration setting to set menu fonts
+#@+node:ekr.20050512031131:Use global_log_window_position to specify outline/log ratio?
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3147054
+By: niccl
+
+In the CVS leo from 12 May, yet another minor but mildly irritating bug: the
+split ratio between log and outline windows isn't restored on re-opening a .leo
+file. The  split between body and the others is, however.
+#@nonl
+#@-node:ekr.20050512031131:Use global_log_window_position to specify outline/log ratio?
+#@+node:ekr.20050712065231:New commands
+@nocolor
+
+A variation on Alt-left would close the parent when visiting it.  (This is the Contract Parent command)
+
+Apply incremental search commands to headlines.  This might be fast, but is it useful if nodes aren't visible?
+#@nonl
+#@-node:ekr.20050712065231:New commands
+#@+node:ekr.20050916180203:Make more commands undoable
+@nocolor
+
+Make Alt-arrow commands undoable.
+    Example:  Alt-left Alt-right is not the same, in general, as Alt-left, Undo.
+    
+Make Expand/Contract undoable?
+#@-node:ekr.20050916180203:Make more commands undoable
+#@-node:ekr.20050727075336:Minor 4
+#@-node:ekr.20050816165305:To do 4.4
+#@+node:ekr.20041228073219:4.4.x
+#@+node:ekr.20041228074125:(Make drawing more flexible)
+#@+node:ekr.20041228092223:Play with wiki markup
+http://sourceforge.net/forum/message.php?msg_id=2205285
+From: Rich
+
+Color ''and'' italic/bold characters with @markup. One thing I'd like to
+''not'' see are the markup characters in @file-nosent files.  "~~red:NOTE:~~"
+does nothing for readability in plain text.
+#@nonl
+#@-node:ekr.20041228092223:Play with wiki markup
+#@+node:EKR.20040602153716:(Finish drawUserIcons)
+# Create a better way of writing user icons.
+#@nonl
+#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+Also add corresponding commands.
+#@nonl
+#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+#@+node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2477913
+By: edream
+
+A better design for user icons
+
+Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
+to have t.unknownAttributes["icons"] be a list of g.Bunches rather
+than a list of tuples.  Each of these bunches could have the
+following keys:
+
+"type"
+
+"file", "icon" or "url".  At present my prototype code uses "file" to specify
+the location of an icon.
+
+"where":
+
+"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
+where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
+means before the plus/minus box.  "beforeIcon" means before the standard icon.
+
+"height":
+
+the height of the icon to use when calculating the line height.  Default: get
+from the icon itself, if possible.
+
+"width":
+
+the width of the icon to use when calculating where to put the following element.
+Default: get from the icon, if possible.
+
+"xoffset"
+
+Leo draws the icon at x + xoffset, where x is determined by the where param
+above.  Default 0.
+
+"xpad"
+
+The amount of extra space following the icon.  Default 0.
+
+"yoffset"
+
+Leo draws the icon at y + yoffset.  Default 0.
+
+"ypad"
+
+The amount of extra vertical space to add to the line height.  Default 0.
+
+These offset and pad values are integer pixel values and may be positive or
+negative.
+
+"lineHeight"  NOT USED.
+
+Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+
+Edward
+
+P.S.  Other gui's might not be able to support all these options.  That's ok.
+The drawing code in gui plugins should degrade gracefully.
+
+EKR
+#@nonl
+#@-node:ekr.20040317184631:Design for drawUserIcons (use dict instead of tuples) (finished)
+#@+node:ekr.20040317184631.2:Changes
+@nocolor
+
+"lineHeight"
+
+This key won't be used.
+
+t.unknownAttributes["lineYOffset"] 
+
+An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
+#@nonl
+#@-node:ekr.20040317184631.2:Changes
+#@+node:ekr.20040317184631.1:To do
+@nocolor
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+#@nonl
+#@-node:ekr.20040317184631.1:To do
+#@+node:EKR.20040526202501:putUnknownAttributes
+def putUnknownAttributes (self,torv):
+    
+    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
+    
+    attrDict = torv.unknownAttributes
+    if type(attrDict) != type({}):
+        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+        return
+
+    for key in attrDict.keys():
+        val = attrDict[key]
+        self.putUa(torv,key,val)
+#@nonl
+#@-node:EKR.20040526202501:putUnknownAttributes
+#@-node:EKR.20040602153716:(Finish drawUserIcons)
+#@+node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2877106
+
+By: Paul Paterson - paulpaterson
+RE: Can I color the headline text ?  
+2004-12-01 08:01
+
+The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
+ 
+Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
+ 
+Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
+ 
+Between the two of them there should be enough information to help you achieve what you want. 
+ 
+It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
+#@nonl
+#@-node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
+#@-node:ekr.20041228074125:(Make drawing more flexible)
 #@+node:ekr.20050318072227.2:Python-oriented find
 Use Python search commands instead of Tk.
 Use Python indices
@@ -11185,7 +11333,7 @@ def convertAllBlanks (self):
     d = g.scanDirectives(c)
     tabWidth  = d.get("tabwidth")
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         count = 0 ; dirtyVnodeList = []
         u.beforeChangeGroup(current,undoType)
         for p in current.self_and_subtree_iter():
@@ -11215,7 +11363,8 @@ def convertAllBlanks (self):
                     u.afterChangeNodeContents(p,undoType,innerUndoData)
         u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
         g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
-    c.endUpdate(count > 0)
+    finally:
+        c.endUpdate(count > 0)
 #@nonl
 #@-node:ekr.20031218072017.1704:convertAllBlanks
 #@+node:ekr.20031218072017.1705:convertAllTabs
@@ -11230,7 +11379,7 @@ def convertAllTabs (self):
     theDict = g.scanDirectives(c)
     tabWidth  = theDict.get("tabwidth")
     c.beginUpdate()
-    if 1: # In update:
+    try: # In update:
         count = 0 ; dirtyVnodeList = []
         u.beforeChangeGroup(current,undoType)
         for p in current.self_and_subtree_iter():
@@ -11259,7 +11408,8 @@ def convertAllTabs (self):
                     u.afterChangeNodeContents(p,undoType,undoData)
         u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
         g.es("tabs converted to blanks in %d nodes" % count)
-    c.endUpdate(count > 0)
+    finally:
+        c.endUpdate(count > 0)
 #@nonl
 #@-node:ekr.20031218072017.1705:convertAllTabs
 #@+node:ekr.20031218072017.1821:convertBlanks
@@ -11396,7 +11546,7 @@ def extract(self):
     if head: head = head.rstrip()
 
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         u.beforeChangeGroup(current,undoType)
         if 1: # In group...
             undoData = u.beforeInsertNode(current)
@@ -11404,7 +11554,8 @@ def extract(self):
             u.afterInsertNode(p,undoType,undoData)
             c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
         u.afterChangeGroup(current,undoType)
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.1706:extract
 #@+node:ekr.20031218072017.1708:extractSection
@@ -11435,7 +11586,7 @@ def extractSection(self):
     if head: head = head.rstrip()
 
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         u.beforeChangeGroup(current,undoType)
         if 1: # In group...
             undoData = u.beforeInsertNode(current)
@@ -11443,7 +11594,8 @@ def extractSection(self):
             u.afterInsertNode(p,undoType,undoData)
             c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
         u.afterChangeGroup(current,undoType)
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 #@nonl
 #@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
 if len(headline) < 5:
@@ -11474,7 +11626,7 @@ def extractSectionNames(self):
     if not lines: return
 
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         u.beforeChangeGroup(current,undoType)
         if 1: # In group...
             found = False
@@ -11490,7 +11642,8 @@ def extractSectionNames(self):
             if not found:
                 g.es("Selected text should contain one or more section names",color="blue")
         u.afterChangeGroup(current,undoType)
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 
     # Restore the selection.
     body.setTextSelection(oldSel)
@@ -11951,13 +12104,14 @@ def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
 
     # Update the changed mark and icon.
     c.beginUpdate()
-    if 1: # In update...
+    try: # In update...
         c.setChanged(True)
         if p.isDirty():
             dirtyVnodeList = []
         else:
             dirtyVnodeList = p.setDirty()
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 
     # Scroll as necessary.
     if oldYview:
@@ -12114,12 +12268,17 @@ def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
     << Set the default directory >>
     self.topPosition = None
     c.beginUpdate()
-    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
-    frame.resizePanesToRatio(ratio,frame.secondary_ratio)
-    if 0: # 1/30/04: this is useless.
-        if self.topPosition: 
-            c.setTopVnode(self.topPosition)
-    c.endUpdate()
+    try:
+        ok, ratio = self.getLeoFile(
+            fileName,
+            readAtFileNodesFlag=readAtFileNodesFlag,
+            silent=silent)
+        frame.resizePanesToRatio(ratio,frame.secondary_ratio)
+        if 0: # 1/30/04: this is useless.
+            if self.topPosition: 
+                c.setTopVnode(self.topPosition)
+    finally:
+        c.endUpdate()
     # Delete the file buffer
     self.fileBuffer = ""
     return ok
@@ -18671,12 +18830,17 @@ def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
     << Set the default directory >>
     self.topPosition = None
     c.beginUpdate()
-    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
-    frame.resizePanesToRatio(ratio,frame.secondary_ratio)
-    if 0: # 1/30/04: this is useless.
-        if self.topPosition: 
-            c.setTopVnode(self.topPosition)
-    c.endUpdate()
+    try:
+        ok, ratio = self.getLeoFile(
+            fileName,
+            readAtFileNodesFlag=readAtFileNodesFlag,
+            silent=silent)
+        frame.resizePanesToRatio(ratio,frame.secondary_ratio)
+        if 0: # 1/30/04: this is useless.
+            if self.topPosition: 
+                c.setTopVnode(self.topPosition)
+    finally:
+        c.endUpdate()
     # Delete the file buffer
     self.fileBuffer = ""
     return ok
@@ -18701,8 +18865,10 @@ def readOutlineOnly (self,theFile,fileName):
     self.fileIndex = 0
     << Set the default directory >>
     c.beginUpdate()
-    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=False)
-    c.endUpdate()
+    try:
+        ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=False)
+    finally:
+        c.endUpdate()
     c.frame.deiconify()
     vflag,junk,secondary_ratio = self.frame.initialRatios()
     c.frame.resizePanesToRatio(ratio,secondary_ratio)

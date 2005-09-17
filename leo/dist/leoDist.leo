@@ -98,7 +98,7 @@
 <v t="ekr.20050118125236"><vh>Write a script to make sure .nsi and main install scripts create the same files</vh></v>
 <v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
-<v t="EKR.20040519080201.1"><vh>Distribution checklist</vh></v>
+<v t="EKR.20040519080201.1" a="TV"><vh>Distribution checklist</vh></v>
 <v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="ekr.20050430095952"><vh>Pychecker statements</vh></v>
@@ -122,7 +122,7 @@
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 <v t="ekr.20050910192724"><vh>Pychecker incorrect errors</vh></v>
 </v>
-<v t="ekr.20050118095021" a="E"><vh>Leo 4.3 installer: version stuff</vh>
+<v t="ekr.20050118095021"><vh>Leo 4.3 installer: version stuff</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
@@ -231,6 +231,7 @@ Create the distribution using the distribution scripts.
     - Make sure .leoRecentFiles.txt is empty.
     
 ** Open test.leo: does it open without errors?
+** Open leoPlugins.leo: does it open without errors?
 
 Create and test leosetup.exe.
 	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"

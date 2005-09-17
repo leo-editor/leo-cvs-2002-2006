@@ -1307,7 +1307,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050803075926" a="E"><vh>sudoku puzzle</vh>
+<v t="ekr.20050803075926"><vh>sudoku puzzle</vh>
 <v t="ekr.20050804073824"><vh>&lt;&lt; define data &gt;&gt;</vh></v>
 <v t="ekr.20050911123109"><vh>&lt;&lt; 5-star puzzles &gt;&gt;</vh></v>
 <v t="ekr.20050911145104"><vh>&lt;&lt; 4-star puzzles &gt;&gt;</vh></v>
@@ -3024,7 +3024,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -3147,7 +3147,7 @@ approach to tree walking.</t>
     
     regex = re.compile(e.get())
     c.beginUpdate()
-    if 1: # update...
+    try: # update...
         t = tnode('','A Filtered Hoist')
         ticker = c.rootVnode().insertAfter(t)
         for z in nodes:
@@ -3156,7 +3156,8 @@ approach to tree walking.</t>
                 clone.moveToNthChildOf(ticker,0)
         c.setCurrentVnode(ticker)
         ticker.moveToRoot(c.rootVnode())
-    c.endUpdate()
+    finally:
+        c.endUpdate()
     c.hoist()
     fhp.withdraw()
 </t>
@@ -3235,7 +3236,7 @@ def OLDsearch(vn,regex):
     pat = re.compile(e.get())
 
     c.beginUpdate()
-    if 1: # update...
+    try: # update...
         t = tnode('','A Filtered Hoist')
         newRoot = c.rootVnode().insertAfter(t)
         p = c.rootVnode()
@@ -3246,7 +3247,8 @@ def OLDsearch(vn,regex):
             p = p.threadNext()
         newRoot.moveToRoot(c.rootVnode())
         c.setCurrentVnode(newRoot)
-    c.endUpdate()
+    finally:
+        c.endUpdate()
 
     c.hoist()
     fhp.withdraw()
@@ -9551,11 +9553,13 @@ try:
     p.setHeadString("changed")
     assert child.isDirty(), "setting descendant @thin nodes dirty failed."
 finally:
-    p.setHeadString(h)
-    child.setHeadString("bogus")
-    p.clearDirty()
-    child.clearDirty()
-c.endUpdate()
+    try:
+        p.setHeadString(h)
+        child.setHeadString("bogus")
+        p.clearDirty()
+        child.clearDirty()
+    finally: pass
+    c.endUpdate()
 </t>
 <t tx="ekr.20040802065214.1">test</t>
 <t tx="ekr.20040802071519"># Tests that p.setBodyStringOrPane works immediately.
@@ -10087,8 +10091,10 @@ import cStringIO
 
     tnode = leoNodes.tnode(body,"xslt stylesheet")
     c.beginUpdate()
-    pos.insertAfter(tnode)
-    c.endUpdate()
+    try:
+        pos.insertAfter(tnode)
+    finally:
+        c.endUpdate()
 </t>
 <t tx="ekr.20041011160953.9">def addXSLTemplate (c):
 
@@ -10128,8 +10134,10 @@ import cStringIO
     pos = stylenodes[c]
 
     c.beginUpdate()
-    c.selectPosition(pos)
-    c.endUpdate()</t>
+    try:
+        c.selectPosition(pos)
+    finally:
+        c.endUpdate()</t>
 <t tx="ekr.20041011160953.12">def styleNodeSelected (c):
 
     if not stylenodes.has_key(c):
@@ -10280,9 +10288,11 @@ def headfind():
                     return
                 else:
                     c.beginUpdate()
-                    c.frame.tree.expandAllAncestors(p)
-                    c.selectVnode(p)
-                    c.endUpdate()
+                    try:
+                        c.frame.tree.expandAllAncestors(p)
+                        c.selectVnode(p)
+                    finally:
+                        c.endUpdate()
                     return
 					
         g.es("no headline matches '%s'" % (s),color="blue")
