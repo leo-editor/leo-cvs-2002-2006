@@ -61,9 +61,12 @@ import weakref
 #@@nocolor
 #@+at
 # 
-# - Remove all module globals except those used to redefine core classes.
+# - Eliminate all hard constants (except for tables of defaults).
 # 
-# ** Bind emacs keystroks in Leo's core.
+# ** Bug: return does not set body text dirty.
+#     - modifyOnBodyKey may be the cause.
+# 
+# ** Bind emacs keystrokes in Leo's core.
 #     - That is, modify Leo's core to uses temacs-style masterCommand method 
 # for all keystrokes.
 # 
@@ -76,7 +79,8 @@ import weakref
 # - convertCommandName utility converts to and from emacs-style (with '-' 
 # chars) to python/leo style (with capitalization).
 # 
-# - Eliminate all hard constants (except for tables of defaults).
+# - Create printLongCommandName command: prints long name of any keystroke 
+# command.
 # 
 # - User options:
 #     - 'Emacs Compatibility' option: binds keys as done in present plugin.
@@ -146,13 +150,12 @@ import weakref
 #     svar, label = self.getSvarLabel( event )
 # by:
 #     b = self.miniBuffer ; tbuffer = event.widget
+# 
 # (done) self.setSvar(event,svar) -> b.update(event)
 # (done) svar ->  b
 # (done) label.configure(background='lightblue') --> b.setLabelBlue()
 # (done) self.miniBuffer -> b
-# 
-# (done) Replace alld delegators by b. methods.
-# 
+# (done) Replaced all delegators by b.methods.
 # (done) Removed unused args from most methods.
 #@-at
 #@nonl
@@ -171,30 +174,25 @@ import weakref
 #@-at
 #@nonl
 #@-node:ekr.20050730201742:Improvements to commands
+#@+node:ekr.20050918100340:Removed all globals
+#@+at
+# 
+# - positions and tnodes globals are now ivars of bufferCommands class.
+#@-at
+#@nonl
+#@-node:ekr.20050918100340:Removed all globals
 #@-others
 #@nonl
 #@-node:ekr.20050725074202:<< modification log >>
 #@nl
-#@<< define module globals >>
-#@+node:ekr.20050724080034:<< define module globals >>
-haveseen = weakref.WeakKeyDictionary()
-extensions = []
-new_keystrokes = {}
-leocommandnames = None
 
-# For buffer interaction methods.
-tnodestnodes = {} # Keys are commanders.  Values are dicts.
-positions =  {}
-
-# Original versions of methods.
+# Module globals:  original versions of methods.
+# These are used to call the originals after executing the modified code.
 orig_Bindings = None
 orig_OnBodyKey = None
-#@nonl
-#@-node:ekr.20050724080034:<< define module globals >>
-#@nl
 
 #@+others
-#@+node:ekr.20050730204529:Module-level...
+#@+node:ekr.20050730204529:Module-level... (creates frame)
 #@+node:ekr.20050723062822.2:init
 def init ():
 
@@ -237,375 +235,23 @@ def init ():
     return ok
 #@nonl
 #@-node:ekr.20050723062822.2:init
-#@+node:ekr.20050724074642.16:loadConfig (from usetemacs)
-def loadConfig ():
-    '''Loads Emacs extensions and new keystrokes to be added to Emacs instances'''
-    pth = os.path.split(g.app.loadDir)
-    aini = pth [0] + r"/plugins/usetemacs.ini"
-    if os.path.exists(aini):
+#@+node:ekr.20050917154455:createTkMiniBuffer
+def createTkMiniBuffer (frame):
 
-        cp = ConfigParser.ConfigParser()
-        cp.read(aini)
-        section = None
-        for z in cp.sections():
-            if z.strip() == 'extensions':
-                section = z
-                break
+    '''Create the minbuffer below the status line.'''
 
-        if section:
-            for z in cp.options(section):
-                extension = cp.get(section,z)
-                try:
-                    ex = __import__(extension)
-                    extensions.append(ex)
-                except Exception, x:
-                    g.es("Could not load %s because of %s" % (extension,x),color='red')
+    f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
+    f.pack(side='bottom',fill='x')
 
-        kstroke_sec = None
-        for z in cp.sections():
-            if z.strip() == 'newkeystrokes':
-                kstroke_sec = z
-                break
-        if kstroke_sec:
-            for z in cp.options(kstroke_sec):
-                new_keystrokes [z.capitalize()] = cp.get(kstroke_sec,z)
+    lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
+    lab.pack(side='left')
+
+    label = Tk.Label(f,relief='groove',justify='left',anchor='w')
+    label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
+
+    return label
 #@nonl
-#@-node:ekr.20050724074642.16:loadConfig (from usetemacs)
-#@+node:ekr.20050724074642.19:seeHelp & helper (to be removed)
-def seeHelp ():
-    '''Opens a Help dialog that shows the Emac systems commands and keystrokes'''
-    tl = Tk.Toplevel()
-    ms = tl.maxsize()
-    tl.geometry('%sx%s+0+0' % ((ms[0]/3)*2,ms[1]/2)) #half the screen height, half the screen width
-    tl.title("Temacs Help")
-    fixedFont = tkFont.Font(family='Fixed',size=14)
-    tc = ScrolledText.ScrolledText(tl,font=fixedFont,background='white',wrap='word')
-    sbar = Tk.Scrollbar(tc.frame,orient='horizontal')
-    sbar.configure(command=tc.xview)
-    tc.configure(xscrollcommand=sbar.set)
-    sbar.pack(side='bottom',fill='x')
-    for z in tc.frame.children.values():
-        sbar.pack_configure(before=z)
-    tc.insert('1.0',Emacs.getHelpText())
-    lc = '''\n---------Leo Commands-----------\n'''
-    tc.insert('end',lc)
-    leocommandnames.sort()
-    lstring = '\n'.join(leocommandnames)
-    tc.insert('end',lstring)
-    #@    << define clz >>
-    #@+node:ekr.20050724074642.20:<< define clz >>
-    def clz (tl=tl):
-        tl.withdraw()
-        tl.destroy()
-    #@nonl
-    #@-node:ekr.20050724074642.20:<< define clz >>
-    #@nl
-    g = Tk.Frame(tl)
-    g.pack(side='bottom')
-    tc.pack(side='top',expand=1,fill='both')
-    e = Tk.Label(g,text='Search:')
-    e.pack(side='left')
-    ef = Tk.Entry(g,background='white',foreground='blue')
-    ef.pack(side='left')
-    #@    << define search >>
-    #@+node:ekr.20050724074642.21:<< define search >>
-    def search ():
-    
-        #stext = ef.getvalue()
-        stext = ef.get()
-        #tc = t.component( 'text' )
-        tc.tag_delete('found')
-        tc.tag_configure('found',background='red')
-        ins = tc.index('insert')
-        ind = tc.search(stext,'insert',stopindex='end',nocase=True)
-        if not ind:
-            ind = tc.search(stext,'1.0',stopindex='end',nocase=True)
-        if ind:
-            tc.mark_set('insert','%s +%sc' % (ind,len(stext)))
-            tc.tag_add('found','insert -%sc' % len(stext),'insert')
-            tc.see(ind)
-    #@nonl
-    #@-node:ekr.20050724074642.21:<< define search >>
-    #@nl
-    go = Tk.Button(g,text='Go',command=search)
-    go.pack(side='left')
-    b = Tk.Button(g,text='Close',command=clz)
-    b.pack(side='left')
-    #@    << define watch >>
-    #@+node:ekr.20050724074642.22:<< define watch >>
-    def watch (event):
-        search()
-    #@nonl
-    #@-node:ekr.20050724074642.22:<< define watch >>
-    #@nl
-    ef.bind('<Return>',watch)
-#@nonl
-#@+node:ekr.20050724075352.42:getHelpText
-def getHelpText ():
-    '''This returns a string that describes what all the
-    keystrokes do with a bound Text widget.'''
-    help_t =['Buffer Keyboard Commands:', 
-    '----------------------------------------\n', 
-    '<Control-p>: move up one line', 
-    '<Control-n>: move down one line', 
-    '<Control-f>: move forward one char', 
-    '<Conftol-b>: move backward one char', 
-    '<Control-o>: insert newline', 
-    '<Control-Alt-o> : insert newline and indent', 
-    '<Control-j>: insert newline and tab', 
-    '<Alt-<> : move to start of Buffer', 
-    '<Alt- >'+' >: move to end of Buffer', 
-    '<Control a>: move to start of line', 
-    '<Control e> :move to end of line', 
-    '<Alt-Up>: move to start of line', 
-    '<Alt-Down>: move to end of line', 
-    '<Alt b>: move one word backward', 
-    '<Alt f> : move one word forward', 
-    '<Control - Right Arrow>: move one word forward', 
-    '<Control - Left Arrow>: move one word backwards', 
-    '<Alt-m> : move to beginning of indentation', 
-    '<Alt-g> : goto line number', 
-    '<Control-v>: scroll forward one screen', 
-    '<Alt-v>: scroll up one screen', 
-    '<Alt-a>: move back one sentence', 
-    '<Alt-e>: move forward one sentence', 
-    '<Alt-}>: move forward one paragraph', 
-    '<Alt-{>: move backwards one paragraph', 
-    '<Alt-:> evaluate a Python expression in the minibuffer and insert the value in the current buffer', 
-    'Esc Esc : evaluate a Python expression in the minibuffer and insert the value in the current buffer', 
-    '<Control-x . >: set fill prefix', 
-    '<Alt-q>: fill paragraph', 
-    '<Alt-h>: select current or next paragraph', 
-    '<Control-x Control-@>: pop global mark', 
-    '<Control-u>: universal command, repeats the next command n times.', 
-    '<Alt -n > : n is a number.  Processes the next command n times.', 
-    '<Control-x (>: start definition of kbd macro', 
-    '<Control-x ) > : stop definition of kbd macro', 
-    '<Control-x e : execute last macro defined', 
-    '<Control-u Control-x ( >: execute last macro and edit', 
-    '<Control-x Esc Esc >: execute last complex command( last Alt-x command', 
-    '<Control-x Control-c >: save buffers kill Emacs', 
-    '''<Control-x u > : advertised undo.   This function utilizes the environments.
-    If the buffer is not configure explicitly, there is no operation.''', 
-    '<Control-_>: advertised undo.  See above', 
-    '<Control-z>: iconfify frame', 
-    '----------------------------------------\n', 
-    '<Delete> : delete previous character', 
-    '<Control d>: delete next character', 
-    '<Control k> : delete from cursor to end of line. Text goes to kill buffer', 
-    '<Alt d>: delete word. Word goes to kill buffer', 
-    '<Alt Delete>: delete previous word. Word goes to kill buffer', 
-    '<Alt k >: delete current sentence. Sentence goes to kill buffer', 
-    '<Control x Delete>: delete previous sentence. Sentence goes to kill buffer', 
-    '<Control y >: yank last deleted text segment from\n kill buffer and inserts it.', 
-    '<Alt y >: cycle and yank through kill buffer.\n', 
-    '<Alt z >: zap to typed letter. Text goes to kill buffer', 
-    '<Alt-^ >: join this line to the previous one', 
-    '<Alt-\ >: delete surrounding spaces', 
-    '<Alt-s> >: center line in current fill column', 
-    '<Control-Alt-w>: next kill is appended to kill buffer\n'
-    
-    '----------------------------------------\n', 
-    '<Alt c>: Capitalize the word the cursor is under.', 
-    '<Alt u>: Uppercase the characters in the word.', 
-    '<Alt l>: Lowercase the characters in the word.', 
-    '----------------------------------------\n', 
-    '<Alt t>: Mark word for word swapping.  Marking a second\n word will swap this word with the first', 
-    '<Control-t>: Swap characters', 
-    '<Ctrl-@>: Begin marking region.', 
-    '<Ctrl-W>: Kill marked region', 
-    '<Alt-W>: Copy marked region', 
-    '<Ctrl-x Ctrl-u>: uppercase a marked region', 
-    '<Ctrl-x Ctrl-l>: lowercase a marked region', 
-    '<Ctrl-x h>: mark entire buffer', 
-    '<Alt-Ctrl-backslash>: indent region to indentation of line 1 of the region.', 
-    '<Ctrl-x tab> : indent region by 1 tab', 
-    '<Control-x Control-x> : swap point and mark', 
-    '<Control-x semicolon>: set comment column', 
-    '<Alt-semicolon>: indent to comment column', 
-    '----------------------------------------\n', 
-    'M-! cmd -- Run the shell command line cmd and display the output', 
-    'M-| cmd -- Run the shell command line cmd with region contents as input', 
-    '----------------------------------------\n', 
-    '<Control-x a e>: Expand the abbrev before point (expand-abbrev), even when Abbrev mode is not enabled', 
-    '<Control-x a g>: Define an abbreviation for previous word', 
-    '<Control-x a i g>: Define a word as abbreviation for word before point, or in point', 
-    '----------------------------------------\n', 
-    '<Control s>: forward search, using pattern in Mini buffer.\n', 
-    '<Control r>: backward search, using pattern in Mini buffer.\n', 
-    '<Control s Enter>: search forward for a word, nonincremental\n', 
-    '<Control r Enter>: search backward for a word, nonincremental\n', 
-    '<Control s Enter Control w>: Search for words, ignoring details of punctuation', 
-    '<Control r Enter Control w>: Search backward for words, ignoring details of punctuation', 
-    '<Control-Alt s>: forward regular expression search, using pattern in Mini buffer\n', 
-    '<Control-Alt r>: backward regular expression search, using pattern in Mini buffer\n', 
-    '''<Alt-%>: begin query search/replace. n skips to next match. y changes current match.  
-    q or Return exits. ! to replace all remaining matches with no more questions''', 
-    '''<Control Alt %> begin regex search replace, like Alt-%''', 
-    '<Alt-=>: count lines and characters in regions', 
-    '<Alt-( >: insert parentheses()', 
-    '<Alt-) >:  move past close', 
-    '<Control-x Control-t>: transpose lines.', 
-    '<Control-x Control-o>: delete blank lines', 
-    '<Control-x r s>: save region to register', 
-    '<Control-x r i>: insert to buffer from register', 
-    '<Control-x r +>: increment register', 
-    '<Control-x r n>: insert number 0 to register', 
-    '<Control-x r space > : point insert point to register', 
-    '<Control-x r j > : jump to register', 
-    '<Control-x x>: save region to register', 
-    '<Control-x r r> : save rectangle to register', 
-    '<Control-x r o>: open up rectangle', 
-    '<Control-x r c> : clear rectangle', 
-    '<Control-x r d> : delete rectangle', 
-    '<Control-x r t> : replace rectangle with string', 
-    '<Control-x r k> : kill rectangle', 
-    '<Control-x r y> : yank rectangle', 
-    '<Control-g> : keyboard quit\n', 
-    '<Control-x = > : position of cursor', 
-    '<Control-x . > : set fill prefix', 
-    '<Control-x f > : set the fill column', 
-    '<Control-x Control-b > : display the buffer list', 
-    '<Control-x b > : switch to buffer', 
-    '<Control-x k > : kill the specified buffer', 
-    '----------------------------------------\n', 
-    '<Alt - - Alt-l >: lowercase previous word', 
-    '<Alt - - Alt-u>: uppercase previous word', 
-    '<Alt - - Alt-c>: capitalise previous word', 
-    '----------------------------------------\n', 
-    '<Alt-/ >: dynamic expansion', 
-    '<Control-Alt-/>: dynamic expansion.  Expands to common prefix in buffer\n'
-    '----------------------------------------\n', 
-    'Alt-x commands:\n', 
-    '(Pressing Tab will result in auto completion of the options if an appropriate match is found', 
-    'replace-string  -  replace string with string', 
-    'replace-regex - replace python regular expression with string', 
-    'append-to-register  - append region to register', 
-    'prepend-to-register - prepend region to register\n'
-    'sort-lines - sort selected lines', 
-    'sort-columns - sort by selected columns', 
-    'reverse-region - reverse selected lines', 
-    'sort-fields  - sort by fields', 
-    'abbrev-mode - toggle abbrev mode on/off', 
-    'kill-all-abbrevs - kill current abbreviations', 
-    'expand-region-abbrevs - expand all abrevs in region', 
-    'read-abbrev-file - read abbreviations from file', 
-    'write-abbrev-file - write abbreviations to file', 
-    'list-abbrevs   - list abbrevs in minibuffer', 
-    'fill-region-as-paragraph - treat region as one paragraph and add fill prefix', 
-    'fill-region - fill paragraphs in region with fill prefix', 
-    'close-rectangle  - close whitespace rectangle', 
-    'how-many - counts occurances of python regular expression', 
-    'kill-paragraph - delete from cursor to end of paragraph', 
-    'backward-kill-paragraph - delete from cursor to start of paragraph', 
-    'backward-kill-sentence - delete from the cursor to the start of the sentence', 
-    'name-last-kbd-macro - give the last kbd-macro a name', 
-    'insert-keyboard-macro - save macros to file', 
-    'load-file - load a macro file', 
-    'kill-word - delete the word the cursor is on', 
-    'kill-line - delete form the cursor to end of the line', 
-    'kill-sentence - delete the sentence the cursor is on', 
-    'kill-region - delete a marked region', 
-    'yank - restore what you have deleted', 
-    'backward-kill-word - delete previous word', 
-    'backward-delete-char - delete previous character', 
-    'delete-char - delete character under cursor', 
-    'isearch-forward - start forward incremental search', 
-    'isearch-backward - start backward incremental search', 
-    'isearch-forward-regexp - start forward regular expression incremental search', 
-    'isearch-backward-regexp - start backward return expression incremental search', 
-    'capitalize-word - capitalize the current word', 
-    'upcase-word - switch word to upper case', 
-    'downcase-word - switch word to lower case', 
-    'indent-region - indent region to first line in region', 
-    'indent-rigidly - indent region by a tab', 
-    'indent-relative - Indent from point to under an indentation point in the previous line', 
-    'set-mark-command - mark the beginning or end of a region', 
-     'kill-rectangle - kill the rectangle', 
-    'delete-rectangle - delete the rectangle', 
-    'yank-rectangle - yank the rectangle', 
-    'open-rectangle - open the rectangle', 
-    'clear-rectangle - clear the rectangle', 
-    'copy-to-register - copy selection to register', 
-    'insert-register - insert register into buffer', 
-    'copy-rectangle-to-register - copy buffer rectangle to register', 
-    'jump-to-register - jump to position in register', 
-    'point-to-register - insert point into register', 
-    'number-to-register - insert number into register', 
-    'increment-register - increment number in register', 
-    'view-register - view what register contains', 
-    'beginning-of-line - move to the beginning of the line', 
-    'end-of-line - move to the end of the line', 
-    'beginning-of-buffer - move to the beginning of the buffer', 
-    'end-of-buffer - move to the end of the buffer', 
-    'newline-and-indent - insert a newline and tab', 
-    'keyboard-quit - abort current command', 
-    'iconify-or-deiconify-frame - iconfiy current frame', 
-    'advertised-undo - undo the last operation', 
-    'back-to-indentation - move to first non-blank character of line', 
-    'delete-indentation - join this line to the previous one', 
-    'view-lossage - see the last 100 characters typed', 
-    'transpose-chars - transpose two letters', 
-    'transpose-words - transpose two words', 
-    'transpose-line - transpose two lines', 
-    'flush-lines - delete lines that match regex', 
-    'keep-lines - keep lines that only match regex', 
-    'insert-file - insert file at current position', 
-    'save-buffer - save file', 
-    'split-line - split line at cursor. indent to column of cursor', 
-    'upcase-region - Upper case region', 
-    'downcase-region - lower case region', 
-    'goto-line - goto a line in the buffer', 
-    'what-line - display what line the cursor is on', 
-    'goto-char - goto a char in the buffer', 
-    'set-fill-column - sets the fill column', 
-    'center-line - centers the current line within the fill column', 
-    'center-region - centers the current region within the fill column', 
-    'forward-char - move the cursor forward one char', 
-    'backward-char - move the cursor backward one char', 
-    'previous-line - move the cursor up one line', 
-    'next-line - move the cursor down one line', 
-    'universal-argument - Repeat the next command "n" times', 
-    'digit-argument - Repeat the next command "n" times', 
-    'set-fill-prefix - Sets the prefix from the insert point to the start of the line', 
-    'scroll-up - scrolls up one screen', 
-    'scroll-down - scrolls down one screen', 
-    'append-to-buffer - Append region to a specified buffer', 
-    'prepend-to-buffer - Prepend region to a specified buffer', 
-    'copy-to-buffer - Copy region to a specified buffer, deleting the previous contents', 
-    'insert-buffer - Insert the contents of a specified buffer into current buffer at point', 
-    'list-buffers - Display the buffer list', 
-    'switch-to-buffer - switch to a different buffer, if it does not exits, it is created.', 
-    'kill-buffer - kill the specified buffer', 
-    'rename-buffer - rename the buffer', 
-    'query-replace - query buffer for pattern and replace it.  The user will be asked for a pattern, and for text to replace the pattern with.', 
-    'query-replace-regex - query buffer with regex and replace it.  The user will be asked for a pattern, and for text to replace the regex matches with.', 
-    'inverse-add-global-abbrev - add global abbreviation from previous word.  Will ask user for word to expand to', 
-    'expand-abbrev - Expand the abbrev before point. This is effective even when Abbrev mode is not enabled', 
-    're-search-forward - do a python regular expression search forward', 
-    're-search-backward - do a python regular expression search backward', 
-    'diff - compares two files, displaying the differences in an Emacs buffer named *diff*', 
-    'make-directory - create a new directory', 
-    'remove-directory - remove an existing directory if its empty', 
-    'delete-file - remove an existing file', 
-    'search-forward - search forward for a word', 
-    'search-backward - search backward for a word', 
-    'word-search-forward - Search for words, ignoring details of punctuation.', 
-    'word-search-backward - Search backward for words, ignoring details of punctuation', 
-    'repeat-complex-command - repeat the last Alt-x command', 
-    'eval-expression - evaluate a Python expression and put the value in the current buffer', 
-    'tabify - turn the selected text\'s spaces into tabs', 
-    'untabify - turn the selected text\'s tabs into spaces', 
-    'shell-command -Run the shell command line cmd and display the output', 
-    'shell-command-on-region -Run the shell command line cmd with region contents as input', 
-    ]
-    
-    return '\n'.join(help_t)
-
-getHelpText = staticmethod(getHelpText)
-#@nonl
-#@-node:ekr.20050724075352.42:getHelpText
-#@-node:ekr.20050724074642.19:seeHelp & helper (to be removed)
+#@-node:ekr.20050917154455:createTkMiniBuffer
 #@+node:ekr.20050724074642.23:Overridden methods in Leo's core
 #@+node:ekr.20050724074642.24:modifyOnBodyKey
 def modifyOnBodyKey (self,event):
@@ -622,38 +268,16 @@ def modifyOnBodyKey (self,event):
         return orig_OnBodyKey(self,event)
 #@nonl
 #@-node:ekr.20050724074642.24:modifyOnBodyKey
-#@+node:ekr.20050724074642.25:createBindings & helpers  (Creates Emacs instance)
+#@+node:ekr.20050724074642.25:(leoTkinterBody.createBindings (lCreates Emacs)
 def createBindings (self,frame):
 
     c = frame.c
-
-    #@    << create a label for frame >>
-    #@+node:ekr.20050724074642.26:<< create a label for frame >>
-    group = Tk.Frame(frame.split2Pane2,relief='ridge',borderwidth=3)
-    
-    f2 = Tk.Frame(group)
-    f2.pack(side='top',fill='x')
-    
-    gtitle = Tk.Label(f2,
-        text='mini-buffer',justify='left',anchor='nw',
-        foreground='blue',background='white')
-    
-    group.pack(side='bottom',fill='x',expand=1)
-    
-    for z in frame.split2Pane2.children.values():
-        group.pack_configure(before=z)
-    
-    label = Tk.Label(group,relief='groove',justify='left',anchor='w')
-    label.pack(side='bottom',fill='both',expand=1,padx=2,pady=2)
-    
-    gtitle.pack(side='left')
-    #@nonl
-    #@-node:ekr.20050724074642.26:<< create a label for frame >>
-    #@nl
+    label = createTkMiniBuffer(frame)
     orig_Bindings(self,frame)
 
     # EKR: set emacs ivar in the commander.
-    c.emacs = emacs = Emacs(frame.c,frame.bodyCtrl,label,useGlobalKillbuffer=True,useGlobalRegisters=True)
+    c.emacs = emacs = Emacs(frame.c,frame.bodyCtrl,
+        label,useGlobalKillbuffer=True,useGlobalRegisters=True)
     emacs.label = label
     emacs.setUndoer(frame.bodyCtrl,self.c.undoer.undo)
     #@    << define utTailEnd >>
@@ -671,10 +295,12 @@ def createBindings (self,frame):
     #@nl
     emacs.miniBuffer.setTailEnd(frame.bodyCtrl,utTailEnd)
     emacs.emacsControlCommands.setShutdownHook(self.c.close)
-    addTemacsExtensions(emacs)
-    addTemacsAbbreviations(emacs)
-    changeKeyStrokes(emacs,frame.bodyCtrl)
-    ### setBufferInteractionMethods( self.c, emacs, frame.bodyCtrl )
+    if 0:
+        addTemacsExtensions(emacs)
+        addTemacsAbbreviations(emacs)
+        changeKeyStrokes(emacs,frame.bodyCtrl)
+    # This is dubious.
+    setBufferInteractionMethods(self.c,emacs,frame.bodyCtrl)
     orig_del = frame.bodyCtrl.delete
     #@    << define watchDelete >>
     #@+node:ekr.20050724074642.28:<< define watchDelete >>
@@ -694,101 +320,33 @@ def createBindings (self,frame):
     #@nl
     frame.bodyCtrl.delete = watchDelete
 #@nonl
-#@+node:ekr.20050724074642.29:addTemacsAbbreviations:  To do:  get stuff from confic
-def addTemacsAbbreviations (Emacs):
-
-    '''Adds abbreviatios and kbd macros to an Emacs instance'''
-
-    pth = os.path.split(g.app.loadDir)
-    aini = pth [0] +os.sep+'plugins'+os.sep
-
-    if os.path.exists(aini+r'usetemacs.kbd'):
-        f = file(aini+r'usetemacs.kbd','r')
-        Emacs._loadMacros(f)
-
-    if os.path.exists(aini+r'usetemacs.abv'):
-        f = file(aini+r'usetemacs.abv','r')
-        Emacs._readAbbrevs(f)
-#@nonl
-#@-node:ekr.20050724074642.29:addTemacsAbbreviations:  To do:  get stuff from confic
-#@+node:ekr.20050724074642.30:addTemacsExtensions
-def addTemacsExtensions (Emacs):
-
-    '''Adds extensions to Emacs parameter.'''
-    for z in extensions:
-        try:
-            if hasattr(z,'getExtensions'):
-                ex_meths = z.getExtensions()
-                for x in ex_meths.keys():
-                    Emacs.extendAltX(x,ex_meths[x])
-            else:
-                g.es('Module %s does not have a getExtensions function' % z,color='red')
-
-        except Exception, x:
-            g.es('Could not add extension because of %s' % x,color='red')
-#@nonl
-#@-node:ekr.20050724074642.30:addTemacsExtensions
-#@+node:ekr.20050724074642.31:changeKeyStrokes
-def changeKeyStrokes (Emacs,tbuffer):
-
-    for z in new_keystrokes.keys():
-
-        Emacs.reconfigureKeyStroke(tbuffer,z,new_keystrokes[z])
-#@nonl
-#@-node:ekr.20050724074642.31:changeKeyStrokes
 #@+node:ekr.20050724074642.32:setBufferInteractionMethods & helpers
+# Called by modified leoTkinterBody.createBindings.
+
 def setBufferInteractionMethods (c,emacs,buffer):
 
     '''This function configures the Emacs instance so that
        it can see all the nodes as buffers for its buffer commands.'''
 
+    # These are actually methods of the bufferCommandsClass.
     #@    @+others
-    #@+node:ekr.20050724074642.33:OLDbuildBufferList
-    def OLDbuildBufferList (): #This builds a buffer list from what is in the outline.  Worked surprisingly fast on LeoPy.
-        if not tnodes.has_key(c): #I was worried that speed factors would make it unusable.
-            tnodes [c] = {}
-        tdict = tnodes [c]
-        pos = c.rootPosition()
-        utni = pos.allNodes_iter()
-        bufferdict = {}
-        tdict.clear()
-        positions.clear()
-        for z in utni:
-    
-           t = z.v.t
-           if positions.has_key(t.headString):
-            positions [t.headString].append(z.copy())
-           else:
-            positions [t.headString] = [z.copy()] #not using a copy seems to have bad results.
-           #positions[ t.headString ] = z
-    
-           bS = ''
-           if t.bodyString: bS = t.bodyString
-    
-    
-           bufferdict [t.headString] = bS
-           tdict [t.headString] = t
-    
-        return bufferdict
-    #@nonl
-    #@-node:ekr.20050724074642.33:OLDbuildBufferList
     #@+node:ekr.20050725070621:buildBufferList  (MAY BE BUGGY)
     def buildBufferList (self):
     
         '''Build a buffer list from an outline.'''
     
-        c = self.c ; global positions, tnodes
+        c = self.c
     
-        d = {} ; positions.clear()
+        d = {} ; self.positions.clear()
     
         for p in c.allNodes_iter():
             t = p.v.t ; h = t.headString()
-            theList = positions.get(h,[])
+            theList = self.positions.get(h,[])
             theList.append(p.copy())
             self.positions [h] = theList
             d [h] = t.bodyString()
     
-        tnodes [c] = d
+        self.tnodes [c] = d
         return d
     #@nonl
     #@-node:ekr.20050725070621:buildBufferList  (MAY BE BUGGY)
@@ -796,7 +354,7 @@ def setBufferInteractionMethods (c,emacs,buffer):
     def setBufferData (name,data):
     
         data = unicode(data)
-        tdict = tnodes [c]
+        tdict = self.tnodes [c]
         if tdict.has_key(name):
             tdict [name].bodyString = data
     #@nonl
@@ -805,53 +363,52 @@ def setBufferInteractionMethods (c,emacs,buffer):
     def gotoNode (name):
     
         c.beginUpdate()
-        if positions.has_key(name):
-            posis = positions [name]
-            if len(posis) > 1:
-                tl = Tk.Toplevel()
-                #tl.geometry( '%sx%s+0+0' % ( ( ms[ 0 ]/3 ) *2 , ms[ 1 ]/2 ))
-                tl.title("Select node by numeric position")
-                fr = Tk.Frame(tl)
-                fr.pack()
-                header = Tk.Label(fr,text='select position')
-                header.pack()
-                lbox = Tk.Listbox(fr,background='white',foreground='blue')
-                lbox.pack()
-                for z in xrange(len(posis)):
-                    lbox.insert(z,z+1)
-                lbox.selection_set(0)
-                def setPos (event):
-                    cpos = int(lbox.nearest(event.y))
-                    tl.withdraw()
-                    tl.destroy()
-                    if cpos != None:
-                        gotoPosition(c,posis[cpos])
-                lbox.bind('<Button-1>',setPos)
-                geometry = tl.geometry()
-                geometry = geometry.split('+')
-                geometry = geometry [0]
-                width = tl.winfo_screenwidth() / 3
-                height = tl.winfo_screenheight() / 3
-                geometry = '+%s+%s' % (width,height)
-                tl.geometry(geometry)
+        try:
+            if self.positions.has_key(name):
+                posis = self.positions [name]
+                if len(posis) > 1:
+                    tl = Tk.Toplevel()
+                    #tl.geometry( '%sx%s+0+0' % ( ( ms[ 0 ]/3 ) *2 , ms[ 1 ]/2 ))
+                    tl.title("Select node by numeric position")
+                    fr = Tk.Frame(tl)
+                    fr.pack()
+                    header = Tk.Label(fr,text='select position')
+                    header.pack()
+                    lbox = Tk.Listbox(fr,background='white',foreground='blue')
+                    lbox.pack()
+                    for z in xrange(len(posis)):
+                        lbox.insert(z,z+1)
+                    lbox.selection_set(0)
+                    def setPos (event):
+                        cpos = int(lbox.nearest(event.y))
+                        tl.withdraw()
+                        tl.destroy()
+                        if cpos != None:
+                            gotoPosition(c,posis[cpos])
+                    lbox.bind('<Button-1>',setPos)
+                    geometry = tl.geometry()
+                    geometry = geometry.split('+')
+                    geometry = geometry [0]
+                    width = tl.winfo_screenwidth() / 3
+                    height = tl.winfo_screenheight() / 3
+                    geometry = '+%s+%s' % (width,height)
+                    tl.geometry(geometry)
+                else:
+                    pos = posis [0]
+                    gotoPosition(c,pos)
             else:
-                pos = posis [0]
+                pos2 = c.currentPosition()
+                tnd = leoNodes.tnode('',name)
+                pos = pos2.insertAfter(tnd)
                 gotoPosition(c,pos)
-        else:
-            pos2 = c.currentPosition()
-            tnd = leoNodes.tnode('',name)
-            pos = pos2.insertAfter(tnd)
-            gotoPosition(c,pos)
-        #c.frame.tree.expandAllAncestors( pos )
-        #c.selectPosition( pos )
-        #c.endUpdate()
+        finally:
+            c.endUpdate()
     #@nonl
     #@+node:ekr.20050724074642.36:gotoPosition
     def gotoPosition (c,pos):
     
         c.frame.tree.expandAllAncestors(pos)
         c.selectPosition(pos)
-        c.endUpdate()
     #@nonl
     #@-node:ekr.20050724074642.36:gotoPosition
     #@-node:ekr.20050724074642.35:gotoNode & gotoPosition
@@ -859,33 +416,37 @@ def setBufferInteractionMethods (c,emacs,buffer):
     def deleteNode (name):
     
         c.beginUpdate()
-        if positions.has_key(name):
-            pos = positions [name]
-            cpos = c.currentPosition()
-            pos.doDelete(cpos)
-        c.endUpdate()
+        try:
+            if self.positions.has_key(name):
+                pos = self.positions [name]
+                cpos = c.currentPosition()
+                pos.doDelete(cpos)
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20050724074642.37:deleteNode
     #@+node:ekr.20050724074642.38:renameNode
     def renameNode (name):
     
         c.beginUpdate()
-        pos = c.currentPosition()
-        pos.setHeadString(name)
-        c.endUpdate()
+        try:
+            pos = c.currentPosition()
+            pos.setHeadString(name)
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20050724074642.38:renameNode
     #@-others
 
     # These add Leo-reated capabilities to the emacs instance.
-    emacs.bufferCommmands.setBufferListGetter(buffer,buildBufferList)
-    emacs.bufferCommmands.setBufferSetter(buffer,setBufferData)
-    emacs.bufferCommmands.setBufferGoto(buffer,gotoNode)
-    emacs.bufferCommmands.setBufferDelete(buffer,deleteNode)
-    emacs.bufferCommmands.setBufferRename(buffer,renameNode)
+    emacs.bufferCommands.setBufferListGetter(buffer,buildBufferList)
+    emacs.bufferCommands.setBufferSetter(buffer,setBufferData)
+    emacs.bufferCommands.setBufferGoto(buffer,gotoNode)
+    emacs.bufferCommands.setBufferDelete(buffer,deleteNode)
+    emacs.bufferCommands.setBufferRename(buffer,renameNode)
 #@nonl
 #@-node:ekr.20050724074642.32:setBufferInteractionMethods & helpers
-#@-node:ekr.20050724074642.25:createBindings & helpers  (Creates Emacs instance)
+#@-node:ekr.20050724074642.25:(leoTkinterBody.createBindings (lCreates Emacs)
 #@+node:ekr.20050801090011:modifyDefineMenuTables & helper
 def modifyDefineMenuTables (self):
 
@@ -955,7 +516,7 @@ def createEmacsMenuFromTable (self):
 #@-node:ekr.20050801093531.2:createEmacsMenuFromTable
 #@-node:ekr.20050801093531.1:modifyCreateMenusFromTables & helper
 #@-node:ekr.20050724074642.23:Overridden methods in Leo's core
-#@-node:ekr.20050730204529:Module-level...
+#@-node:ekr.20050730204529:Module-level... (creates frame)
 #@+node:ekr.20050724075352.40:class Emacs
 class Emacs:
     
@@ -987,6 +548,8 @@ class Emacs:
         useGlobalRegisters and useGlobalKillbuffer indicate whether to use
         global (class vars) or per-instance (ivars) for kill buffers and registers.'''
         
+        g.trace('Emacs',self)
+        
         self.c = c
         self.undoers = {} # Emacs instance tracks undoers given to it.
         self.useGlobalKillbuffer = useGlobalKillbuffer
@@ -1013,7 +576,7 @@ class Emacs:
             self.miniBuffer.setBufferStrokes(tbuffer)
     #@nonl
     #@-node:ekr.20050724075352.41: ctor (Emacs)
-    #@+node:ekr.20050725094519:createCommandsClasses
+    #@+node:ekr.20050725094519:createCommandsClasses (Emacs)
     def createCommandsClasses (self):
         
         self.commandClasses = [
@@ -1037,7 +600,7 @@ class Emacs:
         for name, theClass in self.commandClasses:
             theInstance = theClass(self)# Create the class.
             setattr(self,name,theInstance)
-            # g.trace(getattr(self,name))
+            # g.trace(name,theInstance)
             d = theInstance.getPublicCommands()
             if d:
                 altX_commandsDict.update(d)
@@ -1049,20 +612,7 @@ class Emacs:
                     
         return altX_commandsDict
     #@nonl
-    #@-node:ekr.20050725094519:createCommandsClasses
-    #@+node:ekr.20050724075352.116:reconfigureKeyStroke  Not tested -- why is it needed?
-    def reconfigureKeyStroke (self,tbuffer,keystroke,set_to):
-    
-        '''This method allows the user to reconfigure what a keystroke does.
-           This feature is alpha at best, and untested.'''
-    
-        if self.cbDict.has_key(set_to):
-            command = self.cbDict [set_to]
-            self.cbDict [keystroke] = command
-            evstring = '<%s>' % keystroke
-            tbuffer.bind(evstring,lambda event,meth=command: self.miniBuffer.masterCommand(event,meth,evstring))
-    #@nonl
-    #@-node:ekr.20050724075352.116:reconfigureKeyStroke  Not tested -- why is it needed?
+    #@-node:ekr.20050725094519:createCommandsClasses (Emacs)
     #@+node:ekr.20050724075352.109:undoer methods
     #@+at
     # Emacs requires an undo mechanism be added from the environment.
@@ -1478,10 +1028,14 @@ class Emacs:
     class bufferCommandsClass  (baseCommandsClass):
     
         #@    @+others
-        #@+node:ekr.20050726044533.4: ctor
+        #@+node:ekr.20050726044533.4: ctor (bufferCommandsClass) (uses values created by setBufferInteractionMethods) 
         def __init__ (self,emacs):
             
             Emacs.baseCommandsClass.__init__(self,emacs) # init the base class.
+            
+            # These used to be globals.
+            self.positions =  {}
+            self.tnodes = {}
             
             # This section sets up the buffer data structures.
             self.bufferListGetters ={}
@@ -1497,12 +1051,12 @@ class Emacs:
                 'append-to-buffer': self._appendToBuffer,
                 'copy-to-buffer':   self._copyToBuffer,
                 'insert-buffer':    self._insertToBuffer,
-                'kill-buffer':     self._killBuffer, 
+                'kill-buffer':      self._killBuffer, 
                 'prepend-to-buffer':self._prependToBuffer, 
                 'switch-to-buffer': self._switchToBuffer, 
             }
         #@nonl
-        #@-node:ekr.20050726044533.4: ctor
+        #@-node:ekr.20050726044533.4: ctor (bufferCommandsClass) (uses values created by setBufferInteractionMethods) 
         #@+node:ekr.20050726045343: getPublicCommands
         def getPublicCommands (self):
         
@@ -5275,7 +4829,10 @@ class Emacs:
                 i = tbuffer.index('insert')
                 word = b.get()
                 if state == 'for':
-                    s = tbuffer.search(word,i,stopindex='end')
+                    try:
+                        s = tbuffer.search(word,i,stopindex='end')
+                    except Exception: # Can throw an exception.
+                        s = None
                     if s: s = tbuffer.index('%s +%sc' % (s,len(word)))
                 else: s = tbuffer.search(word,i,stopindex='1.0',backwards=True)
                 if s: tbuffer.mark_set('insert',s)
@@ -5428,50 +4985,6 @@ class Emacs:
     
         #@    @+others
         #@+node:ekr.20050728103627: Birth
-        #@+node:ekr.20050725112958:finishCreate (stateManagerClass) MUST BE GENERALIZED
-        def finishCreate (self):
-        
-            emacs = self.emacs
-        
-            # EKR: used only below.
-            def eA (event):
-                if self.emacs.expandAbbrev(event):
-                    return 'break'
-        
-            self.stateCommands = { 
-                # 1 == one parameter, 2 == all
-                
-                # Utility states...
-                'getArg':    (2,emacs.miniBuffer.getArg),
-                
-                # Command states...
-                'uC':               (2,emacs.miniBuffer.universalDispatch),
-                'controlx':         (2,emacs.miniBuffer.doControlX),
-                'isearch':          (2,emacs.searchCommands.iSearch),
-                'goto':             (1,emacs.editCommands.Goto),
-                'zap':              (1,emacs.editCommands.zapTo),
-                'howM':             (1,emacs.editCommands.howMany),
-                'abbrevMode':       (1,emacs.abbrevCommands.abbrevCommand1),
-                'altx':             (1,emacs.miniBuffer.doAlt_X),
-                'qlisten':          (1,emacs.queryReplaceCommands.masterQR),
-                'rString':          (1,emacs.editCommands.replaceString),
-                'negativeArg':      (2,emacs.miniBuffer.negativeArgument),
-                'abbrevOn':         (1,eA),
-                'set-fill-column':  (1,emacs.editCommands.setFillColumn),
-                'chooseBuffer':     (1,emacs.bufferCommands.chooseBuffer),
-                'renameBuffer':     (1,emacs.bufferCommands.renameBuffer),
-                're_search':        (1,emacs.searchCommands.re_search),
-                'alterlines':       (1,emacs.editCommands.processLines),
-                'make_directory':   (1,emacs.fileCommands.makeDirectory),
-                'remove_directory': (1,emacs.fileCommands.removeDirectory),
-                'delete_file':      (1,emacs.fileCommands.deleteFile),
-                'nonincr-search':   (2,emacs.searchCommands.nonincrSearch),
-                'word-search':      (1,emacs.searchCommands.wordSearch),
-                'last-altx':        (1,emacs.miniBuffer.executeLastAltX),
-                'escape':           (1,emacs.editCommands.watchEscape),
-                'subprocess':       (1,emacs.emacsControlCommands.subprocesser),
-            }
-        #@-node:ekr.20050725112958:finishCreate (stateManagerClass) MUST BE GENERALIZED
         #@+node:ekr.20050727162112: ctor (miniBuffer)
         def __init__ (self,emacs,widget):
         
@@ -5522,6 +5035,45 @@ class Emacs:
             self.whichState = self.stateManager.whichState
         #@nonl
         #@-node:ekr.20050727162112: ctor (miniBuffer)
+        #@+node:ekr.20050728093027.1: finishCreate (miniBufferClass) MUST BE GENERALIZED
+        def finishCreate (self,altX_commandsDict):
+        
+            emacs = self.emacs
+        
+            # Finish creating the helper classes.
+            self.stateManager.finishCreate()
+            self.kstrokeManager.finishCreate()
+            self.cxHandler.finishCreate()
+        
+            # Finish this class.
+            self.altX_commandsDict = altX_commandsDict
+        
+            self.add_ekr_altx_commands()
+        
+            # Command bindings.
+            self.cbDict = self.addCallBackDict() # Creates callback dictionary, primarily used in the master command
+        
+            self.negArgs = {
+                '<Alt-c>': self.emacs.editCommands.changePreviousWord,
+                '<Alt-u>': self.emacs.editCommands.changePreviousWord,
+                '<Alt-l>': self.emacs.editCommands.changePreviousWord,
+            }
+        
+            self.xcommands = {
+                '<Control-t>': emacs.editCommands.transposeLines,
+                '<Control-u>': lambda event, way = 'up': emacs.upperLowerRegion(event,way),
+                '<Control-l>': lambda event, way = 'low': emacs.upperLowerRegion(event,way),
+                '<Control-o>': emacs.editCommands.removeBlankLines,
+                '<Control-i>': emacs.fileCommands.insertFile,
+                '<Control-s>': emacs.fileCommands.saveFile,
+                '<Control-x>': emacs.editCommands.exchangePointMark,
+                '<Control-c>': emacs.emacsControlCommands.shutdown,
+                '<Control-b>': emacs.bufferCommands.listBuffers,
+                '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
+                '<Delete>': lambda event, back = True: emacs.editCommands.killsentence(event,back),
+            }
+        #@nonl
+        #@-node:ekr.20050728093027.1: finishCreate (miniBufferClass) MUST BE GENERALIZED
         #@+node:ekr.20050729150051.2:add_ekr_altx_commands
         def add_ekr_altx_commands (self):
         
@@ -5592,74 +5144,207 @@ class Emacs:
             '''Create callback dictionary for masterCommand.'''
         
             b = self ; emacs = self.emacs
-        
+            
+            if 0:
+                #@        << old cbDict >>
+                #@+node:ekr.20050918105212:<< old cbDict >>
+                cbDict = {
+                    # These are very hard to get right.
+                        #'KeyRelease-Alt_L':        self.alt_X, # Bare alt keys 
+                        #'KeyRelease-Control_L':    self.alt_X, # Bare control keys
+                    'Alt-less':     lambda event, spot = '1.0': emacs.editCommands.moveTo(event,spot),
+                    'Alt-greater':  lambda event, spot = 'end': emacs.editCommands.moveTo(event,spot),
+                    'Control-Right': lambda event, way = 1: emacs.editCommands.moveword(event,way),
+                    'Control-Left': lambda event, way = -1: emacs.editCommands.moveword(event,way),
+                    'Control-a':    lambda event, spot = 'insert linestart': emacs.editCommands.moveTo(event,spot),
+                    'Control-e':    lambda event, spot = 'insert lineend': emacs.editCommands.moveTo(event,spot),
+                    'Alt-Up':       lambda event, spot = 'insert linestart': emacs.editCommands.moveTo(event,spot),
+                    'Alt-Down':     lambda event, spot = 'insert lineend': emacs.editCommands.moveTo(event,spot),
+                    'Alt-f':        lambda event, way = 1: emacs.editCommands.moveword(event,way),
+                    'Alt-b':        lambda event, way = -1: emacs.editCommands.moveword(event,way),
+                    'Control-o':    emacs.editCommands.insertNewLine,
+                    'Control-k':    lambda event, frm = 'insert', to = 'insert lineend': emacs.kill(event,frm,to),
+                    'Alt-d':        lambda event, frm = 'insert wordstart', to = 'insert wordend': emacs.kill(event,frm,to),
+                    'Alt-Delete':   lambda event: emacs.deletelastWord(event),
+                    "Control-y":    lambda event, frm = 'insert', which = 'c': emacs.walkKB(event,frm,which),
+                    "Alt-y":        lambda event, frm = "insert", which = 'a': emacs.walkKB(event,frm,which),
+                    "Alt-k":        lambda event: emacs.killsentence(event),
+                    'Control-s':    None,
+                    'Control-r':    None,
+                    'Alt-c':        lambda event, which = 'cap': emacs.editCommands.capitalize(event,which),
+                    'Alt-u':        lambda event, which = 'up': emacs.editCommands.capitalize(event,which),
+                    'Alt-l':        lambda event, which = 'low': emacs.editCommands.capitalize(event,which),
+                    'Alt-t':        lambda event, sw = emacs.editCommands.swapSpots: emacs.editCommands.swapWords(event,sw),
+                    'Alt-x':        self.alt_X,
+                    'Control-x':    self.startControlX,
+                    'Control-g':    b.keyboardQuit,
+                    'Control-Shift-at': emacs.editCommands.setRegion,
+                    'Control-w':    lambda event, which = 'd': emacs.editCommands.killRegion(event,which),
+                    'Alt-w':        lambda event, which = 'c': emacs.editCommands.killRegion(event,which),
+                    'Control-t':    emacs.editCommands.swapCharacters,
+                    'Control-u':    None,
+                    'Control-l':    None,
+                    'Alt-z':        None,
+                    'Control-i':    None,
+                    'Alt-Control-backslash': emacs.editCommands.indentRegion,
+                    'Alt-m':            emacs.editCommands.backToIndentation,
+                    'Alt-asciicircum':  emacs.editCommands.deleteIndentation,
+                    'Control-d':        emacs.editCommands.deleteNextChar,
+                    'Alt-backslash':    emacs.editCommands.deleteSpaces,
+                    'Alt-g':        None,
+                    'Control-v':    lambda event, way = 'south': emacs.editCommands.screenscroll(event,way),
+                    'Alt-v':        lambda event, way = 'north': emacs.editCommands.screenscroll(event,way),
+                    'Alt-equal':    emacs.editCommands.countRegion,
+                    'Alt-parenleft':    emacs.editCommands.insertParentheses,
+                    'Alt-parenright':   emacs.editCommands.movePastClose,
+                    'Alt-percent':  None,
+                    'Control-c':    None,
+                    'Delete':       lambda event, which = 'BackSpace': self.manufactureKeyPress(event,which),
+                    'Control-p':    lambda event, which = 'Up': self.manufactureKeyPress(event,which),
+                    'Control-n':    lambda event, which = 'Down': self.manufactureKeyPress(event,which),
+                    'Control-f':    lambda event, which = 'Right': self.manufactureKeyPress(event,which),
+                    'Control-b':    lambda event, which = 'Left': self.manufactureKeyPress(event,which),
+                    'Control-Alt-w': None,
+                    'Alt-a':        emacs.editCommands.backSentence,
+                    'Alt-e':        emacs.editCommands.forwardSentence,
+                    'Control-Alt-o': emacs.editCommands.insertNewLineIndent,
+                    'Control-j':    emacs.editCommands.insertNewLineAndTab,
+                    'Alt-minus':    self.negativeArgument,
+                    'Alt-slash':    emacs.editCommands.dynamicExpansion,
+                    'Control-Alt-slash':    emacs.editCommands.dynamicExpansion2,
+                    'Control-u':        lambda event, keystroke = '<Control-u>': self.universalDispatch(event,keystroke),
+                    'Alt-braceright':   lambda event, which = 1: emacs.movingParagraphs(event,which),
+                    'Alt-braceleft':    lambda event, which = 0: emacs.movingParagraphs(event,which),
+                    'Alt-q':        emacs.editCommands.fillParagraph,
+                    'Alt-h':        emacs.editCommands.selectParagraph,
+                    'Alt-semicolon': emacs.editCommands.indentToCommentColumn,
+                    'Alt-0': lambda event, stroke = '<Alt-0>', number = 0: self.numberCommand(event,stroke,number),
+                    'Alt-1': lambda event, stroke = '<Alt-1>', number = 1: self.numberCommand(event,stroke,number),
+                    'Alt-2': lambda event, stroke = '<Alt-2>', number = 2: self.numberCommand(event,stroke,number),
+                    'Alt-3': lambda event, stroke = '<Alt-3>', number = 3: self.numberCommand(event,stroke,number),
+                    'Alt-4': lambda event, stroke = '<Alt-4>', number = 4: self.numberCommand(event,stroke,number),
+                    'Alt-5': lambda event, stroke = '<Alt-5>', number = 5: self.numberCommand(event,stroke,number),
+                    'Alt-6': lambda event, stroke = '<Alt-6>', number = 6: self.numberCommand(event,stroke,number),
+                    'Alt-7': lambda event, stroke = '<Alt-7>', number = 7: self.numberCommand(event,stroke,number),
+                    'Alt-8': lambda event, stroke = '<Alt-8>', number = 8: self.numberCommand(event,stroke,number),
+                    'Alt-9': lambda event, stroke = '<Alt-9>', number = 9: self.numberCommand(event,stroke,number),
+                    'Control-underscore': emacs.doUndo,
+                    'Alt-s':            emacs.editCommands.centerLine,
+                    'Control-z':        emacs.emacsControlCommands.suspend,
+                    'Control-Alt-s': emacs.searchCommands.isearchForwardRegexp,
+                        ### Hmmm.  the lambda doesn't call keyboardQuit
+                        # lambda event, stroke = '<Control-s>': emacs.startIncremental(event,stroke,which='regexp'),
+                    'Control-Alt-r': emacs.searchCommands.isearchBackwardRegexp,
+                        # lambda event, stroke = '<Control-r>': emacs.startIncremental(event,stroke,which='regexp'),
+                    'Control-Alt-percent': lambda event: emacs.startRegexReplace()and emacs.masterQR(event),
+                    'Escape':       emacs.editCommands.watchEscape,
+                    'Alt-colon':    emacs.editCommands.startEvaluate,
+                    'Alt-exclam':   emacs.emacsControlCommands.startSubprocess,
+                    'Alt-bar':      lambda event: emacs.emacsControlCommands.startSubprocess(event,which=1),
+                }
+                #@nonl
+                #@-node:ekr.20050918105212:<< old cbDict >>
+                #@nl
+            
             cbDict = {
-            'Alt-less':     lambda event, spot = '1.0': emacs.editCommands.moveTo(event,spot),
-            'Alt-greater':  lambda event, spot = 'end': emacs.editCommands.moveTo(event,spot),
-            'Control-Right': lambda event, way = 1: emacs.editCommands.moveword(event,way),
-            'Control-Left': lambda event, way = -1: emacs.editCommands.moveword(event,way),
-            'Control-a':    lambda event, spot = 'insert linestart': emacs.editCommands.moveTo(event,spot),
-            'Control-e':    lambda event, spot = 'insert lineend': emacs.editCommands.moveTo(event,spot),
-            'Alt-Up':       lambda event, spot = 'insert linestart': emacs.editCommands.moveTo(event,spot),
-            'Alt-Down':     lambda event, spot = 'insert lineend': emacs.editCommands.moveTo(event,spot),
-            'Alt-f':        lambda event, way = 1: emacs.editCommands.moveword(event,way),
-            'Alt-b':        lambda event, way = -1: emacs.editCommands.moveword(event,way),
-            'Control-o':    emacs.editCommands.insertNewLine,
-            'Control-k':    lambda event, frm = 'insert', to = 'insert lineend': emacs.kill(event,frm,to),
-            'Alt-d':        lambda event, frm = 'insert wordstart', to = 'insert wordend': emacs.kill(event,frm,to),
-            'Alt-Delete':   lambda event: emacs.deletelastWord(event),
-            "Control-y":    lambda event, frm = 'insert', which = 'c': emacs.walkKB(event,frm,which),
-            "Alt-y":        lambda event, frm = "insert", which = 'a': emacs.walkKB(event,frm,which),
-            "Alt-k":        lambda event: emacs.killsentence(event),
-            'Control-s':    None,
-            'Control-r':    None,
-            'Alt-c':        lambda event, which = 'cap': emacs.editCommands.capitalize(event,which),
-            'Alt-u':        lambda event, which = 'up': emacs.editCommands.capitalize(event,which),
-            'Alt-l':        lambda event, which = 'low': emacs.editCommands.capitalize(event,which),
-            'Alt-t':        lambda event, sw = emacs.editCommands.swapSpots: emacs.editCommands.swapWords(event,sw),
+            
+            # The big ones...
             'Alt-x':        self.alt_X,
             'Control-x':    self.startControlX,
             'Control-g':    b.keyboardQuit,
-            'Control-Shift-at': emacs.editCommands.setRegion,
-            'Control-w':    lambda event, which = 'd': emacs.editCommands.killRegion(event,which),
-            'Alt-w':        lambda event, which = 'c': emacs.editCommands.killRegion(event,which),
-            'Control-t':    emacs.editCommands.swapCharacters,
-            'Control-u':    None,
-            'Control-l':    None,
-            'Alt-z':        None,
-            'Control-i':    None,
-            'Alt-Control-backslash': emacs.editCommands.indentRegion,
-            'Alt-m':            emacs.editCommands.backToIndentation,
-            'Alt-asciicircum':  emacs.editCommands.deleteIndentation,
-            'Control-d':        emacs.editCommands.deleteNextChar,
-            'Alt-backslash':    emacs.editCommands.deleteSpaces,
-            'Alt-g':        None,
-            'Control-v':    lambda event, way = 'south': emacs.editCommands.screenscroll(event,way),
-            'Alt-v':        lambda event, way = 'north': emacs.editCommands.screenscroll(event,way),
-            'Alt-equal':    emacs.editCommands.countRegion,
-            'Alt-parenleft':    emacs.editCommands.insertParentheses,
-            'Alt-parenright':   emacs.editCommands.movePastClose,
-            'Alt-percent':  None,
-            'Control-c':    None,
-            'Delete':       lambda event, which = 'BackSpace': self.manufactureKeyPress(event,which),
+        
+            # Standard Emacs moves...
+            'Alt-less':     lambda event, spot = '1.0': emacs.editCommands.moveTo(event,spot),
+            'Alt-greater':  lambda event, spot = 'end': emacs.editCommands.moveTo(event,spot),
+            'Alt-a':        emacs.editCommands.backSentence,
+            'Alt-e':        emacs.editCommands.forwardSentence,
+            'Alt-f':       lambda event, way = 1: emacs.editCommands.moveword(event,way),
+            'Alt-b':        lambda event, way = -1: emacs.editCommands.moveword(event,way),
+            'Alt-braceright':   lambda event, which = 1: emacs.movingParagraphs(event,which),
+            'Alt-braceleft':    lambda event, which = 0: emacs.movingParagraphs(event,which),
+            'Control-Right':lambda event, way = 1: emacs.editCommands.moveword(event,way),
+            'Control-Left': lambda event, way = -1: emacs.editCommands.moveword(event,way),
+            'Control-a':    lambda event, spot = 'insert linestart': emacs.editCommands.moveTo(event,spot),
+            'Control-e':    lambda event, spot = 'insert lineend': emacs.editCommands.moveTo(event,spot),
             'Control-p':    lambda event, which = 'Up': self.manufactureKeyPress(event,which),
             'Control-n':    lambda event, which = 'Down': self.manufactureKeyPress(event,which),
             'Control-f':    lambda event, which = 'Right': self.manufactureKeyPress(event,which),
             'Control-b':    lambda event, which = 'Left': self.manufactureKeyPress(event,which),
-            'Control-Alt-w': None,
-            'Alt-a':        emacs.editCommands.backSentence,
-            'Alt-e':        emacs.editCommands.forwardSentence,
-            'Control-Alt-o': emacs.editCommands.insertNewLineIndent,
-            'Control-j':    emacs.editCommands.insertNewLineAndTab,
-            'Alt-minus':    self.negativeArgument,
-            'Alt-slash':    emacs.editCommands.dynamicExpansion,
-            'Control-Alt-slash':    emacs.editCommands.dynamicExpansion2,
-            'Control-u':        lambda event, keystroke = '<Control-u>': self.universalDispatch(event,keystroke),
-            'Alt-braceright':   lambda event, which = 1: emacs.movingParagraphs(event,which),
-            'Alt-braceleft':    lambda event, which = 0: emacs.movingParagraphs(event,which),
-            'Alt-q':        emacs.editCommands.fillParagraph,
-            'Alt-h':        emacs.editCommands.selectParagraph,
-            'Alt-semicolon': emacs.editCommands.indentToCommentColumn,
+            
+            # Standard Emacs deletes...
+                # 'Control-d':        emacs.editCommands.deleteNextChar,
+                # 'Alt-backslash':    emacs.editCommands.deleteSpaces,
+                # 'Delete':       lambda event, which = 'BackSpace': self.manufactureKeyPress(event,which),
+            
+            # Kill buffer...
+            'Control-k':    lambda event, frm = 'insert', to = 'insert lineend': emacs.kill(event,frm,to),
+            'Alt-d':        lambda event, frm = 'insert wordstart', to = 'insert wordend': emacs.kill(event,frm,to),
+            'Alt-Delete':   lambda event: emacs.deletelastWord(event),
+            "Alt-k":        lambda event: emacs.killsentence(event),
+            
+            # Conflicts with Leo outline moves.
+            #'Alt-Up':       lambda event, spot = 'insert linestart': emacs.editCommands.moveTo(event,spot),
+            #'Alt-Down':     lambda event, spot = 'insert lineend': emacs.editCommands.moveTo(event,spot),
+           
+            # I wouldn't use these...
+                # 'Control-o':    emacs.editCommands.insertNewLine,
+                # "Control-y":    lambda event, frm = 'insert', which = 'c': emacs.walkKB(event,frm,which),
+                # "Alt-y":        lambda event, frm = "insert", which = 'a': emacs.walkKB(event,frm,which),
+                # 'Control-s':    None,
+                # 'Control-r':    None,
+                # 'Alt-c':        lambda event, which = 'cap': emacs.editCommands.capitalize(event,which),
+                # 'Alt-u':        lambda event, which = 'up': emacs.editCommands.capitalize(event,which),
+                # 'Alt-l':        lambda event, which = 'low': emacs.editCommands.capitalize(event,which),
+                # 'Alt-t':        lambda event, sw = emacs.editCommands.swapSpots: emacs.editCommands.swapWords(event,sw),
+            
+            # Region stuff...
+                # 'Control-Shift-at': emacs.editCommands.setRegion,
+                # 'Control-w':    lambda event, which = 'd': emacs.editCommands.killRegion(event,which),
+                # 'Alt-w':        lambda event, which = 'c': emacs.editCommands.killRegion(event,which),
+                # 'Alt-Control-backslash': emacs.editCommands.indentRegion,
+                # 'Alt-m':            emacs.editCommands.backToIndentation,
+                # 'Alt-asciicircum':  emacs.editCommands.deleteIndentation,
+        
+            # Conflicts with swap panes.
+                # 'Control-t':    emacs.editCommands.swapCharacters,
+                
+            # Misc.
+                # 'Control-u':    None,
+                # 'Control-l':    None,
+                # 'Alt-z':        None,
+                # 'Control-i':    None,
+                # 'Alt-g':        None,
+                # 'Control-v':    lambda event, way = 'south': emacs.editCommands.screenscroll(event,way),
+                # 'Alt-v':        lambda event, way = 'north': emacs.editCommands.screenscroll(event,way),
+                # 'Alt-equal':    emacs.editCommands.countRegion,
+                # 'Alt-parenleft':    emacs.editCommands.insertParentheses,
+                # 'Alt-parenright':   emacs.editCommands.movePastClose,
+                # 'Alt-percent':  None,
+                # 'Control-c':    None,
+                # 'Control-Alt-w': None,
+                # 'Control-Alt-o': emacs.editCommands.insertNewLineIndent,
+                # 'Control-j':    emacs.editCommands.insertNewLineAndTab,
+                # 'Alt-minus':    self.negativeArgument,
+                # 'Alt-slash':    emacs.editCommands.dynamicExpansion,
+                # 'Control-Alt-slash':    emacs.editCommands.dynamicExpansion2,
+                # 'Control-u':        lambda event, keystroke = '<Control-u>': self.universalDispatch(event,keystroke),
+                # 'Alt-q':        emacs.editCommands.fillParagraph,
+                # 'Alt-h':        emacs.editCommands.selectParagraph,
+                # 'Alt-semicolon': emacs.editCommands.indentToCommentColumn,
+                # 'Alt-s':            emacs.editCommands.centerLine,
+                # 'Control-z':        emacs.emacsControlCommands.suspend,
+                # 'Control-Alt-s': emacs.searchCommands.isearchForwardRegexp,
+                    # ### Hmmm.  the lambda doesn't call keyboardQuit
+                    # # lambda event, stroke = '<Control-s>': emacs.startIncremental(event,stroke,which='regexp'),
+                # 'Control-Alt-r': emacs.searchCommands.isearchBackwardRegexp,
+                    # # lambda event, stroke = '<Control-r>': emacs.startIncremental(event,stroke,which='regexp'),
+                # 'Control-Alt-percent': lambda event: emacs.startRegexReplace()and emacs.masterQR(event),
+                # 'Escape':       emacs.editCommands.watchEscape,
+                # 'Alt-colon':    emacs.editCommands.startEvaluate,
+                # 'Alt-exclam':   emacs.emacsControlCommands.startSubprocess,
+                # 'Alt-bar':      lambda event: emacs.emacsControlCommands.startSubprocess(event,which=1),
+            
+            # Numbered commands: conflict with Leo's Expand to level commands, but so what...
             'Alt-0': lambda event, stroke = '<Alt-0>', number = 0: self.numberCommand(event,stroke,number),
             'Alt-1': lambda event, stroke = '<Alt-1>', number = 1: self.numberCommand(event,stroke,number),
             'Alt-2': lambda event, stroke = '<Alt-2>', number = 2: self.numberCommand(event,stroke,number),
@@ -5670,22 +5355,13 @@ class Emacs:
             'Alt-7': lambda event, stroke = '<Alt-7>', number = 7: self.numberCommand(event,stroke,number),
             'Alt-8': lambda event, stroke = '<Alt-8>', number = 8: self.numberCommand(event,stroke,number),
             'Alt-9': lambda event, stroke = '<Alt-9>', number = 9: self.numberCommand(event,stroke,number),
-            'Control-underscore': emacs.doUndo,
-            'Alt-s':            emacs.editCommands.centerLine,
-            'Control-z':        emacs.emacsControlCommands.suspend,
-            'Control-Alt-s': emacs.searchCommands.isearchForwardRegexp,
-                ### Hmmm.  the lambda doesn't call keyboardQuit
-                # lambda event, stroke = '<Control-s>': emacs.startIncremental(event,stroke,which='regexp'),
-            'Control-Alt-r': emacs.searchCommands.isearchBackwardRegexp,
-                # lambda event, stroke = '<Control-r>': emacs.startIncremental(event,stroke,which='regexp'),
-            'Control-Alt-percent': lambda event: emacs.startRegexReplace()and emacs.masterQR(event),
-            'Escape':       emacs.editCommands.watchEscape,
-            'Alt-colon':    emacs.editCommands.startEvaluate,
-            'Alt-exclam':   emacs.emacsControlCommands.startSubprocess,
-            'Alt-bar':      lambda event: emacs.emacsControlCommands.startSubprocess(event,which=1),
+            
+            # Emacs undo.
+                # 'Control-underscore': emacs.doUndo,
             }
         
             return cbDict
+        #@nonl
         #@-node:ekr.20050724075352.49:addCallBackDict (miniBufferClass) MUST BE GENERALIZED
         #@+node:ekr.20050724075352.144:addToDoAltX
         def addToDoAltX (self,name,macro):
@@ -5704,6 +5380,25 @@ class Emacs:
             return True
         #@nonl
         #@-node:ekr.20050724075352.144:addToDoAltX
+        #@+node:ekr.20050724075352.113:bindKey
+        def bindKey (self,tbuffer,evstring):
+        
+            callback = self.cbDict.get(evstring)
+            evstring = '<%s>' % evstring
+            
+            # g.trace(evstring)
+        
+            def f (event):
+                general = evstring == '<Key>'
+                return self.masterCommand(event,callback,evstring,general)
+        
+            if evstring == '<Key>':
+                tbuffer.bind(evstring,f,'+')
+            else:
+                tbuffer.bind(evstring,f)
+               
+        #@nonl
+        #@-node:ekr.20050724075352.113:bindKey
         #@+node:ekr.20050724075352.90:changecbDict NOT USED
         def changecbDict (self,changes):
             for z in changes:
@@ -5711,46 +5406,7 @@ class Emacs:
                     self.cbDict [z] = self.changes [z]
         #@nonl
         #@-node:ekr.20050724075352.90:changecbDict NOT USED
-        #@+node:ekr.20050728093027.1:finishCreate (miniBufferClass) MUST BE GENERALIZED
-        def finishCreate (self,altX_commandsDict):
-        
-            emacs = self.emacs
-        
-            # Finish creating the helper classes.
-            self.stateManager.finishCreate()
-            self.kstrokeManager.finishCreate()
-            self.cxHandler.finishCreate()
-        
-            # Finish this class.
-            self.altX_commandsDict = altX_commandsDict
-        
-            self.add_ekr_altx_commands()
-        
-            # Command bindings.
-            self.cbDict = self.addCallBackDict() # Creates callback dictionary, primarily used in the master command
-        
-            self.negArgs = {
-                '<Alt-c>': self.emacs.editCommands.changePreviousWord,
-                '<Alt-u>': self.emacs.editCommands.changePreviousWord,
-                '<Alt-l>': self.emacs.editCommands.changePreviousWord,
-            }
-        
-            self.xcommands = {
-                '<Control-t>': emacs.editCommands.transposeLines,
-                '<Control-u>': lambda event, way = 'up': emacs.upperLowerRegion(event,way),
-                '<Control-l>': lambda event, way = 'low': emacs.upperLowerRegion(event,way),
-                '<Control-o>': emacs.editCommands.removeBlankLines,
-                '<Control-i>': emacs.fileCommands.insertFile,
-                '<Control-s>': emacs.fileCommands.saveFile,
-                '<Control-x>': emacs.editCommands.exchangePointMark,
-                '<Control-c>': emacs.emacsControlCommands.shutdown,
-                '<Control-b>': emacs.bufferCommands.listBuffers,
-                '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
-                '<Delete>': lambda event, back = True: emacs.editCommands.killsentence(event,back),
-            }
-        #@nonl
-        #@-node:ekr.20050728093027.1:finishCreate (miniBufferClass) MUST BE GENERALIZED
-        #@+node:ekr.20050724075352.112:setBufferStrokes  (creates svars & <key> bindings
+        #@+node:ekr.20050724075352.112:setBufferStrokes  (creates svars & <key> bindings)
         def setBufferStrokes (self,tbuffer):
         
             '''Sets key bindings for a Tk Text widget.'''
@@ -5762,22 +5418,7 @@ class Emacs:
             # Add a binding for <Key> events, so _all_ key events go through masterCommand.
             self.bindKey(tbuffer,'Key')
         #@nonl
-        #@+node:ekr.20050724075352.113:bindKey
-        def bindKey (self,tbuffer,evstring):
-        
-            callback = self.cbDict.get(evstring)
-            evstring = '<%s>' % evstring
-        
-            def f (event):
-                return self.masterCommand(event,callback,evstring)
-        
-            if evstring != '<Key>':
-                tbuffer.bind(evstring,f)
-            else:
-                tbuffer.bind(evstring,f,'+')
-        #@nonl
-        #@-node:ekr.20050724075352.113:bindKey
-        #@-node:ekr.20050724075352.112:setBufferStrokes  (creates svars & <key> bindings
+        #@-node:ekr.20050724075352.112:setBufferStrokes  (creates svars & <key> bindings)
         #@-node:ekr.20050728103627: Birth
         #@+node:ekr.20050728092044: Entry points
         # These are user commands accessible via alt-x.
@@ -6420,7 +6061,7 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.47:keyboardQuit
         #@+node:ekr.20050724075352.89:manufactureKeyPress
-        def manufactureKeyPress (self,event,which): # event IS used.
+        def manufactureKeyPress (self,event,which): # event **is** used.
         
             tbuffer = event.widget
             tbuffer.event_generate('<Key>',keysym=which)
@@ -6430,14 +6071,19 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.89:manufactureKeyPress
         #@+node:ekr.20050724075352.43:masterCommand
-        def masterCommand (self,event,method,stroke):
+        def masterCommand (self,event,method,stroke,general):
+            
             '''This is the central routing method of the Emacs class.
             All commands and keystrokes pass through here.'''
-        
-            special = event.keysym in ('Control_L','Control_R','Alt_L','Alt-R','Shift_L','Shift_R')
-            inserted = not special or len(self.keysymhistory) == 0 or self.keysymhistory [0] != event.keysym
+            
+            # Note: the _L symbols represent *either* special key.
+            special = event.keysym in ('Control_L','Alt_L','Shift_L')
+            
+            inserted = not special or (
+                not general and (len(self.keysymhistory) == 0 or self.keysymhistory [0] != event.keysym))
         
             if inserted:
+                g.trace(general,event.keysym)
                 #@        << add character to history >>
                 #@+node:ekr.20050731084644:<< add character to history >>
                 # Don't add multiple special characters to history.
@@ -6642,7 +6288,7 @@ class Emacs:
     #@-others
 #@nonl
 #@-node:ekr.20050724075352.40:class Emacs
-#@+node:ekr.20050724075352.34:class Tracker
+#@+node:ekr.20050724075352.34:class Tracker (an iterator)
 class Tracker:
 
     '''An iterator class to allow the user to cycle through and change a list.'''
@@ -6690,7 +6336,7 @@ class Tracker:
     #@-node:ekr.20050724075352.39:clear
     #@-others
 #@nonl
-#@-node:ekr.20050724075352.34:class Tracker
+#@-node:ekr.20050724075352.34:class Tracker (an iterator)
 #@-others
 #@nonl
 #@-node:ekr.20050723062822:@thin __core_emacs.py
