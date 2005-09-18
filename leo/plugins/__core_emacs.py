@@ -5628,7 +5628,7 @@ class Emacs:
         #@nonl
         #@-node:ekr.20050724075352.288:repeatComplexCommand
         #@-node:ekr.20050724075352.283:Alt_X methods
-        #@+node:ekr.20050724075352.14:class controlX_handlerClass
+        #@+node:ekr.20050724075352.14:class controlX_handlerClass MUST BE GENERALIZED
         class controlX_handlerClass:
         
             '''The ControlXHandler manages how the Control-X based commands operate on the
@@ -5661,7 +5661,7 @@ class Emacs:
                 if stroke in ('<Key>','<Escape>'):
                     return self.processKey(event)  # Weird command-specific stuff.
             
-                if stroke in emacs.xcommands:
+                if stroke in emacs.miniBuffer.xcommands:
                     emacs.xcommands [stroke](event)
                     if stroke != '<Control-b>':
                         emacs.keyboardQuit(event)
@@ -5708,15 +5708,28 @@ class Emacs:
                 }
             #@nonl
             #@-node:ekr.20050728103627.2:finishCreate (controlX_handlerClass)  MUST BE GENERALIZED
-            #@+node:ekr.20050724075352.17:processKey
+            #@+node:ekr.20050918111700:get/set
+            def get (self,ignorePrompt=False):
+                
+                return self.emacs.miniBuffer.get(ignorePrompt)
+                
+            def set (self,s,protect=False):
+            
+                return self.emacs.miniBuffer.set(s,protect)
+            #@nonl
+            #@-node:ekr.20050918111700:get/set
+            #@+node:ekr.20050724075352.17:processKey (controlX_handlerClass) MUST BE GENERALIZED
             def processKey (self,event):
             
                 b = self ; emacs = self.emacs
                 previous = self.previous
+                
                 if event.keysym in ('Shift_L','Shift_R'):
                     return
+                    
+                g.trace(event.keysym)
             
-                if emacs.sRect:
+                if emacs.rectangleCommands.sRect:
                     return emacs.stringRectangle(event)
             
                 if (
@@ -5763,9 +5776,11 @@ class Emacs:
                     if len(previous) > 1:
                         if previous [1] == 'Escape':
                             return emacs.repeatComplexCommand(event)
-            #@-node:ekr.20050724075352.17:processKey
+            #@nonl
+            #@-node:ekr.20050724075352.17:processKey (controlX_handlerClass) MUST BE GENERALIZED
             #@+node:ekr.20050724075352.18:processRectangle
             if 0: # Reference: actually defined in finishCreate.
+            
                 self.rect_commands = {
                     'o': emacs.rectangleCommands.openRectangle,
                     'c': emacs.rectangleCommands.clearRectangle,
@@ -5782,9 +5797,9 @@ class Emacs:
                 func(event)
                 return 'break'
             #@-node:ekr.20050724075352.18:processRectangle
-            #@+node:ekr.20050724075352.19:processAbbreviation
+            #@+node:ekr.20050724075352.19:processAbbreviation MUST BE GENERALIZED
             def processAbbreviation (self,event):
-            
+                
                 b = self ; char = event.char
             
                 if b.get() != 'a' and event.keysym == 'a':
@@ -5800,10 +5815,10 @@ class Emacs:
                         self.emacs.expandAbbrev(event)
                     return 'break'
             #@nonl
-            #@-node:ekr.20050724075352.19:processAbbreviation
+            #@-node:ekr.20050724075352.19:processAbbreviation MUST BE GENERALIZED
             #@-others
         #@nonl
-        #@-node:ekr.20050724075352.14:class controlX_handlerClass
+        #@-node:ekr.20050724075352.14:class controlX_handlerClass MUST BE GENERALIZED
         #@+node:ekr.20050724075352.29:class keyStrokeManagerClass
         class keyStrokeManagerClass:
         
