@@ -206,7 +206,7 @@ class baseCommands:
     #@+node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     def getSignOnLine (self):
         c = self
-        return "Leo 4.3.2, build %s, September 16, 2005" % c.getBuildNumber()
+        return "Leo 4.3.3, build %s, September 17, 2005" % c.getBuildNumber()
     #@nonl
     #@-node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     #@+node:ekr.20040629121554.2:initVersion
@@ -4093,7 +4093,9 @@ class baseCommands:
         c = self
         c.beginUpdate()
         try:
-            for p in c.currentPosition().self_and_subtree_iter():
+            current = c.currentPosition()
+            n = current.level()
+            for p in current.self_and_subtree_iter():
                 if p.level() - n + 1 < level:
                     p.expand()
                 else:
