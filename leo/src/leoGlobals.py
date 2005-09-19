@@ -142,8 +142,8 @@ def computeHomeDir():
     home = os.getenv('HOME',default=None)
 
     if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
-	    # Get the indirect reference to the true home.
-	    home = os.getenv(home[1:-1],default=None)
+        # Get the indirect reference to the true home.
+        home = os.getenv(home[1:-1],default=None)
 
     if home:
         # N.B. This returns the _working_ directory if home is None!
@@ -3589,9 +3589,8 @@ def findTopLevelNode(headline):
 def executeFile(filename, options= ''):
 
     if not os.access(filename, os.R_OK): return
-    
-    try: import subprocess # Exists in Python 2.4 or later.
-    except ImportError: subprocess = None
+
+    subprocess = g.importExtension('subprocess',None,verbose=False)
 
     cwd = os.getcwdu()
     fdir, fname = g.os_path_split(filename)
