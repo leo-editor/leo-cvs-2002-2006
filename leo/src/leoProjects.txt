@@ -19,6 +19,25 @@
 #@@tabwidth -4
 
 #@+all
+#@+node:ekr.20031218072017.2606:<< Import pychecker >>
+@color
+
+# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
+
+if 0: # Set to 1 for lint-like testing.
+
+    # Note:  Pychecker presently works only on Python 2.3.
+
+    try:
+        import pychecker.checker
+        # This works.  We may want to set options here...
+        # from pychecker import Config 
+        # print pychecker
+        print ; print "Warning (in leo.py): pychecker.checker running..." ; print
+    except:
+        print ; print 'Can not import pychecker' ; print
+#@nonl
+#@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@+node:ekr.20031218072017.1319:(Key handlers)
 @ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
 #@+node:ekr.20031218072017.1320:body key handlers
@@ -10037,7 +10056,7 @@ def test_g_es_print():
 #@+node:ekr.20050911084855:Added doc/html/*.html to distribution list
 #@-node:ekr.20050911084855:Added doc/html/*.html to distribution list
 #@-node:ekr.20050914132013:4.3.2 final projects
-#@+node:ekr.20050916095957:4.4 a1 projects
+#@+node:ekr.20050916095957:4.3.3 projects
 #@+node:ekr.20050916101421:Cleanup
 #@+node:ekr.20050902074723:Protected c.beginEndUpdate against exceptions.
 @nocolor
@@ -10127,7 +10146,59 @@ This tech report should be rewritten.
 #@nonl
 #@-node:ekr.20050621130815:Rewrote tech report with rst3
 #@-node:ekr.20050916190932:Docs
-#@-node:ekr.20050916095957:4.4 a1 projects
+#@+node:ekr.20050917092155:Plugins
+@nocolor
+
+- Fixed bugs in niceNosent and fastGotoNode plugins.
+- Added niceNosent and fastGotoNode plugins to pluginsManager.txt (disabled)
+- Realized that the rst3 plugin should **ignore** @ignore directives.
+  Indeed, we typically want to use @ignore to suppress creation of derived files.
+- Called Pmw.initialise in the plugins manager plugin.
+#@nonl
+#@+node:ekr.20050917114044:Fix problem in plugin manager
+#@+node:ekr.20050917114044.1:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3342256
+
+Started Plugin Mgr. Got:
+
+exception executing command
+Traceback (most recent call last):
+  File "C:\Software Engineering\Leo\src\leoCommands.py", line 186, in doCommand
+    command()
+  File "C:\Software Engineering\Leo\plugins\plugins_menu.py", line 502,
+in callback
+    p.hastoplevel()
+  File "C:\Software Engineering\Leo\plugins\plugin_manager.py", line 193, in
+topLevelMenu
+    dlg = ManagerDialog()
+  File "C:\Software Engineering\Leo\plugins\plugin_manager.py", line 680, in
+__init__
+    self.plugin_view = PluginView(self.upper, self.file_text)
+  File "C:\Software Engineering\Leo\plugins\plugin_manager.py", line 311, in
+__init__
+    label_text = 'Name:',
+  File "C:\Language\Python\lib\site-packages\Pmw\Pmw_1_2\lib\PmwEntryField.py",
+line 73, in __init__
+    sequences = root.bind_class(tag)
+  File "C:\Language\Python\lib\lib-tk\Tkinter.py", line 958, in bind_class
+    return self._bind(('bind', className), sequence, func, add, 0)
+  File "C:\Language\Python\lib\lib-tk\Tkinter.py", line 893, in _bind
+    return self.tk.splitlist(self.tk.call(what))
+TclError: bad window path name
+".12775632.15466288.15466328.15466408.15466448.15800760.15801320"
+#@nonl
+#@-node:ekr.20050917114044.1:Report
+#@+node:ekr.20050917114044.2:What I did
+@nocolor
+
+- Added a call to Pmw.initialise(g.app.root) in the top-level init method.
+#@nonl
+#@-node:ekr.20050917114044.2:What I did
+#@-node:ekr.20050917114044:Fix problem in plugin manager
+#@-node:ekr.20050917092155:Plugins
+#@-node:ekr.20050916095957:4.3.3 projects
 #@+node:ekr.20050718150452:(Stuff used by wx plugin)
 #@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
 def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):

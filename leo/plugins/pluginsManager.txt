@@ -19,6 +19,8 @@
 
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
+#__jEdit_colorizer__.py
+#__core_emacs.py
 #word_export.py
 #open_shell.py
 #at_view.py
@@ -38,10 +40,9 @@ plugins_menu.py
 #usetemacs.py
 #pie_menus.py
 #Tiddly.py
-#__jEdit_colorizer__.py
+
 #leoupdate.py
 #__wx_gui.py
-#__core_emacs.py
 #pretty_print.py
 rst3.py
 # zodb.py

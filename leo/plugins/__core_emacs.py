@@ -61,32 +61,28 @@ import weakref
 #@@nocolor
 #@+at
 # 
-# - Eliminate all hard constants (except for tables of defaults).
-# 
-# ** Bug: return does not set body text dirty.
-#     - modifyOnBodyKey may be the cause.
-# 
-# ** Bind emacs keystrokes in Leo's core.
-#     - That is, modify Leo's core to uses temacs-style masterCommand method 
-# for all keystrokes.
-# 
-# * Complete menu work.
-# 
-# * Eliminate state-related tables.
-# 
-# * Test all commands and make unit tests.
-# 
-# - convertCommandName utility converts to and from emacs-style (with '-' 
-# chars) to python/leo style (with capitalization).
-# 
-# - Create printLongCommandName command: prints long name of any keystroke 
-# command.
+# *** Generalize the code!
+#     - Eliminate state-related tables.
 # 
 # - User options:
 #     - 'Emacs Compatibility' option: binds keys as done in present plugin.
 #     - 'Emacs Menu option':  On by default: adds emacs option.
 #     - Get keystrokes from user options.
 #     - User-specified keys for alt-x, control-c, etc.
+# 
+# * Bind emacs keystrokes in Leo's core.
+#     - That is, modify Leo's core to uses temacs-style masterCommand method 
+# for all keystrokes.
+# 
+# Minor:
+#     - Complete menu work.
+#     - convertCommandName utility converts to and from emacs-style (with '-' 
+# chars) to
+#       python/leo style (with capitalization).
+#     - Create printLongCommandName command: prints long name of any keystroke 
+# command.
+# 
+# * Test all commands and make unit tests.
 #@-at
 #@nonl
 #@-node:ekr.20050730204402:<< to do >>
@@ -181,6 +177,14 @@ import weakref
 #@-at
 #@nonl
 #@-node:ekr.20050918100340:Removed all globals
+#@+node:ekr.20050918143332:Fixed bug: newline was not setting body pane dirty
+#@+at
+# 
+# The fix was to return return orig_OnBodyKey(self.c.frame.body,event) at end 
+# of masterCommand.
+#@-at
+#@nonl
+#@-node:ekr.20050918143332:Fixed bug: newline was not setting body pane dirty
 #@-others
 #@nonl
 #@-node:ekr.20050725074202:<< modification log >>
@@ -263,7 +267,8 @@ def modifyOnBodyKey (self,event):
 
     if event.char.isspace(): 
         if c.emacs.stateManager.hasState():
-           return None
+            g.trace('hasState')
+            return None # Must be None, not 'break'
     else:
         return orig_OnBodyKey(self,event)
 #@nonl
@@ -299,8 +304,8 @@ def createBindings (self,frame):
         addTemacsExtensions(emacs)
         addTemacsAbbreviations(emacs)
         changeKeyStrokes(emacs,frame.bodyCtrl)
-    # This is dubious.
-    setBufferInteractionMethods(self.c,emacs,frame.bodyCtrl)
+    if 1: # This is dubious.
+        setBufferInteractionMethods(self.c,emacs,frame.bodyCtrl)
     orig_del = frame.bodyCtrl.delete
     #@    << define watchDelete >>
     #@+node:ekr.20050724074642.28:<< define watchDelete >>
@@ -475,7 +480,6 @@ def defineEmacsMenuTables (self):
         ('Options Command 1',None,dummyCommand),
     ]
 
-    
     self.emacsMenuBuffersMenuTable = [
         ('Buffers Command 1',None,dummyCommand),
     ]
@@ -6138,10 +6142,12 @@ class Emacs:
         
             # Important: This effectively over-rides the handling of most keystrokes with a state.
             if self.stateManager.hasState():
+                g.trace('hasState')
                 self.previousStroke = stroke
                 return self.stateManager(event,stroke) # Invoke the __call__ method.
         
             if self.kstrokeManager.hasKeyStroke(stroke):
+                g.trace('hasKeyStroke')
                 self.previousStroke = stroke
                 return self.kstrokeManager(event,stroke) # Invoke the __call__ method.
         
@@ -6160,6 +6166,9 @@ class Emacs:
                 rt = method(event)
                 self.previousStroke = stroke
                 return rt
+            else:
+                g.trace('default')
+                return orig_OnBodyKey(self.c.frame.body,event)
         #@nonl
         #@-node:ekr.20050724075352.43:masterCommand
         #@+node:ekr.20050724075352.75:negativeArgument

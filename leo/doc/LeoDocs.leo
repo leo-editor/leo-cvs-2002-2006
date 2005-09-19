@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="18922" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="18937" clone_windows="0"/>
 <globals body_outline_ratio="0.464772727273">
 	<global_window_position top="62" left="351" height="880" width="890"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -43,7 +43,29 @@
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
 <v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20050913131848" a="TV"><vh>4.3.2 final</vh>
+<v t="ekr.20050917092557" a="TV"><vh>4.3.3 final</vh>
+<v t="ekr.20050917105646"><vh>Fixes made in 4.3.3</vh></v>
+<v t="ekr.20050917092557.1"><vh>Rewrote documentation</vh></v>
+<v t="ekr.20050917092557.2"><vh>Bug fixes...</vh>
+<v t="ekr.20050917092557.3"><vh>Fixed various unicode bugs</vh></v>
+<v t="ekr.20050917092557.4"><vh>Fixed bugs relating to recent files</vh></v>
+<v t="ekr.20050917092557.5"><vh>Fixed minor crasher in colorizer</vh></v>
+<v t="ekr.20050917092557.6"><vh>Protected several methods used by plugin manager</vh></v>
+<v t="ekr.20050917092557.7"><vh>Added test files to distribution list and cvs</vh></v>
+</v>
+<v t="ekr.20050917092557.8"><vh>New and improved  plugins</vh>
+<v t="ekr.20050917092557.9"><vh>New rst3 plugin</vh></v>
+<v t="ekr.20050917092557.10"><vh>Improved spellpyx plugin</vh></v>
+<v t="ekr.20050917092557.11"><vh>Improved vim and openWith plugins</vh></v>
+</v>
+<v t="ekr.20050917092557.12"><vh>New &amp; improved features...</vh>
+<v t="ekr.20050917092557.13"><vh>Added g.es_print, g.es_trace function</vh></v>
+<v t="ekr.20050917092557.14"><vh>Improved PrettyPrinting</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203163054.117"><vh>Previous versions...</vh>
+<v t="ekr.20050913131848"><vh>4.3.2 final</vh>
 <v t="ekr.20050906104918.1"><vh>Rewrote documentation</vh></v>
 <v t="ekr.20050906104931.1"><vh>Bug fixes...</vh>
 <v t="ekr.20050909082711"><vh>Fixed various unicode bugs</vh></v>
@@ -62,8 +84,6 @@
 <v t="ekr.20050906104931.56"><vh>Improved PrettyPrinting</vh></v>
 </v>
 </v>
-</v>
-<v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050906104918"><vh>4.3.2 beta 1</vh></v>
 <v t="ekr.20050620144052"><vh>4.3.1</vh>
 <v t="ekr.20050620144052.2"><vh>Bug fixes...</vh>
@@ -2023,27 +2043,6 @@
 <v t="ekr.20050901083017"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20050914132220"><vh>Other docs</vh>
-<v t="ekr.20050916184158"><vh>Leo Tech report</vh>
-<v t="ekr.20050916184158.1"><vh>@rst html\techReport.html</vh>
-<v t="ekr.20050916184158.2"><vh>Leo’s window, outlines &amp; clones</vh></v>
-<v t="ekr.20050916184158.3"><vh>Relations: organizer nodes, views, tasks and metadata</vh></v>
-<v t="ekr.20050916184158.4"><vh>Plugins</vh></v>
-<v t="ekr.20050916184158.5"><vh>Derived files and special nodes</vh></v>
-<v t="ekr.20050916184158.6" a="E"><vh>Markup for scripts</vh></v>
-<v t="ekr.20050916184158.7"><vh>Scripting Leo</vh></v>
-<v t="ekr.20050916184158.8" a="E"><vh>Leo’s modules and classes</vh></v>
-<v t="ekr.20050916184158.9"><vh>Predefined symbols in scripts</vh></v>
-<v t="ekr.20050916184158.10"><vh>Accessing data</vh></v>
-<v t="ekr.20050916184158.11"><vh>Traversing outlines</vh></v>
-<v t="ekr.20050916184158.12"><vh>Executing commands from scripts</vh></v>
-<v t="ekr.20050916184158.13"><vh>Bringing scripts to data</vh></v>
-<v t="ekr.20050916184158.14"><vh>Unit Testing with @test and @suite nodes</vh></v>
-<v t="ekr.20050916184158.15"><vh>Plugins and hooks</vh></v>
-<v t="ekr.20050916184158.16"><vh>Contacts</vh></v>
-</v>
-</v>
 <v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
 <v t="edream.110203163054.1654"><vh>100's administering Leaps (and LeoCon)</vh>
 <v t="edream.110203163054.1655"><vh>Leap 102: LeoCon 1</vh></v>
@@ -2058,6 +2057,26 @@
 <v t="edream.110203163054.1663"><vh>Leap 302: Resolve CVS Conflicts command</vh>
 <v t="edream.110203163054.1664"><vh>Comments by Josef</vh></v>
 </v>
+</v>
+</v>
+<v t="ekr.20050914132220"><vh>Other docs</vh>
+<v t="ekr.20050916184158"><vh>Leo Tech report</vh>
+<v t="ekr.20050916184158.1"><vh>@rst html\techReport.html</vh>
+<v t="ekr.20050916184158.2"><vh>Leo’s window, outlines &amp; clones</vh></v>
+<v t="ekr.20050916184158.3"><vh>Relations: organizer nodes, views, tasks and metadata</vh></v>
+<v t="ekr.20050916184158.4"><vh>Plugins</vh></v>
+<v t="ekr.20050916184158.5"><vh>Derived files and special nodes</vh></v>
+<v t="ekr.20050916184158.6"><vh>Markup for scripts</vh></v>
+<v t="ekr.20050916184158.7"><vh>Scripting Leo</vh></v>
+<v t="ekr.20050916184158.8"><vh>Leo’s modules and classes</vh></v>
+<v t="ekr.20050916184158.9"><vh>Predefined symbols in scripts</vh></v>
+<v t="ekr.20050916184158.10"><vh>Accessing data</vh></v>
+<v t="ekr.20050916184158.11"><vh>Traversing outlines</vh></v>
+<v t="ekr.20050916184158.12"><vh>Executing commands from scripts</vh></v>
+<v t="ekr.20050916184158.13"><vh>Bringing scripts to data</vh></v>
+<v t="ekr.20050916184158.14"><vh>Unit Testing with @test and @suite nodes</vh></v>
+<v t="ekr.20050916184158.15"><vh>Plugins and hooks</vh></v>
+<v t="ekr.20050916184158.16"><vh>Contacts</vh></v>
 </v>
 </v>
 <v t="ekr.20050903174637"><vh>Not used (pdf sources)</vh>
@@ -2130,6 +2149,7 @@
 </v>
 </v>
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -13200,7 +13220,7 @@ if rst3:
                 controller.processTree(p)
                 break
         else: controller.processTree(current)
-        g.es('done',color='blue')
+        g.es_print('done',color='blue')
 else:
     rst3 = leoPlugins.loadOnePlugin('rst3',verbose=True)
     if rst3:
@@ -20783,7 +20803,19 @@ This tech report should be rewritten.
 
 @nocolor
 @tabwidth -4</t>
-<t tx="ekr.20050916184158.1">##########################################
+<t tx="ekr.20050916184158.1">@ @rst-options
+code_mode=False
+generate_rst=True
+http_server_support = False
+show_organizer_nodes=True
+show_headlines=True
+show_leo_directives=True
+.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+write_intermediate_file = False
+verbose=True
+@c
+
+##########################################
 The Essentials of Leo
 ##########################################
 
@@ -21070,5 +21102,172 @@ to write your own plugins.</t>
 <t tx="ekr.20050916184158.16">- Leo’s home page:  google edreamleo or http://webpages.charter.net/edreamleo/front.html
 
 - Edward K. Ream:  edreamleo@charter.net, 166 N. Prospect Ave., Madison WI 53726, (608) 231-0766</t>
+<t tx="ekr.20050917092557">Leo 4.3.3 final                 September 17, 2005
+
+Leo 4.3.3 fixes several bugs reported in Leo 4.3.2 final in the last several days.
+
+To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of 4.3.3 (and 4.3.2)
+-----------------------------------
+
+- Improved Leo's documentation:
+    - A tutorial introduction to Leo:
+      http://webpages.charter.net/edreamleo/intro.html
+    - A 5-minute guide to programming with Leo:
+      http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
+
+- The new rst3 plugin creates .html and .tex files from reStructuredText
+  embedded in Leo files. Any node of the source outline may contain options for
+  the rst3 plugin, which makes this plugin much more useful and flexible than
+  the previous rst plugins. All of Leo's documentation was created using this
+  plugin from sources in LeoDocs.leo. For full documentation for rst3 see:
+  http://webpages.charter.net/edreamleo/rstplugin3.html.
+
+- The spellpyx (spell checking) plugin is now much easier to use.
+
+- The vim and openWith plugins now use Python's subprocess module if it is present.
+ 
+- Improved the Pretty Printing command.
+
+- The usual assortment of bug fixes.</t>
+<t tx="ekr.20050917092557.1">Here is a summary of the changes:
+
+- General:  All chapters created with rst3 plugin.  This ensures a uniform look.  The source is in LeoDocs.leo.  Removed all references to older versions of Leo, except when discussing old file formats in the Appendices.  Corrected all text so it discusses present version.
+
+- rst3 plugin itself:  Correct bug that caused chapters to be formatted differently when processing multiple @rst trees.  
+
+- rst3 button in LeoDocs.leo:  The script first looks *up* the tree, looking for an @rst node.  If found, it processes just that tree.  If not found, it processes all @rst nodes *below* the originally selected node.  The button is now much more convenient to use.
+
+- Preface: Shorter, no history.  No longer a dead end.
+
+- What People are Saying About Leo: No longer a dead end.
+
+- FAQ: Reorganized, simplified, revised.  Added entries for running Leo in a console window and debugging docutils.  Improved entry for using cvs.
+
+- Chapter 1: Installation: Now the first chapter.  Revised.
+
+- Chapter 2: Tutorial: Completely rewritten.  Like Python's tutorial, this chapter contains everything a beginner needs to understand and use Leo.  The `Quickstart for programmers` section is the heart of this chapter.  All terms used have links either to their definition in the tutorial or in the Glossary.  Newbies should be able to digest this chapter easily.  This chapter should make Leo comprehensible to many more people.
+
+- Chapter 3: Using Outlines: Revised per general remarks above.
+
+- Chapter 4: Writing Programs in Leo.  Completely rewritten.  The old chapter was an embarrassment. The new chapter is a reference guide, properly organized as such.  The introduction warns newbies away.
+
+- Chapter 5: Using Leo's Commands.  'Minor' revisions and corrections create a substantially better result.
+
+- Chapter 6: Leo and literate programming: Reformatting helps.  New words about rST markup and other improvements over traditional LP.
+
+- Chapter 7: Scripting Leo with Python: Rewritten, simplified, updated and corrected.  The sources in LeoDocs.leo are directly executable.  rST sources use literal blocks instead of code-blocks so that the sources are simplified. (Important when executing examples).  Properly discusses positions, including 'supremely important' section on copying positions.
+
+- Chapter 8: Customizing Leo.  Heavily revised.  Discusses leoSettings.leo, not leoConfig.txt.  Security warnings are more reasonable.  Section on script buttons. Rewrote section on uA's (Adding extensible attributes to nodes and .leo files).
+
+- Chapter 9: History of Leo.  Rewritten.  Much shorter and more useful.  Discusses the major milestones, concentrating on explaining the major differences between versions.  Gone are details of how discoveries came to be.  They are in LeoPostings.leo, which will be included in the distribution.
+
+- Chapter 10: Theory of Operation.  Largely rewritten.  Discusses positions properly.  Omits discussion of how clones were implemented before 4.2.
+
+- Chapter 11: White Papers.  A new chapter.  This is a slightly-edited version of writing that had been buried in the appendices.
+
+- Appendices.  Heavily revised and reformatted.  Rewrote sections on file formats.
+
+- Glossary: A separate chapter.  All terms have links to their definition.  All definitions are rST targets so other chapters may refer to them.  Added several new entries.
+</t>
+<t tx="ekr.20050917092557.2"></t>
+<t tx="ekr.20050917092557.3">- Fixed bug with non-unicode characters in file name
+
+    http://sourceforge.net/forum/message.php?msg_id=3224635
+    
+    Leo crashed try to read .leo files whose name contained non-ascii characters.
+
+- Fixed bug with non-unicode characters in settings value
+
+    http://sourceforge.net/forum/message.php?msg_id=3222750
+    
+    Leo crashed try to write settings whose values contained non-ascii characters.
+
+- Fixed bug tangling sections with non-unicode characters.
+
+    http://sourceforge.net/forum/message.php?msg_id=3307318</t>
+<t tx="ekr.20050917092557.4">http://sourceforge.net/forum/message.php?msg_id=3218558</t>
+<t tx="ekr.20050917092557.5">The fix was to add an entry of 'unknown' state to state_dict. This fixes the
+crash by brute force, but may not be strictly correct. However, this is pretty
+much moot: we shall soon be moving to the new colorizer.</t>
+<t tx="ekr.20050917092557.6">The code gets c = keywords.get('c') in several places.
+The protection is to return if c is None.
+This affects the following files: plugins_menu.py, pluginsTest.py, plugin_manager.py</t>
+<t tx="ekr.20050917092557.7">http://sourceforge.net/forum/message.php?msg_id=3231597
+
+test.leo had some non-@ignore'd @thin nodes for files not in the distribution.
+
+- Only files used by unit tests should be on cvs and the distribution.
+    - test\unittest\batchTest.py and test\unittest\errorTest.py were already on cvs.
+    - Added these files to the distribution.
+
+- Other test files should be distributed in @ignore nodes.
+
+- Leo's distribution checklist now has an item to check that the distributed test.leo can be opened without errors.</t>
+<t tx="ekr.20050917092557.8"></t>
+<t tx="ekr.20050917092557.9">See http://webpages.charter.net/edreamleo/rstplugin3.html for full documentation
+of this plugin.
+
+The rst3 plugin creates output files from Leo outlines containing
+reStructuredText (rST) ReStructuredText is a simple and powerful text formatting
+markup language. Outlines are a natural way to organize rST (or any text).
+
+This plugin adds the Write Restructured Text command to Leo's Edit menu. The
+Write Restructured Text command searches the selected outline looking for rst
+root nodes whose headline have the form @rst &lt;filename&gt;. The plugin then creates
+the named file in various ways depending which rst3 options are in effect.
+
+By default, the rst3 plugin creates rST headings automatically from outlines, so
+the higher-level nodes in the outline correspond to higher-level sections in the
+output. Creating rST headings automatically relieves you from one of the most
+tedious chores in creating rST markup.
+
+To use this plugin effectively, Python's docutils module must be installed. The
+rst3 plugin will use the SilverCity syntax coloring package if it installed.
+
+This plugin sends .htm, .html or .tex files to the docutils module for further
+processing. Docutils generates HTML files or LaTeX files depending on the file's
+extension. HTML files generated by docutils refer to three .css (cascading style
+sheet) files that should exist in the same directory as the generated HTML file.
+You can control the formatting of the HTML file by altering these .css files.</t>
+<t tx="ekr.20050917092557.10">This plugin now allows quotes within words, but strips quotes and other cruft
+from the beginning and end of words. As a result, using the spellpyx spell
+checker is much easier than before.
+
+Leo's extensions folder now contains aspell23.pyd and aspell24.pyd. These are
+Python dll's compiled for Python 2.3 and 2.4 respectively. You must rename one
+of these files to be aspell.pyd and move aspell.pyd to the aspell folder. For
+more details, see the installation nodes in the docstring for the spellpyx
+plugin.</t>
+<t tx="ekr.20050917092557.11">These plugins now use Python's subprocess module if it is present. The
+subprocess module comes standard with Python 2.4. For Linux systems, Leo will
+use subprocess.py in Leo's extensions folder if necessary.
+
+For Windows systems you can install Python's subprocess module in Python 2.2 or
+2.3 as follows:
+    
+    - Go to http://www.effbot.org/downloads/#subprocess
+
+    - Download and execute one of the following installers, depending on your version of Python:
+        subprocess-0.1-20041012.win32-py2.3.exe 
+        subprocess-0.1-20041012.win32-py2.2.exe
+        
+This installer installs the subprocess sources and also _subprocess.pyd in Python's site-packages folder.
+</t>
+<t tx="ekr.20050917092557.12"></t>
+<t tx="ekr.20050917092557.13">Calling print directly is dangerous: it will fail for unicode characters.</t>
+<t tx="ekr.20050917092557.14">The new Pretty Print code has the following improvements:
+
+- Strip trailing blanks in get.
+- Many improvement to doOp.
+- Improved DoMultiline:
+    - Added special case logic to ensure '#' is preceded by space except at start of line.
+    - Added blank after multi-line string if needed.
+- Added lastName token for special-case handling depending on previous token.
+- No change to put, putArray or doName.</t>
+<t tx="ekr.20050917105646">- Fixed bug that caused the Open With command to crash if the subprocess module was not installed.
+
+- Fixed problems in the niceNocent and fastGotoNode plugins.</t>
 </tnodes>
 </leo_file>

@@ -1073,15 +1073,45 @@ class rstClass:
             if g.match_word(h,0,"@rst"):
                 self.outputFileName = h[4:].strip()
                 if self.outputFileName and self.outputFileName[0] != '-':
-                    # g.trace(p.headString())
-                    found = True
-                    self.ext = ext = g.os_path_splitext(self.outputFileName)[1].lower()
-                    if ext in ('.htm','.html','.tex','.pdf'):
-                        ok = self.writeSpecialTree(p)
+                    #@                << set ignore if we should ignore this @rst node >>
+                    #@+node:ekr.20050917091412:<< set ignore if we should ignore this @rst node >>
+                    #@+at 
+                    #@nonl
+                    # The @rst plugin almost certainly should ignore the 
+                    # @ignore directive. Indeed,
+                    # we often want to put @rst nodes in the range of @ignore 
+                    # directives so that
+                    # discussions of @root, etc. do not create derived files!
+                    # 
+                    # An easy way to cause the rst3 plugin to ignore an @rst 
+                    # tree is to change
+                    # @rst to @@rst.
+                    #@-at
+                    #@@c
+                    
+                    if 1:
+                        # Ignore @ignore directives.
+                        ignore = False
                     else:
-                        self.writeNormalTree(p)
-                    self.scanAllOptions(p) # Restore the top-level verbose setting.
-                    self.report(self.outputFileName)
+                        # Honor @ignore in p or any ancestor.
+                        for p2 in p.self_and_parents_iter():
+                            if p2.isAtIgnoreNode():
+                                g.es('ignoring %s' % (h))
+                                ignore = True ; break
+                        else: ignore = False
+                    #@nonl
+                    #@-node:ekr.20050917091412:<< set ignore if we should ignore this @rst node >>
+                    #@nl
+                    if not ignore:
+                        # g.trace(p.headString())
+                        found = True
+                        self.ext = ext = g.os_path_splitext(self.outputFileName)[1].lower()
+                        if ext in ('.htm','.html','.tex','.pdf'):
+                            ok = self.writeSpecialTree(p)
+                        else:
+                            self.writeNormalTree(p)
+                        self.scanAllOptions(p) # Restore the top-level verbose setting.
+                        self.report(self.outputFileName)
                     p.moveToNodeAfterTree()
                 else:
                     p.moveToThreadNext()

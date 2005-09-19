@@ -101,7 +101,7 @@ def init ():
     ok = Pmw and Tk
     
     if ok:
-        Pmw.initialise()
+        Pmw.initialise(g.app.root)
         leoPlugins.registerHandler('before-create-leo-frame',onCreate)
         g.plugin_signon(__name__)
 

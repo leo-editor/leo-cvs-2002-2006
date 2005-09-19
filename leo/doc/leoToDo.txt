@@ -3225,22 +3225,15 @@ _Mark_
 #@-node:ekr.20050707085637:Suggestions from an emacs user
 #@-node:ekr.20050524074930.2:Mouseless leo
 #@+node:ekr.20050419060645:Alternate lead-in characters
+@nocolor
+
 An @decorator setting might be good. This would be a list of all Python
 decorators. Leo would create @verbatim sentinels for these.
 #@nonl
 #@-node:ekr.20050419060645:Alternate lead-in characters
 #@+node:ekr.20040919182750.1:Better handling of whitespace (cvs fiendly)
-#@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
-add python -t to test suite to catch mixed tab & space in derived files.
-#@nonl
-#@-node:ekr.20041022083005.8:Catch mixed tab & space in derived files
-#@+node:ekr.20040916122326:Check Import command
-- Ignore position of blank lines wrt sentinels.
-- Ignore (optionally?) underindented blank lines.
-#@nonl
-#@-node:ekr.20040916122326:Check Import command
 #@+node:ekr.20040721094203:Make sure Leo uses "verbatim" whitespace
-@killcolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2674828
 By: bwmulder
@@ -3320,40 +3313,9 @@ Summary:
 - Profile to find out what slows Leo down if many nodes change.
 #@nonl
 #@-node:ekr.20040721094203:Make sure Leo uses "verbatim" whitespace
-#@+node:ekr.20040930075711:Handle underindented lines
-#@+node:ekr.20040720065022: Notes
-@nocolor
-
-Leo can't represent some files using nodes!
-
-I call this the "underindented blank line" problem.
-
-Example:
-
-@color
-
-class aClass:
-    def spam(): pass
-# comment line
-    def eggs(): pass
-    
-@nocolor
-
-Leo's import code can't handle this:
-    
-- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
-
-- Having the comment line stop the scanning of aClass is even worse.
-
-- This usually shows up with an unindented blank line instead of the comment line.
-#@nonl
-#@-node:ekr.20040720065022: Notes
-#@-node:ekr.20040930075711:Handle underindented lines
 #@+node:ekr.20040930075920:Whitespace options
 #@+node:ekr.20040720103642.1:Script to remove trailing body newlines VERY DANGEROUS
-import leoGlobals as g
-
-c = g.top() ; current = c.currentPosition()
+current = c.currentPosition()
 count = 0
 
 for p in c.all_positions_iter():
@@ -3380,8 +3342,6 @@ Alas, this really does not solve problems with Import.
 
 Special case code is required so empty nodes stay empty with "one" option.
 #@nonl
-#@+node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20040722132104:Write script to report underindented lines
 #@+node:ekr.20040802063546.1:(Made sure body text changes reported properly)
 # This may have to change when mass whitespace changes happen)
 #@nonl
@@ -3528,7 +3488,6 @@ for p in c.allNodes_iter():
 #@-node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
 #@-node:ekr.20031218072017.1812:top_df.read
 #@-node:ekr.20040802063546.1:(Made sure body text changes reported properly)
-#@-node:EKR.20040603092958.1:Add new options for handling newlines in body text
 #@+node:ekr.20040930075920.1:Common to both options
 #@+node:ekr.20031218072017.1416:app.__init__
 def __init__(self):
@@ -4516,24 +4475,40 @@ def putCodeLine (self,s,i):
 #@nonl
 #@-node:ekr.20031218072017.2134:putCodeLine
 #@-node:ekr.20040720075446.1:(write_strips_blank_lines option)
+#@-node:EKR.20040603092958.1:Add new options for handling newlines in body text
 #@-node:ekr.20040930075920:Whitespace options
-#@+node:ekr.20041126102902:(Handle blanks better in imports)
-@
+#@+node:ekr.20041022083005.8:Script to catch mixed tab & space in derived files
+import glob
 
-- Add tab_width keyword arg to import command.
-- Convert tabs to blanks if tab width < 0.
+@others
+
+dir = c.frame.openDirectory
+files = glob.glob('%s\*.py' % dir)
+
+n = 0
+for name in files:
+    f = file(name)
+    lines = f.readlines()
+    # print '%5d %s' % (len(lines),name)
+    f.close()
+    check(name,lines)
+    n += 1
+print 'done.  checked %d files' % (n)
 #@nonl
-#@-node:ekr.20041126102902:(Handle blanks better in imports)
-#@+node:ekr.20041126102946:(Use pyclbr to parse Python imports)
-#@-node:ekr.20041126102946:(Use pyclbr to parse Python imports)
-#@+node:EKR.20040628085831:@import, @shadow
-#@+node:ekr.20040718033104:@shadow
-#@-node:ekr.20040718033104:@shadow
-#@+node:ekr.20040718032616:@import
-#@-node:ekr.20040718032616:@import
-#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040628085831:@import, @shadow
+#@+node:ekr.20050917133402:check
+def check(name,lines):
+    
+    n = 0
+    for line in lines:
+        n += 1
+        i = g.skip_ws(line,0)
+        lws = line[0:i]
+        if lws:
+            if lws.find(' ') > -1 and lws.find('\t') > -1:
+                print '%20s %5d %s' % (name,n,repr(line))
+#@nonl
+#@-node:ekr.20050917133402:check
+#@-node:ekr.20041022083005.8:Script to catch mixed tab & space in derived files
 #@-node:ekr.20040919182750.1:Better handling of whitespace (cvs fiendly)
 #@+node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
 @ To do:
@@ -5601,6 +5576,134 @@ Scott
 #@-node:ekr.20041228084018.5:Finish zodb plugin
 #@-node:ekr.20050707081822:Top priorities
 #@+node:ekr.20050816165305:To do 4.4
+#@+node:ekr.20050917080509:Improve g.utils_rename?
+#@+node:ekr.20050917080509.1:Request
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3342865
+By: nobody
+
+I had to move all my files on a nsf share, so - when tangling - I got the following
+error: OSError: [Errno 18] Invalid cross-device link. Searching the source,
+I found that the problem was caused by trying first os.rename instead of
+distutils.file_util.move_file. So, I propose to change the following piece of
+code (in src/leoGlobals.py - utils_rename)
+
+    try:
+        if 1: # Use rename in all cases.
+            os.rename(src,dst)
+            if mode:
+                g.utils_chmod(dst,mode,verbose)
+            return True
+        else:
+            # This isn't a great solution: distutils.file_util may not exist.
+            if sys.platform=="win32":
+                os.rename(src,dst)
+            else:
+                from distutils.file_util import move_file
+                move_file(src,dst)
+            if mode:
+                g.utils_chmod(dst,mode,verbose)
+            return True
+
+with this one:
+
+    try:
+        from distutils.file_util import move_file
+        distutils_ok=True
+    except:
+        distutils_ok=False
+    try:            
+        if distutils_ok: 
+            move_file(src,dst)
+        else:    
+            # Use rename only if distutils isn't available.
+            os.rename(src,dst)
+        if mode:
+            g.utils_chmod(dst,mode,verbose)
+        return True
+
+Tiziano Tissino <t.tissino@itaca.coopsoc.it>
+#@nonl
+#@-node:ekr.20050917080509.1:Request
+#@+node:ekr.20031218072017.1263:g.utils_rename & test
+<< about os.rename >>
+
+def utils_rename(src,dst,mode=None,verbose=True):
+
+    '''Platform independent rename.'''
+    
+    head,tail=g.os_path_split(dst)
+    if head and len(head) > 0:
+        g.makeAllNonExistentDirectories(head)
+        
+    if g.os_path_exists(dst):
+        if not g.utils_remove(dst):
+            return False
+        
+    try:
+        if 1: # Use rename in all cases.
+            os.rename(src,dst)
+            if mode:
+                g.utils_chmod(dst,mode,verbose)
+            return True
+        else:
+            # This isn't a great solution: distutils.file_util may not exist.
+            if sys.platform=="win32":
+                os.rename(src,dst)
+            else:
+                from distutils.file_util import move_file
+                move_file(src,dst)
+            if mode:
+                g.utils_chmod(dst,mode,verbose)
+            return True
+
+    except Exception:
+        if verbose:
+            g.es('Exception renaming %s to %s' % (src,dst),color='red')
+            g.es_exception(full=False)
+        return False
+#@nonl
+#@+node:ekr.20050104123726.1:<< about os.rename >>
+@ Here is the Python 2.4 documentation for rename (same as Python 2.3)
+
+Rename the file or directory src to dst.  If dst is a directory, OSError will be raised.
+
+On Unix, if dst exists and is a file, it will be removed silently if the user
+has permission. The operation may fail on some Unix flavors if src and dst are
+on different filesystems. If successful, the renaming will be an atomic
+operation (this is a POSIX requirement).
+
+On Windows, if dst already exists, OSError will be raised even if it is a file;
+there may be no way to implement an atomic rename when dst names an existing
+file.
+#@nonl
+#@-node:ekr.20050104123726.1:<< about os.rename >>
+#@+node:ekr.20050107085710.1:test_g_utils_rename
+def test_g_utils_rename():
+
+    __pychecker__ = '--no-reimport'
+
+    import os
+    exists = g.os_path_exists
+    
+    path = g.os_path_join(g.app.testDir,'xyzzy')
+    if exists(path):
+        os.remove(path)
+        
+    assert not exists(path)
+    assert not g.utils_remove(path,verbose=False)
+    
+    f = file(path,'w')
+    f.write('test')
+    f.close()
+    
+    assert exists(path)
+    assert g.utils_remove(path,verbose=True)
+    assert not exists(path)
+#@nonl
+#@-node:ekr.20050107085710.1:test_g_utils_rename
+#@-node:ekr.20031218072017.1263:g.utils_rename & test
+#@-node:ekr.20050917080509:Improve g.utils_rename?
 #@+node:ekr.20050831131028:opml
 #@+node:ekr.20050912063133:@url http://sourceforge.net/forum/message.php?msg_id=3273977
 #@-node:ekr.20050912063133:@url http://sourceforge.net/forum/message.php?msg_id=3273977
@@ -5699,8 +5802,6 @@ Thanks.
 Edward
 #@-node:ekr.20050915062404:My post
 #@-node:ekr.20050831131028:opml
-#@+node:ekr.20050914132954.1:Have rst3 plugin honor the @ignore directive
-#@-node:ekr.20050914132954.1:Have rst3 plugin honor the @ignore directive
 #@+node:ekr.20050524074930.2:Mouseless leo
 #@+node:ekr.20050712092501.1:xemacs variables
 @killcolor
@@ -8922,22 +9023,15 @@ _Mark_
 #@-node:ekr.20050707085637:Suggestions from an emacs user
 #@-node:ekr.20050524074930.2:Mouseless leo
 #@+node:ekr.20050419060645:Alternate lead-in characters
+@nocolor
+
 An @decorator setting might be good. This would be a list of all Python
 decorators. Leo would create @verbatim sentinels for these.
 #@nonl
 #@-node:ekr.20050419060645:Alternate lead-in characters
 #@+node:ekr.20040919182750.1:Better handling of whitespace (cvs fiendly)
-#@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
-add python -t to test suite to catch mixed tab & space in derived files.
-#@nonl
-#@-node:ekr.20041022083005.8:Catch mixed tab & space in derived files
-#@+node:ekr.20040916122326:Check Import command
-- Ignore position of blank lines wrt sentinels.
-- Ignore (optionally?) underindented blank lines.
-#@nonl
-#@-node:ekr.20040916122326:Check Import command
 #@+node:ekr.20040721094203:Make sure Leo uses "verbatim" whitespace
-@killcolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2674828
 By: bwmulder
@@ -9017,40 +9111,9 @@ Summary:
 - Profile to find out what slows Leo down if many nodes change.
 #@nonl
 #@-node:ekr.20040721094203:Make sure Leo uses "verbatim" whitespace
-#@+node:ekr.20040930075711:Handle underindented lines
-#@+node:ekr.20040720065022: Notes
-@nocolor
-
-Leo can't represent some files using nodes!
-
-I call this the "underindented blank line" problem.
-
-Example:
-
-@color
-
-class aClass:
-    def spam(): pass
-# comment line
-    def eggs(): pass
-    
-@nocolor
-
-Leo's import code can't handle this:
-    
-- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
-
-- Having the comment line stop the scanning of aClass is even worse.
-
-- This usually shows up with an unindented blank line instead of the comment line.
-#@nonl
-#@-node:ekr.20040720065022: Notes
-#@-node:ekr.20040930075711:Handle underindented lines
 #@+node:ekr.20040930075920:Whitespace options
 #@+node:ekr.20040720103642.1:Script to remove trailing body newlines VERY DANGEROUS
-import leoGlobals as g
-
-c = g.top() ; current = c.currentPosition()
+current = c.currentPosition()
 count = 0
 
 for p in c.all_positions_iter():
@@ -9077,8 +9140,6 @@ Alas, this really does not solve problems with Import.
 
 Special case code is required so empty nodes stay empty with "one" option.
 #@nonl
-#@+node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20040722132104:Write script to report underindented lines
 #@+node:ekr.20040802063546.1:(Made sure body text changes reported properly)
 # This may have to change when mass whitespace changes happen)
 #@nonl
@@ -9225,7 +9286,6 @@ for p in c.allNodes_iter():
 #@-node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
 #@-node:ekr.20031218072017.1812:top_df.read
 #@-node:ekr.20040802063546.1:(Made sure body text changes reported properly)
-#@-node:EKR.20040603092958.1:Add new options for handling newlines in body text
 #@+node:ekr.20040930075920.1:Common to both options
 #@+node:ekr.20031218072017.1416:app.__init__
 def __init__(self):
@@ -10213,24 +10273,40 @@ def putCodeLine (self,s,i):
 #@nonl
 #@-node:ekr.20031218072017.2134:putCodeLine
 #@-node:ekr.20040720075446.1:(write_strips_blank_lines option)
+#@-node:EKR.20040603092958.1:Add new options for handling newlines in body text
 #@-node:ekr.20040930075920:Whitespace options
-#@+node:ekr.20041126102902:(Handle blanks better in imports)
-@
+#@+node:ekr.20041022083005.8:Script to catch mixed tab & space in derived files
+import glob
 
-- Add tab_width keyword arg to import command.
-- Convert tabs to blanks if tab width < 0.
+@others
+
+dir = c.frame.openDirectory
+files = glob.glob('%s\*.py' % dir)
+
+n = 0
+for name in files:
+    f = file(name)
+    lines = f.readlines()
+    # print '%5d %s' % (len(lines),name)
+    f.close()
+    check(name,lines)
+    n += 1
+print 'done.  checked %d files' % (n)
 #@nonl
-#@-node:ekr.20041126102902:(Handle blanks better in imports)
-#@+node:ekr.20041126102946:(Use pyclbr to parse Python imports)
-#@-node:ekr.20041126102946:(Use pyclbr to parse Python imports)
-#@+node:EKR.20040628085831:@import, @shadow
-#@+node:ekr.20040718033104:@shadow
-#@-node:ekr.20040718033104:@shadow
-#@+node:ekr.20040718032616:@import
-#@-node:ekr.20040718032616:@import
-#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040628085831:@import, @shadow
+#@+node:ekr.20050917133402:check
+def check(name,lines):
+    
+    n = 0
+    for line in lines:
+        n += 1
+        i = g.skip_ws(line,0)
+        lws = line[0:i]
+        if lws:
+            if lws.find(' ') > -1 and lws.find('\t') > -1:
+                print '%20s %5d %s' % (name,n,repr(line))
+#@nonl
+#@-node:ekr.20050917133402:check
+#@-node:ekr.20041022083005.8:Script to catch mixed tab & space in derived files
 #@-node:ekr.20040919182750.1:Better handling of whitespace (cvs fiendly)
 #@+node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
 @ To do:
@@ -10887,6 +10963,50 @@ Scott
 #@-node:ekr.20031218072017.737:Leo & data bases
 #@-node:ekr.20031218072017.412:Zope postings
 #@-node:ekr.20041228084018.5:Finish zodb plugin
+#@+node:ekr.20050917125556:Improve import commands
+@nocolor
+
+** Handle underindented lines (see child node)
+
+- Use pyclbr to parse Python imports?
+
+- Handle blanks better in imports:
+    - Add tab_width keyword arg to import command.
+    - Convert tabs to blanks if tab width < 0.
+
+- Ignore position of blank lines wrt sentinels.
+- Ignore (optionally?) underindented blank lines.
+#@nonl
+#@+node:ekr.20040930075711:Handle underindented lines
+@nocolor
+
+Leo can't represent some files using nodes!
+
+I call this the "underindented blank line" problem.
+
+Example:
+
+@color
+
+class aClass:
+    def spam(): pass
+# comment line
+    def eggs(): pass
+    
+@nocolor
+
+Leo's import code can't handle this:
+    
+- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
+
+- Having the comment line stop the scanning of aClass is even worse.
+
+- This usually shows up with an unindented blank line instead of the comment line.
+#@nonl
+#@-node:ekr.20040930075711:Handle underindented lines
+#@+node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20050917125556:Improve import commands
 #@+node:ekr.20050727075336:Minor 4
 #@+node:ekr.20050713105353:Add configuration setting to set menu fonts
 #@+node:ekr.20050713105353.1:Email from Martin Moncrieffe <mcm35@cam.ac.uk>
@@ -13606,6 +13726,14 @@ More things to think about.
 Gil
 #@-node:ekr.20031218072017.662:Gil 2
 #@-node:ekr.20031218072017.658:Resolve CVS Conflicts command (Stepen Schaefer)
+#@+node:EKR.20040628085831:@import, @shadow
+#@+node:ekr.20040718033104:@shadow
+#@-node:ekr.20040718033104:@shadow
+#@+node:ekr.20040718032616:@import
+#@-node:ekr.20040718032616:@import
+#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@-node:EKR.20040628085831:@import, @shadow
 #@-node:ekr.20041228073219:4.4.x
 #@+node:ekr.20041228094138:4.5  LeoN and collaboration
 This may not be so big a project.  LeoN already exists.

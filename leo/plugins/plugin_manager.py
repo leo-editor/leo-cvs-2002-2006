@@ -178,6 +178,8 @@ def init():
     
     # Ok for unit testing: adds menu.
     if ok:
+        # Bug fix 9-17-05: init Pmw.
+        Pmw.initialise(g.app.root)
         g.plugin_signon(__name__)
 
     return ok
@@ -653,12 +655,19 @@ class ManagerDialog:
         #@    << create top level window >>
         #@+node:ekr.20041010110321:<< create top level window >>
         root = g.app.root
+        
+        # As weird as this appears, it appears to be essential.
         if standalone:
+            # Use the hidden root.
             self.top = top = root
         else:
             self.top = top = Tk.Toplevel(root)
+        
+        # g.trace('root',root)
+        
         g.app.gui.attachLeoIcon(self.top)
         top.title(self.dialog_caption)
+        #@nonl
         #@-node:ekr.20041010110321:<< create top level window >>
         #@nl
         self.initLocalCollection()

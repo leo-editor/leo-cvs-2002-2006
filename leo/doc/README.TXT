@@ -1,9 +1,11 @@
-Leo 4.3.2 final                  September 16, 2005
+Leo 4.3.3 final                             September 17, 2005
+
+Leo 4.3.3 fixes several bugs reported in Leo 4.3.2 final.
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
-The highlights of 4.3.2:
------------------------
+The highlights of 4.3.3 (and 4.3.2)
+-----------------------------------
 
 - Improved Leo's documentation:
     - A tutorial introduction to Leo:
@@ -16,7 +18,7 @@ The highlights of 4.3.2:
   the rst3 plugin, which makes this plugin much more useful and flexible than
   the previous rst plugins. All of Leo's documentation was created using this
   plugin from sources in LeoDocs.leo. For full documentation for rst3 see:
-  http://webpages.charter.net/edreamleo/rstplugin3.html
+  http://webpages.charter.net/edreamleo/rstplugin3.html.
 
 - The spellpyx (spell checking) plugin is now much easier to use.
 
