@@ -20,7 +20,6 @@
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
 #__jEdit_colorizer__.py
-#__core_emacs.py
 #word_export.py
 #open_shell.py
 #at_view.py
