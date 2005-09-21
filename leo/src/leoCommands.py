@@ -22,6 +22,7 @@ import leoAtFile
 import leoConfig
 import leoEditCommands
 import leoFileCommands
+import leoKeys
 import leoImport
 import leoNodes
 import leoTangle
@@ -60,6 +61,8 @@ class baseCommands:
     
         c = self
         
+        # g.trace('Commands')
+        
         # Init ivars with self.x instead of c.x to keep Pychecker happy
         self.frame = frame
         self.mFileName = fileName
@@ -68,9 +71,9 @@ class baseCommands:
         # g.trace(c) # Do this after setting c.mFileName.
         c.initIvars()
     
-        # initialize the sub-commanders
-        self.editCommands = leoEditCommands.editCommands(c)
-        self.fileCommands = leoFileCommands.fileCommands(c)
+        # initialize the sub-commanders.
+        # c.finishCreate creates the sub-commanders for edit commands.
+        self.fileCommands   = leoFileCommands.fileCommands(c)
         self.atFileCommands = leoAtFile.atFile(c)
         self.importCommands = leoImport.leoImportCommands(c)
         self.tangleCommands = leoTangle.tangleCommands(c)
@@ -155,6 +158,28 @@ class baseCommands:
             return 0
     #@nonl
     #@-node:ekr.20041130173135:c.hash
+    #@+node:ekr.20050920093543:c.finishCreate
+    def finishCreate (self):  # New in 4.4.
+        
+        '''Finish creating the commander after frame.finishCreate.'''
+        
+        c = self
+        c.miniBufferWidget = c.frame.miniBufferWidget
+        
+        # g.trace('Commands')
+        
+        # There is no miniBufferWidget created for leoSettings.leo files.
+        if c.miniBufferWidget:
+        
+            c.keyHandler = leoKeys.keyHandlerClass(c,
+                useGlobalKillbuffer=True,
+                useGlobalRegisters=True)
+                
+            # Create the classes in the keyHandler.
+            altX_commandsDict = leoEditCommands.createEditCommanders(c)
+            c.keyHandler.finishCreate(altX_commandsDict)
+    #@nonl
+    #@-node:ekr.20050920093543:c.finishCreate
     #@-node:ekr.20031218072017.2811: c.Birth & death
     #@+node:ekr.20031218072017.2817: doCommand
     def doCommand (self,command,label):

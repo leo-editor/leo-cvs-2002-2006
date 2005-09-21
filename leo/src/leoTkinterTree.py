@@ -2598,6 +2598,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         c = self.c ; frame = c.frame ; body = frame.bodyCtrl
         old_p = c.currentPosition()
+        
+        # g.trace(p.headString())
     
         if not p: return
         if not p.exists(c):
@@ -2756,6 +2758,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if self.redrawScheduled: return 
     
         if p and p.edit_text():
+            # g.trace(p.headString())
             self.setUnselectedHeadlineColors(p)
     #@nonl
     #@-node:ekr.20040803072955.138:setUnselectedLabelState

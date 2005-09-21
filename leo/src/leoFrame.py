@@ -451,6 +451,8 @@ class leoFrame:
         self.fontPanel = None 
         self.prefsPanel = None
         self.comparePanel = None
+        self.miniBufferWidget = None # New in 4.4.
+        self.useMiniBufferWidget = False # New in 4.4
     
         # Gui-independent data
         self.componentsDict = {} # Keys are names, values are componentClass instances.
@@ -1458,6 +1460,7 @@ class nullFrame (leoFrame):
     
         leoFrame.__init__(self,gui) # Init the base class.
         assert(self.c is None)
+        
         self.title = title
         self.useNullUndoer = useNullUndoer
         

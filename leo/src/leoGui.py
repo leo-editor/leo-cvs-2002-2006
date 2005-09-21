@@ -131,6 +131,7 @@ class leoGui:
             g.doHook("before-create-leo-frame",c=c) # Was 'onCreate': too confusing.
         
         frame.finishCreate(c)
+        c.finishCreate() # New in 4.4.
         
         # Finish initing the subcommanders.
         c.undoer.clearUndoState() # Menus must exist at this point.

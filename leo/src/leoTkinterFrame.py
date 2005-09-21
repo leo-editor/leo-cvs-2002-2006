@@ -46,7 +46,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
         leoFrame.leoFrame.__init__(self,gui)
     
         self.title = title
+        self.useMiniBuffer = False
+    
         leoTkinterFrame.instances += 1
+    
         self.c = None # Set in finishCreate.
         self.iconBar = None
     
@@ -101,10 +104,31 @@ class leoTkinterFrame (leoFrame.leoFrame):
         return self.componentsDict.keys()
     #@nonl
     #@-node:ekr.20041221122440:f.component & components
+    #@+node:ekr.20050920094212:f.createMiniBufferWidget
+    def createMiniBufferWidget (self):
+        
+    
+        '''Create the minbuffer below the status line.'''
+        
+        frame = self
+        f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
+        f.pack(side='bottom',fill='x')
+    
+        lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
+        lab.pack(side='left')
+    
+        label = Tk.Label(f,relief='groove',justify='left',anchor='w')
+        label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
+    
+        return label
+    #@nonl
+    #@-node:ekr.20050920094212:f.createMiniBufferWidget
     #@+node:ekr.20031218072017.2176:f.finishCreate
     def finishCreate (self,c):
         
         frame = self ; frame.c = c ; gui = g.app.gui
+        
+        # g.trace('tkFrame',self.useMiniBuffer)
         
         # This must be done after creating the commander.
         self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
@@ -225,6 +249,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         g.app.windowList.append(frame)
         c.initVersion()
         c.signOnWithVersion()
+        if self.useMiniBuffer:
+            self.miniBufferWidget = self.createMiniBufferWidget()
         self.body.createBindings(frame)
     #@nonl
     #@-node:ekr.20031218072017.2176:f.finishCreate
