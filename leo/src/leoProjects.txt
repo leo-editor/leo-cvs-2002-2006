@@ -322,6 +322,14 @@ def onBodyKey (self,event):
 
     c = self.c ; ch = event.char
     
+    # Support for key-handler state.
+    if (
+        c.keyHandler and c.miniBufferWidget and 
+        event.char.isspace() and
+        c.keyHandler.stateManager.hasState()
+    ):
+        return None # Must be None, not 'break'
+    
     # This translation is needed on MacOS.
     if ch == '':
         d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
@@ -3857,6 +3865,8 @@ def select (self,p,updateBeadList=True):
     
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
+    
+    # g.trace(p.headString())
 
     if not p: return
     if not p.exists(c):
@@ -7089,6 +7099,14 @@ def onBodyKey (self,event):
 
     c = self.c ; ch = event.char
     
+    # Support for key-handler state.
+    if (
+        c.keyHandler and c.miniBufferWidget and 
+        event.char.isspace() and
+        c.keyHandler.stateManager.hasState()
+    ):
+        return None # Must be None, not 'break'
+    
     # This translation is needed on MacOS.
     if ch == '':
         d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
@@ -9856,6 +9874,7 @@ import leoAtFile
 import leoConfig
 import leoEditCommands
 import leoFileCommands
+import leoKeys
 import leoImport
 import leoNodes
 import leoTangle
@@ -10222,6 +10241,7 @@ def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
         g.doHook("before-create-leo-frame",c=c) # Was 'onCreate': too confusing.
     
     frame.finishCreate(c)
+    c.finishCreate() # New in 4.4.
     
     # Finish initing the subcommanders.
     c.undoer.clearUndoState() # Menus must exist at this point.
@@ -10591,6 +10611,8 @@ def select (self,p,updateBeadList=True):
     
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
+    
+    # g.trace(p.headString())
 
     if not p: return
     if not p.exists(c):
@@ -11232,6 +11254,14 @@ def onBodyKey (self,event):
     """Handle any key press event in the body pane."""
 
     c = self.c ; ch = event.char
+    
+    # Support for key-handler state.
+    if (
+        c.keyHandler and c.miniBufferWidget and 
+        event.char.isspace() and
+        c.keyHandler.stateManager.hasState()
+    ):
+        return None # Must be None, not 'break'
     
     # This translation is needed on MacOS.
     if ch == '':

@@ -26,10 +26,210 @@ class leoMenu:
         self.frame = frame
         self.menus = {} # Menu dictionary.
         self.menuShortcuts = {}
+        self.useEditorMenu = self.c.config.getBool('useEditorMenu')
     
         self.defineMenuTables()
     #@nonl
     #@-node:ekr.20031218072017.3751: leoMenu.__init__
+    #@+node:ekr.20031218072017.3775:oops
+    def oops (self):
+    
+        print "leoMenu oops:", g.callerName(2), "should be overridden in subclass"
+    #@nonl
+    #@-node:ekr.20031218072017.3775:oops
+    #@+node:ekr.20031218072017.3776:Gui-independent menu enablers
+    #@+node:ekr.20031218072017.3777:updateAllMenus
+    def updateAllMenus (self):
+        
+        """The Tk "postcommand" callback called when a click happens in any menu.
+        
+        Updates (enables or disables) all menu items."""
+        
+        # A horrible kludge: set g.app.log to cover for a possibly missing activate event.
+        g.app.setLog(self.frame.log,"updateAllMenus")
+        
+        # Allow the user first crack at updating menus.
+        c = self.c ; v = c.currentVnode()
+    
+        if not g.doHook("menu2",c=c,p=v,v=v):
+            self.updateFileMenu()
+            self.updateEditMenu()
+            self.updateOutlineMenu()
+    #@nonl
+    #@-node:ekr.20031218072017.3777:updateAllMenus
+    #@+node:ekr.20031218072017.3778:updateFileMenu
+    def updateFileMenu (self):
+        
+        c = self.c ; frame = c.frame
+        if not c: return
+    
+        try:
+            enable = frame.menu.enableMenu
+            menu = frame.menu.getMenu("File")
+            enable(menu,"Revert To Saved", c.canRevert())
+            enable(menu,"Open With...", g.app.hasOpenWithMenu)
+        except:
+            g.es("exception updating File menu")
+            g.es_exception()
+    #@nonl
+    #@-node:ekr.20031218072017.3778:updateFileMenu
+    #@+node:ekr.20031218072017.836:updateEditMenu
+    def updateEditMenu (self):
+    
+        c = self.c ; frame = c.frame ; gui = g.app.gui
+        if not c: return
+        try:
+            # Top level Edit menu...
+            enable = frame.menu.enableMenu
+            menu = frame.menu.getMenu("Edit")
+            c.undoer.enableMenuItems()
+            #@        << enable cut/paste >>
+            #@+node:ekr.20040130164211:<< enable cut/paste >>
+            if frame.body.hasFocus():
+                data = frame.body.getSelectedText()
+                canCut = data and len(data) > 0
+            else:
+                # This isn't strictly correct, but we can't get the Tk headline selection.
+                canCut = True
+            
+            enable(menu,"Cut",canCut)
+            enable(menu,"Copy",canCut)
+            
+            data = gui.getTextFromClipboard()
+            canPaste = data and len(data) > 0
+            enable(menu,"Paste",canPaste)
+            #@nonl
+            #@-node:ekr.20040130164211:<< enable cut/paste >>
+            #@nl
+            if 0: # Always on for now.
+                menu = frame.menu.getMenu("Find...")
+                enable(menu,"Find Next",c.canFind())
+                flag = c.canReplace()
+                enable(menu,"Replace",flag)
+                enable(menu,"Replace, Then Find",flag)
+            # Edit Body submenu...
+            menu = frame.menu.getMenu("Edit Body...")
+            enable(menu,"Extract Section",c.canExtractSection())
+            enable(menu,"Extract Names",c.canExtractSectionNames())
+            enable(menu,"Extract",c.canExtract())
+            enable(menu,"Match Brackets",c.canFindMatchingBracket())
+        except:
+            g.es("exception updating Edit menu")
+            g.es_exception()
+    #@nonl
+    #@-node:ekr.20031218072017.836:updateEditMenu
+    #@+node:ekr.20031218072017.3779:updateOutlineMenu
+    def updateOutlineMenu (self):
+    
+        c = self.c ; frame = c.frame
+        if not c: return
+    
+        p = c.currentPosition()
+        hasParent = p.hasParent()
+        hasBack = p.hasBack()
+        hasNext = p.hasNext()
+        hasChildren = p.hasChildren()
+        isExpanded = p.isExpanded()
+        isCloned = p.isCloned()
+        isMarked = p.isMarked()
+    
+        try:
+            enable = frame.menu.enableMenu
+            #@        << enable top level outline menu >>
+            #@+node:ekr.20040131171020:<< enable top level outline menu >>
+            menu = frame.menu.getMenu("Outline")
+            enable(menu,"Cut Node",c.canCutOutline())
+            enable(menu,"Delete Node",c.canDeleteHeadline())
+            enable(menu,"Paste Node",c.canPasteOutline())
+            enable(menu,"Paste Node As Clone",c.canPasteOutline())
+            enable(menu,"Clone Node",c.canClone()) # 1/31/04
+            enable(menu,"Sort Siblings",c.canSortSiblings())
+            enable(menu,"Hoist",c.canHoist())
+            enable(menu,"De-Hoist",c.canDehoist())
+            #@nonl
+            #@-node:ekr.20040131171020:<< enable top level outline menu >>
+            #@nl
+            #@        << enable expand/contract submenu >>
+            #@+node:ekr.20040131171020.1:<< enable expand/Contract submenu >>
+            menu = frame.menu.getMenu("Expand/Contract...")
+            enable(menu,"Contract Parent",c.canContractParent())
+            enable(menu,"Contract Node",hasChildren and isExpanded)
+            enable(menu,"Contract Or Go Left",(hasChildren and isExpanded) or hasParent)
+            enable(menu,"Expand Node",hasChildren and not isExpanded)
+            enable(menu,"Expand Prev Level",hasChildren and isExpanded)
+            enable(menu,"Expand Next Level",hasChildren)
+            enable(menu,"Expand To Level 1",hasChildren and isExpanded)
+            enable(menu,"Expand Or Go Right",hasChildren)
+            for i in xrange(2,9):
+                frame.menu.enableMenu(menu,"Expand To Level " + str(i), hasChildren)
+            #@nonl
+            #@-node:ekr.20040131171020.1:<< enable expand/Contract submenu >>
+            #@nl
+            #@        << enable move submenu >>
+            #@+node:ekr.20040131171020.2:<< enable move submenu >>
+            menu = frame.menu.getMenu("Move...")
+            enable(menu,"Move Down",c.canMoveOutlineDown())
+            enable(menu,"Move Left",c.canMoveOutlineLeft())
+            enable(menu,"Move Right",c.canMoveOutlineRight())
+            enable(menu,"Move Up",c.canMoveOutlineUp())
+            enable(menu,"Promote",c.canPromote())
+            enable(menu,"Demote",c.canDemote())
+            #@nonl
+            #@-node:ekr.20040131171020.2:<< enable move submenu >>
+            #@nl
+            #@        << enable go to submenu >>
+            #@+node:ekr.20040131171020.3:<< enable go to submenu >>
+            menu = frame.menu.getMenu("Go To...")
+            enable(menu,"Go Back",c.beadPointer > 1)
+            enable(menu,"Go Forward",c.beadPointer + 1 < len(c.beadList))
+            enable(menu,"Go To Prev Visible",c.canSelectVisBack())
+            enable(menu,"Go To Next Visible",c.canSelectVisNext())
+            if 0: # These are too slow.
+                enable(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
+                enable(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
+            enable(menu,"Go To Next Clone",isCloned)
+            enable(menu,"Go To Prev Node",c.canSelectThreadBack())
+            enable(menu,"Go To Next Node",c.canSelectThreadNext())
+            enable(menu,"Go To Parent",hasParent)
+            enable(menu,"Go To Prev Sibling",hasBack)
+            enable(menu,"Go To Next Sibling",hasNext)
+            #@nonl
+            #@-node:ekr.20040131171020.3:<< enable go to submenu >>
+            #@nl
+            #@        << enable mark submenu >>
+            #@+node:ekr.20040131171020.4:<< enable mark submenu >>
+            menu = frame.menu.getMenu("Mark/Unmark...")
+            label = g.choose(isMarked,"Unmark","Mark")
+            frame.menu.setMenuLabel(menu,0,label)
+            enable(menu,"Mark Subheads",hasChildren)
+            if 0: # These are too slow.
+                enable(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
+                enable(menu,"Mark Changed Roots",c.canMarkChangedRoots())
+            enable(menu,"Mark Clones",isCloned)
+            #@nonl
+            #@-node:ekr.20040131171020.4:<< enable mark submenu >>
+            #@nl
+        except:
+            g.es("exception updating Outline menu")
+            g.es_exception()
+    #@nonl
+    #@-node:ekr.20031218072017.3779:updateOutlineMenu
+    #@+node:ekr.20031218072017.3780:hasSelection
+    # Returns True if text in the outline or body text is selected.
+    
+    def hasSelection (self):
+        
+        body = self.frame.body
+    
+        if body:
+            first, last = body.getTextSelection()
+            return first != last
+        else:
+            return False
+    #@nonl
+    #@-node:ekr.20031218072017.3780:hasSelection
+    #@-node:ekr.20031218072017.3776:Gui-independent menu enablers
+    #@+node:ekr.20031218072017.3781:Gui-independent menu routines
     #@+node:ekr.20031218072017.3752:defineMenuTables & helpers
     def defineMenuTables (self):
         
@@ -37,6 +237,10 @@ class leoMenu:
         self.defineFileMenuTables()
         self.defineOutlineMenuTables()
         self.defineWindowMenuTables()
+        
+        if self.useEditorMenu:
+            self.defineEditorMenuTables()
+    
         self.defineHelpMenuTables()
     #@nonl
     #@+node:ekr.20031218072017.3753:defineEditMenuTables & helpers
@@ -479,6 +683,29 @@ class leoMenu:
     #@nonl
     #@-node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
     #@-node:ekr.20031218072017.3767:defineOutlineMenuTables & helpers
+    #@+node:ekr.20050921103230:defineEditorMenuTables
+    def defineEditorMenuTables (self):
+        
+        def dummyCommand():
+            g.trace()
+        
+        self.emacsMenuCmdsMenuTable = [
+            ('Cmnd Command 1',None,dummyCommand),
+        ]
+        
+        self.emacsMenuToolsMenuTable = [
+            ('Tools Command 1',None,dummyCommand),
+        ]
+    
+        self.emacsMenuOptionsMenuTable = [
+            ('Options Command 1',None,dummyCommand),
+        ]
+    
+        self.emacsMenuBuffersMenuTable = [
+            ('Buffers Command 1',None,dummyCommand),
+        ]
+    #@nonl
+    #@-node:ekr.20050921103230:defineEditorMenuTables
     #@+node:ekr.20031218072017.3773:defineWindowMenuTables
     def defineWindowMenuTables (self):
         
@@ -526,205 +753,6 @@ class leoMenu:
     #@nonl
     #@-node:ekr.20031218072017.3774:defineHelpMenuTables
     #@-node:ekr.20031218072017.3752:defineMenuTables & helpers
-    #@+node:ekr.20031218072017.3775:oops
-    def oops (self):
-    
-        print "leoMenu oops:", g.callerName(2), "should be overridden in subclass"
-    #@nonl
-    #@-node:ekr.20031218072017.3775:oops
-    #@+node:ekr.20031218072017.3776:Gui-independent menu enablers
-    #@+node:ekr.20031218072017.3777:updateAllMenus
-    def updateAllMenus (self):
-        
-        """The Tk "postcommand" callback called when a click happens in any menu.
-        
-        Updates (enables or disables) all menu items."""
-        
-        # A horrible kludge: set g.app.log to cover for a possibly missing activate event.
-        g.app.setLog(self.frame.log,"updateAllMenus")
-        
-        # Allow the user first crack at updating menus.
-        c = self.c ; v = c.currentVnode()
-    
-        if not g.doHook("menu2",c=c,p=v,v=v):
-            self.updateFileMenu()
-            self.updateEditMenu()
-            self.updateOutlineMenu()
-    #@nonl
-    #@-node:ekr.20031218072017.3777:updateAllMenus
-    #@+node:ekr.20031218072017.3778:updateFileMenu
-    def updateFileMenu (self):
-        
-        c = self.c ; frame = c.frame
-        if not c: return
-    
-        try:
-            enable = frame.menu.enableMenu
-            menu = frame.menu.getMenu("File")
-            enable(menu,"Revert To Saved", c.canRevert())
-            enable(menu,"Open With...", g.app.hasOpenWithMenu)
-        except:
-            g.es("exception updating File menu")
-            g.es_exception()
-    #@nonl
-    #@-node:ekr.20031218072017.3778:updateFileMenu
-    #@+node:ekr.20031218072017.836:updateEditMenu
-    def updateEditMenu (self):
-    
-        c = self.c ; frame = c.frame ; gui = g.app.gui
-        if not c: return
-        try:
-            # Top level Edit menu...
-            enable = frame.menu.enableMenu
-            menu = frame.menu.getMenu("Edit")
-            c.undoer.enableMenuItems()
-            #@        << enable cut/paste >>
-            #@+node:ekr.20040130164211:<< enable cut/paste >>
-            if frame.body.hasFocus():
-                data = frame.body.getSelectedText()
-                canCut = data and len(data) > 0
-            else:
-                # This isn't strictly correct, but we can't get the Tk headline selection.
-                canCut = True
-            
-            enable(menu,"Cut",canCut)
-            enable(menu,"Copy",canCut)
-            
-            data = gui.getTextFromClipboard()
-            canPaste = data and len(data) > 0
-            enable(menu,"Paste",canPaste)
-            #@nonl
-            #@-node:ekr.20040130164211:<< enable cut/paste >>
-            #@nl
-            if 0: # Always on for now.
-                menu = frame.menu.getMenu("Find...")
-                enable(menu,"Find Next",c.canFind())
-                flag = c.canReplace()
-                enable(menu,"Replace",flag)
-                enable(menu,"Replace, Then Find",flag)
-            # Edit Body submenu...
-            menu = frame.menu.getMenu("Edit Body...")
-            enable(menu,"Extract Section",c.canExtractSection())
-            enable(menu,"Extract Names",c.canExtractSectionNames())
-            enable(menu,"Extract",c.canExtract())
-            enable(menu,"Match Brackets",c.canFindMatchingBracket())
-        except:
-            g.es("exception updating Edit menu")
-            g.es_exception()
-    #@nonl
-    #@-node:ekr.20031218072017.836:updateEditMenu
-    #@+node:ekr.20031218072017.3779:updateOutlineMenu
-    def updateOutlineMenu (self):
-    
-        c = self.c ; frame = c.frame
-        if not c: return
-    
-        p = c.currentPosition()
-        hasParent = p.hasParent()
-        hasBack = p.hasBack()
-        hasNext = p.hasNext()
-        hasChildren = p.hasChildren()
-        isExpanded = p.isExpanded()
-        isCloned = p.isCloned()
-        isMarked = p.isMarked()
-    
-        try:
-            enable = frame.menu.enableMenu
-            #@        << enable top level outline menu >>
-            #@+node:ekr.20040131171020:<< enable top level outline menu >>
-            menu = frame.menu.getMenu("Outline")
-            enable(menu,"Cut Node",c.canCutOutline())
-            enable(menu,"Delete Node",c.canDeleteHeadline())
-            enable(menu,"Paste Node",c.canPasteOutline())
-            enable(menu,"Paste Node As Clone",c.canPasteOutline())
-            enable(menu,"Clone Node",c.canClone()) # 1/31/04
-            enable(menu,"Sort Siblings",c.canSortSiblings())
-            enable(menu,"Hoist",c.canHoist())
-            enable(menu,"De-Hoist",c.canDehoist())
-            #@nonl
-            #@-node:ekr.20040131171020:<< enable top level outline menu >>
-            #@nl
-            #@        << enable expand/contract submenu >>
-            #@+node:ekr.20040131171020.1:<< enable expand/Contract submenu >>
-            menu = frame.menu.getMenu("Expand/Contract...")
-            enable(menu,"Contract Parent",c.canContractParent())
-            enable(menu,"Contract Node",hasChildren and isExpanded)
-            enable(menu,"Contract Or Go Left",(hasChildren and isExpanded) or hasParent)
-            enable(menu,"Expand Node",hasChildren and not isExpanded)
-            enable(menu,"Expand Prev Level",hasChildren and isExpanded)
-            enable(menu,"Expand Next Level",hasChildren)
-            enable(menu,"Expand To Level 1",hasChildren and isExpanded)
-            enable(menu,"Expand Or Go Right",hasChildren)
-            for i in xrange(2,9):
-                frame.menu.enableMenu(menu,"Expand To Level " + str(i), hasChildren)
-            #@nonl
-            #@-node:ekr.20040131171020.1:<< enable expand/Contract submenu >>
-            #@nl
-            #@        << enable move submenu >>
-            #@+node:ekr.20040131171020.2:<< enable move submenu >>
-            menu = frame.menu.getMenu("Move...")
-            enable(menu,"Move Down",c.canMoveOutlineDown())
-            enable(menu,"Move Left",c.canMoveOutlineLeft())
-            enable(menu,"Move Right",c.canMoveOutlineRight())
-            enable(menu,"Move Up",c.canMoveOutlineUp())
-            enable(menu,"Promote",c.canPromote())
-            enable(menu,"Demote",c.canDemote())
-            #@nonl
-            #@-node:ekr.20040131171020.2:<< enable move submenu >>
-            #@nl
-            #@        << enable go to submenu >>
-            #@+node:ekr.20040131171020.3:<< enable go to submenu >>
-            menu = frame.menu.getMenu("Go To...")
-            enable(menu,"Go Back",c.beadPointer > 1)
-            enable(menu,"Go Forward",c.beadPointer + 1 < len(c.beadList))
-            enable(menu,"Go To Prev Visible",c.canSelectVisBack())
-            enable(menu,"Go To Next Visible",c.canSelectVisNext())
-            if 0: # These are too slow.
-                enable(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
-                enable(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
-            enable(menu,"Go To Next Clone",isCloned)
-            enable(menu,"Go To Prev Node",c.canSelectThreadBack())
-            enable(menu,"Go To Next Node",c.canSelectThreadNext())
-            enable(menu,"Go To Parent",hasParent)
-            enable(menu,"Go To Prev Sibling",hasBack)
-            enable(menu,"Go To Next Sibling",hasNext)
-            #@nonl
-            #@-node:ekr.20040131171020.3:<< enable go to submenu >>
-            #@nl
-            #@        << enable mark submenu >>
-            #@+node:ekr.20040131171020.4:<< enable mark submenu >>
-            menu = frame.menu.getMenu("Mark/Unmark...")
-            label = g.choose(isMarked,"Unmark","Mark")
-            frame.menu.setMenuLabel(menu,0,label)
-            enable(menu,"Mark Subheads",hasChildren)
-            if 0: # These are too slow.
-                enable(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
-                enable(menu,"Mark Changed Roots",c.canMarkChangedRoots())
-            enable(menu,"Mark Clones",isCloned)
-            #@nonl
-            #@-node:ekr.20040131171020.4:<< enable mark submenu >>
-            #@nl
-        except:
-            g.es("exception updating Outline menu")
-            g.es_exception()
-    #@nonl
-    #@-node:ekr.20031218072017.3779:updateOutlineMenu
-    #@+node:ekr.20031218072017.3780:hasSelection
-    # Returns True if text in the outline or body text is selected.
-    
-    def hasSelection (self):
-        
-        body = self.frame.body
-    
-        if body:
-            first, last = body.getTextSelection()
-            return first != last
-        else:
-            return False
-    #@nonl
-    #@-node:ekr.20031218072017.3780:hasSelection
-    #@-node:ekr.20031218072017.3776:Gui-independent menu enablers
-    #@+node:ekr.20031218072017.3781:Gui-independent menu routines
     #@+node:ekr.20031218072017.3782:get/setRealMenuName & setRealMenuNamesFromTable
     # Returns the translation of a menu name or an item name.
     
@@ -1116,8 +1144,11 @@ class leoMenu:
         self.createFileMenuFromTable()
         self.createEditMenuFromTable()
         self.createOutlineMenuFromTable()
-    
+        
         g.doHook("create-optional-menus",c=c)
+        
+        if self.useEditorMenu:
+            self.createEditorMenuFromTable()
     
         self.createWindowMenuFromTable()
         self.createHelpMenuFromTable()
@@ -1268,6 +1299,23 @@ class leoMenu:
         #@nl
     #@nonl
     #@-node:ekr.20031218072017.3797:createOutlineMenuFromTable
+    #@+node:ekr.20050921103736:createEditorMenuFromTable
+    def createEditorMenuFromTable (self):
+    
+        editorMenu = self.createNewMenu("Editor")
+    
+        for name,table,sep in (
+            #('View...',   self.emacsMenuViewMenuTable,    True),
+            ('Cmds...',    self.emacsMenuCmdsMenuTable,    True),
+            ('Tools...',   self.emacsMenuToolsMenuTable,   True),
+            ('Options...', self.emacsMenuOptionsMenuTable, True),
+            ('Buffers...', self.emacsMenuBuffersMenuTable, False),
+        ):
+            menu = self.createNewMenu(name,"Editor")
+            self.createMenuEntries(menu,table,init=True)
+            if sep: self.add_separator(editorMenu)
+    #@nonl
+    #@-node:ekr.20050921103736:createEditorMenuFromTable
     #@+node:ekr.20031218072017.3802:createWindowMenuFromTable
     def createWindowMenuFromTable (self):
     

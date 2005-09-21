@@ -128,7 +128,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         frame = self ; frame.c = c ; gui = g.app.gui
         
-        # g.trace('tkFrame',self.useMiniBuffer)
+        # g.trace('tkFrame')
+        self.useMiniBuffer = c.config.getBool('useMiniBuffer')
         
         # This must be done after creating the commander.
         self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
@@ -2635,6 +2636,14 @@ class leoTkinterBody (leoFrame.leoBody):
         """Handle any key press event in the body pane."""
     
         c = self.c ; ch = event.char
+        
+        # Support for key-handler state.
+        if (
+            c.keyHandler and c.miniBufferWidget and 
+            event.char.isspace() and
+            c.keyHandler.stateManager.hasState()
+        ):
+            return None # Must be None, not 'break'
         
         # This translation is needed on MacOS.
         if ch == '':

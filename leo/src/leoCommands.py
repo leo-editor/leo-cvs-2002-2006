@@ -95,6 +95,10 @@ class baseCommands:
         self._rootPosition    = self.nullPosition()
         self._topPosition     = self.nullPosition()
         
+        # For emacs/vim key handling.
+        self.keyHandler = None
+        self.miniBufferWidget = None
+        
         # per-document info...
         self.disableCommandsMessage = ''
             # The presence of this message disables all commands.

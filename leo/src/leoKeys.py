@@ -85,7 +85,7 @@ class keyHandlerClass:
     #@+node:ekr.20050920094633:finishCreate
     def finishCreate (self,altX_commandsDict):
         
-        g.trace('keyHandler')
+        # g.trace('keyHandler')
         
         keyHandler = self ; b = self.miniBufferHandler
         c = self.c ; frame = c.frame
@@ -329,6 +329,7 @@ class keyHandlerClass:
             # For alt-X commands...
             self.xcommands = None       # Done in finishCreate.
             self.altX_commandsDict = {} # Set later by finishCreate.
+            self.alt_x_prompt = 'full-command'
             self.axTabList = Tracker()
             self.x_hasNumeric = ['sort-lines','sort-fields']
         
@@ -352,7 +353,7 @@ class keyHandlerClass:
         #@+node:ekr.20050920085536.10: finishCreate (miniBufferClass) MUST BE GENERALIZED
         def finishCreate (self,altX_commandsDict):
             
-            g.trace('miniBufferClass')
+            # g.trace('miniBufferClass')
         
             c = self.c ; keyHandler = self.keyHandler
         
@@ -451,7 +452,7 @@ class keyHandlerClass:
                 val = d.get(key)
                 func = self.altX_commandsDict.get(val)
                 if func:
-                    g.trace(('%-4s' % key),val)
+                    # g.trace(('%-4s' % key),val)
                     self.altX_commandsDict [key] = func
         #@-node:ekr.20050920085536.11:add_ekr_altx_commands
         #@+node:ekr.20050920085536.13:addCallBackDict (miniBufferClass) MUST BE GENERALIZED
@@ -721,8 +722,6 @@ class keyHandlerClass:
         def setBufferStrokes (self,tbuffer):
         
             '''Sets key bindings for a Tk Text widget.'''
-            
-            g.trace()
         
             # Create one binding for each entry in cbDict.
             for key in self.cbDict:
@@ -776,6 +775,8 @@ class keyHandlerClass:
             #@-node:ekr.20050920085536.51:__call__
             #@+node:ekr.20050920085536.52:finishCreate (controlX_handlerClass)  MUST BE GENERALIZED
             def finishCreate (self):
+                
+                # g.trace('controlX_handlerClass')
             
                 c = self.c ; keyHandler = self.keyHandler
             
@@ -950,6 +951,8 @@ class keyHandlerClass:
             #@-node:ekr.20050920085536.20:__call__ (keyStrokeManagerClass)
             #@+node:ekr.20050920085536.21:finishCreate (keyStrokeManagerClass) MUST BE GENERALIZED
             def finishCreate (self):
+                
+                # g.trace('keyStrokeManagerClass')
                 
                 c = self.c
                 
@@ -1168,12 +1171,15 @@ class keyHandlerClass:
         #@-node:ekr.20050920085536.33: Getters & Setters
         #@+node:ekr.20050920085536.40:Alt_X methods
         #@+node:ekr.20050920085536.41:alt_X
-        def alt_X (self,event=None,which=None):
+        def alt_X (self,event=None,which=''):
         
             b = self
         
-            b.setState('altx',g.choose(which,which,1))
-            b.set(g.choose(which,'%s M-x:' % which,'M-x:'))
+            b.setState('altx',which or 1) # Must be int, not True.
+            if which:
+                b.set('%s %s:' % (which,self.alt_x_prompt))
+            else:
+                b.set('%s:' % (self.alt_x_prompt))
             b.setLabelBlue()
         
             return 'break'
@@ -1186,7 +1192,7 @@ class keyHandlerClass:
             
             b = self ; keysym = event.keysym
         
-            if b.get().endswith('M-x:'):
+            if b.get().endswith(self.alt_x_prompt):
                 b.axTabList.clear() # Clear the list, new Alt-x command is in effect.
                 b.set('')
             if keysym == 'Return':
