@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="96" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="99" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="105" left="310" height="703" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -35,28 +35,6 @@
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
-<v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
-<v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
-<v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
-<v t="ekr.20041119034357.7"><vh>.leo file options</vh>
-<v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
-<v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
-</v>
-<v t="ekr.20041119034357.11"><vh>directory options</vh>
-<v t="ekr.20041119041304"><vh>@bool create_nonexistent_directories = False</vh></v>
-<v t="ekr.20041119041304.1"><vh>@string relative_path_base_directory = .</vh></v>
-</v>
-<v t="ekr.20041119034357.12"><vh>derived files options</vh>
-<v t="ekr.20041119041747"><vh>@string output_newline = nl</vh></v>
-<v t="ekr.20041119041747.1"><vh>@string trailing_body_newlines = one</vh></v>
-<v t="ekr.20041119041747.4"><vh>@bool write_strips_blank_lines = True</vh></v>
-</v>
-<v t="ekr.20041119034357.15"><vh>unicode encoding options</vh>
-<v t="ekr.20041119042929.9"><vh>@string default_derived_file_encoding = UTF-8</vh></v>
-<v t="ekr.20041119042929.10"><vh>@string new_leo_file_encoding = UTF-8</vh></v>
-<v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
-</v>
-</v>
 <v t="ekr.20041119034357.10"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -116,6 +94,39 @@
 <v t="ekr.20041120152900.2"><vh>@bool script_search = None</vh></v>
 </v>
 </v>
+<v t="ekr.20041213105007"><vh>@page Fonts</vh>
+<v t="ekr.20041213105508"><vh>@font log font</vh></v>
+<v t="ekr.20041119034357.45"><vh>@font body text font</vh></v>
+<v t="ekr.20041119051246.4"><vh>@font outline font</vh></v>
+</v>
+<v t="ekr.20050203090810"><vh>@page For unit tests</vh>
+<v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
+</v>
+<v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
+<v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
+<v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
+<v t="ekr.20041119034357.7"><vh>.leo file options</vh>
+<v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
+<v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
+</v>
+<v t="ekr.20041119034357.11"><vh>directory options</vh>
+<v t="ekr.20041119041304"><vh>@bool create_nonexistent_directories = False</vh></v>
+<v t="ekr.20041119041304.1"><vh>@string relative_path_base_directory = .</vh></v>
+</v>
+<v t="ekr.20041119034357.12"><vh>derived files options</vh>
+<v t="ekr.20041119041747"><vh>@string output_newline = nl</vh></v>
+<v t="ekr.20041119041747.1"><vh>@string trailing_body_newlines = one</vh></v>
+<v t="ekr.20041119041747.4"><vh>@bool write_strips_blank_lines = True</vh></v>
+</v>
+<v t="ekr.20041119034357.15"><vh>unicode encoding options</vh>
+<v t="ekr.20041119042929.9"><vh>@string default_derived_file_encoding = UTF-8</vh></v>
+<v t="ekr.20041119042929.10"><vh>@string new_leo_file_encoding = UTF-8</vh></v>
+<v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
+</v>
+</v>
+<v t="ekr.20050921105316"><vh>@page Menu options	</vh>
+<v t="ekr.20050921105316.1"><vh>@bool useEditorMenu=True</vh></v>
+</v>
 <v t="ekr.20041119034357.28"><vh>@page Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
 <v t="ekr.20041119034357.30"><vh>@language default_target_language = python</vh></v>
@@ -127,24 +138,7 @@
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
-<v t="ekr.20050203090810"><vh>@page For unit tests</vh>
-<v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
-</v>
-<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
-<v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
-<v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
-<v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
-<v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
-<v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
-<v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
-<v t="ekr.20050513110847"><vh>@shortcuts test shortcuts</vh></v>
-</v>
-<v t="ekr.20041213105007"><vh>@page Fonts</vh>
-<v t="ekr.20041213105508"><vh>@font log font</vh></v>
-<v t="ekr.20041119034357.45"><vh>@font body text font</vh></v>
-<v t="ekr.20041119051246.4"><vh>@font outline font</vh></v>
-</v>
-<v t="ekr.20041213105007.1" a="E"><vh>Colors</vh>
+<v t="ekr.20041213105007.1"><vh>Colors</vh>
 <v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
@@ -159,7 +153,7 @@
 <v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
 </v>
 <v t="ekr.20041119051246.1" a="E"><vh>@page Outline pane colors</vh>
-<v t="ekr.20041119051246.2" a="TV"><vh>@color headline_text_unselected_background_color = #ffffec</vh></v>
+<v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = #ffffec</vh></v>
 <v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = None</vh></v>
 <v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
 <v t="ekr.20041119050749.7"><vh>@color headline_text_selected_foreground_color = None</vh></v>
@@ -191,13 +185,23 @@
 </v>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 </v>
-<v t="ekr.20041213105954"><vh>Window options</vh>
+<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
+<v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
+<v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
+<v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
+<v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
+<v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
+<v t="ekr.20050513110847"><vh>@shortcuts test shortcuts</vh></v>
+</v>
+<v t="ekr.20041213105954" a="TV"><vh>Window options</vh>
 <v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
 <v t="ekr.20041119034357.43"><vh>@bool body_gmt_time = False</vh></v>
 <v t="ekr.20041119034357.44"><vh>@bool smart_auto_indent = False</vh></v>
 <v t="ekr.20041119034357.53"><vh>@int additional_body_text_border = 0</vh></v>
+<v t="ekr.20050921105316.2"><vh>@bool useMiniBuffer=True</vh></v>
 </v>
 <v t="ekr.20041213105954.1"><vh>@page Log pane options</vh>
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
@@ -1135,5 +1139,8 @@ Doing so would make unit tests fail.
 xyzzy = Alt+Ctrl+Shift+y
 pdq = Alt+Ctrl+Shift+A</t>
 <t tx="ekr.20050620083647"></t>
+<t tx="ekr.20050921105316"></t>
+<t tx="ekr.20050921105316.1"></t>
+<t tx="ekr.20050921105316.2"></t>
 </tnodes>
 </leo_file>
