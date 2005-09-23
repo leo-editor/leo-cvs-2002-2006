@@ -65,15 +65,22 @@ class baseEditCommandsClass:
         return st
     #@nonl
     #@-node:ekr.20050920084036.4:findPre
-    #@+node:ekr.20050920084036.5:getPublicCommands
+    #@+node:ekr.20050920084036.5:getPublicCommands & getStateCommands
     def getPublicCommands (self):
+    
         '''Return a dict describing public commands implemented in the subclass.
         Keys are untranslated command names.  Values are methods of the subclass.'''
     
-        self.oops()
+        return {}
+        
+    def getStateCommands (self):
+    
+        '''Return a dictionary describing commands that use complex min-buffer state.
+        Keys are untranslated command names.  Values are state-description objects.'''
+    
         return {}
     #@nonl
-    #@-node:ekr.20050920084036.5:getPublicCommands
+    #@-node:ekr.20050920084036.5:getPublicCommands & getStateCommands
     #@+node:ekr.20050920084036.6:getWSString
     def getWSString (self,txt):
     
@@ -280,7 +287,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
         self.keyHandler.abbrevOn = False # determines if abbreviations are on for masterCommand and toggle abbreviations.
     #@nonl
     #@-node:ekr.20050920084036.14: ctor & finishCreate
-    #@+node:ekr.20050920084036.15: getPublicCommands
+    #@+node:ekr.20050920084036.15: getPublicCommands & getStateCommands
     def getPublicCommands (self):
         
         return {
@@ -292,8 +299,12 @@ class abbrevCommandsClass (baseEditCommandsClass):
             'read-abbrev-file':         self.readAbbreviations,
             'write-abbrev-file':        self.writeAbbreviations,
         }
+        
+    def getStateCommands (self):
+        
+        return {} ### Not ready yet.
     #@nonl
-    #@-node:ekr.20050920084036.15: getPublicCommands
+    #@-node:ekr.20050920084036.15: getPublicCommands & getStateCommands
     #@+node:ekr.20050920084036.16: Entry points
     #@+node:ekr.20050920084036.17:expandAbbrev
     def expandAbbrev (self,event):
@@ -387,7 +398,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
     def toggleAbbrevMode (self,event):
      
         b = self.miniBufferHandler
-        self.keyHandler.abbrevOn = not self.keyHandler.abbrevOn 
+        self.keyHandler.abbrevOn = not self.keyHandler.abbrevOn
         b.keyboardQuit(event)
         b.set('Abbreviations are ' + g.choose(self.keyHandler.abbrevOn,'On','Off'))
     #@nonl
@@ -545,6 +556,22 @@ class bufferCommandsClass  (baseEditCommandsClass):
             'rename-buffer':        self.renameBuffer,
             'switch-to-buffer':     self.switchToBuffer,
         }
+        
+    def getStateCommands (self):
+        
+        return {}
+        
+        if 0: # setInBufferMode does all the state handling.
+            return {
+                'append-to-buffer':     None,
+                'copy-to-buffer':       None,
+                'insert-buffer':        None,
+                'kill-buffer' :         None,
+                'list-buffers' :        None,
+                'prepend-to-buffer':    None,
+                'rename-buffer':        None,
+                'switch-to-buffer':     None,
+            }
     #@nonl
     #@-node:ekr.20050920084036.33: getPublicCommands
     #@+node:ekr.20050920084036.34:Entry points
@@ -1759,7 +1786,7 @@ class editCommandsClass (baseEditCommandsClass):
             tbuffer.insert('%s.0' % istart,'%s\n' % z)
             istart = istart + 1
         tbuffer.mark_set('insert',ins)
-        b.stateManager.clear()
+        b.stateManager.clearState()
         b.reset()
         return b._tailEnd(tbuffer)
     #@nonl
@@ -1847,7 +1874,7 @@ class editCommandsClass (baseEditCommandsClass):
             s = 'Replaced %s occurances' % count
             b.set(s)
             b.setLabelGrey()
-            b.stateManager.clear()
+            b.stateManager.clearState()
             self._useRegex = False
             return b._tailEnd(tbuffer)
     #@nonl

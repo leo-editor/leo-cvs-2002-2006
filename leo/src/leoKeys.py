@@ -324,6 +324,7 @@ class keyHandlerClass:
             self.cxHandler = self.controlX_handlerClass(keyHandler) # Create the handler for Control-x commands
             
             # Delegators.  These will go away if the state helper class goes away.
+            self.clearState = self.stateManager.clearState
             self.getState = self.stateManager.getState
             self.setState = self.stateManager.setState
             self.hasState = self.stateManager.hasState
@@ -963,17 +964,7 @@ class keyHandlerClass:
                routes key events to the right method, dependent upon the state in the stateManagerClass'''
                
             #@    @+others
-            #@+node:ekr.20050920085536.24:__init__
-            def __init__ (self,keyHandler):
-            
-                self.c = keyHandler.c
-                self.keyHandler = keyHandler
-            
-                self.state = None
-                self.states = {}
-            #@nonl
-            #@-node:ekr.20050920085536.24:__init__
-            #@+node:ekr.20050920085536.25:__call__(state manager)
+            #@+node:ekr.20050920085536.25: __call__(state manager)
             def __call__ (self,*args):
             
                 if self.state:
@@ -984,8 +975,18 @@ class keyHandlerClass:
                     else:
                         return func(*args)
             #@nonl
-            #@-node:ekr.20050920085536.25:__call__(state manager)
-            #@+node:ekr.20050920085536.26:finishCreate (stateManagerClass) MUST BE GENERALIZED
+            #@-node:ekr.20050920085536.25: __call__(state manager)
+            #@+node:ekr.20050920085536.24: __init__
+            def __init__ (self,keyHandler):
+            
+                self.c = keyHandler.c
+                self.keyHandler = keyHandler
+            
+                self.state = None
+                self.states = {}
+            #@nonl
+            #@-node:ekr.20050920085536.24: __init__
+            #@+node:ekr.20050920085536.26: finishCreate (stateManagerClass) MUST BE GENERALIZED
             def finishCreate (self):
             
                 c = self.c ; keyHandler = self.keyHandler ; b = keyHandler.miniBufferHandler
@@ -1029,14 +1030,16 @@ class keyHandlerClass:
                     'subprocess':       (1,c.controlCommands.subprocesser),
                 }
             #@nonl
-            #@-node:ekr.20050920085536.26:finishCreate (stateManagerClass) MUST BE GENERALIZED
-            #@+node:ekr.20050920085536.27:setState
-            def setState (self,state,value):
+            #@-node:ekr.20050920085536.26: finishCreate (stateManagerClass) MUST BE GENERALIZED
+            #@+node:ekr.20050920085536.31:clearState
+            def clearState (self):
             
-                self.state = state
-                self.states [state] = value
+                self.state = None
+            
+                for z in self.states.keys():
+                    self.states [z] = 0 # More useful than False.
             #@nonl
-            #@-node:ekr.20050920085536.27:setState
+            #@-node:ekr.20050920085536.31:clearState
             #@+node:ekr.20050920085536.28:getState
             def getState (self,state):
             
@@ -1050,21 +1053,22 @@ class keyHandlerClass:
                     return self.states [self.state]
             #@nonl
             #@-node:ekr.20050920085536.29:hasState
+            #@+node:ekr.20050920085536.27:setState
+            def setState (self,state,value):
+            
+                self.state = state
+                if state:
+                    self.states [state] = value
+                else:
+                    self.clearState()
+            #@nonl
+            #@-node:ekr.20050920085536.27:setState
             #@+node:ekr.20050920085536.30:whichState
             def whichState (self):
             
                 return self.state
             #@nonl
             #@-node:ekr.20050920085536.30:whichState
-            #@+node:ekr.20050920085536.31:clear
-            def clear (self):
-            
-                self.state = None
-            
-                for z in self.states.keys():
-                    self.states [z] = 0 # More useful than False.
-            #@nonl
-            #@-node:ekr.20050920085536.31:clear
             #@-others
         #@nonl
         #@-node:ekr.20050920085536.23: class stateManagerClass
@@ -1183,17 +1187,19 @@ class keyHandlerClass:
                 #@+node:ekr.20050920085536.45:<< dispatch the function >>
                 s = b.get()
                 b.altX_tabList = []
-                s = s[len(b.altX_prefix):].strip()
-                func = c.commandsDict.get(s)
+                command = s[len(b.altX_prefix):].strip()
+                func = c.commandsDict.get(command)
+                b.clearState()
+                b.keyHandler.keyboardQuit(event)
+                
                 if func:
-                    if s != 'repeat-complex-command': b.altX_history.insert(0,s)
+                    if command != 'repeat-complex-command': b.altX_history.insert(0,command)
                     aX = b.getState('altx')
-                    if (type(aX) == type(1) or aX.isdigit()) and s in b.x_hasNumeric:
+                    if (type(aX) == type(1) or aX.isdigit()) and command in b.x_hasNumeric:
                         func(event,aX)
                     else:
                         func(event)
                 else:
-                    b.keyboardQuit(event)
                     b.set('Command does not exist')
                 #@nonl
                 #@-node:ekr.20050920085536.45:<< dispatch the function >>
@@ -1231,8 +1237,7 @@ class keyHandlerClass:
             elif keysym == 'BackSpace':
                 #@        << handle BackSpace >>
                 #@+node:ekr.20050920085536.46:<< handle BackSpace >>
-                # Cut back to previous prefix and update prefix 
-                
+                # Cut back to previous prefix and update prefix.
                 s = b.altX_tabListPrefix
                 
                 if len(s) > len(b.altX_prefix):
@@ -1242,10 +1247,9 @@ class keyHandlerClass:
                     b.altX_tabListPrefix = s
                     b.set(b.altX_tabListPrefix,protect=True)
                     
-                g.trace('BackSpace: new altX_tabListPrefix',b.altX_tabListPrefix)
+                # g.trace('BackSpace: new altX_tabListPrefix',b.altX_tabListPrefix)
                 
-                ### b.startIteration()
-                
+                # Force a recomputation of the commands list.
                 b.altX_tabList = []
                 #@nonl
                 #@-node:ekr.20050920085536.46:<< handle BackSpace >>
@@ -1271,8 +1275,10 @@ class keyHandlerClass:
         
             common_prefix = ''
         
-            if s:
-                pmatches = [a for a in fdict if a.startswith(s)]
+            if s: pmatches = [a for a in fdict if a.startswith(s)]
+            else: pmatches = []
+                
+            if pmatches:
                 s = pmatches[0] ; done = False
                 for i in xrange(len(s)):
                     prefix = s[:i]
@@ -1283,10 +1289,7 @@ class keyHandlerClass:
                         break
                     else:
                         common_prefix = prefix
-            else:
-                pmatches = []
-        
-            pmatches.sort()
+                pmatches.sort()
         
             # g.trace(repr(s),len(pmatches))
             return pmatches,common_prefix
@@ -1351,7 +1354,7 @@ class keyHandlerClass:
             c.rectangleCommands.sRect = False
             c.registerCommands.rectanglemode = 0
             
-            b.stateManager.clear()
+            b.stateManager.clearState()
             widget.tag_delete('color')
             widget.tag_delete('color1')
         
@@ -1405,7 +1408,7 @@ class keyHandlerClass:
                 # Compute the actual arg.
                 s = b.get() ; b.arg = s[len(b.altX_prefix):]
                 # Immediately enter the caller's requested state.
-                b.stateManager.clear()
+                b.stateManager.clearState()
                 stateKind,state = self.afterGetArgState
                 b.setState(stateKind,state)
                 b.stateManager(event,None) # Invoke the stateManager __call__ method.
@@ -1446,7 +1449,7 @@ class keyHandlerClass:
                 not general and (len(self.keysymhistory) == 0 or self.keysymhistory [0] != event.keysym))
         
             if inserted:
-                g.trace(general,event.keysym)
+                # g.trace(general,event.keysym)
                 #@        << add character to history >>
                 #@+node:ekr.20050920085536.67:<< add character to history >>
                 # Don't add multiple special characters to history.
