@@ -3997,10 +3997,10 @@ class registerCommandsClass (baseEditCommandsClass):
         
         b = self.miniBufferHandler
         
-        b.stopControlX(event)
+        ## b.stopControlX(event)
     
-        if event.keysym in string.letters:
-            s = self.registers[event.keysym.lower()]
+        s = self.registers.get(event.keysym.lower())
+        if s:
             b.set(s)
     #@nonl
     #@-node:ekr.20050920084036.246:_viewRegister
@@ -4146,12 +4146,13 @@ class registerCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.255:setNextRegister
     #@+node:ekr.20050920084036.256:executeRegister
-    def executeRegister( self, event ):
+    def executeRegister (self,event):
+        
+        b = self.miniBufferHandler
     
-        self.method( event )
-        if self.registermode: 
-            self.stopControlX( event )
-        return
+        self.method(event)
+        if self.registermode:
+            b.stopControlX(event)
     #@nonl
     #@-node:ekr.20050920084036.256:executeRegister
     #@-node:ekr.20050920084036.248:Helpers

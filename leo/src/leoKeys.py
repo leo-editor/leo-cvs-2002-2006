@@ -22,7 +22,7 @@ import string
 #@nl
 
 #@+others
-#@+node:ekr.20050920085536:class keyHandler (replaces Emacs class)
+#@+node:ekr.20050920085536:class keyHandler
 class keyHandlerClass:
     
     '''A class to support emacs-style commands.  Creates a Tk Text widget for the minibufer.'''
@@ -828,7 +828,7 @@ class keyHandlerClass:
                     return self.processRectangle(event)
             
                 if (
-                    c.rect_commands.has_key(event.keysym) and
+                    b.rect_commands.has_key(event.keysym) and
                     c.rectangleCommands.rectanglemode == 1
                 ):
                     return self.processRectangle(event)
@@ -1659,7 +1659,7 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.7:class miniBufferHandlerClass
     #@-others
 #@nonl
-#@-node:ekr.20050920085536:class keyHandler (replaces Emacs class)
+#@-node:ekr.20050920085536:class keyHandler
 #@-others
 #@nonl
 #@-node:ekr.20031218072017.3748:@thin leoKeys.py
