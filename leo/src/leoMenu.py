@@ -27,6 +27,10 @@ class leoMenu:
         self.menus = {} # Menu dictionary.
         self.menuShortcuts = {}
         self.useEditorMenu = self.c.config.getBool('useEditorMenu')
+        
+        self.newBinding = True
+            # True if using new binding scheme.
+            # You can set this to False in an emergency to revert to the old way.
     
         self.defineMenuTables()
     #@nonl

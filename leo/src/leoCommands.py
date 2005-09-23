@@ -77,6 +77,7 @@ class baseCommands:
         self.atFileCommands = leoAtFile.atFile(c)
         self.importCommands = leoImport.leoImportCommands(c)
         self.tangleCommands = leoTangle.tangleCommands(c)
+        self.commandsDict = leoEditCommands.createEditCommanders(c)
     
         if 0 and g.debugGC:
             print ; print "*** using Null undoer ***" ; print
@@ -96,6 +97,7 @@ class baseCommands:
         self._topPosition     = self.nullPosition()
         
         # For emacs/vim key handling.
+        self.commandsDict = None
         self.keyHandler = None
         self.miniBufferWidget = None
         
@@ -169,9 +171,7 @@ class baseCommands:
         
         c = self
         c.miniBufferWidget = c.frame.miniBufferWidget
-        
-        # g.trace('Commands')
-        
+    
         # There is no miniBufferWidget created for leoSettings.leo files.
         if c.miniBufferWidget:
         
@@ -180,8 +180,8 @@ class baseCommands:
                 useGlobalRegisters=True)
                 
             # Create the classes in the keyHandler.
-            altX_commandsDict = leoEditCommands.createEditCommanders(c)
-            c.keyHandler.finishCreate(altX_commandsDict)
+            leoEditCommands.finishCreateEditCommanders(c)
+            c.keyHandler.finishCreate(self.commandsDict)
     #@nonl
     #@-node:ekr.20050920093543:c.finishCreate
     #@-node:ekr.20031218072017.2811: c.Birth & death
