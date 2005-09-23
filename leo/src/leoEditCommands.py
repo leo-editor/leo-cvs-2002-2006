@@ -29,16 +29,21 @@ class baseEditCommandsClass:
     '''The base class for all edit command classes'''
 
     #@    @+others
-    #@+node:ekr.20050920084036.2: ctor
+    #@+node:ekr.20050920084036.2: ctor & finishCreate (baseEditCommandsClass)
     def __init__ (self,c):
     
         self.c = c
+        # Class delegators.
+        self.keyHandler = None
+        self.miniBufferHandler = None
+        
+    def finishCreate(self):
     
         # Class delegators.
         self.keyHandler = self.c.keyHandler
         self.miniBufferHandler = self.c.keyHandler.miniBufferHandler
     #@nonl
-    #@-node:ekr.20050920084036.2: ctor
+    #@-node:ekr.20050920084036.2: ctor & finishCreate (baseEditCommandsClass)
     #@+node:ekr.20050920084036.3:__call__
     if 0:
         def __call__ (self,*args,**keys):
@@ -152,41 +157,38 @@ def createEditCommanders (self):
     
     '''Create edit classes in the commander.'''
     
-    c = self
-    classes = [
-        ('abbrevCommands',      abbrevCommandsClass),
-        ('bufferCommands',      bufferCommandsClass),
-        ('editCommands',        editCommandsClass),
-        ('controlCommands',     controlCommandsClass),
-        ('editFileCommands',    editFileCommandsClass),
-        ('keyHandlerCommands',  keyHandlerCommandsClass),
-        ('killBufferCommands',  killBufferCommandsClass),
-        ('leoCommands',         leoCommandsClass),
-        ('macroCommands',       macroCommandsClass),
-        ('queryReplaceCommands',queryReplaceCommandsClass),
-        ('rectangleCommands',   rectangleCommandsClass),
-        ('registerCommands',    registerCommandsClass),
-        ('searchCommands',      searchCommandsClass),
-    ]
+    c = self ; global classesList
     
-    altX_commandsDict = {}
+    d = {}
 
-    for name, theClass in classes:
+    for name, theClass in classesList:
         theInstance = theClass(c)# Create the class.
         setattr(c,name,theInstance)
         # g.trace(name,theInstance)
-        d = theInstance.getPublicCommands()
-        if d:
-            altX_commandsDict.update(d)
+        d2 = theInstance.getPublicCommands()
+        if d2:
+            d.update(d2)
             if 0:
-                keys = d.keys()
+                keys = d2.keys()
                 keys.sort()
                 print '----- %s' % name
                 for key in keys: print key
                 
-    return altX_commandsDict
+    return d
 #@nonl
 #@-node:ekr.20050920084720: createEditCommanders (leoEditCommands module)
+#@+node:ekr.20050922104731: finishCreateEditCommanders (leoEditCommands module)
+def finishCreateEditCommanders (self):
+    
+    '''Create edit classes in the commander.'''
+    
+    c = self ; global classesList
+
+    for name, theClass in classesList:
+        theInstance = getattr(c,name)
+        theInstance.finishCreate()
+#@nonl
+#@-node:ekr.20050922104731: finishCreateEditCommanders (leoEditCommands module)
 #@+node:ekr.20050920085536.84:class  Tracker (an iterator)
 class Tracker:
 
@@ -261,19 +263,23 @@ class Tracker:
 class abbrevCommandsClass (baseEditCommandsClass):
 
     #@    @+others
-    #@+node:ekr.20050920084036.14: ctor
+    #@+node:ekr.20050920084036.14: ctor & finishCreate
     def __init__ (self,c):
         
         baseEditCommandsClass.__init__(self,c) # init the base class.
+        
+        # Set local ivars.
+        self.abbrevs ={}
+        
+    def finishCreate(self):
+        
+        baseEditCommandsClass.finishCreate(self)
     
         # Set ivars in emacs.
         self.keyHandler.abbrevMode = False 
         self.keyHandler.abbrevOn = False # determines if abbreviations are on for masterCommand and toggle abbreviations.
-    
-        # Set local ivars.
-        self.abbrevs ={}
     #@nonl
-    #@-node:ekr.20050920084036.14: ctor
+    #@-node:ekr.20050920084036.14: ctor & finishCreate
     #@+node:ekr.20050920084036.15: getPublicCommands
     def getPublicCommands (self):
         
@@ -497,7 +503,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
 class bufferCommandsClass  (baseEditCommandsClass):
 
     #@    @+others
-    #@+node:ekr.20050920084036.32: ctor (bufferCommandsClass) (uses values created by setBufferInteractionMethods) 
+    #@+node:ekr.20050920084036.32: ctor (bufferCommandsClass) (uses values created by setBufferInteractionMethods)
     def __init__ (self,c):
         
         baseEditCommandsClass.__init__(self,c) # init the base class.
@@ -525,7 +531,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
             'switch-to-buffer': self._switchToBuffer, 
         }
     #@nonl
-    #@-node:ekr.20050920084036.32: ctor (bufferCommandsClass) (uses values created by setBufferInteractionMethods) 
+    #@-node:ekr.20050920084036.32: ctor (bufferCommandsClass) (uses values created by setBufferInteractionMethods)
     #@+node:ekr.20050920084036.33: getPublicCommands
     def getPublicCommands (self):
     
@@ -2434,27 +2440,60 @@ class controlCommandsClass (baseEditCommandsClass):
     def getPublicCommands (self):
         
         b = self.miniBufferHandler
-    
-        return {
-            'advertised-undo':              lambda event: self.doUndo( event ) and b.keyboardQuit( event ),
-            'iconfify-or-deiconify-frame':  lambda event: self.suspend( event ) and b.keyboardQuit( event ),
-            'keyboard-quit':                b.keyboardQuit,
-            'save-buffers-kill-emacs':      lambda event: b.keyboardQuit( event ) and self.shutdown( event ),
-            'shell-command':                self.startSubprocess,
-            'shell-command-on-region':      lambda event: self.startSubprocess( event, which=1 ),
+        
+        if 1:
+            return {
+                'advertised-undo':              self.advertizedUndo,
+                'iconfify-or-deiconify-frame':  self.iconifyOrDeiconifyFrame,
+                'keyboard-quit':                self.keyboardQuit,
+                'save-buffers-kill-emacs':      self.saveBuffersKillEmacs,
+                'shell-command':                self.startSubprocess,
+                'shell-command-on-region':      self.shellCommandOnRegion,
+                'suspend':                      self.suspend,
+            }
             
-            # Added by ekr.
-            'suspend':                      lambda event: self.suspend( event ) and b.keyboardQuit( event ),
-        }
+        else: # old
+    
+            return {
+                'advertised-undo':              lambda event: self.doUndo( event ) and b.keyboardQuit( event ),
+                'iconfify-or-deiconify-frame':  lambda event: self.suspend( event ) and b.keyboardQuit( event ),
+                'keyboard-quit':                b.keyboardQuit,
+                'save-buffers-kill-emacs':      lambda event: b.keyboardQuit( event ) and self.shutdown( event ),
+                'shell-command':                self.startSubprocess,
+                'shell-command-on-region':      lambda event: self.startSubprocess( event, which=1 ),
+                
+                # Added by ekr.
+                'suspend':                      lambda event: self.suspend( event ) and b.keyboardQuit( event ),
+            }
     #@nonl
     #@-node:ekr.20050920084036.152: getPublicCommands
-    #@+node:ekr.20050920084036.153:suspend
-    def suspend( self, event ):
+    #@+node:ekr.20050922110030:Entry points
+    def advertizedUndo (self,event):
+        return self.doUndo(event) and b.keyboardQuit(event)
+    
+    def iconifyOrDeiconifyFrame (self,event):
+        return self._suspend(event) and b.keyboardQuit(event)
+    
+    def keyboardQuit (self,event):
+        return self.miniBufferHandler.keyboardQuite(event)
+    
+    def saveBuffersKillEmacs (self,event):
+        b = self.miniBufferHandler
+        return b.keyboardQuit(event) and self.shutdown(event)
+    
+    def shellCommandOnRegion (self,event):
+        return self.startSubprocess(event,which=1)
+    
+    def suspend (self,event):
+        return self._suspend(event) and b.keyboardQuit(event)
+    #@-node:ekr.20050922110030:Entry points
+    #@+node:ekr.20050920084036.153:_suspend
+    def _suspend( self, event ):
         
         widget = event.widget
         widget.winfo_toplevel().iconify()
     #@nonl
-    #@-node:ekr.20050920084036.153:suspend
+    #@-node:ekr.20050920084036.153:_suspend
     #@+node:ekr.20050920084036.154:shutdown methods
     #@+node:ekr.20050920084036.155:shutdown
     def shutdown( self, event ):
@@ -2741,12 +2780,23 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
     def getPublicCommands (self):
         
         return {
-            'digit-argument':           self.miniBufferHandler.digitArgument,
-            'repeat-complex-command':   self.miniBufferHandler.repeatComplexCommand,
-            'universal-argument':       self.miniBufferHandler.universalArgument,
+            'digit-argument':           self.digitArgument,
+            'repeat-complex-command':   self.repeatComplexCommand,
+            'universal-argument':       self.universalArgument,
         }
     #@nonl
     #@-node:ekr.20050920084036.173:getPublicCommands
+    #@+node:ekr.20050922110452:Entry points
+    def digitArgument (self,event):
+        return self.miniBufferHandler.digitArgument(event)
+    
+    def repeatComplexCommand (self,event):
+        return self.miniBufferHandler.repeatComplexCommand(event)
+    
+    def universalArgument (self,event):
+        return self.miniBufferHandler.universalArgument(event)
+    #@nonl
+    #@-node:ekr.20050922110452:Entry points
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.171:class keyHandlerCommandsClass
@@ -2756,20 +2806,24 @@ class killBufferCommandsClass (baseEditCommandsClass):
     '''A class to manage the kill buffer.'''
 
     #@    @+others
-    #@+node:ekr.20050920084036.175: ctor
+    #@+node:ekr.20050920084036.175: ctor & finishCreate
     def __init__ (self,c):
     
         baseEditCommandsClass.__init__(self,c) # init the base class.
-        
-        if c.keyHandler.useGlobalKillbuffer:
-            self.killbuffer = leoKeys.keyHandlerClass.global_killbuffer
-        else:
-            self.killbuffer = []
-            
+    
+        self.killbuffer = [] # May be changed in finishCreate.
         self.kbiterator = self.iterateKillBuffer()
         self.last_clipboard = None # For interacting with system clipboard.
         self.reset = False 
-    #@-node:ekr.20050920084036.175: ctor
+    
+    def finishCreate (self):
+        
+        baseEditCommandsClass.finishCreate(self) # Call the base finishCreate.
+        
+        if self.keyHandler.useGlobalKillbuffer:
+            self.killbuffer = leoKeys.keyHandlerClass.global_killbuffer
+    #@nonl
+    #@-node:ekr.20050920084036.175: ctor & finishCreate
     #@+node:ekr.20050920084036.176:getPublicCommands
     def getPublicCommands (self):
         
@@ -3135,13 +3189,13 @@ class macroCommandsClass (baseEditCommandsClass):
     #@    @+others
     #@+node:ekr.20050920084036.191: ctor
     def __init__ (self,c):
-        
+    
         baseEditCommandsClass.__init__(self,c) # init the base class.
     
-        self.lastMacro = None 
-        self.macs =[]
-        self.macro =[]
-        self.namedMacros ={}
+        self.lastMacro = None
+        self.macs = []
+        self.macro = []
+        self.namedMacros = {}
         self.macroing = False
     #@nonl
     #@-node:ekr.20050920084036.191: ctor
@@ -3184,9 +3238,9 @@ class macroCommandsClass (baseEditCommandsClass):
         b = self.miniBufferHandler
     
         if not fdict:
-            fdict = self.miniBufferHandler.altX_commandsDict
+            fdict = c.commandsDict
     
-        s = b.get()
+        s = b.get()#
         pmatches = filter(lambda a: a.startswith(s),fdict)
         pmatches.sort()
         if pmatches:
@@ -3194,7 +3248,7 @@ class macroCommandsClass (baseEditCommandsClass):
             return mstring
     
         return s
-    
+    #@nonl
     #@-node:ekr.20050920084036.195:_findMatch
     #@-node:ekr.20050920084036.194:getMacroName (calls saveMacros)
     #@+node:ekr.20050920084036.196:loadMacros & helpers
@@ -3757,22 +3811,24 @@ class registerCommandsClass (baseEditCommandsClass):
     '''A class to represent registers a-z and the corresponding Emacs commands.'''
 
     #@    @+others
-    #@+node:ekr.20050920084036.235: ctor
+    #@+node:ekr.20050920084036.235: ctor & finishCreate
     def __init__ (self,c):
         
         baseEditCommandsClass.__init__(self,c) # init the base class.
     
-        if c.keyHandler.useGlobalRegisters:
-            self.registers = leoKeys.keyHandlerClass.global_registers 
-        else:
-            self.registers = {}
-    
         self.method = None 
         self.methodDict, self.helpDict = self.addRegisterItems()
-        
         self.registermode = False # For rectangles and registers
+        self.registers = {} # May be changed later.
+        
+    def finishCreate (self):
+        
+        baseEditCommandsClass.finishCreate(self) # finish the base class.
+        
+        if self.keyHandler.useGlobalRegisters:
+            self.registers = leoKeys.keyHandlerClass.global_registers
     #@nonl
-    #@-node:ekr.20050920084036.235: ctor
+    #@-node:ekr.20050920084036.235: ctor & finishCreate
     #@+node:ekr.20050920084036.236: Entry points
     def copyToRegister (self,event):
         return self.miniBufferHandler.setEvent(event,'s') and self.setNextRegister(event)
@@ -3922,7 +3978,7 @@ class registerCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.246:_viewRegister
     #@-node:ekr.20050920084036.236: Entry points
-    #@+node:ekr.20050920084036.247: getPublicCommands 
+    #@+node:ekr.20050920084036.247: getPublicCommands
     def getPublicCommands (self):
         
         return {
@@ -3938,7 +3994,7 @@ class registerCommandsClass (baseEditCommandsClass):
             'view-register':                self.viewRegister,
         }
     #@nonl
-    #@-node:ekr.20050920084036.247: getPublicCommands 
+    #@-node:ekr.20050920084036.247: getPublicCommands
     #@+node:ekr.20050920084036.248:Helpers
     #@+node:ekr.20050920084036.249:_chckSel
     def _chckSel (self,event):
@@ -4447,6 +4503,27 @@ class searchCommandsClass (baseEditCommandsClass):
 #@nonl
 #@-node:ekr.20050920084036.257:class searchCommandsClass
 #@-others
+
+#@<< define classesList >>
+#@+node:ekr.20050922104213:<< define classesList >>
+classesList = [
+    ('abbrevCommands',      abbrevCommandsClass),
+    ('bufferCommands',      bufferCommandsClass),
+    ('editCommands',        editCommandsClass),
+    ('controlCommands',     controlCommandsClass),
+    ('editFileCommands',    editFileCommandsClass),
+    ('keyHandlerCommands',  keyHandlerCommandsClass),
+    ('killBufferCommands',  killBufferCommandsClass),
+    ('leoCommands',         leoCommandsClass),
+    ('macroCommands',       macroCommandsClass),
+    ('queryReplaceCommands',queryReplaceCommandsClass),
+    ('rectangleCommands',   rectangleCommandsClass),
+    ('registerCommands',    registerCommandsClass),
+    ('searchCommands',      searchCommandsClass),
+]
+#@nonl
+#@-node:ekr.20050922104213:<< define classesList >>
+#@nl
 #@nonl
 #@-node:ekr.20050710142719:@thin leoEditCommands.py
 #@-leo

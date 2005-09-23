@@ -62,8 +62,7 @@ class keyHandlerClass:
             return
     
         self.tbuffer = c.frame.miniBufferWidget
-        
-        self.altX_commandsDict = None # Set in c.finishCreate.
+    
         self.undoers = {} # Emacs instance tracks undoers given to it.
         self.useGlobalKillbuffer = useGlobalKillbuffer
         self.useGlobalRegisters = useGlobalRegisters
@@ -80,9 +79,9 @@ class keyHandlerClass:
         self.kstrokeManager = self.miniBufferHandler.kstrokeManager
         self.keyboardQuit   = self.miniBufferHandler.keyboardQuit
         self.setEvent       = self.miniBufferHandler.setEvent
-      
+    #@nonl
     #@-node:ekr.20050920085536.2: ctor (keyHandler)
-    #@+node:ekr.20050920094633:finishCreate
+    #@+node:ekr.20050920094633:finishCreate (keyHandler)
     def finishCreate (self,altX_commandsDict):
         
         # g.trace('keyHandler')
@@ -109,7 +108,7 @@ class keyHandlerClass:
         #@nl
         b.setTailEnd(frame.bodyCtrl,utTailEnd)
         c.controlCommands.setShutdownHook(c.close)
-    
+        
         if 0:
             addTemacsExtensions(keyHandler)
             addTemacsAbbreviations(keyHandler)
@@ -117,27 +116,8 @@ class keyHandlerClass:
     
         if 1: # This is dubious.
             keyHandler.setBufferInteractionMethods(frame.bodyCtrl)
-    
-        orig_del = frame.bodyCtrl.delete
-        #@    << define watchDelete >>
-        #@+node:ekr.20050920114619.2:<< define watchDelete >>
-        def watchDelete (i,j=None,keyHandler=keyHandler):
-        
-            '''Watches for complete text deletion.  If it occurs, turns off all state in the Emacs instance.'''
-        
-            if i == '1.0' and j == 'end':
-                # g.trace()
-                event = Tk.Event()
-                event.widget = frame.bodyCtrl
-                keyHandler.keyboardQuit(event)
-        
-            return orig_del(i,j)
-        #@nonl
-        #@-node:ekr.20050920114619.2:<< define watchDelete >>
-        #@nl
-        frame.bodyCtrl.delete = watchDelete
     #@nonl
-    #@-node:ekr.20050920094633:finishCreate
+    #@-node:ekr.20050920094633:finishCreate (keyHandler)
     #@+node:ekr.20050920115444:setBufferInteractionMethods & helpers
     # Called by modified leoTkinterBody.createBindings.
     
@@ -310,8 +290,11 @@ class keyHandlerClass:
             self.widget.configure(textvariable=self.svar)
         
             # Ivars.
-            self.altx_history = []
+            self.altX_history = []
             self.altX_prefix = ''
+            self.altX_tabListPrefix = ''
+            self.altX_tabList = []
+            self.altX_tabListIndex = -1
             self.keysymhistory = []
             self.previousStroke = ''
             self.svars = {}
@@ -320,7 +303,6 @@ class keyHandlerClass:
             # For accumlated args...
             self.arg = ''
             self.afterGetArgState = None
-            self.argPromptLen = 0
         
             # For negative arguments...
             self.negativeArg = False
@@ -328,9 +310,7 @@ class keyHandlerClass:
         
             # For alt-X commands...
             self.xcommands = None       # Done in finishCreate.
-            self.altX_commandsDict = {} # Set later by finishCreate.
-            self.alt_x_prompt = 'full-command'
-            self.axTabList = Tracker()
+            self.alt_x_prompt = 'full-command: '
             self.x_hasNumeric = ['sort-lines','sort-fields']
         
             # For universal commands...
@@ -363,8 +343,6 @@ class keyHandlerClass:
             self.cxHandler.finishCreate()
         
             # Finish this class.
-            self.altX_commandsDict = altX_commandsDict
-        
             self.add_ekr_altx_commands()
         
             # Command bindings.
@@ -446,14 +424,16 @@ class keyHandlerClass:
             #@-node:ekr.20050920085536.12:<< define dict d of abbreviations >>
             #@nl
         
+            c = self.c
             keys = d.keys()
             keys.sort()
             for key in keys:
                 val = d.get(key)
-                func = self.altX_commandsDict.get(val)
+                func = c.commandsDict.get(val)
                 if func:
                     # g.trace(('%-4s' % key),val)
-                    self.altX_commandsDict [key] = func
+                    c.commandsDict [key] = func
+        #@nonl
         #@-node:ekr.20050920085536.11:add_ekr_altx_commands
         #@+node:ekr.20050920085536.13:addCallBackDict (miniBufferClass) MUST BE GENERALIZED
         def addCallBackDict (self):
@@ -686,20 +666,22 @@ class keyHandlerClass:
         def addToDoAltX (self,name,macro):
         
             '''Adds macro to Alt-X commands.'''
+            
+            c = self.c
         
-            if self.altX_commandsDict.has_key(name):
+            if c.commandsDict.has_key(name):
                 return False
         
             def exe (event,macro=macro):
                 self.stopControlX(event)
                 return self._executeMacro(macro,event.widget)
         
-            self.altX_commandsDict [name] = exe
+            c.commandsDict [name] = exe
             self.namedMacros [name] = macro
             return True
         #@nonl
         #@-node:ekr.20050920085536.15:addToDoAltX
-        #@+node:ekr.20050920085536.16:bindKey
+        #@+node:ekr.20050920085536.16:bindKey (miniBufferHandlerClass)
         def bindKey (self,tbuffer,evstring):
         
             callback = self.cbDict.get(evstring)
@@ -715,9 +697,8 @@ class keyHandlerClass:
                 tbuffer.bind(evstring,f,'+')
             else:
                 tbuffer.bind(evstring,f)
-               
         #@nonl
-        #@-node:ekr.20050920085536.16:bindKey
+        #@-node:ekr.20050920085536.16:bindKey (miniBufferHandlerClass)
         #@+node:ekr.20050920085536.17:setBufferStrokes  (creates svars & <key> bindings)
         def setBufferStrokes (self,tbuffer):
         
@@ -1124,7 +1105,7 @@ class keyHandlerClass:
         
             b.set('')
             b.setLabelGrey()
-            b.argPromptLen = 0
+            b.altX_prefix = ''
         #@nonl
         #@-node:ekr.20050920085536.37:reset
         #@+node:ekr.20050920085536.38:update
@@ -1141,7 +1122,7 @@ class keyHandlerClass:
         
             if ch == '\b': # Handle backspace.
                 # Don't backspace over the prompt.
-                if len(s) <= self.argPromptLen:
+                if len(s) <= b.altX_prefix:
                     return 
                 elif len(s) == 1: s = ''
                 else: s = s [0:-1]
@@ -1156,8 +1137,9 @@ class keyHandlerClass:
         def get (self,ignorePrompt=False):
         
             s = self.svar.get()
+            # g.trace(s)
             if ignorePrompt:
-                return s[self.argPromptLen:]
+                return s[len(self.altX_prefix):]
             else:
                 return s
         
@@ -1165,21 +1147,24 @@ class keyHandlerClass:
             
             self.svar.set(s)
             if protect:
-                self.argPromptLen = len(s)
+                # g.trace('protecting',repr(s))
+                self.altX_prefix = s
         #@nonl
         #@-node:ekr.20050920085536.39:get & set
         #@-node:ekr.20050920085536.33: Getters & Setters
-        #@+node:ekr.20050920085536.40:Alt_X methods
+        #@+node:ekr.20050920085536.40:Alt_X methods (miniBufferHandlerClass)
         #@+node:ekr.20050920085536.41:alt_X
         def alt_X (self,event=None,which=''):
         
             b = self
         
             b.setState('altx',which or 1) # Must be int, not True.
+        
             if which:
-                b.set('%s %s:' % (which,self.alt_x_prompt))
+                b.set('%s %s' % (which,self.alt_x_prompt),protect=True)
             else:
-                b.set('%s:' % (self.alt_x_prompt))
+                b.set('%s' % (self.alt_x_prompt),protect=True)
+        
             b.setLabelBlue()
         
             return 'break'
@@ -1190,18 +1175,18 @@ class keyHandlerClass:
         
             '''This method executes the correct Alt-X command'''
             
-            b = self ; keysym = event.keysym
+            b = self ; c = self.c ; keysym = event.keysym
+            # g.trace(keysym)
         
-            if b.get().endswith(self.alt_x_prompt):
-                b.axTabList.clear() # Clear the list, new Alt-x command is in effect.
-                b.set('')
             if keysym == 'Return':
                 #@        << dispatch the function >>
                 #@+node:ekr.20050920085536.45:<< dispatch the function >>
                 s = b.get()
-                func = b.altX_commandsDict.get(s)
+                b.altX_tabList = []
+                s = s[len(b.altX_prefix):].strip()
+                func = c.commandsDict.get(s)
                 if func:
-                    if s != 'repeat-complex-command': b.altx_history.insert(0,s)
+                    if s != 'repeat-complex-command': b.altX_history.insert(0,s)
                     aX = b.getState('altx')
                     if (type(aX) == type(1) or aX.isdigit()) and s in b.x_hasNumeric:
                         func(event,aX)
@@ -1218,65 +1203,104 @@ class keyHandlerClass:
                 #@+node:ekr.20050920085536.44:<< handle tab completion >>
                 s = b.get().strip()
                 
-                if b.axTabList.prefix and s.startswith(b.axTabList.prefix):
-                    b.set(b.axTabList.next()) # get next in iteration
+                if b.altX_tabList and s.startswith(b.altX_tabListPrefix):
+                    b.altX_tabListIndex +=1
+                    if b.altX_tabListIndex >= len(b.altX_tabList):
+                        b.altX_tabListIndex = 0
+                    b.set(b.alt_x_prompt + b.altX_tabList [b.altX_tabListIndex])
                 else:
-                    self.altX_prefix = prefix = b.get()
-                    pmatches = b._findMatch()
-                    b.axTabList.setTabList(prefix,pmatches)
-                    b.set(b.axTabList.next()) # begin iteration on new list
+                    s = b.get() # Always includes prefix, so command is well defined.
+                    b.altX_tabListPrefix = s
+                    command = s [len(b.alt_x_prompt):]
+                    b.altX_tabList,common_prefix = b._findMatch(command)
+                    b.altX_tabListIndex = 0
+                    if b.altX_tabList:
+                        if len(b.altX_tabList) > 1 and (
+                            len(common_prefix) > (len(b.altX_tabListPrefix) - len(b.alt_x_prompt))
+                        ):
+                            b.set(b.alt_x_prompt + common_prefix)
+                            b.altX_tabListPrefix = b.alt_x_prompt + common_prefix
+                        else:
+                            # No common prefix, so show the first item.
+                            b.set(b.alt_x_prompt + b.altX_tabList [0])
+                    else:
+                        b.set(b.alt_x_prompt,protect=True)
                 #@nonl
                 #@-node:ekr.20050920085536.44:<< handle tab completion >>
                 #@nl
             elif keysym == 'BackSpace':
-                #@        << cut back to previous prefix and update prefix >>
-                #@+node:ekr.20050920085536.46:<< cut back to previous prefix and update prefix >>
-                s = self.altX_prefix
+                #@        << handle BackSpace >>
+                #@+node:ekr.20050920085536.46:<< handle BackSpace >>
+                # Cut back to previous prefix and update prefix 
                 
-                b.set(s)
+                s = b.altX_tabListPrefix
                 
-                if len(s) > 1:
-                    self.altX_prefix = s[:-1]
+                if len(s) > len(b.altX_prefix):
+                    b.altX_tabListPrefix = s[:-1]
+                    b.set(b.altX_tabListPrefix,protect=False)
                 else:
-                    self.altX_prefix = ''
+                    b.altX_tabListPrefix = s
+                    b.set(b.altX_tabListPrefix,protect=True)
+                    
+                g.trace('BackSpace: new altX_tabListPrefix',b.altX_tabListPrefix)
+                
+                ### b.startIteration()
+                
+                b.altX_tabList = []
                 #@nonl
-                #@-node:ekr.20050920085536.46:<< cut back to previous prefix and update prefix >>
+                #@-node:ekr.20050920085536.46:<< handle BackSpace >>
                 #@nl
             else:
                 # Clear the list, any other character besides tab indicates that a new prefix is in effect.
-                b.axTabList.clear() 
+                b.altX_tabList = []
                 b.update(event)
+                b.altX_tabListPrefix = b.get()
+                # g.trace('new prefix',b.altX_tabListPrefix)
         
             return 'break'
         #@nonl
         #@+node:ekr.20050920085536.43:_findMatch
-        def _findMatch (self,fdict=None):
+        def _findMatch (self,s,fdict=None):
             
             '''This method returns a sorted list of matches.'''
         
-            if not fdict:
-                fdict = self.altX_commandsDict
+            c = self.c
         
-            s = self.get().strip()
+            if not fdict:
+                fdict = c.commandsDict
+        
+            common_prefix = ''
+        
             if s:
-                # pmatches = filter(lambda a: a.startswith(s),fdict)
                 pmatches = [a for a in fdict if a.startswith(s)]
+                s = pmatches[0] ; done = False
+                for i in xrange(len(s)):
+                    prefix = s[:i]
+                    for z in pmatches:
+                        if not z.startswith(prefix):
+                            done = True ; break
+                    if done:
+                        break
+                    else:
+                        common_prefix = prefix
             else:
                 pmatches = []
         
             pmatches.sort()
-            return pmatches
+        
+            # g.trace(repr(s),len(pmatches))
+            return pmatches,common_prefix
         #@nonl
         #@-node:ekr.20050920085536.43:_findMatch
         #@-node:ekr.20050920085536.42:doAlt_X & helpers
         #@+node:ekr.20050920085536.47:executeLastAltX
         def executeLastAltX (self,event):
             
-            b = self
+            b = self ; c = self.c
         
-            if event.keysym == 'Return' and b.altx_history:
-                last = self.altx_history [0]
-                b.altX_commandsDict [last](event)
+            if event.keysym == 'Return' and b.altX_history:
+                last = self.altX_history [0]
+                c.commandsDict [last](event)
                 return 'break'
             else:
                 return b.keyboardQuit(event)
@@ -1289,15 +1313,15 @@ class keyHandlerClass:
         
             b.keyboardQuit(event)
         
-            if self.altx_history:
+            if self.altX_history:
                 self.setLabelBlue()
-                b.set("Redo: %s" % b.altx_history[0])
+                b.set("Redo: %s" % b.altX_history[0])
                 b.setState('last-altx',True)
         
             return 'break'
         #@nonl
         #@-node:ekr.20050920085536.48:repeatComplexCommand
-        #@-node:ekr.20050920085536.40:Alt_X methods
+        #@-node:ekr.20050920085536.40:Alt_X methods (miniBufferHandlerClass)
         #@+node:ekr.20050920085536.57:ControlX methods
         #@+node:ekr.20050920085536.58:startControlX
         def startControlX (self,event):
@@ -1355,14 +1379,14 @@ class keyHandlerClass:
         
             # Important: f need not be a method of the emacs class.
             
-            b = self
+            b = self ; c = self.c
         
             def f (event,aX=None,self=self,command=function):
                 # g.trace(event,self,command)
                 command()
                 b.keyboardQuit(event)
         
-            b.altX_commandsDict [name] = f
+            c.commandsDict [name] = f
         #@nonl
         #@-node:ekr.20050920085536.61:extendAltX
         #@+node:ekr.20050920085536.62:getArg
@@ -1374,12 +1398,12 @@ class keyHandlerClass:
             b = self ; stateKind = 'getArg'
             state = b.getState(stateKind)
             if not state:
-                b.argPromptLen = len(b.get()) ; b.arg = ''
+                b.altX_prefix = len(b.get()) ; b.arg = ''
                 b.afterGetArgState = (returnStateKind,returnState)
                 b.setState(stateKind,1)
             elif event.keysym == 'Return':
                 # Compute the actual arg.
-                s = b.get() ; b.arg = s[b.argPromptLen:]
+                s = b.get() ; b.arg = s[len(b.altX_prefix):]
                 # Immediately enter the caller's requested state.
                 b.stateManager.clear()
                 stateKind,state = self.afterGetArgState
@@ -1633,55 +1657,6 @@ class keyHandlerClass:
     #@-others
 #@nonl
 #@-node:ekr.20050920085536:class keyHandler (replaces Emacs class)
-#@+node:ekr.20050920085536.78:class Tracker (an iterator)
-class Tracker:
-
-    '''An iterator class to allow the user to cycle through and change a list.'''
-
-    #@    @+others
-    #@+node:ekr.20050920085536.79:init
-    def __init__ (self):
-        
-        self.tablist = []
-        self.prefix = None 
-        self.ng = self._next()
-    #@nonl
-    #@-node:ekr.20050920085536.79:init
-    #@+node:ekr.20050920085536.80:setTabList
-    def setTabList (self,prefix,tlist):
-        
-        self.prefix = prefix 
-        self.tablist = tlist 
-    #@nonl
-    #@-node:ekr.20050920085536.80:setTabList
-    #@+node:ekr.20050920085536.81:_next
-    def _next (self):
-        
-        while 1:
-            tlist = self.tablist 
-            if not tlist:yield ''
-            for z in self.tablist:
-                if tlist!=self.tablist:
-                    break 
-                yield z 
-    #@nonl
-    #@-node:ekr.20050920085536.81:_next
-    #@+node:ekr.20050920085536.82:next
-    def next (self):
-        
-        return self.ng.next()
-    #@nonl
-    #@-node:ekr.20050920085536.82:next
-    #@+node:ekr.20050920085536.83:clear
-    def clear (self):
-    
-        self.tablist = []
-        self.prefix = None
-    #@nonl
-    #@-node:ekr.20050920085536.83:clear
-    #@-others
-#@nonl
-#@-node:ekr.20050920085536.78:class Tracker (an iterator)
 #@-others
 #@nonl
 #@-node:ekr.20031218072017.3748:@thin leoKeys.py
