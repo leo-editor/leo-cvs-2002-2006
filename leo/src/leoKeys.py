@@ -21,26 +21,28 @@ import string
 #@-node:ekr.20050920094258:<< imports >>
 #@nl
 
-#@+others
-#@+node:ekr.20050920085536:class keyHandler
 class keyHandlerClass:
     
     '''A class to support emacs-style commands.'''
 
-    # Define class vars...
+    #@    << define class vars >>
+    #@+node:ekr.20050924065520:<< define class vars >>
     global_killbuffer = []
         # Used only if useGlobalKillbuffer arg to Emacs ctor is True.
         # Otherwise, each Emacs instance has its own local kill buffer.
-
+    
     global_registers = {}
         # Used only if useGlobalRegisters arg to Emacs ctor is True.
         # Otherwise each Emacs instance has its own set of registers.
-
+    
     lossage = []
         # A case could be made for per-instance lossage, but this is not supported.
+    #@nonl
+    #@-node:ekr.20050924065520:<< define class vars >>
+    #@nl
 
     #@    @+others
-    #@+node:ekr.20050920085536.1:Birth
+    #@+node:ekr.20050920085536.1: Birth
     #@+node:ekr.20050920085536.2: ctor (keyHandler)
     def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
         
@@ -548,6 +550,16 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.17:setBufferStrokes  (creates svars & <key> bindings)
     #@-node:ekr.20050923214044: setMiniBufferFunctions & helpers
+    #@+node:ekr.20050920085536.64:manufactureKeyPress
+    def manufactureKeyPress (self,event,which):
+    
+        w = event.widget
+        w.event_generate('<Key>',keysym=which)
+        w.update_idletasks()
+        
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920085536.64:manufactureKeyPress
     #@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
     #@+node:ekr.20050920115444:setBufferInteractionMethods & helpers
     # Called by modified leoTkinterBody.createBindings.
@@ -675,126 +687,347 @@ class keyHandlerClass:
         c.bufferCommands.setBufferRename(buffer,renameNode)
     #@nonl
     #@-node:ekr.20050920115444:setBufferInteractionMethods & helpers
-    #@-node:ekr.20050920085536.1:Birth
-    #@+node:ekr.20050920085536.4:undoer methods
-    #@+at
-    # Emacs requires an undo mechanism be added from the environment.
-    # If there is no undo mechanism added, there will be no undo functionality 
-    # in the instance.
-    #@-at
-    #@@c
+    #@-node:ekr.20050920085536.1: Birth
+    #@+node:ekr.20050920085536.32: Entry points
+    # These are user commands accessible via alt-x.
     
-    #@+others
-    #@+node:ekr.20050920085536.5:setUndoer
-    def setUndoer (self,w,undoer):
-        '''This method sets the undoer method for the Emacs instance.'''
+    def digitArgument (self,event):
         
         k = self
+    
+        return k.universalDispatch(event,'')
+    
+    def universalArgument (self,event):
         
-        k.undoers [w] = undoer
+        k = self
+    
+        return k.universalDispatch(event,'')
     #@nonl
-    #@-node:ekr.20050920085536.5:setUndoer
-    #@+node:ekr.20050920085536.6:doUndo
-    def doUndo (self,event,amount=1):
+    #@+node:ekr.20050920085536.73:universalDispatch
+    def universalDispatch (self,event,stroke):
+    
+        k = self
         
-        k = self ; w = event.widget
-        
-        if k.undoers.has_key(w):
-            for z in xrange(amount):
-                k.undoers [w] ()
+        state = k.getState('uC')
+        if state == 0:
+            k.setState('uC',1)
+            k.setLabel('')
+            k.setLabelBlue()
+        elif state == 1:
+            k.universalCommand1(event,stroke)
+        elif state == 2:
+            k.universalCommand3(event,stroke)
+    
         return 'break'
-    
-    #@-node:ekr.20050920085536.6:doUndo
-    #@-others
     #@nonl
-    #@-node:ekr.20050920085536.4:undoer methods
-    #@+node:ekr.20050923172809:State methods...
-    #@+node:ekr.20050923172809.1:callStateFunction
-    def callStateFunction (self,*args):
+    #@-node:ekr.20050920085536.73:universalDispatch
+    #@+node:ekr.20050920085536.74:universalCommand1
+    def universalCommand1 (self,event,stroke):
         
         k = self
     
-        if k.state:
-            flag, func = k.stateCommands [k.state]
+        if event.char not in k.uCstring:
+            return k.universalCommand2(event,stroke)
+     
+        k.update(event)
     
-            if flag == 1:
-                return func(args[0])
+        if event.char != '\b':
+            k.setLabel('%s ' % k.getLabel())
+    #@nonl
+    #@-node:ekr.20050920085536.74:universalCommand1
+    #@+node:ekr.20050920085536.75:universalCommand2
+    def universalCommand2 (self,event,stroke):
+        
+        k = self ; w = event.widget # event IS used.
+        txt = k.getLabel()
+        k.keyboardQuit(event)
+        txt = txt.replace(' ','')
+        k.resetLabel()
+        if not txt.isdigit():
+            # This takes us to macro state.
+            # For example Control-u Control-x ( will execute the last macro and begin editing of it.
+            if stroke == '<Control-x>':
+                k.setState('uC',2)
+                return k.universalCommand3(event,stroke)
+            return k._tailEnd(w)
+        if k.uCdict.has_key(stroke): # This executes the keystroke 'n' number of times.
+            k.uCdict [stroke](event,txt)
+        else:
+            i = int(txt)
+            stroke = stroke.lstrip('<').rstrip('>')
+            if k.cbDict.has_key(stroke):
+                for z in xrange(i):
+                    method = k.cbDict [stroke]
+                    ev = Tk.Event()
+                    ev.widget = event.widget
+                    ev.keysym = event.keysym
+                    ev.keycode = event.keycode
+                    ev.char = event.char
+                    k.masterCommand(ev,method,'<%s>' % stroke)
             else:
-                return func(*args)
-    #@nonl
-    #@-node:ekr.20050923172809.1:callStateFunction
-    #@+node:ekr.20050923172814.1:clearState
-    def clearState (self):
+                for z in xrange(i):
+                    w.event_generate('<Key>',keycode=event.keycode,keysym=event.keysym)
+                    k._tailEnd(w)
+    #@-node:ekr.20050920085536.75:universalCommand2
+    #@+node:ekr.20050920085536.76:universalCommand3
+    def universalCommand3 (self,event,stroke):
         
         k = self
+        k.setLabel('Control-u %s' % stroke.lstrip('<').rstrip('>'))
+        k.setLabelBlue()
     
-        k.state = None
-    
-        for z in k.states.keys():
-            k.states [z] = 0 # More useful than False.
+        if event.keysym == 'parenleft':
+            k.keyboardQuit(event)
+            c.macroCommands.startKBDMacro(event)
+            c.macroCommands.executeLastMacro(event)
+            return 'break'
     #@nonl
-    #@-node:ekr.20050923172814.1:clearState
-    #@+node:ekr.20050923172814.2:getState
-    def getState (self,state):
-        
+    #@-node:ekr.20050920085536.76:universalCommand3
+    #@+node:ekr.20050920085536.77:numberCommand
+    def numberCommand (self,event,stroke,number): # event IS used.
+    
         k = self
     
-        return k.states.get(state,False)
-    #@nonl
-    #@-node:ekr.20050923172814.2:getState
-    #@+node:ekr.20050923172814.3:hasState
-    def hasState (self):
-        
-        k = self
+        k.universalDispatch(event,stroke)
+        event.widget.event_generate('<Key>',keysym=number)
     
-        if k.state:
-            return k.states [k.state]
+        return 'break'
     #@nonl
-    #@-node:ekr.20050923172814.3:hasState
-    #@+node:ekr.20050923172814.4:setState
-    def setState (self,state,value):
+    #@-node:ekr.20050920085536.77:numberCommand
+    #@-node:ekr.20050920085536.32: Entry points
+    #@+node:ekr.20050924065103:Arg...
+    #@+node:ekr.20050920085536.62:getArg
+    def getArg (self,event,returnStateKind=None,returnState=None):
         
-        k = self
-        k.state = state
-        if state:
-            k.states [state] = value
-        else:
+        '''Accumulate an argument until the user hits return (or control-g).
+        Enter the 'return' state when done.'''
+        
+        k = self ; stateKind = 'getArg'
+        state = k.getState(stateKind)
+        if not state:
+            k.altX_prefix = len(k.getLabel()) ; k.arg = ''
+            k.afterGetArgState = (returnStateKind,returnState)
+            k.setState(stateKind,1)
+        elif event.keysym == 'Return':
+            # Compute the actual arg.
+            s = k.getLabel() ; k.arg = s[len(k.altX_prefix):]
+            # Immediately enter the caller's requested state.
             k.clearState()
-    #@nonl
-    #@-node:ekr.20050923172814.4:setState
-    #@+node:ekr.20050923172814.5:whichState
-    def whichState (self):
-        
-        k = self
-    
-        return k.state
-    #@nonl
-    #@-node:ekr.20050923172814.5:whichState
-    #@-node:ekr.20050923172809:State methods...
-    #@+node:ekr.20050923174229.2:Keystroke methods
-    #@+node:ekr.20050923174229.3:callKeystrokeFunction
-    def callKeystrokeFunction (self,event,stroke):
-        
-        k = self
-        
-        numberOfArgs, func = k.keystrokes [stroke]
-    
-        if numberOfArgs == 1:
-            return func(event)
+            stateKind,state = k.afterGetArgState
+            k.setState(stateKind,state)
+            k.callStateFunction(event,None)
         else:
-            return func(event,stroke)
+            k.update(event)
+        return 'break'
     #@nonl
-    #@-node:ekr.20050923174229.3:callKeystrokeFunction
-    #@+node:ekr.20050920085536.22:hasKeyStroke
-    def hasKeyStroke (self,stroke):
-        
+    #@-node:ekr.20050920085536.62:getArg
+    #@+node:ekr.20050920085536.68:negativeArgument
+    def negativeArgument (self,event,stroke=None):
+    
         k = self
     
-        return k.keystrokes.has_key(stroke)
+        k.setLabel("Negative Argument")
+        k.setLabelBlue()
+    
+        state = k.getState('negativeArg')
+        if state == 0:
+            k.setState('negativeArg',1)
+        else:
+            func = k.negArgs.get(stroke)
+            if func:
+                func(event,stroke)
+    
+        return 'break'
     #@nonl
-    #@-node:ekr.20050920085536.22:hasKeyStroke
-    #@-node:ekr.20050923174229.2:Keystroke methods
-    #@+node:ekr.20050920085536.57:ControlX methods
+    #@-node:ekr.20050920085536.68:negativeArgument
+    #@-node:ekr.20050924065103:Arg...
+    #@+node:ekr.20050920085536.40:Alt_X...
+    #@+node:ekr.20050920085536.41:alt_X
+    def alt_X (self,event=None,which=''):
+    
+        k = self
+    
+        k.setState('altx',which or 1) # Must be int, not True.
+    
+        if which:
+            k.setLabel('%s %s' % (which,k.alt_x_prompt),protect=True)
+        else:
+            k.setLabel('%s' % (k.alt_x_prompt),protect=True)
+    
+        k.setLabelBlue()
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920085536.41:alt_X
+    #@+node:ekr.20050920085536.42:doAlt_X & helpers
+    def doAlt_X (self,event):
+    
+        '''This method executes the correct Alt-X command'''
+        
+        k = self ; c = k.c ; keysym = event.keysym
+        # g.trace(keysym)
+    
+        if keysym == 'Return':
+            #@        << dispatch the function >>
+            #@+node:ekr.20050920085536.45:<< dispatch the function >>
+            s = k.getLabel()
+            k.altX_tabList = []
+            command = s[len(k.altX_prefix):].strip()
+            func = c.commandsDict.get(command)
+            k.clearState()
+            k.keyboardQuit(event)
+            
+            if func:
+                if command != 'repeat-complex-command': k.altX_history.insert(0,command)
+                aX = k.getState('altx')
+                if (type(aX) == type(1) or aX.isdigit()) and command in k.x_hasNumeric:
+                    func(event,aX)
+                else:
+                    func(event)
+            else:
+                k.setLabel('Command does not exist')
+            #@nonl
+            #@-node:ekr.20050920085536.45:<< dispatch the function >>
+            #@nl
+        elif keysym == 'Tab':
+            #@        << handle tab completion >>
+            #@+node:ekr.20050920085536.44:<< handle tab completion >>
+            s = k.getLabel().strip()
+            
+            if k.altX_tabList and s.startswith(k.altX_tabListPrefix):
+                k.altX_tabListIndex +=1
+                if k.altX_tabListIndex >= len(k.altX_tabList):
+                    k.altX_tabListIndex = 0
+                k.setLabel(k.alt_x_prompt + k.altX_tabList [k.altX_tabListIndex])
+            else:
+                s = k.getLabel() # Always includes prefix, so command is well defined.
+                k.altX_tabListPrefix = s
+                command = s [len(k.alt_x_prompt):]
+                k.altX_tabList,common_prefix = k._findMatch(command)
+                k.altX_tabListIndex = 0
+                if k.altX_tabList:
+                    if len(k.altX_tabList) > 1 and (
+                        len(common_prefix) > (len(k.altX_tabListPrefix) - len(k.alt_x_prompt))
+                    ):
+                        k.setLabel(k.alt_x_prompt + common_prefix)
+                        k.altX_tabListPrefix = k.alt_x_prompt + common_prefix
+                    else:
+                        # No common prefix, so show the first item.
+                        k.setLabel(k.alt_x_prompt + k.altX_tabList [0])
+                else:
+                    k.setLabel(k.alt_x_prompt,protect=True)
+            #@nonl
+            #@-node:ekr.20050920085536.44:<< handle tab completion >>
+            #@nl
+        elif keysym == 'BackSpace':
+            #@        << handle BackSpace >>
+            #@+node:ekr.20050920085536.46:<< handle BackSpace >>
+            # Cut back to previous prefix and update prefix.
+            s = k.altX_tabListPrefix
+            
+            if len(s) > len(k.altX_prefix):
+                k.altX_tabListPrefix = s[:-1]
+                k.setLabel(k.altX_tabListPrefix,protect=False)
+            else:
+                k.altX_tabListPrefix = s
+                k.setLabel(k.altX_tabListPrefix,protect=True)
+                
+            # g.trace('BackSpace: new altX_tabListPrefix',k.altX_tabListPrefix)
+            
+            # Force a recomputation of the commands list.
+            k.altX_tabList = []
+            #@nonl
+            #@-node:ekr.20050920085536.46:<< handle BackSpace >>
+            #@nl
+        else:
+            # Clear the list, any other character besides tab indicates that a new prefix is in effect.
+            k.altX_tabList = []
+            k.update(event)
+            k.altX_tabListPrefix = k.getLabel()
+            # g.trace('new prefix',k.altX_tabListPrefix)
+    
+        return 'break'
+    #@nonl
+    #@+node:ekr.20050920085536.43:_findMatch
+    def _findMatch (self,s,fdict=None):
+        
+        '''This method returns a sorted list of matches.'''
+    
+        k = self ; c = k.c
+    
+        if not fdict:
+            fdict = c.commandsDict
+    
+        common_prefix = ''
+    
+        if s: pmatches = [a for a in fdict if a.startswith(s)]
+        else: pmatches = []
+            
+        if pmatches:
+            s = pmatches[0] ; done = False
+            for i in xrange(len(s)):
+                prefix = s[:i]
+                for z in pmatches:
+                    if not z.startswith(prefix):
+                        done = True ; break
+                if done:
+                    break
+                else:
+                    common_prefix = prefix
+            pmatches.sort()
+    
+        # g.trace(repr(s),len(pmatches))
+        return pmatches,common_prefix
+    #@nonl
+    #@-node:ekr.20050920085536.43:_findMatch
+    #@-node:ekr.20050920085536.42:doAlt_X & helpers
+    #@+node:ekr.20050920085536.47:executeLastAltX
+    def executeLastAltX (self,event):
+        
+        k = self ; c = k.c
+    
+        if event.keysym == 'Return' and k.altX_history:
+            last = k.altX_history [0]
+            c.commandsDict [last](event)
+            return 'break'
+        else:
+            return k.keyboardQuit(event)
+    #@nonl
+    #@-node:ekr.20050920085536.47:executeLastAltX
+    #@+node:ekr.20050920085536.48:repeatComplexCommand
+    def repeatComplexCommand (self,event):
+    
+        k = self
+    
+        k.keyboardQuit(event)
+    
+        if k.altX_history:
+            k.setLabelBlue()
+            k.setLabel("Redo: %s" % k.altX_history[0])
+            k.setState('last-altx',True)
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920085536.48:repeatComplexCommand
+    #@+node:ekr.20050920085536.61:extendAltX
+    def extendAltX (self,name,function):
+    
+        '''A simple method that extends the functions Alt-X offers.'''
+    
+        # Important: f need not be a method of the emacs class.
+        
+        k = self ; c = k.c
+    
+        def f (event,aX=None,self=self,command=function):
+            # g.trace(event,self,command)
+            command()
+            k.keyboardQuit(event)
+    
+        c.commandsDict [name] = f
+    #@nonl
+    #@-node:ekr.20050920085536.61:extendAltX
+    #@-node:ekr.20050920085536.40:Alt_X...
+    #@+node:ekr.20050920085536.57:ControlX...
     #@+node:ekr.20050920085536.58:startControlX
     def startControlX (self,event):
     
@@ -803,7 +1036,7 @@ class keyHandlerClass:
         k = self
     
         k.setState('controlx',True)
-        k.set('Control - X')
+        k.setLabel('Control - X')
         k.setLabelBlue()
     
         return 'break'
@@ -944,7 +1177,7 @@ class keyHandlerClass:
             if k.processAbbreviation(event): return 'break'
     
         if event.keysym == 'g':
-            l = k.get()
+            l = k.getLabel()
             if k.abbreviationDispatch.has_key(l):
                 k.stopControlX(event)
                 return k.abbreviationDispatch [l](event)
@@ -990,13 +1223,13 @@ class keyHandlerClass:
         
         k = self ; char = event.char
     
-        if k.get() != 'a' and event.keysym == 'a':
-            k.set('a')
+        if k.getLabel() != 'a' and event.keysym == 'a':
+            k.setLabel('a')
             return 'break'
     
-        elif k.get() == 'a':
+        elif k.getLabel() == 'a':
             if char == 'i':
-                k.set('a i')
+                k.setLabel('a i')
             elif char == 'e':
                 k.stopControlX(event)
                 event.char = ''
@@ -1004,123 +1237,46 @@ class keyHandlerClass:
             return 'break'
     #@nonl
     #@-node:ekr.20050923183943.6:processAbbreviation MUST BE GENERALIZED
-    #@-node:ekr.20050920085536.57:ControlX methods
-    #@+node:ekr.20050920085536.7:MiniBuffer methods
-    #@+node:ekr.20050920085536.32: Entry points
-    # These are user commands accessible via alt-x.
-    
-    def digitArgument (self,event):
+    #@-node:ekr.20050920085536.57:ControlX...
+    #@+node:ekr.20050923174229.2:Keystroke...
+    #@+node:ekr.20050923174229.3:callKeystrokeFunction
+    def callKeystrokeFunction (self,event,stroke):
         
         k = self
-    
-        return k.universalDispatch(event,'')
-    
-    def universalArgument (self,event):
         
-        k = self
+        numberOfArgs, func = k.keystrokes [stroke]
     
-        return k.universalDispatch(event,'')
-    #@nonl
-    #@+node:ekr.20050920085536.73:universalDispatch
-    def universalDispatch (self,event,stroke):
-    
-        k = self
-        
-        state = k.getState('uC')
-        if state == 0:
-            k.setState('uC',1)
-            k.set('')
-            k.setLabelBlue()
-        elif state == 1:
-            k.universalCommand1(event,stroke)
-        elif state == 2:
-            k.universalCommand3(event,stroke)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.73:universalDispatch
-    #@+node:ekr.20050920085536.74:universalCommand1
-    def universalCommand1 (self,event,stroke):
-        
-        k = self
-    
-        if event.char not in k.uCstring:
-            return k.universalCommand2(event,stroke)
-     
-        k.update(event)
-    
-        if event.char != '\b':
-            k.set('%s ' % k.get())
-    #@nonl
-    #@-node:ekr.20050920085536.74:universalCommand1
-    #@+node:ekr.20050920085536.75:universalCommand2
-    def universalCommand2 (self,event,stroke):
-        
-        k = self ; w = event.widget # event IS used.
-        txt = k.get()
-        k.keyboardQuit(event)
-        txt = txt.replace(' ','')
-        k.resetLabel()
-        if not txt.isdigit():
-            # This takes us to macro state.
-            # For example Control-u Control-x ( will execute the last macro and begin editing of it.
-            if stroke == '<Control-x>':
-                k.setState('uC',2)
-                return k.universalCommand3(event,stroke)
-            return k._tailEnd(w)
-        if k.uCdict.has_key(stroke): # This executes the keystroke 'n' number of times.
-            k.uCdict [stroke](event,txt)
+        if numberOfArgs == 1:
+            return func(event)
         else:
-            i = int(txt)
-            stroke = stroke.lstrip('<').rstrip('>')
-            if k.cbDict.has_key(stroke):
-                for z in xrange(i):
-                    method = k.cbDict [stroke]
-                    ev = Tk.Event()
-                    ev.widget = event.widget
-                    ev.keysym = event.keysym
-                    ev.keycode = event.keycode
-                    ev.char = event.char
-                    k.masterCommand(ev,method,'<%s>' % stroke)
-            else:
-                for z in xrange(i):
-                    w.event_generate('<Key>',keycode=event.keycode,keysym=event.keysym)
-                    k._tailEnd(w)
-    #@-node:ekr.20050920085536.75:universalCommand2
-    #@+node:ekr.20050920085536.76:universalCommand3
-    def universalCommand3 (self,event,stroke):
+            return func(event,stroke)
+    #@nonl
+    #@-node:ekr.20050923174229.3:callKeystrokeFunction
+    #@+node:ekr.20050920085536.22:hasKeyStroke
+    def hasKeyStroke (self,stroke):
+    
+        return self.keystrokes.has_key(stroke)
+    #@nonl
+    #@-node:ekr.20050920085536.22:hasKeyStroke
+    #@-node:ekr.20050923174229.2:Keystroke...
+    #@+node:ekr.20050924064254:Label methods
+    #@+node:ekr.20050920085536.39:getLabel & setLabel
+    def getLabel (self,ignorePrompt=False):
+        
+        k = self ; s = k.svar.get()
+        if ignorePrompt:
+            return s[len(k.altX_prefix):]
+        else:
+            return s
+    
+    def setLabel (self,s,protect=False):
         
         k = self
-        k.set('Control-u %s' % stroke.lstrip('<').rstrip('>'))
-        k.setLabelBlue()
-    
-        if event.keysym == 'parenleft':
-            k.keyboardQuit(event)
-            c.macroCommands.startKBDMacro(event)
-            c.macroCommands.executeLastMacro(event)
-            return 'break'
+        k.svar.set(s)
+        if protect:
+            k.altX_prefix = s
     #@nonl
-    #@-node:ekr.20050920085536.76:universalCommand3
-    #@+node:ekr.20050920085536.77:numberCommand
-    def numberCommand (self,event,stroke,number): # event IS used.
-    
-        k = self
-    
-        k.universalDispatch(event,stroke)
-        event.widget.event_generate('<Key>',keysym=number)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.77:numberCommand
-    #@-node:ekr.20050920085536.32: Entry points
-    #@+node:ekr.20050920085536.33: Getters & Setters
-    #@+node:ekr.20050920085536.34:setEvent
-    def setEvent (self,event,l):
-    
-        event.keysym = l
-        return event
-    #@nonl
-    #@-node:ekr.20050920085536.34:setEvent
+    #@-node:ekr.20050920085536.39:getLabel & setLabel
     #@+node:ekr.20050920085536.35:setLabelGrey
     def setLabelGrey (self):
         
@@ -1141,8 +1297,7 @@ class keyHandlerClass:
     def resetLabel (self):
         
         k = self
-    
-        k.set('')
+        k.setLabel('')
         k.setLabelGrey()
         k.altX_prefix = ''
     #@nonl
@@ -1157,7 +1312,7 @@ class keyHandlerClass:
         It mimics what would happen with the keyboard and a Text editor
         instead of plain accumalation.'''
         
-        k = self ; s = k.get() ; ch = event.char
+        k = self ; s = k.getLabel() ; ch = event.char
     
         if ch == '\b': # Handle backspace.
             # Don't backspace over the prompt.
@@ -1169,238 +1324,9 @@ class keyHandlerClass:
             # Add the character.
             s = s + ch
     
-        k.set(s)
+        k.setLabel(s)
     #@nonl
     #@-node:ekr.20050920085536.38:update
-    #@-node:ekr.20050920085536.33: Getters & Setters
-    #@+node:ekr.20050920085536.39:get & set
-    def get (self,ignorePrompt=False):
-        
-        k = self ; s = k.svar.get()
-        if ignorePrompt:
-            return s[len(k.altX_prefix):]
-        else:
-            return s
-    
-    def set (self,s,protect=False):
-        
-        k = self
-        k.svar.set(s)
-        if protect:
-            k.altX_prefix = s
-    #@nonl
-    #@-node:ekr.20050920085536.39:get & set
-    #@+node:ekr.20050920085536.40:Alt_X methods
-    #@+node:ekr.20050920085536.41:alt_X
-    def alt_X (self,event=None,which=''):
-    
-        k = self
-    
-        k.setState('altx',which or 1) # Must be int, not True.
-    
-        if which:
-            k.set('%s %s' % (which,k.alt_x_prompt),protect=True)
-        else:
-            k.set('%s' % (k.alt_x_prompt),protect=True)
-    
-        k.setLabelBlue()
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.41:alt_X
-    #@+node:ekr.20050920085536.42:doAlt_X & helpers
-    def doAlt_X (self,event):
-    
-        '''This method executes the correct Alt-X command'''
-        
-        k = self ; c = k.c ; keysym = event.keysym
-        # g.trace(keysym)
-    
-        if keysym == 'Return':
-            #@        << dispatch the function >>
-            #@+node:ekr.20050920085536.45:<< dispatch the function >>
-            s = k.get()
-            k.altX_tabList = []
-            command = s[len(k.altX_prefix):].strip()
-            func = c.commandsDict.get(command)
-            k.clearState()
-            k.keyboardQuit(event)
-            
-            if func:
-                if command != 'repeat-complex-command': k.altX_history.insert(0,command)
-                aX = k.getState('altx')
-                if (type(aX) == type(1) or aX.isdigit()) and command in k.x_hasNumeric:
-                    func(event,aX)
-                else:
-                    func(event)
-            else:
-                k.set('Command does not exist')
-            #@nonl
-            #@-node:ekr.20050920085536.45:<< dispatch the function >>
-            #@nl
-        elif keysym == 'Tab':
-            #@        << handle tab completion >>
-            #@+node:ekr.20050920085536.44:<< handle tab completion >>
-            s = k.get().strip()
-            
-            if k.altX_tabList and s.startswith(k.altX_tabListPrefix):
-                k.altX_tabListIndex +=1
-                if k.altX_tabListIndex >= len(k.altX_tabList):
-                    k.altX_tabListIndex = 0
-                k.set(k.alt_x_prompt + k.altX_tabList [k.altX_tabListIndex])
-            else:
-                s = k.get() # Always includes prefix, so command is well defined.
-                k.altX_tabListPrefix = s
-                command = s [len(k.alt_x_prompt):]
-                k.altX_tabList,common_prefix = k._findMatch(command)
-                k.altX_tabListIndex = 0
-                if k.altX_tabList:
-                    if len(k.altX_tabList) > 1 and (
-                        len(common_prefix) > (len(k.altX_tabListPrefix) - len(k.alt_x_prompt))
-                    ):
-                        k.set(k.alt_x_prompt + common_prefix)
-                        k.altX_tabListPrefix = k.alt_x_prompt + common_prefix
-                    else:
-                        # No common prefix, so show the first item.
-                        k.set(k.alt_x_prompt + k.altX_tabList [0])
-                else:
-                    k.set(k.alt_x_prompt,protect=True)
-            #@nonl
-            #@-node:ekr.20050920085536.44:<< handle tab completion >>
-            #@nl
-        elif keysym == 'BackSpace':
-            #@        << handle BackSpace >>
-            #@+node:ekr.20050920085536.46:<< handle BackSpace >>
-            # Cut back to previous prefix and update prefix.
-            s = k.altX_tabListPrefix
-            
-            if len(s) > len(k.altX_prefix):
-                k.altX_tabListPrefix = s[:-1]
-                k.set(k.altX_tabListPrefix,protect=False)
-            else:
-                k.altX_tabListPrefix = s
-                k.set(k.altX_tabListPrefix,protect=True)
-                
-            # g.trace('BackSpace: new altX_tabListPrefix',k.altX_tabListPrefix)
-            
-            # Force a recomputation of the commands list.
-            k.altX_tabList = []
-            #@nonl
-            #@-node:ekr.20050920085536.46:<< handle BackSpace >>
-            #@nl
-        else:
-            # Clear the list, any other character besides tab indicates that a new prefix is in effect.
-            k.altX_tabList = []
-            k.update(event)
-            k.altX_tabListPrefix = k.get()
-            # g.trace('new prefix',k.altX_tabListPrefix)
-    
-        return 'break'
-    #@nonl
-    #@+node:ekr.20050920085536.43:_findMatch
-    def _findMatch (self,s,fdict=None):
-        
-        '''This method returns a sorted list of matches.'''
-    
-        k = self ; c = k.c
-    
-        if not fdict:
-            fdict = c.commandsDict
-    
-        common_prefix = ''
-    
-        if s: pmatches = [a for a in fdict if a.startswith(s)]
-        else: pmatches = []
-            
-        if pmatches:
-            s = pmatches[0] ; done = False
-            for i in xrange(len(s)):
-                prefix = s[:i]
-                for z in pmatches:
-                    if not z.startswith(prefix):
-                        done = True ; break
-                if done:
-                    break
-                else:
-                    common_prefix = prefix
-            pmatches.sort()
-    
-        # g.trace(repr(s),len(pmatches))
-        return pmatches,common_prefix
-    #@nonl
-    #@-node:ekr.20050920085536.43:_findMatch
-    #@-node:ekr.20050920085536.42:doAlt_X & helpers
-    #@+node:ekr.20050920085536.47:executeLastAltX
-    def executeLastAltX (self,event):
-        
-        k = self ; c = k.c
-    
-        if event.keysym == 'Return' and k.altX_history:
-            last = k.altX_history [0]
-            c.commandsDict [last](event)
-            return 'break'
-        else:
-            return k.keyboardQuit(event)
-    #@nonl
-    #@-node:ekr.20050920085536.47:executeLastAltX
-    #@+node:ekr.20050920085536.48:repeatComplexCommand
-    def repeatComplexCommand (self,event):
-    
-        k = self
-    
-        k.keyboardQuit(event)
-    
-        if k.altX_history:
-            k.setLabelBlue()
-            k.set("Redo: %s" % k.altX_history[0])
-            k.setState('last-altx',True)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.48:repeatComplexCommand
-    #@-node:ekr.20050920085536.40:Alt_X methods
-    #@+node:ekr.20050920085536.61:extendAltX
-    def extendAltX (self,name,function):
-    
-        '''A simple method that extends the functions Alt-X offers.'''
-    
-        # Important: f need not be a method of the emacs class.
-        
-        k = self ; c = k.c
-    
-        def f (event,aX=None,self=self,command=function):
-            # g.trace(event,self,command)
-            command()
-            k.keyboardQuit(event)
-    
-        c.commandsDict [name] = f
-    #@nonl
-    #@-node:ekr.20050920085536.61:extendAltX
-    #@+node:ekr.20050920085536.62:getArg
-    def getArg (self,event,returnStateKind=None,returnState=None):
-        
-        '''Accumulate an argument until the user hits return (or control-g).
-        Enter the 'return' state when done.'''
-        
-        k = self ; stateKind = 'getArg'
-        state = k.getState(stateKind)
-        if not state:
-            k.altX_prefix = len(k.get()) ; k.arg = ''
-            k.afterGetArgState = (returnStateKind,returnState)
-            k.setState(stateKind,1)
-        elif event.keysym == 'Return':
-            # Compute the actual arg.
-            s = k.get() ; k.arg = s[len(k.altX_prefix):]
-            # Immediately enter the caller's requested state.
-            k.clearState()
-            stateKind,state = k.afterGetArgState
-            k.setState(stateKind,state)
-            k.callStateFunction(event,None)
-        else:
-            k.update(event)
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.62:getArg
     #@+node:ekr.20050920085536.63:keyboardQuit
     def keyboardQuit (self,event):  # The event arg IS used.
     
@@ -1411,16 +1337,7 @@ class keyHandlerClass:
         return k.stopControlX(event) # This method will eventually contain the stopControlX code.
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
-    #@+node:ekr.20050920085536.64:manufactureKeyPress
-    def manufactureKeyPress (self,event,which): # event **is** used.
-    
-        w = event.widget
-        w.event_generate('<Key>',keysym=which)
-        w.update_idletasks()
-        
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.64:manufactureKeyPress
+    #@-node:ekr.20050924064254:Label methods
     #@+node:ekr.20050920085536.65:masterCommand (miniBufferHandlerClass)
     def masterCommand (self,event,method,stroke,general):
         
@@ -1505,25 +1422,69 @@ class keyHandlerClass:
             return c.frame.body.onBodyKey(event)
     #@nonl
     #@-node:ekr.20050920085536.65:masterCommand (miniBufferHandlerClass)
-    #@+node:ekr.20050920085536.68:negativeArgument
-    def negativeArgument (self,event,stroke=None):
-    
+    #@+node:ekr.20050923172809:State methods...
+    #@+node:ekr.20050923172809.1:callStateFunction
+    def callStateFunction (self,*args):
+        
         k = self
     
-        k.set("Negative Argument")
-        k.setLabelBlue()
+        if k.state:
+            flag, func = k.stateCommands [k.state]
     
-        state = k.getState('negativeArg')
-        if state == 0:
-            k.setState('negativeArg',1)
-        else:
-            func = k.negArgs.get(stroke)
-            if func:
-                func(event,stroke)
-    
-        return 'break'
+            if flag == 1:
+                return func(args[0])
+            else:
+                return func(*args)
     #@nonl
-    #@-node:ekr.20050920085536.68:negativeArgument
+    #@-node:ekr.20050923172809.1:callStateFunction
+    #@+node:ekr.20050923172814.1:clearState
+    def clearState (self):
+        
+        k = self
+    
+        k.state = None
+    
+        for z in k.states.keys():
+            k.states [z] = 0 # More useful than False.
+    #@nonl
+    #@-node:ekr.20050923172814.1:clearState
+    #@+node:ekr.20050923172814.2:getState
+    def getState (self,state):
+        
+        k = self
+    
+        return k.states.get(state,False)
+    #@nonl
+    #@-node:ekr.20050923172814.2:getState
+    #@+node:ekr.20050923172814.3:hasState
+    def hasState (self):
+        
+        k = self
+    
+        if k.state:
+            return k.states [k.state]
+    #@nonl
+    #@-node:ekr.20050923172814.3:hasState
+    #@+node:ekr.20050923172814.4:setState
+    def setState (self,state,value):
+        
+        k = self
+        k.state = state
+        if state:
+            k.states [state] = value
+        else:
+            k.clearState()
+    #@nonl
+    #@-node:ekr.20050923172814.4:setState
+    #@+node:ekr.20050923172814.5:whichState
+    def whichState (self):
+        
+        k = self
+    
+        return k.state
+    #@nonl
+    #@-node:ekr.20050923172814.5:whichState
+    #@-node:ekr.20050923172809:State methods...
     #@+node:ekr.20050920085536.69:tailEnd methods
     #@+node:ekr.20050920085536.70:_tailEnd
     def _tailEnd (self,w):
@@ -1549,11 +1510,39 @@ class keyHandlerClass:
         k.tailEnds [w] = tailCall
     #@-node:ekr.20050920085536.71:setTailEnd
     #@-node:ekr.20050920085536.69:tailEnd methods
-    #@-node:ekr.20050920085536.7:MiniBuffer methods
+    #@+node:ekr.20050920085536.4:Undoer methods
+    #@+at
+    # Emacs requires an undo mechanism be added from the environment.
+    # If there is no undo mechanism added, there will be no undo functionality 
+    # in the instance.
+    #@-at
+    #@@c
+    
+    #@+others
+    #@+node:ekr.20050920085536.5:setUndoer
+    def setUndoer (self,w,undoer):
+        '''This method sets the undoer method for the Emacs instance.'''
+        
+        k = self
+        
+        k.undoers [w] = undoer
+    #@nonl
+    #@-node:ekr.20050920085536.5:setUndoer
+    #@+node:ekr.20050920085536.6:doUndo
+    def doUndo (self,event,amount=1):
+        
+        k = self ; w = event.widget
+        
+        if k.undoers.has_key(w):
+            for z in xrange(amount):
+                k.undoers [w] ()
+        return 'break'
+    
+    #@-node:ekr.20050920085536.6:doUndo
     #@-others
-#@nonl
-#@-node:ekr.20050920085536:class keyHandler
-#@-others
+    #@nonl
+    #@-node:ekr.20050920085536.4:Undoer methods
+    #@-others
 #@nonl
 #@-node:ekr.20031218072017.3748:@thin leoKeys.py
 #@-leo
