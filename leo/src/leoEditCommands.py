@@ -344,35 +344,38 @@ class abbrevCommandsClass (baseEditCommandsClass):
         ins = w.index( 'insert' )
         #@    << define a new generator searchXR >>
         #@+node:ekr.20050920084036.22:<< define a new generator searchXR >>
-        # EKR: This is a generator (it contains a yield).
-        # EKR: To make this work we must define a new generator for each call to regionalExpandAbbrev.
-        def searchXR( i1 , i2, ins, event ):
-        
+        #@+at 
+        #@nonl
+        # This is a generator (it contains a yield).
+        # To make this work we must define a new generator for each call to 
+        # regionalExpandAbbrev.
+        #@-at
+        #@@c
+        def searchXR (i1,i2,ins,event):
             k = self.k ; w = event.widget
-            w.tag_add( 'sXR', i1, i2 )
+            w.tag_add('sXR',i1,i2)
             while i1:
-                tr = w.tag_ranges( 'sXR' )
+                tr = w.tag_ranges('sXR')
                 if not tr: break
-                i1 = w.search( r'\w', i1, stopindex = tr[ 1 ] , regexp = True )
+                i1 = w.search(r'\w',i1,stopindex=tr[1],regexp=True)
                 if i1:
-                    word = w.get( '%s wordstart' % i1, '%s wordend' % i1 )
-                    w.tag_delete( 'found' )
-                    w.tag_add( 'found',  '%s wordstart' % i1, '%s wordend' % i1 )
-                    w.tag_config( 'found', background = 'yellow' )
-                    if self.abbrevs.has_key( word ):
-                        k.setLabel( 'Replace %s with %s? y/n' % ( word, self.abbrevs[ word ] ) )
+                    word = w.get('%s wordstart' % i1,'%s wordend' % i1)
+                    w.tag_delete('found')
+                    w.tag_add('found','%s wordstart' % i1,'%s wordend' % i1)
+                    w.tag_config('found',background='yellow')
+                    if self.abbrevs.has_key(word):
+                        k.setLabel('Replace %s with %s? y/n' % (word,self.abbrevs[word]))
                         yield None
                         if self.regXKey == 'y':
-                            ind = w.index( '%s wordstart' % i1 )
-                            w.delete( '%s wordstart' % i1, '%s wordend' % i1 )
-                            w.insert( ind, self.abbrevs[ word ] )
+                            ind = w.index('%s wordstart' % i1)
+                            w.delete('%s wordstart' % i1,'%s wordend' % i1)
+                            w.insert(ind,self.abbrevs[word])
                     i1 = '%s wordend' % i1
-            w.mark_set( 'insert', ins )
+            w.mark_set('insert',ins)
             w.selection_clear()
-            w.tag_delete( 'sXR' )
-            w.tag_delete( 'found' )
-            k.setLabel( '' )
-            k.setLabelGrey()
+            w.tag_delete('sXR')
+            w.tag_delete('found')
+            k.setLabelGrey('')
             self._setRAvars()
         #@-node:ekr.20050920084036.22:<< define a new generator searchXR >>
         #@nl
@@ -406,13 +409,11 @@ class abbrevCommandsClass (baseEditCommandsClass):
     def abbreviationDispatch (self,event,which):
         
         k = self.k
-    
         state = k.getState('abbrevMode')
     
         if state == 0:
             k.setState('abbrevMode',which)
-            k.setLabel('')
-            k.setLabelBlue()
+            k.setLabelBlue('')
         else:
             self.abbrevCommand1(event)
             
@@ -709,8 +710,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         k = self.k ; w = event.widget
         if not k.getState('renameBuffer'):
             k.setState('renameBuffer',True)
-            k.setLabel('')
-            k.setLabelBlue()
+            k.setLabelBlue('')
             return 'break'
         elif event.keysym=='Return':
            nname = k.getLabel()
@@ -726,12 +726,14 @@ class bufferCommandsClass  (baseEditCommandsClass):
     def setInBufferMode (self,event,which):
         
         k = self.k ; w = event.widget
+    
         k.keyboardQuit(event)
         k.setState('chooseBuffer','start%s' % which)
-        k.setLabelBlue()
-        k.setLabel('Choose Buffer Name:')
+        k.setLabelBlue('Choose Buffer Name:')
         self.bufferDict = self.getBufferDict(event)
+    
         return 'break'
+    #@nonl
     #@-node:ekr.20050920084036.44:setInBufferMode
     #@+node:ekr.20050920084036.45:Buffer configuration methods
     #@+node:ekr.20050920084036.46:setBufferListGetter
@@ -985,8 +987,7 @@ class editCommandsClass (baseEditCommandsClass):
         k = self.k ; w = event.widget
         if not k.hasState():
             k.setState('escape','start')
-            k.setLabelBlue()
-            k.setLabel('Esc')
+            k.setLabelBlue('Esc')
             return 'break'
         if k.whichState() == 'escape':
             state = k.getState('escape')
@@ -1034,9 +1035,10 @@ class editCommandsClass (baseEditCommandsClass):
     def startEvaluate (self,event):
     
         k = self.k
-        k.setLabelBlue()
-        k.setLabel('Eval:')
+    
+        k.setLabelBlue('Eval:')
         k.setState('escape','evaluate')
+    
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.65:startEvaluate
@@ -1099,8 +1101,7 @@ class editCommandsClass (baseEditCommandsClass):
                 k.update(event)
         else:
             k.setState('set-fill-column',1)
-            k.setLabel('')
-            k.setLabelBlue()
+            k.setLabelBlue('')
     
         return 'break'
     #@nonl
@@ -1161,8 +1162,7 @@ class editCommandsClass (baseEditCommandsClass):
         k = self.k
     
         k.setState('goto',k.getState()+1)
-        k.setLabel('')
-        k.setLabelBlue()
+        k.setLabelBlue('')
     
         return 'break'
     #@nonl
@@ -1243,8 +1243,7 @@ class editCommandsClass (baseEditCommandsClass):
             reg1 = k.getLabel()
             reg = re.compile(reg1)
             i = reg.findall(txt)
-            k.setLabel('%s occurances found of %s' % (len(i),reg1))
-            k.setLabelGrey()
+            k.setLabelGrey('%s occurances found of %s' % (len(i),reg1))
             k.setState('howM',False)
         else:
             k.update(event)
@@ -1276,8 +1275,7 @@ class editCommandsClass (baseEditCommandsClass):
         k = self.k
     
         k.setState('howM',1)
-        k.setLabel('')
-        k.setLabelBlue()
+        k.setLabelBlue('')
     
         return 'break'
     #@nonl
@@ -1400,6 +1398,7 @@ class editCommandsClass (baseEditCommandsClass):
     def startLines (self,event,which='flush'):
     
         k = self.k
+    
         k.keyboardQuit(event)
         k.setState('alterlines','start%s' % which)
         k.setLabelBlue()
@@ -1838,9 +1837,7 @@ class editCommandsClass (baseEditCommandsClass):
             #@nonl
             #@-node:ekr.20050920084036.114:<< do the replace >>
             #@nl
-            s = 'Replaced %s occurances' % count
-            k.setLabel(s)
-            k.setLabelGrey()
+            k.setLabelGrey('Replaced %s occurances' % count)
             k.clearState()
             self._useRegex = False
             return k._tailEnd(w)
@@ -2063,8 +2060,7 @@ class editCommandsClass (baseEditCommandsClass):
         k = self.k
     
         k.setState('zap',1)
-        k.setLabelBlue()
-        k.setLabel('Zap To Character')
+        k.setLabelBlue('Zap To Character')
     
         return 'break'
     #@nonl
@@ -2502,24 +2498,24 @@ class controlCommandsClass (baseEditCommandsClass):
     
         k = self.k ; w = event.widget
         statecontents = {'state': 'start', 'payload': None}
+    
         k.setState('subprocess',statecontents)
+    
         if which:
-            k.setLabel("Shell command on region:")
+            k.setLabelBlue('Shell command on region:')
             is1 = is2 = None
             try:
                 is1 = w.index('sel.first')
                 is2 = w.index('sel.last')
             finally:
                 if is1:
-                    ### Does nothing
                     statecontents ['payload'] = w.get(is1,is2)
-                    ### ??? k.setState('subprocess',statecontents)
+                    k.setState('subprocess',statecontents)
                 else:
                     return k.keyboardQuit(event)
         else:
-            k.setLabel("Alt - !:")
+            k.setLabelBlue("Alt - !:")
     
-        self.setLabelBlue()
         return 'break'
     #@-node:ekr.20050920084036.158:startSubprocess
     #@+node:ekr.20050920084036.159:subprocess
@@ -2613,16 +2609,14 @@ class editFileCommandsClass (baseEditCommandsClass):
     
         if state == 0:
             k.setState('delete_file',1)
-            k.setLabelBlue()
-            directory = os.getcwd()
-            k.setLabel('%s%s' % (directory,os.sep))
+            k.setLabelBlue('%s%s' % (os.getcwd(),os.sep))
         elif event.keysym == 'Return':
-            dfile = k.getLabel()
+            lab = k.getLabel()
             k.keyboardQuit(event)
             try:
                 os.remove(dfile)
             except:
-                k.setLabel("Could not delete %s%" % dfile)
+                k.setLabel("Could not delete %s%" % lab)
         else:
             k.update(event)
         
@@ -2689,18 +2683,16 @@ class editFileCommandsClass (baseEditCommandsClass):
     
         if state == 0:
             k.setState('make_directory',1)
-            k.setLabelBlue()
-            directory = os.getcwd()
-            k.setLabel('%s%s' % (directory,os.sep))
+            k.setLabelBlue('%s%s' % (os.getcwd(),os.sep))
             return 'break'
     
         if event.keysym == 'Return':
-            ndirectory = k.getLabel()
+            lab = k.getLabel()
             k.keyboardQuit(event)
             try:
-                os.mkdir(ndirectory)
+                os.mkdir(lab)
             except:
-                k.setLabel("Could not make %s%" % ndirectory)
+                k.setLabel("Could not make %s%" % lab)
             return 'break'
         else:
             k.update(event)
@@ -2715,18 +2707,16 @@ class editFileCommandsClass (baseEditCommandsClass):
     
         if not state:
             k.setState('remove_directory',True)
-            k.setLabelBlue()
-            directory = os.getcwd()
-            k.setLabel('%s%s' % (directory,os.sep))
+            k.setLabelBlue('%s%s' % (os.getcwd(),os.sep))
             return 'break'
     
         if event.keysym == 'Return':
-            ndirectory = k.getLabel()
+            lab = k.getLabel()
             k.keyboardQuit(event)
             try:
-                os.rmdir(ndirectory)
+                os.rmdir(lab)
             except:
-                k.setLabel("Could not remove %s%" % ndirectory)
+                k.setLabel("Could not remove %s!" % lab)
             return 'break'
         else:
             k.update(event)
@@ -3201,17 +3191,17 @@ class macroCommandsClass (baseEditCommandsClass):
     
         if not self.macroing:
             self.macroing = 3
-            k.setLabel('')
-            k.setLabelBlue()
+            k.setLabelBlue('')
         elif event.keysym == 'Return':
             self.macroing = False
-            self.saveMacros(event,k.getLabel())
+            self.saveMacros(event,k.getLabel()) 
         elif event.keysym == 'Tab':
             k.setLabel(self._findMatch(self.namedMacros))
         else:
             k.update(event)
     
         return 'break'
+    #@nonl
     #@+node:ekr.20050920084036.195:_findMatch
     def _findMatch (self,fdict=None):
     
@@ -3268,13 +3258,11 @@ class macroCommandsClass (baseEditCommandsClass):
     
         if not self.macroing:
             self.macroing = 2
-            k.setLabel('')
-            k.setLabelBlue()
+            k.setLabelBlue('')
         elif event.keysym == 'Return':
             name = k.getLabel()
             k.addToDoAltX(name,self.lastMacro)
-            k.setLabel('')
-            k.setLabelBlue()
+            k.setLabelBlue('')
             self.macroing = False
             k.stopControlX(event)
         else:
@@ -3352,8 +3340,7 @@ class macroCommandsClass (baseEditCommandsClass):
     
         k = self.k
     
-        k.setLabel( 'Recording Keyboard Macro' )
-        k.setLabelBlue()
+        k.setLabelBlue('Recording Keyboard Macro')
         self.macroing = True
     
         return 'break'
@@ -3381,8 +3368,7 @@ class macroCommandsClass (baseEditCommandsClass):
             self.macro = []
     
         self.macroing = False
-        k.setLabel('Keyboard macro defined')
-        k.setLabelBlue()
+        k.setLabelBlue('Keyboard macro defined')
     
         return 'break'
     #@nonl
@@ -3533,8 +3519,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
         k = self.k
     
         k.setState('qlisten','replace-caption')
-        k.setLabelBlue()
-        k.setLabel(
+        k.setLabelBlue(
             g.choose(self.querytype=='regex',
                 'Regex Query with:','Query with:'))
     
@@ -3588,8 +3573,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
         self.qR = None
         k.setState('qlisten',0)
         self.qrexecute = False
-        k.setLabel('')
-        k.setLabelGrey()
+        k.setLabelGrey('')
         self.querytype = 'normal'
         k._tailEnd(event.widget)
     #@nonl
@@ -3765,8 +3749,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
         k = self.k ; w = event.widget
         if not self.sRect:
             self.sRect = 1
-            k.setLabel('String rectangle :')
-            k.setLabelBlue()
+            k.setLabelBlue('String rectangle :')
             return 'break'
         if event.keysym == 'Return':
             self.sRect = 3
@@ -4093,9 +4076,7 @@ class registerCommandsClass (baseEditCommandsClass):
     
         k = self.k
     
-        k.setLabel('')
-        k.setLabelGrey()
-    
+        k.setLabelGrey('')
         self.registermode = False
         self.method = None
     #@nonl
@@ -4220,14 +4201,12 @@ class searchCommandsClass (baseEditCommandsClass):
         k = self.k
     
         state = k.getState('isearch')
-        g.trace(stroke)
         
         if state == 0:
             ## ref: self.csr = { '<Control-s>': 'for', '<Control-r>':'bak' }
             self.pref = self.csr [stroke]
-            k.setLabel('isearch:',protect=True)
-            k.setLabelBlue()
             k.setState('isearch',which)
+            k.setLabelBlue('isearch:',protect=True)
         else:
             self.search(event,way=self.csr[stroke],useregex=self.useRegex())
             self.pref = self.csr [stroke]
@@ -4377,8 +4356,7 @@ class searchCommandsClass (baseEditCommandsClass):
     
         k.keyboardQuit(event)
         k.setState('nonincr-search','start%s' % which)
-        k.setLabelBlue()
-        k.setLabel('Search:')
+        k.setLabelBlue('Search:')
     
         return 'break'
     #@nonl
@@ -4404,8 +4382,8 @@ class searchCommandsClass (baseEditCommandsClass):
     
         k.keyboardQuit(event)
         k.setState('word-search','start%s' % which)
-        k.setLabelBlue()
-        k.setLabel('Word Search %s:' % g.choose(which=='bak','Backward','Forward'))
+        k.setLabelBlue('Word Search %s:' %
+            g.choose(which=='bak','Backward','Forward'))
     
         return 'break'
     #@nonl
@@ -4458,8 +4436,7 @@ class searchCommandsClass (baseEditCommandsClass):
     
         k.keyboardQuit(event)
         k.setState('re_search','start%s' % which)
-        k.setLabelBlue()
-        k.setLabel('RE Search:')
+        k.setLabelBlue('RE Search:')
     
         return 'break'
     

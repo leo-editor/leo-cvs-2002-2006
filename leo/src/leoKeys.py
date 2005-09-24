@@ -707,12 +707,11 @@ class keyHandlerClass:
     def universalDispatch (self,event,stroke):
     
         k = self
-        
         state = k.getState('uC')
+    
         if state == 0:
             k.setState('uC',1)
-            k.setLabel('')
-            k.setLabelBlue()
+            k.setLabelBlue('')
         elif state == 1:
             k.universalCommand1(event,stroke)
         elif state == 2:
@@ -773,8 +772,7 @@ class keyHandlerClass:
     def universalCommand3 (self,event,stroke):
         
         k = self
-        k.setLabel('Control-u %s' % stroke.lstrip('<').rstrip('>'))
-        k.setLabelBlue()
+        k.setLabelBlue('Control-u %s' % stroke.lstrip('<').rstrip('>'))
     
         if event.keysym == 'parenleft':
             k.keyboardQuit(event)
@@ -825,11 +823,9 @@ class keyHandlerClass:
     def negativeArgument (self,event,stroke=None):
     
         k = self
-    
-        k.setLabel("Negative Argument")
-        k.setLabelBlue()
-    
         state = k.getState('negativeArg')
+        k.setLabelBlue('Negative Argument')
+    
         if state == 0:
             k.setState('negativeArg',1)
         else:
@@ -846,15 +842,12 @@ class keyHandlerClass:
     def alt_X (self,event=None,which=''):
     
         k = self
-    
         k.setState('altx',which or 1) # Must be int, not True.
     
         if which:
-            k.setLabel('%s %s' % (which,k.alt_x_prompt),protect=True)
+            k.setLabelBlue('%s %s' % (which,k.alt_x_prompt),protect=True)
         else:
-            k.setLabel('%s' % (k.alt_x_prompt),protect=True)
-    
-        k.setLabelBlue()
+            k.setLabelBlue('%s' % (k.alt_x_prompt),protect=True)
     
         return 'break'
     #@nonl
@@ -1002,9 +995,8 @@ class keyHandlerClass:
         k.keyboardQuit(event)
     
         if k.altX_history:
-            k.setLabelBlue()
-            k.setLabel("Redo: %s" % k.altX_history[0])
             k.setState('last-altx',True)
+            k.setLabelBlue("Redo: %s" % k.altX_history[0])
     
         return 'break'
     #@nonl
@@ -1036,8 +1028,7 @@ class keyHandlerClass:
         k = self
     
         k.setState('controlx',True)
-        k.setLabel('Control - X')
-        k.setLabelBlue()
+        k.setLabelBlue('Control - X')
     
         return 'break'
     #@nonl
@@ -1278,27 +1269,30 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.39:getLabel & setLabel
     #@+node:ekr.20050920085536.35:setLabelGrey
-    def setLabelGrey (self):
-        
-        k = self
+    def setLabelGrey (self,label=None):
     
+        k = self
         k.widget.configure(background='lightgrey')
+        if label is not None:
+            k.setLabel(label)
     #@nonl
     #@-node:ekr.20050920085536.35:setLabelGrey
     #@+node:ekr.20050920085536.36:setLabelBlue
-    def setLabelBlue (self):
+    def setLabelBlue (self,label=None,protect=False):
         
         k = self
     
         k.widget.configure(background='lightblue')
+    
+        if label is not None:
+            k.setLabel(label,protect)
     #@nonl
     #@-node:ekr.20050920085536.36:setLabelBlue
     #@+node:ekr.20050920085536.37:resetLabel
     def resetLabel (self):
         
         k = self
-        k.setLabel('')
-        k.setLabelGrey()
+        k.setLabelGrey('')
         k.altX_prefix = ''
     #@nonl
     #@-node:ekr.20050920085536.37:resetLabel
