@@ -436,7 +436,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
             k.keyboardQuit(event)
             k.resetLabel()
         else:
-            k.update(event)
+            k.updateLabel(event)
     
         return 'break'
     #@nonl
@@ -717,7 +717,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
            k.keyboardQuit(event)
            self.renameBuffers[w](nname)
         else:
-            k.update(event)
+            k.updateLabel(event)
             return 'break'
     #@nonl
     #@-node:ekr.20050920084036.43:renameBuffer
@@ -1028,7 +1028,7 @@ class editCommandsClass (baseEditCommandsClass):
                     k.setLabel('Error: Invalid Expression')
                 return k._tailEnd(w)
         else:
-            k.update(event)
+            k.updateLabel(event)
             return 'break'
     #@-node:ekr.20050920084036.64:escEvaluate
     #@+node:ekr.20050920084036.65:startEvaluate
@@ -1098,7 +1098,7 @@ class editCommandsClass (baseEditCommandsClass):
                     self.fillColumn = int(value)
                 return k.keyboardQuit(event)
             elif event.char.isdigit() or event.char == '\b':
-                k.update(event)
+                k.updateLabel(event)
         else:
             k.setState('set-fill-column',1)
             k.setLabelBlue('')
@@ -1246,7 +1246,7 @@ class editCommandsClass (baseEditCommandsClass):
             k.setLabelGrey('%s occurances found of %s' % (len(i),reg1))
             k.setState('howM',False)
         else:
-            k.update(event)
+            k.updateLabel(event)
     
         return 'break'
     #@nonl
@@ -1390,7 +1390,7 @@ class editCommandsClass (baseEditCommandsClass):
             self.alterLines(event,state)
             return k.keyboardQuit(event)
         else:
-            k.update(event)
+            k.updateLabel(event)
             return 'break'
     #@nonl
     #@-node:ekr.20050920084036.93:processLines
@@ -2302,7 +2302,7 @@ class editCommandsClass (baseEditCommandsClass):
                 widget.update_idletasks()
                 widget.see('insert')
         else:
-            k.update(event)
+            k.updateLabel(event)
     
         return 'break'
     #@nonl
@@ -2532,7 +2532,7 @@ class controlCommandsClass (baseEditCommandsClass):
             cmdline = k.getLabel()
             return self.executeSubprocess(event,cmdline,input=state['payload'])
         else:
-            k.update(event)
+            k.updateLabel(event)
             return 'break'
     #@nonl
     #@-node:ekr.20050920084036.159:subprocess
@@ -2618,7 +2618,7 @@ class editFileCommandsClass (baseEditCommandsClass):
             except:
                 k.setLabel("Could not delete %s%" % lab)
         else:
-            k.update(event)
+            k.updateLabel(event)
         
         return 'break'
     #@nonl
@@ -2695,7 +2695,7 @@ class editFileCommandsClass (baseEditCommandsClass):
                 k.setLabel("Could not make %s%" % lab)
             return 'break'
         else:
-            k.update(event)
+            k.updateLabel(event)
             return 'break'
     #@nonl
     #@-node:ekr.20050920084036.168:makeDirectory
@@ -2719,7 +2719,7 @@ class editFileCommandsClass (baseEditCommandsClass):
                 k.setLabel("Could not remove %s!" % lab)
             return 'break'
         else:
-            k.update(event)
+            k.updateLabel(event)
             return 'break'
     #@nonl
     #@-node:ekr.20050920084036.169:removeDirectory
@@ -3198,7 +3198,7 @@ class macroCommandsClass (baseEditCommandsClass):
         elif event.keysym == 'Tab':
             k.setLabel(self._findMatch(self.namedMacros))
         else:
-            k.update(event)
+            k.updateLabel(event)
     
         return 'break'
     #@nonl
@@ -3266,7 +3266,7 @@ class macroCommandsClass (baseEditCommandsClass):
             self.macroing = False
             k.stopControlX(event)
         else:
-            k.update(event)
+            k.updateLabel(event)
     
         return 'break'
     #@nonl
@@ -3461,7 +3461,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
             k.setLabel('')
             k.setState('qlisten',True)
     
-        k.update(event)
+        k.updateLabel(event)
     #@nonl
     #@-node:ekr.20050920084036.213:getQuery
     #@+node:ekr.20050920084036.214:getReplace
@@ -3487,7 +3487,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
             k.setLabel('')
             k.setState('qlisten',True)
     
-        k.update(event)
+        k.updateLabel(event)
     #@nonl
     #@-node:ekr.20050920084036.214:getReplace
     #@+node:ekr.20050920084036.215:masterQR
@@ -3757,7 +3757,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
             k.setLabel('')
             self.sRect = 2
         if self.sRect == 2:
-            k.update(event)
+            k.updateLabel(event)
             return 'break'
         if self.sRect == 3:
             if not self._chckSel(event):
@@ -4263,7 +4263,7 @@ class searchCommandsClass (baseEditCommandsClass):
             else:
                 return self.startNonIncrSearch(event,self.pref)
     
-        k.update(event)
+        k.updateLabel(event)
         if event.char != '\b':
            s = k.getLabel(ignorePrompt=True)
            z = w.search(s,'insert',stopindex='insert +%sc' % len(s))
@@ -4345,7 +4345,7 @@ class searchCommandsClass (baseEditCommandsClass):
             k.keyboardQuit(event)
             return k._tailEnd(w)
         else:
-            k.update(event)
+            k.updateLabel(event)
             return 'break'
     #@nonl
     #@-node:ekr.20050920084036.268:nonincrSearch
@@ -4421,7 +4421,7 @@ class searchCommandsClass (baseEditCommandsClass):
             k.keyboardQuit(event)
             return k._tailEnd(w)
         else:
-            k.update(event)
+            k.updateLabel(event)
             return 'break'
     #@nonl
     #@-node:ekr.20050920084036.272:wordSearch
@@ -4473,7 +4473,7 @@ class searchCommandsClass (baseEditCommandsClass):
                 w.see( 'insert' )
             return k.keyboardQuit( event )    
         else:
-            k.update( event )
+            k.updateLabel( event )
             return 'break'
     #@nonl
     #@-node:ekr.20050920084036.275:re_search

@@ -728,7 +728,7 @@ class keyHandlerClass:
         if event.char not in k.uCstring:
             return k.universalCommand2(event,stroke)
      
-        k.update(event)
+        k.updateLabel(event)
     
         if event.char != '\b':
             k.setLabel('%s ' % k.getLabel())
@@ -815,7 +815,7 @@ class keyHandlerClass:
             k.setState(stateKind,state)
             k.callStateFunction(event,None)
         else:
-            k.update(event)
+            k.updateLabel(event)
         return 'break'
     #@nonl
     #@-node:ekr.20050920085536.62:getArg
@@ -935,7 +935,7 @@ class keyHandlerClass:
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.altX_tabList = []
-            k.update(event)
+            k.updateLabel(event)
             k.altX_tabListPrefix = k.getLabel()
             # g.trace('new prefix',k.altX_tabListPrefix)
     
@@ -1129,7 +1129,7 @@ class keyHandlerClass:
         }
     #@nonl
     #@-node:ekr.20050923183943.2:setControlXFunctions MUST BE GENERALIZED
-    #@+node:ekr.20050923183943.4:processKey (controlX_handlerClass) MUST BE GENERALIZED
+    #@+node:ekr.20050923183943.4:processKey MUST BE GENERALIZED
     def processKey (self,event):
     
         k = self ; c = k.c ; previous = k.previous
@@ -1187,7 +1187,7 @@ class keyHandlerClass:
                 if previous [1] == 'Escape':
                     return k.repeatComplexCommand(event)
     #@nonl
-    #@-node:ekr.20050923183943.4:processKey (controlX_handlerClass) MUST BE GENERALIZED
+    #@-node:ekr.20050923183943.4:processKey MUST BE GENERALIZED
     #@+node:ekr.20050923183943.5:processRectangle
     if 0: # Reference: actually defined in finishCreate.
     
@@ -1305,8 +1305,8 @@ class keyHandlerClass:
         k.altX_prefix = ''
     #@nonl
     #@-node:ekr.20050920085536.37:resetLabel
-    #@+node:ekr.20050920085536.38:update
-    def update (self,event):
+    #@+node:ekr.20050920085536.38:updateLabel
+    def updateLabel (self,event):
     
         '''
         Alters the StringVar svar to represent the change in the event.
@@ -1329,7 +1329,7 @@ class keyHandlerClass:
     
         k.setLabel(s)
     #@nonl
-    #@-node:ekr.20050920085536.38:update
+    #@-node:ekr.20050920085536.38:updateLabel
     #@+node:ekr.20050920085536.63:keyboardQuit
     def keyboardQuit (self,event):  # The event arg IS used.
     

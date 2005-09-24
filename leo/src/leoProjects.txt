@@ -11787,55 +11787,37 @@ def skip_ws_and_nl(s,i):
 #@-node:ekr.20050710102922.1:(Using Python indices instead of Tk indices)
 #@+node:ekr.20050924073836:4.4 projects
 #@+node:ekr.20050920084720.1:(Move temacs/usetemacs code into Leo's core)
-@nocolor
-    
-- Remove utTailEnd (defined in keyHandler finishCreate).
-    - Figure out how to do without it.
-        - User wrapper functions for 'complex' commands ?? (those that require state)
-        
-- (done in base class, but maybe not needed)
-    commands classes have stateCommands method that returns a list of commands that use state.
-
-@color
-#@nonl
-#@+node:ekr.20050921094025:To do
+#@+node:ekr.20050921094025:To do (emacs)
 @nocolor
 
-- Bind emacs keystrokes in Leo's core.
-    - That is, modify Leo's core to uses temacs-style masterCommand method for all keystrokes.
+* Define all keys using leoSettings.leo.
+    - Define the following input modes:
+        -defaultEmacsBindings
+        -defaultVimBindings
+        -defaultLeoBindings
 
-- Define the following input modes:
-    -defaultEmacsBindings
-    -defaultVimBindings
-    -defaultLeoBindings
+* Bind emacs keystrokes in Leo's core.
+    - Use masterCommand method for all keystrokes.
+    - ?? For all panes ??
 
-- Define all keys using leoSettings.leo.
+* Remove need for lambda's and other state-related weirdnesses.
+    - All commands must have explicit name.
+    - Eliminate setup/teardown code.
+    - Remove utTailEnd (defined in keyHandler finishCreate).
+        - Figure out how to do without it.
+            - User wrapper functions for 'complex' commands ?? (those that require state)
 
-- Use same logic for *all* commands:
+* Generalize the code.
+    - Commands should handle their own state (this is mostly true already)
+        - Remove hasState hack.
+            - (done in base class, but maybe not needed)
+            ommands classes have stateCommands method that returns a list of commands that use state.
+    - Make sure the code can support vim as well as emacs.
+    - User-specified keys for alt-x, control-c, etc.
 
-    - Non-emacs commands should contribute to key history.
-    - Non-emacs commands must clear mini-buffer state.
-        Example: About Leo
-
-- Generalize the code!
-    - ? Create inputMode class (see status line)?
-    - masterCommand should know as little as possible about details of commands.
-        - Control-x and control-c handlers should be 'normal-but-complex' commands.
-        - Complex commands (might) use tables to define interior states.
-        - Tables should be as high-level as possible.
-    
-
-*** Separate code into keyHandler part and command part.
-    - How is this related to 'the great divide'.
-    - Create table(s) of long command names.
-#@+node:ekr.20050921094945:Bugs
-- Clicking in the expand/contract box does weird things.
-
-- About Leo does not clear mini-buffer.
-
-- What happens if useMiniBuffer option is False?
+* What happens if useMiniBuffer option is False?
+    - Disable commands that depend on them?
 #@nonl
-#@-node:ekr.20050921094945:Bugs
 #@+node:ekr.20050921094025.1:Goals
 @nocolor
 
@@ -11872,27 +11854,6 @@ Other goals:
 - (Optional?)  Don't bind menu items: let the key handler dispatch the menu commands.
 #@nonl
 #@-node:ekr.20050921094025.1:Goals
-#@+node:ekr.20050921094025.2:Clean up
-@nocolor
-
-
-- Help commands print to log?
-
-*** Remove need for lambda's and other state-related weirdnesses.
-
-    - Make sure the code can support vim as well as emacs.
-    - Remove need for hasState hack.
-    - Binding tables should specify what mode to enter after a command.
-    - Find a clean way to handle multi-state commands:
-        - Test any solution on the search commands.
-        - Create command-state-tables:
-        
-    searchCommandStateTable = [ # Use list so it can be changed.
-        (prompt,end-keys,next-state,etc.),
-        (prompt,end-keys,next-state,etc.),
-    ]
-
-#@-node:ekr.20050921094025.2:Clean up
 #@+node:ekr.20050921094025.3:Minor
 - Complete menu work.
 
@@ -11904,16 +11865,12 @@ Other goals:
 #@-node:ekr.20050921094025.3:Minor
 #@+node:ekr.20050921094025.4:Options
 - 'Emacs Compatibility' option: binds keys as done in present plugin.
-
-- Get keystrokes from user options.
-
-- User-specified keys for alt-x, control-c, etc.
 #@-node:ekr.20050921094025.4:Options
 #@+node:ekr.20050921094025.5:Test
 Test all commands and make unit tests.
 #@nonl
 #@-node:ekr.20050921094025.5:Test
-#@-node:ekr.20050921094025:To do
+#@-node:ekr.20050921094025:To do (emacs)
 #@+node:ekr.20050921094025.6:What I did
 @nocolor
 #@nonl
@@ -12024,7 +11981,10 @@ The effect of these changes:
 - setEvent is only used in one commands class, so it was moved there.
 
 - setLabelBlue and setLabelGrey now can set the label text as well as color.
-    This is a nice simplification of the client code.
+  This is a nice simplification of the client code.
+
+- Changed k.get, k.set and k.update to k.getLabel, k.setLable and k.updateLabel.
+  This is an important clarification.
 #@nonl
 #@-node:ekr.20050924073836.1:More simplifications
 #@-node:ekr.20050921094025.6:What I did
