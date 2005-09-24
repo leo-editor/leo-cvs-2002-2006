@@ -369,7 +369,7 @@ class keyHandlerClass:
                 c.commandsDict [key] = func
     #@nonl
     #@-node:ekr.20050920085536.11:add_ekr_altx_commands
-    #@+node:ekr.20050920085536.13:addCallBackDict (miniBufferClass) MUST BE GENERALIZED
+    #@+node:ekr.20050920085536.13:addCallBackDict MUST BE GENERALIZED
     def addCallBackDict (self):
     
         '''Create callback dictionary for masterCommand.'''
@@ -494,7 +494,7 @@ class keyHandlerClass:
     
         return cbDict
     #@nonl
-    #@-node:ekr.20050920085536.13:addCallBackDict (miniBufferClass) MUST BE GENERALIZED
+    #@-node:ekr.20050920085536.13:addCallBackDict MUST BE GENERALIZED
     #@+node:ekr.20050920085536.15:addToDoAltX
     def addToDoAltX (self,name,macro):
     
@@ -514,7 +514,7 @@ class keyHandlerClass:
         return True
     #@nonl
     #@-node:ekr.20050920085536.15:addToDoAltX
-    #@+node:ekr.20050920085536.16:bindKey (miniBufferHandlerClass)
+    #@+node:ekr.20050920085536.16:bindKey
     def bindKey (self,w,evstring):
         
         k = self
@@ -533,7 +533,7 @@ class keyHandlerClass:
         else:
             w.bind(evstring,f)
     #@nonl
-    #@-node:ekr.20050920085536.16:bindKey (miniBufferHandlerClass)
+    #@-node:ekr.20050920085536.16:bindKey
     #@+node:ekr.20050920085536.17:setBufferStrokes  (creates svars & <key> bindings)
     def setBufferStrokes (self,w):
     
@@ -1250,7 +1250,16 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.22:hasKeyStroke
     #@-node:ekr.20050923174229.2:Keystroke...
-    #@+node:ekr.20050924064254:Label methods
+    #@+node:ekr.20050924064254:Label...
+    #@+at 
+    #@nonl
+    # There is something dubious about tracking states separately for separate 
+    # commands.
+    # In fact, there is only one mini-buffer, and it has only one state.
+    # OTOH, maintaining separate states makes it impossible for one command to 
+    # influence another.
+    #@-at
+    #@nonl
     #@+node:ekr.20050920085536.39:getLabel & setLabel
     def getLabel (self,ignorePrompt=False):
         
@@ -1331,8 +1340,8 @@ class keyHandlerClass:
         return k.stopControlX(event) # This method will eventually contain the stopControlX code.
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
-    #@-node:ekr.20050924064254:Label methods
-    #@+node:ekr.20050920085536.65:masterCommand (miniBufferHandlerClass)
+    #@-node:ekr.20050924064254:Label...
+    #@+node:ekr.20050920085536.65:masterCommand
     def masterCommand (self,event,method,stroke,general):
         
         '''This is the central routing method of the Emacs class.
@@ -1415,8 +1424,8 @@ class keyHandlerClass:
             # g.trace('default')
             return c.frame.body.onBodyKey(event)
     #@nonl
-    #@-node:ekr.20050920085536.65:masterCommand (miniBufferHandlerClass)
-    #@+node:ekr.20050923172809:State methods...
+    #@-node:ekr.20050920085536.65:masterCommand
+    #@+node:ekr.20050923172809:State...
     #@+node:ekr.20050923172809.1:callStateFunction
     def callStateFunction (self,*args):
         
@@ -1478,8 +1487,8 @@ class keyHandlerClass:
         return k.state
     #@nonl
     #@-node:ekr.20050923172814.5:whichState
-    #@-node:ekr.20050923172809:State methods...
-    #@+node:ekr.20050920085536.69:tailEnd methods
+    #@-node:ekr.20050923172809:State...
+    #@+node:ekr.20050920085536.69:tailEnd...
     #@+node:ekr.20050920085536.70:_tailEnd
     def _tailEnd (self,w):
         
@@ -1503,8 +1512,8 @@ class keyHandlerClass:
     
         k.tailEnds [w] = tailCall
     #@-node:ekr.20050920085536.71:setTailEnd
-    #@-node:ekr.20050920085536.69:tailEnd methods
-    #@+node:ekr.20050920085536.4:Undoer methods
+    #@-node:ekr.20050920085536.69:tailEnd...
+    #@+node:ekr.20050920085536.4:Undoer...
     #@+at
     # Emacs requires an undo mechanism be added from the environment.
     # If there is no undo mechanism added, there will be no undo functionality 
@@ -1535,7 +1544,7 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.6:doUndo
     #@-others
     #@nonl
-    #@-node:ekr.20050920085536.4:Undoer methods
+    #@-node:ekr.20050920085536.4:Undoer...
     #@-others
 #@nonl
 #@-node:ekr.20031218072017.3748:@thin leoKeys.py
