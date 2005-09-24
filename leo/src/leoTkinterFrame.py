@@ -2641,7 +2641,7 @@ class leoTkinterBody (leoFrame.leoBody):
         if (
             c.keyHandler and c.miniBufferWidget and 
             event.char.isspace() and
-            c.keyHandler.stateManager.hasState()
+            c.keyHandler.hasState()
         ):
             return None # Must be None, not 'break'
         
