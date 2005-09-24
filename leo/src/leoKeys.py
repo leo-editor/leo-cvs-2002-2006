@@ -10,6 +10,7 @@
 #@+node:ekr.20050920094258:<< imports >>
 import leoGlobals as g
 
+import leoEditCommands
 import leoNodes
 
 Tk              = g.importExtension('Tkinter',pluginName=None,verbose=False)
@@ -91,8 +92,25 @@ class keyHandlerClass:
         #@nl
         #@    << define state ivars >>
         #@+node:ekr.20050923222924.3:<< define state ivars >>
+        #@+at 
+        #@nonl
+        # Use a state dict is dubious: the minibuffer can have only one state 
+        # at a time.
+        # OTOH, there may be sublties in the old code I don't understand yet.
+        # 
+        # The newState ivar hedges the bet.
+        # 
+        #@-at
+        #@@c
+        
+        self.newState = True
+        
         self.state = None
-        self.states = {}
+        
+        if self.newState:
+            self.stateKind = None
+        else:
+            self.states = {}
         #@nonl
         #@-node:ekr.20050923222924.3:<< define state ivars >>
         #@nl
@@ -103,7 +121,7 @@ class keyHandlerClass:
         self.altX_tabListPrefix = ''
         self.altX_tabList = []
         self.altX_tabListIndex = -1
-        self.keysymhistory = []
+        self.keysymHistory = []
         self.previousStroke = ''
         self.svars = {}
         self.tailEnds = {} # functions to execute at the end of many Emacs methods.  Configurable by environment.
@@ -189,7 +207,7 @@ class keyHandlerClass:
             
             # Command states...
             'uC':               (2,k.universalDispatch),
-            'controlx':         (2,k.doControlX),
+            'controlx':         (2,k.callControlXFunction),
             'isearch':          (2,c.searchCommands.iSearch),
             'goto':             (1,c.editCommands.Goto),
             'zap':              (1,c.editCommands.zapTo),
@@ -792,51 +810,99 @@ class keyHandlerClass:
         return 'break'
     #@nonl
     #@-node:ekr.20050920085536.77:numberCommand
-    #@-node:ekr.20050920085536.32: Entry points
-    #@+node:ekr.20050924065103:Arg...
-    #@+node:ekr.20050920085536.62:getArg
-    def getArg (self,event,returnStateKind=None,returnState=None):
-        
-        '''Accumulate an argument until the user hits return (or control-g).
-        Enter the 'return' state when done.'''
-        
-        k = self ; stateKind = 'getArg'
-        state = k.getState(stateKind)
-        if not state:
-            k.altX_prefix = len(k.getLabel()) ; k.arg = ''
-            k.afterGetArgState = (returnStateKind,returnState)
-            k.setState(stateKind,1)
-        elif event.keysym == 'Return':
-            # Compute the actual arg.
-            s = k.getLabel() ; k.arg = s[len(k.altX_prefix):]
-            # Immediately enter the caller's requested state.
-            k.clearState()
-            stateKind,state = k.afterGetArgState
-            k.setState(stateKind,state)
-            k.callStateFunction(event,None)
-        else:
-            k.updateLabel(event)
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.62:getArg
-    #@+node:ekr.20050920085536.68:negativeArgument
-    def negativeArgument (self,event,stroke=None):
+    #@+node:ekr.20050920085536.63:keyboardQuit
+    def keyboardQuit (self,event):
     
+        '''This method cleans the Emacs instance of state and ceases current operations.'''
+        
         k = self
-        state = k.getState('negativeArg')
-        k.setLabelBlue('Negative Argument')
     
-        if state == 0:
-            k.setState('negativeArg',1)
-        else:
-            func = k.negArgs.get(stroke)
-            if func:
-                func(event,stroke)
-    
-        return 'break'
+        return k.stopControlX(event)
     #@nonl
-    #@-node:ekr.20050920085536.68:negativeArgument
-    #@-node:ekr.20050924065103:Arg...
+    #@-node:ekr.20050920085536.63:keyboardQuit
+    #@-node:ekr.20050920085536.32: Entry points
+    #@+node:ekr.20050920085536.65: masterCommand
+    def masterCommand (self,event,method,stroke,general):
+        
+        '''This is the central routing method of the Emacs class.
+        All commands and keystrokes pass through here.'''
+        
+        # Note: the _L symbols represent *either* special key.
+        k = self ; c = k.c
+        special = event.keysym in ('Control_L','Alt_L','Shift_L')
+    
+        inserted = not special or (
+            not general and (len(k.keysymHistory) == 0 or k.keysymHistory [0] != event.keysym))
+    
+        if inserted:
+            # g.trace(general,event.keysym)
+            #@        << add character to history >>
+            #@+node:ekr.20050920085536.67:<< add character to history >>
+            # Don't add multiple special characters to history.
+            
+            k.keysymHistory.insert(0,event.keysym)
+            
+            if len(event.char) > 0:
+                if len(keyHandlerClass.lossage) > 99:
+                    keyHandlerClass.lossage.pop()
+                keyHandlerClass.lossage.insert(0,event.char)
+            
+            if 0: # traces
+                g.trace(event.keysym,stroke)
+                g.trace(k.keysymHistory)
+                g.trace(keyHandlerClass.lossage)
+            #@nonl
+            #@-node:ekr.20050920085536.67:<< add character to history >>
+            #@nl
+    
+        if c.macroCommands.macroing:
+            #@        << handle macro >>
+            #@+node:ekr.20050920085536.66:<< handle macro >>
+            if c.macroCommands.macroing == 2 and stroke != '<Control-x>':
+                return k.nameLastMacro(event)
+                
+            elif c.macroCommands.macroing == 3 and stroke != '<Control-x>':
+                return k.getMacroName(event)
+                
+            else:
+               k.recordKBDMacro(event,stroke)
+            #@nonl
+            #@-node:ekr.20050920085536.66:<< handle macro >>
+            #@nl
+    
+        if stroke == '<Control-g>':
+            k.previousStroke = stroke
+            return k.keyboardQuit(event)
+    
+        if k.inState():
+            k.previousStroke = stroke
+            return k.callStateFunction(event,stroke)
+    
+        if k.hasKeyStroke(stroke):
+            g.trace('hasKeyStroke')
+            k.previousStroke = stroke
+            k.callKeystrokeFunction(event,stroke)
+    
+        if k.regXRpl: # EKR: a generator.
+            try:
+                k.regXKey = event.keysym
+                k.regXRpl.next() # EKR: next() may throw StopIteration.
+            finally:
+                return 'break'
+    
+        if k.abbrevOn:
+            if c.abbrevCommands._expandAbbrev(event):
+                return 'break'
+    
+        if method:
+            rt = method(event)
+            k.previousStroke = stroke
+            return rt
+        else:
+            # g.trace('default')
+            return c.frame.body.onBodyKey(event)
+    #@nonl
+    #@-node:ekr.20050920085536.65: masterCommand
     #@+node:ekr.20050920085536.40:Alt_X...
     #@+node:ekr.20050920085536.41:alt_X
     def alt_X (self,event=None,which=''):
@@ -1019,6 +1085,50 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.61:extendAltX
     #@-node:ekr.20050920085536.40:Alt_X...
+    #@+node:ekr.20050924065103:Arg...
+    #@+node:ekr.20050920085536.62:getArg
+    def getArg (self,event,returnStateKind=None,returnState=None):
+        
+        '''Accumulate an argument until the user hits return (or control-g).
+        Enter the 'return' state when done.'''
+        
+        k = self ; stateKind = 'getArg'
+        state = k.getState(stateKind)
+        if not state:
+            k.altX_prefix = len(k.getLabel()) ; k.arg = ''
+            k.afterGetArgState = (returnStateKind,returnState)
+            k.setState(stateKind,1)
+        elif event.keysym == 'Return':
+            # Compute the actual arg.
+            s = k.getLabel() ; k.arg = s[len(k.altX_prefix):]
+            # Immediately enter the caller's requested state.
+            k.clearState()
+            stateKind,state = k.afterGetArgState
+            k.setState(stateKind,state)
+            k.callStateFunction(event,None)
+        else:
+            k.updateLabel(event)
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920085536.62:getArg
+    #@+node:ekr.20050920085536.68:negativeArgument
+    def negativeArgument (self,event,stroke=None):
+    
+        k = self
+        state = k.getState('negativeArg')
+        k.setLabelBlue('Negative Argument')
+    
+        if state == 0:
+            k.setState('negativeArg',1)
+        else:
+            func = k.negArgs.get(stroke)
+            if func:
+                func(event,stroke)
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920085536.68:negativeArgument
+    #@-node:ekr.20050924065103:Arg...
     #@+node:ekr.20050920085536.57:ControlX...
     #@+node:ekr.20050920085536.58:startControlX
     def startControlX (self,event):
@@ -1043,32 +1153,18 @@ class keyHandlerClass:
         # This will all be migrated to keyboardQuit eventually.
         if c.controlCommands.shuttingdown:
             return
+            
+        leoEditCommands.initAllEditCommanders(c)
     
-        c.rectangleCommands.sRect = False
-        c.registerCommands.rectanglemode = 0
-        
         k.clearState()
         w.tag_delete('color')
         w.tag_delete('color1')
-    
-        if c.registerCommands.registermode:
-            c.registerCommands.deactivateRegister(event)
-    
-        k.bufferMode = None ### Correct???
         k.resetLabel()
         w.update_idletasks()
     
         return 'break'
     #@nonl
     #@-node:ekr.20050920085536.59:stopControlX
-    #@+node:ekr.20050920085536.60:doControlX
-    def doControlX (self,event,stroke,previous=[]):
-        
-        k = self
-        
-        return k.callControlXFunction(event,stroke)
-    #@nonl
-    #@-node:ekr.20050920085536.60:doControlX
     #@+node:ekr.20050923183943.1:callControlXFunction
     def callControlXFunction (self,event,stroke):
         
@@ -1330,163 +1426,103 @@ class keyHandlerClass:
         k.setLabel(s)
     #@nonl
     #@-node:ekr.20050920085536.38:updateLabel
-    #@+node:ekr.20050920085536.63:keyboardQuit
-    def keyboardQuit (self,event):  # The event arg IS used.
-    
-        '''This method cleans the Emacs instance of state and ceases current operations.'''
-        
-        k = self
-    
-        return k.stopControlX(event) # This method will eventually contain the stopControlX code.
-    #@nonl
-    #@-node:ekr.20050920085536.63:keyboardQuit
     #@-node:ekr.20050924064254:Label...
-    #@+node:ekr.20050920085536.65:masterCommand
-    def masterCommand (self,event,method,stroke,general):
-        
-        '''This is the central routing method of the Emacs class.
-        All commands and keystrokes pass through here.'''
-        
-        # Note: the _L symbols represent *either* special key.
-        k = self ; c = k.c
-        special = event.keysym in ('Control_L','Alt_L','Shift_L')
-    
-        inserted = not special or (
-            not general and (len(k.keysymhistory) == 0 or k.keysymhistory [0] != event.keysym))
-    
-        if inserted:
-            # g.trace(general,event.keysym)
-            #@        << add character to history >>
-            #@+node:ekr.20050920085536.67:<< add character to history >>
-            # Don't add multiple special characters to history.
-            
-            k.keysymhistory.insert(0,event.keysym)
-            
-            if len(event.char) > 0:
-                if len(keyHandlerClass.lossage) > 99:
-                    keyHandlerClass.lossage.pop()
-                keyHandlerClass.lossage.insert(0,event.char)
-            
-            if 0: # traces
-                g.trace(event.keysym,stroke)
-                g.trace(k.keysymhistory)
-                g.trace(keyHandlerClass.lossage)
-            #@nonl
-            #@-node:ekr.20050920085536.67:<< add character to history >>
-            #@nl
-    
-        if c.macroCommands.macroing:
-            #@        << handle macro >>
-            #@+node:ekr.20050920085536.66:<< handle macro >>
-            if c.macroCommands.macroing == 2 and stroke != '<Control-x>':
-                return k.nameLastMacro(event)
-                
-            elif c.macroCommands.macroing == 3 and stroke != '<Control-x>':
-                return k.getMacroName(event)
-                
-            else:
-               k.recordKBDMacro(event,stroke)
-            #@nonl
-            #@-node:ekr.20050920085536.66:<< handle macro >>
-            #@nl
-    
-        if stroke == '<Control-g>':
-            k.previousStroke = stroke
-            return k.keyboardQuit(event)
-    
-        # Important: This effectively over-rides the handling of most keystrokes with a state.
-        if k.hasState():
-            # g.trace('hasState')
-            k.previousStroke = stroke
-            return k.callStateFunction(event,stroke)
-    
-        if k.hasKeyStroke(stroke):
-            g.trace('hasKeyStroke')
-            k.previousStroke = stroke
-            k.callKeystrokeFunction(event,stroke)
-    
-        if k.regXRpl: # EKR: a generator.
-            try:
-                k.regXKey = event.keysym
-                k.regXRpl.next() # EKR: next() may throw StopIteration.
-            finally:
-                return 'break'
-    
-        if k.abbrevOn:
-            if c.abbrevCommands._expandAbbrev(event):
-                return 'break'
-    
-        if method:
-            rt = method(event)
-            k.previousStroke = stroke
-            return rt
-        else:
-            # g.trace('default')
-            return c.frame.body.onBodyKey(event)
-    #@nonl
-    #@-node:ekr.20050920085536.65:masterCommand
     #@+node:ekr.20050923172809:State...
     #@+node:ekr.20050923172809.1:callStateFunction
     def callStateFunction (self,*args):
         
         k = self
-    
-        if k.state:
-            flag, func = k.stateCommands [k.state]
-    
-            if flag == 1:
-                return func(args[0])
-            else:
-                return func(*args)
+        
+        if k.newState:
+            if k.stateKind:
+                flag, func = k.stateCommands.get(k.stateKind,(None,None))
+                if func:
+                    if flag == 1:
+                        return func(args[0])
+                    else:
+                        return func(*args)
+                else:
+                    g.es_print('no state function for %s' % (k.stateKind),color='red')
+        else:
+            if k.state:
+                flag, func = k.stateCommands [k.state]
+        
+                if flag == 1:
+                    return func(args[0])
+                else:
+                    return func(*args)
     #@nonl
     #@-node:ekr.20050923172809.1:callStateFunction
     #@+node:ekr.20050923172814.1:clearState
     def clearState (self):
         
         k = self
-    
         k.state = None
-    
-        for z in k.states.keys():
-            k.states [z] = 0 # More useful than False.
+        
+        if k.newState:
+            k.stateKind = None
+        else:
+            for z in k.states.keys():
+                k.states [z] = 0 # More useful than False.
     #@nonl
     #@-node:ekr.20050923172814.1:clearState
     #@+node:ekr.20050923172814.2:getState
     def getState (self,state):
         
         k = self
-    
-        return k.states.get(state,False)
+        
+        if k.newState:
+            val = g.choose(k.stateKind == state,k.state,0)
+        else:
+            val = k.states.get(state,False)
+            
+        # g.trace(state,'returns',val)
+        return val
     #@nonl
     #@-node:ekr.20050923172814.2:getState
-    #@+node:ekr.20050923172814.3:hasState
-    def hasState (self):
+    #@+node:ekr.20050923172814.5:getStateKind
+    def getStateKind (self):
         
         k = self
-    
-        if k.state:
-            return k.states [k.state]
+        
+        if k.newState:
+            return k.stateKind
+        else:
+            return k.state
     #@nonl
-    #@-node:ekr.20050923172814.3:hasState
+    #@-node:ekr.20050923172814.5:getStateKind
+    #@+node:ekr.20050923172814.3:inState
+    def inState (self):
+        
+        k = self
+        
+        if k.newState:
+            return k.state and k.stateKind != None
+        else:
+            if k.state:
+                return k.states [k.state]
+    #@nonl
+    #@-node:ekr.20050923172814.3:inState
     #@+node:ekr.20050923172814.4:setState
     def setState (self,state,value):
         
         k = self
         k.state = state
-        if state:
-            k.states [state] = value
+        # g.trace(state,value)
+        
+        if k.newState:
+            if state:
+                k.stateKind = state
+                k.state = value
+            else:
+                k.clearState()
         else:
-            k.clearState()
+            if state:
+                k.states [state] = value
+            else:
+                k.clearState()
     #@nonl
     #@-node:ekr.20050923172814.4:setState
-    #@+node:ekr.20050923172814.5:whichState
-    def whichState (self):
-        
-        k = self
-    
-        return k.state
-    #@nonl
-    #@-node:ekr.20050923172814.5:whichState
     #@-node:ekr.20050923172809:State...
     #@+node:ekr.20050920085536.69:tailEnd...
     #@+node:ekr.20050920085536.70:_tailEnd

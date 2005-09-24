@@ -326,7 +326,7 @@ def onBodyKey (self,event):
     if (
         c.keyHandler and c.miniBufferWidget and 
         event.char.isspace() and
-        c.keyHandler.hasState()
+        c.keyHandler.inState()
     ):
         return None # Must be None, not 'break'
     
@@ -7103,7 +7103,7 @@ def onBodyKey (self,event):
     if (
         c.keyHandler and c.miniBufferWidget and 
         event.char.isspace() and
-        c.keyHandler.hasState()
+        c.keyHandler.inState()
     ):
         return None # Must be None, not 'break'
     
@@ -11259,7 +11259,7 @@ def onBodyKey (self,event):
     if (
         c.keyHandler and c.miniBufferWidget and 
         event.char.isspace() and
-        c.keyHandler.hasState()
+        c.keyHandler.inState()
     ):
         return None # Must be None, not 'break'
     
@@ -11790,6 +11790,13 @@ def skip_ws_and_nl(s,i):
 #@+node:ekr.20050921094025:To do (emacs)
 @nocolor
 
+* Remove lambda's and other state-related weirdnesses.
+    - All commands must have explicit name.
+    - Eliminate setup/teardown code.
+    - ?? Remove utTailEnd (defined in keyHandler finishCreate).
+        - Figure out how to do without it.
+            - User wrapper functions for 'complex' commands ?? (those that require state)
+
 * Define all keys using leoSettings.leo.
     - Define the following input modes:
         -defaultEmacsBindings
@@ -11800,18 +11807,7 @@ def skip_ws_and_nl(s,i):
     - Use masterCommand method for all keystrokes.
     - ?? For all panes ??
 
-* Remove need for lambda's and other state-related weirdnesses.
-    - All commands must have explicit name.
-    - Eliminate setup/teardown code.
-    - Remove utTailEnd (defined in keyHandler finishCreate).
-        - Figure out how to do without it.
-            - User wrapper functions for 'complex' commands ?? (those that require state)
-
 * Generalize the code.
-    - Commands should handle their own state (this is mostly true already)
-        - Remove hasState hack.
-            - (done in base class, but maybe not needed)
-            ommands classes have stateCommands method that returns a list of commands that use state.
     - Make sure the code can support vim as well as emacs.
     - User-specified keys for alt-x, control-c, etc.
 
@@ -11985,6 +11981,15 @@ The effect of these changes:
 
 - Changed k.get, k.set and k.update to k.getLabel, k.setLable and k.updateLabel.
   This is an important clarification.
+
+- Used simplified state-handling scheme, under control of k.newState ivar.
+    - I now see that state-handling is actually fully encapsulated in the commands classes.
+    - In particular, masterCommand knows essentially nothing of states.
+    - Removed getStateCommands dicts.
+
+- Simplified stopControlX by defining leoEditCommands.initAllEditCommanders at the module level.
+    - This call theInstance.init() for all commands classes.
+      The default in the base class does nothing.
 #@nonl
 #@-node:ekr.20050924073836.1:More simplifications
 #@-node:ekr.20050921094025.6:What I did
@@ -14765,6 +14770,14 @@ def selectForwardWord (self):
 #@-node:ekr.20050723064110.18:selectForwordWord
 #@-node:ekr.20050723064110.12:Cursor movement
 #@-node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
+#@+node:ekr.20050920085536.60:doControlX
+def doControlX (self,event,stroke,previous=[]):
+    
+    k = self
+    
+    return k.callControlXFunction(event,stroke)
+#@nonl
+#@-node:ekr.20050920085536.60:doControlX
 #@-node:ekr.20050921100955:Not used
 #@+node:ekr.20050922074229.2:(Startup code)
 @nocolor
@@ -15070,7 +15083,7 @@ def setStateFunctions (self):
         
         # Command states...
         'uC':               (2,k.universalDispatch),
-        'controlx':         (2,k.doControlX),
+        'controlx':         (2,k.callControlXFunction),
         'isearch':          (2,c.searchCommands.iSearch),
         'goto':             (1,c.editCommands.Goto),
         'zap':              (1,c.editCommands.zapTo),

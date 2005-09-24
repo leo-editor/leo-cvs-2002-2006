@@ -29,7 +29,7 @@ class baseEditCommandsClass:
     '''The base class for all edit command classes'''
 
     #@    @+others
-    #@+node:ekr.20050920084036.2: ctor & finishCreate (baseEditCommandsClass)
+    #@+node:ekr.20050920084036.2: ctor, finishCreate, init (baseEditCommandsClass)
     def __init__ (self,c):
     
         self.c = c
@@ -39,8 +39,14 @@ class baseEditCommandsClass:
     
         # Class delegators.
         self.k = self.keyHandler = self.c.keyHandler
+        
+    def init (self):
+        
+        '''Called from k.stopControlX to init all classes.'''
+        
+        pass
     #@nonl
-    #@-node:ekr.20050920084036.2: ctor & finishCreate (baseEditCommandsClass)
+    #@-node:ekr.20050920084036.2: ctor, finishCreate, init (baseEditCommandsClass)
     #@+node:ekr.20050920084036.4:findPre
     def findPre (self,a,b):
         st = ''
@@ -58,13 +64,6 @@ class baseEditCommandsClass:
     
         '''Return a dict describing public commands implemented in the subclass.
         Keys are untranslated command names.  Values are methods of the subclass.'''
-    
-        return {}
-        
-    def getStateCommands (self):
-    
-        '''Return a dictionary describing commands that use complex min-buffer state.
-        Keys are untranslated command names.  Values are state-description objects.'''
     
         return {}
     #@nonl
@@ -147,7 +146,8 @@ class baseEditCommandsClass:
 #@nl
 
 #@+others
-#@+node:ekr.20050920084720: createEditCommanders (leoEditCommands module)
+#@+node:ekr.20050924100713: Module level...
+#@+node:ekr.20050920084720:createEditCommanders (leoEditCommands module)
 def createEditCommanders (self):
     
     '''Create edit classes in the commander.'''
@@ -171,19 +171,33 @@ def createEditCommanders (self):
                 
     return d
 #@nonl
-#@-node:ekr.20050920084720: createEditCommanders (leoEditCommands module)
-#@+node:ekr.20050922104731: finishCreateEditCommanders (leoEditCommands module)
-def finishCreateEditCommanders (self):
+#@-node:ekr.20050920084720:createEditCommanders (leoEditCommands module)
+#@+node:ekr.20050922104731:finishCreateEditCommanders (leoEditCommands module)
+def finishCreateEditCommanders (c):
     
     '''Create edit classes in the commander.'''
+    
+    global classesList
+
+    for name, theClass in classesList:
+        theInstance = getattr(c,name)
+        theInstance.finishCreate()
+        theInstance.init()
+#@nonl
+#@-node:ekr.20050922104731:finishCreateEditCommanders (leoEditCommands module)
+#@+node:ekr.20050924100713.1:initAllEditCommanders
+def initAllEditCommanders (self):
+    
+    '''Re-init classes in the commander.'''
     
     c = self ; global classesList
 
     for name, theClass in classesList:
         theInstance = getattr(c,name)
-        theInstance.finishCreate()
+        theInstance.init()
 #@nonl
-#@-node:ekr.20050922104731: finishCreateEditCommanders (leoEditCommands module)
+#@-node:ekr.20050924100713.1:initAllEditCommanders
+#@-node:ekr.20050924100713: Module level...
 #@+node:ekr.20050920085536.84:class  Tracker (an iterator)
 class Tracker:
 
@@ -287,10 +301,6 @@ class abbrevCommandsClass (baseEditCommandsClass):
             'read-abbrev-file':         self.readAbbreviations,
             'write-abbrev-file':        self.writeAbbreviations,
         }
-        
-    def getStateCommands (self):
-        
-        return {} ### Not ready yet.
     #@nonl
     #@-node:ekr.20050920084036.15: getPublicCommands & getStateCommands
     #@+node:ekr.20050920084036.16: Entry points
@@ -550,22 +560,6 @@ class bufferCommandsClass  (baseEditCommandsClass):
             'rename-buffer':        self.renameBuffer,
             'switch-to-buffer':     self.switchToBuffer,
         }
-        
-    def getStateCommands (self):
-        
-        return {}
-        
-        if 0: # setInBufferMode does all the state handling.
-            return {
-                'append-to-buffer':     None,
-                'copy-to-buffer':       None,
-                'insert-buffer':        None,
-                'kill-buffer' :         None,
-                'list-buffers' :        None,
-                'prepend-to-buffer':    None,
-                'rename-buffer':        None,
-                'switch-to-buffer':     None,
-            }
     #@nonl
     #@-node:ekr.20050920084036.33: getPublicCommands
     #@+node:ekr.20050920084036.34:Entry points
@@ -985,14 +979,15 @@ class editCommandsClass (baseEditCommandsClass):
     def watchEscape (self,event):
     
         k = self.k ; w = event.widget
-        if not k.hasState():
+        if not k.inState():
             k.setState('escape','start')
             k.setLabelBlue('Esc')
             return 'break'
-        if k.whichState() == 'escape':
+    
+        if k.getStateKind() == 'escape':
             state = k.getState('escape')
-            hi1 = self.keysymhistory [0]
-            hi2 = self.keysymhistory [1]
+            hi1 = self.keysymHistory [0]
+            hi2 = self.keysymHistory [1]
             if state == 'esc esc' and event.keysym == 'colon':
                 return self.startEvaluate(event)
             elif state == 'evaluate':
@@ -3588,16 +3583,18 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
 class rectangleCommandsClass (baseEditCommandsClass):
 
     #@    @+others
-    #@+node:ekr.20050920084036.222: ctor
+    #@+node:ekr.20050920084036.222: ctor & init
     def __init__ (self,c):
     
         baseEditCommandsClass.__init__(self,c) # init the base class.
-    
+        
+    def init (self):
+        
         self.sRect = False # State indicating string rectangle.  May be moved to stateManagerClass
         self.krectangle = None # The kill rectangle
-        self.rectanglemode = 0 # Determines what state the rectangle system is in.
+        self.rectanglemode = False # Determines what state the rectangle system is in.
     #@nonl
-    #@-node:ekr.20050920084036.222: ctor
+    #@-node:ekr.20050920084036.222: ctor & init
     #@+node:ekr.20050920084036.223:getPublicCommands
     def getPublicCommands (self):
     
@@ -3793,15 +3790,14 @@ class registerCommandsClass (baseEditCommandsClass):
     '''A class to represent registers a-z and the corresponding Emacs commands.'''
 
     #@    @+others
-    #@+node:ekr.20050920084036.235: ctor & finishCreate
+    #@+node:ekr.20050920084036.235: ctor, finishCreate & init
     def __init__ (self,c):
         
         baseEditCommandsClass.__init__(self,c) # init the base class.
     
         self.method = None 
         self.methodDict, self.helpDict = self.addRegisterItems()
-        self.registermode = False # For rectangles and registers
-        self.registers = {} # May be changed later.
+        self.registermode = 0 # Must be an int.
         
     def finishCreate (self):
         
@@ -3809,8 +3805,18 @@ class registerCommandsClass (baseEditCommandsClass):
         
         if self.k.useGlobalRegisters:
             self.registers = leoKeys.keyHandlerClass.global_registers
+        else:
+            self.registers = {}
+            
+    def init (self):
+    
+        if self.registermode:
+            self.deactivateRegister()
+        self.registermode = 0
+            
+        
     #@nonl
-    #@-node:ekr.20050920084036.235: ctor & finishCreate
+    #@-node:ekr.20050920084036.235: ctor, finishCreate & init
     #@+node:ekr.20050920084036.236: Entry points
     def setEvent (self,event,l):
         event.keysym = l ; return event
@@ -3960,8 +3966,6 @@ class registerCommandsClass (baseEditCommandsClass):
     def _viewRegister (self,event):
         
         k = self.k
-        
-        ## k.stopControlX(event)
     
         s = self.registers.get(event.keysym.lower())
         if s:
@@ -4072,12 +4076,12 @@ class registerCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.252:addRegisterItems (registerCommandsClass)
     #@+node:ekr.20050920084036.253:deactivateRegister
-    def deactivateRegister (self,event):
+    def deactivateRegister (self,event=None): # Event not used.
     
         k = self.k
     
         k.setLabelGrey('')
-        self.registermode = False
+        self.registermode = 0
         self.method = None
     #@nonl
     #@-node:ekr.20050920084036.253:deactivateRegister
