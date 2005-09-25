@@ -92,25 +92,9 @@ class keyHandlerClass:
         #@nl
         #@    << define state ivars >>
         #@+node:ekr.20050923222924.3:<< define state ivars >>
-        #@+at 
-        #@nonl
-        # Use a state dict is dubious: the minibuffer can have only one state 
-        # at a time.
-        # OTOH, there may be sublties in the old code I don't understand yet.
-        # 
-        # The newState ivar hedges the bet.
-        # 
-        #@-at
-        #@@c
-        
-        self.newState = True
-        
         self.state = None
-        
-        if self.newState:
-            self.stateKind = None
-        else:
-            self.states = {}
+        self.stateKind = None
+        self.stateHandler = None
         #@nonl
         #@-node:ekr.20050923222924.3:<< define state ivars >>
         #@nl
@@ -199,38 +183,24 @@ class keyHandlerClass:
             if k.expandAbbrev(event):
                 return 'break'
     
-        self.stateCommands = { 
-            # 1 == one parameter, 2 == all
+        self.stateCommands = {
             
-            # Utility states...
-            'getArg':    (2,k.getArg),
+            'negativeArg':      k.callStateFunction,
+            'goto':             c.editCommands.Goto,
+            'zap':              c.editCommands.zapTo,
+            'howM':             c.editCommands.howMany,
+            'abbrevMode':       c.abbrevCommands.abbrevCommand1,
             
-            # Command states...
-            'uC':               (2,k.universalDispatch),
-            'controlx':         (2,k.callControlXFunction),
-            'isearch':          (2,c.searchCommands.iSearch),
-            'goto':             (1,c.editCommands.Goto),
-            'zap':              (1,c.editCommands.zapTo),
-            'howM':             (1,c.editCommands.howMany),
-            'abbrevMode':       (1,c.abbrevCommands.abbrevCommand1),
-            'altx':             (1,k.doAlt_X),
-            'qlisten':          (1,c.queryReplaceCommands.masterQR),
-            'rString':          (1,c.editCommands.replaceString),
-            'negativeArg':      (2,k.negativeArgument),
-            'abbrevOn':         (1,eA),
-            'set-fill-column':  (1,c.editCommands.setFillColumn),
-            'chooseBuffer':     (1,c.bufferCommands.chooseBuffer),
-            'renameBuffer':     (1,c.bufferCommands.renameBuffer),
-            're_search':        (1,c.searchCommands.re_search),
-            'alterlines':       (1,c.editCommands.processLines),
-            'make_directory':   (1,c.editFileCommands.makeDirectory),
-            'remove_directory': (1,c.editFileCommands.removeDirectory),
-            'delete_file':      (1,c.editFileCommands.deleteFile),
-            'nonincr-search':   (2,c.searchCommands.nonincrSearch),
-            'word-search':      (1,c.searchCommands.wordSearch),
-            'last-altx':        (1,k.executeLastAltX),
-            'escape':           (1,c.editCommands.watchEscape),
-            'subprocess':       (1,c.controlCommands.subprocesser),
+            'qlisten':          c.queryReplaceCommands.masterQR,
+            'abbrevOn':         eA,
+            'set-fill-column':  c.editCommands.setFillColumn,
+            'chooseBuffer':     c.bufferCommands.chooseBuffer,
+            'renameBuffer':     c.bufferCommands.renameBuffer,
+           
+            'alterlines':       c.editCommands.processLines,
+            'last-altx':        k.executeLastAltX,
+            'escape':           c.editCommands.watchEscape,
+            'subprocess':       c.controlCommands.subprocesser,
         }
     #@nonl
     #@-node:ekr.20050923174229:setStateFunctions
@@ -398,8 +368,8 @@ class keyHandlerClass:
         
         # The big ones...
         'Alt-x':        k.alt_X,
-        
-        'Control-x':    k.startControlX, # Conflicts with XP cut.
+        #'Control-x':    k.startControlX, # Conflicts with XP cut.
+        'Control-c':    k.startControlX, # Conflicts with XP cut.
         'Control-g':    k.keyboardQuit,
     
         # Standard Emacs moves...
@@ -477,7 +447,7 @@ class keyHandlerClass:
             # 'Alt-minus':    k.negativeArgument,
             # 'Alt-slash':    c.editCommands.dynamicExpansion,
             # 'Control-Alt-slash':    c.editCommands.dynamicExpansion2,
-            # 'Control-u':        lambda event, keystroke = '<Control-u>': k.universalDispatch(event,keystroke),
+            # 'Control-u':        lambda event, keystroke = '<Control-u>': k.universalDispatchStateHandler(event,keystroke),
             # 'Alt-q':        c.editCommands.fillParagraph,
             # 'Alt-h':        c.editCommands.selectParagraph,
             # 'Alt-semicolon': c.editCommands.indentToCommentColumn,
@@ -711,24 +681,24 @@ class keyHandlerClass:
     
     def digitArgument (self,event):
         
-        k = self
+        k = self ; k.stroke = ''
     
-        return k.universalDispatch(event,'')
+        return k.universalDispatchStateHandler(event)
     
     def universalArgument (self,event):
         
-        k = self
+        k = self ; k.stroke = ''
     
-        return k.universalDispatch(event,'')
+        return k.universalDispatchStateHandler(event)
     #@nonl
     #@+node:ekr.20050920085536.73:universalDispatch
-    def universalDispatch (self,event,stroke):
+    def universalDispatchStateHandler (self,event):
     
-        k = self
+        k = self ; stroke = k.stroke
         state = k.getState('uC')
     
         if state == 0:
-            k.setState('uC',1)
+            k.setState('uC',1,stateHandler=k.universalDispatchStateHandler)
             k.setLabelBlue('')
         elif state == 1:
             k.universalCommand1(event,stroke)
@@ -800,11 +770,11 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.76:universalCommand3
     #@+node:ekr.20050920085536.77:numberCommand
-    def numberCommand (self,event,stroke,number): # event IS used.
+    def numberCommand (self,event,stroke,number):
     
-        k = self
+        k = self ; k.stroke = stroke
     
-        k.universalDispatch(event,stroke)
+        k.universalDispatchStateHandler(event)
         event.widget.event_generate('<Key>',keysym=number)
     
         return 'break'
@@ -830,6 +800,7 @@ class keyHandlerClass:
         # Note: the _L symbols represent *either* special key.
         k = self ; c = k.c
         special = event.keysym in ('Control_L','Alt_L','Shift_L')
+        k.stroke = stroke
     
         inserted = not special or (
             not general and (len(k.keysymHistory) == 0 or k.keysymHistory [0] != event.keysym))
@@ -876,12 +847,12 @@ class keyHandlerClass:
     
         if k.inState():
             k.previousStroke = stroke
-            return k.callStateFunction(event,stroke)
+            return k.callStateFunction(event)
     
         if k.hasKeyStroke(stroke):
             g.trace('hasKeyStroke')
             k.previousStroke = stroke
-            k.callKeystrokeFunction(event,stroke)
+            k.callKeystrokeFunction(event)
     
         if k.regXRpl: # EKR: a generator.
             try:
@@ -908,7 +879,8 @@ class keyHandlerClass:
     def alt_X (self,event=None,which=''):
     
         k = self
-        k.setState('altx',which or 1) # Must be int, not True.
+        k.setState('altx',which or 1, # Must be int, not True.
+            stateHandler=k.doAlt_X) 
     
         if which:
             k.setLabelBlue('%s %s' % (which,k.alt_x_prompt),protect=True)
@@ -1087,32 +1059,38 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.40:Alt_X...
     #@+node:ekr.20050924065103:Arg...
     #@+node:ekr.20050920085536.62:getArg
-    def getArg (self,event,returnStateKind=None,returnState=None):
+    def getArg (self,event,returnStateKind=None,returnState=None,returnStateHandler=None,prefix=None):
         
         '''Accumulate an argument until the user hits return (or control-g).
-        Enter the 'return' state when done.'''
+        Enter the given return state when done.
+        The prefix is does not form the arg.  The prefix defaults to the k.getLabel().
+        '''
         
-        k = self ; stateKind = 'getArg'
-        state = k.getState(stateKind)
+        k = self
+        state = k.getState('getArg')
+        # g.trace('state',repr(state))
         if not state:
-            k.altX_prefix = len(k.getLabel()) ; k.arg = ''
-            k.afterGetArgState = (returnStateKind,returnState)
-            k.setState(stateKind,1)
+            if prefix:  k.altX_prefix = prefix
+            else:       k.altX_prefix = k.getLabel()
+            k.arg = ''
+            k.afterGetArgState = (returnStateKind,returnState,returnStateHandler)
+            k.setState('getArg',1,stateHandler=k.getArg)
         elif event.keysym == 'Return':
             # Compute the actual arg.
             s = k.getLabel() ; k.arg = s[len(k.altX_prefix):]
             # Immediately enter the caller's requested state.
-            k.clearState()
-            stateKind,state = k.afterGetArgState
-            k.setState(stateKind,state)
-            k.callStateFunction(event,None)
+            returnStateKind,returnState,returnStateHandler = k.afterGetArgState
+            k.setState(returnStateKind,returnState,returnStateHandler)
+            k.callStateFunction(event)
         else:
             k.updateLabel(event)
         return 'break'
     #@nonl
     #@-node:ekr.20050920085536.62:getArg
     #@+node:ekr.20050920085536.68:negativeArgument
-    def negativeArgument (self,event,stroke=None):
+    def negativeArgument (self,event):
+        
+        g.trace(event.keysym,stroke)
     
         k = self
         state = k.getState('negativeArg')
@@ -1121,15 +1099,15 @@ class keyHandlerClass:
         if state == 0:
             k.setState('negativeArg',1)
         else:
-            func = k.negArgs.get(stroke)
+            func = k.negArgs.get(k.stroke)
             if func:
-                func(event,stroke)
+                func(event)
     
         return 'break'
     #@nonl
     #@-node:ekr.20050920085536.68:negativeArgument
     #@-node:ekr.20050924065103:Arg...
-    #@+node:ekr.20050920085536.57:ControlX...
+    #@+node:ekr.20050920085536.57:ControlX...  (actually bound to control-c for now)
     #@+node:ekr.20050920085536.58:startControlX
     def startControlX (self,event):
     
@@ -1137,14 +1115,14 @@ class keyHandlerClass:
         
         k = self
     
-        k.setState('controlx',True)
+        k.setState('controlx',True,stateHandler=k.controlX_stateHandler)
         k.setLabelBlue('Control - X')
     
         return 'break'
     #@nonl
     #@-node:ekr.20050920085536.58:startControlX
     #@+node:ekr.20050920085536.59:stopControlX
-    def stopControlX (self,event): # event IS used.
+    def stopControlX (self,event):
     
         '''This method clears the state of the Emacs instance'''
         
@@ -1165,18 +1143,33 @@ class keyHandlerClass:
         return 'break'
     #@nonl
     #@-node:ekr.20050920085536.59:stopControlX
-    #@+node:ekr.20050923183943.1:callControlXFunction
-    def callControlXFunction (self,event,stroke):
+    #@+node:ekr.20050923183943.1:controlX_stateHandler
+    def controlX_stateHandler (self,event):
         
-        k = self
+        k = self ; stroke = k.stroke
     
         k.previous.insert(0,event.keysym)
     
         if len(k.previous) > 10:
             k.previous.pop()
+            
+        g.trace(stroke)
     
         if stroke in ('<Key>','<Escape>'):
             return k.processKey(event)  # Weird command-specific stuff.
+            
+        #  k.xcommands:
+        # '<Control-t>': c.editCommands.transposeLines,
+        # '<Control-u>': lambda event, way = 'up': c.editCommands.upperLowerRegion(event,way),
+        # '<Control-l>': lambda event, way = 'low': c.editCommands.upperLowerRegion(event,way),
+        # '<Control-o>': c.editCommands.removeBlankLines,
+        # '<Control-i>': c.editFileCommands.insertFile,
+        # '<Control-s>': c.editFileCommands.saveFile,
+        # '<Control-x>': c.editCommands.exchangePointMark,
+        # '<Control-c>': c.controlCommands.shutdown,
+        # '<Control-b>': c.bufferCommands.listBuffers,
+        # '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
+        # '<Delete>': lambda event, back = True: c.editCommands.killsentence(event,back),
     
         if stroke in k.xcommands:
             k.xcommands [stroke](event)
@@ -1184,7 +1177,8 @@ class keyHandlerClass:
                 k.keyboardQuit(event)
     
         return 'break'
-    #@-node:ekr.20050923183943.1:callControlXFunction
+    #@nonl
+    #@-node:ekr.20050923183943.1:controlX_stateHandler
     #@+node:ekr.20050923183943.2:setControlXFunctions MUST BE GENERALIZED
     def setControlXFunctions (self):
     
@@ -1261,7 +1255,10 @@ class keyHandlerClass:
             return func(event)
     
         if event.keysym in ('a','i','e'):
-            if k.processAbbreviation(event): return 'break'
+            if k.processAbbreviation(event):
+                return 'break'
+            else:
+                g.trace('no abbreviation for %s' % event.keysym)
     
         if event.keysym == 'g':
             l = k.getLabel()
@@ -1324,19 +1321,16 @@ class keyHandlerClass:
             return 'break'
     #@nonl
     #@-node:ekr.20050923183943.6:processAbbreviation MUST BE GENERALIZED
-    #@-node:ekr.20050920085536.57:ControlX...
+    #@-node:ekr.20050920085536.57:ControlX...  (actually bound to control-c for now)
     #@+node:ekr.20050923174229.2:Keystroke...
     #@+node:ekr.20050923174229.3:callKeystrokeFunction
-    def callKeystrokeFunction (self,event,stroke):
+    def callKeystrokeFunction (self,event):
         
         k = self
         
-        numberOfArgs, func = k.keystrokes [stroke]
+        numberOfArgs, func = k.keystrokes [k.stroke]
     
-        if numberOfArgs == 1:
-            return func(event)
-        else:
-            return func(event,stroke)
+        return func(event)
     #@nonl
     #@-node:ekr.20050923174229.3:callKeystrokeFunction
     #@+node:ekr.20050920085536.22:hasKeyStroke
@@ -1429,28 +1423,21 @@ class keyHandlerClass:
     #@-node:ekr.20050924064254:Label...
     #@+node:ekr.20050923172809:State...
     #@+node:ekr.20050923172809.1:callStateFunction
-    def callStateFunction (self,*args):
+    def callStateFunction (self,event):
         
         k = self
         
-        if k.newState:
-            if k.stateKind:
-                flag, func = k.stateCommands.get(k.stateKind,(None,None))
+        # g.trace(k.stateKind,k.state)
+        
+        if k.stateKind:
+            if k.stateHandler:
+                return k.stateHandler(event)
+            else:
+                func = k.stateCommands.get(k.stateKind)
                 if func:
-                    if flag == 1:
-                        return func(args[0])
-                    else:
-                        return func(*args)
+                    return func(event)
                 else:
                     g.es_print('no state function for %s' % (k.stateKind),color='red')
-        else:
-            if k.state:
-                flag, func = k.stateCommands [k.state]
-        
-                if flag == 1:
-                    return func(args[0])
-                else:
-                    return func(*args)
     #@nonl
     #@-node:ekr.20050923172809.1:callStateFunction
     #@+node:ekr.20050923172814.1:clearState
@@ -1458,24 +1445,15 @@ class keyHandlerClass:
         
         k = self
         k.state = None
-        
-        if k.newState:
-            k.stateKind = None
-        else:
-            for z in k.states.keys():
-                k.states [z] = 0 # More useful than False.
+        k.stateHandler = None
+        k.stateKind = None
     #@nonl
     #@-node:ekr.20050923172814.1:clearState
     #@+node:ekr.20050923172814.2:getState
     def getState (self,state):
         
         k = self
-        
-        if k.newState:
-            val = g.choose(k.stateKind == state,k.state,0)
-        else:
-            val = k.states.get(state,False)
-            
+        val = g.choose(k.stateKind == state,k.state,0)
         # g.trace(state,'returns',val)
         return val
     #@nonl
@@ -1484,11 +1462,8 @@ class keyHandlerClass:
     def getStateKind (self):
         
         k = self
+        return k.stateKind
         
-        if k.newState:
-            return k.stateKind
-        else:
-            return k.state
     #@nonl
     #@-node:ekr.20050923172814.5:getStateKind
     #@+node:ekr.20050923172814.3:inState
@@ -1496,32 +1471,22 @@ class keyHandlerClass:
         
         k = self
         
-        if k.newState:
-            return k.state and k.stateKind != None
-        else:
-            if k.state:
-                return k.states [k.state]
+        return k.state and k.stateKind != None
     #@nonl
     #@-node:ekr.20050923172814.3:inState
     #@+node:ekr.20050923172814.4:setState
-    def setState (self,state,value):
+    def setState (self,state,value,stateHandler=None):
         
         k = self
         k.state = state
+        if stateHandler:
+            k.stateHandler = stateHandler
         # g.trace(state,value)
-        
-        if k.newState:
-            if state:
-                k.stateKind = state
-                k.state = value
-            else:
-                k.clearState()
+        if state:
+            k.stateKind = state
+            k.state = value
         else:
-            if state:
-                k.states [state] = value
-            else:
-                k.clearState()
-    #@nonl
+            k.clearState()
     #@-node:ekr.20050923172814.4:setState
     #@-node:ekr.20050923172809:State...
     #@+node:ekr.20050920085536.69:tailEnd...

@@ -1778,13 +1778,12 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.105:region...
     #@+node:ekr.20050920084036.112:replace...
     #@+node:ekr.20050920084036.113:replaceString
-    def replaceString (self,event): # event IS used
+    def replaceString (self,event):
         
         k = self.k ; w = event.widget
-        stateKind = 'rString'
         # This should not be here.
         if event.keysym in ('Control_L','Control_R'): return
-        state = k.getState(stateKind)
+        state = k.getState('rString')
         regex = self._useRegex
         prompt = 'Replace ' + g.choose(regex,'Regex','String')
         if state == 0:
@@ -1792,13 +1791,13 @@ class editCommandsClass (baseEditCommandsClass):
             s = '%s: ' % prompt
             k.setLabel(s)
             # Get arg and enter state 1.
-            return k.getArg(event,stateKind,1) 
+            return k.getArg(event,'rString',1,self.replaceStringStateHandler) 
         elif state == 1:
             self._sString = k.arg
             s = '%s: %s With: ' % (prompt,self._sString)
             k.setLabel(s)
             # Get arg and enter state 2.
-            return k.getArg(event,stateKind,2)
+            return k.getArg(event,'rString',2,self.replaceStringStateHandler)
         elif state == 2:
             self._rpString = k.arg
             #@        << do the replace >>
@@ -1836,6 +1835,7 @@ class editCommandsClass (baseEditCommandsClass):
             k.clearState()
             self._useRegex = False
             return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.113:replaceString
     #@+node:ekr.20050920084036.115:activateReplaceRegex
     def activateReplaceRegex( self ):
@@ -2305,9 +2305,9 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.130:New Entry points
     #@+node:ekr.20050920084036.144:Used by neg argss
     #@+node:ekr.20050920084036.145:changePreviousWord
-    def changePreviousWord (self,event,stroke):
+    def changePreviousWord (self,event):
     
-        k = self.k ; w = event.widget
+        k = self.k ; stroke = k.stroke ; w = event.widget
         i = w.index('insert')
     
         self.moveword(event,-1)
@@ -2599,22 +2599,22 @@ class editFileCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.164:deleteFile
     def deleteFile (self,event):
     
-        k = self.k
-        state = k.getState('delete_file')
+        k = self.k ; state = k.getState('delete_file')
     
         if state == 0:
-            k.setState('delete_file',1)
-            k.setLabelBlue('%s%s' % (os.getcwd(),os.sep))
-        elif event.keysym == 'Return':
-            lab = k.getLabel()
-            k.keyboardQuit(event)
-            try:
-                os.remove(dfile)
-            except:
-                k.setLabel("Could not delete %s%" % lab)
+            prefix = 'Remove File: '
+            k.setLabelBlue('%s%s%s' % (prefix,os.getcwd(),os.sep))
+            k.getArg(event,'delete_file',1,
+                returnStateHandler=self.deleteFile,prefix=prefix)
         else:
-            k.updateLabel(event)
-        
+            k.keyboardQuit(event)
+            k.clearState()
+            try:
+                os.remove(k.arg)
+                k.setLabel('deleted %s' % k.arg)
+            except:
+                k.setLabel('deleted not delete %s' % k.arg)
+    
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.164:deleteFile
@@ -2673,59 +2673,55 @@ class editFileCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.168:makeDirectory
     def makeDirectory (self,event):
     
-        k = self.k
-        state = k.getState('make_directory')
+        k = self.k ; state = k.getState('make_directory')
     
         if state == 0:
-            k.setState('make_directory',1)
-            k.setLabelBlue('%s%s' % (os.getcwd(),os.sep))
-            return 'break'
-    
-        if event.keysym == 'Return':
-            lab = k.getLabel()
-            k.keyboardQuit(event)
-            try:
-                os.mkdir(lab)
-            except:
-                k.setLabel("Could not make %s%" % lab)
-            return 'break'
+            prefix = 'Make Directory: '
+            k.setLabelBlue('%s%s%s' % (prefix,os.getcwd(),os.sep))
+            k.getArg(event,'make_directory',1,
+                returnStateHandler=self.makeDirectory,prefix=prefix)
         else:
-            k.updateLabel(event)
-            return 'break'
-    #@nonl
+            k.keyboardQuit(event)
+            k.clearState()
+            try:
+                os.mkdir(k.arg)
+                k.setLabel("created %s" % k.arg)
+            except:
+                k.setLabel("can not create %s" % k.arg)
+                
+        return 'break'
     #@-node:ekr.20050920084036.168:makeDirectory
     #@+node:ekr.20050920084036.169:removeDirectory
     def removeDirectory (self,event):
     
-        k = self.k
-        state = k.getState('remove_directory')
+        k = self.k ; state = k.getState('remove_directory')
     
-        if not state:
-            k.setState('remove_directory',True)
-            k.setLabelBlue('%s%s' % (os.getcwd(),os.sep))
-            return 'break'
-    
-        if event.keysym == 'Return':
-            lab = k.getLabel()
-            k.keyboardQuit(event)
-            try:
-                os.rmdir(lab)
-            except:
-                k.setLabel("Could not remove %s!" % lab)
-            return 'break'
+        if state == 0:
+            prefix = 'Remove Directory: '
+            k.setLabelBlue('%s%s%s' % (prefix,os.getcwd(),os.sep))
+            k.getArg(event,'remove_directory',1,
+                returnStateHandler=self.removeDirectory,prefix=prefix)
         else:
-            k.updateLabel(event)
-            return 'break'
+            k.keyboardQuit(event)
+            k.clearState()
+            try:
+                os.rmdir(k.arg)
+                k.setLabel('removed %s' % k.arg)
+            except:
+                k.setLabel('Can not remove %s' % k.arg)
+    
+        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.169:removeDirectory
     #@+node:ekr.20050920084036.170:saveFile
     def saveFile( self, event ):
+    
         w = event.widget
         txt = w.get( '1.0', 'end' )
         f = tkFileDialog.asksaveasfile()
-        if f == None : return None
-        f.write( txt )
-        f.close()
+        if f:
+            f.write( txt )
+            f.close()
     #@nonl
     #@-node:ekr.20050920084036.170:saveFile
     #@-others
@@ -3342,13 +3338,15 @@ class macroCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.204:startKBDMacro
     #@+node:ekr.20050920084036.205:recordKBDMacro
-    def recordKBDMacro( self, event, stroke ):
+    def recordKBDMacro( self, event ):
+        
+        k = self.k ; stroke = k.stroke
+        
         if stroke != '<Key>':
             self.macro.append( (stroke, event.keycode, event.keysym, event.char) )
         elif stroke == '<Key>':
             if event.keysym != '??':
                 self.macro.append( ( event.keycode, event.keysym ) )
-        return
     #@nonl
     #@-node:ekr.20050920084036.205:recordKBDMacro
     #@+node:ekr.20050920084036.206:stopKBDMacro
@@ -4200,20 +4198,21 @@ class searchCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.260:Entry points
     #@+node:ekr.20050920084036.261:incremental search methods
     #@+node:ekr.20050920084036.262:startIncremental
-    def startIncremental (self,event,stroke,which='normal'):
+    def startIncremental (self,event,kind='<Control-s>',which='normal'):
     
-        k = self.k
+        k = self.k # kind is '<Control-s>' or '<Control-r>'
     
         state = k.getState('isearch')
         
+        g.trace(kind,state)
+        
         if state == 0:
-            ## ref: self.csr = { '<Control-s>': 'for', '<Control-r>':'bak' }
-            self.pref = self.csr [stroke]
-            k.setState('isearch',which)
+            self.pref = self.csr [kind]
+            k.setState('isearch',which,stateHandler=self.iSearchStateHandler)
             k.setLabelBlue('isearch:',protect=True)
         else:
-            self.search(event,way=self.csr[stroke],useregex=self.useRegex())
-            self.pref = self.csr [stroke]
+            self.search(event,way=self.csr[kind],useregex=self.useRegex())
+            self.pref = self.csr [kind]
             self.scolorizer(event)
     
         return 'break'
@@ -4223,9 +4222,10 @@ class searchCommandsClass (baseEditCommandsClass):
     def search (self,event,way,useregex=False):
     
         '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
-    
+        
         k = self.k ; w = event.widget
         s = k.getLabel(ignorePrompt=True)
+        g.trace(way,repr(s))
         if s:
             try:
                 if way == 'bak': # Search backwards.
@@ -4247,15 +4247,15 @@ class searchCommandsClass (baseEditCommandsClass):
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.263:search
-    #@+node:ekr.20050920084036.264:iSearch
+    #@+node:ekr.20050920084036.264:iSearchStateHandler
     # Called when from the state manager when the state is 'isearch'
     
-    def iSearch (self,event,stroke):
-        
-        g.trace(stroke)
+    def iSearchStateHandler (self,event):
     
-        k = self.k ; w = event.widget
+        k = self.k ; stroke = k.stroke ; w = event.widget
         if not event.char: return
+    
+        g.trace(event.keysym)
     
         if stroke in self.csr:
             return self.startIncremental(event,stroke)
@@ -4268,7 +4268,9 @@ class searchCommandsClass (baseEditCommandsClass):
                 return self.startNonIncrSearch(event,self.pref)
     
         k.updateLabel(event)
-        if event.char != '\b':
+        if event.char == '\b':
+            g.trace('backspace not handled yet')
+        else:
            s = k.getLabel(ignorePrompt=True)
            z = w.search(s,'insert',stopindex='insert +%sc' % len(s))
            if not z:
@@ -4277,7 +4279,7 @@ class searchCommandsClass (baseEditCommandsClass):
     
         return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.264:iSearch
+    #@-node:ekr.20050920084036.264:iSearchStateHandler
     #@+node:ekr.20050920084036.265:scolorizer
     def scolorizer (self,event):
     
@@ -4320,10 +4322,10 @@ class searchCommandsClass (baseEditCommandsClass):
     # Alt-x forward-search or backward-search, just looks for words...
     #@-at
     #@nonl
-    #@+node:ekr.20050920084036.268:nonincrSearch
-    def nonincrSearch (self,event,stroke):
+    #@+node:ekr.20050920084036.268:nonincrSearchStateHandler
+    def nonincrSearchStateHandler (self,event):
     
-        k = self.k ; w = event.widget
+        k = self.k ; stroke = k.stroke ; w = event.widget
     
         if event.keysym in ('Control_L','Control_R'): return
         state = k.getState('nonincr-search')
@@ -4352,14 +4354,15 @@ class searchCommandsClass (baseEditCommandsClass):
             k.updateLabel(event)
             return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.268:nonincrSearch
+    #@-node:ekr.20050920084036.268:nonincrSearchStateHandler
     #@+node:ekr.20050920084036.269:startNonIncrSearch
     def startNonIncrSearch (self,event,which):
     
         k = self.k
     
         k.keyboardQuit(event)
-        k.setState('nonincr-search','start%s' % which)
+        k.setState('nonincr-search','start%s' % which,
+            stateHandler=self.nonincrSearchStateHandler)
         k.setLabelBlue('Search:')
     
         return 'break'
@@ -4385,22 +4388,23 @@ class searchCommandsClass (baseEditCommandsClass):
         k = self.k
     
         k.keyboardQuit(event)
-        k.setState('word-search','start%s' % which)
+        k.setState('word-search','start%s' % which,
+            stateHandler=self.wordSearchStateHandler)
         k.setLabelBlue('Word Search %s:' %
-            g.choose(which=='bak','Backward','Forward'))
+            g.choose(which=='bak','Backward','Forward'),protect=True)
     
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.271:startWordSearch
-    #@+node:ekr.20050920084036.272:wordSearch
-    def wordSearch (self,event):
+    #@+node:ekr.20050920084036.272:wordSearchStateHandler
+    def wordSearchStateHandler (self,event):
     
         k = self.k ; w = event.widget
         state = k.getState('word-search')
-        if state.startswith('start'):
+        if state.startswith('start'): # pathetic hack.
             state = state [5:]
-            k.setState('word-search',state)
-            k.setLabel('')
+            k.setState('word-search',state,
+                stateHandler=self.wordSearchStateHandler)
         if event.keysym == 'Return':
             i = w.index('insert')
             words = k.getLabel().split()
@@ -4428,7 +4432,7 @@ class searchCommandsClass (baseEditCommandsClass):
             k.updateLabel(event)
             return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.272:wordSearch
+    #@-node:ekr.20050920084036.272:wordSearchStateHandler
     #@-node:ekr.20050920084036.270:word search methods
     #@+node:ekr.20050920084036.273:re-search methods
     # For the re-search-backward and re-search-forward Alt-x commands
@@ -4439,7 +4443,8 @@ class searchCommandsClass (baseEditCommandsClass):
         k = self.k
     
         k.keyboardQuit(event)
-        k.setState('re_search','start%s' % which)
+        k.setState('re_search','start%s' % which,
+            stateHandler=self.reSearchStateHandler)
         k.setLabelBlue('RE Search:')
     
         return 'break'
@@ -4447,40 +4452,40 @@ class searchCommandsClass (baseEditCommandsClass):
     reSearchForward = reStart
     #@nonl
     #@-node:ekr.20050920084036.274:reStart
-    #@+node:ekr.20050920084036.275:re_search
-    def re_search( self, event ):
+    #@+node:ekr.20050920084036.275:reSearchStateHandler
+    def reSearchStateHandler (self,event):
     
         k = self.k ; w = event.widget
-        state = k.getState( 're_search' )
-        if state.startswith( 'start' ):
-            state = state[ 5: ]
-            k.setState( 're_search', state )
-            k.setLabel( '' )
+        state = k.getState('re_search')
+        if state.startswith('start'):
+            state = state [5:] # pathetic hack.
+            k.setState('re_search',state,stateHandler=self.reSearchStateHandler)
+            k.setLabel('')
         if event.keysym == 'Return':
             pattern = k.getLabel()
-            cpattern = re.compile( pattern )
+            cpattern = re.compile(pattern)
             end = None
             if state == 'forward':
-                txt = w.get( 'insert', 'end' )
-                match = cpattern.search( txt )
+                txt = w.get('insert','end')
+                match = cpattern.search(txt)
                 end = match.end()
             else:
-                txt = w.get( '1.0', 'insert' ) #initially the reverse words formula for Python Cookbook was going to be used.
-                a = re.split( pattern, txt )         #that didnt quite work right.  This one apparently does.   
-                if len( a ) > 1:
-                    b = re.findall( pattern, txt )
-                    end = len( a[ -1 ] ) + len( b[ -1 ] )
+                txt = w.get('1.0','insert') #initially the reverse words formula for Python Cookbook was going to be used.
+                a = re.split(pattern,txt) #that didnt quite work right.  This one apparently does.
+                if len(a) > 1:
+                    b = re.findall(pattern,txt)
+                    end = len(a[-1]) + len(b[-1])
             if end:
-                wdict ={ 'forward': 'insert +%sc', 'backward': 'insert -%sc' }
-                w.mark_set( 'insert', wdict[ state ] % end )                                
-                k._tailEnd( w )
-                w.see( 'insert' )
-            return k.keyboardQuit( event )    
+                wdict = {'forward': 'insert +%sc', 'backward': 'insert -%sc'}
+                w.mark_set('insert',wdict[state] % end)
+                k._tailEnd(w)
+                w.see('insert')
+            return k.keyboardQuit(event)
         else:
-            k.updateLabel( event )
+            k.updateLabel(event)
             return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.275:re_search
+    #@-node:ekr.20050920084036.275:reSearchStateHandler
     #@-node:ekr.20050920084036.273:re-search methods
     #@-others
 #@nonl
