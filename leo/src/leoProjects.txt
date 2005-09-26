@@ -11790,27 +11790,27 @@ def skip_ws_and_nl(s,i):
 #@+node:ekr.20050921094025:To do (emacs)
 @nocolor
 
+- Eliminate stateCommands dict.
+
+* Remove lambda's and other dispatching weirdnesses.
+    - All commands must have explicit name.
+
+* Allow the user to specify alternatives for all keys.
+    - User-specified keys for alt-x, control-c, etc.
+    - Make sure the code can support vim as well as emacs.
+
+? Remove utTailEnd (defined in keyHandler finishCreate).
+
 * Redo how shortcuts get bound.
     - Ignore shortcut entry in menu tables.
     - Create shortcut dict:  keys are emacs-command names, values are shortcut.
     - Define defaultEmacsBindings,defaultVimBindings,defaultLeoBindings
     - Allow any shortcut to be overridden using leoSettings.leo.
 
-* Remove lambda's and other dispatching weirdnesses.
-    - Eliminate stateCommands dict.
-        - Functions that manage state should set k.stateFunction to themselve.
-    - All commands must have explicit name.
-    - Eliminate setup/teardown code.
-    - ?? Remove utTailEnd (defined in keyHandler finishCreate).
-
 * Bind emacs keystrokes in Leo's core.
     - Use masterCommand method for all keystrokes.
     - ?? For all panes ??
 
-* Allow the user to specify alternatives for all keys.
-    - User-specified keys for alt-x, control-c, etc.
-    - Make sure the code can support vim as well as emacs.
-    
 * What happens if useMiniBuffer option is False?
     - Disable commands that depend on them?
 #@nonl

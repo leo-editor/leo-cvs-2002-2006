@@ -390,8 +390,8 @@ class abbrevCommandsClass (baseEditCommandsClass):
         #@-node:ekr.20050920084036.22:<< define a new generator searchXR >>
         #@nl
         # EKR: the 'result' of calling searchXR is a generator object.
-        k.regXRpl = searchXR( i1, i2, ins, event)
-        k.regXRpl.next() # Call it the first time.
+        k.regx.iter = searchXR( i1, i2, ins, event)
+        k.regx.iter.next() # Call it the first time.
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.21:regionalExpandAbbrev
@@ -476,7 +476,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.28:_setRAvars
     def _setRAvars( self ):
     
-        self.k.regXRpl = self.k.regXKey = None
+        self.k.regx.iter = self.k.regXKey = None
     #@nonl
     #@-node:ekr.20050920084036.28:_setRAvars
     #@+node:ekr.20050920084036.29:_readAbbrevs
@@ -1239,7 +1239,7 @@ class editCommandsClass (baseEditCommandsClass):
             reg = re.compile(reg1)
             i = reg.findall(txt)
             k.setLabelGrey('%s occurances found of %s' % (len(i),reg1))
-            k.setState('howM',False)
+            k.setState('howM',0)
         else:
             k.updateLabel(event)
     
@@ -2622,7 +2622,7 @@ class editFileCommandsClass (baseEditCommandsClass):
     def diff( self, event ):
         
         '''the diff command, accessed by Alt-x diff.
-        Creates a buffer and puts the diff between 2 files into it..'''
+        Creates a buffer and puts the diff between 2 files into it.'''
         
         k = self.k ; w = event.widget
     
@@ -3452,7 +3452,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
     
         if k.getState('qlisten') == 'replace-caption':
             k.setLabel('')
-            k.setState('qlisten',True)
+            k.setState('qlisten',1)
     
         k.updateLabel(event)
     #@nonl
@@ -3478,7 +3478,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
     
         if k.getState('qlisten') == 'replace-caption':
             k.setLabel('')
-            k.setState('qlisten',True)
+            k.setState('qlisten',1)
     
         k.updateLabel(event)
     #@nonl
@@ -3848,7 +3848,7 @@ class registerCommandsClass (baseEditCommandsClass):
         k = self.k
         event.keysym = 'a'
         self.setNextRegister(event)
-        k.setState('controlx',True)
+        k.setState('controlx',1)
     #@nonl
     #@-node:ekr.20050920084036.237:appendToRegister
     #@+node:ekr.20050920084036.238:prependToRegister
@@ -3857,7 +3857,7 @@ class registerCommandsClass (baseEditCommandsClass):
         k = self.k
         event.keysym = 'p'
         self.setNextRegister(event)
-        k.setState('controlx',False)
+        k.setState('controlx',0)
     #@-node:ekr.20050920084036.238:prependToRegister
     #@+node:ekr.20050920084036.239:_copyRectangleToRegister
     def _copyRectangleToRegister (self,event):
@@ -4101,7 +4101,7 @@ class registerCommandsClass (baseEditCommandsClass):
             return 
     
         if self.methodDict.has_key(event.keysym):
-            k.setState('controlx',True)
+            k.setState('controlx',1)
             self.method = self.methodDict[event.keysym]
             self.registermode = 2
             k.setLabel(self.helpDict[event.keysym])
@@ -4208,7 +4208,7 @@ class searchCommandsClass (baseEditCommandsClass):
         
         if state == 0:
             self.pref = self.csr [kind]
-            k.setState('isearch',which,stateHandler=self.iSearchStateHandler)
+            k.setState('isearch',which,handler=self.iSearchStateHandler)
             k.setLabelBlue('isearch:',protect=True)
         else:
             self.search(event,way=self.csr[kind],useregex=self.useRegex())
@@ -4362,7 +4362,7 @@ class searchCommandsClass (baseEditCommandsClass):
     
         k.keyboardQuit(event)
         k.setState('nonincr-search','start%s' % which,
-            stateHandler=self.nonincrSearchStateHandler)
+            handler=self.nonincrSearchStateHandler)
         k.setLabelBlue('Search:')
     
         return 'break'
@@ -4389,7 +4389,7 @@ class searchCommandsClass (baseEditCommandsClass):
     
         k.keyboardQuit(event)
         k.setState('word-search','start%s' % which,
-            stateHandler=self.wordSearchStateHandler)
+            handler=self.wordSearchStateHandler)
         k.setLabelBlue('Word Search %s:' %
             g.choose(which=='bak','Backward','Forward'),protect=True)
     
@@ -4404,7 +4404,7 @@ class searchCommandsClass (baseEditCommandsClass):
         if state.startswith('start'): # pathetic hack.
             state = state [5:]
             k.setState('word-search',state,
-                stateHandler=self.wordSearchStateHandler)
+                handler=self.wordSearchStateHandler)
         if event.keysym == 'Return':
             i = w.index('insert')
             words = k.getLabel().split()
@@ -4444,7 +4444,7 @@ class searchCommandsClass (baseEditCommandsClass):
     
         k.keyboardQuit(event)
         k.setState('re_search','start%s' % which,
-            stateHandler=self.reSearchStateHandler)
+            handler=self.reSearchStateHandler)
         k.setLabelBlue('RE Search:')
     
         return 'break'
@@ -4459,7 +4459,8 @@ class searchCommandsClass (baseEditCommandsClass):
         state = k.getState('re_search')
         if state.startswith('start'):
             state = state [5:] # pathetic hack.
-            k.setState('re_search',state,stateHandler=self.reSearchStateHandler)
+            k.setState('re_search',state,
+                handler=self.reSearchStateHandler)
             k.setLabel('')
         if event.keysym == 'Return':
             pattern = k.getLabel()

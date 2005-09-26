@@ -66,14 +66,10 @@ class keyHandlerClass:
         self.undoers = {} # Emacs instance tracks undoers given to it.
         self.useGlobalKillbuffer = useGlobalKillbuffer
         self.useGlobalRegisters = useGlobalRegisters
-        #@    << define regX ivars >>
-        #@+node:ekr.20050923222924.2:<< define regX ivars >>
-        # For communication between keystroke handlers and other classes.
-        self.regXRpl = None # EKR: a generator: calling self.regXRpl.next() get the next value.
-        self.regXKey = None
-        #@nonl
-        #@-node:ekr.20050923222924.2:<< define regX ivars >>
-        #@nl
+        
+        self.keystrokes = {}
+        self.regx = g.bunch(iter=None,key=None)
+        self.state = g.bunch(kind=None,n=None,handler=None)
         #@    << define control-x ivars >>
         #@+node:ekr.20050923222924:<< define control-x ivars >>
         self.previous = []
@@ -83,20 +79,6 @@ class keyHandlerClass:
         self.register_commands = {}
         #@nonl
         #@-node:ekr.20050923222924:<< define control-x ivars >>
-        #@nl
-        #@    << define keystroke ivars >>
-        #@+node:ekr.20050923222924.1:<< define keystroke ivars >>
-        self.keystrokes = {}
-        #@nonl
-        #@-node:ekr.20050923222924.1:<< define keystroke ivars >>
-        #@nl
-        #@    << define state ivars >>
-        #@+node:ekr.20050923222924.3:<< define state ivars >>
-        self.state = None
-        self.stateKind = None
-        self.stateHandler = None
-        #@nonl
-        #@-node:ekr.20050923222924.3:<< define state ivars >>
         #@nl
         #@    << define minibuffer ivars >>
         #@+node:ekr.20050923213858:<< define minibuffer ivars >>
@@ -698,7 +680,7 @@ class keyHandlerClass:
         state = k.getState('uC')
     
         if state == 0:
-            k.setState('uC',1,stateHandler=k.universalDispatchStateHandler)
+            k.setState('uC',1,handler=k.universalDispatchStateHandler)
             k.setLabelBlue('')
         elif state == 1:
             k.universalCommand1(event,stroke)
@@ -854,10 +836,10 @@ class keyHandlerClass:
             k.previousStroke = stroke
             k.callKeystrokeFunction(event)
     
-        if k.regXRpl: # EKR: a generator.
+        if k.regx.iter:
             try:
                 k.regXKey = event.keysym
-                k.regXRpl.next() # EKR: next() may throw StopIteration.
+                k.regx.iter.next() # EKR: next() may throw StopIteration.
             finally:
                 return 'break'
     
@@ -880,7 +862,7 @@ class keyHandlerClass:
     
         k = self
         k.setState('altx',which or 1, # Must be int, not True.
-            stateHandler=k.doAlt_X) 
+            handler=k.doAlt_X) 
     
         if which:
             k.setLabelBlue('%s %s' % (which,k.alt_x_prompt),protect=True)
@@ -1033,7 +1015,7 @@ class keyHandlerClass:
         k.keyboardQuit(event)
     
         if k.altX_history:
-            k.setState('last-altx',True)
+            k.setState('last-altx',1)
             k.setLabelBlue("Redo: %s" % k.altX_history[0])
     
         return 'break'
@@ -1074,7 +1056,7 @@ class keyHandlerClass:
             else:       k.altX_prefix = k.getLabel()
             k.arg = ''
             k.afterGetArgState = (returnStateKind,returnState,returnStateHandler)
-            k.setState('getArg',1,stateHandler=k.getArg)
+            k.setState('getArg',1,handler=k.getArg)
         elif event.keysym == 'Return':
             # Compute the actual arg.
             s = k.getLabel() ; k.arg = s[len(k.altX_prefix):]
@@ -1115,7 +1097,7 @@ class keyHandlerClass:
         
         k = self
     
-        k.setState('controlx',True,stateHandler=k.controlX_stateHandler)
+        k.setState('controlx',True,handler=k.controlX_stateHandler)
         k.setLabelBlue('Control - X')
     
         return 'break'
@@ -1429,40 +1411,39 @@ class keyHandlerClass:
         
         # g.trace(k.stateKind,k.state)
         
-        if k.stateKind:
-            if k.stateHandler:
-                return k.stateHandler(event)
+        if k.state.kind:
+            if k.state.handler:
+                return k.state.handler(event)
             else:
-                func = k.stateCommands.get(k.stateKind)
+                func = k.stateCommands.get(k.state.kind)
                 if func:
                     return func(event)
                 else:
-                    g.es_print('no state function for %s' % (k.stateKind),color='red')
+                    g.es_print('no state function for %s' % (k.state.kind),color='red')
     #@nonl
     #@-node:ekr.20050923172809.1:callStateFunction
     #@+node:ekr.20050923172814.1:clearState
     def clearState (self):
         
         k = self
-        k.state = None
-        k.stateHandler = None
-        k.stateKind = None
+        k.state.kind = None
+        k.state.n = None
+        k.state.handler = None
     #@nonl
     #@-node:ekr.20050923172814.1:clearState
     #@+node:ekr.20050923172814.2:getState
-    def getState (self,state):
+    def getState (self,kind):
         
         k = self
-        val = g.choose(k.stateKind == state,k.state,0)
+        val = g.choose(k.state.kind == kind,k.state.n,0)
         # g.trace(state,'returns',val)
         return val
     #@nonl
     #@-node:ekr.20050923172814.2:getState
     #@+node:ekr.20050923172814.5:getStateKind
     def getStateKind (self):
-        
-        k = self
-        return k.stateKind
+    
+        return self.state.kind
         
     #@nonl
     #@-node:ekr.20050923172814.5:getStateKind
@@ -1471,20 +1452,18 @@ class keyHandlerClass:
         
         k = self
         
-        return k.state and k.stateKind != None
+        return k.state.kind and k.state.n != None
     #@nonl
     #@-node:ekr.20050923172814.3:inState
     #@+node:ekr.20050923172814.4:setState
-    def setState (self,state,value,stateHandler=None):
+    def setState (self,kind,n,handler=None):
         
         k = self
-        k.state = state
-        if stateHandler:
-            k.stateHandler = stateHandler
-        # g.trace(state,value)
-        if state:
-            k.stateKind = state
-            k.state = value
+        if kind and n != None:
+            k.state.kind = kind
+            k.state.n = n
+            if handler:
+                k.state.handler = handler
         else:
             k.clearState()
     #@-node:ekr.20050923172814.4:setState
