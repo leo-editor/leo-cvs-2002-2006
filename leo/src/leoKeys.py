@@ -92,9 +92,12 @@ class keyHandlerClass:
         self.svars = {}
         self.tailEnds = {} # functions to execute at the end of many Emacs methods.  Configurable by environment.
         
-        # For accumlated args...
+        # For getArg...
         self.arg = ''
         self.afterGetArgState = None
+        self.argTabList = []
+        self.argTabListPrefix = None
+        self.argTabListIndex = 0
         
         # For negative arguments...
         self.negativeArg = False
@@ -146,9 +149,6 @@ class keyHandlerClass:
             addTemacsExtensions(k)
             addTemacsAbbreviations(k)
             changeKeyStrokes(k,frame.bodyCtrl)
-    
-        if 1: # This is dubious.
-            k.setBufferInteractionMethods(frame.bodyCtrl)
             
         k.setStateFunctions()
         k.setKeystrokeFunctions()
@@ -159,24 +159,13 @@ class keyHandlerClass:
     def setStateFunctions (self):
         
         k = self ; c = k.c
-    
-        # EKR: used only below.
-        def eA (event):
-            if k.expandAbbrev(event):
-                return 'break'
-    
+        
         self.stateCommands = {
             
-            'negativeArg':      k.callStateFunction,
-            'goto':             c.editCommands.Goto,
-            'zap':              c.editCommands.zapTo,
-            'howM':             c.editCommands.howMany,
-            'abbrevMode':       c.abbrevCommands.abbrevCommand1,
-            
-            'qlisten':          c.queryReplaceCommands.masterQR,
-            'abbrevOn':         eA,
-            'set-fill-column':  c.editCommands.setFillColumn,
-            'chooseBuffer':     c.bufferCommands.chooseBuffer,
+            ###'negativeArg':      k.callStateFunction,
+            ###'abbrevMode':       c.abbrevCommands.abbrevCommand1,
+            # 'qlisten':          c.queryReplaceCommands.masterQR,
+        
             'renameBuffer':     c.bufferCommands.renameBuffer,
            
             'alterlines':       c.editCommands.processLines,
@@ -195,7 +184,7 @@ class keyHandlerClass:
             '<Control-s>':      ( 2, c.searchCommands.startIncremental ),
             '<Control-r>':      ( 2, c.searchCommands.startIncremental ),
             '<Alt-g>':          ( 1, c.editCommands.startGoto ),
-            '<Alt-z>':          ( 1, c.editCommands.startZap ),
+            '<Alt-z>':          ( 1, c.killBufferCommands.zapToCharacter ),
             '<Alt-percent>':    ( 1, c.queryReplaceCommands.masterQR ),
             '<Control-Alt-w>':  ( 1, lambda event: 'break' ),
         }
@@ -531,132 +520,6 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.64:manufactureKeyPress
     #@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
-    #@+node:ekr.20050920115444:setBufferInteractionMethods & helpers
-    # Called by modified leoTkinterBody.createBindings.
-    
-    def setBufferInteractionMethods (self,buffer):
-    
-        '''This function configures the Emacs instance so that
-           it can see all the nodes as buffers for its buffer commands.'''
-           
-        k = self ; c = k.c
-    
-        # These are actually methods of the bufferCommandsClass.
-        #@    @+others
-        #@+node:ekr.20050920115444.1:buildBufferList  (MAY BE BUGGY)
-        def buildBufferList (self):
-        
-            '''Build a buffer list from an outline.'''
-        
-            d = {} ; self.positions.clear()
-        
-            for p in c.allNodes_iter():
-                t = p.v.t ; h = t.headString()
-                theList = self.positions.get(h,[])
-                theList.append(p.copy())
-                self.positions [h] = theList
-                d [h] = t.bodyString()
-        
-            self.tnodes [c] = d
-            return d
-        #@nonl
-        #@-node:ekr.20050920115444.1:buildBufferList  (MAY BE BUGGY)
-        #@+node:ekr.20050920115444.2:setBufferData
-        def setBufferData (name,data):
-        
-            data = unicode(data)
-            tdict = self.tnodes [c]
-            if tdict.has_key(name):
-                tdict [name].bodyString = data
-        #@nonl
-        #@-node:ekr.20050920115444.2:setBufferData
-        #@+node:ekr.20050920115444.3:gotoNode & gotoPosition
-        def gotoNode (name):
-        
-            c.beginUpdate()
-            try:
-                if self.positions.has_key(name):
-                    posis = self.positions [name]
-                    if len(posis) > 1:
-                        tl = Tk.Toplevel()
-                        #tl.geometry( '%sx%s+0+0' % ( ( ms[ 0 ]/3 ) *2 , ms[ 1 ]/2 ))
-                        tl.title("Select node by numeric position")
-                        fr = Tk.Frame(tl)
-                        fr.pack()
-                        header = Tk.Label(fr,text='select position')
-                        header.pack()
-                        lbox = Tk.Listbox(fr,background='white',foreground='blue')
-                        lbox.pack()
-                        for z in xrange(len(posis)):
-                            lbox.insert(z,z+1)
-                        lbox.selection_set(0)
-                        def setPos (event):
-                            cpos = int(lbox.nearest(event.y))
-                            tl.withdraw()
-                            tl.destroy()
-                            if cpos != None:
-                                gotoPosition(c,posis[cpos])
-                        lbox.bind('<Button-1>',setPos)
-                        geometry = tl.geometry()
-                        geometry = geometry.split('+')
-                        geometry = geometry [0]
-                        width = tl.winfo_screenwidth() / 3
-                        height = tl.winfo_screenheight() / 3
-                        geometry = '+%s+%s' % (width,height)
-                        tl.geometry(geometry)
-                    else:
-                        pos = posis [0]
-                        gotoPosition(c,pos)
-                else:
-                    pos2 = c.currentPosition()
-                    tnd = leoNodes.tnode('',name)
-                    pos = pos2.insertAfter(tnd)
-                    gotoPosition(c,pos)
-            finally:
-                c.endUpdate()
-        #@nonl
-        #@+node:ekr.20050920115444.4:gotoPosition
-        def gotoPosition (c,pos):
-        
-            c.frame.tree.expandAllAncestors(pos)
-            c.selectPosition(pos)
-        #@nonl
-        #@-node:ekr.20050920115444.4:gotoPosition
-        #@-node:ekr.20050920115444.3:gotoNode & gotoPosition
-        #@+node:ekr.20050920115444.5:deleteNode
-        def deleteNode (name):
-        
-            c.beginUpdate()
-            try:
-                if self.positions.has_key(name):
-                    pos = self.positions [name]
-                    cpos = c.currentPosition()
-                    pos.doDelete(cpos)
-            finally:
-                c.endUpdate()
-        #@nonl
-        #@-node:ekr.20050920115444.5:deleteNode
-        #@+node:ekr.20050920115444.6:renameNode
-        def renameNode (name):
-        
-            c.beginUpdate()
-            try:
-                pos = c.currentPosition()
-                pos.setHeadString(name)
-            finally:
-                c.endUpdate()
-        #@nonl
-        #@-node:ekr.20050920115444.6:renameNode
-        #@-others
-    
-        # These add Leo-reated capabilities to the key handler.
-        c.bufferCommands.setBufferListGetter(buffer,buildBufferList)
-        c.bufferCommands.setBufferSetter(buffer,setBufferData)
-        c.bufferCommands.setBufferGoto(buffer,gotoNode)
-        c.bufferCommands.setBufferDelete(buffer,deleteNode)
-        c.bufferCommands.setBufferRename(buffer,renameNode)
-    #@nonl
-    #@-node:ekr.20050920115444:setBufferInteractionMethods & helpers
     #@-node:ekr.20050920085536.1: Birth
     #@+node:ekr.20050920085536.32: Entry points
     # These are user commands accessible via alt-x.
@@ -872,7 +735,7 @@ class keyHandlerClass:
         return 'break'
     #@nonl
     #@-node:ekr.20050920085536.41:alt_X
-    #@+node:ekr.20050920085536.42:doAlt_X & helpers
+    #@+node:ekr.20050920085536.42:doAlt_X & helpers (DO NOT CHANGE)
     def doAlt_X (self,event):
     
         '''This method executes the correct Alt-X command'''
@@ -904,7 +767,7 @@ class keyHandlerClass:
             #@nl
         elif keysym == 'Tab':
             #@        << handle tab completion >>
-            #@+node:ekr.20050920085536.44:<< handle tab completion >>
+            #@+node:ekr.20050920085536.44:<< handle tab completion >> (DO NOT CHANGE)
             s = k.getLabel().strip()
             
             if k.altX_tabList and s.startswith(k.altX_tabListPrefix):
@@ -930,11 +793,11 @@ class keyHandlerClass:
                 else:
                     k.setLabel(k.alt_x_prompt,protect=True)
             #@nonl
-            #@-node:ekr.20050920085536.44:<< handle tab completion >>
+            #@-node:ekr.20050920085536.44:<< handle tab completion >> (DO NOT CHANGE)
             #@nl
         elif keysym == 'BackSpace':
             #@        << handle BackSpace >>
-            #@+node:ekr.20050920085536.46:<< handle BackSpace >>
+            #@+node:ekr.20050920085536.46:<< handle BackSpace >> (DO NOT CHANGE)
             # Cut back to previous prefix and update prefix.
             s = k.altX_tabListPrefix
             
@@ -950,7 +813,7 @@ class keyHandlerClass:
             # Force a recomputation of the commands list.
             k.altX_tabList = []
             #@nonl
-            #@-node:ekr.20050920085536.46:<< handle BackSpace >>
+            #@-node:ekr.20050920085536.46:<< handle BackSpace >> (DO NOT CHANGE)
             #@nl
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
@@ -993,7 +856,7 @@ class keyHandlerClass:
         return pmatches,common_prefix
     #@nonl
     #@-node:ekr.20050920085536.43:_findMatch
-    #@-node:ekr.20050920085536.42:doAlt_X & helpers
+    #@-node:ekr.20050920085536.42:doAlt_X & helpers (DO NOT CHANGE)
     #@+node:ekr.20050920085536.47:executeLastAltX
     def executeLastAltX (self,event):
         
@@ -1041,23 +904,84 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.40:Alt_X...
     #@+node:ekr.20050924065103:Arg...
     #@+node:ekr.20050920085536.62:getArg
-    def getArg (self,event,returnStateKind=None,returnState=None,returnStateHandler=None,prefix=None):
+    def getArg (self,event,returnStateKind=None,returnState=None,returnStateHandler=None,prefix=None,tabList=None):
         
         '''Accumulate an argument until the user hits return (or control-g).
         Enter the given return state when done.
         The prefix is does not form the arg.  The prefix defaults to the k.getLabel().
         '''
         
-        k = self
-        state = k.getState('getArg')
+        k = self ; state = k.getState('getArg')
+        if event: ch = event.keysym
+        else:     ch = ''
         # g.trace('state',repr(state))
         if not state:
-            if prefix:  k.altX_prefix = prefix
-            else:       k.altX_prefix = k.getLabel()
+            if prefix:  k.argTabListPrefix = prefix
+            else:       k.argTabListPrefix = k.getLabel()
             k.arg = ''
+            if tabList: k.argTabList = tabList[:]
+            else:       k.argTabList = []
+            k.argTabList.sort()
+            g.trace(len(k.argTabList))
             k.afterGetArgState = (returnStateKind,returnState,returnStateHandler)
             k.setState('getArg',1,handler=k.getArg)
-        elif event.keysym == 'Return':
+        elif ch == 'BackSpace':
+            #@        << handle BackSpace >>
+            #@+node:ekr.20050927105315:<< handle BackSpace >>
+            # Cut back to previous prefix and update prefix.
+            s = k.argTabListPrefix
+            
+            if len(s) > len(k.altX_prefix):
+                k.argTabListPrefix = s[:-1]
+                k.setLabel(k.argTabListPrefix,protect=False)
+            else:
+                k.argTabListPrefix = s
+                k.setLabel(k.argTabListPrefix,protect=True)
+                
+            # g.trace('BackSpace: new altX_tabListPrefix',k.altX_tabListPrefix)
+            
+            # Force a recomputation of the commands list.
+            ### k.argTabList = []
+            #@nonl
+            #@-node:ekr.20050927105315:<< handle BackSpace >>
+            #@nl
+        elif ch == 'Tab':
+            if k.argTabList:
+                g.trace(len(k.argTabList))
+                tabList = k.argTabList
+                #@            << handle tab completion >>
+                #@+node:ekr.20050927104632:<< handle tab completion >>
+                s = k.getLabel().strip()
+                
+                if 0: # Not ready yet.
+                
+                    if tabList and s.startswith(k.argTabListPrefix):
+                        k.argTabListIndex +=1
+                        if k.argTabListIndex >= len(tabList):
+                            k.argTabListIndex = 0
+                        k.setLabel(k.alt_x_prompt + tabList [k.argTabListIndex])
+                    else:
+                        s = k.getLabel() # Always includes prefix, so command is well defined.
+                        k.altX_tabListPrefix = s
+                        command = s [len(k.alt_x_prompt):]
+                        k.altX_tabList,common_prefix = k._findMatch(command)
+                        k.altX_tabListIndex = 0
+                        if k.altX_tabList:
+                            if len(k.altX_tabList) > 1 and (
+                                len(common_prefix) > (len(k.altX_tabListPrefix) - len(k.alt_x_prompt))
+                            ):
+                                k.setLabel(k.alt_x_prompt + common_prefix)
+                                k.altX_tabListPrefix = k.alt_x_prompt + common_prefix
+                            else:
+                                # No common prefix, so show the first item.
+                                k.setLabel(k.alt_x_prompt + k.altX_tabList [0])
+                        else:
+                            k.setLabel(k.alt_x_prompt,protect=True)
+                    
+                #@nonl
+                #@-node:ekr.20050927104632:<< handle tab completion >>
+                #@nl
+        elif ch == 'Return':
             # Compute the actual arg.
             s = k.getLabel() ; k.arg = s[len(k.altX_prefix):]
             # Immediately enter the caller's requested state.
@@ -1477,6 +1401,7 @@ class keyHandlerClass:
         k = self
         func = k.tailEnds.get(w)
         if func:
+            g.trace(func)
             return func(w)
         else:
             return 'break'

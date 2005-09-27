@@ -415,21 +415,21 @@ class abbrevCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.24:writeAbbreviations
     #@-node:ekr.20050920084036.16: Entry points
-    #@+node:ekr.20050920084036.25:abbreviationDispatch
+    #@+node:ekr.20050920084036.25:abbreviationDispatch (Probably wrong)
     def abbreviationDispatch (self,event,which):
         
         k = self.k
         state = k.getState('abbrevMode')
     
         if state == 0:
-            k.setState('abbrevMode',which)
+            k.setState('abbrevMode',which,handler=self.abbrevCommand1)
             k.setLabelBlue('')
         else:
             self.abbrevCommand1(event)
             
         return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.25:abbreviationDispatch
+    #@-node:ekr.20050920084036.25:abbreviationDispatch (Probably wrong)
     #@+node:ekr.20050920084036.26:abbrevCommand1
     def abbrevCommand1 (self,event):
     
@@ -461,7 +461,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
     
         if ch:
             # We must do this: expandAbbrev is called from Alt-x and Control-x,
-            #we get two differnt types of data and w states.
+            # we get two differnt types of data and w states.
             word = '%s%s'% (word,event.char)
             
         if self.abbrevs.has_key(word):
@@ -518,42 +518,24 @@ class abbrevCommandsClass (baseEditCommandsClass):
 class bufferCommandsClass  (baseEditCommandsClass):
 
     #@    @+others
-    #@+node:ekr.20050920084036.32: ctor (bufferCommandsClass) (uses values created by setBufferInteractionMethods)
+    #@+node:ekr.20050920084036.32: ctor (bufferCommandsClass)
     def __init__ (self,c):
         
         baseEditCommandsClass.__init__(self,c) # init the base class.
         
-        # These used to be globals.
-        self.positions =  {}
-        self.tnodes = {}
+        ##self.positions =  {}
+        ##self.tnodes = {}
         
-        # This section sets up the buffer data structures.
-        self.bufferListGetters ={}
-        self.bufferSetters ={}
-        self.bufferGotos ={}
-        self.bufferDeletes ={}
-        self.renameBuffers ={}
-        self.bufferDict = {} 
-        self.bufferTracker = Tracker()
-        
-        # Used by chooseBuffer.
-        self.commandsDict = {
-            'append-to-buffer': self._appendToBuffer,
-            'copy-to-buffer':   self._copyToBuffer,
-            'insert-buffer':    self._insertToBuffer,
-            'kill-buffer':      self._killBuffer, 
-            'prepend-to-buffer':self._prependToBuffer, 
-            'switch-to-buffer': self._switchToBuffer, 
-        }
+        self.getBufferNameFinisher = None
     #@nonl
-    #@-node:ekr.20050920084036.32: ctor (bufferCommandsClass) (uses values created by setBufferInteractionMethods)
+    #@-node:ekr.20050920084036.32: ctor (bufferCommandsClass)
     #@+node:ekr.20050920084036.33: getPublicCommands
     def getPublicCommands (self):
     
         return {
             'append-to-buffer':     self.appendToBuffer,
             'copy-to-buffer':       self.copyToBuffer,
-            'insert-buffer':        self.insertBuffer,
+            'insert-to-buffer':       self.insertToBuffer,
             'kill-buffer' :         self.killBuffer,
             'list-buffers' :        self.listBuffers,
             'prepend-to-buffer':    self.prependToBuffer,
@@ -562,106 +544,319 @@ class bufferCommandsClass  (baseEditCommandsClass):
         }
     #@nonl
     #@-node:ekr.20050920084036.33: getPublicCommands
-    #@+node:ekr.20050920084036.34:Entry points
+    #@+node:ekr.20050920084036.34:Entry points 
+    #@+node:ekr.20050920084036.35:appendToBuffer/Finisher
     def appendToBuffer (self,event):
-        return self.setInBufferMode(event,which='append-to-buffer')
     
-    def copyToBuffer (self,event):
-        return self.setInBufferMode(event,which='copy-to-buffer')
+        k = self.k
+        k.setLabelBlue('Append to buffer: ')
+        self.getBufferName(self.appendToBufferFinisher)
+        return 'break'
     
-    def insertBuffer (self,event):
-        return self.setInBufferMode(event,which= 'insert-buffer')
+    def appendToBufferFinisher (self,name,w):
     
-    def killBuffer (self,event):
-        return self.setInBufferMode(event,which='kill-buffer')
-    
-    def prependToBuffer (self,event):
-        return self.setInBufferMode(event,which='prepend-to-buffer')
-    
-    def switchToBuffer (self,event):
-        return self.setInBufferMode(event,which='switch-to-buffer')
-    #@nonl
-    #@+node:ekr.20050920084036.35:_appendToBuffer
-    def _appendToBuffer (self,event,name): # event IS used.
-    
-        k = self.k ; w = event.widget
-        
+        txt = w.get('sel.first','sel.last')
         try:
-            txt = w.get('sel.first','sel.last')
-            bdata = self.bufferDict[name]
-            bdata = '%s%s'%(bdata,txt)
+            bdata = self.bufferDict [name]
+            bdata = '%s%s' % (bdata,txt)
             self.setBufferData(event,name,bdata)
         except Exception:
-            pass 
+            pass
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.35:appendToBuffer/Finisher
+    #@+node:ekr.20050920084036.36:copyToBuffer/Finisher
+    def copyToBuffer (self,event):
     
-        return k.keyboardQuit(event)
-    #@-node:ekr.20050920084036.35:_appendToBuffer
-    #@+node:ekr.20050920084036.36:_copyToBuffer
-    def _copyToBuffer (self,event,name): # event IS used.
-        
-        k = self.k ; w = event.widget
+        k = self.k
+        k.setLabelBlue('Copy to buffer: ')
+        self.getBufferName(self.copyToBufferFinisher)
+        return 'break'
+    
+    def copyToBufferFinisher (self,name,w):
     
         try:
             txt = w.get('sel.first','sel.last')
             self.setBufferData(event,name,txt)
         except Exception:
-            pass 
-        
-        return k.keyboardQuit(event)
-    #@-node:ekr.20050920084036.36:_copyToBuffer
-    #@+node:ekr.20050920084036.37:_insertToBuffer
-    def _insertToBuffer (self,event,name):
-    
-        k = self.k ; w = event.widget 
-        bdata = self.bufferDict[name]
-        w.insert('insert',bdata)
-        k._tailEnd(w)
-    
-        return k.keyboardQuit(event)
-    #@-node:ekr.20050920084036.37:_insertToBuffer
-    #@+node:ekr.20050920084036.38:_killBuffer
-    def _killBuffer (self,event,name):
-        
-        k = self.k
-        method = self.bufferDeletes[event.widget]
-        k.keyboardQuit(event)
-        method(name)
+            pass
         return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.38:_killBuffer
-    #@+node:ekr.20050920084036.39:_prependToBuffer
-    def _prependToBuffer (self,event,name):
-        
-        k = self.k ; w = event.widget
+    #@-node:ekr.20050920084036.36:copyToBuffer/Finisher
+    #@+node:ekr.20050920084036.37:insertToBuffer/Finisher
+    def insertToBuffer (self,event):
     
+        k = self.k
+        k.setLabelBlue('Insert to buffer: ')
+        self.getBufferName(self.insertToBufferFinisher)
+        return 'break'
+    
+    def insertToBufferFinisher (self,name,w):
+    
+        try:
+            bdata = self.bufferDict [name]
+            w.insert('insert',bdata)
+            k._tailEnd(w)
+        except Exception:
+            pass
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.37:insertToBuffer/Finisher
+    #@+node:ekr.20050920084036.38:killBuffer/Finisher  (not ready yet)
+    def killBuffer (self,event):
+    
+        k = self.k
+        k.setLabelBlue('Kill buffer: ')
+        self.getBufferName(self.killBufferFinisher)
+        return 'break'
+    
+    def killBufferFinisher (self,name,w):
+    
+        # method = self.bufferDeletes[event.widget]
+        # method(name)
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.38:killBuffer/Finisher  (not ready yet)
+    #@+node:ekr.20050920084036.39:prependToBuffer/Finisher
+    def prependToBuffer (self,event):
+        
+        k = self.k
+        k.setLabelBlue('Prepend to buffer: ')
+        self.getBufferName(self.prependToBufferFinisher)
+        return 'break'
+        
+    def prependToBufferFinisher (self,name,w):
+        
         try:
             txt = w.get('sel.first','sel.last')
             bdata = self.bufferDict[name]
             bdata = '%s%s'%(txt,bdata)
             self.setBufferData(event,name,bdata)
         except Exception:
-            pass 
-    
-        return k.keyboardQuit(event)
-    #@-node:ekr.20050920084036.39:_prependToBuffer
-    #@+node:ekr.20050920084036.40:_switchToBuffer
-    def _switchToBuffer (self,event,name):
-        
-        k = self.k
-        method = self.bufferGotos[event.widget]
-        k.keyboardQuit(event)
-        method(name)
+            pass
         return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.40:_switchToBuffer
-    #@+node:ekr.20050920084036.41:chooseBuffer
-    def chooseBuffer (self,event):
+    #@-node:ekr.20050920084036.39:prependToBuffer/Finisher
+    #@+node:ekr.20050920084036.40:switchToBuffer (not ready yet)
+    def switchToBuffer (self,event):
         
         k = self.k
-        state = k.getState('chooseBuffer')
+        k.setLabelBlue('Switch to buffer: ')
+        self.getBufferName(self.switchToBufferFinisher)
+        return 'break'
+        
+    def switchToBufferFinisher (self,name,w):
+     
+        # method = self.bufferGotos[event.widget]
+        # k.keyboardQuit(event)
+        # method(name)
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.40:switchToBuffer (not ready yet)
+    #@+node:ekr.20050920084036.42:listBuffers/Finisher
+    def listBuffers (self,event):
+        
+        k = self.k ; w = event.widget
+        bdict = self.getBufferDict(event)
+        list = bdict.keys()
+        list.sort()
+        data = '\n'.join(list)
+        k.keyboardQuit(event)
+        k.setLabel(data)
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.42:listBuffers/Finisher
+    #@+node:ekr.20050920084036.43:renameBuffer (not ready yet)
+    def renameBuffer (self,event):
+        
+        k = self.k
+        k.setLabelBlue('Rename buffer to: ')
+        self.getBufferName(self.renameBufferFinisher)
+        return 'break'
+        
+    def renameBufferFinisher (self,name,w):
+        
+        k = self.k
+        ## self.renameBuffers[w](name)
+        g.trace(repr(name))
+        
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.43:renameBuffer (not ready yet)
+    #@-node:ekr.20050920084036.34:Entry points 
+    #@+node:ekr.20050927102133.1:Utils
+    #@+node:ekr.20050927093851:getBufferName ## To do: allow tab completion
+    def getBufferName (self,func):
+        
+        '''Get a buffer name into k.arg and call k.setState(kind,n,handler).'''
+        
+        k = self.k ; c = k.c ; state = k.getState('getBufferName')
+        
+        if state == 0:
+            # Using a dict is faster than using a list directly.
+            names = {}
+            for p in c.allNodes_iter():
+                names [p.headString()] = None
+            tabList = names.keys()
+            self.getBufferNameFinisher = func
+            g.trace(len(tabList))
+            k.getArg(None,'getBufferName',1,self.getBufferName,tabList=tabList)
+        else:
+            k.resetLabel()
+            k.clearState()
+            g.trace(k.arg)
+            if 0: # Get widget from buffer name.
+                self.getBufferNameFinisher(k.arg,w)
+    
+        return 'break'
+                
+    if 0: # Reference
+    
+        def bufferList (self,event):
+            
+            k = self.k
+            state = k.getState('bufferList')
+            if state.startswith('start'):
+                state = state[5:]
+                k.setState('bufferList',state)
+                k.setLabel('')
+            if event.keysym=='Tab':
+                stext = k.getLabel().strip()
+                if self.bufferTracker.prefix and stext.startswith(self.bufferTracker.prefix):
+                    k.setLabel(self.bufferTracker.next())#get next in iteration
+                else:
+                    prefix = k.getLabel()
+                    pmatches =[]
+                    for z in self.bufferDict.keys():
+                        if z.startswith(prefix):
+                            pmatches.append(z)
+                    self.bufferTracker.setTabList(prefix,pmatches)
+                    k.setLabel(self.bufferTracker.next())#begin iteration on new lsit
+                return 'break'
+            elif event.keysym=='Return':
+               bMode = k.getState('bufferList')
+               return self.commandsDict[bMode](event,k.getLabel())
+            else:
+                self.update(event)
+                return 'break'
+    #@nonl
+    #@-node:ekr.20050927093851:getBufferName ## To do: allow tab completion
+    #@+node:ekr.20050927101829.3:setBufferData
+    def setBufferData (name,data):
+    
+        data = unicode(data)
+        tdict = self.tnodes [c]
+        if tdict.has_key(name):
+            tdict [name].bodyString = data
+    #@nonl
+    #@-node:ekr.20050927101829.3:setBufferData
+    #@+node:ekr.20050927101829.4:gotoNode
+    def gotoNode (name):
+    
+        c.beginUpdate()
+        try:
+            if self.positions.has_key(name):
+                posis = self.positions [name]
+                if len(posis) > 1:
+                    tl = Tk.Toplevel()
+                    #tl.geometry( '%sx%s+0+0' % ( ( ms[ 0 ]/3 ) *2 , ms[ 1 ]/2 ))
+                    tl.title("Select node by numeric position")
+                    fr = Tk.Frame(tl)
+                    fr.pack()
+                    header = Tk.Label(fr,text='select position')
+                    header.pack()
+                    lbox = Tk.Listbox(fr,background='white',foreground='blue')
+                    lbox.pack()
+                    for z in xrange(len(posis)):
+                        lbox.insert(z,z+1)
+                    lbox.selection_set(0)
+                    def setPos (event):
+                        cpos = int(lbox.nearest(event.y))
+                        tl.withdraw()
+                        tl.destroy()
+                        if cpos != None:
+                            gotoPosition(c,posis[cpos])
+                    lbox.bind('<Button-1>',setPos)
+                    geometry = tl.geometry()
+                    geometry = geometry.split('+')
+                    geometry = geometry [0]
+                    width = tl.winfo_screenwidth() / 3
+                    height = tl.winfo_screenheight() / 3
+                    geometry = '+%s+%s' % (width,height)
+                    tl.geometry(geometry)
+                else:
+                    pos = posis [0]
+                    gotoPosition(c,pos)
+            else:
+                pos2 = c.currentPosition()
+                tnd = leoNodes.tnode('',name)
+                pos = pos2.insertAfter(tnd)
+                gotoPosition(c,pos)
+        finally:
+            c.endUpdate()
+    #@nonl
+    #@-node:ekr.20050927101829.4:gotoNode
+    #@+node:ekr.20050927101829.5:gotoPosition
+    def gotoPosition (c,pos):
+    
+        c.frame.tree.expandAllAncestors(pos)
+        c.selectPosition(pos)
+    #@nonl
+    #@-node:ekr.20050927101829.5:gotoPosition
+    #@+node:ekr.20050927101829.6:deleteNode
+    def deleteNode (name):
+    
+        c.beginUpdate()
+        try:
+            if self.positions.has_key(name):
+                pos = self.positions [name]
+                cpos = c.currentPosition()
+                pos.doDelete(cpos)
+        finally:
+            c.endUpdate()
+    #@nonl
+    #@-node:ekr.20050927101829.6:deleteNode
+    #@+node:ekr.20050927101829.7:renameNode
+    def renameNode (name):
+    
+        c.beginUpdate()
+        try:
+            pos = c.currentPosition()
+            pos.setHeadString(name)
+        finally:
+            c.endUpdate()
+    #@nonl
+    #@-node:ekr.20050927101829.7:renameNode
+    #@-node:ekr.20050927102133.1:Utils
+    #@+node:ekr.20050927101829.2:buildBufferList (not used)
+    def buildBufferList (self):
+    
+        '''Build a buffer list from an outline.'''
+        
+        self.positions =  {}
+        self.tnodes = {}
+    
+        for p in c.allNodes_iter():
+        
+            t = p.v.t ; h = t.headString()
+            
+            theList = self.positions.get(h,[])
+            theList.append(p.copy())
+            self.positions [h] = theList
+            
+            self.tnodes [h] = t.bodyString()
+    #@nonl
+    #@-node:ekr.20050927101829.2:buildBufferList (not used)
+    #@+node:ekr.20050920084036.41:bufferList (to be deleted)
+    def bufferList (self,event):
+        
+        k = self.k
+        state = k.getState('bufferList')
         if state.startswith('start'):
             state = state[5:]
-            k.setState('chooseBuffer',state)
+            k.setState('bufferList',state)
             k.setLabel('')
         if event.keysym=='Tab':
             stext = k.getLabel().strip()
@@ -677,108 +872,13 @@ class bufferCommandsClass  (baseEditCommandsClass):
                 k.setLabel(self.bufferTracker.next())#begin iteration on new lsit
             return 'break'
         elif event.keysym=='Return':
-           bMode = k.getState('chooseBuffer')
+           bMode = k.getState('bufferList')
            return self.commandsDict[bMode](event,k.getLabel())
         else:
             self.update(event)
             return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.41:chooseBuffer
-    #@+node:ekr.20050920084036.42:listBuffers
-    def listBuffers (self,event):
-        
-        k = self.k ; w = event.widget
-        bdict = self.getBufferDict(event)
-        list = bdict.keys()
-        list.sort()
-        data = '\n'.join(list)
-        k.keyboardQuit(event)
-        k.setLabel(data)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.42:listBuffers
-    #@+node:ekr.20050920084036.43:renameBuffer
-    def renameBuffer (self,event):
-        
-        k = self.k ; w = event.widget
-        if not k.getState('renameBuffer'):
-            k.setState('renameBuffer',True)
-            k.setLabelBlue('')
-            return 'break'
-        elif event.keysym=='Return':
-           nname = k.getLabel()
-           k.keyboardQuit(event)
-           self.renameBuffers[w](nname)
-        else:
-            k.updateLabel(event)
-            return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.43:renameBuffer
-    #@-node:ekr.20050920084036.34:Entry points
-    #@+node:ekr.20050920084036.44:setInBufferMode
-    def setInBufferMode (self,event,which):
-        
-        k = self.k ; w = event.widget
-    
-        k.keyboardQuit(event)
-        k.setState('chooseBuffer','start%s' % which)
-        k.setLabelBlue('Choose Buffer Name:')
-        self.bufferDict = self.getBufferDict(event)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.44:setInBufferMode
-    #@+node:ekr.20050920084036.45:Buffer configuration methods
-    #@+node:ekr.20050920084036.46:setBufferListGetter
-    def setBufferListGetter (self,buffer,method):
-    
-        #Sets a method that returns a buffer name and its text, and its insert position.
-        self.bufferListGetters [buffer] = method
-    #@nonl
-    #@-node:ekr.20050920084036.46:setBufferListGetter
-    #@+node:ekr.20050920084036.47:setBufferSetter
-    def setBufferSetter( self, buffer, method ):
-    
-        #Sets a method that takes a buffer name and the new contents.
-        self.bufferSetters[ buffer ] = method
-    #@nonl
-    #@-node:ekr.20050920084036.47:setBufferSetter
-    #@+node:ekr.20050920084036.48:getBufferDict
-    def getBufferDict (self,event):
-    
-        w = event.widget
-        meth = self.bufferListGetters [w]
-        return meth()
-    #@nonl
-    #@-node:ekr.20050920084036.48:getBufferDict
-    #@+node:ekr.20050920084036.49:setBufferData
-    def setBufferData( self, event, name, data ):
-        
-        w = event.widget
-        meth = self.bufferSetters[ w ]
-        meth( name, data )
-    #@nonl
-    #@-node:ekr.20050920084036.49:setBufferData
-    #@+node:ekr.20050920084036.50:setBufferGoto
-    def setBufferGoto( self, w, method ):
-    
-        self.bufferGotos[ w ] = method
-    #@nonl
-    #@-node:ekr.20050920084036.50:setBufferGoto
-    #@+node:ekr.20050920084036.51:setBufferDelete
-    def setBufferDelete( self, w, method ):
-        
-        self.bufferDeletes[ w ] = method
-    #@nonl
-    #@-node:ekr.20050920084036.51:setBufferDelete
-    #@+node:ekr.20050920084036.52:setBufferRename
-    def setBufferRename( self, buffer, method ):
-        
-        self.renameBuffers[ buffer ] = method
-    #@nonl
-    #@-node:ekr.20050920084036.52:setBufferRename
-    #@-node:ekr.20050920084036.45:Buffer configuration methods
+    #@-node:ekr.20050920084036.41:bufferList (to be deleted)
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.31:class bufferCommandsClass
@@ -1084,19 +1184,18 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.68:setFillColumn
     def setFillColumn (self,event):
     
-        k = self.k
-    
-        if k.getState('set-fill-column'):
-            if event.keysym == 'Return':
-                value = k.getLabel()
-                if value.isdigit():
-                    self.fillColumn = int(value)
-                return k.keyboardQuit(event)
-            elif event.char.isdigit() or event.char == '\b':
-                k.updateLabel(event)
+        k = self.k ; state = k.getState('set-fill-column')
+        
+        if state == 0:
+            k.setLabelBlue('Set Fill Column: ')
+            k.getArg(event,'set-fill-column',1,self.setFillColumn)
         else:
-            k.setState('set-fill-column',1)
-            k.setLabelBlue('')
+            try:
+                n = int(k.arg)
+                k.setLabelGrey('fill column is: %d' % n)
+            except ValueError:
+                k.resetLabel()
+            k.clearState()
     
         return 'break'
     #@nonl
@@ -1156,12 +1255,35 @@ class editCommandsClass (baseEditCommandsClass):
     
         k = self.k
     
-        k.setState('goto',k.getState()+1)
+        k.setState('goto',k.getState()+1,handler=self.Goto)
         k.setLabelBlue('')
     
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.73:startGoto
+    #@+node:ekr.20050920084036.143:Goto
+    def Goto (self,event):
+    
+        k = self.k ; w = event.widget
+        if event.keysym == 'Return':
+            i = k.getLabel()
+            k.resetLabel()
+            state = k.getState('goto')
+            k.setState('goto',0)
+            if i.isdigit():
+                if state == 1:
+                    widget.mark_set('insert','%s.0' % i)
+                elif state == 2:
+                    widget.mark_set('insert','1.0 +%sc' % i)
+                widget.event_generate('<Key>')
+                widget.update_idletasks()
+                widget.see('insert')
+        else:
+            k.updateLabel(event)
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.143:Goto
     #@-node:ekr.20050920084036.72:goto...
     #@+node:ekr.20050920084036.74:indent...
     #@+node:ekr.20050920084036.75:backToIndentation
@@ -1239,7 +1361,7 @@ class editCommandsClass (baseEditCommandsClass):
             reg = re.compile(reg1)
             i = reg.findall(txt)
             k.setLabelGrey('%s occurances found of %s' % (len(i),reg1))
-            k.setState('howM',0)
+            k.setState('howM',0,handler=self.howMany)
         else:
             k.updateLabel(event)
     
@@ -2048,36 +2170,6 @@ class editCommandsClass (baseEditCommandsClass):
         k.keyboardQuit(event)
     #@-node:ekr.20050920084036.126:_tabify
     #@-node:ekr.20050920084036.125:tabify...
-    #@+node:ekr.20050920084036.127:zap...
-    #@+node:ekr.20050920084036.128:startZap
-    def startZap (self,event):
-    
-        k = self.k
-    
-        k.setState('zap',1)
-        k.setLabelBlue('Zap To Character')
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.128:startZap
-    #@+node:ekr.20050920084036.129:zapTo
-    def zapTo (self,event):
-    
-        k = self.k ; w = event.widget
-        s = string.ascii_letters+string.digits+string.punctuation
-    
-        if len(event.char) != 0 and event.char in s:
-            k.setState('zap',False)
-            i = w.search(event.char,'insert',stopindex='end')
-            k.resetLabel()
-            if i:
-                t = w.get('insert','%s+1c' % i)
-                self.killBufferCommands.addToKillBuffer(t)
-                w.delete('insert','%s+1c' % i)
-    
-        return 'break'
-    #@-node:ekr.20050920084036.129:zapTo
-    #@-node:ekr.20050920084036.127:zap...
     #@-node:ekr.20050920084036.56: Entry points
     #@+node:ekr.20050920084036.130:New Entry points
     #@+node:ekr.20050920084036.131:backSentence
@@ -2279,29 +2371,6 @@ class editCommandsClass (baseEditCommandsClass):
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.142:selectAll
-    #@+node:ekr.20050920084036.143:Goto
-    def Goto (self,event):
-    
-        k = self.k ; w = event.widget
-        if event.keysym == 'Return':
-            i = k.getLabel()
-            k.resetLabel()
-            state = k.getState('goto')
-            k.setState('goto',0)
-            if i.isdigit():
-                if state == 1:
-                    widget.mark_set('insert','%s.0' % i)
-                elif state == 2:
-                    widget.mark_set('insert','1.0 +%sc' % i)
-                widget.event_generate('<Key>')
-                widget.update_idletasks()
-                widget.see('insert')
-        else:
-            k.updateLabel(event)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.143:Goto
     #@-node:ekr.20050920084036.130:New Entry points
     #@+node:ekr.20050920084036.144:Used by neg argss
     #@+node:ekr.20050920084036.145:changePreviousWord
@@ -2800,6 +2869,7 @@ class killBufferCommandsClass (baseEditCommandsClass):
             'kill-region':              self.killRegion,
             'yank':                     self.yank,
             'yank-pop':                 self.yankPop,
+            'zap-to-character':         self.zapToCharacter,
         }
     #@nonl
     #@-node:ekr.20050920084036.176:getPublicCommands
@@ -2976,6 +3046,32 @@ class killBufferCommandsClass (baseEditCommandsClass):
         return None
     #@nonl
     #@-node:ekr.20050920084036.185:getClipboard
+    #@+node:ekr.20050920084036.128:zapToCharacter
+    def zapToCharacter (self,event):
+    
+        k = self.k ; state = k.getState('zapToCharacter')
+    
+        if state == 0:
+            k.setState('zapToCharacter',1,handler=self.zapToCharacter)
+            k.setLabelBlue('Zap To Character: ')
+        else:
+            c = k.c ; w = event.widget ; ch = event.char
+            if (
+                len(event.char) != 0 and
+                ch in (string.ascii_letters + string.digits + string.punctuation)
+            ):
+                k.setState('zap',0)
+                i = w.search(ch,'insert',stopindex='end')
+                if i:
+                    t = w.get('insert','%s+1c' % i)
+                    self.addToKillBuffer(t)
+                    w.delete('insert','%s+1c' % i)
+                    k.resetLabel()
+                    k.clearState()
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.128:zapToCharacter
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.174:class killBufferCommandsClass

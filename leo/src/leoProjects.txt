@@ -11792,8 +11792,9 @@ def skip_ws_and_nl(s,i):
 
 - Eliminate stateCommands dict.
 
+- Make the name of each command correspond to its method.
+
 * Remove lambda's and other dispatching weirdnesses.
-    - All commands must have explicit name.
 
 * Allow the user to specify alternatives for all keys.
     - User-specified keys for alt-x, control-c, etc.
@@ -11815,7 +11816,7 @@ def skip_ws_and_nl(s,i):
     - Disable commands that depend on them?
 #@nonl
 #@+node:ekr.20050925105522:Improve commands
-Improve getArg.
+- Improve getArg.
     - Handle backspace.
     - Tab completion for file commands.
 
@@ -11824,6 +11825,8 @@ Improve getArg.
 - word/re search code must be improved.
 
 - What do universal dispatch commands do?
+
+- Auto-indent conflicts with old auto indent.
 #@nonl
 #@-node:ekr.20050925105522:Improve commands
 #@+node:ekr.20050921094025.1:Goals
@@ -14790,6 +14793,133 @@ def doControlX (self,event,stroke,previous=[]):
     return k.callControlXFunction(event,stroke)
 #@nonl
 #@-node:ekr.20050920085536.60:doControlX
+#@+node:ekr.20050920084036.129:zapTo
+def zapTo (self,event):
+
+    k = self.k ; c = k.c ; w = event.widget
+    s = string.ascii_letters+string.digits+string.punctuation
+
+    if len(event.char) != 0 and event.char in s:
+        k.setState('zap',0)
+        i = w.search(event.char,'insert',stopindex='end')
+        k.resetLabel()
+        if i:
+            t = w.get('insert','%s+1c' % i)
+            c.killBufferCommands.addToKillBuffer(t)
+            w.delete('insert','%s+1c' % i)
+
+    return 'break'
+#@-node:ekr.20050920084036.129:zapTo
+#@+node:ekr.20050920084036.44:setInBufferMode
+def setInBufferMode (self,event,which):
+    
+    k = self.k ; w = event.widget
+
+    k.keyboardQuit(event)
+    k.setState('bufferList','start%s' % which)
+    k.setLabelBlue('Choose Buffer Name:')
+    self.bufferDict = self.getBufferDict(event)
+
+    return 'break'
+#@nonl
+#@-node:ekr.20050920084036.44:setInBufferMode
+#@+node:ekr.20050927102133:from bufferCommandsClass ctor
+if 0: # To be deleted
+    
+    # This section sets up the buffer data structures.
+    self.bufferListGetters ={}
+    self.bufferSetters ={}
+    self.bufferGotos ={}
+    self.bufferDeletes ={}
+    self.renameBuffers ={}
+    self.bufferDict = {} 
+    self.bufferTracker = Tracker()
+
+    # Used by bufferList.
+    self.commandsDict = {
+        'append-to-buffer': self.appendToBuffer,
+        'copy-to-buffer':   self.copyToBuffer,
+        'insert-buffer':    self.insertToBuffer,
+        'kill-buffer':      self.killBuffer, 
+        'prepend-to-buffer':self.prependToBuffer, 
+        'switch-to-buffer': self.switchToBuffer, 
+    }
+#@nonl
+#@-node:ekr.20050927102133:from bufferCommandsClass ctor
+#@+node:ekr.20050927102645:From bufferCommandsClass
+#@+node:ekr.20050920084036.46:setBufferListGetter
+def setBufferListGetter (self,buffer,method):
+
+    #Sets a method that returns a buffer name and its text, and its insert position.
+    self.bufferListGetters [buffer] = method
+#@nonl
+#@-node:ekr.20050920084036.46:setBufferListGetter
+#@+node:ekr.20050920084036.47:setBufferSetter
+def setBufferSetter( self, buffer, method ):
+
+    #Sets a method that takes a buffer name and the new contents.
+    self.bufferSetters[ buffer ] = method
+#@nonl
+#@-node:ekr.20050920084036.47:setBufferSetter
+#@+node:ekr.20050920084036.48:getBufferDict
+def getBufferDict (self,event):
+
+    w = event.widget
+    meth = self.bufferListGetters [w]
+    return meth()
+#@nonl
+#@-node:ekr.20050920084036.48:getBufferDict
+#@+node:ekr.20050920084036.49:setBufferData
+def setBufferData( self, event, name, data ):
+    
+    w = event.widget
+    meth = self.bufferSetters[ w ]
+    meth( name, data )
+#@nonl
+#@-node:ekr.20050920084036.49:setBufferData
+#@+node:ekr.20050920084036.50:setBufferGoto
+def setBufferGoto( self, w, method ):
+
+    self.bufferGotos[ w ] = method
+#@nonl
+#@-node:ekr.20050920084036.50:setBufferGoto
+#@+node:ekr.20050920084036.51:setBufferDelete
+def setBufferDelete( self, w, method ):
+    
+    self.bufferDeletes[ w ] = method
+#@nonl
+#@-node:ekr.20050920084036.51:setBufferDelete
+#@+node:ekr.20050920084036.52:setBufferRename
+def setBufferRename( self, buffer, method ):
+    
+    self.renameBuffers[ buffer ] = method
+#@nonl
+#@-node:ekr.20050920084036.52:setBufferRename
+#@-node:ekr.20050927102645:From bufferCommandsClass
+#@+node:ekr.20050920115444:setBufferInteractionMethods & helpers (not used)
+# Called by modified leoTkinterBody.createBindings.
+
+if 0: # This is dubious.
+    k.setBufferInteractionMethods(frame.bodyCtrl)
+
+def setBufferInteractionMethods (self,buffer):
+
+    '''This function configures the Emacs instance so that
+       it can see all the nodes as buffers for its buffer commands.'''
+       
+    k = self ; c = k.c
+
+    # These are actually methods of the bufferCommandsClass.
+    @others
+
+    # These add Leo-reated capabilities to the key handler.
+    c.bufferCommands.setBufferListGetter(buffer,buildBufferList)
+    c.bufferCommands.setBufferSetter(buffer,setBufferData)
+    c.bufferCommands.setBufferGoto(buffer,gotoNode)
+    c.bufferCommands.setBufferDelete(buffer,deleteNode)
+    c.bufferCommands.setBufferRename(buffer,renameNode)
+#@nonl
+#@-node:ekr.20050920115444:setBufferInteractionMethods & helpers (not used)
 #@-node:ekr.20050921100955:Not used
 #@+node:ekr.20050922074229.2:(Startup code)
 @nocolor
@@ -15057,9 +15187,6 @@ def finishCreate (self,altX_commandsDict):
         addTemacsExtensions(k)
         addTemacsAbbreviations(k)
         changeKeyStrokes(k,frame.bodyCtrl)
-
-    if 1: # This is dubious.
-        k.setBufferInteractionMethods(frame.bodyCtrl)
         
     k.setStateFunctions()
     k.setKeystrokeFunctions()
@@ -15081,24 +15208,13 @@ def utTailEnd (buffer,frame=frame):
 def setStateFunctions (self):
     
     k = self ; c = k.c
-
-    # EKR: used only below.
-    def eA (event):
-        if k.expandAbbrev(event):
-            return 'break'
-
+    
     self.stateCommands = {
         
-        'negativeArg':      k.callStateFunction,
-        'goto':             c.editCommands.Goto,
-        'zap':              c.editCommands.zapTo,
-        'howM':             c.editCommands.howMany,
-        'abbrevMode':       c.abbrevCommands.abbrevCommand1,
-        
-        'qlisten':          c.queryReplaceCommands.masterQR,
-        'abbrevOn':         eA,
-        'set-fill-column':  c.editCommands.setFillColumn,
-        'chooseBuffer':     c.bufferCommands.chooseBuffer,
+        ###'negativeArg':      k.callStateFunction,
+        ###'abbrevMode':       c.abbrevCommands.abbrevCommand1,
+        # 'qlisten':          c.queryReplaceCommands.masterQR,
+    
         'renameBuffer':     c.bufferCommands.renameBuffer,
        
         'alterlines':       c.editCommands.processLines,
@@ -15117,7 +15233,7 @@ def setKeystrokeFunctions (self):
         '<Control-s>':      ( 2, c.searchCommands.startIncremental ),
         '<Control-r>':      ( 2, c.searchCommands.startIncremental ),
         '<Alt-g>':          ( 1, c.editCommands.startGoto ),
-        '<Alt-z>':          ( 1, c.editCommands.startZap ),
+        '<Alt-z>':          ( 1, c.killBufferCommands.zapToCharacter ),
         '<Alt-percent>':    ( 1, c.queryReplaceCommands.masterQR ),
         '<Control-Alt-w>':  ( 1, lambda event: 'break' ),
     }
