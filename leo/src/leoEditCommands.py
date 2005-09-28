@@ -541,7 +541,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         self.getBufferName(self.appendToBufferFinisher)
         return 'break'
     
-    def appendToBufferFinisher (self,name,w):
+    def appendToBufferFinisher (self,name):
     
         txt = w.get('sel.first','sel.last')
         try:
@@ -561,7 +561,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         self.getBufferName(self.copyToBufferFinisher)
         return 'break'
     
-    def copyToBufferFinisher (self,name,w):
+    def copyToBufferFinisher (self,name):
     
         try:
             txt = w.get('sel.first','sel.last')
@@ -579,7 +579,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         self.getBufferName(self.insertToBufferFinisher)
         return 'break'
     
-    def insertToBufferFinisher (self,name,w):
+    def insertToBufferFinisher (self,name):
     
         try:
             bdata = self.bufferDict [name]
@@ -598,7 +598,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         self.getBufferName(self.killBufferFinisher)
         return 'break'
     
-    def killBufferFinisher (self,name,w):
+    def killBufferFinisher (self,name):
     
         # method = self.bufferDeletes[event.widget]
         # method(name)
@@ -614,7 +614,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         self.getBufferName(self.prependToBufferFinisher)
         return 'break'
         
-    def prependToBufferFinisher (self,name,w):
+    def prependToBufferFinisher (self,name):
         
         try:
             txt = w.get('sel.first','sel.last')
@@ -634,7 +634,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         self.getBufferName(self.switchToBufferFinisher)
         return 'break'
         
-    def switchToBufferFinisher (self,name,w):
+    def switchToBufferFinisher (self,name):
      
         # method = self.bufferGotos[event.widget]
         # k.keyboardQuit(event)
@@ -645,7 +645,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
     #@+node:ekr.20050920084036.42:listBuffers/Finisher
     def listBuffers (self,event):
         
-        k = self.k ; w = event.widget
+        k = self.k
         bdict = self.getBufferDict(event)
         list = bdict.keys()
         list.sort()
@@ -664,23 +664,25 @@ class bufferCommandsClass  (baseEditCommandsClass):
         self.getBufferName(self.renameBufferFinisher)
         return 'break'
         
-    def renameBufferFinisher (self,name,w):
+    def renameBufferFinisher (self,name):
         
         k = self.k
         ## self.renameBuffers[w](name)
         g.trace(repr(name))
-        
+    
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.43:renameBuffer (not ready yet)
     #@-node:ekr.20050920084036.34:Entry points 
     #@+node:ekr.20050927102133.1:Utils
-    #@+node:ekr.20050927093851:getBufferName ## To do: allow tab completion
-    def getBufferName (self,func):
+    #@+node:ekr.20050927093851:getBufferName
+    def getBufferName (self,func=None):
         
         '''Get a buffer name into k.arg and call k.setState(kind,n,handler).'''
         
         k = self.k ; c = k.c ; state = k.getState('getBufferName')
+        
+        g.trace(state)
         
         if state == 0:
             # Using a dict is faster than using a list directly.
@@ -689,17 +691,19 @@ class bufferCommandsClass  (baseEditCommandsClass):
                 names [p.headString()] = None
             tabList = names.keys()
             self.getBufferNameFinisher = func
-            g.trace(len(tabList))
-            k.getArg(None,'getBufferName',1,self.getBufferName,tabList=tabList)
+            prefix = k.getLabel()
+            k.getArg(None,'getBufferName',1,self.getBufferName,prefix=prefix,tabList=tabList)
         else:
             k.resetLabel()
             k.clearState()
-            g.trace(k.arg)
-            if 0: # Get widget from buffer name.
-                self.getBufferNameFinisher(k.arg,w)
+            g.trace(repr(k.arg))
+            func = self.getBufferNameFinisher
+            self.getBufferNameFinisher = None
+            if func:
+                func(k.arg)
     
         return 'break'
-                
+        
     if 0: # Reference
     
         def bufferList (self,event):
@@ -729,8 +733,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
             else:
                 self.update(event)
                 return 'break'
-    #@nonl
-    #@-node:ekr.20050927093851:getBufferName ## To do: allow tab completion
+    #@-node:ekr.20050927093851:getBufferName
     #@+node:ekr.20050927101829.3:setBufferData
     def setBufferData (name,data):
     

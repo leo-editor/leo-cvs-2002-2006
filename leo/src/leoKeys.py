@@ -96,8 +96,8 @@ class keyHandlerClass:
         self.arg = ''
         self.afterGetArgState = None
         self.argTabList = []
-        self.argTabListPrefix = None
-        self.argTabListIndex = 0
+        # # self.argTabListPrefix = None
+        # # self.argTabListIndex = 0
         
         # For negative arguments...
         self.negativeArg = False
@@ -635,6 +635,25 @@ class keyHandlerClass:
         return k.stopControlX(event)
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
+    #@+node:ekr.20050920085536.68:negativeArgument
+    def negativeArgument (self,event):
+        
+        g.trace(event.keysym,stroke)
+    
+        k = self
+        state = k.getState('negativeArg')
+        k.setLabelBlue('Negative Argument')
+    
+        if state == 0:
+            k.setState('negativeArg',1)
+        else:
+            func = k.negArgs.get(k.stroke)
+            if func:
+                func(event)
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920085536.68:negativeArgument
     #@-node:ekr.20050920085536.32: Entry points
     #@+node:ekr.20050920085536.65: masterCommand
     def masterCommand (self,event,method,stroke,general):
@@ -735,7 +754,7 @@ class keyHandlerClass:
         return 'break'
     #@nonl
     #@-node:ekr.20050920085536.41:alt_X
-    #@+node:ekr.20050920085536.42:doAlt_X & helpers (DO NOT CHANGE)
+    #@+node:ekr.20050920085536.42:doAlt_X & helper
     def doAlt_X (self,event):
     
         '''This method executes the correct Alt-X command'''
@@ -744,77 +763,11 @@ class keyHandlerClass:
         # g.trace(keysym)
     
         if keysym == 'Return':
-            #@        << dispatch the function >>
-            #@+node:ekr.20050920085536.45:<< dispatch the function >>
-            s = k.getLabel()
-            k.altX_tabList = []
-            command = s[len(k.altX_prefix):].strip()
-            func = c.commandsDict.get(command)
-            k.clearState()
-            k.keyboardQuit(event)
-            
-            if func:
-                if command != 'repeat-complex-command': k.altX_history.insert(0,command)
-                aX = k.getState('altx')
-                if (type(aX) == type(1) or aX.isdigit()) and command in k.x_hasNumeric:
-                    func(event,aX)
-                else:
-                    func(event)
-            else:
-                k.setLabel('Command does not exist')
-            #@nonl
-            #@-node:ekr.20050920085536.45:<< dispatch the function >>
-            #@nl
+            k.dispatchAltXFunction(event)
         elif keysym == 'Tab':
-            #@        << handle tab completion >>
-            #@+node:ekr.20050920085536.44:<< handle tab completion >> (DO NOT CHANGE)
-            s = k.getLabel().strip()
-            
-            if k.altX_tabList and s.startswith(k.altX_tabListPrefix):
-                k.altX_tabListIndex +=1
-                if k.altX_tabListIndex >= len(k.altX_tabList):
-                    k.altX_tabListIndex = 0
-                k.setLabel(k.alt_x_prompt + k.altX_tabList [k.altX_tabListIndex])
-            else:
-                s = k.getLabel() # Always includes prefix, so command is well defined.
-                k.altX_tabListPrefix = s
-                command = s [len(k.alt_x_prompt):]
-                k.altX_tabList,common_prefix = k.findItemsWithPrefix(command,c.commandsDict.keys())
-                k.altX_tabListIndex = 0
-                if k.altX_tabList:
-                    if len(k.altX_tabList) > 1 and (
-                        len(common_prefix) > (len(k.altX_tabListPrefix) - len(k.alt_x_prompt))
-                    ):
-                        k.setLabel(k.alt_x_prompt + common_prefix)
-                        k.altX_tabListPrefix = k.alt_x_prompt + common_prefix
-                    else:
-                        # No common prefix, so show the first item.
-                        k.setLabel(k.alt_x_prompt + k.altX_tabList [0])
-                else:
-                    k.setLabel(k.alt_x_prompt,protect=True)
-            #@nonl
-            #@-node:ekr.20050920085536.44:<< handle tab completion >> (DO NOT CHANGE)
-            #@nl
+            k.doTabCompletion(c.commandsDict.keys())
         elif keysym == 'BackSpace':
-            #@        << handle BackSpace >>
-            #@+node:ekr.20050920085536.46:<< handle BackSpace >> (DO NOT CHANGE)
-            # Cut back to previous prefix and update prefix.
-            s = k.altX_tabListPrefix
-            
-            if len(s) > len(k.altX_prefix):
-                k.altX_tabListPrefix = s[:-1]
-                k.setLabel(k.altX_tabListPrefix,protect=False)
-            else:
-                k.altX_tabListPrefix = s
-                k.setLabel(k.altX_tabListPrefix,protect=True)
-                
-            # g.trace('BackSpace: new altX_tabListPrefix',k.altX_tabListPrefix)
-            
-            # Force a recomputation of the commands list.
-            k.altX_tabList = []
-            #@nonl
-            #@-node:ekr.20050920085536.46:<< handle BackSpace >> (DO NOT CHANGE)
-            #@nl
+            k.doBackSpace()
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.altX_tabList = []
@@ -824,41 +777,29 @@ class keyHandlerClass:
     
         return 'break'
     #@nonl
-    #@+node:ekr.20050920085536.43:findItemsWithPrefix
-    def findItemsWithPrefix (self,s,aList=None):
+    #@+node:ekr.20050920085536.45:dispatchAltXFunction
+    def dispatchAltXFunction (self,event):
         
-        '''This method returns a sorted list of matches.
+        k = self ; c = k.c ; s = k.getLabel()
+    
+        k.altX_tabList = []
+        command = s[len(k.altX_prefix):].strip()
+        func = c.commandsDict.get(command)
+        k.clearState()
+        k.keyboardQuit(event)
         
-        It returns the list of matches and the longest common prefix of all the matches.'''
-    
-        k = self ; c = k.c
-    
-        if not fdict:
-            fdict = c.commandsDict
-    
-        common_prefix = ''
-    
-        if s: pmatches = [a for a in aList if a.startswith(s)]
-        else: pmatches = []
-            
-        if pmatches:
-            s = pmatches[0] ; done = False
-            for i in xrange(len(s)):
-                prefix = s[:i]
-                for z in pmatches:
-                    if not z.startswith(prefix):
-                        done = True ; break
-                if done:
-                    break
-                else:
-                    common_prefix = prefix
-            pmatches.sort()
-    
-        # g.trace(repr(s),len(pmatches))
-        return pmatches,common_prefix
+        if func:
+            if command != 'repeat-complex-command': k.altX_history.insert(0,command)
+            aX = k.getState('altx')
+            if (type(aX) == type(1) or aX.isdigit()) and command in k.x_hasNumeric:
+                func(event,aX)
+            else:
+                func(event)
+        else:
+            k.setLabel('Command does not exist')
     #@nonl
-    #@-node:ekr.20050920085536.43:findItemsWithPrefix
-    #@-node:ekr.20050920085536.42:doAlt_X & helpers (DO NOT CHANGE)
+    #@-node:ekr.20050920085536.45:dispatchAltXFunction
+    #@-node:ekr.20050920085536.42:doAlt_X & helper
     #@+node:ekr.20050920085536.47:executeLastAltX
     def executeLastAltX (self,event):
         
@@ -904,7 +845,6 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.61:extendAltX
     #@-node:ekr.20050920085536.40:Alt_X...
-    #@+node:ekr.20050924065103:Arg...
     #@+node:ekr.20050920085536.62:getArg
     def getArg (self,event,returnStateKind=None,returnState=None,returnStateHandler=None,prefix=None,tabList=None):
         
@@ -913,119 +853,52 @@ class keyHandlerClass:
         The prefix is does not form the arg.  The prefix defaults to the k.getLabel().
         '''
         
-        k = self ; state = k.getState('getArg')
-        if event: ch = event.keysym
-        else:     ch = ''
-        # g.trace('state',repr(state))
+        # Similar, but not the same as the code in doAlt_X.
+        k = self ; c = k.c ; state = k.getState('getArg')
+        if event: keysym = event.keysym
+        else:     keysym = ''
         if not state:
-            if prefix:  k.argTabListPrefix = prefix
-            else:       k.argTabListPrefix = k.getLabel()
             k.arg = ''
             if tabList: k.argTabList = tabList[:]
             else:       k.argTabList = []
-            k.argTabList.sort()
-            g.trace(len(k.argTabList))
+            #@        << init altX vars >>
+            #@+node:ekr.20050928092516:<< init altX vars >>
+            # Clear the list, any other character besides tab indicates that a new prefix is in effect.
+            k.altX_tabList = []
+            k.updateLabel(event)
+            if prefix:
+                k.altX_tabListPrefix = prefix
+                k.altX_prefix = prefix
+                k.alt_x_prompt = prefix
+            else:
+                k.altX_tabListPrefix = k.getLabel()
+                k.alt_x_prompt = ''
+                k.altX_prefix = ''
+            #@nonl
+            #@-node:ekr.20050928092516:<< init altX vars >>
+            #@nl
+            # Set the states.
             k.afterGetArgState = (returnStateKind,returnState,returnStateHandler)
             k.setState('getArg',1,handler=k.getArg)
-        elif ch == 'BackSpace':
-            #@        << handle BackSpace >>
-            #@+node:ekr.20050927105315:<< handle BackSpace >>
-            # Cut back to previous prefix and update prefix.
-            s = k.argTabListPrefix
-            
-            if len(s) > len(k.altX_prefix):
-                k.argTabListPrefix = s[:-1]
-                k.setLabel(k.argTabListPrefix,protect=False)
-            else:
-                k.argTabListPrefix = s
-                k.setLabel(k.argTabListPrefix,protect=True)
-                
-            # g.trace('BackSpace: new altX_tabListPrefix',k.altX_tabListPrefix)
-            
-            # Force a recomputation of the commands list.
-            ### k.argTabList = []
-            #@nonl
-            #@-node:ekr.20050927105315:<< handle BackSpace >>
-            #@nl
-        elif ch == 'Tab':
-            if k.argTabList:
-                g.trace(len(k.argTabList))
-                tabList = k.argTabList
-                #@            << handle tab completion >>
-                #@+node:ekr.20050927104632:<< handle tab completion >>
-                s = k.getLabel().strip()
-                
-                if 0: # Not ready yet.
-                
-                    if tabList and s.startswith(k.argTabListPrefix):
-                        k.argTabListIndex +=1
-                        if k.argTabListIndex >= len(tabList):
-                            k.argTabListIndex = 0
-                        k.setLabel(k.alt_x_prompt + tabList [k.argTabListIndex])
-                    else:
-                        s = k.getLabel() # Always includes prefix, so command is well defined.
-                        k.altX_tabListPrefix = s
-                        command = s [len(k.alt_x_prompt):]
-                        k.altX_tabList,common_prefix = k.findItemsWithPrefix(command)
-                        k.altX_tabListIndex = 0
-                        if k.altX_tabList:
-                            if len(k.altX_tabList) > 1 and (
-                                len(common_prefix) > (len(k.altX_tabListPrefix) - len(k.alt_x_prompt))
-                            ):
-                                k.setLabel(k.alt_x_prompt + common_prefix)
-                                k.altX_tabListPrefix = k.alt_x_prompt + common_prefix
-                            else:
-                                # No common prefix, so show the first item.
-                                k.setLabel(k.alt_x_prompt + k.altX_tabList [0])
-                        else:
-                            k.setLabel(k.alt_x_prompt,protect=True)
-                    
-                #@nonl
-                #@-node:ekr.20050927104632:<< handle tab completion >>
-                #@nl
-        elif ch == 'Return':
-            # Compute the actual arg.
-            s = k.getLabel() ; k.arg = s[len(k.altX_prefix):]
-            # Immediately enter the caller's requested state.
+        elif keysym == 'Return':
+            k.arg = k.getLabel(ignorePrompt=True)
             returnStateKind,returnState,returnStateHandler = k.afterGetArgState
             k.setState(returnStateKind,returnState,returnStateHandler)
-            k.callStateFunction(event)
+            if returnStateHandler:
+                returnStateHandler()
+        elif keysym == 'Tab':
+            k.doTabCompletion(k.argTabList)
+        elif keysym == 'BackSpace':
+            k.doBackSpace()
         else:
+            # Clear the list, any other character besides tab indicates that a new prefix is in effect.
+            k.altX_tabList = []
             k.updateLabel(event)
+            k.altX_tabListPrefix = k.getLabel()
+    
         return 'break'
     #@nonl
-    #@+node:ekr.20050928075503:findItemsWithPrefix
-    def findItemsWithPrefix (self,s,aList):
-    
-        if aList is None:
-            aList = self.c.commandsDict.keys()
-            
-        pmatches,common_prefix = g.itemsMatchingPrefixInList(s,aList)
-        
-        return pmatches,common_prefix
-    #@nonl
-    #@-node:ekr.20050928075503:findItemsWithPrefix
     #@-node:ekr.20050920085536.62:getArg
-    #@+node:ekr.20050920085536.68:negativeArgument
-    def negativeArgument (self,event):
-        
-        g.trace(event.keysym,stroke)
-    
-        k = self
-        state = k.getState('negativeArg')
-        k.setLabelBlue('Negative Argument')
-    
-        if state == 0:
-            k.setState('negativeArg',1)
-        else:
-            func = k.negArgs.get(k.stroke)
-            if func:
-                func(event)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.68:negativeArgument
-    #@-node:ekr.20050924065103:Arg...
     #@+node:ekr.20050920085536.57:ControlX...  (actually bound to control-c for now)
     #@+node:ekr.20050920085536.58:startControlX
     def startControlX (self,event):
@@ -1324,7 +1197,9 @@ class keyHandlerClass:
         It mimics what would happen with the keyboard and a Text editor
         instead of plain accumalation.'''
         
-        k = self ; s = k.getLabel() ; ch = event.char
+        k = self ; s = k.getLabel()
+        if event: ch = event.char
+        else:     ch = ''
     
         if ch == '\b': # Handle backspace.
             # Don't backspace over the prompt.
@@ -1332,7 +1207,7 @@ class keyHandlerClass:
                 return 
             elif len(s) == 1: s = ''
             else: s = s [0:-1]
-        else:
+        elif ch:
             # Add the character.
             s = s + ch
     
@@ -1405,6 +1280,62 @@ class keyHandlerClass:
             k.clearState()
     #@-node:ekr.20050923172814.4:setState
     #@-node:ekr.20050923172809:State...
+    #@+node:ekr.20050928082315:Special characters in the mini-buffer...
+    #@+node:ekr.20050920085536.46:doBackSpace
+    def doBackSpace (self):
+    
+        '''Cut back to previous prefix and update prefix.'''
+    
+        k = self ; s = k.altX_tabListPrefix
+    
+        if len(s) > len(k.altX_prefix):
+            k.altX_tabListPrefix = s [:-1]
+            k.setLabel(k.altX_tabListPrefix,protect=False)
+        else:
+            k.altX_tabListPrefix = s
+            k.setLabel(k.altX_tabListPrefix,protect=True)
+    
+        # g.trace('BackSpace: new altX_tabListPrefix',k.altX_tabListPrefix)
+    
+        # Force a recomputation of the commands list.
+        k.altX_tabList = []
+    #@nonl
+    #@-node:ekr.20050920085536.46:doBackSpace
+    #@+node:ekr.20050920085536.44:doTabCompletion
+    def doTabCompletion (self,defaultTabList):
+        
+        '''Handle tab completion when the user hits a tab.'''
+        
+        k = self ; s = k.getLabel().strip()
+        
+        # g.trace(len(k.altX_tabList),repr(k.alt_x_prompt))
+        
+        if k.altX_tabList and s.startswith(k.altX_tabListPrefix):
+            # Set the label to the next item on the tab list.
+            k.altX_tabListIndex +=1
+            if k.altX_tabListIndex >= len(k.altX_tabList):
+                k.altX_tabListIndex = 0
+            k.setLabel(k.alt_x_prompt + k.altX_tabList [k.altX_tabListIndex])
+        else:
+            s = k.getLabel() # Always includes prefix, so command is well defined.
+            k.altX_tabListPrefix = s
+            command = s [len(k.alt_x_prompt):]
+            k.altX_tabList,common_prefix = g.itemsMatchingPrefixInList(command,defaultTabList)
+            k.altX_tabListIndex = 0
+            if k.altX_tabList:
+                if len(k.altX_tabList) > 1 and (
+                    len(common_prefix) > (len(k.altX_tabListPrefix) - len(k.alt_x_prompt))
+                ):
+                    k.setLabel(k.alt_x_prompt + common_prefix)
+                    k.altX_tabListPrefix = k.alt_x_prompt + common_prefix
+                else:
+                    # No common prefix, so show the first item.
+                    k.setLabel(k.alt_x_prompt + k.altX_tabList [0])
+            else:
+                k.setLabel(k.alt_x_prompt,protect=True)
+    #@nonl
+    #@-node:ekr.20050920085536.44:doTabCompletion
+    #@-node:ekr.20050928082315:Special characters in the mini-buffer...
     #@+node:ekr.20050920085536.69:tailEnd...
     #@+node:ekr.20050920085536.70:_tailEnd
     def _tailEnd (self,w):

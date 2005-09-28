@@ -14920,6 +14920,37 @@ def setBufferInteractionMethods (self,buffer):
     c.bufferCommands.setBufferRename(buffer,renameNode)
 #@nonl
 #@-node:ekr.20050920115444:setBufferInteractionMethods & helpers (not used)
+#@+node:ekr.20050920085536.43:findItemsWithPrefix (Not used)
+def findItemsWithPrefix (self,s,aList=None):
+
+    '''This method returns a sorted list of matches.
+    
+    It returns the list of matches and the longest common prefix of all the matches.'''
+
+    k = self ; c = k.c
+
+    common_prefix = ''
+
+    if s: pmatches = [a for a in aList if a.startswith(s)]
+    else: pmatches = []
+        
+    if pmatches:
+        s = pmatches[0] ; done = False
+        for i in xrange(len(s)):
+            prefix = s[:i]
+            for z in pmatches:
+                if not z.startswith(prefix):
+                    done = True ; break
+            if done:
+                break
+            else:
+                common_prefix = prefix
+        pmatches.sort()
+
+    # g.trace(repr(s),len(pmatches))
+    return pmatches,common_prefix
+#@nonl
+#@-node:ekr.20050920085536.43:findItemsWithPrefix (Not used)
 #@-node:ekr.20050921100955:Not used
 #@+node:ekr.20050922074229.2:(Startup code)
 @nocolor
@@ -16288,6 +16319,38 @@ def destroySelf (self):
 #@-node:ekr.20031218072017.3964:Destroying the frame
 #@-node:ekr.20031218072017.3941: Birth & Death (tkFrame)
 #@-node:ekr.20050922074229.2:(Startup code)
+#@+node:ekr.20050920084036.4:g.longestCommonPrefix & g.itemsMatchingPrefixInList
+def longestCommonPrefix (s1,s2):
+    
+    '''Find the longest prefix common to strings s1 and s2.'''
+    
+    prefix = ''
+    for ch in s1:
+        if s2.startswith(prefix + ch):
+            prefix = prefix + ch
+        else:
+            return prefix
+    return prefix
+        
+def itemsMatchingPrefixInList (s,aList):
+    
+    '''This method returns a sorted list items of aList whose prefix is s.
+    
+    It also returns the longest common prefix of all the matches.'''
+
+    if s: pmatches = [a for a in aList if a.startswith(s)]
+    else: pmatches = []
+        
+    if pmatches:
+        pmatches.sort()
+        common_prefix = reduce(g.longestCommonPrefix,pmatches)
+    else:
+        common_prefix = ''
+
+    # g.trace(repr(s),len(pmatches))
+    return pmatches,common_prefix
+#@nonl
+#@-node:ekr.20050920084036.4:g.longestCommonPrefix & g.itemsMatchingPrefixInList
 #@-node:ekr.20050920084720.1:(Move temacs/usetemacs code into Leo's core)
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
