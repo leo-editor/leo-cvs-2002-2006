@@ -4871,6 +4871,47 @@ def test_g_getScript_strips_crlf():
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_crlf
 #@-node:EKR.20040614071102.1:g.getScript & tests
+#@+node:ekr.20050920084036.4:g.longestCommonPrefix & g.itemsMatchingPrefixInList
+def longestCommonPrefix (s1,s2):
+    
+    '''Find the longest prefix common to strings s1 and s2.'''
+    
+    prefix = ''
+    for ch in s1:
+        if s2.startswith(prefix + ch):
+            prefix = prefix + ch
+        else:
+            return prefix
+    return prefix
+        
+def itemsMatchingPrefixInList (s,aList):
+    
+    '''This method returns a sorted list items of aList whose prefix is s.
+    
+    It also returns the longest common prefix of all the matches.'''
+
+    common_prefix = ''
+
+    if s: pmatches = [a for a in aList if a.startswith(s)]
+    else: pmatches = []
+        
+    if pmatches:
+        s = pmatches[0] ; done = False
+        for i in xrange(len(s)):
+            prefix = s[:i]
+            for z in pmatches:
+                if not z.startswith(prefix):
+                    done = True ; break
+            if done:
+                break
+            else:
+                common_prefix = prefix
+        pmatches.sort()
+
+    # g.trace(repr(s),len(pmatches))
+    return pmatches,common_prefix
+#@nonl
+#@-node:ekr.20050920084036.4:g.longestCommonPrefix & g.itemsMatchingPrefixInList
 #@+node:ekr.20041219095213:import wrappers
 #@+at 
 #@nonl
