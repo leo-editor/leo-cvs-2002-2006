@@ -511,10 +511,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         
         baseEditCommandsClass.__init__(self,c) # init the base class.
         
-        ##self.positions =  {}
-        ##self.tnodes = {}
-        
-        self.getBufferNameFinisher = None
+        self.fromName = '' # Saved name from getBufferName.
     #@nonl
     #@-node:ekr.20050920084036.32: ctor (bufferCommandsClass)
     #@+node:ekr.20050920084036.33: getPublicCommands
@@ -660,21 +657,27 @@ class bufferCommandsClass  (baseEditCommandsClass):
     def renameBuffer (self,event):
         
         k = self.k
-        k.setLabelBlue('Rename buffer to: ')
-        self.getBufferName(self.renameBufferFinisher)
+        k.setLabelBlue('Rename buffer from: ')
+        self.getBufferName(self.renameBufferFinisher1)
         return 'break'
         
-    def renameBufferFinisher (self,name):
+    def renameBufferFinisher1 (self,name):
         
         k = self.k
-        ## self.renameBuffers[w](name)
-        g.trace(repr(name))
+        k.setLabelBlue('Rename buffer from: %s to: ' % (name))
+        self.fromName = name
+        self.getBufferName(self.renameBufferFinisher2)
+        return 'break'
+        
+    def renameBufferFinisher2 (self,name):
     
+        k = self.k
+        # self.renameBuffers[w](name)
+        k.setLabelGrey('Renamed buffer %s to %s' % (self.fromName,name))
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.43:renameBuffer (not ready yet)
     #@-node:ekr.20050920084036.34:Entry points 
-    #@+node:ekr.20050927102133.1:Utils
     #@+node:ekr.20050927093851:getBufferName
     def getBufferName (self,func=None):
         
@@ -682,10 +685,8 @@ class bufferCommandsClass  (baseEditCommandsClass):
         
         k = self.k ; c = k.c ; state = k.getState('getBufferName')
         
-        g.trace(state)
-        
         if state == 0:
-            # Using a dict is faster than using a list directly.
+            # Creating a helper dict is much faster than creating the list directly.
             names = {}
             for p in c.allNodes_iter():
                 names [p.headString()] = None
@@ -696,44 +697,16 @@ class bufferCommandsClass  (baseEditCommandsClass):
         else:
             k.resetLabel()
             k.clearState()
-            g.trace(repr(k.arg))
+            # g.trace(repr(k.arg))
             func = self.getBufferNameFinisher
             self.getBufferNameFinisher = None
             if func:
                 func(k.arg)
     
         return 'break'
-        
-    if 0: # Reference
-    
-        def bufferList (self,event):
-            
-            k = self.k
-            state = k.getState('bufferList')
-            if state.startswith('start'):
-                state = state[5:]
-                k.setState('bufferList',state)
-                k.setLabel('')
-            if event.keysym=='Tab':
-                stext = k.getLabel().strip()
-                if self.bufferTracker.prefix and stext.startswith(self.bufferTracker.prefix):
-                    k.setLabel(self.bufferTracker.next())#get next in iteration
-                else:
-                    prefix = k.getLabel()
-                    pmatches =[]
-                    for z in self.bufferDict.keys():
-                        if z.startswith(prefix):
-                            pmatches.append(z)
-                    self.bufferTracker.setTabList(prefix,pmatches)
-                    k.setLabel(self.bufferTracker.next())#begin iteration on new lsit
-                return 'break'
-            elif event.keysym=='Return':
-               bMode = k.getState('bufferList')
-               return self.commandsDict[bMode](event,k.getLabel())
-            else:
-                self.update(event)
-                return 'break'
+    #@nonl
     #@-node:ekr.20050927093851:getBufferName
+    #@+node:ekr.20050927102133.1:Utils
     #@+node:ekr.20050927101829.3:setBufferData
     def setBufferData (name,data):
     
