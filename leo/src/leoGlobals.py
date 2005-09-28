@@ -4890,23 +4890,14 @@ def itemsMatchingPrefixInList (s,aList):
     
     It also returns the longest common prefix of all the matches.'''
 
-    common_prefix = ''
-
     if s: pmatches = [a for a in aList if a.startswith(s)]
     else: pmatches = []
         
     if pmatches:
-        s = pmatches[0] ; done = False
-        for i in xrange(len(s)):
-            prefix = s[:i]
-            for z in pmatches:
-                if not z.startswith(prefix):
-                    done = True ; break
-            if done:
-                break
-            else:
-                common_prefix = prefix
         pmatches.sort()
+        common_prefix = reduce(g.longestCommonPrefix,pmatches)
+    else:
+        common_prefix = ''
 
     # g.trace(repr(s),len(pmatches))
     return pmatches,common_prefix
