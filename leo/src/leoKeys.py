@@ -779,7 +779,7 @@ class keyHandlerClass:
                 s = k.getLabel() # Always includes prefix, so command is well defined.
                 k.altX_tabListPrefix = s
                 command = s [len(k.alt_x_prompt):]
-                k.altX_tabList,common_prefix = k._findMatch(command)
+                k.altX_tabList,common_prefix = k.findItemsWithPrefix(command,c.commandsDict.keys())
                 k.altX_tabListIndex = 0
                 if k.altX_tabList:
                     if len(k.altX_tabList) > 1 and (
@@ -824,10 +824,12 @@ class keyHandlerClass:
     
         return 'break'
     #@nonl
-    #@+node:ekr.20050920085536.43:_findMatch
-    def _findMatch (self,s,fdict=None):
+    #@+node:ekr.20050920085536.43:findItemsWithPrefix
+    def findItemsWithPrefix (self,s,aList=None):
         
-        '''This method returns a sorted list of matches.'''
+        '''This method returns a sorted list of matches.
+        
+        It returns the list of matches and the longest common prefix of all the matches.'''
     
         k = self ; c = k.c
     
@@ -836,7 +838,7 @@ class keyHandlerClass:
     
         common_prefix = ''
     
-        if s: pmatches = [a for a in fdict if a.startswith(s)]
+        if s: pmatches = [a for a in aList if a.startswith(s)]
         else: pmatches = []
             
         if pmatches:
@@ -855,7 +857,7 @@ class keyHandlerClass:
         # g.trace(repr(s),len(pmatches))
         return pmatches,common_prefix
     #@nonl
-    #@-node:ekr.20050920085536.43:_findMatch
+    #@-node:ekr.20050920085536.43:findItemsWithPrefix
     #@-node:ekr.20050920085536.42:doAlt_X & helpers (DO NOT CHANGE)
     #@+node:ekr.20050920085536.47:executeLastAltX
     def executeLastAltX (self,event):
@@ -964,7 +966,7 @@ class keyHandlerClass:
                         s = k.getLabel() # Always includes prefix, so command is well defined.
                         k.altX_tabListPrefix = s
                         command = s [len(k.alt_x_prompt):]
-                        k.altX_tabList,common_prefix = k._findMatch(command)
+                        k.altX_tabList,common_prefix = k.findItemsWithPrefix(command)
                         k.altX_tabListIndex = 0
                         if k.altX_tabList:
                             if len(k.altX_tabList) > 1 and (
@@ -992,6 +994,17 @@ class keyHandlerClass:
             k.updateLabel(event)
         return 'break'
     #@nonl
+    #@+node:ekr.20050928075503:findItemsWithPrefix
+    def findItemsWithPrefix (self,s,aList):
+    
+        if aList is None:
+            aList = self.c.commandsDict.keys()
+            
+        pmatches,common_prefix = g.itemsMatchingPrefixInList(s,aList)
+        
+        return pmatches,common_prefix
+    #@nonl
+    #@-node:ekr.20050928075503:findItemsWithPrefix
     #@-node:ekr.20050920085536.62:getArg
     #@+node:ekr.20050920085536.68:negativeArgument
     def negativeArgument (self,event):

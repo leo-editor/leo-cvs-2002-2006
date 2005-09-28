@@ -47,18 +47,6 @@ class baseEditCommandsClass:
         pass
     #@nonl
     #@-node:ekr.20050920084036.2: ctor, finishCreate, init (baseEditCommandsClass)
-    #@+node:ekr.20050920084036.4:findPre
-    def findPre (self,a,b):
-        st = ''
-        for z in a:
-            st1 = st + z
-            if b.startswith(st1):
-                st = st1
-            else:
-                return st
-        return st
-    #@nonl
-    #@-node:ekr.20050920084036.4:findPre
     #@+node:ekr.20050920084036.5:getPublicCommands & getStateCommands
     def getPublicCommands (self):
     
@@ -1052,7 +1040,7 @@ class editCommandsClass (baseEditCommandsClass):
         txt = w.get( i, i2 )   
         rlist = []
         self.getDynamicList( w, txt, rlist )
-        dEstring = reduce( self.findPre, rlist )
+        dEstring = reduce( g.longestCommonPrefix, rlist )
         if dEstring:
             w.delete( i , i2 )
             w.insert( i, dEstring )    
@@ -3283,32 +3271,32 @@ class macroCommandsClass (baseEditCommandsClass):
             self.macroing = False
             self.saveMacros(event,k.getLabel()) 
         elif event.keysym == 'Tab':
-            k.setLabel(self._findMatch(self.namedMacros))
+            s = k.getLabel()
+            k.setLabel(self.findFirstMatchFromList(s,self.namedMacros))
         else:
             k.updateLabel(event)
     
         return 'break'
     #@nonl
-    #@+node:ekr.20050920084036.195:_findMatch
-    def _findMatch (self,fdict=None):
+    #@+node:ekr.20050920084036.195:findFirstMatchFromList
+    def findFirstMatchFromList (self,s,aList=None):
     
         '''This method finds the first match it can find in a sorted list'''
     
         k = self.k
     
-        if not fdict:
-            fdict = c.commandsDict
+        if alist is not None:
+            aList = c.commandsDict.keys()
     
-        s = k.getLabel()#
-        pmatches = filter(lambda a: a.startswith(s),fdict)
+        pmatches = [item for item in aList if item.startswith(s)]
         pmatches.sort()
         if pmatches:
-            mstring = reduce(self.findPre,pmatches)
+            mstring = reduce(g.longestCommonPrefix,pmatches)
             return mstring
     
         return s
     #@nonl
-    #@-node:ekr.20050920084036.195:_findMatch
+    #@-node:ekr.20050920084036.195:findFirstMatchFromList
     #@-node:ekr.20050920084036.194:getMacroName (calls saveMacros)
     #@+node:ekr.20050920084036.196:loadMacros & helpers
     def loadMacros (self,event):
