@@ -11816,67 +11816,51 @@ def skip_ws_and_nl(s,i):
     - Disable commands that depend on them?
 #@nonl
 #@+node:ekr.20050925105522:Improve commands
-- Improve getArg.
-    - Handle backspace.
-    - Tab completion for file commands.
+- Auto-indent conflicts with old auto indent.
+
+- Tab completion for file commands.
 
 - Use getArg for most commands.
 
 - word/re search code must be improved.
 
 - What do universal dispatch commands do?
-
-- Auto-indent conflicts with old auto indent.
 #@nonl
 #@-node:ekr.20050925105522:Improve commands
-#@+node:ekr.20050921094025.1:Goals
-@nocolor
+#@+node:ekr.20050928144501:Before next release
+* Use leoSettings to set all new bindings.
 
-- Want to be able to emulate *either* emacs or vim.
-- If possible want to emulate XP "sticky keys"
+- Don't bind menu items: let the key handler dispatch the menu commands.
 
-- Don't try to duplicate XP sticky keys.
+- Define all present xemacs names in Leo.
 
-1.  Get present emacs functionality integrated into Leo asap.
+- Complete menu work.
+#@nonl
+#@-node:ekr.20050928144501:Before next release
+#@+node:ekr.20050928144501.1:Before 4.4 final
+** Mouseless Leo: control all Leo commands & widgets using only key commands.
 
-    - Add a single emacs menu containing submenus for each of the following main emacs menu:
-        View, Cmds, Tools, Options, Buffers (but not Lisp yet)
-    - Possibly add items in existing File & Edit menus.
-    - Dim unimplemented items.
-    - Get important Emacs items from settings dialog.
-        (Try not to change this too much in the future.)
+- Add vim, emacs, leo commands.
 
-Subgoals:
-    
-- Allow future improvements without changing user options greatly.
-    - Allow for customizeEmacs plugin.
+- Emacs-style help: appropos, etc.
+
 - Implement all essential emacs commands:  cursor commands, find commands, etc.
+
 - Extend emacs commands to handler Leo improvements.
+
 - Integrate Leo commands with emacs commands.
 
-Other goals:
-    
-- Define all present xemacs names in Leo for the future.
-- emacs class should not know any details of 'interior modes'.
-- pushMode, popMode, setMode, clearMode commands.
-- Each important Leo widget should capture all <key> events.
-    - Send them to master key handler commander, widgetKind args.
-      (This makes it unnecessary to call possibly unreliable (or non-existent) gui methods.
-- (Optional?)  Don't bind menu items: let the key handler dispatch the menu commands.
+- Allow future improvements without changing user options greatly.
+    - Allow for customizeEmacs plugin.
 #@nonl
-#@-node:ekr.20050921094025.1:Goals
+#@-node:ekr.20050928144501.1:Before 4.4 final
 #@+node:ekr.20050921094025.3:Minor
-- Complete menu work.
-
 - convertCommandName utility converts to and from emacs-style (with '-' chars) to
       python/leo style (with capitalization).
 
 - Create printLongCommandName command: prints long name of any keystroke command.
 #@nonl
 #@-node:ekr.20050921094025.3:Minor
-#@+node:ekr.20050921094025.4:Options
-- 'Emacs Compatibility' option: binds keys as done in present plugin.
-#@-node:ekr.20050921094025.4:Options
 #@+node:ekr.20050921094025.5:Test
 Test all commands and make unit tests.
 #@nonl
@@ -16352,6 +16336,300 @@ def itemsMatchingPrefixInList (s,aList):
 #@nonl
 #@-node:ekr.20050920084036.4:g.longestCommonPrefix & g.itemsMatchingPrefixInList
 #@-node:ekr.20050920084720.1:(Move temacs/usetemacs code into Leo's core)
+#@+node:ekr.20050929075341:Added option for selected body text
+#@+node:ekr.20050929075920:Request
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3355954
+By: nobody
+
+Well, I came to the conclusion that there is no setting for body selection colors.
+Please consider adding such settings in the future.
+
+I changed it the source (Code-->Gui Tkinter classes-->@thin
+leoTkinterFrame.py-->class leoTkinterBody--> Birth & death-->tkBody.createControl).
+CadetBlue3 is more cheerful than Gray80, and syntax coloring still looks good.
+#@-node:ekr.20050929075920:Request
+#@+node:ekr.20031218072017.3998:tkBody.createControl
+def createControl (self,frame,parentFrame):
+    
+    c = self.c
+
+    wrap = c.config.getBool('body_pane_wraps')
+    wrap = g.choose(wrap,"word","none")
+    
+    # Setgrid=1 cause severe problems with the font panel.
+    body = Tk.Text(parentFrame,name='body',
+        bd=2,bg="white",relief="flat",setgrid=0,wrap=wrap)
+    
+    bodyBar = Tk.Scrollbar(parentFrame,name='bodyBar')
+    frame.bodyBar = self.bodyBar = bodyBar
+    body['yscrollcommand'] = bodyBar.set
+    bodyBar['command'] = body.yview
+    bodyBar.pack(side="right", fill="y")
+    
+    # Always create the horizontal bar.
+    frame.bodyXBar = self.bodyXBar = bodyXBar = Tk.Scrollbar(
+        parentFrame,name='bodyXBar',orient="horizontal")
+    body['xscrollcommand'] = bodyXBar.set
+    bodyXBar['command'] = body.xview
+    self.bodyXbar = frame.bodyXBar = bodyXBar
+    
+    if wrap == "none":
+        # g.trace(parentFrame)
+        bodyXBar.pack(side="bottom", fill="x")
+        
+    body.pack(expand=1,fill="both")
+
+    self.wrapState = wrap
+
+    if 0: # Causes the cursor not to blink.
+        body.configure(insertofftime=0)
+        
+    return body
+#@nonl
+#@-node:ekr.20031218072017.3998:tkBody.createControl
+#@+node:ekr.20041217135735.1:tkBody.setColorFromConfig
+def setColorFromConfig (self):
+    
+    c = self.c ; body = self.bodyCtrl
+        
+    bg = c.config.getColor("body_text_background_color") or 'white'
+    try: body.configure(bg=bg)
+    except:
+        g.es("exception setting body text background color")
+        g.es_exception()
+    
+    fg = c.config.getColor("body_text_foreground_color") or 'black'
+    try: body.configure(fg=fg)
+    except:
+        g.es("exception setting body textforeground color")
+        g.es_exception()
+
+    bg = c.config.getColor("body_insertion_cursor_color")
+    if bg:
+        try: body.configure(insertbackground=bg)
+        except:
+            g.es("exception setting body pane cursor color")
+            g.es_exception()
+            
+    sel_bg = c.config.getColor('body_text_selection_color') or 'Gray80'
+    try: body.configure(selectbackground=sel_bg)
+    except Exception:
+        g.es("exception setting body pane text selection color")
+        g.es_exception()
+   
+    if sys.platform != "win32": # Maybe a Windows bug.
+        fg = c.config.getColor("body_cursor_foreground_color")
+        bg = c.config.getColor("body_cursor_background_color")
+        if fg and bg:
+            cursor="xterm" + " " + fg + " " + bg
+            try: body.configure(cursor=cursor)
+            except:
+                import traceback ; traceback.print_exc()
+#@nonl
+#@-node:ekr.20041217135735.1:tkBody.setColorFromConfig
+#@-node:ekr.20050929075341:Added option for selected body text
+#@+node:ekr.20050928112629:Fixed bug in Leo's read logic
+#@+node:ekr.20050929082939:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3351985
+By: leouserz
+
+I have ran into my first case of actual brittleness in regular leos read code.
+
+If I output via dom a tnode that has no text it does it like so:
+<t/>
+
+leo yacks on the fact that it was expecting:
+<t></t>
+#@nonl
+#@-node:ekr.20050929082939:Report
+#@+node:ekr.20031218072017.1566:getVnode changed for 4.2 & 4.4)
+def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
+
+    v = None
+    setCurrent = setExpanded = setMarked = setOrphan = setTop = False
+    tref = -1 ; headline = '' ; tnodeList = None ; attrDict = {}
+
+    # we have already matched <v.
+    
+    # New in Leo 4.4: support collapsed tnodes.
+    if self.matchTag('/>'): # A collapsed vnode.
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        return v
+    
+    while 1:
+        if self.matchTag("a=\""):
+            << Handle vnode attribute bits >>
+        elif self.matchTag("t="):
+            # New for 4.1.  Read either "Tnnn" or "gnx".
+            tref = index = self.getDqString()
+            if self.usingClipboard:
+                << raise invalidPaste if the tnode is in self.forbiddenTnodes >>
+        elif self.matchTag("vtag=\"V"):
+            self.getIndex() ; self.getDquote() # ignored
+        elif self.matchTag("tnodeList="):
+            s = self.getDqString()
+            tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag("descendentTnodeUnknownAttributes="):
+            # New for 4.2, deprecated for 4.3?
+            s = self.getDqString()
+            theDict = self.getDescendentUnknownAttributes(s)
+            if theDict:
+                self.descendentUnknownAttributesDictList.append(theDict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2.
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
+        elif self.matchTag(">"):
+            break
+        else: # New for 4.0: allow unknown attributes.
+            # New in 4.2: allow pickle'd and hexlify'ed values.
+            attr,val = self.getUa("vnode")
+            if attr: attrDict[attr] = val
+    # Headlines are optional.
+    if self.matchTag("<vh>"):
+        headline = self.getEscapedString() ; self.getTag("</vh>")
+    # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    if skip:
+        v = self.getExistingVnode(tref,headline)
+        if v: # Bug fix: 4/18/05: The headline may change during paste as clone.
+            v.initHeadString(headline,encoding=self.leo_file_encoding)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
+        if tnodeList:
+            v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
+            
+    << Set the remembered status bits >>
+
+    # Recursively create all nested nodes.
+    parent = v ; back = None
+    while self.matchTag("<v"):
+        append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
+        append2 = appendToTopStack and len(self.topVnodeStack) == 0
+        back = self.getVnode(parent,back,skip,
+            appendToCurrentStack=append1,appendToTopStack=append2)
+            
+    << Append to current or top stack >>
+
+    # End this vnode.
+    self.getTag("</v>")
+    return v
+#@nonl
+#@+node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+# The a=" has already been seen.
+while 1:
+    if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
+    elif self.matchChar('D'): pass # Not used.
+    elif self.matchChar('E'): setExpanded = True
+    elif self.matchChar('M'): setMarked = True
+    elif self.matchChar('O'): setOrphan = True
+    elif self.matchChar('T'): setTop = True
+    elif self.matchChar('V'): setCurrent = True
+    else: break
+
+self.getDquote()
+#@nonl
+#@-node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+#@+node:ekr.20041023110111:<< raise invalidPaste if the tnode is in self.forbiddenTnodes >>
+# Bug fix in 4.3 a1: make sure we have valid paste.
+theId,time,n = g.app.nodeIndices.scanGnx(index,0)
+if not time and index[0] == "T":
+    index = index[1:]
+    
+index = self.canonicalTnodeIndex(index)
+t = self.tnodesDict.get(index)
+
+if t in self.forbiddenTnodes:
+    # g.trace(t)
+    raise invalidPaste
+#@nonl
+#@-node:ekr.20041023110111:<< raise invalidPaste if the tnode is in self.forbiddenTnodes >>
+#@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+if setCurrent:
+    self.currentVnodeStack = [v]
+
+if setTop:
+    self.topVnodeStack = [v]
+    
+if setExpanded:
+    v.initExpandedBit()
+    
+if setMarked:
+    v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
+
+if setOrphan:
+    v.setOrphan()
+#@nonl
+#@-node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+#@+node:ekr.20040326055828:<< Append to current or top stack >>
+if not setCurrent and len(self.currentVnodeStack) > 0 and appendToCurrentStack:
+    #g.trace("append current",v)
+    self.currentVnodeStack.append(v)
+    
+if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
+    #g.trace("append top",v)
+    self.topVnodeStack.append(v)
+#@nonl
+#@-node:ekr.20040326055828:<< Append to current or top stack >>
+#@-node:ekr.20031218072017.1566:getVnode changed for 4.2 & 4.4)
+#@+node:ekr.20031218072017.1561:getTnode (changed for 4.4)
+def getTnode (self):
+
+    # we have already matched <t.
+    index = -1 ; attrDict = {}
+
+    # New in Leo 4.4: support collapsed tnodes.
+    if self.matchTag('/>'): # A collapsed tnode.
+        return
+
+    # Attributes may appear in any order.
+    while 1:
+        if self.matchTag("tx="):
+            # New for 4.1.  Read either "Tnnn" or "gnx".
+            index = self.getDqString()
+        elif self.matchTag("rtf=\"1\""): pass # ignored
+        elif self.matchTag("rtf=\"0\""): pass # ignored
+        elif self.matchTag(">"):         break
+        else: # New for 4.0: allow unknown attributes.
+            # New in 4.2: allow pickle'd and hexlify'ed values.
+            attr,val = self.getUa("tnode")
+            if attr: attrDict[attr] = val
+            
+    # index might be Tnnn, nnn, or gnx.
+    theId,time,n = g.app.nodeIndices.scanGnx(index,0)
+    if time == None: # A pre-4.1 file index.
+        if index[0] == "T":
+            index = index[1:]
+
+    index = self.canonicalTnodeIndex(index)
+    t = self.tnodesDict.get(index)
+    << handle unknown attributes >>
+    if t:
+        s = self.getEscapedString()
+        t.setTnodeText(s,encoding=self.leo_file_encoding)
+    else:
+        g.es("no tnode with index: %s.  The text will be discarded" % str(index))
+    self.getTag("</t>")
+#@nonl
+#@+node:ekr.20031218072017.1564:<< handle unknown attributes >>
+keys = attrDict.keys()
+if keys:
+    t.unknownAttributes = attrDict
+    if 0: # For debugging.
+        s = "unknown attributes for tnode"
+        g.es_print(s, color = "blue")
+        for key in keys:
+            s = "%s = %s" % (key,attrDict.get(key))
+            g.es_print(s)
+#@nonl
+#@-node:ekr.20031218072017.1564:<< handle unknown attributes >>
+#@-node:ekr.20031218072017.1561:getTnode (changed for 4.4)
+#@-node:ekr.20050928112629:Fixed bug in Leo's read logic
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl
