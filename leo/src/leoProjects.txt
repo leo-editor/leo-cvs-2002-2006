@@ -38,492 +38,6 @@ if 0: # Set to 1 for lint-like testing.
         print ; print 'Can not import pychecker' ; print
 #@nonl
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
-#@+node:ekr.20031218072017.1319:(Key handlers)
-@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
-#@+node:ekr.20031218072017.1320:body key handlers
-@ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
-
-1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if so.  This is the clean and safe way.
-
-2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
-@c
-
-@others
-#@nonl
-#@+node:ekr.20031218072017.1321:idle_body_key & helpers
-def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
-    
-    """Update the body pane at idle time."""
-    
-    __pychecker__ = 'maxlines=500'
-
-    c = self.c
-    if not c: return "break"
-    if not p: return "break"
-    if not c.isCurrentPosition(p): return "break"
-    # g.trace(ch,ord(ch))
-
-    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
-        return "break" # The hook claims to have handled the event.
-    body = p.bodyString()
-    if not newSel:
-        newSel = c.frame.body.getTextSelection()
-    if oldText != None:
-        s = oldText
-    else:
-        s = c.frame.body.getAllText()
-    << return if nothing has changed >>
-    << set removeTrailing >>
-    if ch in ('\t','\n','\r',chr(8)):
-        << handle special characters >>
-    << set s to widget text, removing trailing newlines if necessary >>
-    if undoType:
-        if not oldText: oldText = body
-        newText = s
-        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
-    p.v.setTnodeText(s)
-    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
-    << recolor the body >>
-    if not c.changed:
-        c.setChanged(True)
-    << redraw the screen if necessary >>
-    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
-    return "break"
-#@nonl
-#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
-# Make sure we handle delete key properly.
-if ch not in ('\n','\r',chr(8)):
-
-    if s == body:
-        return "break"
-
-    # Do nothing for control characters.
-    if (ch == None or len(ch) == 0) and body == s[:-1]:
-        return "break"
-#@nonl
-#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
-#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
-@ Tk will add a newline only if:
-1. A real change has been made to the Tk.Text widget, and
-2. the change did _not_ result in the widget already containing a newline.
-
-It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
-@c
-new = s ; old = body
-
-if len(new) == 0 or new[-1] != '\n':
-    # There is no newline to remove.  Probably will never happen.
-    removeTrailing = False
-elif len(old) == 0:
-    # Ambigous case.  Formerly always returned False.
-    if new == "\n\n":
-        removeTrailing = True # Handle a very strange special case.
-    else:
-        removeTrailing = ch not in ('\r','\n')
-elif old == new[:-1]:
-    # A single trailing character has been added.
-    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
-else:
-    # The text didn't have a newline, and now it does.
-    # Moveover, some other change has been made to the text,
-    # So at worst we have misrepresented the user's intentions slightly.
-    removeTrailing = True
-
-if 0:
-    print removeTrailing
-    print repr(ch)
-    print repr(oldText)
-    print repr(old)
-    print repr(new)
-#@nonl
-#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
-#@+node:ekr.20050526080309:<< handle special characters >>
-d = g.scanDirectives(c,p) # Support @tab_width directive properly.
-tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
-
-if ch in ('\n','\r'):
-    # Do nothing if we are in @nocolor mode or if we are executing a Change command.
-    if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
-        removeTrailing = self.doAutoIndent(p,removeTrailing,tab_width,undoType)
-
-elif ch == '\t' and tab_width < 0:
-    # Do nothing if we are executing a Change command.
-    if undoType != "Change":
-        self.convertBlanksToTabs(tab_width)
-
-elif ch in (chr(8)) and tab_width < 0:
-    << handle backspace with negative tab_width >>
-#@nonl
-#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
-# Get the preceeding characters.
-prev   =c.frame.bodyCtrl.get("insert linestart","insert")
-allPrev=c.frame.bodyCtrl.get("1.0","insert")
-n = len(allPrev)
-try:
-    oldAllPrev = body[:n]
-    assert(allPrev==oldAllPrev)
-    deletedChar = body[n:n+1]
-except (IndexError,AssertionError):
-    deletedChar = None
-
-if deletedChar in (u' ',' '):
-    n = len(prev) ; w = abs(tab_width)
-    n2 = n % w # Delete up to n2 - 1 spaces.
-    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
-        count = 0
-        while n2 > 0:
-            n2 -= 1
-            ch = prev[n-count-1]
-            # g.trace(count,repr(ch))
-            if ch in (u' ',' '): count += 1
-            else: break
-        # g.trace(count,(n%w))
-        if count > 0:
-            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
-            newSel = c.frame.body.getTextSelection() # Fixes crasher in undo logic.
-#@nonl
-#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
-#@-node:ekr.20050526080309:<< handle special characters >>
-#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
-s = c.frame.body.getAllText()
-if len(s) > 0 and s[-1] == '\n' and removeTrailing:
-    s = s[:-1]
-    
-# Major change: 6/12/04
-if s == body:
-    # print "no real change"
-    return "break"
-#@nonl
-#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
-#@+node:ekr.20031218072017.1327:<< recolor the body >>
-self.frame.scanForTabWidth(p)
-
-incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
-self.frame.body.recolor_now(p,incremental=incremental)
-
-self.forceFullRecolorFlag = False
-#@nonl
-#@-node:ekr.20031218072017.1327:<< recolor the body >>
-#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
-redraw_flag = False
-c.beginUpdate()
-try:
-    # Update dirty bits.
-    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-        redraw_flag = True
-    # Update icons.
-    val = p.computeIcon()
-    # During unit tests the node may not have been drawn,
-    # So p.v.iconVal may not exist yet.
-    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-        p.v.iconVal = val
-        redraw_flag = True
-finally:
-    c.endUpdate(redraw_flag) # redraw only if necessary
-#@nonl
-#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
-#@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
-def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
-    
-    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
-    
-    c = self.c
-    # Get the previous line.
-    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-    # Add the leading whitespace to the present line.
-    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
-    if s and len(s) > 0 and s[-1]==':':
-        # For Python: increase auto-indent after colons.
-        if self.colorizer.scanColorDirectives(p) == "python":
-            width += abs(tab_width)
-    if c.config.getBool("smart_auto_indent"):
-        # Added Nov 18 by David McNab, david@rebirthing.co.nz
-        # Determine if prev line has unclosed parens/brackets/braces
-        brackets = [width] ; tabex = 0
-        for i in range(0, len(s)):
-            if s[i] == '\t':
-                tabex += tab_width - 1
-            if s[i] in '([{':
-                brackets.append(i+tabex + 1)
-            elif s[i] in '}])' and len(brackets) > 1:
-                brackets.pop()
-        width = brackets.pop()
-        # end patch by David McNab
-    ws = g.computeLeadingWhitespace (width,tab_width)
-    if ws and len(ws) > 0:
-        c.frame.bodyCtrl.insert("insert", ws)
-        removeTrailing = False
-            
-    return removeTrailing
-#@nonl
-#@-node:ekr.20031218072017.1324:doAutoIndent (David McNab)
-#@+node:ekr.20031218072017.1325:convertBlanksToTabs
-def convertBlanksToTabs (self,tab_width):
-
-    c = self.c
-    
-    # Get the characters preceeding the tab.
-    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-    
-    if 1:
-        << convert tab no matter where it is >>
-    else:
-        << convert only leading tabs >>
-#@nonl
-#@+node:ekr.20050526081024:<< convert tab no matter where it is >>
-w = g.computeWidth(prev,tab_width)
-w2 = (abs(tab_width) - (w % abs(tab_width)))
-# g.trace("prev w:",w,"prev chars:",prev)
-c.frame.bodyCtrl.delete("insert -1c")
-c.frame.bodyCtrl.insert("insert",' ' * w2)
-#@nonl
-#@-node:ekr.20050526081024:<< convert tab no matter where it is >>
-#@+node:ekr.20050526081024.1:<< convert only leading tabs >>
-# Get the characters preceeding the tab.
-prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-
-# Do nothing if there are non-whitespace in prev:
-all_ws = True
-for ch in prev:
-    if ch != ' ' and ch != '\t':
-        all_ws = False
-if all_ws:
-    w = g.computeWidth(prev,tab_width)
-    w2 = (abs(tab_width) - (w % abs(tab_width)))
-    # g.trace("prev w:",w,"prev chars:",prev)
-    c.frame.bodyCtrl.delete("insert -1c")
-    c.frame.bodyCtrl.insert("insert",' ' * w2)
-#@nonl
-#@-node:ekr.20050526081024.1:<< convert only leading tabs >>
-#@-node:ekr.20031218072017.1325:convertBlanksToTabs
-#@-node:ekr.20031218072017.1321:idle_body_key & helpers
-#@+node:ekr.20031218072017.1329:onBodyChanged (tkTree)
-# Called by command handlers that have already changed the text.
-
-def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
-    
-    """Handle a change to the body pane."""
-    
-    c = self.c
-    if not p:
-        p = c.currentPosition()
-
-    if not oldSel:
-        oldSel = c.frame.body.getTextSelection()
-
-    self.c.frame.body.colorizer.interrupt()
-    self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
-#@nonl
-#@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
-#@+node:ekr.20031218072017.1330:onBodyKey
-def onBodyKey (self,event):
-    
-    """Handle any key press event in the body pane."""
-
-    c = self.c ; ch = event.char
-    
-    # Support for key-handler state.
-    if (
-        c.keyHandler and c.miniBufferWidget and 
-        event.char.isspace() and
-        c.keyHandler.inState()
-    ):
-        return None # Must be None, not 'break'
-    
-    # This translation is needed on MacOS.
-    if ch == '':
-        d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
-        ch = d.get(event.keysym,'')
-
-    oldSel = c.frame.body.getTextSelection()
-    
-    p = c.currentPosition()
-
-    if 0: # won't work when menu keys are bound.
-        self.handleStatusLineKey(event)
-        
-    # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
-    self.c.frame.body.colorizer.interrupt()
-    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
-#@nonl
-#@+node:ekr.20040105223536:handleStatusLineKey
-def handleStatusLineKey (self,event):
-    
-    c = self.c ; frame = c.frame
-    ch = event.char ; keysym = event.keysym
-    keycode = event.keycode ; state = event.state
-
-    if 1: # ch and len(ch)>0:
-        << trace the key event >>
-
-    try:
-        status = self.keyStatus
-    except:
-        status = [] ; frame.clearStatusLine()
-    
-    for sym,name in (
-        ("Alt_L","Alt"),("Alt_R","Alt"),
-        ("Control_L","Control"),("Control_R","Control"),
-        ("Escape","Esc"),
-        ("Shift_L","Shift"), ("Shift_R","Shift")):
-        if keysym == sym:
-            if name not in status:
-                status.append(name)
-                frame.putStatusLine(name + ' ')
-            break
-    else:
-        status = [] ; frame.clearStatusLine()
-
-    self.keyStatus = status
-#@nonl
-#@+node:ekr.20040105223536.1:<< trace the key event >>
-try:    self.keyCount += 1
-except: self.keyCount  = 1
-
-printable = g.choose(ch == keysym and state < 4,"printable","")
-
-print "%4d %s %d %s %x %s" % (
-    self.keyCount,repr(ch),keycode,keysym,state,printable)
-#@nonl
-#@-node:ekr.20040105223536.1:<< trace the key event >>
-#@-node:ekr.20040105223536:handleStatusLineKey
-#@-node:ekr.20031218072017.1330:onBodyKey
-#@+node:ekr.20031218072017.1331:onBodyWillChange
-# Called by command handlers that change the text just before idle time.
-
-def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
-    
-    """Queue the body changed idle handler."""
-    
-    c = self.c
-
-    if not oldSel:
-        oldSel = c.frame.body.getTextSelection()
-
-    if not p:
-        p = c.currentPosition()
-
-    self.c.frame.body.colorizer.interrupt()
-    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
-#@nonl
-#@-node:ekr.20031218072017.1331:onBodyWillChange
-#@-node:ekr.20031218072017.1320:body key handlers
-#@+node:ekr.20040803072955.91:idle_head_key
-def idle_head_key (self,p,ch=None):
-    
-    """Update headline text at idle time."""
-    
-    c = self.c ; u = c.undoer
-
-    if not p or not p.isCurrentPosition():
-        return "break"
-
-    edit_text = self.edit_text(p)
-    index = edit_text.index("insert")
-
-    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
-        return "break" # The hook claims to have handled the event.
-        
-    << set head to vnode text >>
-    done = ch in ('\r','\n')
-    if done:
-        << set the widget text to head >>
-    << set s to the widget text >>
-    changed = s != head
-    if changed:
-        undoData = u.beforeChangeNodeContents(p)
-        << update p >>
-        u.afterChangeNodeContents(p,'Change Headline',undoData,dirtyVnodeList=dirtyVnodeList)
-    if done or changed:
-        << reconfigure p and all nodes joined to p >>
-        << update the screen >>
-
-    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
-    return "break"
-#@nonl
-#@+node:ekr.20040803072955.92:<< set head to vnode text >>
-head = p.headString()
-if head == None:
-    head = u""
-head = g.toUnicode(head,"utf-8")
-#@nonl
-#@-node:ekr.20040803072955.92:<< set head to vnode text >>
-#@+node:ekr.20040803072955.93:<< set the widget text to head >>
-self.setText(edit_text,head,tag="idle_head_key")
-edit_text.mark_set("insert",index)
-#@nonl
-#@-node:ekr.20040803072955.93:<< set the widget text to head >>
-#@+node:ekr.20040803072955.94:<< set s to the widget text >>
-s = edit_text.get("1.0","end")
-
-# Don't truncate if the user is hitting return.
-# That should just end editing.
-if 1:
-    # Truncate headline text to workaround Tk problems...
-    # Another kludge: remove one or two trailing newlines before warning of truncation.
-    if s and s[-1] == '\n': s = s[:-1]
-    if s and s[-1] == '\n': s = s[:-1]
-    i = s.find('\n')
-    if i > -1:
-        # g.trace(i,len(s),repr(s))
-        g.es("Truncating headline to one line",color="blue")
-        s = s[:i]
-    limit = 1000
-    if len(s) > limit:
-        g.es("Truncating headline to %d characters" % (limit),color="blue")
-        s = s[:limit]
-
-s = g.toUnicode(s,g.app.tkEncoding)
-
-if not s:
-    s = u""
-    
-if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
-    s = s.replace('\n','')
-    s = s.replace('\r','')
-#@nonl
-#@-node:ekr.20040803072955.94:<< set s to the widget text >>
-#@+node:ekr.20040803072955.95:<< update p >>
-c.beginUpdate()
-try: # In update...
-    # Update changed bit.
-    if not c.changed: c.setChanged(True)
-    # We must call p.setDirty even if p is dirty!
-    dirtyVnodeList = p.setDirty()
-    # Update p.
-    p.initHeadString(s)
-    self.setText(edit_text,s,tag="idle_head_key2")
-    edit_text.mark_set("insert",index)
-finally:
-    c.endUpdate(False) # do not redraw now.
-#@nonl
-#@-node:ekr.20040803072955.95:<< update p >>
-#@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
-# Reconfigure p's headline.
-if done:
-    self.setDisabledLabelState(p)
-
-edit_text.configure(width=self.headWidth(p))
-#@nonl
-#@-node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
-#@+node:ekr.20040803072955.97:<< update the screen >>
-if done:
-    # g.trace("done")
-    c.beginUpdate()
-    try:
-        self.endEditLabel()
-    finally:
-        c.endUpdate()
-
-elif changed:
-    # g.trace("changed")
-    # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
-    # Redrawing the whole screen now messes up the cursor in the headline.
-    self.drawIcon(p) # just redraw the icon.
-#@nonl
-#@-node:ekr.20040803072955.97:<< update the screen >>
-#@-node:ekr.20040803072955.91:idle_head_key
-#@-node:ekr.20031218072017.1319:(Key handlers)
 #@+node:ekr.20031218072017.1341:(scanAllDirectives, scanDirectives, related utils)
 @ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
 #@nonl
@@ -3985,7 +3499,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not c: return "break"
     if not p: return "break"
     if not c.isCurrentPosition(p): return "break"
-    # g.trace(ch,ord(ch))
+    # g.trace(repr(ch))
 
     if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -4115,7 +3629,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    # print "no real change"
+    # g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -4154,6 +3668,7 @@ def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
     c = self.c
     # Get the previous line.
     s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # g.trace(repr(s))
     # Add the leading whitespace to the present line.
     junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
     if s and len(s) > 0 and s[-1]==':':
@@ -6303,7 +5818,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not c: return "break"
     if not p: return "break"
     if not c.isCurrentPosition(p): return "break"
-    # g.trace(ch,ord(ch))
+    # g.trace(repr(ch))
 
     if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -6433,7 +5948,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    # print "no real change"
+    # g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -6472,6 +5987,7 @@ def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
     c = self.c
     # Get the previous line.
     s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # g.trace(repr(s))
     # Add the leading whitespace to the present line.
     junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
     if s and len(s) > 0 and s[-1]==':':
@@ -6838,7 +6354,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not c: return "break"
     if not p: return "break"
     if not c.isCurrentPosition(p): return "break"
-    # g.trace(ch,ord(ch))
+    # g.trace(repr(ch))
 
     if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -6968,7 +6484,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    # print "no real change"
+    # g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -7007,6 +6523,7 @@ def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
     c = self.c
     # Get the previous line.
     s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # g.trace(repr(s))
     # Add the leading whitespace to the present line.
     junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
     if s and len(s) > 0 and s[-1]==':':
@@ -7098,15 +6615,9 @@ def onBodyKey (self,event):
     """Handle any key press event in the body pane."""
 
     c = self.c ; ch = event.char
-    
-    # Support for key-handler state.
-    if (
-        c.keyHandler and c.miniBufferWidget and 
-        event.char.isspace() and
-        c.keyHandler.inState()
-    ):
-        return None # Must be None, not 'break'
-    
+
+    # g.trace(repr(ch))
+
     # This translation is needed on MacOS.
     if ch == '':
         d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
@@ -7115,9 +6626,6 @@ def onBodyKey (self,event):
     oldSel = c.frame.body.getTextSelection()
     
     p = c.currentPosition()
-
-    if 0: # won't work when menu keys are bound.
-        self.handleStatusLineKey(event)
         
     # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
     self.c.frame.body.colorizer.interrupt()
@@ -10994,7 +10502,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not c: return "break"
     if not p: return "break"
     if not c.isCurrentPosition(p): return "break"
-    # g.trace(ch,ord(ch))
+    # g.trace(repr(ch))
 
     if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -11124,7 +10632,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    # print "no real change"
+    # g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -11163,6 +10671,7 @@ def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
     c = self.c
     # Get the previous line.
     s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # g.trace(repr(s))
     # Add the leading whitespace to the present line.
     junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
     if s and len(s) > 0 and s[-1]==':':
@@ -11254,15 +10763,9 @@ def onBodyKey (self,event):
     """Handle any key press event in the body pane."""
 
     c = self.c ; ch = event.char
-    
-    # Support for key-handler state.
-    if (
-        c.keyHandler and c.miniBufferWidget and 
-        event.char.isspace() and
-        c.keyHandler.inState()
-    ):
-        return None # Must be None, not 'break'
-    
+
+    # g.trace(repr(ch))
+
     # This translation is needed on MacOS.
     if ch == '':
         d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
@@ -11271,9 +10774,6 @@ def onBodyKey (self,event):
     oldSel = c.frame.body.getTextSelection()
     
     p = c.currentPosition()
-
-    if 0: # won't work when menu keys are bound.
-        self.handleStatusLineKey(event)
         
     # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
     self.c.frame.body.colorizer.interrupt()
@@ -11786,4556 +11286,6 @@ def skip_ws_and_nl(s,i):
 #@-node:ekr.20031218072017.3173:Scanners: no error messages
 #@-node:ekr.20050710102922.1:(Using Python indices instead of Tk indices)
 #@+node:ekr.20050924073836:4.4 projects
-#@+node:ekr.20050920084720.1:(Move temacs/usetemacs code into Leo's core)
-#@+node:ekr.20050921094025:To do (emacs)
-@nocolor
-
-- Eliminate stateCommands dict.
-
-- Make the name of each command correspond to its method.
-
-* Remove lambda's and other dispatching weirdnesses.
-
-* Allow the user to specify alternatives for all keys.
-    - User-specified keys for alt-x, control-c, etc.
-    - Make sure the code can support vim as well as emacs.
-
-? Remove utTailEnd (defined in keyHandler finishCreate).
-
-* Redo how shortcuts get bound.
-    - Ignore shortcut entry in menu tables.
-    - Create shortcut dict:  keys are emacs-command names, values are shortcut.
-    - Define defaultEmacsBindings,defaultVimBindings,defaultLeoBindings
-    - Allow any shortcut to be overridden using leoSettings.leo.
-
-* Bind emacs keystrokes in Leo's core.
-    - Use masterCommand method for all keystrokes.
-    - ?? For all panes ??
-
-* What happens if useMiniBuffer option is False?
-    - Disable commands that depend on them?
-#@nonl
-#@+node:ekr.20050925105522:Improve commands
-- Auto-indent conflicts with old auto indent.
-
-- Tab completion for file commands.
-
-- Use getArg for most commands.
-
-- word/re search code must be improved.
-
-- What do universal dispatch commands do?
-#@nonl
-#@-node:ekr.20050925105522:Improve commands
-#@+node:ekr.20050928144501:Before next release
-* Use leoSettings to set all new bindings.
-
-- Don't bind menu items: let the key handler dispatch the menu commands.
-
-- Define all present xemacs names in Leo.
-
-- Complete menu work.
-#@nonl
-#@-node:ekr.20050928144501:Before next release
-#@+node:ekr.20050928144501.1:Before 4.4 final
-** Mouseless Leo: control all Leo commands & widgets using only key commands.
-
-- Add vim, emacs, leo commands.
-
-- Emacs-style help: appropos, etc.
-
-- Implement all essential emacs commands:  cursor commands, find commands, etc.
-
-- Extend emacs commands to handler Leo improvements.
-
-- Integrate Leo commands with emacs commands.
-
-- Allow future improvements without changing user options greatly.
-    - Allow for customizeEmacs plugin.
-#@nonl
-#@-node:ekr.20050928144501.1:Before 4.4 final
-#@+node:ekr.20050921094025.3:Minor
-- convertCommandName utility converts to and from emacs-style (with '-' chars) to
-      python/leo style (with capitalization).
-
-- Create printLongCommandName command: prints long name of any keystroke command.
-#@nonl
-#@-node:ekr.20050921094025.3:Minor
-#@+node:ekr.20050921094025.5:Test
-Test all commands and make unit tests.
-#@nonl
-#@-node:ekr.20050921094025.5:Test
-#@-node:ekr.20050921094025:To do (emacs)
-#@+node:ekr.20050921094025.6:What I did
-@nocolor
-#@nonl
-#@+node:ekr.20050921094025.7:Rewrote buildBufferList
-There may be bugs here.  The old code had definite strange aspects to it.
-#@nonl
-#@-node:ekr.20050921094025.7:Rewrote buildBufferList
-#@+node:ekr.20050921094025.8:Removed Emacs_instances class var
-createBindings now sets c.emacs, so modifyOnBodyKey just uses c.emacs.
-#@nonl
-#@-node:ekr.20050921094025.8:Removed Emacs_instances class var
-#@+node:ekr.20050921094025.9:Added c ivar to Emacs class
-This is an important addition:  it guarantees that the proper commander is always used.
-#@nonl
-#@-node:ekr.20050921094025.9:Added c ivar to Emacs class
-#@+node:ekr.20050921094025.10:Removed labels class var
-This is not needed.  createBindings is called at most once per commander.
-#@nonl
-#@-node:ekr.20050921094025.10:Removed labels class var
-#@+node:ekr.20050921094025.11:Added baseCommands class
-Subclasses of baseCommands class should implement getPublicCommands.
-
-This returns a dict whose keys are emacs command names and whose values are bound methods.
-#@nonl
-#@-node:ekr.20050921094025.11:Added baseCommands class
-#@+node:ekr.20050921094025.12:The big collapse (of complexity)
-The miniBufferClass is the one half of the great divide.  The commands classes are the other.
-
-- The commnds classes do not understand the details of the miniBufferClass: it can be rearranged as needed.
-
-(done) Replace:
-    svar, label = self.getSvarLabel( event )
-by:
-    b = self.miniBuffer ; tbuffer = event.widget
-
-(done) self.setSvar(event,svar) -> b.update(event)
-(done) svar ->  b
-(done) label.configure(background='lightblue') --> b.setLabelBlue()
-(done) self.miniBuffer -> b
-(done) Replaced all delegators by b.methods.
-(done) Removed unused args from most methods.
-#@nonl
-#@-node:ekr.20050921094025.12:The big collapse (of complexity)
-#@+node:ekr.20050921094025.13:Improvements to commands
-- Improved feedback for interactive search.
-    - The minibuffer now says isearch:
-    - Added args to miniBuffer.set/get methods to protect/ignore initial prompt characters.
-
-- Backspacing when tab completion cuts back to last 'really' typed character.
-    - Further backspaces work as you would expect.
-#@nonl
-#@-node:ekr.20050921094025.13:Improvements to commands
-#@+node:ekr.20050921094025.14:Removed all globals
-- positions and tnodes globals are now ivars of bufferCommands class.
-#@nonl
-#@-node:ekr.20050921094025.14:Removed all globals
-#@+node:ekr.20050921094025.15:Fixed bug: newline was not setting body pane dirty
-The fix was to return return orig_OnBodyKey(self.c.frame.body,event) at end of masterCommand.
-#@nonl
-#@-node:ekr.20050921094025.15:Fixed bug: newline was not setting body pane dirty
-#@+node:ekr.20050921101706:Replaced 'M-x' prompt by 'full-command'
-#@-node:ekr.20050921101706:Replaced 'M-x' prompt by 'full-command'
-#@+node:ekr.20050921105623:Added useMiniBuffer and useEditorMenu @settings
-#@-node:ekr.20050921105623:Added useMiniBuffer and useEditorMenu @settings
-#@+node:ekr.20050921105623.1:Deleted coreEmacs plugin
-No longer needed.
-#@nonl
-#@-node:ekr.20050921105623.1:Deleted coreEmacs plugin
-#@+node:ekr.20050922080526:Fixed outline selection bug
-Thie problem was in the code at the end of keyHandler.finishCreate.
-
-The watchDelete hack was interfering with some kind of event.
-
-It was an ugly hack anyway ;-)
-#@nonl
-#@-node:ekr.20050922080526:Fixed outline selection bug
-#@+node:ekr.20050923143034:c.commandsDict now describes all commands
-- Keys are full Emacs command names, values are methods.
-#@nonl
-#@-node:ekr.20050923143034:c.commandsDict now describes all commands
-#@+node:ekr.20050923141539:Rewrote altX code
-- Eliminated iterator class.  (I now understand the code :-)
-- Automatically call b.clearState() and b.keyboardQuit() before dispatching commands.
-- Tab completion returns a non-trivial common prefix if it exists.  Further tabs cycle through possibilities.
-#@nonl
-#@-node:ekr.20050923141539:Rewrote altX code
-#@+node:ekr.20050923233827:Eliminated all helper classes and simplified the code.
-- Eliminated self.tbuffer
-
-- Removed all subclssses from keyHandlerClass.
-    - Replaced all references to keyHandler, miniBuffer, kstrokeManager, etc.
-    - All methods are now methods of the keyHandler class.
-
-- k denotes the keyHandler class everywhere.
-    - All commands classes define k ivar that refers to keyHandler.
-
-- Replaced tbuffer by w everywhere.
-
-The effect of these changes:
-    - There is never any confusion about how to access a keyHandler method: just use k.whatever.
-    - The init logic is simple and clean.
-    - The client code is visually much shorter and easier to understand.
-    - The keyHandler class is now simpler, though larger.
-    - There is no need for redirector methods.
-#@nonl
-#@-node:ekr.20050923233827:Eliminated all helper classes and simplified the code.
-#@+node:ekr.20050924073836.1:More simplifications
-- setEvent is only used in one commands class, so it was moved there.
-
-- setLabelBlue and setLabelGrey now can set the label text as well as color.
-  This is a nice simplification of the client code.
-
-- Changed k.get, k.set and k.update to k.getLabel, k.setLable and k.updateLabel.
-  This is an important clarification.
-
-- Used simplified state-handling scheme, under control of k.newState ivar.
-    - I now see that state-handling is actually fully encapsulated in the commands classes.
-    - In particular, masterCommand knows essentially nothing of states.
-    - Removed getStateCommands dicts.
-
-- Simplified stopControlX by defining leoEditCommands.initAllEditCommanders at the module level.
-    - This call theInstance.init() for all commands classes.
-      The default in the base class does nothing.
-#@nonl
-#@-node:ekr.20050924073836.1:More simplifications
-#@-node:ekr.20050921094025.6:What I did
-#@+node:ekr.20050921094025.254:All xemacs commands
-@killcolor
-#@+node:ekr.20050921094025.255:B
-Buffer-menu-1-window
-Buffer-menu-2-window
-Buffer-menu-backup-unmark
-Buffer-menu-delete
-Buffer-menu-delete-backwards
-Buffer-menu-execute
-Buffer-menu-igrep
-Buffer-menu-mark
-Buffer-menu-maybe-mouse-select
-Buffer-menu-mouse-select
-Buffer-menu-not-modified
-Buffer-menu-other-window
-Buffer-menu-popup-menu
-Buffer-menu-quit
-Buffer-menu-save
-Buffer-menu-select
-Buffer-menu-switch-other-window
-Buffer-menu-this-window
-Buffer-menu-toggle-read-only
-Buffer-menu-unmark
-Buffer-menu-visit-tags-table
-#@nonl
-#@-node:ekr.20050921094025.255:B
-#@+node:ekr.20050921094025.256:C, E, F, H
-Custom-buffer-done
-Custom-goto-parent
-Custom-make-dependencies
-Custom-mode-menu
-Custom-reset-current
-Custom-reset-saved
-Custom-reset-standard
-Custom-save
-Custom-set
-
-Electric-command-history-redo-expression
-
-Footnote-add-footnote
-
-Helper-describe-bindings
-Helper-help
-
-#@-node:ekr.20050921094025.256:C, E, F, H
-#@+node:ekr.20050921094025.257:I
-Info-elisp-ref
-Info-emacs-command
-Info-emacs-key
-Info-goto-emacs-command-node
-Info-goto-emacs-key-command-node
-Info-goto-node
-Info-query
-Info-search
-Info-speedbar-browser
-Info-split
-Info-tagify
-Info-validate
-Info-visit-file
-#@nonl
-#@-node:ekr.20050921094025.257:I
-#@+node:ekr.20050921094025.258:L, M, R, T, V
-LaTeX-install-toolbar
-LaTeX-mode
-
-Manual-nuke-nroff-bs
-
-Rd-mode
-
-TeX-auto-generate
-TeX-auto-generate-global
-TeX-insert-quote
-TeX-mode
-TeX-submit-bug-report
-
-View-process-status
-#@nonl
-#@-node:ekr.20050921094025.258:L, M, R, T, V
-#@+node:ekr.20050921094025.259:a append- appropos- auto-
-abbrev-mode
-abbrev-prefix-mark
-abort-recursive-edit
-about-xemacs
-activate-region
-ada-make-filename-from-adaname
-ada-mode
-add-change-log-entry
-add-change-log-entry-other-window
-add-global-abbrev
-add-log-convert
-add-mode-abbrev
-add-name-to-file
-advertised-switch-to-completions
-advertised-undo
-align
-align-current
-align-entire
-align-highlight-rule
-align-newline-and-indent
-align-regexp
-align-unhighlight-rule
-all-hail-emacs
-all-hail-xemacs
-ams-tex-mode
-ansi-color-for-comint-mode-on
-apache-mode
-append-next-kill
-append-to-buffer
-append-to-file
-append-to-register
-apply-macro-to-region-lines
-appt-add
-appt-delete
-apropos
-apropos-command
-apropos-documentation
-apropos-value
-apropos-zippy
-arp
-asm-mode
-assign-last-kbd-macro-to-key
-auto-compression-mode
-auto-fill-mode
-auto-insert
-auto-revert-mode
-auto-save-mode
-auto-show-make-point-visible
-auto-show-mode
-autoconf-mode
-awk-mode
-#@nonl
-#@-node:ekr.20050921094025.259:a append- appropos- auto-
-#@+node:ekr.20050921094025.260:b: backward- beginning- bookmark- br- browse- buffer- build- byte-
-back-to-indentation
-background
-backtrace
-backward-block-of-lines
-backward-char
-backward-char-command
-backward-delete-char
-backward-delete-char-untabify
-backward-kill-line
-backward-kill-paragraph
-backward-kill-sentence
-backward-kill-sexp
-backward-kill-word
-backward-list
-backward-or-forward-delete-char
-backward-or-forward-kill-sentence
-backward-or-forward-kill-sexp
-backward-or-forward-kill-word
-backward-other-window
-backward-page
-backward-paragraph
-backward-sentence
-backward-sexp
-backward-to-indentation
-backward-up-list
-backward-word
-balance-windows
-balloon-help-minor-mode
-balloon-help-mode
-base64-decode-region
-base64-encode-region
-basic-save-buffer
-bbdb
-bbdb-add-or-remove-mail-alias
-bbdb-apply-next-command-to-all-records
-bbdb-changed
-bbdb-company
-bbdb-complete-name
-bbdb-create
-bbdb-create-ftp-site
-bbdb-creation-newer
-bbdb-creation-no-change
-bbdb-creation-older
-bbdb-delete-current-field-or-record
-bbdb-delete-current-record
-bbdb-dial
-bbdb-display-all-records-completely
-bbdb-display-record-completely
-bbdb-edit-current-field
-bbdb-finger
-bbdb-fontify-buffer
-bbdb-force-record-create
-bbdb-ftp
-bbdb-help
-bbdb-info
-bbdb-insert-new-field
-bbdb-load-touchtones
-bbdb-menu
-bbdb-merge-file
-bbdb-name
-bbdb-net
-bbdb-notes
-bbdb-omit-record
-bbdb-print
-bbdb-record-edit-notes
-bbdb-record-edit-property
-bbdb-refile-record
-bbdb-send-mail
-bbdb-show-all-recipients
-bbdb-snarf
-bbdb-snarf-region
-bbdb-submit-bug-report
-bbdb-timestamp-newer
-bbdb-timestamp-older
-bbdb-toggle-all-records-display-layout
-bbdb-toggle-records-display-layout
-bbdb-transpose-fields
-bbdb-whois
-bbdb-www
-bbdb-www-grab-homepage
-bbdb-yank
-bbdb/gnus-annotate-sender
-bbdb/gnus-show-all-recipients
-bbdb/gnus-show-records
-bbdb/gnus-snarf-signature
-bbdb/mh-annotate-sender
-bbdb/mh-show-sender
-bbdb/rmail-annotate-sender
-bbdb/rmail-show-sender
-bbdb/vm-annotate-sender
-bbdb/vm-set-auto-folder-alist
-bbdb/vm-show-all-recipients
-bbdb/vm-show-records
-bbdb/vm-show-sender
-beginning-of-buffer
-beginning-of-buffer-other-window
-beginning-of-defun
-beginning-of-defun-raw
-beginning-of-line
-beginning-of-line-text
-bib-cite-minor-mode
-bib-mode
-bibtex-mode
-binary-overwrite-mode
-blackbox
-blink-cursor-mode
-blink-matching-open
-blink-paren
-bnf-mode
-bookmark-bmenu-list
-bookmark-delete
-bookmark-insert
-bookmark-insert-location
-bookmark-jump
-bookmark-load
-bookmark-locate
-bookmark-menu-delete
-bookmark-menu-insert
-bookmark-menu-jump
-bookmark-menu-locate
-bookmark-menu-rename
-bookmark-relocate
-bookmark-rename
-bookmark-save
-bookmark-set
-bookmark-write
-br-complete-symbol
-br-env-browse
-br-env-load
-br-three-button-mouse
-br-to-from-viewer
-br-two-button-mouse
-browse-url
-browse-url-at-mouse
-browse-url-at-point
-browse-url-cci
-browse-url-firefox
-browse-url-galeon
-browse-url-generic
-browse-url-gnome-moz
-browse-url-grail
-browse-url-iximosaic
-browse-url-kde
-browse-url-lynx-emacs
-browse-url-lynx-xterm
-browse-url-mail
-browse-url-mmm
-browse-url-mosaic
-browse-url-mozilla
-browse-url-netscape
-browse-url-of-buffer
-browse-url-of-dired-file
-browse-url-of-file
-browse-url-of-region
-browse-url-opera
-browse-url-w3
-browse-url-w3-gnudoit
-browse-url-w3m
-browse-url-w3m-gnudoit
-bsh-script-help
-buffer-disable-undo
-buffer-enable-undo
-buffer-flush-undo
-buffer-menu
-buffer-menu-other-window
-build
-build-report
-build-version
-bury-buffer
-byte-compile-and-load-file
-byte-compile-buffer
-byte-compile-file
-byte-force-recompile
-byte-recompile-directory
-byte-recompile-file
-#@nonl
-#@-node:ekr.20050921094025.260:b: backward- beginning- bookmark- br- browse- buffer- build- byte-
-#@+node:ekr.20050921094025.261:c: c calc-, call- capitalize- center- checkdoc- command- completion- count- customize- cvs-
-c++-browse
-c++-mode
-c-add-style
-c-comment-edit
-c-macro-expand
-c-mode
-c-set-offset
-c-set-style
-calc
-calc-dispatch
-calc-embedded
-calc-embedded-activate
-calc-grab-rectangle
-calc-grab-region
-calc-keypad
-calc-tutorial
-calendar
-call-last-kbd-macro
-call-tree
-caml-mode
-camldebug
-cancel-debug-on-entry
-canonically-space-region
-capitalize-region
-capitalize-region-as-title
-capitalize-region-or-word
-capitalize-word
-cd
-cde-start-drag
-cde-start-drag-region
-center-line
-center-paragraph
-center-region
-center-to-window-line
-change-log-merge
-change-log-mode
-change-log-redate
-check-ispell-version
-checkdoc
-checkdoc-continue
-checkdoc-current-buffer
-checkdoc-defun
-checkdoc-eval-current-buffer
-checkdoc-eval-defun
-checkdoc-interactive
-checkdoc-ispell
-checkdoc-ispell-comments
-checkdoc-ispell-continue
-checkdoc-ispell-current-buffer
-checkdoc-ispell-defun
-checkdoc-ispell-interactive
-checkdoc-ispell-message-interactive
-checkdoc-ispell-message-text
-checkdoc-ispell-start
-checkdoc-message-interactive
-checkdoc-message-text
-checkdoc-minor-mode
-checkdoc-rogue-spaces
-checkdoc-start
-choose-completion
-clear-profiling-info
-clear-rectangle
-clearcase-install
-clearcase-integrate
-clearcase-unintegrate
-clos-browse
-column-number-mode
-comint-dynamic-complete
-comint-mode
-comint-run
-command-apropos
-command-history-mode
-comment-region
-compare-windows
-compilation-minor-mode
-compilation-mode
-compilation-shell-minor-mode
-compile
-compile-defun
-complete
-completion-do-in-minibuffer
-completion-list-mode
-completion-list-mode-quit
-completion-switch-to-minibuffer
-compose-mail
-compose-mail-other-frame
-compose-mail-other-window
-consing-since-gc
-context-en-mode
-context-nl-mode
-conx
-conx-buffer
-conx-load
-conx-region
-copy-file
-copy-from-above-command
-copy-primary-selection
-copy-rectangle-to-register
-copy-region-as-kill
-copy-to-buffer
-copy-to-register
-count-lines-buffer
-count-lines-page
-count-lines-region
-count-matches
-count-words-buffer
-count-words-region
-cperl-mode
-cperl-perldoc
-cperl-perldoc-at-point
-css-mode
-ctypes-all-buffers
-ctypes-auto-parse-mode
-ctypes-buffer
-ctypes-define-type
-ctypes-define-type-in-mode
-ctypes-dir
-ctypes-file
-ctypes-read-file
-ctypes-tags
-customize
-customize-apropos
-customize-apropos-faces
-customize-apropos-groups
-customize-apropos-options
-customize-browse
-customize-changed-options
-customize-customized
-customize-face
-customize-face-other-window
-customize-group
-customize-group-other-window
-customize-option
-customize-option-other-window
-customize-other-window
-customize-save-customized
-customize-save-variable
-customize-saved
-customize-set-value
-customize-set-variable
-customize-variable
-customize-variable-other-window
-cvs-checkout
-cvs-examine
-cvs-log-mode
-cvs-quickdir
-cvs-status
-cvs-status-mode
-cvs-update
-#@nonl
-#@-node:ekr.20050921094025.261:c: c calc-, call- capitalize- center- checkdoc- command- completion- count- customize- cvs-
-#@+node:ekr.20050921094025.262:d dabbrev- define- delete- describe- dired- downcase-
-dabbrev-completion
-dabbrev-expand
-dbx
-debug
-debug-on-entry
-decipher
-decipher-mode
-decrease-left-margin
-decrease-right-margin
-define-abbrevs
-define-global-abbrev
-define-mail-alias
-define-mode-abbrev
-defining-kbd-macro
-delete-backward-char
-delete-blank-lines
-delete-char
-delete-completion-window
-delete-directory
-delete-file
-delete-frame
-delete-horizontal-space
-delete-indentation
-delete-matching-lines
-delete-non-matching-lines
-delete-other-frames
-delete-other-windows
-delete-primary-selection
-delete-rectangle
-delete-region
-delete-selection-mode
-delete-window
-delete-windows-on
-deprecated-help-command
-describe-beta
-describe-bindings
-describe-buffer-case-table
-describe-class
-describe-copying
-describe-current-display-table
-describe-distribution
-describe-function
-describe-function-arglist
-describe-function-at-point
-describe-generic
-describe-installation
-describe-key
-describe-key-briefly
-describe-last-error
-describe-method
-describe-mode
-describe-no-warranty
-describe-pointer
-describe-prefix-bindings
-describe-project
-describe-stroke
-describe-syntax
-describe-variable
-describe-variable-at-point
-desktop-entry-mode
-desktop-read
-diary
-diary-mail-entries
-dictionary
-dictionary-lookup-definition
-dictionary-match-words
-dictionary-mouse-popup-matching-words
-dictionary-popup-matching-words
-dictionary-search
-diff
-diff-backup
-diff-minor-mode
-diff-mode
-digit-argument
-directory-tree-thing
-dired
-dired-apropos
-dired-backup-diff
-dired-cleanup
-dired-compress-subdir-files
-dired-describe-mode
-dired-diff
-dired-do-background-shell-command
-dired-do-compress
-dired-do-copy-regexp
-dired-do-grep
-dired-do-hardlink-regexp
-dired-do-igrep
-dired-do-igrep-find
-dired-do-print
-dired-do-relsymlink-regexp
-dired-do-rename-regexp
-dired-do-shell-command
-dired-do-symlink-regexp
-dired-do-uucode
-dired-downcase
-dired-ediff
-dired-emerge
-dired-emerge-with-ancestor
-dired-epatch
-dired-flag-extension
-dired-flag-files-regexp
-dired-jump-back
-dired-jump-back-other-frame
-dired-jump-back-other-window
-dired-mark-extension
-dired-mark-files-compilation-buffer
-dired-mark-files-from-other-dired-buffer
-dired-mark-files-regexp
-dired-mark-sexp
-dired-other-frame
-dired-other-window
-dired-read-mail
-dired-report-bug
-dired-rmail
-dired-summary
-dired-upcase
-dired-virtual
-dired-vm
-disable-command
-disassemble
-display-buffer
-display-call-tree
-display-column-mode
-display-time
-dissociated-press
-dns-mode
-dns-mode-soa-increment-serial
-do-auto-save
-docbook-grep
-docbook-mode
-docref-setup
-doctor
-down-list
-downcase-region
-downcase-region-or-word
-downcase-word
-drag-window-divider
-dsssl-mode
-dunnet
-#@nonl
-#@-node:ekr.20050921094025.262:d dabbrev- define- delete- describe- dired- downcase-
-#@+node:ekr.20050921094025.263:e ediff- edit- emerge- end- exchange- expand-
-ebuffers
-ebuffers3
-ecb-activate
-ecb-byte-compile
-ecb-minor-mode
-ecb-show-help
-edebug-defun
-edebug-eval-top-level-form
-ediff
-ediff-backup
-ediff-buffers
-ediff-buffers3
-ediff-customize
-ediff-directories
-ediff-directories3
-ediff-directory-revisions
-ediff-documentation
-ediff-files
-ediff-files3
-ediff-merge
-ediff-merge-buffers
-ediff-merge-buffers-with-ancestor
-ediff-merge-directories
-ediff-merge-directories-with-ancestor
-ediff-merge-directory-revisions
-ediff-merge-directory-revisions-with-ancestor
-ediff-merge-files
-ediff-merge-files-with-ancestor
-ediff-merge-revisions
-ediff-merge-revisions-with-ancestor
-ediff-merge-with-ancestor
-ediff-patch-buffer
-ediff-patch-file
-ediff-regions-linewise
-ediff-regions-wordwise
-ediff-revision
-ediff-show-registry
-ediff-toggle-multiframe
-ediff-toggle-use-toolbar
-ediff-version
-ediff-windows-linewise
-ediff-windows-wordwise
-ediff3
-edir-merge-revisions
-edir-merge-revisions-with-ancestor
-edir-revisions
-edirs
-edirs-merge
-edirs-merge-with-ancestor
-edirs3
-edit-abbrevs
-edit-abbrevs-mode
-edit-abbrevs-redefine
-edit-bookmarks
-edit-faces
-edit-itimers
-edit-kbd-macro
-edit-last-kbd-macro
-edit-mime
-edit-named-kbd-macro
-edit-picture
-edit-pr
-edit-tab-stops
-edit-tab-stops-note-changes
-edit-toolbar
-edt-emulation-on
-edt-set-scroll-margins
-efs-display-ftp-activity
-efs-nslookup-host
-efs-report-bug
-efs-set-passwd
-efs-set-user
-eieio-class-tree
-eieio-describe-class
-eieio-describe-generic
-eieio-describe-method
-eif-browse
-eiffel-mode
-eldoc-mode
-electric-buffer-list
-electric-command-history
-electric-nroff-mode
-elp-instrument-function
-elp-instrument-list
-elp-instrument-package
-elp-results
-emacs-lisp-byte-compile
-emacs-lisp-byte-compile-and-load
-emacs-lisp-mode
-emacs-version
-emerge
-emerge-buffers
-emerge-buffers-with-ancestor
-emerge-files
-emerge-files-with-ancestor
-emerge-merge-directories
-emerge-revisions
-emerge-revisions-with-ancestor
-enable-command
-enable-flow-control
-encrypt-insert-file-contents
-end-kbd-macro
-end-of-buffer
-end-of-buffer-other-window
-end-of-defun
-end-of-line
-enlarge-window
-enlarge-window-horizontally
-enlarge-window-pixels
-enriched-mode
-epatch
-epatch-buffer
-erase-buffer
-erc-add-dangerous-host
-erc-add-fool
-erc-add-keyword
-erc-add-pal
-erc-autojoin-mode
-erc-button-mode
-erc-chanlist
-erc-cmd-LIST
-erc-complete
-erc-completion-mode
-erc-delete-dangerous-host
-erc-delete-fool
-erc-delete-keyword
-erc-delete-pal
-erc-fill-mode
-erc-log-mode
-erc-nickserv-identify
-erc-nickserv-identify-mode
-erc-notify-mode
-erc-ring-mode
-erc-save-buffer-in-logs
-erc-select
-erc-server-select
-erc-services-mode
-erc-spelling-mode
-erc-timestamp-mode
-erc-track-mode
-erc-track-when-inactive-mode
-erc-truncate-buffer
-erc-truncate-mode
-erc-xdcc-add-file
-eregistry
-erevision
-escreen-install
-eshell
-eshell-command
-eshell-report-bug
-eshell-test
-eshell-toggle
-eshell-toggle-cd
-eudc-edit-hotlist
-eudc-expand-inline
-eudc-get-email
-eudc-get-phone
-eudc-insert-record-at-point-into-bbdb
-eudc-load-eudc
-eudc-query-form
-eudc-set-server
-eudc-try-bbdb-insert
-eval-buffer
-eval-current-buffer
-eval-defun
-eval-expr
-eval-expr-install
-eval-expression
-eval-last-sexp
-eval-print-last-sexp
-eval-region
-exchange-dot-and-mark
-exchange-point-and-mark
-executable-self-display
-executable-set-magic
-execute-extended-command
-exit-minibuffer
-exit-recursive-edit
-expand-abbrev
-expand-region-abbrevs
-#@nonl
-#@-node:ekr.20050921094025.263:e ediff- edit- emerge- end- exchange- expand-
-#@+node:ekr.20050921094025.264:f fill- find- format- forward-
-f90-mode
-facemenu-make-larger
-facemenu-make-much-larger
-facemenu-make-much-smaller
-facemenu-make-smaller
-facemenu-remove-props
-facemenu-remove-special
-facemenu-set-background
-facemenu-set-face
-facemenu-set-face-from-menu
-facemenu-set-foreground
-facemenu-set-intangible
-facemenu-set-invisible
-facemenu-set-read-only
-facemenu-set-size-default
-fast-lock-mode
-feedmail-queue-reminder
-feedmail-run-the-queue
-feedmail-run-the-queue-global-prompt
-feedmail-run-the-queue-no-prompts
-ffap
-ffap-at-mouse
-ffap-menu
-ffap-next
-fill-individual-paragraphs
-fill-nonuniform-paragraphs
-fill-paragraph
-fill-paragraph-or-region
-fill-region
-fill-region-as-paragraph
-find-alternate-file
-find-alternate-file-other-window
-find-file
-find-file-at-point
-find-file-other-frame
-find-file-other-window
-find-file-read-only
-find-file-read-only-other-frame
-find-file-read-only-other-window
-find-function
-find-function-at-point
-find-function-on-key
-find-function-other-frame
-find-function-other-window
-find-library
-find-library-other-frame
-find-library-other-window
-find-tag
-find-tag-at-point
-find-tag-other-window
-find-variable
-find-variable-at-point
-find-variable-other-frame
-find-variable-other-window
-finder-by-keyword
-finder-commentary
-finger
-first-error
-fixup-whitespace
-flame
-floating-toolbar
-floating-toolbar-from-extent-or-popup-mode-menu
-floating-toolbar-or-popup-mode-menu
-flush-lines
-flyspell-buffer
-flyspell-mode
-flyspell-prog-mode
-flyspell-region
-flyspell-version
-folding-mode
-folding-mode-add-find-file-hook
-font-lock-fontify-buffer
-font-lock-mode
-footnote-mode
-format-decode-buffer
-format-decode-region
-format-encode-buffer
-format-encode-region
-format-find-file
-format-insert-file
-format-write-file
-forms-find-file
-forms-find-file-other-window
-forms-mode
-fortran-mode
-forward-block-of-lines
-forward-char
-forward-char-command
-forward-line
-forward-list
-forward-page
-forward-paragraph
-forward-sentence
-forward-sexp
-forward-to-indentation
-forward-word
-frame-configuration-to-register
-ftelnet
-ftp
-full-calc
-full-calc-keypad
-fume-mode
-fume-setup-buffer
-function-menu
-fundamental-mode
-fusion-mode
-#@nonl
-#@-node:ekr.20050921094025.264:f fill- find- format- forward-
-#@+node:ekr.20050921094025.265:g global- goto- grep-
-garbage-collect
-gdb
-gdb-with-core
-gdbsrc
-generate-file-autoloads
-generic-page-setup
-generic-print-buffer
-getenv
-global-auto-revert-mode
-global-semantic-auto-parse-mode
-global-semantic-show-dirty-mode
-global-semantic-show-unmatched-syntax-mode
-global-semantic-summary-mode
-global-semanticdb-minor-mode
-global-senator-minor-mode
-global-set-key
-global-set-stroke
-global-unset-key
-gnats:edit-pr
-gnats:query-pr
-gnats:summ-pr
-gnats:view-pr
-gnuserv-start
-gomoku
-google-query
-google-query-region
-goto-address
-goto-address-at-mouse
-goto-address-at-point
-goto-char
-goto-line
-grep
-grep-all-files-in-current-directory
-grep-all-files-in-current-directory-and-below
-grep-find
-gtk-start-drag
-gtk-start-drag-region
-#@nonl
-#@-node:ekr.20050921094025.265:g global- goto- grep-
-#@+node:ekr.20050921094025.266:h help- html- hyper-
-hanoi
-haskell-doc-mode
-haskell-doc-show-type
-haskell-mode
-help
-help-for-help
-help-mode
-help-mode-bury
-help-mode-quit
-help-next-section
-help-next-symbol
-help-prev-section
-help-prev-symbol
-help-quit
-help-with-tutorial
-hexl-find-file
-hexl-mode
-hexlify-buffer
-hide-copyleft-region
-hide-ifdef-mode
-highlight-headers-follow-url
-highlight-headers-follow-url-kfm
-highlight-headers-follow-url-mosaic
-highlight-headers-follow-url-netscape
-highline-customize
-highline-local-mode
-highline-mode
-highline-mode-off
-highline-mode-on
-highline-off
-highline-on
-highline-view-mode
-highline-view-off
-highline-view-on
-hippie-expand
-hm--html-minor-mode
-hm--html-mode
-hmail:compose
-holidays
-how-many
-hs-minor-mode
-html-mode
-html-quote-region
-html-view-get-display
-html-view-goto-url
-html-view-start-mosaic
-html-view-view-buffer
-html-view-view-file
-htmlize-buffer
-htmlize-file
-htmlize-many-files
-htmlize-many-files-dired
-htmlize-region
-hyper-apropos
-hyper-apropos-popup-menu
-hyper-apropos-set-variable
-hyper-describe-face
-hyper-describe-function
-hyper-describe-key
-hyper-describe-key-briefly
-hyper-describe-variable
-hyper-set-variable
-hyper-where-is
-hyperb:customize
-hyperb:find-file-urls-mode
-hyperb:init-menubar
-hyperbole
-hypropos-popup-menu
-hypropos-set-variable
-#@nonl
-#@-node:ekr.20050921094025.266:h help- html- hyper-
-#@+node:ekr.20050921094025.267:i isearch- ispell- iswitchb itimer-
-ibuffer
-ibuffer-add-saved-filters
-ibuffer-add-to-tmp-hide
-ibuffer-add-to-tmp-show
-ibuffer-auto-mode
-ibuffer-backward-filter-group
-ibuffer-backwards-next-marked
-ibuffer-bs-show
-ibuffer-clear-filter-groups
-ibuffer-copy-filename-as-kill
-ibuffer-customize
-ibuffer-decompose-filter
-ibuffer-delete-saved-filter-groups
-ibuffer-delete-saved-filters
-ibuffer-diff-with-file
-ibuffer-do-kill-lines
-ibuffer-do-occur
-ibuffer-exchange-filters
-ibuffer-filter-disable
-ibuffer-filters-to-filter-group
-ibuffer-forward-next-marked
-ibuffer-invert-sorting
-ibuffer-jump-to-buffer
-ibuffer-jump-to-filter-group
-ibuffer-kill-filter-group
-ibuffer-kill-line
-ibuffer-list-buffers
-ibuffer-mark-by-file-name-regexp
-ibuffer-mark-by-mode
-ibuffer-mark-by-mode-regexp
-ibuffer-mark-by-name-regexp
-ibuffer-mark-dired-buffers
-ibuffer-mark-dissociated-buffers
-ibuffer-mark-help-buffers
-ibuffer-mark-modified-buffers
-ibuffer-mark-old-buffers
-ibuffer-mark-read-only-buffers
-ibuffer-mark-special-buffers
-ibuffer-mark-unsaved-buffers
-ibuffer-negate-filter
-ibuffer-or-filter
-ibuffer-other-window
-ibuffer-pop-filter
-ibuffer-pop-filter-group
-ibuffer-save-filter-groups
-ibuffer-save-filters
-ibuffer-set-filter-groups-by-mode
-ibuffer-switch-to-saved-filter-groups
-ibuffer-switch-to-saved-filters
-ibuffer-toggle-sorting-mode
-ibuffer-yank
-icomplete-mode
-icon-mode
-iconify-emacs
-iconify-frame
-id-select-and-copy-thing
-id-select-and-kill-thing
-id-select-goto-matching-tag
-id-select-install
-id-select-thing
-id-select-thing-with-mouse
-idl-mode
-idlwave-mode
-idlwave-shell
-ielm
-ifconfig
-ignore
-igrep
-igrep-find
-igrep-insinuate
-igrep-visited-files
-ilisp-imenu-add-menubar-index
-image-mode
-imenu
-imenu-add-menubar-index
-imenu-add-to-menubar
-increase-left-margin
-increase-right-margin
-increment-register
-indent-according-to-mode
-indent-code-rigidly
-indent-for-comment
-indent-for-tab-command
-indent-new-comment-line
-indent-region
-indent-relative
-indent-relative-maybe
-indent-rigidly
-indent-sexp
-indent-to
-indent-to-column
-indented-text-mode
-inferior-prolog-mode
-inferior-tcl
-info
-info-browse
-info-complete-file
-info-complete-symbol
-info-lookup-file
-info-lookup-reset
-info-lookup-symbol
-insert-abbrevs
-insert-buffer
-insert-file
-insert-kbd-macro
-insert-key-binding
-insert-parentheses
-insert-register
-insert-selection
-insert-zippyism
-install-where-was-i
-inverse-add-global-abbrev
-inverse-add-mode-abbrev
-invert-face
-ipconfig
-isearch-*-char
-isearch-abort
-isearch-backward
-isearch-backward-regexp
-isearch-cancel
-isearch-complete
-isearch-complete-edit
-isearch-delete-char
-isearch-edit-string
-isearch-exit
-isearch-forward
-isearch-forward-exit-minibuffer
-isearch-forward-regexp
-isearch-help-or-delete-char
-isearch-mode-help
-isearch-nonincremental-exit-minibuffer
-isearch-printing-char
-isearch-quote-char
-isearch-repeat-backward
-isearch-repeat-forward
-isearch-return-char
-isearch-reverse-exit-minibuffer
-isearch-ring-advance
-isearch-ring-advance-edit
-isearch-ring-retreat
-isearch-ring-retreat-edit
-isearch-toggle-case-fold
-isearch-toggle-regexp
-isearch-whitespace-chars
-isearch-yank-clipboard
-isearch-yank-kill
-isearch-yank-line
-isearch-yank-selection
-isearch-yank-sexp
-isearch-yank-word
-isearch-yank-x-clipboard
-isearch-yank-x-selection
-isearch-|-char
-iso-accents-mode
-ispell
-ispell-buffer
-ispell-change-dictionary
-ispell-comments-and-strings
-ispell-complete-word
-ispell-complete-word-interior-frag
-ispell-continue
-ispell-kill-ispell
-ispell-message
-ispell-minor-mode
-ispell-pdict-save
-ispell-region
-ispell-word
-iswitchb-buffer
-iswitchb-buffer-other-frame
-iswitchb-buffer-other-window
-iswitchb-default-keybindings
-iswitchb-display-buffer
-itimer-edit-delete-itimer
-itimer-edit-help
-itimer-edit-next-field
-itimer-edit-previous-field
-itimer-edit-quit
-itimer-edit-set-field
-#@nonl
-#@-node:ekr.20050921094025.267:i isearch- ispell- iswitchb itimer-
-#@+node:ekr.20050921094025.268:j
-japanese-latex-mode
-japanese-plain-tex-mode
-java-browse
-java-mode
-javascript-mode
-javascript-shell
-jde-ant-build
-jde-ant-projecthelp
-jde-ant-show-options
-jde-bug-debug-app
-jde-build
-jde-checkstyle
-jde-checkstyle-customize
-jde-compile
-jde-compile-jde
-jde-create-new-project
-jde-db-set-app-args
-jde-db-set-args
-jde-db-set-debugger
-jde-ejb-entity-bean-buffer
-jde-ejb-session-bean-buffer
-jde-gen-buffer
-jde-gen-class-buffer
-jde-gen-console-buffer
-jde-gen-interface-buffer
-jde-gen-jfc-app-buffer
-jde-gen-junit-test-class-buffer
-jde-help-browse-jdk-doc
-jde-import-organize
-jde-java-font-lock-setup-keywords
-jde-javadoc-autodoc-at-line
-jde-javadoc-checkdoc
-jde-javadoc-checkdoc-at-line
-jde-javadoc-checker-fix
-jde-javadoc-checker-next
-jde-javadoc-checker-previous
-jde-javadoc-checker-quit
-jde-javadoc-customize
-jde-javadoc-make
-jde-jdb
-jde-jdb-applet
-jde-make
-jde-make-show-options
-jde-mode
-jde-open-project-file
-jde-package-update
-jde-run
-jde-run-applet
-jde-run-set-app
-jde-run-set-app-args
-jde-run-set-applet-doc
-jde-run-set-applet-viewer
-jde-run-set-args
-jde-save-project
-jde-set-compile-options
-jde-set-global-classpath
-jde-show-help
-jde-stat-loc-report
-jde-stat-loc-report-directory
-jde-stat-loc-report-project
-jde-xref-customize
-jde-xref-display-call-tree
-jde-xref-first-caller
-jde-xref-list-uncalled-functions
-jde-xref-make-xref-db
-jde-xref-next-caller
-jde-xref-update
-join-line
-jump-to-register
-just-one-space
-justify-current-line
-#@nonl
-#@-node:ekr.20050921094025.268:j
-#@+node:ekr.20050921094025.269:k kill- kimport-
-kbd-macro-query
-keep-lines
-keyboard-escape-quit
-keyboard-quit
-kfile:find
-kfile:view
-kill-all-abbrevs
-kill-buffer
-kill-buffer-and-window
-kill-comment
-kill-console-local-variable
-kill-emacs
-kill-entire-line
-kill-line
-kill-local-variable
-kill-paragraph
-kill-primary-selection
-kill-rectangle
-kill-region
-kill-ring-save
-kill-sentence
-kill-sexp
-kill-some-buffers
-kill-this-buffer
-kill-word
-kimport:aug-post-outline
-kimport:file
-kimport:star-outline
-kimport:text
-klink:create
-kotl-mode
-kotl-mode:example
-ksh-mode
-#@nonl
-#@-node:ekr.20050921094025.269:k kill- kimport-
-#@+node:ekr.20050921094025.270:l list- load-
-latex-mode
-lazy-lock-mode
-lazy-shot-mode
-ledit-mode
-liece
-life
-line-number-mode
-linuxdoc-sgml-mode
-lisp-complete-symbol
-lisp-fill-paragraph
-lisp-indent-for-comment
-lisp-indent-line
-lisp-interaction-mode
-lisp-mode
-lisp-send-defun
-list-abbrevs
-list-bookmarks
-list-buffers
-list-colors-display
-list-command-history
-list-directory
-list-faces-display
-list-holidays
-list-itimers
-list-load-path-shadows
-list-matches-in-buffers
-list-matching-lines
-list-mode
-list-mode-item-keyboard-selected
-list-mode-item-mouse-selected
-list-packages
-list-processes
-list-strokes
-list-tags
-list-text-properties-at
-list-yahrzeit-dates
-literate-haskell-mode
-load-default-sounds
-load-file
-load-library
-load-sound-file
-load-user-strokes
-local-set-key
-local-unset-key
-locate-library
-lock-buffer
-lower-frame
-lpr-buffer
-lpr-region
-lua-mode
-#@nonl
-#@-node:ekr.20050921094025.270:l list- load-
-#@+node:ekr.20050921094025.271:m mouse- move-
-m4-mode
-macroexpand-all-sexp
-macroexpand-sexp
-mail
-mail-mode
-mail-other-frame
-mail-other-window
-make-command-summary
-make-compatible
-make-compatible-variable
-make-directory
-make-directory-path
-make-face-bold
-make-face-bold-italic
-make-face-italic
-make-face-larger
-make-face-smaller
-make-face-unbold
-make-face-unitalic
-make-file-part
-make-frame
-make-indirect-buffer
-make-local-variable
-make-obsolete
-make-obsolete-variable
-make-search-dialog
-make-symbolic-link
-make-variable-buffer-local
-makefile-mode
-manual-entry
-map-query-replace-regexp
-mark-beginning-of-buffer
-mark-bob
-mark-defun
-mark-end-of-buffer
-mark-end-of-line
-mark-end-of-sentence
-mark-eob
-mark-page
-mark-paragraph
-mark-sexp
-mark-whole-buffer
-mark-word
-maybe-unmigrate-user-init-file
-mchat
-mchat-other-frame
-metamail-buffer
-metamail-interpret-body
-metamail-interpret-header
-metamail-region
-mew
-mew-send
-mh-letter-mode
-mh-nmail
-mh-rmail
-mh-smail
-mh-smail-other-window
-mh-version
-migrate-user-init-file
-mime-decode-region
-mime-encode-region
-mime-insert-encoded-file
-mime/editor-mode
-minibuffer-complete
-minibuffer-complete-and-exit
-minibuffer-complete-word
-minibuffer-completion-help
-minibuffer-electric-separator
-minibuffer-electric-tilde
-minibuffer-keyboard-quit
-minibuffer-smart-maybe-select-highlighted-completion
-minibuffer-smart-select-highlighted-completion
-mode-compile
-mode-compile-kill
-mode-compile-submit-bug-report
-modeline-buffers-menu
-modeline-menu
-modeline-minor-mode-menu
-modeline-toggle-read-only
-modify-syntax-entry
-modula-2-mode
-morse-region
-mouse-avoidance-mode
-mouse-bury-buffer
-mouse-choose-completion
-mouse-consolidated-yank
-mouse-del-char
-mouse-delete-window
-mouse-drag-modeline
-mouse-eval-last-sexpr
-mouse-eval-sexp
-mouse-ignore
-mouse-keep-one-window
-mouse-kill-line
-mouse-line-length
-mouse-me
-mouse-scroll
-mouse-select
-mouse-select-and-split
-mouse-set-mark
-mouse-set-point
-mouse-track
-mouse-track-adjust
-mouse-track-adjust-default
-mouse-track-default
-mouse-track-delete-and-insert
-mouse-track-do-rectangle
-mouse-track-insert
-mouse-unbury-buffer
-mouse-window-to-region
-mouse-yank
-move-past-close-and-reindent
-move-to-left-margin
-move-to-tab-stop
-move-to-window-line
-mpuz
-mswindows-paste-clipboard
-mwheel-install
-#@nonl
-#@-node:ekr.20050921094025.271:m mouse- move-
-#@+node:ekr.20050921094025.272:n narrow- newline- next-
-name-last-kbd-macro
-narrow-stack-mode
-narrow-to-defun
-narrow-to-page
-narrow-to-region
-narrow-window-to-region
-negative-argument
-netstat
-network-connection
-network-connection-to-service
-new-frame
-newline
-newline-and-indent
-next-complete-history-element
-next-error
-next-file
-next-history-element
-next-line
-next-list-mode-item
-next-matching-history-element
-next-multiframe-window
-normal-mode
-not-modified
-nroff-mode
-nslookup
-nslookup-host
-nuke-nroff-bs
-nuke-selective-display
-number-to-register
-#@nonl
-#@-node:ekr.20050921094025.272:n narrow- newline- next-
-#@+node:ekr.20050921094025.273:o open- other-
-objc-browse
-objc-mode
-occur
-occur-mode-goto-occurrence
-occur-mode-mouse-goto
-offix-start-drag
-offix-start-drag-region
-old-whitespace-incremental-mode
-old-whitespace-mode
-oo-browser
-open-dribble-file
-open-line
-open-rectangle
-open-termscript
-other-frame
-other-window
-outl-mouse-minor-mode
-outl-mouse-mode
-outline-minor-mode
-outline-mode
-overstrike-region
-overwrite-mode
-own-selection
-#@nonl
-#@-node:ekr.20050921094025.273:o open- other-
-#@+node:ekr.20050921094025.274:p package- paren- pcomplete- pending- pop- popup- pp- prepend- prettyexapnd- previous- profile- ps-
-package-admin-add-binary-package
-package-admin-add-single-file-package
-package-get
-package-get-all
-package-get-custom
-package-get-delete-package
-package-get-package-provider
-package-get-save-base
-package-get-update-all
-package-get-update-base
-package-get-update-base-from-buffer
-paragraph-indent-text-mode
-paren-activate
-paren-backward-sexp
-paren-deactivate
-paren-forward-sexp
-paren-set-mode
-paren-toggle-matching-paired-delimiter
-paren-toggle-matching-quoted-paren
-paren-toggle-open-paren-context
-pascal-mode
-patch-to-change-log
-patcher-mail
-patcher-mail-subproject
-patcher-version
-pcomplete
-pcomplete-continue
-pcomplete-expand
-pcomplete-expand-and-complete
-pcomplete-help
-pcomplete-list
-pcomplete-reverse
-pdb
-pending-delete
-pending-delete-mode
-pending-delete-off
-pending-delete-on
-perl-mode
-perldb
-permanent-buffers-mode
-pgg-decrypt
-pgg-decrypt-region
-pgg-encrypt
-pgg-encrypt-region
-pgg-insert-key
-pgg-sign
-pgg-sign-region
-pgg-snarf-keys
-pgg-snarf-keys-region
-pgg-verify
-pgg-verify-region
-phases-of-moon
-php-mode
-picture-mode
-pike-mode
-ping
-plain-TeX-mode
-plain-tex-mode
-play-sound-file
-point-to-register
-pop-global-mark
-pop-tag-mark
-pop-window-configuration
-popper-install
-popup-buffer-menu
-popup-menubar-menu
-popup-mode-menu
-posix-search-backward
-posix-search-forward
-postscript-mode
-pp-eval-expression
-pp-eval-last-sexp
-pp-function
-pp-plist
-pp-variable
-praise-be-unto-emacs
-praise-be-unto-xemacs
-prefer-coding-system
-prefix-region
-prepend-to-buffer
-prepend-to-register
-press-toolbar-button
-prettyexpand-all-sexp
-prettyexpand-sexp
-previous-complete-history-element
-previous-error
-previous-history-element
-previous-line
-previous-list-mode-item
-previous-matching-history-element
-previous-multiframe-window
-print-buffer
-print-region
-profile-command
-profile-expression
-profile-key-sequence
-profile-results
-prolog-mode
-ps
-ps-despool
-ps-line-lengths
-ps-nb-pages-buffer
-ps-nb-pages-region
-ps-print-buffer
-ps-print-buffer-with-faces
-ps-print-customize
-ps-print-region
-ps-print-region-with-faces
-ps-spool-buffer
-ps-spool-buffer-with-faces
-ps-spool-region
-ps-spool-region-with-faces
-psychoanalyze-pinhead
-pui-add-install-directory
-pui-list-packages
-push-window-configuration
-pwd
-py-shell
-pydoc-apropos
-pydoc-commands
-pydoc-help
-pydoc-keywords
-pydoc-modules
-pydoc-packages
-pydoc-topics
-pydoc-xrefs
-pymacs-eval
-pymacs-load
-python-browse
-python-mode
-#@nonl
-#@-node:ekr.20050921094025.274:p package- paren- pcomplete- pending- pop- popup- pp- prepend- prettyexapnd- previous- profile- ps-
-#@+node:ekr.20050921094025.275:q query-
-query-pr
-query-replace
-query-replace-regexp
-quick-calc
-quoted-insert
-#@nonl
-#@-node:ekr.20050921094025.275:q query-
-#@+node:ekr.20050921094025.276:r re- read- recentf- recover- recursive- rename- repeat- replace- reverse- run-
-raise-frame
-re-builder
-re-search-backward
-re-search-forward
-read-abbrev-file
-read-kbd-macro
-read-library-name
-recent-files-initialize
-recent-files-visit-file
-recenter
-recentf-cancel-dialog
-recentf-cleanup
-recentf-dialog-mode
-recentf-edit-list
-recentf-mode
-recentf-open-files
-recentf-open-more-files
-recentf-rebuild-virtual-pathes
-recentf-save-list
-recover-all-files
-recover-file
-recover-session
-recover-session-finish
-recursive-edit
-reftex-citation
-reftex-index-phrases-mode
-reftex-mode
-regexp-builder
-register-to-point
-reindent-then-newline-and-indent
-release-and-activate-toolbar-button
-release-toolbar-button
-remote-compile
-remove-directory
-rename-buffer
-rename-file
-rename-uniquely
-repeat-complex-command
-repeat-matching-complex-command
-replace-buffer-in-windows
-replace-rectangle
-replace-regexp
-replace-string
-report-emacs-bug
-report-xemacs-bug
-reposition-window
-resize-minibuffer-mode
-restore-initial-toolbar
-resume-console
-reverse-region
-revert-buffer
-rexx-mode
-riece
-rlogin
-rmail
-rmail-input
-rmail-mode
-rolo-add
-rolo-display-matches
-rolo-edit
-rolo-fgrep
-rolo-fgrep-logical
-rolo-grep
-rolo-kill
-rolo-sort
-rolo-toggle-datestamps
-rolo-yank
-rot13-other-window
-rotate-yank-pointer
-route
-rpm
-rpm-spec-mode
-rsh
-rtf-clip-buffer
-rtf-clip-region
-rtf-export
-rtf-export-region
-rtf-spool-buffer
-rtf-spool-region
-ruby-mode
-rubydb
-run-at-time
-run-caml
-run-ediff-from-cvs-buffer
-run-prolog
-run-ruby
-run-scheme
-run-scsh
-run-sml
-run-with-idle-timer
-run-with-timer
-#@nonl
-#@-node:ekr.20050921094025.276:r re- read- recentf- recover- recursive- rename- repeat- replace- reverse- run-
-#@+node:ekr.20050921094025.277:s save- scroll- search- set- shell- sort- speedbar spell- strokes- suspend- switch- symbol-
-s-region-bind
-s-region-bind-cua
-save-buffer
-save-buffers-kill-emacs
-save-some-buffers
-savehist-load
-savehist-save
-scheme-mode
-scribe-mode
-scroll-down
-scroll-down-command
-scroll-down-one
-scroll-left
-scroll-other-window
-scroll-other-window-down
-scroll-right
-scroll-up
-scroll-up-command
-scroll-up-one
-sdb
-search-backward
-search-backward-regexp
-search-forward
-search-forward-regexp
-self-insert-and-exit
-self-insert-command
-semantic-analyze-current-context
-semantic-auto-parse-mode
-semantic-bnf-mode
-semantic-cb-speedbar-mode
-semantic-chart-database-size
-semantic-chart-nonterminal-complexity-token
-semantic-chart-nonterminals-by-token
-semantic-show-dirty-mode
-semantic-show-unmatched-syntax-mode
-semantic-summary-mode
-senator-complete-symbol
-senator-completion-menu-popup
-senator-jump
-senator-jump-regexp
-senator-minor-mode
-senator-next-token
-senator-previous-token
-senator-re-search-backward
-senator-re-search-forward
-senator-search-backward
-senator-search-forward
-senator-word-search-backward
-senator-word-search-forward
-send-pr
-send-pr-mode
-send-pr:send-pr
-send-pr:send-pr-mode
-set-buffer-file-coding-system
-set-buffer-file-coding-system-for-read
-set-buffer-process-coding-system
-set-comment-column
-set-default-buffer-file-coding-system
-set-default-file-coding-system
-set-face-background
-set-face-background-pixmap
-set-face-blinking-p
-set-face-dim-p
-set-face-display-table
-set-face-doc-string
-set-face-font
-set-face-foreground
-set-face-highlight-p
-set-face-reverse-p
-set-face-strikethru-p
-set-face-underline-p
-set-file-coding-system
-set-file-coding-system-for-read
-set-fill-column
-set-fill-prefix
-set-goal-column
-set-justification
-set-justification-center
-set-justification-full
-set-justification-left
-set-justification-none
-set-justification-right
-set-keyboard-coding-system
-set-left-margin
-set-mark-command
-set-pathname-coding-system
-set-right-margin
-set-selective-display
-set-terminal-coding-system
-set-variable
-set-visited-file-name
-setenv
-setnu-mode
-sgml-mode
-sh-mode
-shell
-shell-command
-shell-command-on-region
-shell-script-mode
-show-message-log
-shrink-window
-shrink-window-horizontally
-shrink-window-if-larger-than-buffer
-shrink-window-pixels
-sieve-manage
-sieve-mode
-sieve-upload
-sieve-upload-and-bury
-signal-process
-simula-mode
-skeleton-pair-insert-maybe
-skeleton-proxy
-skeleton-proxy-new
-smart-c++
-smart-info
-smart-info-assist
-smart-java
-smart-objc
-smerge
-sml-mode
-smt-browse
-snake
-sokoban
-sort-columns
-sort-fields
-sort-float-fields
-sort-lines
-sort-numeric-fields
-sort-pages
-sort-paragraphs
-sort-regexp-fields
-sort-regexp-fields-numerically
-speedbar
-speedbar-frame-mode
-speedbar-get-focus
-spell-buffer
-spell-region
-spell-string
-spell-word
-split-line
-split-window
-split-window-horizontally
-split-window-vertically
-spook
-sql-db2
-sql-help
-sql-informix
-sql-ingres
-sql-interbase
-sql-linter
-sql-mode
-sql-ms
-sql-mysql
-sql-oracle
-sql-postgres
-sql-product-interactive
-sql-solid
-sql-sqlite
-sql-sybase
-ssh
-standard-display-european
-start-itimer
-start-kbd-macro
-startup-presentation-hack
-string-rectangle
-strokes-compose-complex-stroke
-strokes-decode-buffer
-strokes-describe-stroke
-strokes-do-complex-stroke
-strokes-do-stroke
-strokes-global-set-stroke
-strokes-help
-strokes-list-strokes
-strokes-load-user-strokes
-strokes-mode
-style-format
-summ-pr
-sunrise-sunset
-suspend-console
-suspend-emacs
-suspend-emacs-or-iconify-frame
-suspend-or-iconify-emacs
-switch-to-buffer
-switch-to-buffer-other-frame
-switch-to-buffer-other-window
-switch-to-completions
-switch-to-other-buffer
-symbol-file
-symbol-near-point
-#@nonl
-#@-node:ekr.20050921094025.277:s save- scroll- search- set- shell- sort- speedbar spell- strokes- suspend- switch- symbol-
-#@+node:ekr.20050921094025.278:t tab tags- toggle- toolbar- turn-off turn-on
-tab-to-tab-stop
-tabify
-tag-complete-symbol
-tags-apropos
-tags-loop-continue
-tags-query-replace
-tags-search
-tcl-help-on-word
-tcl-mode
-tdbx
-teco-command
-telnet
-term
-terminal-emulator
-tetris
-tex-mode
-texi2info
-texinfo-format-buffer
-texinfo-format-region
-texinfo-mode
-texmathp
-text-mode
-tgdb
-time-stamp
-time-stamp-toggle-active
-tmpl-expand-templates-in-buffer
-tmpl-expand-templates-in-region
-tmpl-insert-template-file
-tmpl-insert-template-file-from-fixed-dirs
-tmpl-minor-mode
-toggle-auto-compression
-toggle-buffer-file-coding-system
-toggle-debug-on-error
-toggle-debug-on-quit
-toggle-debug-on-signal
-toggle-profiling
-toggle-read-only
-toggle-rot13-mode
-toggle-text-mode-auto-fill
-toggle-truncate-lines
-toggle-viper-mode
-toggle-where-was-i
-toolbar-add-button-on-the-fly
-toolbar-add-execute-macro-button
-toolbar-add-kbd-macro
-toolbar-compile
-toolbar-copy
-toolbar-cut
-toolbar-debug
-toolbar-dired
-toolbar-external
-toolbar-gnus
-toolbar-info
-toolbar-ispell
-toolbar-ispell-internal
-toolbar-mail
-toolbar-news
-toolbar-not-configured
-toolbar-open
-toolbar-paste
-toolbar-print
-toolbar-redo
-toolbar-replace
-toolbar-save
-toolbar-search
-toolbar-undo
-top-level
-tperldb
-tpu-edt
-tpu-edt-mode
-tpu-edt-on
-tpu-set-cursor-bound
-tpu-set-cursor-free
-tpu-set-scroll-margins
-tpum-global-mode
-tpum-minor-mode
-trace-function
-trace-function-background
-traceroute
-transpose-chars
-transpose-line-down
-transpose-line-up
-transpose-lines
-transpose-paragraphs
-transpose-preceding-chars
-transpose-sentences
-transpose-sexps
-transpose-words
-tree-test-it-all
-tsdb
-tshell
-turn-off-font-lock
-turn-off-haskell-doc-mode
-turn-off-pending-delete
-turn-on-auto-fill
-turn-on-eldoc-mode
-turn-on-font-lock
-turn-on-fume-mode
-turn-on-haskell-doc-mode
-turn-on-pending-delete
-turn-on-permanent-buffers
-txdb
-#@nonl
-#@-node:ekr.20050921094025.278:t tab tags- toggle- toolbar- turn-off turn-on
-#@+node:ekr.20050921094025.279:u universal- upcase- url-
-uil-mode
-undefined
-underline-region
-undo
-unexpand-abbrev
-unhide-copyleft-region
-universal-argument
-universal-argument-minus
-universal-argument-more
-universal-argument-other-key
-universal-coding-system-argument
-unix-sync
-unload-feature
-unlock-buffer
-unmigrate-user-init-file
-unmorse-region
-unoverstrike-region
-unpop-window-configuration
-unrmail
-untabify
-ununderline-and-unoverstrike-region
-ununderline-region
-up-list
-upcase-initials-region
-upcase-region
-upcase-region-or-word
-upcase-word
-update-autoloads-from-directory
-update-autoloads-here
-update-file-autoloads
-url-gateway-nslookup-host
-url-mail
-url-setup-save-timer
-use-hard-newlines
-user-mail-address
-#@nonl
-#@-node:ekr.20050921094025.279:u universal- upcase- url-
-#@+node:ekr.20050921094025.280:v view- vm-
-vc-annotate
-vc-cancel-version
-vc-create-snapshot
-vc-diff
-vc-directory
-vc-insert-headers
-vc-load-vc-hooks
-vc-merge
-vc-next-action
-vc-print-log
-vc-register
-vc-rename-file
-vc-resolve-conflicts
-vc-retrieve-snapshot
-vc-revert-buffer
-vc-update-change-log
-vc-version-diff
-vc-version-other-window
-verilog-customize
-verilog-mode
-verilog-version
-version
-vertical-mode
-vhdl-mode
-view-buffer
-view-buffer-other-window
-view-emacs-news
-view-file
-view-file-other-window
-view-lossage
-view-major-mode
-view-minor-mode
-view-mode
-view-pr
-view-register
-view-sample-init-el
-viper-mode
-visit-tags-table
-vm
-vm-compose-mail
-vm-folders-summarize
-vm-mail
-vm-mail-other-frame
-vm-mail-other-window
-vm-mode
-vm-other-frame
-vm-other-window
-vm-submit-bug-report
-vm-visit-folder
-vm-visit-folder-other-frame
-vm-visit-folder-other-window
-vm-visit-imap-folder
-vm-visit-imap-folder-other-frame
-vm-visit-imap-folder-other-window
-vm-visit-pop-folder
-vm-visit-pop-folder-other-frame
-vm-visit-pop-folder-other-window
-vm-visit-virtual-folder
-vm-visit-virtual-folder-other-frame
-vm-visit-virtual-folder-other-window
-vrml-mode
-#@nonl
-#@-node:ekr.20050921094025.280:v view- vm-
-#@+node:ekr.20050921094025.281:w win32- winring- word- write-
-w3
-w3-display-stylesheet
-w3-fetch
-w3-fetch-other-frame
-w3-find-file
-w3-follow-link
-w3-follow-url-at-point
-w3-follow-url-at-point-other-frame
-w3-hotindex-add-key
-w3-hotindex-query
-w3-hotindex-rm-key
-w3-hotlist-add-document
-w3-hotlist-add-document-at-point
-w3-hotlist-append
-w3-hotlist-apropos
-w3-hotlist-delete
-w3-hotlist-refresh
-w3-hotlist-rename-entry
-w3-maybe-follow-link
-w3-maybe-follow-link-mouse
-w3-next-document
-w3-open-local
-w3-prev-document
-w3-preview-this-buffer
-w3-print-this-url
-w3-print-url-under-point
-w3-read-html-bookmarks
-w3-region
-w3-show-dvi
-w3-table-speak-current-table-column
-w3-use-hotlist
-w3-version
-wconfig-add-by-name
-wconfig-delete-by-name
-wconfig-delete-pop
-wconfig-restore-by-name
-wconfig-ring-save
-wconfig-yank-pop
-webjump
-what-coding-system
-what-cursor-position
-what-domain
-what-line
-what-page
-where-is
-whitespace-buffer
-whitespace-cleanup
-whitespace-cleanup-region
-whitespace-global-mode
-whitespace-region
-whitespace-toggle-ateol-check
-whitespace-toggle-indent-check
-whitespace-toggle-leading-check
-whitespace-toggle-spacetab-check
-whitespace-toggle-trailing-check
-whitespace-visual-incremental-mode
-whitespace-visual-mode
-whitespace-write-file-hook
-whois
-whois-reverse-lookup
-widen
-widget-backward
-widget-beginning-of-line
-widget-browse
-widget-browse-at
-widget-browse-other-window
-widget-button-click
-widget-button-press
-widget-button1-click
-widget-complete
-widget-end-of-line
-widget-field-activate
-widget-file-complete
-widget-forward
-widget-kill-line
-widget-minor-mode
-widget-transpose-chars
-win32-get-current-locale-id
-win32-get-default-locale-id
-win32-get-locale-info
-win32-get-valid-locale-ids
-win32-long-file-name
-win32-set-current-locale
-win32-set-process-priority
-win32-short-file-name
-window-configuration-to-register
-winmgr-mode
-winring-delete-configuration
-winring-duplicate-configuration
-winring-jump-to-configuration
-winring-new-configuration
-winring-next-configuration
-winring-prev-configuration
-winring-rename-configuration
-word-search-backward
-word-search-forward
-wordstar-mode
-write-abbrev-file
-write-file
-write-region
-write-region-internal
-wrolo-popup-menu
-#@nonl
-#@-node:ekr.20050921094025.281:w win32- winring- word- write-
-#@+node:ekr.20050921094025.282:x xwem-
-x-symbol-decode
-x-symbol-decode-recode
-x-symbol-encode
-x-symbol-encode-recode
-x-symbol-fontify
-x-symbol-grid
-x-symbol-image-editor
-x-symbol-image-parse-buffer
-x-symbol-init-language-interactive
-x-symbol-initialize
-x-symbol-key-autoload
-x-symbol-map-autoload
-x-symbol-mode
-x-symbol-modify-key
-x-symbol-package-bug
-x-symbol-package-info
-x-symbol-package-reply-to-report
-x-symbol-package-web
-x-symbol-rotate-key
-x-symbol-unalias
-xdb
-xemacs-local-faq
-xemacs-splash-buffer
-xemacs-www-faq
-xemacs-www-page
-xetla
-xetla-add-log-entry
-xetla-apply-changeset
-xetla-archives
-xetla-bookmarks
-xetla-browse
-xetla-changelog
-xetla-changes
-xetla-changes-against
-xetla-changes-last-revision
-xetla-commit
-xetla-conflicts-finish
-xetla-delta
-xetla-ediff-add-log-entry
-xetla-edit-log
-xetla-file-diff
-xetla-file-ediff
-xetla-file-ediff-revisions
-xetla-file-view-original
-xetla-get-changeset
-xetla-help
-xetla-id-tagging-method
-xetla-inventory
-xetla-inventory-file-mode
-xetla-log-edit-mode
-xetla-logs
-xetla-make-archive
-xetla-missing
-xetla-my-id
-xetla-my-revision-library
-xetla-prepare-patch-submission
-xetla-revisions
-xetla-rm
-xetla-start-project
-xetla-submit-bug-report
-xetla-tag-insert
-xetla-tag-regenerate
-xetla-tree-lint
-xetla-tree-version
-xetla-version
-xetla-view-conflicts
-xmine
-xmine-mode
-xml-mode
-xpm-mode
-xrdb-mode
-xsl-grep
-xsl-mode
-xslt-process-mode
-xt-check-xlib
-xwem-attach-client
-xwem-backward-application
-xwem-balance-windows
-xwem-battery
-xwem-battery-popup-menu
-xwem-battery-status
-xwem-cl-pop-to-client
-xwem-cl-set-title
-xwem-cl-switch-other-frame
-xwem-cl-switch-other-win
-xwem-cl-switch-to-other
-xwem-cl-switch-to-other-in-other-win
-xwem-cl-transpose
-xwem-clgen-toggle-other-on-split
-xwem-clgen-turn-off-other-on-split
-xwem-clgen-turn-on-other-on-split
-xwem-client-demanage-others
-xwem-client-exchange-selected-and-mark
-xwem-client-iconify
-xwem-client-idestroy
-xwem-client-imove
-xwem-client-info
-xwem-client-iresize
-xwem-client-kill
-xwem-client-query-kill
-xwem-client-run-copy
-xwem-client-run-copy-other-frame
-xwem-client-run-copy-other-win
-xwem-client-set-mark
-xwem-client-unset-mark
-xwem-clswi-next
-xwem-clswi-next-other-window
-xwem-clswi-prev
-xwem-clswi-prev-other-window
-xwem-copy-cutbuffer
-xwem-copy-region-as-cutbuffer
-xwem-describe-prefix-bindings
-xwem-desktop-load
-xwem-desktop-load-onetime
-xwem-desktop-save
-xwem-desktop-save-onetime
-xwem-edit-client-properties
-xwem-edmacro-edit-kbd-macro
-xwem-eval-expression
-xwem-execute-extended-command
-xwem-fini
-xwem-focus-click-on
-xwem-forward-application
-xwem-frame-destroy
-xwem-frame-fit-screen
-xwem-frame-goto-next
-xwem-frame-goto-next-hor
-xwem-frame-goto-next-vert
-xwem-frame-goto-prev
-xwem-frame-goto-prev-hor
-xwem-frame-goto-prev-vert
-xwem-frame-hide
-xwem-frame-imove
-xwem-frame-iresize
-xwem-frame-lower
-xwem-frame-next
-xwem-frame-on-delim-menu
-xwem-frame-on-delim-resize
-xwem-frame-previous
-xwem-frame-raise
-xwem-frame-sbs-hor-split
-xwem-frame-sbs-vert-split
-xwem-frame-set-name
-xwem-frame-showroot
-xwem-frame-split-sbs
-xwem-frame-switch
-xwem-frame-switch-nth
-xwem-frame-switch-nth-linkage
-xwem-frame-transparency
-xwem-frame-transpose
-xwem-framei-dockapp-popup-alt-menu
-xwem-framei-dockapp-popup-menu
-xwem-fullscreen-mode
-xwem-help
-xwem-help-clients
-xwem-help-cutbuffers
-xwem-help-describe-bindings
-xwem-help-describe-key
-xwem-help-describe-key1
-xwem-help-for-help
-xwem-help-frames
-xwem-help-mode
-xwem-help-where-is
-xwem-help-wins
-xwem-ignore-command
-xwem-kbd-quit
-xwem-kbd-quote-command
-xwem-keyboard-quit
-xwem-keymacro-begin
-xwem-keymacro-end
-xwem-keymacro-exit-recursive-edit
-xwem-keymacro-recursive-edit
-xwem-keymacro-undefined
-xwem-keytt-minor-mode
-xwem-kill-cl-and-window
-xwem-launch-dock-down
-xwem-launch-dock-launch
-xwem-launch-dock-menu
-xwem-launch-lupe
-xwem-launch-lupe-other-frame
-xwem-launch-lupe-other-win
-xwem-launch-program
-xwem-launch-program-other-frame
-xwem-launch-program-other-win
-xwem-launch-xlock
-xwem-launch-xterm
-xwem-launch-xterm-other-frame
-xwem-launch-xterm-other-win
-xwem-launcher-toggle-frame-type
-xwem-launcher-toggle-split-type
-xwem-launcher-turn-on-embedded-frame-type
-xwem-launcher-turn-on-horizontal-split-type
-xwem-launcher-turn-on-normal-frame-type
-xwem-launcher-turn-on-vertical-split-type
-xwem-make-frame
-xwem-mini-calc
-xwem-minib-resize-mode
-xwem-minibuffer-activate
-xwem-misc-make-screenshot
-xwem-misc-pause
-xwem-misc-profiling-results
-xwem-misc-start-profiling
-xwem-modeline-disable
-xwem-modeline-enable
-xwem-open-file
-xwem-other-window
-xwem-pager
-xwem-pager-move-down
-xwem-pager-move-left
-xwem-pager-move-right
-xwem-pager-move-up
-xwem-paste-cutbuffer
-xwem-popup-auto-menu
-xwem-popup-clients-menu
-xwem-recover-do-recover
-xwem-recover-toggle
-xwem-recover-turn-off
-xwem-recover-turn-on
-xwem-register-client
-xwem-register-frame-config
-xwem-register-jump
-xwem-register-win-config
-xwem-report-bug
-xwem-rooter-lower
-xwem-rooter-raise
-xwem-run-program
-xwem-self-insert-or-undefined
-xwem-shell-command
-xwem-show-message-log
-xwem-sm-global-mode
-xwem-sm-mode
-xwem-strokes-begin
-xwem-strokes-cmplx-begin
-xwem-strokes-define
-xwem-strokes-ibutton1
-xwem-strokes-ibutton1up
-xwem-strokes-ibutton3
-xwem-strokes-idescribe
-xwem-strokes-list
-xwem-strokes-nocmd
-xwem-strokes-unset-last-stroke
-xwem-switch-client
-xwem-switch-other-client
-xwem-switch-to-fullscreen-cl
-xwem-tabber-popup-cl-menu
-xwem-tabber-switch-cl
-xwem-theme-set
-xwem-time
-xwem-toggle-fullscreen
-xwem-transpose-frames
-xwem-turn-off-keytt
-xwem-turn-off-vline
-xwem-turn-on-keytt
-xwem-turn-on-vline
-xwem-undefined-command
-xwem-universal-argument
-xwem-universal-command
-xwem-universal-digit
-xwem-universal-minus
-xwem-universal-more
-xwem-vline-minor-mode
-xwem-weather-popup-menu
-xwem-weather-popup-remove
-xwem-weather-show-details
-xwem-weather-update
-xwem-window-delete
-xwem-window-delete-others
-xwem-window-enlarge-horizontally
-xwem-window-enlarge-vertically
-xwem-window-split-horizontally
-xwem-window-split-vertically
-xwem-winmove-down
-xwem-winmove-left
-xwem-winmove-right
-xwem-winmove-up
-xwem-worklog-login
-xwem-worklog-logout
-#@nonl
-#@-node:ekr.20050921094025.282:x xwem-
-#@+node:ekr.20050921094025.283:y yank-
-yank
-yank-clipboard-selection
-yank-pop
-yank-rectangle
-yow
-#@-node:ekr.20050921094025.283:y yank-
-#@+node:ekr.20050921094025.284:z zap- 
-zap-to-char
-zap-up-to-char
-zenirc
-#@nonl
-#@-node:ekr.20050921094025.284:z zap- 
-#@-node:ekr.20050921094025.254:All xemacs commands
-#@+node:ekr.20050921100955:Not used
-#@+node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
-class editCommands:
-
-    @others
-#@nonl
-#@+node:ekr.20050723064110.1:ctor
-def __init__ (self,c):
-    
-    self.c = c
-
-    self.mode = 'default'
-    self.modeStack = []
-    
-    self.defaultWordChars1, self.defaultWordChars2 = self.setDefaultWordChars()
-    self.wordChars1 = self.defaultWordChars1
-    self.wordChars2 = self.defaultWordChars2
-
-    self.setDefaultOptions()
-#@nonl
-#@-node:ekr.20050723064110.1:ctor
-#@+node:ekr.20050723064110.3:Options...
-#@+node:ekr.20050723064110.4:setDefaultOptions
-def setDefaultOptions(self):
-    
-    self.options = {
-        'extendMovesForward':   True,  # True: moving forward may cross node boundaries.
-        'extendMovesBack':      True,  # True: moving back may cross node boundaries.
-        'extendFindsForward':   True,   # True: find forward may cross node boundaries.
-        'extendFindsBack':      True,   # True: find back may cross node boundaries.
-    }
-#@nonl
-#@-node:ekr.20050723064110.4:setDefaultOptions
-#@+node:ekr.20050723064110.5:getOption
-def getOption (self,optionName):
-    
-    # This may change when modes get put in.
-    return self.options.get(optionName)
-#@nonl
-#@-node:ekr.20050723064110.5:getOption
-#@-node:ekr.20050723064110.3:Options...
-#@+node:ekr.20050723064110.6:Word stuff...
-#@+node:ekr.20050723064110.7:findWordStart
-def findWordStart(self,s,i):
-    
-    while i < len(s):
-        if s[i] in self.wordChars1:
-            return i
-        else:
-            i += 1
-    return i
-#@nonl
-#@-node:ekr.20050723064110.7:findWordStart
-#@+node:ekr.20050723064110.8:insideWord
-def insideWord (self,s,i):
-    
-    '''Return True if the char at s[i] is inside a word but does not start the word.'''
-    
-    return (
-        0 < i < len(s) and
-        s[i] in self.wordChars2 and
-        s[i-1] in self.wordChars2
-    )
-#@nonl
-#@-node:ekr.20050723064110.8:insideWord
-#@+node:ekr.20050723064110.9:skipWord
-def skipWord(self,s,i):
-    
-    while i < len(s) and s[i] in self.wordChars2:
-        i += 1
-    return i
-#@nonl
-#@-node:ekr.20050723064110.9:skipWord
-#@+node:ekr.20050723064110.10:startsWord
-def startsWord (self,s,i):
-    
-    '''Return True if the char at s[i] is inside a word but does not start the word.'''
-    
-    return (
-        i < len(s) and 
-        s[i] in self.wordChars1 and
-        (i == 0 or s[i-1] not in self.wordChars1)
-    )
-#@nonl
-#@-node:ekr.20050723064110.10:startsWord
-#@+node:ekr.20050723064110.11:setDefaultWordChars
-def setDefaultWordChars (self):
-    
-    chars1 = '_' + string.letters
-    chars2 = '_' + string.letters + string.digits
-    return chars1, chars2
-#@nonl
-#@-node:ekr.20050723064110.11:setDefaultWordChars
-#@-node:ekr.20050723064110.6:Word stuff...
-#@+node:ekr.20050723064110.12:Cursor movement
-#@+node:ekr.20050723064110.13:moveBackwardChar
-def moveBackwardChar (self):
-    
-    c = self.c ; b = c.frame.body ; s = b.getAllText()
-    i = b.getPythonInsertionPoint(s=s)
-    i -= 1
-    if i >= 0:
-        b.setPythonInsertionPoint(i)
-        return True
-    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
-        p = c.currentPosition().moveToThreadBack()
-        while p:
-            s = p.bodyString()
-            if len(s) > 0:
-                c.selectPosition(p)
-                b.setPythonInsertionPoint(len(s)-1)
-                return True
-            else:
-                p.moveToThreadBack()
-        return False
-    else:
-        return False
-#@nonl
-#@-node:ekr.20050723064110.13:moveBackwardChar
-#@+node:ekr.20050723064110.14:moveBackwardWord (Finish)
-def moveBackwardWord (self,i=None):
-    
-    c = self.c ; b = c.frame.body ; s = b.getAllText()
-    if i is None: i = b.getPythonInsertionPoint(s=s)
-
-    if self.startsWord(s,i) or self.insideWord(s,i):
-        i = self.findWordStart(s,i)
-    i = self.findWordStart(s,i) ###
-    if self.startsWord(s,i): ###
-        b.setPythonInsertionPoint(i)
-        return True
-    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
-        p = c.currentPosition().moveToThreadBack()
-        while p:
-            c.selectPosition(p)
-            if self.moveBackwardWord(0):
-                return True
-            p.moveToThreadBack()
-        return False
-    else:
-        return False
-#@nonl
-#@-node:ekr.20050723064110.14:moveBackwardWord (Finish)
-#@+node:ekr.20050723064110.15:moveForwardChar
-def moveForwardChar (self):
-    
-    c = self.c ; b = c.frame.body ; s = b.getAllText()
-    i = b.getPythonInsertionPoint(s=s)
-    i += 1
-    if i < len(s):
-        b.setPythonInsertionPoint(i)
-        return True
-    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
-        p = c.currentPosition().moveToThreadNext()
-        while p:
-            if len(p.bodyString()) > 0:
-                c.selectPosition(p)
-                b.setPythonInsertionPoint(0)
-                return True
-            else:
-                p.moveToThreadNext()
-        return False
-    else:
-        return False
-#@nonl
-#@-node:ekr.20050723064110.15:moveForwardChar
-#@+node:ekr.20050723064110.16:moveForwardWord
-def moveForwardWord (self,i=None):
-    
-    c = self.c ; b = c.frame.body ; s = b.getAllText()
-    if i is None: i = b.getPythonInsertionPoint(s=s)
-
-    if self.startsWord(s,i) or self.insideWord(s,i):
-        i = self.skipWord(s,i)
-    i = self.findWordStart(s,i)
-    if self.startsWord(s,i):
-        b.setPythonInsertionPoint(i)
-        return True
-    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
-        p = c.currentPosition().moveToThreadNext()
-        while p:
-            c.selectPosition(p)
-            if self.moveForwardWord(0):
-                return True
-            p.moveToThreadNext()
-        return False
-    else:
-        return False
-#@nonl
-#@-node:ekr.20050723064110.16:moveForwardWord
-#@+node:ekr.20050723064110.17:selectWord
-#@-node:ekr.20050723064110.17:selectWord
-#@+node:ekr.20050723064110.18:selectForwordWord
-def selectForwardWord (self):
-    
-    c = self ; b = c.frame.body ; s = b.getAllText()
-
-    i = i1 = b.getPythonInsertionPoint()
-    
-    if i < len(s) and g.is_c_id(s[i]):
-        i = g.skip_c_id(s,i+1)
-    
-    while i < len(s) and not g.is_c_id(s[i]):
-        i += 1
-        
-    if i < len(s) and g.is_c_id(s[i]):
-        # b.setPythonTextSelection(i1,i)
-        pass ### TODO
-#@nonl
-#@-node:ekr.20050723064110.18:selectForwordWord
-#@-node:ekr.20050723064110.12:Cursor movement
-#@-node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
-#@+node:ekr.20050920085536.60:doControlX
-def doControlX (self,event,stroke,previous=[]):
-    
-    k = self
-    
-    return k.callControlXFunction(event,stroke)
-#@nonl
-#@-node:ekr.20050920085536.60:doControlX
-#@+node:ekr.20050920084036.129:zapTo
-def zapTo (self,event):
-
-    k = self.k ; c = k.c ; w = event.widget
-    s = string.ascii_letters+string.digits+string.punctuation
-
-    if len(event.char) != 0 and event.char in s:
-        k.setState('zap',0)
-        i = w.search(event.char,'insert',stopindex='end')
-        k.resetLabel()
-        if i:
-            t = w.get('insert','%s+1c' % i)
-            c.killBufferCommands.addToKillBuffer(t)
-            w.delete('insert','%s+1c' % i)
-
-    return 'break'
-#@-node:ekr.20050920084036.129:zapTo
-#@+node:ekr.20050920084036.44:setInBufferMode
-def setInBufferMode (self,event,which):
-    
-    k = self.k ; w = event.widget
-
-    k.keyboardQuit(event)
-    k.setState('bufferList','start%s' % which)
-    k.setLabelBlue('Choose Buffer Name:')
-    self.bufferDict = self.getBufferDict(event)
-
-    return 'break'
-#@nonl
-#@-node:ekr.20050920084036.44:setInBufferMode
-#@+node:ekr.20050927102133:from bufferCommandsClass ctor
-if 0: # To be deleted
-    
-    # This section sets up the buffer data structures.
-    self.bufferListGetters ={}
-    self.bufferSetters ={}
-    self.bufferGotos ={}
-    self.bufferDeletes ={}
-    self.renameBuffers ={}
-    self.bufferDict = {} 
-    self.bufferTracker = Tracker()
-
-    # Used by bufferList.
-    self.commandsDict = {
-        'append-to-buffer': self.appendToBuffer,
-        'copy-to-buffer':   self.copyToBuffer,
-        'insert-buffer':    self.insertToBuffer,
-        'kill-buffer':      self.killBuffer, 
-        'prepend-to-buffer':self.prependToBuffer, 
-        'switch-to-buffer': self.switchToBuffer, 
-    }
-#@nonl
-#@-node:ekr.20050927102133:from bufferCommandsClass ctor
-#@+node:ekr.20050927102645:From bufferCommandsClass
-#@+node:ekr.20050920084036.46:setBufferListGetter
-def setBufferListGetter (self,buffer,method):
-
-    #Sets a method that returns a buffer name and its text, and its insert position.
-    self.bufferListGetters [buffer] = method
-#@nonl
-#@-node:ekr.20050920084036.46:setBufferListGetter
-#@+node:ekr.20050920084036.47:setBufferSetter
-def setBufferSetter( self, buffer, method ):
-
-    #Sets a method that takes a buffer name and the new contents.
-    self.bufferSetters[ buffer ] = method
-#@nonl
-#@-node:ekr.20050920084036.47:setBufferSetter
-#@+node:ekr.20050920084036.48:getBufferDict
-def getBufferDict (self,event):
-
-    w = event.widget
-    meth = self.bufferListGetters [w]
-    return meth()
-#@nonl
-#@-node:ekr.20050920084036.48:getBufferDict
-#@+node:ekr.20050920084036.49:setBufferData
-def setBufferData( self, event, name, data ):
-    
-    w = event.widget
-    meth = self.bufferSetters[ w ]
-    meth( name, data )
-#@nonl
-#@-node:ekr.20050920084036.49:setBufferData
-#@+node:ekr.20050920084036.50:setBufferGoto
-def setBufferGoto( self, w, method ):
-
-    self.bufferGotos[ w ] = method
-#@nonl
-#@-node:ekr.20050920084036.50:setBufferGoto
-#@+node:ekr.20050920084036.51:setBufferDelete
-def setBufferDelete( self, w, method ):
-    
-    self.bufferDeletes[ w ] = method
-#@nonl
-#@-node:ekr.20050920084036.51:setBufferDelete
-#@+node:ekr.20050920084036.52:setBufferRename
-def setBufferRename( self, buffer, method ):
-    
-    self.renameBuffers[ buffer ] = method
-#@nonl
-#@-node:ekr.20050920084036.52:setBufferRename
-#@-node:ekr.20050927102645:From bufferCommandsClass
-#@+node:ekr.20050920115444:setBufferInteractionMethods & helpers (not used)
-# Called by modified leoTkinterBody.createBindings.
-
-if 0: # This is dubious.
-    k.setBufferInteractionMethods(frame.bodyCtrl)
-
-def setBufferInteractionMethods (self,buffer):
-
-    '''This function configures the Emacs instance so that
-       it can see all the nodes as buffers for its buffer commands.'''
-       
-    k = self ; c = k.c
-
-    # These are actually methods of the bufferCommandsClass.
-    @others
-
-    # These add Leo-reated capabilities to the key handler.
-    c.bufferCommands.setBufferListGetter(buffer,buildBufferList)
-    c.bufferCommands.setBufferSetter(buffer,setBufferData)
-    c.bufferCommands.setBufferGoto(buffer,gotoNode)
-    c.bufferCommands.setBufferDelete(buffer,deleteNode)
-    c.bufferCommands.setBufferRename(buffer,renameNode)
-#@nonl
-#@-node:ekr.20050920115444:setBufferInteractionMethods & helpers (not used)
-#@+node:ekr.20050920085536.43:findItemsWithPrefix (Not used)
-def findItemsWithPrefix (self,s,aList=None):
-
-    '''This method returns a sorted list of matches.
-    
-    It returns the list of matches and the longest common prefix of all the matches.'''
-
-    k = self ; c = k.c
-
-    common_prefix = ''
-
-    if s: pmatches = [a for a in aList if a.startswith(s)]
-    else: pmatches = []
-        
-    if pmatches:
-        s = pmatches[0] ; done = False
-        for i in xrange(len(s)):
-            prefix = s[:i]
-            for z in pmatches:
-                if not z.startswith(prefix):
-                    done = True ; break
-            if done:
-                break
-            else:
-                common_prefix = prefix
-        pmatches.sort()
-
-    # g.trace(repr(s),len(pmatches))
-    return pmatches,common_prefix
-#@nonl
-#@-node:ekr.20050920085536.43:findItemsWithPrefix (Not used)
-#@-node:ekr.20050921100955:Not used
-#@+node:ekr.20050922074229.2:(Startup code)
-@nocolor
-
-gui.newLeoCommanderAndFrame has the following code:
-
-
-@color
-
-    # Create an unfinished frame to pass to the commanders.
-    frame = gui.createLeoFrame(title)
-    
-    # Create the commander and its subcommanders.
-    c = leoCommands.Commands(frame,fileName)
-    
-    if not g.app.initing:
-        g.doHook("before-create-leo-frame",c=c) # Was 'onCreate': too confusing.
-    
-    frame.finishCreate(c)
-    c.finishCreate() # New in 4.4.
-#@nonl
-#@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
-def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
-    
-    """Create a commander and its view frame for the Leo main window."""
-    
-    gui = self
-    
-    import leoCommands
-    
-    if not fileName: fileName = ""
-    << compute the window title >>
-
-    # Create an unfinished frame to pass to the commanders.
-    frame = gui.createLeoFrame(title)
-    
-    # Create the commander and its subcommanders.
-    c = leoCommands.Commands(frame,fileName)
-    
-    if not g.app.initing:
-        g.doHook("before-create-leo-frame",c=c) # Was 'onCreate': too confusing.
-    
-    frame.finishCreate(c)
-    c.finishCreate() # New in 4.4.
-    
-    # Finish initing the subcommanders.
-    c.undoer.clearUndoState() # Menus must exist at this point.
-    
-    if updateRecentFiles:
-        c.updateRecentFiles(fileName)
-    
-    if not g.app.initing:
-        g.doHook("after-create-leo-frame",c=c)
-        
-    # g.trace(c,frame)
-
-    return c,frame
-#@nonl
-#@+node:ekr.20031218072017.2189:<< compute the window title >>
-# Set the window title and fileName
-if fileName:
-    title = g.computeWindowTitle(fileName)
-else:
-    s = "untitled"
-    n = g.app.numberOfWindows
-    if n > 0:
-        s += str(n)
-    title = g.computeWindowTitle(s)
-    g.app.numberOfWindows = n+1
-
-#@-node:ekr.20031218072017.2189:<< compute the window title >>
-#@-node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
-#@+node:ekr.20031218072017.2812:c.__init__
-def __init__(self,frame,fileName):
-
-    c = self
-    
-    # g.trace('Commands')
-    
-    # Init ivars with self.x instead of c.x to keep Pychecker happy
-    self.frame = frame
-    self.mFileName = fileName
-        # Do _not_ use os_path_norm: it converts an empty path to '.' (!!)
-
-    # g.trace(c) # Do this after setting c.mFileName.
-    c.initIvars()
-
-    # initialize the sub-commanders.
-    # c.finishCreate creates the sub-commanders for edit commands.
-    self.fileCommands   = leoFileCommands.fileCommands(c)
-    self.atFileCommands = leoAtFile.atFile(c)
-    self.importCommands = leoImport.leoImportCommands(c)
-    self.tangleCommands = leoTangle.tangleCommands(c)
-    self.commandsDict = leoEditCommands.createEditCommanders(c)
-
-    if 0 and g.debugGC:
-        print ; print "*** using Null undoer ***" ; print
-        self.undoer = leoUndo.nullUndoer(self)
-    else:
-        self.undoer = leoUndo.undoer(self)
-#@nonl
-#@-node:ekr.20031218072017.2812:c.__init__
-#@+node:ekr.20050920093543:c.finishCreate
-def finishCreate (self):  # New in 4.4.
-    
-    '''Finish creating the commander after frame.finishCreate.'''
-    
-    c = self
-    c.miniBufferWidget = c.frame.miniBufferWidget
-
-    # There is no miniBufferWidget created for leoSettings.leo files.
-    if c.miniBufferWidget:
-    
-        c.keyHandler = leoKeys.keyHandlerClass(c,
-            useGlobalKillbuffer=True,
-            useGlobalRegisters=True)
-            
-        # Create the classes in the keyHandler.
-        leoEditCommands.finishCreateEditCommanders(c)
-        c.keyHandler.finishCreate(self.commandsDict)
-#@nonl
-#@-node:ekr.20050920093543:c.finishCreate
-#@+node:ekr.20031218072017.2176:f.finishCreate
-def finishCreate (self,c):
-    
-    frame = self ; frame.c = c ; gui = g.app.gui
-    
-    # g.trace('tkFrame')
-    self.useMiniBuffer = c.config.getBool('useMiniBuffer')
-    
-    # This must be done after creating the commander.
-    self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
-    << create the toplevel and outer frames >>
-    << create the icon bar >>
-    << create the splitters and their subframes >>
-    << create the status line >>
-    << create the first tree node >>
-    << create the menu bar >>
-    g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
-    g.app.windowList.append(frame)
-    c.initVersion()
-    c.signOnWithVersion()
-    if self.useMiniBuffer:
-        self.miniBufferWidget = self.createMiniBufferWidget()
-    self.body.createBindings(frame)
-#@nonl
-#@+node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
-frame.top = top = Tk.Toplevel()
-gui.attachLeoIcon(top)
-top.title(frame.title)
-top.minsize(30,10) # In grid units.
-
-if g.os_path_exists(g.app.user_xresources_path):
-    frame.top.option_readfile(g.app.user_xresources_path)
-
-frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
-frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
-
-# These don't work on Windows. Because of bugs in window managers,
-# there is NO WAY to know which window is on top!
-frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
-frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
-
-frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
-frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
-
-# Create the outer frame, the 'hull' component.
-self.outerFrame = outerFrame = Tk.Frame(top)
-self.outerFrame.pack(expand=1,fill="both")
-self.componentClass(c,'hull',self.outerFrame)
-#@nonl
-#@-node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
-#@+node:ekr.20041224120552:<< create the icon bar >>
-self.iconBarComponentName = 'iconBar'
-iconBar = self.iconBarClass(c,outerFrame)
-self.iconFrame = iconBar.iconFrame
-
-self.iconBar = self.componentClass(c,
-    self.iconBarComponentName,iconBar.iconFrame,
-    iconBar,iconBar.pack,iconBar.unpack)
-
-self.iconBar.show()
-#@nonl
-#@-node:ekr.20041224120552:<< create the icon bar >>
-#@+node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
-self.createLeoSplitters(outerFrame)
-
-# Create the canvas, tree, log and body.
-frame.canvas = self.createCanvas(self.split2Pane1)
-frame.tree   = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
-frame.log    = leoTkinterLog(frame,self.split2Pane2)
-frame.body   = leoTkinterBody(frame,self.split1Pane2)
-
-self.componentClass(c,'tree',self.split2Pane1, frame.tree, self.packTree, self.unpackTree)
-self.componentClass(c,'log', self.split2Pane2, frame.log,  self.packLog,  self.unpackLog)
-self.componentClass(c,'body',self.split1Pane2, frame.body, self.packBody, self.unpackBody)
-
-# Yes, this an "official" ivar: this is a kludge.
-frame.bodyCtrl = frame.body.bodyCtrl
-
-# Configure.
-frame.setTabWidth(c.tab_width)
-frame.tree.setColorFromConfig()
-self.reconfigurePanes()
-self.body.setFontFromConfig()
-self.body.setColorFromConfig()
-#@nonl
-#@-node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
-#@+node:ekr.20041225103412:<< create the status line >>
-self.statusLineComponentName = 'statusLine'
-statusLine = self.statusLineClass(c,outerFrame)
-
-# Create offical ivars in the frame class.
-self.statusFrame = statusLine.statusFrame
-self.statusLabel = statusLine.labelWidget
-self.statusText  = statusLine.textWidget
-
-self.statusLine = self.componentClass(c,
-    self.statusLineComponentName,
-    statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
-self.statusLine.show() # Show status line by default.
-#@nonl
-#@-node:ekr.20041225103412:<< create the status line >>
-#@+node:ekr.20031218072017.2180:<< create the first tree node >>
-t = leoNodes.tnode()
-v = leoNodes.vnode(c,t)
-p = leoNodes.position(v,[])
-v.initHeadString("NewHeadline")
-
-p.moveToRoot()
-c.beginUpdate()
-try:
-    c.selectVnode(p)
-    c.redraw()
-    c.frame.getFocus()
-    c.editPosition(p)
-finally:
-    c.endUpdate(False)
-#@nonl
-#@-node:ekr.20031218072017.2180:<< create the first tree node >>
-#@+node:ekr.20041225103412.1:<< create the menu bar >>
-self.menu = leoTkinterMenu.leoTkinterMenu(frame)
-v = c.currentVnode()
-if not g.doHook("menu1",c=c,p=v,v=v):
-    frame.menu.createMenuBar(self)
-#@nonl
-#@-node:ekr.20041225103412.1:<< create the menu bar >>
-#@-node:ekr.20031218072017.2176:f.finishCreate
-#@+node:ekr.20050920094633:finishCreate (keyHandler) & helpers
-def finishCreate (self,altX_commandsDict):
-    
-    # g.trace('keyHandler')
-    
-    k = self ; c = k.c ; frame = c.frame
-
-    k.setMiniBufferFunctions(altX_commandsDict)
-    k.setBufferStrokes(c.frame.bodyCtrl)
-    k.setUndoer(c.frame.bodyCtrl,c.undoer.undo)
-    
-    << define utTailEnd >>
-    k.setTailEnd(frame.bodyCtrl,utTailEnd)
-    c.controlCommands.setShutdownHook(c.close)
-    
-    if 0:
-        addTemacsExtensions(k)
-        addTemacsAbbreviations(k)
-        changeKeyStrokes(k,frame.bodyCtrl)
-        
-    k.setStateFunctions()
-    k.setKeystrokeFunctions()
-    k.setControlXFunctions()
-    
-#@nonl
-#@+node:ekr.20050920114619.1:<< define utTailEnd >>
-def utTailEnd (buffer,frame=frame):
-
-    '''A method that Emacs will call with its _tailEnd method'''
-
-    buffer.event_generate('<Key>')
-    buffer.update_idletasks()
-
-    return 'break'
-#@nonl
-#@-node:ekr.20050920114619.1:<< define utTailEnd >>
-#@+node:ekr.20050923174229:setStateFunctions
-def setStateFunctions (self):
-    
-    k = self ; c = k.c
-    
-    self.stateCommands = {
-        
-        ###'negativeArg':      k.callStateFunction,
-        ###'abbrevMode':       c.abbrevCommands.abbrevCommand1,
-        # 'qlisten':          c.queryReplaceCommands.masterQR,
-    
-        'renameBuffer':     c.bufferCommands.renameBuffer,
-       
-        'alterlines':       c.editCommands.processLines,
-        'last-altx':        k.executeLastAltX,
-        'escape':           c.editCommands.watchEscape,
-        'subprocess':       c.controlCommands.subprocesser,
-    }
-#@nonl
-#@-node:ekr.20050923174229:setStateFunctions
-#@+node:ekr.20050923174229.1:setKeystrokFunctions
-def setKeystrokeFunctions (self):
-    
-    k = self ; c = k.c
-    
-    self.keystrokes = {
-        '<Control-s>':      ( 2, c.searchCommands.startIncremental ),
-        '<Control-r>':      ( 2, c.searchCommands.startIncremental ),
-        '<Alt-g>':          ( 1, c.editCommands.startGoto ),
-        '<Alt-z>':          ( 1, c.killBufferCommands.zapToCharacter ),
-        '<Alt-percent>':    ( 1, c.queryReplaceCommands.masterQR ),
-        '<Control-Alt-w>':  ( 1, lambda event: 'break' ),
-    }
-#@-node:ekr.20050923174229.1:setKeystrokFunctions
-#@+node:ekr.20050923183932:setControlXFunctions
-def setControlXFunctions (self):
-
-    k = self ; c = k.c
-
-    self.abbreviationDispatch = {
-        'a':    lambda event: k.abbreviationDispatch(event,1),
-        'a i':  lambda event: k.abbreviationDispatch(event,2),
-    }
-
-    self.rect_commands = {
-        'o': c.rectangleCommands.openRectangle,
-        'c': c.rectangleCommands.clearRectangle,
-        't': c.rectangleCommands.stringRectangle,
-        'y': c.rectangleCommands.yankRectangle,
-        'd': c.rectangleCommands.deleteRectangle,
-        'k': c.rectangleCommands.killRectangle,
-        'r': c.rectangleCommands.activateRectangleMethods,
-    }
-
-    self.register_commands = {
-        1: c.registerCommands.setNextRegister,
-        2: c.registerCommands.executeRegister,
-    }
-
-    self.variety_commands = {
-        'period':       c.editCommands.setFillPrefix,
-        'parenleft':    c.macroCommands.startKBDMacro,
-        'parenright':   c.macroCommands.stopKBDMacro,
-        'semicolon':    c.editCommands.setCommentColumn,
-        'Tab':          c.editCommands.tabIndentRegion,
-        'u':            lambda event: k.doUndo(event,2),
-        'equal':        c.editCommands.lineNumber,
-        'h':            c.editCommands.selectAll,
-        'f':            c.editCommands.setFillColumn,
-        'b':            lambda event, which = 'switch-to-buffer': k.setInBufferMode(event,which),
-        'k':            lambda event, which = 'kill-buffer': emakeyHandlers.setInBufferMode(event,which),
-    }
-#@nonl
-#@-node:ekr.20050923183932:setControlXFunctions
-#@+node:ekr.20050923214044: setMiniBufferFunctions & helpers
-def setMiniBufferFunctions (self,altX_commandsDict):
-    
-    # g.trace('miniBufferClass')
-
-    k = self ; c = k.c
-
-    # Finish this class.
-    k.add_ekr_altx_commands()
-
-    # Command bindings.
-    self.cbDict = k.addCallBackDict() # Creates callback dictionary, primarily used in the master command
-
-    self.negArgs = {
-        '<Alt-c>': c.editCommands.changePreviousWord,
-        '<Alt-u>': c.editCommands.changePreviousWord,
-        '<Alt-l>': c.editCommands.changePreviousWord,
-    }
-
-    self.xcommands = {
-        '<Control-t>': c.editCommands.transposeLines,
-        '<Control-u>': lambda event, way = 'up': c.editCommands.upperLowerRegion(event,way),
-        '<Control-l>': lambda event, way = 'low': c.editCommands.upperLowerRegion(event,way),
-        '<Control-o>': c.editCommands.removeBlankLines,
-        '<Control-i>': c.editFileCommands.insertFile,
-        '<Control-s>': c.editFileCommands.saveFile,
-        '<Control-x>': c.editCommands.exchangePointMark,
-        '<Control-c>': c.controlCommands.shutdown,
-        '<Control-b>': c.bufferCommands.listBuffers,
-        '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
-        '<Delete>': lambda event, back = True: c.editCommands.killsentence(event,back),
-    }
-#@nonl
-#@+node:ekr.20050920085536.11:add_ekr_altx_commands
-def add_ekr_altx_commands (self):
-
-    << define dict d of abbreviations >>
-
-    c = self.c
-    keys = d.keys()
-    keys.sort()
-    for key in keys:
-        val = d.get(key)
-        func = c.commandsDict.get(val)
-        if func:
-            # g.trace(('%-4s' % key),val)
-            c.commandsDict [key] = func
-#@nonl
-#@+node:ekr.20050920085536.12:<< define dict d of abbreviations >>
-d = {
-    'i':    'isearch-forward', 
-    'ib':   'isearch-backward',      
-    'ix':   'isearch-forward-regexp',
-    'irx':  'isearch-backward-regexp',
-    'ixr':  'isearch-backward-regexp',
-    
-    'r':    'replace-string',
-    'rx':   'replace-regex',
-
-    's':    'search-forward',
-    'sb':   'search-backward',
-    
-    'sw':   'word-search-forward',    
-    'sbw':  'word-search-backward',
-    'swb':  'word-search-backward',
-    
-    #
-    # 'a1'  'abbrev-on'
-    # 'a0'  'abbrev-off'
- 
-    ## Don't put these in: they might conflict with other abbreviatsions.
-    # 'fd':   'find-dialog',
-    # 'od':   'options-dialog',
-    
-    # At present these would be Leo Find stuff.
-    # 'f':    'find',
-    # 'fr':   'find-reverse',
-    # 'fx':   'find-regex',
-    # 'frx':  'find-regex-reverse',
-    # 'fxr':  'find-regex-reverse',
-    # 'fw':   'find-word',
-    # 'sf':   'set-find-text',
-    # 'sr':   'set-find-replace',
-    # 'ss':   'script-search',
-    # 'ssr':  'script-search-reverse',
-    
-    ## These could be shared...
-    # 'tfh':  'toggle-find-search-headline',
-    # 'tfb':  'toggle-find-search-body',
-    # 'tfw':  'toggle-find-word',
-    # 'tfn':  'toggle-find-node-only',
-    # 'tfi':  'toggle-find-ignore-case',
-    # 'tfmc': 'toggle-find-mark-changes',
-    # 'tfmf': 'toggle-find-mark-finds',
-}
-#@nonl
-#@-node:ekr.20050920085536.12:<< define dict d of abbreviations >>
-#@-node:ekr.20050920085536.11:add_ekr_altx_commands
-#@+node:ekr.20050920085536.13:addCallBackDict MUST BE GENERALIZED
-def addCallBackDict (self):
-
-    '''Create callback dictionary for masterCommand.'''
-
-    k = self ; c = k.c
-    
-    cbDict = {
-    
-    # The big ones...
-    'Alt-x':        k.alt_X,
-    #'Control-x':    k.startControlX, # Conflicts with XP cut.
-    'Control-c':    k.startControlX, # Conflicts with XP cut.
-    'Control-g':    k.keyboardQuit,
-
-    # Standard Emacs moves...
-    'Alt-less':     lambda event, spot = '1.0': c.editCommands.moveTo(event,spot),
-    'Alt-greater':  lambda event, spot = 'end': c.editCommands.moveTo(event,spot),
-    'Alt-a':        c.editCommands.backSentence,
-    'Alt-e':        c.editCommands.forwardSentence,
-    'Alt-f':       lambda event, way = 1: c.editCommands.moveword(event,way),
-    'Alt-b':        lambda event, way = -1: c.editCommands.moveword(event,way),
-    'Alt-braceright':   lambda event, which = 1: c.editCommands.movingParagraphs(event,which),
-    'Alt-braceleft':    lambda event, which = 0: c.editCommands.movingParagraphs(event,which),
-    'Control-Right':lambda event, way = 1: c.editCommands.moveword(event,way),
-    'Control-Left': lambda event, way = -1: c.editCommands.moveword(event,way),
-    'Control-a':    lambda event, spot = 'insert linestart': c.editCommands.moveTo(event,spot),
-    'Control-e':    lambda event, spot = 'insert lineend': c.editCommands.moveTo(event,spot),
-    'Control-p':    lambda event, which = 'Up': k.manufactureKeyPress(event,which),
-    'Control-n':    lambda event, which = 'Down': k.manufactureKeyPress(event,which),
-    # Conflicts with Find panel.
-    # 'Control-f':    lambda event, which = 'Right': k.manufactureKeyPress(event,which),
-    'Control-b':    lambda event, which = 'Left': k.manufactureKeyPress(event,which),
-    
-    # Standard Emacs deletes...
-        # 'Control-d':        c.editCommands.deleteNextChar,
-        # 'Alt-backslash':    c.editCommands.deleteSpaces,
-        # 'Delete':       lambda event, which = 'BackSpace': k.manufactureKeyPress(event,which),
-    
-    # Kill buffer...
-    'Control-k':    lambda event, frm = 'insert', to = 'insert lineend': k.kill(event,frm,to),
-    'Alt-d':        lambda event, frm = 'insert wordstart', to = 'insert wordend': k.kill(event,frm,to),
-    'Alt-Delete':   lambda event: c.editCommands.deletelastWord(event),
-    "Alt-k":        lambda event: c.editCommands.killsentence(event),
-    
-    # Conflicts with Leo outline moves.
-    #'Alt-Up':       lambda event, spot = 'insert linestart': c.editCommands.moveTo(event,spot),
-    #'Alt-Down':     lambda event, spot = 'insert lineend': c.editCommands.moveTo(event,spot),
-   
-    # I wouldn't use these...
-        # 'Control-o':    c.editCommands.insertNewLine,
-        # "Control-y":    lambda event, frm = 'insert', which = 'c': c.walkKB(event,frm,which),
-        # "Alt-y":        lambda event, frm = "insert", which = 'a': c.walkKB(event,frm,which),
-        # 'Control-s':    None,
-        # 'Control-r':    None,
-        # 'Alt-c':        lambda event, which = 'cap': c.editCommands.capitalize(event,which),
-        # 'Alt-u':        lambda event, which = 'up': c.editCommands.capitalize(event,which),
-        # 'Alt-l':        lambda event, which = 'low': c.editCommands.capitalize(event,which),
-        # 'Alt-t':        lambda event, sw = c.editCommands.swapSpots: c.editCommands.swapWords(event,sw),
-    
-    # Region stuff...
-        # 'Control-Shift-at': c.editCommands.setRegion,
-        # 'Control-w':    lambda event, which = 'd': c.editCommands.killRegion(event,which),
-        # 'Alt-w':        lambda event, which = 'c': c.editCommands.killRegion(event,which),
-        # 'Alt-Control-backslash': c.editCommands.indentRegion,
-        # 'Alt-m':            c.editCommands.backToIndentation,
-        # 'Alt-asciicircum':  c.editCommands.deleteIndentation,
-
-    # Conflicts with swap panes.
-        # 'Control-t':    c.editCommands.swapCharacters,
-        
-    # Misc.
-        # 'Control-u':    None,
-        # 'Control-l':    None,
-        # 'Alt-z':        None,
-        # 'Control-i':    None,
-        # 'Alt-g':        None,
-        # 'Control-v':    lambda event, way = 'south': c.editCommands.screenscroll(event,way),
-        # 'Alt-v':        lambda event, way = 'north': c.editCommands.screenscroll(event,way),
-        # 'Alt-equal':      c.editCommands.countRegion,
-        # 'Alt-parenleft':  c.editCommands.insertParentheses,
-        # 'Alt-parenright': c.editCommands.movePastClose,
-        # 'Alt-percent':  None,
-        # 'Control-c':    None,
-        # 'Control-Alt-w': None,
-        # 'Control-Alt-o': c.editCommands.insertNewLineIndent,
-        # 'Control-j':    c.editCommands.insertNewLineAndTab,
-        # 'Alt-minus':    k.negativeArgument,
-        # 'Alt-slash':    c.editCommands.dynamicExpansion,
-        # 'Control-Alt-slash':    c.editCommands.dynamicExpansion2,
-        # 'Control-u':        lambda event, keystroke = '<Control-u>': k.universalDispatchStateHandler(event,keystroke),
-        # 'Alt-q':        c.editCommands.fillParagraph,
-        # 'Alt-h':        c.editCommands.selectParagraph,
-        # 'Alt-semicolon': c.editCommands.indentToCommentColumn,
-        # 'Alt-s':            c.editCommands.centerLine,
-        # 'Control-z':        c.controlCommands.suspend,
-        # 'Control-Alt-s': c.searchCommands.isearchForwardRegexp,
-            # ### Hmmm.  the lambda doesn't call keyboardQuit
-            # # lambda event, stroke = '<Control-s>': k.startIncremental(event,stroke,which='regexp'),
-        # 'Control-Alt-r': c.searchCommands.isearchBackwardRegexp,
-            # # lambda event, stroke = '<Control-r>': k.startIncremental(event,stroke,which='regexp'),
-        # 'Control-Alt-percent': lambda event: k.startRegexReplace()and k.masterQR(event),
-        # 'Escape':       c.editCommands.watchEscape,
-        # 'Alt-colon':    c.editCommands.startEvaluate,
-        # 'Alt-exclam':   c.emacsControlCommands.startSubprocess,
-        # 'Alt-bar':      lambda event: c.controlCommands.startSubprocess(event,which=1),
-    
-    # Numbered commands: conflict with Leo's Expand to level commands, but so what...
-    'Alt-0': lambda event, stroke = '<Alt-0>', number = 0: k.numberCommand(event,stroke,number),
-    'Alt-1': lambda event, stroke = '<Alt-1>', number = 1: k.numberCommand(event,stroke,number),
-    'Alt-2': lambda event, stroke = '<Alt-2>', number = 2: k.numberCommand(event,stroke,number),
-    'Alt-3': lambda event, stroke = '<Alt-3>', number = 3: k.numberCommand(event,stroke,number),
-    'Alt-4': lambda event, stroke = '<Alt-4>', number = 4: k.numberCommand(event,stroke,number),
-    'Alt-5': lambda event, stroke = '<Alt-5>', number = 5: k.numberCommand(event,stroke,number),
-    'Alt-6': lambda event, stroke = '<Alt-6>', number = 6: k.numberCommand(event,stroke,number),
-    'Alt-7': lambda event, stroke = '<Alt-7>', number = 7: k.numberCommand(event,stroke,number),
-    'Alt-8': lambda event, stroke = '<Alt-8>', number = 8: k.numberCommand(event,stroke,number),
-    'Alt-9': lambda event, stroke = '<Alt-9>', number = 9: k.numberCommand(event,stroke,number),
-    
-    # Emacs undo.
-        # 'Control-underscore': k.doUndo,
-    }
-
-    return cbDict
-#@nonl
-#@-node:ekr.20050920085536.13:addCallBackDict MUST BE GENERALIZED
-#@+node:ekr.20050920085536.15:addToDoAltX
-def addToDoAltX (self,name,macro):
-
-    '''Adds macro to Alt-X commands.'''
-    
-    k= self ; c = k.c
-
-    if c.commandsDict.has_key(name):
-        return False
-
-    def exe (event,macro=macro):
-        k.stopControlX(event)
-        return k._executeMacro(macro,event.widget)
-
-    c.commandsDict [name] = exe
-    k.namedMacros [name] = macro
-    return True
-#@nonl
-#@-node:ekr.20050920085536.15:addToDoAltX
-#@+node:ekr.20050920085536.16:bindKey
-def bindKey (self,w,evstring):
-    
-    k = self
-
-    callback = k.cbDict.get(evstring)
-    evstring = '<%s>' % evstring
-    
-    # g.trace(evstring)
-
-    def f (event):
-        general = evstring == '<Key>'
-        return k.masterCommand(event,callback,evstring,general)
-
-    if evstring == '<Key>':
-        w.bind(evstring,f,'+')
-    else:
-        w.bind(evstring,f)
-#@nonl
-#@-node:ekr.20050920085536.16:bindKey
-#@+node:ekr.20050920085536.17:setBufferStrokes  (creates svars & <key> bindings)
-def setBufferStrokes (self,w):
-
-    '''Sets key bindings for Tk Text widget w.'''
-    
-    k = self
-
-    # Create one binding for each entry in cbDict.
-    for key in k.cbDict:
-        k.bindKey(w,key)
-
-    # Add a binding for <Key> events, so _all_ key events go through masterCommand.
-    k.bindKey(w,'Key')
-#@nonl
-#@-node:ekr.20050920085536.17:setBufferStrokes  (creates svars & <key> bindings)
-#@-node:ekr.20050923214044: setMiniBufferFunctions & helpers
-#@+node:ekr.20050920085536.64:manufactureKeyPress
-def manufactureKeyPress (self,event,which):
-
-    w = event.widget
-    w.event_generate('<Key>',keysym=which)
-    w.update_idletasks()
-    
-    return 'break'
-#@nonl
-#@-node:ekr.20050920085536.64:manufactureKeyPress
-#@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
-#@+node:ekr.20031218072017.3941: Birth & Death (tkFrame)
-#@+node:ekr.20031218072017.1801:__init__ (tkFrame)
-def __init__(self,title,gui):
-
-    # Init the base class.
-    leoFrame.leoFrame.__init__(self,gui)
-
-    self.title = title
-    self.useMiniBuffer = False
-
-    leoTkinterFrame.instances += 1
-
-    self.c = None # Set in finishCreate.
-    self.iconBar = None
-
-    << set the leoTkinterFrame ivars >>
-#@nonl
-#@+node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
-# "Official ivars created in createLeoFrame and its allies.
-self.bar1 = None
-self.bar2 = None
-self.body = None
-self.bodyBar = None
-self.bodyCtrl = None
-self.bodyXBar = None
-self.f1 = self.f2 = None
-self.findPanel = None # Inited when first opened.
-self.iconFrame = None 
-self.log = None
-self.canvas = None
-self.outerFrame = None 
-self.statusFrame = None 
-self.statusText = None 
-self.statusLabel = None 
-self.top = None
-self.tree = None
-self.treeBar = None
-
-# Used by event handlers...
-self.controlKeyIsDown = False # For control-drags
-self.draggedItem = None
-self.isActive = True
-self.redrawCount = 0
-self.revertHeadline = None # Previous headline text for abortEditLabel.
-self.wantedWidget = None
-self.wantedCallbackScheduled = False
-self.scrollWay = None
-#@nonl
-#@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
-#@-node:ekr.20031218072017.1801:__init__ (tkFrame)
-#@+node:ekr.20031218072017.3942:__repr__ (tkFrame)
-def __repr__ (self):
-
-    return "<leoTkinterFrame: %s>" % self.title
-#@-node:ekr.20031218072017.3942:__repr__ (tkFrame)
-#@+node:ekr.20041221122440:f.component & components
-def component (self,name):
-    
-    return self.componentsDict.get(name)
-    
-def components (self):
-
-    return self.componentsDict.keys()
-#@nonl
-#@-node:ekr.20041221122440:f.component & components
-#@+node:ekr.20050920094212:f.createMiniBufferWidget
-def createMiniBufferWidget (self):
-    
-
-    '''Create the minbuffer below the status line.'''
-    
-    frame = self
-    f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
-    f.pack(side='bottom',fill='x')
-
-    lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
-    lab.pack(side='left')
-
-    label = Tk.Label(f,relief='groove',justify='left',anchor='w')
-    label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
-
-    return label
-#@nonl
-#@-node:ekr.20050920094212:f.createMiniBufferWidget
-#@+node:ekr.20031218072017.2176:f.finishCreate
-def finishCreate (self,c):
-    
-    frame = self ; frame.c = c ; gui = g.app.gui
-    
-    # g.trace('tkFrame')
-    self.useMiniBuffer = c.config.getBool('useMiniBuffer')
-    
-    # This must be done after creating the commander.
-    self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
-    << create the toplevel and outer frames >>
-    << create the icon bar >>
-    << create the splitters and their subframes >>
-    << create the status line >>
-    << create the first tree node >>
-    << create the menu bar >>
-    g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
-    g.app.windowList.append(frame)
-    c.initVersion()
-    c.signOnWithVersion()
-    if self.useMiniBuffer:
-        self.miniBufferWidget = self.createMiniBufferWidget()
-    self.body.createBindings(frame)
-#@nonl
-#@+node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
-frame.top = top = Tk.Toplevel()
-gui.attachLeoIcon(top)
-top.title(frame.title)
-top.minsize(30,10) # In grid units.
-
-if g.os_path_exists(g.app.user_xresources_path):
-    frame.top.option_readfile(g.app.user_xresources_path)
-
-frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
-frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
-
-# These don't work on Windows. Because of bugs in window managers,
-# there is NO WAY to know which window is on top!
-frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
-frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
-
-frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
-frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
-
-# Create the outer frame, the 'hull' component.
-self.outerFrame = outerFrame = Tk.Frame(top)
-self.outerFrame.pack(expand=1,fill="both")
-self.componentClass(c,'hull',self.outerFrame)
-#@nonl
-#@-node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
-#@+node:ekr.20041224120552:<< create the icon bar >>
-self.iconBarComponentName = 'iconBar'
-iconBar = self.iconBarClass(c,outerFrame)
-self.iconFrame = iconBar.iconFrame
-
-self.iconBar = self.componentClass(c,
-    self.iconBarComponentName,iconBar.iconFrame,
-    iconBar,iconBar.pack,iconBar.unpack)
-
-self.iconBar.show()
-#@nonl
-#@-node:ekr.20041224120552:<< create the icon bar >>
-#@+node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
-self.createLeoSplitters(outerFrame)
-
-# Create the canvas, tree, log and body.
-frame.canvas = self.createCanvas(self.split2Pane1)
-frame.tree   = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
-frame.log    = leoTkinterLog(frame,self.split2Pane2)
-frame.body   = leoTkinterBody(frame,self.split1Pane2)
-
-self.componentClass(c,'tree',self.split2Pane1, frame.tree, self.packTree, self.unpackTree)
-self.componentClass(c,'log', self.split2Pane2, frame.log,  self.packLog,  self.unpackLog)
-self.componentClass(c,'body',self.split1Pane2, frame.body, self.packBody, self.unpackBody)
-
-# Yes, this an "official" ivar: this is a kludge.
-frame.bodyCtrl = frame.body.bodyCtrl
-
-# Configure.
-frame.setTabWidth(c.tab_width)
-frame.tree.setColorFromConfig()
-self.reconfigurePanes()
-self.body.setFontFromConfig()
-self.body.setColorFromConfig()
-#@nonl
-#@-node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
-#@+node:ekr.20041225103412:<< create the status line >>
-self.statusLineComponentName = 'statusLine'
-statusLine = self.statusLineClass(c,outerFrame)
-
-# Create offical ivars in the frame class.
-self.statusFrame = statusLine.statusFrame
-self.statusLabel = statusLine.labelWidget
-self.statusText  = statusLine.textWidget
-
-self.statusLine = self.componentClass(c,
-    self.statusLineComponentName,
-    statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
-self.statusLine.show() # Show status line by default.
-#@nonl
-#@-node:ekr.20041225103412:<< create the status line >>
-#@+node:ekr.20031218072017.2180:<< create the first tree node >>
-t = leoNodes.tnode()
-v = leoNodes.vnode(c,t)
-p = leoNodes.position(v,[])
-v.initHeadString("NewHeadline")
-
-p.moveToRoot()
-c.beginUpdate()
-try:
-    c.selectVnode(p)
-    c.redraw()
-    c.frame.getFocus()
-    c.editPosition(p)
-finally:
-    c.endUpdate(False)
-#@nonl
-#@-node:ekr.20031218072017.2180:<< create the first tree node >>
-#@+node:ekr.20041225103412.1:<< create the menu bar >>
-self.menu = leoTkinterMenu.leoTkinterMenu(frame)
-v = c.currentVnode()
-if not g.doHook("menu1",c=c,p=v,v=v):
-    frame.menu.createMenuBar(self)
-#@nonl
-#@-node:ekr.20041225103412.1:<< create the menu bar >>
-#@-node:ekr.20031218072017.2176:f.finishCreate
-#@+node:ekr.20031218072017.3944:f.createCanvas & helpers
-def createCanvas (self,parentFrame,pack=True):
-    
-    c = self.c
-    
-    scrolls = c.config.getBool('outline_pane_scrolls_horizontally')
-    scrolls = g.choose(scrolls,1,0)
-    
-    if use_Pmw and Pmw:
-        canvas = self.createPmwTreeCanvas(parentFrame,scrolls,pack)
-    else:
-        canvas = self.createTkTreeCanvas(parentFrame,scrolls,pack)
-
-    return canvas
-#@nonl
-#@+node:ekr.20041221071131:createPmwTreeCanvas
-def createPmwTreeCanvas (self,parentFrame,hScrollMode,pack):
-    
-    hscrollmode = g.choose(hScrollMode,'dynamic','none')
-    
-    self.scrolledCanvas = scrolledCanvas = Pmw.ScrolledCanvas(
-        parentFrame,
-        hscrollmode=hscrollmode,
-        vscrollmode='dynamic')
-
-    if pack:
-        scrolledCanvas.pack(side='top',expand=1,fill="both")
-
-    self.treeBar = scrolledCanvas.component('vertscrollbar')
-    
-    canvas = scrolledCanvas.component('canvas')
-    canvas.configure(background='white')
-    
-    return canvas
-#@nonl
-#@-node:ekr.20041221071131:createPmwTreeCanvas
-#@+node:ekr.20041221071131.1:createTkTreeCanvas
-def createTkTreeCanvas (self,parentFrame,scrolls,pack):
-    
-    frame = self
-    
-    canvas = Tk.Canvas(parentFrame,name="canvas",
-        bd=0,bg="white",relief="flat")
-
-    frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
-    
-    # Bind mouse wheel event to canvas
-    if sys.platform != "win32": # Works on 98, crashes on XP.
-        canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-        if 1: # New in 4.3.
-            << workaround for mouse-wheel problems >>
-        
-    canvas['yscrollcommand'] = self.setCallback
-    treeBar['command']     = self.yviewCallback
-    treeBar.pack(side="right", fill="y")
-    if scrolls: 
-        treeXBar = Tk.Scrollbar( 
-            parentFrame,name='treeXBar',orient="horizontal") 
-        canvas['xscrollcommand'] = treeXBar.set 
-        treeXBar['command'] = canvas.xview 
-        treeXBar.pack(side="bottom", fill="x")
-    
-    if pack:
-        canvas.pack(expand=1,fill="both")
-
-    canvas.bind("<Button-1>", frame.OnActivateTree)
-
-    # Handle mouse wheel in the outline pane.
-    if sys.platform == "linux2": # This crashes tcl83.dll
-        canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-    if 1:
-        << do scrolling by hand in a separate thread >>
-    
-    # g.print_bindings("canvas",canvas)
-    return canvas
-#@nonl
-#@+node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
-# Handle mapping of mouse-wheel to buttons 4 and 5.
-
-def mapWheel(e):
-    if e.num == 4: # Button 4
-        e.delta = 120
-        return frame.OnMouseWheel(e)
-    elif e.num == 5: # Button 5
-        e.delta = -120
-        return frame.OnMouseWheel(e)
-
-canvas.bind("<ButtonPress>",mapWheel,add=1)
-#@nonl
-#@-node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
-#@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
-# New in 4.3: replaced global way with scrollWay ivar.
-ev = threading.Event()
-
-def run(self=self,canvas=canvas,ev=ev):
-
-    while 1:
-        ev.wait()
-        if self.scrollWay =='Down': canvas.yview("scroll", 1,"units")
-        else:                       canvas.yview("scroll",-1,"units")
-        time.sleep(.1)
-
-t = threading.Thread(target = run)
-t.setDaemon(True)
-t.start()
-
-def scrollUp(event): scrollUpOrDown(event,'Down')
-def scrollDn(event): scrollUpOrDown(event,'Up')
-    
-def scrollUpOrDown(event,theWay):
-    if event.widget!=canvas: return
-    if 0: # This seems to interfere with scrolling.
-        if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
-    ev.set()
-    self.scrollWay = theWay
-        
-def off(event,ev=ev,canvas=canvas):
-    if event.widget!=canvas: return
-    ev.clear()
-
-if 1: # Use shift-click
-    # Shift-button-1 scrolls up, Shift-button-2 scrolls down
-    canvas.bind_all('<Shift Button-3>',scrollDn)
-    canvas.bind_all('<Shift Button-1>',scrollUp)
-    canvas.bind_all('<Shift ButtonRelease-1>',off)
-    canvas.bind_all('<Shift ButtonRelease-3>',off)
-else: # Use plain click.
-    canvas.bind_all( '<Button-3>',scrollDn)
-    canvas.bind_all( '<Button-1>',scrollUp)
-    canvas.bind_all( '<ButtonRelease-1>',off)
-    canvas.bind_all( '<ButtonRelease-3>',off)
-#@nonl
-#@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
-#@-node:ekr.20041221071131.1:createTkTreeCanvas
-#@-node:ekr.20031218072017.3944:f.createCanvas & helpers
-#@+node:ekr.20041221123325:createLeoSplitters & helpers
-def createLeoSplitters (self,parentFrame):
-    
-    if use_Pmw and Pmw:
-        << create Pmw splitters and their components >>
-    else:
-        # Splitter 1 is the main splitter containing splitter2 and the body pane.
-        f1,bar1,split1Pane1,split1Pane2 = self.createLeoTkSplitter(
-            parentFrame,self.splitVerticalFlag,'splitter1')
-
-        self.f1,self.bar1 = f1,bar1
-        self.split1Pane1,self.split1Pane2 = split1Pane1,split1Pane2
-
-        # Splitter 2 is the secondary splitter containing the tree and log panes.
-        f2,bar2,split2Pane1,split2Pane2 = self.createLeoTkSplitter(
-            split1Pane1,not self.splitVerticalFlag,'splitter2')
-
-        self.f2,self.bar2 = f2,bar2
-        self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
-#@nonl
-#@+node:ekr.20041223130032:<< create Pmw splitters and their components >>
-# Create splitter1 and its components.
-splitter1 = self.createLeoPmwSplitter(parentFrame,self.splitVerticalFlag,'splitter1')
-self.split1Pane1 = splitter2Frame = splitter1.add('splitter2Frame',min=50,size=300)
-self.split1Pane2 = splitter1.add('body',min=50,size=300)
-
-# Create splitter2 and its components.
-splitter2 = self.createLeoPmwSplitter(splitter2Frame,not self.splitVerticalFlag,'splitter2')
-self.split2Pane1 = splitter2.add('outline',min=50,size=300)
-self.split2Pane2 = splitter2.add('log',min=50,size=50)
-
-# Set the colors of the separator and handle after adding the dynamic frames.
-for splitter in (splitter1,splitter2):
-    bar = splitter.component('separator-1')
-    bar.configure(background='LightSteelBlue2')
-    handle = splitter.component('handle-1')
-    handle.configure(background='SteelBlue2')
-#@nonl
-#@-node:ekr.20041223130032:<< create Pmw splitters and their components >>
-#@+node:ekr.20041221195402:Pmw...
-#@+node:ekr.20041221073427:createLeoPmwSplitter
-def createLeoPmwSplitter (self,parent,verticalFlag,name):
-    
-    c = self.c
-    
-    orient = g.choose(verticalFlag,'vertical','horizontal')
-    command = g.choose(name=='splitter1',
-        self.onPmwResizeSplitter1,self.onPmwResizeSplitter2)
-
-    panedFrame = Pmw.PanedWidget(parent,
-        orient=orient,
-        separatorthickness = 6, # default is 2
-        handlesize = 8,         # default is 8
-        command = command)
-
-    panedFrame.pack(expand=1,fill='both')
-    
-    self.componentClass(c,name,panedFrame,panedFrame)
-
-    return panedFrame
-#@nonl
-#@-node:ekr.20041221073427:createLeoPmwSplitter
-#@+node:ekr.20031218072017.3946:resizePanesToRatio
-def resizePanesToRatio(self,ratio,ratio2):
-    
-    # g.trace(ratio,ratio2)
-    
-    if use_Pmw and Pmw:
-        << resize the Pmw panes >>
-    else:
-        self.divideLeoSplitter(self.splitVerticalFlag,ratio)
-        self.divideLeoSplitter(not self.splitVerticalFlag,ratio2)
-#@nonl
-#@+node:ekr.20050104084531:<< resize the Pmw panes >>
-self.ratio = ratio
-self.secondary_ratio = ratio2
-splitter1 = self.component('splitter1').getObject()
-splitter2 = self.component('splitter2').getObject()
-
-if self.splitVerticalFlag:
-    # Use ratio to set splitter2 height.
-    size = ratio * float(splitter1.winfo_height())
-    splitter1.configurepane('splitter2Frame',size=int(size))
-    # Use ratio2 to set outline width.
-    size = ratio2 * float(splitter2.winfo_width())
-    splitter2.configurepane('outline',size=int(size))
-else:
-    # Use ratio to set splitter2 width.
-    size = ratio * float(splitter1.winfo_width())
-    splitter1.configurepane('splitter2Frame',size=int(size))
-    # Use ratio2 to set outline height.
-    size = ratio2 * float(splitter2.winfo_height())
-    splitter2.configurepane('outline',size=int(size))
-#@nonl
-#@-node:ekr.20050104084531:<< resize the Pmw panes >>
-#@-node:ekr.20031218072017.3946:resizePanesToRatio
-#@+node:ekr.20041221075743:onPmwResizeSplitter1/2
-@ These methods cause problems because Pmw.PanedWidget's calls these methods way too often.
-
-We don't need to remember changes to pane sizes, for several reasons:
-1. The initial secondary ratio is always set by leoFrame.initialRatios().
-    - Remembering this ratio implies a change to the file format and is not worth the cost.
-    - The user can set these initial ratios with user options.
-2. The only benefit of remembering the secondary ratio is when using the Equal Sized Panes command.
-    - But resetting the secondary ratio to the default secondary ratio is good enough.
-3. Not remembering these ratios simplifies the code enough to be worth doing.
-@c
-
-def onPmwResizeSplitter1 (self,sizes):
-    if 0: # Don't try to remember size changes.
-        if not self.initing:
-            n1,n2 = sizes
-            n1,n2 = float(n1),float(n2)
-            self.ratio = n1/(n1+n2)
-            # g.trace(self.ratio)
-    
-def onPmwResizeSplitter2 (self,sizes):
-    if 0: # Don't try to remember size changes.
-        if not self.initing:
-            n1,n2 = sizes
-            n1,n2 = float(n1),float(n2)
-            self.secondary_ratio = n1/(n1+n2)
-            # g.trace(self.secondary_ratio)
-#@nonl
-#@-node:ekr.20041221075743:onPmwResizeSplitter1/2
-#@-node:ekr.20041221195402:Pmw...
-#@+node:ekr.20041221185246:Tk...
-@ The key invariants used throughout this code:
-
-1. self.splitVerticalFlag tells the alignment of the main splitter and
-2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
-
-Only the general-purpose divideAnySplitter routine doesn't know about these invariants.  So most of this code is specialized for Leo's window.  OTOH, creating a single splitter window would be much easier than this code.
-#@nonl
-#@+node:ekr.20041221073427.1:createLeoTkSplitter
-def createLeoTkSplitter (self,parent,verticalFlag,componentName):
-    
-    c = self.c
-
-    # Create the frames.
-    f = Tk.Frame(parent,bd=0,relief="flat")
-    f.pack(expand=1,fill="both",pady=1)
-    
-    f1 = Tk.Frame(f)
-    f2 = Tk.Frame(f)
-    bar = Tk.Frame(f,bd=2,relief="raised",bg="LightSteelBlue2")
-
-    # Configure and place the frames.
-    self.configureBar(bar,verticalFlag)
-    self.bindBar(bar,verticalFlag)
-    self.placeSplitter(bar,f1,f2,verticalFlag)
-    
-    # Define the splitter, bar and outer frame components.
-    # It would be useless to define placed components here.
-    # N.B. All frames managed by the placer must descend from splitterFrame1 or splitterFrame2
-    self.componentClass(self.c,componentName,f)
-    if componentName == 'splitter1':
-        self.componentClass(c,'splitter1Frame',f)
-        self.componentClass(c,'splitBar1',bar)
-    else:
-        self.componentClass(c,'splitter2Frame',f)
-        self.componentClass(c,'splitBar2',bar)
-
-    return f, bar, f1, f2
-#@nonl
-#@-node:ekr.20041221073427.1:createLeoTkSplitter
-#@+node:ekr.20031218072017.3947:bindBar
-def bindBar (self, bar, verticalFlag):
-
-    if verticalFlag == self.splitVerticalFlag:
-        bar.bind("<B1-Motion>", self.onDragMainSplitBar)
-
-    else:
-        bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
-#@nonl
-#@-node:ekr.20031218072017.3947:bindBar
-#@+node:ekr.20031218072017.3949:divideAnySplitter
-# This is the general-purpose placer for splitters.
-# It is the only general-purpose splitter code in Leo.
-
-def divideAnySplitter (self, frac, verticalFlag, bar, pane1, pane2):
-
-    if verticalFlag:
-        # Panes arranged vertically; horizontal splitter bar
-        bar.place(rely=frac)
-        pane1.place(relheight=frac)
-        pane2.place(relheight=1-frac)
-    else:
-        # Panes arranged horizontally; vertical splitter bar
-        bar.place(relx=frac)
-        pane1.place(relwidth=frac)
-        pane2.place(relwidth=1-frac)
-#@nonl
-#@-node:ekr.20031218072017.3949:divideAnySplitter
-#@+node:ekr.20031218072017.3950:divideLeoSplitter
-# Divides the main or secondary splitter, using the key invariant.
-def divideLeoSplitter (self, verticalFlag, frac):
-
-    if self.splitVerticalFlag == verticalFlag:
-        self.divideLeoSplitter1(frac,verticalFlag)
-        self.ratio = frac # Ratio of body pane to tree pane.
-    else:
-        self.divideLeoSplitter2(frac,verticalFlag)
-        self.secondary_ratio = frac # Ratio of tree pane to log pane.
-
-# Divides the main splitter.
-def divideLeoSplitter1 (self, frac, verticalFlag): 
-    self.divideAnySplitter(frac, verticalFlag,
-        self.bar1, self.split1Pane1, self.split1Pane2)
-
-# Divides the secondary splitter.
-def divideLeoSplitter2 (self, frac, verticalFlag): 
-    self.divideAnySplitter (frac, verticalFlag,
-        self.bar2, self.split2Pane1, self.split2Pane2)
-#@nonl
-#@-node:ekr.20031218072017.3950:divideLeoSplitter
-#@+node:ekr.20031218072017.3951:onDrag...
-def onDragMainSplitBar (self, event):
-    self.onDragSplitterBar(event,self.splitVerticalFlag)
-
-def onDragSecondarySplitBar (self, event):
-    self.onDragSplitterBar(event,not self.splitVerticalFlag)
-
-def onDragSplitterBar (self, event, verticalFlag):
-
-    # x and y are the coordinates of the cursor relative to the bar, not the main window.
-    bar = event.widget
-    x = event.x
-    y = event.y
-    top = bar.winfo_toplevel()
-
-    if verticalFlag:
-        # Panes arranged vertically; horizontal splitter bar
-        wRoot	= top.winfo_rooty()
-        barRoot = bar.winfo_rooty()
-        wMax	= top.winfo_height()
-        offset = float(barRoot) + y - wRoot
-    else:
-        # Panes arranged horizontally; vertical splitter bar
-        wRoot	= top.winfo_rootx()
-        barRoot = bar.winfo_rootx()
-        wMax	= top.winfo_width()
-        offset = float(barRoot) + x - wRoot
-
-    # Adjust the pixels, not the frac.
-    if offset < 3: offset = 3
-    if offset > wMax - 2: offset = wMax - 2
-    # Redraw the splitter as the drag is occuring.
-    frac = float(offset) / wMax
-    # g.trace(frac)
-    self.divideLeoSplitter(verticalFlag, frac)
-#@nonl
-#@-node:ekr.20031218072017.3951:onDrag...
-#@+node:ekr.20031218072017.3952:placeSplitter
-def placeSplitter (self,bar,pane1,pane2,verticalFlag):
-
-    if use_Pmw and Pmw:
-        return
-
-    if verticalFlag:
-        # Panes arranged vertically; horizontal splitter bar
-        pane1.place(relx=0.5, rely =   0, anchor="n", relwidth=1.0, relheight=0.5)
-        pane2.place(relx=0.5, rely = 1.0, anchor="s", relwidth=1.0, relheight=0.5)
-        bar.place  (relx=0.5, rely = 0.5, anchor="c", relwidth=1.0)
-    else:
-        # Panes arranged horizontally; vertical splitter bar
-        # adj gives tree pane more room when tiling vertically.
-        adj = g.choose(verticalFlag != self.splitVerticalFlag,0.65,0.5)
-        pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=adj)
-        pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
-        bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
-#@nonl
-#@-node:ekr.20031218072017.3952:placeSplitter
-#@+node:ekr.20031218072017.998:Scrolling callbacks (frame)
-def setCallback (self,*args,**keys):
-    
-    """Callback to adjust the scrollbar.
-    
-    Args is a tuple of two floats describing the fraction of the visible area."""
-
-    # g.trace(self.tree.redrawCount,args)
-
-    apply(self.treeBar.set,args,keys)
-
-    if self.tree.allocateOnlyVisibleNodes:
-        self.tree.setVisibleArea(args)
-        
-def yviewCallback (self,*args,**keys):
-    
-    """Tell the canvas to scroll"""
-    
-    # g.trace(vyiewCallback",args,keys)
-
-    if self.tree.allocateOnlyVisibleNodes:
-        self.tree.allocateNodesBeforeScrolling(args)
-
-    apply(self.canvas.yview,args,keys)
-#@nonl
-#@-node:ekr.20031218072017.998:Scrolling callbacks (frame)
-#@-node:ekr.20041221185246:Tk...
-#@-node:ekr.20041221123325:createLeoSplitters & helpers
-#@+node:ekr.20031218072017.3964:Destroying the frame
-#@+node:ekr.20031218072017.1975:destroyAllObjects
-def destroyAllObjects (self):
-
-    """Clear all links to objects in a Leo window."""
-
-    frame = self ; c = self.c ; tree = frame.tree ; body = self.body
-
-    # Do this first.
-    << clear all vnodes and tnodes in the tree >>
-
-    # Destroy all ivars in subcommanders.
-    g.clearAllIvars(c.atFileCommands)
-    g.clearAllIvars(c.fileCommands)
-    g.clearAllIvars(c.importCommands)
-    g.clearAllIvars(c.tangleCommands)
-    g.clearAllIvars(c.undoer)
-    g.clearAllIvars(c)
-    g.clearAllIvars(body.colorizer)
-    g.clearAllIvars(body)
-    g.clearAllIvars(tree)
-
-    # This must be done last.
-    frame.destroyAllPanels()
-    g.clearAllIvars(frame)
-#@nonl
-#@+node:ekr.20031218072017.1976:<< clear all vnodes and tnodes in the tree>>
-# Using a dict here is essential for adequate speed.
-vList = [] ; tDict = {}
-
-for p in c.allNodes_iter():
-    vList.append(p.v)
-    if p.v.t:
-        key = id(p.v.t)
-        if not tDict.has_key(key):
-            tDict[key] = p.v.t
-
-for key in tDict.keys():
-    g.clearAllIvars(tDict[key])
-
-for v in vList:
-    g.clearAllIvars(v)
-
-vList = [] ; tDict = {} # Remove these references immediately.
-#@nonl
-#@-node:ekr.20031218072017.1976:<< clear all vnodes and tnodes in the tree>>
-#@-node:ekr.20031218072017.1975:destroyAllObjects
-#@+node:ekr.20031218072017.3965:destroyAllPanels
-def destroyAllPanels (self):
-
-    """Destroy all panels attached to this frame."""
-    
-    panels = (self.comparePanel, self.colorPanel, self.findPanel, self.fontPanel, self.prefsPanel)
-
-    for panel in panels:
-        if panel:
-            panel.top.destroy()
-#@nonl
-#@-node:ekr.20031218072017.3965:destroyAllPanels
-#@+node:ekr.20031218072017.1974:destroySelf
-def destroySelf (self):
-    
-    top = self.top # Remember this: we are about to destroy all of our ivars!
-    
-    # g.trace(self)
-
-    self.destroyAllObjects()
-
-    top.destroy()
-#@nonl
-#@-node:ekr.20031218072017.1974:destroySelf
-#@-node:ekr.20031218072017.3964:Destroying the frame
-#@-node:ekr.20031218072017.3941: Birth & Death (tkFrame)
-#@-node:ekr.20050922074229.2:(Startup code)
-#@+node:ekr.20050920084036.4:g.longestCommonPrefix & g.itemsMatchingPrefixInList
-def longestCommonPrefix (s1,s2):
-    
-    '''Find the longest prefix common to strings s1 and s2.'''
-    
-    prefix = ''
-    for ch in s1:
-        if s2.startswith(prefix + ch):
-            prefix = prefix + ch
-        else:
-            return prefix
-    return prefix
-        
-def itemsMatchingPrefixInList (s,aList):
-    
-    '''This method returns a sorted list items of aList whose prefix is s.
-    
-    It also returns the longest common prefix of all the matches.'''
-
-    if s: pmatches = [a for a in aList if a.startswith(s)]
-    else: pmatches = []
-        
-    if pmatches:
-        pmatches.sort()
-        common_prefix = reduce(g.longestCommonPrefix,pmatches)
-    else:
-        common_prefix = ''
-
-    # g.trace(repr(s),len(pmatches))
-    return pmatches,common_prefix
-#@nonl
-#@-node:ekr.20050920084036.4:g.longestCommonPrefix & g.itemsMatchingPrefixInList
-#@-node:ekr.20050920084720.1:(Move temacs/usetemacs code into Leo's core)
 #@+node:ekr.20050929075341:Added option for selected body text
 #@+node:ekr.20050929075920:Request
 @nocolor
@@ -16630,6 +11580,434 @@ if keys:
 #@-node:ekr.20031218072017.1564:<< handle unknown attributes >>
 #@-node:ekr.20031218072017.1561:getTnode (changed for 4.4)
 #@-node:ekr.20050928112629:Fixed bug in Leo's read logic
+#@+node:ekr.20050929084510:Fixed problem with auto-indent
+@
+
+idle_body_key was being called twice for every keystroke.
+Why this worked at all is still a bit of a mystery.
+The fix was to eliminate the binding to <Key> in tkBody.createBindings.
+
+To do: remove the cut/copy/paste bindings in tkBody.createBindings.
+#@nonl
+#@+node:ekr.20050920085536.65: masterCommand
+def masterCommand (self,event,method,stroke,general):
+    
+    '''This is the central routing method of the Emacs class.
+    All commands and keystrokes pass through here.'''
+    
+    # Note: the _L symbols represent *either* special key.
+    k = self ; c = k.c
+    special = event.keysym in ('Control_L','Alt_L','Shift_L')
+    k.stroke = stroke
+
+    inserted = not special or (
+        not general and (len(k.keysymHistory) == 0 or k.keysymHistory [0] != event.keysym))
+
+    if inserted:
+        # g.trace('general',general,event.keysym)
+        << add character to history >>
+
+    if c.macroCommands.macroing:
+        << handle macro >>
+
+    if stroke == '<Control-g>':
+        k.previousStroke = stroke
+        return k.keyboardQuit(event)
+
+    if k.inState():
+        k.previousStroke = stroke
+        return k.callStateFunction(event)
+
+    if k.hasKeyStroke(stroke):
+        g.trace('hasKeyStroke')
+        k.previousStroke = stroke
+        k.callKeystrokeFunction(event)
+
+    if k.regx.iter:
+        try:
+            k.regXKey = event.keysym
+            k.regx.iter.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    if k.abbrevOn:
+        if c.abbrevCommands._expandAbbrev(event):
+            return 'break'
+
+    if method:
+        rt = method(event)
+        k.previousStroke = stroke
+        return rt
+    
+    else:
+        c.frame.body.onBodyKey(event)
+        return None # Not 'break'
+#@+node:ekr.20050920085536.67:<< add character to history >>
+# Don't add multiple special characters to history.
+
+k.keysymHistory.insert(0,event.keysym)
+
+if len(event.char) > 0:
+    if len(keyHandlerClass.lossage) > 99:
+        keyHandlerClass.lossage.pop()
+    keyHandlerClass.lossage.insert(0,event.char)
+
+if 0: # traces
+    g.trace(event.keysym,stroke)
+    g.trace(k.keysymHistory)
+    g.trace(keyHandlerClass.lossage)
+#@nonl
+#@-node:ekr.20050920085536.67:<< add character to history >>
+#@+node:ekr.20050920085536.66:<< handle macro >>
+if c.macroCommands.macroing == 2 and stroke != '<Control-x>':
+    return k.nameLastMacro(event)
+    
+elif c.macroCommands.macroing == 3 and stroke != '<Control-x>':
+    return k.getMacroName(event)
+    
+else:
+   k.recordKBDMacro(event,stroke)
+#@nonl
+#@-node:ekr.20050920085536.66:<< handle macro >>
+#@-node:ekr.20050920085536.65: masterCommand
+#@+node:ekr.20031218072017.1330:onBodyKey
+def onBodyKey (self,event):
+    
+    """Handle any key press event in the body pane."""
+
+    c = self.c ; ch = event.char
+
+    # g.trace(repr(ch))
+
+    # This translation is needed on MacOS.
+    if ch == '':
+        d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
+        ch = d.get(event.keysym,'')
+
+    oldSel = c.frame.body.getTextSelection()
+    
+    p = c.currentPosition()
+        
+    # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
+    self.c.frame.body.colorizer.interrupt()
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
+#@nonl
+#@+node:ekr.20040105223536:handleStatusLineKey
+def handleStatusLineKey (self,event):
+    
+    c = self.c ; frame = c.frame
+    ch = event.char ; keysym = event.keysym
+    keycode = event.keycode ; state = event.state
+
+    if 1: # ch and len(ch)>0:
+        << trace the key event >>
+
+    try:
+        status = self.keyStatus
+    except:
+        status = [] ; frame.clearStatusLine()
+    
+    for sym,name in (
+        ("Alt_L","Alt"),("Alt_R","Alt"),
+        ("Control_L","Control"),("Control_R","Control"),
+        ("Escape","Esc"),
+        ("Shift_L","Shift"), ("Shift_R","Shift")):
+        if keysym == sym:
+            if name not in status:
+                status.append(name)
+                frame.putStatusLine(name + ' ')
+            break
+    else:
+        status = [] ; frame.clearStatusLine()
+
+    self.keyStatus = status
+#@nonl
+#@+node:ekr.20040105223536.1:<< trace the key event >>
+try:    self.keyCount += 1
+except: self.keyCount  = 1
+
+printable = g.choose(ch == keysym and state < 4,"printable","")
+
+print "%4d %s %d %s %x %s" % (
+    self.keyCount,repr(ch),keycode,keysym,state,printable)
+#@nonl
+#@-node:ekr.20040105223536.1:<< trace the key event >>
+#@-node:ekr.20040105223536:handleStatusLineKey
+#@-node:ekr.20031218072017.1330:onBodyKey
+#@+node:ekr.20031218072017.1321:idle_body_key & helpers
+def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Update the body pane at idle time."""
+    
+    __pychecker__ = 'maxlines=500'
+
+    c = self.c
+    if not c: return "break"
+    if not p: return "break"
+    if not c.isCurrentPosition(p): return "break"
+    # g.trace(repr(ch))
+
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+    body = p.bodyString()
+    if not newSel:
+        newSel = c.frame.body.getTextSelection()
+    if oldText != None:
+        s = oldText
+    else:
+        s = c.frame.body.getAllText()
+    << return if nothing has changed >>
+    << set removeTrailing >>
+    if ch in ('\t','\n','\r',chr(8)):
+        << handle special characters >>
+    << set s to widget text, removing trailing newlines if necessary >>
+    if undoType:
+        if not oldText: oldText = body
+        newText = s
+        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+    p.v.setTnodeText(s)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed:
+        c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return "break"
+#@nonl
+#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
+# Make sure we handle delete key properly.
+if ch not in ('\n','\r',chr(8)):
+
+    if s == body:
+        return "break"
+
+    # Do nothing for control characters.
+    if (ch == None or len(ch) == 0) and body == s[:-1]:
+        return "break"
+#@nonl
+#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
+#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = s ; old = body
+
+if len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
+#@nonl
+#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
+#@+node:ekr.20050526080309:<< handle special characters >>
+d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+
+if ch in ('\n','\r'):
+    # Do nothing if we are in @nocolor mode or if we are executing a Change command.
+    if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+        removeTrailing = self.doAutoIndent(p,removeTrailing,tab_width,undoType)
+
+elif ch == '\t' and tab_width < 0:
+    # Do nothing if we are executing a Change command.
+    if undoType != "Change":
+        self.convertBlanksToTabs(tab_width)
+
+elif ch in (chr(8)) and tab_width < 0:
+    << handle backspace with negative tab_width >>
+#@nonl
+#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+# Get the preceeding characters.
+prev   =c.frame.bodyCtrl.get("insert linestart","insert")
+allPrev=c.frame.bodyCtrl.get("1.0","insert")
+n = len(allPrev)
+try:
+    oldAllPrev = body[:n]
+    assert(allPrev==oldAllPrev)
+    deletedChar = body[n:n+1]
+except (IndexError,AssertionError):
+    deletedChar = None
+
+if deletedChar in (u' ',' '):
+    n = len(prev) ; w = abs(tab_width)
+    n2 = n % w # Delete up to n2 - 1 spaces.
+    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
+        count = 0
+        while n2 > 0:
+            n2 -= 1
+            ch = prev[n-count-1]
+            # g.trace(count,repr(ch))
+            if ch in (u' ',' '): count += 1
+            else: break
+        # g.trace(count,(n%w))
+        if count > 0:
+            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+            newSel = c.frame.body.getTextSelection() # Fixes crasher in undo logic.
+#@nonl
+#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+#@-node:ekr.20050526080309:<< handle special characters >>
+#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+s = c.frame.body.getAllText()
+if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+    s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # g.trace('no real change')
+    return "break"
+#@nonl
+#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+#@+node:ekr.20031218072017.1327:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20031218072017.1327:<< recolor the body >>
+#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+redraw_flag = False
+c.beginUpdate()
+try:
+    # Update dirty bits.
+    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+        redraw_flag = True
+    # Update icons.
+    val = p.computeIcon()
+    # During unit tests the node may not have been drawn,
+    # So p.v.iconVal may not exist yet.
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    c.endUpdate(redraw_flag) # redraw only if necessary
+#@nonl
+#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+#@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
+def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
+    
+    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
+    
+    c = self.c
+    # Get the previous line.
+    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # g.trace(repr(s))
+    # Add the leading whitespace to the present line.
+    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s[-1]==':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Added Nov 18 by David McNab, david@rebirthing.co.nz
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width] ; tabex = 0
+        for i in range(0, len(s)):
+            if s[i] == '\t':
+                tabex += tab_width - 1
+            if s[i] in '([{':
+                brackets.append(i+tabex + 1)
+            elif s[i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+        # end patch by David McNab
+    ws = g.computeLeadingWhitespace (width,tab_width)
+    if ws and len(ws) > 0:
+        c.frame.bodyCtrl.insert("insert", ws)
+        removeTrailing = False
+            
+    return removeTrailing
+#@nonl
+#@-node:ekr.20031218072017.1324:doAutoIndent (David McNab)
+#@+node:ekr.20031218072017.1325:convertBlanksToTabs
+def convertBlanksToTabs (self,tab_width):
+
+    c = self.c
+    
+    # Get the characters preceeding the tab.
+    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+    
+    if 1:
+        << convert tab no matter where it is >>
+    else:
+        << convert only leading tabs >>
+#@nonl
+#@+node:ekr.20050526081024:<< convert tab no matter where it is >>
+w = g.computeWidth(prev,tab_width)
+w2 = (abs(tab_width) - (w % abs(tab_width)))
+# g.trace("prev w:",w,"prev chars:",prev)
+c.frame.bodyCtrl.delete("insert -1c")
+c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20050526081024:<< convert tab no matter where it is >>
+#@+node:ekr.20050526081024.1:<< convert only leading tabs >>
+# Get the characters preceeding the tab.
+prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+
+# Do nothing if there are non-whitespace in prev:
+all_ws = True
+for ch in prev:
+    if ch != ' ' and ch != '\t':
+        all_ws = False
+if all_ws:
+    w = g.computeWidth(prev,tab_width)
+    w2 = (abs(tab_width) - (w % abs(tab_width)))
+    # g.trace("prev w:",w,"prev chars:",prev)
+    c.frame.bodyCtrl.delete("insert -1c")
+    c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20050526081024.1:<< convert only leading tabs >>
+#@-node:ekr.20031218072017.1325:convertBlanksToTabs
+#@-node:ekr.20031218072017.1321:idle_body_key & helpers
+#@+node:ekr.20031218072017.838:tkBody.createBindings
+def createBindings (self,frame):
+    
+    t = self.bodyCtrl
+    
+    # Event handlers...
+    t.bind("<Button-1>", frame.OnBodyClick)
+    if sys.platform == "win32":
+        # Support Linux middle-button paste easter egg.
+        t.bind("<Button-2>", frame.OnPaste)
+    t.bind("<Button-3>", frame.OnBodyRClick)
+    t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
+    
+    if not self.useMiniBuffer: # Now done in masterCommand.
+        g.trace('binding <Key>')
+        t.bind("<Key>", frame.body.onBodyKey)
+
+    # Gui-dependent commands...
+    t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+    t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+    t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+#@nonl
+#@-node:ekr.20031218072017.838:tkBody.createBindings
+#@-node:ekr.20050929084510:Fixed problem with auto-indent
+#@+node:ekr.20050925080847.1:Eliminate stateCommands dict
+#@-node:ekr.20050925080847.1:Eliminate stateCommands dict
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl

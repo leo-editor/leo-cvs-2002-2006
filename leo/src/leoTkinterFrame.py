@@ -46,7 +46,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         leoFrame.leoFrame.__init__(self,gui)
     
         self.title = title
-        self.useMiniBuffer = False
     
         leoTkinterFrame.instances += 1
     
@@ -129,6 +128,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         frame = self ; frame.c = c ; gui = g.app.gui
         
         # g.trace('tkFrame')
+        
         self.useMiniBuffer = c.config.getBool('useMiniBuffer')
         
         # This must be done after creating the commander.
@@ -2209,10 +2209,14 @@ class leoTkinterBody (leoFrame.leoBody):
         
         # Call the base class constructor.
         leoFrame.leoBody.__init__(self,frame,parentFrame)
+        
+        c = self.c
+        
+        self.useMiniBuffer = c.config.getBool('useMiniBuffer')
     
         self.bodyCtrl = self.createControl(frame,parentFrame)
     
-        self.colorizer = leoColor.colorizer(self.c)
+        self.colorizer = leoColor.colorizer(c)
     #@nonl
     #@-node:ekr.20031218072017.2182:tkBody. __init__
     #@+node:ekr.20031218072017.838:tkBody.createBindings
@@ -2227,7 +2231,10 @@ class leoTkinterBody (leoFrame.leoBody):
             t.bind("<Button-2>", frame.OnPaste)
         t.bind("<Button-3>", frame.OnBodyRClick)
         t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
-        t.bind("<Key>", frame.body.onBodyKey)
+        
+        if not self.useMiniBuffer: # Now done in masterCommand.
+            g.trace('binding <Key>')
+            t.bind("<Key>", frame.body.onBodyKey)
     
         # Gui-dependent commands...
         t.bind(g.virtual_event_name("Cut"), frame.OnCut)
@@ -2363,7 +2370,7 @@ class leoTkinterBody (leoFrame.leoBody):
         if not c: return "break"
         if not p: return "break"
         if not c.isCurrentPosition(p): return "break"
-        # g.trace(ch,ord(ch))
+        # g.trace(repr(ch))
     
         if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
             return "break" # The hook claims to have handled the event.
@@ -2492,7 +2499,7 @@ class leoTkinterBody (leoFrame.leoBody):
             
         # Major change: 6/12/04
         if s == body:
-            # print "no real change"
+            # g.trace('no real change')
             return "break"
         #@nonl
         #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -2547,6 +2554,7 @@ class leoTkinterBody (leoFrame.leoBody):
         c = self.c
         # Get the previous line.
         s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+        # g.trace(repr(s))
         # Add the leading whitespace to the present line.
         junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
         if s and len(s) > 0 and s[-1]==':':
@@ -2640,15 +2648,9 @@ class leoTkinterBody (leoFrame.leoBody):
         """Handle any key press event in the body pane."""
     
         c = self.c ; ch = event.char
-        
-        # Support for key-handler state.
-        if (
-            c.keyHandler and c.miniBufferWidget and 
-            event.char.isspace() and
-            c.keyHandler.inState()
-        ):
-            return None # Must be None, not 'break'
-        
+    
+        # g.trace(repr(ch))
+    
         # This translation is needed on MacOS.
         if ch == '':
             d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
@@ -2657,9 +2659,6 @@ class leoTkinterBody (leoFrame.leoBody):
         oldSel = c.frame.body.getTextSelection()
         
         p = c.currentPosition()
-    
-        if 0: # won't work when menu keys are bound.
-            self.handleStatusLineKey(event)
             
         # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
         self.c.frame.body.colorizer.interrupt()

@@ -16,7 +16,8 @@ import difflib
 import os
 import re
 import string
-subprocess = g.importExtension('subprocess',pluginName=None,verbose=False)
+subprocess   = g.importExtension('subprocess',  pluginName=None,verbose=False)
+tkFileDialog = g.importExtension('tkFileDialog',pluginName=None,verbose=False)
 import sys
 #@nonl
 #@-node:ekr.20050710151017:<< imports >>
@@ -141,13 +142,28 @@ def createEditCommanders (self):
     '''Create edit classes in the commander.'''
     
     c = self ; global classesList
-    
-    d = {}
 
     for name, theClass in classesList:
         theInstance = theClass(c)# Create the class.
         setattr(c,name,theInstance)
         # g.trace(name,theInstance)
+#@nonl
+#@-node:ekr.20050920084720:createEditCommanders (leoEditCommands module)
+#@+node:ekr.20050922104731:finishCreateEditCommanders (leoEditCommands module)
+def finishCreateEditCommanders (c):
+    
+    '''Finish creating edit classes in the commander.
+    
+    Return the commands dictionary for all the classes.'''
+    
+    global classesList
+    
+    d = {}
+
+    for name, theClass in classesList:
+        theInstance = getattr(c,name)
+        theInstance.finishCreate()
+        theInstance.init()
         d2 = theInstance.getPublicCommands()
         if d2:
             d.update(d2)
@@ -155,22 +171,9 @@ def createEditCommanders (self):
                 keys = d2.keys()
                 keys.sort()
                 print '----- %s' % name
-                for key in keys: print key
+                for key in keys: print
                 
     return d
-#@nonl
-#@-node:ekr.20050920084720:createEditCommanders (leoEditCommands module)
-#@+node:ekr.20050922104731:finishCreateEditCommanders (leoEditCommands module)
-def finishCreateEditCommanders (c):
-    
-    '''Create edit classes in the commander.'''
-    
-    global classesList
-
-    for name, theClass in classesList:
-        theInstance = getattr(c,name)
-        theInstance.finishCreate()
-        theInstance.init()
 #@nonl
 #@-node:ekr.20050922104731:finishCreateEditCommanders (leoEditCommands module)
 #@+node:ekr.20050924100713.1:initAllEditCommanders
@@ -322,11 +325,11 @@ class abbrevCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.20:readAbbreviations
     def readAbbreviations (self,event):
     
-        f = tkFileDialog.askopenfile()
-        if f == None:
-            return 'break'
-        else:
+        f = tkFileDialog and tkFileDialog.askopenfile()
+        if f:
             return self._readAbbrevs(f)
+        else:
+            return 'break'
     #@nonl
     #@-node:ekr.20050920084036.20:readAbbreviations
     #@+node:ekr.20050920084036.21:regionalExpandAbbrev
@@ -395,11 +398,11 @@ class abbrevCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.24:writeAbbreviations
     def writeAbbreviations (self,event):
     
-        f = tkFileDialog.asksaveasfile()
-        if f == None:
-            return 'break'
-        else:
+        f = tkFileDialog and tkFileDialog.asksaveasfile()
+        if f :
             return self._writeAbbrevs(f)
+        else:
+            return 'break'
     #@nonl
     #@-node:ekr.20050920084036.24:writeAbbreviations
     #@-node:ekr.20050920084036.16: Entry points
@@ -520,7 +523,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         return {
             'append-to-buffer':     self.appendToBuffer,
             'copy-to-buffer':       self.copyToBuffer,
-            'insert-to-buffer':       self.insertToBuffer,
+            'insert-to-buffer':     self.insertToBuffer,
             'kill-buffer' :         self.killBuffer,
             'list-buffers' :        self.listBuffers,
             'prepend-to-buffer':    self.prependToBuffer,
@@ -529,7 +532,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         }
     #@nonl
     #@-node:ekr.20050920084036.33: getPublicCommands
-    #@+node:ekr.20050920084036.34:Entry points 
+    #@+node:ekr.20050920084036.34:Entry points
     #@+node:ekr.20050920084036.35:appendToBuffer/Finisher
     def appendToBuffer (self,event):
     
@@ -677,7 +680,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.43:renameBuffer (not ready yet)
-    #@-node:ekr.20050920084036.34:Entry points 
+    #@-node:ekr.20050920084036.34:Entry points
     #@+node:ekr.20050927093851:getBufferName
     def getBufferName (self,func=None):
         
@@ -865,106 +868,112 @@ class editCommandsClass (baseEditCommandsClass):
         self.store ={'rlist':[], 'stext':''} # For dynamic expansion.
         self.swapSpots = []
         self._useRegex = False # For replace-string and replace-regex
+        self.widget = None # For use by state handlers.
     #@nonl
     #@-node:ekr.20050920084036.54: ctor
-    #@+node:ekr.20050920084036.55: getPublicCommands
+    #@+node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
     def getPublicCommands (self):
     
         k = self.k
     
         return {
-            'back-to-indentation': lambda event: self.backToIndentation(event) and k.keyboardQuit(event),
+            'back-to-indentation':  self.backToIndentation,
             'backward-delete-char': lambda event, which = 'BackSpace': self.manufactureKeyPress(event,which) and k.keyboardQuit(event),
-            'backward-char': lambda event, which = 'Left': k.keyboardQuit(event) and self.manufactureKeyPress(event,which),
+            'backward-char':        lambda event, which = 'Left': k.keyboardQuit(event) and self.manufactureKeyPress(event,which),
             'backward-kill-paragraph': self.backwardKillParagraph,
-            'beginning-of-buffer': lambda event, spot = '1.0': self.moveTo(event,spot) and k.keyboardQuit(event),
-            'beginning-of-line': lambda event, spot = 'insert linestart': self.moveTo(event,spot) and k.keyboardQuit(event),
-            'capitalize-word': lambda event, which = 'cap': self.capitalize(event,which) and k.keyboardQuit(event),
-            'center-line': lambda event: self.centerLine(event) and k.keyboardQuit(event),
-            'center-region': lambda event: self.centerRegion(event) and k.keyboardQuit(event),
-            'dabbrev-completion': lambda event: self.dynamicExpansion2(event) and k.keyboardQuit(event),
-            'dabbrev-expands': lambda event: self.dynamicExpansion(event) and k.keyboardQuit(event),
-            'delete-char': lambda event: self.deleteNextChar(event) and k.keyboardQuit(event),
-            'delete-indentation': lambda event: self.deleteIndentation(event) and k.keyboardQuit(event),
-            'downcase-region': lambda event: self.upperLowerRegion(event,'low') and k.keyboardQuit(event),
-            'downcase-word': lambda event, which = 'low': self.capitalize(event,which) and k.keyboardQuit(event),
-            'end-of-buffer': lambda event, spot = 'end': self.moveTo(event,spot) and k.keyboardQuit(event),
-            'end-of-line': lambda event, spot = 'insert lineend': self.moveTo(event,spot) and k.keyboardQuit(event),
-            'eval-expression': self.startEvaluate,
+            'beginning-of-buffer':  self.beginningOfBuffer,
+            'beginning-of-line':    self.beginningOfLine,
+            'capitalize-word':      self.capitalize,
+            'center-line':          self.centerLine,
+            'center-region':        self.centerRegion,
+            'dabbrev-completion':   self.dynamicExpansion2,
+            'dabbrev-expands':      self.dynamicExpansion,
+            'delete-char':          self.deleteNextChar,
+            'delete-indentation':   self.deleteIndentation,
+            'downcase-region':      self.downCaseRegion,
+            'downcase-word':        self.downCaseWord,
+            'end-of-buffer':        self.endOfBuffer,
+            'end-of-line':          self.endOfLine,
+            'eval-expression':      self.startEvaluate,
             'fill-region-as-paragraph': self.fillRegionAsParagraph,
-            'fill-region': self.fillRegion,
-            'flush-lines': lambda event: self.flushLines,
-            'forward-char': lambda event, which = 'Right': k.keyboardQuit(event) and self.manufactureKeyPress(event,which),
-            'goto-char': lambda event: self.startGoto(event,True),
-            'goto-line': lambda event: self.startGoto(event),
-            'how-many': self.startHowMany, ### Change name?
-            'indent-region': lambda event: self.indentRegion(event) and k.keyboardQuit(event),
-            'indent-rigidly': lambda event: self.tabIndentRegion(event) and k.keyboardQuit(event),
-            'indent-relative': self.indentRelative,
-            'insert-file': lambda event: self.insertFile(event) and k.keyboardQuit(event),
-            'keep-lines': self.keepLines,
-            'kill-paragraph': self.killParagraph,
-            'newline-and-indent': lambda event: self.insertNewLineAndTab(event) and k.keyboardQuit(event),
-            'next-line': lambda event, which = 'Down': k.keyboardQuit(event) and self.manufactureKeyPress(event,which),
-            'previous-line': lambda event, which = 'Up': k.keyboardQuit(event) and self.manufactureKeyPress(event,which),
-            'replace-regex': lambda event: self.activateReplaceRegex() and self.replaceString(event),
-            'replace-string': self.replaceString,
-            'reverse-region': self.reverseRegion,
-            'save-buffer': lambda event: self.saveFile(event) and k.keyboardQuit(event),
-            'scroll-down': lambda event, way = 'south': self.screenscroll(event,way) and k.keyboardQuit(event),
-            'scroll-up': lambda event, way = 'north': self.screenscroll(event,way) and k.keyboardQuit(event),
-            'set-fill-column': self.setFillColumn,
-            'set-fill-prefix': self.setFillPrefix,
-            'set-mark-command': lambda event: self.setRegion(event) and k.keyboardQuit(event),
-            'sort-columns': self.sortColumns,
-            'sort-fields': self.sortFields,
-            'sort-lines': self.sortLines,
-            'split-line': lambda event: self.insertNewLineIndent(event) and k.keyboardQuit(event),
-            'tabify': self.tabify,
-            'transpose-chars': lambda event: self.swapCharacters(event) and k.keyboardQuit(event),
-            'transpose-words': lambda event, sw = self.swapSpots: self.swapWords(event,sw) and k.keyboardQuit(event),
-            'transpose-lines': lambda event: self.transposeLines(event) and k.keyboardQuit(event),
-            'untabify': self.untabify,
-            'upcase-region': lambda event: self.upperLowerRegion(event,'up') and k.keyboardQuit(event),
-            'upcase-word': lambda event, which = 'up': self.capitalize(event,which) and k.keyboardQuit(event),
-            'view-lossage': self.viewLossage,
-            'what-line': self.whatLine,
+            'fill-region':          self.fillRegion,
+            'flush-lines':          self.flushLines,
+            'forward-char':         self.forwardCharacter,
+            'goto-char':            self.gotoCharacter,
+            'goto-line':            self.gotoLine,
+            'how-many':             self.startHowMany, ### Change name?
+            'indent-region':        self.indentRegion,
+            'indent-rigidly':       self.tabIndentRegion,
+            'indent-relative':      self.indentRelative,
+            'keep-lines':           self.keepLines,
+            'kill-paragraph':       self.killParagraph,
+            'newline-and-indent':   self.insertNewLineAndTab,
+            'next-line':            lambda event, which = 'Down': k.keyboardQuit(event) and self.manufactureKeyPress(event,which),
+            'previous-line':        lambda event, which = 'Up': k.keyboardQuit(event) and self.manufactureKeyPress(event,which),
+            'replace-regex':        self.activateReplaceRegex,
+            'replace-string':       self.replaceString,
+            'reverse-region':       self.reverseRegion,
+            ## 'save-buffer':       self.saveFile,
+            'scroll-down':          self.scrollDown,
+            'scroll-up':            self.scrollUp,
+            'set-fill-column':      self.setFillColumn,
+            'set-fill-prefix':      self.setFillPrefix,
+            'set-mark-command':     self.setRegion,
+            'sort-columns':         self.sortColumns,
+            'sort-fields':          self.sortFields,
+            'sort-lines':           self.sortLines,
+            'split-line':           self.insertNewLineIndent,
+            'tabify':               self.tabify,
+            'transpose-chars':      self.transposeCharacters,
+            'transpose-words':      self.transposeWords,
+            'transpose-lines':      self.transposeLines,
+            'untabify':             self.untabify,
+            'upcase-region':        self.upCaseRegion,
+            'upcase-word':          self.upCaseWord,
+            'view-lossage':         self.viewLossage,
+            'what-line':            self.whatLine,
     
             # Added by EKR:
-            'back-sentence': self.backSentence,
-            'delete-spaces': self.deleteSpaces,
-            'forward-sentence': self.forwardSentence,
-            'exchange-point-mark': self.exchangePointMark,
+            'back-sentence':        self.backSentence,
+            'delete-spaces':        self.deleteSpaces,
+            'forward-sentence':     self.forwardSentence,
+            'exchange-point-mark':  self.exchangePointMark,
             'indent-to-comment-column': self.indentToCommentColumn,
-            'insert-newline': self.insertNewline,
-            'insert-parentheses': self.insertParentheses,
-            'line-number': self.lineNumber,
-            'move-past-close': self.movePastClose,
-            'remove-blank-lines': self.removeBlankLines,
-            'select-all': self.selectAll,
-            'set-comment-column': self.setCommentColumn,
+            'insert-newline':       self.insertNewline,
+            'insert-parentheses':   self.insertParentheses,
+            'line-number':          self.lineNumber,
+            'move-past-close':      self.movePastClose,
+            'remove-blank-lines':   self.removeBlankLines,
+            'select-all':           self.selectAll,
+            'set-comment-column':   self.setCommentColumn,
         }
     #@nonl
-    #@-node:ekr.20050920084036.55: getPublicCommands
+    #@-node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
     #@+node:ekr.20050920084036.56: Entry points
-    #@+node:ekr.20050920084036.57:capitalize
-    def capitalize( self, event, which ):
+    #@+node:ekr.20050920084036.57:capitalize, upCaseWord, downCaseWord
+    def capitalize (self,event,which='cap'):
         w = event.widget
-        text = w.get( 'insert wordstart', 'insert wordend' )
-        i = w.index( 'insert' )
+        text = w.get('insert wordstart','insert wordend')
+        i = w.index('insert')
         if text == ' ': return 'break'
-        w.delete( 'insert wordstart', 'insert wordend' )
+        w.delete('insert wordstart','insert wordend')
         if which == 'cap':
-            text = text.capitalize() 
+            text = text.capitalize()
         if which == 'low':
             text = text.lower()
         if which == 'up':
             text = text.upper()
-        w.insert( 'insert', text )
-        w.mark_set( 'insert', i )    
+        w.insert('insert',text)
+        w.mark_set('insert',i)
         return 'break'
+    
+    def downCaseWord (self,event):
+        return self.capitalize(event,'low')
+    
+    def upCaseWord (self,event):
+        return self.capitalize(event,'up')
     #@nonl
-    #@-node:ekr.20050920084036.57:capitalize
+    #@-node:ekr.20050920084036.57:capitalize, upCaseWord, downCaseWord
     #@+node:ekr.20050920084036.58:dynamic abbreviation...
     #@+node:ekr.20050920084036.59:dynamicExpansion
     def dynamicExpansion( self, event ):#, store = {'rlist': [], 'stext': ''} ):
@@ -1044,11 +1053,10 @@ class editCommandsClass (baseEditCommandsClass):
     
         k = self.k ; w = event.widget
         if not k.inState():
-            k.setState('escape','start')
-            k.setLabelBlue('Esc')
+            k.setState('escape','start',handler=self.watchEscape)
+            k.setLabelBlue('Esc ')
             return 'break'
-    
-        if k.getStateKind() == 'escape':
+        elif k.getStateKind() == 'escape':
             state = k.getState('escape')
             hi1 = self.keysymHistory [0]
             hi2 = self.keysymHistory [1]
@@ -1061,9 +1069,10 @@ class editCommandsClass (baseEditCommandsClass):
                 k.setLabel('Esc Esc -')
                 return 'break'
             elif event.keysym in ('Shift_L','Shift_R'):
-                return
+                return None
             else:
                 return k.keyboardQuit(event)
+    #@nonl
     #@-node:ekr.20050920084036.63:watchEscape
     #@+node:ekr.20050920084036.64:escEvaluate
     def escEvaluate (self,event):
@@ -1214,40 +1223,47 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.66:fill column and centering
     #@+node:ekr.20050920084036.72:goto...
-    #@+node:ekr.20050920084036.73:startGoto
-    def startGoto (self,event,ch=False):
+    #@+node:ekr.20050929115226:gotoCharacter
+    def gotoCharacter (self,event=None):
     
-        k = self.k
+        k = self.k ; state = k.getState('goto-char')
     
-        k.setState('goto',k.getState()+1,handler=self.Goto)
-        k.setLabelBlue('')
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.73:startGoto
-    #@+node:ekr.20050920084036.143:Goto
-    def Goto (self,event):
-    
-        k = self.k ; w = event.widget
-        if event.keysym == 'Return':
-            i = k.getLabel()
-            k.resetLabel()
-            state = k.getState('goto')
-            k.setState('goto',0)
-            if i.isdigit():
-                if state == 1:
-                    widget.mark_set('insert','%s.0' % i)
-                elif state == 2:
-                    widget.mark_set('insert','1.0 +%sc' % i)
-                widget.event_generate('<Key>')
-                widget.update_idletasks()
-                widget.see('insert')
+        if state == 0:
+            self.widget = event.widget
+            k.setLabelBlue('Goto character: ')
+            k.getArg(event,'goto-char',1,self.gotoCharacter)
         else:
-            k.updateLabel(event)
+            n = k.arg ; w = self.widget
+            if n.isdigit():
+                w.mark_set('insert','1.0 +%sc' % n)
+                w.see('insert')
+            k.resetLabel()
+            k.clearState()
     
         return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.143:Goto
+    #@-node:ekr.20050929115226:gotoCharacter
+    #@+node:ekr.20050929124234:gotoLine
+    def gotoLine (self,event=None):
+    
+        k = self.k ; state = k.getState('goto-line')
+        
+        if state == 0:
+            self.widget = event.widget
+            k.setLabelBlue('Goto line: ')
+            k.getArg(event,'goto-line',1,self.gotoLine)
+        else:
+            n = k.arg ;  w = self.widget
+            # g.trace(repr(n))
+            if n.isdigit():
+                w.mark_set('insert','%s.0' % n)
+                w.see('insert')
+            k.resetLabel()
+            k.clearState()
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050929124234:gotoLine
     #@-node:ekr.20050920084036.72:goto...
     #@+node:ekr.20050920084036.74:indent...
     #@+node:ekr.20050920084036.75:backToIndentation
@@ -1402,7 +1418,7 @@ class editCommandsClass (baseEditCommandsClass):
         return k._tailEnd( w )
     #@-node:ekr.20050920084036.87:deleteNextChar
     #@-node:ekr.20050920084036.85:Insert/delete...
-    #@+node:ekr.20050920084036.88:line...
+    #@+node:ekr.20050920084036.88:line... (rewrite)
     #@+node:ekr.20050920084036.89: Entries
     #@+node:ekr.20050920084036.90:flushLines
     def flushLines (self,event):
@@ -1459,8 +1475,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.93:processLines
     def processLines (self,event):
     
-        k = self.k
-        state = k.getState('alterlines')
+        k = self.k ; state = k.getState('alterlines')
     
         if state.startswith('start'):
             state = state [5:]
@@ -1487,7 +1502,93 @@ class editCommandsClass (baseEditCommandsClass):
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.94:startLines
-    #@-node:ekr.20050920084036.88:line...
+    #@-node:ekr.20050920084036.88:line... (rewrite)
+    #@+node:ekr.20050920084036.147:measure
+    def measure (self,w):
+        i = w.index('insert')
+        i1, i2 = i.split('.')
+        start = int(i1)
+        watch = 0
+        ustart = start
+        pone = 1
+        top = i
+        bottom = i
+        while pone:
+            ustart = ustart-1
+            if ustart < 0:
+                break
+            ds = '%s.0' % ustart
+            pone = w.dlineinfo(ds)
+            if pone:
+                top = ds
+                watch = watch + 1
+        pone = 1
+        ustart = start
+        while pone:
+            ustart = ustart + 1
+            ds = '%s.0' % ustart
+            pone = w.dlineinfo(ds)
+            if pone:
+                bottom = ds
+                watch = watch + 1
+    
+        return watch, top, bottom
+    #@nonl
+    #@-node:ekr.20050920084036.147:measure
+    #@+node:ekr.20050929114218:move...
+    #@+node:ekr.20050929115226.1:NewHeadline
+    def forwardCharacter (self,event):
+        return self.manufactureKeyPress(event,'Right'),
+    #@nonl
+    #@-node:ekr.20050929115226.1:NewHeadline
+    #@+node:ekr.20050920084036.148:moveTo, beginnning/endOfBuffer/Line
+    def moveTo (self,event,spot):
+        w = event.widget
+        w.mark_set(Tk.INSERT,spot)
+        w.see(spot)
+        return 'break'
+    
+    def beginningOfBuffer (self,event):
+        return self.moveTo(event,'1.0')
+    
+    def beginningOfLine (self,event):
+        return self.moveTo(event,'insert linestart')
+    
+    def endOfBuffer (self,event):
+        return self.moveTo(event,'end')
+    
+    def endOfLine (self,event):
+        return self.moveTo(event,'insert lineend')
+    #@nonl
+    #@-node:ekr.20050920084036.148:moveTo, beginnning/endOfBuffer/Line
+    #@+node:ekr.20050920084036.149:moveword (used by many entires)  TO DO: split into forward/backward versions
+    def moveword( self, event, way  ):
+        
+        '''This function moves the cursor to the next word, direction dependent on the way parameter'''
+        
+        w = event.widget
+        ind = w.index( 'insert' )
+    
+        if way == 1:
+             ind = w.search( '\w', 'insert', stopindex = 'end', regexp=True )
+             if ind:
+                nind = '%s wordend' % ind
+             else:
+                nind = 'end'
+        else:
+             ind = w.search( '\w', 'insert -1c', stopindex= '1.0', regexp = True, backwards = True )
+             if ind:
+                nind = '%s wordstart' % ind 
+             else:
+                nind = '1.0'
+        w.mark_set( 'insert', nind )
+        w.see( 'insert' )
+        w.event_generate( '<Key>' )
+        w.update_idletasks()
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.149:moveword (used by many entires)  TO DO: split into forward/backward versions
+    #@-node:ekr.20050929114218:move...
     #@+node:ekr.20050920084036.95:paragraph...
     #@+others
     #@+node:ekr.20050920084036.96:selectParagraph
@@ -1839,24 +1940,30 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.110:reverseRegion
     #@+node:ekr.20050920084036.111:upperLowerRegion
-    def upperLowerRegion( self, event, way ):
+    def upperLowerRegion (self,event,way):
     
         w = event.widget
         mrk = 'sel'
-        trange = w.tag_ranges( mrk )
-        if len( trange ) != 0:
-            text = w.get( trange[ 0 ] , trange[ -1 ] )
-            i = w.index( 'insert' )
+        trange = w.tag_ranges(mrk)
+        if len(trange) != 0:
+            text = w.get(trange[0],trange[-1])
+            i = w.index('insert')
             if text == ' ': return 'break'
-            w.delete( trange[ 0 ], trange[ -1 ] )
+            w.delete(trange[0],trange[-1])
             if way == 'low':
                 text = text.lower()
             if way == 'up':
                 text = text.upper()
-            w.insert( 'insert', text )
-            w.mark_set( 'insert', i ) 
-        self.removeRKeys( w )
+            w.insert('insert',text)
+            w.mark_set('insert',i)
+        self.removeRKeys(w)
         return 'break'
+    
+    def downCaseRegion (self,event):
+        return self.upperLowerRegion('low')
+    
+    def upCaseRegion (self,event):
+        return self.upperLowerRegion('up')
     #@nonl
     #@-node:ekr.20050920084036.111:upperLowerRegion
     #@-others
@@ -1877,13 +1984,13 @@ class editCommandsClass (baseEditCommandsClass):
             s = '%s: ' % prompt
             k.setLabel(s)
             # Get arg and enter state 1.
-            return k.getArg(event,'rString',1,self.replaceStringStateHandler) 
+            return k.getArg(event,'rString',1,self.replaceString) 
         elif state == 1:
             self._sString = k.arg
             s = '%s: %s With: ' % (prompt,self._sString)
             k.setLabel(s)
             # Get arg and enter state 2.
-            return k.getArg(event,'rString',2,self.replaceStringStateHandler)
+            return k.getArg(event,'rString',2,self.replaceString)
         elif state == 2:
             self._rpString = k.arg
             #@        << do the replace >>
@@ -1932,7 +2039,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.115:activateReplaceRegex
     #@-node:ekr.20050920084036.112:replace...
     #@+node:ekr.20050920084036.116:screenscroll
-    def screenscroll (self,event,way='north'):
+    def screenscroll (self,event,way):
     
         k = self.k ; w = event.widget
         chng = self.measure(w)
@@ -1948,6 +2055,13 @@ class editCommandsClass (baseEditCommandsClass):
         w.mark_set('insert','%s.%s' % (i1,i2))
         w.see('insert')
         return k._tailEnd(w)
+        
+    def scrollDown (self,event):
+        return self.screenscroll('south')
+    
+    def scrollUp (self,event):
+        return self.screenscroll('north')
+    #@nonl
     #@-node:ekr.20050920084036.116:screenscroll
     #@+node:ekr.20050920084036.117:sort...
     #@+node:ekr.20050920084036.118:sortLines
@@ -2063,7 +2177,7 @@ class editCommandsClass (baseEditCommandsClass):
             w.insert( '1.0', l2 + '\n' )
         return k._tailEnd( w )
     #@-node:ekr.20050920084036.122:transposeLines
-    #@+node:ekr.20050920084036.123:swapWords
+    #@+node:ekr.20050920084036.123:swapWords & transposeWords
     def swapWords( self, event , swapspots ):
         w = event.widget
         txt = w.get( 'insert wordstart', 'insert wordend' )
@@ -2088,22 +2202,28 @@ class editCommandsClass (baseEditCommandsClass):
             swapspots.append( txt )
             swapspots.append( i )
             return 'break'
+    
+    def transposeWords (self,event):
+        return self.swapWords (event,self.swapSpots)
     #@nonl
-    #@-node:ekr.20050920084036.123:swapWords
-    #@+node:ekr.20050920084036.124:swapCharacters
-    def swapCharacters( self, event ):
+    #@-node:ekr.20050920084036.123:swapWords & transposeWords
+    #@+node:ekr.20050920084036.124:swapCharacters & transeposeCharacters
+    def swapCharacters (self,event):
     
         k = self.k ; w = event.widget
-        i = w.index( 'insert' )
-        c1 = w.get( 'insert', 'insert +1c' )
-        c2 = w.get( 'insert -1c', 'insert' )
-        w.delete( 'insert -1c', 'insert' )
-        w.insert( 'insert', c1 )
-        w.delete( 'insert', 'insert +1c' )
-        w.insert( 'insert', c2 )
-        w.mark_set( 'insert', i )
-        return k._tailEnd( w )
-    #@-node:ekr.20050920084036.124:swapCharacters
+        i = w.index('insert')
+        c1 = w.get('insert','insert +1c')
+        c2 = w.get('insert -1c','insert')
+        w.delete('insert -1c','insert')
+        w.insert('insert',c1)
+        w.delete('insert','insert +1c')
+        w.insert('insert',c2)
+        w.mark_set('insert',i)
+        return k._tailEnd(w)
+    
+    transposeCharacters = swapCharacters
+    #@nonl
+    #@-node:ekr.20050920084036.124:swapCharacters & transeposeCharacters
     #@-node:ekr.20050920084036.121:swap/transpose...
     #@+node:ekr.20050920084036.125:tabify...
     def tabify (self,event):
@@ -2356,78 +2476,6 @@ class editCommandsClass (baseEditCommandsClass):
         return k._tailEnd(w)
     #@-node:ekr.20050920084036.145:changePreviousWord
     #@-node:ekr.20050920084036.144:Used by neg argss
-    #@+node:ekr.20050920084036.146:Utilities
-        
-    #@nonl
-    #@+node:ekr.20050920084036.147:measure
-    def measure( self, w ):
-        i = w.index( 'insert' )
-        i1, i2 = i.split( '.' )
-        start = int( i1 )
-        watch = 0
-        ustart = start
-        pone = 1
-        top = i
-        bottom = i
-        while pone:
-            ustart = ustart - 1
-            if ustart < 0:
-                break
-            ds = '%s.0' % ustart
-            pone = w.dlineinfo( ds )
-            if pone:
-                top = ds
-                watch = watch  + 1
-        
-        pone = 1
-        ustart = start
-        while pone:
-            ustart = ustart +1
-            ds = '%s.0' % ustart
-            pone = w.dlineinfo( ds )
-            if pone:
-                bottom = ds
-                watch = watch + 1
-                
-        return watch , top, bottom
-    #@nonl
-    #@-node:ekr.20050920084036.147:measure
-    #@+node:ekr.20050920084036.148:moveTo
-    def moveTo( self, event, spot ):
-        w = event.widget
-        w.mark_set( Tk.INSERT, spot )
-        w.see( spot )
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.148:moveTo
-    #@+node:ekr.20050920084036.149:moveword (used by many entires)  TO DO: split into forward/backward versions
-    def moveword( self, event, way  ):
-        
-        '''This function moves the cursor to the next word, direction dependent on the way parameter'''
-        
-        w = event.widget
-        ind = w.index( 'insert' )
-    
-        if way == 1:
-             ind = w.search( '\w', 'insert', stopindex = 'end', regexp=True )
-             if ind:
-                nind = '%s wordend' % ind
-             else:
-                nind = 'end'
-        else:
-             ind = w.search( '\w', 'insert -1c', stopindex= '1.0', regexp = True, backwards = True )
-             if ind:
-                nind = '%s wordstart' % ind 
-             else:
-                nind = '1.0'
-        w.mark_set( 'insert', nind )
-        w.see( 'insert' )
-        w.event_generate( '<Key>' )
-        w.update_idletasks()
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.149:moveword (used by many entires)  TO DO: split into forward/backward versions
-    #@-node:ekr.20050920084036.146:Utilities
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.53:class editCommandsClass
@@ -2448,31 +2496,16 @@ class controlCommandsClass (baseEditCommandsClass):
     def getPublicCommands (self):
         
         k = self
-        
-        if 1:
-            return {
-                'advertised-undo':              self.advertizedUndo,
-                'iconfify-or-deiconify-frame':  self.iconifyOrDeiconifyFrame,
-                'keyboard-quit':                self.keyboardQuit,
-                'save-buffers-kill-emacs':      self.saveBuffersKillEmacs,
-                'shell-command':                self.startSubprocess,
-                'shell-command-on-region':      self.shellCommandOnRegion,
-                'suspend':                      self.suspend,
-            }
-            
-        else: # old
     
-            return {
-                'advertised-undo':              lambda event: self.doUndo( event ) and k.keyboardQuit( event ),
-                'iconfify-or-deiconify-frame':  lambda event: self.suspend( event ) and k.keyboardQuit( event ),
-                'keyboard-quit':                k.keyboardQuit,
-                'save-buffers-kill-emacs':      lambda event: k.keyboardQuit( event ) and self.shutdown( event ),
-                'shell-command':                self.startSubprocess,
-                'shell-command-on-region':      lambda event: self.startSubprocess( event, which=1 ),
-                
-                # Added by ekr.
-                'suspend':                      lambda event: self.suspend( event ) and k.keyboardQuit( event ),
-            }
+        return {
+            'advertised-undo':              self.advertizedUndo,
+            'iconfify-or-deiconify-frame':  self.iconifyOrDeiconifyFrame,
+            'keyboard-quit':                self.keyboardQuit,
+            'save-buffers-kill-emacs':      self.saveBuffersKillEmacs,
+            'shell-command':                self.startSubprocess,
+            'shell-command-on-region':      self.shellCommandOnRegion,
+            'suspend':                      self.suspend,
+        }
     #@nonl
     #@-node:ekr.20050920084036.152: getPublicCommands
     #@+node:ekr.20050922110030:Entry points
@@ -2549,8 +2582,7 @@ class controlCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.159:subprocess
     def subprocesser (self,event):
     
-        k = self.k
-        state = k.getState('subprocess')
+        k = self.k ; state = k.getState('subprocess')
     
         if state ['state'] == 'start':
             state ['state'] = 'watching'
@@ -2614,7 +2646,7 @@ class editFileCommandsClass (baseEditCommandsClass):
         baseEditCommandsClass.__init__(self,c) # init the base class.
     #@nonl
     #@-node:ekr.20050920084036.162: ctor
-    #@+node:ekr.20050920084036.163: getPublicCommands
+    #@+node:ekr.20050920084036.163: getPublicCommands (editFileCommandsClass)
     def getPublicCommands (self):
         
         k = self.k
@@ -2622,13 +2654,13 @@ class editFileCommandsClass (baseEditCommandsClass):
         return {
             'delete-file':      self.deleteFile,
             'diff':             self.diff, 
-            'insert-file':      lambda event: self.insertFile( event ) and k.keyboardQuit( event ),
+            'insert-file':      self.insertFile,
             'make-directory':   self.makeDirectory,
             'remove-directory': self.removeDirectory,
             'save-file':        self.saveFile
         }
     #@nonl
-    #@-node:ekr.20050920084036.163: getPublicCommands
+    #@-node:ekr.20050920084036.163: getPublicCommands (editFileCommandsClass)
     #@+node:ekr.20050920084036.164:deleteFile
     def deleteFile (self,event):
     
@@ -2681,27 +2713,28 @@ class editFileCommandsClass (baseEditCommandsClass):
     
         return k.keyboardQuit( event )
     #@-node:ekr.20050920084036.165:diff
-    #@+node:ekr.20050920084036.166:getReadableFile
-    def getReadableTextFile( self ):
-        
-        fname = tkFileDialog.askopenfilename()
-        if fname == None: return None, None
-        f = open( fname, 'rt' )
-        return f, fname
+    #@+node:ekr.20050920084036.166:getReadableTextFile
+    def getReadableTextFile (self):
+    
+        fname = tkFileDialog and tkFileDialog.askopenfilename()
+        if fname == None:
+            return None, None
+        else:
+            f = open(fname,'rt')
+            return f, fname
     #@nonl
-    #@-node:ekr.20050920084036.166:getReadableFile
+    #@-node:ekr.20050920084036.166:getReadableTextFile
     #@+node:ekr.20050920084036.167:insertFile
     def insertFile (self,event):
     
-        k = self.k ; w = event.widget
+        k = self.k ; c = k.c ; w = event.widget
         f, name = self.getReadableTextFile()
         if not f: return None
         txt = f.read()
         f.close()
         w.insert('insert',txt)
-    
+        w.see('1.0')
         return k._tailEnd(w)
-    #@nonl
     #@-node:ekr.20050920084036.167:insertFile
     #@+node:ekr.20050920084036.168:makeDirectory
     def makeDirectory (self,event):
@@ -2751,7 +2784,7 @@ class editFileCommandsClass (baseEditCommandsClass):
     
         w = event.widget
         txt = w.get( '1.0', 'end' )
-        f = tkFileDialog.asksaveasfile()
+        f = tkFileDialog and tkFileDialog.asksaveasfile()
         if f:
             f.write( txt )
             f.close()
@@ -2770,28 +2803,20 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
     def __init__ (self,c):
     
         baseEditCommandsClass.__init__(self,c) # init the base class.
+    #@nonl
     #@-node:ekr.20050920084036.172: ctor
     #@+node:ekr.20050920084036.173:getPublicCommands
     def getPublicCommands (self):
         
+        k = self.k
+        
         return {
-            'digit-argument':           self.digitArgument,
-            'repeat-complex-command':   self.repeatComplexCommand,
-            'universal-argument':       self.universalArgument,
+            'digit-argument':           k.digitArgument,
+            'repeat-complex-command':   k.repeatComplexCommand,
+            'universal-argument':       k.universalArgument,
         }
     #@nonl
     #@-node:ekr.20050920084036.173:getPublicCommands
-    #@+node:ekr.20050922110452:Entry points
-    def digitArgument (self,event):
-        return self.k.digitArgument(event)
-    
-    def repeatComplexCommand (self,event):
-        return self.k.repeatComplexCommand(event)
-    
-    def universalArgument (self,event):
-        return self.k.universalArgument(event)
-    #@nonl
-    #@-node:ekr.20050922110452:Entry points
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.171:class keyHandlerCommandsClass
@@ -3061,131 +3086,129 @@ class leoCommandsClass (baseEditCommandsClass):
         d = {
             'new':                  c.new,
             'open':                 c.open,
-            'openWith':             c.openWith,
+            'open-with':            c.openWith,
             'close':                c.close,
             'save':                 c.save,
             'saveAs':               c.saveAs,
             'saveTo':               c.saveTo,
             'revert':               c.revert,
-            'readOutlineOnly':      c.readOutlineOnly,
-            'readAtFileNodes':      c.readAtFileNodes,
-            'importDerivedFile':    c.importDerivedFile,
-            #'writeNewDerivedFiles': c.writeNewDerivedFiles,
-            #'writeOldDerivedFiles': c.writeOldDerivedFiles,
+            'read-outline-only':    c.readOutlineOnly,
+            'read-at-file-nodes':   c.readAtFileNodes,
+            'import-derived-file':  c.importDerivedFile,
             'tangle':               c.tangle,
-            'tangle all':           c.tangleAll,
-            'tangle marked':        c.tangleMarked,
+            'tangle-all':           c.tangleAll,
+            'tangle-marked':        c.tangleMarked,
             'untangle':             c.untangle,
-            'untangle all':         c.untangleAll,
-            'untangle marked':      c.untangleMarked,
-            'export headlines':     c.exportHeadlines,
-            'flatten outline':      c.flattenOutline,
-            'import AtRoot':        c.importAtRoot,
-            'import AtFile':        c.importAtFile,
-            'import CWEB Files':    c.importCWEBFiles,
-            'import Flattened Outline': c.importFlattenedOutline,
-            'import Noweb Files':   c.importNowebFiles,
-            'outline to Noweb':     c.outlineToNoweb,
-            'outline to CWEB':      c.outlineToCWEB,
-            'remove sentinels':     c.removeSentinels,
+            'untangle-all':         c.untangleAll,
+            'untangle-marked':      c.untangleMarked,
+            'export-headlines':     c.exportHeadlines,
+            'flatten-outline':      c.flattenOutline,
+            'import-at-root':       c.importAtRoot,
+            'import at-file':       c.importAtFile,
+            'import-cweb-files':    c.importCWEBFiles,
+            'import-flattened-outline': c.importFlattenedOutline,
+            'import-noweb-files':   c.importNowebFiles,
+            'outline-to-noweb':     c.outlineToNoweb,
+            'outline-to-CWEB':      c.outlineToCWEB,
+            'remove-sentinels':     c.removeSentinels,
             'weave':                c.weave,
             'delete':               c.delete,
-            'execute script':       c.executeScript,
-            'go to line number':    c.goToLineNumber,
-            'set font':             c.fontPanel,
-            'set colors':           c.colorPanel,
-            'show invisibles':      c.viewAllCharacters,
+            'execute-script':       c.executeScript,
+            'goto-line-number':     c.goToLineNumber,
+            'set-font':             c.fontPanel,
+            'set-colors':           c.colorPanel,
+            'show-invisibles':      c.viewAllCharacters,
             'preferences':          c.preferences,
-            'convert all blanks':   c.convertAllBlanks,
-            'convert all tabs':     c.convertAllTabs,
-            'convert blanks':       c.convertBlanks,
-            'convert tabs':         c.convertTabs,
+            'convert-all-blanks':   c.convertAllBlanks,
+            'convert-all-tabs':     c.convertAllTabs,
+            'convert-blanks':       c.convertBlanks,
+            'convert-tabs':         c.convertTabs,
             'indent':               c.indentBody,
             'unindent':             c.dedentBody,
-            'reformat paragraph':   c.reformatParagraph,
-            'insert time':          c.insertBodyTime,
-            'extract section':      c.extractSection,
-            'extract names':        c.extractSectionNames,
+            'reformat-paragraph':   c.reformatParagraph,
+            'insert-time':          c.insertBodyTime,
+            'extract-section':      c.extractSection,
+            'extract-names':        c.extractSectionNames,
             'extract':              c.extract,
-            'match bracket':        c.findMatchingBracket,
-            'find panel':           c.showFindPanel, ## c.findPanel,
-            'find next':            c.findNext,
-            'find previous':        c.findPrevious,
+            'match-bracket':        c.findMatchingBracket,
+            'find-panel':           c.showFindPanel, ## c.findPanel,
+            'find-next':            c.findNext,
+            'find-previous':        c.findPrevious,
             'replace':              c.replace,
-            'replace then find':    c.replaceThenFind,
-            'edit headline':        c.editHeadline,
-            'toggle angle brackets': c.toggleAngleBrackets,
-            'cut node':             c.cutOutline,
-            'copy node':            c.copyOutline,
-            'paste node':           c.pasteOutline,
-            'paste retaining clone': c.pasteOutlineRetainingClones,
+            'replace-then-find':    c.replaceThenFind,
+            'edit-headline':        c.editHeadline,
+            'toggle-angle-brackets': c.toggleAngleBrackets,
+            'cut-node':             c.cutOutline,
+            'copy-node':            c.copyOutline,
+            'paste-node':           c.pasteOutline,
+            'paste-retaining-clone': c.pasteOutlineRetainingClones,
             'hoist':                c.hoist,
             'de-hoist':             c.dehoist,
-            'insert node':          c.insertHeadline,
-            'clone node':           c.clone,
-            'delete node':          c.deleteOutline,
-            'sort children':        c.sortChildren,
-            'sort siblings':        c.sortSiblings,
+            'insert-node':          c.insertHeadline,
+            'clone-node':           c.clone,
+            'delete-node':          c.deleteOutline,
+            'sort-children':        c.sortChildren,
+            'sort-siblings':        c.sortSiblings,
             'demote':               c.demote,
             'promote':              c.promote,
-            'move right':           c.moveOutlineRight,
-            'move left':            c.moveOutlineLeft,
-            'move up':              c.moveOutlineUp,
-            'move down':            c.moveOutlineDown,
-            'unmark all':           c.unmarkAll,
-            'mark clones':          c.markClones,
+            'move-outline-right':   c.moveOutlineRight,
+            'move-outline-left':    c.moveOutlineLeft,
+            'move-outline-up':      c.moveOutlineUp,
+            'move-outline-down':    c.moveOutlineDown,
+            'unmark-all':           c.unmarkAll,
+            'mark-clones':          c.markClones,
             'mark':                 c.markHeadline,
-            'mark subheads':        c.markSubheads,
-            'mark changed items':   c.markChangedHeadlines,
-            'mark changed roots':   c.markChangedRoots,
-            'contract all':         c.contractAllHeadlines,
-            'contract node':        c.contractNode,
-            'contract parent':      c.contractParent,
-            'expand to level 1':    c.expandLevel1,
-            'expand to level 2':    c.expandLevel2,
-            'expand to level 3':    c.expandLevel3,
-            'expand to level 4':    c.expandLevel4,
-            'expand to level 5':    c.expandLevel5,
-            'expand to level 6':    c.expandLevel6,
-            'expand to level 7':    c.expandLevel7,
-            'expand to level 8':    c.expandLevel8,
-            'expand to level 9':    c.expandLevel9,
-            'expand prev level':    c.expandPrevLevel,
-            'expand next level':    c.expandNextLevel,
-            'expand all':           c.expandAllHeadlines,
-            'expand node':          c.expandNode,
-            'check outline':        c.checkOutline,
-            'dump outline':         c.dumpOutline,
-            'check python code':    c.checkPythonCode,
-            'check all python code': c.checkAllPythonCode,
-            'pretty print python code': c.prettyPrintPythonCode,
-            'pretty print all python code': c.prettyPrintAllPythonCode,
-            'goto parent':          c.goToParent,
-            'goto next sibling':    c.goToNextSibling,
-            'goto previous sibling': c.goToPrevSibling,
-            'goto next clone':      c.goToNextClone,
-            'goto next marked':     c.goToNextMarkedHeadline,
-            'goto next changed':    c.goToNextDirtyHeadline,
-            'goto first':           c.goToFirstNode,
-            'goto last':            c.goToLastNode,
-            "go to prev visible":   c.selectVisBack,
-            "go to next visible":   c.selectVisNext,
-            "go to prev node":      c.selectThreadBack,
-            "go to next node":      c.selectThreadNext,
-            'about leo...':         c.about,
+            'mark-subheads':        c.markSubheads,
+            'mark-changed items':   c.markChangedHeadlines,
+            'mark-changed roots':   c.markChangedRoots,
+            'contract-all':         c.contractAllHeadlines,
+            'contract-node':        c.contractNode,
+            'contract-parent':      c.contractParent,
+            'expand-to-level 1':    c.expandLevel1,
+            'expand-to-level 2':    c.expandLevel2,
+            'expand-to-level 3':    c.expandLevel3,
+            'expand-to-level 4':    c.expandLevel4,
+            'expand-to-level 5':    c.expandLevel5,
+            'expand-to-level 6':    c.expandLevel6,
+            'expand-to-level 7':    c.expandLevel7,
+            'expand-to-level 8':    c.expandLevel8,
+            'expand-to-level 9':    c.expandLevel9,
+            'expand-prev-level':    c.expandPrevLevel,
+            'expand-next-level':    c.expandNextLevel,
+            'expand-all':           c.expandAllHeadlines,
+            'expand-node':          c.expandNode,
+            'check-outline':        c.checkOutline,
+            'dump-outline':         c.dumpOutline,
+            'check-python-code':    c.checkPythonCode,
+            'check-all-python-code':        c.checkAllPythonCode,
+            'pretty-print-python-code':     c.prettyPrintPythonCode,
+            'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
+            'goto-parent':          c.goToParent,
+            'goto-next-sibling':    c.goToNextSibling,
+            'goto-prev-sibling':    c.goToPrevSibling,
+            'goto-next-clone':      c.goToNextClone,
+            'goto-next marked':     c.goToNextMarkedHeadline,
+            'goto-next changed':    c.goToNextDirtyHeadline,
+            'goto-first':           c.goToFirstNode,
+            'goto-last':            c.goToLastNode,
+            'goto-prev-visible':    c.selectVisBack,
+            'goto-next-visible':    c.selectVisNext,
+            'goto-prev-node':       c.selectThreadBack,
+            'goto-next-node':       c.selectThreadNext,
+            'about leo':            c.about,
             #'apply settings':      c.applyConfig,
-            'open LeoConfig.leo':   c.leoConfig,
-            'open LeoDocs.leo':     c.leoDocumentation,
-            'open online home':     c.leoHome,
-            'open online tutorial': c.leoTutorial,
-            'open compare window':  c.openCompareWindow,
-            'open Python window':   c.openPythonWindow,
-            "equal sized panes":    f.equalSizedPanes,
-            "toggle active pane":   f.toggleActivePane,
-            "toggle split direction": f.toggleSplitDirection,
-            "resize to screen":     f.resizeToScreen,
-            "cascade":              f.cascade,
-            "minimize all":         f.minimizeAll,
+            'open-leoConfig.leo':   c.leoConfig,
+            'open-leoDocs.leo':     c.leoDocumentation,
+            'open-online-home':     c.leoHome,
+            'open-online-tutorial': c.leoTutorial,
+            'open-compare-window':  c.openCompareWindow,
+            'open-python-window':   c.openPythonWindow,
+            'equal-sized-panes':    f.equalSizedPanes,
+            'toggle-active-pane':   f.toggleActivePane,
+            'toggle-split-direction': f.toggleSplitDirection,
+            'resize-to-screen':     f.resizeToScreen,
+            'cascade':              f.cascade,
+            'minimize-all':         f.minimizeAll,
         }
         #@nonl
         #@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
@@ -3279,8 +3302,7 @@ class macroCommandsClass (baseEditCommandsClass):
     
         '''Asks for a macro file name to load.'''
     
-        f = tkFileDialog.askopenfile()
-    
+        f = tkFileDialog and tkFileDialog.askopenfile()
         if f:
             return self._loadMacros(f)
         else:
@@ -3323,16 +3345,16 @@ class macroCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.198:nameLastMacro
     #@+node:ekr.20050920084036.199:saveMacros & helper
-    def saveMacros( self, event, macname ):
-        
+    def saveMacros (self,event,macname):
+    
         '''Asks for a file name and saves it.'''
     
-        name = tkFileDialog.asksaveasfilename()
+        name = tkFileDialog and tkFileDialog.asksaveasfilename()
         if name:
-            f = file( name, 'a+' )
-            f.seek( 0 )
+            f = file(name,'a+')
+            f.seek(0)
             if f:
-                self._saveMacros( f, macname )
+                self._saveMacros(f,macname)
     
         return 'break'
     #@nonl

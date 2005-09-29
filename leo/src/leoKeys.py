@@ -123,58 +123,23 @@ class keyHandlerClass:
         
         # g.trace('keyHandler')
         
-        k = self ; c = k.c ; frame = c.frame
+        k = self ; c = k.c ; w = c.frame.bodyCtrl
     
         k.setMiniBufferFunctions(altX_commandsDict)
-        k.setBufferStrokes(c.frame.bodyCtrl)
-        k.setUndoer(c.frame.bodyCtrl,c.undoer.undo)
-        
-        #@    << define utTailEnd >>
-        #@+node:ekr.20050920114619.1:<< define utTailEnd >>
-        def utTailEnd (buffer,frame=frame):
-        
-            '''A method that Emacs will call with its _tailEnd method'''
-        
-            buffer.event_generate('<Key>')
-            buffer.update_idletasks()
-        
-            return 'break'
-        #@nonl
-        #@-node:ekr.20050920114619.1:<< define utTailEnd >>
-        #@nl
-        k.setTailEnd(frame.bodyCtrl,utTailEnd)
+        k.setBufferStrokes(w)
+        k.setUndoer(w,c.undoer.undo)
+        k.setTailEnd(w,self.utTailEnd)
         c.controlCommands.setShutdownHook(c.close)
         
         if 0:
             addTemacsExtensions(k)
             addTemacsAbbreviations(k)
             changeKeyStrokes(k,frame.bodyCtrl)
-            
-        k.setStateFunctions()
+    
         k.setKeystrokeFunctions()
         k.setControlXFunctions()
         
     #@nonl
-    #@+node:ekr.20050923174229:setStateFunctions
-    def setStateFunctions (self):
-        
-        k = self ; c = k.c
-        
-        self.stateCommands = {
-            
-            ###'negativeArg':      k.callStateFunction,
-            ###'abbrevMode':       c.abbrevCommands.abbrevCommand1,
-            # 'qlisten':          c.queryReplaceCommands.masterQR,
-        
-            'renameBuffer':     c.bufferCommands.renameBuffer,
-           
-            'alterlines':       c.editCommands.processLines,
-            'last-altx':        k.executeLastAltX,
-            'escape':           c.editCommands.watchEscape,
-            'subprocess':       c.controlCommands.subprocesser,
-        }
-    #@nonl
-    #@-node:ekr.20050923174229:setStateFunctions
     #@+node:ekr.20050923174229.1:setKeystrokFunctions
     def setKeystrokeFunctions (self):
         
@@ -183,7 +148,7 @@ class keyHandlerClass:
         self.keystrokes = {
             '<Control-s>':      ( 2, c.searchCommands.startIncremental ),
             '<Control-r>':      ( 2, c.searchCommands.startIncremental ),
-            '<Alt-g>':          ( 1, c.editCommands.startGoto ),
+            '<Alt-g>':          ( 1, c.editCommands.gotoLine ),
             '<Alt-z>':          ( 1, c.killBufferCommands.zapToCharacter ),
             '<Alt-percent>':    ( 1, c.queryReplaceCommands.masterQR ),
             '<Control-Alt-w>':  ( 1, lambda event: 'break' ),
@@ -536,6 +501,28 @@ class keyHandlerClass:
     
         return k.universalDispatchStateHandler(event)
     #@nonl
+    #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
+    def repeatComplexCommand (self,event):
+    
+        k = self
+    
+        if k.altX_history:
+            k.setState('last-altx',1,handler=k.doLastAltX)
+            k.setLabelBlue("Redo: %s" % k.altX_history[0])
+        return 'break'
+        
+    def doLastAltX (self,event):
+        
+        k = self ; c = k.c
+    
+        if event.keysym == 'Return' and k.altX_history:
+            last = k.altX_history [0]
+            c.commandsDict [last](event)
+            return 'break'
+        else:
+            return k.keyboardQuit(event)
+    #@nonl
+    #@-node:ekr.20050920085536.48:repeatComplexCommand & helper
     #@+node:ekr.20050920085536.73:universalDispatch
     def universalDispatchStateHandler (self,event):
     
@@ -655,6 +642,23 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.68:negativeArgument
     #@-node:ekr.20050920085536.32: Entry points
+    #@+node:ekr.20050920085536.61:extendAltX
+    def extendAltX (self,name,function):
+    
+        '''A simple method that extends the functions Alt-X offers.'''
+    
+        # Important: f need not be a method of the emacs class.
+        
+        k = self ; c = k.c
+    
+        def f (event,aX=None,self=self,command=function):
+            # g.trace(event,self,command)
+            command()
+            k.keyboardQuit(event)
+    
+        c.commandsDict [name] = f
+    #@nonl
+    #@-node:ekr.20050920085536.61:extendAltX
     #@+node:ekr.20050920085536.65: masterCommand
     def masterCommand (self,event,method,stroke,general):
         
@@ -670,7 +674,7 @@ class keyHandlerClass:
             not general and (len(k.keysymHistory) == 0 or k.keysymHistory [0] != event.keysym))
     
         if inserted:
-            # g.trace(general,event.keysym)
+            # g.trace('general',general,event.keysym)
             #@        << add character to history >>
             #@+node:ekr.20050920085536.67:<< add character to history >>
             # Don't add multiple special characters to history.
@@ -733,18 +737,17 @@ class keyHandlerClass:
             rt = method(event)
             k.previousStroke = stroke
             return rt
+        
         else:
-            # g.trace('default')
-            return c.frame.body.onBodyKey(event)
-    #@nonl
+            c.frame.body.onBodyKey(event)
+            return None # Not 'break'
     #@-node:ekr.20050920085536.65: masterCommand
-    #@+node:ekr.20050920085536.40:Alt_X...
-    #@+node:ekr.20050920085536.41:alt_X
+    #@+node:ekr.20050920085536.41:alt_X & helpers
     def alt_X (self,event=None,which=''):
     
         k = self
-        k.setState('altx',which or 1, # Must be int, not True.
-            handler=k.doAlt_X) 
+    
+        k.setState('altx',which or 1,handler=k.doAlt_X) 
     
         if which:
             k.setLabelBlue('%s %s' % (which,k.alt_x_prompt),protect=True)
@@ -753,8 +756,7 @@ class keyHandlerClass:
     
         return 'break'
     #@nonl
-    #@-node:ekr.20050920085536.41:alt_X
-    #@+node:ekr.20050920085536.42:doAlt_X & helper
+    #@+node:ekr.20050920085536.42:doAlt_X
     def doAlt_X (self,event):
     
         '''This method executes the correct Alt-X command'''
@@ -777,6 +779,7 @@ class keyHandlerClass:
     
         return 'break'
     #@nonl
+    #@-node:ekr.20050920085536.42:doAlt_X
     #@+node:ekr.20050920085536.45:dispatchAltXFunction
     def dispatchAltXFunction (self,event):
         
@@ -799,52 +802,7 @@ class keyHandlerClass:
             k.setLabel('Command does not exist')
     #@nonl
     #@-node:ekr.20050920085536.45:dispatchAltXFunction
-    #@-node:ekr.20050920085536.42:doAlt_X & helper
-    #@+node:ekr.20050920085536.47:executeLastAltX
-    def executeLastAltX (self,event):
-        
-        k = self ; c = k.c
-    
-        if event.keysym == 'Return' and k.altX_history:
-            last = k.altX_history [0]
-            c.commandsDict [last](event)
-            return 'break'
-        else:
-            return k.keyboardQuit(event)
-    #@nonl
-    #@-node:ekr.20050920085536.47:executeLastAltX
-    #@+node:ekr.20050920085536.48:repeatComplexCommand
-    def repeatComplexCommand (self,event):
-    
-        k = self
-    
-        k.keyboardQuit(event)
-    
-        if k.altX_history:
-            k.setState('last-altx',1)
-            k.setLabelBlue("Redo: %s" % k.altX_history[0])
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.48:repeatComplexCommand
-    #@+node:ekr.20050920085536.61:extendAltX
-    def extendAltX (self,name,function):
-    
-        '''A simple method that extends the functions Alt-X offers.'''
-    
-        # Important: f need not be a method of the emacs class.
-        
-        k = self ; c = k.c
-    
-        def f (event,aX=None,self=self,command=function):
-            # g.trace(event,self,command)
-            command()
-            k.keyboardQuit(event)
-    
-        c.commandsDict [name] = f
-    #@nonl
-    #@-node:ekr.20050920085536.61:extendAltX
-    #@-node:ekr.20050920085536.40:Alt_X...
+    #@-node:ekr.20050920085536.41:alt_X & helpers
     #@+node:ekr.20050920085536.62:getArg
     def getArg (self,event,returnStateKind=None,returnState=None,returnStateHandler=None,prefix=None,tabList=None):
         
@@ -855,9 +813,9 @@ class keyHandlerClass:
         
         # Similar, but not the same as the code in doAlt_X.
         k = self ; c = k.c ; state = k.getState('getArg')
-        if event: keysym = event.keysym
-        else:     keysym = ''
-        if not state:
+        keysym = (event and event.keysym) or ''
+        # g.trace('state',state,'keysym',keysym)
+        if state == 0:
             k.arg = ''
             if tabList: k.argTabList = tabList[:]
             else:       k.argTabList = []
@@ -871,9 +829,8 @@ class keyHandlerClass:
                 k.altX_prefix = prefix
                 k.alt_x_prompt = prefix
             else:
-                k.altX_tabListPrefix = k.getLabel()
+                k.altX_tabListPrefix = k.altX_prefix = k.getLabel()
                 k.alt_x_prompt = ''
-                k.altX_prefix = ''
             #@nonl
             #@-node:ekr.20050928092516:<< init altX vars >>
             #@nl
@@ -1198,8 +1155,8 @@ class keyHandlerClass:
         instead of plain accumalation.'''
         
         k = self ; s = k.getLabel()
-        if event: ch = event.char
-        else:     ch = ''
+        ch = (event and event.char) or ''
+        # g.trace(repr(s),repr(ch))
     
         if ch == '\b': # Handle backspace.
             # Don't backspace over the prompt.
@@ -1207,10 +1164,10 @@ class keyHandlerClass:
                 return 
             elif len(s) == 1: s = ''
             else: s = s [0:-1]
-        elif ch:
+        elif ch and ch not in ('\n','\r'):
             # Add the character.
             s = s + ch
-    
+        
         k.setLabel(s)
     #@nonl
     #@-node:ekr.20050920085536.38:updateLabel
@@ -1227,11 +1184,8 @@ class keyHandlerClass:
             if k.state.handler:
                 return k.state.handler(event)
             else:
-                func = k.stateCommands.get(k.state.kind)
-                if func:
-                    return func(event)
-                else:
-                    g.es_print('no state function for %s' % (k.state.kind),color='red')
+                g.es_print('no state function for %s' % (k.state.kind),color='red')
+                return 'break'
     #@nonl
     #@-node:ekr.20050923172809.1:callStateFunction
     #@+node:ekr.20050923172814.1:clearState
@@ -1336,7 +1290,22 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion
     #@-node:ekr.20050928082315:Special characters in the mini-buffer...
-    #@+node:ekr.20050920085536.69:tailEnd...
+    #@+node:ekr.20050920085536.69:tailEnd... (to be removed?)
+    #@+node:ekr.20050920114619.1:utTailEnd
+    def utTailEnd (self,event=None):
+    
+        '''A method that Emacs will call with its _tailEnd method'''
+        
+        k = self ; c = k.c ; w = c.frame.bodyCtrl
+    
+        # w.event_generate('<Key>')
+        w.focus_force()
+        w.update_idletasks()
+        # c.frame.bodyWantsFocus(w,later=True,tag='utTailEnd')
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920114619.1:utTailEnd
     #@+node:ekr.20050920085536.70:_tailEnd
     def _tailEnd (self,w):
         
@@ -1345,7 +1314,7 @@ class keyHandlerClass:
         k = self
         func = k.tailEnds.get(w)
         if func:
-            g.trace(func)
+            # g.trace(func)
             return func(w)
         else:
             return 'break'
@@ -1361,7 +1330,7 @@ class keyHandlerClass:
     
         k.tailEnds [w] = tailCall
     #@-node:ekr.20050920085536.71:setTailEnd
-    #@-node:ekr.20050920085536.69:tailEnd...
+    #@-node:ekr.20050920085536.69:tailEnd... (to be removed?)
     #@+node:ekr.20050920085536.4:Undoer...
     #@+at
     # Emacs requires an undo mechanism be added from the environment.
