@@ -2240,14 +2240,12 @@ class leoTkinterBody (leoFrame.leoBody):
         
         c = self.c
     
-        # A light selectbackground value is needed to make syntax coloring look good.
         wrap = c.config.getBool('body_pane_wraps')
         wrap = g.choose(wrap,"word","none")
         
         # Setgrid=1 cause severe problems with the font panel.
         body = Tk.Text(parentFrame,name='body',
-            bd=2,bg="white",relief="flat",
-            setgrid=0,wrap=wrap) ##, selectbackground="Gray80") 
+            bd=2,bg="white",relief="flat",setgrid=0,wrap=wrap)
         
         bodyBar = Tk.Scrollbar(parentFrame,name='bodyBar')
         frame.bodyBar = self.bodyBar = bodyBar
