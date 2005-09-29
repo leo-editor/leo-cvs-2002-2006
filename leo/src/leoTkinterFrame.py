@@ -2247,7 +2247,7 @@ class leoTkinterBody (leoFrame.leoBody):
         # Setgrid=1 cause severe problems with the font panel.
         body = Tk.Text(parentFrame,name='body',
             bd=2,bg="white",relief="flat",
-            setgrid=0,wrap=wrap, selectbackground="Gray80") 
+            setgrid=0,wrap=wrap) ##, selectbackground="Gray80") 
         
         bodyBar = Tk.Scrollbar(parentFrame,name='bodyBar')
         frame.bodyBar = self.bodyBar = bodyBar
@@ -2300,7 +2300,13 @@ class leoTkinterBody (leoFrame.leoBody):
             except:
                 g.es("exception setting body pane cursor color")
                 g.es_exception()
-            
+                
+        sel_bg = c.config.getColor('body_text_selection_color') or 'Gray80'
+        try: body.configure(selectbackground=sel_bg)
+        except Exception:
+            g.es("exception setting body pane text selection color")
+            g.es_exception()
+       
         if sys.platform != "win32": # Maybe a Windows bug.
             fg = c.config.getColor("body_cursor_foreground_color")
             bg = c.config.getColor("body_cursor_background_color")
