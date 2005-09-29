@@ -138,7 +138,7 @@
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
-<v t="ekr.20041213105007.1"><vh>Colors</vh>
+<v t="ekr.20041213105007.1" a="TV"><vh>Colors</vh>
 <v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
@@ -151,8 +151,9 @@
 <v t="ekr.20041119034357.50"><vh>@color body_insertion_cursor_color = None</vh></v>
 <v t="ekr.20041119034357.49"><vh>@color body_text_background_color = None</vh></v>
 <v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
+<v t="ekr.20050929080032"><vh>@color body_text_selection_color = None</vh></v>
 </v>
-<v t="ekr.20041119051246.1" a="E"><vh>@page Outline pane colors</vh>
+<v t="ekr.20041119051246.1"><vh>@page Outline pane colors</vh>
 <v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = #ffffec</vh></v>
 <v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = None</vh></v>
 <v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
@@ -194,7 +195,7 @@
 <v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
 <v t="ekr.20050513110847"><vh>@shortcuts test shortcuts</vh></v>
 </v>
-<v t="ekr.20041213105954" a="TV"><vh>Window options</vh>
+<v t="ekr.20041213105954"><vh>Window options</vh>
 <v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
@@ -1142,5 +1143,9 @@ pdq = Alt+Ctrl+Shift+A</t>
 <t tx="ekr.20050921105316"></t>
 <t tx="ekr.20050921105316.1"></t>
 <t tx="ekr.20050921105316.2"></t>
+<t tx="ekr.20050929080032">Use a light selectbackground value so syntax coloring looks good.
+
+Default is Gray80.
+CadetBlue3 has been suggested.</t>
 </tnodes>
 </leo_file>
