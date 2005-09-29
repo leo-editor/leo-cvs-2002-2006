@@ -907,13 +907,18 @@ class baseFileCommands:
         return height, width
     #@nonl
     #@-node:ekr.20031218072017.3026:getSize
-    #@+node:ekr.20031218072017.1561:getTnode
+    #@+node:ekr.20031218072017.1561:getTnode (changed for 4.4)
     def getTnode (self):
     
         # we have already matched <t.
         index = -1 ; attrDict = {}
-        # New in version 1.7: attributes may appear in any order.
-        while 1:	
+    
+        # New in Leo 4.4: support collapsed tnodes.
+        if self.matchTag('/>'): # A collapsed tnode.
+            return
+    
+        # Attributes may appear in any order.
+        while 1:
             if self.matchTag("tx="):
                 # New for 4.1.  Read either "Tnnn" or "gnx".
                 index = self.getDqString()
@@ -954,7 +959,7 @@ class baseFileCommands:
             g.es("no tnode with index: %s.  The text will be discarded" % str(index))
         self.getTag("</t>")
     #@nonl
-    #@-node:ekr.20031218072017.1561:getTnode
+    #@-node:ekr.20031218072017.1561:getTnode (changed for 4.4)
     #@+node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
     def getTnodeList (self,s):
     
@@ -1028,13 +1033,20 @@ class baseFileCommands:
             return attr,val
     #@nonl
     #@-node:EKR.20040526204036.1:getUa (changed for 4.3)
-    #@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
+    #@+node:ekr.20031218072017.1566:getVnode changed for 4.2 & 4.4)
     def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
     
         v = None
         setCurrent = setExpanded = setMarked = setOrphan = setTop = False
-        tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
+        tref = -1 ; headline = '' ; tnodeList = None ; attrDict = {}
+    
         # we have already matched <v.
+        
+        # New in Leo 4.4: support collapsed tnodes.
+        if self.matchTag('/>'): # A collapsed vnode.
+            v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+            return v
+        
         while 1:
             if self.matchTag("a=\""):
                 #@            << Handle vnode attribute bits >>
@@ -1156,7 +1168,7 @@ class baseFileCommands:
         self.getTag("</v>")
         return v
     #@nonl
-    #@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
+    #@-node:ekr.20031218072017.1566:getVnode changed for 4.2 & 4.4)
     #@+node:ekr.20031218072017.1565:getVnodes
     def getVnodes (self,reassignIndices=True):
     
