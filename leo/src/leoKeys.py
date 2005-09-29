@@ -215,8 +215,8 @@ class keyHandlerClass:
     
         self.xcommands = {
             '<Control-t>': c.editCommands.transposeLines,
-            '<Control-u>': lambda event, way = 'up': c.editCommands.upperLowerRegion(event,way),
-            '<Control-l>': lambda event, way = 'low': c.editCommands.upperLowerRegion(event,way),
+            '<Control-u>': c.editCommands.upCaseRegion,
+            '<Control-l>': c.editCommands.downCaseRegion,
             '<Control-o>': c.editCommands.removeBlankLines,
             '<Control-i>': c.editFileCommands.insertFile,
             '<Control-s>': c.editFileCommands.saveFile,
@@ -224,7 +224,7 @@ class keyHandlerClass:
             '<Control-c>': c.controlCommands.shutdown,
             '<Control-b>': c.bufferCommands.listBuffers,
             '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
-            '<Delete>': lambda event, back = True: c.editCommands.killsentence(event,back),
+            '<Delete>':     c.killBufferCommands.backwardKillSentence,
         }
     #@nonl
     #@+node:ekr.20050920085536.11:add_ekr_altx_commands
@@ -305,38 +305,38 @@ class keyHandlerClass:
         # The big ones...
         'Alt-x':        k.alt_X,
         #'Control-x':    k.startControlX, # Conflicts with XP cut.
-        'Control-c':    k.startControlX, # Conflicts with XP cut.
+        'Control-c':    k.startControlX, # Conflicts with XP copy.
         'Control-g':    k.keyboardQuit,
     
         # Standard Emacs moves...
-        'Alt-less':     lambda event, spot = '1.0': c.editCommands.moveTo(event,spot),
-        'Alt-greater':  lambda event, spot = 'end': c.editCommands.moveTo(event,spot),
+        'Alt-less':     c.editCommands.beginningOfBuffer,
+        'Alt-greater':  c.editCommands.endOfBuffer,
         'Alt-a':        c.editCommands.backSentence,
         'Alt-e':        c.editCommands.forwardSentence,
-        'Alt-f':       lambda event, way = 1: c.editCommands.moveword(event,way),
-        'Alt-b':        lambda event, way = -1: c.editCommands.moveword(event,way),
+        'Alt-f':        c.editCommands.forwardWord,
+        'Alt-b':        c.editCommands.backwardWord,
         'Alt-braceright':   lambda event, which = 1: c.editCommands.movingParagraphs(event,which),
         'Alt-braceleft':    lambda event, which = 0: c.editCommands.movingParagraphs(event,which),
-        'Control-Right':lambda event, way = 1: c.editCommands.moveword(event,way),
-        'Control-Left': lambda event, way = -1: c.editCommands.moveword(event,way),
-        'Control-a':    lambda event, spot = 'insert linestart': c.editCommands.moveTo(event,spot),
-        'Control-e':    lambda event, spot = 'insert lineend': c.editCommands.moveTo(event,spot),
-        'Control-p':    lambda event, which = 'Up': k.manufactureKeyPress(event,which),
-        'Control-n':    lambda event, which = 'Down': k.manufactureKeyPress(event,which),
+        'Control-Right':c.editCommands.forwardWord,
+        'Control-Left': c.editCommands.backwardWord,
+        'Control-a':    c.editCommands.beginningOfLine,
+        'Control-e':    c.editCommands.endOfLine,
+        'Control-p':    c.editCommands.prevLine,
+        'Control-n':    c.editCommands.nextLine,
         # Conflicts with Find panel.
-        # 'Control-f':    lambda event, which = 'Right': k.manufactureKeyPress(event,which),
-        'Control-b':    lambda event, which = 'Left': k.manufactureKeyPress(event,which),
+        # 'Control-f':  c.editCommands.forwardCharacter,
+        'Control-b':    c.editCommands.backCharacter,
         
         # Standard Emacs deletes...
-            # 'Control-d':        c.editCommands.deleteNextChar,
-            # 'Alt-backslash':    c.editCommands.deleteSpaces,
-            # 'Delete':       lambda event, which = 'BackSpace': k.manufactureKeyPress(event,which),
+            # 'Control-d':      c.editCommands.deleteNextChar,
+            # 'Alt-backslash':  c.editCommands.deleteSpaces,
+            # 'Delete':         c.editCommands.backwardDeleteCharacter,
         
         # Kill buffer...
         'Control-k':    lambda event, frm = 'insert', to = 'insert lineend': k.kill(event,frm,to),
         'Alt-d':        lambda event, frm = 'insert wordstart', to = 'insert wordend': k.kill(event,frm,to),
         'Alt-Delete':   lambda event: c.editCommands.deletelastWord(event),
-        "Alt-k":        lambda event: c.editCommands.killsentence(event),
+        "Alt-k":        c.killBufferCommands.killSentence,
         
         # Conflicts with Leo outline moves.
         #'Alt-Up':       lambda event, spot = 'insert linestart': c.editCommands.moveTo(event,spot),
@@ -348,10 +348,10 @@ class keyHandlerClass:
             # "Alt-y":        lambda event, frm = "insert", which = 'a': c.walkKB(event,frm,which),
             # 'Control-s':    None,
             # 'Control-r':    None,
-            # 'Alt-c':        lambda event, which = 'cap': c.editCommands.capitalize(event,which),
-            # 'Alt-u':        lambda event, which = 'up': c.editCommands.capitalize(event,which),
-            # 'Alt-l':        lambda event, which = 'low': c.editCommands.capitalize(event,which),
-            # 'Alt-t':        lambda event, sw = c.editCommands.swapSpots: c.editCommands.swapWords(event,sw),
+            # 'Alt-c':        c.editCommands.capitalizeWord,
+            # 'Alt-u':        c.editCommands.upCaseWord,
+            # 'Alt-l':        c.editCommands.downCaseWord,
+            # 'Alt-t':        c.editCommands.transposeWords,
         
         # Region stuff...
             # 'Control-Shift-at': c.editCommands.setRegion,
@@ -370,47 +370,44 @@ class keyHandlerClass:
             # 'Alt-z':        None,
             # 'Control-i':    None,
             # 'Alt-g':        None,
-            # 'Control-v':    lambda event, way = 'south': c.editCommands.screenscroll(event,way),
-            # 'Alt-v':        lambda event, way = 'north': c.editCommands.screenscroll(event,way),
+            # 'Control-v':      c.editCommands.scrollDown,
+            # 'Alt-v':          c.editCommands.scrollUp,
             # 'Alt-equal':      c.editCommands.countRegion,
             # 'Alt-parenleft':  c.editCommands.insertParentheses,
             # 'Alt-parenright': c.editCommands.movePastClose,
-            # 'Alt-percent':  None,
-            # 'Control-c':    None,
-            # 'Control-Alt-w': None,
-            # 'Control-Alt-o': c.editCommands.insertNewLineIndent,
-            # 'Control-j':    c.editCommands.insertNewLineAndTab,
-            # 'Alt-minus':    k.negativeArgument,
-            # 'Alt-slash':    c.editCommands.dynamicExpansion,
+            # 'Alt-percent':    None,
+            # 'Control-c':      None,
+            # 'Control-Alt-w':  None,
+            # 'Control-Alt-o':  c.editCommands.insertNewLineIndent,
+            # 'Control-j':      c.editCommands.insertNewLineAndTab,
+            # 'Alt-minus':      k.negativeArgument,
+            # 'Alt-slash':      c.editCommands.dynamicExpansion,
             # 'Control-Alt-slash':    c.editCommands.dynamicExpansion2,
             # 'Control-u':        lambda event, keystroke = '<Control-u>': k.universalDispatchStateHandler(event,keystroke),
-            # 'Alt-q':        c.editCommands.fillParagraph,
-            # 'Alt-h':        c.editCommands.selectParagraph,
-            # 'Alt-semicolon': c.editCommands.indentToCommentColumn,
-            # 'Alt-s':            c.editCommands.centerLine,
-            # 'Control-z':        c.controlCommands.suspend,
+            # 'Alt-q':          c.editCommands.fillParagraph,
+            # 'Alt-h':          c.editCommands.selectParagraph,
+            # 'Alt-semicolon':  c.editCommands.indentToCommentColumn,
+            # 'Alt-s':          c.editCommands.centerLine,
+            # 'Control-z':      c.controlCommands.suspend,
             # 'Control-Alt-s': c.searchCommands.isearchForwardRegexp,
-                # ### Hmmm.  the lambda doesn't call keyboardQuit
-                # # lambda event, stroke = '<Control-s>': k.startIncremental(event,stroke,which='regexp'),
             # 'Control-Alt-r': c.searchCommands.isearchBackwardRegexp,
-                # # lambda event, stroke = '<Control-r>': k.startIncremental(event,stroke,which='regexp'),
             # 'Control-Alt-percent': lambda event: k.startRegexReplace()and k.masterQR(event),
-            # 'Escape':       c.editCommands.watchEscape,
-            # 'Alt-colon':    c.editCommands.startEvaluate,
-            # 'Alt-exclam':   c.emacsControlCommands.startSubprocess,
-            # 'Alt-bar':      lambda event: c.controlCommands.startSubprocess(event,which=1),
+            # 'Escape':         c.editCommands.watchEscape,
+            # 'Alt-colon':      c.editCommands.startEvaluate,
+            # 'Alt-exclam':     c.emacsControlCommands.startSubprocess,
+            # 'Alt-bar':        lambda event: c.controlCommands.startSubprocess(event,which=1),
         
         # Numbered commands: conflict with Leo's Expand to level commands, but so what...
-        'Alt-0': lambda event, stroke = '<Alt-0>', number = 0: k.numberCommand(event,stroke,number),
-        'Alt-1': lambda event, stroke = '<Alt-1>', number = 1: k.numberCommand(event,stroke,number),
-        'Alt-2': lambda event, stroke = '<Alt-2>', number = 2: k.numberCommand(event,stroke,number),
-        'Alt-3': lambda event, stroke = '<Alt-3>', number = 3: k.numberCommand(event,stroke,number),
-        'Alt-4': lambda event, stroke = '<Alt-4>', number = 4: k.numberCommand(event,stroke,number),
-        'Alt-5': lambda event, stroke = '<Alt-5>', number = 5: k.numberCommand(event,stroke,number),
-        'Alt-6': lambda event, stroke = '<Alt-6>', number = 6: k.numberCommand(event,stroke,number),
-        'Alt-7': lambda event, stroke = '<Alt-7>', number = 7: k.numberCommand(event,stroke,number),
-        'Alt-8': lambda event, stroke = '<Alt-8>', number = 8: k.numberCommand(event,stroke,number),
-        'Alt-9': lambda event, stroke = '<Alt-9>', number = 9: k.numberCommand(event,stroke,number),
+        'Alt-0': k.numberCommand0,
+        'Alt-1': k.numberCommand1,
+        'Alt-2': k.numberCommand2,
+        'Alt-3': k.numberCommand3,
+        'Alt-4': k.numberCommand4,
+        'Alt-5': k.numberCommand5,
+        'Alt-6': k.numberCommand6,
+        'Alt-7': k.numberCommand7,
+        'Alt-8': k.numberCommand8,
+        'Alt-9': k.numberCommand9,
         
         # Emacs undo.
             # 'Control-underscore': k.doUndo,
@@ -475,10 +472,10 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.17:setBufferStrokes  (creates svars & <key> bindings)
     #@-node:ekr.20050923214044: setMiniBufferFunctions & helpers
     #@+node:ekr.20050920085536.64:manufactureKeyPress
-    def manufactureKeyPress (self,event,which):
+    def manufactureKeyPress (self,event,keysym):
     
         w = event.widget
-        w.event_generate('<Key>',keysym=which)
+        w.event_generate('<Key>',keysym=keysym)
         w.update_idletasks()
         
         return 'break'
@@ -610,6 +607,17 @@ class keyHandlerClass:
         event.widget.event_generate('<Key>',keysym=number)
     
         return 'break'
+    
+    def numberCommand0 (self,event): return self.numberCommand (event,None,0)
+    def numberCommand1 (self,event): return self.numberCommand (event,None,1)
+    def numberCommand2 (self,event): return self.numberCommand (event,None,2)
+    def numberCommand3 (self,event): return self.numberCommand (event,None,3)
+    def numberCommand4 (self,event): return self.numberCommand (event,None,4)
+    def numberCommand5 (self,event): return self.numberCommand (event,None,5)
+    def numberCommand6 (self,event): return self.numberCommand (event,None,6)
+    def numberCommand7 (self,event): return self.numberCommand (event,None,7)
+    def numberCommand8 (self,event): return self.numberCommand (event,None,8)
+    def numberCommand9 (self,event): return self.numberCommand (event,None,9)
     #@nonl
     #@-node:ekr.20050920085536.77:numberCommand
     #@+node:ekr.20050920085536.63:keyboardQuit
@@ -918,7 +926,7 @@ class keyHandlerClass:
         # '<Control-c>': c.controlCommands.shutdown,
         # '<Control-b>': c.bufferCommands.listBuffers,
         # '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
-        # '<Delete>': lambda event, back = True: c.editCommands.killsentence(event,back),
+        # '<Delete>':   c.killBufferCommands.backwardKillSentence,
     
         if stroke in k.xcommands:
             k.xcommands [stroke](event)

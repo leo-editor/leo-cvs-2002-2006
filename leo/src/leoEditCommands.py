@@ -81,7 +81,70 @@ class baseEditCommandsClass:
             "must be overridden in subclass")
     #@nonl
     #@-node:ekr.20050920084036.7:oops
-    #@+node:ekr.20050920084036.8:range utilities
+    #@+node:ekr.20050920084036.12:removeRKeys (baseCommandsClass)
+    def removeRKeys (self,w):
+    
+        mrk = 'sel'
+        w.tag_delete(mrk)
+        w.unbind('<Left>')
+        w.unbind('<Right>')
+        w.unbind('<Up>')
+        w.unbind('<Down>')
+    #@nonl
+    #@-node:ekr.20050920084036.12:removeRKeys (baseCommandsClass)
+    #@+node:ekr.20050929161635:Helpers
+    #@+node:ekr.20050920084036.249:_chckSel
+    def _chckSel (self,event):
+        
+        w = event.widget
+    
+        return 'sel' in w.tag_names() and w.tag_ranges('sel')
+    
+        if 0: # old code
+            if not 'sel' in event.widget.tag_names():
+                return False
+            if not event.widget.tag_ranges('sel'):
+                return False
+            return True
+    #@nonl
+    #@-node:ekr.20050920084036.249:_chckSel
+    #@+node:ekr.20050920084036.250:_checkIfRectangle
+    def _checkIfRectangle (self,event):
+    
+        k = self.k
+    
+        if self.registers.has_key(event.keysym):
+            if isinstance(self.registers[event.keysym],list):
+                k.stopControlX(event)
+                k.setLabel("Register contains Rectangle, not text")
+                return True
+    
+        return False
+    #@nonl
+    #@-node:ekr.20050920084036.250:_checkIfRectangle
+    #@+node:ekr.20050920084036.251:_ToReg
+    def _ToReg( self, event , which):
+    
+        if not self._chckSel( event ):
+            return
+        if self._checkIfRectangle( event ):
+            return
+    
+        if event.keysym in string.letters:
+            event.keysym = event.keysym.lower()
+            w = event.widget
+            if not self.registers.has_key( event.keysym ):
+                self.registers[ event.keysym ] = ''
+            txt = w.get( 'sel.first', 'sel.last' )
+            rtxt = self.registers[ event.keysym ]
+            if self.which == 'p':
+                txt = txt + rtxt
+            else:
+                txt = rtxt + txt
+            self.registers[ event.keysym ] = txt
+            return
+    #@nonl
+    #@-node:ekr.20050920084036.251:_ToReg
     #@+node:ekr.20050920084036.9:inRange
     def inRange (self,w,range,l='',r=''):
     
@@ -117,18 +180,13 @@ class baseEditCommandsClass:
             return True
     #@nonl
     #@-node:ekr.20050920084036.11:testinrange
-    #@-node:ekr.20050920084036.8:range utilities
-    #@+node:ekr.20050920084036.12:removeRKeys (baseCommandsClass)
-    def removeRKeys (self,w):
-    
-        mrk = 'sel'
-        w.tag_delete(mrk)
-        w.unbind('<Left>')
-        w.unbind('<Right>')
-        w.unbind('<Up>')
-        w.unbind('<Down>')
+    #@+node:ekr.20050929170812:manufactureKeyPress
+    def manufactureKeyPress (self,event,keysym):
+        
+        return self.k.manufactureKeyPress(event,keysym)
     #@nonl
-    #@-node:ekr.20050920084036.12:removeRKeys (baseCommandsClass)
+    #@-node:ekr.20050929170812:manufactureKeyPress
+    #@-node:ekr.20050929161635:Helpers
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.1:<< define class baseEditCommandsClass >>
@@ -855,6 +913,7 @@ class editCommandsClass (baseEditCommandsClass):
     '''Contains editing commands with little or no state.'''
 
     #@    @+others
+    #@+node:ekr.20050929155208: birth
     #@+node:ekr.20050920084036.54: ctor
     def __init__ (self,c):
     
@@ -878,12 +937,12 @@ class editCommandsClass (baseEditCommandsClass):
     
         return {
             'back-to-indentation':  self.backToIndentation,
-            'backward-delete-char': lambda event, which = 'BackSpace': self.manufactureKeyPress(event,which) and k.keyboardQuit(event),
-            'backward-char':        lambda event, which = 'Left': k.keyboardQuit(event) and self.manufactureKeyPress(event,which),
+            'backward-delete-char': self.backwardDeleteCharacter,
+            'backward-char':        self.backCharacter,
             'backward-kill-paragraph': self.backwardKillParagraph,
             'beginning-of-buffer':  self.beginningOfBuffer,
             'beginning-of-line':    self.beginningOfLine,
-            'capitalize-word':      self.capitalize,
+            'capitalize-word':      self.capitalizeWord,
             'center-line':          self.centerLine,
             'center-region':        self.centerRegion,
             'dabbrev-completion':   self.dynamicExpansion2,
@@ -908,8 +967,8 @@ class editCommandsClass (baseEditCommandsClass):
             'keep-lines':           self.keepLines,
             'kill-paragraph':       self.killParagraph,
             'newline-and-indent':   self.insertNewLineAndTab,
-            'next-line':            lambda event, which = 'Down': k.keyboardQuit(event) and self.manufactureKeyPress(event,which),
-            'previous-line':        lambda event, which = 'Up': k.keyboardQuit(event) and self.manufactureKeyPress(event,which),
+            'next-line':            self.nextLine,
+            'previous-line':        self.prevLine,
             'replace-regex':        self.activateReplaceRegex,
             'replace-string':       self.replaceString,
             'reverse-region':       self.reverseRegion,
@@ -949,9 +1008,10 @@ class editCommandsClass (baseEditCommandsClass):
         }
     #@nonl
     #@-node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
-    #@+node:ekr.20050920084036.56: Entry points
-    #@+node:ekr.20050920084036.57:capitalize, upCaseWord, downCaseWord
-    def capitalize (self,event,which='cap'):
+    #@-node:ekr.20050929155208: birth
+    #@+node:ekr.20050920084036.57:capitalizeWord, upCaseWord, downCaseWord, changePreviousWord
+    def capitalizeHelper (self,event,which):
+    
         w = event.widget
         text = w.get('insert wordstart','insert wordend')
         i = w.index('insert')
@@ -966,84 +1026,136 @@ class editCommandsClass (baseEditCommandsClass):
         w.insert('insert',text)
         w.mark_set('insert',i)
         return 'break'
+        
+    def capitalizeWord (self,event):
+        return self.capitalizeHelper(event,'cap')
     
     def downCaseWord (self,event):
-        return self.capitalize(event,'low')
+        return self.capitalizeHelper(event,'low')
     
     def upCaseWord (self,event):
-        return self.capitalize(event,'up')
+        return self.capitalizeHelper(event,'up')
     #@nonl
-    #@-node:ekr.20050920084036.57:capitalize, upCaseWord, downCaseWord
+    #@+node:ekr.20050920084036.145:changePreviousWord
+    def changePreviousWord (self,event):
+    
+        k = self.k ; stroke = k.stroke ; w = event.widget
+        i = w.index('insert')
+    
+        self.moveWordHelper(event,-1)
+    
+        if stroke == '<Alt-c>':
+            self.capitalize(event)
+        elif stroke == '<Alt-u>':
+             self.upCaseWord(event)
+        elif stroke == '<Alt-l>':
+            self.downCaseWord(event)
+    
+        w.mark_set('insert',i)
+    
+        return k._tailEnd(w)
+    #@-node:ekr.20050920084036.145:changePreviousWord
+    #@-node:ekr.20050920084036.57:capitalizeWord, upCaseWord, downCaseWord, changePreviousWord
+    #@+node:ekr.20050920084036.132:comment column...
+    #@+node:ekr.20050920084036.133:setCommentColumn
+    def setCommentColumn (self,event):
+    
+        cc = event.widget.index('insert')
+        cc1, cc2 = cc.split('.')
+        self.ccolumn = cc2
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.133:setCommentColumn
+    #@+node:ekr.20050920084036.134:indentToCommentColumn
+    def indentToCommentColumn (self,event):
+    
+        k = self.k ; w = event.widget
+    
+        i = w.index('insert lineend')
+        i1, i2 = i.split('.')
+        i2 = int(i2)
+        c1 = int(self.ccolumn)
+    
+        if i2 < c1:
+            wsn = c1- i2
+            w.insert('insert lineend',' '*wsn)
+        if i2 >= c1:
+            w.insert('insert lineend',' ')
+        w.mark_set('insert','insert lineend')
+    
+        return k._tailEnd(w)
+    #@-node:ekr.20050920084036.134:indentToCommentColumn
+    #@-node:ekr.20050920084036.132:comment column...
     #@+node:ekr.20050920084036.58:dynamic abbreviation...
     #@+node:ekr.20050920084036.59:dynamicExpansion
-    def dynamicExpansion( self, event ):#, store = {'rlist': [], 'stext': ''} ):
-        
+    def dynamicExpansion (self,event): #, store = {'rlist': [], 'stext': ''} ):
+    
         k = self.k ; w = event.widget
-        rlist = self.store[ 'rlist' ]
-        stext = self.store[ 'stext' ]
-        i = w.index( 'insert -1c wordstart' )
-        i2 = w.index( 'insert -1c wordend' )
-        txt = w.get( i, i2 )
-        dA = w.tag_ranges( 'dA' )
-        w.tag_delete( 'dA' )
-        def doDa( txt, from_ = 'insert -1c wordstart', to_ = 'insert -1c wordend' ):
-            w.delete( from_, to_ ) 
-            w.insert( 'insert', txt, 'dA' )
-            return k._tailEnd( w )
-            
+        rlist = self.store ['rlist']
+        stext = self.store ['stext']
+        i = w.index('insert -1c wordstart')
+        i2 = w.index('insert -1c wordend')
+        txt = w.get(i,i2)
+        dA = w.tag_ranges('dA')
+        w.tag_delete('dA')
+        def doDa (txt,from_='insert -1c wordstart',to_='insert -1c wordend'):
+            w.delete(from_,to_)
+            w.insert('insert',txt,'dA')
+            return k._tailEnd(w)
+    
         if dA:
             dA1, dA2 = dA
-            dtext = w.get( dA1, dA2 )
-            if dtext.startswith( stext ) and i2 == dA2:
+            dtext = w.get(dA1,dA2)
+            if dtext.startswith(stext) and i2 == dA2:
                 #This seems reasonable, since we cant get a whole word that has the '-' char in it, we do a good guess
                 if rlist:
                     txt = rlist.pop()
                 else:
                     txt = stext
-                    w.delete( dA1, dA2 )
+                    w.delete(dA1,dA2)
                     dA2 = dA1 #since the text is going to be reread, we dont want to include the last dynamic abbreviation
-                    self.getDynamicList( w, txt, rlist )
-                return doDa( txt, dA1, dA2 )
+                    self.getDynamicList(w,txt,rlist)
+                return doDa(txt,dA1,dA2)
             else:
                 dA = None
-                
+    
         if not dA:
-            self.store[ 'stext' ] = txt
-            self.store[ 'rlist' ] = rlist = []
-            self.getDynamicList( w, txt, rlist )
+            self.store ['stext'] = txt
+            self.store ['rlist'] = rlist = []
+            self.getDynamicList(w,txt,rlist)
             if not rlist:
                 return 'break'
             txt = rlist.pop()
-            return doDa( txt )
+            return doDa(txt)
     #@-node:ekr.20050920084036.59:dynamicExpansion
     #@+node:ekr.20050920084036.60:dynamicExpansion2
-    def dynamicExpansion2( self, event ):
-        
+    def dynamicExpansion2 (self,event):
+    
         k = self.k ; w = event.widget
-        i = w.index( 'insert -1c wordstart' )
-        i2 = w.index( 'insert -1c wordend' )
-        txt = w.get( i, i2 )   
+        i = w.index('insert -1c wordstart')
+        i2 = w.index('insert -1c wordend')
+        txt = w.get(i,i2)
         rlist = []
-        self.getDynamicList( w, txt, rlist )
-        dEstring = reduce( g.longestCommonPrefix, rlist )
+        self.getDynamicList(w,txt,rlist)
+        dEstring = reduce(g.longestCommonPrefix,rlist)
         if dEstring:
-            w.delete( i , i2 )
-            w.insert( i, dEstring )    
-            return k._tailEnd( w )
+            w.delete(i,i2)
+            w.insert(i,dEstring)
+            return k._tailEnd(w)
     #@-node:ekr.20050920084036.60:dynamicExpansion2
     #@+node:ekr.20050920084036.61:getDynamicList (helper)
-    def getDynamicList( self, w, txt , rlist ):
+    def getDynamicList (self,w,txt,rlist):
     
-         ttext = w.get( '1.0', 'end' )
-         items = self.dynaregex.findall( ttext ) #make a big list of what we are considering a 'word'
+         ttext = w.get('1.0','end')
+         items = self.dynaregex.findall(ttext) #make a big list of what we are considering a 'word'
          if items:
              for word in items:
-                 if not word.startswith( txt ) or word == txt: continue #dont need words that dont match or == the pattern
+                 if not word.startswith(txt) or word == txt: continue #dont need words that dont match or == the pattern
                  if word not in rlist:
-                     rlist.append( word )
+                     rlist.append(word)
                  else:
-                     rlist.remove( word )
-                     rlist.append( word )
+                     rlist.remove(word)
+                     rlist.append(word)
     #@nonl
     #@-node:ekr.20050920084036.61:getDynamicList (helper)
     #@-node:ekr.20050920084036.58:dynamic abbreviation...
@@ -1138,9 +1250,11 @@ class editCommandsClass (baseEditCommandsClass):
     #@+others
     #@+node:ekr.20050920084036.67:centerLine
     def centerLine( self, event ):
+    
         '''Centers line within current fillColumn'''
         
         k = self.k ; w = event.widget
+    
         ind = w.index( 'insert linestart' )
         txt = w.get( 'insert linestart', 'insert lineend' )
         txt = txt.strip()
@@ -1152,6 +1266,7 @@ class editCommandsClass (baseEditCommandsClass):
         if not ind: return 'break'
         w.delete( 'insert linestart', '%s' % ind )
         w.insert( 'insert linestart', ws )
+    
         return k._tailEnd( w )
     #@-node:ekr.20050920084036.67:centerLine
     #@+node:ekr.20050920084036.68:setFillColumn
@@ -1213,10 +1328,11 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.70:setFillPrefix
     #@+node:ekr.20050920084036.71:_addPrefix
     def _addPrefix( self, ntxt ):
-            ntxt = ntxt.split( '.' )
-            ntxt = map( lambda a: self.fillPrefix+a, ntxt )
-            ntxt = '.'.join( ntxt )               
-            return ntxt
+        
+        ntxt = ntxt.split( '.' )
+        ntxt = map( lambda a: self.fillPrefix+a, ntxt )
+        ntxt = '.'.join( ntxt )               
+        return ntxt
     #@nonl
     #@-node:ekr.20050920084036.71:_addPrefix
     #@-others
@@ -1254,7 +1370,6 @@ class editCommandsClass (baseEditCommandsClass):
             k.getArg(event,'goto-line',1,self.gotoLine)
         else:
             n = k.arg ;  w = self.widget
-            # g.trace(repr(n))
             if n.isdigit():
                 w.mark_set('insert','%s.0' % n)
                 w.see('insert')
@@ -1267,67 +1382,72 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.72:goto...
     #@+node:ekr.20050920084036.74:indent...
     #@+node:ekr.20050920084036.75:backToIndentation
-    def backToIndentation( self, event ):
+    def backToIndentation (self,event):
     
         w = event.widget
-        i = w.index( 'insert linestart' )
-        i2 = w.search( r'\w', i, stopindex = '%s lineend' % i, regexp = True )
-        w.mark_set( 'insert', i2 )
+    
+        i = w.index('insert linestart')
+        i2 = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+        w.mark_set('insert',i2)
         w.update_idletasks()
+    
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.75:backToIndentation
     #@+node:ekr.20050920084036.76:deleteIndentation
-    def deleteIndentation( self, event ):
+    def deleteIndentation (self,event):
     
         k = self.k ; w = event.widget
-        txt = w.get( 'insert linestart' , 'insert lineend' )
+    
+        txt = w.get('insert linestart','insert lineend')
         txt = ' %s' % txt.lstrip()
-        w.delete( 'insert linestart' , 'insert lineend +1c' )    
-        i  = w.index( 'insert - 1c' )
-        w.insert( 'insert -1c', txt )
-        w.mark_set( 'insert', i )
-        return k._tailEnd( w )
+        w.delete('insert linestart','insert lineend +1c')
+        i = w.index('insert - 1c')
+        w.insert('insert -1c',txt)
+        w.mark_set('insert',i)
+    
+        return k._tailEnd(w)
     #@-node:ekr.20050920084036.76:deleteIndentation
     #@+node:ekr.20050920084036.77:insertNewLineIndent
-    def insertNewLineIndent( self, event ):
-        w =  event.widget
-        txt = w.get( 'insert linestart', 'insert lineend' )
-        txt = self.getWSString( txt )
-        i = w.index( 'insert' )
-        w.insert( i, txt )
-        w.mark_set( 'insert', i )    
-        return self.insertNewLine( event )
-    #@nonl
+    def insertNewLineIndent (self,event):
+    
+        w = event.widget
+        txt = w.get('insert linestart','insert lineend')
+        txt = self.getWSString(txt)
+        i = w.index('insert')
+        w.insert(i,txt)
+        w.mark_set('insert',i)
+    
+        return self.insertNewLine(event)
     #@-node:ekr.20050920084036.77:insertNewLineIndent
     #@+node:ekr.20050920084036.78:indentRelative
-    def indentRelative( self, event ):
-        
+    def indentRelative (self,event):
+    
         k = self.k ; w = event.widget
-        i = w.index( 'insert' )
-        l,c = i.split( '.' )
-        c2 = int( c )
-        l2 = int( l ) - 1
-        if l2 < 1: return k.keyboardQuit( event )
-        txt = w.get( '%s.%s' % (l2, c2 ), '%s.0 lineend' % l2 )
-        if len( txt ) <= len( w.get( 'insert', 'insert lineend' ) ):
-            w.insert(  'insert', '\t' )
+    
+        i = w.index('insert')
+        l, c = i.split('.')
+        c2 = int(c)
+        l2 = int(l) -1
+        if l2 < 1: return k.keyboardQuit(event)
+        txt = w.get('%s.%s' % (l2,c2),'%s.0 lineend' % l2)
+        if len(txt) <= len(w.get('insert','insert lineend')):
+            w.insert('insert','\t')
         else:
-            reg = re.compile( '(\s+)' )
-            ntxt = reg.split( txt )
-            replace_word = re.compile( '\w' )
+            reg = re.compile('(\s+)')
+            ntxt = reg.split(txt)
+            replace_word = re.compile('\w')
             for z in ntxt:
                 if z.isspace():
-                    w.insert( 'insert', z )
+                    w.insert('insert',z)
                     break
                 else:
-                    z = replace_word.subn( ' ', z )
-                    w.insert( 'insert', z[ 0 ] )
+                    z = replace_word.subn(' ',z)
+                    w.insert('insert',z[0])
                     w.update_idletasks()
-            
-            
-        k.keyboardQuit( event )
-        return k._tailEnd( w )
+    
+        k.keyboardQuit(event)
+        return k._tailEnd(w)
     #@-node:ekr.20050920084036.78:indentRelative
     #@-node:ekr.20050920084036.74:indent...
     #@+node:ekr.20050920084036.79:info...
@@ -1351,9 +1471,8 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.81:lineNumber
     def lineNumber (self,event):
     
-        k = self.k
-        w = event.widget
-        k.stopControlX(event)
+        k = self.k ; w = event.widget
+    
         i = w.index('insert')
         i1, i2 = i.split('.')
         c = w.get('insert','insert + 1c')
@@ -1397,6 +1516,12 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.84:whatLine
     #@-node:ekr.20050920084036.79:info...
     #@+node:ekr.20050920084036.85:Insert/delete...
+    #@+node:ekr.20050929163010:backwardDeleteCharacter
+    def backwardDeleteCharacter (self,event):
+        
+        return self.manufactureKeyPress(event,'BackSpace')
+    #@nonl
+    #@-node:ekr.20050929163010:backwardDeleteCharacter
     #@+node:ekr.20050920084036.86:insertNewLineAndTab
     def insertNewLineAndTab( self, event ):
         
@@ -1418,6 +1543,145 @@ class editCommandsClass (baseEditCommandsClass):
         return k._tailEnd( w )
     #@-node:ekr.20050920084036.87:deleteNextChar
     #@-node:ekr.20050920084036.85:Insert/delete...
+    #@+node:ekr.20050920084036.130:insert/delete...
+    #@+node:ekr.20050920084036.135:deleteSpaces
+    def deleteSpaces (self,event,insertspace=False):
+    
+        k = self.k ; w = event.widget
+        char = w.get('insert','insert + 1c ')
+    
+        if char.isspace():
+            i = w.index('insert')
+            wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+            wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
+            if '' in (wf,wb):
+                return 'break'
+            w.delete('%s +1c' % wb,wf)
+            if insertspace:
+                w.insert('insert',' ')
+    
+        return k._tailEnd(w)
+    
+    #@-node:ekr.20050920084036.135:deleteSpaces
+    #@+node:ekr.20050920084036.136:exchangePointMark
+    def exchangePointMark (self,event):
+    
+        if not self._chckSel(event): return
+        k = self.k ; w = event.widget
+        s1 = w.index('sel.first')
+        s2 = w.index('sel.last')
+        i = w.index('insert')
+    
+        if i == s1:
+            w.mark_set('insert',s2)
+        else:
+            w.mark_set('insert',s1)
+    
+        return k._tailEnd(w)
+    #@nonl
+    #@-node:ekr.20050920084036.136:exchangePointMark
+    #@+node:ekr.20050920084036.138:insertNewLine
+    def insertNewLine (self,event):
+    
+        k = self.k ; w = event.widget
+        i = w.index('insert')
+        w.insert('insert','\n')
+        w.mark_set('insert',i)
+        return k._tailEnd(w)
+    
+    insertNewline = insertNewLine
+    #@-node:ekr.20050920084036.138:insertNewLine
+    #@+node:ekr.20050920084036.139:insertParentheses
+    def insertParentheses (self,event):
+    
+        k = self.k ; w = event.widget
+        w.insert('insert','()')
+        w.mark_set('insert','insert -1c')
+        return k._tailEnd(w)
+    #@-node:ekr.20050920084036.139:insertParentheses
+    #@+node:ekr.20050920084036.140:movePastClose
+    def movePastClose (self,event):
+    
+        k = self.k ; w = event.widget
+        i = w.search('(','insert',backwards=True,stopindex='1.0')
+        icheck = w.search(')','insert',backwards=True,stopindex='1.0')
+    
+        if '' == i:
+            return 'break'
+        if icheck:
+            ic = w.compare(i,'<',icheck)
+            if ic:
+                return 'break'
+        i2 = w.search(')','insert',stopindex='end')
+        i2check = w.search('(','insert',stopindex='end')
+        if '' == i2:
+            return 'break'
+        if i2check:
+            ic2 = w.compare(i2,'>',i2check)
+            if ic2:
+                return 'break'
+        ib = w.index('insert')
+        w.mark_set('insert','%s lineend +1c' % i2)
+        if w.index('insert') == w.index('%s lineend' % ib):
+            w.insert('insert','\n')
+    
+        return k._tailEnd(w)
+    #@nonl
+    #@-node:ekr.20050920084036.140:movePastClose
+    #@+node:ekr.20050920084036.141:removeBlankLines
+    def removeBlankLines (self,event):
+        w = event.widget
+        i = w.index('insert')
+        i1, i2 = i.split('.')
+        i1 = int(i1)
+        dindex = []
+        if w.get('insert linestart','insert lineend').strip() == '':
+            while 1:
+                if str(i1) + '.0' == '1.0':
+                    break
+                i1 = i1-1
+                txt = w.get('%s.0' % i1,'%s.0 lineend' % i1)
+                txt = txt.strip()
+                if len(txt) == 0:
+                    dindex.append('%s.0' % i1)
+                    dindex.append('%s.0 lineend' % i1)
+                elif dindex:
+                    w.delete('%s-1c' % dindex[-2],dindex[1])
+                    w.event_generate('<Key>')
+                    w.update_idletasks()
+                    break
+                else:
+                    break
+        i = w.index('insert')
+        i1, i2 = i.split('.')
+        i1 = int(i1)
+        dindex = []
+        while 1:
+            if w.index('%s.0 lineend' % i1) == w.index('end'):
+                break
+            i1 = i1 + 1
+            txt = w.get('%s.0' % i1,'%s.0 lineend' % i1)
+            txt = txt.strip()
+            if len(txt) == 0:
+                dindex.append('%s.0' % i1)
+                dindex.append('%s.0 lineend' % i1)
+            elif dindex:
+                w.delete('%s-1c' % dindex[0],dindex[-1])
+                w.event_generate('<Key>')
+                w.update_idletasks()
+                break
+            else:
+                break
+    #@nonl
+    #@-node:ekr.20050920084036.141:removeBlankLines
+    #@+node:ekr.20050920084036.142:selectAll
+    def selectAll( event ):
+    
+        event.widget.tag_add( 'sel', '1.0', 'end' )
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.142:selectAll
+    #@-node:ekr.20050920084036.130:insert/delete...
     #@+node:ekr.20050920084036.88:line... (rewrite)
     #@+node:ekr.20050920084036.89: Entries
     #@+node:ekr.20050920084036.90:flushLines
@@ -1536,11 +1800,15 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.147:measure
     #@+node:ekr.20050929114218:move...
-    #@+node:ekr.20050929115226.1:NewHeadline
+    #@+node:ekr.20050929115226.1:forward/backCharacter
+    def backCharacter (self,event):
+    
+        return self.manufactureKeyPress(event,'Left')
+        
     def forwardCharacter (self,event):
-        return self.manufactureKeyPress(event,'Right'),
-    #@nonl
-    #@-node:ekr.20050929115226.1:NewHeadline
+    
+        return self.manufactureKeyPress(event,'Right')
+    #@-node:ekr.20050929115226.1:forward/backCharacter
     #@+node:ekr.20050920084036.148:moveTo, beginnning/endOfBuffer/Line
     def moveTo (self,event,spot):
         w = event.widget
@@ -1561,33 +1829,76 @@ class editCommandsClass (baseEditCommandsClass):
         return self.moveTo(event,'insert lineend')
     #@nonl
     #@-node:ekr.20050920084036.148:moveTo, beginnning/endOfBuffer/Line
-    #@+node:ekr.20050920084036.149:moveword (used by many entires)  TO DO: split into forward/backward versions
-    def moveword( self, event, way  ):
-        
-        '''This function moves the cursor to the next word, direction dependent on the way parameter'''
-        
-        w = event.widget
-        ind = w.index( 'insert' )
+    #@+node:ekr.20050920084036.149:back/forwardWord & moveWordHelper
+    def moveWordHelper (self,event,forward=True):
     
-        if way == 1:
-             ind = w.search( '\w', 'insert', stopindex = 'end', regexp=True )
-             if ind:
-                nind = '%s wordend' % ind
-             else:
-                nind = 'end'
+        '''This function moves the cursor to the next word, direction dependent on the way parameter'''
+    
+        w = event.widget ; ind = w.index('insert')
+        if forward:
+             ind = w.search('\w','insert',stopindex='end',regexp=True)
+             if ind: nind = '%s wordend' % ind
+             else:   nind = 'end'
         else:
-             ind = w.search( '\w', 'insert -1c', stopindex= '1.0', regexp = True, backwards = True )
-             if ind:
-                nind = '%s wordstart' % ind 
-             else:
-                nind = '1.0'
-        w.mark_set( 'insert', nind )
-        w.see( 'insert' )
-        w.event_generate( '<Key>' )
+             ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
+             if ind: nind = '%s wordstart' % ind
+             else:   nind = '1.0'
+        w.mark_set('insert',nind)
+        w.see('insert')
+        w.event_generate('<Key>')
         w.update_idletasks()
         return 'break'
+    
+    def backwardWord (self,event):
+        return self.moveWordHelper(event,forward=False)
+    
+    def forwardWord (self,event):
+        return self.moveWordHelper(event,forward=True),
     #@nonl
-    #@-node:ekr.20050920084036.149:moveword (used by many entires)  TO DO: split into forward/backward versions
+    #@-node:ekr.20050920084036.149:back/forwardWord & moveWordHelper
+    #@+node:ekr.20050920084036.131:backSentence
+    def backSentence (self,event):
+    
+        k = self.k ; w = event.widget
+        i = w.search('.','insert',backwards=True,stopindex='1.0')
+    
+        if i:
+            i2 = w.search('.',i,backwards=True,stopindex='1.0')
+            if not i2:
+                i2 = '1.0'
+            if i2:
+                i3 = w.search('\w',i2,stopindex=i,regexp=True)
+                if i3:
+                    w.mark_set('insert',i3)
+        else:
+            w.mark_set('insert','1.0')
+    
+        return k._tailEnd(w)
+    #@nonl
+    #@-node:ekr.20050920084036.131:backSentence
+    #@+node:ekr.20050920084036.137:forwardSentence
+    def forwardSentence (self,event,way):
+    
+        k = self.k ; w = event.widget
+    
+        i = w.search('.','insert',stopindex='end')
+        if i:
+            w.mark_set('insert','%s +1c' % i)
+        else:
+            w.mark_set('insert','end')
+    
+        return k._tailEnd(w)
+    #@-node:ekr.20050920084036.137:forwardSentence
+    #@+node:ekr.20050929163210:next/prevLine
+    def nextLine (self,event):
+        
+        return self.manufactureKeyPress(event,'Down')
+        
+    def prevLine (self,event):
+        
+        return self.manufactureKeyPress(event,'Up')
+    #@nonl
+    #@-node:ekr.20050929163210:next/prevLine
     #@-node:ekr.20050929114218:move...
     #@+node:ekr.20050920084036.95:paragraph...
     #@+others
@@ -1636,20 +1947,20 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.97:_selectParagraph
     #@+node:ekr.20050920084036.98:killParagraph
-    def killParagraph( self, event ):
-        
-        k = self.k ; w = event.widget
-        i = w.index( 'insert' )
-        txt = w.get( 'insert linestart', 'insert lineend' )
-        if not txt.rstrip().lstrip():
-            i = w.search( r'\w', i, regexp = True, stopindex = 'end' )
-        self._selectParagraph( w, i )
-        i2 = w.index( 'insert' )
-        self.kill( event, i, i2 )
-        w.mark_set( 'insert', i )
-        w.selection_clear()
-        return k._tailEnd( w )
+    def killParagraph (self,event):
     
+        k = self.k ; w = event.widget
+        i = w.index('insert')
+        txt = w.get('insert linestart','insert lineend')
+        if not txt.rstrip().lstrip():
+            i = w.search(r'\w',i,regexp=True,stopindex='end')
+        self._selectParagraph(w,i)
+        i2 = w.index('insert')
+        self.kill(event,i,i2)
+        w.mark_set('insert',i)
+        w.selection_clear()
+        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.98:killParagraph
     #@+node:ekr.20050920084036.99:backwardKillParagraph
     def backwardKillParagraph( self, event ):
@@ -1855,66 +2166,71 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.106:setRegion
     #@+node:ekr.20050920084036.107:indentRegion
-    def indentRegion( self, event ):
+    def indentRegion (self,event):
         w = event.widget
         mrk = 'sel'
-        trange = w.tag_ranges( mrk )
-        if len( trange ) != 0:
-            ind = w.search( '\w', '%s linestart' % trange[ 0 ], stopindex = 'end', regexp = True )
-            if not ind : return
-            text = w.get( '%s linestart' % ind ,  '%s lineend' % ind)
+        trange = w.tag_ranges(mrk)
+        if len(trange) != 0:
+            ind = w.search('\w','%s linestart' % trange[0],stopindex='end',regexp=True)
+            if not ind: return
+            text = w.get('%s linestart' % ind,'%s lineend' % ind)
             sstring = text.lstrip()
-            sstring = sstring[ 0 ]
-            ws = text.split( sstring )
-            if len( ws ) > 1:
-                ws = ws[ 0 ]
+            sstring = sstring [0]
+            ws = text.split(sstring)
+            if len(ws) > 1:
+                ws = ws [0]
             else:
                 ws = ''
-            s , s1 = trange[ 0 ].split( '.' )
-            e , e1 = trange[ -1 ].split( '.' )
-            s = int( s )
+            s, s1 = trange [0].split('.')
+            e, e1 = trange [ -1].split('.')
+            s = int(s)
             s = s + 1
-            e = int( e ) + 1
-            for z in xrange( s , e ):
-                t2 = w.get( '%s.0' %z ,  '%s.0 lineend'%z)
+            e = int(e) + 1
+            for z in xrange(s,e):
+                t2 = w.get('%s.0' % z,'%s.0 lineend' % z)
                 t2 = t2.lstrip()
                 t2 = ws + t2
-                w.delete( '%s.0' % z ,  '%s.0 lineend' %z)
-                w.insert( '%s.0' % z, t2 )
-            w.event_generate( '<Key>' )
+                w.delete('%s.0' % z,'%s.0 lineend' % z)
+                w.insert('%s.0' % z,t2)
+            w.event_generate('<Key>')
             w.update_idletasks()
-        self.removeRKeys( w )
+        self.removeRKeys(w)
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.107:indentRegion
     #@+node:ekr.20050920084036.108:tabIndentRegion
-    def tabIndentRegion( self,event ):
+    def tabIndentRegion (self,event):
     
         k = self.k ; w = event.widget
-        if not self._chckSel( event ):
+        if not self._chckSel(event):
             return
-        i = w.index( 'sel.first' )
-        i2 = w.index( 'sel.last' )
-        i = w.index( '%s linestart' %i )
-        i2 = w.index( '%s linestart' % i2)
+    
+        i = w.index('sel.first')
+        i2 = w.index('sel.last')
+        i = w.index('%s linestart' % i)
+        i2 = w.index('%s linestart' % i2)
         while 1:
-            w.insert( i, '\t' )
+            w.insert(i,'\t')
             if i == i2: break
-            i = w.index( '%s + 1 lines' % i )    
-        return k._tailEnd( w )
+            i = w.index('%s + 1 lines' % i)
+    
+        return k._tailEnd(w)
     #@-node:ekr.20050920084036.108:tabIndentRegion
     #@+node:ekr.20050920084036.109:countRegion
     def countRegion (self,event):
     
         k = self.k ; w = event.widget
+    
         txt = w.get('sel.first','sel.last')
         lines = 1 ; chars = 0
         for z in txt:
-            if z == '\n':   lines = lines + 1
-            else:           chars = chars + 1
+            if z == '\n': lines += 1
+            else:         chars += 1
     
-        k.setLabel('Region has %s lines, %s characters' % (lines,chars))
+        k.setLabel('Region has %s lines, %s character%s' % (lines,chars,g.choose(chars==1,'','s')))
+    
         return 'break'
+    #@nonl
     #@-node:ekr.20050920084036.109:countRegion
     #@+node:ekr.20050920084036.110:reverseRegion
     def reverseRegion (self,event):
@@ -1971,28 +2287,25 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.105:region...
     #@+node:ekr.20050920084036.112:replace...
     #@+node:ekr.20050920084036.113:replaceString
-    def replaceString (self,event):
-        
-        k = self.k ; w = event.widget
-        # This should not be here.
-        if event.keysym in ('Control_L','Control_R'): return
-        state = k.getState('rString')
-        regex = self._useRegex
-        prompt = 'Replace ' + g.choose(regex,'Regex','String')
+    def replaceString (self,event=None):
+    
+        k = self.k ; state = k.getState('rString')
+        prompt = 'Replace ' + g.choose(self._useRegex,'Regex','String')
         if state == 0:
+            self.widget = event.widget
             self._sString = self._rpString = ''
             s = '%s: ' % prompt
-            k.setLabel(s)
+            k.setLabelBlue(s,protect=True)
             # Get arg and enter state 1.
-            return k.getArg(event,'rString',1,self.replaceString) 
+            return k.getArg(event,'rString',1,self.replaceString)
         elif state == 1:
             self._sString = k.arg
             s = '%s: %s With: ' % (prompt,self._sString)
-            k.setLabel(s)
+            k.setLabelBlue(s,protect=True)
             # Get arg and enter state 2.
             return k.getArg(event,'rString',2,self.replaceString)
         elif state == 2:
-            self._rpString = k.arg
+            self._rpString = k.arg ; w = self.widget
             #@        << do the replace >>
             #@+node:ekr.20050920084036.114:<< do the replace >>
             # g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
@@ -2000,7 +2313,7 @@ class editCommandsClass (baseEditCommandsClass):
             if w.tag_ranges('sel'):
                 i = w.index('sel.first')
                 end = w.index('sel.last')
-            if regex:
+            if self._useRegex:
                 txt = w.get(i,end)
                 try:
                     pattern = re.compile(self._sString)
@@ -2024,7 +2337,7 @@ class editCommandsClass (baseEditCommandsClass):
             #@nonl
             #@-node:ekr.20050920084036.114:<< do the replace >>
             #@nl
-            k.setLabelGrey('Replaced %s occurances' % count)
+            k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
             k.clearState()
             self._useRegex = False
             return k._tailEnd(w)
@@ -2032,13 +2345,15 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.113:replaceString
     #@+node:ekr.20050920084036.115:activateReplaceRegex
     def activateReplaceRegex( self ):
+        
         '''This method turns regex replace on for replaceString'''
+    
         self._useRegex = True
         return True
     #@nonl
     #@-node:ekr.20050920084036.115:activateReplaceRegex
     #@-node:ekr.20050920084036.112:replace...
-    #@+node:ekr.20050920084036.116:screenscroll
+    #@+node:ekr.20050920084036.116:scroll...
     def screenscroll (self,event,way):
     
         k = self.k ; w = event.widget
@@ -2062,149 +2377,251 @@ class editCommandsClass (baseEditCommandsClass):
     def scrollUp (self,event):
         return self.screenscroll('north')
     #@nonl
-    #@-node:ekr.20050920084036.116:screenscroll
+    #@-node:ekr.20050920084036.116:scroll...
     #@+node:ekr.20050920084036.117:sort...
-    #@+node:ekr.20050920084036.118:sortLines
-    def sortLines( self, event , which = None ): # event IS used.
+    '''XEmacs provides several commands for sorting text in a buffer.  All
+    operate on the contents of the region (the text between point and the
+    mark).  They divide the text of the region into many "sort records",
+    identify a "sort key" for each record, and then reorder the records
+    using the order determined by the sort keys.  The records are ordered so
+    that their keys are in alphabetical order, or, for numerical sorting, in
+    numerical order.  In alphabetical sorting, all upper-case letters `A'
+    through `Z' come before lower-case `a', in accordance with the ASCII
+    character sequence.
     
-        k = self.k ; w = event.widget  
-        if not self._chckSel( event ):
-            return k.keyboardQuit( event )
-        i = w.index( 'sel.first' )
-        i2 = w.index( 'sel.last' )
-        is1 = i.split( '.' )
-        is2 = i2.split( '.' )
-        txt = w.get( '%s.0' % is1[ 0 ], '%s.0 lineend' % is2[ 0 ] )
-        ins = w.index( 'insert' )
-        txt = txt.split( '\n' )
-        w.delete( '%s.0' % is1[ 0 ], '%s.0 lineend' % is2[ 0 ] )
+       The sort commands differ in how they divide the text into sort
+    records and in which part of each record they use as the sort key.
+    Most of the commands make each line a separate sort record, but some
+    commands use paragraphs or pages as sort records.  Most of the sort
+    commands use each entire sort record as its own sort key, but some use
+    only a portion of the record as the sort key.
+    
+    `M-x sort-lines'
+         Divide the region into lines and sort by comparing the entire text
+         of a line.  A prefix argument means sort in descending order.
+    
+    `M-x sort-paragraphs'
+         Divide the region into paragraphs and sort by comparing the entire
+         text of a paragraph (except for leading blank lines).  A prefix
+         argument means sort in descending order.
+    
+    `M-x sort-pages'
+         Divide the region into pages and sort by comparing the entire text
+         of a page (except for leading blank lines).  A prefix argument
+         means sort in descending order.
+    
+    `M-x sort-fields'
+         Divide the region into lines and sort by comparing the contents of
+         one field in each line.  Fields are defined as separated by
+         whitespace, so the first run of consecutive non-whitespace
+         characters in a line constitutes field 1, the second such run
+         constitutes field 2, etc.
+    
+         You specify which field to sort by with a numeric argument: 1 to
+         sort by field 1, etc.  A negative argument means sort in descending
+         order.  Thus, minus 2 means sort by field 2 in reverse-alphabetical
+         order.
+    
+    `M-x sort-numeric-fields'
+         Like `M-x sort-fields', except the specified field is converted to
+         a number for each line and the numbers are compared.  `10' comes
+         before `2' when considered as text, but after it when considered
+         as a number.
+    
+    `M-x sort-columns'
+         Like `M-x sort-fields', except that the text within each line used
+         for comparison comes from a fixed range of columns.  An explanation
+         is given below.
+    
+       For example, if the buffer contains:
+    
+         On systems where clash detection (locking of files being edited) is
+         implemented, XEmacs also checks the first time you modify a buffer
+         whether the file has changed on disk since it was last visited or
+         saved.  If it has, you are asked to confirm that you want to change
+         the buffer.
+    
+    then if you apply `M-x sort-lines' to the entire buffer you get:
+    
+         On systems where clash detection (locking of files being edited) is
+         implemented, XEmacs also checks the first time you modify a buffer
+         saved.  If it has, you are asked to confirm that you want to change
+         the buffer.
+         whether the file has changed on disk since it was last visited or
+    
+    where the upper case `O' comes before all lower case letters.  If you
+    apply instead `C-u 2 M-x sort-fields' you get:
+    
+         saved.  If it has, you are asked to confirm that you want to change
+         implemented, XEmacs also checks the first time you modify a buffer
+         the buffer.
+         On systems where clash detection (locking of files being edited) is
+         whether the file has changed on disk since it was last visited or
+    
+    where the sort keys were `If', `XEmacs', `buffer', `systems', and `the'.
+    
+       `M-x sort-columns' requires more explanation.  You specify the
+    columns by putting point at one of the columns and the mark at the other
+    column.  Because this means you cannot put point or the mark at the
+    beginning of the first line to sort, this command uses an unusual
+    definition of `region': all of the line point is in is considered part
+    of the region, and so is all of the line the mark is in.
+    
+       For example, to sort a table by information found in columns 10 to
+    15, you could put the mark on column 10 in the first line of the table,
+    and point on column 15 in the last line of the table, and then use this
+    command.  Or you could put the mark on column 15 in the first line and
+    point on column 10 in the last line.
+    
+       This can be thought of as sorting the rectangle specified by point
+    and the mark, except that the text on each line to the left or right of
+    the rectangle moves along with the text inside the rectangle.  *Note
+    Rectangles::.
+    
+    '''
+    #@+node:ekr.20050920084036.118:sortLines
+    def sortLines (self,event,which=None): # event IS used.
+    
+        k = self.k ; w = event.widget
+        if not self._chckSel(event):
+            return k.keyboardQuit(event)
+        i = w.index('sel.first')
+        i2 = w.index('sel.last')
+        is1 = i.split('.')
+        is2 = i2.split('.')
+        txt = w.get('%s.0' % is1[0],'%s.0 lineend' % is2[0])
+        ins = w.index('insert')
+        txt = txt.split('\n')
+        w.delete('%s.0' % is1[0],'%s.0 lineend' % is2[0])
         txt.sort()
         if which:
             txt.reverse()
-        inum = int(is1[ 0 ])
+        inum = int(is1[0])
         for z in txt:
-            w.insert( '%s.0' % inum, '%s\n' % z ) 
+            w.insert('%s.0' % inum,'%s\n' % z)
             inum = inum + 1
-        w.mark_set( 'insert', ins )
-        k.keyboardQuit( event )
-        return k._tailEnd( w )
+        w.mark_set('insert',ins)
+        k.keyboardQuit(event)
+        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.118:sortLines
     #@+node:ekr.20050920084036.119:sortColumns
-    def sortColumns( self, event ):
+    def sortColumns (self,event):
     
         k = self.k ; w = event.widget
-        if not self._chckSel( event ):
-            return k.keyboardQuit( event )
-            
-        ins = w.index( 'insert' )
-        is1 = w.index( 'sel.first' )
-        is2 = w.index( 'sel.last' )   
-        sint1, sint2 = is1.split( '.' )
-        sint2 = int( sint2 )
-        sint3, sint4 = is2.split( '.' )
-        sint4 = int( sint4 )
-        txt = w.get( '%s.0' % sint1, '%s.0 lineend' % sint3 )
-        w.delete( '%s.0' % sint1, '%s.0 lineend' % sint3 )
+        if not self._chckSel(event):
+            return k.keyboardQuit(event)
+    
+        ins = w.index('insert')
+        is1 = w.index('sel.first')
+        is2 = w.index('sel.last')
+        sint1, sint2 = is1.split('.')
+        sint2 = int(sint2)
+        sint3, sint4 = is2.split('.')
+        sint4 = int(sint4)
+        txt = w.get('%s.0' % sint1,'%s.0 lineend' % sint3)
+        w.delete('%s.0' % sint1,'%s.0 lineend' % sint3)
         columns = []
-        i = int( sint1 )
-        i2 = int( sint3 )
+        i = int(sint1)
+        i2 = int(sint3)
         while i <= i2:
-            t = w.get( '%s.%s' %( i, sint2 ), '%s.%s' % ( i, sint4 ) )
-            columns.append( t )
+            t = w.get('%s.%s' % (i,sint2),'%s.%s' % (i,sint4))
+            columns.append(t)
             i = i + 1
-        txt = txt.split( '\n' )
-        zlist = zip( columns, txt )
+        txt = txt.split('\n')
+        zlist = zip(columns,txt)
         zlist.sort()
-        i = int( sint1 )      
-        for z in xrange( len( zlist ) ):
-             w.insert( '%s.0' % i, '%s\n' % zlist[ z ][ 1 ] ) 
+        i = int(sint1)
+        for z in xrange(len(zlist)):
+             w.insert('%s.0' % i,'%s\n' % zlist[z][1])
              i = i + 1
-        w.mark_set( 'insert', ins )
-        return k._tailEnd( w )
+        w.mark_set('insert',ins)
+        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.119:sortColumns
     #@+node:ekr.20050920084036.120:sortFields
-    def sortFields( self, event, which = None ):
-        
+    def sortFields (self,event,which=None):
+    
         k = self.k ; w = event.widget
-        if not self._chckSel( event ):
-            return k.keyboardQuit( event )
-        ins = w.index( 'insert' )
-        is1 = w.index( 'sel.first' )
-        is2 = w.index( 'sel.last' )
-        txt = w.get( '%s linestart' % is1, '%s lineend' % is2 )
-        txt = txt.split( '\n' )
+        if not self._chckSel(event):
+            return k.keyboardQuit(event)
+        ins = w.index('insert')
+        is1 = w.index('sel.first')
+        is2 = w.index('sel.last')
+        txt = w.get('%s linestart' % is1,'%s lineend' % is2)
+        txt = txt.split('\n')
         fields = []
         import re
         fn = r'\w+'
-        frx = re.compile( fn )
+        frx = re.compile(fn)
         for z in txt:
-            f = frx.findall( z )
+            f = frx.findall(z)
             if not which:
-                fields.append( f[ 0 ] )
+                fields.append(f[0])
             else:
-                i =  int( which )
-                if len( f ) < i:
-                    return k._tailEnd( w )
-                i = i - 1            
-                fields.append( f[ i ] )
-        nz = zip( fields, txt )
+                i = int(which)
+                if len(f) < i:
+                    return k._tailEnd(w)
+                i = i-1
+                fields.append(f[i])
+        nz = zip(fields,txt)
         nz.sort()
-        w.delete( '%s linestart' % is1, '%s lineend' % is2 )
-        i = is1.split( '.' )
-        int1 = int( i[ 0 ] )
+        w.delete('%s linestart' % is1,'%s lineend' % is2)
+        i = is1.split('.')
+        int1 = int(i[0])
         for z in nz:
-            w.insert( '%s.0' % int1, '%s\n'% z[1] )
+            w.insert('%s.0' % int1,'%s\n' % z[1])
             int1 = int1 + 1
-        w.mark_set( 'insert' , ins )
-        return k._tailEnd( w )
+        w.mark_set('insert',ins)
+        return k._tailEnd(w)
     #@-node:ekr.20050920084036.120:sortFields
     #@-node:ekr.20050920084036.117:sort...
     #@+node:ekr.20050920084036.121:swap/transpose...
     #@+node:ekr.20050920084036.122:transposeLines
-    def transposeLines( self, event ):
+    def transposeLines (self,event):
     
         k = self.k ; w = event.widget
-        i = w.index( 'insert' )
-        i1, i2 = i.split( '.' )
-        i1 = str( int( i1 ) -1 )
+        i = w.index('insert')
+        i1, i2 = i.split('.')
+        i1 = str(int(i1)-1)
         if i1 != '0':
-            l2 = w.get( 'insert linestart', 'insert lineend' )
-            w.delete( 'insert linestart-1c', 'insert lineend' )
-            w.insert( i1+'.0', l2 +'\n')
+            l2 = w.get('insert linestart','insert lineend')
+            w.delete('insert linestart-1c','insert lineend')
+            w.insert(i1+'.0',l2+'\n')
         else:
-            l2 = w.get( '2.0', '2.0 lineend' )
-            w.delete( '2.0', '2.0 lineend' )
-            w.insert( '1.0', l2 + '\n' )
-        return k._tailEnd( w )
+            l2 = w.get('2.0','2.0 lineend')
+            w.delete('2.0','2.0 lineend')
+            w.insert('1.0',l2+'\n')
+        return k._tailEnd(w)
     #@-node:ekr.20050920084036.122:transposeLines
     #@+node:ekr.20050920084036.123:swapWords & transposeWords
-    def swapWords( self, event , swapspots ):
+    def swapWords (self,event,swapspots):
         w = event.widget
-        txt = w.get( 'insert wordstart', 'insert wordend' )
-        if txt == ' ' : return 'break'
-        i = w.index( 'insert wordstart' )
-        if len( swapspots ) != 0:
-            def swp( find, ftext, lind, ltext ):
-                w.delete( find, '%s wordend' % find )
-                w.insert( find, ltext )
-                w.delete( lind, '%s wordend' % lind )
-                w.insert( lind, ftext )
+        txt = w.get('insert wordstart','insert wordend')
+        if txt == ' ': return 'break'
+        i = w.index('insert wordstart')
+        if len(swapspots) != 0:
+            def swp (find,ftext,lind,ltext):
+                w.delete(find,'%s wordend' % find)
+                w.insert(find,ltext)
+                w.delete(lind,'%s wordend' % lind)
+                w.insert(lind,ftext)
                 swapspots.pop()
                 swapspots.pop()
                 return 'break'
-            if w.compare( i , '>', swapspots[ 1 ] ):
-                return swp( i, txt, swapspots[ 1 ], swapspots[ 0 ] )
-            elif w.compare( i , '<', swapspots[ 1 ] ):
-                return swp( swapspots[ 1 ], swapspots[ 0 ], i, txt )
+            if w.compare(i,'>',swapspots[1]):
+                return swp(i,txt,swapspots[1],swapspots[0])
+            elif w.compare(i,'<',swapspots[1]):
+                return swp(swapspots[1],swapspots[0],i,txt)
             else:
                 return 'break'
         else:
-            swapspots.append( txt )
-            swapspots.append( i )
+            swapspots.append(txt)
+            swapspots.append(i)
             return 'break'
     
     def transposeWords (self,event):
-        return self.swapWords (event,self.swapSpots)
+        return self.swapWords(event,self.swapSpots)
     #@nonl
     #@-node:ekr.20050920084036.123:swapWords & transposeWords
     #@+node:ekr.20050920084036.124:swapCharacters & transeposeCharacters
@@ -2225,15 +2642,14 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.124:swapCharacters & transeposeCharacters
     #@-node:ekr.20050920084036.121:swap/transpose...
-    #@+node:ekr.20050920084036.125:tabify...
+    #@+node:ekr.20050920084036.126:tabify & untabify
     def tabify (self,event):
-        return self._tabify (event,which='tabify')
+        return self.tabifyHelper (event,which='tabify')
         
     def untabify (self,event):
-        return self._tabify (event,which='untabify')
-    #@nonl
-    #@+node:ekr.20050920084036.126:_tabify
-    def _tabify (self,event,which='tabify'):
+        return self.tabifyHelper (event,which='untabify')
+    
+    def tabifyHelper (self,event,which):
     
         k = self.k ; w = event.widget
         if w.tag_ranges('sel'):
@@ -2241,241 +2657,16 @@ class editCommandsClass (baseEditCommandsClass):
             end = w.index('sel.last')
             txt = w.get(i,end)
             if which == 'tabify':
-                pattern = re.compile(' {4,4}')
+                pattern = re.compile(' {4,4}') # Huh?
                 ntxt = pattern.sub('\t',txt)
             else:
                 pattern = re.compile('\t')
                 ntxt = pattern.sub('    ',txt)
             w.delete(i,end)
             w.insert(i,ntxt)
-            k.keyboardQuit(event)
             return k._tailEnd(w)
-    
-        k.keyboardQuit(event)
-    #@-node:ekr.20050920084036.126:_tabify
-    #@-node:ekr.20050920084036.125:tabify...
-    #@-node:ekr.20050920084036.56: Entry points
-    #@+node:ekr.20050920084036.130:New Entry points
-    #@+node:ekr.20050920084036.131:backSentence
-    def backSentence (self,event):
-    
-        k = self.k ; w = event.widget
-        i = w.search('.','insert',backwards=True,stopindex='1.0')
-    
-        if i:
-            i2 = w.search('.',i,backwards=True,stopindex='1.0')
-            if not i2:
-                i2 = '1.0'
-            if i2:
-                i3 = w.search('\w',i2,stopindex=i,regexp=True)
-                if i3:
-                    w.mark_set('insert',i3)
-        else:
-            w.mark_set('insert','1.0')
-    
-        return k._tailEnd(w)
     #@nonl
-    #@-node:ekr.20050920084036.131:backSentence
-    #@+node:ekr.20050920084036.132:comment column methods
-    #@+node:ekr.20050920084036.133:setCommentColumn
-    def setCommentColumn (self,event):
-    
-        cc = event.widget.index('insert')
-        cc1, cc2 = cc.split('.')
-        self.ccolumn = cc2
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.133:setCommentColumn
-    #@+node:ekr.20050920084036.134:indentToCommentColumn
-    def indentToCommentColumn (self,event):
-    
-        k = self.k ; w = event.widget
-        i = w.index('insert lineend')
-        i1, i2 = i.split('.')
-        i2 = int(i2)
-        c1 = int(self.ccolumn)
-    
-        if i2 < c1:
-            wsn = c1- i2
-            w.insert('insert lineend',' '*wsn)
-        if i2 >= c1:
-            w.insert('insert lineend',' ')
-        w.mark_set('insert','insert lineend')
-    
-        return k._tailEnd(w)
-    #@-node:ekr.20050920084036.134:indentToCommentColumn
-    #@-node:ekr.20050920084036.132:comment column methods
-    #@+node:ekr.20050920084036.135:deleteSpaces
-    def deleteSpaces (self,event,insertspace=False):
-    
-        k = self.k ; w = event.widget
-        char = w.get('insert','insert + 1c ')
-    
-        if char.isspace():
-            i = w.index('insert')
-            wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
-            wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
-            if '' in (wf,wb):
-                return 'break'
-            w.delete('%s +1c' % wb,wf)
-            if insertspace:
-                w.insert('insert',' ')
-    
-        return k._tailEnd(w)
-    
-    #@-node:ekr.20050920084036.135:deleteSpaces
-    #@+node:ekr.20050920084036.136:exchangePointMark
-    def exchangePointMark (self,event):
-    
-        if not self._chckSel(event): return
-        k = self.k ; w = event.widget
-        s1 = w.index('sel.first')
-        s2 = w.index('sel.last')
-        i = w.index('insert')
-    
-        if i == s1:
-            w.mark_set('insert',s2)
-        else:
-            w.mark_set('insert',s1)
-    
-        return k._tailEnd(w)
-    #@nonl
-    #@-node:ekr.20050920084036.136:exchangePointMark
-    #@+node:ekr.20050920084036.137:forwardSentence
-    def forwardSentence (self,event,way):
-    
-        k = self.k ; w = event.widget
-    
-        i = w.search('.','insert',stopindex='end')
-        if i:
-            w.mark_set('insert','%s +1c' % i)
-        else:
-            w.mark_set('insert','end')
-    
-        return k._tailEnd(w)
-    #@-node:ekr.20050920084036.137:forwardSentence
-    #@+node:ekr.20050920084036.138:insertNewLine
-    def insertNewLine (self,event):
-    
-        k = self.k ; w = event.widget
-        i = w.index('insert')
-        w.insert('insert','\n')
-        w.mark_set('insert',i)
-        return k._tailEnd(w)
-    
-    insertNewline = insertNewLine
-    #@-node:ekr.20050920084036.138:insertNewLine
-    #@+node:ekr.20050920084036.139:insertParentheses
-    def insertParentheses (self,event):
-    
-        k = self.k ; w = event.widget
-        w.insert('insert','()')
-        w.mark_set('insert','insert -1c')
-        return k._tailEnd(w)
-    #@-node:ekr.20050920084036.139:insertParentheses
-    #@+node:ekr.20050920084036.140:movePastClose
-    def movePastClose (self,event):
-    
-        k = self.k ; w = event.widget
-        i = w.search('(','insert',backwards=True,stopindex='1.0')
-        icheck = w.search(')','insert',backwards=True,stopindex='1.0')
-    
-        if '' == i:
-            return 'break'
-        if icheck:
-            ic = w.compare(i,'<',icheck)
-            if ic:
-                return 'break'
-        i2 = w.search(')','insert',stopindex='end')
-        i2check = w.search('(','insert',stopindex='end')
-        if '' == i2:
-            return 'break'
-        if i2check:
-            ic2 = w.compare(i2,'>',i2check)
-            if ic2:
-                return 'break'
-        ib = w.index('insert')
-        w.mark_set('insert','%s lineend +1c' % i2)
-        if w.index('insert') == w.index('%s lineend' % ib):
-            w.insert('insert','\n')
-    
-        return k._tailEnd(w)
-    #@nonl
-    #@-node:ekr.20050920084036.140:movePastClose
-    #@+node:ekr.20050920084036.141:removeBlankLines
-    def removeBlankLines( self, event ):
-        w = event.widget
-        i = w.index( 'insert' )
-        i1, i2 = i.split( '.' )
-        i1 = int( i1 )
-        dindex = []
-        if w.get( 'insert linestart', 'insert lineend' ).strip() == '':
-            while 1:
-                if str( i1 )+ '.0'  == '1.0' :
-                    break 
-                i1 = i1 - 1
-                txt = w.get( '%s.0' % i1, '%s.0 lineend' % i1 )
-                txt = txt.strip()
-                if len( txt ) == 0:
-                    dindex.append( '%s.0' % i1)
-                    dindex.append( '%s.0 lineend' % i1 )
-                elif dindex:
-                    w.delete( '%s-1c' % dindex[ -2 ], dindex[ 1 ] )
-                    w.event_generate( '<Key>' )
-                    w.update_idletasks()
-                    break
-                else:
-                    break
-        i = w.index( 'insert' )
-        i1, i2 = i.split( '.' )
-        i1 = int( i1 )
-        dindex = []
-        while 1:
-            if w.index( '%s.0 lineend' % i1 ) == w.index( 'end' ):
-                break
-            i1 = i1 + 1
-            txt = w.get( '%s.0' % i1, '%s.0 lineend' % i1 )
-            txt = txt.strip() 
-            if len( txt ) == 0:
-                dindex.append( '%s.0' % i1 )
-                dindex.append( '%s.0 lineend' % i1 )
-            elif dindex:
-                w.delete( '%s-1c' % dindex[ 0 ], dindex[ -1 ] )
-                w.event_generate( '<Key>' )
-                w.update_idletasks()
-                break
-            else:
-                break
-    #@nonl
-    #@-node:ekr.20050920084036.141:removeBlankLines
-    #@+node:ekr.20050920084036.142:selectAll
-    def selectAll( event ):
-    
-        event.widget.tag_add( 'sel', '1.0', 'end' )
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.142:selectAll
-    #@-node:ekr.20050920084036.130:New Entry points
-    #@+node:ekr.20050920084036.144:Used by neg argss
-    #@+node:ekr.20050920084036.145:changePreviousWord
-    def changePreviousWord (self,event):
-    
-        k = self.k ; stroke = k.stroke ; w = event.widget
-        i = w.index('insert')
-    
-        self.moveword(event,-1)
-        if stroke == '<Alt-c>':
-            self.capitalize(event,'cap')
-        elif stroke == '<Alt-u>':
-             self.capitalize(event,'up')
-        elif stroke == '<Alt-l>':
-            self.capitalize(event,'low')
-        w.mark_set('insert',i)
-        self.stopControlX(event)
-    
-        return k._tailEnd(w)
-    #@-node:ekr.20050920084036.145:changePreviousWord
-    #@-node:ekr.20050920084036.144:Used by neg argss
+    #@-node:ekr.20050920084036.126:tabify & untabify
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.53:class editCommandsClass
@@ -2950,30 +3141,36 @@ class killBufferCommandsClass (baseEditCommandsClass):
         self.editCommands.moveword( event ,1 )
         return 'break'
     #@-node:ekr.20050920084036.180:deletelastWord
-    #@+node:ekr.20050920084036.181:_killSentence
-    def killsentence( self, event, back = False ):
+    #@+node:ekr.20050920084036.181:killSentence & backwardKillSentence
+    def backwardKillSentence (self,event):
+        return self.killSentenceHelper(event,True)
+    
+    def killSentence (self,event):
+        return self.killSentenceHelper(event,False)
+    
+    def killSentenceHelper (self,event,back):
         w = event.widget
-        i = w.search( '.' , 'insert', stopindex = 'end' )
+        i = w.search('.','insert',stopindex='end')
         if back:
-            i = w.search( '.' , 'insert', backwards = True, stopindex = '1.0' ) 
+            i = w.search('.','insert',backwards=True,stopindex='1.0')
             if i == '':
                 return 'break'
-            i2 = w.search( '.' , i, backwards = True , stopindex = '1.0' )
+            i2 = w.search('.',i,backwards=True,stopindex='1.0')
             if i2 == '':
                 i2 = '1.0'
-            return self.kill( event, i2, '%s + 1c' % i )
+            return self.kill(event,i2,'%s + 1c' % i)
             #return self.kill( event , '%s +1c' % i, 'insert' )
         else:
-            i = w.search( '.' , 'insert', stopindex = 'end' )
-            i2 = w.search( '.', 'insert', backwards = True, stopindex = '1.0' )
+            i = w.search('.','insert',stopindex='end')
+            i2 = w.search('.','insert',backwards=True,stopindex='1.0')
         if i2 == '':
            i2 = '1.0'
         else:
            i2 = i2 + ' + 1c '
         if i == '': return 'break'
-        return self.kill( event, i2, '%s + 1c' % i )
+        return self.kill(event,i2,'%s + 1c' % i)
     #@nonl
-    #@-node:ekr.20050920084036.181:_killSentence
+    #@-node:ekr.20050920084036.181:killSentence & backwardKillSentence
     #@+node:ekr.20050920084036.182:_killRegion
     def killRegion( self, event, which ):
         mrk = 'sel'
@@ -4071,58 +4268,6 @@ class registerCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.247: getPublicCommands
     #@+node:ekr.20050920084036.248:Helpers
-    #@+node:ekr.20050920084036.249:_chckSel
-    def _chckSel (self,event):
-        
-        w = event.widget
-    
-        return 'sel' in w.tag_names() and w.tag_ranges('sel')
-    
-        if 0: # old code
-            if not 'sel' in event.widget.tag_names():
-                return False
-            if not event.widget.tag_ranges('sel'):
-                return False
-            return True
-    #@nonl
-    #@-node:ekr.20050920084036.249:_chckSel
-    #@+node:ekr.20050920084036.250:_checkIfRectangle
-    def _checkIfRectangle (self,event):
-    
-        k = self.k
-    
-        if self.registers.has_key(event.keysym):
-            if isinstance(self.registers[event.keysym],list):
-                k.stopControlX(event)
-                k.setLabel("Register contains Rectangle, not text")
-                return True
-    
-        return False
-    #@nonl
-    #@-node:ekr.20050920084036.250:_checkIfRectangle
-    #@+node:ekr.20050920084036.251:_ToReg
-    def _ToReg( self, event , which):
-    
-        if not self._chckSel( event ):
-            return
-        if self._checkIfRectangle( event ):
-            return
-    
-        if event.keysym in string.letters:
-            event.keysym = event.keysym.lower()
-            w = event.widget
-            if not self.registers.has_key( event.keysym ):
-                self.registers[ event.keysym ] = ''
-            txt = w.get( 'sel.first', 'sel.last' )
-            rtxt = self.registers[ event.keysym ]
-            if self.which == 'p':
-                txt = txt + rtxt
-            else:
-                txt = rtxt + txt
-            self.registers[ event.keysym ] = txt
-            return
-    #@nonl
-    #@-node:ekr.20050920084036.251:_ToReg
     #@+node:ekr.20050920084036.252:addRegisterItems (registerCommandsClass)
     def addRegisterItems( self ):
         
