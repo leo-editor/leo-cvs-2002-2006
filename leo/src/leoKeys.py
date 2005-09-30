@@ -101,7 +101,6 @@ class keyHandlerClass:
         
         # For negative arguments...
         self.negativeArg = False
-        self.negArgs = {} # Set in finishCreate.
         
         # For alt-X commands...
         self.xcommands = None       # Done in finishCreate.
@@ -207,7 +206,7 @@ class keyHandlerClass:
         # Command bindings.
         self.cbDict = k.addCallBackDict() # Creates callback dictionary, primarily used in the master command
     
-        self.negArgs = {
+        self.negArgFunctions = {
             '<Alt-c>': c.editCommands.changePreviousWord,
             '<Alt-u>': c.editCommands.changePreviousWord,
             '<Alt-l>': c.editCommands.changePreviousWord,
@@ -315,8 +314,8 @@ class keyHandlerClass:
         'Alt-e':        c.editCommands.forwardSentence,
         'Alt-f':        c.editCommands.forwardWord,
         'Alt-b':        c.editCommands.backwardWord,
-        'Alt-braceright':   lambda event, which = 1: c.editCommands.movingParagraphs(event,which),
-        'Alt-braceleft':    lambda event, which = 0: c.editCommands.movingParagraphs(event,which),
+        'Alt-braceright':   c.editCommands.moveParagraphRight,
+        'Alt-braceleft':    c.editCommands.moveParagraphLeft,
         'Control-Right':c.editCommands.forwardWord,
         'Control-Left': c.editCommands.backwardWord,
         'Control-a':    c.editCommands.beginningOfLine,
@@ -333,19 +332,19 @@ class keyHandlerClass:
             # 'Delete':         c.editCommands.backwardDeleteCharacter,
         
         # Kill buffer...
-        'Control-k':    lambda event, frm = 'insert', to = 'insert lineend': k.kill(event,frm,to),
-        'Alt-d':        lambda event, frm = 'insert wordstart', to = 'insert wordend': k.kill(event,frm,to),
-        'Alt-Delete':   lambda event: c.editCommands.deletelastWord(event),
+        'Control-k':    c.killBufferCommands.killLine,
+        'Alt-d':        c.killBufferCommands.killWord,
+        'Alt-Delete':   c.killBufferCommands.backwardKillWord,
         "Alt-k":        c.killBufferCommands.killSentence,
+        'Control-y':    c.killBufferCommands.yank,
+        'Alt-y':        c.killBufferCommands.yankPop,
         
         # Conflicts with Leo outline moves.
         #'Alt-Up':       lambda event, spot = 'insert linestart': c.editCommands.moveTo(event,spot),
         #'Alt-Down':     lambda event, spot = 'insert lineend': c.editCommands.moveTo(event,spot),
        
-        # I wouldn't use these...
+        # Misc.
             # 'Control-o':    c.editCommands.insertNewLine,
-            # "Control-y":    lambda event, frm = 'insert', which = 'c': c.walkKB(event,frm,which),
-            # "Alt-y":        lambda event, frm = "insert", which = 'a': c.walkKB(event,frm,which),
             # 'Control-s':    None,
             # 'Control-r':    None,
             # 'Alt-c':        c.editCommands.capitalizeWord,
@@ -365,7 +364,6 @@ class keyHandlerClass:
             # 'Control-t':    c.editCommands.swapCharacters,
             
         # Misc.
-            # 'Control-u':    None,
             # 'Control-l':    None,
             # 'Alt-z':        None,
             # 'Control-i':    None,
@@ -383,7 +381,7 @@ class keyHandlerClass:
             # 'Alt-minus':      k.negativeArgument,
             # 'Alt-slash':      c.editCommands.dynamicExpansion,
             # 'Control-Alt-slash':    c.editCommands.dynamicExpansion2,
-            # 'Control-u':        lambda event, keystroke = '<Control-u>': k.universalDispatchStateHandler(event,keystroke),
+            # 'Control-u':        k.universalArgument,
             # 'Alt-q':          c.editCommands.fillParagraph,
             # 'Alt-h':          c.editCommands.selectParagraph,
             # 'Alt-semicolon':  c.editCommands.indentToCommentColumn,
@@ -484,20 +482,240 @@ class keyHandlerClass:
     #@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
     #@-node:ekr.20050920085536.1: Birth
     #@+node:ekr.20050920085536.32: Entry points
-    # These are user commands accessible via alt-x.
-    
+    #@+node:ekr.20050930082638:Repeating commands
+    #@@nocolor
+    #@+at
+    # 
+    # Repeating Commands
+    # 
+    # ESC-5 C-f
+    #     move forward 5 chars
+    # 
+    # C-u (the universal argument command)
+    #     Just like Esc-n, but does not need an argument -> in which case the 
+    # default of 4 is used. eg:
+    # 
+    # C-u C-u -> repeat 16 times
+    #@-at
+    #@nonl
+    #@-node:ekr.20050930082638:Repeating commands
+    #@+node:ekr.20050930081539:Apropos universal
+    #@@nocolor
+    #@+at
+    # 
+    # universal-argument
+    #   Command: Begin a numeric argument for the following command.
+    # universal-argument-map
+    #   Variable: Keymap used while processing \[universal-argument].
+    #   Plist: 1 property (variable-documentation)
+    # universal-argument-minus
+    #   Command: (not documented)
+    # universal-argument-more
+    #   Command: (not documented)
+    # universal-argument-num-events
+    #   Variable: Number of argument-specifying events read by 
+    # `universal-argument'.
+    #   Plist: 1 property (variable-documentation)
+    # universal-argument-other-key
+    #   Command: (not documented)
+    # universal-coding-system-argument
+    #   Command: Execute an I/O command using the specified coding system.
+    #@-at
+    #@-node:ekr.20050930081539:Apropos universal
+    #@+node:ekr.20050930082638.1:Emacs docs prefix command arguments
+    #@@nocolor
+    #@+at
+    # 
+    # Most Emacs commands can use a prefix argument, a number specified before 
+    # the
+    # command itself. (Don't confuse prefix arguments with prefix keys.) The 
+    # prefix
+    # argument is at all times represented by a value, which may be nil, 
+    # meaning there
+    # is currently no prefix argument. Each command may use the prefix 
+    # argument or
+    # ignore it.
+    # 
+    # There are two representations of the prefix argument: raw and numeric. 
+    # The
+    # editor command loop uses the raw representation internally, and so do 
+    # the Lisp
+    # variables that store the information, but commands can request either
+    # representation.
+    # 
+    # Here are the possible values of a raw prefix argument:
+    # 
+    # - nil, meaning there is no prefix argument. Its numeric value is 1, but 
+    # numerous
+    #   commands make a distinction between nil and the integer 1.
+    # 
+    # - An integer, which stands for itself.
+    # 
+    # - A list of one element, which is an integer. This form of prefix 
+    # argument
+    #   results from one or a succession of C-u's with no digits. The numeric 
+    # value is
+    #   the integer in the list, but some commands make a distinction between 
+    # such a
+    #   list and an integer alone.
+    # 
+    # - The symbol -. This indicates that M-- or C-u - was typed, without 
+    # following
+    # digits. The equivalent numeric value is -1, but some commands make a 
+    # distinction
+    # between the integer -1 and the symbol -.
+    # 
+    # We illustrate these possibilities by calling the following function with 
+    # various prefixes:
+    # 
+    #   (defun display-prefix (arg)
+    #     "Display the value of the raw prefix arg."
+    #     (interactive "P")
+    #     (message "%s" arg))
+    # 
+    # Here are the results of calling display-prefix with various raw prefix 
+    # arguments:
+    # 
+    #         M-x display-prefix  -| nil
+    # C-u     M-x display-prefix  -| (4)
+    # C-u C-u M-x display-prefix  -| (16)
+    # C-u 3   M-x display-prefix  -| 3
+    # M-3     M-x display-prefix  -| 3      ; (Same as C-u 3.)
+    # C-u -   M-x display-prefix  -| -
+    # M--     M-x display-prefix  -| -      ; (Same as C-u -.)
+    # C-u - 7 M-x display-prefix  -| -7
+    # M-- 7   M-x display-prefix  -| -7     ; (Same as C-u -7.)
+    # 
+    # Emacs uses two variables to store the prefix argument: prefix-arg and
+    # current-prefix-arg. Commands such as universal-argument that set up 
+    # prefix
+    # arguments for other commands store them in prefix-arg. In contrast,
+    # current-prefix-arg conveys the prefix argument to the current command, 
+    # so
+    # setting it has no effect on the prefix arguments for future commands.
+    # 
+    # Normally, commands specify which representation to use for the prefix 
+    # argument,
+    # either numeric or raw, in the interactive declaration. (See section 
+    # 21.2.1 Using
+    # interactive.) Alternatively, functions may look at the value of the 
+    # prefix
+    # argument directly in the variable current-prefix-arg, but this is less 
+    # clean.
+    # 
+    # Function: prefix-numeric-value arg
+    # 
+    # This function returns the numeric meaning of a valid raw prefix argument 
+    # value,
+    # arg. The argument may be a symbol, a number, or a list. If it is nil, 
+    # the value
+    # 1 is returned; if it is -, the value -1 is returned; if it is a number, 
+    # that
+    # number is returned; if it is a list, the CAR of that list (which should 
+    # be a
+    # number) is returned.
+    # 
+    # Variable: current-prefix-arg
+    #     This variable holds the raw prefix argument for the current command. 
+    # Commands
+    #     may examine it directly, but the usual method for accessing it is 
+    # with
+    #     (interactive "P").
+    # 
+    # Variable: prefix-arg
+    #     The value of this variable is the raw prefix argument for the next 
+    # editing
+    #     command. Commands such as universal-argument that specify prefix 
+    # arguments for
+    #     the following command work by setting this variable.
+    # 
+    # Variable: last-prefix-arg
+    #     The raw prefix argument value used by the previous command.
+    # 
+    # The following commands exist to set up prefix arguments for the 
+    # following
+    # command. Do not call them for any other reason.
+    # 
+    # Command: universal-argument
+    #     This command reads input and specifies a prefix argument for the 
+    # following
+    #     command. Don't call this command yourself unless you know what you 
+    # are doing.
+    # 
+    # Command: digit-argument arg
+    #     This command adds to the prefix argument for the following command. 
+    # The argument
+    #     arg is the raw prefix argument as it was before this command; it is 
+    # used to
+    #     compute the updated prefix argument. Don't call this command 
+    # yourself unless you
+    #     know what you are doing.
+    # 
+    # Command: negative-argument arg
+    #     This command adds to the numeric argument for the next command. The 
+    # argument arg
+    #     is the raw prefix argument as it was before this command; its value 
+    # is negated
+    #     to form the new prefix argument. Don't call this command yourself 
+    # unless you
+    #     know what you are doing.
+    #@-at
+    #@nonl
+    #@-node:ekr.20050930082638.1:Emacs docs prefix command arguments
+    #@+node:ekr.20050930080419:digitArgument & universalArgument
     def digitArgument (self,event):
         
         k = self ; k.stroke = ''
     
-        return k.universalDispatchStateHandler(event)
+        return k.universalDispatchStateHelper(event)
     
     def universalArgument (self,event):
         
         k = self ; k.stroke = ''
     
-        return k.universalDispatchStateHandler(event)
+        return k.universalDispatchStateHelper(event)
     #@nonl
+    #@-node:ekr.20050930080419:digitArgument & universalArgument
+    #@+node:ekr.20050920085536.68:negativeArgument
+    def negativeArgument (self,event):
+    
+        k = self ; state = k.getState('negativeArg')
+        
+        k.setLabelBlue('Negative Argument: ',protect=True)
+    
+        if state == 0:
+            k.setState('negativeArg',1)
+        else:
+            k.clearState()
+            func = k.negArgFunctions.get(k.stroke)
+            if func:
+                func(event)
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920085536.68:negativeArgument
+    #@+node:ekr.20050920085536.77:numberCommand
+    def numberCommand (self,event,stroke,number):
+    
+        k = self ; k.stroke = stroke ; w = event.widget
+    
+        k.universalDispatchStateHelper(event)
+        w.event_generate('<Key>',keysym=number)
+    
+        return 'break'
+    
+    def numberCommand0 (self,event): return self.numberCommand (event,None,0)
+    def numberCommand1 (self,event): return self.numberCommand (event,None,1)
+    def numberCommand2 (self,event): return self.numberCommand (event,None,2)
+    def numberCommand3 (self,event): return self.numberCommand (event,None,3)
+    def numberCommand4 (self,event): return self.numberCommand (event,None,4)
+    def numberCommand5 (self,event): return self.numberCommand (event,None,5)
+    def numberCommand6 (self,event): return self.numberCommand (event,None,6)
+    def numberCommand7 (self,event): return self.numberCommand (event,None,7)
+    def numberCommand8 (self,event): return self.numberCommand (event,None,8)
+    def numberCommand9 (self,event): return self.numberCommand (event,None,9)
+    #@nonl
+    #@-node:ekr.20050920085536.77:numberCommand
     #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
     def repeatComplexCommand (self,event):
     
@@ -520,14 +738,23 @@ class keyHandlerClass:
             return k.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920085536.48:repeatComplexCommand & helper
-    #@+node:ekr.20050920085536.73:universalDispatch
-    def universalDispatchStateHandler (self,event):
+    #@+node:ekr.20050920085536.63:keyboardQuit
+    def keyboardQuit (self,event):
     
-        k = self ; stroke = k.stroke
-        state = k.getState('uC')
+        '''This method cleans the Emacs instance of state and ceases current operations.'''
+        
+        k = self
+    
+        return k.stopControlX(event)
+    #@nonl
+    #@-node:ekr.20050920085536.63:keyboardQuit
+    #@+node:ekr.20050920085536.73:universalDispatchHelper
+    def universalDispatchStateHelper (self,event):
+    
+        k = self ; stroke = k.stroke ; state = k.getState('uC')
     
         if state == 0:
-            k.setState('uC',1,handler=k.universalDispatchStateHandler)
+            k.setState('uC',1,handler=k.universalDispatchStateHelper)
             k.setLabelBlue('')
         elif state == 1:
             k.universalCommand1(event,stroke)
@@ -536,7 +763,6 @@ class keyHandlerClass:
     
         return 'break'
     #@nonl
-    #@-node:ekr.20050920085536.73:universalDispatch
     #@+node:ekr.20050920085536.74:universalCommand1
     def universalCommand1 (self,event,stroke):
         
@@ -551,10 +777,10 @@ class keyHandlerClass:
             k.setLabel('%s ' % k.getLabel())
     #@nonl
     #@-node:ekr.20050920085536.74:universalCommand1
-    #@+node:ekr.20050920085536.75:universalCommand2
+    #@+node:ekr.20050920085536.75:universalCommand2 (Called from universalCommand2)
     def universalCommand2 (self,event,stroke):
         
-        k = self ; w = event.widget # event IS used.
+        k = self ; w = event.widget
         txt = k.getLabel()
         k.keyboardQuit(event)
         txt = txt.replace(' ','')
@@ -566,6 +792,7 @@ class keyHandlerClass:
                 k.setState('uC',2)
                 return k.universalCommand3(event,stroke)
             return k._tailEnd(w)
+    
         if k.uCdict.has_key(stroke): # This executes the keystroke 'n' number of times.
             k.uCdict [stroke](event,txt)
         else:
@@ -584,7 +811,7 @@ class keyHandlerClass:
                 for z in xrange(i):
                     w.event_generate('<Key>',keycode=event.keycode,keysym=event.keysym)
                     k._tailEnd(w)
-    #@-node:ekr.20050920085536.75:universalCommand2
+    #@-node:ekr.20050920085536.75:universalCommand2 (Called from universalCommand2)
     #@+node:ekr.20050920085536.76:universalCommand3
     def universalCommand3 (self,event,stroke):
         
@@ -598,57 +825,7 @@ class keyHandlerClass:
             return 'break'
     #@nonl
     #@-node:ekr.20050920085536.76:universalCommand3
-    #@+node:ekr.20050920085536.77:numberCommand
-    def numberCommand (self,event,stroke,number):
-    
-        k = self ; k.stroke = stroke
-    
-        k.universalDispatchStateHandler(event)
-        event.widget.event_generate('<Key>',keysym=number)
-    
-        return 'break'
-    
-    def numberCommand0 (self,event): return self.numberCommand (event,None,0)
-    def numberCommand1 (self,event): return self.numberCommand (event,None,1)
-    def numberCommand2 (self,event): return self.numberCommand (event,None,2)
-    def numberCommand3 (self,event): return self.numberCommand (event,None,3)
-    def numberCommand4 (self,event): return self.numberCommand (event,None,4)
-    def numberCommand5 (self,event): return self.numberCommand (event,None,5)
-    def numberCommand6 (self,event): return self.numberCommand (event,None,6)
-    def numberCommand7 (self,event): return self.numberCommand (event,None,7)
-    def numberCommand8 (self,event): return self.numberCommand (event,None,8)
-    def numberCommand9 (self,event): return self.numberCommand (event,None,9)
-    #@nonl
-    #@-node:ekr.20050920085536.77:numberCommand
-    #@+node:ekr.20050920085536.63:keyboardQuit
-    def keyboardQuit (self,event):
-    
-        '''This method cleans the Emacs instance of state and ceases current operations.'''
-        
-        k = self
-    
-        return k.stopControlX(event)
-    #@nonl
-    #@-node:ekr.20050920085536.63:keyboardQuit
-    #@+node:ekr.20050920085536.68:negativeArgument
-    def negativeArgument (self,event):
-        
-        g.trace(event.keysym,stroke)
-    
-        k = self
-        state = k.getState('negativeArg')
-        k.setLabelBlue('Negative Argument')
-    
-        if state == 0:
-            k.setState('negativeArg',1)
-        else:
-            func = k.negArgs.get(k.stroke)
-            if func:
-                func(event)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.68:negativeArgument
+    #@-node:ekr.20050920085536.73:universalDispatchHelper
     #@-node:ekr.20050920085536.32: Entry points
     #@+node:ekr.20050920085536.61:extendAltX
     def extendAltX (self,name,function):
@@ -792,10 +969,11 @@ class keyHandlerClass:
     def dispatchAltXFunction (self,event):
         
         k = self ; c = k.c ; s = k.getLabel()
-    
         k.altX_tabList = []
         command = s[len(k.altX_prefix):].strip()
         func = c.commandsDict.get(command)
+        
+        # These must be done *after* getting the command.
         k.clearState()
         k.keyboardQuit(event)
         
