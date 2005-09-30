@@ -596,7 +596,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
     
         k = self.k
         k.setLabelBlue('Append to buffer: ')
-        self.getBufferName(self.appendToBufferFinisher)
+        self.getBufferName(event,self.appendToBufferFinisher)
         return 'break'
     
     def appendToBufferFinisher (self,name):
@@ -616,7 +616,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
     
         k = self.k
         k.setLabelBlue('Copy to buffer: ')
-        self.getBufferName(self.copyToBufferFinisher)
+        self.getBufferName(event,self.copyToBufferFinisher)
         return 'break'
     
     def copyToBufferFinisher (self,name):
@@ -634,7 +634,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
     
         k = self.k
         k.setLabelBlue('Insert to buffer: ')
-        self.getBufferName(self.insertToBufferFinisher)
+        self.getBufferName(event,self.insertToBufferFinisher)
         return 'break'
     
     def insertToBufferFinisher (self,name):
@@ -653,7 +653,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
     
         k = self.k
         k.setLabelBlue('Kill buffer: ')
-        self.getBufferName(self.killBufferFinisher)
+        self.getBufferName(event,self.killBufferFinisher)
         return 'break'
     
     def killBufferFinisher (self,name):
@@ -669,7 +669,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         
         k = self.k
         k.setLabelBlue('Prepend to buffer: ')
-        self.getBufferName(self.prependToBufferFinisher)
+        self.getBufferName(event,self.prependToBufferFinisher)
         return 'break'
         
     def prependToBufferFinisher (self,name):
@@ -689,7 +689,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         
         k = self.k
         k.setLabelBlue('Switch to buffer: ')
-        self.getBufferName(self.switchToBufferFinisher)
+        self.getBufferName(event,self.switchToBufferFinisher)
         return 'break'
         
     def switchToBufferFinisher (self,name):
@@ -719,7 +719,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         
         k = self.k
         k.setLabelBlue('Rename buffer from: ')
-        self.getBufferName(self.renameBufferFinisher1)
+        self.getBufferName(event,self.renameBufferFinisher1)
         return 'break'
         
     def renameBufferFinisher1 (self,name):
@@ -727,7 +727,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
         k = self.k
         k.setLabelBlue('Rename buffer from: %s to: ' % (name))
         self.fromName = name
-        self.getBufferName(self.renameBufferFinisher2)
+        self.getBufferName(event,self.renameBufferFinisher2)
         return 'break'
         
     def renameBufferFinisher2 (self,name):
@@ -740,7 +740,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
     #@-node:ekr.20050920084036.43:renameBuffer (not ready yet)
     #@-node:ekr.20050920084036.34:Entry points
     #@+node:ekr.20050927093851:getBufferName
-    def getBufferName (self,func=None):
+    def getBufferName (self,event,func=None):
         
         '''Get a buffer name into k.arg and call k.setState(kind,n,handler).'''
         
@@ -754,7 +754,7 @@ class bufferCommandsClass  (baseEditCommandsClass):
             tabList = names.keys()
             self.getBufferNameFinisher = func
             prefix = k.getLabel()
-            k.getArg(None,'getBufferName',1,self.getBufferName,prefix=prefix,tabList=tabList)
+            k.getArg(event,'getBufferName',1,self.getBufferName,prefix=prefix,tabList=tabList)
         else:
             k.resetLabel()
             k.clearState()
@@ -918,6 +918,7 @@ class controlCommandsClass (baseEditCommandsClass):
         
         self.shutdownhook = None # If this is set via setShutdownHook, it is executed instead of sys.exit on Control-x Control-c.
         self.shuttingdown = False # Indicates that the Emacs instance is shutting down and no work needs to be done.
+        self.payload = None
     #@nonl
     #@-node:ekr.20050920084036.151: ctor
     #@+node:ekr.20050920084036.152: getPublicCommands
@@ -930,7 +931,7 @@ class controlCommandsClass (baseEditCommandsClass):
             'iconfify-or-deiconify-frame':  self.iconifyOrDeiconifyFrame,
             'keyboard-quit':                self.keyboardQuit,
             'save-buffers-kill-emacs':      self.saveBuffersKillEmacs,
-            'shell-command':                self.startSubprocess,
+            'shell-command':                self.shellCommand,
             'shell-command-on-region':      self.shellCommandOnRegion,
             'suspend':                      self.suspend,
         }
@@ -948,9 +949,6 @@ class controlCommandsClass (baseEditCommandsClass):
     
     def saveBuffersKillEmacs (self,event):
         return self.k.keyboardQuit(event) and self.shutdown(event)
-    
-    def shellCommandOnRegion (self,event):
-        return self.startSubprocess(event,which=1)
     
     def suspend (self,event):
         return self._suspend(event) and self.k.keyboardQuit(event)
@@ -982,80 +980,77 @@ class controlCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.156:setShutdownHook
     #@-node:ekr.20050920084036.154:shutdown methods
     #@+node:ekr.20050920084036.157:subprocess
-    #@+node:ekr.20050920084036.158:startSubprocess
-    def startSubprocess (self,event,which=0):
+    #@+node:ekr.20050920084036.158:shellCommand
+    def shellCommand (self,event):
+        
+        k = self.k
+        
+        if not subprocess:
+            k.setLabelGrey('can not execute shell-command: can not import subprocess')
+            return 'break'
     
-        k = self.k ; w = event.widget
-        statecontents = {'state': 'start', 'payload': None}
+        state = k.getState('shell-command')
     
-        k.setState('subprocess',statecontents)
-    
-        if which:
-            k.setLabelBlue('Shell command on region:')
-            is1 = is2 = None
-            try:
-                is1 = w.index('sel.first')
-                is2 = w.index('sel.last')
-            finally:
-                if is1:
-                    statecontents ['payload'] = w.get(is1,is2)
-                    k.setState('subprocess',statecontents)
-                else:
-                    return k.keyboardQuit(event)
+        if state == 0:
+            k.setLabelBlue('shell-command: ',protect=True)
+            k.getArg(event,'shell-command',1,self.shellCommand)
         else:
-            k.setLabelBlue("Alt - !:")
+            command = k.arg
+            k.clearState()
+            self.executeSubprocess(event,command,input=None)
     
         return 'break'
-    #@-node:ekr.20050920084036.158:startSubprocess
-    #@+node:ekr.20050920084036.159:subprocess
-    def subprocesser (self,event):
-    
-        k = self.k ; state = k.getState('subprocess')
-    
-        if state ['state'] == 'start':
-            state ['state'] = 'watching'
-            k.setLabel('')
-    
-        if event.keysym == "Return":
-            cmdline = k.getLabel()
-            return self.executeSubprocess(event,cmdline,input=state['payload'])
-        else:
-            k.updateLabel(event)
-            return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.159:subprocess
-    #@+node:ekr.20050920084036.160:executeSubprocess
-    def executeSubprocess (self,event,command,input=None):
-        k = self.k
-        try:
-            try:
-                out, err = os.tmpnam(), os.tmpnam()
-                ofile = open(out,'wt+')
-                efile = open(err,'wt+')
-                process = subprocess.Popen(command,bufsize=-1,
-                    stdout = ofile.fileno(), stderr = ofile.fileno(),
-                    stdin = subprocess.PIPE, shell = True)
-                if input:
-                    process.communicate(input)
-                process.wait()
-                w = event.widget
-                efile.seek(0)
-                errinfo = efile.read()
-                if errinfo:
-                    w.insert('insert',errinfo)
-                ofile.seek(0)
-                okout = ofile.read()
-                if okout:
-                    w.insert('insert',okout)
-            except Exception, x:
-                w = event.widget
-                w.insert('insert',x)
-        finally:
-            os.remove(out)
-            os.remove(err)
-        k.keyboardQuit(event)
+    #@-node:ekr.20050920084036.158:shellCommand
+    #@+node:ekr.20050930112126:shellCommandOnRegion
+    def shellCommandOnRegion (self,event):
+        
+        k = self.k ; is1,is2 = None,None ; w = event.widget
+        
+        if not subprocess:
+            k.setLabelGrey('can not execute shell-command: can not import subprocess')
+            return 'break'
     
-        return k._tailEnd(w)
+        try:
+            is1 = w.index('sel.first')
+            is2 = w.index('sel.last')
+        finally:
+            if is1:
+                command = w.get(is1,is2)
+                self.executeSubprocess(event,command,input=None)
+            else:
+                k.clearState()
+                k.resetLabel()
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050930112126:shellCommandOnRegion
+    #@+node:ekr.20050920084036.160:executeSubprocess
+    def executeSubprocess (self,event,command,input):
+        
+        k = self.k ; w = event.widget
+        k.setLabelBlue('started  shell-command: %s' % command)
+    
+        try:
+            ofile = os.tmpfile()
+            efile = os.tmpfile()
+            process = subprocess.Popen(command,bufsize=-1,
+                stdout = ofile.fileno(), stderr = ofile.fileno(),
+                stdin = subprocess.PIPE, shell = True)
+            if input: process.communicate(input)
+            process.wait()
+            efile.seek(0)
+            errinfo = efile.read()
+            if errinfo: w.insert('insert',errinfo)
+            ofile.seek(0)
+            okout = ofile.read()
+            if okout: w.insert('insert',okout)
+        except Exception, x:
+            w = event.widget
+            w.insert('insert',x)
+            
+        k.setLabelGrey('finished shell-command: %s' % command)
+        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.160:executeSubprocess
     #@-node:ekr.20050920084036.157:subprocess
@@ -1241,6 +1236,87 @@ class editCommandsClass (baseEditCommandsClass):
         return k._tailEnd(w)
     #@-node:ekr.20050920084036.134:indentToCommentColumn
     #@-node:ekr.20050920084036.132:comment column...
+    #@+node:ekr.20050920084036.85:delete...
+    #@+node:ekr.20050929163010:backwardDeleteCharacter
+    def backwardDeleteCharacter (self,event):
+        
+        return self.manufactureKeyPress(event,'BackSpace')
+    #@nonl
+    #@-node:ekr.20050929163010:backwardDeleteCharacter
+    #@+node:ekr.20050920084036.87:deleteNextChar
+    def deleteNextChar( self,event ):
+    
+        k = self.k ; w = event.widget
+        i = w.index( 'insert' )
+        w.delete( i, '%s +1c' % i )
+        return k._tailEnd( w )
+    #@-node:ekr.20050920084036.87:deleteNextChar
+    #@+node:ekr.20050920084036.135:deleteSpaces
+    def deleteSpaces (self,event,insertspace=False):
+    
+        k = self.k ; w = event.widget
+        char = w.get('insert','insert + 1c ')
+    
+        if char.isspace():
+            i = w.index('insert')
+            wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+            wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
+            if '' in (wf,wb):
+                return 'break'
+            w.delete('%s +1c' % wb,wf)
+            if insertspace:
+                w.insert('insert',' ')
+    
+        return k._tailEnd(w)
+    
+    #@-node:ekr.20050920084036.135:deleteSpaces
+    #@+node:ekr.20050920084036.141:removeBlankLines
+    def removeBlankLines (self,event):
+        w = event.widget
+        i = w.index('insert')
+        i1, i2 = i.split('.')
+        i1 = int(i1)
+        dindex = []
+        if w.get('insert linestart','insert lineend').strip() == '':
+            while 1:
+                if str(i1) + '.0' == '1.0':
+                    break
+                i1 = i1-1
+                txt = w.get('%s.0' % i1,'%s.0 lineend' % i1)
+                txt = txt.strip()
+                if len(txt) == 0:
+                    dindex.append('%s.0' % i1)
+                    dindex.append('%s.0 lineend' % i1)
+                elif dindex:
+                    w.delete('%s-1c' % dindex[-2],dindex[1])
+                    w.event_generate('<Key>')
+                    w.update_idletasks()
+                    break
+                else:
+                    break
+        i = w.index('insert')
+        i1, i2 = i.split('.')
+        i1 = int(i1)
+        dindex = []
+        while 1:
+            if w.index('%s.0 lineend' % i1) == w.index('end'):
+                break
+            i1 = i1 + 1
+            txt = w.get('%s.0' % i1,'%s.0 lineend' % i1)
+            txt = txt.strip()
+            if len(txt) == 0:
+                dindex.append('%s.0' % i1)
+                dindex.append('%s.0 lineend' % i1)
+            elif dindex:
+                w.delete('%s-1c' % dindex[0],dindex[-1])
+                w.event_generate('<Key>')
+                w.update_idletasks()
+                break
+            else:
+                break
+    #@nonl
+    #@-node:ekr.20050920084036.141:removeBlankLines
+    #@-node:ekr.20050920084036.85:delete...
     #@+node:ekr.20050920084036.58:dynamic abbreviation...
     #@+node:ekr.20050920084036.59:dynamicExpansion
     def dynamicExpansion (self,event): #, store = {'rlist': [], 'stext': ''} ):
@@ -1378,6 +1454,23 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.65:startEvaluate
     #@-node:ekr.20050920084036.62:esc methods for Python evaluation
+    #@+node:ekr.20050920084036.136:exchangePointMark
+    def exchangePointMark (self,event):
+    
+        if not self._chckSel(event): return
+        k = self.k ; w = event.widget
+        s1 = w.index('sel.first')
+        s2 = w.index('sel.last')
+        i = w.index('insert')
+    
+        if i == s1:
+            w.mark_set('insert',s2)
+        else:
+            w.mark_set('insert',s1)
+    
+        return k._tailEnd(w)
+    #@nonl
+    #@-node:ekr.20050920084036.136:exchangePointMark
     #@+node:ekr.20050920084036.66:fill column and centering
     #@+at
     # These methods are currently just used in tandem to center the line or 
@@ -1495,7 +1588,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.66:fill column and centering
     #@+node:ekr.20050920084036.72:goto...
     #@+node:ekr.20050929115226:gotoCharacter
-    def gotoCharacter (self,event=None):
+    def gotoCharacter (self,event):
     
         k = self.k ; state = k.getState('goto-char')
     
@@ -1515,7 +1608,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050929115226:gotoCharacter
     #@+node:ekr.20050929124234:gotoLine
-    def gotoLine (self,event=None):
+    def gotoLine (self,event):
     
         k = self.k ; state = k.getState('goto-line')
         
@@ -1605,7 +1698,7 @@ class editCommandsClass (baseEditCommandsClass):
         return k._tailEnd(w)
     #@-node:ekr.20050920084036.78:indentRelative
     #@-node:ekr.20050920084036.74:indent...
-    #@+node:ekr.20050920084036.79:info...
+    #@+node:ekr.20050920084036.79:info... (revise)
     #@+node:ekr.20050920084036.80:howMany
     def howMany (self,event):
     
@@ -1669,14 +1762,19 @@ class editCommandsClass (baseEditCommandsClass):
         k.keyboardQuit(event)
         k.setLabel("Line %s" % i1)
     #@-node:ekr.20050920084036.84:whatLine
-    #@-node:ekr.20050920084036.79:info...
-    #@+node:ekr.20050920084036.85:Insert/delete...
-    #@+node:ekr.20050929163010:backwardDeleteCharacter
-    def backwardDeleteCharacter (self,event):
-        
-        return self.manufactureKeyPress(event,'BackSpace')
-    #@nonl
-    #@-node:ekr.20050929163010:backwardDeleteCharacter
+    #@-node:ekr.20050920084036.79:info... (revise)
+    #@+node:ekr.20050930102304:insert...
+    #@+node:ekr.20050920084036.138:insertNewLine
+    def insertNewLine (self,event):
+    
+        k = self.k ; w = event.widget
+        i = w.index('insert')
+        w.insert('insert','\n')
+        w.mark_set('insert',i)
+        return k._tailEnd(w)
+    
+    insertNewline = insertNewLine
+    #@-node:ekr.20050920084036.138:insertNewLine
     #@+node:ekr.20050920084036.86:insertNewLineAndTab
     def insertNewLineAndTab( self, event ):
         
@@ -1689,63 +1787,6 @@ class editCommandsClass (baseEditCommandsClass):
         w.mark_set( 'insert', '%s lineend' % i )
         return k._tailEnd( w )
     #@-node:ekr.20050920084036.86:insertNewLineAndTab
-    #@+node:ekr.20050920084036.87:deleteNextChar
-    def deleteNextChar( self,event ):
-    
-        k = self.k ; w = event.widget
-        i = w.index( 'insert' )
-        w.delete( i, '%s +1c' % i )
-        return k._tailEnd( w )
-    #@-node:ekr.20050920084036.87:deleteNextChar
-    #@-node:ekr.20050920084036.85:Insert/delete...
-    #@+node:ekr.20050920084036.130:insert/delete...
-    #@+node:ekr.20050920084036.135:deleteSpaces
-    def deleteSpaces (self,event,insertspace=False):
-    
-        k = self.k ; w = event.widget
-        char = w.get('insert','insert + 1c ')
-    
-        if char.isspace():
-            i = w.index('insert')
-            wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
-            wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
-            if '' in (wf,wb):
-                return 'break'
-            w.delete('%s +1c' % wb,wf)
-            if insertspace:
-                w.insert('insert',' ')
-    
-        return k._tailEnd(w)
-    
-    #@-node:ekr.20050920084036.135:deleteSpaces
-    #@+node:ekr.20050920084036.136:exchangePointMark
-    def exchangePointMark (self,event):
-    
-        if not self._chckSel(event): return
-        k = self.k ; w = event.widget
-        s1 = w.index('sel.first')
-        s2 = w.index('sel.last')
-        i = w.index('insert')
-    
-        if i == s1:
-            w.mark_set('insert',s2)
-        else:
-            w.mark_set('insert',s1)
-    
-        return k._tailEnd(w)
-    #@nonl
-    #@-node:ekr.20050920084036.136:exchangePointMark
-    #@+node:ekr.20050920084036.138:insertNewLine
-    def insertNewLine (self,event):
-    
-        k = self.k ; w = event.widget
-        i = w.index('insert')
-        w.insert('insert','\n')
-        w.mark_set('insert',i)
-        return k._tailEnd(w)
-    
-    insertNewline = insertNewLine
-    #@-node:ekr.20050920084036.138:insertNewLine
     #@+node:ekr.20050920084036.139:insertParentheses
     def insertParentheses (self,event):
     
@@ -1754,89 +1795,7 @@ class editCommandsClass (baseEditCommandsClass):
         w.mark_set('insert','insert -1c')
         return k._tailEnd(w)
     #@-node:ekr.20050920084036.139:insertParentheses
-    #@+node:ekr.20050920084036.140:movePastClose
-    def movePastClose (self,event):
-    
-        k = self.k ; w = event.widget
-        i = w.search('(','insert',backwards=True,stopindex='1.0')
-        icheck = w.search(')','insert',backwards=True,stopindex='1.0')
-    
-        if '' == i:
-            return 'break'
-        if icheck:
-            ic = w.compare(i,'<',icheck)
-            if ic:
-                return 'break'
-        i2 = w.search(')','insert',stopindex='end')
-        i2check = w.search('(','insert',stopindex='end')
-        if '' == i2:
-            return 'break'
-        if i2check:
-            ic2 = w.compare(i2,'>',i2check)
-            if ic2:
-                return 'break'
-        ib = w.index('insert')
-        w.mark_set('insert','%s lineend +1c' % i2)
-        if w.index('insert') == w.index('%s lineend' % ib):
-            w.insert('insert','\n')
-    
-        return k._tailEnd(w)
-    #@nonl
-    #@-node:ekr.20050920084036.140:movePastClose
-    #@+node:ekr.20050920084036.141:removeBlankLines
-    def removeBlankLines (self,event):
-        w = event.widget
-        i = w.index('insert')
-        i1, i2 = i.split('.')
-        i1 = int(i1)
-        dindex = []
-        if w.get('insert linestart','insert lineend').strip() == '':
-            while 1:
-                if str(i1) + '.0' == '1.0':
-                    break
-                i1 = i1-1
-                txt = w.get('%s.0' % i1,'%s.0 lineend' % i1)
-                txt = txt.strip()
-                if len(txt) == 0:
-                    dindex.append('%s.0' % i1)
-                    dindex.append('%s.0 lineend' % i1)
-                elif dindex:
-                    w.delete('%s-1c' % dindex[-2],dindex[1])
-                    w.event_generate('<Key>')
-                    w.update_idletasks()
-                    break
-                else:
-                    break
-        i = w.index('insert')
-        i1, i2 = i.split('.')
-        i1 = int(i1)
-        dindex = []
-        while 1:
-            if w.index('%s.0 lineend' % i1) == w.index('end'):
-                break
-            i1 = i1 + 1
-            txt = w.get('%s.0' % i1,'%s.0 lineend' % i1)
-            txt = txt.strip()
-            if len(txt) == 0:
-                dindex.append('%s.0' % i1)
-                dindex.append('%s.0 lineend' % i1)
-            elif dindex:
-                w.delete('%s-1c' % dindex[0],dindex[-1])
-                w.event_generate('<Key>')
-                w.update_idletasks()
-                break
-            else:
-                break
-    #@nonl
-    #@-node:ekr.20050920084036.141:removeBlankLines
-    #@+node:ekr.20050920084036.142:selectAll
-    def selectAll( event ):
-    
-        event.widget.tag_add( 'sel', '1.0', 'end' )
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.142:selectAll
-    #@-node:ekr.20050920084036.130:insert/delete...
+    #@-node:ekr.20050930102304:insert...
     #@+node:ekr.20050920084036.88:line... (rewrite)
     #@+node:ekr.20050920084036.89: Entries
     #@+node:ekr.20050920084036.90:flushLines
@@ -1955,6 +1914,35 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.147:measure
     #@+node:ekr.20050929114218:move...
+    #@+node:ekr.20050920084036.140:movePastClose
+    def movePastClose (self,event):
+    
+        k = self.k ; w = event.widget
+        i = w.search('(','insert',backwards=True,stopindex='1.0')
+        icheck = w.search(')','insert',backwards=True,stopindex='1.0')
+    
+        if '' == i:
+            return 'break'
+        if icheck:
+            ic = w.compare(i,'<',icheck)
+            if ic:
+                return 'break'
+        i2 = w.search(')','insert',stopindex='end')
+        i2check = w.search('(','insert',stopindex='end')
+        if '' == i2:
+            return 'break'
+        if i2check:
+            ic2 = w.compare(i2,'>',i2check)
+            if ic2:
+                return 'break'
+        ib = w.index('insert')
+        w.mark_set('insert','%s lineend +1c' % i2)
+        if w.index('insert') == w.index('%s lineend' % ib):
+            w.insert('insert','\n')
+    
+        return k._tailEnd(w)
+    #@nonl
+    #@-node:ekr.20050920084036.140:movePastClose
     #@+node:ekr.20050929115226.1:forward/backCharacter
     def backCharacter (self,event):
     
@@ -1984,7 +1972,7 @@ class editCommandsClass (baseEditCommandsClass):
         return self.moveTo(event,'insert lineend')
     #@nonl
     #@-node:ekr.20050920084036.148:moveTo, beginnning/endOfBuffer/Line
-    #@+node:ekr.20050920084036.149:back/forwardWord & moveWordHelper
+    #@+node:ekr.20050920084036.149:back/forwardWord & helper
     def moveWordHelper (self,event,forward=True):
     
         '''This function moves the cursor to the next word, direction dependent on the way parameter'''
@@ -2010,7 +1998,7 @@ class editCommandsClass (baseEditCommandsClass):
     def forwardWord (self,event):
         return self.moveWordHelper(event,forward=True),
     #@nonl
-    #@-node:ekr.20050920084036.149:back/forwardWord & moveWordHelper
+    #@-node:ekr.20050920084036.149:back/forwardWord & helper
     #@+node:ekr.20050920084036.131:backSentence
     def backSentence (self,event):
     
@@ -2431,7 +2419,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.105:region...
     #@+node:ekr.20050920084036.112:replace...
     #@+node:ekr.20050920084036.113:replaceString
-    def replaceString (self,event=None):
+    def replaceString (self,event):
     
         k = self.k ; state = k.getState('rString')
         prompt = 'Replace ' + g.choose(self._useRegex,'Regex','String')
@@ -2522,6 +2510,13 @@ class editCommandsClass (baseEditCommandsClass):
         return self.screenscroll('north')
     #@nonl
     #@-node:ekr.20050920084036.116:scroll...
+    #@+node:ekr.20050920084036.142:selectAll
+    def selectAll( event ):
+    
+        event.widget.tag_add( 'sel', '1.0', 'end' )
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920084036.142:selectAll
     #@+node:ekr.20050920084036.117:sort...
     '''XEmacs provides several commands for sorting text in a buffer.  All
     operate on the contents of the region (the text between point and the
@@ -2849,8 +2844,7 @@ class editFileCommandsClass (baseEditCommandsClass):
         if state == 0:
             prefix = 'Remove File: '
             k.setLabelBlue('%s%s%s' % (prefix,os.getcwd(),os.sep))
-            k.getArg(event,'delete_file',1,
-                returnStateHandler=self.deleteFile,prefix=prefix)
+            k.getArg(event,'delete_file',1,self.deleteFile,prefix=prefix)
         else:
             k.keyboardQuit(event)
             k.clearState()
@@ -2924,8 +2918,7 @@ class editFileCommandsClass (baseEditCommandsClass):
         if state == 0:
             prefix = 'Make Directory: '
             k.setLabelBlue('%s%s%s' % (prefix,os.getcwd(),os.sep))
-            k.getArg(event,'make_directory',1,
-                returnStateHandler=self.makeDirectory,prefix=prefix)
+            k.getArg(event,'make_directory',1,self.makeDirectory,prefix=prefix)
         else:
             k.keyboardQuit(event)
             k.clearState()
@@ -2945,8 +2938,7 @@ class editFileCommandsClass (baseEditCommandsClass):
         if state == 0:
             prefix = 'Remove Directory: '
             k.setLabelBlue('%s%s%s' % (prefix,os.getcwd(),os.sep))
-            k.getArg(event,'remove_directory',1,
-                returnStateHandler=self.removeDirectory,prefix=prefix)
+            k.getArg(event,'remove_directory',1,self.removeDirectory,prefix=prefix)
         else:
             k.keyboardQuit(event)
             k.clearState()
@@ -3028,6 +3020,23 @@ class killBufferCommandsClass (baseEditCommandsClass):
             self.killBuffer = leoKeys.keyHandlerClass.global_killbuffer
     #@nonl
     #@-node:ekr.20050920084036.175: ctor & finishCreate
+    #@+node:ekr.20050920084036.176: getPublicCommands
+    def getPublicCommands (self):
+        
+        return {
+            'backward-kill-sentence':   self.backwardKillSentence,
+            'backward-kill-word':       self.backwardKillWord,
+            'kill-line':                self.killLine,
+            'kill-word':                self.killWord,
+            'kill-sentence':            self.killSentence,
+            'kill-region':              self.killRegion,
+            'kill-region-save':         self.killRegionSave, # Should this be kill-ring-save?
+            'yank':                     self.yank,
+            'yank-pop':                 self.yankPop,
+            'zap-to-character':         self.zapToCharacter,
+        }
+    #@nonl
+    #@-node:ekr.20050920084036.176: getPublicCommands
     #@+node:ekr.20050920084036.183:addToKillBuffer
     def addToKillBuffer (self,text):
         
@@ -3086,22 +3095,6 @@ class killBufferCommandsClass (baseEditCommandsClass):
         return None
     #@nonl
     #@-node:ekr.20050920084036.185:getClipboard
-    #@+node:ekr.20050920084036.176:getPublicCommands
-    def getPublicCommands (self):
-        
-        return {
-            'backward-kill-sentence':   self.backwardKillSentence,
-            'backward-kill-word':       self.backwardKillWord,
-            'kill-line':                self.killLine,
-            'kill-word':                self.killWord,
-            'kill-sentence':            self.killSentence,
-            'kill-region':              self.killRegion,
-            'yank':                     self.yank,
-            'yank-pop':                 self.yankPop,
-            'zap-to-character':         self.zapToCharacter,
-        }
-    #@nonl
-    #@-node:ekr.20050920084036.176:getPublicCommands
     #@+node:ekr.20050920084036.184:iterateKillBuffer
     def iterateKillBuffer( self ):
         
@@ -3134,14 +3127,21 @@ class killBufferCommandsClass (baseEditCommandsClass):
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.178:kill, killLine, killWord
-    #@+node:ekr.20050920084036.182:killRegion
+    #@+node:ekr.20050920084036.182:killRegion & killRegionSave & helper
     def killRegion (self,event):
+        return self.killRegionHelper(event,deleteFlag=True)
+        
+    def killRegionSave (self,event):
+        return self.killRegionHelper(event,deleteFlag=False)
+    
+    def killRegionHelper (self,event,deleteFlag):
     
         w = event.widget ; range = w.tag_ranges('sel')
     
         if len(range) != 0:
             s = w.get(range[0],range[-1])
-            w.delete(range[0],range[-1])
+            if deleteFlag:
+                w.delete(range[0],range[-1])
             self.addToKillBuffer(s)
             w.clipboard_clear()
             w.clipboard_append(s)
@@ -3149,7 +3149,7 @@ class killBufferCommandsClass (baseEditCommandsClass):
         self.removeRKeys(w)
         return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.182:killRegion
+    #@-node:ekr.20050920084036.182:killRegion & killRegionSave & helper
     #@+node:ekr.20050930095323.1:killSentence
     def killSentence (self,event):
     
@@ -4378,19 +4378,19 @@ class searchCommandsClass (baseEditCommandsClass):
     # Incremental...
     def isearchForward (self,event):
         g.trace()
-        return self.k.keyboardQuit(event) and self.startIncremental(event,'<Control-s>')
+        return self.startIncremental(event,'<Control-s>')
         
     def isearchBackward (self,event):
         g.trace()
-        return self.k.keyboardQuit(event) and self.startIncremental(event,'<Control-r>')
+        return self.startIncremental(event,'<Control-r>')
         
     def isearchForwardRegexp (self,event):
         g.trace()
-        return self.k.keyboardQuit(event) and self.startIncremental(event,'<Control-s>',which='regexp')
+        return self.startIncremental(event,'<Control-s>',which='regexp')
         
     def isearchBackwardRegexp (self,event):
         g.trace()
-        return self.k.keyboardQuit(event) and self.startIncremental(event,'<Control-r>',which='regexp')
+        return self.startIncremental(event,'<Control-r>',which='regexp')
     
     # Non-incremental...
     def reSearchBackward (self,event):

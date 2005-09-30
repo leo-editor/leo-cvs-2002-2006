@@ -302,113 +302,110 @@ class keyHandlerClass:
         cbDict = {
         
         # The big ones...
-        'Alt-x':        k.alt_X,
-        #'Control-x':    k.startControlX, # Conflicts with XP cut.
-        'Control-c':    k.startControlX, # Conflicts with XP copy.
-        'Control-g':    k.keyboardQuit,
+        'Alt-x':            k.alt_X,
+        #'Control-x':       k.startControlX, # Conflicts with XP cut.
+        'Control-c':        k.startControlX, # Conflicts with XP copy.
+        'Control-g':        k.keyboardQuit,
+        'Control-u':        k.universalArgument,
+        'Alt-minus':        k.negativeArgument,
+        'Alt-exclam':       c.controlCommands.shellCommand,
+        'Alt-bar':          c.controlCommands.shellCommandOnRegion,
+        #'Control-z':        c.controlCommands.suspend,
     
         # Standard Emacs moves...
-        'Alt-less':     c.editCommands.beginningOfBuffer,
-        'Alt-greater':  c.editCommands.endOfBuffer,
-        'Alt-a':        c.editCommands.backSentence,
-        'Alt-e':        c.editCommands.forwardSentence,
-        'Alt-f':        c.editCommands.forwardWord,
-        'Alt-b':        c.editCommands.backwardWord,
-        'Alt-braceright':   c.editCommands.moveParagraphRight,
-        'Alt-braceleft':    c.editCommands.moveParagraphLeft,
-        'Control-Right':c.editCommands.forwardWord,
-        'Control-Left': c.editCommands.backwardWord,
-        'Control-a':    c.editCommands.beginningOfLine,
-        'Control-e':    c.editCommands.endOfLine,
-        'Control-p':    c.editCommands.prevLine,
-        'Control-n':    c.editCommands.nextLine,
-        # Conflicts with Find panel.
-        # 'Control-f':  c.editCommands.forwardCharacter,
-        'Control-b':    c.editCommands.backCharacter,
+            'Alt-less':         c.editCommands.beginningOfBuffer,
+            'Alt-greater':      c.editCommands.endOfBuffer,
+            'Alt-a':            c.editCommands.backSentence,
+            'Alt-e':            c.editCommands.forwardSentence,
+            'Alt-f':            c.editCommands.forwardWord,
+            'Alt-b':            c.editCommands.backwardWord,
+            'Alt-braceright':   c.editCommands.moveParagraphRight,
+            'Alt-braceleft':    c.editCommands.moveParagraphLeft,
+            'Control-Right':    c.editCommands.forwardWord,
+            'Control-Left':     c.editCommands.backwardWord,
+            'Control-a':        c.editCommands.beginningOfLine,
+            'Control-e':        c.editCommands.endOfLine,
+            'Control-p':        c.editCommands.prevLine,
+            'Control-n':        c.editCommands.nextLine,
+            # 'Control-f':      c.editCommands.forwardCharacter, # Conflicts with Find panel.
+            'Control-b':        c.editCommands.backCharacter,
+            #'Alt-Up':          c.editCommands.lineStart,   # Conflicts with Leo outline moves.
+            #'Alt-Down':        c.editCommands.lineEnd,     # Conflicts with Leo outline moves.
+            # 'Control-v':      c.editCommands.scrollDown,
+            # 'Alt-v':          c.editCommands.scrollUp,
         
-        # Standard Emacs deletes...
+        # Kill buffer...
+            'Control-k':        c.killBufferCommands.killLine,
+            'Alt-d':            c.killBufferCommands.killWord,
+            'Alt-Delete':       c.killBufferCommands.backwardKillWord,
+            "Alt-k":            c.killBufferCommands.killSentence,
+            'Control-y':        c.killBufferCommands.yank,
+            'Alt-y':            c.killBufferCommands.yankPop,
+            # 'Control-w':      c.killBufferCommands.killRegion,
+            # 'Alt-w':          c.killBufferCommands.killRegionSave,
+        
+        # Simple inserts & deletes...
+            # 'Control-o':    c.editCommands.insertNewLine,
             # 'Control-d':      c.editCommands.deleteNextChar,
             # 'Alt-backslash':  c.editCommands.deleteSpaces,
             # 'Delete':         c.editCommands.backwardDeleteCharacter,
+            # 'Control-Alt-o':      c.editCommands.insertNewLineIndent,
+            # 'Control-j':          c.editCommands.insertNewLineAndTab,
         
-        # Kill buffer...
-        'Control-k':    c.killBufferCommands.killLine,
-        'Alt-d':        c.killBufferCommands.killWord,
-        'Alt-Delete':   c.killBufferCommands.backwardKillWord,
-        "Alt-k":        c.killBufferCommands.killSentence,
-        'Control-y':    c.killBufferCommands.yank,
-        'Alt-y':        c.killBufferCommands.yankPop,
+        # Transpose & swap.
+            # 'Alt-c':          c.editCommands.capitalizeWord,
+            # 'Alt-u':          c.editCommands.upCaseWord,
+            # 'Alt-l':          c.editCommands.downCaseWord,
+            # 'Alt-t':          c.editCommands.transposeWords,
+            # 'Control-t':      c.editCommands.swapCharacters,
         
-        # Conflicts with Leo outline moves.
-        #'Alt-Up':       lambda event, spot = 'insert linestart': c.editCommands.moveTo(event,spot),
-        #'Alt-Down':     lambda event, spot = 'insert lineend': c.editCommands.moveTo(event,spot),
-       
-        # Misc.
-            # 'Control-o':    c.editCommands.insertNewLine,
-            # 'Control-s':    None,
-            # 'Control-r':    None,
-            # 'Alt-c':        c.editCommands.capitalizeWord,
-            # 'Alt-u':        c.editCommands.upCaseWord,
-            # 'Alt-l':        c.editCommands.downCaseWord,
-            # 'Alt-t':        c.editCommands.transposeWords,
-        
-        # Region stuff...
-            # 'Control-Shift-at': c.editCommands.setRegion,
-            # 'Control-w':    lambda event, which = 'd': c.editCommands.killRegion(event,which),
-            # 'Alt-w':        lambda event, which = 'c': c.editCommands.killRegion(event,which),
-            # 'Alt-Control-backslash': c.editCommands.indentRegion,
-            # 'Alt-m':            c.editCommands.backToIndentation,
-            # 'Alt-asciicircum':  c.editCommands.deleteIndentation,
-    
-        # Conflicts with swap panes.
-            # 'Control-t':    c.editCommands.swapCharacters,
+        # Region, Paragraph, indent, & formatting.
+            # 'Control-Shift-at':       c.editCommands.setRegion,
+            # 'Alt-Control-backslash':  c.editCommands.indentRegion,
+            # 'Alt-m':                  c.editCommands.backToIndentation,
+            # 'Alt-asciicircum':        c.editCommands.deleteIndentation,
+            # 'Alt-s':                  c.editCommands.centerLine,
+            # 'Alt-q':                  c.editCommands.fillParagraph,
+            # 'Alt-h':                  c.editCommands.selectParagraph,
+            # 'Alt-equal':              c.editCommands.countRegion,
+            # 'Alt-semicolon':          c.editCommands.indentToCommentColumn,
+            
+        # Parens.
+            # 'Alt-parenleft':      c.editCommands.insertParentheses,
+            # 'Alt-parenright':     c.editCommands.movePastClose,
             
         # Misc.
-            # 'Control-l':    None,
-            # 'Alt-z':        None,
-            # 'Control-i':    None,
-            # 'Alt-g':        None,
-            # 'Control-v':      c.editCommands.scrollDown,
-            # 'Alt-v':          c.editCommands.scrollUp,
-            # 'Alt-equal':      c.editCommands.countRegion,
-            # 'Alt-parenleft':  c.editCommands.insertParentheses,
-            # 'Alt-parenright': c.editCommands.movePastClose,
-            # 'Alt-percent':    None,
-            # 'Control-c':      None,
-            # 'Control-Alt-w':  None,
-            # 'Control-Alt-o':  c.editCommands.insertNewLineIndent,
-            # 'Control-j':      c.editCommands.insertNewLineAndTab,
-            # 'Alt-minus':      k.negativeArgument,
-            # 'Alt-slash':      c.editCommands.dynamicExpansion,
-            # 'Control-Alt-slash':    c.editCommands.dynamicExpansion2,
-            # 'Control-u':        k.universalArgument,
-            # 'Alt-q':          c.editCommands.fillParagraph,
-            # 'Alt-h':          c.editCommands.selectParagraph,
-            # 'Alt-semicolon':  c.editCommands.indentToCommentColumn,
-            # 'Alt-s':          c.editCommands.centerLine,
-            # 'Control-z':      c.controlCommands.suspend,
-            # 'Control-Alt-s': c.searchCommands.isearchForwardRegexp,
-            # 'Control-Alt-r': c.searchCommands.isearchBackwardRegexp,
-            # 'Control-Alt-percent': lambda event: k.startRegexReplace()and k.masterQR(event),
-            # 'Escape':         c.editCommands.watchEscape,
-            # 'Alt-colon':      c.editCommands.startEvaluate,
-            # 'Alt-exclam':     c.emacsControlCommands.startSubprocess,
-            # 'Alt-bar':        lambda event: c.controlCommands.startSubprocess(event,which=1),
-        
-        # Numbered commands: conflict with Leo's Expand to level commands, but so what...
-        'Alt-0': k.numberCommand0,
-        'Alt-1': k.numberCommand1,
-        'Alt-2': k.numberCommand2,
-        'Alt-3': k.numberCommand3,
-        'Alt-4': k.numberCommand4,
-        'Alt-5': k.numberCommand5,
-        'Alt-6': k.numberCommand6,
-        'Alt-7': k.numberCommand7,
-        'Alt-8': k.numberCommand8,
-        'Alt-9': k.numberCommand9,
-        
-        # Emacs undo.
+            # 'Control-s':          None,
+            # 'Control-r':          None,
+            # 'Control-l':          None,
+            # 'Alt-z':              None,
+            # 'Control-i':          None,
+            # 'Alt-g':              None,
+            # 'Alt-percent':        None,
+            # 'Control-c':          None,
+            # 'Control-Alt-w':      None,
+            # 'Alt-slash':          c.editCommands.dynamicExpansion,
+            # 'Control-Alt-slash':  c.editCommands.dynamicExpansion2,
+            # 'Escape':             c.editCommands.watchEscape,
+            # 'Alt-colon':          c.editCommands.startEvaluate,
             # 'Control-underscore': k.doUndo,
+    
+        # Searches.
+            # 'Control-Alt-s':      c.searchCommands.isearchForwardRegexp,
+            # 'Control-Alt-r':      c.searchCommands.isearchBackwardRegexp,
+            # 'Control-Alt-percent': c.searchCommands.queryReplaceRegex,
+    
+        # Numbered commands: conflict with Leo's Expand to level commands, but so what...
+            'Alt-0': k.numberCommand0,
+            'Alt-1': k.numberCommand1,
+            'Alt-2': k.numberCommand2,
+            'Alt-3': k.numberCommand3,
+            'Alt-4': k.numberCommand4,
+            'Alt-5': k.numberCommand5,
+            'Alt-6': k.numberCommand6,
+            'Alt-7': k.numberCommand7,
+            'Alt-8': k.numberCommand8,
+            'Alt-9': k.numberCommand9,
         }
     
         return cbDict
@@ -990,7 +987,7 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.45:dispatchAltXFunction
     #@-node:ekr.20050920085536.41:alt_X & helpers
     #@+node:ekr.20050920085536.62:getArg
-    def getArg (self,event,returnStateKind=None,returnState=None,returnStateHandler=None,prefix=None,tabList=None):
+    def getArg (self,event,returnKind=None,returnState=None,handler=None,prefix=None,tabList=None):
         
         '''Accumulate an argument until the user hits return (or control-g).
         Enter the given return state when done.
@@ -1005,11 +1002,13 @@ class keyHandlerClass:
             k.arg = ''
             if tabList: k.argTabList = tabList[:]
             else:       k.argTabList = []
+            if 0: # Don't do this: it would add the shortcut that started the command.
+                k.updateLabel(event)
             #@        << init altX vars >>
             #@+node:ekr.20050928092516:<< init altX vars >>
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.altX_tabList = []
-            k.updateLabel(event)
+            
             if prefix:
                 k.altX_tabListPrefix = prefix
                 k.altX_prefix = prefix
@@ -1021,14 +1020,13 @@ class keyHandlerClass:
             #@-node:ekr.20050928092516:<< init altX vars >>
             #@nl
             # Set the states.
-            k.afterGetArgState = (returnStateKind,returnState,returnStateHandler)
-            k.setState('getArg',1,handler=k.getArg)
+            k.afterGetArgState = (returnKind,returnState,handler)
+            k.setState('getArg',1,k.getArg)
         elif keysym == 'Return':
             k.arg = k.getLabel(ignorePrompt=True)
-            returnStateKind,returnState,returnStateHandler = k.afterGetArgState
-            k.setState(returnStateKind,returnState,returnStateHandler)
-            if returnStateHandler:
-                returnStateHandler()
+            kind,n,handler = k.afterGetArgState
+            if kind: k.setState(kind,n,handler)
+            if handler: handler(event)
         elif keysym == 'Tab':
             k.doTabCompletion(k.argTabList)
         elif keysym == 'BackSpace':
@@ -1040,7 +1038,6 @@ class keyHandlerClass:
             k.altX_tabListPrefix = k.getLabel()
     
         return 'break'
-    #@nonl
     #@-node:ekr.20050920085536.62:getArg
     #@+node:ekr.20050920085536.57:ControlX...  (actually bound to control-c for now)
     #@+node:ekr.20050920085536.58:startControlX
@@ -1162,7 +1159,7 @@ class keyHandlerClass:
         if event.keysym in ('Shift_L','Shift_R'):
             return
             
-        g.trace(event.keysym)
+        # g.trace(event.keysym)
     
         if c.rectangleCommands.sRect:
             return c.stringRectangle(event)
