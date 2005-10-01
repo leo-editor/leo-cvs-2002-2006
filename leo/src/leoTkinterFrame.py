@@ -2504,6 +2504,7 @@ class leoTkinterBody (leoFrame.leoBody):
         #@nonl
         #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
         #@nl
+        g.trace(repr(ch),undoType)
         if undoType:
             if not oldText: oldText = body
             newText = s
@@ -2643,11 +2644,12 @@ class leoTkinterBody (leoFrame.leoBody):
     #@nonl
     #@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
     #@+node:ekr.20031218072017.1330:onBodyKey
-    def onBodyKey (self,event):
+    def onBodyKey (self,event,undoType='Typing'):
         
-        """Handle any key press event in the body pane."""
+        '''Handle any key press event in the body pane.'''
     
-        c = self.c ; ch = event.char
+        # New in Leo 4.4.  May be called with event = None
+        c = self.c ; ch = (event and event.char) or ''
     
         # g.trace(repr(ch))
     
@@ -2662,7 +2664,7 @@ class leoTkinterBody (leoFrame.leoBody):
             
         # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
         self.c.frame.body.colorizer.interrupt()
-        self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
+        self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,ch)
     #@nonl
     #@+node:ekr.20040105223536:handleStatusLineKey
     def handleStatusLineKey (self,event):

@@ -77,7 +77,6 @@ class baseCommands:
         self.atFileCommands = leoAtFile.atFile(c)
         self.importCommands = leoImport.leoImportCommands(c)
         self.tangleCommands = leoTangle.tangleCommands(c)
-        ### self.commandsDict = leoEditCommands.createEditCommanders(c)
         leoEditCommands.createEditCommanders(c)
     
         if 0 and g.debugGC:
@@ -182,7 +181,7 @@ class baseCommands:
                 
             # Create the classes in the keyHandler.
             c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
-            c.keyHandler.finishCreate(self.commandsDict)
+            c.keyHandler.finishCreate()
     #@nonl
     #@-node:ekr.20050920093543:c.finishCreate
     #@-node:ekr.20031218072017.2811: c.Birth & death
