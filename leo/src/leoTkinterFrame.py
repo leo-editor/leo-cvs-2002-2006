@@ -2504,7 +2504,7 @@ class leoTkinterBody (leoFrame.leoBody):
         #@nonl
         #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
         #@nl
-        g.trace(repr(ch),undoType)
+        # g.trace(repr(ch),undoType)
         if undoType:
             if not oldText: oldText = body
             newText = s

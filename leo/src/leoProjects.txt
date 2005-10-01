@@ -3515,7 +3515,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if ch in ('\t','\n','\r',chr(8)):
         << handle special characters >>
     << set s to widget text, removing trailing newlines if necessary >>
-    g.trace(repr(ch),undoType)
+    # g.trace(repr(ch),undoType)
     if undoType:
         if not oldText: oldText = body
         newText = s
@@ -5835,7 +5835,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if ch in ('\t','\n','\r',chr(8)):
         << handle special characters >>
     << set s to widget text, removing trailing newlines if necessary >>
-    g.trace(repr(ch),undoType)
+    # g.trace(repr(ch),undoType)
     if undoType:
         if not oldText: oldText = body
         newText = s
@@ -6372,7 +6372,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if ch in ('\t','\n','\r',chr(8)):
         << handle special characters >>
     << set s to widget text, removing trailing newlines if necessary >>
-    g.trace(repr(ch),undoType)
+    # g.trace(repr(ch),undoType)
     if undoType:
         if not oldText: oldText = body
         newText = s
@@ -10522,7 +10522,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if ch in ('\t','\n','\r',chr(8)):
         << handle special characters >>
     << set s to widget text, removing trailing newlines if necessary >>
-    g.trace(repr(ch),undoType)
+    # g.trace(repr(ch),undoType)
     if undoType:
         if not oldText: oldText = body
         newText = s
@@ -11596,7 +11596,7 @@ The fix was to eliminate the binding to <Key> in tkBody.createBindings.
 To do: remove the cut/copy/paste bindings in tkBody.createBindings.
 #@nonl
 #@+node:ekr.20050920085536.65: masterCommand
-def masterCommand (self,event,method,stroke,general):
+def masterCommand (self,event,func,stroke,general):
     
     '''This is the central routing method of the Emacs class.
     All commands and keystrokes pass through here.'''
@@ -11618,7 +11618,9 @@ def masterCommand (self,event,method,stroke,general):
 
     if stroke == '<Control-g>':
         k.previousStroke = stroke
-        return k.keyboardQuit(event)
+        k.keyboardQuit(event)
+        k.handleEndCommand (event,'keyboard-quit')
+        return 'break'
 
     if k.inState():
         k.previousStroke = stroke
@@ -11628,6 +11630,7 @@ def masterCommand (self,event,method,stroke,general):
         g.trace('hasKeyStroke')
         k.previousStroke = stroke
         k.callKeystrokeFunction(event)
+        return 'break'
 
     if k.regx.iter:
         try:
@@ -11640,16 +11643,12 @@ def masterCommand (self,event,method,stroke,general):
         if c.abbrevCommands._expandAbbrev(event):
             return 'break'
 
-    if method:
-        g.trace(stroke)
-        rt = method(event)
-        if k.inState():
-            g.trace(k.state.kind) ### To do.
-        else:
-            commandName = k.inverseCommandsDict.get(method,'unknown-command')
-            k.endCommand(commandName)
+    if func:
+        k.commandName = k.inverseCommandsDict.get(func,'unknown-command')
         k.previousStroke = stroke
-        return rt
+        rt = func(event)
+        k.handleEndCommand(event,k.commandName)
+        return 'break' # was rt
     
     else:
         c.frame.body.onBodyKey(event)
@@ -11774,7 +11773,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if ch in ('\t','\n','\r',chr(8)):
         << handle special characters >>
     << set s to widget text, removing trailing newlines if necessary >>
-    g.trace(repr(ch),undoType)
+    # g.trace(repr(ch),undoType)
     if undoType:
         if not oldText: oldText = body
         newText = s

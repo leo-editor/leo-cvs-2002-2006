@@ -43,7 +43,7 @@ class baseEditCommandsClass:
         
     def init (self):
         
-        '''Called from k.stopControlX to init all classes.'''
+        '''Called from k.keyboardQuit to init all classes.'''
         
         pass
     #@nonl
@@ -115,7 +115,7 @@ class baseEditCommandsClass:
     
         if self.registers.has_key(event.keysym):
             if isinstance(self.registers[event.keysym],list):
-                k.stopControlX(event)
+                k.keyboardQuit(event)
                 k.setLabel("Register contains Rectangle, not text")
                 return True
     
@@ -3520,7 +3520,7 @@ class macroCommandsClass (baseEditCommandsClass):
             k.addToDoAltX(name,self.lastMacro)
             k.setLabelBlue('')
             self.macroing = False
-            k.stopControlX(event)
+            k.keyboardQuit(event)
         else:
             k.updateLabel(event)
     
@@ -3881,7 +3881,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
         k = self.k ; w = event.widget
         r1, r2, r3, r4 = self.getRectanglePoints( event )
         lth = ' ' * ( r4 - r2 )
-        self.stopControlX( event )
+        self.keyboardQuit( event )
         while r1 <= r3:
             w.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
             w.insert( '%s.%s' % ( r1, r2 ) , lth)
@@ -3922,7 +3922,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
         k = self.k ; w = event.widget
         r1, r2, r3, r4 = self.getRectanglePoints(event)
         #lth = ' ' * ( r4 - r2 )
-        self.stopControlX(event)
+        self.keyboardQuit(event)
         while r1 <= r3:
             w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
             r1 = r1 + 1
@@ -3939,7 +3939,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
         k = self.k ; w = event.widget
         r1, r2, r3, r4 = self.getRectanglePoints(event)
     
-        self.stopControlX(event)
+        self.keyboardQuit(event)
         self.krectangle = []
         while r1 <= r3:
             txt = w.get('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
@@ -3952,7 +3952,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.228:killRectangle
     #@+node:ekr.20050920084036.229:yankRectangle
     def yankRectangle( self, event , krec = None ):
-        self.stopControlX( event )
+        self.keyboardQuit( event )
         if not krec:
             krec = self.krectangle
         if not krec:
@@ -3984,7 +3984,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
         k = self.k ; w = event.widget
         r1, r2, r3, r4 = self.getRectanglePoints( event )
         lth = ' ' * ( r4 - r2 )
-        self.stopControlX( event )
+        self.keyboardQuit( event )
         while r1 <= r3:
             w.insert( '%s.%s' % ( r1, r2 ) , lth)
             r1 = r1 + 1
@@ -4021,7 +4021,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
             return 'break'
         if self.sRect == 3:
             if not self._chckSel(event):
-                k.stopControlX(event)
+                k.keyboardQuit(event)
                 return
             r1, r2, r3, r4 = self.getRectanglePoints(event)
             lth = k.getLabel()
@@ -4029,7 +4029,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
                 w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
                 w.insert('%s.%s' % (r1,r2),lth)
                 r1 = r1 + 1
-            k.stopControlX(event)
+            k.keyboardQuit(event)
             return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.232:stringRectangle (called from processKey)
@@ -4156,7 +4156,7 @@ class registerCommandsClass (baseEditCommandsClass):
                 rect.append(txt)
                 r1 = r1+1
             self.registers[event.keysym] = rect 
-        self.stopControlX(event)
+        self.keyboardQuit(event)
     #@-node:ekr.20050920084036.239:_copyRectangleToRegister
     #@+node:ekr.20050920084036.240:_copyToRegister
     def _copyToRegister (self,event):
@@ -4171,7 +4171,7 @@ class registerCommandsClass (baseEditCommandsClass):
             self.registers[event.keysym] = txt 
             return 
     
-        self.stopControlX(event)
+        self.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920084036.240:_copyToRegister
     #@+node:ekr.20050920084036.241:_incrementRegister
@@ -4187,7 +4187,7 @@ class registerCommandsClass (baseEditCommandsClass):
             else:
                 self.invalidRegister(event,'number')
                 return 
-        self.stopControlX(event)
+        self.keyboardQuit(event)
     #@-node:ekr.20050920084036.241:_incrementRegister
     #@+node:ekr.20050920084036.242:_insertRegister
     def _insertRegister (self,event):
@@ -4201,7 +4201,7 @@ class registerCommandsClass (baseEditCommandsClass):
                 w.event_generate('<Key>')
                 w.update_idletasks()
     
-        self.stopControlX(event)
+        self.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920084036.242:_insertRegister
     #@+node:ekr.20050920084036.243:_jumpToRegister
@@ -4224,14 +4224,14 @@ class registerCommandsClass (baseEditCommandsClass):
             w.mark_set('insert',i)
             w.event_generate('<Key>')
             w.update_idletasks()
-        self.stopControlX(event)
+        self.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920084036.243:_jumpToRegister
     #@+node:ekr.20050920084036.244:_numberToRegister
     def _numberToRegister (self,event):
         if event.keysym in string.letters:
             self.registers[event.keysym.lower()] = str(0)
-        self.stopControlX(event)
+        self.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920084036.244:_numberToRegister
     #@+node:ekr.20050920084036.245:_pointToRegister
@@ -4239,7 +4239,7 @@ class registerCommandsClass (baseEditCommandsClass):
         if event.keysym in string.letters:
             w = event.widget 
             self.registers[event.keysym.lower()] = w.index('insert')
-        self.stopControlX(event)
+        self.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920084036.245:_pointToRegister
     #@+node:ekr.20050920084036.246:_viewRegister
@@ -4319,7 +4319,7 @@ class registerCommandsClass (baseEditCommandsClass):
             self.registermode = 2
             k.setLabel(self.helpDict[event.keysym])
         else:
-            k.stopControlX(event)
+            k.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920084036.255:setNextRegister
     #@+node:ekr.20050920084036.256:executeRegister
@@ -4329,7 +4329,7 @@ class registerCommandsClass (baseEditCommandsClass):
     
         self.method(event)
         if self.registermode:
-            k.stopControlX(event)
+            k.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920084036.256:executeRegister
     #@-node:ekr.20050920084036.248:Helpers
@@ -4476,7 +4476,7 @@ class searchCommandsClass (baseEditCommandsClass):
         if event.keysym == 'Return':
             s = k.getLabel(ignorePrompt=True)
             if s:
-                return k.stopControlX(event)
+                return k.keyboardQuit(event)
             else:
                 return self.startNonIncrSearch(event,self.pref)
     
