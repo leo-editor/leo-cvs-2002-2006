@@ -99,13 +99,6 @@ class baseEditCommandsClass:
         w = event.widget
     
         return 'sel' in w.tag_names() and w.tag_ranges('sel')
-    
-        if 0: # old code
-            if not 'sel' in event.widget.tag_names():
-                return False
-            if not event.widget.tag_ranges('sel'):
-                return False
-            return True
     #@nonl
     #@-node:ekr.20050920084036.249:_chckSel
     #@+node:ekr.20050920084036.250:_checkIfRectangle
@@ -123,26 +116,25 @@ class baseEditCommandsClass:
     #@nonl
     #@-node:ekr.20050920084036.250:_checkIfRectangle
     #@+node:ekr.20050920084036.251:_ToReg
-    def _ToReg( self, event , which):
+    def _ToReg (self,event,which):
     
-        if not self._chckSel( event ):
+        if not self._chckSel(event):
             return
-        if self._checkIfRectangle( event ):
+        if self._checkIfRectangle(event):
             return
     
         if event.keysym in string.letters:
             event.keysym = event.keysym.lower()
             w = event.widget
-            if not self.registers.has_key( event.keysym ):
-                self.registers[ event.keysym ] = ''
-            txt = w.get( 'sel.first', 'sel.last' )
-            rtxt = self.registers[ event.keysym ]
+            if not self.registers.has_key(event.keysym):
+                self.registers [event.keysym] = ''
+            txt = w.get('sel.first','sel.last')
+            rtxt = self.registers [event.keysym]
             if self.which == 'p':
                 txt = txt + rtxt
             else:
                 txt = rtxt + txt
-            self.registers[ event.keysym ] = txt
-            return
+            self.registers [event.keysym] = txt
     #@nonl
     #@-node:ekr.20050920084036.251:_ToReg
     #@+node:ekr.20050920084036.9:inRange
@@ -180,6 +172,12 @@ class baseEditCommandsClass:
             return True
     #@nonl
     #@-node:ekr.20050920084036.11:testinrange
+    #@+node:ekr.20051002090441:keyboardQuit
+    def keyboardQuit (self):
+        
+        return self.k.keyboardQuit()
+    #@nonl
+    #@-node:ekr.20051002090441:keyboardQuit
     #@+node:ekr.20050929170812:manufactureKeyPress
     def manufactureKeyPress (self,event,keysym):
         
@@ -352,21 +350,61 @@ class abbrevCommandsClass (baseEditCommandsClass):
         }
     #@nonl
     #@-node:ekr.20050920084036.15: getPublicCommands & getStateCommands
-    #@+node:ekr.20050920084036.16: Entry points
-    #@+node:ekr.20050920084036.17:expandAbbrev
-    def expandAbbrev (self,event):
+    #@+node:ekr.20050920084036.25:abbreviationDispatch & helper
+    def abbreviationDispatch (self,event,which):
         
         k = self.k
+        state = k.getState('abbrevMode')
     
-        return k.keyboardQuit(event) and self._expandAbbrev(event)
+        if state == 0:
+            k.setState('abbrevMode',which,handler=self.abbrevCommand1)
+            k.setLabelBlue('')
+        else:
+            self.abbrevCommand1(event)
+    #@nonl
+    #@+node:ekr.20050920084036.26:abbrevCommand1
+    def abbrevCommand1 (self,event):
     
-    #@-node:ekr.20050920084036.17:expandAbbrev
+        k = self.k ; w = event.widget
+    
+        if event.keysym == 'Return':
+            word = w.get('insert -1c wordstart','insert -1c wordend')
+            if word == ' ': return
+            state = k.getState('abbrevMode')
+            if state == 1:
+                self.abbrevs [k.getLabel()] = word
+            elif state == 2:
+                self.abbrevs [word] = k.getLabel()
+            k.keyboardQuit(event)
+            k.resetLabel()
+        else:
+            k.updateLabel(event)
+    #@nonl
+    #@-node:ekr.20050920084036.26:abbrevCommand1
+    #@-node:ekr.20050920084036.25:abbreviationDispatch & helper
+    #@+node:ekr.20050920084036.27:expandAbbrev
+    def expandAbbrev (self,event):
+    
+        k = self.k ; w = event.widget 
+        
+        word = w.get('insert -1c wordstart','insert -1c wordend')
+        ch = event.char.strip()
+    
+        if ch:
+            # We must do this: expandAbbrev is called from Alt-x and Control-x,
+            # we get two differnt types of data and w states.
+            word = '%s%s'% (word,event.char)
+            
+        if self.abbrevs.has_key(word):
+            w.delete('insert -1c wordstart','insert -1c wordend')
+            w.insert('insert',self.abbrevs[word])
+    #@nonl
+    #@-node:ekr.20050920084036.27:expandAbbrev
     #@+node:ekr.20050920084036.18:killAllAbbrevs
     def killAllAbbrevs (self,event):
     
         k = self.k
         self.abbrevs = {}
-        return k.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920084036.18:killAllAbbrevs
     #@+node:ekr.20050920084036.19:listAbbrevs
@@ -377,17 +415,19 @@ class abbrevCommandsClass (baseEditCommandsClass):
         for z in self.abbrevs:
             txt = '%s%s=%s\n' % (txt,z,self.abbrevs[z])
         k.setLabel(txt)
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.19:listAbbrevs
     #@+node:ekr.20050920084036.20:readAbbreviations
     def readAbbreviations (self,event):
     
         f = tkFileDialog and tkFileDialog.askopenfile()
-        if f:
-            return self._readAbbrevs(f)
-        else:
-            return 'break'
+        if not f: return
+    
+        for x in f:
+            a, b = x.split('=')
+            b = b [:-1]
+            self.abbrevs [a] = b
+        f.close()
     #@nonl
     #@-node:ekr.20050920084036.20:readAbbreviations
     #@+node:ekr.20050920084036.21:regionalExpandAbbrev
@@ -435,13 +475,13 @@ class abbrevCommandsClass (baseEditCommandsClass):
             w.tag_delete('sXR')
             w.tag_delete('found')
             k.setLabelGrey('')
-            self._setRAvars()
+            self.k.regx = g.bunch(iter=None,key=None)
+        #@nonl
         #@-node:ekr.20050920084036.22:<< define a new generator searchXR >>
         #@nl
         # EKR: the 'result' of calling searchXR is a generator object.
         k.regx.iter = searchXR( i1, i2, ins, event)
         k.regx.iter.next() # Call it the first time.
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.21:regionalExpandAbbrev
     #@+node:ekr.20050920084036.23:toggleAbbrevMode
@@ -457,99 +497,13 @@ class abbrevCommandsClass (baseEditCommandsClass):
     def writeAbbreviations (self,event):
     
         f = tkFileDialog and tkFileDialog.asksaveasfile()
-        if f :
-            return self._writeAbbrevs(f)
-        else:
-            return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.24:writeAbbreviations
-    #@-node:ekr.20050920084036.16: Entry points
-    #@+node:ekr.20050920084036.25:abbreviationDispatch (Probably wrong)
-    def abbreviationDispatch (self,event,which):
-        
-        k = self.k
-        state = k.getState('abbrevMode')
-    
-        if state == 0:
-            k.setState('abbrevMode',which,handler=self.abbrevCommand1)
-            k.setLabelBlue('')
-        else:
-            self.abbrevCommand1(event)
-            
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.25:abbreviationDispatch (Probably wrong)
-    #@+node:ekr.20050920084036.26:abbrevCommand1
-    def abbrevCommand1 (self,event):
-    
-        k = self.k ; w = event.widget
-    
-        if event.keysym == 'Return':
-            word = w.get('insert -1c wordstart','insert -1c wordend')
-            if word == ' ': return
-            state = k.getState('abbrevMode')
-            if state == 1:
-                self.abbrevs [k.getLabel()] = word
-            elif state == 2:
-                self.abbrevs [word] = k.getLabel()
-            k.keyboardQuit(event)
-            k.resetLabel()
-        else:
-            k.updateLabel(event)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.26:abbrevCommand1
-    #@+node:ekr.20050920084036.27:_expandAbbrev
-    def _expandAbbrev (self,event):
-    
-        k = self.k ; w = event.widget 
-        
-        word = w.get('insert -1c wordstart','insert -1c wordend')
-        ch = event.char.strip()
-    
-        if ch:
-            # We must do this: expandAbbrev is called from Alt-x and Control-x,
-            # we get two differnt types of data and w states.
-            word = '%s%s'% (word,event.char)
-            
-        if self.abbrevs.has_key(word):
-            w.delete('insert -1c wordstart','insert -1c wordend')
-            w.insert('insert',self.abbrevs[word])
-            return k._tailEnd(w)
-        else:
-            return False 
-    
-    
-    #@-node:ekr.20050920084036.27:_expandAbbrev
-    #@+node:ekr.20050920084036.28:_setRAvars
-    def _setRAvars( self ):
-    
-        self.k.regx.iter = self.k.regXKey = None
-    #@nonl
-    #@-node:ekr.20050920084036.28:_setRAvars
-    #@+node:ekr.20050920084036.29:_readAbbrevs
-    def _readAbbrevs (self,f):
-    
-        for x in f:
-            a, b = x.split('=')
-            b = b[:-1]
-            self.abbrevs[a] = b 
-        f.close()
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.29:_readAbbrevs
-    #@+node:ekr.20050920084036.30:_writeAbbrevs
-    def _writeAbbrevs( self, f ):
+        if not f: return
     
         for x in self.abbrevs:
-            f.write( '%s=%s\n' %( x, self.abbrevs[ x ] ) )
+            f.write('%s=%s\n' % (x,self.abbrevs[x]))
         f.close()
-     
-        return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.30:_writeAbbrevs
+    #@-node:ekr.20050920084036.24:writeAbbreviations
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.13:class abbrevCommandsClass
@@ -597,7 +551,6 @@ class bufferCommandsClass  (baseEditCommandsClass):
         k = self.k
         k.setLabelBlue('Append to buffer: ')
         self.getBufferName(event,self.appendToBufferFinisher)
-        return 'break'
     
     def appendToBufferFinisher (self,name):
     
@@ -608,7 +561,6 @@ class bufferCommandsClass  (baseEditCommandsClass):
             self.setBufferData(event,name,bdata)
         except Exception:
             pass
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.35:appendToBuffer/Finisher
     #@+node:ekr.20050920084036.36:copyToBuffer/Finisher
@@ -617,7 +569,6 @@ class bufferCommandsClass  (baseEditCommandsClass):
         k = self.k
         k.setLabelBlue('Copy to buffer: ')
         self.getBufferName(event,self.copyToBufferFinisher)
-        return 'break'
     
     def copyToBufferFinisher (self,name):
     
@@ -626,7 +577,6 @@ class bufferCommandsClass  (baseEditCommandsClass):
             self.setBufferData(event,name,txt)
         except Exception:
             pass
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.36:copyToBuffer/Finisher
     #@+node:ekr.20050920084036.37:insertToBuffer/Finisher
@@ -635,17 +585,14 @@ class bufferCommandsClass  (baseEditCommandsClass):
         k = self.k
         k.setLabelBlue('Insert to buffer: ')
         self.getBufferName(event,self.insertToBufferFinisher)
-        return 'break'
     
     def insertToBufferFinisher (self,name):
     
         try:
             bdata = self.bufferDict [name]
             w.insert('insert',bdata)
-            k._tailEnd(w)
         except Exception:
             pass
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.37:insertToBuffer/Finisher
     #@+node:ekr.20050920084036.38:killBuffer/Finisher  (not ready yet)
@@ -654,14 +601,13 @@ class bufferCommandsClass  (baseEditCommandsClass):
         k = self.k
         k.setLabelBlue('Kill buffer: ')
         self.getBufferName(event,self.killBufferFinisher)
-        return 'break'
     
     def killBufferFinisher (self,name):
     
         # method = self.bufferDeletes[event.widget]
         # method(name)
     
-        return 'break'
+        pass ### Not ready yet.
     #@nonl
     #@-node:ekr.20050920084036.38:killBuffer/Finisher  (not ready yet)
     #@+node:ekr.20050920084036.39:prependToBuffer/Finisher
@@ -670,7 +616,6 @@ class bufferCommandsClass  (baseEditCommandsClass):
         k = self.k
         k.setLabelBlue('Prepend to buffer: ')
         self.getBufferName(event,self.prependToBufferFinisher)
-        return 'break'
         
     def prependToBufferFinisher (self,name):
         
@@ -681,7 +626,6 @@ class bufferCommandsClass  (baseEditCommandsClass):
             self.setBufferData(event,name,bdata)
         except Exception:
             pass
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.39:prependToBuffer/Finisher
     #@+node:ekr.20050920084036.40:switchToBuffer (not ready yet)
@@ -690,37 +634,38 @@ class bufferCommandsClass  (baseEditCommandsClass):
         k = self.k
         k.setLabelBlue('Switch to buffer: ')
         self.getBufferName(event,self.switchToBufferFinisher)
-        return 'break'
         
     def switchToBufferFinisher (self,name):
      
         # method = self.bufferGotos[event.widget]
         # k.keyboardQuit(event)
         # method(name)
-        return 'break'
+        
+        pass ### Not ready yet.
     #@nonl
     #@-node:ekr.20050920084036.40:switchToBuffer (not ready yet)
-    #@+node:ekr.20050920084036.42:listBuffers/Finisher
+    #@+node:ekr.20050920084036.42:listBuffers/Finisher (not ready yet)
     def listBuffers (self,event):
         
-        k = self.k
-        bdict = self.getBufferDict(event)
-        list = bdict.keys()
+        k = self.k ; c = k.c
+        
+        names = {}
+        for p in c.allNodes_iter():
+            names [p.headString()] = None
+    
+        list = names.keys()
         list.sort()
         data = '\n'.join(list)
-        k.keyboardQuit(event)
-        k.setLabel(data)
-    
-        return 'break'
+     
+        ### k.setLabel(data)
     #@nonl
-    #@-node:ekr.20050920084036.42:listBuffers/Finisher
+    #@-node:ekr.20050920084036.42:listBuffers/Finisher (not ready yet)
     #@+node:ekr.20050920084036.43:renameBuffer (not ready yet)
     def renameBuffer (self,event):
         
         k = self.k
         k.setLabelBlue('Rename buffer from: ')
         self.getBufferName(event,self.renameBufferFinisher1)
-        return 'break'
         
     def renameBufferFinisher1 (self,name):
         
@@ -728,14 +673,12 @@ class bufferCommandsClass  (baseEditCommandsClass):
         k.setLabelBlue('Rename buffer from: %s to: ' % (name))
         self.fromName = name
         self.getBufferName(event,self.renameBufferFinisher2)
-        return 'break'
         
     def renameBufferFinisher2 (self,name):
     
         k = self.k
         # self.renameBuffers[w](name)
         k.setLabelGrey('Renamed buffer %s to %s' % (self.fromName,name))
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.43:renameBuffer (not ready yet)
     #@-node:ekr.20050920084036.34:Entry points
@@ -763,8 +706,6 @@ class bufferCommandsClass  (baseEditCommandsClass):
             self.getBufferNameFinisher = None
             if func:
                 func(k.arg)
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050927093851:getBufferName
     #@+node:ekr.20050927102133.1:Utils
@@ -895,13 +836,11 @@ class bufferCommandsClass  (baseEditCommandsClass):
                         pmatches.append(z)
                 self.bufferTracker.setTabList(prefix,pmatches)
                 k.setLabel(self.bufferTracker.next())#begin iteration on new lsit
-            return 'break'
         elif event.keysym=='Return':
            bMode = k.getState('bufferList')
-           return self.commandsDict[bMode](event,k.getLabel())
+           self.commandsDict[bMode](event,k.getLabel())
         else:
             self.update(event)
-            return 'break'
     #@nonl
     #@-node:ekr.20050920084036.41:bufferList (to be deleted)
     #@-others
@@ -937,94 +876,12 @@ class controlCommandsClass (baseEditCommandsClass):
         }
     #@nonl
     #@-node:ekr.20050920084036.152: getPublicCommands
-    #@+node:ekr.20050922110030:Entry points
+    #@+node:ekr.20050922110030:advertizedUndo
     def advertizedUndo (self,event):
-        return self.doUndo(event) and self.k.keyboardQuit(event)
     
-    def iconifyOrDeiconifyFrame (self,event):
-        return self._suspend(event) and self.k.keyboardQuit(event)
-    
-    def keyboardQuit (self,event):
-        return self.k.keyboardQuite(event)
-    
-    def saveBuffersKillEmacs (self,event):
-        return self.k.keyboardQuit(event) and self.shutdown(event)
-    
-    def suspend (self,event):
-        return self._suspend(event) and self.k.keyboardQuit(event)
-    #@-node:ekr.20050922110030:Entry points
-    #@+node:ekr.20050920084036.153:_suspend
-    def _suspend( self, event ):
-        
-        widget = event.widget
-        widget.winfo_toplevel().iconify()
+        self.doUndo(event)
     #@nonl
-    #@-node:ekr.20050920084036.153:_suspend
-    #@+node:ekr.20050920084036.154:shutdown methods
-    #@+node:ekr.20050920084036.155:shutdown
-    def shutdown( self, event ):
-        
-        self.shuttingdown = True
-    
-        if self.shutdownhook:
-            self.shutdownhook()
-        else:
-            sys.exit( 0 )
-    #@nonl
-    #@-node:ekr.20050920084036.155:shutdown
-    #@+node:ekr.20050920084036.156:setShutdownHook
-    def setShutdownHook( self, hook ):
-            
-        self.shutdownhook = hook
-    #@nonl
-    #@-node:ekr.20050920084036.156:setShutdownHook
-    #@-node:ekr.20050920084036.154:shutdown methods
-    #@+node:ekr.20050920084036.157:subprocess
-    #@+node:ekr.20050920084036.158:shellCommand
-    def shellCommand (self,event):
-        
-        k = self.k
-        
-        if not subprocess:
-            k.setLabelGrey('can not execute shell-command: can not import subprocess')
-            return 'break'
-    
-        state = k.getState('shell-command')
-    
-        if state == 0:
-            k.setLabelBlue('shell-command: ',protect=True)
-            k.getArg(event,'shell-command',1,self.shellCommand)
-        else:
-            command = k.arg
-            k.clearState()
-            self.executeSubprocess(event,command,input=None)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.158:shellCommand
-    #@+node:ekr.20050930112126:shellCommandOnRegion
-    def shellCommandOnRegion (self,event):
-        
-        k = self.k ; is1,is2 = None,None ; w = event.widget
-        
-        if not subprocess:
-            k.setLabelGrey('can not execute shell-command: can not import subprocess')
-            return 'break'
-    
-        try:
-            is1 = w.index('sel.first')
-            is2 = w.index('sel.last')
-        finally:
-            if is1:
-                command = w.get(is1,is2)
-                self.executeSubprocess(event,command,input=None)
-            else:
-                k.clearState()
-                k.resetLabel()
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050930112126:shellCommandOnRegion
+    #@-node:ekr.20050922110030:advertizedUndo
     #@+node:ekr.20050920084036.160:executeSubprocess
     def executeSubprocess (self,event,command,input):
         
@@ -1050,10 +907,71 @@ class controlCommandsClass (baseEditCommandsClass):
             w.insert('insert',x)
             
         k.setLabelGrey('finished shell-command: %s' % command)
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.160:executeSubprocess
-    #@-node:ekr.20050920084036.157:subprocess
+    #@+node:ekr.20050920084036.158:shellCommand
+    def shellCommand (self,event):
+    
+        if subprocess:
+            k = self.k ; state = k.getState('shell-command')
+        
+            if state == 0:
+                k.setLabelBlue('shell-command: ',protect=True)
+                k.getArg(event,'shell-command',1,self.shellCommand)
+            else:
+                command = k.arg
+                k.clearState()
+                self.executeSubprocess(event,command,input=None)
+        else:
+            k.setLabelGrey('can not execute shell-command: can not import subprocess')
+    #@nonl
+    #@-node:ekr.20050920084036.158:shellCommand
+    #@+node:ekr.20050930112126:shellCommandOnRegion
+    def shellCommandOnRegion (self,event):
+    
+        if subprocess:
+            k = self.k ; is1,is2 = None,None ; w = event.widget
+            try:
+                is1 = w.index('sel.first')
+                is2 = w.index('sel.last')
+            finally:
+                if is1:
+                    command = w.get(is1,is2)
+                    self.executeSubprocess(event,command,input=None)
+                else:
+                    k.clearState()
+                    k.resetLabel()
+        else:
+            k.setLabelGrey('can not execute shell-command: can not import subprocess')
+        
+    #@nonl
+    #@-node:ekr.20050930112126:shellCommandOnRegion
+    #@+node:ekr.20050920084036.155:shutdown, saveBuffersKillEmacs & setShutdownHook
+    def shutdown (self,event):
+    
+        self.shuttingdown = True
+    
+        if self.shutdownhook:
+            self.shutdownhook()
+        else:
+            sys.exit(0)
+            
+    saveBuffersKillEmacs = shutdown
+            
+    def setShutdownHook (self,hook):
+    
+        self.shutdownhook = hook
+    #@nonl
+    #@-node:ekr.20050920084036.155:shutdown, saveBuffersKillEmacs & setShutdownHook
+    #@+node:ekr.20050920084036.153:suspend & iconifyOrDeiconifyFrame
+    def suspend (self,event):
+    
+        w = event.widget
+        w.winfo_toplevel().iconify()
+        
+    iconifyOrDeiconifyFrame = suspend
+    #@nonl
+    #@-node:ekr.20050920084036.153:suspend & iconifyOrDeiconifyFrame
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.150:class controlCommandsClass
@@ -1103,14 +1021,14 @@ class editCommandsClass (baseEditCommandsClass):
             'downcase-word':        self.downCaseWord,
             'end-of-buffer':        self.endOfBuffer,
             'end-of-line':          self.endOfLine,
-            'eval-expression':      self.startEvaluate,
+            'eval-expression':      self.evalExpression,
             'fill-region-as-paragraph': self.fillRegionAsParagraph,
             'fill-region':          self.fillRegion,
             'flush-lines':          self.flushLines,
             'forward-char':         self.forwardCharacter,
             'goto-char':            self.gotoCharacter,
             'goto-line':            self.gotoLine,
-            'how-many':             self.startHowMany, ### Change name?
+            'how-many':             self.howMany,
             'indent-region':        self.indentRegion,
             'indent-rigidly':       self.tabIndentRegion,
             'indent-relative':      self.indentRelative,
@@ -1165,7 +1083,7 @@ class editCommandsClass (baseEditCommandsClass):
         w = event.widget
         text = w.get('insert wordstart','insert wordend')
         i = w.index('insert')
-        if text == ' ': return 'break'
+        if text == ' ': return
         w.delete('insert wordstart','insert wordend')
         if which == 'cap':
             text = text.capitalize()
@@ -1175,16 +1093,15 @@ class editCommandsClass (baseEditCommandsClass):
             text = text.upper()
         w.insert('insert',text)
         w.mark_set('insert',i)
-        return 'break'
         
     def capitalizeWord (self,event):
-        return self.capitalizeHelper(event,'cap')
+        self.capitalizeHelper(event,'cap')
     
     def downCaseWord (self,event):
-        return self.capitalizeHelper(event,'low')
+        self.capitalizeHelper(event,'low')
     
     def upCaseWord (self,event):
-        return self.capitalizeHelper(event,'up')
+        self.capitalizeHelper(event,'up')
     #@nonl
     #@+node:ekr.20050920084036.145:changePreviousWord
     def changePreviousWord (self,event):
@@ -1202,8 +1119,7 @@ class editCommandsClass (baseEditCommandsClass):
             self.downCaseWord(event)
     
         w.mark_set('insert',i)
-    
-        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.145:changePreviousWord
     #@-node:ekr.20050920084036.57:capitalizeWord, upCaseWord, downCaseWord, changePreviousWord
     #@+node:ekr.20050920084036.132:comment column...
@@ -1213,7 +1129,6 @@ class editCommandsClass (baseEditCommandsClass):
         cc = event.widget.index('insert')
         cc1, cc2 = cc.split('.')
         self.ccolumn = cc2
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.133:setCommentColumn
     #@+node:ekr.20050920084036.134:indentToCommentColumn
@@ -1232,43 +1147,38 @@ class editCommandsClass (baseEditCommandsClass):
         if i2 >= c1:
             w.insert('insert lineend',' ')
         w.mark_set('insert','insert lineend')
-    
-        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.134:indentToCommentColumn
     #@-node:ekr.20050920084036.132:comment column...
     #@+node:ekr.20050920084036.85:delete...
     #@+node:ekr.20050929163010:backwardDeleteCharacter
     def backwardDeleteCharacter (self,event):
         
-        return self.manufactureKeyPress(event,'BackSpace')
+        self.manufactureKeyPress(event,'BackSpace')
     #@nonl
     #@-node:ekr.20050929163010:backwardDeleteCharacter
     #@+node:ekr.20050920084036.87:deleteNextChar
-    def deleteNextChar( self,event ):
+    def deleteNextChar (self,event):
     
         k = self.k ; w = event.widget
-        i = w.index( 'insert' )
-        w.delete( i, '%s +1c' % i )
-        return k._tailEnd( w )
+        i = w.index('insert')
+        w.delete(i,'%s +1c' % i)
+    #@nonl
     #@-node:ekr.20050920084036.87:deleteNextChar
     #@+node:ekr.20050920084036.135:deleteSpaces
     def deleteSpaces (self,event,insertspace=False):
     
         k = self.k ; w = event.widget
         char = w.get('insert','insert + 1c ')
-    
-        if char.isspace():
-            i = w.index('insert')
-            wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
-            wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
-            if '' in (wf,wb):
-                return 'break'
-            w.delete('%s +1c' % wb,wf)
-            if insertspace:
-                w.insert('insert',' ')
-    
-        return k._tailEnd(w)
-    
+        if not char.isspace(): return
+        
+        i = w.index('insert')
+        wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+        wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
+        if '' in (wf,wb): return
+        w.delete('%s +1c' % wb,wf)
+        if insertspace: w.insert('insert',' ')
+    #@nonl
     #@-node:ekr.20050920084036.135:deleteSpaces
     #@+node:ekr.20050920084036.141:removeBlankLines
     def removeBlankLines (self,event):
@@ -1332,7 +1242,6 @@ class editCommandsClass (baseEditCommandsClass):
         def doDa (txt,from_='insert -1c wordstart',to_='insert -1c wordend'):
             w.delete(from_,to_)
             w.insert('insert',txt,'dA')
-            return k._tailEnd(w)
     
         if dA:
             dA1, dA2 = dA
@@ -1344,20 +1253,18 @@ class editCommandsClass (baseEditCommandsClass):
                 else:
                     txt = stext
                     w.delete(dA1,dA2)
-                    dA2 = dA1 #since the text is going to be reread, we dont want to include the last dynamic abbreviation
+                    dA2 = dA1 # since the text is going to be reread, we dont want to include the last dynamic abbreviation
                     self.getDynamicList(w,txt,rlist)
-                return doDa(txt,dA1,dA2)
-            else:
-                dA = None
+                doDa(txt,dA1,dA2) ; return
+            else: dA = None
     
         if not dA:
             self.store ['stext'] = txt
             self.store ['rlist'] = rlist = []
             self.getDynamicList(w,txt,rlist)
-            if not rlist:
-                return 'break'
+            if not rlist: return
             txt = rlist.pop()
-            return doDa(txt)
+            doDa(txt)
     #@-node:ekr.20050920084036.59:dynamicExpansion
     #@+node:ekr.20050920084036.60:dynamicExpansion2
     def dynamicExpansion2 (self,event):
@@ -1372,7 +1279,7 @@ class editCommandsClass (baseEditCommandsClass):
         if dEstring:
             w.delete(i,i2)
             w.insert(i,dEstring)
-            return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.60:dynamicExpansion2
     #@+node:ekr.20050920084036.61:getDynamicList (helper)
     def getDynamicList (self,w,txt,rlist):
@@ -1391,33 +1298,31 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.61:getDynamicList (helper)
     #@-node:ekr.20050920084036.58:dynamic abbreviation...
     #@+node:ekr.20050920084036.62:esc methods for Python evaluation
-    #@+node:ekr.20050920084036.63:watchEscape
+    #@+node:ekr.20050920084036.63:watchEscape (Revise)
     def watchEscape (self,event):
     
         k = self.k ; w = event.widget
         if not k.inState():
             k.setState('escape','start',handler=self.watchEscape)
             k.setLabelBlue('Esc ')
-            return 'break'
         elif k.getStateKind() == 'escape':
             state = k.getState('escape')
             hi1 = self.keysymHistory [0]
             hi2 = self.keysymHistory [1]
             if state == 'esc esc' and event.keysym == 'colon':
-                return self.startEvaluate(event)
+                self.evalExpression(event)
             elif state == 'evaluate':
-                return self.escEvaluate(event)
+                self.escEvaluate(event)
             elif hi1 == hi2 == 'Escape':
                 k.setState('escape','esc esc')
                 k.setLabel('Esc Esc -')
-                return 'break'
             elif event.keysym in ('Shift_L','Shift_R'):
                 return None
             else:
                 return k.keyboardQuit(event)
     #@nonl
-    #@-node:ekr.20050920084036.63:watchEscape
-    #@+node:ekr.20050920084036.64:escEvaluate
+    #@-node:ekr.20050920084036.63:watchEscape (Revise)
+    #@+node:ekr.20050920084036.64:escEvaluate (Revise)
     def escEvaluate (self,event):
     
         k = self.k ; w = event.widget
@@ -1437,38 +1342,43 @@ class editCommandsClass (baseEditCommandsClass):
                 k.keyboardQuit(event)
                 if not ok:
                     k.setLabel('Error: Invalid Expression')
-                return k._tailEnd(w)
         else:
             k.updateLabel(event)
-            return 'break'
-    #@-node:ekr.20050920084036.64:escEvaluate
-    #@+node:ekr.20050920084036.65:startEvaluate
-    def startEvaluate (self,event):
-    
-        k = self.k
-    
-        k.setLabelBlue('Eval:')
-        k.setState('escape','evaluate')
-    
-        return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.65:startEvaluate
+    #@-node:ekr.20050920084036.64:escEvaluate (Revise)
     #@-node:ekr.20050920084036.62:esc methods for Python evaluation
+    #@+node:ekr.20050920084036.65:evalExpression
+    def evalExpression (self,event):
+    
+        k = self.k ; state = k.getState('eval-expression')
+        
+        if state == 0:
+            k.setLabelBlue('Eval: ',protect=True)
+            k.getArg(event,'eval-expression',1,self.evalExpression)
+        else:
+            k = self.k ; w = event.widget
+            e = k.arg
+            k.clearState()
+            try:
+                ok = False
+                result = eval(e,{},{})
+                result = str(result)
+                # w.insert('insert',result)
+                k.setLabelGrey('Eval: %s -> %s' % (e,result))
+            except Exception:
+                k.setLabelGrey('Invalid Expression: %s' % e)
+    #@nonl
+    #@-node:ekr.20050920084036.65:evalExpression
     #@+node:ekr.20050920084036.136:exchangePointMark
     def exchangePointMark (self,event):
     
         if not self._chckSel(event): return
+    
         k = self.k ; w = event.widget
         s1 = w.index('sel.first')
         s2 = w.index('sel.last')
         i = w.index('insert')
-    
-        if i == s1:
-            w.mark_set('insert',s2)
-        else:
-            w.mark_set('insert',s1)
-    
-        return k._tailEnd(w)
+        w.mark_set('insert',g.choose(i==s1,s2,s1))
     #@nonl
     #@-node:ekr.20050920084036.136:exchangePointMark
     #@+node:ekr.20050920084036.66:fill column and centering
@@ -1497,25 +1407,25 @@ class editCommandsClass (baseEditCommandsClass):
     
     #@+others
     #@+node:ekr.20050920084036.67:centerLine
-    def centerLine( self, event ):
+    def centerLine (self,event):
     
         '''Centers line within current fillColumn'''
-        
+    
         k = self.k ; w = event.widget
     
-        ind = w.index( 'insert linestart' )
-        txt = w.get( 'insert linestart', 'insert lineend' )
+        ind = w.index('insert linestart')
+        txt = w.get('insert linestart','insert lineend')
         txt = txt.strip()
-        if len( txt ) >= self.fillColumn: return k._tailEnd( w )
-        amount = ( self.fillColumn - len( txt ) ) / 2
-        ws = ' ' * amount
-        col, nind = ind.split( '.' )
-        ind = w.search( '\w', 'insert linestart', regexp = True, stopindex = 'insert lineend' )
-        if not ind: return 'break'
-        w.delete( 'insert linestart', '%s' % ind )
-        w.insert( 'insert linestart', ws )
+        if len(txt) >= self.fillColumn: return
     
-        return k._tailEnd( w )
+        amount = (self.fillColumn-len(txt)) / 2
+        ws = ' ' * amount
+        col, nind = ind.split('.')
+        ind = w.search('\w','insert linestart',regexp=True,stopindex='insert lineend')
+        if ind:
+            w.delete('insert linestart','%s' % ind)
+            w.insert('insert linestart',ws)
+    #@nonl
     #@-node:ekr.20050920084036.67:centerLine
     #@+node:ekr.20050920084036.68:setFillColumn
     def setFillColumn (self,event):
@@ -1526,14 +1436,12 @@ class editCommandsClass (baseEditCommandsClass):
             k.setLabelBlue('Set Fill Column: ')
             k.getArg(event,'set-fill-column',1,self.setFillColumn)
         else:
+            k.clearState()
             try:
                 n = int(k.arg)
                 k.setLabelGrey('fill column is: %d' % n)
             except ValueError:
                 k.resetLabel()
-            k.clearState()
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.68:setFillColumn
     #@+node:ekr.20050920084036.69:centerRegion
@@ -1563,7 +1471,7 @@ class editCommandsClass (baseEditCommandsClass):
             w.delete( '%s.0' % sindex , '%s' % ind )
             w.insert( '%s.0' % sindex , ws )
             sindex = sindex + 1
-        return k._tailEnd( w )
+    #@nonl
     #@-node:ekr.20050920084036.69:centerRegion
     #@+node:ekr.20050920084036.70:setFillPrefix
     def setFillPrefix( self, event ):
@@ -1571,15 +1479,14 @@ class editCommandsClass (baseEditCommandsClass):
         w = event.widget
         txt = w.get( 'insert linestart', 'insert' )
         self.fillPrefix = txt
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.70:setFillPrefix
     #@+node:ekr.20050920084036.71:_addPrefix
-    def _addPrefix( self, ntxt ):
-        
-        ntxt = ntxt.split( '.' )
-        ntxt = map( lambda a: self.fillPrefix+a, ntxt )
-        ntxt = '.'.join( ntxt )               
+    def _addPrefix (self,ntxt):
+    
+        ntxt = ntxt.split('.')
+        ntxt = map(lambda a: self.fillPrefix+a,ntxt)
+        ntxt = '.'.join(ntxt)
         return ntxt
     #@nonl
     #@-node:ekr.20050920084036.71:_addPrefix
@@ -1603,8 +1510,6 @@ class editCommandsClass (baseEditCommandsClass):
                 w.see('insert')
             k.resetLabel()
             k.clearState()
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050929115226:gotoCharacter
     #@+node:ekr.20050929124234:gotoLine
@@ -1623,8 +1528,6 @@ class editCommandsClass (baseEditCommandsClass):
                 w.see('insert')
             k.resetLabel()
             k.clearState()
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050929124234:gotoLine
     #@-node:ekr.20050920084036.72:goto...
@@ -1638,8 +1541,6 @@ class editCommandsClass (baseEditCommandsClass):
         i2 = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
         w.mark_set('insert',i2)
         w.update_idletasks()
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.75:backToIndentation
     #@+node:ekr.20050920084036.76:deleteIndentation
@@ -1653,8 +1554,7 @@ class editCommandsClass (baseEditCommandsClass):
         i = w.index('insert - 1c')
         w.insert('insert -1c',txt)
         w.mark_set('insert',i)
-    
-        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.76:deleteIndentation
     #@+node:ekr.20050920084036.77:insertNewLineIndent
     def insertNewLineIndent (self,event):
@@ -1665,8 +1565,7 @@ class editCommandsClass (baseEditCommandsClass):
         i = w.index('insert')
         w.insert(i,txt)
         w.mark_set('insert',i)
-    
-        return self.insertNewLine(event)
+        self.insertNewLine(event)
     #@-node:ekr.20050920084036.77:insertNewLineIndent
     #@+node:ekr.20050920084036.78:indentRelative
     def indentRelative (self,event):
@@ -1677,7 +1576,7 @@ class editCommandsClass (baseEditCommandsClass):
         l, c = i.split('.')
         c2 = int(c)
         l2 = int(l) -1
-        if l2 < 1: return k.keyboardQuit(event)
+        if l2 < 1: return
         txt = w.get('%s.%s' % (l2,c2),'%s.0 lineend' % l2)
         if len(txt) <= len(w.get('insert','insert lineend')):
             w.insert('insert','\t')
@@ -1693,27 +1592,24 @@ class editCommandsClass (baseEditCommandsClass):
                     z = replace_word.subn(' ',z)
                     w.insert('insert',z[0])
                     w.update_idletasks()
-    
-        k.keyboardQuit(event)
-        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.78:indentRelative
     #@-node:ekr.20050920084036.74:indent...
-    #@+node:ekr.20050920084036.79:info... (revise)
+    #@+node:ekr.20050920084036.79:info...
     #@+node:ekr.20050920084036.80:howMany
     def howMany (self,event):
-    
-        k = self.k ; w = event.widget
-        if event.keysym == 'Return':
-            txt = w.get('1.0','end')
-            reg1 = k.getLabel()
-            reg = re.compile(reg1)
-            i = reg.findall(txt)
-            k.setLabelGrey('%s occurances found of %s' % (len(i),reg1))
-            k.setState('howM',0,handler=self.howMany)
+        
+        k = self.k ; w = event.widget ; state = k.getState('how-many')
+        
+        if state == 0:
+            k.setLabelBlue('How many: ',protect = True)
+            k.getArg(event,'how-many',1,self.howMany)
         else:
-            k.updateLabel(event)
-    
-        return 'break'
+            k.clearState()
+            s = w.get('1.0','end')
+            reg = re.compile(k.arg)
+            i = reg.findall(s)
+            k.setLabelGrey('%s occurances of %s' % (len(i),k.arg))
     #@nonl
     #@-node:ekr.20050920084036.80:howMany
     #@+node:ekr.20050920084036.81:lineNumber
@@ -1728,28 +1624,14 @@ class editCommandsClass (baseEditCommandsClass):
         txt2 = w.get('1.0','insert')
         perc = len(txt) * .01
         perc = int(len(txt2)/perc)
-        k.setLabel('Char: %s point %s of %s(%s%s)  Column %s' % (c,len(txt2),len(txt),perc,'%',i1))
-    
-        return 'break'
-    
-    #@-node:ekr.20050920084036.81:lineNumber
-    #@+node:ekr.20050920084036.82:startHowMany
-    def startHowMany (self,event):
-    
-        k = self.k
-    
-        k.setState('howM',1)
-        k.setLabelBlue('')
-    
-        return 'break'
+        k.setLabelGrey('Char: %s point %s of %s(%s%s)  Column %s' % (c,len(txt2),len(txt),perc,'%',i1))
     #@nonl
-    #@-node:ekr.20050920084036.82:startHowMany
+    #@-node:ekr.20050920084036.81:lineNumber
     #@+node:ekr.20050920084036.83:viewLossage
     def viewLossage (self,event):
     
         k = self.k
-        loss = ''.join(leoKeys.kClass.lossage)
-        k.keyboardQuit(event)
+        loss = ''.join(leoKeys.keyHandlerClass.lossage)
         k.setLabel(loss)
     #@nonl
     #@-node:ekr.20050920084036.83:viewLossage
@@ -1761,8 +1643,9 @@ class editCommandsClass (baseEditCommandsClass):
         i1, i2 = i.split('.')
         k.keyboardQuit(event)
         k.setLabel("Line %s" % i1)
+    #@nonl
     #@-node:ekr.20050920084036.84:whatLine
-    #@-node:ekr.20050920084036.79:info... (revise)
+    #@-node:ekr.20050920084036.79:info...
     #@+node:ekr.20050930102304:insert...
     #@+node:ekr.20050920084036.138:insertNewLine
     def insertNewLine (self,event):
@@ -1771,21 +1654,20 @@ class editCommandsClass (baseEditCommandsClass):
         i = w.index('insert')
         w.insert('insert','\n')
         w.mark_set('insert',i)
-        return k._tailEnd(w)
     
     insertNewline = insertNewLine
     #@-node:ekr.20050920084036.138:insertNewLine
     #@+node:ekr.20050920084036.86:insertNewLineAndTab
-    def insertNewLineAndTab( self, event ):
-        
+    def insertNewLineAndTab (self,event):
+    
         '''Insert a newline and tab'''
-        
+    
         k = self.k ; w = event.widget
-        self.insertNewLine( event )
-        i = w.index( 'insert +1c' )
-        w.insert( i, '\t' )
-        w.mark_set( 'insert', '%s lineend' % i )
-        return k._tailEnd( w )
+        self.insertNewLine(event)
+        i = w.index('insert +1c')
+        w.insert(i,'\t')
+        w.mark_set('insert','%s lineend' % i)
+    #@nonl
     #@-node:ekr.20050920084036.86:insertNewLineAndTab
     #@+node:ekr.20050920084036.139:insertParentheses
     def insertParentheses (self,event):
@@ -1793,11 +1675,10 @@ class editCommandsClass (baseEditCommandsClass):
         k = self.k ; w = event.widget
         w.insert('insert','()')
         w.mark_set('insert','insert -1c')
-        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.139:insertParentheses
     #@-node:ekr.20050930102304:insert...
-    #@+node:ekr.20050920084036.88:line... (rewrite)
-    #@+node:ekr.20050920084036.89: Entries
+    #@+node:ekr.20050920084036.88:line...
     #@+node:ekr.20050920084036.90:flushLines
     def flushLines (self,event):
     
@@ -1805,82 +1686,65 @@ class editCommandsClass (baseEditCommandsClass):
     
         In Transient Mark mode, if the region is active, the command operates on the region instead.'''
     
-        return self.startLines(event,which='flush')
+        k = self.k ; state = k.getState('flush-lines')
+        
+        if state == 0:
+            k.setLabelBlue('Flush lines regexp: ',protect=True)
+            k.getArg(event,'flush-lines',1,self.flushLines)
+        else:
+            k.clearState()
+            self.linesHelper(event,k.arg,'flush')
     #@nonl
     #@-node:ekr.20050920084036.90:flushLines
-    #@+node:ekr.20050920084036.91:keepLines
+    #@+node:ekr.20051002095724:keepLines
     def keepLines (self,event):
     
         '''Delete each line that does not contain a match for regexp, operating on the text after point.
     
         In Transient Mark mode, if the region is active, the command operates on the region instead.'''
     
-        return self.startLines(event,which='keep')
-    #@nonl
-    #@-node:ekr.20050920084036.91:keepLines
-    #@-node:ekr.20050920084036.89: Entries
-    #@+node:ekr.20050920084036.92:alterLines
-    def alterLines( self, event, which ):
+        k = self.k ; state = k.getState('keep-lines')
         
+        if state == 0:
+            k.setLabelBlue('Keep lines regexp: ',protect=True)
+            k.getArg(event,'keep-lines',1,self.keepLines)
+        else:
+            k.clearState()
+            self.linesHelper(event,k.arg,'keep')
+    #@nonl
+    #@-node:ekr.20051002095724:keepLines
+    #@+node:ekr.20050920084036.92:linesHelper
+    def linesHelper (self,event,pattern,which):
+    
         k = self.k ; w = event.widget
-        i = w.index( 'insert' )
-        end = 'end'
-        if w.tag_ranges( 'sel' ):
-            i = w.index( 'sel.first' )
-            end = w.index( 'sel.last' )
-        txt = w.get( i, end )
-        tlines = txt.splitlines( True )
-        if which == 'flush':    keeplines = list( tlines )
+       
+        if w.tag_ranges('sel'):
+            i = w.index('sel.first') ; end = w.index('sel.last')
+        else:
+             i = w.index('insert') ; end = 'end'
+        txt = w.get(i,end)
+        tlines = txt.splitlines(True)
+        if which == 'flush':    keeplines = list(tlines)
         else:                   keeplines = []
-        pattern = k.getLabel()
+    
         try:
-            regex = re.compile( pattern )
-            for n , z in enumerate( tlines ):
-                f = regex.findall( z )
+            regex = re.compile(pattern)
+            for n, z in enumerate(tlines):
+                f = regex.findall(z)
                 if which == 'flush' and f:
-                    keeplines[ n ] = None
+                    keeplines [n] = None
                 elif f:
-                    keeplines.append( z )
-        except Exception,x:
+                    keeplines.append(z)
+        except Exception, x:
             return
         if which == 'flush':
-            keeplines = [ x for x in keeplines if x != None ]
-        w.delete( i, end )
-        w.insert( i, ''.join( keeplines ) )
-        w.mark_set( 'insert', i )
-        k._tailEnd( w )
-    #@-node:ekr.20050920084036.92:alterLines
-    #@+node:ekr.20050920084036.93:processLines
-    def processLines (self,event):
-    
-        k = self.k ; state = k.getState('alterlines')
-    
-        if state.startswith('start'):
-            state = state [5:]
-            k.setState('alterlines',state)
-            k.setLabel('')
-    
-        if event.keysym == 'Return':
-            self.alterLines(event,state)
-            return k.keyboardQuit(event)
-        else:
-            k.updateLabel(event)
-            return 'break'
+            keeplines = [x for x in keeplines if x != None]
+        w.delete(i,end)
+        w.insert(i,''.join(keeplines))
+        w.mark_set('insert',i)
     #@nonl
-    #@-node:ekr.20050920084036.93:processLines
-    #@+node:ekr.20050920084036.94:startLines
-    def startLines (self,event,which='flush'):
-    
-        k = self.k
-    
-        k.keyboardQuit(event)
-        k.setState('alterlines','start%s' % which)
-        k.setLabelBlue()
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.94:startLines
-    #@-node:ekr.20050920084036.88:line... (rewrite)
+    #@-node:ekr.20050920084036.92:linesHelper
+    #@-node:ekr.20050920084036.88:line...
     #@+node:ekr.20050920084036.147:measure
     def measure (self,w):
         i = w.index('insert')
@@ -1918,58 +1782,55 @@ class editCommandsClass (baseEditCommandsClass):
     def movePastClose (self,event):
     
         k = self.k ; w = event.widget
-        i = w.search('(','insert',backwards=True,stopindex='1.0')
-        icheck = w.search(')','insert',backwards=True,stopindex='1.0')
     
-        if '' == i:
-            return 'break'
+        i = w.search('(','insert',backwards=True,stopindex='1.0')
+        if '' == i: return
+    
+        icheck = w.search(')','insert',backwards=True,stopindex='1.0')
         if icheck:
             ic = w.compare(i,'<',icheck)
-            if ic:
-                return 'break'
+            if ic: return
+    
         i2 = w.search(')','insert',stopindex='end')
+        if '' == i2: return
+    
         i2check = w.search('(','insert',stopindex='end')
-        if '' == i2:
-            return 'break'
         if i2check:
             ic2 = w.compare(i2,'>',i2check)
-            if ic2:
-                return 'break'
+            if ic2: return
+    
         ib = w.index('insert')
         w.mark_set('insert','%s lineend +1c' % i2)
         if w.index('insert') == w.index('%s lineend' % ib):
             w.insert('insert','\n')
-    
-        return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.140:movePastClose
     #@+node:ekr.20050929115226.1:forward/backCharacter
     def backCharacter (self,event):
     
-        return self.manufactureKeyPress(event,'Left')
+        self.manufactureKeyPress(event,'Left')
         
     def forwardCharacter (self,event):
     
-        return self.manufactureKeyPress(event,'Right')
+        self.manufactureKeyPress(event,'Right')
     #@-node:ekr.20050929115226.1:forward/backCharacter
     #@+node:ekr.20050920084036.148:moveTo, beginnning/endOfBuffer/Line
     def moveTo (self,event,spot):
         w = event.widget
         w.mark_set(Tk.INSERT,spot)
         w.see(spot)
-        return 'break'
     
     def beginningOfBuffer (self,event):
-        return self.moveTo(event,'1.0')
+        self.moveTo(event,'1.0')
     
     def beginningOfLine (self,event):
-        return self.moveTo(event,'insert linestart')
+        self.moveTo(event,'insert linestart')
     
     def endOfBuffer (self,event):
-        return self.moveTo(event,'end')
+        self.moveTo(event,'end')
     
     def endOfLine (self,event):
-        return self.moveTo(event,'insert lineend')
+        self.moveTo(event,'insert lineend')
     #@nonl
     #@-node:ekr.20050920084036.148:moveTo, beginnning/endOfBuffer/Line
     #@+node:ekr.20050920084036.149:back/forwardWord & helper
@@ -1990,13 +1851,12 @@ class editCommandsClass (baseEditCommandsClass):
         w.see('insert')
         w.event_generate('<Key>')
         w.update_idletasks()
-        return 'break'
     
     def backwardWord (self,event):
-        return self.moveWordHelper(event,forward=False)
+        self.moveWordHelper(event,forward=False)
     
     def forwardWord (self,event):
-        return self.moveWordHelper(event,forward=True),
+        self.moveWordHelper(event,forward=True),
     #@nonl
     #@-node:ekr.20050920084036.149:back/forwardWord & helper
     #@+node:ekr.20050920084036.131:backSentence
@@ -2015,8 +1875,6 @@ class editCommandsClass (baseEditCommandsClass):
                     w.mark_set('insert',i3)
         else:
             w.mark_set('insert','1.0')
-    
-        return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.131:backSentence
     #@+node:ekr.20050920084036.137:forwardSentence
@@ -2029,66 +1887,67 @@ class editCommandsClass (baseEditCommandsClass):
             w.mark_set('insert','%s +1c' % i)
         else:
             w.mark_set('insert','end')
-    
-        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.137:forwardSentence
     #@+node:ekr.20050929163210:next/prevLine
     def nextLine (self,event):
         
-        return self.manufactureKeyPress(event,'Down')
+        self.manufactureKeyPress(event,'Down')
         
     def prevLine (self,event):
         
-        return self.manufactureKeyPress(event,'Up')
+        self.manufactureKeyPress(event,'Up')
     #@nonl
     #@-node:ekr.20050929163210:next/prevLine
     #@-node:ekr.20050929114218:move...
     #@+node:ekr.20050920084036.95:paragraph...
     #@+others
-    #@+node:ekr.20050920084036.96:selectParagraph
-    def selectParagraph( self, event ):
+    #@+node:ekr.20050920084036.96:selectParagraph & helper
+    def selectParagraph (self,event):
     
         k = self.k ; w = event.widget
-        txt = w.get( 'insert linestart', 'insert lineend' )
+        txt = w.get('insert linestart','insert lineend')
         txt = txt.lstrip().rstrip()
-        i = w.index( 'insert' )
+        i = w.index('insert')
+    
         if not txt:
             while 1:
-                i = w.index( '%s + 1 lines' % i )
-                txt = w.get( '%s linestart' % i, '%s lineend' % i )
+                i = w.index('%s + 1 lines' % i)
+                txt = w.get('%s linestart' % i,'%s lineend' % i)
                 txt = txt.lstrip().rstrip()
                 if txt:
-                    self._selectParagraph( w, i )
-                    break
-                if w.index( '%s lineend' % i ) == w.index( 'end' ):
-                    return 'break'
+                    self.selectParagraphHelper(w,i) ; break
+                if w.index('%s lineend' % i) == w.index('end'):
+                    return
+    
         if txt:
             while 1:
-                i = w.index( '%s - 1 lines' % i )
-                txt = w.get( '%s linestart' % i, '%s lineend' % i )
+                i = w.index('%s - 1 lines' % i)
+                txt = w.get('%s linestart' % i,'%s lineend' % i)
                 txt = txt.lstrip().rstrip()
-                if not txt or w.index( '%s linestart' % i ) == w.index( '1.0' ):
-                    if not txt:
-                        i = w.index( '%s + 1 lines' % i )
-                    self._selectParagraph( w, i )
-                    break     
-        return k._tailEnd( w )
-    #@-node:ekr.20050920084036.96:selectParagraph
-    #@+node:ekr.20050920084036.97:_selectParagraph
-    def _selectParagraph( self, w, start ):
+                if not txt or w.index('%s linestart' % i) == w.index('1.0'):
+                    if not txt: i = w.index('%s + 1 lines' % i)
+                    self.selectParagraphHelper(w,i)
+                    break
+    #@nonl
+    #@+node:ekr.20050920084036.97:selectParagraphHelper
+    def selectParagraphHelper (self,w,start):
+    
         i2 = start
         while 1:
-            txt = w.get( '%s linestart' % i2, '%s lineend' % i2 )
-            if w.index( '%s lineend' % i2 )  == w.index( 'end' ):
+            txt = w.get('%s linestart' % i2,'%s lineend' % i2)
+            if w.index('%s lineend' % i2) == w.index('end'):
                 break
             txt = txt.lstrip().rstrip()
             if not txt: break
             else:
-                i2 = w.index( '%s + 1 lines' % i2 )
-        w.tag_add( 'sel', '%s linestart' % start, '%s lineend' % i2 )
-        w.mark_set( 'insert', '%s lineend' % i2 )
+                i2 = w.index('%s + 1 lines' % i2)
+    
+        w.tag_add('sel','%s linestart' % start,'%s lineend' % i2)
+        w.mark_set('insert','%s lineend' % i2)
     #@nonl
-    #@-node:ekr.20050920084036.97:_selectParagraph
+    #@-node:ekr.20050920084036.97:selectParagraphHelper
+    #@-node:ekr.20050920084036.96:selectParagraph & helper
     #@+node:ekr.20050920084036.98:killParagraph
     def killParagraph (self,event):
     
@@ -2102,7 +1961,6 @@ class editCommandsClass (baseEditCommandsClass):
         self.kill(event,i,i2)
         w.mark_set('insert',i)
         w.selection_clear()
-        return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.98:killParagraph
     #@+node:ekr.20050920084036.99:backwardKillParagraph
@@ -2120,14 +1978,14 @@ class editCommandsClass (baseEditCommandsClass):
         self.kill(event,i3,i2)
         w.mark_set('insert',i)
         w.selection_clear()
-        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.99:backwardKillParagraph
     #@+node:ekr.20050920084036.100:fillRegion
     def fillRegion (self,event):
     
         k = self.k ; w = event.widget
-        if not self._chckSel(event):
-            return
+        if not self._chckSel(event): return
+    
         s1 = w.index('sel.first')
         s2 = w.index('sel.last')
         w.mark_set('insert',s1)
@@ -2139,13 +1997,33 @@ class editCommandsClass (baseEditCommandsClass):
             if w.compare('insert','>',s2):
                 break
             self.fillParagraph(event)
-        return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.100:fillRegion
-    #@+node:ekr.20050920084036.102:moveParagraphLeft/Right
+    #@+node:ekr.20050920084036.102:moveParagraphLeft
+    def moveParagraphLeft (self,event):
+    
+        k = self.k ; w = event.widget ; i = w.index('insert')
+    
+        while 1:
+            txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
+            if text:
+                i = w.index('%s - 1 lines' % i)
+                if w.index('%s linestart' % i) == '1.0':
+                    i = w.search(r'\w','1.0',regexp=True,stopindex='end')
+                    break
+            else:
+                i = w.search(r'\w',i,backwards=True,regexp=True,stopindex='1.0')
+                i = '%s +1c' % i
+                break
+        if i:
+            w.mark_set('insert',i) ; w.see('insert')
+    #@nonl
+    #@-node:ekr.20050920084036.102:moveParagraphLeft
+    #@+node:ekr.20051002100905:moveParagraphRIght
     def moveParagraphRight (self,event):
-        k = self.k ; w = event.widget
-        i = w.index('insert')
+        
+        k = self.k ; w = event.widget ; i = w.index('insert')
+    
         while 1:
             txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
             if txt:
@@ -2160,26 +2038,8 @@ class editCommandsClass (baseEditCommandsClass):
                 break
         if i:
             w.mark_set('insert',i) ; w.see('insert')
-        return 'break'
-    
-    def moveParagraphLeft (self,event):
-        k = self.k ; w = event.widget ; i = w.index('insert')
-        while 1:
-            txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
-            if text:
-                i = w.index('%s - 1 lines' % i)
-                if w.index('%s linestart' % i) == '1.0':
-                    i = w.search(r'\w','1.0',regexp=True,stopindex='end')
-                    break
-            else:
-                i = w.search(r'\w',i,backwards=True,regexp=True,stopindex='1.0')
-                i = '%s +1c' % i
-                break
-        if i:
-            w.mark_set('insert',i) ; w.see('insert')
-        return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.102:moveParagraphLeft/Right
+    #@-node:ekr.20051002100905:moveParagraphRIght
     #@+node:ekr.20050920084036.103:fillParagraph
     def fillParagraph( self, event ):
         k = self.k ; w = event.widget
@@ -2212,21 +2072,21 @@ class editCommandsClass (baseEditCommandsClass):
             w.delete( '%s linestart' %i2, '%s lineend' % i3 )
             w.insert( i2, ntxt )
             w.mark_set( 'insert', i )
-            return k._tailEnd( w )
+    #@nonl
     #@-node:ekr.20050920084036.103:fillParagraph
     #@+node:ekr.20050920084036.104:fillRegionAsParagraph
-    def fillRegionAsParagraph( self, event ):
-        
+    def fillRegionAsParagraph (self,event):
+    
         k = self.k ; w = event.widget
-        if not self._chckSel( event ):
-            return
-        i1 = w.index( 'sel.first linestart' )
-        i2 = w.index( 'sel.last lineend' )
-        txt = w.get(  i1,  i2 )
-        txt = self._addPrefix( txt )
-        w.delete( i1, i2 )
-        w.insert( i1, txt )
-        return k._tailEnd( w )
+        if not self._chckSel(event): return
+    
+        i1 = w.index('sel.first linestart')
+        i2 = w.index('sel.last lineend')
+        txt = w.get(i1,i2)
+        txt = self._addPrefix(txt)
+        w.delete(i1,i2)
+        w.insert(i1,txt)
+    #@nonl
     #@-node:ekr.20050920084036.104:fillRegionAsParagraph
     #@-others
     #@nonl
@@ -2234,66 +2094,89 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.105:region...
     #@+others
     #@+node:ekr.20050920084036.106:setRegion
-    def setRegion( self, event ):
+    def setRegion (self,event):
     
         mrk = 'sel'
         w = event.widget
-        def extend( event ):
-            widget = event.widget
-            widget.mark_set( 'insert', 'insert + 1c' )
-            if self.inRange( widget, mrk ):
-                widget.tag_remove( mrk, 'insert -1c' )
+    
+        #@    @+others
+        #@+node:ekr.20051002102410:down
+        def down (event):
+        
+            w = event.widget
+        
+            if self.testinrange(w):
+                w.tag_add(mrk,'insert','insert lineend')
+                i = w.index('insert')
+                i1, i2 = i.split('.')
+                i1 = str(int(i1)+1)
+                w.mark_set('insert',i1+'.'+i2)
+                w.tag_add(mrk,'insert linestart -1c','insert')
+                if self.inRange(w,mrk,l='-1c',r='+1c'):
+                    w.tag_remove(mrk,'1.0','insert')
+        
+            return 'break'
+        #@nonl
+        #@-node:ekr.20051002102410:down
+        #@+node:ekr.20051002102410.1:extend
+        def extend (event):
+        
+            w = event.widget
+            w.mark_set('insert','insert + 1c')
+        
+            if self.inRange(w,mrk):
+                w.tag_remove(mrk,'insert -1c')
             else:
-                widget.tag_add( mrk, 'insert -1c' )
-                widget.tag_configure( mrk, background = 'lightgrey' )
-                self.testinrange( widget )
+                w.tag_add(mrk,'insert -1c')
+                w.tag_configure(mrk,background='lightgrey')
+                self.testinrange(w)
+        
             return 'break'
-            
-        def truncate( event ):
-            widget = event.widget
-            widget.mark_set( 'insert', 'insert -1c' )
-            if self.inRange( widget, mrk ):
-                self.testinrange( widget )
-                widget.tag_remove( mrk, 'insert' )
+        
+        #@-node:ekr.20051002102410.1:extend
+        #@+node:ekr.20051002102410.2:truncate
+        def truncate (event):
+        
+            w = event.widget
+            w.mark_set('insert','insert -1c')
+        
+            if self.inRange(w,mrk):
+                self.testinrange(w)
+                w.tag_remove(mrk,'insert')
             else:
-                widget.tag_add( mrk, 'insert' )
-                widget.tag_configure( mrk, background = 'lightgrey' )
-                self.testinrange( widget  )
+                w.tag_add(mrk,'insert')
+                w.tag_configure(mrk,background='lightgrey')
+                self.testinrange(w)
+        
             return 'break'
-            
-        def up( event ):
-            widget = event.widget
-            if not self.testinrange( widget ):
-                return 'break'
-            widget.tag_add( mrk, 'insert linestart', 'insert' )
-            i = widget.index( 'insert' )
-            i1, i2 = i.split( '.' )
-            i1 = str( int( i1 ) - 1 )
-            widget.mark_set( 'insert', i1+'.'+i2)
-            widget.tag_add( mrk, 'insert', 'insert lineend + 1c' )
-            if self.inRange( widget, mrk ,l = '-1c', r = '+1c') and widget.index( 'insert' ) != '1.0':
-                widget.tag_remove( mrk, 'insert', 'end' )  
+        #@nonl
+        #@-node:ekr.20051002102410.2:truncate
+        #@+node:ekr.20051002102410.3:up
+        def up (event):
+        
+            w = event.widget
+        
+            if self.testinrange(w):
+                w.tag_add(mrk,'insert linestart','insert')
+                i = w.index('insert')
+                i1, i2 = i.split('.')
+                i1 = str(int(i1)-1)
+                w.mark_set('insert',i1+'.'+i2)
+                w.tag_add(mrk,'insert','insert lineend + 1c')
+                if self.inRange(w,mrk,l='-1c',r='+1c') and w.index('insert') != '1.0':
+                    w.tag_remove(mrk,'insert','end')
+        
             return 'break'
-            
-        def down( event ):
-            widget = event.widget
-            if not self.testinrange( widget ):
-                return 'break'
-            widget.tag_add( mrk, 'insert', 'insert lineend' )
-            i = widget.index( 'insert' )
-            i1, i2 = i.split( '.' )
-            i1 = str( int( i1 ) + 1 )
-            widget.mark_set( 'insert', i1 +'.'+i2 )
-            widget.tag_add( mrk, 'insert linestart -1c', 'insert' )
-            if self.inRange( widget, mrk , l = '-1c', r = '+1c' ): 
-                widget.tag_remove( mrk, '1.0', 'insert' )
-            return 'break'
-            
-        extend( event )   
-        w.bind( '<Right>', extend, '+' )
-        w.bind( '<Left>', truncate, '+' )
-        w.bind( '<Up>', up, '+' )
-        w.bind( '<Down>', down, '+' )
+        #@nonl
+        #@-node:ekr.20051002102410.3:up
+        #@-others
+    
+        extend(event)
+        w.bind('<Right>',extend,'+')
+        w.bind('<Left>',truncate,'+')
+        w.bind('<Up>',up,'+')
+        w.bind('<Down>',down,'+')
+    
         return 'break'
     #@nonl
     #@-node:ekr.20050920084036.106:setRegion
@@ -2327,15 +2210,13 @@ class editCommandsClass (baseEditCommandsClass):
             w.event_generate('<Key>')
             w.update_idletasks()
         self.removeRKeys(w)
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.107:indentRegion
     #@+node:ekr.20050920084036.108:tabIndentRegion
     def tabIndentRegion (self,event):
     
         k = self.k ; w = event.widget
-        if not self._chckSel(event):
-            return
+        if not self._chckSel(event): return
     
         i = w.index('sel.first')
         i2 = w.index('sel.last')
@@ -2345,8 +2226,7 @@ class editCommandsClass (baseEditCommandsClass):
             w.insert(i,'\t')
             if i == i2: break
             i = w.index('%s + 1 lines' % i)
-    
-        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.108:tabIndentRegion
     #@+node:ekr.20050920084036.109:countRegion
     def countRegion (self,event):
@@ -2359,9 +2239,8 @@ class editCommandsClass (baseEditCommandsClass):
             if z == '\n': lines += 1
             else:         chars += 1
     
-        k.setLabel('Region has %s lines, %s character%s' % (lines,chars,g.choose(chars==1,'','s')))
-    
-        return 'break'
+        k.setLabelGrey('Region has %s lines, %s character%s' % (
+            lines,chars,g.choose(chars==1,'','s')))
     #@nonl
     #@-node:ekr.20050920084036.109:countRegion
     #@+node:ekr.20050920084036.110:reverseRegion
@@ -2369,6 +2248,7 @@ class editCommandsClass (baseEditCommandsClass):
     
         k = self.k ; w = event.widget
         if not self._chckSel(event): return
+    
         ins = w.index('insert')
         is1 = w.index('sel.first')
         is2 = w.index('sel.last')
@@ -2384,36 +2264,32 @@ class editCommandsClass (baseEditCommandsClass):
         w.mark_set('insert',ins)
         k.clearState()
         k.resetLabel()
-        return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.110:reverseRegion
-    #@+node:ekr.20050920084036.111:upperLowerRegion
-    def upperLowerRegion (self,event,way):
+    #@+node:ekr.20050920084036.111:up/downCaseRegion & helper
+    def downCaseRegion (self,event):
+        self.caseHelper('low')
     
-        w = event.widget
-        mrk = 'sel'
-        trange = w.tag_ranges(mrk)
+    def upCaseRegion (self,event):
+        self.caseHelper('up')
+    
+    def caseHelper (self,event,way):
+    
+        w = event.widget ; trange = w.tag_ranges('sel')
+    
         if len(trange) != 0:
             text = w.get(trange[0],trange[-1])
             i = w.index('insert')
-            if text == ' ': return 'break'
+            if text == ' ': return
             w.delete(trange[0],trange[-1])
-            if way == 'low':
-                text = text.lower()
-            if way == 'up':
-                text = text.upper()
+            if way == 'low': text = text.lower()
+            if way == 'up':  text = text.upper()
             w.insert('insert',text)
             w.mark_set('insert',i)
+    
         self.removeRKeys(w)
-        return 'break'
-    
-    def downCaseRegion (self,event):
-        return self.upperLowerRegion('low')
-    
-    def upCaseRegion (self,event):
-        return self.upperLowerRegion('up')
     #@nonl
-    #@-node:ekr.20050920084036.111:upperLowerRegion
+    #@-node:ekr.20050920084036.111:up/downCaseRegion & helper
     #@-others
     #@nonl
     #@-node:ekr.20050920084036.105:region...
@@ -2421,22 +2297,22 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.113:replaceString
     def replaceString (self,event):
     
-        k = self.k ; state = k.getState('rString')
+        k = self.k ; state = k.getState('replace-string')
         prompt = 'Replace ' + g.choose(self._useRegex,'Regex','String')
+    
         if state == 0:
             self.widget = event.widget
             self._sString = self._rpString = ''
             s = '%s: ' % prompt
             k.setLabelBlue(s,protect=True)
-            # Get arg and enter state 1.
-            return k.getArg(event,'rString',1,self.replaceString)
+            k.getArg(event,'replace-string',1,self.replaceString)
         elif state == 1:
             self._sString = k.arg
             s = '%s: %s With: ' % (prompt,self._sString)
             k.setLabelBlue(s,protect=True)
-            # Get arg and enter state 2.
-            return k.getArg(event,'rString',2,self.replaceString)
+            k.getArg(event,'replace-string',2,self.replaceString)
         elif state == 2:
+            k.clearState()
             self._rpString = k.arg ; w = self.widget
             #@        << do the replace >>
             #@+node:ekr.20050920084036.114:<< do the replace >>
@@ -2452,7 +2328,7 @@ class editCommandsClass (baseEditCommandsClass):
                 except:
                     k.keyboardQuit(event)
                     k.setLabel("Illegal regular expression")
-                    return 'break'
+                    return
                 count = len(pattern.findall(txt))
                 if count:
                     ntxt = pattern.sub(self._rpString,txt)
@@ -2470,9 +2346,7 @@ class editCommandsClass (baseEditCommandsClass):
             #@-node:ekr.20050920084036.114:<< do the replace >>
             #@nl
             k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
-            k.clearState()
             self._useRegex = False
-            return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.113:replaceString
     #@+node:ekr.20050920084036.115:activateReplaceRegex
@@ -2485,36 +2359,32 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.115:activateReplaceRegex
     #@-node:ekr.20050920084036.112:replace...
-    #@+node:ekr.20050920084036.116:scroll...
-    def screenscroll (self,event,way):
+    #@+node:ekr.20050920084036.116:scrollUp/Down
+    def scrollDown (self,event):
     
         k = self.k ; w = event.widget
         chng = self.measure(w)
         i = w.index('insert')
-    
-        if way == 'north':
-            i1, i2 = i.split('.')
-            i1 = int(i1) - chng [0]
-        else:
-            i1, i2 = i.split('.')
-            i1 = int(i1) + chng [0]
-    
+        i1, i2 = i.split('.')
+        i1 = int(i1) + chng [0]
         w.mark_set('insert','%s.%s' % (i1,i2))
         w.see('insert')
-        return k._tailEnd(w)
-        
-    def scrollDown (self,event):
-        return self.screenscroll('south')
     
     def scrollUp (self,event):
-        return self.screenscroll('north')
-    #@nonl
-    #@-node:ekr.20050920084036.116:scroll...
-    #@+node:ekr.20050920084036.142:selectAll
-    def selectAll( event ):
     
-        event.widget.tag_add( 'sel', '1.0', 'end' )
-        return 'break'
+        k = self.k ; w = event.widget
+        chng = self.measure(w)
+        i = w.index('insert')
+        i1, i2 = i.split('.')
+        i1 = int(i1) - chng [0]
+        w.mark_set('insert','%s.%s' % (i1,i2))
+        w.see('insert')
+    #@nonl
+    #@-node:ekr.20050920084036.116:scrollUp/Down
+    #@+node:ekr.20050920084036.142:selectAll
+    def selectAll (event):
+    
+        event.widget.tag_add('sel','1.0','end')
     #@nonl
     #@-node:ekr.20050920084036.142:selectAll
     #@+node:ekr.20050920084036.117:sort...
@@ -2623,7 +2493,7 @@ class editCommandsClass (baseEditCommandsClass):
     
         k = self.k ; w = event.widget
         if not self._chckSel(event):
-            return k.keyboardQuit(event)
+            return
         i = w.index('sel.first')
         i2 = w.index('sel.last')
         is1 = i.split('.')
@@ -2640,16 +2510,13 @@ class editCommandsClass (baseEditCommandsClass):
             w.insert('%s.0' % inum,'%s\n' % z)
             inum = inum + 1
         w.mark_set('insert',ins)
-        k.keyboardQuit(event)
-        return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.118:sortLines
     #@+node:ekr.20050920084036.119:sortColumns
     def sortColumns (self,event):
     
         k = self.k ; w = event.widget
-        if not self._chckSel(event):
-            return k.keyboardQuit(event)
+        if not self._chckSel(event): return
     
         ins = w.index('insert')
         is1 = w.index('sel.first')
@@ -2675,22 +2542,20 @@ class editCommandsClass (baseEditCommandsClass):
              w.insert('%s.0' % i,'%s\n' % zlist[z][1])
              i = i + 1
         w.mark_set('insert',ins)
-        return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.119:sortColumns
     #@+node:ekr.20050920084036.120:sortFields
     def sortFields (self,event,which=None):
     
         k = self.k ; w = event.widget
-        if not self._chckSel(event):
-            return k.keyboardQuit(event)
+        if not self._chckSel(event): return
+    
         ins = w.index('insert')
         is1 = w.index('sel.first')
         is2 = w.index('sel.last')
         txt = w.get('%s linestart' % is1,'%s lineend' % is2)
         txt = txt.split('\n')
         fields = []
-        import re
         fn = r'\w+'
         frx = re.compile(fn)
         for z in txt:
@@ -2699,8 +2564,7 @@ class editCommandsClass (baseEditCommandsClass):
                 fields.append(f[0])
             else:
                 i = int(which)
-                if len(f) < i:
-                    return k._tailEnd(w)
+                if len(f) < i: return
                 i = i-1
                 fields.append(f[i])
         nz = zip(fields,txt)
@@ -2712,7 +2576,7 @@ class editCommandsClass (baseEditCommandsClass):
             w.insert('%s.0' % int1,'%s\n' % z[1])
             int1 = int1 + 1
         w.mark_set('insert',ins)
-        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.120:sortFields
     #@-node:ekr.20050920084036.117:sort...
     #@+node:ekr.20050920084036.121:swap/transpose...
@@ -2723,6 +2587,7 @@ class editCommandsClass (baseEditCommandsClass):
         i = w.index('insert')
         i1, i2 = i.split('.')
         i1 = str(int(i1)-1)
+    
         if i1 != '0':
             l2 = w.get('insert linestart','insert lineend')
             w.delete('insert linestart-1c','insert lineend')
@@ -2731,37 +2596,34 @@ class editCommandsClass (baseEditCommandsClass):
             l2 = w.get('2.0','2.0 lineend')
             w.delete('2.0','2.0 lineend')
             w.insert('1.0',l2+'\n')
-        return k._tailEnd(w)
+    #@nonl
     #@-node:ekr.20050920084036.122:transposeLines
     #@+node:ekr.20050920084036.123:swapWords & transposeWords
     def swapWords (self,event,swapspots):
+    
         w = event.widget
         txt = w.get('insert wordstart','insert wordend')
-        if txt == ' ': return 'break'
+        if txt == ' ': return
         i = w.index('insert wordstart')
         if len(swapspots) != 0:
-            def swp (find,ftext,lind,ltext):
-                w.delete(find,'%s wordend' % find)
-                w.insert(find,ltext)
-                w.delete(lind,'%s wordend' % lind)
-                w.insert(lind,ftext)
-                swapspots.pop()
-                swapspots.pop()
-                return 'break'
             if w.compare(i,'>',swapspots[1]):
-                return swp(i,txt,swapspots[1],swapspots[0])
+                self.swapHelper(i,txt,swapspots[1],swapspots[0])
             elif w.compare(i,'<',swapspots[1]):
-                return swp(swapspots[1],swapspots[0],i,txt)
-            else:
-                return 'break'
+                self.swapHelper(swapspots[1],swapspots[0],i,txt)
         else:
             swapspots.append(txt)
             swapspots.append(i)
-            return 'break'
     
     def transposeWords (self,event):
-        return self.swapWords(event,self.swapSpots)
-    #@nonl
+        self.swapWords(event,self.swapSpots)
+    
+    def swapHelper (find,ftext,lind,ltext):
+        w.delete(find,'%s wordend' % find)
+        w.insert(find,ltext)
+        w.delete(lind,'%s wordend' % lind)
+        w.insert(lind,ftext)
+        swapspots.pop()
+        swapspots.pop()
     #@-node:ekr.20050920084036.123:swapWords & transposeWords
     #@+node:ekr.20050920084036.124:swapCharacters & transeposeCharacters
     def swapCharacters (self,event):
@@ -2775,7 +2637,6 @@ class editCommandsClass (baseEditCommandsClass):
         w.delete('insert','insert +1c')
         w.insert('insert',c2)
         w.mark_set('insert',i)
-        return k._tailEnd(w)
     
     transposeCharacters = swapCharacters
     #@nonl
@@ -2783,10 +2644,10 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.121:swap/transpose...
     #@+node:ekr.20050920084036.126:tabify & untabify
     def tabify (self,event):
-        return self.tabifyHelper (event,which='tabify')
+        self.tabifyHelper (event,which='tabify')
         
     def untabify (self,event):
-        return self.tabifyHelper (event,which='untabify')
+        self.tabifyHelper (event,which='untabify')
     
     def tabifyHelper (self,event,which):
     
@@ -2803,7 +2664,6 @@ class editCommandsClass (baseEditCommandsClass):
                 ntxt = pattern.sub('    ',txt)
             w.delete(i,end)
             w.insert(i,ntxt)
-            return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.126:tabify & untabify
     #@-others
@@ -2853,40 +2713,32 @@ class editFileCommandsClass (baseEditCommandsClass):
                 k.setLabel('deleted %s' % k.arg)
             except:
                 k.setLabel('deleted not delete %s' % k.arg)
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.164:deleteFile
-    #@+node:ekr.20050920084036.165:diff
-    def diff( self, event ):
-        
+    #@+node:ekr.20050920084036.165:diff (revise)
+    def diff (self,event):
+    
         '''the diff command, accessed by Alt-x diff.
         Creates a buffer and puts the diff between 2 files into it.'''
-        
+    
         k = self.k ; w = event.widget
     
         try:
             f, name = self.getReadableTextFile()
-            txt1 = f.read()
-            f.close()
-            
+            txt1 = f.read() ; f.close()
             f2, name2 = self.getReadableTextFile()
-            txt2 = f2.read()
-            f2.close()
-        except:
-            return k.keyboardQuit( event )
+            txt2 = f2.read() ; f2.close()
+        except IOError: return
     
-        self.switchToBuffer( event, "*diff* of ( %s , %s )" %( name, name2 ) )
-        data = difflib.ndiff( txt1, txt2 )
+        self.switchToBuffer(event,"*diff* of ( %s , %s )" % (name,name2))
+        data = difflib.ndiff(txt1,txt2)
         idata = []
         for z in data:
-            idata.append( z )
-        w.delete( '1.0', 'end' )
-        w.insert( '1.0', ''.join( idata ) )
-        k._tailEnd( w )
-    
-        return k.keyboardQuit( event )
-    #@-node:ekr.20050920084036.165:diff
+            idata.append(z)
+        w.delete('1.0','end')
+        w.insert('1.0',''.join(idata))
+    #@nonl
+    #@-node:ekr.20050920084036.165:diff (revise)
     #@+node:ekr.20050920084036.166:getReadableTextFile
     def getReadableTextFile (self):
     
@@ -2903,12 +2755,12 @@ class editFileCommandsClass (baseEditCommandsClass):
     
         k = self.k ; c = k.c ; w = event.widget
         f, name = self.getReadableTextFile()
-        if not f: return None
-        txt = f.read()
-        f.close()
-        w.insert('insert',txt)
-        w.see('1.0')
-        return k._tailEnd(w)
+        if f:
+            txt = f.read()
+            f.close()
+            w.insert('insert',txt)
+            w.see('1.0')
+    #@nonl
     #@-node:ekr.20050920084036.167:insertFile
     #@+node:ekr.20050920084036.168:makeDirectory
     def makeDirectory (self,event):
@@ -2927,8 +2779,7 @@ class editFileCommandsClass (baseEditCommandsClass):
                 k.setLabel("created %s" % k.arg)
             except:
                 k.setLabel("can not create %s" % k.arg)
-                
-        return 'break'
+    #@nonl
     #@-node:ekr.20050920084036.168:makeDirectory
     #@+node:ekr.20050920084036.169:removeDirectory
     def removeDirectory (self,event):
@@ -2947,8 +2798,6 @@ class editFileCommandsClass (baseEditCommandsClass):
                 k.setLabel('removed %s' % k.arg)
             except:
                 k.setLabel('Can not remove %s' % k.arg)
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.169:removeDirectory
     #@+node:ekr.20050920084036.170:saveFile
@@ -3065,9 +2914,7 @@ class killBufferCommandsClass (baseEditCommandsClass):
         if i:
             i2 = w.search('.',i,backwards=True,stopindex='1.0')
             i2 = g.choose(i2=='','1.0',i2+'+1c ')
-            return self.kill(event,i2,'%s + 1c' % i)
-    
-        return 'break'
+            self.kill(event,i2,'%s + 1c' % i)
     #@nonl
     #@-node:ekr.20050920084036.181:backwardKillSentence
     #@+node:ekr.20050920084036.180:backwardKillWord
@@ -3078,7 +2925,6 @@ class killBufferCommandsClass (baseEditCommandsClass):
         self.killWord(event)
         self.killWs(event)
         c.editCommands.backwardWord(event)
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.180:backwardKillWord
     #@+node:ekr.20050920084036.185:getClipboard
@@ -3115,24 +2961,22 @@ class killBufferCommandsClass (baseEditCommandsClass):
         w.clipboard_clear()
         w.clipboard_append(s)
         w.delete(frm,to)
-        return 'break'
     
     def killLine (self,event):
-        return self.kill(event,'insert linestart','insert lineend+1c')
+        self.kill(event,'insert linestart','insert lineend+1c')
     
     def killWord (self,event):
         w = event.widget
         self.kill(event,'insert wordstart','insert wordend')
         self.killWs(event)
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.178:kill, killLine, killWord
     #@+node:ekr.20050920084036.182:killRegion & killRegionSave & helper
     def killRegion (self,event):
-        return self.killRegionHelper(event,deleteFlag=True)
+        self.killRegionHelper(event,deleteFlag=True)
         
     def killRegionSave (self,event):
-        return self.killRegionHelper(event,deleteFlag=False)
+        self.killRegionHelper(event,deleteFlag=False)
     
     def killRegionHelper (self,event,deleteFlag):
     
@@ -3147,7 +2991,6 @@ class killBufferCommandsClass (baseEditCommandsClass):
             w.clipboard_append(s)
     
         self.removeRKeys(w)
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.182:killRegion & killRegionSave & helper
     #@+node:ekr.20050930095323.1:killSentence
@@ -3159,8 +3002,6 @@ class killBufferCommandsClass (baseEditCommandsClass):
             i2 = w.search('.','insert',backwards=True,stopindex='1.0')
             i2 = g.choose(i2=='','1.0',i2+'+1c ')
             self.kill(event,i2,'%s + 1c' % i)
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050930095323.1:killSentence
     #@+node:ekr.20050930100733:killWs
@@ -3194,8 +3035,7 @@ class killBufferCommandsClass (baseEditCommandsClass):
             w.tag_delete('kb')
             w.insert('insert',s,('kb'))
             w.mark_set('insert',i)
-    
-        return 'break'
+    #@nonl
     #@-node:ekr.20050930091642.1:yank
     #@+node:ekr.20050930091642.2:yankPop
     def yankPop (self,event):
@@ -3214,34 +3054,29 @@ class killBufferCommandsClass (baseEditCommandsClass):
             w.tag_delete('kb')
             w.insert(frm,s,('kb'))
             w.mark_set('insert',i)
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050930091642.2:yankPop
     #@+node:ekr.20050920084036.128:zapToCharacter
     def zapToCharacter (self,event):
     
-        k = self.k ; state = k.getState('zapToCharacter')
+        k = self.k ; state = k.getState('zap-to-char')
     
         if state == 0:
-            k.setState('zapToCharacter',1,handler=self.zapToCharacter)
-            k.setLabelBlue('Zap To Character: ')
+            k.setLabelBlue('Zap To Character: ',protect=True)
+            k.setState('zap-to-char',1,handler=self.zapToCharacter)
         else:
             c = k.c ; w = event.widget ; ch = event.char
+            k.resetLabel()
+            k.clearState()
             if (
                 len(event.char) != 0 and
                 ch in (string.ascii_letters + string.digits + string.punctuation)
             ):
-                k.setState('zap',0)
                 i = w.search(ch,'insert',stopindex='end')
                 if i:
                     t = w.get('insert','%s+1c' % i)
                     self.addToKillBuffer(t)
                     w.delete('insert','%s+1c' % i)
-                    k.resetLabel()
-                    k.clearState()
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.128:zapToCharacter
     #@-others
@@ -3438,7 +3273,7 @@ class macroCommandsClass (baseEditCommandsClass):
         }
     #@nonl
     #@-node:ekr.20050920084036.192: getPublicCommands
-    #@+node:ekr.20050920084036.193:Entry points
+    #@+node:ekr.20050920084036.193:Entry points (revise)
     #@+node:ekr.20050920084036.194:getMacroName (calls saveMacros)
     def getMacroName (self,event):
     
@@ -3457,8 +3292,6 @@ class macroCommandsClass (baseEditCommandsClass):
             k.setLabel(self.findFirstMatchFromList(s,self.namedMacros))
         else:
             k.updateLabel(event)
-    
-        return 'break'
     #@nonl
     #@+node:ekr.20050920084036.195:findFirstMatchFromList
     def findFirstMatchFromList (self,s,aList=None):
@@ -3487,21 +3320,17 @@ class macroCommandsClass (baseEditCommandsClass):
     
         f = tkFileDialog and tkFileDialog.askopenfile()
         if f:
-            return self._loadMacros(f)
-        else:
-            return 'break'
+            self._loadMacros(f)
     #@nonl
     #@+node:ekr.20050920084036.197:_loadMacros
-    def _loadMacros( self, f ):
+    def _loadMacros (self,f):
     
         '''Loads a macro file into the macros dictionary.'''
     
         k = self.k
-        macros = cPickle.load( f )
+        macros = cPickle.load(f)
         for z in macros:
-            k.addToDoAltX( z, macros[ z ] )
-    
-        return 'break'
+            k.addToDoAltX(z,macros[z])
     #@nonl
     #@-node:ekr.20050920084036.197:_loadMacros
     #@-node:ekr.20050920084036.196:loadMacros & helpers
@@ -3523,8 +3352,6 @@ class macroCommandsClass (baseEditCommandsClass):
             k.keyboardQuit(event)
         else:
             k.updateLabel(event)
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.198:nameLastMacro
     #@+node:ekr.20050920084036.199:saveMacros & helper
@@ -3538,8 +3365,6 @@ class macroCommandsClass (baseEditCommandsClass):
             f.seek(0)
             if f:
                 self._saveMacros(f,macname)
-    
-        return 'break'
     #@nonl
     #@+node:ekr.20050920084036.200:_saveMacros
     def _saveMacros( self, f , name ):
@@ -3559,7 +3384,7 @@ class macroCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.200:_saveMacros
     #@-node:ekr.20050920084036.199:saveMacros & helper
-    #@-node:ekr.20050920084036.193:Entry points
+    #@-node:ekr.20050920084036.193:Entry points (revise)
     #@+node:ekr.20050920084036.201:Called from keystroke handlers
     #@+node:ekr.20050920084036.202:executeLastMacro & helper (called from universal command)
     def executeLastMacro( self, event ):
@@ -3567,7 +3392,6 @@ class macroCommandsClass (baseEditCommandsClass):
         w = event.widget
         if self.lastMacro:
             return self._executeMacro( self.lastMacro, w )
-        return 'break'
     #@nonl
     #@+node:ekr.20050920084036.203:_executeMacro
     def _executeMacro( self, macro, w ):
@@ -3586,32 +3410,27 @@ class macroCommandsClass (baseEditCommandsClass):
                 ev.keysym = z[ 2 ]
                 ev.char = z[ 3 ]
                 self.masterCommand( ev , method, '<%s>' % meth )
-    
-        return k._tailEnd( w )
     #@nonl
     #@-node:ekr.20050920084036.203:_executeMacro
     #@-node:ekr.20050920084036.202:executeLastMacro & helper (called from universal command)
     #@+node:ekr.20050920084036.204:startKBDMacro
-    def startKBDMacro( self, event ):
+    def startKBDMacro (self,event):
     
         k = self.k
-    
-        k.setLabelBlue('Recording Keyboard Macro')
+        k.setLabelBlue('Recording keyboard macro...',protect=True)
         self.macroing = True
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.204:startKBDMacro
     #@+node:ekr.20050920084036.205:recordKBDMacro
-    def recordKBDMacro( self, event ):
-        
+    def recordKBDMacro (self,event):
+    
         k = self.k ; stroke = k.stroke
-        
+    
         if stroke != '<Key>':
-            self.macro.append( (stroke, event.keycode, event.keysym, event.char) )
+            self.macro.append((stroke,event.keycode,event.keysym,event.char))
         elif stroke == '<Key>':
             if event.keysym != '??':
-                self.macro.append( ( event.keycode, event.keysym ) )
+                self.macro.append((event.keycode,event.keysym))
     #@nonl
     #@-node:ekr.20050920084036.205:recordKBDMacro
     #@+node:ekr.20050920084036.206:stopKBDMacro
@@ -3626,9 +3445,7 @@ class macroCommandsClass (baseEditCommandsClass):
             self.macro = []
     
         self.macroing = False
-        k.setLabelBlue('Keyboard macro defined')
-    
-        return 'break'
+        k.setLabelGrey('Keyboard macro defined')
     #@nonl
     #@-node:ekr.20050920084036.206:stopKBDMacro
     #@-node:ekr.20050920084036.201:Called from keystroke handlers
@@ -3666,13 +3483,14 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.209: getPublicCommands
     #@+node:ekr.20050920084036.210:Entry points
     def queryReplace (self,event):
-        return self.masterQR(event)
+        self.masterQR(event)
     
     def queryReplaceRegex (self,event):
-        return self.startRegexReplace() and self.masterQR(event)
+        self.startRegexReplace()
+        self.masterQR(event)
     
     def inverseAddGlobalAbbrev (self,event):
-        return self.abbreviationDispatch(event,2)
+        self.abbreviationDispatch(event,2)
     #@nonl
     #@-node:ekr.20050920084036.210:Entry points
     #@+node:ekr.20050920084036.211:qreplace
@@ -3680,7 +3498,6 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
     
         if event.keysym == 'y':
             self._qreplace( event )
-            return
         elif event.keysym in ( 'q', 'Return' ):
             self.quitQSearch( event )
         elif event.keysym == 'exclam':
@@ -3759,8 +3576,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
             self.qreplace(event)
         else:
             self.listenQR(event)
-    
-        return 'break'
+    #@nonl
     #@-node:ekr.20050920084036.215:masterQR
     #@+node:ekr.20050920084036.216:startRegexReplace
     def startRegexReplace( self ):
@@ -3816,7 +3632,6 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
                     w.update_idletasks()
                     w.tag_add( 'qR', 'insert', 'insert +%sc'% len( self.qQ ) )
                     w.tag_config( 'qR', background = 'lightblue' )
-                    k._tailEnd( w )
                     return True
             self.quitQSearch( event )
             return False
@@ -3833,7 +3648,6 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
         self.qrexecute = False
         k.setLabelGrey('')
         self.querytype = 'normal'
-        k._tailEnd(event.widget)
     #@nonl
     #@-node:ekr.20050920084036.220:quitQSearch
     #@-others
@@ -3873,28 +3687,23 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.223:getPublicCommands
     #@+node:ekr.20050920084036.224:Entry points
     #@+node:ekr.20050920084036.225:clearRectangle
-    def clearRectangle( self, event ):
-        
-        if not self._chckSel( event ):
-            return
+    def clearRectangle (self,event):
+    
+        if not self._chckSel(event): return
     
         k = self.k ; w = event.widget
-        r1, r2, r3, r4 = self.getRectanglePoints( event )
-        lth = ' ' * ( r4 - r2 )
-        self.keyboardQuit( event )
+        r1, r2, r3, r4 = self.getRectanglePoints(event)
+        lth = ' ' * (r4-r2)
         while r1 <= r3:
-            w.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
-            w.insert( '%s.%s' % ( r1, r2 ) , lth)
+            w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
+            w.insert('%s.%s' % (r1,r2),lth)
             r1 = r1 + 1
-    
-        return k._tailEnd( w )
     #@nonl
     #@-node:ekr.20050920084036.225:clearRectangle
     #@+node:ekr.20050920084036.226:closeRectangle
     def closeRectangle (self,event):
     
-        if not self._chckSel(event):
-            return
+        if not self._chckSel(event): return
     
         k = self.k ; w = event.widget
         r1, r2, r3, r4 = self.getRectanglePoints(event)
@@ -3909,86 +3718,71 @@ class rectangleCommandsClass (baseEditCommandsClass):
         while r1 <= r3:
             w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
             r1 = r1 + 1
-    
-        return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.226:closeRectangle
     #@+node:ekr.20050920084036.227:deleteRectangle
     def deleteRectangle (self,event):
     
-        if not self._chckSel(event):
-            return
+        if not self._chckSel(event): return
     
         k = self.k ; w = event.widget
         r1, r2, r3, r4 = self.getRectanglePoints(event)
         #lth = ' ' * ( r4 - r2 )
-        self.keyboardQuit(event)
         while r1 <= r3:
             w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
             r1 = r1 + 1
-    
-        return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.227:deleteRectangle
     #@+node:ekr.20050920084036.228:killRectangle
     def killRectangle (self,event):
     
-        if not self._chckSel(event):
-            return
+        if not self._chckSel(event): return
     
         k = self.k ; w = event.widget
         r1, r2, r3, r4 = self.getRectanglePoints(event)
-    
-        self.keyboardQuit(event)
         self.krectangle = []
         while r1 <= r3:
             txt = w.get('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
             self.krectangle.append(txt)
             w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
             r1 = r1 + 1
-    
-        return k._tailEnd(w)
     #@nonl
     #@-node:ekr.20050920084036.228:killRectangle
     #@+node:ekr.20050920084036.229:yankRectangle
-    def yankRectangle( self, event , krec = None ):
-        self.keyboardQuit( event )
-        if not krec:
-            krec = self.krectangle
-        if not krec:
-            return 'break'
+    def yankRectangle (self,event,krec=None):
+    
+        self.keyboardQuit(event)
+        if not krec: krec = self.krectangle
+        if not krec: return
+    
         k = self.k ; w = event.widget
-        txt = w.get( 'insert linestart', 'insert' )
-        txt = self.getWSString( txt )
-        i = w.index( 'insert' )
-        i1, i2 = i.split( '.' )
-        i1 = int( i1 )
-        for z in krec:        
-            txt2 = w.get( '%s.0 linestart' % i1, '%s.%s' % ( i1, i2 ) )
-            if len( txt2 ) != len( txt ):
-                amount = len( txt ) - len( txt2 )
-                z = txt[ -amount : ] + z
-            w.insert( '%s.%s' %( i1, i2 ) , z )
-            if w.index( '%s.0 lineend +1c' % i1 ) == w.index( 'end' ):
-                w.insert( '%s.0 lineend' % i1, '\n' )
+        txt = w.get('insert linestart','insert')
+        txt = self.getWSString(txt)
+        i = w.index('insert')
+        i1, i2 = i.split('.')
+        i1 = int(i1)
+        for z in krec:
+            txt2 = w.get('%s.0 linestart' % i1,'%s.%s' % (i1,i2))
+            if len(txt2) != len(txt):
+                amount = len(txt) - len(txt2)
+                z = txt [ -amount:] + z
+            w.insert('%s.%s' % (i1,i2),z)
+            if w.index('%s.0 lineend +1c' % i1) == w.index('end'):
+                w.insert('%s.0 lineend' % i1,'\n')
             i1 = i1 + 1
-        return k._tailEnd( w )
     #@nonl
     #@-node:ekr.20050920084036.229:yankRectangle
     #@+node:ekr.20050920084036.230:openRectangle
-    def openRectangle( self, event ):
+    def openRectangle (self,event):
     
-        if not self._chckSel( event ):
-            return
+        if not self._chckSel(event): return
     
         k = self.k ; w = event.widget
-        r1, r2, r3, r4 = self.getRectanglePoints( event )
-        lth = ' ' * ( r4 - r2 )
-        self.keyboardQuit( event )
+        r1, r2, r3, r4 = self.getRectanglePoints(event)
+        lth = ' ' * (r4-r2)
         while r1 <= r3:
-            w.insert( '%s.%s' % ( r1, r2 ) , lth)
+            w.insert('%s.%s' % (r1,r2),lth)
             r1 = r1 + 1
-        return k._tailEnd( w )
     #@nonl
     #@-node:ekr.20050920084036.230:openRectangle
     #@-node:ekr.20050920084036.224:Entry points
@@ -3999,18 +3793,16 @@ class rectangleCommandsClass (baseEditCommandsClass):
     
         self.rectanglemode = 1
         k.setLabel('C - x r')
-    
-        return 'break'
     #@nonl
     #@-node:ekr.20050920084036.231:activateRectangleMethods
-    #@+node:ekr.20050920084036.232:stringRectangle (called from processKey)
+    #@+node:ekr.20050920084036.232:stringRectangle (called from processKey) (revise)
     def stringRectangle (self,event):
     
         k = self.k ; w = event.widget
         if not self.sRect:
             self.sRect = 1
             k.setLabelBlue('String rectangle :')
-            return 'break'
+            return
         if event.keysym == 'Return':
             self.sRect = 3
         if self.sRect == 1:
@@ -4018,10 +3810,9 @@ class rectangleCommandsClass (baseEditCommandsClass):
             self.sRect = 2
         if self.sRect == 2:
             k.updateLabel(event)
-            return 'break'
+            return
         if self.sRect == 3:
             if not self._chckSel(event):
-                k.keyboardQuit(event)
                 return
             r1, r2, r3, r4 = self.getRectanglePoints(event)
             lth = k.getLabel()
@@ -4029,10 +3820,8 @@ class rectangleCommandsClass (baseEditCommandsClass):
                 w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
                 w.insert('%s.%s' % (r1,r2),lth)
                 r1 = r1 + 1
-            k.keyboardQuit(event)
-            return k._tailEnd(w)
     #@nonl
-    #@-node:ekr.20050920084036.232:stringRectangle (called from processKey)
+    #@-node:ekr.20050920084036.232:stringRectangle (called from processKey) (revise)
     #@+node:ekr.20050920084036.233:getRectanglePoints
     def getRectanglePoints (self,event):
     
@@ -4097,39 +3886,36 @@ class registerCommandsClass (baseEditCommandsClass):
         }
     #@nonl
     #@-node:ekr.20050920084036.247: getPublicCommands
-    #@+node:ekr.20050920084036.236:Entry points
-    def setEvent (self,event,l):
-        event.keysym = l ; return event
-    
+    #@+node:ekr.20050920084036.236:Entry points (revise)
     def copyToRegister (self,event):
-        return self.setEvent(event,'s') and self.setNextRegister(event)
+        self.setNextRegister(event,'s')
         
     def copyRectangleToRegister (self,event):
-        return self.setEvent(event,'r') and self.setNextRegister(event)
+        self.setNextRegister(event,'r')
         
     def incrementRegister (self,event):
-        return self.setEvent(event,'plus') and self.setNextRegister(event)
+        self.setNextRegister(event,'plus')
         
     def insertRegister (self,event):
-        return self.setEvent(event,'i') and self.setNextRegister(event)
+        self.setNextRegister(event,'i')
         
     def jumpToRegister (self,event):
-        return self.setEvent(event,'j') and self.setNextRegister(event)
+        self.setNextRegister(event,'j')
         
     def numberToRegister (self,event):
-        return self.setEvent(event,'n') and self.setNextRegister(event)
+        self.setNextRegister(event,'n')
         
     def pointToRegister (self,event):
-        return self.setEvent(event,'space') and self.setNextRegister(event)
+        self.setNextRegister(event,'space')
         
     def viewRegister (self,event):
-        return self.setEvent(event,'view') and self.setNextRegister(event)
+        self.setNextRegister(event,'view')
+    #@nonl
     #@+node:ekr.20050920084036.237:appendToRegister
     def appendToRegister (self,event):
     
         k = self.k
-        event.keysym = 'a'
-        self.setNextRegister(event)
+        self.setNextRegister(event,'a')
         k.setState('controlx',1)
     #@nonl
     #@-node:ekr.20050920084036.237:appendToRegister
@@ -4137,15 +3923,15 @@ class registerCommandsClass (baseEditCommandsClass):
     def prependToRegister (self,event):
     
         k = self.k
-        event.keysym = 'p'
-        self.setNextRegister(event)
+        self.setNextRegister(event,'p')
         k.setState('controlx',0)
+    #@nonl
     #@-node:ekr.20050920084036.238:prependToRegister
     #@+node:ekr.20050920084036.239:_copyRectangleToRegister
     def _copyRectangleToRegister (self,event):
         
-        if not self._chckSel(event):
-            return 
+        if not self._chckSel(event): return
+    
         if event.keysym in string.letters:
             event.keysym = event.keysym.lower()
             w = event.widget 
@@ -4155,23 +3941,19 @@ class registerCommandsClass (baseEditCommandsClass):
                 txt = w.get('%s.%s'%(r1,r2),'%s.%s'%(r1,r4))
                 rect.append(txt)
                 r1 = r1+1
-            self.registers[event.keysym] = rect 
-        self.keyboardQuit(event)
+            self.registers[event.keysym] = rect
+    #@nonl
     #@-node:ekr.20050920084036.239:_copyRectangleToRegister
     #@+node:ekr.20050920084036.240:_copyToRegister
     def _copyToRegister (self,event):
     
-        if not self._chckSel(event):
-            return 
+        if not self._chckSel(event): return 
     
         if event.keysym in string.letters:
             event.keysym = event.keysym.lower()
             w = event.widget 
             txt = w.get('sel.first','sel.last')
-            self.registers[event.keysym] = txt 
-            return 
-    
-        self.keyboardQuit(event)
+            self.registers[event.keysym] = txt
     #@nonl
     #@-node:ekr.20050920084036.240:_copyToRegister
     #@+node:ekr.20050920084036.241:_incrementRegister
@@ -4179,15 +3961,14 @@ class registerCommandsClass (baseEditCommandsClass):
         
         if self.registers.has_key(event.keysym):
             if self._checkIfRectangle(event):
-                return 
-            if self.registers[event.keysym]in string.digits:
+                pass
+            elif self.registers[event.keysym]in string.digits:
                 i = self.registers[event.keysym]
                 i = str(int(i)+1)
                 self.registers[event.keysym] = i 
             else:
                 self.invalidRegister(event,'number')
-                return 
-        self.keyboardQuit(event)
+    #@nonl
     #@-node:ekr.20050920084036.241:_incrementRegister
     #@+node:ekr.20050920084036.242:_insertRegister
     def _insertRegister (self,event):
@@ -4206,9 +3987,9 @@ class registerCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.242:_insertRegister
     #@+node:ekr.20050920084036.243:_jumpToRegister
     def _jumpToRegister (self,event):
+    
         if event.keysym in string.letters:
-            if self._checkIfRectangle(event):
-                return 
+            if self._checkIfRectangle(event): return 
             w = event.widget 
             i = self.registers[event.keysym.lower()]
             i2 = i.split('.')
@@ -4224,7 +4005,6 @@ class registerCommandsClass (baseEditCommandsClass):
             w.mark_set('insert',i)
             w.event_generate('<Key>')
             w.update_idletasks()
-        self.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920084036.243:_jumpToRegister
     #@+node:ekr.20050920084036.244:_numberToRegister
@@ -4252,7 +4032,7 @@ class registerCommandsClass (baseEditCommandsClass):
             k.setLabel(s)
     #@nonl
     #@-node:ekr.20050920084036.246:_viewRegister
-    #@-node:ekr.20050920084036.236:Entry points
+    #@-node:ekr.20050920084036.236:Entry points (revise)
     #@+node:ekr.20050920084036.248:Helpers
     #@+node:ekr.20050920084036.252:addRegisterItems (registerCommandsClass)
     def addRegisterItems( self ):
@@ -4306,20 +4086,18 @@ class registerCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.254:invalidRegister
     #@+node:ekr.20050920084036.255:setNextRegister
-    def setNextRegister (self,event):
-        
-        k = self.k
+    def setNextRegister (self,event,keysym):
     
-        if event.keysym=='Shift':
-            return 
+        k = self.k ; event.keysym = keysym
     
-        if self.methodDict.has_key(event.keysym):
+        if keysym == 'Shift':
+            return
+    
+        if self.methodDict.has_key(keysym):
             k.setState('controlx',1)
-            self.method = self.methodDict[event.keysym]
+            self.method = self.methodDict [keysym]
             self.registermode = 2
-            k.setLabel(self.helpDict[event.keysym])
-        else:
-            k.keyboardQuit(event)
+            k.setLabel(self.helpDict[keysym])
     #@nonl
     #@-node:ekr.20050920084036.255:setNextRegister
     #@+node:ekr.20050920084036.256:executeRegister
@@ -4347,10 +4125,12 @@ class searchCommandsClass (baseEditCommandsClass):
     
         baseEditCommandsClass.__init__(self,c) # init the base class.
         
-        self.csr = { '<Control-s>': 'for', '<Control-r>':'bak' }
-        self.pref = None
+        ## self.csr = { '<Control-s>': 'for', '<Control-r>':'bak' }
+        
+        self.forward = True
+        self.regexp = False
     
-        # For replace-string and replace-regex
+        # For replace-string and replace-regexp
         self._sString = ''
         self._rpString = ''
     #@nonl
@@ -4374,125 +4154,107 @@ class searchCommandsClass (baseEditCommandsClass):
         }
     #@nonl
     #@-node:ekr.20050920084036.259:getPublicCommands
-    #@+node:ekr.20050920084036.260:Entry points
-    # Incremental...
+    #@+node:ekr.20050920084036.261:incremental search...
     def isearchForward (self,event):
-        g.trace()
-        return self.startIncremental(event,'<Control-s>')
+        self.startIncremental(event,forward=True,regexp=False)
         
     def isearchBackward (self,event):
-        g.trace()
-        return self.startIncremental(event,'<Control-r>')
+        self.startIncremental(event,forward=False,regexp=False)
         
     def isearchForwardRegexp (self,event):
-        g.trace()
-        return self.startIncremental(event,'<Control-s>',which='regexp')
+        self.startIncremental(event,forward=True,regexp=True)
         
     def isearchBackwardRegexp (self,event):
-        g.trace()
-        return self.startIncremental(event,'<Control-r>',which='regexp')
-    
-    # Non-incremental...
-    def reSearchBackward (self,event):
-        return self.reStart(event,which='backward')
-    
-    def searchForward (self,event):
-        return self.startNonIncrSearch(event,'for')
-        
-    def searchBackward (self,event):
-        return self.startNonIncrSearch(event,'bak')
-        
-    def wordSearchForward (self,event):
-        return self.startWordSearch(event,'for')
-        
-    def wordSearchBackward (self,event):
-        return self.startWordSearch(event,'bak')
+        self.startIncremental(event,forward=False,regexp=True)
     #@nonl
-    #@-node:ekr.20050920084036.260:Entry points
-    #@+node:ekr.20050920084036.261:incremental search methods
     #@+node:ekr.20050920084036.262:startIncremental
-    def startIncremental (self,event,kind='<Control-s>',which='normal'):
+    def startIncremental (self,event,forward,regexp):
     
-        k = self.k # kind is '<Control-s>' or '<Control-r>'
-    
-        state = k.getState('isearch')
+        k = self.k
         
-        g.trace(kind,state)
-        
-        if state == 0:
-            self.pref = self.csr [kind]
-            k.setState('isearch',which,handler=self.iSearchStateHandler)
-            k.setLabelBlue('isearch:',protect=True)
-        else:
-            self.search(event,way=self.csr[kind],useregex=self.useRegex())
-            self.pref = self.csr [kind]
-            self.scolorizer(event)
-    
-        return 'break'
+        self.forward = forward
+        self.regexp = regexp
+        k.setLabelBlue('isearch: ',protect=True)
+        k.setState('isearch',1,handler=self.iSearchStateHandler)
     #@nonl
     #@-node:ekr.20050920084036.262:startIncremental
-    #@+node:ekr.20050920084036.263:search
-    def search (self,event,way,useregex=False):
+    #@+node:ekr.20050920084036.264:iSearchStateHandler & helper
+    # Called when from the state manager when the state is 'isearch'
+    
+    def iSearchStateHandler (self,event):
+    
+        k = self.k ; w = event.widget ; keysym = event.keysym
+        if keysym == 'Control_L': return
+        
+        g.trace('keysym',keysym,'stroke',k.stroke)
+        
+        if 0: # Useful, but presently conflicts with other bindings.
+            if k.stroke == '<Control-s>':
+                self.startIncremental(event,forward=True,regexp=False)
+            elif k.stroke == '<Control-r>':
+                self.startIncremental(event,forward=False,regexp=False)
+    
+        if keysym == 'Return':
+            if 0: # Doesn't do anything at present.
+                #@            << do a non-incremental search >>
+                #@+node:ekr.20051002120125:<< do a non-incremental search >>
+                s = k.getLabel(ignorePrompt=True)
+                
+                if s:
+                    if self.forward:
+                        if self.regexp: self.reSearchForward(event)
+                        else:           self.searchForward(event)
+                    else:
+                        if self.regexp: self.reSearchBackward(event)
+                        else:           self.searchBackward(event)
+                #@nonl
+                #@-node:ekr.20051002120125:<< do a non-incremental search >>
+                #@nl
+            k.resetLabel()
+            k.clearState()
+            return
+    
+        if event.char == '\b':
+            g.trace('backspace not handled yet')
+            return
+        
+        if event.char:
+            k.updateLabel(event)
+            s = k.getLabel(ignorePrompt=True)
+            z = w.search(s,'insert',stopindex='insert +%sc' % len(s))
+            if not z:
+               self.iSearchHelper(event,self.forward,self.regexp)
+            self.scolorizer(event)
+    #@nonl
+    #@+node:ekr.20050920084036.263:iSearchHelper
+    def iSearchHelper (self,event,forward,regexp):
     
         '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
         
         k = self.k ; w = event.widget
         s = k.getLabel(ignorePrompt=True)
-        g.trace(way,repr(s))
+        g.trace(forward,repr(s))
         if s:
             try:
-                if way == 'bak': # Search backwards.
-                    i = w.search(s,'insert',backwards=True,stopindex='1.0',regexp=useregex)
-                    if not i:
-                        # Start again at the bottom of the buffer.
-                        i = w.search(s,'end',backwards=True,stopindex='insert',regexp=useregex)
-                else: # Search forwards.
-                    i = w.search(s,"insert + 1c",stopindex='end',regexp=useregex)
+                if forward:
+                    i = w.search(s,"insert + 1c",stopindex='end',regexp=regexp)
                     if not i:
                         # Start again at the top of the buffer.
-                        i = w.search(s,'1.0',stopindex='insert',regexp=useregex)
+                        i = w.search(s,'1.0',stopindex='insert',regexp=regexp)
+                else:
+                    i = w.search(s,'insert',backwards=True,stopindex='1.0',regexp=regexp)
+                    if not i:
+                        # Start again at the bottom of the buffer.
+                        i = w.search(s,'end',backwards=True,stopindex='insert',regexp=regexp)
+                
             except: pass
     
             if i and not i.isspace():
                 w.mark_set('insert',i)
                 w.see('insert')
-    
-        return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.263:search
-    #@+node:ekr.20050920084036.264:iSearchStateHandler
-    # Called when from the state manager when the state is 'isearch'
-    
-    def iSearchStateHandler (self,event):
-    
-        k = self.k ; stroke = k.stroke ; w = event.widget
-        if not event.char: return
-    
-        g.trace(event.keysym)
-    
-        if stroke in self.csr:
-            return self.startIncremental(event,stroke)
-    
-        if event.keysym == 'Return':
-            s = k.getLabel(ignorePrompt=True)
-            if s:
-                return k.keyboardQuit(event)
-            else:
-                return self.startNonIncrSearch(event,self.pref)
-    
-        k.updateLabel(event)
-        if event.char == '\b':
-            g.trace('backspace not handled yet')
-        else:
-           s = k.getLabel(ignorePrompt=True)
-           z = w.search(s,'insert',stopindex='insert +%sc' % len(s))
-           if not z:
-               self.search(event,self.pref,useregex=self.useRegex())
-        self.scolorizer(event)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.264:iSearchStateHandler
+    #@-node:ekr.20050920084036.263:iSearchHelper
+    #@-node:ekr.20050920084036.264:iSearchStateHandler & helper
     #@+node:ekr.20050920084036.265:scolorizer
     def scolorizer (self,event):
     
@@ -4501,11 +4263,11 @@ class searchCommandsClass (baseEditCommandsClass):
         stext = k.getLabel(ignorePrompt=True)
         w.tag_delete('color')
         w.tag_delete('color1')
-        if stext == '': return 'break'
+        if stext == '': return
         ind = '1.0'
         while ind:
             try:
-                ind = w.search(stext,ind,stopindex='end',regexp=self.useRegex())
+                ind = w.search(stext,ind,stopindex='end',regexp=self.regexp)
             except:
                 break
             if ind:
@@ -4520,187 +4282,149 @@ class searchCommandsClass (baseEditCommandsClass):
         w.tag_config('color1',background='lightblue')
     #@nonl
     #@-node:ekr.20050920084036.265:scolorizer
-    #@+node:ekr.20050920084036.266:useRegex
-    def useRegex (self):
+    #@-node:ekr.20050920084036.261:incremental search...
+    #@+node:ekr.20050920084036.267:non-incremental search...
+    #@+node:ekr.20050920084036.269:seachForward/Backward & helper
+    def searchBackward (self,event):
     
-        k = self.k
-    
-        return k.getState('isearch') != 'normal'
-    #@nonl
-    #@-node:ekr.20050920084036.266:useRegex
-    #@-node:ekr.20050920084036.261:incremental search methods
-    #@+node:ekr.20050920084036.267:non-incremental search methods
-    #@+at
-    # Accessed by Control-s Enter or Control-r Enter.
-    # Alt-x forward-search or backward-search, just looks for words...
-    #@-at
-    #@nonl
-    #@+node:ekr.20050920084036.268:nonincrSearchStateHandler
-    def nonincrSearchStateHandler (self,event):
-    
-        k = self.k ; stroke = k.stroke ; w = event.widget
-    
-        if event.keysym in ('Control_L','Control_R'): return
-        state = k.getState('nonincr-search')
-        if state.startswith('start'):
-            state = state [5:]
-            k.setState('nonincr-search',state)
-            k.setLabel('')
-    
-        if k.getLabel() == '' and stroke == '<Control-w>':
-            return self.startWordSearch(event,state)
-    
-        if event.keysym == 'Return':
-            i = w.index('insert')
-            word = k.getLabel()
-            if state == 'for':
-                try:
-                    s = w.search(word,i,stopindex='end')
-                except Exception: # Can throw an exception.
-                    s = None
-                if s: s = w.index('%s +%sc' % (s,len(word)))
-            else: s = w.search(word,i,stopindex='1.0',backwards=True)
-            if s: w.mark_set('insert',s)
-            k.keyboardQuit(event)
-            return k._tailEnd(w)
+        k = self.k ; state = k.getState('search-backward')
+        if state == 0:
+            k.setLabelBlue('Search: ',protect=True)
+            k.getArg(event,'search-backward',1,self.searchBackward)
         else:
-            k.updateLabel(event)
-            return 'break'
+            k.clearState()
+            k.resetLabel()
+            self.plainSearchHelper(event,k.arg,forward=False)
+    
+    def searchForward (self,event):
+    
+        k = self.k ; state = k.getState('search-forward')
+        if state == 0:
+            k.setLabelBlue('Search Backward: ',protect=True)
+            k.getArg(event,'search-forward',1,self.searchForward)
+        else:
+            k.clearState()
+            k.resetLabel()
+            self.plainSearchHelper(event,k.arg,forward=True)
     #@nonl
-    #@-node:ekr.20050920084036.268:nonincrSearchStateHandler
-    #@+node:ekr.20050920084036.269:startNonIncrSearch
-    def startNonIncrSearch (self,event,which):
+    #@+node:ekr.20050920084036.268:plainSearchHelper
+    def plainSearchHelper (self,event,pattern,forward):
     
-        k = self.k
+        k = self.k ; w = event.widget ; i = w.index('insert')
     
-        k.keyboardQuit(event)
-        k.setState('nonincr-search','start%s' % which,
-            handler=self.nonincrSearchStateHandler)
-        k.setLabelBlue('Search:')
+        try:
+            if forward:
+                s = w.search(pattern,i,stopindex='end')
+                if s: s = w.index('%s +%sc' % (s,len(pattern)))
+            else:
+                s = w.search(pattern,i,stopindex='1.0',backwards=True)
+        except Exception:
+            return
     
-        return 'break'
+        if s:
+            w.mark_set('insert',s)
     #@nonl
-    #@-node:ekr.20050920084036.269:startNonIncrSearch
-    #@-node:ekr.20050920084036.267:non-incremental search methods
-    #@+node:ekr.20050920084036.270:word search methods
-    #@+at
-    # 
-    # Control-s(r) Enter Control-w words Enter, pattern entered is treated as 
-    # a regular expression.
-    # 
-    # for example in the buffer we see:
-    #     cats......................dogs
-    # 
-    # if we are after this and we enter the backwards look, search for 'cats 
-    # dogs' if will take us to the match.
-    #@-at
+    #@-node:ekr.20050920084036.268:plainSearchHelper
+    #@-node:ekr.20050920084036.269:seachForward/Backward & helper
+    #@+node:ekr.20051002111614:wordSearchBackward/Forward & helper
+    def wordSearchBackward (self,event):
+    
+        k = self.k ; state = k.getState('word-search-backward')
+        if state == 0:
+            k.setLabelBlue('Word Search Backward: ',protect=True)
+            k.getArg(event,'word-search-backward',1,self.wordSearchBackward)
+        else:
+            k.clearState()
+            k.resetLabel()
+            self.wordSearchHelper(event,k.arg,forward=False)
+    
+    def wordSearchForward (self,event):
+    
+        k = self.k ; state = k.getState('word-search-forward')
+        if state == 0:
+            k.setLabelBlue('Word Search: ',protect=True)
+            k.getArg(event,'word-search-forward',1,self.wordSearchForward)
+        else:
+            k.clearState()
+            k.resetLabel()
+            self.wordSearchHelper(event,k.arg,forward=True)
     #@nonl
-    #@+node:ekr.20050920084036.271:startWordSearch
-    def startWordSearch (self,event,which):
+    #@+node:ekr.20050920084036.272:wordSearchHelper
+    def wordSearchHelper (self,event,pattern,forward):
     
-        k = self.k
+        k = self.k ; i = w.index('insert')
+        words = pattern.split()
+        sep = '[%s%s]+' % (string.punctuation,string.whitespace)
+        pattern = sep.join(words)
+        cpattern = re.compile(pattern)
+        if state == 'for':
+            txt = w.get('insert','end')
+            match = cpattern.search(txt)
+            if not match: return
+            end = match.end()
+        else:
+            txt = w.get('1.0','insert') #initially the reverse words formula for Python Cookbook was going to be used.
+            a = re.split(pattern,txt) #that didnt quite work right.  This one apparently does.
+            if len(a) > 1:
+                b = re.findall(pattern,txt)
+                end = len(a[-1]) + len(b[-1])
+            else: return
     
-        k.keyboardQuit(event)
-        k.setState('word-search','start%s' % which,
-            handler=self.wordSearchStateHandler)
-        k.setLabelBlue('Word Search %s:' %
-            g.choose(which=='bak','Backward','Forward'),protect=True)
+        wdict = {'for': 'insert +%sc', 'bak': 'insert -%sc'}
+        w.mark_set('insert',wdict[state] % end)
+        w.see('insert')
+    #@-node:ekr.20050920084036.272:wordSearchHelper
+    #@-node:ekr.20051002111614:wordSearchBackward/Forward & helper
+    #@+node:ekr.20050920084036.274:reSearchBackward/Forward & helper
+    def reSearchBackward (self,event):
     
-        return 'break'
+        k = self.k ; state = k.getState('re-search-backward')
+        if state == 0:
+            k.setLabelBlue('Regexp Search backward:',protect=True)
+            k.getArg(event,'re-search-backward',1,self.reSearchBackward)
+        else:
+            k.clearState()
+            k.resetLabel()
+            self.reSearchHelper(event,k.arg,forward=False)
+    
+    def reSearchForward (self,event):
+    
+        k = self.k ; state = k.getState('re-search-forward')
+        if state == 0:
+            k.setLabelBlue('Regexp Search:',protect=True)
+            k.getArg(event,'re-search-forward',1,self.reSearchForward)
+        else:
+            k.clearState()
+            k.resetLabel()
+            self.reSearchHelper(event,k.arg,forward=True)
     #@nonl
-    #@-node:ekr.20050920084036.271:startWordSearch
-    #@+node:ekr.20050920084036.272:wordSearchStateHandler
-    def wordSearchStateHandler (self,event):
+    #@+node:ekr.20050920084036.275:reSearchHelper
+    def reSearchStateHandler (self,event,pattern,forward):
     
         k = self.k ; w = event.widget
-        state = k.getState('word-search')
-        if state.startswith('start'): # pathetic hack.
-            state = state [5:]
-            k.setState('word-search',state,
-                handler=self.wordSearchStateHandler)
-        if event.keysym == 'Return':
-            i = w.index('insert')
-            words = k.getLabel().split()
-            sep = '[%s%s]+' % (string.punctuation,string.whitespace)
-            pattern = sep.join(words)
-            cpattern = re.compile(pattern)
-            if state == 'for':
-                txt = w.get('insert','end')
-                match = cpattern.search(txt)
-                if not match: return k.keyboardQuit(event)
-                end = match.end()
-            else:
-                txt = w.get('1.0','insert') #initially the reverse words formula for Python Cookbook was going to be used.
-                a = re.split(pattern,txt) #that didnt quite work right.  This one apparently does.
-                if len(a) > 1:
-                    b = re.findall(pattern,txt)
-                    end = len(a[-1]) + len(b[-1])
-                else: return k.keyboardQuit(event)
-            wdict = {'for': 'insert +%sc', 'bak': 'insert -%sc'}
+        cpattern = re.compile(pattern)
+    
+        if forward:
+            txt = w.get('insert','end')
+            match = cpattern.search(txt)
+            end = match.end()
+        else:
+            # The reverse words formula for Python Cookbook didn't quite work.
+            txt = w.get('1.0','insert') 
+            a = re.split(pattern,txt)
+            if len(a) > 1:
+                b = re.findall(pattern,txt)
+                end = len(a[-1]) + len(b[-1])
+            else: return
+    
+        if end:
+            wdict = {'forward': 'insert +%sc', 'backward': 'insert -%sc'}
             w.mark_set('insert',wdict[state] % end)
             w.see('insert')
-            k.keyboardQuit(event)
-            return k._tailEnd(w)
-        else:
-            k.updateLabel(event)
-            return 'break'
     #@nonl
-    #@-node:ekr.20050920084036.272:wordSearchStateHandler
-    #@-node:ekr.20050920084036.270:word search methods
-    #@+node:ekr.20050920084036.273:re-search methods
-    # For the re-search-backward and re-search-forward Alt-x commands
-    #@nonl
-    #@+node:ekr.20050920084036.274:reStart
-    def reStart (self,event,which='forward'):
-    
-        k = self.k
-    
-        k.keyboardQuit(event)
-        k.setState('re_search','start%s' % which,
-            handler=self.reSearchStateHandler)
-        k.setLabelBlue('RE Search:')
-    
-        return 'break'
-    
-    reSearchForward = reStart
-    #@nonl
-    #@-node:ekr.20050920084036.274:reStart
-    #@+node:ekr.20050920084036.275:reSearchStateHandler
-    def reSearchStateHandler (self,event):
-    
-        k = self.k ; w = event.widget
-        state = k.getState('re_search')
-        if state.startswith('start'):
-            state = state [5:] # pathetic hack.
-            k.setState('re_search',state,
-                handler=self.reSearchStateHandler)
-            k.setLabel('')
-        if event.keysym == 'Return':
-            pattern = k.getLabel()
-            cpattern = re.compile(pattern)
-            end = None
-            if state == 'forward':
-                txt = w.get('insert','end')
-                match = cpattern.search(txt)
-                end = match.end()
-            else:
-                txt = w.get('1.0','insert') #initially the reverse words formula for Python Cookbook was going to be used.
-                a = re.split(pattern,txt) #that didnt quite work right.  This one apparently does.
-                if len(a) > 1:
-                    b = re.findall(pattern,txt)
-                    end = len(a[-1]) + len(b[-1])
-            if end:
-                wdict = {'forward': 'insert +%sc', 'backward': 'insert -%sc'}
-                w.mark_set('insert',wdict[state] % end)
-                k._tailEnd(w)
-                w.see('insert')
-            return k.keyboardQuit(event)
-        else:
-            k.updateLabel(event)
-            return 'break'
-    #@nonl
-    #@-node:ekr.20050920084036.275:reSearchStateHandler
-    #@-node:ekr.20050920084036.273:re-search methods
+    #@-node:ekr.20050920084036.275:reSearchHelper
+    #@-node:ekr.20050920084036.274:reSearchBackward/Forward & helper
+    #@-node:ekr.20050920084036.267:non-incremental search...
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.257:class searchCommandsClass

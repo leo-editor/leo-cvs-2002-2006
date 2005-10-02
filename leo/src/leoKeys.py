@@ -132,7 +132,6 @@ class keyHandlerClass:
         k.setMiniBufferFunctions()
         k.setBufferStrokes(w)
         k.setUndoer(w,c.undoer.undo)
-        k.setTailEnd(w,self.utTailEnd)
         c.controlCommands.setShutdownHook(c.close)
         
         if 0:
@@ -776,7 +775,7 @@ class keyHandlerClass:
             if stroke == '<Control-x>':
                 k.setState('uC',2)
                 return k.universalCommand3(event,stroke)
-            return k._tailEnd(w)
+            return
     
         if k.uCdict.has_key(stroke): # This executes the keystroke 'n' number of times.
             k.uCdict [stroke](event,txt)
@@ -795,7 +794,6 @@ class keyHandlerClass:
             else:
                 for z in xrange(i):
                     w.event_generate('<Key>',keycode=event.keycode,keysym=event.keysym)
-                    k._tailEnd(w)
     #@-node:ekr.20050920085536.75:universalCommand2 (Called from universalCommand2)
     #@+node:ekr.20050920085536.76:universalCommand3
     def universalCommand3 (self,event,stroke):
@@ -1539,47 +1537,6 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion
     #@-node:ekr.20050928082315:Special characters in the mini-buffer...
-    #@+node:ekr.20050920085536.69:tailEnd... (to be removed?)
-    #@+node:ekr.20050920114619.1:utTailEnd
-    def utTailEnd (self,event=None):
-    
-        '''A method that Emacs will call with its _tailEnd method'''
-        
-        k = self ; c = k.c ; w = c.frame.bodyCtrl
-    
-        # w.event_generate('<Key>')
-        w.focus_force()
-        w.update_idletasks()
-        # c.frame.bodyWantsFocus(w,later=True,tag='utTailEnd')
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920114619.1:utTailEnd
-    #@+node:ekr.20050920085536.70:_tailEnd
-    def _tailEnd (self,w):
-        
-        '''This returns the tailEnd function that has been configure for the w parameter.'''
-        
-        k = self
-        func = k.tailEnds.get(w)
-        if func:
-            # g.trace(func)
-            return func(w)
-        else:
-            return 'break'
-    #@-node:ekr.20050920085536.70:_tailEnd
-    #@+node:ekr.20050920085536.71:setTailEnd
-    def setTailEnd (self,w,tailCall):
-    
-        '''This method sets a ending call that is specific for a particular Text widget.
-           Some environments require that specific end calls be made after a keystroke
-           or command is executed.'''
-    
-        k = self
-    
-        k.tailEnds [w] = tailCall
-    #@-node:ekr.20050920085536.71:setTailEnd
-    #@-node:ekr.20050920085536.69:tailEnd... (to be removed?)
     #@+node:ekr.20050920085536.4:Undoer...
     #@+at
     # Emacs requires an undo mechanism be added from the environment.
