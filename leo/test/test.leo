@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7655" clone_windows="0"/>
 <globals body_outline_ratio="0.568986568987">
-	<global_window_position top="76" left="314" height="819" width="961"/>
+	<global_window_position top="15" left="329" height="819" width="869"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -21,7 +21,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841" a="TV" annotate="7d71002e"><vh>Other tests...</vh>
+<v t="ekr.20040708205841" annotate="7d71002e"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
@@ -510,7 +510,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20050113094943"><vh>Unicode stuff</vh></v>
-<v t="ekr.20050119220832"><vh>@url file:.\..\leo\doc\LeoDocs.leo#Users Guide--&gt;Chapter 8: Customizing Leo</vh></v>
+<v t="ekr.20050119220832"><vh>@url '..\doc\LeoDocs.leo#Users Guide--&gt;Chapter 8: Customizing Leo'</vh></v>
 <v t="ekr.20050203085849"><vh>test local settings (c.redirect_execute_script_output_to_log_pane)</vh></v>
 <v t="ekr.20050211121701"><vh>Develop &amp; test g.removeExtraLws</vh>
 <v t="ekr.20050211121701.1"><vh>g.removeExtraLws</vh></v>
@@ -1312,72 +1312,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050803075926"><vh>sudoku puzzle</vh>
-<v t="ekr.20050804073824"><vh>&lt;&lt; define data &gt;&gt;</vh></v>
-<v t="ekr.20050911123109"><vh>&lt;&lt; 5-star puzzles &gt;&gt;</vh></v>
-<v t="ekr.20050911145104"><vh>&lt;&lt; 4-star puzzles &gt;&gt;</vh></v>
-<v t="ekr.20050811075608"><vh>&lt;&lt; old puzzles &gt;&gt;</vh></v>
-<v t="ekr.20050803075926.1"><vh>class sudokuClass</vh>
-<v t="ekr.20050803075926.2"><vh> ctor (main) &amp; helpers</vh>
-<v t="ekr.20050803202932"><vh>initFromData</vh></v>
-<v t="ekr.20050803075926.4"><vh>finishInit</vh></v>
-<v t="ekr.20050803121102"><vh>checkData</vh></v>
-<v t="ekr.20050804070733"><vh>check &amp; helper</vh>
-<v t="ekr.20050804071049"><vh>checkGroup</vh></v>
-</v>
-</v>
-<v t="ekr.20050804071242"><vh>printing &amp; dumping</vh>
-<v t="ekr.20050803080858"><vh>dump</vh></v>
-<v t="ekr.20050803121730"><vh>printData</vh></v>
-<v t="ekr.20050803200132"><vh>printCells</vh></v>
-</v>
-<v t="ekr.20050911112043.1"><vh>Utils</vh>
-<v t="ekr.20050803095202"><vh>groupNumber</vh></v>
-<v t="ekr.20050803075926.3"><vh>error</vh></v>
-<v t="ekr.20050803215553"><vh>trace</vh></v>
-<v t="ekr.20050803202932.1"><vh>isFinished</vh></v>
-</v>
-<v t="ekr.20050911094859"><vh>Guesses</vh>
-<v t="ekr.20050803203001"><vh>findBestGroup</vh></v>
-<v t="ekr.20050803210939"><vh>findGuesses</vh></v>
-<v t="ekr.20050804060706"><vh>isValidGuess</vh></v>
-</v>
-<v t="ekr.20050803075926.5"><vh>solve (main)</vh>
-<v t="ekr.20050911085945"><vh>&lt;&lt; guess an answer &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050911135016"><vh>group classes</vh>
-<v t="ekr.20050911101819"><vh>class squareGroupClass</vh>
-<v t="ekr.20050803121102.2"><vh> ctor</vh></v>
-<v t="ekr.20050911101819.1"><vh>__repr__ &amp; __str__</vh></v>
-<v t="ekr.20050803130829"><vh>finishCreate</vh></v>
-<v t="ekr.20050803161504"><vh>computeRelatedGroups</vh></v>
-</v>
-<v t="ekr.20050910194752"><vh>class colGroupClass</vh>
-<v t="ekr.20050910194752.1"><vh>ctor</vh></v>
-<v t="ekr.20050911102800"><vh>__repr__ &amp; __str__</vh></v>
-<v t="ekr.20050910195107"><vh>finishCreate</vh></v>
-</v>
-<v t="ekr.20050910194752.2"><vh>class rowGroupClass</vh>
-<v t="ekr.20050910194752.3"><vh>ctor</vh></v>
-<v t="ekr.20050911102800.1"><vh>__repr__ &amp; __str__</vh></v>
-<v t="ekr.20050910195107.1"><vh>finishCreate</vh></v>
-</v>
-</v>
-<v t="ekr.20050803075926.7"><vh>class cellClass</vh>
-<v t="ekr.20050911144450"><vh> birth</vh>
-<v t="ekr.20050803081438"><vh> ctor (cell)</vh></v>
-<v t="ekr.20050803200724"><vh>__repr__ &amp; __str__</vh></v>
-<v t="ekr.20050911113403"><vh>finishCreate</vh></v>
-</v>
-<v t="ekr.20050911112043.2"><vh>error &amp; trace</vh></v>
-<v t="ekr.20050911092707"><vh>reduce</vh></v>
-<v t="ekr.20050911111404"><vh>removeConflicts</vh></v>
-<v t="ekr.20050911094544"><vh>setValue</vh></v>
-<v t="ekr.20050911092707.1"><vh>unique</vh></v>
-<v t="ekr.20050803134436.1"><vh>valIsPossible</vh></v>
-</v>
-</v>
-</v>
 </v>
 <v t="EKR.20040613162717"><vh>Report newlines</vh></v>
 <v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
@@ -1474,6 +1408,74 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726112715"><vh>Multiline test</vh></v>
 <v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
 <v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
+<v t="ekr.20050803075926"><vh>sudoku puzzle</vh>
+<v t="ekr.20050804073824"><vh>&lt;&lt; define data &gt;&gt;</vh></v>
+<v t="ekr.20050911123109"><vh>&lt;&lt; 5-star puzzles &gt;&gt;</vh></v>
+<v t="ekr.20050911145104"><vh>&lt;&lt; 4-star puzzles &gt;&gt;</vh></v>
+<v t="ekr.20050811075608"><vh>&lt;&lt; 3-star puzzles &gt;&gt;</vh></v>
+<v t="ekr.20050929065040"><vh>&lt;&lt; 2-star puzzles &gt;&gt;</vh></v>
+<v t="ekr.20050927122648" a="E"><vh>&lt;&lt; 1-star puzzles &gt;&gt;</vh></v>
+<v t="ekr.20050803075926.1"><vh>class sudokuClass</vh>
+<v t="ekr.20050803075926.2"><vh> ctor (main) &amp; helpers</vh>
+<v t="ekr.20050803202932"><vh>initFromData</vh></v>
+<v t="ekr.20050803075926.4"><vh>finishInit</vh></v>
+<v t="ekr.20050803121102"><vh>checkData</vh></v>
+<v t="ekr.20050804070733"><vh>check &amp; helper</vh>
+<v t="ekr.20050804071049"><vh>checkGroup</vh></v>
+</v>
+</v>
+<v t="ekr.20050804071242"><vh>printing &amp; dumping</vh>
+<v t="ekr.20050803080858"><vh>dump</vh></v>
+<v t="ekr.20050803121730"><vh>printData</vh></v>
+<v t="ekr.20050803200132"><vh>printCells</vh></v>
+</v>
+<v t="ekr.20050911112043.1"><vh>Utils</vh>
+<v t="ekr.20050803095202"><vh>groupNumber</vh></v>
+<v t="ekr.20050803075926.3"><vh>error</vh></v>
+<v t="ekr.20050803215553"><vh>trace</vh></v>
+<v t="ekr.20050803202932.1"><vh>isFinished</vh></v>
+</v>
+<v t="ekr.20050911094859"><vh>Guesses</vh>
+<v t="ekr.20050803203001"><vh>findBestGroup</vh></v>
+<v t="ekr.20050803210939"><vh>findGuesses</vh></v>
+<v t="ekr.20050804060706"><vh>isValidGuess</vh></v>
+</v>
+<v t="ekr.20050803075926.5"><vh>solve (main)</vh>
+<v t="ekr.20050911085945"><vh>&lt;&lt; guess an answer &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050911135016"><vh>group classes</vh>
+<v t="ekr.20050911101819"><vh>class squareGroupClass</vh>
+<v t="ekr.20050803121102.2"><vh> ctor</vh></v>
+<v t="ekr.20050911101819.1"><vh>__repr__ &amp; __str__</vh></v>
+<v t="ekr.20050803130829"><vh>finishCreate</vh></v>
+<v t="ekr.20050803161504"><vh>computeRelatedGroups</vh></v>
+</v>
+<v t="ekr.20050910194752"><vh>class colGroupClass</vh>
+<v t="ekr.20050910194752.1"><vh>ctor</vh></v>
+<v t="ekr.20050911102800"><vh>__repr__ &amp; __str__</vh></v>
+<v t="ekr.20050910195107"><vh>finishCreate</vh></v>
+</v>
+<v t="ekr.20050910194752.2"><vh>class rowGroupClass</vh>
+<v t="ekr.20050910194752.3"><vh>ctor</vh></v>
+<v t="ekr.20050911102800.1"><vh>__repr__ &amp; __str__</vh></v>
+<v t="ekr.20050910195107.1"><vh>finishCreate</vh></v>
+</v>
+</v>
+<v t="ekr.20050803075926.7"><vh>class cellClass</vh>
+<v t="ekr.20050911144450"><vh> birth</vh>
+<v t="ekr.20050803081438"><vh> ctor (cell)</vh></v>
+<v t="ekr.20050803200724"><vh>__repr__ &amp; __str__</vh></v>
+<v t="ekr.20050911113403"><vh>finishCreate</vh></v>
+</v>
+<v t="ekr.20050911112043.2"><vh>error &amp; trace</vh></v>
+<v t="ekr.20050911092707"><vh>reduce</vh></v>
+<v t="ekr.20050911111404"><vh>removeConflicts</vh></v>
+<v t="ekr.20050911094544"><vh>setValue</vh></v>
+<v t="ekr.20050911092707.1"><vh>unique</vh></v>
+<v t="ekr.20050803134436.1"><vh>valIsPossible</vh></v>
+</v>
+</v>
+</v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
@@ -1527,11 +1529,11 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050809091430.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
 </v>
 </v>
+<v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20050911112310"><vh>@button save</vh></v>
 <v t="ekr.20041001203411.1"><vh>@@script hi</vh></v>
 <v t="ekr.20041113113555"><vh>@@button check spelling...</vh></v>
-<v t="ekr.20041001194357"><vh>@button unit test</vh></v>
-<v t="ekr.20041125145818.1"><vh>@button settings...</vh></v>
+<v t="ekr.20041125145818.1"><vh>@@button settings...</vh></v>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
 <v t="ekr.20050331070207"><vh>@@ button golf</vh></v>
@@ -2322,6 +2324,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
+<v t="ekr.20050927082642" a="TV"><vh>Text tests</vh></v>
+<v t="ekr.20050930124917"><vh>outlineToClipboard</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -16970,14 +16974,18 @@ def loose ( a , b ) :
     while a != 2 :
         a = b + c * d
 </t>
-<t tx="ekr.20050803075926"># Solves the sudoku puzzle.
+<t tx="ekr.20050803075926">@tabwidth -4
+
+# Solves the sudoku puzzle.
 
 import copy
 
 digits = '123456789' # valid digits.
 
 if 0:
-    &lt;&lt; old puzzles &gt;&gt;
+    &lt;&lt; 1-star puzzles &gt;&gt;
+    &lt;&lt; 2-star puzzles &gt;&gt;
+    &lt;&lt; 3-star puzzles &gt;&gt;
     &lt;&lt; 4-star puzzles &gt;&gt;
     &lt;&lt; 5-star puzzles &gt;&gt;
 
@@ -16989,7 +16997,8 @@ print '-' * 40
 
 solver = sudokuClass(data=data)
 if not solver.errors:
-    solver.solve()</t>
+    solver.solve()
+</t>
 <t tx="ekr.20050803075926.1">class sudokuClass:
     
     '''A class to solve the sudoku puzzle.'''
@@ -17362,17 +17371,17 @@ __str__ = __repr__</t>
     '',
 ) 
 
-data = ( 
-    'x6x29xx8x',
-    'xx8xxxx3x',
-    'x1xx78xxx',
-    'x217x9xx8',
-    '6xxxxxxx3',
-    '7xx6x492x',
-    'xxx12xx4x',
-    'x7xxxx3xx',
-    'x5xx86x7x')
-</t>
+data = (
+    'x6x3x2xxx',
+    '42x18xxxx',
+    'x19xx7xxx',
+    'x8xx3xxxx',
+    '2x6xxx5x7',
+    'xxxx2xx6x',
+    'xxx2xx17x',
+    'xxxx91x53',
+    'xxx5x4x2x',
+)</t>
 <t tx="ekr.20050805150320">import leoPlugins
 
 rst3 = leoPlugins.getPluginModule('rst3')
@@ -17433,7 +17442,19 @@ Generates 'http-node-marker-'+str(number), where number is config.node_counter
 <t tx="ekr.20050809091430.6"></t>
 <t tx="ekr.20050809091430.8"></t>
 <t tx="ekr.20050810095252"></t>
-<t tx="ekr.20050811075608">data = ( # 8/3: solvable.
+<t tx="ekr.20050811075608">data = (
+    '8xxx9x21x',
+    'x9x4xxxxx',
+    'xx58x7xx9',
+    '7xx1xx9xx',
+    'xxxx5xxxx',
+    'xx6xx3x28',
+    '6xx5x93xx',
+    'xxxxx6x7x',
+    'x48x1xxx6',
+)
+
+data = ( # 8/3: solvable.
     'x5xx9xxxx',
     'xx48xxxx9',
     'xxx1x728x',
@@ -17455,28 +17476,6 @@ data = ( # 1 stars
     '57x1xx2xx',
     '928xxxx6x')
     
-data = ( # 8/6 2 stars
-    '2x6xxxx49',
-    'x37xx9xxx',
-    '1xx7xxxx6',
-    'xxx58x9xx',
-    '7x5xxx8x4',
-    'xx9x62xxx',
-    '9xxxx4xx1',
-    'xxx3xx49x',
-    '41xxxx2x8')
-    
-data = ( # 8/10 1 star
-    'x6xxx5x19',
-    'x9x34xxxx',
-    'x8x96x5xx',
-    'xxx8x93x1',
-    '8x9xxx4x7',
-    '2x17x4xxx',
-    'xx3x86x4x',
-    'xxxx27x6x',
-    '47x5xxx8x')
-    
 data = (
     '6xx75x1xx',
     '8xxxx34xx',
@@ -17488,40 +17487,6 @@ data = (
     'xx65xxxx1',
     'xx5x42xx3') # solvable.
     
-data = (
-    '9xx7x3xx6',
-    'x87xx2xxx',
-    '15xxxxx9x',
-    'xxx6xx82x',
-    'xx8xxx1xx',
-    'x26xx8xxx',
-    'x6xxxxx31',
-    'xxx4xx97x',
-    '4xx2x1xx8') # 8/30 2 stars
-
-data = (
-    'xx2xx7xx9',
-    'x8x249x3x',
-    'x31xx572x',
-    'xx9xx8xx1',
-    'x65xxx847',
-    '4xx7xx2xx',
-    'x931xx65x',
-    'x5x862x73',
-    '8xx5xx4xx') # 1 star
-
-data = (
-    '8xx3xxx7x',
-    'xx57xxxxx',
-    '9xx165x3x',
-    '34xxxxxx9',
-    'xxx5x4xxx',
-    '7xxxxxx83',
-    'x8x253xx4',
-    'xxxxx65xx',
-    'x2xxx1xx6',
-) # 9/6/ 2 stars
-
 data = (
     'xxxxx6xx5',
     'xx41xx8xx',
@@ -17553,7 +17518,19 @@ data = (
     'xx7x4xxxx',
     'x3xxxxxxx',
     '8x2xx319x',
-    '94x87xxxx') # 9/9/05 3 stars</t>
+    '94x87xxxx') # 9/9/05 3 stars
+        
+data = (
+    '8xxxxxxxx',
+    'x915x36xx',
+    'x62xxxx8x',
+    'xx9xx8xxx',
+    'x752x984x',
+    'xxx4xx9xx',
+    'x1xxxx42x',
+    'xx49x276x',
+    'xxx7xxxx5',
+)</t>
 <t tx="ekr.20050811141217">@language python
 
 @ @rst-options
@@ -22496,5 +22473,132 @@ part 2, line 2, no newline
 <t tx="ekr.20050917082428.3">part 3, line 1
 part 3, line 2, newline
 </t>
+<t tx="ekr.20050927082642">@tabwidth -4
+
+    A first sentence. A second sentence. This is a test of kill sentence. Here
+    is another sentence.
+    and a third.
+    abc
+pdq
+xyz
+if 1:</t>
+<t tx="ekr.20050927122648">data = (
+    'x4735xxx9',
+    'x5x8x93xx',
+    'xx84xx12x',
+    '12x57xxx8',
+    '7x5xxx2x6',
+    '3xxx82x17',
+    'x12xx59xx',
+    'xx92x6x4x',
+    '4xxx1875x',
+)
+
+data = (
+    '19xxx84xx',
+    '7xxx9xxxx',
+    'x5xxxx986',
+    'x19xxxx6x',
+    '8xxxxxxx5',
+    'x6xxxx72x',
+    '684xxxx3x',
+    'xxxx2xxx7',
+    'xx26xxx14',
+)
+
+data = (
+    'xx2xx7xx9',
+    'x8x249x3x',
+    'x31xx572x',
+    'xx9xx8xx1',
+    'x65xxx847',
+    '4xx7xx2xx',
+    'x931xx65x',
+    'x5x862x73',
+    '8xx5xx4xx') # 1 star
+        
+data = ( # 8/10 1 star
+    'x6xxx5x19',
+    'x9x34xxxx',
+    'x8x96x5xx',
+    'xxx8x93x1',
+    '8x9xxx4x7',
+    '2x17x4xxx',
+    'xx3x86x4x',
+    'xxxx27x6x',
+    '47x5xxx8x')</t>
+<t tx="ekr.20050929065040">data = (
+    'xxx395xxx',
+    'xx5xx89x2',
+    'xxxx2xxx5',
+    '6x2xxxxx7',
+    'x84xxx53x',
+    '7xxxxx1x6',
+    '3xxx6xxxx',
+    '5x62xx7xx',
+    'xxx831xxx',
+)
+
+data = ( # 8/6 2 stars
+    '2x6xxxx49',
+    'x37xx9xxx',
+    '1xx7xxxx6',
+    'xxx58x9xx',
+    '7x5xxx8x4',
+    'xx9x62xxx',
+    '9xxxx4xx1',
+    'xxx3xx49x',
+    '41xxxx2x8')
+        
+data = (
+    '9xx7x3xx6',
+    'x87xx2xxx',
+    '15xxxxx9x',
+    'xxx6xx82x',
+    'xx8xxx1xx',
+    'x26xx8xxx',
+    'x6xxxxx31',
+    'xxx4xx97x',
+    '4xx2x1xx8') # 8/30 2 stars
+        
+data = (
+    '8xx3xxx7x',
+    'xx57xxxxx',
+    '9xx165x3x',
+    '34xxxxxx9',
+    'xxx5x4xxx',
+    '7xxxxxx83',
+    'x8x253xx4',
+    'xxxxx65xx',
+    'x2xxx1xx6',
+) # 9/6/ 2 stars
+
+data = ( 
+    'x6x29xx8x',
+    'xx8xxxx3x',
+    'x1xx78xxx',
+    'x217x9xx8',
+    '6xxxxxxx3',
+    '7xx6x492x',
+    'xxx12xx4x',
+    'x7xxxx3xx',
+    'x5xx86x7x') # 2 stars</t>
+<t tx="ekr.20050930124917">result = []
+firstLevel = p.level()
+
+for p in p.self_and_subtree_iter():
+    head = p.moreHead(firstLevel)
+    head = g.toEncodedString(head,'ascii',reportErrors=True)
+    result.append(head)
+    body = p.moreBody() # Inserts escapes for '+' and '-' characters.
+    if body:
+        body = g.toEncodedString(body,'ascii',reportErrors=True)
+        result.append(body)
+
+result = '\n'.join(result) + '\n'
+# print result
+w = c.frame.body.bodyCtrl
+w.clipboard_clear()
+w.clipboard_append(result)</t>
 </tnodes>
 </leo_file>
