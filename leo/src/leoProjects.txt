@@ -11645,15 +11645,16 @@ def masterCommand (self,event,func,stroke,general):
         return 'break'
 
     if func:
-        k.commandName = k.inverseCommandsDict.get(func)
+        commandName = k.inverseCommandsDict.get(func)
         k.previousStroke = stroke
         func(event)
-        k.endCommand(event,k.commandName,tag='masterCommand')
+        k.endCommand(event,commandName,tag='masterCommand')
         return 'break'
 
     else:
         c.frame.body.onBodyKey(event)
         return None # Not 'break'
+#@nonl
 #@+node:ekr.20050920085536.67:<< add character to history >>
 # Don't add multiple special characters to history.
 

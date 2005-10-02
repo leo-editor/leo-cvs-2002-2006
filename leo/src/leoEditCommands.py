@@ -879,7 +879,7 @@ class controlCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050922110030:advertizedUndo
     def advertizedUndo (self,event):
     
-        self.doUndo(event)
+        self.c.undoer.undo()
     #@nonl
     #@-node:ekr.20050922110030:advertizedUndo
     #@+node:ekr.20050920084036.160:executeSubprocess
@@ -920,6 +920,7 @@ class controlCommandsClass (baseEditCommandsClass):
                 k.getArg(event,'shell-command',1,self.shellCommand)
             else:
                 command = k.arg
+                k.commandName = 'shell-command: %s' % command
                 k.clearState()
                 self.executeSubprocess(event,command,input=None)
         else:
@@ -937,6 +938,7 @@ class controlCommandsClass (baseEditCommandsClass):
             finally:
                 if is1:
                     command = w.get(is1,is2)
+                    k.commandName = 'shell-command: %s' % command
                     self.executeSubprocess(event,command,input=None)
                 else:
                     k.clearState()
@@ -1693,6 +1695,7 @@ class editCommandsClass (baseEditCommandsClass):
             k.getArg(event,'flush-lines',1,self.flushLines)
         else:
             k.clearState()
+            k.resetLabel()
             self.linesHelper(event,k.arg,'flush')
     #@nonl
     #@-node:ekr.20050920084036.90:flushLines
@@ -1710,6 +1713,7 @@ class editCommandsClass (baseEditCommandsClass):
             k.getArg(event,'keep-lines',1,self.keepLines)
         else:
             k.clearState()
+            k.resetLabel()
             self.linesHelper(event,k.arg,'keep')
     #@nonl
     #@-node:ekr.20051002095724:keepLines
