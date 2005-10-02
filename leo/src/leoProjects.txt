@@ -11597,17 +11597,17 @@ To do: remove the cut/copy/paste bindings in tkBody.createBindings.
 #@nonl
 #@+node:ekr.20050920085536.65: masterCommand
 def masterCommand (self,event,func,stroke,general):
-    
+
     '''This is the central routing method of the Emacs class.
     All commands and keystrokes pass through here.'''
-    
+
     # Note: the _L symbols represent *either* special key.
     k = self ; c = k.c
     special = event.keysym in ('Control_L','Alt_L','Shift_L')
     k.stroke = stroke
 
     inserted = not special or (
-        not general and (len(k.keysymHistory) == 0 or k.keysymHistory [0] != event.keysym))
+        not general and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
 
     if inserted:
         # g.trace('general',general,event.keysym)
@@ -11619,17 +11619,17 @@ def masterCommand (self,event,func,stroke,general):
     if stroke == '<Control-g>':
         k.previousStroke = stroke
         k.keyboardQuit(event)
-        k.handleEndCommand (event,'keyboard-quit')
+        k.endCommand(event,'keyboard-quit')
         return 'break'
 
     if k.inState():
         k.previousStroke = stroke
-        return k.callStateFunction(event)
+        k.callStateFunction(event) # Calls end-command.
+        return 'break'
 
-    if k.hasKeyStroke(stroke):
-        g.trace('hasKeyStroke')
+    if k.keystrokeFunctionDict.has_key(stroke):
         k.previousStroke = stroke
-        k.callKeystrokeFunction(event)
+        k.callKeystrokeFunction(event) # Calls end-command
         return 'break'
 
     if k.regx.iter:
@@ -11640,16 +11640,17 @@ def masterCommand (self,event,func,stroke,general):
             return 'break'
 
     if k.abbrevOn:
-        if c.abbrevCommands._expandAbbrev(event):
-            return 'break'
+        c.abbrevCommands.expandAbbrev(event)
+        k.endCommand(event,'masterCommand:expandAbbrev')
+        return 'break'
 
     if func:
-        k.commandName = k.inverseCommandsDict.get(func,'unknown-command')
+        k.commandName = k.inverseCommandsDict.get(func)
         k.previousStroke = stroke
-        rt = func(event)
-        k.handleEndCommand(event,k.commandName)
-        return 'break' # was rt
-    
+        func(event)
+        k.endCommand(event,k.commandName,tag='masterCommand')
+        return 'break'
+
     else:
         c.frame.body.onBodyKey(event)
         return None # Not 'break'
