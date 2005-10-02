@@ -6,20 +6,75 @@
 #@+node:ekr.20050921094025:To do (New key handling)
 @nocolor
 
-- (done) Remove tailEnd and return 'break's.  They are no longer needed.
-- (done) Replaced stopControlX by keyboardQuit.
-- (done) Rewrite state handling for search commands.
-- (done) Call endCommand after every keystroke.
-- (done) Set k.commandName to include args in keep-lines, shell-command, etc.
-- (done) removed k.doUndo.
+- Tab completion for file commands.
 
-- Remove last lambda's (See child)
-- Revise all query-replace code.
-- Revise macro code, rectangle code.
-* Use standard Emacs names for all functions.
+- Extend k.commandName for commands that
+    A) alter a widget
+    B) use arguments
+
+* Test all commands:
+    - Revise all query-replace code.
+    - Revise macro code, rectangle code.
+#@nonl
+#@+node:ekr.20051001155426:Crash in undo
+exception executing command
+Traceback (most recent call last):
+
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 213, in doCommand
+    command()
+
+  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1571, in undo
+    u.undoHelper()
+
+  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1720, in undoMove
+    u.p.moveToNthChildOf(u.oldParent,u.oldN)
+
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 2764, in moveToNthChildOf
+    p.unlink()
+
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 3307, in unlink
+    assert(parent.v in p.v.directParents())
+
+AssertionError
+
+#@-node:ekr.20051001155426:Crash in undo
+#@+node:ekr.20050928144501:Before first release
+** Redo bindings.
+    - Ignore shortcut entry in menu tables.
+    - Create shortcut dict:  keys are emacs-command names, values are shortcut.
+    - Define defaultEmacsBindings,defaultVimBindings,defaultLeoBindings
+    - Allow any shortcut to be overridden using leoSettings.leo.
+    - Don't bind menu items: let the key handler dispatch the menu commands.
+    - Remove the cut/copy/paste bindings in tkBody.createBindings.
+
+* Use leoSettings to set all new bindings.
+
+- Complete menu work.
+#@nonl
+#@-node:ekr.20050928144501:Before first release
+#@+node:ekr.20050925105522:Before second release
+- Remove last lambda's (See child).
+    - Revise abbreviationDispatch...
+
+- Use getArg for most commands.
+
+* Allow the user to specify alternatives for all keys.
+    - User-specified keys for alt-x, control-c, etc.
+    - Make sure the code can support vim as well as emacs.
+
+- Implement set-variable.
+    Use dict to translate between emacs name and Python name.
+
+- Create new kinds of commands dispatchers: vim, tree, etc.
+
+- Use standard Emacs names for all functions.
+
 - Allow numeric prefixes before all commands.
 #@nonl
+#@-node:ekr.20050925105522:Before second release
 #@+node:ekr.20050930130346.1:(Remove lambdas)
+@color
+#@nonl
 #@+node:ekr.20050923183932:setControlXFunctions MUST BE GENERALIZED
 def setControlXFunctions (self):
 
@@ -61,65 +116,6 @@ def setControlXFunctions (self):
 #@nonl
 #@-node:ekr.20050923183932:setControlXFunctions MUST BE GENERALIZED
 #@-node:ekr.20050930130346.1:(Remove lambdas)
-#@+node:ekr.20051001155426:Crash in undo
-exception executing command
-Traceback (most recent call last):
-
-  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 213, in doCommand
-    command()
-
-  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1571, in undo
-    u.undoHelper()
-
-  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1720, in undoMove
-    u.p.moveToNthChildOf(u.oldParent,u.oldN)
-
-  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 2764, in moveToNthChildOf
-    p.unlink()
-
-  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 3307, in unlink
-    assert(parent.v in p.v.directParents())
-
-AssertionError
-
-#@-node:ekr.20051001155426:Crash in undo
-#@+node:ekr.20050928144501:Before first release
-** Redo bindings.
-    - Ignore shortcut entry in menu tables.
-    - Create shortcut dict:  keys are emacs-command names, values are shortcut.
-    - Define defaultEmacsBindings,defaultVimBindings,defaultLeoBindings
-    - Allow any shortcut to be overridden using leoSettings.leo.
-
-* Use leoSettings to set all new bindings.
-
-- Don't bind menu items: let the key handler dispatch the menu commands.
-
-- Complete menu work.
-
-- Remove the cut/copy/paste bindings in tkBody.createBindings.
-
-- Tab completion for file commands.
-#@nonl
-#@-node:ekr.20050928144501:Before first release
-#@+node:ekr.20050925105522:Before second release
-- Use getArg for most commands.
-
-- word/re search code must be improved.
-
-** Rewrite lines commands in editCommandsClass.
-
-* Test subprocessor.  The state is messed up.
-
-* Allow the user to specify alternatives for all keys.
-    - User-specified keys for alt-x, control-c, etc.
-    - Make sure the code can support vim as well as emacs.
-
-- Implement set-variable.
-    Use dict to translate between emacs name and Python name.
-
-- Create new kinds of commands dispatchers: vim, tree, etc.
-#@nonl
-#@-node:ekr.20050925105522:Before second release
 #@+node:ekr.20050928144501.1:Before 4.4 final
 ** Mouseless Leo: control all Leo commands & widgets using only key commands.
 
