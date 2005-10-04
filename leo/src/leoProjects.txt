@@ -11595,10 +11595,10 @@ The fix was to eliminate the binding to <Key> in tkBody.createBindings.
 
 To do: remove the cut/copy/paste bindings in tkBody.createBindings.
 #@nonl
-#@+node:ekr.20050920085536.65: masterCommand
+#@+node:ekr.20050920085536.65: masterCommand & helpers
 def masterCommand (self,event,func,stroke,general):
 
-    '''This is the central routing method of the Emacs class.
+    '''This is the central dispatching method.
     All commands and keystrokes pass through here.'''
 
     # Note: the _L symbols represent *either* special key.
@@ -11616,8 +11616,9 @@ def masterCommand (self,event,func,stroke,general):
     if c.macroCommands.macroing:
         << handle macro >>
 
-    if stroke == '<Control-g>':
+    if stroke == k.abortAllModesKey: # '<Control-g>'
         k.previousStroke = stroke
+        k.clearState()
         k.keyboardQuit(event)
         k.endCommand(event,'keyboard-quit')
         return 'break'
@@ -11682,7 +11683,35 @@ else:
    k.recordKBDMacro(event,stroke)
 #@nonl
 #@-node:ekr.20050920085536.66:<< handle macro >>
-#@-node:ekr.20050920085536.65: masterCommand
+#@+node:ekr.20050923172809.1:callStateFunction
+def callStateFunction (self,event):
+    
+    k = self
+    
+    # g.trace(k.stateKind,k.state)
+    
+    if k.state.kind:
+        if k.state.handler:
+            k.state.handler(event)
+            k.endCommand(event,k.commandName,tag='callStateFunction')
+        else:
+            g.es_print('no state function for %s' % (k.state.kind),color='red')
+    
+    return 'break'
+#@nonl
+#@-node:ekr.20050923172809.1:callStateFunction
+#@+node:ekr.20050923174229.3:callKeystrokeFunction
+def callKeystrokeFunction (self,event):
+    
+    k = self
+    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
+
+    commandName = k.inverseCommandsDict.get(func)
+    func(event)
+    k.endCommand(event,commandName,tag='callKeystrokeFunction')
+#@nonl
+#@-node:ekr.20050923174229.3:callKeystrokeFunction
+#@-node:ekr.20050920085536.65: masterCommand & helpers
 #@+node:ekr.20031218072017.1330:onBodyKey
 def onBodyKey (self,event,undoType='Typing'):
     
