@@ -396,12 +396,12 @@ class keyHandlerClass:
         k = self ; c = k.c
         
         self.keystrokeFunctionDict = {
-            '<Control-s>':      ( 2, c.searchCommands.startIncremental ),
-            '<Control-r>':      ( 2, c.searchCommands.startIncremental ),
-            '<Alt-g>':          ( 1, c.editCommands.gotoLine ),
-            '<Alt-z>':          ( 1, c.killBufferCommands.zapToCharacter ),
-            '<Alt-percent>':    ( 1, c.queryReplaceCommands.masterQR ),
-            '<Control-Alt-w>':  ( 1, lambda event: 'break' ),
+            '<Control-s>':      (2, c.searchCommands.startIncremental),
+            '<Control-r>':      (2, c.searchCommands.startIncremental),
+            '<Alt-g>':          (1, c.editCommands.gotoLine),
+            '<Alt-z>':          (1, c.killBufferCommands.zapToCharacter),
+            '<Alt-percent>':    (1, c.queryReplaceCommands.masterQR),
+            '<Control-Alt-w>':  (1, lambda event: 'break'),
         }
     
         self.abbreviationFuncDict = {
@@ -410,23 +410,18 @@ class keyHandlerClass:
         }
         
         self.rCommandDict = {
-            'space': c.registerCommands.pointToRegister,
-            'i': c.registerCommands.insertRegister,
-            'j': c.registerCommands.jumpToRegister,
-            'n': c.registerCommands.numberToRegister,
-            'r': c.rectangleCommands.enterRectangleState,
-            's': c.registerCommands.copyToRegister,
-            'v': c.registerCommands.viewRegister, # was 'view'
-            'plus': c.registerCommands.incrementRegister,
+            'space':    c.registerCommands.pointToRegister,
+            'a':        c.registerCommands.appendToRegister,
+            'i':        c.registerCommands.insertRegister,
+            'j':        c.registerCommands.jumpToRegister,
+            'n':        c.registerCommands.numberToRegister,
+            'p':        c.registerCommands.prependToRegister,
+            'r':        c.rectangleCommands.enterRectangleState,
+            's':        c.registerCommands.copyToRegister,
+            'v':        c.registerCommands.viewRegister,
+            'plus':     c.registerCommands.incrementRegister,
         }
-    
-        if 0: # No longer used.
-            self.register_commands = {
-                # These are values of c.registerCommands.registerMode.
-                1: c.registerCommands.setNextRegister,
-                2: c.registerCommands.executeRegister,
-            }
-    
+        
         self.variety_commands = {
             # Keys are Tk keysyms.
             'period':       c.editCommands.setFillPrefix,
@@ -1065,13 +1060,15 @@ class keyHandlerClass:
     #@+node:ekr.20051004102314:rCommand
     def rCommand (self,event):
         
-        k = self ; state = k.getState('r-command')
+        k = self ; state = k.getState('r-command') ; ch = event.keysym
         if state == 0:
             k.setLabel ('quick-command r: ',protect=True)
             k.setState('r-command',1,k.rCommand)
+        elif ch in ('Control_L','Alt_L','Shift_L'):
+            return
         else:
             k.clearState()
-            ch = event.keysym
+            
             # g.trace(repr(ch))
             func = k.rCommandDict.get(ch)
             if func:

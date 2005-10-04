@@ -109,18 +109,19 @@ class baseEditCommandsClass:
     #@+node:ekr.20050920084036.250:_checkIfRectangle
     def _checkIfRectangle (self,event):
     
-        k = self.k
+        k = self.k ; key = event.keysym.lower()
+        
+        val = self.registers.get(key)
     
-        if self.registers.has_key(event.keysym):
-            if isinstance(self.registers[event.keysym],list):
-                k.keyboardQuit(event)
-                k.setLabelGrey("Register contains Rectangle, not text")
-                return True
+        if val and type(val) == type([]):
+            k.clearState()
+            k.setLabelGrey("Register contains Rectangle, not text")
+            return True
     
         return False
     #@nonl
     #@-node:ekr.20050920084036.250:_checkIfRectangle
-    #@+node:ekr.20050920084036.251:_ToReg
+    #@+node:ekr.20050920084036.251:_ToReg (not used)
     def _ToReg (self,event,which):
     
         if not self._chckSel(event):
@@ -141,7 +142,30 @@ class baseEditCommandsClass:
                 txt = rtxt + txt
             self.registers [event.keysym] = txt
     #@nonl
-    #@-node:ekr.20050920084036.251:_ToReg
+    #@-node:ekr.20050920084036.251:_ToReg (not used)
+    #@+node:ekr.20050920084036.10:contRanges
+    def contRanges (self,w,range):
+    
+        ranges = w.tag_ranges(range)
+        t1 = w.get(ranges[0],ranges[-1])
+        t2 = []
+        for z in xrange(0,len(ranges),2):
+            z1 = z + 1
+            t2.append(w.get(ranges[z],ranges[z1]))
+        t2 = '\n'.join(t2)
+        return t1 == t2
+    #@-node:ekr.20050920084036.10:contRanges
+    #@+node:ekr.20050920084036.233:getRectanglePoints
+    def getRectanglePoints (self,event):
+    
+        w = event.widget
+        i = w.index('sel.first')
+        i2 = w.index('sel.last')
+        r1, r2 = i.split('.')
+        r3, r4 = i2.split('.')
+        return int(r1), int(r2), int(r3), int(r4)
+    #@nonl
+    #@-node:ekr.20050920084036.233:getRectanglePoints
     #@+node:ekr.20050920084036.9:inRange
     def inRange (self,w,range,l='',r=''):
     
@@ -155,28 +179,6 @@ class baseEditCommandsClass:
         return False
     #@nonl
     #@-node:ekr.20050920084036.9:inRange
-    #@+node:ekr.20050920084036.10:contRanges
-    def contRanges (self,w,range):
-    
-        ranges = w.tag_ranges(range)
-        t1 = w.get(ranges[0],ranges[-1])
-        t2 = []
-        for z in xrange(0,len(ranges),2):
-            z1 = z + 1
-            t2.append(w.get(ranges[z],ranges[z1]))
-        t2 = '\n'.join(t2)
-        return t1 == t2
-    #@-node:ekr.20050920084036.10:contRanges
-    #@+node:ekr.20050920084036.11:testinrange
-    def testinrange (self,w):
-    
-        if not self.inRange(w,'sel') or not self.contRanges(w,'sel'):
-            self.removeRKeys(w)
-            return False
-        else:
-            return True
-    #@nonl
-    #@-node:ekr.20050920084036.11:testinrange
     #@+node:ekr.20051002090441:keyboardQuit
     def keyboardQuit (self):
         
@@ -189,6 +191,16 @@ class baseEditCommandsClass:
         return self.k.manufactureKeyPress(event,keysym)
     #@nonl
     #@-node:ekr.20050929170812:manufactureKeyPress
+    #@+node:ekr.20050920084036.11:testinrange
+    def testinrange (self,w):
+    
+        if not self.inRange(w,'sel') or not self.contRanges(w,'sel'):
+            self.removeRKeys(w)
+            return False
+        else:
+            return True
+    #@nonl
+    #@-node:ekr.20050920084036.11:testinrange
     #@-node:ekr.20050929161635:Helpers
     #@-others
 #@nonl
@@ -3777,9 +3789,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20051004111226:copyRectangleToRegister
     def copyRectangleToRegister (self,event):
         
-        if self.check(event):
-            self.c.registerCommands.copyRectangleToRegister(event)
-    #@nonl
+        self.c.registerCommands.copyRectangleToRegister(event)
     #@-node:ekr.20051004111226:copyRectangleToRegister
     #@+node:ekr.20050920084036.227:deleteRectangle
     def deleteRectangle (self,event):
@@ -3873,17 +3883,6 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.232:stringRectangle
     #@-node:ekr.20050920084036.224:Entries
-    #@+node:ekr.20050920084036.233:getRectanglePoints
-    def getRectanglePoints (self,event):
-    
-        w = event.widget
-        i = w.index('sel.first')
-        i2 = w.index('sel.last')
-        r1, r2 = i.split('.')
-        r3, r4 = i2.split('.')
-        return int(r1), int(r2), int(r3), int(r4)
-    #@nonl
-    #@-node:ekr.20050920084036.233:getRectanglePoints
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.221:class rectangleCommandsClass
@@ -3938,20 +3937,20 @@ class registerCommandsClass (baseEditCommandsClass):
         }
     #@nonl
     #@-node:ekr.20050920084036.247: getPublicCommands
-    #@+node:ekr.20050920084036.252:addRegisterItems
+    #@+node:ekr.20050920084036.252:addRegisterItems (Not used!)
     def addRegisterItems( self ):
         
         methodDict = {
-            's':        self.copyToRegister,
-            'i':        self.insertRegister,
-            'n':        self.numberToRegister,
             'plus':     self.incrementRegister,
             'space':    self.pointToRegister,
-            'j':        self.jumpToRegister,
             'a':        self.appendToRegister,
+            'i':        self.insertRegister,
+            'j':        self.jumpToRegister,
+            'n':        self.numberToRegister,
             'p':        self.prependToRegister,
             'r':        self.copyRectangleToRegister,
-            'view' :    self.viewRegister,
+            's':        self.copyToRegister,
+            'v' :       self.viewRegister,
         }    
         
         helpDict = {
@@ -3964,76 +3963,95 @@ class registerCommandsClass (baseEditCommandsClass):
             'space':'point to register',
             'j':    'jump to register',
             'r':    'rectangle to register',
-            'view': 'view register',
+            'v': 'view register',
         }
     
         return methodDict, helpDict
     #@nonl
-    #@-node:ekr.20050920084036.252:addRegisterItems
+    #@-node:ekr.20050920084036.252:addRegisterItems (Not used!)
     #@-node:ekr.20051004095209:Birth
     #@+node:ekr.20051004123217:check
-    def check (self,event):
+    def check (self,event,warning='No text selected'):
     
-        return self._chckSel(event,'No text selected')
+        return self._chckSel(event,warning)
     #@nonl
     #@-node:ekr.20051004123217:check
-    #@+node:ekr.20050920084036.236:Entry points (revise)
-    if 0:
-        def copyToRegister (self,event):
-            self.setNextRegister(event,'s')
-            
-        def copyRectangleToRegister (self,event):
-            self.setNextRegister(event,'r')
-            
-        def incrementRegister (self,event):
-            self.setNextRegister(event,'plus')
-            
-        def insertRegister (self,event):
-            self.setNextRegister(event,'i')
-            
-        def jumpToRegister (self,event):
-            self.setNextRegister(event,'j')
-            
-        def numberToRegister (self,event):
-            self.setNextRegister(event,'n')
-            
-        # def pointToRegister (self,event):
-            # self.setNextRegister(event,'space')
-            
-        def viewRegister (self,event):
-            self.setNextRegister(event,'view')
-    #@nonl
-    #@+node:ekr.20050920084036.237:appendToRegister  (todo)
+    #@+node:ekr.20050920084036.236:Entries...
+    #@+node:ekr.20050920084036.238:appendToRegister
     def appendToRegister (self,event):
     
-        k = self.k
-        ## self.setNextRegister(event,'a')
-        # k.setState('quick-command',1)
-    #@-node:ekr.20050920084036.237:appendToRegister  (todo)
-    #@+node:ekr.20050920084036.238:prependToRegister (todo)
-    def prependToRegister (self,event):
-    
-        k = self.k
-        ## self.setNextRegister(event,'p')
-        k.setState('quick-command',0)
-    #@nonl
-    #@-node:ekr.20050920084036.238:prependToRegister (todo)
-    #@+node:ekr.20050920084036.239:copyRectangleToRegister  (todo)
-    def copyRectangleToRegister (self,event):
+        k = self.k ; state = k.getState('append-to-reg')
         
-        if self.check(event):
+        if state == 0:
+            k.setLabelBlue('Append to register: ',protect=True)
+            k.setState('append-to-reg',1,self.appendToRegister)
+        else:
+            k.clearState()
             if event.keysym in string.letters:
-                event.keysym = event.keysym.lower()
-                w = event.widget 
-                r1, r2, r3, r4 = self.getRectanglePoints(event)
-                rect =[]
-                while r1<=r3:
-                    txt = w.get('%s.%s'%(r1,r2),'%s.%s'%(r1,r4))
-                    rect.append(txt)
-                    r1 = r1+1
-                self.registers[event.keysym] = rect
+                w = event.widget
+                key = event.keysym.lower()
+                val = self.registers.get(key,'')
+                try:
+                    val = val + w.get('sel.first','sel.last')
+                except Exception:
+                    pass
+                self.registers[key] = val
+                k.setLabelGrey('Register %s = %s' % (key,repr(val)))
+            else:
+                k.setLabelGrey('Register must be a letter')
     #@nonl
-    #@-node:ekr.20050920084036.239:copyRectangleToRegister  (todo)
+    #@-node:ekr.20050920084036.238:appendToRegister
+    #@+node:ekr.20050920084036.237:prependToRegister
+    def prependToRegister (self,event):
+        
+        k = self.k ; state = k.getState('prepend-to-reg')
+        
+        if state == 0:
+            k.setLabelBlue('Prepend to register: ',protect=True)
+            k.setState('prepend-to-reg',1,self.prependToRegister)
+        else:
+            k.clearState()
+            if event.keysym in string.letters:
+                w = event.widget
+                key = event.keysym.lower()
+                val = self.registers.get(key,'')
+                try:
+                    val = w.get('sel.first','sel.last') + val
+                except Exception:
+                    pass
+                self.registers[key] = val
+                k.setLabelGrey('Register %s = %s' % (key,repr(val)))
+            else:
+                k.setLabelGrey('Register must be a letter')
+    #@nonl
+    #@-node:ekr.20050920084036.237:prependToRegister
+    #@+node:ekr.20050920084036.239:copyRectangleToRegister 
+    def copyRectangleToRegister (self,event):
+    
+        k = self.k ; state = k.getState('copy-rect-to-reg')
+    
+        if state == 0:
+            k.commandName = 'copy-rectangle-to-register'
+            k.setLabelBlue('Copy Rectangle To Register: ',protect=True)
+            k.setState('copy-rect-to-reg',1,self.copyRectangleToRegister)
+        elif self.check(event,'No rectangle selected'):
+            k.clearState()
+            if event.keysym in string.letters:
+                key = event.keysym.lower() ; w = event.widget
+                r1, r2, r3, r4 = self.getRectanglePoints(event)
+                rect = []
+                while r1 <= r3:
+                    txt = w.get('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
+                    rect.append(txt)
+                    r1 = r1 + 1
+                self.registers [key] = rect
+                k.setLabelGrey('Register %s = %s' % (key,repr(rect)))
+            else:
+                k.setLabelGrey('Register must be a letter')
+        else:
+            k.clearState()
+    #@nonl
+    #@-node:ekr.20050920084036.239:copyRectangleToRegister 
     #@+node:ekr.20050920084036.240:copyToRegister
     def copyToRegister (self,event):
         
@@ -4048,28 +4066,41 @@ class registerCommandsClass (baseEditCommandsClass):
             if self.check(event):
                 if event.keysym in string.letters:
                     key = event.keysym.lower()
-                    w = event.widget 
-                    val = w.get('sel.first','sel.last')
+                    w = event.widget
+                    try:
+                        val = w.get('sel.first','sel.last')
+                    except Exception:
+                        val = ''
                     self.registers[key] = val
                     k.setLabelGrey('Register %s = %s' % (key,repr(val)))
                 else:
                     k.setLabelGrey('Register must be a letter')
     #@nonl
     #@-node:ekr.20050920084036.240:copyToRegister
-    #@+node:ekr.20050920084036.241:incrementRegister (todo)
+    #@+node:ekr.20050920084036.241:incrementRegister
     def incrementRegister (self,event):
         
-        if self.registers.has_key(event.keysym):
+        k = self.k ; state = k.getState('increment-reg')
+        
+        if state == 0:
+            k.setLabelBlue('Increment register: ',protect=True)
+            k.setState('increment-reg',1,self.incrementRegister)
+        else:
+            k.clearState()
             if self._checkIfRectangle(event):
-                pass
-            elif self.registers[event.keysym]in string.digits:
-                i = self.registers[event.keysym]
-                i = str(int(i)+1)
-                self.registers[event.keysym] = i 
+                k.resetLabel()
+            elif event.keysym in string.letters:
+                key = event.keysym.lower()
+                val = self.registers.get(key,0)
+                try:
+                    val = str(int(val)+1)
+                    self.registers[key] = val
+                    k.setLabelGrey('Register %s = %s' % (key,repr(val)))
+                except ValueError:
+                    k.setLabelGrey("Can't increment register %s = %s" % (key,val))
             else:
-                self.invalidRegister(event,'number')
-    #@nonl
-    #@-node:ekr.20050920084036.241:incrementRegister (todo)
+                k.setLabelGrey('Register must be a letter')
+    #@-node:ekr.20050920084036.241:incrementRegister
     #@+node:ekr.20050920084036.242:insertRegister
     def insertRegister (self,event):
         
@@ -4151,7 +4182,7 @@ class registerCommandsClass (baseEditCommandsClass):
             else:
                 k.setLabelGrey('Register must be a letter')
     #@-node:ekr.20050920084036.244:numberToRegister (not ready yet)
-    #@+node:ekr.20050920084036.245:pointToRegister (done)
+    #@+node:ekr.20050920084036.245:pointToRegister
     def pointToRegister (self,event):
         
         k = self.k ; state = k.getState('point-to-reg')
@@ -4171,7 +4202,7 @@ class registerCommandsClass (baseEditCommandsClass):
             else:
                 k.setLabelGrey('Register must be a letter')
     #@nonl
-    #@-node:ekr.20050920084036.245:pointToRegister (done)
+    #@-node:ekr.20050920084036.245:pointToRegister
     #@+node:ekr.20050920084036.246:viewRegister
     def viewRegister (self,event):
     
@@ -4191,40 +4222,7 @@ class registerCommandsClass (baseEditCommandsClass):
                 k.setLabelGrey('Register must be a letter')
     #@nonl
     #@-node:ekr.20050920084036.246:viewRegister
-    #@-node:ekr.20050920084036.236:Entry points (revise)
-    #@+node:ekr.20050920084036.248:Helpers
-    #@+node:ekr.20050920084036.253:deactivateRegister
-    def deactivateRegister (self,event=None): # Event not used.
-    
-        k = self.k
-    
-        k.setLabelGrey('')
-        self.registerMode = 0
-        self.method = None
-    #@nonl
-    #@-node:ekr.20050920084036.253:deactivateRegister
-    #@+node:ekr.20050920084036.254:invalidRegister
-    def invalidRegister (self,event,what):
-    
-        k = self.k
-    
-        self.deactivateRegister(event)
-        k.setLabel('Register does not contain valid %s' % what)
-    #@nonl
-    #@-node:ekr.20050920084036.254:invalidRegister
-    #@+node:ekr.20050920084036.256:executeRegister
-    def executeRegister (self,event):
-        
-        k = self.k
-    
-        if self.method:
-            self.method(event)
-    
-            if self.registerMode != 0:
-                k.keyboardQuit(event)
-    #@nonl
-    #@-node:ekr.20050920084036.256:executeRegister
-    #@-node:ekr.20050920084036.248:Helpers
+    #@-node:ekr.20050920084036.236:Entries...
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.234:class registerCommandsClass
