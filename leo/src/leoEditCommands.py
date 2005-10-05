@@ -540,7 +540,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
 #@-at
 #@@c
 
-class bufferCommandsClass  (baseEditCommandsClass):
+class bufferCommandsClass (baseEditCommandsClass):
 
     #@    @+others
     #@+node:ekr.20050920084036.32: ctor (bufferCommandsClass)
@@ -2737,7 +2737,7 @@ class editFileCommandsClass (baseEditCommandsClass):
         k = self.k ; state = k.getState('delete_file')
     
         if state == 0:
-            prefix = 'Remove File: '
+            prefix = 'Delete File: '
             k.setLabelBlue('%s%s%s' % (prefix,os.getcwd(),os.sep))
             k.getArg(event,'delete_file',1,self.deleteFile,prefix=prefix)
         else:
@@ -2745,9 +2745,9 @@ class editFileCommandsClass (baseEditCommandsClass):
             k.clearState()
             try:
                 os.remove(k.arg)
-                k.setLabel('deleted %s' % k.arg)
+                k.setLabel('Deleted: %s' % k.arg)
             except:
-                k.setLabel('deleted not delete %s' % k.arg)
+                k.setLabel('Not Deleted: %s' % k.arg)
     #@nonl
     #@-node:ekr.20050920084036.164:deleteFile
     #@+node:ekr.20050920084036.165:diff (revise)
@@ -2811,9 +2811,9 @@ class editFileCommandsClass (baseEditCommandsClass):
             k.clearState()
             try:
                 os.mkdir(k.arg)
-                k.setLabel("created %s" % k.arg)
+                k.setLabel("Created: %s" % k.arg)
             except:
-                k.setLabel("can not create %s" % k.arg)
+                k.setLabel("Not Create: %s" % k.arg)
     #@nonl
     #@-node:ekr.20050920084036.168:makeDirectory
     #@+node:ekr.20050920084036.169:removeDirectory
@@ -2830,19 +2830,19 @@ class editFileCommandsClass (baseEditCommandsClass):
             k.clearState()
             try:
                 os.rmdir(k.arg)
-                k.setLabel('removed %s' % k.arg)
+                k.setLabel('Removed: %s' % k.arg)
             except:
-                k.setLabel('Can not remove %s' % k.arg)
+                k.setLabel('Not Remove: %s' % k.arg)
     #@nonl
     #@-node:ekr.20050920084036.169:removeDirectory
     #@+node:ekr.20050920084036.170:saveFile
-    def saveFile( self, event ):
+    def saveFile (self,event):
     
         w = event.widget
-        txt = w.get( '1.0', 'end' )
+        txt = w.get('1.0','end')
         f = tkFileDialog and tkFileDialog.asksaveasfile()
         if f:
-            f.write( txt )
+            f.write(txt)
             f.close()
     #@nonl
     #@-node:ekr.20050920084036.170:saveFile
@@ -3691,31 +3691,35 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
 class rectangleCommandsClass (baseEditCommandsClass):
 
     #@    @+others
-    #@+node:ekr.20050920084036.222: ctor
+    #@+node:ekr.20050920084036.222: ctor & finishCreate
     def __init__ (self,c):
     
         baseEditCommandsClass.__init__(self,c) # init the base class.
+        
+        self.theKillRectangle = [] # Do not re-init this!
+        
+    def finishCreate(self):
+        
+        baseEditCommandsClass.finishCreate(self)
         
         self.commandsDict = {
             'c': ('clear-rectangle',    self.clearRectangle),
             'd': ('delete-rectangle',   self.deleteRectangle),
             'k': ('kill-rectangle',     self.killRectangle),
             'o': ('open-rectangle',     self.openRectangle),
-            'r': ('copy-rectangle-to-register',self.copyRectangleToRegister),
+            'r': ('copy-rectangle-to-register',
+                self.c.registerCommands.copyRectangleToRegister),
             't': ('string-rectangle',   self.stringRectangle),
             'y': ('yank-rectangle',     self.yankRectangle),
         }
-        
-        self.theKillRectangle = [] # Do not re-init this!
-    #@nonl
-    #@-node:ekr.20050920084036.222: ctor
+    #@-node:ekr.20050920084036.222: ctor & finishCreate
     #@+node:ekr.20051004112630:check
-    def check (self,event):
+    def check (self,event,warning='No rectangle selected'):
         
         '''Return True if there is a selection.
         Otherwise, return False and issue a warning.'''
     
-        return self._chckSel(event,'No rectangle selected')
+        return self._chckSel(event,warning)
     #@nonl
     #@-node:ekr.20051004112630:check
     #@+node:ekr.20050920084036.223:getPublicCommands
@@ -3769,6 +3773,8 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.225:clearRectangle
     #@+node:ekr.20050920084036.226:closeRectangle
     def closeRectangle (self,event):
+        
+        '''Delete all whitespace following a specified column in each line.'''
     
         if self.check(event):
             k = self.k ; w = event.widget
@@ -3778,26 +3784,20 @@ class rectangleCommandsClass (baseEditCommandsClass):
             while ar1 <= r3:
                 txt.append(w.get('%s.%s' % (ar1,r2),'%s.%s' % (ar1,r4)))
                 ar1 = ar1 + 1
-            for z in txt:
-                if z.lstrip().rstrip():
-                    return
+            # for z in txt:
+                # if z.strip():
+                    # return
             while r1 <= r3:
                 w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
                 r1 = r1 + 1
     #@nonl
     #@-node:ekr.20050920084036.226:closeRectangle
-    #@+node:ekr.20051004111226:copyRectangleToRegister
-    def copyRectangleToRegister (self,event):
-        
-        self.c.registerCommands.copyRectangleToRegister(event)
-    #@-node:ekr.20051004111226:copyRectangleToRegister
     #@+node:ekr.20050920084036.227:deleteRectangle
     def deleteRectangle (self,event):
     
         if self.check(event):
             k = self.k ; w = event.widget
             r1, r2, r3, r4 = self.getRectanglePoints(event)
-            #lth = ' ' * ( r4 - r2 )
             while r1 <= r3:
                 w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
                 r1 = r1 + 1
@@ -3816,13 +3816,15 @@ class rectangleCommandsClass (baseEditCommandsClass):
                 w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
                 r1 = r1 + 1
             if self.theKillRectangle:
-                g.trace(self.theKillRectangle)
                 w.mark_set('sel.start','insert')
                 w.mark_set('sel.end','insert')
     #@nonl
     #@-node:ekr.20050920084036.228:killRectangle
     #@+node:ekr.20050920084036.230:openRectangle
     def openRectangle (self,event):
+        
+        '''Insert blank space to fill the space of the region-rectangle.
+        This pushes the previous contents of the region-rectangle rightward. '''
     
         if self.check(event):
             k = self.k ; w = event.widget
