@@ -3513,197 +3513,178 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
     '''A class to handle query replace commands.'''
 
     #@    @+others
-    #@+node:ekr.20050920084036.208: ctor
+    #@+node:ekr.20050920084036.208: ctor & init
     def __init__ (self,c):
         
         baseEditCommandsClass.__init__(self,c) # init the base class.
+        self.regexp = False # True: do query-replace-regexp.  Set in stateHandler.
+        
+    def init (self):
         
         self.qQ = None
         self.qR = None
-        self.qgetQuery = False
-        self.qgetReplace = False
-        self.qrexecute = False
-        self.querytype = 'normal'
+        self.replaced = 0 # The number of replacements.
+        
+        # self.qgetQuery = False
+        # self.qgetReplace = False
+        # self.qrexecute = False
     #@nonl
-    #@-node:ekr.20050920084036.208: ctor
+    #@-node:ekr.20050920084036.208: ctor & init
     #@+node:ekr.20050920084036.209: getPublicCommands
     def getPublicCommands (self):
     
         return {
-            'query-replace':                self.queryReplace,
-            'query-replace-regex':          self.queryReplaceRegex,
+            'query-replace':        self.queryReplace,
+            'query-replace-regex':  self.queryReplaceRegex,
         }
     #@nonl
     #@-node:ekr.20050920084036.209: getPublicCommands
     #@+node:ekr.20050920084036.210:Entry points
     def queryReplace (self,event):
-        self.masterQR(event)
+    
+        self.regexp = False
+        self.stateHandler(event)
     
     def queryReplaceRegex (self,event):
-        self.startRegexReplace()
-        self.masterQR(event)
-    #@nonl
+        
+        self.regexp = True
+        self.stateHandler(event)
     #@-node:ekr.20050920084036.210:Entry points
-    #@+node:ekr.20050920084036.211:qreplace
-    def qreplace( self, event ):
+    #@+node:ekr.20051005151838:Helpers
+    #@+node:ekr.20050920084036.212:doOneReplace
+    def doOneReplace (self,event):
+    
+        i = event.widget.tag_ranges('qR')
+        event.widget.delete(i[0],i[1])
+        event.widget.insert('insert',self.qR)
+        self.replaced += 1
+    #@nonl
+    #@-node:ekr.20050920084036.212:doOneReplace
+    #@+node:ekr.20050920084036.219:findNextMatch
+    def findNextMatch (self,event):
+        
+        '''Find the next match and select it.
+        Return True if a match was found.
+        Otherwise, call quitSearch and return False.'''
+    
+        k = self.k ; w = event.widget
+        
+        w.tag_delete('qR')
+    
+        if self.regexp:
+            #@        << handle regexp >>
+            #@+node:ekr.20051005155611:<< handle regexp >>
+            try:
+                regex = re.compile(self.qQ)
+            except:
+                self.quitSearch(event,'Illegal regular expression')
+                return False
+            
+            txt = w.get('insert','end')
+            match = regex.search(txt)
+            
+            if match:
+                start = match.start()
+                end = match.end()
+                length = end - start
+                w.mark_set('insert','insert +%sc' % start)
+                w.update_idletasks()
+                w.tag_add('qR','insert','insert +%sc' % length)
+                w.tag_config('qR',background='lightblue')
+                txt = w.get('insert','insert +%sc' % length)
+                ## k.setLabel("Replace %s with %s? y/n(! for all )" % (txt,self.qR))
+                return True
+            else:
+                self.quitSearch(event)
+                return False
+            #@nonl
+            #@-node:ekr.20051005155611:<< handle regexp >>
+            #@nl
+        else:
+            #@        << handle plain search >>
+            #@+node:ekr.20051005160923:<< handle plain search >>
+            i = w.search(self.qQ,'insert',stopindex='end')
+            if i:
+                w.mark_set('insert',i)
+                w.update_idletasks()
+                w.tag_add('qR','insert','insert +%sc' % len(self.qQ))
+                w.tag_config('qR',background='lightblue')
+                return True
+            else:
+                self.quitSearch(event)
+                return False
+            #@nonl
+            #@-node:ekr.20051005160923:<< handle plain search >>
+            #@nl
+    #@nonl
+    #@-node:ekr.20050920084036.219:findNextMatch
+    #@+node:ekr.20050920084036.211:getUserResponse
+    def getUserResponse (self,event):
+        
+        w = event.widget
+        # g.trace(event.keysym)
     
         if event.keysym == 'y':
-            self._qreplace( event )
-        elif event.keysym in ( 'q', 'Return' ):
-            self.quitQSearch( event )
+            self.doOneReplace(event)
+            if not self.findNextMatch(event):
+                self.quitSearch(event)
+        elif event.keysym in ('q','Return'):
+            self.quitSearch(event)
         elif event.keysym == 'exclam':
-            while self.qrexecute:
-                self._qreplace( event )
-        elif event.keysym in ( 'n', 'Delete'):
-            #i = event.widget.index( 'insert' )
-            event.widget.mark_set( 'insert', 'insert +%sc' % len( self.qQ ) )
-            self.qsearch( event )
+            while self.findNextMatch(event):
+                self.doOneReplace(event)
+        elif event.keysym in ('n','Delete'):
+            # Skip over the present match.
+            w.mark_set('insert','insert +%sc' % len(self.qQ))
+            if not self.findNextMatch(event):
+                self.quitSearch(event)
     
-        event.widget.see( 'insert' )
+        w.see('insert')
     #@nonl
-    #@-node:ekr.20050920084036.211:qreplace
-    #@+node:ekr.20050920084036.212:_qreplace
-    def _qreplace( self, event ):
-        
-        i = event.widget.tag_ranges( 'qR' )
-        event.widget.delete( i[ 0 ], i[ 1 ] )
-        event.widget.insert( 'insert', self.qR )
-        self.qsearch( event )
-    #@-node:ekr.20050920084036.212:_qreplace
-    #@+node:ekr.20050920084036.213:getQuery
-    def getQuery (self,event):
-    
-        k = self.k
-    
-        if event.keysym == 'Return':
-            self.qgetQuery = False
-            self.qgetReplace = True
-            self.qQ = k.getLabel()
-            k.setLabel("Replace with:")
-            k.setState('qlisten','replace-caption')
-            return
-    
-        if k.getState('qlisten') == 'replace-caption':
-            k.setLabel('')
-            k.setState('qlisten',1)
-    
-        k.updateLabel(event)
-    #@nonl
-    #@-node:ekr.20050920084036.213:getQuery
-    #@+node:ekr.20050920084036.214:getReplace
-    def getReplace (self,event):
+    #@-node:ekr.20050920084036.211:getUserResponse
+    #@+node:ekr.20050920084036.220:quitSearch
+    def quitSearch (self,event,message=None):
     
         k = self.k ; w = event.widget
-        prompt = 'Replace %s with %s y/n(! for all )'
-    
-        if event.keysym == 'Return':
-            self.qgetReplace = False
-            self.qR = k.getLabel()
-            self.qrexecute = True
-            ok = self.qsearch(event)
-            if self.querytype == 'regex' and ok:
-                range = w.tag_ranges('qR')
-                s = w.get(range[0],range[1])
-                k.setLabel(prompt % (s,self.qR))
-            elif ok:
-                k.setLabel(prompt % (self.qQ,self.qR))
-            return
-    
-        if k.getState('qlisten') == 'replace-caption':
-            k.setLabel('')
-            k.setState('qlisten',1)
-    
-        k.updateLabel(event)
-    #@nonl
-    #@-node:ekr.20050920084036.214:getReplace
-    #@+node:ekr.20050920084036.215:masterQR
-    def masterQR (self,event):
-    
-        if self.qgetQuery:
-            self.getQuery(event)
-        elif self.qgetReplace:
-            self.getReplace(event)
-        elif self.qrexecute:
-            self.qreplace(event)
-        else:
-            self.listenQR(event)
-    #@nonl
-    #@-node:ekr.20050920084036.215:masterQR
-    #@+node:ekr.20050920084036.216:startRegexReplace
-    def startRegexReplace( self ):
-        
-        self.querytype = 'regex'
-        return True
-    #@nonl
-    #@-node:ekr.20050920084036.216:startRegexReplace
-    #@+node:ekr.20050920084036.217:query search methods
-    #@+others
-    #@+node:ekr.20050920084036.218:listenQR
-    def listenQR (self,event):
-    
-        k = self.k
-    
-        k.setState('qlisten','replace-caption')
-        k.setLabelBlue(
-            g.choose(self.querytype=='regex',
-                'Regex Query with:','Query with:'))
-    
-        self.qgetQuery = True
-    #@nonl
-    #@-node:ekr.20050920084036.218:listenQR
-    #@+node:ekr.20050920084036.219:qsearch
-    def qsearch( self, event ):
-        
-        k = self.k ; w = event.widget
-        if self.qQ:
-            w.tag_delete( 'qR' )
-            if self.querytype == 'regex':
-                try:
-                    regex = re.compile( self.qQ )
-                except:
-                    k.keyboardQuit( event )
-                    k.setLabel( "Illegal regular expression" )
-                txt = w.get( 'insert', 'end' )
-                match = regex.search( txt )
-                if match:
-                    start = match.start()
-                    end = match.end()
-                    length = end - start
-                    w.mark_set( 'insert', 'insert +%sc' % start )
-                    w.update_idletasks()
-                    w.tag_add( 'qR', 'insert', 'insert +%sc' % length )
-                    w.tag_config( 'qR', background = 'lightblue' )
-                    txt = w.get( 'insert', 'insert +%sc' % length )
-                    k.setLabel( "Replace %s with %s? y/n(! for all )" % ( txt, self.qR ) )
-                    return True
-            else:
-                i = w.search( self.qQ, 'insert', stopindex = 'end' )
-                if i:
-                    w.mark_set( 'insert', i )
-                    w.update_idletasks()
-                    w.tag_add( 'qR', 'insert', 'insert +%sc'% len( self.qQ ) )
-                    w.tag_config( 'qR', background = 'lightblue' )
-                    return True
-            self.quitQSearch( event )
-            return False
-    #@-node:ekr.20050920084036.219:qsearch
-    #@+node:ekr.20050920084036.220:quitQSearch
-    def quitQSearch (self,event):
-    
-        k = self.k ; w = event.widget
-    
         w.tag_delete('qR')
-        self.qQ = None
-        self.qR = None
-        k.setState('qlisten',0)
-        self.qrexecute = False
-        k.setLabelGrey('')
-        self.querytype = 'normal'
+        k.clearState()
+        if message is None:
+            message = 'Replaced %d occurences' % self.replaced
+        k.setLabelGrey(message)
     #@nonl
-    #@-node:ekr.20050920084036.220:quitQSearch
-    #@-others
+    #@-node:ekr.20050920084036.220:quitSearch
+    #@+node:ekr.20050920084036.215:stateHandler
+    def stateHandler (self,event):
+        
+        k = self.k ; state = k.getState('query-replace')
+        
+        prompt = g.choose(self.regexp,'Query replace regexp','Query replace')
+        
+        if state == 0: # Get the first arg.
+            self.init()
+            k.setLabelBlue(prompt + ': ',protect=True)
+            k.getArg(event,'query-replace',1,self.stateHandler)
+        elif state == 1: # Get the second arg.
+            self.qQ = k.arg
+            if len(k.arg) > 0:
+                prompt = '%s %s with: ' % (prompt,k.arg)
+                k.setLabelBlue(prompt)
+                k.getArg(event,'query-replace',2,self.stateHandler)
+            else:
+                k.resetLabel()
+                k.clearState()
+        elif state == 2: # Set the prompt and find the first match.
+            self.qR = k.arg # Null replacement arg is ok.
+            k.setLabelBlue('Query replacing %s with %s\n' % (self.qQ,self.qR) +
+                'y: replace, (n or Delete): skip, !: replace all, (q or Return): quit',
+                protect=True)
+            k.setState('query-replace',3,self.stateHandler)
+            self.findNextMatch(event)
+        elif state == 3:
+            self.getUserResponse(event)
     #@nonl
-    #@-node:ekr.20050920084036.217:query search methods
+    #@-node:ekr.20050920084036.215:stateHandler
+    #@-node:ekr.20051005151838:Helpers
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.207:class queryReplaceCommandsClass

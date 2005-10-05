@@ -401,7 +401,7 @@ class keyHandlerClass:
             '<Control-r>':      (2, c.searchCommands.startIncremental),
             '<Alt-g>':          (1, c.editCommands.gotoLine),
             '<Alt-z>':          (1, c.killBufferCommands.zapToCharacter),
-            '<Alt-percent>':    (1, c.queryReplaceCommands.masterQR),
+            '<Alt-percent>':    (1, c.queryReplaceCommands.queryReplace),
             '<Control-Alt-w>':  (1, lambda event: 'break'),
         }
     
