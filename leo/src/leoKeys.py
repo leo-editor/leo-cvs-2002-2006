@@ -70,6 +70,7 @@ class keyHandlerClass:
         self.keystrokeFunctionDict = {}
         self.regx = g.bunch(iter=None,key=None)
         self.state = g.bunch(kind=None,n=None,handler=None)
+        self.abbrevOn = False # True: abbreviations are on.  Toggled by abbrev-mode command.
         #@    << define control-x ivars >>
         #@+node:ekr.20050923222924:<< define control-x ivars >>
         self.previous = []
@@ -425,8 +426,8 @@ class keyHandlerClass:
         self.variety_commands = {
             # Keys are Tk keysyms.
             'period':       c.editCommands.setFillPrefix,
-            'parenleft':    c.macroCommands.startKBDMacro,
-            'parenright':   c.macroCommands.stopKBDMacro,
+            'parenleft':    c.macroCommands.startKbdMacro,
+            'parenright':   c.macroCommands.endKbdMacro,
             'semicolon':    c.editCommands.setCommentColumn,
             'Tab':          c.editCommands.tabIndentRegion,
             'u':            c.undoer.undo,
@@ -847,8 +848,8 @@ class keyHandlerClass:
     
         if event.keysym == 'parenleft':
             k.keyboardQuit(event)
-            c.macroCommands.startKBDMacro(event)
-            c.macroCommands.executeLastMacro(event)
+            c.macroCommands.startKbdMacro(event)
+            c.macroCommands.callLastKeyboardMacro(event)
             return 'break'
     #@nonl
     #@-node:ekr.20050920085536.76:universalCommand3
@@ -868,6 +869,8 @@ class keyHandlerClass:
         k = self ; c = k.c
         special = event.keysym in ('Control_L','Alt_L','Shift_L')
         k.stroke = stroke
+        
+        # g.trace(k.getStateKind(),stroke)
     
         inserted = not special or (
             not general and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
@@ -892,21 +895,11 @@ class keyHandlerClass:
             #@nonl
             #@-node:ekr.20050920085536.67:<< add character to history >>
             #@nl
-    
-        if c.macroCommands.macroing:
-            #@        << handle macro >>
-            #@+node:ekr.20050920085536.66:<< handle macro >>
-            if c.macroCommands.macroing == 2 and stroke != '<Control-x>':
-                return k.nameLastMacro(event)
-                
-            elif c.macroCommands.macroing == 3 and stroke != '<Control-x>':
-                return k.getMacroName(event)
-                
-            else:
-               k.recordKBDMacro(event,stroke)
-            #@nonl
-            #@-node:ekr.20050920085536.66:<< handle macro >>
-            #@nl
+            
+        # We *must not* interfere with the global state in the macro class.
+        if c.macroCommands.recordingMacro:
+            done = c.macroCommands.startKbdMacro(event)
+            if done: return 'break'
     
         if stroke == k.abortAllModesKey: # '<Control-g>'
             k.previousStroke = stroke
@@ -922,8 +915,8 @@ class keyHandlerClass:
     
         if k.keystrokeFunctionDict.has_key(stroke):
             k.previousStroke = stroke
-            k.callKeystrokeFunction(event) # Calls end-command
-            return 'break'
+            if k.callKeystrokeFunction(event): # Calls end-command
+                return 'break'
     
         if k.regx.iter:
             try:
@@ -933,11 +926,10 @@ class keyHandlerClass:
                 return 'break'
     
         if k.abbrevOn:
-            c.abbrevCommands.expandAbbrev(event)
-            k.endCommand(event,'masterCommand:expandAbbrev')
-            return 'break'
+            expanded = c.abbrevCommands.expandAbbrev(event)
+            if expanded: return 'break'
     
-        if func:
+        if func: # Func is an argument.
             commandName = k.inverseCommandsDict.get(func)
             k.previousStroke = stroke
             func(event)
@@ -961,19 +953,25 @@ class keyHandlerClass:
                 k.endCommand(event,k.commandName,tag='callStateFunction')
             else:
                 g.es_print('no state function for %s' % (k.state.kind),color='red')
-        
-        return 'break'
     #@nonl
     #@-node:ekr.20050923172809.1:callStateFunction
     #@+node:ekr.20050923174229.3:callKeystrokeFunction
     def callKeystrokeFunction (self,event):
         
+        '''Handle a quick keystroke function.
+        Return the function or None.'''
+        
         k = self
         numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
     
-        commandName = k.inverseCommandsDict.get(func)
-        func(event)
-        k.endCommand(event,commandName,tag='callKeystrokeFunction')
+        if func:
+            func(event)
+            commandName = k.inverseCommandsDict.get(func)
+            k.endCommand(event,commandName,tag='callKeystrokeFunction')
+        
+        return func
+        
+        
     #@nonl
     #@-node:ekr.20050923174229.3:callKeystrokeFunction
     #@-node:ekr.20050920085536.65: masterCommand & helpers
@@ -1110,7 +1108,7 @@ class keyHandlerClass:
         
         if event.keysym == 'e': # Execute the last macro.
             k.keyboardQuit(event)
-            c.macroCommands.executeLastMacro(event)
+            c.macroCommands.callLastKeyboardMacro(event)
             return
     
         if event.keysym == 'x' and previous [1] not in ('Control_L','Control_R'):
@@ -1405,11 +1403,14 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050923172814.5:getStateKind
     #@+node:ekr.20050923172814.3:inState
-    def inState (self):
+    def inState (self,kind=None):
         
         k = self
         
-        return k.state.kind and k.state.n != None
+        if kind:
+            return k.state.kind == kind and k.state.n != None
+        else:
+            return k.state.kind and k.state.n != None
     #@nonl
     #@-node:ekr.20050923172814.3:inState
     #@+node:ekr.20050923172814.4:setState

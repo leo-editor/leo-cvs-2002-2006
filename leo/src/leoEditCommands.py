@@ -348,9 +348,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
         
         baseEditCommandsClass.finishCreate(self)
     
-        # Set ivars in emacs.
-        self.keyHandler.abbrevMode = False 
-        self.keyHandler.abbrevOn = False # determines if abbreviations are on for masterCommand and toggle abbreviations.
+        
     #@nonl
     #@-node:ekr.20050920084036.14: ctor & finishCreate
     #@+node:ekr.20050920084036.15: getPublicCommands & getStateCommands
@@ -371,6 +369,8 @@ class abbrevCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.15: getPublicCommands & getStateCommands
     #@+node:ekr.20050920084036.25:addAbbreviation
     def addAbbreviation (self,event):
+        
+        '''A small new feature: also sets abbreviations on.'''
                 
         k = self.k ; state = k.getState('add-abbr')
     
@@ -385,6 +385,10 @@ class abbrevCommandsClass (baseEditCommandsClass):
             word = w.get('insert -1c wordstart','insert -1c wordend')
             if k.arg.strip():
                 self.abbrevs [k.arg] = word
+                k.abbrevOn = True
+                k.setLabelGrey(
+                    "Abbreviations are on.\nAbbreviation: '%s' = '%s'" % (
+                    k.arg,word))
     #@nonl
     #@-node:ekr.20050920084036.25:addAbbreviation
     #@+node:ekr.20051004080550:addInverseAbbreviation
@@ -407,20 +411,26 @@ class abbrevCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20051004080550:addInverseAbbreviation
     #@+node:ekr.20050920084036.27:expandAbbrev
     def expandAbbrev (self,event):
-    
-        k = self.k ; w = event.widget 
         
-        word = w.get('insert -1c wordstart','insert -1c wordend')
-        ch = event.char.strip()
+        '''Not a command.  Called from k.masterCommand to expand
+        abbreviations in event.widget.'''
     
+        k = self.k ; ch = event.char.strip() ; w = event.widget 
+        word = w.get('insert -1c wordstart','insert -1c wordend')
+        
+        g.trace('ch',repr(ch),'word',repr(word))
+        
         if ch:
             # We must do this: expandAbbrev is called from Alt-x and Control-x,
             # we get two differnt types of data and w states.
-            word = '%s%s'% (word,event.char)
+            word = '%s%s'% (word,ch)
             
-        if self.abbrevs.has_key(word):
+        val = self.abbrevs.get(word)
+        if val is not None:
             w.delete('insert -1c wordstart','insert -1c wordend')
-            w.insert('insert',self.abbrevs[word])
+            w.insert('insert',val)
+            
+        return val is not None
     #@nonl
     #@-node:ekr.20050920084036.27:expandAbbrev
     #@+node:ekr.20050920084036.18:killAllAbbrevs
@@ -3295,38 +3305,48 @@ class macroCommandsClass (baseEditCommandsClass):
         self.macs = []
         self.macro = []
         self.namedMacros = {}
-        self.macroing = False
+        
+        # Important: we must not interfere with k.state in startKbdMacro!
+        self.recordingMacro = False
     #@nonl
     #@-node:ekr.20050920084036.191: ctor
     #@+node:ekr.20050920084036.192: getPublicCommands
     def getPublicCommands (self):
     
         return {
-            'name-last-kbd-macro':      self.nameLastMacro,
-            'load-file':                self.loadMacros,
-            'insert-keyboard-macro' :   self.getMacroName,
+            'call-last-keyboard-macro': self.callLastKeyboardMacro,
+            'end-kbd-macro':            self.endKbdMacro,
+            'name-last-kbd-macro':      self.nameLastKbdMacro,
+            'load-file':                self.loadFile,
+            'insert-keyboard-macro' :   self.insertKeyboardMacro,
+            'start-kbd-macro':          self.startKbdMacro,
         }
     #@nonl
     #@-node:ekr.20050920084036.192: getPublicCommands
-    #@+node:ekr.20050920084036.193:Entry points (revise)
-    #@+node:ekr.20050920084036.194:getMacroName (calls saveMacros)
-    def getMacroName (self,event):
+    #@+node:ekr.20050920084036.193:Entry points
+    #@+node:ekr.20050920084036.194:insertKeyboardMacro
+    def insertKeyboardMacro (self,event):
     
         '''A method to save your macros to file.'''
     
-        k = self.k
+        k = self.k ; state = k.getState('macro-name')
+        prompt = 'Macro name: '
     
-        if not self.macroing:
-            self.macroing = 3
-            k.setLabelBlue('')
-        elif event.keysym == 'Return':
-            self.macroing = False
-            self.saveMacros(event,k.getLabel()) 
-        elif event.keysym == 'Tab':
-            s = k.getLabel()
-            k.setLabel(self.findFirstMatchFromList(s,self.namedMacros))
+        if state == 0:
+            k.setLabelBlue(prompt,protect=True)
+            k.getArg(event,'macro-name',1,self.insertKeyboardMacro)
         else:
-            k.updateLabel(event)
+            ch = event.keysym ; s = s = k.getLabel(ignorePrompt=True)
+            g.trace(repr(ch),repr(s))
+            if ch == 'Return':
+                k.clearState()
+                self.saveMacros(event,s)
+            elif ch == 'Tab':
+                k.setLabel('%s%s' % (
+                    prompt,self.findFirstMatchFromList(s,self.namedMacros)),
+                    prompt=prompt,protect=True)
+            else:
+                k.updateLabel(event)
     #@nonl
     #@+node:ekr.20050920084036.195:findFirstMatchFromList
     def findFirstMatchFromList (self,s,aList=None):
@@ -3347,9 +3367,9 @@ class macroCommandsClass (baseEditCommandsClass):
         return s
     #@nonl
     #@-node:ekr.20050920084036.195:findFirstMatchFromList
-    #@-node:ekr.20050920084036.194:getMacroName (calls saveMacros)
-    #@+node:ekr.20050920084036.196:loadMacros & helpers
-    def loadMacros (self,event):
+    #@-node:ekr.20050920084036.194:insertKeyboardMacro
+    #@+node:ekr.20050920084036.196:loadFile & helpers
+    def loadFile (self,event):
     
         '''Asks for a macro file name to load.'''
     
@@ -3368,27 +3388,24 @@ class macroCommandsClass (baseEditCommandsClass):
             k.addToDoAltX(z,macros[z])
     #@nonl
     #@-node:ekr.20050920084036.197:_loadMacros
-    #@-node:ekr.20050920084036.196:loadMacros & helpers
-    #@+node:ekr.20050920084036.198:nameLastMacro
-    def nameLastMacro (self,event):
+    #@-node:ekr.20050920084036.196:loadFile & helpers
+    #@+node:ekr.20050920084036.198:nameLastKbdMacro
+    def nameLastKbdMacro (self,event):
     
         '''Names the last macro defined.'''
     
-        k = self.k
-    
-        if not self.macroing:
-            self.macroing = 2
-            k.setLabelBlue('')
-        elif event.keysym == 'Return':
-            name = k.getLabel()
-            k.addToDoAltX(name,self.lastMacro)
-            k.setLabelBlue('')
-            self.macroing = False
-            k.keyboardQuit(event)
+        k = self.k ; state = k.getState('name-macro')
+        
+        if state == 0:
+            k.setLabelBlue('Name of macro: ',protect=True)
+            k.getArg(event,'name-macro',1,self.nameLastKbdMacro)
         else:
-            k.updateLabel(event)
+            k.clearState()
+            name = k.arg
+            k.addToDoAltX(name,self.lastMacro)
+            k.setLabelGrey('Macro defined: %s' % name)
     #@nonl
-    #@-node:ekr.20050920084036.198:nameLastMacro
+    #@-node:ekr.20050920084036.198:nameLastKbdMacro
     #@+node:ekr.20050920084036.199:saveMacros & helper
     def saveMacros (self,event,macname):
     
@@ -3419,14 +3436,52 @@ class macroCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.200:_saveMacros
     #@-node:ekr.20050920084036.199:saveMacros & helper
-    #@-node:ekr.20050920084036.193:Entry points (revise)
-    #@+node:ekr.20050920084036.201:Called from keystroke handlers
-    #@+node:ekr.20050920084036.202:executeLastMacro & helper (called from universal command)
-    def executeLastMacro( self, event ):
+    #@+node:ekr.20050920084036.204:startKbdMacro
+    def startKbdMacro (self,event):
+    
+        k = self.k
+        
+        if not self.recordingMacro:
+            self.recordingMacro = True
+            k.setLabelBlue('Recording keyboard macro...',protect=True)
+        else:
+            stroke = k.stroke ; keysym = event.keysym
+            if stroke == '<Key>' and keysym in ('Control_L','Alt_L','Shift_L'):
+                return False
+            g.trace('stroke',stroke,'keysym',keysym)
+            if stroke == '<Key>' and keysym =='parenright':
+                self.endKbdMacro(event)
+                return True
+            elif stroke == '<Key>':
+                self.macro.append((event.keycode,event.keysym))
+                return True
+            else:
+                self.macro.append((stroke,event.keycode,event.keysym,event.char))
+                return True
+    #@nonl
+    #@-node:ekr.20050920084036.204:startKbdMacro
+    #@+node:ekr.20050920084036.206:endKbdMacro
+    def endKbdMacro (self,event):
+    
+        k = self.k ; self.recordingMacro = False
+    
+        if self.macro:
+            self.macro = self.macro [: -4]
+            self.macs.insert(0,self.macro)
+            self.lastMacro = self.macro[:]
+            self.macro = []
+            k.setLabelGrey('Keyboard macro defined, not named')
+        else:
+            k.setLabelGrey('Empty keyboard macro')
+    #@nonl
+    #@-node:ekr.20050920084036.206:endKbdMacro
+    #@+node:ekr.20050920084036.202:callLastKeyboardMacro & helper (called from universal command)
+    def callLastKeyboardMacro (self,event):
     
         w = event.widget
+    
         if self.lastMacro:
-            return self._executeMacro( self.lastMacro, w )
+            return self._executeMacro(self.lastMacro,w)
     #@nonl
     #@+node:ekr.20050920084036.203:_executeMacro
     def _executeMacro( self, macro, w ):
@@ -3447,43 +3502,8 @@ class macroCommandsClass (baseEditCommandsClass):
                 self.masterCommand( ev , method, '<%s>' % meth )
     #@nonl
     #@-node:ekr.20050920084036.203:_executeMacro
-    #@-node:ekr.20050920084036.202:executeLastMacro & helper (called from universal command)
-    #@+node:ekr.20050920084036.204:startKBDMacro
-    def startKBDMacro (self,event):
-    
-        k = self.k
-        k.setLabelBlue('Recording keyboard macro...',protect=True)
-        self.macroing = True
-    #@nonl
-    #@-node:ekr.20050920084036.204:startKBDMacro
-    #@+node:ekr.20050920084036.205:recordKBDMacro
-    def recordKBDMacro (self,event):
-    
-        k = self.k ; stroke = k.stroke
-    
-        if stroke != '<Key>':
-            self.macro.append((stroke,event.keycode,event.keysym,event.char))
-        elif stroke == '<Key>':
-            if event.keysym != '??':
-                self.macro.append((event.keycode,event.keysym))
-    #@nonl
-    #@-node:ekr.20050920084036.205:recordKBDMacro
-    #@+node:ekr.20050920084036.206:stopKBDMacro
-    def stopKBDMacro (self,event):
-    
-        k = self.k
-    
-        if self.macro:
-            self.macro = self.macro [: -4]
-            self.macs.insert(0,self.macro)
-            self.lastMacro = self.macro
-            self.macro = []
-    
-        self.macroing = False
-        k.setLabelGrey('Keyboard macro defined')
-    #@nonl
-    #@-node:ekr.20050920084036.206:stopKBDMacro
-    #@-node:ekr.20050920084036.201:Called from keystroke handlers
+    #@-node:ekr.20050920084036.202:callLastKeyboardMacro & helper (called from universal command)
+    #@-node:ekr.20050920084036.193:Entry points
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.190:class macroCommandsClass
@@ -4027,7 +4047,7 @@ class registerCommandsClass (baseEditCommandsClass):
                 k.setLabelGrey('Register must be a letter')
     #@nonl
     #@-node:ekr.20050920084036.237:prependToRegister
-    #@+node:ekr.20050920084036.239:copyRectangleToRegister 
+    #@+node:ekr.20050920084036.239:copyRectangleToRegister
     def copyRectangleToRegister (self,event):
     
         k = self.k ; state = k.getState('copy-rect-to-reg')
@@ -4053,7 +4073,7 @@ class registerCommandsClass (baseEditCommandsClass):
         else:
             k.clearState()
     #@nonl
-    #@-node:ekr.20050920084036.239:copyRectangleToRegister 
+    #@-node:ekr.20050920084036.239:copyRectangleToRegister
     #@+node:ekr.20050920084036.240:copyToRegister
     def copyToRegister (self,event):
         
