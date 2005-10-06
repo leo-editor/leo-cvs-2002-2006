@@ -57,35 +57,39 @@ class keyHandlerClass:
         if not self.c.frame.miniBufferWidget:
             g.trace('no widget')
             return
-    
-        self.widget  = c.frame.miniBufferWidget # A Tk Label widget.
-        # Permanently associate a Tk.StringVar with the widget.
-        self.svar = Tk.StringVar()
-        self.widget.configure(textvariable=self.svar)
-    
-        self.undoers = {} # Emacs instance tracks undoers given to it.
+            
         self.useGlobalKillbuffer = useGlobalKillbuffer
         self.useGlobalRegisters = useGlobalRegisters
-        
-        self.keystrokeFunctionDict = {}
-        self.regx = g.bunch(iter=None,key=None)
-        self.state = g.bunch(kind=None,n=None,handler=None)
-        self.abbrevOn = False # True: abbreviations are on.  Toggled by abbrev-mode command.
-        #@    << define control-x ivars >>
-        #@+node:ekr.20050923222924:<< define control-x ivars >>
-        self.previous = []
-        self.rect_commands = {}
-        self.variety_commands = {}
-        self.abbreviationFuncDict = {}
-        ### self.register_commands = {}
+    
+        # Generalize...
+        self.altX_prompt = 'full-command: '
+        self.x_hasNumeric = ['sort-lines','sort-fields']
+        self.fullCommandKey = 'Alt-x'
+        self.universalArgKey = 'Control-u'
+    
+        #@    << define Tk ivars >>
+        #@+node:ekr.20051006092617:<< define Tk ivars >>
+        self.svars = {}
+        self.widget  = c.frame.miniBufferWidget # A Tk Label widget.
+        self.svar = Tk.StringVar()
+        self.widget.configure(textvariable=self.svar)
         #@nonl
-        #@-node:ekr.20050923222924:<< define control-x ivars >>
+        #@-node:ekr.20051006092617:<< define Tk ivars >>
         #@nl
-        #@    << define minibuffer ivars >>
-        #@+node:ekr.20050923213858:<< define minibuffer ivars >>
-        # For endCommand.
+        #@    << define externally visible ivars >>
+        #@+node:ekr.20051006092617.1:<< define externally visible ivars >>
+        self.abbrevOn = False # True: abbreviations are on.
+        self.arg = '' # The value returned by k.getArg.
         self.commandName = None
-        
+        self.negativeArg = False
+        self.regx = g.bunch(iter=None,key=None)
+        self.repeatCount = None
+        self.state = g.bunch(kind=None,n=None,handler=None)
+        #@nonl
+        #@-node:ekr.20051006092617.1:<< define externally visible ivars >>
+        #@nl
+        #@    << define internal ivars >>
+        #@+node:ekr.20050923213858:<< define internal ivars >>
         # Keepting track of the characters in the mini-buffer.
         self.mb_history = []
         self.mb_prefix = ''
@@ -95,28 +99,14 @@ class keyHandlerClass:
         self.mb_prompt = ''
         
         self.keysymHistory = []
+        self.previous = []
         self.previousStroke = ''
-        self.svars = {}
-        self.tailEnds = {} # functions to execute at the end of many Emacs methods.  Configurable by environment.
         
         # For getArg...
-        self.arg = ''
         self.afterGetArgState = None
         self.argTabList = []
-        
-        # For negative arguments...
-        self.negativeArg = False
-        self.altX_prompt = 'full-command: '
-        
-        # For alt-X commands...
-        self.xcommands = None       # Done in finishCreate.
-        self.altX_prompt = 'full-command: '
-        self.x_hasNumeric = ['sort-lines','sort-fields']
-        
-        # For universal commands...
-        self.uCstring = string.digits + '\b'
         #@nonl
-        #@-node:ekr.20050923213858:<< define minibuffer ivars >>
+        #@-node:ekr.20050923213858:<< define internal ivars >>
         #@nl
     #@nonl
     #@-node:ekr.20050920085536.2: ctor (keyHandler)
@@ -127,7 +117,6 @@ class keyHandlerClass:
         k = self ; c = k.c
     
         self.cbDict = k.create_cbDict()
-        self.uCdict = k.create_ucDict()
         k.setNegArgFunctions()
         k.setBufferStrokes(c.frame.bodyCtrl)
         self.abortAllModesKey = '<Control-g>' ### To do: generalize
@@ -155,6 +144,7 @@ class keyHandlerClass:
         #@    << define dict d of abbreviations >>
         #@+node:ekr.20050920085536.12:<< define dict d of abbreviations >>
         d = {
+            'a':    'repeat-complex-command',
             'i':    'isearch-forward', 
             'ib':   'isearch-backward',      
             'ix':   'isearch-forward-regexp',
@@ -222,12 +212,10 @@ class keyHandlerClass:
     
         callback = k.cbDict.get(evstring)
         evstring = '<%s>' % evstring
-        
-        # g.trace(evstring)
     
         def f (event):
-            general = evstring == '<Key>'
-            return k.masterCommand(event,callback,evstring,general)
+            # general = evstring == '<Key>'
+            return k.masterCommand(event,callback,evstring)
     
         if evstring == '<Key>':
             w.bind(evstring,f,'+')
@@ -354,14 +342,6 @@ class keyHandlerClass:
         return cbDict
     #@nonl
     #@-node:ekr.20050920085536.13:create_cbDict (Generalize)
-    #@+node:ekr.20051004101106:create_ucDict (Generalize?)
-    def create_ucDict (self):
-    
-        return {
-            '<Alt-x>': self.fullCommand
-        }
-    #@nonl
-    #@-node:ekr.20051004101106:create_ucDict (Generalize?)
     #@+node:ekr.20050920085536.17:setBufferStrokes
     def setBufferStrokes (self,w):
     
@@ -455,412 +435,12 @@ class keyHandlerClass:
     #@-node:ekr.20050923174229.1:setQuickCommandKeyBindings
     #@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
     #@-node:ekr.20050920085536.1: Birth
-    #@+node:ekr.20051002153709: Docs
-    #@+node:ekr.20050930081539:Apropos universal
-    #@@nocolor
-    #@+at
-    # 
-    # universal-argument
-    #   Command: Begin a numeric argument for the following command.
-    # universal-argument-map
-    #   Variable: Keymap used while processing \[universal-argument].
-    #   Plist: 1 property (variable-documentation)
-    # universal-argument-minus
-    #   Command: (not documented)
-    # universal-argument-more
-    #   Command: (not documented)
-    # universal-argument-num-events
-    #   Variable: Number of argument-specifying events read by 
-    # `universal-argument'.
-    #   Plist: 1 property (variable-documentation)
-    # universal-argument-other-key
-    #   Command: (not documented)
-    # universal-coding-system-argument
-    #   Command: Execute an I/O command using the specified coding system.
-    #@-at
-    #@-node:ekr.20050930081539:Apropos universal
-    #@+node:ekr.20050930080419:digitArgument & universalArgument
-    def digitArgument (self,event):
-        
-        k = self ; k.stroke = ''
-    
-        return k.universalDispatchStateHelper(event)
-    
-    def universalArgument (self,event):
-        
-        k = self ; k.stroke = ''
-    
-        return k.universalDispatchStateHelper(event)
-    #@nonl
-    #@-node:ekr.20050930080419:digitArgument & universalArgument
-    #@+node:ekr.20050930082638.1:Emacs docs prefix command arguments
-    #@@nocolor
-    #@+at
-    # 
-    # Most Emacs commands can use a prefix argument, a number specified before 
-    # the
-    # command itself. (Don't confuse prefix arguments with prefix keys.) The 
-    # prefix
-    # argument is at all times represented by a value, which may be nil, 
-    # meaning there
-    # is currently no prefix argument. Each command may use the prefix 
-    # argument or
-    # ignore it.
-    # 
-    # There are two representations of the prefix argument: raw and numeric. 
-    # The
-    # editor command loop uses the raw representation internally, and so do 
-    # the Lisp
-    # variables that store the information, but commands can request either
-    # representation.
-    # 
-    # Here are the possible values of a raw prefix argument:
-    # 
-    # - nil, meaning there is no prefix argument. Its numeric value is 1, but 
-    # numerous
-    #   commands make a distinction between nil and the integer 1.
-    # 
-    # - An integer, which stands for itself.
-    # 
-    # - A list of one element, which is an integer. This form of prefix 
-    # argument
-    #   results from one or a succession of C-u's with no digits. The numeric 
-    # value is
-    #   the integer in the list, but some commands make a distinction between 
-    # such a
-    #   list and an integer alone.
-    # 
-    # - The symbol -. This indicates that M-- or C-u - was typed, without 
-    # following
-    # digits. The equivalent numeric value is -1, but some commands make a 
-    # distinction
-    # between the integer -1 and the symbol -.
-    # 
-    # We illustrate these possibilities by calling the following function with 
-    # various prefixes:
-    # 
-    #   (defun display-prefix (arg)
-    #     "Display the value of the raw prefix arg."
-    #     (interactive "P")
-    #     (message "%s" arg))
-    # 
-    # Here are the results of calling display-prefix with various raw prefix 
-    # arguments:
-    # 
-    #         M-x display-prefix  -| nil
-    # C-u     M-x display-prefix  -| (4)
-    # C-u C-u M-x display-prefix  -| (16)
-    # C-u 3   M-x display-prefix  -| 3
-    # M-3     M-x display-prefix  -| 3      ; (Same as C-u 3.)
-    # C-u -   M-x display-prefix  -| -
-    # M--     M-x display-prefix  -| -      ; (Same as C-u -.)
-    # C-u - 7 M-x display-prefix  -| -7
-    # M-- 7   M-x display-prefix  -| -7     ; (Same as C-u -7.)
-    # 
-    # Emacs uses two variables to store the prefix argument: prefix-arg and
-    # current-prefix-arg. Commands such as universal-argument that set up 
-    # prefix
-    # arguments for other commands store them in prefix-arg. In contrast,
-    # current-prefix-arg conveys the prefix argument to the current command, 
-    # so
-    # setting it has no effect on the prefix arguments for future commands.
-    # 
-    # Normally, commands specify which representation to use for the prefix 
-    # argument,
-    # either numeric or raw, in the interactive declaration. (See section 
-    # 21.2.1 Using
-    # interactive.) Alternatively, functions may look at the value of the 
-    # prefix
-    # argument directly in the variable current-prefix-arg, but this is less 
-    # clean.
-    # 
-    # Function: prefix-numeric-value arg
-    # 
-    # This function returns the numeric meaning of a valid raw prefix argument 
-    # value,
-    # arg. The argument may be a symbol, a number, or a list. If it is nil, 
-    # the value
-    # 1 is returned; if it is -, the value -1 is returned; if it is a number, 
-    # that
-    # number is returned; if it is a list, the CAR of that list (which should 
-    # be a
-    # number) is returned.
-    # 
-    # Variable: current-prefix-arg
-    #     This variable holds the raw prefix argument for the current command. 
-    # Commands
-    #     may examine it directly, but the usual method for accessing it is 
-    # with
-    #     (interactive "P").
-    # 
-    # Variable: prefix-arg
-    #     The value of this variable is the raw prefix argument for the next 
-    # editing
-    #     command. Commands such as universal-argument that specify prefix 
-    # arguments for
-    #     the following command work by setting this variable.
-    # 
-    # Variable: last-prefix-arg
-    #     The raw prefix argument value used by the previous command.
-    # 
-    # The following commands exist to set up prefix arguments for the 
-    # following
-    # command. Do not call them for any other reason.
-    # 
-    # Command: universal-argument
-    #     This command reads input and specifies a prefix argument for the 
-    # following
-    #     command. Don't call this command yourself unless you know what you 
-    # are doing.
-    # 
-    # Command: digit-argument arg
-    #     This command adds to the prefix argument for the following command. 
-    # The argument
-    #     arg is the raw prefix argument as it was before this command; it is 
-    # used to
-    #     compute the updated prefix argument. Don't call this command 
-    # yourself unless you
-    #     know what you are doing.
-    # 
-    # Command: negative-argument arg
-    #     This command adds to the numeric argument for the next command. The 
-    # argument arg
-    #     is the raw prefix argument as it was before this command; its value 
-    # is negated
-    #     to form the new prefix argument. Don't call this command yourself 
-    # unless you
-    #     know what you are doing.
-    #@-at
-    #@nonl
-    #@-node:ekr.20050930082638.1:Emacs docs prefix command arguments
-    #@+node:ekr.20050930082638:Repeating commands
-    #@@nocolor
-    #@+at
-    # 
-    # Repeating Commands
-    # 
-    # ESC-5 C-f
-    #     move forward 5 chars
-    # 
-    # C-u (the universal argument command)
-    #     Just like Esc-n, but does not need an argument -> in which case the 
-    # default of 4 is used. eg:
-    # 
-    # C-u C-u -> repeat 16 times
-    #@-at
-    #@nonl
-    #@-node:ekr.20050930082638:Repeating commands
-    #@-node:ekr.20051002153709: Docs
-    #@+node:ekr.20050920085536.32: Entry points
-    #@+node:ekr.20050920085536.15:addToDoAltX (not used)
-    def addToDoAltX (self,name,macro):
-    
-        '''Adds macro to Alt-X commands.'''
-        
-        k= self ; c = k.c
-    
-        if c.commandsDict.has_key(name):
-            return False
-    
-        def exe (event,macro=macro):
-            return k._executeMacro(macro,event.widget)
-    
-        c.commandsDict [name] = exe
-        k.namedMacros [name] = macro
-        return True
-    #@nonl
-    #@-node:ekr.20050920085536.15:addToDoAltX (not used)
-    #@+node:ekr.20050920085536.61:extendAltX (not used)
-    def extendAltX (self,name,function):
-    
-        '''A simple method that extends the functions Alt-X offers.'''
-    
-        # Important: f need not be a method of the emacs class.
-        
-        k = self ; c = k.c
-    
-        def f (event,aX=None,self=self,command=function):
-            # g.trace(event,self,command)
-            command()
-            k.keyboardQuit(event)
-    
-        c.commandsDict [name] = f
-    #@nonl
-    #@-node:ekr.20050920085536.61:extendAltX (not used)
-    #@+node:ekr.20050920085536.63:keyboardQuit
-    def keyboardQuit (self,event=None):
-    
-        '''This method clears the state and the minibuffer label.
-        
-        k.endCommand handles all other end-of-command chores.'''
-        
-        k = self ; c = k.c
-    
-        if c.controlCommands.shuttingdown:
-            return
-            
-        k.clearState()
-        k.resetLabel()
-    #@nonl
-    #@-node:ekr.20050920085536.63:keyboardQuit
-    #@+node:ekr.20050920085536.64:manufactureKeyPress
-    def manufactureKeyPress (self,event,keysym):
-        
-        '''Implement a command by passing a keypress to Tkinter.'''
-    
-        w = event.widget
-        w.event_generate('<Key>',keysym=keysym)
-        self.endCommand(event,keysym,tag='manufactureKeyPress')
-        
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.64:manufactureKeyPress
-    #@+node:ekr.20050920085536.68:negativeArgument
-    def negativeArgument (self,event):
-    
-        k = self ; state = k.getState('neg-arg')
-    
-        if state == 0:
-            k.setLabelBlue('Negative Argument: ',protect=True)
-            k.setState('neg-arg',1,k.negativeArgument)
-        else:
-            k.clearState()
-            k.resetLabel()
-            func = k.negArgFunctions.get(k.stroke)
-            if func:
-                func(event)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.68:negativeArgument
-    #@+node:ekr.20050920085536.77:numberCommand
-    def numberCommand (self,event,stroke,number):
-    
-        k = self ; k.stroke = stroke ; w = event.widget
-    
-        k.universalDispatchStateHelper(event)
-        w.event_generate('<Key>',keysym=number)
-    
-        return 'break'
-    
-    def numberCommand0 (self,event): return self.numberCommand (event,None,0)
-    def numberCommand1 (self,event): return self.numberCommand (event,None,1)
-    def numberCommand2 (self,event): return self.numberCommand (event,None,2)
-    def numberCommand3 (self,event): return self.numberCommand (event,None,3)
-    def numberCommand4 (self,event): return self.numberCommand (event,None,4)
-    def numberCommand5 (self,event): return self.numberCommand (event,None,5)
-    def numberCommand6 (self,event): return self.numberCommand (event,None,6)
-    def numberCommand7 (self,event): return self.numberCommand (event,None,7)
-    def numberCommand8 (self,event): return self.numberCommand (event,None,8)
-    def numberCommand9 (self,event): return self.numberCommand (event,None,9)
-    #@nonl
-    #@-node:ekr.20050920085536.77:numberCommand
-    #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
-    def repeatComplexCommand (self,event):
-    
-        k = self
-    
-        if k.mb_history:
-            k.setState('last-altx',1,handler=k.doLastAltX)
-            k.setLabelBlue("Redo: %s" % k.mb_history[0])
-        return 'break'
-        
-    def doLastAltX (self,event):
-        
-        k = self ; c = k.c
-    
-        if event.keysym == 'Return' and k.mb_history:
-            last = k.mb_history [0]
-            c.commandsDict [last](event)
-            return 'break'
-        else:
-            return k.keyboardQuit(event)
-    #@nonl
-    #@-node:ekr.20050920085536.48:repeatComplexCommand & helper
-    #@+node:ekr.20050920085536.73:universalDispatchHelper
-    def universalDispatchStateHelper (self,event):
-    
-        k = self ; stroke = k.stroke ; state = k.getState('uC')
-    
-        if state == 0:
-            k.setState('uC',1,handler=k.universalDispatchStateHelper)
-            k.setLabelBlue('')
-        elif state == 1:
-            k.universalCommand1(event,stroke)
-        elif state == 2:
-            k.universalCommand3(event,stroke)
-    
-        return 'break'
-    #@nonl
-    #@+node:ekr.20050920085536.74:universalCommand1
-    def universalCommand1 (self,event,stroke):
-        
-        k = self
-    
-        if event.char not in k.uCstring:
-            return k.universalCommand2(event,stroke)
-     
-        k.updateLabel(event)
-    
-        if event.char != '\b':
-            k.setLabel('%s ' % k.getLabel())
-    #@nonl
-    #@-node:ekr.20050920085536.74:universalCommand1
-    #@+node:ekr.20050920085536.75:universalCommand2 (Called from universalCommand1)
-    def universalCommand2 (self,event,stroke):
-        
-        k = self ; w = event.widget
-        txt = k.getLabel()
-        k.keyboardQuit(event)
-        txt = txt.replace(' ','')
-        k.resetLabel()
-        if not txt.isdigit():
-            # This takes us to macro state.
-            # For example Control-u Control-x ( will execute the last macro and begin editing of it.
-            if stroke == '<Control-x>':
-                k.setState('uC',2)
-                return k.universalCommand3(event,stroke)
-            return
-    
-        if k.uCdict.has_key(stroke): # This executes the keystroke 'n' number of times.
-            k.uCdict [stroke](event,txt)
-        else:
-            i = int(txt)
-            stroke = stroke.lstrip('<').rstrip('>')
-            if k.cbDict.has_key(stroke):
-                for z in xrange(i):
-                    method = k.cbDict [stroke]
-                    ev = Tk.Event()
-                    ev.widget = event.widget
-                    ev.keysym = event.keysym
-                    ev.keycode = event.keycode
-                    ev.char = event.char
-                    k.masterCommand(ev,method,'<%s>' % stroke)
-            else:
-                for z in xrange(i):
-                    w.event_generate('<Key>',keycode=event.keycode,keysym=event.keysym)
-    #@-node:ekr.20050920085536.75:universalCommand2 (Called from universalCommand1)
-    #@+node:ekr.20050920085536.76:universalCommand3
-    def universalCommand3 (self,event,stroke):
-        
-        k = self
-        k.setLabelBlue('Control-u %s' % stroke.lstrip('<').rstrip('>'))
-    
-        if event.keysym == 'parenleft':
-            k.keyboardQuit(event)
-            c.macroCommands.startKbdMacro(event)
-            c.macroCommands.callLastKeyboardMacro(event)
-            return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.76:universalCommand3
-    #@-node:ekr.20050920085536.73:universalDispatchHelper
-    #@-node:ekr.20050920085536.32: Entry points
     #@+node:ekr.20051001051355:Dispatching...
     #@+node:ekr.20051002152108:Top-level
     # These must return 'break' unless more processing is needed.
     #@nonl
     #@+node:ekr.20050920085536.65: masterCommand & helpers
-    def masterCommand (self,event,func,stroke,general):
+    def masterCommand (self,event,func,stroke):
     
         '''This is the central dispatching method.
         All commands and keystrokes pass through here.'''
@@ -868,9 +448,10 @@ class keyHandlerClass:
         # Note: the _L symbols represent *either* special key.
         k = self ; c = k.c
         special = event.keysym in ('Control_L','Alt_L','Shift_L')
+        general = stroke == '<Key>'
         k.stroke = stroke
         
-        # g.trace(k.getStateKind(),stroke)
+        # g.trace('state kind',k.getStateKind(),'stroke',stroke,'keysym',event.keysym)
     
         inserted = not special or (
             not general and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
@@ -1147,7 +728,301 @@ class keyHandlerClass:
     #@-node:ekr.20050923183943.4:processKey
     #@-node:ekr.20050920085536.58:quickCommand  (ctrl-c) & helpers
     #@-node:ekr.20051002152108:Top-level
-    #@+node:ekr.20051002152108.1:Shared helpers
+    #@+node:ekr.20051001050607:endCommand
+    def endCommand (self,event,commandName,tag=''):
+    
+        '''Make sure Leo updates the widget following a command.
+        
+        Never changes the minibuffer label: individual commands must do that.
+        '''
+    
+        k = self ; c = k.c ; w = event.widget
+        if c.controlCommands.shuttingdown: return
+            
+        # Set the best possible undoType: prefer explicit commandName to k.commandName.
+        commandName = commandName or k.commandName or ''
+        k.commandName = k.commandName or commandName or ''
+    
+        # Call onBodyWillChange only if there is a proper command name.
+        if commandName:
+            p = c.currentPosition()
+            c.frame.body.onBodyWillChange(p,undoType=commandName,oldSel=None,oldYview=None)
+            if not k.inState():
+                # g.trace('commandName:',commandName,'caller:',tag)
+                k.commandName = None
+                leoEditCommands.initAllEditCommanders(c)
+                w.focus_force()
+                w.tag_delete('color')
+                w.tag_delete('color1')
+    
+        w.update_idletasks()
+    #@nonl
+    #@-node:ekr.20051001050607:endCommand
+    #@-node:ekr.20051001051355:Dispatching...
+    #@+node:ekr.20050920085536.32:Externally visible commands
+    #@+node:ekr.20050930080419:digitArgument & universalArgument
+    def universalArgument (self,event):
+        
+        '''Begin a numeric argument for the following command.'''
+        
+        k = self
+        k.setLabelBlue('Universal Argument: ',protect=True)
+        k.universalDispatcher(event)
+        
+    def digitArgument (self,event):
+    
+        k = self
+        k.setLabelBlue('Digit Argument: ',protect=True)
+        k.universalDispatcher(event)
+    #@nonl
+    #@-node:ekr.20050930080419:digitArgument & universalArgument
+    #@+node:ekr.20050920085536.68:negativeArgument (redo?)
+    def negativeArgument (self,event):
+    
+        k = self ; state = k.getState('neg-arg')
+    
+        if state == 0:
+            k.setLabelBlue('Negative Argument: ',protect=True)
+            k.setState('neg-arg',1,k.negativeArgument)
+        else:
+            k.clearState()
+            k.resetLabel()
+            func = k.negArgFunctions.get(k.stroke)
+            if func:
+                func(event)
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920085536.68:negativeArgument (redo?)
+    #@+node:ekr.20050920085536.77:numberCommand
+    def numberCommand (self,event,stroke,number):
+    
+        k = self ; k.stroke = stroke ; w = event.widget
+    
+        k.universalDispatcher(event)
+        w.event_generate('<Key>',keysym=number)
+    
+        return 'break'
+    
+    def numberCommand0 (self,event): return self.numberCommand (event,None,0)
+    def numberCommand1 (self,event): return self.numberCommand (event,None,1)
+    def numberCommand2 (self,event): return self.numberCommand (event,None,2)
+    def numberCommand3 (self,event): return self.numberCommand (event,None,3)
+    def numberCommand4 (self,event): return self.numberCommand (event,None,4)
+    def numberCommand5 (self,event): return self.numberCommand (event,None,5)
+    def numberCommand6 (self,event): return self.numberCommand (event,None,6)
+    def numberCommand7 (self,event): return self.numberCommand (event,None,7)
+    def numberCommand8 (self,event): return self.numberCommand (event,None,8)
+    def numberCommand9 (self,event): return self.numberCommand (event,None,9)
+    #@nonl
+    #@-node:ekr.20050920085536.77:numberCommand
+    #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
+    def repeatComplexCommand (self,event):
+    
+        k = self
+    
+        if k.mb_history:
+            k.setState('last-altx',1,handler=k.doLastAltX)
+            k.setLabelBlue("Redo: %s" % k.mb_history[0])
+        return 'break'
+        
+    def doLastAltX (self,event):
+        
+        k = self ; c = k.c
+    
+        if event.keysym == 'Return' and k.mb_history:
+            last = k.mb_history [0]
+            c.commandsDict [last](event)
+            return 'break'
+        else:
+            return k.keyboardQuit(event)
+    #@nonl
+    #@-node:ekr.20050920085536.48:repeatComplexCommand & helper
+    #@-node:ekr.20050920085536.32:Externally visible commands
+    #@+node:ekr.20050920085536.73:universalDispatcher
+    def universalDispatcher (self,event):
+        
+        '''Handle accumulation of universal argument.'''
+        
+        #@    << about repeat counts >>
+        #@+node:ekr.20051006083627.1:<< about repeat counts >>
+        #@@nocolor
+        
+        #@+at  
+        #@nonl
+        # Any Emacs command can be given a numeric argument. Some commands 
+        # interpret the
+        # argument as a repetition count. For example, giving an argument of 
+        # ten to the
+        # key C-f (the command forward-char, move forward one character) moves 
+        # forward ten
+        # characters. With these commands, no argument is equivalent to an 
+        # argument of
+        # one. Negative arguments are allowed. Often they tell a command to 
+        # move or act
+        # backwards.
+        # 
+        # If your keyboard has a META key, the easiest way to specify a 
+        # numeric argument
+        # is to type digits and/or a minus sign while holding down the the 
+        # META key. For
+        # example,
+        # 
+        # M-5 C-n
+        # 
+        # moves down five lines. The characters Meta-1, Meta-2, and so on, as 
+        # well as
+        # Meta--, do this because they are keys bound to commands 
+        # (digit-argument and
+        # negative-argument) that are defined to contribute to an argument for 
+        # the next
+        # command.
+        # 
+        # Another way of specifying an argument is to use the C-u 
+        # (universal-argument)
+        # command followed by the digits of the argument. With C-u, you can 
+        # type the
+        # argument digits without holding down shift keys. To type a negative 
+        # argument,
+        # start with a minus sign. Just a minus sign normally means -1. C-u 
+        # works on all
+        # terminals.
+        # 
+        # C-u followed by a character which is neither a digit nor a minus 
+        # sign has the
+        # special meaning of "multiply by four". It multiplies the argument 
+        # for the next
+        # command by four. C-u twice multiplies it by sixteen. Thus, C-u C-u 
+        # C-f moves
+        # forward sixteen characters. This is a good way to move forward 
+        # "fast", since it
+        # moves about 1/5 of a line in the usual size screen. Other useful 
+        # combinations
+        # are C-u C-n, C-u C-u C-n (move down a good fraction of a screen), 
+        # C-u C-u C-o
+        # (make "a lot" of blank lines), and C-u C-k (kill four lines).
+        # 
+        # Some commands care only about whether there is an argument and not 
+        # about its
+        # value. For example, the command M-q (fill-paragraph) with no 
+        # argument fills
+        # text; with an argument, it justifies the text as well. (See section 
+        # Filling
+        # Text, for more information on M-q.) Just C-u is a handy way of 
+        # providing an
+        # argument for such commands.
+        # 
+        # Some commands use the value of the argument as a repeat count, but 
+        # do something
+        # peculiar when there is no argument. For example, the command C-k 
+        # (kill-line)
+        # with argument n kills n lines, including their terminating newlines. 
+        # But C-k
+        # with no argument is special: it kills the text up to the next 
+        # newline, or, if
+        # point is right at the end of the line, it kills the newline itself. 
+        # Thus, two
+        # C-k commands with no arguments can kill a non-blank line, just like 
+        # C-k with an
+        # argument of one. (See section Deletion and Killing, for more 
+        # information on
+        # C-k.)
+        # 
+        # A few commands treat a plain C-u differently from an ordinary 
+        # argument. A few
+        # others may treat an argument of just a minus sign differently from 
+        # an argument
+        # of -1. These unusual cases will be described when they come up; they 
+        # are always
+        # to make the individual command more convenient to use.
+        #@-at
+        #@nonl
+        #@-node:ekr.20051006083627.1:<< about repeat counts >>
+        #@nl
+    
+        k = self ; state = k.getState('u-arg')
+    
+        if state == 0:
+            # The call should set the label.
+            k.setState('u-arg',1,k.universalDispatcher)
+            k.repeatCount = 1
+        elif state == 1:
+            stroke = k.stroke ; keysym = event.keysym
+                # Stroke is <Key> for plain keys, <Control-u> (k.universalArgKey)
+            if stroke == k.universalArgKey:
+                k.repeatCount = k.repeatCount * 4
+            elif stroke == '<Key>' and keysym in string.digits + '-':
+                k.updateLabel(event)
+            elif stroke == '<Key>' and keysym in (
+                'Alt_L','Alt_R','Shift_L','Shift_R','Control_L','Control_R'):
+                 # g.trace('stroke',k.stroke,'keysym',keysym)
+                 k.updateLabel(event)
+            else:
+                # *Anything* other than C-u, '-' or a numeral is taken to be a command.
+                g.trace('stroke',k.stroke,'keysym',keysym)
+                val = k.getLabel(ignorePrompt=True)
+                try:                n = int(val) * k.repeatCount
+                except ValueError:  n = 1
+                g.trace('val',repr(val),'n',n,'k.repeatCount',k.repeatCount)
+                k.clearState()
+                k.executeNTimes(event,n)
+                k.clearState()
+                k.setLabelGrey()
+                if 0: # Not ready yet.
+                    # This takes us to macro state.
+                    # For example Control-u Control-x ( will execute the last macro and begin editing of it.
+                    if stroke == '<Control-x>':
+                        k.setState('uC',2,k.universalDispatcher)
+                        return k.doControlU(event,stroke)
+        elif state == 2:
+            k.doControlU(event,stroke)
+    
+        return 'break'
+    #@nonl
+    #@+node:ekr.20050920085536.75:executeNTimes
+    def executeNTimes (self,event,n):
+        
+        k = self ; stroke = k.stroke ; w = event.widget
+        g.trace('stroke',stroke,'keycode',event.keycode,'n',n)
+    
+        if stroke == k.fullCommandKey:
+            for z in xrange(n):
+                k.fullCommand()
+        else:
+            stroke = stroke.lstrip('<').rstrip('>')
+            method = k.cbDict.get(stroke)
+            if method:
+                g.trace('method',method)
+                for z in xrange(n):
+                    if 1: # No need to do this: commands never alter events.
+                        ev = Tk.Event()
+                        ev.widget = event.widget
+                        ev.keysym = event.keysym
+                        ev.keycode = event.keycode
+                        ev.char = event.char
+                    k.masterCommand(event,method,'<%s>' % stroke)
+            else:
+                for z in xrange(n):
+                    w.event_generate('<Key>',keycode=event.keycode,keysym=event.keysym)
+    #@nonl
+    #@-node:ekr.20050920085536.75:executeNTimes
+    #@+node:ekr.20050920085536.76:doControlU
+    def doControlU (self,event,stroke):
+        
+        k = self
+    
+        k.setLabelBlue('Control-u %s' % stroke.lstrip('<').rstrip('>'))
+    
+        if event.keysym == 'parenleft': # Execute the macro.
+    
+            k.clearState()
+            k.resetLabel()
+            c.macroCommands.startKbdMacro(event)
+            c.macroCommands.callLastKeyboardMacro(event)
+    #@nonl
+    #@-node:ekr.20050920085536.76:doControlU
+    #@-node:ekr.20050920085536.73:universalDispatcher
+    #@+node:ekr.20051006065121:Externally visible helpers
     #@+node:ekr.20050920085536.62:getArg
     def getArg (self,event,returnKind=None,returnState=None,handler=None,prefix=None,tabList=None):
         
@@ -1155,8 +1030,7 @@ class keyHandlerClass:
         Enter the given return state when done.
         The prefix is does not form the arg.  The prefix defaults to the k.getLabel().
         '''
-        
-        # Similar, but not the same as the code in doAlt_X.
+    
         k = self ; c = k.c ; state = k.getState('getArg')
         keysym = (event and event.keysym) or ''
         # g.trace('state',state,'keysym',keysym)
@@ -1201,6 +1075,126 @@ class keyHandlerClass:
     
         return 'break'
     #@-node:ekr.20050920085536.62:getArg
+    #@+node:ekr.20050920085536.63:keyboardQuit
+    def keyboardQuit (self,event=None):
+    
+        '''This method clears the state and the minibuffer label.
+        
+        k.endCommand handles all other end-of-command chores.'''
+        
+        k = self ; c = k.c
+    
+        if c.controlCommands.shuttingdown:
+            return
+            
+        k.clearState()
+        k.resetLabel()
+    #@nonl
+    #@-node:ekr.20050920085536.63:keyboardQuit
+    #@+node:ekr.20050920085536.64:manufactureKeyPress
+    def manufactureKeyPress (self,event,keysym):
+        
+        '''Implement a command by passing a keypress to Tkinter.'''
+    
+        w = event.widget
+        w.event_generate('<Key>',keysym=keysym)
+        self.endCommand(event,keysym,tag='manufactureKeyPress')
+        
+        return 'break'
+    #@nonl
+    #@-node:ekr.20050920085536.64:manufactureKeyPress
+    #@-node:ekr.20051006065121:Externally visible helpers
+    #@+node:ekr.20050924064254:Label...
+    #@+at 
+    #@nonl
+    # There is something dubious about tracking states separately for separate 
+    # commands.
+    # In fact, there is only one mini-buffer, and it has only one state.
+    # OTOH, maintaining separate states makes it impossible for one command to 
+    # influence another.
+    #@-at
+    #@nonl
+    #@+node:ekr.20050920085536.39:getLabel & setLabel & protectLabel
+    def getLabel (self,ignorePrompt=False):
+        
+        k = self ; s = k.svar.get()
+        if ignorePrompt:
+            return s[len(k.mb_prefix):]
+        else:
+            return s
+    
+    def setLabel (self,s,protect=False):
+        
+        k = self
+        k.svar.set(s)
+        if protect:
+            k.mb_prefix = s
+            
+    def protectLabel (self):
+        
+        k = self
+        k.mb_prefix = s = k.svar.get()
+    #@nonl
+    #@-node:ekr.20050920085536.39:getLabel & setLabel & protectLabel
+    #@+node:ekr.20050920085536.35:setLabelGrey
+    def setLabelGrey (self,label=None):
+    
+        k = self
+        k.widget.configure(background='lightgrey')
+        if label is not None:
+            k.setLabel(label)
+            
+    setLabelGray = setLabelGrey
+    #@nonl
+    #@-node:ekr.20050920085536.35:setLabelGrey
+    #@+node:ekr.20050920085536.36:setLabelBlue
+    def setLabelBlue (self,label=None,protect=False):
+        
+        k = self
+    
+        k.widget.configure(background='lightblue')
+    
+        if label is not None:
+            k.setLabel(label,protect)
+    #@nonl
+    #@-node:ekr.20050920085536.36:setLabelBlue
+    #@+node:ekr.20050920085536.37:resetLabel
+    def resetLabel (self):
+        
+        k = self
+        k.setLabelGrey('')
+        k.mb_prefix = ''
+    #@nonl
+    #@-node:ekr.20050920085536.37:resetLabel
+    #@+node:ekr.20050920085536.38:updateLabel
+    def updateLabel (self,event):
+    
+        '''
+        Alters the StringVar svar to represent the change in the event.
+        This has the effect of changing the miniBuffer contents.
+    
+        It mimics what would happen with the keyboard and a Text editor
+        instead of plain accumalation.'''
+        
+        k = self ; s = k.getLabel()
+        ch = (event and event.char) or ''
+        # g.trace(repr(s),repr(ch))
+    
+        if ch == '\b': # Handle backspace.
+            # Don't backspace over the prompt.
+            if len(s) <= k.mb_prefix:
+                return 
+            elif len(s) == 1: s = ''
+            else: s = s [0:-1]
+        elif ch and ch not in ('\n','\r'):
+            # Add the character.
+            s = s + ch
+        
+        k.setLabel(s)
+    #@nonl
+    #@-node:ekr.20050920085536.38:updateLabel
+    #@-node:ekr.20050924064254:Label...
+    #@+node:ekr.20051002152108.1:Shared helpers
     #@+node:ekr.20050920085536.46:doBackSpace
     # Used by getArg and fullCommand.
     
@@ -1260,122 +1254,6 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion
     #@-node:ekr.20051002152108.1:Shared helpers
-    #@+node:ekr.20051001050607:endCommand
-    def endCommand (self,event,commandName,tag=''):
-    
-        '''Make sure Leo updates the widget following a command.
-        
-        Never changes the minibuffer label: individual commands must do that.
-        '''
-    
-        k = self ; c = k.c ; w = event.widget
-        if c.controlCommands.shuttingdown: return
-            
-        # Set the best possible undoType: prefer explicit commandName to k.commandName.
-        commandName = commandName or k.commandName or ''
-        k.commandName = k.commandName or commandName or ''
-    
-        # Call onBodyWillChange only if there is a proper command name.
-        if commandName:
-            p = c.currentPosition()
-            c.frame.body.onBodyWillChange(p,undoType=commandName,oldSel=None,oldYview=None)
-            if not k.inState():
-                # g.trace('commandName:',commandName,'caller:',tag)
-                k.commandName = None
-                leoEditCommands.initAllEditCommanders(c)
-                w.focus_force()
-                w.tag_delete('color')
-                w.tag_delete('color1')
-    
-        w.update_idletasks()
-    #@nonl
-    #@-node:ekr.20051001050607:endCommand
-    #@-node:ekr.20051001051355:Dispatching...
-    #@+node:ekr.20050924064254:Label...
-    #@+at 
-    #@nonl
-    # There is something dubious about tracking states separately for separate 
-    # commands.
-    # In fact, there is only one mini-buffer, and it has only one state.
-    # OTOH, maintaining separate states makes it impossible for one command to 
-    # influence another.
-    #@-at
-    #@nonl
-    #@+node:ekr.20050920085536.39:getLabel & setLabel
-    def getLabel (self,ignorePrompt=False):
-        
-        k = self ; s = k.svar.get()
-        if ignorePrompt:
-            return s[len(k.mb_prefix):]
-        else:
-            return s
-    
-    def setLabel (self,s,protect=False):
-        
-        k = self
-        k.svar.set(s)
-        if protect:
-            k.mb_prefix = s
-    #@nonl
-    #@-node:ekr.20050920085536.39:getLabel & setLabel
-    #@+node:ekr.20050920085536.35:setLabelGrey
-    def setLabelGrey (self,label=None):
-    
-        k = self
-        k.widget.configure(background='lightgrey')
-        if label is not None:
-            k.setLabel(label)
-            
-    setLabelGray = setLabelGrey
-    #@nonl
-    #@-node:ekr.20050920085536.35:setLabelGrey
-    #@+node:ekr.20050920085536.36:setLabelBlue
-    def setLabelBlue (self,label=None,protect=False):
-        
-        k = self
-    
-        k.widget.configure(background='lightblue')
-    
-        if label is not None:
-            k.setLabel(label,protect)
-    #@nonl
-    #@-node:ekr.20050920085536.36:setLabelBlue
-    #@+node:ekr.20050920085536.37:resetLabel
-    def resetLabel (self):
-        
-        k = self
-        k.setLabelGrey('')
-        k.mb_prefix = ''
-    #@nonl
-    #@-node:ekr.20050920085536.37:resetLabel
-    #@+node:ekr.20050920085536.38:updateLabel
-    def updateLabel (self,event):
-    
-        '''
-        Alters the StringVar svar to represent the change in the event.
-        This has the effect of changing the miniBuffer contents.
-    
-        It mimics what would happen with the keyboard and a Text editor
-        instead of plain accumalation.'''
-        
-        k = self ; s = k.getLabel()
-        ch = (event and event.char) or ''
-        # g.trace(repr(s),repr(ch))
-    
-        if ch == '\b': # Handle backspace.
-            # Don't backspace over the prompt.
-            if len(s) <= k.mb_prefix:
-                return 
-            elif len(s) == 1: s = ''
-            else: s = s [0:-1]
-        elif ch and ch not in ('\n','\r'):
-            # Add the character.
-            s = s + ch
-        
-        k.setLabel(s)
-    #@nonl
-    #@-node:ekr.20050920085536.38:updateLabel
-    #@-node:ekr.20050924064254:Label...
     #@+node:ekr.20050923172809:State...
     #@+node:ekr.20050923172814.1:clearState
     def clearState (self):

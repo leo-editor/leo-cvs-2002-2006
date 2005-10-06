@@ -17,6 +17,7 @@ import os
 import re
 import string
 subprocess   = g.importExtension('subprocess',  pluginName=None,verbose=False)
+Tk           = g.importExtension('Tkinter',     pluginName=None,verbose=False)
 tkFileDialog = g.importExtension('tkFileDialog',pluginName=None,verbose=False)
 import sys
 #@nonl
@@ -3504,6 +3505,28 @@ class macroCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.203:_executeMacro
     #@-node:ekr.20050920084036.202:callLastKeyboardMacro & helper (called from universal command)
     #@-node:ekr.20050920084036.193:Entry points
+    #@+node:ekr.20051006065746:Common Helpers
+    #@+node:ekr.20050920085536.15:addToDoAltX
+    # Called from loadFile and nameLastKbdMacro.
+    
+    def addToDoAltX (self,name,macro):
+    
+        '''Adds macro to Alt-X commands.'''
+        
+        k= self ; c = k.c
+    
+        if c.commandsDict.has_key(name):
+            return False
+    
+        def func (event,macro=macro):
+            return self._executeMacro(macro,event.widget)
+    
+        c.commandsDict [name] = func
+        self.namedMacros [name] = macro
+        return True
+    #@nonl
+    #@-node:ekr.20050920085536.15:addToDoAltX
+    #@-node:ekr.20051006065746:Common Helpers
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.190:class macroCommandsClass
