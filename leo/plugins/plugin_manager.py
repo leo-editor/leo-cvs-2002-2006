@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.14"
+__version__ = "0.15"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -79,6 +79,10 @@ __plugin_group__ = "Core"
 # 0.14 EKR:
 #     - Several methods now return if get.keywords('c') is None.
 #       This may fix some startup bugs, or not.
+# 0.15 Paul Paterson:
+#     - Reorganized to speed loading of initial display
+#     - Added a "Close" button. Guess what it does?!
+#     - Added code to dynamically enable a plugin at runtime
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
@@ -122,6 +126,7 @@ import urllib
 import threading
 import webbrowser
 import traceback
+import time
 
 try:
     import leoGlobals as g
@@ -141,6 +146,17 @@ if ok:
         s = 'plugins_manager.py: %s: %s' % (sys.exc_type,sys.exc_value)
         print s ; g.es(s,color='blue')
         ok = False
+
+#
+# If running in Leo then try to import plugins so we can 
+# dynamically enable a plugin        
+if not standalone:
+    try:
+        import leoPlugins
+    except ImportError:
+        leoPlugins = None
+else:
+    leoPlugins = None           
 #@nonl
 #@-node:pap.20041006184225.3:<< imports >>
 #@nl
@@ -478,6 +494,8 @@ class PluginView(Tk.Frame):
     #@+node:pap.20041008224625:showPlugin
     def showPlugin(self, plugin):
         """Show a plugin"""
+        # First make sure that the plugin details have been read
+        plugin.ensureDetails()
         self.name.setentry(plugin.name)
         self.version.setentry(plugin.version)
         self.group.setentry(plugin.group)
@@ -757,7 +775,14 @@ class ManagerDialog:
                 labelpos = 'w',
                 label_text = 'Status:')
         
-        self.messagebar.pack(side="top", fill='x', expand=1, padx=5, pady=1)
+        self.messagebar.pack(side="left", fill='x', expand=1, padx=5, pady=1)
+        
+        
+        self.donebutton = Tk.Button(self.lower, text="Close", 
+                                    command=lambda : self.top.destroy())
+        self.donebutton.pack(side="right", fill="none", expand=0)
+            
+        
         #@-node:pap.20041006224808:<< create message bar >>
         #@nl
         self.plugin_list.populateList("All")
@@ -775,7 +800,7 @@ class ManagerDialog:
         """Enable a plugin"""
         plugin = self.plugin_list.getSelectedPlugin()
         if not plugin: return
-        
+    
         self.local.enablePlugin(plugin,self.enable)
         self.plugin_list.populateList()
     #@nonl
@@ -1027,14 +1052,16 @@ class Plugin:
     max_name_width = 30
     max_group_width = 10
     
+    read_details_immediately = False
+    
     #@    @+others
     #@+node:pap.20041006185727.1:__init__
     def __init__(self):
         """Initialize the plugin"""
         self.filename = None
         self.name = None
-        self.is_plugin = False
-        self.version = None
+        self.is_plugin = True # until proven False! speeds initial loading
+        self.version = 'Unknown'
         self.description = ''
         self.handlers = []
         self.commands = []
@@ -1045,9 +1072,10 @@ class Plugin:
         self.priority = None
         self.has_toplevel = False
         self.requires = []
-        self.group = None
-        self.versions = ''
+        self.group = 'Unknown'
+        self.versions = 'Unknown'
         self.contents_valid = False
+        self.has_details = False
         
     #@nonl
     #@-node:pap.20041006185727.1:__init__
@@ -1063,7 +1091,7 @@ class Plugin:
         # Get the contents of the file
         try:
             text = self.getContents()
-            self.getDetails(text)
+            self.getSummary(text)
         except InvalidPlugin, err:
             print 'InvalidPlugin',str(err)
             self.description = str(err)
@@ -1107,8 +1135,29 @@ class Plugin:
             name = name[4:]
         return name.capitalize()
     #@-node:pap.20050317183038:getNiceName
+    #@+node:pap.20051001230822:getSummary
+    def getSummary(self, text):
+        """Get a summary of this plugin
+        
+        This is a quick method to get an overview of whether this 
+        really is a plugin and some key information. The longer,
+        more time consuming search is performed by the getDetails
+        method.
+        
+        """
+        self.is_plugin = not self.hasPattern(text, '__not_a_plugin__\s*=\s*True(?!")')
+        self.version = self.getPattern(text, r'__version__\s*=\s*[\'"](.*?)[\'"]', "-")
+        self.group = self.getPattern(text, r'__plugin_group__\s*=\s*[\'"](.*?)[\'"]', "-")
+        self._plugin_text = text
+        
+        # Some plugins need to have their details read immediately
+        if self.read_details_immediately:
+            self.ensureDetails()
+        
+    #@nonl
+    #@-node:pap.20051001230822:getSummary
     #@+node:pap.20041006194759:getDetails
-    def getDetails(self, text):
+    def getDetails(self):
         """Get the details of the plugin
         
         We look for
@@ -1117,11 +1166,8 @@ class Plugin:
             config
             commands
         """
-        # The following line tried to detect plugins by looking 
-        # for self.hasImport(text, "leoPlugins") - now we assume all .py are plugins
-        self.is_plugin = not self.hasPattern(text, '__not_a_plugin__\s*=\s*True(?!")')
-        self.version = self.getPattern(text, r'__version__\s*=\s*[\'"](.*?)[\'"]', "-")
-        self.group = self.getPattern(text, r'__plugin_group__\s*=\s*[\'"](.*?)[\'"]', "-")
+        self.has_details = True
+        text = self._plugin_text
         # Allow both single and double triple-quoted strings.
         match1 = self.getMatch(text, r'"""(.*?)"""')
         match2 = self.getMatch(text, r"'''(.*?)'''")
@@ -1255,6 +1301,19 @@ class Plugin:
             raise InvalidPlugin(
                 "Unable to write plugin file '%s': %s" % (filename, err))
     #@-node:pap.20041009023004:writeTo
+    #@+node:pap.20051001232117:ensureDetails
+    def ensureDetails(self):
+        """Ensure that the details have been read for this plugin
+        
+        The details are read asynchronously but we may need to make
+        sure that they are available. This method will cause the
+        details to be read now if they haven't already.
+        
+        """
+        if not self.has_details:
+            self.getDetails()
+    #@nonl
+    #@-node:pap.20051001232117:ensureDetails
     #@+node:pap.20050305165333:getVersionHistory
     def getVersionHistory(self, text):
         """Try to extract the version history of this plugin
@@ -1392,6 +1451,8 @@ class LocalPlugin(Plugin):
 class CVSPlugin(Plugin):
      """A plugin on CVS"""
      
+     read_details_immediately = True
+    
      #@     @+others
      #@+node:pap.20041006212238:getName
      def getName(self, location):
@@ -1436,7 +1497,6 @@ class CVSPlugin(Plugin):
          return self.filename.replace(r"/*checkout*", "") + "&view=markup"
      #@-node:pap.20041009224435:getViewFilename
      #@-others
-#@nonl
 #@-node:pap.20041006203049:class CVSPlugin
 #@+node:pap.20041006190628:class PluginCollection
 class PluginCollection(dict):
@@ -1444,6 +1504,7 @@ class PluginCollection(dict):
     """Represents a collection of plugins"""
     
     plugin_class = None
+    background_pause = 0.05 # seconds to pause while getting details
     
     #@    @+others
     #@+node:pap.20041006192257:__init__
@@ -1476,8 +1537,29 @@ class PluginCollection(dict):
         for plugin in self.values():
             plugin.getRequiredModules(self)
     
+        # Kick-off a thread to get detailed information on the plugin
+        # This can be time consuming so we don't try to do this on
+        # the main thread
+        handler = threading.Thread(target=self.getPluginDetails)
+        handler.start()
+        
         return errors
+    
     #@-node:pap.20041006191239:initFrom
+    #@+node:pap.20051001231439:getPluginDetails
+    def getPluginDetails(self):
+        """Get detailed information on all the plugins
+        
+        This can be time consuming and so is normally done on a 
+        separate thread. We do a lot of pausing here also
+        to ensure that we don't block other things going on.
+        
+        """
+        for plugin in self.values():
+            time.sleep(self.background_pause)
+            plugin.ensureDetails()
+    #@nonl
+    #@-node:pap.20051001231439:getPluginDetails
     #@+node:pap.20041006191829:getAllFiles
     def getAllFiles(self, location):
         
@@ -1572,6 +1654,47 @@ class LocalPluginCollection(PluginCollection):
         return [os.path.join(location, filename) for filename in os.listdir(location)]
     #@nonl
     #@-node:pap.20041006191803.1:getAllFiles
+    #@+node:pap.20051002002852:enablePlugin
+    def enablePlugin(self, plugin, enabler):
+        """Enable the plugin
+        
+        This adds the plugin to the list of plugins which will be
+        started the next time that Leo runs and also tries to
+        dynamically start the plugin. This may fail if the plugin
+        needed to do something when Leo was first kicking off.
+        
+        We only try the dynamic start if we are running inside of
+        Leo (ie not standalone) and we were able to import
+        the leoPlugins module.
+        
+        """
+        super(LocalPluginCollection, self).enablePlugin(plugin, enabler)
+        
+        if leoPlugins:
+            try:
+                leoPlugins.loadOnePlugin(plugin.name)
+                #@	        << Send hooks >>
+                #@+node:pap.20051002004135:<< Send hooks >>
+                # In order to simulate the startup process we need
+                # to send a series of hooks to the plugin
+                #import pdb; pdb.set_trace()
+                for hook in ("after-create-leo-frame", "new"):
+                    bunch = leoPlugins.handlers.get(hook, [])
+                    for item in bunch:
+                        if item.moduleName == plugin.name:
+                            g.es("Sending '%s' to '%s'" % (hook, plugin.name), color="green")
+                            # How do we do this call???
+                            # item.fn(hook, keys)
+                        
+                #@-node:pap.20051002004135:<< Send hooks >>
+                #@nl
+            except Exception, err:
+                g.es("Failed to dynamically enable '%s': %s" % (plugin.name, err),
+                     color="red")
+            else:
+                g.es("Dynamically enabled '%s'" % plugin.name, color="blue")
+    #@nonl
+    #@-node:pap.20051002002852:enablePlugin
     #@-others
 #@-node:pap.20041006190817:class LocalPluginCollection
 #@+node:pap.20041006201849:class CVSPluginCollection
