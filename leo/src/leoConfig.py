@@ -861,7 +861,7 @@ class configClass:
     #@-node:ekr.20041121143823:getValFromDict
     #@-node:ekr.20041117083141:get & allies (g.app.config)
     #@+node:ekr.20041117081009.3:getBool
-    def getBool (self,c,setting):
+    def getBool (self,c,setting,default=None):
         
         """Search all dictionaries for the setting & check it's type"""
         
@@ -870,7 +870,7 @@ class configClass:
         if val in (True,False):
             return val
         else:
-            return None
+            return default
     #@nonl
     #@-node:ekr.20041117081009.3:getBool
     #@+node:ekr.20041122070339:getColor

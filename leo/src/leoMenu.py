@@ -22,11 +22,14 @@ class leoMenu:
     #@+node:ekr.20031218072017.3751: leoMenu.__init__
     def __init__ (self,frame):
         
-        self.c = frame.c
+        self.c = c = frame.c
         self.frame = frame
         self.menus = {} # Menu dictionary.
         self.menuShortcuts = {}
-        self.useEditorMenu = self.c.config.getBool('useEditorMenu')
+        
+        # To aid transition to emacs-style key handling.
+        self.useEditorMenu = c.config.getBool('useEditorMenu')
+        self.useMiniBuffer = c.config.getBool('useMiniBuffer')
         
         self.newBinding = True
             # True if using new binding scheme.
@@ -984,7 +987,7 @@ class leoMenu:
         return bind_shortcut,menu_shortcut
     #@nonl
     #@-node:ekr.20031218072017.2098:canonicalizeShortcut
-    #@+node:ekr.20031218072017.1723:createMenuEntries
+    #@+node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
     #@+at 
     #@nonl
     # The old, non-user-configurable code bound shortcuts in createMenuBar.  
@@ -1085,43 +1088,46 @@ class leoMenu:
                     dontBind = True
     
                 if bind_shortcut and not dontBind:
-                    #@                << handle bind_shorcut >>
-                    #@+node:ekr.20031218072017.1729:<< handle bind_shorcut >>
-                    d = self.menuShortcuts
-                    bunch = d.get(bind_shortcut)
-                    
-                    if bunch and not g.app.menuWarningsGiven:
-                        if bunch.init:
-                            if 0: # Testing only.
-                                s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
+                    if self.useMiniBuffer:
+                        c.keyHandler.bindShortcutFromMenu(bind_shortcut,name,command,openWith)
+                    else:
+                        #@                    << handle bind_shorcut >>
+                        #@+node:ekr.20031218072017.1729:<< handle bind_shorcut >>
+                        d = self.menuShortcuts
+                        bunch = d.get(bind_shortcut)
+                        
+                        if bunch and not g.app.menuWarningsGiven:
+                            if bunch.init:
+                                if 0: # Testing only.
+                                    s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
+                                        accel,label,bunch.accel,bunch.label)
+                                    g.es(s,color="red")
+                                    print s
+                                # Unbind the previous accelerator.
+                                if menu != bunch.menu or label != bunch.label:
+                                    self.clearAccel(bunch.menu,bunch.label)
+                            else:
+                                s = 'duplicate shortcut\nnew: %s %s\nold: %s %s' % (
                                     accel,label,bunch.accel,bunch.label)
                                 g.es(s,color="red")
                                 print s
-                            # Unbind the previous accelerator.
-                            if menu != bunch.menu or label != bunch.label:
-                                self.clearAccel(bunch.menu,bunch.label)
-                        else:
-                            s = 'duplicate shortcut\nnew: %s %s\nold: %s %s' % (
-                                accel,label,bunch.accel,bunch.label)
-                            g.es(s,color="red")
-                            print s
-                    
-                    d[bind_shortcut] = g.Bunch(label=label,accel=accel,init=init,menu=menu)
                         
-                    try:
-                        self.frame.body.bind(bind_shortcut,callback)
-                        self.bind(bind_shortcut,callback)
-                    except: # could be a user error
-                        if not g.app.menuWarningsGiven:
-                            print "exception binding menu shortcut..."
-                            print bind_shortcut
-                            g.es_exception()
-                            g.app.menuWarningsGive = True
-                    #@nonl
-                    #@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
-                    #@nl
+                        d[bind_shortcut] = g.Bunch(label=label,accel=accel,init=init,menu=menu)
+                            
+                        try:
+                            self.frame.body.bind(bind_shortcut,callback)
+                            self.bind(bind_shortcut,callback)
+                        except: # could be a user error
+                            if not g.app.menuWarningsGiven:
+                                print "exception binding menu shortcut..."
+                                print bind_shortcut
+                                g.es_exception()
+                                g.app.menuWarningsGive = True
+                        #@nonl
+                        #@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
+                        #@nl
     #@nonl
-    #@-node:ekr.20031218072017.1723:createMenuEntries
+    #@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
     #@+node:ekr.20031218072017.3784:createMenuItemsFromTable
     def createMenuItemsFromTable (self,menuName,table,openWith=False):
         
@@ -1144,6 +1150,8 @@ class leoMenu:
     def createMenusFromTables (self):
         
         c = self.c
+        
+        g.trace()
         
         self.createFileMenuFromTable()
         self.createEditMenuFromTable()
@@ -1346,13 +1354,7 @@ class leoMenu:
     def createNewMenu (self,menuName,parentName="top",before=None):
     
         try:
-            parent = self.getMenu(parentName)
-            
-            if 0: # 11/13/03: Allow parent to be None.
-                if parent == None:
-                    g.es("unknown parent menu: " + parentName)
-                    return None
-    
+            parent = self.getMenu(parentName) # parent may be None.
             menu = self.getMenu(menuName)
             if menu:
                 g.es("menu already exists: " + menuName,color="red")

@@ -174,6 +174,8 @@ class baseCommands:
     
         # There is no miniBufferWidget created for leoSettings.leo files.
         if c.miniBufferWidget:
+            
+            g.trace('Commands')
         
             c.keyHandler = leoKeys.keyHandlerClass(c,
                 useGlobalKillbuffer=True,
@@ -182,6 +184,11 @@ class baseCommands:
             # Create the classes in the keyHandler.
             c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
             c.keyHandler.finishCreate()
+            
+            # Create the menu last so that we can use the key handler for shortcuts.
+            p = c.currentPosition()
+            if not g.doHook("menu1",c=c,p=p,v=p):
+                c.frame.menu.createMenuBar(c.frame)
     #@nonl
     #@-node:ekr.20050920093543:c.finishCreate
     #@-node:ekr.20031218072017.2811: c.Birth & death

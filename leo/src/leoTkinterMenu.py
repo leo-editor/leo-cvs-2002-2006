@@ -184,7 +184,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
         self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=True)
     #@nonl
     #@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
-    #@+node:ekr.20031218072017.4117:defineMenuCallback (tk)
+    #@+node:ekr.20031218072017.4117:defineMenuCallback (tkMenu)
     def defineMenuCallback(self,command,name):
         
         # The first parameter must be event, and it must default to None.
@@ -194,8 +194,8 @@ class leoTkinterMenu (leoMenu.leoMenu):
     
         return callback
     #@nonl
-    #@-node:ekr.20031218072017.4117:defineMenuCallback (tk)
-    #@+node:ekr.20031218072017.4118:defineOpenWithMenuCallback
+    #@-node:ekr.20031218072017.4117:defineMenuCallback (tkMenu)
+    #@+node:ekr.20031218072017.4118:defineOpenWithMenuCallback (tkMenu)
     def defineOpenWithMenuCallback(self,command):
         
         # The first parameter must be event, and it must default to None.
@@ -205,7 +205,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
     
         return callback
     #@nonl
-    #@-node:ekr.20031218072017.4118:defineOpenWithMenuCallback
+    #@-node:ekr.20031218072017.4118:defineOpenWithMenuCallback (tkMenu)
     #@+node:ekr.20031218072017.4119:disableMenu
     def disableMenu (self,menu,name):
         
