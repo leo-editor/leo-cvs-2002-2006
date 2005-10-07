@@ -127,7 +127,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         frame = self ; frame.c = c ; gui = g.app.gui
         
-        # g.trace('tkFrame')
+        g.trace('tkFrame')
         
         self.useMiniBuffer = c.config.getBool('useMiniBuffer')
         
@@ -241,8 +241,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
         #@+node:ekr.20041225103412.1:<< create the menu bar >>
         self.menu = leoTkinterMenu.leoTkinterMenu(frame)
         v = c.currentVnode()
-        if not g.doHook("menu1",c=c,p=v,v=v):
-            frame.menu.createMenuBar(self)
+        
+        if not self.useMiniBuffer:
+            if not g.doHook("menu1",c=c,p=v,v=v):
+                frame.menu.createMenuBar(self)
         #@nonl
         #@-node:ekr.20041225103412.1:<< create the menu bar >>
         #@nl
@@ -2305,13 +2307,19 @@ class leoTkinterBody (leoFrame.leoBody):
             except:
                 g.es("exception setting body pane cursor color")
                 g.es_exception()
-                
-        sel_bg = c.config.getColor('body_text_selection_color') or 'Gray80'
+            
+        sel_bg = c.config.getColor('body_text_selection_background_color') or 'Gray80'
         try: body.configure(selectbackground=sel_bg)
         except Exception:
-            g.es("exception setting body pane text selection color")
+            g.es("exception setting body pane text selection background color")
             g.es_exception()
-       
+    
+        sel_fg = c.config.getColor('body_text_selection_foreground_color') or 'white'
+        try: body.configure(selectforeground=sel_fg)
+        except Exception:
+            g.es("exception setting body pane text selection foreground color")
+            g.es_exception()
+      
         if sys.platform != "win32": # Maybe a Windows bug.
             fg = c.config.getColor("body_cursor_foreground_color")
             bg = c.config.getColor("body_cursor_background_color")
