@@ -183,6 +183,20 @@ class baseCommands:
                 
             # Create the classes in the keyHandler.
             c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
+            
+            if 0:
+                #@            << print c.commandsDict >>
+                #@+node:ekr.20051007143620:<< print c.commandsDict >>
+                print 'Commands...'
+                keys = c.commandsDict.keys()
+                keys.sort()
+                for key in keys:
+                    print '%30s = None' % ("'"+key+"'")
+                print
+                #@nonl
+                #@-node:ekr.20051007143620:<< print c.commandsDict >>
+                #@nl
+    
             c.keyHandler.finishCreate()
             
             # Create the menu last so that we can use the key handler for shortcuts.

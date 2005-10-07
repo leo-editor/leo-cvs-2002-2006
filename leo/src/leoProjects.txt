@@ -12248,6 +12248,8 @@ Important simplifications:
 
 - Removed test to keystrokeFunctionDict in masterCommand.
     The regular key binding mechanism should be enough!
+
+- Created k.defaultBindingsDict and k.defaultEmacsBindingsDict.
 #@nonl
 #@-node:ekr.20051007093659:Final integration
 #@-node:ekr.20050921094025.6:What I did
