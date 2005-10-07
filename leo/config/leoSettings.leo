@@ -138,20 +138,21 @@
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
-<v t="ekr.20041213105007.1" a="TV"><vh>Colors</vh>
+<v t="ekr.20041213105007.1" a="E"><vh>Colors</vh>
 <v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
 <v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
 <v t="ekr.20041217184352.2"><vh>@color log_pane_background_color = #f2fdff</vh></v>
 </v>
-<v t="ekr.20041213105007.2"><vh>@page Body pane colors</vh>
+<v t="ekr.20041213105007.2" a="E"><vh>@page Body pane colors</vh>
 <v t="ekr.20041119034357.41"><vh>@color body_cursor_background_color = None</vh></v>
 <v t="ekr.20041119034357.40"><vh>@color body_cursor_foreground_color = None</vh></v>
 <v t="ekr.20041119034357.50"><vh>@color body_insertion_cursor_color = None</vh></v>
 <v t="ekr.20041119034357.49"><vh>@color body_text_background_color = None</vh></v>
 <v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
-<v t="ekr.20050929080032"><vh>@color body_text_selection_color = None</vh></v>
+<v t="ekr.20051006200015"><vh>@color body_text_selection_background_color = Gray80</vh></v>
+<v t="ekr.20051006200015.1" a="TV"><vh>@color body_text_selection_foreground_color = white</vh></v>
 </v>
 <v t="ekr.20041119051246.1"><vh>@page Outline pane colors</vh>
 <v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = #ffffec</vh></v>
@@ -202,7 +203,7 @@
 <v t="ekr.20041119034357.43"><vh>@bool body_gmt_time = False</vh></v>
 <v t="ekr.20041119034357.44"><vh>@bool smart_auto_indent = False</vh></v>
 <v t="ekr.20041119034357.53"><vh>@int additional_body_text_border = 0</vh></v>
-<v t="ekr.20050921105316.2"><vh>@bool useMiniBuffer=True</vh></v>
+<v t="ekr.20050921105316.2"><vh>@bool useMiniBuffer=False</vh></v>
 </v>
 <v t="ekr.20041213105954.1"><vh>@page Log pane options</vh>
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
@@ -1143,9 +1144,10 @@ pdq = Alt+Ctrl+Shift+A</t>
 <t tx="ekr.20050921105316"></t>
 <t tx="ekr.20050921105316.1"></t>
 <t tx="ekr.20050921105316.2"></t>
-<t tx="ekr.20050929080032">Use a light selectbackground value so syntax coloring looks good.
+<t tx="ekr.20051006200015">Use a light selectbackground value so syntax coloring looks good.
 
 Default is Gray80.
 CadetBlue3 has been suggested.</t>
+<t tx="ekr.20051006200015.1">Default is white.</t>
 </tnodes>
 </leo_file>
