@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7655" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7656" clone_windows="0"/>
 <globals body_outline_ratio="0.568986568987">
 	<global_window_position top="15" left="329" height="819" width="869"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1477,7 +1477,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" a="TV" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20050801071700"><vh>@@string stylesheet = type="text/xsl" href="bpLEOHTM.xsl"</vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
@@ -1528,6 +1528,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050809091430.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
 </v>
+<v t="ekr.20051006130309.1"><vh>@bool useMiniBuffer=True</vh></v>
 </v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20050911112310"><vh>@button save</vh></v>
@@ -2324,7 +2325,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050927082642" a="TV"><vh>Text tests</vh></v>
+<v t="ekr.20050927082642"><vh>Text tests</vh></v>
 <v t="ekr.20050930124917"><vh>outlineToClipboard</vh></v>
 </vnodes>
 <tnodes>
@@ -22477,7 +22478,7 @@ part 3, line 2, newline
 
     A first sentence. A second sentence. This is a test of kill sentence. Here
     is another sentence.
-    and a third.
+    and a third. end
     abc
 pdq
 xyz
@@ -22600,5 +22601,6 @@ result = '\n'.join(result) + '\n'
 w = c.frame.body.bodyCtrl
 w.clipboard_clear()
 w.clipboard_append(result)</t>
+<t tx="ekr.20051006130309.1"></t>
 </tnodes>
 </leo_file>

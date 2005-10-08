@@ -6,16 +6,38 @@
 #@+node:ekr.20050921094025:To do (New key handling)
 @nocolor
 
-- Tab completion for file commands.
+* Allow the user to specify keys for alt-x, control-c, etc.
+    Put special-case code in bindKey.
 
-- Extend k.commandName for commands that
-    A) alter a widget
-    B) use arguments
+- Allow both Emacs style and old style names in @shortcuts?
+    - Create oldShortcutNameToEmacsName dict.
+        - Keys are old shortcut names, values are Emacs-style names.
 
-* Test all commands:
-    - Revise all query-replace code.
-    - Revise macro code, rectangle code.
+* Soften the bindings
+    - Add defaults for *all* commands early in the binding process.
+    - Add a 'default' keyword arg to bindKey.
+        - Indicates that the binding is merely a default binding.
+        - Don't warn if a non-default binding overrides a default.
+        - Ignore default-bindings if a non-default binding already exists.
+        - Make entries in k.bindingsDict be g.Bunch(commandName=commandName,default=default)
+    
+- Remove the cut/copy/paste bindings in tkBody.createBindings.
+
+- C-u 5 <return> works but is not undone properly.
+    Perhaps this is the reason for insert-newline command?
 #@nonl
+#@+node:ekr.20051003064825:Big picture
+- The primary goal is to allow Emacs and Vim users to retain their 'finger habits' while using Leo.
+
+    - It is *not* necessary to implement all Emacs commands: just those that are used frequently.
+
+    - It *is* necessary to extend commands like isearch so they can deal with multiple body texts.
+
+- The secondary goal is 'mouseless leo': being able to drive all parts of Leo without using the mouse.
+
+    - It *is* necessary to be able to set Emacs and Leo options from the keyboard.
+#@nonl
+#@-node:ekr.20051003064825:Big picture
 #@+node:ekr.20051001155426:Crash in undo
 exception executing command
 Traceback (most recent call last):
@@ -39,83 +61,35 @@ AssertionError
 
 #@-node:ekr.20051001155426:Crash in undo
 #@+node:ekr.20050928144501:Before first release
-** Redo bindings.
-    - Ignore shortcut entry in menu tables.
-    - Create shortcut dict:  keys are emacs-command names, values are shortcut.
-    - Define defaultEmacsBindings,defaultVimBindings,defaultLeoBindings
-    - Allow any shortcut to be overridden using leoSettings.leo.
-    - Don't bind menu items: let the key handler dispatch the menu commands.
-    - Remove the cut/copy/paste bindings in tkBody.createBindings.
-
-* Use leoSettings to set all new bindings.
-
-- Complete menu work.
+- List of known incompletions and bugs.
 #@nonl
 #@-node:ekr.20050928144501:Before first release
 #@+node:ekr.20050925105522:Before second release
-- Remove last lambda's (See child).
-    - Revise abbreviationDispatch...
+- Define defaultEmacsBindings,defaultVimBindings,defaultLeoBindings
 
-- Use getArg for most commands.
+- Complete menu work.
 
-* Allow the user to specify alternatives for all keys.
-    - User-specified keys for alt-x, control-c, etc.
-    - Make sure the code can support vim as well as emacs.
+- Make sure the code can support vim as well as emacs.
 
-- Implement set-variable.
-    Use dict to translate between emacs name and Python name.
+- Tab completion for file commands.
 
 - Create new kinds of commands dispatchers: vim, tree, etc.
-
-- Use standard Emacs names for all functions.
-
-- Allow numeric prefixes before all commands.
 #@nonl
 #@-node:ekr.20050925105522:Before second release
-#@+node:ekr.20050930130346.1:(Remove lambdas)
-@color
+#@+node:ekr.20051005163644:Expand meaning of commands
+- Integrate Leo commands with emacs commands.
+
+- Expand 'point' so it indicates node as well as text location.
+
+- Allow Leo options (e.g. search options) in Emacs commands.
+    - default-search-command
+
+- Implement set-variable command.
+    Use dict to translate between emacs name and Python name.
+
+- Extend emacs commands to handle full-outline, node-only options.
 #@nonl
-#@+node:ekr.20050923183932:setControlXFunctions MUST BE GENERALIZED
-def setControlXFunctions (self):
-
-    k = self ; c = k.c
-
-    self.abbreviationDispatch = {
-        'a':    lambda event: k.abbreviationDispatch(event,1),
-        'a i':  lambda event: k.abbreviationDispatch(event,2),
-    }
-
-    self.rect_commands = {
-        'o': c.rectangleCommands.openRectangle,
-        'c': c.rectangleCommands.clearRectangle,
-        't': c.rectangleCommands.stringRectangle,
-        'y': c.rectangleCommands.yankRectangle,
-        'd': c.rectangleCommands.deleteRectangle,
-        'k': c.rectangleCommands.killRectangle,
-        'r': c.rectangleCommands.activateRectangleMethods,
-    }
-
-    self.register_commands = {
-        1: c.registerCommands.setNextRegister,
-        2: c.registerCommands.executeRegister,
-    }
-
-    self.variety_commands = {
-        'period':       c.editCommands.setFillPrefix,
-        'parenleft':    c.macroCommands.startKBDMacro,
-        'parenright':   c.macroCommands.stopKBDMacro,
-        'semicolon':    c.editCommands.setCommentColumn,
-        'Tab':          c.editCommands.tabIndentRegion,
-        'u':            c.undoer.undo,
-        'equal':        c.editCommands.lineNumber,
-        'h':            c.editCommands.selectAll,
-        'f':            c.editCommands.setFillColumn,
-        'b':            lambda event, which = 'switch-to-buffer': k.setInBufferMode(event,which),
-        'k':            lambda event, which = 'kill-buffer': emakeyHandlers.setInBufferMode(event,which),
-    }
-#@nonl
-#@-node:ekr.20050923183932:setControlXFunctions MUST BE GENERALIZED
-#@-node:ekr.20050930130346.1:(Remove lambdas)
+#@-node:ekr.20051005163644:Expand meaning of commands
 #@+node:ekr.20050928144501.1:Before 4.4 final
 ** Mouseless Leo: control all Leo commands & widgets using only key commands.
 
@@ -123,14 +97,11 @@ def setControlXFunctions (self):
 
 - Implement all essential emacs commands:  cursor commands, find commands, etc.
 
-- Extend emacs commands to handle full-outline, node-only options.
 
-- Integrate Leo commands with emacs commands.
 
 - Allow future improvements without changing user options greatly.
     - Allow for customizeEmacs plugin.
 #@nonl
-#@-node:ekr.20050928144501.1:Before 4.4 final
 #@+node:ekr.20050921094025.3:Minor
 - convertCommandName utility converts to and from emacs-style (with '-' chars) to
       python/leo style (with capitalization).
@@ -138,10 +109,7 @@ def setControlXFunctions (self):
 - Create printLongCommandName command: prints long name of any keystroke command.
 #@nonl
 #@-node:ekr.20050921094025.3:Minor
-#@+node:ekr.20050921094025.5:Test
-Test all commands and make unit tests.
-#@nonl
-#@-node:ekr.20050921094025.5:Test
+#@-node:ekr.20050928144501.1:Before 4.4 final
 #@-node:ekr.20050921094025:To do (New key handling)
 #@+node:ekr.20050707081822:Top priorities
 #@+node:ekr.20050524074930.2:Mouseless leo
