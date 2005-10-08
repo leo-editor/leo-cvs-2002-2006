@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="99" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-	<global_window_position top="105" left="310" height="703" width="911"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="118" clone_windows="0"/>
+<globals body_outline_ratio="0.34474017744">
+	<global_window_position top="95" left="204" height="789" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -138,21 +138,21 @@
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
-<v t="ekr.20041213105007.1" a="E"><vh>Colors</vh>
+<v t="ekr.20041213105007.1"><vh>Colors</vh>
 <v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
 <v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
 <v t="ekr.20041217184352.2"><vh>@color log_pane_background_color = #f2fdff</vh></v>
 </v>
-<v t="ekr.20041213105007.2" a="E"><vh>@page Body pane colors</vh>
+<v t="ekr.20041213105007.2"><vh>@page Body pane colors</vh>
 <v t="ekr.20041119034357.41"><vh>@color body_cursor_background_color = None</vh></v>
 <v t="ekr.20041119034357.40"><vh>@color body_cursor_foreground_color = None</vh></v>
 <v t="ekr.20041119034357.50"><vh>@color body_insertion_cursor_color = None</vh></v>
 <v t="ekr.20041119034357.49"><vh>@color body_text_background_color = None</vh></v>
 <v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
 <v t="ekr.20051006200015"><vh>@color body_text_selection_background_color = Gray80</vh></v>
-<v t="ekr.20051006200015.1" a="TV"><vh>@color body_text_selection_foreground_color = white</vh></v>
+<v t="ekr.20051006200015.1"><vh>@color body_text_selection_foreground_color = white</vh></v>
 </v>
 <v t="ekr.20041119051246.1"><vh>@page Outline pane colors</vh>
 <v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = #ffffec</vh></v>
@@ -186,15 +186,6 @@
 <v t="ekr.20041119034357.76"><vh>@bool use_hyperlinks = False</vh></v>
 </v>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
-</v>
-<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
-<v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
-<v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
-<v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
-<v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
-<v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
-<v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
-<v t="ekr.20050513110847"><vh>@shortcuts test shortcuts</vh></v>
 </v>
 <v t="ekr.20041213105954"><vh>Window options</vh>
 <v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
@@ -231,6 +222,17 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
+<v t="ekr.20051007200824"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh></v>
+<v t="ekr.20051007200824.2"><vh>@shortcuts Alt and Shift-Alt</vh></v>
+<v t="ekr.20051007200824.3"><vh>@shortcuts Control</vh></v>
+<v t="ekr.20051007200824.4"><vh>@shortcuts Shift-Control</vh></v>
+<v t="ekr.20051007200824.5"><vh>@shortcuts F-keys and Esc</vh></v>
+<v t="ekr.20051007200824.6"><vh>@shortcuts No shortcut specified</vh></v>
+<v t="ekr.20051007200824.7"><vh>@shortcuts test shortcuts</vh></v>
+<v t="ekr.20051007193321" a="M"><vh>@@shortcuts default Emacs shortcuts</vh></v>
+</v>
+<v t="ekr.20051007193427" a="EMTV"><vh>@@shortcuts traditional Leo shortcuts</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -289,222 +291,6 @@ None  Compares all files when comparing directories.
 .py   Compares only .py files when comparing directories.</t>
 <t tx="ekr.20041119034357.19">These options have no effect when comparing directories.</t>
 <t tx="ekr.20041119034357.20"></t>
-<t tx="ekr.20041119034357.21">Keyboard shortcuts for menu commands.
-
-A shortcut specification has the form:
-    
-commandName = shortcutSpecifier
-
-where commandName is the name of the command in the menu with all non-alphabetic characters removed.
-    
-To remove any default shortcut, use None as the specifier.
-
-Otherwise, a shortcut specifier consists of a head followed by a tail.  The head may be empty, or may be a concatenation of the following: Shift+, Alt+, Control+ or Ctrl+.
-
-Case is ignored in commandName, and in the head of the shortcutSpecifier. Case is significant in multi-character tails.  Also, - may be used instead of + in heads.  The following are all equivalent:
-    
-    Ctrl+A
-    Ctrl-a
-    Control+A
-
-The following are not equivalent:
-    
-    Ctrl+-
-    Ctrl-+
-
-and the following are not equivalent:
-
-    Ctrl+Tab (may be valid)
-    Ctrl+tab (will never be valid)
-    
-See "About keyboard shortcuts" for a full discussion of what may appear in the tail of a shortcut.</t>
-<t tx="ekr.20041119034357.22">The following special single characters may be used in the tails of shortcuts.  They are listed along with their associated Tk binding value.  Leo contains special code to handle these characters.  No other single characters may be specified.
-
-For example, you could specify Ctrl+! as a shortcut, and Leo will create a binding for &lt;Control+exclam&gt;.  Some of these values may be invalid on some machines.
-
-! exclam
-" quotedbl
-# numbersign
-$ dollar
-% percent
-&amp; ampersand
-' quoteright
-( parenleft
-) parenright
-* asterisk
-+ plus
-, comma
-- minus
-. period
-/ slash
-: colon
-; semicolon
-&lt; less
-= equal
-&gt; greater
-? question
-@ at
-[ bracketleft
-\ backslash
-] bracketright
-^ asciicircum
-_ underscore
-` quoteleft
-{ braceleft
-| bar
-} braceright
-~ asciitilde
-
-Leo recognizes the following mult-character names, and translates the indicated strings in the menu items:
-    
-"bksp"     : "BkSp"
-"dnarrow"  : "DnArrow"
-"ltarrow"  : "LtArrow"
-"rtarrow"  : "RtArrow"
-"uparrow"  : "UpArrow"
-"pageup"   : "PgUp"),
-"pagedn"   : "PgDn")
-
-For example, "Ctrl-uparrow"  will appear as "Ctrl+UpArrow" in the menu.
-
-Leo passes all other mult-character names verbatim to Tk, so on some platforms you may be able to use any of the following.  Most appear on the numeric keypad. For example, the following may work on some systems:
-    
-"Ctrl+BackSpace"
-
-Don't use these if you want to be sure that the binding work on all platforms. The complete list of names may be found at: http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
-    
-F1, F2, F3, F4, F5, F6, F7, F8, F9, F10,
-BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab, 
-Down, Left, Right, Up,
-Begin, End, Home, Next, Prior,
-Num_Lock, Pause, Scroll_Lock, Sys_Req,
-KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
-KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
-KP_F1, KP_F2, KP_F3, KP_F4,
-KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
-<t tx="ekr.20041119034357.23">ExpandNextLevel   = Alt+=
-ExpandNode        = Alt+]
-ExpandPrevLevel   = Alt+.
-ContractAll       = Alt+-
-ContractNode      = Alt+[
-ContractOrGoLeft  = Alt+LtArrow
-ContractParent    = Alt+0
-ExpandOrGoRight   = Alt+RtArrow
-ExpandToLevel1    = Alt+1
-ExpandToLevel2    = Alt+2
-ExpandToLevel3    = Alt+3
-ExpandToLevel4    = Alt+4
-ExpandToLevel5    = Alt+5
-ExpandToLevel6    = Alt+6
-ExpandToLevel7    = Alt+7
-ExpandToLevel8    = Alt+8
-ExpandAll         = Alt+9
-
-SortSiblings     = Alt-A
-MarkChangedItems = Alt+C
-GoToNextChanged  = Alt+D
-# Reserved         Alt+E  (Opens Edit Menu)
-# Reserved         Alt+F  (Opens File Menu)
-GoToLineNumber   = Alt+G
-# Reserved         Alt+H  (Opens Help Menu)
-MarkClones       = Alt+K
-GoToNextMarked   = Alt+M
-GoToNextCloned   = Alt+N
-# Reserved         Alt+O  (Opens Outline Menu)
-OpenPythonWindow = Alt+P
-MarkChangedRoots = Alt+R
-MarkSubheads     = Alt+S
-UnmarkAll        = Alt+U
-ShowInvisibles   = Alt+V
-# Reserved         Alt+W  (Opens Window Menu)
-
-CheckSpelling    = Alt+Shift+A
-# Idle           = Alt+Shift+I
-# Word           = Alt+Shift+W
-# WordPad        = Alt+Shift+T
-EqualSizedPanes  = Alt+Shift+E
-
-GoToFirstNode    = Alt+Shift+G
-GoToLastNode     = Alt+Shift+H
-GoToParent       = Alt+Shift+P
-GoToPrevSibling  = Alt+Shift+R
-GoToNextSibling  = Alt+Shift+S
-
-GoToNextVisible  = Alt+DnArrow
-GoToPrevVisible  = Alt+UpArrow
-GoToPrevNode     = Alt+Shift+UpArrow
-GoToNextNode     = Alt+Shift+DnArrow</t>
-<t tx="ekr.20041119034357.24">CloneNode        = Ctrl+`
-Replace          = Ctrl+=
-ReplaceThenFind  = Ctrl+-
-AddComments      = Ctrl+(
-DeleteComments   = Ctrl+)
-Indent           = Ctrl+]
-Unindent         = Ctrl+[
-Promote          = Ctrl+{
-Demote           = Ctrl+}
-
-SelectAll        = Ctrl+A
-# Unused         = Ctrl+B
-Copy             = Ctrl+C
-MoveDown         = Ctrl+D
-ExecuteScript    = Ctrl+E
-FindPanel        = Ctrl+F
-# It is no longer possible to specify two shortcuts for the same command.
-# Unused         = Ctrl+G
-EditHeadline     = Ctrl+H
-InsertNode       = Ctrl+I
-# Unused         = Ctrl+J
-MatchBrackets    = Ctrl+K
-MoveLeft         = Ctrl+L
-Mark             = Ctrl+M
-New              = Ctrl+N
-Open             = Ctrl+O
-# Unused         = Ctrl+P
-Exit             = Ctrl-Q
-MoveRight        = Ctrl+R
-Save             = Ctrl+S
-ToggleActivePane = Ctrl+T
-MoveUp           = Ctrl+U
-Paste            = Ctrl+V
-Close            = Ctrl+W
-Cut              = Ctrl+X
-Settings         = Ctrl+Y
-CantUndo         = Ctrl+Z</t>
-<t tx="ekr.20041119034357.25">DeleteNode      = Shift+Ctrl+BkSp
-
-TangleAll       = Shift+Ctrl+A
-ConvertBlanks   = Shift+Ctrl+B
-CopyNode        = Shift+Ctrl+C
-Extract         = Shift+Ctrl+D
-ExtractSection  = Shift+Ctrl+E
-ImportTofile    = Shift+Ctrl+F
-InsertBodyTimeDate     = Shift+Ctrl+G
-InsertHeadlineTimeDate = Shift+Ctrl+H
-# Unused        = Shift+Ctrl+I
-ConvertTabs     = Shift+Ctrl+J
-# Unused        = Shift+Ctrl+K
-# Unused        = Shift+Ctrl+L
-TangleMarked    = Shift+Ctrl+M
-ExtractNames    = Shift+Ctrl+N
-# Unused        = Shift+Ctrl+O
-ReformatParagraph = Shift+Ctrl+P
-WriteDirtyAtFileNodes = Shift+Ctrl+Q
-ReadOutlineOnly = Shift+Ctrl+R
-SaveAs          = Shift+Ctrl+S
-Tangle          = Shift+Ctrl+T
-Untangle        = Shift+Ctrl+U
-PasteNode       = Shift+Ctrl+V
-WritefileNodes  = Shift+Ctrl+W
-CutNode         = Shift+Ctrl+X
-CantRedo        = Shift+Ctrl+Z</t>
-<t tx="ekr.20041119034357.26"># F4 seems to interfere with Alt-F4 processing on windows.  Sigh.
-
-FindNext     = F3
-FindPrevious = F2
-
-AbortEditHeadline   = Shift+Esc
-EndEditHeadline     = Esc</t>
 <t tx="ekr.20041119034357.28">@nocolor</t>
 <t tx="ekr.20041119034357.29">DEPRECATED
 
@@ -966,48 +752,6 @@ Foreground must also be specified for either setting to take effect.</t>
 
 </t>
 <t tx="ekr.20041119053445">Background color of log text.</t>
-<t tx="ekr.20041119054938">AboutLeo                = None
-ApplySettings           = None
-Cascade                 = None
-ContractAllChildren     = None
-ContractChildren        = None
-DeHoist                 = None
-ExpandAllChildren       = None
-ExpandChildren          = None
-ExpandToLevel1          = None
-FlattenOutline          = None
-GoBack                  = None
-GoForward               = None
-Hoist                   = None
-ImportCWEBFiles         = None
-ImportFlattenedOutline  = None
-ImportNowebFiles        = None
-ImportToroot            = None
-MinimizeAll             = None
-OnlineHomePage          = None
-OpenLeoConfigLeo        = None
-OpenLeoDocsLeo          = None
-OpenOfflineTutorial     = None
-OpenOnlineTutorial      = None
-OpenCompareWindow       = None
-OpenfileWith            = None
-OutlineToCWEB           = None
-OutlineToNoweb          = None
-PasteRetainingClones    = None
-ReadfileNodes           = None
-ReferenceLeoDocsleo     = None
-RemoveSentinels         = None
-RevertToSaved           = None
-SaveTo                  = None
-SetColors               = None
-SetFont                 = None
-SortChildren            = None
-ToggleAngleBrackets     = None
-ToggleSplitDirection    = None
-UntangleAll             = None
-UntangleMarked          = None
-Weave                   = None
-WriteOutlineOnly        = None</t>
 <t tx="ekr.20041119105509">Not implemented yet.
 
 Creates a permanent value that can be tested later with @if. That is, it alters
@@ -1137,9 +881,6 @@ Please do not change this; it would make a unit test fail.</t>
 
 Doing so would make unit tests fail.
 </t>
-<t tx="ekr.20050513110847"># For manual testing
-xyzzy = Alt+Ctrl+Shift+y
-pdq = Alt+Ctrl+Shift+A</t>
 <t tx="ekr.20050620083647"></t>
 <t tx="ekr.20050921105316"></t>
 <t tx="ekr.20050921105316.1"></t>
@@ -1149,5 +890,573 @@ pdq = Alt+Ctrl+Shift+A</t>
 Default is Gray80.
 CadetBlue3 has been suggested.</t>
 <t tx="ekr.20051006200015.1">Default is white.</t>
+<t tx="ekr.20051007193321"># Controlling the keyboard controller.
+--full-command          = Alt-x
+--quick-command         = Control-c
+digit-argument          = None
+number-command          = None
+keyboard-quit           = Control-g
+universal-argument      = Control-u
+negative-argument       = Alt-minus
+repeat-complex-command  = None
+
+# Numbered commands...
+number-command-0        = Alt-0
+number-command-1        = Alt-1
+number-command-2        = Alt-2
+number-command-3        = Alt-3
+number-command-4        = Alt-4
+number-command-5        = Alt-5
+number-command-6        = Alt-6
+number-command-7        = Alt-7
+number-command-8        = Alt-8
+number-command-9        = Alt-9
+
+# Moves...
+back-sentence           = Alt-a
+backward-char           = Control-b
+backward-paragraph      = Alt-braceleft
+backward-word           = Alt-b          
+backward-word           = Control-Left
+beginning-of-buffer     = Alt-less
+beginning-of-line       = Alt-Up        
+beginning-of-line       = Control-a
+end-of-buffer           = Alt-greater
+end-of-line             = Control-e
+end-of-line             = Alt-Down      
+exchange-point-mark     = None  # Should be Control-X Control-X.
+forward-char            = Control-f
+forward-paragraph       = Alt-braceright
+forward-sentence        = Alt-e
+forward-word            = Alt-f
+forward-word            = Control-Right
+goto-char               = None
+goto-line               = Alt-g
+move-past-close         = Alt-parenright
+next-line               = Control-n
+previous-line           = Control-p
+scroll-down             = Control-v
+scroll-up               = Alt-v
+set-mark-command        = Control-Shift-at
+
+# Inserts &amp; deletes...
+delete-char             = Control-d
+delete-spaces           = Alt-backslash
+insert-newline          = Control-o
+newline-and-indent:     = Control-j
+split-line              = Control-Alt-o
+zap-to-character        = Alt-z
+
+# Kill buffer...
+# append-next-kill      = Control-Alt-w
+backward-kill-paragraph = None
+backward-kill-word      = Alt-Delete
+kill-line               = Control-k
+kill-paragraph          = None
+kill-region             = Control-w
+kill-region-save        = Alt-w
+kill-sentence           = Alt-k
+kill-word               = Alt-d
+yank                    = Control-y
+yank-pop                = Alt-y
+
+# Processes...       
+shell-command           = Alt-exclam
+shell-command-on-regio  = Alt-bar
+suspend                 = Control-z
+save-buffers-kill-emacs = None # Should be Control-x Control-c
+
+# Python evaluation...
+escape                  = Escape
+eval-expression         = Alt-colon
+
+# Searches &amp; Query-replace...
+isearch-forward         = Control-S
+isearch-backward        = Control-R
+isearch-forward-regexp  = Control-Alt-s
+isearch-backward-regexp = Control-Alt-r
+query-replace           = Alt-percent
+query-replace-regex     = None
+re-search-forward       = None
+re-search-backward      = None
+search-forward          = None
+search-backward         = None
+word-search-forward     = None
+word-search-backward    = None
+
+# All other editing commands...
+advertised-undo         = Control-underscore
+back-to-indentation     = Alt-m
+backward-delete-char    = Delete
+capitalize-word         = Alt-c
+center-line             = Alt-s
+center-region           = None
+count-region          = Alt-equal
+dabbrev-completion      = Control-Alt-slash
+dabbrev-expands         = Alt-slash
+delete-indentation      = Alt-asciicircum
+downcase-region         = None
+downcase-word           = Alt-l
+eval-expression:        = None
+fill-paragraph          = Alt-q
+fill-region-as-paragraph= None
+fill-region             = None
+flush-lines             = None
+how-many                = None
+# indent-for-tab        = Control-i
+indent-region           = Alt-Control-backslash
+indent-rigidly          = None
+indent-relative         = None
+indent-to-comment-column = Alt-semicolon
+insert-parentheses      = Alt-parenleft
+keep-lines              = None
+line-number             = None
+# recenter              = Control-l
+remove-blank-lines      = None
+replace-regex           = None
+replace-string          = None
+reverse-region          = None
+# save-buffer           = None      # Use save instead.
+select-all              = None
+select-paragraph        = Alt-h
+set-comment-column      = None
+set-fill-column         = None
+set-fill-prefix         = None
+sort-columns            = None
+sort-fields             = None
+sort-lines              = None
+tabify                  = None
+transpose-chars         = Control-t
+transpose-lines         = None
+transpose-words         = Alt-t
+untabify                = None
+upcase-region           = None
+upcase-word             = Alt-u
+view-lossage            = None
+what-line               = None</t>
+<t tx="ekr.20051007193427">@color
+
+# Reserved  Alt+E  (Opens Edit Menu)
+# Reserved  Alt+F  (Opens File Menu)
+# Reserved  Alt+H  (Opens Help Menu)
+# Reserved  Alt+O  (Opens Outline Menu)
+# Reserved  Alt+W  (Opens Window Menu)
+
+# In Open With menu...
+# Idle      = Alt+Shift+I
+# Word      = Alt+Shift+W
+# WordPad   = Alt+Shift+T
+
+# Unused Ctrl+B, Ctrl+G, Ctrl+J, Ctrl+P
+# Unused Shift+Ctrl+I, Shift+Ctrl+K, Shift+Ctrl+L, Shift+Ctrl+O
+
+# F4 seems to interfere with Alt-F4 processing on windows.  Sigh.
+
+# apply settings             = None
+abort-edit-headline          = Shift+Esc            ## Add this command
+about-leo                    = None
+add-comments                 = Ctrl+(               ## Add this command
+cascade                      = None
+check-all-python-code        = None
+check-outline                = None
+check-python-code            = None
+check-spelling               = Alt+Shift+A          ## Add this command.
+clone-node                   = Ctrl+`
+close                        = Ctrl+W
+contract-all                 = Alt+-
+contract-node                = Alt+[
+contract-parent              = Alt+0
+contract-or-go-left          = Alt+LtArrow
+convert-all-blanks           = None
+convert-all-tabs             = None
+convert-blanks               = Shift+Ctrl+B
+convert-tabs                 = Shift+Ctrl+J
+copy-text                    = Ctrl+C           ## Add this command
+copy-node                    = Shift+Ctrl+C
+cut-node                     = Shift+Ctrl+X
+cut-text                     = Ctrl+X           ## Add this command.
+de-hoist                     = None
+delete-comments              = Ctrl+)           ## Add this command.
+delete-node                  = Shift+Ctrl+BkSp
+delete-text                  = None             ## Add this command.
+demote                       = Ctrl+}
+dump-outline                 = None
+edit-headline                = Ctrl+H
+equal-sized-panes            = Alt+Shift+E
+end-edit-headline            = Esc              ## Add this command.
+execute-script               = Ctrl+E
+exit                         = Ctrl-Q           ## Add this command.
+expand-all                   = Alt+9
+expand-next-level            = Alt+=
+expand-node                  = Alt+]
+expand-or-go-right           = Alt+RtArrow
+expand-prev-level            = Alt+.
+expand-to-level 1            = Alt+1
+expand-to-level 2            = Alt+2
+expand-to-level 3            = Alt+3
+expand-to-level 4            = Alt+4
+expand-to-level 5            = Alt+5
+expand-to-level 6            = Alt+6
+expand-to-level 7            = Alt+7
+expand-to-level 8            = Alt+8
+expand-to-level 9            = None
+export-headlines             = None
+extract                      = Shift+Ctrl+D
+extract-names                = Shift+Ctrl+N
+extract-section              = Shift+Ctrl+E
+find-next                    = F3
+find-panel                   = Ctrl+F
+find-previous                = F2
+flatten-outline              = None
+goto-first                   = Alt+Shift+G
+goto-last                    = Alt+Shift+H
+goto-line-number             = Alt+G
+goto-next-changed            = Alt+D
+goto-next-marked             = Alt+M
+goto-next-clone              = Alt+N
+goto-next-node               = Alt+Shift+DnArrow
+goto-next-sibling            = Alt+Shift+S
+goto-next-visible            = Alt+DnArrow
+goto-parent                  = Alt+Shift+P
+goto-prev-node               = Alt+Shift+UpArrow
+goto-prev-sibling            = Alt+Shift+R
+goto-prev-visible            = Alt+UpArrow
+hoist                        = None
+import at-file               = Shift+Ctrl+F
+import-at-root               = None
+import-cweb-files            = None
+import-derived-file          = None
+import-flattened-outline     = None
+import-noweb-files           = None
+indent                       = Ctrl+]
+insert-node                  = Ctrl+I
+insert-body-time             = Shift+Ctrl+G
+insert-headline-time         = Shift+Ctrl+H
+mark                         = Ctrl+M
+mark-changed-items           = Alt+C
+mark-changed-roots           = Alt+R
+mark-clones                  = Alt+K
+mark-subheads                = Alt+S
+match-bracket                = Ctrl+K
+minimize-all                 = None
+move-outline-down            = Ctrl+D
+move-outline-left            = Ctrl+L
+move-outline-right           = Ctrl+R
+move-outline-up              = Ctrl+U
+new                          = Ctrl+N
+open                         = Ctrl+O
+open-compare-window          = None
+open-leoConfig.leo           = None
+open-leoDocs.leo             = None
+open-online-home             = None
+open-online-tutorial         = None
+open-offline-tutorial        = None             ## Add this command.
+open-python-window           = Alt+P
+open-with                    = None
+outline-to-CWEB              = None
+outline-to-noweb             = None
+paste-node                   = Shift+Ctrl+V
+paste-retaining-clone        = None
+paste-text                   = Ctrl+V           ## Add this command.
+# preferences                = None
+pretty-print-all-python-code = None
+pretty-print-python-code     = None
+promote                      = Ctrl+{        
+read-at-file-nodes           = None
+read-outline-only            = Shift+Ctrl+R
+redo                         = Shift+Ctrl+Z     ## Add this (was CantRedo)
+reformat-paragraph           = Shift+Ctrl+P
+remove-sentinels             = None
+replace                      = Ctrl+=
+replace-then-find            = Ctrl+-
+resize-to-screen             = None
+revert                       = None
+save                         = Ctrl+S
+save-as                      = Shift+Ctrl+S
+save-to                      = None
+select-all                   = Ctrl+A           ## Add this command.
+#set-colors                   = None
+#set-font                     = None
+settings                     = Ctrl+Y           ## Add this command.
+show-invisibles              = Alt+V
+sort-children                = None
+sort-siblings                = Alt-A
+tangle                       = Shift+Ctrl+T
+tangle-all                   = Shift+Ctrl+A
+tangle-marked                = Shift+Ctrl+M
+toggle-active-pane           = Ctrl+T
+toggle-angle-brackets        = None
+toggle-split-direction       = None
+undo                         = Ctrl+Z           ## Add this.  Was CantUndo.
+unindent                     = Ctrl+[
+unmark-all                   = Alt+U
+untangle                     = Shift+Ctrl+U
+untangle-all                 = None
+untangle-marked              = None
+write-at-file-nodes          = Shift+Ctrl+W     ## Add this command.
+write-dirty-at-file-nodes    = Shift+Ctrl+Q
+write-outline-only           = None             ## Add this command.
+weave                        = None</t>
+<t tx="ekr.20051007200824">Keyboard shortcuts for menu commands.
+
+A shortcut specification has the form:
+    
+commandName = shortcutSpecifier
+
+where commandName is the name of the command in the menu with all non-alphabetic characters removed.
+    
+To remove any default shortcut, use None as the specifier.
+
+Otherwise, a shortcut specifier consists of a head followed by a tail.  The head may be empty, or may be a concatenation of the following: Shift+, Alt+, Control+ or Ctrl+.
+
+Case is ignored in commandName, and in the head of the shortcutSpecifier. Case is significant in multi-character tails.  Also, - may be used instead of + in heads.  The following are all equivalent:
+    
+    Ctrl+A
+    Ctrl-a
+    Control+A
+
+The following are not equivalent:
+    
+    Ctrl+-
+    Ctrl-+
+
+and the following are not equivalent:
+
+    Ctrl+Tab (may be valid)
+    Ctrl+tab (will never be valid)
+    
+See "About keyboard shortcuts" for a full discussion of what may appear in the tail of a shortcut.</t>
+<t tx="ekr.20051007200824.1">The following special single characters may be used in the tails of shortcuts.  They are listed along with their associated Tk binding value.  Leo contains special code to handle these characters.  No other single characters may be specified.
+
+For example, you could specify Ctrl+! as a shortcut, and Leo will create a binding for &lt;Control+exclam&gt;.  Some of these values may be invalid on some machines.
+
+! exclam
+" quotedbl
+# numbersign
+$ dollar
+% percent
+&amp; ampersand
+' quoteright
+( parenleft
+) parenright
+* asterisk
++ plus
+, comma
+- minus
+. period
+/ slash
+: colon
+; semicolon
+&lt; less
+= equal
+&gt; greater
+? question
+@ at
+[ bracketleft
+\ backslash
+] bracketright
+^ asciicircum
+_ underscore
+` quoteleft
+{ braceleft
+| bar
+} braceright
+~ asciitilde
+
+Leo recognizes the following mult-character names, and translates the indicated strings in the menu items:
+    
+"bksp"     : "BkSp"
+"dnarrow"  : "DnArrow"
+"ltarrow"  : "LtArrow"
+"rtarrow"  : "RtArrow"
+"uparrow"  : "UpArrow"
+"pageup"   : "PgUp"),
+"pagedn"   : "PgDn")
+
+For example, "Ctrl-uparrow"  will appear as "Ctrl+UpArrow" in the menu.
+
+Leo passes all other mult-character names verbatim to Tk, so on some platforms you may be able to use any of the following.  Most appear on the numeric keypad. For example, the following may work on some systems:
+    
+"Ctrl+BackSpace"
+
+Don't use these if you want to be sure that the binding work on all platforms. The complete list of names may be found at: http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+    
+F1, F2, F3, F4, F5, F6, F7, F8, F9, F10,
+BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab, 
+Down, Left, Right, Up,
+Begin, End, Home, Next, Prior,
+Num_Lock, Pause, Scroll_Lock, Sys_Req,
+KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
+KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
+KP_F1, KP_F2, KP_F3, KP_F4,
+KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
+<t tx="ekr.20051007200824.2">ExpandNextLevel   = Alt+=
+ExpandNode        = Alt+]
+ExpandPrevLevel   = Alt+.
+ContractAll       = Alt+-
+ContractNode      = Alt+[
+ContractOrGoLeft  = Alt+LtArrow
+ContractParent    = Alt+0
+ExpandOrGoRight   = Alt+RtArrow
+ExpandToLevel1    = Alt+1
+ExpandToLevel2    = Alt+2
+ExpandToLevel3    = Alt+3
+ExpandToLevel4    = Alt+4
+ExpandToLevel5    = Alt+5
+ExpandToLevel6    = Alt+6
+ExpandToLevel7    = Alt+7
+ExpandToLevel8    = Alt+8
+ExpandAll         = Alt+9
+
+SortSiblings     = Alt-A
+MarkChangedItems = Alt+C
+GoToNextChanged  = Alt+D
+# Reserved         Alt+E  (Opens Edit Menu)
+# Reserved         Alt+F  (Opens File Menu)
+GoToLineNumber   = Alt+G
+# Reserved         Alt+H  (Opens Help Menu)
+MarkClones       = Alt+K
+GoToNextMarked   = Alt+M
+GoToNextCloned   = Alt+N
+# Reserved         Alt+O  (Opens Outline Menu)
+OpenPythonWindow = Alt+P
+MarkChangedRoots = Alt+R
+MarkSubheads     = Alt+S
+UnmarkAll        = Alt+U
+ShowInvisibles   = Alt+V
+# Reserved         Alt+W  (Opens Window Menu)
+
+CheckSpelling    = Alt+Shift+A
+# Idle           = Alt+Shift+I
+# Word           = Alt+Shift+W
+# WordPad        = Alt+Shift+T
+EqualSizedPanes  = Alt+Shift+E
+
+GoToFirstNode    = Alt+Shift+G
+GoToLastNode     = Alt+Shift+H
+GoToParent       = Alt+Shift+P
+GoToPrevSibling  = Alt+Shift+R
+GoToNextSibling  = Alt+Shift+S
+
+GoToNextVisible  = Alt+DnArrow
+GoToPrevVisible  = Alt+UpArrow
+GoToPrevNode     = Alt+Shift+UpArrow
+GoToNextNode     = Alt+Shift+DnArrow</t>
+<t tx="ekr.20051007200824.3">CloneNode        = Ctrl+`
+Replace          = Ctrl+=
+ReplaceThenFind  = Ctrl+-
+AddComments      = Ctrl+(
+DeleteComments   = Ctrl+)
+Indent           = Ctrl+]
+Unindent         = Ctrl+[
+Promote          = Ctrl+{
+Demote           = Ctrl+}
+
+SelectAll        = Ctrl+A
+# Unused         = Ctrl+B
+Copy             = Ctrl+C
+MoveDown         = Ctrl+D
+ExecuteScript    = Ctrl+E
+FindPanel        = Ctrl+F
+# It is no longer possible to specify two shortcuts for the same command.
+# Unused         = Ctrl+G
+EditHeadline     = Ctrl+H
+InsertNode       = Ctrl+I
+# Unused         = Ctrl+J
+MatchBrackets    = Ctrl+K
+MoveLeft         = Ctrl+L
+Mark             = Ctrl+M
+New              = Ctrl+N
+Open             = Ctrl+O
+# Unused         = Ctrl+P
+Exit             = Ctrl-Q
+MoveRight        = Ctrl+R
+Save             = Ctrl+S
+ToggleActivePane = Ctrl+T
+MoveUp           = Ctrl+U
+Paste            = Ctrl+V
+Close            = Ctrl+W
+Cut              = Ctrl+X
+Settings         = Ctrl+Y
+CantUndo         = Ctrl+Z</t>
+<t tx="ekr.20051007200824.4">DeleteNode      = Shift+Ctrl+BkSp
+
+TangleAll       = Shift+Ctrl+A
+ConvertBlanks   = Shift+Ctrl+B
+CopyNode        = Shift+Ctrl+C
+Extract         = Shift+Ctrl+D
+ExtractSection  = Shift+Ctrl+E
+ImportTofile    = Shift+Ctrl+F
+InsertBodyTimeDate     = Shift+Ctrl+G
+InsertHeadlineTimeDate = Shift+Ctrl+H
+# Unused        = Shift+Ctrl+I
+ConvertTabs     = Shift+Ctrl+J
+# Unused        = Shift+Ctrl+K
+# Unused        = Shift+Ctrl+L
+TangleMarked    = Shift+Ctrl+M
+ExtractNames    = Shift+Ctrl+N
+# Unused        = Shift+Ctrl+O
+ReformatParagraph = Shift+Ctrl+P
+WriteDirtyAtFileNodes = Shift+Ctrl+Q
+ReadOutlineOnly = Shift+Ctrl+R
+SaveAs          = Shift+Ctrl+S
+Tangle          = Shift+Ctrl+T
+Untangle        = Shift+Ctrl+U
+PasteNode       = Shift+Ctrl+V
+WritefileNodes  = Shift+Ctrl+W
+CutNode         = Shift+Ctrl+X
+CantRedo        = Shift+Ctrl+Z</t>
+<t tx="ekr.20051007200824.5"># F4 seems to interfere with Alt-F4 processing on windows.  Sigh.
+
+FindNext     = F3
+FindPrevious = F2
+
+AbortEditHeadline   = Shift+Esc
+EndEditHeadline     = Esc</t>
+<t tx="ekr.20051007200824.6">AboutLeo                = None
+ApplySettings           = None
+Cascade                 = None
+ContractAllChildren     = None
+ContractChildren        = None
+DeHoist                 = None
+ExpandAllChildren       = None
+ExpandChildren          = None
+ExpandToLevel1          = None
+FlattenOutline          = None
+GoBack                  = None
+GoForward               = None
+Hoist                   = None
+ImportCWEBFiles         = None
+ImportFlattenedOutline  = None
+ImportNowebFiles        = None
+ImportToroot            = None
+MinimizeAll             = None
+OnlineHomePage          = None
+OpenLeoConfigLeo        = None
+OpenLeoDocsLeo          = None
+OpenOfflineTutorial     = None
+OpenOnlineTutorial      = None
+OpenCompareWindow       = None
+OpenfileWith            = None
+OutlineToCWEB           = None
+OutlineToNoweb          = None
+PasteRetainingClones    = None
+ReadfileNodes           = None
+ReferenceLeoDocsleo     = None
+RemoveSentinels         = None
+RevertToSaved           = None
+SaveTo                  = None
+SetColors               = None
+SetFont                 = None
+SortChildren            = None
+ToggleAngleBrackets     = None
+ToggleSplitDirection    = None
+UntangleAll             = None
+UntangleMarked          = None
+Weave                   = None
+WriteOutlineOnly        = None</t>
+<t tx="ekr.20051007200824.7"># For manual testing
+xyzzy = Alt+Ctrl+Shift+y
+pdq = Alt+Ctrl+Shift+A</t>
 </tnodes>
 </leo_file>
