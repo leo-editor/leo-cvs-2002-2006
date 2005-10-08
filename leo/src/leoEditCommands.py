@@ -1048,12 +1048,15 @@ class editCommandsClass (baseEditCommandsClass):
             'back-to-indentation':  self.backToIndentation,
             'backward-delete-char': self.backwardDeleteCharacter,
             'backward-char':        self.backCharacter,
+            'backward-paragraph':   self.backwardParagraph,
+            'backward-word':        self.backwardWord,
             'backward-kill-paragraph': self.backwardKillParagraph,
             'beginning-of-buffer':  self.beginningOfBuffer,
             'beginning-of-line':    self.beginningOfLine,
             'capitalize-word':      self.capitalizeWord,
             'center-line':          self.centerLine,
             'center-region':        self.centerRegion,
+            'count-region':         self.countRegion,
             'dabbrev-completion':   self.dynamicExpansion2,
             'dabbrev-expands':      self.dynamicExpansion,
             'delete-char':          self.deleteNextChar,
@@ -1064,10 +1067,13 @@ class editCommandsClass (baseEditCommandsClass):
             'end-of-line':          self.endOfLine,
             'escape':               self.watchEscape,
             'eval-expression':      self.evalExpression,
+            'fill-paragraph':       self.fillParagraph,
             'fill-region-as-paragraph': self.fillRegionAsParagraph,
             'fill-region':          self.fillRegion,
             'flush-lines':          self.flushLines,
             'forward-char':         self.forwardCharacter,
+            'forward-paragraph':    self.forwardParagraph,
+            'forward-word':         self.forwardWord,
             'goto-char':            self.gotoCharacter,
             'goto-line':            self.gotoLine,
             'how-many':             self.howMany,
@@ -1088,6 +1094,7 @@ class editCommandsClass (baseEditCommandsClass):
             'set-fill-column':      self.setFillColumn,
             'set-fill-prefix':      self.setFillPrefix,
             'set-mark-command':     self.setRegion,
+            'select-paragraph':     self.selectParagraph,
             'sort-columns':         self.sortColumns,
             'sort-fields':          self.sortFields,
             'sort-lines':           self.sortLines,
@@ -1949,6 +1956,146 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050929114218:move...
     #@+node:ekr.20050920084036.95:paragraph...
     #@+others
+    #@+node:ekr.20050920084036.99:backwardKillParagraph
+    def backwardKillParagraph (self,event):
+    
+        k = self.k ; w = event.widget
+        i = w.index('insert')
+        i2 = i
+        txt = w.get('insert linestart','insert lineend')
+        if not txt.rstrip().lstrip():
+            self.backwardParagraph(event)
+            i2 = w.index('insert')
+        self.selectParagraph(event)
+        i3 = w.index('sel.first')
+        self.kill(event,i3,i2)
+        w.mark_set('insert',i)
+        w.selection_clear()
+    #@nonl
+    #@-node:ekr.20050920084036.99:backwardKillParagraph
+    #@+node:ekr.20050920084036.102:backwardParagraph
+    def backwardParagraph (self,event):
+    
+        k = self.k ; w = event.widget ; i = w.index('insert')
+    
+        while 1:
+            txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
+            if text:
+                i = w.index('%s - 1 lines' % i)
+                if w.index('%s linestart' % i) == '1.0':
+                    i = w.search(r'\w','1.0',regexp=True,stopindex='end')
+                    break
+            else:
+                i = w.search(r'\w',i,backwards=True,regexp=True,stopindex='1.0')
+                i = '%s +1c' % i
+                break
+        if i:
+            w.mark_set('insert',i) ; w.see('insert')
+    #@nonl
+    #@-node:ekr.20050920084036.102:backwardParagraph
+    #@+node:ekr.20050920084036.103:fillParagraph
+    def fillParagraph( self, event ):
+        k = self.k ; w = event.widget
+        txt = w.get( 'insert linestart', 'insert lineend' )
+        txt = txt.lstrip().rstrip()
+        if txt:
+            i = w.index( 'insert' )
+            i2 = i
+            txt2 = txt
+            while txt2:
+                pi2 = w.index( '%s - 1 lines' % i2)
+                txt2 = w.get( '%s linestart' % pi2, '%s lineend' % pi2 )
+                if w.index( '%s linestart' % pi2 ) == '1.0':
+                    i2 = w.search( '\w', '1.0', regexp = True, stopindex = 'end' )
+                    break
+                if txt2.lstrip().rstrip() == '': break
+                i2 = pi2
+            i3 = i
+            txt3 = txt
+            while txt3:
+                pi3 = w.index( '%s + 1 lines' %i3 )
+                txt3 = w.get( '%s linestart' % pi3, '%s lineend' % pi3 )
+                if w.index( '%s lineend' % pi3 ) == w.index( 'end' ):
+                    i3 = w.search( '\w', 'end', backwards = True, regexp = True, stopindex = '1.0' )
+                    break
+                if txt3.lstrip().rstrip() == '': break
+                i3 = pi3
+            ntxt = w.get( '%s linestart' %i2, '%s lineend' %i3 )
+            ntxt = self._addPrefix( ntxt )
+            w.delete( '%s linestart' %i2, '%s lineend' % i3 )
+            w.insert( i2, ntxt )
+            w.mark_set( 'insert', i )
+    #@nonl
+    #@-node:ekr.20050920084036.103:fillParagraph
+    #@+node:ekr.20050920084036.100:fillRegion
+    def fillRegion (self,event):
+    
+        k = self.k ; w = event.widget
+        if not self._chckSel(event): return
+    
+        s1 = w.index('sel.first')
+        s2 = w.index('sel.last')
+        w.mark_set('insert',s1)
+        self.backwardParagraph(event,-1)
+        if w.index('insert linestart') == '1.0':
+            self.fillParagraph(event)
+        while 1:
+            self.forwardParagraph(event)
+            if w.compare('insert','>',s2):
+                break
+            self.fillParagraph(event)
+    #@nonl
+    #@-node:ekr.20050920084036.100:fillRegion
+    #@+node:ekr.20050920084036.104:fillRegionAsParagraph
+    def fillRegionAsParagraph (self,event):
+    
+        k = self.k ; w = event.widget
+        if not self._chckSel(event): return
+    
+        i1 = w.index('sel.first linestart')
+        i2 = w.index('sel.last lineend')
+        txt = w.get(i1,i2)
+        txt = self._addPrefix(txt)
+        w.delete(i1,i2)
+        w.insert(i1,txt)
+    #@nonl
+    #@-node:ekr.20050920084036.104:fillRegionAsParagraph
+    #@+node:ekr.20051002100905:forwardParagraph
+    def forwardParagraph (self,event):
+        
+        k = self.k ; w = event.widget ; i = w.index('insert')
+    
+        while 1:
+            txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
+            if txt:
+                i = w.index('%s + 1 lines' % i)
+                if w.index('%s linestart' % i) == w.index('end'):
+                    i = w.search(r'\w','end',backwards=True,regexp=True,stopindex='1.0')
+                    i = '%s + 1c' % i
+                    break
+            else:
+                i = w.search(r'\w',i,regexp=True,stopindex='end')
+                i = '%s' % i
+                break
+        if i:
+            w.mark_set('insert',i) ; w.see('insert')
+    #@nonl
+    #@-node:ekr.20051002100905:forwardParagraph
+    #@+node:ekr.20050920084036.98:killParagraph
+    def killParagraph (self,event):
+    
+        k = self.k ; w = event.widget
+        i = w.index('insert')
+        txt = w.get('insert linestart','insert lineend')
+        if not txt.rstrip().lstrip():
+            i = w.search(r'\w',i,regexp=True,stopindex='end')
+        self._selectParagraph(w,i)
+        i2 = w.index('insert')
+        self.kill(event,i,i2)
+        w.mark_set('insert',i)
+        w.selection_clear()
+    #@nonl
+    #@-node:ekr.20050920084036.98:killParagraph
     #@+node:ekr.20050920084036.96:selectParagraph & helper
     def selectParagraph (self,event):
     
@@ -1995,146 +2142,6 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.97:selectParagraphHelper
     #@-node:ekr.20050920084036.96:selectParagraph & helper
-    #@+node:ekr.20050920084036.98:killParagraph
-    def killParagraph (self,event):
-    
-        k = self.k ; w = event.widget
-        i = w.index('insert')
-        txt = w.get('insert linestart','insert lineend')
-        if not txt.rstrip().lstrip():
-            i = w.search(r'\w',i,regexp=True,stopindex='end')
-        self._selectParagraph(w,i)
-        i2 = w.index('insert')
-        self.kill(event,i,i2)
-        w.mark_set('insert',i)
-        w.selection_clear()
-    #@nonl
-    #@-node:ekr.20050920084036.98:killParagraph
-    #@+node:ekr.20050920084036.99:backwardKillParagraph
-    def backwardKillParagraph (self,event):
-    
-        k = self.k ; w = event.widget
-        i = w.index('insert')
-        i2 = i
-        txt = w.get('insert linestart','insert lineend')
-        if not txt.rstrip().lstrip():
-            self.moveParagraphLeft(event)
-            i2 = w.index('insert')
-        self.selectParagraph(event)
-        i3 = w.index('sel.first')
-        self.kill(event,i3,i2)
-        w.mark_set('insert',i)
-        w.selection_clear()
-    #@nonl
-    #@-node:ekr.20050920084036.99:backwardKillParagraph
-    #@+node:ekr.20050920084036.100:fillRegion
-    def fillRegion (self,event):
-    
-        k = self.k ; w = event.widget
-        if not self._chckSel(event): return
-    
-        s1 = w.index('sel.first')
-        s2 = w.index('sel.last')
-        w.mark_set('insert',s1)
-        self.moveParagraphLeft(event,-1)
-        if w.index('insert linestart') == '1.0':
-            self.fillParagraph(event)
-        while 1:
-            self.moveParagraphRight(event)
-            if w.compare('insert','>',s2):
-                break
-            self.fillParagraph(event)
-    #@nonl
-    #@-node:ekr.20050920084036.100:fillRegion
-    #@+node:ekr.20050920084036.102:moveParagraphLeft
-    def moveParagraphLeft (self,event):
-    
-        k = self.k ; w = event.widget ; i = w.index('insert')
-    
-        while 1:
-            txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
-            if text:
-                i = w.index('%s - 1 lines' % i)
-                if w.index('%s linestart' % i) == '1.0':
-                    i = w.search(r'\w','1.0',regexp=True,stopindex='end')
-                    break
-            else:
-                i = w.search(r'\w',i,backwards=True,regexp=True,stopindex='1.0')
-                i = '%s +1c' % i
-                break
-        if i:
-            w.mark_set('insert',i) ; w.see('insert')
-    #@nonl
-    #@-node:ekr.20050920084036.102:moveParagraphLeft
-    #@+node:ekr.20051002100905:moveParagraphRIght
-    def moveParagraphRight (self,event):
-        
-        k = self.k ; w = event.widget ; i = w.index('insert')
-    
-        while 1:
-            txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
-            if txt:
-                i = w.index('%s + 1 lines' % i)
-                if w.index('%s linestart' % i) == w.index('end'):
-                    i = w.search(r'\w','end',backwards=True,regexp=True,stopindex='1.0')
-                    i = '%s + 1c' % i
-                    break
-            else:
-                i = w.search(r'\w',i,regexp=True,stopindex='end')
-                i = '%s' % i
-                break
-        if i:
-            w.mark_set('insert',i) ; w.see('insert')
-    #@nonl
-    #@-node:ekr.20051002100905:moveParagraphRIght
-    #@+node:ekr.20050920084036.103:fillParagraph
-    def fillParagraph( self, event ):
-        k = self.k ; w = event.widget
-        txt = w.get( 'insert linestart', 'insert lineend' )
-        txt = txt.lstrip().rstrip()
-        if txt:
-            i = w.index( 'insert' )
-            i2 = i
-            txt2 = txt
-            while txt2:
-                pi2 = w.index( '%s - 1 lines' % i2)
-                txt2 = w.get( '%s linestart' % pi2, '%s lineend' % pi2 )
-                if w.index( '%s linestart' % pi2 ) == '1.0':
-                    i2 = w.search( '\w', '1.0', regexp = True, stopindex = 'end' )
-                    break
-                if txt2.lstrip().rstrip() == '': break
-                i2 = pi2
-            i3 = i
-            txt3 = txt
-            while txt3:
-                pi3 = w.index( '%s + 1 lines' %i3 )
-                txt3 = w.get( '%s linestart' % pi3, '%s lineend' % pi3 )
-                if w.index( '%s lineend' % pi3 ) == w.index( 'end' ):
-                    i3 = w.search( '\w', 'end', backwards = True, regexp = True, stopindex = '1.0' )
-                    break
-                if txt3.lstrip().rstrip() == '': break
-                i3 = pi3
-            ntxt = w.get( '%s linestart' %i2, '%s lineend' %i3 )
-            ntxt = self._addPrefix( ntxt )
-            w.delete( '%s linestart' %i2, '%s lineend' % i3 )
-            w.insert( i2, ntxt )
-            w.mark_set( 'insert', i )
-    #@nonl
-    #@-node:ekr.20050920084036.103:fillParagraph
-    #@+node:ekr.20050920084036.104:fillRegionAsParagraph
-    def fillRegionAsParagraph (self,event):
-    
-        k = self.k ; w = event.widget
-        if not self._chckSel(event): return
-    
-        i1 = w.index('sel.first linestart')
-        i2 = w.index('sel.last lineend')
-        txt = w.get(i1,i2)
-        txt = self._addPrefix(txt)
-        w.delete(i1,i2)
-        w.insert(i1,txt)
-    #@nonl
-    #@-node:ekr.20050920084036.104:fillRegionAsParagraph
     #@-others
     #@nonl
     #@-node:ekr.20050920084036.95:paragraph...
@@ -3159,86 +3166,37 @@ class leoCommandsClass (baseEditCommandsClass):
         c = self.c ; f = c.frame
         
         d = {
-            'new':                  c.new,
-            'open':                 c.open,
-            'open-with':            c.openWith,
+            #'apply settings':      c.applyConfig,
+            'about-leo':            c.about,
+            'cascade':              f.cascade,
+            'check-all-python-code':        c.checkAllPythonCode,
+            'check-outline':        c.checkOutline,
+            'check-python-code':    c.checkPythonCode,
+            'clone-node':           c.clone,
             'close':                c.close,
-            'save':                 c.save,
-            'saveAs':               c.saveAs,
-            'saveTo':               c.saveTo,
-            'revert':               c.revert,
-            'read-outline-only':    c.readOutlineOnly,
-            'read-at-file-nodes':   c.readAtFileNodes,
-            'import-derived-file':  c.importDerivedFile,
-            'tangle':               c.tangle,
-            'tangle-all':           c.tangleAll,
-            'tangle-marked':        c.tangleMarked,
-            'untangle':             c.untangle,
-            'untangle-all':         c.untangleAll,
-            'untangle-marked':      c.untangleMarked,
-            'export-headlines':     c.exportHeadlines,
-            'flatten-outline':      c.flattenOutline,
-            'import-at-root':       c.importAtRoot,
-            'import at-file':       c.importAtFile,
-            'import-cweb-files':    c.importCWEBFiles,
-            'import-flattened-outline': c.importFlattenedOutline,
-            'import-noweb-files':   c.importNowebFiles,
-            'outline-to-noweb':     c.outlineToNoweb,
-            'outline-to-CWEB':      c.outlineToCWEB,
-            'remove-sentinels':     c.removeSentinels,
-            'weave':                c.weave,
-            'delete':               c.delete,
-            'execute-script':       c.executeScript,
-            'goto-line-number':     c.goToLineNumber,
-            'set-font':             c.fontPanel,
-            'set-colors':           c.colorPanel,
-            'show-invisibles':      c.viewAllCharacters,
-            'preferences':          c.preferences,
+            'contract-all':         c.contractAllHeadlines,
+            'contract-node':        c.contractNode,
+            'contract-or-go-left':  c.contractNodeOrGoToParent,
+            'contract-parent':      c.contractParent,
             'convert-all-blanks':   c.convertAllBlanks,
             'convert-all-tabs':     c.convertAllTabs,
             'convert-blanks':       c.convertBlanks,
             'convert-tabs':         c.convertTabs,
-            'indent':               c.indentBody,
-            'unindent':             c.dedentBody,
-            'reformat-paragraph':   c.reformatParagraph,
-            'insert-time':          c.insertBodyTime,
-            'extract-section':      c.extractSection,
-            'extract-names':        c.extractSectionNames,
-            'extract':              c.extract,
-            'match-bracket':        c.findMatchingBracket,
-            'find-panel':           c.showFindPanel, ## c.findPanel,
-            'find-next':            c.findNext,
-            'find-previous':        c.findPrevious,
-            'replace':              c.replace,
-            'replace-then-find':    c.replaceThenFind,
-            'edit-headline':        c.editHeadline,
-            'toggle-angle-brackets': c.toggleAngleBrackets,
-            'cut-node':             c.cutOutline,
             'copy-node':            c.copyOutline,
-            'paste-node':           c.pasteOutline,
-            'paste-retaining-clone': c.pasteOutlineRetainingClones,
-            'hoist':                c.hoist,
+            'cut-node':             c.cutOutline,
             'de-hoist':             c.dehoist,
-            'insert-node':          c.insertHeadline,
-            'clone-node':           c.clone,
+            'delete':               c.delete,
             'delete-node':          c.deleteOutline,
-            'sort-children':        c.sortChildren,
-            'sort-siblings':        c.sortSiblings,
             'demote':               c.demote,
-            'promote':              c.promote,
-            'move-outline-right':   c.moveOutlineRight,
-            'move-outline-left':    c.moveOutlineLeft,
-            'move-outline-up':      c.moveOutlineUp,
-            'move-outline-down':    c.moveOutlineDown,
-            'unmark-all':           c.unmarkAll,
-            'mark-clones':          c.markClones,
-            'mark':                 c.markHeadline,
-            'mark-subheads':        c.markSubheads,
-            'mark-changed items':   c.markChangedHeadlines,
-            'mark-changed roots':   c.markChangedRoots,
-            'contract-all':         c.contractAllHeadlines,
-            'contract-node':        c.contractNode,
-            'contract-parent':      c.contractParent,
+            'dump-outline':         c.dumpOutline,
+            'edit-headline':        c.editHeadline,
+            'equal-sized-panes':    f.equalSizedPanes,
+            'execute-script':       c.executeScript,
+            'expand-all':           c.expandAllHeadlines,
+            'expand-next-level':    c.expandNextLevel,
+            'expand-node':          c.expandNode,
+            'expand-or-go-right':   c.expandNodeOrGoToFirstChild,
+            'expand-prev-level':    c.expandPrevLevel,
             'expand-to-level 1':    c.expandLevel1,
             'expand-to-level 2':    c.expandLevel2,
             'expand-to-level 3':    c.expandLevel3,
@@ -3248,42 +3206,94 @@ class leoCommandsClass (baseEditCommandsClass):
             'expand-to-level 7':    c.expandLevel7,
             'expand-to-level 8':    c.expandLevel8,
             'expand-to-level 9':    c.expandLevel9,
-            'expand-prev-level':    c.expandPrevLevel,
-            'expand-next-level':    c.expandNextLevel,
-            'expand-all':           c.expandAllHeadlines,
-            'expand-node':          c.expandNode,
-            'check-outline':        c.checkOutline,
-            'dump-outline':         c.dumpOutline,
-            'check-python-code':    c.checkPythonCode,
-            'check-all-python-code':        c.checkAllPythonCode,
-            'pretty-print-python-code':     c.prettyPrintPythonCode,
-            'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
-            'goto-parent':          c.goToParent,
-            'goto-next-sibling':    c.goToNextSibling,
-            'goto-prev-sibling':    c.goToPrevSibling,
-            'goto-next-clone':      c.goToNextClone,
-            'goto-next marked':     c.goToNextMarkedHeadline,
-            'goto-next changed':    c.goToNextDirtyHeadline,
+            'export-headlines':     c.exportHeadlines,
+            'extract':              c.extract,
+            'extract-names':        c.extractSectionNames,
+            'extract-section':      c.extractSection,
+            'find-next':            c.findNext,
+            'find-panel':           c.showFindPanel, ## c.findPanel,
+            'find-previous':        c.findPrevious,
+            'flatten-outline':      c.flattenOutline,
             'goto-first':           c.goToFirstNode,
             'goto-last':            c.goToLastNode,
-            'goto-prev-visible':    c.selectVisBack,
-            'goto-next-visible':    c.selectVisNext,
-            'goto-prev-node':       c.selectThreadBack,
+            'goto-line-number':     c.goToLineNumber,
+            'goto-next-changed':    c.goToNextDirtyHeadline,
+            'goto-next-clone':      c.goToNextClone,
+            'goto-next-marked':     c.goToNextMarkedHeadline,
             'goto-next-node':       c.selectThreadNext,
-            'about leo':            c.about,
-            #'apply settings':      c.applyConfig,
+            'goto-next-sibling':    c.goToNextSibling,
+            'goto-next-visible':    c.selectVisNext,
+            'goto-parent':          c.goToParent,
+            'goto-prev-node':       c.selectThreadBack,
+            'goto-prev-sibling':    c.goToPrevSibling,
+            'goto-prev-visible':    c.selectVisBack,
+            'hoist':                c.hoist,
+            'import at-file':       c.importAtFile,
+            'import-at-root':       c.importAtRoot,
+            'import-cweb-files':    c.importCWEBFiles,
+            'import-derived-file':  c.importDerivedFile,
+            'import-flattened-outline': c.importFlattenedOutline,
+            'import-noweb-files':   c.importNowebFiles,
+            'indent':               c.indentBody,
+            'insert-node':          c.insertHeadline,
+            'insert-body-time':     c.insertBodyTime,
+            'insert-headline-time': f.insertHeadlineTime,
+            'mark':                 c.markHeadline,
+            'mark-changed-items':   c.markChangedHeadlines,
+            'mark-changed-roots':   c.markChangedRoots,
+            'mark-clones':          c.markClones,
+            'mark-subheads':        c.markSubheads,
+            'match-bracket':        c.findMatchingBracket,
+            'minimize-all':         f.minimizeAll,
+            'move-outline-down':    c.moveOutlineDown,
+            'move-outline-left':    c.moveOutlineLeft,
+            'move-outline-right':   c.moveOutlineRight,
+            'move-outline-up':      c.moveOutlineUp,
+            'new':                  c.new,
+            'open':                 c.open,
+            'open-compare-window':  c.openCompareWindow,
             'open-leoConfig.leo':   c.leoConfig,
             'open-leoDocs.leo':     c.leoDocumentation,
             'open-online-home':     c.leoHome,
             'open-online-tutorial': c.leoTutorial,
-            'open-compare-window':  c.openCompareWindow,
             'open-python-window':   c.openPythonWindow,
-            'equal-sized-panes':    f.equalSizedPanes,
-            'toggle-active-pane':   f.toggleActivePane,
-            'toggle-split-direction': f.toggleSplitDirection,
+            'open-with':            c.openWith,
+            'outline-to-CWEB':      c.outlineToCWEB,
+            'outline-to-noweb':     c.outlineToNoweb,
+            'paste-node':           c.pasteOutline,
+            'paste-retaining-clone': c.pasteOutlineRetainingClones,
+            'preferences':          c.preferences,
+            'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
+            'pretty-print-python-code':     c.prettyPrintPythonCode,
+            'promote':              c.promote,
+            'read-at-file-nodes':   c.readAtFileNodes,
+            'read-outline-only':    c.readOutlineOnly,
+            'reformat-paragraph':   c.reformatParagraph,
+            'remove-sentinels':     c.removeSentinels,
+            'replace':              c.replace,
+            'replace-then-find':    c.replaceThenFind,
             'resize-to-screen':     f.resizeToScreen,
-            'cascade':              f.cascade,
-            'minimize-all':         f.minimizeAll,
+            'revert':               c.revert,
+            'save':                 c.save,
+            'save-as':              c.saveAs,
+            'save-to':              c.saveTo,
+            'set-colors':           c.colorPanel,
+            'set-font':             c.fontPanel,
+            'show-invisibles':      c.viewAllCharacters,
+            'sort-children':        c.sortChildren,
+            'sort-siblings':        c.sortSiblings,
+            'tangle':               c.tangle,
+            'tangle-all':           c.tangleAll,
+            'tangle-marked':        c.tangleMarked,
+            'toggle-active-pane':   f.toggleActivePane,
+            'toggle-angle-brackets': c.toggleAngleBrackets,
+            'toggle-split-direction': f.toggleSplitDirection,
+            'unindent':             c.dedentBody,
+            'unmark-all':           c.unmarkAll,
+            'untangle':             c.untangle,
+            'untangle-all':         c.untangleAll,
+            'untangle-marked':      c.untangleMarked,
+            'weave':                c.weave,
         }
         #@nonl
         #@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
