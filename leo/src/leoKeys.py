@@ -276,7 +276,7 @@ class keyHandlerClass:
                       'reverse-region': None,
                               'revert': None,
                                 'save': None,
-             'save-buffers-kill-emacs': None,
+             'save-buffers-kill-leo':   None,
                            'save-file': None,
                              'save-as': None,
                              'save-to': None,
@@ -554,7 +554,7 @@ class keyHandlerClass:
                       'reverse-region': None,
                               'revert': None,
                                 'save': None,
-             'save-buffers-kill-emacs': None,
+               'save-buffers-kill-leo': None,
                            'save-file': None,
                              'save-as': None,
                              'save-to': None,
@@ -1062,7 +1062,7 @@ class keyHandlerClass:
             funcName = func.__name__
             
             def funcCallback (event,func=func):
-                g.trace(func)
+                # g.trace(func)
                 return func(event)
             
             def keyCallback (event,func=funcCallback,stroke=stroke):
@@ -1382,7 +1382,7 @@ class keyHandlerClass:
         '''
     
         k = self ; c = k.c ; w = event.widget
-        if c.controlCommands.shuttingdown: return
+        if g.app.quitting: return
             
         # Set the best possible undoType: prefer explicit commandName to k.commandName.
         commandName = commandName or k.commandName or ''
@@ -1729,7 +1729,7 @@ class keyHandlerClass:
         
         k = self ; c = k.c
     
-        if c.controlCommands.shuttingdown:
+        if g.app.quitting:
             return
             
         k.clearState()

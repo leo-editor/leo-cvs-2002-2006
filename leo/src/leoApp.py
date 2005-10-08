@@ -346,9 +346,9 @@ class LeoApp:
             if not g.app.closeLeoWindow(w):
                 break
     
-        g.app.quitting = False # If we get here the quit has been disabled.
-    
-    
+        if g.app.windowList:
+            g.app.quitting = False # If we get here the quit has been disabled.
+    #@nonl
     #@-node:ekr.20031218072017.2617:app.onQuit
     #@+node:ekr.20031218072017.2618:app.setEncoding
     #@+at 
