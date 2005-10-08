@@ -3150,9 +3150,12 @@ class leoCommandsClass (baseEditCommandsClass):
         
         '''(leoCommands) Return a dict of the 'legacy' Leo commands.
         A special case used only by this class.
-        Put the *raw* command name into the inverse dict, *not* 'leoCallback'.'''
+        Put the *raw* command name into the inverse dict, *not* 'leoCallback'.
+        
+        Also creates k.leoCallBackDict.  Keys are *raw* functions, values are emacs command names.'''
         
         k = self.k ; d2 = {}
+        k.leoCallbackDict = {}
         
         #@    << define dictionary d of names and Leo commands >>
         #@+node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
@@ -3308,8 +3311,7 @@ class leoCommandsClass (baseEditCommandsClass):
             def leoCallback (event,f=f):
                 f()
             d2 [name] = leoCallback
-            if 0: ## Huh? Name is not a valid Python attribute name!
-                setattr(self,name,f) # Make the name available.
+            k.leoCallbackDict [leoCallback] = f # For use by k.bindShortcutFromDict
             k.inverseCommandsDict [f.__name__] = name
             # g.trace('leoCommands %24s = %s' % (f.__name__,name))
             
@@ -3511,22 +3513,23 @@ class macroCommandsClass (baseEditCommandsClass):
             return self._executeMacro(self.lastMacro,w)
     #@nonl
     #@+node:ekr.20050920084036.203:_executeMacro
-    def _executeMacro( self, macro, w ):
-        
+    def _executeMacro (self,macro,w):
+    
         k = self.k
-        
+    
         for z in macro:
-            if len( z ) == 2:
-                w.event_generate( '<Key>', keycode = z[ 0 ], keysym = z[ 1 ] ) 
+            if len(z) == 2:
+                w.event_generate('<Key>',keycode=z[0],keysym=z[1])
             else:
-                meth = z[ 0 ].lstrip( '<' ).rstrip( '>' )
-                method = self.cbDict[ meth ]
-                ev = Tk.Event()
-                ev.widget = w
-                ev.keycode = z[ 1 ]
-                ev.keysym = z[ 2 ]
-                ev.char = z[ 3 ]
-                self.masterCommand( ev , method, '<%s>' % meth )
+                meth = z [0].lstrip('<').rstrip('>')
+                b = self.bindingsDict.get(meth)
+                if b:
+                    ev = Tk.Event()
+                    ev.widget = w
+                    ev.keycode = z [1]
+                    ev.keysym = z [2]
+                    ev.char = z [3]
+                    self.masterCommand(ev,b.f,'<%s>' % meth)
     #@nonl
     #@-node:ekr.20050920084036.203:_executeMacro
     #@-node:ekr.20050920084036.202:callLastKeyboardMacro & helper (called from universal command)

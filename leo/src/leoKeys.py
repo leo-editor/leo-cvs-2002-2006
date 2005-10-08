@@ -643,6 +643,9 @@ class keyHandlerClass:
         self.commandName = None
         self.inverseCommandsDict = {}
             # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
+        self.leoCallbackDict = {}
+            # Completed in leoCommands.getPublicCommands.
+            # Keys are *raw* functions wrapped by the leoCallback, values are emacs command names.
         self.negativeArg = False
         self.regx = g.bunch(iter=None,key=None)
         self.repeatCount = None
@@ -654,7 +657,7 @@ class keyHandlerClass:
         #@+node:ekr.20050923213858:<< define internal ivars >>
         # Previously defined bindings.
         self.bindingsDict = {}
-        
+            # Keys are Tk key names, values are g.bunch(f=f,name=name)
         # Keepting track of the characters in the mini-buffer.
         self.mb_history = []
         self.mb_prefix = ''
@@ -790,132 +793,45 @@ class keyHandlerClass:
         
         k.bindingsDict = {}
         k.makeHardBindings()
-        
-        if 1: # To be removed soon.
-            k.cbDict = k.create_cbDict()
-            k.setBufferStrokes(w)
+        k.makeSpecialBindings() # These take precedence.
+        k.setBindingsFromCommandsDict()
         k.add_ekr_altx_commands()
     #@nonl
     #@-node:ekr.20051007080058:k.makeAllBindings
-    #@+node:ekr.20050920085536.13:create_cbDict (Generalize)
-    def create_cbDict (self):
+    #@+node:ekr.20051008152134:makeSpecialBindings
+    def makeSpecialBindings (self):
+        
+        '''Make the bindings and set ivars for sepcial keystrokes.'''
+        
+        k = self ; c = k.c ; w = c.frame.body.bodyCtrl ; tag = 'makeSpecialBindings'
+        
+        for stroke,ivar,name,func in (
+            ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
+            ('Atl-x',   'fullCommandKey',  'full-command',  k.fullCommand),
+            ('Ctrl-u',  'universalArgKey', 'universal-arg', k.universalArgument),
+            ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
+        ):
+            def specialCallback (event,func=func,name=name):
+                return func(event)
     
-        '''Create callback dictionary for masterCommand.'''
-    
-        k = self ; c = k.c
-        
-        cbDict = {
-        
-        # The big ones...
-            'Alt-x':            k.fullCommand,
-            'Alt-c':            k.quickCommand, # Control keys conflict with XP cut/copy/paste.
-                # Alt-c is usually bound to capitalizeWord.
-            'Control-g':        k.keyboardQuit,
-            'Control-u':        k.universalArgument,
-            'Alt-minus':        k.negativeArgument,
-            'Alt-exclam':       c.controlCommands.shellCommand,
-            'Alt-bar':          c.controlCommands.shellCommandOnRegion,
-            #'Control-z':        c.controlCommands.suspend,
-    
-        # Standard Emacs moves...
-            'Alt-less':         c.editCommands.beginningOfBuffer,
-            'Alt-greater':      c.editCommands.endOfBuffer,
-            'Alt-a':            c.editCommands.backSentence,
-            'Alt-e':            c.editCommands.forwardSentence,
-            'Alt-f':            c.editCommands.forwardWord,
-            'Alt-b':            c.editCommands.backwardWord,
-            'Alt-braceright':   c.editCommands.forwardParagraph,
-            'Alt-braceleft':    c.editCommands.backwardParagraph,
-            'Control-Right':    c.editCommands.forwardWord,
-            'Control-Left':     c.editCommands.backwardWord,
-            'Control-a':        c.editCommands.beginningOfLine,
-            'Control-e':        c.editCommands.endOfLine,
-            'Control-p':        c.editCommands.prevLine,
-            'Control-n':        c.editCommands.nextLine,
-            # 'Control-f':      c.editCommands.forwardCharacter, # Conflicts with Find panel.
-            'Control-b':        c.editCommands.backCharacter,
-            #'Alt-Up':          c.editCommands.lineStart,   # Conflicts with Leo outline moves.
-            #'Alt-Down':        c.editCommands.lineEnd,     # Conflicts with Leo outline moves.
-            # 'Control-v':      c.editCommands.scrollDown,
-            # 'Alt-v':          c.editCommands.scrollUp,
-        
-        # Kill buffer...
-            'Control-k':        c.killBufferCommands.killLine,
-            'Alt-d':            c.killBufferCommands.killWord,
-            'Alt-Delete':       c.killBufferCommands.backwardKillWord,
-            "Alt-k":            c.killBufferCommands.killSentence,
-            'Control-y':        c.killBufferCommands.yank,
-            'Alt-y':            c.killBufferCommands.yankPop,
-            # 'Control-w':      c.killBufferCommands.killRegion,
-            # 'Alt-w':          c.killBufferCommands.killRegionSave,
-        
-        # Simple inserts & deletes...
-            # 'Control-o':    c.editCommands.insertNewLine,
-            # 'Control-d':      c.editCommands.deleteNextChar,
-            # 'Alt-backslash':  c.editCommands.deleteSpaces,
-            # 'Delete':         c.editCommands.backwardDeleteCharacter,
-            # 'Control-Alt-o':      c.editCommands.insertNewLineIndent,
-            # 'Control-j':          c.editCommands.insertNewLineAndTab,
-        
-        # Transpose & swap.
-            # 'Alt-c':          c.editCommands.capitalizeWord,
-            # 'Alt-u':          c.editCommands.upCaseWord,
-            # 'Alt-l':          c.editCommands.downCaseWord,
-            # 'Alt-t':          c.editCommands.transposeWords,
-            # 'Control-t':      c.editCommands.swapCharacters,
-        
-        # Region, Paragraph, indent, & formatting.
-            # 'Control-Shift-at':       c.editCommands.setRegion,
-            # 'Alt-Control-backslash':  c.editCommands.indentRegion,
-            # 'Alt-m':                  c.editCommands.backToIndentation,
-            # 'Alt-asciicircum':        c.editCommands.deleteIndentation,
-            # 'Alt-s':                  c.editCommands.centerLine,
-            # 'Alt-q':                  c.editCommands.fillParagraph,
-            # 'Alt-h':                  c.editCommands.selectParagraph,
-            # 'Alt-equal':              c.editCommands.countRegion,
-            # 'Alt-semicolon':          c.editCommands.indentToCommentColumn,
+            def keyCallback (event,func=specialCallback,stroke=stroke):
+                return k.masterCommand(event,func,stroke)
             
-        # Parens.
-            # 'Alt-parenleft':      c.editCommands.insertParentheses,
-            # 'Alt-parenright':     c.editCommands.movePastClose,
+            # Allow the user to override.
+            junk, accel = c.config.getShortcut(name)
+            if not accel: accel = stroke
+            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+            k.bindKey(w,shortcut,keyCallback,func.__name__,tag)
+            setattr(k,ivar,stroke)
+            # g.trace(shortcut,func.__name__)
             
-        # Misc.
-            # 'Control-s':          None,
-            # 'Control-r':          None,
-            # 'Control-l':          None,
-            # 'Alt-z':              None,
-            # 'Control-i':          None,
-            # 'Alt-g':              None,
-            # 'Alt-percent':        None,
-            # 'Control-c':          None,
-            # 'Control-Alt-w':      None,
-            # 'Alt-slash':          c.editCommands.dynamicExpansion,
-            # 'Control-Alt-slash':  c.editCommands.dynamicExpansion2,
-            # 'Escape':             c.editCommands.watchEscape,
-            # 'Alt-colon':          c.editCommands.startEvaluate,
-            # 'Control-underscore': c.undoer.undo,
-    
-        # Searches.
-            # 'Control-Alt-s':      c.searchCommands.isearchForwardRegexp,
-            # 'Control-Alt-r':      c.searchCommands.isearchBackwardRegexp,
-            # 'Control-Alt-percent': c.searchCommands.queryReplaceRegex,
-    
-        # Numbered commands: conflict with Leo's Expand to level commands, but so what...
-            'Alt-0': k.numberCommand0,
-            'Alt-1': k.numberCommand1,
-            'Alt-2': k.numberCommand2,
-            'Alt-3': k.numberCommand3,
-            'Alt-4': k.numberCommand4,
-            'Alt-5': k.numberCommand5,
-            'Alt-6': k.numberCommand6,
-            'Alt-7': k.numberCommand7,
-            'Alt-8': k.numberCommand8,
-            'Alt-9': k.numberCommand9,
-        }
-    
-        return cbDict
+        # Add a binding for <Key> events, so _all_ key events go through masterCommand.
+        def allKeyCallback (event):
+            return k.masterCommand(event,func=None,stroke='<Key>')
+            
+        k.bindKey(w,'<Key>',allKeyCallback,'masterCommand',tag)
     #@nonl
-    #@-node:ekr.20050920085536.13:create_cbDict (Generalize)
+    #@-node:ekr.20051008152134:makeSpecialBindings
     #@+node:ekr.20050923174229.1:makeHardBindings 
     def makeHardBindings (self):
         
@@ -987,8 +903,8 @@ class keyHandlerClass:
         }
     #@nonl
     #@-node:ekr.20050923174229.1:makeHardBindings 
-    #@+node:ekr.20051006125633.1:bindShortcutFromMenu
-    def bindShortcutFromMenu (self,shortcut,name,command,openWith):
+    #@+node:ekr.20051006125633.1:bindShortcut
+    def bindShortcut (self,shortcut,name,command,openWith):
         
         '''Bind one shortcut from a menu table.'''
         
@@ -996,15 +912,15 @@ class keyHandlerClass:
         
         shortcut = str(shortcut)
         
-        # g.trace('%25s' % (shortcut),name)
-        
         if openWith:
-             # The first parameter must be event, and it must default to None.
-            def openWithCallback(event=None,self=self,data=command):
-                __pychecker__ = '--no-argsused' # event must be present.
-                return self.c.openWith(data=data)
-    
-            def keyCallback (event,func=openWithCallback,stroke=shortcut):
+            k.bindOpenWith(shortcut,name,command)
+            return
+        elif command.__name__ == 'leoCallback':
+            # Get the function wrapped by this particular leoCallback function.
+            func = k.leoCallbackDict.get(command)
+            name = func.__name__
+            # No need for a second layer of callback.
+            def keyCallback (event,func=command,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
         else:
             # Important: the name just needs to be unique for every function.
@@ -1017,9 +933,28 @@ class keyHandlerClass:
             def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
                 
-        k.bindKey(w,shortcut,keyCallback,name,tag='bindShortcutFromMenu')
+        # g.trace('%25s %20s %s' % (shortcut,name))
+        k.bindKey(w,shortcut,keyCallback,name,tag='bindShortcut')
     #@nonl
-    #@-node:ekr.20051006125633.1:bindShortcutFromMenu
+    #@-node:ekr.20051006125633.1:bindShortcut
+    #@+node:ekr.20051008135051.1:bindOpenWith
+    def bindOpenWith (self,shortcut,name,command):
+        
+        '''Make a binding for the Open With command.'''
+        
+        k = self ; c = k.c ; w = c.frame.body.bodyCtrl
+    
+        # The first parameter must be event, and it must default to None.
+        def openWithCallback(event=None,self=self,data=command):
+            __pychecker__ = '--no-argsused' # event must be present.
+            return self.c.openWith(data=data)
+    
+        def keyCallback (event,func=openWithCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+                
+        k.bindKey(w,shortcut,keyCallback,name,tag='bindOpenWith')
+    #@nonl
+    #@-node:ekr.20051008135051.1:bindOpenWith
     #@+node:ekr.20050920085536.16:bindKey
     def bindKey (self,w,shortcut,keyCallback,commandName,tag=''):
         
@@ -1027,19 +962,22 @@ class keyHandlerClass:
         keyCallback calls commandName (for error messages).'''
         
         k = self
-                
-        # g.trace(tag,'%15s' % (shortcut),commandName)
         
         # Check for duplicates.
-        key = shortcut # The menu code (at least) canonicalizes the shortcut.
-        oldCommandName = k.bindingsDict.get(key)
-        if oldCommandName:
-            g.es_print('ignoring %14s = %24s Keep %s' % (shortcut,commandName,oldCommandName))
+        b = k.bindingsDict.get(shortcut)
+        if b:
+            if b.name != commandName and not b.warningGiven:
+                b.warningGiven = True
+                g.es_print('bindKey: ignoring %s = %s. Keeping binding to %s' % (
+                    shortcut,commandName,b.name))
             return
-        
+    
+        # g.trace(tag,'%25s' % (shortcut),commandName)
+     
         try:
-           w.bind(shortcut,keyCallback)
-           k.bindingsDict [ key ] = commandName
+            w.bind(shortcut,keyCallback)
+            k.bindingsDict [ shortcut ] = g.bunch(
+                func=keyCallback,name=commandName,warningGiven=False)
         except Exception: # Could be a user error.
             if not g.app.menuWarningsGiven:
                 g.es_print('Exception binding for %s to %s' % (shortcut,commandName))
@@ -1047,35 +985,26 @@ class keyHandlerClass:
                 g.app.menuWarningsGive = True
     #@nonl
     #@-node:ekr.20050920085536.16:bindKey
-    #@+node:ekr.20050920085536.17:setBufferStrokes
-    def setBufferStrokes (self,w):
-    
-        '''Sets key bindings for Tk Text widget w.'''
-    
-        k = self ; tag = 'setBufferStrokes'
-    
-        # Create one binding for each entry in cbDict.
-        for stroke in k.cbDict.keys():
-            
-            func = k.cbDict.get(stroke)
-            funcName = func.__name__
-            
-            def funcCallback (event,func=func):
-                # g.trace(func)
-                return func(event)
-            
-            def keyCallback (event,func=funcCallback,stroke=stroke):
-                return k.masterCommand(event,func,stroke)
+    #@+node:ekr.20051008134059:setBindingsFromCommandsDict
+    def setBindingsFromCommandsDict (self):
         
-            ok = k.bindKey(w,'<%s>' % (stroke),keyCallback,funcName,tag=tag)
+        '''Add bindings for all entries in c.commandDict.
+        
+        These bindings may also be specied later by menu code,
+        but bindShortcut and bindKey ignore equivalent bindings.
+        '''
     
-        # Add a binding for <Key> events, so _all_ key events go through masterCommand.
-        def keyCallback (event):
-            return k.masterCommand(event,func=None,stroke='Key')
-            
-        k.bindKey(w,'<Key>',keyCallback,'masterCommand',tag=tag)
+        k = self ; c = k.c
+        keys = c.commandsDict.keys() ; keys.sort()
+    
+        for name in keys:
+            command = c.commandsDict.get(name)
+            key, accel = c.config.getShortcut(name)
+            if accel:
+                bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
+                k.bindShortcut(bind_shortcut,name,command,openWith=name=='open-with')
     #@nonl
-    #@-node:ekr.20050920085536.17:setBufferStrokes
+    #@-node:ekr.20051008134059:setBindingsFromCommandsDict
     #@-node:ekr.20051006125633:Binding (keyHandler)
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20051001051355:Dispatching...
@@ -1094,7 +1023,7 @@ class keyHandlerClass:
         general = stroke == '<Key>'
         k.stroke = stroke
         
-        # g.trace('state kind',k.getStateKind(),'stroke',stroke,'keysym',event.keysym)
+        g.trace('state',k.getStateKind(),'stroke',stroke,'keysym',event.keysym,func and func.__name__)
         # g.trace(stroke,func)
     
         inserted = not special or (
@@ -1207,6 +1136,8 @@ class keyHandlerClass:
     
         k = self ; c = k.c ; state = k.getState('altx')
         keysym = (event and event.keysym) or ''
+        
+        g.trace(state,keysym)
         
         if state == 0:
             k.setState('altx',1,handler=k.fullCommand) 
@@ -1593,6 +1524,7 @@ class keyHandlerClass:
         elif state == 1:
             stroke = k.stroke ; keysym = event.keysym
                 # Stroke is <Key> for plain keys, <Control-u> (k.universalArgKey)
+            # g.trace(state,stroke)
             if stroke == k.universalArgKey:
                 k.repeatCount = k.repeatCount * 4
             elif stroke == '<Key>' and keysym in string.digits + '-':
@@ -1634,8 +1566,8 @@ class keyHandlerClass:
                 k.fullCommand()
         else:
             stroke = stroke.lstrip('<').rstrip('>')
-            method = k.cbDict.get(stroke)
-            if method:
+            b = k.bindingsDict.get(stroke)
+            if b:
                 g.trace('method',method)
                 for z in xrange(n):
                     if 1: # No need to do this: commands never alter events.
@@ -1644,7 +1576,7 @@ class keyHandlerClass:
                         ev.keysym = event.keysym
                         ev.keycode = event.keycode
                         ev.char = event.char
-                    k.masterCommand(event,method,'<%s>' % stroke)
+                    k.masterCommand(event,b.f,'<%s>' % stroke)
             else:
                 for z in xrange(n):
                     w.event_generate('<Key>',keycode=event.keycode,keysym=event.keysym)
@@ -1870,20 +1802,21 @@ class keyHandlerClass:
         
         k = self ; s = k.getLabel().strip()
         
-        # g.trace(repr(k.mb_prompt))
-        
         if k.mb_tabList and s.startswith(k.mb_tabListPrefix):
+            g.trace('cycle')
             # Set the label to the next item on the tab list.
             k.mb_tabListIndex +=1
             if k.mb_tabListIndex >= len(k.mb_tabList):
                 k.mb_tabListIndex = 0
             k.setLabel(k.mb_prompt + k.mb_tabList [k.mb_tabListIndex])
         else:
+            
             s = k.getLabel() # Always includes prefix, so command is well defined.
             k.mb_tabListPrefix = s
             command = s [len(k.mb_prompt):]
             k.mb_tabList,common_prefix = g.itemsMatchingPrefixInList(command,defaultTabList)
             k.mb_tabListIndex = 0
+            g.trace('newlist',len(k.mb_tabList),'command',command,'common_prefix',repr(common_prefix))
             if k.mb_tabList:
                 if len(k.mb_tabList) > 1 and (
                     len(common_prefix) > (len(k.mb_tabListPrefix) - len(k.mb_prompt))

@@ -1010,19 +1010,22 @@ class leoMenu:
                 #@nl
                 #@            << set accel to the shortcut for name >>
                 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-                # First, try to get the munged (old-style) name.
+                # First, try to get the old-style name.
                 rawKey,accel2 = c.config.getShortcut(name)
                 
                 # New in 4.4: allow emacs-style or old style names in menu shortcuts.
-                if k and not accel2 and not openWith:
-                    emacs_name = k.inverseCommandsDict.get(command.__name__)
-                    if emacs_name:
-                        rawKey,accel2 = c.config.getShortcut(emacs_name)
-                        accel = accel2 # Override the default shortcut.
-                        # if accel: g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
+                if not accel2 and not openWith:
+                    if k:
+                        emacs_name = k.inverseCommandsDict.get(command.__name__)
+                        if emacs_name:
+                            rawKey,accel2 = c.config.getShortcut(emacs_name)
+                            accel = accel2 # Override the default shortcut.
+                            # if accel: g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
+                        else:
+                            accel = None # New in 4.4: remove the default shortcut.
+                            g.trace('no inverse for %s' % command.__name__)
                     else:
-                        accel = None # New in 4.4: remove the default shortcut.
-                        g.trace('no inverse for %s' % command.__name__)
+                        pass # Use the default shortcut: we are not using the key handler!
                 elif accel2 and accel2.lower() == "none":
                     accel = None # Remove the default shortcut.
                 else:
@@ -1096,7 +1099,7 @@ class leoMenu:
     
                 if bind_shortcut and not dontBind:
                     if self.useMiniBuffer:
-                        c.keyHandler.bindShortcutFromMenu(bind_shortcut,name,command,openWith)
+                        c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith)
                     else:
                         #@                    << handle bind_shorcut >>
                         #@+node:ekr.20031218072017.1729:<< handle bind_shorcut >>

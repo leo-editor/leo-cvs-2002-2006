@@ -175,7 +175,7 @@ class baseCommands:
         # There is no miniBufferWidget created for leoSettings.leo files.
         if c.miniBufferWidget:
             
-            g.trace('Commands')
+            # g.trace('Commands')
         
             c.keyHandler = leoKeys.keyHandlerClass(c,
                 useGlobalKillbuffer=True,

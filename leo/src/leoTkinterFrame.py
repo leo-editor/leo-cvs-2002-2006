@@ -127,7 +127,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         frame = self ; frame.c = c ; gui = g.app.gui
         
-        g.trace('tkFrame')
+        # g.trace('tkFrame')
         
         self.useMiniBuffer = c.config.getBool('useMiniBuffer')
         

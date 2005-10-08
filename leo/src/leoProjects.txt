@@ -11613,7 +11613,7 @@ def masterCommand (self,event,func,stroke):
     general = stroke == '<Key>'
     k.stroke = stroke
     
-    # g.trace('state kind',k.getStateKind(),'stroke',stroke,'keysym',event.keysym)
+    g.trace('state',k.getStateKind(),'stroke',stroke,'keysym',event.keysym,func and func.__name__)
     # g.trace(stroke,func)
 
     inserted = not special or (
@@ -12273,6 +12273,8 @@ Important simplifications:
     However, <Alt-X> is not bound properly at present.
 
 Binding is mostly complete:  the traces from createMenuEntries show missing command names in leoSettings.leo.
+
+- Removed last traces of cbDict ivar.  Use. by k.bindingsDict as need.
 #@nonl
 #@-node:ekr.20051008065518:Final integration 2
 #@-node:ekr.20050921094025.6:What I did
@@ -12759,6 +12761,154 @@ def executeRegister (self,event):
             k.keyboardQuit(event)
 #@nonl
 #@-node:ekr.20050920084036.256:executeRegister (not used)
+#@+node:ekr.20050920085536.17:setBufferStrokes (No longer used)
+def setBufferStrokes (self,w):
+
+    '''Sets key bindings for Tk Text widget w.'''
+
+    k = self ; tag = 'setBufferStrokes'
+
+    # Create one binding for each entry in cbDict.
+    for stroke in k.cbDict.keys():
+
+        func = k.cbDict.get(stroke)
+        funcName = func.__name__
+
+        def funcCallback (event,func=func):
+            # g.trace(func)
+            return func(event)
+        
+        def keyCallback (event,func=funcCallback,stroke=stroke):
+            return k.masterCommand(event,func,stroke)
+    
+        ok = k.bindKey(w,'<%s>' % (stroke),keyCallback,funcName,tag=tag)
+
+    # Add a binding for <Key> events, so _all_ key events go through masterCommand.
+    def keyCallback (event):
+        return k.masterCommand(event,func=None,stroke='Key')
+        
+    k.bindKey(w,'<Key>',keyCallback,'masterCommand',tag=tag)
+#@nonl
+#@-node:ekr.20050920085536.17:setBufferStrokes (No longer used)
+#@+node:ekr.20050920085536.13:create_cbDict (No longer used)
+def create_cbDict (self):
+
+    '''Create callback dictionary for masterCommand.'''
+
+    k = self ; c = k.c
+    
+    cbDict = {
+    
+    # The big ones...
+        'Alt-x':            k.fullCommand,
+        'Alt-c':            k.quickCommand, # Control keys conflict with XP cut/copy/paste.
+            # Alt-c is usually bound to capitalizeWord.
+        'Control-g':        k.keyboardQuit,
+        'Control-u':        k.universalArgument,
+        'Alt-minus':        k.negativeArgument,
+        'Alt-exclam':       c.controlCommands.shellCommand,
+        'Alt-bar':          c.controlCommands.shellCommandOnRegion,
+        #'Control-z':        c.controlCommands.suspend,
+
+    # Standard Emacs moves...
+        'Alt-less':         c.editCommands.beginningOfBuffer,
+        'Alt-greater':      c.editCommands.endOfBuffer,
+        'Alt-a':            c.editCommands.backSentence,
+        'Alt-e':            c.editCommands.forwardSentence,
+        'Alt-f':            c.editCommands.forwardWord,
+        'Alt-b':            c.editCommands.backwardWord,
+        'Alt-braceright':   c.editCommands.forwardParagraph,
+        'Alt-braceleft':    c.editCommands.backwardParagraph,
+        'Control-Right':    c.editCommands.forwardWord,
+        'Control-Left':     c.editCommands.backwardWord,
+        'Control-a':        c.editCommands.beginningOfLine,
+        'Control-e':        c.editCommands.endOfLine,
+        'Control-p':        c.editCommands.prevLine,
+        'Control-n':        c.editCommands.nextLine,
+        # 'Control-f':      c.editCommands.forwardCharacter, # Conflicts with Find panel.
+        'Control-b':        c.editCommands.backCharacter,
+        #'Alt-Up':          c.editCommands.lineStart,   # Conflicts with Leo outline moves.
+        #'Alt-Down':        c.editCommands.lineEnd,     # Conflicts with Leo outline moves.
+        # 'Control-v':      c.editCommands.scrollDown,
+        # 'Alt-v':          c.editCommands.scrollUp,
+    
+    # Kill buffer...
+        'Control-k':        c.killBufferCommands.killLine,
+        'Alt-d':            c.killBufferCommands.killWord,
+        'Alt-Delete':       c.killBufferCommands.backwardKillWord,
+        "Alt-k":            c.killBufferCommands.killSentence,
+        'Control-y':        c.killBufferCommands.yank,
+        'Alt-y':            c.killBufferCommands.yankPop,
+        # 'Control-w':      c.killBufferCommands.killRegion,
+        # 'Alt-w':          c.killBufferCommands.killRegionSave,
+    
+    # Simple inserts & deletes...
+        # 'Control-o':    c.editCommands.insertNewLine,
+        # 'Control-d':      c.editCommands.deleteNextChar,
+        # 'Alt-backslash':  c.editCommands.deleteSpaces,
+        # 'Delete':         c.editCommands.backwardDeleteCharacter,
+        # 'Control-Alt-o':      c.editCommands.insertNewLineIndent,
+        # 'Control-j':          c.editCommands.insertNewLineAndTab,
+    
+    # Transpose & swap.
+        # 'Alt-c':          c.editCommands.capitalizeWord,
+        # 'Alt-u':          c.editCommands.upCaseWord,
+        # 'Alt-l':          c.editCommands.downCaseWord,
+        # 'Alt-t':          c.editCommands.transposeWords,
+        # 'Control-t':      c.editCommands.swapCharacters,
+    
+    # Region, Paragraph, indent, & formatting.
+        # 'Control-Shift-at':       c.editCommands.setRegion,
+        # 'Alt-Control-backslash':  c.editCommands.indentRegion,
+        # 'Alt-m':                  c.editCommands.backToIndentation,
+        # 'Alt-asciicircum':        c.editCommands.deleteIndentation,
+        # 'Alt-s':                  c.editCommands.centerLine,
+        # 'Alt-q':                  c.editCommands.fillParagraph,
+        # 'Alt-h':                  c.editCommands.selectParagraph,
+        # 'Alt-equal':              c.editCommands.countRegion,
+        # 'Alt-semicolon':          c.editCommands.indentToCommentColumn,
+        
+    # Parens.
+        # 'Alt-parenleft':      c.editCommands.insertParentheses,
+        # 'Alt-parenright':     c.editCommands.movePastClose,
+        
+    # Misc.
+        # 'Control-s':          None,
+        # 'Control-r':          None,
+        # 'Control-l':          None,
+        # 'Alt-z':              None,
+        # 'Control-i':          None,
+        # 'Alt-g':              None,
+        # 'Alt-percent':        None,
+        # 'Control-c':          None,
+        # 'Control-Alt-w':      None,
+        # 'Alt-slash':          c.editCommands.dynamicExpansion,
+        # 'Control-Alt-slash':  c.editCommands.dynamicExpansion2,
+        # 'Escape':             c.editCommands.watchEscape,
+        # 'Alt-colon':          c.editCommands.startEvaluate,
+        # 'Control-underscore': c.undoer.undo,
+
+    # Searches.
+        # 'Control-Alt-s':      c.searchCommands.isearchForwardRegexp,
+        # 'Control-Alt-r':      c.searchCommands.isearchBackwardRegexp,
+        # 'Control-Alt-percent': c.searchCommands.queryReplaceRegex,
+
+    # Numbered commands: conflict with Leo's Expand to level commands, but so what...
+        'Alt-0': k.numberCommand0,
+        'Alt-1': k.numberCommand1,
+        'Alt-2': k.numberCommand2,
+        'Alt-3': k.numberCommand3,
+        'Alt-4': k.numberCommand4,
+        'Alt-5': k.numberCommand5,
+        'Alt-6': k.numberCommand6,
+        'Alt-7': k.numberCommand7,
+        'Alt-8': k.numberCommand8,
+        'Alt-9': k.numberCommand9,
+    }
+
+    return cbDict
+#@nonl
+#@-node:ekr.20050920085536.13:create_cbDict (No longer used)
 #@-node:ekr.20050921100955:Not used
 #@+node:ekr.20050930130346:Docs
 #@+node:ekr.20050921094025.254:All xemacs commands
