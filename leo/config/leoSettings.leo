@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="118" clone_windows="0"/>
-<globals body_outline_ratio="0.34474017744">
-	<global_window_position top="95" left="204" height="789" width="911"/>
+<globals body_outline_ratio="0.570342205323">
+	<global_window_position top="92" left="230" height="789" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -222,17 +222,11 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh></v>
-<v t="ekr.20051007200824.2"><vh>@shortcuts Alt and Shift-Alt</vh></v>
-<v t="ekr.20051007200824.3"><vh>@shortcuts Control</vh></v>
-<v t="ekr.20051007200824.4"><vh>@shortcuts Shift-Control</vh></v>
-<v t="ekr.20051007200824.5"><vh>@shortcuts F-keys and Esc</vh></v>
-<v t="ekr.20051007200824.6"><vh>@shortcuts No shortcut specified</vh></v>
-<v t="ekr.20051007200824.7"><vh>@shortcuts test shortcuts</vh></v>
+<v t="ekr.20051007193427" a="EMTV"><vh>@shortcuts traditional Leo shortcuts</vh></v>
 <v t="ekr.20051007193321" a="M"><vh>@@shortcuts default Emacs shortcuts</vh></v>
 </v>
-<v t="ekr.20051007193427" a="EMTV"><vh>@@shortcuts traditional Leo shortcuts</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -964,7 +958,7 @@ yank-pop                = Alt-y
 shell-command           = Alt-exclam
 shell-command-on-regio  = Alt-bar
 suspend                 = Control-z
-save-buffers-kill-emacs = None # Should be Control-x Control-c
+save-buffers-kill-leo   = None # Should be Control-x Control-c
 
 # Python evaluation...
 escape                  = Escape
@@ -1061,6 +1055,7 @@ check-all-python-code        = None
 check-outline                = None
 check-python-code            = None
 check-spelling               = Alt+Shift+A          ## Add this command.
+clear-recent-files           = None
 clone-node                   = Ctrl+`
 close                        = Ctrl+W
 contract-all                 = Alt+-
@@ -1085,7 +1080,7 @@ edit-headline                = Ctrl+H
 equal-sized-panes            = Alt+Shift+E
 end-edit-headline            = Esc              ## Add this command.
 execute-script               = Ctrl+E
-exit                         = Ctrl-Q           ## Add this command.
+exit-leo                     = Ctrl-Q           ## Add this command.
 expand-all                   = Alt+9
 expand-next-level            = Alt+=
 expand-node                  = Alt+]
@@ -1108,8 +1103,8 @@ find-next                    = F3
 find-panel                   = Ctrl+F
 find-previous                = F2
 flatten-outline              = None
-goto-first                   = Alt+Shift+G
-goto-last                    = Alt+Shift+H
+goto-first-node              = Alt+Shift+G
+goto-last-node               = Alt+Shift+H
 goto-line-number             = Alt+G
 goto-next-changed            = Alt+D
 goto-next-marked             = Alt+M
@@ -1290,173 +1285,5 @@ KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
 KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
-<t tx="ekr.20051007200824.2">ExpandNextLevel   = Alt+=
-ExpandNode        = Alt+]
-ExpandPrevLevel   = Alt+.
-ContractAll       = Alt+-
-ContractNode      = Alt+[
-ContractOrGoLeft  = Alt+LtArrow
-ContractParent    = Alt+0
-ExpandOrGoRight   = Alt+RtArrow
-ExpandToLevel1    = Alt+1
-ExpandToLevel2    = Alt+2
-ExpandToLevel3    = Alt+3
-ExpandToLevel4    = Alt+4
-ExpandToLevel5    = Alt+5
-ExpandToLevel6    = Alt+6
-ExpandToLevel7    = Alt+7
-ExpandToLevel8    = Alt+8
-ExpandAll         = Alt+9
-
-SortSiblings     = Alt-A
-MarkChangedItems = Alt+C
-GoToNextChanged  = Alt+D
-# Reserved         Alt+E  (Opens Edit Menu)
-# Reserved         Alt+F  (Opens File Menu)
-GoToLineNumber   = Alt+G
-# Reserved         Alt+H  (Opens Help Menu)
-MarkClones       = Alt+K
-GoToNextMarked   = Alt+M
-GoToNextCloned   = Alt+N
-# Reserved         Alt+O  (Opens Outline Menu)
-OpenPythonWindow = Alt+P
-MarkChangedRoots = Alt+R
-MarkSubheads     = Alt+S
-UnmarkAll        = Alt+U
-ShowInvisibles   = Alt+V
-# Reserved         Alt+W  (Opens Window Menu)
-
-CheckSpelling    = Alt+Shift+A
-# Idle           = Alt+Shift+I
-# Word           = Alt+Shift+W
-# WordPad        = Alt+Shift+T
-EqualSizedPanes  = Alt+Shift+E
-
-GoToFirstNode    = Alt+Shift+G
-GoToLastNode     = Alt+Shift+H
-GoToParent       = Alt+Shift+P
-GoToPrevSibling  = Alt+Shift+R
-GoToNextSibling  = Alt+Shift+S
-
-GoToNextVisible  = Alt+DnArrow
-GoToPrevVisible  = Alt+UpArrow
-GoToPrevNode     = Alt+Shift+UpArrow
-GoToNextNode     = Alt+Shift+DnArrow</t>
-<t tx="ekr.20051007200824.3">CloneNode        = Ctrl+`
-Replace          = Ctrl+=
-ReplaceThenFind  = Ctrl+-
-AddComments      = Ctrl+(
-DeleteComments   = Ctrl+)
-Indent           = Ctrl+]
-Unindent         = Ctrl+[
-Promote          = Ctrl+{
-Demote           = Ctrl+}
-
-SelectAll        = Ctrl+A
-# Unused         = Ctrl+B
-Copy             = Ctrl+C
-MoveDown         = Ctrl+D
-ExecuteScript    = Ctrl+E
-FindPanel        = Ctrl+F
-# It is no longer possible to specify two shortcuts for the same command.
-# Unused         = Ctrl+G
-EditHeadline     = Ctrl+H
-InsertNode       = Ctrl+I
-# Unused         = Ctrl+J
-MatchBrackets    = Ctrl+K
-MoveLeft         = Ctrl+L
-Mark             = Ctrl+M
-New              = Ctrl+N
-Open             = Ctrl+O
-# Unused         = Ctrl+P
-Exit             = Ctrl-Q
-MoveRight        = Ctrl+R
-Save             = Ctrl+S
-ToggleActivePane = Ctrl+T
-MoveUp           = Ctrl+U
-Paste            = Ctrl+V
-Close            = Ctrl+W
-Cut              = Ctrl+X
-Settings         = Ctrl+Y
-CantUndo         = Ctrl+Z</t>
-<t tx="ekr.20051007200824.4">DeleteNode      = Shift+Ctrl+BkSp
-
-TangleAll       = Shift+Ctrl+A
-ConvertBlanks   = Shift+Ctrl+B
-CopyNode        = Shift+Ctrl+C
-Extract         = Shift+Ctrl+D
-ExtractSection  = Shift+Ctrl+E
-ImportTofile    = Shift+Ctrl+F
-InsertBodyTimeDate     = Shift+Ctrl+G
-InsertHeadlineTimeDate = Shift+Ctrl+H
-# Unused        = Shift+Ctrl+I
-ConvertTabs     = Shift+Ctrl+J
-# Unused        = Shift+Ctrl+K
-# Unused        = Shift+Ctrl+L
-TangleMarked    = Shift+Ctrl+M
-ExtractNames    = Shift+Ctrl+N
-# Unused        = Shift+Ctrl+O
-ReformatParagraph = Shift+Ctrl+P
-WriteDirtyAtFileNodes = Shift+Ctrl+Q
-ReadOutlineOnly = Shift+Ctrl+R
-SaveAs          = Shift+Ctrl+S
-Tangle          = Shift+Ctrl+T
-Untangle        = Shift+Ctrl+U
-PasteNode       = Shift+Ctrl+V
-WritefileNodes  = Shift+Ctrl+W
-CutNode         = Shift+Ctrl+X
-CantRedo        = Shift+Ctrl+Z</t>
-<t tx="ekr.20051007200824.5"># F4 seems to interfere with Alt-F4 processing on windows.  Sigh.
-
-FindNext     = F3
-FindPrevious = F2
-
-AbortEditHeadline   = Shift+Esc
-EndEditHeadline     = Esc</t>
-<t tx="ekr.20051007200824.6">AboutLeo                = None
-ApplySettings           = None
-Cascade                 = None
-ContractAllChildren     = None
-ContractChildren        = None
-DeHoist                 = None
-ExpandAllChildren       = None
-ExpandChildren          = None
-ExpandToLevel1          = None
-FlattenOutline          = None
-GoBack                  = None
-GoForward               = None
-Hoist                   = None
-ImportCWEBFiles         = None
-ImportFlattenedOutline  = None
-ImportNowebFiles        = None
-ImportToroot            = None
-MinimizeAll             = None
-OnlineHomePage          = None
-OpenLeoConfigLeo        = None
-OpenLeoDocsLeo          = None
-OpenOfflineTutorial     = None
-OpenOnlineTutorial      = None
-OpenCompareWindow       = None
-OpenfileWith            = None
-OutlineToCWEB           = None
-OutlineToNoweb          = None
-PasteRetainingClones    = None
-ReadfileNodes           = None
-ReferenceLeoDocsleo     = None
-RemoveSentinels         = None
-RevertToSaved           = None
-SaveTo                  = None
-SetColors               = None
-SetFont                 = None
-SortChildren            = None
-ToggleAngleBrackets     = None
-ToggleSplitDirection    = None
-UntangleAll             = None
-UntangleMarked          = None
-Weave                   = None
-WriteOutlineOnly        = None</t>
-<t tx="ekr.20051007200824.7"># For manual testing
-xyzzy = Alt+Ctrl+Shift+y
-pdq = Alt+Ctrl+Shift+A</t>
 </tnodes>
 </leo_file>
