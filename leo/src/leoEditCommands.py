@@ -894,7 +894,6 @@ class controlCommandsClass (baseEditCommandsClass):
     
         baseEditCommandsClass.__init__(self,c) # init the base class.
         
-        self.shutdownhook = None # If this is set via setShutdownHook, it is executed instead of sys.exit on Control-x Control-c.
         self.payload = None
     #@nonl
     #@-node:ekr.20050920084036.151: ctor
@@ -992,10 +991,6 @@ class controlCommandsClass (baseEditCommandsClass):
         g.app.onQuit()
             
     saveBuffersKillLeo = shutdown
-            
-    def setShutdownHook (self,hook):
-    
-        self.shutdownhook = hook
     #@nonl
     #@-node:ekr.20050920084036.155:shutdown, saveBuffersKillEmacs & setShutdownHook
     #@+node:ekr.20050920084036.153:suspend & iconifyOrDeiconifyFrame

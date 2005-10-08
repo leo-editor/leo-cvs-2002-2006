@@ -686,7 +686,6 @@ class keyHandlerClass:
     
         k.createInverseCommandsDict()
         k.makeAllBindings()
-        c.controlCommands.setShutdownHook(c.close)
         
         if 0:
             addTemacsExtensions(k)
