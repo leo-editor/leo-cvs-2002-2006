@@ -12252,6 +12252,29 @@ Important simplifications:
 - Created k.defaultBindingsDict and k.defaultEmacsBindingsDict.
 #@nonl
 #@-node:ekr.20051007093659:Final integration
+#@+node:ekr.20051008065518:Final integration 2
+- k.finishCreate calls k.createInverseCommandsDict first.
+
+- The values in k.inverseCommandsDict are f.__name__, rather than f.
+
+- leoCommands.getPublicCommands now adds underlying f.__name__ to k.inverseCommandsDict rather than leoCallback.
+
+- createInverseCommandsDict ignores 'leoCallback' when adding entries.
+
+- Used k.inverseCommandsDict in << set accel to the shortcut for name >> to get shortcuts using emacs-style names.
+
+    This allows either old-style menu shortcuts or emacs command names.
+
+- Allow '-' in shortcut names in parseShortcutLine.
+
+- Allow trailing comments in shortcut names in parseShortcutLine.
+
+* cb_dict is now vestigial and will soon be removed.
+    However, <Alt-X> is not bound properly at present.
+
+Binding is mostly complete:  the traces from createMenuEntries show missing command names in leoSettings.leo.
+#@nonl
+#@-node:ekr.20051008065518:Final integration 2
 #@-node:ekr.20050921094025.6:What I did
 #@+node:ekr.20050921100955:Not used
 #@+node:ekr.20050723064110:class generalizedEditCommands (Do not delete)

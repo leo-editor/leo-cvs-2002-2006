@@ -191,7 +191,8 @@ class baseCommands:
                 keys = c.commandsDict.keys()
                 keys.sort()
                 for key in keys:
-                    print '%30s = None' % ("'"+key+"'")
+                    command = c.commandsDict.get(key)
+                    print '%30s = %s' % (key,g.choose(command,command.__name__,'<None>'))
                 print
                 #@nonl
                 #@-node:ekr.20051007143620:<< print c.commandsDict >>
@@ -6064,7 +6065,7 @@ class configSettings:
     def getFontDict  (self,setting): return g.app.config.getFontDict (self.c,setting)
     def getLanguage  (self,setting): return g.app.config.getLanguage (self.c,setting)
     def getRatio     (self,setting): return g.app.config.getRatio    (self.c,setting)
-    def getShortcut  (self,setting): return g.app.config.getShortcut (self.c,setting)
+    def getShortcut  (self,setting,):return g.app.config.getShortcut (self.c,setting)
     def getString    (self,setting): return g.app.config.getString   (self.c,setting)
     #@nonl
     #@-node:ekr.20041118053731:Getters

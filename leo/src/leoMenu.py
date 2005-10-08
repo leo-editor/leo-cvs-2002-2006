@@ -988,21 +988,10 @@ class leoMenu:
     #@nonl
     #@-node:ekr.20031218072017.2098:canonicalizeShortcut
     #@+node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
-    #@+at 
-    #@nonl
-    # The old, non-user-configurable code bound shortcuts in createMenuBar.  
-    # The new user-configurable code binds shortcuts here.
-    # 
-    # Centralized tables of shortscuts no longer exist as they did in 
-    # createAccelerators.  To check for duplicates, (possibly arising from 
-    # leoConfig.txt) we add entries to a central dictionary here, and report 
-    # duplicates if an entry for a canonicalized shortcut already exists.
-    #@-at
-    #@@c
-    
     def createMenuEntries (self,menu,table,openWith=False,dontBind=False,init=False):
         
-        c = self.c
+        c = self.c ; k = c.keyHandler
+        
         for label,accel,command in table:
             if label == None or command == None or label == "-":
                 self.add_separator(menu)
@@ -1021,15 +1010,33 @@ class leoMenu:
                 #@nl
                 #@            << set accel to the shortcut for name >>
                 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+                # First, try to get the munged (old-style) name.
                 rawKey,accel2 = c.config.getShortcut(name)
                 
-                # 7/19/03: Make sure "None" overrides the default shortcut.
-                if accel2 == None or len(accel2) == 0:
-                    pass # Use default shortcut, if any.
-                elif accel2.lower() == "none":
+                # New in 4.4: allow emacs-style or old style names in menu shortcuts.
+                if k and not accel2 and not openWith:
+                    emacs_name = k.inverseCommandsDict.get(command.__name__)
+                    if emacs_name:
+                        rawKey,accel2 = c.config.getShortcut(emacs_name)
+                        accel = accel2 # Override the default shortcut.
+                        # if accel: g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
+                    else:
+                        accel = None # New in 4.4: remove the default shortcut.
+                        g.trace('no inverse for %s' % command.__name__)
+                elif accel2 and accel2.lower() == "none":
                     accel = None # Remove the default shortcut.
                 else:
                     accel = accel2 # Override the default shortcut.
+                
+                if 0: ## Original code.
+                
+                    # Make sure "None" overrides the default shortcut.
+                    if accel2 == None or len(accel2) == 0:
+                        pass # Use default shortcut, if any.
+                    elif accel2.lower() == "none":
+                        accel = None # Remove the default shortcut.
+                    else:
+                        accel = accel2 # Override the default shortcut.
                 #@nonl
                 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
                 #@nl
@@ -1126,7 +1133,6 @@ class leoMenu:
                         #@nonl
                         #@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
                         #@nl
-    #@nonl
     #@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
     #@+node:ekr.20031218072017.3784:createMenuItemsFromTable
     def createMenuItemsFromTable (self,menuName,table,openWith=False):

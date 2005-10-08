@@ -641,11 +641,13 @@ class keyHandlerClass:
         self.abbrevOn = False # True: abbreviations are on.
         self.arg = '' # The value returned by k.getArg.
         self.commandName = None
+        self.inverseCommandsDict = {}
+            # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
         self.negativeArg = False
         self.regx = g.bunch(iter=None,key=None)
         self.repeatCount = None
         self.state = g.bunch(kind=None,n=None,handler=None)
-        #@nonl
+        
         #@-node:ekr.20051006092617.1:<< define externally visible ivars >>
         #@nl
         #@    << define internal ivars >>
@@ -682,6 +684,7 @@ class keyHandlerClass:
         k = self ; c = k.c
         # g.trace('keyHandler')
     
+        k.createInverseCommandsDict()
         k.makeAllBindings()
         c.controlCommands.setShutdownHook(c.close)
         
@@ -689,14 +692,6 @@ class keyHandlerClass:
             addTemacsExtensions(k)
             addTemacsAbbreviations(k)
             changeKeyStrokes(k,frame.bodyCtrl)
-        
-        # In c.commandsDict keys are command names, values are methods.
-        # In k.inverseCommandsDict keys are methods, values are command names.
-        # This is one reason we want unique method names without selector switches.
-        k.inverseCommandsDict = {}
-        for key in c.commandsDict.keys():
-            val = c.commandsDict.get(key)
-            k.inverseCommandsDict [val] = key
     #@nonl
     #@+node:ekr.20050920085536.11:add_ekr_altx_commands
     def add_ekr_altx_commands (self):
@@ -765,6 +760,28 @@ class keyHandlerClass:
                 c.commandsDict [key] = func
     #@nonl
     #@-node:ekr.20050920085536.11:add_ekr_altx_commands
+    #@+node:ekr.20051008082929:createInverseCommandsDict
+    def createInverseCommandsDict (self):
+        
+        '''Add entries to k.inverseCommandsDict using c.commandDict,
+        except when c.commandDict.get(key) refers to the leoCallback function.
+        leoCommands.getPublicCommands has already added an entry in this case.
+        
+        In c.commandsDict        keys are command names, values are funcions f.
+        In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
+        '''
+    
+        k = self ; c = k.c
+    
+        for name in c.commandsDict.keys():
+            f = c.commandsDict.get(name)
+            
+            # 'leoCallback' callback created by leoCommands.getPublicCommands.
+            if f.__name__ != 'leoCallback':
+                k.inverseCommandsDict [f.__name__] = name
+                # g.trace('%24s = %s' % (f.__name__,name))
+    #@nonl
+    #@-node:ekr.20051008082929:createInverseCommandsDict
     #@-node:ekr.20050920094633:k.finishCreate & helpers
     #@+node:ekr.20051006125633:Binding (keyHandler)
     #@+node:ekr.20051007080058:k.makeAllBindings
@@ -774,8 +791,10 @@ class keyHandlerClass:
         
         k.bindingsDict = {}
         k.makeHardBindings()
-        k.cbDict = k.create_cbDict()
-        k.setBufferStrokes(w)
+        
+        if 1: # To be removed soon.
+            k.cbDict = k.create_cbDict()
+            k.setBufferStrokes(w)
         k.add_ekr_altx_commands()
     #@nonl
     #@-node:ekr.20051007080058:k.makeAllBindings
@@ -989,8 +1008,11 @@ class keyHandlerClass:
             def keyCallback (event,func=openWithCallback,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
         else:
+            # Important: the name just needs to be unique for every function.
+            name = command.__name__ 
+    
             def menuFuncCallback (event,command=command,name=name):
-                g.trace(name,command)
+                # g.trace(name,command)
                 return c.doCommand(command,label=name)
     
             def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
@@ -1026,11 +1048,11 @@ class keyHandlerClass:
                 g.app.menuWarningsGive = True
     #@nonl
     #@-node:ekr.20050920085536.16:bindKey
-    #@+node:ekr.20050920085536.17:setBufferStrokes  #3 To do: canonicalize the shortcut.
+    #@+node:ekr.20050920085536.17:setBufferStrokes
     def setBufferStrokes (self,w):
     
         '''Sets key bindings for Tk Text widget w.'''
-        
+    
         k = self ; tag = 'setBufferStrokes'
     
         # Create one binding for each entry in cbDict.
@@ -1054,7 +1076,7 @@ class keyHandlerClass:
             
         k.bindKey(w,'<Key>',keyCallback,'masterCommand',tag=tag)
     #@nonl
-    #@-node:ekr.20050920085536.17:setBufferStrokes  #3 To do: canonicalize the shortcut.
+    #@-node:ekr.20050920085536.17:setBufferStrokes
     #@-node:ekr.20051006125633:Binding (keyHandler)
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20051001051355:Dispatching...

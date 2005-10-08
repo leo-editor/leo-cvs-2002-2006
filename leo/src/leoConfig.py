@@ -314,7 +314,7 @@ class parserBaseClass:
     #@-node:ekr.20041120094940:kind handlers (parserBaseClass)
     #@+node:ekr.20041124063257:munge
     def munge(self,s):
-        
+    
         return g.app.config.canonicalizeSettingName(s)
     #@nonl
     #@-node:ekr.20041124063257:munge
@@ -414,24 +414,32 @@ class parserBaseClass:
         return kind,name,val
     #@nonl
     #@-node:ekr.20041119205148:parseHeadline
-    #@+node:ekr.20041120112043:parseShortcutLine
+    #@+node:ekr.20041120112043:g.app.config.parseShortcutLine
     def parseShortcutLine (self,s):
         
         """Return the kind of @settings node indicated by p's headline."""
         
         name = val = None
-        i = g.skip_id(s,0)
+        i = g.skip_id(s,0,'-') # New in 4.4: allow Emacs-style shortcut names.
         name = s[0:i]
         if name:
             i = g.skip_ws(s,i)
             if g.match(s,i,'='):
                 i = g.skip_ws(s,i+1)
                 val = s[i:]
+               
+        # New in 4.4: Allow comments after the shortcut.
+        # Comments must be preceded by whitespace. 
+        if val:
+            i = val.find('#')
+            if i > 0 and val[i-1] in (' ','\t'):
+                val = val[:i].strip()
+                # g.trace('removed comment from shortcut: %s' % (val))
     
         # g.trace("%30s %s" %(name,val))
         return name,val
     #@nonl
-    #@-node:ekr.20041120112043:parseShortcutLine
+    #@-node:ekr.20041120112043:g.app.config.parseShortcutLine
     #@-node:ekr.20041213082558:parsers
     #@+node:ekr.20041120094940.9:set (parseBaseClass)
     def set (self,p,kind,name,val):
@@ -989,13 +997,13 @@ class configClass:
         '''Return rawKey,accel for shortcutName'''
         
         key = c.frame.menu.canonicalizeMenuName(shortcutName)
-        rawKey = key.replace('&','') # Allow '&' in names.
-        val = self.get(c,rawKey,"shortcut")
-        if val is None:
-             return rawKey,None
-        else:
-            # g.trace(key,val)
-            return rawKey,val
+        key = key.replace('&','') # Allow '&' in names.
+    
+        val = self.get(c,key,"shortcut")
+        
+        # g.trace(key,repr(val))
+    
+        return key,val
     #@nonl
     #@-node:ekr.20041117062717.14:getShortcut (config)
     #@+node:ekr.20041117081009.4:getString

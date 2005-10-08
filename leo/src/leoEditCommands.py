@@ -3156,10 +3156,14 @@ class leoCommandsClass (baseEditCommandsClass):
         baseEditCommandsClass.__init__(self,c) # init the base class.
     #@nonl
     #@-node:ekr.20050920084036.187: ctor
-    #@+node:ekr.20050920084036.188:getPublicCommands
+    #@+node:ekr.20050920084036.188:leoCommands.getPublicCommands
     def getPublicCommands (self):
         
-        leoCommandsDict = {}
+        '''(leoCommands) Return a dict of the 'legacy' Leo commands.
+        A special case used only by this class.
+        Put the *raw* command name into the inverse dict, *not* 'leoCallback'.'''
+        
+        k = self.k ; d2 = {}
         
         #@    << define dictionary d of names and Leo commands >>
         #@+node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
@@ -3169,7 +3173,7 @@ class leoCommandsClass (baseEditCommandsClass):
             #'apply settings':      c.applyConfig,
             'about-leo':            c.about,
             'cascade':              f.cascade,
-            'check-all-python-code':        c.checkAllPythonCode,
+            'check-all-python-code':c.checkAllPythonCode,
             'check-outline':        c.checkOutline,
             'check-python-code':    c.checkPythonCode,
             'clone-node':           c.clone,
@@ -3300,17 +3304,22 @@ class leoCommandsClass (baseEditCommandsClass):
         #@nl
         
         # Create a callback for each item in d.
-        for key in d.keys():
-            f = d.get(key)
+        keys = d.keys() ; keys.sort()
+        for name in keys:
+    
+            f = d.get(name)
+            # Warning: k.createInverseCommandsDict uses the name of this callback.
             def leoCallback (event,f=f):
                 f()
-            leoCommandsDict [key] = leoCallback
-            ### To do: not all these keys are valid Python function names.
-            setattr(self,key,f) # Make the key available.
+            d2 [name] = leoCallback
+            if 0: ## Huh? Name is not a valid Python attribute name!
+                setattr(self,name,f) # Make the name available.
+            k.inverseCommandsDict [f.__name__] = name
+            # g.trace('leoCommands %24s = %s' % (f.__name__,name))
             
-        return leoCommandsDict
+        return d2
     #@nonl
-    #@-node:ekr.20050920084036.188:getPublicCommands
+    #@-node:ekr.20050920084036.188:leoCommands.getPublicCommands
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.186:class leoCommandsClass
