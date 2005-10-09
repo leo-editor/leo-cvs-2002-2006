@@ -627,19 +627,19 @@ class rstClass:
     #@nonl
     #@-node:ekr.20050805162550.10: ctor (rstClass)
     #@+node:ekr.20050805162550.12:addMenu
-    def addMenu(self):
-        
+    def addMenu (self):
+    
         c = self.c ; editMenu = c.frame.menu.getMenu('Edit')
-        
-        def callback():
+    
+        def rst3PluginCallback ():
             self.processTree(c.currentPosition())
-                
+    
         table = (
-            ("-", None, None),
-            ("Write Restructed Text", "", callback),
+            ("-",None,None),
+            ("Write Restructed Text","",rst3PluginCallback),
         )
-            
-        c.frame.menu.createMenuEntries(editMenu, table)
+    
+        c.frame.menu.createMenuEntries(editMenu,table,dynamicMenu=True)
     #@nonl
     #@-node:ekr.20050805162550.12:addMenu
     #@+node:ekr.20050813083007:initHeadlineCommands

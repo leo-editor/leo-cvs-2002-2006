@@ -311,7 +311,7 @@ def create_menu(c, instance):
              ("Full Year", None, instance.insert_year_nodes)]
 
     expandMenu = c.frame.menu.createNewMenu("Insert Date Nodes...","Outline")
-    c.frame.menu.createMenuEntries(expandMenu,table)
+    c.frame.menu.createMenuEntries(expandMenu,table,dynamicMenu=True)
 #@nonl
 #@-node:gfunch.20041207102456:create_menu
 #@-others

@@ -325,10 +325,10 @@ def getUrl(c, *tags):
 #@-node:edream.110403140857.17:onBodydclick1 & allies
 #@+node:edream.110403140857.19:Menu handling
 #@+node:edream.110403140857.20:createWikiMenu
-def createWikiMenu(tag, keywords):
-    
+def createWikiMenu (tag,keywords):
+
     """Create menu entries under Edit->Edit Body to insert wiki tags."""
-    
+
     c = keywords.get('c')
     if not c: return
 
@@ -338,19 +338,19 @@ def createWikiMenu(tag, keywords):
         return # wiki menu already created
 
     editBodyMenu = c.frame.menu.getMenu(editBodyMenuName)
-    separator = (("-", None, None),)
-    c.frame.menu.createMenuEntries(editBodyMenu, separator)
-    
-    wikiMenu = c.frame.menu.createNewMenu(wikiMenuName, editBodyMenuName)
+    separator = (("-",None,None),)
+    c.frame.menu.createMenuEntries(editBodyMenu,separator)
+
+    wikiMenu = c.frame.menu.createNewMenu(wikiMenuName,editBodyMenuName)
     newEntries = (
-        ("&Bold", "Alt+Shift+B", doWikiBold),
-        ("&Italic", "Alt+Shift+I", doWikiItalic),
+        ("&Bold","Alt+Shift+B",doWikiBold),
+        ("&Italic","Alt+Shift+I",doWikiItalic),
         #("Insert Pict&ure...", "Alt+Shift+U", doWikiPicture),
-        ("C&olor", "Alt+Shift+O", doWikiColor),
-        ("Choose Co&lor...", "Alt+Shift+L", doWikiChooseColor),
-        )
-    
-    c.frame.menu.createMenuEntries(wikiMenu, newEntries)
+        ("C&olor","Alt+Shift+O",doWikiColor),
+        ("Choose Co&lor...","Alt+Shift+L",doWikiChooseColor),
+    )
+
+    c.frame.menu.createMenuEntries(wikiMenu,newEntries,dynamicMenu=True)
 #@nonl
 #@-node:edream.110403140857.20:createWikiMenu
 #@+node:edream.110403140857.21:doWikiBold

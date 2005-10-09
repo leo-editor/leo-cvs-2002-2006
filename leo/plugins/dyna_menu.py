@@ -5022,7 +5022,7 @@ def atest_Configuration():
 
 #no user code besides cascade names tuple
 
-def load_menu(tag, keywords ):
+def load_menu (tag,keywords):
     global dynaMvar
 
     c = keywords.get("c")
@@ -5030,9 +5030,9 @@ def load_menu(tag, keywords ):
 
     if dynaMvar is None:
         dynaMvar = g.app.dynaMvar = init_dyna(c)
-        
+
         #maybe pospone ini read further, till first time dyna is clicked?
-        if not hasattr(g.app.dynaMvar, 'htmlize_filename'):
+        if not hasattr(g.app.dynaMvar,'htmlize_filename'):
             dynaMvar.htmlize_filename = 'default'
             #initfilenames()
             applyConfiguration(None)
@@ -5060,23 +5060,23 @@ def load_menu(tag, keywords ):
     #@nl
     casnamtup = (
         'infos', #B   clipdtef, linenumber
-        'mod text', #M 
+        'mod text', #M
         'codeing', #S
 
-        'pre/post', #A:y restoreST, htmlize, 
+        'pre/post', #A:y restoreST, htmlize,
         'zzzzz', #never gets here don't use past Z as a sentinal
     )
 
-    table = []  #first table is built then some items use .add
+    table = [] #first table is built then some items use .add
 
     #need to option the menu names and expose a list of all menu text
-    nu = dynaMvar.dynasMenu = c.frame.menu.createNewMenu("D&yna", "top")
+    nu = dynaMvar.dynasMenu = c.frame.menu.createNewMenu("D&yna","top")
 
 
     #eventually build some entries outside submenus
     #maybe the first and last letter save for this reason A:z
     #then work from copy lst with those items subtracted
-    lst = dynaMvar.dynadeflst[:]
+    lst = dynaMvar.dynadeflst [:]
     lst.reverse() #makes no sense but we do it anyway.
 
     #you change the macro order you assume full responsinility
@@ -5086,8 +5086,8 @@ def load_menu(tag, keywords ):
     #-4 currently is help sorted z..a
     try:
         table.append(
-            (lst[menudefault][6:], None,
-                lambda c= c, f= globals()[lst[menudefault]]: f(c) ))
+            (lst[menudefault][6:],None,
+                lambda c = c, f = globals() [lst [menudefault]]: f(c)))
     except Exception:
         pass
 
@@ -5095,7 +5095,7 @@ def load_menu(tag, keywords ):
     #@+node:ekr.20050421093045.97:<< add items >>
     #there better be at least one macro in lst and one cas entry
     a = 0
-    ch = dynaMvar.dynadeflst[0][4]
+    ch = dynaMvar.dynadeflst [0] [4]
     subtable = []
     sub = None
     #dynaMvar.dynadeflst.append('dynaz_') #add break sentinal
@@ -5111,18 +5111,18 @@ def load_menu(tag, keywords ):
     
         if s.startswith('dynax_'): continue
     
-        if s[4] != ch or sub is None:
+        if s [4] != ch or sub is None:
             #g.es('a=', a, 's=', s, `subtable`, color= 'orange')
             if sub:
-                c.frame.menu.createMenuEntries(sub, subtable)
+                c.frame.menu.createMenuEntries(sub,subtable,dynamicMenu=True)
                 subtable = []
                 a += 1 #yada yada test end of cas
-                ch = s[4]
-            if s[4] >= 'Z': break
-            sub = c.frame.menu.createNewMenu(casnamtup[a], "dyna") #nu
+                ch = s [4]
+            if s [4] >= 'Z': break
+            sub = c.frame.menu.createNewMenu(casnamtup[a],"dyna") #nu
     
         subtable.append(
-            (s[6:], None, lambda c= c, f= globals()[s]: f(c) ))
+            (s[6:],None,lambda c=c,f=globals()[s]: f(c)))
     
         lst.pop() #quick if not efficent
     
@@ -5130,28 +5130,26 @@ def load_menu(tag, keywords ):
     for s in lst:
         if s.startswith('dynax_'): continue #actions get cascades
         table.append(
-            (s[6:], None, lambda c= c, f= globals()[s]: f(c) ))
-    
-    
+            (s[6:],None,lambda c=c,f=globals()[s]: f(c)))
     #@-node:ekr.20050421093045.97:<< add items >>
     #@nl
 
     #nu.add_separator()  #gets out of synch w/table here
-    table.append(('-', None, None))
+    table.append(('-',None,None))
 
-    c.frame.menu.createMenuEntries(nu, table)
+    c.frame.menu.createMenuEntries(nu,table,dynamicMenu=True)
 
     dynaMvar.dynapasteFlag.set('print')
-    
-    nu.add_radiobutton(label= 'print',
+
+    nu.add_radiobutton(label='print',
             variable = dynaMvar.dynapasteFlag,
-            command= togprpa(cf= cf) )
-    nu.add_radiobutton(label= 'paste',
+            command = togprpa(cf=cf))
+    nu.add_radiobutton(label='paste',
             variable = dynaMvar.dynapasteFlag,
-            command= togprpa(cf= cf) )
-    nu.add_radiobutton(label= 'doc',
+            command = togprpa(cf=cf))
+    nu.add_radiobutton(label='doc',
             variable = dynaMvar.dynapasteFlag,
-            command= togprpa(cf= cf) )
+            command = togprpa(cf=cf))
 
     #@    << action >>
     #@+node:ekr.20050421093045.98:<< action >>
@@ -5199,6 +5197,7 @@ def load_menu(tag, keywords ):
     #@nonl
     #@-node:ekr.20050421093045.98:<< action >>
     #@nl
+#@nonl
 #@-node:ekr.20050421093045.95:load_menu
 #@+node:ekr.20050421093045.102:init
 def init():

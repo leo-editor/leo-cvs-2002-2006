@@ -102,7 +102,7 @@ def onCreate (tag, keywords):
         ("-", None, None),
         (mess1, "Shift+Ctrl+Alt+D",cc.readDir))
     
-    c.frame.menu.createMenuEntries(menu,table)
+    c.frame.menu.createMenuEntries(menu,table,dynamicMenu=True)
 #@nonl
 #@-node:ekr.20050301083306.5:onCreate
 #@+node:ekr.20050301083306.6:class controller

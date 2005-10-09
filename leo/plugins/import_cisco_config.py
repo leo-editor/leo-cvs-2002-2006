@@ -74,17 +74,17 @@ def init ():
 #@nonl
 #@-node:ekr.20050311102853.1:init
 #@+node:edream.110203113231.671:create_import_cisco_menu
-def create_import_cisco_menu(tag, keywords):
-    
+def create_import_cisco_menu (tag,keywords):
+
     c = keywords.get('c')
     if c:
         importMenu = c.frame.menu.getMenu('import')
-        
+
         newEntries = (
-            ("-", None, None),
-            ("Import C&isco Configuration", "Shift+Ctrl+I", importCiscoConfig))
-        
-        c.frame.menu.createMenuEntries(importMenu, newEntries)
+            ("-",None,None),
+            ("Import C&isco Configuration","Shift+Ctrl+I",importCiscoConfig))
+
+        c.frame.menu.createMenuEntries(importMenu,newEntries,dynamicMenu=True)
 #@-node:edream.110203113231.671:create_import_cisco_menu
 #@+node:edream.110203113231.672:importCiscoConfig
 def importCiscoConfig(event=None):

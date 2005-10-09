@@ -644,11 +644,11 @@ class cleoController:
                     command=self.changed_redraw)
             parent.add_cascade(label=label,underline=0,menu=menu)
                         
-        def callback():
+        def cleoColorsMenuCallback():
             self.remove_colours(p.v)
     
         parent.add_command(label='Remove Colouring', underline=0,
-            command=callback)
+            command=cleoColorsMenuCallback)
     #@nonl
     #@-node:ekr.20050227071948.59:colours_menu
     #@+node:ekr.20050227071948.56:node menu

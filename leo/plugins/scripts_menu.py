@@ -59,7 +59,7 @@ def createScriptsMenu (tag,keywords):
                 g.executeScript(name)
             table.append((name,None,doScript),)
             
-        c.frame.menu.createMenuEntries(scriptsMenu, table)
+        c.frame.menu.createMenuEntries(scriptsMenu, table,dynamicMenu=True)
         #@-node:EKR.20040517080555.39:<< Create top-level entries for every script in top_scripts >>
         #@nl
         for dir in dirs:
@@ -79,7 +79,7 @@ def createScriptsMenu (tag,keywords):
                         g.executeScript(name)
                     table.append((name,None,doScript),)
                 
-                c.frame.menu.createMenuEntries(menu, table)
+                c.frame.menu.createMenuEntries(menu, table,dynamicMenu=True)
                 #@nonl
                 #@-node:EKR.20040517080555.40:<< Create a submenu for dir containing each file in files >>
                 #@nl
