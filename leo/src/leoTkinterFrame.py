@@ -122,110 +122,133 @@ class leoTkinterFrame (leoFrame.leoFrame):
         return label
     #@nonl
     #@-node:ekr.20050920094212:f.createMiniBufferWidget
-    #@+node:ekr.20031218072017.2176:f.finishCreate
+    #@+node:ekr.20031218072017.2176:f.finishCreate & helpers
     def finishCreate (self,c):
         
-        frame = self ; frame.c = c ; gui = g.app.gui
-        
+        f = self ; f.c = c ; gui = g.app.gui
         # g.trace('tkFrame')
         
-        self.useMiniBuffer = c.config.getBool('useMiniBuffer')
-        
         # This must be done after creating the commander.
-        self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
-        #@    << create the toplevel and outer frames >>
-        #@+node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
-        frame.top = top = Tk.Toplevel()
-        gui.attachLeoIcon(top)
-        top.title(frame.title)
+        f.splitVerticalFlag,f.ratio,f.secondary_ratio = f.initialRatios()
+        f.createOuterFrames()
+        f.createIconBarComponents()
+        f.createSplitterComponents()
+        f.createStatusLineComponents()
+        f.createFirstTreeNode()
+        f.menu = leoTkinterMenu.leoTkinterMenu(f)
+            # c.finishCreate calls f.createMenuBar later.
+        g.app.setLog(f.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
+        g.app.windowList.append(f)
+        c.initVersion()
+        c.signOnWithVersion()
+        if c.useMiniBuffer:
+            f.miniBufferWidget = f.createMiniBufferWidget()
+        f.body.createBindings(f)
+    #@nonl
+    #@+node:ekr.20051009044751:createOuterFrames
+    def createOuterFrames (self):
+    
+        f = self ; c = f.c
+        f.top = top = Tk.Toplevel()
+        g.app.gui.attachLeoIcon(top)
+        top.title(f.title)
         top.minsize(30,10) # In grid units.
         
         if g.os_path_exists(g.app.user_xresources_path):
-            frame.top.option_readfile(g.app.user_xresources_path)
+            f.top.option_readfile(g.app.user_xresources_path)
         
-        frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
-        frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
+        f.top.protocol("WM_DELETE_WINDOW", f.OnCloseLeoEvent)
+        f.top.bind("<Button-1>", f.OnActivateLeoEvent)
         
         # These don't work on Windows. Because of bugs in window managers,
         # there is NO WAY to know which window is on top!
-        frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
-        frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
+        f.top.bind("<Activate>",f.OnActivateLeoEvent)
+        f.top.bind("<Deactivate>",f.OnDeactivateLeoEvent)
         
-        frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
-        frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
+        f.top.bind("<Control-KeyPress>",f.OnControlKeyDown)
+        f.top.bind("<Control-KeyRelease>",f.OnControlKeyUp)
         
         # Create the outer frame, the 'hull' component.
-        self.outerFrame = outerFrame = Tk.Frame(top)
-        self.outerFrame.pack(expand=1,fill="both")
-        self.componentClass(c,'hull',self.outerFrame)
-        #@nonl
-        #@-node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
-        #@nl
-        #@    << create the icon bar >>
-        #@+node:ekr.20041224120552:<< create the icon bar >>
-        self.iconBarComponentName = 'iconBar'
-        iconBar = self.iconBarClass(c,outerFrame)
-        self.iconFrame = iconBar.iconFrame
-        
-        self.iconBar = self.componentClass(c,
-            self.iconBarComponentName,iconBar.iconFrame,
+        f.outerFrame = Tk.Frame(top)
+        f.outerFrame.pack(expand=1,fill="both")
+        f.componentClass(c,'hull',f.outerFrame)
+    #@-node:ekr.20051009044751:createOuterFrames
+    #@+node:ekr.20051009044920:createIconBarComponents
+    # Warning: there is also a method called createIconBar.
+    
+    def createIconBarComponents (self):
+    
+        f = self ; c = f.c
+    
+        f.iconBarComponentName = 'iconBar'
+        iconBar = f.iconBarClass(c,f.outerFrame)
+        f.iconFrame = iconBar.iconFrame
+        f.iconBar = f.componentClass(c,
+            f.iconBarComponentName,iconBar.iconFrame,
             iconBar,iconBar.pack,iconBar.unpack)
-        
-        self.iconBar.show()
-        #@nonl
-        #@-node:ekr.20041224120552:<< create the icon bar >>
-        #@nl
-        #@    << create the splitters and their subframes >>
-        #@+node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
-        self.createLeoSplitters(outerFrame)
+        f.iconBar.show()
+    #@nonl
+    #@-node:ekr.20051009044920:createIconBarComponents
+    #@+node:ekr.20051009045208:createSplitterComponents
+    def createSplitterComponents (self):
+    
+        f = self ; c = f.c
+    
+        f.createLeoSplitters(f.outerFrame)
         
         # Create the canvas, tree, log and body.
-        frame.canvas = self.createCanvas(self.split2Pane1)
-        frame.tree   = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
-        frame.log    = leoTkinterLog(frame,self.split2Pane2)
-        frame.body   = leoTkinterBody(frame,self.split1Pane2)
+        f.canvas = f.createCanvas(f.split2Pane1)
+        f.tree   = leoTkinterTree.leoTkinterTree(c,f,f.canvas)
+        f.log    = leoTkinterLog(f,f.split2Pane2)
+        f.body   = leoTkinterBody(f,f.split1Pane2)
         
-        self.componentClass(c,'tree',self.split2Pane1, frame.tree, self.packTree, self.unpackTree)
-        self.componentClass(c,'log', self.split2Pane2, frame.log,  self.packLog,  self.unpackLog)
-        self.componentClass(c,'body',self.split1Pane2, frame.body, self.packBody, self.unpackBody)
+        f.componentClass(c,'tree',f.split2Pane1, f.tree, f.packTree, f.unpackTree)
+        f.componentClass(c,'log', f.split2Pane2, f.log,  f.packLog,  f.unpackLog)
+        f.componentClass(c,'body',f.split1Pane2, f.body, f.packBody, f.unpackBody)
         
         # Yes, this an "official" ivar: this is a kludge.
-        frame.bodyCtrl = frame.body.bodyCtrl
+        f.bodyCtrl = f.body.bodyCtrl
         
         # Configure.
-        frame.setTabWidth(c.tab_width)
-        frame.tree.setColorFromConfig()
-        self.reconfigurePanes()
-        self.body.setFontFromConfig()
-        self.body.setColorFromConfig()
-        #@nonl
-        #@-node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
-        #@nl
-        #@    << create the status line >>
-        #@+node:ekr.20041225103412:<< create the status line >>
-        self.statusLineComponentName = 'statusLine'
-        statusLine = self.statusLineClass(c,outerFrame)
+        f.setTabWidth(c.tab_width)
+        f.tree.setColorFromConfig()
+        f.reconfigurePanes()
+        f.body.setFontFromConfig()
+        f.body.setColorFromConfig()
+    #@nonl
+    #@-node:ekr.20051009045208:createSplitterComponents
+    #@+node:ekr.20051009045300:createStatusLineComponents
+    # Warning: there is also a method called createStatusLine.
+    
+    def createStatusLineComponents (self):
+        
+        f = self ; c = f.c
+    
+        f.statusLineComponentName = 'statusLine'
+        statusLine = f.statusLineClass(c,f.outerFrame)
         
         # Create offical ivars in the frame class.
-        self.statusFrame = statusLine.statusFrame
-        self.statusLabel = statusLine.labelWidget
-        self.statusText  = statusLine.textWidget
+        f.statusFrame = statusLine.statusFrame
+        f.statusLabel = statusLine.labelWidget
+        f.statusText  = statusLine.textWidget
         
-        self.statusLine = self.componentClass(c,
-            self.statusLineComponentName,
+        f.statusLine = f.componentClass(c,
+            f.statusLineComponentName,
             statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
-        self.statusLine.show() # Show status line by default.
-        #@nonl
-        #@-node:ekr.20041225103412:<< create the status line >>
-        #@nl
-        #@    << create the first tree node >>
-        #@+node:ekr.20031218072017.2180:<< create the first tree node >>
+        f.statusLine.show() # Show status line by default.
+    #@nonl
+    #@-node:ekr.20051009045300:createStatusLineComponents
+    #@+node:ekr.20051009045404:createFirstTreeNode
+    def createFirstTreeNode (self):
+        
+        f = self ; c = f.c
+    
         t = leoNodes.tnode()
         v = leoNodes.vnode(c,t)
         p = leoNodes.position(v,[])
         v.initHeadString("NewHeadline")
-        
         p.moveToRoot()
+    
         c.beginUpdate()
         try:
             c.selectVnode(p)
@@ -234,29 +257,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c.editPosition(p)
         finally:
             c.endUpdate(False)
-        #@nonl
-        #@-node:ekr.20031218072017.2180:<< create the first tree node >>
-        #@nl
-        #@    << create the menu bar >>
-        #@+node:ekr.20041225103412.1:<< create the menu bar >>
-        self.menu = leoTkinterMenu.leoTkinterMenu(frame)
-        v = c.currentVnode()
-        
-        if not self.useMiniBuffer:
-            if not g.doHook("menu1",c=c,p=v,v=v):
-                frame.menu.createMenuBar(self)
-        #@nonl
-        #@-node:ekr.20041225103412.1:<< create the menu bar >>
-        #@nl
-        g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
-        g.app.windowList.append(frame)
-        c.initVersion()
-        c.signOnWithVersion()
-        if self.useMiniBuffer:
-            self.miniBufferWidget = self.createMiniBufferWidget()
-        self.body.createBindings(frame)
     #@nonl
-    #@-node:ekr.20031218072017.2176:f.finishCreate
+    #@-node:ekr.20051009045404:createFirstTreeNode
+    #@-node:ekr.20031218072017.2176:f.finishCreate & helpers
     #@+node:ekr.20031218072017.3944:f.createCanvas & helpers
     def createCanvas (self,parentFrame,pack=True):
         
@@ -2213,8 +2216,6 @@ class leoTkinterBody (leoFrame.leoBody):
         leoFrame.leoBody.__init__(self,frame,parentFrame)
         
         c = self.c
-        
-        self.useMiniBuffer = c.config.getBool('useMiniBuffer')
     
         self.bodyCtrl = self.createControl(frame,parentFrame)
     
@@ -2224,7 +2225,7 @@ class leoTkinterBody (leoFrame.leoBody):
     #@+node:ekr.20031218072017.838:tkBody.createBindings
     def createBindings (self,frame):
         
-        t = self.bodyCtrl
+        c = self.c ; t = self.bodyCtrl
         
         # Event handlers...
         t.bind("<Button-1>", frame.OnBodyClick)
@@ -2234,7 +2235,7 @@ class leoTkinterBody (leoFrame.leoBody):
         t.bind("<Button-3>", frame.OnBodyRClick)
         t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
         
-        if not self.useMiniBuffer: # Now done in masterCommand.
+        if not c.useMiniBuffer: # Now done in masterCommand.
             g.trace('binding <Key>')
             t.bind("<Key>", frame.body.onBodyKey)
     

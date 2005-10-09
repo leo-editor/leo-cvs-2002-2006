@@ -28,8 +28,7 @@ class leoMenu:
         self.menuShortcuts = {}
         
         # To aid transition to emacs-style key handling.
-        self.useEditorMenu = c.config.getBool('useEditorMenu')
-        self.useMiniBuffer = c.config.getBool('useMiniBuffer')
+        self.useCmdMenu = c.config.getBool('useCmdMenu')
         
         self.newBinding = True
             # True if using new binding scheme.
@@ -245,7 +244,7 @@ class leoMenu:
         self.defineOutlineMenuTables()
         self.defineWindowMenuTables()
         
-        if self.useEditorMenu:
+        if self.useCmdMenu:
             self.defineEditorMenuTables()
     
         self.defineHelpMenuTables()
@@ -1087,7 +1086,7 @@ class leoMenu:
                     dontBind = True
     
                 if bind_shortcut and not dontBind:
-                    if self.useMiniBuffer:
+                    if c.useMiniBuffer:
                         c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith)
                     else:
                         #@                    << handle bind_shorcut >>
@@ -1149,16 +1148,14 @@ class leoMenu:
         
         c = self.c
         
-        g.trace()
-        
         self.createFileMenuFromTable()
         self.createEditMenuFromTable()
         self.createOutlineMenuFromTable()
         
         g.doHook("create-optional-menus",c=c)
         
-        if self.useEditorMenu:
-            self.createEditorMenuFromTable()
+        if self.useCmdMenu:
+            self.createCmdMenuFromTable()
     
         self.createWindowMenuFromTable()
         self.createHelpMenuFromTable()
@@ -1309,8 +1306,8 @@ class leoMenu:
         #@nl
     #@nonl
     #@-node:ekr.20031218072017.3797:createOutlineMenuFromTable
-    #@+node:ekr.20050921103736:createEditorMenuFromTable
-    def createEditorMenuFromTable (self):
+    #@+node:ekr.20050921103736:createCmdMenuFromTable
+    def createCmdMenuFromTable (self):
     
         editorMenu = self.createNewMenu("Editor")
     
@@ -1325,7 +1322,7 @@ class leoMenu:
             self.createMenuEntries(menu,table,init=True)
             if sep: self.add_separator(editorMenu)
     #@nonl
-    #@-node:ekr.20050921103736:createEditorMenuFromTable
+    #@-node:ekr.20050921103736:createCmdMenuFromTable
     #@+node:ekr.20031218072017.3802:createWindowMenuFromTable
     def createWindowMenuFromTable (self):
     
@@ -1531,46 +1528,10 @@ class nullMenu(leoMenu):
     #@+node:ekr.20050104094029:oops
     def oops (self):
     
-        g.trace("leoMenu", g.callerName(2))
+        # g.trace("leoMenu", g.callerName(2))
         pass
     #@nonl
     #@-node:ekr.20050104094029:oops
-    #@+node:ekr.20050104093323:Gui-independent menu routines
-    def createMenuEntries (self,menu,table,openWith=False,dontBind=False,init=False):
-        pass
-    def createMenuItemsFromTable (self,menuName,table,openWith=False):
-        pass
-    def createMenusFromTables (self):
-        pass
-    def defineMenuTables (self):
-        pass
-    def createNewMenu (self,menuName,parentName="top",before=None):
-        pass
-    def createRecentFilesMenuItems (self):
-        pass
-    def deleteMenu (self,menuName):
-        pass
-    def deleteMenuItem (self,itemName,menuName="top"):
-        pass
-    def destroyMenu (self,menuName):
-        pass
-    def getMenu (self,menuName):
-        pass
-    def setMenu (self,menuName,menu):
-        pass
-    #@nonl
-    #@-node:ekr.20050104093323:Gui-independent menu routines
-    #@+node:ekr.20050104092958:Gui-independent menu enablers
-    def updateAllMenus (self):
-        pass
-    def updateEditMenu (self):
-        pass
-    def updateFileMenu (self):
-        pass
-    def updateOutlineMenu (self):
-        pass
-    #@nonl
-    #@-node:ekr.20050104092958:Gui-independent menu enablers
     #@-others
 #@nonl
 #@-node:ekr.20031218072017.3811:class nullMenu

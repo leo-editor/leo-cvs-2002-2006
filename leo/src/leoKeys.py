@@ -1414,7 +1414,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.48:repeatComplexCommand & helper
     #@-node:ekr.20050920085536.32:Externally visible commands
-    #@+node:ekr.20050920085536.73:universalDispatcher
+    #@+node:ekr.20050920085536.73:universalDispatcher & helpers
     def universalDispatcher (self,event):
         
         '''Handle accumulation of universal argument.'''
@@ -1535,11 +1535,11 @@ class keyHandlerClass:
                  k.updateLabel(event)
             else:
                 # *Anything* other than C-u, '-' or a numeral is taken to be a command.
-                g.trace('stroke',k.stroke,'keysym',keysym)
+                # g.trace('stroke',k.stroke,'keysym',keysym)
                 val = k.getLabel(ignorePrompt=True)
                 try:                n = int(val) * k.repeatCount
                 except ValueError:  n = 1
-                g.trace('val',repr(val),'n',n,'k.repeatCount',k.repeatCount)
+                # g.trace('val',repr(val),'n',n,'k.repeatCount',k.repeatCount)
                 k.clearState()
                 k.executeNTimes(event,n)
                 k.clearState()
@@ -1597,7 +1597,7 @@ class keyHandlerClass:
             c.macroCommands.callLastKeyboardMacro(event)
     #@nonl
     #@-node:ekr.20050920085536.76:doControlU
-    #@-node:ekr.20050920085536.73:universalDispatcher
+    #@-node:ekr.20050920085536.73:universalDispatcher & helpers
     #@+node:ekr.20051006065121:Externally visible helpers
     #@+node:ekr.20050920085536.62:getArg
     def getArg (self,event,returnKind=None,returnState=None,handler=None,prefix=None,tabList=None):
