@@ -701,7 +701,7 @@ class keyHandlerClass:
         #@    << define dict d of abbreviations >>
         #@+node:ekr.20050920085536.12:<< define dict d of abbreviations >>
         d = {
-            'a':    'repeat-complex-command',
+            'again':'repeat-complex-command',
             'i':    'isearch-forward', 
             'ib':   'isearch-backward',      
             'ix':   'isearch-forward-regexp',
@@ -1023,7 +1023,7 @@ class keyHandlerClass:
         general = stroke == '<Key>'
         k.stroke = stroke
         
-        g.trace('state',k.getStateKind(),'stroke',stroke,'keysym',event.keysym,func and func.__name__)
+        # g.trace('state',k.getStateKind(),'stroke',stroke,'keysym',event.keysym,func and func.__name__)
         # g.trace(stroke,func)
     
         inserted = not special or (
@@ -1137,7 +1137,7 @@ class keyHandlerClass:
         k = self ; c = k.c ; state = k.getState('altx')
         keysym = (event and event.keysym) or ''
         
-        g.trace(state,keysym)
+        # g.trace(state,keysym)
         
         if state == 0:
             k.setState('altx',1,handler=k.fullCommand) 
@@ -1614,8 +1614,6 @@ class keyHandlerClass:
             k.arg = ''
             if tabList: k.argTabList = tabList[:]
             else:       k.argTabList = []
-            if 0: # Don't do this: it would add the shortcut that started the command.
-                k.updateLabel(event)
             #@        << init altX vars >>
             #@+node:ekr.20050928092516:<< init altX vars >>
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.

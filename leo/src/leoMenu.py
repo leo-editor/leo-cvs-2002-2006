@@ -1030,17 +1030,6 @@ class leoMenu:
                     accel = None # Remove the default shortcut.
                 else:
                     accel = accel2 # Override the default shortcut.
-                
-                if 0: ## Original code.
-                
-                    # Make sure "None" overrides the default shortcut.
-                    if accel2 == None or len(accel2) == 0:
-                        pass # Use default shortcut, if any.
-                    elif accel2.lower() == "none":
-                        accel = None # Remove the default shortcut.
-                    else:
-                        accel = accel2 # Override the default shortcut.
-                #@nonl
                 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
                 #@nl
                 #@            << set bind_shortcut and menu_shortcut using accel >>

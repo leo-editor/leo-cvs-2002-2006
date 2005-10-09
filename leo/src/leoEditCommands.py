@@ -3644,7 +3644,6 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
                 w.tag_add('qR','insert','insert +%sc' % length)
                 w.tag_config('qR',background='lightblue')
                 txt = w.get('insert','insert +%sc' % length)
-                ## k.setLabel("Replace %s with %s? y/n(! for all )" % (txt,self.qR))
                 return True
             else:
                 self.quitSearch(event)
@@ -4291,8 +4290,6 @@ class searchCommandsClass (baseEditCommandsClass):
     def __init__ (self,c):
     
         baseEditCommandsClass.__init__(self,c) # init the base class.
-        
-        ## self.csr = { '<Control-s>': 'for', '<Control-r>':'bak' }
         
         self.forward = True
         self.regexp = False

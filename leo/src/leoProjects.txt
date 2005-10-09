@@ -11613,7 +11613,7 @@ def masterCommand (self,event,func,stroke):
     general = stroke == '<Key>'
     k.stroke = stroke
     
-    g.trace('state',k.getStateKind(),'stroke',stroke,'keysym',event.keysym,func and func.__name__)
+    # g.trace('state',k.getStateKind(),'stroke',stroke,'keysym',event.keysym,func and func.__name__)
     # g.trace(stroke,func)
 
     inserted = not special or (
