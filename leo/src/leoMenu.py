@@ -1161,7 +1161,7 @@ class leoMenu:
         g.doHook("create-optional-menus",c=c)
         
         if self.useCmdMenu and c.useMiniBuffer:
-            self.createCmdMenuFromTable()
+            self.createEditorMenuFromTable()
     
         self.createWindowMenuFromTable()
         self.createHelpMenuFromTable()
@@ -1312,10 +1312,10 @@ class leoMenu:
         #@nl
     #@nonl
     #@-node:ekr.20031218072017.3797:createOutlineMenuFromTable
-    #@+node:ekr.20050921103736:createCmdMenuFromTable
-    def createCmdMenuFromTable (self):
+    #@+node:ekr.20050921103736:createEditorMenuFromTable
+    def createEditorMenuFromTable (self):
     
-        editorMenu = self.createNewMenu("Editor")
+        cmdsMenu = self.createNewMenu('Editor')
     
         for name,table,sep in (
             #('View...',   self.emacsMenuViewMenuTable,    True),
@@ -1324,11 +1324,11 @@ class leoMenu:
             ('Options...', self.emacsMenuOptionsMenuTable, True),
             ('Buffers...', self.emacsMenuBuffersMenuTable, False),
         ):
-            menu = self.createNewMenu(name,"Editor")
+            menu = self.createNewMenu(name,'Editor')
             self.createMenuEntries(menu,table,init=True)
-            if sep: self.add_separator(editorMenu)
+            if sep: self.add_separator(cmdsMenu)
     #@nonl
-    #@-node:ekr.20050921103736:createCmdMenuFromTable
+    #@-node:ekr.20050921103736:createEditorMenuFromTable
     #@+node:ekr.20031218072017.3802:createWindowMenuFromTable
     def createWindowMenuFromTable (self):
     

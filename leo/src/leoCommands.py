@@ -165,15 +165,14 @@ class baseCommands:
             return 0
     #@nonl
     #@-node:ekr.20041130173135:c.hash
-    #@+node:ekr.20050920093543:c.finishCreate
+    #@+node:ekr.20050920093543:c.finishCreate & helper
     def finishCreate (self):  # New in 4.4.
         
         '''Finish creating the commander after frame.finishCreate.'''
         
-        c = self
+        c = self ; p = c.currentPosition()
         c.miniBufferWidget = c.frame.miniBufferWidget
-        
-        # g.trace('Commands')
+        # g.trace('Commands',c.miniBufferWidget)
         
         # Create a keyHandler even if there is no miniBuffer.
         c.keyHandler = leoKeys.keyHandlerClass(c,
@@ -183,27 +182,28 @@ class baseCommands:
         # There is no miniBufferWidget created for leoSettings.leo files.
         if c.miniBufferWidget:
             c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
-            if 0:
-                #@            << print c.commandsDict >>
-                #@+node:ekr.20051007143620:<< print c.commandsDict >>
-                print 'Commands...'
-                keys = c.commandsDict.keys()
-                keys.sort()
-                for key in keys:
-                    command = c.commandsDict.get(key)
-                    print '%30s = %s' % (key,g.choose(command,command.__name__,'<None>'))
-                print
-                #@nonl
-                #@-node:ekr.20051007143620:<< print c.commandsDict >>
-                #@nl
+            # c.printCommandsDict()
             c.keyHandler.finishCreate()
     
         # Create the menu last so that we can use the key handler for shortcuts.
-        p = c.currentPosition()
         if not g.doHook("menu1",c=c,p=p,v=p):
             c.frame.menu.createMenuBar(c.frame)
     #@nonl
-    #@-node:ekr.20050920093543:c.finishCreate
+    #@+node:ekr.20051007143620:printCommandsDict
+    def printCommandsDict (self):
+        
+        c = self
+        
+        print 'Commands...'
+        keys = c.commandsDict.keys()
+        keys.sort()
+        for key in keys:
+            command = c.commandsDict.get(key)
+            print '%30s = %s' % (key,g.choose(command,command.__name__,'<None>'))
+        print
+    #@nonl
+    #@-node:ekr.20051007143620:printCommandsDict
+    #@-node:ekr.20050920093543:c.finishCreate & helper
     #@-node:ekr.20031218072017.2811: c.Birth & death
     #@+node:ekr.20031218072017.2817: doCommand
     def doCommand (self,command,label):

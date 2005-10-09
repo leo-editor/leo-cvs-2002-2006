@@ -414,7 +414,7 @@ class parserBaseClass:
         return kind,name,val
     #@nonl
     #@-node:ekr.20041119205148:parseHeadline
-    #@+node:ekr.20041120112043:g.app.config.parseShortcutLine
+    #@+node:ekr.20041120112043:g.app.config.parseShortcutLine  (Generalize this)
     def parseShortcutLine (self,s):
         
         """Return the kind of @settings node indicated by p's headline."""
@@ -439,7 +439,7 @@ class parserBaseClass:
         # g.trace("%30s %s" %(name,val))
         return name,val
     #@nonl
-    #@-node:ekr.20041120112043:g.app.config.parseShortcutLine
+    #@-node:ekr.20041120112043:g.app.config.parseShortcutLine  (Generalize this)
     #@-node:ekr.20041213082558:parsers
     #@+node:ekr.20041120094940.9:set (parseBaseClass)
     def set (self,p,kind,name,val):
