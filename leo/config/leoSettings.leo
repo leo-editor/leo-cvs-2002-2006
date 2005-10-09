@@ -124,8 +124,8 @@
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20050921105316"><vh>@page Menu options	</vh>
-<v t="ekr.20050921105316.1"><vh>@bool useEditorMenu=True</vh></v>
+<v t="ekr.20050921105316" a="E"><vh>@page Menu options	</vh>
+<v t="ekr.20050921105316.1" a="TV"><vh>@bool useCmdMenu=True</vh></v>
 </v>
 <v t="ekr.20041119034357.28"><vh>@page Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
@@ -224,7 +224,7 @@
 </v>
 <v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh></v>
-<v t="ekr.20051007193427" a="EMTV"><vh>@shortcuts traditional Leo shortcuts</vh></v>
+<v t="ekr.20051007193427" a="EM"><vh>@shortcuts traditional Leo shortcuts</vh></v>
 <v t="ekr.20051007193321" a="M"><vh>@@shortcuts default Emacs shortcuts</vh></v>
 </v>
 </v>
@@ -885,8 +885,8 @@ Default is Gray80.
 CadetBlue3 has been suggested.</t>
 <t tx="ekr.20051006200015.1">Default is white.</t>
 <t tx="ekr.20051007193321"># Controlling the keyboard controller.
---full-command          = Alt-x
---quick-command         = Control-c
+full-command            = Alt-x
+quick-command           = Control-c
 digit-argument          = None
 number-command          = None
 keyboard-quit           = Control-g
@@ -1045,6 +1045,14 @@ what-line               = None</t>
 # Unused Shift+Ctrl+I, Shift+Ctrl+K, Shift+Ctrl+L, Shift+Ctrl+O
 
 # F4 seems to interfere with Alt-F4 processing on windows.  Sigh.
+
+full-command            = Alt-x
+quick-command           = Alt-c # Typical is Control-c, but that conflicts with XP cut.
+keyboard-quit           = Ctrl-g
+universal-argument      = Ctrl-u
+# negative-argument     = Alt-minus
+repeat-complex-command  = None
+
 
 # apply settings             = None
 abort-edit-headline          = Shift+Esc            ## Add this command
