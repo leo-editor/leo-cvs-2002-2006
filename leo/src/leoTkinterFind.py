@@ -61,12 +61,12 @@ class underlinedTkButton:
         
         if self.hotKey:
             for key in (self.hotKey.lower(),self.hotKey.upper()):
-                widget.bind("<Alt-%s>" % key,self.callback)
+                widget.bind("<Alt-%s>" % key,self.buttonCallback)
     #@-node:ekr.20041026080125:bindHotKey
-    #@+node:ekr.20041025152717:callback
+    #@+node:ekr.20041025152717:buttonCallback
     # The hot key has been hit.  Call the button's command.
     
-    def callback (self, event=None):
+    def buttonCallback (self, event=None):
         
         __pychecker__ = '--no-argsused' # the event param must be present.
     
@@ -76,7 +76,7 @@ class underlinedTkButton:
         
         # See if this helps.
         return 'break'
-    #@-node:ekr.20041025152717:callback
+    #@-node:ekr.20041025152717:buttonCallback
     #@-others
 #@nonl
 #@-node:ekr.20041025152343:class underlinedTkButton
@@ -315,8 +315,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         for widget in (self.find_ctrl, self.change_ctrl):
             widget.bind ("<1>",  self.resetWrap)
             widget.bind("<Key>", self.resetWrap)
-            widget.bind("<Control-a>",self.selectAll)
-            #widget.bind(g.virtual_event_name("SelectAll"),self.selectAll)
+            widget.bind("<Control-a>",self.selectAllFindText)
+            #widget.bind(g.virtual_event_name("SelectAll"),self.selectAllFindText)
         
         for widget in (outer, self.find_ctrl, self.change_ctrl):
             widget.bind("<Key-Return>", findButtonCallback)
@@ -463,8 +463,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         # We must do this after other callbacks.  Sheesh.
         self.top.after(500,setFocusCallback)
     #@-node:ekr.20031218072017.3907:bringToFront
-    #@+node:EKR.20040603221140:selectAll
-    def selectAll (self,event=None):
+    #@+node:EKR.20040603221140:selectAllFindText
+    def selectAllFindText (self,event=None):
         
         __pychecker__ = '--no-argsused' # the event param must be present.
     
@@ -475,7 +475,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         except:
             return None # To keep pychecker happy.
     #@nonl
-    #@-node:EKR.20040603221140:selectAll
+    #@-node:EKR.20040603221140:selectAllFindText
     #@+node:ekr.20031218072017.3908:Tkinter wrappers (leoTkinterFind)
     def gui_search (self,t,*args,**keys):
         return t.search(*args,**keys)

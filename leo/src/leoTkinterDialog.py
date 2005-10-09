@@ -132,10 +132,10 @@ class leoTkinterDialog:
             self.top.protocol("WM_DELETE_WINDOW", self.onClose)
         
         # Do this at idle time.
-        def callback(top=self.top):
+        def attachIconCallback(top=self.top):
             g.app.gui.attachLeoIcon(top)
         
-        self.top.after_idle(callback)
+        self.top.after_idle(attachIconCallback)
     #@nonl
     #@-node:ekr.20031218072017.3865:createTopFrame
     #@+node:ekr.20040731065422:onClose

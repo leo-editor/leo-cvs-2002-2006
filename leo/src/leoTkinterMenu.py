@@ -188,22 +188,22 @@ class leoTkinterMenu (leoMenu.leoMenu):
     def defineMenuCallback(self,command,name):
         
         # The first parameter must be event, and it must default to None.
-        def callback(event=None,self=self,command=command,label=name):
+        def menuCallback(event=None,self=self,command=command,label=name):
             __pychecker__ = '--no-argsused' # event not used, and must be present.
             return self.c.doCommand(command,label)
     
-        return callback
+        return menuCallback
     #@nonl
     #@-node:ekr.20031218072017.4117:defineMenuCallback (tkMenu)
     #@+node:ekr.20031218072017.4118:defineOpenWithMenuCallback (tkMenu)
     def defineOpenWithMenuCallback(self,command):
         
         # The first parameter must be event, and it must default to None.
-        def callback(event=None,self=self,data=command):
+        def openWithMenuCallback(event=None,self=self,data=command):
             __pychecker__ = '--no-argsused' # event param must be present.
             return self.c.openWith(data=data)
     
-        return callback
+        return openWithMenuCallback
     #@nonl
     #@-node:ekr.20031218072017.4118:defineOpenWithMenuCallback (tkMenu)
     #@+node:ekr.20031218072017.4119:disableMenu

@@ -1109,7 +1109,6 @@ class editCommandsClass (baseEditCommandsClass):
             'line-number':          self.lineNumber,
             'move-past-close':      self.movePastClose,
             'remove-blank-lines':   self.removeBlankLines,
-            'select-all':           self.selectAll,
             'set-comment-column':   self.setCommentColumn,
         }
     #@nonl
@@ -2424,12 +2423,6 @@ class editCommandsClass (baseEditCommandsClass):
         w.see('insert')
     #@nonl
     #@-node:ekr.20050920084036.116:scrollUp/Down
-    #@+node:ekr.20050920084036.142:selectAll
-    def selectAll (event):
-    
-        event.widget.tag_add('sel','1.0','end')
-    #@nonl
-    #@-node:ekr.20050920084036.142:selectAll
     #@+node:ekr.20050920084036.117:sort...
     '''XEmacs provides several commands for sorting text in a buffer.  All
     operate on the contents of the region (the text between point and the
@@ -3180,7 +3173,9 @@ class leoCommandsClass (baseEditCommandsClass):
             'convert-blanks':       c.convertBlanks,
             'convert-tabs':         c.convertTabs,
             'copy-node':            c.copyOutline,
+            'copy-text':            f.OnCopyFromMenu,
             'cut-node':             c.cutOutline,
+            'cut-text':             f.OnCutFromMenu,
             'de-hoist':             c.dehoist,
             'delete':               c.delete,
             'delete-node':          c.deleteOutline,
@@ -3209,9 +3204,11 @@ class leoCommandsClass (baseEditCommandsClass):
             'extract-names':        c.extractSectionNames,
             'extract-section':      c.extractSection,
             'find-next':            c.findNext,
-            'find-panel':           c.showFindPanel, ## c.findPanel,
+            'find-panel':           c.showFindPanel,
             'find-previous':        c.findPrevious,
             'flatten-outline':      c.flattenOutline,
+            'go-back':              c.goPrevVisitedNode,
+            'go-forward':           c.goNextVisitedNode,
             'goto-first-node':      c.goToFirstNode,
             'goto-last-node':       c.goToLastNode,
             'goto-last-visitlbe':   c.goToLastVisibleNode,
@@ -3253,20 +3250,24 @@ class leoCommandsClass (baseEditCommandsClass):
             'open-compare-window':      c.openCompareWindow,
             'open-leoConfig.leo':       c.leoConfig,
             'open-leoDocs.leo':         c.leoDocumentation,
+            'open-leoPlugins.leo':      c.openLeoPlugins,
             'open-online-home':         c.leoHome,
             'open-online-tutorial':     c.leoTutorial,
+            'open-offline-tutorial':    f.leoHelp,
             'open-python-window':       c.openPythonWindow,
             'open-with':                c.openWith,
             'outline-to-CWEB':          c.outlineToCWEB,
             'outline-to-noweb':         c.outlineToNoweb,
             'paste-node':               c.pasteOutline,
-            'paste-retaining-clone':    c.pasteOutlineRetainingClones,
+            'paste-retaining-clones':   c.pasteOutlineRetainingClones,
+            'paste-text':               f.OnPasteFromMenu,
             'preferences':              c.preferences,
             'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
             'pretty-print-python-code':     c.prettyPrintPythonCode,
             'promote':                  c.promote,
             'read-at-file-nodes':       c.readAtFileNodes,
             'read-outline-only':        c.readOutlineOnly,
+            'redo':                     c.undoer.redo,
             'reformat-paragraph':       c.reformatParagraph,
             'remove-sentinels':         c.removeSentinels,
             'replace':                  c.replace,
@@ -3276,6 +3277,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'save':                     c.save,
             'save-as':                  c.saveAs,
             'save-to':                  c.saveTo,
+            'select-all':               f.body.selectAllText,
             'set-colors':               c.colorPanel,
             'set-font':                 c.fontPanel,
             'show-invisibles':          c.viewAllCharacters,
@@ -3287,6 +3289,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'toggle-active-pane':       f.toggleActivePane,
             'toggle-angle-brackets':    c.toggleAngleBrackets,
             'toggle-split-direction':   f.toggleSplitDirection,
+            'undo':                     c.undoer.undo,
             'unindent':                 c.dedentBody,
             'unmark-all':               c.unmarkAll,
             'untangle':                 c.untangle,

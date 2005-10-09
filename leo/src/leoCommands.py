@@ -172,19 +172,17 @@ class baseCommands:
         
         c = self
         c.miniBufferWidget = c.frame.miniBufferWidget
+        
+        # g.trace('Commands')
+        
+        # Create a keyHandler even if there is no miniBuffer.
+        c.keyHandler = leoKeys.keyHandlerClass(c,
+            useGlobalKillbuffer=True,
+            useGlobalRegisters=True)
     
         # There is no miniBufferWidget created for leoSettings.leo files.
         if c.miniBufferWidget:
-            
-            # g.trace('Commands')
-        
-            c.keyHandler = leoKeys.keyHandlerClass(c,
-                useGlobalKillbuffer=True,
-                useGlobalRegisters=True)
-                
-            # Create the classes in the keyHandler.
             c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
-            
             if 0:
                 #@            << print c.commandsDict >>
                 #@+node:ekr.20051007143620:<< print c.commandsDict >>
@@ -198,7 +196,6 @@ class baseCommands:
                 #@nonl
                 #@-node:ekr.20051007143620:<< print c.commandsDict >>
                 #@nl
-    
             c.keyHandler.finishCreate()
     
         # Create the menu last so that we can use the key handler for shortcuts.
@@ -4994,7 +4991,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2941:leoHome
     #@+node:ekr.20050130152008:leoPlugins
-    def leoPlugins (self):
+    def openLeoPlugins (self):
         
         c = self ; name = "leoPlugins.leo"
         fileName = g.os_path_join(g.app.loadDir,"..","plugins",name)

@@ -239,12 +239,14 @@ class leoMenu:
     #@+node:ekr.20031218072017.3752:defineMenuTables & helpers
     def defineMenuTables (self):
         
+        c = self.c
+        
         self.defineEditMenuTables()
         self.defineFileMenuTables()
         self.defineOutlineMenuTables()
         self.defineWindowMenuTables()
         
-        if self.useCmdMenu:
+        if self.useCmdMenu and c.useMiniBuffer:
             self.defineEditorMenuTables()
     
         self.defineHelpMenuTables()
@@ -693,7 +695,7 @@ class leoMenu:
     def defineEditorMenuTables (self):
         
         def dummyCommand():
-            g.trace()
+            pass
         
         self.emacsMenuCmdsMenuTable = [
             ('Cmnd Command 1',None,dummyCommand),
@@ -753,7 +755,7 @@ class leoMenu:
         self.helpMenuTop3Table = [
             ("-",None,None),
             ("Open Leo&Docs.leo",None,c.leoDocumentation),
-            ("Open Leo&Plugins.leo",None,c.leoPlugins),
+            ("Open Leo&Plugins.leo",None,c.openLeoPlugins),
             ("Open Leo&Settings.leo",None,c.leoConfig),
         ]
     #@nonl
@@ -987,7 +989,9 @@ class leoMenu:
     #@nonl
     #@-node:ekr.20031218072017.2098:canonicalizeShortcut
     #@+node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
-    def createMenuEntries (self,menu,table,openWith=False,dontBind=False,init=False):
+    def createMenuEntries (self,menu,table,
+        openWith=False,dontBind=False,
+        init=False,dynamicMenu=False):
         
         c = self.c ; k = c.keyHandler
         
@@ -1014,7 +1018,7 @@ class leoMenu:
                 
                 # New in 4.4: allow emacs-style or old style names in menu shortcuts.
                 if not accel2 and not openWith:
-                    if k:
+                    if c.useMiniBuffer:
                         emacs_name = k.inverseCommandsDict.get(command.__name__)
                         if emacs_name:
                             rawKey,accel2 = c.config.getShortcut(emacs_name)
@@ -1022,13 +1026,16 @@ class leoMenu:
                             # if accel: g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
                         else:
                             accel = None # New in 4.4: remove the default shortcut.
-                            g.trace('no inverse for %s' % command.__name__)
+                            if not dynamicMenu: # Don't require command names for dynamic menu entries.
+                                if command.__name__ != 'dummyCommand':
+                                    g.trace('no inverse for %s' % command.__name__)
                     else:
-                        pass # Use the default shortcut: we are not using the key handler!
+                        pass # Use the default shortcut.
                 elif accel2 and accel2.lower() == "none":
                     accel = None # Remove the default shortcut.
                 else:
                     accel = accel2 # Override the default shortcut.
+                #@nonl
                 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
                 #@nl
                 #@            << set bind_shortcut and menu_shortcut using accel >>
@@ -1048,9 +1055,9 @@ class leoMenu:
                 #@            << define callback function >>
                 #@+node:ekr.20031218072017.1727:<< define callback function >>
                 if openWith:
-                    callback = self.defineOpenWithMenuCallback(command)
+                    menuCallback = self.defineOpenWithMenuCallback(command)
                 else:
-                    callback = self.defineMenuCallback(command,name)
+                    menuCallback = self.defineMenuCallback(command,name)
                 #@nonl
                 #@-node:ekr.20031218072017.1727:<< define callback function >>
                 #@nl
@@ -1078,16 +1085,11 @@ class leoMenu:
                 #@nonl
                 #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
                 #@nl
-        
-                self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
-                    command=callback,underline=amp_index)
-                    
-                if 0: # testing
-                    dontBind = True
-    
+                
                 if bind_shortcut and not dontBind:
                     if c.useMiniBuffer:
-                        c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith)
+                        ok = c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith,fromMenu=True)
+                        if not ok: menu_shortcut = None
                     else:
                         #@                    << handle bind_shorcut >>
                         #@+node:ekr.20031218072017.1729:<< handle bind_shorcut >>
@@ -1113,8 +1115,8 @@ class leoMenu:
                         d[bind_shortcut] = g.Bunch(label=label,accel=accel,init=init,menu=menu)
                             
                         try:
-                            self.frame.body.bind(bind_shortcut,callback)
-                            self.bind(bind_shortcut,callback)
+                            self.frame.body.bind(bind_shortcut,menuCallback)
+                            self.bind(bind_shortcut,menuCallback)
                         except: # could be a user error
                             if not g.app.menuWarningsGiven:
                                 print "exception binding menu shortcut..."
@@ -1124,6 +1126,10 @@ class leoMenu:
                         #@nonl
                         #@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
                         #@nl
+                        
+                self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+                    command=menuCallback,underline=amp_index)
+    
     #@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
     #@+node:ekr.20031218072017.3784:createMenuItemsFromTable
     def createMenuItemsFromTable (self,menuName,table,openWith=False):
@@ -1154,7 +1160,7 @@ class leoMenu:
         
         g.doHook("create-optional-menus",c=c)
         
-        if self.useCmdMenu:
+        if self.useCmdMenu and c.useMiniBuffer:
             self.createCmdMenuFromTable()
     
         self.createWindowMenuFromTable()
@@ -1392,11 +1398,11 @@ class leoMenu:
         # Create all the other entries.
         i = 3
         for name in c.recentFiles:
-            def callback (event=None,c=c,name=name):
+            def recentFilesCallback (event=None,c=c,name=name):
                 __pychecker__ = '--no-argsused' # event not used, but must be present.
                 c.openRecentFile(name)
             label = "%d %s" % (i-2,g.computeWindowTitle(name))
-            self.add_command(recentFilesMenu,label=label,command=callback,underline=0)
+            self.add_command(recentFilesMenu,label=label,command=recentFilesCallback,underline=0)
             i += 1
     #@nonl
     #@-node:ekr.20031218072017.2078:createRecentFilesMenuItems (leoMenu)

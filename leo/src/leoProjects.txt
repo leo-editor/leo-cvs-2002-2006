@@ -12259,6 +12259,13 @@ Binding is mostly complete:  the traces from createMenuEntries show missing comm
 - Call createMenuBar in c.finishCreate.
 - Removed all dummy methods from nullMenu class.
     - The methods of the base class will do fine, provided that an overrided oops method does nothing!
+- Removed all warnings:
+    - Added dynamicMenu arg to createMenuEntries to suppress a warning when a menu is created from a plugin.
+    - Always define c.keyHandler, even if c.useMiniBuffer is False.
+    - Revise << set accel to the shortcut for name >> in createMenuEntries tests c.useMiniBuffer.
+    - Use c.frame.selectAllText instead of c.editCommands.selectAll.
+- Fixed bug in makeSpecialBindings so that Control-g works.
+#@nonl
 #@-node:ekr.20051009042953:Changeover
 #@-node:ekr.20050921094025.6:What I did
 #@+node:ekr.20050921100955:Not used
@@ -12933,298 +12940,110 @@ def setMenu (self,menuName,menu):
 #@nonl
 #@-node:ekr.20050104093323:Gui-independent menu routines
 #@-node:ekr.20051009043912:From nullMenu
-#@+node:ekr.20051007140132:(same as c.commandDict, but with 'self' replaced by c.x)
-c.editCommands.defaultBindingsDict = {
-
-    # Leo commands.
-    'new':                  c.new,
-    'open':                 c.open,
-    'open-with':            c.openWith,
-    'close':                c.close,
-    'save':                 c.save,
-    'saveAs':               c.saveAs,
-    'saveTo':               c.saveTo,
-    'revert':               c.revert,
-    'read-outline-only':    c.readOutlineOnly,
-    'read-at-file-nodes':   c.readAtFileNodes,
-    'import-derived-file':  c.importDerivedFile,
-    'tangle':               c.tangle,
-    'tangle-all':           c.tangleAll,
-    'tangle-marked':        c.tangleMarked,
-    'untangle':             c.untangle,
-    'untangle-all':         c.untangleAll,
-    'untangle-marked':      c.untangleMarked,
-    'export-headlines':     c.exportHeadlines,
-    'flatten-outline':      c.flattenOutline,
-    'import-at-root':       c.importAtRoot,
-    'import at-file':       c.importAtFile,
-    'import-cweb-files':    c.importCWEBFiles,
-    'import-flattened-outline': c.importFlattenedOutline,
-    'import-noweb-files':   c.importNowebFiles,
-    'outline-to-noweb':     c.outlineToNoweb,
-    'outline-to-CWEB':      c.outlineToCWEB,
-    'remove-sentinels':     c.removeSentinels,
-    'weave':                c.weave,
-    'delete':               c.delete,
-    'execute-script':       c.executeScript,
-    'goto-line-number':     c.goToLineNumber,
-    'set-font':             c.fontPanel,
-    'set-colors':           c.colorPanel,
-    'show-invisibles':      c.viewAllCharacters,
-    'preferences':          c.preferences,
-    'convert-all-blanks':   c.convertAllBlanks,
-    'convert-all-tabs':     c.convertAllTabs,
-    'convert-blanks':       c.convertBlanks,
-    'convert-tabs':         c.convertTabs,
-    'indent':               c.indentBody,
-    'unindent':             c.dedentBody,
-    'reformat-paragraph':   c.reformatParagraph,
-    'insert-time':          c.insertBodyTime,
-    'extract-section':      c.extractSection,
-    'extract-names':        c.extractSectionNames,
-    'extract':              c.extract,
-    'match-bracket':        c.findMatchingBracket,
-    'find-panel':           c.showFindPanel, ## c.findPanel,
-    'find-next':            c.findNext,
-    'find-previous':        c.findPrevious,
-    'replace':              c.replace,
-    'replace-then-find':    c.replaceThenFind,
-    'edit-headline':        c.editHeadline,
-    'toggle-angle-brackets': c.toggleAngleBrackets,
-    'cut-node':             c.cutOutline,
-    'copy-node':            c.copyOutline,
-    'paste-node':           c.pasteOutline,
-    'paste-retaining-clone': c.pasteOutlineRetainingClones,
-    'hoist':                c.hoist,
-    'de-hoist':             c.dehoist,
-    'insert-node':          c.insertHeadline,
-    'clone-node':           c.clone,
-    'delete-node':          c.deleteOutline,
-    'sort-children':        c.sortChildren,
-    'sort-siblings':        c.sortSiblings,
-    'demote':               c.demote,
-    'promote':              c.promote,
-    'move-outline-right':   c.moveOutlineRight,
-    'move-outline-left':    c.moveOutlineLeft,
-    'move-outline-up':      c.moveOutlineUp,
-    'move-outline-down':    c.moveOutlineDown,
-    'unmark-all':           c.unmarkAll,
-    'mark-clones':          c.markClones,
-    'mark':                 c.markHeadline,
-    'mark-subheads':        c.markSubheads,
-    'mark-changed items':   c.markChangedHeadlines,
-    'mark-changed roots':   c.markChangedRoots,
-    'contract-all':         c.contractAllHeadlines,
-    'contract-node':        c.contractNode,
-    'contract-parent':      c.contractParent,
-    'expand-to-level 1':    c.expandLevel1,
-    'expand-to-level 2':    c.expandLevel2,
-    'expand-to-level 3':    c.expandLevel3,
-    'expand-to-level 4':    c.expandLevel4,
-    'expand-to-level 5':    c.expandLevel5,
-    'expand-to-level 6':    c.expandLevel6,
-    'expand-to-level 7':    c.expandLevel7,
-    'expand-to-level 8':    c.expandLevel8,
-    'expand-to-level 9':    c.expandLevel9,
-    'expand-prev-level':    c.expandPrevLevel,
-    'expand-next-level':    c.expandNextLevel,
-    'expand-all':           c.expandAllHeadlines,
-    'expand-node':          c.expandNode,
-    'check-outline':        c.checkOutline,
-    'dump-outline':         c.dumpOutline,
-    'check-python-code':    c.checkPythonCode,
-    'check-all-python-code':        c.checkAllPythonCode,
-    'pretty-print-python-code':     c.prettyPrintPythonCode,
-    'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
-    'goto-parent':          c.goToParent,
-    'goto-next-sibling':    c.goToNextSibling,
-    'goto-prev-sibling':    c.goToPrevSibling,
-    'goto-next-clone':      c.goToNextClone,
-    'goto-next marked':     c.goToNextMarkedHeadline,
-    'goto-next changed':    c.goToNextDirtyHeadline,
-    'goto-first':           c.goToFirstNode,
-    'goto-last':            c.goToLastNode,
-    'goto-prev-visible':    c.selectVisBack,
-    'goto-next-visible':    c.selectVisNext,
-    'goto-prev-node':       c.selectThreadBack,
-    'goto-next-node':       c.selectThreadNext,
-    'about leo':            c.about,
-    #'apply settings':      c.applyConfig,
-    'open-leoConfig.leo':   c.leoConfig,
-    'open-leoDocs.leo':     c.leoDocumentation,
-    'open-online-home':     c.leoHome,
-    'open-online-tutorial': c.leoTutorial,
-    'open-compare-window':  c.openCompareWindow,
-    'open-python-window':   c.openPythonWindow,
-    'equal-sized-panes':    f.equalSizedPanes,
-    'toggle-active-pane':   f.toggleActivePane,
-    'toggle-split-direction': f.toggleSplitDirection,
-    'resize-to-screen':     f.resizeToScreen,
-    'cascade':              f.cascade,
-    'minimize-all':         f.minimizeAll,
-    # Abbrev
-    'abbrev-mode':                  c.abbrevCommands.toggleAbbrevMode,
-    'add-global-abbrev':            c.abbrevCommands.addAbbreviation,
-    'expand-abbrev':                c.abbrevCommands.expandAbbrev,
-    'expand-region-abbrevs':        c.abbrevCommands.regionalExpandAbbrev,
-    'inverse-add-global-abbrev':    c.abbrevCommands.addInverseAbbreviation,
-    'kill-all-abbrevs':             c.abbrevCommands.killAllAbbrevs,
-    'list-abbrevs':                 c.abbrevCommands.listAbbrevs,
-    'read-abbrev-file':             c.abbrevCommands.readAbbreviations,
-    'write-abbrev-file':            c.abbrevCommands.writeAbbreviations,
-    # Buffer
-    'append-to-buffer':     c.bufferCommands.appendToBuffer,
-    'copy-to-buffer':       c.bufferCommands.copyToBuffer,
-    'insert-to-buffer':     c.bufferCommands.insertToBuffer,
-    'kill-buffer' :         c.bufferCommands.killBuffer,
-    'list-buffers' :        c.bufferCommands.listBuffers,
-    'prepend-to-buffer':    c.bufferCommands.prependToBuffer,
-    'rename-buffer':        c.bufferCommands.renameBuffer,
-    'switch-to-buffer':     c.bufferCommands.switchToBuffer,
-    # Control
-    'advertised-undo':              c.controlCommands.advertizedUndo,
-    'iconfify-or-deiconify-frame':  c.controlCommands.iconifyOrDeiconifyFrame,
-    'keyboard-quit':                c.controlCommands.keyboardQuit,
-    'save-buffers-kill-leo':        c.controlCommands.saveBuffersKillLeo,
-    'shell-command':                c.controlCommands.shellCommand,
-    'shell-command-on-region':      c.controlCommands.shellCommandOnRegion,
-    'suspend':                      c.controlCommands.suspend,
-    # Edit
-    'back-to-indentation':  c.editCommands.backToIndentation,
-    'backward-delete-char': c.editCommands.backwardDeleteCharacter,
-    'backward-char':        c.editCommands.backCharacter,
-    'backward-kill-paragraph': c.editCommands.backwardKillParagraph,
-    'beginning-of-buffer':  c.editCommands.beginningOfBuffer,
-    'beginning-of-line':    c.editCommands.beginningOfLine,
-    'capitalize-word':      c.editCommands.capitalizeWord,
-    'center-line':          c.editCommands.centerLine,
-    'center-region':        c.editCommands.centerRegion,
-    'dabbrev-completion':   c.editCommands.dynamicExpansion2,
-    'dabbrev-expands':      c.editCommands.dynamicExpansion,
-    'delete-char':          c.editCommands.deleteNextChar,
-    'delete-indentation':   c.editCommands.deleteIndentation,
-    'downcase-region':      c.editCommands.downCaseRegion,
-    'downcase-word':        c.editCommands.downCaseWord,
-    'end-of-buffer':        c.editCommands.endOfBuffer,
-    'end-of-line':          c.editCommands.endOfLine,
-    'eval-expression':      c.editCommands.evalExpression,
-    'fill-region-as-paragraph': c.editCommands.fillRegionAsParagraph,
-    'fill-region':          c.editCommands.fillRegion,
-    'flush-lines':          c.editCommands.flushLines,
-    'forward-char':         c.editCommands.forwardCharacter,
-    'goto-char':            c.editCommands.gotoCharacter,
-    'goto-line':            c.editCommands.gotoLine,
-    'how-many':             c.editCommands.howMany,
-    'indent-region':        c.editCommands.indentRegion,
-    'indent-rigidly':       c.editCommands.tabIndentRegion,
-    'indent-relative':      c.editCommands.indentRelative,
-    'keep-lines':           c.editCommands.keepLines,
-    'kill-paragraph':       c.editCommands.killParagraph,
-    'newline-and-indent':   c.editCommands.insertNewLineAndTab,
-    'next-line':            c.editCommands.nextLine,
-    'previous-line':        c.editCommands.prevLine,
-    'replace-regex':        c.editCommands.activateReplaceRegex,
-    'replace-string':       c.editCommands.replaceString,
-    'reverse-region':       c.editCommands.reverseRegion,
-    ## 'save-buffer':       c.editCommands.saveFile,
-    'scroll-down':          c.editCommands.scrollDown,
-    'scroll-up':            c.editCommands.scrollUp,
-    'set-fill-column':      c.editCommands.setFillColumn,
-    'set-fill-prefix':      c.editCommands.setFillPrefix,
-    'set-mark-command':     c.editCommands.setRegion,
-    'sort-columns':         c.editCommands.sortColumns,
-    'sort-fields':          c.editCommands.sortFields,
-    'sort-lines':           c.editCommands.sortLines,
-    'split-line':           c.editCommands.insertNewLineIndent,
-    'tabify':               c.editCommands.tabify,
-    'transpose-chars':      c.editCommands.transposeCharacters,
-    'transpose-words':      c.editCommands.transposeWords,
-    'transpose-lines':      c.editCommands.transposeLines,
-    'untabify':             c.editCommands.untabify,
-    'upcase-region':        c.editCommands.upCaseRegion,
-    'upcase-word':          c.editCommands.upCaseWord,
-    'view-lossage':         c.editCommands.viewLossage,
-    'what-line':            c.editCommands.whatLine,
-    # Edit commands added by EKR:
-    'back-sentence':        c.editCommands.backSentence,
-    'delete-spaces':        c.editCommands.deleteSpaces,
-    'forward-sentence':     c.editCommands.forwardSentence,
-    'exchange-point-mark':  c.editCommands.exchangePointMark,
-    'indent-to-comment-column': c.editCommands.indentToCommentColumn,
-    'insert-newline':       c.editCommands.insertNewline,
-    'insert-parentheses':   c.editCommands.insertParentheses,
-    'line-number':          c.editCommands.lineNumber,
-    'move-past-close':      c.editCommands.movePastClose,
-    'remove-blank-lines':   c.editCommands.removeBlankLines,
-    'select-all':           c.editCommands.selectAll,
-    'set-comment-column':   c.editCommands.setCommentColumn,
-    # Edit Files commands.
-    'delete-file':      c.editFileCommands.deleteFile,
-    'diff':             c.editFileCommands.diff, 
-    'insert-file':      c.editFileCommands.insertFile,
-    'make-directory':   c.editFileCommands.makeDirectory,
-    'remove-directory': c.editFileCommands.removeDirectory,
-    'save-file':        c.editFileCommands.saveFile,
-    # Keyhandler commands.
-    'digit-argument':           k.digitArgument,
-    'negative-argument':        k.negativeArgument,
-    'number-command':           k.numberCommand,
-    'repeat-complex-command':   k.repeatComplexCommand,
-    'universal-argument':       k.universalArgument,
-    # Killbuffer commands.
-    'backward-kill-sentence':   c.killBufferCommands.backwardKillSentence,
-    'backward-kill-word':       c.killBufferCommands.backwardKillWord,
-    'kill-line':                c.killBufferCommands.killLine,
-    'kill-word':                c.killBufferCommands.killWord,
-    'kill-sentence':            c.killBufferCommands.killSentence,
-    'kill-region':              c.killBufferCommands.killRegion,
-    'kill-region-save':         c.killBufferCommands.killRegionSave, # Should this be kill-ring-save?
-    'yank':                     c.killBufferCommands.yank,
-    'yank-pop':                 c.killBufferCommands.yankPop,
-    'zap-to-character':         c.killBufferCommands.zapToCharacter,
-    # Macro commands.
-    'call-last-keyboard-macro': c.macroCommands.callLastKeyboardMacro,
-    'end-kbd-macro':            c.macroCommands.endKbdMacro,
-    'name-last-kbd-macro':      c.macroCommands.nameLastKbdMacro,
-    'load-file':                c.macroCommands.loadFile,
-    'insert-keyboard-macro' :   c.macroCommands.insertKeyboardMacro,
-    'start-kbd-macro':          c.macroCommands.startKbdMacro,
-    # Query-replace commands.
-    'query-replace':        c.queryReplaceCommands.queryReplace,
-    'query-replace-regex':  c.queryReplaceCommands.queryReplaceRegex,
-    # Rectangle commands.  
-    'clear-rectangle':  c.rectangleCommands.clearRectangle,
-    'close-rectangle':  c.rectangleCommands.closeRectangle,
-    'delete-rectangle': c.rectangleCommands.deleteRectangle,
-    'kill-rectangle':   c.rectangleCommands.killRectangle,
-    'open-rectangle':   c.rectangleCommands.openRectangle,
-    'string-rectangle': c.rectangleCommands.stringRectangle,
-    'yank-rectangle':   c.rectangleCommands.yankRectangle,
-    # Register commaands.
-    'append-to-register':           c.registerCommands.appendToRegister,
-    'copy-rectangle-to-register':   c.registerCommands.copyRectangleToRegister,
-    'copy-to-register':             c.registerCommands.copyToRegister,
-    'increment-register':           c.registerCommands.incrementRegister,
-    'insert-register':              c.registerCommands.insertRegister,
-    'jump-to-register':             c.registerCommands.jumpToRegister,
-    'number-to-register':           c.registerCommands.numberToRegister,
-    'point-to-register':            c.registerCommands.pointToRegister,
-    'prepend-to-register':          c.registerCommands.prependToRegister,
-    'view-register':                c.registerCommands.viewRegister,
-    # Search commands.
-    'isearch-forward':          c.searchCommands.isearchForward,
-    'isearch-backward':         c.searchCommands.isearchBackward,
-    'isearch-forward-regexp':   c.searchCommands.isearchForwardRegexp,
-    'isearch-backward-regexp':  c.searchCommands.isearchBackwardRegexp,
-    're-search-forward':        c.searchCommands.reSearchForward,
-    're-search-backward':       c.searchCommands.reSearchBackward,
-    'search-forward':           c.searchCommands.searchForward,
-    'search-backward':          c.searchCommands.searchBackward,
-    'word-search-forward':      c.searchCommands.wordSearchForward,
-    'word-search-backward':     c.searchCommands.wordSearchBackward,
-}
+#@+node:ekr.20051009051949:From tkFrame.finishCreate
+    else:
+        frame = self
+        << create the toplevel and outer frames >>
+        << create the icon bar >>
+        << create the splitters and their subframes >>
+        << create the status line >>
+        << create the first tree node >>
 #@nonl
-#@-node:ekr.20051007140132:(same as c.commandDict, but with 'self' replaced by c.x)
+#@+node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
+frame.top = top = Tk.Toplevel()
+gui.attachLeoIcon(top)
+top.title(frame.title)
+top.minsize(30,10) # In grid units.
+
+if g.os_path_exists(g.app.user_xresources_path):
+    frame.top.option_readfile(g.app.user_xresources_path)
+
+frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
+frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
+
+# These don't work on Windows. Because of bugs in window managers,
+# there is NO WAY to know which window is on top!
+frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
+frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
+
+frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
+frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
+
+# Create the outer frame, the 'hull' component.
+self.outerFrame = Tk.Frame(top)
+self.outerFrame.pack(expand=1,fill="both")
+self.componentClass(c,'hull',self.outerFrame)
+#@nonl
+#@-node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
+#@+node:ekr.20041224120552:<< create the icon bar >>
+self.iconBarComponentName = 'iconBar'
+iconBar = self.iconBarClass(c,outerFrame)
+self.iconFrame = iconBar.iconFrame
+
+self.iconBar = self.componentClass(c,
+    self.iconBarComponentName,iconBar.iconFrame,
+    iconBar,iconBar.pack,iconBar.unpack)
+
+self.iconBar.show()
+#@nonl
+#@-node:ekr.20041224120552:<< create the icon bar >>
+#@+node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
+self.createLeoSplitters(outerFrame)
+
+# Create the canvas, tree, log and body.
+frame.canvas = self.createCanvas(self.split2Pane1)
+frame.tree   = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
+frame.log    = leoTkinterLog(frame,self.split2Pane2)
+frame.body   = leoTkinterBody(frame,self.split1Pane2)
+
+self.componentClass(c,'tree',self.split2Pane1, frame.tree, self.packTree, self.unpackTree)
+self.componentClass(c,'log', self.split2Pane2, frame.log,  self.packLog,  self.unpackLog)
+self.componentClass(c,'body',self.split1Pane2, frame.body, self.packBody, self.unpackBody)
+
+# Yes, this an "official" ivar: this is a kludge.
+frame.bodyCtrl = frame.body.bodyCtrl
+
+# Configure.
+frame.setTabWidth(c.tab_width)
+frame.tree.setColorFromConfig()
+self.reconfigurePanes()
+self.body.setFontFromConfig()
+self.body.setColorFromConfig()
+#@nonl
+#@-node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
+#@+node:ekr.20041225103412:<< create the status line >>
+self.statusLineComponentName = 'statusLine'
+statusLine = self.statusLineClass(c,outerFrame)
+
+# Create offical ivars in the frame class.
+self.statusFrame = statusLine.statusFrame
+self.statusLabel = statusLine.labelWidget
+self.statusText  = statusLine.textWidget
+
+self.statusLine = self.componentClass(c,
+    self.statusLineComponentName,
+    statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
+self.statusLine.show() # Show status line by default.
+#@nonl
+#@-node:ekr.20041225103412:<< create the status line >>
+#@+node:ekr.20031218072017.2180:<< create the first tree node >>
+t = leoNodes.tnode()
+v = leoNodes.vnode(c,t)
+p = leoNodes.position(v,[])
+v.initHeadString("NewHeadline")
+
+p.moveToRoot()
+c.beginUpdate()
+try:
+    c.selectVnode(p)
+    c.redraw()
+    c.frame.getFocus()
+    c.editPosition(p)
+finally:
+    c.endUpdate(False)
+#@nonl
+#@-node:ekr.20031218072017.2180:<< create the first tree node >>
+#@-node:ekr.20051009051949:From tkFrame.finishCreate
 #@-node:ekr.20050921100955:Not used
 #@+node:ekr.20050930130346:Docs
 #@+node:ekr.20050921094025.254:All xemacs commands
@@ -16436,7 +16255,7 @@ Compiling Programs withing Emacs
 'line-number':          self.lineNumber,
 'move-past-close':      self.movePastClose,
 'remove-blank-lines':   self.removeBlankLines,
-'select-all':           self.selectAll,
+'select-all':           f.body.selectAllText,
 'set-comment-column':   self.setCommentColumn,
 #@nonl
 #@-node:ekr.20050930075327.4:Edit 66
@@ -16967,6 +16786,12 @@ def doControlU (self,event,stroke):
 #@-node:ekr.20050920085536.76:doControlU
 #@-node:ekr.20050920085536.73:universalDispatcher & helpers
 #@-node:ekr.20051006131811:(uArgs)
+#@+node:ekr.20050920084036.142:c.editCommands.selectAll
+def selectAll (event):
+
+    event.widget.tag_add('sel','1.0','end')
+#@nonl
+#@-node:ekr.20050920084036.142:c.editCommands.selectAll
 #@-node:ekr.20050920084720.1:(New key handling)
 #@+node:ekr.20051006195420:Added background/foreground selection confic options
 #@+node:ekr.20051006195420.1:Report
