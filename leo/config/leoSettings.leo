@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="118" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.570342205323">
-	<global_window_position top="92" left="230" height="789" width="911"/>
+	<global_window_position top="50" left="320" height="789" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -34,6 +34,7 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
+<v t="ekr.20051010093913"><vh>@button save</vh></v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
 <v t="ekr.20041119034357.10"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
@@ -124,8 +125,8 @@
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20050921105316" a="E"><vh>@page Menu options	</vh>
-<v t="ekr.20050921105316.1" a="TV"><vh>@bool useCmdMenu=True</vh></v>
+<v t="ekr.20050921105316"><vh>@page Menu options	</vh>
+<v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=True</vh></v>
 </v>
 <v t="ekr.20041119034357.28"><vh>@page Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
@@ -194,7 +195,6 @@
 <v t="ekr.20041119034357.43"><vh>@bool body_gmt_time = False</vh></v>
 <v t="ekr.20041119034357.44"><vh>@bool smart_auto_indent = False</vh></v>
 <v t="ekr.20041119034357.53"><vh>@int additional_body_text_border = 0</vh></v>
-<v t="ekr.20050921105316.2"><vh>@bool useMiniBuffer=False</vh></v>
 </v>
 <v t="ekr.20041213105954.1"><vh>@page Log pane options</vh>
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
@@ -223,9 +223,13 @@
 </v>
 </v>
 <v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051010121210"><vh>To do</vh></v>
+<v t="ekr.20050921105316.2"><vh>@bool useMiniBuffer=True</vh></v>
 <v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh></v>
-<v t="ekr.20051007193427" a="EM"><vh>@shortcuts traditional Leo shortcuts</vh></v>
+<v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
+<v t="ekr.20051007193427" a="EM"><vh>@@shortcuts traditional Leo shortcuts</vh></v>
 <v t="ekr.20051007193321" a="M"><vh>@@shortcuts default Emacs shortcuts</vh></v>
+<v t="ekr.20051010112558" a="EMTV"><vh>@shortcuts traditional Leo shortcuts with basic Emacs moves</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1005,7 +1009,7 @@ indent-to-comment-column = Alt-semicolon
 insert-parentheses      = Alt-parenleft
 keep-lines              = None
 line-number             = None
-# recenter              = Control-l
+# recenter              = None      # Control-l
 remove-blank-lines      = None
 replace-regex           = None
 replace-string          = None
@@ -1030,174 +1034,163 @@ view-lossage            = None
 what-line               = None</t>
 <t tx="ekr.20051007193427">@color
 
-# Reserved  Alt+E  (Opens Edit Menu)
-# Reserved  Alt+F  (Opens File Menu)
-# Reserved  Alt+H  (Opens Help Menu)
-# Reserved  Alt+O  (Opens Outline Menu)
-# Reserved  Alt+W  (Opens Window Menu)
-
-# In Open With menu...
-# Idle      = Alt+Shift+I
-# Word      = Alt+Shift+W
-# WordPad   = Alt+Shift+T
-
-# Unused Ctrl+B, Ctrl+G, Ctrl+J, Ctrl+P
-# Unused Shift+Ctrl+I, Shift+Ctrl+K, Shift+Ctrl+L, Shift+Ctrl+O
-
-# F4 seems to interfere with Alt-F4 processing on windows.  Sigh.
+# The infamous cut/copy/paste commands.
+# These are no longer bound automatically in tkFrame.
+copy-text               = Ctrl-C
+cut-text                = Ctrl-X
+paste-text              = Ctrl-V
 
 full-command            = Alt-x
-quick-command           = Alt-c # Typical is Control-c, but that conflicts with XP cut.
+quick-command           = Alt-c # Usually control-c, conflicts cut-text.
 keyboard-quit           = Ctrl-g
-universal-argument      = Ctrl-u
+universal-arg           = Alt-u # Usually Ctrl-u, conflicts with move-outline-up.
 # negative-argument     = Alt-minus
 repeat-complex-command  = None
 
-
 # apply settings             = None
-abort-edit-headline          = Shift+Esc            ## Add this command
+abort-edit-headline          = Shift-Esc            ## Add this command
 about-leo                    = None
-add-comments                 = Ctrl+(               ## Add this command
+add-comments                 = Ctrl-(               ## Add this command
 cascade                      = None
 check-all-python-code        = None
 check-outline                = None
 check-python-code            = None
-check-spelling               = Alt+Shift+A          ## Add this command.
+check-spelling               = Alt-Shift-A          ## Add this command.
 clear-recent-files           = None
-clone-node                   = Ctrl+`
-close                        = Ctrl+W
-contract-all                 = Alt+-
-contract-node                = Alt+[
-contract-parent              = Alt+0
-contract-or-go-left          = Alt+LtArrow
+clone-node                   = Ctrl-`
+close                        = Ctrl-W
+contract-all                 = Alt--
+contract-node                = Alt-[
+contract-parent              = Alt-0
+contract-or-go-left          = Alt-LtArrow
 convert-all-blanks           = None
 convert-all-tabs             = None
-convert-blanks               = Shift+Ctrl+B
-convert-tabs                 = Shift+Ctrl+J
-copy-text                    = Ctrl+C           ## Add this command
-copy-node                    = Shift+Ctrl+C
-cut-node                     = Shift+Ctrl+X
-cut-text                     = Ctrl+X           ## Add this command.
+convert-blanks               = Shift-Ctrl-B
+convert-tabs                 = Shift-Ctrl-J
+copy-node                    = Shift-Ctrl-C
+cut-node                     = Shift-Ctrl-X
 de-hoist                     = None
-delete-comments              = Ctrl+)           ## Add this command.
-delete-node                  = Shift+Ctrl+BkSp
+delete-comments              = Ctrl-)           ## Add this command.
+delete-node                  = Shift-Ctrl-BkSp
 delete-text                  = None             ## Add this command.
-demote                       = Ctrl+}
+demote                       = Ctrl-}
 dump-outline                 = None
-edit-headline                = Ctrl+H
-equal-sized-panes            = Alt+Shift+E
+edit-headline                = Ctrl-H
+equal-sized-panes            = Alt-Shift-E
 end-edit-headline            = Esc              ## Add this command.
-execute-script               = Ctrl+E
+execute-script               = Ctrl-E
 exit-leo                     = Ctrl-Q           ## Add this command.
-expand-all                   = Alt+9
-expand-next-level            = Alt+=
-expand-node                  = Alt+]
-expand-or-go-right           = Alt+RtArrow
-expand-prev-level            = Alt+.
-expand-to-level 1            = Alt+1
-expand-to-level 2            = Alt+2
-expand-to-level 3            = Alt+3
-expand-to-level 4            = Alt+4
-expand-to-level 5            = Alt+5
-expand-to-level 6            = Alt+6
-expand-to-level 7            = Alt+7
-expand-to-level 8            = Alt+8
+expand-all                   = Alt-9
+expand-next-level            = Alt-=
+expand-node                  = Alt-]
+expand-or-go-right           = Alt-RtArrow
+expand-prev-level            = Alt-.
+expand-to-level 1            = Alt-1
+expand-to-level 2            = Alt-2
+expand-to-level 3            = Alt-3
+expand-to-level 4            = Alt-4
+expand-to-level 5            = Alt-5
+expand-to-level 6            = Alt-6
+expand-to-level 7            = Alt-7
+expand-to-level 8            = Alt-8
 expand-to-level 9            = None
 export-headlines             = None
-extract                      = Shift+Ctrl+D
-extract-names                = Shift+Ctrl+N
-extract-section              = Shift+Ctrl+E
+extract                      = Shift-Ctrl-D
+extract-names                = Shift-Ctrl-N
+extract-section              = Shift-Ctrl-E
 find-next                    = F3
-find-panel                   = Ctrl+F
+find-panel                   = Ctrl-F
 find-previous                = F2
 flatten-outline              = None
-goto-first-node              = Alt+Shift+G
-goto-last-node               = Alt+Shift+H
-goto-line-number             = Alt+G
-goto-next-changed            = Alt+D
-goto-next-marked             = Alt+M
-goto-next-clone              = Alt+N
-goto-next-node               = Alt+Shift+DnArrow
-goto-next-sibling            = Alt+Shift+S
-goto-next-visible            = Alt+DnArrow
-goto-parent                  = Alt+Shift+P
-goto-prev-node               = Alt+Shift+UpArrow
-goto-prev-sibling            = Alt+Shift+R
-goto-prev-visible            = Alt+UpArrow
+go-back                      = None
+go-forward                   = None
+goto-first-node              = Alt-Shift-G
+goto-last-node               = Alt-Shift-H
+goto-line-number             = Alt-G
+goto-next-changed            = Alt-D
+goto-next-marked             = Alt-M
+goto-next-clone              = Alt-N
+goto-next-node               = Alt-Shift-DnArrow
+goto-next-sibling            = Alt-Shift-S
+goto-next-visible            = Alt-DnArrow
+goto-parent                  = Alt-Shift-P
+goto-prev-node               = Alt-Shift-UpArrow
+goto-prev-sibling            = Alt-Shift-R
+goto-prev-visible            = Alt-UpArrow
 hoist                        = None
-import at-file               = Shift+Ctrl+F
+import at-file               = Shift-Ctrl-F
 import-at-root               = None
 import-cweb-files            = None
 import-derived-file          = None
 import-flattened-outline     = None
 import-noweb-files           = None
-indent                       = Ctrl+]
-insert-node                  = Ctrl+I
-insert-body-time             = Shift+Ctrl+G
-insert-headline-time         = Shift+Ctrl+H
-mark                         = Ctrl+M
-mark-changed-items           = Alt+C
-mark-changed-roots           = Alt+R
-mark-clones                  = Alt+K
-mark-subheads                = Alt+S
-match-bracket                = Ctrl+K
+indent                       = Ctrl-]
+insert-node                  = Ctrl-I
+insert-body-time             = Shift-Ctrl-G
+insert-headline-time         = Shift-Ctrl-H
+mark                         = Ctrl-M
+mark-changed-items           = None             # Alt-C: now quick-command.
+mark-changed-roots           = Alt-R
+mark-clones                  = Alt-K
+mark-subheads                = Alt-S
+match-bracket                = Ctrl-K
 minimize-all                 = None
-move-outline-down            = Ctrl+D
-move-outline-left            = Ctrl+L
-move-outline-right           = Ctrl+R
-move-outline-up              = Ctrl+U
-new                          = Ctrl+N
-open                         = Ctrl+O
+move-outline-down            = Ctrl-D
+move-outline-left            = Ctrl-L
+move-outline-right           = Ctrl-R
+move-outline-up              = Ctrl-U
+new                          = Ctrl-N
+open                         = Ctrl-O
 open-compare-window          = None
 open-leoConfig.leo           = None
 open-leoDocs.leo             = None
+open-leoPlugins.leo          = None
 open-online-home             = None
 open-online-tutorial         = None
-open-offline-tutorial        = None             ## Add this command.
-open-python-window           = Alt+P
+open-offline-tutorial        = None
+open-python-window           = Alt-P
 open-with                    = None
 outline-to-CWEB              = None
 outline-to-noweb             = None
-paste-node                   = Shift+Ctrl+V
-paste-retaining-clone        = None
-paste-text                   = Ctrl+V           ## Add this command.
+paste-node                   = Shift-Ctrl-V
+paste-retaining-clones       = None
 # preferences                = None
 pretty-print-all-python-code = None
 pretty-print-python-code     = None
-promote                      = Ctrl+{        
+promote                      = Ctrl-{        
 read-at-file-nodes           = None
-read-outline-only            = Shift+Ctrl+R
-redo                         = Shift+Ctrl+Z     ## Add this (was CantRedo)
-reformat-paragraph           = Shift+Ctrl+P
+read-outline-only            = Shift-Ctrl-R
+redo                         = Shift-Ctrl-Z
+reformat-paragraph           = Shift-Ctrl-P
 remove-sentinels             = None
-replace                      = Ctrl+=
-replace-then-find            = Ctrl+-
+replace                      = Ctrl-=
+replace-then-find            = Ctrl--
 resize-to-screen             = None
 revert                       = None
-save                         = Ctrl+S
-save-as                      = Shift+Ctrl+S
+save                         = Ctrl-S
+save-as                      = Shift-Ctrl-S
 save-to                      = None
-select-all                   = Ctrl+A           ## Add this command.
+select-all                   = Ctrl-A           ## Add this command.
 #set-colors                   = None
 #set-font                     = None
-settings                     = Ctrl+Y           ## Add this command.
-show-invisibles              = Alt+V
+settings                     = Ctrl-Y           ## Add this command.
+show-invisibles              = Alt-V
 sort-children                = None
 sort-siblings                = Alt-A
-tangle                       = Shift+Ctrl+T
-tangle-all                   = Shift+Ctrl+A
-tangle-marked                = Shift+Ctrl+M
-toggle-active-pane           = Ctrl+T
+tangle                       = Shift-Ctrl-T
+tangle-all                   = Shift-Ctrl-A
+tangle-marked                = Shift-Ctrl-M
+toggle-active-pane           = Ctrl-T
 toggle-angle-brackets        = None
 toggle-split-direction       = None
-undo                         = Ctrl+Z           ## Add this.  Was CantUndo.
-unindent                     = Ctrl+[
-unmark-all                   = Alt+U
-untangle                     = Shift+Ctrl+U
+undo                         = Ctrl-Z
+unindent                     = Ctrl-[
+unmark-all                   = Alt-U
+untangle                     = Shift-Ctrl-U
 untangle-all                 = None
 untangle-marked              = None
-write-at-file-nodes          = Shift+Ctrl+W     ## Add this command.
-write-dirty-at-file-nodes    = Shift+Ctrl+Q
+write-at-file-nodes          = Shift-Ctrl-W     ## Add this command.
+write-dirty-at-file-nodes    = Shift-Ctrl-Q
 write-outline-only           = None             ## Add this command.
 weave                        = None</t>
 <t tx="ekr.20051007200824">Keyboard shortcuts for menu commands.
@@ -1293,5 +1286,211 @@ KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
 KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
+<t tx="ekr.20051010093913">c.save()</t>
+<t tx="ekr.20051010112558">@color
+
+# The infamous cut/copy/paste commands.
+# These are no longer bound automatically in tkFrame.
+# I may replace these later with the emacs equivlents.
+copy-text               = Ctrl-c
+cut-text                = Ctrl-x
+paste-text              = Ctrl-v
+
+# Emacs moves...
+back-sentence           = Alt-a         # No conflict
+backward-char           = Ctrl-b        # No conflict
+backward-paragraph      = Alt-braceleft # Conflicts with 
+backward-word           = Alt-b         # No conflict     
+# backward-word           = Ctrl-Left   # At present, overrides previous binding.
+beginning-of-buffer     = Alt-less
+beginning-of-line       = Alt-UpArrow   # Conflicts with goto-prev-visible
+beginning-of-line       = Ctrl-a        # Conflicts with select-all
+end-of-buffer           = Alt-greater
+end-of-line             = Ctrl-e        # Conflicts with execute-script
+end-of-line             = Alt-DnArrow   # Conflicts with goto-next-visible
+exchange-point-mark     = None          # Should be Ctrl-X Ctrl-X.
+forward-char            = Ctrl-f        # Conflicts with find-panel: now F5
+forward-paragraph       = Alt-braceright
+forward-sentence        = Alt-e         # No conflict
+forward-word            = Alt-f         # No conflict with bindings, but usually opens file menu.
+# forward-word          = Ctrl-Right    # At present, overrides previous binding.
+goto-char               = None
+goto-line               = None          # Usually Alt-g, but Leo's goto-line-number is better.
+goto-line-number        = Alt-g         # The Leo equivalent.
+move-past-close         = Alt-parenright
+next-line               = Ctrl-n        # Conflicts with new.
+previous-line           = Ctrl-p
+scroll-down             = None          # *** Ctrl-v conflicts with paste-text.
+scroll-up               = Alt-v         # Conflicts with view-all-characters.
+set-mark-command        = Ctrl-Shift-at
+
+full-command            = Alt-x         # No conflict.
+quick-command           = Alt-c         # Usually Ctrl-c, conflicts with cut-text.
+keyboard-quit           = Ctrl-g
+universal-arg           = Alt-u         # Usually Ctrl-u, conflicts with move-outline-up.
+# negative-argument     = Alt-minus     # Conflicts with contract-all.
+repeat-complex-command  = None          # Usually 'again', whatever that is.
+
+# apply settings             = None
+abort-edit-headline          = Shift-Esc            ## Add this command
+about-leo                    = None
+add-comments                 = Ctrl-(               ## Add this command
+cascade                      = None
+check-all-python-code        = None
+check-outline                = None
+check-python-code            = None
+check-spelling               = Alt-Shift-A          ## Add this command.
+clear-recent-files           = None
+clone-node                   = Ctrl-`
+close                        = Ctrl-W
+contract-all                 = Alt--
+contract-node                = Alt-[
+contract-parent              = Alt-0
+contract-or-go-left          = Alt-LtArrow
+convert-all-blanks           = None
+convert-all-tabs             = None
+convert-blanks               = Shift-Ctrl-B
+convert-tabs                 = Shift-Ctrl-J
+copy-node                    = Shift-Ctrl-C
+cut-node                     = Shift-Ctrl-X
+de-hoist                     = None
+delete-comments              = Ctrl-)           ## Add this command.
+delete-node                  = Shift-Ctrl-BkSp
+delete-text                  = None             ## Add this command.
+demote                       = Ctrl-}
+dump-outline                 = None
+edit-headline                = Ctrl-H
+equal-sized-panes            = Alt-Shift-E
+end-edit-headline            = Esc              ## Add this command.
+execute-script               = None             # Ctrl-e conflicts with end-of-line
+exit-leo                     = Ctrl-Q           ## Add this command.
+expand-all                   = Alt-9
+expand-next-level            = Alt-=
+expand-node                  = Alt-]
+expand-or-go-right           = Alt-RtArrow
+expand-prev-level            = Alt-.
+expand-to-level 1            = Alt-1
+expand-to-level 2            = Alt-2
+expand-to-level 3            = Alt-3
+expand-to-level 4            = Alt-4
+expand-to-level 5            = Alt-5
+expand-to-level 6            = Alt-6
+expand-to-level 7            = Alt-7
+expand-to-level 8            = Alt-8
+expand-to-level 9            = None
+export-headlines             = None
+extract                      = Shift-Ctrl-D
+extract-names                = Shift-Ctrl-N
+extract-section              = Shift-Ctrl-E
+find-next                    = F3
+find-panel                   = F5     # Ctrl-f conflicts with forward-char
+find-previous                = F2
+flatten-outline              = None
+go-back                      = None
+go-forward                   = None
+goto-first-node              = Alt-Shift-G
+goto-last-node               = Alt-Shift-H
+goto-next-changed            = Alt-D
+goto-next-marked             = Alt-M
+goto-next-clone              = Alt-N
+goto-next-node               = Alt-Shift-DnArrow
+goto-next-sibling            = Alt-Shift-S
+goto-next-visible            = None         # Alt-DnArrow conflicts with end-of-line.
+goto-parent                  = Alt-Shift-P
+goto-prev-node               = Alt-Shift-UpArrow
+goto-prev-sibling            = Alt-Shift-R
+goto-prev-visible            = None         # Alt-UpArrow conflicts with beginning-of-line.
+hoist                        = None
+import-at-file               = None         # Removed Shift-Ctrl-F: not useful enough.
+import-at-root               = None
+import-cweb-files            = None
+import-derived-file          = None
+import-flattened-outline     = None
+import-noweb-files           = None
+indent                       = Ctrl-]
+insert-node                  = Ctrl-I
+insert-body-time             = None         # Removed Shift-Ctrl-G: not useful enough.
+insert-headline-time         = None         # Removed Shift-Ctrl-H: not useful enough.
+mark                         = Ctrl-M
+mark-changed-items           = None         # Alt-C conflicts with quick-command.
+mark-changed-roots           = Alt-R        
+mark-clones                  = Alt-K
+mark-subheads                = Alt-S
+match-bracket                = Ctrl-k
+minimize-all                 = None
+move-outline-down            = Ctrl-D
+move-outline-left            = Ctrl-L
+move-outline-right           = Ctrl-R
+move-outline-up              = Ctrl-U
+new                          = None     # Ctrl-n conflicts with next-line.
+open                         = Ctrl-O
+open-compare-window          = None
+open-leoConfig.leo           = None
+open-leoDocs.leo             = None
+open-leoPlugins.leo          = None
+open-online-home             = None
+open-online-tutorial         = None
+open-offline-tutorial        = None
+open-python-window           = None     # Removed Alt-P: not useful enough.
+open-with                    = None
+outline-to-CWEB              = None
+outline-to-noweb             = None
+paste-node                   = Shift-Ctrl-V
+paste-retaining-clones       = None
+# preferences                = None
+pretty-print-all-python-code = None
+pretty-print-python-code     = None
+promote                      = Ctrl-{        
+read-at-file-nodes           = None
+read-outline-only            = None     # Removed Shift-Ctrl-R: not useful enough.
+redo                         = Shift-Ctrl-Z
+reformat-paragraph           = Shift-Ctrl-P
+remove-sentinels             = None
+replace                      = Ctrl-=
+replace-then-find            = Ctrl--
+resize-to-screen             = None
+revert                       = None
+save                         = Ctrl-s       # Ctrl-s conflicts with search.
+save-as                      = Shift-Ctrl-s
+save-to                      = None
+select-all                   = None         # Ctrl-A conflicts with beginning-of-line.  ## Add this command.
+#set-colors                   = None
+#set-font                     = None
+settings                     = Ctrl-Y       ## Add this command.
+show-invisibles              = None         # Alt-V conflicts with scroll-up .
+sort-children                = None
+sort-siblings                = None         # Alt-A conflicts with back-sentence.
+tangle                       = None         # Removed Shift-Ctrl-T: not useful enough.
+tangle-all                   = None         # Removed Shift-Ctrl-A: not useful enough.
+tangle-marked                = None         # Removed Shift-Ctrl-M: not useful enough.
+toggle-active-pane           = Ctrl-T
+toggle-angle-brackets        = None
+toggle-split-direction       = None
+undo                         = Ctrl-Z
+unindent                     = Ctrl-[
+unmark-all                   = Alt-U
+untangle                     = Shift-Ctrl-U
+untangle-all                 = None
+untangle-marked              = None
+write-at-file-nodes          = Shift-Ctrl-W     ## Add this command.
+write-dirty-at-file-nodes    = Shift-Ctrl-Q
+write-outline-only           = None             ## Add this command.
+weave                        = None</t>
+<t tx="ekr.20051010112903">Reserved  Alt-E  (Opens Edit Menu)
+Reserved  Alt-F  (Opens File Menu)
+Reserved  Alt-H  (Opens Help Menu)
+Reserved  Alt-O  (Opens Outline Menu)
+Reserved  Alt-W  (Opens Window Menu)
+
+In Open With menu...
+Idle      = Alt-Shift-I
+Word      = Alt-Shift-W
+WordPad   = Alt-Shift-T
+
+Unused Ctrl-B, Ctrl-G, Ctrl-J, Ctrl-P
+Unused Shift-Ctrl-I, Shift-Ctrl-K, Shift-Ctrl-L, Shift-Ctrl-O
+
+F4 seems to interfere with Alt-F4 processing on windows.  Sigh.</t>
+<t tx="ekr.20051010121210">open-file-menu (instead of Alt-F)</t>
 </tnodes>
 </leo_file>
