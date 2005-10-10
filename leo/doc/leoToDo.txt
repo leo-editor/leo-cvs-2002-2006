@@ -6,78 +6,27 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
+- Alphabetize entries. in editCommandsClass.getPublicCommands.
 
-Call createMenuBar on only one place
+- Fix Open With bindings.
 
-* Changeover!
-    - Have only one useMinibuffer ivar:  c.useMinibuffer
-        - All classes test c.useMinibuffer.
-    - c.useMinibuffer = True and g.config(...)
-        - Can set True to False in an emergency.
+- Allow multiple shortcuts for any command.
+    (Requires changes to c.config classes.
 
-- Run pychecker.
-
-- Remove all warnings.
-    - Define emacs names for all commands without command names.
-    - What to do about callback warnings?
-    - Complete traditional Leo bindings.
-    - Test emacs bindings.
-    
-- Remove the cut/copy/paste bindings in tkBody.createBindings.
-    - These bindings should be created in @shortcuts settings?
-
-- Change Editor menu to Cmds and complete it.
-
-- All new format for menu tables (deprecate old format).
-    - Does not specify key binding.
-    - Does specify emacs command name??
-
-- Make sure old-style settings still work
-
-- Generalize g.app.config.parseShortcutLine:
-    The setting name should be all alpha chars up to the '='.
-
-- Convert Emacs-Style Names to Menu Style Names when creating undo name.
+- Make sure old-style settings still work.
 #@nonl
-#@+node:ekr.20051003064825:Big picture
-- The primary goal is to allow Emacs and Vim users to retain their 'finger habits' while using Leo.
+#@+node:ekr.20051010143934:Quick Start
+Here are the default bindings in leoSettings.leo.  Important: any of these may be changed by changing the settings in the body text of the node `@shortcuts traditional Leo shortcuts with basic Emacs moves`  There are also other @@shortcuts nodes that you can use instead.  Just make sure exactly one headline starts with @shortcuts and the others start with @@shortcuts.
 
-    - It is *not* necessary to implement all Emacs commands: just those that are used frequently.
-    - It *is* necessary to extend commands like isearch so they can deal with multiple body texts.
+Alt-x:  Just like Emacs:  starts minibuffer.  The prompt is 'full-command'  Type a full command name, then hit <Return> to execute the command.  Tab completion works, but not for file names.
 
-- The secondary goal is 'mouseless leo': being able to drive all parts of Leo without using the mouse.
+Alt-c:  Like Emacs Control-C:  (Ctrl-C conflicts with XP cut).  starts minibuffer.  The prompt is 'quick-command'.  This mode is not completed, but stuff like `Ctrl-C r` and `Ctrl r r` do work.
 
-    - The user must be able to drive all dialogs from the keyboard,
-      **or to get the same effect without using a dialog at all**.
-#@nonl
-#@-node:ekr.20051003064825:Big picture
-#@+node:ekr.20051008204635:Docs
-- Dictionaries, stategies, precedences, what to do about conflicts.
+Alt-u:  Like Emacs Ctrl-u:  (Ctrl-u conflicts with move-outline-up).  Add a repeat count for later command.  Ctrl-u 999 a adds 999 a's, but many features remain unfinished.
 
-- Added makeSpecialBindings: alt-x, control-c, etc.
-
-- Changing bindings in @shortcuts node.
-#@nonl
-#@-node:ekr.20051008204635:Docs
-#@+node:ekr.20051008131807:Unit tests: simulateKeystrokes
-(k. or g.) simulateKeystrokes (keystrokes,p=None)
-
-- keystrokes is a list of bindings to be 'executed' as if typed.
-    - This is an easy way of simulating user interaction.
-
-- unit calls k.simulateKeystrokes and then makes assertions about
-    - state
-    - Contents of label.
-    - ivars
-    - Contents of body text.
-    - what widget has focus.
-    - what the point, mark and selection are.
-    - etc.
-
-- unit test should exit (pass?  fail?) with a warning if c.keyHandler does not exist.
-#@nonl
-#@-node:ekr.20051008131807:Unit tests: simulateKeystrokes
-#@+node:ekr.20051008054802:Known bugs
+Ctrl-g:  Just like Emacs Ctrl-g: Closes the mini-buffer.
+#@-node:ekr.20051010143934:Quick Start
+#@+node:ekr.20051008054802:Known bugs & incompletions
 - C-u 5 <return> works but is not undone properly.
     Perhaps this is the reason for insert-newline command?
 
@@ -109,7 +58,67 @@ Traceback (most recent call last):
 AssertionError
 #@nonl
 #@-node:ekr.20051001155426:Crash in undo
-#@-node:ekr.20051008054802:Known bugs
+#@-node:ekr.20051008054802:Known bugs & incompletions
+#@+node:ekr.20051009115837:Next
+** Create unit tests and write simulateKeystrokes.
+** Get rid of duplicate unit tests!
+
+
+- Run pychecker.
+
+** What to do when mini-buffer does not exist.  Two options:
+    1. Always have it available: hide-mini-buffer option/command.
+    2. Disable state, minibuffer, and those commands that require the mini-buffer.
+        - List of commands that require minibuffer.
+        - Disable menu items that require minibuffer.
+
+- Complete Editor menu.
+- Generalize g.app.config.parseShortcutLine:
+    The setting name should be all alpha chars up to the '='.
+- Convert Emacs-Style Names to Menu Style Names when creating undo name.
+#@nonl
+#@-node:ekr.20051009115837:Next
+#@+node:ekr.20051009115325:Document what I did
+- Dictionaries, stategies, precedences, what to do about conflicts.
+
+- Added makeSpecialBindings: alt-x, control-c, etc.
+
+- Changing bindings in @shortcuts node.
+#@nonl
+#@-node:ekr.20051009115325:Document what I did
+#@+node:ekr.20051008131807:Unit tests: simulateKeystrokes
+(k. or g.) simulateKeystrokes (keystrokes,p=None)
+
+- keystrokes is a list of bindings to be 'executed' as if typed.
+    - This is an easy way of simulating user interaction.
+
+- unit calls k.simulateKeystrokes and then makes assertions about
+    - state
+    - Contents of label.
+    - ivars
+    - Contents of body text.
+    - what widget has focus.
+    - what the point, mark and selection are.
+    - etc.
+
+- unit test should exit (pass?  fail?) with a warning if c.keyHandler does not exist.
+#@nonl
+#@-node:ekr.20051008131807:Unit tests: simulateKeystrokes
+#@+node:ekr.20050925105522:Before second release
+- Complete generalization of code.
+    - Allow state-oriented shortcuts (C-x C-x, for example)
+    - Create new kinds of commands dispatchers: vim, tree, etc.
+        - Single-key mode == vim mode??
+
+- Tab completion for file commands.
+
+- (mostly done) Allow future improvements without changing user options greatly.
+    - Allow for customizeEmacs plugin.
+
+- Emacs-style help: appropos, etc.
+    - printLongCommandName (like Emacs Ctrl-H Ctrl-K) command prints long name of any keystroke command.
+#@nonl
+#@-node:ekr.20050925105522:Before second release
 #@+node:ekr.20050928144501:Expand commands to handle Leo environment
 * Traditional Emacs commands must be generalized to handle the more complex
 envirnoment Leo offers. For example, search commands must be told whether to
@@ -127,27 +136,18 @@ outline.
     - The user must be able to set Emacs and Leo options from the keyboard.
     - The user must be able to drive all dialogs from the keyboard,
       **or to get the same effect without using a dialog at all**.
+
+- Expand names for some Leo commands  new -> new-outline, etc.
 #@nonl
 #@-node:ekr.20050928144501:Expand commands to handle Leo environment
-#@+node:ekr.20050925105522:Before second release
-- Complete generalization of code.
-    - Allow state-oriented shortcuts (C-x C-x, for example)
-    - Create new kinds of commands dispatchers: vim, tree, etc.
-        - Single-key mode == vim mode??
+#@+node:ekr.20050928144501.1:Mouseless Leo
+Control all Leo commands & widgets using only key commands.
 
-- Tab completion for file commands.
+- dismiss-top-dialog command.
 
-- (mostly done) Allow future improvements without changing user options greatly.
-    - Allow for customizeEmacs plugin.
+- activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)
 #@nonl
-#@-node:ekr.20050925105522:Before second release
-#@+node:ekr.20050928144501.1:Before 4.4 final
-** Mouseless Leo: control all Leo commands & widgets using only key commands.
-
-- Emacs-style help: appropos, etc.
-    - printLongCommandName (like Emacs Ctrl-H Ctrl-K) command prints long name of any keystroke command.
-#@nonl
-#@-node:ekr.20050928144501.1:Before 4.4 final
+#@-node:ekr.20050928144501.1:Mouseless Leo
 #@-node:ekr.20050921094025:4.4 To do
 #@+node:ekr.20050707081822:Top priorities
 #@+node:ekr.20050524074930.2:Mouseless leo
@@ -4252,7 +4252,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    # g.trace('no real change')
+    g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -4383,9 +4383,11 @@ def onBodyKey (self,event,undoType='Typing'):
     '''Handle any key press event in the body pane.'''
 
     # New in Leo 4.4.  May be called with event = None
-    c = self.c ; ch = (event and event.char) or ''
+    c = self.c
+    ch = (event and event.char) or ''
+    keysym = (event and event.keysym) or ''
 
-    # g.trace(repr(ch))
+    # g.trace(repr(ch),repr(event.keysym))
 
     # This translation is needed on MacOS.
     if ch == '':
@@ -10052,7 +10054,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    # g.trace('no real change')
+    g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -10183,9 +10185,11 @@ def onBodyKey (self,event,undoType='Typing'):
     '''Handle any key press event in the body pane.'''
 
     # New in Leo 4.4.  May be called with event = None
-    c = self.c ; ch = (event and event.char) or ''
+    c = self.c
+    ch = (event and event.char) or ''
+    keysym = (event and event.keysym) or ''
 
-    # g.trace(repr(ch))
+    # g.trace(repr(ch),repr(event.keysym))
 
     # This translation is needed on MacOS.
     if ch == '':
@@ -14903,6 +14907,8 @@ def OnCut (self,event=None):
     """The handler for the virtual Cut event."""
     
     __pychecker__ = '--no-argsused' # event not used.
+    
+    g.trace()
 
     frame = self ; c = frame.c ; v = c.currentVnode()
     
@@ -14925,14 +14931,14 @@ def OnCutFromMenu (self):
 
     if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
         frame.tree.onHeadChanged(v)
-
-
-
+#@nonl
 #@-node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
 #@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
 def OnCopy (self,event=None):
     
     __pychecker__ = '--no-argsused' # event not used.
+    
+    g.trace()
 
     if 0: # g.app.gui.win32clipboard is always None.
         frame = self
@@ -14957,6 +14963,8 @@ def OnPaste (self,event=None):
     
     frame = self ; c = frame.c ; v = c.currentVnode()
     
+    g.trace()
+  
     if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
         bodyCtrl = frame.body.bodyCtrl
         s = bodyCtrl.selection_get( selection='CLIPBOARD' )
@@ -14977,11 +14985,16 @@ def OnPasteFromMenu (self):
     
     if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
         frame.tree.onHeadChanged(v)
+        
+pasteText = OnPasteFromMenu
 #@nonl
 #@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
 #@+node:ekr.20031218072017.838:tkBody.createBindings
 def createBindings (self,frame):
+    
+    '''(tkBody) Create gui-dependent bindings.
+    These are *not* made in nullBody instances.'''
     
     c = self.c ; t = self.bodyCtrl
     
@@ -14993,14 +15006,16 @@ def createBindings (self,frame):
     t.bind("<Button-3>", frame.OnBodyRClick)
     t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
     
-    if not c.useMiniBuffer: # Now done in masterCommand.
-        g.trace('binding <Key>')
-        t.bind("<Key>", frame.body.onBodyKey)
+    if not c.useMiniBuffer:
+        g.trace('binding <Key> to frame.body.onBodyKey')
+        t.bind("<Key>", self.onBodyKey)
 
-    # Gui-dependent commands...
-    t.bind(g.virtual_event_name("Cut"), frame.OnCut)
-    t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
-    t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+    # Gui-dependent bindings...
+    if 0:
+        # These cause problems when cut/copy/paste-text commands are bound.
+        t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+        t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+        t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
 #@nonl
 #@-node:ekr.20031218072017.838:tkBody.createBindings
 #@+node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
@@ -18142,6 +18157,9 @@ def __init__ (self):
 #@+node:ekr.20031218072017.838:tkBody.createBindings
 def createBindings (self,frame):
     
+    '''(tkBody) Create gui-dependent bindings.
+    These are *not* made in nullBody instances.'''
+    
     c = self.c ; t = self.bodyCtrl
     
     # Event handlers...
@@ -18152,14 +18170,16 @@ def createBindings (self,frame):
     t.bind("<Button-3>", frame.OnBodyRClick)
     t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
     
-    if not c.useMiniBuffer: # Now done in masterCommand.
-        g.trace('binding <Key>')
-        t.bind("<Key>", frame.body.onBodyKey)
+    if not c.useMiniBuffer:
+        g.trace('binding <Key> to frame.body.onBodyKey')
+        t.bind("<Key>", self.onBodyKey)
 
-    # Gui-dependent commands...
-    t.bind(g.virtual_event_name("Cut"), frame.OnCut)
-    t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
-    t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+    # Gui-dependent bindings...
+    if 0:
+        # These cause problems when cut/copy/paste-text commands are bound.
+        t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+        t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+        t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
 #@nonl
 #@-node:ekr.20031218072017.838:tkBody.createBindings
 #@+node:ekr.20031218072017.839:defineEditMenuTopTable
@@ -18192,6 +18212,8 @@ def OnCut (self,event=None):
     """The handler for the virtual Cut event."""
     
     __pychecker__ = '--no-argsused' # event not used.
+    
+    g.trace()
 
     frame = self ; c = frame.c ; v = c.currentVnode()
     
@@ -18214,14 +18236,14 @@ def OnCutFromMenu (self):
 
     if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
         frame.tree.onHeadChanged(v)
-
-
-
+#@nonl
 #@-node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
 #@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
 def OnCopy (self,event=None):
     
     __pychecker__ = '--no-argsused' # event not used.
+    
+    g.trace()
 
     if 0: # g.app.gui.win32clipboard is always None.
         frame = self
@@ -18246,6 +18268,8 @@ def OnPaste (self,event=None):
     
     frame = self ; c = frame.c ; v = c.currentVnode()
     
+    g.trace()
+  
     if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
         bodyCtrl = frame.body.bodyCtrl
         s = bodyCtrl.selection_get( selection='CLIPBOARD' )
@@ -18266,6 +18290,8 @@ def OnPasteFromMenu (self):
     
     if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
         frame.tree.onHeadChanged(v)
+        
+pasteText = OnPasteFromMenu
 #@nonl
 #@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste body text

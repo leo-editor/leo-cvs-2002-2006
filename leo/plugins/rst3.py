@@ -1837,7 +1837,7 @@ class htmlParserClass (linkAnchorParserClass):
                 #@            << trace the unknownAttribute >>
                 #@+node:ekr.20050815164715.1:<< trace the unknownAttribute >>
                 if 0:
-                    print "rst2: unknownAttributes[self.http_attributename]"
+                    print "rst3: unknownAttributes[self.http_attributename]"
                     print "For:", self.last_position
                     pprint.pprint(get_http_attr(self.last_position))
                 #@nonl

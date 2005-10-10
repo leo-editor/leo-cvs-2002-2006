@@ -55,7 +55,6 @@ mod_scripting.py
 #hoist.py
 #spellpyx.py
 #nodenavigator.py
-#rst2.py
 #searchbox.py
 #xemacs.py
 open_with.py

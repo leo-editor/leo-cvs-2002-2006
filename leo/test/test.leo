@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7656" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7657" clone_windows="0"/>
 <globals body_outline_ratio="0.568986568987">
 	<global_window_position top="15" left="329" height="819" width="869"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1414,7 +1414,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050911145104"><vh>&lt;&lt; 4-star puzzles &gt;&gt;</vh></v>
 <v t="ekr.20050811075608"><vh>&lt;&lt; 3-star puzzles &gt;&gt;</vh></v>
 <v t="ekr.20050929065040"><vh>&lt;&lt; 2-star puzzles &gt;&gt;</vh></v>
-<v t="ekr.20050927122648" a="E"><vh>&lt;&lt; 1-star puzzles &gt;&gt;</vh></v>
+<v t="ekr.20050927122648"><vh>&lt;&lt; 1-star puzzles &gt;&gt;</vh></v>
 <v t="ekr.20050803075926.1"><vh>class sudokuClass</vh>
 <v t="ekr.20050803075926.2"><vh> ctor (main) &amp; helpers</vh>
 <v t="ekr.20050803202932"><vh>initFromData</vh></v>
@@ -1477,8 +1477,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20041001211817" a="TV" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
-<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20051010091827"><vh>Previous settings</vh>
 <v t="ekr.20050801071700"><vh>@@string stylesheet = type="text/xsl" href="bpLEOHTM.xsl"</vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
@@ -1499,7 +1499,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041218141525.2"><vh>@font body text font</vh></v>
 <v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
 </v>
-<v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
 <v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
 <v t="ekr.20050328101834"><vh>@page http plugin</vh>
 <v t="ekr.20050328101834.1"><vh>@bool http_active = False</vh></v>
@@ -1528,7 +1527,10 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050809091430.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
 </v>
-<v t="ekr.20051006130309.1"><vh>@bool useMiniBuffer=True</vh></v>
+</v>
+<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20051009140349"><vh>@bool useMiniBuffer = True</vh></v>
+<v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
 </v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20050911112310"><vh>@button save</vh></v>
@@ -1581,7 +1583,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050618061835.19"><vh>How about @suite?</vh></v>
 <v t="ekr.20050618061835.20"><vh>Final remarks</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -2325,8 +2327,9 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050927082642"><vh>Text tests</vh></v>
+<v t="ekr.20050927082642" a="E"><vh>Text tests</vh></v>
 <v t="ekr.20050930124917"><vh>outlineToClipboard</vh></v>
+<v t="ekr.20051010092242"><vh>Test of paste in headline</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -3034,7 +3037,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -22601,6 +22604,8 @@ result = '\n'.join(result) + '\n'
 w = c.frame.body.bodyCtrl
 w.clipboard_clear()
 w.clipboard_append(result)</t>
-<t tx="ekr.20051006130309.1"></t>
+<t tx="ekr.20051009140349"></t>
+<t tx="ekr.20051010091827"></t>
+<t tx="ekr.20051010092242">a</t>
 </tnodes>
 </leo_file>

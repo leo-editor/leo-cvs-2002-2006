@@ -234,7 +234,7 @@ def transform_rst2_text_in_subtree(c):
         
     newEntries = (
             ("-", None, None),
-            ("Transform rst2 text in subtree", "", callOnFileOpen()))
+            ("Transform rst2 text in subtree", "", callOnFileOpen))
         
     c.frame.menu.createMenuEntries(editMenu, newEntries)
 #@-node:bwmulder.20050327204614:transform_rst2_text_in_subtree
