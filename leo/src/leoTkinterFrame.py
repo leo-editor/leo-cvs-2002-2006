@@ -1708,6 +1708,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         """The handler for the virtual Cut event."""
         
         __pychecker__ = '--no-argsused' # event not used.
+        
+        g.trace()
     
         frame = self ; c = frame.c ; v = c.currentVnode()
         
@@ -1730,14 +1732,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
             frame.tree.onHeadChanged(v)
-    
-    
-    
+    #@nonl
     #@-node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
     #@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
     def OnCopy (self,event=None):
         
         __pychecker__ = '--no-argsused' # event not used.
+        
+        g.trace()
     
         if 0: # g.app.gui.win32clipboard is always None.
             frame = self
@@ -1762,6 +1764,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         frame = self ; c = frame.c ; v = c.currentVnode()
         
+        g.trace()
+      
         if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
             bodyCtrl = frame.body.bodyCtrl
             s = bodyCtrl.selection_get( selection='CLIPBOARD' )
@@ -2225,6 +2229,9 @@ class leoTkinterBody (leoFrame.leoBody):
     #@+node:ekr.20031218072017.838:tkBody.createBindings
     def createBindings (self,frame):
         
+        '''(tkBody) Create gui-dependent bindings.
+        These are *not* made in nullBody instances.'''
+        
         c = self.c ; t = self.bodyCtrl
         
         # Event handlers...
@@ -2235,14 +2242,15 @@ class leoTkinterBody (leoFrame.leoBody):
         t.bind("<Button-3>", frame.OnBodyRClick)
         t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
         
-        if not c.useMiniBuffer: # Now done in masterCommand.
-            g.trace('binding <Key>')
-            t.bind("<Key>", frame.body.onBodyKey)
+        if not c.useMiniBuffer:
+            g.trace('binding <Key> to frame.body.onBodyKey')
+            t.bind("<Key>", self.onBodyKey)
     
-        # Gui-dependent commands...
-        t.bind(g.virtual_event_name("Cut"), frame.OnCut)
-        t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
-        t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+        # Gui-dependent bindings...
+        if 1:
+            t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+            t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+            t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
     #@nonl
     #@-node:ekr.20031218072017.838:tkBody.createBindings
     #@+node:ekr.20031218072017.3998:tkBody.createControl
@@ -2508,7 +2516,7 @@ class leoTkinterBody (leoFrame.leoBody):
             
         # Major change: 6/12/04
         if s == body:
-            # g.trace('no real change')
+            g.trace('no real change')
             return "break"
         #@nonl
         #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -2658,9 +2666,11 @@ class leoTkinterBody (leoFrame.leoBody):
         '''Handle any key press event in the body pane.'''
     
         # New in Leo 4.4.  May be called with event = None
-        c = self.c ; ch = (event and event.char) or ''
+        c = self.c
+        ch = (event and event.char) or ''
+        keysym = (event and event.keysym) or ''
     
-        # g.trace(repr(ch))
+        # g.trace(repr(ch),repr(event.keysym))
     
         # This translation is needed on MacOS.
         if ch == '':

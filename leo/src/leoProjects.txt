@@ -3630,7 +3630,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    # g.trace('no real change')
+    g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -5950,7 +5950,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    # g.trace('no real change')
+    g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -6487,7 +6487,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    # g.trace('no real change')
+    g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -6618,9 +6618,11 @@ def onBodyKey (self,event,undoType='Typing'):
     '''Handle any key press event in the body pane.'''
 
     # New in Leo 4.4.  May be called with event = None
-    c = self.c ; ch = (event and event.char) or ''
+    c = self.c
+    ch = (event and event.char) or ''
+    keysym = (event and event.keysym) or ''
 
-    # g.trace(repr(ch))
+    # g.trace(repr(ch),repr(event.keysym))
 
     # This translation is needed on MacOS.
     if ch == '':
@@ -10611,7 +10613,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    # g.trace('no real change')
+    g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -10742,9 +10744,11 @@ def onBodyKey (self,event,undoType='Typing'):
     '''Handle any key press event in the body pane.'''
 
     # New in Leo 4.4.  May be called with event = None
-    c = self.c ; ch = (event and event.char) or ''
+    c = self.c
+    ch = (event and event.char) or ''
+    keysym = (event and event.keysym) or ''
 
-    # g.trace(repr(ch))
+    # g.trace(repr(ch),repr(event.keysym))
 
     # This translation is needed on MacOS.
     if ch == '':
@@ -11583,12 +11587,14 @@ def masterCommand (self,event,func,stroke):
 
     # Note: the _L symbols represent *either* special key.
     k = self ; c = k.c
-    special = event.keysym in ('Control_L','Alt_L','Shift_L')
-    general = stroke == '<Key>'
-    k.stroke = stroke
+    k.stroke = stroke # Set this global for general use.
     
-    # g.trace('state',k.getStateKind(),'stroke',stroke,'keysym',event.keysym,func and func.__name__)
-    # g.trace(stroke,func)
+    special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+    general = stroke == '<Key>'
+    interesting = func or not general
+    commandName = k.ultimateFuncName(func)
+    
+    # if interesting: g.trace(stroke,commandName)
 
     inserted = not special or (
         not general and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
@@ -11631,7 +11637,6 @@ def masterCommand (self,event,func,stroke):
         if expanded: return 'break'
 
     if func: # Func is an argument.
-        commandName = k.inverseCommandsDict.get(func)
         k.previousStroke = stroke
         func(event)
         k.endCommand(event,commandName,tag='masterCommand')
@@ -11683,7 +11688,7 @@ def callKeystrokeFunction (self,event):
 
     if func:
         func(event)
-        commandName = k.inverseCommandsDict.get(func)
+        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
         k.endCommand(event,commandName,tag='callKeystrokeFunction')
     
     return func
@@ -11698,9 +11703,11 @@ def onBodyKey (self,event,undoType='Typing'):
     '''Handle any key press event in the body pane.'''
 
     # New in Leo 4.4.  May be called with event = None
-    c = self.c ; ch = (event and event.char) or ''
+    c = self.c
+    ch = (event and event.char) or ''
+    keysym = (event and event.keysym) or ''
 
-    # g.trace(repr(ch))
+    # g.trace(repr(ch),repr(event.keysym))
 
     # This translation is needed on MacOS.
     if ch == '':
@@ -11899,7 +11906,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    # g.trace('no real change')
+    g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -12009,6 +12016,9 @@ if all_ws:
 #@+node:ekr.20031218072017.838:tkBody.createBindings
 def createBindings (self,frame):
     
+    '''(tkBody) Create gui-dependent bindings.
+    These are *not* made in nullBody instances.'''
+    
     c = self.c ; t = self.bodyCtrl
     
     # Event handlers...
@@ -12019,17 +12029,99 @@ def createBindings (self,frame):
     t.bind("<Button-3>", frame.OnBodyRClick)
     t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
     
-    if not c.useMiniBuffer: # Now done in masterCommand.
-        g.trace('binding <Key>')
-        t.bind("<Key>", frame.body.onBodyKey)
+    if not c.useMiniBuffer:
+        g.trace('binding <Key> to frame.body.onBodyKey')
+        t.bind("<Key>", self.onBodyKey)
 
-    # Gui-dependent commands...
-    t.bind(g.virtual_event_name("Cut"), frame.OnCut)
-    t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
-    t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+    # Gui-dependent bindings...
+    if 1:
+        t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+        t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+        t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
 #@nonl
 #@-node:ekr.20031218072017.838:tkBody.createBindings
 #@-node:ekr.20050929084510:Fixed problem with auto-indent
+#@+node:ekr.20051006195420:Added background/foreground selection confic options
+#@+node:ekr.20051006195420.1:Report
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3361442
+By: nobody
+
+Thanks, now I know where those settings live. For completeness, and in case
+somebody doesn't like low contrast of white on gray, I suggest to also add foreground
+color setting. Imitating what you did I added the following:
+
+two new settings under @settings-->Colors-->@page Body pane colors
+in leoSettings.leo:
+
+ @color body_text_selection_background_color = Gray80   (or CadetBlue2 etc.)
+ @color body_text_selection_foreground_color = white    (or black)
+
+added to tkBody.setColorFromConfig:
+
+....sel_bg = c.config.getColor('body_text_selection_background_color')
+or 'Gray80'
+....try: body.configure(selectbackground=sel_bg)
+....except Exception:
+........g.es("exception setting body pane text selection background color")
+........g.es_exception()
+....
+....sel_fg = c.config.getColor('body_text_selection_foreground_color')
+or 'white'
+....try: body.configure(selectforeground=sel_fg)
+....except Exception:
+........g.es("exception setting body pane text selection foreground color")
+........g.es_exception()
+
+Works with Leo 4.3.3, build  1.282 , Python 2.3.5, Tk 8.4.3, win32
+#@-node:ekr.20051006195420.1:Report
+#@+node:ekr.20041217135735.1:tkBody.setColorFromConfig
+def setColorFromConfig (self):
+    
+    c = self.c ; body = self.bodyCtrl
+        
+    bg = c.config.getColor("body_text_background_color") or 'white'
+    try: body.configure(bg=bg)
+    except:
+        g.es("exception setting body text background color")
+        g.es_exception()
+    
+    fg = c.config.getColor("body_text_foreground_color") or 'black'
+    try: body.configure(fg=fg)
+    except:
+        g.es("exception setting body textforeground color")
+        g.es_exception()
+
+    bg = c.config.getColor("body_insertion_cursor_color")
+    if bg:
+        try: body.configure(insertbackground=bg)
+        except:
+            g.es("exception setting body pane cursor color")
+            g.es_exception()
+        
+    sel_bg = c.config.getColor('body_text_selection_background_color') or 'Gray80'
+    try: body.configure(selectbackground=sel_bg)
+    except Exception:
+        g.es("exception setting body pane text selection background color")
+        g.es_exception()
+
+    sel_fg = c.config.getColor('body_text_selection_foreground_color') or 'white'
+    try: body.configure(selectforeground=sel_fg)
+    except Exception:
+        g.es("exception setting body pane text selection foreground color")
+        g.es_exception()
+  
+    if sys.platform != "win32": # Maybe a Windows bug.
+        fg = c.config.getColor("body_cursor_foreground_color")
+        bg = c.config.getColor("body_cursor_background_color")
+        if fg and bg:
+            cursor="xterm" + " " + fg + " " + bg
+            try: body.configure(cursor=cursor)
+            except:
+                import traceback ; traceback.print_exc()
+#@nonl
+#@-node:ekr.20041217135735.1:tkBody.setColorFromConfig
+#@-node:ekr.20051006195420:Added background/foreground selection confic options
 #@+node:ekr.20050920084720.1:Moved emacs commands and new keyHandler to Leo's core
 #@+node:ekr.20051003064825:Big picture
 - The primary goal is to allow Emacs and Vim users to retain their 'finger habits' while using Leo.
@@ -12269,242 +12361,6 @@ Compiling Programs withing Emacs
 #@+node:ekr.20051005094144:@url 'http://www.delorie.com/gnu/docs/emacs/emacs_487.html' (Macros)
 #@-node:ekr.20051005094144:@url 'http://www.delorie.com/gnu/docs/emacs/emacs_487.html' (Macros)
 #@-node:ekr.20051008204635:Docs
-#@+node:ekr.20050921094025.6:What I did
-@nocolor
-#@nonl
-#@+node:ekr.20051004132320:Early days
-#@+node:ekr.20050921094025.7:Rewrote buildBufferList
-There may be bugs here.  The old code had definite strange aspects to it.
-#@nonl
-#@-node:ekr.20050921094025.7:Rewrote buildBufferList
-#@+node:ekr.20050921094025.8:Removed Emacs_instances class var
-createBindings now sets c.emacs, so modifyOnBodyKey just uses c.emacs.
-#@nonl
-#@-node:ekr.20050921094025.8:Removed Emacs_instances class var
-#@+node:ekr.20050921094025.9:Added c ivar to Emacs class
-This is an important addition:  it guarantees that the proper commander is always used.
-#@nonl
-#@-node:ekr.20050921094025.9:Added c ivar to Emacs class
-#@+node:ekr.20050921094025.10:Removed labels class var
-This is not needed.  createBindings is called at most once per commander.
-#@nonl
-#@-node:ekr.20050921094025.10:Removed labels class var
-#@+node:ekr.20050921094025.11:Added baseCommands class
-Subclasses of baseCommands class should implement getPublicCommands.
-
-This returns a dict whose keys are emacs command names and whose values are bound methods.
-#@nonl
-#@-node:ekr.20050921094025.11:Added baseCommands class
-#@+node:ekr.20050921094025.12:The big collapse (of complexity)
-The miniBufferClass is the one half of the great divide.  The commands classes are the other.
-
-- The commnds classes do not understand the details of the miniBufferClass: it can be rearranged as needed.
-
-(done) Replace:
-    svar, label = self.getSvarLabel( event )
-by:
-    b = self.miniBuffer ; tbuffer = event.widget
-
-(done) self.setSvar(event,svar) -> b.update(event)
-(done) svar ->  b
-(done) label.configure(background='lightblue') --> b.setLabelBlue()
-(done) self.miniBuffer -> b
-(done) Replaced all delegators by b.methods.
-(done) Removed unused args from most methods.
-#@nonl
-#@-node:ekr.20050921094025.12:The big collapse (of complexity)
-#@+node:ekr.20050921094025.13:Improvements to commands
-- Improved feedback for interactive search.
-    - The minibuffer now says isearch:
-    - Added args to miniBuffer.set/get methods to protect/ignore initial prompt characters.
-
-- Backspacing when tab completion cuts back to last 'really' typed character.
-    - Further backspaces work as you would expect.
-#@nonl
-#@-node:ekr.20050921094025.13:Improvements to commands
-#@+node:ekr.20050921094025.14:Removed all globals
-- positions and tnodes globals are now ivars of bufferCommands class.
-#@nonl
-#@-node:ekr.20050921094025.14:Removed all globals
-#@+node:ekr.20050921094025.15:Fixed bug: newline was not setting body pane dirty
-The fix was to return return orig_OnBodyKey(self.c.frame.body,event) at end of masterCommand.
-#@nonl
-#@-node:ekr.20050921094025.15:Fixed bug: newline was not setting body pane dirty
-#@+node:ekr.20050921101706:Replaced 'M-x' prompt by 'full-command'
-#@-node:ekr.20050921101706:Replaced 'M-x' prompt by 'full-command'
-#@+node:ekr.20050921105623:Added useMiniBuffer and useEditorMenu @settings
-#@-node:ekr.20050921105623:Added useMiniBuffer and useEditorMenu @settings
-#@+node:ekr.20050921105623.1:Deleted coreEmacs plugin
-No longer needed.
-#@nonl
-#@-node:ekr.20050921105623.1:Deleted coreEmacs plugin
-#@+node:ekr.20050922080526:Fixed outline selection bug
-Thie problem was in the code at the end of keyHandler.finishCreate.
-
-The watchDelete hack was interfering with some kind of event.
-
-It was an ugly hack anyway ;-)
-#@nonl
-#@-node:ekr.20050922080526:Fixed outline selection bug
-#@+node:ekr.20050923143034:c.commandsDict now describes all commands
-- Keys are full Emacs command names, values are methods.
-#@nonl
-#@-node:ekr.20050923143034:c.commandsDict now describes all commands
-#@+node:ekr.20050923141539:Rewrote altX code
-- Eliminated iterator class.  (I now understand the code :-)
-- Automatically call b.clearState() and b.keyboardQuit() before dispatching commands.
-- Tab completion returns a non-trivial common prefix if it exists.  Further tabs cycle through possibilities.
-#@nonl
-#@-node:ekr.20050923141539:Rewrote altX code
-#@+node:ekr.20050923233827:Eliminated all helper classes and simplified the code.
-- Eliminated self.tbuffer
-
-- Removed all subclssses from keyHandlerClass.
-    - Replaced all references to keyHandler, miniBuffer, kstrokeManager, etc.
-    - All methods are now methods of the keyHandler class.
-
-- k denotes the keyHandler class everywhere.
-    - All commands classes define k ivar that refers to keyHandler.
-
-- Replaced tbuffer by w everywhere.
-
-The effect of these changes:
-    - There is never any confusion about how to access a keyHandler method: just use k.whatever.
-    - The init logic is simple and clean.
-    - The client code is visually much shorter and easier to understand.
-    - The keyHandler class is now simpler, though larger.
-    - There is no need for redirector methods.
-#@nonl
-#@-node:ekr.20050923233827:Eliminated all helper classes and simplified the code.
-#@-node:ekr.20051004132320:Early days
-#@+node:ekr.20050924073836.1:Simplifications 1
-- setEvent is only used in one commands class, so it was moved there.
-
-- setLabelBlue and setLabelGrey now can set the label text as well as color.
-  This is a nice simplification of the client code.
-
-- Changed k.get, k.set and k.update to k.getLabel, k.setLable and k.updateLabel.
-  This is an important clarification.
-
-- Used simplified state-handling scheme, under control of k.newState ivar.
-    - I now see that state-handling is actually fully encapsulated in the commands classes.
-    - In particular, masterCommand knows essentially nothing of states.
-    - Removed getStateCommands dicts.
-
-- Simplified keyboardQuit by defining leoEditCommands.initAllEditCommanders at the module level.
-    - This call theInstance.init() for all commands classes.
-      The default in the base class does nothing.
-#@nonl
-#@-node:ekr.20050924073836.1:Simplifications 1
-#@+node:ekr.20051001180444:Simplifications 2
-10/1/05
-
-Important simplifications:
-
-- Dispatchers call endCommand (via handleEndCommand)
-  when a command returns and there is no state.
-- "User" commands need only clear the state and set (or clear) the label:
-  everything else is automatic.
-- endCommand calls bodyWillChange.  This is the correct way to ensure that changes 'stick'.
-- Dispatchers will return 'break' or None as appropriate:
-  User code will not have to worry about this.
-- keyboardQuit still exists, but it merely clears the state and the label.
-  As before, commands may set the label to inform the user of what has happened.
-#@nonl
-#@-node:ekr.20051001180444:Simplifications 2
-#@+node:ekr.20051002161714:Simplfications 3
-- Removed tailEnd and return 'break's.  They are no longer needed.
-
-- Replaced stopControlX by keyboardQuit.
-
-- Rewrote state handling for search commands.
-
-- Call endCommand after every keystroke.
-
-- Set k.commandName to include args in keep-lines, shell-command, etc.
-
-- Removed k.doUndo.
-#@nonl
-#@-node:ekr.20051002161714:Simplfications 3
-#@+node:ekr.20051003140625:Improvements
-- Extended k.commandName for undoable commands that use extension arguments.
-  There aren't that many such commands, surprisingly.
-#@nonl
-#@-node:ekr.20051003140625:Improvements
-#@+node:ekr.20051004085713:Improvement 2
-- Split abbrevDispatch into addAbbreviation and inversAddAbbriviation.
-- Removed coresponding lambda's.
-- Change the hard binding for <Control-g> to k.abbortAllModesKey.
-- Renamed the top-level dispatches to fullCommand and quickCommand.
-** Massive improvements to rectangle and register commands.
-    - new rCommands dispatcher.
-    - Use new states in rCommands and most rectangle and register commands.
-    - This simplifies and localizes the code.
-    - The new code gives much better feedback.
-    - Allow arbitrary location-types in registers:  e.g. 'end'
-#@nonl
-#@-node:ekr.20051004085713:Improvement 2
-#@+node:ekr.20051007093659:Final integration
-@nocolor
-
-- menu.createMenuEntries calls c.keyHandler.bindShortcutFromMenu if useMiniBuffer is True.
-    menu.createMenuEntries makes **no** bindings itself in this case.
-
-- Created k.makeAllBindings to localize bindings.
-
-- bindShortcutFromMenu and setBufferStrokes use two levels of callbacks.
-    The keyCallback is bound to the key: it calls k.masterCommand.
-    It refers to a refers to a second callback that dispatches the actual command.
-
-- bindKey now tests for duplicates and recovers from bad key bindings (user error).
-
-- Removed test to keystrokeFunctionDict in masterCommand.
-    The regular key binding mechanism should be enough!
-#@nonl
-#@-node:ekr.20051007093659:Final integration
-#@+node:ekr.20051008065518:Final integration 2
-- k.finishCreate calls k.createInverseCommandsDict first.
-
-- The values in k.inverseCommandsDict are f.__name__, rather than f.
-
-- leoCommands.getPublicCommands now adds underlying f.__name__ to k.inverseCommandsDict rather than leoCallback.
-
-- createInverseCommandsDict ignores 'leoCallback' when adding entries.
-
-- Used k.inverseCommandsDict in << set accel to the shortcut for name >> to get shortcuts using emacs-style names.
-
-    This allows either old-style menu shortcuts or emacs command names.
-
-- Allow '-' in shortcut names in parseShortcutLine.
-
-- Allow trailing comments in shortcut names in parseShortcutLine.
-
-* cb_dict is now vestigial and will soon be removed.
-    However, <Alt-X> is not bound properly at present.
-
-Binding is mostly complete:  the traces from createMenuEntries show missing command names in leoSettings.leo.
-
-- Removed last traces of cbDict ivar.  Use. by k.bindingsDict as need.
-#@nonl
-#@-node:ekr.20051008065518:Final integration 2
-#@+node:ekr.20051009042953:Changeover
-@nocolor
-
-- replaced x.useMiniBuffer by c.useMiniBuffer.
-- Replace useEditorMenu by useCmdMenu, etc.
-- Call createMenuBar in c.finishCreate.
-- Removed all dummy methods from nullMenu class.
-    - The methods of the base class will do fine, provided that an overrided oops method does nothing!
-** Always define c.keyHandler, even if c.useMiniBuffer is False.
-    - Changes to c.finishCreate and keyHandler.ctor.
-- Removed all warnings:
-    - Added dynamicMenu arg to createMenuEntries to suppress a warning when a menu is created from a plugin.
-    - Revise << set accel to the shortcut for name >> in createMenuEntries tests c.useMiniBuffer.
-    - Use c.frame.selectAllText instead of c.editCommands.selectAll.
-- Fixed bug in makeSpecialBindings so that Control-g works.
-#@nonl
-#@-node:ekr.20051009042953:Changeover
-#@-node:ekr.20050921094025.6:What I did
 #@+node:ekr.20050921100955:Not used
 #@+node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
 class editCommands:
@@ -17036,88 +16892,248 @@ zenirc
 #@nonl
 #@-node:ekr.20050930075327.13:Search 10
 #@-node:ekr.20050930075327:All commands names:  Leo 125, Emacs 140
-#@-node:ekr.20050920084720.1:Moved emacs commands and new keyHandler to Leo's core
-#@+node:ekr.20051006195420:Added background/foreground selection confic options
-#@+node:ekr.20051006195420.1:Report
+#@+node:ekr.20050921094025.6:What I did
 @nocolor
-https://sourceforge.net/forum/message.php?msg_id=3361442
-By: nobody
-
-Thanks, now I know where those settings live. For completeness, and in case
-somebody doesn't like low contrast of white on gray, I suggest to also add foreground
-color setting. Imitating what you did I added the following:
-
-two new settings under @settings-->Colors-->@page Body pane colors
-in leoSettings.leo:
-
- @color body_text_selection_background_color = Gray80   (or CadetBlue2 etc.)
- @color body_text_selection_foreground_color = white    (or black)
-
-added to tkBody.setColorFromConfig:
-
-....sel_bg = c.config.getColor('body_text_selection_background_color')
-or 'Gray80'
-....try: body.configure(selectbackground=sel_bg)
-....except Exception:
-........g.es("exception setting body pane text selection background color")
-........g.es_exception()
-....
-....sel_fg = c.config.getColor('body_text_selection_foreground_color')
-or 'white'
-....try: body.configure(selectforeground=sel_fg)
-....except Exception:
-........g.es("exception setting body pane text selection foreground color")
-........g.es_exception()
-
-Works with Leo 4.3.3, build  1.282 , Python 2.3.5, Tk 8.4.3, win32
-#@-node:ekr.20051006195420.1:Report
-#@+node:ekr.20041217135735.1:tkBody.setColorFromConfig
-def setColorFromConfig (self):
-    
-    c = self.c ; body = self.bodyCtrl
-        
-    bg = c.config.getColor("body_text_background_color") or 'white'
-    try: body.configure(bg=bg)
-    except:
-        g.es("exception setting body text background color")
-        g.es_exception()
-    
-    fg = c.config.getColor("body_text_foreground_color") or 'black'
-    try: body.configure(fg=fg)
-    except:
-        g.es("exception setting body textforeground color")
-        g.es_exception()
-
-    bg = c.config.getColor("body_insertion_cursor_color")
-    if bg:
-        try: body.configure(insertbackground=bg)
-        except:
-            g.es("exception setting body pane cursor color")
-            g.es_exception()
-        
-    sel_bg = c.config.getColor('body_text_selection_background_color') or 'Gray80'
-    try: body.configure(selectbackground=sel_bg)
-    except Exception:
-        g.es("exception setting body pane text selection background color")
-        g.es_exception()
-
-    sel_fg = c.config.getColor('body_text_selection_foreground_color') or 'white'
-    try: body.configure(selectforeground=sel_fg)
-    except Exception:
-        g.es("exception setting body pane text selection foreground color")
-        g.es_exception()
-  
-    if sys.platform != "win32": # Maybe a Windows bug.
-        fg = c.config.getColor("body_cursor_foreground_color")
-        bg = c.config.getColor("body_cursor_background_color")
-        if fg and bg:
-            cursor="xterm" + " " + fg + " " + bg
-            try: body.configure(cursor=cursor)
-            except:
-                import traceback ; traceback.print_exc()
 #@nonl
-#@-node:ekr.20041217135735.1:tkBody.setColorFromConfig
-#@-node:ekr.20051006195420:Added background/foreground selection confic options
+#@+node:ekr.20051004132320:Early days
+#@+node:ekr.20050921094025.7:Rewrote buildBufferList
+There may be bugs here.  The old code had definite strange aspects to it.
+#@nonl
+#@-node:ekr.20050921094025.7:Rewrote buildBufferList
+#@+node:ekr.20050921094025.8:Removed Emacs_instances class var
+createBindings now sets c.emacs, so modifyOnBodyKey just uses c.emacs.
+#@nonl
+#@-node:ekr.20050921094025.8:Removed Emacs_instances class var
+#@+node:ekr.20050921094025.9:Added c ivar to Emacs class
+This is an important addition:  it guarantees that the proper commander is always used.
+#@nonl
+#@-node:ekr.20050921094025.9:Added c ivar to Emacs class
+#@+node:ekr.20050921094025.10:Removed labels class var
+This is not needed.  createBindings is called at most once per commander.
+#@nonl
+#@-node:ekr.20050921094025.10:Removed labels class var
+#@+node:ekr.20050921094025.11:Added baseCommands class
+Subclasses of baseCommands class should implement getPublicCommands.
+
+This returns a dict whose keys are emacs command names and whose values are bound methods.
+#@nonl
+#@-node:ekr.20050921094025.11:Added baseCommands class
+#@+node:ekr.20050921094025.12:The big collapse (of complexity)
+The miniBufferClass is the one half of the great divide.  The commands classes are the other.
+
+- The commnds classes do not understand the details of the miniBufferClass: it can be rearranged as needed.
+
+(done) Replace:
+    svar, label = self.getSvarLabel( event )
+by:
+    b = self.miniBuffer ; tbuffer = event.widget
+
+(done) self.setSvar(event,svar) -> b.update(event)
+(done) svar ->  b
+(done) label.configure(background='lightblue') --> b.setLabelBlue()
+(done) self.miniBuffer -> b
+(done) Replaced all delegators by b.methods.
+(done) Removed unused args from most methods.
+#@nonl
+#@-node:ekr.20050921094025.12:The big collapse (of complexity)
+#@+node:ekr.20050921094025.13:Improvements to commands
+- Improved feedback for interactive search.
+    - The minibuffer now says isearch:
+    - Added args to miniBuffer.set/get methods to protect/ignore initial prompt characters.
+
+- Backspacing when tab completion cuts back to last 'really' typed character.
+    - Further backspaces work as you would expect.
+#@nonl
+#@-node:ekr.20050921094025.13:Improvements to commands
+#@+node:ekr.20050921094025.14:Removed all globals
+- positions and tnodes globals are now ivars of bufferCommands class.
+#@nonl
+#@-node:ekr.20050921094025.14:Removed all globals
+#@+node:ekr.20050921094025.15:Fixed bug: newline was not setting body pane dirty
+The fix was to return return orig_OnBodyKey(self.c.frame.body,event) at end of masterCommand.
+#@nonl
+#@-node:ekr.20050921094025.15:Fixed bug: newline was not setting body pane dirty
+#@+node:ekr.20050921101706:Replaced 'M-x' prompt by 'full-command'
+#@-node:ekr.20050921101706:Replaced 'M-x' prompt by 'full-command'
+#@+node:ekr.20050921105623:Added useMiniBuffer and useEditorMenu @settings
+#@-node:ekr.20050921105623:Added useMiniBuffer and useEditorMenu @settings
+#@+node:ekr.20050921105623.1:Deleted coreEmacs plugin
+No longer needed.
+#@nonl
+#@-node:ekr.20050921105623.1:Deleted coreEmacs plugin
+#@+node:ekr.20050922080526:Fixed outline selection bug
+Thie problem was in the code at the end of keyHandler.finishCreate.
+
+The watchDelete hack was interfering with some kind of event.
+
+It was an ugly hack anyway ;-)
+#@nonl
+#@-node:ekr.20050922080526:Fixed outline selection bug
+#@+node:ekr.20050923143034:c.commandsDict now describes all commands
+- Keys are full Emacs command names, values are methods.
+#@nonl
+#@-node:ekr.20050923143034:c.commandsDict now describes all commands
+#@+node:ekr.20050923141539:Rewrote altX code
+- Eliminated iterator class.  (I now understand the code :-)
+- Automatically call b.clearState() and b.keyboardQuit() before dispatching commands.
+- Tab completion returns a non-trivial common prefix if it exists.  Further tabs cycle through possibilities.
+#@nonl
+#@-node:ekr.20050923141539:Rewrote altX code
+#@+node:ekr.20050923233827:Eliminated all helper classes and simplified the code.
+- Eliminated self.tbuffer
+
+- Removed all subclssses from keyHandlerClass.
+    - Replaced all references to keyHandler, miniBuffer, kstrokeManager, etc.
+    - All methods are now methods of the keyHandler class.
+
+- k denotes the keyHandler class everywhere.
+    - All commands classes define k ivar that refers to keyHandler.
+
+- Replaced tbuffer by w everywhere.
+
+The effect of these changes:
+    - There is never any confusion about how to access a keyHandler method: just use k.whatever.
+    - The init logic is simple and clean.
+    - The client code is visually much shorter and easier to understand.
+    - The keyHandler class is now simpler, though larger.
+    - There is no need for redirector methods.
+#@nonl
+#@-node:ekr.20050923233827:Eliminated all helper classes and simplified the code.
+#@-node:ekr.20051004132320:Early days
+#@+node:ekr.20050924073836.1:Simplifications 1
+- setEvent is only used in one commands class, so it was moved there.
+
+- setLabelBlue and setLabelGrey now can set the label text as well as color.
+  This is a nice simplification of the client code.
+
+- Changed k.get, k.set and k.update to k.getLabel, k.setLable and k.updateLabel.
+  This is an important clarification.
+
+- Used simplified state-handling scheme, under control of k.newState ivar.
+    - I now see that state-handling is actually fully encapsulated in the commands classes.
+    - In particular, masterCommand knows essentially nothing of states.
+    - Removed getStateCommands dicts.
+
+- Simplified keyboardQuit by defining leoEditCommands.initAllEditCommanders at the module level.
+    - This call theInstance.init() for all commands classes.
+      The default in the base class does nothing.
+#@nonl
+#@-node:ekr.20050924073836.1:Simplifications 1
+#@+node:ekr.20051001180444:Simplifications 2
+10/1/05
+
+Important simplifications:
+
+- Dispatchers call endCommand (via handleEndCommand)
+  when a command returns and there is no state.
+- "User" commands need only clear the state and set (or clear) the label:
+  everything else is automatic.
+- endCommand calls bodyWillChange.  This is the correct way to ensure that changes 'stick'.
+- Dispatchers will return 'break' or None as appropriate:
+  User code will not have to worry about this.
+- keyboardQuit still exists, but it merely clears the state and the label.
+  As before, commands may set the label to inform the user of what has happened.
+#@nonl
+#@-node:ekr.20051001180444:Simplifications 2
+#@+node:ekr.20051002161714:Simplfications 3
+- Removed tailEnd and return 'break's.  They are no longer needed.
+
+- Replaced stopControlX by keyboardQuit.
+
+- Rewrote state handling for search commands.
+
+- Call endCommand after every keystroke.
+
+- Set k.commandName to include args in keep-lines, shell-command, etc.
+
+- Removed k.doUndo.
+#@nonl
+#@-node:ekr.20051002161714:Simplfications 3
+#@+node:ekr.20051003140625:Improvements
+- Extended k.commandName for undoable commands that use extension arguments.
+  There aren't that many such commands, surprisingly.
+#@nonl
+#@-node:ekr.20051003140625:Improvements
+#@+node:ekr.20051004085713:Improvement 2
+- Split abbrevDispatch into addAbbreviation and inversAddAbbriviation.
+- Removed coresponding lambda's.
+- Change the hard binding for <Control-g> to k.abbortAllModesKey.
+- Renamed the top-level dispatches to fullCommand and quickCommand.
+** Massive improvements to rectangle and register commands.
+    - new rCommands dispatcher.
+    - Use new states in rCommands and most rectangle and register commands.
+    - This simplifies and localizes the code.
+    - The new code gives much better feedback.
+    - Allow arbitrary location-types in registers:  e.g. 'end'
+#@nonl
+#@-node:ekr.20051004085713:Improvement 2
+#@+node:ekr.20051007093659:Final integration
+@nocolor
+
+- menu.createMenuEntries calls c.keyHandler.bindShortcutFromMenu if useMiniBuffer is True.
+    menu.createMenuEntries makes **no** bindings itself in this case.
+
+- Created k.makeAllBindings to localize bindings.
+
+- bindShortcutFromMenu and setBufferStrokes use two levels of callbacks.
+    The keyCallback is bound to the key: it calls k.masterCommand.
+    It refers to a refers to a second callback that dispatches the actual command.
+
+- bindKey now tests for duplicates and recovers from bad key bindings (user error).
+
+- Removed test to keystrokeFunctionDict in masterCommand.
+    The regular key binding mechanism should be enough!
+#@nonl
+#@-node:ekr.20051007093659:Final integration
+#@+node:ekr.20051008065518:Final integration 2
+- k.finishCreate calls k.createInverseCommandsDict first.
+
+- The values in k.inverseCommandsDict are f.__name__, rather than f.
+
+- leoCommands.getPublicCommands now adds underlying f.__name__ to k.inverseCommandsDict rather than leoCallback.
+
+- createInverseCommandsDict ignores 'leoCallback' when adding entries.
+
+- Used k.inverseCommandsDict in << set accel to the shortcut for name >> to get shortcuts using emacs-style names.
+
+    This allows either old-style menu shortcuts or emacs command names.
+
+- Allow '-' in shortcut names in parseShortcutLine.
+
+- Allow trailing comments in shortcut names in parseShortcutLine.
+
+* cb_dict is now vestigial and will soon be removed.
+    However, <Alt-X> is not bound properly at present.
+
+Binding is mostly complete:  the traces from createMenuEntries show missing command names in leoSettings.leo.
+
+- Removed last traces of cbDict ivar.  Use. by k.bindingsDict as need.
+#@nonl
+#@-node:ekr.20051008065518:Final integration 2
+#@+node:ekr.20051009042953:Changeover
+@nocolor
+
+- replaced x.useMiniBuffer by c.useMiniBuffer.
+- Replace useEditorMenu by useCmdMenu, etc.
+- Call createMenuBar in c.finishCreate.
+- Removed all dummy methods from nullMenu class.
+    - The methods of the base class will do fine, provided that an overrided oops method does nothing!
+** Always define c.keyHandler, even if c.useMiniBuffer is False.
+    - Changes to c.finishCreate and keyHandler.ctor.
+- Removed all warnings:
+    - Added dynamicMenu arg to createMenuEntries to suppress a warning when a menu is created from a plugin.
+    - Revise << set accel to the shortcut for name >> in createMenuEntries tests c.useMiniBuffer.
+    - Use c.frame.selectAllText instead of c.editCommands.selectAll.
+- Fixed bug in makeSpecialBindings so that Control-g works.
+#@nonl
+#@-node:ekr.20051009042953:Changeover
+#@+node:ekr.20051009130341:Bugs fixed
+- Make all bindings to c.frame.top (not w) in bindKey.
+  This make bindings available everywhere.
+#@nonl
+#@-node:ekr.20051009130341:Bugs fixed
+#@-node:ekr.20050921094025.6:What I did
+#@-node:ekr.20050920084720.1:Moved emacs commands and new keyHandler to Leo's core
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl

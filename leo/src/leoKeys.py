@@ -132,16 +132,22 @@ class keyHandlerClass:
         '''Complete the construction of the keyHandler class.
         c.commandsDict has been created when this is called.'''
         
-        k = self ; c = k.c
+        k = self ; c = k.c ; f = c.frame
+       
+        k.createInverseCommandsDict()
+        
+        if not c.miniBufferWidget:
+            return
+            
         # g.trace('keyHandler')
     
-        k.createInverseCommandsDict()
-        k.makeAllBindings()
+        if c.useMiniBuffer:
+            k.makeAllBindings()
         
         if 0:
             addTemacsExtensions(k)
             addTemacsAbbreviations(k)
-            changeKeyStrokes(k,frame.bodyCtrl)
+            changeKeyStrokes(k,f.bodyCtrl)
     #@nonl
     #@+node:ekr.20050920085536.11:add_ekr_altx_commands
     def add_ekr_altx_commands (self):
@@ -237,7 +243,7 @@ class keyHandlerClass:
     #@+node:ekr.20051007080058:k.makeAllBindings
     def makeAllBindings (self):
         
-        k = self ; c = k.c ; w = c.frame.bodyCtrl
+        k = self ; c = k.c
         
         k.bindingsDict = {}
         k.makeHardBindings()
@@ -246,7 +252,7 @@ class keyHandlerClass:
         k.add_ekr_altx_commands()
     #@nonl
     #@-node:ekr.20051007080058:k.makeAllBindings
-    #@+node:ekr.20051008152134:makeSpecialBindings
+    #@+node:ekr.20051008152134:makeSpecialBindings (Binds to 'Key')
     def makeSpecialBindings (self):
         
         '''Make the bindings and set ivars for sepcial keystrokes.'''
@@ -254,6 +260,7 @@ class keyHandlerClass:
         k = self ; c = k.c ; w = c.frame.body.bodyCtrl ; tag = 'makeSpecialBindings'
         
         for stroke,ivar,name,func in (
+    		# These defaults may be overridden.
             ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
             ('Atl-x',   'fullCommandKey',  'full-command',  k.fullCommand),
             ('Ctrl-u',  'universalArgKey', 'universal-arg', k.universalArgument),
@@ -279,7 +286,7 @@ class keyHandlerClass:
             
         k.bindKey(w,'<Key>',allKeyCallback,'masterCommand',tag)
     #@nonl
-    #@-node:ekr.20051008152134:makeSpecialBindings
+    #@-node:ekr.20051008152134:makeSpecialBindings (Binds to 'Key')
     #@+node:ekr.20050923174229.1:makeHardBindings 
     def makeHardBindings (self):
         
@@ -404,12 +411,12 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051008135051.1:bindOpenWith
     #@+node:ekr.20050920085536.16:bindKey
-    def bindKey (self,w,shortcut,keyCallback,commandName,fromMenu=False,tag=''):
+    def bindKey (self,w,shortcut,callback,commandName,fromMenu=False,tag=''):
     
-        '''Bind the indicated shortcut (a Tk keystroke) to the keyCallback.
-        keyCallback calls commandName (for error messages).'''
+        '''Bind the indicated shortcut (a Tk keystroke) to the callback.
+        callback calls commandName (for error messages).'''
     
-        k = self
+        k = self ; c = k.c
     
         # Check for duplicates: override or ignore default (menu) bindings.
         b = k.bindingsDict.get(shortcut)
@@ -424,9 +431,39 @@ class keyHandlerClass:
     
         # g.trace(tag,'%25s' % (shortcut),commandName)
         try:
-            w.bind(shortcut,keyCallback)
+            # The original way.  Essential to make cut/copy/paste work.
+            if shortcut == '<Key>':
+                c.frame.body.bind(shortcut,callback,'+')
+                # Don't bind to menu.  Besides, menu.bind doesn't allow '+' arg.
+            else:
+                c.frame.body.bind(shortcut,callback)
+                c.frame.menu.bind(shortcut,callback)
+            #@        << other ways that dont work >>
+            #@+node:ekr.20051010065140:<< other ways that dont work >>
+            if 0: # None of these are satisfactory.
+            
+                if 0: # Too restrictive, but might be useful later.
+                    w.bind(shortcut,callback)
+                elif 0: # This prevents all insertions into body text!
+                    # This *might* work, but seems to be flaky.
+                    # Bind the key to *all* text widgets.
+                    c.frame.top.bind_class('Text',shortcut,callback)
+                elif 0:
+                    # Doesn't work at all.
+                    c.frame.outerFrame.bind(shortcut,callback)
+                elif 0:
+                    # A compromise.  This *almost* works, but cut/copy/paste may need help...
+                    for w in (c.frame.body.bodyCtrl,c.frame.canvas,c.frame.log.logCtrl):
+                        w.bind(shortcut,callback)
+                else:
+                    # Make binding available everywhere.
+                    # This causes problems with tabs, cut/copy/paste (!!)
+                    c.frame.top.bind(shortcut,callback)
+            #@nonl
+            #@-node:ekr.20051010065140:<< other ways that dont work >>
+            #@nl
             k.bindingsDict [shortcut] = g.bunch(
-                func = keyCallback, name = commandName,
+                func = callback, name = commandName,
                 warningGiven = False, fromMenu = fromMenu)
             return True
         except Exception: # Could be a user error.
@@ -471,12 +508,14 @@ class keyHandlerClass:
     
         # Note: the _L symbols represent *either* special key.
         k = self ; c = k.c
-        special = event.keysym in ('Control_L','Alt_L','Shift_L')
-        general = stroke == '<Key>'
-        k.stroke = stroke
+        k.stroke = stroke # Set this global for general use.
         
-        # g.trace('state',k.getStateKind(),'stroke',stroke,'keysym',event.keysym,func and func.__name__)
-        # g.trace(stroke,func)
+        special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+        general = stroke == '<Key>'
+        interesting = func or not general
+        commandName = k.ultimateFuncName(func)
+        
+        # if interesting: g.trace(stroke,commandName)
     
         inserted = not special or (
             not general and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
@@ -536,7 +575,6 @@ class keyHandlerClass:
             if expanded: return 'break'
     
         if func: # Func is an argument.
-            commandName = k.inverseCommandsDict.get(func)
             k.previousStroke = stroke
             func(event)
             k.endCommand(event,commandName,tag='masterCommand')
@@ -572,7 +610,7 @@ class keyHandlerClass:
     
         if func:
             func(event)
-            commandName = k.inverseCommandsDict.get(func)
+            commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
             k.endCommand(event,commandName,tag='callKeystrokeFunction')
         
         return func
@@ -1285,6 +1323,28 @@ class keyHandlerClass:
                 k.setLabel(k.mb_prompt,protect=True)
     #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion
+    #@+node:ekr.20051010063452:ultimateFuncName
+    def ultimateFuncName (self,func):
+        
+        '''Return func.__name__ unless it is 'leoCallback.
+        In that case, return the name in k.leoCallbackDict.get(func).'''
+        
+        k = self
+        
+        if not func:
+            return '<no function>'
+            
+        if func.__name__ != 'leoCallback':
+            return func.__name__
+            
+        # Get the function wrapped by this particular leoCallback function.
+        calledFunc = k.leoCallbackDict.get(func)
+        if calledFunc:
+            return 'leoCallback -> %s' % calledFunc.__name__ 
+        else:
+            return '<no leoCallback name>'
+    #@nonl
+    #@-node:ekr.20051010063452:ultimateFuncName
     #@-node:ekr.20051002152108.1:Shared helpers
     #@+node:ekr.20050923172809:State...
     #@+node:ekr.20050923172814.1:clearState

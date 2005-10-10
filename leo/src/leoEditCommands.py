@@ -3138,7 +3138,7 @@ class leoCommandsClass (baseEditCommandsClass):
         baseEditCommandsClass.__init__(self,c) # init the base class.
     #@nonl
     #@-node:ekr.20050920084036.187: ctor
-    #@+node:ekr.20050920084036.188:leoCommands.getPublicCommands
+    #@+node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
     def getPublicCommands (self):
         
         '''(leoCommands) Return a dict of the 'legacy' Leo commands.
@@ -3314,13 +3314,13 @@ class leoCommandsClass (baseEditCommandsClass):
             def leoCallback (event,f=f):
                 f()
             d2 [name] = leoCallback
-            k.leoCallbackDict [leoCallback] = f # For use by k.bindShortcutFromDict
+            k.leoCallbackDict [leoCallback] = f
             k.inverseCommandsDict [f.__name__] = name
             # g.trace('leoCommands %24s = %s' % (f.__name__,name))
             
         return d2
     #@nonl
-    #@-node:ekr.20050920084036.188:leoCommands.getPublicCommands
+    #@-node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.186:class leoCommandsClass

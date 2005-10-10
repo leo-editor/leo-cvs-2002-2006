@@ -183,7 +183,10 @@ class baseCommands:
         if c.miniBufferWidget:
             c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
             # c.printCommandsDict()
-            c.keyHandler.finishCreate()
+        else:
+            c.commandsDict = {}
+    
+        c.keyHandler.finishCreate()
     
         # Create the menu last so that we can use the key handler for shortcuts.
         if not g.doHook("menu1",c=c,p=p,v=p):
