@@ -1019,7 +1019,11 @@ class leoMenu:
                 # New in 4.4: allow emacs-style or old style names in menu shortcuts.
                 if not accel2 and not openWith:
                     if c.useMiniBuffer:
-                        emacs_name = k.inverseCommandsDict.get(command.__name__)
+                        try: # User errors in the call can cause this.
+                            commandName = command.__name__
+                        except Exception:
+                            commandName = None
+                        emacs_name = k.inverseCommandsDict.get(commandName)
                         if emacs_name:
                             rawKey,accel2 = c.config.getShortcut(emacs_name)
                             accel = accel2 # Override the default shortcut.
@@ -1027,8 +1031,8 @@ class leoMenu:
                         else:
                             accel = None # New in 4.4: remove the default shortcut.
                             if not dynamicMenu: # Don't require command names for dynamic menu entries.
-                                if command.__name__ != 'dummyCommand':
-                                    g.trace('no inverse for %s' % command.__name__)
+                                if commandName and commandName != 'dummyCommand':
+                                    g.trace('no inverse for %s' % commandName)
                     else:
                         pass # Use the default shortcut.
                 elif accel2 and accel2.lower() == "none":
@@ -1087,46 +1091,9 @@ class leoMenu:
                 #@nl
                 
                 if bind_shortcut and not dontBind:
-                    if c.useMiniBuffer:
-                        ok = c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith,fromMenu=True)
-                        if not ok: menu_shortcut = None
-                    else:
-                        #@                    << handle bind_shorcut >>
-                        #@+node:ekr.20031218072017.1729:<< handle bind_shorcut >>
-                        d = self.menuShortcuts
-                        bunch = d.get(bind_shortcut)
-                        
-                        if bunch and not g.app.menuWarningsGiven:
-                            if bunch.init:
-                                if 0: # Testing only.
-                                    s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
-                                        accel,label,bunch.accel,bunch.label)
-                                    g.es(s,color="red")
-                                    print s
-                                # Unbind the previous accelerator.
-                                if menu != bunch.menu or label != bunch.label:
-                                    self.clearAccel(bunch.menu,bunch.label)
-                            else:
-                                s = 'duplicate shortcut\nnew: %s %s\nold: %s %s' % (
-                                    accel,label,bunch.accel,bunch.label)
-                                g.es(s,color="red")
-                                print s
-                        
-                        d[bind_shortcut] = g.Bunch(label=label,accel=accel,init=init,menu=menu)
-                            
-                        try:
-                            self.frame.body.bind(bind_shortcut,menuCallback)
-                            self.bind(bind_shortcut,menuCallback)
-                        except: # could be a user error
-                            if not g.app.menuWarningsGiven:
-                                print "exception binding menu shortcut..."
-                                print bind_shortcut
-                                g.es_exception()
-                                g.app.menuWarningsGive = True
-                        #@nonl
-                        #@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
-                        #@nl
-                        
+                    ok = c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith,fromMenu=True)
+                    if not ok: menu_shortcut = None
+    
                 self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
                     command=menuCallback,underline=amp_index)
     
