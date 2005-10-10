@@ -83,8 +83,9 @@ __plugin_group__ = "Core"
 #     - Reorganized to speed loading of initial display
 #     - Added a "Close" button. Guess what it does?!
 #     - Added code to dynamically enable a plugin at runtime
+# 0.16 Paul Paterson:
+#     - Complete code to dynamically enable plugins
 #@-at
-#@nonl
 #@-node:pap.20041006184225.2:<< version history >>
 #@nl
 #@<< define importLeoGlobals >>
@@ -197,10 +198,19 @@ def init():
         # Bug fix 9-17-05: init Pmw.
         Pmw.initialise(g.app.root)
         g.plugin_signon(__name__)
+        leoPlugins.registerHandler("start2", grabCommander)
 
     return ok
 #@nonl
 #@-node:ekr.20050213122944:init
+#@+node:pap.20051007193021:grabCommander
+def grabCommander(tag, keywords):
+    """Grab the commander to use when starting plugins dynamically"""
+    # FIXME: there has to be a better way!
+    global KEYWORDS
+    KEYWORDS = keywords
+#@nonl
+#@-node:pap.20051007193021:grabCommander
 #@+node:ekr.20041231134702:topLevelMenu
 # This is called from plugins_menu plugin.
 # It should only be defined if the extension has been registered.
@@ -1673,20 +1683,69 @@ class LocalPluginCollection(PluginCollection):
         if leoPlugins:
             try:
                 leoPlugins.loadOnePlugin(plugin.name)
+                #@            << Hooks to send >>
+                #@+node:pap.20051007193759:<< Hooks to send >>
+                # These are the hooks to send to dynamically enabled plugins 
+                # to persuade them to start
+                
+                hook_list = [
+                        'start1',
+                        'before-create-leo-frame',
+                        'unselect1',
+                        'unselect2',
+                        'select1',
+                        'scan-directives',
+                        'init-color-markup',
+                        'select2',
+                        'select3',
+                        'unselect1',
+                        'unselect2',
+                        'select1',
+                        'scan-directives',
+                        'init-color-markup',
+                        'select2',
+                        'select3',
+                        'menu1',
+                        'create-optional-menus',
+                        'after-create-leo-frame',
+                        'new',
+                        'start2',
+                        'idle',
+                        'redraw-entire-outline',
+                        'draw-sub-outline',
+                        'draw-outline-node',
+                        'draw-outline-icon',
+                        'draw-outline-text-box',
+                        'after-redraw-outline',
+                        ]
+                #@nonl
+                #@-node:pap.20051007193759:<< Hooks to send >>
+                #@nl
                 #@	        << Send hooks >>
                 #@+node:pap.20051002004135:<< Send hooks >>
                 # In order to simulate the startup process we need
                 # to send a series of hooks to the plugin
                 #import pdb; pdb.set_trace()
-                for hook in ("after-create-leo-frame", "new"):
+                for hook in hook_list:
                     bunch = leoPlugins.handlers.get(hook, [])
                     for item in bunch:
                         if item.moduleName == plugin.name:
                             g.es("Sending '%s' to '%s'" % (hook, plugin.name), color="green")
                             # How do we do this call???
-                            # item.fn(hook, keys)
+                            global KEYWORDS
+                            item.fn(hook, KEYWORDS)
                         
                 #@-node:pap.20051002004135:<< Send hooks >>
+                #@nl
+                #@            << Add plugin menu >>
+                #@+node:pap.20051008005923:<< Add plugin menu >>
+                # Add the menu item to the plugins menu
+                import plugins_menu
+                filename = plugins_menu.PluginDatabase.all_plugins[plugin.name]
+                new_plugin = plugins_menu.PlugIn(filename)
+                plugins_menu.addPluginMenuItem(new_plugin, KEYWORDS["c"])
+                #@nonl
+                #@-node:pap.20051008005923:<< Add plugin menu >>
                 #@nl
             except Exception, err:
                 g.es("Failed to dynamically enable '%s': %s" % (plugin.name, err),

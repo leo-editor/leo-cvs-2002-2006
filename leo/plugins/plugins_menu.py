@@ -83,6 +83,9 @@ __version__ = "1.8"
 # 1.8 Paul Paterson:
 #     - Changed the names in the plugin menu to remove at_, mod_ and 
 # capitalized
+# 1.9 Paul Paterson:
+#     - Refactored to allow dynamically adding plugins to the menu after 
+# initial load
 #@-at
 #@nonl
 #@-node:ekr.20050101100033:<< version history >>
@@ -104,14 +107,15 @@ class _PluginDatabase:
         self.plugins_by_group = {}
         self.groups_by_plugin = {}
         self.menus = {}
+        self.all_plugins = []
     #@nonl
     #@-node:pap.20050305152751.1:__init__
     #@+node:pap.20050305152751.2:addPlugin
     def addPlugin(self, item, group):
         """Add a plugin"""
-        self.plugins_by_group.setdefault(group, []).append(item)
-        self.groups_by_plugin[item] = group
-    #@nonl
+        if group:
+            self.plugins_by_group.setdefault(group, []).append(item)
+            self.groups_by_plugin[item] = group
     #@-node:pap.20050305152751.2:addPlugin
     #@+node:pap.20050305152751.3:getGroups
     def getGroups(self):
@@ -136,6 +140,13 @@ class _PluginDatabase:
             return self.menus["Default"]
     #@nonl
     #@-node:pap.20050305153716.1:getMenu
+    #@+node:pap.20051008005012:storeAllPlugins
+    def storeAllPlugins(self, files):
+        """Store all the plugins for later reference if we need to enable them"""
+        self.all_plugins = dict(
+    		[(g.os_path_splitext(g.os_path_basename(f))[0], f) for f in files])
+    #@nonl
+    #@-node:pap.20051008005012:storeAllPlugins
     #@-others
     
 PluginDatabase = _PluginDatabase()
@@ -159,16 +170,17 @@ class PlugIn:
         try:
             self.mod = __import__(g.os_path_splitext(g.os_path_basename(filename))[0])
             if not self.mod: return
-            #
-            self.group = getattr(self.mod, "__plugin_group__", None)
-            if self.group:
-                PluginDatabase.addPlugin(self, self.group)
             # g.trace('Plugin',self.mod)
             try:
                 name = self.mod.__plugin_name__
             except AttributeError:
                 name = self.mod.__name__
+            self.realname = name
             self.name = self.getNiceName(name)
+            #
+            self.group = getattr(self.mod, "__plugin_group__", None)
+            PluginDatabase.addPlugin(self, self.group)
+            #
             try:
                 self.priority = self.mod.__plugin_priority__
             except AttributeError:
@@ -463,12 +475,13 @@ def createPluginsMenu (tag,keywords):
 
     path = os.path.join(g.app.loadDir,"..","plugins")
     sys.path = path
-    
+        
     if os.path.exists(path):
         # Create a list of all active plugins.
         files = glob.glob(os.path.join(path,"*.py"))
         files.sort()
         plugins = [PlugIn(file) for file in files]
+        PluginDatabase.storeAllPlugins(files)
         items = [(p.name,p) for p in plugins if p.version]
         if items:
             #@            << Sort items >>
@@ -488,51 +501,51 @@ def createPluginsMenu (tag,keywords):
                 PluginDatabase.setMenu(group_name, c.frame.menu.createNewMenu(group_name, "&Plugins"))
             #@-node:pap.20050305152223:<< Add group menus >>
             #@nl
-            #@            << add items to the plugins menu >>
-            #@+node:EKR.20040517080555.24:<< add items to the plugins menu >>
-            for name, p in items:
-                if p.hastoplevel:
-                    # Check at runtime to see if the plugin has actually been loaded.
-                    # This prevents us from calling hasTopLevel() on unloaded plugins.
-                    def pluginsMenuCallback (p=p):
-                        path, name = g.os_path_split(p.filename)
-                        name, ext = g.os_path_splitext(name)
-                        # g.trace(name,g.app.loadedPlugins)
-                        if name in g.app.loadedPlugins:
-                            p.hastoplevel()
-                        else:
-                            p.about()
-                    table = ((p.name,None,pluginsMenuCallback),)
-                    c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p),table,dynamicMenu=True)
-                elif p.hasconfig or p.othercmds:
-                    #@        << Get menu location >>
-                    #@+node:pap.20050305153147:<< Get menu location >>
-                    if p.group:
-                        menu_location = p.group
-                    else:
-                        menu_location = "&Plugins"
-                    #@-node:pap.20050305153147:<< Get menu location >>
-                    #@nl
-                    m = c.frame.menu.createNewMenu(p.name,menu_location)
-                    table = [("About...",None,p.about)]
-                    if p.hasconfig:
-                        table.append(("Properties...",None,p.properties))
-                    if p.othercmds:
-                        table.append(("-",None,None))
-                        items = [(cmd,None,fn) for cmd, fn in p.othercmds.iteritems()]
-                        items.sort()
-                        table.extend(items)
-                    c.frame.menu.createMenuEntries(m,table,dynamicMenu=True)
-                else:
-                    table = ((p.name,None,p.about),)
-                    c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p),table,dynamicMenu=True)
-            #@nonl
-            #@-node:EKR.20040517080555.24:<< add items to the plugins menu >>
-            #@nl
+            for name,p in items:
+                addPluginMenuItem(p, c)
             
     sys.path = old_path
 #@nonl
 #@-node:EKR.20040517080555.23:createPluginsMenu
+#@+node:EKR.20040517080555.24:addPluginMenuItem
+def addPluginMenuItem(p, c):
+    if p.hastoplevel:
+        # Check at runtime to see if the plugin has actually been loaded.
+        # This prevents us from calling hasTopLevel() on unloaded plugins.
+        def callback(p=p):
+            path,name = g.os_path_split(p.filename)
+            name,ext = g.os_path_splitext(name)
+            # g.trace(name,g.app.loadedPlugins)
+            if name in g.app.loadedPlugins:
+                p.hastoplevel()
+            else:
+                p.about()
+        table = ((p.name, None, callback),)
+        c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p), table)
+    elif p.hasconfig or p.othercmds:
+        #@        << Get menu location >>
+        #@+node:pap.20050305153147:<< Get menu location >>
+        if p.group:
+            menu_location = p.group
+        else:
+            menu_location = "&Plugins"
+        #@-node:pap.20050305153147:<< Get menu location >>
+        #@nl
+        m = c.frame.menu.createNewMenu(p.name, menu_location)
+        table = [("About...", None, p.about)]
+        if p.hasconfig:
+            table.append(("Properties...", None, p.properties))
+        if p.othercmds:
+            table.append(("-", None, None))
+            items = [(cmd,None,fn) for cmd,fn in p.othercmds.iteritems()]
+            items.sort()
+            table.extend(items)
+        c.frame.menu.createMenuEntries(m, table)
+    else:
+        table = ((p.name, None, p.about),)
+        c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p), table)
+#@nonl
+#@-node:EKR.20040517080555.24:addPluginMenuItem
 #@-others
 
 if Tk and not g.app.unitTesting: # Register the handlers...
