@@ -1920,7 +1920,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.131:backSentence
     #@+node:ekr.20050920084036.137:forwardSentence
-    def forwardSentence (self,event,way):
+    def forwardSentence (self,event):
     
         k = self.k ; w = event.widget
     
@@ -1968,7 +1968,7 @@ class editCommandsClass (baseEditCommandsClass):
     
         while 1:
             txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
-            if text:
+            if txt:
                 i = w.index('%s - 1 lines' % i)
                 if w.index('%s linestart' % i) == '1.0':
                     i = w.search(r'\w','1.0',regexp=True,stopindex='end')
@@ -3224,7 +3224,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'goto-prev-sibling':    c.goToPrevSibling,
             'goto-prev-visible':    c.selectVisBack,
             'hoist':                c.hoist,
-            'import at-file':       c.importAtFile,
+            'import-at-file':       c.importAtFile,
             'import-at-root':       c.importAtRoot,
             'import-cweb-files':    c.importCWEBFiles,
             'import-derived-file':      c.importDerivedFile,
@@ -3248,7 +3248,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'new':                      c.new,
             'open':                     c.open,
             'open-compare-window':      c.openCompareWindow,
-            'open-leoConfig.leo':       c.leoConfig,
+            'open-leoConfig.leo':       c.openLeoSettings,
             'open-leoDocs.leo':         c.leoDocumentation,
             'open-leoPlugins.leo':      c.openLeoPlugins,
             'open-online-home':         c.leoHome,
@@ -3260,7 +3260,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'outline-to-noweb':         c.outlineToNoweb,
             'paste-node':               c.pasteOutline,
             'paste-retaining-clones':   c.pasteOutlineRetainingClones,
-            'paste-text':               f.OnPasteFromMenu,
+            'paste-text':               f.pasteText, # Same as OnPasteFromMenu
             'preferences':              c.preferences,
             'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
             'pretty-print-python-code':     c.prettyPrintPythonCode,

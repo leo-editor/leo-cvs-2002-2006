@@ -4948,7 +4948,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2939:about (version number & date)
     #@+node:ekr.20031218072017.2943:leoConfig
-    def leoConfig (self):
+    def openLeoSettings (self):
     
         c = self
         name = 'leoSettings.leo'

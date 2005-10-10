@@ -266,6 +266,8 @@ class keyHandlerClass:
             ('Ctrl-u',  'universalArgKey', 'universal-arg', k.universalArgument),
             ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
         ):
+            
+            # Use two-levels of callbacks.
             def specialCallback (event,func=func,name=name):
                 return func(event)
     
@@ -280,11 +282,11 @@ class keyHandlerClass:
             setattr(k,ivar,shortcut)
             # g.trace(shortcut,func.__name__)
             
-        # Add a binding for <Key> events, so _all_ key events go through masterCommand.
-        def allKeyCallback (event):
+        # Add a binding for <Key> events, so all key events go through masterCommand.
+        def allKeysCallback (event):
             return k.masterCommand(event,func=None,stroke='<Key>')
-            
-        k.bindKey(w,'<Key>',allKeyCallback,'masterCommand',tag)
+                
+        k.bindKey(w,'<Key>',allKeysCallback,'masterCommand',tag=tag)
     #@nonl
     #@-node:ekr.20051008152134:makeSpecialBindings (Binds to 'Key')
     #@+node:ekr.20050923174229.1:makeHardBindings 
@@ -370,7 +372,8 @@ class keyHandlerClass:
         if openWith:
             k.bindOpenWith(shortcut,name,command)
             return True
-        elif command.__name__ == 'leoCallback':
+    
+        if command.__name__ == 'leoCallback':
             # Get the function wrapped by this particular leoCallback function.
             func = k.leoCallbackDict.get(command)
             name = func.__name__
@@ -382,12 +385,12 @@ class keyHandlerClass:
             name = command.__name__ 
     
             def menuFuncCallback (event,command=command,name=name):
-                # g.trace(name,command)
-                return c.doCommand(command,label=name)
+                # g.trace(name)
+                return command(event)
     
             def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
-                
+            
         # g.trace('%25s %20s %s' % (shortcut,name))
         return k.bindKey(w,shortcut,keyCallback,name,fromMenu,tag='bindShortcut')
     #@nonl
@@ -429,17 +432,21 @@ class keyHandlerClass:
                     shortcut, commandName, b.name))
             return b.name == commandName
     
-        # g.trace(tag,'%25s' % (shortcut),commandName)
+        # if shortcut.lower().startswith('<alt'): g.trace(tag,'%25s' % (shortcut),commandName)
+    
         try:
             # The original way.  Essential to make cut/copy/paste work.
             if shortcut == '<Key>':
-                c.frame.body.bind(shortcut,callback,'+')
+                ### c.frame.body.bind(shortcut,callback,'+')
+                w.bind(shortcut,callback,'+')
                 # Don't bind to menu.  Besides, menu.bind doesn't allow '+' arg.
             else:
-                c.frame.body.bind(shortcut,callback)
-                c.frame.menu.bind(shortcut,callback)
-            #@        << other ways that dont work >>
-            #@+node:ekr.20051010065140:<< other ways that dont work >>
+                ### c.frame.body.bind(shortcut,callback)
+                w.bind(shortcut,callback)
+                if 0: ### shortcut.lower() not in ('alt-e','alt-f','alt-p','alt-w','alt-h'):
+                    c.frame.menu.bind(shortcut,callback)
+            #@        << other ways that don't work >>
+            #@+node:ekr.20051010065140:<< other ways that don't work >>
             if 0: # None of these are satisfactory.
             
                 if 0: # Too restrictive, but might be useful later.
@@ -460,12 +467,13 @@ class keyHandlerClass:
                     # This causes problems with tabs, cut/copy/paste (!!)
                     c.frame.top.bind(shortcut,callback)
             #@nonl
-            #@-node:ekr.20051010065140:<< other ways that dont work >>
+            #@-node:ekr.20051010065140:<< other ways that don't work >>
             #@nl
             k.bindingsDict [shortcut] = g.bunch(
                 func = callback, name = commandName,
                 warningGiven = False, fromMenu = fromMenu)
             return True
+    
         except Exception: # Could be a user error.
             if not g.app.menuWarningsGiven:
                 g.es_print('Exception binding for %s to %s' % (shortcut,commandName))
@@ -492,6 +500,10 @@ class keyHandlerClass:
             if accel:
                 bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
                 k.bindShortcut(bind_shortcut,name,command,openWith=name=='open-with')
+            else:
+                bind_shortcut = None
+            
+            # g.trace('%25s %s' % (name,bind_shortcut))
     #@nonl
     #@-node:ekr.20051008134059:setBindingsFromCommandsDict
     #@-node:ekr.20051006125633:Binding (keyHandler)
@@ -506,22 +518,19 @@ class keyHandlerClass:
         '''This is the central dispatching method.
         All commands and keystrokes pass through here.'''
     
-        # Note: the _L symbols represent *either* special key.
         k = self ; c = k.c
         k.stroke = stroke # Set this global for general use.
-        
-        special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-        general = stroke == '<Key>'
-        interesting = func or not general
         commandName = k.ultimateFuncName(func)
-        
+        special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+        interesting = func or stroke != '<Key>'
+    
         # if interesting: g.trace(stroke,commandName)
     
         inserted = not special or (
-            not general and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
+            stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
     
         if inserted:
-            # g.trace('general',general,event.keysym)
+            # g.trace(stroke,event.keysym)
             #@        << add character to history >>
             #@+node:ekr.20050920085536.67:<< add character to history >>
             # Don't add multiple special characters to history.
@@ -550,7 +559,7 @@ class keyHandlerClass:
             k.previousStroke = stroke
             k.clearState()
             k.keyboardQuit(event)
-            k.endCommand(event,'keyboard-quit')
+            k.endCommand(event,tag='keyboard-quit')
             return 'break'
     
         if k.inState():
@@ -577,7 +586,8 @@ class keyHandlerClass:
         if func: # Func is an argument.
             k.previousStroke = stroke
             func(event)
-            k.endCommand(event,commandName,tag='masterCommand')
+            forceFocus = func.__name__ != 'leoCallback'
+            k.endCommand(event,commandName,forceFocus,tag='masterCommand')
             return 'break'
     
         else:
@@ -611,11 +621,10 @@ class keyHandlerClass:
         if func:
             func(event)
             commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-            k.endCommand(event,commandName,tag='callKeystrokeFunction')
+            forceFocus = func.__name__ != 'leoCallback'
+            k.endCommand(event,commandName,forceFocus,tag='callKeystrokeFunction')
         
         return func
-        
-        
     #@nonl
     #@-node:ekr.20050923174229.3:callKeystrokeFunction
     #@-node:ekr.20050920085536.65: masterCommand & helpers
@@ -794,7 +803,7 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.58:quickCommand  (ctrl-c) & helpers
     #@-node:ekr.20051002152108:Top-level
     #@+node:ekr.20051001050607:endCommand
-    def endCommand (self,event,commandName,tag=''):
+    def endCommand (self,event,commandName,forceFocus=True,tag=''):
     
         '''Make sure Leo updates the widget following a command.
         
@@ -807,6 +816,7 @@ class keyHandlerClass:
         # Set the best possible undoType: prefer explicit commandName to k.commandName.
         commandName = commandName or k.commandName or ''
         k.commandName = k.commandName or commandName or ''
+        # g.trace(commandName)
     
         # Call onBodyWillChange only if there is a proper command name.
         if commandName:
@@ -816,7 +826,8 @@ class keyHandlerClass:
                 # g.trace('commandName:',commandName,'caller:',tag)
                 k.commandName = None
                 leoEditCommands.initAllEditCommanders(c)
-                w.focus_force()
+                if forceFocus: # This is dubious.
+                    w.focus_force()
                 w.tag_delete('color')
                 w.tag_delete('color1')
     

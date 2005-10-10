@@ -2575,8 +2575,6 @@ class leoTkinterTree (leoFrame.leoTree):
     def editLabel (self,p):
         
         """Start editing p.edit_text."""
-        
-        # g.trace(p)
     
         if self.editPosition() and p != self.editPosition():
             self.endEditLabel()

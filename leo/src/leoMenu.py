@@ -756,7 +756,7 @@ class leoMenu:
             ("-",None,None),
             ("Open Leo&Docs.leo",None,c.leoDocumentation),
             ("Open Leo&Plugins.leo",None,c.openLeoPlugins),
-            ("Open Leo&Settings.leo",None,c.leoConfig),
+            ("Open Leo&Settings.leo",None,c.openLeoSettings),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3774:defineHelpMenuTables

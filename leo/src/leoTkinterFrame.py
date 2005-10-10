@@ -1786,6 +1786,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
             frame.tree.onHeadChanged(v)
+            
+    pasteText = OnPasteFromMenu
     #@nonl
     #@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
     #@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
@@ -2247,7 +2249,8 @@ class leoTkinterBody (leoFrame.leoBody):
             t.bind("<Key>", self.onBodyKey)
     
         # Gui-dependent bindings...
-        if 1:
+        if 0:
+            # These cause problems when cut/copy/paste-text commands are bound.
             t.bind(g.virtual_event_name("Cut"), frame.OnCut)
             t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
             t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
