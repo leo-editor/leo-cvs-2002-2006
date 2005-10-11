@@ -11609,7 +11609,7 @@ def masterCommand (self,event,func,stroke):
         k.previousStroke = stroke
         k.clearState()
         k.keyboardQuit(event)
-        k.endCommand(event,tag='keyboard-quit')
+        k.endCommand(event,commandName,tag='keyboard-quit')
         return 'break'
 
     if k.inState():
@@ -17172,6 +17172,20 @@ Binding is mostly complete:  the traces from createMenuEntries show missing comm
   This make bindings available everywhere.
 #@nonl
 #@-node:ekr.20051009130341:Bugs fixed
+#@+node:ekr.20051011091759:Added big kludge to solve infamous control-v problems
+Added big kludge to menu.createMenuEntries so that f.OnCut/Copy/PasteFromMenu get called
+**only** when explicitly selected from the menu (rather than from a shortcut).
+This allows the code in cut/copy/paste-text to be different as needed.
+
+Users can override the shortcut by assigning shortcuts to cut/copy/paste-text commands.
+The shortcut will appear in the menu, but does **not** get bound to c.frame.menu.
+
+This is an essential step in solving the infamous Control-V problem.
+The code appears to work properly on XP.  Not tested other places.
+
+This is the last best hope to solve this problem: the code interacts as little as possible with Tk.
+#@nonl
+#@-node:ekr.20051011091759:Added big kludge to solve infamous control-v problems
 #@-node:ekr.20050921094025.6:What I did
 #@-node:ekr.20050920084720.1:Moved emacs commands and new keyHandler to Leo's core
 #@-node:ekr.20050924073836:4.4 projects

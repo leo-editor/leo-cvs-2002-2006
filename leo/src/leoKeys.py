@@ -239,6 +239,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051008082929:createInverseCommandsDict
     #@-node:ekr.20050920094633:k.finishCreate & helpers
+    #@-node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20051006125633:Binding (keyHandler)
     #@+node:ekr.20051007080058:k.makeAllBindings
     def makeAllBindings (self):
@@ -508,7 +509,6 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051008134059:setBindingsFromCommandsDict
     #@-node:ekr.20051006125633:Binding (keyHandler)
-    #@-node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20051001051355:Dispatching...
     #@+node:ekr.20051002152108:Top-level
     # These must return 'break' unless more processing is needed.
@@ -560,7 +560,7 @@ class keyHandlerClass:
             k.previousStroke = stroke
             k.clearState()
             k.keyboardQuit(event)
-            k.endCommand(event,tag='keyboard-quit')
+            k.endCommand(event,commandName,tag='keyboard-quit')
             return 'break'
     
         if k.inState():
@@ -707,6 +707,7 @@ class keyHandlerClass:
                 k.clearState()
                 k.xcommands [stroke](event)
                 
+            ### Probably should use commandName instead of stroke.
             k.endCommand(event,stroke,tag='quickCommand')
             
         return 'break'
@@ -1174,6 +1175,8 @@ class keyHandlerClass:
     
         w = event.widget
         w.event_generate('<Key>',keysym=keysym)
+        
+        ### Synthesize commandName instead of keysym?
         self.endCommand(event,keysym,tag='manufactureKeyPress')
         
         return 'break'
