@@ -868,6 +868,29 @@ class configClass:
     #@nonl
     #@-node:ekr.20041121143823:getValFromDict
     #@-node:ekr.20041117083141:get & allies (g.app.config)
+    #@+node:ekr.20051011105014:exists (g.app.config)
+    def exists (self,c,setting,kind):
+        
+        """Return true if any setting exists, even if it is None."""
+        
+        found = False
+        if c:
+            d = self.localOptionsDict.get(c.hash())
+            if d:
+                val,found = self.getValFromDict(d,setting,kind,found)
+                if found: return True
+                    
+        for d in self.localOptionsList:
+            val,found = self.getValFromDict(d,setting,kind,found)
+            if found: return True
+    
+        for d in self.dictList:
+            val,found = self.getValFromDict(d,setting,kind,found)
+            if found: return True
+    
+        return False
+    #@nonl
+    #@-node:ekr.20051011105014:exists (g.app.config)
     #@+node:ekr.20041117081009.3:getBool
     def getBool (self,c,setting,default=None):
         

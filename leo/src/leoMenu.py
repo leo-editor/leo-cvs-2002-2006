@@ -791,9 +791,10 @@ class leoMenu:
     def canonicalizeMenuName (self,name):
         
         name = name.lower() ; newname = ""
+        chars = string.ascii_letters + string.digits
         for ch in name:
             # if ch not in (' ','\t','\n','\r','&'):
-            if ch in string.ascii_letters:
+            if ch in chars:
                 newname = newname+ch
         return newname
         
@@ -1028,7 +1029,6 @@ class leoMenu:
                 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
                 # First, check the kludged cut/copy/paste commands.
                 if not useBindShortcut:
-                    g.trace(accel,name,command.__name__)
                     cutCopyPasteDict = {
                         'Ctrl+X': 'cut-text',
                         'Ctrl+C': 'copy-text',
@@ -1037,8 +1037,9 @@ class leoMenu:
                     name = cutCopyPasteDict.get(accel)
                     # Allow the user to override the shortcut using equivalent emacs name.
                     rawKey,accel2 = c.config.getShortcut(name)
+                    # g.trace(accel,accel2,name,command.__name__)
                     if not accel2:
-                        accel2 = accel # Do not allow any further overrides.
+                        accel2 = 'none' # Do not allow any further overrides.
                 else:
                     # Second, try to get the old-style name.
                     rawKey,accel2 = c.config.getShortcut(name)
