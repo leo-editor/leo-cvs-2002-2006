@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="18937" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="19074" clone_windows="0"/>
 <globals body_outline_ratio="0.464772727273">
 	<global_window_position top="62" left="351" height="880" width="890"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -42,8 +42,164 @@
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
 <v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20050917092557" a="TV"><vh>4.3.3 final</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="ekr.20051011141302" a="ETV"><vh>4.4 alpha 1</vh>
+<v t="ekr.20051011141302.1"><vh>Known bugs &amp; incompletions</vh>
+<v t="ekr.20051011141302.2"><vh>Crash in undo</vh></v>
+</v>
+<v t="ekr.20051011141302.3"><vh>Moved emacs commands and new keyHandler to Leo's core</vh>
+<v t="ekr.20051011141302.4"><vh>Big picture</vh></v>
+<v t="ekr.20051011141302.5"><vh>Docs</vh>
+<v t="ekr.20051011141302.6"><vh>@url 'http://www.sas.upenn.edu/computing/help/Unix/emacs.html'   (Basic Emacs commands)</vh></v>
+<v t="ekr.20051011141302.7"><vh>@url 'http://www.ling.ed.ac.uk/facilities/help/emacs/emacs_14.html' (Registers)</vh></v>
+<v t="ekr.20051011141302.8"><vh>@url 'http://www.delorie.com/gnu/docs/emacs/emacs_487.html' (Macros)</vh></v>
+</v>
+<v t="ekr.20051011141302.9"><vh>Not used</vh>
+<v t="ekr.20051011141302.10"><vh>class generalizedEditCommands (Do not delete)</vh>
+<v t="ekr.20051011141302.11"><vh>ctor</vh></v>
+<v t="ekr.20051011141302.12"><vh>Options...</vh>
+<v t="ekr.20051011141302.13"><vh>setDefaultOptions</vh></v>
+<v t="ekr.20051011141302.14"><vh>getOption</vh></v>
+</v>
+<v t="ekr.20051011141302.15"><vh>Word stuff...</vh>
+<v t="ekr.20051011141302.16"><vh>findWordStart</vh></v>
+<v t="ekr.20051011141302.17"><vh>insideWord</vh></v>
+<v t="ekr.20051011141302.18"><vh>skipWord</vh></v>
+<v t="ekr.20051011141302.19"><vh>startsWord</vh></v>
+<v t="ekr.20051011141302.20"><vh>setDefaultWordChars</vh></v>
+</v>
+<v t="ekr.20051011141302.21"><vh>Cursor movement</vh>
+<v t="ekr.20051011141302.22"><vh>moveBackwardChar</vh></v>
+<v t="ekr.20051011141302.23"><vh>moveBackwardWord (Finish)</vh></v>
+<v t="ekr.20051011141302.24"><vh>moveForwardChar</vh></v>
+<v t="ekr.20051011141302.25"><vh>moveForwardWord</vh></v>
+<v t="ekr.20051011141302.26"><vh>selectWord</vh></v>
+<v t="ekr.20051011141302.27"><vh>selectForwordWord</vh></v>
+</v>
+</v>
+<v t="ekr.20051011141302.28"><vh>zapTo</vh></v>
+<v t="ekr.20051011141302.29"><vh>From bufferCommandsClass</vh>
+<v t="ekr.20051011141302.30"><vh>setBufferListGetter</vh></v>
+<v t="ekr.20051011141302.31"><vh>setBufferSetter</vh></v>
+<v t="ekr.20051011141302.32"><vh>getBufferDict</vh></v>
+<v t="ekr.20051011141302.33"><vh>setBufferData</vh></v>
+<v t="ekr.20051011141302.34"><vh>setBufferGoto</vh></v>
+<v t="ekr.20051011141302.35"><vh>setBufferDelete</vh></v>
+<v t="ekr.20051011141302.36"><vh>setBufferRename</vh></v>
+</v>
+<v t="ekr.20051011141302.37"><vh>setBufferInteractionMethods &amp; helpers (not used)</vh></v>
+<v t="ekr.20051011141302.38"><vh>findItemsWithPrefix (Not used)</vh></v>
+<v t="ekr.20051011141302.39"><vh>startGoto (No longer used)</vh></v>
+<v t="ekr.20051011141302.40"><vh>Goto (no longer used)</vh></v>
+<v t="ekr.20051011141302.41"><vh>walkKB</vh></v>
+<v t="ekr.20051011141302.42"><vh>killSentenceHelper</vh></v>
+<v t="ekr.20051011141302.43"><vh>tailEnd...</vh>
+<v t="ekr.20051011141302.44"><vh>utTailEnd</vh></v>
+<v t="ekr.20051011141302.45"><vh>_tailEnd</vh></v>
+<v t="ekr.20051011141302.46"><vh>setTailEnd</vh></v>
+</v>
+<v t="ekr.20051011141302.47"><vh>setInBufferMode</vh></v>
+<v t="ekr.20051011141302.48"><vh>executeRegister (not used)</vh></v>
+<v t="ekr.20051011141302.49"><vh>setBufferStrokes (No longer used)</vh></v>
+<v t="ekr.20051011141302.50"><vh>create_cbDict (No longer used)</vh></v>
+<v t="ekr.20051011141302.51"><vh>From nullMenu</vh>
+<v t="ekr.20051011141302.52"><vh>Gui-independent menu enablers</vh></v>
+<v t="ekr.20051011141302.53"><vh>Gui-independent menu routines</vh></v>
+</v>
+<v t="ekr.20051011141302.54"><vh>From tkFrame.finishCreate</vh>
+<v t="ekr.20051011141302.55"><vh>&lt;&lt; create the toplevel and outer frames &gt;&gt;</vh></v>
+<v t="ekr.20051011141302.56"><vh>&lt;&lt; create the icon bar &gt;&gt;</vh></v>
+<v t="ekr.20051011141302.57"><vh>&lt;&lt; create the splitters and their subframes &gt;&gt;</vh></v>
+<v t="ekr.20051011141302.58"><vh>&lt;&lt; create the status line &gt;&gt;</vh></v>
+<v t="ekr.20051011141302.59"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051011141302.60"><vh>&lt;&lt; define defaultEmacsBindingsDict &gt;&gt;</vh></v>
+<v t="ekr.20051011141302.61"><vh>&lt;&lt; define defaultBindingsDict &gt;&gt;</vh></v>
+<v t="ekr.20051011141302.62"><vh>c.editCommands.selectAll</vh></v>
+<v t="ekr.20051011141302.63"><vh>From top level of createMenuEntrties</vh>
+<v t="ekr.20051011141302.64"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20051011141302.65"><vh>All xemacs commands</vh>
+<v t="ekr.20051011141302.66"><vh>B: Buffer-menu</vh></v>
+<v t="ekr.20051011141302.67"><vh>C, E, F, H</vh></v>
+<v t="ekr.20051011141302.68"><vh>I: info</vh></v>
+<v t="ekr.20051011141302.69"><vh>L, M, R, T, V: LaTeX,TeX</vh></v>
+<v t="ekr.20051011141302.70"><vh>a add- align- append- apropos- auto-</vh></v>
+<v t="ekr.20051011141302.71"><vh>b backward- bbdb- beginning- bookmark- br- browse- buffer- build- byte-</vh></v>
+<v t="ekr.20051011141302.72"><vh>c c- calc-, call- capitalize- center- checkdoc- command- completion- copy- count- customize- cvs-</vh></v>
+<v t="ekr.20051011141302.73"><vh>d dabbrev- define- delete- describe- dictionary dired- display- downcase-</vh></v>
+<v t="ekr.20051011141302.74"><vh>e ediff- edir edit- emerge- end- exchange- eshell eval- exit- expand-</vh></v>
+<v t="ekr.20051011141302.75"><vh>f fill- find- format- forward-</vh></v>
+<v t="ekr.20051011141302.76"><vh>g global- goto- grep-</vh></v>
+<v t="ekr.20051011141302.77"><vh>h help- hide- html- hyper-</vh></v>
+<v t="ekr.20051011141302.78"><vh>i ibuffer- id-select- igrep- indent- info- insert- isearch- ispell- iswitchb- itimer-</vh></v>
+<v t="ekr.20051011141302.79"><vh>j jde-</vh></v>
+<v t="ekr.20051011141302.80"><vh>k kill- kimport-</vh></v>
+<v t="ekr.20051011141302.81"><vh>l lisp- list- load-</vh></v>
+<v t="ekr.20051011141302.82"><vh>m macroexpand- mail- make- mark- minibuffer- mouse- move-</vh></v>
+<v t="ekr.20051011141302.83"><vh>n narrow- newline- next-</vh></v>
+<v t="ekr.20051011141302.84"><vh>o open- other- outl- outline- overwrite</vh></v>
+<v t="ekr.20051011141302.85"><vh>p package- paren- pcomplete- pending- pop- popup- pp- prepend- prettyexapnd- previous- profile- ps- pydoc pymacs- python-</vh></v>
+<v t="ekr.20051011141302.86"><vh>q query-</vh></v>
+<v t="ekr.20051011141302.87"><vh>r re- read- recentf- recover- recursive- rename- repeat- replace- reverse- run-</vh></v>
+<v t="ekr.20051011141302.88"><vh>s save- scroll- search- set- shell- sort- speedbar spell- strokes- suspend- switch- symbol-</vh></v>
+<v t="ekr.20051011141302.89"><vh>t tab tags- toggle- toolbar- turn-off turn-on</vh></v>
+<v t="ekr.20051011141302.90"><vh>u universal- upcase- url-</vh></v>
+<v t="ekr.20051011141302.91"><vh>v view- vm-</vh></v>
+<v t="ekr.20051011141302.92"><vh>w win32- winring- word- write-</vh></v>
+<v t="ekr.20051011141302.93"><vh>x xwem-</vh></v>
+<v t="ekr.20051011141302.94"><vh>y yank-</vh></v>
+<v t="ekr.20051011141302.95"><vh>z zap- </vh></v>
+</v>
+<v t="ekr.20051011141302.96"><vh>All commands names:  Leo 125, Emacs 140</vh>
+<v t="ekr.20051011141302.97"><vh>Abbreviation 7</vh></v>
+<v t="ekr.20051011141302.98"><vh>Buffer 8</vh></v>
+<v t="ekr.20051011141302.99"><vh>Control 7</vh></v>
+<v t="ekr.20051011141302.100"><vh>Edit 66</vh></v>
+<v t="ekr.20051011141302.101"><vh>File 6</vh></v>
+<v t="ekr.20051011141302.102"><vh>Key Handler 5</vh></v>
+<v t="ekr.20051011141302.103"><vh>Kill buffer 9</vh></v>
+<v t="ekr.20051011141302.104"><vh>Leo 124</vh></v>
+<v t="ekr.20051011141302.105"><vh>Macro 3</vh></v>
+<v t="ekr.20051011141302.106"><vh>Query Replace 3</vh></v>
+<v t="ekr.20051011141302.107"><vh>Rectangle 6</vh></v>
+<v t="ekr.20051011141302.108"><vh>Register 10</vh></v>
+<v t="ekr.20051011141302.109"><vh>Search 10</vh></v>
+</v>
+<v t="ekr.20051011141302.110"><vh>What I did</vh>
+<v t="ekr.20051011141302.111"><vh>Early days</vh>
+<v t="ekr.20051011141302.112"><vh>Rewrote buildBufferList</vh></v>
+<v t="ekr.20051011141302.113"><vh>Removed Emacs_instances class var</vh></v>
+<v t="ekr.20051011141302.114"><vh>Added c ivar to Emacs class</vh></v>
+<v t="ekr.20051011141302.115"><vh>Removed labels class var</vh></v>
+<v t="ekr.20051011141302.116"><vh>Added baseCommands class</vh></v>
+<v t="ekr.20051011141302.117"><vh>The big collapse (of complexity)</vh></v>
+<v t="ekr.20051011141302.118"><vh>Improvements to commands</vh></v>
+<v t="ekr.20051011141302.119"><vh>Removed all globals</vh></v>
+<v t="ekr.20051011141302.120"><vh>Fixed bug: newline was not setting body pane dirty</vh></v>
+<v t="ekr.20051011141302.121"><vh>Replaced 'M-x' prompt by 'full-command'</vh></v>
+<v t="ekr.20051011141302.122"><vh>Added useMiniBuffer and useEditorMenu @settings</vh></v>
+<v t="ekr.20051011141302.123"><vh>Deleted coreEmacs plugin</vh></v>
+<v t="ekr.20051011141302.124"><vh>Fixed outline selection bug</vh></v>
+<v t="ekr.20051011141302.125"><vh>c.commandsDict now describes all commands</vh></v>
+<v t="ekr.20051011141302.126"><vh>Rewrote altX code</vh></v>
+<v t="ekr.20051011141302.127"><vh>Eliminated all helper classes and simplified the code.</vh></v>
+</v>
+<v t="ekr.20051011141302.128"><vh>Simplifications 1</vh></v>
+<v t="ekr.20051011141302.129"><vh>Simplifications 2</vh></v>
+<v t="ekr.20051011141302.130"><vh>Simplfications 3</vh></v>
+<v t="ekr.20051011141302.131"><vh>Improvements</vh></v>
+<v t="ekr.20051011141302.132"><vh>Improvement 2</vh></v>
+<v t="ekr.20051011141302.133"><vh>Final integration</vh></v>
+<v t="ekr.20051011141302.134"><vh>Final integration 2</vh></v>
+<v t="ekr.20051011141302.135"><vh>Changeover</vh></v>
+<v t="ekr.20051011141302.136"><vh>Bugs fixed</vh></v>
+<v t="ekr.20051011141302.137"><vh>Added big kludge to solve infamous control-v problems</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050917092557"><vh>4.3.3 final</vh>
 <v t="ekr.20050917105646"><vh>Fixes made in 4.3.3</vh></v>
 <v t="ekr.20050917092557.1"><vh>Rewrote documentation</vh></v>
 <v t="ekr.20050917092557.2"><vh>Bug fixes...</vh>
@@ -21269,5 +21425,4775 @@ This installer installs the subprocess sources and also _subprocess.pyd in Pytho
 <t tx="ekr.20050917105646">- Fixed bug that caused the Open With command to crash if the subprocess module was not installed.
 
 - Fixed problems in the niceNocent and fastGotoNode plugins.</t>
+<t tx="ekr.20051011141302">Leo 4.4 alpha 1                 October 14, 2005
+
+Leo 4.4 aims to be compatible with Emacs and Vim key bindings. Leo 4.4 adds an
+Emacs-like minibuffer and support for all frequently-used Emacs commands. Emacs
+users will be able to choose key bindings compatible with their present finger
+habits. Eventually, Vim users will be able to do the same.
+
+To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of Leo 4.4 alpha 1:
+----------------------------------
+
+- Support for all frequently-used Emacs commands, including cursor and screen
+movement, basic character, word and paragragraph manipulation, and commands to
+manipulate buffers, the kill ring, regions and rectangles. Almost all commands
+found in the Emacs Cmds menu are implemented.
+
+- An Emacs-like mini-buffer: you can now execute any command by name, both the
+new Emacs-style commands and the traditional Leo commands.
+
+- You can define key bindings using @shortcuts nodes in leoSettings.leo files.
+You can define multiple sets of key bindings and switch between those sets
+easily.
+
+Coming in later releases of Leo 4.4:
+------------------------------------
+
+- Support for 'mouseless Leo'. There will be commands to manipulate all aspects
+of Leo using commands, so your fingers will never have to leave the keyboard.
+
+- Support for Vim and other 'plain-key' command modes.</t>
+<t tx="ekr.20051011141302.1">- The cut-text, copy-text and paste-text commands work do not work from the
+  command line when the selected text is not in body text.
+
+- C-u 5 &lt;return&gt; works but is not undone properly.
+  Perhaps this is the reason for insert-newline command?
+
+- Emacs search commands are limited to a single body text.
+
+- Buffer commands not complete yet.
+
+- repeat-complex-command (again) does not work.
+
+- There should be a method for the 'check-spelling' command. (use button code)</t>
+<t tx="ekr.20051011141302.2">exception executing command
+Traceback (most recent call last):
+
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 213, in doCommand
+    command()
+
+  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1571, in undo
+    u.undoHelper()
+
+  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1720, in undoMove
+    u.p.moveToNthChildOf(u.oldParent,u.oldN)
+
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 2764, in moveToNthChildOf
+    p.unlink()
+
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 3307, in unlink
+    assert(parent.v in p.v.directParents())
+
+AssertionError</t>
+<t tx="ekr.20051011141302.3"></t>
+<t tx="ekr.20051011141302.4">- The primary goal is to allow Emacs and Vim users to retain their 'finger habits' while using Leo.
+
+    - It is *not* necessary to implement all Emacs commands: just those that are used frequently.
+    - It *is* necessary to extend commands like isearch so they can deal with multiple body texts.
+
+- The secondary goal is 'mouseless leo': being able to drive all parts of Leo without using the mouse.
+
+    - The user must be able to drive all dialogs from the keyboard,
+      **or to get the same effect without using a dialog at all**.</t>
+<t tx="ekr.20051011141302.5"></t>
+<t tx="ekr.20051011141302.6">@killcolor
+
+Invoking:
+    emacs file1 file2 file3 .... 
+
+Help
+    CTRL-h enters the Help facility.
+    Help Tutorial  (CTRL-h t)
+    Help Apropos   (CTRL-h a) find a command given its functionality,
+    Help Character (CTRL-h c) describes a given character's effect,
+    Help Function ( CTRL-h f) describes a given Lisp function specified by name.
+
+Reading, writing files
+    C-x C-f Find file (to read into buffer) 
+    C-x C-s Save current buffer (ie. file in the buffer) 
+
+Moving the cursor
+    C-f forward character 
+    C-b backward character 
+    C-n next line 
+    C-p previous line 
+    C-e move cursor to end of line 
+    C-a move cursor to beginning of line 
+    Esc-&lt; move cursor to top of document 
+    Esc-&gt; move cursor to bottom of document 
+    Esc-f forward word 
+    Esc-b backward word 
+    Esc-a backward sentence 
+    Esc-e forward sentence 
+    Esc-] forward paragraph 
+    Esc-[ backward paragraph 
+    C-v forward page 
+    Esc-v backward page 
+    Esc-x goto-linen 
+    Esc-x goto-char 
+    C-l recenter and redraw page 
+
+Repeating Commands
+    ESC-5 C-f       move forward 5 chars 
+    C-u (the universal argument command)
+        Just like Esc-n, but does not need an argument -&gt; in which case the default of 4 is used. eg: 
+    C-u C-u -&gt; repeat 16 times 
+
+Deleting Stuff (Killing)
+    C-d delete char 
+    E-d kill word 
+    C-k kill line (but not newline after it) 
+    C-u C-k delete 4 lines (not 2 lines! - newlines go too!) 
+    E-4 C-k same 
+
+Yanking back things from the Kill ring
+    C-y yank 
+    C-w kill region 
+    E-w copy region into kill ring 
+    C-@ or C-SPC set-mark 
+    
+Paragraph Reformatting
+    E-q fill-paragraph 
+    E-g fill-region
+
+Searching and replacing
+    C-s isearch-forward 
+    C-r isearch-backward 
+    Esc exit a successful search 
+    C-g quit 
+    C-s Esc non incremental search forward 
+    C-r Esc backward " 
+    E-x  replace-string RET bad RET good RET 
+    E-% query replace 
+
+By default, searches are case insensitive. You can change this by setting the
+variable: case-fold-search --&gt; set it to: nil (Use Esc-x set-variable) 
+    E-x re-search-forward simple 
+    E-x re-search-backward 
+    E-x isearch-forward-regexp incremental 
+    E-x isearch-backward-regexp 
+    E-x query-replace-regexp 
+    E-x replace-regexp 
+    replace unconditionally 
+
+Undo
+    E-x revert-buffer restore file from disk 
+    C-s u undo
+
+Transpose
+    C-t transpose characters 
+    E-t transpose words 
+    C-x C-t transpose lines 
+
+Buffer Manipulation
+    C-x b move to other buffer 
+    C-x s save some buffers 
+    E-x kill-buffer kill buffer 
+    E-x kill-some-buffers kill some buffers 
+    E-x rename-buffer rename buffer 
+    C-x C-q toggle read only status of buffer 
+    C-x C-b list buffers 
+
+Window Manipulation
+    C-x 2 split current window into 2 horizontals 
+    C-x 5 vertically 
+    C-x o move to other window 
+    E-C v scroll next window 
+    Attach '4' to C-x to have the operation go to the other window, eg: C-x 4 f find-file-other window 
+    C-x 4 b change buffer other window 
+    E-x compare-windows (must have 2 buffers in split windows) 
+
+Spelling Checker
+    E-$ (spell check the word the cursor is on)
+    E-x spell-string
+    E-x spell-buffer
+    E-x spell-region
+
+Shell commands in Emacs
+    E-! run UNIX command 
+    E-| run command on marked region (shell-command-on-region) 
+    C-u E-! run UNIX command, but in the current window! 
+    E-x shell invoke shell buffer 
+
+Fix echo'ing and ^M ing at the end of lines: 
+    stty -echo nl 
+
+Dired: Directory Editor commands
+    E-x dired or emacs  
+    SPC move 
+    n next 
+    p prev 
+    v view (via recursive edit) 
+    C-c (or q) to return to directory list 
+    d mark for deletion 
+    e edit file 
+    f edit file 
+    x DELETE those marked 
+    c copy file 
+    r rename file 
+    M change file permissions 
+
+Text Formatting
+    E-x fill-paragraph
+    E-x fill-individual-paragraphs
+    E-x edit-tab-stops
+    E-x untabify (converts tabs to spaces)
+    E-x tabify
+    E-x mark-whole-buffer
+    C-x h variable: indent-tabs-mode
+    (if set to nil, Emacs always uses spaces to make tabs)
+    C-x fill-prefix: this string automatically gets inserted at begin of each line
+    C-x . set-fill-prefix
+    E-x indented-text-mode
+
+Centering Text
+    E-s center-line
+    E-x center-paragraph
+    C-l form feed - used for pagination
+
+Macros
+    C-x ( start macro definition
+    C-x ) end macro definition
+    C-x e call-last-kbd-macro
+
+Customizing Emacs
+    (define-key keymap "keystroke" 'command-name)
+    (global-set-key "keystroke" 'command-name)
+    (local-set-key "keystroke" 'command-name)
+    (global-unset-key "\C-s") 
+    Example:
+        (define-key global-map "\C-xl" 'goto-line)
+            (global-set-key "\C-xl" 'goto-line) 
+    Maps: global-map, ctl-x-map, esc-map 
+
+Indentation
+    E-C-\ indent-region 
+    E-m back-to-indentation 
+    E-^ delete-indentation join this line to previous 
+    E-; indent-for-comment 
+
+C-Mode
+    E-C-a beginning-of-defun 
+    E-C-e end-of-defun 
+    E-C-h mark-c-function 
+
+Variables Default 
+    c-indent-level 2 
+    c-auto-new-line nil 
+    c-continued-statement-offset 2 
+    c-argdecl-indent 5 
+    c-brace-offset 0 
+    c-continued-brace-offset 0 
+    c-brace-imaginary-offset 0 
+    c-label-offset -2 
+
+ETAGS
+    etags *.[ch] creates a TAGS file E-.
+    find-tag C-x 4 find-tag-other-window E-,
+    tags-loop-continue (find next tag)
+    E-x tags-search prompts for an RE and finds it.
+    find next by E-,
+    E-x tags-query-replace
+    C-u E-x tags-query-replace (only replace for full words) E-x list-tags 
+
+Lisp Mode
+    3: emacs-lisp-mode, lisp-mode, lisp-interaction-mode 
+    S-expression: any syntactically correct LISP expression: atom or parenthesized list. 
+    E C-a beginning-of-defun 
+    E C-e end-of-defun 
+    E C-h mark-defun 
+
+Lisp Interaction Mode
+    E-x lisp-interaction-mode
+    LINEFEED C-j is bound to eval-print-last-sexp
+
+Compiling Programs withing Emacs
+    E-x compile
+    default: make -k (controlled by compile-command variable)
+    C-c ` next-error
+    C-u C-x ` start at first error again
+    E-x grep</t>
+<t tx="ekr.20051011141302.7"></t>
+<t tx="ekr.20051011141302.8"></t>
+<t tx="ekr.20051011141302.9"></t>
+<t tx="ekr.20051011141302.10">class editCommands:
+
+    @others</t>
+<t tx="ekr.20051011141302.11">def __init__ (self,c):
+    
+    self.c = c
+
+    self.mode = 'default'
+    self.modeStack = []
+    
+    self.defaultWordChars1, self.defaultWordChars2 = self.setDefaultWordChars()
+    self.wordChars1 = self.defaultWordChars1
+    self.wordChars2 = self.defaultWordChars2
+
+    self.setDefaultOptions()</t>
+<t tx="ekr.20051011141302.12"></t>
+<t tx="ekr.20051011141302.13">def setDefaultOptions(self):
+    
+    self.options = {
+        'extendMovesForward':   True,  # True: moving forward may cross node boundaries.
+        'extendMovesBack':      True,  # True: moving back may cross node boundaries.
+        'extendFindsForward':   True,   # True: find forward may cross node boundaries.
+        'extendFindsBack':      True,   # True: find back may cross node boundaries.
+    }</t>
+<t tx="ekr.20051011141302.14">def getOption (self,optionName):
+    
+    # This may change when modes get put in.
+    return self.options.get(optionName)</t>
+<t tx="ekr.20051011141302.15"></t>
+<t tx="ekr.20051011141302.16">def findWordStart(self,s,i):
+    
+    while i &lt; len(s):
+        if s[i] in self.wordChars1:
+            return i
+        else:
+            i += 1
+    return i</t>
+<t tx="ekr.20051011141302.17">def insideWord (self,s,i):
+    
+    '''Return True if the char at s[i] is inside a word but does not start the word.'''
+    
+    return (
+        0 &lt; i &lt; len(s) and
+        s[i] in self.wordChars2 and
+        s[i-1] in self.wordChars2
+    )</t>
+<t tx="ekr.20051011141302.18">def skipWord(self,s,i):
+    
+    while i &lt; len(s) and s[i] in self.wordChars2:
+        i += 1
+    return i</t>
+<t tx="ekr.20051011141302.19">def startsWord (self,s,i):
+    
+    '''Return True if the char at s[i] is inside a word but does not start the word.'''
+    
+    return (
+        i &lt; len(s) and 
+        s[i] in self.wordChars1 and
+        (i == 0 or s[i-1] not in self.wordChars1)
+    )</t>
+<t tx="ekr.20051011141302.20">def setDefaultWordChars (self):
+    
+    chars1 = '_' + string.letters
+    chars2 = '_' + string.letters + string.digits
+    return chars1, chars2</t>
+<t tx="ekr.20051011141302.21"></t>
+<t tx="ekr.20051011141302.22">def moveBackwardChar (self):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    i = b.getPythonInsertionPoint(s=s)
+    i -= 1
+    if i &gt;= 0:
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
+        p = c.currentPosition().moveToThreadBack()
+        while p:
+            s = p.bodyString()
+            if len(s) &gt; 0:
+                c.selectPosition(p)
+                b.setPythonInsertionPoint(len(s)-1)
+                return True
+            else:
+                p.moveToThreadBack()
+        return False
+    else:
+        return False</t>
+<t tx="ekr.20051011141302.23">def moveBackwardWord (self,i=None):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    if i is None: i = b.getPythonInsertionPoint(s=s)
+
+    if self.startsWord(s,i) or self.insideWord(s,i):
+        i = self.findWordStart(s,i)
+    i = self.findWordStart(s,i) ###
+    if self.startsWord(s,i): ###
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
+        p = c.currentPosition().moveToThreadBack()
+        while p:
+            c.selectPosition(p)
+            if self.moveBackwardWord(0):
+                return True
+            p.moveToThreadBack()
+        return False
+    else:
+        return False</t>
+<t tx="ekr.20051011141302.24">def moveForwardChar (self):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    i = b.getPythonInsertionPoint(s=s)
+    i += 1
+    if i &lt; len(s):
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
+        p = c.currentPosition().moveToThreadNext()
+        while p:
+            if len(p.bodyString()) &gt; 0:
+                c.selectPosition(p)
+                b.setPythonInsertionPoint(0)
+                return True
+            else:
+                p.moveToThreadNext()
+        return False
+    else:
+        return False</t>
+<t tx="ekr.20051011141302.25">def moveForwardWord (self,i=None):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    if i is None: i = b.getPythonInsertionPoint(s=s)
+
+    if self.startsWord(s,i) or self.insideWord(s,i):
+        i = self.skipWord(s,i)
+    i = self.findWordStart(s,i)
+    if self.startsWord(s,i):
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
+        p = c.currentPosition().moveToThreadNext()
+        while p:
+            c.selectPosition(p)
+            if self.moveForwardWord(0):
+                return True
+            p.moveToThreadNext()
+        return False
+    else:
+        return False</t>
+<t tx="ekr.20051011141302.26"></t>
+<t tx="ekr.20051011141302.27">def selectForwardWord (self):
+    
+    c = self ; b = c.frame.body ; s = b.getAllText()
+
+    i = i1 = b.getPythonInsertionPoint()
+    
+    if i &lt; len(s) and g.is_c_id(s[i]):
+        i = g.skip_c_id(s,i+1)
+    
+    while i &lt; len(s) and not g.is_c_id(s[i]):
+        i += 1
+        
+    if i &lt; len(s) and g.is_c_id(s[i]):
+        # b.setPythonTextSelection(i1,i)
+        pass ### TODO</t>
+<t tx="ekr.20051011141302.28">def zapTo (self,event):
+
+    k = self.k ; c = k.c ; w = event.widget
+    s = string.ascii_letters+string.digits+string.punctuation
+
+    if len(event.char) != 0 and event.char in s:
+        k.setState('zap',0)
+        i = w.search(event.char,'insert',stopindex='end')
+        k.resetLabel()
+        if i:
+            t = w.get('insert','%s+1c' % i)
+            c.killBufferCommands.addToKillBuffer(t)
+            w.delete('insert','%s+1c' % i)
+
+    return 'break'
+</t>
+<t tx="ekr.20051011141302.29"></t>
+<t tx="ekr.20051011141302.30">def setBufferListGetter (self,buffer,method):
+
+    #Sets a method that returns a buffer name and its text, and its insert position.
+    self.bufferListGetters [buffer] = method</t>
+<t tx="ekr.20051011141302.31">def setBufferSetter( self, buffer, method ):
+
+    #Sets a method that takes a buffer name and the new contents.
+    self.bufferSetters[ buffer ] = method</t>
+<t tx="ekr.20051011141302.32">def getBufferDict (self,event):
+
+    w = event.widget
+    meth = self.bufferListGetters [w]
+    return meth()</t>
+<t tx="ekr.20051011141302.33">def setBufferData( self, event, name, data ):
+    
+    w = event.widget
+    meth = self.bufferSetters[ w ]
+    meth( name, data )</t>
+<t tx="ekr.20051011141302.34">def setBufferGoto( self, w, method ):
+
+    self.bufferGotos[ w ] = method</t>
+<t tx="ekr.20051011141302.35">def setBufferDelete( self, w, method ):
+    
+    self.bufferDeletes[ w ] = method</t>
+<t tx="ekr.20051011141302.36">def setBufferRename( self, buffer, method ):
+    
+    self.renameBuffers[ buffer ] = method</t>
+<t tx="ekr.20051011141302.37"># Called by modified leoTkinterBody.createBindings.
+
+if 0: # This is dubious.
+    k.setBufferInteractionMethods(frame.bodyCtrl)
+
+def setBufferInteractionMethods (self,buffer):
+
+    '''This function configures the Emacs instance so that
+       it can see all the nodes as buffers for its buffer commands.'''
+       
+    k = self ; c = k.c
+
+    # These are actually methods of the bufferCommandsClass.
+    @others
+
+    # These add Leo-reated capabilities to the key handler.
+    c.bufferCommands.setBufferListGetter(buffer,buildBufferList)
+    c.bufferCommands.setBufferSetter(buffer,setBufferData)
+    c.bufferCommands.setBufferGoto(buffer,gotoNode)
+    c.bufferCommands.setBufferDelete(buffer,deleteNode)
+    c.bufferCommands.setBufferRename(buffer,renameNode)</t>
+<t tx="ekr.20051011141302.38">def findItemsWithPrefix (self,s,aList=None):
+
+    '''This method returns a sorted list of matches.
+    
+    It returns the list of matches and the longest common prefix of all the matches.'''
+
+    k = self ; c = k.c
+
+    common_prefix = ''
+
+    if s: pmatches = [a for a in aList if a.startswith(s)]
+    else: pmatches = []
+        
+    if pmatches:
+        s = pmatches[0] ; done = False
+        for i in xrange(len(s)):
+            prefix = s[:i]
+            for z in pmatches:
+                if not z.startswith(prefix):
+                    done = True ; break
+            if done:
+                break
+            else:
+                common_prefix = prefix
+        pmatches.sort()
+
+    # g.trace(repr(s),len(pmatches))
+    return pmatches,common_prefix</t>
+<t tx="ekr.20051011141302.39">def startGoto (self,event,ch=False):
+
+    k = self.k ; state = k.getState('goto')
+    k.setState('goto',state+1,handler=self.Goto)
+    k.setLabelBlue('')
+    return 'break'</t>
+<t tx="ekr.20051011141302.40">def Goto (self,event):
+
+    k = self.k ; w = event.widget
+    if event.keysym == 'Return':
+        i = k.getLabel()
+        k.resetLabel()
+        state = k.getState('goto')
+        k.setState('goto',0)
+        if i.isdigit():
+            if state == 1:
+                w.mark_set('insert','%s.0' % i)
+            elif state == 2:
+                w.mark_set('insert','1.0 +%sc' % i)
+            w.event_generate('&lt;Key&gt;')
+            w.update_idletasks()
+            w.see('insert')
+    else:
+        k.updateLabel(event)
+
+    return 'break'</t>
+<t tx="ekr.20051011141302.41">def walkKB( self, event, frm, which ):# kb = self.iterateKillBuffer() ):
+
+    k = self.k ; w = event.widget
+    i = w.index( 'insert' )
+    t , t1 = i.split( '.' )
+    clip_text = self.getClipboard( w )    
+    if self.killbuffer or clip_text:
+        if which == 'c':
+            self.reset = True
+            if clip_text:
+                txt = clip_text
+            else:
+                txt = self.kbiterator.next()
+            w.tag_delete( 'kb' )
+            w.insert( frm, txt, ('kb') )
+            w.mark_set( 'insert', i )
+        else:
+            if clip_text:
+                txt = clip_text
+            else:
+                txt = self.kbiterator.next()
+            t1 = str( int( t1 ) + len( txt ) )
+            r = w.tag_ranges( 'kb' )
+            if r and r[ 0 ] == i:
+                w.delete( r[ 0 ], r[ -1 ] )
+            w.tag_delete( 'kb' )
+            w.insert( frm, txt, ('kb') )
+            w.mark_set( 'insert', i )
+    return k._tailEnd( w )</t>
+<t tx="ekr.20051011141302.42">def killSentenceHelper (self,event,back):
+    w = event.widget
+    i = w.search('.','insert',stopindex='end')
+    if back:
+        i = w.search('.','insert',backwards=True,stopindex='1.0')
+        if not i: return 'break'
+        i2 = w.search('.',i,backwards=True,stopindex='1.0') or '1.0'
+        return self.kill(event,i2,'%s + 1c' % i)
+    else:
+        i  = w.search('.','insert',stopindex='end')
+        i2 = w.search('.','insert',backwards=True,stopindex='1.0')
+    if i:
+        i2 = g.choose(i2=='','1.0',i2+'+1c ')
+        self.kill(event,i2,'%s + 1c' % i)
+
+    return 'break'</t>
+<t tx="ekr.20051011141302.43"></t>
+<t tx="ekr.20051011141302.44">def utTailEnd (self,event=None):
+
+    '''A method that Emacs will call with its _tailEnd method'''
+    
+    k = self ; c = k.c ; w = c.frame.bodyCtrl
+
+    # w.event_generate('&lt;Key&gt;')
+    w.focus_force()
+    w.update_idletasks()
+    # c.frame.bodyWantsFocus(w,later=True,tag='utTailEnd')
+
+    return 'break'</t>
+<t tx="ekr.20051011141302.45">def _tailEnd (self,w):
+    
+    '''This returns the tailEnd function that has been configure for the w parameter.'''
+    
+    k = self
+    func = k.tailEnds.get(w)
+    if func:
+        # g.trace(func)
+        return func(w)
+    else:
+        return 'break'
+</t>
+<t tx="ekr.20051011141302.46">def setTailEnd (self,w,tailCall):
+
+    '''This method sets a ending call that is specific for a particular Text widget.
+       Some environments require that specific end calls be made after a keystroke
+       or command is executed.'''
+
+    k = self
+
+    k.tailEnds [w] = tailCall
+</t>
+<t tx="ekr.20051011141302.47">def setInBufferMode (self,event,which):
+    
+    k = self.k ; w = event.widget
+
+    k.keyboardQuit(event)
+    k.setState('bufferList','start%s' % which)
+    k.setLabelBlue('Choose Buffer Name: ',protect=True)
+    self.bufferDict = self.getBufferDict(event)
+
+    return 'break'</t>
+<t tx="ekr.20051011141302.48">def executeRegister (self,event):
+    
+    k = self.k
+
+    if self.method:
+        self.method(event)
+
+        if self.registerMode != 0:
+            k.keyboardQuit(event)</t>
+<t tx="ekr.20051011141302.49">def setBufferStrokes (self,w):
+
+    '''Sets key bindings for Tk Text widget w.'''
+
+    k = self ; tag = 'setBufferStrokes'
+
+    # Create one binding for each entry in cbDict.
+    for stroke in k.cbDict.keys():
+
+        func = k.cbDict.get(stroke)
+        funcName = func.__name__
+
+        def funcCallback (event,func=func):
+            # g.trace(func)
+            return func(event)
+        
+        def keyCallback (event,func=funcCallback,stroke=stroke):
+            return k.masterCommand(event,func,stroke)
+    
+        ok = k.bindKey(w,'&lt;%s&gt;' % (stroke),keyCallback,funcName,tag=tag)
+
+    # Add a binding for &lt;Key&gt; events, so _all_ key events go through masterCommand.
+    def keyCallback (event):
+        return k.masterCommand(event,func=None,stroke='Key')
+        
+    k.bindKey(w,'&lt;Key&gt;',keyCallback,'masterCommand',tag=tag)</t>
+<t tx="ekr.20051011141302.50">def create_cbDict (self):
+
+    '''Create callback dictionary for masterCommand.'''
+
+    k = self ; c = k.c
+    
+    cbDict = {
+    
+    # The big ones...
+        'Alt-x':            k.fullCommand,
+        'Alt-c':            k.quickCommand, # Control keys conflict with XP cut/copy/paste.
+            # Alt-c is usually bound to capitalizeWord.
+        'Control-g':        k.keyboardQuit,
+        'Control-u':        k.universalArgument,
+        'Alt-minus':        k.negativeArgument,
+        'Alt-exclam':       c.controlCommands.shellCommand,
+        'Alt-bar':          c.controlCommands.shellCommandOnRegion,
+        #'Control-z':        c.controlCommands.suspend,
+
+    # Standard Emacs moves...
+        'Alt-less':         c.editCommands.beginningOfBuffer,
+        'Alt-greater':      c.editCommands.endOfBuffer,
+        'Alt-a':            c.editCommands.backSentence,
+        'Alt-e':            c.editCommands.forwardSentence,
+        'Alt-f':            c.editCommands.forwardWord,
+        'Alt-b':            c.editCommands.backwardWord,
+        'Alt-braceright':   c.editCommands.forwardParagraph,
+        'Alt-braceleft':    c.editCommands.backwardParagraph,
+        'Control-Right':    c.editCommands.forwardWord,
+        'Control-Left':     c.editCommands.backwardWord,
+        'Control-a':        c.editCommands.beginningOfLine,
+        'Control-e':        c.editCommands.endOfLine,
+        'Control-p':        c.editCommands.prevLine,
+        'Control-n':        c.editCommands.nextLine,
+        # 'Control-f':      c.editCommands.forwardCharacter, # Conflicts with Find panel.
+        'Control-b':        c.editCommands.backCharacter,
+        #'Alt-Up':          c.editCommands.lineStart,   # Conflicts with Leo outline moves.
+        #'Alt-Down':        c.editCommands.lineEnd,     # Conflicts with Leo outline moves.
+        # 'Control-v':      c.editCommands.scrollDown,
+        # 'Alt-v':          c.editCommands.scrollUp,
+    
+    # Kill buffer...
+        'Control-k':        c.killBufferCommands.killLine,
+        'Alt-d':            c.killBufferCommands.killWord,
+        'Alt-Delete':       c.killBufferCommands.backwardKillWord,
+        "Alt-k":            c.killBufferCommands.killSentence,
+        'Control-y':        c.killBufferCommands.yank,
+        'Alt-y':            c.killBufferCommands.yankPop,
+        # 'Control-w':      c.killBufferCommands.killRegion,
+        # 'Alt-w':          c.killBufferCommands.killRegionSave,
+    
+    # Simple inserts &amp; deletes...
+        # 'Control-o':    c.editCommands.insertNewLine,
+        # 'Control-d':      c.editCommands.deleteNextChar,
+        # 'Alt-backslash':  c.editCommands.deleteSpaces,
+        # 'Delete':         c.editCommands.backwardDeleteCharacter,
+        # 'Control-Alt-o':      c.editCommands.insertNewLineIndent,
+        # 'Control-j':          c.editCommands.insertNewLineAndTab,
+    
+    # Transpose &amp; swap.
+        # 'Alt-c':          c.editCommands.capitalizeWord,
+        # 'Alt-u':          c.editCommands.upCaseWord,
+        # 'Alt-l':          c.editCommands.downCaseWord,
+        # 'Alt-t':          c.editCommands.transposeWords,
+        # 'Control-t':      c.editCommands.swapCharacters,
+    
+    # Region, Paragraph, indent, &amp; formatting.
+        # 'Control-Shift-at':       c.editCommands.setRegion,
+        # 'Alt-Control-backslash':  c.editCommands.indentRegion,
+        # 'Alt-m':                  c.editCommands.backToIndentation,
+        # 'Alt-asciicircum':        c.editCommands.deleteIndentation,
+        # 'Alt-s':                  c.editCommands.centerLine,
+        # 'Alt-q':                  c.editCommands.fillParagraph,
+        # 'Alt-h':                  c.editCommands.selectParagraph,
+        # 'Alt-equal':              c.editCommands.countRegion,
+        # 'Alt-semicolon':          c.editCommands.indentToCommentColumn,
+        
+    # Parens.
+        # 'Alt-parenleft':      c.editCommands.insertParentheses,
+        # 'Alt-parenright':     c.editCommands.movePastClose,
+        
+    # Misc.
+        # 'Control-s':          None,
+        # 'Control-r':          None,
+        # 'Control-l':          None,
+        # 'Alt-z':              None,
+        # 'Control-i':          None,
+        # 'Alt-g':              None,
+        # 'Alt-percent':        None,
+        # 'Control-c':          None,
+        # 'Control-Alt-w':      None,
+        # 'Alt-slash':          c.editCommands.dynamicExpansion,
+        # 'Control-Alt-slash':  c.editCommands.dynamicExpansion2,
+        # 'Escape':             c.editCommands.watchEscape,
+        # 'Alt-colon':          c.editCommands.startEvaluate,
+        # 'Control-underscore': c.undoer.undo,
+
+    # Searches.
+        # 'Control-Alt-s':      c.searchCommands.isearchForwardRegexp,
+        # 'Control-Alt-r':      c.searchCommands.isearchBackwardRegexp,
+        # 'Control-Alt-percent': c.searchCommands.queryReplaceRegex,
+
+    # Numbered commands: conflict with Leo's Expand to level commands, but so what...
+        'Alt-0': k.numberCommand0,
+        'Alt-1': k.numberCommand1,
+        'Alt-2': k.numberCommand2,
+        'Alt-3': k.numberCommand3,
+        'Alt-4': k.numberCommand4,
+        'Alt-5': k.numberCommand5,
+        'Alt-6': k.numberCommand6,
+        'Alt-7': k.numberCommand7,
+        'Alt-8': k.numberCommand8,
+        'Alt-9': k.numberCommand9,
+    }
+
+    return cbDict</t>
+<t tx="ekr.20051011141302.51"># There is no reason to define these routines.
+# Just have the over-rided oops method do nothing!</t>
+<t tx="ekr.20051011141302.52">def updateAllMenus (self):
+    pass
+def updateEditMenu (self):
+    pass
+def updateFileMenu (self):
+    pass
+def updateOutlineMenu (self):
+    pass</t>
+<t tx="ekr.20051011141302.53">def createMenuEntries (self,menu,table,openWith=False,dontBind=False,init=False):
+    pass
+def createMenuItemsFromTable (self,menuName,table,openWith=False):
+    pass
+def createMenusFromTables (self):
+    pass
+def defineMenuTables (self):
+    pass
+def createNewMenu (self,menuName,parentName="top",before=None):
+    pass
+def createRecentFilesMenuItems (self):
+    pass
+def deleteMenu (self,menuName):
+    pass
+def deleteMenuItem (self,itemName,menuName="top"):
+    pass
+def destroyMenu (self,menuName):
+    pass
+def getMenu (self,menuName):
+    pass
+def setMenu (self,menuName,menu):
+    pass</t>
+<t tx="ekr.20051011141302.54">    else:
+        frame = self
+        &lt;&lt; create the toplevel and outer frames &gt;&gt;
+        &lt;&lt; create the icon bar &gt;&gt;
+        &lt;&lt; create the splitters and their subframes &gt;&gt;
+        &lt;&lt; create the status line &gt;&gt;
+        &lt;&lt; create the first tree node &gt;&gt;</t>
+<t tx="ekr.20051011141302.55">frame.top = top = Tk.Toplevel()
+gui.attachLeoIcon(top)
+top.title(frame.title)
+top.minsize(30,10) # In grid units.
+
+if g.os_path_exists(g.app.user_xresources_path):
+    frame.top.option_readfile(g.app.user_xresources_path)
+
+frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
+frame.top.bind("&lt;Button-1&gt;", frame.OnActivateLeoEvent)
+
+# These don't work on Windows. Because of bugs in window managers,
+# there is NO WAY to know which window is on top!
+frame.top.bind("&lt;Activate&gt;",frame.OnActivateLeoEvent)
+frame.top.bind("&lt;Deactivate&gt;",frame.OnDeactivateLeoEvent)
+
+frame.top.bind("&lt;Control-KeyPress&gt;",frame.OnControlKeyDown)
+frame.top.bind("&lt;Control-KeyRelease&gt;",frame.OnControlKeyUp)
+
+# Create the outer frame, the 'hull' component.
+self.outerFrame = Tk.Frame(top)
+self.outerFrame.pack(expand=1,fill="both")
+self.componentClass(c,'hull',self.outerFrame)</t>
+<t tx="ekr.20051011141302.56">self.iconBarComponentName = 'iconBar'
+iconBar = self.iconBarClass(c,outerFrame)
+self.iconFrame = iconBar.iconFrame
+
+self.iconBar = self.componentClass(c,
+    self.iconBarComponentName,iconBar.iconFrame,
+    iconBar,iconBar.pack,iconBar.unpack)
+
+self.iconBar.show()</t>
+<t tx="ekr.20051011141302.57">self.createLeoSplitters(outerFrame)
+
+# Create the canvas, tree, log and body.
+frame.canvas = self.createCanvas(self.split2Pane1)
+frame.tree   = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
+frame.log    = leoTkinterLog(frame,self.split2Pane2)
+frame.body   = leoTkinterBody(frame,self.split1Pane2)
+
+self.componentClass(c,'tree',self.split2Pane1, frame.tree, self.packTree, self.unpackTree)
+self.componentClass(c,'log', self.split2Pane2, frame.log,  self.packLog,  self.unpackLog)
+self.componentClass(c,'body',self.split1Pane2, frame.body, self.packBody, self.unpackBody)
+
+# Yes, this an "official" ivar: this is a kludge.
+frame.bodyCtrl = frame.body.bodyCtrl
+
+# Configure.
+frame.setTabWidth(c.tab_width)
+frame.tree.setColorFromConfig()
+self.reconfigurePanes()
+self.body.setFontFromConfig()
+self.body.setColorFromConfig()</t>
+<t tx="ekr.20051011141302.58">self.statusLineComponentName = 'statusLine'
+statusLine = self.statusLineClass(c,outerFrame)
+
+# Create offical ivars in the frame class.
+self.statusFrame = statusLine.statusFrame
+self.statusLabel = statusLine.labelWidget
+self.statusText  = statusLine.textWidget
+
+self.statusLine = self.componentClass(c,
+    self.statusLineComponentName,
+    statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
+self.statusLine.show() # Show status line by default.</t>
+<t tx="ekr.20051011141302.59">t = leoNodes.tnode()
+v = leoNodes.vnode(c,t)
+p = leoNodes.position(v,[])
+v.initHeadString("NewHeadline")
+
+p.moveToRoot()
+c.beginUpdate()
+try:
+    c.selectVnode(p)
+    c.redraw()
+    c.frame.getFocus()
+    c.editPosition(p)
+finally:
+    c.endUpdate(False)</t>
+<t tx="ekr.20051011141302.60">self.defaultEmacsBindingsDict = {
+                 'abbrev-mode': None,
+                   'about leo': None,
+           'add-global-abbrev': None,
+             'advertised-undo': None,
+            'append-to-buffer': None,
+          'append-to-register': None,
+               'back-sentence': None,
+         'back-to-indentation': None,
+               'backward-char': None,
+        'backward-delete-char': None,
+     'backward-kill-paragraph': None,
+      'backward-kill-sentence': None,
+          'backward-kill-word': None,
+         'beginning-of-buffer': None,
+           'beginning-of-line': None,
+    'call-last-keyboard-macro': None,
+             'capitalize-word': None,
+                     'cascade': None,
+                 'center-line': None,
+               'center-region': None,
+       'check-all-python-code': None,
+               'check-outline': None,
+           'check-python-code': None,
+             'clear-rectangle': None,
+                  'clone-node': None,
+                       'close': None,
+             'close-rectangle': None,
+                'contract-all': None,
+               'contract-node': None,
+             'contract-parent': None,
+          'convert-all-blanks': None,
+            'convert-all-tabs': None,
+              'convert-blanks': None,
+                'convert-tabs': None,
+                   'copy-node': None,
+  'copy-rectangle-to-register': None,
+              'copy-to-buffer': None,
+            'copy-to-register': None,
+                    'cut-node': None,
+          'dabbrev-completion': None,
+             'dabbrev-expands': None,
+                    'de-hoist': None,
+                      'delete': None,
+                 'delete-char': None,
+                 'delete-file': None,
+          'delete-indentation': None,
+                 'delete-node': None,
+            'delete-rectangle': None,
+               'delete-spaces': None,
+                      'demote': None,
+                        'diff': None,
+              'digit-argument': None,
+             'downcase-region': None,
+               'downcase-word': None,
+                'dump-outline': None,
+               'edit-headline': None,
+               'end-kbd-macro': None,
+               'end-of-buffer': None,
+                 'end-of-line': None,
+           'equal-sized-panes': None,
+             'eval-expression': None,
+         'exchange-point-mark': None,
+              'execute-script': None,
+               'expand-abbrev': None,
+                  'expand-all': None,
+           'expand-next-level': None,
+                 'expand-node': None,
+           'expand-prev-level': None,
+       'expand-region-abbrevs': None,
+           'expand-to-level 1': None,
+           'expand-to-level 2': None,
+           'expand-to-level 3': None,
+           'expand-to-level 4': None,
+           'expand-to-level 5': None,
+           'expand-to-level 6': None,
+           'expand-to-level 7': None,
+           'expand-to-level 8': None,
+           'expand-to-level 9': None,
+            'export-headlines': None,
+                     'extract': None,
+               'extract-names': None,
+             'extract-section': None,
+                 'fill-region': None,
+    'fill-region-as-paragraph': None,
+                   'find-next': None,
+                  'find-panel': None,
+               'find-previous': None,
+             'flatten-outline': None,
+                 'flush-lines': None,
+                'forward-char': None,
+            'forward-sentence': None,
+                   'goto-char': None,
+                  'goto-first': None,
+                   'goto-last': None,
+                   'goto-line': None,
+            'goto-line-number': None,
+           'goto-next changed': None,
+            'goto-next marked': None,
+             'goto-next-clone': None,
+              'goto-next-node': None,
+           'goto-next-sibling': None,
+           'goto-next-visible': None,
+                 'goto-parent': None,
+              'goto-prev-node': None,
+           'goto-prev-sibling': None,
+           'goto-prev-visible': None,
+                       'hoist': None,
+                    'how-many': None,
+ 'iconfify-or-deiconify-frame': None,
+              'import at-file': None,
+              'import-at-root': None,
+           'import-cweb-files': None,
+         'import-derived-file': None,
+    'import-flattened-outline': None,
+          'import-noweb-files': None,
+          'increment-register': None,
+                      'indent': None,
+               'indent-region': None,
+             'indent-relative': None,
+              'indent-rigidly': None,
+    'indent-to-comment-column': None,
+                 'insert-file': None,
+       'insert-keyboard-macro': None,
+              'insert-newline': None,
+                 'insert-node': None,
+          'insert-parentheses': None,
+             'insert-register': None,
+            'insert-body-time': None,
+        'insert-headline-time': None,
+            'insert-to-buffer': None,
+   'inverse-add-global-abbrev': None,
+            'isearch-backward': None,
+     'isearch-backward-regexp': None,
+             'isearch-forward': None,
+      'isearch-forward-regexp': None,
+            'jump-to-register': None,
+                  'keep-lines': None,
+               'keyboard-quit': None,
+            'kill-all-abbrevs': None,
+                 'kill-buffer': None,
+                   'kill-line': None,
+              'kill-paragraph': None,
+              'kill-rectangle': None,
+                 'kill-region': None,
+            'kill-region-save': None,
+               'kill-sentence': None,
+                   'kill-word': None,
+                 'line-number': None,
+                'list-abbrevs': None,
+                'list-buffers': None,
+                   'load-file': None,
+              'make-directory': None,
+                        'mark': None,
+          'mark-changed items': None,
+          'mark-changed roots': None,
+                 'mark-clones': None,
+               'mark-subheads': None,
+               'match-bracket': None,
+                'minimize-all': None,
+           'move-outline-down': None,
+           'move-outline-left': None,
+          'move-outline-right': None,
+             'move-outline-up': None,
+             'move-past-close': None,
+         'name-last-kbd-macro': None,
+           'negative-argument': None,
+                         'new': None,
+          'newline-and-indent': None,
+                   'next-line': None,
+              'number-command': None,
+          'number-to-register': None,
+                        'open': None,
+         'open-compare-window': None,
+          'open-leoConfig.leo': None,
+            'open-leoDocs.leo': None,
+            'open-online-home': None,
+        'open-online-tutorial': None,
+          'open-python-window': None,
+              'open-rectangle': None,
+                   'open-with': None,
+             'outline-to-CWEB': None,
+            'outline-to-noweb': None,
+                  'paste-node': None,
+       'paste-retaining-clone': None,
+           'point-to-register': None,
+                 'preferences': None,
+           'prepend-to-buffer': None,
+         'prepend-to-register': None,
+'pretty-print-all-python-code': None,
+    'pretty-print-python-code': None,
+               'previous-line': None,
+                     'promote': None,
+               'query-replace': None,
+         'query-replace-regex': None,
+          're-search-backward': None,
+           're-search-forward': None,
+            'read-abbrev-file': None,
+          'read-at-file-nodes': None,
+           'read-outline-only': None,
+          'reformat-paragraph': None,
+          'remove-blank-lines': None,
+            'remove-directory': None,
+            'remove-sentinels': None,
+               'rename-buffer': None,
+      'repeat-complex-command': None,
+                     'replace': None,
+               'replace-regex': None,
+              'replace-string': None,
+           'replace-then-find': None,
+            'resize-to-screen': None,
+              'reverse-region': None,
+                      'revert': None,
+                        'save': None,
+       'save-buffers-kill-leo': None,
+                   'save-file': None,
+                     'save-as': None,
+                     'save-to': None,
+                 'scroll-down': None,
+                   'scroll-up': None,
+             'search-backward': None,
+              'search-forward': None,
+                  'select-all': None,
+                  'set-colors': None,
+          'set-comment-column': None,
+             'set-fill-column': None,
+             'set-fill-prefix': None,
+                    'set-font': None,
+            'set-mark-command': None,
+               'shell-command': None,
+     'shell-command-on-region': None,
+             'show-invisibles': None,
+               'sort-children': None,
+                'sort-columns': None,
+                 'sort-fields': None,
+                  'sort-lines': None,
+               'sort-siblings': None,
+                  'split-line': None,
+             'start-kbd-macro': None,
+            'string-rectangle': None,
+                     'suspend': None,
+            'switch-to-buffer': None,
+                      'tabify': None,
+                      'tangle': None,
+                  'tangle-all': None,
+               'tangle-marked': None,
+          'toggle-active-pane': None,
+       'toggle-angle-brackets': None,
+      'toggle-split-direction': None,
+             'transpose-chars': None,
+             'transpose-lines': None,
+             'transpose-words': None,
+                    'unindent': None,
+          'universal-argument': None,
+                  'unmark-all': None,
+                    'untabify': None,
+                    'untangle': None,
+                'untangle-all': None,
+             'untangle-marked': None,
+               'upcase-region': None,
+                 'upcase-word': None,
+                'view-lossage': None,
+               'view-register': None,
+                       'weave': None,
+                   'what-line': None,
+        'word-search-backward': None,
+         'word-search-forward': None,
+           'write-abbrev-file': None,
+                        'yank': None,
+                    'yank-pop': None,
+              'yank-rectangle': None,
+            'zap-to-character': None,
+}</t>
+<t tx="ekr.20051011141302.61">self.defaultBindingsDict = {
+                 'abbrev-mode': None,
+                   'about leo': None,
+           'add-global-abbrev': None,
+             'advertised-undo': None,
+            'append-to-buffer': None,
+          'append-to-register': None,
+               'back-sentence': None,
+         'back-to-indentation': None,
+               'backward-char': None,
+        'backward-delete-char': None,
+     'backward-kill-paragraph': None,
+      'backward-kill-sentence': None,
+          'backward-kill-word': None,
+         'beginning-of-buffer': None,
+           'beginning-of-line': None,
+    'call-last-keyboard-macro': None,
+             'capitalize-word': None,
+                     'cascade': None,
+                 'center-line': None,
+               'center-region': None,
+       'check-all-python-code': None,
+               'check-outline': None,
+           'check-python-code': None,
+             'clear-rectangle': None,
+                  'clone-node': None,
+                       'close': None,
+             'close-rectangle': None,
+                'contract-all': None,
+               'contract-node': None,
+             'contract-parent': None,
+          'convert-all-blanks': None,
+            'convert-all-tabs': None,
+              'convert-blanks': None,
+                'convert-tabs': None,
+                   'copy-node': None,
+  'copy-rectangle-to-register': None,
+              'copy-to-buffer': None,
+            'copy-to-register': None,
+                    'cut-node': None,
+          'dabbrev-completion': None,
+             'dabbrev-expands': None,
+                    'de-hoist': None,
+                      'delete': None,
+                 'delete-char': None,
+                 'delete-file': None,
+          'delete-indentation': None,
+                 'delete-node': None,
+            'delete-rectangle': None,
+               'delete-spaces': None,
+                      'demote': None,
+                        'diff': None,
+              'digit-argument': None,
+             'downcase-region': None,
+               'downcase-word': None,
+                'dump-outline': None,
+               'edit-headline': None,
+               'end-kbd-macro': None,
+               'end-of-buffer': None,
+                 'end-of-line': None,
+           'equal-sized-panes': None,
+             'eval-expression': None,
+         'exchange-point-mark': None,
+              'execute-script': None,
+               'expand-abbrev': None,
+                  'expand-all': None,
+           'expand-next-level': None,
+                 'expand-node': None,
+           'expand-prev-level': None,
+       'expand-region-abbrevs': None,
+           'expand-to-level 1': None,
+           'expand-to-level 2': None,
+           'expand-to-level 3': None,
+           'expand-to-level 4': None,
+           'expand-to-level 5': None,
+           'expand-to-level 6': None,
+           'expand-to-level 7': None,
+           'expand-to-level 8': None,
+           'expand-to-level 9': None,
+            'export-headlines': None,
+                     'extract': None,
+               'extract-names': None,
+             'extract-section': None,
+                 'fill-region': None,
+    'fill-region-as-paragraph': None,
+                   'find-next': None,
+                  'find-panel': None,
+               'find-previous': None,
+             'flatten-outline': None,
+                 'flush-lines': None,
+                'forward-char': None,
+            'forward-sentence': None,
+                   'goto-char': None,
+                  'goto-first': None,
+                   'goto-last': None,
+                   'goto-line': None,
+            'goto-line-number': None,
+           'goto-next changed': None,
+            'goto-next marked': None,
+             'goto-next-clone': None,
+              'goto-next-node': None,
+           'goto-next-sibling': None,
+           'goto-next-visible': None,
+                 'goto-parent': None,
+              'goto-prev-node': None,
+           'goto-prev-sibling': None,
+           'goto-prev-visible': None,
+                       'hoist': None,
+                    'how-many': None,
+ 'iconfify-or-deiconify-frame': None,
+              'import at-file': None,
+              'import-at-root': None,
+           'import-cweb-files': None,
+         'import-derived-file': None,
+    'import-flattened-outline': None,
+          'import-noweb-files': None,
+          'increment-register': None,
+                      'indent': None,
+               'indent-region': None,
+             'indent-relative': None,
+              'indent-rigidly': None,
+    'indent-to-comment-column': None,
+                 'insert-file': None,
+       'insert-keyboard-macro': None,
+              'insert-newline': None,
+                 'insert-node': None,
+          'insert-parentheses': None,
+             'insert-register': None,
+            'insert-body-time': None,
+        'insert-headline-time': None,
+            'insert-to-buffer': None,
+   'inverse-add-global-abbrev': None,
+            'isearch-backward': None,
+     'isearch-backward-regexp': None,
+             'isearch-forward': None,
+      'isearch-forward-regexp': None,
+            'jump-to-register': None,
+                  'keep-lines': None,
+               'keyboard-quit': None,
+            'kill-all-abbrevs': None,
+                 'kill-buffer': None,
+                   'kill-line': None,
+              'kill-paragraph': None,
+              'kill-rectangle': None,
+                 'kill-region': None,
+            'kill-region-save': None,
+               'kill-sentence': None,
+                   'kill-word': None,
+                 'line-number': None,
+                'list-abbrevs': None,
+                'list-buffers': None,
+                   'load-file': None,
+              'make-directory': None,
+                        'mark': None,
+          'mark-changed items': None,
+          'mark-changed roots': None,
+                 'mark-clones': None,
+               'mark-subheads': None,
+               'match-bracket': None,
+                'minimize-all': None,
+           'move-outline-down': None,
+           'move-outline-left': None,
+          'move-outline-right': None,
+             'move-outline-up': None,
+             'move-past-close': None,
+         'name-last-kbd-macro': None,
+           'negative-argument': None,
+                         'new': None,
+          'newline-and-indent': None,
+                   'next-line': None,
+              'number-command': None,
+          'number-to-register': None,
+                        'open': None,
+         'open-compare-window': None,
+          'open-leoConfig.leo': None,
+            'open-leoDocs.leo': None,
+            'open-online-home': None,
+        'open-online-tutorial': None,
+          'open-python-window': None,
+              'open-rectangle': None,
+                   'open-with': None,
+             'outline-to-CWEB': None,
+            'outline-to-noweb': None,
+                  'paste-node': None,
+       'paste-retaining-clone': None,
+           'point-to-register': None,
+                 'preferences': None,
+           'prepend-to-buffer': None,
+         'prepend-to-register': None,
+'pretty-print-all-python-code': None,
+    'pretty-print-python-code': None,
+               'previous-line': None,
+                     'promote': None,
+               'query-replace': None,
+         'query-replace-regex': None,
+          're-search-backward': None,
+           're-search-forward': None,
+            'read-abbrev-file': None,
+          'read-at-file-nodes': None,
+           'read-outline-only': None,
+          'reformat-paragraph': None,
+          'remove-blank-lines': None,
+            'remove-directory': None,
+            'remove-sentinels': None,
+               'rename-buffer': None,
+      'repeat-complex-command': None,
+                     'replace': None,
+               'replace-regex': None,
+              'replace-string': None,
+           'replace-then-find': None,
+            'resize-to-screen': None,
+              'reverse-region': None,
+                      'revert': None,
+                        'save': None,
+     'save-buffers-kill-leo':   None,
+                   'save-file': None,
+                     'save-as': None,
+                     'save-to': None,
+                 'scroll-down': None,
+                   'scroll-up': None,
+             'search-backward': None,
+              'search-forward': None,
+                  'select-all': None,
+                  'set-colors': None,
+          'set-comment-column': None,
+             'set-fill-column': None,
+             'set-fill-prefix': None,
+                    'set-font': None,
+            'set-mark-command': None,
+               'shell-command': None,
+     'shell-command-on-region': None,
+             'show-invisibles': None,
+               'sort-children': None,
+                'sort-columns': None,
+                 'sort-fields': None,
+                  'sort-lines': None,
+               'sort-siblings': None,
+                  'split-line': None,
+             'start-kbd-macro': None,
+            'string-rectangle': None,
+                     'suspend': None,
+            'switch-to-buffer': None,
+                      'tabify': None,
+                      'tangle': None,
+                  'tangle-all': None,
+               'tangle-marked': None,
+          'toggle-active-pane': None,
+       'toggle-angle-brackets': None,
+      'toggle-split-direction': None,
+             'transpose-chars': None,
+             'transpose-lines': None,
+             'transpose-words': None,
+                    'unindent': None,
+          'universal-argument': None,
+                  'unmark-all': None,
+                    'untabify': None,
+                    'untangle': None,
+                'untangle-all': None,
+             'untangle-marked': None,
+               'upcase-region': None,
+                 'upcase-word': None,
+                'view-lossage': None,
+               'view-register': None,
+                       'weave': None,
+                   'what-line': None,
+        'word-search-backward': None,
+         'word-search-forward': None,
+           'write-abbrev-file': None,
+                        'yank': None,
+                    'yank-pop': None,
+              'yank-rectangle': None,
+            'zap-to-character': None,
+}</t>
+<t tx="ekr.20051011141302.62">def selectAll (event):
+
+    event.widget.tag_add('sel','1.0','end')</t>
+<t tx="ekr.20051011141302.63">            if bind_shortcut and not dontBind:
+                if c.useMiniBuffer:
+                    ok = c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith,fromMenu=True)
+                    if not ok: menu_shortcut = None
+                else:
+                    &lt;&lt; handle bind_shorcut &gt;&gt;</t>
+<t tx="ekr.20051011141302.64">d = self.menuShortcuts
+bunch = d.get(bind_shortcut)
+
+if bunch and not g.app.menuWarningsGiven:
+    if bunch.init:
+        if 0: # Testing only.
+            s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
+                accel,label,bunch.accel,bunch.label)
+            g.es(s,color="red")
+            print s
+        # Unbind the previous accelerator.
+        if menu != bunch.menu or label != bunch.label:
+            self.clearAccel(bunch.menu,bunch.label)
+    else:
+        s = 'duplicate shortcut\nnew: %s %s\nold: %s %s' % (
+            accel,label,bunch.accel,bunch.label)
+        g.es(s,color="red")
+        print s
+
+d[bind_shortcut] = g.Bunch(label=label,accel=accel,init=init,menu=menu)
+    
+try:
+    self.frame.body.bind(bind_shortcut,menuCallback)
+    self.bind(bind_shortcut,menuCallback)
+except: # could be a user error
+    if not g.app.menuWarningsGiven:
+        print "exception binding menu shortcut..."
+        print bind_shortcut
+        g.es_exception()
+        g.app.menuWarningsGive = True</t>
+<t tx="ekr.20051011141302.65">@killcolor
+</t>
+<t tx="ekr.20051011141302.66">Buffer-menu-1-window
+Buffer-menu-2-window
+Buffer-menu-backup-unmark
+Buffer-menu-delete
+Buffer-menu-delete-backwards
+Buffer-menu-execute
+Buffer-menu-igrep
+Buffer-menu-mark
+Buffer-menu-maybe-mouse-select
+Buffer-menu-mouse-select
+Buffer-menu-not-modified
+Buffer-menu-other-window
+Buffer-menu-popup-menu
+Buffer-menu-quit
+Buffer-menu-save
+Buffer-menu-select
+Buffer-menu-switch-other-window
+Buffer-menu-this-window
+Buffer-menu-toggle-read-only
+Buffer-menu-unmark
+Buffer-menu-visit-tags-table</t>
+<t tx="ekr.20051011141302.67">Custom-buffer-done
+Custom-goto-parent
+Custom-make-dependencies
+Custom-mode-menu
+Custom-reset-current
+Custom-reset-saved
+Custom-reset-standard
+Custom-save
+Custom-set
+
+Electric-command-history-redo-expression
+
+Footnote-add-footnote
+
+Helper-describe-bindings
+Helper-help
+
+</t>
+<t tx="ekr.20051011141302.68">Info-elisp-ref
+Info-emacs-command
+Info-emacs-key
+Info-goto-emacs-command-node
+Info-goto-emacs-key-command-node
+Info-goto-node
+Info-query
+Info-search
+Info-speedbar-browser
+Info-split
+Info-tagify
+Info-validate
+Info-visit-file</t>
+<t tx="ekr.20051011141302.69">LaTeX-install-toolbar
+LaTeX-mode
+
+Manual-nuke-nroff-bs
+
+Rd-mode
+
+TeX-auto-generate
+TeX-auto-generate-global
+TeX-insert-quote
+TeX-mode
+TeX-submit-bug-report
+
+View-process-status</t>
+<t tx="ekr.20051011141302.70">abbrev-mode
+abbrev-prefix-mark
+
+abort-recursive-edit
+about-xemacs
+activate-region
+ada-make-filename-from-adaname
+ada-mode
+
+add-change-log-entry
+add-change-log-entry-other-window
+add-global-abbrev
+add-log-convert
+add-mode-abbrev
+add-name-to-file
+
+advertised-switch-to-completions
+advertised-undo
+
+align
+align-current
+align-entire
+align-highlight-rule
+align-newline-and-indent
+align-regexp
+align-unhighlight-rule
+
+all-hail-emacs
+all-hail-xemacs
+ams-tex-mode
+ansi-color-for-comint-mode-on
+apache-mode
+
+append-next-kill
+append-to-buffer
+append-to-file
+append-to-register
+
+apply-macro-to-region-lines
+appt-add
+appt-delete
+apropos
+apropos-command
+apropos-documentation
+apropos-value
+apropos-zippy
+arp
+asm-mode
+assign-last-kbd-macro-to-key
+
+auto-compression-mode
+auto-fill-mode
+auto-insert
+auto-revert-mode
+auto-save-mode
+auto-show-make-point-visible
+auto-show-mode
+
+autoconf-mode
+awk-mode</t>
+<t tx="ekr.20051011141302.71">back-to-indentation
+background
+backtrace
+
+backward-block-of-lines
+backward-char
+backward-char-command
+backward-delete-char
+backward-delete-char-untabify
+backward-kill-line
+backward-kill-paragraph
+backward-kill-sentence
+backward-kill-sexp
+backward-kill-word
+backward-list
+backward-or-forward-delete-char
+backward-or-forward-kill-sentence
+backward-or-forward-kill-sexp
+backward-or-forward-kill-word
+backward-other-window
+backward-page
+backward-paragraph
+backward-sentence
+backward-sexp
+backward-to-indentation
+backward-up-list
+backward-word
+
+balance-windows
+balloon-help-minor-mode
+balloon-help-mode
+base64-decode-region
+base64-encode-region
+basic-save-buffer
+
+bbdb
+bbdb-add-or-remove-mail-alias
+bbdb-apply-next-command-to-all-records
+bbdb-changed
+bbdb-company
+bbdb-complete-name
+bbdb-create
+bbdb-create-ftp-site
+bbdb-creation-newer
+bbdb-creation-no-change
+bbdb-creation-older
+bbdb-delete-current-field-or-record
+bbdb-delete-current-record
+bbdb-dial
+bbdb-display-all-records-completely
+bbdb-display-record-completely
+bbdb-edit-current-field
+bbdb-finger
+bbdb-fontify-buffer
+bbdb-force-record-create
+bbdb-ftp
+bbdb-help
+bbdb-info
+bbdb-insert-new-field
+bbdb-load-touchtones
+bbdb-menu
+bbdb-merge-file
+bbdb-name
+bbdb-net
+bbdb-notes
+bbdb-omit-record
+bbdb-print
+bbdb-record-edit-notes
+bbdb-record-edit-property
+bbdb-refile-record
+bbdb-send-mail
+bbdb-show-all-recipients
+bbdb-snarf
+bbdb-snarf-region
+bbdb-submit-bug-report
+bbdb-timestamp-newer
+bbdb-timestamp-older
+bbdb-toggle-all-records-display-layout
+bbdb-toggle-records-display-layout
+bbdb-transpose-fields
+bbdb-whois
+bbdb-www
+bbdb-www-grab-homepage
+bbdb-yank
+bbdb/gnus-annotate-sender
+bbdb/gnus-show-all-recipients
+bbdb/gnus-show-records
+bbdb/gnus-snarf-signature
+bbdb/mh-annotate-sender
+bbdb/mh-show-sender
+bbdb/rmail-annotate-sender
+bbdb/rmail-show-sender
+bbdb/vm-annotate-sender
+bbdb/vm-set-auto-folder-alist
+bbdb/vm-show-all-recipients
+bbdb/vm-show-records
+bbdb/vm-show-sender
+
+beginning-of-buffer
+beginning-of-buffer-other-window
+beginning-of-defun
+beginning-of-defun-raw
+beginning-of-line
+beginning-of-line-text
+
+bib-cite-minor-mode
+bib-mode
+bibtex-mode
+binary-overwrite-mode
+blackbox
+blink-cursor-mode
+blink-matching-open
+blink-paren
+bnf-mode
+
+bookmark-bmenu-list
+bookmark-delete
+bookmark-insert
+bookmark-insert-location
+bookmark-jump
+bookmark-load
+bookmark-locate
+bookmark-menu-delete
+bookmark-menu-insert
+bookmark-menu-jump
+bookmark-menu-locate
+bookmark-menu-rename
+bookmark-relocate
+bookmark-rename
+bookmark-save
+bookmark-set
+bookmark-write
+
+br-complete-symbol
+br-env-browse
+br-env-load
+br-three-button-mouse
+br-to-from-viewer
+br-two-button-mouse
+
+browse-url
+browse-url-at-mouse
+browse-url-at-point
+browse-url-cci
+browse-url-firefox
+browse-url-galeon
+browse-url-generic
+browse-url-gnome-moz
+browse-url-grail
+browse-url-iximosaic
+browse-url-kde
+browse-url-lynx-emacs
+browse-url-lynx-xterm
+browse-url-mail
+browse-url-mmm
+browse-url-mosaic
+browse-url-mozilla
+browse-url-netscape
+browse-url-of-buffer
+browse-url-of-dired-file
+browse-url-of-file
+browse-url-of-region
+browse-url-opera
+browse-url-w3
+browse-url-w3-gnudoit
+browse-url-w3m
+browse-url-w3m-gnudoit
+
+bsh-script-help
+
+buffer-disable-undo
+buffer-enable-undo
+buffer-flush-undo
+buffer-menu
+buffer-menu-other-window
+
+build
+build-report
+build-version
+
+bury-buffer
+
+byte-compile-and-load-file
+byte-compile-buffer
+byte-compile-file
+byte-force-recompile
+byte-recompile-directory
+byte-recompile-file</t>
+<t tx="ekr.20051011141302.72">c++-browse
+c++-mode
+
+c-add-style
+c-comment-edit
+c-macro-expand
+c-mode
+c-set-offset
+c-set-style
+
+calc
+calc-dispatch
+calc-embedded
+calc-embedded-activate
+calc-grab-rectangle
+calc-grab-region
+calc-keypad
+calc-tutorial
+
+calendar
+call-last-kbd-macro
+call-tree
+caml-mode
+camldebug
+cancel-debug-on-entry
+canonically-space-region
+
+capitalize-region
+capitalize-region-as-title
+capitalize-region-or-word
+capitalize-word
+
+cd
+cde-start-drag
+cde-start-drag-region
+
+center-line
+center-paragraph
+center-region
+center-to-window-line
+
+change-log-merge
+change-log-mode
+change-log-redate
+
+check-ispell-version
+
+checkdoc
+checkdoc-continue
+checkdoc-current-buffer
+checkdoc-defun
+checkdoc-eval-current-buffer
+checkdoc-eval-defun
+checkdoc-interactive
+checkdoc-ispell
+checkdoc-ispell-comments
+checkdoc-ispell-continue
+checkdoc-ispell-current-buffer
+checkdoc-ispell-defun
+checkdoc-ispell-interactive
+checkdoc-ispell-message-interactive
+checkdoc-ispell-message-text
+checkdoc-ispell-start
+checkdoc-message-interactive
+checkdoc-message-text
+checkdoc-minor-mode
+checkdoc-rogue-spaces
+checkdoc-start
+
+choose-completion
+
+clear-profiling-info
+clear-rectangle
+clearcase-install
+clearcase-integrate
+clearcase-unintegrate
+
+clos-browse
+column-number-mode
+comint-dynamic-complete
+comint-mode
+comint-run
+command-apropos
+command-history-mode
+comment-region
+compare-windows
+compilation-minor-mode
+compilation-mode
+compilation-shell-minor-mode
+compile
+compile-defun
+complete
+
+completion-do-in-minibuffer
+completion-list-mode
+completion-list-mode-quit
+completion-switch-to-minibuffer
+
+compose-mail
+compose-mail-other-frame
+compose-mail-other-window
+
+consing-since-gc
+context-en-mode
+context-nl-mode
+
+conx
+conx-buffer
+conx-load
+conx-region
+
+copy-file
+copy-from-above-command
+copy-primary-selection
+copy-rectangle-to-register
+copy-region-as-kill
+copy-to-buffer
+copy-to-register
+
+count-lines-buffer
+count-lines-page
+count-lines-region
+count-matches
+count-words-buffer
+count-words-region
+
+cperl-mode
+cperl-perldoc
+cperl-perldoc-at-point
+
+css-mode
+
+ctypes-all-buffers
+ctypes-auto-parse-mode
+ctypes-buffer
+ctypes-define-type
+ctypes-define-type-in-mode
+ctypes-dir
+ctypes-file
+ctypes-read-file
+ctypes-tags
+
+customize
+customize-apropos
+customize-apropos-faces
+customize-apropos-groups
+customize-apropos-options
+customize-browse
+customize-changed-options
+customize-customized
+customize-face
+customize-face-other-window
+customize-group
+customize-group-other-window
+customize-option
+customize-option-other-window
+customize-other-window
+customize-save-customized
+customize-save-variable
+customize-saved
+customize-set-value
+customize-set-variable
+customize-variable
+customize-variable-other-window
+
+cvs-checkout
+cvs-examine
+cvs-log-mode
+cvs-quickdir
+cvs-status
+cvs-status-mode
+cvs-update</t>
+<t tx="ekr.20051011141302.73">dabbrev-completion
+dabbrev-expand
+
+dbx
+
+debug
+debug-on-entry
+
+decipher
+decipher-mode
+decrease-left-margin
+decrease-right-margin
+
+define-abbrevs
+define-global-abbrev
+define-mail-alias
+define-mode-abbrev
+defining-kbd-macro
+
+delete-backward-char
+delete-blank-lines
+delete-char
+delete-completion-window
+delete-directory
+delete-file
+delete-frame
+delete-horizontal-space
+delete-indentation
+delete-matching-lines
+delete-non-matching-lines
+delete-other-frames
+delete-other-windows
+delete-primary-selection
+delete-rectangle
+delete-region
+delete-selection-mode
+delete-window
+delete-windows-on
+
+deprecated-help-command
+
+describe-beta
+describe-bindings
+describe-buffer-case-table
+describe-class
+describe-copying
+describe-current-display-table
+describe-distribution
+describe-function
+describe-function-arglist
+describe-function-at-point
+describe-generic
+describe-installation
+describe-key
+describe-key-briefly
+describe-last-error
+describe-method
+describe-mode
+describe-no-warranty
+describe-pointer
+describe-prefix-bindings
+describe-project
+describe-stroke
+describe-syntax
+describe-variable
+describe-variable-at-point
+
+desktop-entry-mode
+desktop-read
+
+diary
+diary-mail-entries
+
+dictionary
+dictionary-lookup-definition
+dictionary-match-words
+dictionary-mouse-popup-matching-words
+dictionary-popup-matching-words
+dictionary-search
+
+diff
+diff-backup
+diff-minor-mode
+diff-mode
+
+digit-argument
+directory-tree-thing
+
+dired
+dired-apropos
+dired-backup-diff
+dired-cleanup
+dired-compress-subdir-files
+dired-describe-mode
+dired-diff
+dired-do-background-shell-command
+dired-do-compress
+dired-do-copy-regexp
+dired-do-grep
+dired-do-hardlink-regexp
+dired-do-igrep
+dired-do-igrep-find
+dired-do-print
+dired-do-relsymlink-regexp
+dired-do-rename-regexp
+dired-do-shell-command
+dired-do-symlink-regexp
+dired-do-uucode
+dired-downcase
+dired-ediff
+dired-emerge
+dired-emerge-with-ancestor
+dired-epatch
+dired-flag-extension
+dired-flag-files-regexp
+dired-jump-back
+dired-jump-back-other-frame
+dired-jump-back-other-window
+dired-mark-extension
+dired-mark-files-compilation-buffer
+dired-mark-files-from-other-dired-buffer
+dired-mark-files-regexp
+dired-mark-sexp
+dired-other-frame
+dired-other-window
+dired-read-mail
+dired-report-bug
+dired-rmail
+dired-summary
+dired-upcase
+dired-virtual
+dired-vm
+
+disable-command
+disassemble
+
+display-buffer
+display-call-tree
+display-column-mode
+display-time
+
+dissociated-press
+dns-mode
+dns-mode-soa-increment-serial
+do-auto-save
+docbook-grep
+docbook-mode
+docref-setup
+doctor
+down-list
+
+downcase-region
+downcase-region-or-word
+downcase-word
+
+drag-window-divider
+dsssl-mode
+dunnet</t>
+<t tx="ekr.20051011141302.74">ebuffers
+ebuffers3
+
+ecb-activate
+ecb-byte-compile
+ecb-minor-mode
+ecb-show-help
+edebug-defun
+edebug-eval-top-level-form
+
+ediff
+ediff-backup
+ediff-buffers
+ediff-buffers3
+ediff-customize
+ediff-directories
+ediff-directories3
+ediff-directory-revisions
+ediff-documentation
+ediff-files
+ediff-files3
+ediff-merge
+ediff-merge-buffers
+ediff-merge-buffers-with-ancestor
+ediff-merge-directories
+ediff-merge-directories-with-ancestor
+ediff-merge-directory-revisions
+ediff-merge-directory-revisions-with-ancestor
+ediff-merge-files
+ediff-merge-files-with-ancestor
+ediff-merge-revisions
+ediff-merge-revisions-with-ancestor
+ediff-merge-with-ancestor
+ediff-patch-buffer
+ediff-patch-file
+ediff-regions-linewise
+ediff-regions-wordwise
+ediff-revision
+ediff-show-registry
+ediff-toggle-multiframe
+ediff-toggle-use-toolbar
+ediff-version
+ediff-windows-linewise
+ediff-windows-wordwise
+ediff3
+
+edir-merge-revisions
+edir-merge-revisions-with-ancestor
+edir-revisions
+edirs
+edirs-merge
+edirs-merge-with-ancestor
+edirs3
+
+edit-abbrevs
+edit-abbrevs-mode
+edit-abbrevs-redefine
+edit-bookmarks
+edit-faces
+edit-itimers
+edit-kbd-macro
+edit-last-kbd-macro
+edit-mime
+edit-named-kbd-macro
+edit-picture
+edit-pr
+edit-tab-stops
+edit-tab-stops-note-changes
+edit-toolbar
+
+edt-emulation-on
+edt-set-scroll-margins
+
+efs-display-ftp-activity
+efs-nslookup-host
+efs-report-bug
+efs-set-passwd
+efs-set-user
+
+eieio-class-tree
+eieio-describe-class
+eieio-describe-generic
+eieio-describe-method
+
+eif-browse
+eiffel-mode
+eldoc-mode
+
+electric-buffer-list
+electric-command-history
+electric-nroff-mode
+
+elp-instrument-function
+elp-instrument-list
+elp-instrument-package
+elp-results
+
+emacs-lisp-byte-compile
+emacs-lisp-byte-compile-and-load
+emacs-lisp-mode
+emacs-version
+
+emerge
+emerge-buffers
+emerge-buffers-with-ancestor
+emerge-files
+emerge-files-with-ancestor
+emerge-merge-directories
+emerge-revisions
+emerge-revisions-with-ancestor
+
+enable-command
+enable-flow-control
+
+encrypt-insert-file-contents
+
+end-kbd-macro
+end-of-buffer
+end-of-buffer-other-window
+end-of-defun
+end-of-line
+
+enlarge-window
+enlarge-window-horizontally
+enlarge-window-pixels
+
+enriched-mode
+epatch
+
+epatch-buffer
+erase-buffer
+
+erc-add-dangerous-host
+erc-add-fool
+erc-add-keyword
+erc-add-pal
+erc-autojoin-mode
+erc-button-mode
+erc-chanlist
+erc-cmd-LIST
+erc-complete
+erc-completion-mode
+erc-delete-dangerous-host
+erc-delete-fool
+erc-delete-keyword
+erc-delete-pal
+erc-fill-mode
+erc-log-mode
+erc-nickserv-identify
+erc-nickserv-identify-mode
+erc-notify-mode
+erc-ring-mode
+erc-save-buffer-in-logs
+erc-select
+erc-server-select
+erc-services-mode
+erc-spelling-mode
+erc-timestamp-mode
+erc-track-mode
+erc-track-when-inactive-mode
+erc-truncate-buffer
+erc-truncate-mode
+erc-xdcc-add-file
+
+eregistry
+erevision
+escreen-install
+
+eshell
+eshell-command
+eshell-report-bug
+eshell-test
+eshell-toggle
+eshell-toggle-cd
+
+eudc-edit-hotlist
+eudc-expand-inline
+eudc-get-email
+eudc-get-phone
+eudc-insert-record-at-point-into-bbdb
+eudc-load-eudc
+eudc-query-form
+eudc-set-server
+eudc-try-bbdb-insert
+
+eval-buffer
+eval-current-buffer
+eval-defun
+eval-expr
+eval-expr-install
+eval-expression
+eval-last-sexp
+eval-print-last-sexp
+eval-region
+
+exchange-dot-and-mark
+exchange-point-and-mark
+
+executable-self-display
+executable-set-magic
+
+execute-extended-command
+
+exit-minibuffer
+exit-recursive-edit
+
+expand-abbrev
+expand-region-abbrevs</t>
+<t tx="ekr.20051011141302.75">f90-mode
+
+facemenu-make-larger
+facemenu-make-much-larger
+facemenu-make-much-smaller
+facemenu-make-smaller
+facemenu-remove-props
+facemenu-remove-special
+facemenu-set-background
+facemenu-set-face
+facemenu-set-face-from-menu
+facemenu-set-foreground
+facemenu-set-intangible
+facemenu-set-invisible
+facemenu-set-read-only
+facemenu-set-size-default
+
+fast-lock-mode
+
+feedmail-queue-reminder
+feedmail-run-the-queue
+feedmail-run-the-queue-global-prompt
+feedmail-run-the-queue-no-prompts
+
+ffap
+ffap-at-mouse
+ffap-menu
+ffap-next
+
+fill-individual-paragraphs
+fill-nonuniform-paragraphs
+fill-paragraph
+fill-paragraph-or-region
+fill-region
+fill-region-as-paragraph
+
+find-alternate-file
+find-alternate-file-other-window
+find-file
+find-file-at-point
+find-file-other-frame
+find-file-other-window
+find-file-read-only
+find-file-read-only-other-frame
+find-file-read-only-other-window
+find-function
+find-function-at-point
+find-function-on-key
+find-function-other-frame
+find-function-other-window
+find-library
+find-library-other-frame
+find-library-other-window
+find-tag
+find-tag-at-point
+find-tag-other-window
+find-variable
+find-variable-at-point
+find-variable-other-frame
+find-variable-other-window
+
+finder-by-keyword
+finder-commentary
+finger
+first-error
+fixup-whitespace
+flame
+
+floating-toolbar
+floating-toolbar-from-extent-or-popup-mode-menu
+floating-toolbar-or-popup-mode-menu
+
+flush-lines
+
+flyspell-buffer
+flyspell-mode
+flyspell-prog-mode
+flyspell-region
+flyspell-version
+
+folding-mode
+folding-mode-add-find-file-hook
+
+font-lock-fontify-buffer
+font-lock-mode
+
+footnote-mode
+
+format-decode-buffer
+format-decode-region
+format-encode-buffer
+format-encode-region
+format-find-file
+format-insert-file
+format-write-file
+
+forms-find-file
+forms-find-file-other-window
+forms-mode
+
+fortran-mode
+
+forward-block-of-lines
+forward-char
+forward-char-command
+forward-line
+forward-list
+forward-page
+forward-paragraph
+forward-sentence
+forward-sexp
+forward-to-indentation
+forward-word
+
+frame-configuration-to-register
+ftelnet
+ftp
+full-calc
+full-calc-keypad
+fume-mode
+fume-setup-buffer
+function-menu
+fundamental-mode
+fusion-mode</t>
+<t tx="ekr.20051011141302.76">garbage-collect
+gdb
+gdb-with-core
+gdbsrc
+generate-file-autoloads
+generic-page-setup
+generic-print-buffer
+getenv
+
+global-auto-revert-mode
+global-semantic-auto-parse-mode
+global-semantic-show-dirty-mode
+global-semantic-show-unmatched-syntax-mode
+global-semantic-summary-mode
+global-semanticdb-minor-mode
+global-senator-minor-mode
+global-set-key
+global-set-stroke
+global-unset-key
+
+gnats:edit-pr
+gnats:query-pr
+gnats:summ-pr
+gnats:view-pr
+
+gnuserv-start
+gomoku
+
+google-query
+google-query-region
+
+goto-address
+goto-address-at-mouse
+goto-address-at-point
+goto-char
+goto-line
+
+grep
+grep-all-files-in-current-directory
+grep-all-files-in-current-directory-and-below
+grep-find
+
+gtk-start-drag
+gtk-start-drag-region</t>
+<t tx="ekr.20051011141302.77">hanoi
+haskell-doc-mode
+haskell-doc-show-type
+haskell-mode
+
+help
+help-for-help
+help-mode
+help-mode-bury
+help-mode-quit
+help-next-section
+help-next-symbol
+help-prev-section
+help-prev-symbol
+help-quit
+help-with-tutorial
+
+hexl-find-file
+hexl-mode
+hexlify-buffer
+
+hide-copyleft-region
+hide-ifdef-mode
+
+highlight-headers-follow-url
+highlight-headers-follow-url-kfm
+highlight-headers-follow-url-mosaic
+highlight-headers-follow-url-netscape
+
+highline-customize
+highline-local-mode
+highline-mode
+highline-mode-off
+highline-mode-on
+highline-off
+highline-on
+highline-view-mode
+highline-view-off
+highline-view-on
+
+hippie-expand
+hm--html-minor-mode
+hm--html-mode
+hmail:compose
+holidays
+how-many
+hs-minor-mode
+
+html-mode
+html-quote-region
+html-view-get-display
+html-view-goto-url
+html-view-start-mosaic
+html-view-view-buffer
+html-view-view-file
+htmlize-buffer
+htmlize-file
+htmlize-many-files
+htmlize-many-files-dired
+htmlize-region
+
+hyper-apropos
+hyper-apropos-popup-menu
+hyper-apropos-set-variable
+hyper-describe-face
+hyper-describe-function
+hyper-describe-key
+hyper-describe-key-briefly
+hyper-describe-variable
+hyper-set-variable
+hyper-where-is
+
+hyperb:customize
+hyperb:find-file-urls-mode
+hyperb:init-menubar
+hyperbole
+
+hypropos-popup-menu
+hypropos-set-variable</t>
+<t tx="ekr.20051011141302.78">ibuffer
+ibuffer-add-saved-filters
+ibuffer-add-to-tmp-hide
+ibuffer-add-to-tmp-show
+ibuffer-auto-mode
+ibuffer-backward-filter-group
+ibuffer-backwards-next-marked
+ibuffer-bs-show
+ibuffer-clear-filter-groups
+ibuffer-copy-filename-as-kill
+ibuffer-customize
+ibuffer-decompose-filter
+ibuffer-delete-saved-filter-groups
+ibuffer-delete-saved-filters
+ibuffer-diff-with-file
+ibuffer-do-kill-lines
+ibuffer-do-occur
+ibuffer-exchange-filters
+ibuffer-filter-disable
+ibuffer-filters-to-filter-group
+ibuffer-forward-next-marked
+ibuffer-invert-sorting
+ibuffer-jump-to-buffer
+ibuffer-jump-to-filter-group
+ibuffer-kill-filter-group
+ibuffer-kill-line
+ibuffer-list-buffers
+ibuffer-mark-by-file-name-regexp
+ibuffer-mark-by-mode
+ibuffer-mark-by-mode-regexp
+ibuffer-mark-by-name-regexp
+ibuffer-mark-dired-buffers
+ibuffer-mark-dissociated-buffers
+ibuffer-mark-help-buffers
+ibuffer-mark-modified-buffers
+ibuffer-mark-old-buffers
+ibuffer-mark-read-only-buffers
+ibuffer-mark-special-buffers
+ibuffer-mark-unsaved-buffers
+ibuffer-negate-filter
+ibuffer-or-filter
+ibuffer-other-window
+ibuffer-pop-filter
+ibuffer-pop-filter-group
+ibuffer-save-filter-groups
+ibuffer-save-filters
+ibuffer-set-filter-groups-by-mode
+ibuffer-switch-to-saved-filter-groups
+ibuffer-switch-to-saved-filters
+ibuffer-toggle-sorting-mode
+ibuffer-yank
+
+icomplete-mode
+icon-mode
+iconify-emacs
+iconify-frame
+
+id-select-and-copy-thing
+id-select-and-kill-thing
+id-select-goto-matching-tag
+id-select-install
+id-select-thing
+id-select-thing-with-mouse
+
+idl-mode
+idlwave-mode
+idlwave-shell
+ielm
+ifconfig
+
+ignore
+
+igrep
+igrep-find
+igrep-insinuate
+igrep-visited-files
+
+ilisp-imenu-add-menubar-index
+image-mode
+
+imenu
+imenu-add-menubar-index
+imenu-add-to-menubar
+
+increase-left-margin
+increase-right-margin
+
+increment-register
+
+indent-according-to-mode
+indent-code-rigidly
+indent-for-comment
+indent-for-tab-command
+indent-new-comment-line
+indent-region
+indent-relative
+indent-relative-maybe
+indent-rigidly
+indent-sexp
+indent-to
+indent-to-column
+
+indented-text-mode
+inferior-prolog-mode
+inferior-tcl
+
+info
+info-browse
+info-complete-file
+info-complete-symbol
+info-lookup-file
+info-lookup-reset
+info-lookup-symbol
+
+insert-abbrevs
+insert-buffer
+insert-file
+insert-kbd-macro
+insert-key-binding
+insert-parentheses
+insert-register
+insert-selection
+insert-zippyism
+
+install-where-was-i
+inverse-add-global-abbrev
+inverse-add-mode-abbrev
+invert-face
+ipconfig
+
+isearch-*-char
+isearch-abort
+isearch-backward
+isearch-backward-regexp
+isearch-cancel
+isearch-complete
+isearch-complete-edit
+isearch-delete-char
+isearch-edit-string
+isearch-exit
+isearch-forward
+isearch-forward-exit-minibuffer
+isearch-forward-regexp
+isearch-help-or-delete-char
+isearch-mode-help
+isearch-nonincremental-exit-minibuffer
+isearch-printing-char
+isearch-quote-char
+isearch-repeat-backward
+isearch-repeat-forward
+isearch-return-char
+isearch-reverse-exit-minibuffer
+isearch-ring-advance
+isearch-ring-advance-edit
+isearch-ring-retreat
+isearch-ring-retreat-edit
+isearch-toggle-case-fold
+isearch-toggle-regexp
+isearch-whitespace-chars
+isearch-yank-clipboard
+isearch-yank-kill
+isearch-yank-line
+isearch-yank-selection
+isearch-yank-sexp
+isearch-yank-word
+isearch-yank-x-clipboard
+isearch-yank-x-selection
+isearch-|-char
+
+iso-accents-mode
+
+ispell
+ispell-buffer
+ispell-change-dictionary
+ispell-comments-and-strings
+ispell-complete-word
+ispell-complete-word-interior-frag
+ispell-continue
+ispell-kill-ispell
+ispell-message
+ispell-minor-mode
+ispell-pdict-save
+ispell-region
+ispell-word
+
+iswitchb-buffer
+iswitchb-buffer-other-frame
+iswitchb-buffer-other-window
+iswitchb-default-keybindings
+iswitchb-display-buffer
+
+itimer-edit-delete-itimer
+itimer-edit-help
+itimer-edit-next-field
+itimer-edit-previous-field
+itimer-edit-quit
+itimer-edit-set-field</t>
+<t tx="ekr.20051011141302.79">japanese-latex-mode
+japanese-plain-tex-mode
+
+java-browse
+java-mode
+
+javascript-mode
+javascript-shell
+
+jde-ant-build
+jde-ant-projecthelp
+jde-ant-show-options
+jde-bug-debug-app
+jde-build
+jde-checkstyle
+jde-checkstyle-customize
+jde-compile
+jde-compile-jde
+jde-create-new-project
+jde-db-set-app-args
+jde-db-set-args
+jde-db-set-debugger
+jde-ejb-entity-bean-buffer
+jde-ejb-session-bean-buffer
+jde-gen-buffer
+jde-gen-class-buffer
+jde-gen-console-buffer
+jde-gen-interface-buffer
+jde-gen-jfc-app-buffer
+jde-gen-junit-test-class-buffer
+jde-help-browse-jdk-doc
+jde-import-organize
+jde-java-font-lock-setup-keywords
+jde-javadoc-autodoc-at-line
+jde-javadoc-checkdoc
+jde-javadoc-checkdoc-at-line
+jde-javadoc-checker-fix
+jde-javadoc-checker-next
+jde-javadoc-checker-previous
+jde-javadoc-checker-quit
+jde-javadoc-customize
+jde-javadoc-make
+jde-jdb
+jde-jdb-applet
+jde-make
+jde-make-show-options
+jde-mode
+jde-open-project-file
+jde-package-update
+jde-run
+jde-run-applet
+jde-run-set-app
+jde-run-set-app-args
+jde-run-set-applet-doc
+jde-run-set-applet-viewer
+jde-run-set-args
+jde-save-project
+jde-set-compile-options
+jde-set-global-classpath
+jde-show-help
+jde-stat-loc-report
+jde-stat-loc-report-directory
+jde-stat-loc-report-project
+jde-xref-customize
+jde-xref-display-call-tree
+jde-xref-first-caller
+jde-xref-list-uncalled-functions
+jde-xref-make-xref-db
+jde-xref-next-caller
+jde-xref-update
+
+join-line
+jump-to-register
+just-one-space
+justify-current-line</t>
+<t tx="ekr.20051011141302.80">kbd-macro-query
+keep-lines
+
+keyboard-escape-quit
+keyboard-quit
+
+kfile:find
+kfile:view
+
+kill-all-abbrevs
+kill-buffer
+kill-buffer-and-window
+kill-comment
+kill-console-local-variable
+kill-emacs
+kill-entire-line
+kill-line
+kill-local-variable
+kill-paragraph
+kill-primary-selection
+kill-rectangle
+kill-region
+kill-ring-save
+kill-sentence
+kill-sexp
+kill-some-buffers
+kill-this-buffer
+kill-word
+
+kimport:aug-post-outline
+kimport:file
+kimport:star-outline
+kimport:text
+
+klink:create
+kotl-mode
+kotl-mode:example
+ksh-mode</t>
+<t tx="ekr.20051011141302.81">latex-mode
+lazy-lock-mode
+lazy-shot-mode
+ledit-mode
+liece
+life
+line-number-mode
+linuxdoc-sgml-mode
+
+lisp-complete-symbol
+lisp-fill-paragraph
+lisp-indent-for-comment
+lisp-indent-line
+lisp-interaction-mode
+lisp-mode
+lisp-send-defun
+
+list-abbrevs
+list-bookmarks
+list-buffers
+list-colors-display
+list-command-history
+list-directory
+list-faces-display
+list-holidays
+list-itimers
+list-load-path-shadows
+list-matches-in-buffers
+list-matching-lines
+list-mode
+list-mode-item-keyboard-selected
+list-mode-item-mouse-selected
+list-packages
+list-processes
+list-strokes
+list-tags
+list-text-properties-at
+list-yahrzeit-dates
+
+literate-haskell-mode
+
+load-default-sounds
+load-file
+load-library
+load-sound-file
+load-user-strokes
+
+local-set-key
+local-unset-key
+
+locate-library
+lock-buffer
+lower-frame
+lpr-buffer
+lpr-region
+lua-mode</t>
+<t tx="ekr.20051011141302.82">m4-mode
+
+macroexpand-all-sexp
+macroexpand-sexp
+
+mail
+mail-mode
+mail-other-frame
+mail-other-window
+
+make-command-summary
+make-compatible
+make-compatible-variable
+make-directory
+make-directory-path
+make-face-bold
+make-face-bold-italic
+make-face-italic
+make-face-larger
+make-face-smaller
+make-face-unbold
+make-face-unitalic
+make-file-part
+make-frame
+make-indirect-buffer
+make-local-variable
+make-obsolete
+make-obsolete-variable
+make-search-dialog
+make-symbolic-link
+make-variable-buffer-local
+makefile-mode
+
+manual-entry
+map-query-replace-regexp
+mark-beginning-of-buffer
+
+mark-bob
+mark-defun
+mark-end-of-buffer
+mark-end-of-line
+mark-end-of-sentence
+mark-eob
+mark-page
+mark-paragraph
+mark-sexp
+mark-whole-buffer
+mark-word
+
+maybe-unmigrate-user-init-file
+mchat
+mchat-other-frame
+
+metamail-buffer
+metamail-interpret-body
+metamail-interpret-header
+metamail-region
+
+mew
+mew-send
+mh-letter-mode
+mh-nmail
+mh-rmail
+mh-smail
+mh-smail-other-window
+mh-version
+migrate-user-init-file
+mime-decode-region
+mime-encode-region
+mime-insert-encoded-file
+mime/editor-mode
+
+minibuffer-complete
+minibuffer-complete-and-exit
+minibuffer-complete-word
+minibuffer-completion-help
+minibuffer-electric-separator
+minibuffer-electric-tilde
+minibuffer-keyboard-quit
+minibuffer-smart-maybe-select-highlighted-completion
+minibuffer-smart-select-highlighted-completion
+
+mode-compile
+mode-compile-kill
+mode-compile-submit-bug-report
+
+modeline-buffers-menu
+modeline-menu
+modeline-minor-mode-menu
+modeline-toggle-read-only
+
+modify-syntax-entry
+modula-2-mode
+morse-region
+
+mouse-avoidance-mode
+mouse-bury-buffer
+mouse-choose-completion
+mouse-consolidated-yank
+mouse-del-char
+mouse-delete-window
+mouse-drag-modeline
+mouse-eval-last-sexpr
+mouse-eval-sexp
+mouse-ignore
+mouse-keep-one-window
+mouse-kill-line
+mouse-line-length
+mouse-me
+mouse-scroll
+mouse-select
+mouse-select-and-split
+mouse-set-mark
+mouse-set-point
+mouse-track
+mouse-track-adjust
+mouse-track-adjust-default
+mouse-track-default
+mouse-track-delete-and-insert
+mouse-track-do-rectangle
+mouse-track-insert
+mouse-unbury-buffer
+mouse-window-to-region
+mouse-yank
+
+move-past-close-and-reindent
+move-to-left-margin
+move-to-tab-stop
+move-to-window-line
+
+mpuz
+mswindows-paste-clipboard
+mwheel-install</t>
+<t tx="ekr.20051011141302.83">name-last-kbd-macro
+
+narrow-stack-mode
+narrow-to-defun
+narrow-to-page
+narrow-to-region
+narrow-window-to-region
+
+negative-argument
+netstat
+network-connection
+network-connection-to-service
+new-frame
+
+newline
+newline-and-indent
+
+next-complete-history-element
+next-error
+next-file
+next-history-element
+next-line
+next-list-mode-item
+next-matching-history-element
+next-multiframe-window
+
+normal-mode
+not-modified
+nroff-mode
+nslookup
+nslookup-host
+nuke-nroff-bs
+nuke-selective-display
+number-to-register</t>
+<t tx="ekr.20051011141302.84">objc-browse
+objc-mode
+
+occur
+occur-mode-goto-occurrence
+occur-mode-mouse-goto
+
+offix-start-drag
+offix-start-drag-region
+
+old-whitespace-incremental-mode
+old-whitespace-mode
+
+oo-browser
+
+open-dribble-file
+open-line
+open-rectangle
+open-termscript
+
+other-frame
+other-window
+
+outl-mouse-minor-mode
+outl-mouse-mode
+
+outline-minor-mode
+outline-mode
+
+overstrike-region
+overwrite-mode
+own-selection</t>
+<t tx="ekr.20051011141302.85">package-admin-add-binary-package
+package-admin-add-single-file-package
+package-get
+package-get-all
+package-get-custom
+package-get-delete-package
+package-get-package-provider
+package-get-save-base
+package-get-update-all
+package-get-update-base
+package-get-update-base-from-buffer
+
+paragraph-indent-text-mode
+paren-activate
+paren-backward-sexp
+paren-deactivate
+paren-forward-sexp
+paren-set-mode
+paren-toggle-matching-paired-delimiter
+paren-toggle-matching-quoted-paren
+paren-toggle-open-paren-context
+
+pascal-mode
+patch-to-change-log
+
+patcher-mail
+patcher-mail-subproject
+patcher-version
+
+pcomplete
+pcomplete-continue
+pcomplete-expand
+pcomplete-expand-and-complete
+pcomplete-help
+pcomplete-list
+pcomplete-reverse
+
+pdb
+
+pending-delete
+pending-delete-mode
+pending-delete-off
+pending-delete-on
+
+perl-mode
+perldb
+permanent-buffers-mode
+
+pgg-decrypt
+pgg-decrypt-region
+pgg-encrypt
+pgg-encrypt-region
+pgg-insert-key
+pgg-sign
+pgg-sign-region
+pgg-snarf-keys
+pgg-snarf-keys-region
+pgg-verify
+pgg-verify-region
+
+phases-of-moon
+php-mode
+picture-mode
+pike-mode
+ping
+
+plain-TeX-mode
+plain-tex-mode
+
+play-sound-file
+point-to-register
+
+pop-global-mark
+pop-tag-mark
+pop-window-configuration
+
+popper-install
+
+popup-buffer-menu
+popup-menubar-menu
+popup-mode-menu
+
+posix-search-backward
+posix-search-forward
+
+postscript-mode
+
+pp-eval-expression
+pp-eval-last-sexp
+pp-function
+pp-plist
+pp-variable
+
+praise-be-unto-emacs
+praise-be-unto-xemacs
+
+prefer-coding-system
+prefix-region
+
+prepend-to-buffer
+prepend-to-register
+
+press-toolbar-button
+
+prettyexpand-all-sexp
+prettyexpand-sexp
+
+previous-complete-history-element
+previous-error
+previous-history-element
+previous-line
+previous-list-mode-item
+previous-matching-history-element
+previous-multiframe-window
+
+print-buffer
+print-region
+
+profile-command
+profile-expression
+profile-key-sequence
+profile-results
+
+prolog-mode
+
+ps
+ps-despool
+ps-line-lengths
+ps-nb-pages-buffer
+ps-nb-pages-region
+ps-print-buffer
+ps-print-buffer-with-faces
+ps-print-customize
+ps-print-region
+ps-print-region-with-faces
+ps-spool-buffer
+ps-spool-buffer-with-faces
+ps-spool-region
+ps-spool-region-with-faces
+
+psychoanalyze-pinhead
+pui-add-install-directory
+pui-list-packages
+push-window-configuration
+pwd
+
+py-shell
+pydoc-apropos
+pydoc-commands
+pydoc-help
+pydoc-keywords
+pydoc-modules
+pydoc-packages
+pydoc-topics
+pydoc-xrefs
+
+pymacs-eval
+pymacs-load
+
+python-browse
+python-mode</t>
+<t tx="ekr.20051011141302.86">query-pr
+query-replace
+query-replace-regexp
+quick-calc
+quoted-insert</t>
+<t tx="ekr.20051011141302.87">raise-frame
+
+re-builder
+re-search-backward
+re-search-forward
+
+read-abbrev-file
+read-kbd-macro
+read-library-name
+
+recent-files-initialize
+recent-files-visit-file
+
+recenter
+
+recentf-cancel-dialog
+recentf-cleanup
+recentf-dialog-mode
+recentf-edit-list
+recentf-mode
+recentf-open-files
+recentf-open-more-files
+recentf-rebuild-virtual-pathes
+recentf-save-list
+
+recover-all-files
+recover-file
+recover-session
+recover-session-finish
+
+recursive-edit
+
+reftex-citation
+reftex-index-phrases-mode
+reftex-mode
+
+regexp-builder
+register-to-point
+reindent-then-newline-and-indent
+release-and-activate-toolbar-button
+release-toolbar-button
+remote-compile
+remove-directory
+
+rename-buffer
+rename-file
+rename-uniquely
+
+repeat-complex-command
+repeat-matching-complex-command
+
+replace-buffer-in-windows
+replace-rectangle
+replace-regexp
+replace-string
+
+report-emacs-bug
+report-xemacs-bug
+
+reposition-window
+resize-minibuffer-mode
+restore-initial-toolbar
+resume-console
+reverse-region
+revert-buffer
+rexx-mode
+riece
+rlogin
+
+rmail
+rmail-input
+rmail-mode
+
+rolo-add
+rolo-display-matches
+rolo-edit
+rolo-fgrep
+rolo-fgrep-logical
+rolo-grep
+rolo-kill
+rolo-sort
+rolo-toggle-datestamps
+rolo-yank
+
+rot13-other-window
+rotate-yank-pointer
+route
+
+rpm
+rpm-spec-mode
+
+rsh
+
+rtf-clip-buffer
+rtf-clip-region
+rtf-export
+rtf-export-region
+rtf-spool-buffer
+rtf-spool-region
+
+ruby-mode
+rubydb
+
+run-at-time
+run-caml
+run-ediff-from-cvs-buffer
+run-prolog
+run-ruby
+run-scheme
+run-scsh
+run-sml
+run-with-idle-timer
+run-with-timer</t>
+<t tx="ekr.20051011141302.88">s-region-bind
+s-region-bind-cua
+
+save-buffer
+save-buffers-kill-emacs
+save-some-buffers
+
+savehist-load
+savehist-save
+
+scheme-mode
+scribe-mode
+
+scroll-down
+scroll-down-command
+scroll-down-one
+scroll-left
+scroll-other-window
+scroll-other-window-down
+scroll-right
+scroll-up
+scroll-up-command
+scroll-up-one
+
+sdb
+
+search-backward
+search-backward-regexp
+search-forward
+search-forward-regexp
+
+self-insert-and-exit
+self-insert-command
+
+semantic-analyze-current-context
+semantic-auto-parse-mode
+semantic-bnf-mode
+semantic-cb-speedbar-mode
+semantic-chart-database-size
+semantic-chart-nonterminal-complexity-token
+semantic-chart-nonterminals-by-token
+semantic-show-dirty-mode
+semantic-show-unmatched-syntax-mode
+semantic-summary-mode
+
+senator-complete-symbol
+senator-completion-menu-popup
+senator-jump
+senator-jump-regexp
+senator-minor-mode
+senator-next-token
+senator-previous-token
+senator-re-search-backward
+senator-re-search-forward
+senator-search-backward
+senator-search-forward
+senator-word-search-backward
+senator-word-search-forward
+
+send-pr
+send-pr-mode
+send-pr:send-pr
+send-pr:send-pr-mode
+
+set-buffer-file-coding-system
+set-buffer-file-coding-system-for-read
+set-buffer-process-coding-system
+set-comment-column
+set-default-buffer-file-coding-system
+set-default-file-coding-system
+set-face-background
+set-face-background-pixmap
+set-face-blinking-p
+set-face-dim-p
+set-face-display-table
+set-face-doc-string
+set-face-font
+set-face-foreground
+set-face-highlight-p
+set-face-reverse-p
+set-face-strikethru-p
+set-face-underline-p
+set-file-coding-system
+set-file-coding-system-for-read
+set-fill-column
+set-fill-prefix
+set-goal-column
+set-justification
+set-justification-center
+set-justification-full
+set-justification-left
+set-justification-none
+set-justification-right
+set-keyboard-coding-system
+set-left-margin
+set-mark-command
+set-pathname-coding-system
+set-right-margin
+set-selective-display
+set-terminal-coding-system
+set-variable
+set-visited-file-name
+
+setenv
+setnu-mode
+sgml-mode
+sh-mode
+
+shell
+shell-command
+shell-command-on-region
+shell-script-mode
+
+show-message-log
+
+shrink-window
+shrink-window-horizontally
+shrink-window-if-larger-than-buffer
+shrink-window-pixels
+
+sieve-manage
+sieve-mode
+sieve-upload
+sieve-upload-and-bury
+
+signal-process
+simula-mode
+
+skeleton-pair-insert-maybe
+skeleton-proxy
+skeleton-proxy-new
+
+smart-c++
+smart-info
+smart-info-assist
+smart-java
+smart-objc
+
+smerge
+sml-mode
+smt-browse
+snake
+sokoban
+
+sort-columns
+sort-fields
+sort-float-fields
+sort-lines
+sort-numeric-fields
+sort-pages
+sort-paragraphs
+sort-regexp-fields
+sort-regexp-fields-numerically
+
+speedbar
+speedbar-frame-mode
+speedbar-get-focus
+
+spell-buffer
+spell-region
+spell-string
+spell-word
+
+split-line
+split-window
+split-window-horizontally
+split-window-vertically
+
+spook
+
+sql-db2
+sql-help
+sql-informix
+sql-ingres
+sql-interbase
+sql-linter
+sql-mode
+sql-ms
+sql-mysql
+sql-oracle
+sql-postgres
+sql-product-interactive
+sql-solid
+sql-sqlite
+sql-sybase
+
+ssh
+standard-display-european
+start-itimer
+start-kbd-macro
+startup-presentation-hack
+string-rectangle
+
+strokes-compose-complex-stroke
+strokes-decode-buffer
+strokes-describe-stroke
+strokes-do-complex-stroke
+strokes-do-stroke
+strokes-global-set-stroke
+strokes-help
+strokes-list-strokes
+strokes-load-user-strokes
+strokes-mode
+
+style-format
+summ-pr
+sunrise-sunset
+
+suspend-console
+suspend-emacs
+suspend-emacs-or-iconify-frame
+suspend-or-iconify-emacs
+
+switch-to-buffer
+switch-to-buffer-other-frame
+switch-to-buffer-other-window
+switch-to-completions
+switch-to-other-buffer
+
+symbol-file
+symbol-near-point</t>
+<t tx="ekr.20051011141302.89">tab-to-tab-stop
+tabify
+
+tag-complete-symbol
+tags-apropos
+tags-loop-continue
+tags-query-replace
+tags-search
+
+tcl-help-on-word
+tcl-mode
+
+tdbx
+teco-command
+telnet
+term
+terminal-emulator
+tetris
+
+tex-mode
+texi2info
+texinfo-format-buffer
+texinfo-format-region
+texinfo-mode
+texmathp
+
+text-mode
+tgdb
+time-stamp
+time-stamp-toggle-active
+
+tmpl-expand-templates-in-buffer
+tmpl-expand-templates-in-region
+tmpl-insert-template-file
+tmpl-insert-template-file-from-fixed-dirs
+tmpl-minor-mode
+
+toggle-auto-compression
+toggle-buffer-file-coding-system
+toggle-debug-on-error
+toggle-debug-on-quit
+toggle-debug-on-signal
+toggle-profiling
+toggle-read-only
+toggle-rot13-mode
+toggle-text-mode-auto-fill
+toggle-truncate-lines
+toggle-viper-mode
+toggle-where-was-i
+
+toolbar-add-button-on-the-fly
+toolbar-add-execute-macro-button
+toolbar-add-kbd-macro
+toolbar-compile
+toolbar-copy
+toolbar-cut
+toolbar-debug
+toolbar-dired
+toolbar-external
+toolbar-gnus
+toolbar-info
+toolbar-ispell
+toolbar-ispell-internal
+toolbar-mail
+toolbar-news
+toolbar-not-configured
+toolbar-open
+toolbar-paste
+toolbar-print
+toolbar-redo
+toolbar-replace
+toolbar-save
+toolbar-search
+toolbar-undo
+
+top-level
+tperldb
+tpu-edt
+tpu-edt-mode
+tpu-edt-on
+tpu-set-cursor-bound
+tpu-set-cursor-free
+tpu-set-scroll-margins
+
+tpum-global-mode
+tpum-minor-mode
+
+trace-function
+trace-function-background
+traceroute
+
+transpose-chars
+transpose-line-down
+transpose-line-up
+transpose-lines
+transpose-paragraphs
+transpose-preceding-chars
+transpose-sentences
+transpose-sexps
+transpose-words
+
+tree-test-it-all
+tsdb
+tshell
+
+turn-off-font-lock
+turn-off-haskell-doc-mode
+turn-off-pending-delete
+turn-on-auto-fill
+turn-on-eldoc-mode
+turn-on-font-lock
+turn-on-fume-mode
+turn-on-haskell-doc-mode
+turn-on-pending-delete
+turn-on-permanent-buffers
+
+txdb</t>
+<t tx="ekr.20051011141302.90">uil-mode
+undefined
+underline-region
+undo
+unexpand-abbrev
+unhide-copyleft-region
+
+universal-argument
+universal-argument-minus
+universal-argument-more
+universal-argument-other-key
+universal-coding-system-argument
+
+unix-sync
+unload-feature
+unlock-buffer
+unmigrate-user-init-file
+unmorse-region
+unoverstrike-region
+unpop-window-configuration
+unrmail
+untabify
+ununderline-and-unoverstrike-region
+ununderline-region
+up-list
+
+upcase-initials-region
+upcase-region
+upcase-region-or-word
+upcase-word
+
+update-autoloads-from-directory
+update-autoloads-here
+update-file-autoloads
+
+url-gateway-nslookup-host
+url-mail
+url-setup-save-timer
+
+use-hard-newlines
+user-mail-address</t>
+<t tx="ekr.20051011141302.91">vc-annotate
+vc-cancel-version
+vc-create-snapshot
+vc-diff
+vc-directory
+vc-insert-headers
+vc-load-vc-hooks
+vc-merge
+vc-next-action
+vc-print-log
+vc-register
+vc-rename-file
+vc-resolve-conflicts
+vc-retrieve-snapshot
+vc-revert-buffer
+vc-update-change-log
+vc-version-diff
+vc-version-other-window
+
+verilog-customize
+verilog-mode
+verilog-version
+
+version
+vertical-mode
+vhdl-mode
+
+view-buffer
+view-buffer-other-window
+view-emacs-news
+view-file
+view-file-other-window
+view-lossage
+view-major-mode
+view-minor-mode
+view-mode
+view-pr
+view-register
+view-sample-init-el
+
+viper-mode
+visit-tags-table
+
+vm
+vm-compose-mail
+vm-folders-summarize
+vm-mail
+vm-mail-other-frame
+vm-mail-other-window
+vm-mode
+vm-other-frame
+vm-other-window
+vm-submit-bug-report
+vm-visit-folder
+vm-visit-folder-other-frame
+vm-visit-folder-other-window
+vm-visit-imap-folder
+vm-visit-imap-folder-other-frame
+vm-visit-imap-folder-other-window
+vm-visit-pop-folder
+vm-visit-pop-folder-other-frame
+vm-visit-pop-folder-other-window
+vm-visit-virtual-folder
+vm-visit-virtual-folder-other-frame
+vm-visit-virtual-folder-other-window
+
+vrml-mode</t>
+<t tx="ekr.20051011141302.92">w3
+w3-display-stylesheet
+w3-fetch
+w3-fetch-other-frame
+w3-find-file
+w3-follow-link
+w3-follow-url-at-point
+w3-follow-url-at-point-other-frame
+w3-hotindex-add-key
+w3-hotindex-query
+w3-hotindex-rm-key
+w3-hotlist-add-document
+w3-hotlist-add-document-at-point
+w3-hotlist-append
+w3-hotlist-apropos
+w3-hotlist-delete
+w3-hotlist-refresh
+w3-hotlist-rename-entry
+w3-maybe-follow-link
+w3-maybe-follow-link-mouse
+w3-next-document
+w3-open-local
+w3-prev-document
+w3-preview-this-buffer
+w3-print-this-url
+w3-print-url-under-point
+w3-read-html-bookmarks
+w3-region
+w3-show-dvi
+w3-table-speak-current-table-column
+w3-use-hotlist
+w3-version
+
+wconfig-add-by-name
+wconfig-delete-by-name
+wconfig-delete-pop
+wconfig-restore-by-name
+wconfig-ring-save
+wconfig-yank-pop
+
+webjump
+
+what-coding-system
+what-cursor-position
+what-domain
+what-line
+what-page
+
+where-is
+
+whitespace-buffer
+whitespace-cleanup
+whitespace-cleanup-region
+whitespace-global-mode
+whitespace-region
+whitespace-toggle-ateol-check
+whitespace-toggle-indent-check
+whitespace-toggle-leading-check
+whitespace-toggle-spacetab-check
+whitespace-toggle-trailing-check
+whitespace-visual-incremental-mode
+whitespace-visual-mode
+whitespace-write-file-hook
+
+whois
+whois-reverse-lookup
+widen
+
+widget-backward
+widget-beginning-of-line
+widget-browse
+widget-browse-at
+widget-browse-other-window
+widget-button-click
+widget-button-press
+widget-button1-click
+widget-complete
+widget-end-of-line
+widget-field-activate
+widget-file-complete
+widget-forward
+widget-kill-line
+widget-minor-mode
+widget-transpose-chars
+
+win32-get-current-locale-id
+win32-get-default-locale-id
+win32-get-locale-info
+win32-get-valid-locale-ids
+win32-long-file-name
+win32-set-current-locale
+win32-set-process-priority
+win32-short-file-name
+
+window-configuration-to-register
+winmgr-mode
+
+winring-delete-configuration
+winring-duplicate-configuration
+winring-jump-to-configuration
+winring-new-configuration
+winring-next-configuration
+winring-prev-configuration
+winring-rename-configuration
+
+word-search-backward
+word-search-forward
+
+wordstar-mode
+
+write-abbrev-file
+write-file
+write-region
+write-region-internal
+
+wrolo-popup-menu</t>
+<t tx="ekr.20051011141302.93">x-symbol-decode
+x-symbol-decode-recode
+x-symbol-encode
+x-symbol-encode-recode
+x-symbol-fontify
+x-symbol-grid
+x-symbol-image-editor
+x-symbol-image-parse-buffer
+x-symbol-init-language-interactive
+x-symbol-initialize
+x-symbol-key-autoload
+x-symbol-map-autoload
+x-symbol-mode
+x-symbol-modify-key
+x-symbol-package-bug
+x-symbol-package-info
+x-symbol-package-reply-to-report
+x-symbol-package-web
+x-symbol-rotate-key
+x-symbol-unalias
+
+xdb
+
+xemacs-local-faq
+xemacs-splash-buffer
+xemacs-www-faq
+xemacs-www-page
+
+xetla
+xetla-add-log-entry
+xetla-apply-changeset
+xetla-archives
+xetla-bookmarks
+xetla-browse
+xetla-changelog
+xetla-changes
+xetla-changes-against
+xetla-changes-last-revision
+xetla-commit
+xetla-conflicts-finish
+xetla-delta
+xetla-ediff-add-log-entry
+xetla-edit-log
+xetla-file-diff
+xetla-file-ediff
+xetla-file-ediff-revisions
+xetla-file-view-original
+xetla-get-changeset
+xetla-help
+xetla-id-tagging-method
+xetla-inventory
+xetla-inventory-file-mode
+xetla-log-edit-mode
+xetla-logs
+xetla-make-archive
+xetla-missing
+xetla-my-id
+xetla-my-revision-library
+xetla-prepare-patch-submission
+xetla-revisions
+xetla-rm
+xetla-start-project
+xetla-submit-bug-report
+xetla-tag-insert
+xetla-tag-regenerate
+xetla-tree-lint
+xetla-tree-version
+xetla-version
+xetla-view-conflicts
+
+xmine
+xmine-mode
+xml-mode
+xpm-mode
+xrdb-mode
+xsl-grep
+xsl-mode
+xslt-process-mode
+xt-check-xlib
+
+xwem-attach-client
+xwem-backward-application
+xwem-balance-windows
+xwem-battery
+xwem-battery-popup-menu
+xwem-battery-status
+xwem-cl-pop-to-client
+xwem-cl-set-title
+xwem-cl-switch-other-frame
+xwem-cl-switch-other-win
+xwem-cl-switch-to-other
+xwem-cl-switch-to-other-in-other-win
+xwem-cl-transpose
+xwem-clgen-toggle-other-on-split
+xwem-clgen-turn-off-other-on-split
+xwem-clgen-turn-on-other-on-split
+xwem-client-demanage-others
+xwem-client-exchange-selected-and-mark
+xwem-client-iconify
+xwem-client-idestroy
+xwem-client-imove
+xwem-client-info
+xwem-client-iresize
+xwem-client-kill
+xwem-client-query-kill
+xwem-client-run-copy
+xwem-client-run-copy-other-frame
+xwem-client-run-copy-other-win
+xwem-client-set-mark
+xwem-client-unset-mark
+xwem-clswi-next
+xwem-clswi-next-other-window
+xwem-clswi-prev
+xwem-clswi-prev-other-window
+xwem-copy-cutbuffer
+xwem-copy-region-as-cutbuffer
+xwem-describe-prefix-bindings
+xwem-desktop-load
+xwem-desktop-load-onetime
+xwem-desktop-save
+xwem-desktop-save-onetime
+xwem-edit-client-properties
+xwem-edmacro-edit-kbd-macro
+xwem-eval-expression
+xwem-execute-extended-command
+xwem-fini
+xwem-focus-click-on
+xwem-forward-application
+xwem-frame-destroy
+xwem-frame-fit-screen
+xwem-frame-goto-next
+xwem-frame-goto-next-hor
+xwem-frame-goto-next-vert
+xwem-frame-goto-prev
+xwem-frame-goto-prev-hor
+xwem-frame-goto-prev-vert
+xwem-frame-hide
+xwem-frame-imove
+xwem-frame-iresize
+xwem-frame-lower
+xwem-frame-next
+xwem-frame-on-delim-menu
+xwem-frame-on-delim-resize
+xwem-frame-previous
+xwem-frame-raise
+xwem-frame-sbs-hor-split
+xwem-frame-sbs-vert-split
+xwem-frame-set-name
+xwem-frame-showroot
+xwem-frame-split-sbs
+xwem-frame-switch
+xwem-frame-switch-nth
+xwem-frame-switch-nth-linkage
+xwem-frame-transparency
+xwem-frame-transpose
+xwem-framei-dockapp-popup-alt-menu
+xwem-framei-dockapp-popup-menu
+xwem-fullscreen-mode
+xwem-help
+xwem-help-clients
+xwem-help-cutbuffers
+xwem-help-describe-bindings
+xwem-help-describe-key
+xwem-help-describe-key1
+xwem-help-for-help
+xwem-help-frames
+xwem-help-mode
+xwem-help-where-is
+xwem-help-wins
+xwem-ignore-command
+xwem-kbd-quit
+xwem-kbd-quote-command
+xwem-keyboard-quit
+xwem-keymacro-begin
+xwem-keymacro-end
+xwem-keymacro-exit-recursive-edit
+xwem-keymacro-recursive-edit
+xwem-keymacro-undefined
+xwem-keytt-minor-mode
+xwem-kill-cl-and-window
+xwem-launch-dock-down
+xwem-launch-dock-launch
+xwem-launch-dock-menu
+xwem-launch-lupe
+xwem-launch-lupe-other-frame
+xwem-launch-lupe-other-win
+xwem-launch-program
+xwem-launch-program-other-frame
+xwem-launch-program-other-win
+xwem-launch-xlock
+xwem-launch-xterm
+xwem-launch-xterm-other-frame
+xwem-launch-xterm-other-win
+xwem-launcher-toggle-frame-type
+xwem-launcher-toggle-split-type
+xwem-launcher-turn-on-embedded-frame-type
+xwem-launcher-turn-on-horizontal-split-type
+xwem-launcher-turn-on-normal-frame-type
+xwem-launcher-turn-on-vertical-split-type
+xwem-make-frame
+xwem-mini-calc
+xwem-minib-resize-mode
+xwem-minibuffer-activate
+xwem-misc-make-screenshot
+xwem-misc-pause
+xwem-misc-profiling-results
+xwem-misc-start-profiling
+xwem-modeline-disable
+xwem-modeline-enable
+xwem-open-file
+xwem-other-window
+xwem-pager
+xwem-pager-move-down
+xwem-pager-move-left
+xwem-pager-move-right
+xwem-pager-move-up
+xwem-paste-cutbuffer
+xwem-popup-auto-menu
+xwem-popup-clients-menu
+xwem-recover-do-recover
+xwem-recover-toggle
+xwem-recover-turn-off
+xwem-recover-turn-on
+xwem-register-client
+xwem-register-frame-config
+xwem-register-jump
+xwem-register-win-config
+xwem-report-bug
+xwem-rooter-lower
+xwem-rooter-raise
+xwem-run-program
+xwem-self-insert-or-undefined
+xwem-shell-command
+xwem-show-message-log
+xwem-sm-global-mode
+xwem-sm-mode
+xwem-strokes-begin
+xwem-strokes-cmplx-begin
+xwem-strokes-define
+xwem-strokes-ibutton1
+xwem-strokes-ibutton1up
+xwem-strokes-ibutton3
+xwem-strokes-idescribe
+xwem-strokes-list
+xwem-strokes-nocmd
+xwem-strokes-unset-last-stroke
+xwem-switch-client
+xwem-switch-other-client
+xwem-switch-to-fullscreen-cl
+xwem-tabber-popup-cl-menu
+xwem-tabber-switch-cl
+xwem-theme-set
+xwem-time
+xwem-toggle-fullscreen
+xwem-transpose-frames
+xwem-turn-off-keytt
+xwem-turn-off-vline
+xwem-turn-on-keytt
+xwem-turn-on-vline
+xwem-undefined-command
+xwem-universal-argument
+xwem-universal-command
+xwem-universal-digit
+xwem-universal-minus
+xwem-universal-more
+xwem-vline-minor-mode
+xwem-weather-popup-menu
+xwem-weather-popup-remove
+xwem-weather-show-details
+xwem-weather-update
+xwem-window-delete
+xwem-window-delete-others
+xwem-window-enlarge-horizontally
+xwem-window-enlarge-vertically
+xwem-window-split-horizontally
+xwem-window-split-vertically
+xwem-winmove-down
+xwem-winmove-left
+xwem-winmove-right
+xwem-winmove-up
+xwem-worklog-login
+xwem-worklog-logout</t>
+<t tx="ekr.20051011141302.94">yank
+yank-clipboard-selection
+yank-pop
+yank-rectangle
+yow
+</t>
+<t tx="ekr.20051011141302.95">zap-to-char
+zap-up-to-char
+zenirc</t>
+<t tx="ekr.20051011141302.96"></t>
+<t tx="ekr.20051011141302.97">'abbrev-mode':              self.toggleAbbrevMode,
+'expand-abbrev':            self.expandAbbrev,
+'expand-region-abbrevs':    self.regionalExpandAbbrev,
+'kill-all-abbrevs':         self.killAllAbbrevs,
+'list-abbrevs':             self.listAbbrevs,
+'read-abbrev-file':         self.readAbbreviations,
+'write-abbrev-file':        self.writeAbbreviations,
+
+</t>
+<t tx="ekr.20051011141302.98">'append-to-buffer':     self.appendToBuffer,
+'copy-to-buffer':       self.copyToBuffer,
+'insert-to-buffer':     self.insertToBuffer,
+'kill-buffer' :         self.killBuffer,
+'list-buffers' :        self.listBuffers,
+'prepend-to-buffer':    self.prependToBuffer,
+'rename-buffer':        self.renameBuffer,
+'switch-to-buffer':     self.switchToBuffer,</t>
+<t tx="ekr.20051011141302.99">'advertised-undo':              self.advertizedUndo,
+'iconfify-or-deiconify-frame':  self.iconifyOrDeiconifyFrame,
+'keyboard-quit':                self.keyboardQuit,
+'save-buffers-kill-leo':        self.saveBuffersKillLeo,
+'shell-command':                self.shellCommand,
+'shell-command-on-region':      self.shellCommandOnRegion,
+'suspend':                      self.suspend,</t>
+<t tx="ekr.20051011141302.100">'back-to-indentation':  self.backToIndentation,
+'backward-delete-char': self.backwardDeleteCharacter,
+'backward-char':        self.backCharacter,
+'backward-kill-paragraph': self.backwardKillParagraph,
+'beginning-of-buffer':  self.beginningOfBuffer,
+'beginning-of-line':    self.beginningOfLine,
+'capitalize-word':      self.capitalizeWord,
+'center-line':          self.centerLine,
+'center-region':        self.centerRegion,
+'dabbrev-completion':   self.dynamicExpansion2,
+'dabbrev-expands':      self.dynamicExpansion,
+'delete-char':          self.deleteNextChar,
+'delete-indentation':   self.deleteIndentation,
+'downcase-region':      self.downCaseRegion,
+'downcase-word':        self.downCaseWord,
+'end-of-buffer':        self.endOfBuffer,
+'end-of-line':          self.endOfLine,
+'eval-expression':      self.startEvaluate,
+'fill-region-as-paragraph': self.fillRegionAsParagraph,
+'fill-region':          self.fillRegion,
+'flush-lines':          self.flushLines,
+'forward-char':         self.forwardCharacter,
+'goto-char':            self.gotoCharacter,
+'goto-line':            self.gotoLine,
+'how-many':             self.startHowMany, ### Change name?
+'indent-region':        self.indentRegion,
+'indent-rigidly':       self.tabIndentRegion,
+'indent-relative':      self.indentRelative,
+'keep-lines':           self.keepLines,
+'kill-paragraph':       self.killParagraph,
+'newline-and-indent':   self.insertNewLineAndTab,
+'next-line':            self.nextLine,
+'previous-line':        self.prevLine,
+'replace-regex':        self.activateReplaceRegex,
+'replace-string':       self.replaceString,
+'reverse-region':       self.reverseRegion,
+## 'save-buffer':       self.saveFile,
+'scroll-down':          self.scrollDown,
+'scroll-up':            self.scrollUp,
+'set-fill-column':      self.setFillColumn,
+'set-fill-prefix':      self.setFillPrefix,
+'set-mark-command':     self.setRegion,
+'sort-columns':         self.sortColumns,
+'sort-fields':          self.sortFields,
+'sort-lines':           self.sortLines,
+'split-line':           self.insertNewLineIndent,
+'tabify':               self.tabify,
+'transpose-chars':      self.transposeCharacters,
+'transpose-words':      self.transposeWords,
+'transpose-lines':      self.transposeLines,
+'untabify':             self.untabify,
+'upcase-region':        self.upCaseRegion,
+'upcase-word':          self.upCaseWord,
+'view-lossage':         self.viewLossage,
+'what-line':            self.whatLine,
+
+# Added by EKR:
+'back-sentence':        self.backSentence,
+'delete-spaces':        self.deleteSpaces,
+'forward-sentence':     self.forwardSentence,
+'exchange-point-mark':  self.exchangePointMark,
+'indent-to-comment-column': self.indentToCommentColumn,
+'insert-newline':       self.insertNewline,
+'insert-parentheses':   self.insertParentheses,
+'line-number':          self.lineNumber,
+'move-past-close':      self.movePastClose,
+'remove-blank-lines':   self.removeBlankLines,
+'select-all':           f.body.selectAllText,
+'set-comment-column':   self.setCommentColumn,</t>
+<t tx="ekr.20051011141302.101">'delete-file':      self.deleteFile,
+'diff':             self.diff, 
+'insert-file':      self.insertFile,
+'make-directory':   self.makeDirectory,
+'remove-directory': self.removeDirectory,
+'save-file':        self.saveFile</t>
+<t tx="ekr.20051011141302.102">'digit-argument':           k.digitArgument,
+'negative-argument':        k.negativeArgument,
+'number-command':           k.numberCommand,
+'repeat-complex-command':   k.repeatComplexCommand,
+'universal-argument':       k.universalArgument,</t>
+<t tx="ekr.20051011141302.103">'backward-kill-sentence':   self.backwardKillSentence,
+'backward-kill-word':       self.backwardKillWord,
+'kill-line':                self.killLine,
+'kill-word':                self.killWord,
+'kill-sentence':            self.killSentence,
+'kill-region':              self.killRegion,
+'yank':                     self.yank,
+'yank-pop':                 self.yankPop,
+'zap-to-character':         self.zapToCharacter,</t>
+<t tx="ekr.20051011141302.104">'new':                  c.new,
+'open':                 c.open,
+'open-with':            c.openWith,
+'close':                c.close,
+'save':                 c.save,
+'saveAs':               c.saveAs,
+'saveTo':               c.saveTo,
+'revert':               c.revert,
+'read-outline-only':    c.readOutlineOnly,
+'read-at-file-nodes':   c.readAtFileNodes,
+'import-derived-file':  c.importDerivedFile,
+'tangle':               c.tangle,
+'tangle-all':           c.tangleAll,
+'tangle-marked':        c.tangleMarked,
+'untangle':             c.untangle,
+'untangle-all':         c.untangleAll,
+'untangle-marked':      c.untangleMarked,
+'export-headlines':     c.exportHeadlines,
+'flatten-outline':      c.flattenOutline,
+'import-at-root':       c.importAtRoot,
+'import at-file':       c.importAtFile,
+'import-cweb-files':    c.importCWEBFiles,
+'import-flattened-outline': c.importFlattenedOutline,
+'import-noweb-files':   c.importNowebFiles,
+'outline-to-noweb':     c.outlineToNoweb,
+'outline-to-CWEB':      c.outlineToCWEB,
+'remove-sentinels':     c.removeSentinels,
+'weave':                c.weave,
+'delete':               c.delete,
+'execute-script':       c.executeScript,
+'goto-line-number':     c.goToLineNumber,
+'set-font':             c.fontPanel,
+'set-colors':           c.colorPanel,
+'show-invisibles':      c.viewAllCharacters,
+'preferences':          c.preferences,
+'convert-all-blanks':   c.convertAllBlanks,
+'convert-all-tabs':     c.convertAllTabs,
+'convert-blanks':       c.convertBlanks,
+'convert-tabs':         c.convertTabs,
+'indent':               c.indentBody,
+'unindent':             c.dedentBody,
+'reformat-paragraph':   c.reformatParagraph,
+'insert-time':          c.insertBodyTime,
+'extract-section':      c.extractSection,
+'extract-names':        c.extractSectionNames,
+'extract':              c.extract,
+'match-bracket':        c.findMatchingBracket,
+'find-panel':           c.showFindPanel, ## c.findPanel,
+'find-next':            c.findNext,
+'find-previous':        c.findPrevious,
+'replace':              c.replace,
+'replace-then-find':    c.replaceThenFind,
+'edit-headline':        c.editHeadline,
+'toggle-angle-brackets': c.toggleAngleBrackets,
+'cut-node':             c.cutOutline,
+'copy-node':            c.copyOutline,
+'paste-node':           c.pasteOutline,
+'paste-retaining-clone': c.pasteOutlineRetainingClones,
+'hoist':                c.hoist,
+'de-hoist':             c.dehoist,
+'insert-node':          c.insertHeadline,
+'clone-node':           c.clone,
+'delete-node':          c.deleteOutline,
+'sort-children':        c.sortChildren,
+'sort-siblings':        c.sortSiblings,
+'demote':               c.demote,
+'promote':              c.promote,
+'move-outline-right':   c.moveOutlineRight,
+'move-outline-left':    c.moveOutlineLeft,
+'move-outline-up':      c.moveOutlineUp,
+'move-outline-down':    c.moveOutlineDown,
+'unmark-all':           c.unmarkAll,
+'mark-clones':          c.markClones,
+'mark':                 c.markHeadline,
+'mark-subheads':        c.markSubheads,
+'mark-changed items':   c.markChangedHeadlines,
+'mark-changed roots':   c.markChangedRoots,
+'contract-all':         c.contractAllHeadlines,
+'contract-node':        c.contractNode,
+'contract-parent':      c.contractParent,
+'expand-to-level 1':    c.expandLevel1,
+'expand-to-level 2':    c.expandLevel2,
+'expand-to-level 3':    c.expandLevel3,
+'expand-to-level 4':    c.expandLevel4,
+'expand-to-level 5':    c.expandLevel5,
+'expand-to-level 6':    c.expandLevel6,
+'expand-to-level 7':    c.expandLevel7,
+'expand-to-level 8':    c.expandLevel8,
+'expand-to-level 9':    c.expandLevel9,
+'expand-prev-level':    c.expandPrevLevel,
+'expand-next-level':    c.expandNextLevel,
+'expand-all':           c.expandAllHeadlines,
+'expand-node':          c.expandNode,
+'check-outline':        c.checkOutline,
+'dump-outline':         c.dumpOutline,
+'check-python-code':    c.checkPythonCode,
+'check-all-python-code':        c.checkAllPythonCode,
+'pretty-print-python-code':     c.prettyPrintPythonCode,
+'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
+'goto-parent':          c.goToParent,
+'goto-next-sibling':    c.goToNextSibling,
+'goto-prev-sibling':    c.goToPrevSibling,
+'goto-next-clone':      c.goToNextClone,
+'goto-next marked':     c.goToNextMarkedHeadline,
+'goto-next changed':    c.goToNextDirtyHeadline,
+'goto-first':           c.goToFirstNode,
+'goto-last':            c.goToLastNode,
+'goto-prev-visible':    c.selectVisBack,
+'goto-next-visible':    c.selectVisNext,
+'goto-prev-node':       c.selectThreadBack,
+'goto-next-node':       c.selectThreadNext,
+'about leo':            c.about,
+#'apply settings':      c.applyConfig,
+'open-leoConfig.leo':   c.openLeoSettings,
+'open-leoDocs.leo':     c.leoDocumentation,
+'open-online-home':     c.leoHome,
+'open-online-tutorial': c.leoTutorial,
+'open-compare-window':  c.openCompareWindow,
+'open-python-window':   c.openPythonWindow,
+'equal-sized-panes':    f.equalSizedPanes,
+'toggle-active-pane':   f.toggleActivePane,
+'toggle-split-direction': f.toggleSplitDirection,
+'resize-to-screen':     f.resizeToScreen,
+'cascade':              f.cascade,
+'minimize-all':         f.minimizeAll,</t>
+<t tx="ekr.20051011141302.105">'name-last-kbd-macro':      self.nameLastMacro,
+'load-file':                self.loadMacros,
+'insert-keyboard-macro' :   self.getMacroName,</t>
+<t tx="ekr.20051011141302.106">'query-replace':                self.queryReplace,
+'query-replace-regex':          self.queryReplaceRegex,
+'inverse-add-global-abbrev':    self.inverseAddGlobalAbbrev,</t>
+<t tx="ekr.20051011141302.107">'clear-rectangle':  self.clearRectangle,
+'close-rectangle':  self.closeRectangle,
+'delete-rectangle': self.deleteRectangle,
+'kill-rectangle':   self.killRectangle,
+'open-rectangle':   self.openRectangle,
+'yank-rectangle':   self.yankRectangle,</t>
+<t tx="ekr.20051011141302.108">'append-to-register':           self.appendToRegister,
+'copy-rectangle-to-register':   self.copyRectangleToRegister,
+'copy-to-register':             self.copyToRegister,
+'increment-register':           self.incrementRegister,
+'insert-register':              self.insertRegister,
+'jump-to-register':             self.jumpToRegister,
+'number-to-register':           self.numberToRegister,
+'point-to-register':            self.pointToRegister,
+'prepend-to-register':          self.prependToRegister,
+'view-register':                self.viewRegister,</t>
+<t tx="ekr.20051011141302.109">'isearch-forward':          self.isearchForward,
+'isearch-backward':         self.isearchBackward,
+'isearch-forward-regexp':   self.isearchForwardRegexp,
+'isearch-backward-regexp':  self.isearchBackwardRegexp,
+
+'re-search-forward':        self.reSearchForward,
+'re-search-backward':       self.reSearchBackward,
+
+'search-forward':           self.searchForward,
+'search-backward':          self.searchBackward,
+'word-search-forward':      self.wordSearchForward,
+'word-search-backward':     self.wordSearchBackward,</t>
+<t tx="ekr.20051011141302.110">@nocolor</t>
+<t tx="ekr.20051011141302.111"></t>
+<t tx="ekr.20051011141302.112">There may be bugs here.  The old code had definite strange aspects to it.</t>
+<t tx="ekr.20051011141302.113">createBindings now sets c.emacs, so modifyOnBodyKey just uses c.emacs.</t>
+<t tx="ekr.20051011141302.114">This is an important addition:  it guarantees that the proper commander is always used.</t>
+<t tx="ekr.20051011141302.115">This is not needed.  createBindings is called at most once per commander.</t>
+<t tx="ekr.20051011141302.116">Subclasses of baseCommands class should implement getPublicCommands.
+
+This returns a dict whose keys are emacs command names and whose values are bound methods.</t>
+<t tx="ekr.20051011141302.117">The miniBufferClass is the one half of the great divide.  The commands classes are the other.
+
+- The commnds classes do not understand the details of the miniBufferClass: it can be rearranged as needed.
+
+(done) Replace:
+    svar, label = self.getSvarLabel( event )
+by:
+    b = self.miniBuffer ; tbuffer = event.widget
+
+(done) self.setSvar(event,svar) -&gt; b.update(event)
+(done) svar -&gt;  b
+(done) label.configure(background='lightblue') --&gt; b.setLabelBlue()
+(done) self.miniBuffer -&gt; b
+(done) Replaced all delegators by b.methods.
+(done) Removed unused args from most methods.</t>
+<t tx="ekr.20051011141302.118">- Improved feedback for interactive search.
+    - The minibuffer now says isearch:
+    - Added args to miniBuffer.set/get methods to protect/ignore initial prompt characters.
+
+- Backspacing when tab completion cuts back to last 'really' typed character.
+    - Further backspaces work as you would expect.</t>
+<t tx="ekr.20051011141302.119">- positions and tnodes globals are now ivars of bufferCommands class.</t>
+<t tx="ekr.20051011141302.120">The fix was to return return orig_OnBodyKey(self.c.frame.body,event) at end of masterCommand.</t>
+<t tx="ekr.20051011141302.121"></t>
+<t tx="ekr.20051011141302.122"></t>
+<t tx="ekr.20051011141302.123">No longer needed.</t>
+<t tx="ekr.20051011141302.124">Thie problem was in the code at the end of keyHandler.finishCreate.
+
+The watchDelete hack was interfering with some kind of event.
+
+It was an ugly hack anyway ;-)</t>
+<t tx="ekr.20051011141302.125">- Keys are full Emacs command names, values are methods.</t>
+<t tx="ekr.20051011141302.126">- Eliminated iterator class.  (I now understand the code :-)
+- Automatically call b.clearState() and b.keyboardQuit() before dispatching commands.
+- Tab completion returns a non-trivial common prefix if it exists.  Further tabs cycle through possibilities.</t>
+<t tx="ekr.20051011141302.127">- Eliminated self.tbuffer
+
+- Removed all subclssses from keyHandlerClass.
+    - Replaced all references to keyHandler, miniBuffer, kstrokeManager, etc.
+    - All methods are now methods of the keyHandler class.
+
+- k denotes the keyHandler class everywhere.
+    - All commands classes define k ivar that refers to keyHandler.
+
+- Replaced tbuffer by w everywhere.
+
+The effect of these changes:
+    - There is never any confusion about how to access a keyHandler method: just use k.whatever.
+    - The init logic is simple and clean.
+    - The client code is visually much shorter and easier to understand.
+    - The keyHandler class is now simpler, though larger.
+    - There is no need for redirector methods.</t>
+<t tx="ekr.20051011141302.128">- setEvent is only used in one commands class, so it was moved there.
+
+- setLabelBlue and setLabelGrey now can set the label text as well as color.
+  This is a nice simplification of the client code.
+
+- Changed k.get, k.set and k.update to k.getLabel, k.setLable and k.updateLabel.
+  This is an important clarification.
+
+- Used simplified state-handling scheme, under control of k.newState ivar.
+    - I now see that state-handling is actually fully encapsulated in the commands classes.
+    - In particular, masterCommand knows essentially nothing of states.
+    - Removed getStateCommands dicts.
+
+- Simplified keyboardQuit by defining leoEditCommands.initAllEditCommanders at the module level.
+    - This call theInstance.init() for all commands classes.
+      The default in the base class does nothing.</t>
+<t tx="ekr.20051011141302.129">10/1/05
+
+Important simplifications:
+
+- Dispatchers call endCommand (via handleEndCommand)
+  when a command returns and there is no state.
+- "User" commands need only clear the state and set (or clear) the label:
+  everything else is automatic.
+- endCommand calls bodyWillChange.  This is the correct way to ensure that changes 'stick'.
+- Dispatchers will return 'break' or None as appropriate:
+  User code will not have to worry about this.
+- keyboardQuit still exists, but it merely clears the state and the label.
+  As before, commands may set the label to inform the user of what has happened.</t>
+<t tx="ekr.20051011141302.130">- Removed tailEnd and return 'break's.  They are no longer needed.
+
+- Replaced stopControlX by keyboardQuit.
+
+- Rewrote state handling for search commands.
+
+- Call endCommand after every keystroke.
+
+- Set k.commandName to include args in keep-lines, shell-command, etc.
+
+- Removed k.doUndo.</t>
+<t tx="ekr.20051011141302.131">- Extended k.commandName for undoable commands that use extension arguments.
+  There aren't that many such commands, surprisingly.</t>
+<t tx="ekr.20051011141302.132">- Split abbrevDispatch into addAbbreviation and inversAddAbbriviation.
+- Removed coresponding lambda's.
+- Change the hard binding for &lt;Control-g&gt; to k.abbortAllModesKey.
+- Renamed the top-level dispatches to fullCommand and quickCommand.
+** Massive improvements to rectangle and register commands.
+    - new rCommands dispatcher.
+    - Use new states in rCommands and most rectangle and register commands.
+    - This simplifies and localizes the code.
+    - The new code gives much better feedback.
+    - Allow arbitrary location-types in registers:  e.g. 'end'</t>
+<t tx="ekr.20051011141302.133">@nocolor
+
+- menu.createMenuEntries calls c.keyHandler.bindShortcutFromMenu if useMiniBuffer is True.
+    menu.createMenuEntries makes **no** bindings itself in this case.
+
+- Created k.makeAllBindings to localize bindings.
+
+- bindShortcutFromMenu and setBufferStrokes use two levels of callbacks.
+    The keyCallback is bound to the key: it calls k.masterCommand.
+    It refers to a refers to a second callback that dispatches the actual command.
+
+- bindKey now tests for duplicates and recovers from bad key bindings (user error).
+
+- Removed test to keystrokeFunctionDict in masterCommand.
+    The regular key binding mechanism should be enough!</t>
+<t tx="ekr.20051011141302.134">- k.finishCreate calls k.createInverseCommandsDict first.
+
+- The values in k.inverseCommandsDict are f.__name__, rather than f.
+
+- leoCommands.getPublicCommands now adds underlying f.__name__ to k.inverseCommandsDict rather than leoCallback.
+
+- createInverseCommandsDict ignores 'leoCallback' when adding entries.
+
+- Used k.inverseCommandsDict in &lt;&lt; set accel to the shortcut for name &gt;&gt; to get shortcuts using emacs-style names.
+
+    This allows either old-style menu shortcuts or emacs command names.
+
+- Allow '-' in shortcut names in parseShortcutLine.
+
+- Allow trailing comments in shortcut names in parseShortcutLine.
+
+* cb_dict is now vestigial and will soon be removed.
+    However, &lt;Alt-X&gt; is not bound properly at present.
+
+Binding is mostly complete:  the traces from createMenuEntries show missing command names in leoSettings.leo.
+
+- Removed last traces of cbDict ivar.  Use. by k.bindingsDict as need.</t>
+<t tx="ekr.20051011141302.135">@nocolor
+
+- replaced x.useMiniBuffer by c.useMiniBuffer.
+- Replace useEditorMenu by useCmdMenu, etc.
+- Call createMenuBar in c.finishCreate.
+- Removed all dummy methods from nullMenu class.
+    - The methods of the base class will do fine, provided that an overrided oops method does nothing!
+** Always define c.keyHandler, even if c.useMiniBuffer is False.
+    - Changes to c.finishCreate and keyHandler.ctor.
+- Removed all warnings:
+    - Added dynamicMenu arg to createMenuEntries to suppress a warning when a menu is created from a plugin.
+    - Revise &lt;&lt; set accel to the shortcut for name &gt;&gt; in createMenuEntries tests c.useMiniBuffer.
+    - Use c.frame.selectAllText instead of c.editCommands.selectAll.
+- Fixed bug in makeSpecialBindings so that Control-g works.</t>
+<t tx="ekr.20051011141302.136">- Make all bindings to c.frame.top (not w) in bindKey.
+  This make bindings available everywhere.</t>
+<t tx="ekr.20051011141302.137">Added big kludge to menu.createMenuEntries so that f.OnCut/Copy/PasteFromMenu get called
+**only** when explicitly selected from the menu (rather than from a shortcut).
+This allows the code in cut/copy/paste-text to be different as needed.
+
+Users can override the shortcut by assigning shortcuts to cut/copy/paste-text commands.
+The shortcut will appear in the menu, but does **not** get bound to c.frame.menu.
+
+This is an essential step in solving the infamous Control-V problem.
+The code appears to work properly on XP.  Not tested other places.
+
+This is the last best hope to solve this problem: the code interacts as little as possible with Tk.</t>
 </tnodes>
 </leo_file>
