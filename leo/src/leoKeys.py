@@ -377,12 +377,15 @@ class keyHandlerClass:
             # Get the function wrapped by this particular leoCallback function.
             func = k.leoCallbackDict.get(command)
             name = func.__name__
+            # g.trace('%25s (leo) %s' % (shortcut,name))
+            
             # No need for a second layer of callback.
             def keyCallback (event,func=command,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
         else:
             # Important: the name just needs to be unique for every function.
-            name = command.__name__ 
+            name = command.__name__
+            # g.trace('%25s %s' % (shortcut,name))
     
             def menuFuncCallback (event,command=command,name=name):
                 # g.trace(name)
@@ -391,7 +394,6 @@ class keyHandlerClass:
             def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
             
-        # g.trace('%25s %20s %s' % (shortcut,name))
         return k.bindKey(w,shortcut,keyCallback,name,fromMenu,tag='bindShortcut')
     #@nonl
     #@-node:ekr.20051006125633.1:bindShortcut
@@ -432,18 +434,16 @@ class keyHandlerClass:
                     shortcut, commandName, b.name))
             return b.name == commandName
     
-        # if shortcut.lower().startswith('<alt'): g.trace(tag,'%25s' % (shortcut),commandName)
+        # g.trace(tag,'%25s' % (shortcut),commandName)
     
         try:
             # The original way.  Essential to make cut/copy/paste work.
             if shortcut == '<Key>':
-                ### c.frame.body.bind(shortcut,callback,'+')
                 w.bind(shortcut,callback,'+')
                 # Don't bind to menu.  Besides, menu.bind doesn't allow '+' arg.
             else:
-                ### c.frame.body.bind(shortcut,callback)
                 w.bind(shortcut,callback)
-                if 0: ### shortcut.lower() not in ('alt-e','alt-f','alt-p','alt-w','alt-h'):
+                if 0: # Apparently this is not needed?
                     c.frame.menu.bind(shortcut,callback)
             #@        << other ways that don't work >>
             #@+node:ekr.20051010065140:<< other ways that don't work >>
@@ -496,6 +496,7 @@ class keyHandlerClass:
     
         for name in keys:
             command = c.commandsDict.get(name)
+            
             key, accel = c.config.getShortcut(name)
             if accel:
                 bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)

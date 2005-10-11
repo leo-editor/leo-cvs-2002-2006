@@ -1034,12 +1034,13 @@ class editCommandsClass (baseEditCommandsClass):
         k = self.k
     
         return {
+            'back-sentence':        self.backSentence,
             'back-to-indentation':  self.backToIndentation,
-            'backward-delete-char': self.backwardDeleteCharacter,
             'backward-char':        self.backCharacter,
+            'backward-delete-char': self.backwardDeleteCharacter,
+            'backward-kill-paragraph': self.backwardKillParagraph,
             'backward-paragraph':   self.backwardParagraph,
             'backward-word':        self.backwardWord,
-            'backward-kill-paragraph': self.backwardKillParagraph,
             'beginning-of-buffer':  self.beginningOfBuffer,
             'beginning-of-line':    self.beginningOfLine,
             'capitalize-word':      self.capitalizeWord,
@@ -1050,66 +1051,63 @@ class editCommandsClass (baseEditCommandsClass):
             'dabbrev-expands':      self.dynamicExpansion,
             'delete-char':          self.deleteNextChar,
             'delete-indentation':   self.deleteIndentation,
+            'delete-spaces':        self.deleteSpaces,
             'downcase-region':      self.downCaseRegion,
             'downcase-word':        self.downCaseWord,
             'end-of-buffer':        self.endOfBuffer,
             'end-of-line':          self.endOfLine,
             'escape':               self.watchEscape,
             'eval-expression':      self.evalExpression,
+            'exchange-point-mark':  self.exchangePointMark,
             'fill-paragraph':       self.fillParagraph,
-            'fill-region-as-paragraph': self.fillRegionAsParagraph,
             'fill-region':          self.fillRegion,
+            'fill-region-as-paragraph': self.fillRegionAsParagraph,
             'flush-lines':          self.flushLines,
             'forward-char':         self.forwardCharacter,
             'forward-paragraph':    self.forwardParagraph,
+            'forward-sentence':     self.forwardSentence,
             'forward-word':         self.forwardWord,
             'goto-char':            self.gotoCharacter,
             'goto-line':            self.gotoLine,
             'how-many':             self.howMany,
             'indent-region':        self.indentRegion,
-            'indent-rigidly':       self.tabIndentRegion,
             'indent-relative':      self.indentRelative,
+            'indent-rigidly':       self.tabIndentRegion,
+            'indent-to-comment-column': self.indentToCommentColumn,
+            'insert-newline':       self.insertNewline,
+            'insert-parentheses':   self.insertParentheses,
             'keep-lines':           self.keepLines,
             'kill-paragraph':       self.killParagraph,
+            'line-number':          self.lineNumber,
+            'move-past-close':      self.movePastClose,
             'newline-and-indent':   self.insertNewLineAndTab,
             'next-line':            self.nextLine,
             'previous-line':        self.prevLine,
+            'remove-blank-lines':   self.removeBlankLines,
             'replace-regex':        self.activateReplaceRegex,
             'replace-string':       self.replaceString,
             'reverse-region':       self.reverseRegion,
-            ## 'save-buffer':       self.saveFile,
             'scroll-down':          self.scrollDown,
             'scroll-up':            self.scrollUp,
+            'select-paragraph':     self.selectParagraph,
+            'set-comment-column':   self.setCommentColumn,
             'set-fill-column':      self.setFillColumn,
             'set-fill-prefix':      self.setFillPrefix,
             'set-mark-command':     self.setRegion,
-            'select-paragraph':     self.selectParagraph,
+            # 'save-buffer':        self.saveFile,
             'sort-columns':         self.sortColumns,
             'sort-fields':          self.sortFields,
             'sort-lines':           self.sortLines,
             'split-line':           self.insertNewLineIndent,
             'tabify':               self.tabify,
             'transpose-chars':      self.transposeCharacters,
-            'transpose-words':      self.transposeWords,
             'transpose-lines':      self.transposeLines,
+            'transpose-words':      self.transposeWords,
             'untabify':             self.untabify,
             'upcase-region':        self.upCaseRegion,
             'upcase-word':          self.upCaseWord,
             'view-lossage':         self.viewLossage,
             'what-line':            self.whatLine,
-    
-            # Added by EKR:
-            'back-sentence':        self.backSentence,
-            'delete-spaces':        self.deleteSpaces,
-            'forward-sentence':     self.forwardSentence,
-            'exchange-point-mark':  self.exchangePointMark,
-            'indent-to-comment-column': self.indentToCommentColumn,
-            'insert-newline':       self.insertNewline,
-            'insert-parentheses':   self.insertParentheses,
-            'line-number':          self.lineNumber,
-            'move-past-close':      self.movePastClose,
-            'remove-blank-lines':   self.removeBlankLines,
-            'set-comment-column':   self.setCommentColumn,
         }
     #@nonl
     #@-node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
@@ -2024,7 +2022,7 @@ class editCommandsClass (baseEditCommandsClass):
         s1 = w.index('sel.first')
         s2 = w.index('sel.last')
         w.mark_set('insert',s1)
-        self.backwardParagraph(event,-1)
+        self.backwardParagraph(event)
         if w.index('insert linestart') == '1.0':
             self.fillParagraph(event)
         while 1:
@@ -3155,18 +3153,21 @@ class leoCommandsClass (baseEditCommandsClass):
         c = self.c ; f = c.frame
         
         d = {
-            #'apply settings':      c.applyConfig,
+            'abort-edit-headline':  f.abortEditLabelCommand,
             'about-leo':            c.about,
-            'cascade':              f.cascade,
+            'add-comments':         c.addComments,     
+            'cascade-windows':      f.cascade,
+            #'check-spelling':      None,                   # Create this command.
+            'clear-recent-files':   c.clearRecentFiles,
+            'close-window':         c.close,
+            'contract-or-go-left':  c.contractNodeOrGoToParent,
+            'check-python-code':    c.checkPythonCode,
             'check-all-python-code':c.checkAllPythonCode,
             'check-outline':        c.checkOutline,
-            'check-python-code':    c.checkPythonCode,
             'clear-recent-files':   c.clearRecentFiles,
             'clone-node':           c.clone,
-            'close':                c.close,
-            'contract-all':         c.contractAllHeadlines,
             'contract-node':        c.contractNode,
-            'contract-or-go-left':  c.contractNodeOrGoToParent,
+            'contract-all':         c.contractAllHeadlines,
             'contract-parent':      c.contractParent,
             'convert-all-blanks':   c.convertAllBlanks,
             'convert-all-tabs':     c.convertAllTabs,
@@ -3178,10 +3179,13 @@ class leoCommandsClass (baseEditCommandsClass):
             'cut-text':             f.OnCutFromMenu,
             'de-hoist':             c.dehoist,
             'delete':               c.delete,
+            'delete-comments':      c.deleteComments,
             'delete-node':          c.deleteOutline,
+            'delete-text':          c.delete,
             'demote':               c.demote,
             'dump-outline':         c.dumpOutline,
             'edit-headline':        c.editHeadline,
+            'end-edit-headline':    f.endEditLabelCommand,
             'equal-sized-panes':    f.equalSizedPanes,
             'execute-script':       c.executeScript,
             'exit-leo':             g.app.onQuit,
@@ -3211,7 +3215,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'go-forward':           c.goNextVisitedNode,
             'goto-first-node':      c.goToFirstNode,
             'goto-last-node':       c.goToLastNode,
-            'goto-last-visitlbe':   c.goToLastVisibleNode,
+            'goto-last-visible':    c.goToLastVisibleNode,
             'goto-line-number':     c.goToLineNumber,
             'goto-next-changed':    c.goToNextDirtyHeadline,
             'goto-next-clone':      c.goToNextClone,
@@ -3246,7 +3250,6 @@ class leoCommandsClass (baseEditCommandsClass):
             'move-outline-right':       c.moveOutlineRight,
             'move-outline-up':          c.moveOutlineUp,
             'new':                      c.new,
-            'open':                     c.open,
             'open-compare-window':      c.openCompareWindow,
             'open-leoConfig.leo':       c.openLeoSettings,
             'open-leoDocs.leo':         c.leoDocumentation,
@@ -3254,6 +3257,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'open-online-home':         c.leoHome,
             'open-online-tutorial':     c.leoTutorial,
             'open-offline-tutorial':    f.leoHelp,
+            'open-outline':             c.open,
             'open-python-window':       c.openPythonWindow,
             'open-with':                c.openWith,
             'outline-to-CWEB':          c.outlineToCWEB,
@@ -3261,7 +3265,6 @@ class leoCommandsClass (baseEditCommandsClass):
             'paste-node':               c.pasteOutline,
             'paste-retaining-clones':   c.pasteOutlineRetainingClones,
             'paste-text':               f.pasteText, # Same as OnPasteFromMenu
-            'preferences':              c.preferences,
             'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
             'pretty-print-python-code':     c.prettyPrintPythonCode,
             'promote':                  c.promote,
@@ -3274,6 +3277,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'replace-then-find':        c.replaceThenFind,
             'resize-to-screen':         f.resizeToScreen,
             'revert':                   c.revert,
+            'settings':                 c.preferences,
             'save':                     c.save,
             'save-as':                  c.saveAs,
             'save-to':                  c.saveTo,
@@ -3308,11 +3312,10 @@ class leoCommandsClass (baseEditCommandsClass):
         # Create a callback for each item in d.
         keys = d.keys() ; keys.sort()
         for name in keys:
-    
             f = d.get(name)
             # Warning: k.createInverseCommandsDict uses the name of this callback.
-            def leoCallback (event,f=f):
-                f()
+            def leoCallback (event,f=f,self=self,name=name):
+                self.c.doCommand(f,name)
             d2 [name] = leoCallback
             k.leoCallbackDict [leoCallback] = f
             k.inverseCommandsDict [f.__name__] = name
