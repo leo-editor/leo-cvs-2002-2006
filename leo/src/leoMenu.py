@@ -272,9 +272,12 @@ class leoMenu:
             ("Can't Undo","Ctrl+Z",c.undoer.undo), # &U reserved for Undo
             ("Can't Redo","Shift+Ctrl+Z",c.undoer.redo), # &R reserved for Redo
             ("-",None,None),
-            ("Cu&t","Ctrl+X",f.OnCutFromMenu), 
-            ("Cop&y","Ctrl+C",f.OnCopyFromMenu),
-            ("&Paste","Ctrl+V",f.OnPasteFromMenu),
+            # A Horrible kludge.  The -- indicates we should set menu_shortcut but *not* the bind_shortcut.
+            # This is needed so we can distinguish between invokes from the menu (very rare) and others.
+            # Important: these shortcuts can be overridden by specifying shortcuts for copy-text, cut-text and paste-text.
+            ("Cu&t","--Ctrl+X",f.OnCutFromMenu), 
+            ("Cop&y","--Ctrl+C",f.OnCopyFromMenu),
+            ("&Paste","--Ctrl+V",f.OnPasteFromMenu),
             ("&Delete",None,c.delete),
             ("Select &All","Ctrl+A",f.body.selectAllText),
             ("-",None,None),
@@ -999,6 +1002,16 @@ class leoMenu:
             if label == None or command == None or label == "-":
                 self.add_separator(menu)
             else:
+                #@            << clear useBindShortcut and adjust accel if accel startswith '--' >>
+                #@+node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
+                if accel and accel.startswith('--'):
+                    useBindShortcut = False
+                    accel = accel[2:]
+                else:
+                    useBindShortcut = True
+                #@nonl
+                #@-node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
+                #@nl
                 #@            << set name to the label for doCommand >>
                 #@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
                 name = label.strip().lower()
@@ -1013,8 +1026,22 @@ class leoMenu:
                 #@nl
                 #@            << set accel to the shortcut for name >>
                 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-                # First, try to get the old-style name.
-                rawKey,accel2 = c.config.getShortcut(name)
+                # First, check the kludged cut/copy/paste commands.
+                if not useBindShortcut:
+                    g.trace(accel,name,command.__name__)
+                    cutCopyPasteDict = {
+                        'Ctrl+X': 'cut-text',
+                        'Ctrl+C': 'copy-text',
+                        'Ctrl+V': 'paste-text',
+                    }
+                    name = cutCopyPasteDict.get(accel)
+                    # Allow the user to override the shortcut using equivalent emacs name.
+                    rawKey,accel2 = c.config.getShortcut(name)
+                    if not accel2:
+                        accel2 = accel # Do not allow any further overrides.
+                else:
+                    # Second, try to get the old-style name.
+                    rawKey,accel2 = c.config.getShortcut(name)
                 
                 # New in 4.4: allow emacs-style or old style names in menu shortcuts.
                 if not accel2 and not openWith:
@@ -1090,13 +1117,12 @@ class leoMenu:
                 #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
                 #@nl
                 
-                if bind_shortcut and not dontBind:
+                if bind_shortcut and useBindShortcut and not dontBind:
                     ok = c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith,fromMenu=True)
                     if not ok: menu_shortcut = None
     
                 self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
                     command=menuCallback,underline=amp_index)
-    
     #@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
     #@+node:ekr.20031218072017.3784:createMenuItemsFromTable
     def createMenuItemsFromTable (self,menuName,table,openWith=False):

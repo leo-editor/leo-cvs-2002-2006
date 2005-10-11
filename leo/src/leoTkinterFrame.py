@@ -1701,98 +1701,179 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 tree.force_redraw() # force a redraw of joined headlines.
     #@nonl
     #@-node:ekr.20031218072017.3981:abortEditLabelCommand
-    #@+node:ekr.20031218072017.840:Cut/Copy/Paste body text
-    #@+node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
+    #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+    #@+node:ekr.20031218072017.841:f.cut methods
+    
+    
+    #@+node:ekr.20051011072049:OnCut (no longer used)
+    # No longer used.  Was called from tkBody.createBindings.
+    
     def OnCut (self,event=None):
         
         """The handler for the virtual Cut event."""
         
         __pychecker__ = '--no-argsused' # event not used.
         
+        f = self ; c = f.c
         g.trace()
-    
-        frame = self ; c = frame.c ; v = c.currentVnode()
         
         if 0: # g.app.gui.win32clipboard is always None.
             if g.app.gui.win32clipboard:
-                data = frame.body.getSelectedText()
+                data = f.body.getSelectedText()
                 if data:
                     g.app.gui.replaceClipboardWith(data)
     
         # Activate the body key handler by hand.
-        frame.body.forceFullRecolor()
-        frame.body.onBodyWillChange(v,"Cut")
-    
+        f.body.forceFullRecolor()
+        f.body.onBodyWillChange(c.currentPosition(),"Cut")
+    #@nonl
+    #@-node:ekr.20051011072049:OnCut (no longer used)
+    #@+node:ekr.20051011072049.1:OnCutFromMenu
     def OnCutFromMenu (self):
         
-        w = self.getFocus()
-        w.event_generate(g.virtual_event_name("Cut"))
+        ''' Called **only** when invoked using the menu instead of a shortcut.
+        menu.createMenuEntries contains a horrible kludge to make this happen.'''
         
-        frame = self ; c = frame.c ; v = c.currentVnode()
-    
-        if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
-            frame.tree.onHeadChanged(v)
+        f = self ; c = f.c ; w = f.getFocus()
+        
+        isBody = w == f.body.bodyCtrl
+        g.trace('isBody',isBody)
+        if isBody:
+            w.event_generate(g.virtual_event_name("Cut"))
+        else:
+            # Necessary
+            w.event_generate(g.virtual_event_name("Cut"))
+            f.tree.onHeadChanged(c.currentPosition())
     #@nonl
-    #@-node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
-    #@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
+    #@-node:ekr.20051011072049.1:OnCutFromMenu
+    #@+node:ekr.20051011072049.2:cutText
+    def cutText (self):
+        
+        '''Invoked from the mini-buffer and from shortcuts.'''
+        
+        f = self ; c = f.c ; w = f.getFocus()
+        isBody = w == f.body.bodyCtrl
+        g.trace('isBody',isBody)
+    
+        if isBody:
+            w.event_generate(g.virtual_event_name("Cut"))
+        else:
+            f.tree.onHeadChanged(c.currentPosition())
+    #@nonl
+    #@-node:ekr.20051011072049.2:cutText
+    #@-node:ekr.20031218072017.841:f.cut methods
+    #@+node:ekr.20031218072017.842:f.copy methods
+    #@+node:ekr.20051011072903:OnCopy (no longer used)
+    # No longer used.  Was called from tkBody.createBindings.
+    
     def OnCopy (self,event=None):
         
         __pychecker__ = '--no-argsused' # event not used.
-        
         g.trace()
     
         if 0: # g.app.gui.win32clipboard is always None.
-            frame = self
+            f = self
             if g.app.gui.win32clipboard:
-                data = frame.body.getSelectedText()
+                data = f.body.getSelectedText()
                 if data:
                     g.app.gui.replaceClipboardWith(data)
             
         # Copy never changes dirty bits or syntax coloring.
         
+    #@-node:ekr.20051011072903:OnCopy (no longer used)
+    #@+node:ekr.20051011072903.1:OnCopyFromMenu
     def OnCopyFromMenu (self):
-    
-        frame = self
-        w = frame.getFocus()
-        w.event_generate(g.virtual_event_name("Copy"))
+        
+        ''' Called **only** when invoked using the menu instead of a shortcut.
+        menu.createMenuEntries contains a horrible kludge to make this happen.'''
+        
+        f = self ; c = f.c ; w = f.getFocus()
+        isBody = w == f.body.bodyCtrl
+        isMenu = w == f.menu
+        g.trace('isBody',isBody,'isMenu',isMenu)
+        if isBody:
+            w.event_generate(g.virtual_event_name("Copy"))
+        else:
+            # Necessary when not using shortcut keys.
+            w.event_generate(g.virtual_event_name("Copy"))
     #@nonl
-    #@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
-    #@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
+    #@-node:ekr.20051011072903.1:OnCopyFromMenu
+    #@+node:ekr.20051011072903.2:copyText
+    def copyText (self):
+        
+        '''Invoked from the mini-buffer and from shortcuts.'''
+        
+        f = self ; c = f.c ; w = f.getFocus()
+        isBody = w == f.body.bodyCtrl
+        g.trace('isBody',isBody)
+    
+        if isBody:
+            w.event_generate(g.virtual_event_name("Copy"))
+        else:
+            pass
+    
+    #@-node:ekr.20051011072903.2:copyText
+    #@-node:ekr.20031218072017.842:f.copy methods
+    #@+node:ekr.20031218072017.843:f.OnPaste & OnPasteFromMenu & pasteText
+    #@+node:ekr.20051011072903.3:OnPaste (no longer used)
+    # No longer used.  Was called from tkBody.createBindings.
+    
     def OnPaste (self,event=None):
         
         __pychecker__ = '--no-argsused' # event not used.
         
-        frame = self ; c = frame.c ; v = c.currentVnode()
-        
+        f = self ; c = f.c
         g.trace()
       
         if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
-            bodyCtrl = frame.body.bodyCtrl
+            bodyCtrl = f.body.bodyCtrl
             s = bodyCtrl.selection_get( selection='CLIPBOARD' )
             bodyCtrl.insert('insert', s)
             bodyCtrl.event_generate('<Key>')
             bodyCtrl.update_idletasks()
         else:
             # Activate the body key handler by hand.
-            frame.body.forceFullRecolor()
-            frame.body.onBodyWillChange(v,"Paste")
+            f.body.forceFullRecolor()
+            f.body.onBodyWillChange(c.currentPosition(),"Paste")
         
+    #@-node:ekr.20051011072903.3:OnPaste (no longer used)
+    #@+node:ekr.20051011072903.4:OnPasteFromMenu
     def OnPasteFromMenu (self):
         
-        frame = self ; c = frame.c ; v = c.currentVnode()
+        ''' Called **only** when invoked using the menu instead of a shortcut.
+        menu.createMenuEntries contains a horrible kludge to make this happen.'''
         
-        g.trace()
+        f = self ; c = f.c ; w = f.getFocus()
     
         w = self.getFocus()
-        w.event_generate(g.virtual_event_name("Paste"))
+        isBody = w == f.body.bodyCtrl
+        isMenu = w == f.menu
+        g.trace('isBody',isBody,'isMenu',isMenu)
+        if isBody:
+            w.event_generate(g.virtual_event_name("Paste"))
+        else:
+            w.event_generate(g.virtual_event_name("Paste"))
+            f.tree.onHeadChanged(c.currentPosition())
+    #@-node:ekr.20051011072903.4:OnPasteFromMenu
+    #@+node:ekr.20051011072903.5:pasteText
+    def pasteText (self):
         
-        if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
-            frame.tree.onHeadChanged(v)
-            
-    pasteText = OnPasteFromMenu
+        '''This should be called **only** when invoked using the menu.
+        menu.createMenuEntries contains a horrible kludge to make this happen.'''
+        
+        f = self ; c = f.c ; w = f.getFocus()
+        isBody = w == f.body.bodyCtrl
+        g.trace('isBody',isBody)
+    
+        if isBody:
+            w.event_generate(g.virtual_event_name("Paste"))
+        else:
+            # Do **not** call w.event_generate here.
+            f.tree.onHeadChanged(c.currentPosition())
     #@nonl
-    #@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
-    #@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
+    #@-node:ekr.20051011072903.5:pasteText
+    #@-node:ekr.20031218072017.843:f.OnPaste & OnPasteFromMenu & pasteText
+    #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
     #@+node:ekr.20031218072017.3982:endEditLabelCommand
     def endEditLabelCommand (self):
     

@@ -476,6 +476,10 @@ class leoFrame:
     def OnCopyFromMenu (self):     self.oops()
     def OnPasteFromMenu (self):    self.oops()
     
+    copyText  = OnCopyFromMenu
+    cutText   = OnCutFromMenu
+    pasteText = OnPasteFromMenu
+    
     def abortEditLabelCommand (self): self.oops()
     def endEditLabelCommand (self):   self.oops()
     def insertHeadlineTime (self):    self.oops()
