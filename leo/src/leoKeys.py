@@ -443,8 +443,8 @@ class keyHandlerClass:
                 # Don't bind to menu.  Besides, menu.bind doesn't allow '+' arg.
             else:
                 w.bind(shortcut,callback)
-                if 0: # Apparently this is not needed?
-                    c.frame.menu.bind(shortcut,callback)
+                # Binding to the menu ensures that keys are active in all parts of the frame.
+                c.frame.menu.bind(shortcut,callback)
             #@        << other ways that don't work >>
             #@+node:ekr.20051010065140:<< other ways that don't work >>
             if 0: # None of these are satisfactory.

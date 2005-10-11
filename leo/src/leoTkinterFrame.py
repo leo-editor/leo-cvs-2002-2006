@@ -1780,6 +1780,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def OnPasteFromMenu (self):
         
         frame = self ; c = frame.c ; v = c.currentVnode()
+        
+        g.trace()
     
         w = self.getFocus()
         w.event_generate(g.virtual_event_name("Paste"))
