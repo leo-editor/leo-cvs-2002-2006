@@ -7,20 +7,18 @@ Modelled after Emacs and Vim commands.'''
 #@<< imports >>
 #@+node:ekr.20050710151017:<< imports >>
 import leoGlobals as g
-
 import leoKeys
-import leoPlugins
+import leoNodes
 
 import cPickle
 import difflib
 import os
 import re
 import string
+
 subprocess   = g.importExtension('subprocess',  pluginName=None,verbose=False)
 Tk           = g.importExtension('Tkinter',     pluginName=None,verbose=False)
 tkFileDialog = g.importExtension('tkFileDialog',pluginName=None,verbose=False)
-import sys
-#@nonl
 #@-node:ekr.20050710151017:<< imports >>
 #@nl
 
@@ -36,6 +34,7 @@ class baseEditCommandsClass:
     
         self.c = c
         self.k = self.keyHandler = None
+        self.registers = {} # To keep pychecker happy.
         
     def finishCreate(self):
     
@@ -122,28 +121,6 @@ class baseEditCommandsClass:
         return False
     #@nonl
     #@-node:ekr.20050920084036.250:_checkIfRectangle
-    #@+node:ekr.20050920084036.251:_ToReg (not used)
-    def _ToReg (self,event,which):
-    
-        if not self._chckSel(event):
-            return
-        if self._checkIfRectangle(event):
-            return
-    
-        if event.keysym in string.letters:
-            event.keysym = event.keysym.lower()
-            w = event.widget
-            if not self.registers.has_key(event.keysym):
-                self.registers [event.keysym] = ''
-            txt = w.get('sel.first','sel.last')
-            rtxt = self.registers [event.keysym]
-            if self.which == 'p':
-                txt = txt + rtxt
-            else:
-                txt = rtxt + txt
-            self.registers [event.keysym] = txt
-    #@nonl
-    #@-node:ekr.20050920084036.251:_ToReg (not used)
     #@+node:ekr.20050920084036.10:contRanges
     def contRanges (self,w,range):
     
@@ -211,11 +188,11 @@ class baseEditCommandsClass:
 #@+others
 #@+node:ekr.20050924100713: Module level...
 #@+node:ekr.20050920084720:createEditCommanders (leoEditCommands module)
-def createEditCommanders (self):
+def createEditCommanders (c):
     
     '''Create edit classes in the commander.'''
     
-    c = self ; global classesList
+    global classesList
 
     for name, theClass in classesList:
         theInstance = theClass(c)# Create the class.
@@ -251,11 +228,11 @@ def finishCreateEditCommanders (c):
 #@nonl
 #@-node:ekr.20050922104731:finishCreateEditCommanders (leoEditCommands module)
 #@+node:ekr.20050924100713.1:initAllEditCommanders
-def initAllEditCommanders (self):
+def initAllEditCommanders (c):
     
     '''Re-init classes in the commander.'''
     
-    c = self ; global classesList
+    global classesList
 
     for name, theClass in classesList:
         theInstance = getattr(c,name)
@@ -498,7 +475,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
                     if self.abbrevs.has_key(word):
                         k.setLabel('Replace %s with %s? y/n' % (word,self.abbrevs[word]))
                         yield None
-                        if self.regXKey == 'y':
+                        if k.regXKey == 'y':
                             ind = w.index('%s wordstart' % i1)
                             w.delete('%s wordstart' % i1,'%s wordend' % i1)
                             w.insert(ind,self.abbrevs[word])
@@ -560,6 +537,9 @@ class bufferCommandsClass (baseEditCommandsClass):
         baseEditCommandsClass.__init__(self,c) # init the base class.
         
         self.fromName = '' # Saved name from getBufferName.
+        self.bufferDict = {}
+        self.positions = {}
+        self.tnodes = {}
     #@nonl
     #@-node:ekr.20050920084036.32: ctor (bufferCommandsClass)
     #@+node:ekr.20050920084036.33: getPublicCommands
@@ -585,8 +565,9 @@ class bufferCommandsClass (baseEditCommandsClass):
         k.setLabelBlue('Append to buffer: ')
         self.getBufferName(event,self.appendToBufferFinisher)
     
-    def appendToBufferFinisher (self,name):
+    def appendToBufferFinisher (self,event,name):
     
+        k = self.k ; w = event.widget
         txt = w.get('sel.first','sel.last')
         try:
             bdata = self.bufferDict [name]
@@ -604,8 +585,9 @@ class bufferCommandsClass (baseEditCommandsClass):
         k.setLabelBlue('Copy to buffer: ')
         self.getBufferName(event,self.copyToBufferFinisher)
     
-    def copyToBufferFinisher (self,name):
+    def copyToBufferFinisher (self,event,name):
     
+        k = self.k ; w = event.widget
         try:
             txt = w.get('sel.first','sel.last')
             self.setBufferData(event,name,txt)
@@ -621,8 +603,9 @@ class bufferCommandsClass (baseEditCommandsClass):
         k.setLabelBlue('Insert to buffer: ')
         self.getBufferName(event,self.insertToBufferFinisher)
     
-    def insertToBufferFinisher (self,name):
-    
+    def insertToBufferFinisher (self,event,name):
+        
+        k = self.k ; w = event.widget
         try:
             bdata = self.bufferDict [name]
             w.insert('insert',bdata)
@@ -638,9 +621,12 @@ class bufferCommandsClass (baseEditCommandsClass):
         k.setLabelBlue('Kill buffer: ')
         self.getBufferName(event,self.killBufferFinisher)
     
-    def killBufferFinisher (self,name):
-    
-        # method = self.bufferDeletes[event.widget]
+    def killBufferFinisher (self,event,name):
+        
+        k = self.k
+        
+        # w = event.widget
+        # method = self.bufferDeletes[w]
         # method(name)
     
         pass ### Not ready yet.
@@ -657,11 +643,12 @@ class bufferCommandsClass (baseEditCommandsClass):
         for p in c.allNodes_iter():
             names [p.headString()] = None
     
-        list = names.keys()
-        list.sort()
-        data = '\n'.join(list)
-    
-        ### k.setLabel(data)
+        buffers = names.keys()
+        buffers.sort()
+        
+        if 0: # This would be too much data for now...
+            data = '\n'.join(buffers)
+            k.setLabelGrey(data)
     #@nonl
     #@-node:ekr.20050920084036.42:listBuffers/Finisher (not ready yet)
     #@+node:ekr.20050920084036.39:prependToBuffer/Finisher
@@ -671,7 +658,9 @@ class bufferCommandsClass (baseEditCommandsClass):
         k.setLabelBlue('Prepend to buffer: ')
         self.getBufferName(event,self.prependToBufferFinisher)
         
-    def prependToBufferFinisher (self,name):
+    def prependToBufferFinisher (self,event,name):
+        
+        k = self.k ; w = event.widget
         
         try:
             txt = w.get('sel.first','sel.last')
@@ -690,17 +679,20 @@ class bufferCommandsClass (baseEditCommandsClass):
         k.setLabelBlue('Rename buffer from: ')
         self.getBufferName(event,self.renameBufferFinisher1)
         
-    def renameBufferFinisher1 (self,name):
+    def renameBufferFinisher1 (self,event,name):
         
         k = self.k
         k.setLabelBlue('Rename buffer from: %s to: ' % (name))
         self.fromName = name
         self.getBufferName(event,self.renameBufferFinisher2)
         
-    def renameBufferFinisher2 (self,name):
+    def renameBufferFinisher2 (self,event,name):
     
         k = self.k
+        
+        # w = event.widget
         # self.renameBuffers[w](name)
+    
         k.setLabelGrey('Renamed buffer %s to %s' % (self.fromName,name))
     #@nonl
     #@-node:ekr.20050920084036.43:renameBuffer (not ready yet)
@@ -711,8 +703,11 @@ class bufferCommandsClass (baseEditCommandsClass):
         k.setLabelBlue('Switch to buffer: ')
         self.getBufferName(event,self.switchToBufferFinisher)
         
-    def switchToBufferFinisher (self,name):
-     
+    def switchToBufferFinisher (self,event,name):
+        
+        k = self.k
+        
+        # w = event.widget
         # method = self.bufferGotos[event.widget]
         # k.keyboardQuit(event)
         # method(name)
@@ -744,22 +739,24 @@ class bufferCommandsClass (baseEditCommandsClass):
             func = self.getBufferNameFinisher
             self.getBufferNameFinisher = None
             if func:
-                func(k.arg)
+                func(event,k.arg)
     #@nonl
     #@-node:ekr.20050927093851:getBufferName
     #@+node:ekr.20050927102133.1:Utils
     #@+node:ekr.20050927101829.3:setBufferData
-    def setBufferData (name,data):
+    def setBufferData (self,event,name,data):
     
+        c = self.c
         data = unicode(data)
-        tdict = self.tnodes [c]
-        if tdict.has_key(name):
-            tdict [name].bodyString = data
+        d = self.tnodes [c]
+        if d.has_key(name):
+            d [name].bodyString = data
     #@nonl
     #@-node:ekr.20050927101829.3:setBufferData
-    #@+node:ekr.20050927101829.4:gotoNode
-    def gotoNode (name):
-    
+    #@+node:ekr.20050927101829.4:gotoNode (not used!)
+    def gotoNode (self,name):
+        
+        c = self.c
         c.beginUpdate()
         try:
             if self.positions.has_key(name):
@@ -782,7 +779,7 @@ class bufferCommandsClass (baseEditCommandsClass):
                         tl.withdraw()
                         tl.destroy()
                         if cpos != None:
-                            gotoPosition(c,posis[cpos])
+                            self.gotoPosition(c,posis[cpos])
                     lbox.bind('<Button-1>',setPos)
                     geometry = tl.geometry()
                     geometry = geometry.split('+')
@@ -793,25 +790,27 @@ class bufferCommandsClass (baseEditCommandsClass):
                     tl.geometry(geometry)
                 else:
                     pos = posis [0]
-                    gotoPosition(c,pos)
+                    self.gotoPosition(c,pos)
             else:
                 pos2 = c.currentPosition()
                 tnd = leoNodes.tnode('',name)
                 pos = pos2.insertAfter(tnd)
-                gotoPosition(c,pos)
+                self.gotoPosition(c,pos)
         finally:
             c.endUpdate()
     #@nonl
-    #@-node:ekr.20050927101829.4:gotoNode
+    #@-node:ekr.20050927101829.4:gotoNode (not used!)
     #@+node:ekr.20050927101829.5:gotoPosition
-    def gotoPosition (c,pos):
+    def gotoPosition (self,c,pos):
     
         c.frame.tree.expandAllAncestors(pos)
         c.selectPosition(pos)
     #@nonl
     #@-node:ekr.20050927101829.5:gotoPosition
-    #@+node:ekr.20050927101829.6:deleteNode
-    def deleteNode (name):
+    #@+node:ekr.20050927101829.6:deleteNode (not used?)
+    def deleteNode (self,name):
+        
+        c = self.c
     
         c.beginUpdate()
         try:
@@ -822,9 +821,11 @@ class bufferCommandsClass (baseEditCommandsClass):
         finally:
             c.endUpdate()
     #@nonl
-    #@-node:ekr.20050927101829.6:deleteNode
-    #@+node:ekr.20050927101829.7:renameNode
-    def renameNode (name):
+    #@-node:ekr.20050927101829.6:deleteNode (not used?)
+    #@+node:ekr.20050927101829.7:renameNode (not used?)
+    def renameNode (self,name):
+        
+        c = self.c
     
         c.beginUpdate()
         try:
@@ -833,55 +834,8 @@ class bufferCommandsClass (baseEditCommandsClass):
         finally:
             c.endUpdate()
     #@nonl
-    #@-node:ekr.20050927101829.7:renameNode
+    #@-node:ekr.20050927101829.7:renameNode (not used?)
     #@-node:ekr.20050927102133.1:Utils
-    #@+node:ekr.20050927101829.2:buildBufferList (not used)
-    def buildBufferList (self):
-    
-        '''Build a buffer list from an outline.'''
-        
-        self.positions =  {}
-        self.tnodes = {}
-    
-        for p in c.allNodes_iter():
-        
-            t = p.v.t ; h = t.headString()
-            
-            theList = self.positions.get(h,[])
-            theList.append(p.copy())
-            self.positions [h] = theList
-            
-            self.tnodes [h] = t.bodyString()
-    #@nonl
-    #@-node:ekr.20050927101829.2:buildBufferList (not used)
-    #@+node:ekr.20050920084036.41:bufferList (to be deleted)
-    def bufferList (self,event):
-        
-        k = self.k
-        state = k.getState('bufferList')
-        if state.startswith('start'):
-            state = state[5:]
-            k.setState('bufferList',state)
-            k.setLabel('')
-        if event.keysym=='Tab':
-            stext = k.getLabel().strip()
-            if self.bufferTracker.prefix and stext.startswith(self.bufferTracker.prefix):
-                k.setLabel(self.bufferTracker.next())#get next in iteration
-            else:
-                prefix = k.getLabel()
-                pmatches =[]
-                for z in self.bufferDict.keys():
-                    if z.startswith(prefix):
-                        pmatches.append(z)
-                self.bufferTracker.setTabList(prefix,pmatches)
-                k.setLabel(self.bufferTracker.next())#begin iteration on new lsit
-        elif event.keysym=='Return':
-           bMode = k.getState('bufferList')
-           self.commandsDict[bMode](event,k.getLabel())
-        else:
-            self.update(event)
-    #@nonl
-    #@-node:ekr.20050920084036.41:bufferList (to be deleted)
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.31:class bufferCommandsClass
@@ -1336,14 +1290,15 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.63:watchEscape (Revise)
     def watchEscape (self,event):
     
-        k = self.k ; w = event.widget
+        k = self.k
+    
         if not k.inState():
             k.setState('escape','start',handler=self.watchEscape)
             k.setLabelBlue('Esc ')
         elif k.getStateKind() == 'escape':
             state = k.getState('escape')
-            hi1 = self.keysymHistory [0]
-            hi2 = self.keysymHistory [1]
+            hi1 = k.keysymHistory [0]
+            hi2 = k.keysymHistory [1]
             if state == 'esc esc' and event.keysym == 'colon':
                 self.evalExpression(event)
             elif state == 'evaluate':
@@ -1351,10 +1306,8 @@ class editCommandsClass (baseEditCommandsClass):
             elif hi1 == hi2 == 'Escape':
                 k.setState('escape','esc esc')
                 k.setLabel('Esc Esc -')
-            elif event.keysym in ('Shift_L','Shift_R'):
-                return None
-            else:
-                return k.keyboardQuit(event)
+            elif event.keysym not in ('Shift_L','Shift_R'):
+                k.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920084036.63:watchEscape (Revise)
     #@+node:ekr.20050920084036.64:escEvaluate (Revise)
@@ -1391,14 +1344,10 @@ class editCommandsClass (baseEditCommandsClass):
             k.setLabelBlue('Eval: ',protect=True)
             k.getArg(event,'eval-expression',1,self.evalExpression)
         else:
-            k = self.k ; w = event.widget
-            e = k.arg
             k.clearState()
             try:
-                ok = False
-                result = eval(e,{},{})
-                result = str(result)
-                # w.insert('insert',result)
+                e = k.arg
+                result = str(eval(e,{},{}))
                 k.setLabelGrey('Eval: %s -> %s' % (e,result))
             except Exception:
                 k.setLabelGrey('Invalid Expression: %s' % e)
@@ -1878,7 +1827,8 @@ class editCommandsClass (baseEditCommandsClass):
     
         '''This function moves the cursor to the next word, direction dependent on the way parameter'''
     
-        w = event.widget ; ind = w.index('insert')
+        w = event.widget
+        
         if forward:
              ind = w.search('\w','insert',stopindex='end',regexp=True)
              if ind: nind = '%s wordend' % ind
@@ -1887,6 +1837,7 @@ class editCommandsClass (baseEditCommandsClass):
              ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
              if ind: nind = '%s wordstart' % ind
              else:   nind = '1.0'
+    
         w.mark_set('insert',nind)
         w.see('insert')
         w.event_generate('<Key>')
@@ -1945,7 +1896,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.99:backwardKillParagraph
     def backwardKillParagraph (self,event):
     
-        k = self.k ; w = event.widget
+        k = self.k ; c = k.c ; w = event.widget
         i = w.index('insert')
         i2 = i
         txt = w.get('insert linestart','insert lineend')
@@ -1954,7 +1905,7 @@ class editCommandsClass (baseEditCommandsClass):
             i2 = w.index('insert')
         self.selectParagraph(event)
         i3 = w.index('sel.first')
-        self.kill(event,i3,i2)
+        c.killBufferCommands.kill(event,i3,i2)
         w.mark_set('insert',i)
         w.selection_clear()
     #@nonl
@@ -2067,21 +2018,23 @@ class editCommandsClass (baseEditCommandsClass):
             w.mark_set('insert',i) ; w.see('insert')
     #@nonl
     #@-node:ekr.20051002100905:forwardParagraph
-    #@+node:ekr.20050920084036.98:killParagraph
+    #@+node:ekr.20050920084036.98:killParagraph (Test)
     def killParagraph (self,event):
     
-        k = self.k ; w = event.widget
+        k = self.k ; c = k.c ; w = event.widget
         i = w.index('insert')
         txt = w.get('insert linestart','insert lineend')
+    
         if not txt.rstrip().lstrip():
             i = w.search(r'\w',i,regexp=True,stopindex='end')
-        self._selectParagraph(w,i)
+    
+        self.selectParagraphHelper(w,i)
         i2 = w.index('insert')
-        self.kill(event,i,i2)
+        c.killBufferCommands.kill(event,i,i2)
         w.mark_set('insert',i)
         w.selection_clear()
     #@nonl
-    #@-node:ekr.20050920084036.98:killParagraph
+    #@-node:ekr.20050920084036.98:killParagraph (Test)
     #@+node:ekr.20050920084036.96:selectParagraph & helper
     def selectParagraph (self,event):
     
@@ -2308,10 +2261,10 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.110:reverseRegion
     #@+node:ekr.20050920084036.111:up/downCaseRegion & helper
     def downCaseRegion (self,event):
-        self.caseHelper('low')
+        self.caseHelper(event,'low')
     
     def upCaseRegion (self,event):
-        self.caseHelper('up')
+        self.caseHelper(event,'up')
     
     def caseHelper (self,event,way):
     
@@ -2641,9 +2594,9 @@ class editCommandsClass (baseEditCommandsClass):
         i = w.index('insert wordstart')
         if len(swapspots) != 0:
             if w.compare(i,'>',swapspots[1]):
-                self.swapHelper(i,txt,swapspots[1],swapspots[0])
+                self.swapHelper(w,i,txt,swapspots[1],swapspots[0])
             elif w.compare(i,'<',swapspots[1]):
-                self.swapHelper(swapspots[1],swapspots[0],i,txt)
+                self.swapHelper(w,swapspots[1],swapspots[0],i,txt)
         else:
             swapspots.append(txt)
             swapspots.append(i)
@@ -2651,13 +2604,13 @@ class editCommandsClass (baseEditCommandsClass):
     def transposeWords (self,event):
         self.swapWords(event,self.swapSpots)
     
-    def swapHelper (find,ftext,lind,ltext):
+    def swapHelper (self,w,find,ftext,lind,ltext):
         w.delete(find,'%s wordend' % find)
         w.insert(find,ltext)
         w.delete(lind,'%s wordend' % lind)
         w.insert(lind,ftext)
-        swapspots.pop()
-        swapspots.pop()
+        self.swapSpots.pop()
+        self.swapSpots.pop()
     #@-node:ekr.20050920084036.123:swapWords & transposeWords
     #@+node:ekr.20050920084036.124:swapCharacters & transeposeCharacters
     def swapCharacters (self,event):
@@ -2764,7 +2717,7 @@ class editFileCommandsClass (baseEditCommandsClass):
             txt2 = f2.read() ; f2.close()
         except IOError: return
     
-        self.switchToBuffer(event,"*diff* of ( %s , %s )" % (name,name2))
+        ### self.switchToBuffer(event,"*diff* of ( %s , %s )" % (name,name2))
         data = difflib.ndiff(txt1,txt2)
         idata = []
         for z in data:
@@ -3007,13 +2960,13 @@ class killBufferCommandsClass (baseEditCommandsClass):
         w.delete(frm,to)
     
     def killLine (self,event):
+        
         self.kill(event,'insert linestart','insert lineend+1c')
     
     def killWord (self,event):
-        w = event.widget
+        
         self.kill(event,'insert wordstart','insert wordend')
         self.killWs(event)
-    #@nonl
     #@-node:ekr.20050920084036.178:kill, killLine, killWord
     #@+node:ekr.20050920084036.182:killRegion & killRegionSave & helper
     def killRegion (self,event):
@@ -3024,12 +2977,12 @@ class killBufferCommandsClass (baseEditCommandsClass):
     
     def killRegionHelper (self,event,deleteFlag):
     
-        w = event.widget ; range = w.tag_ranges('sel')
+        w = event.widget ; theRange = w.tag_ranges('sel')
     
-        if len(range) != 0:
-            s = w.get(range[0],range[-1])
+        if len(theRange) != 0:
+            s = w.get(theRange[0],theRange[-1])
             if deleteFlag:
-                w.delete(range[0],range[-1])
+                w.delete(theRange[0],theRange[-1])
             self.addToKillBuffer(s)
             w.clipboard_clear()
             w.clipboard_append(s)
@@ -3096,7 +3049,7 @@ class killBufferCommandsClass (baseEditCommandsClass):
             if r and r [0] == i:
                 w.delete(r[0],r[-1])
             w.tag_delete('kb')
-            w.insert(frm,s,('kb'))
+            w.insert('insert',s,('kb'))
             w.mark_set('insert',i)
     #@nonl
     #@-node:ekr.20050930091642.2:yankPop
@@ -3391,9 +3344,9 @@ class macroCommandsClass (baseEditCommandsClass):
     
         '''This method finds the first match it can find in a sorted list'''
     
-        k = self.k
+        k = self.k ; c = k.c
     
-        if alist is not None:
+        if aList is not None:
             aList = c.commandsDict.keys()
     
         pmatches = [item for item in aList if item.startswith(s)]
@@ -3519,9 +3472,9 @@ class macroCommandsClass (baseEditCommandsClass):
         w = event.widget
     
         if self.lastMacro:
-            return self._executeMacro(self.lastMacro,w)
+            self._executeMacro(self.lastMacro,w)
     #@nonl
-    #@+node:ekr.20050920084036.203:_executeMacro
+    #@+node:ekr.20050920084036.203:_executeMacro (revise)
     def _executeMacro (self,macro,w):
     
         k = self.k
@@ -3531,16 +3484,16 @@ class macroCommandsClass (baseEditCommandsClass):
                 w.event_generate('<Key>',keycode=z[0],keysym=z[1])
             else:
                 meth = z [0].lstrip('<').rstrip('>')
-                b = self.bindingsDict.get(meth)
+                b = k.bindingsDict.get(meth)  ### Probably should not strip < and >
                 if b:
                     ev = Tk.Event()
                     ev.widget = w
                     ev.keycode = z [1]
                     ev.keysym = z [2]
                     ev.char = z [3]
-                    self.masterCommand(ev,b.f,'<%s>' % meth)
+                    k.masterCommand(ev,b.f,'<%s>' % meth)
     #@nonl
-    #@-node:ekr.20050920084036.203:_executeMacro
+    #@-node:ekr.20050920084036.203:_executeMacro (revise)
     #@-node:ekr.20050920084036.202:callLastKeyboardMacro & helper (called from universal command)
     #@-node:ekr.20050920084036.193:Entry points
     #@+node:ekr.20051006065746:Common Helpers
@@ -3961,9 +3914,8 @@ class registerCommandsClass (baseEditCommandsClass):
         
         baseEditCommandsClass.__init__(self,c) # init the base class.
     
-        self.method = None 
         self.methodDict, self.helpDict = self.addRegisterItems()
-        self.registerMode = 0 # Must be an int.
+        self.init()
         
     def finishCreate (self):
         
@@ -3976,11 +3928,8 @@ class registerCommandsClass (baseEditCommandsClass):
             
     def init (self):
     
-        if self.registerMode != 0:
-            self.deactivateRegister()
-        self.registerMode = 0
-            
-        
+        self.method = None 
+        self.registerMode = 0 # Must be an int.
     #@nonl
     #@-node:ekr.20050920084036.235: ctor, finishCreate & init
     #@+node:ekr.20050920084036.247: getPublicCommands
@@ -4167,7 +4116,7 @@ class registerCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.242:insertRegister
     def insertRegister (self,event):
         
-        k = self.k ; state = k.getState('insert-reg')
+        k = self.k ; c = k.c ; state = k.getState('insert-reg')
         
         if state == 0:
             k.commandName = 'insert-register'
@@ -4181,7 +4130,7 @@ class registerCommandsClass (baseEditCommandsClass):
                 val = self.registers.get(key)
                 if val:
                     if type(val)==type([]):
-                        self.yankRectangle(event,val)
+                        c.rectangleCommands.yankRectangle(event,val)
                     else:
                         w.insert('insert',val)
                 else:
@@ -4210,7 +4159,7 @@ class registerCommandsClass (baseEditCommandsClass):
                         # event.widget.mark_set('insert.end',val)
                         k.setLabelGrey('At %s' % repr(val))
                     except Exception:
-                         k.setLabelGrey('Register %s is not a valid location' % (key,val))
+                        k.setLabelGrey('Register %s is not a valid location' % key)
                 else:
                     k.setLabelGrey('Register %s is empty' % key)
             else:
@@ -4462,7 +4411,7 @@ class searchCommandsClass (baseEditCommandsClass):
     
         k = self.k ; state = k.getState('search-backward')
         if state == 0:
-            k.setLabelBlue('Search: ',protect=True)
+            k.setLabelBlue('Search Backward: ',protect=True)
             k.getArg(event,'search-backward',1,self.searchBackward)
         else:
             k.clearState()
@@ -4473,7 +4422,7 @@ class searchCommandsClass (baseEditCommandsClass):
     
         k = self.k ; state = k.getState('search-forward')
         if state == 0:
-            k.setLabelBlue('Search Backward: ',protect=True)
+            k.setLabelBlue('Search: ',protect=True)
             k.getArg(event,'search-forward',1,self.searchForward)
         else:
             k.clearState()
@@ -4525,12 +4474,12 @@ class searchCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.272:wordSearchHelper
     def wordSearchHelper (self,event,pattern,forward):
     
-        k = self.k ; i = w.index('insert')
+        k = self.k ; w = event.widget ; i = w.index('insert')
         words = pattern.split()
         sep = '[%s%s]+' % (string.punctuation,string.whitespace)
         pattern = sep.join(words)
         cpattern = re.compile(pattern)
-        if state == 'for':
+        if forward:
             txt = w.get('insert','end')
             match = cpattern.search(txt)
             if not match: return
@@ -4542,9 +4491,9 @@ class searchCommandsClass (baseEditCommandsClass):
                 b = re.findall(pattern,txt)
                 end = len(a[-1]) + len(b[-1])
             else: return
-    
-        wdict = {'for': 'insert +%sc', 'bak': 'insert -%sc'}
-        w.mark_set('insert',wdict[state] % end)
+            
+        s = g.choose(forward,'insert +%sc','insert -%sc')
+        w.mark_set('insert',s % end)
         w.see('insert')
     #@-node:ekr.20050920084036.272:wordSearchHelper
     #@-node:ekr.20051002111614:wordSearchBackward/Forward & helper
@@ -4572,7 +4521,7 @@ class searchCommandsClass (baseEditCommandsClass):
             self.reSearchHelper(event,k.arg,forward=True)
     #@nonl
     #@+node:ekr.20050920084036.275:reSearchHelper
-    def reSearchStateHandler (self,event,pattern,forward):
+    def reSearchHelper (self,event,pattern,forward):
     
         k = self.k ; w = event.widget
         cpattern = re.compile(pattern)
@@ -4591,8 +4540,8 @@ class searchCommandsClass (baseEditCommandsClass):
             else: return
     
         if end:
-            wdict = {'forward': 'insert +%sc', 'backward': 'insert -%sc'}
-            w.mark_set('insert',wdict[state] % end)
+            s = g.choose(forward,'insert +%sc','insert -%sc')
+            w.mark_set('insert',s % end)
             w.see('insert')
     #@nonl
     #@-node:ekr.20050920084036.275:reSearchHelper

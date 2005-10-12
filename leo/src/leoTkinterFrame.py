@@ -63,11 +63,13 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.bodyXBar = None
         self.f1 = self.f2 = None
         self.findPanel = None # Inited when first opened.
+        self.iconBarComponentName = 'iconBar'
         self.iconFrame = None 
         self.log = None
         self.canvas = None
         self.outerFrame = None 
-        self.statusFrame = None 
+        self.statusFrame = None
+        self.statusLineComponentName = 'statusLine'
         self.statusText = None 
         self.statusLabel = None 
         self.top = None
@@ -125,7 +127,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.2176:f.finishCreate & helpers
     def finishCreate (self,c):
         
-        f = self ; f.c = c ; gui = g.app.gui
+        f = self ; f.c = c
         # g.trace('tkFrame')
         
         # This must be done after creating the commander.
@@ -180,7 +182,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         f = self ; c = f.c
     
-        f.iconBarComponentName = 'iconBar'
         iconBar = f.iconBarClass(c,f.outerFrame)
         f.iconFrame = iconBar.iconFrame
         f.iconBar = f.componentClass(c,
@@ -223,8 +224,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def createStatusLineComponents (self):
         
         f = self ; c = f.c
-    
-        f.statusLineComponentName = 'statusLine'
         statusLine = f.statusLineClass(c,f.outerFrame)
         
         # Create offical ivars in the frame class.

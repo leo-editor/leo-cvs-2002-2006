@@ -9,13 +9,9 @@
 #@<< imports >>
 #@+node:ekr.20050920094258:<< imports >>
 import leoGlobals as g
-
 import leoEditCommands
-import leoNodes
 
-Tk              = g.importExtension('Tkinter',pluginName=None,verbose=False)
-tkFileDialog    = g.importExtension('tkFileDialog',pluginName=None,verbose=False)
-tkFont          = g.importExtension('tkFileDialog',pluginName=None,verbose=False)
+Tk = g.importExtension('Tkinter',pluginName=None,verbose=False)
 
 import string
 #@nonl
@@ -431,8 +427,7 @@ class textInputMode (baseInputMode):
         
         if event and event.keysym == "BackSpace":
             
-            t = self.c.frame.statusText
-            
+            # t = self.c.frame.statusText
             s = self.getStatusLine()
             
             # This won't work if we click in the frame.
@@ -558,7 +553,7 @@ class keyHandlerClass:
         '''Complete the construction of the keyHandler class.
         c.commandsDict has been created when this is called.'''
         
-        k = self ; c = k.c ; f = c.frame
+        k = self ; c = k.c
        
         k.createInverseCommandsDict()
         
@@ -762,6 +757,9 @@ class keyHandlerClass:
         
         '''Bind one shortcut from a menu table.'''
         
+        __pychecker__ = '--no-argsused'
+            # The pychecker warning about 'name' being unused is WRONG.
+        
         k = self ; c = k.c ; w = c.frame.body.bodyCtrl
         
         shortcut = str(shortcut)
@@ -919,7 +917,7 @@ class keyHandlerClass:
         ):
             
             # Use two-levels of callbacks.
-            def specialCallback (event,func=func,name=name):
+            def specialCallback (event,func=func):
                 return func(event)
     
             def keyCallback (event,func=specialCallback,stroke=stroke):
@@ -976,7 +974,7 @@ class keyHandlerClass:
         '''This is the central dispatching method.
         All commands and keystrokes pass through here.'''
     
-        k = self ; c = k.c ; bodyCtrl = c.frame.body.bodyCtrl
+        k = self ; c = k.c
         k.stroke = stroke # Set this global for general use.
         commandName = k.ultimateFuncName(func)
         special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
@@ -1136,7 +1134,7 @@ class keyHandlerClass:
     #@+node:ekr.20050920085536.45:callAltXFunction
     def callAltXFunction (self,event):
         
-        k = self ; c = k.c ; s = k.getLabel() ; w = event.widget
+        k = self ; c = k.c ; s = k.getLabel()
         k.mb_tabList = []
         commandName = s[len(k.mb_prefix):].strip()
         func = c.commandsDict.get(commandName)
@@ -1215,7 +1213,7 @@ class keyHandlerClass:
     
         k = self ; c = k.c ; previous = k.previous
         
-        if event.keysym in ('Shift_L','Shift_R'): return
+        if event.keysym in ('Shift_L','Shift_R'): return False
         # g.trace(event.keysym)
     
         func = k.variety_commands.get(event.keysym)
@@ -1239,7 +1237,7 @@ class keyHandlerClass:
         if event.keysym == 'e': # Execute the last macro.
             k.keyboardQuit(event)
             c.macroCommands.callLastKeyboardMacro(event)
-            return
+            return True
     
         if event.keysym == 'x' and previous [1] not in ('Control_L','Control_R'):
             event.keysym = 's'
@@ -1250,6 +1248,9 @@ class keyHandlerClass:
         if event.keysym == 'Escape' and len(previous) > 1 and previous [1] == 'Escape':
             k.repeatComplexCommand(event)
             return True
+            
+        else:
+            return False
     #@nonl
     #@+node:ekr.20050923183943.6:processAbbreviation
     def processAbbreviation (self,event):
@@ -1272,6 +1273,8 @@ class keyHandlerClass:
                 event.char = ''
                 k.expandAbbrev(event)
                 return True
+                
+        return False
     #@nonl
     #@-node:ekr.20050923183943.6:processAbbreviation
     #@-node:ekr.20050923183943.4:processKey
@@ -1554,7 +1557,7 @@ class keyHandlerClass:
             stroke = stroke.lstrip('<').rstrip('>')
             b = k.bindingsDict.get(stroke)
             if b:
-                g.trace('method',method)
+                g.trace('method',b.f)
                 for z in xrange(n):
                     if 1: # No need to do this: commands never alter events.
                         ev = Tk.Event()
@@ -1571,7 +1574,7 @@ class keyHandlerClass:
     #@+node:ekr.20050920085536.76:doControlU
     def doControlU (self,event,stroke):
         
-        k = self
+        k = self ; c = k.c
     
         k.setLabelBlue('Control-u %s' % stroke.lstrip('<').rstrip('>'))
     

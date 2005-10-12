@@ -11585,7 +11585,7 @@ def masterCommand (self,event,func,stroke):
     '''This is the central dispatching method.
     All commands and keystrokes pass through here.'''
 
-    k = self ; c = k.c ; bodyCtrl = c.frame.body.bodyCtrl
+    k = self ; c = k.c
     k.stroke = stroke # Set this global for general use.
     commandName = k.ultimateFuncName(func)
     special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
@@ -12375,6 +12375,58 @@ Compiling Programs withing Emacs
 #@+node:ekr.20051005094144:@url 'http://www.delorie.com/gnu/docs/emacs/emacs_487.html' (Macros)
 #@-node:ekr.20051005094144:@url 'http://www.delorie.com/gnu/docs/emacs/emacs_487.html' (Macros)
 #@-node:ekr.20051008204635:Docs
+#@+node:ekr.20051012124113:Pychecker report
+# None of the following are correct.
+
+C:\prog\leoCVS\leo\src\leoKeys.py:789: Redefining attribute (keyCallback) original line (778)
+    # Wrong.
+C:\prog\leoCVS\leo\src\leoKeys.py:1311: No module attribute (initAllEditCommanders) found
+    # Wrong.
+C:\prog\leoCVS\leo\src\leoKeys.py:1554: Local variable (z) not used
+    # for z in xrange(...):
+C:\prog\leoCVS\leo\src\leoEditCommands.py:706: Parameter (name) not used
+    # WRONG:  name **is** used.
+C:\prog\leoCVS\leo\src\leoEditCommands.py:1104: No class attribute (capitalize) found
+    # text.capitalize.
+C:\prog\leoCVS\leo\src\leoEditCommands.py:1850: Statement appears to have no effect
+    # Weird
+#@+node:ekr.20051012124520:Others
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterFrame.py:128: Local variable (gui) not used
+
+# These are now defined in the ctor.
+
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1290: No class attribute (iconBarComponentName) found
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1294: No class attribute (iconBarComponentName) found
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1305: No class attribute (iconBarComponentName) found\
+
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1324: No class attribute (statusLineComponentName) found
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1328: No class attribute (statusLineComponentName) found
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1339: No class attribute (statusLineComponentName) found
+#@-node:ekr.20051012124520:Others
+#@+node:ekr.20051012124113.1:leoKeys
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:14: Imported module (leoNodes) not used
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:17: Imported module (tkFileDialog) not used
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:434: Local variable (t) not used
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:561: Local variable (f) not used
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:780: Parameter (name) not used
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:922: Parameter (name) not used
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:979: Local variable (bodyCtrl) not used
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:1139: Local variable (w) not used
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:1253: Function returns a value and also implicitly returns None
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:1275: Function returns a value and also implicitly returns None
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:1557: No global (method) found
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:1582: No global (c) found
+
+(bad warning) C:\prog\leoCVS\leo\src\leoKeys.py:791: Redefining attribute (keyCallback) original line (780)
+(bad warning) C:\prog\leoCVS\leo\src\leoKeys.py:1308: No module attribute (initAllEditCommanders) found
+(bad warning) C:\prog\leoCVS\leo\src\leoKeys.py:1551: Local variable (z) not used
+
+(Fixed) C:\prog\leoCVS\leo\src\leoKeys.py:15: Imported module (tkFont) not used
+(WRONG) C:\prog\leoCVS\leo\src\leoKeys.py:778: Parameter (name) not used
+(fixed) C:\prog\leoCVS\leo\src\leoKeys.py:1251: Function returns a value and also implicitly returns None
+#@nonl
+#@-node:ekr.20051012124113.1:leoKeys
+#@-node:ekr.20051012124113:Pychecker report
 #@+node:ekr.20050921100955:Not used
 #@+node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
 class editCommands:
@@ -12587,6 +12639,7 @@ def selectForwardWord (self):
 #@-node:ekr.20050723064110.18:selectForwordWord
 #@-node:ekr.20050723064110.12:Cursor movement
 #@-node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
+#@+node:ekr.20051012124209:From leoEditCommands...
 #@+node:ekr.20050920084036.129:zapTo
 def zapTo (self,event):
 
@@ -12654,30 +12707,6 @@ def setBufferRename( self, buffer, method ):
 #@nonl
 #@-node:ekr.20050920084036.52:setBufferRename
 #@-node:ekr.20050927102645:From bufferCommandsClass
-#@+node:ekr.20050920115444:setBufferInteractionMethods & helpers (not used)
-# Called by modified leoTkinterBody.createBindings.
-
-if 0: # This is dubious.
-    k.setBufferInteractionMethods(frame.bodyCtrl)
-
-def setBufferInteractionMethods (self,buffer):
-
-    '''This function configures the Emacs instance so that
-       it can see all the nodes as buffers for its buffer commands.'''
-       
-    k = self ; c = k.c
-
-    # These are actually methods of the bufferCommandsClass.
-    @others
-
-    # These add Leo-reated capabilities to the key handler.
-    c.bufferCommands.setBufferListGetter(buffer,buildBufferList)
-    c.bufferCommands.setBufferSetter(buffer,setBufferData)
-    c.bufferCommands.setBufferGoto(buffer,gotoNode)
-    c.bufferCommands.setBufferDelete(buffer,deleteNode)
-    c.bufferCommands.setBufferRename(buffer,renameNode)
-#@nonl
-#@-node:ekr.20050920115444:setBufferInteractionMethods & helpers (not used)
 #@+node:ekr.20050920085536.43:findItemsWithPrefix (Not used)
 def findItemsWithPrefix (self,s,aList=None):
 
@@ -12858,899 +12887,86 @@ def executeRegister (self,event):
             k.keyboardQuit(event)
 #@nonl
 #@-node:ekr.20050920084036.256:executeRegister (not used)
-#@+node:ekr.20050920085536.17:setBufferStrokes (No longer used)
-def setBufferStrokes (self,w):
+#@-node:ekr.20051012124209:From leoEditCommands...
+#@+node:ekr.20051012141518:From bufferCommandsClass
+#@+node:ekr.20050927101829.2:buildBufferList (not used)
+def buildBufferList (self):
 
-    '''Sets key bindings for Tk Text widget w.'''
+    '''Build a buffer list from an outline.'''
+    
+    self.positions =  {}
+    self.tnodes = {}
 
-    k = self ; tag = 'setBufferStrokes'
-
-    # Create one binding for each entry in cbDict.
-    for stroke in k.cbDict.keys():
-
-        func = k.cbDict.get(stroke)
-        funcName = func.__name__
-
-        def funcCallback (event,func=func):
-            # g.trace(func)
-            return func(event)
+    for p in c.allNodes_iter():
+    
+        t = p.v.t ; h = t.headString()
         
-        def keyCallback (event,func=funcCallback,stroke=stroke):
-            return k.masterCommand(event,func,stroke)
-    
-        ok = k.bindKey(w,'<%s>' % (stroke),keyCallback,funcName,tag=tag)
-
-    # Add a binding for <Key> events, so _all_ key events go through masterCommand.
-    def keyCallback (event):
-        return k.masterCommand(event,func=None,stroke='Key')
+        theList = self.positions.get(h,[])
+        theList.append(p.copy())
+        self.positions [h] = theList
         
-    k.bindKey(w,'<Key>',keyCallback,'masterCommand',tag=tag)
+        self.tnodes [h] = t.bodyString()
 #@nonl
-#@-node:ekr.20050920085536.17:setBufferStrokes (No longer used)
-#@+node:ekr.20050920085536.13:create_cbDict (No longer used)
-def create_cbDict (self):
-
-    '''Create callback dictionary for masterCommand.'''
-
-    k = self ; c = k.c
+#@-node:ekr.20050927101829.2:buildBufferList (not used)
+#@+node:ekr.20050920084036.41:bufferList (to be deleted)
+def bufferList (self,event):
     
-    cbDict = {
-    
-    # The big ones...
-        'Alt-x':            k.fullCommand,
-        'Alt-c':            k.quickCommand, # Control keys conflict with XP cut/copy/paste.
-            # Alt-c is usually bound to capitalizeWord.
-        'Control-g':        k.keyboardQuit,
-        'Control-u':        k.universalArgument,
-        'Alt-minus':        k.negativeArgument,
-        'Alt-exclam':       c.controlCommands.shellCommand,
-        'Alt-bar':          c.controlCommands.shellCommandOnRegion,
-        #'Control-z':        c.controlCommands.suspend,
-
-    # Standard Emacs moves...
-        'Alt-less':         c.editCommands.beginningOfBuffer,
-        'Alt-greater':      c.editCommands.endOfBuffer,
-        'Alt-a':            c.editCommands.backSentence,
-        'Alt-e':            c.editCommands.forwardSentence,
-        'Alt-f':            c.editCommands.forwardWord,
-        'Alt-b':            c.editCommands.backwardWord,
-        'Alt-braceright':   c.editCommands.forwardParagraph,
-        'Alt-braceleft':    c.editCommands.backwardParagraph,
-        'Control-Right':    c.editCommands.forwardWord,
-        'Control-Left':     c.editCommands.backwardWord,
-        'Control-a':        c.editCommands.beginningOfLine,
-        'Control-e':        c.editCommands.endOfLine,
-        'Control-p':        c.editCommands.prevLine,
-        'Control-n':        c.editCommands.nextLine,
-        # 'Control-f':      c.editCommands.forwardCharacter, # Conflicts with Find panel.
-        'Control-b':        c.editCommands.backCharacter,
-        #'Alt-Up':          c.editCommands.lineStart,   # Conflicts with Leo outline moves.
-        #'Alt-Down':        c.editCommands.lineEnd,     # Conflicts with Leo outline moves.
-        # 'Control-v':      c.editCommands.scrollDown,
-        # 'Alt-v':          c.editCommands.scrollUp,
-    
-    # Kill buffer...
-        'Control-k':        c.killBufferCommands.killLine,
-        'Alt-d':            c.killBufferCommands.killWord,
-        'Alt-Delete':       c.killBufferCommands.backwardKillWord,
-        "Alt-k":            c.killBufferCommands.killSentence,
-        'Control-y':        c.killBufferCommands.yank,
-        'Alt-y':            c.killBufferCommands.yankPop,
-        # 'Control-w':      c.killBufferCommands.killRegion,
-        # 'Alt-w':          c.killBufferCommands.killRegionSave,
-    
-    # Simple inserts & deletes...
-        # 'Control-o':    c.editCommands.insertNewLine,
-        # 'Control-d':      c.editCommands.deleteNextChar,
-        # 'Alt-backslash':  c.editCommands.deleteSpaces,
-        # 'Delete':         c.editCommands.backwardDeleteCharacter,
-        # 'Control-Alt-o':      c.editCommands.insertNewLineIndent,
-        # 'Control-j':          c.editCommands.insertNewLineAndTab,
-    
-    # Transpose & swap.
-        # 'Alt-c':          c.editCommands.capitalizeWord,
-        # 'Alt-u':          c.editCommands.upCaseWord,
-        # 'Alt-l':          c.editCommands.downCaseWord,
-        # 'Alt-t':          c.editCommands.transposeWords,
-        # 'Control-t':      c.editCommands.swapCharacters,
-    
-    # Region, Paragraph, indent, & formatting.
-        # 'Control-Shift-at':       c.editCommands.setRegion,
-        # 'Alt-Control-backslash':  c.editCommands.indentRegion,
-        # 'Alt-m':                  c.editCommands.backToIndentation,
-        # 'Alt-asciicircum':        c.editCommands.deleteIndentation,
-        # 'Alt-s':                  c.editCommands.centerLine,
-        # 'Alt-q':                  c.editCommands.fillParagraph,
-        # 'Alt-h':                  c.editCommands.selectParagraph,
-        # 'Alt-equal':              c.editCommands.countRegion,
-        # 'Alt-semicolon':          c.editCommands.indentToCommentColumn,
-        
-    # Parens.
-        # 'Alt-parenleft':      c.editCommands.insertParentheses,
-        # 'Alt-parenright':     c.editCommands.movePastClose,
-        
-    # Misc.
-        # 'Control-s':          None,
-        # 'Control-r':          None,
-        # 'Control-l':          None,
-        # 'Alt-z':              None,
-        # 'Control-i':          None,
-        # 'Alt-g':              None,
-        # 'Alt-percent':        None,
-        # 'Control-c':          None,
-        # 'Control-Alt-w':      None,
-        # 'Alt-slash':          c.editCommands.dynamicExpansion,
-        # 'Control-Alt-slash':  c.editCommands.dynamicExpansion2,
-        # 'Escape':             c.editCommands.watchEscape,
-        # 'Alt-colon':          c.editCommands.startEvaluate,
-        # 'Control-underscore': c.undoer.undo,
-
-    # Searches.
-        # 'Control-Alt-s':      c.searchCommands.isearchForwardRegexp,
-        # 'Control-Alt-r':      c.searchCommands.isearchBackwardRegexp,
-        # 'Control-Alt-percent': c.searchCommands.queryReplaceRegex,
-
-    # Numbered commands: conflict with Leo's Expand to level commands, but so what...
-        'Alt-0': k.numberCommand0,
-        'Alt-1': k.numberCommand1,
-        'Alt-2': k.numberCommand2,
-        'Alt-3': k.numberCommand3,
-        'Alt-4': k.numberCommand4,
-        'Alt-5': k.numberCommand5,
-        'Alt-6': k.numberCommand6,
-        'Alt-7': k.numberCommand7,
-        'Alt-8': k.numberCommand8,
-        'Alt-9': k.numberCommand9,
-    }
-
-    return cbDict
-#@nonl
-#@-node:ekr.20050920085536.13:create_cbDict (No longer used)
-#@+node:ekr.20051009043912:From nullMenu
-# There is no reason to define these routines.
-# Just have the over-rided oops method do nothing!
-#@nonl
-#@+node:ekr.20050104092958:Gui-independent menu enablers
-def updateAllMenus (self):
-    pass
-def updateEditMenu (self):
-    pass
-def updateFileMenu (self):
-    pass
-def updateOutlineMenu (self):
-    pass
-#@nonl
-#@-node:ekr.20050104092958:Gui-independent menu enablers
-#@+node:ekr.20050104093323:Gui-independent menu routines
-def createMenuEntries (self,menu,table,openWith=False,dontBind=False,init=False):
-    pass
-def createMenuItemsFromTable (self,menuName,table,openWith=False):
-    pass
-def createMenusFromTables (self):
-    pass
-def defineMenuTables (self):
-    pass
-def createNewMenu (self,menuName,parentName="top",before=None):
-    pass
-def createRecentFilesMenuItems (self):
-    pass
-def deleteMenu (self,menuName):
-    pass
-def deleteMenuItem (self,itemName,menuName="top"):
-    pass
-def destroyMenu (self,menuName):
-    pass
-def getMenu (self,menuName):
-    pass
-def setMenu (self,menuName,menu):
-    pass
-#@nonl
-#@-node:ekr.20050104093323:Gui-independent menu routines
-#@-node:ekr.20051009043912:From nullMenu
-#@+node:ekr.20051009051949:From tkFrame.finishCreate
+    k = self.k
+    state = k.getState('bufferList')
+    if state.startswith('start'):
+        state = state[5:]
+        k.setState('bufferList',state)
+        k.setLabel('')
+    if event.keysym=='Tab':
+        stext = k.getLabel().strip()
+        if self.bufferTracker.prefix and stext.startswith(self.bufferTracker.prefix):
+            k.setLabel(self.bufferTracker.next())#get next in iteration
+        else:
+            prefix = k.getLabel()
+            pmatches =[]
+            for z in self.bufferDict.keys():
+                if z.startswith(prefix):
+                    pmatches.append(z)
+            self.bufferTracker.setTabList(prefix,pmatches)
+            k.setLabel(self.bufferTracker.next())#begin iteration on new lsit
+    elif event.keysym=='Return':
+       bMode = k.getState('bufferList')
+       c.commandsDict[bMode](event,k.getLabel())
     else:
-        frame = self
-        << create the toplevel and outer frames >>
-        << create the icon bar >>
-        << create the splitters and their subframes >>
-        << create the status line >>
-        << create the first tree node >>
+        self.update(event)
 #@nonl
-#@+node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
-frame.top = top = Tk.Toplevel()
-gui.attachLeoIcon(top)
-top.title(frame.title)
-top.minsize(30,10) # In grid units.
-
-if g.os_path_exists(g.app.user_xresources_path):
-    frame.top.option_readfile(g.app.user_xresources_path)
-
-frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
-frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
-
-# These don't work on Windows. Because of bugs in window managers,
-# there is NO WAY to know which window is on top!
-frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
-frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
-
-frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
-frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
-
-# Create the outer frame, the 'hull' component.
-self.outerFrame = Tk.Frame(top)
-self.outerFrame.pack(expand=1,fill="both")
-self.componentClass(c,'hull',self.outerFrame)
-#@nonl
-#@-node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
-#@+node:ekr.20041224120552:<< create the icon bar >>
-self.iconBarComponentName = 'iconBar'
-iconBar = self.iconBarClass(c,outerFrame)
-self.iconFrame = iconBar.iconFrame
-
-self.iconBar = self.componentClass(c,
-    self.iconBarComponentName,iconBar.iconFrame,
-    iconBar,iconBar.pack,iconBar.unpack)
-
-self.iconBar.show()
-#@nonl
-#@-node:ekr.20041224120552:<< create the icon bar >>
-#@+node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
-self.createLeoSplitters(outerFrame)
-
-# Create the canvas, tree, log and body.
-frame.canvas = self.createCanvas(self.split2Pane1)
-frame.tree   = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
-frame.log    = leoTkinterLog(frame,self.split2Pane2)
-frame.body   = leoTkinterBody(frame,self.split1Pane2)
-
-self.componentClass(c,'tree',self.split2Pane1, frame.tree, self.packTree, self.unpackTree)
-self.componentClass(c,'log', self.split2Pane2, frame.log,  self.packLog,  self.unpackLog)
-self.componentClass(c,'body',self.split1Pane2, frame.body, self.packBody, self.unpackBody)
-
-# Yes, this an "official" ivar: this is a kludge.
-frame.bodyCtrl = frame.body.bodyCtrl
-
-# Configure.
-frame.setTabWidth(c.tab_width)
-frame.tree.setColorFromConfig()
-self.reconfigurePanes()
-self.body.setFontFromConfig()
-self.body.setColorFromConfig()
-#@nonl
-#@-node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
-#@+node:ekr.20041225103412:<< create the status line >>
-self.statusLineComponentName = 'statusLine'
-statusLine = self.statusLineClass(c,outerFrame)
-
-# Create offical ivars in the frame class.
-self.statusFrame = statusLine.statusFrame
-self.statusLabel = statusLine.labelWidget
-self.statusText  = statusLine.textWidget
-
-self.statusLine = self.componentClass(c,
-    self.statusLineComponentName,
-    statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
-self.statusLine.show() # Show status line by default.
-#@nonl
-#@-node:ekr.20041225103412:<< create the status line >>
-#@+node:ekr.20031218072017.2180:<< create the first tree node >>
-t = leoNodes.tnode()
-v = leoNodes.vnode(c,t)
-p = leoNodes.position(v,[])
-v.initHeadString("NewHeadline")
-
-p.moveToRoot()
-c.beginUpdate()
-try:
-    c.selectVnode(p)
-    c.redraw()
-    c.frame.getFocus()
-    c.editPosition(p)
-finally:
-    c.endUpdate(False)
-#@nonl
-#@-node:ekr.20031218072017.2180:<< create the first tree node >>
-#@-node:ekr.20051009051949:From tkFrame.finishCreate
-#@+node:ekr.20051007142923:<< define defaultEmacsBindingsDict >>
-self.defaultEmacsBindingsDict = {
-                 'abbrev-mode': None,
-                   'about leo': None,
-           'add-global-abbrev': None,
-             'advertised-undo': None,
-            'append-to-buffer': None,
-          'append-to-register': None,
-               'back-sentence': None,
-         'back-to-indentation': None,
-               'backward-char': None,
-        'backward-delete-char': None,
-     'backward-kill-paragraph': None,
-      'backward-kill-sentence': None,
-          'backward-kill-word': None,
-         'beginning-of-buffer': None,
-           'beginning-of-line': None,
-    'call-last-keyboard-macro': None,
-             'capitalize-word': None,
-                     'cascade': None,
-                 'center-line': None,
-               'center-region': None,
-       'check-all-python-code': None,
-               'check-outline': None,
-           'check-python-code': None,
-             'clear-rectangle': None,
-                  'clone-node': None,
-                       'close': None,
-             'close-rectangle': None,
-                'contract-all': None,
-               'contract-node': None,
-             'contract-parent': None,
-          'convert-all-blanks': None,
-            'convert-all-tabs': None,
-              'convert-blanks': None,
-                'convert-tabs': None,
-                   'copy-node': None,
-  'copy-rectangle-to-register': None,
-              'copy-to-buffer': None,
-            'copy-to-register': None,
-                    'cut-node': None,
-          'dabbrev-completion': None,
-             'dabbrev-expands': None,
-                    'de-hoist': None,
-                      'delete': None,
-                 'delete-char': None,
-                 'delete-file': None,
-          'delete-indentation': None,
-                 'delete-node': None,
-            'delete-rectangle': None,
-               'delete-spaces': None,
-                      'demote': None,
-                        'diff': None,
-              'digit-argument': None,
-             'downcase-region': None,
-               'downcase-word': None,
-                'dump-outline': None,
-               'edit-headline': None,
-               'end-kbd-macro': None,
-               'end-of-buffer': None,
-                 'end-of-line': None,
-           'equal-sized-panes': None,
-             'eval-expression': None,
-         'exchange-point-mark': None,
-              'execute-script': None,
-               'expand-abbrev': None,
-                  'expand-all': None,
-           'expand-next-level': None,
-                 'expand-node': None,
-           'expand-prev-level': None,
-       'expand-region-abbrevs': None,
-           'expand-to-level 1': None,
-           'expand-to-level 2': None,
-           'expand-to-level 3': None,
-           'expand-to-level 4': None,
-           'expand-to-level 5': None,
-           'expand-to-level 6': None,
-           'expand-to-level 7': None,
-           'expand-to-level 8': None,
-           'expand-to-level 9': None,
-            'export-headlines': None,
-                     'extract': None,
-               'extract-names': None,
-             'extract-section': None,
-                 'fill-region': None,
-    'fill-region-as-paragraph': None,
-                   'find-next': None,
-                  'find-panel': None,
-               'find-previous': None,
-             'flatten-outline': None,
-                 'flush-lines': None,
-                'forward-char': None,
-            'forward-sentence': None,
-                   'goto-char': None,
-                  'goto-first': None,
-                   'goto-last': None,
-                   'goto-line': None,
-            'goto-line-number': None,
-           'goto-next changed': None,
-            'goto-next marked': None,
-             'goto-next-clone': None,
-              'goto-next-node': None,
-           'goto-next-sibling': None,
-           'goto-next-visible': None,
-                 'goto-parent': None,
-              'goto-prev-node': None,
-           'goto-prev-sibling': None,
-           'goto-prev-visible': None,
-                       'hoist': None,
-                    'how-many': None,
- 'iconfify-or-deiconify-frame': None,
-              'import at-file': None,
-              'import-at-root': None,
-           'import-cweb-files': None,
-         'import-derived-file': None,
-    'import-flattened-outline': None,
-          'import-noweb-files': None,
-          'increment-register': None,
-                      'indent': None,
-               'indent-region': None,
-             'indent-relative': None,
-              'indent-rigidly': None,
-    'indent-to-comment-column': None,
-                 'insert-file': None,
-       'insert-keyboard-macro': None,
-              'insert-newline': None,
-                 'insert-node': None,
-          'insert-parentheses': None,
-             'insert-register': None,
-            'insert-body-time': None,
-        'insert-headline-time': None,
-            'insert-to-buffer': None,
-   'inverse-add-global-abbrev': None,
-            'isearch-backward': None,
-     'isearch-backward-regexp': None,
-             'isearch-forward': None,
-      'isearch-forward-regexp': None,
-            'jump-to-register': None,
-                  'keep-lines': None,
-               'keyboard-quit': None,
-            'kill-all-abbrevs': None,
-                 'kill-buffer': None,
-                   'kill-line': None,
-              'kill-paragraph': None,
-              'kill-rectangle': None,
-                 'kill-region': None,
-            'kill-region-save': None,
-               'kill-sentence': None,
-                   'kill-word': None,
-                 'line-number': None,
-                'list-abbrevs': None,
-                'list-buffers': None,
-                   'load-file': None,
-              'make-directory': None,
-                        'mark': None,
-          'mark-changed items': None,
-          'mark-changed roots': None,
-                 'mark-clones': None,
-               'mark-subheads': None,
-               'match-bracket': None,
-                'minimize-all': None,
-           'move-outline-down': None,
-           'move-outline-left': None,
-          'move-outline-right': None,
-             'move-outline-up': None,
-             'move-past-close': None,
-         'name-last-kbd-macro': None,
-           'negative-argument': None,
-                         'new': None,
-          'newline-and-indent': None,
-                   'next-line': None,
-              'number-command': None,
-          'number-to-register': None,
-                        'open': None,
-         'open-compare-window': None,
-          'open-leoConfig.leo': None,
-            'open-leoDocs.leo': None,
-            'open-online-home': None,
-        'open-online-tutorial': None,
-          'open-python-window': None,
-              'open-rectangle': None,
-                   'open-with': None,
-             'outline-to-CWEB': None,
-            'outline-to-noweb': None,
-                  'paste-node': None,
-       'paste-retaining-clone': None,
-           'point-to-register': None,
-                 'preferences': None,
-           'prepend-to-buffer': None,
-         'prepend-to-register': None,
-'pretty-print-all-python-code': None,
-    'pretty-print-python-code': None,
-               'previous-line': None,
-                     'promote': None,
-               'query-replace': None,
-         'query-replace-regex': None,
-          're-search-backward': None,
-           're-search-forward': None,
-            'read-abbrev-file': None,
-          'read-at-file-nodes': None,
-           'read-outline-only': None,
-          'reformat-paragraph': None,
-          'remove-blank-lines': None,
-            'remove-directory': None,
-            'remove-sentinels': None,
-               'rename-buffer': None,
-      'repeat-complex-command': None,
-                     'replace': None,
-               'replace-regex': None,
-              'replace-string': None,
-           'replace-then-find': None,
-            'resize-to-screen': None,
-              'reverse-region': None,
-                      'revert': None,
-                        'save': None,
-       'save-buffers-kill-leo': None,
-                   'save-file': None,
-                     'save-as': None,
-                     'save-to': None,
-                 'scroll-down': None,
-                   'scroll-up': None,
-             'search-backward': None,
-              'search-forward': None,
-                  'select-all': None,
-                  'set-colors': None,
-          'set-comment-column': None,
-             'set-fill-column': None,
-             'set-fill-prefix': None,
-                    'set-font': None,
-            'set-mark-command': None,
-               'shell-command': None,
-     'shell-command-on-region': None,
-             'show-invisibles': None,
-               'sort-children': None,
-                'sort-columns': None,
-                 'sort-fields': None,
-                  'sort-lines': None,
-               'sort-siblings': None,
-                  'split-line': None,
-             'start-kbd-macro': None,
-            'string-rectangle': None,
-                     'suspend': None,
-            'switch-to-buffer': None,
-                      'tabify': None,
-                      'tangle': None,
-                  'tangle-all': None,
-               'tangle-marked': None,
-          'toggle-active-pane': None,
-       'toggle-angle-brackets': None,
-      'toggle-split-direction': None,
-             'transpose-chars': None,
-             'transpose-lines': None,
-             'transpose-words': None,
-                    'unindent': None,
-          'universal-argument': None,
-                  'unmark-all': None,
-                    'untabify': None,
-                    'untangle': None,
-                'untangle-all': None,
-             'untangle-marked': None,
-               'upcase-region': None,
-                 'upcase-word': None,
-                'view-lossage': None,
-               'view-register': None,
-                       'weave': None,
-                   'what-line': None,
-        'word-search-backward': None,
-         'word-search-forward': None,
-           'write-abbrev-file': None,
-                        'yank': None,
-                    'yank-pop': None,
-              'yank-rectangle': None,
-            'zap-to-character': None,
-}
-#@nonl
-#@-node:ekr.20051007142923:<< define defaultEmacsBindingsDict >>
-#@+node:ekr.20051007142117:<< define defaultBindingsDict >>
-self.defaultBindingsDict = {
-                 'abbrev-mode': None,
-                   'about leo': None,
-           'add-global-abbrev': None,
-             'advertised-undo': None,
-            'append-to-buffer': None,
-          'append-to-register': None,
-               'back-sentence': None,
-         'back-to-indentation': None,
-               'backward-char': None,
-        'backward-delete-char': None,
-     'backward-kill-paragraph': None,
-      'backward-kill-sentence': None,
-          'backward-kill-word': None,
-         'beginning-of-buffer': None,
-           'beginning-of-line': None,
-    'call-last-keyboard-macro': None,
-             'capitalize-word': None,
-                     'cascade': None,
-                 'center-line': None,
-               'center-region': None,
-       'check-all-python-code': None,
-               'check-outline': None,
-           'check-python-code': None,
-             'clear-rectangle': None,
-                  'clone-node': None,
-                       'close': None,
-             'close-rectangle': None,
-                'contract-all': None,
-               'contract-node': None,
-             'contract-parent': None,
-          'convert-all-blanks': None,
-            'convert-all-tabs': None,
-              'convert-blanks': None,
-                'convert-tabs': None,
-                   'copy-node': None,
-  'copy-rectangle-to-register': None,
-              'copy-to-buffer': None,
-            'copy-to-register': None,
-                    'cut-node': None,
-          'dabbrev-completion': None,
-             'dabbrev-expands': None,
-                    'de-hoist': None,
-                      'delete': None,
-                 'delete-char': None,
-                 'delete-file': None,
-          'delete-indentation': None,
-                 'delete-node': None,
-            'delete-rectangle': None,
-               'delete-spaces': None,
-                      'demote': None,
-                        'diff': None,
-              'digit-argument': None,
-             'downcase-region': None,
-               'downcase-word': None,
-                'dump-outline': None,
-               'edit-headline': None,
-               'end-kbd-macro': None,
-               'end-of-buffer': None,
-                 'end-of-line': None,
-           'equal-sized-panes': None,
-             'eval-expression': None,
-         'exchange-point-mark': None,
-              'execute-script': None,
-               'expand-abbrev': None,
-                  'expand-all': None,
-           'expand-next-level': None,
-                 'expand-node': None,
-           'expand-prev-level': None,
-       'expand-region-abbrevs': None,
-           'expand-to-level 1': None,
-           'expand-to-level 2': None,
-           'expand-to-level 3': None,
-           'expand-to-level 4': None,
-           'expand-to-level 5': None,
-           'expand-to-level 6': None,
-           'expand-to-level 7': None,
-           'expand-to-level 8': None,
-           'expand-to-level 9': None,
-            'export-headlines': None,
-                     'extract': None,
-               'extract-names': None,
-             'extract-section': None,
-                 'fill-region': None,
-    'fill-region-as-paragraph': None,
-                   'find-next': None,
-                  'find-panel': None,
-               'find-previous': None,
-             'flatten-outline': None,
-                 'flush-lines': None,
-                'forward-char': None,
-            'forward-sentence': None,
-                   'goto-char': None,
-                  'goto-first': None,
-                   'goto-last': None,
-                   'goto-line': None,
-            'goto-line-number': None,
-           'goto-next changed': None,
-            'goto-next marked': None,
-             'goto-next-clone': None,
-              'goto-next-node': None,
-           'goto-next-sibling': None,
-           'goto-next-visible': None,
-                 'goto-parent': None,
-              'goto-prev-node': None,
-           'goto-prev-sibling': None,
-           'goto-prev-visible': None,
-                       'hoist': None,
-                    'how-many': None,
- 'iconfify-or-deiconify-frame': None,
-              'import at-file': None,
-              'import-at-root': None,
-           'import-cweb-files': None,
-         'import-derived-file': None,
-    'import-flattened-outline': None,
-          'import-noweb-files': None,
-          'increment-register': None,
-                      'indent': None,
-               'indent-region': None,
-             'indent-relative': None,
-              'indent-rigidly': None,
-    'indent-to-comment-column': None,
-                 'insert-file': None,
-       'insert-keyboard-macro': None,
-              'insert-newline': None,
-                 'insert-node': None,
-          'insert-parentheses': None,
-             'insert-register': None,
-            'insert-body-time': None,
-        'insert-headline-time': None,
-            'insert-to-buffer': None,
-   'inverse-add-global-abbrev': None,
-            'isearch-backward': None,
-     'isearch-backward-regexp': None,
-             'isearch-forward': None,
-      'isearch-forward-regexp': None,
-            'jump-to-register': None,
-                  'keep-lines': None,
-               'keyboard-quit': None,
-            'kill-all-abbrevs': None,
-                 'kill-buffer': None,
-                   'kill-line': None,
-              'kill-paragraph': None,
-              'kill-rectangle': None,
-                 'kill-region': None,
-            'kill-region-save': None,
-               'kill-sentence': None,
-                   'kill-word': None,
-                 'line-number': None,
-                'list-abbrevs': None,
-                'list-buffers': None,
-                   'load-file': None,
-              'make-directory': None,
-                        'mark': None,
-          'mark-changed items': None,
-          'mark-changed roots': None,
-                 'mark-clones': None,
-               'mark-subheads': None,
-               'match-bracket': None,
-                'minimize-all': None,
-           'move-outline-down': None,
-           'move-outline-left': None,
-          'move-outline-right': None,
-             'move-outline-up': None,
-             'move-past-close': None,
-         'name-last-kbd-macro': None,
-           'negative-argument': None,
-                         'new': None,
-          'newline-and-indent': None,
-                   'next-line': None,
-              'number-command': None,
-          'number-to-register': None,
-                        'open': None,
-         'open-compare-window': None,
-          'open-leoConfig.leo': None,
-            'open-leoDocs.leo': None,
-            'open-online-home': None,
-        'open-online-tutorial': None,
-          'open-python-window': None,
-              'open-rectangle': None,
-                   'open-with': None,
-             'outline-to-CWEB': None,
-            'outline-to-noweb': None,
-                  'paste-node': None,
-       'paste-retaining-clone': None,
-           'point-to-register': None,
-                 'preferences': None,
-           'prepend-to-buffer': None,
-         'prepend-to-register': None,
-'pretty-print-all-python-code': None,
-    'pretty-print-python-code': None,
-               'previous-line': None,
-                     'promote': None,
-               'query-replace': None,
-         'query-replace-regex': None,
-          're-search-backward': None,
-           're-search-forward': None,
-            'read-abbrev-file': None,
-          'read-at-file-nodes': None,
-           'read-outline-only': None,
-          'reformat-paragraph': None,
-          'remove-blank-lines': None,
-            'remove-directory': None,
-            'remove-sentinels': None,
-               'rename-buffer': None,
-      'repeat-complex-command': None,
-                     'replace': None,
-               'replace-regex': None,
-              'replace-string': None,
-           'replace-then-find': None,
-            'resize-to-screen': None,
-              'reverse-region': None,
-                      'revert': None,
-                        'save': None,
-     'save-buffers-kill-leo':   None,
-                   'save-file': None,
-                     'save-as': None,
-                     'save-to': None,
-                 'scroll-down': None,
-                   'scroll-up': None,
-             'search-backward': None,
-              'search-forward': None,
-                  'select-all': None,
-                  'set-colors': None,
-          'set-comment-column': None,
-             'set-fill-column': None,
-             'set-fill-prefix': None,
-                    'set-font': None,
-            'set-mark-command': None,
-               'shell-command': None,
-     'shell-command-on-region': None,
-             'show-invisibles': None,
-               'sort-children': None,
-                'sort-columns': None,
-                 'sort-fields': None,
-                  'sort-lines': None,
-               'sort-siblings': None,
-                  'split-line': None,
-             'start-kbd-macro': None,
-            'string-rectangle': None,
-                     'suspend': None,
-            'switch-to-buffer': None,
-                      'tabify': None,
-                      'tangle': None,
-                  'tangle-all': None,
-               'tangle-marked': None,
-          'toggle-active-pane': None,
-       'toggle-angle-brackets': None,
-      'toggle-split-direction': None,
-             'transpose-chars': None,
-             'transpose-lines': None,
-             'transpose-words': None,
-                    'unindent': None,
-          'universal-argument': None,
-                  'unmark-all': None,
-                    'untabify': None,
-                    'untangle': None,
-                'untangle-all': None,
-             'untangle-marked': None,
-               'upcase-region': None,
-                 'upcase-word': None,
-                'view-lossage': None,
-               'view-register': None,
-                       'weave': None,
-                   'what-line': None,
-        'word-search-backward': None,
-         'word-search-forward': None,
-           'write-abbrev-file': None,
-                        'yank': None,
-                    'yank-pop': None,
-              'yank-rectangle': None,
-            'zap-to-character': None,
-}
-#@nonl
-#@-node:ekr.20051007142117:<< define defaultBindingsDict >>
-#@+node:ekr.20050920084036.142:c.editCommands.selectAll
-def selectAll (event):
-
-    event.widget.tag_add('sel','1.0','end')
-#@nonl
-#@-node:ekr.20050920084036.142:c.editCommands.selectAll
-#@+node:ekr.20051010140216:From top level of createMenuEntrties
-            if bind_shortcut and not dontBind:
-                if c.useMiniBuffer:
-                    ok = c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith,fromMenu=True)
-                    if not ok: menu_shortcut = None
-                else:
-                    << handle bind_shorcut >>
-#@nonl
-#@+node:ekr.20031218072017.1729:<< handle bind_shorcut >>
-d = self.menuShortcuts
-bunch = d.get(bind_shortcut)
-
-if bunch and not g.app.menuWarningsGiven:
-    if bunch.init:
-        if 0: # Testing only.
-            s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
-                accel,label,bunch.accel,bunch.label)
-            g.es(s,color="red")
-            print s
-        # Unbind the previous accelerator.
-        if menu != bunch.menu or label != bunch.label:
-            self.clearAccel(bunch.menu,bunch.label)
-    else:
-        s = 'duplicate shortcut\nnew: %s %s\nold: %s %s' % (
-            accel,label,bunch.accel,bunch.label)
-        g.es(s,color="red")
-        print s
-
-d[bind_shortcut] = g.Bunch(label=label,accel=accel,init=init,menu=menu)
+#@-node:ekr.20050920084036.41:bufferList (to be deleted)
+#@+node:ekr.20051012133615:switchToBuffer (not used)
+def switchToBuffer( self, event, name ):
     
-try:
-    self.frame.body.bind(bind_shortcut,menuCallback)
-    self.bind(bind_shortcut,menuCallback)
-except: # could be a user error
-    if not g.app.menuWarningsGiven:
-        print "exception binding menu shortcut..."
-        print bind_shortcut
-        g.es_exception()
-        g.app.menuWarningsGive = True
+    method = self.bufferGotos[ event.widget ]
+    self.keyboardQuit( event )
+    method( name )
+    return 'break'
+#@-node:ekr.20051012133615:switchToBuffer (not used)
+#@-node:ekr.20051012141518:From bufferCommandsClass
+#@+node:ekr.20050920084036.251:_ToReg (not used)
+def _ToReg (self,event,which):
+
+    if not self._chckSel(event):
+        return
+    if self._checkIfRectangle(event):
+        return
+
+    if event.keysym in string.letters:
+        event.keysym = event.keysym.lower()
+        w = event.widget
+        if not self.registers.has_key(event.keysym):
+            self.registers [event.keysym] = ''
+        txt = w.get('sel.first','sel.last')
+        rtxt = self.registers [event.keysym]
+        if self.which == 'p':
+            txt = txt + rtxt
+        else:
+            txt = rtxt + txt
+        self.registers [event.keysym] = txt
 #@nonl
-#@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
-#@-node:ekr.20051010140216:From top level of createMenuEntrties
+#@-node:ekr.20050920084036.251:_ToReg (not used)
 #@-node:ekr.20050921100955:Not used
 #@+node:ekr.20050921094025.254:All xemacs commands
 @killcolor
