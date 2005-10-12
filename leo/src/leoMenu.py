@@ -186,8 +186,8 @@ class leoMenu:
             #@        << enable go to submenu >>
             #@+node:ekr.20040131171020.3:<< enable go to submenu >>
             menu = frame.menu.getMenu("Go To...")
-            enable(menu,"Go Back",c.beadPointer > 1)
-            enable(menu,"Go Forward",c.beadPointer + 1 < len(c.beadList))
+            enable(menu,"Go Prev Visited",c.beadPointer > 1)
+            enable(menu,"Go Next Visited",c.beadPointer + 1 < len(c.beadList))
             enable(menu,"Go To Prev Visible",c.canSelectVisBack())
             enable(menu,"Go To Next Visible",c.canSelectVisNext())
             if 0: # These are too slow.
@@ -608,11 +608,12 @@ class leoMenu:
             ("&Contract All","Alt+-",c.contractAllHeadlines),
             ("Contract &Node","Alt+[",c.contractNode),
             ("Contract &Parent","Alt+0",c.contractParent),
-            ("Contract Or Go Left","Alt+LtArrow",c.contractNodeOrGoToParent),
+            ("Contract Or Go Left",None,c.contractNodeOrGoToParent),
             ("-",None,None),
             ("Expand P&rev Level","Alt+.",c.expandPrevLevel),
             ("Expand N&ext Level","Alt+=",c.expandNextLevel),
-            ("Expand Or Go Right","Alt+RtArrow",c.expandNodeOrGoToFirstChild),
+            ("Expand And Go Right",None,c.expandNodeAndGoToFirstChild),
+            ("Expand Or Go Right",None,c.expandNodeOrGoToFirstChild),
             ("-",None,None),
             ("Expand To Level &1","Alt+1",c.expandLevel1),
             ("Expand To Level &2","Alt+2",c.expandLevel2),
@@ -672,24 +673,26 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.outlineMenuGoToMenuTable = [
-            ("Go Back",None,c.goPrevVisitedNode), # Usually use buttons for this.
-            ("Go Forward",None,c.goNextVisitedNode),
+            ("Go Prev Visited",None,c.goPrevVisitedNode), # Usually use buttons for this.
+            ("Go Next Visited",None,c.goNextVisitedNode),
+            ("Go To Prev Node",None,c.selectThreadBack),
+            ("Go To Next Node",None,c.selectThreadNext),
             ("-",None,None),
-            ("Go To Next &Marked","Alt+M",c.goToNextMarkedHeadline),
-            ("Go To Next C&hanged","Alt+D",c.goToNextDirtyHeadline),
-            ("Go To Next &Clone","Alt+N",c.goToNextClone),
+            ("Go To Next Marked",None,c.goToNextMarkedHeadline),
+            ("Go To Next Changed",None,c.goToNextDirtyHeadline),
+            ("Go To Next Clone",None,c.goToNextClone),
             ("-",None,None),
-            ("Go To &First Node","Alt+Shift+G",c.goToFirstNode),
-            ("Go To &Last Node","Alt+Shift+H",c.goToLastNode),
-            ('Go To Last Visible Node',None,c.goToLastVisibleNode),
-            ("Go To &Parent","Alt+Shift+P",c.goToParent),
-            ("Go To P&rev Sibling","Alt+Shift+R",c.goToPrevSibling),
-            ("Go To Next &Sibling","Alt+Shift+S",c.goToNextSibling),
+            ("Go To First Node",None,c.goToFirstNode),
+            ("Go To Prev Visible",None,c.selectVisBack),
+            ("Go To Next Visible",None,c.selectVisNext),
+            ("Go To Last Node",None,c.goToLastNode),
+            ('Go To Last Visible',None,c.goToLastVisibleNode),
             ("-",None,None),
-            ("Go To Prev V&isible","Alt+UpArrow",c.selectVisBack),
-            ("Go To Next &Visible","Alt+DnArrow",c.selectVisNext),
-            ("Go To Prev Node","Alt+Shift+UpArrow",c.selectThreadBack),
-            ("Go To Next Node","Alt+Shift+DnArrow",c.selectThreadNext),
+            ("Go To Parent",None,c.goToParent),
+            ('Go To First Sibling',None,c.goToFirstSibling),
+            ('Go To Last Sibling',None,c.goToLastSibling),
+            ("Go To Prev Sibling",None,c.goToPrevSibling),
+            ("Go To Next Sibling",None,c.goToNextSibling),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
@@ -700,7 +703,7 @@ class leoMenu:
         def dummyCommand():
             pass
         
-        self.emacsMenuCmdsMenuTable = [
+        self.emacsMenuCommandsMenuTable = [
             ('Cmnd Command 1',None,dummyCommand),
         ]
         
@@ -1060,7 +1063,7 @@ class leoMenu:
                             # if accel: g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
                         else:
                             accel = None # New in 4.4: remove the default shortcut.
-                            if not dynamicMenu: # Don't require command names for dynamic menu entries.
+                            if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
                                 if commandName and commandName != 'dummyCommand':
                                     g.trace('no inverse for %s' % commandName)
                     else:
@@ -1311,16 +1314,16 @@ class leoMenu:
     #@+node:ekr.20050921103736:createEditorMenuFromTable
     def createEditorMenuFromTable (self):
     
-        cmdsMenu = self.createNewMenu('Editor')
+        cmdsMenu = self.createNewMenu('C&mds')
     
         for name,table,sep in (
             #('View...',   self.emacsMenuViewMenuTable,    True),
-            ('Cmds...',    self.emacsMenuCmdsMenuTable,    True),
+            ('Commands...',self.emacsMenuCommandsMenuTable,True),
             ('Tools...',   self.emacsMenuToolsMenuTable,   True),
             ('Options...', self.emacsMenuOptionsMenuTable, True),
             ('Buffers...', self.emacsMenuBuffersMenuTable, False),
         ):
-            menu = self.createNewMenu(name,'Editor')
+            menu = self.createNewMenu(name,'Cmds')
             self.createMenuEntries(menu,table,init=True)
             if sep: self.add_separator(cmdsMenu)
     #@nonl

@@ -11585,7 +11585,7 @@ def masterCommand (self,event,func,stroke):
     '''This is the central dispatching method.
     All commands and keystrokes pass through here.'''
 
-    k = self ; c = k.c
+    k = self ; c = k.c ; bodyCtrl = c.frame.body.bodyCtrl
     k.stroke = stroke # Set this global for general use.
     commandName = k.ultimateFuncName(func)
     special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
@@ -11613,6 +11613,7 @@ def masterCommand (self,event,func,stroke):
         return 'break'
 
     if k.inState():
+        k.forceFocusToBody()
         k.previousStroke = stroke
         k.callStateFunction(event) # Calls end-command.
         return 'break'
@@ -11635,6 +11636,7 @@ def masterCommand (self,event,func,stroke):
 
     if func: # Func is an argument.
         k.previousStroke = stroke
+        k.forceFocusToBody()
         func(event)
         forceFocus = func.__name__ != 'leoCallback'
         k.endCommand(event,commandName,forceFocus,tag='masterCommand')
@@ -11693,6 +11695,20 @@ def callKeystrokeFunction (self,event):
     return func
 #@nonl
 #@-node:ekr.20050923174229.3:callKeystrokeFunction
+#@+node:ekr.20051012092847:forceFocusToBody
+def forceFocusToBody (self):
+    
+    k = self ; c = k.c
+    
+    if 0: # Causes too much flash.
+        c.frame.endEditLabelCommand()
+    
+    if 0: # Doesn't work, and perhaps is not a good idea.
+        w = c.frame.top
+        w.focus_force()
+        w.update_idletasks()
+#@nonl
+#@-node:ekr.20051012092847:forceFocusToBody
 #@-node:ekr.20050920085536.65: masterCommand & helpers
 #@+node:ekr.20031218072017.1330:onBodyKey
 def onBodyKey (self,event,undoType='Typing'):

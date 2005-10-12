@@ -3998,11 +3998,11 @@ class baseCommands:
         
         """Simulate the left Arrow Key in folder of Windows Explorer."""
     
-        c = self ; v = c.currentVnode()
+        c = self ; p = c.currentPosition()
      
-        if v.hasChildren() and v.isExpanded():
+        if p.hasChildren() and p.isExpanded():
             c.contractNode()
-        elif v.hasParent():
+        elif p.hasParent():
             c.goToParent()
     #@nonl
     #@-node:ekr.20040930064232:contractNodeOrGoToParent
@@ -4089,24 +4089,41 @@ class baseCommands:
             c.endUpdate()
     
     #@-node:ekr.20031218072017.2907:expandNode
-    #@+node:ekr.20040930064232.1:expandNodeOrGoToFirstChild
+    #@+node:ekr.20040930064232.1:expandNodeAnd/OrGoToFirstChild
+    def expandNodeAndGoToFirstChild(self):
+        
+        """If a node has children, expand it if needed and go to the first child."""
+    
+        c = self ; p = c.currentPosition()
+        if not p.hasChildren():
+            return
+    
+        if not p.isExpanded():
+            c.expandNode()
+            
+        c.beginUpdate()
+        try:
+            c.selectVnode(p.firstChild())
+        finally:
+            c.endUpdate()
+            
     def expandNodeOrGoToFirstChild(self):
         
         """Simulate the Right Arrow Key in folder of Windows Explorer."""
     
-        c = self ; v = c.currentVnode()
-        if not v.hasChildren(): return
+        c = self ; p = c.currentPosition()
+        if not p.hasChildren(): return
     
-        if v.isExpanded():
+        if not p.isExpanded():
+            c.expandNode()
+        else:
             c.beginUpdate()
             try:
-                c.selectVnode(v.firstChild())
+                c.selectVnode(p.firstChild())
             finally:
                 c.endUpdate()
-        else:
-            c.expandNode()
     #@nonl
-    #@-node:ekr.20040930064232.1:expandNodeOrGoToFirstChild
+    #@-node:ekr.20040930064232.1:expandNodeAnd/OrGoToFirstChild
     #@+node:ekr.20031218072017.2908:expandPrevLevel
     def expandPrevLevel (self):
     
@@ -4202,20 +4219,36 @@ class baseCommands:
     def goToFirstNode(self):
         
         c = self
-        v = c.rootVnode()
-        if v:
+        p = c.rootPosition()
+        if p:
             c.beginUpdate()
             try:
-                c.selectVnode(v)
+                c.selectVnode(p)
             finally:
                 c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2914:goToFirstNode
-    #@+node:ekr.20031218072017.2915:goToLastNode
+    #@+node:ekr.20051012092453:goToFirstSibling (New in 4.4)
+    def goToFirstSibling(self):
+        
+        c = self ; p = c.currentPosition()
+        
+        if p.hasBack():
+            while p.hasBack():
+                p.moveToBack()
+    
+            c.beginUpdate()
+            try:
+                c.selectVnode(p)
+            finally:
+                c.endUpdate()
+    #@nonl
+    #@-node:ekr.20051012092453:goToFirstSibling (New in 4.4)
+    #@+node:ekr.20031218072017.2915:goToLastNode (Bug fix in 4.4)
     def goToLastNode(self):
         
         c = self ; p = c.rootPosition()
-        while p and p.hasNext():
+        while p and p.hasThreadNext(): # Bug fix: 10/12/05: was p.hasNext.
             p.moveToThreadNext()
     
         if p:
@@ -4226,7 +4259,23 @@ class baseCommands:
             finally:
                 c.endUpdate()
     
-    #@-node:ekr.20031218072017.2915:goToLastNode
+    #@-node:ekr.20031218072017.2915:goToLastNode (Bug fix in 4.4)
+    #@+node:ekr.20051012092847.1:goToLastSibling (New in 4.4)
+    def goToLastSibling(self):
+        
+        c = self ; p = c.currentPosition()
+        
+        if p.hasNext():
+            while p.hasNext():
+                p.moveToNext()
+    
+            c.beginUpdate()
+            try:
+                c.selectVnode(p)
+            finally:
+                c.endUpdate()
+    #@nonl
+    #@-node:ekr.20051012092847.1:goToLastSibling (New in 4.4)
     #@+node:ekr.20050711153537:goToLastVisibleNode
     def goToLastVisibleNode (self):
         
@@ -4235,7 +4284,7 @@ class baseCommands:
         while p.hasNext():
             p.moveToNext()
             
-        while p.isExpanded():
+        while p and p.isExpanded():
             p.moveToLastChild()
     
         if p:
