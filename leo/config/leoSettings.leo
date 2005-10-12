@@ -1507,6 +1507,10 @@ copy-text               = Ctrl-c        # For testing only: Alt-Shift-Ctrl-c
 cut-text                = Ctrl-x        # For testing only: Alt-Shift-Ctrl-x
 paste-text              = Ctrl-v        # For testing only: Alt-Shift-Ctrl-v
 
+# Test of old-style settings names
+# Note: for this to work, the binding for select-all below must be disabled.
+# selectall              = Alt-Shift-Ctrl-A
+
 # Emacs moves...
 back-sentence           = Alt-a         # No conflict
 backward-char           = Ctrl-b        # No conflict
@@ -1520,7 +1524,7 @@ end-of-buffer           = Alt-greater
 end-of-line             = Ctrl-e        # Conflicts with execute-script
 end-of-line             = Alt-DnArrow   # Conflicts with goto-next-visible
 exchange-point-mark     = None          # Should be Ctrl-X Ctrl-X.
-forward-char            = Ctrl-f        # Conflicts with find-panel: now F5
+forward-char            = Shift-Ctrl-f  # Ctrl-f Conflicts with find-panel
 forward-paragraph       = Alt-braceright
 forward-sentence        = Alt-e         # No conflict
 forward-word            = Alt-f         # No conflict with bindings, but usually opens file menu.
@@ -1740,7 +1744,7 @@ extract                     = Shift-Ctrl-D
 extract-names               = Shift-Ctrl-N
 extract-section             = Shift-Ctrl-E
 find-next                   = F3
-find-panel                  = F5           # Ctrl-f conflicts with forward-char
+find-panel                  = Ctrl-f           # Ctrl-f conflicts with forward-char, but so what :-)
 find-previous               = F2
 flatten-outline             = None
 go-back                     = None
