@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7657" clone_windows="0"/>
-<globals body_outline_ratio="0.568986568987">
-	<global_window_position top="15" left="329" height="819" width="869"/>
+<globals body_outline_ratio="0.440789473684">
+	<global_window_position top="7" left="213" height="912" width="892"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -834,7 +834,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050917082428.3"><vh>part 3</vh></v>
 </v>
 </v>
-<v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes...</vh>
+<v t="ekr.20041126132604" a="E" annotate="7d71002e"><vh>Prototypes...</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
 <v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
 </v>
@@ -987,6 +987,10 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050824190822"><vh> Zope test</vh></v>
+<v t="ekr.20051011211253" a="TV"><vh>Debugger canvas</vh>
+<v t="ekr.20051011213138"><vh>getImage</vh></v>
+<v t="ekr.20051011215038"><vh>getLineHeight</vh></v>
+</v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -1583,7 +1587,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050618061835.19"><vh>How about @suite?</vh></v>
 <v t="ekr.20050618061835.20"><vh>Final remarks</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -2327,7 +2331,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050927082642" a="E"><vh>Text tests</vh></v>
+<v t="ekr.20050927082642"><vh>Text tests</vh></v>
 <v t="ekr.20050930124917"><vh>outlineToClipboard</vh></v>
 <v t="ekr.20051010092242"><vh>Test of paste in headline</vh></v>
 </vnodes>
@@ -22607,5 +22611,60 @@ w.clipboard_append(result)</t>
 <t tx="ekr.20051009140349"></t>
 <t tx="ekr.20051010091827"></t>
 <t tx="ekr.20051010092242">a</t>
+<t tx="ekr.20051011211253">import Tkinter as Tk
+import tkFont
+
+images = {}
+
+@others
+
+h = 500 ; w = 900
+
+top = Tk.Toplevel(None) ; top.title("Debugger")
+
+outer = Tk.Frame(top,height=h,width=w)
+outer.pack(expand=1,fill='both')
+
+canvas = Tk.Canvas(outer,background='LightSteelBlue1',width=14)
+canvas.pack(side='left',fill='y',expand=0)
+
+text = Tk.Text(outer)
+text.pack(side='left',fill='both',expand=1,pady=0,padx=0)
+
+line_h = getLineHeight(text)
+# print line_h
+image = getImage('minusnode.gif',canvas)
+
+y = line_h / 2 - 2
+while y &lt; h:
+    id = canvas.create_image(4,y,image=image,anchor="nw")
+    y += line_h
+</t>
+<t tx="ekr.20051011213138">def getImage(name,canvas):
+    
+    icon = images.get(name)
+    if icon: return icon
+        
+    try:
+        fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
+        fullname = g.os_path_normpath(fullname)
+        image = Tk.PhotoImage(master=canvas,file=fullname)
+        images [name] = image
+        return image
+    except:
+        g.es("Exception loading: " + fullname)
+        g.es_exception()
+        return None</t>
+<t tx="ekr.20051011215038">def getLineHeight (text):
+
+    try:
+        fontName = text.cget('font')
+        font = tkFont.Font(font=fontName)
+        metrics = font.metrics()
+        return metrics ["linespace"]
+    except Exception:
+        g.es("exception setting outline line height")
+        g.es_exception()
+        return 20 # default</t>
 </tnodes>
 </leo_file>
