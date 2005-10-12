@@ -3630,7 +3630,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    g.trace('no real change')
+    # g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -5950,7 +5950,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    g.trace('no real change')
+    # g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -6487,7 +6487,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    g.trace('no real change')
+    # g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -10613,7 +10613,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    g.trace('no real change')
+    # g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -11903,7 +11903,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    g.trace('no real change')
+    # g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>

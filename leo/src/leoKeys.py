@@ -312,14 +312,16 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.16:bindKey
     #@+node:ekr.20051008135051.1:bindOpenWith
-    def bindOpenWith (self,shortcut,name,command):
+    def bindOpenWith (self,shortcut,name,data):
         
         '''Make a binding for the Open With command.'''
         
         k = self ; c = k.c ; w = c.frame.body.bodyCtrl
+        
+        # g.trace(shortcut,name,data)
     
         # The first parameter must be event, and it must default to None.
-        def openWithCallback(event=None,self=self,data=command):
+        def openWithCallback(event=None,self=self,data=data):
             __pychecker__ = '--no-argsused' # event must be present.
             return self.c.openWith(data=data)
     

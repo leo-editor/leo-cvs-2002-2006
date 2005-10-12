@@ -1735,9 +1735,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         menu.createMenuEntries contains a horrible kludge to make this happen.'''
         
         f = self ; c = f.c ; w = f.getFocus()
-        
         isBody = w == f.body.bodyCtrl
-        g.trace('isBody',isBody)
+        # g.trace('isBody',isBody)
+    
         if isBody:
             w.event_generate(g.virtual_event_name("Cut"))
         else:
@@ -1753,7 +1753,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl
-        g.trace('isBody',isBody)
+        #g.trace('isBody',isBody)
     
         if isBody:
             w.event_generate(g.virtual_event_name("Cut"))
@@ -1789,8 +1789,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl
-        isMenu = w == f.menu
-        g.trace('isBody',isBody,'isMenu',isMenu)
+        # g.trace('isBody',isBody,'isMenu',isMenu)
+    
         if isBody:
             w.event_generate(g.virtual_event_name("Copy"))
         else:
@@ -1805,7 +1805,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl
-        g.trace('isBody',isBody)
+        # g.trace('isBody',isBody)
     
         if isBody:
             w.event_generate(g.virtual_event_name("Copy"))
@@ -1847,13 +1847,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         w = self.getFocus()
         isBody = w == f.body.bodyCtrl
-        isMenu = w == f.menu
-        g.trace('isBody',isBody,'isMenu',isMenu)
+        # g.trace('isBody',isBody,'isMenu',isMenu)
+    
         if isBody:
             w.event_generate(g.virtual_event_name("Paste"))
         else:
             w.event_generate(g.virtual_event_name("Paste"))
             f.tree.onHeadChanged(c.currentPosition())
+    #@nonl
     #@-node:ekr.20051011072903.4:OnPasteFromMenu
     #@+node:ekr.20051011072903.5:pasteText
     def pasteText (self):
@@ -2602,7 +2603,7 @@ class leoTkinterBody (leoFrame.leoBody):
             
         # Major change: 6/12/04
         if s == body:
-            g.trace('no real change')
+            # g.trace('no real change')
             return "break"
         #@nonl
         #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
