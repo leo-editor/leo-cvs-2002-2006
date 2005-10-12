@@ -6,17 +6,41 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-Fix bugs:
-
-    - Reduce menu warnings: Flag 'standard' calls to createMenuEntries?
-    - Fix bug: @settings tree not handled in outline opened from the Open menu.
-    - Fix bug: menu defaults don't 'take' if there is no @shortcuts node in effect.
-    - Fix bug: full-command does not work properly if focus is not in body pane?
-        - Should full-command force the focus to the body pane?
-    * Get rid of duplicate unit tests!
-
-- Run pychecker.
+* Fix all bugs.
+* Make a list of all unfinished/untested emacs commands.
 #@nonl
+#@+node:ekr.20051011124540:What I did after changeover
+- Fixed duplicate Pastes in headlines.
+    - Works when paste-text command is not defined.
+    - Removed weird virtual bindings in tkBody.createBindings.
+
+- Control-H now works properly.
+    - Added forceFocuse arg to k.endCommand.
+      This is always False for Leo commands.
+      
+- At present the processing for @shortcuts does not allow multiple shortcuts for a single command.
+  The **last** setting prevails.  The value should be a list, and each item on the list should create a binding.
+  
+- Fixed crash in unit test for rst2 plugin.
+    The call to createMenuEntries had callOnFileOpen() instead of callOnFileOpen.
+
+- k.checkBindings checks that commands have an @shortcuts entry.
+    - The entry may be None, of course.
+    - Created g.app.config.exists as a helper function.
+    ** The major @shortcuts nodes now pass this test.
+
+- created `@button align to col` in leoSettings.leo.
+- open-with shortcuts now work.
+- Made sure old-style settings still work.
+- Added contract-and-go-right command
+- Fixed long-standing bug in goto-last-node.
+- Added goto-first-sibling and goto-last-sibling commands.
+- Changed name Editor menu to Cmds menu.
+- Used previously unused init param to createMenuEntries to suppress warnings.
+- Disabled many plugin tests. These tests are flakey: they don't work the same if repeated.
+- Fixed all pychecker errors.
+#@nonl
+#@-node:ekr.20051011124540:What I did after changeover
 #@+node:ekr.20051012061459:Postings
 #@+node:ekr.20051012061459.1:So many options (summay)
 #@-node:ekr.20051012061459.1:So many options (summay)
@@ -105,19 +129,6 @@ Create a buttons menu to show the present bindings & emacs name?
 #@-node:ekr.20051012060813:@ @button should allow bindings to emacs commands and keystrokes.
 #@-node:ekr.20051012053017:Notes
 #@-node:ekr.20051012061459:Postings
-#@+node:ekr.20051011124540:What I did lately
-- k.checkBindings checks that commands have an @shortcuts entry.
-    - The entry may be None, of course.
-    - Created g.app.config.exists as a helper function.
-    ** The major @shortcuts nodes now pass this test.
-
-- created `@button align to col` in leoSettings.leo.
-
-- open-with shortcuts now work.
-
-- Made sure old-style settings still work.
-#@nonl
-#@-node:ekr.20051011124540:What I did lately
 #@+node:ekr.20051012062303:Before 4.4a1
 #@+node:ekr.20051009115325:Docs
 * Finish release notes.
@@ -284,8 +295,10 @@ Control all Leo commands & widgets using only key commands.
 
 - emacs commands for buttons, dialogs, etc.
     - dismiss-top-dialog command.
+    - Scroll outline pane up/down
 
-- emacs commands to change focuse, etc.
+- emacs commands to change focus, etc.
+    - focus-in-body/tree/log/dialog.
 
 - emacs commands for menus.
     - activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)

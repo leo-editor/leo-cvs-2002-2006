@@ -126,8 +126,8 @@
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20050921105316"><vh>@page Menu options	</vh>
-<v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=True</vh></v>
+<v t="ekr.20050921105316" a="E"><vh>@page Menu options	</vh>
+<v t="ekr.20050921105316.1" a="TV"><vh>@bool useCmdMenu=False</vh></v>
 </v>
 <v t="ekr.20041119034357.28"><vh>@page Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
@@ -231,7 +231,7 @@
 <v t="ekr.20051007193427" a="E"><vh>@@shortcuts traditional Leo shortcuts</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
 <v t="ekr.20051010195914"><vh>@@shortcuts no shortcuts (for testing)</vh></v>
-<v t="ekr.20051010112558" a="ETV"><vh>@shortcuts traditional Leo shortcuts with all emacs commands</vh></v>
+<v t="ekr.20051010112558" a="E"><vh>@shortcuts traditional Leo shortcuts with all emacs commands</vh></v>
 </v>
 </v>
 </vnodes>
@@ -883,7 +883,7 @@ Doing so would make unit tests fail.
 </t>
 <t tx="ekr.20050620083647"></t>
 <t tx="ekr.20050921105316"></t>
-<t tx="ekr.20050921105316.1"></t>
+<t tx="ekr.20050921105316.1"># This menu is not ready yet.</t>
 <t tx="ekr.20050921105316.2"></t>
 <t tx="ekr.20051006200015">Use a light selectbackground value so syntax coloring looks good.
 
@@ -1518,11 +1518,11 @@ backward-paragraph      = Alt-braceleft # Conflicts with
 backward-word           = Alt-b         # No conflict     
 # backward-word         = Ctrl-Left     # At present, overrides previous binding.
 beginning-of-buffer     = Alt-less
-beginning-of-line       = Alt-UpArrow   # Conflicts with goto-prev-visible
+beginning-of-line       = None          # Alt-UpArrow conflicts with goto-prev-visible
 beginning-of-line       = Ctrl-a        # Conflicts with select-all
 end-of-buffer           = Alt-greater
 end-of-line             = Ctrl-e        # Conflicts with execute-script
-end-of-line             = Alt-DnArrow   # Conflicts with goto-next-visible
+# end-of-line           = Alt-DnArrow   # Conflicts with goto-next-visible
 exchange-point-mark     = None          # Should be Ctrl-X Ctrl-X.
 forward-char            = Shift-Ctrl-f  # Ctrl-f Conflicts with find-panel
 forward-paragraph       = Alt-braceright
@@ -1535,8 +1535,8 @@ goto-line-number        = Alt-g         # The Leo equivalent.
 move-past-close         = Alt-parenright
 next-line               = Ctrl-n        # Conflicts with new.
 previous-line           = Ctrl-p
-scroll-down             = None          # *** Ctrl-v conflicts with paste-text.
-scroll-up               = Alt-v         # Conflicts with view-all-characters.
+scroll-down             = PageDn          # *** Ctrl-v conflicts with paste-text.
+scroll-up               = PageUp         # Alt-v conflicts with view-all-characters.
 set-mark-command        = Ctrl-Shift-at
 
 full-command            = Alt-x         # No conflict.
@@ -1706,8 +1706,8 @@ clone-node                  = Ctrl-`
 close                       = Ctrl-W
 contract-all                = Alt--
 contract-node               = Alt-[
-contract-or-go-left         = Alt-LtArrow
-contract-parent             = Alt-0
+contract-or-go-left         = None
+contract-parent             = LtArrow       # Was Alt-0, but this seems more consistent.
 convert-all-blanks          = None
 convert-all-tabs            = None
 convert-blanks              = Shift-Ctrl-B
@@ -1728,7 +1728,8 @@ exit-leo                    = Ctrl-Q
 expand-all                  = Alt-9
 expand-next-level           = Alt-=
 expand-node                 = Alt-]
-expand-or-go-right          = Alt-RtArrow
+expand-and-go-right         = RtArrow           # It would make sense to bind Alt-RtArrow to this too.
+expand-or-go-right          = None
 expand-prev-level           = Alt-.
 expand-to-level-1           = Alt-1
 expand-to-level-2           = Alt-2
@@ -1744,27 +1745,29 @@ extract                     = Shift-Ctrl-D
 extract-names               = Shift-Ctrl-N
 extract-section             = Shift-Ctrl-E
 find-next                   = F3
-find-panel                  = Ctrl-f           # Ctrl-f conflicts with forward-char, but so what :-)
+find-panel                  = Ctrl-f        # Ctrl-f conflicts with forward-char, but so what :-)
 find-previous               = F2
 flatten-outline             = None
 go-back                     = None
 go-forward                  = None
-goto-first-node             = Alt-Shift-G
-goto-last-node              = Alt-Shift-H
-goto-last-visible           = None
+goto-first-node             = Alt-Home      # Was: Alt-Shift-G
+goto-first-sibling          = Alt-Shift-Home
+goto-last-node              = None          # Was: Alt-Shift-H
+goto-last-sibling           = Alt-Shift-End
+goto-last-visible           = Alt-End
 goto-line-number            = Alt-G
-goto-next-changed           = Alt-D
+goto-next-changed           = None          # Removed Alt-D: not useful enough.
 goto-next-clone             = Alt-N
-goto-next-marked            = Alt-M
-goto-next-node              = Alt-Shift-DnArrow
-goto-next-sibling           = Alt-Shift-S
-goto-next-visible           = None         # Alt-DnArrow conflicts with end-of-line.
-goto-parent                 = Alt-Shift-P
-goto-prev-node              = Alt-Shift-UpArrow
-goto-prev-sibling           = Alt-Shift-R
-goto-prev-visible           = None         # Alt-UpArrow conflicts with beginning-of-line.
+goto-next-marked            = None          # Removed Alt-M: not useful enough.
+goto-next-node              = Alt-DnArrow
+goto-next-sibling           = None
+goto-next-visible           = DnArrow       # Alt-UpArrow conflicts with beginning-of-line.
+goto-parent                 = Alt-LtArrow
+goto-prev-node              = Alt-UpArrow
+goto-prev-sibling           = None          # Removed Alt-Shift-R: not useful enough.
+goto-prev-visible           = UpArrow
 hoist                       = None
-import-at-file              = None         # Removed Shift-Ctrl-F: not useful enough.
+import-at-file              = None          # Removed Shift-Ctrl-F: not useful enough.
 import-at-root              = None
 import-cweb-files           = None
 import-derived-file         = None
