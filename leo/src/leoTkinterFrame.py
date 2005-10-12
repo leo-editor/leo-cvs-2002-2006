@@ -1715,7 +1715,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         __pychecker__ = '--no-argsused' # event not used.
         
         f = self ; c = f.c
-        g.trace()
         
         if 0: # g.app.gui.win32clipboard is always None.
             if g.app.gui.win32clipboard:
@@ -1769,7 +1768,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def OnCopy (self,event=None):
         
         __pychecker__ = '--no-argsused' # event not used.
-        g.trace()
     
         if 0: # g.app.gui.win32clipboard is always None.
             f = self
@@ -1823,7 +1821,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         __pychecker__ = '--no-argsused' # event not used.
         
         f = self ; c = f.c
-        g.trace()
       
         if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
             bodyCtrl = f.body.bodyCtrl
@@ -1864,7 +1861,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl
-        g.trace('isBody',isBody)
+        # g.trace('isBody',isBody)
     
         if isBody:
             w.event_generate(g.virtual_event_name("Paste"))

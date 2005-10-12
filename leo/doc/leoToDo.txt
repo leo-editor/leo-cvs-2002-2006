@@ -6,18 +6,105 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-* Finish release notes.
-    - Where, how to document new commands?
+Fix bugs:
 
-- Menu defaults don't 'take' if there is no @shortcuts node in effect.
+    - Reduce menu warnings: Flag 'standard' calls to createMenuEntries?
+    - Fix bug: @settings tree not handled in outline opened from the Open menu.
+    - Fix bug: menu defaults don't 'take' if there is no @shortcuts node in effect.
+    - Fix bug: full-command does not work properly if focus is not in body pane?
+        - Should full-command force the focus to the body pane?
+    * Get rid of duplicate unit tests!
 
-- Fix Open With bindings.
-
-- Allow multiple shortcuts for any command.
-    (Requires changes to c.config classes.
-
-- Make sure old-style settings still work.
+- Run pychecker.
 #@nonl
+#@+node:ekr.20051012061459:Postings
+#@+node:ekr.20051012061459.1:So many options (summay)
+#@-node:ekr.20051012061459.1:So many options (summay)
+#@+node:ekr.20051012061459.2:Debugger is easy
+#@-node:ekr.20051012061459.2:Debugger is easy
+#@+node:ekr.20051012061459.3:Input modes are coming
+#@-node:ekr.20051012061459.3:Input modes are coming
+#@+node:ekr.20051012053017.2:Schedule
+- 1 week: mouseless leo
+   
+- 1 week: unit tests
+- 1 week: debugger commands
+- 1 week: input modes, and shortcuts that are lists of keystrokes.
+- 1 week: integrate emacs/leo commands
+    - spell checker
+    - find/change
+- 1 day: completion window
+#@nonl
+#@-node:ekr.20051012053017.2:Schedule
+#@+node:ekr.20051012053017:Notes
+#@+node:ekr.20051012053017.1:Debugger is easy!
+* Breakthrough: can implement debugger quickly & easily
+    - Create emacs-style debugger commands.
+        - Already have evaluate Python expression command.
+        - Abbreviations could make this easier.
+    - Improve what-line command to list:
+        - global line in module.
+        - line in function or method.
+    - No need for 'fancy' debugger console that gets in the way.
+    - (Maybe) improve syntax colorer to show present line.
+      Or more easily, just highlight the present line.
+    - set-breakpoint command just uses what-line (or where-am-i)
+#@nonl
+#@-node:ekr.20051012053017.1:Debugger is easy!
+#@+node:ekr.20051012053017.3:Completion window is useful any time there is lots of data to show
+- Completions
+- Spelling alternatives.
+- Breakpoints
+- Results of evaluating Python expressions in debugger.
+- Debugger state.
+- show-bindings command: prints k.bindingsDict.keys()
+- show-command command:  prints c.commandsDict.keys()
+#@nonl
+#@-node:ekr.20051012053017.3:Completion window is useful any time there is lots of data to show
+#@+node:ekr.20051012053017.4:Search improvements
+** Important: search headline option.
+    
+[iqr] incremental,query,regex
+[fb] forward,back
+[w] word
+[c] case-sensitive
+[hat] headline,all,body
+[osn] outline,subtree,node
+
+*Set defaults for all the above using commands.
+set-word-search-on/off
+set-search-case-on/off
+set-regexp-search-on/off
+set-wrap-search-on/off
+set-search-scope-to-outline/subtree/node
+
+** Search mode: Control keys could change these options *after* starting the search command.
+
+- Script-search commands
+script-search  (can we abort the search somehow?)
+set-find-script
+set-change-script
+#@nonl
+#@-node:ekr.20051012053017.4:Search improvements
+#@+node:ekr.20051012054228:Vim mode is easy
+- k.vimMode controls whether full-command keeps mini-buffer open after a command complete.
+
+- k.fullCommand sets k.sets k.vimMode = c.config.getBool('vim-mode') on entry.
+
+- Commands (like vim-insert-mode) clear k.vimMode to return to the body pane.
+
+- control-g does not alter k.vimMode.
+
+- Shift-control-g clears k.vimMode.
+#@-node:ekr.20051012054228:Vim mode is easy
+#@+node:ekr.20051012060813:@ @button should allow bindings to emacs commands and keystrokes.
+Example:  @button label @key keystroke @@emacs-command-name
+
+Create a buttons menu to show the present bindings & emacs name?
+#@nonl
+#@-node:ekr.20051012060813:@ @button should allow bindings to emacs commands and keystrokes.
+#@-node:ekr.20051012053017:Notes
+#@-node:ekr.20051012061459:Postings
 #@+node:ekr.20051011124540:What I did lately
 - k.checkBindings checks that commands have an @shortcuts entry.
     - The entry may be None, of course.
@@ -25,17 +112,46 @@
     ** The major @shortcuts nodes now pass this test.
 
 - created `@button align to col` in leoSettings.leo.
+
+- open-with shortcuts now work.
+
+- Made sure old-style settings still work.
+#@nonl
 #@-node:ekr.20051011124540:What I did lately
+#@+node:ekr.20051012062303:Before 4.4a1
+#@+node:ekr.20051009115325:Docs
+* Finish release notes.
+
+- Document new commands:  Where?  How?
+#@nonl
+#@+node:ekr.20051012062458:Developer notes
+ Dictionaries, stategies, precedences, what to do about conflicts.
+
+- Added makeSpecialBindings: alt-x, control-c, etc.
+
+- Changing bindings in @shortcuts node.
+#@nonl
+#@-node:ekr.20051012062458:Developer notes
 #@+node:ekr.20051010143934:Quick Start
-Here are the default bindings in leoSettings.leo.  Important: any of these may be changed by changing the settings in the body text of the node `@shortcuts traditional Leo shortcuts with basic Emacs moves`  There are also other @@shortcuts nodes that you can use instead.  Just make sure exactly one headline starts with @shortcuts and the others start with @@shortcuts.
+Here are the default bindings in leoSettings.leo. Important: any of these may be
+changed by changing the settings in the body text of the node `@shortcuts
+traditional Leo shortcuts with basic Emacs moves` There are also other
+@@shortcuts nodes that you can use instead. Just make sure exactly one headline
+starts with @shortcuts and the others start with @@shortcuts.
 
-Alt-x:  Just like Emacs:  starts minibuffer.  The prompt is 'full-command'  Type a full command name, then hit <Return> to execute the command.  Tab completion works, but not for file names.
+Alt-x: Just like Emacs: starts minibuffer. The prompt is 'full-command' Type a
+full command name, then hit <Return> to execute the command. Tab completion
+works, but not for file names.
 
-Alt-c:  Like Emacs Control-C:  (Ctrl-C conflicts with XP cut).  starts minibuffer.  The prompt is 'quick-command'.  This mode is not completed, but stuff like `Ctrl-C r` and `Ctrl r r` do work.
+Alt-c: Like Emacs Control-C: (Ctrl-C conflicts with XP cut). starts minibuffer.
+The prompt is 'quick-command'. This mode is not completed, but stuff like
+`Ctrl-C r` and `Ctrl r r` do work.
 
-Alt-u:  Like Emacs Ctrl-u:  (Ctrl-u conflicts with move-outline-up).  Add a repeat count for later command.  Ctrl-u 999 a adds 999 a's, but many features remain unfinished.
+Alt-u: Like Emacs Ctrl-u: (Ctrl-u conflicts with move-outline-up). Add a repeat
+count for later command. Ctrl-u 999 a adds 999 a's, but many features remain
+unfinished.
 
-Ctrl-g:  Just like Emacs Ctrl-g: Closes the mini-buffer.
+Ctrl-g: Just like Emacs Ctrl-g: Closes the mini-buffer.
 #@-node:ekr.20051010143934:Quick Start
 #@+node:ekr.20051008054802:Known bugs & incompletions
 - The cut-text, copy-text and paste-text commands work do not work from the
@@ -75,33 +191,19 @@ AssertionError
 #@nonl
 #@-node:ekr.20051001155426:Crash in undo
 #@-node:ekr.20051008054802:Known bugs & incompletions
-#@+node:ekr.20051009115837:Next
-** Create unit tests and write simulateKeystrokes.
-** Get rid of duplicate unit tests!
+#@-node:ekr.20051009115325:Docs
+#@-node:ekr.20051012062303:Before 4.4a1
+#@+node:ekr.20051012062458.1:Before 4.4a2
+#@+node:ekr.20051012062111:Choose what to do when mini-buffer does not exist.
+Two options:
 
+1. Always have it available: hide-mini-buffer option/command.
 
-- Run pychecker.
-
-** What to do when mini-buffer does not exist.  Two options:
-    1. Always have it available: hide-mini-buffer option/command.
-    2. Disable state, minibuffer, and those commands that require the mini-buffer.
-        - List of commands that require minibuffer.
-        - Disable menu items that require minibuffer.
-
-- Complete Editor menu.
-- Generalize g.app.config.parseShortcutLine:
-    The setting name should be all alpha chars up to the '='.
-- Convert Emacs-Style Names to Menu Style Names when creating undo name.
+2. Disable state, minibuffer, and those commands that require the mini-buffer.
+    - List of commands that require minibuffer.
+    - Disable menu items that require minibuffer.
 #@nonl
-#@-node:ekr.20051009115837:Next
-#@+node:ekr.20051009115325:Document what I did
-- Dictionaries, stategies, precedences, what to do about conflicts.
-
-- Added makeSpecialBindings: alt-x, control-c, etc.
-
-- Changing bindings in @shortcuts node.
-#@nonl
-#@-node:ekr.20051009115325:Document what I did
+#@-node:ekr.20051012062111:Choose what to do when mini-buffer does not exist.
 #@+node:ekr.20051008131807:Unit tests: simulateKeystrokes
 (k. or g.) simulateKeystrokes (keystrokes,p=None)
 
@@ -120,21 +222,42 @@ AssertionError
 - unit test should exit (pass?  fail?) with a warning if c.keyHandler does not exist.
 #@nonl
 #@-node:ekr.20051008131807:Unit tests: simulateKeystrokes
-#@+node:ekr.20050925105522:Before second release
-- Complete generalization of code.
+#@-node:ekr.20051012062458.1:Before 4.4a2
+#@+node:ekr.20050925105522:Before 4.4 b1
+* Complete Editor menu.
+
+- (1-2 days) Create larger area for tab completion, spelling alternatives, etc.
+    - Completions
+    - Spelling alternatives.
+    - Breakpoints
+    - Results of evaluating Python expressions in debugger.
+    - Debugger state.
+    - show-bindings command: prints k.bindingsDict.keys()
+    - show-command command:  prints c.commandsDict.keys()
+
+- (1 hour) space completion
+
+- (1-2 days) Allow multiple shortcuts for any command.
+    (Requires changes to c.config classes.
+
+- (1-2 days) Complete generalization of code.
     - Allow state-oriented shortcuts (C-x C-x, for example)
     - Create new kinds of commands dispatchers: vim, tree, etc.
         - Single-key mode == vim mode??
 
-- Tab completion for file commands.
+- (1-2 hours) Tab completion for file commands.
+
+- (1-2 days) Emacs-style help: appropos, etc.
+    - printLongCommandName (like Emacs Ctrl-H Ctrl-K) command prints long name of any keystroke command.
 
 - (mostly done) Allow future improvements without changing user options greatly.
     - Allow for customizeEmacs plugin.
 
-- Emacs-style help: appropos, etc.
-    - printLongCommandName (like Emacs Ctrl-H Ctrl-K) command prints long name of any keystroke command.
+- Generalize g.app.config.parseShortcutLine:
+    The setting name should be all alpha chars up to the '='.
+
+- Convert Emacs-Style Names to Menu Style Names when creating undo name.
 #@nonl
-#@-node:ekr.20050925105522:Before second release
 #@+node:ekr.20050928144501:Expand commands to handle Leo environment
 * Traditional Emacs commands must be generalized to handle the more complex
 envirnoment Leo offers. For example, search commands must be told whether to
@@ -159,11 +282,18 @@ outline.
 #@+node:ekr.20050928144501.1:Mouseless Leo
 Control all Leo commands & widgets using only key commands.
 
-- dismiss-top-dialog command.
+- emacs commands for buttons, dialogs, etc.
+    - dismiss-top-dialog command.
 
-- activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)
-#@nonl
+- emacs commands to change focuse, etc.
+
+- emacs commands for menus.
+    - activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)
+
+
+
 #@-node:ekr.20050928144501.1:Mouseless Leo
+#@-node:ekr.20050925105522:Before 4.4 b1
 #@-node:ekr.20050921094025:4.4 To do
 #@+node:ekr.20050707081822:Top priorities
 #@+node:ekr.20050524074930.2:Mouseless leo
@@ -4268,7 +4398,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    g.trace('no real change')
+    # g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -10070,7 +10200,7 @@ if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     
 # Major change: 6/12/04
 if s == body:
-    g.trace('no real change')
+    # g.trace('no real change')
     return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -14930,7 +15060,6 @@ def OnCut (self,event=None):
     __pychecker__ = '--no-argsused' # event not used.
     
     f = self ; c = f.c
-    g.trace()
     
     if 0: # g.app.gui.win32clipboard is always None.
         if g.app.gui.win32clipboard:
@@ -14950,9 +15079,9 @@ def OnCutFromMenu (self):
     menu.createMenuEntries contains a horrible kludge to make this happen.'''
     
     f = self ; c = f.c ; w = f.getFocus()
-    
     isBody = w == f.body.bodyCtrl
-    g.trace('isBody',isBody)
+    # g.trace('isBody',isBody)
+
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
     else:
@@ -14968,7 +15097,7 @@ def cutText (self):
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
-    g.trace('isBody',isBody)
+    #g.trace('isBody',isBody)
 
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
@@ -14984,7 +15113,6 @@ def cutText (self):
 def OnCopy (self,event=None):
     
     __pychecker__ = '--no-argsused' # event not used.
-    g.trace()
 
     if 0: # g.app.gui.win32clipboard is always None.
         f = self
@@ -15004,8 +15132,8 @@ def OnCopyFromMenu (self):
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
-    isMenu = w == f.menu
-    g.trace('isBody',isBody,'isMenu',isMenu)
+    # g.trace('isBody',isBody,'isMenu',isMenu)
+
     if isBody:
         w.event_generate(g.virtual_event_name("Copy"))
     else:
@@ -15020,7 +15148,7 @@ def copyText (self):
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
-    g.trace('isBody',isBody)
+    # g.trace('isBody',isBody)
 
     if isBody:
         w.event_generate(g.virtual_event_name("Copy"))
@@ -15038,7 +15166,6 @@ def OnPaste (self,event=None):
     __pychecker__ = '--no-argsused' # event not used.
     
     f = self ; c = f.c
-    g.trace()
   
     if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
         bodyCtrl = f.body.bodyCtrl
@@ -15062,13 +15189,14 @@ def OnPasteFromMenu (self):
 
     w = self.getFocus()
     isBody = w == f.body.bodyCtrl
-    isMenu = w == f.menu
-    g.trace('isBody',isBody,'isMenu',isMenu)
+    # g.trace('isBody',isBody,'isMenu',isMenu)
+
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
     else:
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition())
+#@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@+node:ekr.20051011072903.5:pasteText
 def pasteText (self):
@@ -15078,7 +15206,7 @@ def pasteText (self):
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
-    g.trace('isBody',isBody)
+    # g.trace('isBody',isBody)
 
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
@@ -18321,7 +18449,6 @@ def OnCut (self,event=None):
     __pychecker__ = '--no-argsused' # event not used.
     
     f = self ; c = f.c
-    g.trace()
     
     if 0: # g.app.gui.win32clipboard is always None.
         if g.app.gui.win32clipboard:
@@ -18341,9 +18468,9 @@ def OnCutFromMenu (self):
     menu.createMenuEntries contains a horrible kludge to make this happen.'''
     
     f = self ; c = f.c ; w = f.getFocus()
-    
     isBody = w == f.body.bodyCtrl
-    g.trace('isBody',isBody)
+    # g.trace('isBody',isBody)
+
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
     else:
@@ -18359,7 +18486,7 @@ def cutText (self):
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
-    g.trace('isBody',isBody)
+    #g.trace('isBody',isBody)
 
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
@@ -18375,7 +18502,6 @@ def cutText (self):
 def OnCopy (self,event=None):
     
     __pychecker__ = '--no-argsused' # event not used.
-    g.trace()
 
     if 0: # g.app.gui.win32clipboard is always None.
         f = self
@@ -18395,8 +18521,8 @@ def OnCopyFromMenu (self):
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
-    isMenu = w == f.menu
-    g.trace('isBody',isBody,'isMenu',isMenu)
+    # g.trace('isBody',isBody,'isMenu',isMenu)
+
     if isBody:
         w.event_generate(g.virtual_event_name("Copy"))
     else:
@@ -18411,7 +18537,7 @@ def copyText (self):
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
-    g.trace('isBody',isBody)
+    # g.trace('isBody',isBody)
 
     if isBody:
         w.event_generate(g.virtual_event_name("Copy"))
@@ -18429,7 +18555,6 @@ def OnPaste (self,event=None):
     __pychecker__ = '--no-argsused' # event not used.
     
     f = self ; c = f.c
-    g.trace()
   
     if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
         bodyCtrl = f.body.bodyCtrl
@@ -18453,13 +18578,14 @@ def OnPasteFromMenu (self):
 
     w = self.getFocus()
     isBody = w == f.body.bodyCtrl
-    isMenu = w == f.menu
-    g.trace('isBody',isBody,'isMenu',isMenu)
+    # g.trace('isBody',isBody,'isMenu',isMenu)
+
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
     else:
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition())
+#@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@+node:ekr.20051011072903.5:pasteText
 def pasteText (self):
@@ -18469,7 +18595,7 @@ def pasteText (self):
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
-    g.trace('isBody',isBody)
+    # g.trace('isBody',isBody)
 
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))

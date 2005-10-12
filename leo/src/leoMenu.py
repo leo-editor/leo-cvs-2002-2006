@@ -1043,7 +1043,6 @@ class leoMenu:
                 else:
                     # Second, try to get the old-style name.
                     rawKey,accel2 = c.config.getShortcut(name)
-                    if name == 'selectall': g.trace(name,accel,accel2)
                 
                 # New in 4.4: allow emacs-style or old style names in menu shortcuts.
                 if openWith:
