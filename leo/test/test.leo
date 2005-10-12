@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7657" clone_windows="0"/>
-<globals body_outline_ratio="0.440789473684">
-	<global_window_position top="7" left="213" height="912" width="892"/>
+<globals body_outline_ratio="0.566885964912">
+	<global_window_position top="10" left="220" height="912" width="885"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -834,7 +834,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050917082428.3"><vh>part 3</vh></v>
 </v>
 </v>
-<v t="ekr.20041126132604" a="E" annotate="7d71002e"><vh>Prototypes...</vh>
+<v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes...</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
 <v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
 </v>
@@ -987,7 +987,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050824190822"><vh> Zope test</vh></v>
-<v t="ekr.20051011211253" a="TV"><vh>Debugger canvas</vh>
+<v t="ekr.20051011211253"><vh>Debugger canvas</vh>
 <v t="ekr.20051011213138"><vh>getImage</vh></v>
 <v t="ekr.20051011215038"><vh>getLineHeight</vh></v>
 </v>
@@ -1555,6 +1555,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050821081021.1" a="M"><vh>moveLinesDown</vh></v>
 </v>
 <v t="ekr.20050805150320"><vh>@@button rst3</vh></v>
+<v t="ekr.20050930124917"><vh>@@button outlineToClipboard</vh></v>
 </v>
 <v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
 <v t="ekr.20050618061835.1"><vh>Intro</vh>
@@ -1587,7 +1588,49 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050618061835.19"><vh>How about @suite?</vh></v>
 <v t="ekr.20050618061835.20"><vh>Final remarks</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="ekr.20051012104957"><vh>Other unit test stuff</vh>
+<v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
+<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
+<v t="ekr.20050106123646"><vh>unused</vh>
+<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
+<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
+<v t="ekr.20050106094854.2"><vh> fail</vh></v>
+<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
+<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
+<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
+<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
+<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
+</v>
+</v>
+<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
+<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
+<v t="ekr.20050106080318.3"><vh> fail</vh></v>
+<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
+<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
+<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
+<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
+<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
+<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
+<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
+</v>
+<v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files...</vh>
+<v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
+<v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
+<v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
+<v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
+<v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
+<v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
+<v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
+<v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
+<v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
+</v>
+<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1661,41 +1704,13 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050119144013"><vh>Remove all file system dependencies</vh></v>
 </v>
+</v>
+<v t="EKR.20040619133116" a="E" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>General Unit Tests...</vh>
-<v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
-<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
-<v t="ekr.20050106123646"><vh>unused</vh>
-<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
-<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
-<v t="ekr.20050106094854.2"><vh> fail</vh></v>
-<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
-<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
-<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
-<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
-<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
-</v>
-</v>
-<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
-<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
-<v t="ekr.20050106080318.3"><vh> fail</vh></v>
-<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
-<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
-<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
-<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
-<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
-<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
-</v>
 <v t="ekr.20041130092210"><vh>Batch mode tests...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
-<v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
+<v t="ekr.20040712101754.186" a="E"><vh>@test batch mode</vh>
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
 </v>
 </v>
@@ -2015,7 +2030,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050105080048"><vh>Test ivars...</vh>
+<v t="ekr.20050105080048" a="E"><vh>Test ivars...</vh>
 <v t="ekr.20050105080048.1"><vh>@test official frame ivars</vh></v>
 <v t="ekr.20050105082500"><vh>@test official commander ivars</vh></v>
 <v t="ekr.20050105084757"><vh>@test official g.app directories</vh></v>
@@ -2274,19 +2289,15 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050208104202"><vh>@test of round-tripping toUnicode &amp; toEncodedString</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files...</vh>
-<v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
-<v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
-<v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
-<v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
-<v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
-<v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
-<v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
-<v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
-<v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
+<v t="ekr.20050120095423" a="TV" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
+<v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
+<v t="ekr.20050120095423.1"><vh>Notes</vh>
+<v t="ekr.20050120095423.2"><vh>spellpyx</vh></v>
+<v t="ekr.20050120095423.3" a="E"><vh>table</vh></v>
+<v t="ekr.20050120095423.4"><vh>xsltWithNodes</vh></v>
+<v t="ekr.20050120095423.5"><vh>List of all calls to doHook</vh></v>
 </v>
-<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
-<v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
+<v t="ekr.20050218015346"><vh>@@suite run all plugin test routines (This seems too flakey)</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050218015346.12"><vh>__init__</vh></v>
 <v t="ekr.20050218015346.13"><vh> fail</vh></v>
@@ -2302,22 +2313,9 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050218015346.21"><vh>getAllPlugins</vh></v>
 <v t="ekr.20050218015346.22"><vh>removeLeadingWs</vh></v>
 </v>
-<v t="ekr.20050120095423.1"><vh>Notes</vh>
-<v t="ekr.20050120095423.2"><vh>spellpyx</vh></v>
-<v t="ekr.20050120095423.3"><vh>table</vh></v>
-<v t="ekr.20050120095423.4"><vh>xsltWithNodes</vh></v>
-</v>
-<v t="ekr.20050120095423.5"><vh>List of all calls to doHook</vh></v>
-<v t="ekr.20050120095423.6"><vh>@suite test syntax of all plugins correctly</vh>
-<v t="ekr.20050120095423.7"><vh>class parseFileTestCase</vh>
-<v t="ekr.20050120095423.8"><vh>__init__</vh></v>
-<v t="ekr.20050120095423.9"><vh>runTest</vh></v>
-<v t="ekr.20050120095423.10"><vh>shortDescription</vh></v>
-</v>
-</v>
-<v t="ekr.20050120095423.11"><vh>@suite plugins tests</vh>
+<v t="ekr.20050120095423.11"><vh>@@suite plugins tests (This seems too flakey)</vh>
 <v t="ekr.20050120095423.12"><vh>makePluginsTestSuite</vh></v>
-<v t="ekr.20050120095423.13"><vh>class pluginTestCase</vh>
+<v t="ekr.20050120095423.13" a="E"><vh>class pluginTestCase</vh>
 <v t="ekr.20050120095423.14"><vh>__init__</vh></v>
 <v t="ekr.20050120095423.15"><vh>fail</vh></v>
 <v t="ekr.20050120095423.16"><vh>runTest</vh></v>
@@ -2327,13 +2325,15 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
 </v>
-<v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
+<v t="ekr.20050120095423.6"><vh>@suite test syntax of all plugins</vh>
+<v t="ekr.20050120095423.7" a="E"><vh>class parseFileTestCase</vh>
+<v t="ekr.20050120095423.8"><vh>__init__</vh></v>
+<v t="ekr.20050120095423.9"><vh>runTest</vh></v>
+<v t="ekr.20050120095423.10"><vh>shortDescription</vh></v>
 </v>
-<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050927082642"><vh>Text tests</vh></v>
-<v t="ekr.20050930124917"><vh>outlineToClipboard</vh></v>
-<v t="ekr.20051010092242"><vh>Test of paste in headline</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -3041,7 +3041,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13393,23 +13393,25 @@ changed = c.isChanged() ; p1 = c.currentPosition()
 
 plugins = getAllPlugins()
 
-g.app.unitTestDict["fail"] = False
+# g.printList(plugins)
 
-suite = unittest.makeSuite(unittest.TestCase)
-for plugin in plugins:
-    n = addTestRoutinesInPluginToSuite(c,g,plugin,suite)
-    if n:
-        plural = g.choose(n==1,'','s')
-        s = 'found %2d test routine%s for %s' % (n,plural,plugin)
-        print s ; g.es(s)
-
-if 1: # For @suite nodes.  Better for unit testing.
-    g.app.scriptDict['suite'] = suite
-else: # For script button nodes.  Good for testing.
-    # Verbosity: 1: print just dots.
-    unittest.TextTestRunner(verbosity=1).run(suite)
-    c.setChanged(changed) # Restore changed state.
-    c.selectVnode(p1) # N.B. Restore the selected node.</t>
+if 1:
+    g.app.unitTestDict["fail"] = False
+    suite = unittest.makeSuite(unittest.TestCase)
+    for plugin in plugins:
+        n = addTestRoutinesInPluginToSuite(c,g,plugin,suite)
+        if n:
+            plural = g.choose(n==1,'','s')
+            s = 'found %2d test routine%s for %s' % (n,plural,plugin)
+            print s ; g.es(s)
+    
+    if 1: # For @suite nodes.  Better for unit testing.
+        g.app.scriptDict['suite'] = suite
+    else: # For script button nodes.  Good for testing.
+        # Verbosity: 1: print just dots.
+        unittest.TextTestRunner(verbosity=1).run(suite)
+        c.setChanged(changed) # Restore changed state.
+        c.selectVnode(p1) # N.B. Restore the selected node.</t>
 <t tx="ekr.20050218015346.11">class testRoutineTestCase(unittest.TestCase):
 
     """Create a unit test from a snippet of code."""
@@ -22481,15 +22483,6 @@ part 2, line 2, no newline
 <t tx="ekr.20050917082428.3">part 3, line 1
 part 3, line 2, newline
 </t>
-<t tx="ekr.20050927082642">@tabwidth -4
-
-    A first sentence. A second sentence. This is a test of kill sentence. Here
-    is another sentence.
-    and a third. end
-    abc
-pdq
-xyz
-if 1:</t>
 <t tx="ekr.20050927122648">data = (
     'x4735xxx9',
     'x5x8x93xx',
@@ -22610,7 +22603,6 @@ w.clipboard_clear()
 w.clipboard_append(result)</t>
 <t tx="ekr.20051009140349"></t>
 <t tx="ekr.20051010091827"></t>
-<t tx="ekr.20051010092242">a</t>
 <t tx="ekr.20051011211253">import Tkinter as Tk
 import tkFont
 
@@ -22666,5 +22658,6 @@ while y &lt; h:
         g.es("exception setting outline line height")
         g.es_exception()
         return 20 # default</t>
+<t tx="ekr.20051012104957"></t>
 </tnodes>
 </leo_file>
