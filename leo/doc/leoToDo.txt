@@ -9,7 +9,7 @@
 * Fix all bugs.
 
 - Create registerCommand method for use by scripts, plugins.
-#@nonl
+
 #@+node:ekr.20051011124540:What I did after changeover
 - Fixed duplicate Pastes in headlines.
     - Works when paste-text command is not defined.
@@ -211,6 +211,12 @@ AssertionError
 #@-node:ekr.20051009115325:Docs
 #@-node:ekr.20051012062303:Before 4.4a1
 #@+node:ekr.20051012062458.1:Before 4.4a2
+- Replace focus commands in leoEditCommands.py with forceFocusToBody.
+
+- Don't put unknown control keys into minibuffer.
+
+- Create bindings for buttons!
+#@nonl
 #@+node:ekr.20051012062111:Choose what to do when mini-buffer does not exist.
 Two options:
 
@@ -6020,10 +6026,6 @@ def test_g_utils_rename():
 #@-node:ekr.20031218072017.1263:g.utils_rename & test
 #@-node:ekr.20050917080509:Improve g.utils_rename?
 #@+node:ekr.20050831131028:opml
-#@+node:ekr.20050912063133:@url http://sourceforge.net/forum/message.php?msg_id=3273977
-#@-node:ekr.20050912063133:@url http://sourceforge.net/forum/message.php?msg_id=3273977
-#@+node:ekr.20050912065811:@url http://sourceforge.net/forum/message.php?msg_id=3279900 (summary)
-#@-node:ekr.20050912065811:@url http://sourceforge.net/forum/message.php?msg_id=3279900 (summary)
 #@+node:ekr.20050831131452:Original post
 @nocolor
 http://sourceforge.net/forum/message.php?msg_id=3280949
@@ -6103,6 +6105,10 @@ regards,
 
 bill p
 #@-node:ekr.20050831131452.1:opml attributes v elements
+#@+node:ekr.20050912063133:@url http://sourceforge.net/forum/message.php?msg_id=3273977
+#@-node:ekr.20050912063133:@url http://sourceforge.net/forum/message.php?msg_id=3273977
+#@+node:ekr.20050912065811:@url http://sourceforge.net/forum/message.php?msg_id=3279900 (summary)
+#@-node:ekr.20050912065811:@url http://sourceforge.net/forum/message.php?msg_id=3279900 (summary)
 #@+node:ekr.20050915062404:My post
 @nocolor
 

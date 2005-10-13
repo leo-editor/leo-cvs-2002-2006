@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="10" left="256" height="851" width="943"/>
+	<global_window_position top="10" left="256" height="794" width="943"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -899,7 +899,7 @@ paste-text              = None      # Ctrl-V conflicts with scroll-down
 
 # Leo find panel stuff.  It's not clear what will happen to these.
 leo-find                = F3
-leo-find-panel          = None      # Ctrl-f conflicts with forward-char.
+leo-find-panel          = F5      # Ctrl-f conflicts with forward-char.
 leo-find-previous       = F2
 leo-change              = None
 leo-change-then-find    = None
@@ -1532,7 +1532,7 @@ paste-text              = Ctrl-v        # For testing only: Alt-Shift-Ctrl-v
 # Leo find panel stuff.  It's not clear what will happen to these.
 dismiss-leo-find-panel  = None
 leo-find                = F3
-leo-find-panel          = Ctrl-f    # Ctrl-f conflicts with forward-char.
+leo-find-panel          = F5    # Ctrl-f conflicts with forward-char.
 leo-find-previous       = F2
 leo-change              = None
 leo-change-then-find    = None
@@ -1775,22 +1775,32 @@ dump-outline                = None
 edit-headline               = Ctrl-H
 end-edit-headline           = Esc
 equal-sized-panes           = Alt-Shift-E
-execute-script              = None             # Ctrl-e conflicts with end-of-line
+execute-script              = None              # Ctrl-e conflicts with end-of-line
 exit-leo                    = Ctrl-Q
-expand-all                  = Alt-9
+expand-all                  = None              # Alt-9: not useful enough.
+expand-and-go-right         = RtArrow           # It would make sense to bind Alt-RtArrow to this too.
 expand-next-level           = Alt-=
 expand-node                 = Alt-]
-expand-and-go-right         = RtArrow           # It would make sense to bind Alt-RtArrow to this too.
 expand-or-go-right          = None
 expand-prev-level           = Alt-.
-expand-to-level-1           = Alt-1
-expand-to-level-2           = Alt-2
-expand-to-level-3           = Alt-3
-expand-to-level-4           = Alt-4
-expand-to-level-5           = Alt-5
-expand-to-level-6           = Alt-6
-expand-to-level-7           = Alt-7
-expand-to-level-8           = Alt-8
+# These conflict with the Emacs number commands.
+# expand-to-level-1         = Alt-1
+# expand-to-level-2         = Alt-2
+# expand-to-level-3         = Alt-3
+# expand-to-level-4         = Alt-4
+# expand-to-level-5         = Alt-5
+# expand-to-level-6         = Alt-6
+# expand-to-level-7         = Alt-7
+# expand-to-level-8         = Alt-8
+# expand-to-level-9         = None
+expand-to-level-1           = None
+expand-to-level-2           = None
+expand-to-level-3           = None
+expand-to-level-4           = None
+expand-to-level-5           = None
+expand-to-level-6           = None
+expand-to-level-7           = None
+expand-to-level-8           = None
 expand-to-level-9           = None
 export-headlines            = None
 extract                     = Shift-Ctrl-D
@@ -1845,8 +1855,8 @@ open-leoplugins-leo         = None
 open-offline-tutorial       = None
 open-online-home            = None
 open-online-tutorial        = None
-open-outline                = Ctrl-O
-open-python-window          = None         # Removed Alt-P: not useful enough.
+open-outline                = Ctrl-O        # Ctrl-O conflicts with insert-newline
+open-python-window          = None          # Alt-P: not useful enough.
 open-with                   = None
 outline-to-CWEB             = None
 outline-to-noweb            = None
@@ -1856,7 +1866,7 @@ pretty-print-all-python-code= None
 pretty-print-python-code    = None
 promote                     = Ctrl-{            
 read-at-file-nodes          = None
-read-outline-only           = None         # Removed Shift-Ctrl-R: not useful enough.
+read-outline-only           = None          # Shift-Ctrl-R: not useful enough.
 redo                        = Shift-Ctrl-Z
 reformat-paragraph          = Shift-Ctrl-P
 remove-sentinels            = None
@@ -1870,21 +1880,20 @@ save-file-to                = None
 select-all                  = None         # Ctrl-A conflicts with beginning-of-line.
 set-colors                  = None
 set-font                    = None
-settings                    = None          # Ctrl-Y conflicts with yank.
-show-invisibles             = Alt-V
-show-invisibles             = None         # Alt-V conflicts with scroll-up .
+settings                    = None        # Ctrl-Y conflicts with yank.
+show-invisibles             = None        # Alt-V conflicts with scroll-up .
 sort-children               = None
-sort-siblings               = None         # Alt-A conflicts with back-sentence.
-tangle                      = None         # Removed Shift-Ctrl-T: not useful enough.
-tangle-all                  = None         # Removed Shift-Ctrl-A: not useful enough.
-tangle-marked               = None         # Removed Shift-Ctrl-M: not useful enough.
+sort-siblings               = None        # Alt-A conflicts with back-sentence.
+tangle                      = None        # Removed Shift-Ctrl-T: not useful enough.
+tangle-all                  = None        # Removed Shift-Ctrl-A: not useful enough.
+tangle-marked               = None        # Removed Shift-Ctrl-M: not useful enough.
 toggle-active-pane          = Ctrl-T
 toggle-angle-brackets       = None
 toggle-split-direction      = None
 undo                        = Ctrl-Z
 unindent                    = Ctrl-[
-unmark-all                  = Alt-U
-untangle                    = None         # Removed Shift-Ctrl-U: not useful enough
+unmark-all                  = None
+untangle                    = None        # Removed Shift-Ctrl-U: not useful enough
 untangle-all                = None
 untangle-marked             = None
 weave                       = None

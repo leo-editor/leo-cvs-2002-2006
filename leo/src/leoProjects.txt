@@ -24836,151 +24836,6 @@ def setBindingsFromCommandsDict (self):
 #@-node:ekr.20051013103457:(bindings)
 #@-node:ekr.20051006122237:(Recent)
 #@+node:ekr.20051012084345:Bugs
-#@+node:ekr.20051013103838:(Escape does not end label editing)
-#@+node:ekr.20050120092028.1:set_focus (tkFrame)
-@
-Very tricky code:
-Many Tk calls can mess with the focus, so we must always set the focus,
-regardless of what we did previously.
-
-Alas, because of bugs in Tk and/or window managers, we can not call method at
-idle time: that would interfere with switching between windows. Instead, the
-xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
-to g.app.g.app.gui.set_focus.
-@c
-
-def set_focus(self,widget,later=False,tag=''):
-    
-    '''Set the focus to the widget specified in the xWantsFocus methods.'''
-    
-    __pychecker__ = '--no-argsused' # tag good for debugging.
-
-    c = self.c
-    # g.trace(tag) # c.shortFileName())
-
-    if widget and not g.app.unitTesting:
-        # Messing with focus may be dangerous in unit tests.
-        if later:
-            # Queue up the call (just once) for later.
-            def setFocusCallback(c=c):
-                self.wantedCallbackScheduled = False
-                if c == g.app.wantedCommander and c.frame.wantedWidget:
-                    # g.trace(c.frame.wantedWidget)
-                    g.app.gui.set_focus(
-                        g.app.wantedCommander,
-                        c.frame.wantedWidget,
-                        tag='frame.setFocus')
-                self.wantedWidget = None
-                g.app.wantedCommander = None
-                    
-            # Crucial: This may change what the callback does.
-            self.wantedWidget = widget
-            g.app.wantedCommander = c
-            if not self.wantedCallbackScheduled:
-                # g.trace(tag,c.shortFileName())
-                self.wantedCallbackScheduled = True
-                # We don't have to wait so long now that we don't call this so often.
-                # The difference between 500 msec. and 100 msec. is significant.
-                # New in 4.4: set the delay to 1 msec.: the smaller the better.
-                self.outerFrame.after(1,setFocusCallback)
-        else:
-            # g.trace(tag,c.shortFileName())
-            g.app.gui.set_focus(c,widget,tag='frame.setFocus')
-            # Crucial: cancel any previous callback.
-            # It may be re-enabled later, but that doesn't matter.
-            self.wantedWidget = None
-            g.app.wantedCommander = None
-    else:
-        # Cancel any previous request.
-        self.wantedWidget = None
-        g.app.wantedCommander = None
-#@nonl
-#@-node:ekr.20050120092028.1:set_focus (tkFrame)
-#@+node:ekr.20040803072955.135:setNormalLabelState
-def setNormalLabelState (self,p): # selected, editing
-
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-    
-    if p and p.edit_text():
-        self.setEditHeadlineColors(p)
-        p.edit_text().tag_remove("sel","1.0","end")
-        p.edit_text().tag_add("sel","1.0","end")
-        # Set the focus immediately
-        self.frame.treeWantsFocus(p.edit_text(),later=False,tag='tree:setNormalLabelState')
-#@nonl
-#@-node:ekr.20040803072955.135:setNormalLabelState
-#@+node:ekr.20040803072955.126:endEditLabel
-def endEditLabel (self):
-    
-    """End editing for self.editText."""
-
-    c = self.c ; frame = c.frame
-    
-    p = self.editPosition()
-
-    if p and p.edit_text():
-        if 0: # New in recycled widgets scheme: this could cause a race condition.
-            # This will be done in the redraw code becaused editPosition will be None.
-            self.setUnselectedLabelState(p)
-
-        self.setEditPosition(None)
-
-        # force a redraw of joined and ancestor headlines.
-        self.force_redraw() 
-
-    frame.bodyWantsFocus(frame.bodyCtrl,tag='body:endEditLabel')
-#@nonl
-#@-node:ekr.20040803072955.126:endEditLabel
-#@+node:ekr.20031218072017.3982:endEditLabelCommand
-def endEditLabelCommand (self):
-
-    frame = self ; c = frame.c ; tree = frame.tree
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("End Edit Headline")
-        return
-        
-    if 1: # New code in 4.4a1.
-        tree.endEditLabel()
-        tree.select(tree.editPosition())
-    else:
-        v = frame.tree.editPosition()
-        # g.trace(v)
-        if v and v.edit_text():
-            tree.select(v)
-        if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-            tree.force_redraw() # force a redraw of joined headlines.
-
-    frame.bodyWantsFocus(frame.bodyCtrl,tag='body:endEditLabelCommand')
-#@nonl
-#@-node:ekr.20031218072017.3982:endEditLabelCommand
-#@+node:ekr.20031218072017.3981:abortEditLabelCommand
-def abortEditLabelCommand (self):
-    
-    frame = self ; c = frame.c ; v = c.currentVnode() ; tree = frame.tree
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Abort Edit Headline")
-        return
-
-    if self.revertHeadline and v.edit_text() and v == tree.editPosition():
-    
-        v.edit_text().delete("1.0","end")
-        v.edit_text().insert("end",self.revertHeadline)
-        tree.idle_head_key(v) # Must be done immediately.
-        tree.revertHeadline = None
-        if 1: # New code in 4.4a1.
-            tree.endEditLabel()
-            tree.select(tree.editPosition())
-        else: # Old code:
-            tree.select(v)
-            if v and len(v.t.vnodeList) > 0:
-                tree.force_redraw() # force a redraw of joined headlines.
-#@nonl
-#@-node:ekr.20031218072017.3981:abortEditLabelCommand
-#@-node:ekr.20051013103838:(Escape does not end label editing)
 #@+node:ekr.20051012075322:Fix bug: @settings not honored in opened outline
 #@+node:ekr.20051010152921:Report
 @nocolor
@@ -25670,6 +25525,155 @@ def backwardDeleteCharacter (self,event):
 #@nonl
 #@-node:ekr.20050929163010:backwardDeleteCharacter
 #@-node:ekr.20051012205437:(Replaced all calls to manufactureKeyPress)
+#@+node:ekr.20051013103838:(Escape does not end label editing)
+@
+Control-c while editing headline caused problems.
+end/abort-edit-headline did not work.
+#@nonl
+#@+node:ekr.20050120092028.1:set_focus (tkFrame)
+@
+Very tricky code:
+Many Tk calls can mess with the focus, so we must always set the focus,
+regardless of what we did previously.
+
+Alas, because of bugs in Tk and/or window managers, we can not call method at
+idle time: that would interfere with switching between windows. Instead, the
+xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
+to g.app.g.app.gui.set_focus.
+@c
+
+def set_focus(self,widget,later=False,tag=''):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+    
+    __pychecker__ = '--no-argsused' # tag good for debugging.
+
+    c = self.c
+    # g.trace(tag) # c.shortFileName())
+
+    if widget and not g.app.unitTesting:
+        # Messing with focus may be dangerous in unit tests.
+        if later:
+            # Queue up the call (just once) for later.
+            def setFocusCallback(c=c):
+                self.wantedCallbackScheduled = False
+                if c == g.app.wantedCommander and c.frame.wantedWidget:
+                    # g.trace(c.frame.wantedWidget)
+                    g.app.gui.set_focus(
+                        g.app.wantedCommander,
+                        c.frame.wantedWidget,
+                        tag='frame.setFocus')
+                self.wantedWidget = None
+                g.app.wantedCommander = None
+                    
+            # Crucial: This may change what the callback does.
+            self.wantedWidget = widget
+            g.app.wantedCommander = c
+            if not self.wantedCallbackScheduled:
+                # g.trace(tag,c.shortFileName())
+                self.wantedCallbackScheduled = True
+                # We don't have to wait so long now that we don't call this so often.
+                # The difference between 500 msec. and 100 msec. is significant.
+                # New in 4.4: set the delay to 1 msec.: the smaller the better.
+                self.outerFrame.after(1,setFocusCallback)
+        else:
+            # g.trace(tag,c.shortFileName())
+            g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+            # Crucial: cancel any previous callback.
+            # It may be re-enabled later, but that doesn't matter.
+            self.wantedWidget = None
+            g.app.wantedCommander = None
+    else:
+        # Cancel any previous request.
+        self.wantedWidget = None
+        g.app.wantedCommander = None
+#@nonl
+#@-node:ekr.20050120092028.1:set_focus (tkFrame)
+#@+node:ekr.20040803072955.135:setNormalLabelState
+def setNormalLabelState (self,p): # selected, editing
+
+    # Do nothing if a redraw is already sheduled.
+    # This prevents race conditions.
+    if self.redrawScheduled: return 
+    
+    if p and p.edit_text():
+        self.setEditHeadlineColors(p)
+        p.edit_text().tag_remove("sel","1.0","end")
+        p.edit_text().tag_add("sel","1.0","end")
+        # Set the focus immediately
+        self.frame.treeWantsFocus(p.edit_text(),later=False,tag='tree:setNormalLabelState')
+#@nonl
+#@-node:ekr.20040803072955.135:setNormalLabelState
+#@+node:ekr.20040803072955.126:endEditLabel
+def endEditLabel (self):
+    
+    """End editing for self.editText."""
+
+    c = self.c ; frame = c.frame
+    
+    p = self.editPosition()
+
+    if p and p.edit_text():
+        if 0: # New in recycled widgets scheme: this could cause a race condition.
+            # This will be done in the redraw code becaused editPosition will be None.
+            self.setUnselectedLabelState(p)
+
+        self.setEditPosition(None)
+
+        # force a redraw of joined and ancestor headlines.
+        self.force_redraw() 
+
+    frame.bodyWantsFocus(frame.bodyCtrl,tag='body:endEditLabel')
+#@nonl
+#@-node:ekr.20040803072955.126:endEditLabel
+#@+node:ekr.20031218072017.3982:endEditLabelCommand
+def endEditLabelCommand (self):
+
+    frame = self ; c = frame.c ; tree = frame.tree
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("End Edit Headline")
+        return
+        
+    if 1: # New code in 4.4a1.
+        tree.endEditLabel()
+        tree.select(tree.editPosition())
+    else:
+        v = frame.tree.editPosition()
+        # g.trace(v)
+        if v and v.edit_text():
+            tree.select(v)
+        if v: # Bug fix 10/9/02: also redraw ancestor headlines.
+            tree.force_redraw() # force a redraw of joined headlines.
+
+    frame.bodyWantsFocus(frame.bodyCtrl,tag='body:endEditLabelCommand')
+#@nonl
+#@-node:ekr.20031218072017.3982:endEditLabelCommand
+#@+node:ekr.20031218072017.3981:abortEditLabelCommand
+def abortEditLabelCommand (self):
+    
+    frame = self ; c = frame.c ; v = c.currentVnode() ; tree = frame.tree
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Abort Edit Headline")
+        return
+
+    if self.revertHeadline and v.edit_text() and v == tree.editPosition():
+    
+        v.edit_text().delete("1.0","end")
+        v.edit_text().insert("end",self.revertHeadline)
+        tree.idle_head_key(v) # Must be done immediately.
+        tree.revertHeadline = None
+        if 1: # New code in 4.4a1.
+            tree.endEditLabel()
+            tree.select(tree.editPosition())
+        else: # Old code:
+            tree.select(v)
+            if v and len(v.t.vnodeList) > 0:
+                tree.force_redraw() # force a redraw of joined headlines.
+#@nonl
+#@-node:ekr.20031218072017.3981:abortEditLabelCommand
+#@-node:ekr.20051013103838:(Escape does not end label editing)
 #@-node:ekr.20051012210958:Fixed
 #@-node:ekr.20051012084345:Bugs
 #@-node:ekr.20050924073836:4.4 projects
