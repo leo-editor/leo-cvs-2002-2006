@@ -653,6 +653,9 @@ class keyHandlerClass:
     
         k = self ; c = k.c
         k.abbreviationsDict = {}
+        
+        return ###
+    
         keys = d.keys()
         keys.sort()
         for key in keys:
@@ -817,7 +820,7 @@ class keyHandlerClass:
                     g.trace('No shortcut in any @shortcuts node for %s' % name)
     #@nonl
     #@-node:ekr.20051011103654:checkBindings
-    #@+node:ekr.20051007080058:k.makeAllBindings
+    #@+node:ekr.20051007080058:makeAllBindings
     def makeAllBindings (self):
         
         k = self ; c = k.c
@@ -829,7 +832,7 @@ class keyHandlerClass:
         k.add_ekr_altx_commands()
         k.checkBindings()
     #@nonl
-    #@-node:ekr.20051007080058:k.makeAllBindings
+    #@-node:ekr.20051007080058:makeAllBindings
     #@+node:ekr.20050923174229.1:makeHardBindings 
     def makeHardBindings (self):
         
@@ -938,6 +941,19 @@ class keyHandlerClass:
         k.bindKey(w,'<Key>',allKeysCallback,'masterCommand',tag=tag)
     #@nonl
     #@-node:ekr.20051008152134:makeSpecialBindings (Binds to 'Key')
+    #@+node:ekr.20051012201831:printBindings
+    def printBindings (self,event):
+    
+        '''Print all the bindings presently in effect.'''
+    
+        k = self ; c = k.c
+        keys = k.bindingsDict.keys() ; keys.sort()
+    
+        for key in keys:
+            b = k.bindingsDict.get(key)
+            print key, b.name
+    #@nonl
+    #@-node:ekr.20051012201831:printBindings
     #@+node:ekr.20051008134059:setBindingsFromCommandsDict
     def setBindingsFromCommandsDict (self):
         
@@ -1654,20 +1670,6 @@ class keyHandlerClass:
         k.resetLabel()
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
-    #@+node:ekr.20050920085536.64:manufactureKeyPress
-    def manufactureKeyPress (self,event,keysym):
-        
-        '''Implement a command by passing a keypress to Tkinter.'''
-    
-        w = event.widget
-        w.event_generate('<Key>',keysym=keysym)
-        
-        ### Synthesize commandName instead of keysym?
-        self.endCommand(event,keysym,tag='manufactureKeyPress')
-        
-        return 'break'
-    #@nonl
-    #@-node:ekr.20050920085536.64:manufactureKeyPress
     #@-node:ekr.20051006065121:Externally visible helpers
     #@+node:ekr.20050924064254:Label...
     #@+at 

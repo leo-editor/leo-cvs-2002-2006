@@ -163,12 +163,6 @@ class baseEditCommandsClass:
         return self.k.keyboardQuit()
     #@nonl
     #@-node:ekr.20051002090441:keyboardQuit
-    #@+node:ekr.20050929170812:manufactureKeyPress
-    def manufactureKeyPress (self,event,keysym):
-        
-        return self.k.manufactureKeyPress(event,keysym)
-    #@nonl
-    #@-node:ekr.20050929170812:manufactureKeyPress
     #@+node:ekr.20050920084036.11:testinrange
     def testinrange (self,w):
     
@@ -1142,8 +1136,13 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.85:delete...
     #@+node:ekr.20050929163010:backwardDeleteCharacter
     def backwardDeleteCharacter (self,event):
-        
-        self.manufactureKeyPress(event,'BackSpace')
+    
+        try:
+            w = event.widget
+            i = w.index('insert')
+            w.delete('%s-1c' % (i), '%s' % (i))
+        except Exception:
+            pass #  w might not be a text widget.
     #@nonl
     #@-node:ekr.20050929163010:backwardDeleteCharacter
     #@+node:ekr.20050920084036.87:deleteNextChar
@@ -1797,11 +1796,21 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050929115226.1:forward/backCharacter
     def backCharacter (self,event):
     
-        self.manufactureKeyPress(event,'Left')
+        try:
+            w = event.widget
+            i = w.index('insert')
+            w.mark_set('insert','%s - 1c' % i)
+        except Exception:
+            pass #  w might not be a text widget.
         
     def forwardCharacter (self,event):
     
-        self.manufactureKeyPress(event,'Right')
+        try:
+            w = event.widget
+            i = w.index('insert')
+            w.mark_set('insert','%s + 1c' % i)
+        except Exception:
+            pass #  w might not be a text widget.
     #@-node:ekr.20050929115226.1:forward/backCharacter
     #@+node:ekr.20050920084036.148:moveTo, beginnning/endOfBuffer/Line
     def moveTo (self,event,spot):
@@ -1882,12 +1891,22 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.137:forwardSentence
     #@+node:ekr.20050929163210:next/prevLine
     def nextLine (self,event):
-        
-        self.manufactureKeyPress(event,'Down')
-        
+    
+        try:
+            w = event.widget
+            i = w.index('insert')
+            w.mark_set('insert','%s + 1l' % i) # 1Line
+        except Exception:
+            pass #  w might not be a text widget.
+    
     def prevLine (self,event):
-        
-        self.manufactureKeyPress(event,'Up')
+    
+        try:
+            w = event.widget
+            i = w.index('insert')
+            w.mark_set('insert','%s - 1l' % i) # 1Line
+        except Exception:
+            pass #  w might not be a text widget.
     #@nonl
     #@-node:ekr.20050929163210:next/prevLine
     #@-node:ekr.20050929114218:move...
@@ -2832,6 +2851,7 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
             'number-command-7':         k.numberCommand7,
             'number-command-8':         k.numberCommand8,
             'number-command-9':         k.numberCommand9,
+            'print-bindings':           k.printBindings,
             'repeat-complex-command':   k.repeatComplexCommand,
             'universal-argument':       k.universalArgument,
         }
