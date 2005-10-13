@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
-<globals body_outline_ratio="0.4309252218">
-	<global_window_position top="50" left="320" height="789" width="911"/>
+<globals body_outline_ratio="0.579954954955">
+	<global_window_position top="10" left="256" height="812" width="947"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -35,7 +35,7 @@
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
 <v t="ekr.20051010093913"><vh>@button save</vh></v>
-<v t="ekr.20051011123608"><vh>@button align to col</vh></v>
+<v t="ekr.20051011123608"><vh>@@button align to col</vh></v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
 <v t="ekr.20041119034357.10"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
@@ -126,8 +126,8 @@
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20050921105316" a="E"><vh>@page Menu options	</vh>
-<v t="ekr.20050921105316.1" a="TV"><vh>@bool useCmdMenu=False</vh></v>
+<v t="ekr.20050921105316"><vh>@page Menu options	</vh>
+<v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 </v>
 <v t="ekr.20041119034357.28"><vh>@page Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
@@ -228,10 +228,10 @@
 <v t="ekr.20050921105316.2"><vh>@bool useMiniBuffer=True</vh></v>
 <v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
-<v t="ekr.20051007193427" a="E"><vh>@@shortcuts traditional Leo shortcuts</vh></v>
-<v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
 <v t="ekr.20051010195914"><vh>@@shortcuts no shortcuts (for testing)</vh></v>
-<v t="ekr.20051010112558" a="E"><vh>@shortcuts traditional Leo shortcuts with all emacs commands</vh></v>
+<v t="ekr.20051007193427"><vh>@@shortcuts traditional Leo shortcuts (not recommended)</vh></v>
+<v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
+<v t="ekr.20051010112558" a="ETV"><vh>@shortcuts traditional Leo shortcuts emacs moves &amp; commands</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1058,6 +1058,7 @@ open-rectangle          = None
 point-to-register       = None
 prepend-to-buffer       = None
 prepend-to-register     = None
+print-bindings              = None
 # recenter              = None      # Control-l
 read-abbrev-file        = None
 remove-blank-lines      = None
@@ -1310,7 +1311,7 @@ extract                      = Shift-Ctrl-D
 extract-names                = Shift-Ctrl-N
 extract-section              = Shift-Ctrl-E
 find-next                    = F3
-find-panel                   = Ctrl-F
+find-panel                   = F5
 find-previous                = F2
 flatten-outline              = None
 go-back                      = None
@@ -1518,13 +1519,13 @@ backward-paragraph      = Alt-braceleft # Conflicts with
 backward-word           = Alt-b         # No conflict     
 # backward-word         = Ctrl-Left     # At present, overrides previous binding.
 beginning-of-buffer     = Alt-less
-beginning-of-line       = None          # Alt-UpArrow conflicts with goto-prev-visible
+# beginning-of-line     = None          # Alt-UpArrow conflicts with goto-prev-visible
 beginning-of-line       = Ctrl-a        # Conflicts with select-all
 end-of-buffer           = Alt-greater
 end-of-line             = Ctrl-e        # Conflicts with execute-script
 # end-of-line           = Alt-DnArrow   # Conflicts with goto-next-visible
 exchange-point-mark     = None          # Should be Ctrl-X Ctrl-X.
-forward-char            = Shift-Ctrl-f  # Ctrl-f Conflicts with find-panel
+forward-char            = Ctrl-f        # Ctrl-f Conflicts with find-panel
 forward-paragraph       = Alt-braceright
 forward-sentence        = Alt-e         # No conflict
 forward-word            = Alt-f         # No conflict with bindings, but usually opens file menu.
@@ -1553,7 +1554,7 @@ advertised-undo             = None
 append-to-buffer            = None
 append-to-register          = None
 back-to-indentation         = None
-backward-delete-char        = None
+backward-delete-char        = Shift-BackSpace # Testing
 backward-kill-paragraph     = None
 backward-kill-sentence      = None
 backward-kill-word          = None
@@ -1642,6 +1643,7 @@ open-rectangle              = None
 point-to-register           = None
 prepend-to-buffer           = None
 prepend-to-register         = None
+print-bindings              = None
 query-replace               = None
 query-replace-regex         = None
 re-search-backward          = None
@@ -1745,7 +1747,7 @@ extract                     = Shift-Ctrl-D
 extract-names               = Shift-Ctrl-N
 extract-section             = Shift-Ctrl-E
 find-next                   = F3
-find-panel                  = Ctrl-f        # Ctrl-f conflicts with forward-char, but so what :-)
+find-panel                  = F5            # Ctrl-f conflicts with forward-char.
 find-previous               = F2
 flatten-outline             = None
 go-back                     = None
