@@ -12967,6 +12967,26 @@ def _ToReg (self,event,which):
         self.registers [event.keysym] = txt
 #@nonl
 #@-node:ekr.20050920084036.251:_ToReg (not used)
+#@+node:ekr.20050920085536.64:k.manufactureKeyPress
+def manufactureKeyPress (self,event,keysym):
+    
+    '''Implement a command by passing a keypress to Tkinter.'''
+
+    w = event.widget
+    w.event_generate('<Key>',keysym=keysym)
+    
+    ### Synthesize commandName instead of keysym?
+    self.endCommand(event,keysym,tag='manufactureKeyPress')
+    
+    return 'break'
+#@nonl
+#@-node:ekr.20050920085536.64:k.manufactureKeyPress
+#@+node:ekr.20050929170812:leoEditCommands.manufactureKeyPress
+def manufactureKeyPress (self,event,keysym):
+    
+    return self.k.manufactureKeyPress(event,keysym)
+#@nonl
+#@-node:ekr.20050929170812:leoEditCommands.manufactureKeyPress
 #@-node:ekr.20050921100955:Not used
 #@+node:ekr.20050921094025.254:All xemacs commands
 @killcolor
