@@ -7,7 +7,8 @@
 @nocolor
 
 * Fix all bugs.
-* Make a list of all unfinished/untested emacs commands.
+
+- Create registerCommand method for use by scripts, plugins.
 #@nonl
 #@+node:ekr.20051011124540:What I did after changeover
 - Fixed duplicate Pastes in headlines.
@@ -39,6 +40,7 @@
 - Used previously unused init param to createMenuEntries to suppress warnings.
 - Disabled many plugin tests. These tests are flakey: they don't work the same if repeated.
 - Fixed all pychecker errors.
+- Fixed bugs in nextLine, prevLine.  Can't call manufactureKeyPress: the keys may have been rebound!
 #@nonl
 #@-node:ekr.20051011124540:What I did after changeover
 #@+node:ekr.20051012061459:Postings
@@ -132,6 +134,10 @@ Create a buttons menu to show the present bindings & emacs name?
 #@+node:ekr.20051012062303:Before 4.4a1
 #@+node:ekr.20051009115325:Docs
 * Finish release notes.
+
+- Make a list of all unfinished/untested emacs commands.
+
+- Document 'EKR' abbreviations.
 
 - Document new commands:  Where?  How?
 #@nonl

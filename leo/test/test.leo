@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7663" clone_windows="0"/>
 <globals body_outline_ratio="0.566885964912">
-	<global_window_position top="10" left="314" height="912" width="885"/>
+	<global_window_position top="10" left="167" height="912" width="885"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1504,11 +1504,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
 </v>
 <v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
-<v t="ekr.20050328101834"><vh>@page http plugin</vh>
-<v t="ekr.20050328101834.1"><vh>@bool http_active = False</vh></v>
-<v t="ekr.20050328101834.2"><vh>@int  port = 8080</vh></v>
-<v t="ekr.20050328101834.3"><vh>@string rst_http_attributename = ''</vh></v>
-</v>
 <v t="ekr.20050415090637"><vh>@bool allow_clone_drags = True</vh></v>
 <v t="ekr.20050419082439"><vh>@if-platform win32</vh>
 <v t="ekr.20050419070841"><vh>@string ekrSetting = abc2</vh></v>
@@ -1535,6 +1530,11 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051009140349"><vh>@bool useMiniBuffer = True</vh></v>
 <v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
+<v t="ekr.20050328101834"><vh>@page http plugin</vh>
+<v t="ekr.20050328101834.1"><vh>@bool http_active = False</vh></v>
+<v t="ekr.20050328101834.2"><vh>@int  port = 8080</vh></v>
+<v t="ekr.20050328101834.3"><vh>@string rst_http_attributename = ''</vh></v>
+</v>
 </v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20050911112310"><vh>@button save</vh></v>
@@ -1700,7 +1700,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
 </v>
 <v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2" a="E"><vh>findTestsInModule</vh>
+<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
 <v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
@@ -1710,7 +1710,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>General Unit Tests...</vh>
 <v t="ekr.20041130092210"><vh>Batch mode tests...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
-<v t="ekr.20040712101754.186" a="E"><vh>@test batch mode</vh>
+<v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
 </v>
 </v>
@@ -2030,7 +2030,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050105080048" a="E"><vh>Test ivars...</vh>
+<v t="ekr.20050105080048"><vh>Test ivars...</vh>
 <v t="ekr.20050105080048.1"><vh>@test official frame ivars</vh></v>
 <v t="ekr.20050105082500"><vh>@test official commander ivars</vh></v>
 <v t="ekr.20050105084757"><vh>@test official g.app directories</vh></v>
@@ -2293,7 +2293,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 <v t="ekr.20050120095423.1"><vh>Notes</vh>
 <v t="ekr.20050120095423.2"><vh>spellpyx</vh></v>
-<v t="ekr.20050120095423.3" a="E"><vh>table</vh></v>
+<v t="ekr.20050120095423.3"><vh>table</vh></v>
 <v t="ekr.20050120095423.4"><vh>xsltWithNodes</vh></v>
 <v t="ekr.20050120095423.5"><vh>List of all calls to doHook</vh></v>
 </v>
@@ -2315,7 +2315,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050120095423.11"><vh>@@suite plugins tests (This seems too flakey)</vh>
 <v t="ekr.20050120095423.12"><vh>makePluginsTestSuite</vh></v>
-<v t="ekr.20050120095423.13" a="E"><vh>class pluginTestCase</vh>
+<v t="ekr.20050120095423.13"><vh>class pluginTestCase</vh>
 <v t="ekr.20050120095423.14"><vh>__init__</vh></v>
 <v t="ekr.20050120095423.15"><vh>fail</vh></v>
 <v t="ekr.20050120095423.16"><vh>runTest</vh></v>
@@ -2326,7 +2326,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
 </v>
 <v t="ekr.20050120095423.6"><vh>@suite test syntax of all plugins</vh>
-<v t="ekr.20050120095423.7" a="E"><vh>class parseFileTestCase</vh>
+<v t="ekr.20050120095423.7"><vh>class parseFileTestCase</vh>
 <v t="ekr.20050120095423.8"><vh>__init__</vh></v>
 <v t="ekr.20050120095423.9"><vh>runTest</vh></v>
 <v t="ekr.20050120095423.10"><vh>shortDescription</vh></v>
@@ -2334,7 +2334,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20051012155129" a="ETV"><vh>Tabbed log prototype</vh></v>
+<v t="ekr.20051012155129" a="TV"><vh>Tabbed log prototype</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"

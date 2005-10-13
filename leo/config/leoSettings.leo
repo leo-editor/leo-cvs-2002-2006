@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="10" left="256" height="812" width="947"/>
+	<global_window_position top="10" left="256" height="698" width="947"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -897,6 +897,14 @@ copy-text               = None          # Ctrl-C conflicts with quick-command.
 cut-text                = None          # Ctrl-X (possible)
 paste-text              = None          # Ctrl-V conflicts with scroll-down
 
+# Leo find panel stuff.  It's not clear what will happen to these.
+leo-find                = F3
+leo-find-panel          = None      # Ctrl-f conflicts with forward-char.
+leo-find-previous       = F2
+leo-change              = None
+leo-change-then-find    = None
+leo-change-all          = None      # Unwise to bind this to a shortcut or abbreviation.
+
 # Controlling the keyboard controller.
 full-command            = Alt-x
 quick-command           = Ctrl-c
@@ -1251,6 +1259,15 @@ copy-text               = Ctrl-C
 cut-text                = Ctrl-X
 paste-text              = Ctrl-V
 
+# Leo find panel stuff.  It's not clear what will happen to these.
+dismiss-leo-find-panel  = None
+leo-find                = F3
+leo-find-panel          = Ctrl-f         # Ctrl-f conflicts with forward-char.
+leo-find-previous       = F2
+leo-change              = None
+leo-change-then-find    = None
+leo-change-all          = None          # Unwise to bind this to a shortcut or abbreviation.
+
 full-command            = Alt-x
 quick-command           = Alt-c # Usually control-c, conflicts cut-text.
 keyboard-quit           = Ctrl-g
@@ -1512,6 +1529,15 @@ paste-text              = Ctrl-v        # For testing only: Alt-Shift-Ctrl-v
 # Note: for this to work, the binding for select-all below must be disabled.
 # selectall              = Alt-Shift-Ctrl-A
 
+# Leo find panel stuff.  It's not clear what will happen to these.
+dismiss-leo-find-panel  = None
+leo-find                = F3
+leo-find-panel          = Ctrl-f    # Ctrl-f conflicts with forward-char.
+leo-find-previous       = F2
+leo-change              = None
+leo-change-then-find    = None
+leo-change-all          = None      # Unwise to bind this to a shortcut or abbreviation.
+
 # Emacs moves...
 back-sentence           = Alt-a         # No conflict
 backward-char           = Ctrl-b        # No conflict
@@ -1694,6 +1720,15 @@ zap-to-character            = None
 
 # Leo commands...
 
+# Leo find panel stuff.  It's not clear what will happen to these.
+# At present these are bound to 'EKR' abbreviations as shown
+leo-find-button             = F3            # ff
+leo-find-panel              = None          # f
+leo-find-previous           = F2            # fp
+leo-find-change-button      = None          # fc
+leo-find-change-then-find-button = None     # fcf
+leo-find-change-all         = None          # Unwise to bind this to a shortcut or abbreviation.
+
 # apply settings            = None
 abort-edit-headline         = Shift-Esc
 about-leo                   = None
@@ -1746,9 +1781,6 @@ export-headlines            = None
 extract                     = Shift-Ctrl-D
 extract-names               = Shift-Ctrl-N
 extract-section             = Shift-Ctrl-E
-find-next                   = F3
-find-panel                  = F5            # Ctrl-f conflicts with forward-char.
-find-previous               = F2
 flatten-outline             = None
 go-back                     = None
 go-forward                  = None
