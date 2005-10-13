@@ -24865,279 +24865,8 @@ Leo 4.3.3, build  1.282 , Python 2.4.2, Tk 8.4.7, win2k
 #@nonl
 #@-node:ekr.20051010152921:Report
 #@-node:ekr.20051012075322:Fix bug: @settings not honored in opened outline
-#@+node:ekr.20051012101954:Crash in Open Compare Window
-exception executing command
-Traceback (most recent call last):
-
-  File "C:\prog\leoCVS\leo\src\leoCommands.py", line 236, in doCommand
-    command()
-
-  File "C:\prog\leoCVS\leo\src\leoCommands.py", line 4856, in openCompareWindow
-    frame.comparePanel = g.app.gui.createComparePanel(c)
-
-  File "c:\prog\leoCVS\leo\src\leoTkinterGui.py", line 254, in createComparePanel
-    return leoTkinterComparePanel.leoTkinterComparePanel(c)
-
-  File "c:\prog\leoCVS\leo\src\leoTkinterComparePanel.py", line 41, in __init__
-    self.useOutputFileVar = Tk.IntVar()
-
-  File "c:\python24\lib\lib-tk\Tkinter.py", line 244, in __init__
-    Variable.__init__(self, master)
-
-  File "c:\python24\lib\lib-tk\Tkinter.py", line 179, in __init__
-    self._tk = master.tk
-
-AttributeError: 'NoneType' object has no attribute 'tk'
-
-Exception exceptions.AttributeError: "IntVar instance has no attribute '_tk'" in <bound method IntVar.__del__ of <Tkinte
-r.IntVar instance at 0x0171B800>> ignored
-#@-node:ekr.20051012101954:Crash in Open Compare Window
-#@+node:ekr.20051012082219:Crash in backwardParagraph
-TclError Exception in Tk callback
-  Function: <function keyCallback at 0x017923B0> (type: <type 'function'>)
-  Args: (<Tkinter.Event instance at 0x026A9E18>,)
-  Event type: KeyPress (type num: 2)
-Traceback (innermost last):
-  File "c:\prog\leoCVS\leo\extensions\Pmw\Pmw_1_2\lib\PmwBase.py", line 1747, in __call__
-    return apply(self.func, args)
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 792, in keyCallback
-    return k.masterCommand(event,func,stroke)
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 1050, in masterCommand
-    func(event)
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 789, in menuFuncCallback
-    return command(event)
-  File "C:\prog\leoCVS\leo\src\leoEditCommands.py", line 1979, in backwardParagraph
-    w.mark_set('insert',i) ; w.see('insert')
-  File "c:\python24\lib\lib-tk\Tkinter.py", line 2932, in mark_set
-    self.tk.call(self._w, 'mark', 'set', markName, index)
-TclError: bad text index " +1c"
-
-================================================
-  Event contents:
-    char: {
-    delta: 219
-    height: ??
-    keycode: 219
-    keysym: braceleft
-    keysym_num: 123
-    num: ??
-    serial: 4627
-    state: 131073
-    time: 11194296
-    type: 2
-    widget: .19812560.24607680.24608040.24608160.body
-    width: ??
-    x: 656
-    x_root: 873
-    y: 37
-    y_root: 487
-
-TclError Exception in Tk callback
-  Function: <function keyCallback at 0x017923B0> (type: <type 'function'>)
-  Args: (<Tkinter.Event instance at 0x026B2648>,)
-  Event type: KeyPress (type num: 2)
-Traceback (innermost last):
-  File "c:\prog\leoCVS\leo\extensions\Pmw\Pmw_1_2\lib\PmwBase.py", line 1747, in __call__
-    return apply(self.func, args)
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 792, in keyCallback
-    return k.masterCommand(event,func,stroke)
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 1050, in masterCommand
-    func(event)
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 789, in menuFuncCallback
-    return command(event)
-  File "C:\prog\leoCVS\leo\src\leoEditCommands.py", line 1979, in backwardParagraph
-    w.mark_set('insert',i) ; w.see('insert')
-  File "c:\python24\lib\lib-tk\Tkinter.py", line 2932, in mark_set
-    self.tk.call(self._w, 'mark', 'set', markName, index)
-TclError: bad text index " +1c"
-
-================================================
-  Event contents:
-    char: {
-    delta: 219
-    height: ??
-    keycode: 219
-    keysym: braceleft
-    keysym_num: 123
-    num: ??
-    serial: 4627
-    state: 131073
-    time: 11194296
-    type: 2
-    widget: .19812560.24607680.24608040.24608160.body
-    width: ??
-    x: 656
-    x_root: 873
-    y: 37
-    y_root: 487
-
-#@-node:ekr.20051012082219:Crash in backwardParagraph
 #@+node:ekr.20051012101104:Fix bug: menu defaults don't 'take' if there is no @shortcuts node in effect.
 #@-node:ekr.20051012101104:Fix bug: menu defaults don't 'take' if there is no @shortcuts node in effect.
-#@+node:ekr.20051010130212:Crash in unit test
-createMenuEntries: no inverse for launchCmd
-createMenuEntries: no inverse for launchExplorer
-createMenuEntries: no inverse for <lambda>
-createMenuEntries: no inverse for parameterize
-Traceback (most recent call last):
-
-  File "c:\prog\leoCVS\leo\src\leoGlobals.py", line 2349, in doHook
-    return f(tag,keywords)
-
-  File "c:\prog\leoCVS\leo\src\leoPlugins.py", line 88, in doPlugins
-    return doHandlersForTag(tag,keywords)
-
-  File "c:\prog\leoCVS\leo\src\leoPlugins.py", line 69, in doHandlersForTag
-    val = callTagHandler(bunch,tag,keywords)
-
-  File "c:\prog\leoCVS\leo\src\leoPlugins.py", line 47, in callTagHandler
-    result = handler(tag,keywords)
-
-  File "C:\prog\leoCVS\leo\plugins\rst2.py", line 248, in onFileOpen
-    transform_rst2_text_in_subtree(c)
-
-  File "C:\prog\leoCVS\leo\plugins\rst2.py", line 239, in transform_rst2_text_in_subtree
-    c.frame.menu.createMenuEntries(editMenu, newEntries)
-
-  File "C:\prog\leoCVS\leo\src\leoMenu.py", line 1022, in createMenuEntries
-    emacs_name = k.inverseCommandsDict.get(command.__name__)
-
-AttributeError: 'callOnFileOpen' object has no attribute '__name__'
-#@nonl
-#@+node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
-def createMenuEntries (self,menu,table,
-    openWith=False,dontBind=False,
-    init=False,dynamicMenu=False):
-    
-    c = self.c ; k = c.keyHandler
-    
-    for label,accel,command in table:
-        if label == None or command == None or label == "-":
-            self.add_separator(menu)
-        else:
-            << clear useBindShortcut and adjust accel if accel startswith '--' >>
-            << set name to the label for doCommand >>
-            << set accel to the shortcut for name >>
-            << set bind_shortcut and menu_shortcut using accel >>
-            << define callback function >>
-            << set realLabel, amp_index and menu_shortcut >>
-            
-            if bind_shortcut and useBindShortcut and not dontBind:
-                ok = c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith,fromMenu=True)
-                if not ok: menu_shortcut = None
-
-            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
-                command=menuCallback,underline=amp_index)
-#@+node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
-if accel and accel.startswith('--'):
-    useBindShortcut = False
-    accel = accel[2:]
-else:
-    useBindShortcut = True
-#@nonl
-#@-node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
-#@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
-name = label.strip().lower()
-
-# Remove special characters from command names.
-name2 = ""
-for ch in name:
-    if ch in string.ascii_letters or ch in string.digits:
-        name2 = name2 + ch
-name = name2
-#@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
-#@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, check the kludged cut/copy/paste commands.
-if not useBindShortcut:
-    cutCopyPasteDict = {
-        'Ctrl+X': 'cut-text',
-        'Ctrl+C': 'copy-text',
-        'Ctrl+V': 'paste-text',
-    }
-    name = cutCopyPasteDict.get(accel)
-    # Allow the user to override the shortcut using equivalent emacs name.
-    rawKey,accel2 = c.config.getShortcut(name)
-    # g.trace(accel,accel2,name,command.__name__)
-    if not accel2:
-        accel2 = 'none' # Do not allow any further overrides.
-else:
-    # Second, try to get the old-style name.
-    rawKey,accel2 = c.config.getShortcut(name)
-    
-# if not openWith: g.trace(accel,accel2,name)
-
-# New in 4.4: allow emacs-style or old style names in menu shortcuts.
-if openWith:
-    pass
-elif not accel2:
-    if c.useMiniBuffer:
-        try: # User errors in the call can cause this.
-            commandName = command.__name__
-        except Exception:
-            commandName = None
-        emacs_name = k.inverseCommandsDict.get(commandName)
-        if emacs_name:
-            rawKey,accel2 = c.config.getShortcut(emacs_name)
-            accel = accel2 # Override the default shortcut.
-            # if accel: g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
-        else:
-            accel = None # New in 4.4: remove the default shortcut.
-            if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
-                if commandName and commandName != 'dummyCommand':
-                    g.trace('no inverse for %s' % commandName)
-    else:
-        pass # Use the default shortcut.
-elif accel2 and accel2.lower() == "none":
-    accel = None # Remove the default shortcut.
-else:
-    accel = accel2 # Override the default shortcut.
-    
-# if not openWith: g.trace(accel,accel2,name)
-#@nonl
-#@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
-
-# Kludge: disable the shortcuts for cut, copy, paste.
-# This has already been bound in leoTkinterFrame.__init__
-# 2/13/03: A _possible_ fix for the Linux control-v bug.
-
-if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
-    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
-        bind_shortcut = None
-#@nonl
-#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-#@+node:ekr.20031218072017.1727:<< define callback function >>
-if openWith:
-    menuCallback = self.defineOpenWithMenuCallback(command)
-else:
-    menuCallback = self.defineMenuCallback(command,name)
-#@nonl
-#@-node:ekr.20031218072017.1727:<< define callback function >>
-#@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-realLabel = self.getRealMenuName(label)
-
-# A bad hack:  this does not allow for translations!
-# We need a way of specifying shortcuts, & bindings and translations all in the same place.
-
-amp_index = -1
-if rawKey:
-    amp_index = rawKey.find("&")
-if amp_index == -1:
-    amp_index = realLabel.find("&")
-
-realLabel = realLabel.replace("&","")
-
-if 0: # trace
-    if rawKey and rawKey.lower().startswith("exit"):
-        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
-
-if not menu_shortcut:
-    menu_shortcut = ""
-#@nonl
-#@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-#@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
-#@-node:ekr.20051010130212:Crash in unit test
 #@+node:ekr.20051012210958:Fixed
 #@+node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
 #@+node:ekr.20031218072017.839:defineEditMenuTopTable
@@ -25674,6 +25403,133 @@ def abortEditLabelCommand (self):
 #@nonl
 #@-node:ekr.20031218072017.3981:abortEditLabelCommand
 #@-node:ekr.20051013103838:(Escape does not end label editing)
+#@+node:ekr.20051012082219:Crash in backwardParagraph
+TclError Exception in Tk callback
+  Function: <function keyCallback at 0x017923B0> (type: <type 'function'>)
+  Args: (<Tkinter.Event instance at 0x026A9E18>,)
+  Event type: KeyPress (type num: 2)
+Traceback (innermost last):
+  File "c:\prog\leoCVS\leo\extensions\Pmw\Pmw_1_2\lib\PmwBase.py", line 1747, in __call__
+    return apply(self.func, args)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 792, in keyCallback
+    return k.masterCommand(event,func,stroke)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 1050, in masterCommand
+    func(event)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 789, in menuFuncCallback
+    return command(event)
+  File "C:\prog\leoCVS\leo\src\leoEditCommands.py", line 1979, in backwardParagraph
+    w.mark_set('insert',i) ; w.see('insert')
+  File "c:\python24\lib\lib-tk\Tkinter.py", line 2932, in mark_set
+    self.tk.call(self._w, 'mark', 'set', markName, index)
+TclError: bad text index " +1c"
+
+================================================
+  Event contents:
+    char: {
+    delta: 219
+    height: ??
+    keycode: 219
+    keysym: braceleft
+    keysym_num: 123
+    num: ??
+    serial: 4627
+    state: 131073
+    time: 11194296
+    type: 2
+    widget: .19812560.24607680.24608040.24608160.body
+    width: ??
+    x: 656
+    x_root: 873
+    y: 37
+    y_root: 487
+
+TclError Exception in Tk callback
+  Function: <function keyCallback at 0x017923B0> (type: <type 'function'>)
+  Args: (<Tkinter.Event instance at 0x026B2648>,)
+  Event type: KeyPress (type num: 2)
+Traceback (innermost last):
+  File "c:\prog\leoCVS\leo\extensions\Pmw\Pmw_1_2\lib\PmwBase.py", line 1747, in __call__
+    return apply(self.func, args)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 792, in keyCallback
+    return k.masterCommand(event,func,stroke)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 1050, in masterCommand
+    func(event)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 789, in menuFuncCallback
+    return command(event)
+  File "C:\prog\leoCVS\leo\src\leoEditCommands.py", line 1979, in backwardParagraph
+    w.mark_set('insert',i) ; w.see('insert')
+  File "c:\python24\lib\lib-tk\Tkinter.py", line 2932, in mark_set
+    self.tk.call(self._w, 'mark', 'set', markName, index)
+TclError: bad text index " +1c"
+
+================================================
+  Event contents:
+    char: {
+    delta: 219
+    height: ??
+    keycode: 219
+    keysym: braceleft
+    keysym_num: 123
+    num: ??
+    serial: 4627
+    state: 131073
+    time: 11194296
+    type: 2
+    widget: .19812560.24607680.24608040.24608160.body
+    width: ??
+    x: 656
+    x_root: 873
+    y: 37
+    y_root: 487
+
+#@+node:ekr.20050920084036.102:backwardParagraph
+def backwardParagraph (self,event):
+
+    k = self.k ; w = event.widget ; i = w.index('insert')
+
+    while 1:
+        s = w.get('%s linestart' % i,'%s lineend' % i).strip()
+        if s:
+            i = w.index('%s - 1 lines' % i)
+            if w.index('%s linestart' % i) == '1.0':
+                i = w.search(r'\w','1.0',regexp=True,stopindex='end')
+                break
+        else:
+            i = w.search(r'\w',i,backwards=True,regexp=True,stopindex='1.0')
+            i = '%s +1c' % i
+            break
+    if i:
+        w.mark_set('insert',i)
+        w.see('insert')
+#@-node:ekr.20050920084036.102:backwardParagraph
+#@-node:ekr.20051012082219:Crash in backwardParagraph
+#@+node:ekr.20051012101954:Crash in Open Compare Window
+exception executing command
+Traceback (most recent call last):
+
+  File "C:\prog\leoCVS\leo\src\leoCommands.py", line 236, in doCommand
+    command()
+
+  File "C:\prog\leoCVS\leo\src\leoCommands.py", line 4856, in openCompareWindow
+    frame.comparePanel = g.app.gui.createComparePanel(c)
+
+  File "c:\prog\leoCVS\leo\src\leoTkinterGui.py", line 254, in createComparePanel
+    return leoTkinterComparePanel.leoTkinterComparePanel(c)
+
+  File "c:\prog\leoCVS\leo\src\leoTkinterComparePanel.py", line 41, in __init__
+    self.useOutputFileVar = Tk.IntVar()
+
+  File "c:\python24\lib\lib-tk\Tkinter.py", line 244, in __init__
+    Variable.__init__(self, master)
+
+  File "c:\python24\lib\lib-tk\Tkinter.py", line 179, in __init__
+    self._tk = master.tk
+
+AttributeError: 'NoneType' object has no attribute 'tk'
+
+Exception exceptions.AttributeError: "IntVar instance has no attribute '_tk'" in <bound method IntVar.__del__ of <Tkinte
+r.IntVar instance at 0x0171B800>> ignored
+#@-node:ekr.20051012101954:Crash in Open Compare Window
 #@-node:ekr.20051012210958:Fixed
 #@-node:ekr.20051012084345:Bugs
 #@-node:ekr.20050924073836:4.4 projects

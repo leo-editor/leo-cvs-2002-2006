@@ -1935,8 +1935,8 @@ class editCommandsClass (baseEditCommandsClass):
         k = self.k ; w = event.widget ; i = w.index('insert')
     
         while 1:
-            txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
-            if txt:
+            s = w.get('%s linestart' % i,'%s lineend' % i).strip()
+            if s:
                 i = w.index('%s - 1 lines' % i)
                 if w.index('%s linestart' % i) == '1.0':
                     i = w.search(r'\w','1.0',regexp=True,stopindex='end')
@@ -1946,8 +1946,8 @@ class editCommandsClass (baseEditCommandsClass):
                 i = '%s +1c' % i
                 break
         if i:
-            w.mark_set('insert',i) ; w.see('insert')
-    #@nonl
+            w.mark_set('insert',i)
+            w.see('insert')
     #@-node:ekr.20050920084036.102:backwardParagraph
     #@+node:ekr.20050920084036.103:fillParagraph
     def fillParagraph( self, event ):
