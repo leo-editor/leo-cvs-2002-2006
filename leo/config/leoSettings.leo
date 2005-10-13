@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="10" left="256" height="698" width="947"/>
+	<global_window_position top="10" left="256" height="851" width="943"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -231,7 +231,7 @@
 <v t="ekr.20051010195914"><vh>@@shortcuts no shortcuts (for testing)</vh></v>
 <v t="ekr.20051007193427"><vh>@@shortcuts traditional Leo shortcuts (not recommended)</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558" a="ETV"><vh>@shortcuts traditional Leo shortcuts emacs moves &amp; commands</vh></v>
+<v t="ekr.20051010112558" a="ETV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -893,9 +893,9 @@ CadetBlue3 has been suggested.</t>
 <t tx="ekr.20051007193321">@color
 
 # The infamous cut/copy/paste commands.
-copy-text               = None          # Ctrl-C conflicts with quick-command.
-cut-text                = None          # Ctrl-X (possible)
-paste-text              = None          # Ctrl-V conflicts with scroll-down
+copy-text               = None      # Ctrl-C conflicts with quick-command.
+cut-text                = None      # Ctrl-X (possible)
+paste-text              = None      # Ctrl-V conflicts with scroll-down
 
 # Leo find panel stuff.  It's not clear what will happen to these.
 leo-find                = F3
@@ -1573,6 +1573,34 @@ universal-arg           = Alt-u         # Usually Ctrl-u, conflicts with move-ou
 # negative-argument     = Alt-minus     # Conflicts with contract-all.
 repeat-complex-command  = None          # Usually 'again', whatever that is.
 
+# Inserts &amp; deletes...
+delete                  = None              # What does this do?
+delete-char             = None              # Use BackSpace: Too big a conflict with Control-d
+delete-file             = None
+delete-rectangle        = None
+delete-spaces           = Alt-backslash
+insert-newline          = None              # Control-o conflicts with open.
+newline-and-indent:     = Control-j
+split-line              = Alt-Ctrl-o
+zap-to-character        = Alt-z
+
+# Kill buffer...
+# append-next-kill      = Control-Alt-w
+backward-kill-paragraph = None
+backward-kill-sentence  = None
+backward-kill-word      = Alt-Delete
+kill-buffer             = None
+kill-line               = Shift-Ctrl-k        # Ctrl-K conflicts with match-braket.
+kill-paragraph          = None
+kill-rectangle          = None
+kill-region             = Control-w
+kill-region-save        = Alt-w 	        # Ctrl-w conflicts with close.
+kill-sentence           = Alt-k
+kill-word               = Alt-d
+yank                    = Control-y
+yank-pop                = Alt-y
+
+
 # All other Emacs commands
 abbrev-mode                 = None
 add-global-abbrev           = None
@@ -1580,10 +1608,7 @@ advertised-undo             = None
 append-to-buffer            = None
 append-to-register          = None
 back-to-indentation         = None
-backward-delete-char        = Shift-BackSpace # Testing
-backward-kill-paragraph     = None
-backward-kill-sentence      = None
-backward-kill-word          = None
+backward-delete-char        = None
 call-last-keyboard-macro    = None
 capitalize-word             = None
 center-line                 = None
@@ -1637,14 +1662,6 @@ isearch-forward-regexp      = None
 jump-to-register            = None
 keep-lines                  = None
 kill-all-abbrevs            = None
-kill-buffer                 = None
-kill-line                   = None 
-kill-paragraph              = None
-kill-rectangle              = None
-kill-region                 = None
-kill-region-save            = None
-kill-sentence               = None
-kill-word                   = None 
 line-number                 = None
 list-abbrevs                = None
 list-buffers                = None
@@ -1713,8 +1730,6 @@ word-search-backward        = None
 word-search-forward         = None
 write-abbrev-file           = None
 write-missing-at-file-nodes = None
-yank                        = None
-yank-pop                    = None
 yank-rectangle              = None
 zap-to-character            = None
 
@@ -1740,7 +1755,7 @@ check-python-code           = None
 # check-spelling            = Alt-Shift-A          # Add this command.
 clear-recent-files          = None
 clone-node                  = Ctrl-`
-close                       = Ctrl-W
+close                       = None          # Ctrl-w conflicts with kill-region.
 contract-all                = Alt--
 contract-node               = Alt-[
 contract-or-go-left         = None
@@ -1808,15 +1823,15 @@ import-derived-file         = None
 import-flattened-outline    = None
 import-noweb-files          = None
 indent                      = Ctrl-]
-insert-body-time            = None         # Removed Shift-Ctrl-G: not useful enough.
-insert-headline-time        = None         # Removed Shift-Ctrl-H: not useful enough.
+insert-body-time            = None          # Shift-Ctrl-G: not useful enough.
+insert-headline-time        = None          # Shift-Ctrl-H: not useful enough.
 insert-node                 = Ctrl-I
 mark                        = Ctrl-M
-mark-changed-items          = None         # Alt-C: now quick-command.
-mark-changed-roots          = Alt-R 
-mark-clones                 = Alt-K
-mark-subheads               = Alt-S
-match-bracket               = Ctrl-K
+mark-changed-items          = None          # Alt-C: now quick-command.
+mark-changed-roots          = None          # Alt-R: not useful enough.
+mark-clones                 = None          # Alt-K: not useful enough.
+mark-subheads               = None          # Alt-S: not useful enough.
+match-bracket               = Ctrl-K        # Conflicts with kill-line
 minimize-all                = None
 move-outline-down           = Ctrl-D
 move-outline-left           = Ctrl-L
@@ -1855,7 +1870,7 @@ save-file-to                = None
 select-all                  = None         # Ctrl-A conflicts with beginning-of-line.
 set-colors                  = None
 set-font                    = None
-settings                    = Ctrl-Y
+settings                    = None          # Ctrl-Y conflicts with yank.
 show-invisibles             = Alt-V
 show-invisibles             = None         # Alt-V conflicts with scroll-up .
 sort-children               = None
