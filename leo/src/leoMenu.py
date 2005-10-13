@@ -1060,14 +1060,17 @@ class leoMenu:
                             commandName = None
                         emacs_name = k.inverseCommandsDict.get(commandName)
                         if emacs_name:
-                            rawKey,accel2 = c.config.getShortcut(emacs_name)
-                            accel = accel2 # Override the default shortcut.
-                            # if accel: g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
+                            # Override the default shortcut, but *only* if the setting was actually given.
+                            if g.app.config.exists(c,emacs_name,'shortcut'):
+                                rawKey,accel2 = c.config.getShortcut(emacs_name)
+                                # Override the default shortcut.
+                                accel = accel2 
+                                # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
                         else:
-                            accel = None # New in 4.4: remove the default shortcut.
                             if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
                                 if commandName and commandName != 'dummyCommand':
                                     g.trace('no inverse for %s' % commandName)
+                            accel = None # New in 4.4: clear the default.
                     else:
                         pass # Use the default shortcut.
                 elif accel2 and accel2.lower() == "none":
