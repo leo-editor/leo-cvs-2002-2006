@@ -241,6 +241,11 @@ class leoFind:
             self.changeThenFind()
     #@nonl
     #@-node:ekr.20031218072017.3062:changeThenFindCommand
+    #@+node:ekr.20051013084200.1:dismiss: defined in subclass class
+    def dismiss (self):
+        pass
+    #@nonl
+    #@-node:ekr.20051013084200.1:dismiss: defined in subclass class
     #@+node:ekr.20031218072017.3060:findAllButton
     # The user has pushed the "Find All" button from the find panel.
     

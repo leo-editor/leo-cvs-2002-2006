@@ -2714,6 +2714,15 @@ class baseCommands:
     #@-node:ekr.20031218072017.2290:toggleAngleBrackets
     #@-node:ekr.20031218072017.2885:Edit Headline submenu
     #@+node:ekr.20031218072017.2887:Find submenu (frame methods)
+    #@+node:ekr.20051013084200:dismissFindPanel
+    def dismissFindPanel (self):
+        
+        c = self
+        
+        if c.frame.findPanel:
+            c.frame.findPanel.dismiss()
+    #@nonl
+    #@-node:ekr.20051013084200:dismissFindPanel
     #@+node:ekr.20031218072017.2888:showFindPanel
     def showFindPanel(self):
     
@@ -2765,6 +2774,16 @@ class baseCommands:
     
         c.frame.findPanel.changeThenFindCommand(c)
     #@-node:ekr.20031218072017.2892:replaceThenFind
+    #@+node:ekr.20051013083241:replaceAll
+    def replaceAll(self):
+    
+        c = self
+        
+        if not c.frame.findPanel:
+            c.frame.findPanel = g.app.gui.createFindPanel(c)
+    
+        c.frame.findPanel.changeAllCommand(c)
+    #@-node:ekr.20051013083241:replaceAll
     #@-node:ekr.20031218072017.2887:Find submenu (frame methods)
     #@+node:ekr.20031218072017.2893:notValidInBatchMode
     def notValidInBatchMode(self, commandName):

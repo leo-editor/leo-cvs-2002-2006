@@ -602,6 +602,18 @@ class keyHandlerClass:
         #@+node:ekr.20050920085536.12:<< define dict d of abbreviations >>
         d = {
             'again':'repeat-complex-command',
+            
+            # Leo searches.
+            # It's not possible to use Alt-x while the find-panel is frontmost.
+            # On XP you can use Alt-F4 to dismiss or Alt-tab to switch panes, then dismiss.
+            # (Or I could add a 'close' button with Alt-something hotkey :-)
+            'fx':   'dismiss-leo-find-panel',
+            'f':    'leo-find-panel',
+            'ff':   'leo-find-button',  
+            'fp':   'leo-find-previous',
+            'fc':   'leo-find-change-button',
+            'fcf':  'leo-find-change-then-find-button',
+        
             'i':    'isearch-forward', 
             'ib':   'isearch-backward',      
             'ix':   'isearch-forward-regexp',
@@ -613,6 +625,7 @@ class keyHandlerClass:
         
             's':    'search-forward',
             'sb':   'search-backward',
+            'sv':   'save-file',
             
             'sw':   'word-search-forward',    
             'sbw':  'word-search-backward',
@@ -627,7 +640,6 @@ class keyHandlerClass:
             # 'od':   'options-dialog',
             
             # At present these would be Leo Find stuff.
-            # 'f':    'find',
             # 'fr':   'find-reverse',
             # 'fx':   'find-regex',
             # 'frx':  'find-regex-reverse',
@@ -653,8 +665,6 @@ class keyHandlerClass:
     
         k = self ; c = k.c
         k.abbreviationsDict = {}
-        
-        return ###
     
         keys = d.keys()
         keys.sort()
@@ -1101,20 +1111,6 @@ class keyHandlerClass:
         return func
     #@nonl
     #@-node:ekr.20050923174229.3:callKeystrokeFunction
-    #@+node:ekr.20051012092847:forceFocusToBody
-    def forceFocusToBody (self):
-        
-        k = self ; c = k.c
-        
-        if 0: # Causes too much flash.
-            c.frame.endEditLabelCommand()
-        
-        if 0: # Doesn't work, and perhaps is not a good idea.
-            w = c.frame.top
-            w.focus_force()
-            w.update_idletasks()
-    #@nonl
-    #@-node:ekr.20051012092847:forceFocusToBody
     #@-node:ekr.20050920085536.65: masterCommand & helpers
     #@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
     def fullCommand (self,event):
@@ -1826,6 +1822,17 @@ class keyHandlerClass:
                 k.setLabel(k.mb_prompt,protect=True)
     #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion
+    #@+node:ekr.20051012092847:forceFocusToBody
+    def forceFocusToBody (self):
+        
+        k = self ; c = k.c ; f = c.frame
+        
+        f.bodyWantsFocus(f.bodyCtrl,later=False,tag='k.forceFocusToBody')
+        
+        if 0: # Causes too much flash.
+            c.frame.endEditLabelCommand()
+    #@nonl
+    #@-node:ekr.20051012092847:forceFocusToBody
     #@+node:ekr.20051010063452:ultimateFuncName
     def ultimateFuncName (self,func):
         

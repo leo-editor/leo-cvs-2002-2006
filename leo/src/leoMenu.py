@@ -369,7 +369,7 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.editMenuFindMenuTable = [
-            ("&Find Panel","Ctrl+F",c.showFindPanel),
+            ("&Find Panel","F5",c.showFindPanel),
             ("-",None,None),
             ("Find &Next","F3",c.findNext),
             ("Find &Previous","F4",c.findPrevious),

@@ -265,6 +265,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         buttons.pack (anchor="n",expand=1,fill="x")
         buttons2.pack(anchor="n",expand=1,fill="x")
         
+        # In 4.4 it's dubious to define these keys.  For example, Alt-x must be reserved!
         # HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
         # HotKeys used for plain buttons (enter),d,g,t
         
@@ -435,6 +436,12 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         self.top.withdraw()
     #@nonl
     #@-node:ekr.20031218072017.3906:onCloseWindow
+    #@+node:ekr.20051013084256:dismiss
+    def dismiss (self):
+        
+        self.top.withdraw()
+    #@nonl
+    #@-node:ekr.20051013084256:dismiss
     #@+node:ekr.20031218072017.3907:bringToFront
     def bringToFront (self):
         

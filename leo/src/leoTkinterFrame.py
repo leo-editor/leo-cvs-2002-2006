@@ -2230,7 +2230,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
                     self.wantedCallbackScheduled = True
                     # We don't have to wait so long now that we don't call this so often.
                     # The difference between 500 msec. and 100 msec. is significant.
-                    self.outerFrame.after(100,setFocusCallback)
+                    # New in 4.4: set the delay to 1 msec.: the smaller the better.
+                    self.outerFrame.after(1,setFocusCallback)
             else:
                 # g.trace(tag,c.shortFileName())
                 g.app.gui.set_focus(c,widget,tag='frame.setFocus')
