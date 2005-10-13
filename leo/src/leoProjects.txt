@@ -9776,7 +9776,9 @@ def run(fileName=None,*args,**keywords):
     g.app.config = leoConfig.configClass()
     fileName = completeFileName(fileName)
     reportDirectories(verbose)
-    g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.
+    # Read settings *after* setting g.app.config.
+    # Read settings *before* opening plugins.
+    g.app.config.readSettingsFiles(fileName,verbose)
     g.app.setEncoding()
     if script:
         createNullGuiWithScript(script)
@@ -9915,7 +9917,8 @@ def createFrame (fileName):
     # Try to create a frame for the file.
     if fileName:
         if g.os_path_exists(fileName):
-            ok, frame = g.openWithFileName(fileName,None)
+            # We have already read settings from this file.
+            ok, frame = g.openWithFileName(fileName,None,readSettings=False)
             if ok:
                 return frame.c,frame
 
@@ -9990,7 +9993,8 @@ def reportDirectories(verbose):
 #@-node:ekr.20041130093254:reportDirectories
 #@-node:ekr.20031218072017.1934:run & allies
 #@+node:ekr.20031218072017.2052:g.openWithFileName
-def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
+def openWithFileName(fileName,old_c,
+    enableLog=True,readAtFileNodesFlag=True,readSettings=True):
     
     """Create a Leo Frame for the indicated fileName if the file exists."""
 
@@ -10013,7 +10017,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
             # g.trace('Already open',fileName)
             return True, frame
     try:
-        # g.trace('Not open',fileName)
+        g.trace('Not open',fileName)
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
@@ -10029,7 +10033,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
             for frame in g.app.windowList:
                 # The recent files list has been updated by menu.updateRecentFiles.
                 frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        # Bug fix in 4.4.
         frame.openDirectory = g.os_path_dirname(fileName)
+        if readSettings:
+            g.app.config.readSettings(c)
         g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
@@ -18773,6 +18780,172 @@ def defineHelpMenuTables (self):
 #@-node:ekr.20031218072017.3752:defineMenuTables & helpers
 #@-node:ekr.20051013085834:(Added new emacs find commands & ekr abbreviations)
 #@+node:ekr.20051013103457:(bindings)
+#@+node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
+c = self.c ; f = c.frame
+
+d = {
+    'abort-edit-headline':  f.abortEditLabelCommand,
+    'about-leo':            c.about,
+    'add-comments':         c.addComments,     
+    'cascade-windows':      f.cascade,
+    #'check-spelling':      None,                   # Create this command.
+    'clear-recent-files':   c.clearRecentFiles,
+    'close-window':         c.close,
+    'contract-or-go-left':  c.contractNodeOrGoToParent,
+    'check-python-code':    c.checkPythonCode,
+    'check-all-python-code':c.checkAllPythonCode,
+    'check-outline':        c.checkOutline,
+    'clear-recent-files':   c.clearRecentFiles,
+    'clone-node':           c.clone,
+    'contract-node':        c.contractNode,
+    'contract-all':         c.contractAllHeadlines,
+    'contract-parent':      c.contractParent,
+    'convert-all-blanks':   c.convertAllBlanks,
+    'convert-all-tabs':     c.convertAllTabs,
+    'convert-blanks':       c.convertBlanks,
+    'convert-tabs':         c.convertTabs,
+    'copy-node':            c.copyOutline,
+    'copy-text':            f.copyText,
+    'cut-node':             c.cutOutline,
+    'cut-text':             f.cutText,
+    'de-hoist':             c.dehoist,
+    'delete':               c.delete,
+    'delete-comments':      c.deleteComments,
+    'delete-node':          c.deleteOutline,
+    'delete-text':          c.delete,
+    'demote':               c.demote,
+    'dump-outline':         c.dumpOutline,
+    'edit-headline':        c.editHeadline,
+    'end-edit-headline':    f.endEditLabelCommand,
+    'equal-sized-panes':    f.equalSizedPanes,
+    'execute-script':       c.executeScript,
+    'exit-leo':             g.app.onQuit,
+    'expand-all':           c.expandAllHeadlines,
+    'expand-next-level':    c.expandNextLevel,
+    'expand-node':          c.expandNode,
+    'expand-and-go-right':  c.expandNodeAndGoToFirstChild,
+    'expand-or-go-right':   c.expandNodeOrGoToFirstChild,
+    'expand-prev-level':    c.expandPrevLevel,
+    'expand-to-level-1':    c.expandLevel1,
+    'expand-to-level-2':    c.expandLevel2,
+    'expand-to-level-3':    c.expandLevel3,
+    'expand-to-level-4':    c.expandLevel4,
+    'expand-to-level-5':    c.expandLevel5,
+    'expand-to-level-6':    c.expandLevel6,
+    'expand-to-level-7':    c.expandLevel7,
+    'expand-to-level-8':    c.expandLevel8,
+    'expand-to-level-9':    c.expandLevel9,
+    'export-headlines':     c.exportHeadlines,
+    'extract':              c.extract,
+    'extract-names':        c.extractSectionNames,
+    'extract-section':      c.extractSection,
+    'flatten-outline':      c.flattenOutline,
+    'go-back':              c.goPrevVisitedNode,
+    'go-forward':           c.goNextVisitedNode,
+    'goto-first-node':      c.goToFirstNode,
+    'goto-first-sibling':   c.goToFirstSibling,
+    'goto-last-node':       c.goToLastNode,
+    'goto-last-sibling':    c.goToLastSibling,
+    'goto-last-visible':    c.goToLastVisibleNode,
+    'goto-line-number':     c.goToLineNumber,
+    'goto-next-changed':    c.goToNextDirtyHeadline,
+    'goto-next-clone':      c.goToNextClone,
+    'goto-next-marked':     c.goToNextMarkedHeadline,
+    'goto-next-node':       c.selectThreadNext,
+    'goto-next-sibling':    c.goToNextSibling,
+    'goto-next-visible':    c.selectVisNext,
+    'goto-parent':          c.goToParent,
+    'goto-prev-node':       c.selectThreadBack,
+    'goto-prev-sibling':    c.goToPrevSibling,
+    'goto-prev-visible':    c.selectVisBack,
+    'hoist':                c.hoist,
+    'import-at-file':       c.importAtFile,
+    'import-at-root':       c.importAtRoot,
+    'import-cweb-files':    c.importCWEBFiles,
+    'import-derived-file':      c.importDerivedFile,
+    'import-flattened-outline': c.importFlattenedOutline,
+    'import-noweb-files':       c.importNowebFiles,
+    'indent':                   c.indentBody,
+    'insert-node':              c.insertHeadline,
+    'insert-body-time':         c.insertBodyTime,
+    'insert-headline-time':     f.insertHeadlineTime,
+    # Leo find panel stuff.  It's not clear what will happen to these.
+    'dismiss-leo-find-panel':   c.dismissFindPanel,
+    'leo-change':               c.replace,
+    'leo-change-then-find':     c.replaceThenFind,
+    'leo-change-all':           c.replaceAll,
+    'leo-find':                 c.findNext,
+    'leo-find-panel':           c.showFindPanel,
+    'leo-find-previous':        c.findPrevious,
+    'mark':                     c.markHeadline,
+    'mark-changed-items':       c.markChangedHeadlines,
+    'mark-changed-roots':       c.markChangedRoots,
+    'mark-clones':              c.markClones,
+    'mark-subheads':            c.markSubheads,
+    'match-bracket':            c.findMatchingBracket,
+    'minimize-all':             f.minimizeAll,
+    'move-outline-down':        c.moveOutlineDown,
+    'move-outline-left':        c.moveOutlineLeft,
+    'move-outline-right':       c.moveOutlineRight,
+    'move-outline-up':          c.moveOutlineUp,
+    'new':                      c.new,
+    'open-compare-window':      c.openCompareWindow,
+    'open-leoconfig-leo':       c.openLeoSettings,
+    'open-leodocs-leo':         c.leoDocumentation,
+    'open-leoplugins-leo':      c.openLeoPlugins,
+    'open-online-home':         c.leoHome,
+    'open-online-tutorial':     c.leoTutorial,
+    'open-offline-tutorial':    f.leoHelp,
+    'open-outline':             c.open,
+    'open-python-window':       c.openPythonWindow,
+    'open-with':                c.openWith,
+    'outline-to-CWEB':          c.outlineToCWEB,
+    'outline-to-noweb':         c.outlineToNoweb,
+    'paste-node':               c.pasteOutline,
+    'paste-retaining-clones':   c.pasteOutlineRetainingClones,
+    'paste-text':               f.pasteText,
+    'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
+    'pretty-print-python-code':     c.prettyPrintPythonCode,
+    'promote':                  c.promote,
+    'read-at-file-nodes':       c.readAtFileNodes,
+    'read-outline-only':        c.readOutlineOnly,
+    'redo':                     c.undoer.redo,
+    'reformat-paragraph':       c.reformatParagraph,
+    'remove-sentinels':         c.removeSentinels,
+    'replace':                  c.replace,
+    'replace-then-find':        c.replaceThenFind,
+    'resize-to-screen':         f.resizeToScreen,
+    'revert':                   c.revert,
+    'save-file':                c.save,
+    'save-file-as':             c.saveAs,
+    'save-file-to':             c.saveTo,
+    'select-all':               f.body.selectAllText,
+    'settings':                 c.preferences,
+    'set-colors':               c.colorPanel,
+    'set-font':                 c.fontPanel,
+    'show-invisibles':          c.viewAllCharacters,
+    'sort-children':            c.sortChildren,
+    'sort-siblings':            c.sortSiblings,
+    'tangle':                   c.tangle,
+    'tangle-all':               c.tangleAll,
+    'tangle-marked':            c.tangleMarked,
+    'toggle-active-pane':       f.toggleActivePane,
+    'toggle-angle-brackets':    c.toggleAngleBrackets,
+    'toggle-split-direction':   f.toggleSplitDirection,
+    'undo':                     c.undoer.undo,
+    'unindent':                 c.dedentBody,
+    'unmark-all':               c.unmarkAll,
+    'untangle':                 c.untangle,
+    'untangle-all':             c.untangleAll,
+    'untangle-marked':          c.untangleMarked,
+    'weave':                    c.weave,
+    'write-at-file-nodes':      c.fileCommands.writeAtFileNodes,
+    'write-dirty-at-file-nodes':    c.fileCommands.writeDirtyAtFileNodes,
+    'write-missing-at-file-nodes':  c.fileCommands.writeMissingAtFileNodes,
+    'write-outline-only':       c.fileCommands.writeOutlineOnly,
+}
+#@nonl
+#@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
 #@+node:ekr.20050920085536.12:<< define dict d of abbreviations >>
 d = {
     'again':'repeat-complex-command',
@@ -19502,172 +19675,6 @@ if not menu_shortcut:
 #@nonl
 #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
 #@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
-#@+node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
-c = self.c ; f = c.frame
-
-d = {
-    'abort-edit-headline':  f.abortEditLabelCommand,
-    'about-leo':            c.about,
-    'add-comments':         c.addComments,     
-    'cascade-windows':      f.cascade,
-    #'check-spelling':      None,                   # Create this command.
-    'clear-recent-files':   c.clearRecentFiles,
-    'close-window':         c.close,
-    'contract-or-go-left':  c.contractNodeOrGoToParent,
-    'check-python-code':    c.checkPythonCode,
-    'check-all-python-code':c.checkAllPythonCode,
-    'check-outline':        c.checkOutline,
-    'clear-recent-files':   c.clearRecentFiles,
-    'clone-node':           c.clone,
-    'contract-node':        c.contractNode,
-    'contract-all':         c.contractAllHeadlines,
-    'contract-parent':      c.contractParent,
-    'convert-all-blanks':   c.convertAllBlanks,
-    'convert-all-tabs':     c.convertAllTabs,
-    'convert-blanks':       c.convertBlanks,
-    'convert-tabs':         c.convertTabs,
-    'copy-node':            c.copyOutline,
-    'copy-text':            f.copyText,
-    'cut-node':             c.cutOutline,
-    'cut-text':             f.cutText,
-    'de-hoist':             c.dehoist,
-    'delete':               c.delete,
-    'delete-comments':      c.deleteComments,
-    'delete-node':          c.deleteOutline,
-    'delete-text':          c.delete,
-    'demote':               c.demote,
-    'dump-outline':         c.dumpOutline,
-    'edit-headline':        c.editHeadline,
-    'end-edit-headline':    f.endEditLabelCommand,
-    'equal-sized-panes':    f.equalSizedPanes,
-    'execute-script':       c.executeScript,
-    'exit-leo':             g.app.onQuit,
-    'expand-all':           c.expandAllHeadlines,
-    'expand-next-level':    c.expandNextLevel,
-    'expand-node':          c.expandNode,
-    'expand-and-go-right':  c.expandNodeAndGoToFirstChild,
-    'expand-or-go-right':   c.expandNodeOrGoToFirstChild,
-    'expand-prev-level':    c.expandPrevLevel,
-    'expand-to-level-1':    c.expandLevel1,
-    'expand-to-level-2':    c.expandLevel2,
-    'expand-to-level-3':    c.expandLevel3,
-    'expand-to-level-4':    c.expandLevel4,
-    'expand-to-level-5':    c.expandLevel5,
-    'expand-to-level-6':    c.expandLevel6,
-    'expand-to-level-7':    c.expandLevel7,
-    'expand-to-level-8':    c.expandLevel8,
-    'expand-to-level-9':    c.expandLevel9,
-    'export-headlines':     c.exportHeadlines,
-    'extract':              c.extract,
-    'extract-names':        c.extractSectionNames,
-    'extract-section':      c.extractSection,
-    'flatten-outline':      c.flattenOutline,
-    'go-back':              c.goPrevVisitedNode,
-    'go-forward':           c.goNextVisitedNode,
-    'goto-first-node':      c.goToFirstNode,
-    'goto-first-sibling':   c.goToFirstSibling,
-    'goto-last-node':       c.goToLastNode,
-    'goto-last-sibling':    c.goToLastSibling,
-    'goto-last-visible':    c.goToLastVisibleNode,
-    'goto-line-number':     c.goToLineNumber,
-    'goto-next-changed':    c.goToNextDirtyHeadline,
-    'goto-next-clone':      c.goToNextClone,
-    'goto-next-marked':     c.goToNextMarkedHeadline,
-    'goto-next-node':       c.selectThreadNext,
-    'goto-next-sibling':    c.goToNextSibling,
-    'goto-next-visible':    c.selectVisNext,
-    'goto-parent':          c.goToParent,
-    'goto-prev-node':       c.selectThreadBack,
-    'goto-prev-sibling':    c.goToPrevSibling,
-    'goto-prev-visible':    c.selectVisBack,
-    'hoist':                c.hoist,
-    'import-at-file':       c.importAtFile,
-    'import-at-root':       c.importAtRoot,
-    'import-cweb-files':    c.importCWEBFiles,
-    'import-derived-file':      c.importDerivedFile,
-    'import-flattened-outline': c.importFlattenedOutline,
-    'import-noweb-files':       c.importNowebFiles,
-    'indent':                   c.indentBody,
-    'insert-node':              c.insertHeadline,
-    'insert-body-time':         c.insertBodyTime,
-    'insert-headline-time':     f.insertHeadlineTime,
-    # Leo find panel stuff.  It's not clear what will happen to these.
-    'dismiss-leo-find-panel':   c.dismissFindPanel,
-    'leo-change':               c.replace,
-    'leo-change-then-find':     c.replaceThenFind,
-    'leo-change-all':           c.replaceAll,
-    'leo-find':                 c.findNext,
-    'leo-find-panel':           c.showFindPanel,
-    'leo-find-previous':        c.findPrevious,
-    'mark':                     c.markHeadline,
-    'mark-changed-items':       c.markChangedHeadlines,
-    'mark-changed-roots':       c.markChangedRoots,
-    'mark-clones':              c.markClones,
-    'mark-subheads':            c.markSubheads,
-    'match-bracket':            c.findMatchingBracket,
-    'minimize-all':             f.minimizeAll,
-    'move-outline-down':        c.moveOutlineDown,
-    'move-outline-left':        c.moveOutlineLeft,
-    'move-outline-right':       c.moveOutlineRight,
-    'move-outline-up':          c.moveOutlineUp,
-    'new':                      c.new,
-    'open-compare-window':      c.openCompareWindow,
-    'open-leoconfig-leo':       c.openLeoSettings,
-    'open-leodocs-leo':         c.leoDocumentation,
-    'open-leoplugins-leo':      c.openLeoPlugins,
-    'open-online-home':         c.leoHome,
-    'open-online-tutorial':     c.leoTutorial,
-    'open-offline-tutorial':    f.leoHelp,
-    'open-outline':             c.open,
-    'open-python-window':       c.openPythonWindow,
-    'open-with':                c.openWith,
-    'outline-to-CWEB':          c.outlineToCWEB,
-    'outline-to-noweb':         c.outlineToNoweb,
-    'paste-node':               c.pasteOutline,
-    'paste-retaining-clones':   c.pasteOutlineRetainingClones,
-    'paste-text':               f.pasteText,
-    'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
-    'pretty-print-python-code':     c.prettyPrintPythonCode,
-    'promote':                  c.promote,
-    'read-at-file-nodes':       c.readAtFileNodes,
-    'read-outline-only':        c.readOutlineOnly,
-    'redo':                     c.undoer.redo,
-    'reformat-paragraph':       c.reformatParagraph,
-    'remove-sentinels':         c.removeSentinels,
-    'replace':                  c.replace,
-    'replace-then-find':        c.replaceThenFind,
-    'resize-to-screen':         f.resizeToScreen,
-    'revert':                   c.revert,
-    'save-file':                c.save,
-    'save-file-as':             c.saveAs,
-    'save-file-to':             c.saveTo,
-    'select-all':               f.body.selectAllText,
-    'settings':                 c.preferences,
-    'set-colors':               c.colorPanel,
-    'set-font':                 c.fontPanel,
-    'show-invisibles':          c.viewAllCharacters,
-    'sort-children':            c.sortChildren,
-    'sort-siblings':            c.sortSiblings,
-    'tangle':                   c.tangle,
-    'tangle-all':               c.tangleAll,
-    'tangle-marked':            c.tangleMarked,
-    'toggle-active-pane':       f.toggleActivePane,
-    'toggle-angle-brackets':    c.toggleAngleBrackets,
-    'toggle-split-direction':   f.toggleSplitDirection,
-    'undo':                     c.undoer.undo,
-    'unindent':                 c.dedentBody,
-    'unmark-all':               c.unmarkAll,
-    'untangle':                 c.untangle,
-    'untangle-all':             c.untangleAll,
-    'untangle-marked':          c.untangleMarked,
-    'weave':                    c.weave,
-    'write-at-file-nodes':      c.fileCommands.writeAtFileNodes,
-    'write-dirty-at-file-nodes':    c.fileCommands.writeDirtyAtFileNodes,
-    'write-missing-at-file-nodes':  c.fileCommands.writeMissingAtFileNodes,
-    'write-outline-only':       c.fileCommands.writeOutlineOnly,
-}
-#@nonl
-#@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
 #@+node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
 def getPublicCommands (self):
     
@@ -20259,7 +20266,7 @@ def setBindingsFromCommandsDict (self):
 #@-node:ekr.20051006125633:Binding (keyHandler)
 #@-node:ekr.20051013103457:(bindings)
 #@-node:ekr.20051006122237:(Recent)
-#@+node:ekr.20051012084345:Fixed Bugs
+#@+node:ekr.20051012084345:Bugs fixed
 #@+node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
 #@+node:ekr.20031218072017.839:defineEditMenuTopTable
 def defineEditMenuTopTable (self):
@@ -20595,6 +20602,437 @@ def pasteText (self):
 #@-node:ekr.20031218072017.843:f.OnPaste & OnPasteFromMenu & pasteText
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@-node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
+#@+node:ekr.20051012075322:openWithFileName now reads @settings by default
+#@+node:ekr.20051010152921:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3376527
+By: vpe
+
+My first complaint is the same as in this earlier post:
+http://sourceforge.net/forum/message.php?msg_id=3331283
+If leo file has @settings in it, these settings are not applied when I open
+the file from another outline, that is from File->Recent Files or File->Open
+or Help->Leo Docs etc. They are applied when I open the file directly by double
+clicking.
+
+Also, when leo files are opened from another outline, the log window has no
+messages about leoID, global config dir, home dir, reading settings, # plugins
+loaded.
+
+Possible reason:
+
+I have leo files associated with "path\pythonw.exe" "path\leo.py" "%1". Each
+time I open a leo file directly, a new pythonw.exe process is started. But,
+when I open files from an outline, no new pythonw.exe is started. This does
+not make much sense to me. It's not an MDI editor. It's also safer to have separate
+processes--if one outline crashes, others will survive.
+
+Leo 4.3.3, build  1.282 , Python 2.4.2, Tk 8.4.7, win2k
+#@nonl
+#@-node:ekr.20051010152921:Report
+#@+node:ekr.20031218072017.1934:run & allies
+def run(fileName=None,*args,**keywords):
+    
+    """Initialize and run Leo"""
+    
+    __pychecker__ = '--no-argsused' # keywords not used.
+    
+    if not isValidPython(): return
+    << import leoGlobals and leoApp >>
+    g.computeStandardDirectories()
+    script = getBatchScript() # Do early so we can compute verbose next.
+    verbose = script is None
+    g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
+    << import leoNodes and leoConfig >>
+    g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
+    g.app.config = leoConfig.configClass()
+    fileName = completeFileName(fileName)
+    reportDirectories(verbose)
+    # Read settings *after* setting g.app.config.
+    # Read settings *before* opening plugins.
+    g.app.config.readSettingsFiles(fileName,verbose)
+    g.app.setEncoding()
+    if script:
+        createNullGuiWithScript(script)
+        fileName = None
+    # Load plugins. Plugins may create g.app.gui.
+    g.doHook("start1")
+    if g.app.killed: return # Support for g.app.forceShutdown.
+    # Create the default gui if needed.
+    if g.app.gui == None:
+        g.app.createTkGui() # Creates global windows.
+    # Initialize tracing and statistics.
+    g.init_sherlock(args)
+    g.clear_stats()
+    << start psycho >>
+    # New in 4.3: clear g.app.initing _before_ creating the frame.
+    g.app.initing = False # "idle" hooks may now call g.app.forceShutdown.
+    # Create the main frame.  Show it and all queued messages.
+    c,frame = createFrame(fileName)
+    if not frame: return
+    if g.app.disableSave:
+        g.es("disabling save commands",color="red")
+    g.app.writeWaitingLog()
+    p = c.currentPosition()
+    g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
+    g.enableIdleTimeHook()
+    frame.tree.redraw()
+    frame.body.setFocus()
+    g.app.gui.runMainLoop()
+#@nonl
+#@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+# Import leoGlobals, but do NOT set g.
+try:
+    import leoGlobals
+except ImportError:
+    print "Error importing leoGlobals.py"
+
+# Create the application object.
+try:
+    import leoApp
+    leoGlobals.app = leoApp.LeoApp()
+except ImportError:
+    print "Error importing leoApp.py"
+    
+# NOW we can set g.
+g = leoGlobals
+assert(g.app)
+#@nonl
+#@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+#@+node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+try:
+    import leoNodes
+except ImportError:
+    print "Error importing leoNodes.py"
+    import traceback ; traceback.print_exc()
+try:
+    import leoConfig
+except ImportError:
+    print "Error importing leoConfig.py"
+    import traceback ; traceback.print_exc()
+#@nonl
+#@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+#@+node:ekr.20040411081633:<< start psycho >>
+if g.app and g.app.use_psyco:
+    try:
+        import psyco
+        if 0:
+            theFile = r"c:\prog\test\psycoLog.txt"
+            g.es("psyco now logging to",theFile,color="blue")
+            psyco.log(theFile)
+            psyco.profile()
+        psyco.full()
+        g.es("psyco now running",color="blue")
+    except ImportError:
+        pass
+    except:
+        print "unexpected exception importing psyco"
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040411081633:<< start psycho >>
+#@+node:ekr.20031218072017.1936:isValidPython
+def isValidPython():
+
+    message = """\
+Leo requires Python 2.2.1 or higher.
+You may download Python from http://python.org/download/
+"""
+    try:
+        # This will fail if True/False are not defined.
+        import leoGlobals as g
+    except ImportError:
+        print "isValidPython: can not import leoGlobals"
+        return 0
+    except:
+        print "isValidPytyhon: unexpected exception: import leoGlobals.py as g"
+        import traceback ; traceback.print_exc()
+        return 0
+    try:
+        ok = g.CheckVersion(sys.version, "2.2.1")
+        if not ok:
+            print message
+            g.app.gui.runAskOkDialog(None,"Python version error",message=message,text="Exit")
+        return ok
+    except:
+        print "isValidPython: unexpected exception: g.CheckVersion"
+        import traceback ; traceback.print_exc()
+        return 0
+#@nonl
+#@-node:ekr.20031218072017.1936:isValidPython
+#@+node:ekr.20041124083125:completeFileName (leo.py)
+def completeFileName (fileName):
+    
+    import leoGlobals as g
+    
+    if not fileName:
+        return None
+        
+    # This does not depend on config settings.
+    fileName = g.os_path_join(os.getcwd(),fileName)
+
+    head,ext = g.os_path_splitext(fileName)
+    if not ext:
+        fileName = fileName + ".leo"
+
+    return fileName
+#@nonl
+#@-node:ekr.20041124083125:completeFileName (leo.py)
+#@+node:ekr.20031218072017.1624:createFrame (leo.py)
+def createFrame (fileName):
+    
+    """Create a LeoFrame during Leo's startup process."""
+    
+    import leoGlobals as g
+    
+    # g.trace(repr(fileName))
+
+    # Try to create a frame for the file.
+    if fileName:
+        if g.os_path_exists(fileName):
+            # We have already read settings from this file.
+            ok, frame = g.openWithFileName(fileName,None,readSettings=False)
+            if ok:
+                return frame.c,frame
+
+    # Create a _new_ frame & indicate it is the startup window.
+    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
+    frame.setInitialWindowGeometry()
+    frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # 5/13/05
+    frame.startupWindow = True
+    # 3/2/05: Call the 'new' hook for compatibility with plugins.
+    g.doHook("new",old_c=None,c=c,new_c=c)
+
+    # Report the failure to open the file.
+    if fileName:
+        g.es("File not found: " + fileName)
+
+    return c,frame
+#@-node:ekr.20031218072017.1624:createFrame (leo.py)
+#@+node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+def createNullGuiWithScript (script):
+    
+    import leoGlobals as g
+    import leoGui
+    
+    g.app.batchMode = True
+    g.app.gui = leoGui.nullGui("nullGui")
+    if not g.app.root:
+        g.app.root = g.app.gui.createRootWindow()
+    g.app.gui.finishCreate()
+    g.app.gui.setScript(script)
+#@-node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+#@+node:ekr.20031218072017.1939:getBatchScript
+def getBatchScript ():
+    
+    import leoGlobals as g
+    
+    name = None ; i = 1 # Skip the dummy first arg.
+    while i + 1 < len(sys.argv):
+        arg = sys.argv[i].strip().lower()
+        if arg in ("--script","-script"):
+            name = sys.argv[i+1].strip() ; break
+        i += 1
+
+    if not name:
+        return None
+    name = g.os_path_join(g.app.loadDir,name)
+    try:
+        f = None
+        try:
+            f = open(name,'r')
+            script = f.read()
+            # g.trace("script",script)
+        except IOError:
+            g.es("can not open script file: " + name, color="red")
+            script = None
+    finally:
+        if f: f.close()
+        return script
+#@nonl
+#@-node:ekr.20031218072017.1939:getBatchScript
+#@+node:ekr.20041130093254:reportDirectories
+def reportDirectories(verbose):
+    
+    import leoGlobals as g
+   
+    if verbose:
+        for kind,theDir in (
+            ("global config",g.app.globalConfigDir),
+            ("home",g.app.homeDir),
+        ):
+            g.es("%s dir: %s" % (kind,theDir),color="blue")
+#@nonl
+#@-node:ekr.20041130093254:reportDirectories
+#@-node:ekr.20031218072017.1934:run & allies
+#@+node:ekr.20031218072017.1624:createFrame (leo.py)
+def createFrame (fileName):
+    
+    """Create a LeoFrame during Leo's startup process."""
+    
+    import leoGlobals as g
+    
+    # g.trace(repr(fileName))
+
+    # Try to create a frame for the file.
+    if fileName:
+        if g.os_path_exists(fileName):
+            # We have already read settings from this file.
+            ok, frame = g.openWithFileName(fileName,None,readSettings=False)
+            if ok:
+                return frame.c,frame
+
+    # Create a _new_ frame & indicate it is the startup window.
+    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
+    frame.setInitialWindowGeometry()
+    frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # 5/13/05
+    frame.startupWindow = True
+    # 3/2/05: Call the 'new' hook for compatibility with plugins.
+    g.doHook("new",old_c=None,c=c,new_c=c)
+
+    # Report the failure to open the file.
+    if fileName:
+        g.es("File not found: " + fileName)
+
+    return c,frame
+#@-node:ekr.20031218072017.1624:createFrame (leo.py)
+#@+node:ekr.20041117093246:Scanning @settings (g.app.config)
+#@+node:ekr.20041117085625:openSettingsFile
+def openSettingsFile (self,path):
+    
+    try:
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
+        theFile = open(path,'rb')
+    except IOError:
+        g.es("can not open: " + path, color="blue")
+        return None
+        
+    # Similar to g.openWithFileName except it uses a null gui.
+    # Changing g.app.gui here is a major hack.
+    oldGui = g.app.gui
+    g.app.gui = leoGui.nullGui("nullGui")
+    c,frame = g.app.gui.newLeoCommanderAndFrame(path,updateRecentFiles=False)
+    frame.log.enable(False)
+    g.app.setLog(frame.log,"openWithFileName")
+    g.app.lockLog()
+    ok = frame.c.fileCommands.open(
+        theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
+    g.app.unlockLog()
+    frame.openDirectory = g.os_path_dirname(path)
+    g.app.gui = oldGui
+    return ok and c
+#@nonl
+#@-node:ekr.20041117085625:openSettingsFile
+#@+node:ekr.20041120064303:config.readSettingsFiles
+def readSettingsFiles (self,fileName,verbose=True):
+    
+    seen = []
+    
+    # Init settings from leoSettings.leo files.
+    for path,localFlag in (
+        (self.globalConfigFile,False),
+        (self.homeFile,False),
+        (fileName,True),
+    ):
+        if path and path.lower() not in seen:
+            seen.append(path.lower())
+            if verbose:
+                g.es_print('reading settings in %s' % path)
+            c = self.openSettingsFile(path)
+            if c:
+                d = self.readSettings(c)
+                if d:
+                    d['_hash'] = theHash = c.hash()
+                    if localFlag:
+                        self.localOptionsDict[theHash] = d
+                    else:
+                        self.localOptionsList.insert(0,d)
+                g.app.destroyWindow(c.frame)
+            self.readRecentFilesFile(path)
+
+    self.inited = True
+    self.setIvarsFromSettings(None)
+#@nonl
+#@-node:ekr.20041120064303:config.readSettingsFiles
+#@+node:ekr.20041117083857.1:readSettings
+# Called to read all leoSettings.leo files.
+# Also called when opening an .leo file to read @settings tree.
+
+def readSettings (self,c):
+    
+    """Read settings from a file that may contain an @settings tree."""
+    
+    # g.trace(c.fileName())
+    
+    # Create a settings dict for c for set()
+    if c and self.localOptionsDict.get(c.hash()) is None:
+        self.localOptionsDict[c.hash()] = {}
+
+    parser = settingsTreeParser(c)
+    d = parser.traverse()
+
+    return d
+#@nonl
+#@-node:ekr.20041117083857.1:readSettings
+#@-node:ekr.20041117093246:Scanning @settings (g.app.config)
+#@+node:ekr.20031218072017.2052:g.openWithFileName
+def openWithFileName(fileName,old_c,
+    enableLog=True,readAtFileNodesFlag=True,readSettings=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Create a full, normalized, Unicode path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
+
+    # If the file is already open just bring its window to the front.
+    theList = app.windowList
+    for frame in theList:
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
+            app.setLog(frame.log,"openWithFileName")
+            # g.trace('Already open',fileName)
+            return True, frame
+    try:
+        g.trace('Not open',fileName)
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
+        theFile = open(fileName,'rb')
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        # Bug fix in 4.4.
+        frame.openDirectory = g.os_path_dirname(fileName)
+        if readSettings:
+            g.app.config.readSettings(c)
+        g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
+        return True, frame
+    except IOError:
+        # Do not use string + here: it will fail for non-ascii strings!
+        if not g.app.unitTesting:
+            g.es("can not open: %s" % (fileName), color="blue")
+        return False, None
+    except Exception:
+        g.es("exceptions opening: %s" % (fileName),color="red")
+        g.es_exception()
+        return False, None
+#@nonl
+#@-node:ekr.20031218072017.2052:g.openWithFileName
+#@-node:ekr.20051012075322:openWithFileName now reads @settings by default
 #@+node:ekr.20051012205437:(Replaced all calls to manufactureKeyPress)
 # Such calls will fail if keys have been rebound.
 #@nonl
@@ -20798,6 +21236,145 @@ def abortEditLabelCommand (self):
 #@nonl
 #@-node:ekr.20031218072017.3981:abortEditLabelCommand
 #@-node:ekr.20051013103838:(Escape does not end label editing)
+#@+node:ekr.20051012101104:Don't override menu defaults if there is no setting for the command in the @shortcuts node
+#@+node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
+def createMenuEntries (self,menu,table,
+    openWith=False,dontBind=False,
+    init=False,dynamicMenu=False):
+    
+    c = self.c ; k = c.keyHandler
+    
+    for label,accel,command in table:
+        if label == None or command == None or label == "-":
+            self.add_separator(menu)
+        else:
+            << clear useBindShortcut and adjust accel if accel startswith '--' >>
+            << set name to the label for doCommand >>
+            << set accel to the shortcut for name >>
+            << set bind_shortcut and menu_shortcut using accel >>
+            << define callback function >>
+            << set realLabel, amp_index and menu_shortcut >>
+            
+            if bind_shortcut and useBindShortcut and not dontBind:
+                ok = c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith,fromMenu=True)
+                if not ok: menu_shortcut = None
+
+            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+                command=menuCallback,underline=amp_index)
+#@+node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
+if accel and accel.startswith('--'):
+    useBindShortcut = False
+    accel = accel[2:]
+else:
+    useBindShortcut = True
+#@nonl
+#@-node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
+#@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+name = label.strip().lower()
+
+# Remove special characters from command names.
+name2 = ""
+for ch in name:
+    if ch in string.ascii_letters or ch in string.digits:
+        name2 = name2 + ch
+name = name2
+#@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+#@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+# First, check the kludged cut/copy/paste commands.
+if not useBindShortcut:
+    cutCopyPasteDict = {
+        'Ctrl+X': 'cut-text',
+        'Ctrl+C': 'copy-text',
+        'Ctrl+V': 'paste-text',
+    }
+    name = cutCopyPasteDict.get(accel)
+    # Allow the user to override the shortcut using equivalent emacs name.
+    rawKey,accel2 = c.config.getShortcut(name)
+    # g.trace(accel,accel2,name,command.__name__)
+    if not accel2:
+        accel2 = 'none' # Do not allow any further overrides.
+else:
+    # Second, try to get the old-style name.
+    rawKey,accel2 = c.config.getShortcut(name)
+    
+# if not openWith: g.trace(accel,accel2,name)
+
+# New in 4.4: allow emacs-style or old style names in menu shortcuts.
+if openWith:
+    pass
+elif not accel2:
+    if c.useMiniBuffer:
+        try: # User errors in the call can cause this.
+            commandName = command.__name__
+        except Exception:
+            commandName = None
+        emacs_name = k.inverseCommandsDict.get(commandName)
+        if emacs_name:
+            # Override the default shortcut, but *only* if the setting was actually given.
+            if g.app.config.exists(c,emacs_name,'shortcut'):
+                rawKey,accel2 = c.config.getShortcut(emacs_name)
+                # Override the default shortcut.
+                accel = accel2 
+                # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
+        else:
+            if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
+                if commandName and commandName != 'dummyCommand':
+                    g.trace('no inverse for %s' % commandName)
+            accel = None # New in 4.4: clear the default.
+    else:
+        pass # Use the default shortcut.
+elif accel2 and accel2.lower() == "none":
+    accel = None # Remove the default shortcut.
+else:
+    accel = accel2 # Override the default shortcut.
+    
+# if not openWith: g.trace(accel,accel2,name)
+#@nonl
+#@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+
+# Kludge: disable the shortcuts for cut, copy, paste.
+# This has already been bound in leoTkinterFrame.__init__
+# 2/13/03: A _possible_ fix for the Linux control-v bug.
+
+if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
+    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
+        bind_shortcut = None
+#@nonl
+#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@+node:ekr.20031218072017.1727:<< define callback function >>
+if openWith:
+    menuCallback = self.defineOpenWithMenuCallback(command)
+else:
+    menuCallback = self.defineMenuCallback(command,name)
+#@nonl
+#@-node:ekr.20031218072017.1727:<< define callback function >>
+#@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+realLabel = self.getRealMenuName(label)
+
+# A bad hack:  this does not allow for translations!
+# We need a way of specifying shortcuts, & bindings and translations all in the same place.
+
+amp_index = -1
+if rawKey:
+    amp_index = rawKey.find("&")
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+
+realLabel = realLabel.replace("&","")
+
+if 0: # trace
+    if rawKey and rawKey.lower().startswith("exit"):
+        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
+
+if not menu_shortcut:
+    menu_shortcut = ""
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+#@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
+#@-node:ekr.20051012101104:Don't override menu defaults if there is no setting for the command in the @shortcuts node
+#@+node:ekr.20051013155435:Minor crashes during development
 #@+node:ekr.20051012082219:Crash in backwardParagraph
 TclError Exception in Tk callback
   Function: <function keyCallback at 0x017923B0> (type: <type 'function'>)
@@ -21088,145 +21665,8 @@ if not menu_shortcut:
 #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
 #@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
 #@-node:ekr.20051010130212:Crash in unit test
-#@+node:ekr.20051012101104:Don't override menu defaults if there is no setting for the command in the @shortcuts node
-#@+node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
-def createMenuEntries (self,menu,table,
-    openWith=False,dontBind=False,
-    init=False,dynamicMenu=False):
-    
-    c = self.c ; k = c.keyHandler
-    
-    for label,accel,command in table:
-        if label == None or command == None or label == "-":
-            self.add_separator(menu)
-        else:
-            << clear useBindShortcut and adjust accel if accel startswith '--' >>
-            << set name to the label for doCommand >>
-            << set accel to the shortcut for name >>
-            << set bind_shortcut and menu_shortcut using accel >>
-            << define callback function >>
-            << set realLabel, amp_index and menu_shortcut >>
-            
-            if bind_shortcut and useBindShortcut and not dontBind:
-                ok = c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith,fromMenu=True)
-                if not ok: menu_shortcut = None
-
-            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
-                command=menuCallback,underline=amp_index)
-#@+node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
-if accel and accel.startswith('--'):
-    useBindShortcut = False
-    accel = accel[2:]
-else:
-    useBindShortcut = True
-#@nonl
-#@-node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
-#@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
-name = label.strip().lower()
-
-# Remove special characters from command names.
-name2 = ""
-for ch in name:
-    if ch in string.ascii_letters or ch in string.digits:
-        name2 = name2 + ch
-name = name2
-#@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
-#@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, check the kludged cut/copy/paste commands.
-if not useBindShortcut:
-    cutCopyPasteDict = {
-        'Ctrl+X': 'cut-text',
-        'Ctrl+C': 'copy-text',
-        'Ctrl+V': 'paste-text',
-    }
-    name = cutCopyPasteDict.get(accel)
-    # Allow the user to override the shortcut using equivalent emacs name.
-    rawKey,accel2 = c.config.getShortcut(name)
-    # g.trace(accel,accel2,name,command.__name__)
-    if not accel2:
-        accel2 = 'none' # Do not allow any further overrides.
-else:
-    # Second, try to get the old-style name.
-    rawKey,accel2 = c.config.getShortcut(name)
-    
-# if not openWith: g.trace(accel,accel2,name)
-
-# New in 4.4: allow emacs-style or old style names in menu shortcuts.
-if openWith:
-    pass
-elif not accel2:
-    if c.useMiniBuffer:
-        try: # User errors in the call can cause this.
-            commandName = command.__name__
-        except Exception:
-            commandName = None
-        emacs_name = k.inverseCommandsDict.get(commandName)
-        if emacs_name:
-            # Override the default shortcut, but *only* if the setting was actually given.
-            if g.app.config.exists(c,emacs_name,'shortcut'):
-                rawKey,accel2 = c.config.getShortcut(emacs_name)
-                # Override the default shortcut.
-                accel = accel2 
-                # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
-        else:
-            if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
-                if commandName and commandName != 'dummyCommand':
-                    g.trace('no inverse for %s' % commandName)
-            accel = None # New in 4.4: clear the default.
-    else:
-        pass # Use the default shortcut.
-elif accel2 and accel2.lower() == "none":
-    accel = None # Remove the default shortcut.
-else:
-    accel = accel2 # Override the default shortcut.
-    
-# if not openWith: g.trace(accel,accel2,name)
-#@nonl
-#@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
-
-# Kludge: disable the shortcuts for cut, copy, paste.
-# This has already been bound in leoTkinterFrame.__init__
-# 2/13/03: A _possible_ fix for the Linux control-v bug.
-
-if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
-    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
-        bind_shortcut = None
-#@nonl
-#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-#@+node:ekr.20031218072017.1727:<< define callback function >>
-if openWith:
-    menuCallback = self.defineOpenWithMenuCallback(command)
-else:
-    menuCallback = self.defineMenuCallback(command,name)
-#@nonl
-#@-node:ekr.20031218072017.1727:<< define callback function >>
-#@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-realLabel = self.getRealMenuName(label)
-
-# A bad hack:  this does not allow for translations!
-# We need a way of specifying shortcuts, & bindings and translations all in the same place.
-
-amp_index = -1
-if rawKey:
-    amp_index = rawKey.find("&")
-if amp_index == -1:
-    amp_index = realLabel.find("&")
-
-realLabel = realLabel.replace("&","")
-
-if 0: # trace
-    if rawKey and rawKey.lower().startswith("exit"):
-        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
-
-if not menu_shortcut:
-    menu_shortcut = ""
-#@nonl
-#@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-#@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
-#@-node:ekr.20051012101104:Don't override menu defaults if there is no setting for the command in the @shortcuts node
-#@-node:ekr.20051012084345:Fixed Bugs
+#@-node:ekr.20051013155435:Minor crashes during development
+#@-node:ekr.20051012084345:Bugs fixed
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl

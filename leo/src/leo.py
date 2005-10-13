@@ -92,7 +92,9 @@ def run(fileName=None,*args,**keywords):
     g.app.config = leoConfig.configClass()
     fileName = completeFileName(fileName)
     reportDirectories(verbose)
-    g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.
+    # Read settings *after* setting g.app.config.
+    # Read settings *before* opening plugins.
+    g.app.config.readSettingsFiles(fileName,verbose)
     g.app.setEncoding()
     if script:
         createNullGuiWithScript(script)
@@ -200,7 +202,8 @@ def createFrame (fileName):
     # Try to create a frame for the file.
     if fileName:
         if g.os_path_exists(fileName):
-            ok, frame = g.openWithFileName(fileName,None)
+            # We have already read settings from this file.
+            ok, frame = g.openWithFileName(fileName,None,readSettings=False)
             if ok:
                 return frame.c,frame
 

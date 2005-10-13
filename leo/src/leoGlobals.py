@@ -749,7 +749,8 @@ def scanDirectives(c,p=None):
 #@-node:ekr.20031218072017.1391:scanDirectives (utils)
 #@-node:ekr.20031218072017.1380:Directive utils...
 #@+node:ekr.20031218072017.2052:g.openWithFileName
-def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
+def openWithFileName(fileName,old_c,
+    enableLog=True,readAtFileNodesFlag=True,readSettings=True):
     
     """Create a Leo Frame for the indicated fileName if the file exists."""
 
@@ -772,7 +773,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
             # g.trace('Already open',fileName)
             return True, frame
     try:
-        # g.trace('Not open',fileName)
+        g.trace('Not open',fileName)
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
@@ -788,7 +789,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
             for frame in g.app.windowList:
                 # The recent files list has been updated by menu.updateRecentFiles.
                 frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        # Bug fix in 4.4.
         frame.openDirectory = g.os_path_dirname(fileName)
+        if readSettings:
+            g.app.config.readSettings(c)
         g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
