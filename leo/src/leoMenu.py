@@ -1046,6 +1046,8 @@ class leoMenu:
                 else:
                     # Second, try to get the old-style name.
                     rawKey,accel2 = c.config.getShortcut(name)
+                    
+                # if not openWith: g.trace(accel,accel2,name)
                 
                 # New in 4.4: allow emacs-style or old style names in menu shortcuts.
                 if openWith:
@@ -1072,6 +1074,8 @@ class leoMenu:
                     accel = None # Remove the default shortcut.
                 else:
                     accel = accel2 # Override the default shortcut.
+                    
+                # if not openWith: g.trace(accel,accel2,name)
                 #@nonl
                 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
                 #@nl

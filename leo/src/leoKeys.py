@@ -843,7 +843,7 @@ class keyHandlerClass:
         k.checkBindings()
     #@nonl
     #@-node:ekr.20051007080058:makeAllBindings
-    #@+node:ekr.20050923174229.1:makeHardBindings 
+    #@+node:ekr.20050923174229.1:makeHardBindings
     def makeHardBindings (self):
         
         '''Define the bindings used in quick-command mode.'''
@@ -913,7 +913,7 @@ class keyHandlerClass:
             '<Delete>':     c.killBufferCommands.backwardKillSentence,
         }
     #@nonl
-    #@-node:ekr.20050923174229.1:makeHardBindings 
+    #@-node:ekr.20050923174229.1:makeHardBindings
     #@+node:ekr.20051008152134:makeSpecialBindings (Binds to 'Key')
     def makeSpecialBindings (self):
         
@@ -1068,9 +1068,10 @@ class keyHandlerClass:
     
         if func: # Func is an argument.
             k.previousStroke = stroke
-            k.forceFocusToBody()
-            func(event)
             forceFocus = func.__name__ != 'leoCallback'
+            if forceFocus:
+                k.forceFocusToBody()
+            func(event)
             k.endCommand(event,commandName,forceFocus,tag='masterCommand')
             return 'break'
     
@@ -1828,9 +1829,6 @@ class keyHandlerClass:
         k = self ; c = k.c ; f = c.frame
         
         f.bodyWantsFocus(f.bodyCtrl,later=False,tag='k.forceFocusToBody')
-        
-        if 0: # Causes too much flash.
-            c.frame.endEditLabelCommand()
     #@nonl
     #@-node:ekr.20051012092847:forceFocusToBody
     #@+node:ekr.20051010063452:ultimateFuncName

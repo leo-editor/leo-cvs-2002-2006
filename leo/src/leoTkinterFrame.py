@@ -1695,9 +1695,13 @@ class leoTkinterFrame (leoFrame.leoFrame):
             v.edit_text().insert("end",self.revertHeadline)
             tree.idle_head_key(v) # Must be done immediately.
             tree.revertHeadline = None
-            tree.select(v)
-            if v and len(v.t.vnodeList) > 0:
-                tree.force_redraw() # force a redraw of joined headlines.
+            if 1: # New code in 4.4a1.
+                tree.endEditLabel()
+                tree.select(tree.editPosition())
+            else: # Old code:
+                tree.select(v)
+                if v and len(v.t.vnodeList) > 0:
+                    tree.force_redraw() # force a redraw of joined headlines.
     #@nonl
     #@-node:ekr.20031218072017.3981:abortEditLabelCommand
     #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -1879,16 +1883,19 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if g.app.batchMode:
             c.notValidInBatchMode("End Edit Headline")
             return
-        
-        v = frame.tree.editPosition()
+            
+        if 1: # New code in 4.4a1.
+            tree.endEditLabel()
+            tree.select(tree.editPosition())
+        else:
+            v = frame.tree.editPosition()
+            # g.trace(v)
+            if v and v.edit_text():
+                tree.select(v)
+            if v: # Bug fix 10/9/02: also redraw ancestor headlines.
+                tree.force_redraw() # force a redraw of joined headlines.
     
-        # g.trace(v)
-        if v and v.edit_text():
-            tree.select(v)
-        if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-            tree.force_redraw() # force a redraw of joined headlines.
-    
-        frame.bodyWantsFocus(frame.bodyCtrl,tag='endEditLabelCommand')
+        frame.bodyWantsFocus(frame.bodyCtrl,tag='body:endEditLabelCommand')
     #@nonl
     #@-node:ekr.20031218072017.3982:endEditLabelCommand
     #@+node:ekr.20031218072017.3983:insertHeadlineTime
@@ -2204,8 +2211,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         __pychecker__ = '--no-argsused' # tag good for debugging.
     
         c = self.c
-        
-        # g.trace(c.shortFileName())
+        # g.trace(tag) # c.shortFileName())
     
         if widget and not g.app.unitTesting:
             # Messing with focus may be dangerous in unit tests.

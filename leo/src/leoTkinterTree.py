@@ -2568,7 +2568,7 @@ class leoTkinterTree (leoFrame.leoTree):
             # force a redraw of joined and ancestor headlines.
             self.force_redraw() 
     
-        frame.bodyWantsFocus(frame.bodyCtrl,tag='endEditLabel')
+        frame.bodyWantsFocus(frame.bodyCtrl,tag='body:endEditLabel')
     #@nonl
     #@-node:ekr.20040803072955.126:endEditLabel
     #@+node:ekr.20040803072955.127:editLabel
@@ -2723,7 +2723,7 @@ class leoTkinterTree (leoFrame.leoTree):
             p.edit_text().tag_remove("sel","1.0","end")
             p.edit_text().tag_add("sel","1.0","end")
             # Set the focus immediately
-            self.frame.treeWantsFocus(p.edit_text(),later=False,tag='setNormalLabelState')
+            self.frame.treeWantsFocus(p.edit_text(),later=False,tag='tree:setNormalLabelState')
     #@nonl
     #@-node:ekr.20040803072955.135:setNormalLabelState
     #@+node:ekr.20040803072955.136:setDisabledLabelState
