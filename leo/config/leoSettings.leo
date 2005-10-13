@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="10" left="256" height="794" width="943"/>
+	<global_window_position top="10" left="256" height="718" width="943"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -228,7 +228,7 @@
 <v t="ekr.20050921105316.2"><vh>@bool useMiniBuffer=True</vh></v>
 <v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
-<v t="ekr.20051010195914"><vh>@@shortcuts no shortcuts (for testing)</vh></v>
+<v t="ekr.20051010195914" a="E"><vh>@@shortcuts no shortcuts (for testing)</vh></v>
 <v t="ekr.20051007193427"><vh>@@shortcuts traditional Leo shortcuts (not recommended)</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
 <v t="ekr.20051010112558" a="ETV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
@@ -1532,7 +1532,7 @@ paste-text              = Ctrl-v        # For testing only: Alt-Shift-Ctrl-v
 # Leo find panel stuff.  It's not clear what will happen to these.
 dismiss-leo-find-panel  = None
 leo-find                = F3
-leo-find-panel          = F5    # Ctrl-f conflicts with forward-char.
+leo-find-panel          = Shift-Ctrl-f # Ctrl-f conflicts with forward-char.
 leo-find-previous       = F2
 leo-change              = None
 leo-change-then-find    = None
@@ -1734,15 +1734,6 @@ yank-rectangle              = None
 zap-to-character            = None
 
 # Leo commands...
-
-# Leo find panel stuff.  It's not clear what will happen to these.
-# At present these are bound to 'EKR' abbreviations as shown
-leo-find-button             = F3            # ff
-leo-find-panel              = None          # f
-leo-find-previous           = F2            # fp
-leo-find-change-button      = None          # fc
-leo-find-change-then-find-button = None     # fcf
-leo-find-change-all         = None          # Unwise to bind this to a shortcut or abbreviation.
 
 # apply settings            = None
 abort-edit-headline         = Shift-Esc

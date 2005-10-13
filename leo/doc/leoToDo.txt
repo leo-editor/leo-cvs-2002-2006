@@ -6,10 +6,32 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-* Fix all bugs.
+* Learn how to make selections using the mouse.
+    - Make sure it is possible and convenient with default shortcuts.
+
+** Config should warn if a setting appears twice in the same @shortcuts node.
+   (Later, we can have a list of settings, but it would still be wrong.)
+
+**** We would *really* like arrow keys to mean different things in different panes.
+
+- Must have a shortcut for sort-siblings
+
+- Document new commands:
+    print-bindings
+
+- Posting:
+    - Understanding mousless operation.
+    ** Understanding frustration with Leo's lack of support for keyboard.
+    - Moving towards more standard emacs keystrokes.
+    - New commands to support mouseless leo: many more coming.
+        - By default, arrow keys more outline, control/alt keys are as in Emacs.
+    - Changing 30 years of habits is slow, but it is happening.
+    - Much more appreciation for emacs:  no need for bindings for infrequenly-used commands.
+    - 3 sets of keybindings in leoSettings.leo.  You can use these as templates, or roll your own.
+    - Discuss warnings.
 
 - Create registerCommand method for use by scripts, plugins.
-
+#@nonl
 #@+node:ekr.20051011124540:What I did after changeover
 - Fixed duplicate Pastes in headlines.
     - Works when paste-text command is not defined.
