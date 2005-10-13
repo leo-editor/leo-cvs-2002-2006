@@ -7347,7 +7347,7 @@ def toEncodedString (s,encoding,reportErrors=False):
     return s
 #@nonl
 #@-node:ekr.20050208093800:toEncodedString
-#@+node:ekr.20041120064303:config.readSettingsFiles
+#@+node:ekr.20041120064303:g.app.config.readSettingsFiles
 def readSettingsFiles (self,fileName,verbose=True):
     
     seen = []
@@ -7364,20 +7364,14 @@ def readSettingsFiles (self,fileName,verbose=True):
                 g.es_print('reading settings in %s' % path)
             c = self.openSettingsFile(path)
             if c:
-                d = self.readSettings(c)
-                if d:
-                    d['_hash'] = theHash = c.hash()
-                    if localFlag:
-                        self.localOptionsDict[theHash] = d
-                    else:
-                        self.localOptionsList.insert(0,d)
+                self.updateSettings(c,localFlag)
                 g.app.destroyWindow(c.frame)
             self.readRecentFilesFile(path)
 
     self.inited = True
     self.setIvarsFromSettings(None)
 #@nonl
-#@-node:ekr.20041120064303:config.readSettingsFiles
+#@-node:ekr.20041120064303:g.app.config.readSettingsFiles
 #@-node:ekr.20050705140158:Fixed bug with non-unicode characters in file name
 #@+node:ekr.20050705142321:Fixed bug with non-unicode characters in settings value
 #@+node:ekr.20050705142321.1:Report
@@ -10017,7 +10011,7 @@ def openWithFileName(fileName,old_c,
             # g.trace('Already open',fileName)
             return True, frame
     try:
-        g.trace('Not open',fileName)
+        # g.trace('Not open',fileName)
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
@@ -10036,7 +10030,7 @@ def openWithFileName(fileName,old_c,
         # Bug fix in 4.4.
         frame.openDirectory = g.os_path_dirname(fileName)
         if readSettings:
-            g.app.config.readSettings(c)
+            g.app.config.updateSettings(c,localFlag=True)
         g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
@@ -20602,6 +20596,7 @@ def pasteText (self):
 #@-node:ekr.20031218072017.843:f.OnPaste & OnPasteFromMenu & pasteText
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@-node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
+#@clone 2
 #@+node:ekr.20051012075322:openWithFileName now reads @settings by default
 #@+node:ekr.20051010152921:Report
 @nocolor
@@ -20896,7 +20891,7 @@ def createFrame (fileName):
     return c,frame
 #@-node:ekr.20031218072017.1624:createFrame (leo.py)
 #@+node:ekr.20041117093246:Scanning @settings (g.app.config)
-#@+node:ekr.20041117085625:openSettingsFile
+#@+node:ekr.20041117085625:g.app.config.openSettingsFile
 def openSettingsFile (self,path):
     
     try:
@@ -20921,8 +20916,8 @@ def openSettingsFile (self,path):
     g.app.gui = oldGui
     return ok and c
 #@nonl
-#@-node:ekr.20041117085625:openSettingsFile
-#@+node:ekr.20041120064303:config.readSettingsFiles
+#@-node:ekr.20041117085625:g.app.config.openSettingsFile
+#@+node:ekr.20041120064303:g.app.config.readSettingsFiles
 def readSettingsFiles (self,fileName,verbose=True):
     
     seen = []
@@ -20939,21 +20934,15 @@ def readSettingsFiles (self,fileName,verbose=True):
                 g.es_print('reading settings in %s' % path)
             c = self.openSettingsFile(path)
             if c:
-                d = self.readSettings(c)
-                if d:
-                    d['_hash'] = theHash = c.hash()
-                    if localFlag:
-                        self.localOptionsDict[theHash] = d
-                    else:
-                        self.localOptionsList.insert(0,d)
+                self.updateSettings(c,localFlag)
                 g.app.destroyWindow(c.frame)
             self.readRecentFilesFile(path)
 
     self.inited = True
     self.setIvarsFromSettings(None)
 #@nonl
-#@-node:ekr.20041120064303:config.readSettingsFiles
-#@+node:ekr.20041117083857.1:readSettings
+#@-node:ekr.20041120064303:g.app.config.readSettingsFiles
+#@+node:ekr.20041117083857.1:g.app.config.readSettings
 # Called to read all leoSettings.leo files.
 # Also called when opening an .leo file to read @settings tree.
 
@@ -20972,7 +20961,25 @@ def readSettings (self,c):
 
     return d
 #@nonl
-#@-node:ekr.20041117083857.1:readSettings
+#@-node:ekr.20041117083857.1:g.app.config.readSettings
+#@+node:ekr.20051013161232:g.app.config.updateSettings
+def updateSettings (self,c,localFlag):
+
+    d = self.readSettings(c)
+    
+    if d:
+        d['_hash'] = theHash = c.hash()
+        if localFlag:
+            self.localOptionsDict[theHash] = d
+        else:
+            self.localOptionsList.insert(0,d)
+            
+    if 0: # Good trace.
+        if localFlag:
+            g.trace(c.fileName())
+            g.printDict(d)
+#@nonl
+#@-node:ekr.20051013161232:g.app.config.updateSettings
 #@-node:ekr.20041117093246:Scanning @settings (g.app.config)
 #@+node:ekr.20031218072017.2052:g.openWithFileName
 def openWithFileName(fileName,old_c,
@@ -20999,7 +21006,7 @@ def openWithFileName(fileName,old_c,
             # g.trace('Already open',fileName)
             return True, frame
     try:
-        g.trace('Not open',fileName)
+        # g.trace('Not open',fileName)
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
@@ -21018,7 +21025,7 @@ def openWithFileName(fileName,old_c,
         # Bug fix in 4.4.
         frame.openDirectory = g.os_path_dirname(fileName)
         if readSettings:
-            g.app.config.readSettings(c)
+            g.app.config.updateSettings(c,localFlag=True)
         g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:

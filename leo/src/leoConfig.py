@@ -1160,7 +1160,7 @@ class configClass:
     #@-node:ekr.20041201080436:appendToRecentFiles (g.app.config)
     #@-node:ekr.20041118084146:Setters (g.app.config)
     #@+node:ekr.20041117093246:Scanning @settings (g.app.config)
-    #@+node:ekr.20041117085625:openSettingsFile
+    #@+node:ekr.20041117085625:g.app.config.openSettingsFile
     def openSettingsFile (self,path):
         
         try:
@@ -1185,8 +1185,8 @@ class configClass:
         g.app.gui = oldGui
         return ok and c
     #@nonl
-    #@-node:ekr.20041117085625:openSettingsFile
-    #@+node:ekr.20041120064303:config.readSettingsFiles
+    #@-node:ekr.20041117085625:g.app.config.openSettingsFile
+    #@+node:ekr.20041120064303:g.app.config.readSettingsFiles
     def readSettingsFiles (self,fileName,verbose=True):
         
         seen = []
@@ -1203,21 +1203,15 @@ class configClass:
                     g.es_print('reading settings in %s' % path)
                 c = self.openSettingsFile(path)
                 if c:
-                    d = self.readSettings(c)
-                    if d:
-                        d['_hash'] = theHash = c.hash()
-                        if localFlag:
-                            self.localOptionsDict[theHash] = d
-                        else:
-                            self.localOptionsList.insert(0,d)
+                    self.updateSettings(c,localFlag)
                     g.app.destroyWindow(c.frame)
                 self.readRecentFilesFile(path)
     
         self.inited = True
         self.setIvarsFromSettings(None)
     #@nonl
-    #@-node:ekr.20041120064303:config.readSettingsFiles
-    #@+node:ekr.20041117083857.1:readSettings
+    #@-node:ekr.20041120064303:g.app.config.readSettingsFiles
+    #@+node:ekr.20041117083857.1:g.app.config.readSettings
     # Called to read all leoSettings.leo files.
     # Also called when opening an .leo file to read @settings tree.
     
@@ -1236,7 +1230,25 @@ class configClass:
     
         return d
     #@nonl
-    #@-node:ekr.20041117083857.1:readSettings
+    #@-node:ekr.20041117083857.1:g.app.config.readSettings
+    #@+node:ekr.20051013161232:g.app.config.updateSettings
+    def updateSettings (self,c,localFlag):
+    
+        d = self.readSettings(c)
+        
+        if d:
+            d['_hash'] = theHash = c.hash()
+            if localFlag:
+                self.localOptionsDict[theHash] = d
+            else:
+                self.localOptionsList.insert(0,d)
+                
+        if 0: # Good trace.
+            if localFlag:
+                g.trace(c.fileName())
+                g.printDict(d)
+    #@nonl
+    #@-node:ekr.20051013161232:g.app.config.updateSettings
     #@-node:ekr.20041117093246:Scanning @settings (g.app.config)
     #@+node:ekr.20050424114937.1:Reading and writing .leoRecentFiles.txt (g.app.config)
     #@+node:ekr.20050424115658:readRecentFilesFile

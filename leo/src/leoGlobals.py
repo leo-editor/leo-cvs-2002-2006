@@ -773,7 +773,7 @@ def openWithFileName(fileName,old_c,
             # g.trace('Already open',fileName)
             return True, frame
     try:
-        g.trace('Not open',fileName)
+        # g.trace('Not open',fileName)
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
@@ -792,7 +792,7 @@ def openWithFileName(fileName,old_c,
         # Bug fix in 4.4.
         frame.openDirectory = g.os_path_dirname(fileName)
         if readSettings:
-            g.app.config.readSettings(c)
+            g.app.config.updateSettings(c,localFlag=True)
         g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
