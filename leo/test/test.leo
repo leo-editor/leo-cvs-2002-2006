@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7663" clone_windows="0"/>
 <globals body_outline_ratio="0.566885964912">
-	<global_window_position top="10" left="167" height="912" width="885"/>
+	<global_window_position top="1" left="285" height="912" width="885"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -991,6 +991,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051011213138"><vh>getImage</vh></v>
 <v t="ekr.20051011215038"><vh>getLineHeight</vh></v>
 </v>
+<v t="ekr.20051012155129"><vh>Tabbed log prototype</vh></v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -1558,6 +1559,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050930124917"><vh>@@button outlineToClipboard</vh></v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
+<v t="ekr.20051012104957"><vh>Other unit test stuff...</vh>
 <v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
 <v t="ekr.20050618061835.1"><vh>Intro</vh>
 <v t="ekr.20050618061835.2"><vh>@url http://www.onlamp.com/pub/a/python/2005/02/03/tdd_pyunit2.html</vh></v>
@@ -1589,7 +1591,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050618061835.19"><vh>How about @suite?</vh></v>
 <v t="ekr.20050618061835.20"><vh>Final remarks</vh></v>
 </v>
-<v t="ekr.20051012104957"><vh>Other unit test stuff...</vh>
 <v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
@@ -2289,7 +2290,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050208104202"><vh>@test of round-tripping toUnicode &amp; toEncodedString</vh></v>
 </v>
 </v>
-<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
+</v>
+<v t="ekr.20050120095423" a="ETV" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 <v t="ekr.20050120095423.1"><vh>Notes</vh>
 <v t="ekr.20050120095423.2"><vh>spellpyx</vh></v>
@@ -2297,7 +2299,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050120095423.4"><vh>xsltWithNodes</vh></v>
 <v t="ekr.20050120095423.5"><vh>List of all calls to doHook</vh></v>
 </v>
-<v t="ekr.20050218015346"><vh>@@suite run all plugin test routines (This seems too flakey)</vh>
+<v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050218015346.12"><vh>__init__</vh></v>
 <v t="ekr.20050218015346.13"><vh> fail</vh></v>
@@ -2313,7 +2315,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050218015346.21"><vh>getAllPlugins</vh></v>
 <v t="ekr.20050218015346.22"><vh>removeLeadingWs</vh></v>
 </v>
-<v t="ekr.20050120095423.11"><vh>@@suite plugins tests (This seems too flakey)</vh>
+<v t="ekr.20050120095423.11"><vh>@suite plugins tests</vh>
 <v t="ekr.20050120095423.12"><vh>makePluginsTestSuite</vh></v>
 <v t="ekr.20050120095423.13"><vh>class pluginTestCase</vh>
 <v t="ekr.20050120095423.14"><vh>__init__</vh></v>
@@ -2333,8 +2335,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20051012155129" a="TV"><vh>Tabbed log prototype</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -3042,7 +3042,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13520,6 +13520,8 @@ if 1:
 </t>
 <t tx="ekr.20050218015346.19">def findTestsInModule (module,moduleName):
     
+    # g.trace(moduleName)
+    
     toString = g.listToString
     try:
         functions = inspect.getmembers(module,inspect.isfunction)
@@ -13548,7 +13550,9 @@ if 1:
         methods = [(theClass,f) for name,f in methods if name.startswith('test_')]
         allMethods.extend(methods)
 
-    functions = [(None,f) for name,f in functions if name.startswith('test_')]
+    # Hack: remove duplicate tests from leoGlobals.py.
+    functions = [(None,f) for name,f in functions
+        if name.startswith('test_') and not name.startswith('test_g_')]
 
     if 0:
         &lt;&lt; print classes, methods &amp; functions &gt;&gt;
