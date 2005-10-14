@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="10" left="256" height="860" width="966"/>
+	<global_window_position top="10" left="256" height="822" width="966"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -224,9 +224,9 @@
 </v>
 </v>
 <v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051010121210"><vh>To do</vh></v>
 <v t="ekr.20050921105316.2"><vh>@bool useMiniBuffer=True</vh></v>
-<v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
 <v t="ekr.20051010195914" a="E"><vh>@@shortcuts no shortcuts (for testing)</vh></v>
 <v t="ekr.20051007193427"><vh>@@shortcuts traditional Leo shortcuts (not recommended)</vh></v>
@@ -892,6 +892,11 @@ CadetBlue3 has been suggested.</t>
 <t tx="ekr.20051006200015.1">Default is white.</t>
 <t tx="ekr.20051007193321">@color
 
+hide-mini-buffer        = None
+show-mini-buffer        = None
+toggle-mini-buffer      = Alt+Shift+S   # This had better be defined if you intend ever to hide the minibuffer.
+    # Note: it **is** possible to use &lt;alt-x&gt;show-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
+
 # The infamous cut/copy/paste commands.
 copy-text               = None      # Ctrl-C conflicts with quick-command.
 cut-text                = None      # Ctrl-X (possible)
@@ -1520,6 +1525,11 @@ KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 <t tx="ekr.20051010093913">c.save()</t>
 <t tx="ekr.20051010112558">@color
 
+hide-mini-buffer        = None
+show-mini-buffer        = None
+toggle-mini-buffer      = Alt+Shift+S   # This had better be defined if you intend ever to hide the minibuffer.
+    # Note: it **is** possible to use &lt;alt-x&gt;show-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
+
 # The infamous cut/copy/paste commands.
 # I may replace these later with the emacs equivlents.
 copy-text               = Ctrl-c        # For testing only: Alt-Shift-Ctrl-c
@@ -1563,9 +1573,9 @@ goto-line-number        = Alt-g         # The Leo equivalent.
 move-past-close         = Alt-parenright
 next-line               = Ctrl-n        # Conflicts with new.
 previous-line           = Ctrl-p
-scroll-down             = PageDn          # *** Ctrl-v conflicts with paste-text.
-scroll-up               = PageUp         # Alt-v conflicts with view-all-characters.
-set-mark-command        = Ctrl-Shift-at
+scroll-down             = PageDn        # *** Ctrl-v conflicts with paste-text.
+scroll-up               = PageUp        # Alt-v conflicts with view-all-characters.
+set-mark-command        = Ctrl-space    # Also Ctrl-Shift-at
 
 full-command            = Alt-x         # No conflict.
 quick-command           = Alt-c         # Usually Ctrl-c, conflicts with cut-text.
