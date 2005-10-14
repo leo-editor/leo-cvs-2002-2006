@@ -112,7 +112,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         '''Create the minbuffer below the status line.'''
         
         frame = self
-        f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
+        frame.minibufferFrame = f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
+        
         f.pack(side='bottom',fill='x')
     
         lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
@@ -120,6 +121,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         label = Tk.Label(f,relief='groove',justify='left',anchor='w')
         label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
+        
+        frame.minibufferVisible = True
     
         return label
     #@nonl
@@ -1284,6 +1287,23 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@nonl
     #@-node:ekr.20041224072631:show/hideComponent
     #@-node:ekr.20041222060024:tkFrame.unpack/repack...
+    #@+node:ekr.20051014154752:Minibuffer methods
+    def showMinibuffer (self):
+        
+        frame = self
+        
+        if not frame.minibufferVisible:
+            frame.minibufferFrame.pack(side='bottom',fill='x')
+            frame.minibufferVisible = True
+            
+    def hideMinibuffer (self):
+        
+        frame = self
+        if frame.minibufferVisible:
+            frame.minibufferFrame.pack_forget()
+            frame.minibufferVisible = False
+    #@nonl
+    #@-node:ekr.20051014154752:Minibuffer methods
     #@+node:ekr.20031218072017.3953:Icon area methods (compatibility)
     def getIconBarObject(self):
         component = self.component(self.iconBarComponentName)

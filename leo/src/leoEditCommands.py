@@ -2832,13 +2832,14 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
         baseEditCommandsClass.__init__(self,c) # init the base class.
     #@nonl
     #@-node:ekr.20050920084036.172: ctor
-    #@+node:ekr.20050920084036.173:getPublicCommands
+    #@+node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
     def getPublicCommands (self):
         
         k = self.k
         
         return {
             'digit-argument':           k.digitArgument,
+            'hide-mini-buffer':         k.hideMinibuffer,
             'negative-argument':        k.negativeArgument,
             'number-command':           k.numberCommand,
             'number-command-0':         k.numberCommand0,
@@ -2854,10 +2855,12 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
             'print-bindings':           k.printBindings,
             'print-commands':           k.printCommands,
             'repeat-complex-command':   k.repeatComplexCommand,
+            'show-mini-buffer':         k.showMinibuffer,
+            'toggle-mini-buffer':       k.toggleMinibuffer,
             'universal-argument':       k.universalArgument,
         }
     #@nonl
-    #@-node:ekr.20050920084036.173:getPublicCommands
+    #@-node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.171:class keyHandlerCommandsClass

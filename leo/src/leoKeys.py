@@ -1443,6 +1443,29 @@ class keyHandlerClass:
             return k.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920085536.48:repeatComplexCommand & helper
+    #@+node:ekr.20051014155551:k.show/hide/toggleMinibuffer
+    def hideMinibuffer (self,event):
+        
+        k = self ; c = k.c
+        
+        c.frame.hideMinibuffer()
+        
+    def showMinibuffer (self,event):
+        
+        k = self ; c = k.c
+        
+        c.frame.showMinibuffer()
+        
+    def toggleMinibuffer (self,event):
+        
+        k = self ; c = k.c
+        
+        if c.frame.minibufferVisible:
+            c.frame.hideMinibuffer()
+        else:
+            c.frame.showMinibuffer()
+    #@nonl
+    #@-node:ekr.20051014155551:k.show/hide/toggleMinibuffer
     #@-node:ekr.20050920085536.32:Externally visible commands
     #@+node:ekr.20050920085536.73:universalDispatcher & helpers
     def universalDispatcher (self,event):
@@ -1765,7 +1788,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.37:resetLabel
     #@+node:ekr.20050920085536.38:updateLabel
-    def updateLabel (self,event):
+    def updateLabel (self,event,suppressControlChars=True):
     
         '''
         Alters the StringVar svar to represent the change in the event.
@@ -1776,17 +1799,19 @@ class keyHandlerClass:
         
         k = self ; s = k.getLabel()
         ch = (event and event.char) or ''
-        # g.trace(repr(s),repr(ch))
-    
+        keysym = (event and event.keysym) or ''
+        # g.trace(s,ch,keysym,k.stroke)
+        
         if ch == '\b': # Handle backspace.
             # Don't backspace over the prompt.
             if len(s) <= k.mb_prefix:
                 return 
             elif len(s) == 1: s = ''
             else: s = s [0:-1]
+        elif suppressControlChars and k.stroke != '<Key>':
+            return
         elif ch and ch not in ('\n','\r'):
-            # Add the character.
-            s = s + ch
+            s = s + ch # Add the character.
         
         k.setLabel(s)
     #@nonl
