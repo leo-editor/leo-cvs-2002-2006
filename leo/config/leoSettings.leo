@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="10" left="256" height="822" width="966"/>
+	<global_window_position top="10" left="256" height="803" width="966"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -228,10 +228,10 @@
 <v t="ekr.20051010121210"><vh>To do</vh></v>
 <v t="ekr.20050921105316.2"><vh>@bool useMiniBuffer=True</vh></v>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
-<v t="ekr.20051010195914" a="E"><vh>@@shortcuts no shortcuts (for testing)</vh></v>
+<v t="ekr.20051010195914"><vh>@@shortcuts no shortcuts (for testing)</vh></v>
 <v t="ekr.20051007193427"><vh>@@shortcuts traditional Leo shortcuts (not recommended)</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558" a="ETV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
+<v t="ekr.20051010112558" a="TV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -952,6 +952,7 @@ forward-word            = Alt-f
 forward-word            = Control-Right
 goto-char               = None
 goto-line               = Alt-g
+help                    = None
 move-past-close         = Alt-parenright
 next-line               = Control-n
 previous-line           = Control-p
@@ -1527,7 +1528,9 @@ KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 
 hide-mini-buffer        = None
 show-mini-buffer        = None
-toggle-mini-buffer      = Alt+Shift+S   # This had better be defined if you intend ever to hide the minibuffer.
+toggle-mini-buffer      = Alt-Ctrl-Shift-S
+    # This had better be defined if you intend ever to hide the minibuffer.
+    # To avoid confusion, it should be something unlikely to be typed by accident.
     # Note: it **is** possible to use &lt;alt-x&gt;show-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
 
 # The infamous cut/copy/paste commands.
@@ -1653,6 +1656,7 @@ fill-region                 = None
 fill-region-as-paragraph    = None
 flush-lines                 = None
 how-many                    = None
+help                        = Ctrl-h
 iconfify-or-deiconify-frame = None
 increment-register          = None
 indent-region               = None
