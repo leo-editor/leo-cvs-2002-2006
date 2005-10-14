@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="10" left="256" height="766" width="940"/>
+	<global_window_position top="10" left="256" height="860" width="966"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1066,7 +1066,8 @@ open-rectangle          = None
 point-to-register       = None
 prepend-to-buffer       = None
 prepend-to-register     = None
-print-bindings              = None
+print-bindings          = None
+print-commands          = None
 # recenter              = None      # Control-l
 read-abbrev-file        = None
 remove-blank-lines      = None
@@ -1235,7 +1236,7 @@ settings                     = None         # Ctrl-Y conflicts with yank.
 show-invisibles              = Alt-V
 show-invisibles              = None         # Alt-V conflicts with scroll-up .
 sort-children                = None
-sort-siblings                = None         # Alt-A conflicts with back-sentence.
+sort-siblings                = Shift-Alt-A  # Alt-A conflicts with back-sentence.
 tangle                       = None         # Removed Shift-Ctrl-T: not useful enough.
 tangle-all                   = None         # Removed Shift-Ctrl-A: not useful enough.
 tangle-marked                = None         # Removed Shift-Ctrl-M: not useful enough.
@@ -1687,6 +1688,7 @@ point-to-register           = None
 prepend-to-buffer           = None
 prepend-to-register         = None
 print-bindings              = None
+print-commands              = None
 query-replace               = None
 query-replace-regex         = None
 re-search-backward          = None
@@ -1874,7 +1876,7 @@ set-font                    = None
 settings                    = None        # Ctrl-Y conflicts with yank.
 show-invisibles             = None        # Alt-V conflicts with scroll-up .
 sort-children               = None
-sort-siblings               = None        # Alt-A conflicts with back-sentence.
+sort-siblings               = Shift-Alt-A # Alt-A conflicts with back-sentence.
 tangle                      = None        # Removed Shift-Ctrl-T: not useful enough.
 tangle-all                  = None        # Removed Shift-Ctrl-A: not useful enough.
 tangle-marked               = None        # Removed Shift-Ctrl-M: not useful enough.

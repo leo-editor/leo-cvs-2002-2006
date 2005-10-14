@@ -48,7 +48,7 @@ rst3.py
 plugin_manager.py
 
 # Several plugins depend on TabbedLog.
-#TabbedLog.py
+TabbedLog.py
 
 # Icon area: order is important.
 mod_scripting.py
@@ -84,7 +84,7 @@ open_with.py
 #color_markup.py
 #import_cisco_config.py
 #table.py
-UNL.py
+#UNL.py
 #@nonl
 #@-node:edream.120603093808:@thin pluginsManager.txt
 #@-leo

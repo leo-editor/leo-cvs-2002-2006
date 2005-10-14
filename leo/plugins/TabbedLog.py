@@ -4,7 +4,7 @@
 #@+node:ekr.20050913084153:<<docstring>>
 '''Turns the log into a tabbed component.  Other plugins may add tabs.
 
-To get a new tab in TabbedLog::
+To get a new or existing tab in TabbedLog::
 
     import TabbedLog
     pane = TabbedLog.getPane(name,c)
@@ -14,6 +14,10 @@ To get a new tab in TabbedLog::
 - ``name`` is the name of the tab you want for the pane.
 
 - ``c`` is the commander for the leoFrame.
+
+To get the Pmw notebook for c do this::
+    
+    nb = TabbedLog.nbs.get(c.frame.log)
 '''
 #@nonl
 #@-node:ekr.20050913084153:<<docstring>>
@@ -22,7 +26,7 @@ To get a new tab in TabbedLog::
 #@@language python
 #@@tabwidth -4
 
-__version__ = ".2"
+__version__ = ".3"
 
 #@<< version history >>
 #@+node:ekr.20040915074133:<< version history >>
@@ -33,6 +37,10 @@ __version__ = ".2"
 # 0.2 EKR:
 #     - Style changes.
 #     - Enable this plugin only if Tk, Pmw and weakref can be imported.
+# 0.3 EKR:
+#     - getPane no longer throws an exception if the pane already exists,
+#       but instead returns the existing pane.
+#     - The docstring now tells how to get the notebook itself.
 #@-at
 #@nonl
 #@-node:ekr.20040915074133:<< version history >>
@@ -53,19 +61,24 @@ import weakref
 
 #@+others
 #@+node:ekr.20040915074510.1:createLog
-def createLog( self, parentframe ):
+def createLog (self,parentframe):
 
-    nb = Pmw.NoteBook( parentframe, borderwidth = 1, pagemargin = 0 )
-    nb.pack(fill = 'both', expand = 1)
-    nbs[ self ] = nb
-    pn = nb.add( "Log" )
-    return oldCLog( self, pn )
+    nb = Pmw.NoteBook(parentframe,borderwidth=1,pagemargin=0)
+    nb.pack(fill='both',expand=1)
+    nbs [self] = nb
+    pn = nb.add("Log")
+    return oldCLog(self,pn)
+#@nonl
 #@-node:ekr.20040915074510.1:createLog
 #@+node:ekr.20040915074510.2:getPane
-def getPane( name, c ):
-    f = c.frame.log
-    nb = nbs[ f ]
-    return nb.add( name )
+def getPane (name,c):
+
+    nb = nbs [c.frame.log]
+
+    if name in nb.pagenames():
+        return nb.page(name)
+    else:
+        return nb.add(name)
 #@nonl
 #@-node:ekr.20040915074510.2:getPane
 #@-others
