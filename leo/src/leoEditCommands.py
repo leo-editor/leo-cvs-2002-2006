@@ -2839,6 +2839,7 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
         
         return {
             'digit-argument':           k.digitArgument,
+            'help':                     k.help,
             'hide-mini-buffer':         k.hideMinibuffer,
             'negative-argument':        k.negativeArgument,
             'number-command':           k.numberCommand,

@@ -1344,6 +1344,43 @@ class keyHandlerClass:
         k.universalDispatcher(event)
     #@nonl
     #@-node:ekr.20050930080419:digitArgument & universalArgument
+    #@+node:ekr.20051014170754:k.help
+    def help (self,event):
+        
+        k = self ;
+        commands = (
+            k.fullCommand,
+            k.quickCommand,
+            k.universalArgument,
+            k.keyboardQuit,
+            # negative-argument
+            # repeat-complex-command
+        )
+        shortcuts = [
+            k.getShortcutForCommand(command)
+            for command in commands]
+    
+        s = '''
+    The mini-buffer is intended to be like the Emacs buffer:
+    
+    %s: Just like Emacs Alt-x: starts minibuffer. The prompt is 'full-command' Type a
+    full command name, then hit <Return> to execute the command. Tab completion
+    works, but not for file names.
+    
+    %s: Like Emacs Control-C: (Ctrl-C conflicts with XP cut). starts minibuffer.
+    The prompt is 'quick-command'. This mode is not completed, but stuff like
+    `Ctrl-C r` and `Ctrl r r` do work.
+    
+    %s: Like Emacs Ctrl-u: (Ctrl-u conflicts with move-outline-up). Add a repeat
+    count for later command. Ctrl-u 999 a adds 999 a's, but many features remain
+    unfinished.
+    
+    %s: Just like Emacs Ctrl-g: Closes the mini-buffer.
+    ''' % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
+    
+        g.es_print(s)
+    
+    #@-node:ekr.20051014170754:k.help
     #@+node:ekr.20050920085536.68:negativeArgument (redo?)
     def negativeArgument (self,event):
     
@@ -1451,13 +1488,12 @@ class keyHandlerClass:
         c.frame.hideMinibuffer()
         
         g.es('Minibuffer hidden',color='red')
-        for emacsName in ('show-mini-buffer','toggle-mini-buffer'):
-            command = c.commandsDict.get(emacsName)
-            for key in k.bindingsDict:
-                b = k.bindingsDict.get(key)
-                if b.name == command.__name__:
-                    g.es('%s is bound to: %s' % (emacsName,key))
-                    break
+    
+        for commandName in ('show-mini-buffer','toggle-mini-buffer'):
+            shortcut = k.getShortcutForCommandName(commandName)
+            if shortcut:
+                g.es('%s is bound to: %s' % (commandName,shortcut))
+        
         
     def showMinibuffer (self,event):
         
@@ -1893,6 +1929,34 @@ class keyHandlerClass:
         f.bodyWantsFocus(f.bodyCtrl,later=False,tag='k.forceFocusToBody')
     #@nonl
     #@-node:ekr.20051012092847:forceFocusToBody
+    #@+node:ekr.20051014170754.1:getShortcutForCommand/Name
+    def getShortcutForCommandName (self,commandName):
+        
+        k = self ; c = k.c
+    
+        command = c.commandsDict.get(commandName)
+    
+        if command:
+            for key in k.bindingsDict:
+                b = k.bindingsDict.get(key)
+                if b.name == command.__name__:
+                    return key
+        
+        return ''
+        
+    def getShortcutForCommand (self,command):
+        
+        k = self ; c = k.c
+        
+        if command:
+            for key in k.bindingsDict:
+                b = k.bindingsDict.get(key)
+                if b.name == command.__name__:
+                    return key
+        
+        return ''
+    #@nonl
+    #@-node:ekr.20051014170754.1:getShortcutForCommand/Name
     #@+node:ekr.20051010063452:ultimateFuncName
     def ultimateFuncName (self,func):
         

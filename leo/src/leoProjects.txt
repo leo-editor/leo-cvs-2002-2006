@@ -15971,6 +15971,7 @@ The effect of these changes:
 #@nonl
 #@-node:ekr.20050923233827:Eliminated all helper classes and simplified the code.
 #@-node:ekr.20051004132320:Early days
+#@+node:ekr.20051014170101:Before changeover
 #@+node:ekr.20050924073836.1:Simplifications 1
 - setEvent is only used in one commands class, so it was moved there.
 
@@ -16117,7 +16118,8 @@ The code appears to work properly on XP.  Not tested other places.
 This is the last best hope to solve this problem: the code interacts as little as possible with Tk.
 #@nonl
 #@-node:ekr.20051011091759:Added big kludge to solve infamous control-v problems
-#@+node:ekr.20051011124540:What I did after changeover
+#@-node:ekr.20051014170101:Before changeover
+#@+node:ekr.20051011124540:After changeover
 - Fixed duplicate Pastes in headlines.
     - Works when paste-text command is not defined.
     - Removed weird virtual bindings in tkBody.createBindings.
@@ -16140,16 +16142,23 @@ This is the last best hope to solve this problem: the code interacts as little a
 - created `@button align to col` in leoSettings.leo.
 - open-with shortcuts now work.
 - Made sure old-style settings still work.
-- Added contract-and-go-right command
-- Fixed long-standing bug in goto-last-node.
-- Added goto-first-sibling and goto-last-sibling commands.
+
 - Changed name Editor menu to Cmds menu.
 - Used previously unused init param to createMenuEntries to suppress warnings.
 - Disabled many plugin tests. These tests are flakey: they don't work the same if repeated.
 - Fixed all pychecker errors.
 - Fixed bugs in nextLine, prevLine.  Can't call manufactureKeyPress: the keys may have been rebound!
 #@nonl
-#@-node:ekr.20051011124540:What I did after changeover
+#@-node:ekr.20051011124540:After changeover
+#@+node:ekr.20051014170101.1:Before a1
+- Changed k.updateLabel so unknown control keysare not put into minibuffer.
+- Added hide/show/toggle-mini-buffer commands.
+- Added contract-and-go-right command
+- Fixed long-standing bug in goto-last-node.
+- Added goto-first-sibling and goto-last-sibling commands.
+- Created help command.
+#@nonl
+#@-node:ekr.20051014170101.1:Before a1
 #@-node:ekr.20050921094025.6:What I did
 #@-node:ekr.20050920084720.1:Moved emacs commands and new keyHandler to Leo's core
 #@+node:ekr.20051006122237:(Recent)
@@ -20293,6 +20302,493 @@ def setBindingsFromCommandsDict (self):
 #@-node:ekr.20051008134059:setBindingsFromCommandsDict
 #@-node:ekr.20051006125633:Binding (keyHandler)
 #@-node:ekr.20051013103457:(bindings)
+#@+node:ekr.20051014155115:(Added f.show/hideMinibuffer)
+#@+node:ekr.20051014170754.1:getShortcutForCommand/Name
+def getShortcutForCommandName (self,commandName):
+    
+    k = self ; c = k.c
+
+    command = c.commandsDict.get(commandName)
+
+    if command:
+        for key in k.bindingsDict:
+            b = k.bindingsDict.get(key)
+            if b.name == command.__name__:
+                return key
+    
+    return ''
+    
+def getShortcutForCommand (self,command):
+    
+    k = self ; c = k.c
+    
+    if command:
+        for key in k.bindingsDict:
+            b = k.bindingsDict.get(key)
+            if b.name == command.__name__:
+                return key
+    
+    return ''
+#@nonl
+#@-node:ekr.20051014170754.1:getShortcutForCommand/Name
+#@+node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
+def getPublicCommands (self):
+    
+    k = self.k
+    
+    return {
+        'digit-argument':           k.digitArgument,
+        'help':                     k.help,
+        'hide-mini-buffer':         k.hideMinibuffer,
+        'negative-argument':        k.negativeArgument,
+        'number-command':           k.numberCommand,
+        'number-command-0':         k.numberCommand0,
+        'number-command-1':         k.numberCommand1,
+        'number-command-2':         k.numberCommand2,
+        'number-command-3':         k.numberCommand3,
+        'number-command-4':         k.numberCommand4,
+        'number-command-5':         k.numberCommand5,
+        'number-command-6':         k.numberCommand6,
+        'number-command-7':         k.numberCommand7,
+        'number-command-8':         k.numberCommand8,
+        'number-command-9':         k.numberCommand9,
+        'print-bindings':           k.printBindings,
+        'print-commands':           k.printCommands,
+        'repeat-complex-command':   k.repeatComplexCommand,
+        'show-mini-buffer':         k.showMinibuffer,
+        'toggle-mini-buffer':       k.toggleMinibuffer,
+        'universal-argument':       k.universalArgument,
+    }
+#@nonl
+#@-node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
+#@+node:ekr.20051014155551:k.show/hide/toggleMinibuffer
+def hideMinibuffer (self,event):
+    
+    k = self ; c = k.c
+    
+    c.frame.hideMinibuffer()
+    
+    g.es('Minibuffer hidden',color='red')
+
+    for commandName in ('show-mini-buffer','toggle-mini-buffer'):
+        shortcut = k.getShortcutForCommandName(commandName)
+        if shortcut:
+            g.es('%s is bound to: %s' % (commandName,shortcut))
+    
+    
+def showMinibuffer (self,event):
+    
+    k = self ; c = k.c
+    
+    c.frame.showMinibuffer()
+    
+def toggleMinibuffer (self,event):
+    
+    k = self ; c = k.c
+    
+    if c.frame.minibufferVisible:
+        k.hideMinibuffer(event)
+    else:
+        k.showMinibuffer(event)
+#@nonl
+#@-node:ekr.20051014155551:k.show/hide/toggleMinibuffer
+#@+node:ekr.20051014154752:Minibuffer methods
+def showMinibuffer (self):
+    
+    frame = self
+    
+    if not frame.minibufferVisible:
+        frame.minibufferFrame.pack(side='bottom',fill='x')
+        frame.minibufferVisible = True
+        
+def hideMinibuffer (self):
+    
+    frame = self
+    if frame.minibufferVisible:
+        frame.minibufferFrame.pack_forget()
+        frame.minibufferVisible = False
+#@nonl
+#@-node:ekr.20051014154752:Minibuffer methods
+#@+node:ekr.20050920094212:f.createMiniBufferWidget
+def createMiniBufferWidget (self):
+    
+
+    '''Create the minbuffer below the status line.'''
+    
+    frame = self
+    frame.minibufferFrame = f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
+    
+    f.pack(side='bottom',fill='x')
+
+    lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
+    lab.pack(side='left')
+
+    label = Tk.Label(f,relief='groove',justify='left',anchor='w')
+    label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
+    
+    frame.minibufferVisible = True
+
+    return label
+#@nonl
+#@-node:ekr.20050920094212:f.createMiniBufferWidget
+#@+node:ekr.20050920085536.65: masterCommand & helpers
+def masterCommand (self,event,func,stroke):
+
+    '''This is the central dispatching method.
+    All commands and keystrokes pass through here.'''
+
+    k = self ; c = k.c
+    k.stroke = stroke # Set this global for general use.
+    commandName = k.ultimateFuncName(func)
+    special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+    interesting = func or stroke != '<Key>'
+
+    # if interesting: g.trace(stroke,commandName)
+
+    inserted = not special or (
+        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
+
+    if inserted:
+        # g.trace(stroke,event.keysym)
+        << add character to history >>
+        
+    # We *must not* interfere with the global state in the macro class.
+    if c.macroCommands.recordingMacro:
+        done = c.macroCommands.startKbdMacro(event)
+        if done: return 'break'
+        
+    # g.trace(stroke,k.abortAllModesKey)
+
+    if stroke == k.abortAllModesKey: # 'Control-g'
+        k.previousStroke = stroke
+        k.clearState()
+        k.keyboardQuit(event)
+        k.endCommand(event,commandName,tag='keyboard-quit')
+        return 'break'
+
+    if k.inState():
+        k.forceFocusToBody()
+        k.previousStroke = stroke
+        k.callStateFunction(event) # Calls end-command.
+        return 'break'
+
+    # if k.keystrokeFunctionDict.has_key(stroke):
+        # k.previousStroke = stroke
+        # if k.callKeystrokeFunction(event): # Calls end-command
+            # return 'break'
+
+    if k.regx.iter:
+        try:
+            k.regXKey = event.keysym
+            k.regx.iter.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    if k.abbrevOn:
+        expanded = c.abbrevCommands.expandAbbrev(event)
+        if expanded: return 'break'
+
+    if func: # Func is an argument.
+        k.previousStroke = stroke
+        forceFocus = func.__name__ != 'leoCallback'
+        if forceFocus:
+            k.forceFocusToBody()
+        func(event)
+        k.endCommand(event,commandName,forceFocus,tag='masterCommand')
+        return 'break'
+
+    else:
+        c.frame.body.onBodyKey(event)
+        return None # Not 'break'
+#@nonl
+#@+node:ekr.20050920085536.67:<< add character to history >>
+# Don't add multiple special characters to history.
+
+k.keysymHistory.insert(0,event.keysym)
+
+if len(event.char) > 0:
+    if len(keyHandlerClass.lossage) > 99:
+        keyHandlerClass.lossage.pop()
+    keyHandlerClass.lossage.insert(0,event.char)
+
+if 0: # traces
+    g.trace(event.keysym,stroke)
+    g.trace(k.keysymHistory)
+    g.trace(keyHandlerClass.lossage)
+#@nonl
+#@-node:ekr.20050920085536.67:<< add character to history >>
+#@+node:ekr.20050923172809.1:callStateFunction
+def callStateFunction (self,event):
+    
+    k = self
+    
+    # g.trace(k.stateKind,k.state)
+    
+    if k.state.kind:
+        if k.state.handler:
+            k.state.handler(event)
+            k.endCommand(event,k.commandName,tag='callStateFunction')
+        else:
+            g.es_print('no state function for %s' % (k.state.kind),color='red')
+#@nonl
+#@-node:ekr.20050923172809.1:callStateFunction
+#@+node:ekr.20050923174229.3:callKeystrokeFunction
+def callKeystrokeFunction (self,event):
+    
+    '''Handle a quick keystroke function.
+    Return the function or None.'''
+    
+    k = self
+    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
+
+    if func:
+        func(event)
+        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
+        forceFocus = func.__name__ != 'leoCallback'
+        k.endCommand(event,commandName,forceFocus,tag='callKeystrokeFunction')
+    
+    return func
+#@nonl
+#@-node:ekr.20050923174229.3:callKeystrokeFunction
+#@-node:ekr.20050920085536.65: masterCommand & helpers
+#@-node:ekr.20051014155115:(Added f.show/hideMinibuffer)
+#@+node:ekr.20051014161914:(Don't put unknown control characters into the mini-buffer)
+#@+node:ekr.20050920085536.65: masterCommand & helpers
+def masterCommand (self,event,func,stroke):
+
+    '''This is the central dispatching method.
+    All commands and keystrokes pass through here.'''
+
+    k = self ; c = k.c
+    k.stroke = stroke # Set this global for general use.
+    commandName = k.ultimateFuncName(func)
+    special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+    interesting = func or stroke != '<Key>'
+
+    # if interesting: g.trace(stroke,commandName)
+
+    inserted = not special or (
+        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
+
+    if inserted:
+        # g.trace(stroke,event.keysym)
+        << add character to history >>
+        
+    # We *must not* interfere with the global state in the macro class.
+    if c.macroCommands.recordingMacro:
+        done = c.macroCommands.startKbdMacro(event)
+        if done: return 'break'
+        
+    # g.trace(stroke,k.abortAllModesKey)
+
+    if stroke == k.abortAllModesKey: # 'Control-g'
+        k.previousStroke = stroke
+        k.clearState()
+        k.keyboardQuit(event)
+        k.endCommand(event,commandName,tag='keyboard-quit')
+        return 'break'
+
+    if k.inState():
+        k.forceFocusToBody()
+        k.previousStroke = stroke
+        k.callStateFunction(event) # Calls end-command.
+        return 'break'
+
+    # if k.keystrokeFunctionDict.has_key(stroke):
+        # k.previousStroke = stroke
+        # if k.callKeystrokeFunction(event): # Calls end-command
+            # return 'break'
+
+    if k.regx.iter:
+        try:
+            k.regXKey = event.keysym
+            k.regx.iter.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    if k.abbrevOn:
+        expanded = c.abbrevCommands.expandAbbrev(event)
+        if expanded: return 'break'
+
+    if func: # Func is an argument.
+        k.previousStroke = stroke
+        forceFocus = func.__name__ != 'leoCallback'
+        if forceFocus:
+            k.forceFocusToBody()
+        func(event)
+        k.endCommand(event,commandName,forceFocus,tag='masterCommand')
+        return 'break'
+
+    else:
+        c.frame.body.onBodyKey(event)
+        return None # Not 'break'
+#@nonl
+#@+node:ekr.20050920085536.67:<< add character to history >>
+# Don't add multiple special characters to history.
+
+k.keysymHistory.insert(0,event.keysym)
+
+if len(event.char) > 0:
+    if len(keyHandlerClass.lossage) > 99:
+        keyHandlerClass.lossage.pop()
+    keyHandlerClass.lossage.insert(0,event.char)
+
+if 0: # traces
+    g.trace(event.keysym,stroke)
+    g.trace(k.keysymHistory)
+    g.trace(keyHandlerClass.lossage)
+#@nonl
+#@-node:ekr.20050920085536.67:<< add character to history >>
+#@+node:ekr.20050923172809.1:callStateFunction
+def callStateFunction (self,event):
+    
+    k = self
+    
+    # g.trace(k.stateKind,k.state)
+    
+    if k.state.kind:
+        if k.state.handler:
+            k.state.handler(event)
+            k.endCommand(event,k.commandName,tag='callStateFunction')
+        else:
+            g.es_print('no state function for %s' % (k.state.kind),color='red')
+#@nonl
+#@-node:ekr.20050923172809.1:callStateFunction
+#@+node:ekr.20050923174229.3:callKeystrokeFunction
+def callKeystrokeFunction (self,event):
+    
+    '''Handle a quick keystroke function.
+    Return the function or None.'''
+    
+    k = self
+    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
+
+    if func:
+        func(event)
+        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
+        forceFocus = func.__name__ != 'leoCallback'
+        k.endCommand(event,commandName,forceFocus,tag='callKeystrokeFunction')
+    
+    return func
+#@nonl
+#@-node:ekr.20050923174229.3:callKeystrokeFunction
+#@-node:ekr.20050920085536.65: masterCommand & helpers
+#@+node:ekr.20050920085536.62:getArg
+def getArg (self,event,returnKind=None,returnState=None,handler=None,prefix=None,tabList=None):
+    
+    '''Accumulate an argument until the user hits return (or control-g).
+    Enter the given return state when done.
+    The prefix is does not form the arg.  The prefix defaults to the k.getLabel().
+    '''
+
+    k = self ; c = k.c ; state = k.getState('getArg')
+    keysym = (event and event.keysym) or ''
+    # g.trace('state',state,'keysym',keysym)
+    if state == 0:
+        k.arg = ''
+        if tabList: k.argTabList = tabList[:]
+        else:       k.argTabList = []
+        << init altX vars >>
+        # Set the states.
+        k.afterGetArgState = (returnKind,returnState,handler)
+        k.setState('getArg',1,k.getArg)
+    elif keysym == 'Return':
+        k.arg = k.getLabel(ignorePrompt=True)
+        kind,n,handler = k.afterGetArgState
+        if kind: k.setState(kind,n,handler)
+        if handler: handler(event)
+    elif keysym == 'Tab':
+        k.doTabCompletion(k.argTabList)
+    elif keysym == 'BackSpace':
+        k.doBackSpace()
+    else:
+        # Clear the list, any other character besides tab indicates that a new prefix is in effect.
+        k.mb_tabList = []
+        k.updateLabel(event)
+        k.mb_tabListPrefix = k.getLabel()
+
+    return 'break'
+#@+node:ekr.20050928092516:<< init altX vars >>
+# Clear the list, any other character besides tab indicates that a new prefix is in effect.
+k.mb_tabList = []
+
+if prefix:
+    k.mb_tabListPrefix = prefix
+    k.mb_prefix = prefix
+    k.mb_prompt = prefix
+else:
+    k.mb_tabListPrefix = k.mb_prefix = k.getLabel()
+    k.mb_prompt = ''
+#@nonl
+#@-node:ekr.20050928092516:<< init altX vars >>
+#@-node:ekr.20050920085536.62:getArg
+#@+node:ekr.20050920085536.38:updateLabel
+def updateLabel (self,event,suppressControlChars=True):
+
+    '''
+    Alters the StringVar svar to represent the change in the event.
+    This has the effect of changing the miniBuffer contents.
+
+    It mimics what would happen with the keyboard and a Text editor
+    instead of plain accumalation.'''
+    
+    k = self ; s = k.getLabel()
+    ch = (event and event.char) or ''
+    keysym = (event and event.keysym) or ''
+    # g.trace(s,ch,keysym,k.stroke)
+    
+    if ch == '\b': # Handle backspace.
+        # Don't backspace over the prompt.
+        if len(s) <= k.mb_prefix:
+            return 
+        elif len(s) == 1: s = ''
+        else: s = s [0:-1]
+    elif suppressControlChars and k.stroke != '<Key>':
+        return
+    elif ch and ch not in ('\n','\r'):
+        s = s + ch # Add the character.
+    
+    k.setLabel(s)
+#@nonl
+#@-node:ekr.20050920085536.38:updateLabel
+#@-node:ekr.20051014161914:(Don't put unknown control characters into the mini-buffer)
+#@+node:ekr.20051014170754:k.help
+def help (self,event):
+    
+    k = self ;
+    commands = (
+        k.fullCommand,
+        k.quickCommand,
+        k.universalArgument,
+        k.keyboardQuit,
+        # negative-argument
+        # repeat-complex-command
+    )
+    shortcuts = [
+        k.getShortcutForCommand(command)
+        for command in commands]
+
+    s = '''
+The mini-buffer is intended to be like the Emacs buffer:
+
+%s: Just like Emacs Alt-x: starts minibuffer. The prompt is 'full-command' Type a
+full command name, then hit <Return> to execute the command. Tab completion
+works, but not for file names.
+
+%s: Like Emacs Control-C: (Ctrl-C conflicts with XP cut). starts minibuffer.
+The prompt is 'quick-command'. This mode is not completed, but stuff like
+`Ctrl-C r` and `Ctrl r r` do work.
+
+%s: Like Emacs Ctrl-u: (Ctrl-u conflicts with move-outline-up). Add a repeat
+count for later command. Ctrl-u 999 a adds 999 a's, but many features remain
+unfinished.
+
+%s: Just like Emacs Ctrl-g: Closes the mini-buffer.
+''' % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
+
+    g.es_print(s)
+
+#@-node:ekr.20051014170754:k.help
 #@-node:ekr.20051006122237:(Recent)
 #@+node:ekr.20051012084345:Bugs fixed
 #@+node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
