@@ -17267,6 +17267,12 @@ c.commandsDict:        keys are emacs command names, values are functions f.
 k.inverseCommandsDict: keys are f.__name__, values are emacs command names.
 
 k.leoCallbackDict:     keys are leoCallback functions, values are called functions.
+
+k.bindingsDict:     keys are shortcuts, values are
+
+    g.bunch(
+            func = callback, name = commandName,
+            warningGiven = False, fromMenu = fromMenu)
 #@nonl
 #@+node:ekr.20050922104731:finishCreateEditCommanders (leoEditCommands module)
 def finishCreateEditCommanders (c):
@@ -20227,19 +20233,6 @@ def makeSpecialBindings (self):
     k.bindKey(w,'<Key>',allKeysCallback,'masterCommand',tag=tag)
 #@nonl
 #@-node:ekr.20051008152134:makeSpecialBindings (Binds to 'Key')
-#@+node:ekr.20051012201831:printBindings
-def printBindings (self,event):
-
-    '''Print all the bindings presently in effect.'''
-
-    k = self ; c = k.c
-    keys = k.bindingsDict.keys() ; keys.sort()
-
-    for key in keys:
-        b = k.bindingsDict.get(key)
-        print key, b.name
-#@nonl
-#@-node:ekr.20051012201831:printBindings
 #@+node:ekr.20051008134059:setBindingsFromCommandsDict
 def setBindingsFromCommandsDict (self):
     

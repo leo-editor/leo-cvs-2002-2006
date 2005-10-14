@@ -953,19 +953,6 @@ class keyHandlerClass:
         k.bindKey(w,'<Key>',allKeysCallback,'masterCommand',tag=tag)
     #@nonl
     #@-node:ekr.20051008152134:makeSpecialBindings (Binds to 'Key')
-    #@+node:ekr.20051012201831:printBindings
-    def printBindings (self,event):
-    
-        '''Print all the bindings presently in effect.'''
-    
-        k = self ; c = k.c
-        keys = k.bindingsDict.keys() ; keys.sort()
-    
-        for key in keys:
-            b = k.bindingsDict.get(key)
-            print key, b.name
-    #@nonl
-    #@-node:ekr.20051012201831:printBindings
     #@+node:ekr.20051008134059:setBindingsFromCommandsDict
     def setBindingsFromCommandsDict (self):
         
@@ -1397,6 +1384,43 @@ class keyHandlerClass:
     def numberCommand9 (self,event): return self.numberCommand (event,None,9)
     #@nonl
     #@-node:ekr.20050920085536.77:numberCommand
+    #@+node:ekr.20051012201831:printBindings
+    def printBindings (self,event):
+    
+        '''Print all the bindings presently in effect.'''
+    
+        k = self ; c = k.c
+        keys = k.bindingsDict.keys() ; keys.sort()
+    
+        for key in keys:
+            b = k.bindingsDict.get(key)
+            print key, b.name
+    #@nonl
+    #@-node:ekr.20051012201831:printBindings
+    #@+node:ekr.20051014061332:printCommands
+    def printCommands (self,event):
+    
+        '''Print all the known commands and their bindings, if any.'''
+    
+        k = self ; c = k.c
+        commands = c.commandsDict.keys() ; commands.sort()
+    
+        inverseDict = {} # keys are function names, values are shortcuts.
+        for shortcut in  k.bindingsDict.keys():
+            b = k.bindingsDict.get(shortcut)
+            inverseDict[b.name] = shortcut
+    
+        for commandName in commands:
+            func = c.commandsDict.get(commandName)
+            if func.__name__ == 'leoCallback':
+                calledFunc = k.leoCallbackDict.get(func)
+                funcName = calledFunc and calledFunc.__name__
+            else:
+                funcName = func.__name__
+            shortcut = inverseDict.get(funcName,'')
+            print '%30s %s' % (commandName,shortcut)
+    #@nonl
+    #@-node:ekr.20051014061332:printCommands
     #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
     def repeatComplexCommand (self,event):
     

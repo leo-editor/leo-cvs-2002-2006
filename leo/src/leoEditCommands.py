@@ -2852,6 +2852,7 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
             'number-command-8':         k.numberCommand8,
             'number-command-9':         k.numberCommand9,
             'print-bindings':           k.printBindings,
+            'print-commands':           k.printCommands,
             'repeat-complex-command':   k.repeatComplexCommand,
             'universal-argument':       k.universalArgument,
         }
