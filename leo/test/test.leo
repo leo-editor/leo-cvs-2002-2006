@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7663" clone_windows="0"/>
-<globals body_outline_ratio="0.566885964912">
-	<global_window_position top="27" left="205" height="836" width="885"/>
+<globals body_outline_ratio="0.755102040816">
+	<global_window_position top="64" left="219" height="833" width="950"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -21,7 +21,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841" a="TV" annotate="7d71002e"><vh>Other tests...</vh>
+<v t="ekr.20040708205841" annotate="7d71002e"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
@@ -919,6 +919,18 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050608082702.1"><vh>@thin leadingAtTest4.py</vh></v>
 </v>
 </v>
+<v t="ekr.20050715132524"><vh>Pymacs (hangs)</vh></v>
+<v t="ekr.20050726101926"><vh>keyPressed</vh>
+<v t="ekr.20050726101926.1"><vh>&lt;&lt; create the command &gt;&gt;</vh></v>
+<v t="ekr.20050726101926.2"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
+<v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050824190822"><vh> Zope test</vh></v>
+<v t="ekr.20051011211253"><vh>Debugger canvas</vh>
+<v t="ekr.20051011213138"><vh>getImage</vh></v>
+<v t="ekr.20051011215038"><vh>getLineHeight</vh></v>
+</v>
+<v t="ekr.20051012155129"><vh>Tabbed log prototype</vh></v>
 <v t="ekr.20050707183613"><vh>Ipython Shell</vh>
 <v t="ekr.20050708110336"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20050708091220.78"><vh>&lt;&lt; use IPShellEmbed &gt;&gt;</vh></v>
@@ -981,18 +993,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050708105323.3"><vh>ipmagic &amp; palias</vh></v>
 <v t="ekr.20050708165531.1"><vh>esc_quotes</vh></v>
 </v>
-<v t="ekr.20050715132524"><vh>Pymacs (hangs)</vh></v>
-<v t="ekr.20050726101926"><vh>keyPressed</vh>
-<v t="ekr.20050726101926.1"><vh>&lt;&lt; create the command &gt;&gt;</vh></v>
-<v t="ekr.20050726101926.2"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
-<v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050824190822"><vh> Zope test</vh></v>
-<v t="ekr.20051011211253"><vh>Debugger canvas</vh>
-<v t="ekr.20051011213138"><vh>getImage</vh></v>
-<v t="ekr.20051011215038"><vh>getLineHeight</vh></v>
-</v>
-<v t="ekr.20051012155129"><vh>Tabbed log prototype</vh></v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -2292,7 +2292,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
+<v t="ekr.20050120095423" a="TV" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 <v t="ekr.20050120095423.1"><vh>Notes</vh>
 <v t="ekr.20050120095423.2"><vh>spellpyx</vh></v>
@@ -16196,10 +16196,9 @@ ipshell()</t>
 
 @others
 
-if 0:
+if 1:
     &lt;&lt; use IPShellEmbed &gt;&gt;
 else:
-    
     shell = LeoShell('shell')
     # g.redirectStdout()
     g.es_print('-'*40)
