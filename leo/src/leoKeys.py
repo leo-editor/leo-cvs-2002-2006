@@ -1403,14 +1403,14 @@ class keyHandlerClass:
         '''Print all the known commands and their bindings, if any.'''
     
         k = self ; c = k.c
-        commands = c.commandsDict.keys() ; commands.sort()
+        commandNames = c.commandsDict.keys() ; commandNames.sort()
     
         inverseDict = {} # keys are function names, values are shortcuts.
         for shortcut in  k.bindingsDict.keys():
             b = k.bindingsDict.get(shortcut)
             inverseDict[b.name] = shortcut
     
-        for commandName in commands:
+        for commandName in commandNames:
             func = c.commandsDict.get(commandName)
             if func.__name__ == 'leoCallback':
                 calledFunc = k.leoCallbackDict.get(func)

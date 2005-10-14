@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8326" clone_windows="0"/>
-<globals body_outline_ratio="0.608407079646">
-	<global_window_position top="39" left="237" height="904" width="1027"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8327" clone_windows="0"/>
+<globals body_outline_ratio="0.442477876106">
+	<global_window_position top="10" left="303" height="923" width="827"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,22 +14,26 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20040711135244.11,ekr.20040711135244.11,ekr.20031218072017.2052,ekr.20031218072017.2619,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040711135244.11,ekr.20040711135244.11,ekr.20031218072017.2052,ekr.20031218072017.2619,ekr.20031218072017.2052,ekr.20031218072017.2052,"
+expanded="ekr.20051006125633,"><vh>@thin leoProjects.txt</vh></v>
 </v>
-<v t="EKR.20040519090151.2"><vh>To do</vh>
+<v t="EKR.20040519090151.2" a="TV"><vh>To do</vh>
 <v t="ekr.20050831131028"><vh>opml</vh>
 <v t="ekr.20050831131452"><vh>Original post</vh></v>
 <v t="ekr.20050831131452.1"><vh>opml attributes v elements</vh></v>
+<v t="ekr.20050912063133"><vh>@url http://sourceforge.net/forum/message.php?msg_id=3273977</vh></v>
+<v t="ekr.20050912065811"><vh>@url http://sourceforge.net/forum/message.php?msg_id=3279900 (summary)</vh></v>
+<v t="ekr.20050915062404"><vh>My post</vh></v>
 </v>
 <v t="ekr.20040117181936"
 marks="ekr.20050712092501.37,ekr.20050712092501.47,ekr.20050712092501.37,ekr.20050712092501.47,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
-<v t="ekr.20031218072017.2406" a="ETV"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2415"><vh> Scripts</vh>
 <v t="ekr.20040327103735.2"><vh>Script Tools (leoGlobals.py)</vh>
 <v t="ekr.20031218072017.2418"><vh>g.initScriptFind (set up dialog)</vh></v>
 <v t="ekr.20040321065415"><vh>g.findNodeInTree, findNodeAnywhere, findTopLevelNode</vh></v>
-<v t="ekr.20050503112513.7"><vh>g.executeFile</vh>
+<v t="ekr.20050503112513.7" a="M"><vh>g.executeFile</vh>
 <v t="ekr.20050503112513.8"><vh>&lt;&lt; define subprocess_wrapper &gt;&gt;</vh></v>
 </v>
 </v>
@@ -39,7 +43,7 @@ marks="ekr.20050712092501.37,ekr.20050712092501.47,ekr.20050712092501.37,ekr.200
 </v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
-<v t="ekr.20040629121554.1"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
+<v t="ekr.20040629121554.1" a="M"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
 <v t="ekr.20040629121554.2" a="M" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
 <v t="ekr.20040629121554.3"><vh>signOnWithVersion</vh></v>
 </v>
@@ -47,6 +51,7 @@ marks="ekr.20050712092501.37,ekr.20050712092501.47,ekr.20050712092501.37,ekr.200
 <v t="ekr.20050123202520.1"><vh>@button Settings...</vh></v>
 <v t="ekr.20041226080857"><vh>@button Spelling...</vh></v>
 <v t="ekr.20050130152155"><vh>@button Plugins...</vh></v>
+<v t="ekr.20051013103117"><vh>@button save</vh></v>
 <v t="ekr.20041119040438"><vh>@settings</vh>
 <v t="ekr.20050420073615"><vh>@recent-files</vh></v>
 <v t="ekr.20041119042418"><vh>@bool use_plugins = True</vh></v>
@@ -60,13 +65,15 @@ marks="ekr.20031218072017.2619,"><vh>@thin leoApp.py</vh></v>
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
 <v t="ekr.20031218072017.2810"
-marks="ekr.20031218072017.2817,ekr.20040629121554.2,ekr.20040711135244.11,"><vh>@thin leoCommands.py</vh></v>
+marks="ekr.20031218072017.2817,ekr.20040629121554.1,ekr.20040629121554.2,ekr.20040711135244.11,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
 <v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.3093"
-marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
+marks="ekr.20031218072017.2052,ekr.20050503112513.7,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
+<v t="ekr.20031218072017.3748"
+expanded="ekr.20051006125633,"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
 <v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
@@ -78,7 +85,6 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3052"><vh>@thin leoFind.py</vh></v>
 <v t="ekr.20031218072017.3655"><vh>@thin leoFrame.py</vh></v>
 <v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
-<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3821"><vh>Gui Tkinter classes</vh>
@@ -193,10 +199,10 @@ def findTopLevelNode(headline):
     return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"</t>
 <t tx="ekr.20040629121554.1">def getSignOnLine (self):
     c = self
-    return "Leo 4.3.2 beta 1, build %s, September 10, 2005" % c.getBuildNumber()</t>
+    return "Leo 4.3.3, build %s, September 17, 2005" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.276 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.300 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -235,16 +241,14 @@ if spellpyx:
         if createMenu: spellFrame.createSpellMenu('tag',keys)
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20050123202520"></t>
-<t tx="ekr.20050123202520.1">''' Replace the outline and body panes by a settings outline and settings widgets respectively'''
+<t tx="ekr.20050123202520.1">if 1:
+    # Open leoSettings.leo
+    c.openLeoSettings()
 
-import leoGlobals as g
-import leoConfig
-
-# @button code does not get updated dynamically.
-replaceBody=True
-
-c = g.top()
-leoConfig.settingsController(c,replaceBody)</t>
+else:
+    # Open the settings dialog.
+    import leoConfig
+    leoConfig.settingsController(c,replaceBody=True)</t>
 <t tx="ekr.20050130152155">import leoGlobals as g
 c = g.top()
 name = "leoPlugins.leo"
@@ -260,9 +264,8 @@ c:\prog\leoCVS\leo\config\leoSettings.leo</t>
 <t tx="ekr.20050503112513.7">def executeFile(filename, options= ''):
 
     if not os.access(filename, os.R_OK): return
-    
-    try: import subprocess # Exists in Python 2.4 or later.
-    except ImportError: subprocess = None
+
+    subprocess = g.importExtension('subprocess',None,verbose=False)
 
     cwd = os.getcwdu()
     fdir, fname = g.os_path_split(filename)
@@ -408,5 +411,20 @@ regards,
 
 bill p
 </t>
+<t tx="ekr.20050912063133"></t>
+<t tx="ekr.20050912065811"></t>
+<t tx="ekr.20050915062404">@nocolor
+
+Hi,
+
+I am the author of Leo http://webpages.charter.net/edreamleo/front.html an outline editor supporting clones http://webpages.charter.net/edreamleo/intro.html#clones-views.
+
+I am interested in having Leo be able to read and write opml files.  My understanding is that applications are free to use attributes of &lt;outline&gt; elements as they please, but I am wondering whether there are guidelines or existing conventions for representing clones.  Have any namespaces been defined for that purpose?
+
+Thanks.
+
+Edward
+</t>
+<t tx="ekr.20051013103117">c.save()</t>
 </tnodes>
 </leo_file>
