@@ -1450,6 +1450,15 @@ class keyHandlerClass:
         
         c.frame.hideMinibuffer()
         
+        g.es('Minibuffer hidden',color='red')
+        for emacsName in ('show-mini-buffer','toggle-mini-buffer'):
+            command = c.commandsDict.get(emacsName)
+            for key in k.bindingsDict:
+                b = k.bindingsDict.get(key)
+                if b.name == command.__name__:
+                    g.es('%s is bound to: %s' % (emacsName,key))
+                    break
+        
     def showMinibuffer (self,event):
         
         k = self ; c = k.c
@@ -1461,9 +1470,9 @@ class keyHandlerClass:
         k = self ; c = k.c
         
         if c.frame.minibufferVisible:
-            c.frame.hideMinibuffer()
+            k.hideMinibuffer(event)
         else:
-            c.frame.showMinibuffer()
+            k.showMinibuffer(event)
     #@nonl
     #@-node:ekr.20051014155551:k.show/hide/toggleMinibuffer
     #@-node:ekr.20050920085536.32:Externally visible commands
