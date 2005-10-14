@@ -697,7 +697,7 @@ class keyHandlerClass:
                     shortcut, commandName, b.name))
             return b.name == commandName
     
-        # g.trace(tag,'%25s' % (shortcut),commandName)
+        # if shortcut=='<Control-g>': g.trace(tag,'%25s' % (shortcut),commandName)
     
         try:
             # The original way.  Essential to make cut/copy/paste work.
@@ -940,9 +940,11 @@ class keyHandlerClass:
             junk, accel = c.config.getShortcut(name)
             if not accel: accel = stroke
             shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-            k.bindKey(w,shortcut,keyCallback,func.__name__,tag)
-            setattr(k,ivar,shortcut)
-            # g.trace(shortcut,func.__name__)
+            # g.trace(stroke,accel,shortcut,func.__name__)
+            
+            # keyCallback will return stroke *regardless* of the actual binding.
+            setattr(k,ivar,stroke) 
+            k.bindKey(w,shortcut,keyCallback,func.__name__,tag=tag)
             
         # Add a binding for <Key> events, so all key events go through masterCommand.
         def allKeysCallback (event):
@@ -1036,6 +1038,8 @@ class keyHandlerClass:
         if c.macroCommands.recordingMacro:
             done = c.macroCommands.startKbdMacro(event)
             if done: return 'break'
+            
+        # g.trace(stroke,k.abortAllModesKey)
     
         if stroke == k.abortAllModesKey: # 'Control-g'
             k.previousStroke = stroke
