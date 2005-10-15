@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.15"
+__version__ = "0.16"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -198,7 +198,7 @@ def init():
         # Bug fix 9-17-05: init Pmw.
         Pmw.initialise(g.app.root)
         g.plugin_signon(__name__)
-        leoPlugins.registerHandler("start2", grabCommander)
+        leoPlugins.registerHandler("new", grabCommander)
 
     return ok
 #@nonl
@@ -1731,8 +1731,9 @@ class LocalPluginCollection(PluginCollection):
                     for item in bunch:
                         if item.moduleName == plugin.name:
                             g.es("Sending '%s' to '%s'" % (hook, plugin.name), color="green")
-                            # How do we do this call???
+                            # This is pretty ugly!
                             global KEYWORDS
+                            KEYWORDS["c"] = KEYWORDS["new_c"] = g.top()
                             item.fn(hook, KEYWORDS)
                         
                 #@-node:pap.20051002004135:<< Send hooks >>

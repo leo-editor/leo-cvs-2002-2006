@@ -57,7 +57,7 @@ import sys
 #@nonl
 #@-node:ekr.20050101090207.10:<< imports >>
 #@nl
-__version__ = "1.8"
+__version__ = "1.9"
 #@<< version history >>
 #@+node:ekr.20050101100033:<< version history >>
 #@+at
@@ -86,6 +86,7 @@ __version__ = "1.8"
 # 1.9 Paul Paterson:
 #     - Refactored to allow dynamically adding plugins to the menu after 
 # initial load
+#     - Reformatted menu items for cmd_ThisIsIt to be "This Is It"
 #@-at
 #@nonl
 #@-node:ekr.20050101100033:<< version history >>
@@ -233,7 +234,7 @@ class PlugIn:
         
         for item in self.mod.__dict__.keys():
             if item.startswith("cmd_"):
-                self.othercmds[item[4:]] = self.mod.__dict__[item]
+                self.othercmds[self.niceMenuName(item)] = self.mod.__dict__[item]
         #@-node:EKR.20040517080555.7:<< Look for additional commands >>
         #@nl
         #@    << Look for toplevel menu item >>
@@ -287,6 +288,25 @@ class PlugIn:
         PropertiesWindow(self.configfilename, self)
     #@nonl
     #@-node:EKR.20040517080555.9:properties
+    #@+node:pap.20051011215345:niceMenuName
+    def niceMenuName(self, name):
+        """Return a nice version of the command name for the menu
+        
+        The command will be of the form::
+        
+            cmd_ThisIsIt
+            
+        We want to convert this to "This Is It".
+        
+        """
+        text = ""
+        for char in name[4:]:
+            if char.isupper() and text:
+                text += " "
+            text += char
+        return text
+    #@nonl
+    #@-node:pap.20051011215345:niceMenuName
     #@-others
     
 #@-node:EKR.20040517080555.3:class Plugin
