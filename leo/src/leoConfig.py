@@ -820,74 +820,103 @@ class configClass:
         
         """Get the setting and make sure its type matches the expected type."""
         
-        found = False
         if c:
             d = self.localOptionsDict.get(c.hash())
             if d:
-                val,found = self.getValFromDict(d,setting,kind,found)
+                val,junk = self.getValFromDict(d,setting,kind)
                 if val is not None:
                     # g.trace(c.shortFileName(),setting,val)
                     return val
                     
         for d in self.localOptionsList:
-            val,found = self.getValFromDict(d,setting,kind,found)
+            val,junk = self.getValFromDict(d,setting,kind)
             if val is not None:
                 kind = d.get('_hash','<no hash>')
                 # g.trace(kind,setting,val)
                 return val
     
         for d in self.dictList:
-            val,found = self.getValFromDict(d,setting,kind,found)
+            val,junk = self.getValFromDict(d,setting,kind)
             if val is not None:
                 kind = d.get('_hash','<no hash>')
                 # g.trace(kind,setting,val)
                 return val
-                    
-        if 0: # Good for debugging leoSettings.leo.  This is NOT an error.
-            # Don't warn if None was specified.
-            if not found:
-                g.trace("Not found:",setting)
     
         return None
     #@nonl
     #@+node:ekr.20041121143823:getValFromDict
-    def getValFromDict (self,d,setting,requestedType,found):
+    def getValFromDict (self,d,setting,requestedType,warn=True):
         
-        __pychecker__ = '--no-argsused' # reqestedType not used.
+        '''Look up the setting in d. If warn is True, warn if the requested type
+        does not (loosely) match the actual type.
+        returns (val,exists)'''
     
         bunch = d.get(self.munge(setting))
-        if bunch:
-            # g.trace(setting,requestedType,bunch.toString())
-            found = True ; val = bunch.val
-            if val not in (u'None',u'none','None','none','',None):
-                # g.trace(setting,val)
-                return val,found
+        if not bunch: return None,False
     
-        # Do NOT warn if not found here.  It may be in another dict.
-        return None,found
+        # g.trace(setting,requestedType,bunch.toString())
+        val = bunch.val
+        if not self.typesMatch(bunch.kind,requestedType):
+            # New in 4.4: make sure the types match.
+            # A serious warning: one setting may have destroyed another!
+            # Important: this is not a complete test of conflicting settings:
+            # The warning is given only if the code tries to access the setting.
+            if warn:
+                s = (
+                    'Warning: ignoring %s:%s not %s\n' +
+                    'There may be conflicting settings!')
+                g.es_print(s % (bunch.kind,setting,requestedType),color='red')
+            return None, False
+        elif val in (u'None',u'none','None','none','',None):
+            return None, True # Exists, but is None
+        else:
+            # g.trace(setting,val)
+            return val, True
     #@nonl
     #@-node:ekr.20041121143823:getValFromDict
+    #@+node:ekr.20051015093141:typesMatch
+    def typesMatch (self,type1,type2):
+        
+        '''
+        Return True if type1, the actual type, matches type2, the requeseted type.
+        
+        The following equivalences are allowed:
+    
+        - None matches anything.
+        - An actual type of string or strings matches anything.
+        - Shortcut matches shortcuts.
+        '''
+    
+        shortcuts = ('shortcut','shortcuts')
+        
+        return (
+            type1 == None or type2 == None or
+            type1.startswith('string') or
+            (type1 in shortcuts and type2 in shortcuts) or
+            type1 == type2
+        )
+    #@-node:ekr.20051015093141:typesMatch
     #@-node:ekr.20041117083141:get & allies (g.app.config)
     #@+node:ekr.20051011105014:exists (g.app.config)
     def exists (self,c,setting,kind):
         
-        """Return true if any setting exists, even if it is None."""
-        
-        found = False
+        '''Return true if a setting of the given kind exists, even if it is None.'''
+    
         if c:
             d = self.localOptionsDict.get(c.hash())
             if d:
-                val,found = self.getValFromDict(d,setting,kind,found)
+                junk,found = self.getValFromDict(d,setting,kind)
                 if found: return True
                     
         for d in self.localOptionsList:
-            val,found = self.getValFromDict(d,setting,kind,found)
+            junk,found = self.getValFromDict(d,setting,kind)
             if found: return True
     
         for d in self.dictList:
-            val,found = self.getValFromDict(d,setting,kind,found)
+            junk,found = self.getValFromDict(d,setting,kind)
             if found: return True
     
+        # g.trace('does not exist',setting,kind)
         return False
     #@nonl
     #@-node:ekr.20051011105014:exists (g.app.config)
