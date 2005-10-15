@@ -1439,7 +1439,7 @@ class keyHandlerClass:
     
         for key in keys:
             b = k.bindingsDict.get(key)
-            print key, b.name
+            g.es_print(key,b.name)
     #@nonl
     #@-node:ekr.20051012201831:printBindings
     #@+node:ekr.20051014061332:printCommands
@@ -1463,7 +1463,10 @@ class keyHandlerClass:
             else:
                 funcName = func.__name__
             shortcut = inverseDict.get(funcName,'')
+            
+            # Use different format strings for the console and log pane.
             print '%30s %s' % (commandName,shortcut)
+            g.es('%s %s' % (commandName,shortcut))
     #@nonl
     #@-node:ekr.20051014061332:printCommands
     #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
