@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="19412" clone_windows="0"/>
 <globals body_outline_ratio="0.464772727273">
-	<global_window_position top="62" left="351" height="785" width="890"/>
+	<global_window_position top="62" left="351" height="766" width="890"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -38,63 +38,34 @@
 <v t="ekr.20050901121617"><vh>@@button sentence</vh>
 <v t="ekr.20050901121617.1"><vh>splitSentences</vh></v>
 </v>
-<v t="ekr.20050902080416"><vh>@button reformat-paragraph</vh></v>
+<v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
 <v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20051011141302" a="E"><vh>4.4 alpha 1</vh>
-<v t="ekr.20051014104108" a="MTV"><vh> To do</vh></v>
-<v t="ekr.20051015125434"><vh>Posting: A new world</vh></v>
-<v t="ekr.20051011141302.1"><vh>Known bugs</vh></v>
-<v t="ekr.20051014105514.37" a="M"><vh>The major new feature: an emacs-style minibuffer and related commands</vh>
-<v t="ekr.20051014105514.136"><vh>Added useMiniBuffer and useEditorMenu @settings</vh></v>
-<v t="ekr.20051014105514.132"><vh>Improvements</vh></v>
+<v t="ekr.20051011141302" a="TV"><vh>4.4 alpha 1</vh>
+<v t="ekr.20051014103845.3"><vh>Quick Start</vh></v>
+<v t="ekr.20051015141215"><vh>The 'key' features of 4.4</vh></v>
+<v t="ekr.20051015142343" a="E"><vh>Planned improvements</vh></v>
+<v t="ekr.20051011141302.1"><vh>New options</vh>
 <v t="ekr.20051015124747"><vh>The @bool useMinibuffer option</vh></v>
 <v t="ekr.20051015125338"><vh>The @bool useCmdMenu option</vh></v>
-<v t="ekr.20051014105911"><vh>New emacs-like commands</vh></v>
+<v t="ekr.20051014105514.1"><vh>Options for selected body text</vh></v>
 </v>
-<v t="ekr.20051014105606"><vh>Other new features</vh>
-<v t="ekr.20051014105514.1"><vh>Added options for selected body text</vh></v>
+<v t="ekr.20051014105911"><vh>New mini-buffer commands</vh></v>
+<v t="ekr.20051014105514.132"><vh>New code-level features</vh>
+<v t="ekr.20051015153139"><vh>Dictionaries of keys and commands</vh></v>
+<v t="ekr.20051015153139.1"><vh>Functions that return the present key bindings</vh></v>
+<v t="ekr.20051015153139.2"><vh>The registerCommand helper</vh></v>
 </v>
 <v t="ekr.20051014105514.275"><vh>Bugs fixed (in 4.3 code base)</vh>
 <v t="ekr.20051014112415"><vh>Leo protects c.endUpdate with a 'finally' clause</vh></v>
 <v t="ekr.20051014105514.151"><vh>Added kludge to solve infamous control-v problems</vh></v>
 <v t="ekr.20051014105514.5"><vh>Fixed bug in Leo's read logic</vh></v>
-<v t="ekr.20051014105514.14"><vh>Fixed problem with auto-indent</vh>
-<v t="ekr.20051014105514.15"><vh> masterCommand &amp; helpers</vh>
-<v t="ekr.20051014105514.16"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
-<v t="ekr.20051014105514.17"><vh>callStateFunction</vh></v>
-<v t="ekr.20051014105514.18"><vh>callKeystrokeFunction</vh></v>
-</v>
-<v t="ekr.20051014105514.19"><vh>onBodyKey</vh>
-<v t="ekr.20051014105514.20"><vh>handleStatusLineKey</vh>
-<v t="ekr.20051014105514.21"><vh>&lt;&lt; trace the key event &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20051014105514.22"><vh>idle_body_key &amp; helpers</vh>
-<v t="ekr.20051014105514.23"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
-<v t="ekr.20051014105514.24"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
-<v t="ekr.20051014105514.25"><vh>&lt;&lt; handle special characters &gt;&gt;</vh>
-<v t="ekr.20051014105514.26"><vh>&lt;&lt; handle backspace with negative tab_width &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051014105514.27"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051014105514.28"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
-<v t="ekr.20051014105514.29"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051014105514.30"><vh>doAutoIndent (David McNab)</vh></v>
-<v t="ekr.20051014105514.31"><vh>convertBlanksToTabs</vh>
-<v t="ekr.20051014105514.32"><vh>&lt;&lt; convert tab no matter where it is &gt;&gt;</vh></v>
-<v t="ekr.20051014105514.33"><vh>&lt;&lt; convert only leading tabs &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20051014105514.34"><vh>tkBody.createBindings</vh></v>
-</v>
 <v t="ekr.20051014105911.1"><vh>Fixed bug in goto-last-node.</vh></v>
 <v t="ekr.20051014105514.290"><vh>Leo now reads @settings trees when opening a .leo file from another outline.</vh></v>
 <v t="ekr.20051014211811"><vh>Improved g.removeExtraLws</vh></v>
 </v>
-<v t="ekr.20051014103845"><vh>4.4 notes</vh></v>
-<v t="ekr.20051014103845.3"><vh>Quick Start</vh></v>
 </v>
 <v t="ekr.20050917092557"><vh>4.3.3 final</vh>
 <v t="ekr.20050917105646"><vh>Fixes made in 4.3.3</vh></v>
@@ -19138,7 +19109,9 @@ b.tag_add('sel','1.0','1.0')
 b.update_idletasks()
 
 # Format until the end.
-while 1:
+count = 0 # Guard against loops.
+while count &lt; 100:
+    count += 1
     s = p.bodyString()
     if not s.strip():
         break
@@ -19147,8 +19120,7 @@ while 1:
     
     index = b.index('insert')
     if b.compare(index,'&gt;=','end-1c'):
-        break
-</t>
+        break</t>
 <t tx="ekr.20050902100834">This following information may be of interest to historians. It is not of
 general enough interest to put in Leo's Users Guide on the web. I am including
 this mass of detail here to indicate the complexities that were involved in
@@ -21322,16 +21294,24 @@ This installer installs the subprocess sources and also _subprocess.pyd in Pytho
 <t tx="ekr.20050917105646">- Fixed bug that caused the Open With command to crash if the subprocess module was not installed.
 
 - Fixed problems in the niceNocent and fastGotoNode plugins.</t>
-<t tx="ekr.20051011141302">Leo 4.4 alpha 1                 October 14, 2005
+<t tx="ekr.20051011141302">Leo 4.4 alpha 1                 October 15, 2005
 
-Leo 4.4 aims to be compatible with Emacs and Vim key bindings. Leo 4.4 adds an
-Emacs-like minibuffer and support for all frequently-used Emacs commands. Emacs
-users will be able to choose key bindings compatible with their present finger
-habits. Eventually, Vim users will be able to do the same.
+Leo 4.4 adds an Emacs-like minibuffer and support for all frequently-used Emacs
+commands. Emacs users will be able to choose key bindings compatible with their
+present finger habits. Eventually, Vim users will be able to do the same.
+
+The new code in Leo 4.4 is a complete rewrite of most of the temacs and
+usetemacs plugins. Those plugins have now been retired. Besides many code-level
+improvements, it is now possible to specify key bindings for all commands
+(including the new Emacs-style commands) using @shortcuts nodes in
+leoSettings.leo.
+
+This is definitely an alpha release. Several of the new Emacs-style commands are
+buggy. However, improvments to Leo's error-handling logic mean that you should
+be able to recover from the odd crash much more reliably than previously. I have
+used this code for about a week with no significant problems at all.
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
-
-Important: there are *many* more items on the to-do list.
 
 The highlights of Leo 4.4 alpha 1:
 ----------------------------------
@@ -21348,178 +21328,17 @@ new Emacs-style commands and the traditional Leo commands.
 You can define multiple sets of key bindings and switch between those sets
 easily.
 
+- Several bug fixes made to the 4.3 code bases.
+
 Coming in later releases of Leo 4.4:
 ------------------------------------
-
 - Support for 'mouseless Leo'. There will be commands to manipulate all aspects
 of Leo using commands, so your fingers will never have to leave the keyboard.
 
 - Support for Vim and other 'plain-key' command modes.</t>
-<t tx="ekr.20051011141302.1">- C-u 5 &lt;return&gt; works but is not undone properly.
-  Perhaps this is the reason for insert-newline command?
-
-- Buffer commands not complete yet.
-
-- repeat-complex-command (again) does not work.
-
-- Many new commands have never been tested.</t>
-<t tx="ekr.20051014103845">A new world
-
-This posting discusses various new features of Leo 4.4. It also discusses my
-plans upcoming 4.4 versions. This is essentially pre-writing for the 4.4a1
-release notes.
-
-- The minibuffer reduces the need for key shortcuts.
-
-It is easy to execute any command (including all of Leo's legacy commands) from
-the minibuffer. This reduces the need for shortcuts dramatically. For example,
-none of Leo's import commands need a shortcut because it is easy enough to
-execute them from the minibuffer. In particular, executing commands from the
-minibuffer is much easier than executing commands by hand from a menu.
-Important: you can execute any of Leo's 'legacy' commands from the mini-buffer.
-For example, &lt;alt-x&gt; about-leo or &lt;alt-x&gt; leo-find-panel.
-
-- `EKR shortcuts`
-
-I'm not sure whether abbreviations work at present. (They will definitely work
-for 4.4a2.) However, I have hacked a new kind of abbreviation. At present these
-are hard coded in the function add_ekr_altx_commands. For example, one
-ekr-shortcut is: 'f', which is bound to leo-find-panel. Typing &lt;alt-x&gt; f
-&lt;return&gt; executes leo-find-panel. These may be quicker than regular Emacs
-abbreviations, but I could be mistaken.
-
-- New commands
-
-The show-bindings command prints a list of all key bindings and their associated
-emacs command name. The show-commands command prints a list of *all* the emacs
-command names and their associated key bindings. For 4.4a1 the output goes to
-stdout. For 4.4a2 the output will go to a tab in the log pane. It is very easy
-to add new commands at present. It will get easier still in a2 (see below).
-
-- Minibuffer commands don't need gui elements.
-
-Most emacs-like commands have no associated gui except for the minibuffer itself
-(and buffers for the completion list, etc.) Aside: Leo 4.4a2 will show lists of
-tab completions in a new tab in the log pane, but even without the visible list
-of completions it is easy to use tab completion. *Not* having a gui simplifies
-commands a lot: there is no need for keystrokes to navigate through dialogs.
-This is important. Compare the pane of navigating through Leo's traditional Find
-panel without a mouse with the ease of using the Emacs-style find commands. In
-short, *not* showing dialogs simplifies the user's task and reduces the need for
-dialog-navigation key bindings. Avoiding dialogs would simplify an integrated
-Leo debugger, for example.
-
-Using the mouse to do things in dialogs not only seems slow, but it can cause
-bad typing habits. I recently realized that I try to do too much with the left
-hand, for example, typing Ctrl-S with only my left hand. This happens frequently
-just after using the mouse to select text. My right hand is 'blocked' by the
-mouse, so the temptation to type everything with the left hand is strong.
-
-- Multiple @shortcuts nodes.
-
-leoSettings.leo contains one functional @shortcuts node and two disabled
-@@shortcuts nodes. My preference at present is for the node called `@shortcuts
-traditional Leo shortcuts with import emacs bindings`. This node contains more
-Emacs-like bindings and fewer Leo 'legacy' bindings. You can any of these as
-they are, use them as base for modifications, or roll your own. You should
-define a binding for every function, even if that binding is 'None'. If you
-don't, Leo will issue a warning. I might take the warning out later, but for now
-it's a good check that all commands appear in the active @shortcuts node. Note:
-you can define your own lead-in characters to the following standard Emacs keys:
-Ctrl-C, Alt-x,
-
------ Coming in 4.4a2 or later -----
-
-I am only now digging out from the avalanche of ideas created by the 4.4 code
-base. In times like this, just jotting down the ideas as they come becomes
-problematic. However, things have settled down a bit. Here is a complete list of
-my plans for the near future.
-
-- More typing completion.
-
-The 4.4a1 code base handles the minibuffer well. In particular, k.getArg handles
-most of the routine chores in getting arguments to emacs-style commands,
-including typing completion for command names. 4.4a2 will add typing completion
-for file names and space completion for command names.
-
-- Tabbed log pane.
-
-Emacs creates a new buffer any time there is lots of data to show, for example,
-for help text or tab completions. Leo 4.4a2 will create tabs in the log pane to
-hold such data. At that time the TabbedLog plugin will be retired: Leo will
-always have a tabbed log. A tabbed log will be useful for showing spelling
-alternatives, breakpoint lists, debugger state, results of evaluating
-expression, whatever.
-
-- (Urgent) Per-pane key bindings.
-
-Yes, the minibuffer reduces the number of essential key bindings, but Leo
-creates a much richer context than Emacs, and this increases the demand for more
-essential key bindings. The easily typed shortcuts are all taken. The only way
-to create more bindings is to allow per-pane bindings. For example, many people
-might want arrow keys to do different things in the outline and body panes. In
-the outline pane, the arrow keys should navigate between nodes. In text panes
-the arrow panes should move the cursor by default. Indeed, Tk already has a
-powerful, and fairly standard, set of bindings for arrow keys.
-
-Leo 4.4a2 will allow this using a simple hack: key shortcuts can specify a pane
-in which they are to be bound. For example:
-
-    goto-next-visible = (outline) DnArrow
-    next-line = (body) DnArrow
-
-- Multiple bindings per command.
-
-The standard Emacs bindings assigns several keys to the same command.   This isn't urgent, but it could easily be done like this:
-
-    next-line = (body) [DnArrow,Ctrl-N]
-
-- Registering commands from plugins or scripts.
-
-k.registerCommand(commandName,shortcut,function) will cause Leo to add a new emacs-style function that can be called using the shortcut if it exists or from the minibuffer using &lt;alt-x&gt; commandName &lt;return&gt;.  This is easy to do, and I might do it for 4.4a1.
-
-- Improved @button bindings
-
-@button should allow bindings to emacs commands and keystrokes.  Something like this:
-
-    @button @name=button-name @key=shortcut
-
-would create a button whose name is button-name bound to the shortcut.  In addition it would have the effect of calling:
-
-    k.registerCommand(button-name,shortcut,f)
-
-where f is a wrapping of the script defined by the button.  The user can then execute the script in the button using the shortcut or this way:
-
-    &lt;alt-x&gt; button-name &lt;return&gt;
-
- Should be easy enough to do.
-
-- (The big one) Input modes and complex shortcuts.
-
-Recently I saw that a 'vim mode' would be fairly easy to do. The idea is simply
-to stay in the minibuffer after most commands. That's all very well, but both
-Emacs and Vim create hidden modes such as &lt;ctrl-c&gt; r r for rectangle commands.
-The present code is pretty kludgy, with lots of hard bindings. The most general
-way would be to have a tree of key binding modes. Emacs has something like this
-with its binding tables. This has lots of implications and ramifications. For
-example, Emacs shows the complex shortcuts &lt;ctrl-c&gt; r r in menus. I wont go into
-further details here.
-
-- Unit tests
-
-I shall not release Leo 4.4b1 until as many commands as possible in
-leoEditCommands.py have unit tests. The unit tests will call
-g.simulateKeystrokes (does not yet exist) with a list of keystrokes to simulate.
-The unit test will then assert various properties of the minibuffer or whatever.
-The teardown method may be more important than usual.
-
-Edward
-</t>
-<t tx="ekr.20051014103845.3">Here are the default bindings in leoSettings.leo. Important: any of these may be
-changed by changing the settings in the body text of the node `@shortcuts
-traditional Leo shortcuts with basic Emacs moves` There are also other
-@@shortcuts nodes that you can use instead. Just make sure exactly one headline
-starts with @shortcuts and the others start with @@shortcuts.
+<t tx="ekr.20051011141302.1"></t>
+<t tx="ekr.20051014103845.3">Here are the default bindings relating to the minibuffer. Any of
+these may be changed by changing the @shortcut node in leoSettings.leo.
 
 Alt-x: Just like Emacs: starts minibuffer. The prompt is 'full-command' Type a
 full command name, then hit &lt;Return&gt; to execute the command. Tab completion
@@ -21534,22 +21353,11 @@ count for later command. Ctrl-u 999 a adds 999 a's, but many features remain
 unfinished.
 
 Ctrl-g: Just like Emacs Ctrl-g: Closes the mini-buffer.
-</t>
-<t tx="ekr.20051014104108">** Convert posting to docs.
 
-- Document 'EKR' abbreviations.
-
-- List of commands known to be buggy.
-
-- List of all incompletions.
-    - Not all commands have been tested!
-    - the inputMode classes in leoKey.py are completely unused.
-
-- List of visible changes from usetemacs plugin.
-    New commands.
-    Better handling of buffer.
-    Worse handling of selection.
-    @bool useMinibuffer setting.</t>
+The @bool useMinibuffer setting in leoSettings.leo just controls whether the
+minibuffer is visible. The minibuffer exists (and you can type into it) even if
+it isn't visible! You can use the show-mini-buffer, hide-mini-buffer and
+toggle-mini-buffer commands to show or hide the minibuffer.</t>
 <t tx="ekr.20051014105514.1">http://sourceforge.net/forum/message.php?msg_id=3355954
 
 'body_text_selection_background_color'  Default is 'Gray80'
@@ -21557,442 +21365,7 @@ Ctrl-g: Just like Emacs Ctrl-g: Closes the mini-buffer.
 <t tx="ekr.20051014105514.5">http://sourceforge.net/forum/message.php?msg_id=3351985
 
 Leo did not read empty tnodes like &lt;t/&gt; properly.</t>
-<t tx="ekr.20051014105514.14">@
-
-idle_body_key was being called twice for every keystroke.
-Why this worked at all is still a bit of a mystery.
-The fix was to eliminate the binding to &lt;Key&gt; in tkBody.createBindings.
-
-To do: remove the cut/copy/paste bindings in tkBody.createBindings.</t>
-<t tx="ekr.20051014105514.15">def masterCommand (self,event,func,stroke):
-
-    '''This is the central dispatching method.
-    All commands and keystrokes pass through here.'''
-
-    k = self ; c = k.c
-    k.stroke = stroke # Set this global for general use.
-    commandName = k.ultimateFuncName(func)
-    special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func or stroke != '&lt;Key&gt;'
-
-    # if interesting: g.trace(stroke,commandName)
-
-    inserted = not special or (
-        stroke != '&lt;Key&gt;' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
-
-    if inserted:
-        # g.trace(stroke,event.keysym)
-        &lt;&lt; add character to history &gt;&gt;
-        
-    # We *must not* interfere with the global state in the macro class.
-    if c.macroCommands.recordingMacro:
-        done = c.macroCommands.startKbdMacro(event)
-        if done: return 'break'
-        
-    # g.trace(stroke,k.abortAllModesKey)
-
-    if stroke == k.abortAllModesKey: # 'Control-g'
-        k.previousStroke = stroke
-        k.clearState()
-        k.keyboardQuit(event)
-        k.endCommand(event,commandName,tag='keyboard-quit')
-        return 'break'
-
-    if k.inState():
-        k.forceFocusToBody()
-        k.previousStroke = stroke
-        k.callStateFunction(event) # Calls end-command.
-        return 'break'
-
-    # if k.keystrokeFunctionDict.has_key(stroke):
-        # k.previousStroke = stroke
-        # if k.callKeystrokeFunction(event): # Calls end-command
-            # return 'break'
-
-    if k.regx.iter:
-        try:
-            k.regXKey = event.keysym
-            k.regx.iter.next() # EKR: next() may throw StopIteration.
-        finally:
-            return 'break'
-
-    if k.abbrevOn:
-        expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded: return 'break'
-
-    if func: # Func is an argument.
-        k.previousStroke = stroke
-        forceFocus = func.__name__ != 'leoCallback'
-        if forceFocus:
-            k.forceFocusToBody()
-        func(event)
-        k.endCommand(event,commandName,forceFocus,tag='masterCommand')
-        return 'break'
-
-    else:
-        c.frame.body.onBodyKey(event)
-        return None # Not 'break'</t>
-<t tx="ekr.20051014105514.16"># Don't add multiple special characters to history.
-
-k.keysymHistory.insert(0,event.keysym)
-
-if len(event.char) &gt; 0:
-    if len(keyHandlerClass.lossage) &gt; 99:
-        keyHandlerClass.lossage.pop()
-    keyHandlerClass.lossage.insert(0,event.char)
-
-if 0: # traces
-    g.trace(event.keysym,stroke)
-    g.trace(k.keysymHistory)
-    g.trace(keyHandlerClass.lossage)</t>
-<t tx="ekr.20051014105514.17">def callStateFunction (self,event):
-    
-    k = self
-    
-    # g.trace(k.stateKind,k.state)
-    
-    if k.state.kind:
-        if k.state.handler:
-            k.state.handler(event)
-            k.endCommand(event,k.commandName,tag='callStateFunction')
-        else:
-            g.es_print('no state function for %s' % (k.state.kind),color='red')</t>
-<t tx="ekr.20051014105514.18">def callKeystrokeFunction (self,event):
-    
-    '''Handle a quick keystroke function.
-    Return the function or None.'''
-    
-    k = self
-    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
-
-    if func:
-        func(event)
-        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        forceFocus = func.__name__ != 'leoCallback'
-        k.endCommand(event,commandName,forceFocus,tag='callKeystrokeFunction')
-    
-    return func</t>
-<t tx="ekr.20051014105514.19">def onBodyKey (self,event,undoType='Typing'):
-    
-    '''Handle any key press event in the body pane.'''
-
-    # New in Leo 4.4.  May be called with event = None
-    c = self.c
-    ch = (event and event.char) or ''
-    keysym = (event and event.keysym) or ''
-
-    # g.trace(repr(ch),repr(event.keysym))
-
-    # This translation is needed on MacOS.
-    if ch == '':
-        d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
-        ch = d.get(event.keysym,'')
-
-    oldSel = c.frame.body.getTextSelection()
-    
-    p = c.currentPosition()
-        
-    # We must execute this even if len(ch) &gt; 0 to delete spurious trailing newlines.
-    self.c.frame.body.colorizer.interrupt()
-    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,ch)</t>
-<t tx="ekr.20051014105514.20">def handleStatusLineKey (self,event):
-    
-    c = self.c ; frame = c.frame
-    ch = event.char ; keysym = event.keysym
-    keycode = event.keycode ; state = event.state
-
-    if 1: # ch and len(ch)&gt;0:
-        &lt;&lt; trace the key event &gt;&gt;
-
-    try:
-        status = self.keyStatus
-    except:
-        status = [] ; frame.clearStatusLine()
-    
-    for sym,name in (
-        ("Alt_L","Alt"),("Alt_R","Alt"),
-        ("Control_L","Control"),("Control_R","Control"),
-        ("Escape","Esc"),
-        ("Shift_L","Shift"), ("Shift_R","Shift")):
-        if keysym == sym:
-            if name not in status:
-                status.append(name)
-                frame.putStatusLine(name + ' ')
-            break
-    else:
-        status = [] ; frame.clearStatusLine()
-
-    self.keyStatus = status</t>
-<t tx="ekr.20051014105514.21">try:    self.keyCount += 1
-except: self.keyCount  = 1
-
-printable = g.choose(ch == keysym and state &lt; 4,"printable","")
-
-print "%4d %s %d %s %x %s" % (
-    self.keyCount,repr(ch),keycode,keysym,state,printable)</t>
-<t tx="ekr.20051014105514.22">def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
-    
-    """Update the body pane at idle time."""
-    
-    __pychecker__ = 'maxlines=500'
-
-    c = self.c
-    if not c: return "break"
-    if not p: return "break"
-    if not c.isCurrentPosition(p): return "break"
-    # g.trace(repr(ch))
-
-    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
-        return "break" # The hook claims to have handled the event.
-    body = p.bodyString()
-    if not newSel:
-        newSel = c.frame.body.getTextSelection()
-    if oldText != None:
-        s = oldText
-    else:
-        s = c.frame.body.getAllText()
-    &lt;&lt; return if nothing has changed &gt;&gt;
-    &lt;&lt; set removeTrailing &gt;&gt;
-    if ch in ('\t','\n','\r',chr(8)):
-        &lt;&lt; handle special characters &gt;&gt;
-    &lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;
-    # g.trace(repr(ch),undoType)
-    if undoType:
-        if not oldText: oldText = body
-        newText = s
-        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
-    p.v.setTnodeText(s)
-    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
-    &lt;&lt; recolor the body &gt;&gt;
-    if not c.changed:
-        c.setChanged(True)
-    &lt;&lt; redraw the screen if necessary &gt;&gt;
-    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
-    return "break"</t>
-<t tx="ekr.20051014105514.23"># Make sure we handle delete key properly.
-if ch not in ('\n','\r',chr(8)):
-
-    if s == body:
-        return "break"
-
-    # Do nothing for control characters.
-    if (ch == None or len(ch) == 0) and body == s[:-1]:
-        return "break"</t>
-<t tx="ekr.20051014105514.24">@ Tk will add a newline only if:
-1. A real change has been made to the Tk.Text widget, and
-2. the change did _not_ result in the widget already containing a newline.
-
-It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
-@c
-new = s ; old = body
-
-if len(new) == 0 or new[-1] != '\n':
-    # There is no newline to remove.  Probably will never happen.
-    removeTrailing = False
-elif len(old) == 0:
-    # Ambigous case.  Formerly always returned False.
-    if new == "\n\n":
-        removeTrailing = True # Handle a very strange special case.
-    else:
-        removeTrailing = ch not in ('\r','\n')
-elif old == new[:-1]:
-    # A single trailing character has been added.
-    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
-else:
-    # The text didn't have a newline, and now it does.
-    # Moveover, some other change has been made to the text,
-    # So at worst we have misrepresented the user's intentions slightly.
-    removeTrailing = True
-
-if 0:
-    print removeTrailing
-    print repr(ch)
-    print repr(oldText)
-    print repr(old)
-    print repr(new)</t>
-<t tx="ekr.20051014105514.25">d = g.scanDirectives(c,p) # Support @tab_width directive properly.
-tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
-
-if ch in ('\n','\r'):
-    # Do nothing if we are in @nocolor mode or if we are executing a Change command.
-    if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
-        removeTrailing = self.doAutoIndent(p,removeTrailing,tab_width,undoType)
-
-elif ch == '\t' and tab_width &lt; 0:
-    # Do nothing if we are executing a Change command.
-    if undoType != "Change":
-        self.convertBlanksToTabs(tab_width)
-
-elif ch in (chr(8)) and tab_width &lt; 0:
-    &lt;&lt; handle backspace with negative tab_width &gt;&gt;</t>
-<t tx="ekr.20051014105514.26"># Get the preceeding characters.
-prev   =c.frame.bodyCtrl.get("insert linestart","insert")
-allPrev=c.frame.bodyCtrl.get("1.0","insert")
-n = len(allPrev)
-try:
-    oldAllPrev = body[:n]
-    assert(allPrev==oldAllPrev)
-    deletedChar = body[n:n+1]
-except (IndexError,AssertionError):
-    deletedChar = None
-
-if deletedChar in (u' ',' '):
-    n = len(prev) ; w = abs(tab_width)
-    n2 = n % w # Delete up to n2 - 1 spaces.
-    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
-        count = 0
-        while n2 &gt; 0:
-            n2 -= 1
-            ch = prev[n-count-1]
-            # g.trace(count,repr(ch))
-            if ch in (u' ',' '): count += 1
-            else: break
-        # g.trace(count,(n%w))
-        if count &gt; 0:
-            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
-            newSel = c.frame.body.getTextSelection() # Fixes crasher in undo logic.</t>
-<t tx="ekr.20051014105514.27">s = c.frame.body.getAllText()
-if len(s) &gt; 0 and s[-1] == '\n' and removeTrailing:
-    s = s[:-1]
-    
-# Major change: 6/12/04
-if s == body:
-    # g.trace('no real change')
-    return "break"</t>
-<t tx="ekr.20051014105514.28">self.frame.scanForTabWidth(p)
-
-incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
-self.frame.body.recolor_now(p,incremental=incremental)
-
-self.forceFullRecolorFlag = False</t>
-<t tx="ekr.20051014105514.29">redraw_flag = False
-c.beginUpdate()
-try:
-    # Update dirty bits.
-    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-        redraw_flag = True
-    # Update icons.
-    val = p.computeIcon()
-    # During unit tests the node may not have been drawn,
-    # So p.v.iconVal may not exist yet.
-    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-        p.v.iconVal = val
-        redraw_flag = True
-finally:
-    c.endUpdate(redraw_flag) # redraw only if necessary</t>
-<t tx="ekr.20051014105514.30">def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
-    
-    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
-    
-    c = self.c
-    # Get the previous line.
-    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-    # g.trace(repr(s))
-    # Add the leading whitespace to the present line.
-    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
-    if s and len(s) &gt; 0 and s[-1]==':':
-        # For Python: increase auto-indent after colons.
-        if self.colorizer.scanColorDirectives(p) == "python":
-            width += abs(tab_width)
-    if c.config.getBool("smart_auto_indent"):
-        # Added Nov 18 by David McNab, david@rebirthing.co.nz
-        # Determine if prev line has unclosed parens/brackets/braces
-        brackets = [width] ; tabex = 0
-        for i in range(0, len(s)):
-            if s[i] == '\t':
-                tabex += tab_width - 1
-            if s[i] in '([{':
-                brackets.append(i+tabex + 1)
-            elif s[i] in '}])' and len(brackets) &gt; 1:
-                brackets.pop()
-        width = brackets.pop()
-        # end patch by David McNab
-    ws = g.computeLeadingWhitespace (width,tab_width)
-    if ws and len(ws) &gt; 0:
-        c.frame.bodyCtrl.insert("insert", ws)
-        removeTrailing = False
-            
-    return removeTrailing</t>
-<t tx="ekr.20051014105514.31">def convertBlanksToTabs (self,tab_width):
-
-    c = self.c
-    
-    # Get the characters preceeding the tab.
-    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-    
-    if 1:
-        &lt;&lt; convert tab no matter where it is &gt;&gt;
-    else:
-        &lt;&lt; convert only leading tabs &gt;&gt;</t>
-<t tx="ekr.20051014105514.32">w = g.computeWidth(prev,tab_width)
-w2 = (abs(tab_width) - (w % abs(tab_width)))
-# g.trace("prev w:",w,"prev chars:",prev)
-c.frame.bodyCtrl.delete("insert -1c")
-c.frame.bodyCtrl.insert("insert",' ' * w2)</t>
-<t tx="ekr.20051014105514.33"># Get the characters preceeding the tab.
-prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-
-# Do nothing if there are non-whitespace in prev:
-all_ws = True
-for ch in prev:
-    if ch != ' ' and ch != '\t':
-        all_ws = False
-if all_ws:
-    w = g.computeWidth(prev,tab_width)
-    w2 = (abs(tab_width) - (w % abs(tab_width)))
-    # g.trace("prev w:",w,"prev chars:",prev)
-    c.frame.bodyCtrl.delete("insert -1c")
-    c.frame.bodyCtrl.insert("insert",' ' * w2)</t>
-<t tx="ekr.20051014105514.34">def createBindings (self,frame):
-    
-    '''(tkBody) Create gui-dependent bindings.
-    These are *not* made in nullBody instances.'''
-    
-    c = self.c ; t = self.bodyCtrl
-    
-    # Event handlers...
-    t.bind("&lt;Button-1&gt;", frame.OnBodyClick)
-    if sys.platform == "win32":
-        # Support Linux middle-button paste easter egg.
-        t.bind("&lt;Button-2&gt;", frame.OnPaste)
-    t.bind("&lt;Button-3&gt;", frame.OnBodyRClick)
-    t.bind("&lt;Double-Button-1&gt;", frame.OnBodyDoubleClick)
-    
-    if not c.useMiniBuffer:
-        g.trace('binding &lt;Key&gt; to frame.body.onBodyKey')
-        t.bind("&lt;Key&gt;", self.onBodyKey)
-
-    # Gui-dependent bindings...
-    if 0:
-        # These cause problems when cut/copy/paste-text commands are bound.
-        t.bind(g.virtual_event_name("Cut"), frame.OnCut)
-        t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
-        t.bind(g.virtual_event_name("Paste"), frame.OnPaste)</t>
-<t tx="ekr.20051014105514.37">- The primary goal is to allow Emacs and Vim users to retain their 'finger habits' while using Leo.
-
-    - It is *not* necessary to implement all Emacs commands: just those that are used frequently.
-    - It *is* necessary to extend commands like isearch so they can deal with multiple body texts.
-
-- The secondary goal is 'mouseless leo': being able to drive all parts of Leo without using the mouse.</t>
-<t tx="ekr.20051014105514.132">The original code was prototype quality.
-
-- Improved appearance of mini-buffer.
-
-- Improved operation of tab completion.
-
-- Improved feedback from many commands.
-
-- c.commandsDict now describes all commands. Keys are full Emacs command names, values are methods.
-
-- (The big collapse, the great divide) Separated code into leokeys.py and leoEditCommands.py.
-
-- Many code-level simplifications.  The LeoPy.leo for the full details.
-
-- Keyboard shortcuts now come primarily from the @shortcuts node in leoSettings.leo, not from hard-coded tables in the code.
-
-- k.registerCommand can now be called from scripts to register new alt-x commands.
-  It probably won't work from plugins yet.  This will happen in 4.4a2.</t>
-<t tx="ekr.20051014105514.136"></t>
+<t tx="ekr.20051014105514.132"></t>
 <t tx="ekr.20051014105514.151">Added big kludge to menu.createMenuEntries so that f.OnCut/Copy/PasteFromMenu get called
 **only** when explicitly selected from the menu (rather than from a shortcut).
 This allows the code in cut/copy/paste-text to be different as needed.
@@ -22006,23 +21379,24 @@ The code appears to work properly on XP.  Not tested other places.
 This is the last best hope to solve this problem: the code interacts as little as possible with Tk.</t>
 <t tx="ekr.20051014105514.275">The following bugs exist in 4.3 final.</t>
 <t tx="ekr.20051014105514.290">http://sourceforge.net/forum/message.php?msg_id=3376527</t>
-<t tx="ekr.20051014105606"></t>
-<t tx="ekr.20051014105911">- contract-and-go-right command
+<t tx="ekr.20051014105911">- The contract-and-go-right command moves to the parent node and collapses the
+parent node.
 
-- goto-first-sibling and goto-last-sibling
+- The goto-first-sibling and goto-last-sibling commands allow rapid movement
+through an ouline without collapsing nodes.
 
-- print-bindings
+- The print-bindings and print-commands show what commands exist and what keys
+are bound to them.
 
-- print-commands.  This is an easy way of discovering which commands exist.
-
-- help</t>
+- The help command gives a brief quick start introduction to Leo's Emacs-like
+features.</t>
 <t tx="ekr.20051014105911.1"></t>
 <t tx="ekr.20051014112415">This makes it much harder to hang Leo after taking an exception. Leo 4.4a1 is
 *much* more robust than Leo 4.3 final in this regard.</t>
 <t tx="ekr.20051014211811">It now computes the minimum leading whitespace of all non-blank lines. The old
 code computed the leading whitespace of the *first* non-blank line. This would
 give the wrong results if the first line were indented.</t>
-<t tx="ekr.20051015124747">1. The minibuffer will exist regardless of this setting, but will not be shown
+<t tx="ekr.20051015124747">1. The minibuffer exists regardless of this setting, but will not be shown
    initially if it is False.
 
 2. Hiding the minibuffer does not change any bindings or the operation of Leo in
@@ -22038,104 +21412,171 @@ give the wrong results if the first line were indented.</t>
 <t tx="ekr.20051015125338">This options controls whether Leo creates a Cmds menu.
 
 This menu is not ready yet, though nothing bad happens if this option is True.</t>
-<t tx="ekr.20051015125434">This posting discusses various new features of Leo 4.4.  It also discusses my plans upcoming 4.4 versions.  This is essentially pre-writing for the 4.4a1 release notes.
+<t tx="ekr.20051015141215">The most important new features of Leo 4.4 have to do with key bindings.
 
--  The minibuffer reduces the need for key shortcuts.
+1. The minibuffer works pretty much like the Emacs mini-buffer.
 
-It is easy to execute any command (including all of Leo's legacy commands) from the minibuffer.  This reduces the need for shortcuts dramatically.   For example, none of Leo's  import commands need a shortcut because it is easy enough to execute them from the minibuffer.  In particular, executing commands from the minibuffer is much easier than executing commands by hand from a menu.  Important: you can execute any of Leo's 'legacy' commands from the mini-buffer.  For example, &lt;alt-x&gt; about-leo  or &lt;alt-x&gt; leo-find-panel.
+At the bottom of Leo's window you will now see an area labelled the mini-buffer.
+You can't type in it directly, you activate the buffer by typing Alt-x or Alt-c.
+Typing Alt-x takes you to 'full-command' mode. Type the full name of a command,
+followed by a 'return'. 
 
-- `EKR shortcuts`
+- To get help, type Alt-x help.
+- For a list of commands, type Alt-x print-commands.
+- For a list of present key bindings, type Alt-x print-bindings.
+- To leave the mini-buffer at any time typc Ctrl-g.
 
-I'm not sure whether abbreviations work at present.  (They will definitely work for 4.4a2.)  However, I have hacked a new kind of abbreviation.  At present these are hard coded in the function add_ekr_altx_commands.  For example, one ekr-shortcut is: 'f', which is bound to leo-find-panel.  Typing &lt;alt-x&gt; f &lt;return&gt; executes leo-find-panel. These may be quicker than regular Emacs abbreviations, but I could be mistaken.
+Note: you can redefine any of these keys as you wish.
 
-- New commands
+Important: you can execute any of Leo's 'legacy' commands from the mini-buffer.
+For example, Alt-x about-leo or Alt-x leo-find-panel.
 
-The show-bindings command prints a list of all key bindings and their associated emacs command name.  The show-commands command prints a list of *all* the emacs command names and their associated key bindings.  For 4.4a1 the output goes to stdout.  For 4.4a2 the output will go to a tab in the log pane.  It is very easy to add new commands at present.  It will get easier still in a2 (see below).
+You can use tab-completion in the minibuffer to cycle through the list of
+commands that start with what is in the buffer. Typing backspace takes you back
+to the what you previously typed (less on character.) 
 
--  Minibuffer commands don't need gui elements.
+The mini-buffer reduces the need for shortcuts dramatically. For example, none
+of Leo's import commands need a shortcut because it is easy enough to execute
+them from the minibuffer. In particular, executing commands from the minibuffer
+is much easier than executing commands by hand from a menu. 
 
-Most emacs-like commands have no associated gui except for the minibuffer itself (and buffers for the completion list, etc.)  Aside: Leo 4.4a2 will show lists of tab completions in a new tab in the log pane, but even without the visible list of completions it is easy to use tab completion.  *Not* having a gui simplifies commands a lot: there is no need for keystrokes to navigate through dialogs.  This is important.  Compare the pain of navigating through Leo's traditional Find panel without a mouse with the ease of using the Emacs-style find commands.  In short, *not* showing dialogs simplifies the user's task and reduces the need for dialog-navigation key bindings.  Avoiding dialogs would simplify an integrated Leo debugger, for example.
+2. `EKR shortcuts`
 
-Using the mouse to do things in dialogs not only seems slow, but it can cause bad typing habits.  I recently realized that I try to do too much with the left hand, for example, typing Ctrl-S with only my left hand.  This happens frequently just after using the mouse to select text.  My right hand is 'blocked' by the mouse, so the temptation to type everything with the left hand is strong.
+Abbreviations may not work at present. (They will definitely work for 4.4a2.) A
+new kind of abbreviation is presently hard coded in add_ekr_altx_commands in
+leoKeys.py. For example, one ekr-shortcut is: 'f', which is bound to
+leo-find-panel. Typing Alt-x f Return executes leo-find-panel. These may be
+quicker than Emacs abbreviations, or not.
 
--  Multiple @shortcuts nodes.
+3. Binding keys with @shortcuts nodes in leoSettings.leo.
 
-leoSettings.leo contains one functional @shortcuts node and two disabled @@shortcuts nodes.  My preference at present is for the node called `@shortcuts traditional Leo shortcuts with import emacs bindings`.  This node contains more Emacs-like bindings and fewer Leo 'legacy' bindings.  You can any of these as they are, use them as base for modifications, or roll your own.   You should define a binding for every function, even if that binding is 'None'.  If you don't, Leo will issue a warning.  I might take the warning out later, but for now it's a good check that all commands appear in the active @shortcuts node.  Note: you can define your own lead-in characters to the following standard Emacs keys: Ctrl-C, Alt-x, Ctrl-U and Ctrl-G.
+leoSettings.leo contains one functional @shortcuts node and one disabled
+@@shortcuts node. These node contain entries for every command. You can assign
+key shortcuts to any command, as discussed in the comments in that file. You can
+either node as is, use them as base for modifications, or roll your own. You
+should define a binding for every function, even if that binding is 'None'. If
+you don't, Leo will issue a warning.</t>
+<t tx="ekr.20051015142343">Here are the features planned, in approximate order of importance:
 
------ Coming in 4.4a2 or later -----
+1. Per-pane key bindings
 
-I am only now digging out from the avalanche of ideas created by the 4.4 code base.  In times like this, just jotting down the ideas as they come becomes problematic.  However, things have settled down a bit.  Here is a complete list of my plans for the near future.
+Many people might want the same keystroke to do different things depending on
+whether the outline or body pane is active. In particular, it would be natural
+to use arrow keys to navigate between nodes in the outline pane, the arrow keys
+should navigate between nodes. In text panes the arrow panes should move the
+cursor by default. Indeed, Tk already has a powerful, and fairly standard, set
+of bindings for arrow keys.
 
-- More typing completion.
+2. Use a tabbed log pane for lengthy output.
 
-The 4.4a1 code base handles the minibuffer well.  In particular, k.getArg handles most of the routine chores in getting arguments to emacs-style commands, including typing completion for command names. 4.4a2 will add typing completion for file names and space completion for command names.
+Emacs creates a new buffer any time there is lots of data to show, for example,
+for help text or tab completions. Leo 4.4a2 will create tabs in the log pane to
+hold such data. At that time the TabbedLog plugin will be retired: Leo will
+always have a tabbed log. A tabbed log will be useful for showing spelling
+alternatives, breakpoint lists, debugger state, results of evaluating
+expression, whatever.
 
-- Tabbed log pane.
+3. Debug and improve and extend Emacs-style commands.
 
-Emacs creates a new buffer any time there is lots of data to show, for example, for help text or tab completions.  Leo 4.4a2 will create tabs in the log pane to hold such data.  At that time the TabbedLog plugin will be retired: Leo will always have a tabbed log.  A tabbed log will be useful for showing spelling alternatives, breakpoint lists, debugger state, results of evaluating expression, whatever.
+Not all commands have even been tested. Here are some areas that need work:
 
-- (Urgent) Per-pane key bindings.
+- repeat-complex-command does not work.  It is likely that none of the buffer commands work at present.
 
-Yes, the minibuffer reduces the number of essential key bindings, but Leo creates a much richer context than Emacs, and this increases the demand for more essential key bindings.  The easily typed shortcuts are all taken.  The only way to create more bindings is to allow per-pane bindings.   For example, many people might want arrow keys to do different things in the outline and body panes.  In the outline pane, the arrow keys should navigate between nodes.  In text panes the arrow panes should move the cursor by default.  Indeed, Tk already has a powerful, and fairly standard, set of bindings for arrow keys.
+- Moving the cursor when the 'mark' has been defined does not expand the visibly
+selected text.
 
-Leo 4.4a2 will allow this using a simple hack:  key shortcuts can specify a pane in which they are to be bound.  For example:
+- Yanking and killing have not been well tested.
 
-.…goto-next-visible = (outline) DnArrow
-.…next-line = (body) DnArrow
+- C-u 5 &lt;return&gt; works but is not undone properly. Also, the kill-line command
+does not work as in Emacs.
 
-- Multiple bindings per command.
+- Many new commands must be generalized to handle the more complex environment
+Leo offers. For example, search commands must be told whether to limit the
+search a single node, or a node or and its descendents, or the entire outline.
+We need a set-variable command that sets a (Python) variable using an
+emacs-style variable name.
 
-The standard Emacs bindings assigns several keys to the same command.   This isn't urgent, but it could easily be done like this:
-
-.…next-line = (body) [DnArrow,Ctrl-N]
-
-- Registering commands from plugins or scripts.
-
-k.registerCommand(commandName,shortcut,function) will cause Leo to add a new emacs-style function that can be called using the shortcut if it exists or from the minibuffer using &lt;alt-x&gt; commandName &lt;return&gt;.  This is easy to do, and I might do it for 4.4a1.
-
-- Improved @button bindings
-
-@button should allow bindings to emacs commands and keystrokes.  Something like this:
-
-.…@button @name=button-name @key=shortcut
-
-would create a button whose name is button-name bound to the shortcut.  In addition it would have the effect of calling:
-
-.…k.registerCommand(button-name,shortcut,f)
-
-where f is a wrapping of the script defined by the button.  The user can then execute the script in the button using the shortcut or this way:
-
-.…&lt;alt-x&gt; button-name &lt;return&gt;
-
- Should be easy enough to do.
-
-- (The big one) Input modes and complex shortcuts.
-
-Recently I saw that a 'vim mode' would be fairly easy to do.  The idea is simply to stay in the minibuffer after most commands.  That's all very well, but both Emacs and Vim create hidden modes such as &lt;ctrl-c&gt; r r for rectangle commands.  The present code is pretty kludgy, with lots of hard bindings.  The most general way would be to have a tree of key binding modes.  Emacs has something like this with its binding tables.  This has lots of implications and ramifications.  For example, Emacs shows the complex shortcuts &lt;ctrl-c&gt; r r in menus.  I wont go into further details here.
-
-- Unit tests
-
-I shall not release Leo 4.4b1 until as many commands as possible in leoEditCommands.py have unit tests.  The unit tests will call g.simulateKeystrokes (does not yet exist) with a list of keystrokes to simulate. The unit test will then assert various properties of the minibuffer or whatever.  The teardown method may be more important than usual.
-
-Edward
-
-P.S. I wasn't kidding when I said that it is hard to get all the ideas down.  I forgot a big one.
-
-Sometime before 4.4b1 I must figure out how to merge the old and new commands.  For example, there are now two distinct sets of find commands: the legacy Leo way and the Emacs way.  This is ugly, and even Leo keeps both ways, we shall want emacs-like commands to do Leo-specific tasks.  Some examples (this list is *far* from complete):
-
-1. Traditional Emacs commands must be generalized to handle the more complex environment Leo offers. For example, search commands must be told whether to limit the search a single node, or a node or and its descendents, or the entire outline.  We need a set-variable command that sets a (Python) variable using an emacs-style variable name.
-
-2. The notion of the 'point' must be expanded so it indicates a node as well as text location.  This could be a bit tricky.
+- The notion of the 'point' must be expanded so it indicates a node as well as
+text location.
     
-3. Many more commands are needed to support 'mouseless-Leo':
+- New commands are needed to support 'mouseless-Leo'. The user must be able to
+drive all dialogs from the keyboard, or to get the same effect without using a
+dialog at all. Examples: dismiss-top-dialog, scroll-outline-up/down. We also
+need commands to change focus and to manage menus. Examples: focus-in-body,
+focus-in-tree, etc, activate-edit-menu, etc.
 
-- The user must be able to drive all dialogs from the keyboard, **or to get the same effect without using a dialog at all**.  Examples:  dismiss-top-dialog, scroll-outline-up/down.
+4. Improved @button bindings
 
-- emacs commands to change focus, etc: focus-in-body/tree/log/dialog.
+@button will allow bindings to emacs commands and keystrokes.  Something like this:
 
-- emacs commands for menus.  activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)
+    @button @name=button-name @key=shortcut
 
-EKR
-</t>
+would create a button whose name is button-name bound to the shortcut. There is
+a nice synergy between @button nodes and k.registerCommand.
+
+5. Better typing completion.
+
+The next release will add typing completion for file names and space completion
+for command names.
+
+6. Multiple bindings per command
+
+The standard Emacs bindings assigns several keys to the same command. The syntax
+of entries in @shortcuts nodes will be expanded to allow entries like this:
+
+    next-line = (body) [DnArrow,Ctrl-N]
+
+7. User customizable input modes
+
+It should be possible to for any keystroke or sequence of keystrokes to define a
+new input mode. An input mode is simply a list of key bindings. Some of those
+bindings may have the effect of changing to another input mode.
+
+We shall want to define input modes using Python tables, and possibly with new
+kinds of entries in @shortcuts nodes. The details are hazy at present. It's a
+significant job.</t>
+<t tx="ekr.20051015153139">Leo maintains the following dictionaries.  As usual, k referes to c.keyHandler:
+
+- c.keyHandler.registerCommand can be called from scripts to register new alt-x
+  commands. It probably won't work from plugins yet.
+
+New dictionaries and methods make it easier to customize and extend Leo:
+
+- c.commandsDict describes all commands. Keys are full Emacs command names;
+values are functsions f.
+
+- k.inverseCommandsDict: keys are f.__name__, values are emacs command names.
+
+- k.leoCallbackDict: keys are leoCallback functions, values are called
+functions.
+
+- k.bindingsDict: keys are shortcuts, values are g.bunches with the following
+    members: func, name, warningGiven, fromMenu.</t>
+<t tx="ekr.20051015153139.1">The following helper functions make it easy to discover the binding presently in
+effect for a command:
+
+- k.getShortcutForCommandName(self,commandName) returns the shortcut given
+  f.__name__.
+
+- k.getShortcutForCommand(self,f) returns the shortcut for f.</t>
+<t tx="ekr.20051015153139.2">@nocolor
+
+c.keyHandlerregisterCommand (self,commandName,shortcut,func)
+
+This function make the func available as a minibuffer command, and optionally
+binds a shortcut to func. You can wrap any method in a function, so the
+restriction to functions is not significant.
+
+Here is an example take from an @button node::
+
+@color
+
+k = c.keyHandler
+
+def f (event):
+    g.es_print('Hello',color='purple')
+
+k.registerCommand('print-hello','Alt-Ctrl-Shift-p',f)
+k.registerCommand('print-hello2',None,f)</t>
 </tnodes>
 </leo_file>
