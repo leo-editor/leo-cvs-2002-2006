@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="10" left="256" height="765" width="966"/>
+	<global_window_position top="10" left="256" height="757" width="1017"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -36,7 +36,7 @@
 </v>
 <v t="ekr.20051010093913"><vh>@button save</vh></v>
 <v t="ekr.20051011123608"><vh>@@button align to col</vh></v>
-<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="TV"><vh>@settings</vh>
 <v t="ekr.20041119034357.10"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -101,7 +101,7 @@
 <v t="ekr.20041119034357.45"><vh>@font body text font</vh></v>
 <v t="ekr.20041119051246.4"><vh>@font outline font</vh></v>
 </v>
-<v t="ekr.20050203090810"><vh>@page For unit tests</vh>
+<v t="ekr.20050203090810" a="E"><vh>@page For unit tests</vh>
 <v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
 </v>
 <v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
@@ -125,9 +125,6 @@
 <v t="ekr.20041119042929.10"><vh>@string new_leo_file_encoding = UTF-8</vh></v>
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
-</v>
-<v t="ekr.20050921105316"><vh>@page Menu options	</vh>
-<v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 </v>
 <v t="ekr.20041119034357.28"><vh>@page Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
@@ -223,15 +220,16 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
-<v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh></v>
-<v t="ekr.20051010121210"><vh>To do</vh></v>
-<v t="ekr.20050921105316.2"><vh>@bool useMiniBuffer=True</vh></v>
+<v t="ekr.20051007200824"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
+</v>
+<v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
+<v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051010195914"><vh>@@shortcuts no shortcuts (for testing)</vh></v>
 <v t="ekr.20051007193427"><vh>@@shortcuts traditional Leo shortcuts (not recommended)</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558" a="TV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
+<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -882,9 +880,17 @@ Please do not change this; it would make a unit test fail.</t>
 Doing so would make unit tests fail.
 </t>
 <t tx="ekr.20050620083647"></t>
-<t tx="ekr.20050921105316"></t>
-<t tx="ekr.20050921105316.1"># This menu is not ready yet.</t>
-<t tx="ekr.20050921105316.2"></t>
+<t tx="ekr.20050921105316.1">The Cmds menu is not ready yet.  It will be similar to the Emacs Cmds menu.</t>
+<t tx="ekr.20050921105316.2">Important:
+
+- The minibuffer will exist regardless of this setting, but will not be shown
+initially if it is False.
+
+- The show-mini-buffer, hide-mini-buffer and toggle-mini-buffer commands (or any
+other minibuffer command!) may be executed even if the minibuffer is hidden.
+Indeed, the following will work even if the minibuffer is hidden.
+
+&lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
 <t tx="ekr.20051006200015">Use a light selectbackground value so syntax coloring looks good.
 
 Default is Gray80.
@@ -1922,7 +1928,6 @@ Unused Ctrl-B, Ctrl-G, Ctrl-J, Ctrl-P
 Unused Shift-Ctrl-I, Shift-Ctrl-K, Shift-Ctrl-L, Shift-Ctrl-O
 
 F4 seems to interfere with Alt-F4 processing on windows.  Sigh.</t>
-<t tx="ekr.20051010121210">open-file-menu (instead of Alt-F)</t>
 <t tx="ekr.20051010195914"># We expect to see the defaults created by the menu tables.</t>
 <t tx="ekr.20051011123608">n = len('insert-newline              ')
 

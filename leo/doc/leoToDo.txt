@@ -6,19 +6,31 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- Change useMiniBuffer to showMinibuffer
-    - Don't pack the minibuffer initially if option is False.
-    - **Do** init everything even if the option is false.
-
-    Hiding the minibuffer does not change any bindings or the operation of Leo in any other way.
-    Therefore, if you do hide the minibuffer initially, and never want to use it, you should not bind
-    shortcuts to any commands that use the minibuffer.
+- k.registerCommand
 
 - Upload latest Plugins Manager.
 
-- k.registerCommand
+** Remove all pychecker warnings.
 
-Finish docs.
+** (urgent) improve emacs-search commands
+
+Docs:
+    Convert posting to docs.
+    List of all incompletions.
+        * (urgent) unit tests.
+        Not all commands have been tested!
+        * List of defective commands.
+    * List of visible changes from usetemacs plugin.
+        New commands.
+        Better handling of buffer.
+        Worse handling of selection.
+
+    - Hiding the minibuffer does not change any bindings or the operation of Leo
+    in any other way. Therefore, if you do hide the minibuffer initially, and
+    never want to use it, you should not bind shortcuts to any commands that use
+    the minibuffer.
+
+* The colerer is calling c.config too much.
 #@nonl
 #@+node:ekr.20051014122218:From the xemacs tutorial
 <Delete>     delete the character just before the cursor
@@ -15186,7 +15198,7 @@ def createBindings (self,frame):
     t.bind("<Button-3>", frame.OnBodyRClick)
     t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
     
-    if not c.useMiniBuffer:
+    if 0: # The changeover to the mini-buffer code is complete.
         g.trace('binding <Key> to frame.body.onBodyKey')
         t.bind("<Key>", self.onBodyKey)
 
@@ -18350,7 +18362,7 @@ def createBindings (self,frame):
     t.bind("<Button-3>", frame.OnBodyRClick)
     t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
     
-    if not c.useMiniBuffer:
+    if 0: # The changeover to the mini-buffer code is complete.
         g.trace('binding <Key> to frame.body.onBodyKey')
         t.bind("<Key>", self.onBodyKey)
 

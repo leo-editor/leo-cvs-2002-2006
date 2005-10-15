@@ -16310,6 +16310,700 @@ def callKeystrokeFunction (self,event):
 #@nonl
 #@-node:ekr.20050923174229.3:callKeystrokeFunction
 #@-node:ekr.20050920085536.65: masterCommand & helpers
+#@+node:ekr.20051009120608:(ctors & finishCreate)
+#@+node:ekr.20031218072017.2811: c.Birth & death
+#@+node:ekr.20031218072017.2812:c.__init__
+def __init__(self,frame,fileName):
+
+    c = self
+    
+    # g.trace('Commands')
+    
+    # Init ivars with self.x instead of c.x to keep Pychecker happy
+    self.frame = frame
+    self.mFileName = fileName
+        # Do _not_ use os_path_norm: it converts an empty path to '.' (!!)
+
+    # g.trace(c) # Do this after setting c.mFileName.
+    c.initIvars()
+
+    self.showMinibuffer = c.config.getBool('useMinibuffer')
+
+    # initialize the sub-commanders.
+    # c.finishCreate creates the sub-commanders for edit commands.
+    self.fileCommands   = leoFileCommands.fileCommands(c)
+    self.atFileCommands = leoAtFile.atFile(c)
+    self.importCommands = leoImport.leoImportCommands(c)
+    self.tangleCommands = leoTangle.tangleCommands(c)
+    leoEditCommands.createEditCommanders(c)
+
+    if 0 and g.debugGC:
+        print ; print "*** using Null undoer ***" ; print
+        self.undoer = leoUndo.nullUndoer(self)
+    else:
+        self.undoer = leoUndo.undoer(self)
+#@nonl
+#@-node:ekr.20031218072017.2812:c.__init__
+#@+node:ekr.20040731071037:c.initIvars
+def initIvars(self):
+
+    c = self
+    << initialize ivars >>
+    self.config = configSettings(c)
+    g.app.config.setIvarsFromSettings(c)
+#@nonl
+#@+node:ekr.20031218072017.2813:<< initialize ivars >>
+self._currentPosition = self.nullPosition()
+self._rootPosition    = self.nullPosition()
+self._topPosition     = self.nullPosition()
+
+# For emacs/vim key handling.
+self.commandsDict = None
+self.keyHandler = None
+self.miniBufferWidget = None
+
+# per-document info...
+self.disableCommandsMessage = ''
+    # The presence of this message disables all commands.
+self.hookFunction = None
+self.openDirectory = None
+
+self.expansionLevel = 0  # The expansion level of this outline.
+self.expansionNode = None # The last node we expanded or contracted.
+self.changed = False # True if any data has been changed since the last save.
+self.loading = False # True if we are loading a file: disables c.setChanged()
+self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
+self.promptingForClose = False # To lock out additional closing dialogs.
+
+# For tangle/untangle
+self.tangle_errors = 0
+
+# Global options
+self.page_width = 132
+self.tab_width = -4
+self.tangle_batch_flag = False
+self.untangle_batch_flag = False
+# Default Tangle options
+self.tangle_directory = ""
+self.use_header_flag = False
+self.output_doc_flag = False
+# Default Target Language
+self.target_language = "python" # Required if leoConfig.txt does not exist.
+
+# These are defined here, and updated by the tree.select()
+self.beadList = [] # list of vnodes for the Back and Forward commands.
+self.beadPointer = -1 # present item in the list.
+self.visitedList = [] # list of positions for the Nodes dialog.
+
+# For hoist/dehoist commands.
+self.hoistStack = []
+    # Stack of nodes to be root of drawn tree.
+    # Affects drawing routines and find commands.
+self.recentFiles = [] # List of recent files
+#@nonl
+#@-node:ekr.20031218072017.2813:<< initialize ivars >>
+#@-node:ekr.20040731071037:c.initIvars
+#@+node:ekr.20031218072017.2814:c.__repr__ & __str__
+def __repr__ (self):
+    
+    return "Commander %d: %s" % (id(self),repr(self.mFileName))
+        
+__str__ = __repr__
+
+#@-node:ekr.20031218072017.2814:c.__repr__ & __str__
+#@+node:ekr.20041130173135:c.hash
+def hash (self):
+
+    c = self
+    if c.mFileName:
+        return g.os_path_abspath(c.mFileName).lower()
+    else:
+        return 0
+#@nonl
+#@-node:ekr.20041130173135:c.hash
+#@+node:ekr.20050920093543:c.finishCreate & helper
+def finishCreate (self):  # New in 4.4.
+    
+    '''Finish creating the commander after frame.finishCreate.'''
+    
+    c = self ; p = c.currentPosition()
+    c.miniBufferWidget = c.frame.miniBufferWidget
+    # g.trace('Commands',c.miniBufferWidget)
+    
+    # Create a keyHandler even if there is no miniBuffer.
+    c.keyHandler = leoKeys.keyHandlerClass(c,
+        useGlobalKillbuffer=True,
+        useGlobalRegisters=True)
+
+    # There is no miniBufferWidget created for leoSettings.leo files.
+    if c.miniBufferWidget:
+        c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
+        # c.printCommandsDict()
+    else:
+        c.commandsDict = {}
+
+    c.keyHandler.finishCreate()
+
+    # Create the menu last so that we can use the key handler for shortcuts.
+    if not g.doHook("menu1",c=c,p=p,v=p):
+        c.frame.menu.createMenuBar(c.frame)
+#@nonl
+#@+node:ekr.20051007143620:printCommandsDict
+def printCommandsDict (self):
+    
+    c = self
+    
+    print 'Commands...'
+    keys = c.commandsDict.keys()
+    keys.sort()
+    for key in keys:
+        command = c.commandsDict.get(key)
+        print '%30s = %s' % (key,g.choose(command,command.__name__,'<None>'))
+    print
+#@nonl
+#@-node:ekr.20051007143620:printCommandsDict
+#@-node:ekr.20050920093543:c.finishCreate & helper
+#@-node:ekr.20031218072017.2811: c.Birth & death
+#@+node:ekr.20050920085536.2: ctor (keyHandler)
+def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
+    
+    '''Create a key handler for c.
+    c.frame.miniBufferWidget is a Tk.Label.
+    
+    useGlobalRegisters and useGlobalKillbuffer indicate whether to use
+    global (class vars) or per-instance (ivars) for kill buffers and registers.'''
+    
+    self.c = c
+    self.widget = c.frame.miniBufferWidget
+        # A Tk Label widget.  Exists even if c.showMinibuffer is False.
+        
+    self.useGlobalKillbuffer = useGlobalKillbuffer
+    self.useGlobalRegisters = useGlobalRegisters
+
+    # Generalize...
+    self.x_hasNumeric = ['sort-lines','sort-fields']
+
+    self.altX_prompt = 'full-command: '
+    << define Tk ivars >>
+    << define externally visible ivars >>
+    << define internal ivars >>
+#@nonl
+#@+node:ekr.20051006092617:<< define Tk ivars >>
+if self.widget:
+    self.svar = Tk.StringVar()
+    self.widget.configure(textvariable=self.svar)
+    
+else:
+    self.svar = None
+#@nonl
+#@-node:ekr.20051006092617:<< define Tk ivars >>
+#@+node:ekr.20051006092617.1:<< define externally visible ivars >>
+self.abbrevOn = False # True: abbreviations are on.
+self.arg = '' # The value returned by k.getArg.
+self.commandName = None
+self.inverseCommandsDict = {}
+    # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
+self.leoCallbackDict = {}
+    # Completed in leoCommands.getPublicCommands.
+    # Keys are *raw* functions wrapped by the leoCallback, values are emacs command names.
+self.negativeArg = False
+self.regx = g.bunch(iter=None,key=None)
+self.repeatCount = None
+self.state = g.bunch(kind=None,n=None,handler=None)
+
+#@-node:ekr.20051006092617.1:<< define externally visible ivars >>
+#@+node:ekr.20050923213858:<< define internal ivars >>
+# Previously defined bindings.
+self.bindingsDict = {}
+    # Keys are Tk key names, values are g.bunch(f=f,name=name)
+    
+
+# Keepting track of the characters in the mini-buffer.
+self.mb_history = []
+self.mb_prefix = ''
+self.mb_tabListPrefix = ''
+self.mb_tabList = []
+self.mb_tabListIndex = -1
+self.mb_prompt = ''
+
+self.keysymHistory = []
+self.previous = []
+self.previousStroke = ''
+
+# For getArg...
+self.afterGetArgState = None
+self.argTabList = []
+
+if 0: # These are now set in makeSpecialBindings.
+    self.abortAllModesKey = 'Control-g'
+    self.fullCommandKey = 'Alt-x'
+    self.universalArgKey = 'Control-u'
+#@nonl
+#@-node:ekr.20050923213858:<< define internal ivars >>
+#@-node:ekr.20050920085536.2: ctor (keyHandler)
+#@+node:ekr.20050920093543:c.finishCreate & helper
+def finishCreate (self):  # New in 4.4.
+    
+    '''Finish creating the commander after frame.finishCreate.'''
+    
+    c = self ; p = c.currentPosition()
+    c.miniBufferWidget = c.frame.miniBufferWidget
+    # g.trace('Commands',c.miniBufferWidget)
+    
+    # Create a keyHandler even if there is no miniBuffer.
+    c.keyHandler = leoKeys.keyHandlerClass(c,
+        useGlobalKillbuffer=True,
+        useGlobalRegisters=True)
+
+    # There is no miniBufferWidget created for leoSettings.leo files.
+    if c.miniBufferWidget:
+        c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
+        # c.printCommandsDict()
+    else:
+        c.commandsDict = {}
+
+    c.keyHandler.finishCreate()
+
+    # Create the menu last so that we can use the key handler for shortcuts.
+    if not g.doHook("menu1",c=c,p=p,v=p):
+        c.frame.menu.createMenuBar(c.frame)
+#@nonl
+#@+node:ekr.20051007143620:printCommandsDict
+def printCommandsDict (self):
+    
+    c = self
+    
+    print 'Commands...'
+    keys = c.commandsDict.keys()
+    keys.sort()
+    for key in keys:
+        command = c.commandsDict.get(key)
+        print '%30s = %s' % (key,g.choose(command,command.__name__,'<None>'))
+    print
+#@nonl
+#@-node:ekr.20051007143620:printCommandsDict
+#@-node:ekr.20050920093543:c.finishCreate & helper
+#@+node:ekr.20031218072017.2176:f.finishCreate & helpers
+def finishCreate (self,c):
+    
+    f = self ; f.c = c
+    # g.trace('tkFrame')
+    
+    # This must be done after creating the commander.
+    f.splitVerticalFlag,f.ratio,f.secondary_ratio = f.initialRatios()
+    f.createOuterFrames()
+    f.createIconBarComponents()
+    f.createSplitterComponents()
+    f.createStatusLineComponents()
+    f.createFirstTreeNode()
+    f.menu = leoTkinterMenu.leoTkinterMenu(f)
+        # c.finishCreate calls f.createMenuBar later.
+    g.app.setLog(f.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
+    g.app.windowList.append(f)
+    c.initVersion()
+    c.signOnWithVersion()
+    f.miniBufferWidget = f.createMiniBufferWidget()
+    f.body.createBindings(f)
+#@nonl
+#@+node:ekr.20051009044751:createOuterFrames
+def createOuterFrames (self):
+
+    f = self ; c = f.c
+    f.top = top = Tk.Toplevel()
+    g.app.gui.attachLeoIcon(top)
+    top.title(f.title)
+    top.minsize(30,10) # In grid units.
+    
+    if g.os_path_exists(g.app.user_xresources_path):
+        f.top.option_readfile(g.app.user_xresources_path)
+    
+    f.top.protocol("WM_DELETE_WINDOW", f.OnCloseLeoEvent)
+    f.top.bind("<Button-1>", f.OnActivateLeoEvent)
+    
+    # These don't work on Windows. Because of bugs in window managers,
+    # there is NO WAY to know which window is on top!
+    f.top.bind("<Activate>",f.OnActivateLeoEvent)
+    f.top.bind("<Deactivate>",f.OnDeactivateLeoEvent)
+    
+    f.top.bind("<Control-KeyPress>",f.OnControlKeyDown)
+    f.top.bind("<Control-KeyRelease>",f.OnControlKeyUp)
+    
+    # Create the outer frame, the 'hull' component.
+    f.outerFrame = Tk.Frame(top)
+    f.outerFrame.pack(expand=1,fill="both")
+    f.componentClass(c,'hull',f.outerFrame)
+#@-node:ekr.20051009044751:createOuterFrames
+#@+node:ekr.20051009044920:createIconBarComponents
+# Warning: there is also a method called createIconBar.
+
+def createIconBarComponents (self):
+
+    f = self ; c = f.c
+
+    iconBar = f.iconBarClass(c,f.outerFrame)
+    f.iconFrame = iconBar.iconFrame
+    f.iconBar = f.componentClass(c,
+        f.iconBarComponentName,iconBar.iconFrame,
+        iconBar,iconBar.pack,iconBar.unpack)
+    f.iconBar.show()
+#@nonl
+#@-node:ekr.20051009044920:createIconBarComponents
+#@+node:ekr.20051009045208:createSplitterComponents
+def createSplitterComponents (self):
+
+    f = self ; c = f.c
+
+    f.createLeoSplitters(f.outerFrame)
+    
+    # Create the canvas, tree, log and body.
+    f.canvas = f.createCanvas(f.split2Pane1)
+    f.tree   = leoTkinterTree.leoTkinterTree(c,f,f.canvas)
+    f.log    = leoTkinterLog(f,f.split2Pane2)
+    f.body   = leoTkinterBody(f,f.split1Pane2)
+    
+    f.componentClass(c,'tree',f.split2Pane1, f.tree, f.packTree, f.unpackTree)
+    f.componentClass(c,'log', f.split2Pane2, f.log,  f.packLog,  f.unpackLog)
+    f.componentClass(c,'body',f.split1Pane2, f.body, f.packBody, f.unpackBody)
+    
+    # Yes, this an "official" ivar: this is a kludge.
+    f.bodyCtrl = f.body.bodyCtrl
+    
+    # Configure.
+    f.setTabWidth(c.tab_width)
+    f.tree.setColorFromConfig()
+    f.reconfigurePanes()
+    f.body.setFontFromConfig()
+    f.body.setColorFromConfig()
+#@nonl
+#@-node:ekr.20051009045208:createSplitterComponents
+#@+node:ekr.20051009045300:createStatusLineComponents
+# Warning: there is also a method called createStatusLine.
+
+def createStatusLineComponents (self):
+    
+    f = self ; c = f.c
+    statusLine = f.statusLineClass(c,f.outerFrame)
+    
+    # Create offical ivars in the frame class.
+    f.statusFrame = statusLine.statusFrame
+    f.statusLabel = statusLine.labelWidget
+    f.statusText  = statusLine.textWidget
+    
+    f.statusLine = f.componentClass(c,
+        f.statusLineComponentName,
+        statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
+    f.statusLine.show() # Show status line by default.
+#@nonl
+#@-node:ekr.20051009045300:createStatusLineComponents
+#@+node:ekr.20051009045404:createFirstTreeNode
+def createFirstTreeNode (self):
+    
+    f = self ; c = f.c
+
+    t = leoNodes.tnode()
+    v = leoNodes.vnode(c,t)
+    p = leoNodes.position(v,[])
+    v.initHeadString("NewHeadline")
+    p.moveToRoot()
+
+    c.beginUpdate()
+    try:
+        c.selectVnode(p)
+        c.redraw()
+        c.frame.getFocus()
+        c.editPosition(p)
+    finally:
+        c.endUpdate(False)
+#@nonl
+#@-node:ekr.20051009045404:createFirstTreeNode
+#@+node:ekr.20050920094212:createMiniBufferWidget
+def createMiniBufferWidget (self):
+    
+    '''Create the minbuffer below the status line.'''
+    
+    frame = self ; c = frame.c
+
+    frame.minibufferFrame = f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
+    if c.showMinibuffer:
+        f.pack(side='bottom',fill='x')
+
+    lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
+    lab.pack(side='left')
+
+    label = Tk.Label(f,relief='groove',justify='left',anchor='w')
+    label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
+    
+    frame.minibufferVisible = c.showMinibuffer
+
+    return label
+#@nonl
+#@-node:ekr.20050920094212:createMiniBufferWidget
+#@-node:ekr.20031218072017.2176:f.finishCreate & helpers
+#@+node:ekr.20050920094633:k.finishCreate & helpers
+def finishCreate (self):
+    
+    '''Complete the construction of the keyHandler class.
+    c.commandsDict has been created when this is called.'''
+    
+    k = self ; c = k.c
+   
+    k.createInverseCommandsDict()
+    
+    if not c.miniBufferWidget:
+        # Does not exist for leoSettings.leo files.
+        return
+        
+    # g.trace('keyHandler')
+
+    # Important: bindings exist even if c.showMiniBuffer is False.
+    k.makeAllBindings()
+    
+    if 0:
+        addTemacsExtensions(k)
+        addTemacsAbbreviations(k)
+        changeKeyStrokes(k,f.bodyCtrl)
+#@nonl
+#@+node:ekr.20051008082929:createInverseCommandsDict
+def createInverseCommandsDict (self):
+    
+    '''Add entries to k.inverseCommandsDict using c.commandDict,
+    except when c.commandDict.get(key) refers to the leoCallback function.
+    leoCommands.getPublicCommands has already added an entry in this case.
+    
+    In c.commandsDict        keys are command names, values are funcions f.
+    In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
+    '''
+
+    k = self ; c = k.c
+
+    for name in c.commandsDict.keys():
+        f = c.commandsDict.get(name)
+        
+        # 'leoCallback' callback created by leoCommands.getPublicCommands.
+        if f.__name__ != 'leoCallback':
+            k.inverseCommandsDict [f.__name__] = name
+            # g.trace('%24s = %s' % (f.__name__,name))
+#@nonl
+#@-node:ekr.20051008082929:createInverseCommandsDict
+#@-node:ekr.20050920094633:k.finishCreate & helpers
+#@+node:ekr.20051008082929:createInverseCommandsDict
+def createInverseCommandsDict (self):
+    
+    '''Add entries to k.inverseCommandsDict using c.commandDict,
+    except when c.commandDict.get(key) refers to the leoCallback function.
+    leoCommands.getPublicCommands has already added an entry in this case.
+    
+    In c.commandsDict        keys are command names, values are funcions f.
+    In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
+    '''
+
+    k = self ; c = k.c
+
+    for name in c.commandsDict.keys():
+        f = c.commandsDict.get(name)
+        
+        # 'leoCallback' callback created by leoCommands.getPublicCommands.
+        if f.__name__ != 'leoCallback':
+            k.inverseCommandsDict [f.__name__] = name
+            # g.trace('%24s = %s' % (f.__name__,name))
+#@nonl
+#@-node:ekr.20051008082929:createInverseCommandsDict
+#@+node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
+def getPublicCommands (self):
+    
+    '''(leoCommands) Return a dict of the 'legacy' Leo commands.
+    A special case used only by this class.
+    Put the *raw* command name into the inverse dict, *not* 'leoCallback'.
+    
+    Also creates k.leoCallBackDict.  Keys are *raw* functions, values are emacs command names.'''
+    
+    k = self.k ; d2 = {}
+    k.leoCallbackDict = {}
+    
+    << define dictionary d of names and Leo commands >>
+    
+    # Create a callback for each item in d.
+    keys = d.keys() ; keys.sort()
+    for name in keys:
+        f = d.get(name)
+        # Warning: k.createInverseCommandsDict uses the name of this callback.
+        def leoCallback (event,f=f,self=self,name=name):
+            self.c.doCommand(f,name)
+        d2 [name] = leoCallback
+        k.leoCallbackDict [leoCallback] = f
+        k.inverseCommandsDict [f.__name__] = name
+        # g.trace('leoCommands %24s = %s' % (f.__name__,name))
+        
+    return d2
+#@nonl
+#@+node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
+c = self.c ; f = c.frame
+
+d = {
+    'abort-edit-headline':  f.abortEditLabelCommand,
+    'about-leo':            c.about,
+    'add-comments':         c.addComments,     
+    'cascade-windows':      f.cascade,
+    #'check-spelling':      None,                   # Create this command.
+    'clear-recent-files':   c.clearRecentFiles,
+    'close-window':         c.close,
+    'contract-or-go-left':  c.contractNodeOrGoToParent,
+    'check-python-code':    c.checkPythonCode,
+    'check-all-python-code':c.checkAllPythonCode,
+    'check-outline':        c.checkOutline,
+    'clear-recent-files':   c.clearRecentFiles,
+    'clone-node':           c.clone,
+    'contract-node':        c.contractNode,
+    'contract-all':         c.contractAllHeadlines,
+    'contract-parent':      c.contractParent,
+    'convert-all-blanks':   c.convertAllBlanks,
+    'convert-all-tabs':     c.convertAllTabs,
+    'convert-blanks':       c.convertBlanks,
+    'convert-tabs':         c.convertTabs,
+    'copy-node':            c.copyOutline,
+    'copy-text':            f.copyText,
+    'cut-node':             c.cutOutline,
+    'cut-text':             f.cutText,
+    'de-hoist':             c.dehoist,
+    'delete':               c.delete,
+    'delete-comments':      c.deleteComments,
+    'delete-node':          c.deleteOutline,
+    'delete-text':          c.delete,
+    'demote':               c.demote,
+    'dump-outline':         c.dumpOutline,
+    'edit-headline':        c.editHeadline,
+    'end-edit-headline':    f.endEditLabelCommand,
+    'equal-sized-panes':    f.equalSizedPanes,
+    'execute-script':       c.executeScript,
+    'exit-leo':             g.app.onQuit,
+    'expand-all':           c.expandAllHeadlines,
+    'expand-next-level':    c.expandNextLevel,
+    'expand-node':          c.expandNode,
+    'expand-and-go-right':  c.expandNodeAndGoToFirstChild,
+    'expand-or-go-right':   c.expandNodeOrGoToFirstChild,
+    'expand-prev-level':    c.expandPrevLevel,
+    'expand-to-level-1':    c.expandLevel1,
+    'expand-to-level-2':    c.expandLevel2,
+    'expand-to-level-3':    c.expandLevel3,
+    'expand-to-level-4':    c.expandLevel4,
+    'expand-to-level-5':    c.expandLevel5,
+    'expand-to-level-6':    c.expandLevel6,
+    'expand-to-level-7':    c.expandLevel7,
+    'expand-to-level-8':    c.expandLevel8,
+    'expand-to-level-9':    c.expandLevel9,
+    'export-headlines':     c.exportHeadlines,
+    'extract':              c.extract,
+    'extract-names':        c.extractSectionNames,
+    'extract-section':      c.extractSection,
+    'flatten-outline':      c.flattenOutline,
+    'go-back':              c.goPrevVisitedNode,
+    'go-forward':           c.goNextVisitedNode,
+    'goto-first-node':      c.goToFirstNode,
+    'goto-first-sibling':   c.goToFirstSibling,
+    'goto-last-node':       c.goToLastNode,
+    'goto-last-sibling':    c.goToLastSibling,
+    'goto-last-visible':    c.goToLastVisibleNode,
+    'goto-line-number':     c.goToLineNumber,
+    'goto-next-changed':    c.goToNextDirtyHeadline,
+    'goto-next-clone':      c.goToNextClone,
+    'goto-next-marked':     c.goToNextMarkedHeadline,
+    'goto-next-node':       c.selectThreadNext,
+    'goto-next-sibling':    c.goToNextSibling,
+    'goto-next-visible':    c.selectVisNext,
+    'goto-parent':          c.goToParent,
+    'goto-prev-node':       c.selectThreadBack,
+    'goto-prev-sibling':    c.goToPrevSibling,
+    'goto-prev-visible':    c.selectVisBack,
+    'hoist':                c.hoist,
+    'import-at-file':       c.importAtFile,
+    'import-at-root':       c.importAtRoot,
+    'import-cweb-files':    c.importCWEBFiles,
+    'import-derived-file':      c.importDerivedFile,
+    'import-flattened-outline': c.importFlattenedOutline,
+    'import-noweb-files':       c.importNowebFiles,
+    'indent':                   c.indentBody,
+    'insert-node':              c.insertHeadline,
+    'insert-body-time':         c.insertBodyTime,
+    'insert-headline-time':     f.insertHeadlineTime,
+    # Leo find panel stuff.  It's not clear what will happen to these.
+    'dismiss-leo-find-panel':   c.dismissFindPanel,
+    'leo-change':               c.replace,
+    'leo-change-then-find':     c.replaceThenFind,
+    'leo-change-all':           c.replaceAll,
+    'leo-find':                 c.findNext,
+    'leo-find-panel':           c.showFindPanel,
+    'leo-find-previous':        c.findPrevious,
+    'mark':                     c.markHeadline,
+    'mark-changed-items':       c.markChangedHeadlines,
+    'mark-changed-roots':       c.markChangedRoots,
+    'mark-clones':              c.markClones,
+    'mark-subheads':            c.markSubheads,
+    'match-bracket':            c.findMatchingBracket,
+    'minimize-all':             f.minimizeAll,
+    'move-outline-down':        c.moveOutlineDown,
+    'move-outline-left':        c.moveOutlineLeft,
+    'move-outline-right':       c.moveOutlineRight,
+    'move-outline-up':          c.moveOutlineUp,
+    'new':                      c.new,
+    'open-compare-window':      c.openCompareWindow,
+    'open-leoconfig-leo':       c.openLeoSettings,
+    'open-leodocs-leo':         c.leoDocumentation,
+    'open-leoplugins-leo':      c.openLeoPlugins,
+    'open-online-home':         c.leoHome,
+    'open-online-tutorial':     c.leoTutorial,
+    'open-offline-tutorial':    f.leoHelp,
+    'open-outline':             c.open,
+    'open-python-window':       c.openPythonWindow,
+    'open-with':                c.openWith,
+    'outline-to-CWEB':          c.outlineToCWEB,
+    'outline-to-noweb':         c.outlineToNoweb,
+    'paste-node':               c.pasteOutline,
+    'paste-retaining-clones':   c.pasteOutlineRetainingClones,
+    'paste-text':               f.pasteText,
+    'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
+    'pretty-print-python-code':     c.prettyPrintPythonCode,
+    'promote':                  c.promote,
+    'read-at-file-nodes':       c.readAtFileNodes,
+    'read-outline-only':        c.readOutlineOnly,
+    'redo':                     c.undoer.redo,
+    'reformat-paragraph':       c.reformatParagraph,
+    'remove-sentinels':         c.removeSentinels,
+    'replace':                  c.replace,
+    'replace-then-find':        c.replaceThenFind,
+    'resize-to-screen':         f.resizeToScreen,
+    'revert':                   c.revert,
+    'save-file':                c.save,
+    'save-file-as':             c.saveAs,
+    'save-file-to':             c.saveTo,
+    'select-all':               f.body.selectAllText,
+    'settings':                 c.preferences,
+    'set-colors':               c.colorPanel,
+    'set-font':                 c.fontPanel,
+    'show-invisibles':          c.viewAllCharacters,
+    'sort-children':            c.sortChildren,
+    'sort-siblings':            c.sortSiblings,
+    'tangle':                   c.tangle,
+    'tangle-all':               c.tangleAll,
+    'tangle-marked':            c.tangleMarked,
+    'toggle-active-pane':       f.toggleActivePane,
+    'toggle-angle-brackets':    c.toggleAngleBrackets,
+    'toggle-split-direction':   f.toggleSplitDirection,
+    'undo':                     c.undoer.undo,
+    'unindent':                 c.dedentBody,
+    'unmark-all':               c.unmarkAll,
+    'untangle':                 c.untangle,
+    'untangle-all':             c.untangleAll,
+    'untangle-marked':          c.untangleMarked,
+    'weave':                    c.weave,
+    'write-at-file-nodes':      c.fileCommands.writeAtFileNodes,
+    'write-dirty-at-file-nodes':    c.fileCommands.writeDirtyAtFileNodes,
+    'write-missing-at-file-nodes':  c.fileCommands.writeMissingAtFileNodes,
+    'write-outline-only':       c.fileCommands.writeOutlineOnly,
+}
+#@nonl
+#@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
+#@-node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
+#@-node:ekr.20051009120608:(ctors & finishCreate)
 #@+node:ekr.20051006131811:(uArgs)
 #@+node:ekr.20050920085536.65: masterCommand & helpers
 def masterCommand (self,event,func,stroke):
@@ -20585,6 +21279,276 @@ if not menu_shortcut:
 #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
 #@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
 #@-node:ekr.20051014034200:(Fixed problems when special keys are not defined
+#@+node:ekr.20051015063053:(Problems enabling minibuffer)
+# These arose because @bool useMinibuffer conflicted with @shortcut use-mini-buffer(!!)
+# Added new checks in g.app.config.getValFromDict.
+#@nonl
+#@+node:ekr.20031218072017.2812:c.__init__
+def __init__(self,frame,fileName):
+
+    c = self
+    
+    # g.trace('Commands')
+    
+    # Init ivars with self.x instead of c.x to keep Pychecker happy
+    self.frame = frame
+    self.mFileName = fileName
+        # Do _not_ use os_path_norm: it converts an empty path to '.' (!!)
+
+    # g.trace(c) # Do this after setting c.mFileName.
+    c.initIvars()
+
+    self.showMinibuffer = c.config.getBool('useMinibuffer')
+
+    # initialize the sub-commanders.
+    # c.finishCreate creates the sub-commanders for edit commands.
+    self.fileCommands   = leoFileCommands.fileCommands(c)
+    self.atFileCommands = leoAtFile.atFile(c)
+    self.importCommands = leoImport.leoImportCommands(c)
+    self.tangleCommands = leoTangle.tangleCommands(c)
+    leoEditCommands.createEditCommanders(c)
+
+    if 0 and g.debugGC:
+        print ; print "*** using Null undoer ***" ; print
+        self.undoer = leoUndo.nullUndoer(self)
+    else:
+        self.undoer = leoUndo.undoer(self)
+#@nonl
+#@-node:ekr.20031218072017.2812:c.__init__
+#@+node:ekr.20051011105014:exists (g.app.config)
+def exists (self,c,setting,kind):
+    
+    '''Return true if a setting of the given kind exists, even if it is None.'''
+
+    if c:
+        d = self.localOptionsDict.get(c.hash())
+        if d:
+            junk,found = self.getValFromDict(d,setting,kind)
+            if found: return True
+                
+    for d in self.localOptionsList:
+        junk,found = self.getValFromDict(d,setting,kind)
+        if found: return True
+
+    for d in self.dictList:
+        junk,found = self.getValFromDict(d,setting,kind)
+        if found: return True
+
+    # g.trace('does not exist',setting,kind)
+    return False
+#@nonl
+#@-node:ekr.20051011105014:exists (g.app.config)
+#@+node:ekr.20041118084146:Setters (g.app.config)
+#@+node:ekr.20041118084146.1:set (g.app.config)
+def set (self,c,setting,kind,val):
+    
+    '''Set the setting.  Not called during initialization.'''
+
+    found = False ;  key = self.munge(setting)
+    if c:
+        d = self.localOptionsDict.get(c.hash())
+        if d: found = True
+
+    if not found:
+        theHash = c.hash()
+        for d in self.localOptionsList:
+            hash2 = d.get('_hash')
+            if theHash == hash2:
+                found = True ; break
+
+    if not found:
+        d = self.dictList [0]
+
+    d[key] = g.Bunch(setting=setting,kind=kind,val=val,tag='setting')
+    # g.trace(d.get(key).toString())
+
+    if 0:
+        dkind = d.get('_hash','<no hash: %s>' % c.hash())
+        g.trace(dkind,setting,kind,val)
+#@nonl
+#@-node:ekr.20041118084146.1:set (g.app.config)
+#@+node:ekr.20041118084241:setString
+def setString (self,c,setting,val):
+    
+    self.set(c,setting,"string",val)
+#@nonl
+#@-node:ekr.20041118084241:setString
+#@+node:ekr.20041228042224:setIvarsFromSettings (g.app.config)
+def setIvarsFromSettings (self,c):
+
+    '''Init g.app.config ivars or c's ivars from settings.
+    
+    - Called from readSettingsFiles with c = None to init g.app.config ivars.
+    - Called from c.__init__ to init corresponding commmander ivars.'''
+    
+    # Ingore temporary commanders created by readSettingsFiles.
+    if not self.inited: return
+
+    # g.trace(c)
+    d = self.ivarsDict
+    for key in d:
+        if key != '_hash':
+            bunch = d.get(key)
+            if bunch:
+                ivar = bunch.ivar # The actual name of the ivar.
+                kind = bunch.kind
+                val = self.get(c,key,kind) # Don't use bunch.val!
+                if c:
+                    # g.trace("%20s %s = %s" % (g.shortFileName(c.mFileName),ivar,val))
+                    setattr(c,ivar,val)
+                else:
+                    # g.trace("%20s %s = %s" % ('g.app.config',ivar,val))
+                    setattr(self,ivar,val)
+#@nonl
+#@-node:ekr.20041228042224:setIvarsFromSettings (g.app.config)
+#@+node:ekr.20041201080436:appendToRecentFiles (g.app.config)
+def appendToRecentFiles (self,files):
+    
+    files = [theFile.strip() for theFile in files]
+    
+    # g.trace(files)
+    
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+    
+    for name in files:
+        # Remove all variants of name.
+        for name2 in self.recentFiles:
+            if munge(name) == munge(name2):
+                self.recentFiles.remove(name2)
+
+        self.recentFiles.append(name)
+#@nonl
+#@-node:ekr.20041201080436:appendToRecentFiles (g.app.config)
+#@-node:ekr.20041118084146:Setters (g.app.config)
+#@+node:ekr.20041117083141:get & allies (g.app.config)
+def get (self,c,setting,kind):
+    
+    """Get the setting and make sure its type matches the expected type."""
+    
+    if c:
+        d = self.localOptionsDict.get(c.hash())
+        if d:
+            val,junk = self.getValFromDict(d,setting,kind)
+            if val is not None:
+                # g.trace(c.shortFileName(),setting,val)
+                return val
+                
+    for d in self.localOptionsList:
+        val,junk = self.getValFromDict(d,setting,kind)
+        if val is not None:
+            kind = d.get('_hash','<no hash>')
+            # g.trace(kind,setting,val)
+            return val
+
+    for d in self.dictList:
+        val,junk = self.getValFromDict(d,setting,kind)
+        if val is not None:
+            kind = d.get('_hash','<no hash>')
+            # g.trace(kind,setting,val)
+            return val
+
+    return None
+#@nonl
+#@+node:ekr.20041121143823:getValFromDict
+def getValFromDict (self,d,setting,requestedType,warn=True):
+    
+    '''Look up the setting in d. If warn is True, warn if the requested type
+    does not (loosely) match the actual type.
+    returns (val,exists)'''
+
+    bunch = d.get(self.munge(setting))
+    if not bunch: return None,False
+
+    # g.trace(setting,requestedType,bunch.toString())
+    val = bunch.val
+    if not self.typesMatch(bunch.kind,requestedType):
+        # New in 4.4: make sure the types match.
+        # A serious warning: one setting may have destroyed another!
+        # Important: this is not a complete test of conflicting settings:
+        # The warning is given only if the code tries to access the setting.
+        if warn:
+            s = (
+                'Warning: ignoring %s:%s not %s\n' +
+                'There may be conflicting settings!')
+            g.es_print(s % (bunch.kind,setting,requestedType),color='red')
+        return None, False
+    elif val in (u'None',u'none','None','none','',None):
+        return None, True # Exists, but is None
+    else:
+        # g.trace(setting,val)
+        return val, True
+#@nonl
+#@-node:ekr.20041121143823:getValFromDict
+#@+node:ekr.20051015093141:typesMatch
+def typesMatch (self,type1,type2):
+    
+    '''
+    Return True if type1, the actual type, matches type2, the requeseted type.
+    
+    The following equivalences are allowed:
+
+    - None matches anything.
+    - An actual type of string or strings matches anything.
+    - Shortcut matches shortcuts.
+    '''
+
+    shortcuts = ('shortcut','shortcuts')
+    
+    return (
+        type1 == None or type2 == None or
+        type1.startswith('string') or
+        (type1 in shortcuts and type2 in shortcuts) or
+        type1 == type2
+    )
+#@-node:ekr.20051015093141:typesMatch
+#@-node:ekr.20041117083141:get & allies (g.app.config)
+#@+node:ekr.20041118195812:Setters... (c.configSettings)
+#@+node:ekr.20041118195812.3:setRecentFiles (c.configSettings)
+def setRecentFiles (self,files):
+    
+    '''Update the recent files list.'''
+
+    # Append the files to the global list.
+    g.app.config.appendToRecentFiles(files)
+#@nonl
+#@-node:ekr.20041118195812.3:setRecentFiles (c.configSettings)
+#@+node:ekr.20041118195812.2:set & setString
+def set (self,p,setting,val):
+    
+    __pychecker__ = '--no-argsused' # p not used.
+    
+    return g.app.config.setString(self.c,setting,val)
+    
+setString = set
+#@nonl
+#@-node:ekr.20041118195812.2:set & setString
+#@-node:ekr.20041118195812:Setters... (c.configSettings)
+#@+node:ekr.20051011103654:checkBindings
+def checkBindings (self):
+    
+    '''Print warnings if commands do not have any @shortcut entry.
+    The entry may be `None`, of course.'''
+    
+    k = self ; c = k.c
+    
+    names = c.commandsDict.keys() ; names.sort()
+    
+    for name in names:
+        abbrev = k.abbreviationsDict.get(name)
+        # This logic is from c.config.getShortcut
+        key = c.frame.menu.canonicalizeMenuName(abbrev or name)
+        key = key.replace('&','')
+        if not g.app.config.exists(c,key,'shortcut'):
+            if abbrev:
+                 g.trace('No shortcut for abbrev %s -> %s = %s' % (
+                    name,abbrev,key))
+            else:
+                g.trace('No shortcut for %s = %s' % (name,key))
+#@nonl
+#@-node:ekr.20051011103654:checkBindings
+#@-node:ekr.20051015063053:(Problems enabling minibuffer)
 #@-node:ekr.20051012084345:Bugs fixed
 #@+node:ekr.20051014180059:(Help command)
 #@+node:ekr.20051014170754:k.help
