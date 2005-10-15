@@ -6,8 +6,6 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- Check bindings for Ctrl-U (universal-argument or arg??)
-
 - Change useMiniBuffer to showMinibuffer
     - Don't pack the minibuffer initially if option is False.
     - **Do** init everything even if the option is false.
@@ -15,6 +13,10 @@
     Hiding the minibuffer does not change any bindings or the operation of Leo in any other way.
     Therefore, if you do hide the minibuffer initially, and never want to use it, you should not bind
     shortcuts to any commands that use the minibuffer.
+
+- Upload latest Plugins Manager.
+
+- k.registerCommand
 
 Finish docs.
 #@nonl

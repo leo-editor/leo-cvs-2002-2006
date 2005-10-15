@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="19412" clone_windows="0"/>
 <globals body_outline_ratio="0.464772727273">
-	<global_window_position top="62" left="351" height="842" width="890"/>
+	<global_window_position top="62" left="351" height="823" width="890"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -44,20 +44,20 @@
 <v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
 <v t="ekr.20051011141302" a="E"><vh>4.4 alpha 1</vh>
-<v t="ekr.20051014104108" a="M"><vh> To do</vh></v>
-<v t="ekr.20051011141302.1" a="E"><vh>Known bugs</vh></v>
-<v t="ekr.20051014105514.37" a="MTV"><vh>The major new feature: an emacs-style minibuffer and related commands</vh>
+<v t="ekr.20051014104108" a="MTV"><vh> To do</vh></v>
+<v t="ekr.20051011141302.1"><vh>Known bugs</vh></v>
+<v t="ekr.20051014105514.37" a="M"><vh>The major new feature: an emacs-style minibuffer and related commands</vh>
 <v t="ekr.20051014105514.136"><vh>Added useMiniBuffer and useEditorMenu @settings</vh></v>
 <v t="ekr.20051014105514.132"><vh>Improvements</vh></v>
 <v t="ekr.20051014105911"><vh>New emacs-like commands</vh></v>
 </v>
 <v t="ekr.20051014105606"><vh>Other new features</vh>
-<v t="ekr.20051014105514.1" a="E"><vh>Added options for selected body text</vh></v>
+<v t="ekr.20051014105514.1"><vh>Added options for selected body text</vh></v>
 </v>
 <v t="ekr.20051014105514.275"><vh>Bugs fixed (in 4.3 code base)</vh>
 <v t="ekr.20051014112415"><vh>Leo protects c.endUpdate with a 'finally' clause</vh></v>
 <v t="ekr.20051014105514.151"><vh>Added kludge to solve infamous control-v problems</vh></v>
-<v t="ekr.20051014105514.5" a="E"><vh>Fixed bug in Leo's read logic</vh></v>
+<v t="ekr.20051014105514.5"><vh>Fixed bug in Leo's read logic</vh></v>
 <v t="ekr.20051014105514.14"><vh>Fixed problem with auto-indent</vh>
 <v t="ekr.20051014105514.15"><vh> masterCommand &amp; helpers</vh>
 <v t="ekr.20051014105514.16"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
@@ -87,7 +87,8 @@
 <v t="ekr.20051014105514.34"><vh>tkBody.createBindings</vh></v>
 </v>
 <v t="ekr.20051014105911.1"><vh>Fixed bug in goto-last-node.</vh></v>
-<v t="ekr.20051014105514.290" a="E"><vh>Leo now reads @settings trees when opening a .leo file from another outline.</vh></v>
+<v t="ekr.20051014105514.290"><vh>Leo now reads @settings trees when opening a .leo file from another outline.</vh></v>
+<v t="ekr.20051014211811"><vh>Improved g.removeExtraLws</vh></v>
 </v>
 <v t="ekr.20051014103845"><vh>4.4 notes</vh></v>
 <v t="ekr.20051014103845.3"><vh>Quick Start</vh></v>
@@ -22000,5 +22001,8 @@ This is the last best hope to solve this problem: the code interacts as little a
 <t tx="ekr.20051014105911.1"></t>
 <t tx="ekr.20051014112415">This makes it much harder to hang Leo after taking an exception. Leo 4.4a1 is
 *much* more robust than Leo 4.3 final in this regard.</t>
+<t tx="ekr.20051014211811">It now computes the minimum leading whitespace of all non-blank lines. The old
+code computed the leading whitespace of the *first* non-blank line. This would
+give the wrong results if the first line were indented.</t>
 </tnodes>
 </leo_file>

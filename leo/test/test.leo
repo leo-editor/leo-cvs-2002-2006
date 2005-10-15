@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7663" clone_windows="0"/>
 <globals body_outline_ratio="0.755102040816">
-	<global_window_position top="64" left="219" height="833" width="950"/>
+	<global_window_position top="65" left="216" height="833" width="950"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1483,7 +1483,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" a="TV" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051010091827"><vh>Previous settings</vh>
 <v t="ekr.20050801071700"><vh>@@string stylesheet = type="text/xsl" href="bpLEOHTM.xsl"</vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
@@ -2292,7 +2292,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050120095423" a="TV" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
+<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins...</vh>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 <v t="ekr.20050120095423.1"><vh>Notes</vh>
 <v t="ekr.20050120095423.2"><vh>spellpyx</vh></v>
