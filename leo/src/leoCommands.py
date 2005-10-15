@@ -1260,6 +1260,7 @@ class baseCommands:
                     p = c.currentPosition()
                     d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
                     if define_name: d['__name__'] = define_name
+                    # g.trace(script)
                     exec script in d
                     if not script1:
                         g.es("end of script",color="purple")
