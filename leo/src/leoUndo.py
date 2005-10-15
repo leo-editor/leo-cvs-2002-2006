@@ -965,6 +965,8 @@ class baseUndoer:
     #@+node:ekr.20050525151217:getMark & rollbackToMark
     def getMark (self):
         
+        __pychecker__ = '--no-classattr' # self.bead does, in fact, exist.
+        
         return self.bead
         
     def rollbackToMark (self,n):

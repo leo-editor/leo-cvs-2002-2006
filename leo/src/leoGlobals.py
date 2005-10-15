@@ -1414,7 +1414,7 @@ def print_list(aList,tag=None,sort=False,indent=''):
         else:   print '{}'
         return
     if sort:
-        aList = aList[:] # Sort a copy!
+        aList = aList[:] # Sort a copy! Pychecker incorrectly complains.
         aList.sort()
     if tag: print '%s...[' % tag
     else:   print '['
@@ -1425,12 +1425,12 @@ def print_list(aList,tag=None,sort=False,indent=''):
 printList = print_list
 
 def listToString(aList,tag=None,sort=False,indent=''):
-    
+
     if not aList:
         if tag: return '%s...{}' % tag
         else:   return '{}'
     if sort:
-        aList = aList[:] # Sort a copy!
+        aList = aList[:] # Sort a copy! Pychecker incorrectly complains.
         aList.sort()
     lines = ["%s%s" % (indent,repr(e).strip()) for e in aList]
     s = '\n'.join(lines)
