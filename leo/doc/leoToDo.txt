@@ -6,40 +6,25 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
+First in 4.4a2.
+
+- Move the TabbedLog plugin into Leo's core.
+    - Create tabs for completion, general output, etc.
+
+- Make sure k.registerCommand can be called from plugins.
+
 - Support @button @name=button-name @key=shortcut
 
-- Make sure k.registerCommand can be called plugins.
-
-- Make the tabbed log always available.  Is it already?
-#@nonl
-#@+node:ekr.20051014122218:kill/yank from the xemacs tutorial
-<Delete>     delete the character just before the cursor
-C-d   	     delete the next character after the cursor
-
-M-<Delete>   kill the word immediately before the cursor
-M-d	     kill the next word after the cursor
-
-C-k	     kill from the cursor position to end of line
-M-k	     kill to the end of the current sentence
-
-** (I changed this: I should change it back)
-Note that a single C-k kills the contents of the line, and a second
-C-k kills the line itself...
-
-C-k treats a numeric argument specially: it kills that many lines AND
-their contents.  This is not mere repetition.  C-u 2 C-k kills two
-lines and their newlines; typing C-k twice would not do that.
-
-The set-mark-command command sets the mark to the point.
-Bound to Alt-@, Ctrl--, Ctrl-space
-#@nonl
-#@-node:ekr.20051014122218:kill/yank from the xemacs tutorial
+- The code that reads @shortcuts nodes should issue a warning is a single node
+contains multiple entries for the same command name!
 #@+node:ekr.20051012053017.2:Schedule
 1. 1 day: completion window
     - Integrate TabbedLog plugin.
     - Retire TabbedLog plugin.
 
-2. 1 week: unit tests
+2. 1 day: per-pane bindings.
+
+3. 3-4 days: unit tests
 
 Others
 
@@ -67,10 +52,30 @@ next-line           = (body) DnArrow
 
 - Replace focus commands in leoEditCommands.py with k.forceFocusToBody.
 
-
-
 * The colerer is calling c.config too much?
 #@nonl
+#@+node:ekr.20051014122218:kill/yank from the xemacs tutorial
+<Delete>     delete the character just before the cursor
+C-d   	     delete the next character after the cursor
+
+M-<Delete>   kill the word immediately before the cursor
+M-d	     kill the next word after the cursor
+
+C-k	     kill from the cursor position to end of line
+M-k	     kill to the end of the current sentence
+
+** (I changed this: I should change it back)
+Note that a single C-k kills the contents of the line, and a second
+C-k kills the line itself...
+
+C-k treats a numeric argument specially: it kills that many lines AND
+their contents.  This is not mere repetition.  C-u 2 C-k kills two
+lines and their newlines; typing C-k twice would not do that.
+
+The set-mark-command command sets the mark to the point.
+Bound to Alt-@, Ctrl--, Ctrl-space
+#@nonl
+#@-node:ekr.20051014122218:kill/yank from the xemacs tutorial
 #@+node:ekr.20051014104337.1:Crash in undo
 exception executing command
 Traceback (most recent call last):

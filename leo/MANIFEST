@@ -355,7 +355,6 @@ plugins\UASearch.py
 plugins\UNL.py
 plugins\URLloader.py
 plugins\UniversalScrolling.py
-plugins\__core_emacs.py
 plugins\__ipython.py
 plugins\__jEdit_colorizer__.py
 plugins\__outlineExperiments.py
@@ -451,7 +450,6 @@ plugins\spellpyx.ini
 plugins\spellpyx.py
 plugins\spellpyx.txt
 plugins\startfile.py
-plugins\status_line.py
 plugins\table.py
 plugins\temacs.py
 plugins\templates.py

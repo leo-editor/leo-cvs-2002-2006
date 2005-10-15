@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="19412" clone_windows="0"/>
 <globals body_outline_ratio="0.464772727273">
-	<global_window_position top="62" left="351" height="766" width="890"/>
+	<global_window_position top="27" left="392" height="766" width="890"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -41,12 +41,12 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20051011141302" a="TV"><vh>4.4 alpha 1</vh>
+<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="ekr.20051011141302"><vh>4.4 alpha 1</vh>
 <v t="ekr.20051014103845.3"><vh>Quick Start</vh></v>
 <v t="ekr.20051015141215"><vh>The 'key' features of 4.4</vh></v>
-<v t="ekr.20051015142343" a="E"><vh>Planned improvements</vh></v>
+<v t="ekr.20051015142343"><vh>Planned improvements</vh></v>
 <v t="ekr.20051011141302.1"><vh>New options</vh>
 <v t="ekr.20051015124747"><vh>The @bool useMinibuffer option</vh></v>
 <v t="ekr.20051015125338"><vh>The @bool useCmdMenu option</vh></v>
@@ -11148,27 +11148,26 @@ tests now takes a few seconds!
 - Leo is now much more friendly to using spaces instead of tabs.
 
 - The Execute Script command reports erroneous lines more clearly.</t>
-<t tx="ekr.20041226081019">import leoGlobals as g
-import leoPlugins
-c = g.top()
+<t tx="ekr.20041226081019">import leoPlugins
 
 spellpyx = leoPlugins.getPluginModule("spellpyx")
+spellFrame = None
 createMenu = spellpyx is None
 keys = {'c':c}
 
 if not spellpyx:
-    print 'loading spellpyx plugin'
     spellpyx = leoPlugins.loadOnePlugin("spellpyx",verbose=True)
-    if spellpyx:
-        spellpyx.onCreate('tag',keys)
+    if spellpyx: spellpyx.onCreate('tag',keys)
 
 if spellpyx:
-    # g.trace(g.dictToString(spellpyx.spellFrames,tag='spellFrames'))
     spellFrame = spellpyx.spellFrames.get(c)
-    if spellFrame and createMenu:
-        spellFrame.createSpellMenu('tag',keys)
     if spellFrame:
-        spellFrame.checkSpelling()</t>
+        if createMenu: spellFrame.createSpellMenu('tag',keys)
+        spellFrame.checkSpelling()
+
+if not spellpyx or not spellFrame:
+    # Ask to be removed.
+    g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20050122084954">Leo stores options in @settings trees, that is, parts of Leo outlines whose root node has the headline @settings.  When opening a .leo file, Leo looks for @settings trees in the following places:
 
 - The file called leoSettings.leo in the leo/config directory.
@@ -21307,7 +21306,7 @@ improvements, it is now possible to specify key bindings for all commands
 leoSettings.leo.
 
 This is definitely an alpha release. Several of the new Emacs-style commands are
-buggy. However, improvments to Leo's error-handling logic mean that you should
+buggy. However, improvements to Leo's error-handling logic mean that you should
 be able to recover from the odd crash much more reliably than previously. I have
 used this code for about a week with no significant problems at all.
 
@@ -21317,7 +21316,7 @@ The highlights of Leo 4.4 alpha 1:
 ----------------------------------
 
 - Support for all frequently-used Emacs commands, including cursor and screen
-movement, basic character, word and paragragraph manipulation, and commands to
+movement, basic character, word and paragraph manipulation, and commands to
 manipulate buffers, the kill ring, regions and rectangles. Almost all commands
 found in the Emacs Cmds menu are implemented.
 
@@ -21328,7 +21327,7 @@ new Emacs-style commands and the traditional Leo commands.
 You can define multiple sets of key bindings and switch between those sets
 easily.
 
-- Several bug fixes made to the 4.3 code bases.
+- Several fixes made to the 4.3 code base.
 
 Coming in later releases of Leo 4.4:
 ------------------------------------
@@ -21424,7 +21423,7 @@ followed by a 'return'.
 - To get help, type Alt-x help.
 - For a list of commands, type Alt-x print-commands.
 - For a list of present key bindings, type Alt-x print-bindings.
-- To leave the mini-buffer at any time typc Ctrl-g.
+- To leave the mini-buffer at any time type Ctrl-g.
 
 Note: you can redefine any of these keys as you wish.
 
@@ -21492,7 +21491,7 @@ does not work as in Emacs.
 
 - Many new commands must be generalized to handle the more complex environment
 Leo offers. For example, search commands must be told whether to limit the
-search a single node, or a node or and its descendents, or the entire outline.
+search a single node, or a node or and its descendants, or the entire outline.
 We need a set-variable command that sets a (Python) variable using an
 emacs-style variable name.
 
@@ -21535,7 +21534,7 @@ bindings may have the effect of changing to another input mode.
 We shall want to define input modes using Python tables, and possibly with new
 kinds of entries in @shortcuts nodes. The details are hazy at present. It's a
 significant job.</t>
-<t tx="ekr.20051015153139">Leo maintains the following dictionaries.  As usual, k referes to c.keyHandler:
+<t tx="ekr.20051015153139">Leo maintains the following dictionaries.  As usual, k refers to c.keyHandler:
 
 - c.keyHandler.registerCommand can be called from scripts to register new alt-x
   commands. It probably won't work from plugins yet.
@@ -21543,7 +21542,7 @@ significant job.</t>
 New dictionaries and methods make it easier to customize and extend Leo:
 
 - c.commandsDict describes all commands. Keys are full Emacs command names;
-values are functsions f.
+values are functions f.
 
 - k.inverseCommandsDict: keys are f.__name__, values are emacs command names.
 

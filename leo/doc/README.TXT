@@ -1,29 +1,38 @@
-Leo 4.3.3 final                             September 17, 2005
+Leo 4.4 alpha 1                                      October 15, 2005
 
-Leo 4.3.3 fixes several bugs reported in Leo 4.3.2 final.
+Leo 4.4 alpha 1 is now available at:
+
+http://sourceforge.net/project/showfiles.php?group_id=3458&package_id=29106
+
+Leo 4.4 adds an Emacs-like minibuffer and support for all frequently-used Emacs
+commands. Emacs users will be able to choose key bindings compatible with their
+present finger habits. Eventually, Vim users will be able to do the same.
+
+The new code in Leo 4.4 is a complete rewrite of most of the temacs and
+usetemacs plugins. Those plugins have now been retired. Besides many code-level
+improvements, it is now possible to specify key bindings for all commands
+(including the new Emacs-style commands) using @shortcuts nodes in
+leoSettings.leo.
+
+This is definitely an alpha release. Several of the new Emacs-style commands are
+buggy. However, improvements to Leo's error-handling logic mean that you should
+be able to recover from the odd crash much more reliably than previously. I have
+used this code for about a week with no significant problems at all.
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
-The highlights of 4.3.3 (and 4.3.2)
------------------------------------
+The highlights of Leo 4.4 alpha 1:
+----------------------------------
+- Support for all frequently-used Emacs commands, including cursor and screen
+movement, basic character, word and paragraph manipulation, and commands to
+manipulate buffers, the kill ring, regions and rectangles. Almost all commands
+found in the Emacs Cmds menu are implemented.
 
-- Improved Leo's documentation:
-    - A tutorial introduction to Leo:
-      http://webpages.charter.net/edreamleo/intro.html
-    - A 5-minute guide to programming with Leo:
-      http://webpages.charter.net/edreamleo/intro.html#quick-start-for-programmers
+- An Emacs-like mini-buffer: you can now execute any command by name, both the
+new Emacs-style commands and the traditional Leo commands.
 
-- The new rst3 plugin creates .html and .tex files from reStructuredText
-  embedded in Leo files. Any node of the source outline may contain options for
-  the rst3 plugin, which makes this plugin much more useful and flexible than
-  the previous rst plugins. All of Leo's documentation was created using this
-  plugin from sources in LeoDocs.leo. For full documentation for rst3 see:
-  http://webpages.charter.net/edreamleo/rstplugin3.html.
+- You can define key bindings using @shortcuts nodes in leoSettings.leo files.
+You can define multiple sets of key bindings and switch between those sets
+easily.
 
-- The spellpyx (spell checking) plugin is now much easier to use.
-
-- The vim and openWith plugins now use Python's subprocess module if it is present.
- 
-- Improved the Pretty Printing command.
-
-- The usual assortment of bug fixes.
+- Several fixes made to the 4.3 code base.
