@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="10" left="280" height="738" width="993"/>
+	<global_window_position top="36" left="267" height="762" width="981"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -224,12 +224,10 @@
 <v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
 </v>
-<v t="ekr.20050921105316.2" a="TV"><vh>@bool useMinibuffer = True</vh></v>
+<v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
-<v t="ekr.20051010195914"><vh>@@shortcuts no shortcuts (for testing)</vh></v>
-<v t="ekr.20051007193427"><vh>@@shortcuts traditional Leo shortcuts (not recommended)</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
+<v t="ekr.20051010112558" a="TV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1270,177 +1268,6 @@ weave                        = None
 write-at-file-nodes          = Shift-Ctrl-W
 write-dirty-at-file-nodes    = None
 write-outline-only           = None </t>
-<t tx="ekr.20051007193427">@color
-
-# The infamous cut/copy/paste commands.
-copy-text               = Ctrl-C
-cut-text                = Ctrl-X
-paste-text              = Ctrl-V
-
-# Leo find panel stuff.  It's not clear what will happen to these.
-dismiss-leo-find-panel  = None
-leo-find                = F3
-leo-find-panel          = Ctrl-f         # Ctrl-f conflicts with forward-char.
-leo-find-previous       = F2
-leo-change              = None
-leo-change-then-find    = None
-leo-change-all          = None          # Unwise to bind this to a shortcut or abbreviation.
-
-full-command            = Alt-x
-quick-command           = Alt-c # Usually control-c, conflicts cut-text.
-keyboard-quit           = Ctrl-g
-universal-argument      = Alt-u # Usually Ctrl-u, conflicts with move-outline-up.
-# negative-argument     = Alt-minus
-repeat-complex-command  = None
-
-# apply settings             = None
-about-leo                    = None
-abort-edit-headline          = Shift-Esc
-add-comments                 = Ctrl-(
-cascade-windows              = None
-check-all-python-code        = None
-check-outline                = None
-check-python-code            = None
-# check-spelling             = Alt-Shift-A  # Add this command.
-clear-recent-files           = None
-clone-node                   = Ctrl-`
-close                        = Ctrl-W
-contract-all                 = Alt--
-contract-node                = Alt-[
-contract-parent              = Alt-0
-contract-or-go-left          = Alt-LtArrow
-convert-all-blanks           = None
-convert-all-tabs             = None
-convert-blanks               = Shift-Ctrl-B
-convert-tabs                 = Shift-Ctrl-J
-copy-node                    = Shift-Ctrl-C
-cut-node                     = Shift-Ctrl-X
-de-hoist                     = None
-delete-comments              = Ctrl-)
-delete-node                  = Shift-Ctrl-BkSp
-delete-text                  = None
-demote                       = Ctrl-}
-dump-outline                 = None
-edit-headline                = Ctrl-H
-end-edit-headline            = Shift-Esc
-equal-sized-panes            = Alt-Shift-E
-end-edit-headline            = Esc
-execute-script               = Ctrl-E
-exit-leo                     = Ctrl-Q
-expand-all                   = Alt-9
-expand-next-level            = Alt-=
-expand-node                  = Alt-]
-expand-or-go-right           = Alt-RtArrow
-expand-prev-level            = Alt-.
-expand-to-level-1            = Alt-1
-expand-to-level-2            = Alt-2
-expand-to-level-3            = Alt-3
-expand-to-level-4            = Alt-4
-expand-to-level-5            = Alt-5
-expand-to-level-6            = Alt-6
-expand-to-level-7            = Alt-7
-expand-to-level-8            = Alt-8
-expand-to-level-9            = None
-export-headlines             = None
-extract                      = Shift-Ctrl-D
-extract-names                = Shift-Ctrl-N
-extract-section              = Shift-Ctrl-E
-find-next                    = F3
-find-panel                   = F5
-find-previous                = F2
-flatten-outline              = None
-go-back                      = None
-go-forward                   = None
-goto-first-node              = Alt-Shift-G
-goto-last-node               = Alt-Shift-H
-goto-last-visible            = None
-goto-line-number             = Alt-G
-goto-next-changed            = Alt-D
-goto-next-marked             = Alt-M
-goto-next-clone              = Alt-N
-goto-next-node               = Alt-Shift-DnArrow
-goto-next-sibling            = Alt-Shift-S
-goto-next-visible            = Alt-DnArrow
-goto-parent                  = Alt-Shift-P
-goto-prev-node               = Alt-Shift-UpArrow
-goto-prev-sibling            = Alt-Shift-R
-goto-prev-visible            = Alt-UpArrow
-hoist                        = None
-import-at-file               = Shift-Ctrl-F
-import-at-root               = None
-import-cweb-files            = None
-import-derived-file          = None
-import-flattened-outline     = None
-import-noweb-files           = None
-indent                       = Ctrl-]
-insert-node                  = Ctrl-I
-insert-body-time             = Shift-Ctrl-G
-insert-headline-time         = Shift-Ctrl-H
-mark                         = Ctrl-M
-mark-changed-items           = None             # Alt-C: now quick-command.
-mark-changed-roots           = Alt-R
-mark-clones                  = Alt-K
-mark-subheads                = Alt-S
-match-bracket                = Ctrl-K
-minimize-all                 = None
-move-outline-down            = Ctrl-D
-move-outline-left            = Ctrl-L
-move-outline-right           = Ctrl-R
-move-outline-up              = Ctrl-U
-new                          = Ctrl-N
-open-compare-window          = None
-open-leoconfig-leo           = None
-open-leodocs-leo             = None
-open-leoplugins-leo          = None
-open-online-home             = None
-open-online-tutorial         = None
-open-offline-tutorial        = None
-open-outline                 = Ctrl-O
-open-python-window           = Alt-P
-open-with                    = None
-outline-to-CWEB              = None
-outline-to-noweb             = None
-paste-node                   = Shift-Ctrl-V
-paste-retaining-clones       = None
-preferences                  = None
-pretty-print-all-python-code = None
-pretty-print-python-code     = None
-promote                      = Ctrl-{        
-read-at-file-nodes           = None
-read-outline-only            = Shift-Ctrl-R
-redo                         = Shift-Ctrl-Z
-reformat-paragraph           = Shift-Ctrl-P
-remove-sentinels             = None
-replace                      = Ctrl-=
-replace-then-find            = Ctrl--
-resize-to-screen             = None
-revert                       = None
-save-file                    = Ctrl-S
-save-file-as                 = Shift-Ctrl-S
-save-file-to                 = None
-select-all                   = Ctrl-A
-set-colors                   = None
-set-font                     = None
-settings                     = Ctrl-Y
-show-invisibles              = Alt-V
-sort-children                = None
-sort-siblings                = Alt-A
-tangle                       = Shift-Ctrl-T
-tangle-all                   = Shift-Ctrl-A
-tangle-marked                = Shift-Ctrl-M
-toggle-active-pane           = Ctrl-T
-toggle-angle-brackets        = None
-toggle-split-direction       = None
-undo                         = Ctrl-Z
-unindent                     = Ctrl-[
-unmark-all                   = Alt-U
-untangle                     = Shift-Ctrl-U
-untangle-all                 = None
-untangle-marked              = None
-write-at-file-nodes          = Shift-Ctrl-W
-write-dirty-at-file-nodes    = Shift-Ctrl-Q
-write-outline-only           = None
-weave                        = None</t>
 <t tx="ekr.20051007200824">Keyboard shortcuts for menu commands.
 
 A shortcut specification has the form:
@@ -1557,7 +1384,7 @@ paste-text              = Ctrl-v        # For testing only: Alt-Shift-Ctrl-v
 # Leo find panel stuff.  It's not clear what will happen to these.
 dismiss-leo-find-panel  = None
 leo-find                = F3
-leo-find-panel          = Shift-Ctrl-f # Ctrl-f conflicts with forward-char.
+leo-find-panel          = Ctrl-f # Ctrl-f conflicts with forward-char.
 leo-find-previous       = F2
 leo-change              = None
 leo-change-then-find    = None
@@ -1576,7 +1403,7 @@ end-of-buffer           = Alt-greater
 end-of-line             = Ctrl-e        # Conflicts with execute-script
 # end-of-line           = Alt-DnArrow   # Conflicts with goto-next-visible
 exchange-point-mark     = None          # Should be Ctrl-X Ctrl-X.
-forward-char            = Ctrl-f        # Ctrl-f Conflicts with find-panel
+forward-char            = Shift-Ctrl-f        # Ctrl-f Conflicts with find-panel
 forward-paragraph       = Alt-braceright
 forward-sentence        = Alt-e         # No conflict
 forward-word            = Alt-f         # No conflict with bindings, but usually opens file menu.
@@ -1746,7 +1573,6 @@ tabify                      = None
 transpose-chars             = None
 transpose-lines             = None
 transpose-words             = None
-universal-argument          = None
 untabify                    = None
 upcase-region               = None
 upcase-word                 = None
@@ -1933,7 +1759,6 @@ Unused Ctrl-B, Ctrl-G, Ctrl-J, Ctrl-P
 Unused Shift-Ctrl-I, Shift-Ctrl-K, Shift-Ctrl-L, Shift-Ctrl-O
 
 F4 seems to interfere with Alt-F4 processing on windows.  Sigh.</t>
-<t tx="ekr.20051010195914"># We expect to see the defaults created by the menu tables.</t>
 <t tx="ekr.20051011123608">n = len('insert-newline              ')
 
 s = p.bodyString()
