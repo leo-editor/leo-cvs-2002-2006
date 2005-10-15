@@ -245,8 +245,8 @@ class leoMenu:
         self.defineFileMenuTables()
         self.defineOutlineMenuTables()
         self.defineWindowMenuTables()
-        
-        if self.useCmdMenu and c.useMiniBuffer:
+    
+        if self.useCmdMenu:
             self.defineEditorMenuTables()
     
         self.defineHelpMenuTables()
@@ -1053,26 +1053,23 @@ class leoMenu:
                 if openWith:
                     pass
                 elif not accel2:
-                    if c.useMiniBuffer:
-                        try: # User errors in the call can cause this.
-                            commandName = command.__name__
-                        except Exception:
-                            commandName = None
-                        emacs_name = k.inverseCommandsDict.get(commandName)
-                        if emacs_name:
-                            # Override the default shortcut, but *only* if the setting was actually given.
-                            if g.app.config.exists(c,emacs_name,'shortcut'):
-                                rawKey,accel2 = c.config.getShortcut(emacs_name)
-                                # Override the default shortcut.
-                                accel = accel2 
-                                # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
-                        else:
-                            if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
-                                if commandName and commandName != 'dummyCommand':
-                                    g.trace('no inverse for %s' % commandName)
-                            accel = None # New in 4.4: clear the default.
+                    try: # User errors in the call can cause this.
+                        commandName = command.__name__
+                    except Exception:
+                        commandName = None
+                    emacs_name = k.inverseCommandsDict.get(commandName)
+                    if emacs_name:
+                        # Override the default shortcut, but *only* if the setting was actually given.
+                        if g.app.config.exists(c,emacs_name,'shortcut'):
+                            rawKey,accel2 = c.config.getShortcut(emacs_name)
+                            # Override the default shortcut.
+                            accel = accel2 
+                            # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
                     else:
-                        pass # Use the default shortcut.
+                        if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
+                            if commandName and commandName != 'dummyCommand':
+                                g.trace('no inverse for %s' % commandName)
+                        accel = None # New in 4.4: clear the default.
                 elif accel2 and accel2.lower() == "none":
                     accel = None # Remove the default shortcut.
                 else:
@@ -1166,7 +1163,7 @@ class leoMenu:
         
         g.doHook("create-optional-menus",c=c)
         
-        if self.useCmdMenu and c.useMiniBuffer:
+        if self.useCmdMenu:
             self.createEditorMenuFromTable()
     
         self.createWindowMenuFromTable()

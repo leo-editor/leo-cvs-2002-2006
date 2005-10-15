@@ -478,7 +478,7 @@ class keyHandlerClass:
         
         self.c = c
         self.widget = c.frame.miniBufferWidget
-            # A Tk Label widget.  Important: will be None if c.useMiniBuffer is False.
+            # A Tk Label widget.  Exists even if c.showMinibuffer is False.
             
         self.useGlobalKillbuffer = useGlobalKillbuffer
         self.useGlobalRegisters = useGlobalRegisters
@@ -558,12 +558,13 @@ class keyHandlerClass:
         k.createInverseCommandsDict()
         
         if not c.miniBufferWidget:
+            # Does not exist for leoSettings.leo files.
             return
             
         # g.trace('keyHandler')
     
-        if c.useMiniBuffer:
-            k.makeAllBindings()
+        # Important: bindings exist even if c.showMiniBuffer is False.
+        k.makeAllBindings()
         
         if 0:
             addTemacsExtensions(k)
@@ -817,17 +818,15 @@ class keyHandlerClass:
         
         for name in names:
             abbrev = k.abbreviationsDict.get(name)
-            if abbrev:
-                name = abbrev
             # This logic is from c.config.getShortcut
-            key = c.frame.menu.canonicalizeMenuName(name)
+            key = c.frame.menu.canonicalizeMenuName(abbrev or name)
             key = key.replace('&','')
             if not g.app.config.exists(c,key,'shortcut'):
                 if abbrev:
-                     g.trace('No shortcut in any @shortcuts node for abbrev %s -> %s' % (
-                        abbrev,name))
+                     g.trace('No shortcut for abbrev %s -> %s = %s' % (
+                        name,abbrev,key))
                 else:
-                    g.trace('No shortcut in any @shortcuts node for %s' % name)
+                    g.trace('No shortcut for %s = %s' % (name,key))
     #@nonl
     #@-node:ekr.20051011103654:checkBindings
     #@+node:ekr.20051007080058:makeAllBindings

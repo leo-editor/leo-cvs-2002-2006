@@ -70,7 +70,8 @@ class baseCommands:
     
         # g.trace(c) # Do this after setting c.mFileName.
         c.initIvars()
-        self.useMiniBuffer = c.config.getBool('useMiniBuffer')
+    
+        self.showMinibuffer = c.config.getBool('useMinibuffer')
     
         # initialize the sub-commanders.
         # c.finishCreate creates the sub-commanders for edit commands.
@@ -6139,7 +6140,7 @@ class configSettings:
     def getString    (self,setting): return g.app.config.getString   (self.c,setting)
     #@nonl
     #@-node:ekr.20041118053731:Getters
-    #@+node:ekr.20041118195812:Setters...
+    #@+node:ekr.20041118195812:Setters... (c.configSettings)
     #@+node:ekr.20041118195812.3:setRecentFiles (c.configSettings)
     def setRecentFiles (self,files):
         
@@ -6159,7 +6160,7 @@ class configSettings:
     setString = set
     #@nonl
     #@-node:ekr.20041118195812.2:set & setString
-    #@-node:ekr.20041118195812:Setters...
+    #@-node:ekr.20041118195812:Setters... (c.configSettings)
     #@-others
 #@nonl
 #@-node:ekr.20041118104831.1:class configSettings

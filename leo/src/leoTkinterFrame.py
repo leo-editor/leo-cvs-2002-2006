@@ -105,28 +105,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         return self.componentsDict.keys()
     #@nonl
     #@-node:ekr.20041221122440:f.component & components
-    #@+node:ekr.20050920094212:f.createMiniBufferWidget
-    def createMiniBufferWidget (self):
-        
-    
-        '''Create the minbuffer below the status line.'''
-        
-        frame = self
-        frame.minibufferFrame = f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
-        
-        f.pack(side='bottom',fill='x')
-    
-        lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
-        lab.pack(side='left')
-    
-        label = Tk.Label(f,relief='groove',justify='left',anchor='w')
-        label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
-        
-        frame.minibufferVisible = True
-    
-        return label
-    #@nonl
-    #@-node:ekr.20050920094212:f.createMiniBufferWidget
     #@+node:ekr.20031218072017.2176:f.finishCreate & helpers
     def finishCreate (self,c):
         
@@ -146,8 +124,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         g.app.windowList.append(f)
         c.initVersion()
         c.signOnWithVersion()
-        if c.useMiniBuffer:
-            f.miniBufferWidget = f.createMiniBufferWidget()
+        f.miniBufferWidget = f.createMiniBufferWidget()
         f.body.createBindings(f)
     #@nonl
     #@+node:ekr.20051009044751:createOuterFrames
@@ -261,6 +238,28 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c.endUpdate(False)
     #@nonl
     #@-node:ekr.20051009045404:createFirstTreeNode
+    #@+node:ekr.20050920094212:createMiniBufferWidget
+    def createMiniBufferWidget (self):
+        
+        '''Create the minbuffer below the status line.'''
+        
+        frame = self ; c = frame.c
+    
+        frame.minibufferFrame = f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
+        if c.showMinibuffer:
+            f.pack(side='bottom',fill='x')
+    
+        lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
+        lab.pack(side='left')
+    
+        label = Tk.Label(f,relief='groove',justify='left',anchor='w')
+        label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
+        
+        frame.minibufferVisible = c.showMinibuffer
+    
+        return label
+    #@nonl
+    #@-node:ekr.20050920094212:createMiniBufferWidget
     #@-node:ekr.20031218072017.2176:f.finishCreate & helpers
     #@+node:ekr.20031218072017.3944:f.createCanvas & helpers
     def createCanvas (self,parentFrame,pack=True):
@@ -2351,7 +2350,7 @@ class leoTkinterBody (leoFrame.leoBody):
         t.bind("<Button-3>", frame.OnBodyRClick)
         t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
         
-        if not c.useMiniBuffer:
+        if 0: # The changeover to the mini-buffer code is complete.
             g.trace('binding <Key> to frame.body.onBodyKey')
             t.bind("<Key>", self.onBodyKey)
     
