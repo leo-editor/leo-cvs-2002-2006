@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="10" left="256" height="803" width="966"/>
+	<global_window_position top="10" left="256" height="765" width="966"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1278,7 +1278,7 @@ leo-change-all          = None          # Unwise to bind this to a shortcut or a
 full-command            = Alt-x
 quick-command           = Alt-c # Usually control-c, conflicts cut-text.
 keyboard-quit           = Ctrl-g
-universal-arg           = Alt-u # Usually Ctrl-u, conflicts with move-outline-up.
+universal-argument      = Alt-u # Usually Ctrl-u, conflicts with move-outline-up.
 # negative-argument     = Alt-minus
 repeat-complex-command  = None
 
@@ -1583,7 +1583,7 @@ set-mark-command        = Ctrl-space    # Also Ctrl-Shift-at
 full-command            = Alt-x         # No conflict.
 quick-command           = Alt-c         # Usually Ctrl-c, conflicts with cut-text.
 keyboard-quit           = Ctrl-g
-universal-arg           = Alt-u         # Usually Ctrl-u, conflicts with move-outline-up.
+universal-argument      = Alt-u         # Usually Ctrl-u, conflicts with move-outline-up.
 # negative-argument     = Alt-minus     # Conflicts with contract-all.
 repeat-complex-command  = None          # Usually 'again', whatever that is.
 
@@ -1656,7 +1656,7 @@ fill-region                 = None
 fill-region-as-paragraph    = None
 flush-lines                 = None
 how-many                    = None
-help                        = Ctrl-h
+help                        = None # Ctrl-h conflicts with edit headline.
 iconfify-or-deiconify-frame = None
 increment-register          = None
 indent-region               = None
