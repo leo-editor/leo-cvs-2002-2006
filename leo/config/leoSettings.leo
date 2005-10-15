@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="10" left="256" height="757" width="1017"/>
+	<global_window_position top="10" left="280" height="738" width="993"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -36,7 +36,7 @@
 </v>
 <v t="ekr.20051010093913"><vh>@button save</vh></v>
 <v t="ekr.20051011123608"><vh>@@button align to col</vh></v>
-<v t="ekr.20041119034357.1" a="TV"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
 <v t="ekr.20041119034357.10"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -220,11 +220,11 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
 </v>
-<v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
+<v t="ekr.20050921105316.2" a="TV"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051010195914"><vh>@@shortcuts no shortcuts (for testing)</vh></v>
 <v t="ekr.20051007193427"><vh>@@shortcuts traditional Leo shortcuts (not recommended)</vh></v>
@@ -883,14 +883,19 @@ Doing so would make unit tests fail.
 <t tx="ekr.20050921105316.1">The Cmds menu is not ready yet.  It will be similar to the Emacs Cmds menu.</t>
 <t tx="ekr.20050921105316.2">Important:
 
-- The minibuffer will exist regardless of this setting, but will not be shown
-initially if it is False.
+1. The minibuffer will exist regardless of this setting, but will not be shown
+   initially if it is False.
 
-- The show-mini-buffer, hide-mini-buffer and toggle-mini-buffer commands (or any
-other minibuffer command!) may be executed even if the minibuffer is hidden.
-Indeed, the following will work even if the minibuffer is hidden.
+2. Hiding the minibuffer does not change any bindings or the operation of Leo in
+   any other way. Therefore, if you do hide the minibuffer initially, and never
+   want to use it, you should not bind shortcuts to any commands that use the
+   minibuffer.
 
-&lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
+3. You can execute the show-mini-buffer, hide-mini-buffer and toggle-mini-buffer
+   commands (or any other minibuffer command!) if the minibuffer is hidden.
+   Indeed, the following will work even if the minibuffer is hidden.
+
+       &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
 <t tx="ekr.20051006200015">Use a light selectbackground value so syntax coloring looks good.
 
 Default is Gray80.

@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="19412" clone_windows="0"/>
 <globals body_outline_ratio="0.464772727273">
-	<global_window_position top="62" left="351" height="804" width="890"/>
+	<global_window_position top="62" left="351" height="785" width="890"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -43,12 +43,15 @@
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
 <v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20051011141302" a="TV"><vh>4.4 alpha 1</vh>
-<v t="ekr.20051014104108" a="M"><vh> To do</vh></v>
+<v t="ekr.20051011141302" a="E"><vh>4.4 alpha 1</vh>
+<v t="ekr.20051014104108" a="MTV"><vh> To do</vh></v>
+<v t="ekr.20051015125434"><vh>Posting: A new world</vh></v>
 <v t="ekr.20051011141302.1"><vh>Known bugs</vh></v>
 <v t="ekr.20051014105514.37" a="M"><vh>The major new feature: an emacs-style minibuffer and related commands</vh>
 <v t="ekr.20051014105514.136"><vh>Added useMiniBuffer and useEditorMenu @settings</vh></v>
 <v t="ekr.20051014105514.132"><vh>Improvements</vh></v>
+<v t="ekr.20051015124747"><vh>The @bool useMinibuffer option</vh></v>
+<v t="ekr.20051015125338"><vh>The @bool useCmdMenu option</vh></v>
 <v t="ekr.20051014105911"><vh>New emacs-like commands</vh></v>
 </v>
 <v t="ekr.20051014105606"><vh>Other new features</vh>
@@ -21532,11 +21535,21 @@ unfinished.
 
 Ctrl-g: Just like Emacs Ctrl-g: Closes the mini-buffer.
 </t>
-<t tx="ekr.20051014104108">- Make a list of all unfinished/untested emacs commands.
+<t tx="ekr.20051014104108">** Convert posting to docs.
 
 - Document 'EKR' abbreviations.
 
-** Use print-commands instead of docs!</t>
+- List of commands known to be buggy.
+
+- List of all incompletions.
+    - Not all commands have been tested!
+    - the inputMode classes in leoKey.py are completely unused.
+
+- List of visible changes from usetemacs plugin.
+    New commands.
+    Better handling of buffer.
+    Worse handling of selection.
+    @bool useMinibuffer setting.</t>
 <t tx="ekr.20051014105514.1">http://sourceforge.net/forum/message.php?msg_id=3355954
 
 'body_text_selection_background_color'  Default is 'Gray80'
@@ -22000,12 +22013,129 @@ This is the last best hope to solve this problem: the code interacts as little a
 
 - print-bindings
 
-- print-commands</t>
+- print-commands.  This is an easy way of discovering which commands exist.
+
+- help</t>
 <t tx="ekr.20051014105911.1"></t>
 <t tx="ekr.20051014112415">This makes it much harder to hang Leo after taking an exception. Leo 4.4a1 is
 *much* more robust than Leo 4.3 final in this regard.</t>
 <t tx="ekr.20051014211811">It now computes the minimum leading whitespace of all non-blank lines. The old
 code computed the leading whitespace of the *first* non-blank line. This would
 give the wrong results if the first line were indented.</t>
+<t tx="ekr.20051015124747">1. The minibuffer will exist regardless of this setting, but will not be shown
+   initially if it is False.
+
+2. Hiding the minibuffer does not change any bindings or the operation of Leo in
+   any other way. Therefore, if you do hide the minibuffer initially, and never
+   want to use it, you should not bind shortcuts to any commands that use the
+   minibuffer.
+
+3. You can execute the show-mini-buffer, hide-mini-buffer and toggle-mini-buffer
+   commands (or any other minibuffer command!) if the minibuffer is hidden.
+   Indeed, the following will work even if the minibuffer is hidden.
+
+       &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
+<t tx="ekr.20051015125338">This options controls whether Leo creates a Cmds menu.
+
+This menu is not ready yet, though nothing bad happens if this option is True.</t>
+<t tx="ekr.20051015125434">This posting discusses various new features of Leo 4.4.  It also discusses my plans upcoming 4.4 versions.  This is essentially pre-writing for the 4.4a1 release notes.
+
+-  The minibuffer reduces the need for key shortcuts.
+
+It is easy to execute any command (including all of Leo's legacy commands) from the minibuffer.  This reduces the need for shortcuts dramatically.   For example, none of Leo's  import commands need a shortcut because it is easy enough to execute them from the minibuffer.  In particular, executing commands from the minibuffer is much easier than executing commands by hand from a menu.  Important: you can execute any of Leo's 'legacy' commands from the mini-buffer.  For example, &lt;alt-x&gt; about-leo  or &lt;alt-x&gt; leo-find-panel.
+
+- `EKR shortcuts`
+
+I'm not sure whether abbreviations work at present.  (They will definitely work for 4.4a2.)  However, I have hacked a new kind of abbreviation.  At present these are hard coded in the function add_ekr_altx_commands.  For example, one ekr-shortcut is: 'f', which is bound to leo-find-panel.  Typing &lt;alt-x&gt; f &lt;return&gt; executes leo-find-panel. These may be quicker than regular Emacs abbreviations, but I could be mistaken.
+
+- New commands
+
+The show-bindings command prints a list of all key bindings and their associated emacs command name.  The show-commands command prints a list of *all* the emacs command names and their associated key bindings.  For 4.4a1 the output goes to stdout.  For 4.4a2 the output will go to a tab in the log pane.  It is very easy to add new commands at present.  It will get easier still in a2 (see below).
+
+-  Minibuffer commands don't need gui elements.
+
+Most emacs-like commands have no associated gui except for the minibuffer itself (and buffers for the completion list, etc.)  Aside: Leo 4.4a2 will show lists of tab completions in a new tab in the log pane, but even without the visible list of completions it is easy to use tab completion.  *Not* having a gui simplifies commands a lot: there is no need for keystrokes to navigate through dialogs.  This is important.  Compare the pain of navigating through Leo's traditional Find panel without a mouse with the ease of using the Emacs-style find commands.  In short, *not* showing dialogs simplifies the user's task and reduces the need for dialog-navigation key bindings.  Avoiding dialogs would simplify an integrated Leo debugger, for example.
+
+Using the mouse to do things in dialogs not only seems slow, but it can cause bad typing habits.  I recently realized that I try to do too much with the left hand, for example, typing Ctrl-S with only my left hand.  This happens frequently just after using the mouse to select text.  My right hand is 'blocked' by the mouse, so the temptation to type everything with the left hand is strong.
+
+-  Multiple @shortcuts nodes.
+
+leoSettings.leo contains one functional @shortcuts node and two disabled @@shortcuts nodes.  My preference at present is for the node called `@shortcuts traditional Leo shortcuts with import emacs bindings`.  This node contains more Emacs-like bindings and fewer Leo 'legacy' bindings.  You can any of these as they are, use them as base for modifications, or roll your own.   You should define a binding for every function, even if that binding is 'None'.  If you don't, Leo will issue a warning.  I might take the warning out later, but for now it's a good check that all commands appear in the active @shortcuts node.  Note: you can define your own lead-in characters to the following standard Emacs keys: Ctrl-C, Alt-x, Ctrl-U and Ctrl-G.
+
+----- Coming in 4.4a2 or later -----
+
+I am only now digging out from the avalanche of ideas created by the 4.4 code base.  In times like this, just jotting down the ideas as they come becomes problematic.  However, things have settled down a bit.  Here is a complete list of my plans for the near future.
+
+- More typing completion.
+
+The 4.4a1 code base handles the minibuffer well.  In particular, k.getArg handles most of the routine chores in getting arguments to emacs-style commands, including typing completion for command names. 4.4a2 will add typing completion for file names and space completion for command names.
+
+- Tabbed log pane.
+
+Emacs creates a new buffer any time there is lots of data to show, for example, for help text or tab completions.  Leo 4.4a2 will create tabs in the log pane to hold such data.  At that time the TabbedLog plugin will be retired: Leo will always have a tabbed log.  A tabbed log will be useful for showing spelling alternatives, breakpoint lists, debugger state, results of evaluating expression, whatever.
+
+- (Urgent) Per-pane key bindings.
+
+Yes, the minibuffer reduces the number of essential key bindings, but Leo creates a much richer context than Emacs, and this increases the demand for more essential key bindings.  The easily typed shortcuts are all taken.  The only way to create more bindings is to allow per-pane bindings.   For example, many people might want arrow keys to do different things in the outline and body panes.  In the outline pane, the arrow keys should navigate between nodes.  In text panes the arrow panes should move the cursor by default.  Indeed, Tk already has a powerful, and fairly standard, set of bindings for arrow keys.
+
+Leo 4.4a2 will allow this using a simple hack:  key shortcuts can specify a pane in which they are to be bound.  For example:
+
+.…goto-next-visible = (outline) DnArrow
+.…next-line = (body) DnArrow
+
+- Multiple bindings per command.
+
+The standard Emacs bindings assigns several keys to the same command.   This isn't urgent, but it could easily be done like this:
+
+.…next-line = (body) [DnArrow,Ctrl-N]
+
+- Registering commands from plugins or scripts.
+
+k.registerCommand(commandName,shortcut,function) will cause Leo to add a new emacs-style function that can be called using the shortcut if it exists or from the minibuffer using &lt;alt-x&gt; commandName &lt;return&gt;.  This is easy to do, and I might do it for 4.4a1.
+
+- Improved @button bindings
+
+@button should allow bindings to emacs commands and keystrokes.  Something like this:
+
+.…@button @name=button-name @key=shortcut
+
+would create a button whose name is button-name bound to the shortcut.  In addition it would have the effect of calling:
+
+.…k.registerCommand(button-name,shortcut,f)
+
+where f is a wrapping of the script defined by the button.  The user can then execute the script in the button using the shortcut or this way:
+
+.…&lt;alt-x&gt; button-name &lt;return&gt;
+
+ Should be easy enough to do.
+
+- (The big one) Input modes and complex shortcuts.
+
+Recently I saw that a 'vim mode' would be fairly easy to do.  The idea is simply to stay in the minibuffer after most commands.  That's all very well, but both Emacs and Vim create hidden modes such as &lt;ctrl-c&gt; r r for rectangle commands.  The present code is pretty kludgy, with lots of hard bindings.  The most general way would be to have a tree of key binding modes.  Emacs has something like this with its binding tables.  This has lots of implications and ramifications.  For example, Emacs shows the complex shortcuts &lt;ctrl-c&gt; r r in menus.  I wont go into further details here.
+
+- Unit tests
+
+I shall not release Leo 4.4b1 until as many commands as possible in leoEditCommands.py have unit tests.  The unit tests will call g.simulateKeystrokes (does not yet exist) with a list of keystrokes to simulate. The unit test will then assert various properties of the minibuffer or whatever.  The teardown method may be more important than usual.
+
+Edward
+
+P.S. I wasn't kidding when I said that it is hard to get all the ideas down.  I forgot a big one.
+
+Sometime before 4.4b1 I must figure out how to merge the old and new commands.  For example, there are now two distinct sets of find commands: the legacy Leo way and the Emacs way.  This is ugly, and even Leo keeps both ways, we shall want emacs-like commands to do Leo-specific tasks.  Some examples (this list is *far* from complete):
+
+1. Traditional Emacs commands must be generalized to handle the more complex environment Leo offers. For example, search commands must be told whether to limit the search a single node, or a node or and its descendents, or the entire outline.  We need a set-variable command that sets a (Python) variable using an emacs-style variable name.
+
+2. The notion of the 'point' must be expanded so it indicates a node as well as text location.  This could be a bit tricky.
+    
+3. Many more commands are needed to support 'mouseless-Leo':
+
+- The user must be able to drive all dialogs from the keyboard, **or to get the same effect without using a dialog at all**.  Examples:  dismiss-top-dialog, scroll-outline-up/down.
+
+- emacs commands to change focus, etc: focus-in-body/tree/log/dialog.
+
+- emacs commands for menus.  activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)
+
+EKR
+</t>
 </tnodes>
 </leo_file>

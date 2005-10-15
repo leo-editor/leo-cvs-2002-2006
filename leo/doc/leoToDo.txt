@@ -5,23 +5,6 @@
 #@+all
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
-
-Docs:
-    Convert posting to docs.
-    List of all incompletions.
-        - the inputMode classes in leoKey.py are completely unused.
-        * (urgent) unit tests.
-        Not all commands have been tested!
-        * List of defective commands.
-    * List of visible changes from usetemacs plugin.
-        New commands.
-        Better handling of buffer.
-        Worse handling of selection.
-
-    - Hiding the minibuffer does not change any bindings or the operation of Leo
-    in any other way. Therefore, if you do hide the minibuffer initially, and
-    never want to use it, you should not bind shortcuts to any commands that use
-    the minibuffer.
 #@nonl
 #@+node:ekr.20051014122218:From the xemacs tutorial
 <Delete>     delete the character just before the cursor
