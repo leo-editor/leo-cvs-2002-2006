@@ -158,9 +158,9 @@ class baseEditCommandsClass:
     #@nonl
     #@-node:ekr.20050920084036.9:inRange
     #@+node:ekr.20051002090441:keyboardQuit
-    def keyboardQuit (self):
+    def keyboardQuit (self,event):
         
-        return self.k.keyboardQuit()
+        return self.k.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20051002090441:keyboardQuit
     #@+node:ekr.20050920084036.11:testinrange

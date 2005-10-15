@@ -1757,7 +1757,7 @@ class keyHandlerClass:
         return 'break'
     #@-node:ekr.20050920085536.62:getArg
     #@+node:ekr.20050920085536.63:keyboardQuit
-    def keyboardQuit (self,event=None):
+    def keyboardQuit (self,event):
     
         '''This method clears the state and the minibuffer label.
         
