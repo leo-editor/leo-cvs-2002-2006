@@ -923,26 +923,27 @@ class keyHandlerClass:
         for stroke,ivar,name,func in (
     		# These defaults may be overridden.
             ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
-            ('Atl-x',   'fullCommandKey',  'full-command',  k.fullCommand),
-            ('Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
+            ('Alt-x',   'fullCommandKey',  'full-command',  k.fullCommand),
+            # There are dafault menu bindings to Ctrl-U and Shift-Ctrl-U, so
+            # we must pick another value here: otherwise it will be overridden later.
+            ('Alt-Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
             ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
         ):
+            # Create the callback **after** any user override.
+            junk, accel = c.config.getShortcut(name)
+            # g.trace(accel,name)
+            if not accel: accel = stroke
+            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+            # g.trace(stroke,accel,shortcut,func.__name__)
             
             # Use two-levels of callbacks.
             def specialCallback (event,func=func):
                 return func(event)
     
-            def keyCallback (event,func=specialCallback,stroke=stroke):
+            def keyCallback (event,func=specialCallback,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
             
-            # Allow the user to override.
-            junk, accel = c.config.getShortcut(name)
-            if not accel: accel = stroke
-            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-            # g.trace(stroke,accel,shortcut,func.__name__)
-            
-            # keyCallback will return stroke *regardless* of the actual binding.
-            setattr(k,ivar,stroke)
+            setattr(k,ivar,shortcut)
             # Set fromMenu = True: this *can* be overridden.
             k.bindKey(w,shortcut,keyCallback,func.__name__,fromMenu=True,tag=tag)
             
@@ -1026,7 +1027,7 @@ class keyHandlerClass:
             done = c.macroCommands.startKbdMacro(event)
             if done: return 'break'
             
-        # g.trace(stroke,k.abortAllModesKey)
+        g.trace(stroke,k.abortAllModesKey)
     
         if stroke == k.abortAllModesKey: # 'Control-g'
             k.previousStroke = stroke
