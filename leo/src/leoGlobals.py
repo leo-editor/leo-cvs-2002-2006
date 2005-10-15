@@ -5045,6 +5045,33 @@ class readLinesClass:
 #@-node:ekr.20040629162023:readLines class and generator
 #@-node:EKR.20040612114220:Utility classes, functions & objects...
 #@+node:ekr.20031218072017.3197:Whitespace...
+#@+node:ekr.20051014175117:g.adjustTripleString (same as removeExtraLws)
+def adjustTripleString (s,tab_width):
+    
+    '''Remove leading indentation from a triple-quoted string.
+    
+    This works around the fact that Leo nodes can't represent underindented strings.
+    '''
+    
+    # Compute the minimum leading whitespace of all non-blank lines.
+    lines = g.splitLines(s)
+    w = -1
+    for s in lines:
+       if s.strip():
+            lws = g.get_leading_ws(s)
+            w2 = g.computeWidth(lws,tab_width)
+            if w < 0: w = w2
+            else:     w = min(w,w2)
+            # g.trace('w',w)
+    if w <= 0: return s
+
+    # Remove the leading whitespace.
+    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
+    result = ''.join(result)
+
+    return result
+#@nonl
+#@-node:ekr.20051014175117:g.adjustTripleString (same as removeExtraLws)
 #@+node:ekr.20031218072017.3198:computeLeadingWhitespace
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
 
@@ -5136,7 +5163,9 @@ def removeLeadingWhitespace (s,first_ws,tab_width):
 #@+node:ekr.20050211120242.2:g.removeExtraLws & tests
 def removeExtraLws (s,tab_width):
     
-    '''Remove extra indentation from one or more lines.'''
+    '''Remove extra indentation from one or more lines.
+    
+    Warning: used by getScript.  This is *not* the same as g.adjustTripleString.'''
     
     lines = g.splitLines(s)
 
@@ -5149,6 +5178,7 @@ def removeExtraLws (s,tab_width):
             break
     else: return s
     
+    # Remove the leading whitespace.
     result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
     result = ''.join(result)
     
