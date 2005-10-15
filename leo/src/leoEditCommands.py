@@ -701,6 +701,9 @@ class bufferCommandsClass (baseEditCommandsClass):
         
         k = self.k
         
+        ### To be removed.
+        __pychecker__ = '--no-argsused' # name not used yet.
+        
         # w = event.widget
         # method = self.bufferGotos[event.widget]
         # k.keyboardQuit(event)
@@ -1060,7 +1063,37 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
     #@-node:ekr.20050929155208: birth
-    #@+node:ekr.20050920084036.57:capitalizeWord, upCaseWord, downCaseWord, changePreviousWord
+    #@+node:ekr.20050920084036.57:capitalization & case
+    #@+node:ekr.20051015114221:capitalizeWord & up/downCaseWord
+    def capitalizeWord (self,event):
+        self.capitalizeHelper(event,'cap')
+    
+    def downCaseWord (self,event):
+        self.capitalizeHelper(event,'low')
+    
+    def upCaseWord (self,event):
+        self.capitalizeHelper(event,'up')
+    #@nonl
+    #@-node:ekr.20051015114221:capitalizeWord & up/downCaseWord
+    #@+node:ekr.20050920084036.145:changePreviousWord
+    def changePreviousWord (self,event):
+    
+        k = self.k ; stroke = k.stroke ; w = event.widget
+        i = w.index('insert')
+    
+        self.moveWordHelper(event,-1)
+    
+        if stroke == '<Alt-c>':
+            self.capitalizeWord(event)
+        elif stroke == '<Alt-u>':
+             self.upCaseWord(event)
+        elif stroke == '<Alt-l>':
+            self.downCaseWord(event)
+    
+        w.mark_set('insert',i)
+    #@nonl
+    #@-node:ekr.20050920084036.145:changePreviousWord
+    #@+node:ekr.20051015114221.1:capitalizeHelper
     def capitalizeHelper (self,event,which):
     
         w = event.widget
@@ -1077,34 +1110,8 @@ class editCommandsClass (baseEditCommandsClass):
         w.insert('insert',text)
         w.mark_set('insert',i)
         
-    def capitalizeWord (self,event):
-        self.capitalizeHelper(event,'cap')
-    
-    def downCaseWord (self,event):
-        self.capitalizeHelper(event,'low')
-    
-    def upCaseWord (self,event):
-        self.capitalizeHelper(event,'up')
-    #@nonl
-    #@+node:ekr.20050920084036.145:changePreviousWord
-    def changePreviousWord (self,event):
-    
-        k = self.k ; stroke = k.stroke ; w = event.widget
-        i = w.index('insert')
-    
-        self.moveWordHelper(event,-1)
-    
-        if stroke == '<Alt-c>':
-            self.capitalize(event)
-        elif stroke == '<Alt-u>':
-             self.upCaseWord(event)
-        elif stroke == '<Alt-l>':
-            self.downCaseWord(event)
-    
-        w.mark_set('insert',i)
-    #@nonl
-    #@-node:ekr.20050920084036.145:changePreviousWord
-    #@-node:ekr.20050920084036.57:capitalizeWord, upCaseWord, downCaseWord, changePreviousWord
+    #@-node:ekr.20051015114221.1:capitalizeHelper
+    #@-node:ekr.20050920084036.57:capitalization & case
     #@+node:ekr.20050920084036.132:comment column...
     #@+node:ekr.20050920084036.133:setCommentColumn
     def setCommentColumn (self,event):
@@ -1856,7 +1863,7 @@ class editCommandsClass (baseEditCommandsClass):
         self.moveWordHelper(event,forward=False)
     
     def forwardWord (self,event):
-        self.moveWordHelper(event,forward=True),
+        self.moveWordHelper(event,forward=True)
     #@nonl
     #@-node:ekr.20050920084036.149:back/forwardWord & helper
     #@+node:ekr.20050920084036.131:backSentence
