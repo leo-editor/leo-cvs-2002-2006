@@ -5,8 +5,14 @@
 #@+all
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
+
+- Support @button @name=button-name @key=shortcut
+
+- Make sure k.registerCommand can be called plugins.
+
+- Make the tabbed log always available.  Is it already?
 #@nonl
-#@+node:ekr.20051014122218:From the xemacs tutorial
+#@+node:ekr.20051014122218:kill/yank from the xemacs tutorial
 <Delete>     delete the character just before the cursor
 C-d   	     delete the next character after the cursor
 
@@ -27,7 +33,7 @@ lines and their newlines; typing C-k twice would not do that.
 The set-mark-command command sets the mark to the point.
 Bound to Alt-@, Ctrl--, Ctrl-space
 #@nonl
-#@-node:ekr.20051014122218:From the xemacs tutorial
+#@-node:ekr.20051014122218:kill/yank from the xemacs tutorial
 #@+node:ekr.20051012053017.2:Schedule
 1. 1 day: completion window
     - Integrate TabbedLog plugin.
@@ -56,16 +62,12 @@ next-line           = (body) DnArrow
 
 - (urgent) Improve handling of the mark.  The selection should be visible.
 
-- Create bindings for @buttons:
-
-    @button @name=button-name @key=shortcut
-
 - Config should warn if a setting appears twice in the same @shortcuts node.
    (Later, we can have a list of settings, but it would still be wrong.)
 
 - Replace focus commands in leoEditCommands.py with k.forceFocusToBody.
 
-- Make sure k.registerCommand can be called plugins.
+
 
 * The colerer is calling c.config too much?
 #@nonl
