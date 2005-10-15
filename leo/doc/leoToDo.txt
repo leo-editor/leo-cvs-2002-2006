@@ -6,17 +6,10 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- k.registerCommand
-
-- Upload latest Plugins Manager.
-
-** Remove all pychecker warnings.
-
-** (urgent) improve emacs-search commands
-
 Docs:
     Convert posting to docs.
     List of all incompletions.
+        - the inputMode classes in leoKey.py are completely unused.
         * (urgent) unit tests.
         Not all commands have been tested!
         * List of defective commands.
@@ -29,8 +22,6 @@ Docs:
     in any other way. Therefore, if you do hide the minibuffer initially, and
     never want to use it, you should not bind shortcuts to any commands that use
     the minibuffer.
-
-* The colerer is calling c.config too much.
 #@nonl
 #@+node:ekr.20051014122218:From the xemacs tutorial
 <Delete>     delete the character just before the cursor
@@ -73,6 +64,8 @@ Others
 #@nonl
 #@-node:ekr.20051012053017.2:Schedule
 #@+node:ekr.20051012062458.1:Before 4.4a2
+- (urgent) improve emacs-search commands
+
 - (urgent) Allow per-pane settings:
 
 goto-next-visible   = (outline) DnArrow
@@ -88,6 +81,10 @@ next-line           = (body) DnArrow
    (Later, we can have a list of settings, but it would still be wrong.)
 
 - Replace focus commands in leoEditCommands.py with k.forceFocusToBody.
+
+- Make sure k.registerCommand can be called plugins.
+
+* The colerer is calling c.config too much?
 #@nonl
 #@+node:ekr.20051014104337.1:Crash in undo
 exception executing command

@@ -100,7 +100,7 @@
 <v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
 <v t="EKR.20040519080201.1"><vh>Distribution checklist</vh></v>
-<v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
+<v t="ekr.20040629175400" a="E"><vh>Pychecker stuff</vh>
 <v t="ekr.20050910192724"><vh>Pychecker warnings</vh></v>
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="ekr.20050430095952"><vh>Pychecker statements</vh></v>
@@ -111,8 +111,8 @@
 <v t="ekr.20050212143754.4"><vh>_checkModuleAttribute (modified)</vh></v>
 </v>
 </v>
-<v t="ekr.20040629173419.1" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file .pycheckrc</vh>
-<v t="ekr.20040701193853"><vh>blacklist</vh></v>
+<v t="ekr.20040629173419.1" a="E" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file .pycheckrc</vh>
+<v t="ekr.20040701193853" a="TV"><vh>blacklist</vh></v>
 <v t="ekr.20040701193853.1"><vh>defaults</vh></v>
 <v t="ekr.20040701193853.2"><vh>max...</vh></v>
 <v t="ekr.20040701193853.3"><vh>suppressions</vh></v>
@@ -195,7 +195,7 @@ expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050118113631" a="TV"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -3017,7 +3017,8 @@ no-varlist=
 no-version</t>
 <t tx="ekr.20040701193853"># list of strings: ignore warnings generated from these modules
 blacklist = [
-	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK',\
+	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK',
+    'mod_http',
 ]
 </t>
 <t tx="ekr.20040701193853.1"># bool: warnings for Doc Strings
@@ -3174,8 +3175,8 @@ suppressionRegexs = {}</t>
 <t tx="ekr.20040701193853.4"># Ignore unused locals/arguments if name is one of the following:
 
 unusedNames = [
-	'_', 'empty', 'unused', 'dummy', 'event', 'commander',
-	'c', 'i', 'j', 'k', 's',
+	'_', 'empty', 'junk','unused', 'dummy', 'event', 'commander',
+	'c', 'i', 'j', 'k', 's', 'z',
 	'tag', 'args', 'keys', 'keywords',
 ]
 </t>

@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="19412" clone_windows="0"/>
 <globals body_outline_ratio="0.464772727273">
-	<global_window_position top="62" left="351" height="823" width="890"/>
+	<global_window_position top="62" left="351" height="804" width="890"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -43,8 +43,8 @@
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
 <v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20051011141302" a="E"><vh>4.4 alpha 1</vh>
-<v t="ekr.20051014104108" a="MTV"><vh> To do</vh></v>
+<v t="ekr.20051011141302" a="TV"><vh>4.4 alpha 1</vh>
+<v t="ekr.20051014104108" a="M"><vh> To do</vh></v>
 <v t="ekr.20051011141302.1"><vh>Known bugs</vh></v>
 <v t="ekr.20051014105514.37" a="M"><vh>The major new feature: an emacs-style minibuffer and related commands</vh>
 <v t="ekr.20051014105514.136"><vh>Added useMiniBuffer and useEditorMenu @settings</vh></v>
@@ -21975,7 +21975,10 @@ if all_ws:
 
 - Many code-level simplifications.  The LeoPy.leo for the full details.
 
-- Keyboard shortcuts now come primarily from the @shortcuts node in leoSettings.leo, not from hard-coded tables in the code.</t>
+- Keyboard shortcuts now come primarily from the @shortcuts node in leoSettings.leo, not from hard-coded tables in the code.
+
+- k.registerCommand can now be called from scripts to register new alt-x commands.
+  It probably won't work from plugins yet.  This will happen in 4.4a2.</t>
 <t tx="ekr.20051014105514.136"></t>
 <t tx="ekr.20051014105514.151">Added big kludge to menu.createMenuEntries so that f.OnCut/Copy/PasteFromMenu get called
 **only** when explicitly selected from the menu (rather than from a shortcut).
