@@ -1027,7 +1027,7 @@ class keyHandlerClass:
             done = c.macroCommands.startKbdMacro(event)
             if done: return 'break'
             
-        g.trace(stroke,k.abortAllModesKey)
+        # g.trace(stroke,k.abortAllModesKey)
     
         if stroke == k.abortAllModesKey: # 'Control-g'
             k.previousStroke = stroke
