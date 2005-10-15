@@ -1310,6 +1310,9 @@ class keyHandlerClass:
         if commandName:
             c.frame.body.onBodyWillChange(p,undoType=commandName,oldSel=None,oldYview=None)
             if not k.inState():
+                __pychecker__ = '--no-classattr --no-objattrs'
+                    # leoEditCommands.initAllEditCommanders *does* exist.
+        
                 # g.trace('commandName:',commandName,'caller:',tag)
                 k.commandName = None
                 leoEditCommands.initAllEditCommanders(c)
@@ -1660,6 +1663,8 @@ class keyHandlerClass:
     #@+node:ekr.20050920085536.75:executeNTimes
     def executeNTimes (self,event,n):
         
+        __pychecker__ = '--no-local' # z is used just for a repeat count.
+        
         k = self ; stroke = k.stroke ; w = event.widget
         g.trace('stroke',stroke,'keycode',event.keycode,'n',n)
     
@@ -1767,6 +1772,36 @@ class keyHandlerClass:
         k.resetLabel()
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
+    #@+node:ekr.20051015110547:registerCommand
+    def registerCommand (self,commandName,shortcut,func):
+        
+        '''Make the function available as a minibuffer command,
+        and optionally attempt to bind a shortcut.
+        
+        You can wrap any method in a callback function, so the
+        restriction to functions is not significant.'''
+        
+        k = self ; c = k.c
+        
+        f = c.commandsDict.get(commandName)
+        if f:
+            g.es_trace('Redefining %s' % (commandName), color='red')
+            
+        c.commandsDict [commandName] = func
+        
+        if shortcut:
+            # Retain the original spelling of the shortcut for the message.
+            shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+            ok = k.bindShortcut (shortcut2,commandName,func,
+                openWith=False,fromMenu=False)
+                
+        if shortcut and ok:
+            g.es_print('Registered %s bound to %s' % (
+                commandName,shortcut),color='blue')
+        else:
+            g.es_print('Registered %s' % (commandName), color='blue')
+    #@nonl
+    #@-node:ekr.20051015110547:registerCommand
     #@-node:ekr.20051006065121:Externally visible helpers
     #@+node:ekr.20050924064254:Label...
     #@+at 
