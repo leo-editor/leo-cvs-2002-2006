@@ -20247,7 +20247,7 @@ def makeSpecialBindings (self):
 		# These defaults may be overridden.
         ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
         ('Atl-x',   'fullCommandKey',  'full-command',  k.fullCommand),
-        ('Ctrl-u',  'universalArgKey', 'universal-arg', k.universalArgument),
+        ('Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
         ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
     ):
         
@@ -20265,8 +20265,9 @@ def makeSpecialBindings (self):
         # g.trace(stroke,accel,shortcut,func.__name__)
         
         # keyCallback will return stroke *regardless* of the actual binding.
-        setattr(k,ivar,stroke) 
-        k.bindKey(w,shortcut,keyCallback,func.__name__,tag=tag)
+        setattr(k,ivar,stroke)
+        # Set fromMenu = True: this *can* be overridden.
+        k.bindKey(w,shortcut,keyCallback,func.__name__,fromMenu=True,tag=tag)
         
     # Add a binding for <Key> events, so all key events go through masterCommand.
     def allKeysCallback (event):
@@ -20752,43 +20753,6 @@ def updateLabel (self,event,suppressControlChars=True):
 #@nonl
 #@-node:ekr.20050920085536.38:updateLabel
 #@-node:ekr.20051014161914:(Don't put unknown control characters into the mini-buffer)
-#@+node:ekr.20051014170754:k.help
-def help (self,event):
-    
-    k = self ;
-    commands = (
-        k.fullCommand,
-        k.quickCommand,
-        k.universalArgument,
-        k.keyboardQuit,
-        # negative-argument
-        # repeat-complex-command
-    )
-    shortcuts = [
-        k.getShortcutForCommand(command)
-        for command in commands]
-
-    s = '''
-The mini-buffer is intended to be like the Emacs buffer:
-
-%s: Just like Emacs Alt-x: starts minibuffer. The prompt is 'full-command' Type a
-full command name, then hit <Return> to execute the command. Tab completion
-works, but not for file names.
-
-%s: Like Emacs Control-C: (Ctrl-C conflicts with XP cut). starts minibuffer.
-The prompt is 'quick-command'. This mode is not completed, but stuff like
-`Ctrl-C r` and `Ctrl r r` do work.
-
-%s: Like Emacs Ctrl-u: (Ctrl-u conflicts with move-outline-up). Add a repeat
-count for later command. Ctrl-u 999 a adds 999 a's, but many features remain
-unfinished.
-
-%s: Just like Emacs Ctrl-g: Closes the mini-buffer.
-''' % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
-
-    g.es_print(s)
-
-#@-node:ekr.20051014170754:k.help
 #@-node:ekr.20051006122237:(Recent)
 #@+node:ekr.20051012084345:Bugs fixed
 #@+node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
@@ -22221,7 +22185,7 @@ def makeSpecialBindings (self):
 		# These defaults may be overridden.
         ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
         ('Atl-x',   'fullCommandKey',  'full-command',  k.fullCommand),
-        ('Ctrl-u',  'universalArgKey', 'universal-arg', k.universalArgument),
+        ('Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
         ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
     ):
         
@@ -22239,8 +22203,9 @@ def makeSpecialBindings (self):
         # g.trace(stroke,accel,shortcut,func.__name__)
         
         # keyCallback will return stroke *regardless* of the actual binding.
-        setattr(k,ivar,stroke) 
-        k.bindKey(w,shortcut,keyCallback,func.__name__,tag=tag)
+        setattr(k,ivar,stroke)
+        # Set fromMenu = True: this *can* be overridden.
+        k.bindKey(w,shortcut,keyCallback,func.__name__,fromMenu=True,tag=tag)
         
     # Add a binding for <Key> events, so all key events go through masterCommand.
     def allKeysCallback (event):
@@ -22781,6 +22746,273 @@ if not menu_shortcut:
 #@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
 #@-node:ekr.20051014034200:(Fixed problems when special keys are not defined
 #@-node:ekr.20051012084345:Bugs fixed
+#@+node:ekr.20051014180059:(Help command)
+#@+node:ekr.20051014170754:k.help
+def help (self,event):
+    
+    k = self ; c = k.c
+    commands = (
+        k.fullCommand,
+        k.quickCommand,
+        k.universalArgument,
+        k.keyboardQuit,
+        # negative-argument
+        # repeat-complex-command
+    )
+    shortcuts = [
+        k.getShortcutForCommand(command)
+        for command in commands]
+
+    # A bug in Leo: triple quotes puts indentation before each line.
+    s = '''
+The mini-buffer is intended to be like the Emacs buffer:
+
+%s: Just like Emacs Alt-x: starts minibuffer. The prompt is 'full-command' Type a
+full command name, then hit <Return> to execute the command. Tab completion
+works, but not for file names.
+
+%s: Like Emacs Control-C: (Ctrl-C conflicts with XP cut). starts minibuffer.
+The prompt is 'quick-command'. This mode is not completed, but stuff like
+`Ctrl-C r` and `Ctrl r r` do work.
+
+%s: Like Emacs Ctrl-u: (Ctrl-u conflicts with move-outline-up). Add a repeat
+count for later command. Ctrl-u 999 a adds 999 a's, but many features remain
+unfinished.
+
+%s: Just like Emacs Ctrl-g: Closes the mini-buffer.
+'''
+
+    s = g.adjustTripleString(s,c.tab_width)
+        # Remove indentation from indentation of this function.
+    s = s % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
+    g.es_print(s)
+#@nonl
+#@-node:ekr.20051014170754:k.help
+#@+node:ekr.20031218072017.3197:Whitespace...
+#@+node:ekr.20051014175117:g.adjustTripleString (same as removeExtraLws)
+def adjustTripleString (s,tab_width):
+    
+    '''Remove leading indentation from a triple-quoted string.
+    
+    This works around the fact that Leo nodes can't represent underindented strings.
+    '''
+    
+    # Compute the minimum leading whitespace of all non-blank lines.
+    lines = g.splitLines(s)
+    w = -1
+    for s in lines:
+       if s.strip():
+            lws = g.get_leading_ws(s)
+            w2 = g.computeWidth(lws,tab_width)
+            if w < 0: w = w2
+            else:     w = min(w,w2)
+            # g.trace('w',w)
+    if w <= 0: return s
+
+    # Remove the leading whitespace.
+    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
+    result = ''.join(result)
+
+    return result
+#@nonl
+#@-node:ekr.20051014175117:g.adjustTripleString (same as removeExtraLws)
+#@+node:ekr.20031218072017.3198:computeLeadingWhitespace
+# Returns optimized whitespace corresponding to width with the indicated tab_width.
+
+def computeLeadingWhitespace (width, tab_width):
+
+    if width <= 0:
+        return ""
+    if tab_width > 1:
+        tabs   = width / tab_width
+        blanks = width % tab_width
+        return ('\t' * tabs) + (' ' * blanks)
+    else: # 7/3/02: negative tab width always gets converted to blanks.
+        return (' ' * width)
+#@nonl
+#@-node:ekr.20031218072017.3198:computeLeadingWhitespace
+#@+node:ekr.20031218072017.3199:computeWidth
+# Returns the width of s, assuming s starts a line, with indicated tab_width.
+
+def computeWidth (s, tab_width):
+        
+    w = 0
+    for ch in s:
+        if ch == '\t':
+            w += (abs(tab_width) - (w % abs(tab_width)))
+        else:
+            w += 1
+    return w
+#@nonl
+#@-node:ekr.20031218072017.3199:computeWidth
+#@+node:ekr.20031218072017.3200:get_leading_ws
+def get_leading_ws(s):
+    
+    """Returns the leading whitespace of 's'."""
+
+    i = 0 ; n = len(s)
+    while i < n and s[i] in (' ','\t'):
+        i += 1
+    return s[0:i]
+#@-node:ekr.20031218072017.3200:get_leading_ws
+#@+node:ekr.20031218072017.3201:optimizeLeadingWhitespace
+# Optimize leading whitespace in s with the given tab_width.
+
+def optimizeLeadingWhitespace (line,tab_width):
+
+    i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+    s = g.computeLeadingWhitespace(width,tab_width) + line[i:]
+    return s
+#@nonl
+#@-node:ekr.20031218072017.3201:optimizeLeadingWhitespace
+#@+node:ekr.20040723093558:regularizeTrailingNewlines
+@
+
+The caller should call g.stripBlankLines before calling this routine if desired.
+
+This routine does _not_ simply call rstrip(): that would delete all trailing whitespace-only lines, and in some cases that would change the meaning of program or data.
+
+@c
+
+def regularizeTrailingNewlines(s,kind):
+    
+    """Kind is 'asis', 'zero' or 'one'."""
+    
+    pass
+#@nonl
+#@-node:ekr.20040723093558:regularizeTrailingNewlines
+#@+node:ekr.20031218072017.3202:removeLeadingWhitespace
+# Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
+
+def removeLeadingWhitespace (s,first_ws,tab_width):
+
+    j = 0 ; ws = 0
+    for ch in s:
+        if ws >= first_ws:
+            break
+        elif ch == ' ':
+            j += 1 ; ws += 1
+        elif ch == '\t':
+            j += 1 ; ws += (abs(tab_width) - (ws % abs(tab_width)))
+        else: break
+    if j > 0:
+        s = s[j:]
+    return s
+#@nonl
+#@-node:ekr.20031218072017.3202:removeLeadingWhitespace
+#@+node:ekr.20050211120242.2:g.removeExtraLws & tests
+def removeExtraLws (s,tab_width):
+    
+    '''Remove extra indentation from one or more lines.
+    
+    Warning: used by getScript.  This is *not* the same as g.adjustTripleString.'''
+    
+    lines = g.splitLines(s)
+
+    # Find the first non-blank line and compute w, the width of its leading whitespace.
+    for s in lines:
+       if s.strip():
+            lws = g.get_leading_ws(s)
+            w = g.computeWidth(lws,tab_width)
+            # g.trace('w',w)
+            break
+    else: return s
+    
+    # Remove the leading whitespace.
+    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
+    result = ''.join(result)
+    
+    if 0:
+        g.trace('lines...')
+        for line in g.splitLines(result):
+            print repr(line)
+
+    return result
+#@nonl
+#@+node:ekr.20050211120837:test_g_removeExtraLws
+def test_g_removeExtraLws():
+    
+    for s,expected in (
+        (' a\n b\n c', 'a\nb\nc'),
+        (' \n  A\n    B\n  C\n', '\nA\n  B\nC\n'),
+    ):
+        result = g.removeExtraLws(s,c.tab_width)
+        assert result == expected, '\ns: %s\nexpected: %s\nresult:   %s' % (
+            repr(s),repr(expected),repr(result))
+#@nonl
+#@-node:ekr.20050211120837:test_g_removeExtraLws
+#@-node:ekr.20050211120242.2:g.removeExtraLws & tests
+#@+node:ekr.20031218072017.3203:removeTrailingWs
+# Warning: string.rstrip also removes newlines!
+
+def removeTrailingWs(s):
+
+    j = len(s)-1
+    while j >= 0 and (s[j] == ' ' or s[j] == '\t'):
+        j -= 1
+    return s[:j+1]
+#@-node:ekr.20031218072017.3203:removeTrailingWs
+#@+node:ekr.20031218072017.3204:skip_leading_ws
+# Skips leading up to width leading whitespace.
+
+def skip_leading_ws(s,i,ws,tab_width):
+
+    count = 0
+    while count < ws and i < len(s):
+        ch = s[i]
+        if ch == ' ':
+            count += 1
+            i += 1
+        elif ch == '\t':
+            count += (abs(tab_width) - (count % abs(tab_width)))
+            i += 1
+        else: break
+
+    return i
+#@nonl
+#@-node:ekr.20031218072017.3204:skip_leading_ws
+#@+node:ekr.20031218072017.3205:skip_leading_ws_with_indent
+def skip_leading_ws_with_indent(s,i,tab_width):
+
+    """Skips leading whitespace and returns (i, indent), 
+    
+    - i points after the whitespace
+    - indent is the width of the whitespace, assuming tab_width wide tabs."""
+
+    count = 0 ; n = len(s)
+    while i < n:
+        ch = s[i]
+        if ch == ' ':
+            count += 1
+            i += 1
+        elif ch == '\t':
+            count += (abs(tab_width) - (count % abs(tab_width)))
+            i += 1
+        else: break
+
+    return i, count
+#@nonl
+#@-node:ekr.20031218072017.3205:skip_leading_ws_with_indent
+#@+node:ekr.20040723093558.1:stripBlankLines
+def stripBlankLines(s):
+    
+    lines = g.splitLines(s)
+
+    for i in xrange(len(lines)):
+
+        line = lines[i]
+        j = g.skip_ws(line,0)
+        if j >= len(line):
+            lines[i] = ''
+            # g.trace("%4d %s" % (i,repr(lines[i])))
+        elif line[j] == '\n':
+            lines[i] = '\n'
+            # g.trace("%4d %s" % (i,repr(lines[i])))
+            
+    return ''.join(lines)
+#@-node:ekr.20040723093558.1:stripBlankLines
+#@-node:ekr.20031218072017.3197:Whitespace...
+#@-node:ekr.20051014180059:(Help command)
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl
