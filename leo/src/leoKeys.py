@@ -925,7 +925,7 @@ class keyHandlerClass:
     		# These defaults may be overridden.
             ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
             ('Atl-x',   'fullCommandKey',  'full-command',  k.fullCommand),
-            ('Ctrl-u',  'universalArgKey', 'universal-arg', k.universalArgument),
+            ('Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
             ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
         ):
             
@@ -943,8 +943,9 @@ class keyHandlerClass:
             # g.trace(stroke,accel,shortcut,func.__name__)
             
             # keyCallback will return stroke *regardless* of the actual binding.
-            setattr(k,ivar,stroke) 
-            k.bindKey(w,shortcut,keyCallback,func.__name__,tag=tag)
+            setattr(k,ivar,stroke)
+            # Set fromMenu = True: this *can* be overridden.
+            k.bindKey(w,shortcut,keyCallback,func.__name__,fromMenu=True,tag=tag)
             
         # Add a binding for <Key> events, so all key events go through masterCommand.
         def allKeysCallback (event):
@@ -1347,7 +1348,7 @@ class keyHandlerClass:
     #@+node:ekr.20051014170754:k.help
     def help (self,event):
         
-        k = self ;
+        k = self ; c = k.c
         commands = (
             k.fullCommand,
             k.quickCommand,
@@ -1360,6 +1361,7 @@ class keyHandlerClass:
             k.getShortcutForCommand(command)
             for command in commands]
     
+        # A bug in Leo: triple quotes puts indentation before each line.
         s = '''
     The mini-buffer is intended to be like the Emacs buffer:
     
@@ -1376,10 +1378,13 @@ class keyHandlerClass:
     unfinished.
     
     %s: Just like Emacs Ctrl-g: Closes the mini-buffer.
-    ''' % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
+    '''
     
+        s = g.adjustTripleString(s,c.tab_width)
+            # Remove indentation from indentation of this function.
+        s = s % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
         g.es_print(s)
-    
+    #@nonl
     #@-node:ekr.20051014170754:k.help
     #@+node:ekr.20050920085536.68:negativeArgument (redo?)
     def negativeArgument (self,event):
