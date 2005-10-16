@@ -7,7 +7,7 @@ A plugin for searching unknownAttributes (uA's).
 #@@language python
 #@@tabwidth -4
 
-__version__ = ".3"
+__version__ = ".4"
 #@<< version history >>
 #@+node:ekr.20040915075530.1:<< version history >>
 #@+at
@@ -17,12 +17,14 @@ __version__ = ".3"
 # 0.2 EKR:
 #     - Style changes.
 #     - Converted to outline.
-#     - Enable this plugin only if TabbedLog, Tkand Pmw can be imported.
+#     - Enable this plugin only if Tk and Pmw can be imported.
 #     - Added found function to handle selecting found nodes properly.
 # 0.3 EKR:
 #     - Changed 'new_c' logic to 'c' logic.
 #     - Added init function.
 #     - Removed 'start2' hook and haveseen dict.
+# 0.4 EKR:
+#     - use c.frame.log.select.selectTab instead of TabbedLog plugin.
 #@-at
 #@nonl
 #@-node:ekr.20040915075530.1:<< version history >>
@@ -35,7 +37,6 @@ import leoTkinterFrame
 
 Tk        = g.importExtension('Tkinter',  pluginName=__name__,verbose=True)
 Pmw       = g.importExtension("Pmw",      pluginName=__name__,verbose=True)
-TabbedLog = g.importExtension("TabbedLog",pluginName=__name__,verbose=True)
 
 import re
 import weakref
@@ -47,7 +48,7 @@ import weakref
 #@+node:ekr.20050311090939.6:init
 def init ():
     
-    ok = TabbedLog and Tk # Ok for unit tests: adds menu.
+    ok = Tk is not None # Ok for unit tests: adds menu.
     
     if ok:
         leoPlugins.registerHandler(('new','open2'),addPMenu)
@@ -57,32 +58,35 @@ def init ():
 #@nonl
 #@-node:ekr.20050311090939.6:init
 #@+node:ekr.20040915075530.3:addPMenu
-def addPMenu( tag, keywords ):
+def addPMenu (tag,keywords):
     c = keywords.get('c')
-    if not c: return  
+    if not c: return
 
-    x = TabbedLog.getPane( "UASearch", c )
-    ef = Pmw.EntryField( x, labelpos = 'w', label_text = 'uaname:' )
-    e = ef.component( 'entry' )
-    e.configure( background = 'white', foreground = 'blue' )
+    # New in Leo 4.4: the log is always tabbed.
+    if 1: x = c.frame.log.selectTab("UASearch")
+    else: x = TabbedLog.getPane("UASearch",c)
+
+    ef = Pmw.EntryField(x,labelpos='w',label_text='uaname:')
+    e = ef.component('entry')
+    e.configure(background='white',foreground='blue')
     ef.pack()
-    ev = Pmw.EntryField( x, labelpos = 'w', label_text = 'uavalue:' )
-    e = ev.component( 'entry' )
-    e.configure( background = 'white', foreground = 'blue' )
+    ev = Pmw.EntryField(x,labelpos='w',label_text='uavalue:')
+    e = ev.component('entry')
+    e.configure(background='white',foreground='blue')
     ev.pack()
-    rs = Pmw.RadioSelect( x, labelpos = 'n' ,
+    rs = Pmw.RadioSelect(x,labelpos='n',
         label_text = 'Search by:',
         frame_borderwidth = 2,
         frame_relief = 'ridge',
         buttontype = 'radiobutton')
-    rs.add( "uaname" )
-    rs.add( "uavalue" )
-    rs.add( "regex" )
+    rs.add("uaname")
+    rs.add("uavalue")
+    rs.add("regex")
     rs.pack()
-    rs.setvalue( "uaname")
-    b = Tk.Button( x, text = "Search" )
+    rs.setvalue("uaname")
+    b = Tk.Button(x,text="Search")
     b.pack()
-    l = Tk.Label( x )
+    l = Tk.Label(x)
     l.pack()
     #@    << define callbacks >>
     #@+node:ekr.20040915075808:<< define callbacks >>
@@ -97,7 +101,7 @@ def addPMenu( tag, keywords ):
     #@nonl
     #@-node:ekr.20040915075808:<< define callbacks >>
     #@nl
-    b.bind( '<Button-1>', firesearch )
+    b.bind('<Button-1>',firesearch)
 #@-node:ekr.20040915075530.3:addPMenu
 #@+node:ekr.20040915081837:found
 def found (porv,name):

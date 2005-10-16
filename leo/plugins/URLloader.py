@@ -1,14 +1,12 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040831115238:@thin URLloader.py
 """This plugin uses Python's urllib module to download files and import them into Leo.
-
-It requires the TabbedLog plugin.
 """
 
 #@@language python
 #@@tabwidth -4
 
-__version__ = ".4"
+__version__ = ".5"
 #@<< Change log >>
 #@+node:ekr.20040831115918:<< Change log >>
 #@+at
@@ -20,6 +18,8 @@ __version__ = ".4"
 #     - Added init function.
 # .4 EKR:
 #     - Removed 'start2' hook and haveseen dict.
+# .5 EKR:
+#     - use c.frame.log.select.selectTab instead of TabbedLog plugin.
 #@-at
 #@nonl
 #@-node:ekr.20040831115918:<< Change log >>
@@ -29,9 +29,8 @@ __version__ = ".4"
 import leoGlobals as g
 import leoPlugins
 
-Tk        = g.importExtension('Tkinter',  pluginName=__name__,verbose=True)
-Pmw       = g.importExtension("Pmw",      pluginName=__name__,verbose=True)
-TabbedLog = g.importExtension("TabbedLog",pluginName=__name__,verbose=True)
+Tk  = g.importExtension('Tkinter',  pluginName=__name__,verbose=True)
+Pmw = g.importExtension("Pmw",      pluginName=__name__,verbose=True)
 
 import os
 import urllib
@@ -44,7 +43,7 @@ import weakref
 #@+node:ekr.20050311090939.7:init
 def init ():
     
-    ok = Tk and Pmw and TabbedLog # Ok for unit test: adds tabbed pane to log.
+    ok = Tk and Pmw # Ok for unit test: adds tabbed pane to log.
     
     if ok:
         leoPlugins.registerHandler(('new','open2'), addURLPane)
@@ -54,19 +53,22 @@ def init ():
 #@nonl
 #@-node:ekr.20050311090939.7:init
 #@+node:ekr.20040831115238.1:addURLPane
-def addURLPane( tag, keywords ):
+def addURLPane (tag,keywords):
 
     c = keywords.get('c')
     if not c: return
 
-    x = TabbedLog.getPane( "URLLoad", c )
-    ef = Pmw.EntryField( x, labelpos = 'n', label_text = 'URL:' )
-    e = ef.component( 'entry' )
-    e.configure( background = 'white', foreground = 'blue' )
-    ef.pack( expand = 1, fill = 'x' )
-    b = Tk.Button( x, text = 'Load' )
+    # New in Leo 4.4: the log is always tabbed.
+    if 1: x = c.frame.log.selectTab('URLLoad')
+    else: x = TabbedLog.getPane("URLLoad",c)
+
+    ef = Pmw.EntryField(x,labelpos='n',label_text='URL:')
+    e = ef.component('entry')
+    e.configure(background='white',foreground='blue')
+    ef.pack(expand=1,fill='x')
+    b = Tk.Button(x,text='Load')
     b.pack()
-    b.bind( '<Button-1>', lambda event , entry = e , c = c: load( event, entry, c ) )
+    b.bind('<Button-1>',lambda event,entry=e,c=c: load(event,entry,c))
 #@nonl
 #@-node:ekr.20040831115238.1:addURLPane
 #@+node:ekr.20040831115238.2:load
