@@ -45,9 +45,6 @@ rst3.py
 # zodb.py
 plugin_manager.py
 
-# Several plugins depend on TabbedLog.
-# TabbedLog.py
-
 # Icon area: order is important.
 mod_scripting.py
 #hoist.py
