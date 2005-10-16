@@ -3412,19 +3412,73 @@ class leoTkinterLog (leoFrame.leoLog):
     """A class that represents the log pane of a Tkinter window."""
 
     #@    @+others
+    #@+node:ekr.20051016095907:tkLog Birth
     #@+node:ekr.20031218072017.4040:tkLog.__init__
     def __init__ (self,frame,parentFrame):
         
         # g.trace("leoTkinterLog")
         
-        # Call the base class constructor.
+        self.c = c = frame.c # Also set in the base constructor, but we need it here.
+        
+        self.colorTags = []
+            # The list of color names used as tags in present tab.
+            # This gest switched by selectTab.
+    
+        self.wrap = g.choose(c.config.getBool('log_pane_wraps'),"word","none")
+        
+        # New in 4.4a2: The log pane is a Pmw.Notebook...
+    
+        self.nb = None      # The Pmw.Notebook that holds all the tabs.
+        self.colorTagsDict = {} # Keys are page names.  Values are saved colorTags lists.
+        self.frameDict = {}  # Keys are page names. Values are Tk.Frames.
+        self.textDict = {}  # Keys are page names. Values are Tk.Text widgets.
+        
+        # Official status variables.  Can be used by client code.
+        self.tabName = None # The name of the active tab.
+        self.logCtrl = None # Same as self.textDict.get(self.tabName)
+        self.tabFrame = None # Same as self.frameDict.get(self.tabName)
+        
+        # Call the base class constructor and calls createControl.
         leoFrame.leoLog.__init__(self,frame,parentFrame)
-        
-        self.colorTags = [] # list of color names used as tags in log window.
-        
-        self.logCtrl.bind("<Button-1>", self.onActivateLog)
-    #@nonl
     #@-node:ekr.20031218072017.4040:tkLog.__init__
+    #@+node:ekr.20031218072017.4042:tkLog.createControl
+    def createControl (self,parentFrame):
+        
+        c = self.c
+        
+        self.nb = Pmw.NoteBook(parentFrame,borderwidth=1,pagemargin=0)
+        self.nb.pack(fill='both',expand=1)
+        self.selectTab('Log') # create the tab and make it the active tab.
+        return self.logCtrl
+        
+    #@nonl
+    #@-node:ekr.20031218072017.4042:tkLog.createControl
+    #@+node:ekr.20051016103459:tkLog.createTextWidget
+    def createTextWidget (self,parentFrame):
+        
+        log = Tk.Text(parentFrame,name="log",
+            setgrid=0,wrap=self.wrap,bd=2,bg="white",relief="flat")
+        
+        logBar = Tk.Scrollbar(parentFrame,name="logBar")
+    
+        log['yscrollcommand'] = logBar.set
+        logBar['command'] = log.yview
+        
+        logBar.pack(side="right", fill="y")
+        # rr 8/14/02 added horizontal elevator 
+        if self.wrap == "none": 
+            logXBar = Tk.Scrollbar( 
+                parentFrame,name='logXBar',orient="horizontal") 
+            log['xscrollcommand'] = logXBar.set 
+            logXBar['command'] = log.xview 
+            logXBar.pack(side="bottom", fill="x")
+        log.pack(expand=1, fill="both")
+    
+        return log
+    #@nonl
+    #@-node:ekr.20051016103459:tkLog.createTextWidget
+    #@-node:ekr.20051016095907:tkLog Birth
+    #@+node:ekr.20051016095907.1:Config & get/saveState
     #@+node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
     def configureBorder(self,border):
         
@@ -3435,35 +3489,6 @@ class leoTkinterLog (leoFrame.leoLog):
         self.logCtrl.configure(font=font)
     #@nonl
     #@-node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
-    #@+node:ekr.20031218072017.4042:tkLog.createControl
-    def createControl (self,parentFrame):
-        
-        c = self.c
-        
-        wrap = c.config.getBool('log_pane_wraps')
-        wrap = g.choose(wrap,"word","none")
-    
-        log = Tk.Text(parentFrame,name="log",
-            setgrid=0,wrap=wrap,bd=2,bg="white",relief="flat")
-        
-        logBar = Tk.Scrollbar(parentFrame,name="logBar")
-    
-        log['yscrollcommand'] = logBar.set
-        logBar['command'] = log.yview
-        
-        logBar.pack(side="right", fill="y")
-        # rr 8/14/02 added horizontal elevator 
-        if wrap == "none": 
-            logXBar = Tk.Scrollbar( 
-                parentFrame,name='logXBar',orient="horizontal") 
-            log['xscrollcommand'] = logXBar.set 
-            logXBar['command'] = log.xview 
-            logXBar.pack(side="bottom", fill="x")
-        log.pack(expand=1, fill="both")
-    
-        return log
-    #@nonl
-    #@-node:ekr.20031218072017.4042:tkLog.createControl
     #@+node:ekr.20031218072017.4043:tkLog.getFontConfig
     def getFontConfig (self):
     
@@ -3472,112 +3497,6 @@ class leoTkinterLog (leoFrame.leoLog):
         return font
     #@nonl
     #@-node:ekr.20031218072017.4043:tkLog.getFontConfig
-    #@+node:ekr.20031218072017.4044:tkLog.hasFocus
-    def hasFocus (self):
-        
-        return g.app.gui.get_focus(self.frame) == self.logCtrl
-    #@nonl
-    #@-node:ekr.20031218072017.4044:tkLog.hasFocus
-    #@+node:ekr.20031218072017.4045:tkLog.onActivateLog
-    def onActivateLog (self,event=None):
-        
-        __pychecker__ = '--no-argsused' # event not used.
-    
-        try:
-            g.app.setLog(self,"OnActivateLog")
-            self.frame.tree.OnDeactivate()
-            self.frame.logWantsFocus(self.logCtrl,tag='onActivateLog')
-        except:
-            g.es_event_exception("activate log")
-    #@nonl
-    #@-node:ekr.20031218072017.4045:tkLog.onActivateLog
-    #@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
-    # All output to the log stream eventually comes here.
-    def put (self,s,color=None):
-        
-        # print 'tkLog.put',self.c.shortFileName(),s,
-    
-        if g.app.quitting: return
-        elif self.logCtrl:
-            #@        << put s to log control >>
-            #@+node:EKR.20040423082910:<< put s to log control >>
-            if 0:
-                # Do this later, or not at all.
-                # Doing this here messes up the display in the log pane.
-                if type(s) == type(u""):
-                    s = g.toEncodedString(s,g.app.TkEncoding)
-            
-            if color:
-                if color not in self.colorTags:
-                    self.colorTags.append(color)
-                    self.logCtrl.tag_config(color,foreground=color)
-                self.logCtrl.insert("end",s)
-                self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-                if "black" not in self.colorTags:
-                    self.colorTags.append("black")
-                    self.logCtrl.tag_config("black",foreground="black")
-                self.logCtrl.tag_add("black","end")
-            else:
-                self.logCtrl.insert("end",s)
-            
-            self.logCtrl.see("end")
-                
-            self.forceLogUpdate(s)
-            #@nonl
-            #@-node:EKR.20040423082910:<< put s to log control >>
-            #@nl
-        else:
-            #@        << put s to logWaiting and print s >>
-            #@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
-            g.app.logWaiting.append((s,color),)
-            
-            print "Null tkinter log"
-            
-            if type(s) == type(u""):
-                s = g.toEncodedString(s,"ascii")
-            
-            print s
-            #@nonl
-            #@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
-            #@nl
-    
-    def putnl (self):
-        if g.app.quitting: return
-        elif self.logCtrl:
-            #@        << put newline to log control >>
-            #@+node:EKR.20040423082910.2:<< put newline to log control >>
-            self.logCtrl.insert("end",'\n')
-            self.logCtrl.see("end")
-            self.forceLogUpdate('\n')
-            #@nonl
-            #@-node:EKR.20040423082910.2:<< put newline to log control >>
-            #@nl
-        else:
-            #@        << put newline to logWaiting and print newline >>
-            #@+node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
-            g.app.logWaiting.append(('\n',"black"),)
-            print "Null tkinter log"
-            print
-            #@nonl
-            #@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
-            #@nl
-    #@nonl
-    #@+node:ekr.20050208133438:forceLogUpdate
-    def forceLogUpdate (self,s):
-    
-        if sys.platform == "darwin": # Does not work on MacOS X.
-            try:
-                print s, # Don't add a newline.
-            except UnicodeError:
-                # g.app may not be inited during scripts!
-                print g.toEncodedString(s,'utf-8')
-        else:
-            self.frame.tree.disableRedraw = True
-            self.logCtrl.update_idletasks()
-            self.frame.tree.disableRedraw = False
-    #@nonl
-    #@-node:ekr.20050208133438:forceLogUpdate
-    #@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
     #@+node:ekr.20041222043017:tkLog.restoreAllState
     def restoreAllState (self,d):
         
@@ -3663,6 +3582,156 @@ class leoTkinterLog (leoFrame.leoLog):
             except: pass
     #@nonl
     #@-node:ekr.20031218072017.4046:tkLog.setFontFromConfig
+    #@-node:ekr.20051016095907.1:Config & get/saveState
+    #@+node:ekr.20051016095907.2:Focus & update
+    #@+node:ekr.20031218072017.4045:tkLog.onActivateLog
+    def onActivateLog (self,event=None):
+        
+        __pychecker__ = '--no-argsused' # event not used.
+    
+        try:
+            g.app.setLog(self,"OnActivateLog")
+            self.frame.tree.OnDeactivate()
+            self.frame.logWantsFocus(self.logCtrl,tag='onActivateLog')
+        except:
+            g.es_event_exception("activate log")
+    #@nonl
+    #@-node:ekr.20031218072017.4045:tkLog.onActivateLog
+    #@+node:ekr.20031218072017.4044:tkLog.hasFocus
+    def hasFocus (self):
+        
+        return g.app.gui.get_focus(self.frame) == self.logCtrl
+    #@nonl
+    #@-node:ekr.20031218072017.4044:tkLog.hasFocus
+    #@+node:ekr.20050208133438:forceLogUpdate
+    def forceLogUpdate (self,s):
+    
+        if sys.platform == "darwin": # Does not work on MacOS X.
+            try:
+                print s, # Don't add a newline.
+            except UnicodeError:
+                # g.app may not be inited during scripts!
+                print g.toEncodedString(s,'utf-8')
+        else:
+            self.frame.tree.disableRedraw = True
+            self.logCtrl.update_idletasks()
+            self.frame.tree.disableRedraw = False
+    #@nonl
+    #@-node:ekr.20050208133438:forceLogUpdate
+    #@-node:ekr.20051016095907.2:Focus & update
+    #@+node:ekr.20051016101724.1:tkLog.selectTab
+    def selectTab (self,tabName):
+    
+        '''Create the tab if necessary and make it the active tab to which all
+        output is sent.'''
+        
+        tabFrame = self.frameDict.get(tabName)
+        # g.trace(g.choose(tabName,'switching to','creating'),tabName)
+    
+        if tabFrame:
+            # Switch to a new colorTags list.
+            if 1: # We might be able to do without this...
+                newColorTags = self.colorTagsDict.get(tabName)
+                self.colorTagsDict [self.tabName] = self.colorTags [:]
+                self.colorTags = newColorTags
+        else:
+            tabFrame = self.nb.add(tabName)
+            textWidget = self.createTextWidget(tabFrame)
+            self.frameDict [tabName] = tabFrame
+            self.textDict [tabName] = textWidget
+            # Switch to a new colorTags list.
+            if self.tabName:
+                self.colorTagsDict [self.tabName] = self.colorTags [:]
+            self.colorTags = ['black']
+            self.colorTagsDict [tabName] = self.colorTags
+            # Init the configuration.
+            textWidget.bind("<Button-1>",self.onActivateLog)
+            textWidget.tag_config('black',foreground='black')
+            self.tabName = tabName
+            
+        # Select the page and pdate the status vars.
+        self.nb.selectpage(tabName)
+        self.tabName = tabName
+        self.logCtrl = self.textDict.get(tabName)
+        self.tabFrame = self.frameDict.get(tabName)
+    
+        return tabFrame
+    #@nonl
+    #@-node:ekr.20051016101724.1:tkLog.selectTab
+    #@+node:ekr.20051016101927:Printing
+    #@+at 
+    #@nonl
+    # Printing uses self.logCtrl, so this code need not concern itself
+    # with which tab is active.
+    # 
+    # Also, selectTab switches the contents of colorTags, so that is not 
+    # concern.
+    # It may be that Pmw will allow us to dispense with the colorTags logic...
+    #@-at
+    #@nonl
+    #@+node:ekr.20031218072017.1473:put
+    # All output to the log stream eventually comes here.
+    def put (self,s,color=None):
+        
+        # print 'tkLog.put',self.c.shortFileName(),s,
+    
+        if g.app.quitting: return
+        elif self.logCtrl:
+            #@        << put s to log control >>
+            #@+node:EKR.20040423082910:<< put s to log control >>
+            if 0:
+                # Doing this here messes up the display in the log pane.
+                if type(s) == type(u""):
+                    s = g.toEncodedString(s,g.app.TkEncoding)
+            
+            if color:
+                if color not in self.colorTags:
+                    self.colorTags.append(color)
+                    self.logCtrl.tag_config(color,foreground=color)
+                self.logCtrl.insert("end",s)
+                self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+                self.logCtrl.tag_add("black","end")
+            else:
+                self.logCtrl.insert("end",s)
+            
+            self.logCtrl.see("end")
+                
+            self.forceLogUpdate(s)
+            #@nonl
+            #@-node:EKR.20040423082910:<< put s to log control >>
+            #@nl
+        else:
+            #@        << put s to logWaiting and print s >>
+            #@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+            g.app.logWaiting.append((s,color),)
+            
+            print "Null tkinter log"
+            
+            if type(s) == type(u""):
+                s = g.toEncodedString(s,"ascii")
+            
+            print s
+            #@nonl
+            #@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+            #@nl
+    #@nonl
+    #@-node:ekr.20031218072017.1473:put
+    #@+node:ekr.20051016101927.1:putnl
+    def putnl (self):
+    
+        if g.app.quitting:
+            return
+        elif self.logCtrl:
+            self.logCtrl.insert("end",'\n')
+            self.logCtrl.see("end")
+            self.forceLogUpdate('\n')
+        else:
+            # Put a newline to logWaiting and print newline
+            g.app.logWaiting.append(('\n',"black"),)
+            print "Null tkinter log"
+            print
+    #@-node:ekr.20051016101927.1:putnl
+    #@-node:ekr.20051016101927:Printing
     #@-others
 #@nonl
 #@-node:ekr.20031218072017.4039:class leoTkinterLog
