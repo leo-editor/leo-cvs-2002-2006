@@ -9,14 +9,14 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20050315084904" a="E"><vh>Startup</vh>
+<v t="ekr.20050315084904"><vh>Startup</vh>
 <v t="ekr.20050315084904.1" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20050315084904.2"><vh>@recentfiles </vh></v>
 </v>
 <v t="ekr.20050315084922"><vh>@button check spelling...</vh></v>
 <v t="ekr.20051015172713"><vh>@button save</vh></v>
 </v>
-<v t="EKR.20040519091259"><vh>Annoucnements (don't split into lines)</vh>
+<v t="EKR.20040519091259" a="E"><vh>Annoucnements (don't split into lines)</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -24,7 +24,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20051015171839" a="E"><vh>ANN: Leo 4.4a1</vh></v>
+<v t="ekr.20051015171839" a="ETV"><vh>ANN: Leo 4.4a1</vh></v>
 <v t="ekr.20050919101619"><vh>ANN: Leo 4.3.3</vh></v>
 <v t="ekr.20050916073410"><vh>ANN: Leo 4.3.2-final</vh></v>
 <v t="ekr.20050905095110"><vh>ANN: Leo 4.3.2-b1</vh></v>
@@ -200,7 +200,7 @@ expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 <v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
-<v t="ekr.20050117032444" a="TV"><vh>@button Create Leo-4.x.zip</vh>
+<v t="ekr.20050117032444"><vh>@button Create Leo-4.x.zip</vh>
 <v t="ekr.20050118080857"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 <v t="ekr.20050118083936.1"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050118082301"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -4513,7 +4513,7 @@ commands. Emacs users will be able to choose key bindings compatible with their
 present finger habits. Eventually, Vim users will be able to do the same.
 
 The new code in Leo 4.4 is a complete rewrite of most of the temacs and
-usetemacs plugins. Those plugins have now been retired. Besides many code-level
+usetemacs plugins. Those plugins will soon be retired. Besides many code-level
 improvements, it is now possible to specify key bindings for all commands
 (including the new Emacs-style commands) using @shortcuts nodes in
 leoSettings.leo.

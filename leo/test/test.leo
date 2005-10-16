@@ -2,7 +2,7 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7663" clone_windows="0"/>
-<globals body_outline_ratio="0.755102040816">
+<globals body_outline_ratio="0.644657863145">
 	<global_window_position top="65" left="216" height="833" width="950"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -21,7 +21,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841" a="TV" annotate="7d71002e"><vh>Other tests...</vh>
+<v t="ekr.20040708205841" annotate="7d71002e"><vh>Other tests...</vh>
 <v t="ekr.20051015100336"><vh>Older...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
@@ -934,7 +934,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051011213138"><vh>getImage</vh></v>
 <v t="ekr.20051011215038"><vh>getLineHeight</vh></v>
 </v>
-<v t="ekr.20051012155129"><vh>Tabbed log prototype</vh></v>
 <v t="ekr.20050707183613"><vh>Ipython Shell</vh>
 <v t="ekr.20050708110336"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20050708091220.78"><vh>&lt;&lt; use IPShellEmbed &gt;&gt;</vh></v>
@@ -2339,6 +2338,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
+<v t="ekr.20051016110449" a="TV"><vh>Write to test tab</vh></v>
+<v t="ekr.20051016113248"><vh>Write to log tab</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -3046,7 +3047,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -22676,31 +22677,6 @@ while y &lt; h:
         g.es_exception()
         return 20 # default</t>
 <t tx="ekr.20051012104957"></t>
-<t tx="ekr.20051012155129">import TabbedLog
-Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
-Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
-
-log = TabbedLog.getPane('Log',c)
-completions = TabbedLog.getPane('Completions',c)
-
-nb = TabbedLog.nbs.get(c.frame.log)
-
-try:
-    d = c.tabbedLogPages
-except AttributeError:
-    c.tabbedLogPages = d = {}
-    
-t = d.get('Completions')
-if not t:
-    #print repr(nb)
-    #print repr(log)
-    t = Tk.Text(completions,background='LightSteelBlue1')
-    t.pack(side='top',expand=1,fill='both')
-    c.tabbedLogPages['Completions'] = t
-
-nb.selectpage('Completions')
-t.insert('end','Another line\n')
-</t>
 <t tx="ekr.20051013160521"># g.app.config.updateSettings(c)
 g.es('test_setting',c.config.getBool('test_setting'))</t>
 <t tx="ekr.20051013162226"></t>
@@ -22720,5 +22696,9 @@ def f (event):
 
 k.registerCommand('print-hello','Alt-Ctrl-Shift-p',f)
 k.registerCommand('print-hello2',None,f)</t>
+<t tx="ekr.20051016110449">c.frame.log.selectTab('Test')
+g.es('Test',color='red')</t>
+<t tx="ekr.20051016113248">c.frame.log.selectTab('Log')
+g.es('Test',color='blue')</t>
 </tnodes>
 </leo_file>

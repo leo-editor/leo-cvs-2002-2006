@@ -26,16 +26,18 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
+Post: Special handling of 'site-customize' plugin? This could be loaded first
+(or last). It's really just the same as any other plugin, but it could be like
+an Emacs init file.
+#@nonl
 #@+node:ekr.20051015223107:First
-- Move the TabbedLog plugin into Leo's core.
-    - Create tabs for completion, general output, etc.
-
 - Make sure k.registerCommand can be called from plugins.
 
 - Support @button @name=button-name @key=shortcut
 
 - The code that reads @shortcuts nodes should issue a warning is a single node
 contains multiple entries for the same command name!
+#@nonl
 #@+node:ekr.20051008131807:Unit tests: simulateKeystrokes
 (k. or g.) simulateKeystrokes (keystrokes,p=None)
 
@@ -67,7 +69,7 @@ contains multiple entries for the same command name!
 #@-node:ekr.20051012054228:Vim mode (k.vimMode)
 #@+node:ekr.20051015223107.1:Replace focus commands in leoEditCommands.py with k.forceFocusToBody
 #@-node:ekr.20051015223107.1:Replace focus commands in leoEditCommands.py with k.forceFocusToBody
-#@+node:ekr.20051015223107.2:Bugs
+#@+node:ekr.20051015223107.2:Bugs 2
 #@+node:ekr.20051014104337.1:Crash in undo
 exception executing command
 Traceback (most recent call last):
@@ -141,7 +143,7 @@ Leo's import code can't handle this:
 #@+node:ekr.20040722132104:Write script to report underindented lines
 #@-node:ekr.20040722132104:Write script to report underindented lines
 #@-node:ekr.20051014152256:Fix long-standing bug in import code
-#@-node:ekr.20051015223107.2:Bugs
+#@-node:ekr.20051015223107.2:Bugs 2
 #@-node:ekr.20051015223107:First
 #@+node:ekr.20051015223107.3:Urgent
 - Allow per-pane settings:
