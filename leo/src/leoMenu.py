@@ -1050,6 +1050,7 @@ class leoMenu:
                 # if not openWith: g.trace(accel,accel2,name)
                 
                 # New in 4.4: allow emacs-style or old style names in menu shortcuts.
+                emacs_name = None
                 if openWith:
                     pass
                 elif not accel2:
@@ -1075,6 +1076,7 @@ class leoMenu:
                 else:
                     accel = accel2 # Override the default shortcut.
                     
+                commandName = emacs_name or name
                 # if not openWith: g.trace(accel,accel2,name)
                 #@nonl
                 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
@@ -1128,7 +1130,8 @@ class leoMenu:
                 #@nl
                 
                 if bind_shortcut and useBindShortcut and not dontBind:
-                    ok = c.keyHandler.bindShortcut(bind_shortcut,name,command,openWith,fromMenu=True)
+                    ok = c.keyHandler.bindShortcut(
+                        bind_shortcut,name,command,commandName,openWith,fromMenu=True)
                     if not ok: menu_shortcut = None
     
                 self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
