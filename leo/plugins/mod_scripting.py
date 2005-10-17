@@ -2,7 +2,7 @@
 #@+node:EKR.20040613213623:@thin mod_scripting.py
 #@<< docstring >>
 #@+node:ekr.20050130155124:<< docstring >>
-"""A plugin to create script buttons and @button, @plugin and @script nodes.
+"""A plugin to create script buttons and @button, @command, @plugin and @script nodes.
 
 This plugin puts two buttons in the icon area: a button called 'run Script' and
 a button called 'script Button'.
@@ -24,16 +24,29 @@ For example, to run a script on any part of an outline do the following:
 
 That's all.  You can delete a script button by right-clicking on it.
 
-This plugin optionally scans for @button nodes, @plugin nodes and @script nodes
-whenever a .leo file is opened.
+This plugin optionally scans for @button nodes, @command, @plugin nodes and
+@script nodes whenever a .leo file is opened.
 
 - @button nodes create script buttons.
+- @command nodes create minibuffer commands.
 - @plugin nodes cause plugins to be loaded.
 - @script nodes cause a script to be executed when opening a .leo file.
 
 Such nodes may be security risks. This plugin scans for such nodes only if the
 corresponding atButtonNodes, atPluginNodes, and atScriptNodes constants are set
 to True in this plugin.
+
+You can bind key shortcuts to @button and @command nodes as follows:
+
+@button name @key=shortcut
+
+This binds the shortcut to the script in the script button. The button's name is
+'name', but you can see the full headline in the status line when you move the
+mouse over the button.
+
+@command name @key=shortcut
+
+This creates a new minibuffer command and binds shortcut to it.
 
 This plugin is based on ideas from e's dynabutton plugin.   
 """
