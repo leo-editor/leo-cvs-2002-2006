@@ -35,16 +35,8 @@ Such nodes may be security risks. This plugin scans for such nodes only if the
 corresponding atButtonNodes, atPluginNodes, and atScriptNodes constants are set
 to True in this plugin.
 
-Notes:
-    
-- This plugin is based on ideas from e's dynabutton plugin.
-    
-- The bindLate option in this file determines whether changing the text of the
-node will affect what script gets executed when a script button is pressed. The
-default (recommended) setting is True, in which case the script that gets
-executed is the present contents of the node used to create the script button.
-If bindLate is False, the original script is used whenever you press the script
-button."""
+This plugin is based on ideas from e's dynabutton plugin.   
+"""
 #@nonl
 #@-node:ekr.20050130155124:<< docstring >>
 #@nl
@@ -60,7 +52,7 @@ import sys
 #@-node:EKR.20040613215415:<< imports >>
 #@nl
 
-__version__ = "0.10"
+__version__ = "0.11"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
@@ -86,6 +78,11 @@ __version__ = "0.10"
 #     - Created scriptingController class.
 # 0.10 EKR:
 #     - Changed 'new_c' logic to 'c' logic.
+# 0.11 EKR:
+#     - Removed bindLate options: it should always be on.
+#     - Added support for:
+#         - @button name [@key=shortcut]
+#         - @command name [@key=shortcut]
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -97,6 +94,8 @@ bindLate = True
     # False: Bind script when button is created.
 atButtonNodes = True
     # True: adds a button for every @button node.
+atCommandsNodes = True
+    # True: define a minibuffer command for every @command node.
 atPluginNodes = False
     # True: dynamically loads plugins in @plugins nodes when a window is created.
 atScriptNodes = False
@@ -164,45 +163,93 @@ class scriptingController:
             # scan for user-defined nodes.
             for p in c.allNodes_iter():
                 if atButtonNodes and p.headString().startswith("@button"):
-                    self.createDynamicButton(p)
+                    self.createAtButtonButton(p)
+                if atCommandsNodes and p.headString().startswith("@command"):
+                    self.createMinibufferCommand(p)
                 if atPluginNodes and p.headString().startswith("@plugin"):
                     self.loadPlugin(p)
                 if atScriptNodes and p.headString().startswith("@script"):
                     self.executeScriptNode(p)
     #@nonl
     #@-node:ekr.20050308105005:createAllButtons
-    #@+node:ekr.20041001184024:createDynamicButton
-    def createDynamicButton (self,p):
+    #@+node:ekr.20051016173424:createMinibufferCommand (New in 4.4)
+    def createMinibufferCommand (self,p):
         
-        tag = "@button"
-        c = self.c ; p = p.copy()
-        text = p.headString()
-        assert(g.match(text,0,tag))
-        key = text = text[len(tag):].strip()
-        script = g.getScript(c,p,useSelectedText=False)
-        buttonText = text[:maxButtonSize]
+        '''Register a minibuffer command.
+        
+        p.headString has the form @command name [@key=shortcut].'''
+        
+        c = self.c ; k = c.keyHandler ; h = p.headString()
+        if not h.strip(): return
+        
+        #@    << get the commandName and optional shortcut >>
+        #@+node:ekr.20051016192305:<< get the commandName and optional shortcut >>
+        tag = '@command' ; shortcut = None
+        
+        i = h.find('@key')
+        
+        if i > -1:
+            commandName = h[len(tag):i].strip()
+            j = g.skip_ws(h,i+len('@key'))
+            if g.match(h,j,'='):
+                shortcut = h[j+1:].strip()
+        else:
+            commandName = h[len(tag):].strip()
+            
+        # g.trace(commandName,'shortcut',shortcut)
+        #@nonl
+        #@-node:ekr.20051016192305:<< get the commandName and optional shortcut >>
+        #@nl
     
-        statusLine = "Script button: %s" % text
-        bg = 'LightSteelBlue1'
-        b = c.frame.addIconButton(text=buttonText)
+        def atCommandCallback (event=None,c=c,p=p.copy()):
+            c.executeScript(p=p)
+    
+        k.registerCommand(commandName,shortcut,atCommandCallback)
+    #@nonl
+    #@-node:ekr.20051016173424:createMinibufferCommand (New in 4.4)
+    #@+node:ekr.20041001184024:createAtButtonButton (Improved for 4.4)
+    def createAtButtonButton (self,p):
         
-        #@    << define callbacks for dynamic buttons >>
-        #@+node:ekr.20041001185413:<< define callbacks for dynamic buttons >>
+        '''Create a button in the icon area for an @button node.
+        
+        An optional @key=shortcut defines a shortcut that is bound to the button's script.
+        The @key=shortcut does not appear in the button's name, but
+        it *does* appear in the statutus line shown when the mouse moves over the button.'''
+    
+        c = self.c ; h = p.headString() ; tag = "@button"
+        assert(g.match(h,0,tag))
+        key = h = h[len(tag):].strip()
+        statusLine = "Script button: %s" % h
+        #@    << get buttonText and optional shortcut >>
+        #@+node:ekr.20051016221440:<< get buttonText and optional shortcut >>
+        shortcut = None
+        i = h.find('@key')
+        
+        if i > -1:
+            buttonText = h[:i].strip()
+            j = g.skip_ws(h,i+len('@key'))
+            if g.match(h,j,'='):
+                shortcut = h[j+1:].strip()
+            
+        else:
+            buttonText = h
+            
+        fullButtonText = buttonText
+        buttonText = buttonText[:maxButtonSize]
+            
+        # g.trace(commandName,'shortcut',shortcut)
+        #@nonl
+        #@-node:ekr.20051016221440:<< get buttonText and optional shortcut >>
+        #@nl
+        b = c.frame.addIconButton(text=buttonText)
+        if not b: return
+        #@    << define callbacks for @button buttons >>
+        #@+node:ekr.20041001185413:<< define callbacks for @button buttons >>
         def deleteButtonCallback(event=None,self=self,key=key):
             self.deleteButton(key)
-            
-        def execCommandCallback (event=None,self=self,b=b,script=script,buttonText=buttonText):
-            c = self.c
-            if c.disableCommandsMessage:
-                g.es(c.disableCommandsMessage,color='blue')
-            else:
-                g.app.scriptDict = {}
-                c.executeScript(script=script)
-                # A useful hack: remove the button if the script asks to be removed.
-                # In particular, this will remove the spelling button if it can't be inited.
-                if g.app.scriptDict.get('removeMe'):
-                    g.es("Removing '%s' button at its request" % (buttonText))
-                    b.pack_forget()
+        
+        def atButtonCallback (event=None,self=self,p=p.copy(),b=b,buttonText=buttonText):
+            self.executeScriptFromCallback (p,b,buttonText)
             
         def mouseEnterCallback(event=None,self=self,statusLine=statusLine):
             self.mouseEnter(statusLine)
@@ -210,33 +257,55 @@ class scriptingController:
         def mouseLeaveCallback(event=None,self=self):
             self.mouseLeave()
         #@nonl
-        #@-node:ekr.20041001185413:<< define callbacks for dynamic buttons >>
+        #@-node:ekr.20041001185413:<< define callbacks for @button buttons >>
         #@nl
-    
-        if not b: return
+        if shortcut:
+            #@        << bind the shortcut to atButtonCallback >>
+            #@+node:ekr.20051016224708:<< bind the shortcut to atButtonCallback >>
+            k = c.keyHandler ; func = atButtonCallback
+            
+            shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+            ok = k.bindShortcut (shortcut,func.__name__,func,buttonText,
+                openWith=False,fromMenu=False)
+            
+            if ok:
+                g.es_print('Bound @button %s to %s' % (
+                    fullButtonText,shortcut),color='blue')
+            #@nonl
+            #@-node:ekr.20051016224708:<< bind the shortcut to atButtonCallback >>
+            #@nl
         self.d [key] = b
+        #@    << bind the callbacks to b >>
+        #@+node:ekr.20051016224007:<< bind the callbacks to b >>
         if sys.platform == "win32":
-            width = int(len(text) * 0.9)
-            b.configure(width=width,font=('verdana',7,'bold'),bg=bg)
-        b.configure(command=execCommandCallback)
+            width = int(len(buttonText) * 0.9)
+            b.configure(width=width,
+                font=('verdana',7,'bold'),bg='LightSteelBlue1')
+        b.configure(command=atButtonCallback)
         b.bind('<3>',deleteButtonCallback)
         b.bind('<Enter>', mouseEnterCallback)
         b.bind('<Leave>', mouseLeaveCallback)
-    #@-node:ekr.20041001184024:createDynamicButton
+        #@nonl
+        #@-node:ekr.20051016224007:<< bind the callbacks to b >>
+        #@nl
+    #@nonl
+    #@-node:ekr.20041001184024:createAtButtonButton (Improved for 4.4)
     #@+node:ekr.20041001183818:createStandardButtons
     def createStandardButtons(self):
     
         c = self.c ; p = c.currentPosition() ; h = p.headString()
         script = p.bodyString()
     
-        #@    << define execCommand >>
-        #@+node:EKR.20040618091543.1:<< define execCommand >>
-        def execCommand (event=None):
+        #@    << define runScriptCommand >>
+        #@+node:EKR.20040618091543.1:<< define runScriptCommand >>
+        def runScriptCommand (event=None):
+            
+            '''Called when user presses the 'Run Script' button.'''
         
             c = self.c
             c.executeScript(c.currentPosition(),useSelectedText=True)
         #@nonl
-        #@-node:EKR.20040618091543.1:<< define execCommand >>
+        #@-node:EKR.20040618091543.1:<< define runScriptCommand >>
         #@nl
         #@    << define addScriptButtonCommand >>
         #@+node:EKR.20040618091543.2:<< define addScriptButtonCommand >>
@@ -260,37 +329,16 @@ class scriptingController:
             b = c.frame.addIconButton(text=buttonText)
             #@    << define callbacks for addScriptButton >>
             #@+node:EKR.20040613231552:<< define callbacks for addScriptButton >>
-            def deleteButtonCallback(event=None,self=self,buttonName=buttonName):
+            def deleteButtonCallback (event=None,self=self,buttonName=buttonName):
                 self.deleteButton(buttonName)
-                
-            def commandCallback(event=None,self=self,b=b,p=p.copy(),script=script,statusMessage=statusMessage):
-                global bindLate
-                c = self.c
-                if c.disableCommandsMessage:
-                    g.es(c.disableCommandsMessage,color='blue')
-                else:
-                    if script is None: script = ""
-                    c.frame.clearStatusLine()
-                    c.frame.putStatusLine("Executing %s..." % statusMessage)
-                    g.app.scriptDict = {}
-                    if bindLate:
-                        # New in 4.2.1: always use the entire body string.
-                        script = g.getScript(c,p,useSelectedText=False)
-                    if script:
-                        c.executeScript(script=script)
-                    else:
-                        g.es("No script selected",color="blue")
-                        
-                    # A useful hack: remove the button if the script asks to be removed.
-                    # In particular, this will remove the spelling button if it can't be inited.
-                    if g.app.scriptDict.get('removeMe'):
-                        g.es("Removing '%s' button at its request" % (buttonText))
-                        b.pack_forget()
-                
-            def mouseEnterCallback(event=None,self=self,statusMessage=statusMessage):
+            
+            def commandCallback (event=None,self=self,b=b,p=p.copy(),buttonText=buttonText):
+                self.executeScriptFromCallback(p,b,buttonText)
+            
+            def mouseEnterCallback (event=None,self=self,statusMessage=statusMessage):
                 self.mouseEnter(statusMessage)
-                
-            def mouseLeaveCallback(event=None,self=self):
+            
+            def mouseLeaveCallback (event=None,self=self):
                 self.mouseLeave()
             #@nonl
             #@-node:EKR.20040613231552:<< define callbacks for addScriptButton >>
@@ -308,11 +356,11 @@ class scriptingController:
         #@-node:EKR.20040618091543.2:<< define addScriptButtonCommand >>
         #@nl
         
-        runStatusLine = 'Run script: %s' % h
-        makeStatusLine = 'Make script button for: %s' % h
+        runStatusLine = 'Run script in current node'
+        makeStatusLine = 'Make script button current node'
         
         for key,text,command,statusLine,bg in (
-            ("execButton","Run Script",execCommand,runStatusLine,'MistyRose1'),
+            ("execButton","Run Script",runScriptCommand,runStatusLine,'MistyRose1'),
             ("addScriptButton","Script Button",addScriptButtonCommand,makeStatusLine,"#ffffcc")
         ):
             #@        << define callbacks for standard buttons >>
@@ -409,6 +457,26 @@ class scriptingController:
         self.c.frame.clearStatusLine()
     #@nonl
     #@-node:EKR.20040618091543:mouseEnter/Leave
+    #@+node:ekr.20051016210846:executeScriptFromCallback
+    def executeScriptFromCallback (self,p,b,buttonText):
+        
+        '''Called from callbacks to execute the script in node p.'''
+        
+        c = self.c
+    
+        if c.disableCommandsMessage:
+            g.es(c.disableCommandsMessage,color='blue')
+        else:
+            #c.frame.clearStatusLine()
+            #c.frame.putStatusLine("Executing button: %s..." % buttonText)
+            g.app.scriptDict = {}
+            c.executeScript(p=p)
+            # Remove the button if the script asks to be removed.
+            if g.app.scriptDict.get('removeMe'):
+                g.es("Removing '%s' button at its request" % buttonText)
+                b.pack_forget()
+    #@nonl
+    #@-node:ekr.20051016210846:executeScriptFromCallback
     #@-others
 #@nonl
 #@-node:ekr.20050302082838.1:class scriptingController
