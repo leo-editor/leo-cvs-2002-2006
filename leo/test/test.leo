@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7663" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7665" clone_windows="0"/>
 <globals body_outline_ratio="0.644657863145">
 	<global_window_position top="65" left="216" height="833" width="950"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -837,7 +837,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20051013160521"><vh>Tests of settings when opened from another .leo file</vh></v>
 <v t="ekr.20051015065018"><vh>Test of warnings of conflicting shortcuts</vh></v>
-<v t="ekr.20051015103450" a="E"><vh>test k.registerCommand</vh></v>
+<v t="ekr.20051016110449"><vh>Write to test tab</vh></v>
+<v t="ekr.20051016113248"><vh>Write to log tab</vh></v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes...</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -2338,8 +2339,10 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20051016110449" a="TV"><vh>Write to test tab</vh></v>
-<v t="ekr.20051016113248"><vh>Write to log tab</vh></v>
+<v t="ekr.20051015103450" a="E"><vh>test k.registerCommand</vh></v>
+<v t="ekr.20051016174943" a="TV"><vh>@command my-command @key = alt-shift-ctrl-z</vh></v>
+<v t="ekr.20051016174943.1"><vh>@command my-command2</vh></v>
+<v t="ekr.20051016205407"><vh>@button test @key=alt-shift-ctrl-y</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -22693,12 +22696,18 @@ print 'shortcut:showMinibuffer',val</t>
 
 def f (event):
     g.es_print('Hello',color='purple')
+    
+def f2 (event):
+    g.es_print('Hello2',color='purple')
 
 k.registerCommand('print-hello','Alt-Ctrl-Shift-p',f)
-k.registerCommand('print-hello2',None,f)</t>
+k.registerCommand('print-hello2',None,f2)</t>
 <t tx="ekr.20051016110449">c.frame.log.selectTab('Test')
 g.es('Test',color='red')</t>
 <t tx="ekr.20051016113248">c.frame.log.selectTab('Log')
 g.es('Test',color='blue')</t>
+<t tx="ekr.20051016174943">g.es('my-command',color='red')</t>
+<t tx="ekr.20051016174943.1">print 'This is my command 3'</t>
+<t tx="ekr.20051016205407">g.es('hi',color='red')</t>
 </tnodes>
 </leo_file>
