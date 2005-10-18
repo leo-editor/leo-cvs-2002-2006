@@ -96,6 +96,9 @@ __version__ = "0.11"
 #     - Added support for:
 #         - @button name [@key=shortcut]
 #         - @command name [@key=shortcut]
+# 0.12 EKR:
+#     - Use c.executeScript(p=p,silent=True) in @command so the
+#       'end of script' message doesn't switch tabs.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -215,7 +218,8 @@ class scriptingController:
         #@nl
     
         def atCommandCallback (event=None,c=c,p=p.copy()):
-            c.executeScript(p=p)
+            # The 'end-of-script command messes up tabs.
+            c.executeScript(p=p,silent=True)
     
         k.registerCommand(commandName,shortcut,atCommandCallback)
     #@nonl
