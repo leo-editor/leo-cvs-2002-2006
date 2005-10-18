@@ -1441,9 +1441,10 @@ class keyHandlerClass:
         k = self ; c = k.c
         keys = k.bindingsDict.keys() ; keys.sort()
     
+        c.frame.log.clearTab('Command')
         for key in keys:
             b = k.bindingsDict.get(key)
-            g.es_print(key,b.commandName or b.name,tabName='Minibuffer')
+            g.es(key,b.commandName or b.name,tabName='Command')
     #@nonl
     #@-node:ekr.20051012201831:printBindings
     #@+node:ekr.20051014061332:printCommands
@@ -1452,25 +1453,15 @@ class keyHandlerClass:
         '''Print all the known commands and their bindings, if any.'''
     
         k = self ; c = k.c
+        
+        c.frame.log.clearTab('Command')
+        
+        inverseBindingDict = k.computeInverseBindingDict()
         commandNames = c.commandsDict.keys() ; commandNames.sort()
     
-        inverseDict = {} # keys are function names, values are shortcuts.
-        for shortcut in  k.bindingsDict.keys():
-            b = k.bindingsDict.get(shortcut)
-            inverseDict[b.name] = shortcut
-    
         for commandName in commandNames:
-            func = c.commandsDict.get(commandName)
-            if func.__name__ == 'leoCallback':
-                calledFunc = k.leoCallbackDict.get(func)
-                funcName = calledFunc and calledFunc.__name__
-            else:
-                funcName = func.__name__
-            shortcut = inverseDict.get(funcName,'')
-            
-            # Use different format strings for the console and log pane.
-            print '%30s %s' % (commandName,shortcut)
-            g.es('%s %s' % (commandName,shortcut),tabName='Minibuffer')
+            k.printCommandNameAndBinding(
+                commandName,inverseBindingDict,tabName='Command')
     #@nonl
     #@-node:ekr.20051014061332:printCommands
     #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
@@ -1931,13 +1922,28 @@ class keyHandlerClass:
     
             if not backspace:
                 k.setLabel(k.mb_prompt + common_prefix)
-        
-            for z in k.mb_tabList:
-                g.es(z,tabName='Completion')
+                
+            inverseBindingDict = k.computeInverseBindingDict()
+            for commandName in k.mb_tabList:
+                k.printCommandNameAndBinding(
+                    commandName,inverseBindingDict,tabName='Completion')
     
         k.forceFocusToBody()
     #@nonl
     #@-node:ekr.20051017212452:computeCompletionList
+    #@+node:ekr.20051018070524:computeInverseBindingDict
+    def computeInverseBindingDict (self):
+    
+        k = self
+    
+        d = {} # keys are function names, values are shortcuts.
+        for shortcut in k.bindingsDict.keys():
+            b = k.bindingsDict.get(shortcut)
+            d [b.name] = shortcut
+    
+        return d
+    #@nonl
+    #@-node:ekr.20051018070524:computeInverseBindingDict
     #@+node:ekr.20050920085536.46:doBackSpace
     # Used by getArg and fullCommand.
     
@@ -2033,6 +2039,25 @@ class keyHandlerClass:
             return '<no leoCallback name>'
     #@nonl
     #@-node:ekr.20051010063452:ultimateFuncName
+    #@+node:ekr.20051018065555:printCommandNameAndBinding
+    def printCommandNameAndBinding (self,commandName,inverseBindingDict,tabName='Log'):
+        
+        k = self ; c = k.c
+        
+        func = c.commandsDict.get(commandName)
+        if func.__name__ == 'leoCallback':
+            calledFunc = k.leoCallbackDict.get(func)
+            funcName = calledFunc and calledFunc.__name__
+        else:
+            funcName = func.__name__
+    
+        shortcut = inverseBindingDict.get(funcName,'')
+        
+        # Use different format strings for the console and log pane.
+        # print '%30s %s' % (commandName,shortcut)
+        g.es('%s %s' % (commandName,shortcut),tabName=tabName)
+    #@nonl
+    #@-node:ekr.20051018065555:printCommandNameAndBinding
     #@-node:ekr.20051002152108.1:Shared helpers
     #@+node:ekr.20050923172809:State...
     #@+node:ekr.20050923172814.1:clearState

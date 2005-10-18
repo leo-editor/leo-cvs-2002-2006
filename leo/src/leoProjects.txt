@@ -8447,26 +8447,28 @@ https://sourceforge.net/forum/unmonitor.php?forum_id=10226
 @ Calling print directly is dangerous: it will fail for unicode characters.
 #@nonl
 #@+node:ekr.20031218072017.1474:es, enl, ecnl
-def ecnl():
-    g.ecnls(1)
+def ecnl(tabName='Log'):
+    g.ecnls(1,tabName)
 
-def ecnls(n):
+def ecnls(n,tabName='Log'):
     log = app.log
     if log and not log.isNull:
         while log.newlines < n:
-            g.enl()
+            g.enl(tabName)
 
-def enl():
+def enl(tabName='Log'):
     log = app.log
     if log and not log.isNull:
         log.newlines += 1
-        log.putnl()
+        log.putnl(tabName)
 
 def es(s,*args,**keys):
     if app.killed:
         return
     newline = keys.get("newline",True)
-    color = keys.get("color",None)
+    color = keys.get('color')
+    tabName = keys.get('tabName','Log')
+        # Default goes to log pane *Not* the presently active pane.
     if color == 'suppress': return # New in 4.3.
     if type(s) != type("") and type(s) != type(u""): # 1/20/03
         s = repr(s)
@@ -8481,12 +8483,12 @@ def es(s,*args,**keys):
         log = app.log
         if log and not log.isNull:
             # print 'g.es',s
-            log.put(s,color=color)
+            log.put(s,color=color,tabName=tabName)
             for ch in s:
                 if ch == '\n': log.newlines += 1
                 else: log.newlines = 0
             if newline:
-                g.ecnl() # only valid here
+                g.ecnl(tabName=tabName) # only valid here
         elif newline:
             app.logWaiting.append((s+'\n',color),)
             # print s
@@ -10047,26 +10049,28 @@ def openWithFileName(fileName,old_c,
 #@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20031218072017.1474:es, enl, ecnl
-def ecnl():
-    g.ecnls(1)
+def ecnl(tabName='Log'):
+    g.ecnls(1,tabName)
 
-def ecnls(n):
+def ecnls(n,tabName='Log'):
     log = app.log
     if log and not log.isNull:
         while log.newlines < n:
-            g.enl()
+            g.enl(tabName)
 
-def enl():
+def enl(tabName='Log'):
     log = app.log
     if log and not log.isNull:
         log.newlines += 1
-        log.putnl()
+        log.putnl(tabName)
 
 def es(s,*args,**keys):
     if app.killed:
         return
     newline = keys.get("newline",True)
-    color = keys.get("color",None)
+    color = keys.get('color')
+    tabName = keys.get('tabName','Log')
+        # Default goes to log pane *Not* the presently active pane.
     if color == 'suppress': return # New in 4.3.
     if type(s) != type("") and type(s) != type(u""): # 1/20/03
         s = repr(s)
@@ -10081,12 +10085,12 @@ def es(s,*args,**keys):
         log = app.log
         if log and not log.isNull:
             # print 'g.es',s
-            log.put(s,color=color)
+            log.put(s,color=color,tabName=tabName)
             for ch in s:
                 if ch == '\n': log.newlines += 1
                 else: log.newlines = 0
             if newline:
-                g.ecnl() # only valid here
+                g.ecnl(tabName=tabName) # only valid here
         elif newline:
             app.logWaiting.append((s+'\n',color),)
             # print s
@@ -18608,17 +18612,23 @@ than TabbedLog.getPane. No other official plugins use TabbedLog.
 c.frame.log.selectTab(tabName) selects the tab in the log pane, creating it if
 necessary.
 
-That's all any code has to do! g.es and all other methods that write to the log
-always write to the presently selected tab.
+The g.es, g.enl, g.ecnl, g.ecnls write to the log tab specified by the optional
+tabName argument. The default for tabName is 'Log', so existing code works as
+before.
 
-The following are official status ivars.  They can be read by client code,
+Minor notes:
+
+1. The following are official status ivars.  They can be read by client code,
 but they should never be changed outside of the leoTkinterLog class:
 
 c.frame.log.tabName: the name of the active tab.
 c.frame.log.logCtrl: the Tk.Text widget for the active tab.
 c.frame.log.tabFrame: the Tk.Frame containing the active tab.
 
-Note: these ivars may not exist in nullLog's.
+These ivars may not exist in nullLog's.
+
+2. The put and putnl methods of the tkinterLog class also take an optional
+tabName argument which defaults to 'Log'.
 #@nonl
 #@-node:ekr.20051016113907.1:How to use the new code
 #@+node:ekr.20031218072017.4039:class leoTkinterLog
@@ -18662,7 +18672,12 @@ def createControl (self,parentFrame):
     
     c = self.c
     
-    self.nb = Pmw.NoteBook(parentFrame,borderwidth=1,pagemargin=0)
+    self.nb = Pmw.NoteBook(parentFrame,
+        borderwidth=1,pagemargin=0,
+        raisecommand=self.raiseTab,
+        lowercommand=self.lowerTab
+    )
+
     self.nb.pack(fill='both',expand=1)
     self.selectTab('Log') # create the tab and make it the active tab.
     return self.logCtrl
@@ -18835,13 +18850,36 @@ def forceLogUpdate (self,s):
 #@nonl
 #@-node:ekr.20050208133438:forceLogUpdate
 #@-node:ekr.20051016095907.2:Focus & update
+#@+node:ekr.20051018061932:Tab
+#@+node:ekr.20051017212057:tkLog.clearTab
+def clearTab (self,tabName):
+    
+    self.selectTab(tabName)
+    t = self.logCtrl
+    t.delete('1.0','end')
+#@nonl
+#@-node:ekr.20051017212057:tkLog.clearTab
+#@+node:ekr.20051018061932.1:tkLog.lower/raiseTab
+def lowerTab (self,tabName):
+    
+    if tabName:
+        b = self.nb.tab(tabName) # b is a Tk.Button.
+        b.config(bg='grey80')
+    
+def raiseTab (self,tabName):
+
+    if tabName:
+        b = self.nb.tab(tabName) # b is a Tk.Button.
+        b.config(bg='LightSteelBlue1')
+#@nonl
+#@-node:ekr.20051018061932.1:tkLog.lower/raiseTab
 #@+node:ekr.20051016101724.1:tkLog.selectTab
 def selectTab (self,tabName):
 
     '''Create the tab if necessary and make it the active tab to which all
     output is sent.'''
     
-    tabFrame = self.frameDict.get(tabName)
+    c = self.c ; tabFrame = self.frameDict.get(tabName)
     # g.trace(g.choose(tabName,'switching to','creating'),tabName)
 
     if tabFrame:
@@ -18852,29 +18890,44 @@ def selectTab (self,tabName):
             self.colorTags = newColorTags
     else:
         tabFrame = self.nb.add(tabName)
+        # Put a text widget in the notebook page.
         textWidget = self.createTextWidget(tabFrame)
-        self.frameDict [tabName] = tabFrame
-        self.textDict [tabName] = textWidget
-        # Switch to a new colorTags list.
-        if self.tabName:
-            self.colorTagsDict [self.tabName] = self.colorTags [:]
-        self.colorTags = ['black']
-        self.colorTagsDict [tabName] = self.colorTags
-        # Init the configuration.
-        textWidget.bind("<Button-1>",self.onActivateLog)
-        textWidget.tag_config('black',foreground='black')
-        self.tabName = tabName
+        << configure textWidget >>
+        # Update immediately so we can queue the request to change focus.
+        tabFrame.update_idletasks()
+        self.c.frame.bodyWantsFocus(self.c.frame.bodyCtrl,tag='tkLog.selectTab')
         
-    # Select the page and pdate the status vars.
     self.nb.selectpage(tabName)
+
+    # Update the status vars.
     self.tabName = tabName
     self.logCtrl = self.textDict.get(tabName)
     self.tabFrame = self.frameDict.get(tabName)
-
+    
+    # g.trace(self.tabName,repr(self.logCtrl))
     return tabFrame
 #@nonl
+#@+node:ekr.20051018072306:<< configure textWidget >>
+if tabName != 'Log':
+    configName = 'log_pane_%s_tab_background_color' % tabName
+    bg = c.config.getColor(configName) or 'MistyRose1'
+    try: textWidget.configure(bg=bg)
+    except Exception: pass # Could be a user error.
+self.frameDict [tabName] = tabFrame
+self.textDict [tabName] = textWidget
+# Switch to a new colorTags list.
+if self.tabName:
+    self.colorTagsDict [self.tabName] = self.colorTags [:]
+self.colorTags = ['black']
+self.colorTagsDict [tabName] = self.colorTags
+# Init the configuration.
+textWidget.bind("<Button-1>",self.onActivateLog)
+textWidget.tag_config('black',foreground='black')
+#@nonl
+#@-node:ekr.20051018072306:<< configure textWidget >>
 #@-node:ekr.20051016101724.1:tkLog.selectTab
-#@+node:ekr.20051016101927:Printing
+#@-node:ekr.20051018061932:Tab
+#@+node:ekr.20051016101927:put & putnl (LeoTkinterLog)
 @ Printing uses self.logCtrl, so this code need not concern itself
 with which tab is active.
 
@@ -18883,12 +18936,16 @@ It may be that Pmw will allow us to dispense with the colorTags logic...
 #@nonl
 #@+node:ekr.20031218072017.1473:put
 # All output to the log stream eventually comes here.
-def put (self,s,color=None):
+def put (self,s,color=None,tabName='Log'):
     
     # print 'tkLog.put',self.c.shortFileName(),s,
 
-    if g.app.quitting: return
-    elif self.logCtrl:
+    if g.app.quitting:
+        return
+    if tabName:
+        self.selectTab(tabName)
+    
+    if self.logCtrl:
         << put s to log control >>
     else:
         << put s to logWaiting and print s >>
@@ -18898,6 +18955,8 @@ if 0:
     # Doing this here messes up the display in the log pane.
     if type(s) == type(u""):
         s = g.toEncodedString(s,g.app.TkEncoding)
+        
+# g.trace(repr(self.logCtrl))
 
 if color:
     if color not in self.colorTags:
@@ -18927,11 +18986,14 @@ print s
 #@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
 #@-node:ekr.20031218072017.1473:put
 #@+node:ekr.20051016101927.1:putnl
-def putnl (self):
+def putnl (self,tabName='Log'):
 
     if g.app.quitting:
         return
-    elif self.logCtrl:
+    if tabName:
+        self.selectTab(tabName)
+    
+    if self.logCtrl:
         self.logCtrl.insert("end",'\n')
         self.logCtrl.see("end")
         self.forceLogUpdate('\n')
@@ -18941,7 +19003,7 @@ def putnl (self):
         print "Null tkinter log"
         print
 #@-node:ekr.20051016101927.1:putnl
-#@-node:ekr.20051016101927:Printing
+#@-node:ekr.20051016101927:put & putnl (LeoTkinterLog)
 #@-node:ekr.20031218072017.4039:class leoTkinterLog
 #@-node:ekr.20051016113907:(Moved TabbedLog code into Leo's core)
 #@+node:ekr.20051016162459:k.registerShortcut now makes sure to set k.inverseCommandsDict
@@ -19095,7 +19157,7 @@ if not menu_shortcut:
 #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
 #@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
 #@+node:ekr.20051015110547:registerCommand
-def registerCommand (self,commandName,shortcut,func):
+def registerCommand (self,commandName,shortcut,func,verbose=True):
     
     '''Make the function available as a minibuffer command,
     and optionally attempt to bind a shortcut.
@@ -19118,11 +19180,12 @@ def registerCommand (self,commandName,shortcut,func):
         ok = k.bindShortcut (shortcut2,func.__name__,func,commandName,
             openWith=False,fromMenu=False)
             
-    if shortcut and ok:
-        g.es_print('Registered %s bound to %s' % (
-            commandName,shortcut),color='blue')
-    else:
-        g.es_print('Registered %s' % (commandName), color='blue')
+    if verbose:
+        if shortcut and ok:
+            g.es_print('Registered %s bound to %s' % (
+                commandName,shortcut),color='blue')
+        else:
+            g.es_print('Registered %s' % (commandName), color='blue')
 #@nonl
 #@-node:ekr.20051015110547:registerCommand
 #@+node:ekr.20051006125633.1:bindShortcut
@@ -19241,9 +19304,10 @@ def printBindings (self,event):
     k = self ; c = k.c
     keys = k.bindingsDict.keys() ; keys.sort()
 
+    c.frame.log.clearTab('Command')
     for key in keys:
         b = k.bindingsDict.get(key)
-        g.es_print(key,b.commandName or b.name)
+        g.es(key,b.commandName or b.name,tabName='Command')
 #@nonl
 #@-node:ekr.20051012201831:printBindings
 #@+node:ekr.20051008152134:makeSpecialBindings (Binds to 'Key')
@@ -19289,6 +19353,33 @@ def makeSpecialBindings (self):
         fromMenu=False,tag=tag)
 #@-node:ekr.20051008152134:makeSpecialBindings (Binds to 'Key')
 #@-node:ekr.20051015112436:(Fixed bugs in k.registerCommand, k.printBindings
+#@+node:ekr.20051017053631:Improved the scripting plugin
+@nocolor
+
+The scripting plugin now has support for the following kinds of headlines:
+
+@button name @key=shortcut
+
+This binds the shortcut to the script in the script button.  The button's name is 'name', but you can see the full headline in the status line when you move the mouse over the button.  This is a clean and simple way of discovering the shortcut.
+
+@command name
+
+This creates a new minibuffer command whose name is 'name'.
+
+@command name @key=shortcut
+
+This creates a new minibuffer command and binds shortcut to it.
+
+The scripting plugin no longer contains the 'bindLate' code-level option.  The scripts for all @button or @command nodes are computed 'dynamically', that is, when the button is pushed or the command is executed from the minibuffer.  This is the most useful way, and the most intuitive.
+
+Previously, scripts for @button nodes were never dynamic, while scripts in @button nodes created by the 'Script button' button were dynamic only if bindLate was True.  You could call this a bug: it was unhelpful, annoying and confusing.
+#@-node:ekr.20051017053631:Improved the scripting plugin
+#@+node:ekr.20051017111039:Fixed minor bug in k.doTabCompletion
+@nocolor
+
+Set the tab-list index to-1 if we first print a common prefix.  That way item returned next will be item 0.
+#@nonl
+#@-node:ekr.20051017111039:Fixed minor bug in k.doTabCompletion
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

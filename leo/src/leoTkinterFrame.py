@@ -3446,7 +3446,12 @@ class leoTkinterLog (leoFrame.leoLog):
         
         c = self.c
         
-        self.nb = Pmw.NoteBook(parentFrame,borderwidth=1,pagemargin=0)
+        self.nb = Pmw.NoteBook(parentFrame,
+            borderwidth=1,pagemargin=0,
+            raisecommand=self.raiseTab,
+            lowercommand=self.lowerTab
+        )
+    
         self.nb.pack(fill='both',expand=1)
         self.selectTab('Log') # create the tab and make it the active tab.
         return self.logCtrl
@@ -3619,13 +3624,36 @@ class leoTkinterLog (leoFrame.leoLog):
     #@nonl
     #@-node:ekr.20050208133438:forceLogUpdate
     #@-node:ekr.20051016095907.2:Focus & update
+    #@+node:ekr.20051018061932:Tab
+    #@+node:ekr.20051017212057:tkLog.clearTab
+    def clearTab (self,tabName):
+        
+        self.selectTab(tabName)
+        t = self.logCtrl
+        t.delete('1.0','end')
+    #@nonl
+    #@-node:ekr.20051017212057:tkLog.clearTab
+    #@+node:ekr.20051018061932.1:tkLog.lower/raiseTab
+    def lowerTab (self,tabName):
+        
+        if tabName:
+            b = self.nb.tab(tabName) # b is a Tk.Button.
+            b.config(bg='grey80')
+        
+    def raiseTab (self,tabName):
+    
+        if tabName:
+            b = self.nb.tab(tabName) # b is a Tk.Button.
+            b.config(bg='LightSteelBlue1')
+    #@nonl
+    #@-node:ekr.20051018061932.1:tkLog.lower/raiseTab
     #@+node:ekr.20051016101724.1:tkLog.selectTab
     def selectTab (self,tabName):
     
         '''Create the tab if necessary and make it the active tab to which all
         output is sent.'''
         
-        tabFrame = self.frameDict.get(tabName)
+        c = self.c ; tabFrame = self.frameDict.get(tabName)
         # g.trace(g.choose(tabName,'switching to','creating'),tabName)
     
         if tabFrame:
@@ -3638,6 +3666,13 @@ class leoTkinterLog (leoFrame.leoLog):
             tabFrame = self.nb.add(tabName)
             # Put a text widget in the notebook page.
             textWidget = self.createTextWidget(tabFrame)
+            #@        << configure textWidget >>
+            #@+node:ekr.20051018072306:<< configure textWidget >>
+            if tabName != 'Log':
+                configName = 'log_pane_%s_tab_background_color' % tabName
+                bg = c.config.getColor(configName) or 'MistyRose1'
+                try: textWidget.configure(bg=bg)
+                except Exception: pass # Could be a user error.
             self.frameDict [tabName] = tabFrame
             self.textDict [tabName] = textWidget
             # Switch to a new colorTags list.
@@ -3648,10 +3683,16 @@ class leoTkinterLog (leoFrame.leoLog):
             # Init the configuration.
             textWidget.bind("<Button-1>",self.onActivateLog)
             textWidget.tag_config('black',foreground='black')
-            self.tabName = tabName
+            #@nonl
+            #@-node:ekr.20051018072306:<< configure textWidget >>
+            #@nl
+            # Update immediately so we can queue the request to change focus.
+            tabFrame.update_idletasks()
+            self.c.frame.bodyWantsFocus(self.c.frame.bodyCtrl,tag='tkLog.selectTab')
             
-        # Select the page and pdate the status vars.
         self.nb.selectpage(tabName)
+    
+        # Update the status vars.
         self.tabName = tabName
         self.logCtrl = self.textDict.get(tabName)
         self.tabFrame = self.frameDict.get(tabName)
@@ -3660,6 +3701,7 @@ class leoTkinterLog (leoFrame.leoLog):
         return tabFrame
     #@nonl
     #@-node:ekr.20051016101724.1:tkLog.selectTab
+    #@-node:ekr.20051018061932:Tab
     #@+node:ekr.20051016101927:put & putnl (LeoTkinterLog)
     #@+at 
     #@nonl
