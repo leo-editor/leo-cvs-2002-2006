@@ -1130,7 +1130,7 @@ class keyHandlerClass:
         elif keysym == 'Tab':
             k.doTabCompletion(c.commandsDict.keys())
         elif keysym == 'BackSpace':
-            k.doBackSpace()
+            k.doBackSpace(c.commandsDict.keys())
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.mb_tabList = []
@@ -1443,7 +1443,7 @@ class keyHandlerClass:
     
         for key in keys:
             b = k.bindingsDict.get(key)
-            g.es_print(key,b.commandName or b.name)
+            g.es_print(key,b.commandName or b.name,tabName='Minibuffer')
     #@nonl
     #@-node:ekr.20051012201831:printBindings
     #@+node:ekr.20051014061332:printCommands
@@ -1470,7 +1470,7 @@ class keyHandlerClass:
             
             # Use different format strings for the console and log pane.
             print '%30s %s' % (commandName,shortcut)
-            g.es('%s %s' % (commandName,shortcut))
+            g.es('%s %s' % (commandName,shortcut),tabName='Minibuffer')
     #@nonl
     #@-node:ekr.20051014061332:printCommands
     #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
@@ -1781,7 +1781,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
     #@+node:ekr.20051015110547:registerCommand
-    def registerCommand (self,commandName,shortcut,func):
+    def registerCommand (self,commandName,shortcut,func,verbose=True):
         
         '''Make the function available as a minibuffer command,
         and optionally attempt to bind a shortcut.
@@ -1804,11 +1804,12 @@ class keyHandlerClass:
             ok = k.bindShortcut (shortcut2,func.__name__,func,commandName,
                 openWith=False,fromMenu=False)
                 
-        if shortcut and ok:
-            g.es_print('Registered %s bound to %s' % (
-                commandName,shortcut),color='blue')
-        else:
-            g.es_print('Registered %s' % (commandName), color='blue')
+        if verbose:
+            if shortcut and ok:
+                g.es_print('Registered %s bound to %s' % (
+                    commandName,shortcut),color='blue')
+            else:
+                g.es_print('Registered %s' % (commandName), color='blue')
     #@nonl
     #@-node:ekr.20051015110547:registerCommand
     #@-node:ekr.20051006065121:Externally visible helpers
@@ -1842,6 +1843,7 @@ class keyHandlerClass:
             k.svar.set(s)
             if protect:
                 k.mb_prefix = s
+            #self.widget.update_idletasks()
             
     def protectLabel (self):
         
@@ -1911,26 +1913,46 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.38:updateLabel
     #@-node:ekr.20050924064254:Label...
     #@+node:ekr.20051002152108.1:Shared helpers
+    #@+node:ekr.20051017212452:computeCompletionList
+    # Important: this code must not change mb_tabListPrefix.  Only doBackSpace should do that.
+    
+    def computeCompletionList (self,defaultTabList,backspace):
+        
+        k = self ; c = k.c ; s = k.getLabel() 
+        command = s [len(k.mb_prompt):]
+            # s always includes prefix, so command is well defined.
+    
+        k.mb_tabList,common_prefix = g.itemsMatchingPrefixInList(command,defaultTabList)
+    
+        c.frame.log.clearTab('Completion')
+    
+        if k.mb_tabList:
+            k.mb_tabListIndex = -1 # The next item will be item 0.
+    
+            if not backspace:
+                k.setLabel(k.mb_prompt + common_prefix)
+        
+            for z in k.mb_tabList:
+                g.es(z,tabName='Completion')
+    
+        k.forceFocusToBody()
+    #@nonl
+    #@-node:ekr.20051017212452:computeCompletionList
     #@+node:ekr.20050920085536.46:doBackSpace
     # Used by getArg and fullCommand.
     
-    def doBackSpace (self):
+    def doBackSpace (self,defaultCompletionList):
     
         '''Cut back to previous prefix and update prefix.'''
     
-        k = self ; s = k.mb_tabListPrefix
+        k = self
     
-        if len(s) > len(k.mb_prefix):
-            k.mb_tabListPrefix = s [:-1]
-            k.setLabel(k.mb_tabListPrefix,protect=False)
-        else:
-            k.mb_tabListPrefix = s
-            k.setLabel(k.mb_tabListPrefix,protect=True)
+        if len(k.mb_tabListPrefix) > len(k.mb_prefix):
     
-        # g.trace('BackSpace: new mb_tabListPrefix',k.mb_tabListPrefix)
+            k.mb_tabListPrefix = k.mb_tabListPrefix [:-1]
+            k.setLabel(k.mb_tabListPrefix)
     
-        # Force a recomputation of the commands list.
-        k.mb_tabList = []
+        k.computeCompletionList(defaultCompletionList,backspace=True)
     #@nonl
     #@-node:ekr.20050920085536.46:doBackSpace
     #@+node:ekr.20050920085536.44:doTabCompletion
@@ -1940,7 +1962,7 @@ class keyHandlerClass:
         
         '''Handle tab completion when the user hits a tab.'''
         
-        k = self ; s = k.getLabel().strip()
+        k = self ; c = k.c ; s = k.getLabel().strip()
         
         if k.mb_tabList and s.startswith(k.mb_tabListPrefix):
             # g.trace('cycle')
@@ -1950,23 +1972,7 @@ class keyHandlerClass:
                 k.mb_tabListIndex = 0
             k.setLabel(k.mb_prompt + k.mb_tabList [k.mb_tabListIndex])
         else:
-            s = k.getLabel() # Always includes prefix, so command is well defined.
-            k.mb_tabListPrefix = s
-            command = s [len(k.mb_prompt):]
-            k.mb_tabList,common_prefix = g.itemsMatchingPrefixInList(command,defaultTabList)
-            k.mb_tabListIndex = 0
-            # g.trace('newlist',len(k.mb_tabList),'command',command,'common_prefix',repr(common_prefix))
-            if k.mb_tabList:
-                if len(k.mb_tabList) > 1 and (
-                    len(common_prefix) > (len(k.mb_tabListPrefix) - len(k.mb_prompt))
-                ):
-                    k.setLabel(k.mb_prompt + common_prefix)
-                    k.mb_tabListPrefix = k.mb_prompt + common_prefix
-                else:
-                    # No common prefix, so show the first item.
-                    k.setLabel(k.mb_prompt + k.mb_tabList [0])
-            else:
-                k.setLabel(k.mb_prompt,protect=True)
+            k.computeCompletionList(defaultTabList,backspace=False)
     #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion
     #@+node:ekr.20051012092847:forceFocusToBody
