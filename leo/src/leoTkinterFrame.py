@@ -958,7 +958,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         show = pack
         #@nonl
         #@-node:ekr.20041223111916:pack & show
-        #@+node:ekr.20031218072017.3963:put (leoTkinterFrame)
+        #@+node:ekr.20031218072017.3963:put (leoTkinterFrame:statusLineClass)
         def put(self,s,color=None):
             
             t = self.textWidget
@@ -981,7 +981,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             t.configure(state="disabled")
             t.update_idletasks()
         #@nonl
-        #@-node:ekr.20031218072017.3963:put (leoTkinterFrame)
+        #@-node:ekr.20031218072017.3963:put (leoTkinterFrame:statusLineClass)
         #@+node:EKR.20040424154804:setFocus
         if 0: # No longer used in 4.3.  Done as the result of statusLineWantsFocus.
         
@@ -3636,6 +3636,7 @@ class leoTkinterLog (leoFrame.leoLog):
                 self.colorTags = newColorTags
         else:
             tabFrame = self.nb.add(tabName)
+            # Put a text widget in the notebook page.
             textWidget = self.createTextWidget(tabFrame)
             self.frameDict [tabName] = tabFrame
             self.textDict [tabName] = textWidget
@@ -3654,11 +3655,12 @@ class leoTkinterLog (leoFrame.leoLog):
         self.tabName = tabName
         self.logCtrl = self.textDict.get(tabName)
         self.tabFrame = self.frameDict.get(tabName)
-    
+        
+        # g.trace(self.tabName,repr(self.logCtrl))
         return tabFrame
     #@nonl
     #@-node:ekr.20051016101724.1:tkLog.selectTab
-    #@+node:ekr.20051016101927:Printing
+    #@+node:ekr.20051016101927:put & putnl (LeoTkinterLog)
     #@+at 
     #@nonl
     # Printing uses self.logCtrl, so this code need not concern itself
@@ -3671,18 +3673,24 @@ class leoTkinterLog (leoFrame.leoLog):
     #@nonl
     #@+node:ekr.20031218072017.1473:put
     # All output to the log stream eventually comes here.
-    def put (self,s,color=None):
+    def put (self,s,color=None,tabName='Log'):
         
         # print 'tkLog.put',self.c.shortFileName(),s,
     
-        if g.app.quitting: return
-        elif self.logCtrl:
+        if g.app.quitting:
+            return
+        if tabName:
+            self.selectTab(tabName)
+        
+        if self.logCtrl:
             #@        << put s to log control >>
             #@+node:EKR.20040423082910:<< put s to log control >>
             if 0:
                 # Doing this here messes up the display in the log pane.
                 if type(s) == type(u""):
                     s = g.toEncodedString(s,g.app.TkEncoding)
+                    
+            # g.trace(repr(self.logCtrl))
             
             if color:
                 if color not in self.colorTags:
@@ -3717,11 +3725,14 @@ class leoTkinterLog (leoFrame.leoLog):
     #@nonl
     #@-node:ekr.20031218072017.1473:put
     #@+node:ekr.20051016101927.1:putnl
-    def putnl (self):
+    def putnl (self,tabName='Log'):
     
         if g.app.quitting:
             return
-        elif self.logCtrl:
+        if tabName:
+            self.selectTab(tabName)
+        
+        if self.logCtrl:
             self.logCtrl.insert("end",'\n')
             self.logCtrl.see("end")
             self.forceLogUpdate('\n')
@@ -3731,7 +3742,7 @@ class leoTkinterLog (leoFrame.leoLog):
             print "Null tkinter log"
             print
     #@-node:ekr.20051016101927.1:putnl
-    #@-node:ekr.20051016101927:Printing
+    #@-node:ekr.20051016101927:put & putnl (LeoTkinterLog)
     #@-others
 #@nonl
 #@-node:ekr.20031218072017.4039:class leoTkinterLog
