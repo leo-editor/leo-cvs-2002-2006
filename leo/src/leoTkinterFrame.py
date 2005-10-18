@@ -3633,6 +3633,18 @@ class leoTkinterLog (leoFrame.leoLog):
         t.delete('1.0','end')
     #@nonl
     #@-node:ekr.20051017212057:tkLog.clearTab
+    #@+node:ekr.20051018102027:tkLog.deleteTab
+    def deleteTab (self,tabName):
+        
+        if tabName != 'Log' and tabName in self.nb.pagenames():
+            self.nb.delete(tabName)
+            self.colorTagsDict [tabName] = []
+            self.textDict [tabName] = None
+            self.frameDict [tabName] = None
+            self.tabName = None
+            self.selectTab('Log')
+    #@nonl
+    #@-node:ekr.20051018102027:tkLog.deleteTab
     #@+node:ekr.20051018061932.1:tkLog.lower/raiseTab
     def lowerTab (self,tabName):
         
