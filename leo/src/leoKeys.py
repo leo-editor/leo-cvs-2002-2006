@@ -1065,6 +1065,8 @@ class keyHandlerClass:
         if func: # Func is an argument.
             k.previousStroke = stroke
             forceFocus = func.__name__ != 'leoCallback'
+            if c.frame.log.tabName == 'Completion':
+                c.frame.log.setTab('Log')
             if forceFocus:
                 k.forceFocusToBody()
             func(event)
