@@ -2408,26 +2408,28 @@ def choose(cond, a, b): # warning: evaluates all arguments
 #@nonl
 #@-node:ekr.20031218072017.3147:choose
 #@+node:ekr.20031218072017.1474:es, enl, ecnl
-def ecnl():
-    g.ecnls(1)
+def ecnl(tabName='Log'):
+    g.ecnls(1,tabName)
 
-def ecnls(n):
+def ecnls(n,tabName='Log'):
     log = app.log
     if log and not log.isNull:
         while log.newlines < n:
-            g.enl()
+            g.enl(tabName)
 
-def enl():
+def enl(tabName='Log'):
     log = app.log
     if log and not log.isNull:
         log.newlines += 1
-        log.putnl()
+        log.putnl(tabName)
 
 def es(s,*args,**keys):
     if app.killed:
         return
     newline = keys.get("newline",True)
-    color = keys.get("color",None)
+    color = keys.get('color')
+    tabName = keys.get('tabName','Log')
+        # Default goes to log pane *Not* the presently active pane.
     if color == 'suppress': return # New in 4.3.
     if type(s) != type("") and type(s) != type(u""): # 1/20/03
         s = repr(s)
@@ -2442,12 +2444,12 @@ def es(s,*args,**keys):
         log = app.log
         if log and not log.isNull:
             # print 'g.es',s
-            log.put(s,color=color)
+            log.put(s,color=color,tabName=tabName)
             for ch in s:
                 if ch == '\n': log.newlines += 1
                 else: log.newlines = 0
             if newline:
-                g.ecnl() # only valid here
+                g.ecnl(tabName=tabName) # only valid here
         elif newline:
             app.logWaiting.append((s+'\n',color),)
             # print s
