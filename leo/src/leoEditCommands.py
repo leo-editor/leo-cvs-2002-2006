@@ -1177,45 +1177,40 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.135:deleteSpaces
     #@+node:ekr.20050920084036.141:removeBlankLines
     def removeBlankLines (self,event):
+        
         w = event.widget
         i = w.index('insert')
         i1, i2 = i.split('.')
-        i1 = int(i1)
-        dindex = []
+        i1 = int(i1) ; dindex = []
         if w.get('insert linestart','insert lineend').strip() == '':
-            while 1:
-                if str(i1) + '.0' == '1.0':
-                    break
-                i1 = i1-1
-                txt = w.get('%s.0' % i1,'%s.0 lineend' % i1)
-                txt = txt.strip()
-                if len(txt) == 0:
+            while str(i1) + '.0' != '1.0':
+                i1 -= 1
+                g.trace('loop1',i1)
+                s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
+                if not s:
                     dindex.append('%s.0' % i1)
                     dindex.append('%s.0 lineend' % i1)
                 elif dindex:
                     w.delete('%s-1c' % dindex[-2],dindex[1])
                     w.event_generate('<Key>')
-                    w.update_idletasks()
+                    w.update_idletasks() # Needed to continue the loop.
                     break
                 else:
                     break
         i = w.index('insert')
         i1, i2 = i.split('.')
-        i1 = int(i1)
-        dindex = []
-        while 1:
-            if w.index('%s.0 lineend' % i1) == w.index('end'):
-                break
-            i1 = i1 + 1
-            txt = w.get('%s.0' % i1,'%s.0 lineend' % i1)
-            txt = txt.strip()
-            if len(txt) == 0:
+        i1 = int(i1) ; dindex = []
+        while w.index('%s.0 lineend' % i1) != w.index('end'):
+            i1 += 1
+            g.trace('loop1',i1)
+            s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
+            if not s:
                 dindex.append('%s.0' % i1)
                 dindex.append('%s.0 lineend' % i1)
             elif dindex:
                 w.delete('%s-1c' % dindex[0],dindex[-1])
                 w.event_generate('<Key>')
-                w.update_idletasks()
+                w.update_idletasks() # Needed to continue the loop.
                 break
             else:
                 break
@@ -1531,7 +1526,7 @@ class editCommandsClass (baseEditCommandsClass):
         i = w.index('insert linestart')
         i2 = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
         w.mark_set('insert',i2)
-        w.update_idletasks()
+        ### w.update_idletasks()
     #@nonl
     #@-node:ekr.20050920084036.75:backToIndentation
     #@+node:ekr.20050920084036.76:deleteIndentation
@@ -1582,7 +1577,7 @@ class editCommandsClass (baseEditCommandsClass):
                 else:
                     z = replace_word.subn(' ',z)
                     w.insert('insert',z[0])
-                    w.update_idletasks()
+                    ###w.update_idletasks()
     #@nonl
     #@-node:ekr.20050920084036.78:indentRelative
     #@-node:ekr.20050920084036.74:indent...
@@ -1856,8 +1851,8 @@ class editCommandsClass (baseEditCommandsClass):
     
         w.mark_set('insert',nind)
         w.see('insert')
-        w.event_generate('<Key>')
-        w.update_idletasks()
+        ### w.event_generate('<Key>')
+        ### w.update_idletasks()
     
     def backwardWord (self,event):
         self.moveWordHelper(event,forward=False)
@@ -2226,8 +2221,8 @@ class editCommandsClass (baseEditCommandsClass):
                 t2 = ws + t2
                 w.delete('%s.0' % z,'%s.0 lineend' % z)
                 w.insert('%s.0' % z,t2)
-            w.event_generate('<Key>')
-            w.update_idletasks()
+            ### w.event_generate('<Key>')
+            ### w.update_idletasks()
         self.removeRKeys(w)
     #@nonl
     #@-node:ekr.20050920084036.107:indentRegion
@@ -3639,7 +3634,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
                 end = match.end()
                 length = end - start
                 w.mark_set('insert','insert +%sc' % start)
-                w.update_idletasks()
+                ### w.update_idletasks()
                 w.tag_add('qR','insert','insert +%sc' % length)
                 w.tag_config('qR',background='lightblue')
                 txt = w.get('insert','insert +%sc' % length)
@@ -3656,7 +3651,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
             i = w.search(self.qQ,'insert',stopindex='end')
             if i:
                 w.mark_set('insert',i)
-                w.update_idletasks()
+                ###w.update_idletasks()
                 w.tag_add('qR','insert','insert +%sc' % len(self.qQ))
                 w.tag_config('qR',background='lightblue')
                 return True
