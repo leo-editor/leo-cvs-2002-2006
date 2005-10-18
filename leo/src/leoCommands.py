@@ -1235,7 +1235,7 @@ class baseCommands:
     #@-node:ekr.20031218072017.2863:delete
     #@+node:ekr.20031218072017.2140:c.executeScript
     def executeScript(self,p=None,script=None,
-        useSelectedText=True,define_g=True,define_name=''):
+        useSelectedText=True,define_g=True,define_name='',silent=False):
     
         """This executes body text as a Python script.
         
@@ -1263,7 +1263,7 @@ class baseCommands:
                     if define_name: d['__name__'] = define_name
                     # g.trace(script)
                     exec script in d
-                    if not script1:
+                    if not script1 and not silent:
                         g.es("end of script",color="purple")
                 except Exception:
                     #@                << handle an exception in the script >>
