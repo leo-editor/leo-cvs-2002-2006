@@ -43,7 +43,6 @@ import leoCommands
 import leoPlugins
 
 from leoTkinterDialog import tkinterListBoxDialog, leoTkinterDialog
-import Pmw
 
 if 0: # Not anymore
     from leoGlobals import * # required by read :-(.
