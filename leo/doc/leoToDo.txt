@@ -26,11 +26,8 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- Create show-fonts command, and make show-colors an official command.
 
-- Allow per-pane settings:
-    goto-next-visible = (outline) DnArrow
-    next-line         = (body) DnArrow
+
 
 ** Unit tests: test all commands
 
@@ -41,33 +38,7 @@ Docs:
     - Document @command and @button @key.
     - Posting: how to program tabs in the log pane.
     - Posting: Not possible to use @command inside a derived file.
-#@+node:ekr.20051015223107.3:First
-#@+node:ekr.20051008131807:Unit tests: 
-@nocolor
-
-** New utils for unit testing
-    - The idea is to avoid subclassing TestCase.
-    - data = g.saveSubtree()
-    - g.restoreSubtree(data)
-    
-- g.simulateKeystrokes (keystrokes,p=None)
-    - keystrokes is a list of bindings to be 'executed' as if typed.
-        - This is an easy way of simulating user interaction.
-
-- unit calls k.simulateKeystrokes and then makes assertions about
-    - state
-    - Contents of label.
-    - ivars
-    - Contents of body text.
-    - what widget has focus.
-    - what the point, mark and selection are.
-    - etc.
-
-@color
-#@nonl
-#@-node:ekr.20051008131807:Unit tests: 
-#@-node:ekr.20051015223107.3:First
-#@+node:ekr.20051016162724:Next
+#@+node:ekr.20051016162724:First
 Urgent:
 
 - Improve emacs-search commands
@@ -387,6 +358,7 @@ outline.
     These might get the tab name from the minibuffer...
 #@nonl
 #@-node:ekr.20050928144501:Expand commands to handle Leo environment
+#@-node:ekr.20051016162724:First
 #@+node:ekr.20051015223107.2:Bugs 3
 #@+node:ekr.20051014104337.1:Crash in undo
 exception executing command
@@ -478,7 +450,6 @@ Python 2.3.5, Tk 8.4.7, darwin
 Mac OS 10.4.2
 #@-node:ekr.20051017132446:Hang in MacOS scripting
 #@-node:ekr.20051015223107.2:Bugs 3
-#@-node:ekr.20051016162724:Next
 #@+node:ekr.20050925105522:Big
 * Complete Editor menu.
 
@@ -2844,7 +2815,7 @@ xwem-worklog-tasks-description
 #@+node:ekr.20051014161015:Full input modes
 #@-node:ekr.20051014161015:Full input modes
 #@-node:ekr.20050925105522:Big
-#@+node:ekr.20051012062458.1:Others
+#@+node:ekr.20051012062458.1:Minor
 - The code that reads @shortcuts nodes should issue a warning is a single node
 contains multiple entries for the same command name!
 
@@ -2897,7 +2868,7 @@ possibly looking somewhere besides the leo/plugins folder, or maybe having it
 always be enabled.
 #@nonl
 #@-node:ekr.20051016155819:treat plugins/options.py  differently?
-#@-node:ekr.20051012062458.1:Others
+#@-node:ekr.20051012062458.1:Minor
 #@+node:ekr.20051017140811:Original temac bindings
 Buffer Keyboard Commands:
 ----------------------------------------

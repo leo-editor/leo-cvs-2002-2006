@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7745" clone_windows="0"/>
-<globals body_outline_ratio="0.59543817527">
-	<global_window_position top="62" left="141" height="833" width="872"/>
+<globals body_outline_ratio="0.637454981993">
+	<global_window_position top="71" left="353" height="833" width="872"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -846,7 +846,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051016205407"><vh>@@button test @key=alt-shift-ctrl-y</vh></v>
 </v>
 </v>
-<v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes...</vh>
+<v t="ekr.20041126132604" a="TV" annotate="7d71002e"><vh>Prototypes...</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
 <v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
 </v>
@@ -1002,6 +1002,45 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050708105323.3"><vh>ipmagic &amp; palias</vh></v>
 <v t="ekr.20050708165531.1"><vh>esc_quotes</vh></v>
+</v>
+<v t="ekr.20051020104412.37"><vh>Functional prototype of open-find-tab</vh>
+<v t="ekr.20051020110046"><vh>class underlinedTkButton</vh>
+<v t="ekr.20051020110046.1"><vh>__init__</vh>
+<v t="ekr.20051020110046.2"><vh>&lt;&lt; set self.hotKey if '&amp;' is in the string &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051020110046.3"><vh>bindHotKey</vh></v>
+<v t="ekr.20051020110046.4"><vh>buttonCallback</vh></v>
+</v>
+<v t="ekr.20051020104805" a="E"><vh>class leoTkinterFindTab</vh>
+<v t="ekr.20051020104805.1" a="E"><vh> Not used</vh>
+<v t="ekr.20051020104805.2"><vh>destroySelf</vh></v>
+<v t="ekr.20051020104805.9"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051020104805.3" a="E"><vh>Birth &amp; death</vh>
+<v t="ekr.20051020104805.4" a="E"><vh>__init__</vh>
+<v t="ekr.20051020104805.5"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051020104805.6" a="E"><vh>find.createFrame</vh>
+<v t="ekr.20051020105921"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
+<v t="ekr.20051020104805.7"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
+<v t="ekr.20051020104805.8"><vh>&lt;&lt; Bind Tab and control-tab &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051020111605" a="E"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
+<v t="ekr.20051020104805.10"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051020104805.11" a="E"><vh>find.init</vh>
+<v t="ekr.20051020104805.12"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
+<v t="ekr.20051020104805.13"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20051020104805.14"><vh>find.update_ivars</vh></v>
+<v t="ekr.20051020104805.15"><vh>tkFind.adjust_find_text</vh></v>
+<v t="ekr.20051020104805.16"><vh>onCloseWindow</vh></v>
+<v t="ekr.20051020104805.17"><vh>dismiss</vh></v>
+<v t="ekr.20051020104805.18"><vh>bringToFront</vh></v>
+<v t="ekr.20051020104805.19"><vh>selectAllFindText</vh></v>
+<v t="ekr.20051020104805.20"><vh>Tkinter wrappers (leoTkinterFind)</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
@@ -2347,58 +2386,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
-<v t="ekr.20051020104412"><vh>show-fonts &amp; helpers</vh>
-<v t="ekr.20051020104412.1"><vh>createFontPicker</vh>
-<v t="ekr.20051020104412.2"><vh>&lt;&lt; create the frames &gt;&gt;</vh></v>
-<v t="ekr.20051020104412.3"><vh>&lt;&lt; create the family combo box &gt;&gt;</vh></v>
-<v t="ekr.20051020104412.4"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
-<v t="ekr.20051020104412.5"><vh>&lt;&lt; create the weight combo box &gt;&gt;</vh></v>
-<v t="ekr.20051020104412.6"><vh>&lt;&lt; create the slant combo box&gt;&gt;</vh></v>
-<v t="ekr.20051020104412.7"><vh>&lt;&lt; create the sample text widget &gt;&gt;</vh></v>
-<v t="ekr.20051020104412.8"><vh>&lt;&lt; create and bind the callbacks &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020104412.9"><vh>getFont</vh></v>
-<v t="ekr.20051020104412.10"><vh>setFont</vh></v>
-</v>
-<v t="ekr.20051020104412.37" a="ETV"><vh>@command Find Tab</vh>
-<v t="ekr.20051020110046"><vh>class underlinedTkButton</vh>
-<v t="ekr.20051020110046.1"><vh>__init__</vh>
-<v t="ekr.20051020110046.2"><vh>&lt;&lt; set self.hotKey if '&amp;' is in the string &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020110046.3"><vh>bindHotKey</vh></v>
-<v t="ekr.20051020110046.4"><vh>buttonCallback</vh></v>
-</v>
-<v t="ekr.20051020104805" a="E"><vh>class leoTkinterFindTab</vh>
-<v t="ekr.20051020104805.1" a="E"><vh> Not used</vh>
-<v t="ekr.20051020104805.2"><vh>destroySelf</vh></v>
-<v t="ekr.20051020104805.9"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020104805.3" a="E"><vh>Birth &amp; death</vh>
-<v t="ekr.20051020104805.4" a="E"><vh>__init__</vh>
-<v t="ekr.20051020104805.5"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020104805.6" a="E"><vh>find.createFrame</vh>
-<v t="ekr.20051020105921"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
-<v t="ekr.20051020104805.7"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
-<v t="ekr.20051020104805.8"><vh>&lt;&lt; Bind Tab and control-tab &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020111605" a="E"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
-<v t="ekr.20051020104805.10"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020104805.11" a="E"><vh>find.init</vh>
-<v t="ekr.20051020104805.12"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
-<v t="ekr.20051020104805.13"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20051020104805.14"><vh>find.update_ivars</vh></v>
-<v t="ekr.20051020104805.15"><vh>tkFind.adjust_find_text</vh></v>
-<v t="ekr.20051020104805.16"><vh>onCloseWindow</vh></v>
-<v t="ekr.20051020104805.17"><vh>dismiss</vh></v>
-<v t="ekr.20051020104805.18"><vh>bringToFront</vh></v>
-<v t="ekr.20051020104805.19"><vh>selectAllFindText</vh></v>
-<v t="ekr.20051020104805.20"><vh>Tkinter wrappers (leoTkinterFind)</vh></v>
-</v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -3106,7 +3093,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -22775,115 +22762,7 @@ d
 e</t>
 <t tx="ekr.20051017104401"></t>
 <t tx="ekr.20051018071924">	</t>
-<t tx="ekr.20051020104412">def showFonts (self,event):
-
-    c = self.c ; log = c.frame.log ; tabName = 'Fonts'
-
-    if log.frameDict.get(tabName):
-        log.selectTab(tabName)
-    else:
-        log.selectTab(tabName)
-        f = log.frameDict.get(tabName)
-        t = log.textDict.get(tabName)
-        t.pack_forget()
-        self.createFontPicker(f)</t>
-<t tx="ekr.20051020104412.1">def createFontPicker (self,parent):
-
-    bg = parent.cget('background')
-    font = self.getFont()
-    &lt;&lt; create the frames &gt;&gt;
-    &lt;&lt; create the family combo box &gt;&gt;
-    &lt;&lt; create the size entry &gt;&gt;
-    &lt;&lt; create the weight combo box &gt;&gt;
-    &lt;&lt; create the slant combo box &gt;&gt;
-    &lt;&lt; create the sample text widget &gt;&gt;
-    &lt;&lt; create and bind the callbacks &gt;&gt;</t>
-<t tx="ekr.20051020104412.2">f = Tk.Frame(parent,background=bg) ; f.pack (side='top',expand=0,fill='both')
-f1 = Tk.Frame(f,background=bg)     ; f1.pack(side='top',expand=1,fill='x')
-f2 = Tk.Frame(f,background=bg)     ; f2.pack(side='top',expand=1,fill='x')
-f3 = Tk.Frame(f,background=bg)     ; f3.pack(side='top',expand=1,fill='x')
-f4 = Tk.Frame(f,background=bg)     ; f4.pack(side='top',expand=1,fill='x')</t>
-<t tx="ekr.20051020104412.3">names = tkFont.families()
-names = list(names)
-names.sort()
-names.insert(0,'&lt;None&gt;')
-
-familyBox = Pmw.ComboBox(f1,
-    labelpos="we",label_text='Family:',label_width=10,
-    label_background=bg,
-    arrowbutton_background=bg,
-    scrolledlist_items=names)
-
-familyBox.selectitem(0)
-familyBox.pack(side="left",padx=2,pady=2)</t>
-<t tx="ekr.20051020104412.4">Tk.Label(f2,text="Size:",width=10,background=bg).pack(side="left")
-
-sizeEntry = Tk.Entry(f2,width=4) ##,textvariable=sv)
-sizeEntry.pack(side="left",padx=2,pady=2)
-</t>
-<t tx="ekr.20051020104412.5">weightBox = Pmw.ComboBox(f3,
-    labelpos="we",label_text="Weight:",label_width=10,
-    label_background=bg,
-    arrowbutton_background=bg,
-    scrolledlist_items=['&lt;None&gt;','normal','bold'])
-
-weightBox.selectitem(0)
-weightBox.pack(side="left",padx=2,pady=2)</t>
-<t tx="ekr.20051020104412.6">slantBox = Pmw.ComboBox(f4,
-    labelpos="we",label_text="Slant:",label_width=10,
-    label_background=bg,
-    arrowbutton_background=bg,
-    scrolledlist_items=['&lt;None&gt;','roman','italic'])
-
-slantBox.selectitem(0)
-slantBox.pack(side="left",padx=2,pady=2)</t>
-<t tx="ekr.20051020104412.7">sample = Tk.Text(f,height=20,width=80,font=font)
-sample.pack(side='left')
-
-s = 'The quick brown fox\njumped over the lazy dog.\n0123456789'
-sample.insert('1.0',s)</t>
-<t tx="ekr.20051020104412.8">def fontCallback(event=None):
-    self.setFont(familyBox,sizeEntry,slantBox,weightBox,sample)
-
-for w in (familyBox,slantBox,weightBox):
-    w.configure(selectioncommand=fontCallback)
-
-sizeEntry.bind('&lt;Return&gt;',fontCallback)</t>
-<t tx="ekr.20051020104412.9">def getFont(self,family=None,size=12,slant='roman',weight='normal'):
-    
-    try:
-        return tkFont.Font(family=family,size=size,slant=slant,weight=weight)
-    except:
-        g.es("exception setting font")
-        g.es("family,size,slant,weight:",family,size,slant,weight)
-        # g.es_exception() # This just confuses people.
-        return g.app.config.defaultFont</t>
-<t tx="ekr.20051020104412.10">def setFont(self,familyBox,sizeEntry,slantBox,weightBox,label):
-    
-    d = {}
-    for box,key in (
-        (familyBox, 'family'),
-        (None,      'size'),
-        (slantBox,  'slant'),
-        (weightBox, 'weight'),
-    ):
-        if box: val = box.get()
-        else:
-            val = sizeEntry.get().strip() or ''
-            try: int(val)
-            except ValueError: val = None
-        if val and val.lower() not in ('none','&lt;none&gt;',):
-            d[key] = val
-
-    family=d.get('family',None)
-    size=d.get('size',12)
-    weight=d.get('weight','normal')
-    slant=d.get('slant','roman')
-    font = self.getFont(family,size,slant,weight)
-    label.configure(font=font)</t>
-<t tx="ekr.20051020104412.37"># To do: disallow 'real' deletes of 'Find' tab.
-
-import leoFind
+<t tx="ekr.20051020104412.37">import leoFind
 import leoTkinterDialog
 import Tkinter as Tk
 
@@ -22891,8 +22770,6 @@ import Tkinter as Tk
 
 #c = self.c ; 
 log = c.frame.log ; tabName = 'Find'
-
-log.deleteTab(tabName) # For testing only.  The core preserves the Find tab.
 
 if log.frameDict.get(tabName):
     log.selectTab(tabName)
