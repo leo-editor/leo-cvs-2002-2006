@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7745" clone_windows="0"/>
 <globals body_outline_ratio="0.59543817527">
-	<global_window_position top="62" left="141" height="833" width="941"/>
+	<global_window_position top="62" left="141" height="833" width="872"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -2360,7 +2360,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051020104412.9"><vh>getFont</vh></v>
 <v t="ekr.20051020104412.10"><vh>setFont</vh></v>
 </v>
-<v t="ekr.20051020104412.37" a="E"><vh>@command Find Tab</vh>
+<v t="ekr.20051020104412.37" a="ETV"><vh>@command Find Tab</vh>
 <v t="ekr.20051020110046"><vh>class underlinedTkButton</vh>
 <v t="ekr.20051020110046.1"><vh>__init__</vh>
 <v t="ekr.20051020110046.2"><vh>&lt;&lt; set self.hotKey if '&amp;' is in the string &gt;&gt;</vh></v>
@@ -2382,10 +2382,10 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051020104805.7"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
 <v t="ekr.20051020104805.8"><vh>&lt;&lt; Bind Tab and control-tab &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051020111605" a="TV"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
+<v t="ekr.20051020111605" a="E"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
 <v t="ekr.20051020104805.10"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051020104805.11"><vh>find.init</vh>
+<v t="ekr.20051020104805.11" a="E"><vh>find.init</vh>
 <v t="ekr.20051020104805.12"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
 <v t="ekr.20051020104805.13"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
 </v>
@@ -22892,6 +22892,8 @@ import Tkinter as Tk
 #c = self.c ; 
 log = c.frame.log ; tabName = 'Find'
 
+log.deleteTab(tabName) # For testing only.  The core preserves the Find tab.
+
 if log.frameDict.get(tabName):
     log.selectTab(tabName)
 else:
@@ -23079,15 +23081,17 @@ findButton=Tk.Button(buttons,
     width=9,text="Find",bd=4,command=findButtonCallback) # The default.
 findButton.pack(pady="1p",padx="25p",side="left")
 
-if 0:
-    contextBox = underlinedTkButton("check",buttons,
-        anchor="w",text="Show Context",variable=self.dict["batch"])
-    contextBox.button.pack(pady="1p",side="left",expand=1)
-    contextBox.bindHotKey(ftxt)
-    contextBox.bindHotKey(ctxt)
+if 1:
+    incrementalBox = underlinedTkButton("check",buttons,
+        anchor="w",text="Incremental")
+        # Not yet.  This may affect the file format!
+        # ,variable=self.dict['incremental'])
+    incrementalBox.button.pack(pady="1p",side="left",expand=1)
+    incrementalBox.bindHotKey(ftxt)
+    incrementalBox.bindHotKey(ctxt)
 
 findAllButton = underlinedTkButton("button",buttons,
-    width=9,text="Fin&amp;d All",command=self.findAllButton)
+    width=9,text="Find All",command=self.findAllButton)
 findAllButton.button.pack(pady="1p",padx="25p",side="right",fill="x")
 findAllButton.bindHotKey(ftxt)
 findAllButton.bindHotKey(ctxt)
@@ -23251,7 +23255,11 @@ def init_s_ctrl (self,s):
     t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
     return t</t>
 <t tx="ekr.20051020105921">self.top = Tk.Frame(parentFrame)
-self.top.pack(side='left') # side='top' centers all elements.
+
+if 1: # Left justify
+    self.top.pack(side='left',fill='y',pady=10)
+else:
+    self.top.pack(side='top',pady=20)
 
 self.frame = Tk.Frame(self.top)
 self.frame.pack(side="top")
@@ -23316,8 +23324,7 @@ def buttonCallback (self, event=None):
     return 'break'
 </t>
 <t tx="ekr.20051020111605">columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
-# columnsFrame.pack(anchor="e",expand=1,padx="7p",pady="2p") # Don't fill.
-columnsFrame.pack(expand=1,padx="7p",pady="2p") # Fill to center. fill='x',
+columnsFrame.pack(expand=1,padx="7p",pady="2p") # Use ,fill='x' to left justify
 
 numberOfColumns = 2 # Number of columns
 columns = [] ; radioLists = [] ; checkLists = []
@@ -23332,16 +23339,19 @@ for i in xrange(numberOfColumns):
 # HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
 
 radioLists[0] = [
-    (self.dict["radio-find-type"],"P&amp;Lain Search","plain-search"),  
-    (self.dict["radio-find-type"],"&amp;Pattern Match Search","pattern-search"),
+    #(self.dict["radio-find-type"],"P&amp;Lain Search","plain-search"),  
+    #(self.dict["radio-find-type"],"&amp;Pattern Match Search","pattern-search"),
     # (self.dict["radio-find-type"],"&amp;Script Search","script-search"),
 ]
 checkLists[0] = [
     # ("Scrip&amp;t Change",self.dict["script_change"]),
-    ("Whole Word",  self.dict["whole_word"]),
-    ("Ignore Case", self.dict["ignore_case"]),
-    ("Wrap Around", self.dict["wrap"]),
-    ("Reverse",     self.dict["reverse"]),
+    ("Whole Word",      self.dict["whole_word"]),
+    ("Ignore Case",     self.dict["ignore_case"]),
+    ("Wrap Around",     self.dict["wrap"]),
+    ("Reverse",         self.dict["reverse"]),
+    ('Regexp',          self.dict["radio-find-type"]=='pattern-search'),
+    ("Search Headline", self.dict["search_headline"]),
+    ("Search Body",     self.dict["search_body"]),
 ]
 
 radioLists[1] = [
@@ -23351,10 +23361,7 @@ radioLists[1] = [
     # I don't know what selection-only is supposed to do.
     (self.dict["radio-search-scope"],"Selection Only",None), #,"selection-only")
 ]
-
 checkLists[1] = [
-    ("Search &amp;Headline Text", self.dict["search_headline"]),
-    ("Search &amp;Body Text",     self.dict["search_body"]),
     ("&amp;Mark Finds",           self.dict["mark_finds"]),
     ("Mark &amp;Changes",         self.dict["mark_changes"]),
     ('Show Context',          self.dict['batch']),
