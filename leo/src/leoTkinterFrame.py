@@ -3454,7 +3454,12 @@ class leoTkinterLog (leoFrame.leoLog):
             lowercommand = self.lowerTab
         )
     
-        self.makeTabMenu()
+        menu = self.makeTabMenu(tabName=None)
+    
+        def hullMenuCallback(event):
+            self.onRightClick(event,menu)
+    
+        self.nb.bind('<Button-3>',hullMenuCallback)
     
         self.nb.pack(fill='both',expand=1)
         self.selectTab('Log') # create the tab and make it the active tab.
@@ -3485,30 +3490,33 @@ class leoTkinterLog (leoFrame.leoLog):
     #@nonl
     #@-node:ekr.20051016103459:tkLog.createTextWidget
     #@+node:ekr.20051019134106.1:tkLog.makeTabMenu
-    def makeTabMenu (self):
+    def makeTabMenu (self,tabName=None):
     
-        '''Create the menu that appears when the user clicks a tab.'''
+        '''Create a tab popup menu.'''
     
         c = self.c
         hull = self.nb.component('hull') # A Tk.Canvas.
         
-        self.tabMenu = menu = Tk.Menu(hull,tearoff=0)
+        menu = Tk.Menu(hull,tearoff=0)
+        menu.add_command(label='New Tab',command=self.newTabFromMenu)
         
-        menu.add_command(label='Delete Tab',command=self.deleteTabFromMenu)
-        menu.add_command(label='New Tab',   command=self.newTabFromMenu)
-        
-        if 0: # Renaming is dubious, because Pmw doesn't have a way of actually renaming the tabs.
-            menu.add_command(label='Rename Tab',command=self.renameTabFromMenu)
-        
-        self.nb.bind('<Button-3>',self.onRightClick)
+        if tabName:
+            # Important: tabName is the name when the tab is created.
+            # It is not affected by renaming, so we don't have to keep
+            # track of the correspondence between this name and what is in the label.
+            def deleteTabCallback():
+                self.deleteTab(tabName)
+    
+            menu.add_command(label='Delete This Tab',command=deleteTabCallback)
+     
+            def renameTabCallback():
+                self.renameTabFromMenu(tabName)
+    
+            menu.add_command(label='Rename This Tab',command=renameTabCallback)
+    
+        return menu
     #@nonl
     #@-node:ekr.20051019134106.1:tkLog.makeTabMenu
-    #@+node:ekr.20051019134422:tkLog.onRightClick
-    def onRightClick (self,event):
-    
-        self.tabMenu.post(event.x_root,event.y_root)
-    #@nonl
-    #@-node:ekr.20051019134422:tkLog.onRightClick
     #@-node:ekr.20051016095907:tkLog Birth
     #@+node:ekr.20051016095907.1:Config & get/saveState
     #@+node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
@@ -3770,16 +3778,6 @@ class leoTkinterLog (leoFrame.leoLog):
     #@nonl
     #@-node:ekr.20051018061932.1:ower/raiseTab
     #@+node:ekr.20051019170806:renameTab
-    #@+at 
-    #@nonl
-    # Not used, and doesn't really work. Pmw.Notebook has no rename method,
-    # so changing the label just cause confusion.
-    # 
-    # One way to fix this would be to have a 'realNames' dict, another would 
-    # be to use numeric indics.
-    #@-at
-    #@@c
-    
     def renameTab (self,oldName,newName):
         
         label = self.nb.tab(oldName)
@@ -3789,117 +3787,122 @@ class leoTkinterLog (leoFrame.leoLog):
     #@+node:ekr.20051016101724.1:selectTab
     def selectTab (self,tabName):
     
-        '''Create the tab if necessary and make it the active tab to which all
-        output is sent.'''
+        '''Create the tab if necessary and make it active.'''
         
         c = self.c ; tabFrame = self.frameDict.get(tabName)
         # g.trace(g.choose(tabName,'switching to','creating'),tabName)
-    
         if tabFrame:
             # Switch to a new colorTags list.
-            if 1: # We might be able to do without this...
-                newColorTags = self.colorTagsDict.get(tabName)
-                self.colorTagsDict [self.tabName] = self.colorTags [:]
-                self.colorTags = newColorTags
+            newColorTags = self.colorTagsDict.get(tabName)
+            self.colorTagsDict [self.tabName] = self.colorTags [:]
+            self.colorTags = newColorTags
         else:
             tabFrame = self.nb.add(tabName)
-            # Bind the pop-up menu to the tab.
+            #@        << bind a tab-specific pop-up menu to the tab >>
+            #@+node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
+            menu = self.makeTabMenu(tabName)
             tab = self.nb.tab(tabName)
-            tab.bind('<Button-3>',self.onRightClick)
-            # Put a text widget in the notebook page.
+            
+            def menuClickCallback(event):
+                self.onRightClick(event,menu)
+            
+            tab.bind('<Button-3>',menuClickCallback)
+            #@nonl
+            #@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
+            #@nl
+            #@        << Create the tab's text widget >>
+            #@+node:ekr.20051018072306:<< Create the tab's text widget >>
             textWidget = self.createTextWidget(tabFrame)
-            #@        << configure textWidget >>
-            #@+node:ekr.20051018072306:<< configure textWidget >>
-            if tabName != 'Log':
-                configName = 'log_pane_%s_tab_background_color' % tabName
-                bg = c.config.getColor(configName) or 'MistyRose1'
-                try: textWidget.configure(bg=bg)
-                except Exception: pass # Could be a user error.
+            
+            # Set the background color.
+            configName = 'log_pane_%s_tab_background_color' % tabName
+            bg = c.config.getColor(configName) or 'MistyRose1'
+            try: textWidget.configure(bg=bg)
+            except Exception: pass # Could be a user error.
+            
             self.frameDict [tabName] = tabFrame
             self.textDict [tabName] = textWidget
+            
             # Switch to a new colorTags list.
             if self.tabName:
                 self.colorTagsDict [self.tabName] = self.colorTags [:]
             self.colorTags = ['black']
             self.colorTagsDict [tabName] = self.colorTags
-            # Init the configuration.
+            
+            # Make the bindings.
             textWidget.bind("<Button-1>",self.onActivateLog)
             textWidget.tag_config('black',foreground='black')
             #@nonl
-            #@-node:ekr.20051018072306:<< configure textWidget >>
+            #@-node:ekr.20051018072306:<< Create the tab's text widget >>
             #@nl
             # Update immediately so we can queue the request to change focus.
             tabFrame.update_idletasks()
             self.c.frame.bodyWantsFocus(self.c.frame.bodyCtrl,tag='tkLog.selectTab')
             
         self.nb.selectpage(tabName)
-    
         # Update the status vars.
         self.tabName = tabName
         self.logCtrl = self.textDict.get(tabName)
         self.tabFrame = self.frameDict.get(tabName)
-        
         # g.trace(self.tabName,repr(self.logCtrl))
         return tabFrame
     #@nonl
     #@-node:ekr.20051016101724.1:selectTab
-    #@+node:ekr.20051019134106:tab menu...
-    #@+node:ekr.20051019140004:deleteTabFromMenu
-    def deleteTabFromMenu (self):
+    #@+node:ekr.20051019134106:Tab menu callbacks & helpers
+    #@+node:ekr.20051019134422:onRightClick
+    def onRightClick (self,event,menu):
     
-        tabName = self.nb.getcurselection()
-    
-        self.deleteTab(tabName)
+        menu.post(event.x_root,event.y_root)
     #@nonl
-    #@-node:ekr.20051019140004:deleteTabFromMenu
+    #@-node:ekr.20051019134422:onRightClick
     #@+node:ekr.20051019140004.1:newTabFromMenu
-    def newTabFromMenu (self):
-        
-        tabName = self.nb.getcurselection()
+    def newTabFromMenu (self,tabName='Log'):
     
+        self.selectTab(tabName)
         parentFrame = self.frameDict.get(tabName)
         
-        def renameCallback (oldName,newName):
+        # This is called by getTabName.
+        def selectTabCallback (oldName,newName):
             self.selectTab(newName)
     
-        self.getTabName(parentFrame,'',renameCallback)
+        self.getTabName(parentFrame,'',selectTabCallback)
     #@nonl
     #@-node:ekr.20051019140004.1:newTabFromMenu
-    #@+node:ekr.20051019165401:renameTabFromMenu (not used)
-    def renameTabFromMenu (self):
-    
-        tabName = self.nb.getcurselection()
+    #@+node:ekr.20051019165401:renameTabFromMenu
+    def renameTabFromMenu (self,tabName):
     
         if tabName in ('Log','Completions'):
             g.es('can not rename %s tab' % (tabName),color='blue')
-    
         else:
             parentFrame = self.frameDict.get(tabName)
             self.getTabName(parentFrame,tabName,self.renameTab)
     #@nonl
-    #@-node:ekr.20051019165401:renameTabFromMenu (not used)
+    #@-node:ekr.20051019165401:renameTabFromMenu
     #@+node:ekr.20051019172811:getTabName
     def getTabName (self,parentFrame,tabName,exitCallback):
     
-        # Put the Entry in the frame being renamed.
-        f = Tk.Frame(parentFrame,background='LightSteelBlue1')
+        f = Tk.Frame(parentFrame)
+        f.pack(side='bottom',fill='x',expand=1)
+    
+        Tk.Label(f,text='Tab name').pack(side='left')
+    
         e = Tk.Entry(f,background='white')
+        e.pack(side='left')
     
         def getNameCallback (event=None):
             s = e.get().strip()
             f.pack_forget()
-            if s:
-                exitCallback(tabName,s)
+            if s: exitCallback(tabName,s)
+        
+        if 0:
+            b = Tk.Button(row,text="Close",command=getNameCallback)
+            b.pack(side='left')
     
-        b = Tk.Button(f,text="Close",command=getNameCallback)
-        f.pack(side='bottom') # ,fill='both',expand=1)
-        e.pack(side='left')
-        b.pack(side='left')
         e.focus_force()
         e.bind('<Return>',getNameCallback)
     #@nonl
     #@-node:ekr.20051019172811:getTabName
-    #@-node:ekr.20051019134106:tab menu...
+    #@-node:ekr.20051019134106:Tab menu callbacks & helpers
     #@-node:ekr.20051018061932:Tab (TkLog)
     #@-others
 #@nonl
