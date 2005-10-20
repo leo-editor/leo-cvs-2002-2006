@@ -26,22 +26,22 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- Posting: how to program tabs in the log pane.
+- Create show-fonts command, and make show-colors an official command.
+
+- Allow per-pane settings:
+    goto-next-visible = (outline) DnArrow
+    next-line         = (body) DnArrow
+
+** Unit tests: test all commands
 
 Docs:
     - Document new settings.
     - Document how to create and manage tabs in the log pane.
     - Document how to script the log pane.
     - Document @command and @button @key.
-#@nonl
+    - Posting: how to program tabs in the log pane.
+    - Posting: Not possible to use @command inside a derived file.
 #@+node:ekr.20051015223107.3:First
-- Allow per-pane settings:
-
-    goto-next-visible   = (outline) DnArrow
-    next-line           = (body) DnArrow
-
-- Test all minibuffer commands, and make unit tests.
-#@nonl
 #@+node:ekr.20051008131807:Unit tests: 
 @nocolor
 

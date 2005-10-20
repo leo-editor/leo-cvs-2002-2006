@@ -43,6 +43,7 @@ plugins_menu.py
 #pretty_print.py
 rst3.py
 # zodb.py
+# testRegisterCommand.py
 plugin_manager.py
 
 # Icon area: order is important.
