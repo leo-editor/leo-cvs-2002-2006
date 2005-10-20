@@ -4570,6 +4570,8 @@ class searchCommandsClass (baseEditCommandsClass):
     #@    @+others
     #@+node:ekr.20050920084036.258: ctor
     def __init__ (self,c):
+        
+        # g.trace('searchCommandsClass')
     
         baseEditCommandsClass.__init__(self,c) # init the base class.
         
@@ -4628,6 +4630,7 @@ class searchCommandsClass (baseEditCommandsClass):
         
             # Init the base class...
             leoFind.leoFind.__init__(self,c,title='Find Tab')
+            self.c = c
             
             #@    << create the tkinter intVars >>
             #@+node:ekr.20051020120306.12:<< create the tkinter intVars >>
@@ -4656,43 +4659,46 @@ class searchCommandsClass (baseEditCommandsClass):
         #@+node:ekr.20051020120306.13:find.createFrame
         def createFrame (self,parentFrame):
             
+            c = self.c
+            
             #@    << Create the outer frames >>
             #@+node:ekr.20051020120306.14:<< Create the outer frames >>
-            self.top = Tk.Frame(parentFrame)
+            configName = 'log_pane_Find_tab_background_color'
+            bg = c.config.getColor(configName) or 'MistyRose1'
             
-            if 1: # Left justify
-                self.top.pack(side='left',fill='y',pady=10)
-            else:
-                self.top.pack(side='top',pady=20)
+            parentFrame.configure(background=bg)
             
-            self.frame = Tk.Frame(self.top)
-            self.frame.pack(side="top")
+            self.top = Tk.Frame(parentFrame,background=bg)
+            self.frame = Tk.Frame(self.top,background=bg)
+            outer = Tk.Frame(self.frame,background=bg)
             
-            # Used for alignment.
-            outer = Tk.Frame(self.frame)
-            outer.pack(padx=2,pady=2)
+            self.top.pack   (side='top',expand=0,fill='x',pady=5)
+                # Don't expand, so the frame goes to the top.
+            
+            self.frame.pack (side="top",expand=1,fill='x')
+            outer.pack      (side='top',expand=1,fill='x',padx=2,pady=2,)
             #@nonl
             #@-node:ekr.20051020120306.14:<< Create the outer frames >>
             #@nl
             #@    << Create the Find and Change panes >>
             #@+node:ekr.20051020120306.15:<< Create the Find and Change panes >>
-            fc = Tk.Frame(outer, bd="1m")
+            fc = Tk.Frame(outer, bd="1m",background=bg)
             fc.pack(anchor="n", fill="x", expand=1)
             
             # Removed unused height/width params: using fractions causes problems in some locales!
-            fpane = Tk.Frame(fc, bd=1)
-            cpane = Tk.Frame(fc, bd=1)
+            fpane = Tk.Frame(fc, bd=1,background=bg)
+            cpane = Tk.Frame(fc, bd=1,background=bg)
             
             fpane.pack(anchor="n", expand=1, fill="x")
             cpane.pack(anchor="s", expand=1, fill="x")
             
             # Create the labels and text fields...
-            flab = Tk.Label(fpane, width=8, text="Find:")
-            clab = Tk.Label(cpane, width=8, text="Change:")
+            flab = Tk.Label(fpane, width=8, text="Find:",background=bg)
+            clab = Tk.Label(cpane, width=8, text="Change:",background=bg)
             
             # Use bigger boxes for scripts.
-            self.find_ctrl   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=2,width=15) # was height=4,width=20
-            self.change_ctrl = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=2,width=15) # was height=4,width=20
+            self.find_ctrl   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=3,width=15) # was height=4,width=20
+            self.change_ctrl = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=3,width=15) # was height=4,width=20
             #@<< Bind Tab and control-tab >>
             #@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
             def setFocus(w):
@@ -4732,15 +4738,16 @@ class searchCommandsClass (baseEditCommandsClass):
             
             flab.pack(side="left")
             clab.pack(side="left")
-            ctxt.pack(side="right", expand=1, fill="x") # was 'both'
-            ftxt.pack(side="right", expand=1, fill="x") # was 'both'
+            ctxt.pack(side="right", expand=1, fill="x") 
+            ftxt.pack(side="right", expand=1, fill="x")
             #@nonl
             #@-node:ekr.20051020120306.15:<< Create the Find and Change panes >>
             #@nl
             #@    << Create two columns of radio and checkboxes >>
             #@+node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
-            columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
-            columnsFrame.pack(expand=1,padx="7p",pady="2p") # Use ,fill='x' to left justify
+            columnsFrame = Tk.Frame(outer,relief="groove",bd=2,background=bg)
+            
+            columnsFrame.pack(expand=0,padx="7p",pady="2p")
             
             numberOfColumns = 2 # Number of columns
             columns = [] ; radioLists = [] ; checkLists = []
@@ -4786,7 +4793,7 @@ class searchCommandsClass (baseEditCommandsClass):
             for i in xrange(numberOfColumns):
                 for var,name,val in radioLists[i]:
                     box = self.underlinedTkButton(
-                        "radio",columns[i],anchor="w",text=name,variable=var,value=val)
+                        "radio",columns[i],anchor="w",text=name,variable=var,value=val,background=bg)
                     box.button.pack(fill="x")
                     box.button.bind("<1>", self.resetWrap)
                     if val == None: box.button.configure(state="disabled")
@@ -4794,7 +4801,7 @@ class searchCommandsClass (baseEditCommandsClass):
                     box.bindHotKey(ctxt)
                 for name,var in checkLists[i]:
                     box = self.underlinedTkButton(
-                        "check",columns[i],anchor="w",text=name,variable=var)
+                        "check",columns[i],anchor="w",text=name,variable=var,background=bg)
                     box.button.pack(fill="x")
                     box.button.bind("<1>", self.resetWrap)
                     box.bindHotKey(ftxt)
@@ -4803,74 +4810,65 @@ class searchCommandsClass (baseEditCommandsClass):
             #@nonl
             #@-node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
             #@nl
-            #@    << Create two rows of buttons >>
-            #@+node:ekr.20051020120306.18:<< Create two rows of buttons >>
-            # Create the button panes
-            buttons  = Tk.Frame(outer,bd=1)
-            buttons2 = Tk.Frame(outer,bd=1)
-            buttons.pack (anchor="n",expand=1,fill="x")
-            buttons2.pack(anchor="n",expand=1,fill="x")
-            
-            # In 4.4 it's dubious to define these keys.  For example, Alt-x must be reserved!
-            # HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
-            # HotKeys used for plain buttons (enter),d,g,t
+            #@    << Create two columns of buttons >>
+            #@+node:ekr.20051020120306.18:<< Create two columns of buttons >>
+            # Create the alignment panes.
+            buttons  = Tk.Frame(outer,background=bg)
+            buttons1 = Tk.Frame(buttons,bd=1,background=bg)
+            buttons2 = Tk.Frame(buttons,bd=1,background=bg)
+            buttons.pack(side='top',expand=1)
+            buttons1.pack(side='left')
+            buttons2.pack(side='right')
             
             def findButtonCallback(event=None):
                 __pychecker__ = '--no-argsused' # the event param must be present.
                 self.findButton()
                 return 'break'
             
-            # Create the first row of buttons
-            findButton=Tk.Button(buttons,
-                width=9,text="Find",bd=4,command=findButtonCallback) # The default.
-            findButton.pack(pady="1p",padx="25p",side="left")
+            # Column 1...
+            findButton=self.underlinedTkButton('button',buttons1,width=15-1,
+                text="Find",bd=4,command=findButtonCallback) # The default.
             
-            if 1:
-                incrementalBox = self.underlinedTkButton("check",buttons,
-                    anchor="w",text="Incremental")
-                    # Not yet.  This may affect the file format!
-                    # ,variable=self.dict['incremental'])
-                incrementalBox.button.pack(pady="1p",side="left",expand=1)
-                incrementalBox.bindHotKey(ftxt)
-                incrementalBox.bindHotKey(ctxt)
-            
-            findAllButton = self.underlinedTkButton("button",buttons,
-                width=9,text="Find All",command=self.findAllButton)
-            findAllButton.button.pack(pady="1p",padx="25p",side="right",fill="x")
-            findAllButton.bindHotKey(ftxt)
-            findAllButton.bindHotKey(ctxt)
-            
-            # Create the second row of buttons
-            changeButton = self.underlinedTkButton("button",buttons2,
-                width=10,text="Change",command=self.changeButton)
-            changeButton.button.pack(pady="1p",padx="25p",side="left")
-            changeButton.bindHotKey(ftxt)
-            changeButton.bindHotKey(ctxt)
-            
-            changeFindButton = self.underlinedTkButton("button",buttons2,
-                text="Change, Then Find",command=self.changeThenFindButton)
-            changeFindButton.button.pack(pady="1p",side="left",expand=1)
-            changeFindButton.bindHotKey(ftxt)
-            changeFindButton.bindHotKey(ctxt)
+            incrementalBox = self.underlinedTkButton("check",buttons1,width=15,
+                text="Incremental",background=bg)
+                # ,variable=self.dict['incremental']) # **May affect the file format**
+            findAllButton = self.underlinedTkButton("button",buttons1,width=15,
+                text="Find All",command=self.findAllButton)
                 
-            changeAllButton = self.underlinedTkButton("button",buttons2,
-                width=10,text="Change All",command=self.changeAllButton)
-            changeAllButton.button.pack(pady="1p",padx="25p",side="right")
-            changeAllButton.bindHotKey(ftxt)
-            changeAllButton.bindHotKey(ctxt)
+            # Column 2...
+            changeButton = self.underlinedTkButton("button",buttons2,width=15,
+                text="Change",command=self.changeButton)
+                
+            changeFindButton = self.underlinedTkButton("button",buttons2,width=15,
+                text="Change, Then Find",command=self.changeThenFindButton)
+                
+            changeAllButton = self.underlinedTkButton("button",buttons2,width=15,
+                text="Change All",command=self.changeAllButton)
+            
+            for w in (findButton,findAllButton,incrementalBox):
+                w.button.pack(side='top',anchor='w',pady=2,padx=2)
+                
+            for w in (changeButton,changeFindButton,changeAllButton):
+                w.button.pack(side='top',anchor='e',pady=2,padx=2)
             #@nonl
-            #@-node:ekr.20051020120306.18:<< Create two rows of buttons >>
+            #@-node:ekr.20051020120306.18:<< Create two columns of buttons >>
             #@nl
             
-            for widget in (self.find_ctrl, self.change_ctrl):
-                widget.bind ("<1>",  self.resetWrap)
-                widget.bind("<Key>", self.resetWrap)
-                widget.bind("<Control-a>",self.selectAllFindText)
-                #widget.bind(g.virtual_event_name("SelectAll"),self.selectAllFindText)
+            for w in (
+                findButton,incrementalBox,findAllButton,
+                changeButton,changeFindButton,changeAllButton,
+            ):
+                w.bindHotKey(ftxt)
+                w.bindHotKey(ctxt)
             
-            for widget in (outer, self.find_ctrl, self.change_ctrl):
-                widget.bind("<Key-Return>", findButtonCallback)
-                widget.bind("<Key-Escape>", self.onCloseWindow)
+            for w in (self.find_ctrl, self.change_ctrl):
+                w.bind ("<1>",  self.resetWrap)
+                w.bind("<Key>", self.resetWrap)
+                w.bind("<Control-a>",self.selectAllFindText)
+            
+            for w in (outer, self.find_ctrl, self.change_ctrl):
+                w.bind("<Key-Return>", findButtonCallback)
+                w.bind("<Key-Escape>", self.onCloseWindow)
         #@nonl
         #@-node:ekr.20051020120306.13:find.createFrame
         #@+node:ekr.20051020120306.19:find.init

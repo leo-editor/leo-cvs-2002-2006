@@ -19511,7 +19511,6 @@ Previously, scripts for @button nodes were never dynamic, while scripts in @butt
 Set the tab-list index to-1 if we first print a common prefix.  That way item returned next will be item 0.
 #@nonl
 #@-node:ekr.20051017111039:Fixed minor bug in k.doTabCompletion
-#@clone 2
 #@+node:ekr.20051017184201:(Tabbed log pane)
 #@+node:ekr.20050920085536.65: masterCommand & helpers
 def masterCommand (self,event,func,stroke):

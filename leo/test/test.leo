@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7745" clone_windows="0"/>
 <globals body_outline_ratio="0.637454981993">
-	<global_window_position top="71" left="353" height="833" width="872"/>
+	<global_window_position top="74" left="134" height="833" width="872"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -846,7 +846,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051016205407"><vh>@@button test @key=alt-shift-ctrl-y</vh></v>
 </v>
 </v>
-<v t="ekr.20041126132604" a="TV" annotate="7d71002e"><vh>Prototypes...</vh>
+<v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes...</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
 <v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
 </v>
@@ -1532,8 +1532,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
-<v t="ekr.20051010091827" a="E"><vh>Previous settings</vh>
+<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20051010091827"><vh>Previous settings</vh>
 <v t="ekr.20050801071700"><vh>@@string stylesheet = type="text/xsl" href="bpLEOHTM.xsl"</vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
@@ -1587,8 +1587,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051013162226"><vh>@bool test_setting = True</vh></v>
 <v t="ekr.20051018071924"><vh>@@color log_pane_Completion_tab_background_color = yellow</vh></v>
 </v>
-<v t="ekr.20041001194357"><vh>@button unit test</vh></v>
-<v t="ekr.20050911112310"><vh>@button save</vh></v>
+<v t="ekr.20051020124457"><vh>Previous buttons</vh>
 <v t="ekr.20041001203411.1"><vh>@@script hi</vh></v>
 <v t="ekr.20041113113555"><vh>@@button check spelling...</vh></v>
 <v t="ekr.20041125145818.1"><vh>@@button settings...</vh></v>
@@ -1608,6 +1607,10 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050805150320"><vh>@@button rst3</vh></v>
 <v t="ekr.20050930124917"><vh>@@button outlineToClipboard</vh></v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+</v>
+<v t="ekr.20041001194357"><vh>@button unit test</vh></v>
+<v t="ekr.20050911112310"><vh>@button save</vh></v>
+<v t="ekr.20051020124457.1" a="TV"><vh>@button find tab</vh></v>
 </v>
 <v t="ekr.20051012104957"><vh>Other unit test stuff...</vh>
 <v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
@@ -3093,7 +3096,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -23259,5 +23262,9 @@ for i in xrange(numberOfColumns):
         box.bindHotKey(ftxt)
         box.bindHotKey(ctxt)
         if var is None: box.button.configure(state="disabled")</t>
+<t tx="ekr.20051020124457"></t>
+<t tx="ekr.20051020124457.1">print c.searchCommands.c
+
+c.searchCommands.openFindTab(event=None)</t>
 </tnodes>
 </leo_file>
