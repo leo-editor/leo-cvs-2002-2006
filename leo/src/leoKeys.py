@@ -999,6 +999,8 @@ class keyHandlerClass:
         commandName = k.ultimateFuncName(func)
         special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
         interesting = func or stroke != '<Key>'
+        
+        # g.trace(k.inState(),k.getStateKind())
     
         # if interesting: g.trace(stroke,commandName)
     
@@ -1065,9 +1067,6 @@ class keyHandlerClass:
         if func: # Func is an argument.
             k.previousStroke = stroke
             forceFocus = func.__name__ != 'leoCallback'
-            if 0: # It isn't helpful.
-                if c.frame.log.tabName == 'Completion':
-                    c.frame.log.selectTab('Log')
             if forceFocus:
                 k.forceFocusToBody()
             func(event)
@@ -1129,6 +1128,7 @@ class keyHandlerClass:
             k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
             k.mb_tabList = [] ; k.mb_tabListIndex = -1
         elif keysym == 'Return':
+            c.frame.log.deleteTab('Completion')
             k.callAltXFunction(event)
         elif keysym == 'Tab':
             k.doTabCompletion(c.commandsDict.keys())
@@ -1769,6 +1769,8 @@ class keyHandlerClass:
     
         if g.app.quitting:
             return
+            
+        c.frame.log.deleteTab('Completion')
             
         k.clearState()
         k.resetLabel()
