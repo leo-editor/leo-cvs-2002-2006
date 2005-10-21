@@ -266,7 +266,7 @@ class parserBaseClass:
     #@+node:ekr.20041120105609:doShortcuts
     def doShortcuts(self,p,kind,name,val):
         
-        __pychecker__ = '--no-argsused' # kind not used.
+        __pychecker__ = '--no-argsused' # kind,val not used.
         
         #g.trace('*'*10,p.headString())
     
@@ -275,11 +275,11 @@ class parserBaseClass:
         for line in lines:
             line = line.strip()
             if line and not g.match(line,0,'#'):
-                name,val = self.parseShortcutLine(line)
-                # g.trace(name,val)
-                if val is not None:
-                    self.set(p,"shortcut",name,val)
-                    self.setShortcut(name,val)
+                name,bunch = self.parseShortcutLine(line)
+                # g.trace(name,bunch)
+                if bunch is not None:
+                    self.set(p,"shortcut",name,bunch)
+                    self.setShortcut(name,bunch)
     #@nonl
     #@-node:ekr.20041120105609:doShortcuts
     #@+node:ekr.20041217132028:doString
@@ -414,19 +414,33 @@ class parserBaseClass:
         return kind,name,val
     #@nonl
     #@-node:ekr.20041119205148:parseHeadline
-    #@+node:ekr.20041120112043:g.app.config.parseShortcutLine  (Generalize this)
+    #@+node:ekr.20041120112043:g.app.config.parseShortcutLine
     def parseShortcutLine (self,s):
         
-        """Return the kind of @settings node indicated by p's headline."""
+        '''Parse a shortcut line.  Valid forms:
+            
+        settingName = shortcut
+        settingName ! paneName = shortcut'''
         
         name = val = None
-        i = g.skip_id(s,0,'-') # New in 4.4: allow Emacs-style shortcut names.
-        name = s[0:i]
-        if name:
-            i = g.skip_ws(s,i)
-            if g.match(s,i,'='):
-                i = g.skip_ws(s,i+1)
-                val = s[i:]
+        j = g.skip_ws(s,0)
+        i = g.skip_id(s,j,'-') # New in 4.4: allow Emacs-style shortcut names.
+        name = s[j:i]
+        if not name: return None,None
+            
+        i = g.skip_ws(s,i)
+        if g.match(s,i,'!'): # New in 4.4: allow pane-specific shortcuts.
+            j = g.skip_ws(s,i+1)
+            i = g.skip_id(s,i)
+            pane = s[j:i]
+            if not pane.strip():
+                pane = 'all'
+        else:
+            pane = 'all'
+    
+        if g.match(s,i,'='):
+            i = g.skip_ws(s,i+1)
+            val = s[i:]
                
         # New in 4.4: Allow comments after the shortcut.
         # Comments must be preceded by whitespace. 
@@ -434,12 +448,11 @@ class parserBaseClass:
             i = val.find('#')
             if i > 0 and val[i-1] in (' ','\t'):
                 val = val[:i].strip()
-                # g.trace('removed comment from shortcut: %s' % (val))
     
         # g.trace("%30s %s" %(name,val))
-        return name,val
+        return name,g.bunch(pane=pane,val=val)
     #@nonl
-    #@-node:ekr.20041120112043:g.app.config.parseShortcutLine  (Generalize this)
+    #@-node:ekr.20041120112043:g.app.config.parseShortcutLine
     #@-node:ekr.20041213082558:parsers
     #@+node:ekr.20041120094940.9:set (parseBaseClass)
     def set (self,p,kind,name,val):
@@ -465,16 +478,16 @@ class parserBaseClass:
     #@nonl
     #@-node:ekr.20041120094940.9:set (parseBaseClass)
     #@+node:ekr.20041227071423:setShortcut (ParserBaseClass)
-    def setShortcut (self,name,val):
+    def setShortcut (self,name,bunch):
         
-        # g.trace(name,val)
+        # g.trace(name,bunch)
         
         c = self.c
         
         # None is a valid value for val.
         key = c.frame.menu.canonicalizeMenuName(name)
         rawKey = key.replace('&','')
-        self.set(c,rawKey,"shortcut",val)
+        self.set(c,rawKey,"shortcut",bunch)
     #@nonl
     #@-node:ekr.20041227071423:setShortcut (ParserBaseClass)
     #@+node:ekr.20041119204700.1:traverse (parserBaseClass)
@@ -1051,11 +1064,15 @@ class configClass:
         key = c.frame.menu.canonicalizeMenuName(shortcutName)
         key = key.replace('&','') # Allow '&' in names.
     
-        val = self.get(c,key,"shortcut")
-        
-        # g.trace(key,repr(val))
-    
-        return key,val
+        bunch = self.get(c,key,"shortcut")
+        if bunch and bunch.val:
+            if bunch.val.lower() == 'none':
+                return key,None
+            else:
+                # g.trace(key,repr(bunch.val))
+                return key,bunch
+        else:
+            return key,None
     #@nonl
     #@-node:ekr.20041117062717.14:getShortcut (config)
     #@+node:ekr.20041117081009.4:getString

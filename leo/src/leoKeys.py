@@ -691,7 +691,7 @@ class keyHandlerClass:
         b = k.bindingsDict.get(shortcut)
         if b and not b.fromMenu:
             # We are trying to override a non-default (non-menu) binding.
-            if b.name != name and not b.warningGiven: ### and not fromMenu:
+            if b.name != name and not b.warningGiven and not fromMenu:
                 # Warning about a non-default binding
                 b.warningGiven = True
                 g.es_print('bindKey: ignoring %s = %s. Keeping binding to %s' % (
@@ -740,9 +740,11 @@ class keyHandlerClass:
     
         except Exception: # Could be a user error.
             if not g.app.menuWarningsGiven:
-                g.es_print('Exception binding for %s to %s' % (shortcut,commandName))
+                g.es_print('Exception binding %s to %s tag:%s' % (
+                    shortcut,commandName,tag))
                 g.es_exception()
-                g.app.menuWarningsGive = True
+                g.printStack()
+                g.app.menuWarningsGiven = True
             return False
     #@nonl
     #@-node:ekr.20050920085536.16:bindKey
@@ -916,24 +918,26 @@ class keyHandlerClass:
         }
     #@nonl
     #@-node:ekr.20050923174229.1:makeHardBindings
-    #@+node:ekr.20051008152134:makeSpecialBindings (Binds to 'Key')
+    #@+node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
     def makeSpecialBindings (self):
         
         '''Make the bindings and set ivars for sepcial keystrokes.'''
         
-        k = self ; c = k.c ; w = c.frame.body.bodyCtrl ; tag = 'makeSpecialBindings'
+        k = self ; c = k.c ; f = c.frame ; w = f.body.bodyCtrl
+        tag = 'makeSpecialBindings'
         
+        # These defaults may be overridden.
         for stroke,ivar,commandName,func in (
-    		# These defaults may be overridden.
             ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
             ('Alt-x',   'fullCommandKey',  'full-command',  k.fullCommand),
-            # There are dafault menu bindings to Ctrl-U and Shift-Ctrl-U, so
+            # There are default menu bindings to Ctrl-U and Shift-Ctrl-U, so
             # we must pick another value here: otherwise it will be overridden later.
             ('Alt-Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
             ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
         ):
             # Create the callback **after** any user override.
-            junk, accel = c.config.getShortcut(commandName)
+            junk, bunch = c.config.getShortcut(commandName)
+            accel = bunch and bunch.val
             # g.trace(accel,commandName)
             if not accel: accel = stroke
             shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
@@ -957,7 +961,8 @@ class keyHandlerClass:
         k.bindKey(w,'<Key>',allKeysCallback,
             name='masterCommand',commandName='master-command',
             fromMenu=False,tag=tag)
-    #@-node:ekr.20051008152134:makeSpecialBindings (Binds to 'Key')
+    
+    #@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
     #@+node:ekr.20051008134059:setBindingsFromCommandsDict
     def setBindingsFromCommandsDict (self):
         
@@ -973,12 +978,11 @@ class keyHandlerClass:
         for name in keys:
             command = c.commandsDict.get(name)
             
-            key, accel = c.config.getShortcut(name)
+            key, bunch = c.config.getShortcut(name)
+            accel = bunch and bunch.val
             if accel:
                 bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
                 k.bindShortcut(bind_shortcut,name,command,name,openWith=name=='open-with')
-            else:
-                bind_shortcut = None
             
             # g.trace('%25s %s' % (name,bind_shortcut))
     #@nonl

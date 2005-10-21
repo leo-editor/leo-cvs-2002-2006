@@ -275,9 +275,9 @@ class leoMenu:
             # A Horrible kludge.  The -- indicates we should set menu_shortcut but *not* the bind_shortcut.
             # This is needed so we can distinguish between invokes from the menu (very rare) and others.
             # Important: these shortcuts can be overridden by specifying shortcuts for copy-text, cut-text and paste-text.
-            ("Cu&t","--Ctrl+X",f.OnCutFromMenu), 
-            ("Cop&y","--Ctrl+C",f.OnCopyFromMenu),
-            ("&Paste","--Ctrl+V",f.OnPasteFromMenu),
+            ###("Cu&t","--Ctrl+X",f.OnCutFromMenu), 
+            ###("Cop&y","--Ctrl+C",f.OnCopyFromMenu),
+            ###("&Paste","--Ctrl+V",f.OnPasteFromMenu),
             ("&Delete",None,c.delete),
             ("Select &All","Ctrl+A",f.body.selectAllText),
             ("-",None,None),
@@ -1000,7 +1000,7 @@ class leoMenu:
         openWith=False,dontBind=False,
         init=False,dynamicMenu=False):
         
-        c = self.c ; k = c.keyHandler
+        c = self.c ; f = c.frame ; k = c.keyHandler
         
         for label,accel,command in table:
             if label == None or command == None or label == "-":
@@ -1039,13 +1039,16 @@ class leoMenu:
                     }
                     name = cutCopyPasteDict.get(accel)
                     # Allow the user to override the shortcut using equivalent emacs name.
-                    rawKey,accel2 = c.config.getShortcut(name)
+                    ### rawKey,accel2 = c.config.getShortcut(name)
+                    rawKey,bunch = c.config.getShortcut(name)
+                    accel2 = bunch and bunch.val
                     # g.trace(accel,accel2,name,command.__name__)
                     if not accel2:
                         accel2 = 'none' # Do not allow any further overrides.
                 else:
                     # Second, try to get the old-style name.
-                    rawKey,accel2 = c.config.getShortcut(name)
+                    rawKey,bunch = c.config.getShortcut(name)
+                    accel2 = bunch and bunch.val
                     
                 # if not openWith: g.trace(accel,accel2,name)
                 
@@ -1062,10 +1065,12 @@ class leoMenu:
                     if emacs_name:
                         # Override the default shortcut, but *only* if the setting was actually given.
                         if g.app.config.exists(c,emacs_name,'shortcut'):
-                            rawKey,accel2 = c.config.getShortcut(emacs_name)
-                            # Override the default shortcut.
-                            accel = accel2 
-                            # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
+                            rawKey,bunch = c.config.getShortcut(emacs_name)
+                            if bunch and bunch.val:
+                                accel2 = bunch.val
+                                # Override the default shortcut.
+                                accel = accel2 
+                                # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
                     else:
                         if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
                             if commandName and commandName != 'dummyCommand':
@@ -1097,6 +1102,10 @@ class leoMenu:
                 #@nl
                 #@            << define callback function >>
                 #@+node:ekr.20031218072017.1727:<< define callback function >>
+                # A slightly less horrible kludge.
+                # Do *not* bind the actual callback for cut/copy/paste
+                if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+                    menuCallback = None
                 if openWith:
                     menuCallback = self.defineOpenWithMenuCallback(command)
                 else:
@@ -1133,9 +1142,10 @@ class leoMenu:
                     ok = c.keyHandler.bindShortcut(
                         bind_shortcut,name,command,commandName,openWith,fromMenu=True)
                     if not ok: menu_shortcut = None
-    
+                    
                 self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
                     command=menuCallback,underline=amp_index)
+    #@nonl
     #@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
     #@+node:ekr.20031218072017.3784:createMenuItemsFromTable
     def createMenuItemsFromTable (self,menuName,table,openWith=False):
