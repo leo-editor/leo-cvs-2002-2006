@@ -16121,333 +16121,6 @@ This is the last best hope to solve this problem: the code interacts as little a
 #@-node:ekr.20050921094025.6:What I did
 #@-node:ekr.20050920084720.1:Moved emacs commands and new keyHandler to Leo's core
 #@+node:ekr.20051012084345:Bugs fixed
-#@+node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
-#@+node:ekr.20031218072017.839:defineEditMenuTopTable
-def defineEditMenuTopTable (self):
-    
-    __pychecker__ = 'no-unusednames=[f]' # We define 'f' just in case.
-
-    c = self.c ; f = self.frame
-    
-    self.editMenuTopTable = [
-        ("Can't Undo",c.undoer.undo), # &U reserved for Undo
-        ("Can't Redo",c.undoer.redo), # &R reserved for Redo
-        ("-",None),
-        ("Cu&t",f.OnCutFromMenu), 
-        ("Cop&y",f.OnCopyFromMenu),
-        ("&Paste",f.OnPasteFromMenu),
-        ("&Delete",c.delete),
-        ("Select &All",f.body.selectAllText),
-        ("-",None),
-    ]
-
-    # Top-level shortcuts here:  a,d,p,t,u,y,z
-    # Top-level shortcuts later: e,g,n,v
-#@nonl
-#@-node:ekr.20031218072017.839:defineEditMenuTopTable
-#@+node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
-def createMenuEntries (self,menu,table,
-    openWith=False,dontBind=False,
-    init=False,dynamicMenu=False):
-    
-    c = self.c ; f = c.frame ; k = c.keyHandler
-    
-    if g.app.unitTesting: return
-
-    for data in table:
-        << get label & command or continue >>
-        special = command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu)
-        << set name to the label for doCommand >>
-        << set accel to the shortcut for name >>
-        << set bind_shortcut and menu_shortcut using accel >>
-        << define callback function >>
-        << set realLabel, amp_index and menu_shortcut >>
-        if bind_shortcut:
-            ok = c.keyHandler.bindShortcut(
-                bind_shortcut,name,command,commandName,openWith)
-            if not ok:
-                menu_shortcut = None
-            
-        self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
-            command=menuCallback,underline=amp_index)
-#@nonl
-#@+node:ekr.20051021091958:<< get label & command or continue >>
-ok = True
-
-if type(data) not in (type(()), type([])):
-    ok = False
-elif len(data) == 2:
-    label,command = data
-elif len(data) == 3:
-    label,junk,command = data
-else:
-    ok = False
-     
-if not ok:
-    g.trace('bad data in menu table: %s' % repr(data))
-    continue # Ignore bad data
-     
-if label in (None,'-') or command == None:
-    self.add_separator(menu)
-    continue # That's all.
-#@nonl
-#@-node:ekr.20051021091958:<< get label & command or continue >>
-#@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
-name = label.strip().lower()
-
-# Remove special characters from command names.
-name2 = ""
-for ch in name:
-    if ch in string.ascii_letters or ch in string.digits:
-        name2 = name2 + ch
-name = name2
-#@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
-#@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, get the old-style name.
-rawKey,bunch = c.config.getShortcut(name)
-accel = bunch and bunch.val
-commandName = name
-
-# Second, get new-style name.
-if not openWith and not accel:
-    << compute emacs_name >>
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunch = c.config.getShortcut(emacs_name)
-        accel = bunch and bunch.val
-    elif init:
-        g.trace('No inverse for %s' % name)
-#@nonl
-#@+node:ekr.20051021100806.1:<< compute emacs_name >>
-if special:
-    # A slightly less horrible kludge.
-    # The menu tables have methods that are not the same as the
-    # methods actually bound to cut/copy/paste-text minibuffer commands.
-    emacs_name = '%s-text' % name
-else:
-    try: # User errors in the table can cause this.
-        emacs_name = k.inverseCommandsDict.get(command.__name__)
-    except Exception:
-        emacs_name = None
-#@nonl
-#@-node:ekr.20051021100806.1:<< compute emacs_name >>
-#@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-if accel:
-    bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
-else:
-    bind_shortcut,menu_shortcut = None,None
-    
-# A less horrible kludge: just pretend to bind shortcuts to cut/copy/paste.
-if special or (
-    sys.platform.startswith('win') and
-    bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>")
-):
-    bind_shortcut = None
-#@nonl
-#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-#@+node:ekr.20031218072017.1727:<< define callback function >>
-if openWith:
-    menuCallback = self.defineOpenWithMenuCallback(command)
-else:
-    menuCallback = self.defineMenuCallback(command,name)
-#@nonl
-#@-node:ekr.20031218072017.1727:<< define callback function >>
-#@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-realLabel = self.getRealMenuName(label)
-
-# A bad hack:  this does not allow for translations!
-# We need a way of specifying shortcuts, & bindings and translations all in the same place.
-
-amp_index = -1
-if rawKey:
-    amp_index = rawKey.find("&")
-if amp_index == -1:
-    amp_index = realLabel.find("&")
-
-realLabel = realLabel.replace("&","")
-
-if 0: # trace
-    if rawKey and rawKey.lower().startswith("exit"):
-        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
-
-if not menu_shortcut:
-    menu_shortcut = ""
-#@nonl
-#@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-#@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
-#@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
-#@+node:ekr.20031218072017.841:f.cut methods
-
-
-#@+node:ekr.20051011072049:OnCut (no longer used)
-# No longer used.  Was called from tkBody.createBindings.
-
-def OnCut (self,event=None):
-    
-    """The handler for the virtual Cut event."""
-    
-    __pychecker__ = '--no-argsused' # event not used.
-    
-    f = self ; c = f.c
-    
-    if 0: # g.app.gui.win32clipboard is always None.
-        if g.app.gui.win32clipboard:
-            data = f.body.getSelectedText()
-            if data:
-                g.app.gui.replaceClipboardWith(data)
-
-    # Activate the body key handler by hand.
-    f.body.forceFullRecolor()
-    f.body.onBodyWillChange(c.currentPosition(),"Cut")
-#@nonl
-#@-node:ekr.20051011072049:OnCut (no longer used)
-#@+node:ekr.20051011072049.1:OnCutFromMenu
-def OnCutFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.
-    menu.createMenuEntries contains a horrible kludge to make this happen.'''
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    # g.trace('isBody',isBody)
-
-    if isBody:
-        w.event_generate(g.virtual_event_name("Cut"))
-    else:
-        # Necessary
-        w.event_generate(g.virtual_event_name("Cut"))
-        f.tree.onHeadChanged(c.currentPosition())
-#@nonl
-#@-node:ekr.20051011072049.1:OnCutFromMenu
-#@+node:ekr.20051011072049.2:cutText
-def cutText (self):
-    
-    '''Invoked from the mini-buffer and from shortcuts.'''
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    #g.trace('isBody',isBody)
-
-    if isBody:
-        w.event_generate(g.virtual_event_name("Cut"))
-    else:
-        f.tree.onHeadChanged(c.currentPosition())
-#@nonl
-#@-node:ekr.20051011072049.2:cutText
-#@-node:ekr.20031218072017.841:f.cut methods
-#@+node:ekr.20031218072017.842:f.copy methods
-#@+node:ekr.20051011072903:OnCopy (no longer used)
-# No longer used.  Was called from tkBody.createBindings.
-
-def OnCopy (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
-
-    if 0: # g.app.gui.win32clipboard is always None.
-        f = self
-        if g.app.gui.win32clipboard:
-            data = f.body.getSelectedText()
-            if data:
-                g.app.gui.replaceClipboardWith(data)
-        
-    # Copy never changes dirty bits or syntax coloring.
-    
-#@-node:ekr.20051011072903:OnCopy (no longer used)
-#@+node:ekr.20051011072903.1:OnCopyFromMenu
-def OnCopyFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.
-    menu.createMenuEntries contains a horrible kludge to make this happen.'''
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    # g.trace('isBody',isBody,'isMenu',isMenu)
-
-    if isBody:
-        w.event_generate(g.virtual_event_name("Copy"))
-    else:
-        # Necessary when not using shortcut keys.
-        w.event_generate(g.virtual_event_name("Copy"))
-#@nonl
-#@-node:ekr.20051011072903.1:OnCopyFromMenu
-#@+node:ekr.20051011072903.2:copyText
-def copyText (self):
-    
-    '''Invoked from the mini-buffer and from shortcuts.'''
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    # g.trace('isBody',isBody)
-
-    if isBody:
-        w.event_generate(g.virtual_event_name("Copy"))
-    else:
-        pass
-
-#@-node:ekr.20051011072903.2:copyText
-#@-node:ekr.20031218072017.842:f.copy methods
-#@+node:ekr.20031218072017.843:f.OnPaste & OnPasteFromMenu & pasteText
-#@+node:ekr.20051011072903.3:OnPaste (no longer used)
-# No longer used.  Was called from tkBody.createBindings.
-
-def OnPaste (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
-    
-    f = self ; c = f.c
-  
-    if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
-        bodyCtrl = f.body.bodyCtrl
-        s = bodyCtrl.selection_get( selection='CLIPBOARD' )
-        bodyCtrl.insert('insert', s)
-        bodyCtrl.event_generate('<Key>')
-        bodyCtrl.update_idletasks()
-    else:
-        # Activate the body key handler by hand.
-        f.body.forceFullRecolor()
-        f.body.onBodyWillChange(c.currentPosition(),"Paste")
-    
-#@-node:ekr.20051011072903.3:OnPaste (no longer used)
-#@+node:ekr.20051011072903.4:OnPasteFromMenu
-def OnPasteFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.
-    menu.createMenuEntries contains a horrible kludge to make this happen.'''
-    
-    f = self ; c = f.c ; w = f.getFocus()
-
-    w = self.getFocus()
-    isBody = w == f.body.bodyCtrl
-    # g.trace('isBody',isBody,'isMenu',isMenu)
-
-    if isBody:
-        w.event_generate(g.virtual_event_name("Paste"))
-    else:
-        w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition())
-#@nonl
-#@-node:ekr.20051011072903.4:OnPasteFromMenu
-#@+node:ekr.20051011072903.5:pasteText
-def pasteText (self):
-    
-    '''This should be called **only** when invoked using the menu.
-    menu.createMenuEntries contains a horrible kludge to make this happen.'''
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    # g.trace('isBody',isBody)
-
-    if isBody:
-        w.event_generate(g.virtual_event_name("Paste"))
-    else:
-        # Do **not** call w.event_generate here.
-        f.tree.onHeadChanged(c.currentPosition())
-#@nonl
-#@-node:ekr.20051011072903.5:pasteText
-#@-node:ekr.20031218072017.843:f.OnPaste & OnPasteFromMenu & pasteText
-#@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
-#@-node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
 #@clone 2
 #@+node:ekr.20051012075322:openWithFileName now reads @settings by default
 #@+node:ekr.20051010152921:Report
@@ -17096,10 +16769,13 @@ def abortEditLabelCommand (self):
 #@-node:ekr.20031218072017.3981:abortEditLabelCommand
 #@-node:ekr.20051013103838:(Escape does not end label editing)
 #@+node:ekr.20051012101104:Don't override menu defaults if there is no setting for the command in the @shortcuts node
-#@+node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
+#@+node:ekr.20031218072017.1723:menu.createMenuEntries
 def createMenuEntries (self,menu,table,
-    openWith=False,dontBind=False,
-    init=False,dynamicMenu=False):
+    openWith=False,dontBind=False,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
     
     c = self.c ; f = c.frame ; k = c.keyHandler
     
@@ -17107,38 +16783,31 @@ def createMenuEntries (self,menu,table,
 
     for data in table:
         << get label & command or continue >>
-        special = command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu)
         << set name to the label for doCommand >>
         << set accel to the shortcut for name >>
-        << set bind_shortcut and menu_shortcut using accel >>
+        << set menu_shortcut using accel >>
         << define callback function >>
         << set realLabel, amp_index and menu_shortcut >>
-        if bind_shortcut:
-            ok = c.keyHandler.bindShortcut(
-                bind_shortcut,name,command,commandName,openWith)
-            if not ok:
-                menu_shortcut = None
-            
-        self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+        self.add_command(menu,label=realLabel,
+            accelerator=menu_shortcut or '',
             command=menuCallback,underline=amp_index)
 #@nonl
 #@+node:ekr.20051021091958:<< get label & command or continue >>
-ok = True
-
-if type(data) not in (type(()), type([])):
-    ok = False
-elif len(data) == 2:
-    label,command = data
-elif len(data) == 3:
-    label,junk,command = data
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        label,command = data
+    else:
+        label,junk,command = data
 else:
-    ok = False
-     
-if not ok:
     g.trace('bad data in menu table: %s' % repr(data))
     continue # Ignore bad data
      
-if label in (None,'-') or command == None:
+if ok and (label in (None,'-') or command == None):
     self.add_separator(menu)
     continue # That's all.
 #@nonl
@@ -17166,14 +16835,19 @@ if not openWith and not accel:
         commandName = emacs_name
         rawKey,bunch = c.config.getShortcut(emacs_name)
         accel = bunch and bunch.val
-    elif init:
+    elif not dynamicMenu:
         g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
-if special:
-    # A slightly less horrible kludge.
-    # The menu tables have methods that are not the same as the
-    # methods actually bound to cut/copy/paste-text minibuffer commands.
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
     emacs_name = '%s-text' % name
 else:
     try: # User errors in the table can cause this.
@@ -17183,20 +16857,13 @@ else:
 #@nonl
 #@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@+node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 if accel:
-    bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+    junk,menu_shortcut = self.canonicalizeShortcut(accel)
 else:
-    bind_shortcut,menu_shortcut = None,None
-    
-# A less horrible kludge: just pretend to bind shortcuts to cut/copy/paste.
-if special or (
-    sys.platform.startswith('win') and
-    bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>")
-):
-    bind_shortcut = None
+    menu_shortcut = None
 #@nonl
-#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
 if openWith:
     menuCallback = self.defineOpenWithMenuCallback(command)
@@ -17207,26 +16874,20 @@ else:
 #@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
 realLabel = self.getRealMenuName(label)
 
-# A bad hack:  this does not allow for translations!
-# We need a way of specifying shortcuts, & bindings and translations all in the same place.
-
 amp_index = -1
+
 if rawKey:
     amp_index = rawKey.find("&")
+
 if amp_index == -1:
     amp_index = realLabel.find("&")
 
 realLabel = realLabel.replace("&","")
-
-if 0: # trace
-    if rawKey and rawKey.lower().startswith("exit"):
-        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
-
-if not menu_shortcut:
-    menu_shortcut = ""
+        
+if dontBind: menu_shortcut = ''
 #@nonl
 #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-#@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
+#@-node:ekr.20031218072017.1723:menu.createMenuEntries
 #@-node:ekr.20051012101104:Don't override menu defaults if there is no setting for the command in the @shortcuts node
 #@+node:ekr.20051013155435:Minor crashes during development
 #@+node:ekr.20051012082219:Crash in backwardParagraph
@@ -17382,10 +17043,13 @@ Traceback (most recent call last):
 
 AttributeError: 'callOnFileOpen' object has no attribute '__name__'
 #@nonl
-#@+node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
+#@+node:ekr.20031218072017.1723:menu.createMenuEntries
 def createMenuEntries (self,menu,table,
-    openWith=False,dontBind=False,
-    init=False,dynamicMenu=False):
+    openWith=False,dontBind=False,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
     
     c = self.c ; f = c.frame ; k = c.keyHandler
     
@@ -17393,38 +17057,31 @@ def createMenuEntries (self,menu,table,
 
     for data in table:
         << get label & command or continue >>
-        special = command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu)
         << set name to the label for doCommand >>
         << set accel to the shortcut for name >>
-        << set bind_shortcut and menu_shortcut using accel >>
+        << set menu_shortcut using accel >>
         << define callback function >>
         << set realLabel, amp_index and menu_shortcut >>
-        if bind_shortcut:
-            ok = c.keyHandler.bindShortcut(
-                bind_shortcut,name,command,commandName,openWith)
-            if not ok:
-                menu_shortcut = None
-            
-        self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+        self.add_command(menu,label=realLabel,
+            accelerator=menu_shortcut or '',
             command=menuCallback,underline=amp_index)
 #@nonl
 #@+node:ekr.20051021091958:<< get label & command or continue >>
-ok = True
-
-if type(data) not in (type(()), type([])):
-    ok = False
-elif len(data) == 2:
-    label,command = data
-elif len(data) == 3:
-    label,junk,command = data
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        label,command = data
+    else:
+        label,junk,command = data
 else:
-    ok = False
-     
-if not ok:
     g.trace('bad data in menu table: %s' % repr(data))
     continue # Ignore bad data
      
-if label in (None,'-') or command == None:
+if ok and (label in (None,'-') or command == None):
     self.add_separator(menu)
     continue # That's all.
 #@nonl
@@ -17452,14 +17109,19 @@ if not openWith and not accel:
         commandName = emacs_name
         rawKey,bunch = c.config.getShortcut(emacs_name)
         accel = bunch and bunch.val
-    elif init:
+    elif not dynamicMenu:
         g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
-if special:
-    # A slightly less horrible kludge.
-    # The menu tables have methods that are not the same as the
-    # methods actually bound to cut/copy/paste-text minibuffer commands.
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
     emacs_name = '%s-text' % name
 else:
     try: # User errors in the table can cause this.
@@ -17469,20 +17131,13 @@ else:
 #@nonl
 #@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@+node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 if accel:
-    bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+    junk,menu_shortcut = self.canonicalizeShortcut(accel)
 else:
-    bind_shortcut,menu_shortcut = None,None
-    
-# A less horrible kludge: just pretend to bind shortcuts to cut/copy/paste.
-if special or (
-    sys.platform.startswith('win') and
-    bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>")
-):
-    bind_shortcut = None
+    menu_shortcut = None
 #@nonl
-#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
 if openWith:
     menuCallback = self.defineOpenWithMenuCallback(command)
@@ -17493,26 +17148,20 @@ else:
 #@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
 realLabel = self.getRealMenuName(label)
 
-# A bad hack:  this does not allow for translations!
-# We need a way of specifying shortcuts, & bindings and translations all in the same place.
-
 amp_index = -1
+
 if rawKey:
     amp_index = rawKey.find("&")
+
 if amp_index == -1:
     amp_index = realLabel.find("&")
 
 realLabel = realLabel.replace("&","")
-
-if 0: # trace
-    if rawKey and rawKey.lower().startswith("exit"):
-        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
-
-if not menu_shortcut:
-    menu_shortcut = ""
+        
+if dontBind: menu_shortcut = ''
 #@nonl
 #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-#@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
+#@-node:ekr.20031218072017.1723:menu.createMenuEntries
 #@-node:ekr.20051010130212:Crash in unit test
 #@-node:ekr.20051013155435:Minor crashes during development
 #@+node:ekr.20051014034200:(Fixed problems when special keys are not defined
@@ -17529,11 +17178,6 @@ def makeSpecialBindings (self):
     
     k = self ; c = k.c ; f = c.frame ; w = f.body.bodyCtrl
     tag = 'makeSpecialBindings'
-    
-    if 0: # Add inverses for cut/copy/paste commands.
-        c.commandsDict['copy-text'] = f.OnCopyFromMenu
-        c.commandsDict['cut-text'] = f.OnCutFromMenu
-        c.commandsDict['paste-text'] = f.OnPasteFromMenu
     
     # These defaults may be overridden.
     for stroke,ivar,commandName,func in (
@@ -17585,6 +17229,8 @@ def bindShortcut (self,shortcut,name,command,commandName,openWith):
     if openWith:
         k.bindOpenWith(shortcut,name,command)
         return True
+        
+    # g.trace(g.callerName(2),command.__name__)
 
     if command.__name__ == 'leoCallback':
         # Get the function wrapped by this particular leoCallback function.
@@ -17956,10 +17602,13 @@ def callKeystrokeFunction (self,event):
 #@nonl
 #@-node:ekr.20050923174229.3:callKeystrokeFunction
 #@-node:ekr.20050920085536.65: masterCommand & helpers
-#@+node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
+#@+node:ekr.20031218072017.1723:menu.createMenuEntries
 def createMenuEntries (self,menu,table,
-    openWith=False,dontBind=False,
-    init=False,dynamicMenu=False):
+    openWith=False,dontBind=False,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
     
     c = self.c ; f = c.frame ; k = c.keyHandler
     
@@ -17967,38 +17616,31 @@ def createMenuEntries (self,menu,table,
 
     for data in table:
         << get label & command or continue >>
-        special = command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu)
         << set name to the label for doCommand >>
         << set accel to the shortcut for name >>
-        << set bind_shortcut and menu_shortcut using accel >>
+        << set menu_shortcut using accel >>
         << define callback function >>
         << set realLabel, amp_index and menu_shortcut >>
-        if bind_shortcut:
-            ok = c.keyHandler.bindShortcut(
-                bind_shortcut,name,command,commandName,openWith)
-            if not ok:
-                menu_shortcut = None
-            
-        self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+        self.add_command(menu,label=realLabel,
+            accelerator=menu_shortcut or '',
             command=menuCallback,underline=amp_index)
 #@nonl
 #@+node:ekr.20051021091958:<< get label & command or continue >>
-ok = True
-
-if type(data) not in (type(()), type([])):
-    ok = False
-elif len(data) == 2:
-    label,command = data
-elif len(data) == 3:
-    label,junk,command = data
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        label,command = data
+    else:
+        label,junk,command = data
 else:
-    ok = False
-     
-if not ok:
     g.trace('bad data in menu table: %s' % repr(data))
     continue # Ignore bad data
      
-if label in (None,'-') or command == None:
+if ok and (label in (None,'-') or command == None):
     self.add_separator(menu)
     continue # That's all.
 #@nonl
@@ -18026,14 +17668,19 @@ if not openWith and not accel:
         commandName = emacs_name
         rawKey,bunch = c.config.getShortcut(emacs_name)
         accel = bunch and bunch.val
-    elif init:
+    elif not dynamicMenu:
         g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
-if special:
-    # A slightly less horrible kludge.
-    # The menu tables have methods that are not the same as the
-    # methods actually bound to cut/copy/paste-text minibuffer commands.
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
     emacs_name = '%s-text' % name
 else:
     try: # User errors in the table can cause this.
@@ -18043,20 +17690,13 @@ else:
 #@nonl
 #@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@+node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 if accel:
-    bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+    junk,menu_shortcut = self.canonicalizeShortcut(accel)
 else:
-    bind_shortcut,menu_shortcut = None,None
-    
-# A less horrible kludge: just pretend to bind shortcuts to cut/copy/paste.
-if special or (
-    sys.platform.startswith('win') and
-    bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>")
-):
-    bind_shortcut = None
+    menu_shortcut = None
 #@nonl
-#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
 if openWith:
     menuCallback = self.defineOpenWithMenuCallback(command)
@@ -18067,26 +17707,20 @@ else:
 #@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
 realLabel = self.getRealMenuName(label)
 
-# A bad hack:  this does not allow for translations!
-# We need a way of specifying shortcuts, & bindings and translations all in the same place.
-
 amp_index = -1
+
 if rawKey:
     amp_index = rawKey.find("&")
+
 if amp_index == -1:
     amp_index = realLabel.find("&")
 
 realLabel = realLabel.replace("&","")
-
-if 0: # trace
-    if rawKey and rawKey.lower().startswith("exit"):
-        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
-
-if not menu_shortcut:
-    menu_shortcut = ""
+        
+if dontBind: menu_shortcut = ''
 #@nonl
 #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-#@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
+#@-node:ekr.20031218072017.1723:menu.createMenuEntries
 #@-node:ekr.20051014034200:(Fixed problems when special keys are not defined
 #@+node:ekr.20051015063053:(Problems enabling minibuffer)
 # These arose because @bool useMinibuffer conflicted with @shortcut use-mini-buffer(!!)
@@ -18497,11 +18131,6 @@ def makeSpecialBindings (self):
     
     k = self ; c = k.c ; f = c.frame ; w = f.body.bodyCtrl
     tag = 'makeSpecialBindings'
-    
-    if 0: # Add inverses for cut/copy/paste commands.
-        c.commandsDict['copy-text'] = f.OnCopyFromMenu
-        c.commandsDict['cut-text'] = f.OnCutFromMenu
-        c.commandsDict['paste-text'] = f.OnPasteFromMenu
     
     # These defaults may be overridden.
     for stroke,ivar,commandName,func in (
@@ -19128,10 +18757,13 @@ k.bindKey. The work is worthwhile: it is now much clearer what is being bound.
 The most complicated change was to menu.createMenuEntries, as usual...
 #@nonl
 #@-node:ekr.20051016171402:Notes
-#@+node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
+#@+node:ekr.20031218072017.1723:menu.createMenuEntries
 def createMenuEntries (self,menu,table,
-    openWith=False,dontBind=False,
-    init=False,dynamicMenu=False):
+    openWith=False,dontBind=False,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
     
     c = self.c ; f = c.frame ; k = c.keyHandler
     
@@ -19139,38 +18771,31 @@ def createMenuEntries (self,menu,table,
 
     for data in table:
         << get label & command or continue >>
-        special = command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu)
         << set name to the label for doCommand >>
         << set accel to the shortcut for name >>
-        << set bind_shortcut and menu_shortcut using accel >>
+        << set menu_shortcut using accel >>
         << define callback function >>
         << set realLabel, amp_index and menu_shortcut >>
-        if bind_shortcut:
-            ok = c.keyHandler.bindShortcut(
-                bind_shortcut,name,command,commandName,openWith)
-            if not ok:
-                menu_shortcut = None
-            
-        self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+        self.add_command(menu,label=realLabel,
+            accelerator=menu_shortcut or '',
             command=menuCallback,underline=amp_index)
 #@nonl
 #@+node:ekr.20051021091958:<< get label & command or continue >>
-ok = True
-
-if type(data) not in (type(()), type([])):
-    ok = False
-elif len(data) == 2:
-    label,command = data
-elif len(data) == 3:
-    label,junk,command = data
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        label,command = data
+    else:
+        label,junk,command = data
 else:
-    ok = False
-     
-if not ok:
     g.trace('bad data in menu table: %s' % repr(data))
     continue # Ignore bad data
      
-if label in (None,'-') or command == None:
+if ok and (label in (None,'-') or command == None):
     self.add_separator(menu)
     continue # That's all.
 #@nonl
@@ -19198,14 +18823,19 @@ if not openWith and not accel:
         commandName = emacs_name
         rawKey,bunch = c.config.getShortcut(emacs_name)
         accel = bunch and bunch.val
-    elif init:
+    elif not dynamicMenu:
         g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
-if special:
-    # A slightly less horrible kludge.
-    # The menu tables have methods that are not the same as the
-    # methods actually bound to cut/copy/paste-text minibuffer commands.
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
     emacs_name = '%s-text' % name
 else:
     try: # User errors in the table can cause this.
@@ -19215,20 +18845,13 @@ else:
 #@nonl
 #@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@+node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 if accel:
-    bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+    junk,menu_shortcut = self.canonicalizeShortcut(accel)
 else:
-    bind_shortcut,menu_shortcut = None,None
-    
-# A less horrible kludge: just pretend to bind shortcuts to cut/copy/paste.
-if special or (
-    sys.platform.startswith('win') and
-    bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>")
-):
-    bind_shortcut = None
+    menu_shortcut = None
 #@nonl
-#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
 if openWith:
     menuCallback = self.defineOpenWithMenuCallback(command)
@@ -19239,26 +18862,20 @@ else:
 #@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
 realLabel = self.getRealMenuName(label)
 
-# A bad hack:  this does not allow for translations!
-# We need a way of specifying shortcuts, & bindings and translations all in the same place.
-
 amp_index = -1
+
 if rawKey:
     amp_index = rawKey.find("&")
+
 if amp_index == -1:
     amp_index = realLabel.find("&")
 
 realLabel = realLabel.replace("&","")
-
-if 0: # trace
-    if rawKey and rawKey.lower().startswith("exit"):
-        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
-
-if not menu_shortcut:
-    menu_shortcut = ""
+        
+if dontBind: menu_shortcut = ''
 #@nonl
 #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-#@-node:ekr.20031218072017.1723:menu.createMenuEntries (does bindings)
+#@-node:ekr.20031218072017.1723:menu.createMenuEntries
 #@+node:ekr.20051015110547:registerCommand
 def registerCommand (self,commandName,shortcut,func,verbose=True):
     
@@ -19306,6 +18923,8 @@ def bindShortcut (self,shortcut,name,command,commandName,openWith):
     if openWith:
         k.bindOpenWith(shortcut,name,command)
         return True
+        
+    # g.trace(g.callerName(2),command.__name__)
 
     if command.__name__ == 'leoCallback':
         # Get the function wrapped by this particular leoCallback function.
@@ -19408,11 +19027,6 @@ def makeSpecialBindings (self):
     
     k = self ; c = k.c ; f = c.frame ; w = f.body.bodyCtrl
     tag = 'makeSpecialBindings'
-    
-    if 0: # Add inverses for cut/copy/paste commands.
-        c.commandsDict['copy-text'] = f.OnCopyFromMenu
-        c.commandsDict['cut-text'] = f.OnCutFromMenu
-        c.commandsDict['paste-text'] = f.OnPasteFromMenu
     
     # These defaults may be overridden.
     for stroke,ivar,commandName,func in (
@@ -20898,6 +20512,384 @@ def buttonCallback (self, event=None):
 #@-node:ekr.20051020120306.6:class leoTkinterFindTab
 #@-node:ekr.20051020120306:openFindTab & helper classes
 #@-node:ekr.20051021070335:(Created open-find-tab command)
+#@+node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
+#@+node:ekr.20031218072017.839:defineEditMenuTopTable
+def defineEditMenuTopTable (self):
+    
+    __pychecker__ = 'no-unusednames=[f]' # We define 'f' just in case.
+
+    c = self.c ; f = self.frame
+    
+    self.editMenuTopTable = [
+        ("Can't Undo",c.undoer.undo), # &U reserved for Undo
+        ("Can't Redo",c.undoer.redo), # &R reserved for Redo
+        ("-",None),
+        ("Cu&t",f.OnCutFromMenu), 
+        ("Cop&y",f.OnCopyFromMenu),
+        ("&Paste",f.OnPasteFromMenu),
+        ("&Delete",c.delete),
+        ("Select &All",f.body.selectAllText),
+        ("-",None),
+    ]
+
+    # Top-level shortcuts here:  a,d,p,t,u,y,z
+    # Top-level shortcuts later: e,g,n,v
+#@nonl
+#@-node:ekr.20031218072017.839:defineEditMenuTopTable
+#@+node:ekr.20031218072017.1723:menu.createMenuEntries
+def createMenuEntries (self,menu,table,
+    openWith=False,dontBind=False,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.keyHandler
+    
+    if g.app.unitTesting: return
+
+    for data in table:
+        << get label & command or continue >>
+        << set name to the label for doCommand >>
+        << set accel to the shortcut for name >>
+        << set menu_shortcut using accel >>
+        << define callback function >>
+        << set realLabel, amp_index and menu_shortcut >>
+        self.add_command(menu,label=realLabel,
+            accelerator=menu_shortcut or '',
+            command=menuCallback,underline=amp_index)
+#@nonl
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        label,command = data
+    else:
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and (label in (None,'-') or command == None):
+    self.add_separator(menu)
+    continue # That's all.
+#@nonl
+#@-node:ekr.20051021091958:<< get label & command or continue >>
+#@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+name = label.strip().lower()
+
+# Remove special characters from command names.
+name2 = ""
+for ch in name:
+    if ch in string.ascii_letters or ch in string.digits:
+        name2 = name2 + ch
+name = name2
+#@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+#@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+# First, get the old-style name.
+rawKey,bunch = c.config.getShortcut(name)
+accel = bunch and bunch.val
+commandName = name
+
+# Second, get new-style name.
+if not openWith and not accel:
+    << compute emacs_name >>
+    if emacs_name:
+        commandName = emacs_name
+        rawKey,bunch = c.config.getShortcut(emacs_name)
+        accel = bunch and bunch.val
+    elif not dynamicMenu:
+        g.trace('No inverse for %s' % name)
+#@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % name
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
+#@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+#@+node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
+if accel:
+    junk,menu_shortcut = self.canonicalizeShortcut(accel)
+else:
+    menu_shortcut = None
+#@nonl
+#@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
+#@+node:ekr.20031218072017.1727:<< define callback function >>
+if openWith:
+    menuCallback = self.defineOpenWithMenuCallback(command)
+else:
+    menuCallback = self.defineMenuCallback(command,name)
+#@nonl
+#@-node:ekr.20031218072017.1727:<< define callback function >>
+#@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+realLabel = self.getRealMenuName(label)
+
+amp_index = -1
+
+if rawKey:
+    amp_index = rawKey.find("&")
+
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+
+realLabel = realLabel.replace("&","")
+        
+if dontBind: menu_shortcut = ''
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+#@-node:ekr.20031218072017.1723:menu.createMenuEntries
+#@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@+node:ekr.20051011072903.2:copyText
+def copyText (self):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    #g.trace()
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Copy"))
+    else:
+        pass # Copy doesn't change text.
+
+#@-node:ekr.20051011072903.2:copyText
+#@+node:ekr.20051011072049.2:cutText
+def cutText (self):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    #g.trace()
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Cut"))
+    else:
+        f.tree.onHeadChanged(c.currentPosition())
+#@nonl
+#@-node:ekr.20051011072049.2:cutText
+#@+node:ekr.20051011072903.5:pasteText
+def pasteText (self):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    #g.trace()
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Paste"))
+    else:
+        # Do **not** call w.event_generate here.
+        f.tree.onHeadChanged(c.currentPosition())
+#@nonl
+#@-node:ekr.20051011072903.5:pasteText
+#@+node:ekr.20051011072903.1:OnCopyFromMenu
+def OnCopyFromMenu (self):
+    
+    ''' Called **only** when invoked using the menu instead of a shortcut.'''
+    
+    #g.trace()
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Copy"))
+    else:
+        # Necessary when not using shortcut keys.
+        w.event_generate(g.virtual_event_name("Copy"))
+#@nonl
+#@-node:ekr.20051011072903.1:OnCopyFromMenu
+#@+node:ekr.20051011072049.1:OnCutFromMenu
+def OnCutFromMenu (self):
+    
+    ''' Called **only** when invoked using the menu instead of a shortcut.'''
+    
+    #g.trace()
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Cut"))
+    else:
+        # Necessary
+        w.event_generate(g.virtual_event_name("Cut"))
+        f.tree.onHeadChanged(c.currentPosition())
+#@nonl
+#@-node:ekr.20051011072049.1:OnCutFromMenu
+#@+node:ekr.20051011072903.4:OnPasteFromMenu
+def OnPasteFromMenu (self):
+    
+    ''' Called **only** when invoked using the menu instead of a shortcut.'''
+    
+    #g.trace()
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    w = self.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Paste"))
+    else:
+        w.event_generate(g.virtual_event_name("Paste"))
+        f.tree.onHeadChanged(c.currentPosition())
+#@nonl
+#@-node:ekr.20051011072903.4:OnPasteFromMenu
+#@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@-node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
+#@+node:ekr.20051021143159.1:(Removed all key bindings from createMenuEntries)
+@ This is an important simplification.
+
+One not-so-horrible kludge remains. The cut/copy/paste commands in the menu
+tables are not the same as the methods actually bound to cut/copy/paste-text
+minibuffer commands, so we must do a bit of extra translation to discover
+whether the user has overridden their bindings.
+
+Important: this affect only the **appearance** of the menu, **not** any bindings!
+#@nonl
+#@+node:ekr.20031218072017.1723:menu.createMenuEntries
+def createMenuEntries (self,menu,table,
+    openWith=False,dontBind=False,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.keyHandler
+    
+    if g.app.unitTesting: return
+
+    for data in table:
+        << get label & command or continue >>
+        << set name to the label for doCommand >>
+        << set accel to the shortcut for name >>
+        << set menu_shortcut using accel >>
+        << define callback function >>
+        << set realLabel, amp_index and menu_shortcut >>
+        self.add_command(menu,label=realLabel,
+            accelerator=menu_shortcut or '',
+            command=menuCallback,underline=amp_index)
+#@nonl
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        label,command = data
+    else:
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and (label in (None,'-') or command == None):
+    self.add_separator(menu)
+    continue # That's all.
+#@nonl
+#@-node:ekr.20051021091958:<< get label & command or continue >>
+#@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+name = label.strip().lower()
+
+# Remove special characters from command names.
+name2 = ""
+for ch in name:
+    if ch in string.ascii_letters or ch in string.digits:
+        name2 = name2 + ch
+name = name2
+#@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+#@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+# First, get the old-style name.
+rawKey,bunch = c.config.getShortcut(name)
+accel = bunch and bunch.val
+commandName = name
+
+# Second, get new-style name.
+if not openWith and not accel:
+    << compute emacs_name >>
+    if emacs_name:
+        commandName = emacs_name
+        rawKey,bunch = c.config.getShortcut(emacs_name)
+        accel = bunch and bunch.val
+    elif not dynamicMenu:
+        g.trace('No inverse for %s' % name)
+#@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % name
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
+#@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+#@+node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
+if accel:
+    junk,menu_shortcut = self.canonicalizeShortcut(accel)
+else:
+    menu_shortcut = None
+#@nonl
+#@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
+#@+node:ekr.20031218072017.1727:<< define callback function >>
+if openWith:
+    menuCallback = self.defineOpenWithMenuCallback(command)
+else:
+    menuCallback = self.defineMenuCallback(command,name)
+#@nonl
+#@-node:ekr.20031218072017.1727:<< define callback function >>
+#@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+realLabel = self.getRealMenuName(label)
+
+amp_index = -1
+
+if rawKey:
+    amp_index = rawKey.find("&")
+
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+
+realLabel = realLabel.replace("&","")
+        
+if dontBind: menu_shortcut = ''
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+#@-node:ekr.20031218072017.1723:menu.createMenuEntries
+#@-node:ekr.20051021143159.1:(Removed all key bindings from createMenuEntries)
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@+node:ekr.20051006122237:(Recent)
 #@+node:ekr.20050920085536.65: masterCommand & helpers
@@ -22314,14 +22306,19 @@ if not openWith and not accel:
         commandName = emacs_name
         rawKey,bunch = c.config.getShortcut(emacs_name)
         accel = bunch and bunch.val
-    elif init:
+    elif not dynamicMenu:
         g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
-if special:
-    # A slightly less horrible kludge.
-    # The menu tables have methods that are not the same as the
-    # methods actually bound to cut/copy/paste-text minibuffer commands.
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
     emacs_name = '%s-text' % name
 else:
     try: # User errors in the table can cause this.
@@ -24321,6 +24318,8 @@ def bindShortcut (self,shortcut,name,command,commandName,openWith):
     if openWith:
         k.bindOpenWith(shortcut,name,command)
         return True
+        
+    # g.trace(g.callerName(2),command.__name__)
 
     if command.__name__ == 'leoCallback':
         # Get the function wrapped by this particular leoCallback function.

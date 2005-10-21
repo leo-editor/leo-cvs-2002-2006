@@ -137,13 +137,13 @@
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
-<v t="ekr.20041213105007.1" a="E"><vh>Colors</vh>
-<v t="ekr.20041213105007.3" a="E"><vh>@page Log pane colors</vh>
+<v t="ekr.20041213105007.1"><vh>Colors</vh>
+<v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
 <v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
 <v t="ekr.20041217184352.2"><vh>@color log_pane_background_color = #f2fdff</vh></v>
-<v t="ekr.20051020125928" a="TV"><vh>@color log_pane_Find_tab_background_color = #d6c7d3</vh></v>
+<v t="ekr.20051020125928"><vh>@color log_pane_Find_tab_background_color = #d6c7d3</vh></v>
 </v>
 <v t="ekr.20041213105007.2"><vh>@page Body pane colors</vh>
 <v t="ekr.20041119034357.41"><vh>@color body_cursor_background_color = None</vh></v>
@@ -228,7 +228,7 @@
 <v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
+<v t="ekr.20051010112558" a="TV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>

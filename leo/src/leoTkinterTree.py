@@ -2285,7 +2285,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         # Add the Open With entries if they exist.
         if g.app.openWithTable:
-            frame.menu.createMenuEntries(menu,g.app.openWithTable,openWith=1)
+            frame.menu.createMenuEntries(menu,g.app.openWithTable,openWith=True)
             table = (("-",None,None),)
             frame.menu.createMenuEntries(menu,table)
             

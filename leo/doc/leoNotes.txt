@@ -2233,6 +2233,87 @@ while g.match(s,i,tag):
 #@nonl
 #@-node:ekr.20041005105605.158:<< put all @first lines in root >> (4.x)
 #@-node:ekr.20050506094742:Unused from atFile.writeOpenFile
+#@+node:ekr.20051021140337:Unused cut/copy/paste
+#@+node:ekr.20051011072049:OnCut (no longer used)
+# No longer used.  Was called from tkBody.createBindings.
+
+def OnCut (self,event=None):
+    
+    """The handler for the virtual Cut event."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    f = self ; c = f.c
+    
+    if 0: # g.app.gui.win32clipboard is always None.
+        if g.app.gui.win32clipboard:
+            data = f.body.getSelectedText()
+            if data:
+                g.app.gui.replaceClipboardWith(data)
+
+    # Activate the body key handler by hand.
+    f.body.forceFullRecolor()
+    f.body.onBodyWillChange(c.currentPosition(),"Cut")
+#@nonl
+#@-node:ekr.20051011072049:OnCut (no longer used)
+#@+node:ekr.20051011072903:OnCopy (no longer used)
+# No longer used.  Was called from tkBody.createBindings.
+
+def OnCopy (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    if 0: # g.app.gui.win32clipboard is always None.
+        f = self
+        if g.app.gui.win32clipboard:
+            data = f.body.getSelectedText()
+            if data:
+                g.app.gui.replaceClipboardWith(data)
+        
+    # Copy never changes dirty bits or syntax coloring.
+    
+#@-node:ekr.20051011072903:OnCopy (no longer used)
+#@+node:ekr.20051011072903.3:OnPaste (no longer used)
+# No longer used.  Was called from tkBody.createBindings.
+
+def OnPaste (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    f = self ; c = f.c
+  
+    if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
+        bodyCtrl = f.body.bodyCtrl
+        s = bodyCtrl.selection_get( selection='CLIPBOARD' )
+        bodyCtrl.insert('insert', s)
+        bodyCtrl.event_generate('<Key>')
+        bodyCtrl.update_idletasks()
+    else:
+        # Activate the body key handler by hand.
+        f.body.forceFullRecolor()
+        f.body.onBodyWillChange(c.currentPosition(),"Paste")
+    
+#@-node:ekr.20051011072903.3:OnPaste (no longer used)
+#@-node:ekr.20051021140337:Unused cut/copy/paste
+#@+node:ekr.20051021143159:From menu.createMenuEnties
+# From << set realLabel, amp_index and menu_shortcut >>
+
+# A less horrible kludge: just pretend to bind shortcuts to cut/copy/paste.
+if special or (
+    sys.platform.startswith('win') and
+    bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>")
+):
+    bind_shortcut = None
+
+# From top level.
+
+if bind_shortcut:
+    ok = c.keyHandler.bindShortcut(
+        bind_shortcut,name,command,commandName,openWith)
+    if not ok:
+        menu_shortcut = None
+#@nonl
+#@-node:ekr.20051021143159:From menu.createMenuEnties
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
