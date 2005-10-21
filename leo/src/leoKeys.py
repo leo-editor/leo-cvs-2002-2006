@@ -770,6 +770,8 @@ class keyHandlerClass:
         if openWith:
             k.bindOpenWith(shortcut,name,command)
             return True
+            
+        # g.trace(g.callerName(2),command.__name__)
     
         if command.__name__ == 'leoCallback':
             # Get the function wrapped by this particular leoCallback function.
@@ -966,7 +968,6 @@ class keyHandlerClass:
     
         for name in keys:
             command = c.commandsDict.get(name)
-            
             key, bunch = c.config.getShortcut(name)
             accel = bunch and bunch.val
             if accel:

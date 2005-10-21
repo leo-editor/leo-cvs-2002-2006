@@ -1114,12 +1114,14 @@ class leoMenu:
             #@nonl
             #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
             #@nl
-            if bind_shortcut:
-                ok = c.keyHandler.bindShortcut(
-                    bind_shortcut,name,command,commandName,openWith)
-                if not ok:
-                    menu_shortcut = None
-                
+            
+            if 0: # Urgent fix.
+                if bind_shortcut:
+                    ok = c.keyHandler.bindShortcut(
+                        bind_shortcut,name,command,commandName,openWith)
+                    if not ok:
+                        menu_shortcut = None
+    
             self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
                 command=menuCallback,underline=amp_index)
     #@nonl
