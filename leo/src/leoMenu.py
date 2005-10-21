@@ -270,7 +270,7 @@ class leoMenu:
         
         self.editMenuTopTable = [
             ("Can't Undo",c.undoer.undo), # &U reserved for Undo
-            ("Can't Redo","Shift+Ctrl+Z",c.undoer.redo), # &R reserved for Redo
+            ("Can't Redo",c.undoer.redo), # &R reserved for Redo
             ("-",None),
             ("Cu&t",f.OnCutFromMenu), 
             ("Cop&y",f.OnCopyFromMenu),
@@ -294,21 +294,21 @@ class leoMenu:
         if 0: ### Not ready yet.
             # These should have Emacs names...
             self.editMenuEditCursorTable = [
-                ('Delete Right',c.deleteRightChar), # Tk: Del
-                ('Delete Left',c.deleteLeftChar), # Tk: Backspace
+                ('Delete Right',c.deleteRightChar), 
+                ('Delete Left',c.deleteLeftChar), 
                 # Moving the cursor.
-                ('Start of Line',c.moveToStartOfLine), # Tk: Home
-                ('End of Line',c.moveToEndOfLine), # Tk: End
-                ('Start of Node',c.moveToStartOfNode), # Tk: c-Home
-                ('End of Node',c.moveToEndOfNode), # Tk: c-End
+                ('Start of Line',c.moveToStartOfLine), 
+                ('End of Line',c.moveToEndOfLine), 
+                ('Start of Node',c.moveToStartOfNode),
+                ('End of Node',c.moveToEndOfNode), 
                 ('-',None,None),
                 # Extending the selection...
                 ('Select Line',c.selectEntireLine),
                 ('Extend To Start of Word',c.extendToStartOfWord),
                 ('Extend To End of Word',c.extendToEndOfWord),
-                ('Extend To Start Of Line',c.extendToStartOfLine), # Tk: s-Home
-                ('Extend To End Of Line',c.extendToEndOfLine), # Tk: s-End
-                ('Extend To End of Node',c.extendToEndOfNode), # Tk: s-c-End
+                ('Extend To Start Of Line',c.extendToStartOfLine), 
+                ('Extend To End Of Line',c.extendToEndOfLine), 
+                ('Extend To End of Node',c.extendToEndOfNode),
                 # The mark...
             ]
     #@nonl
@@ -321,22 +321,22 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.editMenuEditBodyTable = [
-            ("Extract &Section","Shift+Ctrl+E",c.extractSection),
-            ("Extract &Names","Shift+Ctrl+N",c.extractSectionNames),
-            ("&Extract","Shift+Ctrl+D",c.extract),
+            ("Extract &Section",c.extractSection),
+            ("Extract &Names",c.extractSectionNames),
+            ("&Extract",c.extract),
             ("-",None,None),
-            ("Convert All B&lanks",None,c.convertAllBlanks),
-            ("Convert All T&abs",None,c.convertAllTabs),
-            ("Convert &Blanks","Shift+Ctrl+B",c.convertBlanks),
-            ("Convert &Tabs","Shift+Ctrl+J",c.convertTabs),
-            ("Insert Body Time/&Date","Shift+Ctrl+G",c.insertBodyTime),
-            ("&Reformat Paragraph","Shift+Ctrl+P",c.reformatParagraph),
+            ("Convert All B&lanks",c.convertAllBlanks),
+            ("Convert All T&abs",c.convertAllTabs),
+            ("Convert &Blanks",c.convertBlanks),
+            ("Convert &Tabs",c.convertTabs),
+            ("Insert Body Time/&Date",c.insertBodyTime),
+            ("&Reformat Paragraph",c.reformatParagraph),
             ("-",None,None),
-            ("&Indent","Ctrl+]",c.indentBody),
-            ("&Unindent","Ctrl+[",c.dedentBody),
-            ("&Match Brackets","Ctrl+K",c.findMatchingBracket),
-            ("Add Comments",None,c.addComments),
-            ("Delete Comments",None,c.deleteComments),
+            ("&Indent",c.indentBody),
+            ("&Unindent",c.dedentBody),
+            ("&Match Brackets",c.findMatchingBracket),
+            ("Add Comments",c.addComments),
+            ("Delete Comments",c.deleteComments),
         ]
         # Shortcuts a,b,d,e,i,l,m,n,r,s,t,u
     #@nonl
@@ -349,12 +349,11 @@ class leoMenu:
         c = self.c ; f = self.frame
         
         self.editMenuEditHeadlineTable = [
-            ("Edit &Headline","Ctrl+H",c.editHeadline),
-            ("&End Edit Headline","Escape",f.endEditLabelCommand),
-            ("&Abort Edit Headline","Shift+Escape",f.abortEditLabelCommand),
-            ("Insert Headline Time/&Date","Shift+Ctrl+H",f.insertHeadlineTime),
-            # 2/16/04: restore Toggle Angle Brackets command without any default shortcut.
-            ("Toggle Angle Brackets",None,c.toggleAngleBrackets),
+            ("Edit &Headline",c.editHeadline),
+            ("&End Edit Headline",f.endEditLabelCommand),
+            ("&Abort Edit Headline",f.abortEditLabelCommand),
+            ("Insert Headline Time/&Date",f.insertHeadlineTime),
+            ("Toggle Angle Brackets",c.toggleAngleBrackets),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3755:defineEditMenuEditHeadlineTable
@@ -366,12 +365,12 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.editMenuFindMenuTable = [
-            ("&Find Panel","F5",c.showFindPanel),
-            ("-",None,None),
-            ("Find &Next","F3",c.findNext),
-            ("Find &Previous","F4",c.findPrevious),
-            ("&Replace","Ctrl+=",c.replace),
-            ("Replace, &Then Find","Ctrl+-",c.replaceThenFind),
+            ("&Find Panel",c.showFindPanel),
+            ("-",None),
+            ("Find &Next",c.findNext),
+            ("Find &Previous",c.findPrevious),
+            ("&Replace",c.replace),
+            ("Replace, &Then Find",c.replaceThenFind),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
@@ -387,13 +386,10 @@ class leoMenu:
         label = g.choose(show,"Hide In&visibles","Show In&visibles")
             
         self.editMenuTop2Table = [
-            ("&Go To Line Number","Alt+G",c.goToLineNumber),
-            ("&Execute Script","Alt+Shift+E",c.executeScript),
-            # ("Set Fon&t...",None,c.fontPanel), # To be replaced by general settings dialog.
-            # ("Set &Colors...",None,c.colorPanel), # To be replaced by general settings dialog.
-            (label,"Alt+V",c.viewAllCharacters),
-            # ("-",None,None),
-            ("Setti&ngs",None,c.preferences),
+            ("&Go To Line Number",c.goToLineNumber),
+            ("&Execute Script",c.executeScript),
+            (label,c.viewAllCharacters),
+            ("Setti&ngs",c.preferences),
         ]
     
         # Top-level shortcuts earlier: a,d,p,t,u,y,z
@@ -421,8 +417,8 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.fileMenuTopTable = [
-            ("&New","Ctrl+N",c.new),
-            ("&Open...","Ctrl+O",c.open),
+            ("&New",c.new),
+            ("&Open...",c.open),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3759:defineFileMenuTopTable
@@ -434,12 +430,12 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.fileMenuTop2Table = [
-            ("-",None,None),
-            ("&Close","Ctrl+W",c.close),
-            ("&Save","Ctrl+S",c.save),
-            ("Save &As","Shift+Ctrl+S",c.saveAs),
-            ("Save To",None,c.saveTo), # &Tangle
-            ("Re&vert To Saved",None,c.revert), # &Read/Write
+            ("-",None),
+            ("&Close",c.close),
+            ("&Save",c.save),
+            ("Save &As",c.saveAs),
+            ("Save To",c.saveTo), # &Tangle
+            ("Re&vert To Saved",c.revert), # &Read/Write
         ]
     #@nonl
     #@-node:ekr.20031218072017.3760:defineFileMenuTop2Table
@@ -448,16 +444,16 @@ class leoMenu:
         
         __pychecker__ = 'no-unusednames=c,f'
         
-        c = self.c ; f = self.frame
+        c = self.c ; f = self.frame ; fc = c.fileCommands
     
         self.fileMenuReadWriteMenuTable = [
-            ("&Read Outline Only","Shift+Ctrl+R",c.readOutlineOnly),
-            ("Read @file &Nodes",None,c.readAtFileNodes),
-            ("-",None,None),
-            ("Write &Dirty @file Nodes","Shift+Ctrl+Q",c.fileCommands.writeDirtyAtFileNodes),
-            ("Write &Missing @file Nodes",None,c.fileCommands.writeMissingAtFileNodes),
-            ("Write &Outline Only",None,c.fileCommands.writeOutlineOnly),
-            ("&Write @file Nodes","Shift+Ctrl+W",c.fileCommands.writeAtFileNodes),
+            ("&Read Outline Only",c.readOutlineOnly),
+            ("Read @file &Nodes",c.readAtFileNodes),
+            ("-",None),
+            ("Write &Dirty @file Nodes",fc.writeDirtyAtFileNodes),
+            ("Write &Missing @file Nodes",fc.writeMissingAtFileNodes),
+            ("Write &Outline Only",fc.writeOutlineOnly),
+            ("&Write @file Nodes",fc.writeAtFileNodes),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3761:defineFileMenuReadWriteMenuTable
@@ -469,9 +465,9 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.fileMenuTangleMenuTable = [
-            ("Tangle &All","Shift+Ctrl+A",c.tangleAll),
-            ("Tangle &Marked","Shift+Ctrl+M",c.tangleMarked),
-            ("&Tangle","Shift+Ctrl+T",c.tangle),
+            ("Tangle &All",c.tangleAll),
+            ("Tangle &Marked",c.tangleMarked),
+            ("&Tangle",c.tangle),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3762:defineFileMenuTangleMenuTable
@@ -483,9 +479,9 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.fileMenuUntangleMenuTable = [
-            ("Untangle &All",None,c.untangleAll),
-            ("Untangle &Marked",None,c.untangleMarked),
-            ("&Untangle","Shift+Ctrl+U",c.untangle),
+            ("Untangle &All",c.untangleAll),
+            ("Untangle &Marked",c.untangleMarked),
+            ("&Untangle",c.untangle),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3763:defineFileMenuUntangleMenuTable
@@ -497,13 +493,12 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.fileMenuImportMenuTable = [
-            ("Import Derived File",None,c.importDerivedFile),
-            ("Import To @&file","Shift+Ctrl+F",c.importAtFile),
-            ("Import To @&root",None,c.importAtRoot),
-            ("Import &CWEB Files",None,c.importCWEBFiles),
-            
-            ("Import &noweb Files",None,c.importNowebFiles),
-            ("Import Flattened &Outline",None,c.importFlattenedOutline),
+            ("Import Derived File",c.importDerivedFile),
+            ("Import To @&file",c.importAtFile),
+            ("Import To @&root",c.importAtRoot),
+            ("Import &CWEB Files",c.importCWEBFiles),
+            ("Import &noweb Files",c.importNowebFiles),
+            ("Import Flattened &Outline",c.importFlattenedOutline),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3764:defineFileMenuImportMenuTable
@@ -515,12 +510,12 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.fileMenuExportMenuTable = [
-            ("Export &Headlines",None,c.exportHeadlines),
-            ("Outline To &CWEB",None,c.outlineToCWEB),
-            ("Outline To &Noweb",None,c.outlineToNoweb),
-            ("&Flatten Outline",None,c.flattenOutline),
-            ("&Remove Sentinels",None,c.removeSentinels),
-            ("&Weave",None,c.weave),
+            ("Export &Headlines",c.exportHeadlines),
+            ("Outline To &CWEB",c.outlineToCWEB),
+            ("Outline To &Noweb",c.outlineToNoweb),
+            ("&Flatten Outline",c.flattenOutline),
+            ("&Remove Sentinels",c.removeSentinels),
+            ("&Weave",c.weave),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3765:defineFileMenuExportMenuTable
@@ -532,7 +527,7 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.fileMenuTop3MenuTable = [
-            ("E&xit","Ctrl+Q",g.app.onQuit),
+            ("E&xit",g.app.onQuit),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3766:defineFileMenuTop3MenuTable
@@ -555,20 +550,20 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.outlineMenuTopMenuTable = [
-            ("C&ut Node","Shift+Ctrl+X",c.cutOutline),
-            ("C&opy Node","Shift+Ctrl+C",c.copyOutline),
-            ("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
-            ("Pas&te Node As Clone",None,c.pasteOutlineRetainingClones),
-            ("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
+            ("C&ut Node",c.cutOutline),
+            ("C&opy Node",c.copyOutline),
+            ("&Paste Node",c.pasteOutline),
+            ("Pas&te Node As Clone",c.pasteOutlineRetainingClones),
+            ("&Delete Node",c.deleteOutline),
             ("-",None,None),
-            ("&Insert Node","Ctrl+I",c.insertHeadline),
-            ("&Clone Node","Ctrl+`",c.clone),
-            ("Sort Childre&n",None,c.sortChildren), # Conflicted with Hoist.
-            ("&Sort Siblings","Alt+A",c.sortSiblings),
-            ("-",None,None),
-            ("&Hoist",None,c.hoist),
-            ("D&e-Hoist",None,f.c.dehoist),
-            ("-",None,None),
+            ("&Insert Node",c.insertHeadline),
+            ("&Clone Node",c.clone),
+            ("Sort Childre&n",c.sortChildren), # Conflicted with Hoist.
+            ("&Sort Siblings",c.sortSiblings),
+            ("-",None),
+            ("&Hoist",c.hoist),
+            ("D&e-Hoist",f.c.dehoist),
+            ("-",None),
         ]
         # Ampersand bindings:  a,c,d,e,h,i,n,o,p,t,s,
         # Bindings for entries that go to submenus: a,g,k,m,x
@@ -582,14 +577,14 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.outlineMenuCheckOutlineMenuTable = [
-            ("Check &Outline",None,c.checkOutline),
-            ("&Dump Outline",None,c.dumpOutline),
-            ("-",None,None),
-            ("Check &All Python Code",None,c.checkAllPythonCode),
-            ("&Check Python &Code",None,c.checkPythonCode),
-            ("-",None,None),
-            ("Pretty P&rint All Python Code",None,c.prettyPrintAllPythonCode),
-            ("&Pretty Print Python Code",None,c.prettyPrintPythonCode),
+            ("Check &Outline",c.checkOutline),
+            ("&Dump Outline",c.dumpOutline),
+            ("-",None),
+            ("Check &All Python Code",c.checkAllPythonCode),
+            ("&Check Python &Code",c.checkPythonCode),
+            ("-",None),
+            ("Pretty P&rint All Python Code",c.prettyPrintAllPythonCode),
+            ("&Pretty Print Python Code",c.prettyPrintPythonCode),
         ]
         # shortcuts used: a,c,d,o,p,r
     #@nonl
@@ -602,28 +597,27 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.outlineMenuExpandContractMenuTable = [
-            ("&Contract All","Alt+-",c.contractAllHeadlines),
-            ("Contract &Node","Alt+[",c.contractNode),
-            ("Contract &Parent","Alt+0",c.contractParent),
-            ("Contract Or Go Left",None,c.contractNodeOrGoToParent),
-            ("-",None,None),
-            ("Expand P&rev Level","Alt+.",c.expandPrevLevel),
-            ("Expand N&ext Level","Alt+=",c.expandNextLevel),
-            ("Expand And Go Right",None,c.expandNodeAndGoToFirstChild),
-            ("Expand Or Go Right",None,c.expandNodeOrGoToFirstChild),
-            ("-",None,None),
-            ("Expand To Level &1","Alt+1",c.expandLevel1),
-            ("Expand To Level &2","Alt+2",c.expandLevel2),
-            ("Expand To Level &3","Alt+3",c.expandLevel3),
-            ("Expand To Level &4","Alt+4",c.expandLevel4),
-            ("Expand To Level &5","Alt+5",c.expandLevel5),
-            ("Expand To Level &6","Alt+6",c.expandLevel6),
-            ("Expand To Level &7","Alt+7",c.expandLevel7),
-            ("Expand To Level &8","Alt+8",c.expandLevel8),
-            # ("Expand To Level &9","Alt+9",c.expandLevel9),
-            ("-",None,None),
-            ("Expand &All","Alt+9",c.expandAllHeadlines),
-            ("Expand N&ode","Alt+]",c.expandNode),
+            ("&Contract All",c.contractAllHeadlines),
+            ("Contract &Node",c.contractNode),
+            ("Contract &Parent",c.contractParent),
+            ("Contract Or Go Left",c.contractNodeOrGoToParent),
+            ("-",None),
+            ("Expand P&rev Level",c.expandPrevLevel),
+            ("Expand N&ext Level",c.expandNextLevel),
+            ("Expand And Go Right",c.expandNodeAndGoToFirstChild),
+            ("Expand Or Go Right",c.expandNodeOrGoToFirstChild),
+            ("-",None),
+            ("Expand To Level &1",c.expandLevel1),
+            ("Expand To Level &2",c.expandLevel2),
+            ("Expand To Level &3",c.expandLevel3),
+            ("Expand To Level &4",c.expandLevel4),
+            ("Expand To Level &5",c.expandLevel5),
+            ("Expand To Level &6",c.expandLevel6),
+            ("Expand To Level &7",c.expandLevel7),
+            ("Expand To Level &8",c.expandLevel8),
+            ("-",None),
+            ("Expand &All",c.expandAllHeadlines),
+            ("Expand N&ode",c.expandNode),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3769:defineOutlineMenuExpandContractMenuTable
@@ -635,13 +629,13 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.outlineMenuMoveMenuTable = [
-            ("Move &Down", "Ctrl+D",c.moveOutlineDown),
-            ("Move &Left", "Ctrl+L",c.moveOutlineLeft),
-            ("Move &Right","Ctrl+R",c.moveOutlineRight),
-            ("Move &Up",   "Ctrl+U",c.moveOutlineUp),
-            ("-",None,None),
-            ("&Promote","Ctrl+{",c.promote),
-            ("&Demote", "Ctrl+}",c.demote),
+            ("Move &Down",c.moveOutlineDown),
+            ("Move &Left",c.moveOutlineLeft),
+            ("Move &Right",c.moveOutlineRight),
+            ("Move &Up",c.moveOutlineUp),
+            ("-",None),
+            ("&Promote",c.promote),
+            ("&Demote",c.demote),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3770:defineOutlineMenuMoveMenuTable
@@ -653,12 +647,12 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.outlineMenuMarkMenuTable = [
-            ("&Mark","Ctrl+M",c.markHeadline),
-            ("Mark &Subheads","Alt+S",c.markSubheads),
-            ("Mark Changed &Items","Alt+C",c.markChangedHeadlines),
-            ("Mark Changed &Roots","Alt+R",c.markChangedRoots),
-            ("Mark &Clones","Alt+K",c.markClones),
-            ("&Unmark All","Alt+U",c.unmarkAll),
+            ("&Mark",c.markHeadline),
+            ("Mark &Subheads",c.markSubheads),
+            ("Mark Changed &Items",c.markChangedHeadlines),
+            ("Mark Changed &Roots",c.markChangedRoots),
+            ("Mark &Clones",c.markClones),
+            ("&Unmark All",c.unmarkAll),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3771:defineOutlineMenuMarkMenuTable
@@ -670,26 +664,26 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.outlineMenuGoToMenuTable = [
-            ("Go Prev Visited",None,c.goPrevVisitedNode), # Usually use buttons for this.
-            ("Go Next Visited",None,c.goNextVisitedNode),
-            ("Go To Prev Node",None,c.selectThreadBack),
-            ("Go To Next Node",None,c.selectThreadNext),
-            ("-",None,None),
-            ("Go To Next Marked",None,c.goToNextMarkedHeadline),
-            ("Go To Next Changed",None,c.goToNextDirtyHeadline),
-            ("Go To Next Clone",None,c.goToNextClone),
-            ("-",None,None),
-            ("Go To First Node",None,c.goToFirstNode),
-            ("Go To Prev Visible",None,c.selectVisBack),
-            ("Go To Next Visible",None,c.selectVisNext),
-            ("Go To Last Node",None,c.goToLastNode),
-            ('Go To Last Visible',None,c.goToLastVisibleNode),
-            ("-",None,None),
-            ("Go To Parent",None,c.goToParent),
-            ('Go To First Sibling',None,c.goToFirstSibling),
-            ('Go To Last Sibling',None,c.goToLastSibling),
-            ("Go To Prev Sibling",None,c.goToPrevSibling),
-            ("Go To Next Sibling",None,c.goToNextSibling),
+            ("Go Prev Visited",c.goPrevVisitedNode), # Usually use buttons for this.
+            ("Go Next Visited",c.goNextVisitedNode),
+            ("Go To Prev Node",c.selectThreadBack),
+            ("Go To Next Node",c.selectThreadNext),
+            ("-",None),
+            ("Go To Next Marked",c.goToNextMarkedHeadline),
+            ("Go To Next Changed",c.goToNextDirtyHeadline),
+            ("Go To Next Clone",c.goToNextClone),
+            ("-",None),
+            ("Go To First Node",c.goToFirstNode),
+            ("Go To Prev Visible",c.selectVisBack),
+            ("Go To Next Visible",c.selectVisNext),
+            ("Go To Last Node",c.goToLastNode),
+            ('Go To Last Visible',c.goToLastVisibleNode),
+            ("-",None),
+            ("Go To Parent",c.goToParent),
+            ('Go To First Sibling',c.goToFirstSibling),
+            ('Go To Last Sibling',c.goToLastSibling),
+            ("Go To Prev Sibling",c.goToPrevSibling),
+            ("Go To Next Sibling",c.goToNextSibling),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
@@ -701,19 +695,19 @@ class leoMenu:
             pass
         
         self.emacsMenuCommandsMenuTable = [
-            ('Cmnd Command 1',None,dummyCommand),
+            ('Cmnd Command 1',dummyCommand),
         ]
         
         self.emacsMenuToolsMenuTable = [
-            ('Tools Command 1',None,dummyCommand),
+            ('Tools Command 1',dummyCommand),
         ]
     
         self.emacsMenuOptionsMenuTable = [
-            ('Options Command 1',None,dummyCommand),
+            ('Options Command 1',dummyCommand),
         ]
     
         self.emacsMenuBuffersMenuTable = [
-            ('Buffers Command 1',None,dummyCommand),
+            ('Buffers Command 1',dummyCommand),
         ]
     #@nonl
     #@-node:ekr.20050921103230:defineEditorMenuTables
@@ -725,16 +719,16 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.windowMenuTopTable = [
-            ("&Equal Sized Panes","Ctrl+E",f.equalSizedPanes),
-            ("Toggle &Active Pane","Ctrl+T",f.toggleActivePane),
-            ("Toggle &Split Direction",None,f.toggleSplitDirection),
-            ("-",None,None),
-            ("Resize To Screen",None,f.resizeToScreen),
-            ("Casca&de",None,f.cascade),
-            ("&Minimize All",None,f.minimizeAll),
-            ("-",None,None),
-            ("Open &Compare Window",None,c.openCompareWindow),
-            ("Open &Python Window","Alt+P",c.openPythonWindow),
+            ("&Equal Sized Panes",f.equalSizedPanes),
+            ("Toggle &Active Pane",f.toggleActivePane),
+            ("Toggle &Split Direction",f.toggleSplitDirection),
+            ("-",None),
+            ("Resize To Screen",f.resizeToScreen),
+            ("Casca&de",f.cascade),
+            ("&Minimize All",f.minimizeAll),
+            ("-",None),
+            ("Open &Compare Window",c.openCompareWindow),
+            ("Open &Python Window",c.openPythonWindow),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3773:defineWindowMenuTables
@@ -746,20 +740,20 @@ class leoMenu:
         c = self.c ; f = self.frame
     
         self.helpMenuTopTable = [
-            ("&About Leo...",None,c.about),
-            ("Online &Home Page",None,c.leoHome),
-            ("Open Online &Tutorial",None,c.leoTutorial),
+            ("&About Leo...",c.about),
+            ("Online &Home Page",c.leoHome),
+            ("Open Online &Tutorial",c.leoTutorial),
         ]
     
         self.helpMenuTop2Table = [
-            ("Open &Offline Tutorial",None,f.leoHelp),
+            ("Open &Offline Tutorial",f.leoHelp),
         ]
     
         self.helpMenuTop3Table = [
             ("-",None,None),
-            ("Open Leo&Docs.leo",None,c.leoDocumentation),
-            ("Open Leo&Plugins.leo",None,c.openLeoPlugins),
-            ("Open Leo&Settings.leo",None,c.openLeoSettings),
+            ("Open Leo&Docs.leo",c.leoDocumentation),
+            ("Open Leo&Plugins.leo",c.openLeoPlugins),
+            ("Open Leo&Settings.leo",c.openLeoSettings),
         ]
     #@nonl
     #@-node:ekr.20031218072017.3774:defineHelpMenuTables
@@ -1008,9 +1002,6 @@ class leoMenu:
             
             if type(data) not in (type(()), type([])):
                 ok = False
-            elif len(data) == 1:
-                ok = label in (None,'-')
-                label = data[0] ; command = None
             elif len(data) == 2:
                 label,command = data
             elif len(data) == 3:
@@ -1125,7 +1116,7 @@ class leoMenu:
             #@nl
             if bind_shortcut:
                 ok = c.keyHandler.bindShortcut(
-                    bind_shortcut,name,command,commandName,openWith,fromMenu=True)
+                    bind_shortcut,name,command,commandName,openWith)
                 if not ok:
                     menu_shortcut = None
                 

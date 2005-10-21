@@ -680,28 +680,15 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.11:add_ekr_altx_commands
     #@+node:ekr.20050920085536.16:bindKey
-    def bindKey (self,w,shortcut,callback,name,commandName,fromMenu=False,tag=''):
+    def bindKey (self,w,shortcut,callback,name,commandName,tag=''):
     
         '''Bind the indicated shortcut (a Tk keystroke) to the callback.
         callback calls commandName (for error messages).'''
     
         k = self ; c = k.c
     
-        # Check for duplicates: override or ignore default (menu) bindings.
-        b = k.bindingsDict.get(shortcut)
-        if b and not b.fromMenu:
-            # We are trying to override a non-default (non-menu) binding.
-            if b.name != name and not b.warningGiven and not fromMenu:
-                # Warning about a non-default binding
-                b.warningGiven = True
-                g.es_print('bindKey: ignoring %s = %s. Keeping binding to %s' % (
-                    shortcut, commandName, b.commandName))
-            return b.name == name
-    
-        # if shortcut=='<Control-g>': g.trace(tag,'%25s' % (shortcut),commandName)
-    
         try:
-            # The original way.  Essential to make cut/copy/paste work.
+            # Essential to make cut/copy/paste work.
             if shortcut == '<Key>':
                 w.bind(shortcut,callback,'+')
                 # Don't bind to menu.  Besides, menu.bind doesn't allow '+' arg.
@@ -734,8 +721,7 @@ class keyHandlerClass:
             #@-node:ekr.20051010065140:<< other ways that don't work >>
             #@nl
             k.bindingsDict [shortcut] = g.bunch(
-                func=callback,name=name,commandName=commandName,
-                warningGiven=False,fromMenu=fromMenu)
+                func=callback,name=name,commandName=commandName,warningGiven=False)
             return True
     
         except Exception: # Could be a user error.
@@ -770,7 +756,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051008135051.1:bindOpenWith
     #@+node:ekr.20051006125633.1:bindShortcut
-    def bindShortcut (self,shortcut,name,command,commandName,openWith,fromMenu=False):
+    def bindShortcut (self,shortcut,name,command,commandName,openWith):
         
         '''Bind one shortcut from a menu table.'''
         
@@ -808,7 +794,7 @@ class keyHandlerClass:
             def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
             
-        return k.bindKey(w,shortcut,keyCallback,name,commandName,fromMenu,tag='bindShortcut')
+        return k.bindKey(w,shortcut,keyCallback,name,commandName,tag='bindShortcut')
     #@nonl
     #@-node:ekr.20051006125633.1:bindShortcut
     #@+node:ekr.20051011103654:checkBindings
@@ -956,16 +942,14 @@ class keyHandlerClass:
                 return k.masterCommand(event,func,stroke)
             
             setattr(k,ivar,shortcut)
-            # Set fromMenu = True: this *can* be overridden.
-            k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,fromMenu=True,tag=tag)
+            k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,tag=tag)
             
         # Add a binding for <Key> events, so all key events go through masterCommand.
         def allKeysCallback (event):
             return k.masterCommand(event,func=None,stroke='<Key>')
                 
         k.bindKey(w,'<Key>',allKeysCallback,
-            name='masterCommand',commandName='master-command',
-            fromMenu=False,tag=tag)
+            name='masterCommand',commandName='master-command',tag=tag)
     
     #@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
     #@+node:ekr.20051008134059:setBindingsFromCommandsDict
@@ -1807,7 +1791,7 @@ class keyHandlerClass:
             # Retain the original spelling of the shortcut for the message.
             shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
             ok = k.bindShortcut (shortcut2,func.__name__,func,commandName,
-                openWith=False,fromMenu=False)
+                openWith=False)
                 
         if verbose:
             if shortcut and ok:
