@@ -926,6 +926,11 @@ class keyHandlerClass:
         k = self ; c = k.c ; f = c.frame ; w = f.body.bodyCtrl
         tag = 'makeSpecialBindings'
         
+        if 0: # Add inverses for cut/copy/paste commands.
+            c.commandsDict['copy-text'] = f.OnCopyFromMenu
+            c.commandsDict['cut-text'] = f.OnCutFromMenu
+            c.commandsDict['paste-text'] = f.OnPasteFromMenu
+        
         # These defaults may be overridden.
         for stroke,ivar,commandName,func in (
             ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),

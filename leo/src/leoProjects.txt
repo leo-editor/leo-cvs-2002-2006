@@ -16130,20 +16130,17 @@ def defineEditMenuTopTable (self):
     c = self.c ; f = self.frame
     
     self.editMenuTopTable = [
-        ("Can't Undo","Ctrl+Z",c.undoer.undo), # &U reserved for Undo
+        ("Can't Undo",c.undoer.undo), # &U reserved for Undo
         ("Can't Redo","Shift+Ctrl+Z",c.undoer.redo), # &R reserved for Redo
-        ("-",None,None),
-        # A Horrible kludge.  The -- indicates we should set menu_shortcut but *not* the bind_shortcut.
-        # This is needed so we can distinguish between invokes from the menu (very rare) and others.
-        # Important: these shortcuts can be overridden by specifying shortcuts for copy-text, cut-text and paste-text.
-        ###("Cu&t","--Ctrl+X",f.OnCutFromMenu), 
-        ###("Cop&y","--Ctrl+C",f.OnCopyFromMenu),
-        ###("&Paste","--Ctrl+V",f.OnPasteFromMenu),
-        ("&Delete",None,c.delete),
-        ("Select &All","Ctrl+A",f.body.selectAllText),
-        ("-",None,None),
+        ("-",None),
+        ("Cu&t",f.OnCutFromMenu), 
+        ("Cop&y",f.OnCopyFromMenu),
+        ("&Paste",f.OnPasteFromMenu),
+        ("&Delete",c.delete),
+        ("Select &All",f.body.selectAllText),
+        ("-",None),
     ]
-        
+
     # Top-level shortcuts here:  a,d,p,t,u,y,z
     # Top-level shortcuts later: e,g,n,v
 #@nonl
@@ -16155,33 +16152,49 @@ def createMenuEntries (self,menu,table,
     
     c = self.c ; f = c.frame ; k = c.keyHandler
     
-    for label,accel,command in table:
-        if label == None or command == None or label == "-":
-            self.add_separator(menu)
-        else:
-            << clear useBindShortcut and adjust accel if accel startswith '--' >>
-            << set name to the label for doCommand >>
-            << set accel to the shortcut for name >>
-            << set bind_shortcut and menu_shortcut using accel >>
-            << define callback function >>
-            << set realLabel, amp_index and menu_shortcut >>
+    if g.app.unitTesting: return
+
+    for data in table:
+        << get label & command or continue >>
+        special = command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu)
+        << set name to the label for doCommand >>
+        << set accel to the shortcut for name >>
+        << set bind_shortcut and menu_shortcut using accel >>
+        << define callback function >>
+        << set realLabel, amp_index and menu_shortcut >>
+        if bind_shortcut:
+            ok = c.keyHandler.bindShortcut(
+                bind_shortcut,name,command,commandName,openWith,fromMenu=True)
+            if not ok:
+                menu_shortcut = None
             
-            if bind_shortcut and useBindShortcut and not dontBind:
-                ok = c.keyHandler.bindShortcut(
-                    bind_shortcut,name,command,commandName,openWith,fromMenu=True)
-                if not ok: menu_shortcut = None
-                
-            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
-                command=menuCallback,underline=amp_index)
+        self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+            command=menuCallback,underline=amp_index)
 #@nonl
-#@+node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
-if accel and accel.startswith('--'):
-    useBindShortcut = False
-    accel = accel[2:]
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = True
+
+if type(data) not in (type(()), type([])):
+    ok = False
+elif len(data) == 1:
+    ok = label in (None,'-')
+    label = data[0] ; command = None
+elif len(data) == 2:
+    label,command = data
+elif len(data) == 3:
+    label,junk,command = data
 else:
-    useBindShortcut = True
+    ok = False
+     
+if not ok:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if label in (None,'-') or command == None:
+    self.add_separator(menu)
+    continue # That's all.
 #@nonl
-#@-node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
+#@-node:ekr.20051021091958:<< get label & command or continue >>
 #@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 name = label.strip().lower()
 
@@ -16193,78 +16206,50 @@ for ch in name:
 name = name2
 #@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, check the kludged cut/copy/paste commands.
-if not useBindShortcut:
-    cutCopyPasteDict = {
-        'Ctrl+X': 'cut-text',
-        'Ctrl+C': 'copy-text',
-        'Ctrl+V': 'paste-text',
-    }
-    name = cutCopyPasteDict.get(accel)
-    # Allow the user to override the shortcut using equivalent emacs name.
-    ### rawKey,accel2 = c.config.getShortcut(name)
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    # g.trace(accel,accel2,name,command.__name__)
-    if not accel2:
-        accel2 = 'none' # Do not allow any further overrides.
-else:
-    # Second, try to get the old-style name.
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    
-# if not openWith: g.trace(accel,accel2,name)
+# First, get the old-style name.
+rawKey,bunch = c.config.getShortcut(name)
+accel = bunch and bunch.val
+commandName = name
 
-# New in 4.4: allow emacs-style or old style names in menu shortcuts.
-emacs_name = None
-if openWith:
-    pass
-elif not accel2:
-    try: # User errors in the call can cause this.
-        commandName = command.__name__
-    except Exception:
-        commandName = None
-    emacs_name = k.inverseCommandsDict.get(commandName)
+# Second, get new-style name.
+if not openWith and not accel:
+    << compute emacs_name >>
     if emacs_name:
-        # Override the default shortcut, but *only* if the setting was actually given.
-        if g.app.config.exists(c,emacs_name,'shortcut'):
-            rawKey,bunch = c.config.getShortcut(emacs_name)
-            if bunch and bunch.val:
-                accel2 = bunch.val
-                # Override the default shortcut.
-                accel = accel2 
-                # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
-    else:
-        if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
-            if commandName and commandName != 'dummyCommand':
-                g.trace('no inverse for %s' % commandName)
-        accel = None # New in 4.4: clear the default.
-elif accel2 and accel2.lower() == "none":
-    accel = None # Remove the default shortcut.
-else:
-    accel = accel2 # Override the default shortcut.
-    
-commandName = emacs_name or name
-# if not openWith: g.trace(accel,accel2,name)
+        commandName = emacs_name
+        rawKey,bunch = c.config.getShortcut(emacs_name)
+        accel = bunch and bunch.val
+    elif init:
+        g.trace('No inverse for %s' % name)
 #@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+if special:
+    # A slightly less horrible kludge.
+    # The menu tables have methods that are not the same as the
+    # methods actually bound to cut/copy/paste-text minibuffer commands.
+    emacs_name = '%s-text' % name
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
 #@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
-
-# Kludge: disable the shortcuts for cut, copy, paste.
-# This has already been bound in leoTkinterFrame.__init__
-# 2/13/03: A _possible_ fix for the Linux control-v bug.
-
-if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
-    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
-        bind_shortcut = None
+if accel:
+    bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+else:
+    bind_shortcut,menu_shortcut = None,None
+    
+# A less horrible kludge: just pretend to bind shortcuts to cut/copy/paste.
+if special or (
+    sys.platform.startswith('win') and
+    bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>")
+):
+    bind_shortcut = None
 #@nonl
 #@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
-# A slightly less horrible kludge.
-# Do *not* bind the actual callback for cut/copy/paste
-if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-    menuCallback = None
 if openWith:
     menuCallback = self.defineOpenWithMenuCallback(command)
 else:
@@ -17121,33 +17106,49 @@ def createMenuEntries (self,menu,table,
     
     c = self.c ; f = c.frame ; k = c.keyHandler
     
-    for label,accel,command in table:
-        if label == None or command == None or label == "-":
-            self.add_separator(menu)
-        else:
-            << clear useBindShortcut and adjust accel if accel startswith '--' >>
-            << set name to the label for doCommand >>
-            << set accel to the shortcut for name >>
-            << set bind_shortcut and menu_shortcut using accel >>
-            << define callback function >>
-            << set realLabel, amp_index and menu_shortcut >>
+    if g.app.unitTesting: return
+
+    for data in table:
+        << get label & command or continue >>
+        special = command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu)
+        << set name to the label for doCommand >>
+        << set accel to the shortcut for name >>
+        << set bind_shortcut and menu_shortcut using accel >>
+        << define callback function >>
+        << set realLabel, amp_index and menu_shortcut >>
+        if bind_shortcut:
+            ok = c.keyHandler.bindShortcut(
+                bind_shortcut,name,command,commandName,openWith,fromMenu=True)
+            if not ok:
+                menu_shortcut = None
             
-            if bind_shortcut and useBindShortcut and not dontBind:
-                ok = c.keyHandler.bindShortcut(
-                    bind_shortcut,name,command,commandName,openWith,fromMenu=True)
-                if not ok: menu_shortcut = None
-                
-            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
-                command=menuCallback,underline=amp_index)
+        self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+            command=menuCallback,underline=amp_index)
 #@nonl
-#@+node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
-if accel and accel.startswith('--'):
-    useBindShortcut = False
-    accel = accel[2:]
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = True
+
+if type(data) not in (type(()), type([])):
+    ok = False
+elif len(data) == 1:
+    ok = label in (None,'-')
+    label = data[0] ; command = None
+elif len(data) == 2:
+    label,command = data
+elif len(data) == 3:
+    label,junk,command = data
 else:
-    useBindShortcut = True
+    ok = False
+     
+if not ok:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if label in (None,'-') or command == None:
+    self.add_separator(menu)
+    continue # That's all.
 #@nonl
-#@-node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
+#@-node:ekr.20051021091958:<< get label & command or continue >>
 #@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 name = label.strip().lower()
 
@@ -17159,78 +17160,50 @@ for ch in name:
 name = name2
 #@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, check the kludged cut/copy/paste commands.
-if not useBindShortcut:
-    cutCopyPasteDict = {
-        'Ctrl+X': 'cut-text',
-        'Ctrl+C': 'copy-text',
-        'Ctrl+V': 'paste-text',
-    }
-    name = cutCopyPasteDict.get(accel)
-    # Allow the user to override the shortcut using equivalent emacs name.
-    ### rawKey,accel2 = c.config.getShortcut(name)
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    # g.trace(accel,accel2,name,command.__name__)
-    if not accel2:
-        accel2 = 'none' # Do not allow any further overrides.
-else:
-    # Second, try to get the old-style name.
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    
-# if not openWith: g.trace(accel,accel2,name)
+# First, get the old-style name.
+rawKey,bunch = c.config.getShortcut(name)
+accel = bunch and bunch.val
+commandName = name
 
-# New in 4.4: allow emacs-style or old style names in menu shortcuts.
-emacs_name = None
-if openWith:
-    pass
-elif not accel2:
-    try: # User errors in the call can cause this.
-        commandName = command.__name__
-    except Exception:
-        commandName = None
-    emacs_name = k.inverseCommandsDict.get(commandName)
+# Second, get new-style name.
+if not openWith and not accel:
+    << compute emacs_name >>
     if emacs_name:
-        # Override the default shortcut, but *only* if the setting was actually given.
-        if g.app.config.exists(c,emacs_name,'shortcut'):
-            rawKey,bunch = c.config.getShortcut(emacs_name)
-            if bunch and bunch.val:
-                accel2 = bunch.val
-                # Override the default shortcut.
-                accel = accel2 
-                # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
-    else:
-        if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
-            if commandName and commandName != 'dummyCommand':
-                g.trace('no inverse for %s' % commandName)
-        accel = None # New in 4.4: clear the default.
-elif accel2 and accel2.lower() == "none":
-    accel = None # Remove the default shortcut.
-else:
-    accel = accel2 # Override the default shortcut.
-    
-commandName = emacs_name or name
-# if not openWith: g.trace(accel,accel2,name)
+        commandName = emacs_name
+        rawKey,bunch = c.config.getShortcut(emacs_name)
+        accel = bunch and bunch.val
+    elif init:
+        g.trace('No inverse for %s' % name)
 #@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+if special:
+    # A slightly less horrible kludge.
+    # The menu tables have methods that are not the same as the
+    # methods actually bound to cut/copy/paste-text minibuffer commands.
+    emacs_name = '%s-text' % name
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
 #@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
-
-# Kludge: disable the shortcuts for cut, copy, paste.
-# This has already been bound in leoTkinterFrame.__init__
-# 2/13/03: A _possible_ fix for the Linux control-v bug.
-
-if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
-    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
-        bind_shortcut = None
+if accel:
+    bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+else:
+    bind_shortcut,menu_shortcut = None,None
+    
+# A less horrible kludge: just pretend to bind shortcuts to cut/copy/paste.
+if special or (
+    sys.platform.startswith('win') and
+    bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>")
+):
+    bind_shortcut = None
 #@nonl
 #@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
-# A slightly less horrible kludge.
-# Do *not* bind the actual callback for cut/copy/paste
-if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-    menuCallback = None
 if openWith:
     menuCallback = self.defineOpenWithMenuCallback(command)
 else:
@@ -17422,33 +17395,49 @@ def createMenuEntries (self,menu,table,
     
     c = self.c ; f = c.frame ; k = c.keyHandler
     
-    for label,accel,command in table:
-        if label == None or command == None or label == "-":
-            self.add_separator(menu)
-        else:
-            << clear useBindShortcut and adjust accel if accel startswith '--' >>
-            << set name to the label for doCommand >>
-            << set accel to the shortcut for name >>
-            << set bind_shortcut and menu_shortcut using accel >>
-            << define callback function >>
-            << set realLabel, amp_index and menu_shortcut >>
+    if g.app.unitTesting: return
+
+    for data in table:
+        << get label & command or continue >>
+        special = command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu)
+        << set name to the label for doCommand >>
+        << set accel to the shortcut for name >>
+        << set bind_shortcut and menu_shortcut using accel >>
+        << define callback function >>
+        << set realLabel, amp_index and menu_shortcut >>
+        if bind_shortcut:
+            ok = c.keyHandler.bindShortcut(
+                bind_shortcut,name,command,commandName,openWith,fromMenu=True)
+            if not ok:
+                menu_shortcut = None
             
-            if bind_shortcut and useBindShortcut and not dontBind:
-                ok = c.keyHandler.bindShortcut(
-                    bind_shortcut,name,command,commandName,openWith,fromMenu=True)
-                if not ok: menu_shortcut = None
-                
-            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
-                command=menuCallback,underline=amp_index)
+        self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+            command=menuCallback,underline=amp_index)
 #@nonl
-#@+node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
-if accel and accel.startswith('--'):
-    useBindShortcut = False
-    accel = accel[2:]
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = True
+
+if type(data) not in (type(()), type([])):
+    ok = False
+elif len(data) == 1:
+    ok = label in (None,'-')
+    label = data[0] ; command = None
+elif len(data) == 2:
+    label,command = data
+elif len(data) == 3:
+    label,junk,command = data
 else:
-    useBindShortcut = True
+    ok = False
+     
+if not ok:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if label in (None,'-') or command == None:
+    self.add_separator(menu)
+    continue # That's all.
 #@nonl
-#@-node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
+#@-node:ekr.20051021091958:<< get label & command or continue >>
 #@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 name = label.strip().lower()
 
@@ -17460,78 +17449,50 @@ for ch in name:
 name = name2
 #@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, check the kludged cut/copy/paste commands.
-if not useBindShortcut:
-    cutCopyPasteDict = {
-        'Ctrl+X': 'cut-text',
-        'Ctrl+C': 'copy-text',
-        'Ctrl+V': 'paste-text',
-    }
-    name = cutCopyPasteDict.get(accel)
-    # Allow the user to override the shortcut using equivalent emacs name.
-    ### rawKey,accel2 = c.config.getShortcut(name)
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    # g.trace(accel,accel2,name,command.__name__)
-    if not accel2:
-        accel2 = 'none' # Do not allow any further overrides.
-else:
-    # Second, try to get the old-style name.
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    
-# if not openWith: g.trace(accel,accel2,name)
+# First, get the old-style name.
+rawKey,bunch = c.config.getShortcut(name)
+accel = bunch and bunch.val
+commandName = name
 
-# New in 4.4: allow emacs-style or old style names in menu shortcuts.
-emacs_name = None
-if openWith:
-    pass
-elif not accel2:
-    try: # User errors in the call can cause this.
-        commandName = command.__name__
-    except Exception:
-        commandName = None
-    emacs_name = k.inverseCommandsDict.get(commandName)
+# Second, get new-style name.
+if not openWith and not accel:
+    << compute emacs_name >>
     if emacs_name:
-        # Override the default shortcut, but *only* if the setting was actually given.
-        if g.app.config.exists(c,emacs_name,'shortcut'):
-            rawKey,bunch = c.config.getShortcut(emacs_name)
-            if bunch and bunch.val:
-                accel2 = bunch.val
-                # Override the default shortcut.
-                accel = accel2 
-                # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
-    else:
-        if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
-            if commandName and commandName != 'dummyCommand':
-                g.trace('no inverse for %s' % commandName)
-        accel = None # New in 4.4: clear the default.
-elif accel2 and accel2.lower() == "none":
-    accel = None # Remove the default shortcut.
-else:
-    accel = accel2 # Override the default shortcut.
-    
-commandName = emacs_name or name
-# if not openWith: g.trace(accel,accel2,name)
+        commandName = emacs_name
+        rawKey,bunch = c.config.getShortcut(emacs_name)
+        accel = bunch and bunch.val
+    elif init:
+        g.trace('No inverse for %s' % name)
 #@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+if special:
+    # A slightly less horrible kludge.
+    # The menu tables have methods that are not the same as the
+    # methods actually bound to cut/copy/paste-text minibuffer commands.
+    emacs_name = '%s-text' % name
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
 #@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
-
-# Kludge: disable the shortcuts for cut, copy, paste.
-# This has already been bound in leoTkinterFrame.__init__
-# 2/13/03: A _possible_ fix for the Linux control-v bug.
-
-if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
-    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
-        bind_shortcut = None
+if accel:
+    bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+else:
+    bind_shortcut,menu_shortcut = None,None
+    
+# A less horrible kludge: just pretend to bind shortcuts to cut/copy/paste.
+if special or (
+    sys.platform.startswith('win') and
+    bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>")
+):
+    bind_shortcut = None
 #@nonl
 #@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
-# A slightly less horrible kludge.
-# Do *not* bind the actual callback for cut/copy/paste
-if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-    menuCallback = None
 if openWith:
     menuCallback = self.defineOpenWithMenuCallback(command)
 else:
@@ -17577,6 +17538,11 @@ def makeSpecialBindings (self):
     
     k = self ; c = k.c ; f = c.frame ; w = f.body.bodyCtrl
     tag = 'makeSpecialBindings'
+    
+    if 0: # Add inverses for cut/copy/paste commands.
+        c.commandsDict['copy-text'] = f.OnCopyFromMenu
+        c.commandsDict['cut-text'] = f.OnCutFromMenu
+        c.commandsDict['paste-text'] = f.OnPasteFromMenu
     
     # These defaults may be overridden.
     for stroke,ivar,commandName,func in (
@@ -18022,33 +17988,49 @@ def createMenuEntries (self,menu,table,
     
     c = self.c ; f = c.frame ; k = c.keyHandler
     
-    for label,accel,command in table:
-        if label == None or command == None or label == "-":
-            self.add_separator(menu)
-        else:
-            << clear useBindShortcut and adjust accel if accel startswith '--' >>
-            << set name to the label for doCommand >>
-            << set accel to the shortcut for name >>
-            << set bind_shortcut and menu_shortcut using accel >>
-            << define callback function >>
-            << set realLabel, amp_index and menu_shortcut >>
+    if g.app.unitTesting: return
+
+    for data in table:
+        << get label & command or continue >>
+        special = command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu)
+        << set name to the label for doCommand >>
+        << set accel to the shortcut for name >>
+        << set bind_shortcut and menu_shortcut using accel >>
+        << define callback function >>
+        << set realLabel, amp_index and menu_shortcut >>
+        if bind_shortcut:
+            ok = c.keyHandler.bindShortcut(
+                bind_shortcut,name,command,commandName,openWith,fromMenu=True)
+            if not ok:
+                menu_shortcut = None
             
-            if bind_shortcut and useBindShortcut and not dontBind:
-                ok = c.keyHandler.bindShortcut(
-                    bind_shortcut,name,command,commandName,openWith,fromMenu=True)
-                if not ok: menu_shortcut = None
-                
-            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
-                command=menuCallback,underline=amp_index)
+        self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+            command=menuCallback,underline=amp_index)
 #@nonl
-#@+node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
-if accel and accel.startswith('--'):
-    useBindShortcut = False
-    accel = accel[2:]
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = True
+
+if type(data) not in (type(()), type([])):
+    ok = False
+elif len(data) == 1:
+    ok = label in (None,'-')
+    label = data[0] ; command = None
+elif len(data) == 2:
+    label,command = data
+elif len(data) == 3:
+    label,junk,command = data
 else:
-    useBindShortcut = True
+    ok = False
+     
+if not ok:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if label in (None,'-') or command == None:
+    self.add_separator(menu)
+    continue # That's all.
 #@nonl
-#@-node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
+#@-node:ekr.20051021091958:<< get label & command or continue >>
 #@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 name = label.strip().lower()
 
@@ -18060,78 +18042,50 @@ for ch in name:
 name = name2
 #@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, check the kludged cut/copy/paste commands.
-if not useBindShortcut:
-    cutCopyPasteDict = {
-        'Ctrl+X': 'cut-text',
-        'Ctrl+C': 'copy-text',
-        'Ctrl+V': 'paste-text',
-    }
-    name = cutCopyPasteDict.get(accel)
-    # Allow the user to override the shortcut using equivalent emacs name.
-    ### rawKey,accel2 = c.config.getShortcut(name)
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    # g.trace(accel,accel2,name,command.__name__)
-    if not accel2:
-        accel2 = 'none' # Do not allow any further overrides.
-else:
-    # Second, try to get the old-style name.
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    
-# if not openWith: g.trace(accel,accel2,name)
+# First, get the old-style name.
+rawKey,bunch = c.config.getShortcut(name)
+accel = bunch and bunch.val
+commandName = name
 
-# New in 4.4: allow emacs-style or old style names in menu shortcuts.
-emacs_name = None
-if openWith:
-    pass
-elif not accel2:
-    try: # User errors in the call can cause this.
-        commandName = command.__name__
-    except Exception:
-        commandName = None
-    emacs_name = k.inverseCommandsDict.get(commandName)
+# Second, get new-style name.
+if not openWith and not accel:
+    << compute emacs_name >>
     if emacs_name:
-        # Override the default shortcut, but *only* if the setting was actually given.
-        if g.app.config.exists(c,emacs_name,'shortcut'):
-            rawKey,bunch = c.config.getShortcut(emacs_name)
-            if bunch and bunch.val:
-                accel2 = bunch.val
-                # Override the default shortcut.
-                accel = accel2 
-                # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
-    else:
-        if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
-            if commandName and commandName != 'dummyCommand':
-                g.trace('no inverse for %s' % commandName)
-        accel = None # New in 4.4: clear the default.
-elif accel2 and accel2.lower() == "none":
-    accel = None # Remove the default shortcut.
-else:
-    accel = accel2 # Override the default shortcut.
-    
-commandName = emacs_name or name
-# if not openWith: g.trace(accel,accel2,name)
+        commandName = emacs_name
+        rawKey,bunch = c.config.getShortcut(emacs_name)
+        accel = bunch and bunch.val
+    elif init:
+        g.trace('No inverse for %s' % name)
 #@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+if special:
+    # A slightly less horrible kludge.
+    # The menu tables have methods that are not the same as the
+    # methods actually bound to cut/copy/paste-text minibuffer commands.
+    emacs_name = '%s-text' % name
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
 #@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
-
-# Kludge: disable the shortcuts for cut, copy, paste.
-# This has already been bound in leoTkinterFrame.__init__
-# 2/13/03: A _possible_ fix for the Linux control-v bug.
-
-if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
-    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
-        bind_shortcut = None
+if accel:
+    bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+else:
+    bind_shortcut,menu_shortcut = None,None
+    
+# A less horrible kludge: just pretend to bind shortcuts to cut/copy/paste.
+if special or (
+    sys.platform.startswith('win') and
+    bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>")
+):
+    bind_shortcut = None
 #@nonl
 #@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
-# A slightly less horrible kludge.
-# Do *not* bind the actual callback for cut/copy/paste
-if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-    menuCallback = None
 if openWith:
     menuCallback = self.defineOpenWithMenuCallback(command)
 else:
@@ -18571,6 +18525,11 @@ def makeSpecialBindings (self):
     
     k = self ; c = k.c ; f = c.frame ; w = f.body.bodyCtrl
     tag = 'makeSpecialBindings'
+    
+    if 0: # Add inverses for cut/copy/paste commands.
+        c.commandsDict['copy-text'] = f.OnCopyFromMenu
+        c.commandsDict['cut-text'] = f.OnCutFromMenu
+        c.commandsDict['paste-text'] = f.OnPasteFromMenu
     
     # These defaults may be overridden.
     for stroke,ivar,commandName,func in (
@@ -19206,33 +19165,49 @@ def createMenuEntries (self,menu,table,
     
     c = self.c ; f = c.frame ; k = c.keyHandler
     
-    for label,accel,command in table:
-        if label == None or command == None or label == "-":
-            self.add_separator(menu)
-        else:
-            << clear useBindShortcut and adjust accel if accel startswith '--' >>
-            << set name to the label for doCommand >>
-            << set accel to the shortcut for name >>
-            << set bind_shortcut and menu_shortcut using accel >>
-            << define callback function >>
-            << set realLabel, amp_index and menu_shortcut >>
+    if g.app.unitTesting: return
+
+    for data in table:
+        << get label & command or continue >>
+        special = command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu)
+        << set name to the label for doCommand >>
+        << set accel to the shortcut for name >>
+        << set bind_shortcut and menu_shortcut using accel >>
+        << define callback function >>
+        << set realLabel, amp_index and menu_shortcut >>
+        if bind_shortcut:
+            ok = c.keyHandler.bindShortcut(
+                bind_shortcut,name,command,commandName,openWith,fromMenu=True)
+            if not ok:
+                menu_shortcut = None
             
-            if bind_shortcut and useBindShortcut and not dontBind:
-                ok = c.keyHandler.bindShortcut(
-                    bind_shortcut,name,command,commandName,openWith,fromMenu=True)
-                if not ok: menu_shortcut = None
-                
-            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
-                command=menuCallback,underline=amp_index)
+        self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+            command=menuCallback,underline=amp_index)
 #@nonl
-#@+node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
-if accel and accel.startswith('--'):
-    useBindShortcut = False
-    accel = accel[2:]
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = True
+
+if type(data) not in (type(()), type([])):
+    ok = False
+elif len(data) == 1:
+    ok = label in (None,'-')
+    label = data[0] ; command = None
+elif len(data) == 2:
+    label,command = data
+elif len(data) == 3:
+    label,junk,command = data
 else:
-    useBindShortcut = True
+    ok = False
+     
+if not ok:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if label in (None,'-') or command == None:
+    self.add_separator(menu)
+    continue # That's all.
 #@nonl
-#@-node:ekr.20051011071542:<< clear useBindShortcut and adjust accel if accel startswith '--' >>
+#@-node:ekr.20051021091958:<< get label & command or continue >>
 #@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 name = label.strip().lower()
 
@@ -19244,78 +19219,50 @@ for ch in name:
 name = name2
 #@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, check the kludged cut/copy/paste commands.
-if not useBindShortcut:
-    cutCopyPasteDict = {
-        'Ctrl+X': 'cut-text',
-        'Ctrl+C': 'copy-text',
-        'Ctrl+V': 'paste-text',
-    }
-    name = cutCopyPasteDict.get(accel)
-    # Allow the user to override the shortcut using equivalent emacs name.
-    ### rawKey,accel2 = c.config.getShortcut(name)
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    # g.trace(accel,accel2,name,command.__name__)
-    if not accel2:
-        accel2 = 'none' # Do not allow any further overrides.
-else:
-    # Second, try to get the old-style name.
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    
-# if not openWith: g.trace(accel,accel2,name)
+# First, get the old-style name.
+rawKey,bunch = c.config.getShortcut(name)
+accel = bunch and bunch.val
+commandName = name
 
-# New in 4.4: allow emacs-style or old style names in menu shortcuts.
-emacs_name = None
-if openWith:
-    pass
-elif not accel2:
-    try: # User errors in the call can cause this.
-        commandName = command.__name__
-    except Exception:
-        commandName = None
-    emacs_name = k.inverseCommandsDict.get(commandName)
+# Second, get new-style name.
+if not openWith and not accel:
+    << compute emacs_name >>
     if emacs_name:
-        # Override the default shortcut, but *only* if the setting was actually given.
-        if g.app.config.exists(c,emacs_name,'shortcut'):
-            rawKey,bunch = c.config.getShortcut(emacs_name)
-            if bunch and bunch.val:
-                accel2 = bunch.val
-                # Override the default shortcut.
-                accel = accel2 
-                # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
-    else:
-        if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
-            if commandName and commandName != 'dummyCommand':
-                g.trace('no inverse for %s' % commandName)
-        accel = None # New in 4.4: clear the default.
-elif accel2 and accel2.lower() == "none":
-    accel = None # Remove the default shortcut.
-else:
-    accel = accel2 # Override the default shortcut.
-    
-commandName = emacs_name or name
-# if not openWith: g.trace(accel,accel2,name)
+        commandName = emacs_name
+        rawKey,bunch = c.config.getShortcut(emacs_name)
+        accel = bunch and bunch.val
+    elif init:
+        g.trace('No inverse for %s' % name)
 #@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+if special:
+    # A slightly less horrible kludge.
+    # The menu tables have methods that are not the same as the
+    # methods actually bound to cut/copy/paste-text minibuffer commands.
+    emacs_name = '%s-text' % name
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
 #@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
-
-# Kludge: disable the shortcuts for cut, copy, paste.
-# This has already been bound in leoTkinterFrame.__init__
-# 2/13/03: A _possible_ fix for the Linux control-v bug.
-
-if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
-    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
-        bind_shortcut = None
+if accel:
+    bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+else:
+    bind_shortcut,menu_shortcut = None,None
+    
+# A less horrible kludge: just pretend to bind shortcuts to cut/copy/paste.
+if special or (
+    sys.platform.startswith('win') and
+    bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>")
+):
+    bind_shortcut = None
 #@nonl
 #@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
-# A slightly less horrible kludge.
-# Do *not* bind the actual callback for cut/copy/paste
-if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-    menuCallback = None
 if openWith:
     menuCallback = self.defineOpenWithMenuCallback(command)
 else:
@@ -19508,6 +19455,11 @@ def makeSpecialBindings (self):
     
     k = self ; c = k.c ; f = c.frame ; w = f.body.bodyCtrl
     tag = 'makeSpecialBindings'
+    
+    if 0: # Add inverses for cut/copy/paste commands.
+        c.commandsDict['copy-text'] = f.OnCopyFromMenu
+        c.commandsDict['cut-text'] = f.OnCutFromMenu
+        c.commandsDict['paste-text'] = f.OnPasteFromMenu
     
     # These defaults may be overridden.
     for stroke,ivar,commandName,func in (
@@ -22398,60 +22350,34 @@ def createInverseCommandsDict (self):
 #@nonl
 #@-node:ekr.20051008082929:createInverseCommandsDict
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, check the kludged cut/copy/paste commands.
-if not useBindShortcut:
-    cutCopyPasteDict = {
-        'Ctrl+X': 'cut-text',
-        'Ctrl+C': 'copy-text',
-        'Ctrl+V': 'paste-text',
-    }
-    name = cutCopyPasteDict.get(accel)
-    # Allow the user to override the shortcut using equivalent emacs name.
-    ### rawKey,accel2 = c.config.getShortcut(name)
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    # g.trace(accel,accel2,name,command.__name__)
-    if not accel2:
-        accel2 = 'none' # Do not allow any further overrides.
-else:
-    # Second, try to get the old-style name.
-    rawKey,bunch = c.config.getShortcut(name)
-    accel2 = bunch and bunch.val
-    
-# if not openWith: g.trace(accel,accel2,name)
+# First, get the old-style name.
+rawKey,bunch = c.config.getShortcut(name)
+accel = bunch and bunch.val
+commandName = name
 
-# New in 4.4: allow emacs-style or old style names in menu shortcuts.
-emacs_name = None
-if openWith:
-    pass
-elif not accel2:
-    try: # User errors in the call can cause this.
-        commandName = command.__name__
-    except Exception:
-        commandName = None
-    emacs_name = k.inverseCommandsDict.get(commandName)
+# Second, get new-style name.
+if not openWith and not accel:
+    << compute emacs_name >>
     if emacs_name:
-        # Override the default shortcut, but *only* if the setting was actually given.
-        if g.app.config.exists(c,emacs_name,'shortcut'):
-            rawKey,bunch = c.config.getShortcut(emacs_name)
-            if bunch and bunch.val:
-                accel2 = bunch.val
-                # Override the default shortcut.
-                accel = accel2 
-                # g.trace('%30s = %30s: %s' % (name,emacs_name,repr(accel)))
-    else:
-        if init and not dynamicMenu: # Don't require command names for dynamic menu entries.
-            if commandName and commandName != 'dummyCommand':
-                g.trace('no inverse for %s' % commandName)
-        accel = None # New in 4.4: clear the default.
-elif accel2 and accel2.lower() == "none":
-    accel = None # Remove the default shortcut.
-else:
-    accel = accel2 # Override the default shortcut.
-    
-commandName = emacs_name or name
-# if not openWith: g.trace(accel,accel2,name)
+        commandName = emacs_name
+        rawKey,bunch = c.config.getShortcut(emacs_name)
+        accel = bunch and bunch.val
+    elif init:
+        g.trace('No inverse for %s' % name)
 #@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+if special:
+    # A slightly less horrible kludge.
+    # The menu tables have methods that are not the same as the
+    # methods actually bound to cut/copy/paste-text minibuffer commands.
+    emacs_name = '%s-text' % name
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
 #@-node:ekr.20051010062551.1:(key dicts)
 #@+node:ekr.20051012091323:(Outline goto's)
@@ -23169,20 +23095,17 @@ def defineEditMenuTopTable (self):
     c = self.c ; f = self.frame
     
     self.editMenuTopTable = [
-        ("Can't Undo","Ctrl+Z",c.undoer.undo), # &U reserved for Undo
+        ("Can't Undo",c.undoer.undo), # &U reserved for Undo
         ("Can't Redo","Shift+Ctrl+Z",c.undoer.redo), # &R reserved for Redo
-        ("-",None,None),
-        # A Horrible kludge.  The -- indicates we should set menu_shortcut but *not* the bind_shortcut.
-        # This is needed so we can distinguish between invokes from the menu (very rare) and others.
-        # Important: these shortcuts can be overridden by specifying shortcuts for copy-text, cut-text and paste-text.
-        ###("Cu&t","--Ctrl+X",f.OnCutFromMenu), 
-        ###("Cop&y","--Ctrl+C",f.OnCopyFromMenu),
-        ###("&Paste","--Ctrl+V",f.OnPasteFromMenu),
-        ("&Delete",None,c.delete),
-        ("Select &All","Ctrl+A",f.body.selectAllText),
-        ("-",None,None),
+        ("-",None),
+        ("Cu&t",f.OnCutFromMenu), 
+        ("Cop&y",f.OnCopyFromMenu),
+        ("&Paste",f.OnPasteFromMenu),
+        ("&Delete",c.delete),
+        ("Select &All",f.body.selectAllText),
+        ("-",None),
     ]
-        
+
     # Top-level shortcuts here:  a,d,p,t,u,y,z
     # Top-level shortcuts later: e,g,n,v
 #@nonl
