@@ -4821,43 +4821,37 @@ class searchCommandsClass (baseEditCommandsClass):
             buttons2.pack(side='right')
             
             def findButtonCallback(event=None):
-                __pychecker__ = '--no-argsused' # the event param must be present.
+                __pychecker__ = '--no-argsused'
                 self.findButton()
                 return 'break'
+                    
+            width = 15 ; defaultText = 'Find' ; buttons = []
             
-            # Column 1...
-            findButton=self.underlinedTkButton('button',buttons1,width=15-1,
-                text="Find",bd=4,command=findButtonCallback) # The default.
-            
-            incrementalBox = self.underlinedTkButton("check",buttons1,width=15,
-                text="Incremental",background=bg)
-                # ,variable=self.dict['incremental']) # **May affect the file format**
-            findAllButton = self.underlinedTkButton("button",buttons1,width=15,
-                text="Find All",command=self.findAllButton)
-                
-            # Column 2...
-            changeButton = self.underlinedTkButton("button",buttons2,width=15,
-                text="Change",command=self.changeButton)
-                
-            changeFindButton = self.underlinedTkButton("button",buttons2,width=15,
-                text="Change, Then Find",command=self.changeThenFindButton)
-                
-            changeAllButton = self.underlinedTkButton("button",buttons2,width=15,
-                text="Change All",command=self.changeAllButton)
-            
-            for w in (findButton,findAllButton,incrementalBox):
+            for text,boxKind,frame,callback in (
+                # Column 1...
+                ('Find','button',buttons1,findButtonCallback),
+                ('Incremental','check', buttons1,None),
+                    ## variable=self.dict['incremental'])
+                    ## May affect the file format.
+                ('Find All','button',buttons1,self.findAllButton),
+                # Column 2...
+                ('Change','button',buttons2,self.changeButton),
+                ('Change, Then Find','button',buttons2,self.changeThenFindButton),
+                ('Change All','button',buttons2,self.changeAllButton),
+            ):
+                w = self.underlinedTkButton(boxKind,frame,
+                    text=text,command=callback)
+                buttons.append(w)
+                if text == defaultText:
+                    w.button.configure(width=width-1,bd=4)
+                elif boxKind != 'check':
+                    w.button.configure(width=width)
                 w.button.pack(side='top',anchor='w',pady=2,padx=2)
-                
-            for w in (changeButton,changeFindButton,changeAllButton):
-                w.button.pack(side='top',anchor='e',pady=2,padx=2)
             #@nonl
             #@-node:ekr.20051020120306.18:<< Create two columns of buttons >>
             #@nl
             
-            for w in (
-                findButton,incrementalBox,findAllButton,
-                changeButton,changeFindButton,changeAllButton,
-            ):
+            for w in buttons:
                 w.bindHotKey(ftxt)
                 w.bindHotKey(ctxt)
             
