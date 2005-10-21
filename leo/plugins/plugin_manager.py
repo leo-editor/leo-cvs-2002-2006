@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.16"
+__version__ = "0.17"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -85,7 +85,11 @@ __plugin_group__ = "Core"
 #     - Added code to dynamically enable a plugin at runtime
 # 0.16 Paul Paterson:
 #     - Complete code to dynamically enable plugins
+# 0.17 EKR:
+#     - Added dynamicMenu arg to calls to createMenuEntries to suppress the 
+# 'no inverse' message.
 #@-at
+#@nonl
 #@-node:pap.20041006184225.2:<< version history >>
 #@nl
 #@<< define importLeoGlobals >>

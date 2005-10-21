@@ -528,20 +528,20 @@ def createPluginsMenu (tag,keywords):
 #@nonl
 #@-node:EKR.20040517080555.23:createPluginsMenu
 #@+node:EKR.20040517080555.24:addPluginMenuItem
-def addPluginMenuItem(p, c):
+def addPluginMenuItem (p,c):
     if p.hastoplevel:
         # Check at runtime to see if the plugin has actually been loaded.
         # This prevents us from calling hasTopLevel() on unloaded plugins.
-        def callback(p=p):
-            path,name = g.os_path_split(p.filename)
-            name,ext = g.os_path_splitext(name)
+        def callback (p=p):
+            path, name = g.os_path_split(p.filename)
+            name, ext = g.os_path_splitext(name)
             # g.trace(name,g.app.loadedPlugins)
             if name in g.app.loadedPlugins:
                 p.hastoplevel()
             else:
                 p.about()
-        table = ((p.name, None, callback),)
-        c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p), table)
+        table = ((p.name,None,callback),)
+        c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p),table,dynamicMenu=True)
     elif p.hasconfig or p.othercmds:
         #@        << Get menu location >>
         #@+node:pap.20050305153147:<< Get menu location >>
@@ -551,19 +551,19 @@ def addPluginMenuItem(p, c):
             menu_location = "&Plugins"
         #@-node:pap.20050305153147:<< Get menu location >>
         #@nl
-        m = c.frame.menu.createNewMenu(p.name, menu_location)
-        table = [("About...", None, p.about)]
+        m = c.frame.menu.createNewMenu(p.name,menu_location)
+        table = [("About...",None,p.about)]
         if p.hasconfig:
-            table.append(("Properties...", None, p.properties))
+            table.append(("Properties...",None,p.properties))
         if p.othercmds:
-            table.append(("-", None, None))
-            items = [(cmd,None,fn) for cmd,fn in p.othercmds.iteritems()]
+            table.append(("-",None,None))
+            items = [(cmd,None,fn) for cmd, fn in p.othercmds.iteritems()]
             items.sort()
             table.extend(items)
-        c.frame.menu.createMenuEntries(m, table)
+        c.frame.menu.createMenuEntries(m,table,dynamicMenu=True)
     else:
-        table = ((p.name, None, p.about),)
-        c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p), table)
+        table = ((p.name,None,p.about),)
+        c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p),table,dynamicMenu=True)
 #@nonl
 #@-node:EKR.20040517080555.24:addPluginMenuItem
 #@-others
