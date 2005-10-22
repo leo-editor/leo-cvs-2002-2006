@@ -2292,32 +2292,33 @@ class leoTkinterTree (leoFrame.leoTree):
         #@    << Create the menu table >>
         #@+node:ekr.20040803072955.113:<< Create the menu table >>
         table = (
-            ("&Read @file Nodes",None,c.readAtFileNodes),
-            ("&Write @file Nodes",None,c.fileCommands.writeAtFileNodes),
-            ("-",None,None),
-            ("&Tangle","Shift+Ctrl+T",c.tangle),
-            ("&Untangle","Shift+Ctrl+U",c.untangle),
-            ("-",None,None),
-            # 2/16/04: Remove shortcut for Toggle Angle Brackets command.
-            ("Toggle Angle &Brackets",None,c.toggleAngleBrackets),
-            ("-",None,None),
-            ("Cut Node","Shift+Ctrl+X",c.cutOutline),
-            ("Copy Node","Shift+Ctrl+C",c.copyOutline),
-            ("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
-            ("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
-            ("-",None,None),
-            ("&Insert Node","Ctrl+I",c.insertHeadline),
-            ("&Clone Node","Ctrl+`",c.clone),
-            ("Sort C&hildren",None,c.sortChildren),
-            ("&Sort Siblings","Alt-A",c.sortSiblings),
-            ("-",None,None),
-            ("Contract Parent","Alt+0",c.contractParent))
+            ("&Read @file Nodes",c.readAtFileNodes),
+            ("&Write @file Nodes",c.fileCommands.writeAtFileNodes),
+            ("-",None),
+            ("&Tangle",c.tangle),
+            ("&Untangle",c.untangle),
+            ("-",None),
+            ("Toggle Angle &Brackets",c.toggleAngleBrackets),
+            ("-",None),
+            ("Cut Node",c.cutOutline),
+            ("Copy Node",c.copyOutline),
+            ("&Paste Node",c.pasteOutline),
+            ("&Delete Node",c.deleteOutline),
+            ("-",None),
+            ("&Insert Node",c.insertHeadline),
+            ("&Clone Node",c.clone),
+            ("Sort C&hildren",c.sortChildren),
+            ("&Sort Siblings",c.sortSiblings),
+            ("-",None),
+            ("Contract Parent",c.contractParent),
+        )
         #@nonl
         #@-node:ekr.20040803072955.113:<< Create the menu table >>
         #@nl
         
-        # Don't actually set binding: it would conflict with previous.
-        frame.menu.createMenuEntries(menu,table,dontBind=True)
+        # New in 4.4.  There is no need for a dontBind argument because
+        # Bindings from tables are ignored.
+        frame.menu.createMenuEntries(menu,table)
     #@nonl
     #@-node:ekr.20040803072955.112:createPopupMenu
     #@+node:ekr.20040803072955.114:enablePopupMenuItems

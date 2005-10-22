@@ -1117,6 +1117,105 @@ class leoMenu:
     #@nonl
     #@-node:ekr.20031218072017.3806:deleteMenuItem
     #@-node:ekr.20051022053758: Top level
+    #@+node:ekr.20031218072017.1723:createMenuEntries
+    def createMenuEntries (self,menu,table,dynamicMenu=False):
+            
+        '''Create a menu entry from the table.
+        New in 4.4: this method shows the shortcut in the menu,
+        but this method **never** binds any shortcuts.'''
+        
+        c = self.c ; f = c.frame ; k = c.keyHandler
+        
+        if g.app.unitTesting: return
+    
+        for data in table:
+            #@        << get label & command or continue >>
+            #@+node:ekr.20051021091958:<< get label & command or continue >>
+            ok = (
+                type(data) in (type(()), type([])) and
+                len(data) in (2,3)
+            )
+                
+            if ok:
+                if len(data) == 2:
+                    label,command = data
+                else:
+                    # New in 4.4: we ignore shortcuts bound in menu tables.
+                    label,junk,command = data
+            else:
+                g.trace('bad data in menu table: %s' % repr(data))
+                continue # Ignore bad data
+                 
+            if ok and label in (None,'-'):
+                self.add_separator(menu)
+                continue # That's all.
+            #@nonl
+            #@-node:ekr.20051021091958:<< get label & command or continue >>
+            #@nl
+            #@        << compute commandName & accel from label & command >>
+            #@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+            # First, get the old-style name.
+            commandName = self.computeOldStyleShortcutKey(label)
+            rawKey,bunch = c.config.getShortcut(commandName)
+            accel = bunch and bunch.val
+            
+            # Second, get new-style name.
+            if not accel:
+                #@    << compute emacs_name >>
+                #@+node:ekr.20051021100806.1:<< compute emacs_name >>
+                #@+at 
+                #@nonl
+                # One not-so-horrible kludge remains.
+                # 
+                # The cut/copy/paste commands in the menu tables are not the 
+                # same as the methods
+                # actually bound to cut/copy/paste-text minibuffer commands, 
+                # so we must do a bit
+                # of extra translation to discover whether the user has 
+                # overridden their
+                # bindings.
+                #@-at
+                #@@c
+                
+                if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+                    emacs_name = '%s-text' % commandName
+                else:
+                    try: # User errors in the table can cause this.
+                        emacs_name = k.inverseCommandsDict.get(command.__name__)
+                    except Exception:
+                        emacs_name = None
+                #@nonl
+                #@-node:ekr.20051021100806.1:<< compute emacs_name >>
+                #@nl
+                if emacs_name:
+                    commandName = emacs_name
+                    rawKey,bunch = c.config.getShortcut(emacs_name)
+                    accel = bunch and bunch.val
+                elif not dynamicMenu:
+                    g.trace('No inverse for %s' % name)
+            #@nonl
+            #@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+            #@nl
+            rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
+            menuCallback = self.defineMenuCallback(command,commandName)
+            realLabel = self.getRealMenuName(label).replace("&","")
+            #@        << set amp_index using rawKey and realLabel >>
+            #@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+            if rawKey:
+                amp_index = rawKey.find("&")
+            else:
+                amp_index = -1
+            
+            if amp_index == -1:
+                amp_index = realLabel.find("&")
+            #@nonl
+            #@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+            #@nl
+            self.add_command(menu,label=realLabel,
+                accelerator= menu_shortcut or '',
+                command=menuCallback,underline=amp_index)
+    #@nonl
+    #@-node:ekr.20031218072017.1723:createMenuEntries
     #@+node:ekr.20051022053758.1:Helpers
     #@+node:ekr.20031218072017.3783:canonicalizeMenuName & cononicalizeTranslatedMenuName
     def canonicalizeMenuName (self,name):
@@ -1335,105 +1434,6 @@ class leoMenu:
         return ''.join(result)
     #@nonl
     #@-node:ekr.20051022044950:computeOldStyleShortcutKey
-    #@+node:ekr.20031218072017.1723:createMenuEntries
-    def createMenuEntries (self,menu,table,dontBind=False,dynamicMenu=False):
-            
-        '''Create a menu entry from the table.
-        New in 4.4: this method shows the shortcut in the menu,
-        but this method **never** binds any shortcuts.'''
-        
-        c = self.c ; f = c.frame ; k = c.keyHandler
-        
-        if g.app.unitTesting: return
-    
-        for data in table:
-            #@        << get label & command or continue >>
-            #@+node:ekr.20051021091958:<< get label & command or continue >>
-            ok = (
-                type(data) in (type(()), type([])) and
-                len(data) in (2,3)
-            )
-                
-            if ok:
-                if len(data) == 2:
-                    label,command = data
-                else:
-                    label,junk,command = data
-            else:
-                g.trace('bad data in menu table: %s' % repr(data))
-                continue # Ignore bad data
-                 
-            if ok and label in (None,'-'):
-                self.add_separator(menu)
-                continue # That's all.
-            #@nonl
-            #@-node:ekr.20051021091958:<< get label & command or continue >>
-            #@nl
-            name = self.computeOldStyleShortcutKey(label)
-            #@        << set accel from name and command >>
-            #@+node:ekr.20031218072017.1725:<< set accel from name and command >>
-            # First, get the old-style name.
-            rawKey,bunch = c.config.getShortcut(name)
-            accel = bunch and bunch.val
-            commandName = name
-            
-            # Second, get new-style name.
-            if not accel:
-                #@    << compute emacs_name >>
-                #@+node:ekr.20051021100806.1:<< compute emacs_name >>
-                #@+at 
-                #@nonl
-                # One not-so-horrible kludge remains.
-                # 
-                # The cut/copy/paste commands in the menu tables are not the 
-                # same as the methods
-                # actually bound to cut/copy/paste-text minibuffer commands, 
-                # so we must do a bit
-                # of extra translation to discover whether the user has 
-                # overridden their
-                # bindings.
-                #@-at
-                #@@c
-                
-                if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-                    emacs_name = '%s-text' % name
-                else:
-                    try: # User errors in the table can cause this.
-                        emacs_name = k.inverseCommandsDict.get(command.__name__)
-                    except Exception:
-                        emacs_name = None
-                #@nonl
-                #@-node:ekr.20051021100806.1:<< compute emacs_name >>
-                #@nl
-                if emacs_name:
-                    commandName = emacs_name
-                    rawKey,bunch = c.config.getShortcut(emacs_name)
-                    accel = bunch and bunch.val
-                elif not dynamicMenu:
-                    g.trace('No inverse for %s' % name)
-            #@nonl
-            #@-node:ekr.20031218072017.1725:<< set accel from name and command >>
-            #@nl
-            rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
-            menuCallback = self.defineMenuCallback(command,name)
-            realLabel = self.getRealMenuName(label).replace("&","")
-            #@        << set amp_index using rawKey and realLabel >>
-            #@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-            if rawKey:
-                amp_index = rawKey.find("&")
-            else:
-                amp_index = -1
-            
-            if amp_index == -1:
-                amp_index = realLabel.find("&")
-            #@nonl
-            #@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-            #@nl
-            self.add_command(menu,label=realLabel,
-                accelerator= (not dontBind and menu_shortcut) or '',
-                command=menuCallback,underline=amp_index)
-    #@nonl
-    #@-node:ekr.20031218072017.1723:createMenuEntries
     #@+node:ekr.20051022043608.1:createOpenWithMenuItemsFromTable
     def createOpenWithMenuItemsFromTable (self,menu,table):
         
