@@ -3486,7 +3486,10 @@ if p != old_p:
 
 frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
 
-frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
+if self.stayInTree:
+    c.frame.treeWantsFocus()
+else:
+    frame.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20040803072955.133:<< set the current node >>
 #@-node:ekr.20040803072955.128:tree.select
@@ -10211,7 +10214,10 @@ if p != old_p:
 
 frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
 
-frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
+if self.stayInTree:
+    c.frame.treeWantsFocus()
+else:
+    frame.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20040803072955.133:<< set the current node >>
 #@-node:ekr.20040803072955.128:tree.select
@@ -10289,10 +10295,6 @@ def setNormalLabelState(self,v):
 #@+node:ekr.20031218072017.3710:Notifications
 # These should all be internal to the tkinter.frame class.
 
-def OnActivateHeadline(self,p):
-    __pychecker__ = '--no-argsused'
-    self.oops()
-    
 def onHeadChanged(self,p):
     __pychecker__ = '--no-argsused'
     self.oops()
@@ -11848,6 +11850,8 @@ def finishCreate (self):
     # Important: bindings exist even if c.showMiniBuffer is False.
     k.makeAllBindings()
     
+    c.frame.log.setTabBindings('Log')
+    
     if 0:
         addTemacsExtensions(k)
         addTemacsAbbreviations(k)
@@ -13309,6 +13313,7 @@ def goToParent(self):
             c.selectVnode(p)
         finally:
             c.endUpdate()
+#@nonl
 #@-node:ekr.20031218072017.2920:goToParent
 #@+node:ekr.20031218072017.2921:goToPrevSibling
 def goToPrevSibling(self):
@@ -13325,6 +13330,67 @@ def goToPrevSibling(self):
             c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2921:goToPrevSibling
+#@+node:ekr.20031218072017.2994:selectThreadNext
+def selectThreadNext(self):
+
+    c = self ; current = c.currentPosition()
+    if not current: return
+
+    p = current.threadNext()
+    if p:
+        c.beginUpdate()
+        try:
+            c.selectPosition(p)
+        finally:
+            c.endUpdate()
+        c.frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20031218072017.2994:selectThreadNext
+#@+node:ekr.20031218072017.2993:selectThreadBack
+def selectThreadBack(self):
+
+    c = self ; current = c.currentVnode()
+    if not current: return
+    
+    v = current.threadBack()
+    if v:
+        c.beginUpdate()
+        try:
+            c.selectVnode(v)
+        finally:
+            c.endUpdate()
+#@-node:ekr.20031218072017.2993:selectThreadBack
+#@+node:ekr.20031218072017.2995:selectVisBack
+# This has an up arrow for a control key.
+
+def selectVisBack(self):
+
+    c = self ; current = c.currentVnode()
+    if not current: return
+
+    v = current.visBack()
+    if v:
+        c.beginUpdate()
+        try:
+            c.selectVnode(v)
+        finally:
+            c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2995:selectVisBack
+#@+node:ekr.20031218072017.2996:selectVisNext
+def selectVisNext(self):
+
+    c = self ; current = c.currentVnode()
+    if not current: return
+    
+    v = current.visNext()
+    if v:
+        c.beginUpdate()
+        try:
+            c.selectVnode(v)
+        finally:
+            c.endUpdate()
+#@-node:ekr.20031218072017.2996:selectVisNext
 #@-node:ekr.20031218072017.2913:Goto
 #@-node:ekr.20051012091323:(Outline goto's)
 #@+node:ekr.20051013085834:(Added new emacs find commands & ekr abbreviations)
@@ -15523,22 +15589,12 @@ def createBindings (self,frame):
     
     # Event handlers...
     t.bind("<Button-1>", frame.OnBodyClick)
-    if sys.platform == "win32":
-        # Support Linux middle-button paste easter egg.
-        t.bind("<Button-2>", frame.OnPaste)
     t.bind("<Button-3>", frame.OnBodyRClick)
     t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
     
-    if 0: # The changeover to the mini-buffer code is complete.
-        g.trace('binding <Key> to frame.body.onBodyKey')
-        t.bind("<Key>", self.onBodyKey)
-
-    # Gui-dependent bindings...
-    if 0:
-        # These cause problems when cut/copy/paste-text commands are bound.
-        t.bind(g.virtual_event_name("Cut"), frame.OnCut)
-        t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
-        t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+    if sys.platform.startswith('win'):
+        # Support Linux middle-button paste easter egg.
+        t.bind("<Button-2>", frame.OnPaste)
 #@nonl
 #@-node:ekr.20031218072017.838:tkBody.createBindings
 #@-node:ekr.20050929084510:Fixed problem with auto-indent
@@ -20183,7 +20239,7 @@ def setNormalLabelState (self,p): # selected, editing
         p.edit_text().tag_remove("sel","1.0","end")
         p.edit_text().tag_add("sel","1.0","end")
         # Set the focus immediately
-        self.frame.treeWantsFocus(p.edit_text(),later=False,tag='tree:setNormalLabelState')
+        self.frame.widgetWantsFocus(p.edit_text(),later=False)
 #@nonl
 #@-node:ekr.20040803072955.135:setNormalLabelState
 #@+node:ekr.20040803072955.126:endEditLabel
@@ -20205,7 +20261,10 @@ def endEditLabel (self):
         # force a redraw of joined and ancestor headlines.
         self.force_redraw() 
 
-    frame.bodyWantsFocus(frame.bodyCtrl,tag='body:endEditLabel')
+    if self.stayInTree:
+        c.frame.treeWantsFocus()
+    else:
+        frame.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20040803072955.126:endEditLabel
 #@+node:ekr.20031218072017.3982:endEditLabelCommand
@@ -20228,7 +20287,7 @@ def endEditLabelCommand (self):
         if v: # Bug fix 10/9/02: also redraw ancestor headlines.
             tree.force_redraw() # force a redraw of joined headlines.
 
-    frame.bodyWantsFocus(frame.bodyCtrl,tag='body:endEditLabelCommand')
+    frame.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20031218072017.3982:endEditLabelCommand
 #@+node:ekr.20031218072017.3981:abortEditLabelCommand
@@ -20840,19 +20899,14 @@ def bindKey (self,pane,shortcut,callback,commandName):
     '''Bind the indicated shortcut (a Tk keystroke) to the callback.
     callback calls commandName (for error messages).'''
     
-    k = self ; c = k.c ; w = c.frame.body.bodyCtrl
-    
-    # if pane and pane != 'all': g.trace(shortcut,commandName,pane)
+    k = self ; c = k.c
 
     try:
-        # Essential to make cut/copy/paste work.
         if shortcut == '<Key>':
-            w.bind(shortcut,callback,'+')
             # Don't bind to menu.  Besides, menu.bind doesn't allow '+' arg.
+            c.frame.body.bodyCtrl.bind(shortcut,callback,'+')
         else:
-            w.bind(shortcut,callback)
-            # Binding to the menu ensures that keys are active in all parts of the frame.
-            c.frame.menu.bind(shortcut,callback)
+            << bind callback to shortcut in pane >>
         k.bindingsDict [shortcut] = g.bunch(
             pane=pane,func=callback,commandName=commandName,warningGiven=False)
         return True
@@ -20860,11 +20914,37 @@ def bindKey (self,pane,shortcut,callback,commandName):
     except Exception: # Could be a user error.
         if not g.app.menuWarningsGiven:
             g.es_print('Exception binding %s to %s' % (shortcut,commandName))
-            g.es_exception()
-            g.printStack()
+            # g.es_exception()
+            # g.printStack()
             g.app.menuWarningsGiven = True
         return False
 #@nonl
+#@+node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+body = c.frame.body.bodyCtrl
+log  = c.frame.log.logCtrl
+menu = c.frame.menu
+tree = c.frame.tree.canvas
+
+# Binding to the menu ensures that keys are active in all parts of the frame.
+# However, it does not appear necessary at this time...
+
+d = {
+    'all':  [body,log,tree], # menu
+    'body': [body],
+    'log':  [log],
+    'tree': [tree],
+}
+
+if 0: # A useful trace.
+    if pane and pane != 'all':
+        g.trace('%4s %20s %s' % (pane, shortcut,commandName))
+
+widgets = d.get((pane or 'all').lower(),[])
+
+for w in widgets:
+    w.bind(shortcut,callback)
+#@nonl
+#@-node:ekr.20051022094136:<< bind callback to shortcut in pane >>
 #@-node:ekr.20050920085536.16:bindKey
 #@+node:ekr.20050920085536.65: masterCommand & helpers
 def masterCommand (self,event,func,stroke):
@@ -21564,1717 +21644,6 @@ unfinished.
 #@-node:ekr.20051012084345:Bugs fixed
 #@-node:ekr.20051016115757:4.4a1 projects
 #@+node:ekr.20051016115757.1:4.4a2 projects
-#@+node:ekr.20051016113907:(Moved TabbedLog code into Leo's core)
-@
-
-I removed the TabbedLog plugin from cvs, and changed the UASearch and URLloader
-plugins so they create create tabbed logs using c.frame.log.selectTab rather
-than TabbedLog.getPane. No other official plugins use TabbedLog. 
-#@+node:ekr.20051016113907.1:How to use the new code
-@nocolor
-
-c.frame.log.selectTab(tabName) selects the tab in the log pane, creating it if
-necessary.
-
-The g.es, g.enl, g.ecnl, g.ecnls write to the log tab specified by the optional
-tabName argument. The default for tabName is 'Log', so existing code works as
-before.
-
-Minor notes:
-
-1. The following are official status ivars.  They can be read by client code,
-but they should never be changed outside of the leoTkinterLog class:
-
-c.frame.log.tabName: the name of the active tab.
-c.frame.log.logCtrl: the Tk.Text widget for the active tab.
-c.frame.log.tabFrame: the Tk.Frame containing the active tab.
-
-These ivars may not exist in nullLog's.
-
-2. The put and putnl methods of the tkinterLog class also take an optional
-tabName argument which defaults to 'Log'.
-#@nonl
-#@-node:ekr.20051016113907.1:How to use the new code
-#@+node:ekr.20031218072017.4039:class leoTkinterLog
-class leoTkinterLog (leoFrame.leoLog):
-    
-    """A class that represents the log pane of a Tkinter window."""
-
-    @others
-#@nonl
-#@+node:ekr.20051016095907:tkLog Birth
-#@+node:ekr.20031218072017.4040:tkLog.__init__
-def __init__ (self,frame,parentFrame):
-    
-    # g.trace("leoTkinterLog")
-    
-    self.c = c = frame.c # Also set in the base constructor, but we need it here.
-    
-    self.colorTags = []
-        # The list of color names used as tags in present tab.
-        # This gest switched by selectTab.
-
-    self.wrap = g.choose(c.config.getBool('log_pane_wraps'),"word","none")
-    
-    # New in 4.4a2: The log pane is a Pmw.Notebook...
-
-    self.nb = None      # The Pmw.Notebook that holds all the tabs.
-    self.colorTagsDict = {} # Keys are page names.  Values are saved colorTags lists.
-    self.frameDict = {}  # Keys are page names. Values are Tk.Frames.
-    self.tabMenu = None # A menu that pops up on right clicks in the hull or in tabs.
-    self.textDict = {}  # Keys are page names. Values are Tk.Text widgets.
-    self.newTabCount = 0 # Number of new tabs created.
-    
-    # Official status variables.  Can be used by client code.
-    self.tabName = None # The name of the active tab.
-    self.logCtrl = None # Same as self.textDict.get(self.tabName)
-    self.tabFrame = None # Same as self.frameDict.get(self.tabName)
-    
-    # Call the base class constructor and calls createControl.
-    leoFrame.leoLog.__init__(self,frame,parentFrame)
-#@-node:ekr.20031218072017.4040:tkLog.__init__
-#@+node:ekr.20031218072017.4042:tkLog.createControl
-def createControl (self,parentFrame):
-
-    c = self.c
-
-    self.nb = Pmw.NoteBook(parentFrame,
-        borderwidth = 1, pagemargin = 0,
-        raisecommand = self.raiseTab,
-        lowercommand = self.lowerTab
-    )
-
-    menu = self.makeTabMenu(tabName=None)
-
-    def hullMenuCallback(event):
-        self.onRightClick(event,menu)
-
-    self.nb.bind('<Button-3>',hullMenuCallback)
-
-    self.nb.pack(fill='both',expand=1)
-    self.selectTab('Log') # create the tab and make it the active tab.
-    return self.logCtrl
-#@-node:ekr.20031218072017.4042:tkLog.createControl
-#@+node:ekr.20051016103459:tkLog.createTextWidget
-def createTextWidget (self,parentFrame):
-    
-    log = Tk.Text(parentFrame,name="log",
-        setgrid=0,wrap=self.wrap,bd=2,bg="white",relief="flat")
-    
-    logBar = Tk.Scrollbar(parentFrame,name="logBar")
-
-    log['yscrollcommand'] = logBar.set
-    logBar['command'] = log.yview
-    
-    logBar.pack(side="right", fill="y")
-    # rr 8/14/02 added horizontal elevator 
-    if self.wrap == "none": 
-        logXBar = Tk.Scrollbar( 
-            parentFrame,name='logXBar',orient="horizontal") 
-        log['xscrollcommand'] = logXBar.set 
-        logXBar['command'] = log.xview 
-        logXBar.pack(side="bottom", fill="x")
-    log.pack(expand=1, fill="both")
-
-    return log
-#@nonl
-#@-node:ekr.20051016103459:tkLog.createTextWidget
-#@+node:ekr.20051019134106.1:tkLog.makeTabMenu
-def makeTabMenu (self,tabName=None):
-
-    '''Create a tab popup menu.'''
-
-    c = self.c
-    hull = self.nb.component('hull') # A Tk.Canvas.
-    
-    menu = Tk.Menu(hull,tearoff=0)
-    menu.add_command(label='New Tab',command=self.newTabFromMenu)
-    
-    if tabName:
-        # Important: tabName is the name when the tab is created.
-        # It is not affected by renaming, so we don't have to keep
-        # track of the correspondence between this name and what is in the label.
-        def deleteTabCallback():
-            self.deleteTab(tabName)
-
-        menu.add_command(label='Delete This Tab',command=deleteTabCallback)
- 
-        def renameTabCallback():
-            self.renameTabFromMenu(tabName)
-
-        menu.add_command(label='Rename This Tab',command=renameTabCallback)
-
-    return menu
-#@nonl
-#@-node:ekr.20051019134106.1:tkLog.makeTabMenu
-#@-node:ekr.20051016095907:tkLog Birth
-#@+node:ekr.20051016095907.1:Config & get/saveState
-#@+node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
-def configureBorder(self,border):
-    
-    self.logCtrl.configure(bd=border)
-    
-def configureFont(self,font):
-
-    self.logCtrl.configure(font=font)
-#@nonl
-#@-node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
-#@+node:ekr.20031218072017.4043:tkLog.getFontConfig
-def getFontConfig (self):
-
-    font = self.logCtrl.cget("font")
-    # g.trace(font)
-    return font
-#@nonl
-#@-node:ekr.20031218072017.4043:tkLog.getFontConfig
-#@+node:ekr.20041222043017:tkLog.restoreAllState
-def restoreAllState (self,d):
-    
-    '''Restore the log from a dict created by saveAllState.'''
-    
-    logCtrl = self.logCtrl
-
-    # Restore the text.
-    text = d.get('text')
-    logCtrl.insert('end',text)
-
-    # Restore all colors.
-    colors = d.get('colors')
-    for color in colors.keys():
-        if color not in self.colorTags:
-            self.colorTags.append(color)
-            logCtrl.tag_config(color,foreground=color)
-        items = list(colors.get(color))
-        while items:
-            start,stop = items[0],items[1]
-            items = items[2:]
-            logCtrl.tag_add(color,start,stop)
-#@nonl
-#@-node:ekr.20041222043017:tkLog.restoreAllState
-#@+node:ekr.20041222043017.1:tkLog.saveAllState
-def saveAllState (self):
-    
-    '''Return a dict containing all data needed to recreate the log in another widget.'''
-    
-    logCtrl = self.logCtrl ; colors = {}
-
-    # Save the text
-    text = logCtrl.get('1.0','end')
-
-    # Save color tags.
-    tag_names = logCtrl.tag_names()
-    for tag in tag_names:
-        if tag in self.colorTags:
-            colors[tag] = logCtrl.tag_ranges(tag)
-            
-    d = {'text':text,'colors': colors}
-    # g.trace('\n',g.dictToString(d))
-    return d
-#@nonl
-#@-node:ekr.20041222043017.1:tkLog.saveAllState
-#@+node:ekr.20041217135735.2:tkLog.setColorFromConfig
-def setColorFromConfig (self):
-    
-    c = self.c
-    
-    bg = c.config.getColor("log_pane_background_color") or 'white'
-    
-    try:
-        self.logCtrl.configure(bg=bg)
-    except:
-        g.es("exception setting log pane background color")
-        g.es_exception()
-#@nonl
-#@-node:ekr.20041217135735.2:tkLog.setColorFromConfig
-#@+node:ekr.20031218072017.4046:tkLog.setFontFromConfig
-def setFontFromConfig (self):
-
-    c = self.c ; logCtrl = self.logCtrl
-
-    font = c.config.getFontFromParams(
-        "log_text_font_family", "log_text_font_size",
-        "log_text_font_slant",  "log_text_font_weight",
-        c.config.defaultLogFontSize, tag = "log")
-
-    self.fontRef = font # ESSENTIAL: retain a link to font.
-    logCtrl.configure(font=font)
-    
-    # g.trace("LOG",logCtrl.cget("font"),font.cget("family"),font.cget("weight"))
-
-    bg = c.config.getColor("log_text_background_color")
-    if bg:
-        try: logCtrl.configure(bg=bg)
-        except: pass
-    
-    fg = c.config.getColor("log_text_foreground_color")
-    if fg:
-        try: logCtrl.configure(fg=fg)
-        except: pass
-#@nonl
-#@-node:ekr.20031218072017.4046:tkLog.setFontFromConfig
-#@-node:ekr.20051016095907.1:Config & get/saveState
-#@+node:ekr.20051016095907.2:Focus & update
-#@+node:ekr.20031218072017.4045:tkLog.onActivateLog
-def onActivateLog (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
-
-    try:
-        g.app.setLog(self,"OnActivateLog")
-        self.frame.tree.OnDeactivate()
-        self.frame.logWantsFocus(self.logCtrl,tag='onActivateLog')
-    except:
-        g.es_event_exception("activate log")
-#@nonl
-#@-node:ekr.20031218072017.4045:tkLog.onActivateLog
-#@+node:ekr.20031218072017.4044:tkLog.hasFocus
-def hasFocus (self):
-    
-    return g.app.gui.get_focus(self.frame) == self.logCtrl
-#@nonl
-#@-node:ekr.20031218072017.4044:tkLog.hasFocus
-#@+node:ekr.20050208133438:forceLogUpdate
-def forceLogUpdate (self,s):
-
-    if sys.platform == "darwin": # Does not work on MacOS X.
-        try:
-            print s, # Don't add a newline.
-        except UnicodeError:
-            # g.app may not be inited during scripts!
-            print g.toEncodedString(s,'utf-8')
-    else:
-        self.frame.tree.disableRedraw = True
-        self.logCtrl.update_idletasks()
-        self.frame.tree.disableRedraw = False
-#@nonl
-#@-node:ekr.20050208133438:forceLogUpdate
-#@-node:ekr.20051016095907.2:Focus & update
-#@+node:ekr.20051016101927:put & putnl (LeoTkinterLog)
-@ Printing uses self.logCtrl, so this code need not concern itself
-with which tab is active.
-
-Also, selectTab switches the contents of colorTags, so that is not concern.
-It may be that Pmw will allow us to dispense with the colorTags logic...
-#@nonl
-#@+node:ekr.20031218072017.1473:put
-# All output to the log stream eventually comes here.
-def put (self,s,color=None,tabName='Log'):
-    
-    # print 'tkLog.put',self.c.shortFileName(),s,
-
-    if g.app.quitting:
-        return
-    if tabName:
-        self.selectTab(tabName)
-    
-    if self.logCtrl:
-        << put s to log control >>
-    else:
-        << put s to logWaiting and print s >>
-#@nonl
-#@+node:EKR.20040423082910:<< put s to log control >>
-if 0:
-    # Doing this here messes up the display in the log pane.
-    if type(s) == type(u""):
-        s = g.toEncodedString(s,g.app.TkEncoding)
-        
-# g.trace(repr(self.logCtrl))
-
-if color:
-    if color not in self.colorTags:
-        self.colorTags.append(color)
-        self.logCtrl.tag_config(color,foreground=color)
-    self.logCtrl.insert("end",s)
-    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-    self.logCtrl.tag_add("black","end")
-else:
-    self.logCtrl.insert("end",s)
-
-self.logCtrl.see("end")
-    
-self.forceLogUpdate(s)
-#@nonl
-#@-node:EKR.20040423082910:<< put s to log control >>
-#@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
-g.app.logWaiting.append((s,color),)
-
-print "Null tkinter log"
-
-if type(s) == type(u""):
-    s = g.toEncodedString(s,"ascii")
-
-print s
-#@nonl
-#@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
-#@-node:ekr.20031218072017.1473:put
-#@+node:ekr.20051016101927.1:putnl
-def putnl (self,tabName='Log'):
-
-    if g.app.quitting:
-        return
-    if tabName:
-        self.selectTab(tabName)
-    
-    if self.logCtrl:
-        self.logCtrl.insert("end",'\n')
-        self.logCtrl.see("end")
-        self.forceLogUpdate('\n')
-    else:
-        # Put a newline to logWaiting and print newline
-        g.app.logWaiting.append(('\n',"black"),)
-        print "Null tkinter log"
-        print
-#@-node:ekr.20051016101927.1:putnl
-#@-node:ekr.20051016101927:put & putnl (LeoTkinterLog)
-#@+node:ekr.20051018061932:Tab (TkLog)
-#@+node:ekr.20051017212057:clearTab
-def clearTab (self,tabName):
-    
-    self.selectTab(tabName)
-    t = self.logCtrl
-    t.delete('1.0','end')
-#@nonl
-#@-node:ekr.20051017212057:clearTab
-#@+node:ekr.20051018102027:deleteTab
-def deleteTab (self,tabName):
-    
-    if tabName == 'Log':
-        return
-
-    if tabName == 'Find':
-        self.selectTab('Log')
-        return
-    
-    if tabName in self.nb.pagenames():
-        self.nb.delete(tabName)
-        self.colorTagsDict [tabName] = []
-        self.textDict [tabName] = None
-        self.frameDict [tabName] = None
-        self.tabName = None
-        self.selectTab('Log')
-#@nonl
-#@-node:ekr.20051018102027:deleteTab
-#@+node:ekr.20051018061932.1:ower/raiseTab
-def lowerTab (self,tabName):
-    
-    if tabName:
-        b = self.nb.tab(tabName) # b is a Tk.Button.
-        b.config(bg='grey80')
-    
-def raiseTab (self,tabName):
-
-    if tabName:
-        b = self.nb.tab(tabName) # b is a Tk.Button.
-        b.config(bg='LightSteelBlue1')
-#@nonl
-#@-node:ekr.20051018061932.1:ower/raiseTab
-#@+node:ekr.20051019170806:renameTab
-def renameTab (self,oldName,newName):
-    
-    label = self.nb.tab(oldName)
-    label.configure(text=newName)
-#@nonl
-#@-node:ekr.20051019170806:renameTab
-#@+node:ekr.20051016101724.1:selectTab
-def selectTab (self,tabName):
-
-    '''Create the tab if necessary and make it active.'''
-    
-    c = self.c ; tabFrame = self.frameDict.get(tabName)
-    # g.trace(g.choose(tabName,'switching to','creating'),tabName)
-    if tabFrame:
-        # Switch to a new colorTags list.
-        newColorTags = self.colorTagsDict.get(tabName)
-        self.colorTagsDict [self.tabName] = self.colorTags [:]
-        self.colorTags = newColorTags
-    else:
-        tabFrame = self.nb.add(tabName)
-        << bind a tab-specific pop-up menu to the tab >>
-        << Create the tab's text widget >>
-        # Update immediately so we can queue the request to change focus.
-        tabFrame.update_idletasks()
-        self.c.frame.bodyWantsFocus(self.c.frame.bodyCtrl,tag='tkLog.selectTab')
-        
-    self.nb.selectpage(tabName)
-    # Update the status vars.
-    self.tabName = tabName
-    self.logCtrl = self.textDict.get(tabName)
-    self.tabFrame = self.frameDict.get(tabName)
-    # g.trace(self.tabName,repr(self.logCtrl))
-    return tabFrame
-#@nonl
-#@+node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
-menu = self.makeTabMenu(tabName)
-tab = self.nb.tab(tabName)
-
-def menuClickCallback(event):
-    self.onRightClick(event,menu)
-
-tab.bind('<Button-3>',menuClickCallback)
-#@nonl
-#@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
-#@+node:ekr.20051018072306:<< Create the tab's text widget >>
-textWidget = self.createTextWidget(tabFrame)
-
-# Set the background color.
-configName = 'log_pane_%s_tab_background_color' % tabName
-bg = c.config.getColor(configName) or 'MistyRose1'
-try: textWidget.configure(bg=bg)
-except Exception: pass # Could be a user error.
-
-self.frameDict [tabName] = tabFrame
-self.textDict [tabName] = textWidget
-
-# Switch to a new colorTags list.
-if self.tabName:
-    self.colorTagsDict [self.tabName] = self.colorTags [:]
-self.colorTags = ['black']
-self.colorTagsDict [tabName] = self.colorTags
-
-# Make the bindings.
-textWidget.bind("<Button-1>",self.onActivateLog)
-textWidget.tag_config('black',foreground='black')
-#@nonl
-#@-node:ekr.20051018072306:<< Create the tab's text widget >>
-#@-node:ekr.20051016101724.1:selectTab
-#@+node:ekr.20051019134106:Tab menu callbacks & helpers
-#@+node:ekr.20051019134422:onRightClick
-def onRightClick (self,event,menu):
-
-    menu.post(event.x_root,event.y_root)
-#@nonl
-#@-node:ekr.20051019134422:onRightClick
-#@+node:ekr.20051019140004.1:newTabFromMenu
-def newTabFromMenu (self,tabName='Log'):
-
-    self.selectTab(tabName)
-    parentFrame = self.frameDict.get(tabName)
-    
-    # This is called by getTabName.
-    def selectTabCallback (oldName,newName):
-        self.selectTab(newName)
-
-    self.getTabName(parentFrame,'',selectTabCallback)
-#@nonl
-#@-node:ekr.20051019140004.1:newTabFromMenu
-#@+node:ekr.20051019165401:renameTabFromMenu
-def renameTabFromMenu (self,tabName):
-
-    if tabName in ('Log','Completions'):
-        g.es('can not rename %s tab' % (tabName),color='blue')
-    else:
-        parentFrame = self.frameDict.get(tabName)
-        self.getTabName(parentFrame,tabName,self.renameTab)
-#@nonl
-#@-node:ekr.20051019165401:renameTabFromMenu
-#@+node:ekr.20051019172811:getTabName
-def getTabName (self,parentFrame,tabName,exitCallback):
-
-    f = Tk.Frame(parentFrame)
-    f.pack(side='bottom',fill='x',expand=1)
-
-    Tk.Label(f,text='Tab name').pack(side='left')
-
-    e = Tk.Entry(f,background='white')
-    e.pack(side='left')
-
-    def getNameCallback (event=None):
-        s = e.get().strip()
-        f.pack_forget()
-        if s: exitCallback(tabName,s)
-    
-    if 0:
-        b = Tk.Button(row,text="Close",command=getNameCallback)
-        b.pack(side='left')
-
-    e.focus_force()
-    e.bind('<Return>',getNameCallback)
-#@nonl
-#@-node:ekr.20051019172811:getTabName
-#@-node:ekr.20051019134106:Tab menu callbacks & helpers
-#@-node:ekr.20051018061932:Tab (TkLog)
-#@-node:ekr.20031218072017.4039:class leoTkinterLog
-#@-node:ekr.20051016113907:(Moved TabbedLog code into Leo's core)
-#@+node:ekr.20051016162459:k.registerShortcut now makes sure to set k.inverseCommandsDict
-# k.finishCreate sets k.inverseCommandsDict, but k.registerShortcut can be called after that.
-#@nonl
-#@-node:ekr.20051016162459:k.registerShortcut now makes sure to set k.inverseCommandsDict
-#@+node:ekr.20051015112436:(Fixed bugs in k.registerCommand, k.printBindings
-#@+node:ekr.20051016171402:Notes
-@nocolor
-
-print-bindings was printing the function name, not the command name. Fixing this
-was hairy: it involved adding the commandName argument to k.bindShortcut and
-k.bindKey. The work is worthwhile: it is now much clearer what is being bound.
-The most complicated change was to menu.createMenuEntries, as usual...
-#@nonl
-#@-node:ekr.20051016171402:Notes
-#@+node:ekr.20031218072017.1723:createMenuEntries
-def createMenuEntries (self,menu,table,dynamicMenu=False):
-        
-    '''Create a menu entry from the table.
-    New in 4.4: this method shows the shortcut in the menu,
-    but this method **never** binds any shortcuts.'''
-    
-    c = self.c ; f = c.frame ; k = c.keyHandler
-    
-    if g.app.unitTesting: return
-
-    for data in table:
-        << get label & command or continue >>
-        << compute commandName & accel from label & command >>
-        rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
-        menuCallback = self.defineMenuCallback(command,commandName)
-        realLabel = self.getRealMenuName(label)
-        << set amp_index using rawKey and realLabel >>
-        realLabel = realLabel.replace("&","")
-        self.add_command(menu,label=realLabel,
-            accelerator= menu_shortcut or '',
-            command=menuCallback,underline=amp_index)
-#@nonl
-#@+node:ekr.20051021091958:<< get label & command or continue >>
-ok = (
-    type(data) in (type(()), type([])) and
-    len(data) in (2,3)
-)
-    
-if ok:
-    if len(data) == 2:
-        label,command = data
-    else:
-        # New in 4.4: we ignore shortcuts bound in menu tables.
-        label,junk,command = data
-else:
-    g.trace('bad data in menu table: %s' % repr(data))
-    continue # Ignore bad data
-     
-if ok and label in (None,'-'):
-    self.add_separator(menu)
-    continue # That's all.
-#@nonl
-#@-node:ekr.20051021091958:<< get label & command or continue >>
-#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
-# First, get the old-style name.
-commandName = self.computeOldStyleShortcutKey(label)
-rawKey,bunch = c.config.getShortcut(commandName)
-accel = bunch and bunch.val
-
-# Second, get new-style name.
-if not accel:
-    << compute emacs_name >>
-        # Contains the not-so-horrible kludge.
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunch = c.config.getShortcut(emacs_name)
-        accel = bunch and bunch.val
-    elif not dynamicMenu:
-        g.trace('No inverse for %s' % commandName)
-#@nonl
-#@+node:ekr.20051021100806.1:<< compute emacs_name >>
-@ One not-so-horrible kludge remains.
-
-The cut/copy/paste commands in the menu tables are not the same as the methods
-actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
-of extra translation to discover whether the user has overridden their
-bindings.
-@c
-
-if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-    emacs_name = '%s-text' % commandName
-else:
-    try: # User errors in the table can cause this.
-        emacs_name = k.inverseCommandsDict.get(command.__name__)
-    except Exception:
-        emacs_name = None
-#@nonl
-#@-node:ekr.20051021100806.1:<< compute emacs_name >>
-#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
-#@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-if rawKey:
-    amp_index = rawKey.find("&")
-else:
-    amp_index = -1
-
-if amp_index == -1:
-    amp_index = realLabel.find("&")
-#@nonl
-#@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-#@-node:ekr.20031218072017.1723:createMenuEntries
-#@+node:ekr.20051015110547:registerCommand
-def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
-    
-    '''Make the function available as a minibuffer command,
-    and optionally attempt to bind a shortcut.
-    
-    You can wrap any method in a callback function, so the
-    restriction to functions is not significant.'''
-    
-    k = self ; c = k.c
-    
-    f = c.commandsDict.get(commandName)
-    if f:
-        g.es_trace('Redefining %s' % (commandName), color='red')
-        
-    c.commandsDict [commandName] = func
-    k.inverseCommandsDict [func.__name__] = commandName
-    
-    if shortcut:
-        # Retain the original spelling of the shortcut for the message.
-        shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
-        ok = k.bindShortcut (pane,shortcut,func,commandName)
-            
-    if verbose:
-        if shortcut and ok:
-            g.es_print('Registered %s bound to %s' % (
-                commandName,shortcut),color='blue')
-        else:
-            g.es_print('Registered %s' % (commandName), color='blue')
-#@nonl
-#@-node:ekr.20051015110547:registerCommand
-#@+node:ekr.20051006125633.1:bindShortcut
-def bindShortcut (self,pane,shortcut,command,commandName):
-    
-    '''Bind one shortcut from a menu table.'''
-    
-    k = self ; shortcut = str(shortcut)
-
-    if command.__name__ == 'leoCallback':
-        # Get the function wrapped by *this* leoCallback function.
-        func = k.leoCallbackDict.get(command)
-        commandName = k.inverseCommandsDict.get(func.__name__)
-        
-        # No need for a second layer of callback.
-        def keyCallback (event,func=command,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
-    else:
-        def menuFuncCallback (event,command=command):
-            return command(event)
-
-        def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
-        
-    return k.bindKey(pane,shortcut,keyCallback,commandName)
-#@nonl
-#@-node:ekr.20051006125633.1:bindShortcut
-#@+node:ekr.20050920085536.16:bindKey
-def bindKey (self,pane,shortcut,callback,commandName):
-
-    '''Bind the indicated shortcut (a Tk keystroke) to the callback.
-    callback calls commandName (for error messages).'''
-    
-    k = self ; c = k.c ; w = c.frame.body.bodyCtrl
-    
-    # if pane and pane != 'all': g.trace(shortcut,commandName,pane)
-
-    try:
-        # Essential to make cut/copy/paste work.
-        if shortcut == '<Key>':
-            w.bind(shortcut,callback,'+')
-            # Don't bind to menu.  Besides, menu.bind doesn't allow '+' arg.
-        else:
-            w.bind(shortcut,callback)
-            # Binding to the menu ensures that keys are active in all parts of the frame.
-            c.frame.menu.bind(shortcut,callback)
-        k.bindingsDict [shortcut] = g.bunch(
-            pane=pane,func=callback,commandName=commandName,warningGiven=False)
-        return True
-
-    except Exception: # Could be a user error.
-        if not g.app.menuWarningsGiven:
-            g.es_print('Exception binding %s to %s' % (shortcut,commandName))
-            g.es_exception()
-            g.printStack()
-            g.app.menuWarningsGiven = True
-        return False
-#@nonl
-#@-node:ekr.20050920085536.16:bindKey
-#@+node:ekr.20051012201831:printBindings
-def printBindings (self,event):
-
-    '''Print all the bindings presently in effect.'''
-
-    k = self ; c = k.c
-    keys = k.bindingsDict.keys() ; keys.sort()
-
-    c.frame.log.clearTab('Command')
-    for key in keys:
-        b = k.bindingsDict.get(key)
-        g.es(key,b.commandName or b.name,tabName='Command')
-#@nonl
-#@-node:ekr.20051012201831:printBindings
-#@+node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
-def makeSpecialBindings (self):
-    
-    '''Make the bindings and set ivars for sepcial keystrokes.'''
-    
-    k = self ; c = k.c ; f = c.frame
-    
-    # These defaults may be overridden.
-    for stroke,ivar,commandName,func in (
-        ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
-        ('Alt-x',   'fullCommandKey',  'full-command',  k.fullCommand),
-        ('Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
-        ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
-    ):
-        # Get the user shortcut *before* creating the callbacks.
-        junk, bunch = c.config.getShortcut(commandName)
-        accel = (bunch and bunch.val) or stroke
-        shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-        # g.trace(stroke,accel,shortcut,func.__name__)
-        
-        # Create two-levels of callbacks.
-        def specialCallback (event,func=func):
-            return func(event)
-
-        def keyCallback (event,func=specialCallback,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
-        
-        setattr(k,ivar,shortcut)
-
-        k.bindKey('all',shortcut,keyCallback,commandName)
-        
-    # Add a binding for <Key> events, so all key events go through masterCommand.
-    def allKeysCallback (event):
-        return k.masterCommand(event,func=None,stroke='<Key>')
-
-    k.bindKey('all','<Key>',allKeysCallback,'master-command')
-#@nonl
-#@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
-#@-node:ekr.20051015112436:(Fixed bugs in k.registerCommand, k.printBindings
-#@+node:ekr.20051017053631:Improved the scripting plugin
-@nocolor
-
-The scripting plugin now has support for the following kinds of headlines:
-
-@button name @key=shortcut
-
-This binds the shortcut to the script in the script button.  The button's name is 'name', but you can see the full headline in the status line when you move the mouse over the button.  This is a clean and simple way of discovering the shortcut.
-
-@command name
-
-This creates a new minibuffer command whose name is 'name'.
-
-@command name @key=shortcut
-
-This creates a new minibuffer command and binds shortcut to it.
-
-The scripting plugin no longer contains the 'bindLate' code-level option.  The scripts for all @button or @command nodes are computed 'dynamically', that is, when the button is pushed or the command is executed from the minibuffer.  This is the most useful way, and the most intuitive.
-
-Previously, scripts for @button nodes were never dynamic, while scripts in @button nodes created by the 'Script button' button were dynamic only if bindLate was True.  You could call this a bug: it was unhelpful, annoying and confusing.
-#@-node:ekr.20051017053631:Improved the scripting plugin
-#@+node:ekr.20051017111039:Fixed minor bug in k.doTabCompletion
-@nocolor
-
-Set the tab-list index to-1 if we first print a common prefix.  That way item returned next will be item 0.
-#@nonl
-#@-node:ekr.20051017111039:Fixed minor bug in k.doTabCompletion
-#@clone 2
-#@+node:ekr.20051017184201:(Tabbed log pane)
-#@+node:ekr.20050920085536.65: masterCommand & helpers
-def masterCommand (self,event,func,stroke):
-
-    '''This is the central dispatching method.
-    All commands and keystrokes pass through here.'''
-
-    k = self ; c = k.c
-    k.stroke = stroke # Set this global for general use.
-    commandName = k.ultimateFuncName(func)
-    special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func or stroke != '<Key>'
-    
-    # g.trace(k.inState(),k.getStateKind())
-
-    # if interesting: g.trace(stroke,commandName)
-
-    inserted = not special or (
-        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
-
-    if inserted:
-        # g.trace(stroke,event.keysym)
-        << add character to history >>
-        
-    # We *must not* interfere with the global state in the macro class.
-    if c.macroCommands.recordingMacro:
-        done = c.macroCommands.startKbdMacro(event)
-        if done: return 'break'
-        
-    # g.trace(stroke,k.abortAllModesKey)
-
-    if stroke == k.abortAllModesKey: # 'Control-g'
-        k.previousStroke = stroke
-        k.clearState()
-        k.keyboardQuit(event)
-        k.endCommand(event,commandName,tag='keyboard-quit')
-        return 'break'
-
-    if k.inState():
-        k.forceFocusToBody()
-        k.previousStroke = stroke
-        k.callStateFunction(event) # Calls end-command.
-        return 'break'
-
-    # if k.keystrokeFunctionDict.has_key(stroke):
-        # k.previousStroke = stroke
-        # if k.callKeystrokeFunction(event): # Calls end-command
-            # return 'break'
-
-    if k.regx.iter:
-        try:
-            k.regXKey = event.keysym
-            k.regx.iter.next() # EKR: next() may throw StopIteration.
-        finally:
-            return 'break'
-
-    if k.abbrevOn:
-        expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded: return 'break'
-
-    if func: # Func is an argument.
-        k.previousStroke = stroke
-        forceFocus = func.__name__ != 'leoCallback'
-        if forceFocus:
-            k.forceFocusToBody()
-        func(event)
-        k.endCommand(event,commandName,forceFocus,tag='masterCommand')
-        return 'break'
-
-    else:
-        c.frame.body.onBodyKey(event)
-        return None # Not 'break'
-#@nonl
-#@+node:ekr.20050920085536.67:<< add character to history >>
-# Don't add multiple special characters to history.
-
-k.keysymHistory.insert(0,event.keysym)
-
-if len(event.char) > 0:
-    if len(keyHandlerClass.lossage) > 99:
-        keyHandlerClass.lossage.pop()
-    keyHandlerClass.lossage.insert(0,event.char)
-
-if 0: # traces
-    g.trace(event.keysym,stroke)
-    g.trace(k.keysymHistory)
-    g.trace(keyHandlerClass.lossage)
-#@nonl
-#@-node:ekr.20050920085536.67:<< add character to history >>
-#@+node:ekr.20050923172809.1:callStateFunction
-def callStateFunction (self,event):
-    
-    k = self
-    
-    # g.trace(k.stateKind,k.state)
-    
-    if k.state.kind:
-        if k.state.handler:
-            k.state.handler(event)
-            k.endCommand(event,k.commandName,tag='callStateFunction')
-        else:
-            g.es_print('no state function for %s' % (k.state.kind),color='red')
-#@nonl
-#@-node:ekr.20050923172809.1:callStateFunction
-#@+node:ekr.20050923174229.3:callKeystrokeFunction
-def callKeystrokeFunction (self,event):
-    
-    '''Handle a quick keystroke function.
-    Return the function or None.'''
-    
-    k = self
-    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
-
-    if func:
-        func(event)
-        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        forceFocus = func.__name__ != 'leoCallback'
-        k.endCommand(event,commandName,forceFocus,tag='callKeystrokeFunction')
-    
-    return func
-#@nonl
-#@-node:ekr.20050923174229.3:callKeystrokeFunction
-#@-node:ekr.20050920085536.65: masterCommand & helpers
-#@+node:ekr.20051002152108.1:Shared helpers
-#@+node:ekr.20051017212452:computeCompletionList
-# Important: this code must not change mb_tabListPrefix.  Only doBackSpace should do that.
-
-def computeCompletionList (self,defaultTabList,backspace):
-    
-    k = self ; c = k.c ; s = k.getLabel() 
-    command = s [len(k.mb_prompt):]
-        # s always includes prefix, so command is well defined.
-
-    k.mb_tabList,common_prefix = g.itemsMatchingPrefixInList(command,defaultTabList)
-
-    c.frame.log.clearTab('Completion')
-
-    if k.mb_tabList:
-        k.mb_tabListIndex = -1 # The next item will be item 0.
-
-        if not backspace:
-            k.setLabel(k.mb_prompt + common_prefix)
-            
-        inverseBindingDict = k.computeInverseBindingDict()
-        for commandName in k.mb_tabList:
-            shortcut = inverseBindingDict.get(commandName,'')
-            g.es('%s %s' % (commandName,shortcut))
-
-    k.forceFocusToBody()
-#@nonl
-#@-node:ekr.20051017212452:computeCompletionList
-#@+node:ekr.20051018070524:computeInverseBindingDict
-def computeInverseBindingDict (self):
-
-    k = self
-
-    d = {} # keys are minibuffer command names, values are shortcuts.
-
-    for shortcut in k.bindingsDict.keys():
-        b = k.bindingsDict.get(shortcut)
-        d [b.commandName] = shortcut # was b.name
-
-    return d
-#@nonl
-#@-node:ekr.20051018070524:computeInverseBindingDict
-#@+node:ekr.20050920085536.46:doBackSpace
-# Used by getArg and fullCommand.
-
-def doBackSpace (self,defaultCompletionList):
-
-    '''Cut back to previous prefix and update prefix.'''
-
-    k = self
-
-    if len(k.mb_tabListPrefix) > len(k.mb_prefix):
-
-        k.mb_tabListPrefix = k.mb_tabListPrefix [:-1]
-        k.setLabel(k.mb_tabListPrefix)
-
-    k.computeCompletionList(defaultCompletionList,backspace=True)
-#@nonl
-#@-node:ekr.20050920085536.46:doBackSpace
-#@+node:ekr.20050920085536.44:doTabCompletion
-# Used by getArg and fullCommand.
-
-def doTabCompletion (self,defaultTabList):
-    
-    '''Handle tab completion when the user hits a tab.'''
-    
-    k = self ; c = k.c ; s = k.getLabel().strip()
-    
-    if k.mb_tabList and s.startswith(k.mb_tabListPrefix):
-        # g.trace('cycle')
-        # Set the label to the next item on the tab list.
-        k.mb_tabListIndex +=1
-        if k.mb_tabListIndex >= len(k.mb_tabList):
-            k.mb_tabListIndex = 0
-        k.setLabel(k.mb_prompt + k.mb_tabList [k.mb_tabListIndex])
-    else:
-        k.computeCompletionList(defaultTabList,backspace=False)
-#@nonl
-#@-node:ekr.20050920085536.44:doTabCompletion
-#@+node:ekr.20051012092847:forceFocusToBody
-def forceFocusToBody (self):
-    
-    k = self ; c = k.c ; f = c.frame
-    
-    f.bodyWantsFocus(f.bodyCtrl,later=False,tag='k.forceFocusToBody')
-#@nonl
-#@-node:ekr.20051012092847:forceFocusToBody
-#@+node:ekr.20051014170754.1:getShortcutForCommand/Name
-def getShortcutForCommandName (self,commandName):
-    
-    k = self ; c = k.c
-
-    command = c.commandsDict.get(commandName)
-
-    if command:
-        for key in k.bindingsDict:
-            b = k.bindingsDict.get(key)
-            if b.name == command.__name__:
-                return key
-    
-    return ''
-    
-def getShortcutForCommand (self,command):
-    
-    k = self ; c = k.c
-    
-    if command:
-        for key in k.bindingsDict:
-            b = k.bindingsDict.get(key)
-            if b.name == command.__name__:
-                return key
-    
-    return ''
-#@nonl
-#@-node:ekr.20051014170754.1:getShortcutForCommand/Name
-#@+node:ekr.20051010063452:ultimateFuncName
-def ultimateFuncName (self,func):
-    
-    '''Return func.__name__ unless it is 'leoCallback.
-    In that case, return the name in k.leoCallbackDict.get(func).'''
-    
-    k = self
-    
-    if not func:
-        return '<no function>'
-        
-    if func.__name__ != 'leoCallback':
-        return func.__name__
-        
-    # Get the function wrapped by this particular leoCallback function.
-    calledFunc = k.leoCallbackDict.get(func)
-    if calledFunc:
-        return 'leoCallback -> %s' % calledFunc.__name__ 
-    else:
-        return '<no leoCallback name>'
-#@nonl
-#@-node:ekr.20051010063452:ultimateFuncName
-#@-node:ekr.20051002152108.1:Shared helpers
-#@+node:ekr.20051017204206:Notes
-@nocolor
-
-We can't use nb.selectpage('Log') after writing the tab completion list,
-but we want to restore the default page to 'Log'.
-
-There are at least two approaches:
-
-1. Create a method, say, setDefaultTab(), that causes *future* writes to go to the 'Log' tab but does *not* change the presently selected tab.
-
-2. Add tabName='Log' as a keyword argument to g.es, g.enl, etc. and tkLog.put/putnl.
-
-This is more explicit and easier to program, and does the same thing.  This is what I have done.  So by default, g.es does what it always has done, but it is easy to switch to other panes.
-#@nonl
-#@-node:ekr.20051017204206:Notes
-#@+node:ekr.20031218072017.1474:es, enl, ecnl
-def ecnl(tabName='Log'):
-    g.ecnls(1,tabName)
-
-def ecnls(n,tabName='Log'):
-    log = app.log
-    if log and not log.isNull:
-        while log.newlines < n:
-            g.enl(tabName)
-
-def enl(tabName='Log'):
-    log = app.log
-    if log and not log.isNull:
-        log.newlines += 1
-        log.putnl(tabName)
-
-def es(s,*args,**keys):
-    if app.killed:
-        return
-    newline = keys.get("newline",True)
-    color = keys.get('color')
-    tabName = keys.get('tabName','Log')
-        # Default goes to log pane *Not* the presently active pane.
-    if color == 'suppress': return # New in 4.3.
-    if type(s) != type("") and type(s) != type(u""): # 1/20/03
-        s = repr(s)
-    for arg in args:
-        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
-            arg = repr(arg)
-        s = s + ", " + arg
-    if app.batchMode:
-        if app.log:
-            app.log.put(s)
-    else:
-        log = app.log
-        if log and not log.isNull:
-            # print 'g.es',s
-            log.put(s,color=color,tabName=tabName)
-            for ch in s:
-                if ch == '\n': log.newlines += 1
-                else: log.newlines = 0
-            if newline:
-                g.ecnl(tabName=tabName) # only valid here
-        elif newline:
-            app.logWaiting.append((s+'\n',color),)
-            # print s
-        else:
-            app.logWaiting.append((s,color),)
-            # print s,
-#@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl
-#@+node:ekr.20051016101927:put & putnl (LeoTkinterLog)
-@ Printing uses self.logCtrl, so this code need not concern itself
-with which tab is active.
-
-Also, selectTab switches the contents of colorTags, so that is not concern.
-It may be that Pmw will allow us to dispense with the colorTags logic...
-#@nonl
-#@+node:ekr.20031218072017.1473:put
-# All output to the log stream eventually comes here.
-def put (self,s,color=None,tabName='Log'):
-    
-    # print 'tkLog.put',self.c.shortFileName(),s,
-
-    if g.app.quitting:
-        return
-    if tabName:
-        self.selectTab(tabName)
-    
-    if self.logCtrl:
-        << put s to log control >>
-    else:
-        << put s to logWaiting and print s >>
-#@nonl
-#@+node:EKR.20040423082910:<< put s to log control >>
-if 0:
-    # Doing this here messes up the display in the log pane.
-    if type(s) == type(u""):
-        s = g.toEncodedString(s,g.app.TkEncoding)
-        
-# g.trace(repr(self.logCtrl))
-
-if color:
-    if color not in self.colorTags:
-        self.colorTags.append(color)
-        self.logCtrl.tag_config(color,foreground=color)
-    self.logCtrl.insert("end",s)
-    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-    self.logCtrl.tag_add("black","end")
-else:
-    self.logCtrl.insert("end",s)
-
-self.logCtrl.see("end")
-    
-self.forceLogUpdate(s)
-#@nonl
-#@-node:EKR.20040423082910:<< put s to log control >>
-#@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
-g.app.logWaiting.append((s,color),)
-
-print "Null tkinter log"
-
-if type(s) == type(u""):
-    s = g.toEncodedString(s,"ascii")
-
-print s
-#@nonl
-#@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
-#@-node:ekr.20031218072017.1473:put
-#@+node:ekr.20051016101927.1:putnl
-def putnl (self,tabName='Log'):
-
-    if g.app.quitting:
-        return
-    if tabName:
-        self.selectTab(tabName)
-    
-    if self.logCtrl:
-        self.logCtrl.insert("end",'\n')
-        self.logCtrl.see("end")
-        self.forceLogUpdate('\n')
-    else:
-        # Put a newline to logWaiting and print newline
-        g.app.logWaiting.append(('\n',"black"),)
-        print "Null tkinter log"
-        print
-#@-node:ekr.20051016101927.1:putnl
-#@-node:ekr.20051016101927:put & putnl (LeoTkinterLog)
-#@+node:ekr.20031218072017.4039:class leoTkinterLog
-class leoTkinterLog (leoFrame.leoLog):
-    
-    """A class that represents the log pane of a Tkinter window."""
-
-    @others
-#@nonl
-#@+node:ekr.20051016095907:tkLog Birth
-#@+node:ekr.20031218072017.4040:tkLog.__init__
-def __init__ (self,frame,parentFrame):
-    
-    # g.trace("leoTkinterLog")
-    
-    self.c = c = frame.c # Also set in the base constructor, but we need it here.
-    
-    self.colorTags = []
-        # The list of color names used as tags in present tab.
-        # This gest switched by selectTab.
-
-    self.wrap = g.choose(c.config.getBool('log_pane_wraps'),"word","none")
-    
-    # New in 4.4a2: The log pane is a Pmw.Notebook...
-
-    self.nb = None      # The Pmw.Notebook that holds all the tabs.
-    self.colorTagsDict = {} # Keys are page names.  Values are saved colorTags lists.
-    self.frameDict = {}  # Keys are page names. Values are Tk.Frames.
-    self.tabMenu = None # A menu that pops up on right clicks in the hull or in tabs.
-    self.textDict = {}  # Keys are page names. Values are Tk.Text widgets.
-    self.newTabCount = 0 # Number of new tabs created.
-    
-    # Official status variables.  Can be used by client code.
-    self.tabName = None # The name of the active tab.
-    self.logCtrl = None # Same as self.textDict.get(self.tabName)
-    self.tabFrame = None # Same as self.frameDict.get(self.tabName)
-    
-    # Call the base class constructor and calls createControl.
-    leoFrame.leoLog.__init__(self,frame,parentFrame)
-#@-node:ekr.20031218072017.4040:tkLog.__init__
-#@+node:ekr.20031218072017.4042:tkLog.createControl
-def createControl (self,parentFrame):
-
-    c = self.c
-
-    self.nb = Pmw.NoteBook(parentFrame,
-        borderwidth = 1, pagemargin = 0,
-        raisecommand = self.raiseTab,
-        lowercommand = self.lowerTab
-    )
-
-    menu = self.makeTabMenu(tabName=None)
-
-    def hullMenuCallback(event):
-        self.onRightClick(event,menu)
-
-    self.nb.bind('<Button-3>',hullMenuCallback)
-
-    self.nb.pack(fill='both',expand=1)
-    self.selectTab('Log') # create the tab and make it the active tab.
-    return self.logCtrl
-#@-node:ekr.20031218072017.4042:tkLog.createControl
-#@+node:ekr.20051016103459:tkLog.createTextWidget
-def createTextWidget (self,parentFrame):
-    
-    log = Tk.Text(parentFrame,name="log",
-        setgrid=0,wrap=self.wrap,bd=2,bg="white",relief="flat")
-    
-    logBar = Tk.Scrollbar(parentFrame,name="logBar")
-
-    log['yscrollcommand'] = logBar.set
-    logBar['command'] = log.yview
-    
-    logBar.pack(side="right", fill="y")
-    # rr 8/14/02 added horizontal elevator 
-    if self.wrap == "none": 
-        logXBar = Tk.Scrollbar( 
-            parentFrame,name='logXBar',orient="horizontal") 
-        log['xscrollcommand'] = logXBar.set 
-        logXBar['command'] = log.xview 
-        logXBar.pack(side="bottom", fill="x")
-    log.pack(expand=1, fill="both")
-
-    return log
-#@nonl
-#@-node:ekr.20051016103459:tkLog.createTextWidget
-#@+node:ekr.20051019134106.1:tkLog.makeTabMenu
-def makeTabMenu (self,tabName=None):
-
-    '''Create a tab popup menu.'''
-
-    c = self.c
-    hull = self.nb.component('hull') # A Tk.Canvas.
-    
-    menu = Tk.Menu(hull,tearoff=0)
-    menu.add_command(label='New Tab',command=self.newTabFromMenu)
-    
-    if tabName:
-        # Important: tabName is the name when the tab is created.
-        # It is not affected by renaming, so we don't have to keep
-        # track of the correspondence between this name and what is in the label.
-        def deleteTabCallback():
-            self.deleteTab(tabName)
-
-        menu.add_command(label='Delete This Tab',command=deleteTabCallback)
- 
-        def renameTabCallback():
-            self.renameTabFromMenu(tabName)
-
-        menu.add_command(label='Rename This Tab',command=renameTabCallback)
-
-    return menu
-#@nonl
-#@-node:ekr.20051019134106.1:tkLog.makeTabMenu
-#@-node:ekr.20051016095907:tkLog Birth
-#@+node:ekr.20051016095907.1:Config & get/saveState
-#@+node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
-def configureBorder(self,border):
-    
-    self.logCtrl.configure(bd=border)
-    
-def configureFont(self,font):
-
-    self.logCtrl.configure(font=font)
-#@nonl
-#@-node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
-#@+node:ekr.20031218072017.4043:tkLog.getFontConfig
-def getFontConfig (self):
-
-    font = self.logCtrl.cget("font")
-    # g.trace(font)
-    return font
-#@nonl
-#@-node:ekr.20031218072017.4043:tkLog.getFontConfig
-#@+node:ekr.20041222043017:tkLog.restoreAllState
-def restoreAllState (self,d):
-    
-    '''Restore the log from a dict created by saveAllState.'''
-    
-    logCtrl = self.logCtrl
-
-    # Restore the text.
-    text = d.get('text')
-    logCtrl.insert('end',text)
-
-    # Restore all colors.
-    colors = d.get('colors')
-    for color in colors.keys():
-        if color not in self.colorTags:
-            self.colorTags.append(color)
-            logCtrl.tag_config(color,foreground=color)
-        items = list(colors.get(color))
-        while items:
-            start,stop = items[0],items[1]
-            items = items[2:]
-            logCtrl.tag_add(color,start,stop)
-#@nonl
-#@-node:ekr.20041222043017:tkLog.restoreAllState
-#@+node:ekr.20041222043017.1:tkLog.saveAllState
-def saveAllState (self):
-    
-    '''Return a dict containing all data needed to recreate the log in another widget.'''
-    
-    logCtrl = self.logCtrl ; colors = {}
-
-    # Save the text
-    text = logCtrl.get('1.0','end')
-
-    # Save color tags.
-    tag_names = logCtrl.tag_names()
-    for tag in tag_names:
-        if tag in self.colorTags:
-            colors[tag] = logCtrl.tag_ranges(tag)
-            
-    d = {'text':text,'colors': colors}
-    # g.trace('\n',g.dictToString(d))
-    return d
-#@nonl
-#@-node:ekr.20041222043017.1:tkLog.saveAllState
-#@+node:ekr.20041217135735.2:tkLog.setColorFromConfig
-def setColorFromConfig (self):
-    
-    c = self.c
-    
-    bg = c.config.getColor("log_pane_background_color") or 'white'
-    
-    try:
-        self.logCtrl.configure(bg=bg)
-    except:
-        g.es("exception setting log pane background color")
-        g.es_exception()
-#@nonl
-#@-node:ekr.20041217135735.2:tkLog.setColorFromConfig
-#@+node:ekr.20031218072017.4046:tkLog.setFontFromConfig
-def setFontFromConfig (self):
-
-    c = self.c ; logCtrl = self.logCtrl
-
-    font = c.config.getFontFromParams(
-        "log_text_font_family", "log_text_font_size",
-        "log_text_font_slant",  "log_text_font_weight",
-        c.config.defaultLogFontSize, tag = "log")
-
-    self.fontRef = font # ESSENTIAL: retain a link to font.
-    logCtrl.configure(font=font)
-    
-    # g.trace("LOG",logCtrl.cget("font"),font.cget("family"),font.cget("weight"))
-
-    bg = c.config.getColor("log_text_background_color")
-    if bg:
-        try: logCtrl.configure(bg=bg)
-        except: pass
-    
-    fg = c.config.getColor("log_text_foreground_color")
-    if fg:
-        try: logCtrl.configure(fg=fg)
-        except: pass
-#@nonl
-#@-node:ekr.20031218072017.4046:tkLog.setFontFromConfig
-#@-node:ekr.20051016095907.1:Config & get/saveState
-#@+node:ekr.20051016095907.2:Focus & update
-#@+node:ekr.20031218072017.4045:tkLog.onActivateLog
-def onActivateLog (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
-
-    try:
-        g.app.setLog(self,"OnActivateLog")
-        self.frame.tree.OnDeactivate()
-        self.frame.logWantsFocus(self.logCtrl,tag='onActivateLog')
-    except:
-        g.es_event_exception("activate log")
-#@nonl
-#@-node:ekr.20031218072017.4045:tkLog.onActivateLog
-#@+node:ekr.20031218072017.4044:tkLog.hasFocus
-def hasFocus (self):
-    
-    return g.app.gui.get_focus(self.frame) == self.logCtrl
-#@nonl
-#@-node:ekr.20031218072017.4044:tkLog.hasFocus
-#@+node:ekr.20050208133438:forceLogUpdate
-def forceLogUpdate (self,s):
-
-    if sys.platform == "darwin": # Does not work on MacOS X.
-        try:
-            print s, # Don't add a newline.
-        except UnicodeError:
-            # g.app may not be inited during scripts!
-            print g.toEncodedString(s,'utf-8')
-    else:
-        self.frame.tree.disableRedraw = True
-        self.logCtrl.update_idletasks()
-        self.frame.tree.disableRedraw = False
-#@nonl
-#@-node:ekr.20050208133438:forceLogUpdate
-#@-node:ekr.20051016095907.2:Focus & update
-#@+node:ekr.20051016101927:put & putnl (LeoTkinterLog)
-@ Printing uses self.logCtrl, so this code need not concern itself
-with which tab is active.
-
-Also, selectTab switches the contents of colorTags, so that is not concern.
-It may be that Pmw will allow us to dispense with the colorTags logic...
-#@nonl
-#@+node:ekr.20031218072017.1473:put
-# All output to the log stream eventually comes here.
-def put (self,s,color=None,tabName='Log'):
-    
-    # print 'tkLog.put',self.c.shortFileName(),s,
-
-    if g.app.quitting:
-        return
-    if tabName:
-        self.selectTab(tabName)
-    
-    if self.logCtrl:
-        << put s to log control >>
-    else:
-        << put s to logWaiting and print s >>
-#@nonl
-#@+node:EKR.20040423082910:<< put s to log control >>
-if 0:
-    # Doing this here messes up the display in the log pane.
-    if type(s) == type(u""):
-        s = g.toEncodedString(s,g.app.TkEncoding)
-        
-# g.trace(repr(self.logCtrl))
-
-if color:
-    if color not in self.colorTags:
-        self.colorTags.append(color)
-        self.logCtrl.tag_config(color,foreground=color)
-    self.logCtrl.insert("end",s)
-    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-    self.logCtrl.tag_add("black","end")
-else:
-    self.logCtrl.insert("end",s)
-
-self.logCtrl.see("end")
-    
-self.forceLogUpdate(s)
-#@nonl
-#@-node:EKR.20040423082910:<< put s to log control >>
-#@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
-g.app.logWaiting.append((s,color),)
-
-print "Null tkinter log"
-
-if type(s) == type(u""):
-    s = g.toEncodedString(s,"ascii")
-
-print s
-#@nonl
-#@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
-#@-node:ekr.20031218072017.1473:put
-#@+node:ekr.20051016101927.1:putnl
-def putnl (self,tabName='Log'):
-
-    if g.app.quitting:
-        return
-    if tabName:
-        self.selectTab(tabName)
-    
-    if self.logCtrl:
-        self.logCtrl.insert("end",'\n')
-        self.logCtrl.see("end")
-        self.forceLogUpdate('\n')
-    else:
-        # Put a newline to logWaiting and print newline
-        g.app.logWaiting.append(('\n',"black"),)
-        print "Null tkinter log"
-        print
-#@-node:ekr.20051016101927.1:putnl
-#@-node:ekr.20051016101927:put & putnl (LeoTkinterLog)
-#@+node:ekr.20051018061932:Tab (TkLog)
-#@+node:ekr.20051017212057:clearTab
-def clearTab (self,tabName):
-    
-    self.selectTab(tabName)
-    t = self.logCtrl
-    t.delete('1.0','end')
-#@nonl
-#@-node:ekr.20051017212057:clearTab
-#@+node:ekr.20051018102027:deleteTab
-def deleteTab (self,tabName):
-    
-    if tabName == 'Log':
-        return
-
-    if tabName == 'Find':
-        self.selectTab('Log')
-        return
-    
-    if tabName in self.nb.pagenames():
-        self.nb.delete(tabName)
-        self.colorTagsDict [tabName] = []
-        self.textDict [tabName] = None
-        self.frameDict [tabName] = None
-        self.tabName = None
-        self.selectTab('Log')
-#@nonl
-#@-node:ekr.20051018102027:deleteTab
-#@+node:ekr.20051018061932.1:ower/raiseTab
-def lowerTab (self,tabName):
-    
-    if tabName:
-        b = self.nb.tab(tabName) # b is a Tk.Button.
-        b.config(bg='grey80')
-    
-def raiseTab (self,tabName):
-
-    if tabName:
-        b = self.nb.tab(tabName) # b is a Tk.Button.
-        b.config(bg='LightSteelBlue1')
-#@nonl
-#@-node:ekr.20051018061932.1:ower/raiseTab
-#@+node:ekr.20051019170806:renameTab
-def renameTab (self,oldName,newName):
-    
-    label = self.nb.tab(oldName)
-    label.configure(text=newName)
-#@nonl
-#@-node:ekr.20051019170806:renameTab
-#@+node:ekr.20051016101724.1:selectTab
-def selectTab (self,tabName):
-
-    '''Create the tab if necessary and make it active.'''
-    
-    c = self.c ; tabFrame = self.frameDict.get(tabName)
-    # g.trace(g.choose(tabName,'switching to','creating'),tabName)
-    if tabFrame:
-        # Switch to a new colorTags list.
-        newColorTags = self.colorTagsDict.get(tabName)
-        self.colorTagsDict [self.tabName] = self.colorTags [:]
-        self.colorTags = newColorTags
-    else:
-        tabFrame = self.nb.add(tabName)
-        << bind a tab-specific pop-up menu to the tab >>
-        << Create the tab's text widget >>
-        # Update immediately so we can queue the request to change focus.
-        tabFrame.update_idletasks()
-        self.c.frame.bodyWantsFocus(self.c.frame.bodyCtrl,tag='tkLog.selectTab')
-        
-    self.nb.selectpage(tabName)
-    # Update the status vars.
-    self.tabName = tabName
-    self.logCtrl = self.textDict.get(tabName)
-    self.tabFrame = self.frameDict.get(tabName)
-    # g.trace(self.tabName,repr(self.logCtrl))
-    return tabFrame
-#@nonl
-#@+node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
-menu = self.makeTabMenu(tabName)
-tab = self.nb.tab(tabName)
-
-def menuClickCallback(event):
-    self.onRightClick(event,menu)
-
-tab.bind('<Button-3>',menuClickCallback)
-#@nonl
-#@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
-#@+node:ekr.20051018072306:<< Create the tab's text widget >>
-textWidget = self.createTextWidget(tabFrame)
-
-# Set the background color.
-configName = 'log_pane_%s_tab_background_color' % tabName
-bg = c.config.getColor(configName) or 'MistyRose1'
-try: textWidget.configure(bg=bg)
-except Exception: pass # Could be a user error.
-
-self.frameDict [tabName] = tabFrame
-self.textDict [tabName] = textWidget
-
-# Switch to a new colorTags list.
-if self.tabName:
-    self.colorTagsDict [self.tabName] = self.colorTags [:]
-self.colorTags = ['black']
-self.colorTagsDict [tabName] = self.colorTags
-
-# Make the bindings.
-textWidget.bind("<Button-1>",self.onActivateLog)
-textWidget.tag_config('black',foreground='black')
-#@nonl
-#@-node:ekr.20051018072306:<< Create the tab's text widget >>
-#@-node:ekr.20051016101724.1:selectTab
-#@+node:ekr.20051019134106:Tab menu callbacks & helpers
-#@+node:ekr.20051019134422:onRightClick
-def onRightClick (self,event,menu):
-
-    menu.post(event.x_root,event.y_root)
-#@nonl
-#@-node:ekr.20051019134422:onRightClick
-#@+node:ekr.20051019140004.1:newTabFromMenu
-def newTabFromMenu (self,tabName='Log'):
-
-    self.selectTab(tabName)
-    parentFrame = self.frameDict.get(tabName)
-    
-    # This is called by getTabName.
-    def selectTabCallback (oldName,newName):
-        self.selectTab(newName)
-
-    self.getTabName(parentFrame,'',selectTabCallback)
-#@nonl
-#@-node:ekr.20051019140004.1:newTabFromMenu
-#@+node:ekr.20051019165401:renameTabFromMenu
-def renameTabFromMenu (self,tabName):
-
-    if tabName in ('Log','Completions'):
-        g.es('can not rename %s tab' % (tabName),color='blue')
-    else:
-        parentFrame = self.frameDict.get(tabName)
-        self.getTabName(parentFrame,tabName,self.renameTab)
-#@nonl
-#@-node:ekr.20051019165401:renameTabFromMenu
-#@+node:ekr.20051019172811:getTabName
-def getTabName (self,parentFrame,tabName,exitCallback):
-
-    f = Tk.Frame(parentFrame)
-    f.pack(side='bottom',fill='x',expand=1)
-
-    Tk.Label(f,text='Tab name').pack(side='left')
-
-    e = Tk.Entry(f,background='white')
-    e.pack(side='left')
-
-    def getNameCallback (event=None):
-        s = e.get().strip()
-        f.pack_forget()
-        if s: exitCallback(tabName,s)
-    
-    if 0:
-        b = Tk.Button(row,text="Close",command=getNameCallback)
-        b.pack(side='left')
-
-    e.focus_force()
-    e.bind('<Return>',getNameCallback)
-#@nonl
-#@-node:ekr.20051019172811:getTabName
-#@-node:ekr.20051019134106:Tab menu callbacks & helpers
-#@-node:ekr.20051018061932:Tab (TkLog)
-#@-node:ekr.20031218072017.4039:class leoTkinterLog
-#@-node:ekr.20051017184201:(Tabbed log pane)
-#@+node:ekr.20051020074023:Created show-fonts & show-colors commands
-#@-node:ekr.20051020074023:Created show-fonts & show-colors commands
 #@+node:ekr.20051021070335:(Created open-find-tab command)
 #@+node:ekr.20051020120306:openFindTab & helper classes
 def openFindTab (self,event):
@@ -23900,7 +22269,9 @@ def copyText (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Copy"))
     else:
-        pass # Copy doesn't change text.
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Copy"))
 
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
@@ -23916,6 +22287,9 @@ def cutText (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
     else:
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Cut"))
         f.tree.onHeadChanged(c.currentPosition())
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
@@ -23924,7 +22298,7 @@ def pasteText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    #g.trace()
+    # g.trace()
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
@@ -23932,7 +22306,9 @@ def pasteText (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
     else:
-        # Do **not** call w.event_generate here.
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition())
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
@@ -23991,16 +22367,16 @@ def OnPasteFromMenu (self):
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@-node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
-#@+node:ekr.20051021143159.1:(Removed all key bindings from createMenuEntries)
-@ This is an important simplification.
+#@+node:ekr.20051015112436:(Fixed bugs in k.registerCommand, k.printBindings
+#@+node:ekr.20051016171402:Notes
+@nocolor
 
-One not-so-horrible kludge remains. The cut/copy/paste commands in the menu
-tables are not the same as the methods actually bound to cut/copy/paste-text
-minibuffer commands, so we must do a bit of extra translation to discover
-whether the user has overridden their bindings.
-
-Important: this affect only the **appearance** of the menu, **not** any bindings!
+print-bindings was printing the function name, not the command name. Fixing this
+was hairy: it involved adding the commandName argument to k.bindShortcut and
+k.bindKey. The work is worthwhile: it is now much clearer what is being bound.
+The most complicated change was to menu.createMenuEntries, as usual...
 #@nonl
+#@-node:ekr.20051016171402:Notes
 #@+node:ekr.20031218072017.1723:createMenuEntries
 def createMenuEntries (self,menu,table,dynamicMenu=False):
         
@@ -24092,8 +22468,188 @@ if amp_index == -1:
 #@nonl
 #@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
 #@-node:ekr.20031218072017.1723:createMenuEntries
-#@-node:ekr.20051021143159.1:(Removed all key bindings from createMenuEntries)
+#@+node:ekr.20051015110547:registerCommand
+def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
+    
+    '''Make the function available as a minibuffer command,
+    and optionally attempt to bind a shortcut.
+    
+    You can wrap any method in a callback function, so the
+    restriction to functions is not significant.'''
+    
+    k = self ; c = k.c
+    
+    f = c.commandsDict.get(commandName)
+    if f:
+        g.es_trace('Redefining %s' % (commandName), color='red')
+        
+    c.commandsDict [commandName] = func
+    k.inverseCommandsDict [func.__name__] = commandName
+    
+    if shortcut:
+        # Retain the original spelling of the shortcut for the message.
+        shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+        ok = k.bindShortcut (pane,shortcut,func,commandName)
+            
+    if verbose:
+        if shortcut and ok:
+            g.es_print('Registered %s bound to %s' % (
+                commandName,shortcut),color='blue')
+        else:
+            g.es_print('Registered %s' % (commandName), color='blue')
+#@nonl
+#@-node:ekr.20051015110547:registerCommand
+#@+node:ekr.20051006125633.1:bindShortcut
+def bindShortcut (self,pane,shortcut,command,commandName):
+    
+    '''Bind one shortcut from a menu table.'''
+    
+    k = self ; shortcut = str(shortcut)
+
+    if command.__name__ == 'leoCallback':
+        # Get the function wrapped by *this* leoCallback function.
+        func = k.leoCallbackDict.get(command)
+        commandName = k.inverseCommandsDict.get(func.__name__)
+        
+        # No need for a second layer of callback.
+        def keyCallback (event,func=command,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+    else:
+        def menuFuncCallback (event,command=command):
+            return command(event)
+
+        def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+        
+    return k.bindKey(pane,shortcut,keyCallback,commandName)
+#@nonl
+#@-node:ekr.20051006125633.1:bindShortcut
+#@+node:ekr.20050920085536.16:bindKey
+def bindKey (self,pane,shortcut,callback,commandName):
+
+    '''Bind the indicated shortcut (a Tk keystroke) to the callback.
+    callback calls commandName (for error messages).'''
+    
+    k = self ; c = k.c
+
+    try:
+        if shortcut == '<Key>':
+            # Don't bind to menu.  Besides, menu.bind doesn't allow '+' arg.
+            c.frame.body.bodyCtrl.bind(shortcut,callback,'+')
+        else:
+            << bind callback to shortcut in pane >>
+        k.bindingsDict [shortcut] = g.bunch(
+            pane=pane,func=callback,commandName=commandName,warningGiven=False)
+        return True
+
+    except Exception: # Could be a user error.
+        if not g.app.menuWarningsGiven:
+            g.es_print('Exception binding %s to %s' % (shortcut,commandName))
+            # g.es_exception()
+            # g.printStack()
+            g.app.menuWarningsGiven = True
+        return False
+#@nonl
+#@+node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+body = c.frame.body.bodyCtrl
+log  = c.frame.log.logCtrl
+menu = c.frame.menu
+tree = c.frame.tree.canvas
+
+# Binding to the menu ensures that keys are active in all parts of the frame.
+# However, it does not appear necessary at this time...
+
+d = {
+    'all':  [body,log,tree], # menu
+    'body': [body],
+    'log':  [log],
+    'tree': [tree],
+}
+
+if 0: # A useful trace.
+    if pane and pane != 'all':
+        g.trace('%4s %20s %s' % (pane, shortcut,commandName))
+
+widgets = d.get((pane or 'all').lower(),[])
+
+for w in widgets:
+    w.bind(shortcut,callback)
+#@nonl
+#@-node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+#@-node:ekr.20050920085536.16:bindKey
+#@+node:ekr.20051012201831:printBindings
+def printBindings (self,event):
+
+    '''Print all the bindings presently in effect.'''
+
+    k = self ; c = k.c
+    keys = k.bindingsDict.keys() ; keys.sort()
+
+    c.frame.log.clearTab('Command')
+    for key in keys:
+        b = k.bindingsDict.get(key)
+        g.es(key,b.commandName or b.name,tabName='Command')
+#@nonl
+#@-node:ekr.20051012201831:printBindings
+#@+node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
+def makeSpecialBindings (self):
+    
+    '''Make the bindings and set ivars for sepcial keystrokes.'''
+    
+    k = self ; c = k.c ; f = c.frame
+    
+    # These defaults may be overridden.
+    for stroke,ivar,commandName,func in (
+        ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
+        ('Alt-x',   'fullCommandKey',  'full-command',  k.fullCommand),
+        ('Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
+        ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
+    ):
+        # Get the user shortcut *before* creating the callbacks.
+        junk, bunch = c.config.getShortcut(commandName)
+        accel = (bunch and bunch.val) or stroke
+        shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+        # g.trace(stroke,accel,shortcut,func.__name__)
+        
+        # Create two-levels of callbacks.
+        def specialCallback (event,func=func):
+            return func(event)
+
+        def keyCallback (event,func=specialCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+        
+        setattr(k,ivar,shortcut)
+
+        k.bindKey('all',shortcut,keyCallback,commandName)
+        
+    # Add a binding for <Key> events, so all key events go through masterCommand.
+    def allKeysCallback (event):
+        return k.masterCommand(event,func=None,stroke='<Key>')
+
+    k.bindKey('all','<Key>',allKeysCallback,'master-command')
+#@nonl
+#@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
+#@-node:ekr.20051015112436:(Fixed bugs in k.registerCommand, k.printBindings
 #@+node:ekr.20051021074728.1:(Improved shortcuts parser)
+#@+node:ekr.20041117062717.14:getShortcut (config)
+def getShortcut (self,c,shortcutName):
+    
+    '''Return rawKey,accel for shortcutName'''
+    
+    key = c.frame.menu.canonicalizeMenuName(shortcutName)
+    key = key.replace('&','') # Allow '&' in names.
+
+    bunch = self.get(c,key,"shortcut")
+    if bunch and bunch.val:
+        # g.trace(bunch.pane,key,repr(bunch.val))
+        if bunch.val.lower() == 'none':
+            return key,None
+        else:
+            return key,bunch
+    else:
+        return key,None
+#@nonl
+#@-node:ekr.20041117062717.14:getShortcut (config)
 #@+node:ekr.20051021212323:What I did
 @nocolor
 
@@ -24105,30 +22661,7 @@ if amp_index == -1:
 - Warn and ignore duplicate shortcuts in doShortcuts.
 #@nonl
 #@-node:ekr.20051021212323:What I did
-#@+node:ekr.20051011105014:exists (g.app.config)
-def exists (self,c,setting,kind):
-    
-    '''Return true if a setting of the given kind exists, even if it is None.'''
-
-    if c:
-        d = self.localOptionsDict.get(c.hash())
-        if d:
-            junk,found = self.getValFromDict(d,setting,kind)
-            if found: return True
-                
-    for d in self.localOptionsList:
-        junk,found = self.getValFromDict(d,setting,kind)
-        if found: return True
-
-    for d in self.dictList:
-        junk,found = self.getValFromDict(d,setting,kind)
-        if found: return True
-
-    # g.trace('does not exist',setting,kind)
-    return False
-#@nonl
-#@-node:ekr.20051011105014:exists (g.app.config)
-#@+node:ekr.20041120112043:g.app.config.parseShortcutLine
+#@+node:ekr.20041120112043:parseShortcutLine (g.app.config)
 def parseShortcutLine (self,s):
     
     '''Parse a shortcut line.  Valid forms:
@@ -24145,13 +22678,12 @@ def parseShortcutLine (self,s):
     i = g.skip_ws(s,i)
     if g.match(s,i,'!'): # New in 4.4: allow pane-specific shortcuts.
         j = g.skip_ws(s,i+1)
-        i = g.skip_id(s,i)
+        i = g.skip_id(s,j)
         pane = s[j:i]
-        if not pane.strip():
-            pane = 'all'
-    else:
-        pane = 'all'
+        if not pane.strip(): pane = 'all'
+    else: pane = 'all'
 
+    i = g.skip_ws(s,i)
     if g.match(s,i,'='):
         i = g.skip_ws(s,i+1)
         val = s[i:]
@@ -24163,10 +22695,10 @@ def parseShortcutLine (self,s):
         if i > 0 and val[i-1] in (' ','\t'):
             val = val[:i].strip()
 
-    # g.trace("%30s %s" %(name,val))
+    # g.trace(pane,name,val,s)
     return name,g.bunch(pane=pane,val=val)
 #@nonl
-#@-node:ekr.20041120112043:g.app.config.parseShortcutLine
+#@-node:ekr.20041120112043:parseShortcutLine (g.app.config)
 #@+node:ekr.20041120105609:doShortcuts
 def doShortcuts(self,p,kind,name,val):
     
@@ -24216,17 +22748,568 @@ def set (self,p,kind,name,val):
 #@+node:ekr.20041227071423:setShortcut (ParserBaseClass)
 def setShortcut (self,name,bunch):
     
-    # g.trace(name,bunch)
-    
     c = self.c
     
     # None is a valid value for val.
     key = c.frame.menu.canonicalizeMenuName(name)
     rawKey = key.replace('&','')
     self.set(c,rawKey,"shortcut",bunch)
+    
+    # g.trace(bunch.pane,rawKey,bunch.val)
 #@nonl
 #@-node:ekr.20041227071423:setShortcut (ParserBaseClass)
 #@-node:ekr.20051021074728.1:(Improved shortcuts parser)
+#@+node:ekr.20051016113907:(Moved TabbedLog code into Leo's core)
+@
+
+I removed the TabbedLog plugin from cvs, and changed the UASearch and URLloader
+plugins so they create create tabbed logs using c.frame.log.selectTab rather
+than TabbedLog.getPane. No other official plugins use TabbedLog. 
+#@+node:ekr.20051016113907.1:How to use the new code
+@nocolor
+
+c.frame.log.selectTab(tabName) selects the tab in the log pane, creating it if
+necessary.
+
+The g.es, g.enl, g.ecnl, g.ecnls write to the log tab specified by the optional
+tabName argument. The default for tabName is 'Log', so existing code works as
+before.
+
+Minor notes:
+
+1. The following are official status ivars.  They can be read by client code,
+but they should never be changed outside of the leoTkinterLog class:
+
+c.frame.log.tabName: the name of the active tab.
+c.frame.log.logCtrl: the Tk.Text widget for the active tab.
+c.frame.log.tabFrame: the Tk.Frame containing the active tab.
+
+These ivars may not exist in nullLog's.
+
+2. The put and putnl methods of the tkinterLog class also take an optional
+tabName argument which defaults to 'Log'.
+#@nonl
+#@-node:ekr.20051016113907.1:How to use the new code
+#@+node:ekr.20031218072017.4039:class leoTkinterLog
+class leoTkinterLog (leoFrame.leoLog):
+    
+    """A class that represents the log pane of a Tkinter window."""
+
+    @others
+#@nonl
+#@+node:ekr.20051016095907:tkLog Birth
+#@+node:ekr.20031218072017.4040:tkLog.__init__
+def __init__ (self,frame,parentFrame):
+    
+    # g.trace("leoTkinterLog")
+    
+    self.c = c = frame.c # Also set in the base constructor, but we need it here.
+    
+    self.colorTags = []
+        # The list of color names used as tags in present tab.
+        # This gest switched by selectTab.
+
+    self.wrap = g.choose(c.config.getBool('log_pane_wraps'),"word","none")
+    
+    # New in 4.4a2: The log pane is a Pmw.Notebook...
+
+    self.nb = None      # The Pmw.Notebook that holds all the tabs.
+    self.colorTagsDict = {} # Keys are page names.  Values are saved colorTags lists.
+    self.frameDict = {}  # Keys are page names. Values are Tk.Frames.
+    self.tabMenu = None # A menu that pops up on right clicks in the hull or in tabs.
+    self.textDict = {}  # Keys are page names. Values are Tk.Text widgets.
+    self.newTabCount = 0 # Number of new tabs created.
+    
+    # Official status variables.  Can be used by client code.
+    self.tabName = None # The name of the active tab.
+    self.logCtrl = None # Same as self.textDict.get(self.tabName)
+    self.tabFrame = None # Same as self.frameDict.get(self.tabName)
+    
+    # Call the base class constructor and calls createControl.
+    leoFrame.leoLog.__init__(self,frame,parentFrame)
+#@-node:ekr.20031218072017.4040:tkLog.__init__
+#@+node:ekr.20031218072017.4042:tkLog.createControl
+def createControl (self,parentFrame):
+
+    c = self.c
+
+    self.nb = Pmw.NoteBook(parentFrame,
+        borderwidth = 1, pagemargin = 0,
+        raisecommand = self.raiseTab,
+        lowercommand = self.lowerTab
+    )
+
+    menu = self.makeTabMenu(tabName=None)
+
+    def hullMenuCallback(event):
+        self.onRightClick(event,menu)
+
+    self.nb.bind('<Button-3>',hullMenuCallback)
+
+    self.nb.pack(fill='both',expand=1)
+    self.selectTab('Log') # create the tab and make it the active tab.
+    return self.logCtrl
+#@-node:ekr.20031218072017.4042:tkLog.createControl
+#@+node:ekr.20051016103459:tkLog.createTextWidget
+def createTextWidget (self,parentFrame):
+    
+    log = Tk.Text(parentFrame,name="log",
+        setgrid=0,wrap=self.wrap,bd=2,bg="white",relief="flat")
+    
+    logBar = Tk.Scrollbar(parentFrame,name="logBar")
+
+    log['yscrollcommand'] = logBar.set
+    logBar['command'] = log.yview
+    
+    logBar.pack(side="right", fill="y")
+    # rr 8/14/02 added horizontal elevator 
+    if self.wrap == "none": 
+        logXBar = Tk.Scrollbar( 
+            parentFrame,name='logXBar',orient="horizontal") 
+        log['xscrollcommand'] = logXBar.set 
+        logXBar['command'] = log.xview 
+        logXBar.pack(side="bottom", fill="x")
+    log.pack(expand=1, fill="both")
+
+    return log
+#@nonl
+#@-node:ekr.20051016103459:tkLog.createTextWidget
+#@+node:ekr.20051019134106.1:tkLog.makeTabMenu
+def makeTabMenu (self,tabName=None):
+
+    '''Create a tab popup menu.'''
+
+    c = self.c
+    hull = self.nb.component('hull') # A Tk.Canvas.
+    
+    menu = Tk.Menu(hull,tearoff=0)
+    menu.add_command(label='New Tab',command=self.newTabFromMenu)
+    
+    if tabName:
+        # Important: tabName is the name when the tab is created.
+        # It is not affected by renaming, so we don't have to keep
+        # track of the correspondence between this name and what is in the label.
+        def deleteTabCallback():
+            self.deleteTab(tabName)
+
+        menu.add_command(label='Delete This Tab',command=deleteTabCallback)
+ 
+        def renameTabCallback():
+            self.renameTabFromMenu(tabName)
+
+        menu.add_command(label='Rename This Tab',command=renameTabCallback)
+
+    return menu
+#@nonl
+#@-node:ekr.20051019134106.1:tkLog.makeTabMenu
+#@-node:ekr.20051016095907:tkLog Birth
+#@+node:ekr.20051016095907.1:Config & get/saveState
+#@+node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
+def configureBorder(self,border):
+    
+    self.logCtrl.configure(bd=border)
+    
+def configureFont(self,font):
+
+    self.logCtrl.configure(font=font)
+#@nonl
+#@-node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
+#@+node:ekr.20031218072017.4043:tkLog.getFontConfig
+def getFontConfig (self):
+
+    font = self.logCtrl.cget("font")
+    # g.trace(font)
+    return font
+#@nonl
+#@-node:ekr.20031218072017.4043:tkLog.getFontConfig
+#@+node:ekr.20041222043017:tkLog.restoreAllState
+def restoreAllState (self,d):
+    
+    '''Restore the log from a dict created by saveAllState.'''
+    
+    logCtrl = self.logCtrl
+
+    # Restore the text.
+    text = d.get('text')
+    logCtrl.insert('end',text)
+
+    # Restore all colors.
+    colors = d.get('colors')
+    for color in colors.keys():
+        if color not in self.colorTags:
+            self.colorTags.append(color)
+            logCtrl.tag_config(color,foreground=color)
+        items = list(colors.get(color))
+        while items:
+            start,stop = items[0],items[1]
+            items = items[2:]
+            logCtrl.tag_add(color,start,stop)
+#@nonl
+#@-node:ekr.20041222043017:tkLog.restoreAllState
+#@+node:ekr.20041222043017.1:tkLog.saveAllState
+def saveAllState (self):
+    
+    '''Return a dict containing all data needed to recreate the log in another widget.'''
+    
+    logCtrl = self.logCtrl ; colors = {}
+
+    # Save the text
+    text = logCtrl.get('1.0','end')
+
+    # Save color tags.
+    tag_names = logCtrl.tag_names()
+    for tag in tag_names:
+        if tag in self.colorTags:
+            colors[tag] = logCtrl.tag_ranges(tag)
+            
+    d = {'text':text,'colors': colors}
+    # g.trace('\n',g.dictToString(d))
+    return d
+#@nonl
+#@-node:ekr.20041222043017.1:tkLog.saveAllState
+#@+node:ekr.20041217135735.2:tkLog.setColorFromConfig
+def setColorFromConfig (self):
+    
+    c = self.c
+    
+    bg = c.config.getColor("log_pane_background_color") or 'white'
+    
+    try:
+        self.logCtrl.configure(bg=bg)
+    except:
+        g.es("exception setting log pane background color")
+        g.es_exception()
+#@nonl
+#@-node:ekr.20041217135735.2:tkLog.setColorFromConfig
+#@+node:ekr.20031218072017.4046:tkLog.setFontFromConfig
+def setFontFromConfig (self):
+
+    c = self.c ; logCtrl = self.logCtrl
+
+    font = c.config.getFontFromParams(
+        "log_text_font_family", "log_text_font_size",
+        "log_text_font_slant",  "log_text_font_weight",
+        c.config.defaultLogFontSize, tag = "log")
+
+    self.fontRef = font # ESSENTIAL: retain a link to font.
+    logCtrl.configure(font=font)
+    
+    # g.trace("LOG",logCtrl.cget("font"),font.cget("family"),font.cget("weight"))
+
+    bg = c.config.getColor("log_text_background_color")
+    if bg:
+        try: logCtrl.configure(bg=bg)
+        except: pass
+    
+    fg = c.config.getColor("log_text_foreground_color")
+    if fg:
+        try: logCtrl.configure(fg=fg)
+        except: pass
+#@nonl
+#@-node:ekr.20031218072017.4046:tkLog.setFontFromConfig
+#@-node:ekr.20051016095907.1:Config & get/saveState
+#@+node:ekr.20051016095907.2:Focus & update (tkLog)
+#@+node:ekr.20031218072017.4045:tkLog.onActivateLog
+def onActivateLog (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    try:
+        g.app.setLog(self,"OnActivateLog")
+        self.frame.tree.OnDeactivate()
+        self.frame.logWantsFocus()
+    except:
+        g.es_event_exception("activate log")
+#@nonl
+#@-node:ekr.20031218072017.4045:tkLog.onActivateLog
+#@+node:ekr.20031218072017.4044:tkLog.hasFocus
+def hasFocus (self):
+    
+    return g.app.gui.get_focus(self.frame) == self.logCtrl
+#@nonl
+#@-node:ekr.20031218072017.4044:tkLog.hasFocus
+#@+node:ekr.20050208133438:forceLogUpdate
+def forceLogUpdate (self,s):
+
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        try:
+            print s, # Don't add a newline.
+        except UnicodeError:
+            # g.app may not be inited during scripts!
+            print g.toEncodedString(s,'utf-8')
+    else:
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        self.frame.tree.disableRedraw = False
+#@nonl
+#@-node:ekr.20050208133438:forceLogUpdate
+#@-node:ekr.20051016095907.2:Focus & update (tkLog)
+#@+node:ekr.20051016101927:put & putnl (tkLog)
+@ Printing uses self.logCtrl, so this code need not concern itself
+with which tab is active.
+
+Also, selectTab switches the contents of colorTags, so that is not concern.
+It may be that Pmw will allow us to dispense with the colorTags logic...
+#@nonl
+#@+node:ekr.20031218072017.1473:put
+# All output to the log stream eventually comes here.
+def put (self,s,color=None,tabName='Log'):
+    
+    # print 'tkLog.put',self.c.shortFileName(),s,
+
+    if g.app.quitting:
+        return
+
+    if tabName:
+        self.selectTab(tabName)
+    
+    if self.logCtrl:
+        << put s to log control >>
+    else:
+        << put s to logWaiting and print s >>
+#@nonl
+#@+node:EKR.20040423082910:<< put s to log control >>
+if 0:
+    # Doing this here messes up the display in the log pane.
+    if type(s) == type(u""):
+        s = g.toEncodedString(s,g.app.TkEncoding)
+        
+# g.trace(repr(self.logCtrl))
+
+if color:
+    if color not in self.colorTags:
+        self.colorTags.append(color)
+        self.logCtrl.tag_config(color,foreground=color)
+    self.logCtrl.insert("end",s)
+    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+    self.logCtrl.tag_add("black","end")
+else:
+    self.logCtrl.insert("end",s)
+
+self.logCtrl.see("end")
+    
+self.forceLogUpdate(s)
+#@nonl
+#@-node:EKR.20040423082910:<< put s to log control >>
+#@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+g.app.logWaiting.append((s,color),)
+
+print "Null tkinter log"
+
+if type(s) == type(u""):
+    s = g.toEncodedString(s,"ascii")
+
+print s
+#@nonl
+#@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+#@-node:ekr.20031218072017.1473:put
+#@+node:ekr.20051016101927.1:putnl
+def putnl (self,tabName='Log'):
+
+    if g.app.quitting:
+        return
+    if tabName:
+        self.selectTab(tabName)
+    
+    if self.logCtrl:
+        self.logCtrl.insert("end",'\n')
+        self.logCtrl.see("end")
+        self.forceLogUpdate('\n')
+    else:
+        # Put a newline to logWaiting and print newline
+        g.app.logWaiting.append(('\n',"black"),)
+        print "Null tkinter log"
+        print
+#@-node:ekr.20051016101927.1:putnl
+#@-node:ekr.20051016101927:put & putnl (tkLog)
+#@+node:ekr.20051018061932:Tab (TkLog)
+#@+node:ekr.20051017212057:clearTab
+def clearTab (self,tabName):
+    
+    self.selectTab(tabName)
+    t = self.logCtrl
+    t.delete('1.0','end')
+#@nonl
+#@-node:ekr.20051017212057:clearTab
+#@+node:ekr.20051018102027:deleteTab
+def deleteTab (self,tabName):
+    
+    if tabName == 'Log':
+        return
+
+    if tabName == 'Find':
+        self.selectTab('Log')
+        return
+    
+    if tabName in self.nb.pagenames():
+        self.nb.delete(tabName)
+        self.colorTagsDict [tabName] = []
+        self.textDict [tabName] = None
+        self.frameDict [tabName] = None
+        self.tabName = None
+        self.selectTab('Log')
+#@nonl
+#@-node:ekr.20051018102027:deleteTab
+#@+node:ekr.20051018061932.1:ower/raiseTab
+def lowerTab (self,tabName):
+    
+    if tabName:
+        b = self.nb.tab(tabName) # b is a Tk.Button.
+        b.config(bg='grey80')
+    
+def raiseTab (self,tabName):
+
+    if tabName:
+        b = self.nb.tab(tabName) # b is a Tk.Button.
+        b.config(bg='LightSteelBlue1')
+#@nonl
+#@-node:ekr.20051018061932.1:ower/raiseTab
+#@+node:ekr.20051019170806:renameTab
+def renameTab (self,oldName,newName):
+    
+    label = self.nb.tab(oldName)
+    label.configure(text=newName)
+#@nonl
+#@-node:ekr.20051019170806:renameTab
+#@+node:ekr.20051016101724.1:selectTab
+def selectTab (self,tabName):
+
+    '''Create the tab if necessary and make it active.'''
+    
+    c = self.c ; k = c.keyHandler ; tabFrame = self.frameDict.get(tabName)
+    # g.trace(g.choose(tabName,'switching to','creating'),tabName)
+    if tabFrame:
+        # Switch to a new colorTags list.
+        newColorTags = self.colorTagsDict.get(tabName)
+        self.colorTagsDict [self.tabName] = self.colorTags [:]
+        self.colorTags = newColorTags
+    else:
+        tabFrame = self.nb.add(tabName)
+        << bind a tab-specific pop-up menu to the tab >>
+        << Create the tab's text widget >>
+        self.setTabBindings(tabName)
+        # Update immediately so we can queue the request to change focus.
+        tabFrame.update_idletasks()
+        self.c.frame.bodyWantsFocus()
+        
+    self.nb.selectpage(tabName)
+    # Update the status vars.
+    self.tabName = tabName
+    self.logCtrl = self.textDict.get(tabName)
+    self.tabFrame = self.frameDict.get(tabName)
+    # g.trace(self.tabName,repr(self.logCtrl))
+    return tabFrame
+#@nonl
+#@+node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
+menu = self.makeTabMenu(tabName)
+tab = self.nb.tab(tabName)
+
+def menuClickCallback(event):
+    self.onRightClick(event,menu)
+
+tab.bind('<Button-3>',menuClickCallback)
+#@nonl
+#@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
+#@+node:ekr.20051018072306:<< Create the tab's text widget >>
+textWidget = self.createTextWidget(tabFrame)
+
+# Set the background color.
+configName = 'log_pane_%s_tab_background_color' % tabName
+bg = c.config.getColor(configName) or 'MistyRose1'
+try: textWidget.configure(bg=bg)
+except Exception: pass # Could be a user error.
+
+self.frameDict [tabName] = tabFrame
+self.textDict [tabName] = textWidget
+
+# Switch to a new colorTags list.
+if self.tabName:
+    self.colorTagsDict [self.tabName] = self.colorTags [:]
+self.colorTags = ['black']
+self.colorTagsDict [tabName] = self.colorTags
+
+# Make the bindings.
+textWidget.bind("<Button-1>",self.onActivateLog)
+textWidget.tag_config('black',foreground='black')
+#@nonl
+#@-node:ekr.20051018072306:<< Create the tab's text widget >>
+#@-node:ekr.20051016101724.1:selectTab
+#@+node:ekr.20051022162730:setTabBindings
+def setTabBindings (self,tabName):
+    
+    c = self.c ; k = c.keyHandler
+    if not k: return
+    
+    textWidget = self.textDict.get(tabName)
+    if not textWidget: return
+
+    shortcuts = k.bindingsDict.keys()
+    
+    for shortcut in shortcuts:
+        bunch = k.bindingsDict.get(shortcut)
+        if bunch.pane in ('all','log'):
+            # g.trace(tabName,bunch.pane,bunch.commandName,shortcut)
+            textWidget.bind(shortcut,bunch.func)
+#@nonl
+#@-node:ekr.20051022162730:setTabBindings
+#@+node:ekr.20051019134106:Tab menu callbacks & helpers
+#@+node:ekr.20051019134422:onRightClick
+def onRightClick (self,event,menu):
+
+    menu.post(event.x_root,event.y_root)
+#@nonl
+#@-node:ekr.20051019134422:onRightClick
+#@+node:ekr.20051019140004.1:newTabFromMenu
+def newTabFromMenu (self,tabName='Log'):
+
+    self.selectTab(tabName)
+    parentFrame = self.frameDict.get(tabName)
+    
+    # This is called by getTabName.
+    def selectTabCallback (oldName,newName):
+        self.selectTab(newName)
+
+    self.getTabName(parentFrame,'',selectTabCallback)
+#@nonl
+#@-node:ekr.20051019140004.1:newTabFromMenu
+#@+node:ekr.20051019165401:renameTabFromMenu
+def renameTabFromMenu (self,tabName):
+
+    if tabName in ('Log','Completions'):
+        g.es('can not rename %s tab' % (tabName),color='blue')
+    else:
+        parentFrame = self.frameDict.get(tabName)
+        self.getTabName(parentFrame,tabName,self.renameTab)
+#@nonl
+#@-node:ekr.20051019165401:renameTabFromMenu
+#@+node:ekr.20051019172811:getTabName
+def getTabName (self,parentFrame,tabName,exitCallback):
+
+    f = Tk.Frame(parentFrame)
+    f.pack(side='bottom',fill='x',expand=1)
+
+    Tk.Label(f,text='Tab name').pack(side='left')
+
+    e = Tk.Entry(f,background='white')
+    e.pack(side='left')
+
+    def getNameCallback (event=None):
+        s = e.get().strip()
+        f.pack_forget()
+        if s: exitCallback(tabName,s)
+    
+    if 0:
+        b = Tk.Button(row,text="Close",command=getNameCallback)
+        b.pack(side='left')
+
+    e.focus_force()
+    e.bind('<Return>',getNameCallback)
+#@nonl
+#@-node:ekr.20051019172811:getTabName
+#@-node:ekr.20051019134106:Tab menu callbacks & helpers
+#@-node:ekr.20051018061932:Tab (TkLog)
+#@-node:ekr.20031218072017.4039:class leoTkinterLog
+#@-node:ekr.20051016113907:(Moved TabbedLog code into Leo's core)
 #@+node:ekr.20051022061226:(Refactored createMenuEntries)
 @nocolor
 
@@ -25495,6 +24578,108 @@ def destroyMenu (self,menuName):
 #@-node:ekr.20051022053758.1:Helpers
 #@-node:ekr.20031218072017.3781:Gui-independent menu routines
 #@-node:ekr.20051022061226:(Refactored createMenuEntries)
+#@+node:ekr.20051021143159.1:(Removed all key bindings from createMenuEntries)
+@ This is an important simplification.
+
+One not-so-horrible kludge remains. The cut/copy/paste commands in the menu
+tables are not the same as the methods actually bound to cut/copy/paste-text
+minibuffer commands, so we must do a bit of extra translation to discover
+whether the user has overridden their bindings.
+
+Important: this affect only the **appearance** of the menu, **not** any bindings!
+#@nonl
+#@+node:ekr.20031218072017.1723:createMenuEntries
+def createMenuEntries (self,menu,table,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.keyHandler
+    
+    if g.app.unitTesting: return
+
+    for data in table:
+        << get label & command or continue >>
+        << compute commandName & accel from label & command >>
+        rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
+        menuCallback = self.defineMenuCallback(command,commandName)
+        realLabel = self.getRealMenuName(label)
+        << set amp_index using rawKey and realLabel >>
+        realLabel = realLabel.replace("&","")
+        self.add_command(menu,label=realLabel,
+            accelerator= menu_shortcut or '',
+            command=menuCallback,underline=amp_index)
+#@nonl
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        label,command = data
+    else:
+        # New in 4.4: we ignore shortcuts bound in menu tables.
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and label in (None,'-'):
+    self.add_separator(menu)
+    continue # That's all.
+#@nonl
+#@-node:ekr.20051021091958:<< get label & command or continue >>
+#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+# First, get the old-style name.
+commandName = self.computeOldStyleShortcutKey(label)
+rawKey,bunch = c.config.getShortcut(commandName)
+accel = bunch and bunch.val
+
+# Second, get new-style name.
+if not accel:
+    << compute emacs_name >>
+        # Contains the not-so-horrible kludge.
+    if emacs_name:
+        commandName = emacs_name
+        rawKey,bunch = c.config.getShortcut(emacs_name)
+        accel = bunch and bunch.val
+    elif not dynamicMenu:
+        g.trace('No inverse for %s' % commandName)
+#@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % commandName
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
+#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+#@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+if rawKey:
+    amp_index = rawKey.find("&")
+else:
+    amp_index = -1
+
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
+#@-node:ekr.20051021143159.1:(Removed all key bindings from createMenuEntries)
 #@+node:ekr.20051022083459:(Simplified the inverseBindingsDict)
 @ Keys are now minibuffer command names, not function.__name__.
 
@@ -25540,7 +24725,7 @@ def computeCompletionList (self,defaultTabList,backspace):
         inverseBindingDict = k.computeInverseBindingDict()
         for commandName in k.mb_tabList:
             shortcut = inverseBindingDict.get(commandName,'')
-            g.es('%s %s' % (commandName,shortcut))
+            g.es('%s %s' % (commandName,shortcut),tabName='Completion')
 
     k.forceFocusToBody()
 #@nonl
@@ -25576,29 +24761,920 @@ def printCommands (self,event):
         g.es('%s %s' % (commandName,shortcut),tabName='Command')
 #@nonl
 #@-node:ekr.20051014061332:printCommands
-#@+node:ekr.20051010065140:<< other ways that don't work >> (from bindKey)
-if 0: # None of these are satisfactory.
-
-    if 0: # Too restrictive, but might be useful later.
-        w.bind(shortcut,callback)
-    elif 0: # This prevents all insertions into body text!
-        # This *might* work, but seems to be flaky.
-        # Bind the key to *all* text widgets.
-        c.frame.top.bind_class('Text',shortcut,callback)
-    elif 0:
-        # Doesn't work at all.
-        c.frame.outerFrame.bind(shortcut,callback)
-    elif 0:
-        # A compromise.  This *almost* works, but cut/copy/paste may need help...
-        for w in (c.frame.body.bodyCtrl,c.frame.canvas,c.frame.log.logCtrl):
-            w.bind(shortcut,callback)
-    else:
-        # Make binding available everywhere.
-        # This causes problems with tabs, cut/copy/paste (!!)
-        c.frame.top.bind(shortcut,callback)
-#@nonl
-#@-node:ekr.20051010065140:<< other ways that don't work >> (from bindKey)
 #@-node:ekr.20051022083459:(Simplified the inverseBindingsDict)
+#@+node:ekr.20051020074023:Created show-fonts & show-colors commands
+#@-node:ekr.20051020074023:Created show-fonts & show-colors commands
+#@+node:ekr.20051017111039:Fixed minor bug in k.doTabCompletion
+@nocolor
+
+Set the tab-list index to-1 if we first print a common prefix.  That way item returned next will be item 0.
+#@nonl
+#@-node:ekr.20051017111039:Fixed minor bug in k.doTabCompletion
+#@+node:ekr.20051017053631:Improved the scripting plugin
+@nocolor
+
+The scripting plugin now has support for the following kinds of headlines:
+
+@button name @key=shortcut
+
+This binds the shortcut to the script in the script button.  The button's name is 'name', but you can see the full headline in the status line when you move the mouse over the button.  This is a clean and simple way of discovering the shortcut.
+
+@command name
+
+This creates a new minibuffer command whose name is 'name'.
+
+@command name @key=shortcut
+
+This creates a new minibuffer command and binds shortcut to it.
+
+The scripting plugin no longer contains the 'bindLate' code-level option.  The scripts for all @button or @command nodes are computed 'dynamically', that is, when the button is pushed or the command is executed from the minibuffer.  This is the most useful way, and the most intuitive.
+
+Previously, scripts for @button nodes were never dynamic, while scripts in @button nodes created by the 'Script button' button were dynamic only if bindLate was True.  You could call this a bug: it was unhelpful, annoying and confusing.
+#@-node:ekr.20051017053631:Improved the scripting plugin
+#@+node:ekr.20051016162459:k.registerShortcut now makes sure to set k.inverseCommandsDict
+# k.finishCreate sets k.inverseCommandsDict, but k.registerShortcut can be called after that.
+#@nonl
+#@-node:ekr.20051016162459:k.registerShortcut now makes sure to set k.inverseCommandsDict
+#@+node:ekr.20051013103457:(Per-pane bindings)
+#@+node:ekr.20051006125633:Binding (keyHandler)
+#@+node:ekr.20050920085536.11:add_ekr_altx_commands
+def add_ekr_altx_commands (self):
+
+    << define dict d of abbreviations >>
+
+    k = self ; c = k.c
+    k.abbreviationsDict = {}
+
+    keys = d.keys()
+    keys.sort()
+    for key in keys:
+        val = d.get(key)
+        func = c.commandsDict.get(val)
+        if func:
+            # g.trace(('%-4s' % key),val)
+            c.commandsDict [key] = func
+            k.abbreviationsDict [key] = val
+            
+#@nonl
+#@+node:ekr.20050920085536.12:<< define dict d of abbreviations >>
+d = {
+    'again':'repeat-complex-command',
+    
+    # Leo searches.
+    # It's not possible to use Alt-x while the find-panel is frontmost.
+    # On XP you can use Alt-F4 to dismiss or Alt-tab to switch panes, then dismiss.
+    # (Or I could add a 'close' button with Alt-something hotkey :-)
+    'fx':   'dismiss-leo-find-panel',
+    'f':    'leo-find-panel',
+    'ff':   'leo-find-button',  
+    'fp':   'leo-find-previous',
+    'fc':   'leo-find-change-button',
+    'fcf':  'leo-find-change-then-find-button',
+
+    'i':    'isearch-forward', 
+    'ib':   'isearch-backward',      
+    'ix':   'isearch-forward-regexp',
+    'irx':  'isearch-backward-regexp',
+    'ixr':  'isearch-backward-regexp',
+    
+    'r':    'replace-string',
+    'rx':   'replace-regex',
+
+    's':    'search-forward',
+    'sb':   'search-backward',
+    'sv':   'save-file',
+    
+    'sw':   'word-search-forward',    
+    'sbw':  'word-search-backward',
+    'swb':  'word-search-backward',
+    
+    #
+    # 'a1'  'abbrev-on'
+    # 'a0'  'abbrev-off'
+ 
+    ## Don't put these in: they might conflict with other abbreviatsions.
+    # 'fd':   'find-dialog',
+    # 'od':   'options-dialog',
+    
+    # At present these would be Leo Find stuff.
+    # 'fr':   'find-reverse',
+    # 'fx':   'find-regex',
+    # 'frx':  'find-regex-reverse',
+    # 'fxr':  'find-regex-reverse',
+    # 'fw':   'find-word',
+    # 'sf':   'set-find-text',
+    # 'sr':   'set-find-replace',
+    # 'ss':   'script-search',
+    # 'ssr':  'script-search-reverse',
+    
+    ## These could be shared...
+    # 'tfh':  'toggle-find-search-headline',
+    # 'tfb':  'toggle-find-search-body',
+    # 'tfw':  'toggle-find-word',
+    # 'tfn':  'toggle-find-node-only',
+    # 'tfi':  'toggle-find-ignore-case',
+    # 'tfmc': 'toggle-find-mark-changes',
+    # 'tfmf': 'toggle-find-mark-finds',
+}
+#@nonl
+#@-node:ekr.20050920085536.12:<< define dict d of abbreviations >>
+#@-node:ekr.20050920085536.11:add_ekr_altx_commands
+#@+node:ekr.20050920085536.16:bindKey
+def bindKey (self,pane,shortcut,callback,commandName):
+
+    '''Bind the indicated shortcut (a Tk keystroke) to the callback.
+    callback calls commandName (for error messages).'''
+    
+    k = self ; c = k.c
+
+    try:
+        if shortcut == '<Key>':
+            # Don't bind to menu.  Besides, menu.bind doesn't allow '+' arg.
+            c.frame.body.bodyCtrl.bind(shortcut,callback,'+')
+        else:
+            << bind callback to shortcut in pane >>
+        k.bindingsDict [shortcut] = g.bunch(
+            pane=pane,func=callback,commandName=commandName,warningGiven=False)
+        return True
+
+    except Exception: # Could be a user error.
+        if not g.app.menuWarningsGiven:
+            g.es_print('Exception binding %s to %s' % (shortcut,commandName))
+            # g.es_exception()
+            # g.printStack()
+            g.app.menuWarningsGiven = True
+        return False
+#@nonl
+#@+node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+body = c.frame.body.bodyCtrl
+log  = c.frame.log.logCtrl
+menu = c.frame.menu
+tree = c.frame.tree.canvas
+
+# Binding to the menu ensures that keys are active in all parts of the frame.
+# However, it does not appear necessary at this time...
+
+d = {
+    'all':  [body,log,tree], # menu
+    'body': [body],
+    'log':  [log],
+    'tree': [tree],
+}
+
+if 0: # A useful trace.
+    if pane and pane != 'all':
+        g.trace('%4s %20s %s' % (pane, shortcut,commandName))
+
+widgets = d.get((pane or 'all').lower(),[])
+
+for w in widgets:
+    w.bind(shortcut,callback)
+#@nonl
+#@-node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+#@-node:ekr.20050920085536.16:bindKey
+#@+node:ekr.20051008135051.1:bindOpenWith
+def bindOpenWith (self,shortcut,name,data):
+    
+    '''Make a binding for the Open With command.'''
+    
+    k = self ; c = k.c ;
+    
+    bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(shortcut)
+    
+    # g.trace(bind_shortcut,name,data)
+
+    # The first parameter must be event, and it must default to None.
+    def openWithCallback(event=None,self=self,data=data):
+        __pychecker__ = '--no-argsused' # event must be present.
+        return self.c.openWith(data=data)
+
+    def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
+        return k.masterCommand(event,func,stroke)
+            
+    return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
+#@nonl
+#@-node:ekr.20051008135051.1:bindOpenWith
+#@+node:ekr.20051006125633.1:bindShortcut
+def bindShortcut (self,pane,shortcut,command,commandName):
+    
+    '''Bind one shortcut from a menu table.'''
+    
+    k = self ; shortcut = str(shortcut)
+
+    if command.__name__ == 'leoCallback':
+        # Get the function wrapped by *this* leoCallback function.
+        func = k.leoCallbackDict.get(command)
+        commandName = k.inverseCommandsDict.get(func.__name__)
+        
+        # No need for a second layer of callback.
+        def keyCallback (event,func=command,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+    else:
+        def menuFuncCallback (event,command=command):
+            return command(event)
+
+        def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+        
+    return k.bindKey(pane,shortcut,keyCallback,commandName)
+#@nonl
+#@-node:ekr.20051006125633.1:bindShortcut
+#@+node:ekr.20051011103654:checkBindings
+def checkBindings (self):
+    
+    '''Print warnings if commands do not have any @shortcut entry.
+    The entry may be `None`, of course.'''
+    
+    k = self ; c = k.c
+    
+    names = c.commandsDict.keys() ; names.sort()
+    
+    for name in names:
+        abbrev = k.abbreviationsDict.get(name)
+        key = c.frame.menu.canonicalizeMenuName(abbrev or name)
+        key = key.replace('&','')
+        if not g.app.config.exists(c,key,'shortcut'):
+            if abbrev:
+                 g.trace('No shortcut for abbrev %s -> %s = %s' % (
+                    name,abbrev,key))
+            else:
+                g.trace('No shortcut for %s = %s' % (name,key))
+#@nonl
+#@-node:ekr.20051011103654:checkBindings
+#@+node:ekr.20051007080058:makeAllBindings
+def makeAllBindings (self):
+    
+    k = self ; c = k.c
+    
+    k.bindingsDict = {}
+    k.makeHardBindings()
+    k.makeSpecialBindings()
+    k.makeBindingsFromCommandsDict()
+    k.add_ekr_altx_commands()
+    k.checkBindings()
+#@nonl
+#@-node:ekr.20051007080058:makeAllBindings
+#@+node:ekr.20050923174229.1:makeHardBindings
+def makeHardBindings (self):
+    
+    '''Define the bindings used in quick-command mode.'''
+    
+    k = self ; c = k.c
+    
+    self.negArgFunctions = {
+        '<Alt-c>': c.editCommands.changePreviousWord,
+        '<Alt-u>': c.editCommands.changePreviousWord,
+        '<Alt-l>': c.editCommands.changePreviousWord,
+    }
+    
+    # No longer used.  Very weird.
+    self.keystrokeFunctionDict = {
+        '<Control-s>':      (2, c.searchCommands.startIncremental),
+        '<Control-r>':      (2, c.searchCommands.startIncremental),
+        '<Alt-g>':          (1, c.editCommands.gotoLine),
+        '<Alt-z>':          (1, c.killBufferCommands.zapToCharacter),
+        '<Alt-percent>':    (1, c.queryReplaceCommands.queryReplace),
+        '<Control-Alt-w>':  (1, lambda event: 'break'),
+    }
+
+    self.abbreviationFuncDict = {
+        'a':    c.abbrevCommands.addAbbreviation,
+        'a i':  c.abbrevCommands.addInverseAbbreviation,
+    }
+    
+    self.rCommandDict = {
+        'space':    c.registerCommands.pointToRegister,
+        'a':        c.registerCommands.appendToRegister,
+        'i':        c.registerCommands.insertRegister,
+        'j':        c.registerCommands.jumpToRegister,
+        'n':        c.registerCommands.numberToRegister,
+        'p':        c.registerCommands.prependToRegister,
+        'r':        c.rectangleCommands.enterRectangleState,
+        's':        c.registerCommands.copyToRegister,
+        'v':        c.registerCommands.viewRegister,
+        'plus':     c.registerCommands.incrementRegister,
+    }
+    
+    self.variety_commands = {
+        # Keys are Tk keysyms.
+        'period':       c.editCommands.setFillPrefix,
+        'parenleft':    c.macroCommands.startKbdMacro,
+        'parenright':   c.macroCommands.endKbdMacro,
+        'semicolon':    c.editCommands.setCommentColumn,
+        'Tab':          c.editCommands.tabIndentRegion,
+        'u':            c.undoer.undo,
+        'equal':        c.editCommands.lineNumber,
+        'h':            c.frame.body.selectAllText,
+        'f':            c.editCommands.setFillColumn,
+        'b':            c.bufferCommands.switchToBuffer,
+        'k':            c.bufferCommands.killBuffer,
+    }
+    
+    self.xcommands = {
+        '<Control-t>':  c.editCommands.transposeLines,
+        '<Control-u>':  c.editCommands.upCaseRegion,
+        '<Control-l>':  c.editCommands.downCaseRegion,
+        '<Control-o>':  c.editCommands.removeBlankLines,
+        '<Control-i>':  c.editFileCommands.insertFile,
+        '<Control-s>':  c.editFileCommands.saveFile,
+        '<Control-x>':  c.editCommands.exchangePointMark,
+        '<Control-c>':  c.controlCommands.shutdown,
+        '<Control-b>':  c.bufferCommands.listBuffers,
+        '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
+        '<Delete>':     c.killBufferCommands.backwardKillSentence,
+    }
+#@nonl
+#@-node:ekr.20050923174229.1:makeHardBindings
+#@+node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
+def makeSpecialBindings (self):
+    
+    '''Make the bindings and set ivars for sepcial keystrokes.'''
+    
+    k = self ; c = k.c ; f = c.frame
+    
+    # These defaults may be overridden.
+    for stroke,ivar,commandName,func in (
+        ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
+        ('Alt-x',   'fullCommandKey',  'full-command',  k.fullCommand),
+        ('Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
+        ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
+    ):
+        # Get the user shortcut *before* creating the callbacks.
+        junk, bunch = c.config.getShortcut(commandName)
+        accel = (bunch and bunch.val) or stroke
+        shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+        # g.trace(stroke,accel,shortcut,func.__name__)
+        
+        # Create two-levels of callbacks.
+        def specialCallback (event,func=func):
+            return func(event)
+
+        def keyCallback (event,func=specialCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+        
+        setattr(k,ivar,shortcut)
+
+        k.bindKey('all',shortcut,keyCallback,commandName)
+        
+    # Add a binding for <Key> events, so all key events go through masterCommand.
+    def allKeysCallback (event):
+        return k.masterCommand(event,func=None,stroke='<Key>')
+
+    k.bindKey('all','<Key>',allKeysCallback,'master-command')
+#@nonl
+#@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
+#@+node:ekr.20051008134059:makeBindingsFromCommandsDict
+def makeBindingsFromCommandsDict (self):
+    
+    '''Add bindings for all entries in c.commandDict.'''
+
+    k = self ; c = k.c
+    keys = c.commandsDict.keys() ; keys.sort()
+
+    for commandName in keys:
+        command = c.commandsDict.get(commandName)
+        key, bunch = c.config.getShortcut(commandName)
+        accel = bunch and bunch.val
+        if accel:
+            bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
+            k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
+        
+        if 0:
+            if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
+            else:     g.trace(commandName)
+#@nonl
+#@-node:ekr.20051008134059:makeBindingsFromCommandsDict
+#@-node:ekr.20051006125633:Binding (keyHandler)
+#@-node:ekr.20051013103457:(Per-pane bindings)
+#@+node:ekr.20051022152427:(Focus commands, etc.)
+#@+node:ekr.20051022142249:focus (editCommandsClass)
+#@+node:ekr.20051022144825:focusToBody/Log/Tree
+def focusToBody (self,event):
+    frame = self.c.frame
+    return frame.set_focus(frame.body.bodyCtrl,later=True)
+
+def focusToLog (self,event):
+    frame = self.c.frame
+    return frame.set_focus(frame.log.logCtrl,later=True)
+
+def focusToTree (self,event):
+    frame = self.c.frame
+    return frame.set_focus(frame.tree.canvas,later=True)
+    
+#@-node:ekr.20051022144825:focusToBody/Log/Tree
+#@+node:ekr.20051022144825.1:cycleFocus
+def cycleFocus (self,event):
+
+    c = self.c ; frame = c.frame
+    
+    body = c.frame.body.bodyCtrl
+    log  = c.frame.log.logCtrl
+    tree = c.frame.tree.canvas
+
+    panes = [body,log,tree]
+
+    for w in panes:
+        if w == event.widget:
+            i = panes.index(w)
+            if i >= len(panes) - 1:
+                i = 0
+            else:
+                i += 1
+            pane = panes[i] ; break
+    else:
+        # Assume we were somewhere in the tree.
+        pane = body
+        
+    # g.trace(pane)
+    frame.set_focus(pane,later=True)
+#@nonl
+#@-node:ekr.20051022144825.1:cycleFocus
+#@-node:ekr.20051022142249:focus (editCommandsClass)
+#@+node:ekr.20051022132934:Click event handlers (tkTree)
+#@+node:ekr.20040803072955.20:tkTree.createPermanentBindings
+def createPermanentBindings (self):
+    
+    canvas = self.canvas
+    
+    canvas.bind('<Button-1>',self.onTreeClick)
+
+    if self.expanded_click_area:
+        canvas.tag_bind('clickBox','<Button-1>', self.onClickBoxClick)
+    else:
+        canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
+
+    canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
+    canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
+    canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
+    canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
+    canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
+
+    if self.useBindtags: # Create a dummy widget to hold all bindings.
+        t = Tk.Text(canvas) # This _must_ be a Text widget attached to the canvas!
+        if 1: # Either way works properly.
+            t.bind("<Button-1>", self.onHeadlineClick)
+            t.bind("<Button-3>", self.onHeadlineRightClick)
+            t.bind("<Key>",      self.onHeadlineKey)
+        else:
+            t.bind("<Button-1>", self.onHeadlineClick, '+')
+            t.bind("<Button-3>", self.onHeadlineRightClick, '+')
+            t.bind("<Key>",      self.onHeadlineKey, '+')
+        t.bind("<Control-t>",self.onControlT)
+    
+        # newText() attaches these bindings to all headlines.
+        self.textBindings = t.bindtags()
+#@nonl
+#@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
+#@+node:ekr.20051016095907.2:Focus & update (tkLog)
+#@+node:ekr.20031218072017.4045:tkLog.onActivateLog
+def onActivateLog (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    try:
+        g.app.setLog(self,"OnActivateLog")
+        self.frame.tree.OnDeactivate()
+        self.frame.logWantsFocus()
+    except:
+        g.es_event_exception("activate log")
+#@nonl
+#@-node:ekr.20031218072017.4045:tkLog.onActivateLog
+#@+node:ekr.20031218072017.4044:tkLog.hasFocus
+def hasFocus (self):
+    
+    return g.app.gui.get_focus(self.frame) == self.logCtrl
+#@nonl
+#@-node:ekr.20031218072017.4044:tkLog.hasFocus
+#@+node:ekr.20050208133438:forceLogUpdate
+def forceLogUpdate (self,s):
+
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        try:
+            print s, # Don't add a newline.
+        except UnicodeError:
+            # g.app may not be inited during scripts!
+            print g.toEncodedString(s,'utf-8')
+    else:
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        self.frame.tree.disableRedraw = False
+#@nonl
+#@-node:ekr.20050208133438:forceLogUpdate
+#@-node:ekr.20051016095907.2:Focus & update (tkLog)
+#@+node:ekr.20031218072017.4003:Focus (tkBody)
+def hasFocus (self):
+    
+    return self.bodyCtrl == self.frame.top.focus_displayof()
+    
+def setFocus (self):
+    
+    self.bodyCtrl.focus_set()
+#@nonl
+#@-node:ekr.20031218072017.4003:Focus (tkBody)
+#@+node:ekr.20040803072955.108:tree.OnDeactivate (caused double-click problem)
+def OnDeactivate (self,event=None):
+    
+    """Deactivate the tree pane, dimming any headline being edited."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    tree = self ; c = self.c
+    focus = g.app.gui.get_focus(c.frame)
+
+    # Doing this on every click would interfere with the double-clicking.
+    if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
+        try:
+            tree.endEditLabel()
+            tree.dimEditLabel()
+        except:
+            g.es_event_exception("deactivate tree")
+#@-node:ekr.20040803072955.108:tree.OnDeactivate (caused double-click problem)
+#@+node:ekr.20040803072955.87:onHeadlineClick
+def onHeadlineClick (self,event):
+    
+    c = self.c ; w = event.widget
+    
+    try:
+        p = w.leo_position
+    except AttributeError:
+        return "continue"
+        
+    # g.trace(p.headString())
+    
+    try:
+        if not g.doHook("headclick1",c=c,p=p,v=p,event=event):
+            self.OnActivateHeadline(p)
+        g.doHook("headclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("headclick")
+        
+    return "continue"
+#@nonl
+#@-node:ekr.20040803072955.87:onHeadlineClick
+#@+node:ekr.20051022141020:onTreeClick
+def onTreeClick (self,event=None):
+    
+    self.frame.treeWantsFocus()
+    
+    return 'break'
+#@-node:ekr.20051022141020:onTreeClick
+#@+node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
+def OnActivateHeadline (self,p,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    # g.trace(p.headString())
+
+    try:
+        c = self.c
+        << activate this window >>
+    except:
+        g.es_event_exception("activate tree")
+#@nonl
+#@+node:ekr.20040803072955.106:<< activate this window >>
+if p == c.currentPosition():
+    # g.trace("is current")
+    if self.active:
+        self.editLabel(p)
+    else:
+        # Set the focus immediately.  This is essential for proper editing.
+        c.frame.treeWantsFocus(later=False)
+else:
+    # g.trace("not current")
+    self.select(p)
+    if c.frame.findPanel:
+        c.frame.findPanel.handleUserClick(p)
+    if p.v.t.insertSpot != None:
+        c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+        c.frame.bodyCtrl.see(p.v.t.insertSpot)
+    else:
+        c.frame.bodyCtrl.mark_set("insert","1.0")
+        
+    if self.stayInTree:
+        c.frame.treeWantsFocus()
+    else:
+        c.frame.bodyWantsFocus()
+
+self.active = True
+#@nonl
+#@-node:ekr.20040803072955.106:<< activate this window >>
+#@-node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
+#@-node:ekr.20051022132934:Click event handlers (tkTree)
+#@+node:ekr.20040803072955.125:Selecting & editing... (tkTree)
+#@+node:ekr.20040803072955.126:endEditLabel
+def endEditLabel (self):
+    
+    """End editing for self.editText."""
+
+    c = self.c ; frame = c.frame
+    
+    p = self.editPosition()
+
+    if p and p.edit_text():
+        if 0: # New in recycled widgets scheme: this could cause a race condition.
+            # This will be done in the redraw code becaused editPosition will be None.
+            self.setUnselectedLabelState(p)
+
+        self.setEditPosition(None)
+
+        # force a redraw of joined and ancestor headlines.
+        self.force_redraw() 
+
+    if self.stayInTree:
+        c.frame.treeWantsFocus()
+    else:
+        frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20040803072955.126:endEditLabel
+#@+node:ekr.20040803072955.127:editLabel
+def editLabel (self,p):
+    
+    """Start editing p.edit_text."""
+
+    if self.editPosition() and p != self.editPosition():
+        self.endEditLabel()
+        self.frame.revertHeadline = None
+        
+    self.setEditPosition(p)
+
+    # Start editing
+    if p and p.edit_text():
+        self.setNormalLabelState(p)
+        self.frame.revertHeadline = p.headString()
+        self.setEditPosition(p)
+#@nonl
+#@-node:ekr.20040803072955.127:editLabel
+#@+node:ekr.20040803072955.128:tree.select
+# Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+    
+    # g.trace(p.headString())
+
+    if not p: return
+    if not p.exists(c):
+        g.trace('does not exist',p)
+        return
+
+    # g.trace('len(body)',len(p.bodyString()),p.headString())
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << select the new node >>
+        if p and p != old_p: # Suppress duplicate call.
+            try: # may fail during initialization.
+                self.idle_scrollTo(p) # p is NOT c.currentPosition() here!
+            except: pass
+        << update c.beadList or c.beadPointer >>
+        << update c.visitedList >>
+
+    << set the current node >>
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    # g.printGc()
+#@nonl
+#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+# Remember the position of the scrollbar before making any changes.
+if old_p:
+
+    yview=body.yview()
+    insertSpot = c.frame.body.getInsertionPoint()
+    
+    if old_p != p:
+        # g.trace("unselect:",old_p.headString())
+        self.endEditLabel() # sets editPosition = None
+        self.setUnselectedLabelState(old_p)
+    
+    if old_p.edit_text():
+        old_p.v.t.scrollBarSpot = yview
+        old_p.v.t.insertSpot = insertSpot
+#@nonl
+#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20040803072955.130:<< select the new node >>
+frame.setWrap(p)
+
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(body,s,tag="select:set body",isHeadline=False)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v and p.v.t.insertSpot != None:
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())
+#@nonl
+#@-node:ekr.20040803072955.130:<< select the new node >>
+#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by c and make c the present node.
+        # print "updating c.beadList"
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+    # g.trace(c.beadPointer,p,present_p)
+#@nonl
+#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20040803072955.132:<< update c.visitedList >>
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+#@nonl
+#@-node:ekr.20040803072955.132:<< update c.visitedList >>
+#@+node:ekr.20040803072955.133:<< set the current node >>
+c.setCurrentPosition(p)
+
+if p != old_p:
+    self.setSelectedLabelState(p)
+
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+if self.stayInTree:
+    c.frame.treeWantsFocus()
+else:
+    frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20040803072955.133:<< set the current node >>
+#@-node:ekr.20040803072955.128:tree.select
+#@+node:ekr.20040803072955.134:tree.set...LabelState
+#@+node:ekr.20040803072955.135:setNormalLabelState
+def setNormalLabelState (self,p): # selected, editing
+
+    # Do nothing if a redraw is already sheduled.
+    # This prevents race conditions.
+    if self.redrawScheduled: return 
+    
+    if p and p.edit_text():
+        self.setEditHeadlineColors(p)
+        p.edit_text().tag_remove("sel","1.0","end")
+        p.edit_text().tag_add("sel","1.0","end")
+        # Set the focus immediately
+        self.frame.widgetWantsFocus(p.edit_text(),later=False)
+#@nonl
+#@-node:ekr.20040803072955.135:setNormalLabelState
+#@+node:ekr.20040803072955.136:setDisabledLabelState
+def setDisabledLabelState (self,p): # selected, disabled
+
+    # Do nothing if a redraw is already sheduled.
+    # This prevents race conditions.
+    if self.redrawScheduled: return
+
+    if p and p.edit_text():
+        self.setDisabledHeadlineColors(p)
+#@nonl
+#@-node:ekr.20040803072955.136:setDisabledLabelState
+#@+node:ekr.20040803072955.137:setSelectedLabelState
+def setSelectedLabelState (self,p): # selected, not editing
+
+    # Do nothing if a redraw is already sheduled.
+    # This prevents race conditions.
+    if self.redrawScheduled: return 
+
+    # g.trace(p)
+    self.setDisabledLabelState(p)
+
+#@-node:ekr.20040803072955.137:setSelectedLabelState
+#@+node:ekr.20040803072955.138:setUnselectedLabelState
+def setUnselectedLabelState (self,p): # not selected.
+
+    # Do nothing if a redraw is already sheduled.
+    # This prevents race conditions.
+    if self.redrawScheduled: return 
+
+    if p and p.edit_text():
+        # g.trace(p.headString())
+        self.setUnselectedHeadlineColors(p)
+#@nonl
+#@-node:ekr.20040803072955.138:setUnselectedLabelState
+#@+node:ekr.20040803072955.139:setDisabledHeadlineColors
+def setDisabledHeadlineColors (self,p):
+
+    c = self.c ; w = p.edit_text()
+
+    if self.trace and self.verbose:
+        if not self.redrawing:
+            print "%10s %d %s" % ("disabled",id(w),p.headString())
+            # import traceback ; traceback.print_stack(limit=6)
+
+    fg = c.config.getColor("headline_text_selected_foreground_color") or 'black'
+    bg = c.config.getColor("headline_text_selected_background_color") or 'grey80'
+    
+    try:
+        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
+    except:
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040803072955.139:setDisabledHeadlineColors
+#@+node:ekr.20040803072955.140:setEditHeadlineColors
+def setEditHeadlineColors (self,p):
+
+    c = self.c ; w = p.edit_text()
+    
+    if self.trace and self.verbose:
+        if not self.redrawing:
+            print "%10s %d %s" % ("edit",id(2),p.headString())
+    
+    fg    = c.config.getColor("headline_text_editing_foreground_color") or 'black'
+    bg    = c.config.getColor("headline_text_editing_background_color") or 'white'
+    selfg = c.config.getColor("headline_text_editing_selection_foreground_color")
+    selbg = c.config.getColor("headline_text_editing_selection_background_color")
+    
+    try: # Use system defaults for selection foreground/background
+        if selfg and selbg:
+            w.configure(
+                selectforeground=selfg,selectbackground=selbg,
+                state="normal",highlightthickness=1,fg=fg,bg=bg)
+        elif selfg and not selbg:
+            w.configure(
+                selectforeground=selfg,
+                state="normal",highlightthickness=1,fg=fg,bg=bg)
+        elif selbg and not selfg:
+            w.configure(
+                selectbackground=selbg,
+                state="normal",highlightthickness=1,fg=fg,bg=bg)
+        else:
+            w.configure(
+                state="normal",highlightthickness=1,fg=fg,bg=bg)
+    except:
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040803072955.140:setEditHeadlineColors
+#@+node:ekr.20040803072955.141:setUnselectedHeadlineColors
+def setUnselectedHeadlineColors (self,p):
+    
+    c = self.c ; w = p.edit_text()
+    
+    if self.trace and self.verbose:
+        if not self.redrawing:
+            print "%10s %d %s" % ("unselect",id(w),p.headString())
+            # import traceback ; traceback.print_stack(limit=6)
+    
+    fg = c.config.getColor("headline_text_unselected_foreground_color") or 'black'
+    bg = c.config.getColor("headline_text_unselected_background_color") or 'white'
+    
+    try:
+        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
+    except:
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040803072955.141:setUnselectedHeadlineColors
+#@-node:ekr.20040803072955.134:tree.set...LabelState
+#@+node:ekr.20040803072955.142:dimEditLabel, undimEditLabel
+# Convenience methods so the caller doesn't have to know the present edit node.
+
+def dimEditLabel (self):
+    
+    p = self.c.currentPosition()
+    self.setDisabledLabelState(p)
+
+def undimEditLabel (self):
+
+    p = self.c.currentPosition()
+    self.setSelectedLabelState(p)
+#@nonl
+#@-node:ekr.20040803072955.142:dimEditLabel, undimEditLabel
+#@+node:ekr.20040803072955.143:tree.expandAllAncestors
+def expandAllAncestors (self,p):
+    
+    redraw_flag = False
+
+    for p in p.parents_iter():
+        if not p.isExpanded():
+            p.expand()
+            redraw_flag = True
+
+    return redraw_flag
+#@nonl
+#@-node:ekr.20040803072955.143:tree.expandAllAncestors
+#@-node:ekr.20040803072955.125:Selecting & editing... (tkTree)
+#@-node:ekr.20051022152427:(Focus commands, etc.)
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

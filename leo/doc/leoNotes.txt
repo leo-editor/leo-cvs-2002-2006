@@ -2314,6 +2314,28 @@ if bind_shortcut:
         menu_shortcut = None
 #@nonl
 #@-node:ekr.20051021143159:From menu.createMenuEnties
+#@+node:ekr.20051010065140:<< other ways that don't work >> (from bindKey)
+if 0: # None of these are satisfactory.
+
+    if 0: # Too restrictive, but might be useful later.
+        w.bind(shortcut,callback)
+    elif 0: # This prevents all insertions into body text!
+        # This *might* work, but seems to be flaky.
+        # Bind the key to *all* text widgets.
+        c.frame.top.bind_class('Text',shortcut,callback)
+    elif 0:
+        # Doesn't work at all.
+        c.frame.outerFrame.bind(shortcut,callback)
+    elif 0:
+        # A compromise.  This *almost* works, but cut/copy/paste may need help...
+        for w in (c.frame.body.bodyCtrl,c.frame.canvas,c.frame.log.logCtrl):
+            w.bind(shortcut,callback)
+    else:
+        # Make binding available everywhere.
+        # This causes problems with tabs, cut/copy/paste (!!)
+        c.frame.top.bind(shortcut,callback)
+#@nonl
+#@-node:ekr.20051010065140:<< other ways that don't work >> (from bindKey)
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

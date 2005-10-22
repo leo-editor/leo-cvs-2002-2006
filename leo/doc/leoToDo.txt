@@ -26,11 +26,23 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
+- Something cool that can be bound to alt-tab.
+
+* @bool wideClickBox option
+
+- g.printNParents(n)
+
+*** @link-unl/url/etc.
+
+- Strip quotes from color, font settings.
+
 - Remove end script message!
 
 - Alt-keys no longer open most menus.  Need commands to do this.
 
 - Specify & for most menu items.
+
+- Add binding for Select All.
 #@nonl
 #@+node:ekr.20051008131807:Unit tests
 @nocolor
@@ -11370,7 +11382,9 @@ def copyText (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Copy"))
     else:
-        pass # Copy doesn't change text.
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Copy"))
 
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
@@ -11386,6 +11400,9 @@ def cutText (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
     else:
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Cut"))
         f.tree.onHeadChanged(c.currentPosition())
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
@@ -11394,7 +11411,7 @@ def pasteText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    #g.trace()
+    # g.trace()
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
@@ -11402,7 +11419,9 @@ def pasteText (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
     else:
-        # Do **not** call w.event_generate here.
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition())
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
@@ -11470,22 +11489,12 @@ def createBindings (self,frame):
     
     # Event handlers...
     t.bind("<Button-1>", frame.OnBodyClick)
-    if sys.platform == "win32":
-        # Support Linux middle-button paste easter egg.
-        t.bind("<Button-2>", frame.OnPaste)
     t.bind("<Button-3>", frame.OnBodyRClick)
     t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
     
-    if 0: # The changeover to the mini-buffer code is complete.
-        g.trace('binding <Key> to frame.body.onBodyKey')
-        t.bind("<Key>", self.onBodyKey)
-
-    # Gui-dependent bindings...
-    if 0:
-        # These cause problems when cut/copy/paste-text commands are bound.
-        t.bind(g.virtual_event_name("Cut"), frame.OnCut)
-        t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
-        t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+    if sys.platform.startswith('win'):
+        # Support Linux middle-button paste easter egg.
+        t.bind("<Button-2>", frame.OnPaste)
 #@nonl
 #@-node:ekr.20031218072017.838:tkBody.createBindings
 #@+node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
@@ -14634,22 +14643,12 @@ def createBindings (self,frame):
     
     # Event handlers...
     t.bind("<Button-1>", frame.OnBodyClick)
-    if sys.platform == "win32":
-        # Support Linux middle-button paste easter egg.
-        t.bind("<Button-2>", frame.OnPaste)
     t.bind("<Button-3>", frame.OnBodyRClick)
     t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
     
-    if 0: # The changeover to the mini-buffer code is complete.
-        g.trace('binding <Key> to frame.body.onBodyKey')
-        t.bind("<Key>", self.onBodyKey)
-
-    # Gui-dependent bindings...
-    if 0:
-        # These cause problems when cut/copy/paste-text commands are bound.
-        t.bind(g.virtual_event_name("Cut"), frame.OnCut)
-        t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
-        t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+    if sys.platform.startswith('win'):
+        # Support Linux middle-button paste easter egg.
+        t.bind("<Button-2>", frame.OnPaste)
 #@nonl
 #@-node:ekr.20031218072017.838:tkBody.createBindings
 #@+node:ekr.20031218072017.839:defineEditMenuTopTable
@@ -14689,7 +14688,9 @@ def copyText (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Copy"))
     else:
-        pass # Copy doesn't change text.
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Copy"))
 
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
@@ -14705,6 +14706,9 @@ def cutText (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
     else:
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Cut"))
         f.tree.onHeadChanged(c.currentPosition())
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
@@ -14713,7 +14717,7 @@ def pasteText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    #g.trace()
+    # g.trace()
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
@@ -14721,7 +14725,9 @@ def pasteText (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
     else:
-        # Do **not** call w.event_generate here.
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition())
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
