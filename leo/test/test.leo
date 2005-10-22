@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7745" clone_windows="0"/>
-<globals body_outline_ratio="0.637454981993">
-	<global_window_position top="74" left="134" height="833" width="872"/>
+<globals body_outline_ratio="0.5">
+	<global_window_position top="91" left="282" height="833" width="872"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -844,6 +844,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051016174943"><vh>@@command my-command @key = alt-shift-ctrl-z</vh></v>
 <v t="ekr.20051016174943.1"><vh>@@command my-command2</vh></v>
 <v t="ekr.20051016205407"><vh>@@button test @key=alt-shift-ctrl-y</vh></v>
+<v t="ekr.20051021151748"><vh>@@command rebind ctrl-e @key=shift-alt-e</vh></v>
 </v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes...</vh>
@@ -1011,24 +1012,24 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051020110046.3"><vh>bindHotKey</vh></v>
 <v t="ekr.20051020110046.4"><vh>buttonCallback</vh></v>
 </v>
-<v t="ekr.20051020104805" a="E"><vh>class leoTkinterFindTab</vh>
-<v t="ekr.20051020104805.1" a="E"><vh> Not used</vh>
+<v t="ekr.20051020104805"><vh>class leoTkinterFindTab</vh>
+<v t="ekr.20051020104805.1"><vh> Not used</vh>
 <v t="ekr.20051020104805.2"><vh>destroySelf</vh></v>
 <v t="ekr.20051020104805.9"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051020104805.3" a="E"><vh>Birth &amp; death</vh>
-<v t="ekr.20051020104805.4" a="E"><vh>__init__</vh>
+<v t="ekr.20051020104805.3"><vh>Birth &amp; death</vh>
+<v t="ekr.20051020104805.4"><vh>__init__</vh>
 <v t="ekr.20051020104805.5"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051020104805.6" a="E"><vh>find.createFrame</vh>
+<v t="ekr.20051020104805.6"><vh>find.createFrame</vh>
 <v t="ekr.20051020105921"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
 <v t="ekr.20051020104805.7"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
 <v t="ekr.20051020104805.8"><vh>&lt;&lt; Bind Tab and control-tab &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051020111605" a="E"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
+<v t="ekr.20051020111605"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
 <v t="ekr.20051020104805.10"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051020104805.11" a="E"><vh>find.init</vh>
+<v t="ekr.20051020104805.11"><vh>find.init</vh>
 <v t="ekr.20051020104805.12"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
 <v t="ekr.20051020104805.13"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
 </v>
@@ -1532,7 +1533,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051010091827"><vh>Previous settings</vh>
 <v t="ekr.20050801071700"><vh>@@string stylesheet = type="text/xsl" href="bpLEOHTM.xsl"</vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
@@ -1610,7 +1611,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20050911112310"><vh>@button save</vh></v>
-<v t="ekr.20051020124457.1" a="TV"><vh>@button find tab</vh></v>
+<v t="ekr.20051020124457.1"><vh>@button find tab</vh></v>
 </v>
 <v t="ekr.20051012104957"><vh>Other unit test stuff...</vh>
 <v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
@@ -1729,7 +1730,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines (runs some tests twice!)</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
@@ -3096,7 +3097,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -23266,5 +23267,6 @@ for i in xrange(numberOfColumns):
 <t tx="ekr.20051020124457.1">print c.searchCommands.c
 
 c.searchCommands.openFindTab(event=None)</t>
+<t tx="ekr.20051021151748">print 'Rebound control E'</t>
 </tnodes>
 </leo_file>

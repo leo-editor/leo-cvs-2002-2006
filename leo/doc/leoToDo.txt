@@ -26,15 +26,46 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-** Unit tests: test all commands
+- Remove end script message!
 
-Docs:
-    - Document new settings.
-    - Document how to create and manage tabs in the log pane.
-    - Document how to script the log pane.
-    - Document @command and @button @key.
-    - Posting: how to program tabs in the log pane.
-    - Posting: Not possible to use @command inside a derived file.
+- Alt-keys no longer open most menus.  Need commands to do this.
+
+- Specify & for most menu items.
+#@nonl
+#@+node:ekr.20051008131807:Unit tests
+@nocolor
+
+** New utils for unit testing
+    - The idea is to avoid subclassing TestCase,
+      and to avoid the kind of helper code that is in leoTest.leo.
+    - data = g.saveSubtree()
+    - g.restoreSubtree(data)
+
+- g.simulateKeystrokes (keystrokes,p=None)
+    - keystrokes is a list of bindings to be 'executed' as if typed.
+        - This is an easy way of simulating user interaction.
+
+- unit calls k.simulateKeystrokes and then makes assertions about
+    - state
+    - Contents of label.
+    - ivars
+    - Contents of body text.
+    - what widget has focus.
+    - what the point, mark and selection are.
+    - etc.
+
+@color
+#@nonl
+#@-node:ekr.20051008131807:Unit tests
+#@+node:ekr.20051021210459:Docs
+- Document new settings.
+- Document how to create and manage tabs in the log pane.
+- Document how to script the log pane.
+- Document @command and @button @key.
+- Posting: how to program tabs in the log pane.
+- Posting: Not possible to use @command inside a derived file.
+#@nonl
+#@-node:ekr.20051021210459:Docs
 #@+node:ekr.20051016162724:First
 Urgent:
 

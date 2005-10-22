@@ -741,7 +741,7 @@ class keyHandlerClass:
         k = self ; shortcut = str(shortcut)
     
         if command.__name__ == 'leoCallback':
-            # Get the function wrapped by this particular leoCallback function.
+            # Get the function wrapped by *this* leoCallback function.
             func = k.leoCallbackDict.get(command)
             commandName = k.inverseCommandsDict.get(func.__name__)
             
@@ -749,7 +749,6 @@ class keyHandlerClass:
             def keyCallback (event,func=command,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
         else:
-    
             def menuFuncCallback (event,command=command):
                 return command(event)
     
