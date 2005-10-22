@@ -1002,9 +1002,7 @@ class leoFind:
     
             gui.setInsertPoint(t,insert)
             gui.makeIndexVisible(t,insert)
-            gui.set_focus(c,t)
-    
-        
+            c.frame.widgetWantsFocus(t) # gui.set_focus(c,t) does not work in 4.4.
     #@nonl
     #@-node:ekr.20031218072017.3089:restore
     #@+node:ekr.20031218072017.3090:save
@@ -1049,13 +1047,12 @@ class leoFind:
             c.endUpdate(False) # Do not draw again!
     
         t = g.choose(self.in_headline,p.edit_text(),c.frame.bodyCtrl)
-        
         insert = g.choose(self.reverse,pos,newpos)
         # g.trace(pos,newpos,t)
         gui.setInsertPoint(t,insert)
         gui.setSelectionRange(t,pos,newpos)
         gui.makeIndexVisible(t,insert)
-        gui.set_focus(c,t)
+        c.frame.widgetWantsFocus(t) # gui.set_focus(c,t) does not work in 4.4.
         if self.wrap and not self.wrapPosition:
             self.wrapPosition = self.p
     #@nonl

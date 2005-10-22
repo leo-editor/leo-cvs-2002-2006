@@ -701,14 +701,14 @@ class keyHandlerClass:
                 
                 # Binding to the menu ensures that keys are active in all parts of the frame.
                 d = {
-                    'all':  [body,body,log,tree],
+                    'all':  [body,menu,log,tree],
                     'body': [body],
                     'log':  [log],
-                    'menu': [body,menu],
+                    'menu': [body,menu,log,tree],
                     'tree': [tree],
                 }
                 
-                if 1:
+                if 0: # A useful trace.
                     if pane and pane != 'all':
                         g.trace('%4s %20s %s' % (pane, shortcut,commandName))
                 

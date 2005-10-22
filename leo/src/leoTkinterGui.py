@@ -441,7 +441,7 @@ class tkinterGui(leoGui.leoGui):
         """Indicate that a widget want to get focus."""
         
         if c:
-            c.frame.widgetWantsFocus(widget,True,tag=tag)
+            c.frame.widgetWantsFocus(widget,True)
             
     widgetWantsFocus = widget_wants_focus
     #@nonl
