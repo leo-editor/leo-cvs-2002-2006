@@ -268,8 +268,7 @@ class parserBaseClass:
         
         __pychecker__ = '--no-argsused' # kind,val not used.
         
-        #g.trace('*'*10,p.headString())
-    
+        d = {} # To detect duplicates.
         s = p.bodyString()
         lines = g.splitLines(s)
         for line in lines:
@@ -278,8 +277,13 @@ class parserBaseClass:
                 name,bunch = self.parseShortcutLine(line)
                 # g.trace(name,bunch)
                 if bunch is not None:
-                    self.set(p,"shortcut",name,bunch)
-                    self.setShortcut(name,bunch)
+                    if d.get(name):
+                        g.es('ignoring duplicate @shortcuts entry: %s' % (
+                            name), color='blue')
+                    else:
+                        d [name] = bunch
+                        self.set(p,"shortcut",name,bunch)
+                        self.setShortcut(name,bunch)
     #@nonl
     #@-node:ekr.20041120105609:doShortcuts
     #@+node:ekr.20041217132028:doString
