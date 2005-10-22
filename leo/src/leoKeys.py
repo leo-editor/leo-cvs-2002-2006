@@ -687,7 +687,7 @@ class keyHandlerClass:
     
         k = self ; c = k.c
         
-        if pane and pane != 'all': g.trace(shortcut,commandName,pane)
+        # if pane and pane != 'all': g.trace(shortcut,commandName,pane)
     
         try:
             # Essential to make cut/copy/paste work.
@@ -760,9 +760,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051008135051.1:bindOpenWith
     #@+node:ekr.20051006125633.1:bindShortcut
-    def bindShortcut (self,
-        shortcut,name,command,commandName,
-        openWith=False,pane=None):
+    def bindShortcut (self,shortcut,name,command,commandName,pane=None):
         
         '''Bind one shortcut from a menu table.'''
         
@@ -771,10 +769,6 @@ class keyHandlerClass:
         
         k = self ; c = k.c ; w = c.frame.body.bodyCtrl
         shortcut = str(shortcut)
-        
-        if openWith:
-            k.bindOpenWith(shortcut,name,command)
-            return True
             
         # g.trace(g.callerName(2),command.__name__)
     
@@ -804,6 +798,7 @@ class keyHandlerClass:
         return k.bindKey(
             w,shortcut,keyCallback,name,commandName,
             pane=pane,tag='bindShortcut')
+    #@nonl
     #@-node:ekr.20051006125633.1:bindShortcut
     #@+node:ekr.20051011103654:checkBindings
     def checkBindings (self):
@@ -974,8 +969,7 @@ class keyHandlerClass:
             accel = bunch and bunch.val
             if accel:
                 bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
-                k.bindShortcut(bind_shortcut,name,command,name,
-                    openWith=name=='open-with',pane=bunch.pane)
+                k.bindShortcut(bind_shortcut,name,command,name,pane=bunch.pane)
             
             # g.trace('%25s %s' % (name,bind_shortcut))
     #@nonl
@@ -1794,8 +1788,7 @@ class keyHandlerClass:
         if shortcut:
             # Retain the original spelling of the shortcut for the message.
             shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
-            ok = k.bindShortcut (shortcut2,func.__name__,func,commandName,
-                openWith=False,pane=pane)
+            ok = k.bindShortcut (shortcut2,func.__name__,func,commandName,pane=pane)
                 
         if verbose:
             if shortcut and ok:

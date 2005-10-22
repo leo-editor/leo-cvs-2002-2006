@@ -29,7 +29,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
     #@+node:ekr.20031218072017.4103:Tkinter menu bindings
     # See the Tk docs for what these routines are to do
     #@nonl
-    #@+node:ekr.20031218072017.4104:9 Routines with Tk spellings
+    #@+node:ekr.20031218072017.4104:Methods with Tk spellings
     #@+node:ekr.20031218072017.4105:add_cascade
     def add_cascade (self,parent,label,menu,underline):
         
@@ -107,8 +107,8 @@ class leoTkinterMenu (leoMenu.leoMenu):
         return Tk.Menu(parent,tearoff=tearoff)
     #@nonl
     #@-node:ekr.20031218072017.4113:new_menu
-    #@-node:ekr.20031218072017.4104:9 Routines with Tk spellings
-    #@+node:ekr.20031218072017.4114:8 Routines with other spellings
+    #@-node:ekr.20031218072017.4104:Methods with Tk spellings
+    #@+node:ekr.20031218072017.4114:Methods with other spellings (Tkmenu)
     #@+node:ekr.20041228063406:clearAccel
     def clearAccel(self,menu,name):
         
@@ -131,80 +131,16 @@ class leoTkinterMenu (leoMenu.leoMenu):
         top.config(menu=topMenu) # Display the menu.
     #@nonl
     #@-node:ekr.20031218072017.4115:createMenuBar
-    #@+node:ekr.20031218072017.4116:createOpenWithMenuFromTable
-    #@+at 
-    #@nonl
-    # Entries in the table passed to createOpenWithMenuFromTable are
-    # tuples of the form (commandName,shortcut,data).
-    # 
-    # - command is one of "os.system", "os.startfile", "os.spawnl", 
-    # "os.spawnv" or "exec".
-    # - shortcut is a string describing a shortcut, just as for 
-    # createMenuItemsFromTable.
-    # - data is a tuple of the form (command,arg,ext).
-    # 
-    # Leo executes command(arg+path) where path is the full path to the temp 
-    # file.
-    # If ext is not None, the temp file has the given extension.
-    # Otherwise, Leo computes an extension based on the @language directive in 
-    # effect.
-    #@-at
-    #@@c
-    
-    def createOpenWithMenuFromTable (self,table):
-    
-        c = self.c
-        g.app.openWithTable = table # Override any previous table.
-        # Delete the previous entry.
-        parent = self.getMenu("File")
-        label = self.getRealMenuName("Open &With...")
-        amp_index = label.find("&")
-        label = label.replace("&","")
-        try:
-            index = parent.index(label)
-            parent.delete(index)
-        except:
-            try:
-                index = parent.index("Open With...")
-                parent.delete(index)
-            except: return
-        # Create the Open With menu.
-        openWithMenu = Tk.Menu(parent,tearoff=0)
-        self.setMenu("Open With...",openWithMenu)
-        parent.insert_cascade(index,label=label,menu=openWithMenu,underline=amp_index)
-        # Create the menu items in of the Open With menu.
-        for entry in table:
-            if len(entry) != 3: # 6/22/03
-                g.es("createOpenWithMenuFromTable: invalid data",color="red")
-                return
-        self.createMenuItemsFromTable("Open &With...",table,openWith=True)
-        for entry in table:
-            name,shortcut,data = entry
-            c.keyHandler.bindOpenWith (shortcut,name,data)
-    #@nonl
-    #@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
-    #@+node:ekr.20031218072017.4117:defineMenuCallback (tkMenu)
-    def defineMenuCallback(self,command,name):
+    #@+node:ekr.20051022042645:createOpenWithMenu
+    def createOpenWithMenu(self,parent,label,index,amp_index):
         
-        # The first parameter must be event, and it must default to None.
-        def menuCallback(event=None,self=self,command=command,label=name):
-            __pychecker__ = '--no-argsused' # event not used, and must be present.
-            return self.c.doCommand(command,label)
-    
-        return menuCallback
-    #@nonl
-    #@-node:ekr.20031218072017.4117:defineMenuCallback (tkMenu)
-    #@+node:ekr.20031218072017.4118:defineOpenWithMenuCallback (tkMenu)
-    def defineOpenWithMenuCallback(self,data):
+        '''Create a submenu.'''
         
-        # The first parameter must be event, and it must default to None.
-        def openWithMenuCallback(event=None,self=self,data=data):
-            __pychecker__ = '--no-argsused' # event param must be present.
-            return self.c.openWith(data=data)
-    
-        return openWithMenuCallback
+        menu = Tk.Menu(parent,tearoff=0)
+        parent.insert_cascade(index,label=label,menu=menu,underline=amp_index)
+        return menu
     #@nonl
-    #@-node:ekr.20031218072017.4118:defineOpenWithMenuCallback (tkMenu)
+    #@-node:ekr.20051022042645:createOpenWithMenu
     #@+node:ekr.20031218072017.4119:disableMenu
     def disableMenu (self,menu,name):
         
@@ -260,7 +196,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
             pass
     #@nonl
     #@-node:ekr.20031218072017.4121:setMenuLabel
-    #@-node:ekr.20031218072017.4114:8 Routines with other spellings
+    #@-node:ekr.20031218072017.4114:Methods with other spellings (Tkmenu)
     #@-node:ekr.20031218072017.4103:Tkinter menu bindings
     #@-others
 #@nonl

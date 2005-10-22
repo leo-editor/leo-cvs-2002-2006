@@ -2285,7 +2285,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         # Add the Open With entries if they exist.
         if g.app.openWithTable:
-            frame.menu.createMenuEntries(menu,g.app.openWithTable,openWith=True)
+            frame.menu.createOpenWithMenuEntries(menu,g.app.openWithTable)
             table = (("-",None,None),)
             frame.menu.createMenuEntries(menu,table)
             
@@ -2316,7 +2316,7 @@ class leoTkinterTree (leoFrame.leoTree):
         #@-node:ekr.20040803072955.113:<< Create the menu table >>
         #@nl
         
-        # 11/27/03: Don't actually set binding: it would conflict with previous.
+        # Don't actually set binding: it would conflict with previous.
         frame.menu.createMenuEntries(menu,table,dontBind=True)
     #@nonl
     #@-node:ekr.20040803072955.112:createPopupMenu
