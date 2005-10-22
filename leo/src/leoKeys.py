@@ -918,20 +918,16 @@ class keyHandlerClass:
         for stroke,ivar,commandName,func in (
             ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
             ('Alt-x',   'fullCommandKey',  'full-command',  k.fullCommand),
-            # There are default menu bindings to Ctrl-U and Shift-Ctrl-U, so
-            # we must pick another value here: otherwise it will be overridden later.
-            ('Alt-Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
+            ('Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
             ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
         ):
-            # Create the callback **after** any user override.
+            # Get the user shortcut *before* creating the callbacks.
             junk, bunch = c.config.getShortcut(commandName)
-            accel = bunch and bunch.val
-            # g.trace(accel,commandName)
-            if not accel: accel = stroke
+            accel = (bunch and bunch.val) or stroke
             shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
             # g.trace(stroke,accel,shortcut,func.__name__)
             
-            # Use two-levels of callbacks.
+            # Create two-levels of callbacks.
             def specialCallback (event,func=func):
                 return func(event)
     
@@ -939,17 +935,18 @@ class keyHandlerClass:
                 return k.masterCommand(event,func,stroke)
             
             setattr(k,ivar,shortcut)
+    
             k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,
                 pane='all',tag=tag)
             
         # Add a binding for <Key> events, so all key events go through masterCommand.
         def allKeysCallback (event):
             return k.masterCommand(event,func=None,stroke='<Key>')
-                
+    
         k.bindKey(w,'<Key>',allKeysCallback,
             name='masterCommand',commandName='master-command',
             pane='all',tag=tag)
-    
+    #@nonl
     #@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
     #@+node:ekr.20051008134059:makeBindingsFromCommandsDict
     def makeBindingsFromCommandsDict (self):
