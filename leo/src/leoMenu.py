@@ -1187,6 +1187,7 @@ class leoMenu:
                 #@nonl
                 #@-node:ekr.20051021100806.1:<< compute emacs_name >>
                 #@nl
+                    # Contains the not-so-horrible kludge.
                 if emacs_name:
                     commandName = emacs_name
                     rawKey,bunch = c.config.getShortcut(emacs_name)
@@ -1198,7 +1199,7 @@ class leoMenu:
             #@nl
             rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
             menuCallback = self.defineMenuCallback(command,commandName)
-            realLabel = self.getRealMenuName(label).replace("&","")
+            realLabel = self.getRealMenuName(label)
             #@        << set amp_index using rawKey and realLabel >>
             #@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
             if rawKey:
@@ -1211,6 +1212,7 @@ class leoMenu:
             #@nonl
             #@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
             #@nl
+            realLabel = realLabel.replace("&","")
             self.add_command(menu,label=realLabel,
                 accelerator= menu_shortcut or '',
                 command=menuCallback,underline=amp_index)
@@ -1463,8 +1465,9 @@ class leoMenu:
             #@nonl
             #@-node:ekr.20051022043713.1:<< get label, accelerator & command or continue >>
             #@nl
-            realLabel = self.getRealMenuName(label).replace("&","")
-            underline=label.find("&")
+            realLabel = self.getRealMenuName(label)
+            underline=realLabel.find("&")
+            realLabel = realLabel.replace("&","")
             callback = self.defineOpenWithMenuCallback(openWithData)
         
             self.add_command(menu,label=realLabel,
