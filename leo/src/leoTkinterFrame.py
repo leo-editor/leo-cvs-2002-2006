@@ -1737,7 +1737,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if isBody:
             w.event_generate(g.virtual_event_name("Copy"))
         else:
-            pass # Copy doesn't change text.
+            # Old: Do **not** call w.event_generate.
+            # New: Do call w.event_generate.
+            w.event_generate(g.virtual_event_name("Copy"))
     
     #@-node:ekr.20051011072903.2:copyText
     #@+node:ekr.20051011072049.2:cutText
@@ -1753,6 +1755,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if isBody:
             w.event_generate(g.virtual_event_name("Cut"))
         else:
+            # Old: Do **not** call w.event_generate.
+            # New: Do call w.event_generate.
+            w.event_generate(g.virtual_event_name("Cut"))
             f.tree.onHeadChanged(c.currentPosition())
     #@nonl
     #@-node:ekr.20051011072049.2:cutText
@@ -1761,7 +1766,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
-        #g.trace()
+        # g.trace()
         
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl
@@ -1769,7 +1774,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if isBody:
             w.event_generate(g.virtual_event_name("Paste"))
         else:
-            # Do **not** call w.event_generate here.
+            # Old: Do **not** call w.event_generate.
+            # New: Do call w.event_generate.
+            w.event_generate(g.virtual_event_name("Paste"))
             f.tree.onHeadChanged(c.currentPosition())
     #@nonl
     #@-node:ekr.20051011072903.5:pasteText
@@ -3716,7 +3723,7 @@ class leoTkinterLog (leoFrame.leoLog):
     
         '''Create the tab if necessary and make it active.'''
         
-        c = self.c ; tabFrame = self.frameDict.get(tabName)
+        c = self.c ; k = c.keyHandler ; tabFrame = self.frameDict.get(tabName)
         # g.trace(g.choose(tabName,'switching to','creating'),tabName)
         if tabFrame:
             # Switch to a new colorTags list.
@@ -3762,6 +3769,7 @@ class leoTkinterLog (leoFrame.leoLog):
             #@nonl
             #@-node:ekr.20051018072306:<< Create the tab's text widget >>
             #@nl
+            self.setTabBindings(tabName)
             # Update immediately so we can queue the request to change focus.
             tabFrame.update_idletasks()
             self.c.frame.bodyWantsFocus()
@@ -3775,6 +3783,24 @@ class leoTkinterLog (leoFrame.leoLog):
         return tabFrame
     #@nonl
     #@-node:ekr.20051016101724.1:selectTab
+    #@+node:ekr.20051022162730:setTabBindings
+    def setTabBindings (self,tabName):
+        
+        c = self.c ; k = c.keyHandler
+        if not k: return
+        
+        textWidget = self.textDict.get(tabName)
+        if not textWidget: return
+    
+        shortcuts = k.bindingsDict.keys()
+        
+        for shortcut in shortcuts:
+            bunch = k.bindingsDict.get(shortcut)
+            if bunch.pane in ('all','log'):
+                # g.trace(tabName,bunch.pane,bunch.commandName,shortcut)
+                textWidget.bind(shortcut,bunch.func)
+    #@nonl
+    #@-node:ekr.20051022162730:setTabBindings
     #@+node:ekr.20051019134106:Tab menu callbacks & helpers
     #@+node:ekr.20051019134422:onRightClick
     def onRightClick (self,event,menu):

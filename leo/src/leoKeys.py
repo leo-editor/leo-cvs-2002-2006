@@ -566,6 +566,8 @@ class keyHandlerClass:
         # Important: bindings exist even if c.showMiniBuffer is False.
         k.makeAllBindings()
         
+        c.frame.log.setTabBindings('Log')
+        
         if 0:
             addTemacsExtensions(k)
             addTemacsAbbreviations(k)
@@ -700,11 +702,12 @@ class keyHandlerClass:
                 tree = c.frame.tree.canvas
                 
                 # Binding to the menu ensures that keys are active in all parts of the frame.
+                # However, it does not appear necessary at this time...
+                
                 d = {
-                    'all':  [body,menu,log,tree],
+                    'all':  [body,log,tree], # menu
                     'body': [body],
                     'log':  [log],
-                    'menu': [body,menu,log,tree],
                     'tree': [tree],
                 }
                 
@@ -751,7 +754,7 @@ class keyHandlerClass:
         def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
             return k.masterCommand(event,func,stroke)
                 
-        return k.bindKey('menu',bind_shortcut,keyCallback,'open-with')
+        return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
     #@nonl
     #@-node:ekr.20051008135051.1:bindOpenWith
     #@+node:ekr.20051006125633.1:bindShortcut
