@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="24" left="225" height="743" width="981"/>
+	<global_window_position top="24" left="225" height="873" width="954"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -101,7 +101,7 @@
 <v t="ekr.20041119034357.45"><vh>@font body text font</vh></v>
 <v t="ekr.20041119051246.4"><vh>@font outline font</vh></v>
 </v>
-<v t="ekr.20050203090810" a="E"><vh>@page For unit tests</vh>
+<v t="ekr.20050203090810"><vh>@page For unit tests</vh>
 <v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
 </v>
 <v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
@@ -187,7 +187,7 @@
 </v>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 </v>
-<v t="ekr.20041213105954"><vh>Window options</vh>
+<v t="ekr.20041213105954" a="TV"><vh>Window options</vh>
 <v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
@@ -215,6 +215,7 @@
 <v t="ekr.20041119050749.5"><vh>@bool expanded_click_area = True</vh></v>
 <v t="ekr.20041119050749.17"><vh>@bool look_for_control_drag_on_mouse_down = True</vh></v>
 <v t="ekr.20041119050749.18"><vh>@bool outline_pane_scrolls_horizontally = False</vh></v>
+<v t="ekr.20051022154824"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 </v>
 <v t="ekr.20041213105954.2"><vh>@page Splitter options</vh>
 <v t="ekr.20041119034357.68"><vh>@string split_bar_relief = groove</vh></v>
@@ -228,7 +229,7 @@
 <v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558" a="TV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
+<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -716,7 +717,8 @@ False: use local time.</t>
 
 LavenderBlush1
 #ffffe1 # a little too yellow.
-#ffffec</t>
+#ffffec
+LightSteelBlue1 # Good for testing.</t>
 <t tx="ekr.20041119050749.17">This option controls the interpretation of the control key when dragging nodes in the outline pane.
 
 True: A drag is a control-drag if the control key is down at the start of the drag.
@@ -1368,9 +1370,15 @@ KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 <t tx="ekr.20051010093913">c.save()</t>
 <t tx="ekr.20051010112558">@color
 
+# New focus commands
+focus-to-body           = None
+focus-to-log            = None
+focus-to-tree           = None
+cycle-focus             = Alt-Shift-f
+
 hide-mini-buffer        = None
 show-mini-buffer        = None
-toggle-mini-buffer      = Alt-Ctrl-Shift-S
+toggle-mini-buffer      = None
     # This had better be defined if you intend ever to hide the minibuffer.
     # To avoid confusion, it should be something unlikely to be typed by accident.
     # Note: it **is** possible to use &lt;alt-x&gt;show-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
@@ -1649,23 +1657,25 @@ extract                     = Shift-Ctrl-D
 extract-names               = Shift-Ctrl-N
 extract-section             = Shift-Ctrl-E
 flatten-outline             = None
-go-back                     = None
-go-forward                  = None
-goto-first-node             = Alt-Home      # Was: Alt-Shift-G
-goto-first-sibling          = Alt-Shift-Home
-goto-last-node              = None          # Was: Alt-Shift-H
-goto-last-sibling           = Alt-Shift-End
-goto-last-visible           = Alt-End
-goto-next-changed           = None          # Removed Alt-D: not useful enough.
-goto-next-clone             = Alt-N
-goto-next-marked            = None          # Removed Alt-M: not useful enough.
-goto-next-node              = Alt-DnArrow
-goto-next-sibling           = None
-goto-next-visible           = DnArrow       # Alt-UpArrow conflicts with beginning-of-line.
-goto-parent                 = Alt-LtArrow
-goto-prev-node              = Alt-UpArrow
-goto-prev-sibling           = None          # Removed Alt-Shift-R: not useful enough.
-goto-prev-visible           = UpArrow
+
+go-back                     ! tree = None
+go-forward                  ! tree = None
+goto-first-node             ! tree = Alt-Home      # Was: Alt-Shift-G
+goto-first-sibling          ! tree = Alt-Shift-Home
+goto-last-node              ! tree = None          # Was: Alt-Shift-H
+goto-last-sibling           ! tree = Alt-Shift-End
+goto-last-visible           ! tree = Alt-End
+goto-next-changed           ! tree = None          # Removed Alt-D: not useful enough.
+goto-next-clone             ! tree = Alt-N
+goto-next-marked            ! tree = None          # Removed Alt-M: not useful enough.
+goto-next-node              ! tree = Alt-DnArrow
+goto-next-sibling           ! tree = None
+goto-next-visible           ! tree = DnArrow       # Alt-UpArrow conflicts with beginning-of-line.
+goto-parent                 ! tree = Alt-LtArrow
+goto-prev-node              ! tree = Alt-UpArrow
+goto-prev-sibling           ! tree = None          # Removed Alt-Shift-R: not useful enough.
+goto-prev-visible           ! tree = UpArrow
+
 hoist                       = None
 import-at-file              = None          # Removed Shift-Ctrl-F: not useful enough.
 import-at-root              = None
@@ -1773,5 +1783,11 @@ p.setBodyString(result)</t>
 <t tx="ekr.20051020125928">#d6c7d3
 #d2cad0
 #c6d3d7</t>
+<t tx="ekr.20051022154824">True: (Recommended) Selecting an outline node leaves the focus in the outline pane.
+      Essential when using key bindings that apply to the outline pane.
+
+False: Selecting an outline node transfers focus to the body pane.
+       This was the way all version before Leo 4.4 worked, but
+       it will prevent key binding in the outline pane for outline operations from being useful.</t>
 </tnodes>
 </leo_file>
