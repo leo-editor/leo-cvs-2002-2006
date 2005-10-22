@@ -4414,6 +4414,7 @@ class baseCommands:
                 c.selectVnode(p)
             finally:
                 c.endUpdate()
+    #@nonl
     #@-node:ekr.20031218072017.2920:goToParent
     #@+node:ekr.20031218072017.2921:goToPrevSibling
     def goToPrevSibling(self):
@@ -4430,6 +4431,67 @@ class baseCommands:
                 c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2921:goToPrevSibling
+    #@+node:ekr.20031218072017.2994:selectThreadNext
+    def selectThreadNext(self):
+    
+        c = self ; current = c.currentPosition()
+        if not current: return
+    
+        p = current.threadNext()
+        if p:
+            c.beginUpdate()
+            try:
+                c.selectPosition(p)
+            finally:
+                c.endUpdate()
+            c.frame.bodyWantsFocus()
+    #@nonl
+    #@-node:ekr.20031218072017.2994:selectThreadNext
+    #@+node:ekr.20031218072017.2993:selectThreadBack
+    def selectThreadBack(self):
+    
+        c = self ; current = c.currentVnode()
+        if not current: return
+        
+        v = current.threadBack()
+        if v:
+            c.beginUpdate()
+            try:
+                c.selectVnode(v)
+            finally:
+                c.endUpdate()
+    #@-node:ekr.20031218072017.2993:selectThreadBack
+    #@+node:ekr.20031218072017.2995:selectVisBack
+    # This has an up arrow for a control key.
+    
+    def selectVisBack(self):
+    
+        c = self ; current = c.currentVnode()
+        if not current: return
+    
+        v = current.visBack()
+        if v:
+            c.beginUpdate()
+            try:
+                c.selectVnode(v)
+            finally:
+                c.endUpdate()
+    #@nonl
+    #@-node:ekr.20031218072017.2995:selectVisBack
+    #@+node:ekr.20031218072017.2996:selectVisNext
+    def selectVisNext(self):
+    
+        c = self ; current = c.currentVnode()
+        if not current: return
+        
+        v = current.visNext()
+        if v:
+            c.beginUpdate()
+            try:
+                c.selectVnode(v)
+            finally:
+                c.endUpdate()
+    #@-node:ekr.20031218072017.2996:selectVisNext
     #@-node:ekr.20031218072017.2913:Goto
     #@+node:ekr.20031218072017.2922:Mark...
     #@+node:ekr.20031218072017.2923:markChangedHeadlines
@@ -5952,66 +6014,6 @@ class baseCommands:
     
         self.frame.tree.endEditLabel()
     #@-node:ekr.20031218072017.2992:endEditing (calls tree.endEditLabel)
-    #@+node:ekr.20031218072017.2993:selectThreadBack
-    def selectThreadBack(self):
-    
-        c = self ; current = c.currentVnode()
-        if not current: return
-        
-        v = current.threadBack()
-        if v:
-            c.beginUpdate()
-            try:
-                c.selectVnode(v)
-            finally:
-                c.endUpdate()
-    #@-node:ekr.20031218072017.2993:selectThreadBack
-    #@+node:ekr.20031218072017.2994:selectThreadNext
-    def selectThreadNext(self):
-    
-        c = self ; current = c.currentVnode()
-        if not current: return
-    
-        v = current.threadNext()
-        if v:
-            c.beginUpdate()
-            try:
-                c.selectVnode(v)
-            finally:
-                c.endUpdate()
-    #@nonl
-    #@-node:ekr.20031218072017.2994:selectThreadNext
-    #@+node:ekr.20031218072017.2995:selectVisBack
-    # This has an up arrow for a control key.
-    
-    def selectVisBack(self):
-    
-        c = self ; current = c.currentVnode()
-        if not current: return
-    
-        v = current.visBack()
-        if v:
-            c.beginUpdate()
-            try:
-                c.selectVnode(v)
-            finally:
-                c.endUpdate()
-    #@nonl
-    #@-node:ekr.20031218072017.2995:selectVisBack
-    #@+node:ekr.20031218072017.2996:selectVisNext
-    def selectVisNext(self):
-    
-        c = self ; current = c.currentVnode()
-        if not current: return
-        
-        v = current.visNext()
-        if v:
-            c.beginUpdate()
-            try:
-                c.selectVnode(v)
-            finally:
-                c.endUpdate()
-    #@-node:ekr.20031218072017.2996:selectVisNext
     #@+node:ekr.20031218072017.2997:selectVnode & selectPosition (calls tree.select)
     def selectVnode(self,p,updateBeadList=True):
         
