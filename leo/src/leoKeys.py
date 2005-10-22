@@ -680,12 +680,14 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.11:add_ekr_altx_commands
     #@+node:ekr.20050920085536.16:bindKey
-    def bindKey (self,w,shortcut,callback,name,commandName,tag=''):
+    def bindKey (self,w,shortcut,callback,name,commandName,pane=None,tag=''):
     
         '''Bind the indicated shortcut (a Tk keystroke) to the callback.
         callback calls commandName (for error messages).'''
     
         k = self ; c = k.c
+        
+        if pane and pane != 'all': g.trace(shortcut,commandName,pane)
     
         try:
             # Essential to make cut/copy/paste work.
@@ -741,22 +743,26 @@ class keyHandlerClass:
         
         k = self ; c = k.c ; w = c.frame.body.bodyCtrl
         
-        # g.trace(shortcut,name,data)
+        bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(shortcut)
+        
+        # g.trace(bind_shortcut,name,data)
     
         # The first parameter must be event, and it must default to None.
         def openWithCallback(event=None,self=self,data=data):
             __pychecker__ = '--no-argsused' # event must be present.
             return self.c.openWith(data=data)
     
-        def keyCallback (event,func=openWithCallback,stroke=shortcut):
+        def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
             return k.masterCommand(event,func,stroke)
                 
-        return k.bindKey(w,shortcut,keyCallback,name,
-            commandName='open-with',tag='bindOpenWith')
+        return k.bindKey(w,bind_shortcut,keyCallback,name,'open-with',
+            pane='menu',tag='bindOpenWith')
     #@nonl
     #@-node:ekr.20051008135051.1:bindOpenWith
     #@+node:ekr.20051006125633.1:bindShortcut
-    def bindShortcut (self,shortcut,name,command,commandName,openWith):
+    def bindShortcut (self,
+        shortcut,name,command,commandName,
+        openWith=False,pane=None):
         
         '''Bind one shortcut from a menu table.'''
         
@@ -764,7 +770,6 @@ class keyHandlerClass:
             # The pychecker warning about 'name' being unused is WRONG.
         
         k = self ; c = k.c ; w = c.frame.body.bodyCtrl
-        
         shortcut = str(shortcut)
         
         if openWith:
@@ -796,8 +801,9 @@ class keyHandlerClass:
             def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
             
-        return k.bindKey(w,shortcut,keyCallback,name,commandName,tag='bindShortcut')
-    #@nonl
+        return k.bindKey(
+            w,shortcut,keyCallback,name,commandName,
+            pane=pane,tag='bindShortcut')
     #@-node:ekr.20051006125633.1:bindShortcut
     #@+node:ekr.20051011103654:checkBindings
     def checkBindings (self):
@@ -811,7 +817,6 @@ class keyHandlerClass:
         
         for name in names:
             abbrev = k.abbreviationsDict.get(name)
-            # This logic is from c.config.getShortcut
             key = c.frame.menu.canonicalizeMenuName(abbrev or name)
             key = key.replace('&','')
             if not g.app.config.exists(c,key,'shortcut'):
@@ -829,8 +834,8 @@ class keyHandlerClass:
         
         k.bindingsDict = {}
         k.makeHardBindings()
-        k.makeSpecialBindings() # These take precedence.
-        k.setBindingsFromCommandsDict()
+        k.makeSpecialBindings()
+        k.makeBindingsFromCommandsDict()
         k.add_ekr_altx_commands()
         k.checkBindings()
     #@nonl
@@ -939,18 +944,20 @@ class keyHandlerClass:
                 return k.masterCommand(event,func,stroke)
             
             setattr(k,ivar,shortcut)
-            k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,tag=tag)
+            k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,
+                pane='all',tag=tag)
             
         # Add a binding for <Key> events, so all key events go through masterCommand.
         def allKeysCallback (event):
             return k.masterCommand(event,func=None,stroke='<Key>')
                 
         k.bindKey(w,'<Key>',allKeysCallback,
-            name='masterCommand',commandName='master-command',tag=tag)
+            name='masterCommand',commandName='master-command',
+            pane='all',tag=tag)
     
     #@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
-    #@+node:ekr.20051008134059:setBindingsFromCommandsDict
-    def setBindingsFromCommandsDict (self):
+    #@+node:ekr.20051008134059:makeBindingsFromCommandsDict
+    def makeBindingsFromCommandsDict (self):
         
         '''Add bindings for all entries in c.commandDict.
         
@@ -967,11 +974,12 @@ class keyHandlerClass:
             accel = bunch and bunch.val
             if accel:
                 bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
-                k.bindShortcut(bind_shortcut,name,command,name,openWith=name=='open-with')
+                k.bindShortcut(bind_shortcut,name,command,name,
+                    openWith=name=='open-with',pane=bunch.pane)
             
             # g.trace('%25s %s' % (name,bind_shortcut))
     #@nonl
-    #@-node:ekr.20051008134059:setBindingsFromCommandsDict
+    #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
     #@-node:ekr.20051006125633:Binding (keyHandler)
     #@+node:ekr.20051001051355:Dispatching...
     #@+node:ekr.20051002152108:Top-level
@@ -1766,7 +1774,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
     #@+node:ekr.20051015110547:registerCommand
-    def registerCommand (self,commandName,shortcut,func,verbose=True):
+    def registerCommand (self,commandName,shortcut,func,pane=None,verbose=True):
         
         '''Make the function available as a minibuffer command,
         and optionally attempt to bind a shortcut.
@@ -1787,7 +1795,7 @@ class keyHandlerClass:
             # Retain the original spelling of the shortcut for the message.
             shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
             ok = k.bindShortcut (shortcut2,func.__name__,func,commandName,
-                openWith=False)
+                openWith=False,pane=pane)
                 
         if verbose:
             if shortcut and ok:

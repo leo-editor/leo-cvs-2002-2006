@@ -153,6 +153,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
     
     def createOpenWithMenuFromTable (self,table):
     
+        c = self.c
         g.app.openWithTable = table # Override any previous table.
         # Delete the previous entry.
         parent = self.getMenu("File")
@@ -167,21 +168,19 @@ class leoTkinterMenu (leoMenu.leoMenu):
                 index = parent.index("Open With...")
                 parent.delete(index)
             except: return
-        # Create the "Open With..." menu.
+        # Create the Open With menu.
         openWithMenu = Tk.Menu(parent,tearoff=0)
         self.setMenu("Open With...",openWithMenu)
         parent.insert_cascade(index,label=label,menu=openWithMenu,underline=amp_index)
-        # Populate the "Open With..." menu.
-        shortcut_table = []
-        for triple in table:
-            if len(triple) == 3: # 6/22/03
-                shortcut_table.append(triple)
-            else:
+        # Create the menu items in of the Open With menu.
+        for entry in table:
+            if len(entry) != 3: # 6/22/03
                 g.es("createOpenWithMenuFromTable: invalid data",color="red")
                 return
-                
-        # for i in shortcut_table: print i
-        self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=True)
+        self.createMenuItemsFromTable("Open &With...",table,openWith=True)
+        for entry in table:
+            name,shortcut,data = entry
+            c.keyHandler.bindOpenWith (shortcut,name,data)
     #@nonl
     #@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
     #@+node:ekr.20031218072017.4117:defineMenuCallback (tkMenu)
@@ -196,10 +195,10 @@ class leoTkinterMenu (leoMenu.leoMenu):
     #@nonl
     #@-node:ekr.20031218072017.4117:defineMenuCallback (tkMenu)
     #@+node:ekr.20031218072017.4118:defineOpenWithMenuCallback (tkMenu)
-    def defineOpenWithMenuCallback(self,command):
+    def defineOpenWithMenuCallback(self,data):
         
         # The first parameter must be event, and it must default to None.
-        def openWithMenuCallback(event=None,self=self,data=command):
+        def openWithMenuCallback(event=None,self=self,data=data):
             __pychecker__ = '--no-argsused' # event param must be present.
             return self.c.openWith(data=data)
     

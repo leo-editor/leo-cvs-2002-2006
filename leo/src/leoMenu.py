@@ -1009,13 +1009,16 @@ class leoMenu:
             if ok:
                 if len(data) == 2:
                     label,command = data
+                elif openWith:
+                    label,openWithShortcut,openWithData = data
+                    rawKey = None
                 else:
                     label,junk,command = data
             else:
                 g.trace('bad data in menu table: %s' % repr(data))
                 continue # Ignore bad data
                  
-            if ok and (label in (None,'-') or command == None):
+            if ok and label in (None,'-'):
                 self.add_separator(menu)
                 continue # That's all.
             #@nonl
@@ -1035,45 +1038,48 @@ class leoMenu:
             #@nl
             #@        << set accel to the shortcut for name >>
             #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-            # First, get the old-style name.
-            rawKey,bunch = c.config.getShortcut(name)
-            accel = bunch and bunch.val
-            commandName = name
-            
-            # Second, get new-style name.
-            if not openWith and not accel:
-                #@    << compute emacs_name >>
-                #@+node:ekr.20051021100806.1:<< compute emacs_name >>
-                #@+at 
-                #@nonl
-                # One not-so-horrible kludge remains.
-                # 
-                # The cut/copy/paste commands in the menu tables are not the 
-                # same as the methods
-                # actually bound to cut/copy/paste-text minibuffer commands, 
-                # so we must do a bit
-                # of extra translation to discover whether the user has 
-                # overridden their
-                # bindings.
-                #@-at
-                #@@c
+            if openWith:
+                accel = openWithShortcut
+            else:
+                # First, get the old-style name.
+                rawKey,bunch = c.config.getShortcut(name)
+                accel = bunch and bunch.val
+                commandName = name
                 
-                if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-                    emacs_name = '%s-text' % name
-                else:
-                    try: # User errors in the table can cause this.
-                        emacs_name = k.inverseCommandsDict.get(command.__name__)
-                    except Exception:
-                        emacs_name = None
-                #@nonl
-                #@-node:ekr.20051021100806.1:<< compute emacs_name >>
-                #@nl
-                if emacs_name:
-                    commandName = emacs_name
-                    rawKey,bunch = c.config.getShortcut(emacs_name)
-                    accel = bunch and bunch.val
-                elif not dynamicMenu:
-                    g.trace('No inverse for %s' % name)
+                # Second, get new-style name.
+                if not accel:
+                    #@        << compute emacs_name >>
+                    #@+node:ekr.20051021100806.1:<< compute emacs_name >>
+                    #@+at 
+                    #@nonl
+                    # One not-so-horrible kludge remains.
+                    # 
+                    # The cut/copy/paste commands in the menu tables are not 
+                    # the same as the methods
+                    # actually bound to cut/copy/paste-text minibuffer 
+                    # commands, so we must do a bit
+                    # of extra translation to discover whether the user has 
+                    # overridden their
+                    # bindings.
+                    #@-at
+                    #@@c
+                    
+                    if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+                        emacs_name = '%s-text' % name
+                    else:
+                        try: # User errors in the table can cause this.
+                            emacs_name = k.inverseCommandsDict.get(command.__name__)
+                        except Exception:
+                            emacs_name = None
+                    #@nonl
+                    #@-node:ekr.20051021100806.1:<< compute emacs_name >>
+                    #@nl
+                    if emacs_name:
+                        commandName = emacs_name
+                        rawKey,bunch = c.config.getShortcut(emacs_name)
+                        accel = bunch and bunch.val
+                    elif not dynamicMenu:
+                        g.trace('No inverse for %s' % name)
             #@nonl
             #@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
             #@nl
@@ -1089,7 +1095,7 @@ class leoMenu:
             #@        << define callback function >>
             #@+node:ekr.20031218072017.1727:<< define callback function >>
             if openWith:
-                menuCallback = self.defineOpenWithMenuCallback(command)
+                menuCallback = self.defineOpenWithMenuCallback(openWithData)
             else:
                 menuCallback = self.defineMenuCallback(command,name)
             #@nonl

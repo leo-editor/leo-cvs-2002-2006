@@ -16801,13 +16801,16 @@ ok = (
 if ok:
     if len(data) == 2:
         label,command = data
+    elif openWith:
+        label,openWithShortcut,openWithData = data
+        rawKey = None
     else:
         label,junk,command = data
 else:
     g.trace('bad data in menu table: %s' % repr(data))
     continue # Ignore bad data
      
-if ok and (label in (None,'-') or command == None):
+if ok and label in (None,'-'):
     self.add_separator(menu)
     continue # That's all.
 #@nonl
@@ -16823,20 +16826,23 @@ for ch in name:
 name = name2
 #@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, get the old-style name.
-rawKey,bunch = c.config.getShortcut(name)
-accel = bunch and bunch.val
-commandName = name
-
-# Second, get new-style name.
-if not openWith and not accel:
-    << compute emacs_name >>
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunch = c.config.getShortcut(emacs_name)
-        accel = bunch and bunch.val
-    elif not dynamicMenu:
-        g.trace('No inverse for %s' % name)
+if openWith:
+    accel = openWithShortcut
+else:
+    # First, get the old-style name.
+    rawKey,bunch = c.config.getShortcut(name)
+    accel = bunch and bunch.val
+    commandName = name
+    
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunch = c.config.getShortcut(emacs_name)
+            accel = bunch and bunch.val
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
 @ One not-so-horrible kludge remains.
@@ -16866,7 +16872,7 @@ else:
 #@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
 if openWith:
-    menuCallback = self.defineOpenWithMenuCallback(command)
+    menuCallback = self.defineOpenWithMenuCallback(openWithData)
 else:
     menuCallback = self.defineMenuCallback(command,name)
 #@nonl
@@ -17075,13 +17081,16 @@ ok = (
 if ok:
     if len(data) == 2:
         label,command = data
+    elif openWith:
+        label,openWithShortcut,openWithData = data
+        rawKey = None
     else:
         label,junk,command = data
 else:
     g.trace('bad data in menu table: %s' % repr(data))
     continue # Ignore bad data
      
-if ok and (label in (None,'-') or command == None):
+if ok and label in (None,'-'):
     self.add_separator(menu)
     continue # That's all.
 #@nonl
@@ -17097,20 +17106,23 @@ for ch in name:
 name = name2
 #@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, get the old-style name.
-rawKey,bunch = c.config.getShortcut(name)
-accel = bunch and bunch.val
-commandName = name
-
-# Second, get new-style name.
-if not openWith and not accel:
-    << compute emacs_name >>
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunch = c.config.getShortcut(emacs_name)
-        accel = bunch and bunch.val
-    elif not dynamicMenu:
-        g.trace('No inverse for %s' % name)
+if openWith:
+    accel = openWithShortcut
+else:
+    # First, get the old-style name.
+    rawKey,bunch = c.config.getShortcut(name)
+    accel = bunch and bunch.val
+    commandName = name
+    
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunch = c.config.getShortcut(emacs_name)
+            accel = bunch and bunch.val
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
 @ One not-so-horrible kludge remains.
@@ -17140,7 +17152,7 @@ else:
 #@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
 if openWith:
-    menuCallback = self.defineOpenWithMenuCallback(command)
+    menuCallback = self.defineOpenWithMenuCallback(openWithData)
 else:
     menuCallback = self.defineMenuCallback(command,name)
 #@nonl
@@ -17204,18 +17216,22 @@ def makeSpecialBindings (self):
             return k.masterCommand(event,func,stroke)
         
         setattr(k,ivar,shortcut)
-        k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,tag=tag)
+        k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,
+            pane='all',tag=tag)
         
     # Add a binding for <Key> events, so all key events go through masterCommand.
     def allKeysCallback (event):
         return k.masterCommand(event,func=None,stroke='<Key>')
             
     k.bindKey(w,'<Key>',allKeysCallback,
-        name='masterCommand',commandName='master-command',tag=tag)
+        name='masterCommand',commandName='master-command',
+        pane='all',tag=tag)
 
 #@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
 #@+node:ekr.20051006125633.1:bindShortcut
-def bindShortcut (self,shortcut,name,command,commandName,openWith):
+def bindShortcut (self,
+    shortcut,name,command,commandName,
+    openWith=False,pane=None):
     
     '''Bind one shortcut from a menu table.'''
     
@@ -17223,7 +17239,6 @@ def bindShortcut (self,shortcut,name,command,commandName,openWith):
         # The pychecker warning about 'name' being unused is WRONG.
     
     k = self ; c = k.c ; w = c.frame.body.bodyCtrl
-    
     shortcut = str(shortcut)
     
     if openWith:
@@ -17255,8 +17270,9 @@ def bindShortcut (self,shortcut,name,command,commandName,openWith):
         def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
             return k.masterCommand(event,func,stroke)
         
-    return k.bindKey(w,shortcut,keyCallback,name,commandName,tag='bindShortcut')
-#@nonl
+    return k.bindKey(
+        w,shortcut,keyCallback,name,commandName,
+        pane=pane,tag='bindShortcut')
 #@-node:ekr.20051006125633.1:bindShortcut
 #@+node:ekr.20031218072017.2098:canonicalizeShortcut
 @ This code "canonicalizes" both the shortcuts that appear in menus and the arguments to bind, mostly ignoring case and the order in which special keys are specified in leoConfig.txt.
@@ -17427,12 +17443,14 @@ menu_shortcut = menu_head + menu_last
 #@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
 #@-node:ekr.20031218072017.2098:canonicalizeShortcut
 #@+node:ekr.20050920085536.16:bindKey
-def bindKey (self,w,shortcut,callback,name,commandName,tag=''):
+def bindKey (self,w,shortcut,callback,name,commandName,pane=None,tag=''):
 
     '''Bind the indicated shortcut (a Tk keystroke) to the callback.
     callback calls commandName (for error messages).'''
 
     k = self ; c = k.c
+    
+    if pane and pane != 'all': g.trace(shortcut,commandName,pane)
 
     try:
         # Essential to make cut/copy/paste work.
@@ -17634,13 +17652,16 @@ ok = (
 if ok:
     if len(data) == 2:
         label,command = data
+    elif openWith:
+        label,openWithShortcut,openWithData = data
+        rawKey = None
     else:
         label,junk,command = data
 else:
     g.trace('bad data in menu table: %s' % repr(data))
     continue # Ignore bad data
      
-if ok and (label in (None,'-') or command == None):
+if ok and label in (None,'-'):
     self.add_separator(menu)
     continue # That's all.
 #@nonl
@@ -17656,20 +17677,23 @@ for ch in name:
 name = name2
 #@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, get the old-style name.
-rawKey,bunch = c.config.getShortcut(name)
-accel = bunch and bunch.val
-commandName = name
-
-# Second, get new-style name.
-if not openWith and not accel:
-    << compute emacs_name >>
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunch = c.config.getShortcut(emacs_name)
-        accel = bunch and bunch.val
-    elif not dynamicMenu:
-        g.trace('No inverse for %s' % name)
+if openWith:
+    accel = openWithShortcut
+else:
+    # First, get the old-style name.
+    rawKey,bunch = c.config.getShortcut(name)
+    accel = bunch and bunch.val
+    commandName = name
+    
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunch = c.config.getShortcut(emacs_name)
+            accel = bunch and bunch.val
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
 @ One not-so-horrible kludge remains.
@@ -17699,7 +17723,7 @@ else:
 #@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
 if openWith:
-    menuCallback = self.defineOpenWithMenuCallback(command)
+    menuCallback = self.defineOpenWithMenuCallback(openWithData)
 else:
     menuCallback = self.defineMenuCallback(command,name)
 #@nonl
@@ -17980,7 +18004,6 @@ def checkBindings (self):
     
     for name in names:
         abbrev = k.abbreviationsDict.get(name)
-        # This logic is from c.config.getShortcut
         key = c.frame.menu.canonicalizeMenuName(abbrev or name)
         key = key.replace('&','')
         if not g.app.config.exists(c,key,'shortcut'):
@@ -18157,14 +18180,16 @@ def makeSpecialBindings (self):
             return k.masterCommand(event,func,stroke)
         
         setattr(k,ivar,shortcut)
-        k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,tag=tag)
+        k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,
+            pane='all',tag=tag)
         
     # Add a binding for <Key> events, so all key events go through masterCommand.
     def allKeysCallback (event):
         return k.masterCommand(event,func=None,stroke='<Key>')
             
     k.bindKey(w,'<Key>',allKeysCallback,
-        name='masterCommand',commandName='master-command',tag=tag)
+        name='masterCommand',commandName='master-command',
+        pane='all',tag=tag)
 
 #@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
 #@+node:ekr.20051014170754:k.help
@@ -18789,13 +18814,16 @@ ok = (
 if ok:
     if len(data) == 2:
         label,command = data
+    elif openWith:
+        label,openWithShortcut,openWithData = data
+        rawKey = None
     else:
         label,junk,command = data
 else:
     g.trace('bad data in menu table: %s' % repr(data))
     continue # Ignore bad data
      
-if ok and (label in (None,'-') or command == None):
+if ok and label in (None,'-'):
     self.add_separator(menu)
     continue # That's all.
 #@nonl
@@ -18811,20 +18839,23 @@ for ch in name:
 name = name2
 #@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, get the old-style name.
-rawKey,bunch = c.config.getShortcut(name)
-accel = bunch and bunch.val
-commandName = name
-
-# Second, get new-style name.
-if not openWith and not accel:
-    << compute emacs_name >>
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunch = c.config.getShortcut(emacs_name)
-        accel = bunch and bunch.val
-    elif not dynamicMenu:
-        g.trace('No inverse for %s' % name)
+if openWith:
+    accel = openWithShortcut
+else:
+    # First, get the old-style name.
+    rawKey,bunch = c.config.getShortcut(name)
+    accel = bunch and bunch.val
+    commandName = name
+    
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunch = c.config.getShortcut(emacs_name)
+            accel = bunch and bunch.val
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
 @ One not-so-horrible kludge remains.
@@ -18854,7 +18885,7 @@ else:
 #@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
 if openWith:
-    menuCallback = self.defineOpenWithMenuCallback(command)
+    menuCallback = self.defineOpenWithMenuCallback(openWithData)
 else:
     menuCallback = self.defineMenuCallback(command,name)
 #@nonl
@@ -18877,7 +18908,7 @@ if dontBind: menu_shortcut = ''
 #@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
 #@-node:ekr.20031218072017.1723:menu.createMenuEntries
 #@+node:ekr.20051015110547:registerCommand
-def registerCommand (self,commandName,shortcut,func,verbose=True):
+def registerCommand (self,commandName,shortcut,func,pane=None,verbose=True):
     
     '''Make the function available as a minibuffer command,
     and optionally attempt to bind a shortcut.
@@ -18898,7 +18929,7 @@ def registerCommand (self,commandName,shortcut,func,verbose=True):
         # Retain the original spelling of the shortcut for the message.
         shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
         ok = k.bindShortcut (shortcut2,func.__name__,func,commandName,
-            openWith=False)
+            openWith=False,pane=pane)
             
     if verbose:
         if shortcut and ok:
@@ -18909,7 +18940,9 @@ def registerCommand (self,commandName,shortcut,func,verbose=True):
 #@nonl
 #@-node:ekr.20051015110547:registerCommand
 #@+node:ekr.20051006125633.1:bindShortcut
-def bindShortcut (self,shortcut,name,command,commandName,openWith):
+def bindShortcut (self,
+    shortcut,name,command,commandName,
+    openWith=False,pane=None):
     
     '''Bind one shortcut from a menu table.'''
     
@@ -18917,7 +18950,6 @@ def bindShortcut (self,shortcut,name,command,commandName,openWith):
         # The pychecker warning about 'name' being unused is WRONG.
     
     k = self ; c = k.c ; w = c.frame.body.bodyCtrl
-    
     shortcut = str(shortcut)
     
     if openWith:
@@ -18949,16 +18981,19 @@ def bindShortcut (self,shortcut,name,command,commandName,openWith):
         def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
             return k.masterCommand(event,func,stroke)
         
-    return k.bindKey(w,shortcut,keyCallback,name,commandName,tag='bindShortcut')
-#@nonl
+    return k.bindKey(
+        w,shortcut,keyCallback,name,commandName,
+        pane=pane,tag='bindShortcut')
 #@-node:ekr.20051006125633.1:bindShortcut
 #@+node:ekr.20050920085536.16:bindKey
-def bindKey (self,w,shortcut,callback,name,commandName,tag=''):
+def bindKey (self,w,shortcut,callback,name,commandName,pane=None,tag=''):
 
     '''Bind the indicated shortcut (a Tk keystroke) to the callback.
     callback calls commandName (for error messages).'''
 
     k = self ; c = k.c
+    
+    if pane and pane != 'all': g.trace(shortcut,commandName,pane)
 
     try:
         # Essential to make cut/copy/paste work.
@@ -19053,14 +19088,16 @@ def makeSpecialBindings (self):
             return k.masterCommand(event,func,stroke)
         
         setattr(k,ivar,shortcut)
-        k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,tag=tag)
+        k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,
+            pane='all',tag=tag)
         
     # Add a binding for <Key> events, so all key events go through masterCommand.
     def allKeysCallback (event):
         return k.masterCommand(event,func=None,stroke='<Key>')
             
     k.bindKey(w,'<Key>',allKeysCallback,
-        name='masterCommand',commandName='master-command',tag=tag)
+        name='masterCommand',commandName='master-command',
+        pane='all',tag=tag)
 
 #@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
 #@-node:ekr.20051015112436:(Fixed bugs in k.registerCommand, k.printBindings
@@ -20568,13 +20605,16 @@ ok = (
 if ok:
     if len(data) == 2:
         label,command = data
+    elif openWith:
+        label,openWithShortcut,openWithData = data
+        rawKey = None
     else:
         label,junk,command = data
 else:
     g.trace('bad data in menu table: %s' % repr(data))
     continue # Ignore bad data
      
-if ok and (label in (None,'-') or command == None):
+if ok and label in (None,'-'):
     self.add_separator(menu)
     continue # That's all.
 #@nonl
@@ -20590,20 +20630,23 @@ for ch in name:
 name = name2
 #@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, get the old-style name.
-rawKey,bunch = c.config.getShortcut(name)
-accel = bunch and bunch.val
-commandName = name
-
-# Second, get new-style name.
-if not openWith and not accel:
-    << compute emacs_name >>
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunch = c.config.getShortcut(emacs_name)
-        accel = bunch and bunch.val
-    elif not dynamicMenu:
-        g.trace('No inverse for %s' % name)
+if openWith:
+    accel = openWithShortcut
+else:
+    # First, get the old-style name.
+    rawKey,bunch = c.config.getShortcut(name)
+    accel = bunch and bunch.val
+    commandName = name
+    
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunch = c.config.getShortcut(emacs_name)
+            accel = bunch and bunch.val
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
 @ One not-so-horrible kludge remains.
@@ -20633,7 +20676,7 @@ else:
 #@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
 if openWith:
-    menuCallback = self.defineOpenWithMenuCallback(command)
+    menuCallback = self.defineOpenWithMenuCallback(openWithData)
 else:
     menuCallback = self.defineMenuCallback(command,name)
 #@nonl
@@ -20802,13 +20845,16 @@ ok = (
 if ok:
     if len(data) == 2:
         label,command = data
+    elif openWith:
+        label,openWithShortcut,openWithData = data
+        rawKey = None
     else:
         label,junk,command = data
 else:
     g.trace('bad data in menu table: %s' % repr(data))
     continue # Ignore bad data
      
-if ok and (label in (None,'-') or command == None):
+if ok and label in (None,'-'):
     self.add_separator(menu)
     continue # That's all.
 #@nonl
@@ -20824,20 +20870,23 @@ for ch in name:
 name = name2
 #@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, get the old-style name.
-rawKey,bunch = c.config.getShortcut(name)
-accel = bunch and bunch.val
-commandName = name
-
-# Second, get new-style name.
-if not openWith and not accel:
-    << compute emacs_name >>
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunch = c.config.getShortcut(emacs_name)
-        accel = bunch and bunch.val
-    elif not dynamicMenu:
-        g.trace('No inverse for %s' % name)
+if openWith:
+    accel = openWithShortcut
+else:
+    # First, get the old-style name.
+    rawKey,bunch = c.config.getShortcut(name)
+    accel = bunch and bunch.val
+    commandName = name
+    
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunch = c.config.getShortcut(emacs_name)
+            accel = bunch and bunch.val
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
 @ One not-so-horrible kludge remains.
@@ -20867,7 +20916,7 @@ else:
 #@-node:ekr.20031218072017.1726:<< set menu_shortcut using accel >>
 #@+node:ekr.20031218072017.1727:<< define callback function >>
 if openWith:
-    menuCallback = self.defineOpenWithMenuCallback(command)
+    menuCallback = self.defineOpenWithMenuCallback(openWithData)
 else:
     menuCallback = self.defineMenuCallback(command,name)
 #@nonl
@@ -22294,20 +22343,23 @@ def createInverseCommandsDict (self):
 #@nonl
 #@-node:ekr.20051008082929:createInverseCommandsDict
 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-# First, get the old-style name.
-rawKey,bunch = c.config.getShortcut(name)
-accel = bunch and bunch.val
-commandName = name
-
-# Second, get new-style name.
-if not openWith and not accel:
-    << compute emacs_name >>
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunch = c.config.getShortcut(emacs_name)
-        accel = bunch and bunch.val
-    elif not dynamicMenu:
-        g.trace('No inverse for %s' % name)
+if openWith:
+    accel = openWithShortcut
+else:
+    # First, get the old-style name.
+    rawKey,bunch = c.config.getShortcut(name)
+    accel = bunch and bunch.val
+    commandName = name
+    
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunch = c.config.getShortcut(emacs_name)
+            accel = bunch and bunch.val
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % name)
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
 @ One not-so-horrible kludge remains.
@@ -24304,7 +24356,9 @@ def listToString(aList,tag=None,sort=False,indent=''):
 #@nonl
 #@-node:ekr.20041126060136:print_list & listToString
 #@+node:ekr.20051006125633.1:bindShortcut
-def bindShortcut (self,shortcut,name,command,commandName,openWith):
+def bindShortcut (self,
+    shortcut,name,command,commandName,
+    openWith=False,pane=None):
     
     '''Bind one shortcut from a menu table.'''
     
@@ -24312,7 +24366,6 @@ def bindShortcut (self,shortcut,name,command,commandName,openWith):
         # The pychecker warning about 'name' being unused is WRONG.
     
     k = self ; c = k.c ; w = c.frame.body.bodyCtrl
-    
     shortcut = str(shortcut)
     
     if openWith:
@@ -24344,8 +24397,9 @@ def bindShortcut (self,shortcut,name,command,commandName,openWith):
         def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
             return k.masterCommand(event,func,stroke)
         
-    return k.bindKey(w,shortcut,keyCallback,name,commandName,tag='bindShortcut')
-#@nonl
+    return k.bindKey(
+        w,shortcut,keyCallback,name,commandName,
+        pane=pane,tag='bindShortcut')
 #@-node:ekr.20051006125633.1:bindShortcut
 #@+node:ekr.20051001050607:endCommand
 def endCommand (self,event,commandName,forceFocus=True,tag=''):
