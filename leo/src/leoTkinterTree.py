@@ -267,7 +267,8 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nl
         
         self.redrawing = False # Used only to disable traces.
-        self.stayInTree = True # New in 4.4: we want to stay in the tree to use per-pane bindings.
+        self.stayInTree = c.config.getBool('stayInTreeAfterSelect')
+            # New in 4.4: We should stay in the tree to use per-pane bindings.
         self.trace = False
         self.verbose = True
         self.useBindtags = True
