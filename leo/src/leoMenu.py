@@ -1192,7 +1192,7 @@ class leoMenu:
                     rawKey,bunch = c.config.getShortcut(emacs_name)
                     accel = bunch and bunch.val
                 elif not dynamicMenu:
-                    g.trace('No inverse for %s' % name)
+                    g.trace('No inverse for %s' % commandName)
             #@nonl
             #@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
             #@nl
