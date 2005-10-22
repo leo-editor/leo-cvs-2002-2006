@@ -187,7 +187,7 @@
 </v>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 </v>
-<v t="ekr.20041213105954" a="TV"><vh>Window options</vh>
+<v t="ekr.20041213105954"><vh>Window options</vh>
 <v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
@@ -229,7 +229,7 @@
 <v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
+<v t="ekr.20051010112558" a="TV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1609,7 +1609,6 @@ close                       = None          # Ctrl-w conflicts with kill-region.
 contract-all                = Alt--
 contract-node               = Alt-[
 contract-or-go-left         = None
-contract-parent             = LtArrow       # Was Alt-0, but this seems more consistent.
 convert-all-blanks          = None
 convert-all-tabs            = None
 convert-blanks              = Shift-Ctrl-B
@@ -1628,7 +1627,6 @@ equal-sized-panes           = Alt-Shift-E
 execute-script              = None              # Ctrl-e conflicts with end-of-line
 exit-leo                    = Ctrl-Q
 expand-all                  = None              # Alt-9: not useful enough.
-expand-and-go-right         = RtArrow           # It would make sense to bind Alt-RtArrow to this too.
 expand-next-level           = Alt-=
 expand-node                 = Alt-]
 expand-or-go-right          = None
@@ -1658,6 +1656,8 @@ extract-names               = Shift-Ctrl-N
 extract-section             = Shift-Ctrl-E
 flatten-outline             = None
 
+contract-parent             ! tree = LtArrow       # Was Alt-0, but this seems more consistent.
+expand-and-go-right         ! tree = RtArrow           # It would make sense to bind Alt-RtArrow to this too.
 go-back                     ! tree = None
 go-forward                  ! tree = None
 goto-first-node             ! tree = Alt-Home      # Was: Alt-Shift-G
