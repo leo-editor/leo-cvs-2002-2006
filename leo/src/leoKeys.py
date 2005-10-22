@@ -680,12 +680,12 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.11:add_ekr_altx_commands
     #@+node:ekr.20050920085536.16:bindKey
-    def bindKey (self,w,shortcut,callback,name,commandName,pane=None,tag=''):
+    def bindKey (self,pane,shortcut,callback,commandName):
     
         '''Bind the indicated shortcut (a Tk keystroke) to the callback.
         callback calls commandName (for error messages).'''
-    
-        k = self ; c = k.c
+        
+        k = self ; c = k.c ; w = c.frame.body.bodyCtrl
         
         # if pane and pane != 'all': g.trace(shortcut,commandName,pane)
     
@@ -698,38 +698,13 @@ class keyHandlerClass:
                 w.bind(shortcut,callback)
                 # Binding to the menu ensures that keys are active in all parts of the frame.
                 c.frame.menu.bind(shortcut,callback)
-            #@        << other ways that don't work >>
-            #@+node:ekr.20051010065140:<< other ways that don't work >>
-            if 0: # None of these are satisfactory.
-            
-                if 0: # Too restrictive, but might be useful later.
-                    w.bind(shortcut,callback)
-                elif 0: # This prevents all insertions into body text!
-                    # This *might* work, but seems to be flaky.
-                    # Bind the key to *all* text widgets.
-                    c.frame.top.bind_class('Text',shortcut,callback)
-                elif 0:
-                    # Doesn't work at all.
-                    c.frame.outerFrame.bind(shortcut,callback)
-                elif 0:
-                    # A compromise.  This *almost* works, but cut/copy/paste may need help...
-                    for w in (c.frame.body.bodyCtrl,c.frame.canvas,c.frame.log.logCtrl):
-                        w.bind(shortcut,callback)
-                else:
-                    # Make binding available everywhere.
-                    # This causes problems with tabs, cut/copy/paste (!!)
-                    c.frame.top.bind(shortcut,callback)
-            #@nonl
-            #@-node:ekr.20051010065140:<< other ways that don't work >>
-            #@nl
             k.bindingsDict [shortcut] = g.bunch(
-                func=callback,name=name,commandName=commandName,warningGiven=False)
+                pane=pane,func=callback,commandName=commandName,warningGiven=False)
             return True
     
         except Exception: # Could be a user error.
             if not g.app.menuWarningsGiven:
-                g.es_print('Exception binding %s to %s tag:%s' % (
-                    shortcut,commandName,tag))
+                g.es_print('Exception binding %s to %s' % (shortcut,commandName))
                 g.es_exception()
                 g.printStack()
                 g.app.menuWarningsGiven = True
@@ -741,7 +716,7 @@ class keyHandlerClass:
         
         '''Make a binding for the Open With command.'''
         
-        k = self ; c = k.c ; w = c.frame.body.bodyCtrl
+        k = self ; c = k.c ;
         
         bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(shortcut)
         
@@ -755,49 +730,33 @@ class keyHandlerClass:
         def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
             return k.masterCommand(event,func,stroke)
                 
-        return k.bindKey(w,bind_shortcut,keyCallback,name,'open-with',
-            pane='menu',tag='bindOpenWith')
+        return k.bindKey('menu',bind_shortcut,keyCallback,'open-with')
     #@nonl
     #@-node:ekr.20051008135051.1:bindOpenWith
     #@+node:ekr.20051006125633.1:bindShortcut
-    def bindShortcut (self,shortcut,name,command,commandName,pane=None):
+    def bindShortcut (self,pane,shortcut,command,commandName):
         
         '''Bind one shortcut from a menu table.'''
         
-        __pychecker__ = '--no-argsused'
-            # The pychecker warning about 'name' being unused is WRONG.
-        
-        k = self ; c = k.c ; w = c.frame.body.bodyCtrl
-        shortcut = str(shortcut)
-            
-        # g.trace(g.callerName(2),command.__name__)
+        k = self ; shortcut = str(shortcut)
     
         if command.__name__ == 'leoCallback':
             # Get the function wrapped by this particular leoCallback function.
             func = k.leoCallbackDict.get(command)
-            # Get the proper command name if possible.
             commandName = k.inverseCommandsDict.get(func.__name__)
-            name = func.__name__
-            # g.trace('%25s (leo) %s' % (shortcut,name))
             
             # No need for a second layer of callback.
             def keyCallback (event,func=command,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
         else:
-            # Important: the name just needs to be unique for every function.
-            name = command.__name__
-            # g.trace('%25s %s' % (shortcut,name))
     
-            def menuFuncCallback (event,command=command,name=name):
-                # g.trace(name)
+            def menuFuncCallback (event,command=command):
                 return command(event)
     
             def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
             
-        return k.bindKey(
-            w,shortcut,keyCallback,name,commandName,
-            pane=pane,tag='bindShortcut')
+        return k.bindKey(pane,shortcut,keyCallback,commandName)
     #@nonl
     #@-node:ekr.20051006125633.1:bindShortcut
     #@+node:ekr.20051011103654:checkBindings
@@ -911,8 +870,7 @@ class keyHandlerClass:
         
         '''Make the bindings and set ivars for sepcial keystrokes.'''
         
-        k = self ; c = k.c ; f = c.frame ; w = f.body.bodyCtrl
-        tag = 'makeSpecialBindings'
+        k = self ; c = k.c ; f = c.frame
         
         # These defaults may be overridden.
         for stroke,ivar,commandName,func in (
@@ -936,39 +894,32 @@ class keyHandlerClass:
             
             setattr(k,ivar,shortcut)
     
-            k.bindKey(w,shortcut,keyCallback,func.__name__,commandName,
-                pane='all',tag=tag)
+            k.bindKey('all',shortcut,keyCallback,commandName)
             
         # Add a binding for <Key> events, so all key events go through masterCommand.
         def allKeysCallback (event):
             return k.masterCommand(event,func=None,stroke='<Key>')
     
-        k.bindKey(w,'<Key>',allKeysCallback,
-            name='masterCommand',commandName='master-command',
-            pane='all',tag=tag)
+        k.bindKey('all','<Key>',allKeysCallback,'master-command')
     #@nonl
     #@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
     #@+node:ekr.20051008134059:makeBindingsFromCommandsDict
     def makeBindingsFromCommandsDict (self):
         
-        '''Add bindings for all entries in c.commandDict.
-        
-        These bindings may also be specied later by menu code,
-        but bindShortcut and bindKey ignore equivalent bindings.
-        '''
+        '''Add bindings for all entries in c.commandDict.'''
     
         k = self ; c = k.c
         keys = c.commandsDict.keys() ; keys.sort()
     
-        for name in keys:
-            command = c.commandsDict.get(name)
-            key, bunch = c.config.getShortcut(name)
+        for commandName in keys:
+            command = c.commandsDict.get(commandName)
+            key, bunch = c.config.getShortcut(commandName)
             accel = bunch and bunch.val
             if accel:
                 bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
-                k.bindShortcut(bind_shortcut,name,command,name,pane=bunch.pane)
+                k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
             
-            # g.trace('%25s %s' % (name,bind_shortcut))
+            # g.trace('%25s %s' % (commandName,bind_shortcut))
     #@nonl
     #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
     #@-node:ekr.20051006125633:Binding (keyHandler)
@@ -1451,8 +1402,8 @@ class keyHandlerClass:
         commandNames = c.commandsDict.keys() ; commandNames.sort()
     
         for commandName in commandNames:
-            k.printCommandNameAndBinding(
-                commandName,inverseBindingDict,tabName='Command')
+            shortcut = inverseBindingDict.get(commandName,'')
+            g.es('%s %s' % (commandName,shortcut),tabName='Command')
     #@nonl
     #@-node:ekr.20051014061332:printCommands
     #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
@@ -1765,7 +1716,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
     #@+node:ekr.20051015110547:registerCommand
-    def registerCommand (self,commandName,shortcut,func,pane=None,verbose=True):
+    def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
         
         '''Make the function available as a minibuffer command,
         and optionally attempt to bind a shortcut.
@@ -1784,8 +1735,8 @@ class keyHandlerClass:
         
         if shortcut:
             # Retain the original spelling of the shortcut for the message.
-            shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
-            ok = k.bindShortcut (shortcut2,func.__name__,func,commandName,pane=pane)
+            shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+            ok = k.bindShortcut (pane,shortcut,func,commandName)
                 
         if verbose:
             if shortcut and ok:
@@ -1917,8 +1868,8 @@ class keyHandlerClass:
                 
             inverseBindingDict = k.computeInverseBindingDict()
             for commandName in k.mb_tabList:
-                k.printCommandNameAndBinding(
-                    commandName,inverseBindingDict,tabName='Completion')
+                shortcut = inverseBindingDict.get(commandName,'')
+                g.es('%s %s' % (commandName,shortcut))
     
         k.forceFocusToBody()
     #@nonl
@@ -1928,10 +1879,11 @@ class keyHandlerClass:
     
         k = self
     
-        d = {} # keys are function names, values are shortcuts.
+        d = {} # keys are minibuffer command names, values are shortcuts.
+    
         for shortcut in k.bindingsDict.keys():
             b = k.bindingsDict.get(shortcut)
-            d [b.name] = shortcut
+            d [b.commandName] = shortcut # was b.name
     
         return d
     #@nonl
@@ -2031,25 +1983,6 @@ class keyHandlerClass:
             return '<no leoCallback name>'
     #@nonl
     #@-node:ekr.20051010063452:ultimateFuncName
-    #@+node:ekr.20051018065555:printCommandNameAndBinding
-    def printCommandNameAndBinding (self,commandName,inverseBindingDict,tabName='Log'):
-        
-        k = self ; c = k.c
-        
-        func = c.commandsDict.get(commandName)
-        if func.__name__ == 'leoCallback':
-            calledFunc = k.leoCallbackDict.get(func)
-            funcName = calledFunc and calledFunc.__name__
-        else:
-            funcName = func.__name__
-    
-        shortcut = inverseBindingDict.get(funcName,'')
-        
-        # Use different format strings for the console and log pane.
-        # print '%30s %s' % (commandName,shortcut)
-        g.es('%s %s' % (commandName,shortcut),tabName=tabName)
-    #@nonl
-    #@-node:ekr.20051018065555:printCommandNameAndBinding
     #@-node:ekr.20051002152108.1:Shared helpers
     #@+node:ekr.20050923172809:State...
     #@+node:ekr.20050923172814.1:clearState
