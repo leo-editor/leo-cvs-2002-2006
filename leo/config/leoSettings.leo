@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="54" left="171" height="743" width="981"/>
+	<global_window_position top="24" left="225" height="743" width="981"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1478,12 +1478,7 @@ copy-to-register            = None
 count-region                = None
 dabbrev-completion          = None
 dabbrev-expands             = None
-delete                      = None
-delete-char                 = None
-delete-file                 = None
 delete-indentation          = None
-delete-rectangle            = None
-delete-spaces               = None
 diff                        = None
 digit-argument              = None
 downcase-region             = None
@@ -1507,7 +1502,6 @@ indent-rigidly              = None
 indent-to-comment-column    = None
 insert-file                 = None
 insert-keyboard-macro       = None
-insert-newline              = None
 insert-parentheses          = None
 insert-register             = None
 insert-to-buffer            = None
@@ -1526,7 +1520,6 @@ load-file                   = None
 make-directory              = None
 name-last-kbd-macro         = None
 negative-argument           = None
-newline-and-indent          = None
 number-command              = None
 number-command-0            = None
 number-command-1            = None
@@ -1571,7 +1564,6 @@ show-fonts                  = None
 sort-columns                = None
 sort-fields                 = None
 sort-lines                  = None
-split-line                  = None
 start-kbd-macro             = None
 string-rectangle            = None
 suspend                     = None
@@ -1591,7 +1583,6 @@ word-search-forward         = None
 write-abbrev-file           = None
 write-missing-at-file-nodes = None
 yank-rectangle              = None
-zap-to-character            = None
 
 # Leo commands...
 
@@ -1665,7 +1656,6 @@ goto-first-sibling          = Alt-Shift-Home
 goto-last-node              = None          # Was: Alt-Shift-H
 goto-last-sibling           = Alt-Shift-End
 goto-last-visible           = Alt-End
-goto-line-number            = Alt-G
 goto-next-changed           = None          # Removed Alt-D: not useful enough.
 goto-next-clone             = Alt-N
 goto-next-marked            = None          # Removed Alt-M: not useful enough.
