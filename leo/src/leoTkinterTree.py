@@ -267,6 +267,7 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nl
         
         self.redrawing = False # Used only to disable traces.
+        self.stayInTree = True # New in 4.4: we want to stay in the tree to use per-pane bindings.
         self.trace = False
         self.verbose = True
         self.useBindtags = True
@@ -303,6 +304,8 @@ class leoTkinterTree (leoFrame.leoTree):
     def createPermanentBindings (self):
         
         canvas = self.canvas
+        
+        canvas.bind('<Button-1>',self.onTreeClick)
     
         if self.expanded_click_area:
             canvas.tag_bind('clickBox','<Button-1>', self.onClickBoxClick)
@@ -433,11 +436,12 @@ class leoTkinterTree (leoFrame.leoTree):
         
         canvas = self.canvas ; defaultColor = "" ; tag="clickBox" 
     
+        # New in 4.4: Limit the size of the box.
+        x2 = x1 + 100
         if self.freeClickBoxes:
             theId = self.freeClickBoxes.pop(0)
             canvas.coords(theId,x1,y1,x2,y2)
         else:
-            # Was this the bug ?? was (x1,y2**,x2,y2)
             theId = self.canvas.create_rectangle(x1,y1,x2,y2,tag=tag)
             canvas.itemconfig(theId,fill=defaultColor,outline=defaultColor)
             
@@ -1684,8 +1688,10 @@ class leoTkinterTree (leoFrame.leoTree):
             self.select(p)
             if c.frame.findPanel:
                 c.frame.findPanel.handleUserClick(p)
-                
-            c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='onClickBoxClick')
+            if self.stayInTree:
+                c.frame.treeWantsFocus()
+            else:
+                c.frame.bodyWantsFocus()
         g.doHook("boxclick2",c=c,p=p,v=p,event=event)
     #@nonl
     #@-node:ekr.20040803072955.79:onClickBoxClick
@@ -1724,7 +1730,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         try:
             if not g.doHook("iconrclick1",c=c,p=p,v=p,event=event):
-                self.OnActivate(p)
+                self.OnActivateHeadline(p)
                 self.endEditLabel()
                 self.OnPopup(p,event)
             g.doHook("iconrclick2",c=c,p=p,v=p,event=event)
@@ -1787,11 +1793,11 @@ class leoTkinterTree (leoFrame.leoTree):
         except AttributeError:
             return "continue"
             
-        if self.trace and self.verbose: g.trace(p)
+        # g.trace(p.headString())
         
         try:
             if not g.doHook("headclick1",c=c,p=p,v=p,event=event):
-                self.OnActivate(p)
+                self.OnActivateHeadline(p)
             g.doHook("headclick2",c=c,p=p,v=p,event=event)
         except:
             g.es_event_exception("headclick")
@@ -1828,7 +1834,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         try:
             if not g.doHook("headrclick1",c=c,p=p,v=p,event=event):
-                self.OnActivate(p)
+                self.OnActivateHeadline(p)
                 self.endEditLabel()
                 self.OnPopup(p,event)
             g.doHook("headrclick2",c=c,p=p,v=p,event=event)
@@ -2136,24 +2142,31 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.103:onEndDrag
     #@-node:ekr.20040803072955.99:Dragging
-    #@+node:ekr.20040803072955.105:OnActivate (tkTree)
-    def OnActivate (self,p,event=None):
+    #@+node:ekr.20051022141020:onTreeClick
+    def onTreeClick (self,event=None):
+        
+        self.frame.treeWantsFocus()
+        
+        return 'break'
+    #@-node:ekr.20051022141020:onTreeClick
+    #@+node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
+    def OnActivateHeadline (self,p,event=None):
         
         __pychecker__ = '--no-argsused' # event not used.
+        
+        # g.trace(p.headString())
     
         try:
             c = self.c
             #@        << activate this window >>
             #@+node:ekr.20040803072955.106:<< activate this window >>
-            current = c.currentPosition()
-            
-            if p == current:
+            if p == c.currentPosition():
                 # g.trace("is current")
                 if self.active:
                     self.editLabel(p)
                 else:
                     # Set the focus immediately.  This is essential for proper editing.
-                    c.frame.treeWantsFocus(self.canvas,later=False,tag='OnActivate')
+                    c.frame.treeWantsFocus(later=False)
             else:
                 # g.trace("not current")
                 self.select(p)
@@ -2164,7 +2177,11 @@ class leoTkinterTree (leoFrame.leoTree):
                     c.frame.bodyCtrl.see(p.v.t.insertSpot)
                 else:
                     c.frame.bodyCtrl.mark_set("insert","1.0")
-                c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='OnActivate')
+                    
+                if self.stayInTree:
+                    c.frame.treeWantsFocus()
+                else:
+                    c.frame.bodyWantsFocus()
             
             self.active = True
             #@nonl
@@ -2173,7 +2190,7 @@ class leoTkinterTree (leoFrame.leoTree):
         except:
             g.es_event_exception("activate tree")
     #@nonl
-    #@-node:ekr.20040803072955.105:OnActivate (tkTree)
+    #@-node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
     #@+node:ekr.20040803072955.107:Unchanged Event handers
     #@+at 
     #@nonl
@@ -2190,12 +2207,9 @@ class leoTkinterTree (leoFrame.leoTree):
         tree = self ; c = self.c
         focus = g.app.gui.get_focus(c.frame)
     
-        # Bug fix: 7/13/03: Only do this as needed.
         # Doing this on every click would interfere with the double-clicking.
         if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
             try:
-                if self.trace and self.verbose:
-                    g.trace(focus)
                 tree.endEditLabel()
                 tree.dimEditLabel()
             except:
@@ -2384,7 +2398,7 @@ class leoTkinterTree (leoFrame.leoTree):
         menu.post(event.x_root, event.y_root)
     
         # Set the focus immediately so we know when we lose it.
-        c.frame.treeWantsFocus(menu,later=False,tag='showPopupMenu')
+        c.frame.widgetWantsFocus(menu,later=False)
     #@nonl
     #@-node:ekr.20040803072955.116:showPopupMenu
     #@-node:ekr.20040803072955.110:tree.OnPopup & allies
@@ -2549,7 +2563,7 @@ class leoTkinterTree (leoFrame.leoTree):
         return y
     #@-node:ekr.20040803072955.124:tree.updateTree
     #@-node:ekr.20040803072955.118:Incremental drawing...
-    #@+node:ekr.20040803072955.125:Selecting & editing...
+    #@+node:ekr.20040803072955.125:Selecting & editing... (tkTree)
     #@+node:ekr.20040803072955.126:endEditLabel
     def endEditLabel (self):
         
@@ -2569,7 +2583,10 @@ class leoTkinterTree (leoFrame.leoTree):
             # force a redraw of joined and ancestor headlines.
             self.force_redraw() 
     
-        frame.bodyWantsFocus(frame.bodyCtrl,tag='body:endEditLabel')
+        if self.stayInTree:
+            c.frame.treeWantsFocus()
+        else:
+            frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20040803072955.126:endEditLabel
     #@+node:ekr.20040803072955.127:editLabel
@@ -2700,7 +2717,10 @@ class leoTkinterTree (leoFrame.leoTree):
         
         frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
         
-        frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
+        if self.stayInTree:
+            c.frame.treeWantsFocus()
+        else:
+            frame.bodyWantsFocus()
         #@nonl
         #@-node:ekr.20040803072955.133:<< set the current node >>
         #@nl
@@ -2724,7 +2744,7 @@ class leoTkinterTree (leoFrame.leoTree):
             p.edit_text().tag_remove("sel","1.0","end")
             p.edit_text().tag_add("sel","1.0","end")
             # Set the focus immediately
-            self.frame.treeWantsFocus(p.edit_text(),later=False,tag='tree:setNormalLabelState')
+            self.frame.widgetWantsFocus(p.edit_text(),later=False)
     #@nonl
     #@-node:ekr.20040803072955.135:setNormalLabelState
     #@+node:ekr.20040803072955.136:setDisabledLabelState
@@ -2852,8 +2872,6 @@ class leoTkinterTree (leoFrame.leoTree):
     def expandAllAncestors (self,p):
         
         redraw_flag = False
-        
-        # g.trace(p)
     
         for p in p.parents_iter():
             if not p.isExpanded():
@@ -2861,9 +2879,9 @@ class leoTkinterTree (leoFrame.leoTree):
                 redraw_flag = True
     
         return redraw_flag
-    
+    #@nonl
     #@-node:ekr.20040803072955.143:tree.expandAllAncestors
-    #@-node:ekr.20040803072955.125:Selecting & editing...
+    #@-node:ekr.20040803072955.125:Selecting & editing... (tkTree)
     #@-others
 #@nonl
 #@-node:ekr.20040803072955:@thin leoTkinterTree.py

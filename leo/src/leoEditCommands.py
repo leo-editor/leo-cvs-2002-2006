@@ -1,6 +1,6 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20050710142719:@thin leoEditCommands.py
-'''Basic editor commands for Leo.
+'''Basic editor commands for Leo.r
 
 Modelled after Emacs and Vim commands.'''
 
@@ -1004,6 +1004,7 @@ class editCommandsClass (baseEditCommandsClass):
             'center-line':          self.centerLine,
             'center-region':        self.centerRegion,
             'count-region':         self.countRegion,
+            'cycle-focus':          self.cycleFocus,
             'dabbrev-completion':   self.dynamicExpansion2,
             'dabbrev-expands':      self.dynamicExpansion,
             'delete-char':          self.deleteNextChar,
@@ -1020,6 +1021,9 @@ class editCommandsClass (baseEditCommandsClass):
             'fill-region':          self.fillRegion,
             'fill-region-as-paragraph': self.fillRegionAsParagraph,
             'flush-lines':          self.flushLines,
+            'focus-to-body':        self.focusToBody,
+            'focus-to-log':         self.focusToLog,
+            'focus-to-tree':        self.focusToTree,
             'forward-char':         self.forwardCharacter,
             'forward-paragraph':    self.forwardParagraph,
             'forward-sentence':     self.forwardSentence,
@@ -1658,6 +1662,49 @@ class editCommandsClass (baseEditCommandsClass):
         w.mark_set('insert',g.choose(i==s1,s2,s1))
     #@nonl
     #@-node:ekr.20050920084036.136:exchangePointMark
+    #@+node:ekr.20051022142249:focus (editCommandsClass)
+    #@+node:ekr.20051022144825:focusToBody/Log/Tree
+    def focusToBody (self,event):
+        frame = self.c.frame
+        return frame.set_focus(frame.body.bodyCtrl,later=True)
+    
+    def focusToLog (self,event):
+        frame = self.c.frame
+        return frame.set_focus(frame.log.logCtrl,later=True)
+    
+    def focusToTree (self,event):
+        frame = self.c.frame
+        return frame.set_focus(frame.tree.canvas,later=True)
+        
+    #@-node:ekr.20051022144825:focusToBody/Log/Tree
+    #@+node:ekr.20051022144825.1:cycleFocus
+    def cycleFocus (self,event):
+    
+        c = self.c ; frame = c.frame
+        
+        body = c.frame.body.bodyCtrl
+        log  = c.frame.log.logCtrl
+        tree = c.frame.tree.canvas
+    
+        panes = [body,log,tree]
+    
+        for w in panes:
+            if w == event.widget:
+                i = panes.index(w)
+                if i >= len(panes) - 1:
+                    i = 0
+                else:
+                    i += 1
+                pane = panes[i] ; break
+        else:
+            # Assume we were somewhere in the tree.
+            pane = body
+            
+        # g.trace(pane)
+        frame.set_focus(pane,later=True)
+    #@nonl
+    #@-node:ekr.20051022144825.1:cycleFocus
+    #@-node:ekr.20051022142249:focus (editCommandsClass)
     #@+node:ekr.20050920084036.66:fill column and centering
     #@+at
     # These methods are currently just used in tandem to center the line or 

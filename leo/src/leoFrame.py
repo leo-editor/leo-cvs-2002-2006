@@ -844,10 +844,6 @@ class leoTree:
     #@+node:ekr.20031218072017.3710:Notifications
     # These should all be internal to the tkinter.frame class.
     
-    def OnActivateHeadline(self,p):
-        __pychecker__ = '--no-argsused'
-        self.oops()
-        
     def onHeadChanged(self,p):
         __pychecker__ = '--no-argsused'
         self.oops()

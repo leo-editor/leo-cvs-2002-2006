@@ -695,14 +695,16 @@ class keyHandlerClass:
                 #@            << bind callback to shortcut in pane >>
                 #@+node:ekr.20051022094136:<< bind callback to shortcut in pane >>
                 body = c.frame.body.bodyCtrl
-                log  = c.frame.log.nb # The entire notebook
+                log  = c.frame.log.logCtrl
                 menu = c.frame.menu
                 tree = c.frame.tree.canvas
                 
                 # Binding to the menu ensures that keys are active in all parts of the frame.
                 d = {
-                    'all':  [body,body], 'body': [body],
-                    'log':  [log],       'menu': [body,menu],
+                    'all':  [body,body,log,tree],
+                    'body': [body],
+                    'log':  [log],
+                    'menu': [body,menu],
                     'tree': [tree],
                 }
                 
@@ -1889,7 +1891,7 @@ class keyHandlerClass:
             inverseBindingDict = k.computeInverseBindingDict()
             for commandName in k.mb_tabList:
                 shortcut = inverseBindingDict.get(commandName,'')
-                g.es('%s %s' % (commandName,shortcut))
+                g.es('%s %s' % (commandName,shortcut),tabName='Completion')
     
         k.forceFocusToBody()
     #@nonl
@@ -1948,9 +1950,9 @@ class keyHandlerClass:
     #@+node:ekr.20051012092847:forceFocusToBody
     def forceFocusToBody (self):
         
-        k = self ; c = k.c ; f = c.frame
+        k = self ; c = k.c
         
-        f.bodyWantsFocus(f.bodyCtrl,later=False,tag='k.forceFocusToBody')
+        c.frame.bodyWantsFocus(later=False)
     #@nonl
     #@-node:ekr.20051012092847:forceFocusToBody
     #@+node:ekr.20051014170754.1:getShortcutForCommand/Name
