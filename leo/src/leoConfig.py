@@ -418,7 +418,7 @@ class parserBaseClass:
         return kind,name,val
     #@nonl
     #@-node:ekr.20041119205148:parseHeadline
-    #@+node:ekr.20041120112043:g.app.config.parseShortcutLine
+    #@+node:ekr.20041120112043:parseShortcutLine (g.app.config)
     def parseShortcutLine (self,s):
         
         '''Parse a shortcut line.  Valid forms:
@@ -435,13 +435,12 @@ class parserBaseClass:
         i = g.skip_ws(s,i)
         if g.match(s,i,'!'): # New in 4.4: allow pane-specific shortcuts.
             j = g.skip_ws(s,i+1)
-            i = g.skip_id(s,i)
+            i = g.skip_id(s,j)
             pane = s[j:i]
-            if not pane.strip():
-                pane = 'all'
-        else:
-            pane = 'all'
+            if not pane.strip(): pane = 'all'
+        else: pane = 'all'
     
+        i = g.skip_ws(s,i)
         if g.match(s,i,'='):
             i = g.skip_ws(s,i+1)
             val = s[i:]
@@ -453,10 +452,10 @@ class parserBaseClass:
             if i > 0 and val[i-1] in (' ','\t'):
                 val = val[:i].strip()
     
-        # g.trace("%30s %s" %(name,val))
+        # g.trace(pane,name,val,s)
         return name,g.bunch(pane=pane,val=val)
     #@nonl
-    #@-node:ekr.20041120112043:g.app.config.parseShortcutLine
+    #@-node:ekr.20041120112043:parseShortcutLine (g.app.config)
     #@-node:ekr.20041213082558:parsers
     #@+node:ekr.20041120094940.9:set (parseBaseClass)
     def set (self,p,kind,name,val):
@@ -484,14 +483,14 @@ class parserBaseClass:
     #@+node:ekr.20041227071423:setShortcut (ParserBaseClass)
     def setShortcut (self,name,bunch):
         
-        # g.trace(name,bunch)
-        
         c = self.c
         
         # None is a valid value for val.
         key = c.frame.menu.canonicalizeMenuName(name)
         rawKey = key.replace('&','')
         self.set(c,rawKey,"shortcut",bunch)
+        
+        # g.trace(bunch.pane,rawKey,bunch.val)
     #@nonl
     #@-node:ekr.20041227071423:setShortcut (ParserBaseClass)
     #@+node:ekr.20041119204700.1:traverse (parserBaseClass)
@@ -1070,10 +1069,10 @@ class configClass:
     
         bunch = self.get(c,key,"shortcut")
         if bunch and bunch.val:
+            # g.trace(bunch.pane,key,repr(bunch.val))
             if bunch.val.lower() == 'none':
                 return key,None
             else:
-                # g.trace(key,repr(bunch.val))
                 return key,bunch
         else:
             return key,None

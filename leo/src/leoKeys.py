@@ -685,19 +685,38 @@ class keyHandlerClass:
         '''Bind the indicated shortcut (a Tk keystroke) to the callback.
         callback calls commandName (for error messages).'''
         
-        k = self ; c = k.c ; w = c.frame.body.bodyCtrl
-        
-        # if pane and pane != 'all': g.trace(shortcut,commandName,pane)
+        k = self ; c = k.c
     
         try:
-            # Essential to make cut/copy/paste work.
             if shortcut == '<Key>':
-                w.bind(shortcut,callback,'+')
                 # Don't bind to menu.  Besides, menu.bind doesn't allow '+' arg.
+                c.frame.body.bodyCtrl.bind(shortcut,callback,'+')
             else:
-                w.bind(shortcut,callback)
+                #@            << bind callback to shortcut in pane >>
+                #@+node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+                body = c.frame.body.bodyCtrl
+                log  = c.frame.log.nb # The entire notebook
+                menu = c.frame.menu
+                tree = c.frame.tree.canvas
+                
                 # Binding to the menu ensures that keys are active in all parts of the frame.
-                c.frame.menu.bind(shortcut,callback)
+                d = {
+                    'all':  [body,body], 'body': [body],
+                    'log':  [log],       'menu': [body,menu],
+                    'tree': [tree],
+                }
+                
+                if 1:
+                    if pane and pane != 'all':
+                        g.trace('%4s %20s %s' % (pane, shortcut,commandName))
+                
+                widgets = d.get((pane or 'all').lower(),[])
+                
+                for w in widgets:
+                    w.bind(shortcut,callback)
+                #@nonl
+                #@-node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+                #@nl
             k.bindingsDict [shortcut] = g.bunch(
                 pane=pane,func=callback,commandName=commandName,warningGiven=False)
             return True
@@ -705,8 +724,8 @@ class keyHandlerClass:
         except Exception: # Could be a user error.
             if not g.app.menuWarningsGiven:
                 g.es_print('Exception binding %s to %s' % (shortcut,commandName))
-                g.es_exception()
-                g.printStack()
+                # g.es_exception()
+                # g.printStack()
                 g.app.menuWarningsGiven = True
             return False
     #@nonl
@@ -918,7 +937,9 @@ class keyHandlerClass:
                 bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
                 k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
             
-            # g.trace('%25s %s' % (commandName,bind_shortcut))
+            if 0:
+                if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
+                else:     g.trace(commandName)
     #@nonl
     #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
     #@-node:ekr.20051006125633:Binding (keyHandler)
