@@ -2159,14 +2159,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-at
     #@@c
     
-    def set_focus(self,widget,later=False,tag=''):
+    def set_focus(self,widget,later=False):
         
         '''Set the focus to the widget specified in the xWantsFocus methods.'''
-        
-        __pychecker__ = '--no-argsused' # tag good for debugging.
     
         c = self.c
-        # g.trace(tag) # c.shortFileName())
+        # g.trace(g.callerList(5))
     
         if widget and not g.app.unitTesting:
             # Messing with focus may be dangerous in unit tests.
@@ -2178,8 +2176,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
                         # g.trace(c.frame.wantedWidget)
                         g.app.gui.set_focus(
                             g.app.wantedCommander,
-                            c.frame.wantedWidget,
-                            tag='frame.setFocus')
+                            c.frame.wantedWidget)
                     self.wantedWidget = None
                     g.app.wantedCommander = None
                         
@@ -2187,15 +2184,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 self.wantedWidget = widget
                 g.app.wantedCommander = c
                 if not self.wantedCallbackScheduled:
-                    # g.trace(tag,c.shortFileName())
+                    # g.trace(g.callerList(4),c.shortFileName())
                     self.wantedCallbackScheduled = True
                     # We don't have to wait so long now that we don't call this so often.
                     # The difference between 500 msec. and 100 msec. is significant.
                     # New in 4.4: set the delay to 1 msec.: the smaller the better.
                     self.outerFrame.after(1,setFocusCallback)
             else:
-                # g.trace(tag,c.shortFileName())
-                g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+                # g.trace(g.callerList(4),c.shortFileName())
+                g.app.gui.set_focus(c,widget)
                 # Crucial: cancel any previous callback.
                 # It may be re-enabled later, but that doesn't matter.
                 self.wantedWidget = None
@@ -2382,7 +2379,7 @@ class leoTkinterBody (leoFrame.leoBody):
         font = c.config.getFontFromParams(
             "body_text_font_family", "body_text_font_size",
             "body_text_font_slant",  "body_text_font_weight",
-            c.config.defaultBodyFontSize, tag = "body")
+            c.config.defaultBodyFontSize)
         
         self.fontRef = font # ESSENTIAL: retain a link to font.
         body.configure(font=font)
@@ -3530,7 +3527,7 @@ class leoTkinterLog (leoFrame.leoLog):
         font = c.config.getFontFromParams(
             "log_text_font_family", "log_text_font_size",
             "log_text_font_slant",  "log_text_font_weight",
-            c.config.defaultLogFontSize, tag = "log")
+            c.config.defaultLogFontSize)
     
         self.fontRef = font # ESSENTIAL: retain a link to font.
         logCtrl.configure(font=font)
@@ -3738,10 +3735,14 @@ class leoTkinterLog (leoFrame.leoLog):
             menu = self.makeTabMenu(tabName)
             tab = self.nb.tab(tabName)
             
-            def menuClickCallback(event):
+            def tabMenuRightClickCallback(event):
                 self.onRightClick(event,menu)
+                
+            def tabMenuClickCallback(event):
+                self.onClick(event,tabName)
             
-            tab.bind('<Button-3>',menuClickCallback)
+            tab.bind('<Button-1>',tabMenuClickCallback)
+            tab.bind('<Button-3>',tabMenuRightClickCallback)
             #@nonl
             #@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
             #@nl
@@ -3771,14 +3772,12 @@ class leoTkinterLog (leoFrame.leoLog):
             #@-node:ekr.20051018072306:<< Create the tab's text widget >>
             #@nl
             self.setTabBindings(tabName)
-            if 0: # Update immediately so we can queue the request to change focus.
-                tabFrame.update_idletasks()
-                self.c.frame.bodyWantsFocus()
             
         self.nb.selectpage(tabName)
         # Update the status vars.
         self.tabName = tabName
         self.logCtrl = self.textDict.get(tabName)
+        c.frame.widgetWantsFocus(self.logCtrl)
         self.tabFrame = self.frameDict.get(tabName)
         return tabFrame
     #@nonl
@@ -3802,12 +3801,16 @@ class leoTkinterLog (leoFrame.leoLog):
     #@nonl
     #@-node:ekr.20051022162730:setTabBindings
     #@+node:ekr.20051019134106:Tab menu callbacks & helpers
-    #@+node:ekr.20051019134422:onRightClick
+    #@+node:ekr.20051019134422:onRightClick & onClick
     def onRightClick (self,event,menu):
     
         menu.post(event.x_root,event.y_root)
+        
+    def onClick (self,event,tabName):
+        
+        self.selectTab(tabName)
     #@nonl
-    #@-node:ekr.20051019134422:onRightClick
+    #@-node:ekr.20051019134422:onRightClick & onClick
     #@+node:ekr.20051019140004.1:newTabFromMenu
     def newTabFromMenu (self,tabName='Log'):
     
