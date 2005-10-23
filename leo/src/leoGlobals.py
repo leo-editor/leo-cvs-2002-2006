@@ -895,6 +895,29 @@ def alert(message):
     import tkMessageBox
     tkMessageBox.showwarning("Alert", message)
 #@-node:ekr.20031218072017.3105:alert
+#@+node:ekr.20051023083258:callerList
+def callerList (n=3,excludeCaller=True):
+    
+    '''Return a list containing the callers of the function that called g.callerList.
+    
+    By default, the function that called g.callerList is not on the list,
+    which is what is wanted when using g.trace.'''
+    
+    callers = []
+    
+    while n > 0:
+        s = g.callerName(n)
+        if s == 'callerList':
+            if excludeCaller and callers:
+                del callers [-1]
+            break
+        else:
+            callers.append(s)
+        n -= 1
+        
+    return ','.join(callers)
+#@nonl
+#@-node:ekr.20051023083258:callerList
 #@+node:ekr.20031218072017.3107:callerName
 def callerName (n=1):
 
