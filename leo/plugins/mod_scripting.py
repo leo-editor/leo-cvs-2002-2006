@@ -65,7 +65,7 @@ import sys
 #@-node:EKR.20040613215415:<< imports >>
 #@nl
 
-__version__ = "0.11"
+__version__ = "0.13"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
@@ -99,6 +99,8 @@ __version__ = "0.11"
 # 0.12 EKR:
 #     - Use c.executeScript(p=p,silent=True) in @command so the
 #       'end of script' message doesn't switch tabs.
+# 0.13 - Use set silent=True in all calls to c.executeScript except for the 
+# 'Run Script' button.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -427,7 +429,7 @@ class scriptingController:
     
         if atPluginNodes:
             g.es("executing script %s" % (name),color="blue")
-            c.executeScript(p,useSelectedText=False)
+            c.executeScript(p,useSelectedText=False,silent=True)
         else:
             g.es("disabled @script: %s" % (name),color="blue")
     #@nonl
@@ -487,7 +489,7 @@ class scriptingController:
             #c.frame.clearStatusLine()
             #c.frame.putStatusLine("Executing button: %s..." % buttonText)
             g.app.scriptDict = {}
-            c.executeScript(p=p)
+            c.executeScript(p=p,silent=True)
             # Remove the button if the script asks to be removed.
             if g.app.scriptDict.get('removeMe'):
                 g.es("Removing '%s' button at its request" % buttonText)
