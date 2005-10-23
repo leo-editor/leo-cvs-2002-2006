@@ -701,11 +701,9 @@ class keyHandlerClass:
                 menu = c.frame.menu
                 tree = c.frame.tree.canvas
                 
-                # Binding to the menu ensures that keys are active in all parts of the frame.
-                # However, it does not appear necessary at this time...
-                
+                # Binding to 'menu' causes problems with multiple pastes in the Find Tab.
                 d = {
-                    'all':  [body,log,tree,menu],
+                    'all':  [body,log,tree], # Probably not wise: menu.
                     'body': [body],
                     'log':  [log],
                     'tree': [tree],
