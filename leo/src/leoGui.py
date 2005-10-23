@@ -309,13 +309,13 @@ class leoGui:
     
         self.oops()
             
-    def set_focus(self,commander,widget,tag=''):
+    def set_focus(self,commander,widget):
     
         """Set the focus of the widget in the given commander if it needs to be changed."""
     
         self.oops()
         
-    def widget_wants_focus(self,commander,widget,tag=''):
+    def widget_wants_focus(self,commander,widget):
     
         """Indicate that a widget want to get focus."""
     
@@ -519,7 +519,7 @@ class unitTestGui(leoGui):
     def getindex(self,body,index):
         return 0,0
     
-    def set_focus(self,c,widget,tag=''):
+    def set_focus(self,c,widget):
         pass
         
     def getTextSelection (self,t):

@@ -1282,7 +1282,7 @@ class baseColorizer:
         self.bold_font = c.config.getFontFromParams(
             "body_text_font_family", "body_text_font_size",
             "body_text_font_slant",  "body_text_font_weight",
-            c.config.defaultBodyFontSize, tag = "colorer bold")
+            c.config.defaultBodyFontSize)
         
         if self.bold_font:
             self.bold_font.configure(weight="bold")
@@ -1290,7 +1290,7 @@ class baseColorizer:
         self.italic_font = c.config.getFontFromParams(
             "body_text_font_family", "body_text_font_size",
             "body_text_font_slant",  "body_text_font_weight",
-            c.config.defaultBodyFontSize, tag = "colorer italic")
+            c.config.defaultBodyFontSize)
             
         if self.italic_font:
             self.italic_font.configure(slant="italic",weight="normal")
@@ -1298,7 +1298,7 @@ class baseColorizer:
         self.bolditalic_font = c.config.getFontFromParams(
             "body_text_font_family", "body_text_font_size",
             "body_text_font_slant",  "body_text_font_weight",
-            c.config.defaultBodyFontSize, tag = "colorer bold italic")
+            c.config.defaultBodyFontSize)
             
         if self.bolditalic_font:
             self.bolditalic_font.configure(weight="bold",slant="italic")

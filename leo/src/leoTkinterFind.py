@@ -453,7 +453,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         self.top.deiconify()
         self.top.lift()
     
-        gui.set_focus(c,t,tag='bringToFront')
+        gui.set_focus(c,t)
         
         # Apparently, the text can not be adjusted unless the widget has focus...
         s = t.get('1.0','end')
@@ -465,7 +465,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         
         def setFocusCallback():
             # g.trace()
-            gui.set_focus(c,t,tag='tkFind.bringToFront')
+            gui.set_focus(c,t)
         
         # We must do this after other callbacks.  Sheesh.
         self.top.after(500,setFocusCallback)

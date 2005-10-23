@@ -577,7 +577,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         # Common configuration.
         # Bug fix 7/31/04:  We must call setText even if p matches: p's text may have changed!
-        self.setText(t,p.headString(),tag="newText")
+        self.setText(t,p.headString())
         t.configure(width=self.headWidth(p))
         t.leo_position = p # Never changes.
         t.leo_generation = self.generation
@@ -695,7 +695,7 @@ class leoTkinterTree (leoFrame.leoTree):
         font = c.config.getFontFromParams(
             "headline_text_font_family", "headline_text_font_size",
             "headline_text_font_slant",  "headline_text_font_weight",
-            c.config.defaultTreeFontSize, tag = "tree")
+            c.config.defaultTreeFontSize)
         
         self.setFont(font)
     #@nonl
@@ -747,18 +747,11 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.26:Config & Measuring...
     #@+node:ekr.20040803072955.31:Debugging...
     #@+node:ekr.20040803072955.32:setText
-    def setText (self,t,s,tag="",isHeadline=True):
+    def setText (self,t,s):
         
         """All changes to text widgets should come here."""
-        
-        __pychecker__ = '--no-argsused'
-            # tag and isHeadline are useful for debugging.
-        
-        if 0: # A good trace to have...
-            if isHeadline:
-                g.trace(self.textAddr(t),tag,s)
-            else:
-                g.trace(self.textAddr(t),tag,len(s))
+    
+        # g.trace(self.textAddr(t),g.callerList(),len(s))
                 
         state = t.cget("state")
         if state != "normal":
@@ -1639,17 +1632,15 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """Returns the Tk.Edit widget for position p."""
     
-        return self.findEditWidget(p,tag="tree:edit_text")
+        return self.findEditWidget(p)
     #@nonl
     #@-node:ekr.20040803072955.75:edit_text
     #@+node:ekr.20040803072955.76:findEditWidget
     # Search the widget list for widget t with t.leo_position == p.
     
-    def findEditWidget (self,p,tag=""):
+    def findEditWidget (self,p):
         
         """Return the Tk.Text item corresponding to p."""
-        
-        __pychecker__ = '--no-argsused' # tag useful for debugging.
     
         c = self.c
         
@@ -1873,7 +1864,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if done:
             #@        << set the widget text to head >>
             #@+node:ekr.20040803072955.93:<< set the widget text to head >>
-            self.setText(edit_text,head,tag="idle_head_key")
+            self.setText(edit_text,head)
             edit_text.mark_set("insert",index)
             #@nonl
             #@-node:ekr.20040803072955.93:<< set the widget text to head >>
@@ -1923,7 +1914,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 dirtyVnodeList = p.setDirty()
                 # Update p.
                 p.initHeadString(s)
-                self.setText(edit_text,s,tag="idle_head_key2")
+                self.setText(edit_text,s)
                 edit_text.mark_set("insert",index)
             finally:
                 c.endUpdate(False) # do not redraw now.
@@ -2653,7 +2644,7 @@ class leoTkinterTree (leoFrame.leoTree):
             
             # Always do this.  Otherwise there can be problems with trailing hewlines.
             s = g.toUnicode(p.v.t.bodyString,"utf-8")
-            self.setText(body,s,tag="select:set body",isHeadline=False)
+            self.setText(body,s)
             
             # We must do a full recoloring: we may be changing context!
             self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.

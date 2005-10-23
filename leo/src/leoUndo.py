@@ -444,7 +444,7 @@ class baseUndoer:
         if marked:  u.p.setMarked()
         else:       u.p.clearMarked()
     
-        u.c.setChanged(changed,tag='updateMarks')
+        u.c.setChanged(changed)
     #@-node:ekr.20050410095424:updateMarks
     #@-node:ekr.20050416092908.1:Internal helpers
     #@+node:ekr.20031218072017.3608:Externally visible entries

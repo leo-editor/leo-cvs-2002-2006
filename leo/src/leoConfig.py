@@ -984,7 +984,7 @@ class configClass:
     #@nonl
     #@-node:ekr.20041117082135:getFloat
     #@+node:ekr.20041117062717.13:getFontFromParams (config)
-    def getFontFromParams(self,c,family,size,slant,weight,defaultSize=12,tag="<unknown>"):
+    def getFontFromParams(self,c,family,size,slant,weight,defaultSize=12):
     
         """Compute a font from font parameters.
     
@@ -992,8 +992,6 @@ class configClass:
         We default to size=12, slant="roman", weight="normal".
     
         We return None if there is no family setting so we can use system default fonts."""
-        
-        __pychecker__ = '--no-argsused' # tag used for debugging.
     
         family = self.get(c,family,"family")
         if family in (None,""):
@@ -1008,7 +1006,7 @@ class configClass:
         weight = self.get(c,weight,"weight")
         if weight in (None,""): weight = "normal"
         
-        # g.trace(tag,family,size,slant,weight,g.shortFileName(c.mFileName))
+        # g.trace(g.callerList(3),family,size,slant,weight,g.shortFileName(c.mFileName))
         
         return g.app.gui.getFontFromParams(family,size,slant,weight)
     #@nonl
@@ -2892,7 +2890,7 @@ class settingsController:
                 changedList.append((ip,iname,ikind,fval,ival),)
     
         self.updateSetter(self.p,updateDicts=False)
-        self.writeChangedList(changedList,"revert")
+        self.writeChangedList(changedList)
         self.updateSetter(self.p) # Redraw the widgets in the pane.
     #@nonl
     #@-node:ekr.20041225063637.52:revert
@@ -3078,7 +3076,7 @@ class settingsController:
                 self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
                 changedList.append((ip,iname,ikind,oldVal,newVal),)
                 
-        self.writeChangedList(changedList,"write")
+        self.writeChangedList(changedList)
     #@nonl
     #@+node:ekr.20041225063637.66:updateConfig
     def updateConfig(self,c,changes):
@@ -3181,9 +3179,7 @@ class settingsController:
     #@-node:ekr.20041225063637.68:computeBodyFromFontDict
     #@-node:ekr.20041225063637.67:updateOneNode & helper
     #@+node:ekr.20041225063637.69:writeChangedList
-    def writeChangedList (self,changedList,tag):
-        
-        __pychecker__ = '--no-argsused' # tag used for debugging.
+    def writeChangedList (self,changedList):
         
         filesInfoDict = self.filesInfoDict
         if 0:
@@ -3201,7 +3197,7 @@ class settingsController:
         # Accumulate the changes for each file in a 'changes' list for each root.
         for data in changedList:
             p,name,kind,oldVal,newVal = data
-            # print "%6s %6s %10s -> %10s %s" % (tag,kind,str(oldVal),str(newVal),name)
+            # print "%6s %6s %10s -> %10s %s" % (g.callerList(2),kind,str(oldVal),str(newVal),name)
             root = self.findSettingsRoot(p)
             d = filesInfoDict.get(root)
             changes = d.get('changes')

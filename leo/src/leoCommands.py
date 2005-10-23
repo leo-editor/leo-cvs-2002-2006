@@ -5938,9 +5938,7 @@ class baseCommands:
     #@-node:ekr.20040803140033.3:setRootPosition
     #@-node:ekr.20031218072017.2988:c.rootPosition & c.setRootPosition
     #@+node:ekr.20031218072017.2989:c.setChanged
-    def setChanged (self,changedFlag,tag=''):
-        
-        __pychecker__ = '--no-argsused' # tag used for debugging.
+    def setChanged (self,changedFlag):
     
         c = self
         if not c.frame: return
@@ -5957,8 +5955,6 @@ class baseCommands:
         c.changed = changedFlag
         s = c.frame.getTitle()
         if len(s) > 2 and not c.loading: # don't update while loading.
-            # g.printStack()
-            # g.trace(changedFlag,tag)
             if changedFlag:
                 if s [0] != '*': c.frame.setTitle("* " + s)
             else:
@@ -6120,9 +6116,9 @@ class configSettings:
     #@-node:ekr.20041118104414:initEncoding
     #@-node:ekr.20041118104831.2:configSettings.__init__
     #@+node:ekr.20041118053731:Getters
-    def getFontFromParams(self,family,size,slant,weight,defaultSize=12,tag="configSetting"):
+    def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
         return g.app.config.getFontFromParams(self.c,
-            family,size,slant,weight,defaultSize=defaultSize,tag=tag)
+            family,size,slant,weight,defaultSize=defaultSize)
     
     def getRecentFiles (self):
         return g.app.config.getRecentFiles()
