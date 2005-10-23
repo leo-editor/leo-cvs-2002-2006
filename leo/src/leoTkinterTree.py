@@ -437,8 +437,6 @@ class leoTkinterTree (leoFrame.leoTree):
         
         canvas = self.canvas ; defaultColor = "" ; tag="clickBox" 
     
-        # New in 4.4: Limit the size of the box.
-        x2 = x1 + 100
         if self.freeClickBoxes:
             theId = self.freeClickBoxes.pop(0)
             canvas.coords(theId,x1,y1,x2,y2)

@@ -3709,6 +3709,8 @@ class leoTkinterLog (leoFrame.leoLog):
         if tabName:
             b = self.nb.tab(tabName) # b is a Tk.Button.
             b.config(bg='LightSteelBlue1')
+            logCtrl = self.textDict.get(tabName)
+            self.c.frame.widgetWantsFocus(logCtrl)
     #@nonl
     #@-node:ekr.20051018061932.1:ower/raiseTab
     #@+node:ekr.20051019170806:renameTab
@@ -3724,7 +3726,6 @@ class leoTkinterLog (leoFrame.leoLog):
         '''Create the tab if necessary and make it active.'''
         
         c = self.c ; k = c.keyHandler ; tabFrame = self.frameDict.get(tabName)
-        # g.trace(g.choose(tabName,'switching to','creating'),tabName)
         if tabFrame:
             # Switch to a new colorTags list.
             newColorTags = self.colorTagsDict.get(tabName)
@@ -3770,9 +3771,9 @@ class leoTkinterLog (leoFrame.leoLog):
             #@-node:ekr.20051018072306:<< Create the tab's text widget >>
             #@nl
             self.setTabBindings(tabName)
-            # Update immediately so we can queue the request to change focus.
-            tabFrame.update_idletasks()
-            self.c.frame.bodyWantsFocus()
+            if 0: # Update immediately so we can queue the request to change focus.
+                tabFrame.update_idletasks()
+                self.c.frame.bodyWantsFocus()
             
         self.nb.selectpage(tabName)
         # Update the status vars.

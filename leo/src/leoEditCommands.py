@@ -4622,6 +4622,8 @@ class searchCommandsClass (baseEditCommandsClass):
     
         baseEditCommandsClass.__init__(self,c) # init the base class.
         
+        self.findTabHandler = None
+        
         self.forward = True
         self.regexp = False
     
@@ -4630,11 +4632,14 @@ class searchCommandsClass (baseEditCommandsClass):
         self._rpString = ''
     #@nonl
     #@-node:ekr.20050920084036.258: ctor
-    #@+node:ekr.20050920084036.259:getPublicCommands
+    #@+node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
     def getPublicCommands (self):
         
         return {
+            # The new find tab replaces the find dialog.
             'open-find-tab':            self.openFindTab,
+            'find-tab-find':            self.findTabFindNext,
+            'find-tab-find-prev':       self.findTabFindPrev,
     
             'isearch-forward':          self.isearchForward,
             'isearch-backward':         self.isearchBackward,
@@ -4650,22 +4655,25 @@ class searchCommandsClass (baseEditCommandsClass):
             'word-search-backward':     self.wordSearchBackward,
         }
     #@nonl
-    #@-node:ekr.20050920084036.259:getPublicCommands
+    #@-node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
+    #@+node:ekr.20051022211617:find tab...
     #@+node:ekr.20051020120306:openFindTab & helper classes
     def openFindTab (self,event):
     
         c = self.c ; log = c.frame.log ; tabName = 'Find'
     
+        g.trace()
         if log.frameDict.get(tabName):
             log.selectTab(tabName)
         else:
+            g.trace('creating findTabHandler')
             log.selectTab(tabName)
             f = log.frameDict.get(tabName)
             t = log.textDict.get(tabName)
             t.pack_forget()
-            self.leoTkinterFindTab(c,f)
+            self.findTabHandler = self.leoTkinterFindTab(c,f)
     #@nonl
-    #@+node:ekr.20051020120306.6:class leoTkinterFindTab
+    #@+node:ekr.20051020120306.6:class leoTkinterFindTab (leoFind.leoFind)
     class leoTkinterFindTab (leoFind.leoFind):
     
         """A class that implements Leo's tkinter find tab."""
@@ -4774,7 +4782,7 @@ class searchCommandsClass (baseEditCommandsClass):
             #@-node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
             #@nl
             
-            if 0:# Add scrollbars.
+            if 0: # Add scrollbars.
                 fBar = Tk.Scrollbar(fpane,name='findBar')
                 cBar = Tk.Scrollbar(cpane,name='changeBar')
                 
@@ -5154,8 +5162,25 @@ class searchCommandsClass (baseEditCommandsClass):
         #@-node:ekr.20051020120306.1:class underlinedTkButton
         #@-others
     #@nonl
-    #@-node:ekr.20051020120306.6:class leoTkinterFindTab
+    #@-node:ekr.20051020120306.6:class leoTkinterFindTab (leoFind.leoFind)
     #@-node:ekr.20051020120306:openFindTab & helper classes
+    #@+node:ekr.20051022212004:findTabFindNext/Pref
+    def findTabFindNext (self,event):
+        
+        c = self.c
+        self.openFindTab()
+        self.findTabHandler.setup_command(c)
+        self.findTabHandler.findNext()
+        
+    def findTabFindPrev (self,event):
+        
+        c = self.c
+        self.openFindTab()
+        self.findTabHandler.setup_command(c)
+        self.findTabHandler.findPrev()
+    #@nonl
+    #@-node:ekr.20051022212004:findTabFindNext/Pref
+    #@-node:ekr.20051022211617:find tab...
     #@+node:ekr.20050920084036.261:incremental search...
     def isearchForward (self,event):
         self.startIncremental(event,forward=True,regexp=False)
