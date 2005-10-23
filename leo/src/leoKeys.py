@@ -705,7 +705,7 @@ class keyHandlerClass:
                 # However, it does not appear necessary at this time...
                 
                 d = {
-                    'all':  [body,log,tree], # menu
+                    'all':  [body,log,tree,menu],
                     'body': [body],
                     'log':  [log],
                     'tree': [tree],
@@ -1003,7 +1003,7 @@ class keyHandlerClass:
             k.previousStroke = stroke
             k.clearState()
             k.keyboardQuit(event)
-            k.endCommand(event,commandName,tag='keyboard-quit')
+            k.endCommand(event,commandName)
             return 'break'
     
         if k.inState():
@@ -1034,7 +1034,7 @@ class keyHandlerClass:
             if forceFocus:
                 k.forceFocusToBody()
             func(event)
-            k.endCommand(event,commandName,forceFocus,tag='masterCommand')
+            k.endCommand(event,commandName,forceFocus)
             return 'break'
     
         else:
@@ -1051,7 +1051,7 @@ class keyHandlerClass:
         if k.state.kind:
             if k.state.handler:
                 k.state.handler(event)
-                k.endCommand(event,k.commandName,tag='callStateFunction')
+                k.endCommand(event,k.commandName)
             else:
                 g.es_print('no state function for %s' % (k.state.kind),color='red')
     #@nonl
@@ -1069,7 +1069,7 @@ class keyHandlerClass:
             func(event)
             commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
             forceFocus = func.__name__ != 'leoCallback'
-            k.endCommand(event,commandName,forceFocus,tag='callKeystrokeFunction')
+            k.endCommand(event,commandName,forceFocus)
         
         return func
     #@nonl
@@ -1124,7 +1124,7 @@ class keyHandlerClass:
                 k.mb_history.insert(0,commandName)
             # if command in k.x_hasNumeric: func(event,aX)
             func(event)
-            k.endCommand(event,commandName,tag='callAltXFunction')
+            k.endCommand(event,commandName)
         else:
             k.setLabel('Command does not exist: %s' % commandName)
     #@nonl
@@ -1155,7 +1155,7 @@ class keyHandlerClass:
                 k.xcommands [stroke](event)
                 
             ### Probably should use commandName instead of stroke.
-            k.endCommand(event,stroke,tag='quickCommand')
+            k.endCommand(event,stroke)
             
         return 'break'
     #@nonl
@@ -1257,7 +1257,7 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.58:quickCommand  (ctrl-c) & helpers
     #@-node:ekr.20051002152108:Top-level
     #@+node:ekr.20051001050607:endCommand
-    def endCommand (self,event,commandName,forceFocus=True,tag=''):
+    def endCommand (self,event,commandName,forceFocus=True):
     
         '''Make sure Leo updates the widget following a command.
         
@@ -1285,7 +1285,7 @@ class keyHandlerClass:
                 __pychecker__ = '--no-classattr --no-objattrs'
                     # leoEditCommands.initAllEditCommanders *does* exist.
         
-                # g.trace('commandName:',commandName,'caller:',tag)
+                # g.trace('commandName:',commandName,'caller:',g.callerList())
                 k.commandName = None
                 leoEditCommands.initAllEditCommanders(c)
                 
