@@ -21646,7 +21646,7 @@ unfinished.
 #@+node:ekr.20051016115757.1:4.4a2 projects
 #@+node:ekr.20051021070335:(Created open-find-tab command)
 #@+node:ekr.20051020120306:openFindTab & helper classes
-def openFindTab (self,event):
+def openFindTab (self,event=None):
 
     c = self.c ; log = c.frame.log ; tabName = 'Find'
 
@@ -21657,9 +21657,9 @@ def openFindTab (self,event):
         f = log.frameDict.get(tabName)
         t = log.textDict.get(tabName)
         t.pack_forget()
-        self.leoTkinterFindTab(c,f)
+        self.findTabHandler = self.leoTkinterFindTab(c,f)
 #@nonl
-#@+node:ekr.20051020120306.6:class leoTkinterFindTab
+#@+node:ekr.20051020120306.6:class leoTkinterFindTab (leoFind.leoFind)
 class leoTkinterFindTab (leoFind.leoFind):
 
     """A class that implements Leo's tkinter find tab."""
@@ -21757,7 +21757,7 @@ self.find_ctrl   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=3,width=15) 
 self.change_ctrl = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=3,width=15) # was height=4,width=20
 << Bind Tab and control-tab >>
 
-if 0:# Add scrollbars.
+if 0: # Add scrollbars.
     fBar = Tk.Scrollbar(fpane,name='findBar')
     cBar = Tk.Scrollbar(cpane,name='changeBar')
     
@@ -22137,7 +22137,7 @@ def buttonCallback (self, event=None):
     return 'break'
 #@-node:ekr.20051020120306.5:buttonCallback
 #@-node:ekr.20051020120306.1:class underlinedTkButton
-#@-node:ekr.20051020120306.6:class leoTkinterFindTab
+#@-node:ekr.20051020120306.6:class leoTkinterFindTab (leoFind.leoFind)
 #@-node:ekr.20051020120306:openFindTab & helper classes
 #@-node:ekr.20051021070335:(Created open-find-tab command)
 #@+node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
@@ -23162,6 +23162,8 @@ def raiseTab (self,tabName):
     if tabName:
         b = self.nb.tab(tabName) # b is a Tk.Button.
         b.config(bg='LightSteelBlue1')
+        logCtrl = self.textDict.get(tabName)
+        self.c.frame.widgetWantsFocus(logCtrl)
 #@nonl
 #@-node:ekr.20051018061932.1:ower/raiseTab
 #@+node:ekr.20051019170806:renameTab
@@ -23175,9 +23177,8 @@ def renameTab (self,oldName,newName):
 def selectTab (self,tabName):
 
     '''Create the tab if necessary and make it active.'''
-    
+
     c = self.c ; k = c.keyHandler ; tabFrame = self.frameDict.get(tabName)
-    # g.trace(g.choose(tabName,'switching to','creating'),tabName)
     if tabFrame:
         # Switch to a new colorTags list.
         newColorTags = self.colorTagsDict.get(tabName)
@@ -23188,16 +23189,15 @@ def selectTab (self,tabName):
         << bind a tab-specific pop-up menu to the tab >>
         << Create the tab's text widget >>
         self.setTabBindings(tabName)
-        # Update immediately so we can queue the request to change focus.
-        tabFrame.update_idletasks()
-        self.c.frame.bodyWantsFocus()
+        if 0: # Update immediately so we can queue the request to change focus.
+            tabFrame.update_idletasks()
+            self.c.frame.bodyWantsFocus()
         
     self.nb.selectpage(tabName)
     # Update the status vars.
     self.tabName = tabName
     self.logCtrl = self.textDict.get(tabName)
     self.tabFrame = self.frameDict.get(tabName)
-    # g.trace(self.tabName,repr(self.logCtrl))
     return tabFrame
 #@nonl
 #@+node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>

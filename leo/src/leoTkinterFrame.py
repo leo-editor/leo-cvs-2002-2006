@@ -3724,7 +3724,7 @@ class leoTkinterLog (leoFrame.leoLog):
     def selectTab (self,tabName):
     
         '''Create the tab if necessary and make it active.'''
-        
+    
         c = self.c ; k = c.keyHandler ; tabFrame = self.frameDict.get(tabName)
         if tabFrame:
             # Switch to a new colorTags list.
@@ -3780,7 +3780,6 @@ class leoTkinterLog (leoFrame.leoLog):
         self.tabName = tabName
         self.logCtrl = self.textDict.get(tabName)
         self.tabFrame = self.frameDict.get(tabName)
-        # g.trace(self.tabName,repr(self.logCtrl))
         return tabFrame
     #@nonl
     #@-node:ekr.20051016101724.1:selectTab

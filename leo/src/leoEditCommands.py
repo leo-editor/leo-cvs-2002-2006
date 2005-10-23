@@ -4658,15 +4658,13 @@ class searchCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
     #@+node:ekr.20051022211617:find tab...
     #@+node:ekr.20051020120306:openFindTab & helper classes
-    def openFindTab (self,event):
+    def openFindTab (self,event=None):
     
         c = self.c ; log = c.frame.log ; tabName = 'Find'
     
-        g.trace()
         if log.frameDict.get(tabName):
             log.selectTab(tabName)
         else:
-            g.trace('creating findTabHandler')
             log.selectTab(tabName)
             f = log.frameDict.get(tabName)
             t = log.textDict.get(tabName)
@@ -5165,14 +5163,14 @@ class searchCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20051020120306.6:class leoTkinterFindTab (leoFind.leoFind)
     #@-node:ekr.20051020120306:openFindTab & helper classes
     #@+node:ekr.20051022212004:findTabFindNext/Pref
-    def findTabFindNext (self,event):
+    def findTabFindNext (self,event=None):
         
         c = self.c
         self.openFindTab()
         self.findTabHandler.setup_command(c)
         self.findTabHandler.findNext()
         
-    def findTabFindPrev (self,event):
+    def findTabFindPrev (self,event=None):
         
         c = self.c
         self.openFindTab()
@@ -5213,7 +5211,7 @@ class searchCommandsClass (baseEditCommandsClass):
         k = self.k ; w = event.widget ; keysym = event.keysym
         if keysym == 'Control_L': return
         
-        g.trace('keysym',keysym,'stroke',k.stroke)
+        # g.trace('keysym',keysym,'stroke',k.stroke)
         
         if 0: # Useful, but presently conflicts with other bindings.
             if k.stroke == '<Control-s>':
