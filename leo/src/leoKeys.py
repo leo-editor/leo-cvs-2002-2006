@@ -575,6 +575,7 @@ class keyHandlerClass:
         k.makeAllBindings()
         
         c.frame.log.setTabBindings('Log')
+        c.frame.tree.setBindings()
         
         if 0:
             addTemacsExtensions(k)
@@ -828,15 +829,17 @@ class keyHandlerClass:
                     g.trace('No shortcut for %s = %s' % (name,key))
     #@nonl
     #@-node:ekr.20051011103654:checkBindings
-    #@+node:ekr.20051023182326:copyTextBindingsToWidget
-    def copyTextBindingsToWidget (self,widget):
+    #@+node:ekr.20051023182326:copyBindingsToWidget
+    def copyBindingsToWidget (self,pane,widget):
+        
+        '''Copy all bindings for the given pane to widget.'''
     
         k = self ; d = k.bindingsDict
         keys = d.keys() ; keys.sort()
         
         for shortcut in keys:
             bunch = d.get(shortcut)
-            if bunch.pane == 'text':
+            if bunch.pane == pane:
                 func = bunch.func
                 commandName = bunch.commandName
                 # g.trace('find tab',shortcut,commandName)
@@ -850,7 +853,7 @@ class keyHandlerClass:
     
                 widget.bind(shortcut,textBindingsRedirectionCallback)
     #@nonl
-    #@-node:ekr.20051023182326:copyTextBindingsToWidget
+    #@-node:ekr.20051023182326:copyBindingsToWidget
     #@+node:ekr.20051007080058:makeAllBindings
     def makeAllBindings (self):
         

@@ -304,7 +304,9 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.20:tkTree.createPermanentBindings
     def createPermanentBindings (self):
         
-        canvas = self.canvas
+        c = self.c ; canvas = self.canvas
+        
+        g.trace('tkTree')
         
         canvas.bind('<Button-1>',self.onTreeClick)
     
@@ -320,7 +322,8 @@ class leoTkinterTree (leoFrame.leoTree):
         canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
     
         if self.useBindtags: # Create a dummy widget to hold all bindings.
-            t = Tk.Text(canvas) # This _must_ be a Text widget attached to the canvas!
+            self.bindingWidget = t = Tk.Text(canvas)
+                # This _must_ be a Text widget attached to the canvas!
             if 1: # Either way works properly.
                 t.bind("<Button-1>", self.onHeadlineClick)
                 t.bind("<Button-3>", self.onHeadlineRightClick)
@@ -329,12 +332,31 @@ class leoTkinterTree (leoFrame.leoTree):
                 t.bind("<Button-1>", self.onHeadlineClick, '+')
                 t.bind("<Button-3>", self.onHeadlineRightClick, '+')
                 t.bind("<Key>",      self.onHeadlineKey, '+')
-            t.bind("<Control-t>",self.onControlT)
+            t.bind("<Control-t>",self.onControlT)  ### Is this still necessary.
         
             # newText() attaches these bindings to all headlines.
             self.textBindings = t.bindtags()
+        else:
+            self.bindingWidget = None
     #@nonl
     #@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
+    #@+node:ekr.20051024102724:tkTtree.setBindings
+    # New in 4.4a2.
+    
+    def setBindings (self):
+        
+        '''Copy all bindings to headlines.'''
+        
+        if self.useBindtags:
+            t = self.bindingWidget
+            self.c.keyHandler.copyBindingsToWidget('all',t)
+            self.textBindings = t.bindtags()
+            # g.trace('tkTree,t.bind())
+    
+        else:
+            pass # self.newText will copy the bindings.
+    #@nonl
+    #@-node:ekr.20051024102724:tkTtree.setBindings
     #@+node:ekr.20040803072955.21:injectCallbacks
     def injectCallbacks(self):
         
@@ -511,7 +533,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         canvas = self.canvas ; tag = "textBox"
         
-        d = self.freeText
+        c = self.c ; d = self.freeText
         key = p.v ; assert key
         pList = d.get(key,[])
         
@@ -535,6 +557,7 @@ class leoTkinterTree (leoFrame.leoTree):
             if self.useBindtags:
                 t.bindtags(self.textBindings)
             else:
+                c.keyHandler.copyBindingsToWidget('all',t)
                 t.bind("<Button-1>", self.onHeadlineClick)
                 t.bind("<Button-3>", self.onHeadlineRightClick)
                 t.bind("<Key>",      self.onHeadlineKey)

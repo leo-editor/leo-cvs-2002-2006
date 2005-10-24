@@ -173,7 +173,7 @@ class baseCommands:
         
         c = self ; p = c.currentPosition()
         c.miniBufferWidget = c.frame.miniBufferWidget
-        # g.trace('Commands',c.miniBufferWidget)
+        # g.trace('Commands')
         
         # Create a keyHandler even if there is no miniBuffer.
         c.keyHandler = leoKeys.keyHandlerClass(c,

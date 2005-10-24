@@ -5146,7 +5146,7 @@ def newText (self,p,x,y):
     
     canvas = self.canvas ; tag = "textBox"
     
-    d = self.freeText
+    c = self.c ; d = self.freeText
     key = p.v ; assert key
     pList = d.get(key,[])
     
@@ -5170,6 +5170,7 @@ def newText (self,p,x,y):
         if self.useBindtags:
             t.bindtags(self.textBindings)
         else:
+            c.keyHandler.copyBindingsToWidget('all',t)
             t.bind("<Button-1>", self.onHeadlineClick)
             t.bind("<Button-3>", self.onHeadlineRightClick)
             t.bind("<Key>",      self.onHeadlineKey)
@@ -11520,7 +11521,7 @@ def finishCreate (self):  # New in 4.4.
     
     c = self ; p = c.currentPosition()
     c.miniBufferWidget = c.frame.miniBufferWidget
-    # g.trace('Commands',c.miniBufferWidget)
+    # g.trace('Commands')
     
     # Create a keyHandler even if there is no miniBuffer.
     c.keyHandler = leoKeys.keyHandlerClass(c,
@@ -11648,7 +11649,7 @@ def finishCreate (self):  # New in 4.4.
     
     c = self ; p = c.currentPosition()
     c.miniBufferWidget = c.frame.miniBufferWidget
-    # g.trace('Commands',c.miniBufferWidget)
+    # g.trace('Commands')
     
     # Create a keyHandler even if there is no miniBuffer.
     c.keyHandler = leoKeys.keyHandlerClass(c,
@@ -11863,6 +11864,7 @@ def finishCreate (self):
     k.makeAllBindings()
     
     c.frame.log.setTabBindings('Log')
+    c.frame.tree.setBindings()
     
     if 0:
         addTemacsExtensions(k)
@@ -24652,15 +24654,17 @@ def checkBindings (self):
                 g.trace('No shortcut for %s = %s' % (name,key))
 #@nonl
 #@-node:ekr.20051011103654:checkBindings
-#@+node:ekr.20051023182326:copyTextBindingsToWidget
-def copyTextBindingsToWidget (self,widget):
+#@+node:ekr.20051023182326:copyBindingsToWidget
+def copyBindingsToWidget (self,pane,widget):
+    
+    '''Copy all bindings for the given pane to widget.'''
 
     k = self ; d = k.bindingsDict
     keys = d.keys() ; keys.sort()
     
     for shortcut in keys:
         bunch = d.get(shortcut)
-        if bunch.pane == 'text':
+        if bunch.pane == pane:
             func = bunch.func
             commandName = bunch.commandName
             # g.trace('find tab',shortcut,commandName)
@@ -24674,7 +24678,7 @@ def copyTextBindingsToWidget (self,widget):
 
             widget.bind(shortcut,textBindingsRedirectionCallback)
 #@nonl
-#@-node:ekr.20051023182326:copyTextBindingsToWidget
+#@-node:ekr.20051023182326:copyBindingsToWidget
 #@+node:ekr.20051007080058:makeAllBindings
 def makeAllBindings (self):
     
@@ -25696,7 +25700,9 @@ def cycleFocus (self,event):
 #@+node:ekr.20040803072955.20:tkTree.createPermanentBindings
 def createPermanentBindings (self):
     
-    canvas = self.canvas
+    c = self.c ; canvas = self.canvas
+    
+    g.trace('tkTree')
     
     canvas.bind('<Button-1>',self.onTreeClick)
 
@@ -25712,7 +25718,8 @@ def createPermanentBindings (self):
     canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
 
     if self.useBindtags: # Create a dummy widget to hold all bindings.
-        t = Tk.Text(canvas) # This _must_ be a Text widget attached to the canvas!
+        self.bindingWidget = t = Tk.Text(canvas)
+            # This _must_ be a Text widget attached to the canvas!
         if 1: # Either way works properly.
             t.bind("<Button-1>", self.onHeadlineClick)
             t.bind("<Button-3>", self.onHeadlineRightClick)
@@ -25721,10 +25728,12 @@ def createPermanentBindings (self):
             t.bind("<Button-1>", self.onHeadlineClick, '+')
             t.bind("<Button-3>", self.onHeadlineRightClick, '+')
             t.bind("<Key>",      self.onHeadlineKey, '+')
-        t.bind("<Control-t>",self.onControlT)
+        t.bind("<Control-t>",self.onControlT)  ### Is this still necessary.
     
         # newText() attaches these bindings to all headlines.
         self.textBindings = t.bindtags()
+    else:
+        self.bindingWidget = None
 #@nonl
 #@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
 #@+node:ekr.20051016095907.2:Focus & update (tkLog)
@@ -26880,6 +26889,154 @@ def updateLabel (self,event,suppressControlChars=True):
 - Eliminated the weird call to bodyWantsFocus in k.masterCommand.
 #@nonl
 #@-node:ekr.20051023175530:Improved the minibuffer
+#@+node:ekr.20051024101355:(Copy bindings to headlines)
+#@+node:ekr.20040803072955.20:tkTree.createPermanentBindings
+def createPermanentBindings (self):
+    
+    c = self.c ; canvas = self.canvas
+    
+    g.trace('tkTree')
+    
+    canvas.bind('<Button-1>',self.onTreeClick)
+
+    if self.expanded_click_area:
+        canvas.tag_bind('clickBox','<Button-1>', self.onClickBoxClick)
+    else:
+        canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
+
+    canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
+    canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
+    canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
+    canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
+    canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
+
+    if self.useBindtags: # Create a dummy widget to hold all bindings.
+        self.bindingWidget = t = Tk.Text(canvas)
+            # This _must_ be a Text widget attached to the canvas!
+        if 1: # Either way works properly.
+            t.bind("<Button-1>", self.onHeadlineClick)
+            t.bind("<Button-3>", self.onHeadlineRightClick)
+            t.bind("<Key>",      self.onHeadlineKey)
+        else:
+            t.bind("<Button-1>", self.onHeadlineClick, '+')
+            t.bind("<Button-3>", self.onHeadlineRightClick, '+')
+            t.bind("<Key>",      self.onHeadlineKey, '+')
+        t.bind("<Control-t>",self.onControlT)  ### Is this still necessary.
+    
+        # newText() attaches these bindings to all headlines.
+        self.textBindings = t.bindtags()
+    else:
+        self.bindingWidget = None
+#@nonl
+#@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
+#@+node:ekr.20040803072955.11:newText (leoTkinterTree)
+def newText (self,p,x,y):
+    
+    canvas = self.canvas ; tag = "textBox"
+    
+    c = self.c ; d = self.freeText
+    key = p.v ; assert key
+    pList = d.get(key,[])
+    
+    # Return only Tk.Text widgets with an exact match with p.
+    found = False
+    for i in xrange(len(pList)):
+        p2,t,theId = pList[i]
+        if p2 == p:
+            del pList[i]
+            theId = t.leo_window_id
+            assert(theId)
+            assert(t.leo_position == p2)
+            canvas.coords(theId,x,y)
+            t.configure(font=self.font) # 12/17/04
+            found = True ; break
+            
+    if not found:
+        # Tags are not valid in Tk.Text widgets.
+        t = Tk.Text(canvas,state="normal",font=self.font,bd=0,relief="flat",height=1)
+    
+        if self.useBindtags:
+            t.bindtags(self.textBindings)
+        else:
+            c.keyHandler.copyBindingsToWidget('all',t)
+            t.bind("<Button-1>", self.onHeadlineClick)
+            t.bind("<Button-3>", self.onHeadlineRightClick)
+            t.bind("<Key>",      self.onHeadlineKey)
+            t.bind("<Control-t>",self.onControlT)
+
+        if 0: # Crashes on XP.
+            << patch by Maciej Kalisiak to handle scroll-wheel events >>
+    
+        theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
+        t.leo_window_id = theId # Never changes.
+        
+    if self.trace and self.verbose:
+        g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),self.textAddr(t),align=-20)
+
+    # Common configuration.
+    # Bug fix 7/31/04:  We must call setText even if p matches: p's text may have changed!
+    self.setText(t,p.headString())
+    t.configure(width=self.headWidth(p))
+    t.leo_position = p # Never changes.
+    t.leo_generation = self.generation
+
+    assert(theId == t.leo_window_id)
+    assert(not self.ids.get(theId))
+    self.ids[theId] = p
+    
+    # New in 4.2 b3: entries are pairs (p,t,theId) indexed by v.
+    key = p.v ; assert key
+    pList = self.visibleText.get(key,[])
+    pList.append((p,t,theId),)
+    self.visibleText[key] = pList
+
+    # g.trace(p,t)
+    return t
+#@nonl
+#@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+def PropagateButton4(e):
+    canvas.event_generate("<Button-4>")
+    return "break"
+
+def PropagateButton5(e):
+    canvas.event_generate("<Button-5>")
+    return "break"
+
+def PropagateMouseWheel(e):
+    canvas.event_generate("<MouseWheel>")
+    return "break"
+
+if self.useBindtags:
+    instance_tag = t.bindtags()[0]
+    t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
+    t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
+    t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
+else:
+    # UNTESTED CASE!!!
+    t.bind("<Button-4>", PropagateButton4)
+    t.bind("<Button-5>", PropagateButton5)
+    t.bind("<MouseWheel>", PropagateMouseWheel)
+
+#@-node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+#@-node:ekr.20040803072955.11:newText (leoTkinterTree)
+#@+node:ekr.20051024102724:tkTtree.setBindings
+# New in 4.4a2.
+
+def setBindings (self):
+    
+    '''Copy all bindings to headlines.'''
+    
+    if self.useBindtags:
+        t = self.bindingWidget
+        self.c.keyHandler.copyBindingsToWidget('all',t)
+        self.textBindings = t.bindtags()
+        # g.trace('tkTree,t.bind())
+
+    else:
+        pass # self.newText will copy the bindings.
+#@nonl
+#@-node:ekr.20051024102724:tkTtree.setBindings
+#@-node:ekr.20051024101355:(Copy bindings to headlines)
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

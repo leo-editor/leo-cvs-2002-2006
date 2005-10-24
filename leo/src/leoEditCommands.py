@@ -4666,7 +4666,7 @@ class leoTkinterFindTab (leoFind.leoFind):
         c = self.c ; k = c.keyHandler
     
         for w in (self.find_ctrl, self.change_ctrl):
-            k.copyTextBindingsToWidget(w)
+            k.copyBindingsToWidget('text',w)
             w.bind ("<1>",  self.resetWrap,'+')
             w.bind("<Key>", self.resetWrap,'+')
             # w.bind("<Control-a>",self.selectAllFindText)
