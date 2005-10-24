@@ -26,17 +26,9 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- (done) Created c.frame.headlineWantsFocus
-
-- (done) Fixed problems with multiple calls to newHeadline.
-
-- (done) copyBindingsToWidget can take either a single pane name or a list of pane names.
-
-- (done) Copy both 'all' bindings and 'tree' bindings to headline.
-
-- Create separate names for all log panes.
-
 - Make Ctrl-= and Ctrl-- work as expected.
+
+- Make spelling/autocompleter tabs.
 #@nonl
 #@+node:ekr.20051023125705:Asap (cool)
 - Spelling tab

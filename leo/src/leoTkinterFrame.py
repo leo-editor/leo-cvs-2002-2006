@@ -3372,6 +3372,7 @@ class leoTkinterLog (leoFrame.leoLog):
         self.nb = None      # The Pmw.Notebook that holds all the tabs.
         self.colorTagsDict = {} # Keys are page names.  Values are saved colorTags lists.
         self.frameDict = {}  # Keys are page names. Values are Tk.Frames.
+        self.logNumber = 0 # To create unique name fields for Tk.Text widgets.
         self.tabMenu = None # A menu that pops up on right clicks in the hull or in tabs.
         self.textDict = {}  # Keys are page names. Values are Tk.Text widgets.
         self.newTabCount = 0 # Number of new tabs created.
@@ -3409,7 +3410,8 @@ class leoTkinterLog (leoFrame.leoLog):
     #@+node:ekr.20051016103459:tkLog.createTextWidget
     def createTextWidget (self,parentFrame):
         
-        log = Tk.Text(parentFrame,name="log",
+        self.logNumber += 1
+        log = Tk.Text(parentFrame,name="log-%d" % self.logNumber,
             setgrid=0,wrap=self.wrap,bd=2,bg="white",relief="flat")
         
         logBar = Tk.Scrollbar(parentFrame,name="logBar")
@@ -3693,6 +3695,55 @@ class leoTkinterLog (leoFrame.leoLog):
         t.delete('1.0','end')
     #@nonl
     #@-node:ekr.20051017212057:clearTab
+    #@+node:ekr.20051024173701:createTab
+    def createTab (self,tabName):
+        
+        c = self.c
+        tabFrame = self.nb.add(tabName)
+        #@    << bind a tab-specific pop-up menu to the tab >>
+        #@+node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
+        menu = self.makeTabMenu(tabName)
+        tab = self.nb.tab(tabName)
+        
+        def tabMenuRightClickCallback(event):
+            self.onRightClick(event,menu)
+            
+        def tabMenuClickCallback(event):
+            self.onClick(event,tabName)
+        
+        tab.bind('<Button-1>',tabMenuClickCallback)
+        tab.bind('<Button-3>',tabMenuRightClickCallback)
+        #@nonl
+        #@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
+        #@nl
+        #@    << Create the tab's text widget >>
+        #@+node:ekr.20051018072306:<< Create the tab's text widget >>
+        textWidget = self.createTextWidget(tabFrame)
+        
+        # Set the background color.
+        configName = 'log_pane_%s_tab_background_color' % tabName
+        bg = c.config.getColor(configName) or 'MistyRose1'
+        try: textWidget.configure(bg=bg)
+        except Exception: pass # Could be a user error.
+        
+        self.frameDict [tabName] = tabFrame
+        self.textDict [tabName] = textWidget
+        
+        # Switch to a new colorTags list.
+        if self.tabName:
+            self.colorTagsDict [self.tabName] = self.colorTags [:]
+        self.colorTags = ['black']
+        self.colorTagsDict [tabName] = self.colorTags
+        
+        # Make the bindings.
+        textWidget.bind("<Button-1>",self.onActivateLog)
+        textWidget.tag_config('black',foreground='black')
+        #@nonl
+        #@-node:ekr.20051018072306:<< Create the tab's text widget >>
+        #@nl
+        self.setTabBindings(tabName)
+    #@nonl
+    #@-node:ekr.20051024173701:createTab
     #@+node:ekr.20051018102027:deleteTab
     def deleteTab (self,tabName):
         
@@ -3740,56 +3791,15 @@ class leoTkinterLog (leoFrame.leoLog):
     
         '''Create the tab if necessary and make it active.'''
     
-        c = self.c ; k = c.keyHandler ; tabFrame = self.frameDict.get(tabName)
+        c = self.c ; tabFrame = self.frameDict.get(tabName)
+    
         if tabFrame:
             # Switch to a new colorTags list.
             newColorTags = self.colorTagsDict.get(tabName)
             self.colorTagsDict [self.tabName] = self.colorTags [:]
             self.colorTags = newColorTags
         else:
-            tabFrame = self.nb.add(tabName)
-            #@        << bind a tab-specific pop-up menu to the tab >>
-            #@+node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
-            menu = self.makeTabMenu(tabName)
-            tab = self.nb.tab(tabName)
-            
-            def tabMenuRightClickCallback(event):
-                self.onRightClick(event,menu)
-                
-            def tabMenuClickCallback(event):
-                self.onClick(event,tabName)
-            
-            tab.bind('<Button-1>',tabMenuClickCallback)
-            tab.bind('<Button-3>',tabMenuRightClickCallback)
-            #@nonl
-            #@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
-            #@nl
-            #@        << Create the tab's text widget >>
-            #@+node:ekr.20051018072306:<< Create the tab's text widget >>
-            textWidget = self.createTextWidget(tabFrame)
-            
-            # Set the background color.
-            configName = 'log_pane_%s_tab_background_color' % tabName
-            bg = c.config.getColor(configName) or 'MistyRose1'
-            try: textWidget.configure(bg=bg)
-            except Exception: pass # Could be a user error.
-            
-            self.frameDict [tabName] = tabFrame
-            self.textDict [tabName] = textWidget
-            
-            # Switch to a new colorTags list.
-            if self.tabName:
-                self.colorTagsDict [self.tabName] = self.colorTags [:]
-            self.colorTags = ['black']
-            self.colorTagsDict [tabName] = self.colorTags
-            
-            # Make the bindings.
-            textWidget.bind("<Button-1>",self.onActivateLog)
-            textWidget.tag_config('black',foreground='black')
-            #@nonl
-            #@-node:ekr.20051018072306:<< Create the tab's text widget >>
-            #@nl
-            self.setTabBindings(tabName)
+            self.createTab(tabName)
             
         self.nb.selectpage(tabName)
         # Update the status vars.

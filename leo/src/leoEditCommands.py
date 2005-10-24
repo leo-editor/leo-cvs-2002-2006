@@ -4717,8 +4717,10 @@ class leoTkinterFindTab (leoFind.leoFind):
         clab = Tk.Label(cpane, width=8, text="Change:",background=bg)
         
         # Use bigger boxes for scripts.
-        self.find_ctrl   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=3,width=15)
-        self.change_ctrl = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=3,width=15)
+        self.find_ctrl = ftxt = Tk.Text(
+            fpane,bd=1,relief="groove",height=3,width=15,name='find-text')
+        self.change_ctrl = ctxt = Tk.Text(
+            cpane,bd=1,relief="groove",height=3,width=15,name='change-text')
         #@<< Bind Tab and control-tab >>
         #@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
         def setFocus(w):
