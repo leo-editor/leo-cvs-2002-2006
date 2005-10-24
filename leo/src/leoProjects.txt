@@ -5145,7 +5145,6 @@ EKR: I don't see how this can work.  The tree pane almost never gets focus.  And
 def newText (self,p,x,y):
     
     canvas = self.canvas ; tag = "textBox"
-    
     c = self.c ; d = self.freeText
     key = p.v ; assert key
     pList = d.get(key,[])
@@ -5165,7 +5164,10 @@ def newText (self,p,x,y):
             
     if not found:
         # Tags are not valid in Tk.Text widgets.
-        t = Tk.Text(canvas,state="normal",font=self.font,bd=0,relief="flat",height=1)
+        # The name is valid, but apparently it must be unique.
+        self.textNumber += 1
+        t = Tk.Text(canvas,name='head-%d' % self.textNumber,
+            state="normal",font=self.font,bd=0,relief="flat",height=1)
     
         if self.useBindtags:
             t.bindtags(self.textBindings)
@@ -5174,6 +5176,8 @@ def newText (self,p,x,y):
             t.bind("<Button-1>", self.onHeadlineClick)
             t.bind("<Button-3>", self.onHeadlineRightClick)
             t.bind("<Key>",      self.onHeadlineKey)
+
+        if 0: # As of 4.4 this does not appear necessary.
             t.bind("<Control-t>",self.onControlT)
 
         if 0: # Crashes on XP.
@@ -5186,7 +5190,7 @@ def newText (self,p,x,y):
         g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),self.textAddr(t),align=-20)
 
     # Common configuration.
-    # Bug fix 7/31/04:  We must call setText even if p matches: p's text may have changed!
+    # We must call setText even if p matches: p's text may have changed!
     self.setText(t,p.headString())
     t.configure(width=self.headWidth(p))
     t.leo_position = p # Never changes.
@@ -5196,13 +5200,11 @@ def newText (self,p,x,y):
     assert(not self.ids.get(theId))
     self.ids[theId] = p
     
-    # New in 4.2 b3: entries are pairs (p,t,theId) indexed by v.
+    # Entries are pairs (p,t,theId) indexed by v.
     key = p.v ; assert key
     pList = self.visibleText.get(key,[])
     pList.append((p,t,theId),)
     self.visibleText[key] = pList
-
-    # g.trace(p,t)
     return t
 #@nonl
 #@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
@@ -20212,7 +20214,7 @@ def set_focus(self,widget,later=False):
     '''Set the focus to the widget specified in the xWantsFocus methods.'''
 
     c = self.c
-    # g.trace(g.callerList(5))
+    # g.trace(widget._name,g.callerList(5))
 
     if widget and not g.app.unitTesting:
         # Messing with focus may be dangerous in unit tests.
@@ -20262,8 +20264,8 @@ def setNormalLabelState (self,p): # selected, editing
         self.setEditHeadlineColors(p)
         p.edit_text().tag_remove("sel","1.0","end")
         p.edit_text().tag_add("sel","1.0","end")
-        # Set the focus immediately
-        self.frame.widgetWantsFocus(p.edit_text(),later=False)
+        
+        # self.frame.headlineWantsFocus(p,later=False)
 #@nonl
 #@-node:ekr.20040803072955.135:setNormalLabelState
 #@+node:ekr.20040803072955.126:endEditLabel
@@ -20274,6 +20276,8 @@ def endEditLabel (self):
     c = self.c ; frame = c.frame
     
     p = self.editPosition()
+    
+    # g.trace(p and p.headString())
 
     if p and p.edit_text():
         if 0: # New in recycled widgets scheme: this could cause a race condition.
@@ -24655,16 +24659,20 @@ def checkBindings (self):
 #@nonl
 #@-node:ekr.20051011103654:checkBindings
 #@+node:ekr.20051023182326:copyBindingsToWidget
-def copyBindingsToWidget (self,pane,widget):
+def copyBindingsToWidget (self,paneOrPanes,widget):
     
-    '''Copy all bindings for the given pane to widget.'''
+    '''Copy all bindings for the given panes to widget.
+    
+    paneOrPanes may be a single pane name or a list of pane names.'''
 
     k = self ; d = k.bindingsDict
     keys = d.keys() ; keys.sort()
     
+    panes = list(paneOrPanes)
+    
     for shortcut in keys:
         bunch = d.get(shortcut)
-        if bunch.pane == pane:
+        if bunch.pane in panes:
             func = bunch.func
             commandName = bunch.commandName
             # g.trace('find tab',shortcut,commandName)
@@ -25702,8 +25710,6 @@ def createPermanentBindings (self):
     
     c = self.c ; canvas = self.canvas
     
-    g.trace('tkTree')
-    
     canvas.bind('<Button-1>',self.onTreeClick)
 
     if self.expanded_click_area:
@@ -25718,22 +25724,14 @@ def createPermanentBindings (self):
     canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
 
     if self.useBindtags: # Create a dummy widget to hold all bindings.
-        self.bindingWidget = t = Tk.Text(canvas)
-            # This _must_ be a Text widget attached to the canvas!
-        if 1: # Either way works properly.
-            t.bind("<Button-1>", self.onHeadlineClick)
-            t.bind("<Button-3>", self.onHeadlineRightClick)
-            t.bind("<Key>",      self.onHeadlineKey)
-        else:
-            t.bind("<Button-1>", self.onHeadlineClick, '+')
-            t.bind("<Button-3>", self.onHeadlineRightClick, '+')
-            t.bind("<Key>",      self.onHeadlineKey, '+')
-        t.bind("<Control-t>",self.onControlT)  ### Is this still necessary.
-    
-        # newText() attaches these bindings to all headlines.
-        self.textBindings = t.bindtags()
-    else:
-        self.bindingWidget = None
+        t = self.bindingWidget
+        t.bind("<Button-1>", self.onHeadlineClick, '+')
+        t.bind("<Button-3>", self.onHeadlineRightClick, '+')
+        t.bind("<Key>",      self.onHeadlineKey)
+            # There must be only one general key handler.
+
+        if 0: # This does not appear necessary in 4.4.
+            t.bind("<Control-t>",self.onControlT)
 #@nonl
 #@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
 #@+node:ekr.20051016095907.2:Focus & update (tkLog)
@@ -25880,6 +25878,8 @@ def endEditLabel (self):
     c = self.c ; frame = c.frame
     
     p = self.editPosition()
+    
+    # g.trace(p and p.headString())
 
     if p and p.edit_text():
         if 0: # New in recycled widgets scheme: this could cause a race condition.
@@ -25907,12 +25907,15 @@ def editLabel (self,p):
         self.frame.revertHeadline = None
         
     self.setEditPosition(p)
+    
+    # g.trace(p,p.edit_text())
 
     # Start editing
     if p and p.edit_text():
         self.setNormalLabelState(p)
         self.frame.revertHeadline = p.headString()
         self.setEditPosition(p)
+        self.frame.headlineWantsFocus(p)
 #@nonl
 #@-node:ekr.20040803072955.127:editLabel
 #@+node:ekr.20040803072955.128:tree.select
@@ -26046,8 +26049,8 @@ def setNormalLabelState (self,p): # selected, editing
         self.setEditHeadlineColors(p)
         p.edit_text().tag_remove("sel","1.0","end")
         p.edit_text().tag_add("sel","1.0","end")
-        # Set the focus immediately
-        self.frame.widgetWantsFocus(p.edit_text(),later=False)
+        
+        # self.frame.headlineWantsFocus(p,later=False)
 #@nonl
 #@-node:ekr.20040803072955.135:setNormalLabelState
 #@+node:ekr.20040803072955.136:setDisabledLabelState
@@ -26890,12 +26893,18 @@ def updateLabel (self,event,suppressControlChars=True):
 #@nonl
 #@-node:ekr.20051023175530:Improved the minibuffer
 #@+node:ekr.20051024101355:(Copy bindings to headlines)
+@nocolor
+
+- Removed the Ctrl-T hack.  It does not appear to be needed.
+
+- Created Ctrl-Shift-V shortcut for show-invisibles.
+
+@color
+#@nonl
 #@+node:ekr.20040803072955.20:tkTree.createPermanentBindings
 def createPermanentBindings (self):
     
     c = self.c ; canvas = self.canvas
-    
-    g.trace('tkTree')
     
     canvas.bind('<Button-1>',self.onTreeClick)
 
@@ -26911,29 +26920,20 @@ def createPermanentBindings (self):
     canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
 
     if self.useBindtags: # Create a dummy widget to hold all bindings.
-        self.bindingWidget = t = Tk.Text(canvas)
-            # This _must_ be a Text widget attached to the canvas!
-        if 1: # Either way works properly.
-            t.bind("<Button-1>", self.onHeadlineClick)
-            t.bind("<Button-3>", self.onHeadlineRightClick)
-            t.bind("<Key>",      self.onHeadlineKey)
-        else:
-            t.bind("<Button-1>", self.onHeadlineClick, '+')
-            t.bind("<Button-3>", self.onHeadlineRightClick, '+')
-            t.bind("<Key>",      self.onHeadlineKey, '+')
-        t.bind("<Control-t>",self.onControlT)  ### Is this still necessary.
-    
-        # newText() attaches these bindings to all headlines.
-        self.textBindings = t.bindtags()
-    else:
-        self.bindingWidget = None
+        t = self.bindingWidget
+        t.bind("<Button-1>", self.onHeadlineClick, '+')
+        t.bind("<Button-3>", self.onHeadlineRightClick, '+')
+        t.bind("<Key>",      self.onHeadlineKey)
+            # There must be only one general key handler.
+
+        if 0: # This does not appear necessary in 4.4.
+            t.bind("<Control-t>",self.onControlT)
 #@nonl
 #@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
 #@+node:ekr.20040803072955.11:newText (leoTkinterTree)
 def newText (self,p,x,y):
     
     canvas = self.canvas ; tag = "textBox"
-    
     c = self.c ; d = self.freeText
     key = p.v ; assert key
     pList = d.get(key,[])
@@ -26953,7 +26953,10 @@ def newText (self,p,x,y):
             
     if not found:
         # Tags are not valid in Tk.Text widgets.
-        t = Tk.Text(canvas,state="normal",font=self.font,bd=0,relief="flat",height=1)
+        # The name is valid, but apparently it must be unique.
+        self.textNumber += 1
+        t = Tk.Text(canvas,name='head-%d' % self.textNumber,
+            state="normal",font=self.font,bd=0,relief="flat",height=1)
     
         if self.useBindtags:
             t.bindtags(self.textBindings)
@@ -26962,6 +26965,8 @@ def newText (self,p,x,y):
             t.bind("<Button-1>", self.onHeadlineClick)
             t.bind("<Button-3>", self.onHeadlineRightClick)
             t.bind("<Key>",      self.onHeadlineKey)
+
+        if 0: # As of 4.4 this does not appear necessary.
             t.bind("<Control-t>",self.onControlT)
 
         if 0: # Crashes on XP.
@@ -26974,7 +26979,7 @@ def newText (self,p,x,y):
         g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),self.textAddr(t),align=-20)
 
     # Common configuration.
-    # Bug fix 7/31/04:  We must call setText even if p matches: p's text may have changed!
+    # We must call setText even if p matches: p's text may have changed!
     self.setText(t,p.headString())
     t.configure(width=self.headWidth(p))
     t.leo_position = p # Never changes.
@@ -26984,13 +26989,11 @@ def newText (self,p,x,y):
     assert(not self.ids.get(theId))
     self.ids[theId] = p
     
-    # New in 4.2 b3: entries are pairs (p,t,theId) indexed by v.
+    # Entries are pairs (p,t,theId) indexed by v.
     key = p.v ; assert key
     pList = self.visibleText.get(key,[])
     pList.append((p,t,theId),)
     self.visibleText[key] = pList
-
-    # g.trace(p,t)
     return t
 #@nonl
 #@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
@@ -27027,13 +27030,17 @@ def setBindings (self):
     '''Copy all bindings to headlines.'''
     
     if self.useBindtags:
-        t = self.bindingWidget
-        self.c.keyHandler.copyBindingsToWidget('all',t)
+        # This _must_ be a Text widget attached to the canvas!
+        self.bindingWidget = t = Tk.Text(self.canvas)
+        self.c.keyHandler.copyBindingsToWidget(['all','tree'],t)
+
+        # newText() attaches these bindings to all headlines.
         self.textBindings = t.bindtags()
         # g.trace('tkTree,t.bind())
-
     else:
-        pass # self.newText will copy the bindings.
+        self.bindingWidget = None
+   
+    self.createPermanentBindings()
 #@nonl
 #@-node:ekr.20051024102724:tkTtree.setBindings
 #@-node:ekr.20051024101355:(Copy bindings to headlines)

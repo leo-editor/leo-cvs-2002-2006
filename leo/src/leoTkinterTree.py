@@ -276,8 +276,9 @@ class leoTkinterTree (leoFrame.leoTree):
         self.dragging = False
         self.prevPositions = 0
         self.expanded_click_area = c.config.getBool("expanded_click_area")
+        self.textNumber = 0 # To make names unique.
         
-        self.createPermanentBindings()
+        # self.createPermanentBindings()
         self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
         
         # Keys are id's, values are unchanging positions...
@@ -306,8 +307,6 @@ class leoTkinterTree (leoFrame.leoTree):
         
         c = self.c ; canvas = self.canvas
         
-        g.trace('tkTree')
-        
         canvas.bind('<Button-1>',self.onTreeClick)
     
         if self.expanded_click_area:
@@ -322,22 +321,14 @@ class leoTkinterTree (leoFrame.leoTree):
         canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
     
         if self.useBindtags: # Create a dummy widget to hold all bindings.
-            self.bindingWidget = t = Tk.Text(canvas)
-                # This _must_ be a Text widget attached to the canvas!
-            if 1: # Either way works properly.
-                t.bind("<Button-1>", self.onHeadlineClick)
-                t.bind("<Button-3>", self.onHeadlineRightClick)
-                t.bind("<Key>",      self.onHeadlineKey)
-            else:
-                t.bind("<Button-1>", self.onHeadlineClick, '+')
-                t.bind("<Button-3>", self.onHeadlineRightClick, '+')
-                t.bind("<Key>",      self.onHeadlineKey, '+')
-            t.bind("<Control-t>",self.onControlT)  ### Is this still necessary.
-        
-            # newText() attaches these bindings to all headlines.
-            self.textBindings = t.bindtags()
-        else:
-            self.bindingWidget = None
+            t = self.bindingWidget
+            t.bind("<Button-1>", self.onHeadlineClick, '+')
+            t.bind("<Button-3>", self.onHeadlineRightClick, '+')
+            t.bind("<Key>",      self.onHeadlineKey)
+                # There must be only one general key handler.
+    
+            if 0: # This does not appear necessary in 4.4.
+                t.bind("<Control-t>",self.onControlT)
     #@nonl
     #@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
     #@+node:ekr.20051024102724:tkTtree.setBindings
@@ -348,13 +339,17 @@ class leoTkinterTree (leoFrame.leoTree):
         '''Copy all bindings to headlines.'''
         
         if self.useBindtags:
-            t = self.bindingWidget
-            self.c.keyHandler.copyBindingsToWidget('all',t)
+            # This _must_ be a Text widget attached to the canvas!
+            self.bindingWidget = t = Tk.Text(self.canvas)
+            self.c.keyHandler.copyBindingsToWidget(['all','tree'],t)
+    
+            # newText() attaches these bindings to all headlines.
             self.textBindings = t.bindtags()
             # g.trace('tkTree,t.bind())
-    
         else:
-            pass # self.newText will copy the bindings.
+            self.bindingWidget = None
+       
+        self.createPermanentBindings()
     #@nonl
     #@-node:ekr.20051024102724:tkTtree.setBindings
     #@+node:ekr.20040803072955.21:injectCallbacks
@@ -532,7 +527,6 @@ class leoTkinterTree (leoFrame.leoTree):
     def newText (self,p,x,y):
         
         canvas = self.canvas ; tag = "textBox"
-        
         c = self.c ; d = self.freeText
         key = p.v ; assert key
         pList = d.get(key,[])
@@ -552,7 +546,10 @@ class leoTkinterTree (leoFrame.leoTree):
                 
         if not found:
             # Tags are not valid in Tk.Text widgets.
-            t = Tk.Text(canvas,state="normal",font=self.font,bd=0,relief="flat",height=1)
+            # The name is valid, but apparently it must be unique.
+            self.textNumber += 1
+            t = Tk.Text(canvas,name='head-%d' % self.textNumber,
+                state="normal",font=self.font,bd=0,relief="flat",height=1)
         
             if self.useBindtags:
                 t.bindtags(self.textBindings)
@@ -561,6 +558,8 @@ class leoTkinterTree (leoFrame.leoTree):
                 t.bind("<Button-1>", self.onHeadlineClick)
                 t.bind("<Button-3>", self.onHeadlineRightClick)
                 t.bind("<Key>",      self.onHeadlineKey)
+    
+            if 0: # As of 4.4 this does not appear necessary.
                 t.bind("<Control-t>",self.onControlT)
     
             if 0: # Crashes on XP.
@@ -599,7 +598,7 @@ class leoTkinterTree (leoFrame.leoTree):
             g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),self.textAddr(t),align=-20)
     
         # Common configuration.
-        # Bug fix 7/31/04:  We must call setText even if p matches: p's text may have changed!
+        # We must call setText even if p matches: p's text may have changed!
         self.setText(t,p.headString())
         t.configure(width=self.headWidth(p))
         t.leo_position = p # Never changes.
@@ -609,13 +608,11 @@ class leoTkinterTree (leoFrame.leoTree):
         assert(not self.ids.get(theId))
         self.ids[theId] = p
         
-        # New in 4.2 b3: entries are pairs (p,t,theId) indexed by v.
+        # Entries are pairs (p,t,theId) indexed by v.
         key = p.v ; assert key
         pList = self.visibleText.get(key,[])
         pList.append((p,t,theId),)
         self.visibleText[key] = pList
-    
-        # g.trace(p,t)
         return t
     #@nonl
     #@-node:ekr.20040803072955.11:newText (leoTkinterTree)
@@ -1674,11 +1671,11 @@ class leoTkinterTree (leoFrame.leoTree):
                 assert t2.leo_window_id == id2
                 assert t2.leo_position == p2
                 if p.equal(p2):
-                    # g.trace("found",t2)
+                    # g.trace('found',t2)
                     return t2
-            return None
-        else:
-            return None
+            
+        # g.trace(not found',p.headString())
+        return None
     #@nonl
     #@-node:ekr.20040803072955.76:findEditWidget
     #@+node:ekr.20040803072955.78:Click Box...
@@ -1824,10 +1821,13 @@ class leoTkinterTree (leoFrame.leoTree):
         """Handle a key event in a headline."""
         
         w = event.widget ; ch = event.char
+        
+        # g.trace(repr(ch))
     
         try:
             p = w.leo_position
         except AttributeError:
+            g.trace('error *****')
             return "continue"
     
         return self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
@@ -1864,6 +1864,8 @@ class leoTkinterTree (leoFrame.leoTree):
         """Update headline text at idle time."""
         
         c = self.c ; u = c.undoer
+        
+        # g.trace(p.headString(),'isCurrent',p.isCurrentPosition())
     
         if not p or not p.isCurrentPosition():
             return "break"
@@ -1874,15 +1876,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
             return "break" # The hook claims to have handled the event.
             
-        #@    << set head to vnode text >>
-        #@+node:ekr.20040803072955.92:<< set head to vnode text >>
-        head = p.headString()
-        if head == None:
-            head = u""
-        head = g.toUnicode(head,"utf-8")
-        #@nonl
-        #@-node:ekr.20040803072955.92:<< set head to vnode text >>
-        #@nl
+        head = g.toUnicode(p.headString() or u'',"utf-8")
         done = ch in ('\r','\n')
         if done:
             #@        << set the widget text to head >>
@@ -2585,6 +2579,8 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; frame = c.frame
         
         p = self.editPosition()
+        
+        # g.trace(p and p.headString())
     
         if p and p.edit_text():
             if 0: # New in recycled widgets scheme: this could cause a race condition.
@@ -2612,12 +2608,15 @@ class leoTkinterTree (leoFrame.leoTree):
             self.frame.revertHeadline = None
             
         self.setEditPosition(p)
+        
+        # g.trace(p,p.edit_text())
     
         # Start editing
         if p and p.edit_text():
             self.setNormalLabelState(p)
             self.frame.revertHeadline = p.headString()
             self.setEditPosition(p)
+            self.frame.headlineWantsFocus(p)
     #@nonl
     #@-node:ekr.20040803072955.127:editLabel
     #@+node:ekr.20040803072955.128:tree.select
@@ -2756,8 +2755,8 @@ class leoTkinterTree (leoFrame.leoTree):
             self.setEditHeadlineColors(p)
             p.edit_text().tag_remove("sel","1.0","end")
             p.edit_text().tag_add("sel","1.0","end")
-            # Set the focus immediately
-            self.frame.widgetWantsFocus(p.edit_text(),later=False)
+            
+            # self.frame.headlineWantsFocus(p,later=False)
     #@nonl
     #@-node:ekr.20040803072955.135:setNormalLabelState
     #@+node:ekr.20040803072955.136:setDisabledLabelState

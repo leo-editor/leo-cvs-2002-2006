@@ -830,16 +830,20 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051011103654:checkBindings
     #@+node:ekr.20051023182326:copyBindingsToWidget
-    def copyBindingsToWidget (self,pane,widget):
+    def copyBindingsToWidget (self,paneOrPanes,widget):
         
-        '''Copy all bindings for the given pane to widget.'''
+        '''Copy all bindings for the given panes to widget.
+        
+        paneOrPanes may be a single pane name or a list of pane names.'''
     
         k = self ; d = k.bindingsDict
         keys = d.keys() ; keys.sort()
         
+        panes = list(paneOrPanes)
+        
         for shortcut in keys:
             bunch = d.get(shortcut)
-            if bunch.pane == pane:
+            if bunch.pane in panes:
                 func = bunch.func
                 commandName = bunch.commandName
                 # g.trace('find tab',shortcut,commandName)

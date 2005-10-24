@@ -2139,6 +2139,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def bodyWantsFocus(self,later=True):
         if self.body and self.body.bodyCtrl:
             self.set_focus(self.body.bodyCtrl,later=later)
+            
+    def headlineWantsFocus(self,p,later=True):
+        w = p and p.edit_text()
+        if w:
+            self.set_focus(w,later=later)
         
     def logWantsFocus(self,later=True):
         if self.log and self.log.logCtrl:
@@ -2155,7 +2160,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def widgetWantsFocus(self,widget,later=True):
         if widget:
             self.set_focus(widget,later=later)
-    #@nonl
     #@-node:ekr.20050120092028:xWantsFocus (tkFrame)
     #@+node:ekr.20050120092028.1:set_focus (tkFrame)
     #@+at
@@ -2178,7 +2182,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         '''Set the focus to the widget specified in the xWantsFocus methods.'''
     
         c = self.c
-        # g.trace(g.callerList(5))
+        # g.trace(widget._name,g.callerList(5))
     
         if widget and not g.app.unitTesting:
             # Messing with focus may be dangerous in unit tests.

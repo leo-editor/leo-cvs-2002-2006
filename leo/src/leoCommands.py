@@ -3026,10 +3026,11 @@ class baseCommands:
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
             c.setChanged(True)
             u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-            c.editPosition(p)
+            c.editPosition(p) # Do this after before the redraw first.
             c.selectPosition(p)
         finally:
             c.endUpdate()
+            c.editPosition(p) # Do this again after the redraw so p.edit_text() will succeed.
         return p # for mod_labels plugin.
     #@nonl
     #@-node:ekr.20031218072017.1761:c.insertHeadline
