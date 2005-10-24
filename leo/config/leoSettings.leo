@@ -222,14 +222,14 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="TV"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
 </v>
 <v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558" a="TV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
+<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1373,6 +1373,7 @@ KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 # New focus commands
 focus-to-body           = None
 focus-to-log            = None
+focus-to-minibuffer     = None
 focus-to-tree           = None
 cycle-focus             = Alt-Shift-f
 
@@ -1395,30 +1396,39 @@ paste-text              = Ctrl-v        # For testing only: Alt-Shift-Ctrl-v
 
 # Leo find panel stuff.  It's not clear what will happen to these.
 dismiss-leo-find-panel  = None
-leo-find                = F3
-leo-find-panel          = Ctrl-f    # Ctrl-f conflicts with forward-char.
-leo-find-previous       = F2
+leo-find                = None
+leo-find-panel          = None      # Ctrl-f conflicts with forward-char.
+leo-find-previous       = None
 leo-change              = None
 leo-change-then-find    = None
 leo-change-all          = None      # Unwise to bind this to a shortcut or abbreviation.
 
+# New leo find tab
+open-find-tab           = Ctrl-f # Functional, but no way to bind F3 to it's Find button.
+find-tab-find           = F3
+find-tab-find-prev      = F2
+
+# These basic moves are bound in all text widgets ?? including the minibuffer ??
+
+backward-char           ! text = Ctrl-b        # No conflict
+backward-word           ! text = Alt-b         # No conflict   
+beginning-of-line       ! text = Ctrl-a        # Ctrl-a Conflicts with select-all 
+end-of-line             ! text = Ctrl-e        # Ctrl-e Conflicts with execute-script
+forward-char            ! text = Shift-Ctrl-f  # Ctrl-f Conflicts with find-panel
+forward-word            ! text = Alt-f         # No conflict with bindings, but usually opens file menu.
+kill-line               ! text = Shift-Ctrl-k  # Ctrl-K conflicts with match-braket.
+
 # Emacs moves...
-back-sentence           = Alt-a         # No conflict
-backward-char           = Ctrl-b        # No conflict
-backward-paragraph      = Alt-braceleft # Conflicts with 
-backward-word           = Alt-b         # No conflict     
+backward-paragraph      = Alt-braceleft # Conflicts with
+back-sentence           ! text = Alt-a         # No conflict
 # backward-word         = Ctrl-Left     # At present, overrides previous binding.
 beginning-of-buffer     = Alt-less
 # beginning-of-line     = None          # Alt-UpArrow conflicts with goto-prev-visible
-beginning-of-line       = Ctrl-a        # Conflicts with select-all
 end-of-buffer           = Alt-greater
-end-of-line             = Ctrl-e        # Conflicts with execute-script
 # end-of-line           = Alt-DnArrow   # Conflicts with goto-next-visible
 exchange-point-mark     = None          # Should be Ctrl-X Ctrl-X.
-forward-char            = Shift-Ctrl-f        # Ctrl-f Conflicts with find-panel
 forward-paragraph       = Alt-braceright
 forward-sentence        = Alt-e         # No conflict
-forward-word            = Alt-f         # No conflict with bindings, but usually opens file menu.
 # forward-word          = Ctrl-Right    # At present, overrides previous binding.
 goto-char               = None
 goto-line               = None          # Usually Alt-g, but Leo's goto-line-number is better.
@@ -1454,7 +1464,6 @@ backward-kill-paragraph = None
 backward-kill-sentence  = None
 backward-kill-word      = Alt-Delete
 kill-buffer             = None
-kill-line               = Shift-Ctrl-k        # Ctrl-K conflicts with match-braket.
 kill-paragraph          = None
 kill-rectangle          = None
 kill-region             = Control-w
@@ -1463,7 +1472,6 @@ kill-sentence           = Alt-k
 kill-word               = Alt-d
 yank                    = Control-y
 yank-pop                = Alt-y
-
 
 # All other Emacs commands
 abbrev-mode                 = None
@@ -1540,7 +1548,6 @@ number-command-7            = None
 number-command-8            = None
 number-command-9            = None
 number-to-register          = None
-open-find-tab               = None # Functional, but no way to bind F3 to it's Find button.
 open-rectangle              = None
 point-to-register           = None
 prepend-to-buffer           = None
@@ -1728,16 +1735,16 @@ revert                      = None
 save-file                   = Ctrl-s       # Ctrl-s conflicts with search.
 save-file-as                = Shift-Ctrl-S
 save-file-to                = None
-select-all                  = None         # Ctrl-A conflicts with beginning-of-line.
+select-all                  = Shift-Ctrl-A  # Ctrl-A conflicts with beginning-of-line.
 set-colors                  = None
 set-font                    = None
-settings                    = None        # Ctrl-Y conflicts with yank.
-show-invisibles             = None        # Alt-V conflicts with scroll-up .
+settings                    = None          # Ctrl-Y conflicts with yank.
+show-invisibles             = Ctrl-Shift-v  # Alt-V conflicts with scroll-up .
 sort-children               = None
-sort-siblings               = Shift-Alt-A # Alt-A conflicts with back-sentence.
-tangle                      = None        # Removed Shift-Ctrl-T: not useful enough.
-tangle-all                  = None        # Removed Shift-Ctrl-A: not useful enough.
-tangle-marked               = None        # Removed Shift-Ctrl-M: not useful enough.
+sort-siblings               = Shift-Alt-A   # Alt-A conflicts with back-sentence.
+tangle                      = None          # Removed Shift-Ctrl-T: not useful enough.
+tangle-all                  = None          # Removed Shift-Ctrl-A: not useful enough.
+tangle-marked               = None          # Removed Shift-Ctrl-M: not useful enough.
 toggle-active-pane          = Ctrl-T
 toggle-angle-brackets       = None
 toggle-split-direction      = None

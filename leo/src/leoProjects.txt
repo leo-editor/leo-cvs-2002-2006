@@ -27044,6 +27044,588 @@ def setBindings (self):
 #@nonl
 #@-node:ekr.20051024102724:tkTtree.setBindings
 #@-node:ekr.20051024101355:(Copy bindings to headlines)
+#@+node:ekr.20051024112703:(Problems with key bindings in headlines)
+#@+node:ekr.20031218072017.1761:c.insertHeadline
+def insertHeadline (self,op_name="Insert Node"):
+    
+    '''Insert a node after the presently selected node.'''
+
+    c = self ; u = c.undoer
+    current = c.currentPosition()
+    
+    if not current: return
+
+    c.beginUpdate()
+    try: # In update...
+        undoData = c.undoer.beforeInsertNode(current)
+        # Make sure the new node is visible when hoisting.
+        if ((current.hasChildren() and current.isExpanded()) or
+            (c.hoistStack and current == c.hoistStack[-1].p)):
+            p = current.insertAsNthChild(0)
+        else:
+            p = current.insertAfter()
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+        u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+        c.editPosition(p) # Do this after before the redraw first.
+        c.selectPosition(p)
+    finally:
+        c.endUpdate()
+        c.editPosition(p) # Do this again after the redraw so p.edit_text() will succeed.
+    return p # for mod_labels plugin.
+#@nonl
+#@-node:ekr.20031218072017.1761:c.insertHeadline
+#@+node:ekr.20051024152318:Focus
+#@+node:ekr.20050120092028:xWantsFocus (tkFrame)
+@ All these do the same thing, but separate names are good for tracing and
+makes the intent of the code clearer.
+@c 
+
+def bodyWantsFocus(self,later=True):
+    if self.body and self.body.bodyCtrl:
+        self.set_focus(self.body.bodyCtrl,later=later)
+        
+def headlineWantsFocus(self,p,later=True):
+    w = p and p.edit_text()
+    if w:
+        self.set_focus(w,later=later)
+    
+def logWantsFocus(self,later=True):
+    if self.log and self.log.logCtrl:
+        self.set_focus(self.log.logCtrl,later=later)
+        
+def minibufferWantsFocus(self,later=True):
+    if self.c.miniBufferWidget:
+        self.set_focus(self.c.miniBufferWidget,later=later)
+    
+def treeWantsFocus(self,later=True):
+    if self.tree and self.tree.canvas:
+        self.set_focus(self.tree.canvas,later=later)
+    
+def widgetWantsFocus(self,widget,later=True):
+    if widget:
+        self.set_focus(widget,later=later)
+#@-node:ekr.20050120092028:xWantsFocus (tkFrame)
+#@+node:ekr.20050120092028.1:set_focus (tkFrame)
+@
+Very tricky code:
+Many Tk calls can mess with the focus, so we must always set the focus,
+regardless of what we did previously.
+
+Alas, because of bugs in Tk and/or window managers, we can not call method at
+idle time: that would interfere with switching between windows. Instead, the
+xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
+to g.app.g.app.gui.set_focus.
+@c
+
+def set_focus(self,widget,later=False):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    c = self.c
+    # g.trace(widget._name,g.callerList(5))
+
+    if widget and not g.app.unitTesting:
+        # Messing with focus may be dangerous in unit tests.
+        if later:
+            # Queue up the call (just once) for later.
+            def setFocusCallback(c=c):
+                self.wantedCallbackScheduled = False
+                if c == g.app.wantedCommander and c.frame.wantedWidget:
+                    # g.trace(c.frame.wantedWidget)
+                    g.app.gui.set_focus(
+                        g.app.wantedCommander,
+                        c.frame.wantedWidget)
+                self.wantedWidget = None
+                g.app.wantedCommander = None
+                    
+            # Crucial: This may change what the callback does.
+            self.wantedWidget = widget
+            g.app.wantedCommander = c
+            if not self.wantedCallbackScheduled:
+                # g.trace(g.callerList(4),c.shortFileName())
+                self.wantedCallbackScheduled = True
+                # We don't have to wait so long now that we don't call this so often.
+                # The difference between 500 msec. and 100 msec. is significant.
+                # New in 4.4: set the delay to 1 msec.: the smaller the better.
+                self.outerFrame.after(1,setFocusCallback)
+        else:
+            # g.trace(g.callerList(4),c.shortFileName())
+            g.app.gui.set_focus(c,widget)
+            # Crucial: cancel any previous callback.
+            # It may be re-enabled later, but that doesn't matter.
+            self.wantedWidget = None
+            g.app.wantedCommander = None
+    else:
+        # Cancel any previous request.
+        self.wantedWidget = None
+        g.app.wantedCommander = None
+#@nonl
+#@-node:ekr.20050120092028.1:set_focus (tkFrame)
+#@-node:ekr.20051024152318:Focus
+#@+node:ekr.20051024152318.1:Bindings
+#@+node:ekr.20040803072955.20:tkTree.createPermanentBindings
+def createPermanentBindings (self):
+    
+    c = self.c ; canvas = self.canvas
+    
+    canvas.bind('<Button-1>',self.onTreeClick)
+
+    if self.expanded_click_area:
+        canvas.tag_bind('clickBox','<Button-1>', self.onClickBoxClick)
+    else:
+        canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
+
+    canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
+    canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
+    canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
+    canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
+    canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
+
+    if self.useBindtags: # Create a dummy widget to hold all bindings.
+        t = self.bindingWidget
+        t.bind("<Button-1>", self.onHeadlineClick, '+')
+        t.bind("<Button-3>", self.onHeadlineRightClick, '+')
+        t.bind("<Key>",      self.onHeadlineKey)
+            # There must be only one general key handler.
+
+        if 0: # This does not appear necessary in 4.4.
+            t.bind("<Control-t>",self.onControlT)
+#@nonl
+#@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
+#@+node:ekr.20051023182326:copyBindingsToWidget
+def copyBindingsToWidget (self,paneOrPanes,widget):
+    
+    '''Copy all bindings for the given panes to widget.
+    
+    paneOrPanes may be a single pane name or a list of pane names.'''
+
+    k = self ; d = k.bindingsDict
+    keys = d.keys() ; keys.sort()
+    
+    panes = list(paneOrPanes)
+    
+    for shortcut in keys:
+        bunch = d.get(shortcut)
+        if bunch.pane in panes:
+            func = bunch.func
+            commandName = bunch.commandName
+            # g.trace('find tab',shortcut,commandName)
+            
+            # This callback executes the command in the given widget.
+            def textBindingsRedirectionCallback(event,
+                func=func,widget=widget,commandName=commandName):
+                event.widget = widget
+                # g.trace(commandName,widget)
+                func(event)
+
+            widget.bind(shortcut,textBindingsRedirectionCallback)
+#@nonl
+#@-node:ekr.20051023182326:copyBindingsToWidget
+#@+node:ekr.20051024102724:tkTtree.setBindings
+# New in 4.4a2.
+
+def setBindings (self):
+    
+    '''Copy all bindings to headlines.'''
+    
+    if self.useBindtags:
+        # This _must_ be a Text widget attached to the canvas!
+        self.bindingWidget = t = Tk.Text(self.canvas)
+        self.c.keyHandler.copyBindingsToWidget(['all','tree'],t)
+
+        # newText() attaches these bindings to all headlines.
+        self.textBindings = t.bindtags()
+        # g.trace('tkTree,t.bind())
+    else:
+        self.bindingWidget = None
+   
+    self.createPermanentBindings()
+#@nonl
+#@-node:ekr.20051024102724:tkTtree.setBindings
+#@+node:ekr.20040803072955.11:newText (leoTkinterTree)
+def newText (self,p,x,y):
+    
+    canvas = self.canvas ; tag = "textBox"
+    c = self.c ; d = self.freeText
+    key = p.v ; assert key
+    pList = d.get(key,[])
+    
+    # Return only Tk.Text widgets with an exact match with p.
+    found = False
+    for i in xrange(len(pList)):
+        p2,t,theId = pList[i]
+        if p2 == p:
+            del pList[i]
+            theId = t.leo_window_id
+            assert(theId)
+            assert(t.leo_position == p2)
+            canvas.coords(theId,x,y)
+            t.configure(font=self.font) # 12/17/04
+            found = True ; break
+            
+    if not found:
+        # Tags are not valid in Tk.Text widgets.
+        # The name is valid, but apparently it must be unique.
+        self.textNumber += 1
+        t = Tk.Text(canvas,name='head-%d' % self.textNumber,
+            state="normal",font=self.font,bd=0,relief="flat",height=1)
+    
+        if self.useBindtags:
+            t.bindtags(self.textBindings)
+        else:
+            c.keyHandler.copyBindingsToWidget('all',t)
+            t.bind("<Button-1>", self.onHeadlineClick)
+            t.bind("<Button-3>", self.onHeadlineRightClick)
+            t.bind("<Key>",      self.onHeadlineKey)
+
+        if 0: # As of 4.4 this does not appear necessary.
+            t.bind("<Control-t>",self.onControlT)
+
+        if 0: # Crashes on XP.
+            << patch by Maciej Kalisiak to handle scroll-wheel events >>
+    
+        theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
+        t.leo_window_id = theId # Never changes.
+        
+    if self.trace and self.verbose:
+        g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),self.textAddr(t),align=-20)
+
+    # Common configuration.
+    # We must call setText even if p matches: p's text may have changed!
+    self.setText(t,p.headString())
+    t.configure(width=self.headWidth(p))
+    t.leo_position = p # Never changes.
+    t.leo_generation = self.generation
+
+    assert(theId == t.leo_window_id)
+    assert(not self.ids.get(theId))
+    self.ids[theId] = p
+    
+    # Entries are pairs (p,t,theId) indexed by v.
+    key = p.v ; assert key
+    pList = self.visibleText.get(key,[])
+    pList.append((p,t,theId),)
+    self.visibleText[key] = pList
+    return t
+#@nonl
+#@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+def PropagateButton4(e):
+    canvas.event_generate("<Button-4>")
+    return "break"
+
+def PropagateButton5(e):
+    canvas.event_generate("<Button-5>")
+    return "break"
+
+def PropagateMouseWheel(e):
+    canvas.event_generate("<MouseWheel>")
+    return "break"
+
+if self.useBindtags:
+    instance_tag = t.bindtags()[0]
+    t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
+    t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
+    t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
+else:
+    # UNTESTED CASE!!!
+    t.bind("<Button-4>", PropagateButton4)
+    t.bind("<Button-5>", PropagateButton5)
+    t.bind("<MouseWheel>", PropagateMouseWheel)
+
+#@-node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+#@-node:ekr.20040803072955.11:newText (leoTkinterTree)
+#@-node:ekr.20051024152318.1:Bindings
+#@+node:ekr.20051024152318.2:Event handlers
+#@+node:ekr.20040803072955.88:onHeadlineKey
+def onHeadlineKey (self,event):
+    
+    """Handle a key event in a headline."""
+    
+    w = event.widget ; ch = event.char
+    
+    # g.trace(repr(ch))
+
+    try:
+        p = w.leo_position
+    except AttributeError:
+        g.trace('error *****')
+        return "continue"
+
+    return self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
+#@nonl
+#@-node:ekr.20040803072955.88:onHeadlineKey
+#@+node:ekr.20040803072955.91:idle_head_key
+def idle_head_key (self,p,ch=None):
+    
+    """Update headline text at idle time."""
+    
+    c = self.c ; u = c.undoer
+    
+    # g.trace(p.headString(),'isCurrent',p.isCurrentPosition())
+
+    if not p or not p.isCurrentPosition():
+        return "break"
+
+    edit_text = self.edit_text(p)
+    index = edit_text.index("insert")
+
+    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
+        return "break" # The hook claims to have handled the event.
+        
+    head = g.toUnicode(p.headString() or u'',"utf-8")
+    done = ch in ('\r','\n')
+    if done:
+        << set the widget text to head >>
+    << set s to the widget text >>
+    changed = s != head
+    if changed:
+        undoData = u.beforeChangeNodeContents(p)
+        << update p >>
+        u.afterChangeNodeContents(p,'Change Headline',undoData,dirtyVnodeList=dirtyVnodeList)
+    if done or changed:
+        << reconfigure p and all nodes joined to p >>
+        << update the screen >>
+
+    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
+    return "break"
+#@nonl
+#@+node:ekr.20040803072955.93:<< set the widget text to head >>
+self.setText(edit_text,head)
+edit_text.mark_set("insert",index)
+#@nonl
+#@-node:ekr.20040803072955.93:<< set the widget text to head >>
+#@+node:ekr.20040803072955.94:<< set s to the widget text >>
+s = edit_text.get("1.0","end")
+
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
+    # Another kludge: remove one or two trailing newlines before warning of truncation.
+    if s and s[-1] == '\n': s = s[:-1]
+    if s and s[-1] == '\n': s = s[:-1]
+    i = s.find('\n')
+    if i > -1:
+        # g.trace(i,len(s),repr(s))
+        g.es("Truncating headline to one line",color="blue")
+        s = s[:i]
+    limit = 1000
+    if len(s) > limit:
+        g.es("Truncating headline to %d characters" % (limit),color="blue")
+        s = s[:limit]
+
+s = g.toUnicode(s,g.app.tkEncoding)
+
+if not s:
+    s = u""
+    
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+    s = s.replace('\n','')
+    s = s.replace('\r','')
+#@nonl
+#@-node:ekr.20040803072955.94:<< set s to the widget text >>
+#@+node:ekr.20040803072955.95:<< update p >>
+c.beginUpdate()
+try: # In update...
+    # Update changed bit.
+    if not c.changed: c.setChanged(True)
+    # We must call p.setDirty even if p is dirty!
+    dirtyVnodeList = p.setDirty()
+    # Update p.
+    p.initHeadString(s)
+    self.setText(edit_text,s)
+    edit_text.mark_set("insert",index)
+finally:
+    c.endUpdate(False) # do not redraw now.
+#@nonl
+#@-node:ekr.20040803072955.95:<< update p >>
+#@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
+# Reconfigure p's headline.
+if done:
+    self.setDisabledLabelState(p)
+
+edit_text.configure(width=self.headWidth(p))
+#@nonl
+#@-node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
+#@+node:ekr.20040803072955.97:<< update the screen >>
+if done:
+    # g.trace("done")
+    c.beginUpdate()
+    try:
+        self.endEditLabel()
+    finally:
+        c.endUpdate()
+
+elif changed:
+    # g.trace("changed")
+    # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Redrawing the whole screen now messes up the cursor in the headline.
+    self.drawIcon(p) # just redraw the icon.
+#@nonl
+#@-node:ekr.20040803072955.97:<< update the screen >>
+#@-node:ekr.20040803072955.91:idle_head_key
+#@-node:ekr.20051024152318.2:Event handlers
+#@+node:ekr.20051024145643:Label state
+#@+node:ekr.20031218072017.3716:Getters/Setters (tree)
+def getEditTextDict(self,v):
+    # New in 4.2: the default is an empty list.
+    return self.edit_text_dict.get(v,[])
+
+def editPosition(self):
+    return self._editPosition
+
+def setEditPosition(self,p):
+    self._editPosition = p
+#@nonl
+#@-node:ekr.20031218072017.3716:Getters/Setters (tree)
+#@+node:ekr.20040803072955.76:findEditWidget
+# Search the widget list for widget t with t.leo_position == p.
+
+def findEditWidget (self,p):
+    
+    """Return the Tk.Text item corresponding to p."""
+
+    c = self.c
+    
+    if c:
+        # New in 4.2: the dictionary is a list of pairs(p,v)
+        pairs = self.visibleText.get(p.v,[])
+        for p2,t2,id2 in pairs:
+            assert t2.leo_window_id == id2
+            assert t2.leo_position == p2
+            if p.equal(p2):
+                # g.trace('found',t2)
+                return t2
+        
+    # g.trace(not found',p.headString())
+    return None
+#@nonl
+#@-node:ekr.20040803072955.76:findEditWidget
+#@+node:ekr.20031218072017.2991:c.editVnode (calls tree.editLabel)
+# Selects v: sets the focus to p and edits p.
+
+def editPosition(self,p):
+
+    c = self
+
+    if p:
+        c.selectVnode(p)
+        c.frame.tree.editLabel(p)
+#@nonl
+#@-node:ekr.20031218072017.2991:c.editVnode (calls tree.editLabel)
+#@+node:ekr.20040803072955.75:edit_text
+def edit_text (self,p):
+    
+    """Returns the Tk.Edit widget for position p."""
+
+    return self.findEditWidget(p)
+#@nonl
+#@-node:ekr.20040803072955.75:edit_text
+#@+node:ekr.20040803072955.135:setNormalLabelState
+def setNormalLabelState (self,p): # selected, editing
+
+    # Do nothing if a redraw is already sheduled.
+    # This prevents race conditions.
+    if self.redrawScheduled: return 
+    
+    if p and p.edit_text():
+        self.setEditHeadlineColors(p)
+        p.edit_text().tag_remove("sel","1.0","end")
+        p.edit_text().tag_add("sel","1.0","end")
+        
+        # self.frame.headlineWantsFocus(p,later=False)
+#@nonl
+#@-node:ekr.20040803072955.135:setNormalLabelState
+#@+node:ekr.20040803072955.127:editLabel
+def editLabel (self,p):
+    
+    """Start editing p.edit_text."""
+
+    if self.editPosition() and p != self.editPosition():
+        self.endEditLabel()
+        self.frame.revertHeadline = None
+        
+    self.setEditPosition(p)
+    
+    # g.trace(p,p.edit_text())
+
+    # Start editing
+    if p and p.edit_text():
+        self.setNormalLabelState(p)
+        self.frame.revertHeadline = p.headString()
+        self.setEditPosition(p)
+        self.frame.headlineWantsFocus(p)
+#@nonl
+#@-node:ekr.20040803072955.127:editLabel
+#@+node:ekr.20040803072955.126:endEditLabel
+def endEditLabel (self):
+    
+    """End editing for self.editText."""
+
+    c = self.c ; frame = c.frame
+    
+    p = self.editPosition()
+    
+    # g.trace(p and p.headString())
+
+    if p and p.edit_text():
+        if 0: # New in recycled widgets scheme: this could cause a race condition.
+            # This will be done in the redraw code becaused editPosition will be None.
+            self.setUnselectedLabelState(p)
+
+        self.setEditPosition(None)
+
+        # force a redraw of joined and ancestor headlines.
+        self.force_redraw() 
+
+    if self.stayInTree:
+        c.frame.treeWantsFocus()
+    else:
+        frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20040803072955.126:endEditLabel
+#@+node:ekr.20040803072955.39:drawIcon
+def drawIcon(self,p,x=None,y=None):
+    
+    """Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
+
+    c = self.c
+    << compute x,y and iconVal >>
+
+    if not g.doHook("draw-outline-icon",tree=self,c=c,p=p,v=p,x=x,y=y):
+
+        # Get the image.
+        imagename = "box%02d.GIF" % val
+        image = self.getIconImage(imagename)
+        self.newIcon(p,x,y+self.lineyoffset,image)
+        
+    return 0,self.icon_width # dummy icon height,width
+#@nonl
+#@+node:ekr.20040803072955.40:<< compute x,y and iconVal >>
+v = p.v
+
+if x is None and y is None:
+    try:
+        x,y = v.iconx, v.icony
+    except:
+        # Inject the ivars.
+        x,y = v.iconx, v.icony = 0,0
+else:
+    # Inject the ivars.
+    v.iconx, v.icony = x,y
+
+y += 2 # draw icon at y + 2
+
+# Always recompute v.iconVal.
+# This is an important drawing optimization.
+val = v.iconVal = v.computeIcon()
+assert(0 <= val <= 15)
+#@nonl
+#@-node:ekr.20040803072955.40:<< compute x,y and iconVal >>
+#@-node:ekr.20040803072955.39:drawIcon
+#@-node:ekr.20051024145643:Label state
+#@-node:ekr.20051024112703:(Problems with key bindings in headlines)
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

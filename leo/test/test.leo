@@ -1607,11 +1607,12 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050805150320"><vh>@@button rst3</vh></v>
 <v t="ekr.20050930124917"><vh>@@button outlineToClipboard</vh></v>
+<v t="ekr.20051020124457.1"><vh>@@button find tab</vh></v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+<v t="ekr.20051023104813"><vh>@@button check-dirty</vh></v>
 </v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20050911112310"><vh>@button save</vh></v>
-<v t="ekr.20051020124457.1"><vh>@button find tab</vh></v>
 </v>
 <v t="ekr.20051012104957"><vh>Other unit test stuff...</vh>
 <v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
@@ -22757,13 +22758,15 @@ g.es('Test',color='blue')</t>
 <t tx="ekr.20051016174943.1">print 'This is my command 3'</t>
 <t tx="ekr.20051016205407">g.es('hi',color='red')</t>
 <t tx="ekr.20051017093427">a
-
+ 
 b
 
 c
 d
 
-e</t>
+e
+
+This is a test of navigation.</t>
 <t tx="ekr.20051017104401"></t>
 <t tx="ekr.20051018071924">	</t>
 <t tx="ekr.20051020104412.37">import leoFind
@@ -23264,9 +23267,17 @@ for i in xrange(numberOfColumns):
         box.bindHotKey(ctxt)
         if var is None: box.button.configure(state="disabled")</t>
 <t tx="ekr.20051020124457"></t>
-<t tx="ekr.20051020124457.1">print c.searchCommands.c
-
-c.searchCommands.openFindTab(event=None)</t>
+<t tx="ekr.20051020124457.1">c.searchCommands.openFindTab(event=None)</t>
 <t tx="ekr.20051021151748">print 'Rebound control E'</t>
+<t tx="ekr.20051023104813"># This works, but is too slow to be really useful.
+
+count = 0 ; tnodes = []
+for p in c.all_positions_iter():
+    if p.isDirty() and p.v.t not in tnodes:
+        c.checkPythonNode (p,suppressErrors=False)
+        tnodes.append(p.v.t)
+        count += 1
+        
+g.es('%s nodes checked' % count)</t>
 </tnodes>
 </leo_file>
