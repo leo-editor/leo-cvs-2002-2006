@@ -253,10 +253,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
         lab.pack(side='left')
         
         if 1:
-            label = Tk.Text(f,height=1,relief='groove',background='lightgrey')
+            label = Tk.Text(f,height=1,relief='groove',background='lightgrey',name='minibuffer')
             label.pack(side='left',fill='x',expand=1,padx=2,pady=1)
         else:
-            label = Tk.Label(f,relief='groove',justify='left',anchor='w')
+            label = Tk.Label(f,relief='groove',justify='left',anchor='w',name='minnibuffer')
             label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
         
         frame.minibufferVisible = c.showMinibuffer
@@ -884,7 +884,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             
             bg = self.statusFrame.cget("background")
             self.textWidget = Tk.Text(self.statusFrame,
-                height=1,state="disabled",bg=bg,relief="groove")
+                height=1,state="disabled",bg=bg,relief="groove",name='status-line')
             self.textWidget.pack(side="left",expand=1,fill="x")
             self.textWidget.bind("<Button-1>", self.onActivate)
         #@nonl
@@ -1729,32 +1729,35 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.3981:abortEditLabelCommand
     #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
     #@+node:ekr.20051011072903.2:copyText
-    def copyText (self):
+    def copyText (self,fromMinibuffer=False):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
-        #g.trace()
-        
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl
+        
+        # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
     
+        # These two branches used to be different, an might be so again.
         if isBody:
             w.event_generate(g.virtual_event_name("Copy"))
+        elif fromMinibuffer:
+            pass
         else:
             # Old: Do **not** call w.event_generate.
             # New: Do call w.event_generate.
             w.event_generate(g.virtual_event_name("Copy"))
-    
+    #@nonl
     #@-node:ekr.20051011072903.2:copyText
     #@+node:ekr.20051011072049.2:cutText
-    def cutText (self):
+    def cutText (self,fromMinibuffer=False):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
-        #g.trace()
-        
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl
+        
+        # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
     
         if isBody:
             w.event_generate(g.virtual_event_name("Cut"))
@@ -1762,21 +1765,24 @@ class leoTkinterFrame (leoFrame.leoFrame):
             # Old: Do **not** call w.event_generate.
             # New: Do call w.event_generate.
             w.event_generate(g.virtual_event_name("Cut"))
-            f.tree.onHeadChanged(c.currentPosition())
+            if not fromMinibuffer:
+                f.tree.onHeadChanged(c.currentPosition())
     #@nonl
     #@-node:ekr.20051011072049.2:cutText
     #@+node:ekr.20051011072903.5:pasteText
-    def pasteText (self):
+    def pasteText (self,fromMinibuffer=False):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
-        # g.trace()
-        
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl
+        
+        # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
     
         if isBody:
             w.event_generate(g.virtual_event_name("Paste"))
+        elif fromMinibuffer:
+            pass
         else:
             # Old: Do **not** call w.event_generate.
             # New: Do call w.event_generate.
@@ -2302,7 +2308,7 @@ class leoTkinterBody (leoFrame.leoBody):
         wrap = g.choose(wrap,"word","none")
         
         # Setgrid=1 cause severe problems with the font panel.
-        body = Tk.Text(parentFrame,name='body',
+        body = Tk.Text(parentFrame,name='body-pane',
             bd=2,bg="white",relief="flat",setgrid=0,wrap=wrap)
         
         bodyBar = Tk.Scrollbar(parentFrame,name='bodyBar')
@@ -3803,7 +3809,7 @@ class leoTkinterLog (leoFrame.leoLog):
         
         for shortcut in shortcuts:
             bunch = k.bindingsDict.get(shortcut)
-            if bunch.pane in ('all','log'):
+            if bunch.pane in ('all','log','text'):
                 # g.trace(tabName,bunch.pane,bunch.commandName,shortcut)
                 textWidget.bind(shortcut,bunch.func)
     #@nonl

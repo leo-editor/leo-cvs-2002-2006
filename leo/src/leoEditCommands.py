@@ -3273,7 +3273,7 @@ class killBufferCommandsClass (baseEditCommandsClass):
     
         g.trace(repr(text))
     
-        if self.killBuffer and k.previousStroke in killKeys:
+        if self.killBuffer and k.stroke in killKeys:
             self.killBuffer [0] = self.killBuffer [0] + text
         else:
             self.killBuffer.insert(0,text)
@@ -4967,7 +4967,7 @@ class leoTkinterFindTab (leoFind.leoFind):
     #@nonl
     #@-node:ekr.20051020120306.22:find.update_ivars
     #@+node:ekr.20051023183028:findButtonCallback
-    def findButtonCallback(event=None):
+    def findButtonCallback(self,event=None):
         
         __pychecker__ = '--no-argsused'
     

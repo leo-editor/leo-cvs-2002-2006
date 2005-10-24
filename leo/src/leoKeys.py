@@ -525,8 +525,10 @@ class keyHandlerClass:
         self.bindingsDict = {}
             # Keys are Tk key names, values are g.bunch(pane,func,commandName)
             
-        self.textBindingsDict = {}
-            # Keys are Tk key names, values are same as bindings dict.
+        # Special bindings for k.fullCommand.
+        self.mb_copyKey = None
+        self.mb_pasteKey = None
+        self.mb_cutKey = None
         
         # Keepting track of the characters in the mini-buffer.
         self.mb_history = []
@@ -539,7 +541,6 @@ class keyHandlerClass:
         self.func = None
         self.keysymHistory = []
         self.previous = []
-        self.previousStroke = ''
         
         # For getArg...
         self.afterGetArgState = None
@@ -745,9 +746,6 @@ class keyHandlerClass:
     
             k.bindingsDict [shortcut] = g.bunch(
                 pane=pane,func=callback,commandName=commandName)
-            if pane == 'text':
-                k.textBindingsDict [shortcut] = g.bunch(
-                    pane=pane,func=callback,commandName=commandName)
     
             return True
     
@@ -757,6 +755,7 @@ class keyHandlerClass:
                 # g.es_exception()
                 # g.printStack()
                 g.app.menuWarningsGiven = True
+    
             return False
     #@nonl
     #@-node:ekr.20050920085536.16:bindKey
@@ -832,24 +831,24 @@ class keyHandlerClass:
     #@+node:ekr.20051023182326:copyTextBindingsToWidget
     def copyTextBindingsToWidget (self,widget):
     
-        k = self ; d = k.textBindingsDict
-        
+        k = self ; d = k.bindingsDict
         keys = d.keys() ; keys.sort()
         
         for shortcut in keys:
             bunch = d.get(shortcut)
-            func = bunch.func
-            commandName = bunch.commandName
-            # g.trace('find tab',shortcut,commandName)
-            
-            # This callback executes the command in the given widget.
-            def textBindingsRedirectionCallback(event,
-                func=func,widget=widget,commandName=commandName):
-                event.widget = widget
-                # g.trace(commandName,widget)
-                func(event)
+            if bunch.pane == 'text':
+                func = bunch.func
+                commandName = bunch.commandName
+                # g.trace('find tab',shortcut,commandName)
                 
-            widget.bind(shortcut,textBindingsRedirectionCallback)
+                # This callback executes the command in the given widget.
+                def textBindingsRedirectionCallback(event,
+                    func=func,widget=widget,commandName=commandName):
+                    event.widget = widget
+                    # g.trace(commandName,widget)
+                    func(event)
+    
+                widget.bind(shortcut,textBindingsRedirectionCallback)
     #@nonl
     #@-node:ekr.20051023182326:copyTextBindingsToWidget
     #@+node:ekr.20051007080058:makeAllBindings
@@ -945,28 +944,41 @@ class keyHandlerClass:
         
         # These defaults may be overridden.
         for pane,stroke,ivar,commandName,func in (
-            ('mini','Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
-            ('all', 'Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
-            ('all', 'Alt-x',   'fullCommandKey',  'full-command',  k.fullCommand),
-            ('all',  'Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
-            ('all',  'Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
+            ('all', 'Alt-x',  'fullCommandKey',  'full-command',  k.fullCommand),
+            ('all', 'Ctrl-g', 'abortAllModesKey','keyboard-quit', k.keyboardQuit),
+            ('all', 'Ctrl-u', 'universalArgKey', 'universal-argument', k.universalArgument),
+            ('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
+            # These bindings for inside the minibuffer are strange beasts.
+            # They are sent directly to k.fullcommand with a special callback.
+            ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
+            ('mini', 'Ctrl-g', None,'keyboard-quit', k.keyboardQuit),
+            ('mini', 'Ctrl-c', 'mb_copyKey', 'copy-text', f.copyText),
+            ('mini', 'Ctrl-v', 'mb_pasteKey','paste-text',f.pasteText),
+            ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
         ):
             # Get the user shortcut *before* creating the callbacks.
             junk, bunch = c.config.getShortcut(commandName)
             accel = (bunch and bunch.val) or stroke
             shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
             # g.trace(stroke,accel,shortcut,func.__name__)
-            
-            # Create two-levels of callbacks.
-            def specialCallback (event,func=func):
-                return func(event)
+            if pane == 'mini' and func != k.keyboardQuit:
+                # Call a strange callback that bypasses k.masterCommand.
+                def minibufferKeyCallback(event,func=func,shortcut=shortcut):
+                    k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
     
-            def keyCallback (event,func=specialCallback,stroke=shortcut):
-                return k.masterCommand(event,func,stroke)
-            
-            setattr(k,ivar,shortcut)
+                k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+            else:
+                # Create two-levels of callbacks.
+                def specialCallback (event,func=func):
+                    return func(event)
     
-            k.bindKey(pane,shortcut,keyCallback,commandName)
+                def keyCallback (event,func=specialCallback,stroke=shortcut):
+                    return k.masterCommand(event,func,stroke)
+    
+                k.bindKey(pane,shortcut,keyCallback,commandName)
+    
+            if ivar:
+                setattr(k,ivar,shortcut)
             
         # Add a binding for <Key> events, so all key events go through masterCommand.
         def allKeysCallback (event):
@@ -1011,7 +1023,8 @@ class keyHandlerClass:
         k.stroke = stroke # Set this global for general use.
         k.func = func
         commandName = k.ultimateFuncName(func)
-        special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+        special = event.keysym in (
+            'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
         interesting = func or stroke != '<Key>'
         
         # g.trace(stroke,k.inState(),k.getStateKind())
@@ -1050,25 +1063,17 @@ class keyHandlerClass:
         # g.trace(stroke,k.abortAllModesKey)
     
         if stroke == k.abortAllModesKey: # 'Control-g'
-            k.previousStroke = stroke
             k.clearState()
             k.keyboardQuit(event)
             k.endCommand(event,commandName)
             return 'break'
     
         if k.inState():
-            k.forceFocusToBody() # Weird: this appears necessary.
-            k.previousStroke = stroke
-            val = k.callStateFunction(event) # Calls end-command.
-            if 0:
-                return 'break'
-            else:
-                # 'continue' is a signal from fullCommand to execute func.
-                if val != 'continue': 
-                    return 'break'
+            if not special: # Don't pass these on.
+                k.callStateFunction(event) # Calls end-command.
+            return 'break'
     
         # if k.keystrokeFunctionDict.has_key(stroke):
-            # k.previousStroke = stroke
             # if k.callKeystrokeFunction(event): # Calls end-command
                 # return 'break'
     
@@ -1085,7 +1090,6 @@ class keyHandlerClass:
     
         if func: # Func is an argument.
             # g.trace('executing func',commandName)
-            k.previousStroke = stroke
             forceFocus = func.__name__ != 'leoCallback'
             if forceFocus:
                 k.forceFocusToBody()
@@ -1135,7 +1139,7 @@ class keyHandlerClass:
     #@-node:ekr.20050923174229.3:callKeystrokeFunction
     #@-node:ekr.20050920085536.65: masterCommand & helpers
     #@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
-    def fullCommand (self,event):
+    def fullCommand (self,event,specialStroke=None,specialFunc=None):
         
         '''Handle 'full-command' (alt-x) mode.'''
     
@@ -1157,19 +1161,19 @@ class keyHandlerClass:
         elif keysym == 'BackSpace':
             k.doBackSpace(c.commandsDict.keys())
         elif ch not in string.printable:
-            if 0: # Execute the command in the context of the minibuffer.
-                # This doesn't work.  Punt for now...
-                g.trace('Edit char:',ch,keysym,k.stroke,g.callerList(3))
-                event.widget = c.miniBufferWidget
-                return 'continue' # A signal to callStateFunction & masterCommand.
+            if specialStroke:
+                g.trace(specialStroke)
+                specialFunc(fromMinibuffer=True)
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.mb_tabList = []
             k.updateLabel(event)
             k.mb_tabListPrefix = k.getLabel()
+            c.frame.minibufferWantsFocus(later=True)
             # g.trace('new prefix',k.mb_tabListPrefix)
+        if keysym != 'Return':
+            c.frame.minibufferWantsFocus(later=True)
         return 'break'
-    #@nonl
     #@+node:ekr.20050920085536.45:callAltXFunction
     def callAltXFunction (self,event):
         
