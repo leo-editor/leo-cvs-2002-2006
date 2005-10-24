@@ -1,6 +1,6 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20050415070840:@thin ../src/leoTest.py
-'''Classes for Leo's unit testing.
+'''Classes for Leo's unit testing. 
 
 Run the unit tests in test.leo using the Execute Script command.'''
 

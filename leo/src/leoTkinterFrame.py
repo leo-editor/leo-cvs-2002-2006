@@ -238,7 +238,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c.endUpdate(False)
     #@nonl
     #@-node:ekr.20051009045404:createFirstTreeNode
-    #@+node:ekr.20050920094212:createMiniBufferWidget
+    #@+node:ekr.20050920094212:f.createMiniBufferWidget
     def createMiniBufferWidget (self):
         
         '''Create the minbuffer below the status line.'''
@@ -251,15 +251,19 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
         lab.pack(side='left')
-    
-        label = Tk.Label(f,relief='groove',justify='left',anchor='w')
-        label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
+        
+        if 1:
+            label = Tk.Text(f,height=1,relief='groove',background='lightgrey')
+            label.pack(side='left',fill='x',expand=1,padx=2,pady=1)
+        else:
+            label = Tk.Label(f,relief='groove',justify='left',anchor='w')
+            label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
         
         frame.minibufferVisible = c.showMinibuffer
     
         return label
     #@nonl
-    #@-node:ekr.20050920094212:createMiniBufferWidget
+    #@-node:ekr.20050920094212:f.createMiniBufferWidget
     #@-node:ekr.20031218072017.2176:f.finishCreate & helpers
     #@+node:ekr.20031218072017.3944:f.createCanvas & helpers
     def createCanvas (self,parentFrame,pack=True):
@@ -2133,6 +2137,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def logWantsFocus(self,later=True):
         if self.log and self.log.logCtrl:
             self.set_focus(self.log.logCtrl,later=later)
+            
+    def minibufferWantsFocus(self,later=True):
+        if self.c.miniBufferWidget:
+            self.set_focus(self.c.miniBufferWidget,later=later)
         
     def treeWantsFocus(self,later=True):
         if self.tree and self.tree.canvas:

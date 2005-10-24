@@ -478,7 +478,8 @@ class keyHandlerClass:
         
         self.c = c
         self.widget = c.frame.miniBufferWidget
-            # A Tk Label widget.  Exists even if c.showMinibuffer is False.
+        self.useTextWidget = True
+            # A Tk Label or Text widget.  Exists even if c.showMinibuffer is False.
             
         self.useGlobalKillbuffer = useGlobalKillbuffer
         self.useGlobalRegisters = useGlobalRegisters
@@ -489,12 +490,15 @@ class keyHandlerClass:
         self.altX_prompt = 'full-command: '
         #@    << define Tk ivars >>
         #@+node:ekr.20051006092617:<< define Tk ivars >>
-        if self.widget:
-            self.svar = Tk.StringVar()
-            self.widget.configure(textvariable=self.svar)
-            
-        else:
+        if self.useTextWidget:
             self.svar = None
+        else:
+            if self.widget:
+                self.svar = Tk.StringVar()
+                self.widget.configure(textvariable=self.svar)
+                
+            else:
+                self.svar = None
         #@nonl
         #@-node:ekr.20051006092617:<< define Tk ivars >>
         #@nl
@@ -519,8 +523,10 @@ class keyHandlerClass:
         #@+node:ekr.20050923213858:<< define internal ivars >>
         # Previously defined bindings.
         self.bindingsDict = {}
-            # Keys are Tk key names, values are g.bunch(f=f,name=name)
+            # Keys are Tk key names, values are g.bunch(pane,func,commandName)
             
+        self.textBindingsDict = {}
+            # Keys are Tk key names, values are same as bindings dict.
         
         # Keepting track of the characters in the mini-buffer.
         self.mb_history = []
@@ -530,6 +536,7 @@ class keyHandlerClass:
         self.mb_tabListIndex = -1
         self.mb_prompt = ''
         
+        self.func = None
         self.keysymHistory = []
         self.previous = []
         self.previousStroke = ''
@@ -688,40 +695,60 @@ class keyHandlerClass:
         callback calls commandName (for error messages).'''
         
         k = self ; c = k.c
+        
+        if not shortcut: g.trace('No shortcut for %s' % commandName)
     
         try:
+            #@        << bind callback to shortcut in pane >>
+            #@+node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+            body = c.frame.body.bodyCtrl
+            log  = c.frame.log.logCtrl
+            menu = c.frame.menu
+            minibuffer = c.miniBufferWidget
+            tree = c.frame.tree.canvas
+            
+            # Binding to 'menu' causes problems with multiple pastes in the Find Tab.
+            # There should only be one binding for the minibuffer: the <Key>+ binding.
+            
+            allPanes = [body,log,tree,menu,minibuffer]
+            
+            d = {
+                'all':  [body,log,tree], # Probably not wise: menu
+                'body': [body],
+                'log':  [log],
+                'menu': [menu], # Not used, and probably dubious.
+                'mini': [minibuffer], # Needed so ctrl-g will work in the minibuffer!
+                'text': [body,log],
+                'tree': [tree],
+            }
+            
+            if 0: # A useful trace.
+                if pane and pane != 'all':
+                    g.trace('%4s %20s %s' % (pane, shortcut,commandName))
+            
+            widgets = d.get((pane or 'all').lower(),[])
+            
             if shortcut == '<Key>':
-                # Don't bind to menu.  Besides, menu.bind doesn't allow '+' arg.
-                c.frame.body.bodyCtrl.bind(shortcut,callback,'+')
+                # Important.  We must make this binding if the minibuffer can ever get focus.
+                if self.useTextWidget:
+                    widgets.append(minibuffer)
+                for w in widgets:
+                    w.bind(shortcut,callback,'+')
             else:
-                #@            << bind callback to shortcut in pane >>
-                #@+node:ekr.20051022094136:<< bind callback to shortcut in pane >>
-                body = c.frame.body.bodyCtrl
-                log  = c.frame.log.logCtrl
-                menu = c.frame.menu
-                tree = c.frame.tree.canvas
-                
-                # Binding to 'menu' causes problems with multiple pastes in the Find Tab.
-                d = {
-                    'all':  [body,log,tree], # Probably not wise: menu.
-                    'body': [body],
-                    'log':  [log],
-                    'tree': [tree],
-                }
-                
-                if 0: # A useful trace.
-                    if pane and pane != 'all':
-                        g.trace('%4s %20s %s' % (pane, shortcut,commandName))
-                
-                widgets = d.get((pane or 'all').lower(),[])
-                
                 for w in widgets:
                     w.bind(shortcut,callback)
-                #@nonl
-                #@-node:ekr.20051022094136:<< bind callback to shortcut in pane >>
-                #@nl
+                # Get rid of the default binding in the menu. (E.g., Alt-f)
+                menu.bind(shortcut,lambda e: 'break')
+            #@nonl
+            #@-node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+            #@nl
+    
             k.bindingsDict [shortcut] = g.bunch(
-                pane=pane,func=callback,commandName=commandName,warningGiven=False)
+                pane=pane,func=callback,commandName=commandName)
+            if pane == 'text':
+                k.textBindingsDict [shortcut] = g.bunch(
+                    pane=pane,func=callback,commandName=commandName)
+    
             return True
     
         except Exception: # Could be a user error.
@@ -802,6 +829,29 @@ class keyHandlerClass:
                     g.trace('No shortcut for %s = %s' % (name,key))
     #@nonl
     #@-node:ekr.20051011103654:checkBindings
+    #@+node:ekr.20051023182326:copyTextBindingsToWidget
+    def copyTextBindingsToWidget (self,widget):
+    
+        k = self ; d = k.textBindingsDict
+        
+        keys = d.keys() ; keys.sort()
+        
+        for shortcut in keys:
+            bunch = d.get(shortcut)
+            func = bunch.func
+            commandName = bunch.commandName
+            # g.trace('find tab',shortcut,commandName)
+            
+            # This callback executes the command in the given widget.
+            def textBindingsRedirectionCallback(event,
+                func=func,widget=widget,commandName=commandName):
+                event.widget = widget
+                # g.trace(commandName,widget)
+                func(event)
+                
+            widget.bind(shortcut,textBindingsRedirectionCallback)
+    #@nonl
+    #@-node:ekr.20051023182326:copyTextBindingsToWidget
     #@+node:ekr.20051007080058:makeAllBindings
     def makeAllBindings (self):
         
@@ -894,11 +944,12 @@ class keyHandlerClass:
         k = self ; c = k.c ; f = c.frame
         
         # These defaults may be overridden.
-        for stroke,ivar,commandName,func in (
-            ('Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
-            ('Alt-x',   'fullCommandKey',  'full-command',  k.fullCommand),
-            ('Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
-            ('Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
+        for pane,stroke,ivar,commandName,func in (
+            ('mini','Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
+            ('all', 'Ctrl-g',  'abortAllModesKey','keyboard-quit', k.keyboardQuit),
+            ('all', 'Alt-x',   'fullCommandKey',  'full-command',  k.fullCommand),
+            ('all',  'Ctrl-u',  'universalArgKey', 'universal-argument', k.universalArgument),
+            ('all',  'Ctrl-c',  'quickCommandKey', 'quick-command', k.quickCommand),
         ):
             # Get the user shortcut *before* creating the callbacks.
             junk, bunch = c.config.getShortcut(commandName)
@@ -915,7 +966,7 @@ class keyHandlerClass:
             
             setattr(k,ivar,shortcut)
     
-            k.bindKey('all',shortcut,keyCallback,commandName)
+            k.bindKey(pane,shortcut,keyCallback,commandName)
             
         # Add a binding for <Key> events, so all key events go through masterCommand.
         def allKeysCallback (event):
@@ -958,13 +1009,14 @@ class keyHandlerClass:
     
         k = self ; c = k.c
         k.stroke = stroke # Set this global for general use.
+        k.func = func
         commandName = k.ultimateFuncName(func)
         special = event.keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
         interesting = func or stroke != '<Key>'
         
-        # g.trace(k.inState(),k.getStateKind())
+        # g.trace(stroke,k.inState(),k.getStateKind())
     
-        # if interesting: g.trace(stroke,commandName)
+        # if interesting: g.trace(stroke,commandName,k.getStateKind())
     
         inserted = not special or (
             stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
@@ -1005,10 +1057,15 @@ class keyHandlerClass:
             return 'break'
     
         if k.inState():
-            k.forceFocusToBody()
+            k.forceFocusToBody() # Weird: this appears necessary.
             k.previousStroke = stroke
-            k.callStateFunction(event) # Calls end-command.
-            return 'break'
+            val = k.callStateFunction(event) # Calls end-command.
+            if 0:
+                return 'break'
+            else:
+                # 'continue' is a signal from fullCommand to execute func.
+                if val != 'continue': 
+                    return 'break'
     
         # if k.keystrokeFunctionDict.has_key(stroke):
             # k.previousStroke = stroke
@@ -1027,6 +1084,7 @@ class keyHandlerClass:
             if expanded: return 'break'
     
         if func: # Func is an argument.
+            # g.trace('executing func',commandName)
             k.previousStroke = stroke
             forceFocus = func.__name__ != 'leoCallback'
             if forceFocus:
@@ -1042,16 +1100,19 @@ class keyHandlerClass:
     #@+node:ekr.20050923172809.1:callStateFunction
     def callStateFunction (self,event):
         
-        k = self
+        k = self ; val = None
         
         # g.trace(k.stateKind,k.state)
         
         if k.state.kind:
             if k.state.handler:
-                k.state.handler(event)
-                k.endCommand(event,k.commandName)
+                val = k.state.handler(event)
+                if val != 'continue':
+                    k.endCommand(event,k.commandName)
             else:
                 g.es_print('no state function for %s' % (k.state.kind),color='red')
+                
+        return val
     #@nonl
     #@-node:ekr.20050923172809.1:callStateFunction
     #@+node:ekr.20050923174229.3:callKeystrokeFunction
@@ -1080,9 +1141,8 @@ class keyHandlerClass:
     
         k = self ; c = k.c ; state = k.getState('altx')
         keysym = (event and event.keysym) or ''
-        
-        # g.trace(state,keysym)
-        
+        ch = (event and event.char) or ''
+        # g.trace('state',state,keysym)
         if state == 0:
             k.setState('altx',1,handler=k.fullCommand) 
             k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
@@ -1096,13 +1156,18 @@ class keyHandlerClass:
             k.doTabCompletion(c.commandsDict.keys())
         elif keysym == 'BackSpace':
             k.doBackSpace(c.commandsDict.keys())
+        elif ch not in string.printable:
+            if 0: # Execute the command in the context of the minibuffer.
+                # This doesn't work.  Punt for now...
+                g.trace('Edit char:',ch,keysym,k.stroke,g.callerList(3))
+                event.widget = c.miniBufferWidget
+                return 'continue' # A signal to callStateFunction & masterCommand.
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.mb_tabList = []
             k.updateLabel(event)
             k.mb_tabListPrefix = k.getLabel()
             # g.trace('new prefix',k.mb_tabListPrefix)
-    
         return 'break'
     #@nonl
     #@+node:ekr.20050920085536.45:callAltXFunction
@@ -1736,6 +1801,8 @@ class keyHandlerClass:
             
         k.clearState()
         k.resetLabel()
+        
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
     #@+node:ekr.20051015110547:registerCommand
@@ -1780,46 +1847,68 @@ class keyHandlerClass:
     # influence another.
     #@-at
     #@nonl
-    #@+node:ekr.20050920085536.39:getLabel & setLabel & protectLabel
+    #@+node:ekr.20051023132350:getLabel
     def getLabel (self,ignorePrompt=False):
         
-        k = self
-        if k.svar:
-            s = k.svar.get()
-            if ignorePrompt:
-                return s[len(k.mb_prefix):]
-            else:
-                return s
-        else:
-            return ''
-    
-    def setLabel (self,s,protect=False):
+        k = self ; w = self.widget
         
-        k = self
-        if k.svar:
-            k.svar.set(s)
-            if protect:
-                k.mb_prefix = s
-            #self.widget.update_idletasks()
-            
+        if self.useTextWidget:
+            w.update_idletasks()
+            s = w and w.get('1.0','end')
+            # Remove the cursed Tk newline.
+            if s.endswith('\n') or s.endswith('\r'): s = s[:-1]
+            # g.trace(repr(s))
+        else:
+            s = k.svar and k.svar.get()
+    
+        if ignorePrompt:
+            return s[len(k.mb_prefix):]
+        else:
+            return s or ''
+    
+    #@-node:ekr.20051023132350:getLabel
+    #@+node:ekr.20051023132350.2:protectLabel
     def protectLabel (self):
         
-        k = self
-        if k.svar:
-            k.mb_prefix = s = k.svar.get()
-    #@nonl
-    #@-node:ekr.20050920085536.39:getLabel & setLabel & protectLabel
-    #@+node:ekr.20050920085536.35:setLabelGrey
-    def setLabelGrey (self,label=None):
+        k = self ; w = self.widget
     
+        if self.useTextWidget:
+            if w:
+                w.update_idletasks()
+                k.mb_prefix = w.get('1.0','end')
+        else:
+            if k.svar:
+                k.mb_prefix = k.svar.get()
+    
+    
+    #@-node:ekr.20051023132350.2:protectLabel
+    #@+node:ekr.20050920085536.37:resetLabel
+    def resetLabel (self):
+        
         k = self
-        k.widget.configure(background='lightgrey')
-        if label is not None:
-            k.setLabel(label)
-            
-    setLabelGray = setLabelGrey
+        k.setLabelGrey('')
+        k.mb_prefix = ''
     #@nonl
-    #@-node:ekr.20050920085536.35:setLabelGrey
+    #@-node:ekr.20050920085536.37:resetLabel
+    #@+node:ekr.20051023132350.1:setLabel
+    def setLabel (self,s,protect=False):
+    
+        k = self ; w = self.widget
+    
+        # g.trace(repr(s))
+    
+        if self.useTextWidget:
+            if w:
+                k.c.frame.minibufferWantsFocus(later=False)
+                w.update_idletasks()
+                w.delete('1.0','end') ; w.insert('1.0',s)
+        else:
+            if k.svar: k.svar.set(s)
+    
+        if protect:
+            k.mb_prefix = s
+    #@nonl
+    #@-node:ekr.20051023132350.1:setLabel
     #@+node:ekr.20050920085536.36:setLabelBlue
     def setLabelBlue (self,label=None,protect=False):
         
@@ -1831,28 +1920,28 @@ class keyHandlerClass:
             k.setLabel(label,protect)
     #@nonl
     #@-node:ekr.20050920085536.36:setLabelBlue
-    #@+node:ekr.20050920085536.37:resetLabel
-    def resetLabel (self):
-        
+    #@+node:ekr.20050920085536.35:setLabelGrey
+    def setLabelGrey (self,label=None):
+    
         k = self
-        k.setLabelGrey('')
-        k.mb_prefix = ''
+        k.widget.configure(background='lightgrey')
+        if label is not None:
+            k.setLabel(label)
+            
+    setLabelGray = setLabelGrey
     #@nonl
-    #@-node:ekr.20050920085536.37:resetLabel
+    #@-node:ekr.20050920085536.35:setLabelGrey
     #@+node:ekr.20050920085536.38:updateLabel
     def updateLabel (self,event,suppressControlChars=True):
     
-        '''
-        Alters the StringVar svar to represent the change in the event.
-        This has the effect of changing the miniBuffer contents.
-    
-        It mimics what would happen with the keyboard and a Text editor
+        '''Mimic what would happen with the keyboard and a Text editor
         instead of plain accumalation.'''
         
         k = self ; s = k.getLabel()
         ch = (event and event.char) or ''
         keysym = (event and event.keysym) or ''
-        # g.trace(s,ch,keysym,k.stroke)
+        
+        # g.trace(repr(s),ch,keysym,k.stroke)
         
         if ch == '\b': # Handle backspace.
             # Don't backspace over the prompt.
@@ -1860,7 +1949,7 @@ class keyHandlerClass:
                 return 
             elif len(s) == 1: s = ''
             else: s = s [0:-1]
-        elif suppressControlChars and k.stroke != '<Key>':
+        elif suppressControlChars and ch not in string.printable:
             return
         elif ch and ch not in ('\n','\r'):
             s = s + ch # Add the character.
@@ -1938,7 +2027,7 @@ class keyHandlerClass:
         k = self ; c = k.c ; s = k.getLabel().strip()
         
         if k.mb_tabList and s.startswith(k.mb_tabListPrefix):
-            # g.trace('cycle')
+            g.trace('cycle',repr(s))
             # Set the label to the next item on the tab list.
             k.mb_tabListIndex +=1
             if k.mb_tabListIndex >= len(k.mb_tabList):
@@ -1953,7 +2042,8 @@ class keyHandlerClass:
         
         k = self ; c = k.c
         
-        c.frame.bodyWantsFocus(later=False)
+        # Later=False does not always work.
+        c.frame.bodyWantsFocus(later=True)
     #@nonl
     #@-node:ekr.20051012092847:forceFocusToBody
     #@+node:ekr.20051014170754.1:getShortcutForCommand/Name

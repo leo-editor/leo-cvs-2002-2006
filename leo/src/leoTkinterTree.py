@@ -2609,7 +2609,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if not p: return
         if not p.exists(c):
-            g.trace('does not exist',p)
+            g.trace(g.callerList(5),'does not exist',p)
             return
     
         # g.trace('len(body)',len(p.bodyString()),p.headString())
