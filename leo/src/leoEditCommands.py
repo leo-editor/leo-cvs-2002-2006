@@ -3491,7 +3491,6 @@ class leoCommandsClass (baseEditCommandsClass):
             'about-leo':            c.about,
             'add-comments':         c.addComments,     
             'cascade-windows':      f.cascade,
-            #'check-spelling':      None,                   # Create this command.
             'clear-recent-files':   c.clearRecentFiles,
             'close-window':         c.close,
             'contract-or-go-left':  c.contractNodeOrGoToParent,
@@ -3500,6 +3499,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'check-outline':        c.checkOutline,
             'clear-recent-files':   c.clearRecentFiles,
             'clone-node':           c.clone,
+            'close-find-dialog':    c.dismissFindPanel, # Deprecated.
             'contract-node':        c.contractNode,
             'contract-all':         c.contractAllHeadlines,
             'contract-parent':      c.contractParent,
@@ -3542,6 +3542,11 @@ class leoCommandsClass (baseEditCommandsClass):
             'extract':              c.extract,
             'extract-names':        c.extractSectionNames,
             'extract-section':      c.extractSection,
+            'find-dialog-change':       c.replace,              # Deprecated.
+            'find-dialog-change-then-find': c.replaceThenFind,  # Deprecated.
+            'find-dialog-change-all':   c.replaceAll,           # Deprecated.
+            'find-dialog-find-next':    c.findNext,             # Deprecated.
+            'find-dialog-find-previous':c.findPrevious,         # Deprecated.
             'flatten-outline':      c.flattenOutline,
             'go-back':              c.goPrevVisitedNode,
             'go-forward':           c.goNextVisitedNode,
@@ -3572,14 +3577,6 @@ class leoCommandsClass (baseEditCommandsClass):
             'insert-node':              c.insertHeadline,
             'insert-body-time':         c.insertBodyTime,
             'insert-headline-time':     f.insertHeadlineTime,
-            # Leo find panel stuff.  It's not clear what will happen to these.
-            'dismiss-leo-find-panel':   c.dismissFindPanel,
-            'leo-change':               c.replace,
-            'leo-change-then-find':     c.replaceThenFind,
-            'leo-change-all':           c.replaceAll,
-            'leo-find':                 c.findNext,
-            'leo-find-panel':           c.showFindPanel,
-            'leo-find-previous':        c.findPrevious,
             'mark':                     c.markHeadline,
             'mark-changed-items':       c.markChangedHeadlines,
             'mark-changed-roots':       c.markChangedRoots,
@@ -3593,6 +3590,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'move-outline-up':          c.moveOutlineUp,
             'new':                      c.new,
             'open-compare-window':      c.openCompareWindow,
+            'open-find-dialog':          c.showFindPanel, # Deprecated.
             'open-leoconfig-leo':       c.openLeoSettings,
             'open-leodocs-leo':         c.leoDocumentation,
             'open-leoplugins-leo':      c.openLeoPlugins,
