@@ -5772,10 +5772,9 @@ class spellTab(leoFind.leoFind):
         leoFind.leoFind.__init__(self,c) # Call the base ctor.
         
         self.c = c
-        # self.body = c.frame.body
+        self.body = c.frame.body
         self.currentWord = None
         self.suggestions = []
-        self.v = None
         self.messages = [] # List of message to be displayed when hiding the tab.
         self.workCtrl = Tk.Text(None) # A text widget for scanning.
         
@@ -5921,51 +5920,45 @@ class spellTab(leoFind.leoFind):
         """Handle a click in the Add button in the Check Spelling dialog."""
     
         self.add()
-        #self.closePipes()
-    
+    #@nonl
     #@-node:ekr.20051025071455.30:onAddButton
     #@+node:ekr.20051025071455.31:onIgnoreButton
     def onIgnoreButton(self):
         """Handle a click in the Ignore button in the Check Spelling dialog."""
     
         self.ignore()
-        #self.closePipes()
     #@nonl
     #@-node:ekr.20051025071455.31:onIgnoreButton
     #@+node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
-    def onChangeButton(self):
-        """Handle a click in the Change button in the Check Spelling dialog."""
+    def onChangeButton(self,event=None):
+        """Handle a click in the Change button in the Spell tab."""
     
         self.change()
-        #self.closePipes()
         self.updateButtons()
         
-    # Event needed for double-click event.
+    
     def onChangeThenFindButton(self,event=None): 
-        """Handle a click in the "Change, Find" button in the Check Spelling dialog."""
+        """Handle a click in the "Change, Find" button in the Spell tab."""
     
         if self.change():
             self.find()
-        #self.closePipes()
         self.updateButtons()
     #@nonl
     #@-node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
     #@+node:ekr.20051025071455.33:onFindButton
     def onFindButton(self):
-        """Handle a click in the Find button in the Check Spelling dialog."""
+        """Handle a click in the Find button in the Spell tab."""
     
         self.find()
         self.updateButtons()
         self.c.frame.bodyWantsFocus()
-        #self.closePipes()
     #@nonl
     #@-node:ekr.20051025071455.33:onFindButton
     #@+node:ekr.20051025071455.34:onHideButton
     def onHideButton(self):
         
-        """Handle a click in the Hide button in the Check Spelling dialog."""
+        """Handle a click in the Hide button in the Spell tab."""
     
-        #self.closePipes()
         self.c.frame.log.selectTab('Log')
         
         for message in self.messages:
@@ -6014,7 +6007,8 @@ class spellTab(leoFind.leoFind):
     def change(self):
         """Make the selected change to the text"""
     
-        c = self.c ; v = self.v ; body = self.body ; t = body.bodyCtrl
+        c = self.c ; current = c.currentPosition()
+        body = self.body ; t = body.bodyCtrl
         
         selection = self.getSuggestion()
         if selection:
@@ -6029,7 +6023,7 @@ class spellTab(leoFind.leoFind):
     
                 # update node, undo status, dirty flag, changed mark & recolor
                 c.beginUpdate()
-                c.frame.body.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
+                c.frame.body.onBodyChanged(current,"Change",oldSel=oldSel,newSel=newSel)
                 c.endUpdate(True)
                 t.focus_set()
                 return True
@@ -6039,40 +6033,31 @@ class spellTab(leoFind.leoFind):
         return False
     #@nonl
     #@-node:ekr.20051025071455.38:change
-    #@+node:ekr.20051025071455.39:checkSpelling
-    def checkSpelling(self,event=None):
-    
-        """Open the Check Spelling dialog."""
-    
-        self.bringToFront()
-        self.update(show=True,fill=False)
-    #@nonl
-    #@-node:ekr.20051025071455.39:checkSpelling
     #@+node:ekr.20051025071455.40:find
-    def find(self):
+    def find (self):
         """Find the next unknown word."""
-        
+    
+        c = self.c ; body = c.frame.body ; bodyCtrl = body.bodyCtrl
+    
         # Reload the work pane from the present node.
-        s = self.body.bodyCtrl.get("1.0", "end").rstrip()
-        self.workCtrl.delete("1.0", "end")
-        self.workCtrl.insert("end", s)
-        
+        s = bodyCtrl.get("1.0","end").rstrip()
+        self.workCtrl.delete("1.0","end")
+        self.workCtrl.insert("end",s)
+    
         # Reset the insertion point of the work widget.
-        ins = self.body.bodyCtrl.index("insert")
-        self.workCtrl.mark_set("insert", ins)
+        ins = bodyCtrl.index("insert")
+        self.workCtrl.mark_set("insert",ins)
     
         alts, word = self.findNextMisspelledWord()
         self.currentWord = word # Need to remember this for 'add' and 'ignore'
-        
+    
         if alts:
-            self.fillbox(alts, word)
-            self.body.bodyCtrl.focus_set()
-                        
+            self.fillbox(alts,word)
+            c.frame.bodyWantsFocus(later=False)
             # Copy the working selection range to the body pane
             start, end = g.app.gui.getTextSelection(self.workCtrl)
-            g.app.gui.setTextSelection(self.body.bodyCtrl, start, end)
-            #fix selection getting hidden in not visable section of body
-            self.body.bodyCtrl.see(start)
+            g.app.gui.setTextSelection(bodyCtrl,start,end)
+            bodyCtrl.see(start)
         else:
             g.es("no more misspellings")
             self.fillbox([])
@@ -6127,53 +6112,48 @@ class spellTab(leoFind.leoFind):
     def findNextMisspelledWord(self):
         """Find the next unknown word."""
         
+        c = self.c ; p = c.currentPosition() ; t = self.workCtrl
         aspell = self.aspell ; alts = None ; word = None
-        c = self.c ; p = self.v ; t = self.workCtrl
+       
         try:
-            #aspell.openPipes()
-            try:
-                while 1:
-                    p, word = self.findNextWord(p) 
-                    if not p or not word:
-                        alts = None
-                        break
-                    #@                << Skip word if ignored or in local dictionary >>
-                    #@+node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
-                    #@+at 
-                    #@nonl
-                    # We don't bother to call apell if the word is in our 
-                    # dictionary. The dictionary contains both locally 
-                    # 'allowed' words and 'ignored' words. We put the test 
-                    # before aspell rather than after aspell because the cost 
-                    # of checking aspell is higher than the cost of checking 
-                    # our local dictionary. For small local dictionaries this 
-                    # is probably not True and this code could easily be 
-                    # located after the aspell call
-                    #@-at
-                    #@@c
+            while 1:
+                p, word = self.findNextWord(p) 
+                if not p or not word:
+                    alts = None
+                    break
+                #@            << Skip word if ignored or in local dictionary >>
+                #@+node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
+                #@+at 
+                #@nonl
+                # We don't bother to call apell if the word is in our 
+                # dictionary. The dictionary contains both locally 'allowed' 
+                # words and 'ignored' words. We put the test before aspell 
+                # rather than after aspell because the cost of checking aspell 
+                # is higher than the cost of checking our local dictionary. 
+                # For small local dictionaries this is probably not True and 
+                # this code could easily be located after the aspell call
+                #@-at
+                #@@c
+                
+                if self.dictionary.has_key(word.lower()):
                     
-                    if self.dictionary.has_key(word.lower()):
-                        
-                        # print "Ignored", word
-                        continue
-                        
-                    # print "Didn't ignore '%s'" % word
-                    #@nonl
-                    #@-node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
-                    #@nl
-                    alts = aspell.processWord(word)
-                    if alts:
-                        self.v = p
-                        c.beginUpdate()
-                        c.frame.tree.expandAllAncestors(p)
-                        c.selectPosition(p)
-                        c.endUpdate()
-                        break
-            except:
-                g.es_exception()
-        finally:
-            #aspell.closePipes()
-            return alts, word
+                    # print "Ignored", word
+                    continue
+                    
+                # print "Didn't ignore '%s'" % word
+                #@nonl
+                #@-node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
+                #@nl
+                alts = aspell.processWord(word)
+                if alts:
+                    c.beginUpdate()
+                    c.frame.tree.expandAllAncestors(p)
+                    c.selectPosition(p)
+                    c.endUpdate()
+                    break
+        except:
+            g.es_exception()
+        return alts, word
     #@nonl
     #@-node:ekr.20051025071455.45:findNextMisspelledWord
     #@+node:ekr.20051025071455.47:findNextWord
@@ -6261,22 +6241,17 @@ class spellTab(leoFind.leoFind):
         
         """Update the Spell Check dialog."""
         
-        # print "update(show=%d,fill=%d)" % (show,fill)
-        
-        # Always assume that the user has changed text.
-        if not self.c: return
-    
         c = self.c
-        self.v = c.currentVnode()
-        self.body = c.frame.body
+        
         if fill:
             self.fillbox([])
+    
         self.updateButtons()
+    
         if show:
             self.bringToFront()
-            # Don't interfere with Edit Headline commands.
-            self.body.bodyCtrl.focus_set()
-    
+            c.frame.body.bodyCtrl.focus_set()
+    #@nonl
     #@-node:ekr.20051025071455.51:update
     #@+node:ekr.20051025071455.52:updateButtons
     def updateButtons (self):
