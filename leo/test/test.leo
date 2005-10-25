@@ -2391,7 +2391,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
-<v t="ekr.20051024205040" a="ETV"><vh>Spell Tab</vh>
+<v t="ekr.20051024205040"><vh>Spell Tab</vh>
 <v t="ekr.20051024205040.4"><vh>&lt;&lt; specify aspell directories for imports &gt;&gt;</vh></v>
 <v t="ekr.20051024205040.5"><vh>&lt;&lt; spellpx imports &gt;&gt;</vh></v>
 <v t="ekr.20051024205040.7"><vh>init (not used)</vh></v>
@@ -2454,6 +2454,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
+<v t="ekr.20051024223801" a="TV"><vh>@button run tcl </vh></v>
+<v t="ekr.20051024223801.1"><vh>My first tcl script</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -24049,5 +24051,12 @@ def findNextWord(self,p):
     self.addButton.configure(state= state)
 
     self.ignoreButton.configure(state= "normal")</t>
+<t tx="ekr.20051024223801"># Executes body text of selected node as a tcl script.
+# For more information, see http://wiki.tcl.tk/6878
+
+s = p.bodyString().strip()
+g.es(g.app.root.tk.eval(s))</t>
+<t tx="ekr.20051024223801.1">set x 50
+return [expr $x*10]</t>
 </tnodes>
 </leo_file>
