@@ -5565,101 +5565,6 @@ else:
 #@nl
 
 #@+others
-#@+node:ekr.20051025071455.1:class spellCommandsClass
-class spellCommandsClass (baseEditCommandsClass):
-    
-    '''Commands to support the Spell Tab.'''
-
-    #@    @+others
-    #@+node:ekr.20051025080056:ctor
-    def __init__ (self,c):
-    
-        baseEditCommandsClass.__init__(self,c) # init the base class.
-        
-        self.handler = None
-        
-        # All the work happens when we first open the frame.
-    #@nonl
-    #@-node:ekr.20051025080056:ctor
-    #@+node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
-    def getPublicCommands (self):
-        
-        return {
-            'open-spell-tab':           self.openSpellTab,
-            'spell-find':               self.find,
-            'spell-change':             self.change,
-            'spell-change-then-find':   self.changeThenFind,
-            'spell-ignore':             self.ignore,
-            'hide-spell-tab':           self.hide,
-        }
-    #@nonl
-    #@-node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
-    #@+node:ekr.20051025080633:openSpellTab
-    def openSpellTab (self,event=None):
-    
-        c = self.c ; log = c.frame.log ; tabName = 'Spell'
-    
-        if log.frameDict.get(tabName):
-            log.selectTab(tabName)
-        elif self.handler:
-            if self.handler.loaded:
-                self.handler.bringToFront()
-        else:
-            log.selectTab(tabName)
-            f = log.frameDict.get(tabName)
-            t = log.textDict.get(tabName)
-            t.pack_forget()
-            self.handler = spellTab(c,f)
-            
-        self.handler.bringToFront()
-    #@nonl
-    #@-node:ekr.20051025080633:openSpellTab
-    #@+node:ekr.20051025080420.1:commands...
-    # Just open the Spell tab if it has never been opened.
-    # For minibuffer commands, we must also force the Spell tab to be visible.
-    
-    def find (self,event=None):
-    
-        if self.handler:
-            self.openSpellTab()
-            self.handler.findCommand()
-        else:
-            self.openSpellTab()
-    
-    def change(self,event=None):
-    
-        if self.handler:
-            self.openSpellTab()
-            self.handler.changeCommand()
-        else:
-            self.openSpellTab()
-    
-    def changeThenFind (self,event=None):
-        
-        if self.handler:
-            self.openSpellTab()
-            self.handler.changeThenFindCommand()
-        else:
-            self.openSpellTab()
-            
-    def hide (self,event=None):
-        
-        if self.handler:
-            self.c.frame.log.selectTab('Log')
-            self.c.frame.bodyWantsFocus()
-    
-    def ignore (self,event=None):
-        
-        if self.handler:
-            self.openSpellTab()
-            self.handler.ignoreCommand()
-        else:
-            self.openSpellTab()
-    #@nonl
-    #@-node:ekr.20051025080420.1:commands...
-    #@-others
-#@nonl
-#@-node:ekr.20051025071455.1:class spellCommandsClass
 #@+node:ekr.20051025071455.6:class Aspell
 class Aspell:
     
@@ -5755,6 +5660,101 @@ class Aspell:
     #@-others
 
 #@-node:ekr.20051025071455.6:class Aspell
+#@+node:ekr.20051025071455.1:class spellCommandsClass
+class spellCommandsClass (baseEditCommandsClass):
+    
+    '''Commands to support the Spell Tab.'''
+
+    #@    @+others
+    #@+node:ekr.20051025080056:ctor
+    def __init__ (self,c):
+    
+        baseEditCommandsClass.__init__(self,c) # init the base class.
+        
+        self.handler = None
+        
+        # All the work happens when we first open the frame.
+    #@nonl
+    #@-node:ekr.20051025080056:ctor
+    #@+node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
+    def getPublicCommands (self):
+        
+        return {
+            'open-spell-tab':           self.openSpellTab,
+            'spell-find':               self.find,
+            'spell-change':             self.change,
+            'spell-change-then-find':   self.changeThenFind,
+            'spell-ignore':             self.ignore,
+            'hide-spell-tab':           self.hide,
+        }
+    #@nonl
+    #@-node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
+    #@+node:ekr.20051025080633:openSpellTab
+    def openSpellTab (self,event=None):
+    
+        c = self.c ; log = c.frame.log ; tabName = 'Spell'
+    
+        if log.frameDict.get(tabName):
+            log.selectTab(tabName)
+        elif self.handler:
+            if self.handler.loaded:
+                self.handler.bringToFront()
+        else:
+            log.selectTab(tabName)
+            f = log.frameDict.get(tabName)
+            t = log.textDict.get(tabName)
+            t.pack_forget()
+            self.handler = spellTab(c,f)
+            
+        self.handler.bringToFront()
+    #@nonl
+    #@-node:ekr.20051025080633:openSpellTab
+    #@+node:ekr.20051025080420.1:commands...
+    # Just open the Spell tab if it has never been opened.
+    # For minibuffer commands, we must also force the Spell tab to be visible.
+    
+    def find (self,event=None):
+    
+        if self.handler:
+            self.openSpellTab()
+            self.handler.find()
+        else:
+            self.openSpellTab()
+    
+    def change(self,event=None):
+    
+        if self.handler:
+            self.openSpellTab()
+            self.handler.change()
+        else:
+            self.openSpellTab()
+    
+    def changeThenFind (self,event=None):
+        
+        if self.handler:
+            self.openSpellTab()
+            self.handler.changeThenFind()
+        else:
+            self.openSpellTab()
+            
+    def hide (self,event=None):
+        
+        if self.handler:
+            self.c.frame.log.selectTab('Log')
+            self.c.frame.bodyWantsFocus()
+    
+    def ignore (self,event=None):
+        
+        if self.handler:
+            self.openSpellTab()
+            self.handler.ignore()
+        else:
+            self.openSpellTab()
+    #@nonl
+    #@-node:ekr.20051025080420.1:commands...
+    #@-others
+#@nonl
+#@-node:ekr.20051025071455.1:class spellCommandsClass
 #@+node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
 class spellTab(leoFind.leoFind):
 
@@ -5781,6 +5781,7 @@ class spellTab(leoFind.leoFind):
         self.loaded = self.init_aspell(c)
         if self.loaded:
             self.createSpellTab(parentFrame)
+            self.createBindings()
     #@nonl
     #@-node:ekr.20051025071455.20:spellTab.__init__
     #@+node:ekr.20051025094004:init_aspell
@@ -5819,21 +5820,19 @@ class spellTab(leoFind.leoFind):
         bg = c.config.getColor('log_pane_Spell_tab_background_color') or 'LightSteelBlue2'
         
         # Create the outer frame.
-        outer = Tk.Frame(parentFrame,bd=2,bg=bg)
+        self.outerFrame = outer = Tk.Frame(parentFrame,bd=2,bg=bg)
         outer.pack(expand=1,fill='both',padx=2,pady=2)
         
         #@    << Create the text and suggestion panes >>
         #@+node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
-        f = outer
-        
-        f2 = Tk.Frame(f,bg=bg)
+        f2 = Tk.Frame(outer,bg=bg)
         f2.pack(side='top',expand=0,fill='x')
         
         self.wordLabel = Tk.Label(f2,text="Suggestions for:")
         self.wordLabel.pack(side='left')
         self.wordLabel.configure(font=('verdana',10,'bold'))
         
-        fpane = Tk.Frame(f,bg=bg,bd=2)
+        fpane = Tk.Frame(outer,bg=bg,bd=2)
         fpane.pack(side='top',expand=1,fill='both')
         
         self.listBox = Tk.Listbox(fpane,height=10,width=10,selectmode="single")
@@ -5885,6 +5884,31 @@ class spellTab(leoFind.leoFind):
         self.listBox.bind("<Map>",self.onMap)
     #@nonl
     #@-node:ekr.20051025071455.22:createSpellTab
+    #@+node:ekr.20051025120920:createBindings
+    def createBindings (self):
+        
+        c = self.c ; k = c.keyHandler
+        widgets = (self.listBox, self.outerFrame)
+    
+        for w in widgets:
+            k.copyBindingsToWidget('text',w)
+            # Bind shortcuts for the following commands...
+            for commandName,func in (
+                ('full-command',            k.fullCommand),
+                ('hide-spell-tab',          self.hide),
+                ('spell-add',               self.add),
+                ('spell-find',              self.find),
+                ('spell-ignore',            self.ignore),
+                ('spell-change-then-find',  self.changeThenFind),
+            ):
+                junk, bunch = c.config.getShortcut(commandName)
+                accel = bunch and bunch.val
+                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                if shortcut:
+                    # g.trace(shortcut,commandName)
+                    w.bind(shortcut,func)
+    #@nonl
+    #@-node:ekr.20051025120920:createBindings
     #@+node:ekr.20051025071455.16:readDictionary
     def readDictionary (self,fileName):
     
@@ -5923,7 +5947,8 @@ class spellTab(leoFind.leoFind):
     #@nonl
     #@-node:ekr.20051025071455.30:onAddButton
     #@+node:ekr.20051025071455.31:onIgnoreButton
-    def onIgnoreButton(self):
+    def onIgnoreButton(self,event=None):
+    
         """Handle a click in the Ignore button in the Check Spelling dialog."""
     
         self.ignore()
@@ -5931,22 +5956,24 @@ class spellTab(leoFind.leoFind):
     #@-node:ekr.20051025071455.31:onIgnoreButton
     #@+node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
     def onChangeButton(self,event=None):
+    
         """Handle a click in the Change button in the Spell tab."""
     
         self.change()
         self.updateButtons()
         
     
-    def onChangeThenFindButton(self,event=None): 
+    def onChangeThenFindButton(self,event=None):
+        
         """Handle a click in the "Change, Find" button in the Spell tab."""
     
         if self.change():
             self.find()
         self.updateButtons()
-    #@nonl
     #@-node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
     #@+node:ekr.20051025071455.33:onFindButton
     def onFindButton(self):
+    
         """Handle a click in the Find button in the Spell tab."""
     
         self.find()
@@ -5958,19 +5985,14 @@ class spellTab(leoFind.leoFind):
     def onHideButton(self):
         
         """Handle a click in the Hide button in the Spell tab."""
-    
-        self.c.frame.log.selectTab('Log')
         
-        for message in self.messages:
-            g.es(message,color='blue')
-            
-        self.messages = []
+        self.hide()
     #@nonl
     #@-node:ekr.20051025071455.34:onHideButton
     #@-node:ekr.20051025071455.29:Buttons
     #@+node:ekr.20051025071455.36:Commands
     #@+node:ekr.20051025071455.37:add
-    def add(self):
+    def add(self,event=None):
         """Add the selected suggestion to the dictionary."""
         
         try:
@@ -6004,7 +6026,7 @@ class spellTab(leoFind.leoFind):
     #@nonl
     #@-node:ekr.20051025071455.37:add
     #@+node:ekr.20051025071455.38:change
-    def change(self):
+    def change(self,event=None):
         """Make the selected change to the text"""
     
         c = self.c ; current = c.currentPosition()
@@ -6034,7 +6056,7 @@ class spellTab(leoFind.leoFind):
     #@nonl
     #@-node:ekr.20051025071455.38:change
     #@+node:ekr.20051025071455.40:find
-    def find (self):
+    def find (self,event=None):
         """Find the next unknown word."""
     
         c = self.c ; body = c.frame.body ; bodyCtrl = body.bodyCtrl
@@ -6063,8 +6085,19 @@ class spellTab(leoFind.leoFind):
             self.fillbox([])
     #@nonl
     #@-node:ekr.20051025071455.40:find
+    #@+node:ekr.20051025121408:hide
+    def hide (self,event=None):
+        
+        self.c.frame.log.selectTab('Log')
+        
+        for message in self.messages:
+            g.es(message,color='blue')
+            
+        self.messages = []
+    #@nonl
+    #@-node:ekr.20051025121408:hide
     #@+node:ekr.20051025071455.41:ignore
-    def ignore(self):
+    def ignore(self,event=None):
     
         """Ignore the incorrect word for the duration of this spell check session."""
         

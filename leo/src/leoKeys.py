@@ -478,9 +478,9 @@ class keyHandlerClass:
         
         self.c = c
         self.widget = c.frame.miniBufferWidget
-        self.useTextWidget = True
-            # A Tk Label or Text widget.  Exists even if c.showMinibuffer is False.
-            
+        self.useTextWidget = c.useTextMinibuffer
+            # A Tk Label or Text widget.
+            # Exists even if c.showMinibuffer is False.
         self.useGlobalKillbuffer = useGlobalKillbuffer
         self.useGlobalRegisters = useGlobalRegisters
     

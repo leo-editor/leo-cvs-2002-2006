@@ -11280,3585 +11280,6 @@ def skip_ws_and_nl(s,i):
 #@-node:ekr.20031218072017.3173:Scanners: no error messages
 #@-node:ekr.20050710102922.1:(Using Python indices instead of Tk indices)
 #@+node:ekr.20050924073836:4.4 projects
-#@+node:ekr.20051006122237:(Recent)
-#@+node:ekr.20050920085536.65: masterCommand & helpers
-def masterCommand (self,event,func,stroke):
-
-    '''This is the central dispatching method.
-    All commands and keystrokes pass through here.'''
-
-    k = self ; c = k.c
-    k.stroke = stroke # Set this global for general use.
-    k.func = func
-    commandName = k.ultimateFuncName(func)
-    special = event.keysym in (
-        'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func or stroke != '<Key>'
-    
-    # g.trace(stroke,k.inState(),k.getStateKind())
-
-    # if interesting: g.trace(stroke,commandName,k.getStateKind())
-
-    inserted = not special or (
-        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
-
-    if inserted:
-        # g.trace(stroke,event.keysym)
-        << add character to history >>
-        
-    # We *must not* interfere with the global state in the macro class.
-    if c.macroCommands.recordingMacro:
-        done = c.macroCommands.startKbdMacro(event)
-        if done: return 'break'
-        
-    # g.trace(stroke,k.abortAllModesKey)
-
-    if stroke == k.abortAllModesKey: # 'Control-g'
-        k.clearState()
-        k.keyboardQuit(event)
-        k.endCommand(event,commandName)
-        return 'break'
-
-    if k.inState():
-        if not special: # Don't pass these on.
-            k.callStateFunction(event) # Calls end-command.
-        return 'break'
-
-    # if k.keystrokeFunctionDict.has_key(stroke):
-        # if k.callKeystrokeFunction(event): # Calls end-command
-            # return 'break'
-
-    if k.regx.iter:
-        try:
-            k.regXKey = event.keysym
-            k.regx.iter.next() # EKR: next() may throw StopIteration.
-        finally:
-            return 'break'
-
-    if k.abbrevOn:
-        expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded: return 'break'
-
-    if func: # Func is an argument.
-        # g.trace('executing func',commandName)
-        forceFocus = func.__name__ != 'leoCallback'
-        if forceFocus:
-            k.forceFocusToBody()
-        func(event)
-        k.endCommand(event,commandName,forceFocus)
-        return 'break'
-
-    else:
-        c.frame.body.onBodyKey(event)
-        return None # Not 'break'
-#@nonl
-#@+node:ekr.20050920085536.67:<< add character to history >>
-# Don't add multiple special characters to history.
-
-k.keysymHistory.insert(0,event.keysym)
-
-if len(event.char) > 0:
-    if len(keyHandlerClass.lossage) > 99:
-        keyHandlerClass.lossage.pop()
-    keyHandlerClass.lossage.insert(0,event.char)
-
-if 0: # traces
-    g.trace(event.keysym,stroke)
-    g.trace(k.keysymHistory)
-    g.trace(keyHandlerClass.lossage)
-#@nonl
-#@-node:ekr.20050920085536.67:<< add character to history >>
-#@+node:ekr.20050923172809.1:callStateFunction
-def callStateFunction (self,event):
-    
-    k = self ; val = None
-    
-    # g.trace(k.stateKind,k.state)
-    
-    if k.state.kind:
-        if k.state.handler:
-            val = k.state.handler(event)
-            if val != 'continue':
-                k.endCommand(event,k.commandName)
-        else:
-            g.es_print('no state function for %s' % (k.state.kind),color='red')
-            
-    return val
-#@nonl
-#@-node:ekr.20050923172809.1:callStateFunction
-#@+node:ekr.20050923174229.3:callKeystrokeFunction
-def callKeystrokeFunction (self,event):
-    
-    '''Handle a quick keystroke function.
-    Return the function or None.'''
-    
-    k = self
-    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
-
-    if func:
-        func(event)
-        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        forceFocus = func.__name__ != 'leoCallback'
-        k.endCommand(event,commandName,forceFocus)
-    
-    return func
-#@nonl
-#@-node:ekr.20050923174229.3:callKeystrokeFunction
-#@-node:ekr.20050920085536.65: masterCommand & helpers
-#@+node:ekr.20051009120608:(ctors & finishCreate)
-#@+node:ekr.20031218072017.2811: c.Birth & death
-#@+node:ekr.20031218072017.2812:c.__init__
-def __init__(self,frame,fileName):
-
-    c = self
-    
-    # g.trace('Commands')
-    
-    # Init ivars with self.x instead of c.x to keep Pychecker happy
-    self.frame = frame
-    self.mFileName = fileName
-        # Do _not_ use os_path_norm: it converts an empty path to '.' (!!)
-
-    # g.trace(c) # Do this after setting c.mFileName.
-    c.initIvars()
-
-    self.showMinibuffer = c.config.getBool('useMinibuffer')
-
-    # initialize the sub-commanders.
-    # c.finishCreate creates the sub-commanders for edit commands.
-    self.fileCommands   = leoFileCommands.fileCommands(c)
-    self.atFileCommands = leoAtFile.atFile(c)
-    self.importCommands = leoImport.leoImportCommands(c)
-    self.tangleCommands = leoTangle.tangleCommands(c)
-    leoEditCommands.createEditCommanders(c)
-
-    if 0 and g.debugGC:
-        print ; print "*** using Null undoer ***" ; print
-        self.undoer = leoUndo.nullUndoer(self)
-    else:
-        self.undoer = leoUndo.undoer(self)
-#@nonl
-#@-node:ekr.20031218072017.2812:c.__init__
-#@+node:ekr.20040731071037:c.initIvars
-def initIvars(self):
-
-    c = self
-    << initialize ivars >>
-    self.config = configSettings(c)
-    g.app.config.setIvarsFromSettings(c)
-#@nonl
-#@+node:ekr.20031218072017.2813:<< initialize ivars >>
-self._currentPosition = self.nullPosition()
-self._rootPosition    = self.nullPosition()
-self._topPosition     = self.nullPosition()
-
-# For emacs/vim key handling.
-self.commandsDict = None
-self.keyHandler = None
-self.miniBufferWidget = None
-
-# per-document info...
-self.disableCommandsMessage = ''
-    # The presence of this message disables all commands.
-self.hookFunction = None
-self.openDirectory = None
-
-self.expansionLevel = 0  # The expansion level of this outline.
-self.expansionNode = None # The last node we expanded or contracted.
-self.changed = False # True if any data has been changed since the last save.
-self.loading = False # True if we are loading a file: disables c.setChanged()
-self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
-self.promptingForClose = False # To lock out additional closing dialogs.
-
-# For tangle/untangle
-self.tangle_errors = 0
-
-# Global options
-self.page_width = 132
-self.tab_width = -4
-self.tangle_batch_flag = False
-self.untangle_batch_flag = False
-# Default Tangle options
-self.tangle_directory = ""
-self.use_header_flag = False
-self.output_doc_flag = False
-# Default Target Language
-self.target_language = "python" # Required if leoConfig.txt does not exist.
-
-# These are defined here, and updated by the tree.select()
-self.beadList = [] # list of vnodes for the Back and Forward commands.
-self.beadPointer = -1 # present item in the list.
-self.visitedList = [] # list of positions for the Nodes dialog.
-
-# For hoist/dehoist commands.
-self.hoistStack = []
-    # Stack of nodes to be root of drawn tree.
-    # Affects drawing routines and find commands.
-self.recentFiles = [] # List of recent files
-#@nonl
-#@-node:ekr.20031218072017.2813:<< initialize ivars >>
-#@-node:ekr.20040731071037:c.initIvars
-#@+node:ekr.20031218072017.2814:c.__repr__ & __str__
-def __repr__ (self):
-    
-    return "Commander %d: %s" % (id(self),repr(self.mFileName))
-        
-__str__ = __repr__
-
-#@-node:ekr.20031218072017.2814:c.__repr__ & __str__
-#@+node:ekr.20041130173135:c.hash
-def hash (self):
-
-    c = self
-    if c.mFileName:
-        return g.os_path_abspath(c.mFileName).lower()
-    else:
-        return 0
-#@nonl
-#@-node:ekr.20041130173135:c.hash
-#@+node:ekr.20050920093543:c.finishCreate & helper
-def finishCreate (self):  # New in 4.4.
-    
-    '''Finish creating the commander after frame.finishCreate.'''
-    
-    c = self ; p = c.currentPosition()
-    c.miniBufferWidget = c.frame.miniBufferWidget
-    # g.trace('Commands')
-    
-    # Create a keyHandler even if there is no miniBuffer.
-    c.keyHandler = leoKeys.keyHandlerClass(c,
-        useGlobalKillbuffer=True,
-        useGlobalRegisters=True)
-
-    # There is no miniBufferWidget created for leoSettings.leo files.
-    if c.miniBufferWidget:
-        c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
-        # c.printCommandsDict()
-    else:
-        c.commandsDict = {}
-
-    c.keyHandler.finishCreate()
-
-    # Create the menu last so that we can use the key handler for shortcuts.
-    if not g.doHook("menu1",c=c,p=p,v=p):
-        c.frame.menu.createMenuBar(c.frame)
-#@nonl
-#@+node:ekr.20051007143620:printCommandsDict
-def printCommandsDict (self):
-    
-    c = self
-    
-    print 'Commands...'
-    keys = c.commandsDict.keys()
-    keys.sort()
-    for key in keys:
-        command = c.commandsDict.get(key)
-        print '%30s = %s' % (key,g.choose(command,command.__name__,'<None>'))
-    print
-#@nonl
-#@-node:ekr.20051007143620:printCommandsDict
-#@-node:ekr.20050920093543:c.finishCreate & helper
-#@-node:ekr.20031218072017.2811: c.Birth & death
-#@+node:ekr.20050920085536.2: ctor (keyHandler)
-def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
-    
-    '''Create a key handler for c.
-    c.frame.miniBufferWidget is a Tk.Label.
-    
-    useGlobalRegisters and useGlobalKillbuffer indicate whether to use
-    global (class vars) or per-instance (ivars) for kill buffers and registers.'''
-    
-    self.c = c
-    self.widget = c.frame.miniBufferWidget
-    self.useTextWidget = True
-        # A Tk Label or Text widget.  Exists even if c.showMinibuffer is False.
-        
-    self.useGlobalKillbuffer = useGlobalKillbuffer
-    self.useGlobalRegisters = useGlobalRegisters
-
-    # Generalize...
-    self.x_hasNumeric = ['sort-lines','sort-fields']
-
-    self.altX_prompt = 'full-command: '
-    << define Tk ivars >>
-    << define externally visible ivars >>
-    << define internal ivars >>
-#@nonl
-#@+node:ekr.20051006092617:<< define Tk ivars >>
-if self.useTextWidget:
-    self.svar = None
-else:
-    if self.widget:
-        self.svar = Tk.StringVar()
-        self.widget.configure(textvariable=self.svar)
-        
-    else:
-        self.svar = None
-#@nonl
-#@-node:ekr.20051006092617:<< define Tk ivars >>
-#@+node:ekr.20051006092617.1:<< define externally visible ivars >>
-self.abbrevOn = False # True: abbreviations are on.
-self.arg = '' # The value returned by k.getArg.
-self.commandName = None
-self.inverseCommandsDict = {}
-    # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
-self.leoCallbackDict = {}
-    # Completed in leoCommands.getPublicCommands.
-    # Keys are *raw* functions wrapped by the leoCallback, values are emacs command names.
-self.negativeArg = False
-self.regx = g.bunch(iter=None,key=None)
-self.repeatCount = None
-self.state = g.bunch(kind=None,n=None,handler=None)
-
-#@-node:ekr.20051006092617.1:<< define externally visible ivars >>
-#@+node:ekr.20050923213858:<< define internal ivars >>
-# Previously defined bindings.
-self.bindingsDict = {}
-    # Keys are Tk key names, values are g.bunch(pane,func,commandName)
-    
-# Special bindings for k.fullCommand.
-self.mb_copyKey = None
-self.mb_pasteKey = None
-self.mb_cutKey = None
-
-# Keepting track of the characters in the mini-buffer.
-self.mb_history = []
-self.mb_prefix = ''
-self.mb_tabListPrefix = ''
-self.mb_tabList = []
-self.mb_tabListIndex = -1
-self.mb_prompt = ''
-
-self.func = None
-self.keysymHistory = []
-self.previous = []
-
-# For getArg...
-self.afterGetArgState = None
-self.argTabList = []
-
-if 0: # These are now set in makeSpecialBindings.
-    self.abortAllModesKey = 'Control-g'
-    self.fullCommandKey = 'Alt-x'
-    self.universalArgKey = 'Control-u'
-#@nonl
-#@-node:ekr.20050923213858:<< define internal ivars >>
-#@-node:ekr.20050920085536.2: ctor (keyHandler)
-#@+node:ekr.20050920093543:c.finishCreate & helper
-def finishCreate (self):  # New in 4.4.
-    
-    '''Finish creating the commander after frame.finishCreate.'''
-    
-    c = self ; p = c.currentPosition()
-    c.miniBufferWidget = c.frame.miniBufferWidget
-    # g.trace('Commands')
-    
-    # Create a keyHandler even if there is no miniBuffer.
-    c.keyHandler = leoKeys.keyHandlerClass(c,
-        useGlobalKillbuffer=True,
-        useGlobalRegisters=True)
-
-    # There is no miniBufferWidget created for leoSettings.leo files.
-    if c.miniBufferWidget:
-        c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
-        # c.printCommandsDict()
-    else:
-        c.commandsDict = {}
-
-    c.keyHandler.finishCreate()
-
-    # Create the menu last so that we can use the key handler for shortcuts.
-    if not g.doHook("menu1",c=c,p=p,v=p):
-        c.frame.menu.createMenuBar(c.frame)
-#@nonl
-#@+node:ekr.20051007143620:printCommandsDict
-def printCommandsDict (self):
-    
-    c = self
-    
-    print 'Commands...'
-    keys = c.commandsDict.keys()
-    keys.sort()
-    for key in keys:
-        command = c.commandsDict.get(key)
-        print '%30s = %s' % (key,g.choose(command,command.__name__,'<None>'))
-    print
-#@nonl
-#@-node:ekr.20051007143620:printCommandsDict
-#@-node:ekr.20050920093543:c.finishCreate & helper
-#@+node:ekr.20031218072017.2176:f.finishCreate & helpers
-def finishCreate (self,c):
-    
-    f = self ; f.c = c
-    # g.trace('tkFrame')
-    
-    # This must be done after creating the commander.
-    f.splitVerticalFlag,f.ratio,f.secondary_ratio = f.initialRatios()
-    f.createOuterFrames()
-    f.createIconBarComponents()
-    f.createSplitterComponents()
-    f.createStatusLineComponents()
-    f.createFirstTreeNode()
-    f.menu = leoTkinterMenu.leoTkinterMenu(f)
-        # c.finishCreate calls f.createMenuBar later.
-    g.app.setLog(f.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
-    g.app.windowList.append(f)
-    c.initVersion()
-    c.signOnWithVersion()
-    f.miniBufferWidget = f.createMiniBufferWidget()
-    f.body.createBindings(f)
-#@nonl
-#@+node:ekr.20051009044751:createOuterFrames
-def createOuterFrames (self):
-
-    f = self ; c = f.c
-    f.top = top = Tk.Toplevel()
-    g.app.gui.attachLeoIcon(top)
-    top.title(f.title)
-    top.minsize(30,10) # In grid units.
-    
-    if g.os_path_exists(g.app.user_xresources_path):
-        f.top.option_readfile(g.app.user_xresources_path)
-    
-    f.top.protocol("WM_DELETE_WINDOW", f.OnCloseLeoEvent)
-    f.top.bind("<Button-1>", f.OnActivateLeoEvent)
-    
-    # These don't work on Windows. Because of bugs in window managers,
-    # there is NO WAY to know which window is on top!
-    f.top.bind("<Activate>",f.OnActivateLeoEvent)
-    f.top.bind("<Deactivate>",f.OnDeactivateLeoEvent)
-    
-    f.top.bind("<Control-KeyPress>",f.OnControlKeyDown)
-    f.top.bind("<Control-KeyRelease>",f.OnControlKeyUp)
-    
-    # Create the outer frame, the 'hull' component.
-    f.outerFrame = Tk.Frame(top)
-    f.outerFrame.pack(expand=1,fill="both")
-    f.componentClass(c,'hull',f.outerFrame)
-#@-node:ekr.20051009044751:createOuterFrames
-#@+node:ekr.20051009044920:createIconBarComponents
-# Warning: there is also a method called createIconBar.
-
-def createIconBarComponents (self):
-
-    f = self ; c = f.c
-
-    iconBar = f.iconBarClass(c,f.outerFrame)
-    f.iconFrame = iconBar.iconFrame
-    f.iconBar = f.componentClass(c,
-        f.iconBarComponentName,iconBar.iconFrame,
-        iconBar,iconBar.pack,iconBar.unpack)
-    f.iconBar.show()
-#@nonl
-#@-node:ekr.20051009044920:createIconBarComponents
-#@+node:ekr.20051009045208:createSplitterComponents
-def createSplitterComponents (self):
-
-    f = self ; c = f.c
-
-    f.createLeoSplitters(f.outerFrame)
-    
-    # Create the canvas, tree, log and body.
-    f.canvas = f.createCanvas(f.split2Pane1)
-    f.tree   = leoTkinterTree.leoTkinterTree(c,f,f.canvas)
-    f.log    = leoTkinterLog(f,f.split2Pane2)
-    f.body   = leoTkinterBody(f,f.split1Pane2)
-    
-    f.componentClass(c,'tree',f.split2Pane1, f.tree, f.packTree, f.unpackTree)
-    f.componentClass(c,'log', f.split2Pane2, f.log,  f.packLog,  f.unpackLog)
-    f.componentClass(c,'body',f.split1Pane2, f.body, f.packBody, f.unpackBody)
-    
-    # Yes, this an "official" ivar: this is a kludge.
-    f.bodyCtrl = f.body.bodyCtrl
-    
-    # Configure.
-    f.setTabWidth(c.tab_width)
-    f.tree.setColorFromConfig()
-    f.reconfigurePanes()
-    f.body.setFontFromConfig()
-    f.body.setColorFromConfig()
-#@nonl
-#@-node:ekr.20051009045208:createSplitterComponents
-#@+node:ekr.20051009045300:createStatusLineComponents
-# Warning: there is also a method called createStatusLine.
-
-def createStatusLineComponents (self):
-    
-    f = self ; c = f.c
-    statusLine = f.statusLineClass(c,f.outerFrame)
-    
-    # Create offical ivars in the frame class.
-    f.statusFrame = statusLine.statusFrame
-    f.statusLabel = statusLine.labelWidget
-    f.statusText  = statusLine.textWidget
-    
-    f.statusLine = f.componentClass(c,
-        f.statusLineComponentName,
-        statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
-    f.statusLine.show() # Show status line by default.
-#@nonl
-#@-node:ekr.20051009045300:createStatusLineComponents
-#@+node:ekr.20051009045404:createFirstTreeNode
-def createFirstTreeNode (self):
-    
-    f = self ; c = f.c
-
-    t = leoNodes.tnode()
-    v = leoNodes.vnode(c,t)
-    p = leoNodes.position(v,[])
-    v.initHeadString("NewHeadline")
-    p.moveToRoot()
-
-    c.beginUpdate()
-    try:
-        c.selectVnode(p)
-        c.redraw()
-        c.frame.getFocus()
-        c.editPosition(p)
-    finally:
-        c.endUpdate(False)
-#@nonl
-#@-node:ekr.20051009045404:createFirstTreeNode
-#@+node:ekr.20050920094212:f.createMiniBufferWidget
-def createMiniBufferWidget (self):
-    
-    '''Create the minbuffer below the status line.'''
-    
-    frame = self ; c = frame.c
-
-    frame.minibufferFrame = f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
-    if c.showMinibuffer:
-        f.pack(side='bottom',fill='x')
-
-    lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
-    lab.pack(side='left')
-    
-    if 1:
-        label = Tk.Text(f,height=1,relief='groove',background='lightgrey',name='minibuffer')
-        label.pack(side='left',fill='x',expand=1,padx=2,pady=1)
-    else:
-        label = Tk.Label(f,relief='groove',justify='left',anchor='w',name='minnibuffer')
-        label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
-    
-    frame.minibufferVisible = c.showMinibuffer
-
-    return label
-#@nonl
-#@-node:ekr.20050920094212:f.createMiniBufferWidget
-#@-node:ekr.20031218072017.2176:f.finishCreate & helpers
-#@+node:ekr.20050920094633:k.finishCreate & helpers
-def finishCreate (self):
-    
-    '''Complete the construction of the keyHandler class.
-    c.commandsDict has been created when this is called.'''
-    
-    k = self ; c = k.c
-   
-    k.createInverseCommandsDict()
-    
-    if not c.miniBufferWidget:
-        # Does not exist for leoSettings.leo files.
-        return
-        
-    # g.trace('keyHandler')
-
-    # Important: bindings exist even if c.showMiniBuffer is False.
-    k.makeAllBindings()
-    
-    c.frame.log.setTabBindings('Log')
-    c.frame.tree.setBindings()
-    
-    if 0:
-        addTemacsExtensions(k)
-        addTemacsAbbreviations(k)
-        changeKeyStrokes(k,f.bodyCtrl)
-#@nonl
-#@+node:ekr.20051008082929:createInverseCommandsDict
-def createInverseCommandsDict (self):
-    
-    '''Add entries to k.inverseCommandsDict using c.commandDict,
-    except when c.commandDict.get(key) refers to the leoCallback function.
-    leoCommands.getPublicCommands has already added an entry in this case.
-    
-    In c.commandsDict        keys are command names, values are funcions f.
-    In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
-    '''
-
-    k = self ; c = k.c
-
-    for name in c.commandsDict.keys():
-        f = c.commandsDict.get(name)
-        
-        # 'leoCallback' callback created by leoCommands.getPublicCommands.
-        if f.__name__ != 'leoCallback':
-            k.inverseCommandsDict [f.__name__] = name
-            # g.trace('%24s = %s' % (f.__name__,name))
-#@nonl
-#@-node:ekr.20051008082929:createInverseCommandsDict
-#@-node:ekr.20050920094633:k.finishCreate & helpers
-#@+node:ekr.20051008082929:createInverseCommandsDict
-def createInverseCommandsDict (self):
-    
-    '''Add entries to k.inverseCommandsDict using c.commandDict,
-    except when c.commandDict.get(key) refers to the leoCallback function.
-    leoCommands.getPublicCommands has already added an entry in this case.
-    
-    In c.commandsDict        keys are command names, values are funcions f.
-    In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
-    '''
-
-    k = self ; c = k.c
-
-    for name in c.commandsDict.keys():
-        f = c.commandsDict.get(name)
-        
-        # 'leoCallback' callback created by leoCommands.getPublicCommands.
-        if f.__name__ != 'leoCallback':
-            k.inverseCommandsDict [f.__name__] = name
-            # g.trace('%24s = %s' % (f.__name__,name))
-#@nonl
-#@-node:ekr.20051008082929:createInverseCommandsDict
-#@+node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
-def getPublicCommands (self):
-    
-    '''(leoCommands) Return a dict of the 'legacy' Leo commands.
-    A special case used only by this class.
-    Put the *raw* command name into the inverse dict, *not* 'leoCallback'.
-    
-    Also creates k.leoCallBackDict.  Keys are *raw* functions, values are emacs command names.'''
-    
-    k = self.k ; d2 = {}
-    k.leoCallbackDict = {}
-    
-    << define dictionary d of names and Leo commands >>
-    
-    # Create a callback for each item in d.
-    keys = d.keys() ; keys.sort()
-    for name in keys:
-        f = d.get(name)
-        # Warning: k.createInverseCommandsDict uses the name of this callback.
-        def leoCallback (event,f=f,self=self,name=name):
-            self.c.doCommand(f,name)
-        d2 [name] = leoCallback
-        k.leoCallbackDict [leoCallback] = f
-        k.inverseCommandsDict [f.__name__] = name
-        # g.trace('leoCommands %24s = %s' % (f.__name__,name))
-        
-    return d2
-#@nonl
-#@+node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
-c = self.c ; f = c.frame
-
-d = {
-    'abort-edit-headline':  f.abortEditLabelCommand,
-    'about-leo':            c.about,
-    'add-comments':         c.addComments,     
-    'cascade-windows':      f.cascade,
-    #'check-spelling':      None,                   # Create this command.
-    'clear-recent-files':   c.clearRecentFiles,
-    'close-window':         c.close,
-    'contract-or-go-left':  c.contractNodeOrGoToParent,
-    'check-python-code':    c.checkPythonCode,
-    'check-all-python-code':c.checkAllPythonCode,
-    'check-outline':        c.checkOutline,
-    'clear-recent-files':   c.clearRecentFiles,
-    'clone-node':           c.clone,
-    'contract-node':        c.contractNode,
-    'contract-all':         c.contractAllHeadlines,
-    'contract-parent':      c.contractParent,
-    'convert-all-blanks':   c.convertAllBlanks,
-    'convert-all-tabs':     c.convertAllTabs,
-    'convert-blanks':       c.convertBlanks,
-    'convert-tabs':         c.convertTabs,
-    'copy-node':            c.copyOutline,
-    'copy-text':            f.copyText,
-    'cut-node':             c.cutOutline,
-    'cut-text':             f.cutText,
-    'de-hoist':             c.dehoist,
-    'delete':               c.delete,
-    'delete-comments':      c.deleteComments,
-    'delete-node':          c.deleteOutline,
-    'delete-text':          c.delete,
-    'demote':               c.demote,
-    'dump-outline':         c.dumpOutline,
-    'edit-headline':        c.editHeadline,
-    'end-edit-headline':    f.endEditLabelCommand,
-    'equal-sized-panes':    f.equalSizedPanes,
-    'execute-script':       c.executeScript,
-    'exit-leo':             g.app.onQuit,
-    'expand-all':           c.expandAllHeadlines,
-    'expand-next-level':    c.expandNextLevel,
-    'expand-node':          c.expandNode,
-    'expand-and-go-right':  c.expandNodeAndGoToFirstChild,
-    'expand-or-go-right':   c.expandNodeOrGoToFirstChild,
-    'expand-prev-level':    c.expandPrevLevel,
-    'expand-to-level-1':    c.expandLevel1,
-    'expand-to-level-2':    c.expandLevel2,
-    'expand-to-level-3':    c.expandLevel3,
-    'expand-to-level-4':    c.expandLevel4,
-    'expand-to-level-5':    c.expandLevel5,
-    'expand-to-level-6':    c.expandLevel6,
-    'expand-to-level-7':    c.expandLevel7,
-    'expand-to-level-8':    c.expandLevel8,
-    'expand-to-level-9':    c.expandLevel9,
-    'export-headlines':     c.exportHeadlines,
-    'extract':              c.extract,
-    'extract-names':        c.extractSectionNames,
-    'extract-section':      c.extractSection,
-    'flatten-outline':      c.flattenOutline,
-    'go-back':              c.goPrevVisitedNode,
-    'go-forward':           c.goNextVisitedNode,
-    'goto-first-node':      c.goToFirstNode,
-    'goto-first-sibling':   c.goToFirstSibling,
-    'goto-last-node':       c.goToLastNode,
-    'goto-last-sibling':    c.goToLastSibling,
-    'goto-last-visible':    c.goToLastVisibleNode,
-    'goto-line-number':     c.goToLineNumber,
-    'goto-next-changed':    c.goToNextDirtyHeadline,
-    'goto-next-clone':      c.goToNextClone,
-    'goto-next-marked':     c.goToNextMarkedHeadline,
-    'goto-next-node':       c.selectThreadNext,
-    'goto-next-sibling':    c.goToNextSibling,
-    'goto-next-visible':    c.selectVisNext,
-    'goto-parent':          c.goToParent,
-    'goto-prev-node':       c.selectThreadBack,
-    'goto-prev-sibling':    c.goToPrevSibling,
-    'goto-prev-visible':    c.selectVisBack,
-    'hoist':                c.hoist,
-    'import-at-file':       c.importAtFile,
-    'import-at-root':       c.importAtRoot,
-    'import-cweb-files':    c.importCWEBFiles,
-    'import-derived-file':      c.importDerivedFile,
-    'import-flattened-outline': c.importFlattenedOutline,
-    'import-noweb-files':       c.importNowebFiles,
-    'indent':                   c.indentBody,
-    'insert-node':              c.insertHeadline,
-    'insert-body-time':         c.insertBodyTime,
-    'insert-headline-time':     f.insertHeadlineTime,
-    # Leo find panel stuff.  It's not clear what will happen to these.
-    'dismiss-leo-find-panel':   c.dismissFindPanel,
-    'leo-change':               c.replace,
-    'leo-change-then-find':     c.replaceThenFind,
-    'leo-change-all':           c.replaceAll,
-    'leo-find':                 c.findNext,
-    'leo-find-panel':           c.showFindPanel,
-    'leo-find-previous':        c.findPrevious,
-    'mark':                     c.markHeadline,
-    'mark-changed-items':       c.markChangedHeadlines,
-    'mark-changed-roots':       c.markChangedRoots,
-    'mark-clones':              c.markClones,
-    'mark-subheads':            c.markSubheads,
-    'match-bracket':            c.findMatchingBracket,
-    'minimize-all':             f.minimizeAll,
-    'move-outline-down':        c.moveOutlineDown,
-    'move-outline-left':        c.moveOutlineLeft,
-    'move-outline-right':       c.moveOutlineRight,
-    'move-outline-up':          c.moveOutlineUp,
-    'new':                      c.new,
-    'open-compare-window':      c.openCompareWindow,
-    'open-leoconfig-leo':       c.openLeoSettings,
-    'open-leodocs-leo':         c.leoDocumentation,
-    'open-leoplugins-leo':      c.openLeoPlugins,
-    'open-online-home':         c.leoHome,
-    'open-online-tutorial':     c.leoTutorial,
-    'open-offline-tutorial':    f.leoHelp,
-    'open-outline':             c.open,
-    'open-python-window':       c.openPythonWindow,
-    'open-with':                c.openWith,
-    'outline-to-CWEB':          c.outlineToCWEB,
-    'outline-to-noweb':         c.outlineToNoweb,
-    'paste-node':               c.pasteOutline,
-    'paste-retaining-clones':   c.pasteOutlineRetainingClones,
-    'paste-text':               f.pasteText,
-    'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
-    'pretty-print-python-code':     c.prettyPrintPythonCode,
-    'promote':                  c.promote,
-    'read-at-file-nodes':       c.readAtFileNodes,
-    'read-outline-only':        c.readOutlineOnly,
-    'redo':                     c.undoer.redo,
-    'reformat-paragraph':       c.reformatParagraph,
-    'remove-sentinels':         c.removeSentinels,
-    'replace':                  c.replace,
-    'replace-then-find':        c.replaceThenFind,
-    'resize-to-screen':         f.resizeToScreen,
-    'revert':                   c.revert,
-    'save-file':                c.save,
-    'save-file-as':             c.saveAs,
-    'save-file-to':             c.saveTo,
-    'select-all':               f.body.selectAllText,
-    'settings':                 c.preferences,
-    'set-colors':               c.colorPanel,
-    'set-font':                 c.fontPanel,
-    'show-invisibles':          c.viewAllCharacters,
-    'sort-children':            c.sortChildren,
-    'sort-siblings':            c.sortSiblings,
-    'tangle':                   c.tangle,
-    'tangle-all':               c.tangleAll,
-    'tangle-marked':            c.tangleMarked,
-    'toggle-active-pane':       f.toggleActivePane,
-    'toggle-angle-brackets':    c.toggleAngleBrackets,
-    'toggle-split-direction':   f.toggleSplitDirection,
-    'undo':                     c.undoer.undo,
-    'unindent':                 c.dedentBody,
-    'unmark-all':               c.unmarkAll,
-    'untangle':                 c.untangle,
-    'untangle-all':             c.untangleAll,
-    'untangle-marked':          c.untangleMarked,
-    'weave':                    c.weave,
-    'write-at-file-nodes':      c.fileCommands.writeAtFileNodes,
-    'write-dirty-at-file-nodes':    c.fileCommands.writeDirtyAtFileNodes,
-    'write-missing-at-file-nodes':  c.fileCommands.writeMissingAtFileNodes,
-    'write-outline-only':       c.fileCommands.writeOutlineOnly,
-}
-#@nonl
-#@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
-#@-node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
-#@-node:ekr.20051009120608:(ctors & finishCreate)
-#@+node:ekr.20051006131811:(uArgs)
-#@+node:ekr.20050920085536.65: masterCommand & helpers
-def masterCommand (self,event,func,stroke):
-
-    '''This is the central dispatching method.
-    All commands and keystrokes pass through here.'''
-
-    k = self ; c = k.c
-    k.stroke = stroke # Set this global for general use.
-    k.func = func
-    commandName = k.ultimateFuncName(func)
-    special = event.keysym in (
-        'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func or stroke != '<Key>'
-    
-    # g.trace(stroke,k.inState(),k.getStateKind())
-
-    # if interesting: g.trace(stroke,commandName,k.getStateKind())
-
-    inserted = not special or (
-        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
-
-    if inserted:
-        # g.trace(stroke,event.keysym)
-        << add character to history >>
-        
-    # We *must not* interfere with the global state in the macro class.
-    if c.macroCommands.recordingMacro:
-        done = c.macroCommands.startKbdMacro(event)
-        if done: return 'break'
-        
-    # g.trace(stroke,k.abortAllModesKey)
-
-    if stroke == k.abortAllModesKey: # 'Control-g'
-        k.clearState()
-        k.keyboardQuit(event)
-        k.endCommand(event,commandName)
-        return 'break'
-
-    if k.inState():
-        if not special: # Don't pass these on.
-            k.callStateFunction(event) # Calls end-command.
-        return 'break'
-
-    # if k.keystrokeFunctionDict.has_key(stroke):
-        # if k.callKeystrokeFunction(event): # Calls end-command
-            # return 'break'
-
-    if k.regx.iter:
-        try:
-            k.regXKey = event.keysym
-            k.regx.iter.next() # EKR: next() may throw StopIteration.
-        finally:
-            return 'break'
-
-    if k.abbrevOn:
-        expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded: return 'break'
-
-    if func: # Func is an argument.
-        # g.trace('executing func',commandName)
-        forceFocus = func.__name__ != 'leoCallback'
-        if forceFocus:
-            k.forceFocusToBody()
-        func(event)
-        k.endCommand(event,commandName,forceFocus)
-        return 'break'
-
-    else:
-        c.frame.body.onBodyKey(event)
-        return None # Not 'break'
-#@nonl
-#@+node:ekr.20050920085536.67:<< add character to history >>
-# Don't add multiple special characters to history.
-
-k.keysymHistory.insert(0,event.keysym)
-
-if len(event.char) > 0:
-    if len(keyHandlerClass.lossage) > 99:
-        keyHandlerClass.lossage.pop()
-    keyHandlerClass.lossage.insert(0,event.char)
-
-if 0: # traces
-    g.trace(event.keysym,stroke)
-    g.trace(k.keysymHistory)
-    g.trace(keyHandlerClass.lossage)
-#@nonl
-#@-node:ekr.20050920085536.67:<< add character to history >>
-#@+node:ekr.20050923172809.1:callStateFunction
-def callStateFunction (self,event):
-    
-    k = self ; val = None
-    
-    # g.trace(k.stateKind,k.state)
-    
-    if k.state.kind:
-        if k.state.handler:
-            val = k.state.handler(event)
-            if val != 'continue':
-                k.endCommand(event,k.commandName)
-        else:
-            g.es_print('no state function for %s' % (k.state.kind),color='red')
-            
-    return val
-#@nonl
-#@-node:ekr.20050923172809.1:callStateFunction
-#@+node:ekr.20050923174229.3:callKeystrokeFunction
-def callKeystrokeFunction (self,event):
-    
-    '''Handle a quick keystroke function.
-    Return the function or None.'''
-    
-    k = self
-    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
-
-    if func:
-        func(event)
-        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        forceFocus = func.__name__ != 'leoCallback'
-        k.endCommand(event,commandName,forceFocus)
-    
-    return func
-#@nonl
-#@-node:ekr.20050923174229.3:callKeystrokeFunction
-#@-node:ekr.20050920085536.65: masterCommand & helpers
-#@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
-def fullCommand (self,event,specialStroke=None,specialFunc=None):
-    
-    '''Handle 'full-command' (alt-x) mode.'''
-
-    k = self ; c = k.c ; state = k.getState('altx')
-    keysym = (event and event.keysym) or ''
-    ch = (event and event.char) or ''
-    # g.trace('state',state,keysym)
-    if state == 0:
-        k.setState('altx',1,handler=k.fullCommand) 
-        k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
-        # Init mb_ ivars. This prevents problems with an initial backspace.
-        k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
-        k.mb_tabList = [] ; k.mb_tabListIndex = -1
-    elif keysym == 'Return':
-        c.frame.log.deleteTab('Completion')
-        k.callAltXFunction(event)
-    elif keysym == 'Tab':
-        k.doTabCompletion(c.commandsDict.keys())
-    elif keysym == 'BackSpace':
-        k.doBackSpace(c.commandsDict.keys())
-    elif ch not in string.printable:
-        if specialStroke:
-            g.trace(specialStroke)
-            specialFunc(fromMinibuffer=True)
-    else:
-        # Clear the list, any other character besides tab indicates that a new prefix is in effect.
-        k.mb_tabList = []
-        k.updateLabel(event)
-        k.mb_tabListPrefix = k.getLabel()
-        c.frame.minibufferWantsFocus(later=True)
-        # g.trace('new prefix',k.mb_tabListPrefix)
-    if keysym != 'Return':
-        c.frame.minibufferWantsFocus(later=True)
-    return 'break'
-#@+node:ekr.20050920085536.45:callAltXFunction
-def callAltXFunction (self,event):
-    
-    k = self ; c = k.c ; s = k.getLabel()
-    k.mb_tabList = []
-    commandName = s[len(k.mb_prefix):].strip()
-    func = c.commandsDict.get(commandName)
-
-    # These must be done *after* getting the command.
-    k.clearState()
-    k.resetLabel()
-
-    if func:
-        if commandName != 'repeat-complex-command':
-            k.mb_history.insert(0,commandName)
-        # if command in k.x_hasNumeric: func(event,aX)
-        func(event)
-        k.endCommand(event,commandName)
-    else:
-        k.setLabel('Command does not exist: %s' % commandName)
-#@nonl
-#@-node:ekr.20050920085536.45:callAltXFunction
-#@-node:ekr.20050920085536.41:fullCommand (alt-x) & helper
-#@+node:ekr.20050920085536.73:universalDispatcher & helpers
-def universalDispatcher (self,event):
-    
-    '''Handle accumulation of universal argument.'''
-    
-    << about repeat counts >>
-
-    k = self ; state = k.getState('u-arg')
-
-    if state == 0:
-        # The call should set the label.
-        k.setState('u-arg',1,k.universalDispatcher)
-        k.repeatCount = 1
-    elif state == 1:
-        stroke = k.stroke ; keysym = event.keysym
-            # Stroke is <Key> for plain keys, <Control-u> (k.universalArgKey)
-        # g.trace(state,stroke)
-        if stroke == k.universalArgKey:
-            k.repeatCount = k.repeatCount * 4
-        elif stroke == '<Key>' and keysym in string.digits + '-':
-            k.updateLabel(event)
-        elif stroke == '<Key>' and keysym in (
-            'Alt_L','Alt_R','Shift_L','Shift_R','Control_L','Control_R'):
-             # g.trace('stroke',k.stroke,'keysym',keysym)
-             k.updateLabel(event)
-        else:
-            # *Anything* other than C-u, '-' or a numeral is taken to be a command.
-            # g.trace('stroke',k.stroke,'keysym',keysym)
-            val = k.getLabel(ignorePrompt=True)
-            try:                n = int(val) * k.repeatCount
-            except ValueError:  n = 1
-            # g.trace('val',repr(val),'n',n,'k.repeatCount',k.repeatCount)
-            k.clearState()
-            k.executeNTimes(event,n)
-            k.clearState()
-            k.setLabelGrey()
-            if 0: # Not ready yet.
-                # This takes us to macro state.
-                # For example Control-u Control-x ( will execute the last macro and begin editing of it.
-                if stroke == '<Control-x>':
-                    k.setState('uC',2,k.universalDispatcher)
-                    return k.doControlU(event,stroke)
-    elif state == 2:
-        k.doControlU(event,stroke)
-
-    return 'break'
-#@nonl
-#@+node:ekr.20051006083627.1:<< about repeat counts >>
-@nocolor
-
-@  Any Emacs command can be given a numeric argument. Some commands interpret the
-argument as a repetition count. For example, giving an argument of ten to the
-key C-f (the command forward-char, move forward one character) moves forward ten
-characters. With these commands, no argument is equivalent to an argument of
-one. Negative arguments are allowed. Often they tell a command to move or act
-backwards.
-
-If your keyboard has a META key, the easiest way to specify a numeric argument
-is to type digits and/or a minus sign while holding down the the META key. For
-example,
-
-M-5 C-n
-
-moves down five lines. The characters Meta-1, Meta-2, and so on, as well as
-Meta--, do this because they are keys bound to commands (digit-argument and
-negative-argument) that are defined to contribute to an argument for the next
-command.
-
-Another way of specifying an argument is to use the C-u (universal-argument)
-command followed by the digits of the argument. With C-u, you can type the
-argument digits without holding down shift keys. To type a negative argument,
-start with a minus sign. Just a minus sign normally means -1. C-u works on all
-terminals.
-
-C-u followed by a character which is neither a digit nor a minus sign has the
-special meaning of "multiply by four". It multiplies the argument for the next
-command by four. C-u twice multiplies it by sixteen. Thus, C-u C-u C-f moves
-forward sixteen characters. This is a good way to move forward "fast", since it
-moves about 1/5 of a line in the usual size screen. Other useful combinations
-are C-u C-n, C-u C-u C-n (move down a good fraction of a screen), C-u C-u C-o
-(make "a lot" of blank lines), and C-u C-k (kill four lines).
-
-Some commands care only about whether there is an argument and not about its
-value. For example, the command M-q (fill-paragraph) with no argument fills
-text; with an argument, it justifies the text as well. (See section Filling
-Text, for more information on M-q.) Just C-u is a handy way of providing an
-argument for such commands.
-
-Some commands use the value of the argument as a repeat count, but do something
-peculiar when there is no argument. For example, the command C-k (kill-line)
-with argument n kills n lines, including their terminating newlines. But C-k
-with no argument is special: it kills the text up to the next newline, or, if
-point is right at the end of the line, it kills the newline itself. Thus, two
-C-k commands with no arguments can kill a non-blank line, just like C-k with an
-argument of one. (See section Deletion and Killing, for more information on
-C-k.)
-
-A few commands treat a plain C-u differently from an ordinary argument. A few
-others may treat an argument of just a minus sign differently from an argument
-of -1. These unusual cases will be described when they come up; they are always
-to make the individual command more convenient to use.
-#@nonl
-#@-node:ekr.20051006083627.1:<< about repeat counts >>
-#@+node:ekr.20050920085536.75:executeNTimes
-def executeNTimes (self,event,n):
-    
-    __pychecker__ = '--no-local' # z is used just for a repeat count.
-    
-    k = self ; stroke = k.stroke ; w = event.widget
-    g.trace('stroke',stroke,'keycode',event.keycode,'n',n)
-
-    if stroke == k.fullCommandKey:
-        for z in xrange(n):
-            k.fullCommand()
-    else:
-        stroke = stroke.lstrip('<').rstrip('>')
-        b = k.bindingsDict.get(stroke)
-        if b:
-            g.trace('method',b.f)
-            for z in xrange(n):
-                if 1: # No need to do this: commands never alter events.
-                    ev = Tk.Event()
-                    ev.widget = event.widget
-                    ev.keysym = event.keysym
-                    ev.keycode = event.keycode
-                    ev.char = event.char
-                k.masterCommand(event,b.f,'<%s>' % stroke)
-        else:
-            for z in xrange(n):
-                w.event_generate('<Key>',keycode=event.keycode,keysym=event.keysym)
-#@nonl
-#@-node:ekr.20050920085536.75:executeNTimes
-#@+node:ekr.20050920085536.76:doControlU
-def doControlU (self,event,stroke):
-    
-    k = self ; c = k.c
-
-    k.setLabelBlue('Control-u %s' % stroke.lstrip('<').rstrip('>'))
-
-    if event.keysym == 'parenleft': # Execute the macro.
-
-        k.clearState()
-        k.resetLabel()
-        c.macroCommands.startKbdMacro(event)
-        c.macroCommands.callLastKeyboardMacro(event)
-#@nonl
-#@-node:ekr.20050920085536.76:doControlU
-#@-node:ekr.20050920085536.73:universalDispatcher & helpers
-#@-node:ekr.20051006131811:(uArgs)
-#@+node:ekr.20051010062551.1:(key dicts)
-@
-
-c.commandsDict:
-    keys are emacs command names, values are functions f.
-
-k.inverseCommandsDict:
-    keys are f.__name__, values are emacs command names.
-    
-inverseBindingsDict (computed by computeInverseBindingDict)
-    keys are emacs command names, values are shortcuts.
-
-k.leoCallbackDict:
-    keys are leoCallback functions, values are called functions.
-
-k.bindingsDict:
-    keys are shortcuts, values are g.bunch(func,name,warningGiven)
-#@+node:ekr.20050922104731:finishCreateEditCommanders (leoEditCommands module)
-def finishCreateEditCommanders (c):
-    
-    '''Finish creating edit classes in the commander.
-    
-    Return the commands dictionary for all the classes.'''
-    
-    global classesList
-    
-    d = {}
-
-    for name, theClass in classesList:
-        theInstance = getattr(c,name)
-        theInstance.finishCreate()
-        theInstance.init()
-        d2 = theInstance.getPublicCommands()
-        if d2:
-            d.update(d2)
-            if 0:
-                keys = d2.keys()
-                keys.sort()
-                print '----- %s' % name
-                for key in keys: print
-                
-    return d
-#@nonl
-#@-node:ekr.20050922104731:finishCreateEditCommanders (leoEditCommands module)
-#@+node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
-def getPublicCommands (self):
-    
-    '''(leoCommands) Return a dict of the 'legacy' Leo commands.
-    A special case used only by this class.
-    Put the *raw* command name into the inverse dict, *not* 'leoCallback'.
-    
-    Also creates k.leoCallBackDict.  Keys are *raw* functions, values are emacs command names.'''
-    
-    k = self.k ; d2 = {}
-    k.leoCallbackDict = {}
-    
-    << define dictionary d of names and Leo commands >>
-    
-    # Create a callback for each item in d.
-    keys = d.keys() ; keys.sort()
-    for name in keys:
-        f = d.get(name)
-        # Warning: k.createInverseCommandsDict uses the name of this callback.
-        def leoCallback (event,f=f,self=self,name=name):
-            self.c.doCommand(f,name)
-        d2 [name] = leoCallback
-        k.leoCallbackDict [leoCallback] = f
-        k.inverseCommandsDict [f.__name__] = name
-        # g.trace('leoCommands %24s = %s' % (f.__name__,name))
-        
-    return d2
-#@nonl
-#@+node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
-c = self.c ; f = c.frame
-
-d = {
-    'abort-edit-headline':  f.abortEditLabelCommand,
-    'about-leo':            c.about,
-    'add-comments':         c.addComments,     
-    'cascade-windows':      f.cascade,
-    #'check-spelling':      None,                   # Create this command.
-    'clear-recent-files':   c.clearRecentFiles,
-    'close-window':         c.close,
-    'contract-or-go-left':  c.contractNodeOrGoToParent,
-    'check-python-code':    c.checkPythonCode,
-    'check-all-python-code':c.checkAllPythonCode,
-    'check-outline':        c.checkOutline,
-    'clear-recent-files':   c.clearRecentFiles,
-    'clone-node':           c.clone,
-    'contract-node':        c.contractNode,
-    'contract-all':         c.contractAllHeadlines,
-    'contract-parent':      c.contractParent,
-    'convert-all-blanks':   c.convertAllBlanks,
-    'convert-all-tabs':     c.convertAllTabs,
-    'convert-blanks':       c.convertBlanks,
-    'convert-tabs':         c.convertTabs,
-    'copy-node':            c.copyOutline,
-    'copy-text':            f.copyText,
-    'cut-node':             c.cutOutline,
-    'cut-text':             f.cutText,
-    'de-hoist':             c.dehoist,
-    'delete':               c.delete,
-    'delete-comments':      c.deleteComments,
-    'delete-node':          c.deleteOutline,
-    'delete-text':          c.delete,
-    'demote':               c.demote,
-    'dump-outline':         c.dumpOutline,
-    'edit-headline':        c.editHeadline,
-    'end-edit-headline':    f.endEditLabelCommand,
-    'equal-sized-panes':    f.equalSizedPanes,
-    'execute-script':       c.executeScript,
-    'exit-leo':             g.app.onQuit,
-    'expand-all':           c.expandAllHeadlines,
-    'expand-next-level':    c.expandNextLevel,
-    'expand-node':          c.expandNode,
-    'expand-and-go-right':  c.expandNodeAndGoToFirstChild,
-    'expand-or-go-right':   c.expandNodeOrGoToFirstChild,
-    'expand-prev-level':    c.expandPrevLevel,
-    'expand-to-level-1':    c.expandLevel1,
-    'expand-to-level-2':    c.expandLevel2,
-    'expand-to-level-3':    c.expandLevel3,
-    'expand-to-level-4':    c.expandLevel4,
-    'expand-to-level-5':    c.expandLevel5,
-    'expand-to-level-6':    c.expandLevel6,
-    'expand-to-level-7':    c.expandLevel7,
-    'expand-to-level-8':    c.expandLevel8,
-    'expand-to-level-9':    c.expandLevel9,
-    'export-headlines':     c.exportHeadlines,
-    'extract':              c.extract,
-    'extract-names':        c.extractSectionNames,
-    'extract-section':      c.extractSection,
-    'flatten-outline':      c.flattenOutline,
-    'go-back':              c.goPrevVisitedNode,
-    'go-forward':           c.goNextVisitedNode,
-    'goto-first-node':      c.goToFirstNode,
-    'goto-first-sibling':   c.goToFirstSibling,
-    'goto-last-node':       c.goToLastNode,
-    'goto-last-sibling':    c.goToLastSibling,
-    'goto-last-visible':    c.goToLastVisibleNode,
-    'goto-line-number':     c.goToLineNumber,
-    'goto-next-changed':    c.goToNextDirtyHeadline,
-    'goto-next-clone':      c.goToNextClone,
-    'goto-next-marked':     c.goToNextMarkedHeadline,
-    'goto-next-node':       c.selectThreadNext,
-    'goto-next-sibling':    c.goToNextSibling,
-    'goto-next-visible':    c.selectVisNext,
-    'goto-parent':          c.goToParent,
-    'goto-prev-node':       c.selectThreadBack,
-    'goto-prev-sibling':    c.goToPrevSibling,
-    'goto-prev-visible':    c.selectVisBack,
-    'hoist':                c.hoist,
-    'import-at-file':       c.importAtFile,
-    'import-at-root':       c.importAtRoot,
-    'import-cweb-files':    c.importCWEBFiles,
-    'import-derived-file':      c.importDerivedFile,
-    'import-flattened-outline': c.importFlattenedOutline,
-    'import-noweb-files':       c.importNowebFiles,
-    'indent':                   c.indentBody,
-    'insert-node':              c.insertHeadline,
-    'insert-body-time':         c.insertBodyTime,
-    'insert-headline-time':     f.insertHeadlineTime,
-    # Leo find panel stuff.  It's not clear what will happen to these.
-    'dismiss-leo-find-panel':   c.dismissFindPanel,
-    'leo-change':               c.replace,
-    'leo-change-then-find':     c.replaceThenFind,
-    'leo-change-all':           c.replaceAll,
-    'leo-find':                 c.findNext,
-    'leo-find-panel':           c.showFindPanel,
-    'leo-find-previous':        c.findPrevious,
-    'mark':                     c.markHeadline,
-    'mark-changed-items':       c.markChangedHeadlines,
-    'mark-changed-roots':       c.markChangedRoots,
-    'mark-clones':              c.markClones,
-    'mark-subheads':            c.markSubheads,
-    'match-bracket':            c.findMatchingBracket,
-    'minimize-all':             f.minimizeAll,
-    'move-outline-down':        c.moveOutlineDown,
-    'move-outline-left':        c.moveOutlineLeft,
-    'move-outline-right':       c.moveOutlineRight,
-    'move-outline-up':          c.moveOutlineUp,
-    'new':                      c.new,
-    'open-compare-window':      c.openCompareWindow,
-    'open-leoconfig-leo':       c.openLeoSettings,
-    'open-leodocs-leo':         c.leoDocumentation,
-    'open-leoplugins-leo':      c.openLeoPlugins,
-    'open-online-home':         c.leoHome,
-    'open-online-tutorial':     c.leoTutorial,
-    'open-offline-tutorial':    f.leoHelp,
-    'open-outline':             c.open,
-    'open-python-window':       c.openPythonWindow,
-    'open-with':                c.openWith,
-    'outline-to-CWEB':          c.outlineToCWEB,
-    'outline-to-noweb':         c.outlineToNoweb,
-    'paste-node':               c.pasteOutline,
-    'paste-retaining-clones':   c.pasteOutlineRetainingClones,
-    'paste-text':               f.pasteText,
-    'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
-    'pretty-print-python-code':     c.prettyPrintPythonCode,
-    'promote':                  c.promote,
-    'read-at-file-nodes':       c.readAtFileNodes,
-    'read-outline-only':        c.readOutlineOnly,
-    'redo':                     c.undoer.redo,
-    'reformat-paragraph':       c.reformatParagraph,
-    'remove-sentinels':         c.removeSentinels,
-    'replace':                  c.replace,
-    'replace-then-find':        c.replaceThenFind,
-    'resize-to-screen':         f.resizeToScreen,
-    'revert':                   c.revert,
-    'save-file':                c.save,
-    'save-file-as':             c.saveAs,
-    'save-file-to':             c.saveTo,
-    'select-all':               f.body.selectAllText,
-    'settings':                 c.preferences,
-    'set-colors':               c.colorPanel,
-    'set-font':                 c.fontPanel,
-    'show-invisibles':          c.viewAllCharacters,
-    'sort-children':            c.sortChildren,
-    'sort-siblings':            c.sortSiblings,
-    'tangle':                   c.tangle,
-    'tangle-all':               c.tangleAll,
-    'tangle-marked':            c.tangleMarked,
-    'toggle-active-pane':       f.toggleActivePane,
-    'toggle-angle-brackets':    c.toggleAngleBrackets,
-    'toggle-split-direction':   f.toggleSplitDirection,
-    'undo':                     c.undoer.undo,
-    'unindent':                 c.dedentBody,
-    'unmark-all':               c.unmarkAll,
-    'untangle':                 c.untangle,
-    'untangle-all':             c.untangleAll,
-    'untangle-marked':          c.untangleMarked,
-    'weave':                    c.weave,
-    'write-at-file-nodes':      c.fileCommands.writeAtFileNodes,
-    'write-dirty-at-file-nodes':    c.fileCommands.writeDirtyAtFileNodes,
-    'write-missing-at-file-nodes':  c.fileCommands.writeMissingAtFileNodes,
-    'write-outline-only':       c.fileCommands.writeOutlineOnly,
-}
-#@nonl
-#@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
-#@-node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
-#@+node:ekr.20051008082929:createInverseCommandsDict
-def createInverseCommandsDict (self):
-    
-    '''Add entries to k.inverseCommandsDict using c.commandDict,
-    except when c.commandDict.get(key) refers to the leoCallback function.
-    leoCommands.getPublicCommands has already added an entry in this case.
-    
-    In c.commandsDict        keys are command names, values are funcions f.
-    In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
-    '''
-
-    k = self ; c = k.c
-
-    for name in c.commandsDict.keys():
-        f = c.commandsDict.get(name)
-        
-        # 'leoCallback' callback created by leoCommands.getPublicCommands.
-        if f.__name__ != 'leoCallback':
-            k.inverseCommandsDict [f.__name__] = name
-            # g.trace('%24s = %s' % (f.__name__,name))
-#@nonl
-#@-node:ekr.20051008082929:createInverseCommandsDict
-#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
-# First, get the old-style name.
-commandName = self.computeOldStyleShortcutKey(label)
-rawKey,bunch = c.config.getShortcut(commandName)
-accel = bunch and bunch.val
-
-# Second, get new-style name.
-if not accel:
-    << compute emacs_name >>
-        # Contains the not-so-horrible kludge.
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunch = c.config.getShortcut(emacs_name)
-        accel = bunch and bunch.val
-    elif not dynamicMenu:
-        g.trace('No inverse for %s' % commandName)
-#@nonl
-#@+node:ekr.20051021100806.1:<< compute emacs_name >>
-@ One not-so-horrible kludge remains.
-
-The cut/copy/paste commands in the menu tables are not the same as the methods
-actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
-of extra translation to discover whether the user has overridden their
-bindings.
-@c
-
-if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-    emacs_name = '%s-text' % commandName
-else:
-    try: # User errors in the table can cause this.
-        emacs_name = k.inverseCommandsDict.get(command.__name__)
-    except Exception:
-        emacs_name = None
-#@nonl
-#@-node:ekr.20051021100806.1:<< compute emacs_name >>
-#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
-#@-node:ekr.20051010062551.1:(key dicts)
-#@+node:ekr.20051012091323:(Outline goto's)
-#@+node:ekr.20031218072017.3767:defineOutlineMenuTables & helpers
-def defineOutlineMenuTables (self):
-
-    self.defineOutlineMenuTopMenuTable()
-    self.defineOutlineMenuCheckOutlineMenuTable()
-    self.defineOutlineMenuExpandContractMenuTable()
-    self.defineOutlineMenuMoveMenuTable()
-    self.defineOutlineMenuMarkMenuTable()
-    self.defineOutlineMenuGoToMenuTable()
-#@nonl
-#@+node:ekr.20031218072017.3768:defineOutlineMenuTopMenuTable
-def defineOutlineMenuTopMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuTopMenuTable = [
-        ("C&ut Node",c.cutOutline),
-        ("C&opy Node",c.copyOutline),
-        ("&Paste Node",c.pasteOutline),
-        ("Pas&te Node As Clone",c.pasteOutlineRetainingClones),
-        ("&Delete Node",c.deleteOutline),
-        ("-",None,None),
-        ("&Insert Node",c.insertHeadline),
-        ("&Clone Node",c.clone),
-        ("Sort Childre&n",c.sortChildren), # Conflicted with Hoist.
-        ("&Sort Siblings",c.sortSiblings),
-        ("-",None),
-        ("&Hoist",c.hoist),
-        ("D&e-Hoist",f.c.dehoist),
-        ("-",None),
-    ]
-    # Ampersand bindings:  a,c,d,e,h,i,n,o,p,t,s,
-    # Bindings for entries that go to submenus: a,g,k,m,x
-#@nonl
-#@-node:ekr.20031218072017.3768:defineOutlineMenuTopMenuTable
-#@+node:ekr.20040711140738:defineOutlineMenuCheckOutlineMenuTable
-def defineOutlineMenuCheckOutlineMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuCheckOutlineMenuTable = [
-        ("Check &Outline",c.checkOutline),
-        ("&Dump Outline",c.dumpOutline),
-        ("-",None),
-        ("Check &All Python Code",c.checkAllPythonCode),
-        ("&Check Python &Code",c.checkPythonCode),
-        ("-",None),
-        ("Pretty P&rint All Python Code",c.prettyPrintAllPythonCode),
-        ("&Pretty Print Python Code",c.prettyPrintPythonCode),
-    ]
-    # shortcuts used: a,c,d,o,p,r
-#@nonl
-#@-node:ekr.20040711140738:defineOutlineMenuCheckOutlineMenuTable
-#@+node:ekr.20031218072017.3769:defineOutlineMenuExpandContractMenuTable
-def defineOutlineMenuExpandContractMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuExpandContractMenuTable = [
-        ("&Contract All",c.contractAllHeadlines),
-        ("Contract &Node",c.contractNode),
-        ("Contract &Parent",c.contractParent),
-        ("Contract Or Go Left",c.contractNodeOrGoToParent),
-        ("-",None),
-        ("Expand P&rev Level",c.expandPrevLevel),
-        ("Expand N&ext Level",c.expandNextLevel),
-        ("Expand And Go Right",c.expandNodeAndGoToFirstChild),
-        ("Expand Or Go Right",c.expandNodeOrGoToFirstChild),
-        ("-",None),
-        ("Expand To Level &1",c.expandLevel1),
-        ("Expand To Level &2",c.expandLevel2),
-        ("Expand To Level &3",c.expandLevel3),
-        ("Expand To Level &4",c.expandLevel4),
-        ("Expand To Level &5",c.expandLevel5),
-        ("Expand To Level &6",c.expandLevel6),
-        ("Expand To Level &7",c.expandLevel7),
-        ("Expand To Level &8",c.expandLevel8),
-        ("-",None),
-        ("Expand &All",c.expandAllHeadlines),
-        ("Expand N&ode",c.expandNode),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3769:defineOutlineMenuExpandContractMenuTable
-#@+node:ekr.20031218072017.3770:defineOutlineMenuMoveMenuTable
-def defineOutlineMenuMoveMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuMoveMenuTable = [
-        ("Move &Down",c.moveOutlineDown),
-        ("Move &Left",c.moveOutlineLeft),
-        ("Move &Right",c.moveOutlineRight),
-        ("Move &Up",c.moveOutlineUp),
-        ("-",None),
-        ("&Promote",c.promote),
-        ("&Demote",c.demote),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3770:defineOutlineMenuMoveMenuTable
-#@+node:ekr.20031218072017.3771:defineOutlineMenuMarkMenuTable
-def defineOutlineMenuMarkMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuMarkMenuTable = [
-        ("&Mark",c.markHeadline),
-        ("Mark &Subheads",c.markSubheads),
-        ("Mark Changed &Items",c.markChangedHeadlines),
-        ("Mark Changed &Roots",c.markChangedRoots),
-        ("Mark &Clones",c.markClones),
-        ("&Unmark All",c.unmarkAll),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3771:defineOutlineMenuMarkMenuTable
-#@+node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
-def defineOutlineMenuGoToMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuGoToMenuTable = [
-        ("Go Prev Visited",c.goPrevVisitedNode), # Usually use buttons for this.
-        ("Go Next Visited",c.goNextVisitedNode),
-        ("Go To Prev Node",c.selectThreadBack),
-        ("Go To Next Node",c.selectThreadNext),
-        ("-",None),
-        ("Go To Next Marked",c.goToNextMarkedHeadline),
-        ("Go To Next Changed",c.goToNextDirtyHeadline),
-        ("Go To Next Clone",c.goToNextClone),
-        ("-",None),
-        ("Go To First Node",c.goToFirstNode),
-        ("Go To Prev Visible",c.selectVisBack),
-        ("Go To Next Visible",c.selectVisNext),
-        ("Go To Last Node",c.goToLastNode),
-        ('Go To Last Visible',c.goToLastVisibleNode),
-        ("-",None),
-        ("Go To Parent",c.goToParent),
-        ('Go To First Sibling',c.goToFirstSibling),
-        ('Go To Last Sibling',c.goToLastSibling),
-        ("Go To Prev Sibling",c.goToPrevSibling),
-        ("Go To Next Sibling",c.goToNextSibling),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
-#@-node:ekr.20031218072017.3767:defineOutlineMenuTables & helpers
-#@+node:ekr.20031218072017.2898:Expand & Contract...
-#@+node:ekr.20031218072017.2899:Commands
-#@+node:ekr.20031218072017.2900:contractAllHeadlines
-def contractAllHeadlines (self):
-
-    c = self
-    
-    c.beginUpdate()
-    try: # update...
-        for p in c.allNodes_iter():
-            p.contract()
-        # Select the topmost ancestor of the presently selected node.
-        p = c.currentPosition()
-        while p and p.hasParent():
-            p.moveToParent()
-        c.selectVnode(p)
-    finally:
-        c.endUpdate()
-
-    c.expansionLevel = 1 # Reset expansion level.
-#@nonl
-#@-node:ekr.20031218072017.2900:contractAllHeadlines
-#@+node:ekr.20031218072017.2901:contractNode
-def contractNode (self):
-    
-    c = self ; v = c.currentVnode()
-    
-    c.beginUpdate()
-    try:
-        v.contract()
-    finally:
-        c.endUpdate()
-#@-node:ekr.20031218072017.2901:contractNode
-#@+node:ekr.20040930064232:contractNodeOrGoToParent
-def contractNodeOrGoToParent(self):
-    
-    """Simulate the left Arrow Key in folder of Windows Explorer."""
-
-    c = self ; p = c.currentPosition()
- 
-    if p.hasChildren() and p.isExpanded():
-        c.contractNode()
-    elif p.hasParent():
-        c.goToParent()
-#@nonl
-#@-node:ekr.20040930064232:contractNodeOrGoToParent
-#@+node:ekr.20031218072017.2902:contractParent
-def contractParent (self):
-    
-    c = self ; v = c.currentVnode()
-    parent = v.parent()
-    if not parent: return
-    
-    c.beginUpdate()
-    try:
-        c.selectVnode(parent)
-        parent.contract()
-    finally:
-        c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.2902:contractParent
-#@+node:ekr.20031218072017.2903:expandAllHeadlines
-def expandAllHeadlines(self):
-
-    c = self ; v = root = c.rootVnode()
-    c.beginUpdate()
-    try:
-        while v:
-            c.expandSubtree(v)
-            v = v.next()
-        c.selectVnode(root)
-    finally:
-        c.endUpdate()
-    c.expansionLevel = 0 # Reset expansion level.
-#@nonl
-#@-node:ekr.20031218072017.2903:expandAllHeadlines
-#@+node:ekr.20031218072017.2904:expandAllSubheads
-def expandAllSubheads (self):
-
-    c = self ; v = c.currentVnode()
-    if not v: return
-
-    child = v.firstChild()
-    c.beginUpdate()
-    try:
-        c.expandSubtree(v)
-        while child:
-            c.expandSubtree(child)
-            child = child.next()
-        c.selectVnode(v)
-    finally:
-        c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.2904:expandAllSubheads
-#@+node:ekr.20031218072017.2905:expandLevel1..9
-def expandLevel1 (self): self.expandToLevel(1)
-def expandLevel2 (self): self.expandToLevel(2)
-def expandLevel3 (self): self.expandToLevel(3)
-def expandLevel4 (self): self.expandToLevel(4)
-def expandLevel5 (self): self.expandToLevel(5)
-def expandLevel6 (self): self.expandToLevel(6)
-def expandLevel7 (self): self.expandToLevel(7)
-def expandLevel8 (self): self.expandToLevel(8)
-def expandLevel9 (self): self.expandToLevel(9)
-#@-node:ekr.20031218072017.2905:expandLevel1..9
-#@+node:ekr.20031218072017.2906:expandNextLevel
-def expandNextLevel (self):
-
-    c = self ; v = c.currentVnode()
-    
-    # 1/31/02: Expansion levels are now local to a particular tree.
-    if c.expansionNode != v:
-        c.expansionLevel = 1
-        c.expansionNode = v
-        
-    self.expandToLevel(c.expansionLevel + 1)
-#@-node:ekr.20031218072017.2906:expandNextLevel
-#@+node:ekr.20031218072017.2907:expandNode
-def expandNode (self):
-    
-    c = self ; v = c.currentVnode()
-    
-    c.beginUpdate()
-    try:
-        v.expand()
-    finally:
-        c.endUpdate()
-
-#@-node:ekr.20031218072017.2907:expandNode
-#@+node:ekr.20040930064232.1:expandNodeAnd/OrGoToFirstChild
-def expandNodeAndGoToFirstChild(self):
-    
-    """If a node has children, expand it if needed and go to the first child."""
-
-    c = self ; p = c.currentPosition()
-    if not p.hasChildren():
-        return
-
-    if not p.isExpanded():
-        c.expandNode()
-        
-    c.beginUpdate()
-    try:
-        c.selectVnode(p.firstChild())
-    finally:
-        c.endUpdate()
-        
-def expandNodeOrGoToFirstChild(self):
-    
-    """Simulate the Right Arrow Key in folder of Windows Explorer."""
-
-    c = self ; p = c.currentPosition()
-    if not p.hasChildren(): return
-
-    if not p.isExpanded():
-        c.expandNode()
-    else:
-        c.beginUpdate()
-        try:
-            c.selectVnode(p.firstChild())
-        finally:
-            c.endUpdate()
-#@nonl
-#@-node:ekr.20040930064232.1:expandNodeAnd/OrGoToFirstChild
-#@+node:ekr.20031218072017.2908:expandPrevLevel
-def expandPrevLevel (self):
-
-    c = self ; v = c.currentVnode()
-    
-    # 1/31/02: Expansion levels are now local to a particular tree.
-    if c.expansionNode != v:
-        c.expansionLevel = 1
-        c.expansionNode = v
-        
-    self.expandToLevel(max(1,c.expansionLevel - 1))
-#@-node:ekr.20031218072017.2908:expandPrevLevel
-#@-node:ekr.20031218072017.2899:Commands
-#@+node:ekr.20031218072017.2909:Utilities
-#@+node:ekr.20031218072017.2910:contractSubtree
-def contractSubtree (self,p):
-
-    for p in p.subtree_iter():
-        p.contract()
-#@nonl
-#@-node:ekr.20031218072017.2910:contractSubtree
-#@+node:ekr.20031218072017.2911:expandSubtree
-def expandSubtree (self,v):
-
-    c = self
-    last = v.lastNode()
-    while v and v != last:
-        v.expand()
-        v = v.threadNext()
-    c.redraw()
-#@nonl
-#@-node:ekr.20031218072017.2911:expandSubtree
-#@+node:ekr.20031218072017.2912:expandToLevel (rewritten in 4.4)
-def expandToLevel (self,level):
-
-    c = self
-    c.beginUpdate()
-    try:
-        current = c.currentPosition()
-        n = current.level()
-        for p in current.self_and_subtree_iter():
-            if p.level() - n + 1 < level:
-                p.expand()
-            else:
-                p.contract()
-        c.expansionLevel = level
-        c.expansionNode = c.currentPosition()
-    finally:
-        c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.2912:expandToLevel (rewritten in 4.4)
-#@-node:ekr.20031218072017.2909:Utilities
-#@-node:ekr.20031218072017.2898:Expand & Contract...
-#@+node:ekr.20031218072017.2913:Goto
-#@+node:ekr.20031218072017.1628:goNextVisitedNode
-def goNextVisitedNode(self):
-    
-    c = self
-
-    while c.beadPointer + 1 < len(c.beadList):
-        c.beadPointer += 1
-        v = c.beadList[c.beadPointer]
-        if v.exists(c):
-            c.beginUpdate()
-            try:
-                c.frame.tree.expandAllAncestors(v)
-                c.selectVnode(v,updateBeadList=False)
-            finally:
-                c.endUpdate()
-            c.frame.tree.idle_scrollTo(v)
-            return
-#@nonl
-#@-node:ekr.20031218072017.1628:goNextVisitedNode
-#@+node:ekr.20031218072017.1627:goPrevVisitedNode
-def goPrevVisitedNode(self):
-    
-    c = self
-
-    while c.beadPointer > 0:
-        c.beadPointer -= 1
-        v = c.beadList[c.beadPointer]
-        if v.exists(c):
-            c.beginUpdate()
-            try:
-                c.frame.tree.expandAllAncestors(v)
-                c.selectVnode(v,updateBeadList=False)
-            finally:
-                c.endUpdate()
-            c.frame.tree.idle_scrollTo(v)
-            return
-#@-node:ekr.20031218072017.1627:goPrevVisitedNode
-#@+node:ekr.20031218072017.2914:goToFirstNode
-def goToFirstNode(self):
-    
-    c = self
-    p = c.rootPosition()
-    if p:
-        c.beginUpdate()
-        try:
-            c.selectVnode(p)
-        finally:
-            c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.2914:goToFirstNode
-#@+node:ekr.20051012092453:goToFirstSibling (New in 4.4)
-def goToFirstSibling(self):
-    
-    c = self ; p = c.currentPosition()
-    
-    if p.hasBack():
-        while p.hasBack():
-            p.moveToBack()
-
-        c.beginUpdate()
-        try:
-            c.selectVnode(p)
-        finally:
-            c.endUpdate()
-#@nonl
-#@-node:ekr.20051012092453:goToFirstSibling (New in 4.4)
-#@+node:ekr.20031218072017.2915:goToLastNode (Bug fix in 4.4)
-def goToLastNode(self):
-    
-    c = self ; p = c.rootPosition()
-    while p and p.hasThreadNext(): # Bug fix: 10/12/05: was p.hasNext.
-        p.moveToThreadNext()
-
-    if p:
-        c.beginUpdate()
-        try:
-            c.frame.tree.expandAllAncestors(p)
-            c.selectVnode(p)
-        finally:
-            c.endUpdate()
-
-#@-node:ekr.20031218072017.2915:goToLastNode (Bug fix in 4.4)
-#@+node:ekr.20051012092847.1:goToLastSibling (New in 4.4)
-def goToLastSibling(self):
-    
-    c = self ; p = c.currentPosition()
-    
-    if p.hasNext():
-        while p.hasNext():
-            p.moveToNext()
-
-        c.beginUpdate()
-        try:
-            c.selectVnode(p)
-        finally:
-            c.endUpdate()
-#@nonl
-#@-node:ekr.20051012092847.1:goToLastSibling (New in 4.4)
-#@+node:ekr.20050711153537:goToLastVisibleNode
-def goToLastVisibleNode (self):
-    
-    c = self ; p = c.rootPosition()
-    
-    while p.hasNext():
-        p.moveToNext()
-        
-    while p and p.isExpanded():
-        p.moveToLastChild()
-
-    if p:
-        c.beginUpdate()
-        try:
-            c.frame.tree.expandAllAncestors(p)
-            c.selectVnode(p)
-        finally:
-            c.endUpdate()
-#@nonl
-#@-node:ekr.20050711153537:goToLastVisibleNode
-#@+node:ekr.20031218072017.2916:goToNextClone
-def goToNextClone(self):
-
-    c = self ; current = c.currentVnode()
-    if not current: return
-    if not current.isCloned(): return
-
-    v = current.threadNext()
-    while v and v.t != current.t:
-        v = v.threadNext()
-        
-    if not v:
-        # Wrap around.
-        v = c.rootVnode()
-        while v and v != current and v.t != current.t:
-            v = v.threadNext()
-
-    if v:
-        c.beginUpdate()
-        try:
-            c.endEditing()
-            c.selectVnode(v)
-        finally:
-            c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.2916:goToNextClone
-#@+node:ekr.20031218072017.2917:goToNextDirtyHeadline
-def goToNextDirtyHeadline (self):
-
-    c = self ; current = c.currentVnode()
-    if not current: return
-
-    v = current.threadNext()
-    while v and not v.isDirty():
-        v = v.threadNext()
-
-    if not v:
-        # Wrap around.
-        v = c.rootVnode()
-        while v and not v.isDirty():
-            v = v.threadNext()
-
-    if v:
-        c.selectVnode(v)
-    else:
-        g.es("done",color="blue")
-#@nonl
-#@-node:ekr.20031218072017.2917:goToNextDirtyHeadline
-#@+node:ekr.20031218072017.2918:goToNextMarkedHeadline
-def goToNextMarkedHeadline(self):
-
-    c = self ; current = c.currentVnode()
-    if not current: return
-
-    v = current.threadNext()
-    while v and not v.isMarked():
-        v = v.threadNext()
-
-    if v:
-        c.beginUpdate()
-        try:
-            c.endEditing()
-            c.selectVnode(v)
-        finally:
-            c.endUpdate()
-    else:
-        g.es("done",color="blue")
-#@nonl
-#@-node:ekr.20031218072017.2918:goToNextMarkedHeadline
-#@+node:ekr.20031218072017.2919:goToNextSibling
-def goToNextSibling(self):
-    
-    c = self
-    v = c.currentVnode()
-    if not v: return
-    next = v.next()
-    if next:
-        c.beginUpdate()
-        try:
-            c.selectVnode(next)
-        finally:
-            c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.2919:goToNextSibling
-#@+node:ekr.20031218072017.2920:goToParent
-def goToParent(self):
-    
-    c = self
-    v = c.currentVnode()
-    if not v: return
-    p = v.parent()
-    if p:
-        c.beginUpdate()
-        try:
-            c.selectVnode(p)
-        finally:
-            c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.2920:goToParent
-#@+node:ekr.20031218072017.2921:goToPrevSibling
-def goToPrevSibling(self):
-    
-    c = self
-    v = c.currentVnode()
-    if not v: return
-    back = v.back()
-    if back:
-        c.beginUpdate()
-        try:
-            c.selectVnode(back)
-        finally:
-            c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.2921:goToPrevSibling
-#@+node:ekr.20031218072017.2994:selectThreadNext
-def selectThreadNext(self):
-
-    c = self ; current = c.currentPosition()
-    if not current: return
-
-    p = current.threadNext()
-    if p:
-        c.beginUpdate()
-        try:
-            c.selectPosition(p)
-        finally:
-            c.endUpdate()
-        c.frame.bodyWantsFocus()
-#@nonl
-#@-node:ekr.20031218072017.2994:selectThreadNext
-#@+node:ekr.20031218072017.2993:selectThreadBack
-def selectThreadBack(self):
-
-    c = self ; current = c.currentVnode()
-    if not current: return
-    
-    v = current.threadBack()
-    if v:
-        c.beginUpdate()
-        try:
-            c.selectVnode(v)
-        finally:
-            c.endUpdate()
-#@-node:ekr.20031218072017.2993:selectThreadBack
-#@+node:ekr.20031218072017.2995:selectVisBack
-# This has an up arrow for a control key.
-
-def selectVisBack(self):
-
-    c = self ; current = c.currentVnode()
-    if not current: return
-
-    v = current.visBack()
-    if v:
-        c.beginUpdate()
-        try:
-            c.selectVnode(v)
-        finally:
-            c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.2995:selectVisBack
-#@+node:ekr.20031218072017.2996:selectVisNext
-def selectVisNext(self):
-
-    c = self ; current = c.currentVnode()
-    if not current: return
-    
-    v = current.visNext()
-    if v:
-        c.beginUpdate()
-        try:
-            c.selectVnode(v)
-        finally:
-            c.endUpdate()
-#@-node:ekr.20031218072017.2996:selectVisNext
-#@-node:ekr.20031218072017.2913:Goto
-#@-node:ekr.20051012091323:(Outline goto's)
-#@+node:ekr.20051013085834:(Added new emacs find commands & ekr abbreviations)
-#@+node:ekr.20031218072017.2887:Find submenu (frame methods)
-#@+node:ekr.20051013084200:dismissFindPanel
-def dismissFindPanel (self):
-    
-    c = self
-    
-    if c.frame.findPanel:
-        c.frame.findPanel.dismiss()
-#@nonl
-#@-node:ekr.20051013084200:dismissFindPanel
-#@+node:ekr.20031218072017.2888:showFindPanel
-def showFindPanel(self):
-
-    c = self
-    
-    if not c.frame.findPanel:
-        c.frame.findPanel = g.app.gui.createFindPanel(c)
-
-    c.frame.findPanel.bringToFront()
-#@nonl
-#@-node:ekr.20031218072017.2888:showFindPanel
-#@+node:ekr.20031218072017.2889:findNext
-def findNext(self):
-
-    c = self
-    
-    if not c.frame.findPanel:
-        c.frame.findPanel = g.app.gui.createFindPanel(c)
-
-    c.frame.findPanel.findNextCommand(c)
-#@-node:ekr.20031218072017.2889:findNext
-#@+node:ekr.20031218072017.2890:findPrevious
-def findPrevious(self):
-
-    c = self
-    
-    if not c.frame.findPanel:
-        c.frame.findPanel = g.app.gui.createFindPanel(c)
-
-    c.frame.findPanel.findPreviousCommand(c)
-#@-node:ekr.20031218072017.2890:findPrevious
-#@+node:ekr.20031218072017.2891:replace
-def replace(self):
-
-    c = self
-    
-    if not c.frame.findPanel:
-        c.frame.findPanel = g.app.gui.createFindPanel(c)
-
-    c.frame.findPanel.changeCommand(c)
-#@-node:ekr.20031218072017.2891:replace
-#@+node:ekr.20031218072017.2892:replaceThenFind
-def replaceThenFind(self):
-
-    c = self
-    
-    if not c.frame.findPanel:
-        c.frame.findPanel = g.app.gui.createFindPanel(c)
-
-    c.frame.findPanel.changeThenFindCommand(c)
-#@-node:ekr.20031218072017.2892:replaceThenFind
-#@+node:ekr.20051013083241:replaceAll
-def replaceAll(self):
-
-    c = self
-    
-    if not c.frame.findPanel:
-        c.frame.findPanel = g.app.gui.createFindPanel(c)
-
-    c.frame.findPanel.changeAllCommand(c)
-#@-node:ekr.20051013083241:replaceAll
-#@-node:ekr.20031218072017.2887:Find submenu (frame methods)
-#@+node:ekr.20031218072017.3752:defineMenuTables & helpers
-def defineMenuTables (self):
-    
-    c = self.c
-    
-    self.defineEditMenuTables()
-    self.defineFileMenuTables()
-    self.defineOutlineMenuTables()
-    self.defineWindowMenuTables()
-
-    if self.useCmdMenu:
-        self.defineEditorMenuTables()
-
-    self.defineHelpMenuTables()
-#@nonl
-#@+node:ekr.20031218072017.3753:defineEditMenuTables & helpers
-def defineEditMenuTables (self):
-
-    self.defineEditMenuTopTable()
-    self.defineEditMenuEditCursorTable()
-    self.defineEditMenuEditBodyTable()
-    self.defineEditMenuEditHeadlineTable()
-    self.defineEditMenuFindMenuTable()
-    self.defineEditMenuTop2Table()
-#@nonl
-#@+node:ekr.20031218072017.839:defineEditMenuTopTable
-def defineEditMenuTopTable (self):
-    
-    __pychecker__ = 'no-unusednames=[f]' # We define 'f' just in case.
-
-    c = self.c ; f = self.frame
-    
-    self.editMenuTopTable = [
-        ("Can't Undo",c.undoer.undo), # &U reserved for Undo
-        ("Can't Redo",c.undoer.redo), # &R reserved for Redo
-        ("-",None),
-        ("Cu&t",f.OnCutFromMenu), 
-        ("Cop&y",f.OnCopyFromMenu),
-        ("&Paste",f.OnPasteFromMenu),
-        ("&Delete",c.delete),
-        ("Select &All",f.body.selectAllText),
-        ("-",None),
-    ]
-
-    # Top-level shortcuts here:  a,d,p,t,u,y,z
-    # Top-level shortcuts later: e,g,n,v
-#@nonl
-#@-node:ekr.20031218072017.839:defineEditMenuTopTable
-#@+node:ekr.20050711091931:defineEditMenuEditCursorTable
-def defineEditMenuEditCursorTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    if 0: ### Not ready yet.
-        # These should have Emacs names...
-        self.editMenuEditCursorTable = [
-            ('Delete Right',c.deleteRightChar), 
-            ('Delete Left',c.deleteLeftChar), 
-            # Moving the cursor.
-            ('Start of Line',c.moveToStartOfLine), 
-            ('End of Line',c.moveToEndOfLine), 
-            ('Start of Node',c.moveToStartOfNode),
-            ('End of Node',c.moveToEndOfNode), 
-            ('-',None,None),
-            # Extending the selection...
-            ('Select Line',c.selectEntireLine),
-            ('Extend To Start of Word',c.extendToStartOfWord),
-            ('Extend To End of Word',c.extendToEndOfWord),
-            ('Extend To Start Of Line',c.extendToStartOfLine), 
-            ('Extend To End Of Line',c.extendToEndOfLine), 
-            ('Extend To End of Node',c.extendToEndOfNode),
-            # The mark...
-        ]
-#@nonl
-#@-node:ekr.20050711091931:defineEditMenuEditCursorTable
-#@+node:ekr.20031218072017.3754:defineEditMenuEditBodyTable
-def defineEditMenuEditBodyTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.editMenuEditBodyTable = [
-        ("Extract &Section",c.extractSection),
-        ("Extract &Names",c.extractSectionNames),
-        ("&Extract",c.extract),
-        ("-",None,None),
-        ("Convert All B&lanks",c.convertAllBlanks),
-        ("Convert All T&abs",c.convertAllTabs),
-        ("Convert &Blanks",c.convertBlanks),
-        ("Convert &Tabs",c.convertTabs),
-        ("Insert Body Time/&Date",c.insertBodyTime),
-        ("&Reformat Paragraph",c.reformatParagraph),
-        ("-",None,None),
-        ("&Indent",c.indentBody),
-        ("&Unindent",c.dedentBody),
-        ("&Match Brackets",c.findMatchingBracket),
-        ("Add Comments",c.addComments),
-        ("Delete Comments",c.deleteComments),
-    ]
-    # Shortcuts a,b,d,e,i,l,m,n,r,s,t,u
-#@nonl
-#@-node:ekr.20031218072017.3754:defineEditMenuEditBodyTable
-#@+node:ekr.20031218072017.3755:defineEditMenuEditHeadlineTable
-def defineEditMenuEditHeadlineTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-    
-    self.editMenuEditHeadlineTable = [
-        ("Edit &Headline",c.editHeadline),
-        ("&End Edit Headline",f.endEditLabelCommand),
-        ("&Abort Edit Headline",f.abortEditLabelCommand),
-        ("Insert Headline Time/&Date",f.insertHeadlineTime),
-        ("Toggle Angle Brackets",c.toggleAngleBrackets),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3755:defineEditMenuEditHeadlineTable
-#@+node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
-def defineEditMenuFindMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.editMenuFindMenuTable = [
-        ("&Find Panel",c.showFindPanel),
-        ("-",None),
-        ("Find &Next",c.findNext),
-        ("Find &Previous",c.findPrevious),
-        ("&Replace",c.replace),
-        ("Replace, &Then Find",c.replaceThenFind),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
-#@+node:ekr.20031218072017.3757:defineEditMenuTop2Table
-def defineEditMenuTop2Table (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-
-    c = self.c ; f = self.frame
-
-    try:        show = c.frame.body.getColorizer().showInvisibles
-    except:     show = False
-    label = g.choose(show,"Hide In&visibles","Show In&visibles")
-        
-    self.editMenuTop2Table = [
-        ("&Go To Line Number",c.goToLineNumber),
-        ("&Execute Script",c.executeScript),
-        (label,c.viewAllCharacters),
-        ("Setti&ngs",c.preferences),
-    ]
-
-    # Top-level shortcuts earlier: a,d,p,t,u,y,z
-    # Top-level shortcuts here: e,g,n,v
-#@nonl
-#@-node:ekr.20031218072017.3757:defineEditMenuTop2Table
-#@-node:ekr.20031218072017.3753:defineEditMenuTables & helpers
-#@+node:ekr.20031218072017.3758:defineFileMenuTables & helpers
-def defineFileMenuTables (self):
-
-    self.defineFileMenuTopTable()
-    self.defineFileMenuTop2Table()
-    self.defineFileMenuReadWriteMenuTable()
-    self.defineFileMenuTangleMenuTable()
-    self.defineFileMenuUntangleMenuTable()
-    self.defineFileMenuImportMenuTable()
-    self.defineFileMenuExportMenuTable()
-    self.defineFileMenuTop3MenuTable()
-#@nonl
-#@+node:ekr.20031218072017.3759:defineFileMenuTopTable
-def defineFileMenuTopTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.fileMenuTopTable = [
-        ("&New",c.new),
-        ("&Open...",c.open),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3759:defineFileMenuTopTable
-#@+node:ekr.20031218072017.3760:defineFileMenuTop2Table
-def defineFileMenuTop2Table (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.fileMenuTop2Table = [
-        ("-",None),
-        ("&Close",c.close),
-        ("&Save",c.save),
-        ("Save &As",c.saveAs),
-        ("Save To",c.saveTo), # &Tangle
-        ("Re&vert To Saved",c.revert), # &Read/Write
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3760:defineFileMenuTop2Table
-#@+node:ekr.20031218072017.3761:defineFileMenuReadWriteMenuTable
-def defineFileMenuReadWriteMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame ; fc = c.fileCommands
-
-    self.fileMenuReadWriteMenuTable = [
-        ("&Read Outline Only",c.readOutlineOnly),
-        ("Read @file &Nodes",c.readAtFileNodes),
-        ("-",None),
-        ("Write &Dirty @file Nodes",fc.writeDirtyAtFileNodes),
-        ("Write &Missing @file Nodes",fc.writeMissingAtFileNodes),
-        ("Write &Outline Only",fc.writeOutlineOnly),
-        ("&Write @file Nodes",fc.writeAtFileNodes),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3761:defineFileMenuReadWriteMenuTable
-#@+node:ekr.20031218072017.3762:defineFileMenuTangleMenuTable
-def defineFileMenuTangleMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.fileMenuTangleMenuTable = [
-        ("Tangle &All",c.tangleAll),
-        ("Tangle &Marked",c.tangleMarked),
-        ("&Tangle",c.tangle),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3762:defineFileMenuTangleMenuTable
-#@+node:ekr.20031218072017.3763:defineFileMenuUntangleMenuTable
-def defineFileMenuUntangleMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.fileMenuUntangleMenuTable = [
-        ("Untangle &All",c.untangleAll),
-        ("Untangle &Marked",c.untangleMarked),
-        ("&Untangle",c.untangle),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3763:defineFileMenuUntangleMenuTable
-#@+node:ekr.20031218072017.3764:defineFileMenuImportMenuTable
-def defineFileMenuImportMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.fileMenuImportMenuTable = [
-        ("Import Derived File",c.importDerivedFile),
-        ("Import To @&file",c.importAtFile),
-        ("Import To @&root",c.importAtRoot),
-        ("Import &CWEB Files",c.importCWEBFiles),
-        ("Import &noweb Files",c.importNowebFiles),
-        ("Import Flattened &Outline",c.importFlattenedOutline),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3764:defineFileMenuImportMenuTable
-#@+node:ekr.20031218072017.3765:defineFileMenuExportMenuTable
-def defineFileMenuExportMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.fileMenuExportMenuTable = [
-        ("Export &Headlines",c.exportHeadlines),
-        ("Outline To &CWEB",c.outlineToCWEB),
-        ("Outline To &Noweb",c.outlineToNoweb),
-        ("&Flatten Outline",c.flattenOutline),
-        ("&Remove Sentinels",c.removeSentinels),
-        ("&Weave",c.weave),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3765:defineFileMenuExportMenuTable
-#@+node:ekr.20031218072017.3766:defineFileMenuTop3MenuTable
-def defineFileMenuTop3MenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.fileMenuTop3MenuTable = [
-        ("E&xit",g.app.onQuit),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3766:defineFileMenuTop3MenuTable
-#@-node:ekr.20031218072017.3758:defineFileMenuTables & helpers
-#@+node:ekr.20031218072017.3767:defineOutlineMenuTables & helpers
-def defineOutlineMenuTables (self):
-
-    self.defineOutlineMenuTopMenuTable()
-    self.defineOutlineMenuCheckOutlineMenuTable()
-    self.defineOutlineMenuExpandContractMenuTable()
-    self.defineOutlineMenuMoveMenuTable()
-    self.defineOutlineMenuMarkMenuTable()
-    self.defineOutlineMenuGoToMenuTable()
-#@nonl
-#@+node:ekr.20031218072017.3768:defineOutlineMenuTopMenuTable
-def defineOutlineMenuTopMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuTopMenuTable = [
-        ("C&ut Node",c.cutOutline),
-        ("C&opy Node",c.copyOutline),
-        ("&Paste Node",c.pasteOutline),
-        ("Pas&te Node As Clone",c.pasteOutlineRetainingClones),
-        ("&Delete Node",c.deleteOutline),
-        ("-",None,None),
-        ("&Insert Node",c.insertHeadline),
-        ("&Clone Node",c.clone),
-        ("Sort Childre&n",c.sortChildren), # Conflicted with Hoist.
-        ("&Sort Siblings",c.sortSiblings),
-        ("-",None),
-        ("&Hoist",c.hoist),
-        ("D&e-Hoist",f.c.dehoist),
-        ("-",None),
-    ]
-    # Ampersand bindings:  a,c,d,e,h,i,n,o,p,t,s,
-    # Bindings for entries that go to submenus: a,g,k,m,x
-#@nonl
-#@-node:ekr.20031218072017.3768:defineOutlineMenuTopMenuTable
-#@+node:ekr.20040711140738:defineOutlineMenuCheckOutlineMenuTable
-def defineOutlineMenuCheckOutlineMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuCheckOutlineMenuTable = [
-        ("Check &Outline",c.checkOutline),
-        ("&Dump Outline",c.dumpOutline),
-        ("-",None),
-        ("Check &All Python Code",c.checkAllPythonCode),
-        ("&Check Python &Code",c.checkPythonCode),
-        ("-",None),
-        ("Pretty P&rint All Python Code",c.prettyPrintAllPythonCode),
-        ("&Pretty Print Python Code",c.prettyPrintPythonCode),
-    ]
-    # shortcuts used: a,c,d,o,p,r
-#@nonl
-#@-node:ekr.20040711140738:defineOutlineMenuCheckOutlineMenuTable
-#@+node:ekr.20031218072017.3769:defineOutlineMenuExpandContractMenuTable
-def defineOutlineMenuExpandContractMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuExpandContractMenuTable = [
-        ("&Contract All",c.contractAllHeadlines),
-        ("Contract &Node",c.contractNode),
-        ("Contract &Parent",c.contractParent),
-        ("Contract Or Go Left",c.contractNodeOrGoToParent),
-        ("-",None),
-        ("Expand P&rev Level",c.expandPrevLevel),
-        ("Expand N&ext Level",c.expandNextLevel),
-        ("Expand And Go Right",c.expandNodeAndGoToFirstChild),
-        ("Expand Or Go Right",c.expandNodeOrGoToFirstChild),
-        ("-",None),
-        ("Expand To Level &1",c.expandLevel1),
-        ("Expand To Level &2",c.expandLevel2),
-        ("Expand To Level &3",c.expandLevel3),
-        ("Expand To Level &4",c.expandLevel4),
-        ("Expand To Level &5",c.expandLevel5),
-        ("Expand To Level &6",c.expandLevel6),
-        ("Expand To Level &7",c.expandLevel7),
-        ("Expand To Level &8",c.expandLevel8),
-        ("-",None),
-        ("Expand &All",c.expandAllHeadlines),
-        ("Expand N&ode",c.expandNode),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3769:defineOutlineMenuExpandContractMenuTable
-#@+node:ekr.20031218072017.3770:defineOutlineMenuMoveMenuTable
-def defineOutlineMenuMoveMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuMoveMenuTable = [
-        ("Move &Down",c.moveOutlineDown),
-        ("Move &Left",c.moveOutlineLeft),
-        ("Move &Right",c.moveOutlineRight),
-        ("Move &Up",c.moveOutlineUp),
-        ("-",None),
-        ("&Promote",c.promote),
-        ("&Demote",c.demote),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3770:defineOutlineMenuMoveMenuTable
-#@+node:ekr.20031218072017.3771:defineOutlineMenuMarkMenuTable
-def defineOutlineMenuMarkMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuMarkMenuTable = [
-        ("&Mark",c.markHeadline),
-        ("Mark &Subheads",c.markSubheads),
-        ("Mark Changed &Items",c.markChangedHeadlines),
-        ("Mark Changed &Roots",c.markChangedRoots),
-        ("Mark &Clones",c.markClones),
-        ("&Unmark All",c.unmarkAll),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3771:defineOutlineMenuMarkMenuTable
-#@+node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
-def defineOutlineMenuGoToMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.outlineMenuGoToMenuTable = [
-        ("Go Prev Visited",c.goPrevVisitedNode), # Usually use buttons for this.
-        ("Go Next Visited",c.goNextVisitedNode),
-        ("Go To Prev Node",c.selectThreadBack),
-        ("Go To Next Node",c.selectThreadNext),
-        ("-",None),
-        ("Go To Next Marked",c.goToNextMarkedHeadline),
-        ("Go To Next Changed",c.goToNextDirtyHeadline),
-        ("Go To Next Clone",c.goToNextClone),
-        ("-",None),
-        ("Go To First Node",c.goToFirstNode),
-        ("Go To Prev Visible",c.selectVisBack),
-        ("Go To Next Visible",c.selectVisNext),
-        ("Go To Last Node",c.goToLastNode),
-        ('Go To Last Visible',c.goToLastVisibleNode),
-        ("-",None),
-        ("Go To Parent",c.goToParent),
-        ('Go To First Sibling',c.goToFirstSibling),
-        ('Go To Last Sibling',c.goToLastSibling),
-        ("Go To Prev Sibling",c.goToPrevSibling),
-        ("Go To Next Sibling",c.goToNextSibling),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
-#@-node:ekr.20031218072017.3767:defineOutlineMenuTables & helpers
-#@+node:ekr.20050921103230:defineEditorMenuTables
-def defineEditorMenuTables (self):
-    
-    def dummyCommand():
-        pass
-    
-    self.emacsMenuCommandsMenuTable = [
-        ('Cmnd Command 1',dummyCommand),
-    ]
-    
-    self.emacsMenuToolsMenuTable = [
-        ('Tools Command 1',dummyCommand),
-    ]
-
-    self.emacsMenuOptionsMenuTable = [
-        ('Options Command 1',dummyCommand),
-    ]
-
-    self.emacsMenuBuffersMenuTable = [
-        ('Buffers Command 1',dummyCommand),
-    ]
-#@nonl
-#@-node:ekr.20050921103230:defineEditorMenuTables
-#@+node:ekr.20031218072017.3773:defineWindowMenuTables
-def defineWindowMenuTables (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.windowMenuTopTable = [
-        ("&Equal Sized Panes",f.equalSizedPanes),
-        ("Toggle &Active Pane",f.toggleActivePane),
-        ("Toggle &Split Direction",f.toggleSplitDirection),
-        ("-",None),
-        ("Resize To Screen",f.resizeToScreen),
-        ("Casca&de",f.cascade),
-        ("&Minimize All",f.minimizeAll),
-        ("-",None),
-        ("Open &Compare Window",c.openCompareWindow),
-        ("Open &Python Window",c.openPythonWindow),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3773:defineWindowMenuTables
-#@+node:ekr.20031218072017.3774:defineHelpMenuTables
-def defineHelpMenuTables (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-
-    self.helpMenuTopTable = [
-        ("&About Leo...",c.about),
-        ("Online &Home Page",c.leoHome),
-        ("Open Online &Tutorial",c.leoTutorial),
-    ]
-
-    self.helpMenuTop2Table = [
-        ("Open &Offline Tutorial",f.leoHelp),
-    ]
-
-    self.helpMenuTop3Table = [
-        ("-",None,None),
-        ("Open Leo&Docs.leo",c.leoDocumentation),
-        ("Open Leo&Plugins.leo",c.openLeoPlugins),
-        ("Open Leo&Settings.leo",c.openLeoSettings),
-    ]
-#@nonl
-#@-node:ekr.20031218072017.3774:defineHelpMenuTables
-#@-node:ekr.20031218072017.3752:defineMenuTables & helpers
-#@-node:ekr.20051013085834:(Added new emacs find commands & ekr abbreviations)
-#@+node:ekr.20051014155115:(Added f.show/hideMinibuffer)
-#@+node:ekr.20051014170754.1:getShortcutForCommand/Name
-def getShortcutForCommandName (self,commandName):
-    
-    k = self ; c = k.c
-
-    command = c.commandsDict.get(commandName)
-
-    if command:
-        for key in k.bindingsDict:
-            b = k.bindingsDict.get(key)
-            if b.name == command.__name__:
-                return key
-    
-    return ''
-    
-def getShortcutForCommand (self,command):
-    
-    k = self ; c = k.c
-    
-    if command:
-        for key in k.bindingsDict:
-            b = k.bindingsDict.get(key)
-            if b.name == command.__name__:
-                return key
-    
-    return ''
-#@nonl
-#@-node:ekr.20051014170754.1:getShortcutForCommand/Name
-#@+node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
-def getPublicCommands (self):
-    
-    k = self.k
-    
-    return {
-        'digit-argument':           k.digitArgument,
-        'help':                     k.help,
-        'hide-mini-buffer':         k.hideMinibuffer,
-        'negative-argument':        k.negativeArgument,
-        'number-command':           k.numberCommand,
-        'number-command-0':         k.numberCommand0,
-        'number-command-1':         k.numberCommand1,
-        'number-command-2':         k.numberCommand2,
-        'number-command-3':         k.numberCommand3,
-        'number-command-4':         k.numberCommand4,
-        'number-command-5':         k.numberCommand5,
-        'number-command-6':         k.numberCommand6,
-        'number-command-7':         k.numberCommand7,
-        'number-command-8':         k.numberCommand8,
-        'number-command-9':         k.numberCommand9,
-        'print-bindings':           k.printBindings,
-        'print-commands':           k.printCommands,
-        'repeat-complex-command':   k.repeatComplexCommand,
-        'show-mini-buffer':         k.showMinibuffer,
-        'toggle-mini-buffer':       k.toggleMinibuffer,
-        'universal-argument':       k.universalArgument,
-    }
-#@nonl
-#@-node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
-#@+node:ekr.20051014155551:k.show/hide/toggleMinibuffer
-def hideMinibuffer (self,event):
-    
-    k = self ; c = k.c
-    
-    c.frame.hideMinibuffer()
-    
-    g.es('Minibuffer hidden',color='red')
-
-    for commandName in ('show-mini-buffer','toggle-mini-buffer'):
-        shortcut = k.getShortcutForCommandName(commandName)
-        if shortcut:
-            g.es('%s is bound to: %s' % (commandName,shortcut))
-    
-    
-def showMinibuffer (self,event):
-    
-    k = self ; c = k.c
-    
-    c.frame.showMinibuffer()
-    
-def toggleMinibuffer (self,event):
-    
-    k = self ; c = k.c
-    
-    if c.frame.minibufferVisible:
-        k.hideMinibuffer(event)
-    else:
-        k.showMinibuffer(event)
-#@nonl
-#@-node:ekr.20051014155551:k.show/hide/toggleMinibuffer
-#@+node:ekr.20051014154752:Minibuffer methods
-def showMinibuffer (self):
-    
-    frame = self
-    
-    if not frame.minibufferVisible:
-        frame.minibufferFrame.pack(side='bottom',fill='x')
-        frame.minibufferVisible = True
-        
-def hideMinibuffer (self):
-    
-    frame = self
-    if frame.minibufferVisible:
-        frame.minibufferFrame.pack_forget()
-        frame.minibufferVisible = False
-#@nonl
-#@-node:ekr.20051014154752:Minibuffer methods
-#@+node:ekr.20050920094212:f.createMiniBufferWidget
-def createMiniBufferWidget (self):
-    
-    '''Create the minbuffer below the status line.'''
-    
-    frame = self ; c = frame.c
-
-    frame.minibufferFrame = f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
-    if c.showMinibuffer:
-        f.pack(side='bottom',fill='x')
-
-    lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
-    lab.pack(side='left')
-    
-    if 1:
-        label = Tk.Text(f,height=1,relief='groove',background='lightgrey',name='minibuffer')
-        label.pack(side='left',fill='x',expand=1,padx=2,pady=1)
-    else:
-        label = Tk.Label(f,relief='groove',justify='left',anchor='w',name='minnibuffer')
-        label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
-    
-    frame.minibufferVisible = c.showMinibuffer
-
-    return label
-#@nonl
-#@-node:ekr.20050920094212:f.createMiniBufferWidget
-#@+node:ekr.20050920085536.65: masterCommand & helpers
-def masterCommand (self,event,func,stroke):
-
-    '''This is the central dispatching method.
-    All commands and keystrokes pass through here.'''
-
-    k = self ; c = k.c
-    k.stroke = stroke # Set this global for general use.
-    k.func = func
-    commandName = k.ultimateFuncName(func)
-    special = event.keysym in (
-        'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func or stroke != '<Key>'
-    
-    # g.trace(stroke,k.inState(),k.getStateKind())
-
-    # if interesting: g.trace(stroke,commandName,k.getStateKind())
-
-    inserted = not special or (
-        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
-
-    if inserted:
-        # g.trace(stroke,event.keysym)
-        << add character to history >>
-        
-    # We *must not* interfere with the global state in the macro class.
-    if c.macroCommands.recordingMacro:
-        done = c.macroCommands.startKbdMacro(event)
-        if done: return 'break'
-        
-    # g.trace(stroke,k.abortAllModesKey)
-
-    if stroke == k.abortAllModesKey: # 'Control-g'
-        k.clearState()
-        k.keyboardQuit(event)
-        k.endCommand(event,commandName)
-        return 'break'
-
-    if k.inState():
-        if not special: # Don't pass these on.
-            k.callStateFunction(event) # Calls end-command.
-        return 'break'
-
-    # if k.keystrokeFunctionDict.has_key(stroke):
-        # if k.callKeystrokeFunction(event): # Calls end-command
-            # return 'break'
-
-    if k.regx.iter:
-        try:
-            k.regXKey = event.keysym
-            k.regx.iter.next() # EKR: next() may throw StopIteration.
-        finally:
-            return 'break'
-
-    if k.abbrevOn:
-        expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded: return 'break'
-
-    if func: # Func is an argument.
-        # g.trace('executing func',commandName)
-        forceFocus = func.__name__ != 'leoCallback'
-        if forceFocus:
-            k.forceFocusToBody()
-        func(event)
-        k.endCommand(event,commandName,forceFocus)
-        return 'break'
-
-    else:
-        c.frame.body.onBodyKey(event)
-        return None # Not 'break'
-#@nonl
-#@+node:ekr.20050920085536.67:<< add character to history >>
-# Don't add multiple special characters to history.
-
-k.keysymHistory.insert(0,event.keysym)
-
-if len(event.char) > 0:
-    if len(keyHandlerClass.lossage) > 99:
-        keyHandlerClass.lossage.pop()
-    keyHandlerClass.lossage.insert(0,event.char)
-
-if 0: # traces
-    g.trace(event.keysym,stroke)
-    g.trace(k.keysymHistory)
-    g.trace(keyHandlerClass.lossage)
-#@nonl
-#@-node:ekr.20050920085536.67:<< add character to history >>
-#@+node:ekr.20050923172809.1:callStateFunction
-def callStateFunction (self,event):
-    
-    k = self ; val = None
-    
-    # g.trace(k.stateKind,k.state)
-    
-    if k.state.kind:
-        if k.state.handler:
-            val = k.state.handler(event)
-            if val != 'continue':
-                k.endCommand(event,k.commandName)
-        else:
-            g.es_print('no state function for %s' % (k.state.kind),color='red')
-            
-    return val
-#@nonl
-#@-node:ekr.20050923172809.1:callStateFunction
-#@+node:ekr.20050923174229.3:callKeystrokeFunction
-def callKeystrokeFunction (self,event):
-    
-    '''Handle a quick keystroke function.
-    Return the function or None.'''
-    
-    k = self
-    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
-
-    if func:
-        func(event)
-        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        forceFocus = func.__name__ != 'leoCallback'
-        k.endCommand(event,commandName,forceFocus)
-    
-    return func
-#@nonl
-#@-node:ekr.20050923174229.3:callKeystrokeFunction
-#@-node:ekr.20050920085536.65: masterCommand & helpers
-#@-node:ekr.20051014155115:(Added f.show/hideMinibuffer)
-#@+node:ekr.20051014161914:(Don't put unknown control characters into the mini-buffer)
-#@+node:ekr.20050920085536.65: masterCommand & helpers
-def masterCommand (self,event,func,stroke):
-
-    '''This is the central dispatching method.
-    All commands and keystrokes pass through here.'''
-
-    k = self ; c = k.c
-    k.stroke = stroke # Set this global for general use.
-    k.func = func
-    commandName = k.ultimateFuncName(func)
-    special = event.keysym in (
-        'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func or stroke != '<Key>'
-    
-    # g.trace(stroke,k.inState(),k.getStateKind())
-
-    # if interesting: g.trace(stroke,commandName,k.getStateKind())
-
-    inserted = not special or (
-        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
-
-    if inserted:
-        # g.trace(stroke,event.keysym)
-        << add character to history >>
-        
-    # We *must not* interfere with the global state in the macro class.
-    if c.macroCommands.recordingMacro:
-        done = c.macroCommands.startKbdMacro(event)
-        if done: return 'break'
-        
-    # g.trace(stroke,k.abortAllModesKey)
-
-    if stroke == k.abortAllModesKey: # 'Control-g'
-        k.clearState()
-        k.keyboardQuit(event)
-        k.endCommand(event,commandName)
-        return 'break'
-
-    if k.inState():
-        if not special: # Don't pass these on.
-            k.callStateFunction(event) # Calls end-command.
-        return 'break'
-
-    # if k.keystrokeFunctionDict.has_key(stroke):
-        # if k.callKeystrokeFunction(event): # Calls end-command
-            # return 'break'
-
-    if k.regx.iter:
-        try:
-            k.regXKey = event.keysym
-            k.regx.iter.next() # EKR: next() may throw StopIteration.
-        finally:
-            return 'break'
-
-    if k.abbrevOn:
-        expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded: return 'break'
-
-    if func: # Func is an argument.
-        # g.trace('executing func',commandName)
-        forceFocus = func.__name__ != 'leoCallback'
-        if forceFocus:
-            k.forceFocusToBody()
-        func(event)
-        k.endCommand(event,commandName,forceFocus)
-        return 'break'
-
-    else:
-        c.frame.body.onBodyKey(event)
-        return None # Not 'break'
-#@nonl
-#@+node:ekr.20050920085536.67:<< add character to history >>
-# Don't add multiple special characters to history.
-
-k.keysymHistory.insert(0,event.keysym)
-
-if len(event.char) > 0:
-    if len(keyHandlerClass.lossage) > 99:
-        keyHandlerClass.lossage.pop()
-    keyHandlerClass.lossage.insert(0,event.char)
-
-if 0: # traces
-    g.trace(event.keysym,stroke)
-    g.trace(k.keysymHistory)
-    g.trace(keyHandlerClass.lossage)
-#@nonl
-#@-node:ekr.20050920085536.67:<< add character to history >>
-#@+node:ekr.20050923172809.1:callStateFunction
-def callStateFunction (self,event):
-    
-    k = self ; val = None
-    
-    # g.trace(k.stateKind,k.state)
-    
-    if k.state.kind:
-        if k.state.handler:
-            val = k.state.handler(event)
-            if val != 'continue':
-                k.endCommand(event,k.commandName)
-        else:
-            g.es_print('no state function for %s' % (k.state.kind),color='red')
-            
-    return val
-#@nonl
-#@-node:ekr.20050923172809.1:callStateFunction
-#@+node:ekr.20050923174229.3:callKeystrokeFunction
-def callKeystrokeFunction (self,event):
-    
-    '''Handle a quick keystroke function.
-    Return the function or None.'''
-    
-    k = self
-    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
-
-    if func:
-        func(event)
-        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        forceFocus = func.__name__ != 'leoCallback'
-        k.endCommand(event,commandName,forceFocus)
-    
-    return func
-#@nonl
-#@-node:ekr.20050923174229.3:callKeystrokeFunction
-#@-node:ekr.20050920085536.65: masterCommand & helpers
-#@+node:ekr.20050920085536.62:getArg
-def getArg (self,event,returnKind=None,returnState=None,handler=None,prefix=None,tabList=None):
-    
-    '''Accumulate an argument until the user hits return (or control-g).
-    Enter the given return state when done.
-    The prefix is does not form the arg.  The prefix defaults to the k.getLabel().
-    '''
-
-    k = self ; c = k.c ; state = k.getState('getArg')
-    keysym = (event and event.keysym) or ''
-    # g.trace('state',state,'keysym',keysym)
-    if state == 0:
-        k.arg = ''
-        if tabList: k.argTabList = tabList[:]
-        else:       k.argTabList = []
-        << init altX vars >>
-        # Set the states.
-        k.afterGetArgState = (returnKind,returnState,handler)
-        k.setState('getArg',1,k.getArg)
-    elif keysym == 'Return':
-        k.arg = k.getLabel(ignorePrompt=True)
-        kind,n,handler = k.afterGetArgState
-        if kind: k.setState(kind,n,handler)
-        if handler: handler(event)
-    elif keysym == 'Tab':
-        k.doTabCompletion(k.argTabList)
-    elif keysym == 'BackSpace':
-        k.doBackSpace()
-    else:
-        # Clear the list, any other character besides tab indicates that a new prefix is in effect.
-        k.mb_tabList = []
-        k.updateLabel(event)
-        k.mb_tabListPrefix = k.getLabel()
-
-    return 'break'
-#@+node:ekr.20050928092516:<< init altX vars >>
-# Clear the list, any other character besides tab indicates that a new prefix is in effect.
-k.mb_tabList = []
-
-if prefix:
-    k.mb_tabListPrefix = prefix
-    k.mb_prefix = prefix
-    k.mb_prompt = prefix
-else:
-    k.mb_tabListPrefix = k.mb_prefix = k.getLabel()
-    k.mb_prompt = ''
-#@nonl
-#@-node:ekr.20050928092516:<< init altX vars >>
-#@-node:ekr.20050920085536.62:getArg
-#@+node:ekr.20050920085536.38:updateLabel
-def updateLabel (self,event,suppressControlChars=True):
-
-    '''Mimic what would happen with the keyboard and a Text editor
-    instead of plain accumalation.'''
-    
-    k = self ; s = k.getLabel()
-    ch = (event and event.char) or ''
-    keysym = (event and event.keysym) or ''
-    
-    # g.trace(repr(s),ch,keysym,k.stroke)
-    
-    if ch == '\b': # Handle backspace.
-        # Don't backspace over the prompt.
-        if len(s) <= k.mb_prefix:
-            return 
-        elif len(s) == 1: s = ''
-        else: s = s [0:-1]
-    elif suppressControlChars and ch not in string.printable:
-        return
-    elif ch and ch not in ('\n','\r'):
-        s = s + ch # Add the character.
-    
-    k.setLabel(s)
-#@nonl
-#@-node:ekr.20050920085536.38:updateLabel
-#@-node:ekr.20051014161914:(Don't put unknown control characters into the mini-buffer)
-#@+node:ekr.20051014180059:(Help command)
-#@+node:ekr.20051014170754:k.help
-def help (self,event):
-    
-    k = self ; c = k.c
-    commands = (
-        k.fullCommand,
-        k.quickCommand,
-        k.universalArgument,
-        k.keyboardQuit,
-        # negative-argument
-        # repeat-complex-command
-    )
-    shortcuts = [
-        k.getShortcutForCommand(command)
-        for command in commands]
-
-    # A bug in Leo: triple quotes puts indentation before each line.
-    s = '''
-The mini-buffer is intended to be like the Emacs buffer:
-
-%s: Just like Emacs Alt-x: starts minibuffer. The prompt is 'full-command' Type a
-full command name, then hit <Return> to execute the command. Tab completion
-works, but not for file names.
-
-%s: Like Emacs Control-C: (Ctrl-C conflicts with XP cut). starts minibuffer.
-The prompt is 'quick-command'. This mode is not completed, but stuff like
-`Ctrl-C r` and `Ctrl r r` do work.
-
-%s: Like Emacs Ctrl-u: (Ctrl-u conflicts with move-outline-up). Add a repeat
-count for later command. Ctrl-u 999 a adds 999 a's, but many features remain
-unfinished.
-
-%s: Just like Emacs Ctrl-g: Closes the mini-buffer.
-'''
-
-    s = g.adjustTripleString(s,c.tab_width)
-        # Remove indentation from indentation of this function.
-    s = s % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
-    g.es_print(s)
-#@nonl
-#@-node:ekr.20051014170754:k.help
-#@+node:ekr.20031218072017.3197:Whitespace...
-#@+node:ekr.20051014175117:g.adjustTripleString (same as removeExtraLws)
-def adjustTripleString (s,tab_width):
-    
-    '''Remove leading indentation from a triple-quoted string.
-    
-    This works around the fact that Leo nodes can't represent underindented strings.
-    '''
-    
-    # Compute the minimum leading whitespace of all non-blank lines.
-    lines = g.splitLines(s)
-    w = -1
-    for s in lines:
-       if s.strip():
-            lws = g.get_leading_ws(s)
-            w2 = g.computeWidth(lws,tab_width)
-            if w < 0: w = w2
-            else:     w = min(w,w2)
-            # g.trace('w',w)
-    if w <= 0: return s
-
-    # Remove the leading whitespace.
-    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
-    result = ''.join(result)
-
-    return result
-#@nonl
-#@-node:ekr.20051014175117:g.adjustTripleString (same as removeExtraLws)
-#@+node:ekr.20031218072017.3198:computeLeadingWhitespace
-# Returns optimized whitespace corresponding to width with the indicated tab_width.
-
-def computeLeadingWhitespace (width, tab_width):
-
-    if width <= 0:
-        return ""
-    if tab_width > 1:
-        tabs   = width / tab_width
-        blanks = width % tab_width
-        return ('\t' * tabs) + (' ' * blanks)
-    else: # 7/3/02: negative tab width always gets converted to blanks.
-        return (' ' * width)
-#@nonl
-#@-node:ekr.20031218072017.3198:computeLeadingWhitespace
-#@+node:ekr.20031218072017.3199:computeWidth
-# Returns the width of s, assuming s starts a line, with indicated tab_width.
-
-def computeWidth (s, tab_width):
-        
-    w = 0
-    for ch in s:
-        if ch == '\t':
-            w += (abs(tab_width) - (w % abs(tab_width)))
-        else:
-            w += 1
-    return w
-#@nonl
-#@-node:ekr.20031218072017.3199:computeWidth
-#@+node:ekr.20031218072017.3200:get_leading_ws
-def get_leading_ws(s):
-    
-    """Returns the leading whitespace of 's'."""
-
-    i = 0 ; n = len(s)
-    while i < n and s[i] in (' ','\t'):
-        i += 1
-    return s[0:i]
-#@-node:ekr.20031218072017.3200:get_leading_ws
-#@+node:ekr.20031218072017.3201:optimizeLeadingWhitespace
-# Optimize leading whitespace in s with the given tab_width.
-
-def optimizeLeadingWhitespace (line,tab_width):
-
-    i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
-    s = g.computeLeadingWhitespace(width,tab_width) + line[i:]
-    return s
-#@nonl
-#@-node:ekr.20031218072017.3201:optimizeLeadingWhitespace
-#@+node:ekr.20040723093558:regularizeTrailingNewlines
-@
-
-The caller should call g.stripBlankLines before calling this routine if desired.
-
-This routine does _not_ simply call rstrip(): that would delete all trailing whitespace-only lines, and in some cases that would change the meaning of program or data.
-
-@c
-
-def regularizeTrailingNewlines(s,kind):
-    
-    """Kind is 'asis', 'zero' or 'one'."""
-    
-    pass
-#@nonl
-#@-node:ekr.20040723093558:regularizeTrailingNewlines
-#@+node:ekr.20031218072017.3202:removeLeadingWhitespace
-# Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
-
-def removeLeadingWhitespace (s,first_ws,tab_width):
-
-    j = 0 ; ws = 0
-    for ch in s:
-        if ws >= first_ws:
-            break
-        elif ch == ' ':
-            j += 1 ; ws += 1
-        elif ch == '\t':
-            j += 1 ; ws += (abs(tab_width) - (ws % abs(tab_width)))
-        else: break
-    if j > 0:
-        s = s[j:]
-    return s
-#@nonl
-#@-node:ekr.20031218072017.3202:removeLeadingWhitespace
-#@+node:ekr.20050211120242.2:g.removeExtraLws & tests
-def removeExtraLws (s,tab_width):
-    
-    '''Remove extra indentation from one or more lines.
-    
-    Warning: used by getScript.  This is *not* the same as g.adjustTripleString.'''
-    
-    lines = g.splitLines(s)
-
-    # Find the first non-blank line and compute w, the width of its leading whitespace.
-    for s in lines:
-       if s.strip():
-            lws = g.get_leading_ws(s)
-            w = g.computeWidth(lws,tab_width)
-            # g.trace('w',w)
-            break
-    else: return s
-    
-    # Remove the leading whitespace.
-    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
-    result = ''.join(result)
-    
-    if 0:
-        g.trace('lines...')
-        for line in g.splitLines(result):
-            print repr(line)
-
-    return result
-#@nonl
-#@+node:ekr.20050211120837:test_g_removeExtraLws
-def test_g_removeExtraLws():
-    
-    for s,expected in (
-        (' a\n b\n c', 'a\nb\nc'),
-        (' \n  A\n    B\n  C\n', '\nA\n  B\nC\n'),
-    ):
-        result = g.removeExtraLws(s,c.tab_width)
-        assert result == expected, '\ns: %s\nexpected: %s\nresult:   %s' % (
-            repr(s),repr(expected),repr(result))
-#@nonl
-#@-node:ekr.20050211120837:test_g_removeExtraLws
-#@-node:ekr.20050211120242.2:g.removeExtraLws & tests
-#@+node:ekr.20031218072017.3203:removeTrailingWs
-# Warning: string.rstrip also removes newlines!
-
-def removeTrailingWs(s):
-
-    j = len(s)-1
-    while j >= 0 and (s[j] == ' ' or s[j] == '\t'):
-        j -= 1
-    return s[:j+1]
-#@-node:ekr.20031218072017.3203:removeTrailingWs
-#@+node:ekr.20031218072017.3204:skip_leading_ws
-# Skips leading up to width leading whitespace.
-
-def skip_leading_ws(s,i,ws,tab_width):
-
-    count = 0
-    while count < ws and i < len(s):
-        ch = s[i]
-        if ch == ' ':
-            count += 1
-            i += 1
-        elif ch == '\t':
-            count += (abs(tab_width) - (count % abs(tab_width)))
-            i += 1
-        else: break
-
-    return i
-#@nonl
-#@-node:ekr.20031218072017.3204:skip_leading_ws
-#@+node:ekr.20031218072017.3205:skip_leading_ws_with_indent
-def skip_leading_ws_with_indent(s,i,tab_width):
-
-    """Skips leading whitespace and returns (i, indent), 
-    
-    - i points after the whitespace
-    - indent is the width of the whitespace, assuming tab_width wide tabs."""
-
-    count = 0 ; n = len(s)
-    while i < n:
-        ch = s[i]
-        if ch == ' ':
-            count += 1
-            i += 1
-        elif ch == '\t':
-            count += (abs(tab_width) - (count % abs(tab_width)))
-            i += 1
-        else: break
-
-    return i, count
-#@nonl
-#@-node:ekr.20031218072017.3205:skip_leading_ws_with_indent
-#@+node:ekr.20040723093558.1:stripBlankLines
-def stripBlankLines(s):
-    
-    lines = g.splitLines(s)
-
-    for i in xrange(len(lines)):
-
-        line = lines[i]
-        j = g.skip_ws(line,0)
-        if j >= len(line):
-            lines[i] = ''
-            # g.trace("%4d %s" % (i,repr(lines[i])))
-        elif line[j] == '\n':
-            lines[i] = '\n'
-            # g.trace("%4d %s" % (i,repr(lines[i])))
-            
-    return ''.join(lines)
-#@-node:ekr.20040723093558.1:stripBlankLines
-#@-node:ekr.20031218072017.3197:Whitespace...
-#@-node:ekr.20051014180059:(Help command)
-#@+node:ekr.20051015123432:(Methods with pychecker problems)
-# None of the following warnings are correct.
-#@nonl
-#@+node:ekr.20051015113252:Pychecker report
-# None of the following are correct.
-
-C:\prog\leoCVS\leo\src\leoGlobals.py:1417: Setting aList to itself has no effect
-
-C:\prog\leoCVS\leo\src\leoGlobals.py:1433: Setting aList to itself has no effect
-
-C:\prog\leoCVS\leo\src\leoKeys.py:803: Redefining attribute (keyCallback) original line (792)
-
-C:\prog\leoCVS\leo\src\leoKeys.py:1315: No module attribute (initAllEditCommanders) found
-#@nonl
-#@-node:ekr.20051015113252:Pychecker report
-#@+node:ekr.20041126060136:print_list & listToString
-def print_list(aList,tag=None,sort=False,indent=''):
-    
-    if not aList:
-        if tag: print '%s...{}' % tag
-        else:   print '{}'
-        return
-    if sort:
-        aList = aList[:] # Sort a copy! Pychecker incorrectly complains.
-        aList.sort()
-    if tag: print '%s...[' % tag
-    else:   print '['
-    for e in aList:
-        print '%s%s' % (indent,repr(e).strip())
-    print ']'
-
-printList = print_list
-
-def listToString(aList,tag=None,sort=False,indent=''):
-
-    if not aList:
-        if tag: return '%s...{}' % tag
-        else:   return '{}'
-    if sort:
-        aList = aList[:] # Sort a copy! Pychecker incorrectly complains.
-        aList.sort()
-    lines = ["%s%s" % (indent,repr(e).strip()) for e in aList]
-    s = '\n'.join(lines)
-    if tag:
-        return '[%s...\n%s\n]' % (tag,s)
-    else:
-        return '[%s]' % s
-#@nonl
-#@-node:ekr.20041126060136:print_list & listToString
-#@+node:ekr.20051006125633.1:bindShortcut
-def bindShortcut (self,pane,shortcut,command,commandName):
-    
-    '''Bind one shortcut from a menu table.'''
-    
-    k = self ; shortcut = str(shortcut)
-
-    if command.__name__ == 'leoCallback':
-        # Get the function wrapped by *this* leoCallback function.
-        func = k.leoCallbackDict.get(command)
-        commandName = k.inverseCommandsDict.get(func.__name__)
-        
-        # No need for a second layer of callback.
-        def keyCallback (event,func=command,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
-    else:
-        def menuFuncCallback (event,command=command):
-            return command(event)
-
-        def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
-        
-    return k.bindKey(pane,shortcut,keyCallback,commandName)
-#@nonl
-#@-node:ekr.20051006125633.1:bindShortcut
-#@+node:ekr.20051001050607:endCommand
-def endCommand (self,event,commandName,forceFocus=True):
-
-    '''Make sure Leo updates the widget following a command.
-    
-    Never changes the minibuffer label: individual commands must do that.
-    '''
-
-    k = self ; c = k.c ; w = event.widget
-    if g.app.quitting: return
-    
-    # The command may have closed the window, so this may fail.
-    try:
-        p = c.currentPosition()
-    except AttributeError:
-        return
-        
-    # Set the best possible undoType: prefer explicit commandName to k.commandName.
-    commandName = commandName or k.commandName or ''
-    k.commandName = k.commandName or commandName or ''
-    # g.trace(commandName)
-
-    # Call onBodyWillChange only if there is a proper command name.
-    if commandName:
-        c.frame.body.onBodyWillChange(p,undoType=commandName,oldSel=None,oldYview=None)
-        if not k.inState():
-            __pychecker__ = '--no-classattr --no-objattrs'
-                # leoEditCommands.initAllEditCommanders *does* exist.
-    
-            # g.trace('commandName:',commandName,'caller:',g.callerList())
-            k.commandName = None
-            leoEditCommands.initAllEditCommanders(c)
-            
-            # # if forceFocus: # This is dubious.
-                # # w.focus_force()
-            try:
-                bodyCtrl = c.frame.body.bodyCtrl
-                bodyCtrl.tag_delete('color')
-                bodyCtrl.tag_delete('color1')
-                bodyCtrl.update_idletasks()
-            except Exception:
-                pass
-
-    w.update_idletasks()
-#@nonl
-#@-node:ekr.20051001050607:endCommand
-#@-node:ekr.20051015123432:(Methods with pychecker problems)
-#@-node:ekr.20051006122237:(Recent)
 #@+node:ekr.20051016115757:4.4a1 projects
 #@+node:ekr.20050929075341:Added option for selected body text
 #@+node:ekr.20050929075920:Request
@@ -20206,7 +16627,7 @@ regardless of what we did previously.
 
 Alas, because of bugs in Tk and/or window managers, we can not call method at
 idle time: that would interfere with switching between windows. Instead, the
-xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
+xWantFocus routines call this with later=True, to queue up a ONE-SHOT later call
 to g.app.g.app.gui.set_focus.
 @c
 
@@ -20215,6 +16636,7 @@ def set_focus(self,widget,later=False):
     '''Set the focus to the widget specified in the xWantsFocus methods.'''
 
     c = self.c
+    # This is a *very* effective trace.
     # g.trace(widget._name,g.callerList(5))
 
     if widget and not g.app.unitTesting:
@@ -21246,6 +17668,7 @@ def __init__(self,frame,fileName):
     # g.trace(c) # Do this after setting c.mFileName.
     c.initIvars()
 
+    self.useTextMinibuffer = True
     self.showMinibuffer = c.config.getBool('useMinibuffer')
 
     # initialize the sub-commanders.
@@ -21727,6 +18150,531 @@ unfinished.
 #@-node:ekr.20051012084345:Bugs fixed
 #@-node:ekr.20051016115757:4.4a1 projects
 #@+node:ekr.20051016115757.1:4.4a2 projects
+#@+node:ekr.20051014155115:(Added f.show/hideMinibuffer)
+#@+node:ekr.20051014170754.1:getShortcutForCommand/Name
+def getShortcutForCommandName (self,commandName):
+    
+    k = self ; c = k.c
+
+    command = c.commandsDict.get(commandName)
+
+    if command:
+        for key in k.bindingsDict:
+            b = k.bindingsDict.get(key)
+            if b.name == command.__name__:
+                return key
+    
+    return ''
+    
+def getShortcutForCommand (self,command):
+    
+    k = self ; c = k.c
+    
+    if command:
+        for key in k.bindingsDict:
+            b = k.bindingsDict.get(key)
+            if b.name == command.__name__:
+                return key
+    
+    return ''
+#@nonl
+#@-node:ekr.20051014170754.1:getShortcutForCommand/Name
+#@+node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
+def getPublicCommands (self):
+    
+    k = self.k
+    
+    return {
+        'digit-argument':           k.digitArgument,
+        'help':                     k.help,
+        'hide-mini-buffer':         k.hideMinibuffer,
+        'negative-argument':        k.negativeArgument,
+        'number-command':           k.numberCommand,
+        'number-command-0':         k.numberCommand0,
+        'number-command-1':         k.numberCommand1,
+        'number-command-2':         k.numberCommand2,
+        'number-command-3':         k.numberCommand3,
+        'number-command-4':         k.numberCommand4,
+        'number-command-5':         k.numberCommand5,
+        'number-command-6':         k.numberCommand6,
+        'number-command-7':         k.numberCommand7,
+        'number-command-8':         k.numberCommand8,
+        'number-command-9':         k.numberCommand9,
+        'print-bindings':           k.printBindings,
+        'print-commands':           k.printCommands,
+        'repeat-complex-command':   k.repeatComplexCommand,
+        'show-mini-buffer':         k.showMinibuffer,
+        'toggle-mini-buffer':       k.toggleMinibuffer,
+        'universal-argument':       k.universalArgument,
+    }
+#@nonl
+#@-node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
+#@+node:ekr.20051014155551:k.show/hide/toggleMinibuffer
+def hideMinibuffer (self,event):
+    
+    k = self ; c = k.c
+    
+    c.frame.hideMinibuffer()
+    
+    g.es('Minibuffer hidden',color='red')
+
+    for commandName in ('show-mini-buffer','toggle-mini-buffer'):
+        shortcut = k.getShortcutForCommandName(commandName)
+        if shortcut:
+            g.es('%s is bound to: %s' % (commandName,shortcut))
+    
+    
+def showMinibuffer (self,event):
+    
+    k = self ; c = k.c
+    
+    c.frame.showMinibuffer()
+    
+def toggleMinibuffer (self,event):
+    
+    k = self ; c = k.c
+    
+    if c.frame.minibufferVisible:
+        k.hideMinibuffer(event)
+    else:
+        k.showMinibuffer(event)
+#@nonl
+#@-node:ekr.20051014155551:k.show/hide/toggleMinibuffer
+#@+node:ekr.20051014154752:Minibuffer methods
+def showMinibuffer (self):
+    
+    frame = self
+    
+    if not frame.minibufferVisible:
+        frame.minibufferFrame.pack(side='bottom',fill='x')
+        frame.minibufferVisible = True
+        
+def hideMinibuffer (self):
+    
+    frame = self
+    if frame.minibufferVisible:
+        frame.minibufferFrame.pack_forget()
+        frame.minibufferVisible = False
+#@nonl
+#@-node:ekr.20051014154752:Minibuffer methods
+#@+node:ekr.20050920094212:f.createMiniBufferWidget
+def createMiniBufferWidget (self):
+    
+    '''Create the minbuffer below the status line.'''
+    
+    frame = self ; c = frame.c
+
+    frame.minibufferFrame = f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
+    if c.showMinibuffer:
+        f.pack(side='bottom',fill='x')
+
+    lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
+    lab.pack(side='left')
+    
+    if c.useTextMinibuffer:
+        label = Tk.Text(f,height=1,relief='groove',background='lightgrey',name='minibuffer')
+        label.pack(side='left',fill='x',expand=1,padx=2,pady=1)
+    else:
+        label = Tk.Label(f,relief='groove',justify='left',anchor='w',name='minibuffer')
+        label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
+    
+    frame.minibufferVisible = c.showMinibuffer
+
+    return label
+#@nonl
+#@-node:ekr.20050920094212:f.createMiniBufferWidget
+#@+node:ekr.20050920085536.65: masterCommand & helpers
+def masterCommand (self,event,func,stroke):
+
+    '''This is the central dispatching method.
+    All commands and keystrokes pass through here.'''
+
+    k = self ; c = k.c
+    k.stroke = stroke # Set this global for general use.
+    k.func = func
+    commandName = k.ultimateFuncName(func)
+    special = event.keysym in (
+        'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+    interesting = func or stroke != '<Key>'
+    
+    # g.trace(stroke,k.inState(),k.getStateKind())
+
+    # if interesting: g.trace(stroke,commandName,k.getStateKind())
+
+    inserted = not special or (
+        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
+
+    if inserted:
+        # g.trace(stroke,event.keysym)
+        << add character to history >>
+        
+    # We *must not* interfere with the global state in the macro class.
+    if c.macroCommands.recordingMacro:
+        done = c.macroCommands.startKbdMacro(event)
+        if done: return 'break'
+        
+    # g.trace(stroke,k.abortAllModesKey)
+
+    if stroke == k.abortAllModesKey: # 'Control-g'
+        k.clearState()
+        k.keyboardQuit(event)
+        k.endCommand(event,commandName)
+        return 'break'
+
+    if k.inState():
+        if not special: # Don't pass these on.
+            k.callStateFunction(event) # Calls end-command.
+        return 'break'
+
+    # if k.keystrokeFunctionDict.has_key(stroke):
+        # if k.callKeystrokeFunction(event): # Calls end-command
+            # return 'break'
+
+    if k.regx.iter:
+        try:
+            k.regXKey = event.keysym
+            k.regx.iter.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    if k.abbrevOn:
+        expanded = c.abbrevCommands.expandAbbrev(event)
+        if expanded: return 'break'
+
+    if func: # Func is an argument.
+        # g.trace('executing func',commandName)
+        forceFocus = func.__name__ != 'leoCallback'
+        if forceFocus:
+            k.forceFocusToBody()
+        func(event)
+        k.endCommand(event,commandName,forceFocus)
+        return 'break'
+
+    else:
+        c.frame.body.onBodyKey(event)
+        return None # Not 'break'
+#@nonl
+#@+node:ekr.20050920085536.67:<< add character to history >>
+# Don't add multiple special characters to history.
+
+k.keysymHistory.insert(0,event.keysym)
+
+if len(event.char) > 0:
+    if len(keyHandlerClass.lossage) > 99:
+        keyHandlerClass.lossage.pop()
+    keyHandlerClass.lossage.insert(0,event.char)
+
+if 0: # traces
+    g.trace(event.keysym,stroke)
+    g.trace(k.keysymHistory)
+    g.trace(keyHandlerClass.lossage)
+#@nonl
+#@-node:ekr.20050920085536.67:<< add character to history >>
+#@+node:ekr.20050923172809.1:callStateFunction
+def callStateFunction (self,event):
+    
+    k = self ; val = None
+    
+    # g.trace(k.stateKind,k.state)
+    
+    if k.state.kind:
+        if k.state.handler:
+            val = k.state.handler(event)
+            if val != 'continue':
+                k.endCommand(event,k.commandName)
+        else:
+            g.es_print('no state function for %s' % (k.state.kind),color='red')
+            
+    return val
+#@nonl
+#@-node:ekr.20050923172809.1:callStateFunction
+#@+node:ekr.20050923174229.3:callKeystrokeFunction
+def callKeystrokeFunction (self,event):
+    
+    '''Handle a quick keystroke function.
+    Return the function or None.'''
+    
+    k = self
+    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
+
+    if func:
+        func(event)
+        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
+        forceFocus = func.__name__ != 'leoCallback'
+        k.endCommand(event,commandName,forceFocus)
+    
+    return func
+#@nonl
+#@-node:ekr.20050923174229.3:callKeystrokeFunction
+#@-node:ekr.20050920085536.65: masterCommand & helpers
+#@-node:ekr.20051014155115:(Added f.show/hideMinibuffer)
+#@+node:ekr.20051014180059:(Help command)
+#@+node:ekr.20051014170754:k.help
+def help (self,event):
+    
+    k = self ; c = k.c
+    commands = (
+        k.fullCommand,
+        k.quickCommand,
+        k.universalArgument,
+        k.keyboardQuit,
+        # negative-argument
+        # repeat-complex-command
+    )
+    shortcuts = [
+        k.getShortcutForCommand(command)
+        for command in commands]
+
+    # A bug in Leo: triple quotes puts indentation before each line.
+    s = '''
+The mini-buffer is intended to be like the Emacs buffer:
+
+%s: Just like Emacs Alt-x: starts minibuffer. The prompt is 'full-command' Type a
+full command name, then hit <Return> to execute the command. Tab completion
+works, but not for file names.
+
+%s: Like Emacs Control-C: (Ctrl-C conflicts with XP cut). starts minibuffer.
+The prompt is 'quick-command'. This mode is not completed, but stuff like
+`Ctrl-C r` and `Ctrl r r` do work.
+
+%s: Like Emacs Ctrl-u: (Ctrl-u conflicts with move-outline-up). Add a repeat
+count for later command. Ctrl-u 999 a adds 999 a's, but many features remain
+unfinished.
+
+%s: Just like Emacs Ctrl-g: Closes the mini-buffer.
+'''
+
+    s = g.adjustTripleString(s,c.tab_width)
+        # Remove indentation from indentation of this function.
+    s = s % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
+    g.es_print(s)
+#@nonl
+#@-node:ekr.20051014170754:k.help
+#@+node:ekr.20031218072017.3197:Whitespace...
+#@+node:ekr.20051014175117:g.adjustTripleString (same as removeExtraLws)
+def adjustTripleString (s,tab_width):
+    
+    '''Remove leading indentation from a triple-quoted string.
+    
+    This works around the fact that Leo nodes can't represent underindented strings.
+    '''
+    
+    # Compute the minimum leading whitespace of all non-blank lines.
+    lines = g.splitLines(s)
+    w = -1
+    for s in lines:
+       if s.strip():
+            lws = g.get_leading_ws(s)
+            w2 = g.computeWidth(lws,tab_width)
+            if w < 0: w = w2
+            else:     w = min(w,w2)
+            # g.trace('w',w)
+    if w <= 0: return s
+
+    # Remove the leading whitespace.
+    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
+    result = ''.join(result)
+
+    return result
+#@nonl
+#@-node:ekr.20051014175117:g.adjustTripleString (same as removeExtraLws)
+#@+node:ekr.20031218072017.3198:computeLeadingWhitespace
+# Returns optimized whitespace corresponding to width with the indicated tab_width.
+
+def computeLeadingWhitespace (width, tab_width):
+
+    if width <= 0:
+        return ""
+    if tab_width > 1:
+        tabs   = width / tab_width
+        blanks = width % tab_width
+        return ('\t' * tabs) + (' ' * blanks)
+    else: # 7/3/02: negative tab width always gets converted to blanks.
+        return (' ' * width)
+#@nonl
+#@-node:ekr.20031218072017.3198:computeLeadingWhitespace
+#@+node:ekr.20031218072017.3199:computeWidth
+# Returns the width of s, assuming s starts a line, with indicated tab_width.
+
+def computeWidth (s, tab_width):
+        
+    w = 0
+    for ch in s:
+        if ch == '\t':
+            w += (abs(tab_width) - (w % abs(tab_width)))
+        else:
+            w += 1
+    return w
+#@nonl
+#@-node:ekr.20031218072017.3199:computeWidth
+#@+node:ekr.20031218072017.3200:get_leading_ws
+def get_leading_ws(s):
+    
+    """Returns the leading whitespace of 's'."""
+
+    i = 0 ; n = len(s)
+    while i < n and s[i] in (' ','\t'):
+        i += 1
+    return s[0:i]
+#@-node:ekr.20031218072017.3200:get_leading_ws
+#@+node:ekr.20031218072017.3201:optimizeLeadingWhitespace
+# Optimize leading whitespace in s with the given tab_width.
+
+def optimizeLeadingWhitespace (line,tab_width):
+
+    i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+    s = g.computeLeadingWhitespace(width,tab_width) + line[i:]
+    return s
+#@nonl
+#@-node:ekr.20031218072017.3201:optimizeLeadingWhitespace
+#@+node:ekr.20040723093558:regularizeTrailingNewlines
+@
+
+The caller should call g.stripBlankLines before calling this routine if desired.
+
+This routine does _not_ simply call rstrip(): that would delete all trailing whitespace-only lines, and in some cases that would change the meaning of program or data.
+
+@c
+
+def regularizeTrailingNewlines(s,kind):
+    
+    """Kind is 'asis', 'zero' or 'one'."""
+    
+    pass
+#@nonl
+#@-node:ekr.20040723093558:regularizeTrailingNewlines
+#@+node:ekr.20031218072017.3202:removeLeadingWhitespace
+# Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
+
+def removeLeadingWhitespace (s,first_ws,tab_width):
+
+    j = 0 ; ws = 0
+    for ch in s:
+        if ws >= first_ws:
+            break
+        elif ch == ' ':
+            j += 1 ; ws += 1
+        elif ch == '\t':
+            j += 1 ; ws += (abs(tab_width) - (ws % abs(tab_width)))
+        else: break
+    if j > 0:
+        s = s[j:]
+    return s
+#@nonl
+#@-node:ekr.20031218072017.3202:removeLeadingWhitespace
+#@+node:ekr.20050211120242.2:g.removeExtraLws & tests
+def removeExtraLws (s,tab_width):
+    
+    '''Remove extra indentation from one or more lines.
+    
+    Warning: used by getScript.  This is *not* the same as g.adjustTripleString.'''
+    
+    lines = g.splitLines(s)
+
+    # Find the first non-blank line and compute w, the width of its leading whitespace.
+    for s in lines:
+       if s.strip():
+            lws = g.get_leading_ws(s)
+            w = g.computeWidth(lws,tab_width)
+            # g.trace('w',w)
+            break
+    else: return s
+    
+    # Remove the leading whitespace.
+    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
+    result = ''.join(result)
+    
+    if 0:
+        g.trace('lines...')
+        for line in g.splitLines(result):
+            print repr(line)
+
+    return result
+#@nonl
+#@+node:ekr.20050211120837:test_g_removeExtraLws
+def test_g_removeExtraLws():
+    
+    for s,expected in (
+        (' a\n b\n c', 'a\nb\nc'),
+        (' \n  A\n    B\n  C\n', '\nA\n  B\nC\n'),
+    ):
+        result = g.removeExtraLws(s,c.tab_width)
+        assert result == expected, '\ns: %s\nexpected: %s\nresult:   %s' % (
+            repr(s),repr(expected),repr(result))
+#@nonl
+#@-node:ekr.20050211120837:test_g_removeExtraLws
+#@-node:ekr.20050211120242.2:g.removeExtraLws & tests
+#@+node:ekr.20031218072017.3203:removeTrailingWs
+# Warning: string.rstrip also removes newlines!
+
+def removeTrailingWs(s):
+
+    j = len(s)-1
+    while j >= 0 and (s[j] == ' ' or s[j] == '\t'):
+        j -= 1
+    return s[:j+1]
+#@-node:ekr.20031218072017.3203:removeTrailingWs
+#@+node:ekr.20031218072017.3204:skip_leading_ws
+# Skips leading up to width leading whitespace.
+
+def skip_leading_ws(s,i,ws,tab_width):
+
+    count = 0
+    while count < ws and i < len(s):
+        ch = s[i]
+        if ch == ' ':
+            count += 1
+            i += 1
+        elif ch == '\t':
+            count += (abs(tab_width) - (count % abs(tab_width)))
+            i += 1
+        else: break
+
+    return i
+#@nonl
+#@-node:ekr.20031218072017.3204:skip_leading_ws
+#@+node:ekr.20031218072017.3205:skip_leading_ws_with_indent
+def skip_leading_ws_with_indent(s,i,tab_width):
+
+    """Skips leading whitespace and returns (i, indent), 
+    
+    - i points after the whitespace
+    - indent is the width of the whitespace, assuming tab_width wide tabs."""
+
+    count = 0 ; n = len(s)
+    while i < n:
+        ch = s[i]
+        if ch == ' ':
+            count += 1
+            i += 1
+        elif ch == '\t':
+            count += (abs(tab_width) - (count % abs(tab_width)))
+            i += 1
+        else: break
+
+    return i, count
+#@nonl
+#@-node:ekr.20031218072017.3205:skip_leading_ws_with_indent
+#@+node:ekr.20040723093558.1:stripBlankLines
+def stripBlankLines(s):
+    
+    lines = g.splitLines(s)
+
+    for i in xrange(len(lines)):
+
+        line = lines[i]
+        j = g.skip_ws(line,0)
+        if j >= len(line):
+            lines[i] = ''
+            # g.trace("%4d %s" % (i,repr(lines[i])))
+        elif line[j] == '\n':
+            lines[i] = '\n'
+            # g.trace("%4d %s" % (i,repr(lines[i])))
+            
+    return ''.join(lines)
+#@-node:ekr.20040723093558.1:stripBlankLines
+#@-node:ekr.20031218072017.3197:Whitespace...
+#@-node:ekr.20051014180059:(Help command)
 #@+node:ekr.20051021070335:(Created open-find-tab command)
 #@+node:ekr.20051020120306:openFindTab
 def openFindTab (self,event=None):
@@ -21740,245 +18688,12 @@ def openFindTab (self,event=None):
         f = log.frameDict.get(tabName)
         t = log.textDict.get(tabName)
         t.pack_forget()
-        self.findTabHandler = leoTkinterFindTab(c,f)
+        self.findTabHandler = findTab(c,f)
         
     self.findTabHandler.bringToFront()
 #@nonl
 #@-node:ekr.20051020120306:openFindTab
 #@-node:ekr.20051021070335:(Created open-find-tab command)
-#@+node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
-#@+node:ekr.20031218072017.839:defineEditMenuTopTable
-def defineEditMenuTopTable (self):
-    
-    __pychecker__ = 'no-unusednames=[f]' # We define 'f' just in case.
-
-    c = self.c ; f = self.frame
-    
-    self.editMenuTopTable = [
-        ("Can't Undo",c.undoer.undo), # &U reserved for Undo
-        ("Can't Redo",c.undoer.redo), # &R reserved for Redo
-        ("-",None),
-        ("Cu&t",f.OnCutFromMenu), 
-        ("Cop&y",f.OnCopyFromMenu),
-        ("&Paste",f.OnPasteFromMenu),
-        ("&Delete",c.delete),
-        ("Select &All",f.body.selectAllText),
-        ("-",None),
-    ]
-
-    # Top-level shortcuts here:  a,d,p,t,u,y,z
-    # Top-level shortcuts later: e,g,n,v
-#@nonl
-#@-node:ekr.20031218072017.839:defineEditMenuTopTable
-#@+node:ekr.20031218072017.1723:createMenuEntries
-def createMenuEntries (self,menu,table,dynamicMenu=False):
-        
-    '''Create a menu entry from the table.
-    New in 4.4: this method shows the shortcut in the menu,
-    but this method **never** binds any shortcuts.'''
-    
-    c = self.c ; f = c.frame ; k = c.keyHandler
-    
-    if g.app.unitTesting: return
-
-    for data in table:
-        << get label & command or continue >>
-        << compute commandName & accel from label & command >>
-        rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
-        menuCallback = self.defineMenuCallback(command,commandName)
-        realLabel = self.getRealMenuName(label)
-        << set amp_index using rawKey and realLabel >>
-        realLabel = realLabel.replace("&","")
-        self.add_command(menu,label=realLabel,
-            accelerator= menu_shortcut or '',
-            command=menuCallback,underline=amp_index)
-#@nonl
-#@+node:ekr.20051021091958:<< get label & command or continue >>
-ok = (
-    type(data) in (type(()), type([])) and
-    len(data) in (2,3)
-)
-    
-if ok:
-    if len(data) == 2:
-        label,command = data
-    else:
-        # New in 4.4: we ignore shortcuts bound in menu tables.
-        label,junk,command = data
-else:
-    g.trace('bad data in menu table: %s' % repr(data))
-    continue # Ignore bad data
-     
-if ok and label in (None,'-'):
-    self.add_separator(menu)
-    continue # That's all.
-#@nonl
-#@-node:ekr.20051021091958:<< get label & command or continue >>
-#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
-# First, get the old-style name.
-commandName = self.computeOldStyleShortcutKey(label)
-rawKey,bunch = c.config.getShortcut(commandName)
-accel = bunch and bunch.val
-
-# Second, get new-style name.
-if not accel:
-    << compute emacs_name >>
-        # Contains the not-so-horrible kludge.
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunch = c.config.getShortcut(emacs_name)
-        accel = bunch and bunch.val
-    elif not dynamicMenu:
-        g.trace('No inverse for %s' % commandName)
-#@nonl
-#@+node:ekr.20051021100806.1:<< compute emacs_name >>
-@ One not-so-horrible kludge remains.
-
-The cut/copy/paste commands in the menu tables are not the same as the methods
-actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
-of extra translation to discover whether the user has overridden their
-bindings.
-@c
-
-if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-    emacs_name = '%s-text' % commandName
-else:
-    try: # User errors in the table can cause this.
-        emacs_name = k.inverseCommandsDict.get(command.__name__)
-    except Exception:
-        emacs_name = None
-#@nonl
-#@-node:ekr.20051021100806.1:<< compute emacs_name >>
-#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
-#@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-if rawKey:
-    amp_index = rawKey.find("&")
-else:
-    amp_index = -1
-
-if amp_index == -1:
-    amp_index = realLabel.find("&")
-#@nonl
-#@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-#@-node:ekr.20031218072017.1723:createMenuEntries
-#@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
-#@+node:ekr.20051011072903.2:copyText
-def copyText (self,fromMinibuffer=False):
-    
-    '''Invoked from the mini-buffer and from shortcuts.'''
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
-
-    # These two branches used to be different, an might be so again.
-    if isBody:
-        w.event_generate(g.virtual_event_name("Copy"))
-    elif fromMinibuffer:
-        pass
-    else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
-        w.event_generate(g.virtual_event_name("Copy"))
-#@nonl
-#@-node:ekr.20051011072903.2:copyText
-#@+node:ekr.20051011072049.2:cutText
-def cutText (self,fromMinibuffer=False):
-    
-    '''Invoked from the mini-buffer and from shortcuts.'''
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
-
-    if isBody:
-        w.event_generate(g.virtual_event_name("Cut"))
-    else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
-        w.event_generate(g.virtual_event_name("Cut"))
-        if not fromMinibuffer:
-            f.tree.onHeadChanged(c.currentPosition())
-#@nonl
-#@-node:ekr.20051011072049.2:cutText
-#@+node:ekr.20051011072903.5:pasteText
-def pasteText (self,fromMinibuffer=False):
-    
-    '''Invoked from the mini-buffer and from shortcuts.'''
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
-
-    if isBody:
-        w.event_generate(g.virtual_event_name("Paste"))
-    elif fromMinibuffer:
-        pass
-    else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
-        w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition())
-#@nonl
-#@-node:ekr.20051011072903.5:pasteText
-#@+node:ekr.20051011072903.1:OnCopyFromMenu
-def OnCopyFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-
-    if isBody:
-        w.event_generate(g.virtual_event_name("Copy"))
-    else:
-        # Necessary when not using shortcut keys.
-        w.event_generate(g.virtual_event_name("Copy"))
-#@nonl
-#@-node:ekr.20051011072903.1:OnCopyFromMenu
-#@+node:ekr.20051011072049.1:OnCutFromMenu
-def OnCutFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-
-    if isBody:
-        w.event_generate(g.virtual_event_name("Cut"))
-    else:
-        # Necessary
-        w.event_generate(g.virtual_event_name("Cut"))
-        f.tree.onHeadChanged(c.currentPosition())
-#@nonl
-#@-node:ekr.20051011072049.1:OnCutFromMenu
-#@+node:ekr.20051011072903.4:OnPasteFromMenu
-def OnPasteFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    w = self.getFocus()
-    isBody = w == f.body.bodyCtrl
-
-    if isBody:
-        w.event_generate(g.virtual_event_name("Paste"))
-    else:
-        w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition())
-#@nonl
-#@-node:ekr.20051011072903.4:OnPasteFromMenu
-#@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
-#@-node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
 #@+node:ekr.20051015112436:(Fixed bugs in k.registerCommand, k.printBindings
 #@+node:ekr.20051016171402:Notes
 @nocolor
@@ -26241,11 +22956,11 @@ def createMiniBufferWidget (self):
     lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
     lab.pack(side='left')
     
-    if 1:
+    if c.useTextMinibuffer:
         label = Tk.Text(f,height=1,relief='groove',background='lightgrey',name='minibuffer')
         label.pack(side='left',fill='x',expand=1,padx=2,pady=1)
     else:
-        label = Tk.Label(f,relief='groove',justify='left',anchor='w',name='minnibuffer')
+        label = Tk.Label(f,relief='groove',justify='left',anchor='w',name='minibuffer')
         label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
     
     frame.minibufferVisible = c.showMinibuffer
@@ -26264,9 +22979,9 @@ def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
     
     self.c = c
     self.widget = c.frame.miniBufferWidget
-    self.useTextWidget = True
-        # A Tk Label or Text widget.  Exists even if c.showMinibuffer is False.
-        
+    self.useTextWidget = c.useTextMinibuffer
+        # A Tk Label or Text widget.
+        # Exists even if c.showMinibuffer is False.
     self.useGlobalKillbuffer = useGlobalKillbuffer
     self.useGlobalRegisters = useGlobalRegisters
 
@@ -26823,9 +23538,7 @@ def pasteText (self,fromMinibuffer=False):
     elif fromMinibuffer:
         pass
     else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
-        w.event_generate(g.virtual_event_name("Paste"))
+        # Do **not** call w.event_generate for headlines.
         f.tree.onHeadChanged(c.currentPosition())
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
@@ -27139,11 +23852,15 @@ def headlineWantsFocus(self,p,later=True):
 def logWantsFocus(self,later=True):
     if self.log and self.log.logCtrl:
         self.set_focus(self.log.logCtrl,later=later)
-        
+
 def minibufferWantsFocus(self,later=True):
-    if self.c.miniBufferWidget:
-        self.set_focus(self.c.miniBufferWidget,later=later)
-    
+    # Important! We must preserve body selection!
+    if 1:
+        self.bodyWantsFocus(later=later)
+    else:
+        if self.c.miniBufferWidget:
+            self.set_focus(self.c.miniBufferWidget,later=later)
+
 def treeWantsFocus(self,later=True):
     if self.tree and self.tree.canvas:
         self.set_focus(self.tree.canvas,later=later)
@@ -27151,6 +23868,7 @@ def treeWantsFocus(self,later=True):
 def widgetWantsFocus(self,widget,later=True):
     if widget:
         self.set_focus(widget,later=later)
+#@nonl
 #@-node:ekr.20050120092028:xWantsFocus (tkFrame)
 #@+node:ekr.20050120092028.1:set_focus (tkFrame)
 @
@@ -27160,7 +23878,7 @@ regardless of what we did previously.
 
 Alas, because of bugs in Tk and/or window managers, we can not call method at
 idle time: that would interfere with switching between windows. Instead, the
-xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
+xWantFocus routines call this with later=True, to queue up a ONE-SHOT later call
 to g.app.g.app.gui.set_focus.
 @c
 
@@ -27169,6 +23887,7 @@ def set_focus(self,widget,later=False):
     '''Set the focus to the widget specified in the xWantsFocus methods.'''
 
     c = self.c
+    # This is a *very* effective trace.
     # g.trace(widget._name,g.callerList(5))
 
     if widget and not g.app.unitTesting:
@@ -27672,6 +24391,377 @@ assert(0 <= val <= 15)
 #@-node:ekr.20040803072955.39:drawIcon
 #@-node:ekr.20051024145643:Label state
 #@-node:ekr.20051024112703:(Problems with key bindings in headlines)
+#@+node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
+#@+node:ekr.20031218072017.839:defineEditMenuTopTable
+def defineEditMenuTopTable (self):
+    
+    __pychecker__ = 'no-unusednames=[f]' # We define 'f' just in case.
+
+    c = self.c ; f = self.frame
+    
+    self.editMenuTopTable = [
+        ("Can't Undo",c.undoer.undo), # &U reserved for Undo
+        ("Can't Redo",c.undoer.redo), # &R reserved for Redo
+        ("-",None),
+        ("Cu&t",f.OnCutFromMenu), 
+        ("Cop&y",f.OnCopyFromMenu),
+        ("&Paste",f.OnPasteFromMenu),
+        ("&Delete",c.delete),
+        ("Select &All",f.body.selectAllText),
+        ("-",None),
+    ]
+
+    # Top-level shortcuts here:  a,d,p,t,u,y,z
+    # Top-level shortcuts later: e,g,n,v
+#@nonl
+#@-node:ekr.20031218072017.839:defineEditMenuTopTable
+#@+node:ekr.20031218072017.1723:createMenuEntries
+def createMenuEntries (self,menu,table,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.keyHandler
+    
+    if g.app.unitTesting: return
+
+    for data in table:
+        << get label & command or continue >>
+        << compute commandName & accel from label & command >>
+        rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
+        menuCallback = self.defineMenuCallback(command,commandName)
+        realLabel = self.getRealMenuName(label)
+        << set amp_index using rawKey and realLabel >>
+        realLabel = realLabel.replace("&","")
+        self.add_command(menu,label=realLabel,
+            accelerator= menu_shortcut or '',
+            command=menuCallback,underline=amp_index)
+#@nonl
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        label,command = data
+    else:
+        # New in 4.4: we ignore shortcuts bound in menu tables.
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and label in (None,'-'):
+    self.add_separator(menu)
+    continue # That's all.
+#@nonl
+#@-node:ekr.20051021091958:<< get label & command or continue >>
+#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+# First, get the old-style name.
+commandName = self.computeOldStyleShortcutKey(label)
+rawKey,bunch = c.config.getShortcut(commandName)
+accel = bunch and bunch.val
+
+# Second, get new-style name.
+if not accel:
+    << compute emacs_name >>
+        # Contains the not-so-horrible kludge.
+    if emacs_name:
+        commandName = emacs_name
+        rawKey,bunch = c.config.getShortcut(emacs_name)
+        accel = bunch and bunch.val
+    elif not dynamicMenu:
+        g.trace('No inverse for %s' % commandName)
+#@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % commandName
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
+#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+#@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+if rawKey:
+    amp_index = rawKey.find("&")
+else:
+    amp_index = -1
+
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
+#@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@+node:ekr.20051011072903.2:copyText
+def copyText (self,fromMinibuffer=False):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+    
+    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
+
+    # These two branches used to be different, an might be so again.
+    if isBody:
+        w.event_generate(g.virtual_event_name("Copy"))
+    elif fromMinibuffer:
+        pass
+    else:
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Copy"))
+#@nonl
+#@-node:ekr.20051011072903.2:copyText
+#@+node:ekr.20051011072049.2:cutText
+def cutText (self,fromMinibuffer=False):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+    
+    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Cut"))
+    else:
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Cut"))
+        if not fromMinibuffer:
+            f.tree.onHeadChanged(c.currentPosition())
+#@nonl
+#@-node:ekr.20051011072049.2:cutText
+#@+node:ekr.20051011072903.5:pasteText
+def pasteText (self,fromMinibuffer=False):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+    
+    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Paste"))
+    elif fromMinibuffer:
+        pass
+    else:
+        # Do **not** call w.event_generate for headlines.
+        f.tree.onHeadChanged(c.currentPosition())
+#@nonl
+#@-node:ekr.20051011072903.5:pasteText
+#@+node:ekr.20051011072903.1:OnCopyFromMenu
+def OnCopyFromMenu (self):
+    
+    ''' Called **only** when invoked using the menu instead of a shortcut.'''
+    
+    #g.trace()
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Copy"))
+    else:
+        # Necessary when not using shortcut keys.
+        w.event_generate(g.virtual_event_name("Copy"))
+#@nonl
+#@-node:ekr.20051011072903.1:OnCopyFromMenu
+#@+node:ekr.20051011072049.1:OnCutFromMenu
+def OnCutFromMenu (self):
+    
+    ''' Called **only** when invoked using the menu instead of a shortcut.'''
+    
+    #g.trace()
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Cut"))
+    else:
+        # Necessary
+        w.event_generate(g.virtual_event_name("Cut"))
+        f.tree.onHeadChanged(c.currentPosition())
+#@nonl
+#@-node:ekr.20051011072049.1:OnCutFromMenu
+#@+node:ekr.20051011072903.4:OnPasteFromMenu
+def OnPasteFromMenu (self):
+    
+    ''' Called **only** when invoked using the menu instead of a shortcut.'''
+    
+    #g.trace()
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    w = self.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Paste"))
+    else:
+        w.event_generate(g.virtual_event_name("Paste"))
+        f.tree.onHeadChanged(c.currentPosition())
+#@nonl
+#@-node:ekr.20051011072903.4:OnPasteFromMenu
+#@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@-node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
+#@+node:ekr.20051025110549:(Keep the focus in the body)
+# minibufferWantsFocus is now the same as bodyWantsFocus.
+#@nonl
+#@+node:ekr.20031218072017.2812:c.__init__
+def __init__(self,frame,fileName):
+
+    c = self
+    
+    # g.trace('Commands')
+    
+    # Init ivars with self.x instead of c.x to keep Pychecker happy
+    self.frame = frame
+    self.mFileName = fileName
+        # Do _not_ use os_path_norm: it converts an empty path to '.' (!!)
+
+    # g.trace(c) # Do this after setting c.mFileName.
+    c.initIvars()
+
+    self.useTextMinibuffer = True
+    self.showMinibuffer = c.config.getBool('useMinibuffer')
+
+    # initialize the sub-commanders.
+    # c.finishCreate creates the sub-commanders for edit commands.
+    self.fileCommands   = leoFileCommands.fileCommands(c)
+    self.atFileCommands = leoAtFile.atFile(c)
+    self.importCommands = leoImport.leoImportCommands(c)
+    self.tangleCommands = leoTangle.tangleCommands(c)
+    leoEditCommands.createEditCommanders(c)
+
+    if 0 and g.debugGC:
+        print ; print "*** using Null undoer ***" ; print
+        self.undoer = leoUndo.nullUndoer(self)
+    else:
+        self.undoer = leoUndo.undoer(self)
+#@nonl
+#@-node:ekr.20031218072017.2812:c.__init__
+#@+node:ekr.20050120083053:Delayed Focus (tkFrame)
+@
+
+New in 4.3
+
+Rather than calling g.app.gui.set_focus directly, the code calls
+self.xWantsFocus. This defers to idle-time code in the status-line class.
+
+N.B.  This code never calls select, so there can be no race condition here that alters text improperly.
+#@nonl
+#@+node:ekr.20050120092028:xWantsFocus (tkFrame)
+@ All these do the same thing, but separate names are good for tracing and
+makes the intent of the code clearer.
+@c 
+
+def bodyWantsFocus(self,later=True):
+    if self.body and self.body.bodyCtrl:
+        self.set_focus(self.body.bodyCtrl,later=later)
+        
+def headlineWantsFocus(self,p,later=True):
+    w = p and p.edit_text()
+    if w:
+        self.set_focus(w,later=later)
+    
+def logWantsFocus(self,later=True):
+    if self.log and self.log.logCtrl:
+        self.set_focus(self.log.logCtrl,later=later)
+
+def minibufferWantsFocus(self,later=True):
+    # Important! We must preserve body selection!
+    if 1:
+        self.bodyWantsFocus(later=later)
+    else:
+        if self.c.miniBufferWidget:
+            self.set_focus(self.c.miniBufferWidget,later=later)
+
+def treeWantsFocus(self,later=True):
+    if self.tree and self.tree.canvas:
+        self.set_focus(self.tree.canvas,later=later)
+    
+def widgetWantsFocus(self,widget,later=True):
+    if widget:
+        self.set_focus(widget,later=later)
+#@nonl
+#@-node:ekr.20050120092028:xWantsFocus (tkFrame)
+#@+node:ekr.20050120092028.1:set_focus (tkFrame)
+@
+Very tricky code:
+Many Tk calls can mess with the focus, so we must always set the focus,
+regardless of what we did previously.
+
+Alas, because of bugs in Tk and/or window managers, we can not call method at
+idle time: that would interfere with switching between windows. Instead, the
+xWantFocus routines call this with later=True, to queue up a ONE-SHOT later call
+to g.app.g.app.gui.set_focus.
+@c
+
+def set_focus(self,widget,later=False):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    c = self.c
+    # This is a *very* effective trace.
+    # g.trace(widget._name,g.callerList(5))
+
+    if widget and not g.app.unitTesting:
+        # Messing with focus may be dangerous in unit tests.
+        if later:
+            # Queue up the call (just once) for later.
+            def setFocusCallback(c=c):
+                self.wantedCallbackScheduled = False
+                if c == g.app.wantedCommander and c.frame.wantedWidget:
+                    # g.trace(c.frame.wantedWidget)
+                    g.app.gui.set_focus(
+                        g.app.wantedCommander,
+                        c.frame.wantedWidget)
+                self.wantedWidget = None
+                g.app.wantedCommander = None
+                    
+            # Crucial: This may change what the callback does.
+            self.wantedWidget = widget
+            g.app.wantedCommander = c
+            if not self.wantedCallbackScheduled:
+                # g.trace(g.callerList(4),c.shortFileName())
+                self.wantedCallbackScheduled = True
+                # We don't have to wait so long now that we don't call this so often.
+                # The difference between 500 msec. and 100 msec. is significant.
+                # New in 4.4: set the delay to 1 msec.: the smaller the better.
+                self.outerFrame.after(1,setFocusCallback)
+        else:
+            # g.trace(g.callerList(4),c.shortFileName())
+            g.app.gui.set_focus(c,widget)
+            # Crucial: cancel any previous callback.
+            # It may be re-enabled later, but that doesn't matter.
+            self.wantedWidget = None
+            g.app.wantedCommander = None
+    else:
+        # Cancel any previous request.
+        self.wantedWidget = None
+        g.app.wantedCommander = None
+#@nonl
+#@-node:ekr.20050120092028.1:set_focus (tkFrame)
+#@-node:ekr.20050120083053:Delayed Focus (tkFrame)
+#@-node:ekr.20051025110549:(Keep the focus in the body)
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

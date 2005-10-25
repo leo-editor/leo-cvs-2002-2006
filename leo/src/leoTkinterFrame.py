@@ -252,11 +252,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
         lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
         lab.pack(side='left')
         
-        if 1:
+        if c.useTextMinibuffer:
             label = Tk.Text(f,height=1,relief='groove',background='lightgrey',name='minibuffer')
             label.pack(side='left',fill='x',expand=1,padx=2,pady=1)
         else:
-            label = Tk.Label(f,relief='groove',justify='left',anchor='w',name='minnibuffer')
+            label = Tk.Label(f,relief='groove',justify='left',anchor='w',name='minibuffer')
             label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
         
         frame.minibufferVisible = c.showMinibuffer
@@ -2146,11 +2146,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def logWantsFocus(self,later=True):
         if self.log and self.log.logCtrl:
             self.set_focus(self.log.logCtrl,later=later)
-            
+    
     def minibufferWantsFocus(self,later=True):
-        if self.c.miniBufferWidget:
-            self.set_focus(self.c.miniBufferWidget,later=later)
-        
+        # Important! We must preserve body selection!
+        if 1:
+            self.bodyWantsFocus(later=later)
+        else:
+            if self.c.miniBufferWidget:
+                self.set_focus(self.c.miniBufferWidget,later=later)
+    
     def treeWantsFocus(self,later=True):
         if self.tree and self.tree.canvas:
             self.set_focus(self.tree.canvas,later=later)
@@ -2158,6 +2162,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def widgetWantsFocus(self,widget,later=True):
         if widget:
             self.set_focus(widget,later=later)
+    #@nonl
     #@-node:ekr.20050120092028:xWantsFocus (tkFrame)
     #@+node:ekr.20050120092028.1:set_focus (tkFrame)
     #@+at
@@ -2169,7 +2174,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     # method at
     # idle time: that would interfere with switching between windows. Instead, 
     # the
-    # xWnatFocus routines call this with later=True, to queue up a ONE-SHOT 
+    # xWantFocus routines call this with later=True, to queue up a ONE-SHOT 
     # later call
     # to g.app.g.app.gui.set_focus.
     #@-at

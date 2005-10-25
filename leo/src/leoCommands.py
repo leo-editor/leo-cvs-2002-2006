@@ -71,6 +71,7 @@ class baseCommands:
         # g.trace(c) # Do this after setting c.mFileName.
         c.initIvars()
     
+        self.useTextMinibuffer = True
         self.showMinibuffer = c.config.getBool('useMinibuffer')
     
         # initialize the sub-commanders.
