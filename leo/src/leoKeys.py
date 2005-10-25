@@ -1492,7 +1492,7 @@ class keyHandlerClass:
         c.frame.log.clearTab('Command')
         for key in keys:
             b = k.bindingsDict.get(key)
-            g.es(key,b.commandName or b.name,tabName='Command')
+            g.es('[%s]' % b.pane,key,b.commandName or b.name,tabName='Command')
     #@nonl
     #@-node:ekr.20051012201831:printBindings
     #@+node:ekr.20051014061332:printCommands
