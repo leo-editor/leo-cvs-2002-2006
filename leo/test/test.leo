@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7800" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7801" clone_windows="0"/>
 <globals body_outline_ratio="0.540216086435">
 	<global_window_position top="79" left="313" height="833" width="872"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1043,6 +1043,69 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051020104805.20"><vh>Tkinter wrappers (leoTkinterFind)</vh></v>
 </v>
 </v>
+<v t="ekr.20051024205040"><vh>Spell Tab (proto)</vh>
+<v t="ekr.20051024205040.4"><vh>&lt;&lt; specify aspell directories for imports &gt;&gt;</vh></v>
+<v t="ekr.20051024205040.5"><vh>&lt;&lt; spellpx imports &gt;&gt;</vh></v>
+<v t="ekr.20051024205040.7"><vh>init (not used)</vh></v>
+<v t="ekr.20051024205040.8"><vh>class Aspell</vh>
+<v t="ekr.20051024205040.9"><vh>Birth &amp; death</vh>
+<v t="ekr.20051024205040.10"><vh>__init__</vh></v>
+<v t="ekr.20051024205040.11"><vh>getAspellDirectory</vh></v>
+</v>
+<v t="ekr.20051024205040.12"><vh>processWord</vh></v>
+<v t="ekr.20051024205040.13"><vh>updateDictionary</vh></v>
+</v>
+<v t="ekr.20051024205040.14"><vh>class globalDataClass</vh>
+<v t="ekr.20051024205040.15"><vh>ctor</vh></v>
+<v t="ekr.20051024205040.16"><vh>getLocalDictionary</vh></v>
+<v t="ekr.20051024205040.17"><vh>getLocalLanguageCode</vh></v>
+<v t="ekr.20051024205040.18"><vh>readLocalDictionary</vh></v>
+<v t="ekr.20051024205040.19"><vh>setLocalDictionary</vh></v>
+</v>
+<v t="ekr.20051024205040.20" a="E"><vh>class spellDialog (leoFind.leoFind)</vh>
+<v t="ekr.20051024205040.21" a="E"><vh>Birth &amp; death</vh>
+<v t="ekr.20051024205040.22"><vh>spellTab.__init__</vh></v>
+<v t="ekr.20051024205040.23"><vh>init</vh></v>
+<v t="ekr.20051024205040.25" a="E"><vh>createTab</vh>
+<v t="ekr.20051024205040.26"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
+<v t="ekr.20051024205040.27" a="E"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20051024205040.28"><vh>Event handlers (not used)</vh>
+<v t="ekr.20051024205040.29"><vh>createSpellMenu</vh></v>
+<v t="ekr.20051024205040.30"><vh>onSelect</vh></v>
+<v t="ekr.20051024205040.31"><vh>onCommand</vh></v>
+</v>
+<v t="ekr.20051024205040.32"><vh>Buttons</vh>
+<v t="ekr.20051024205040.33"><vh>onAddButton</vh></v>
+<v t="ekr.20051024205040.34"><vh>onIgnoreButton</vh></v>
+<v t="ekr.20051024205040.35"><vh>onChangeButton &amp; onChangeThenFindButton</vh></v>
+<v t="ekr.20051024205040.36"><vh>onFindButton</vh></v>
+<v t="ekr.20051024205040.37"><vh>onHideButton</vh></v>
+<v t="ekr.20051024205040.38"><vh>onRedoButton &amp; onUndoButton</vh></v>
+</v>
+<v t="ekr.20051024205040.39"><vh>Commands</vh>
+<v t="ekr.20051024205040.40"><vh>add</vh></v>
+<v t="ekr.20051024205040.41"><vh>change</vh></v>
+<v t="ekr.20051024205040.42"><vh>checkSpelling</vh></v>
+<v t="ekr.20051024205040.43"><vh>find</vh></v>
+<v t="ekr.20051024205040.44"><vh>ignore</vh></v>
+</v>
+<v t="ekr.20051024205040.45" a="E"><vh>Helpers</vh>
+<v t="ekr.20051024205040.46"><vh>bringToFront</vh></v>
+<v t="ekr.20051024205040.47"><vh>fillbox</vh></v>
+<v t="ekr.20051024205040.48"><vh>findNextMisspelledWord</vh>
+<v t="ekr.20051024205040.49"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051024205040.50" a="E"><vh>findNextWord</vh></v>
+<v t="ekr.20051024205040.51"><vh>getSuggestion</vh></v>
+<v t="ekr.20051024205040.52"><vh>onMap</vh></v>
+<v t="ekr.20051024205040.53"><vh>onSelectListBox</vh></v>
+<v t="ekr.20051024205040.54"><vh>update</vh></v>
+<v t="ekr.20051024205040.55"><vh>updateButtons</vh></v>
+</v>
+</v>
+</v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts...</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -1612,6 +1675,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051023104813"><vh>@@button check-dirty</vh></v>
 </v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
+<v t="ekr.20051025070722"><vh>@button Beautify</vh></v>
+<v t="ekr.20051025091355"><vh>@button Spell</vh></v>
 <v t="ekr.20050911112310"><vh>@button save</vh></v>
 </v>
 <v t="ekr.20051012104957"><vh>Other unit test stuff...</vh>
@@ -2391,71 +2456,13 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
-<v t="ekr.20051024205040"><vh>Spell Tab</vh>
-<v t="ekr.20051024205040.4"><vh>&lt;&lt; specify aspell directories for imports &gt;&gt;</vh></v>
-<v t="ekr.20051024205040.5"><vh>&lt;&lt; spellpx imports &gt;&gt;</vh></v>
-<v t="ekr.20051024205040.7"><vh>init (not used)</vh></v>
-<v t="ekr.20051024205040.8"><vh>class Aspell</vh>
-<v t="ekr.20051024205040.9"><vh>Birth &amp; death</vh>
-<v t="ekr.20051024205040.10"><vh>__init__</vh></v>
-<v t="ekr.20051024205040.11"><vh>getAspellDirectory</vh></v>
-</v>
-<v t="ekr.20051024205040.12"><vh>processWord</vh></v>
-<v t="ekr.20051024205040.13"><vh>updateDictionary</vh></v>
-</v>
-<v t="ekr.20051024205040.14" a="E"><vh>class globalDataClass</vh>
-<v t="ekr.20051024205040.15"><vh>ctor</vh></v>
-<v t="ekr.20051024205040.16"><vh>getLocalDictionary</vh></v>
-<v t="ekr.20051024205040.17"><vh>getLocalLanguageCode</vh></v>
-<v t="ekr.20051024205040.18"><vh>readLocalDictionary</vh></v>
-<v t="ekr.20051024205040.19"><vh>setLocalDictionary</vh></v>
-</v>
-<v t="ekr.20051024205040.20"><vh>class spellDialog (leoFind.leoFind)</vh>
-<v t="ekr.20051024205040.21" a="E"><vh>Birth &amp; death</vh>
-<v t="ekr.20051024205040.22"><vh>spellDialog.__init__</vh></v>
-<v t="ekr.20051024205040.23"><vh>init</vh></v>
-<v t="ekr.20051024205040.25" a="E"><vh>createTab</vh>
-<v t="ekr.20051024205040.26"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
-<v t="ekr.20051024205040.27"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20051024205040.28"><vh>Event handlers (not used)</vh>
-<v t="ekr.20051024205040.29"><vh>createSpellMenu</vh></v>
-<v t="ekr.20051024205040.30"><vh>onSelect</vh></v>
-<v t="ekr.20051024205040.31"><vh>onCommand</vh></v>
-</v>
-<v t="ekr.20051024205040.32"><vh>Buttons</vh>
-<v t="ekr.20051024205040.33"><vh>onAddButton</vh></v>
-<v t="ekr.20051024205040.34"><vh>onIgnoreButton</vh></v>
-<v t="ekr.20051024205040.35"><vh>onChangeButton &amp; onChangeThenFindButton</vh></v>
-<v t="ekr.20051024205040.36"><vh>onFindButton</vh></v>
-<v t="ekr.20051024205040.37"><vh>onHideButton</vh></v>
-<v t="ekr.20051024205040.38"><vh>onRedoButton &amp; onUndoButton</vh></v>
-</v>
-<v t="ekr.20051024205040.39"><vh>Commands</vh>
-<v t="ekr.20051024205040.40"><vh>add</vh></v>
-<v t="ekr.20051024205040.41"><vh>change</vh></v>
-<v t="ekr.20051024205040.42"><vh>checkSpelling</vh></v>
-<v t="ekr.20051024205040.43"><vh>find</vh></v>
-<v t="ekr.20051024205040.44"><vh>ignore</vh></v>
-</v>
-<v t="ekr.20051024205040.45" a="E"><vh>Helpers</vh>
-<v t="ekr.20051024205040.46"><vh>bringToFront</vh></v>
-<v t="ekr.20051024205040.47"><vh>fillbox</vh></v>
-<v t="ekr.20051024205040.48"><vh>findNextMisspelledWord</vh>
-<v t="ekr.20051024205040.49"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051024205040.50" a="E"><vh>findNextWord</vh></v>
-<v t="ekr.20051024205040.51"><vh>getSuggestion</vh></v>
-<v t="ekr.20051024205040.52"><vh>onMap</vh></v>
-<v t="ekr.20051024205040.53"><vh>onSelectListBox</vh></v>
-<v t="ekr.20051024205040.54"><vh>update</vh></v>
-<v t="ekr.20051024205040.55"><vh>updateButtons</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20051024223801" a="TV"><vh>@button run tcl </vh></v>
+<v t="ekr.20051025070722.1" a="E"><vh>Runniung tcl scripts from the body pane</vh>
+<v t="ekr.20051024223801" a="TV"><vh>run tcl </vh></v>
 <v t="ekr.20051024223801.1"><vh>My first tcl script</vh></v>
+<v t="ekr.20051025115413" a="E"><vh>My second tcl scrip, organized with noweb markup</vh>
+<v t="ekr.20051025115413.1"><vh>the actual script</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -23605,39 +23612,44 @@ import traceback</t>
 
     """Create the Spell tab."""
     
+    c = self.c
+    
+    # Set the common background color.
+    bg = c.config.getColor('log_pane_Spell_tab_background_color') or 'LightSteelBlue2'
+    
     # Create the find panel...
-    outer = Tk.Frame(self.frame,bd=2)
+    outer = Tk.Frame(self.frame,bd=2,bg=bg)
     outer.pack(expand=1,fill='both',padx=2,pady=2)
     
     &lt;&lt; Create the text and suggestion panes &gt;&gt;
     &lt;&lt; Create the spelling buttons &gt;&gt;</t>
 <t tx="ekr.20051024205040.26">f = outer
 
-f2 = Tk.Frame(f)
+f2 = Tk.Frame(f,bg=bg)
 f2.pack(side='top',expand=0,fill='x')
 
-self.wordLabel = Tk.Label(f2, text="Suggestions for:")
+self.wordLabel = Tk.Label(f2,text="Suggestions for:")
 self.wordLabel.pack(side='left')
 self.wordLabel.configure(font=('verdana',10,'bold'))
 
-fpane = Tk.Frame(f, bd= 2)
+fpane = Tk.Frame(f,bg=bg,bd=2)
 fpane.pack(side='top',expand=1,fill='both')
 
-self.listBox = Tk.Listbox(fpane,height=10,width=10,selectmode= "single")
+self.listBox = Tk.Listbox(fpane,height=10,width=10,selectmode="single")
 self.listBox.pack(side='left',expand=1,fill='both')
 self.listBox.configure(font=('verdana',11,'normal'))
 
-listBoxBar = Tk.Scrollbar(fpane, name= 'listBoxBar')
+listBoxBar = Tk.Scrollbar(fpane,name='listBoxBar')
 
-bar,txt = listBoxBar,self.listBox
-txt['yscrollcommand'] = bar.set
-bar['command'] = txt.yview
+bar, txt = listBoxBar, self.listBox
+txt ['yscrollcommand'] = bar.set
+bar ['command'] = txt.yview
 bar.pack(side='right',fill='y')</t>
 <t tx="ekr.20051024205040.27"># Create the button panes
-buttons1 = Tk.Frame(outer,bd=1)
+buttons1 = Tk.Frame(outer,bd=1,bg=bg)
 buttons1.pack (side='top',expand=0,fill='x')  
 
-buttons2 = Tk.Frame(outer,bd=1)
+buttons2 = Tk.Frame(outer,bd=1,bg=bg)
 buttons2.pack (side='top',expand=0,fill='x') 
 
 buttonList = []
@@ -24051,12 +24063,25 @@ def findNextWord(self,p):
     self.addButton.configure(state= state)
 
     self.ignoreButton.configure(state= "normal")</t>
-<t tx="ekr.20051024223801"># Executes body text of selected node as a tcl script.
+<t tx="ekr.20051024223801"># To use this script, you must make this a script button, either with the
+# 'Script Button' button or by making this an @button node.
+
+# Executes body text of selected node as a tcl script.
 # For more information, see http://wiki.tcl.tk/6878
 
-s = p.bodyString().strip()
+# This statement allows you to organize your scripts using noweb markup.
+s = g.getScript(c,p,forcePythonSentinels=False)
 g.es(g.app.root.tk.eval(s))</t>
-<t tx="ekr.20051024223801.1">set x 50
+<t tx="ekr.20051024223801.1"># This is a comment
+set x 50
+return [expr $x*10]</t>
+<t tx="ekr.20051025070722">c.prettyPrintPythonNode()</t>
+<t tx="ekr.20051025070722.1">@language tcltk</t>
+<t tx="ekr.20051025091355">c.spellCommands.openSpellTab()
+</t>
+<t tx="ekr.20051025115413">@others</t>
+<t tx="ekr.20051025115413.1"># This is a comment
+set x 50 +
 return [expr $x*10]</t>
 </tnodes>
 </leo_file>
