@@ -5221,12 +5221,13 @@ class searchCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20051020120306:openFindTab
     #@+node:ekr.20051022212004:commands...
     # Just open the Find tab if it has never been opened.
-    # For minibuffer commands, we must also force the Find tab to be visible.
+    # For minibuffer commands, it would be good to force the Find tab to be visible.
+    # However, this leads to unfortunate confusion when executed from a shortcut.
     
-    def findTabChange (self,event=None):
+    def findTabChange(self,event=None):
     
         if self.findTabHandler:
-            self.openFindTab()
+            #self.openFindTab()
             self.findTabHandler.changeCommand()
         else:
             self.openFindTab()
@@ -5234,7 +5235,7 @@ class searchCommandsClass (baseEditCommandsClass):
     def findTabChangeThenFind(self,event=None):
     
         if self.findTabHandler:
-            self.openFindTab()
+            #self.openFindTab()
             self.findTabHandler.changeThenFindCommand()
         else:
             self.openFindTab()
@@ -5242,7 +5243,7 @@ class searchCommandsClass (baseEditCommandsClass):
     def findTabFindNext (self,event=None):
         
         if self.findTabHandler:
-            self.openFindTab()
+            #self.openFindTab()
             self.findTabHandler.findNextCommand()
         else:
             self.openFindTab()
@@ -5250,14 +5251,14 @@ class searchCommandsClass (baseEditCommandsClass):
     def findTabFindPrev (self,event=None):
         
         if self.findTabHandler:
-            self.openFindTab()
+            #self.openFindTab()
             self.findTabHandler.findPrevCommand()
         else:
             self.openFindTab()
             
     def hideFindTab (self,event=None):
         if self.findTabHandler:
-            seelf.c.frame.log.selectTab('Log')
+            self.c.frame.log.selectTab('Log')
     #@nonl
     #@-node:ekr.20051022212004:commands...
     #@-node:ekr.20051022211617:find tab...

@@ -486,7 +486,7 @@ class leoMenu:
             return None
     #@nonl
     #@-node:ekr.20031218072017.3804:createNewMenu (contains Tk code)
-    #@+node:ekr.20031218072017.4116:createOpenWithMenuFromTable 
+    #@+node:ekr.20031218072017.4116:createOpenWithMenuFromTable
     #@+at 
     #@nonl
     # Entries in the table passed to createOpenWithMenuFromTable are
@@ -535,7 +535,7 @@ class leoMenu:
         for entry in table:
             name,shortcut,data = entry
             c.keyHandler.bindOpenWith (shortcut,name,data)
-    #@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable 
+    #@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
     #@+node:ekr.20031218072017.2078:createRecentFilesMenuItems (leoMenu)
     def createRecentFilesMenuItems (self):
         
@@ -689,15 +689,27 @@ class leoMenu:
         __pychecker__ = 'no-unusednames=c,f'
         
         c = self.c ; f = self.frame
-    
-        self.editMenuFindMenuTable = [
-            ("&Find Panel",c.showFindPanel),
-            ("-",None),
-            ("Find &Next",c.findNext),
-            ("Find &Previous",c.findPrevious),
-            ("&Replace",c.replace),
-            ("Replace, &Then Find",c.replaceThenFind),
-        ]
+        
+        if 1: # Bind to the Find tab.
+            sc = c.searchCommands
+            self.editMenuFindMenuTable = [
+                ("&Show Find Tab",sc.openFindTab),
+                ("&Hide Find Tab",sc.hideFindTab),
+                ("-",None),
+                ("Find &Next",          sc.findTabFindNext),
+                ("Find &Previous",      sc.findTabFindPrev),
+                ("&Replace",            sc.findTabChange),
+                ("Replace, &Then Find", sc.findTabChangeThenFind),
+            ]
+        else:
+            self.editMenuFindMenuTable = [
+                ("&Find Panel",c.showFindPanel),
+                ("-",None),
+                ("Find &Next",c.findNext),
+                ("Find &Previous",c.findPrevious),
+                ("&Replace",c.replace),
+                ("Replace, &Then Find",c.replaceThenFind),
+            ]
     #@nonl
     #@-node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
     #@+node:ekr.20031218072017.3757:defineEditMenuTop2Table
