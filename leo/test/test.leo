@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7745" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-	<global_window_position top="91" left="282" height="833" width="872"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7800" clone_windows="0"/>
+<globals body_outline_ratio="0.540216086435">
+	<global_window_position top="79" left="313" height="833" width="872"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1731,7 +1731,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines (runs some tests twice!)</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
@@ -2391,6 +2391,69 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
+<v t="ekr.20051024205040" a="ETV"><vh>Spell Tab</vh>
+<v t="ekr.20051024205040.4"><vh>&lt;&lt; specify aspell directories for imports &gt;&gt;</vh></v>
+<v t="ekr.20051024205040.5"><vh>&lt;&lt; spellpx imports &gt;&gt;</vh></v>
+<v t="ekr.20051024205040.7"><vh>init (not used)</vh></v>
+<v t="ekr.20051024205040.8"><vh>class Aspell</vh>
+<v t="ekr.20051024205040.9"><vh>Birth &amp; death</vh>
+<v t="ekr.20051024205040.10"><vh>__init__</vh></v>
+<v t="ekr.20051024205040.11"><vh>getAspellDirectory</vh></v>
+</v>
+<v t="ekr.20051024205040.12"><vh>processWord</vh></v>
+<v t="ekr.20051024205040.13"><vh>updateDictionary</vh></v>
+</v>
+<v t="ekr.20051024205040.14" a="E"><vh>class globalDataClass</vh>
+<v t="ekr.20051024205040.15"><vh>ctor</vh></v>
+<v t="ekr.20051024205040.16"><vh>getLocalDictionary</vh></v>
+<v t="ekr.20051024205040.17"><vh>getLocalLanguageCode</vh></v>
+<v t="ekr.20051024205040.18"><vh>readLocalDictionary</vh></v>
+<v t="ekr.20051024205040.19"><vh>setLocalDictionary</vh></v>
+</v>
+<v t="ekr.20051024205040.20"><vh>class spellDialog (leoFind.leoFind)</vh>
+<v t="ekr.20051024205040.21" a="E"><vh>Birth &amp; death</vh>
+<v t="ekr.20051024205040.22"><vh>spellDialog.__init__</vh></v>
+<v t="ekr.20051024205040.23"><vh>init</vh></v>
+<v t="ekr.20051024205040.25" a="E"><vh>createTab</vh>
+<v t="ekr.20051024205040.26"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
+<v t="ekr.20051024205040.27"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20051024205040.28"><vh>Event handlers (not used)</vh>
+<v t="ekr.20051024205040.29"><vh>createSpellMenu</vh></v>
+<v t="ekr.20051024205040.30"><vh>onSelect</vh></v>
+<v t="ekr.20051024205040.31"><vh>onCommand</vh></v>
+</v>
+<v t="ekr.20051024205040.32"><vh>Buttons</vh>
+<v t="ekr.20051024205040.33"><vh>onAddButton</vh></v>
+<v t="ekr.20051024205040.34"><vh>onIgnoreButton</vh></v>
+<v t="ekr.20051024205040.35"><vh>onChangeButton &amp; onChangeThenFindButton</vh></v>
+<v t="ekr.20051024205040.36"><vh>onFindButton</vh></v>
+<v t="ekr.20051024205040.37"><vh>onHideButton</vh></v>
+<v t="ekr.20051024205040.38"><vh>onRedoButton &amp; onUndoButton</vh></v>
+</v>
+<v t="ekr.20051024205040.39"><vh>Commands</vh>
+<v t="ekr.20051024205040.40"><vh>add</vh></v>
+<v t="ekr.20051024205040.41"><vh>change</vh></v>
+<v t="ekr.20051024205040.42"><vh>checkSpelling</vh></v>
+<v t="ekr.20051024205040.43"><vh>find</vh></v>
+<v t="ekr.20051024205040.44"><vh>ignore</vh></v>
+</v>
+<v t="ekr.20051024205040.45" a="E"><vh>Helpers</vh>
+<v t="ekr.20051024205040.46"><vh>bringToFront</vh></v>
+<v t="ekr.20051024205040.47"><vh>fillbox</vh></v>
+<v t="ekr.20051024205040.48"><vh>findNextMisspelledWord</vh>
+<v t="ekr.20051024205040.49"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051024205040.50" a="E"><vh>findNextWord</vh></v>
+<v t="ekr.20051024205040.51"><vh>getSuggestion</vh></v>
+<v t="ekr.20051024205040.52"><vh>onMap</vh></v>
+<v t="ekr.20051024205040.53"><vh>onSelectListBox</vh></v>
+<v t="ekr.20051024205040.54"><vh>update</vh></v>
+<v t="ekr.20051024205040.55"><vh>updateButtons</vh></v>
+</v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -23279,5 +23342,712 @@ for p in c.all_positions_iter():
         count += 1
         
 g.es('%s nodes checked' % count)</t>
+<t tx="ekr.20051024205040">@language python
+@tabwidth -4
+
+@ To do:
+- open the minibuffer to get suggestions.  
+- Per-pane key bindings. (arrows, etc.)
+- Accumulate status messages.
+@c
+
+&lt;&lt; specify aspell directories for imports &gt;&gt;
+&lt;&lt; spellpx imports &gt;&gt;
+
+ini_file_name = 'spellpyx.ini'
+
+@others
+
+globalData = globalDataClass()
+
+if aspell:
+    spelllTab(c,aspell,globalData)</t>
+<t tx="ekr.20051024205040.4">import sys
+
+if sys.platform == 'darwin':
+    aspell_dir = '/sw/lib'
+        # The top-level directory.
+    aspell_bin_dir = '/sw/lib/bin'
+        # NOT TESTED YET.
+else:
+    aspell_dir = r'c:\Aspell'
+        # The top-level directory.
+    aspell_bin_dir = r'c:\Aspell\bin'
+        # The directory continaing apell.pyd and aspell-15.dll</t>
+<t tx="ekr.20051024205040.5"># import leoGlobals as g
+import sys
+
+# Specify the path to the top-level Aspell directory.
+if sys.platform == 'darwin':
+    aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
+else:
+     aspell = g.importFromPath(
+        "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
+
+import leoPlugins
+import leoFind
+
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+
+import ConfigParser
+import os
+import re
+import string
+import traceback</t>
+<t tx="ekr.20051024205040.7">def init (c):
+    
+    global globalData,spellFrames
+  
+    spellFrames[c] = spellFrame = spelllTab(c,aspell,globalData)
+
+    # New in 4.3: do this immediately.
+    if 0:
+        spellFrame.createSpellMenu()
+
+    if 0: # Register handlers.
+        leoPlugins.registerHandler("command2",spellFrame.onCommand)
+    
+        leoPlugins.registerHandler(
+            ("bodyclick2","bodydclick2","bodyrclick2","bodykey2","select2"),
+            spellFrame.onSelect)</t>
+<t tx="ekr.20051024205040.8">class Aspell:
+    
+    """A wrapper class for Aspell spell checker"""
+    
+    @others
+
+</t>
+<t tx="ekr.20051024205040.9"></t>
+<t tx="ekr.20051024205040.10">def __init__(self,aspell,local_dictionary_file,local_language_code):
+    
+    """Ctor for the Aspell class."""
+
+    self.sc = aspell.spell_checker(prefix=aspell_dir,lang=local_language_code)
+    
+    self.aspell_exe_loc = self.getAspellDirectory()
+    self.local_language_code = local_language_code
+    
+    if local_dictionary_file:
+        self.local_dictionary_file = local_dictionary_file
+        self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]
+    else:
+        print "failed to set aspell.local_dictionary"
+        self.local.dictionary_file = None
+        self.local_dictionary = None</t>
+<t tx="ekr.20051024205040.11">def getAspellDirectory(self):
+
+    """Get the directory containing aspell.exe from the .ini file"""
+
+    try:
+        fileName = os.path.join(g.app.loadDir,"..","plugins",ini_file_name)
+        config = ConfigParser.ConfigParser()
+        config.read(fileName)
+        return config.get("main", "aspell_dir")
+    except:
+        g.es_exception()
+        return None</t>
+<t tx="ekr.20051024205040.12">def processWord(self, word):
+    """Pass a word to aspell and return the list of alternatives.
+    OK: 
+    * 
+    Suggestions: 
+    &amp; «original» «count» «offset»: «miss», «miss», ... 
+    None: 
+    # «original» «offset» 
+    simplifyed to not create the string then make a list from it    
+    """
+
+    if self.sc.check(word):
+        return None
+    else:
+        return self.sc.suggest(word)</t>
+<t tx="ekr.20051024205040.13">def updateDictionary(self):
+
+    """Update the aspell dictionary from a list of words.
+    
+    Return True if the dictionary was updated correctly."""
+
+    try:
+        # Create master list
+        basename = os.path.splitext(self.local_dictionary)[0]
+        cmd = (
+            "%s --lang=%s create master %s.wl &lt; %s.txt" %
+            (self.aspell_exe_loc, self.local_language_code, basename,basename))
+        os.popen(cmd)
+        return True
+
+    except Exception, err:
+        g.es("Unable to update local aspell dictionary: %s" % err)
+        print err
+        add_dicts = ""
+        return False</t>
+<t tx="ekr.20051024205040.14">class globalDataClass:
+    
+    @others</t>
+<t tx="ekr.20051024205040.15">def __init__ (self):
+
+    self.local_dictionary_file = self.getLocalDictionary()
+    self.local_language_code = self.getLocalLanguageCode("en")
+    self.aspell = Aspell(aspell,self.local_dictionary_file,self.local_language_code)
+    self.setLocalDictionary()</t>
+<t tx="ekr.20051024205040.16">def getLocalDictionary(self):
+    
+    """Get the dictionaries containing words not in the standard dictionary from the .ini file."""
+
+    try:
+        fileName = os.path.join(g.app.loadDir,"../","plugins",ini_file_name)
+        config = ConfigParser.ConfigParser()
+        config.read(fileName)
+        return config.get("main","local_leo_dictionary",None)
+    except:
+        g.es_exception()
+        return None</t>
+<t tx="ekr.20051024205040.17">def getLocalLanguageCode(self, defaultLanguageCode):
+    """Get the dictionaries containing words not in the standard dictionary from the .ini file."""
+
+    try:
+        fileName = os.path.join(g.app.loadDir,"../","plugins",ini_file_name)
+        config = ConfigParser.ConfigParser()
+        config.read(fileName)
+        return config.get("main", "local_language_code", defaultLanguageCode)
+    except:
+        g.es_exception()
+        return defaultLanguageCode</t>
+<t tx="ekr.20051024205040.18">def readLocalDictionary(self, local_dictionary):
+    """Read the dictionary of words which we use as a local dictionary
+    
+    Although Aspell itself has the functionality to handle this kind of things
+    we duplicate it here so that we can also use it for the "ignore" functionality
+    and so that in future a Python only solution could be developed."""
+
+    try:
+        f = open(local_dictionary,"r")
+    except IOError:
+        g.es("Unable to open local dictionary '%s' - using a blank one instead" % local_dictionary)
+        return None
+    
+    try:
+        # Create the dictionary - there are better ways to do this
+        # in later Python's but we stick with this method for compatibility
+        dct = {}
+        for word in f.readlines():
+            dct[word.strip().lower()] = 0
+    finally:
+        f.close()
+
+    return dct</t>
+<t tx="ekr.20051024205040.19">def setLocalDictionary (self):
+
+    if self.local_dictionary_file:
+        self.dictionary = self.readLocalDictionary(self.local_dictionary_file)
+        if self.dictionary:
+            g.es("Aspell local dictionary: %s" % \
+                g.shortFileName(self.local_dictionary_file), color="blue")
+            if 0:
+                keys = self.dictionary.keys()
+                keys.sort()
+                print "local dict:", keys
+        else:
+            self.dictionary = {}
+            self.local_dictionary_file = None
+    else:
+        self.dictionary = {}</t>
+<t tx="ekr.20051024205040.20">class spelllTab(leoFind.leoFind):
+
+    """A class to create and manage Leo's Spell Check dialog."""
+    
+    @others</t>
+<t tx="ekr.20051024205040.21"></t>
+<t tx="ekr.20051024205040.22">def __init__(self,c,aspell,globalData):
+    
+    """Ctor for the Leo Spelling dialog."""
+
+    self.c = c ; log = c.frame.log ; tabName = 'Spell'
+    
+    if log.frameDict.get(tabName):
+        log.selectTab(tabName)
+    else:
+        leoFind.leoFind.__init__(self,c) # Call the base ctor.
+        self.c = c
+        log.selectTab(tabName)
+        self.frame = log.frameDict.get(tabName)
+        t = log.textDict.get(tabName)
+        t.pack_forget()
+        self.init()
+        </t>
+<t tx="ekr.20051024205040.23">def init (self):
+    
+    global globalData
+
+    # Get these from the globals.
+    self.local_dictionary_file = globalData.local_dictionary_file
+    self.local_language_code = globalData.local_language_code
+    self.aspell = globalData.aspell
+    self.dictionary = globalData.dictionary
+    
+    # State variables.
+    self.currentWord = None
+    self.suggestions = []
+    self.v = None
+    self.body = None
+    self.messages = [] # List of message to be displayed when hiding the tab.
+    self.workCtrl = Tk.Text(None) # A text widget for scanning.
+
+    # Create the Spell tab and its contents.
+    self.createTab()
+    self.fillbox([])
+    self.listBox.bind("&lt;Double-Button-1&gt;",self.onChangeThenFindButton)
+    self.listBox.bind("&lt;Button-1&gt;",self.onSelectListBox)
+    self.listBox.bind("&lt;Map&gt;",self.onMap)</t>
+<t tx="ekr.20051024205040.25">def createTab(self):
+
+    """Create the Spell tab."""
+    
+    # Create the find panel...
+    outer = Tk.Frame(self.frame,bd=2)
+    outer.pack(expand=1,fill='both',padx=2,pady=2)
+    
+    &lt;&lt; Create the text and suggestion panes &gt;&gt;
+    &lt;&lt; Create the spelling buttons &gt;&gt;</t>
+<t tx="ekr.20051024205040.26">f = outer
+
+f2 = Tk.Frame(f)
+f2.pack(side='top',expand=0,fill='x')
+
+self.wordLabel = Tk.Label(f2, text="Suggestions for:")
+self.wordLabel.pack(side='left')
+self.wordLabel.configure(font=('verdana',10,'bold'))
+
+fpane = Tk.Frame(f, bd= 2)
+fpane.pack(side='top',expand=1,fill='both')
+
+self.listBox = Tk.Listbox(fpane,height=10,width=10,selectmode= "single")
+self.listBox.pack(side='left',expand=1,fill='both')
+self.listBox.configure(font=('verdana',11,'normal'))
+
+listBoxBar = Tk.Scrollbar(fpane, name= 'listBoxBar')
+
+bar,txt = listBoxBar,self.listBox
+txt['yscrollcommand'] = bar.set
+bar['command'] = txt.yview
+bar.pack(side='right',fill='y')</t>
+<t tx="ekr.20051024205040.27"># Create the button panes
+buttons1 = Tk.Frame(outer,bd=1)
+buttons1.pack (side='top',expand=0,fill='x')  
+
+buttons2 = Tk.Frame(outer,bd=1)
+buttons2.pack (side='top',expand=0,fill='x') 
+
+buttonList = []
+for text,command in (
+    ("Find",self.onFindButton),
+    ("Change",self.onChangeButton),
+    ("Change, Find",self.onChangeThenFindButton),
+    ("Add",self.onAddButton)):
+    font = ('verdana', 9, 'normal')
+    width = max(6,len(text)-1)
+    b=Tk.Button(
+        buttons1, font= font, width= width, text= text, command= command)
+    b.pack(side='left',expand = 0,fill='none')
+
+    buttonList.append(b)
+        
+for text,command in (
+    ("Undo",self.onUndoButton),
+    ("Redo",self.onRedoButton),
+    ("Ignore",self.onIgnoreButton),
+    ("Hide",self.onHideButton)):
+    font = ('verdana', 9, 'normal')
+    width = max(6,len(text)-1)
+    b=Tk.Button(
+        buttons2, font= font, width= width, text= text, command= command)
+    b.pack(side='left',expand = 0,fill='none')
+    buttonList.append(b)
+
+# We need these to enable or disable buttons.
+(self.findButton, self.changeButton,
+ self.changeFindButton, self.addButton, 
+ self.undoButton, self.redoButton,
+ self.ignoreButton, self.hideButton) = buttonList</t>
+<t tx="ekr.20051024205040.28"># These formerly were global functions.</t>
+<t tx="ekr.20051024205040.29">def createSpellMenu(self,*args,**keys):
+
+    """Create the Check Spelling menu item in the Edit menu.
+    
+    The args and keys params are for backward compatibility."""
+
+    c = self.c
+
+    table = (
+        ("-", None, None),
+        ("Check Spelling", "Alt+Shift+A",self.checkSpelling))
+
+    c.frame.menu.createMenuItemsFromTable("Edit",table)</t>
+<t tx="ekr.20051024205040.30">def onSelect(self,tag,keys):
+    
+    """A new position has just been selected.  Update the Spell Check window."""
+    
+    c = self.c
+    
+    if keys.get('c') == c:
+        if c.currentPosition() != self.v:
+            self.update(show=False,fill=True)
+        else:
+            self.updateButtons()</t>
+<t tx="ekr.20051024205040.31">def onCommand(self,tag,keys):
+    
+    """Update the Spell Check window after any command that might change text."""
+    
+    c = self.c
+
+    if keys.get('c') == c:
+        self.update(show=False,fill=False)</t>
+<t tx="ekr.20051024205040.32"></t>
+<t tx="ekr.20051024205040.33">def onAddButton(self):
+    """Handle a click in the Add button in the Check Spelling dialog."""
+
+    self.add()
+    #self.closePipes()
+
+</t>
+<t tx="ekr.20051024205040.34">def onIgnoreButton(self):
+    """Handle a click in the Ignore button in the Check Spelling dialog."""
+
+    self.ignore()
+    #self.closePipes()</t>
+<t tx="ekr.20051024205040.35">def onChangeButton(self):
+    """Handle a click in the Change button in the Check Spelling dialog."""
+
+    self.change()
+    #self.closePipes()
+    self.updateButtons()
+    
+# Event needed for double-click event.
+def onChangeThenFindButton(self,event=None): 
+    """Handle a click in the "Change, Find" button in the Check Spelling dialog."""
+
+    if self.change():
+        self.find()
+    #self.closePipes()
+    self.updateButtons()</t>
+<t tx="ekr.20051024205040.36">def onFindButton(self):
+    """Handle a click in the Find button in the Check Spelling dialog."""
+
+    self.find()
+    self.updateButtons()
+    self.c.frame.bodyWantsFocus()
+    #self.closePipes()</t>
+<t tx="ekr.20051024205040.37">def onHideButton(self):
+    
+    """Handle a click in the Hide button in the Check Spelling dialog."""
+
+    #self.closePipes()
+    self.c.frame.log.selectTab('Log')
+    
+    for message in self.messages:
+        g.es(message,color='blue')
+        
+    self.messages = []</t>
+<t tx="ekr.20051024205040.38">def onRedoButton(self):
+    """Handle a click in the Redo button in the Check Spelling dialog."""
+
+    self.c.undoer.redo() # Not a command, so command hook doesn't fire.
+    self.update(show= False, fill= False)
+    # self.c.frame.body.bodyCtrl.focus_force()
+    self.c.frame.bodyWantsFocus()
+    
+def onUndoButton(self):
+    """Handle a click in the Undo button in the Check Spelling dialog."""
+
+    self.c.undoer.undo() # Not a command, so command hook doesn't fire.
+    self.update(show=False,fill=False)
+    # self.c.frame.body.bodyCtrl.focus_force()
+    self.c.frame.bodyWantsFocus()</t>
+<t tx="ekr.20051024205040.39"></t>
+<t tx="ekr.20051024205040.40">def add(self):
+    """Add the selected suggestion to the dictionary."""
+    
+    if not self.local_dictionary_file:
+        return
+    
+    try:
+        f = None
+        try:
+            # Rewrite the dictionary in alphabetical order.
+            f = open(self.local_dictionary_file, "r")
+            words = f.readlines()
+            f.close()
+            words = [word.strip() for word in words]
+            words.append(self.currentWord)
+            words.sort()
+            f = open(self.local_dictionary_file, "w")
+            for word in words:
+                f.write("%s\n" % word)
+            f.flush()
+            f.close()
+            if 1:
+                s = 'Spell: added %s' % self.currentWord
+                self.messages.append(s)
+            else: # Too distracting.
+                g.es("Adding ", color= "blue", newline= False) 
+                g.es('%s' % self.currentWord)
+        except IOError:
+            g.es("Can not add %s to dictionary" % self.currentWord, color="red")
+    finally:
+        if f: f.close()
+        
+    self.dictionary[self.currentWord.lower()] = 0
+    
+    # Restart aspell so that it re-reads its dictionary.
+    #why? since we are checking local words ourself anyway
+    #self.aspell.closePipes()
+    #self.aspell.openPipes()
+    
+    self.onFindButton()</t>
+<t tx="ekr.20051024205040.41">def change(self):
+    """Make the selected change to the text"""
+
+    c = self.c ; v = self.v ; body = self.body ; t = body.bodyCtrl
+    
+    selection = self.getSuggestion()
+    if selection:
+        start,end = oldSel = g.app.gui.getTextSelection(t)
+        if start:
+            if t.compare(start, "&gt;", end):
+                start,end = end,start
+            t.delete(start,end)
+            t.insert(start,selection)
+            g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
+            newSel = g.app.gui.getTextSelection(t)
+
+            # update node, undo status, dirty flag, changed mark &amp; recolor
+            c.beginUpdate()
+            c.frame.body.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
+            c.endUpdate(True)
+            t.focus_set()
+            return True
+
+    # The focus must never leave the body pane.
+    t.focus_set()
+    return False</t>
+<t tx="ekr.20051024205040.42">def checkSpelling(self,event=None):
+
+    """Open the Check Spelling dialog."""
+
+    self.bringToFront()
+    self.update(show=True,fill=False)</t>
+<t tx="ekr.20051024205040.43">def find(self):
+    """Find the next unknown word."""
+    
+    # Reload the work pane from the present node.
+    s = self.body.bodyCtrl.get("1.0", "end").rstrip()
+    self.workCtrl.delete("1.0", "end")
+    self.workCtrl.insert("end", s)
+    
+    # Reset the insertion point of the work widget.
+    ins = self.body.bodyCtrl.index("insert")
+    self.workCtrl.mark_set("insert", ins)
+
+    alts, word = self.findNextMisspelledWord()
+    self.currentWord = word # Need to remember this for 'add' and 'ignore'
+    
+    if alts:
+        self.fillbox(alts, word)
+        self.body.bodyCtrl.focus_set()
+                    
+        # Copy the working selection range to the body pane
+        start, end = g.app.gui.getTextSelection(self.workCtrl)
+        g.app.gui.setTextSelection(self.body.bodyCtrl, start, end)
+        #fix selection getting hidden in not visable section of body
+        self.body.bodyCtrl.see(start)
+    else:
+        g.es("no more misspellings")
+        self.fillbox([])</t>
+<t tx="ekr.20051024205040.44">def ignore(self):
+
+    """Ignore the incorrect word for the duration of this spell check session."""
+    
+    if 1: # Somewhat helpful: applies until the tab is destroyed.
+        s = 'Spell: ignore %s' % self.currentWord
+        self.messages.append(s)
+
+    if 0: # Too distracting
+        g.es("Ignoring ", color= "blue", newline= False)
+        g.es('%s' % self.currentWord)
+
+    self.dictionary[self.currentWord.lower()] = 0
+    self.onFindButton()</t>
+<t tx="ekr.20051024205040.45"></t>
+<t tx="ekr.20051024205040.46">def bringToFront (self):
+    
+    self.c.frame.log.selectTab('Spell')</t>
+<t tx="ekr.20051024205040.47">def fillbox(self, alts, word=None):
+    """Update the suggestions listbox in the Check Spelling dialog."""
+    
+    self.suggestions = alts
+    
+    if not word:
+        word = ""
+
+    self.wordLabel.configure(text= "Suggestions for: " + word)
+    self.listBox.delete(0, "end")
+
+    for i in xrange(len(self.suggestions)):
+        self.listBox.insert(i, self.suggestions[i])
+    
+    # This doesn't show up because we don't have focus.
+    if len(self.suggestions):
+        self.listBox.select_set(1) 
+
+</t>
+<t tx="ekr.20051024205040.48">def findNextMisspelledWord(self):
+    """Find the next unknown word."""
+    
+    aspell = self.aspell ; alts = None ; word = None
+    c = self.c ; p = self.v ; t = self.workCtrl
+    try:
+        #aspell.openPipes()
+        try:
+            while 1:
+                p, word = self.findNextWord(p) 
+                if not p or not word:
+                    alts = None
+                    break
+                &lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;
+                alts = aspell.processWord(word)
+                if alts:
+                    self.v = p
+                    c.beginUpdate()
+                    c.frame.tree.expandAllAncestors(p)
+                    c.selectPosition(p)
+                    c.endUpdate()
+                    break
+        except:
+            g.es_exception()
+    finally:
+        #aspell.closePipes()
+        return alts, word</t>
+<t tx="ekr.20051024205040.49">@ We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the cost of checking aspell is higher than the cost of checking our local dictionary. For small local dictionaries this is probably not True and this code could easily be located after the aspell call
+@c
+
+if self.dictionary.has_key(word.lower()):
+    
+    # print "Ignored", word
+    continue
+    
+# print "Didn't ignore '%s'" % word</t>
+<t tx="ekr.20051024205040.50"># Unicode characters may cause index problems.
+
+def findNextWord(self,p):
+
+    """Scan for the next word, leaving the result in the work widget"""
+
+    t = self.workCtrl
+
+    # Allow quotes and underscores in the middle of words, but not at the beginning or end.
+    # This breaks words at non-ascii 'letters' such as é.  I don't know what the solution is.
+    word_start = string.letters
+    word_end   = string.letters + string.digits
+    word_chars = string.letters + string.digits + "`" + "'" + "_"
+    while 1:
+        line = t.get('insert wordstart','insert lineend')
+        # g.trace('insert',t.index('insert'),'insert wordstart',t.index('insert wordstart'))
+        # g.trace(repr(line))
+        # Start the word at the first letter.
+        i = 0
+        while i &lt; len(line) and line[i] not in word_start:
+            i += 1
+        if i &lt; len(line):
+            # A non-empty word has been found.
+            line = t.get('insert wordstart','insert lineend')
+            j = i
+            while j &lt; len(line) and line[j] in word_chars:
+                j += 1
+            word = line[i:j]
+            while word and word[-1] not in word_end:
+                word = word[:-1]
+            # This trace is important: it verifies that all words have actually been checked.
+            # g.trace(repr(word))
+            x1 = t.index('insert + %dc' % (i))
+            x2 = t.index('insert + %dc' % (i+len(word)))
+            g.app.gui.setTextSelection(t,x1,x2)
+            return p, word
+        else:
+            # End of the line. Bug fix: 9/8/05.
+            t.mark_set('insert','insert lineend + 1c')
+            if t.compare("insert","&gt;=", "end - 1c"):
+                p.moveToThreadNext()
+                if not p: return None,None
+                t.delete("1.0", "end")
+                t.insert("end", p.bodyString())
+                t.mark_set("insert", "1.0")</t>
+<t tx="ekr.20051024205040.51">def getSuggestion(self):
+    """Return the selected suggestion from the listBox."""
+    
+    # Work around an old Python bug.  Convert strings to ints.
+    items = self.listBox.curselection()
+    try:
+        items = map(int, items)
+    except ValueError: pass
+
+    if items:
+        n = items[0]
+        suggestion = self.suggestions[n]
+        return suggestion
+    else:
+        return None</t>
+<t tx="ekr.20051024205040.52">def onMap (self, event=None):
+    """Respond to a Tk &lt;Map&gt; event."""
+    
+    self.update(show= False, fill= False)</t>
+<t tx="ekr.20051024205040.53">def onSelectListBox(self, event=None):
+    """Respond to a click in the selection listBox."""
+    
+    self.updateButtons()
+    self.body.bodyCtrl.focus_set()
+</t>
+<t tx="ekr.20051024205040.54">def update(self,show=True,fill=False):
+    
+    """Update the Spell Check dialog."""
+    
+    # print "update(show=%d,fill=%d)" % (show,fill)
+    
+    # Always assume that the user has changed text.
+    if not self.c: return
+
+    c = self.c
+    self.v = c.currentVnode()
+    self.body = c.frame.body
+    if fill:
+        self.fillbox([])
+    self.updateButtons()
+    if show:
+        self.bringToFront()
+        # Don't interfere with Edit Headline commands.
+        self.body.bodyCtrl.focus_set()
+
+</t>
+<t tx="ekr.20051024205040.55">def updateButtons(self):
+    
+    """Enable or disable buttons in the Check Spelling dialog."""
+    
+    c = self.c
+
+    start,end = g.app.gui.getTextSelection(c.frame.body.bodyCtrl)
+    state = g.choose(self.suggestions and start,"normal", "disabled")
+    
+    self.changeButton.configure(state= state)
+    self.changeFindButton.configure(state= state)
+
+    state = g.choose(self.c.undoer.canRedo(), "normal", "disabled")
+    self.redoButton.configure(state= state)
+    
+    state = g.choose(self.c.undoer.canUndo(), "normal", "disabled")
+    self.undoButton.configure(state= state)
+    
+    state = g.choose(self.local_dictionary_file, "normal", "disabled")
+    self.addButton.configure(state= state)
+
+    self.ignoreButton.configure(state= "normal")</t>
 </tnodes>
 </leo_file>
