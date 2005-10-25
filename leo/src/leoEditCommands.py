@@ -4667,9 +4667,21 @@ class leoTkinterFindTab (leoFind.leoFind):
     
         for w in (self.find_ctrl, self.change_ctrl):
             k.copyBindingsToWidget('text',w)
+            # Bind shortcuts for the following commands...
+            for commandName,func in (
+                ('find-tab-find',       self.findNextCommand),
+                ('find-tab-find-prev',  self.findPrevCommand),
+                ('find-tab-change',     self.changeCommand),
+                ('find-tab-change-find',self.changeThenFindCommand),
+            ):
+                junk, bunch = c.config.getShortcut(commandName)
+                accel = bunch and bunch.val
+                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                if shortcut:
+                    # g.trace(shortcut,commandName)
+                    w.bind(shortcut,func)
             w.bind ("<1>",  self.resetWrap,'+')
             w.bind("<Key>", self.resetWrap,'+')
-            # w.bind("<Control-a>",self.selectAllFindText)
     
         for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
             w.bind("<Key-Return>", self.findButtonCallback)
@@ -4977,6 +4989,38 @@ class leoTkinterFindTab (leoFind.leoFind):
         return 'break'
     #@nonl
     #@-node:ekr.20051023183028:findButtonCallback
+    #@+node:ekr.20051024192602: Top level
+    #@+node:ekr.20051024192642.2:findNext/PrefCommand
+    def findNextCommand (self,event=None):
+        
+        c = self.c
+        self.setup_command(c)
+        self.findNext()
+        
+    def findPrevCommand (self,event=None):
+        
+        c = self.c
+        self.setup_command(c)
+        self.reverse = not self.reverse
+        self.findNext()
+        self.reverse = not self.reverse
+    #@nonl
+    #@-node:ekr.20051024192642.2:findNext/PrefCommand
+    #@+node:ekr.20051024192642.3:change/ThenFindCommand
+    def changeCommand (self,event=None):
+        
+        c = self.c
+        self.setup_command(c)
+        self.change()
+        
+    def changeThenFindCommand(self,event=None):
+        
+        c = self.c
+        self.setup_command(c)
+        self.changeThenFind()
+    #@nonl
+    #@-node:ekr.20051024192642.3:change/ThenFindCommand
+    #@-node:ekr.20051024192602: Top level
     #@+node:ekr.20051020120306.25:hideTab
     def hideTab (self,event=None):
         
@@ -4988,7 +5032,7 @@ class leoTkinterFindTab (leoFind.leoFind):
     #@-node:ekr.20051020120306.25:hideTab
     #@+node:ekr.20051020120306.26:bringToFront
     def bringToFront (self):
-        
+    
         """Bring the Find Tab to the front and select the entire find text."""
     
         c = self.c ; t = self.find_ctrl
@@ -5136,6 +5180,8 @@ class searchCommandsClass (baseEditCommandsClass):
             'open-find-tab':            self.openFindTab,
             'find-tab-find':            self.findTabFindNext,
             'find-tab-find-prev':       self.findTabFindPrev,
+            'find-tab-change':          self.findTabChange,
+            'find-tab-change-then-find':self.findTabChangeThenFind,
     
             'isearch-forward':          self.isearchForward,
             'isearch-backward':         self.isearchBackward,
@@ -5170,22 +5216,43 @@ class searchCommandsClass (baseEditCommandsClass):
         self.findTabHandler.bringToFront()
     #@nonl
     #@-node:ekr.20051020120306:openFindTab
-    #@+node:ekr.20051022212004:findTabFindNext/Pref
+    #@+node:ekr.20051022212004:commands...
+    # Just open the Find tab if it has never been opened.
+    # For minibuffer commands, we must also force the Find tab to be visible.
+    
+    def findTabChange (self,event=None):
+    
+        if self.findTabHandler:
+            self.openFindTab()
+            self.findTabHandler.changeCommand()
+        else:
+            self.openFindTab()
+    
+    def findTabChangeThenFind(self,event=None):
+    
+        if self.findTabHandler:
+            self.openFindTab()
+            self.findTabHandler.changeThenFindCommand()
+        else:
+            self.openFindTab()
+    
     def findTabFindNext (self,event=None):
         
-        c = self.c
-        self.openFindTab()
-        self.findTabHandler.setup_command(c)
-        self.findTabHandler.findNext()
-        
+        if self.findTabHandler:
+            self.openFindTab()
+            self.findTabHandler.findNextCommand()
+        else:
+            self.openFindTab()
+    
     def findTabFindPrev (self,event=None):
         
-        c = self.c
-        self.openFindTab()
-        self.findTabHandler.setup_command(c)
-        self.findTabHandler.findPrev()
+        if self.findTabHandler:
+            self.openFindTab()
+            self.findTabHandler.findPrevCommand()
+        else:
+            self.openFindTab()
     #@nonl
-    #@-node:ekr.20051022212004:findTabFindNext/Pref
+    #@-node:ekr.20051022212004:commands...
     #@-node:ekr.20051022211617:find tab...
     #@+node:ekr.20050920084036.261:incremental search...
     def isearchForward (self,event):

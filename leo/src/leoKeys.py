@@ -699,6 +699,12 @@ class keyHandlerClass:
         k = self ; c = k.c
         
         if not shortcut: g.trace('No shortcut for %s' % commandName)
+        bunch = k.bindingsDict.get(shortcut)
+        if bunch and bunch.pane == pane:
+            if commandName != bunch.commandName:
+                g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
+                    shortcut,bunch.commandName,commandName,pane),color='blue')
+            return
     
         try:
             #@        << bind callback to shortcut in pane >>
@@ -1363,8 +1369,8 @@ class keyHandlerClass:
                 k.commandName = None
                 leoEditCommands.initAllEditCommanders(c)
                 
-                if forceFocus: # This is dubious.
-                    w.focus_force()
+                # # if forceFocus: # This is dubious.
+                    # # w.focus_force()
                 try:
                     bodyCtrl = c.frame.body.bodyCtrl
                     bodyCtrl.tag_delete('color')
@@ -1374,6 +1380,7 @@ class keyHandlerClass:
                     pass
     
         w.update_idletasks()
+    #@nonl
     #@-node:ekr.20051001050607:endCommand
     #@-node:ekr.20051001051355:Dispatching...
     #@+node:ekr.20050920085536.32:Externally visible commands

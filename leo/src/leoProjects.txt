@@ -14844,8 +14844,8 @@ def endCommand (self,event,commandName,forceFocus=True):
             k.commandName = None
             leoEditCommands.initAllEditCommanders(c)
             
-            if forceFocus: # This is dubious.
-                w.focus_force()
+            # # if forceFocus: # This is dubious.
+                # # w.focus_force()
             try:
                 bodyCtrl = c.frame.body.bodyCtrl
                 bodyCtrl.tag_delete('color')
@@ -14855,6 +14855,7 @@ def endCommand (self,event,commandName,forceFocus=True):
                 pass
 
     w.update_idletasks()
+#@nonl
 #@-node:ekr.20051001050607:endCommand
 #@-node:ekr.20051015123432:(Methods with pychecker problems)
 #@-node:ekr.20051006122237:(Recent)
@@ -20944,6 +20945,12 @@ def bindKey (self,pane,shortcut,callback,commandName):
     k = self ; c = k.c
     
     if not shortcut: g.trace('No shortcut for %s' % commandName)
+    bunch = k.bindingsDict.get(shortcut)
+    if bunch and bunch.pane == pane:
+        if commandName != bunch.commandName:
+            g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
+                shortcut,bunch.commandName,commandName,pane),color='blue')
+        return
 
     try:
         << bind callback to shortcut in pane >>
@@ -22138,6 +22145,12 @@ def bindKey (self,pane,shortcut,callback,commandName):
     k = self ; c = k.c
     
     if not shortcut: g.trace('No shortcut for %s' % commandName)
+    bunch = k.bindingsDict.get(shortcut)
+    if bunch and bunch.pane == pane:
+        if commandName != bunch.commandName:
+            g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
+                shortcut,bunch.commandName,commandName,pane),color='blue')
+        return
 
     try:
         << bind callback to shortcut in pane >>
@@ -22771,7 +22784,7 @@ def clearTab (self,tabName):
 #@+node:ekr.20051024173701:createTab
 def createTab (self,tabName):
     
-    c = self.c
+    c = self.c ; k = c.keyHandler
     tabFrame = self.nb.add(tabName)
     << bind a tab-specific pop-up menu to the tab >>
     << Create the tab's text widget >>
@@ -22885,18 +22898,12 @@ def selectTab (self,tabName):
 def setTabBindings (self,tabName):
     
     c = self.c ; k = c.keyHandler
-    if not k: return
-    
-    textWidget = self.textDict.get(tabName)
-    if not textWidget: return
 
-    shortcuts = k.bindingsDict.keys()
-    
-    for shortcut in shortcuts:
-        bunch = k.bindingsDict.get(shortcut)
-        if bunch.pane in ('all','log','text'):
-            # g.trace(tabName,bunch.pane,bunch.commandName,shortcut)
-            textWidget.bind(shortcut,bunch.func)
+    textWidget = self.textDict.get(tabName)
+
+    if k and textWidget:
+
+        k.copyBindingsToWidget(['all','log','text'],textWidget)
 #@nonl
 #@-node:ekr.20051022162730:setTabBindings
 #@+node:ekr.20051019134106:Tab menu callbacks & helpers
@@ -24539,6 +24546,12 @@ def bindKey (self,pane,shortcut,callback,commandName):
     k = self ; c = k.c
     
     if not shortcut: g.trace('No shortcut for %s' % commandName)
+    bunch = k.bindingsDict.get(shortcut)
+    if bunch and bunch.pane == pane:
+        if commandName != bunch.commandName:
+            g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
+                shortcut,bunch.commandName,commandName,pane),color='blue')
+        return
 
     try:
         << bind callback to shortcut in pane >>
@@ -25482,7 +25495,7 @@ def clearTab (self,tabName):
 #@+node:ekr.20051024173701:createTab
 def createTab (self,tabName):
     
-    c = self.c
+    c = self.c ; k = c.keyHandler
     tabFrame = self.nb.add(tabName)
     << bind a tab-specific pop-up menu to the tab >>
     << Create the tab's text widget >>
@@ -25596,18 +25609,12 @@ def selectTab (self,tabName):
 def setTabBindings (self,tabName):
     
     c = self.c ; k = c.keyHandler
-    if not k: return
-    
-    textWidget = self.textDict.get(tabName)
-    if not textWidget: return
 
-    shortcuts = k.bindingsDict.keys()
-    
-    for shortcut in shortcuts:
-        bunch = k.bindingsDict.get(shortcut)
-        if bunch.pane in ('all','log','text'):
-            # g.trace(tabName,bunch.pane,bunch.commandName,shortcut)
-            textWidget.bind(shortcut,bunch.func)
+    textWidget = self.textDict.get(tabName)
+
+    if k and textWidget:
+
+        k.copyBindingsToWidget(['all','log','text'],textWidget)
 #@nonl
 #@-node:ekr.20051022162730:setTabBindings
 #@+node:ekr.20051019134106:Tab menu callbacks & helpers
@@ -26582,6 +26589,12 @@ def bindKey (self,pane,shortcut,callback,commandName):
     k = self ; c = k.c
     
     if not shortcut: g.trace('No shortcut for %s' % commandName)
+    bunch = k.bindingsDict.get(shortcut)
+    if bunch and bunch.pane == pane:
+        if commandName != bunch.commandName:
+            g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
+                shortcut,bunch.commandName,commandName,pane),color='blue')
+        return
 
     try:
         << bind callback to shortcut in pane >>

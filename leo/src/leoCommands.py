@@ -2828,6 +2828,8 @@ class baseCommands:
         s = g.app.gui.getTextFromClipboard()
         pasteAsClone = not reassignIndices
         undoType = g.choose(reassignIndices,'Paste Node','Paste As Clone')
+        
+        g.trace(c.canPasteOutline(s))
     
         if not s or not c.canPasteOutline(s):
             return # This should never happen.

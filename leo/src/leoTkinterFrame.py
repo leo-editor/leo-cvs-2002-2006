@@ -3698,7 +3698,7 @@ class leoTkinterLog (leoFrame.leoLog):
     #@+node:ekr.20051024173701:createTab
     def createTab (self,tabName):
         
-        c = self.c
+        c = self.c ; k = c.keyHandler
         tabFrame = self.nb.add(tabName)
         #@    << bind a tab-specific pop-up menu to the tab >>
         #@+node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
@@ -3814,18 +3814,12 @@ class leoTkinterLog (leoFrame.leoLog):
     def setTabBindings (self,tabName):
         
         c = self.c ; k = c.keyHandler
-        if not k: return
-        
-        textWidget = self.textDict.get(tabName)
-        if not textWidget: return
     
-        shortcuts = k.bindingsDict.keys()
-        
-        for shortcut in shortcuts:
-            bunch = k.bindingsDict.get(shortcut)
-            if bunch.pane in ('all','log','text'):
-                # g.trace(tabName,bunch.pane,bunch.commandName,shortcut)
-                textWidget.bind(shortcut,bunch.func)
+        textWidget = self.textDict.get(tabName)
+    
+        if k and textWidget:
+    
+            k.copyBindingsToWidget(['all','log','text'],textWidget)
     #@nonl
     #@-node:ekr.20051022162730:setTabBindings
     #@+node:ekr.20051019134106:Tab menu callbacks & helpers
