@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="119" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="120" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
-	<global_window_position top="24" left="225" height="873" width="954"/>
+	<global_window_position top="24" left="264" height="873" width="915"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -137,13 +137,20 @@
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
+<v t="ekr.20051025084017"><vh>@page Spell tab</vh>
+<v t="ekr.20051025084017.1"><vh>@string spell_local_language_code = en</vh></v>
+<v t="ekr.20051025084017.2"><vh>@string spell_local_dictionary = None</vh></v>
+<v t="ekr.20051025085144"><vh>@string aspell_dir = c:\aspell</vh></v>
+<v t="ekr.20051025085144.1"><vh>@string aspell_bin_dir = c:\aspell\bin</vh></v>
+</v>
 <v t="ekr.20041213105007.1"><vh>Colors</vh>
-<v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
+<v t="ekr.20041213105007.3" a="E"><vh>@page Log pane colors</vh>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
 <v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
 <v t="ekr.20041217184352.2"><vh>@color log_pane_background_color = #f2fdff</vh></v>
 <v t="ekr.20051020125928"><vh>@color log_pane_Find_tab_background_color = #d6c7d3</vh></v>
+<v t="ekr.20051025070845"><vh>@color log_pane_Spell_tab_background_color = MistyRose1</vh></v>
 </v>
 <v t="ekr.20041213105007.2"><vh>@page Body pane colors</vh>
 <v t="ekr.20041119034357.41"><vh>@color body_cursor_background_color = None</vh></v>
@@ -154,7 +161,7 @@
 <v t="ekr.20051006200015"><vh>@color body_text_selection_background_color = Gray80</vh></v>
 <v t="ekr.20051006200015.1"><vh>@color body_text_selection_foreground_color = white</vh></v>
 </v>
-<v t="ekr.20041119051246.1"><vh>@page Outline pane colors</vh>
+<v t="ekr.20041119051246.1" a="E"><vh>@page Outline pane colors</vh>
 <v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = #ffffec</vh></v>
 <v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = None</vh></v>
 <v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
@@ -222,14 +229,14 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="TV"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
 </v>
 <v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
+<v t="ekr.20051010112558" a="TV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1370,285 +1377,102 @@ KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 <t tx="ekr.20051010093913">c.save()</t>
 <t tx="ekr.20051010112558">@color
 
-# New focus commands
-focus-to-body           = None
-focus-to-log            = None
-focus-to-minibuffer     = None
-focus-to-tree           = None
-cycle-focus             = Alt-Shift-f
+# Important: the print-commands and print-bindings show what bindings are in effect.
 
-hide-mini-buffer        = None
-show-mini-buffer        = None
-toggle-mini-buffer      = None
-    # This had better be defined if you intend ever to hide the minibuffer.
-    # To avoid confusion, it should be something unlikely to be typed by accident.
-    # Note: it **is** possible to use &lt;alt-x&gt;show-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
+# Test of old-style bindings.
+# selectall = Alt-Shift-Ctrl-A
 
-# The infamous cut/copy/paste commands.
-# I may replace these later with the emacs equivlents.
-copy-text               = Ctrl-c        # For testing only: Alt-Shift-Ctrl-c
-cut-text                = Ctrl-x        # For testing only: Alt-Shift-Ctrl-x
-paste-text              = Ctrl-v        # For testing only: Alt-Shift-Ctrl-v
-
-# Test of old-style settings names
-# Note: for this to work, the binding for select-all below must be disabled.
-# selectall              = Alt-Shift-Ctrl-A
-
-# Leo find panel stuff.  It's not clear what will happen to these.
-dismiss-leo-find-panel  = None
-leo-find                = None
-leo-find-panel          = None      # Ctrl-f conflicts with forward-char.
-leo-find-previous       = None
-leo-change              = None
-leo-change-then-find    = None
-leo-change-all          = None      # Unwise to bind this to a shortcut or abbreviation.
-
-# New leo find tab
-open-find-tab           = Ctrl-f # Functional, but no way to bind F3 to it's Find button.
-find-tab-find           = F3
-find-tab-find-prev      = F2
-
-# These basic moves are bound in all text widgets ?? including the minibuffer ??
-
-backward-char           ! text = Ctrl-b        # No conflict
-backward-word           ! text = Alt-b         # No conflict   
-beginning-of-line       ! text = Ctrl-a        # Ctrl-a Conflicts with select-all 
-end-of-line             ! text = Ctrl-e        # Ctrl-e Conflicts with execute-script
-forward-char            ! text = Shift-Ctrl-f  # Ctrl-f Conflicts with find-panel
-forward-word            ! text = Alt-f         # No conflict with bindings, but usually opens file menu.
-kill-line               ! text = Shift-Ctrl-k  # Ctrl-K conflicts with match-braket.
-
-# Emacs moves...
-backward-paragraph      = Alt-braceleft # Conflicts with
-back-sentence           ! text = Alt-a         # No conflict
-# backward-word         = Ctrl-Left     # At present, overrides previous binding.
-beginning-of-buffer     = Alt-less
-# beginning-of-line     = None          # Alt-UpArrow conflicts with goto-prev-visible
-end-of-buffer           = Alt-greater
-# end-of-line           = Alt-DnArrow   # Conflicts with goto-next-visible
-exchange-point-mark     = None          # Should be Ctrl-X Ctrl-X.
-forward-paragraph       = Alt-braceright
-forward-sentence        = Alt-e         # No conflict
-# forward-word          = Ctrl-Right    # At present, overrides previous binding.
-goto-char               = None
-goto-line               = None          # Usually Alt-g, but Leo's goto-line-number is better.
-goto-line-number        = Alt-g         # The Leo equivalent.
-move-past-close         = Alt-parenright
-next-line               = Ctrl-n        # Conflicts with new.
-previous-line           = Ctrl-p
-scroll-down             = PageDn        # *** Ctrl-v conflicts with paste-text.
-scroll-up               = PageUp        # Alt-v conflicts with view-all-characters.
-set-mark-command        = Ctrl-space    # Also Ctrl-Shift-at
-
-full-command            = Alt-x         # No conflict.
-quick-command           = Alt-c         # Usually Ctrl-c, conflicts with cut-text.
-keyboard-quit           = Ctrl-g
-universal-argument      = Alt-u         # Usually Ctrl-u, conflicts with move-outline-up.
-# negative-argument     = Alt-minus     # Conflicts with contract-all.
-repeat-complex-command  = None          # Usually 'again', whatever that is.
-
-# Inserts &amp; deletes...
-delete                  = None              # What does this do?
-delete-char             = None              # Use BackSpace: Too big a conflict with Control-d
-delete-file             = None
-delete-rectangle        = None
-delete-spaces           = Alt-backslash
-insert-newline          = None              # Control-o conflicts with open.
-newline-and-indent:     = Control-j
-split-line              = Alt-Ctrl-o
-zap-to-character        = Alt-z
-
-# Kill buffer...
-# append-next-kill      = Control-Alt-w
-backward-kill-paragraph = None
-backward-kill-sentence  = None
-backward-kill-word      = Alt-Delete
-kill-buffer             = None
-kill-paragraph          = None
-kill-rectangle          = None
-kill-region             = Control-w
-kill-region-save        = Alt-w 	        # Ctrl-w conflicts with close.
-kill-sentence           = Alt-k
-kill-word               = Alt-d
-yank                    = Control-y
-yank-pop                = Alt-y
-
-# All other Emacs commands
 abbrev-mode                 = None
-add-global-abbrev           = None
-advertised-undo             = None
-append-to-buffer            = None
-append-to-register          = None
-back-to-indentation         = None
-backward-delete-char        = None
-call-last-keyboard-macro    = None
-capitalize-word             = None
-center-line                 = None
-center-region               = None
-clear-rectangle             = None
-close-rectangle             = None
-close-window                = None
-copy-rectangle-to-register  = None
-copy-to-buffer              = None
-copy-to-register            = None
-count-region                = None
-dabbrev-completion          = None
-dabbrev-expands             = None
-delete-indentation          = None
-diff                        = None
-digit-argument              = None
-downcase-region             = None
-downcase-word               = None
-end-kbd-macro               = None
-escape                      = None
-eval-expression             = None
-expand-abbrev               = None
-expand-region-abbrevs       = None
-fill-paragraph              = None
-fill-region                 = None
-fill-region-as-paragraph    = None
-flush-lines                 = None
-how-many                    = None
-help                        = None # Ctrl-h conflicts with edit headline.
-iconfify-or-deiconify-frame = None
-increment-register          = None
-indent-region               = None
-indent-relative             = None
-indent-rigidly              = None
-indent-to-comment-column    = None
-insert-file                 = None
-insert-keyboard-macro       = None
-insert-parentheses          = None
-insert-register             = None
-insert-to-buffer            = None
-inverse-add-global-abbrev   = None
-isearch-backward            = None
-isearch-backward-regexp     = None
-isearch-forward             = None
-isearch-forward-regexp      = None
-jump-to-register            = None
-keep-lines                  = None
-kill-all-abbrevs            = None
-line-number                 = None
-list-abbrevs                = None
-list-buffers                = None
-load-file                   = None
-make-directory              = None
-name-last-kbd-macro         = None
-negative-argument           = None
-number-command              = None
-number-command-0            = None
-number-command-1            = None
-number-command-2            = None
-number-command-3            = None
-number-command-4            = None
-number-command-5            = None
-number-command-6            = None
-number-command-7            = None
-number-command-8            = None
-number-command-9            = None
-number-to-register          = None
-open-rectangle              = None
-point-to-register           = None
-prepend-to-buffer           = None
-prepend-to-register         = None
-print-bindings              = None
-print-commands              = None
-query-replace               = None
-query-replace-regex         = None
-re-search-backward          = None
-re-search-forward           = None
-read-abbrev-file            = None
-remove-blank-lines          = None
-remove-directory            = None
-rename-buffer               = None
-replace-regex               = None
-replace-string              = None
-reverse-region              = None
-save-buffers-kill-leo       = None
-search-backward             = None
-search-forward              = None
-select-paragraph            = None
-set-comment-column          = None
-set-fill-column             = None
-set-fill-prefix             = None
-shell-command               = None
-shell-command-on-region     = None
-show-colors                 = None
-show-fonts                  = None
-sort-columns                = None
-sort-fields                 = None
-sort-lines                  = None
-start-kbd-macro             = None
-string-rectangle            = None
-suspend                     = None
-switch-to-buffer            = None
-tabify                      = None
-transpose-chars             = None
-transpose-lines             = None
-transpose-words             = None
-untabify                    = None
-upcase-region               = None
-upcase-word                 = None
-view-lossage                = None
-view-register               = None
-what-line                   = None
-word-search-backward        = None
-word-search-forward         = None
-write-abbrev-file           = None
-write-missing-at-file-nodes = None
-yank-rectangle              = None
-
-# Leo commands...
-
-# apply settings            = None
 abort-edit-headline         = Shift-Esc
 about-leo                   = None
 add-comments                = Ctrl-(
+add-global-abbrev           = None
+advertised-undo             = None
+append-next-kill            = None      # Control-Alt-w
+# apply settings            = None      # Does not exist yet.
+append-to-buffer            = None
+append-to-register          = None
+back-sentence               ! text = Alt-a  # No conflict
+back-to-indentation         = None
+backward-char               ! text = Ctrl-b # No conflict
+backward-delete-char        = None
+backward-kill-paragraph     = None
+backward-kill-sentence      = None
+backward-kill-word          = Alt-Delete
+backward-paragraph          = Alt-braceleft # Conflicts with
+backward-word               ! text = Alt-b  # No conflict   
+beginning-of-buffer         = Alt-less
+beginning-of-line           ! text = Ctrl-a # Ctrl-a Conflicts with select-all 
+call-last-keyboard-macro    = None
+capitalize-word             = None
 cascade-windows             = None
+center-line                 = None
+center-region               = None
 check-all-python-code       = None
 check-outline               = None
 check-python-code           = None
-# check-spelling            = Alt-Shift-A          # Add this command.
 clear-recent-files          = None
+clear-rectangle             = None
 clone-node                  = Ctrl-`
-close                       = None          # Ctrl-w conflicts with kill-region.
+close                       = None      # Ctrl-w conflicts with kill-region.
+close-rectangle             = None
+close-window                = None
 contract-all                = Alt--
 contract-node               = Alt-[
 contract-or-go-left         = None
+contract-parent             ! tree = LtArrow # Was Alt-0, but this seems more consistent.
 convert-all-blanks          = None
 convert-all-tabs            = None
 convert-blanks              = Shift-Ctrl-B
 convert-tabs                = Shift-Ctrl-J
 copy-node                   = Shift-Ctrl-C
+copy-rectangle-to-register  = None
+copy-text                   = Ctrl-c        # Conflicts with Emacs ctrl-c
+copy-to-buffer              = None
+copy-to-register            = None
+count-region                = None
 cut-node                    = Shift-Ctrl-X
+cut-text                    = Ctrl-x
+cycle-focus                 = Alt-Shift-f
+dabbrev-completion          = None
+dabbrev-expands             = None
 de-hoist                    = None
+delete                      = None          # What does this do?
+delete-char                 = None          # Use BackSpace: Too big a conflict with Control-d
 delete-comments             = Ctrl-)
+delete-file                 = None
+delete-indentation          = None
 delete-node                 = Shift-Ctrl-BkSp
+delete-rectangle            = None
+delete-spaces               = Alt-backslash
 delete-text                 = None
 demote                      = Ctrl-}
+diff                        = None
+digit-argument              = None
+dismiss-leo-find-panel      = None
+downcase-region             = None
+downcase-word               = None
 dump-outline                = None
 edit-headline               = Ctrl-H
 end-edit-headline           = Esc
+end-kbd-macro               = None
+end-of-buffer               = Alt-greater
+end-of-line                 ! text = Ctrl-e # Ctrl-e Conflicts with execute-script
 equal-sized-panes           = Alt-Shift-E
-execute-script              = None              # Ctrl-e conflicts with end-of-line
+escape                      = None
+eval-expression             = None
+exchange-point-mark         = None      # Should be Ctrl-X Ctrl-X.
+execute-script              = None      # Ctrl-e conflicts with end-of-line
 exit-leo                    = Ctrl-Q
-expand-all                  = None              # Alt-9: not useful enough.
+expand-abbrev               = None
+expand-all                  = None      # Alt-9: not useful enough.
+expand-and-go-right         ! tree = RtArrow # It would make sense to bind Alt-RtArrow to this too.
 expand-next-level           = Alt-=
 expand-node                 = Alt-]
 expand-or-go-right          = None
 expand-prev-level           = Alt-.
-# These conflict with the Emacs number commands.
-# expand-to-level-1         = Alt-1
-# expand-to-level-2         = Alt-2
-# expand-to-level-3         = Alt-3
-# expand-to-level-4         = Alt-4
-# expand-to-level-5         = Alt-5
-# expand-to-level-6         = Alt-6
-# expand-to-level-7         = Alt-7
-# expand-to-level-8         = Alt-8
-# expand-to-level-9         = None
-expand-to-level-1           = None
+expand-region-abbrevs       = None
+expand-to-level-1           = None      # Was Alt-1 through Alt-8...
 expand-to-level-2           = None
 expand-to-level-3           = None
 expand-to-level-4           = None
@@ -1661,103 +1485,254 @@ export-headlines            = None
 extract                     = Shift-Ctrl-D
 extract-names               = Shift-Ctrl-N
 extract-section             = Shift-Ctrl-E
+fill-paragraph              = None
+fill-region                 = None
+fill-region-as-paragraph    = None
+find-tab-change             = Ctrl-=
+find-tab-change-then-find   = Ctrl--
+find-tab-find               = F3
+find-tab-find-prev          = F2
 flatten-outline             = None
-
-contract-parent             ! tree = LtArrow       # Was Alt-0, but this seems more consistent.
-expand-and-go-right         ! tree = RtArrow           # It would make sense to bind Alt-RtArrow to this too.
+flush-lines                 = None
+focus-to-body               = None
+focus-to-log                = None
+focus-to-minibuffer         = None
+focus-to-tree               = None
+forward-char                ! text = Shift-Ctrl-f   # Ctrl-f Conflicts with find-panel
+forward-paragraph           = Alt-braceright
+forward-sentence            ! text = Alt-e          # No conflict
+forward-word                ! text = Alt-f          # No conflict with bindings, but usually opens file menu.
+full-command                = Alt-x                 # No conflict.
 go-back                     ! tree = None
 go-forward                  ! tree = None
-goto-first-node             ! tree = Alt-Home      # Was: Alt-Shift-G
+goto-char                   = None
+goto-first-node             ! tree = Alt-Home       # Was: Alt-Shift-G
 goto-first-sibling          ! tree = Alt-Shift-Home
-goto-last-node              ! tree = None          # Was: Alt-Shift-H
+goto-last-node              ! tree = None           # Was: Alt-Shift-H
 goto-last-sibling           ! tree = Alt-Shift-End
 goto-last-visible           ! tree = Alt-End
-goto-next-changed           ! tree = None          # Removed Alt-D: not useful enough.
+goto-line                   = None              # Usually Alt-g, but Leo's goto-line-number is better.
+goto-line-number            = Alt-g             # The Leo equivalent.
+goto-next-changed           ! tree = None       # Removed Alt-D: not useful enough.
 goto-next-clone             ! tree = Alt-N
-goto-next-marked            ! tree = None          # Removed Alt-M: not useful enough.
+goto-next-marked            ! tree = None       # Removed Alt-M: not useful enough.
 goto-next-node              ! tree = Alt-DnArrow
 goto-next-sibling           ! tree = None
-goto-next-visible           ! tree = DnArrow       # Alt-UpArrow conflicts with beginning-of-line.
+goto-next-visible           ! tree = DnArrow    # Alt-UpArrow conflicts with beginning-of-line.
 goto-parent                 ! tree = Alt-LtArrow
 goto-prev-node              ! tree = Alt-UpArrow
-goto-prev-sibling           ! tree = None          # Removed Alt-Shift-R: not useful enough.
+goto-prev-sibling           ! tree = None       # Removed Alt-Shift-R: not useful enough.
 goto-prev-visible           ! tree = UpArrow
-
+help                        = None          # Ctrl-h conflicts with edit headline.
+hide-find-tab               = None
+hide-mini-buffer            = None
+hide-spell-tab              = None
 hoist                       = None
+how-many                    = None
+iconfify-or-deiconify-frame = None
 import-at-file              = None          # Removed Shift-Ctrl-F: not useful enough.
 import-at-root              = None
 import-cweb-files           = None
 import-derived-file         = None
 import-flattened-outline    = None
 import-noweb-files          = None
+increment-register          = None
 indent                      = Ctrl-]
+indent-region               = None
+indent-relative             = None
+indent-rigidly              = None
+indent-to-comment-column    = None
 insert-body-time            = None          # Shift-Ctrl-G: not useful enough.
+insert-file                 = None
 insert-headline-time        = None          # Shift-Ctrl-H: not useful enough.
+insert-keyboard-macro       = None
+insert-newline              = None          # Ctrl-o conflicts with open.
 insert-node                 = Ctrl-I
+insert-parentheses          = None
+insert-register             = None
+insert-to-buffer            = None
+inverse-add-global-abbrev   = None
+isearch-backward            = None
+isearch-backward-regexp     = None
+isearch-forward             = None
+isearch-forward-regexp      = None
+jump-to-register            = None
+keep-lines                  = None
+keyboard-quit               = Ctrl-g        # Emacs binding.
+kill-all-abbrevs            = None
+kill-buffer                 = None
+kill-line                   ! text = Shift-Ctrl-k  # Ctrl-K conflicts with match-braket.
+kill-paragraph              = None
+kill-rectangle              = None
+kill-region                 = Control-w
+kill-region-save            = Alt-w 	   # Ctrl-w conflicts with close.
+kill-sentence               = Alt-k
+kill-word                   = Alt-d
+leo-change                  = None
+leo-change-all              = None      # Unwise to bind this to a shortcut or abbreviation.
+leo-change-then-find        = None
+leo-find                    = None
+leo-find-panel              = None      # Ctrl-f conflicts with forward-char.
+leo-find-previous           = None
+line-number                 = None
+list-abbrevs                = None
+list-buffers                = None
+load-file                   = None
+make-directory              = None
 mark                        = Ctrl-M
-mark-changed-items          = None          # Alt-C: now quick-command.
-mark-changed-roots          = None          # Alt-R: not useful enough.
-mark-clones                 = None          # Alt-K: not useful enough.
-mark-subheads               = None          # Alt-S: not useful enough.
-match-bracket               = Ctrl-K        # Conflicts with kill-line
+mark-changed-items          = None      # Alt-C: now quick-command.
+mark-changed-roots          = None      # Alt-R: not useful enough.
+mark-clones                 = None      # Alt-K: not useful enough.
+mark-subheads               = None      # Alt-S: not useful enough.
+match-bracket               = Ctrl-K    # Conflicts with kill-line
 minimize-all                = None
 move-outline-down           = Ctrl-D
 move-outline-left           = Ctrl-L
 move-outline-right          = Ctrl-R
 move-outline-up             = Ctrl-U
-new                         = None         # Ctrl-n conflicts with next-line.
+move-past-close             = Alt-parenright
+name-last-kbd-macro         = None
+negative-argument           = None      # Alt-minus conflicts with contract-all.
+new                         = None      # Ctrl-n conflicts with next-line.
+newline-and-indent:         = Control-j
+next-line                   = Ctrl-n    # Conflicts with new.
+number-command              = None
+number-command-0            = None
+number-command-1            = None
+number-command-2            = None
+number-command-3            = None
+number-command-4            = None
+number-command-5            = None
+number-command-6            = None
+number-command-7            = None
+number-command-8            = None
+number-command-9            = None
+number-to-register          = None
 open-compare-window         = None
+open-find-tab               = Ctrl-f
 open-leoconfig-leo          = None
 open-leodocs-leo            = None
 open-leoplugins-leo         = None
 open-offline-tutorial       = None
 open-online-home            = None
 open-online-tutorial        = None
-open-outline                = Ctrl-O        # Ctrl-O conflicts with insert-newline
-open-python-window          = None          # Alt-P: not useful enough.
+open-outline                = Ctrl-O    # Ctrl-O conflicts with insert-newline
+open-python-window          = None      # Alt-P: not useful enough.
+open-rectangle              = None
+open-spell-tab              = None
 open-with                   = None
 outline-to-CWEB             = None
 outline-to-noweb            = None
 paste-node                  = Shift-Ctrl-V
 paste-retaining-clones      = None
+paste-text                  = Ctrl-v    # For testing only: Alt-Shift-Ctrl-v
+point-to-register           = None
+prepend-to-buffer           = None
+prepend-to-register         = None
 pretty-print-all-python-code= None
 pretty-print-python-code    = None
+previous-line               = Ctrl-p
+print-bindings              = None
+print-commands              = None
 promote                     = Ctrl-{            
+query-replace               = None
+query-replace-regex         = None
+quick-command               = Alt-c     # Usually Ctrl-c, conflicts with cut-text.
+re-search-backward          = None
+re-search-forward           = None
+read-abbrev-file            = None
 read-at-file-nodes          = None
-read-outline-only           = None          # Shift-Ctrl-R: not useful enough.
+read-outline-only           = None      # Shift-Ctrl-R: not useful enough.
 redo                        = Shift-Ctrl-Z
 reformat-paragraph          = Shift-Ctrl-P
+remove-blank-lines          = None
+remove-directory            = None
 remove-sentinels            = None
-replace                     = Ctrl-=
-replace-then-find           = Ctrl--
+rename-buffer               = None
+repeat-complex-command      = None      # Usually 'again', whatever that is.
+replace                     = None
+replace-regex               = None
+replace-string              = None
+replace-then-find           = None
 resize-to-screen            = None
+reverse-region              = None
 revert                      = None
-save-file                   = Ctrl-s       # Ctrl-s conflicts with search.
+save-buffers-kill-leo       = None
+save-file                   = Ctrl-s    # Ctrl-s conflicts with search.
 save-file-as                = Shift-Ctrl-S
 save-file-to                = None
+scroll-down                 = PageDn    # Ctrl-v conflicts with paste-text.
+scroll-up                   = PageUp    # Alt-v conflicts with view-all-characters.
+search-backward             = None
+search-forward              = None
 select-all                  = Shift-Ctrl-A  # Ctrl-A conflicts with beginning-of-line.
+select-paragraph            = None
 set-colors                  = None
+set-comment-column          = None
+set-fill-column             = None
+set-fill-prefix             = None
 set-font                    = None
+set-mark-command            = Ctrl-space    # Also Ctrl-Shift-at
 settings                    = None          # Ctrl-Y conflicts with yank.
-show-invisibles             = Ctrl-Shift-v  # Alt-V conflicts with scroll-up .
+shell-command               = None
+shell-command-on-region     = None
+show-colors                 = None
+show-fonts                  = None
+show-invisibles             = Alt-Shift-v   # Alt-V conflicts with scroll-up .
+show-mini-buffer            = None
 sort-children               = None
-sort-siblings               = Shift-Alt-A   # Alt-A conflicts with back-sentence.
-tangle                      = None          # Removed Shift-Ctrl-T: not useful enough.
-tangle-all                  = None          # Removed Shift-Ctrl-A: not useful enough.
-tangle-marked               = None          # Removed Shift-Ctrl-M: not useful enough.
+sort-columns                = None
+sort-fields                 = None
+sort-lines                  = None
+sort-siblings               = Alt-Shift-A   # Alt-A conflicts with back-sentence.
+spell-change                = None
+spell-change-then-find      = None
+spell-find                  = None
+spell-ignore                = None
+split-line                  = Alt-Ctrl-o
+start-kbd-macro             = None
+string-rectangle            = None
+suspend                     = None
+switch-to-buffer            = None
+tabify                      = None
+tangle                      = None      # Removed Shift-Ctrl-T: not useful enough.
+tangle-all                  = None      # Removed Shift-Ctrl-A: not useful enough.
+tangle-marked               = None      # Removed Shift-Ctrl-M: not useful enough.
 toggle-active-pane          = Ctrl-T
 toggle-angle-brackets       = None
+toggle-mini-buffer          = None
+    # It **is** possible to use &lt;alt-x&gt;toggle-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
+    # This had better be defined if you intend ever to hide the minibuffer.
+    # To avoid confusion, it should be something unlikely to be typed by accident.
 toggle-split-direction      = None
+transpose-chars             = None
+transpose-lines             = None
+transpose-words             = None
 undo                        = Ctrl-Z
 unindent                    = Ctrl-[
+universal-argument          = Alt-u     # Usually Ctrl-u, conflicts with move-outline-up.
 unmark-all                  = None
-untangle                    = None        # Removed Shift-Ctrl-U: not useful enough
+untabify                    = None
+untangle                    = None      # Removed Shift-Ctrl-U: not useful enough
 untangle-all                = None
 untangle-marked             = None
+upcase-region               = None
+upcase-word                 = None
+view-lossage                = None
+view-register               = None
 weave                       = None
+what-line                   = None
+word-search-backward        = None
+word-search-forward         = None
+write-abbrev-file           = None
 write-at-file-nodes         = Shift-Ctrl-W
 write-dirty-at-file-nodes   = None
-write-outline-only          = None </t>
+write-missing-at-file-nodes = None
+write-outline-only          = None 
+yank                        = Control-y
+yank-pop                    = Alt-y
+yank-rectangle              = None
+zap-to-character            = Alt-z</t>
 <t tx="ekr.20051010112903">Reserved  Alt-E  (Opens Edit Menu)
 Reserved  Alt-F  (Opens File Menu)
 Reserved  Alt-H  (Opens Help Menu)
@@ -1796,5 +1771,14 @@ p.setBodyString(result)</t>
 False: Selecting an outline node transfers focus to the body pane.
        This was the way all version before Leo 4.4 worked, but
        it will prevent key binding in the outline pane for outline operations from being useful.</t>
+<t tx="ekr.20051025070845">#d6c7d3
+#d2cad0
+#c6d3d7
+#ffffec # Same as outline.</t>
+<t tx="ekr.20051025084017"></t>
+<t tx="ekr.20051025084017.1"></t>
+<t tx="ekr.20051025084017.2">The full path to the spelling dictionary.</t>
+<t tx="ekr.20051025085144"></t>
+<t tx="ekr.20051025085144.1"></t>
 </tnodes>
 </leo_file>
