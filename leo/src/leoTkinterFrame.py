@@ -1784,9 +1784,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         elif fromMinibuffer:
             pass
         else:
-            # Old: Do **not** call w.event_generate.
-            # New: Do call w.event_generate.
-            w.event_generate(g.virtual_event_name("Paste"))
+            # Do **not** call w.event_generate for headlines.
             f.tree.onHeadChanged(c.currentPosition())
     #@nonl
     #@-node:ekr.20051011072903.5:pasteText
@@ -2182,6 +2180,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         '''Set the focus to the widget specified in the xWantsFocus methods.'''
     
         c = self.c
+        # This is a *very* effective trace.
         # g.trace(widget._name,g.callerList(5))
     
         if widget and not g.app.unitTesting:
