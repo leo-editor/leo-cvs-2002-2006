@@ -196,8 +196,6 @@ def createFrame (fileName):
     """Create a LeoFrame during Leo's startup process."""
     
     import leoGlobals as g
-    
-    # g.trace(repr(fileName))
 
     # Try to create a frame for the file.
     if fileName:
@@ -220,6 +218,7 @@ def createFrame (fileName):
         g.es("File not found: " + fileName)
 
     return c,frame
+#@nonl
 #@-node:ekr.20031218072017.1624:createFrame (leo.py)
 #@+node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
 def createNullGuiWithScript (script):

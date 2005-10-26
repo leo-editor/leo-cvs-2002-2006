@@ -16642,8 +16642,6 @@ def createFrame (fileName):
     """Create a LeoFrame during Leo's startup process."""
     
     import leoGlobals as g
-    
-    # g.trace(repr(fileName))
 
     # Try to create a frame for the file.
     if fileName:
@@ -16666,6 +16664,7 @@ def createFrame (fileName):
         g.es("File not found: " + fileName)
 
     return c,frame
+#@nonl
 #@-node:ekr.20031218072017.1624:createFrame (leo.py)
 #@+node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
 def createNullGuiWithScript (script):
@@ -16729,8 +16728,6 @@ def createFrame (fileName):
     """Create a LeoFrame during Leo's startup process."""
     
     import leoGlobals as g
-    
-    # g.trace(repr(fileName))
 
     # Try to create a frame for the file.
     if fileName:
@@ -16753,6 +16750,7 @@ def createFrame (fileName):
         g.es("File not found: " + fileName)
 
     return c,frame
+#@nonl
 #@-node:ekr.20031218072017.1624:createFrame (leo.py)
 #@+node:ekr.20041117093246:Scanning @settings (g.app.config)
 #@+node:ekr.20041117085625:g.app.config.openSettingsFile
@@ -16891,6 +16889,7 @@ def openWithFileName(fileName,old_c,
         if readSettings:
             g.app.config.updateSettings(c,localFlag=True)
         g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
+        frame.bodyWantsFocus()
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -23987,6 +23986,13 @@ def finishCreate (self):
 #@nonl
 #@-node:ekr.20031218072017.3842:finishCreate (tkComparePanel)
 #@-node:ekr.20051025162409:(Fix warnings in compare dialog)
+#@+node:ekr.20051026170025:Other improvements
+@nocolor
+
+- g.openWithFileName puts the focus in the body pane.
+  Surprisingly important.
+#@nonl
+#@-node:ekr.20051026170025:Other improvements
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

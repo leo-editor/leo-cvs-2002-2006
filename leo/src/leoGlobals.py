@@ -794,6 +794,7 @@ def openWithFileName(fileName,old_c,
         if readSettings:
             g.app.config.updateSettings(c,localFlag=True)
         g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
+        frame.bodyWantsFocus()
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!

@@ -2468,6 +2468,7 @@ class leoTkinterBody (leoFrame.leoBody):
         c = self.c ; p = c.currentPosition()
         ch = event and event.char or ''
         orignalText = oldText # for use by undo.
+        removeTrailing = None # A signal to compute it later.
         # g.trace(repr(ch))
         oldSel = g.app.gui.getTextSelection(w)
         oldText = p.bodyString()
@@ -2476,8 +2477,25 @@ class leoTkinterBody (leoFrame.leoBody):
         elif ch == '\b': ## chr(8):
             # Not strictly correct: we should test for present delete binding...
             self.updateBackspace(p,w)
+        elif ch in ('\r','\n'):
+            ch = '\n'
+            #@        << handle newline >>
+            #@+node:ekr.20051026171121:<< handle newline >>
+            i,j = oldSel
+            
+            if i != j:
+                # No auto-indent if there is selected text.
+                w.delete(i,j)
+                w.insert(i,ch)
+            else:
+                w.insert(i,ch)
+                if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+                    # No auto-indent if in @nocolor mode or after a Change command.
+                    removeTrailing = self.updateAutoIndent(p)
+            #@nonl
+            #@-node:ekr.20051026171121:<< handle newline >>
+            #@nl
         elif ch: # Null chars must not delete the selection.
-            if ch == '\r': ch = '\n'
             i,j = oldSel
             if i != j: w.delete(i,j)
             w.insert(i,ch)
@@ -2504,7 +2522,9 @@ class leoTkinterBody (leoFrame.leoBody):
         #@@c
         new = newText ; old = oldText
         
-        if len(new) == 0 or new[-1] != '\n':
+        if removeTrailing != None:
+            pass # Use the value returned from updateAutoIndent.
+        elif len(new) == 0 or new[-1] != '\n':
             # There is no newline to remove.  Probably will never happen.
             removeTrailing = False
         elif len(old) == 0:
@@ -2535,6 +2555,7 @@ class leoTkinterBody (leoFrame.leoBody):
         #@-node:ekr.20051026143009:<< remove extra Trailing newlines >>
         #@afterref
  # Same logic as always.
+        if newText == oldText: return
         c.undoer.setUndoTypingParams(p,undoType,
             orignalText or oldText,newText,oldSel,newSel,oldYview)
         p.v.setTnodeText(newText)
@@ -2575,6 +2596,40 @@ class leoTkinterBody (leoFrame.leoBody):
         #@nl
         g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
     #@nonl
+    #@+node:ekr.20051026171121.1:udpateAutoIndent
+    # By David McNab:
+    def updateAutoIndent (self,p):
+    
+        c = self.c
+        d = g.scanDirectives(c,p)
+        tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
+        s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+        # Add the leading whitespace to the present line.
+        junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
+        if s and len(s) > 0 and s [ -1] == ':':
+            # For Python: increase auto-indent after colons.
+            if self.colorizer.scanColorDirectives(p) == "python":
+                width += abs(tab_width)
+        if c.config.getBool("smart_auto_indent"):
+            # Determine if prev line has unclosed parens/brackets/braces
+            brackets = [width] ; tabex = 0
+            for i in range(0,len(s)):
+                if s [i] == '\t':
+                    tabex += tab_width-1
+                if s [i] in '([{':
+                    brackets.append(i+tabex+1)
+                elif s [i] in '}])' and len(brackets) > 1:
+                    brackets.pop()
+            width = brackets.pop()
+        ws = g.computeLeadingWhitespace(width,tab_width)
+        if ws:
+            c.frame.bodyCtrl.insert("insert",ws)
+            removeTrailing = False
+        else:
+            removeTrailing = None
+        return removeTrailing
+    #@nonl
+    #@-node:ekr.20051026171121.1:udpateAutoIndent
     #@+node:ekr.20051026092433:updateTab
     def updateTab (self,p,w):
     
@@ -2594,8 +2649,6 @@ class leoTkinterBody (leoFrame.leoBody):
             # Compute n, the number of spaces to insert.
             width = g.computeWidth(s,tab_width)
             n = abs(tab_width) - (width % abs(tab_width))
-        
-            g.trace('prev',repr(s))
             w.insert("insert",' ' * n)
     #@nonl
     #@-node:ekr.20051026092433:updateTab
