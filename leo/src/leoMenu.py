@@ -701,7 +701,7 @@ class leoMenu:
                 ("&Replace",            sc.findTabChange),
                 ("Replace, &Then Find", sc.findTabChangeThenFind),
             ]
-        else:
+        else: # Bind to deprecated Find dialog.
             self.editMenuFindMenuTable = [
                 ("&Find Panel",c.showFindPanel),
                 ("-",None),
