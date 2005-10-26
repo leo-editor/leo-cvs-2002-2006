@@ -5841,7 +5841,6 @@ class baseCommands:
         return (
             c._currentPosition and c._rootPosition and
             c._currentPosition == c._rootPosition)
-            
     #@nonl
     #@-node:ekr.20040803155551:c.currentPositionIsRootPosition
     #@+node:ekr.20040803160656:c.currentPositionHasNext

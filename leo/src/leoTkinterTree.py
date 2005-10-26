@@ -1822,7 +1822,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         w = event.widget ; ch = event.char
         
-        # g.trace(repr(ch))
+        g.trace(repr(ch))
     
         try:
             p = w.leo_position
@@ -1864,8 +1864,6 @@ class leoTkinterTree (leoFrame.leoTree):
         """Update headline text at idle time."""
         
         c = self.c ; u = c.undoer
-        
-        # g.trace(p.headString(),'isCurrent',p.isCurrentPosition())
     
         if not p or not p.isCurrentPosition():
             return "break"
@@ -1889,6 +1887,8 @@ class leoTkinterTree (leoFrame.leoTree):
         #@    << set s to the widget text >>
         #@+node:ekr.20040803072955.94:<< set s to the widget text >>
         s = edit_text.get("1.0","end")
+        
+        g.trace(repr(s),g.callerList(5))
         
         # Don't truncate if the user is hitting return.
         # That should just end editing.
@@ -1984,6 +1984,15 @@ class leoTkinterTree (leoFrame.leoTree):
         self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
     #@nonl
     #@-node:ekr.20040803072955.98:onHeadChanged
+    #@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+    def updateHead (self,event,w):
+        
+        ch = event.char
+        g.trace(repr(ch))
+        i = w.index('insert')
+        w.insert(i,ch)
+    #@nonl
+    #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
     #@-node:ekr.20040803072955.90:virtual event handlers: called from core
     #@-node:ekr.20040803072955.84:Text Box...
     #@+node:ekr.20040803072955.99:Dragging
