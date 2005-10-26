@@ -46,11 +46,11 @@
 <v t="ekr.20041119050749.11"><vh>@bool headline_gmt_time = False</vh></v>
 <v t="ekr.20050126083026"><vh>@string undo_granularity = None</vh></v>
 </v>
-<v t="ekr.20041119034357.16"><vh>@page Compare panel options</vh>
-<v t="ekr.20041119034357.17"><vh>files &amp; directories</vh>
-<v t="ekr.20041119043902"><vh>@path compare_file_1 = </vh></v>
-<v t="ekr.20041119043902.1"><vh>@path compare_file_2 = None</vh></v>
-<v t="ekr.20041119043902.2"><vh>@path output_file = None</vh></v>
+<v t="ekr.20041119034357.16" a="E"><vh>@page Compare panel options</vh>
+<v t="ekr.20041119034357.17" a="TV"><vh>files &amp; directories</vh>
+<v t="ekr.20041119043902"><vh>@string compare_file_1 = None</vh></v>
+<v t="ekr.20041119043902.1"><vh>@string compare_file_2 = None</vh></v>
+<v t="ekr.20041119043902.2"><vh>@string output_file = None</vh></v>
 <v t="ekr.20041119043902.3"><vh>@bool append_output_to_output_file = False</vh></v>
 <v t="ekr.20041119034357.18"><vh>@string limit_directory_search_extension = .py</vh></v>
 </v>
@@ -236,7 +236,7 @@
 <v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558" a="TV"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
+<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1415,6 +1415,7 @@ clear-recent-files          = None
 clear-rectangle             = None
 clone-node                  = Ctrl-`
 close                       = None      # Ctrl-w conflicts with kill-region.
+close-find-dialog           = None
 close-rectangle             = None
 close-window                = None
 contract-all                = Alt--
@@ -1449,7 +1450,6 @@ delete-text                 = None
 demote                      = Ctrl-}
 diff                        = None
 digit-argument              = None
-dismiss-leo-find-panel      = None
 downcase-region             = None
 downcase-word               = None
 dump-outline                = None
@@ -1488,7 +1488,13 @@ extract-section             = Shift-Ctrl-E
 fill-paragraph              = None
 fill-region                 = None
 fill-region-as-paragraph    = None
+find-dialog-change          = None  # Deprecated. 
+find-dialog-change-all      = None  # Deprecated. 
+find-dialog-change-then-find= None  # Deprecated. 
+find-dialog-find-previous   = None  # Deprecated. 
+find-dialog-find-next       = None  # Deprecated. 
 find-tab-change             = Ctrl-=
+find-tab-change-all         = None  # Not recommended to bind this to a shortcut.
 find-tab-change-then-find   = Ctrl--
 find-tab-find               = F3
 find-tab-find-prev          = F2
@@ -1568,12 +1574,6 @@ kill-region                 = Control-w
 kill-region-save            = Alt-w 	   # Ctrl-w conflicts with close.
 kill-sentence               = Alt-k
 kill-word                   = Alt-d
-leo-change                  = None
-leo-change-all              = None      # Unwise to bind this to a shortcut or abbreviation.
-leo-change-then-find        = None
-leo-find                    = None
-leo-find-panel              = None      # Ctrl-f conflicts with forward-char.
-leo-find-previous           = None
 line-number                 = None
 list-abbrevs                = None
 list-buffers                = None
@@ -1609,6 +1609,7 @@ number-command-8            = None
 number-command-9            = None
 number-to-register          = None
 open-compare-window         = None
+open-find-dialog            = None  # Deprecated. The find tab is much better.
 open-find-tab               = Ctrl-f
 open-leoconfig-leo          = None
 open-leodocs-leo            = None
