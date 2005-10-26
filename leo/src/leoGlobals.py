@@ -2282,6 +2282,7 @@ def printGcRefs (verbose=True):
 def enableIdleTimeHook(idleTimeDelay=100):
 
     if not g.app.idleTimeHook:
+        # g.trace('start idle-time hook: %d msec.' % idleTimeDelay)
         # Start idle-time processing only after the first idle-time event.
         g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
         g.app.afterHandler = g.idleTimeHookHandler
@@ -2316,10 +2317,13 @@ def idleTimeHookHandler(*args,**keys):
     # New for Python 2.3: may be called during shutdown.
     if g.app.killed: return
     
+    top = g.top() # Important: only fire k.onIdleTime for the top window.
     for w in g.app.windowList:
         c = w.c
         # New in 4.2 Beta 3. Do NOT compute c.currentPosition.
         # This would be a MAJOR leak of positions.
+        # New in 4.4 a2: direct support for k.onIdleTime()
+        c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
         g.doHook("idle",c=c)
 
     # Requeue this routine after g.app.idleTimeDelay msec.
