@@ -1163,10 +1163,10 @@ class keyHandlerClass:
         try:
             w = event.widget ; name = w._name
             if name.startswith('body'):
-                c.frame.body.updateBody(event,w)
+                c.frame.body.updateBody(event,w,undoType='Typing')
                 return 'break'
             elif name.startswith('head'):
-                c.frame.tree.updateHead(event,w)
+                c.frame.tree.updateHead(event,w,undoType='Typing')
                 return 'break'
             else:
                 # Let tkinter handle the event.
@@ -1382,28 +1382,20 @@ class keyHandlerClass:
         # Set the best possible undoType: prefer explicit commandName to k.commandName.
         commandName = commandName or k.commandName or ''
         k.commandName = k.commandName or commandName or ''
-        # g.trace(commandName)
-    
-        # Call onBodyWillChange only if there is a proper command name.
         if commandName:
-            c.frame.body.onBodyWillChange(p,undoType=commandName,oldSel=None,oldYview=None)
+            bodyCtrl = c.frame.body.bodyCtrl
             if not k.inState():
                 __pychecker__ = '--no-classattr --no-objattrs'
-                    # leoEditCommands.initAllEditCommanders *does* exist.
-        
-                # g.trace('commandName:',commandName,'caller:',g.callerList())
+                    # initAllEditCommanders *does* exist.
                 k.commandName = None
                 leoEditCommands.initAllEditCommanders(c)
-                
-                # # if forceFocus: # This is dubious.
-                    # # w.focus_force()
                 try:
-                    bodyCtrl = c.frame.body.bodyCtrl
                     bodyCtrl.tag_delete('color')
                     bodyCtrl.tag_delete('color1')
-                    bodyCtrl.update_idletasks()
                 except Exception:
                     pass
+            bodyCtrl.update_idletasks()
+            c.frame.body.onBodyChanged(p,undoType='Typing')
     
         w.update_idletasks()
     #@nonl

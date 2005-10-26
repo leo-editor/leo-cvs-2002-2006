@@ -22,7 +22,7 @@ The code is based on code found in Python's IDLE program."""
 # c.redraw() to force a redraw of the outline pane.  Calls to c.endUpdate may 
 # contain an optional flag argument.  Leo redraws the screen only if flag is 
 # True.  This allows code to suppress redrawing entirely when needed.  For an 
-# example, see idle_body_key.
+# example, see updateBody.
 # 
 # c.redraw and its allies in this class redraw all icons automatically.   
 # v.computeIcon method tells what the icon should be.  The v.iconVal tells 
@@ -1857,7 +1857,7 @@ class leoTkinterTree (leoFrame.leoTree):
         return "continue"
     #@nonl
     #@-node:ekr.20040803072955.83:onHeadlineRightClick
-    #@+node:ekr.20040803072955.90:virtual event handlers: called from core
+    #@+node:ekr.20040803072955.90:head key handlers
     #@+node:ekr.20040803072955.91:idle_head_key
     def idle_head_key (self,p,ch=None):
         
@@ -1985,7 +1985,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.98:onHeadChanged
     #@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
-    def updateHead (self,event,w):
+    def updateHead (self,event,w,undoType='Typing'):
         
         ch = event.char
         g.trace(repr(ch))
@@ -1993,7 +1993,7 @@ class leoTkinterTree (leoFrame.leoTree):
         w.insert(i,ch)
     #@nonl
     #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
-    #@-node:ekr.20040803072955.90:virtual event handlers: called from core
+    #@-node:ekr.20040803072955.90:head key handlers
     #@-node:ekr.20040803072955.84:Text Box...
     #@+node:ekr.20040803072955.99:Dragging
     #@+node:ekr.20041111115908:endDrag

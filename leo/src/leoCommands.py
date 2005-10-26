@@ -2654,7 +2654,7 @@ class baseCommands:
         if setSel and oldSel:
             body.setTextSelection(oldSel)
     
-        # This handles the undo by calling setUndoTypingParams (in idle_body_key).
+        # This handles the undo.
         body.onBodyChanged(p,undoType,oldSel=oldSel,oldYview=oldYview)
     
         # Update the changed mark and icon.

@@ -17,42 +17,40 @@ import re
 
 #@<< About handling events >>
 #@+node:ekr.20031218072017.2410:<< About handling events >>
-#@+at 
-#@nonl
+#@+at
 # Leo must handle events or commands that change the text in the outline or 
-# body panes.  It is surprisingly difficult to ensure that headline and body 
-# text corresponds to the vnode and tnode corresponding to presently selected 
-# outline, and vice versa. For example, when the user selects a new headline 
-# in the outline pane, we must ensure that 1) the vnode and tnode of the 
-# previously selected node have up-to-date information and 2) the body pane is 
-# loaded from the correct data in the corresponding tnode.
+# body
+# panes. We must ensure that headline and body text corresponds to the vnode 
+# and
+# tnode corresponding to presently selected outline, and vice versa. For 
+# example,
+# when the user selects a new headline in the outline pane, we must ensure 
+# that:
 # 
-# Early versions of Leo attempted to satisfy these conditions when the user 
-# switched outline nodes.  Such attempts never worked well; there were too 
-# many special cases.  Later versions of Leo, including leo.py, use a much 
-# more direct approach.  The event handlers make sure that the vnode and tnode 
-# corresponding to the presently selected node are always kept up-to-date.  In 
-# particular, every keystroke in the body pane causes the presently selected 
-# tnode to be updated immediately.  There is no longer any need for the 
-# c.synchVnode method.  (That method still exists for compatibility with old 
-# scripts.)
+# 1) All vnodes and tnodes have up-to-date information and
 # 
-# The leoTree class contains all the event handlers for the tree pane, and the 
-# leoBody class contains the event handlers for the body pane.  The actual 
-# work is done in the idle_head_key and idle_body_key methods.  These routines 
-# are surprisingly complex; they must handle all the tasks mentioned above, as 
-# well as others. The idle_head_key and idle_body_key methods should not be 
-# called outside their respective classes.  However, sometimes code in the 
-# Commands must simulate an event.  That is, the code needs to indicate that 
-# headline or body text has changed so that the screen may be redrawn 
-# properly.   The leoBody class defines the following simplified event 
-# handlers: onBodyChanged, onBodyWillChange and onBodyKey. Similarly, the 
-# leoTree class defines onHeadChanged and onHeadlineKey.  Commanders and 
-# subcommanders call these event handlers to indicate that a command has 
-# changed, or will change, the headline or body text.  Calling event handlers 
-# rather than c.beginUpdate and c.endUpdate ensures that the outline pane is 
-# redrawn only when needed.
+# 2) the body pane is loaded with the correct data.
+# 
+# Early versions of Leo attempted to satisfy these conditions when the user
+# switched outline nodes. Such attempts never worked well; there were too many
+# special cases. Later versions of Leo use a much more direct approach: every
+# keystroke in the body pane updates the presently selected tnode immediately.
+# 
+# The leoTree class contains all the event handlers for the tree pane, and the
+# leoBody class contains the event handlers for the body pane. The following
+# convenience methods exists:
+# 
+# - body.updateBody & tree.updateBody:
+#     Called by k.masterCommand after any keystroke not handled by 
+# k.masterCommand.
+#     These are suprising complex.
+# 
+# - body.bodyChanged & tree.headChanged:
+#     Called by commands throughout Leo's core that change the body or 
+# headline.
+#     These are thin wrappers for updateBody and updateTree.
 #@-at
+#@nonl
 #@-node:ekr.20031218072017.2410:<< About handling events >>
 #@nl
 
