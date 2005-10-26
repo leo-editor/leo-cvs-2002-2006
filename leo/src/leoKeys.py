@@ -546,10 +546,8 @@ class keyHandlerClass:
         self.afterGetArgState = None
         self.argTabList = []
         
-        if 0: # These are now set in makeSpecialBindings.
-            self.abortAllModesKey = 'Control-g'
-            self.fullCommandKey = 'Alt-x'
-            self.universalArgKey = 'Control-u'
+        # For onIdleTime
+        self.idleCount = 0
         #@nonl
         #@-node:ekr.20050923213858:<< define internal ivars >>
         #@nl
@@ -576,6 +574,8 @@ class keyHandlerClass:
         
         c.frame.log.setTabBindings('Log')
         c.frame.tree.setBindings()
+        if 1: # I wish there were an easier way...
+            g.enableIdleTimeHook(250)
         
         if 0:
             addTemacsExtensions(k)
@@ -1111,8 +1111,13 @@ class keyHandlerClass:
             return 'break'
     
         else:
-            c.frame.body.onBodyKey(event)
-            return None # Not 'break'
+            # A huge change in 4.4: update *now*, not at idle time.
+            if 1:
+                self.handleDefaultChar(event)
+                return 'break'
+            else:
+                # c.frame.body.onBodyKey(event)
+                return None # Not 'break'
     #@nonl
     #@+node:ekr.20050923172809.1:callStateFunction
     def callStateFunction (self,event):
@@ -1150,6 +1155,27 @@ class keyHandlerClass:
         return func
     #@nonl
     #@-node:ekr.20050923174229.3:callKeystrokeFunction
+    #@+node:ekr.20051026083544:handleDefaultChar
+    def handleDefaultChar(self,event):
+        
+        c = self.c
+    
+        try:
+            w = event.widget ; name = w._name
+            if name.startswith('body'):
+                c.frame.body.updateBody(event,w)
+                return 'break'
+            elif name.startswith('head'):
+                c.frame.tree.updateHead(event,w)
+                return 'break'
+            else:
+                # Let tkinter handle the event.
+                return None
+        except Exception:
+            g.es_exception()
+            return None
+    #@nonl
+    #@-node:ekr.20051026083544:handleDefaultChar
     #@-node:ekr.20050920085536.65: masterCommand & helpers
     #@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
     def fullCommand (self,event,specialStroke=None,specialFunc=None):
@@ -1854,6 +1880,30 @@ class keyHandlerClass:
                 g.es_print('Registered %s' % (commandName), color='blue')
     #@nonl
     #@-node:ekr.20051015110547:registerCommand
+    #@+node:ekr.20051025150224:onIdleTime
+    def onIdleTime (self):
+        
+        '''Set the focus to the body pane if the focus is in limbo.
+        
+        We must allow dialogs and the outer window frame to retain focus.'''
+        
+        k = self ; c = k.c
+        if g.app.quitting: return # Essential.
+        
+        w = g.app.gui.get_focus(c.frame)
+        if w:
+            # Allow clicks in enclosing window frame or in dialogs.
+            name = w._name
+            ok = (
+                name[0] in string.letters # A known Leo frame.
+                or w == c.frame.top # The top of the Leo window
+                or g.app.dialogs > 0) # A dialog.
+            if not ok:
+                # Not a name created by Leo.
+                 g.trace(self.idleCount,name,g.top())
+                 c.frame.bodyWantsFocus()
+    #@nonl
+    #@-node:ekr.20051025150224:onIdleTime
     #@-node:ekr.20051006065121:Externally visible helpers
     #@+node:ekr.20050924064254:Label...
     #@+at 
@@ -2007,13 +2057,12 @@ class keyHandlerClass:
     #@+node:ekr.20051018070524:computeInverseBindingDict
     def computeInverseBindingDict (self):
     
-        k = self
-    
-        d = {} # keys are minibuffer command names, values are shortcuts.
-    
+        k = self ; d = {}
+        
+        # keys are minibuffer command names, values are shortcuts.
         for shortcut in k.bindingsDict.keys():
             b = k.bindingsDict.get(shortcut)
-            d [b.commandName] = shortcut # was b.name
+            d [b.commandName] = shortcut
     
         return d
     #@nonl
@@ -2045,7 +2094,7 @@ class keyHandlerClass:
         k = self ; c = k.c ; s = k.getLabel().strip()
         
         if k.mb_tabList and s.startswith(k.mb_tabListPrefix):
-            g.trace('cycle',repr(s))
+            # g.trace('cycle',repr(s))
             # Set the label to the next item on the tab list.
             k.mb_tabListIndex +=1
             if k.mb_tabListIndex >= len(k.mb_tabList):
