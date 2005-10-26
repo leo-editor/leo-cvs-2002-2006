@@ -1777,7 +1777,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl
         
-        # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
+        g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
     
         if isBody:
             w.event_generate(g.virtual_event_name("Paste"))
@@ -2441,7 +2441,7 @@ class leoTkinterBody (leoFrame.leoBody):
         if not c: return "break"
         if not p: return "break"
         if not c.isCurrentPosition(p): return "break"
-        # g.trace(repr(ch))
+        g.trace(repr(ch))
     
         if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
             return "break" # The hook claims to have handled the event.
@@ -2801,6 +2801,183 @@ class leoTkinterBody (leoFrame.leoBody):
         self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
     #@nonl
     #@-node:ekr.20031218072017.1331:onBodyWillChange
+    #@+node:ekr.20051026083733:updateBody (new in 4.4a2)
+    def updateBody (self,event,w): 
+    
+        """Update the body pane at idle time."""
+        
+        c = self.c ; p = c.currentPosition()
+        ch = event.char ; undoType = 'Typing'
+        # g.trace(repr(ch))
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = p.bodyString()
+        if ch == '\t':
+            self.updateTab(p,w)
+        elif ch == '\b': ## chr(8):
+            # Not strictly correct: we should test for present delete binding...
+            self.updateBackspace(p,w)
+        else:
+            if ch == '\r': ch = '\n'
+            i,j = oldSel
+            if i != j: w.delete(i,j)
+            w.insert(i,ch)
+    
+        if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+            return # The hook claims to have handled the event.
+    
+        # Update the text and handle undo.
+        newSel = g.app.gui.getTextSelection(w)
+        newText = w.get('1.0','end')
+        #@    << remove extra Trailing newlines >>
+        #@+node:ekr.20051026143009:<< remove extra Trailing newlines >>
+        #@+at 
+        #@nonl
+        # Tk will add a newline only if:
+        # 1. A real change has been made to the Tk.Text widget, and
+        # 2. the change did _not_ result in the widget already containing a 
+        # newline.
+        # 
+        # It's not possible to tell, given the information available, what Tk 
+        # has actually done. We need only make a reasonable guess here.   
+        # setUndoTypingParams stores the number of trailing newlines in each 
+        # undo bead, so whatever we do here can be faithfully undone and 
+        # redone.
+        #@-at
+        #@@c
+        new = newText ; old = oldText
+        
+        if len(new) == 0 or new[-1] != '\n':
+            # There is no newline to remove.  Probably will never happen.
+            removeTrailing = False
+        elif len(old) == 0:
+            # Ambigous case.  Formerly always returned False.
+            if new == "\n\n":
+                removeTrailing = True # Handle a very strange special case.
+            else:
+                removeTrailing = ch not in ('\r','\n')
+        elif old == new[:-1]:
+            # A single trailing character has been added.
+            removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+        else:
+            # The text didn't have a newline, and now it does.
+            # Moveover, some other change has been made to the text,
+            # So at worst we have misrepresented the user's intentions slightly.
+            removeTrailing = True
+            
+        if removeTrailing:
+            if len(newText) > 1: newText = newText[:-1]
+            else: newText = ''
+            
+        if 0:
+            if removeTrailing:
+                g.trace('removeTrailing')
+                # g.trace(repr(oldText))
+            # g.trace(repr(newText))
+        #@nonl
+        #@-node:ekr.20051026143009:<< remove extra Trailing newlines >>
+        #@afterref
+ # Same logic as always.
+        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel)
+        p.v.setTnodeText(newText)
+        p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+        #@    << recolor the body >>
+        #@+node:ekr.20051026083733.6:<< recolor the body >>
+        self.frame.scanForTabWidth(p)
+        
+        # incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+        
+        incremental = not self.forceFullRecolorFlag
+        self.frame.body.recolor_now(p,incremental=incremental)
+        self.forceFullRecolorFlag = False
+        #@nonl
+        #@-node:ekr.20051026083733.6:<< recolor the body >>
+        #@nl
+        if not c.changed: c.setChanged(True)
+        #@    << redraw the screen if necessary >>
+        #@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+        redraw_flag = False
+        c.beginUpdate()
+        try:
+            # Update dirty bits.
+            # p.setDirty() sets all cloned and @file dirty bits.
+            if not p.isDirty() and p.setDirty():
+                redraw_flag = True
+                
+            # Update icons.  p.v.iconVal may not exist during unit tests.
+            val = p.computeIcon()
+            if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+                p.v.iconVal = val
+                redraw_flag = True
+        finally:
+            # Redraw only if necessary.
+            c.endUpdate(redraw_flag) 
+        #@nonl
+        #@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+        #@nl
+    
+        g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    #@nonl
+    #@+node:ekr.20051026092433:updateTab
+    def updateTab (self,p,w):
+    
+        c = self.c
+        d = g.scanDirectives(c,p)
+        tab_width = d.get("tabwidth",c.tab_width)
+        
+        i,j = g.app.gui.getTextSelection(w)
+        if i != j:
+            w.delete(i,j)
+        if tab_width > 0:
+            w.insert("insert",'\t')
+        else:
+            # Get the preceeding characters.
+            s = w.get("insert linestart","insert")
+        
+            # Compute n, the number of spaces to insert.
+            width = g.computeWidth(s,tab_width)
+            n = abs(tab_width) - (width % abs(tab_width))
+        
+            g.trace('prev',repr(s))
+            w.insert("insert",' ' * n)
+    #@nonl
+    #@-node:ekr.20051026092433:updateTab
+    #@+node:ekr.20051026092433.1:updateBackspace
+    def updateBackspace (self,p,w):
+        
+        c = self.c
+        d = g.scanDirectives(c,p)
+        tab_width = d.get("tabwidth",c.tab_width)
+        
+        i,j = g.app.gui.getTextSelection(w)
+        if i != j:
+            w.delete(i,j)
+        elif tab_width > 0:
+            w.delete('insert-1c')
+        else:
+            #@        << backspace with negative tab_width >>
+            #@+node:ekr.20051026092746:<< backspace with negative tab_width >>
+            s = prev = w.get("insert linestart","insert")
+            n = len(prev)
+            abs_width = abs(tab_width)
+            
+            # Delete up to this many spaces.
+            n2 = (n % abs_width) or abs_width
+            n2 = min(n,n2) ; count = 0
+            
+            while n2 > 0:
+                n2 -= 1
+                ch = prev[n-count-1]
+                if ch != ' ': break
+                else: count += 1
+            
+            # Make sure we actually delete something.
+            w.delete("insert -%dc" % (max(1,count)),"insert")
+            #@nonl
+            #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
+            #@nl
+    #@nonl
+    #@-node:ekr.20051026092433.1:updateBackspace
+    #@-node:ekr.20051026083733:updateBody (new in 4.4a2)
     #@-others
     #@nonl
     #@-node:ekr.20031218072017.1320:body key handlers
@@ -3453,8 +3630,10 @@ class leoTkinterLog (leoFrame.leoLog):
             # track of the correspondence between this name and what is in the label.
             def deleteTabCallback():
                 self.deleteTab(tabName)
-    
-            menu.add_command(label='Delete This Tab',command=deleteTabCallback)
+                
+            label = g.choose(
+                tabName in ('Find','Spell'),'Hide This Tab','Delete This Tab')
+            menu.add_command(label=label,command=deleteTabCallback)
      
             def renameTabCallback():
                 self.renameTabFromMenu(tabName)
@@ -3754,7 +3933,7 @@ class leoTkinterLog (leoFrame.leoLog):
         if tabName == 'Log':
             return
     
-        if tabName == 'Find':
+        if tabName in ('Find','Spell'):
             self.selectTab('Log')
             return
         
