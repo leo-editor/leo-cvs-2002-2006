@@ -1539,11 +1539,11 @@ class settingsDialogParserClass (parserBaseClass):
     #@-node:ekr.20041225063637.100:kind handlers (settingsDialogParserClass)
     #@-others
 #@-node:ekr.20041225063637.96:class settingsDialogParserClass (parserBaseClass)
-#@+node:ekr.20041225063637.78:class settingsTree (leoConfig)
+#@+node:ekr.20041225063637.78:class settingsTree (leoTkinterTree.leoTkinterTree)
 class settingsTree (leoTkinterTree.leoTkinterTree):
 
     #@    @+others
-    #@+node:ekr.20041225063637.79:ctor
+    #@+node:ekr.20041225063637.79:ctor (settingsTree)
     def __init__(self,c,frame,canvas,controller):
         
         # Init the base class.
@@ -1551,8 +1551,9 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
         
         self.controller = controller
         self.old_p = None
+        self.setBindings() # New in 4.4
     #@nonl
-    #@-node:ekr.20041225063637.79:ctor
+    #@-node:ekr.20041225063637.79:ctor (settingsTree)
     #@+node:ekr.20041225063637.80:Selecting & editing...
     # This code is different because this class has a different current position.
     
@@ -1712,7 +1713,7 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
     #@-node:ekr.20041225063637.95:drawTopTree
     #@-others
 #@nonl
-#@-node:ekr.20041225063637.78:class settingsTree (leoConfig)
+#@-node:ekr.20041225063637.78:class settingsTree (leoTkinterTree.leoTkinterTree)
 #@+node:ekr.20041119203941.3:class settingsTreeParser (parserBaseClass)
 class settingsTreeParser (parserBaseClass):
     
