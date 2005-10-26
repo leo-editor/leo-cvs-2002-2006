@@ -33,6 +33,7 @@ class LeoApp:
             # 0: default behavior
             # 1: full traces in g.es_exception.
             # 2: call pdb.set_trace in g.es_exception, etc.
+        self.dialogs = 0 # Count of open dialogs.
         self.disableSave = False
         self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
         self.gui = None # The gui class.

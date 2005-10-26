@@ -31,6 +31,9 @@ class leoTkinterDialog:
         self.top = None # The toplevel Tk widget.
         self.focus_widget = None # The widget to get the first focus.
         self.canClose = canClose
+        
+        # New in 4.4 a2: g.app.dialogs is a count of the open dialogs.
+        g.app.dialogs += 1
     #@nonl
     #@-node:ekr.20031218072017.3860:__init__ (tkDialog)
     #@+node:ekr.20031218072017.3861:cancelButton, noButton, okButton, yesButton
@@ -143,7 +146,7 @@ class leoTkinterDialog:
         
         """Disable all attempts to close this frame with the close box."""
         
-        pass
+        g.app.dialogs -= 1
     #@nonl
     #@-node:ekr.20040731065422:onClose
     #@+node:ekr.20031218072017.3866:run (tkDialog)
