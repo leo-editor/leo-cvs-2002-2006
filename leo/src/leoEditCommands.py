@@ -11,6 +11,7 @@ Modelled after Emacs and Vim commands.'''
 #@+node:ekr.20050710151017:<< imports >>
 import leoGlobals as g
 
+import leoColor # For autocompleter.
 import leoFind
 import leoKeys
 import leoNodes
