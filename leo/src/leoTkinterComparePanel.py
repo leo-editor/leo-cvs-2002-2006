@@ -72,7 +72,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
         self.createTopFrame()
         self.createFrame()
     #@-node:ekr.20031218072017.3840: tkinterComparePanel.__init__
-    #@+node:ekr.20031218072017.3842:finishCreate
+    #@+node:ekr.20031218072017.3842:finishCreate (tkComparePanel)
     # Initialize ivars from config parameters.
     
     def finishCreate (self):
@@ -177,7 +177,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
             if b == None: b = 0
             self.makeWhitespaceVisibleVar.set(b)
     #@nonl
-    #@-node:ekr.20031218072017.3842:finishCreate
+    #@-node:ekr.20031218072017.3842:finishCreate (tkComparePanel)
     #@+node:ekr.20031218072017.3843:createFrame
     def createFrame (self):
     
