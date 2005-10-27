@@ -1755,6 +1755,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         f = self ; c = f.c
         w = f.getFocus() ; name = w._name
         
+        if 0: # For reference.
+            s = g.app.gui.getTextFromClipboard()
+        
         if fromMinibuffer:
             w.event_generate(g.virtual_event_name("Paste"))
         elif name.startswith('body'):

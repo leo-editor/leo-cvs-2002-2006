@@ -1871,19 +1871,39 @@ class leoTkinterTree (leoFrame.leoTree):
         ch = event and event.char or ''
         i,j = g.app.gui.getTextSelection(w)
         
-        if ch == '\b':
+        if event is None:
+            # A bad kludge: compute what is *already* in the widget,
+            # but what is not reported properly.
+            ch = g.app.gui.getTextFromClipboard()
+            i = int(i.split('.')[1])
+            j = int(j.split('.')[1])
+            g.trace('before',i,j,repr(ch))
+            s = w.get('1.0','end')
             if i != j:
-                w.delete(i,j)
+                s = s[:i] + ch + s[j:]
             else:
-                w.delete('insert-1c')
-        elif ch and ch not in ('\n','\r'):
-            if i != j:
-                w.delete(i,j)
-            i = w.index('insert')
-            w.insert(i,ch)
-    
-        s = w.get('1.0','end')
-    
+                i = w.index('insert')
+                i = int(i.split('.')[1])
+                s = s[:i] + ch + s[i:]
+            # Now force the widget to tell us the truth.
+            w.delete('1.0','end')
+            w.insert('1.0',s)
+            s = w.get('1.0','end')
+            g.trace('after',s)
+        else:
+            if ch == '\b':
+                if i != j:
+                    w.delete(i,j)
+                else:
+                    w.delete('insert-1c')
+            elif ch and ch not in ('\n','\r'):
+                if i != j:
+                    w.delete(i,j)
+                i = w.index('insert')
+                w.insert(i,ch)
+        
+            s = w.get('1.0','end')
+        
         if s.endswith('\n'):
             if len(s) > 1: s = s[:-1]
             else:          s = ''
@@ -1894,6 +1914,8 @@ class leoTkinterTree (leoFrame.leoTree):
              
         if ch in ('\n','\r'):
             self.onHeadChanged(p)
+        elif not event:
+            self.onHeadChanged(p,undoType='Paste In Headline')
     #@nonl
     #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
     #@+node:ekr.20040803072955.91:onHeadChanged
@@ -1931,6 +1953,9 @@ class leoTkinterTree (leoFrame.leoTree):
             #@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
             #@nl
             # g.trace(repr(s))
+            if p.headString() == s:
+                g.trace('no change',g.callers(5))
+                return
             p.initHeadString(s)
             w.configure(width=self.headWidth(p))
         self.endEditLabel()
@@ -2597,7 +2622,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 insertSpot = c.frame.body.getInsertionPoint()
                 
                 if old_p != p:
-                    # g.trace("unselect:",old_p.headString())
+                    self.onHeadChanged(old_p)
                     self.endEditLabel() # sets editPosition = None
                     self.setUnselectedLabelState(old_p)
                 

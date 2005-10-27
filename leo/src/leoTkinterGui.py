@@ -269,7 +269,7 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20031218072017.4058:app.gui.Tkinter panels
     #@+node:ekr.20031218072017.4059:app.gui.Tkinter.utils
-    #@+node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
+    #@+node:ekr.20031218072017.844:Clipboard (tkGui)
     #@+at
     # 
     # The following are called only when g.app.gui.win32clipboard is not None, 
@@ -323,7 +323,7 @@ class tkinterGui(leoGui.leoGui):
                 return None
     #@nonl
     #@-node:ekr.20031218072017.846:getTextFromClipboard
-    #@-node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
+    #@-node:ekr.20031218072017.844:Clipboard (tkGui)
     #@+node:ekr.20031218072017.4060:Dialog
     #@+node:ekr.20031218072017.4061:get_window_info
     # WARNING: Call this routine _after_ creating a dialog.
