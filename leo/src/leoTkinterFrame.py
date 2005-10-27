@@ -81,6 +81,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.draggedItem = None
         self.isActive = True
         self.redrawCount = 0
+        self.revertHeadline = None # Previous headline text for abortEditLabel.
         self.wantedWidget = None
         self.wantedCallbackScheduled = False
         self.scrollWay = None
@@ -1705,14 +1706,21 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3981:abortEditLabelCommand
     def abortEditLabelCommand (self):
         
-        frame = self ; c = frame.c
+        frame = self ; c = frame.c ; tree = frame.tree
+        p = c.currentPosition() ; w = p.edit_text()
         
         if g.app.batchMode:
             c.notValidInBatchMode("Abort Edit Headline")
             return
-    
-        c.frame.tree.endEditLabel()
-        c.selectPosition(c.currentPosition())
+            
+        if self.revertHeadline and w and p == tree.editPosition():
+        
+            w.delete("1.0","end")
+            w.insert("end",self.revertHeadline)
+            tree.onHeadChanged(p,undoType=None) # Must be done immediately.
+            tree.revertHeadline = None
+            c.frame.tree.endEditLabel()
+            c.selectPosition(c.currentPosition())
     #@nonl
     #@-node:ekr.20031218072017.3981:abortEditLabelCommand
     #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -2085,16 +2093,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.3991:Help Menu...
     #@-node:ekr.20031218072017.3979:Gui-dependent commands
     #@+node:ekr.20050120083053:Delayed Focus (tkFrame)
-    #@+at
+    #@+at 
+    #@nonl
+    # New in 4.3. The proper way to change focus is to call 
+    # c.frame.xWantsFocus.
     # 
-    # New in 4.3
-    # 
-    # Rather than calling g.app.gui.set_focus directly, the code calls
-    # self.xWantsFocus. This defers to idle-time code in the status-line 
-    # class.
-    # 
-    # N.B.  This code never calls select, so there can be no race condition 
-    # here that alters text improperly.
+    # Important: This code never calls select, so there can be no race 
+    # condition here
+    # that alters text improperly.
     #@-at
     #@nonl
     #@+node:ekr.20050120092028:xWantsFocus (tkFrame)
@@ -2146,8 +2152,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     # idle time: that would interfere with switching between windows. Instead, 
     # the
     # xWantFocus routines call this with later=True, to queue up a ONE-SHOT 
-    # later call
-    # to g.app.g.app.gui.set_focus.
+    # call
+    # that actually changes the focus.
     #@-at
     #@@c
     
@@ -2466,6 +2472,8 @@ class leoTkinterBody (leoFrame.leoBody):
             #@nonl
             #@-node:ekr.20051026171121:<< handle newline >>
             #@nl
+        elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
+            self.updateAutomatchBracket(p,w,ch,oldSel)
         elif ch: # Null chars must not delete the selection.
             i,j = oldSel
             if i != j: w.delete(i,j)
@@ -2567,6 +2575,33 @@ class leoTkinterBody (leoFrame.leoBody):
         #@nl
         g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
     #@nonl
+    #@+node:ekr.20051027172949:updateAutomatchBracket
+    def updateAutomatchBracket (self,p,w,ch,oldSel):
+        
+        # assert ch in ('(',')','[',']','{','}')
+        
+        c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
+        language = d.get('language')
+        
+        if ch in ('(','[','{',):
+            automatch = language not in ('plain',)
+            if automatch:
+                ch = ch + {'(':')','[':']','{':'}'}.get(ch)
+            if i != j:
+                w.delete(i,j)
+            w.insert(i,ch)
+            if automatch:
+                w.mark_set('insert','insert-1c')
+        else:
+            ch2 = w.get('insert')
+            if ch2 in (')',']','}'):
+                w.mark_set('insert','insert+1c')
+            else:
+                if i != j:
+                    w.delete(i,j)
+                w.insert(i,ch)
+    #@nonl
+    #@-node:ekr.20051027172949:updateAutomatchBracket
     #@+node:ekr.20051026171121.1:udpateAutoIndent
     # By David McNab:
     def updateAutoIndent (self,p):

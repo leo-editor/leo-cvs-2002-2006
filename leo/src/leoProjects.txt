@@ -5950,7 +5950,7 @@ def __init__(self):
     self.unitTesting = False # True if unit testing.
     self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
     self.user_xresources_path = None # Resource file for Tk/tcl.
-    self.wantedCommander = None # Used by leoTkinterFrame logic to manage calls to g.app.gui.set_focus.
+    self.wantedCommander = None # Used by tkFrame.set_focus.
     self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 
     # Global panels.  Destroyed when Leo ends.
@@ -10334,8 +10334,8 @@ regardless of what we did previously.
 
 Alas, because of bugs in Tk and/or window managers, we can not call method at
 idle time: that would interfere with switching between windows. Instead, the
-xWantFocus routines call this with later=True, to queue up a ONE-SHOT later call
-to g.app.g.app.gui.set_focus.
+xWantFocus routines call this with later=True, to queue up a ONE-SHOT call
+that actually changes the focus.
 @c
 
 def set_focus(self,widget,later=False):
@@ -16960,8 +16960,8 @@ regardless of what we did previously.
 
 Alas, because of bugs in Tk and/or window managers, we can not call method at
 idle time: that would interfere with switching between windows. Instead, the
-xWantFocus routines call this with later=True, to queue up a ONE-SHOT later call
-to g.app.g.app.gui.set_focus.
+xWantFocus routines call this with later=True, to queue up a ONE-SHOT call
+that actually changes the focus.
 @c
 
 def set_focus(self,widget,later=False):
@@ -17068,14 +17068,21 @@ def endEditLabelCommand (self):
 #@+node:ekr.20031218072017.3981:abortEditLabelCommand
 def abortEditLabelCommand (self):
     
-    frame = self ; c = frame.c
+    frame = self ; c = frame.c ; tree = frame.tree
+    p = c.currentPosition() ; w = p.edit_text()
     
     if g.app.batchMode:
         c.notValidInBatchMode("Abort Edit Headline")
         return
-
-    c.frame.tree.endEditLabel()
-    c.selectPosition(c.currentPosition())
+        
+    if self.revertHeadline and w and p == tree.editPosition():
+    
+        w.delete("1.0","end")
+        w.insert("end",self.revertHeadline)
+        tree.onHeadChanged(p,undoType=None) # Must be done immediately.
+        tree.revertHeadline = None
+        c.frame.tree.endEditLabel()
+        c.selectPosition(c.currentPosition())
 #@nonl
 #@-node:ekr.20031218072017.3981:abortEditLabelCommand
 #@-node:ekr.20051013103838:(Escape does not end label editing)
@@ -21902,6 +21909,7 @@ def editLabel (self,p):
 
     if self.editPosition() and p != self.editPosition():
         self.endEditLabel()
+        self.frame.revertHeadline = None
         
     self.setEditPosition(p)
     
@@ -21909,6 +21917,7 @@ def editLabel (self,p):
 
     # Start editing
     if p and p.edit_text():
+        self.frame.revertHeadline = p.headString()
         self.setNormalLabelState(p)
         self.setEditPosition(p)
         self.frame.headlineWantsFocus(p)
@@ -22779,8 +22788,8 @@ regardless of what we did previously.
 
 Alas, because of bugs in Tk and/or window managers, we can not call method at
 idle time: that would interfere with switching between windows. Instead, the
-xWantFocus routines call this with later=True, to queue up a ONE-SHOT later call
-to g.app.g.app.gui.set_focus.
+xWantFocus routines call this with later=True, to queue up a ONE-SHOT call
+that actually changes the focus.
 @c
 
 def set_focus(self,widget,later=False):
@@ -23021,17 +23030,14 @@ def onHeadChanged (self,p,undoType='Change Headline'):
     """Update headline text at idle time."""
     
     c = self.c ; u = c.undoer ; w = self.edit_text(p)
-    undoData = u.beforeChangeNodeContents(p)
     
+    # Use the revert point, if present, as the undo point.
+    undoData = u.beforeChangeNodeContents(p,
+        oldHead=c.frame.revertHeadline or p.headString())
     if w:
         s = w.get('1.0','end')
         << truncate s if it has multiple lines >>
-        # g.trace(repr(s))
-        if p.headString() == s:
-            g.trace('no change',g.callers(5))
-            return
         p.initHeadString(s)
-        w.configure(width=self.headWidth(p))
     self.endEditLabel()
     c.beginUpdate()
     try:
@@ -23145,6 +23151,7 @@ def editLabel (self,p):
 
     if self.editPosition() and p != self.editPosition():
         self.endEditLabel()
+        self.frame.revertHeadline = None
         
     self.setEditPosition(p)
     
@@ -23152,6 +23159,7 @@ def editLabel (self,p):
 
     # Start editing
     if p and p.edit_text():
+        self.frame.revertHeadline = p.headString()
         self.setNormalLabelState(p)
         self.setEditPosition(p)
         self.frame.headlineWantsFocus(p)
@@ -23593,6 +23601,8 @@ def finishCreate (self):
   Surprisingly important.
 
 - undo/redo now put the focus in the body.
+
+- Compute length of headline on every key.
 #@nonl
 #@-node:ekr.20051026170025:Other improvements
 #@+node:ekr.20051025110549:(Keep the focus in the body)
@@ -23602,13 +23612,13 @@ Force focus to body at idle time if it isn't a known pane, the outer pane or a d
 
 This scheme is fragile. I also dislike doing anything at idle time.
 #@nonl
-#@+node:ekr.20051027114909:NewHeadline
+#@+node:ekr.20051027114909:Notes
 @nocolor
 
 Fixed immediate problems with complex log tabs.
 (Show fonts was being hidden because of focus-changing logic.)
 #@nonl
-#@-node:ekr.20051027114909:NewHeadline
+#@-node:ekr.20051027114909:Notes
 #@+node:ekr.20050920094633:k.finishCreate & helpers
 def finishCreate (self):
     
@@ -23662,14 +23672,10 @@ def createInverseCommandsDict (self):
 #@-node:ekr.20051008082929:createInverseCommandsDict
 #@-node:ekr.20050920094633:k.finishCreate & helpers
 #@+node:ekr.20050120083053:Delayed Focus (tkFrame)
-@
+@ New in 4.3. The proper way to change focus is to call c.frame.xWantsFocus.
 
-New in 4.3
-
-Rather than calling g.app.gui.set_focus directly, the code calls
-self.xWantsFocus. This defers to idle-time code in the status-line class.
-
-N.B.  This code never calls select, so there can be no race condition here that alters text improperly.
+Important: This code never calls select, so there can be no race condition here
+that alters text improperly.
 #@nonl
 #@+node:ekr.20050120092028:xWantsFocus (tkFrame)
 @ All these do the same thing, but separate names are good for tracing and
@@ -23714,8 +23720,8 @@ regardless of what we did previously.
 
 Alas, because of bugs in Tk and/or window managers, we can not call method at
 idle time: that would interfere with switching between windows. Instead, the
-xWantFocus routines call this with later=True, to queue up a ONE-SHOT later call
-to g.app.g.app.gui.set_focus.
+xWantFocus routines call this with later=True, to queue up a ONE-SHOT call
+that actually changes the focus.
 @c
 
 def set_focus(self,widget,later=False):
@@ -23846,7 +23852,9 @@ def onIdleTime (self):
             name[0] in string.letters # A known Leo frame.
             or w == c.frame.top # The top of the Leo window
             or g.app.dialogs > 0 # A dialog.
-            or c.frame.log.getSelectedTab() in ('Find','Spell','Colors','Fonts')
+            or c.frame.log.getSelectedTab() not in 'Log','Completions'
+            # Assume all other tabs select their text widgets.
+            # in ('Find','Spell','Colors','Fonts')
         ) 
         if not ok:
             # Not a name created by Leo.
@@ -23856,7 +23864,7 @@ def onIdleTime (self):
 #@-node:ekr.20051025150224:onIdleTime
 #@-node:ekr.20051025110549:(Keep the focus in the body)
 #@+node:ekr.20051025152727:(Replaced idle-key logic with direct logic) 
-#@+node:ekr.20051027135712:NewHeadline
+#@+node:ekr.20051027135712:Notes
 @nocolor
 
 I have removed the requirement that you have to type <return> to make the
@@ -23874,7 +23882,7 @@ tree.onHeadChanged) get the correct value.
 The final piece of the puzzle: tree.select now calls onHeadChanged when
 unselecting a node. This allows us to dispense with return characters.
 #@nonl
-#@-node:ekr.20051027135712:NewHeadline
+#@-node:ekr.20051027135712:Notes
 #@+node:ekr.20040803072955.125:Selecting & editing... (tkTree)
 #@+node:ekr.20040803072955.126:endEditLabel
 def endEditLabel (self):
@@ -23910,6 +23918,7 @@ def editLabel (self,p):
 
     if self.editPosition() and p != self.editPosition():
         self.endEditLabel()
+        self.frame.revertHeadline = None
         
     self.setEditPosition(p)
     
@@ -23917,6 +23926,7 @@ def editLabel (self,p):
 
     # Start editing
     if p and p.edit_text():
+        self.frame.revertHeadline = p.headString()
         self.setNormalLabelState(p)
         self.setEditPosition(p)
         self.frame.headlineWantsFocus(p)
@@ -24498,6 +24508,8 @@ def updateBody (self,event,w,undoType,
     elif ch in ('\r','\n'):
         ch = '\n'
         << handle newline >>
+    elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
+        self.updateAutomatchBracket(p,w,ch,oldSel)
     elif ch: # Null chars must not delete the selection.
         i,j = oldSel
         if i != j: w.delete(i,j)
@@ -24601,6 +24613,33 @@ finally:
     c.endUpdate(redraw_flag) 
 #@nonl
 #@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+#@+node:ekr.20051027172949:updateAutomatchBracket
+def updateAutomatchBracket (self,p,w,ch,oldSel):
+    
+    # assert ch in ('(',')','[',']','{','}')
+    
+    c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
+    language = d.get('language')
+    
+    if ch in ('(','[','{',):
+        automatch = language not in ('plain',)
+        if automatch:
+            ch = ch + {'(':')','[':']','{':'}'}.get(ch)
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,ch)
+        if automatch:
+            w.mark_set('insert','insert-1c')
+    else:
+        ch2 = w.get('insert')
+        if ch2 in (')',']','}'):
+            w.mark_set('insert','insert+1c')
+        else:
+            if i != j:
+                w.delete(i,j)
+            w.insert(i,ch)
+#@nonl
+#@-node:ekr.20051027172949:updateAutomatchBracket
 #@+node:ekr.20051026171121.1:udpateAutoIndent
 # By David McNab:
 def updateAutoIndent (self,p):
@@ -24734,7 +24773,7 @@ def changeSelection(self):
     # Update the selection for the next match.
     gui.setSelectionRangeWithLength(t,start,len(self.change_text))
     newSel = gui.getTextSelection(t)
-    gui.set_focus(c,t)
+    c.frame.widgetWantsFocus(t,later=False)
 
     c.beginUpdate()
     try:
@@ -24801,7 +24840,7 @@ def updateHead (self,event,w,undoType='Typing'):
         ch = g.app.gui.getTextFromClipboard()
         i = int(i.split('.')[1])
         j = int(j.split('.')[1])
-        g.trace('before',i,j,repr(ch))
+        # g.trace('before',i,j,repr(ch))
         s = w.get('1.0','end')
         if i != j:
             s = s[:i] + ch + s[j:]
@@ -24813,7 +24852,7 @@ def updateHead (self,event,w,undoType='Typing'):
         w.delete('1.0','end')
         w.insert('1.0',s)
         s = w.get('1.0','end')
-        g.trace('after',s)
+        # g.trace('after',s)
     else:
         if ch == '\b':
             if i != j:
@@ -24831,15 +24870,20 @@ def updateHead (self,event,w,undoType='Typing'):
     if s.endswith('\n'):
         if len(s) > 1: s = s[:-1]
         else:          s = ''
+        
+    # This cause undo problems, but is much safer.
+    p.initHeadString(s)
+    w.configure(width=max(20,self.headWidth(p)))
+    w.update_idletasks()
 
     if 0: # For tracing.
         if ch or not event or p.headString().strip() != s.strip():
             g.trace(w._name,repr(ch),repr(s),g.callers(5))
-         
+
+    # The granularity is the entire editing session,
+    # starting at the revert point.
     if ch in ('\n','\r'):
-        self.onHeadChanged(p)
-    elif not event:
-        self.onHeadChanged(p,undoType='Paste In Headline')
+        self.onHeadChanged(p,undoType='Typing')
 #@nonl
 #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
 #@+node:ekr.20040803072955.91:onHeadChanged
@@ -24848,17 +24892,14 @@ def onHeadChanged (self,p,undoType='Change Headline'):
     """Update headline text at idle time."""
     
     c = self.c ; u = c.undoer ; w = self.edit_text(p)
-    undoData = u.beforeChangeNodeContents(p)
     
+    # Use the revert point, if present, as the undo point.
+    undoData = u.beforeChangeNodeContents(p,
+        oldHead=c.frame.revertHeadline or p.headString())
     if w:
         s = w.get('1.0','end')
         << truncate s if it has multiple lines >>
-        # g.trace(repr(s))
-        if p.headString() == s:
-            g.trace('no change',g.callers(5))
-            return
         p.initHeadString(s)
-        w.configure(width=self.headWidth(p))
     self.endEditLabel()
     c.beginUpdate()
     try:
@@ -24895,6 +24936,415 @@ s = g.toUnicode(s or '',g.app.tkEncoding)
 #@-node:ekr.20040803072955.91:onHeadChanged
 #@-node:ekr.20040803072955.90:head key handlers
 #@-node:ekr.20051025152727:(Replaced idle-key logic with direct logic) 
+#@+node:ekr.20051027170318:(Implemented Auto () {} []  )
+#@+node:ekr.20051027175147:Notes
+@nocolor
+
+controlled by @bool autocomplete-brackets setting.
+
+Nothing happens in @language plain.
+#@nonl
+#@-node:ekr.20051027175147:Notes
+#@+node:ekr.20051026083733:updateBody (new in 4.4a2)
+# This replaces idle_body_key.  It is never called at idle time.
+# Called only from k.handleDefaultChar and tkBody.onBodyChanged.
+
+def updateBody (self,event,w,undoType,
+    oldSel=None,oldYview=None,newSel=None,oldText=None):
+
+    '''Update Leo after the body have been changed.'''
+    
+    c = self.c ; p = c.currentPosition()
+    ch = event and event.char or ''
+    orignalText = oldText # for use by undo.
+    removeTrailing = None # A signal to compute it later.
+    # g.trace(repr(ch))
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = p.bodyString()
+    if ch == '\t':
+        self.updateTab(p,w)
+    elif ch == '\b': ## chr(8):
+        # Not strictly correct: we should test for present delete binding...
+        self.updateBackspace(p,w)
+    elif ch in ('\r','\n'):
+        ch = '\n'
+        << handle newline >>
+    elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
+        self.updateAutomatchBracket(p,w,ch,oldSel)
+    elif ch: # Null chars must not delete the selection.
+        i,j = oldSel
+        if i != j: w.delete(i,j)
+        w.insert(i,ch)
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return # The hook claims to have handled the event.
+    # Update the text and handle undo.
+    if not newSel: newSel = g.app.gui.getTextSelection(w)
+    newText = w.get('1.0','end')
+    << remove extra Trailing newlines >> # Same logic as always.
+    if newText == oldText: return
+    c.undoer.setUndoTypingParams(p,undoType,
+        orignalText or oldText,newText,oldSel,newSel,oldYview)
+    p.v.setTnodeText(newText)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed: c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+#@nonl
+#@+node:ekr.20051026083733.6:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+# incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+
+incremental = not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20051026083733.6:<< recolor the body >>
+#@+node:ekr.20051026171121:<< handle newline >>
+i,j = oldSel
+
+if i != j:
+    # No auto-indent if there is selected text.
+    w.delete(i,j)
+    w.insert(i,ch)
+else:
+    w.insert(i,ch)
+    if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+        # No auto-indent if in @nocolor mode or after a Change command.
+        removeTrailing = self.updateAutoIndent(p)
+#@nonl
+#@-node:ekr.20051026171121:<< handle newline >>
+#@+node:ekr.20051026143009:<< remove extra Trailing newlines >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = newText ; old = oldText
+
+if removeTrailing != None:
+    pass # Use the value returned from updateAutoIndent.
+elif len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+    
+if removeTrailing:
+    if len(newText) > 1: newText = newText[:-1]
+    else: newText = ''
+    
+if 0:
+    if removeTrailing:
+        g.trace('removeTrailing')
+        # g.trace(repr(oldText))
+    # g.trace(repr(newText))
+#@nonl
+#@-node:ekr.20051026143009:<< remove extra Trailing newlines >>
+#@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+redraw_flag = False
+c.beginUpdate()
+try:
+    # Update dirty bits.
+    # p.setDirty() sets all cloned and @file dirty bits.
+    if not p.isDirty() and p.setDirty():
+        redraw_flag = True
+        
+    # Update icons.  p.v.iconVal may not exist during unit tests.
+    val = p.computeIcon()
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    # Redraw only if necessary.
+    c.endUpdate(redraw_flag) 
+#@nonl
+#@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+#@+node:ekr.20051027172949:updateAutomatchBracket
+def updateAutomatchBracket (self,p,w,ch,oldSel):
+    
+    # assert ch in ('(',')','[',']','{','}')
+    
+    c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
+    language = d.get('language')
+    
+    if ch in ('(','[','{',):
+        automatch = language not in ('plain',)
+        if automatch:
+            ch = ch + {'(':')','[':']','{':'}'}.get(ch)
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,ch)
+        if automatch:
+            w.mark_set('insert','insert-1c')
+    else:
+        ch2 = w.get('insert')
+        if ch2 in (')',']','}'):
+            w.mark_set('insert','insert+1c')
+        else:
+            if i != j:
+                w.delete(i,j)
+            w.insert(i,ch)
+#@nonl
+#@-node:ekr.20051027172949:updateAutomatchBracket
+#@+node:ekr.20051026171121.1:udpateAutoIndent
+# By David McNab:
+def updateAutoIndent (self,p):
+
+    c = self.c
+    d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
+    s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s [ -1] == ':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width] ; tabex = 0
+        for i in range(0,len(s)):
+            if s [i] == '\t':
+                tabex += tab_width-1
+            if s [i] in '([{':
+                brackets.append(i+tabex+1)
+            elif s [i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+    ws = g.computeLeadingWhitespace(width,tab_width)
+    if ws:
+        c.frame.bodyCtrl.insert("insert",ws)
+        removeTrailing = False
+    else:
+        removeTrailing = None
+    return removeTrailing
+#@nonl
+#@-node:ekr.20051026171121.1:udpateAutoIndent
+#@+node:ekr.20051026092433:updateTab
+def updateTab (self,p,w):
+
+    c = self.c
+    d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width)
+    
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        w.delete(i,j)
+    if tab_width > 0:
+        w.insert("insert",'\t')
+    else:
+        # Get the preceeding characters.
+        s = w.get("insert linestart","insert")
+    
+        # Compute n, the number of spaces to insert.
+        width = g.computeWidth(s,tab_width)
+        n = abs(tab_width) - (width % abs(tab_width))
+        w.insert("insert",' ' * n)
+#@nonl
+#@-node:ekr.20051026092433:updateTab
+#@+node:ekr.20051026092433.1:updateBackspace
+def updateBackspace (self,p,w):
+    
+    c = self.c
+    d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width)
+    
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        w.delete(i,j)
+    elif tab_width > 0:
+        w.delete('insert-1c')
+    else:
+        << backspace with negative tab_width >>
+#@nonl
+#@+node:ekr.20051026092746:<< backspace with negative tab_width >>
+s = prev = w.get("insert linestart","insert")
+n = len(prev)
+abs_width = abs(tab_width)
+
+# Delete up to this many spaces.
+n2 = (n % abs_width) or abs_width
+n2 = min(n,n2) ; count = 0
+
+while n2 > 0:
+    n2 -= 1
+    ch = prev[n-count-1]
+    if ch != ' ': break
+    else: count += 1
+
+# Make sure we actually delete something.
+w.delete("insert -%dc" % (max(1,count)),"insert")
+#@nonl
+#@-node:ekr.20051026092746:<< backspace with negative tab_width >>
+#@-node:ekr.20051026092433.1:updateBackspace
+#@-node:ekr.20051026083733:updateBody (new in 4.4a2)
+#@-node:ekr.20051027170318:(Implemented Auto () {} []  )
+#@+node:ekr.20051027170018.1:( Fixed various headlineproblems )
+#@+node:ekr.20051027182727:Notes
+@nocolor
+
+- Clicking in the body pane could loose the latest headline edit
+
+The fix was always to call p.initHeadString(s) in updateHead.  This required reimplementing the abort editing logic.
+#@nonl
+#@-node:ekr.20051027182727:Notes
+#@+node:ekr.20040803072955.90:head key handlers
+#@+node:ekr.20040803072955.88:onHeadlineKey
+def onHeadlineKey (self,event):
+    
+    """Handle a key event in a headline."""
+    
+    w = event and event.widget or None
+    
+    self.updateHead(event,w,undoType='Typing')
+
+    return 'break' # Required
+#@nonl
+#@-node:ekr.20040803072955.88:onHeadlineKey
+#@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+def updateHead (self,event,w,undoType='Typing'):
+    
+    c = self.c ; p = c.currentPosition() ; u = c.undoer
+    ch = event and event.char or ''
+    i,j = g.app.gui.getTextSelection(w)
+    
+    if event is None:
+        # A bad kludge: compute what is *already* in the widget,
+        # but what is not reported properly.
+        ch = g.app.gui.getTextFromClipboard()
+        i = int(i.split('.')[1])
+        j = int(j.split('.')[1])
+        # g.trace('before',i,j,repr(ch))
+        s = w.get('1.0','end')
+        if i != j:
+            s = s[:i] + ch + s[j:]
+        else:
+            i = w.index('insert')
+            i = int(i.split('.')[1])
+            s = s[:i] + ch + s[i:]
+        # Now force the widget to tell us the truth.
+        w.delete('1.0','end')
+        w.insert('1.0',s)
+        s = w.get('1.0','end')
+        # g.trace('after',s)
+    else:
+        if ch == '\b':
+            if i != j:
+                w.delete(i,j)
+            else:
+                w.delete('insert-1c')
+        elif ch and ch not in ('\n','\r'):
+            if i != j:
+                w.delete(i,j)
+            i = w.index('insert')
+            w.insert(i,ch)
+    
+        s = w.get('1.0','end')
+    
+    if s.endswith('\n'):
+        if len(s) > 1: s = s[:-1]
+        else:          s = ''
+        
+    # This cause undo problems, but is much safer.
+    p.initHeadString(s)
+    w.configure(width=max(20,self.headWidth(p)))
+    w.update_idletasks()
+
+    if 0: # For tracing.
+        if ch or not event or p.headString().strip() != s.strip():
+            g.trace(w._name,repr(ch),repr(s),g.callers(5))
+
+    # The granularity is the entire editing session,
+    # starting at the revert point.
+    if ch in ('\n','\r'):
+        self.onHeadChanged(p,undoType='Typing')
+#@nonl
+#@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@+node:ekr.20040803072955.91:onHeadChanged
+def onHeadChanged (self,p,undoType='Change Headline'):
+    
+    """Update headline text at idle time."""
+    
+    c = self.c ; u = c.undoer ; w = self.edit_text(p)
+    
+    # Use the revert point, if present, as the undo point.
+    undoData = u.beforeChangeNodeContents(p,
+        oldHead=c.frame.revertHeadline or p.headString())
+    if w:
+        s = w.get('1.0','end')
+        << truncate s if it has multiple lines >>
+        p.initHeadString(s)
+    self.endEditLabel()
+    c.beginUpdate()
+    try:
+        if not c.changed: c.setChanged(True)
+        dirtyVnodeList = p.setDirty()
+    finally:
+        c.endUpdate()
+
+    u.afterChangeNodeContents(p,undoType,undoData,
+        dirtyVnodeList=dirtyVnodeList)
+#@nonl
+#@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+# Kludge remove one or two trailing newlines before warning of truncation.
+for i in (0,1):
+    if s and s[-1] == '\n':
+        if len(s) > 1: s = s[:-1]
+        else: s = ''
+
+# Warn if there are multiple lines.
+i = s.find('\n')
+if i > -1:
+    # g.trace(i,len(s),repr(s))
+    g.es("Truncating headline to one line",color="blue")
+    s = s[:i]
+
+limit = 1000
+if len(s) > limit:
+    g.es("Truncating headline to %d characters" % (limit),color="blue")
+    s = s[:limit]
+
+s = g.toUnicode(s or '',g.app.tkEncoding)
+#@nonl
+#@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+#@-node:ekr.20040803072955.91:onHeadChanged
+#@-node:ekr.20040803072955.90:head key handlers
+#@+node:ekr.20031218072017.3981:abortEditLabelCommand
+def abortEditLabelCommand (self):
+    
+    frame = self ; c = frame.c ; tree = frame.tree
+    p = c.currentPosition() ; w = p.edit_text()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Abort Edit Headline")
+        return
+        
+    if self.revertHeadline and w and p == tree.editPosition():
+    
+        w.delete("1.0","end")
+        w.insert("end",self.revertHeadline)
+        tree.onHeadChanged(p,undoType=None) # Must be done immediately.
+        tree.revertHeadline = None
+        c.frame.tree.endEditLabel()
+        c.selectPosition(c.currentPosition())
+#@nonl
+#@-node:ekr.20031218072017.3981:abortEditLabelCommand
+#@-node:ekr.20051027170018.1:( Fixed various headlineproblems )
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

@@ -514,7 +514,7 @@ class leoFind:
         # Update the selection for the next match.
         gui.setSelectionRangeWithLength(t,start,len(self.change_text))
         newSel = gui.getTextSelection(t)
-        gui.set_focus(c,t)
+        c.frame.widgetWantsFocus(t,later=False)
     
         c.beginUpdate()
         try:
@@ -949,7 +949,7 @@ class leoFind:
             sel = gui.getTextSelection(t)
         pos = gui.getInsertPoint(t)
         st = self.initNextText()
-        gui.set_focus(c,t)
+        c.frame.widgetWantsFocus(t,later=False)
         gui.setInsertPoint(st,pos)
         if sel:
             self.selStart,self.selEnd = sel

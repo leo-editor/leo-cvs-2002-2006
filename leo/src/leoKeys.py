@@ -1892,7 +1892,9 @@ class keyHandlerClass:
                 name[0] in string.letters # A known Leo frame.
                 or w == c.frame.top # The top of the Leo window
                 or g.app.dialogs > 0 # A dialog.
-                or c.frame.log.getSelectedTab() in ('Find','Spell','Colors','Fonts')
+                or c.frame.log.getSelectedTab() not in 'Log','Completions'
+                # Assume all other tabs select their text widgets.
+                # in ('Find','Spell','Colors','Fonts')
             ) 
             if not ok:
                 # Not a name created by Leo.

@@ -452,8 +452,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         self.top.withdraw() # Helps bring the window to the front.
         self.top.deiconify()
         self.top.lift()
-    
-        gui.set_focus(c,t)
+        c.frame.widgetWantsFocus(t,later=False)
         
         # Apparently, the text can not be adjusted unless the widget has focus...
         s = t.get('1.0','end')
@@ -462,13 +461,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     
         # New in 4.3: don't highlight the stupid added trailing newline!
         gui.setTextSelection (t,"1.0","end-1c") # Thanks Rich.
-        
-        def setFocusCallback():
-            # g.trace()
-            gui.set_focus(c,t)
-        
-        # We must do this after other callbacks.  Sheesh.
-        self.top.after(500,setFocusCallback)
+        c.frame.widgetWantsFocus(t,later=True)
+    #@nonl
     #@-node:ekr.20031218072017.3907:bringToFront
     #@+node:EKR.20040603221140:selectAllFindText
     def selectAllFindText (self,event=None):

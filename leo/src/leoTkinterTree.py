@@ -1877,7 +1877,7 @@ class leoTkinterTree (leoFrame.leoTree):
             ch = g.app.gui.getTextFromClipboard()
             i = int(i.split('.')[1])
             j = int(j.split('.')[1])
-            g.trace('before',i,j,repr(ch))
+            # g.trace('before',i,j,repr(ch))
             s = w.get('1.0','end')
             if i != j:
                 s = s[:i] + ch + s[j:]
@@ -1889,7 +1889,7 @@ class leoTkinterTree (leoFrame.leoTree):
             w.delete('1.0','end')
             w.insert('1.0',s)
             s = w.get('1.0','end')
-            g.trace('after',s)
+            # g.trace('after',s)
         else:
             if ch == '\b':
                 if i != j:
@@ -1907,15 +1907,20 @@ class leoTkinterTree (leoFrame.leoTree):
         if s.endswith('\n'):
             if len(s) > 1: s = s[:-1]
             else:          s = ''
+            
+        # This cause undo problems, but is much safer.
+        p.initHeadString(s)
+        w.configure(width=max(20,self.headWidth(p)))
+        w.update_idletasks()
     
         if 0: # For tracing.
             if ch or not event or p.headString().strip() != s.strip():
                 g.trace(w._name,repr(ch),repr(s),g.callers(5))
-             
+    
+        # The granularity is the entire editing session,
+        # starting at the revert point.
         if ch in ('\n','\r'):
-            self.onHeadChanged(p)
-        elif not event:
-            self.onHeadChanged(p,undoType='Paste In Headline')
+            self.onHeadChanged(p,undoType='Typing')
     #@nonl
     #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
     #@+node:ekr.20040803072955.91:onHeadChanged
@@ -1924,8 +1929,10 @@ class leoTkinterTree (leoFrame.leoTree):
         """Update headline text at idle time."""
         
         c = self.c ; u = c.undoer ; w = self.edit_text(p)
-        undoData = u.beforeChangeNodeContents(p)
         
+        # Use the revert point, if present, as the undo point.
+        undoData = u.beforeChangeNodeContents(p,
+            oldHead=c.frame.revertHeadline or p.headString())
         if w:
             s = w.get('1.0','end')
             #@        << truncate s if it has multiple lines >>
@@ -1952,12 +1959,7 @@ class leoTkinterTree (leoFrame.leoTree):
             #@nonl
             #@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
             #@nl
-            # g.trace(repr(s))
-            if p.headString() == s:
-                # g.trace('no change',g.callers(5))
-                return
             p.initHeadString(s)
-            w.configure(width=self.headWidth(p))
         self.endEditLabel()
         c.beginUpdate()
         try:
@@ -2591,6 +2593,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if self.editPosition() and p != self.editPosition():
             self.endEditLabel()
+            self.frame.revertHeadline = None
             
         self.setEditPosition(p)
         
@@ -2598,6 +2601,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         # Start editing
         if p and p.edit_text():
+            self.frame.revertHeadline = p.headString()
             self.setNormalLabelState(p)
             self.setEditPosition(p)
             self.frame.headlineWantsFocus(p)

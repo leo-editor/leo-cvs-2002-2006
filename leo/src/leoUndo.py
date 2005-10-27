@@ -801,7 +801,7 @@ class baseUndoer:
     #@nonl
     #@-node:ekr.20050315134017.7:beforeChangeGroup
     #@+node:ekr.20050315133212.2:beforeChangeNodeContents
-    def beforeChangeNodeContents (self,p):
+    def beforeChangeNodeContents (self,p,oldBody=None,oldHead=None):
         
         '''Return data that gets passed to afterChangeNode'''
         
@@ -809,8 +809,8 @@ class baseUndoer:
         
         bunch = u.createCommonBunch(p)
         
-        bunch.oldBody = p.bodyString()
-        bunch.oldHead = p.headString()
+        bunch.oldBody = oldBody or p.bodyString()
+        bunch.oldHead = oldHead or p.headString()
     
         return bunch
     #@nonl
