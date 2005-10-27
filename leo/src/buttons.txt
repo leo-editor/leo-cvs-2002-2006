@@ -1,0 +1,38 @@
+#@+leo-ver=4-thin
+#@+node:ekr.20051027111215:@thin buttons.txt
+#@+all
+#@+node:ekr.20050123202520.1:@button settings.leo
+if 1:
+    # Open leoSettings.leo
+    c.openLeoSettings()
+
+else:
+    # Open the settings dialog.
+    import leoConfig
+    leoConfig.settingsController(c,replaceBody=True)
+#@nonl
+#@-node:ekr.20050123202520.1:@button settings.leo
+#@+node:ekr.20050130152155:@button plugins.leo
+name = "leoPlugins.leo"
+fileName = g.os_path_join(g.app.loadDir,"..","plugins",name)
+ok,frame = g.openWithFileName(fileName,c)
+if not ok:
+    g.es("not found: %s" % name)
+#@nonl
+#@-node:ekr.20050130152155:@button plugins.leo
+#@+node:ekr.20051025070441:@button Beautify
+c.prettyPrintPythonNode()
+#@nonl
+#@-node:ekr.20051025070441:@button Beautify
+#@+node:ekr.20041226080857:@button Spell
+c.spellCommands.openSpellTab()
+#@nonl
+#@-node:ekr.20041226080857:@button Spell
+#@+node:ekr.20051013103117:@button Save
+c.save()
+#@nonl
+#@-node:ekr.20051013103117:@button Save
+#@-all
+#@nonl
+#@-node:ekr.20051027111215:@thin buttons.txt
+#@-leo
