@@ -3625,6 +3625,12 @@ class leoTkinterLog (leoFrame.leoLog):
             self.selectTab('Log')
     #@nonl
     #@-node:ekr.20051018102027:deleteTab
+    #@+node:ekr.20051027114433:getSelectedTab
+    def getSelectedTab (self):
+        
+        return self.tabName
+    #@nonl
+    #@-node:ekr.20051027114433:getSelectedTab
     #@+node:ekr.20051018061932.1:ower/raiseTab
     def lowerTab (self,tabName):
         

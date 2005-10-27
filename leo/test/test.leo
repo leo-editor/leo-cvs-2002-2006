@@ -21,7 +21,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841" annotate="7d71002e"><vh>Other tests...</vh>
+<v t="ekr.20040708205841" a="TV" annotate="7d71002e"><vh>Other tests...</vh>
 <v t="ekr.20051015100336"><vh>Older...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
@@ -846,6 +846,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051016205407"><vh>@@button test @key=alt-shift-ctrl-y</vh></v>
 <v t="ekr.20051021151748"><vh>@@command rebind ctrl-e @key=shift-alt-e</vh></v>
 </v>
+<v t="ekr.20051025153329"><vh>Handling tabs, backspaces</vh></v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes...</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -1649,7 +1650,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
+<v t="ekr.20050104095950"><vh>@shortcutsEqualSizedPanes</vh></v>
 <v t="ekr.20050328101834"><vh>@page http plugin</vh>
 <v t="ekr.20050328101834.1"><vh>@bool http_active = False</vh></v>
 <v t="ekr.20050328101834.2"><vh>@int  port = 8080</vh></v>
@@ -2463,8 +2464,6 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
-<v t="ekr.20051025153329"><vh>Handling tabs, backspaces</vh></v>
-<v t="ekr.20051027052216" a="TV"><vh>a</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -12303,7 +12302,9 @@ def doIndent (self):
 
 # EqualSizedPanes = Ctrl+E
 # ExecuteScript = Alt+Ctrl+E
-# Exit = alt-ctrl-Z</t>
+# Exit = alt-ctrl-Z
+
+# paste-text = Alt-Ctrl-V</t>
 <t tx="ekr.20050105080048"></t>
 <t tx="ekr.20050105080048.1">f = c.frame
 assert(f.c==c)
@@ -24089,6 +24090,5 @@ return [expr $x*10]</t>
 
 ---*---*---*
 ab</t>
-<t tx="ekr.20051027052216">vvv</t>
 </tnodes>
 </leo_file>

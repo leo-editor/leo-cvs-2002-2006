@@ -1673,23 +1673,18 @@ class editCommandsClass (baseEditCommandsClass):
     def focusToBody (self,event):
         
         self.c.frame.bodyWantsFocus(later=True)
-        # frame = self.c.frame
-        # return frame.set_focus(frame.body.bodyCtrl,later=True)
     
     def focusToLog (self,event):
+    
         self.c.frame.logWantsFocus(later=True)
-        # frame = self.c.frame
-        # return frame.set_focus(frame.log.logCtrl,later=True)
         
     def focusToMinibuffer (self,event):
+        
         self.c.frame.minibufferWantsFocus(later=True)
-        # frame = self.c.frame
-        # return frame.set_focus(frame.log.logCtrl,later=True)
     
     def focusToTree (self,event):
+        
         self.c.frame.treeWantsFocus(later=True)
-        # frame = self.c.frame
-        # return frame.set_focus(frame.tree.canvas,later=True)
     #@nonl
     #@-node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
     #@+node:ekr.20051022144825.1:cycleFocus

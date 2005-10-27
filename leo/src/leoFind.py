@@ -1001,7 +1001,7 @@ class leoFind:
     
             gui.setInsertPoint(t,insert)
             gui.makeIndexVisible(t,insert)
-            c.frame.widgetWantsFocus(t) # gui.set_focus(c,t) does not work in 4.4.
+            c.frame.widgetWantsFocus(t)
     #@nonl
     #@-node:ekr.20031218072017.3089:restore
     #@+node:ekr.20031218072017.3090:save
@@ -1051,7 +1051,7 @@ class leoFind:
         gui.setInsertPoint(t,insert)
         gui.setSelectionRange(t,pos,newpos)
         gui.makeIndexVisible(t,insert)
-        c.frame.widgetWantsFocus(t) # gui.set_focus(c,t) does not work in 4.4.
+        c.frame.widgetWantsFocus(t)
         if self.wrap and not self.wrapPosition:
             self.wrapPosition = self.p
     #@nonl

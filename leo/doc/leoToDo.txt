@@ -26,27 +26,627 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-** Ctrl-Z does not properly set focus.
-- Command name for Ctrl-Z is not right.
-
-- Alt-0 leaves present tree alone?
+- Add buttons.txt to distribution list.
 #@nonl
-#@+node:ekr.20051025101030:minor: before a2
-* Cleanup: review all calls to g.app.gui.set_focus.
+#@+node:ekr.20051025101030:before a2
+#@+node:ekr.20051017132446:Hang in MacOS scripting
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3384016
+By: slott56
 
-- Make sure there is some way of executing script find/changes.
+Executing [any] script throws me into a loop with a lot of "exception execution
+script" messages.  There's a copy of Python left running in the background,
+it appears, which is hung up.
 
-* Create buttons.txt so crashes in leoPy.leo don't lose info.
+Here's the full header...
+
+Leo 4.3 final, build  1.262 , May 23, 2005
+Python 2.3.5, Tk 8.4.7, darwin
+
+Mac OS 10.4.2
+#@-node:ekr.20051017132446:Hang in MacOS scripting
+#@+node:ekr.20051008131807:Unit tests
+@nocolor
+
+** New utils for unit testing
+    - The idea is to avoid subclassing TestCase,
+      and to avoid the kind of helper code that is in leoTest.leo.
+    - data = g.saveSubtree()
+    - g.restoreSubtree(data)
+
+- g.simulateKeystrokes (keystrokes,p=None)
+    - keystrokes is a list of bindings to be 'executed' as if typed.
+        - This is an easy way of simulating user interaction.
+
+- unit calls k.simulateKeystrokes and then makes assertions about
+    - state
+    - Contents of label.
+    - ivars
+    - Contents of body text.
+    - what widget has focus.
+    - what the point, mark and selection are.
+    - etc.
+
+@color
+#@nonl
+#@-node:ekr.20051008131807:Unit tests
+#@+node:ekr.20051027114909.1:Known bug
+- Call onHeadChanged when switching nodes?
+    - No: that won't make 'Paste' stick.
+#@nonl
+#@-node:ekr.20051027114909.1:Known bug
+#@+node:ekr.20051021210459:Docs
+- Document new settings.
+- Document how to create and manage tabs in the log pane.
+- Document how to script the log pane.
+
+- Document @command and @button @key.
+- Posting: how to program tabs in the log pane.
+- Posting: Not possible to use @command inside a derived file.
+
+- Add an entry in the FAQ that g.trace is usually more useful than pdb.
+#@nonl
+#@+node:ekr.20051017140811:Original temac bindings
+Buffer Keyboard Commands:
+----------------------------------------
+
+<Control-p>: move up one line
+<Control-n>: move down one line
+<Control-f>: move forward one char
+<Conftol-b>: move backward one char
+<Control-o>: insert newline
+<Control-Alt-o> : insert newline and indent
+<Control-j>: insert newline and tab
+<Alt-<> : move to start of Buffer
+<Alt- > >: move to end of Buffer
+<Control a>: move to start of line
+<Control e> :move to end of line
+<Alt-Up>: move to start of line
+<Alt-Down>: move to end of line
+<Alt b>: move one word backward
+<Alt f> : move one word forward
+<Control - Right Arrow>: move one word forward
+<Control - Left Arrow>: move one word backwards
+<Alt-m> : move to beginning of indentation
+<Alt-g> : goto line number
+<Control-v>: scroll forward one screen
+<Alt-v>: scroll up one screen
+<Alt-a>: move back one sentence
+<Alt-e>: move forward one sentence
+<Alt-}>: move forward one paragraph
+<Alt-{>: move backwards one paragraph
+<Alt-:> evaluate a Python expression in the minibuffer and insert the value in the current buffer
+Esc Esc : evaluate a Python expression in the minibuffer and insert the value in the current buffer
+<Control-x . >: set fill prefix
+<Alt-q>: fill paragraph
+<Alt-h>: select current or next paragraph
+<Control-x Control-@>: pop global mark
+<Control-u>: universal command, repeats the next command n times.
+<Alt -n > : n is a number.  Processes the next command n times.
+<Control-x (>: start definition of kbd macro
+<Control-x ) > : stop definition of kbd macro
+<Control-x e : execute last macro defined
+<Control-u Control-x ( >: execute last macro and edit
+<Control-x Esc Esc >: execute last complex command( last Alt-x command
+<Control-x Control-c >: save buffers kill Emacs
+<Control-x u > : advertised undo.   This function utilizes the environments.
+        If the buffer is not configure explicitly, there is no operation.
+<Control-_>: advertised undo.  See above
+<Control-z>: iconfify frame
+----------------------------------------
+
+<Delete> : delete previous character
+<Control d>: delete next character
+<Control k> : delete from cursor to end of line. Text goes to kill buffer
+<Alt d>: delete word. Word goes to kill buffer
+<Alt Delete>: delete previous word. Word goes to kill buffer
+<Alt k >: delete current sentence. Sentence goes to kill buffer
+<Control x Delete>: delete previous sentence. Sentence goes to kill buffer
+<Control y >: yank last deleted text segment from
+ kill buffer and inserts it.
+<Alt y >: cycle and yank through kill buffer.
+
+<Alt z >: zap to typed letter. Text goes to kill buffer
+<Alt-^ >: join this line to the previous one
+<Alt-\ >: delete surrounding spaces
+<Alt-s> >: center line in current fill column
+<Control-Alt-w>: next kill is appended to kill buffer
+----------------------------------------
+
+<Alt c>: Capitalize the word the cursor is under.
+<Alt u>: Uppercase the characters in the word.
+<Alt l>: Lowercase the characters in the word.
+----------------------------------------
+
+<Alt t>: Mark word for word swapping.  Marking a second
+ word will swap this word with the first
+<Control-t>: Swap characters
+<Ctrl-@>: Begin marking region.
+<Ctrl-W>: Kill marked region
+<Alt-W>: Copy marked region
+<Ctrl-x Ctrl-u>: uppercase a marked region
+<Ctrl-x Ctrl-l>: lowercase a marked region
+<Ctrl-x h>: mark entire buffer
+<Alt-Ctrl-backslash>: indent region to indentation of line 1 of the region.
+<Ctrl-x tab> : indent region by 1 tab
+<Control-x Control-x> : swap point and mark
+<Control-x semicolon>: set comment column
+<Alt-semicolon>: indent to comment column
+----------------------------------------
+
+M-! cmd -- Run the shell command line cmd and display the output
+M-| cmd -- Run the shell command line cmd with region contents as input
+----------------------------------------
+
+<Control-x a e>: Expand the abbrev before point (expand-abbrev). This is effective even when Abbrev mode is not enabled
+<Control-x a g>: Define an abbreviation for previous word
+<Control-x a i g>: Define a word as abbreviation for word before point, or in point
+----------------------------------------
+
+<Control s>: forward search, using pattern in Mini buffer.
+
+<Control r>: backward search, using pattern in Mini buffer.
+
+<Control s Enter>: search forward for a word, nonincremental
+
+<Control r Enter>: search backward for a word, nonincremental
+
+<Control s Enter Control w>: Search for words, ignoring details of punctuation
+<Control r Enter Control w>: Search backward for words, ignoring details of punctuation
+<Control-Alt s>: forward regular expression search, using pattern in Mini buffer
+
+<Control-Alt r>: backward regular expression search, using pattern in Mini buffer
+
+<Alt-%>: begin query search/replace. n skips to next match. y changes current match.  
+        q or Return exits. ! to replace all remaining matches with no more questions
+<Control Alt %> begin regex search replace, like Alt-%
+<Alt-=>: count lines and characters in regions
+<Alt-( >: insert parentheses()
+<Alt-) >:  move past close
+<Control-x Control-t>: transpose lines.
+<Control-x Control-o>: delete blank lines
+<Control-x r s>: save region to register
+<Control-x r i>: insert to buffer from register
+<Control-x r +>: increment register
+<Control-x r n>: insert number 0 to register
+<Control-x r space > : point insert point to register
+<Control-x r j > : jump to register
+<Control-x x>: save region to register
+<Control-x r r> : save rectangle to register
+<Control-x r o>: open up rectangle
+<Control-x r c> : clear rectangle
+<Control-x r d> : delete rectangle
+<Control-x r t> : replace rectangle with string
+<Control-x r k> : kill rectangle
+<Control-x r y> : yank rectangle
+<Control-g> : keyboard quit
+
+<Control-x = > : position of cursor
+<Control-x . > : set fill prefix
+<Control-x f > : set the fill column
+<Control-x Control-b > : display the buffer list
+<Control-x b > : switch to buffer
+<Control-x k > : kill the specified buffer
+----------------------------------------
+
+<Alt - - Alt-l >: lowercase previous word
+<Alt - - Alt-u>: uppercase previous word
+<Alt - - Alt-c>: capitalise previous word
+----------------------------------------
+
+<Alt-/ >: dynamic expansion
+<Control-Alt-/>: dynamic expansion.  Expands to common prefix in buffer
+----------------------------------------
+
+Alt-x commands:
+
+(Pressing Tab will result in auto completion of the options if an appropriate match is found
+#@nonl
+#@-node:ekr.20051017140811:Original temac bindings
+#@-node:ekr.20051021210459:Docs
+#@+node:ekr.20051014104337.1:Crash in undo
+exception executing command
+Traceback (most recent call last):
+
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 213, in doCommand
+    command()
+
+  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1571, in undo
+    u.undoHelper()
+
+  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1720, in undoMove
+    u.p.moveToNthChildOf(u.oldParent,u.oldN)
+
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 2764, in moveToNthChildOf
+    p.unlink()
+
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 3307, in unlink
+    assert(parent.v in p.v.directParents())
+
+AssertionError
+#@nonl
+#@-node:ekr.20051014104337.1:Crash in undo
+#@-node:ekr.20051025101030:before a2
+#@+node:ekr.20051016162724:before a3
+Urgent:
+
+- Improve emacs-search commands
+
+- Improve handling of the mark.  The selection should be visible.
+
+- Improve kill/yank.
 
 - Improve spell tab:
     - Try default fonts for spell buttons.
     - Select the first entry.
     - Support up/down arrows.
 #@nonl
-#@-node:ekr.20051025101030:minor: before a2
+#@+node:ekr.20051018104223:Improve minibuffer commands
+#@+node:ekr.20051012053017.4:Search improvements
+** Important: search headline option.
+    
+[iqr] incremental,query,regex
+[fb] forward,back
+[w] word
+[c] case-sensitive
+[hat] headline,all,body
+[osn] outline,subtree,node
+
+*Set defaults for all the above using commands.
+set-word-search-on/off
+set-search-case-on/off
+set-regexp-search-on/off
+set-wrap-search-on/off
+set-search-scope-to-outline/subtree/node
+
+** Search mode: Control keys could change these options *after* starting the search command.
+
+- Script-search commands
+script-search  (can we abort the search somehow?)
+set-find-script
+set-change-script
+
+Apply incremental search commands to headlines.  This might be fast, but is it useful if nodes aren't visible?
+#@nonl
+#@-node:ekr.20051012053017.4:Search improvements
+#@+node:ekr.20051014122218:kill/yank from the xemacs tutorial
+<Delete>     delete the character just before the cursor
+C-d   	     delete the next character after the cursor
+
+M-<Delete>   kill the word immediately before the cursor
+M-d	     kill the next word after the cursor
+
+C-k	     kill from the cursor position to end of line
+M-k	     kill to the end of the current sentence
+
+** (I changed this: I should change it back)
+Note that a single C-k kills the contents of the line, and a second
+C-k kills the line itself...
+
+C-k treats a numeric argument specially: it kills that many lines AND
+their contents.  This is not mere repetition.  C-u 2 C-k kills two
+lines and their newlines; typing C-k twice would not do that.
+
+The set-mark-command command sets the mark to the point.
+Bound to Alt-@, Ctrl--, Ctrl-space
+#@nonl
+#@-node:ekr.20051014122218:kill/yank from the xemacs tutorial
+#@+node:ekr.20051017111216:Commands to fix
+- Removed update_idletasks and event_generate from minibuffer commands...
+
+It is unlikely that any of the following commands work:
+
+    removeBlankLines,backToIndentation,indentRelative,
+    moveWordHelper,findNextMatch.
+
+- If possibly, eliminate update_idletasks and w.event_generate('<Key>') in the following:
+    removeBlankLines,backToIndentation,indentRelative,
+    moveWordHelper,findNextMatch.
+
+- baseEditCommandsClass helpers:
+    These would be similar to g.app.gui methods, but maybe simpler to use.
+    head,sel,tail = getSelectedLines()
+    hasSelection, setSelection, etc.
+#@nonl
+#@+node:ekr.20050920084036.141:removeBlankLines
+def removeBlankLines (self,event):
+    
+    w = event.widget
+    i = w.index('insert')
+    i1, i2 = i.split('.')
+    i1 = int(i1) ; dindex = []
+    if w.get('insert linestart','insert lineend').strip() == '':
+        while str(i1) + '.0' != '1.0':
+            i1 -= 1
+            g.trace('loop1',i1)
+            s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
+            if not s:
+                dindex.append('%s.0' % i1)
+                dindex.append('%s.0 lineend' % i1)
+            elif dindex:
+                w.delete('%s-1c' % dindex[-2],dindex[1])
+                w.event_generate('<Key>')
+                w.update_idletasks() # Needed to continue the loop.
+                break
+            else:
+                break
+    i = w.index('insert')
+    i1, i2 = i.split('.')
+    i1 = int(i1) ; dindex = []
+    while w.index('%s.0 lineend' % i1) != w.index('end'):
+        i1 += 1
+        g.trace('loop1',i1)
+        s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
+        if not s:
+            dindex.append('%s.0' % i1)
+            dindex.append('%s.0 lineend' % i1)
+        elif dindex:
+            w.delete('%s-1c' % dindex[0],dindex[-1])
+            w.event_generate('<Key>')
+            w.update_idletasks() # Needed to continue the loop.
+            break
+        else:
+            break
+#@nonl
+#@-node:ekr.20050920084036.141:removeBlankLines
+#@+node:ekr.20050920084036.75:backToIndentation
+def backToIndentation (self,event):
+
+    w = event.widget
+
+    i = w.index('insert linestart')
+    i2 = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+    w.mark_set('insert',i2)
+    ### w.update_idletasks()
+#@nonl
+#@-node:ekr.20050920084036.75:backToIndentation
+#@+node:ekr.20050920084036.78:indentRelative
+def indentRelative (self,event):
+
+    k = self.k ; w = event.widget
+
+    i = w.index('insert')
+    l, c = i.split('.')
+    c2 = int(c)
+    l2 = int(l) -1
+    if l2 < 1: return
+    txt = w.get('%s.%s' % (l2,c2),'%s.0 lineend' % l2)
+    if len(txt) <= len(w.get('insert','insert lineend')):
+        w.insert('insert','\t')
+    else:
+        reg = re.compile('(\s+)')
+        ntxt = reg.split(txt)
+        replace_word = re.compile('\w')
+        for z in ntxt:
+            if z.isspace():
+                w.insert('insert',z)
+                break
+            else:
+                z = replace_word.subn(' ',z)
+                w.insert('insert',z[0])
+                ###w.update_idletasks()
+#@nonl
+#@-node:ekr.20050920084036.78:indentRelative
+#@+node:ekr.20050920084036.149:back/forwardWord & helper
+def moveWordHelper (self,event,forward=True):
+
+    '''This function moves the cursor to the next word, direction dependent on the way parameter'''
+
+    c = self.c ; w = event.widget
+    
+    if forward:
+         ind = w.search('\w','insert',stopindex='end',regexp=True)
+         if ind: nind = '%s wordend' % ind
+         else:   nind = 'end'
+    else:
+         ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
+         if ind: nind = '%s wordstart' % ind
+         else:   nind = '1.0'
+
+    w.mark_set('insert',nind)
+    w.see('insert')
+    c.frame.widgetWantsFocus(w)
+
+def backwardWord (self,event):
+    self.moveWordHelper(event,forward=False)
+
+def forwardWord (self,event):
+    self.moveWordHelper(event,forward=True)
+#@nonl
+#@-node:ekr.20050920084036.149:back/forwardWord & helper
+#@+node:ekr.20050920084036.107:indentRegion
+def indentRegion (self,event):
+    w = event.widget
+    mrk = 'sel'
+    trange = w.tag_ranges(mrk)
+    if len(trange) != 0:
+        ind = w.search('\w','%s linestart' % trange[0],stopindex='end',regexp=True)
+        if not ind: return
+        text = w.get('%s linestart' % ind,'%s lineend' % ind)
+        sstring = text.lstrip()
+        sstring = sstring [0]
+        ws = text.split(sstring)
+        if len(ws) > 1:
+            ws = ws [0]
+        else:
+            ws = ''
+        s, s1 = trange [0].split('.')
+        e, e1 = trange [ -1].split('.')
+        s = int(s)
+        s = s + 1
+        e = int(e) + 1
+        for z in xrange(s,e):
+            t2 = w.get('%s.0' % z,'%s.0 lineend' % z)
+            t2 = t2.lstrip()
+            t2 = ws + t2
+            w.delete('%s.0' % z,'%s.0 lineend' % z)
+            w.insert('%s.0' % z,t2)
+        ### w.event_generate('<Key>')
+        ### w.update_idletasks()
+    self.removeRKeys(w)
+#@nonl
+#@-node:ekr.20050920084036.107:indentRegion
+#@+node:ekr.20050920084036.219:findNextMatch
+def findNextMatch (self,event):
+    
+    '''Find the next match and select it.
+    Return True if a match was found.
+    Otherwise, call quitSearch and return False.'''
+
+    k = self.k ; w = event.widget
+    
+    w.tag_delete('qR')
+
+    if self.regexp:
+        << handle regexp >>
+    else:
+        << handle plain search >>
+#@nonl
+#@+node:ekr.20051005155611:<< handle regexp >>
+try:
+    regex = re.compile(self.qQ)
+except:
+    self.quitSearch(event,'Illegal regular expression')
+    return False
+
+txt = w.get('insert','end')
+match = regex.search(txt)
+
+if match:
+    start = match.start()
+    end = match.end()
+    length = end - start
+    w.mark_set('insert','insert +%sc' % start)
+    ### w.update_idletasks()
+    w.tag_add('qR','insert','insert +%sc' % length)
+    w.tag_config('qR',background='lightblue')
+    txt = w.get('insert','insert +%sc' % length)
+    return True
+else:
+    self.quitSearch(event)
+    return False
+#@nonl
+#@-node:ekr.20051005155611:<< handle regexp >>
+#@+node:ekr.20051005160923:<< handle plain search >>
+i = w.search(self.qQ,'insert',stopindex='end')
+if i:
+    w.mark_set('insert',i)
+    ###w.update_idletasks()
+    w.tag_add('qR','insert','insert +%sc' % len(self.qQ))
+    w.tag_config('qR',background='lightblue')
+    return True
+else:
+    self.quitSearch(event)
+    return False
+#@nonl
+#@-node:ekr.20051005160923:<< handle plain search >>
+#@-node:ekr.20050920084036.219:findNextMatch
+#@-node:ekr.20051017111216:Commands to fix
+#@-node:ekr.20051018104223:Improve minibuffer commands
+#@+node:ekr.20051012054228:Vim mode (k.vimMode)
+- k.vimMode controls whether full-command keeps mini-buffer open after a command complete.
+
+- k.fullCommand sets k.sets k.vimMode = c.config.getBool('vim-mode') on entry.
+
+- Commands (like vim-insert-mode) clear k.vimMode to return to the body pane.
+
+- control-g does not alter k.vimMode.
+
+- Shift-control-g clears k.vimMode.
+#@-node:ekr.20051012054228:Vim mode (k.vimMode)
+#@+node:ekr.20050928144501:Expand commands to handle Leo environment
+* Traditional Emacs commands must be generalized to handle the more complex
+envirnoment Leo offers. For example, search commands must be told whether to
+limit the search a single node, or a node or and its descendents, or the entire
+outline.
+
+    - Expand 'point' so it indicates node as well as text location.
+    - Allow Leo options (e.g. search options) in Emacs commands.
+    - (Maybe) a default-search-command.
+    - Implement set-variable command that sets a (Python) variable using an emacs-style variable name.
+    
+* At present, there are two versions of some operations, the traditional Leo way and the Emacs way.  Some simplification is needed.
+
+* Many more commands are needed to support 'mouseless-Leo'.
+    - The user must be able to set Emacs and Leo options from the keyboard.
+    - The user must be able to drive all dialogs from the keyboard,
+      **or to get the same effect without using a dialog at all**.
+
+- Expand names for some Leo commands  new -> new-outline, etc.
+
+- Emacs search commands are limited to a single node.
+
+- There should be a method for the 'check-spelling' command. (use button code)
+
+- cycle-active-pane and cycle-active-widget (in a single pane) commands.
+
+- create-tab, clear-tab commands, etc.
+    These might get the tab name from the minibuffer...
+#@nonl
+#@-node:ekr.20050928144501:Expand commands to handle Leo environment
+#@+node:ekr.20051021074728:Space completion
+#@-node:ekr.20051021074728:Space completion
+#@-node:ekr.20051016162724:before a3
+#@+node:ekr.20051027105304:before b1
+- Review the posting about making positions permanent, or recording vnode
+indicies. It's probably time to do this.
+
+- Make sure there is some way of executing script find/changes.
+#@nonl
+#@+node:ekr.20051014152256:Fix long-standing bug in import code
+Improve import code so it handles stufff like this from Ipyton/iplib
+
+### This should *not* terminate the function!
+
+    self.LOGHEAD = Itpl(
+"""#log# Automatic Logger file. *** THIS MUST BE THE FIRST LINE ***
+#log# DO NOT CHANGE THIS LINE OR THE TWO BELOW
+#log# opts = $self.rc.opts
+#log# args = $self.rc.args
+#log# It is safe to make manual edits below here.
+#log#-----------------------------------------------------------------------
+""")
+
+- Handle blanks better in imports:
+    - Add tab_width keyword arg to import command.
+    - Convert tabs to blanks if tab width < 0.
+- Ignore position of blank lines wrt sentinels.
+- Ignore (optionally?) underindented blank lines.
+- Use pyclbr to parse Python imports?
+#@nonl
+#@+node:ekr.20040930075711:Handle underindented lines
+@nocolor
+
+Leo can't represent some files using nodes!
+
+I call this the "underindented blank line" problem.
+
+Example:
+
+@color
+
+class aClass:
+    def spam(): pass
+# comment line
+    def eggs(): pass
+    
+@nocolor
+
+Leo's import code can't handle this:
+    
+- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
+
+- Having the comment line stop the scanning of aClass is even worse.
+
+- This usually shows up with an unindented blank line instead of the comment line.
+#@nonl
+#@-node:ekr.20040930075711:Handle underindented lines
+#@+node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20051014152256:Fix long-standing bug in import code
+#@-node:ekr.20051027105304:before b1
 #@+node:ekr.20051023125705:Asap (cool)
 - Autocompleter 
-#@-node:ekr.20051023125705:Asap (cool)
 #@+node:ekr.20051025144611:Autocompleter (Do not delete)
 - list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
   (Autocompleter may already do this)
@@ -947,456 +1547,7 @@ def onOpenWindow ():
 #@-node:ekr.20051025144611.42:onOpenWindow
 #@-node:ekr.20051025144611.4:autocompleter.py
 #@-node:ekr.20051025144611:Autocompleter (Do not delete)
-#@+node:ekr.20051008131807:Unit tests
-@nocolor
-
-** New utils for unit testing
-    - The idea is to avoid subclassing TestCase,
-      and to avoid the kind of helper code that is in leoTest.leo.
-    - data = g.saveSubtree()
-    - g.restoreSubtree(data)
-
-- g.simulateKeystrokes (keystrokes,p=None)
-    - keystrokes is a list of bindings to be 'executed' as if typed.
-        - This is an easy way of simulating user interaction.
-
-- unit calls k.simulateKeystrokes and then makes assertions about
-    - state
-    - Contents of label.
-    - ivars
-    - Contents of body text.
-    - what widget has focus.
-    - what the point, mark and selection are.
-    - etc.
-
-@color
-#@nonl
-#@-node:ekr.20051008131807:Unit tests
-#@+node:ekr.20051021210459:Docs
-- Document new settings.
-- Document how to create and manage tabs in the log pane.
-- Document how to script the log pane.
-
-- Document @command and @button @key.
-- Posting: how to program tabs in the log pane.
-- Posting: Not possible to use @command inside a derived file.
-
-- Add an entry in the FAQ that g.trace is usually more useful than pdb.
-#@nonl
-#@-node:ekr.20051021210459:Docs
-#@+node:ekr.20051016162724:First
-Urgent:
-
-- Improve emacs-search commands
-
-- Improve handling of the mark.  The selection should be visible.
-
-- Improve kill/yank.
-
-Later:
-
-- Review the posting about making positions permanent, or recording vnode
-indicies. It's probably time to do this.
-
-- Must bind *all* keysrokes in all panes to masterControl so that minibuffer works properly.
-#@nonl
-#@+node:ekr.20051018104223:Improve minibuffer commands
-#@+node:ekr.20051012053017.4:Search improvements
-** Important: search headline option.
-    
-[iqr] incremental,query,regex
-[fb] forward,back
-[w] word
-[c] case-sensitive
-[hat] headline,all,body
-[osn] outline,subtree,node
-
-*Set defaults for all the above using commands.
-set-word-search-on/off
-set-search-case-on/off
-set-regexp-search-on/off
-set-wrap-search-on/off
-set-search-scope-to-outline/subtree/node
-
-** Search mode: Control keys could change these options *after* starting the search command.
-
-- Script-search commands
-script-search  (can we abort the search somehow?)
-set-find-script
-set-change-script
-
-Apply incremental search commands to headlines.  This might be fast, but is it useful if nodes aren't visible?
-#@nonl
-#@-node:ekr.20051012053017.4:Search improvements
-#@+node:ekr.20051014122218:kill/yank from the xemacs tutorial
-<Delete>     delete the character just before the cursor
-C-d   	     delete the next character after the cursor
-
-M-<Delete>   kill the word immediately before the cursor
-M-d	     kill the next word after the cursor
-
-C-k	     kill from the cursor position to end of line
-M-k	     kill to the end of the current sentence
-
-** (I changed this: I should change it back)
-Note that a single C-k kills the contents of the line, and a second
-C-k kills the line itself...
-
-C-k treats a numeric argument specially: it kills that many lines AND
-their contents.  This is not mere repetition.  C-u 2 C-k kills two
-lines and their newlines; typing C-k twice would not do that.
-
-The set-mark-command command sets the mark to the point.
-Bound to Alt-@, Ctrl--, Ctrl-space
-#@nonl
-#@-node:ekr.20051014122218:kill/yank from the xemacs tutorial
-#@+node:ekr.20051017111216:Commands to fix
-- Removed update_idletasks and event_generate from minibuffer commands...
-
-It is unlikely that any of the following commands work:
-
-    removeBlankLines,backToIndentation,indentRelative,
-    moveWordHelper,findNextMatch.
-
-- If possibly, eliminate update_idletasks and w.event_generate('<Key>') in the following:
-    removeBlankLines,backToIndentation,indentRelative,
-    moveWordHelper,findNextMatch.
-
-- baseEditCommandsClass helpers:
-    These would be similar to g.app.gui methods, but maybe simpler to use.
-    head,sel,tail = getSelectedLines()
-    hasSelection, setSelection, etc.
-#@nonl
-#@+node:ekr.20050920084036.141:removeBlankLines
-def removeBlankLines (self,event):
-    
-    w = event.widget
-    i = w.index('insert')
-    i1, i2 = i.split('.')
-    i1 = int(i1) ; dindex = []
-    if w.get('insert linestart','insert lineend').strip() == '':
-        while str(i1) + '.0' != '1.0':
-            i1 -= 1
-            g.trace('loop1',i1)
-            s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
-            if not s:
-                dindex.append('%s.0' % i1)
-                dindex.append('%s.0 lineend' % i1)
-            elif dindex:
-                w.delete('%s-1c' % dindex[-2],dindex[1])
-                w.event_generate('<Key>')
-                w.update_idletasks() # Needed to continue the loop.
-                break
-            else:
-                break
-    i = w.index('insert')
-    i1, i2 = i.split('.')
-    i1 = int(i1) ; dindex = []
-    while w.index('%s.0 lineend' % i1) != w.index('end'):
-        i1 += 1
-        g.trace('loop1',i1)
-        s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
-        if not s:
-            dindex.append('%s.0' % i1)
-            dindex.append('%s.0 lineend' % i1)
-        elif dindex:
-            w.delete('%s-1c' % dindex[0],dindex[-1])
-            w.event_generate('<Key>')
-            w.update_idletasks() # Needed to continue the loop.
-            break
-        else:
-            break
-#@nonl
-#@-node:ekr.20050920084036.141:removeBlankLines
-#@+node:ekr.20050920084036.75:backToIndentation
-def backToIndentation (self,event):
-
-    w = event.widget
-
-    i = w.index('insert linestart')
-    i2 = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
-    w.mark_set('insert',i2)
-    ### w.update_idletasks()
-#@nonl
-#@-node:ekr.20050920084036.75:backToIndentation
-#@+node:ekr.20050920084036.78:indentRelative
-def indentRelative (self,event):
-
-    k = self.k ; w = event.widget
-
-    i = w.index('insert')
-    l, c = i.split('.')
-    c2 = int(c)
-    l2 = int(l) -1
-    if l2 < 1: return
-    txt = w.get('%s.%s' % (l2,c2),'%s.0 lineend' % l2)
-    if len(txt) <= len(w.get('insert','insert lineend')):
-        w.insert('insert','\t')
-    else:
-        reg = re.compile('(\s+)')
-        ntxt = reg.split(txt)
-        replace_word = re.compile('\w')
-        for z in ntxt:
-            if z.isspace():
-                w.insert('insert',z)
-                break
-            else:
-                z = replace_word.subn(' ',z)
-                w.insert('insert',z[0])
-                ###w.update_idletasks()
-#@nonl
-#@-node:ekr.20050920084036.78:indentRelative
-#@+node:ekr.20050920084036.149:back/forwardWord & helper
-def moveWordHelper (self,event,forward=True):
-
-    '''This function moves the cursor to the next word, direction dependent on the way parameter'''
-
-    c = self.c ; w = event.widget
-    
-    if forward:
-         ind = w.search('\w','insert',stopindex='end',regexp=True)
-         if ind: nind = '%s wordend' % ind
-         else:   nind = 'end'
-    else:
-         ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
-         if ind: nind = '%s wordstart' % ind
-         else:   nind = '1.0'
-
-    w.mark_set('insert',nind)
-    w.see('insert')
-    c.frame.widgetWantsFocus(w)
-
-def backwardWord (self,event):
-    self.moveWordHelper(event,forward=False)
-
-def forwardWord (self,event):
-    self.moveWordHelper(event,forward=True)
-#@nonl
-#@-node:ekr.20050920084036.149:back/forwardWord & helper
-#@+node:ekr.20050920084036.107:indentRegion
-def indentRegion (self,event):
-    w = event.widget
-    mrk = 'sel'
-    trange = w.tag_ranges(mrk)
-    if len(trange) != 0:
-        ind = w.search('\w','%s linestart' % trange[0],stopindex='end',regexp=True)
-        if not ind: return
-        text = w.get('%s linestart' % ind,'%s lineend' % ind)
-        sstring = text.lstrip()
-        sstring = sstring [0]
-        ws = text.split(sstring)
-        if len(ws) > 1:
-            ws = ws [0]
-        else:
-            ws = ''
-        s, s1 = trange [0].split('.')
-        e, e1 = trange [ -1].split('.')
-        s = int(s)
-        s = s + 1
-        e = int(e) + 1
-        for z in xrange(s,e):
-            t2 = w.get('%s.0' % z,'%s.0 lineend' % z)
-            t2 = t2.lstrip()
-            t2 = ws + t2
-            w.delete('%s.0' % z,'%s.0 lineend' % z)
-            w.insert('%s.0' % z,t2)
-        ### w.event_generate('<Key>')
-        ### w.update_idletasks()
-    self.removeRKeys(w)
-#@nonl
-#@-node:ekr.20050920084036.107:indentRegion
-#@+node:ekr.20050920084036.219:findNextMatch
-def findNextMatch (self,event):
-    
-    '''Find the next match and select it.
-    Return True if a match was found.
-    Otherwise, call quitSearch and return False.'''
-
-    k = self.k ; w = event.widget
-    
-    w.tag_delete('qR')
-
-    if self.regexp:
-        << handle regexp >>
-    else:
-        << handle plain search >>
-#@nonl
-#@+node:ekr.20051005155611:<< handle regexp >>
-try:
-    regex = re.compile(self.qQ)
-except:
-    self.quitSearch(event,'Illegal regular expression')
-    return False
-
-txt = w.get('insert','end')
-match = regex.search(txt)
-
-if match:
-    start = match.start()
-    end = match.end()
-    length = end - start
-    w.mark_set('insert','insert +%sc' % start)
-    ### w.update_idletasks()
-    w.tag_add('qR','insert','insert +%sc' % length)
-    w.tag_config('qR',background='lightblue')
-    txt = w.get('insert','insert +%sc' % length)
-    return True
-else:
-    self.quitSearch(event)
-    return False
-#@nonl
-#@-node:ekr.20051005155611:<< handle regexp >>
-#@+node:ekr.20051005160923:<< handle plain search >>
-i = w.search(self.qQ,'insert',stopindex='end')
-if i:
-    w.mark_set('insert',i)
-    ###w.update_idletasks()
-    w.tag_add('qR','insert','insert +%sc' % len(self.qQ))
-    w.tag_config('qR',background='lightblue')
-    return True
-else:
-    self.quitSearch(event)
-    return False
-#@nonl
-#@-node:ekr.20051005160923:<< handle plain search >>
-#@-node:ekr.20050920084036.219:findNextMatch
-#@-node:ekr.20051017111216:Commands to fix
-#@-node:ekr.20051018104223:Improve minibuffer commands
-#@+node:ekr.20051012054228:Vim mode (k.vimMode)
-- k.vimMode controls whether full-command keeps mini-buffer open after a command complete.
-
-- k.fullCommand sets k.sets k.vimMode = c.config.getBool('vim-mode') on entry.
-
-- Commands (like vim-insert-mode) clear k.vimMode to return to the body pane.
-
-- control-g does not alter k.vimMode.
-
-- Shift-control-g clears k.vimMode.
-#@-node:ekr.20051012054228:Vim mode (k.vimMode)
-#@+node:ekr.20050928144501:Expand commands to handle Leo environment
-* Traditional Emacs commands must be generalized to handle the more complex
-envirnoment Leo offers. For example, search commands must be told whether to
-limit the search a single node, or a node or and its descendents, or the entire
-outline.
-
-    - Expand 'point' so it indicates node as well as text location.
-    - Allow Leo options (e.g. search options) in Emacs commands.
-    - (Maybe) a default-search-command.
-    - Implement set-variable command that sets a (Python) variable using an emacs-style variable name.
-    
-* At present, there are two versions of some operations, the traditional Leo way and the Emacs way.  Some simplification is needed.
-
-* Many more commands are needed to support 'mouseless-Leo'.
-    - The user must be able to set Emacs and Leo options from the keyboard.
-    - The user must be able to drive all dialogs from the keyboard,
-      **or to get the same effect without using a dialog at all**.
-
-- Expand names for some Leo commands  new -> new-outline, etc.
-
-- Emacs search commands are limited to a single node.
-
-- There should be a method for the 'check-spelling' command. (use button code)
-
-- cycle-active-pane and cycle-active-widget (in a single pane) commands.
-
-- create-tab, clear-tab commands, etc.
-    These might get the tab name from the minibuffer...
-#@nonl
-#@-node:ekr.20050928144501:Expand commands to handle Leo environment
-#@+node:ekr.20051021074728:Space completion
-#@-node:ekr.20051021074728:Space completion
-#@-node:ekr.20051016162724:First
-#@+node:ekr.20051015223107.2:Bugs 3
-#@+node:ekr.20051014104337.1:Crash in undo
-exception executing command
-Traceback (most recent call last):
-
-  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 213, in doCommand
-    command()
-
-  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1571, in undo
-    u.undoHelper()
-
-  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1720, in undoMove
-    u.p.moveToNthChildOf(u.oldParent,u.oldN)
-
-  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 2764, in moveToNthChildOf
-    p.unlink()
-
-  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 3307, in unlink
-    assert(parent.v in p.v.directParents())
-
-AssertionError
-#@nonl
-#@-node:ekr.20051014104337.1:Crash in undo
-#@+node:ekr.20051014152256:Fix long-standing bug in import code
-Improve import code so it handles stufff like this from Ipyton/iplib
-
-### This should *not* terminate the function!
-
-    self.LOGHEAD = Itpl(
-"""#log# Automatic Logger file. *** THIS MUST BE THE FIRST LINE ***
-#log# DO NOT CHANGE THIS LINE OR THE TWO BELOW
-#log# opts = $self.rc.opts
-#log# args = $self.rc.args
-#log# It is safe to make manual edits below here.
-#log#-----------------------------------------------------------------------
-""")
-
-- Handle blanks better in imports:
-    - Add tab_width keyword arg to import command.
-    - Convert tabs to blanks if tab width < 0.
-- Ignore position of blank lines wrt sentinels.
-- Ignore (optionally?) underindented blank lines.
-- Use pyclbr to parse Python imports?
-#@nonl
-#@+node:ekr.20040930075711:Handle underindented lines
-@nocolor
-
-Leo can't represent some files using nodes!
-
-I call this the "underindented blank line" problem.
-
-Example:
-
-@color
-
-class aClass:
-    def spam(): pass
-# comment line
-    def eggs(): pass
-    
-@nocolor
-
-Leo's import code can't handle this:
-    
-- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
-
-- Having the comment line stop the scanning of aClass is even worse.
-
-- This usually shows up with an unindented blank line instead of the comment line.
-#@nonl
-#@-node:ekr.20040930075711:Handle underindented lines
-#@+node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20051014152256:Fix long-standing bug in import code
-#@+node:ekr.20051017132446:Hang in MacOS scripting
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3384016
-By: slott56
-
-Executing [any] script throws me into a loop with a lot of "exception execution
-script" messages.  There's a copy of Python left running in the background,
-it appears, which is hung up.
-
-Here's the full header...
-
-Leo 4.3 final, build  1.262 , May 23, 2005
-Python 2.3.5, Tk 8.4.7, darwin
-
-Mac OS 10.4.2
-#@-node:ekr.20051017132446:Hang in MacOS scripting
-#@-node:ekr.20051015223107.2:Bugs 3
+#@-node:ekr.20051023125705:Asap (cool)
 #@+node:ekr.20050925105522:Big
 * Complete Editor menu.
 
@@ -3742,6 +3893,8 @@ xwem-worklog-tasks-description
 #@-node:ekr.20050712092501.1:xemacs variables
 #@-node:ekr.20050928144501.1:Mouseless Leo
 #@+node:ekr.20051014161015:Full input modes
+#@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
+#@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
 #@-node:ekr.20051014161015:Full input modes
 #@-node:ekr.20050925105522:Big
 #@+node:ekr.20051012062458.1:Minor
@@ -3813,165 +3966,6 @@ always be enabled.
 - The colerer is calling c.config too much?
 #@nonl
 #@-node:ekr.20051023192433:Maybe...
-#@+node:ekr.20051017140811:Original temac bindings
-Buffer Keyboard Commands:
-----------------------------------------
-
-<Control-p>: move up one line
-<Control-n>: move down one line
-<Control-f>: move forward one char
-<Conftol-b>: move backward one char
-<Control-o>: insert newline
-<Control-Alt-o> : insert newline and indent
-<Control-j>: insert newline and tab
-<Alt-<> : move to start of Buffer
-<Alt- > >: move to end of Buffer
-<Control a>: move to start of line
-<Control e> :move to end of line
-<Alt-Up>: move to start of line
-<Alt-Down>: move to end of line
-<Alt b>: move one word backward
-<Alt f> : move one word forward
-<Control - Right Arrow>: move one word forward
-<Control - Left Arrow>: move one word backwards
-<Alt-m> : move to beginning of indentation
-<Alt-g> : goto line number
-<Control-v>: scroll forward one screen
-<Alt-v>: scroll up one screen
-<Alt-a>: move back one sentence
-<Alt-e>: move forward one sentence
-<Alt-}>: move forward one paragraph
-<Alt-{>: move backwards one paragraph
-<Alt-:> evaluate a Python expression in the minibuffer and insert the value in the current buffer
-Esc Esc : evaluate a Python expression in the minibuffer and insert the value in the current buffer
-<Control-x . >: set fill prefix
-<Alt-q>: fill paragraph
-<Alt-h>: select current or next paragraph
-<Control-x Control-@>: pop global mark
-<Control-u>: universal command, repeats the next command n times.
-<Alt -n > : n is a number.  Processes the next command n times.
-<Control-x (>: start definition of kbd macro
-<Control-x ) > : stop definition of kbd macro
-<Control-x e : execute last macro defined
-<Control-u Control-x ( >: execute last macro and edit
-<Control-x Esc Esc >: execute last complex command( last Alt-x command
-<Control-x Control-c >: save buffers kill Emacs
-<Control-x u > : advertised undo.   This function utilizes the environments.
-        If the buffer is not configure explicitly, there is no operation.
-<Control-_>: advertised undo.  See above
-<Control-z>: iconfify frame
-----------------------------------------
-
-<Delete> : delete previous character
-<Control d>: delete next character
-<Control k> : delete from cursor to end of line. Text goes to kill buffer
-<Alt d>: delete word. Word goes to kill buffer
-<Alt Delete>: delete previous word. Word goes to kill buffer
-<Alt k >: delete current sentence. Sentence goes to kill buffer
-<Control x Delete>: delete previous sentence. Sentence goes to kill buffer
-<Control y >: yank last deleted text segment from
- kill buffer and inserts it.
-<Alt y >: cycle and yank through kill buffer.
-
-<Alt z >: zap to typed letter. Text goes to kill buffer
-<Alt-^ >: join this line to the previous one
-<Alt-\ >: delete surrounding spaces
-<Alt-s> >: center line in current fill column
-<Control-Alt-w>: next kill is appended to kill buffer
-----------------------------------------
-
-<Alt c>: Capitalize the word the cursor is under.
-<Alt u>: Uppercase the characters in the word.
-<Alt l>: Lowercase the characters in the word.
-----------------------------------------
-
-<Alt t>: Mark word for word swapping.  Marking a second
- word will swap this word with the first
-<Control-t>: Swap characters
-<Ctrl-@>: Begin marking region.
-<Ctrl-W>: Kill marked region
-<Alt-W>: Copy marked region
-<Ctrl-x Ctrl-u>: uppercase a marked region
-<Ctrl-x Ctrl-l>: lowercase a marked region
-<Ctrl-x h>: mark entire buffer
-<Alt-Ctrl-backslash>: indent region to indentation of line 1 of the region.
-<Ctrl-x tab> : indent region by 1 tab
-<Control-x Control-x> : swap point and mark
-<Control-x semicolon>: set comment column
-<Alt-semicolon>: indent to comment column
-----------------------------------------
-
-M-! cmd -- Run the shell command line cmd and display the output
-M-| cmd -- Run the shell command line cmd with region contents as input
-----------------------------------------
-
-<Control-x a e>: Expand the abbrev before point (expand-abbrev). This is effective even when Abbrev mode is not enabled
-<Control-x a g>: Define an abbreviation for previous word
-<Control-x a i g>: Define a word as abbreviation for word before point, or in point
-----------------------------------------
-
-<Control s>: forward search, using pattern in Mini buffer.
-
-<Control r>: backward search, using pattern in Mini buffer.
-
-<Control s Enter>: search forward for a word, nonincremental
-
-<Control r Enter>: search backward for a word, nonincremental
-
-<Control s Enter Control w>: Search for words, ignoring details of punctuation
-<Control r Enter Control w>: Search backward for words, ignoring details of punctuation
-<Control-Alt s>: forward regular expression search, using pattern in Mini buffer
-
-<Control-Alt r>: backward regular expression search, using pattern in Mini buffer
-
-<Alt-%>: begin query search/replace. n skips to next match. y changes current match.  
-        q or Return exits. ! to replace all remaining matches with no more questions
-<Control Alt %> begin regex search replace, like Alt-%
-<Alt-=>: count lines and characters in regions
-<Alt-( >: insert parentheses()
-<Alt-) >:  move past close
-<Control-x Control-t>: transpose lines.
-<Control-x Control-o>: delete blank lines
-<Control-x r s>: save region to register
-<Control-x r i>: insert to buffer from register
-<Control-x r +>: increment register
-<Control-x r n>: insert number 0 to register
-<Control-x r space > : point insert point to register
-<Control-x r j > : jump to register
-<Control-x x>: save region to register
-<Control-x r r> : save rectangle to register
-<Control-x r o>: open up rectangle
-<Control-x r c> : clear rectangle
-<Control-x r d> : delete rectangle
-<Control-x r t> : replace rectangle with string
-<Control-x r k> : kill rectangle
-<Control-x r y> : yank rectangle
-<Control-g> : keyboard quit
-
-<Control-x = > : position of cursor
-<Control-x . > : set fill prefix
-<Control-x f > : set the fill column
-<Control-x Control-b > : display the buffer list
-<Control-x b > : switch to buffer
-<Control-x k > : kill the specified buffer
-----------------------------------------
-
-<Alt - - Alt-l >: lowercase previous word
-<Alt - - Alt-u>: uppercase previous word
-<Alt - - Alt-c>: capitalise previous word
-----------------------------------------
-
-<Alt-/ >: dynamic expansion
-<Control-Alt-/>: dynamic expansion.  Expands to common prefix in buffer
-----------------------------------------
-
-Alt-x commands:
-
-(Pressing Tab will result in auto completion of the options if an appropriate match is found
-#@nonl
-#@-node:ekr.20051017140811:Original temac bindings
-#@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
-#@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
 #@+node:ekr.20051015123432:(Methods with pychecker problems)
 # None of the following warnings are correct.
 #@nonl

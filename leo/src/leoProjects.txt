@@ -18921,6 +18921,12 @@ def deleteTab (self,tabName):
         self.selectTab('Log')
 #@nonl
 #@-node:ekr.20051018102027:deleteTab
+#@+node:ekr.20051027114433:getSelectedTab
+def getSelectedTab (self):
+    
+    return self.tabName
+#@nonl
+#@-node:ekr.20051027114433:getSelectedTab
 #@+node:ekr.20051018061932.1:ower/raiseTab
 def lowerTab (self,tabName):
     
@@ -21520,6 +21526,12 @@ def deleteTab (self,tabName):
         self.selectTab('Log')
 #@nonl
 #@-node:ekr.20051018102027:deleteTab
+#@+node:ekr.20051027114433:getSelectedTab
+def getSelectedTab (self):
+    
+    return self.tabName
+#@nonl
+#@-node:ekr.20051027114433:getSelectedTab
 #@+node:ekr.20051018061932.1:ower/raiseTab
 def lowerTab (self,tabName):
     
@@ -21647,23 +21659,18 @@ def getTabName (self,parentFrame,tabName,exitCallback):
 def focusToBody (self,event):
     
     self.c.frame.bodyWantsFocus(later=True)
-    # frame = self.c.frame
-    # return frame.set_focus(frame.body.bodyCtrl,later=True)
 
 def focusToLog (self,event):
+
     self.c.frame.logWantsFocus(later=True)
-    # frame = self.c.frame
-    # return frame.set_focus(frame.log.logCtrl,later=True)
     
 def focusToMinibuffer (self,event):
+    
     self.c.frame.minibufferWantsFocus(later=True)
-    # frame = self.c.frame
-    # return frame.set_focus(frame.log.logCtrl,later=True)
 
 def focusToTree (self,event):
+    
     self.c.frame.treeWantsFocus(later=True)
-    # frame = self.c.frame
-    # return frame.set_focus(frame.tree.canvas,later=True)
 #@nonl
 #@-node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
 #@+node:ekr.20051022144825.1:cycleFocus
@@ -23432,146 +23439,6 @@ def OnPasteFromMenu (self):
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@-node:ekr.20051011071542.1:(Cut/Copy/Paste bindings)
-#@+node:ekr.20051025110549:(Keep the focus in the body)
-# minibufferWantsFocus is now the same as bodyWantsFocus.
-#@nonl
-#@+node:ekr.20031218072017.2812:c.__init__
-def __init__(self,frame,fileName):
-
-    c = self
-    
-    # g.trace('Commands')
-    
-    # Init ivars with self.x instead of c.x to keep Pychecker happy
-    self.frame = frame
-    self.mFileName = fileName
-        # Do _not_ use os_path_norm: it converts an empty path to '.' (!!)
-
-    # g.trace(c) # Do this after setting c.mFileName.
-    c.initIvars()
-
-    self.useTextMinibuffer = True
-    self.showMinibuffer = c.config.getBool('useMinibuffer')
-
-    # initialize the sub-commanders.
-    # c.finishCreate creates the sub-commanders for edit commands.
-    self.fileCommands   = leoFileCommands.fileCommands(c)
-    self.atFileCommands = leoAtFile.atFile(c)
-    self.importCommands = leoImport.leoImportCommands(c)
-    self.tangleCommands = leoTangle.tangleCommands(c)
-    leoEditCommands.createEditCommanders(c)
-
-    if 0 and g.debugGC:
-        print ; print "*** using Null undoer ***" ; print
-        self.undoer = leoUndo.nullUndoer(self)
-    else:
-        self.undoer = leoUndo.undoer(self)
-#@nonl
-#@-node:ekr.20031218072017.2812:c.__init__
-#@+node:ekr.20050120083053:Delayed Focus (tkFrame)
-@
-
-New in 4.3
-
-Rather than calling g.app.gui.set_focus directly, the code calls
-self.xWantsFocus. This defers to idle-time code in the status-line class.
-
-N.B.  This code never calls select, so there can be no race condition here that alters text improperly.
-#@nonl
-#@+node:ekr.20050120092028:xWantsFocus (tkFrame)
-@ All these do the same thing, but separate names are good for tracing and
-makes the intent of the code clearer.
-@c 
-
-def bodyWantsFocus(self,later=True):
-    if self.body and self.body.bodyCtrl:
-        self.set_focus(self.body.bodyCtrl,later=later)
-        
-def headlineWantsFocus(self,p,later=True):
-    w = p and p.edit_text()
-    if w:
-        self.set_focus(w,later=later)
-    
-def logWantsFocus(self,later=True):
-    if self.log and self.log.logCtrl:
-        self.set_focus(self.log.logCtrl,later=later)
-
-def minibufferWantsFocus(self,later=True):
-    # Important! We must preserve body selection!
-    if 1:
-        self.bodyWantsFocus(later=later)
-    else:
-        if self.c.miniBufferWidget:
-            self.set_focus(self.c.miniBufferWidget,later=later)
-
-def treeWantsFocus(self,later=True):
-    if self.tree and self.tree.canvas:
-        self.set_focus(self.tree.canvas,later=later)
-    
-def widgetWantsFocus(self,widget,later=True):
-    if widget:
-        self.set_focus(widget,later=later)
-#@nonl
-#@-node:ekr.20050120092028:xWantsFocus (tkFrame)
-#@+node:ekr.20050120092028.1:set_focus (tkFrame)
-@
-Very tricky code:
-Many Tk calls can mess with the focus, so we must always set the focus,
-regardless of what we did previously.
-
-Alas, because of bugs in Tk and/or window managers, we can not call method at
-idle time: that would interfere with switching between windows. Instead, the
-xWantFocus routines call this with later=True, to queue up a ONE-SHOT later call
-to g.app.g.app.gui.set_focus.
-@c
-
-def set_focus(self,widget,later=False):
-    
-    '''Set the focus to the widget specified in the xWantsFocus methods.'''
-
-    c = self.c
-    # This is a *very* effective trace.
-    # g.trace(widget._name,g.callers(5))
-
-    if widget and not g.app.unitTesting:
-        # Messing with focus may be dangerous in unit tests.
-        if later:
-            # Queue up the call (just once) for later.
-            def setFocusCallback(c=c):
-                self.wantedCallbackScheduled = False
-                if c == g.app.wantedCommander and c.frame.wantedWidget:
-                    # g.trace(c.frame.wantedWidget)
-                    g.app.gui.set_focus(
-                        g.app.wantedCommander,
-                        c.frame.wantedWidget)
-                self.wantedWidget = None
-                g.app.wantedCommander = None
-                    
-            # Crucial: This may change what the callback does.
-            self.wantedWidget = widget
-            g.app.wantedCommander = c
-            if not self.wantedCallbackScheduled:
-                # g.trace(g.callers(4),c.shortFileName())
-                self.wantedCallbackScheduled = True
-                # We don't have to wait so long now that we don't call this so often.
-                # The difference between 500 msec. and 100 msec. is significant.
-                # New in 4.4: set the delay to 1 msec.: the smaller the better.
-                self.outerFrame.after(1,setFocusCallback)
-        else:
-            # g.trace(g.callers(4),c.shortFileName())
-            g.app.gui.set_focus(c,widget)
-            # Crucial: cancel any previous callback.
-            # It may be re-enabled later, but that doesn't matter.
-            self.wantedWidget = None
-            g.app.wantedCommander = None
-    else:
-        # Cancel any previous request.
-        self.wantedWidget = None
-        g.app.wantedCommander = None
-#@nonl
-#@-node:ekr.20050120092028.1:set_focus (tkFrame)
-#@-node:ekr.20050120083053:Delayed Focus (tkFrame)
-#@-node:ekr.20051025110549:(Keep the focus in the body)
 #@+node:ekr.20051025161103:(Fixed settingsTree)
 # Just had to call setBindings in the ctor.
 #@nonl
@@ -23587,154 +23454,6 @@ def __init__(self,c,frame,canvas,controller):
 #@nonl
 #@-node:ekr.20041225063637.79:ctor (settingsTree)
 #@-node:ekr.20051025161103:(Fixed settingsTree)
-#@+node:ekr.20051025150540:(Test focus at idle time)
-@
-
-Force focus to body at idle time if it isn't a known pane, the outer pane or a dialog.
-
-This works, but I don't like it: it is fragile. I also dislike doing anything at idle time.
-#@nonl
-#@+node:ekr.20050920094633:k.finishCreate & helpers
-def finishCreate (self):
-    
-    '''Complete the construction of the keyHandler class.
-    c.commandsDict has been created when this is called.'''
-    
-    k = self ; c = k.c
-   
-    k.createInverseCommandsDict()
-    
-    if not c.miniBufferWidget:
-        # Does not exist for leoSettings.leo files.
-        return
-        
-    # g.trace('keyHandler')
-
-    # Important: bindings exist even if c.showMiniBuffer is False.
-    k.makeAllBindings()
-    
-    c.frame.log.setTabBindings('Log')
-    c.frame.tree.setBindings()
-    if 1: # I wish there were an easier way...
-        g.enableIdleTimeHook(250)
-    
-    if 0:
-        addTemacsExtensions(k)
-        addTemacsAbbreviations(k)
-        changeKeyStrokes(k,f.bodyCtrl)
-#@nonl
-#@+node:ekr.20051008082929:createInverseCommandsDict
-def createInverseCommandsDict (self):
-    
-    '''Add entries to k.inverseCommandsDict using c.commandDict,
-    except when c.commandDict.get(key) refers to the leoCallback function.
-    leoCommands.getPublicCommands has already added an entry in this case.
-    
-    In c.commandsDict        keys are command names, values are funcions f.
-    In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
-    '''
-
-    k = self ; c = k.c
-
-    for name in c.commandsDict.keys():
-        f = c.commandsDict.get(name)
-        
-        # 'leoCallback' callback created by leoCommands.getPublicCommands.
-        if f.__name__ != 'leoCallback':
-            k.inverseCommandsDict [f.__name__] = name
-            # g.trace('%24s = %s' % (f.__name__,name))
-#@nonl
-#@-node:ekr.20051008082929:createInverseCommandsDict
-#@-node:ekr.20050920094633:k.finishCreate & helpers
-#@+node:ekr.20051025150224:onIdleTime
-def onIdleTime (self):
-    
-    '''Set the focus to the body pane if the focus is in limbo.
-    
-    We must allow dialogs and the outer window frame to retain focus.'''
-    
-    k = self ; c = k.c
-    if g.app.quitting: return # Essential.
-    
-    w = g.app.gui.get_focus(c.frame)
-    if w:
-        # Allow clicks in enclosing window frame or in dialogs.
-        name = w._name
-        ok = (
-            name[0] in string.letters # A known Leo frame.
-            or w == c.frame.top # The top of the Leo window
-            or g.app.dialogs > 0) # A dialog.
-        if not ok:
-            # Not a name created by Leo.
-             g.trace(self.idleCount,name,g.top())
-             c.frame.bodyWantsFocus()
-#@nonl
-#@-node:ekr.20051025150224:onIdleTime
-#@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
-#@+node:EKR.20040602125018:enableIdleTimeHook
-@ Enables the "idle" hook.
-After enableIdleTimeHook is called, Leo will call the "idle" hook
-approximately every g.idleTimeDelay milliseconds.
-@c
-
-def enableIdleTimeHook(idleTimeDelay=100):
-
-    if not g.app.idleTimeHook:
-        # g.trace('start idle-time hook: %d msec.' % idleTimeDelay)
-        # Start idle-time processing only after the first idle-time event.
-        g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
-        g.app.afterHandler = g.idleTimeHookHandler
-        
-    # 1/4/05: Always update these.
-    g.app.idleTimeHook = True
-    g.app.idleTimeDelay = idleTimeDelay # Delay in msec.
-#@nonl
-#@-node:EKR.20040602125018:enableIdleTimeHook
-#@+node:EKR.20040602125018.1:disableIdleTimeHook
-# Disables the "idle" hook.
-def disableIdleTimeHook():
-    
-    g.app.idleTimeHook = False
-#@nonl
-#@-node:EKR.20040602125018.1:disableIdleTimeHook
-#@+node:EKR.20040602125018.2:idleTimeHookHandler
-# An internal routine used to dispatch the "idle" hook.
-trace_count = 0
-
-def idleTimeHookHandler(*args,**keys):
-    
-    __pychecker__ = '--no-argsused' # args & keys not used.
-    
-    if 0: # Do not use g.trace here!
-        global trace_count ; trace_count += 1
-        if trace_count % 10 == 0:
-            for w in g.app.windowList:
-                c = w.c
-                print "idleTimeHookHandler",trace_count,c.shortFileName()
-
-    # New for Python 2.3: may be called during shutdown.
-    if g.app.killed: return
-    
-    top = g.top() # Important: only fire k.onIdleTime for the top window.
-    for w in g.app.windowList:
-        c = w.c
-        # New in 4.2 Beta 3. Do NOT compute c.currentPosition.
-        # This would be a MAJOR leak of positions.
-        # New in 4.4 a2: direct support for k.onIdleTime()
-        c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
-        g.doHook("idle",c=c)
-
-    # Requeue this routine after g.app.idleTimeDelay msec.
-    # (This delay is set by g.enableIdleTimeHook.)
-    # Faster requeues overload the system.
-    if g.app.idleTimeHook:
-        g.app.gui.setIdleTimeHookAfterDelay(g.idleTimeHookHandler)
-        g.app.afterHandler = g.idleTimeHookHandler
-    else:
-        g.app.afterHandler = None
-#@-node:EKR.20040602125018.2:idleTimeHookHandler
-#@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
-#@-node:ekr.20051025150540:(Test focus at idle time)
 #@+node:ekr.20051025162409:(Fix warnings in compare dialog)
 #@+node:ekr.20051026070250:Notes
 @nocolor
@@ -23866,8 +23585,956 @@ def finishCreate (self):
 
 - g.openWithFileName puts the focus in the body pane.
   Surprisingly important.
+
+- undo/redo now put the focus in the body.
 #@nonl
 #@-node:ekr.20051026170025:Other improvements
+#@+node:ekr.20051025152727:(Replaced idle-key logic with direct logic) 
+#@+node:ekr.20050920085536.65: masterCommand & helpers
+def masterCommand (self,event,func,stroke):
+
+    '''This is the central dispatching method.
+    All commands and keystrokes pass through here.'''
+
+    k = self ; c = k.c
+    k.stroke = stroke # Set this global for general use.
+    k.func = func
+    commandName = k.ultimateFuncName(func)
+    special = event.keysym in (
+        'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+    interesting = func or stroke != '<Key>'
+    
+    # g.trace(stroke,k.inState(),k.getStateKind())
+
+    # if interesting: g.trace(stroke,commandName,k.getStateKind())
+
+    inserted = not special or (
+        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
+
+    if inserted:
+        # g.trace(stroke,event.keysym)
+        << add character to history >>
+        
+    # We *must not* interfere with the global state in the macro class.
+    if c.macroCommands.recordingMacro:
+        done = c.macroCommands.startKbdMacro(event)
+        if done: return 'break'
+        
+    # g.trace(stroke,k.abortAllModesKey)
+
+    if stroke == k.abortAllModesKey: # 'Control-g'
+        k.clearState()
+        k.keyboardQuit(event)
+        k.endCommand(event,commandName)
+        return 'break'
+
+    if k.inState():
+        if not special: # Don't pass these on.
+            k.callStateFunction(event) # Calls end-command.
+        return 'break'
+
+    # if k.keystrokeFunctionDict.has_key(stroke):
+        # if k.callKeystrokeFunction(event): # Calls end-command
+            # return 'break'
+
+    if k.regx.iter:
+        try:
+            k.regXKey = event.keysym
+            k.regx.iter.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    if k.abbrevOn:
+        expanded = c.abbrevCommands.expandAbbrev(event)
+        if expanded: return 'break'
+
+    if func: # Func is an argument.
+        # g.trace('executing func',commandName)
+        forceFocus = func.__name__ != 'leoCallback'
+        if forceFocus:
+            k.forceFocusToBody()
+        func(event)
+        k.endCommand(event,commandName,forceFocus)
+        return 'break'
+
+    else:
+        # A huge change in 4.4: update *now*, not at idle time.
+        if 1:
+            self.handleDefaultChar(event)
+            return 'break'
+        else:
+            # c.frame.body.onBodyKey(event)
+            return None # Not 'break'
+#@nonl
+#@+node:ekr.20050920085536.67:<< add character to history >>
+# Don't add multiple special characters to history.
+
+k.keysymHistory.insert(0,event.keysym)
+
+if len(event.char) > 0:
+    if len(keyHandlerClass.lossage) > 99:
+        keyHandlerClass.lossage.pop()
+    keyHandlerClass.lossage.insert(0,event.char)
+
+if 0: # traces
+    g.trace(event.keysym,stroke)
+    g.trace(k.keysymHistory)
+    g.trace(keyHandlerClass.lossage)
+#@nonl
+#@-node:ekr.20050920085536.67:<< add character to history >>
+#@+node:ekr.20050923172809.1:callStateFunction
+def callStateFunction (self,event):
+    
+    k = self ; val = None
+    
+    # g.trace(k.stateKind,k.state)
+    
+    if k.state.kind:
+        if k.state.handler:
+            val = k.state.handler(event)
+            if val != 'continue':
+                k.endCommand(event,k.commandName)
+        else:
+            g.es_print('no state function for %s' % (k.state.kind),color='red')
+            
+    return val
+#@nonl
+#@-node:ekr.20050923172809.1:callStateFunction
+#@+node:ekr.20050923174229.3:callKeystrokeFunction (not used)
+def callKeystrokeFunction (self,event):
+    
+    '''Handle a quick keystroke function.
+    Return the function or None.'''
+    
+    k = self
+    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
+
+    if func:
+        func(event)
+        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
+        forceFocus = func.__name__ != 'leoCallback'
+        k.endCommand(event,commandName,forceFocus)
+    
+    return func
+#@nonl
+#@-node:ekr.20050923174229.3:callKeystrokeFunction (not used)
+#@+node:ekr.20051026083544:handleDefaultChar
+def handleDefaultChar(self,event):
+    
+    c = self.c
+    
+    try:
+        w = event.widget ; name = w._name
+        # g.trace(name)
+        if name.startswith('body'):
+            c.frame.body.updateBody(event,w,undoType='Typing')
+            return 'break'
+        elif name.startswith('head'):
+            g.trace("can't happen: %s" % (name),color='red')
+            c.frame.tree.updateHead(event,w,undoType='Typing')
+            return 'break'
+        else:
+            # Let tkinter handle the event.
+            return None
+    except Exception:
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20051026083544:handleDefaultChar
+#@-node:ekr.20050920085536.65: masterCommand & helpers
+#@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@+node:ekr.20051011072903.2:copyText
+def copyText (self,fromMinibuffer=False):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    
+    if not fromMinibuffer:
+        w.event_generate(g.virtual_event_name("Copy"))
+#@nonl
+#@-node:ekr.20051011072903.2:copyText
+#@+node:ekr.20051011072049.2:cutText
+def cutText (self,fromMinibuffer=False):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+    
+    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Cut"))
+    else:
+        # Old: Do **not** call w.event_generate.
+        # New: Do call w.event_generate.
+        w.event_generate(g.virtual_event_name("Cut"))
+        if not fromMinibuffer:
+            f.tree.onHeadChanged(c.currentPosition(),'Cut')
+#@nonl
+#@-node:ekr.20051011072049.2:cutText
+#@+node:ekr.20051011072903.5:pasteText
+def pasteText (self,fromMinibuffer=False):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    f = self ; c = f.c
+    w = f.getFocus() ; name = w._name
+    
+    if fromMinibuffer:
+        w.event_generate(g.virtual_event_name("Paste"))
+    elif name.startswith('body'):
+        w.event_generate(g.virtual_event_name("Paste"))
+    elif name.startswith('head'):
+        # I have no idea why the paste gets done automatically.
+        # There are Tk bugs lurking here...
+        f.tree.updateHead(event=None,w=w,undoType='Paste')
+    else: pass
+#@nonl
+#@-node:ekr.20051011072903.5:pasteText
+#@+node:ekr.20051011072903.1:OnCopyFromMenu
+def OnCopyFromMenu (self):
+    
+    ''' Called **only** when invoked using the menu instead of a shortcut.'''
+    
+    #g.trace()
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Copy"))
+    else:
+        # Necessary when not using shortcut keys.
+        w.event_generate(g.virtual_event_name("Copy"))
+#@nonl
+#@-node:ekr.20051011072903.1:OnCopyFromMenu
+#@+node:ekr.20051011072049.1:OnCutFromMenu
+def OnCutFromMenu (self):
+    
+    ''' Called **only** when invoked using the menu instead of a shortcut.'''
+
+    f = self ; c = f.c ; w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Cut"))
+    else:
+        # Necessary
+        w.event_generate(g.virtual_event_name("Cut"))
+        f.tree.onHeadChanged(c.currentPosition(),'Cut')
+#@nonl
+#@-node:ekr.20051011072049.1:OnCutFromMenu
+#@+node:ekr.20051011072903.4:OnPasteFromMenu
+def OnPasteFromMenu (self):
+    
+    ''' Called **only** when invoked using the menu instead of a shortcut.'''
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    w = self.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Paste"))
+    else:
+        w.event_generate(g.virtual_event_name("Paste"))
+        f.tree.onHeadChanged(c.currentPosition(),'Paste')
+#@nonl
+#@-node:ekr.20051011072903.4:OnPasteFromMenu
+#@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@+node:ekr.20031218072017.1320:body key handlers
+@ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
+
+1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if so.  This is the clean and safe way.
+
+2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
+@c
+
+@others
+#@nonl
+#@+node:ekr.20031218072017.1329:onBodyChanged (tkTree)
+# Called by command handlers that may have already changed the text.
+
+def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+    
+    '''Update Leo after the body *may* have been changed.
+
+    This is a public convenience method: a thin wrapper for updateBody.'''
+    
+    c = self.c
+    if not p:
+        g.trace("can't happen: no p")
+        return
+
+    if p != c.currentPosition():
+        g.trace("can't happen: not current position p")
+        return
+
+    self.c.frame.body.colorizer.interrupt()
+
+    event = None ; w = c.frame.body.bodyCtrl
+
+    self.updateBody(event,w,undoType,
+        oldSel=oldSel,oldYview=oldYview,newSel=newSel,oldText=oldText)
+#@nonl
+#@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
+#@+node:ekr.20051026083733:updateBody (new in 4.4a2)
+# This replaces idle_body_key.  It is never called at idle time.
+# Called only from k.handleDefaultChar and tkBody.onBodyChanged.
+
+def updateBody (self,event,w,undoType,
+    oldSel=None,oldYview=None,newSel=None,oldText=None):
+
+    '''Update Leo after the body have been changed.'''
+    
+    c = self.c ; p = c.currentPosition()
+    ch = event and event.char or ''
+    orignalText = oldText # for use by undo.
+    removeTrailing = None # A signal to compute it later.
+    # g.trace(repr(ch))
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = p.bodyString()
+    if ch == '\t':
+        self.updateTab(p,w)
+    elif ch == '\b': ## chr(8):
+        # Not strictly correct: we should test for present delete binding...
+        self.updateBackspace(p,w)
+    elif ch in ('\r','\n'):
+        ch = '\n'
+        << handle newline >>
+    elif ch: # Null chars must not delete the selection.
+        i,j = oldSel
+        if i != j: w.delete(i,j)
+        w.insert(i,ch)
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return # The hook claims to have handled the event.
+    # Update the text and handle undo.
+    if not newSel: newSel = g.app.gui.getTextSelection(w)
+    newText = w.get('1.0','end')
+    << remove extra Trailing newlines >> # Same logic as always.
+    if newText == oldText: return
+    c.undoer.setUndoTypingParams(p,undoType,
+        orignalText or oldText,newText,oldSel,newSel,oldYview)
+    p.v.setTnodeText(newText)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed: c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+#@nonl
+#@+node:ekr.20051026083733.6:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+# incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+
+incremental = not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20051026083733.6:<< recolor the body >>
+#@+node:ekr.20051026171121:<< handle newline >>
+i,j = oldSel
+
+if i != j:
+    # No auto-indent if there is selected text.
+    w.delete(i,j)
+    w.insert(i,ch)
+else:
+    w.insert(i,ch)
+    if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+        # No auto-indent if in @nocolor mode or after a Change command.
+        removeTrailing = self.updateAutoIndent(p)
+#@nonl
+#@-node:ekr.20051026171121:<< handle newline >>
+#@+node:ekr.20051026143009:<< remove extra Trailing newlines >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = newText ; old = oldText
+
+if removeTrailing != None:
+    pass # Use the value returned from updateAutoIndent.
+elif len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+    
+if removeTrailing:
+    if len(newText) > 1: newText = newText[:-1]
+    else: newText = ''
+    
+if 0:
+    if removeTrailing:
+        g.trace('removeTrailing')
+        # g.trace(repr(oldText))
+    # g.trace(repr(newText))
+#@nonl
+#@-node:ekr.20051026143009:<< remove extra Trailing newlines >>
+#@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+redraw_flag = False
+c.beginUpdate()
+try:
+    # Update dirty bits.
+    # p.setDirty() sets all cloned and @file dirty bits.
+    if not p.isDirty() and p.setDirty():
+        redraw_flag = True
+        
+    # Update icons.  p.v.iconVal may not exist during unit tests.
+    val = p.computeIcon()
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    # Redraw only if necessary.
+    c.endUpdate(redraw_flag) 
+#@nonl
+#@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+#@+node:ekr.20051026171121.1:udpateAutoIndent
+# By David McNab:
+def updateAutoIndent (self,p):
+
+    c = self.c
+    d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
+    s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s [ -1] == ':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width] ; tabex = 0
+        for i in range(0,len(s)):
+            if s [i] == '\t':
+                tabex += tab_width-1
+            if s [i] in '([{':
+                brackets.append(i+tabex+1)
+            elif s [i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+    ws = g.computeLeadingWhitespace(width,tab_width)
+    if ws:
+        c.frame.bodyCtrl.insert("insert",ws)
+        removeTrailing = False
+    else:
+        removeTrailing = None
+    return removeTrailing
+#@nonl
+#@-node:ekr.20051026171121.1:udpateAutoIndent
+#@+node:ekr.20051026092433:updateTab
+def updateTab (self,p,w):
+
+    c = self.c
+    d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width)
+    
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        w.delete(i,j)
+    if tab_width > 0:
+        w.insert("insert",'\t')
+    else:
+        # Get the preceeding characters.
+        s = w.get("insert linestart","insert")
+    
+        # Compute n, the number of spaces to insert.
+        width = g.computeWidth(s,tab_width)
+        n = abs(tab_width) - (width % abs(tab_width))
+        w.insert("insert",' ' * n)
+#@nonl
+#@-node:ekr.20051026092433:updateTab
+#@+node:ekr.20051026092433.1:updateBackspace
+def updateBackspace (self,p,w):
+    
+    c = self.c
+    d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width)
+    
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        w.delete(i,j)
+    elif tab_width > 0:
+        w.delete('insert-1c')
+    else:
+        << backspace with negative tab_width >>
+#@nonl
+#@+node:ekr.20051026092746:<< backspace with negative tab_width >>
+s = prev = w.get("insert linestart","insert")
+n = len(prev)
+abs_width = abs(tab_width)
+
+# Delete up to this many spaces.
+n2 = (n % abs_width) or abs_width
+n2 = min(n,n2) ; count = 0
+
+while n2 > 0:
+    n2 -= 1
+    ch = prev[n-count-1]
+    if ch != ' ': break
+    else: count += 1
+
+# Make sure we actually delete something.
+w.delete("insert -%dc" % (max(1,count)),"insert")
+#@nonl
+#@-node:ekr.20051026092746:<< backspace with negative tab_width >>
+#@-node:ekr.20051026092433.1:updateBackspace
+#@-node:ekr.20051026083733:updateBody (new in 4.4a2)
+#@-node:ekr.20031218072017.1320:body key handlers
+#@+node:ekr.20040803072955.90:head key handlers
+#@+node:ekr.20040803072955.88:onHeadlineKey
+def onHeadlineKey (self,event):
+    
+    """Handle a key event in a headline."""
+    
+    w = event and event.widget or None
+    
+    self.updateHead(event,w,undoType='Typing')
+
+    return 'break' # Required
+#@nonl
+#@-node:ekr.20040803072955.88:onHeadlineKey
+#@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+def updateHead (self,event,w,undoType='Typing'):
+    
+    c = self.c ; p = c.currentPosition() ; u = c.undoer
+    ch = event and event.char or ''
+    i,j = g.app.gui.getTextSelection(w)
+    
+    if ch == '\b':
+        if i != j:
+            w.delete(i,j)
+        else:
+            w.delete('insert-1c')
+    elif ch and ch not in ('\n','\r'):
+        if i != j:
+            w.delete(i,j)
+        i = w.index('insert')
+        w.insert(i,ch)
+
+    s = w.get('1.0','end')
+
+    if s.endswith('\n'):
+        if len(s) > 1: s = s[:-1]
+        else:          s = ''
+
+    if 0: # For tracing.
+        if ch or not event or p.headString().strip() != s.strip():
+            g.trace(w._name,repr(ch),repr(s),g.callers(5))
+         
+    if ch in ('\n','\r'):
+        self.onHeadChanged(p)
+#@nonl
+#@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@+node:ekr.20040803072955.91:onHeadChanged
+def onHeadChanged (self,p,undoType='Change Headline'):
+    
+    """Update headline text at idle time."""
+    
+    c = self.c ; u = c.undoer ; w = self.edit_text(p)
+    undoData = u.beforeChangeNodeContents(p)
+    
+    if w:
+        s = w.get('1.0','end')
+        << truncate s if it has multiple lines >>
+        # g.trace(repr(s))
+        p.initHeadString(s)
+        w.configure(width=self.headWidth(p))
+    self.endEditLabel()
+    c.beginUpdate()
+    try:
+        if not c.changed: c.setChanged(True)
+        dirtyVnodeList = p.setDirty()
+    finally:
+        c.endUpdate()
+
+    u.afterChangeNodeContents(p,undoType,undoData,
+        dirtyVnodeList=dirtyVnodeList)
+#@nonl
+#@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+# Kludge remove one or two trailing newlines before warning of truncation.
+for i in (0,1):
+    if s and s[-1] == '\n':
+        if len(s) > 1: s = s[:-1]
+        else: s = ''
+
+# Warn if there are multiple lines.
+i = s.find('\n')
+if i > -1:
+    # g.trace(i,len(s),repr(s))
+    g.es("Truncating headline to one line",color="blue")
+    s = s[:i]
+
+limit = 1000
+if len(s) > limit:
+    g.es("Truncating headline to %d characters" % (limit),color="blue")
+    s = s[:limit]
+
+s = g.toUnicode(s or '',g.app.tkEncoding)
+#@nonl
+#@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+#@-node:ekr.20040803072955.91:onHeadChanged
+#@-node:ekr.20040803072955.90:head key handlers
+#@+node:ekr.20031218072017.3982:endEditLabelCommand
+def endEditLabelCommand (self):
+
+    frame = self ; c = frame.c
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("End Edit Headline")
+    else:
+        p = c.currentPosition()
+        c.frame.tree.onHeadChanged(p)
+        c.selectPosition(p)
+        c.frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20031218072017.3982:endEditLabelCommand
+#@+node:ekr.20031218072017.3070:changeSelection
+# Replace selection with self.change_text.
+# If no selection, insert self.change_text at the cursor.
+
+def changeSelection(self):
+
+    c = self.c ; p = self.p ; gui = g.app.gui
+    # g.trace(self.in_headline)
+    t = g.choose(self.in_headline,p.edit_text(),c.frame.bodyCtrl)
+    oldSel = sel = gui.getTextSelection(t)
+    if sel and len(sel) == 2:
+        start,end = sel
+        if start == end:
+            sel = None
+    if not sel or len(sel) != 2:
+        g.es("No text selected")
+        return False
+
+    # Replace the selection in _both_ controls.
+    start,end = oldSel
+    gui.replaceSelectionRangeWithText(t,          start,end,self.change_text)
+    gui.replaceSelectionRangeWithText(self.s_ctrl,start,end,self.change_text)
+
+    # Update the selection for the next match.
+    gui.setSelectionRangeWithLength(t,start,len(self.change_text))
+    newSel = gui.getTextSelection(t)
+    gui.set_focus(c,t)
+
+    c.beginUpdate()
+    try:
+        if self.mark_changes: p.setMarked()
+        # update node, undo status, dirty flag, changed mark & recolor
+        if self.in_headline:
+            c.frame.tree.onHeadChanged(p,'Change')
+        else:
+            c.frame.body.onBodyChanged(p,'Change',oldSel=oldSel,newSel=newSel)
+        c.frame.tree.drawIcon(p) # redraw only the icon.
+    finally:
+        c.endUpdate(False) # No redraws here: they would destroy the headline selection.
+    return True
+#@nonl
+#@-node:ekr.20031218072017.3070:changeSelection
+#@+node:ekr.20031218072017.3983:insertHeadlineTime
+def insertHeadlineTime (self):
+
+    frame = self ; c = frame.c ; p = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Insert Headline Time")
+        return
+        
+    c.editPosition(p)
+    c.frame.tree.setNormalLabelState(p)
+    w = p.edit_text()
+    if w:
+        time = c.getTime(body=False)
+        if 1: # We can't know if we were already editing, so insert at end.
+            g.app.gui.setSelectionRange(w,'end','end')
+            w.insert('end',time)
+        else:
+            i, j = g.app.gui.getTextSelection(w)
+            if i != j:
+                w.delete(i,j)
+            w.insert("insert",time)
+        c.frame.tree.onHeadChanged(p,'Insert Headline Time')
+#@nonl
+#@-node:ekr.20031218072017.3983:insertHeadlineTime
+#@-node:ekr.20051025152727:(Replaced idle-key logic with direct logic) 
+#@+node:ekr.20051025110549:(Keep the focus in the body)
+@
+
+Force focus to body at idle time if it isn't a known pane, the outer pane or a dialog.
+
+This scheme is fragile. I also dislike doing anything at idle time.
+#@nonl
+#@+node:ekr.20051027114909:NewHeadline
+@nocolor
+
+Fixed immediate problems with complex log tabs.
+(Show fonts was being hidden because of focus-changing logic.)
+#@nonl
+#@-node:ekr.20051027114909:NewHeadline
+#@+node:ekr.20050920094633:k.finishCreate & helpers
+def finishCreate (self):
+    
+    '''Complete the construction of the keyHandler class.
+    c.commandsDict has been created when this is called.'''
+    
+    k = self ; c = k.c
+   
+    k.createInverseCommandsDict()
+    
+    if not c.miniBufferWidget:
+        # Does not exist for leoSettings.leo files.
+        return
+        
+    # g.trace('keyHandler')
+
+    # Important: bindings exist even if c.showMiniBuffer is False.
+    k.makeAllBindings()
+    
+    c.frame.log.setTabBindings('Log')
+    c.frame.tree.setBindings()
+    if 1: # I wish there were an easier way...
+        g.enableIdleTimeHook(250)
+    
+    if 0:
+        addTemacsExtensions(k)
+        addTemacsAbbreviations(k)
+        changeKeyStrokes(k,f.bodyCtrl)
+#@nonl
+#@+node:ekr.20051008082929:createInverseCommandsDict
+def createInverseCommandsDict (self):
+    
+    '''Add entries to k.inverseCommandsDict using c.commandDict,
+    except when c.commandDict.get(key) refers to the leoCallback function.
+    leoCommands.getPublicCommands has already added an entry in this case.
+    
+    In c.commandsDict        keys are command names, values are funcions f.
+    In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
+    '''
+
+    k = self ; c = k.c
+
+    for name in c.commandsDict.keys():
+        f = c.commandsDict.get(name)
+        
+        # 'leoCallback' callback created by leoCommands.getPublicCommands.
+        if f.__name__ != 'leoCallback':
+            k.inverseCommandsDict [f.__name__] = name
+            # g.trace('%24s = %s' % (f.__name__,name))
+#@nonl
+#@-node:ekr.20051008082929:createInverseCommandsDict
+#@-node:ekr.20050920094633:k.finishCreate & helpers
+#@+node:ekr.20050120083053:Delayed Focus (tkFrame)
+@
+
+New in 4.3
+
+Rather than calling g.app.gui.set_focus directly, the code calls
+self.xWantsFocus. This defers to idle-time code in the status-line class.
+
+N.B.  This code never calls select, so there can be no race condition here that alters text improperly.
+#@nonl
+#@+node:ekr.20050120092028:xWantsFocus (tkFrame)
+@ All these do the same thing, but separate names are good for tracing and
+makes the intent of the code clearer.
+@c 
+
+def bodyWantsFocus(self,later=True):
+    if self.body and self.body.bodyCtrl:
+        self.set_focus(self.body.bodyCtrl,later=later)
+        
+def headlineWantsFocus(self,p,later=True):
+    w = p and p.edit_text()
+    if w:
+        self.set_focus(w,later=later)
+    
+def logWantsFocus(self,later=True):
+    if self.log and self.log.logCtrl:
+        self.set_focus(self.log.logCtrl,later=later)
+
+def minibufferWantsFocus(self,later=True):
+    # Important! We must preserve body selection!
+    if 1:
+        self.bodyWantsFocus(later=later)
+    else:
+        if self.c.miniBufferWidget:
+            self.set_focus(self.c.miniBufferWidget,later=later)
+
+def treeWantsFocus(self,later=True):
+    if self.tree and self.tree.canvas:
+        self.set_focus(self.tree.canvas,later=later)
+    
+def widgetWantsFocus(self,widget,later=True):
+    if widget:
+        self.set_focus(widget,later=later)
+#@nonl
+#@-node:ekr.20050120092028:xWantsFocus (tkFrame)
+#@+node:ekr.20050120092028.1:set_focus (tkFrame)
+@
+Very tricky code:
+Many Tk calls can mess with the focus, so we must always set the focus,
+regardless of what we did previously.
+
+Alas, because of bugs in Tk and/or window managers, we can not call method at
+idle time: that would interfere with switching between windows. Instead, the
+xWantFocus routines call this with later=True, to queue up a ONE-SHOT later call
+to g.app.g.app.gui.set_focus.
+@c
+
+def set_focus(self,widget,later=False):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    c = self.c
+    # This is a *very* effective trace.
+    # g.trace(widget._name,g.callers(5))
+
+    if widget and not g.app.unitTesting:
+        # Messing with focus may be dangerous in unit tests.
+        if later:
+            # Queue up the call (just once) for later.
+            def setFocusCallback(c=c):
+                self.wantedCallbackScheduled = False
+                if c == g.app.wantedCommander and c.frame.wantedWidget:
+                    # g.trace(c.frame.wantedWidget)
+                    g.app.gui.set_focus(
+                        g.app.wantedCommander,
+                        c.frame.wantedWidget)
+                self.wantedWidget = None
+                g.app.wantedCommander = None
+                    
+            # Crucial: This may change what the callback does.
+            self.wantedWidget = widget
+            g.app.wantedCommander = c
+            if not self.wantedCallbackScheduled:
+                # g.trace(g.callers(4),c.shortFileName())
+                self.wantedCallbackScheduled = True
+                # We don't have to wait so long now that we don't call this so often.
+                # The difference between 500 msec. and 100 msec. is significant.
+                # New in 4.4: set the delay to 1 msec.: the smaller the better.
+                self.outerFrame.after(1,setFocusCallback)
+        else:
+            # g.trace(g.callers(4),c.shortFileName())
+            g.app.gui.set_focus(c,widget)
+            # Crucial: cancel any previous callback.
+            # It may be re-enabled later, but that doesn't matter.
+            self.wantedWidget = None
+            g.app.wantedCommander = None
+    else:
+        # Cancel any previous request.
+        self.wantedWidget = None
+        g.app.wantedCommander = None
+#@nonl
+#@-node:ekr.20050120092028.1:set_focus (tkFrame)
+#@-node:ekr.20050120083053:Delayed Focus (tkFrame)
+#@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
+#@+node:EKR.20040602125018:enableIdleTimeHook
+@ Enables the "idle" hook.
+After enableIdleTimeHook is called, Leo will call the "idle" hook
+approximately every g.idleTimeDelay milliseconds.
+@c
+
+def enableIdleTimeHook(idleTimeDelay=100):
+
+    if not g.app.idleTimeHook:
+        # g.trace('start idle-time hook: %d msec.' % idleTimeDelay)
+        # Start idle-time processing only after the first idle-time event.
+        g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+        g.app.afterHandler = g.idleTimeHookHandler
+        
+    # 1/4/05: Always update these.
+    g.app.idleTimeHook = True
+    g.app.idleTimeDelay = idleTimeDelay # Delay in msec.
+#@nonl
+#@-node:EKR.20040602125018:enableIdleTimeHook
+#@+node:EKR.20040602125018.1:disableIdleTimeHook
+# Disables the "idle" hook.
+def disableIdleTimeHook():
+    
+    g.app.idleTimeHook = False
+#@nonl
+#@-node:EKR.20040602125018.1:disableIdleTimeHook
+#@+node:EKR.20040602125018.2:idleTimeHookHandler
+# An internal routine used to dispatch the "idle" hook.
+trace_count = 0
+
+def idleTimeHookHandler(*args,**keys):
+    
+    __pychecker__ = '--no-argsused' # args & keys not used.
+    
+    if 0: # Do not use g.trace here!
+        global trace_count ; trace_count += 1
+        if trace_count % 10 == 0:
+            for w in g.app.windowList:
+                c = w.c
+                print "idleTimeHookHandler",trace_count,c.shortFileName()
+
+    # New for Python 2.3: may be called during shutdown.
+    if g.app.killed: return
+    
+    top = g.top() # Important: only fire k.onIdleTime for the top window.
+    for w in g.app.windowList:
+        c = w.c
+        # New in 4.2 Beta 3. Do NOT compute c.currentPosition.
+        # This would be a MAJOR leak of positions.
+        # New in 4.4 a2: direct support for k.onIdleTime()
+        c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
+        g.doHook("idle",c=c)
+
+    # Requeue this routine after g.app.idleTimeDelay msec.
+    # (This delay is set by g.enableIdleTimeHook.)
+    # Faster requeues overload the system.
+    if g.app.idleTimeHook:
+        g.app.gui.setIdleTimeHookAfterDelay(g.idleTimeHookHandler)
+        g.app.afterHandler = g.idleTimeHookHandler
+    else:
+        g.app.afterHandler = None
+#@-node:EKR.20040602125018.2:idleTimeHookHandler
+#@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
+#@+node:ekr.20051025150224:onIdleTime
+def onIdleTime (self):
+    
+    '''Set the focus to the body pane if the focus is in limbo.
+    
+    We must allow dialogs and the outer window frame to retain focus.'''
+    
+    k = self ; c = k.c
+    if g.app.quitting: return # Essential.
+    
+    w = g.app.gui.get_focus(c.frame)
+    if w:
+        # Allow clicks in enclosing window frame or in dialogs.
+        name = w._name
+        ok = (
+            name[0] in string.letters # A known Leo frame.
+            or w == c.frame.top # The top of the Leo window
+            or g.app.dialogs > 0 # A dialog.
+            or c.frame.log.getSelectedTab() in ('Find','Spell','Colors','Fonts')
+        ) 
+        if not ok:
+            # Not a name created by Leo.
+             g.trace(self.idleCount,name,g.top())
+             c.frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20051025150224:onIdleTime
+#@-node:ekr.20051025110549:(Keep the focus in the body)
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

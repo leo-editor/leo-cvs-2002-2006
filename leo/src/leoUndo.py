@@ -1319,6 +1319,7 @@ class baseUndoer:
                 g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
         finally:
             c.endUpdate(u.redrawFlag)
+            c.frame.bodyWantsFocus(later=True)
     
         u.redoing = False
         u.bead += 1
@@ -1535,8 +1536,10 @@ class baseUndoer:
             tag="redo",undoType=u.undoType)
         
         if u.newSel:
+            c.frame.bodyWantsFocus(later=False)
             c.frame.body.setTextSelection(u.newSel)
         if u.yview:
+            c.frame.bodyWantsFocus(later=False)
             c.frame.body.setYScrollPosition(u.yview)
         
         if u.groupCount == 0:
@@ -1575,6 +1578,7 @@ class baseUndoer:
                 g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
         finally:
             c.endUpdate(u.redrawFlag)
+            c.frame.bodyWantsFocus(later=True)
     
         u.undoing = False
         u.bead -= 1
@@ -1811,8 +1815,10 @@ class baseUndoer:
             tag="undo",undoType=u.undoType)
     
         if u.oldSel:
+            c.frame.bodyWantsFocus(later=False)
             c.frame.body.setTextSelection(u.oldSel)
         if u.yview:
+            c.frame.bodyWantsFocus(later=False)
             c.frame.body.setYScrollPosition(u.yview)
             
         if u.groupCount == 0:

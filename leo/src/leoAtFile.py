@@ -4361,14 +4361,14 @@ class atFile:
                 mode = self.stat(self.targetFileName)
                 ok = self.rename(self.outputFileName,self.targetFileName,mode)
                 if ok:
-                    g.es('%-10s %s' % ('writing:',self.shortFileName))
+                    g.es('%-10s %s' % ('wrote:',self.shortFileName))
                     self.fileChangedFlag = True
                 return True # bwm
         else:
             # Rename the output file.
             ok = self.rename(self.outputFileName,self.targetFileName)
             if ok:
-                g.es('%-10s %s' % ('creating:',self.targetFileName))
+                g.es('%-10s %s' % ('created:',self.targetFileName))
                 self.fileChangedFlag = True
             return False
     #@nonl

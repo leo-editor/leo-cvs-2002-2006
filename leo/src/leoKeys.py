@@ -1,6 +1,6 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3748:@thin leoKeys.py
-"""Gui-independent keystroke handling for Leo."""
+"""Gui-independent keystroke handling for Leo.""" 
 
 #@@language python
 #@@tabwidth -4
@@ -1891,7 +1891,9 @@ class keyHandlerClass:
             ok = (
                 name[0] in string.letters # A known Leo frame.
                 or w == c.frame.top # The top of the Leo window
-                or g.app.dialogs > 0) # A dialog.
+                or g.app.dialogs > 0 # A dialog.
+                or c.frame.log.getSelectedTab() in ('Find','Spell','Colors','Fonts')
+            ) 
             if not ok:
                 # Not a name created by Leo.
                  g.trace(self.idleCount,name,g.top())
