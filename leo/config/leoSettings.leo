@@ -37,17 +37,17 @@
 <v t="ekr.20051010093913"><vh>@button save</vh></v>
 <v t="ekr.20051011123608"><vh>@@button align to col</vh></v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
-<v t="ekr.20041119034357.10"><vh>@page Command options</vh>
+<v t="ekr.20041119034357.10" a="E"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
 <v t="ekr.20041119041019.1"><vh>@string remove_sentinels_extension = .txt</vh></v>
 <v t="ekr.20041119041019.2"><vh>@bool save_clears_undo_buffer = False</vh></v>
 <v t="ekr.20041119050749.10"><vh>@string headline_time_format_string = %m/%d</vh></v>
-<v t="ekr.20041119050749.11"><vh>@bool headline_gmt_time = False</vh></v>
+<v t="ekr.20041119050749.11" a="TV"><vh>@string headline_gmt_time = None</vh></v>
 <v t="ekr.20050126083026"><vh>@string undo_granularity = None</vh></v>
 </v>
-<v t="ekr.20041119034357.16" a="E"><vh>@page Compare panel options</vh>
-<v t="ekr.20041119034357.17" a="TV"><vh>files &amp; directories</vh>
+<v t="ekr.20041119034357.16"><vh>@page Compare panel options</vh>
+<v t="ekr.20041119034357.17"><vh>files &amp; directories</vh>
 <v t="ekr.20041119043902"><vh>@string compare_file_1 = None</vh></v>
 <v t="ekr.20041119043902.1"><vh>@string compare_file_2 = None</vh></v>
 <v t="ekr.20041119043902.2"><vh>@string output_file = None</vh></v>

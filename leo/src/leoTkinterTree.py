@@ -1820,9 +1820,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """Handle a key event in a headline."""
         
-        w = event.widget ; ch = event and event.char or ''
-        
-        # g.trace(repr(ch))
+        w = event and event.widget or None
         
         self.updateHead(event,w,undoType='Typing')
     
@@ -1859,25 +1857,13 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """Handle a key event in a headline."""
         
-        w = event.widget ; ch = event and event.char or ''
-        
-        # g.trace(repr(ch))
+        w = event and event.widget or None
         
         self.updateHead(event,w,undoType='Typing')
     
         return 'break' # Required
     #@nonl
     #@-node:ekr.20040803072955.88:onHeadlineKey
-    #@+node:ekr.20040803072955.98:onHeadChanged
-    def onHeadChanged (self,p,undoType='Change Headline'):
-    
-        """Handle a change to headline text.
-        
-        Called **after** the change has been made."""
-        
-        self.updateAfterHeadChanged(p,undoType)
-    #@nonl
-    #@-node:ekr.20040803072955.98:onHeadChanged
     #@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
     def updateHead (self,event,w,undoType='Typing'):
         
@@ -1902,16 +1888,16 @@ class leoTkinterTree (leoFrame.leoTree):
             if len(s) > 1: s = s[:-1]
             else:          s = ''
     
-        if 0:
+        if 0: # For tracing.
             if ch or not event or p.headString().strip() != s.strip():
                 g.trace(w._name,repr(ch),repr(s),g.callers(5))
              
         if ch in ('\n','\r'):
-            self.updateAfterHeadChanged(p)
+            self.onHeadChanged(p)
     #@nonl
     #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
-    #@+node:ekr.20040803072955.91:updateAfterHeadChanged
-    def updateAfterHeadChanged (self,p,undoType='Change Headline'):
+    #@+node:ekr.20040803072955.91:onHeadChanged
+    def onHeadChanged (self,p,undoType='Change Headline'):
         
         """Update headline text at idle time."""
         
@@ -1958,7 +1944,7 @@ class leoTkinterTree (leoFrame.leoTree):
         u.afterChangeNodeContents(p,undoType,undoData,
             dirtyVnodeList=dirtyVnodeList)
     #@nonl
-    #@-node:ekr.20040803072955.91:updateAfterHeadChanged
+    #@-node:ekr.20040803072955.91:onHeadChanged
     #@-node:ekr.20040803072955.90:head key handlers
     #@-node:ekr.20040803072955.84:Text Box...
     #@+node:ekr.20040803072955.99:Dragging

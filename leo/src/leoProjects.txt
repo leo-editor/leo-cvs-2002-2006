@@ -17054,25 +17054,15 @@ def endEditLabel (self):
 #@+node:ekr.20031218072017.3982:endEditLabelCommand
 def endEditLabelCommand (self):
 
-    frame = self ; c = frame.c ; tree = frame.tree
+    frame = self ; c = frame.c
     
     if g.app.batchMode:
         c.notValidInBatchMode("End Edit Headline")
-        return
-        
-    if 1: # New code in 4.4a1.
-        p = c.currentPosition()
-        tree.updateAfterHeadChanged(p)
-        c.selectPosition(p)
     else:
-        v = frame.tree.editPosition()
-        # g.trace(v)
-        if v and v.edit_text():
-            tree.select(v)
-        if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-            tree.force_redraw() # force a redraw of joined headlines.
-
-    frame.bodyWantsFocus()
+        p = c.currentPosition()
+        c.frame.tree.onHeadChanged(p)
+        c.selectPosition(p)
+        c.frame.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20031218072017.3982:endEditLabelCommand
 #@+node:ekr.20031218072017.3981:abortEditLabelCommand
@@ -23011,17 +23001,15 @@ def onHeadlineKey (self,event):
     
     """Handle a key event in a headline."""
     
-    w = event.widget ; ch = event and event.char or ''
-    
-    # g.trace(repr(ch))
+    w = event and event.widget or None
     
     self.updateHead(event,w,undoType='Typing')
 
     return 'break' # Required
 #@nonl
 #@-node:ekr.20040803072955.88:onHeadlineKey
-#@+node:ekr.20040803072955.91:updateAfterHeadChanged
-def updateAfterHeadChanged (self,p,undoType='Change Headline'):
+#@+node:ekr.20040803072955.91:onHeadChanged
+def onHeadChanged (self,p,undoType='Change Headline'):
     
     """Update headline text at idle time."""
     
@@ -23067,7 +23055,7 @@ if len(s) > limit:
 s = g.toUnicode(s or '',g.app.tkEncoding)
 #@nonl
 #@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
-#@-node:ekr.20040803072955.91:updateAfterHeadChanged
+#@-node:ekr.20040803072955.91:onHeadChanged
 #@-node:ekr.20051024152318.2:Event handlers
 #@+node:ekr.20051024145643:Label state
 #@+node:ekr.20031218072017.3716:Getters/Setters (tree)

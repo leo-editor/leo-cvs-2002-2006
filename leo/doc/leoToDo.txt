@@ -26,25 +26,34 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- Make Ctrl-= and Ctrl-- work as expected.
+** Ctrl-Z does not properly set focus.
+- Command name for Ctrl-Z is not right.
 
-- Make spelling/autocompleter tabs.
+- Alt-0 leaves present tree alone?
 #@nonl
+#@+node:ekr.20051025101030:minor: before a2
+* Cleanup: review all calls to g.app.gui.set_focus.
+
+- Make sure there is some way of executing script find/changes.
+
+* Create buttons.txt so crashes in leoPy.leo don't lose info.
+
+- Improve spell tab:
+    - Try default fonts for spell buttons.
+    - Select the first entry.
+    - Support up/down arrows.
+#@nonl
+#@-node:ekr.20051025101030:minor: before a2
 #@+node:ekr.20051023125705:Asap (cool)
-- Spelling tab
-
-- Autocompleter (list of names for which classes are known:
-    c,frame,g,k,p,t,tree,v etc.
-
-- Open .leo file in new process:  alternative to test.leo!
-
-- How to make standard editing commands apply to minibuffer?
-#@nonl
-#@+node:ekr.20051023125705.1:Autocompleter
-#@+node:ekr.20051023125705.2:Configuration
+- Autocompleter 
+#@-node:ekr.20051023125705:Asap (cool)
+#@+node:ekr.20051025144611:Autocompleter (Do not delete)
+- list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
+  (Autocompleter may already do this)
+#@+node:ekr.20051025144611.1:Configuration
 @nocolor
 #@nonl
-#@+node:ekr.20051023125705.3:autocompleter.ini
+#@+node:ekr.20051025144611.2:autocompleter.ini
 The plugin looks in the plugins folder for a file called autocompleter.ini.
 
 This follows the windows .ini file format as used in ConfigParser, see: http://docs.python.org/lib/module-ConfigParser.html
@@ -68,8 +77,8 @@ pat = put regular expression here
 
 Then the plugin will recognize your language for the calltip system. This only works if Leo currently recognizes your language, since we are getting our info from the colorizer as to what language is in use.
 #@nonl
-#@-node:ekr.20051023125705.3:autocompleter.ini
-#@+node:ekr.20051023125705.4:.ato files in the autocompleter folder
+#@-node:ekr.20051025144611.2:autocompleter.ini
+#@+node:ekr.20051025144611.3:.ato files in the autocompleter folder
 The plugin uses specific pattern matching based on the language you are using.
 
 For example, if you are in a node and the language is python, it will only recognize def word(     ) as the calltip.
@@ -86,29 +95,26 @@ public static void main( String[] args )
 
 and dog.eat, burt.you would be added to autocompletion and the 3rd line would be added to the calltips section.
 #@nonl
-#@-node:ekr.20051023125705.4:.ato files in the autocompleter folder
-#@-node:ekr.20051023125705.2:Configuration
-#@+node:ekr.20051023125705.5: autocompleter.py
+#@-node:ekr.20051025144611.3:.ato files in the autocompleter folder
+#@-node:ekr.20051025144611.1:Configuration
+#@+node:ekr.20051025144611.4:autocompleter.py
 << docstring >>
-
-@language python 
-@tabwidth-4
-
 <<imports>>
-__version__ = ".73"
 <<version history>>
 <<a note on newCreateControl>>
-<<load notes>>
 <<coding conventions>>
 << configuration >>
-useauto = 1 #These two global determine if the autocompleter and calltip systems are used.  Default is on.
+
+#These two global determine if the autocompleter and calltip systems are used.  Default is on.
+useauto = 1
 usecall = 1
+
 <<globals>>
 <<patterns>>
 
 @others
 #@nonl
-#@+node:ekr.20051023125705.6:<< docstring >>
+#@+node:ekr.20051025144611.5:<< docstring >>
 '''Autocompletion and calltips plugin.
 
 - ``.`` summons the autocompletion.
@@ -147,28 +153,16 @@ Leo. Used correctly an .ato file is a mechanism by which a user can carry
 autocompletion and calltip information between .leo files/sessions.
 '''
 #@nonl
-#@-node:ekr.20051023125705.6:<< docstring >>
-#@+node:ekr.20051023125705.7:<< imports >>
-import leoGlobals as g 
-import leoPlugins 
-import leoTkinterFrame 
+#@-node:ekr.20051025144611.5:<< docstring >>
+#@+node:ekr.20051025144611.6:<< imports >>
+## import leoTkinterFrame 
 
-import leoColor 
-import ConfigParser 
-import os
-import os.path  
-
-import re 
 import sets 
-import string 
 import threading
 import weakref
-
-Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
-Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
 #@nonl
-#@-node:ekr.20051023125705.7:<< imports >>
-#@+node:ekr.20051023125705.8:<<version history>>
+#@-node:ekr.20051025144611.6:<< imports >>
+#@+node:ekr.20051025144611.7:<<version history>>
 @
 .425:
     -The initial scan thread is now a daemon thread.
@@ -226,8 +220,8 @@ the config and language files out of the thread.
 .75 EKR:
     - Disable scan during unit testing.
 #@nonl
-#@-node:ekr.20051023125705.8:<<version history>>
-#@+node:ekr.20051023125705.9:<<a note on newCreateControl>>
+#@-node:ekr.20051025144611.7:<<version history>>
+#@+node:ekr.20051025144611.8:<<a note on newCreateControl>>
 @
 
 the function newCreateControl decorates the leoTkinterFrame.leoTkinterBody.createControl method.
@@ -237,25 +231,11 @@ to put the autobox and calltip label over the editor when the appropiate time is
 prior to .7, this was achieved by using a Tk Canvas as the background of the Editor.  The placer is simpler
 and from what I see more efficient.
 
-#@-node:ekr.20051023125705.9:<<a note on newCreateControl>>
-#@+node:ekr.20051023125705.10:<<load notes>>
-@ 
-
-switching to the placer appears to have gotten rid of this dependency
-
---no longer true---
-Autocompleter needs to be loaded before Chapters/chapters or the autobox and the calltip label do
-not appear in the correct place.
---no longer true---
-
-
-@c 
-#@-node:ekr.20051023125705.10:<<load notes>>
-#@+node:ekr.20051023125705.11:<<coding conventions>>
+#@-node:ekr.20051025144611.8:<<a note on newCreateControl>>
+#@+node:ekr.20051025144611.10:<<coding conventions>>
 @
 
-context - means the widget that backs the editor.  In versions before .7 it was called c and was a canvas.  context is the
-new name, and it is no longer a canvas. c, now means commander.
+context - means the widget that backs the editor.  In versions before .7 it was called c and was a canvas.  context is the new name, and it is no longer a canvas. c, now means commander.
 
 context.autobox - means the Pmw.ScrolledListBox that offers the autocompletion options.
 
@@ -263,13 +243,11 @@ The autobox contains other widgets that can be accessed by autobox.component( 'w
 
 context.calltip - means the Tk.Label that offers calltip information
 
-
 context.which = 0 indicates its in autocompleter mode
 context.which = 1 indicates its in calltip mode
-
-
-#@-node:ekr.20051023125705.11:<<coding conventions>>
-#@+node:ekr.20051023125705.12:<< configuration >>
+#@nonl
+#@-node:ekr.20051025144611.10:<<coding conventions>>
+#@+node:ekr.20051025144611.11:<< configuration >>
 @
 Autocompleter looks in the plugin directory for a file called autocompleter.ini
 
@@ -294,9 +272,9 @@ Autocompleter will scan each .ato file that has a first part that matches a lang
     reads the information in the nodes, so calltip and autocompleter information is added to autocompleters runtime database.
 If a new language has been added in the autocompleter.ini file then an .ato file that starts with the new languages name will be recognized and read in.  Note, this language needs to be recognizable to Leo.
 Used correctly an .ato file is a mechanism by which a user can carry autocompletion and calltip information between .leo files/sessions.
-
-#@-node:ekr.20051023125705.12:<< configuration >>
-#@+node:ekr.20051023125705.13:<< globals >>
+#@nonl
+#@-node:ekr.20051025144611.11:<< configuration >>
+#@+node:ekr.20051025144611.12:<< globals >>
 orig_CreateControl = leoTkinterFrame.leoTkinterBody.createControl 
 
 <<DictSet>>
@@ -308,7 +286,7 @@ pats ={} #used to hold regex patterns to find defintions for calltips
 lang = None #determines what language is in effect.  Though its global, only one autobox or calltip label should be visible for the entire leo instance.
 configfilesread = False #Determines if the config files need to be read
 haveseen = weakref.WeakKeyDictionary()# a dict that tracks the commanders that have been seen without stopping garbage collection of that commander.
-#@+node:ekr.20051023125705.14:<<DictSet>>
+#@+node:ekr.20051025144611.13:<<DictSet>>
 class DictSet( dict ):
     '''A dictionary that always returns either a fresh sets.Set or one that has been stored from a previous call.
     a different datatype can be used by setting the factory keyword in __init__ to a different class.'''
@@ -323,38 +301,39 @@ class DictSet( dict ):
         except:
             dict.__setitem__( self, key, self.factory() )
             return dict.__getitem__( self, key )
-   
-#@-node:ekr.20051023125705.14:<<DictSet>>
-#@-node:ekr.20051023125705.13:<< globals >>
-#@+node:ekr.20051023125705.15:<< patterns >>
-#This section defines patterns for calltip recognition.  The autocompleter does not use regexes.
+#@-node:ekr.20051025144611.13:<<DictSet>>
+#@-node:ekr.20051025144611.12:<< globals >>
+#@+node:ekr.20051025144611.14:<< patterns >>
+# This section defines patterns for calltips.
 space = r'[ \t\r\f\v ]+'
 end = r'\w+\s*\([^)]*\)'
 
-pats['python'] = re.compile(r'def\s+%s' % end)
+pats ['python'] = re.compile(r'def\s+%s' % end)
 
-pats['java'] = re.compile(
-    r'((public\s+|private\s+|protected\s+)?(static%s|\w+%s){1,2}%s)' % ( space, space, end ) )
-    
-pats['perl'] = re.compile(r'sub\s+%s' % end)
+pats ['java'] = re.compile(
+    r'((public\s+|private\s+|protected\s+)?(static%s|\w+%s){1,2}%s)' % (
+        space, space, end))
 
-pats['c++'] = re.compile(r'((virtual\s+)?\w+%s%s)' %( space, end ))
+pats ['perl'] = re.compile(r'sub\s+%s' % end)
 
-pats['c'] = re.compile(r'\w+%s%s' % ( space ,end ))
+pats ['c++'] = re.compile(r'((virtual\s+)?\w+%s%s)' % (space,end))
+
+pats ['c'] = re.compile(r'\w+%s%s' % (space,end))
 
 r = string.punctuation.replace('(','').replace('.','')
-pt = string.digits+string.letters+r 
+pt = string.digits + string.letters + r
 
-ripout = string.punctuation+string.whitespace+'\n'
+ripout = string.punctuation + string.whitespace + '\n'
 ripout = ripout.replace('_','')
 
-okchars ={}
+okchars = {}
 for z in string.ascii_letters:
-    okchars[z] = z 
-okchars['_'] = '_'
+    okchars [z] = z
+okchars ['_'] = '_'
 #@nonl
-#@-node:ekr.20051023125705.15:<< patterns >>
-#@+node:ekr.20051023125705.16:init
+#@-node:ekr.20051025144611.14:<< patterns >>
+#@+node:ekr.20051025170832:Initialization
+#@+node:ekr.20051025144611.15:init
 def init ():
     
     ok = Pmw and Tk and not g.app.unitTesting # Not for unit tests: modifies core classes.
@@ -366,159 +345,21 @@ def init ():
         
     return ok
 #@nonl
-#@-node:ekr.20051023125705.16:init
-#@+node:ekr.20051023125705.17:watcher
-watchitems = ( '.',')' )
-txt_template = '%s%s%s'
-def watcher (event):
-    '''A function that tracks what chars are typed in the Text Editor.  Certain chars activate the text scanning
-       code.'''
-    global lang 
-    if event.char.isspace() or event.char in watchitems:
-        bCtrl = event.widget
-        #This if statement ensures that attributes set in another node
-        #are put in the database.  Of course the user has to type a whitespace
-        # to make sure it happens.  We try to be selective so that we dont burn
-        # through the scanText def for every whitespace char entered.  This will
-        # help when the nodes become big.
-        if event.char.isspace():
-            if bCtrl.get( 'insert -1c' ).isspace(): return #We dont want to do anything if the previous char was a whitespace
-            if bCtrl.get( 'insert -1c wordstart -1c') != '.': return
-            
-        c = bCtrl.commander
-        lang = c.frame.body.getColorizer().language 
-        txt = txt_template %( bCtrl.get( "1.0", 'insert' ), 
-                             event.char, 
-                             bCtrl.get( 'insert', "end" ) ) #We have to add the newest char, its not in the bCtrl yet
+#@-node:ekr.20051025144611.15:init
+#@+node:ekr.20051025170832.1:Config stuff
+#@+node:ekr.20051025144611.24:has read config file meths
+#These functions determine if the config and language files have been read or not.
+# No need to read it more than once.
 
-        scanText(txt)
-    
-#@-node:ekr.20051023125705.17:watcher
-#@+node:ekr.20051023125705.18:scanText
-def scanText (txt):
-    '''This function guides what gets scanned.'''
-
-    if useauto:
-        scanForAutoCompleter(txt)
-    if usecall:
-        scanForCallTip(txt)
-#@-node:ekr.20051023125705.18:scanText
-#@+node:ekr.20051023125705.19:scanForAutoCompleter
-def scanForAutoCompleter (txt):
-    '''This function scans text for the autocompleter database.'''
-    t1 = txt.split('.')
-    g =[]
-    reduce(lambda a,b:makeAutocompletionList(a,b,g),t1)
-    if g:
-        for a, b in g:
-            #if watchwords.has_key(a):
-            #    watchwords[a].add(b)
-            #else:
-            #    watchwords[a] = sets.Set([b])
-            watchwords[ a ].add( b ) # we are using the experimental DictSet class here, usage removed the above statements
-            #notice we have cut it down to one line of code here!
-#@nonl
-#@-node:ekr.20051023125705.19:scanForAutoCompleter
-#@+node:ekr.20051023125705.20:scanForCallTip
-def scanForCallTip (txt):
-    '''this function scans text for calltip info'''
-    pat2 = pats['python']
-    if lang!=None:
-        if pats.has_key(lang):
-            pat2 = pats[lang]
-    g2 = pat2.findall(txt)
-    if g2:
-        for z in g2:
-            if isinstance(z,tuple):
-                z = z[0]
-            pieces2 = z.split('(')
-            pieces2[0] = pieces2[0].split()[-1]
-            a, b = pieces2[0], pieces2[1]
-            calltips[ lang ][ a ].add( z ) #we are using the experimental DictSet here, usage removed all of the commented code. notice we have cut all this down to one line of code!
-            #if calltips.has_key(lang):
-            #    if calltips[lang].has_key(a):
-            #        calltips[lang][a].add(z)
-            #    else:
-            #        calltips[lang][a] = sets.Set([z]) 
-            #else:
-            #    calltips[lang] ={}
-            #    calltips[lang][a] = sets.Set([z])        
-#@nonl
-#@-node:ekr.20051023125705.20:scanForCallTip
-#@+node:ekr.20051023125705.21:makeAutocompletionList
-def makeAutocompletionList (a,b,glist):
-    '''A helper function for autocompletion'''
-    a1 = _reverseFindWhitespace(a)
-    if a1:
-        b2 = _getCleanString(b)
-        if b2!='':
-            glist.append((a1,b2))
-    return b 
-#@-node:ekr.20051023125705.21:makeAutocompletionList
-#@+node:ekr.20051023125705.22:_getCleanString
-def _getCleanString (s):
-    '''a helper for autocompletion scanning'''
-    if s.isalpha():return s 
-
-    for n, l in enumerate(s):
-        if l in okchars:pass 
-        else:return s[:n]
-    return s 
-#@-node:ekr.20051023125705.22:_getCleanString
-#@+node:ekr.20051023125705.23:_reverseFindWhitespace
-def _reverseFindWhitespace (s):
-    '''A helper for autocompletion scan'''
-    for n, l in enumerate(s):
-        n =(n+1)*-1
-        if s[n].isspace()or s[n]=='.':return s[n+1:]
-    return s 
-#@-node:ekr.20051023125705.23:_reverseFindWhitespace
-#@+node:ekr.20051023125705.24:initialScan
-def initialScan (tag,keywords):
-    '''This method walks the node structure to build the in memory database.'''
-    c = keywords.get("c")
-    if not c or haveseen.has_key(c):
-        return 
-
-    haveseen[c] = None 
-    
-    #This part used to be in its own thread until problems were encountered on Windows 98 and XP with g.es
-    pth = os.path.split(g.app.loadDir)  
-    aini = pth[0]+r"%splugins%sautocompleter.ini" % ( os.sep, os.sep )    
-    if not os.path.exists(aini):
-        createConfigFile( aini )
-    try:
-        if not hasReadConfig():
-            if os.path.exists(aini):
-                readConfigFile(aini) 
-
-            bankpath = pth[0]+r"%splugins%sautocompleter%s" % ( os.sep, os.sep, os.sep )
-            readLanguageFiles(bankpath)#This could be too expensive to do here if the user has many and large language files.
-    finally:
-        setReadConfig()
-    
-    # Use a thread to do the initial scan so as not to interfere with the user.            
-    def scan():
-        #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
-        # During unit testing c gets destroyed before the scan finishes.
-        if not g.app.unitTesting:
-            readOutline( c )
-        
-    t = threading.Thread( target = scan )
-    t.setDaemon(True)
-    t.start()
-#@-node:ekr.20051023125705.24:initialScan
-#@+node:ekr.20051023125705.25:has read config file meths
-#These functions determine if the config and language files have been read or not.  No need to read it more than once.
 def hasReadConfig():
     return configfilesread
-    
 
 def setReadConfig():
     global configfilesread
     configfilesread = True
-#@-node:ekr.20051023125705.25:has read config file meths
-#@+node:ekr.20051023125705.26:readConfigFile
+#@nonl
+#@-node:ekr.20051025144611.24:has read config file meths
+#@+node:ekr.20051025144611.25:readConfigFile
 def readConfigFile (aini):
     '''reads the autocompleter config file in.'''
     global usecall, useauto 
@@ -563,8 +404,8 @@ def readConfigFile (aini):
                     g.es( "Could not add %s pattern, because of %s " %( z, x ) , color = 'red')
                     
         break
-#@-node:ekr.20051023125705.26:readConfigFile
-#@+node:ekr.20051023125705.27:createConfigFile
+#@-node:ekr.20051025144611.25:readConfigFile
+#@+node:ekr.20051025144611.26:createConfigFile
 def createConfigFile( aini ):
     '''This function creates a config file identified by the parameter aini'''
     cp = ConfigParser.ConfigParser()
@@ -581,8 +422,8 @@ def createConfigFile( aini ):
         g.es( "Error in creating %s, caused by %s" % ( aini, x ) , color = 'red' )
 
 
-#@-node:ekr.20051023125705.27:createConfigFile
-#@+node:ekr.20051023125705.28:readLanguageFiles
+#@-node:ekr.20051025144611.26:createConfigFile
+#@+node:ekr.20051025144611.27:readLanguageFiles
 def readLanguageFiles (bankpath):
     '''reads language files in directory specified by the bankpath parameter'''
     global lang
@@ -601,8 +442,8 @@ def readLanguageFiles (bankpath):
             #    scanText(x)
             f.close()
 #@nonl
-#@-node:ekr.20051023125705.28:readLanguageFiles
-#@+node:ekr.20051023125705.29:readOutline
+#@-node:ekr.20051025144611.27:readLanguageFiles
+#@+node:ekr.20051025144611.28:readOutline
 def readOutline (c):
     '''This method walks the Outline(s) and builds the database from which
     autocompleter draws its autocompletion options
@@ -620,26 +461,181 @@ def readOutline (c):
             setLanguage( z )
             scanText( z.bodyString() )
 #@nonl
-#@-node:ekr.20051023125705.29:readOutline
-#@+node:ekr.20051023125705.30:reducer
+#@-node:ekr.20051025144611.28:readOutline
+#@-node:ekr.20051025170832.1:Config stuff
+#@+node:ekr.20051025144611.16:watcher
+watchitems = ('.',')')
+txt_template = '%s%s%s'
+
+def watcher (event):
+    '''A function that tracks what chars are typed in the Text Editor.
+    Certain chars activate the text scanning code.'''
+    global lang
+    if not (event.char.isspace() or event.char in watchitems):
+        return
+        
+@
+This if statement ensures that attributes set in another node are put in the
+database.Of course the user has to type a whitespace to make sure it happens.
+We try to be selective so that we dont burn through the scanText def for  every
+whitespace char entered.This will help when the nodes become big.
+@c
+    bCtrl = event.widget
+    if event.char.isspace():
+        # Do nothing if the previous char was a whitespace
+        if bCtrl.get('insert -1c').isspace(): return
+        if bCtrl.get('insert -1c wordstart -1c') != '.': return
+    c = bCtrl.commander
+    lang = c.frame.body.getColorizer().language
+    txt = txt_template % (
+        bCtrl.get("1.0",'insert'),
+        event.char, bCtrl.get('insert',"end"))
+        # Add the newest char; its not in the bCtrl yet
+    scanText(txt)
+#@nonl
+#@-node:ekr.20051025144611.16:watcher
+#@+node:ekr.20051025144611.23:initialScan
+def initialScan (tag,keywords):
+    '''This method walks the node structure to build the in memory database.'''
+    c = keywords.get("c")
+    if not c or haveseen.has_key(c):
+        return 
+
+    haveseen[c] = None 
+    
+    #This part used to be in its own thread until problems were encountered on Windows 98 and XP with g.es
+    pth = os.path.split(g.app.loadDir)  
+    aini = pth[0]+r"%splugins%sautocompleter.ini" % ( os.sep, os.sep )    
+    if not os.path.exists(aini):
+        createConfigFile( aini )
+    try:
+        if not hasReadConfig():
+            if os.path.exists(aini):
+                readConfigFile(aini) 
+
+            bankpath = pth[0]+r"%splugins%sautocompleter%s" % ( os.sep, os.sep, os.sep )
+            readLanguageFiles(bankpath)#This could be too expensive to do here if the user has many and large language files.
+    finally:
+        setReadConfig()
+    
+    # Use a thread to do the initial scan so as not to interfere with the user.            
+    def scan():
+        #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
+        # During unit testing c gets destroyed before the scan finishes.
+        if not g.app.unitTesting:
+            readOutline( c )
+        
+    t = threading.Thread( target = scan )
+    t.setDaemon(True)
+    t.start()
+#@-node:ekr.20051025144611.23:initialScan
+#@-node:ekr.20051025170832:Initialization
+#@+node:ekr.20051025144611.17:scanText
+def scanText (txt):
+
+    '''This function guides what gets scanned.'''
+
+    if useauto:
+        scanForAutoCompleter(txt)
+    if usecall:
+        scanForCallTip(txt)
+#@nonl
+#@-node:ekr.20051025144611.17:scanText
+#@+node:ekr.20051025144611.18:scanForAutoCompleter
+def scanForAutoCompleter (txt):
+    
+    '''This function scans text for the autocompleter database.'''
+
+    t1 = txt.split('.')
+    g =[]
+    reduce(lambda a,b:makeAutocompletionList(a,b,g),t1)
+    if g:
+        for a, b in g:
+            #if watchwords.has_key(a):
+            #    watchwords[a].add(b)
+            #else:
+            #    watchwords[a] = sets.Set([b])
+            watchwords[ a ].add( b )
+            # we are using the experimental DictSet class here.
+            # usage removed the above statements
+            # notice we have cut it down to one line of code here!
+#@nonl
+#@-node:ekr.20051025144611.18:scanForAutoCompleter
+#@+node:ekr.20051025144611.19:scanForCallTip
+def scanForCallTip (txt):
+
+    '''this function scans text for calltip info'''
+
+    # pat2 = pats['python']
+    # if lang:
+        # if pats.has_key(lang):
+            # pat2 = pats[lang]
+
+    pat2 = pats.get(lang or 'python')
+    g2 = pat2.findall(txt) or []
+
+    for z in g2:
+        if isinstance(z,tuple):
+            z = z [0]
+        pieces2 = z.split('(')
+        pieces2 [0] = pieces2 [0].split() [ -1]
+        a, b = pieces2 [0], pieces2 [1]
+        calltips [lang][a].add(z)
+#@nonl
+#@-node:ekr.20051025144611.19:scanForCallTip
+#@+node:ekr.20051025144611.20:makeAutocompletionList
+def makeAutocompletionList (a,b,glist):
+    
+    '''A helper function for autocompletion'''
+    a1 = _reverseFindWhitespace(a)
+    if a1:
+        b2 = _getCleanString(b)
+        if b2!='':
+            glist.append((a1,b2))
+    return b 
+
+#@-node:ekr.20051025144611.20:makeAutocompletionList
+#@+node:ekr.20051025144611.21:_getCleanString
+def _getCleanString (s):
+    '''a helper for autocompletion scanning'''
+    if s.isalpha():return s 
+
+    for n, l in enumerate(s):
+        if l in okchars:pass 
+        else:return s[:n]
+    return s 
+#@-node:ekr.20051025144611.21:_getCleanString
+#@+node:ekr.20051025144611.22:_reverseFindWhitespace
+def _reverseFindWhitespace (s):
+    '''A helper for autocompletion scan'''
+    for n, l in enumerate(s):
+        n =(n+1)*-1
+        if s[n].isspace()or s[n]=='.':return s[n+1:]
+    return s 
+#@-node:ekr.20051025144611.22:_reverseFindWhitespace
+#@+node:ekr.20051025144611.29:reducer
 def reducer (lis,pat):
     '''This def cuts a list down to only those items that start with the parameter pat, pure utility.'''
     return[x for x in lis if x.startswith(pat)]
-#@-node:ekr.20051023125705.30:reducer
-#@+node:ekr.20051023125705.31:unbind
-def unbind ( context ):
+#@-node:ekr.20051025144611.29:reducer
+#@+node:ekr.20051025144611.30:unbind
+def unbind (context):
+
     '''This method turns everything off and removes the calltip and autobox from the canvas.'''
+
     if context.on: #no need to do this stuff, if were not 'on'
         context.on = False
         context.clean_editor()
-        map( context.unbind, ( "<Control_L>", "<Control_R>", "<Alt-Up>", "<Alt-Down>", "<Alt_L>" , "<Alt_R>" ) )
-        context.unbind_all( '<Button>' )
+        map(context.unbind,(
+            "<Control_L>", "<Control_R>", "<Alt-Up>", "<Alt-Down>", "<Alt_L>", "<Alt_R>"))
+        context.unbind_all('<Button>')
         context.update_idletasks()
 #@nonl
-#@-node:ekr.20051023125705.31:unbind
-#@+node:ekr.20051023125705.32:moveSelItem
+#@-node:ekr.20051025144611.30:unbind
+#@+node:ekr.20051025144611.31:moveSelItem
 def moveSelItem (event, context ):
-    '''This def moves the selection in the autobox up or down.'''
+
+    '''Move the selection in the autobox up or down.'''
 
     autobox = context.autobox
     i = autobox.curselection()
@@ -652,60 +648,48 @@ def moveSelItem (event, context ):
             if autobox.size() - 1 > autobox.index( i ):
                 i += 1
             elif i!=0:
-                i -1
+                i -1  ## Can't be correct.
         elif event.keysym=='Up': # EKR.
             if i > 0:
                 i -= 1
     finally:
-
         autobox.select_clear( 0, 'end' )
         autobox.select_set( i )
         autobox.see( i )
         context.update_idletasks()
         return "break"
-#@-node:ekr.20051023125705.32:moveSelItem
-#@+node:ekr.20051023125705.33:processKeyStroke
-def processKeyStroke (event,context ,body):
-    '''c in this def is not a commander but a Tk Canvas.  This def determine what action to take dependent upon
-       the state of the canvas and what information is in the Event'''
-    #if not c.on:return None #nothing on, might as well return
-    if not context.on or event.keysym in ( "??", "Shift_L","Shift_R" ):
-        return None 
-    #if event.keysym=='Escape':
-    #    #turn everything off
-    #    unbind( c )
-    #    return None 
-    #if c.which and event.keysym in('parenright','Control_L','Control_R'):
-    #    unbind( c )
-    #    c.on = False 
-    elif testForUnbind( event, context ): #all of the commented out code is being tested in the new testForUnbind def or moved above.
-        unbind( context )
-        return None
-    #elif event.keysym in("Shift_L","Shift_R"):
-    #    #so the user can use capital letters.
-    #    return None 
-    #elif not c.which and event.char in ripout:
-    #    unbind( c )
-    elif context.which==1:
-        #no need to add text if its calltip time.
-        return None 
-    ind = body.index('insert-1c wordstart')
-    pat = body.get(ind,'insert')+event.char 
-    pat = pat.lstrip('.')
+#@-node:ekr.20051025144611.31:moveSelItem
+#@+node:ekr.20051025144611.32:processKeyStroke
+def processKeyStroke (event,context,body):
 
+    '''Take action based on the state of context (a Tk.Canvas) and the event'''
+    
     autobox = context.autobox
-    ww = list( autobox.get( 0, 'end' ) )
-    lis = reducer(ww,pat)
-    if len(lis)==0:return None #in this section we are selecting which item to select based on what the user has typed.
-    i = ww.index(lis[0])
 
-    autobox.select_clear( 0, 'end' ) #This section sets the current selection to match what the user has typed
-    autobox.select_set( i )
-    autobox.see( i )
+    if not context.on or event.keysym in ("??","Shift_L","Shift_R"):
+        return None
+    elif testForUnbind(event,context):
+        unbind(context)
+        return None
+    elif context.which == 1:
+        return None # It is calltip time.
+        
+    index = body.index('insert-1c wordstart')
+    pat = body.get(index,'insert') + event.char
+    pat = pat.lstrip('.')
+    ww = list(autobox.get(0,'end'))
+    aList = reducer(ww,pat)
+    if not aList: return None
+    # Select which item to select based on what the user has typed.
+    i = ww.index(aList[0])
+    # Set the current selection to match what the user has typed.
+    autobox.select_clear(0,'end') 
+    autobox.select_set(i)
+    autobox.see(i)
     return 'break'
 #@nonl
-#@-node:ekr.20051023125705.33:processKeyStroke
-#@+node:ekr.20051023125705.34:testForUnbind
+#@-node:ekr.20051025144611.32:processKeyStroke
+#@+node:ekr.20051025144611.33:testForUnbind
 def testForUnbind( event, context ):
     '''c in this case is a Tkinter Canvas.
       This def checks if the autobox or calltip label needs to be turned off'''
@@ -715,8 +699,8 @@ def testForUnbind( event, context ):
     elif not context.which and event.char in ripout:
         return True
     return False
-#@-node:ekr.20051023125705.34:testForUnbind
-#@+node:ekr.20051023125705.35:processAutoBox
+#@-node:ekr.20051025144611.33:testForUnbind
+#@+node:ekr.20051025144611.34:processAutoBox
 def processAutoBox(event, context , body ):
     '''This method processes the selection from the autobox.'''
     if event.keysym in("Alt_L","Alt_R"):
@@ -736,8 +720,8 @@ def processAutoBox(event, context , body ):
         body.update_idletasks()
     finally:
         unbind( context )
-#@-node:ekr.20051023125705.35:processAutoBox
-#@+node:ekr.20051023125705.36:add_item
+#@-node:ekr.20051025144611.34:processAutoBox
+#@+node:ekr.20051025144611.35:add_item
 def add_item (event, context ,body,colorizer):
     '''This function will add the autobox or the calltip label.'''
     if not event.char in('.','(')or context.on:return None 
@@ -776,9 +760,10 @@ def add_item (event, context ,body,colorizer):
             context.on = False 
             return None 
 
-#@-node:ekr.20051023125705.36:add_item
-#@+node:ekr.20051023125705.37:add_bindings
+#@-node:ekr.20051025144611.35:add_item
+#@+node:ekr.20051025144611.36:add_bindings
 def add_bindings( context, body ):
+    
     '''This def adds bindings to the Canvas so it can work with the autobox properly.'''
             
     event = Tk.Event()
@@ -798,9 +783,8 @@ def add_bindings( context, body ):
          
     def bind2( args ): context.bind( *args )
     map( bind2, bindings )
-
-#@-node:ekr.20051023125705.37:add_bindings
-#@+node:ekr.20051023125705.38:configureAutoBox
+#@-node:ekr.20051025144611.36:add_bindings
+#@+node:ekr.20051025144611.37:configureAutoBox
 def configureAutoBox ( autobox ,ww):
     '''sets data and size of autobox.'''
     autobox.setlist(ww)
@@ -808,8 +792,8 @@ def configureAutoBox ( autobox ,ww):
     height = len(ww)
     if height>5:height = 5
     lb.configure(height=height)
-#@-node:ekr.20051023125705.38:configureAutoBox
-#@+node:ekr.20051023125705.39:calculatePlace
+#@-node:ekr.20051025144611.37:configureAutoBox
+#@+node:ekr.20051025144611.38:calculatePlace
 def calculatePlace (body,cwidg, context ,toBePlaced):
      '''This def determines where the autobox or calltip label goes on the canvas.
        And then it puts it on the canvas.
@@ -835,8 +819,8 @@ def calculatePlace (body,cwidg, context ,toBePlaced):
      toBePlaced.place( x = x, y = y )
      context.on = True
      context.bind_all( '<Button>', context.do_unbind )
-#@-node:ekr.20051023125705.39:calculatePlace
-#@+node:ekr.20051023125705.40:setLanguage
+#@-node:ekr.20051025144611.38:calculatePlace
+#@+node:ekr.20051025144611.39:setLanguage
 def setLanguage ( pos ):
     '''This method checks a node for the current language in effect
        and accends the parent line until it finds a language.'''
@@ -848,106 +832,111 @@ def setLanguage ( pos ):
             lang = g.set_language(xs1,dict['language'])[0]
             break 
         pos = pos.parent()
-#@-node:ekr.20051023125705.40:setLanguage
-#@+node:ekr.20051023125705.41:newCreateControl
+#@-node:ekr.20051025144611.39:setLanguage
+#@+node:ekr.20051025144611.40:newCreateControl
 def newCreateControl (self,frame,parentFrame):
-    '''This def is a decoration of the createControl def.  We set up the ancestory of the control so we can draw
-       Widgets over the Text editor without disturbing the text.'''
-    #creating background
-    #We have moved to using the placer, this is simpler to use and more efficient.  We have to decorate the Tk.Text
-    #widget with a constructor that creates an intermediate Frame for the Text to be placed instead of packed.  Had no
-    #idea that the placer could do this so nicely.  With a couple changes in 3 places, we are using the placer!
+    '''A decoration of the createControl def.
+    We set up the ancestory of the control so we can draw
+    widgets over the Text editor without disturbing the text.'''
+
+@
+Creating the background:
+- We now use a placer: simpler to use and more efficient.
+- We have to decorate the Tk.Text widget with a constructor that creates an
+  intermediate Frame for the Text to be placed instead of packed.
+  Had no idea that the placer could do this so nicely.
+  With a couple changes in 3 places, we are using the placer !
+@c
     orig_init = Tk.Text.__init__ #We stash the original init of Tk.Text
-    def pre_init( self, master, *args, **kwords ):
-        
-        context = Tk.Frame( master ) #This is what we need to put in before the text to make place work.
-        orig_init( self, context, *args, **kwords )
-    
+    def pre_init (self,master,*args,**kwords):
+
+        context = Tk.Frame(master)
+            #This is what we need to put in before the text to make place work.
+        orig_init(self,context,*args,**kwords)
+
     Tk.Text.__init__ = pre_init #We restore the original init of Tk.Text
-    body = orig_CreateControl(self,frame, parentFrame )#orig_CreatControl is the method this def decorates
+    body = orig_CreateControl(self,frame,parentFrame) #orig_CreatControl is the method this def decorates
     Tk.Text.__init__ = orig_init
-    
+
     context = body.master #This is the Frame we created to intercept the passed in master.
-    context.pack( expand = 1, fill = 'both', after = frame.bodyBar )  #We have to add it to the environment, since we pass on it in the __init__   
-    body.place( relwidth = 1.0, relheight = 1.0 )
+    context.pack(expand=1,fill='both',after=frame.bodyBar) #We have to add it to the environment, since we pass on it in the __init__
+    body.place(relwidth=1.0,relheight=1.0)
     body.commander = self.c #used in watcher
     context.on = False #determines if the system is autocompleting or calltiping
-    addAutoboxAndCalltipWidgets( context )
+    addAutoboxAndCalltipWidgets(context)
     #These used to be lambdas, but I think this is clearer.
-    def processKeyStrokeHandler( event, context= context, body = body ): 
-        processKeyStroke( event, context, body )
-    def addItemHandler( event, context = context, body = body, colorizer = frame.body ): 
-        add_item( event, context, body, colorizer.getColorizer() )
-                
-    for z in ( watcher, processKeyStrokeHandler, addItemHandler ):
-        context.bind( "<Key>", z, '+' )
-    
+    def processKeyStrokeHandler (event,context=context,body=body):
+        processKeyStroke(event,context,body)
+    def addItemHandler (event,context=context,body=body,colorizer=frame.body):
+        add_item(event,context,body,colorizer.getColorizer())
+
+    for z in (watcher,processKeyStrokeHandler,addItemHandler):
+        context.bind("<Key>",z,'+')
+
     ignore = [] #ignore items added to this list when a Button event occurs.
-    if hasattr( context, 'autobox' ):
-        ignore.append(  context.autobox.component( 'listbox' ) )
-        ignore.append( context.autobox.component( 'vertscrollbar' ) )
-    def do_unbind( event ):
+    if hasattr(context,'autobox'):
+        ignore.append(context.autobox.component('listbox'))
+        ignore.append(context.autobox.component('vertscrollbar'))
+    def do_unbind (event):
         '''This def is for doing the unbind on any <Button> events.
-           It only is in effect when the autobox or calltip label are showing.'''            
+           It only is in effect when the autobox or calltip label are showing.'''
         if event.widget not in ignore: #This ensures a click or scroll in the autobox takes effect.
-                unbind( context )
+                unbind(context)
 
     context.do_unbind = do_unbind
-    
-    #This part protects this plugin from others that use Alt-Up, Alt-Down, an example being temacs.py
-    #The frame didnt seem to work.  Im assuming it was not appropiate enought in the bindtag order for the event.
+
+    # This part protects this plugin from others that use Alt-Up, Alt-Down.
+    # The frame didnt seem to work.  Im assuming it was not appropiate enought in the bindtag order for the event.
     context.block_alt = Tk.Entry()
-    def block_alt( event ):
+    def block_alt (event):
         '''This def blocks specific keyboard commands from reaching the Text editor.  'breaking' in
            the context does not occur before the event reaches the Text editor, so it has no effect'''
         if context.on: return 'break'
-    for z in ( '<Alt-Up>', '<Alt-Down>' ): context.block_alt.bind( z, block_alt ) 
-    
+    for z in ('<Alt-Up>','<Alt-Down>'): context.block_alt.bind(z,block_alt)
+
     #set the bindtags for the body, protects the autocompleter from other plugins unbinding this plugins bindings.
     ctags = []
-    ctags.append( context.bindtags()[ 0 ] )
-    ctags.append( context.block_alt.bindtags()[ 0 ] )
-    ctags.extend( body.bindtags() ) 
-    body.bindtags( tuple( ctags ))
-    
-    return body  
+    ctags.append(context.bindtags()[0])
+    ctags.append(context.block_alt.bindtags()[0])
+    ctags.extend(body.bindtags())
+    body.bindtags(tuple(ctags))
 
+    return body
 
-
-
-
-
-
-#@-node:ekr.20051023125705.41:newCreateControl
-#@+node:ekr.20051023125705.42:addAutoboxAndCalltipWidgets
+#@-node:ekr.20051025144611.40:newCreateControl
+#@+node:ekr.20051025144611.41:addAutoboxAndCalltipWidgets
 def addAutoboxAndCalltipWidgets( context ):
     '''This builds the autobox and the calltip label for the editor.
       It should be called once for every editor created.'''
     
     call_pack_forget = []
-    
+
     if useauto:
-        context.autobox = Pmw.ScrolledListBox( context ,hscrollmode='none',
-                                         listbox_selectbackground='#FFE7C6',
-                                         listbox_selectforeground='blue',
-                                         listbox_background='white',
-                                         listbox_foreground='blue',
-                                         vertscrollbar_background='#FFE7C6',
-                                         vertscrollbar_width=10)
+        context.autobox = Pmw.ScrolledListBox(
+            context ,hscrollmode='none',
+            listbox_selectbackground='#FFE7C6',
+            listbox_selectforeground='blue',
+            listbox_background='white',
+            listbox_foreground='blue',
+            vertscrollbar_background='#FFE7C6',
+            vertscrollbar_width=10)
         call_pack_forget.append( context.autobox.component( 'hull' ) )
     
     if usecall:            
-        context.calltip = Tk.Label(context,background='lightyellow',
-                         foreground='black')
+        context.calltip = Tk.Label(context,background='lightyellow',foreground='black')
         call_pack_forget.append( context.calltip )
     
-    def clean_editor( ca = call_pack_forget ):#This def makes removing the autobox or calltip label easy.  No need for an intermediate variable like 'current'.
+    def clean_editor( ca = call_pack_forget ):
+        #This def makes removing the autobox or calltip label easy.
+        # No need for an intermediate variable like 'current'.
         for z in ca: z.place_forget()
-    context.clean_editor = clean_editor
 
-#@-node:ekr.20051023125705.42:addAutoboxAndCalltipWidgets
-#@+node:ekr.20051023125705.43:onOpenWindow
+    context.clean_editor = clean_editor
+#@nonl
+#@-node:ekr.20051025144611.41:addAutoboxAndCalltipWidgets
+#@+node:ekr.20051025144611.42:onOpenWindow
 def onOpenWindow ():
+
     #what does this do?
     c = keywords.get("c")
     if haveseen.has_key(c):
@@ -955,15 +944,9 @@ def onOpenWindow ():
         
     autocompleter = autocomplet(c)
 #@nonl
-#@-node:ekr.20051023125705.43:onOpenWindow
-#@-node:ekr.20051023125705.5: autocompleter.py
-#@-node:ekr.20051023125705.1:Autocompleter
-#@-node:ekr.20051023125705:Asap (cool)
-#@+node:ekr.20051023151346:Cleanup
-- Finish connecting the find tab.
-
-- Make sure there is some way of executing script find/changes.
-#@-node:ekr.20051023151346:Cleanup
+#@-node:ekr.20051025144611.42:onOpenWindow
+#@-node:ekr.20051025144611.4:autocompleter.py
+#@-node:ekr.20051025144611:Autocompleter (Do not delete)
 #@+node:ekr.20051008131807:Unit tests
 @nocolor
 
@@ -1428,6 +1411,8 @@ Mac OS 10.4.2
     - printLongCommandName (like Emacs Ctrl-H Ctrl-K) command prints long name of any keystroke command.
 
 * @link-unl/url/etc.
+
+- Open .leo file in new process: alternative to test.leo!
 #@nonl
 #@+node:ekr.20050928144501.1:Mouseless Leo
 Control all Leo commands & widgets using only key commands.
@@ -3766,6 +3751,7 @@ xwem-worklog-tasks-description
 
 - Strip quotes from color, font settings.
 
+-  Allow multiple selectors:  ! all,find =
 
 - Specify & for most menu items.
 
@@ -3986,6 +3972,119 @@ Alt-x commands:
 #@-node:ekr.20051017140811:Original temac bindings
 #@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
 #@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
+#@+node:ekr.20051015123432:(Methods with pychecker problems)
+# None of the following warnings are correct.
+#@nonl
+#@+node:ekr.20051015113252:Pychecker report
+# None of the following are correct.
+
+C:\prog\leoCVS\leo\src\leoGlobals.py:1417: Setting aList to itself has no effect
+
+C:\prog\leoCVS\leo\src\leoGlobals.py:1433: Setting aList to itself has no effect
+
+C:\prog\leoCVS\leo\src\leoKeys.py:803: Redefining attribute (keyCallback) original line (792)
+
+C:\prog\leoCVS\leo\src\leoKeys.py:1315: No module attribute (initAllEditCommanders) found
+#@nonl
+#@-node:ekr.20051015113252:Pychecker report
+#@+node:ekr.20041126060136:print_list & listToString
+def print_list(aList,tag=None,sort=False,indent=''):
+    
+    if not aList:
+        if tag: print '%s...{}' % tag
+        else:   print '{}'
+        return
+    if sort:
+        aList = aList[:] # Sort a copy! Pychecker incorrectly complains.
+        aList.sort()
+    if tag: print '%s...[' % tag
+    else:   print '['
+    for e in aList:
+        print '%s%s' % (indent,repr(e).strip())
+    print ']'
+
+printList = print_list
+
+def listToString(aList,tag=None,sort=False,indent=''):
+
+    if not aList:
+        if tag: return '%s...{}' % tag
+        else:   return '{}'
+    if sort:
+        aList = aList[:] # Sort a copy! Pychecker incorrectly complains.
+        aList.sort()
+    lines = ["%s%s" % (indent,repr(e).strip()) for e in aList]
+    s = '\n'.join(lines)
+    if tag:
+        return '[%s...\n%s\n]' % (tag,s)
+    else:
+        return '[%s]' % s
+#@nonl
+#@-node:ekr.20041126060136:print_list & listToString
+#@+node:ekr.20051006125633.1:bindShortcut
+def bindShortcut (self,pane,shortcut,command,commandName):
+    
+    '''Bind one shortcut from a menu table.'''
+    
+    k = self ; shortcut = str(shortcut)
+
+    if command.__name__ == 'leoCallback':
+        # Get the function wrapped by *this* leoCallback function.
+        func = k.leoCallbackDict.get(command)
+        commandName = k.inverseCommandsDict.get(func.__name__)
+        
+        # No need for a second layer of callback.
+        def keyCallback (event,func=command,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+    else:
+        def menuFuncCallback (event,command=command):
+            return command(event)
+
+        def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+        
+    return k.bindKey(pane,shortcut,keyCallback,commandName)
+#@nonl
+#@-node:ekr.20051006125633.1:bindShortcut
+#@+node:ekr.20051001050607:endCommand
+def endCommand (self,event,commandName,forceFocus=True):
+
+    '''Make sure Leo updates the widget following a command.
+    
+    Never changes the minibuffer label: individual commands must do that.
+    '''
+
+    k = self ; c = k.c ; w = event.widget
+    if g.app.quitting: return
+    
+    # The command may have closed the window, so this may fail.
+    try:
+        p = c.currentPosition()
+    except AttributeError:
+        return
+        
+    # Set the best possible undoType: prefer explicit commandName to k.commandName.
+    commandName = commandName or k.commandName or ''
+    k.commandName = k.commandName or commandName or ''
+    if commandName:
+        bodyCtrl = c.frame.body.bodyCtrl
+        if not k.inState():
+            __pychecker__ = '--no-classattr --no-objattrs'
+                # initAllEditCommanders *does* exist.
+            k.commandName = None
+            leoEditCommands.initAllEditCommanders(c)
+            try:
+                bodyCtrl.tag_delete('color')
+                bodyCtrl.tag_delete('color1')
+            except Exception:
+                pass
+        bodyCtrl.update_idletasks()
+        c.frame.body.onBodyChanged(p,undoType='Typing')
+
+    w.update_idletasks()
+#@nonl
+#@-node:ekr.20051001050607:endCommand
+#@-node:ekr.20051015123432:(Methods with pychecker problems)
 #@-node:ekr.20050921094025:4.4 To do
 #@+node:ekr.20050707081822:Top priorities (4.5 and beyond)
 #@+node:ekr.20050831131028:opml
@@ -4366,6 +4465,7 @@ def __init__(self):
         # 0: default behavior
         # 1: full traces in g.es_exception.
         # 2: call pdb.set_trace in g.es_exception, etc.
+    self.dialogs = 0 # Count of open dialogs.
     self.disableSave = False
     self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
     self.gui = None # The gui class.
@@ -4697,600 +4797,6 @@ self.write_strips_blank_lines = self.initBooleanConfigParam(
 My first idea was to do this in the body text setters.  However, this converts everything when reading any .leo file, and that is _very_ slow.  It also appears to be very dangerous.
 #@nonl
 #@-node:ekr.20040720105309:Notes
-#@+node:ekr.20031218072017.2772:readEndNode (4.x)
-def readEndNode (self,s,i,middle=False):
-    
-    """Handle end-of-node processing for @-others and @-ref sentinels."""
-
-    at = self ; c = self.c
-    
-    # End raw mode.
-    at.raw = False
-    
-    # Set the temporary body text.
-    s = ''.join(at.out)
-    s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
-
-    if at.importing:
-        at.t.bodyString = s
-    elif middle: 
-        pass # Middle sentinels never alter text.
-    else:
-        if hasattr(at.t,"tempBodyString") and s != at.t.tempBodyString:
-            old = at.t.tempBodyString
-        elif at.t.hasBody() and s != at.t.getBody():
-            old = at.t.getBody()
-        else:
-            old = None
-        # 9/4/04: Suppress this warning for the root: @first complicates matters.
-        if old and not g.app.unitTesting and at.t != at.root.t:
-            << indicate that the node has been changed >>
-        at.t.tempBodyString = s
-
-    # Indicate that the tnode has been set in the derived file.
-    at.t.setVisited()
-
-    # End the previous node sentinel.
-    at.indent = at.indentStack.pop()
-    at.out = at.outStack.pop()
-    at.t = at.tStack.pop()
-    if at.thinFile and not at.importing:
-        at.lastThinNode = at.thinNodeStack.pop()
-
-    at.popSentinelStack(endNode)
-#@nonl
-#@+node:ekr.20040904081433:<< indicate that the node has been changed >>
-if at.perfectImportRoot:
-    << bump at.correctedLines and tell about the correction >>
-    # p.setMarked()
-    at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
-    at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-    at.c.setChanged(True)
-else:
-    if not at.updateWarningGiven:
-        at.updateWarningGiven = True
-        # print "***",at.t,at.root.t
-        g.es("Warning: updating changed text in %s" %
-            (at.root.headString()),color="blue")
-    # g.es("old...\n%s\n" % old)
-    # g.es("new...\n%s\n" % s)
-    # Just set the dirty bit. Ancestors will be marked dirty later.
-    at.t.setDirty()
-    if 1: # We must avoid the full setChanged logic here!
-        c.changed = True
-    else: # Far too slow for mass changes.
-        at.c.setChanged(True)
-#@nonl
-#@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
-# Report the number of corrected nodes.
-at.correctedLines += 1
-
-found = False
-for p in at.perfectImportRoot.self_and_subtree_iter():
-    if p.v.t == at.t:
-        found = True ; break
-
-if found:
-    if 0: # Not needed: we mark all corrected nodes.
-        g.es("Correcting %s" % p.headString(),color="blue")
-    if 0: # For debugging.
-        print ; print '-' * 40
-        print "old",len(old)
-        for line in g.splitLines(old):
-            #line = line.replace(' ','< >').replace('\t','<TAB>')
-            print repr(str(line))
-        print ; print '-' * 40
-        print "new",len(s)
-        for line in g.splitLines(s):
-            #line = line.replace(' ','< >').replace('\t','<TAB>')
-            print repr(str(line))
-        print ; print '-' * 40
-else:
-    # This should never happen.
-    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
-#@nonl
-#@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
-#@-node:ekr.20040904081433:<< indicate that the node has been changed >>
-#@-node:ekr.20031218072017.2772:readEndNode (4.x)
-#@+node:ekr.20031218072017.1485:setTnodeText
-# This sets the text in the tnode from the given string.
-
-def setTnodeText (self,s,encoding="utf-8"):
-    
-    """Set the body text of a tnode to the given string."""
-    
-    s = g.toUnicode(s,encoding,reportErrors=True)
-    
-    if 0: # DANGEROUS:  This automatically converts everything when reading files.
-    
-        ## Self c does not exist yet.
-        option = c.config.trailing_body_newlines
-        
-        if option == "one":
-            s = s.rstrip() + '\n'
-        elif option == "zero":
-            s = s.rstrip()
-    
-    self.bodyString = s
-#@nonl
-#@-node:ekr.20031218072017.1485:setTnodeText
-#@+node:ekr.20031218072017.1319:(Key handlers)
-@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
-#@+node:ekr.20031218072017.1320:body key handlers
-@ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
-
-1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if so.  This is the clean and safe way.
-
-2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
-@c
-
-@others
-#@nonl
-#@+node:ekr.20031218072017.1321:idle_body_key & helpers
-def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
-    
-    """Update the body pane at idle time."""
-    
-    __pychecker__ = 'maxlines=500'
-
-    c = self.c
-    if not c: return "break"
-    if not p: return "break"
-    if not c.isCurrentPosition(p): return "break"
-    # g.trace(repr(ch))
-
-    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
-        return "break" # The hook claims to have handled the event.
-    body = p.bodyString()
-    if not newSel:
-        newSel = c.frame.body.getTextSelection()
-    if oldText != None:
-        s = oldText
-    else:
-        s = c.frame.body.getAllText()
-    << return if nothing has changed >>
-    << set removeTrailing >>
-    if ch in ('\t','\n','\r',chr(8)):
-        << handle special characters >>
-    << set s to widget text, removing trailing newlines if necessary >>
-    # g.trace(repr(ch),undoType)
-    if undoType:
-        if not oldText: oldText = body
-        newText = s
-        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
-    p.v.setTnodeText(s)
-    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
-    << recolor the body >>
-    if not c.changed:
-        c.setChanged(True)
-    << redraw the screen if necessary >>
-    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
-    return "break"
-#@nonl
-#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
-# Make sure we handle delete key properly.
-if ch not in ('\n','\r',chr(8)):
-
-    if s == body:
-        return "break"
-
-    # Do nothing for control characters.
-    if (ch == None or len(ch) == 0) and body == s[:-1]:
-        return "break"
-#@nonl
-#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
-#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
-@ Tk will add a newline only if:
-1. A real change has been made to the Tk.Text widget, and
-2. the change did _not_ result in the widget already containing a newline.
-
-It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
-@c
-new = s ; old = body
-
-if len(new) == 0 or new[-1] != '\n':
-    # There is no newline to remove.  Probably will never happen.
-    removeTrailing = False
-elif len(old) == 0:
-    # Ambigous case.  Formerly always returned False.
-    if new == "\n\n":
-        removeTrailing = True # Handle a very strange special case.
-    else:
-        removeTrailing = ch not in ('\r','\n')
-elif old == new[:-1]:
-    # A single trailing character has been added.
-    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
-else:
-    # The text didn't have a newline, and now it does.
-    # Moveover, some other change has been made to the text,
-    # So at worst we have misrepresented the user's intentions slightly.
-    removeTrailing = True
-
-if 0:
-    print removeTrailing
-    print repr(ch)
-    print repr(oldText)
-    print repr(old)
-    print repr(new)
-#@nonl
-#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
-#@+node:ekr.20050526080309:<< handle special characters >>
-d = g.scanDirectives(c,p) # Support @tab_width directive properly.
-tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
-
-if ch in ('\n','\r'):
-    # Do nothing if we are in @nocolor mode or if we are executing a Change command.
-    if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
-        removeTrailing = self.doAutoIndent(p,removeTrailing,tab_width,undoType)
-
-elif ch == '\t' and tab_width < 0:
-    # Do nothing if we are executing a Change command.
-    if undoType != "Change":
-        self.convertBlanksToTabs(tab_width)
-
-elif ch in (chr(8)) and tab_width < 0:
-    << handle backspace with negative tab_width >>
-#@nonl
-#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
-# Get the preceeding characters.
-prev   =c.frame.bodyCtrl.get("insert linestart","insert")
-allPrev=c.frame.bodyCtrl.get("1.0","insert")
-n = len(allPrev)
-try:
-    oldAllPrev = body[:n]
-    assert(allPrev==oldAllPrev)
-    deletedChar = body[n:n+1]
-except (IndexError,AssertionError):
-    deletedChar = None
-
-if deletedChar in (u' ',' '):
-    n = len(prev) ; w = abs(tab_width)
-    n2 = n % w # Delete up to n2 - 1 spaces.
-    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
-        count = 0
-        while n2 > 0:
-            n2 -= 1
-            ch = prev[n-count-1]
-            # g.trace(count,repr(ch))
-            if ch in (u' ',' '): count += 1
-            else: break
-        # g.trace(count,(n%w))
-        if count > 0:
-            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
-            newSel = c.frame.body.getTextSelection() # Fixes crasher in undo logic.
-#@nonl
-#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
-#@-node:ekr.20050526080309:<< handle special characters >>
-#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
-s = c.frame.body.getAllText()
-if len(s) > 0 and s[-1] == '\n' and removeTrailing:
-    s = s[:-1]
-    
-# Major change: 6/12/04
-if s == body:
-    # g.trace('no real change')
-    return "break"
-#@nonl
-#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
-#@+node:ekr.20031218072017.1327:<< recolor the body >>
-self.frame.scanForTabWidth(p)
-
-incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
-self.frame.body.recolor_now(p,incremental=incremental)
-
-self.forceFullRecolorFlag = False
-#@nonl
-#@-node:ekr.20031218072017.1327:<< recolor the body >>
-#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
-redraw_flag = False
-c.beginUpdate()
-try:
-    # Update dirty bits.
-    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-        redraw_flag = True
-    # Update icons.
-    val = p.computeIcon()
-    # During unit tests the node may not have been drawn,
-    # So p.v.iconVal may not exist yet.
-    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-        p.v.iconVal = val
-        redraw_flag = True
-finally:
-    c.endUpdate(redraw_flag) # redraw only if necessary
-#@nonl
-#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
-#@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
-def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
-    
-    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
-    
-    c = self.c
-    # Get the previous line.
-    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-    # g.trace(repr(s))
-    # Add the leading whitespace to the present line.
-    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
-    if s and len(s) > 0 and s[-1]==':':
-        # For Python: increase auto-indent after colons.
-        if self.colorizer.scanColorDirectives(p) == "python":
-            width += abs(tab_width)
-    if c.config.getBool("smart_auto_indent"):
-        # Added Nov 18 by David McNab, david@rebirthing.co.nz
-        # Determine if prev line has unclosed parens/brackets/braces
-        brackets = [width] ; tabex = 0
-        for i in range(0, len(s)):
-            if s[i] == '\t':
-                tabex += tab_width - 1
-            if s[i] in '([{':
-                brackets.append(i+tabex + 1)
-            elif s[i] in '}])' and len(brackets) > 1:
-                brackets.pop()
-        width = brackets.pop()
-        # end patch by David McNab
-    ws = g.computeLeadingWhitespace (width,tab_width)
-    if ws and len(ws) > 0:
-        c.frame.bodyCtrl.insert("insert", ws)
-        removeTrailing = False
-            
-    return removeTrailing
-#@nonl
-#@-node:ekr.20031218072017.1324:doAutoIndent (David McNab)
-#@+node:ekr.20031218072017.1325:convertBlanksToTabs
-def convertBlanksToTabs (self,tab_width):
-
-    c = self.c
-    
-    # Get the characters preceeding the tab.
-    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-    
-    if 1:
-        << convert tab no matter where it is >>
-    else:
-        << convert only leading tabs >>
-#@nonl
-#@+node:ekr.20050526081024:<< convert tab no matter where it is >>
-w = g.computeWidth(prev,tab_width)
-w2 = (abs(tab_width) - (w % abs(tab_width)))
-# g.trace("prev w:",w,"prev chars:",prev)
-c.frame.bodyCtrl.delete("insert -1c")
-c.frame.bodyCtrl.insert("insert",' ' * w2)
-#@nonl
-#@-node:ekr.20050526081024:<< convert tab no matter where it is >>
-#@+node:ekr.20050526081024.1:<< convert only leading tabs >>
-# Get the characters preceeding the tab.
-prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-
-# Do nothing if there are non-whitespace in prev:
-all_ws = True
-for ch in prev:
-    if ch != ' ' and ch != '\t':
-        all_ws = False
-if all_ws:
-    w = g.computeWidth(prev,tab_width)
-    w2 = (abs(tab_width) - (w % abs(tab_width)))
-    # g.trace("prev w:",w,"prev chars:",prev)
-    c.frame.bodyCtrl.delete("insert -1c")
-    c.frame.bodyCtrl.insert("insert",' ' * w2)
-#@nonl
-#@-node:ekr.20050526081024.1:<< convert only leading tabs >>
-#@-node:ekr.20031218072017.1325:convertBlanksToTabs
-#@-node:ekr.20031218072017.1321:idle_body_key & helpers
-#@+node:ekr.20031218072017.1329:onBodyChanged (tkTree)
-# Called by command handlers that have already changed the text.
-
-def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
-    
-    """Handle a change to the body pane."""
-    
-    c = self.c
-    if not p:
-        p = c.currentPosition()
-
-    if not oldSel:
-        oldSel = c.frame.body.getTextSelection()
-
-    self.c.frame.body.colorizer.interrupt()
-    self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
-#@nonl
-#@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
-#@+node:ekr.20031218072017.1330:onBodyKey
-def onBodyKey (self,event,undoType='Typing'):
-    
-    '''Handle any key press event in the body pane.'''
-
-    # New in Leo 4.4.  May be called with event = None
-    c = self.c
-    ch = (event and event.char) or ''
-    keysym = (event and event.keysym) or ''
-
-    # g.trace(repr(ch),repr(event.keysym))
-
-    # This translation is needed on MacOS.
-    if ch == '':
-        d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
-        ch = d.get(event.keysym,'')
-
-    oldSel = c.frame.body.getTextSelection()
-    
-    p = c.currentPosition()
-        
-    # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
-    self.c.frame.body.colorizer.interrupt()
-    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,ch)
-#@nonl
-#@+node:ekr.20040105223536:handleStatusLineKey
-def handleStatusLineKey (self,event):
-    
-    c = self.c ; frame = c.frame
-    ch = event.char ; keysym = event.keysym
-    keycode = event.keycode ; state = event.state
-
-    if 1: # ch and len(ch)>0:
-        << trace the key event >>
-
-    try:
-        status = self.keyStatus
-    except:
-        status = [] ; frame.clearStatusLine()
-    
-    for sym,name in (
-        ("Alt_L","Alt"),("Alt_R","Alt"),
-        ("Control_L","Control"),("Control_R","Control"),
-        ("Escape","Esc"),
-        ("Shift_L","Shift"), ("Shift_R","Shift")):
-        if keysym == sym:
-            if name not in status:
-                status.append(name)
-                frame.putStatusLine(name + ' ')
-            break
-    else:
-        status = [] ; frame.clearStatusLine()
-
-    self.keyStatus = status
-#@nonl
-#@+node:ekr.20040105223536.1:<< trace the key event >>
-try:    self.keyCount += 1
-except: self.keyCount  = 1
-
-printable = g.choose(ch == keysym and state < 4,"printable","")
-
-print "%4d %s %d %s %x %s" % (
-    self.keyCount,repr(ch),keycode,keysym,state,printable)
-#@nonl
-#@-node:ekr.20040105223536.1:<< trace the key event >>
-#@-node:ekr.20040105223536:handleStatusLineKey
-#@-node:ekr.20031218072017.1330:onBodyKey
-#@+node:ekr.20031218072017.1331:onBodyWillChange
-# Called by command handlers that change the text just before idle time.
-
-def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
-    
-    """Queue the body changed idle handler."""
-    
-    c = self.c
-
-    if not oldSel:
-        oldSel = c.frame.body.getTextSelection()
-
-    if not p:
-        p = c.currentPosition()
-
-    self.c.frame.body.colorizer.interrupt()
-    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
-#@nonl
-#@-node:ekr.20031218072017.1331:onBodyWillChange
-#@-node:ekr.20031218072017.1320:body key handlers
-#@+node:ekr.20040803072955.91:idle_head_key
-def idle_head_key (self,p,ch=None):
-    
-    """Update headline text at idle time."""
-    
-    c = self.c ; u = c.undoer
-    
-    # g.trace(p.headString(),'isCurrent',p.isCurrentPosition())
-
-    if not p or not p.isCurrentPosition():
-        return "break"
-
-    edit_text = self.edit_text(p)
-    index = edit_text.index("insert")
-
-    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
-        return "break" # The hook claims to have handled the event.
-        
-    head = g.toUnicode(p.headString() or u'',"utf-8")
-    done = ch in ('\r','\n')
-    if done:
-        << set the widget text to head >>
-    << set s to the widget text >>
-    changed = s != head
-    if changed:
-        undoData = u.beforeChangeNodeContents(p)
-        << update p >>
-        u.afterChangeNodeContents(p,'Change Headline',undoData,dirtyVnodeList=dirtyVnodeList)
-    if done or changed:
-        << reconfigure p and all nodes joined to p >>
-        << update the screen >>
-
-    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
-    return "break"
-#@nonl
-#@+node:ekr.20040803072955.93:<< set the widget text to head >>
-self.setText(edit_text,head)
-edit_text.mark_set("insert",index)
-#@nonl
-#@-node:ekr.20040803072955.93:<< set the widget text to head >>
-#@+node:ekr.20040803072955.94:<< set s to the widget text >>
-s = edit_text.get("1.0","end")
-
-# Don't truncate if the user is hitting return.
-# That should just end editing.
-if 1:
-    # Truncate headline text to workaround Tk problems...
-    # Another kludge: remove one or two trailing newlines before warning of truncation.
-    if s and s[-1] == '\n': s = s[:-1]
-    if s and s[-1] == '\n': s = s[:-1]
-    i = s.find('\n')
-    if i > -1:
-        # g.trace(i,len(s),repr(s))
-        g.es("Truncating headline to one line",color="blue")
-        s = s[:i]
-    limit = 1000
-    if len(s) > limit:
-        g.es("Truncating headline to %d characters" % (limit),color="blue")
-        s = s[:limit]
-
-s = g.toUnicode(s,g.app.tkEncoding)
-
-if not s:
-    s = u""
-    
-if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
-    s = s.replace('\n','')
-    s = s.replace('\r','')
-#@nonl
-#@-node:ekr.20040803072955.94:<< set s to the widget text >>
-#@+node:ekr.20040803072955.95:<< update p >>
-c.beginUpdate()
-try: # In update...
-    # Update changed bit.
-    if not c.changed: c.setChanged(True)
-    # We must call p.setDirty even if p is dirty!
-    dirtyVnodeList = p.setDirty()
-    # Update p.
-    p.initHeadString(s)
-    self.setText(edit_text,s)
-    edit_text.mark_set("insert",index)
-finally:
-    c.endUpdate(False) # do not redraw now.
-#@nonl
-#@-node:ekr.20040803072955.95:<< update p >>
-#@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
-# Reconfigure p's headline.
-if done:
-    self.setDisabledLabelState(p)
-
-edit_text.configure(width=self.headWidth(p))
-#@nonl
-#@-node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
-#@+node:ekr.20040803072955.97:<< update the screen >>
-if done:
-    # g.trace("done")
-    c.beginUpdate()
-    try:
-        self.endEditLabel()
-    finally:
-        c.endUpdate()
-
-elif changed:
-    # g.trace("changed")
-    # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
-    # Redrawing the whole screen now messes up the cursor in the headline.
-    self.drawIcon(p) # just redraw the icon.
-#@nonl
-#@-node:ekr.20040803072955.97:<< update the screen >>
-#@-node:ekr.20040803072955.91:idle_head_key
-#@-node:ekr.20031218072017.1319:(Key handlers)
 #@-node:ekr.20040718050922:(trailing_body_newlines option)
 #@+node:ekr.20040720075446.1:(write_strips_blank_lines option)
 #@+node:ekr.20031218072017.2134:putCodeLine
@@ -6943,6 +6449,7 @@ def __init__(self):
         # 0: default behavior
         # 1: full traces in g.es_exception.
         # 2: call pdb.set_trace in g.es_exception, etc.
+    self.dialogs = 0 # Count of open dialogs.
     self.disableSave = False
     self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
     self.gui = None # The gui class.
@@ -7274,600 +6781,6 @@ self.write_strips_blank_lines = self.initBooleanConfigParam(
 My first idea was to do this in the body text setters.  However, this converts everything when reading any .leo file, and that is _very_ slow.  It also appears to be very dangerous.
 #@nonl
 #@-node:ekr.20040720105309:Notes
-#@+node:ekr.20031218072017.2772:readEndNode (4.x)
-def readEndNode (self,s,i,middle=False):
-    
-    """Handle end-of-node processing for @-others and @-ref sentinels."""
-
-    at = self ; c = self.c
-    
-    # End raw mode.
-    at.raw = False
-    
-    # Set the temporary body text.
-    s = ''.join(at.out)
-    s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
-
-    if at.importing:
-        at.t.bodyString = s
-    elif middle: 
-        pass # Middle sentinels never alter text.
-    else:
-        if hasattr(at.t,"tempBodyString") and s != at.t.tempBodyString:
-            old = at.t.tempBodyString
-        elif at.t.hasBody() and s != at.t.getBody():
-            old = at.t.getBody()
-        else:
-            old = None
-        # 9/4/04: Suppress this warning for the root: @first complicates matters.
-        if old and not g.app.unitTesting and at.t != at.root.t:
-            << indicate that the node has been changed >>
-        at.t.tempBodyString = s
-
-    # Indicate that the tnode has been set in the derived file.
-    at.t.setVisited()
-
-    # End the previous node sentinel.
-    at.indent = at.indentStack.pop()
-    at.out = at.outStack.pop()
-    at.t = at.tStack.pop()
-    if at.thinFile and not at.importing:
-        at.lastThinNode = at.thinNodeStack.pop()
-
-    at.popSentinelStack(endNode)
-#@nonl
-#@+node:ekr.20040904081433:<< indicate that the node has been changed >>
-if at.perfectImportRoot:
-    << bump at.correctedLines and tell about the correction >>
-    # p.setMarked()
-    at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
-    at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-    at.c.setChanged(True)
-else:
-    if not at.updateWarningGiven:
-        at.updateWarningGiven = True
-        # print "***",at.t,at.root.t
-        g.es("Warning: updating changed text in %s" %
-            (at.root.headString()),color="blue")
-    # g.es("old...\n%s\n" % old)
-    # g.es("new...\n%s\n" % s)
-    # Just set the dirty bit. Ancestors will be marked dirty later.
-    at.t.setDirty()
-    if 1: # We must avoid the full setChanged logic here!
-        c.changed = True
-    else: # Far too slow for mass changes.
-        at.c.setChanged(True)
-#@nonl
-#@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
-# Report the number of corrected nodes.
-at.correctedLines += 1
-
-found = False
-for p in at.perfectImportRoot.self_and_subtree_iter():
-    if p.v.t == at.t:
-        found = True ; break
-
-if found:
-    if 0: # Not needed: we mark all corrected nodes.
-        g.es("Correcting %s" % p.headString(),color="blue")
-    if 0: # For debugging.
-        print ; print '-' * 40
-        print "old",len(old)
-        for line in g.splitLines(old):
-            #line = line.replace(' ','< >').replace('\t','<TAB>')
-            print repr(str(line))
-        print ; print '-' * 40
-        print "new",len(s)
-        for line in g.splitLines(s):
-            #line = line.replace(' ','< >').replace('\t','<TAB>')
-            print repr(str(line))
-        print ; print '-' * 40
-else:
-    # This should never happen.
-    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
-#@nonl
-#@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
-#@-node:ekr.20040904081433:<< indicate that the node has been changed >>
-#@-node:ekr.20031218072017.2772:readEndNode (4.x)
-#@+node:ekr.20031218072017.1485:setTnodeText
-# This sets the text in the tnode from the given string.
-
-def setTnodeText (self,s,encoding="utf-8"):
-    
-    """Set the body text of a tnode to the given string."""
-    
-    s = g.toUnicode(s,encoding,reportErrors=True)
-    
-    if 0: # DANGEROUS:  This automatically converts everything when reading files.
-    
-        ## Self c does not exist yet.
-        option = c.config.trailing_body_newlines
-        
-        if option == "one":
-            s = s.rstrip() + '\n'
-        elif option == "zero":
-            s = s.rstrip()
-    
-    self.bodyString = s
-#@nonl
-#@-node:ekr.20031218072017.1485:setTnodeText
-#@+node:ekr.20031218072017.1319:(Key handlers)
-@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
-#@+node:ekr.20031218072017.1320:body key handlers
-@ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
-
-1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if so.  This is the clean and safe way.
-
-2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
-@c
-
-@others
-#@nonl
-#@+node:ekr.20031218072017.1321:idle_body_key & helpers
-def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
-    
-    """Update the body pane at idle time."""
-    
-    __pychecker__ = 'maxlines=500'
-
-    c = self.c
-    if not c: return "break"
-    if not p: return "break"
-    if not c.isCurrentPosition(p): return "break"
-    # g.trace(repr(ch))
-
-    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
-        return "break" # The hook claims to have handled the event.
-    body = p.bodyString()
-    if not newSel:
-        newSel = c.frame.body.getTextSelection()
-    if oldText != None:
-        s = oldText
-    else:
-        s = c.frame.body.getAllText()
-    << return if nothing has changed >>
-    << set removeTrailing >>
-    if ch in ('\t','\n','\r',chr(8)):
-        << handle special characters >>
-    << set s to widget text, removing trailing newlines if necessary >>
-    # g.trace(repr(ch),undoType)
-    if undoType:
-        if not oldText: oldText = body
-        newText = s
-        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
-    p.v.setTnodeText(s)
-    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
-    << recolor the body >>
-    if not c.changed:
-        c.setChanged(True)
-    << redraw the screen if necessary >>
-    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
-    return "break"
-#@nonl
-#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
-# Make sure we handle delete key properly.
-if ch not in ('\n','\r',chr(8)):
-
-    if s == body:
-        return "break"
-
-    # Do nothing for control characters.
-    if (ch == None or len(ch) == 0) and body == s[:-1]:
-        return "break"
-#@nonl
-#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
-#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
-@ Tk will add a newline only if:
-1. A real change has been made to the Tk.Text widget, and
-2. the change did _not_ result in the widget already containing a newline.
-
-It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
-@c
-new = s ; old = body
-
-if len(new) == 0 or new[-1] != '\n':
-    # There is no newline to remove.  Probably will never happen.
-    removeTrailing = False
-elif len(old) == 0:
-    # Ambigous case.  Formerly always returned False.
-    if new == "\n\n":
-        removeTrailing = True # Handle a very strange special case.
-    else:
-        removeTrailing = ch not in ('\r','\n')
-elif old == new[:-1]:
-    # A single trailing character has been added.
-    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
-else:
-    # The text didn't have a newline, and now it does.
-    # Moveover, some other change has been made to the text,
-    # So at worst we have misrepresented the user's intentions slightly.
-    removeTrailing = True
-
-if 0:
-    print removeTrailing
-    print repr(ch)
-    print repr(oldText)
-    print repr(old)
-    print repr(new)
-#@nonl
-#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
-#@+node:ekr.20050526080309:<< handle special characters >>
-d = g.scanDirectives(c,p) # Support @tab_width directive properly.
-tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
-
-if ch in ('\n','\r'):
-    # Do nothing if we are in @nocolor mode or if we are executing a Change command.
-    if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
-        removeTrailing = self.doAutoIndent(p,removeTrailing,tab_width,undoType)
-
-elif ch == '\t' and tab_width < 0:
-    # Do nothing if we are executing a Change command.
-    if undoType != "Change":
-        self.convertBlanksToTabs(tab_width)
-
-elif ch in (chr(8)) and tab_width < 0:
-    << handle backspace with negative tab_width >>
-#@nonl
-#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
-# Get the preceeding characters.
-prev   =c.frame.bodyCtrl.get("insert linestart","insert")
-allPrev=c.frame.bodyCtrl.get("1.0","insert")
-n = len(allPrev)
-try:
-    oldAllPrev = body[:n]
-    assert(allPrev==oldAllPrev)
-    deletedChar = body[n:n+1]
-except (IndexError,AssertionError):
-    deletedChar = None
-
-if deletedChar in (u' ',' '):
-    n = len(prev) ; w = abs(tab_width)
-    n2 = n % w # Delete up to n2 - 1 spaces.
-    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
-        count = 0
-        while n2 > 0:
-            n2 -= 1
-            ch = prev[n-count-1]
-            # g.trace(count,repr(ch))
-            if ch in (u' ',' '): count += 1
-            else: break
-        # g.trace(count,(n%w))
-        if count > 0:
-            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
-            newSel = c.frame.body.getTextSelection() # Fixes crasher in undo logic.
-#@nonl
-#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
-#@-node:ekr.20050526080309:<< handle special characters >>
-#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
-s = c.frame.body.getAllText()
-if len(s) > 0 and s[-1] == '\n' and removeTrailing:
-    s = s[:-1]
-    
-# Major change: 6/12/04
-if s == body:
-    # g.trace('no real change')
-    return "break"
-#@nonl
-#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
-#@+node:ekr.20031218072017.1327:<< recolor the body >>
-self.frame.scanForTabWidth(p)
-
-incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
-self.frame.body.recolor_now(p,incremental=incremental)
-
-self.forceFullRecolorFlag = False
-#@nonl
-#@-node:ekr.20031218072017.1327:<< recolor the body >>
-#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
-redraw_flag = False
-c.beginUpdate()
-try:
-    # Update dirty bits.
-    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-        redraw_flag = True
-    # Update icons.
-    val = p.computeIcon()
-    # During unit tests the node may not have been drawn,
-    # So p.v.iconVal may not exist yet.
-    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-        p.v.iconVal = val
-        redraw_flag = True
-finally:
-    c.endUpdate(redraw_flag) # redraw only if necessary
-#@nonl
-#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
-#@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
-def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
-    
-    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
-    
-    c = self.c
-    # Get the previous line.
-    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-    # g.trace(repr(s))
-    # Add the leading whitespace to the present line.
-    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
-    if s and len(s) > 0 and s[-1]==':':
-        # For Python: increase auto-indent after colons.
-        if self.colorizer.scanColorDirectives(p) == "python":
-            width += abs(tab_width)
-    if c.config.getBool("smart_auto_indent"):
-        # Added Nov 18 by David McNab, david@rebirthing.co.nz
-        # Determine if prev line has unclosed parens/brackets/braces
-        brackets = [width] ; tabex = 0
-        for i in range(0, len(s)):
-            if s[i] == '\t':
-                tabex += tab_width - 1
-            if s[i] in '([{':
-                brackets.append(i+tabex + 1)
-            elif s[i] in '}])' and len(brackets) > 1:
-                brackets.pop()
-        width = brackets.pop()
-        # end patch by David McNab
-    ws = g.computeLeadingWhitespace (width,tab_width)
-    if ws and len(ws) > 0:
-        c.frame.bodyCtrl.insert("insert", ws)
-        removeTrailing = False
-            
-    return removeTrailing
-#@nonl
-#@-node:ekr.20031218072017.1324:doAutoIndent (David McNab)
-#@+node:ekr.20031218072017.1325:convertBlanksToTabs
-def convertBlanksToTabs (self,tab_width):
-
-    c = self.c
-    
-    # Get the characters preceeding the tab.
-    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-    
-    if 1:
-        << convert tab no matter where it is >>
-    else:
-        << convert only leading tabs >>
-#@nonl
-#@+node:ekr.20050526081024:<< convert tab no matter where it is >>
-w = g.computeWidth(prev,tab_width)
-w2 = (abs(tab_width) - (w % abs(tab_width)))
-# g.trace("prev w:",w,"prev chars:",prev)
-c.frame.bodyCtrl.delete("insert -1c")
-c.frame.bodyCtrl.insert("insert",' ' * w2)
-#@nonl
-#@-node:ekr.20050526081024:<< convert tab no matter where it is >>
-#@+node:ekr.20050526081024.1:<< convert only leading tabs >>
-# Get the characters preceeding the tab.
-prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-
-# Do nothing if there are non-whitespace in prev:
-all_ws = True
-for ch in prev:
-    if ch != ' ' and ch != '\t':
-        all_ws = False
-if all_ws:
-    w = g.computeWidth(prev,tab_width)
-    w2 = (abs(tab_width) - (w % abs(tab_width)))
-    # g.trace("prev w:",w,"prev chars:",prev)
-    c.frame.bodyCtrl.delete("insert -1c")
-    c.frame.bodyCtrl.insert("insert",' ' * w2)
-#@nonl
-#@-node:ekr.20050526081024.1:<< convert only leading tabs >>
-#@-node:ekr.20031218072017.1325:convertBlanksToTabs
-#@-node:ekr.20031218072017.1321:idle_body_key & helpers
-#@+node:ekr.20031218072017.1329:onBodyChanged (tkTree)
-# Called by command handlers that have already changed the text.
-
-def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
-    
-    """Handle a change to the body pane."""
-    
-    c = self.c
-    if not p:
-        p = c.currentPosition()
-
-    if not oldSel:
-        oldSel = c.frame.body.getTextSelection()
-
-    self.c.frame.body.colorizer.interrupt()
-    self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
-#@nonl
-#@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
-#@+node:ekr.20031218072017.1330:onBodyKey
-def onBodyKey (self,event,undoType='Typing'):
-    
-    '''Handle any key press event in the body pane.'''
-
-    # New in Leo 4.4.  May be called with event = None
-    c = self.c
-    ch = (event and event.char) or ''
-    keysym = (event and event.keysym) or ''
-
-    # g.trace(repr(ch),repr(event.keysym))
-
-    # This translation is needed on MacOS.
-    if ch == '':
-        d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
-        ch = d.get(event.keysym,'')
-
-    oldSel = c.frame.body.getTextSelection()
-    
-    p = c.currentPosition()
-        
-    # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
-    self.c.frame.body.colorizer.interrupt()
-    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,ch)
-#@nonl
-#@+node:ekr.20040105223536:handleStatusLineKey
-def handleStatusLineKey (self,event):
-    
-    c = self.c ; frame = c.frame
-    ch = event.char ; keysym = event.keysym
-    keycode = event.keycode ; state = event.state
-
-    if 1: # ch and len(ch)>0:
-        << trace the key event >>
-
-    try:
-        status = self.keyStatus
-    except:
-        status = [] ; frame.clearStatusLine()
-    
-    for sym,name in (
-        ("Alt_L","Alt"),("Alt_R","Alt"),
-        ("Control_L","Control"),("Control_R","Control"),
-        ("Escape","Esc"),
-        ("Shift_L","Shift"), ("Shift_R","Shift")):
-        if keysym == sym:
-            if name not in status:
-                status.append(name)
-                frame.putStatusLine(name + ' ')
-            break
-    else:
-        status = [] ; frame.clearStatusLine()
-
-    self.keyStatus = status
-#@nonl
-#@+node:ekr.20040105223536.1:<< trace the key event >>
-try:    self.keyCount += 1
-except: self.keyCount  = 1
-
-printable = g.choose(ch == keysym and state < 4,"printable","")
-
-print "%4d %s %d %s %x %s" % (
-    self.keyCount,repr(ch),keycode,keysym,state,printable)
-#@nonl
-#@-node:ekr.20040105223536.1:<< trace the key event >>
-#@-node:ekr.20040105223536:handleStatusLineKey
-#@-node:ekr.20031218072017.1330:onBodyKey
-#@+node:ekr.20031218072017.1331:onBodyWillChange
-# Called by command handlers that change the text just before idle time.
-
-def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
-    
-    """Queue the body changed idle handler."""
-    
-    c = self.c
-
-    if not oldSel:
-        oldSel = c.frame.body.getTextSelection()
-
-    if not p:
-        p = c.currentPosition()
-
-    self.c.frame.body.colorizer.interrupt()
-    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
-#@nonl
-#@-node:ekr.20031218072017.1331:onBodyWillChange
-#@-node:ekr.20031218072017.1320:body key handlers
-#@+node:ekr.20040803072955.91:idle_head_key
-def idle_head_key (self,p,ch=None):
-    
-    """Update headline text at idle time."""
-    
-    c = self.c ; u = c.undoer
-    
-    # g.trace(p.headString(),'isCurrent',p.isCurrentPosition())
-
-    if not p or not p.isCurrentPosition():
-        return "break"
-
-    edit_text = self.edit_text(p)
-    index = edit_text.index("insert")
-
-    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
-        return "break" # The hook claims to have handled the event.
-        
-    head = g.toUnicode(p.headString() or u'',"utf-8")
-    done = ch in ('\r','\n')
-    if done:
-        << set the widget text to head >>
-    << set s to the widget text >>
-    changed = s != head
-    if changed:
-        undoData = u.beforeChangeNodeContents(p)
-        << update p >>
-        u.afterChangeNodeContents(p,'Change Headline',undoData,dirtyVnodeList=dirtyVnodeList)
-    if done or changed:
-        << reconfigure p and all nodes joined to p >>
-        << update the screen >>
-
-    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
-    return "break"
-#@nonl
-#@+node:ekr.20040803072955.93:<< set the widget text to head >>
-self.setText(edit_text,head)
-edit_text.mark_set("insert",index)
-#@nonl
-#@-node:ekr.20040803072955.93:<< set the widget text to head >>
-#@+node:ekr.20040803072955.94:<< set s to the widget text >>
-s = edit_text.get("1.0","end")
-
-# Don't truncate if the user is hitting return.
-# That should just end editing.
-if 1:
-    # Truncate headline text to workaround Tk problems...
-    # Another kludge: remove one or two trailing newlines before warning of truncation.
-    if s and s[-1] == '\n': s = s[:-1]
-    if s and s[-1] == '\n': s = s[:-1]
-    i = s.find('\n')
-    if i > -1:
-        # g.trace(i,len(s),repr(s))
-        g.es("Truncating headline to one line",color="blue")
-        s = s[:i]
-    limit = 1000
-    if len(s) > limit:
-        g.es("Truncating headline to %d characters" % (limit),color="blue")
-        s = s[:limit]
-
-s = g.toUnicode(s,g.app.tkEncoding)
-
-if not s:
-    s = u""
-    
-if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
-    s = s.replace('\n','')
-    s = s.replace('\r','')
-#@nonl
-#@-node:ekr.20040803072955.94:<< set s to the widget text >>
-#@+node:ekr.20040803072955.95:<< update p >>
-c.beginUpdate()
-try: # In update...
-    # Update changed bit.
-    if not c.changed: c.setChanged(True)
-    # We must call p.setDirty even if p is dirty!
-    dirtyVnodeList = p.setDirty()
-    # Update p.
-    p.initHeadString(s)
-    self.setText(edit_text,s)
-    edit_text.mark_set("insert",index)
-finally:
-    c.endUpdate(False) # do not redraw now.
-#@nonl
-#@-node:ekr.20040803072955.95:<< update p >>
-#@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
-# Reconfigure p's headline.
-if done:
-    self.setDisabledLabelState(p)
-
-edit_text.configure(width=self.headWidth(p))
-#@nonl
-#@-node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
-#@+node:ekr.20040803072955.97:<< update the screen >>
-if done:
-    # g.trace("done")
-    c.beginUpdate()
-    try:
-        self.endEditLabel()
-    finally:
-        c.endUpdate()
-
-elif changed:
-    # g.trace("changed")
-    # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
-    # Redrawing the whole screen now messes up the cursor in the headline.
-    self.drawIcon(p) # just redraw the icon.
-#@nonl
-#@-node:ekr.20040803072955.97:<< update the screen >>
-#@-node:ekr.20040803072955.91:idle_head_key
-#@-node:ekr.20031218072017.1319:(Key handlers)
 #@-node:ekr.20040718050922:(trailing_body_newlines option)
 #@+node:ekr.20040720075446.1:(write_strips_blank_lines option)
 #@+node:ekr.20031218072017.2134:putCodeLine
@@ -9767,7 +8680,7 @@ def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
     if setSel and oldSel:
         body.setTextSelection(oldSel)
 
-    # This handles the undo by calling setUndoTypingParams (in idle_body_key).
+    # This handles the undo.
     body.onBodyChanged(p,undoType,oldSel=oldSel,oldYview=oldYview)
 
     # Update the changed mark and icon.
@@ -10037,6 +8950,7 @@ def __init__(self):
         # 0: default behavior
         # 1: full traces in g.es_exception.
         # 2: call pdb.set_trace in g.es_exception, etc.
+    self.dialogs = 0 # Count of open dialogs.
     self.disableSave = False
     self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
     self.gui = None # The gui class.
@@ -12301,18 +11215,8 @@ def copyText (self,fromMinibuffer=False):
     '''Invoked from the mini-buffer and from shortcuts.'''
     
     f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
     
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
-
-    # These two branches used to be different, an might be so again.
-    if isBody:
-        w.event_generate(g.virtual_event_name("Copy"))
-    elif fromMinibuffer:
-        pass
-    else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
+    if not fromMinibuffer:
         w.event_generate(g.virtual_event_name("Copy"))
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
@@ -12333,7 +11237,7 @@ def cutText (self,fromMinibuffer=False):
         # New: Do call w.event_generate.
         w.event_generate(g.virtual_event_name("Cut"))
         if not fromMinibuffer:
-            f.tree.onHeadChanged(c.currentPosition())
+            f.tree.onHeadChanged(c.currentPosition(),'Cut')
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -12341,20 +11245,18 @@ def pasteText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    f = self ; c = f.c
+    w = f.getFocus() ; name = w._name
     
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
-
-    if isBody:
+    if fromMinibuffer:
         w.event_generate(g.virtual_event_name("Paste"))
-    elif fromMinibuffer:
-        pass
-    else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
+    elif name.startswith('body'):
         w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition())
+    elif name.startswith('head'):
+        # I have no idea why the paste gets done automatically.
+        # There are Tk bugs lurking here...
+        f.tree.updateHead(event=None,w=w,undoType='Paste')
+    else: pass
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
 #@+node:ekr.20051011072903.1:OnCopyFromMenu
@@ -12378,9 +11280,7 @@ def OnCopyFromMenu (self):
 def OnCutFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
-    
+
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
 
@@ -12389,15 +11289,13 @@ def OnCutFromMenu (self):
     else:
         # Necessary
         w.event_generate(g.virtual_event_name("Cut"))
-        f.tree.onHeadChanged(c.currentPosition())
+        f.tree.onHeadChanged(c.currentPosition(),'Cut')
 #@nonl
 #@-node:ekr.20051011072049.1:OnCutFromMenu
 #@+node:ekr.20051011072903.4:OnPasteFromMenu
 def OnPasteFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
     
     f = self ; c = f.c ; w = f.getFocus()
     w = self.getFocus()
@@ -12407,7 +11305,7 @@ def OnPasteFromMenu (self):
         w.event_generate(g.virtual_event_name("Paste"))
     else:
         w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition())
+        f.tree.onHeadChanged(c.currentPosition(),'Paste')
 #@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -15613,18 +14511,8 @@ def copyText (self,fromMinibuffer=False):
     '''Invoked from the mini-buffer and from shortcuts.'''
     
     f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
     
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
-
-    # These two branches used to be different, an might be so again.
-    if isBody:
-        w.event_generate(g.virtual_event_name("Copy"))
-    elif fromMinibuffer:
-        pass
-    else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
+    if not fromMinibuffer:
         w.event_generate(g.virtual_event_name("Copy"))
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
@@ -15645,7 +14533,7 @@ def cutText (self,fromMinibuffer=False):
         # New: Do call w.event_generate.
         w.event_generate(g.virtual_event_name("Cut"))
         if not fromMinibuffer:
-            f.tree.onHeadChanged(c.currentPosition())
+            f.tree.onHeadChanged(c.currentPosition(),'Cut')
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -15653,20 +14541,18 @@ def pasteText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    f = self ; c = f.c
+    w = f.getFocus() ; name = w._name
     
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
-
-    if isBody:
+    if fromMinibuffer:
         w.event_generate(g.virtual_event_name("Paste"))
-    elif fromMinibuffer:
-        pass
-    else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
+    elif name.startswith('body'):
         w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition())
+    elif name.startswith('head'):
+        # I have no idea why the paste gets done automatically.
+        # There are Tk bugs lurking here...
+        f.tree.updateHead(event=None,w=w,undoType='Paste')
+    else: pass
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
 #@+node:ekr.20051011072903.1:OnCopyFromMenu
@@ -15690,9 +14576,7 @@ def OnCopyFromMenu (self):
 def OnCutFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
-    
+
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
 
@@ -15701,15 +14585,13 @@ def OnCutFromMenu (self):
     else:
         # Necessary
         w.event_generate(g.virtual_event_name("Cut"))
-        f.tree.onHeadChanged(c.currentPosition())
+        f.tree.onHeadChanged(c.currentPosition(),'Cut')
 #@nonl
 #@-node:ekr.20051011072049.1:OnCutFromMenu
 #@+node:ekr.20051011072903.4:OnPasteFromMenu
 def OnPasteFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
     
     f = self ; c = f.c ; w = f.getFocus()
     w = self.getFocus()
@@ -15719,7 +14601,7 @@ def OnPasteFromMenu (self):
         w.event_generate(g.virtual_event_name("Paste"))
     else:
         w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition())
+        f.tree.onHeadChanged(c.currentPosition(),'Paste')
 #@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)

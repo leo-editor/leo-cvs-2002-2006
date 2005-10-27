@@ -1062,13 +1062,13 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051024205040.18"><vh>readLocalDictionary</vh></v>
 <v t="ekr.20051024205040.19"><vh>setLocalDictionary</vh></v>
 </v>
-<v t="ekr.20051024205040.20" a="E"><vh>class spellDialog (leoFind.leoFind)</vh>
-<v t="ekr.20051024205040.21" a="E"><vh>Birth &amp; death</vh>
+<v t="ekr.20051024205040.20"><vh>class spellDialog (leoFind.leoFind)</vh>
+<v t="ekr.20051024205040.21"><vh>Birth &amp; death</vh>
 <v t="ekr.20051024205040.22"><vh>spellTab.__init__</vh></v>
 <v t="ekr.20051024205040.23"><vh>init</vh></v>
-<v t="ekr.20051024205040.25" a="E"><vh>createTab</vh>
+<v t="ekr.20051024205040.25"><vh>createTab</vh>
 <v t="ekr.20051024205040.26"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
-<v t="ekr.20051024205040.27" a="E"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
+<v t="ekr.20051024205040.27"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="ekr.20051024205040.28"><vh>Event handlers (not used)</vh>
@@ -1091,13 +1091,13 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20051024205040.43"><vh>find</vh></v>
 <v t="ekr.20051024205040.44"><vh>ignore</vh></v>
 </v>
-<v t="ekr.20051024205040.45" a="E"><vh>Helpers</vh>
+<v t="ekr.20051024205040.45"><vh>Helpers</vh>
 <v t="ekr.20051024205040.46"><vh>bringToFront</vh></v>
 <v t="ekr.20051024205040.47"><vh>fillbox</vh></v>
 <v t="ekr.20051024205040.48"><vh>findNextMisspelledWord</vh>
 <v t="ekr.20051024205040.49"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051024205040.50" a="E"><vh>findNextWord</vh></v>
+<v t="ekr.20051024205040.50"><vh>findNextWord</vh></v>
 <v t="ekr.20051024205040.51"><vh>getSuggestion</vh></v>
 <v t="ekr.20051024205040.52"><vh>onMap</vh></v>
 <v t="ekr.20051024205040.53"><vh>onSelectListBox</vh></v>
@@ -1593,6 +1593,13 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050911092707.1"><vh>unique</vh></v>
 <v t="ekr.20050803134436.1"><vh>valIsPossible</vh></v>
 </v>
+</v>
+</v>
+<v t="ekr.20051025070722.1"><vh>Runniung tcl scripts from the body pane</vh>
+<v t="ekr.20051024223801"><vh>run tcl </vh></v>
+<v t="ekr.20051024223801.1"><vh>My first tcl script</vh></v>
+<v t="ekr.20051025115413"><vh>My second tcl scrip, organized with noweb markup</vh>
+<v t="ekr.20051025115413.1"><vh>the actual script</vh></v>
 </v>
 </v>
 </v>
@@ -2456,13 +2463,8 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
-<v t="ekr.20051025070722.1" a="E"><vh>Runniung tcl scripts from the body pane</vh>
-<v t="ekr.20051024223801" a="TV"><vh>run tcl </vh></v>
-<v t="ekr.20051024223801.1"><vh>My first tcl script</vh></v>
-<v t="ekr.20051025115413" a="E"><vh>My second tcl scrip, organized with noweb markup</vh>
-<v t="ekr.20051025115413.1"><vh>the actual script</vh></v>
-</v>
-</v>
+<v t="ekr.20051025153329"><vh>Handling tabs, backspaces</vh></v>
+<v t="ekr.20051027052216" a="TV"><vh>a</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -3170,7 +3172,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -9796,7 +9798,6 @@ print "after"</t>
 src\\leo.py</t>
 <t tx="ekr.20040831101747"># Apparently these file are fine when they are written.
 # The problem comes later in the distribution process.
-
 
 def checkLinuxLineEndings(filename):
     
@@ -24083,5 +24084,11 @@ return [expr $x*10]</t>
 <t tx="ekr.20051025115413.1"># This is a comment
 set x 50 +
 return [expr $x*10]</t>
+<t tx="ekr.20051025153329">@language python
+@tabwidth -4
+
+---*---*---*
+ab</t>
+<t tx="ekr.20051027052216">vvv</t>
 </tnodes>
 </leo_file>

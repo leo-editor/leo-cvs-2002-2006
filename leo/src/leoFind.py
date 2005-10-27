@@ -786,7 +786,7 @@ class leoFind:
             return pos, newpos
     #@nonl
     #@-node:ekr.20031218072017.3077:search
-    #@+node:ekr.20031218072017.3081:selectNextVnode
+    #@+node:ekr.20031218072017.3081:selectNextPosition
     # Selects the next node to be searched.
     
     def selectNextPosition(self):
@@ -859,7 +859,7 @@ class leoFind:
             self.initNextText()
         return p
     #@nonl
-    #@-node:ekr.20031218072017.3081:selectNextVnode
+    #@-node:ekr.20031218072017.3081:selectNextPosition
     #@-node:ekr.20031218072017.3067:Find/change utils
     #@+node:ekr.20031218072017.3082:Initing & finalizing
     #@+node:ekr.20031218072017.3083:checkArgs

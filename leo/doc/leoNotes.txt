@@ -2336,6 +2336,522 @@ if 0: # None of these are satisfactory.
         c.frame.top.bind(shortcut,callback)
 #@nonl
 #@-node:ekr.20051010065140:<< other ways that don't work >> (from bindKey)
+#@+node:ekr.20051025095729:From spell tab
+#@+node:ekr.20051025071455.25:Spell Tab Event handlers (not used)
+# These formerly were global functions.
+#@nonl
+#@+node:ekr.20051025071455.26:createSpellMenu
+def createSpellMenu(self,*args,**keys):
+
+    """Create the Check Spelling menu item in the Edit menu.
+    
+    The args and keys params are for backward compatibility."""
+
+    c = self.c
+
+    table = (
+        ("-", None, None),
+        ("Check Spelling", "Alt+Shift+A",self.checkSpelling))
+
+    c.frame.menu.createMenuItemsFromTable("Edit",table)
+#@nonl
+#@-node:ekr.20051025071455.26:createSpellMenu
+#@+node:ekr.20051025071455.27:onSelect
+def onSelect(self,tag,keys):
+    
+    """A new position has just been selected.  Update the Spell Check window."""
+    
+    c = self.c
+    
+    if keys.get('c') == c:
+        if c.currentPosition() != self.v:
+            self.update(show=False,fill=True)
+        else:
+            self.updateButtons()
+#@nonl
+#@-node:ekr.20051025071455.27:onSelect
+#@+node:ekr.20051025071455.28:onCommand
+def onCommand(self,tag,keys):
+    
+    """Update the Spell Check window after any command that might change text."""
+    
+    c = self.c
+
+    if keys.get('c') == c:
+        self.update(show=False,fill=False)
+#@nonl
+#@-node:ekr.20051025071455.28:onCommand
+#@-node:ekr.20051025071455.25:Spell Tab Event handlers (not used)
+#@+node:ekr.20051025071455.35:onRedoButton & onUndoButton (not used)
+if 0: # Not needed: we can use Leo's regular undo.
+
+    def onRedoButton(self):
+    
+        """Handle a click in the Redo button in the Check Spelling dialog."""
+    
+        self.c.undoer.redo() # Not a command, so command hook doesn't fire.
+        self.update(show= False, fill= False)
+        self.c.frame.bodyWantsFocus()
+        
+    def onUndoButton(self):
+        
+        """Handle a click in the Undo button in the Check Spelling dialog."""
+    
+        self.c.undoer.undo() # Not a command, so command hook doesn't fire.
+        self.update(show=False,fill=False)
+        self.c.frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20051025071455.35:onRedoButton & onUndoButton (not used)
+#@-node:ekr.20051025095729:From spell tab
+#@+node:ekr.20051026144126:From idle key handlers
+#@+node:ekr.20031218072017.1330:onBodyKey
+def onBodyKey (self,event,undoType='Typing'):
+    
+    '''Handle any key press event in the body pane.'''
+
+    # New in Leo 4.4.  May be called with event = None
+    c = self.c
+    ch = (event and event.char) or ''
+    keysym = (event and event.keysym) or ''
+
+    # g.trace(repr(ch),repr(event.keysym))
+
+    # This translation is needed on MacOS.
+    if ch == '':
+        d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
+        ch = d.get(event.keysym,'')
+
+    oldSel = c.frame.body.getTextSelection()
+    
+    p = c.currentPosition()
+        
+    # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
+    self.c.frame.body.colorizer.interrupt()
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,ch)
+#@nonl
+#@+node:ekr.20040105223536:handleStatusLineKey
+def handleStatusLineKey (self,event):
+    
+    c = self.c ; frame = c.frame
+    ch = event.char ; keysym = event.keysym
+    keycode = event.keycode ; state = event.state
+
+    if 1: # ch and len(ch)>0:
+        << trace the key event >>
+
+    try:
+        status = self.keyStatus
+    except:
+        status = [] ; frame.clearStatusLine()
+    
+    for sym,name in (
+        ("Alt_L","Alt"),("Alt_R","Alt"),
+        ("Control_L","Control"),("Control_R","Control"),
+        ("Escape","Esc"),
+        ("Shift_L","Shift"), ("Shift_R","Shift")):
+        if keysym == sym:
+            if name not in status:
+                status.append(name)
+                frame.putStatusLine(name + ' ')
+            break
+    else:
+        status = [] ; frame.clearStatusLine()
+
+    self.keyStatus = status
+#@nonl
+#@+node:ekr.20040105223536.1:<< trace the key event >>
+try:    self.keyCount += 1
+except: self.keyCount  = 1
+
+printable = g.choose(ch == keysym and state < 4,"printable","")
+
+print "%4d %s %d %s %x %s" % (
+    self.keyCount,repr(ch),keycode,keysym,state,printable)
+#@nonl
+#@-node:ekr.20040105223536.1:<< trace the key event >>
+#@-node:ekr.20040105223536:handleStatusLineKey
+#@-node:ekr.20031218072017.1330:onBodyKey
+#@+node:ekr.20031218072017.1331:onBodyWillChange
+# Called by command handlers that change the text just before idle time.
+
+def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
+    
+    """Queue the body changed idle handler."""
+
+    g.trace(g.callerList(5))
+    
+    c = self.c
+
+    if not oldSel:
+        oldSel = c.frame.body.getTextSelection()
+
+    if not p:
+        p = c.currentPosition()
+
+    self.c.frame.body.colorizer.interrupt()
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1331:onBodyWillChange
+#@+node:ekr.20031218072017.1321:idle_body_key & helpers
+def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Update the body pane at idle time."""
+    
+    __pychecker__ = 'maxlines=500'
+
+    c = self.c
+    if not c: return "break"
+    if not p: return "break"
+    if not c.isCurrentPosition(p): return "break"
+    g.trace(repr(ch),g.callerList(5))
+
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+    body = p.bodyString()
+    if not newSel:
+        newSel = c.frame.body.getTextSelection()
+    if oldText != None:
+        s = oldText
+    else:
+        s = c.frame.body.getAllText()
+    << return if nothing has changed >>
+    << set removeTrailing >>
+    if ch in ('\t','\n','\r',chr(8)):
+        << handle special characters >>
+    << set s to widget text, removing trailing newlines if necessary >>
+    # g.trace(repr(ch),undoType)
+    if undoType:
+        if not oldText: oldText = body
+        newText = s
+        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+    p.v.setTnodeText(s)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed:
+        c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return "break"
+#@nonl
+#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
+# Make sure we handle delete key properly.
+if ch not in ('\n','\r',chr(8)):
+
+    if s == body:
+        return "break"
+
+    # Do nothing for control characters.
+    if (ch == None or len(ch) == 0) and body == s[:-1]:
+        return "break"
+#@nonl
+#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
+#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = s ; old = body
+
+if len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
+#@nonl
+#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
+#@+node:ekr.20050526080309:<< handle special characters >>
+d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+
+if ch in ('\n','\r'):
+    # Do nothing if we are in @nocolor mode or if we are executing a Change command.
+    if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+        removeTrailing = self.doAutoIndent(p,removeTrailing,tab_width,undoType)
+
+elif ch == '\t' and tab_width < 0:
+    # Do nothing if we are executing a Change command.
+    if undoType != "Change":
+        self.convertBlanksToTabs(tab_width)
+
+elif ch in (chr(8)) and tab_width < 0:
+    << handle backspace with negative tab_width >>
+#@nonl
+#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+# Get the preceeding characters.
+prev   =c.frame.bodyCtrl.get("insert linestart","insert")
+allPrev=c.frame.bodyCtrl.get("1.0","insert")
+n = len(allPrev)
+try:
+    oldAllPrev = body[:n]
+    assert(allPrev==oldAllPrev)
+    deletedChar = body[n:n+1]
+except (IndexError,AssertionError):
+    deletedChar = None
+
+if deletedChar in (u' ',' '):
+    n = len(prev) ; w = abs(tab_width)
+    n2 = n % w # Delete up to n2 - 1 spaces.
+    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
+        count = 0
+        while n2 > 0:
+            n2 -= 1
+            ch = prev[n-count-1]
+            # g.trace(count,repr(ch))
+            if ch in (u' ',' '): count += 1
+            else: break
+        # g.trace(count,(n%w))
+        if count > 0:
+            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+            newSel = c.frame.body.getTextSelection() # Fixes crasher in undo logic.
+#@nonl
+#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+#@-node:ekr.20050526080309:<< handle special characters >>
+#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+s = c.frame.body.getAllText()
+if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+    s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # g.trace('no real change')
+    return "break"
+#@nonl
+#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+#@+node:ekr.20031218072017.1327:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20031218072017.1327:<< recolor the body >>
+#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+redraw_flag = False
+c.beginUpdate()
+try:
+    # Update dirty bits.
+    if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+        redraw_flag = True
+    # Update icons.
+    val = p.computeIcon()
+    # During unit tests the node may not have been drawn,
+    # So p.v.iconVal may not exist yet.
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    c.endUpdate(redraw_flag) # redraw only if necessary
+#@nonl
+#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+#@+node:ekr.20031218072017.1324:doAutoIndent (David McNab)
+def doAutoIndent (self,p,removeTrailing,tab_width,undoType):
+    
+    __pychecker__ = '--no-argsused' # 'undoType' unused, but must be present.
+    
+    c = self.c
+    # Get the previous line.
+    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # g.trace(repr(s))
+    # Add the leading whitespace to the present line.
+    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s[-1]==':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Added Nov 18 by David McNab, david@rebirthing.co.nz
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width] ; tabex = 0
+        for i in range(0, len(s)):
+            if s[i] == '\t':
+                tabex += tab_width - 1
+            if s[i] in '([{':
+                brackets.append(i+tabex + 1)
+            elif s[i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+        # end patch by David McNab
+    ws = g.computeLeadingWhitespace (width,tab_width)
+    if ws and len(ws) > 0:
+        c.frame.bodyCtrl.insert("insert", ws)
+        removeTrailing = False
+            
+    return removeTrailing
+#@nonl
+#@-node:ekr.20031218072017.1324:doAutoIndent (David McNab)
+#@+node:ekr.20031218072017.1325:convertBlanksToTabs
+def convertBlanksToTabs (self,tab_width):
+
+    c = self.c
+    
+    # Get the characters preceeding the tab.
+    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+    
+    if 1:
+        << convert tab no matter where it is >>
+    else:
+        << convert only leading tabs >>
+#@nonl
+#@+node:ekr.20050526081024:<< convert tab no matter where it is >>
+w = g.computeWidth(prev,tab_width)
+w2 = (abs(tab_width) - (w % abs(tab_width)))
+# g.trace("prev w:",w,"prev chars:",prev)
+c.frame.bodyCtrl.delete("insert -1c")
+c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20050526081024:<< convert tab no matter where it is >>
+#@+node:ekr.20050526081024.1:<< convert only leading tabs >>
+# Get the characters preceeding the tab.
+prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+
+# Do nothing if there are non-whitespace in prev:
+all_ws = True
+for ch in prev:
+    if ch != ' ' and ch != '\t':
+        all_ws = False
+if all_ws:
+    w = g.computeWidth(prev,tab_width)
+    w2 = (abs(tab_width) - (w % abs(tab_width)))
+    # g.trace("prev w:",w,"prev chars:",prev)
+    c.frame.bodyCtrl.delete("insert -1c")
+    c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20050526081024.1:<< convert only leading tabs >>
+#@-node:ekr.20031218072017.1325:convertBlanksToTabs
+#@-node:ekr.20031218072017.1321:idle_body_key & helpers
+#@+node:ekr.20051027045029:OLDidle_head_key
+def idle_head_key (self,p,ch=None):
+    
+    """Update headline text at idle time."""
+    
+    c = self.c ; u = c.undoer
+
+    if not p or not p.isCurrentPosition():
+        return "break"
+
+    edit_text = self.edit_text(p)
+    index = edit_text.index("insert")
+
+    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
+        return "break" # The hook claims to have handled the event.
+        
+    head = g.toUnicode(p.headString() or u'',"utf-8")
+    done = ch in ('\r','\n')
+    if done:
+        << set the widget text to head >>
+    << set s to the widget text >>
+    changed = s != head
+    if changed:
+        undoData = u.beforeChangeNodeContents(p)
+        << update p >>
+        u.afterChangeNodeContents(p,'Change Headline',undoData,dirtyVnodeList=dirtyVnodeList)
+    if done or changed:
+        << reconfigure p and all nodes joined to p >>
+        << update the screen >>
+
+    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
+    return "break"
+#@nonl
+#@+node:ekr.20051027045029.1:<< set the widget text to head >>
+self.setText(edit_text,head)
+edit_text.mark_set("insert",index)
+#@nonl
+#@-node:ekr.20051027045029.1:<< set the widget text to head >>
+#@+node:ekr.20051027045029.2:<< set s to the widget text >>
+s = edit_text.get("1.0","end")
+
+g.trace(repr(s),g.callerList(5))
+
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
+    # Another kludge: remove one or two trailing newlines before warning of truncation.
+    if s and s[-1] == '\n': s = s[:-1]
+    if s and s[-1] == '\n': s = s[:-1]
+    i = s.find('\n')
+    if i > -1:
+        # g.trace(i,len(s),repr(s))
+        g.es("Truncating headline to one line",color="blue")
+        s = s[:i]
+    limit = 1000
+    if len(s) > limit:
+        g.es("Truncating headline to %d characters" % (limit),color="blue")
+        s = s[:limit]
+
+s = g.toUnicode(s,g.app.tkEncoding)
+
+if not s:
+    s = u""
+    
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+    s = s.replace('\n','')
+    s = s.replace('\r','')
+#@nonl
+#@-node:ekr.20051027045029.2:<< set s to the widget text >>
+#@+node:ekr.20051027045029.3:<< update p >>
+c.beginUpdate()
+try: # In update...
+    # Update changed bit.
+    if not c.changed: c.setChanged(True)
+    # We must call p.setDirty even if p is dirty!
+    dirtyVnodeList = p.setDirty()
+    # Update p.
+    p.initHeadString(s)
+    self.setText(edit_text,s)
+    edit_text.mark_set("insert",index)
+finally:
+    c.endUpdate(False) # do not redraw now.
+#@nonl
+#@-node:ekr.20051027045029.3:<< update p >>
+#@+node:ekr.20051027045029.4:<< reconfigure p and all nodes joined to p >>
+# Reconfigure p's headline.
+if done:
+    self.setDisabledLabelState(p)
+
+edit_text.configure(width=self.headWidth(p))
+#@nonl
+#@-node:ekr.20051027045029.4:<< reconfigure p and all nodes joined to p >>
+#@+node:ekr.20051027045029.5:<< update the screen >>
+if done:
+    # g.trace("done")
+    c.beginUpdate()
+    try:
+        self.endEditLabel()
+    finally:
+        c.endUpdate()
+
+elif changed:
+    # g.trace("changed")
+    # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Redrawing the whole screen now messes up the cursor in the headline.
+    self.drawIcon(p) # just redraw the icon.
+#@nonl
+#@-node:ekr.20051027045029.5:<< update the screen >>
+#@-node:ekr.20051027045029:OLDidle_head_key
+#@-node:ekr.20051026144126:From idle key handlers
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

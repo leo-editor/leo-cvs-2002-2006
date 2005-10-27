@@ -335,7 +335,7 @@ def init ():
     return ok
 #@nonl
 #@-node:ekr.20050311090939.3:init
-#@+node:ekr.20041017043622.3:watcher
+#@+node:ekr.20041017043622.3:watcher (calls scanText)
 watchitems = ( '.',')' )
 txt_template = '%s%s%s'
 def watcher (event):
@@ -361,86 +361,7 @@ def watcher (event):
 
         scanText(txt)
     
-#@-node:ekr.20041017043622.3:watcher
-#@+node:ekr.20041017043622.4:scanText
-def scanText (txt):
-    '''This function guides what gets scanned.'''
-
-    if useauto:
-        scanForAutoCompleter(txt)
-    if usecall:
-        scanForCallTip(txt)
-#@-node:ekr.20041017043622.4:scanText
-#@+node:ekr.20041017043622.5:scanForAutoCompleter
-def scanForAutoCompleter (txt):
-    '''This function scans text for the autocompleter database.'''
-    t1 = txt.split('.')
-    g =[]
-    reduce(lambda a,b:makeAutocompletionList(a,b,g),t1)
-    if g:
-        for a, b in g:
-            #if watchwords.has_key(a):
-            #    watchwords[a].add(b)
-            #else:
-            #    watchwords[a] = sets.Set([b])
-            watchwords[ a ].add( b ) # we are using the experimental DictSet class here, usage removed the above statements
-            #notice we have cut it down to one line of code here!
-#@nonl
-#@-node:ekr.20041017043622.5:scanForAutoCompleter
-#@+node:ekr.20041017043622.6:scanForCallTip
-def scanForCallTip (txt):
-    '''this function scans text for calltip info'''
-    pat2 = pats['python']
-    if lang!=None:
-        if pats.has_key(lang):
-            pat2 = pats[lang]
-    g2 = pat2.findall(txt)
-    if g2:
-        for z in g2:
-            if isinstance(z,tuple):
-                z = z[0]
-            pieces2 = z.split('(')
-            pieces2[0] = pieces2[0].split()[-1]
-            a, b = pieces2[0], pieces2[1]
-            calltips[ lang ][ a ].add( z ) #we are using the experimental DictSet here, usage removed all of the commented code. notice we have cut all this down to one line of code!
-            #if calltips.has_key(lang):
-            #    if calltips[lang].has_key(a):
-            #        calltips[lang][a].add(z)
-            #    else:
-            #        calltips[lang][a] = sets.Set([z]) 
-            #else:
-            #    calltips[lang] ={}
-            #    calltips[lang][a] = sets.Set([z])        
-#@nonl
-#@-node:ekr.20041017043622.6:scanForCallTip
-#@+node:ekr.20041017043622.7:makeAutocompletionList
-def makeAutocompletionList (a,b,glist):
-    '''A helper function for autocompletion'''
-    a1 = _reverseFindWhitespace(a)
-    if a1:
-        b2 = _getCleanString(b)
-        if b2!='':
-            glist.append((a1,b2))
-    return b 
-#@-node:ekr.20041017043622.7:makeAutocompletionList
-#@+node:ekr.20041017043622.8:_getCleanString
-def _getCleanString (s):
-    '''a helper for autocompletion scanning'''
-    if s.isalpha():return s 
-
-    for n, l in enumerate(s):
-        if l in okchars:pass 
-        else:return s[:n]
-    return s 
-#@-node:ekr.20041017043622.8:_getCleanString
-#@+node:ekr.20041017043622.9:_reverseFindWhitespace
-def _reverseFindWhitespace (s):
-    '''A helper for autocompletion scan'''
-    for n, l in enumerate(s):
-        n =(n+1)*-1
-        if s[n].isspace()or s[n]=='.':return s[n+1:]
-    return s 
-#@-node:ekr.20041017043622.9:_reverseFindWhitespace
+#@-node:ekr.20041017043622.3:watcher (calls scanText)
 #@+node:ekr.20041017043622.10:initialScan
 def initialScan (tag,keywords):
     '''This method walks the node structure to build the in memory database.'''
@@ -475,17 +396,6 @@ def initialScan (tag,keywords):
     t = threading.Thread( target = scan )
     t.setDaemon(True)
     t.start()
-#@-node:ekr.20041017043622.10:initialScan
-#@+node:mork.20041105115626:has read config file meths
-#These functions determine if the config and language files have been read or not.  No need to read it more than once.
-def hasReadConfig():
-    return configfilesread
-    
-
-def setReadConfig():
-    global configfilesread
-    configfilesread = True
-#@-node:mork.20041105115626:has read config file meths
 #@+node:ekr.20041017043622.11:readConfigFile
 def readConfigFile (aini):
     '''reads the autocompleter config file in.'''
@@ -532,6 +442,17 @@ def readConfigFile (aini):
                     
         break
 #@-node:ekr.20041017043622.11:readConfigFile
+#@+node:mork.20041105115626:has read config file meths
+#These functions determine if the config and language files have been read or not.  No need to read it more than once.
+def hasReadConfig():
+    return configfilesread
+    
+
+def setReadConfig():
+    global configfilesread
+    configfilesread = True
+#@-node:mork.20041105115626:has read config file meths
+#@-node:ekr.20041017043622.10:initialScan
 #@+node:mork.20041029160807:createConfigFile
 def createConfigFile( aini ):
     '''This function creates a config file identified by the parameter aini'''
@@ -576,24 +497,134 @@ def readOutline (c):
     autocompleter draws its autocompletion options
     c is a commander in this case'''
     global lang
-    if 'Chapters'in g.app.loadedPlugins: #Chapters or chapters needs work for this function properly again.
-        import chapters 
+
+    g.trace()
+    if 'Chapters' in g.app.loadedPlugins: #Chapters or chapters needs work for this function properly again.
+        import chapters
         it = chapters.walkChapters()
         for x in it:
-            lang = None 
+            lang = None
             setLanguage(x)
             scanText(x.bodyString())
     else:
-        for z in c.rootPosition().allNodes_iter():
-            setLanguage( z )
-            scanText( z.bodyString() )
+        for p in c.rootPosition().allNodes_iter():
+            setLanguage(p)
+            scanText(p.bodyString())
+
+    # g.trace(g.listToString(watchwords.keys())) # g.dictToString(watchwords))
+
+    if 0:
+        # Keys are language names, values are inner dictionaries.
+        # Inner dictionaries: keys are function names, values are sets of calling sequences.
+        for language in calltips.keys():
+            g.trace(language,'*'*60)
+            g.trace(g.dictToString(calltips.get(language)))
 #@nonl
 #@-node:ekr.20041017043622.13:readOutline
-#@+node:ekr.20041017043622.14:reducer
-def reducer (lis,pat):
-    '''This def cuts a list down to only those items that start with the parameter pat, pure utility.'''
-    return[x for x in lis if x.startswith(pat)]
-#@-node:ekr.20041017043622.14:reducer
+#@+node:ekr.20041017043622.4:scanText & helpers
+def scanText (txt):
+
+    '''This function guides what gets scanned.'''
+
+    if useauto:
+        scanForAutoCompleter(txt)
+
+    if usecall:
+        scanForCallTip(txt)
+#@+node:ekr.20041017043622.5:scanForAutoCompleter
+def scanForAutoCompleter (s):
+
+    '''This function scans text for the autocompleter database.'''
+    t1 = s.split('.')
+    matches = []
+    
+#@+at
+# reduce( function, sequence[, initializer])
+# 
+# Apply function of two arguments cumulatively to the items of sequence, from 
+# left to right, so as to reduce the sequence to a single value. For example, 
+# reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) calculates ((((1+2)+3)+4)+5). The 
+# left argument, x, is the accumulated value and the right argument, y, is the 
+# update value from the sequence. If the optional initializer is present, it 
+# is placed before the items of the sequence in the calculation, and serves as 
+# a default when the sequence is empty. If initializer is not given and 
+# sequence contains only one item, the first item is returned.
+#@-at
+#@@c
+    reduce(lambda a,b: makeAutocompletionList(a,b,matches),t1)
+    
+    if matches:
+        # g.trace(g.listToString(matches))
+        for a, b in matches:
+            watchwords [a].add(b)
+#@+node:ekr.20041017043622.7:makeAutocompletionList
+def makeAutocompletionList (a,b,glist):
+    
+    '''A helper function for autocompletion'''
+    
+    a1 = _reverseFindWhitespace(a)
+    
+    if a1:
+        b2 = _getCleanString(b)
+        if b2!='':
+            glist.append((a1,b2))
+    return b 
+
+
+#@+node:ekr.20041017043622.9:_reverseFindWhitespace
+def _reverseFindWhitespace (s):
+    
+    '''A helper for autocompletion scan'''
+    
+    for n, l in enumerate(s):
+        n =(n+1)*-1
+        if s[n].isspace()or s[n]=='.':return s[n+1:]
+    return s 
+
+#@-node:ekr.20041017043622.9:_reverseFindWhitespace
+#@+node:ekr.20041017043622.8:_getCleanString
+def _getCleanString (s):
+    
+    '''a helper for autocompletion scanning'''
+
+    if s.isalpha():return s 
+
+    for n, l in enumerate(s):
+        if l in okchars:pass 
+        else:return s[:n]
+    return s 
+#@-node:ekr.20041017043622.8:_getCleanString
+#@-node:ekr.20041017043622.7:makeAutocompletionList
+#@-node:ekr.20041017043622.5:scanForAutoCompleter
+#@+node:ekr.20041017043622.6:scanForCallTip
+def scanForCallTip (s):
+
+    '''this function scans text for calltip info'''
+
+    key = pats.has_key(lang) and lang or 'python'
+    pat2 = pats.get(key)
+    matches = pat2.findall(s)
+
+    if matches:
+        # g.trace(g.listToString(matches))
+        for z in matches:
+            if isinstance(z,tuple):
+                z = z[0]
+            pieces2 = z.split('(')
+            pieces2[0] = pieces2[0].split()[-1]
+            a, b = pieces2[0], pieces2[1]
+            calltips[ lang ][ a ].add( z )
+#@nonl
+#@-node:ekr.20041017043622.6:scanForCallTip
+#@-node:ekr.20041017043622.4:scanText & helpers
+#@+node:ekr.20041017043622.14:reducer (no longer used)
+if 0:
+    def reducer (lis,pat):
+    
+        '''This def cuts a list down to only those items that start with the parameter pat, pure utility.'''
+
+        return [x for x in lis if x.startswith(pat)]
+#@-node:ekr.20041017043622.14:reducer (no longer used)
 #@+node:ekr.20041017043622.15:unbind
 def unbind ( context ):
     '''This method turns everything off and removes the calltip and autobox from the canvas.'''
@@ -663,7 +694,8 @@ def processKeyStroke (event,context ,body):
 
     autobox = context.autobox
     ww = list( autobox.get( 0, 'end' ) )
-    lis = reducer(ww,pat)
+    ##lis = reducer(ww,pat)
+    lis = [x for x in ww if x.startswith(pat)]
     if len(lis)==0:return None #in this section we are selecting which item to select based on what the user has typed.
     i = ww.index(lis[0])
 
@@ -697,7 +729,6 @@ def processAutoBox(event, context , body ):
         ind = body.index('insert-1c wordstart')
         pat = body.get(ind,'insert')
         pat = pat.lstrip('.')
-
         if a.startswith(pat):a = a[len(pat):]
         body.insert('insert',a)
         body.event_generate("<Key>")
@@ -715,7 +746,6 @@ def add_item (event, context ,body,colorizer):
          return None 
 
     if event.char=='.' and useauto:
-
         ww = list(watchwords[txt])
         ww.sort()
         autobox = context.autobox
@@ -739,33 +769,36 @@ def add_item (event, context ,body,colorizer):
                 #The calltip provides sufficient size information to calculate its place on top of the context. 
                 calculatePlace(body, calltip ,context, calltip  )
                 context.which = 1 #indicates it's in calltip mode
-        
         else:
             context.on = False 
-            return None 
-
+            return None
+#@nonl
 #@-node:mork.20041027103154.2:add_item
 #@+node:mork.20041020110810:add_bindings
-def add_bindings( context, body ):
+def add_bindings (context,body):
     '''This def adds bindings to the Canvas so it can work with the autobox properly.'''
-            
-    event = Tk.Event()
-    event.keysym = ''
-    
-    def processAutoBoxHandler( event = event , context = context, body = body  ): 
-        processAutoBox( event, context , body  )
-        
-    context.autobox.configure( selectioncommand = processAutoBoxHandler )
-    
-    def moveSelItemHandler( event, context = context ): 
-        moveSelItem( event, context )
-    
-    bindings = ( ( "<Control_L>", processAutoBoxHandler ), ( "<Control_R>", processAutoBoxHandler ),
-                 ( "<Alt-Up>", moveSelItemHandler, '+' ), ( "<Alt-Down>", moveSelItemHandler , '+'),
-                 ( "<Alt_L>", processAutoBoxHandler ), ( "<Alt_R>", processAutoBoxHandler ) )
-         
-    def bind2( args ): context.bind( *args )
-    map( bind2, bindings )
+
+    event = Tk.Event() ; event.keysym = ''
+
+    def processAutoBoxHandler (event=event,context=context,body=body):
+        processAutoBox(event,context,body)
+
+    context.autobox.configure(selectioncommand=processAutoBoxHandler)
+
+    def moveSelItemHandler (event,context=context):
+        moveSelItem(event,context)
+
+    bindings = (
+        ("<Control_L>",processAutoBoxHandler),
+        ("<Control_R>",processAutoBoxHandler),
+        ("<Alt-Up>",  moveSelItemHandler,'+'),
+        ("<Alt-Down>",moveSelItemHandler,'+'),
+        ("<Alt_L>",processAutoBoxHandler),
+        ("<Alt_R>",processAutoBoxHandler),
+    )
+
+    def bind2 (args): context.bind(*args)
+    map(bind2,bindings)
 
 #@-node:mork.20041020110810:add_bindings
 #@+node:ekr.20041017043622.21:configureAutoBox

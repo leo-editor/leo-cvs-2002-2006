@@ -361,6 +361,7 @@ allBlanks
 allList
 allNode_iter
 allNodes_iter
+allPanes
 allStatements
 all_tnodes_iter
 all_vnodes_iter
@@ -368,6 +369,7 @@ allow_clone_drags
 altre
 anotherValue
 anydbm
+apell
 applyConfiguration
 aren`t
 arg
@@ -423,6 +425,7 @@ biblio
 bibtext
 bigpond
 binascii
+bindKey
 bind_shortcut
 bindingsDict
 bindtags
@@ -454,6 +457,7 @@ boxclick
 boxclick1
 boxclick2
 br
+bringToFront
 browsers'
 bruceb
 btags
@@ -465,6 +469,7 @@ c2py
 c_language
 c``'s
 callTagHandler
+callerList
 callerName
 calltip
 calltips
@@ -623,6 +628,7 @@ defsubst
 defun
 defvar
 dehoist
+deiconify
 del
 delToken
 deleteMenu
@@ -771,6 +777,7 @@ findNodeInTree
 findRootNode
 findString
 findStringOrList
+findTab
 findTests
 findTokens
 find_line_start
@@ -798,6 +805,7 @@ foreach
 format_headlines
 forum_id
 forwards
+frameDict
 freebsd4
 freebsd5
 freenet
@@ -879,6 +887,7 @@ getattr
 getcwd
 getmtime
 gif
+globalData
 gmttime
 gnuclient
 gnx
@@ -1237,6 +1246,7 @@ mouseless
 moveAfter
 moveToParent
 moveToRoot
+msec
 msg
 msg_id
 multilline
@@ -1330,6 +1340,7 @@ onCommand
 onCreate
 onDoubleClick
 onEnd
+onFindButton
 onHeadChanged
 onHeadlineKey
 onIdle
@@ -1349,6 +1360,7 @@ openDir
 openFileDialog
 openLeo
 openPipes
+openSpellTab
 openType
 openWith
 openWriteFile
@@ -1362,6 +1374,7 @@ os_path_join
 otherKeyword
 ouline
 out_after_sent
+outerFrame
 outerList
 outline1
 outline2
@@ -1380,6 +1393,7 @@ output_sent
 p1
 p2
 p``'s
+pack_forget
 package_id
 page_width
 pagewidth
@@ -1453,6 +1467,7 @@ printFlag
 printGc
 printGcRefs
 printHeading
+printStack
 print_exc
 printf
 processTree
@@ -1524,6 +1539,7 @@ recentfiles1
 recentfiles2
 redirectClass
 redoBletch
+redoButton
 redoHelper
 redraw_flag
 refLinesCount
@@ -1632,7 +1648,9 @@ select1
 select2
 select3
 selectPosition
+selectTab
 selectVnode
+select_set
 selectbackground
 setBodyString
 setChanged
@@ -1721,6 +1739,7 @@ sourcetime
 spawnl
 spawnv
 speedTest
+spellCommands
 spellDialog
 spellFrame
 spellFrames
@@ -1775,6 +1794,7 @@ synch
 synchVnode
 syntax_prefs
 t1
+tabName
 tab_width
 tabnanny
 tabwidth
@@ -1816,6 +1836,7 @@ testsName
 tex
 text1
 text2
+textDict
 theDict
 theDir
 theFile
@@ -1969,7 +1990,9 @@ vnx
 vparents
 vtag
 walkback
+wantedCommander
 wantedFocus
+wantedWidget
 warningGiven
 wasChanged
 wb
@@ -1988,6 +2011,7 @@ windowMenu
 winnt
 won`t
 word2
+wordLabel
 word_export
 wordspacing
 workCtrl

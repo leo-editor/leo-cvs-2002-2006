@@ -1819,48 +1819,40 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3982:endEditLabelCommand
     def endEditLabelCommand (self):
     
-        frame = self ; c = frame.c ; tree = frame.tree
+        frame = self ; c = frame.c
         
         if g.app.batchMode:
             c.notValidInBatchMode("End Edit Headline")
-            return
-            
-        if 1: # New code in 4.4a1.
-            p = c.currentPosition()
-            tree.updateAfterHeadChanged(p)
-            c.selectPosition(p)
         else:
-            v = frame.tree.editPosition()
-            # g.trace(v)
-            if v and v.edit_text():
-                tree.select(v)
-            if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-                tree.force_redraw() # force a redraw of joined headlines.
-    
-        frame.bodyWantsFocus()
+            p = c.currentPosition()
+            c.frame.tree.onHeadChanged(p)
+            c.selectPosition(p)
+            c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20031218072017.3982:endEditLabelCommand
     #@+node:ekr.20031218072017.3983:insertHeadlineTime
     def insertHeadlineTime (self):
     
-        frame = self ; c = frame.c ; p = c.currentVnode()
-        h = p.headString() # Remember the old value.
+        frame = self ; c = frame.c ; p = c.currentPosition()
         
         if g.app.batchMode:
             c.notValidInBatchMode("Insert Headline Time")
             return
-    
+            
+        c.editPosition(p)
+        c.frame.tree.setNormalLabelState(p)
         w = p.edit_text()
         if w:
-            sel1,sel2 = g.app.gui.getTextSelection(p.edit_text())
-            if sel1 and sel2 and sel1 != sel2:
-                w.delete(sel1,sel2)
-            w.insert("insert",c.getTime(body=False))
-            frame.tree.onHeadChanged(p,'Insert Headline Time')
-    
-        # A kludge to get around not knowing whether we are editing or not.
-        if h.strip() == p.headString().strip():
-            g.es("Edit headline to append date/time")
+            time = c.getTime(body=False)
+            if 1: # We can't know if we were already editing, so insert at end.
+                g.app.gui.setSelectionRange(w,'end','end')
+                w.insert('end',time)
+            else:
+                i, j = g.app.gui.getTextSelection(w)
+                if i != j:
+                    w.delete(i,j)
+                w.insert("insert",time)
+            c.frame.tree.onHeadChanged(p,'Insert Headline Time')
     #@nonl
     #@-node:ekr.20031218072017.3983:insertHeadlineTime
     #@-node:ekr.20031218072017.3980:Edit Menu...
