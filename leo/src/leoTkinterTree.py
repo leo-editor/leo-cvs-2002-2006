@@ -1954,7 +1954,7 @@ class leoTkinterTree (leoFrame.leoTree):
             #@nl
             # g.trace(repr(s))
             if p.headString() == s:
-                g.trace('no change',g.callers(5))
+                # g.trace('no change',g.callers(5))
                 return
             p.initHeadString(s)
             w.configure(width=self.headWidth(p))
