@@ -1233,7 +1233,7 @@ class baseCommands:
             # This works even if the assumption is incorrect.
             start,end=g.app.gui.getTextSelection(w)
             g.app.gui.replaceSelectionRangeWithText(w,start,end,'')
-            c.frame.tree.onHeadChanged(p)
+            c.frame.tree.onHeadChanged(p,'Delete')
     #@nonl
     #@-node:ekr.20031218072017.2863:delete
     #@+node:ekr.20031218072017.2140:c.executeScript
@@ -2712,10 +2712,12 @@ class baseCommands:
             s = g.angleBrackets(' ' + s + ' ')
         
         c.frame.tree.editLabel(v)
-        if v.edit_text():
-            v.edit_text().delete("1.0","end")
-            v.edit_text().insert("1.0",s)
-            c.frame.tree.onHeadChanged(v)
+        w = v.edit_text()
+        if w:
+            w.delete("1.0","end")
+            w.insert("1.0",s)
+            c.frame.tree.onHeadChanged(v,'Toggle Angle Brackets')
+    #@nonl
     #@-node:ekr.20031218072017.2290:toggleAngleBrackets
     #@-node:ekr.20031218072017.2885:Edit Headline submenu
     #@+node:ekr.20031218072017.2887:Find submenu (frame methods)

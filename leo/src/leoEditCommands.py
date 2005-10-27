@@ -3656,7 +3656,7 @@ class leoCommandsClass (baseEditCommandsClass):
             f = d.get(name)
             # Warning: k.createInverseCommandsDict uses the name of this callback.
             def leoCallback (event,f=f,self=self,name=name):
-                self.c.doCommand(f,name)
+                return self.c.doCommand(f,name)
             d2 [name] = leoCallback
             k.leoCallbackDict [leoCallback] = f
             k.inverseCommandsDict [f.__name__] = name

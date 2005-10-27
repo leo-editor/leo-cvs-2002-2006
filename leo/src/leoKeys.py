@@ -1137,7 +1137,7 @@ class keyHandlerClass:
         return val
     #@nonl
     #@-node:ekr.20050923172809.1:callStateFunction
-    #@+node:ekr.20050923174229.3:callKeystrokeFunction
+    #@+node:ekr.20050923174229.3:callKeystrokeFunction (not used)
     def callKeystrokeFunction (self,event):
         
         '''Handle a quick keystroke function.
@@ -1154,18 +1154,20 @@ class keyHandlerClass:
         
         return func
     #@nonl
-    #@-node:ekr.20050923174229.3:callKeystrokeFunction
+    #@-node:ekr.20050923174229.3:callKeystrokeFunction (not used)
     #@+node:ekr.20051026083544:handleDefaultChar
     def handleDefaultChar(self,event):
         
         c = self.c
-    
+        
         try:
             w = event.widget ; name = w._name
+            # g.trace(name)
             if name.startswith('body'):
                 c.frame.body.updateBody(event,w,undoType='Typing')
                 return 'break'
             elif name.startswith('head'):
+                g.trace("can't happen: %s" % (name),color='red')
                 c.frame.tree.updateHead(event,w,undoType='Typing')
                 return 'break'
             else:

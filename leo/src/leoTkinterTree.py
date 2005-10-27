@@ -315,6 +315,7 @@ class leoTkinterTree (leoFrame.leoTree):
             canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
     
         canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
+    
         canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
         canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
         canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
@@ -345,7 +346,6 @@ class leoTkinterTree (leoFrame.leoTree):
     
             # newText() attaches these bindings to all headlines.
             self.textBindings = t.bindtags()
-            # g.trace('tkTree,t.bind())
         else:
             self.bindingWidget = None
        
@@ -771,7 +771,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """All changes to text widgets should come here."""
     
-        # g.trace(self.textAddr(t),g.callerList(),len(s))
+        # g.trace(self.textAddr(t),g.callers(),len(s))
                 
         state = t.cget("state")
         if state != "normal":
@@ -1820,17 +1820,13 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """Handle a key event in a headline."""
         
-        w = event.widget ; ch = event.char
+        w = event.widget ; ch = event and event.char or ''
         
-        g.trace(repr(ch))
+        # g.trace(repr(ch))
+        
+        self.updateHead(event,w,undoType='Typing')
     
-        try:
-            p = w.leo_position
-        except AttributeError:
-            g.trace('error *****')
-            return "continue"
-    
-        return self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
+        return 'break' # Required
     #@nonl
     #@-node:ekr.20040803072955.88:onHeadlineKey
     #@+node:ekr.20040803072955.83:onHeadlineRightClick
@@ -1858,141 +1854,111 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.83:onHeadlineRightClick
     #@+node:ekr.20040803072955.90:head key handlers
-    #@+node:ekr.20040803072955.91:idle_head_key
-    def idle_head_key (self,p,ch=None):
+    #@+node:ekr.20040803072955.88:onHeadlineKey
+    def onHeadlineKey (self,event):
         
-        """Update headline text at idle time."""
+        """Handle a key event in a headline."""
         
-        c = self.c ; u = c.undoer
+        w = event.widget ; ch = event and event.char or ''
+        
+        # g.trace(repr(ch))
+        
+        self.updateHead(event,w,undoType='Typing')
     
-        if not p or not p.isCurrentPosition():
-            return "break"
-    
-        edit_text = self.edit_text(p)
-        index = edit_text.index("insert")
-    
-        if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
-            return "break" # The hook claims to have handled the event.
-            
-        head = g.toUnicode(p.headString() or u'',"utf-8")
-        done = ch in ('\r','\n')
-        if done:
-            #@        << set the widget text to head >>
-            #@+node:ekr.20040803072955.93:<< set the widget text to head >>
-            self.setText(edit_text,head)
-            edit_text.mark_set("insert",index)
-            #@nonl
-            #@-node:ekr.20040803072955.93:<< set the widget text to head >>
-            #@nl
-        #@    << set s to the widget text >>
-        #@+node:ekr.20040803072955.94:<< set s to the widget text >>
-        s = edit_text.get("1.0","end")
-        
-        g.trace(repr(s),g.callerList(5))
-        
-        # Don't truncate if the user is hitting return.
-        # That should just end editing.
-        if 1:
-            # Truncate headline text to workaround Tk problems...
-            # Another kludge: remove one or two trailing newlines before warning of truncation.
-            if s and s[-1] == '\n': s = s[:-1]
-            if s and s[-1] == '\n': s = s[:-1]
-            i = s.find('\n')
-            if i > -1:
-                # g.trace(i,len(s),repr(s))
-                g.es("Truncating headline to one line",color="blue")
-                s = s[:i]
-            limit = 1000
-            if len(s) > limit:
-                g.es("Truncating headline to %d characters" % (limit),color="blue")
-                s = s[:limit]
-        
-        s = g.toUnicode(s,g.app.tkEncoding)
-        
-        if not s:
-            s = u""
-            
-        if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
-            s = s.replace('\n','')
-            s = s.replace('\r','')
-        #@nonl
-        #@-node:ekr.20040803072955.94:<< set s to the widget text >>
-        #@nl
-        changed = s != head
-        if changed:
-            undoData = u.beforeChangeNodeContents(p)
-            #@        << update p >>
-            #@+node:ekr.20040803072955.95:<< update p >>
-            c.beginUpdate()
-            try: # In update...
-                # Update changed bit.
-                if not c.changed: c.setChanged(True)
-                # We must call p.setDirty even if p is dirty!
-                dirtyVnodeList = p.setDirty()
-                # Update p.
-                p.initHeadString(s)
-                self.setText(edit_text,s)
-                edit_text.mark_set("insert",index)
-            finally:
-                c.endUpdate(False) # do not redraw now.
-            #@nonl
-            #@-node:ekr.20040803072955.95:<< update p >>
-            #@nl
-            u.afterChangeNodeContents(p,'Change Headline',undoData,dirtyVnodeList=dirtyVnodeList)
-        if done or changed:
-            #@        << reconfigure p and all nodes joined to p >>
-            #@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
-            # Reconfigure p's headline.
-            if done:
-                self.setDisabledLabelState(p)
-            
-            edit_text.configure(width=self.headWidth(p))
-            #@nonl
-            #@-node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
-            #@nl
-            #@        << update the screen >>
-            #@+node:ekr.20040803072955.97:<< update the screen >>
-            if done:
-                # g.trace("done")
-                c.beginUpdate()
-                try:
-                    self.endEditLabel()
-                finally:
-                    c.endUpdate()
-            
-            elif changed:
-                # g.trace("changed")
-                # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
-                # Redrawing the whole screen now messes up the cursor in the headline.
-                self.drawIcon(p) # just redraw the icon.
-            #@nonl
-            #@-node:ekr.20040803072955.97:<< update the screen >>
-            #@nl
-    
-        g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
-        return "break"
+        return 'break' # Required
     #@nonl
-    #@-node:ekr.20040803072955.91:idle_head_key
+    #@-node:ekr.20040803072955.88:onHeadlineKey
     #@+node:ekr.20040803072955.98:onHeadChanged
-    # The <Key> event generates the event before the headline text is changed!
-    # We register an idle-event handler to do the work later.
+    def onHeadChanged (self,p,undoType='Change Headline'):
     
-    def onHeadChanged (self,p):
-    
-        """Handle a change to headline text."""
+        """Handle a change to headline text.
         
-        self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
+        Called **after** the change has been made."""
+        
+        self.updateAfterHeadChanged(p,undoType)
     #@nonl
     #@-node:ekr.20040803072955.98:onHeadChanged
     #@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
     def updateHead (self,event,w,undoType='Typing'):
         
-        ch = event.char
-        g.trace(repr(ch))
-        i = w.index('insert')
-        w.insert(i,ch)
+        c = self.c ; p = c.currentPosition() ; u = c.undoer
+        ch = event and event.char or ''
+        i,j = g.app.gui.getTextSelection(w)
+        
+        if ch == '\b':
+            if i != j:
+                w.delete(i,j)
+            else:
+                w.delete('insert-1c')
+        elif ch and ch not in ('\n','\r'):
+            if i != j:
+                w.delete(i,j)
+            i = w.index('insert')
+            w.insert(i,ch)
+    
+        s = w.get('1.0','end')
+    
+        if s.endswith('\n'):
+            if len(s) > 1: s = s[:-1]
+            else:          s = ''
+    
+        if 0:
+            if ch or not event or p.headString().strip() != s.strip():
+                g.trace(w._name,repr(ch),repr(s),g.callers(5))
+             
+        if ch in ('\n','\r'):
+            self.updateAfterHeadChanged(p)
     #@nonl
     #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+    #@+node:ekr.20040803072955.91:updateAfterHeadChanged
+    def updateAfterHeadChanged (self,p,undoType='Change Headline'):
+        
+        """Update headline text at idle time."""
+        
+        c = self.c ; u = c.undoer ; w = self.edit_text(p)
+        undoData = u.beforeChangeNodeContents(p)
+        
+        if w:
+            s = w.get('1.0','end')
+            #@        << truncate s if it has multiple lines >>
+            #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+            # Kludge remove one or two trailing newlines before warning of truncation.
+            for i in (0,1):
+                if s and s[-1] == '\n':
+                    if len(s) > 1: s = s[:-1]
+                    else: s = ''
+            
+            # Warn if there are multiple lines.
+            i = s.find('\n')
+            if i > -1:
+                # g.trace(i,len(s),repr(s))
+                g.es("Truncating headline to one line",color="blue")
+                s = s[:i]
+            
+            limit = 1000
+            if len(s) > limit:
+                g.es("Truncating headline to %d characters" % (limit),color="blue")
+                s = s[:limit]
+            
+            s = g.toUnicode(s or '',g.app.tkEncoding)
+            #@nonl
+            #@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+            #@nl
+            # g.trace(repr(s))
+            p.initHeadString(s)
+            w.configure(width=self.headWidth(p))
+        self.endEditLabel()
+        c.beginUpdate()
+        try:
+            if not c.changed: c.setChanged(True)
+            dirtyVnodeList = p.setDirty()
+        finally:
+            c.endUpdate()
+    
+        u.afterChangeNodeContents(p,undoType,undoData,
+            dirtyVnodeList=dirtyVnodeList)
+    #@nonl
+    #@-node:ekr.20040803072955.91:updateAfterHeadChanged
     #@-node:ekr.20040803072955.90:head key handlers
     #@-node:ekr.20040803072955.84:Text Box...
     #@+node:ekr.20040803072955.99:Dragging
@@ -2614,7 +2580,6 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if self.editPosition() and p != self.editPosition():
             self.endEditLabel()
-            self.frame.revertHeadline = None
             
         self.setEditPosition(p)
         
@@ -2623,7 +2588,6 @@ class leoTkinterTree (leoFrame.leoTree):
         # Start editing
         if p and p.edit_text():
             self.setNormalLabelState(p)
-            self.frame.revertHeadline = p.headString()
             self.setEditPosition(p)
             self.frame.headlineWantsFocus(p)
     #@nonl
@@ -2635,15 +2599,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         c = self.c ; frame = c.frame ; body = frame.bodyCtrl
         old_p = c.currentPosition()
-        
-        # g.trace(p.headString())
-    
-        if not p: return
-        if not p.exists(c):
-            g.trace(g.callerList(5),'does not exist',p)
-            return
-    
-        # g.trace('len(body)',len(p.bodyString()),p.headString())
+        if not p or not p.exists(c): return # Not an error.
     
         if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
             #@        << unselect the old node >>
@@ -2748,8 +2704,6 @@ class leoTkinterTree (leoFrame.leoTree):
         
         g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
         g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-        
-        # g.printGc()
     #@nonl
     #@-node:ekr.20040803072955.128:tree.select
     #@+node:ekr.20040803072955.134:tree.set...LabelState

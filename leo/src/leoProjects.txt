@@ -3381,15 +3381,7 @@ def select (self,p,updateBeadList=True):
     
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
-    
-    # g.trace(p.headString())
-
-    if not p: return
-    if not p.exists(c):
-        g.trace(g.callerList(5),'does not exist',p)
-        return
-
-    # g.trace('len(body)',len(p.bodyString()),p.headString())
+    if not p or not p.exists(c): return # Not an error.
 
     if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
         << unselect the old node >>
@@ -3409,8 +3401,6 @@ def select (self,p,updateBeadList=True):
     
     g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-    
-    # g.printGc()
 #@nonl
 #@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
 # Remember the position of the scrollbar before making any changes.
@@ -6723,7 +6713,7 @@ def writeChangedList (self,changedList):
     # Accumulate the changes for each file in a 'changes' list for each root.
     for data in changedList:
         p,name,kind,oldVal,newVal = data
-        # print "%6s %6s %10s -> %10s %s" % (g.callerList(2),kind,str(oldVal),str(newVal),name)
+        # print "%6s %6s %10s -> %10s %s" % (g.callers(2),kind,str(oldVal),str(newVal),name)
         root = self.findSettingsRoot(p)
         d = filesInfoDict.get(root)
         changes = d.get('changes')
@@ -9321,7 +9311,7 @@ def getPublicCommands (self):
         f = d.get(name)
         # Warning: k.createInverseCommandsDict uses the name of this callback.
         def leoCallback (event,f=f,self=self,name=name):
-            self.c.doCommand(f,name)
+            return self.c.doCommand(f,name)
         d2 [name] = leoCallback
         k.leoCallbackDict [leoCallback] = f
         k.inverseCommandsDict [f.__name__] = name
@@ -10087,7 +10077,7 @@ def getPublicCommands (self):
         f = d.get(name)
         # Warning: k.createInverseCommandsDict uses the name of this callback.
         def leoCallback (event,f=f,self=self,name=name):
-            self.c.doCommand(f,name)
+            return self.c.doCommand(f,name)
         d2 [name] = leoCallback
         k.leoCallbackDict [leoCallback] = f
         k.inverseCommandsDict [f.__name__] = name
@@ -10354,7 +10344,7 @@ def set_focus(self,widget,later=False):
 
     c = self.c
     # This is a *very* effective trace.
-    # g.trace(widget._name,g.callerList(5))
+    # g.trace(widget._name,g.callers(5))
 
     if widget and not g.app.unitTesting:
         # Messing with focus may be dangerous in unit tests.
@@ -10374,14 +10364,14 @@ def set_focus(self,widget,later=False):
             self.wantedWidget = widget
             g.app.wantedCommander = c
             if not self.wantedCallbackScheduled:
-                # g.trace(g.callerList(4),c.shortFileName())
+                # g.trace(g.callers(4),c.shortFileName())
                 self.wantedCallbackScheduled = True
                 # We don't have to wait so long now that we don't call this so often.
                 # The difference between 500 msec. and 100 msec. is significant.
                 # New in 4.4: set the delay to 1 msec.: the smaller the better.
                 self.outerFrame.after(1,setFocusCallback)
         else:
-            # g.trace(g.callerList(4),c.shortFileName())
+            # g.trace(g.callers(4),c.shortFileName())
             g.app.gui.set_focus(c,widget)
             # Crucial: cancel any previous callback.
             # It may be re-enabled later, but that doesn't matter.
@@ -16980,7 +16970,7 @@ def set_focus(self,widget,later=False):
 
     c = self.c
     # This is a *very* effective trace.
-    # g.trace(widget._name,g.callerList(5))
+    # g.trace(widget._name,g.callers(5))
 
     if widget and not g.app.unitTesting:
         # Messing with focus may be dangerous in unit tests.
@@ -17000,14 +16990,14 @@ def set_focus(self,widget,later=False):
             self.wantedWidget = widget
             g.app.wantedCommander = c
             if not self.wantedCallbackScheduled:
-                # g.trace(g.callerList(4),c.shortFileName())
+                # g.trace(g.callers(4),c.shortFileName())
                 self.wantedCallbackScheduled = True
                 # We don't have to wait so long now that we don't call this so often.
                 # The difference between 500 msec. and 100 msec. is significant.
                 # New in 4.4: set the delay to 1 msec.: the smaller the better.
                 self.outerFrame.after(1,setFocusCallback)
         else:
-            # g.trace(g.callerList(4),c.shortFileName())
+            # g.trace(g.callers(4),c.shortFileName())
             g.app.gui.set_focus(c,widget)
             # Crucial: cancel any previous callback.
             # It may be re-enabled later, but that doesn't matter.
@@ -17071,8 +17061,9 @@ def endEditLabelCommand (self):
         return
         
     if 1: # New code in 4.4a1.
-        tree.endEditLabel()
-        tree.select(tree.editPosition())
+        p = c.currentPosition()
+        tree.updateAfterHeadChanged(p)
+        c.selectPosition(p)
     else:
         v = frame.tree.editPosition()
         # g.trace(v)
@@ -17087,25 +17078,14 @@ def endEditLabelCommand (self):
 #@+node:ekr.20031218072017.3981:abortEditLabelCommand
 def abortEditLabelCommand (self):
     
-    frame = self ; c = frame.c ; v = c.currentVnode() ; tree = frame.tree
+    frame = self ; c = frame.c
     
     if g.app.batchMode:
         c.notValidInBatchMode("Abort Edit Headline")
         return
 
-    if self.revertHeadline and v.edit_text() and v == tree.editPosition():
-    
-        v.edit_text().delete("1.0","end")
-        v.edit_text().insert("end",self.revertHeadline)
-        tree.idle_head_key(v) # Must be done immediately.
-        tree.revertHeadline = None
-        if 1: # New code in 4.4a1.
-            tree.endEditLabel()
-            tree.select(tree.editPosition())
-        else: # Old code:
-            tree.select(v)
-            if v and len(v.t.vnodeList) > 0:
-                tree.force_redraw() # force a redraw of joined headlines.
+    c.frame.tree.endEditLabel()
+    c.selectPosition(c.currentPosition())
 #@nonl
 #@-node:ekr.20031218072017.3981:abortEditLabelCommand
 #@-node:ekr.20051013103838:(Escape does not end label editing)
@@ -21738,6 +21718,7 @@ def createPermanentBindings (self):
         canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
 
     canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
+
     canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
     canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
     canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
@@ -21924,7 +21905,6 @@ def editLabel (self,p):
 
     if self.editPosition() and p != self.editPosition():
         self.endEditLabel()
-        self.frame.revertHeadline = None
         
     self.setEditPosition(p)
     
@@ -21933,7 +21913,6 @@ def editLabel (self,p):
     # Start editing
     if p and p.edit_text():
         self.setNormalLabelState(p)
-        self.frame.revertHeadline = p.headString()
         self.setEditPosition(p)
         self.frame.headlineWantsFocus(p)
 #@nonl
@@ -21945,15 +21924,7 @@ def select (self,p,updateBeadList=True):
     
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
-    
-    # g.trace(p.headString())
-
-    if not p: return
-    if not p.exists(c):
-        g.trace(g.callerList(5),'does not exist',p)
-        return
-
-    # g.trace('len(body)',len(p.bodyString()),p.headString())
+    if not p or not p.exists(c): return # Not an error.
 
     if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
         << unselect the old node >>
@@ -21973,8 +21944,6 @@ def select (self,p,updateBeadList=True):
     
     g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-    
-    # g.printGc()
 #@nonl
 #@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
 # Remember the position of the scrollbar before making any changes.
@@ -22608,6 +22577,7 @@ def createPermanentBindings (self):
         canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
 
     canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
+
     canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
     canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
     canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
@@ -22730,7 +22700,6 @@ def setBindings (self):
 
         # newText() attaches these bindings to all headlines.
         self.textBindings = t.bindtags()
-        # g.trace('tkTree,t.bind())
     else:
         self.bindingWidget = None
    
@@ -22823,7 +22792,7 @@ def set_focus(self,widget,later=False):
 
     c = self.c
     # This is a *very* effective trace.
-    # g.trace(widget._name,g.callerList(5))
+    # g.trace(widget._name,g.callers(5))
 
     if widget and not g.app.unitTesting:
         # Messing with focus may be dangerous in unit tests.
@@ -22843,14 +22812,14 @@ def set_focus(self,widget,later=False):
             self.wantedWidget = widget
             g.app.wantedCommander = c
             if not self.wantedCallbackScheduled:
-                # g.trace(g.callerList(4),c.shortFileName())
+                # g.trace(g.callers(4),c.shortFileName())
                 self.wantedCallbackScheduled = True
                 # We don't have to wait so long now that we don't call this so often.
                 # The difference between 500 msec. and 100 msec. is significant.
                 # New in 4.4: set the delay to 1 msec.: the smaller the better.
                 self.outerFrame.after(1,setFocusCallback)
         else:
-            # g.trace(g.callerList(4),c.shortFileName())
+            # g.trace(g.callers(4),c.shortFileName())
             g.app.gui.set_focus(c,widget)
             # Crucial: cancel any previous callback.
             # It may be re-enabled later, but that doesn't matter.
@@ -22877,6 +22846,7 @@ def createPermanentBindings (self):
         canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
 
     canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
+
     canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
     canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
     canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
@@ -22936,7 +22906,6 @@ def setBindings (self):
 
         # newText() attaches these bindings to all headlines.
         self.textBindings = t.bindtags()
-        # g.trace('tkTree,t.bind())
     else:
         self.bindingWidget = None
    
@@ -23042,129 +23011,63 @@ def onHeadlineKey (self,event):
     
     """Handle a key event in a headline."""
     
-    w = event.widget ; ch = event.char
+    w = event.widget ; ch = event and event.char or ''
     
-    g.trace(repr(ch))
+    # g.trace(repr(ch))
+    
+    self.updateHead(event,w,undoType='Typing')
 
-    try:
-        p = w.leo_position
-    except AttributeError:
-        g.trace('error *****')
-        return "continue"
-
-    return self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
+    return 'break' # Required
 #@nonl
 #@-node:ekr.20040803072955.88:onHeadlineKey
-#@+node:ekr.20040803072955.91:idle_head_key
-def idle_head_key (self,p,ch=None):
+#@+node:ekr.20040803072955.91:updateAfterHeadChanged
+def updateAfterHeadChanged (self,p,undoType='Change Headline'):
     
     """Update headline text at idle time."""
     
-    c = self.c ; u = c.undoer
-
-    if not p or not p.isCurrentPosition():
-        return "break"
-
-    edit_text = self.edit_text(p)
-    index = edit_text.index("insert")
-
-    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
-        return "break" # The hook claims to have handled the event.
-        
-    head = g.toUnicode(p.headString() or u'',"utf-8")
-    done = ch in ('\r','\n')
-    if done:
-        << set the widget text to head >>
-    << set s to the widget text >>
-    changed = s != head
-    if changed:
-        undoData = u.beforeChangeNodeContents(p)
-        << update p >>
-        u.afterChangeNodeContents(p,'Change Headline',undoData,dirtyVnodeList=dirtyVnodeList)
-    if done or changed:
-        << reconfigure p and all nodes joined to p >>
-        << update the screen >>
-
-    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
-    return "break"
-#@nonl
-#@+node:ekr.20040803072955.93:<< set the widget text to head >>
-self.setText(edit_text,head)
-edit_text.mark_set("insert",index)
-#@nonl
-#@-node:ekr.20040803072955.93:<< set the widget text to head >>
-#@+node:ekr.20040803072955.94:<< set s to the widget text >>
-s = edit_text.get("1.0","end")
-
-g.trace(repr(s),g.callerList(5))
-
-# Don't truncate if the user is hitting return.
-# That should just end editing.
-if 1:
-    # Truncate headline text to workaround Tk problems...
-    # Another kludge: remove one or two trailing newlines before warning of truncation.
-    if s and s[-1] == '\n': s = s[:-1]
-    if s and s[-1] == '\n': s = s[:-1]
-    i = s.find('\n')
-    if i > -1:
-        # g.trace(i,len(s),repr(s))
-        g.es("Truncating headline to one line",color="blue")
-        s = s[:i]
-    limit = 1000
-    if len(s) > limit:
-        g.es("Truncating headline to %d characters" % (limit),color="blue")
-        s = s[:limit]
-
-s = g.toUnicode(s,g.app.tkEncoding)
-
-if not s:
-    s = u""
+    c = self.c ; u = c.undoer ; w = self.edit_text(p)
+    undoData = u.beforeChangeNodeContents(p)
     
-if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
-    s = s.replace('\n','')
-    s = s.replace('\r','')
-#@nonl
-#@-node:ekr.20040803072955.94:<< set s to the widget text >>
-#@+node:ekr.20040803072955.95:<< update p >>
-c.beginUpdate()
-try: # In update...
-    # Update changed bit.
-    if not c.changed: c.setChanged(True)
-    # We must call p.setDirty even if p is dirty!
-    dirtyVnodeList = p.setDirty()
-    # Update p.
-    p.initHeadString(s)
-    self.setText(edit_text,s)
-    edit_text.mark_set("insert",index)
-finally:
-    c.endUpdate(False) # do not redraw now.
-#@nonl
-#@-node:ekr.20040803072955.95:<< update p >>
-#@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
-# Reconfigure p's headline.
-if done:
-    self.setDisabledLabelState(p)
-
-edit_text.configure(width=self.headWidth(p))
-#@nonl
-#@-node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
-#@+node:ekr.20040803072955.97:<< update the screen >>
-if done:
-    # g.trace("done")
+    if w:
+        s = w.get('1.0','end')
+        << truncate s if it has multiple lines >>
+        # g.trace(repr(s))
+        p.initHeadString(s)
+        w.configure(width=self.headWidth(p))
+    self.endEditLabel()
     c.beginUpdate()
     try:
-        self.endEditLabel()
+        if not c.changed: c.setChanged(True)
+        dirtyVnodeList = p.setDirty()
     finally:
         c.endUpdate()
 
-elif changed:
-    # g.trace("changed")
-    # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
-    # Redrawing the whole screen now messes up the cursor in the headline.
-    self.drawIcon(p) # just redraw the icon.
+    u.afterChangeNodeContents(p,undoType,undoData,
+        dirtyVnodeList=dirtyVnodeList)
 #@nonl
-#@-node:ekr.20040803072955.97:<< update the screen >>
-#@-node:ekr.20040803072955.91:idle_head_key
+#@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+# Kludge remove one or two trailing newlines before warning of truncation.
+for i in (0,1):
+    if s and s[-1] == '\n':
+        if len(s) > 1: s = s[:-1]
+        else: s = ''
+
+# Warn if there are multiple lines.
+i = s.find('\n')
+if i > -1:
+    # g.trace(i,len(s),repr(s))
+    g.es("Truncating headline to one line",color="blue")
+    s = s[:i]
+
+limit = 1000
+if len(s) > limit:
+    g.es("Truncating headline to %d characters" % (limit),color="blue")
+    s = s[:limit]
+
+s = g.toUnicode(s or '',g.app.tkEncoding)
+#@nonl
+#@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+#@-node:ekr.20040803072955.91:updateAfterHeadChanged
 #@-node:ekr.20051024152318.2:Event handlers
 #@+node:ekr.20051024145643:Label state
 #@+node:ekr.20031218072017.3716:Getters/Setters (tree)
@@ -23244,7 +23147,6 @@ def editLabel (self,p):
 
     if self.editPosition() and p != self.editPosition():
         self.endEditLabel()
-        self.frame.revertHeadline = None
         
     self.setEditPosition(p)
     
@@ -23253,7 +23155,6 @@ def editLabel (self,p):
     # Start editing
     if p and p.edit_text():
         self.setNormalLabelState(p)
-        self.frame.revertHeadline = p.headString()
         self.setEditPosition(p)
         self.frame.headlineWantsFocus(p)
 #@nonl
@@ -23448,18 +23349,8 @@ def copyText (self,fromMinibuffer=False):
     '''Invoked from the mini-buffer and from shortcuts.'''
     
     f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
     
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
-
-    # These two branches used to be different, an might be so again.
-    if isBody:
-        w.event_generate(g.virtual_event_name("Copy"))
-    elif fromMinibuffer:
-        pass
-    else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
+    if not fromMinibuffer:
         w.event_generate(g.virtual_event_name("Copy"))
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
@@ -23480,7 +23371,7 @@ def cutText (self,fromMinibuffer=False):
         # New: Do call w.event_generate.
         w.event_generate(g.virtual_event_name("Cut"))
         if not fromMinibuffer:
-            f.tree.onHeadChanged(c.currentPosition())
+            f.tree.onHeadChanged(c.currentPosition(),'Cut')
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -23488,18 +23379,18 @@ def pasteText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    f = self ; c = f.c
+    w = f.getFocus() ; name = w._name
     
-    g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
-
-    if isBody:
+    if fromMinibuffer:
         w.event_generate(g.virtual_event_name("Paste"))
-    elif fromMinibuffer:
-        pass
-    else:
-        # Do **not** call w.event_generate for headlines.
-        f.tree.onHeadChanged(c.currentPosition())
+    elif name.startswith('body'):
+        w.event_generate(g.virtual_event_name("Paste"))
+    elif name.startswith('head'):
+        # I have no idea why the paste gets done automatically.
+        # There are Tk bugs lurking here...
+        f.tree.updateHead(event=None,w=w,undoType='Paste')
+    else: pass
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
 #@+node:ekr.20051011072903.1:OnCopyFromMenu
@@ -23523,9 +23414,7 @@ def OnCopyFromMenu (self):
 def OnCutFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
-    
+
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
 
@@ -23534,15 +23423,13 @@ def OnCutFromMenu (self):
     else:
         # Necessary
         w.event_generate(g.virtual_event_name("Cut"))
-        f.tree.onHeadChanged(c.currentPosition())
+        f.tree.onHeadChanged(c.currentPosition(),'Cut')
 #@nonl
 #@-node:ekr.20051011072049.1:OnCutFromMenu
 #@+node:ekr.20051011072903.4:OnPasteFromMenu
 def OnPasteFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
     
     f = self ; c = f.c ; w = f.getFocus()
     w = self.getFocus()
@@ -23552,7 +23439,7 @@ def OnPasteFromMenu (self):
         w.event_generate(g.virtual_event_name("Paste"))
     else:
         w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition())
+        f.tree.onHeadChanged(c.currentPosition(),'Paste')
 #@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -23656,7 +23543,7 @@ def set_focus(self,widget,later=False):
 
     c = self.c
     # This is a *very* effective trace.
-    # g.trace(widget._name,g.callerList(5))
+    # g.trace(widget._name,g.callers(5))
 
     if widget and not g.app.unitTesting:
         # Messing with focus may be dangerous in unit tests.
@@ -23676,14 +23563,14 @@ def set_focus(self,widget,later=False):
             self.wantedWidget = widget
             g.app.wantedCommander = c
             if not self.wantedCallbackScheduled:
-                # g.trace(g.callerList(4),c.shortFileName())
+                # g.trace(g.callers(4),c.shortFileName())
                 self.wantedCallbackScheduled = True
                 # We don't have to wait so long now that we don't call this so often.
                 # The difference between 500 msec. and 100 msec. is significant.
                 # New in 4.4: set the delay to 1 msec.: the smaller the better.
                 self.outerFrame.after(1,setFocusCallback)
         else:
-            # g.trace(g.callerList(4),c.shortFileName())
+            # g.trace(g.callers(4),c.shortFileName())
             g.app.gui.set_focus(c,widget)
             # Crucial: cancel any previous callback.
             # It may be re-enabled later, but that doesn't matter.

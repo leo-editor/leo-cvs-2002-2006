@@ -1006,7 +1006,7 @@ class configClass:
         weight = self.get(c,weight,"weight")
         if weight in (None,""): weight = "normal"
         
-        # g.trace(g.callerList(3),family,size,slant,weight,g.shortFileName(c.mFileName))
+        # g.trace(g.callers(3),family,size,slant,weight,g.shortFileName(c.mFileName))
         
         return g.app.gui.getFontFromParams(family,size,slant,weight)
     #@nonl
@@ -3198,7 +3198,7 @@ class settingsController:
         # Accumulate the changes for each file in a 'changes' list for each root.
         for data in changedList:
             p,name,kind,oldVal,newVal = data
-            # print "%6s %6s %10s -> %10s %s" % (g.callerList(2),kind,str(oldVal),str(newVal),name)
+            # print "%6s %6s %10s -> %10s %s" % (g.callers(2),kind,str(oldVal),str(newVal),name)
             root = self.findSettingsRoot(p)
             d = filesInfoDict.get(root)
             changes = d.get('changes')

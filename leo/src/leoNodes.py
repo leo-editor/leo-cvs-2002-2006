@@ -335,6 +335,8 @@ class baseTnode (object):
                 s = s.rstrip()
         
         self.bodyString = s
+        
+        # g.trace(g.callers(5))
     #@nonl
     #@-node:ekr.20031218072017.1485:setTnodeText
     #@+node:ekr.20031218072017.1486:setSelection
@@ -1129,9 +1131,10 @@ class baseVnode (object):
     def initHeadString (self,s,encoding="utf-8"):
         
         v = self
-    
         s = g.toUnicode(s,encoding,reportErrors=True)
         v.t.headString = s
+        
+        # g.trace(g.callers(5))
     #@nonl
     #@-node:ekr.20040315032144:v.initHeadString
     #@+node:ekr.20031218072017.3402:v.setSelection

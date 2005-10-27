@@ -81,7 +81,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.draggedItem = None
         self.isActive = True
         self.redrawCount = 0
-        self.revertHeadline = None # Previous headline text for abortEditLabel.
         self.wantedWidget = None
         self.wantedCallbackScheduled = False
         self.scrollWay = None
@@ -1706,25 +1705,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3981:abortEditLabelCommand
     def abortEditLabelCommand (self):
         
-        frame = self ; c = frame.c ; v = c.currentVnode() ; tree = frame.tree
+        frame = self ; c = frame.c
         
         if g.app.batchMode:
             c.notValidInBatchMode("Abort Edit Headline")
             return
     
-        if self.revertHeadline and v.edit_text() and v == tree.editPosition():
-        
-            v.edit_text().delete("1.0","end")
-            v.edit_text().insert("end",self.revertHeadline)
-            tree.idle_head_key(v) # Must be done immediately.
-            tree.revertHeadline = None
-            if 1: # New code in 4.4a1.
-                tree.endEditLabel()
-                tree.select(tree.editPosition())
-            else: # Old code:
-                tree.select(v)
-                if v and len(v.t.vnodeList) > 0:
-                    tree.force_redraw() # force a redraw of joined headlines.
+        c.frame.tree.endEditLabel()
+        c.selectPosition(c.currentPosition())
     #@nonl
     #@-node:ekr.20031218072017.3981:abortEditLabelCommand
     #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -1734,18 +1722,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         '''Invoked from the mini-buffer and from shortcuts.'''
         
         f = self ; c = f.c ; w = f.getFocus()
-        isBody = w == f.body.bodyCtrl
         
-        # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
-    
-        # These two branches used to be different, an might be so again.
-        if isBody:
-            w.event_generate(g.virtual_event_name("Copy"))
-        elif fromMinibuffer:
-            pass
-        else:
-            # Old: Do **not** call w.event_generate.
-            # New: Do call w.event_generate.
+        if not fromMinibuffer:
             w.event_generate(g.virtual_event_name("Copy"))
     #@nonl
     #@-node:ekr.20051011072903.2:copyText
@@ -1766,7 +1744,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             # New: Do call w.event_generate.
             w.event_generate(g.virtual_event_name("Cut"))
             if not fromMinibuffer:
-                f.tree.onHeadChanged(c.currentPosition())
+                f.tree.onHeadChanged(c.currentPosition(),'Cut')
     #@nonl
     #@-node:ekr.20051011072049.2:cutText
     #@+node:ekr.20051011072903.5:pasteText
@@ -1774,18 +1752,18 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
-        f = self ; c = f.c ; w = f.getFocus()
-        isBody = w == f.body.bodyCtrl
+        f = self ; c = f.c
+        w = f.getFocus() ; name = w._name
         
-        g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
-    
-        if isBody:
+        if fromMinibuffer:
             w.event_generate(g.virtual_event_name("Paste"))
-        elif fromMinibuffer:
-            pass
-        else:
-            # Do **not** call w.event_generate for headlines.
-            f.tree.onHeadChanged(c.currentPosition())
+        elif name.startswith('body'):
+            w.event_generate(g.virtual_event_name("Paste"))
+        elif name.startswith('head'):
+            # I have no idea why the paste gets done automatically.
+            # There are Tk bugs lurking here...
+            f.tree.updateHead(event=None,w=w,undoType='Paste')
+        else: pass
     #@nonl
     #@-node:ekr.20051011072903.5:pasteText
     #@+node:ekr.20051011072903.1:OnCopyFromMenu
@@ -1809,9 +1787,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def OnCutFromMenu (self):
         
         ''' Called **only** when invoked using the menu instead of a shortcut.'''
-        
-        #g.trace()
-        
+    
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl
     
@@ -1820,15 +1796,13 @@ class leoTkinterFrame (leoFrame.leoFrame):
         else:
             # Necessary
             w.event_generate(g.virtual_event_name("Cut"))
-            f.tree.onHeadChanged(c.currentPosition())
+            f.tree.onHeadChanged(c.currentPosition(),'Cut')
     #@nonl
     #@-node:ekr.20051011072049.1:OnCutFromMenu
     #@+node:ekr.20051011072903.4:OnPasteFromMenu
     def OnPasteFromMenu (self):
         
         ''' Called **only** when invoked using the menu instead of a shortcut.'''
-        
-        #g.trace()
         
         f = self ; c = f.c ; w = f.getFocus()
         w = self.getFocus()
@@ -1838,7 +1812,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             w.event_generate(g.virtual_event_name("Paste"))
         else:
             w.event_generate(g.virtual_event_name("Paste"))
-            f.tree.onHeadChanged(c.currentPosition())
+            f.tree.onHeadChanged(c.currentPosition(),'Paste')
     #@nonl
     #@-node:ekr.20051011072903.4:OnPasteFromMenu
     #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -1852,8 +1826,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
             return
             
         if 1: # New code in 4.4a1.
-            tree.endEditLabel()
-            tree.select(tree.editPosition())
+            p = c.currentPosition()
+            tree.updateAfterHeadChanged(p)
+            c.selectPosition(p)
         else:
             v = frame.tree.editPosition()
             # g.trace(v)
@@ -1868,22 +1843,23 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3983:insertHeadlineTime
     def insertHeadlineTime (self):
     
-        frame = self ; c = frame.c ; v = c.currentVnode()
-        h = v.headString() # Remember the old value.
+        frame = self ; c = frame.c ; p = c.currentVnode()
+        h = p.headString() # Remember the old value.
         
         if g.app.batchMode:
             c.notValidInBatchMode("Insert Headline Time")
             return
     
-        if v.edit_text():
-            sel1,sel2 = g.app.gui.getTextSelection(v.edit_text())
-            if sel1 and sel2 and sel1 != sel2: # 7/7/03
-                v.edit_text().delete(sel1,sel2)
-            v.edit_text().insert("insert",c.getTime(body=False))
-            frame.tree.idle_head_key(v)
+        w = p.edit_text()
+        if w:
+            sel1,sel2 = g.app.gui.getTextSelection(p.edit_text())
+            if sel1 and sel2 and sel1 != sel2:
+                w.delete(sel1,sel2)
+            w.insert("insert",c.getTime(body=False))
+            frame.tree.onHeadChanged(p,'Insert Headline Time')
     
         # A kludge to get around not knowing whether we are editing or not.
-        if h.strip() == v.headString().strip():
+        if h.strip() == p.headString().strip():
             g.es("Edit headline to append date/time")
     #@nonl
     #@-node:ekr.20031218072017.3983:insertHeadlineTime
@@ -2186,7 +2162,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         c = self.c
         # This is a *very* effective trace.
-        # g.trace(widget._name,g.callerList(5))
+        # g.trace(widget._name,g.callers(5))
     
         if widget and not g.app.unitTesting:
             # Messing with focus may be dangerous in unit tests.
@@ -2206,14 +2182,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 self.wantedWidget = widget
                 g.app.wantedCommander = c
                 if not self.wantedCallbackScheduled:
-                    # g.trace(g.callerList(4),c.shortFileName())
+                    # g.trace(g.callers(4),c.shortFileName())
                     self.wantedCallbackScheduled = True
                     # We don't have to wait so long now that we don't call this so often.
                     # The difference between 500 msec. and 100 msec. is significant.
                     # New in 4.4: set the delay to 1 msec.: the smaller the better.
                     self.outerFrame.after(1,setFocusCallback)
             else:
-                # g.trace(g.callerList(4),c.shortFileName())
+                # g.trace(g.callers(4),c.shortFileName())
                 g.app.gui.set_focus(c,widget)
                 # Crucial: cancel any previous callback.
                 # It may be re-enabled later, but that doesn't matter.

@@ -421,7 +421,7 @@ class tkinterGui(leoGui.leoGui):
         
         """Put the focus on the widget."""
         
-        # g.trace('g.app.gui',g.callerList(4))
+        # g.trace('g.app.gui',g.callers(4))
         
         # g.trace(c.frame.top.wm_stackorder())
         

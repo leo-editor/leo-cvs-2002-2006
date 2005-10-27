@@ -839,22 +839,6 @@ class leoTree:
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3708:Edit label
-    #@+node:ekr.20031218072017.3710:Notifications
-    # These should all be internal to the tkinter.frame class.
-    
-    def onHeadChanged(self,p):
-        __pychecker__ = '--no-argsused'
-        self.oops()
-    
-    def OnHeadlineKey(self,p,event):
-        __pychecker__ = '--no-argsused'
-        self.oops()
-    
-    def idle_head_key(self,p,ch=None):
-        __pychecker__ = '--no-argsused'
-        self.oops()
-    #@nonl
-    #@-node:ekr.20031218072017.3710:Notifications
     #@+node:ekr.20031218072017.3711:Scrolling
     def scrollTo(self,p):
         self.oops()
